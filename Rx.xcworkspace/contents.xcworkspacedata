@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <FileRef
+      location = "group:LICENSE.md">
+   </FileRef>
+   <FileRef
+      location = "group:README.md">
+   </FileRef>
+   <FileRef
+      location = "group:Rx/Rx.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:RxCocoa/RxCocoa.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:RxExample/RxExample.xcodeproj">
+   </FileRef>
+</Workspace>
