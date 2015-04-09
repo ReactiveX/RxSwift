@@ -7,7 +7,7 @@ This is a Swift port of Reactive extensions.
 
 [https://github.com/Reactive-Extensions](https://github.com/Reactive-Extensions)
 
-Like the original Rx, it's intention is to enable easy composition of asynchronous operations and event streams.
+Like the original Rx, its intention is to enable easy composition of asynchronous operations and event streams.
 
 It tries to port as many concepts from the original Rx as possible, but some concepts were adapted for more pleasant and performant integration with iOS/OSX environment.
 
@@ -194,7 +194,7 @@ result1 >== { okValue in    // success chaining operator
 } 
 ```
 
-If some action needs to be peformed only after a successfull computation without using it's result then `>>>` is used.
+If some action needs to be peformed only after a successfull computation without using its result then `>>>` is used.
 
 ```
 result1 >>> {              
@@ -230,7 +230,7 @@ public func map<E, R>
 }
 ```
 
-Returning an error from a selector will cause entire graph of dependant sequence transformers to "die" and fail with error. Dying implies that it will release all of it's resources and never produce another sequence value. This is usually not an obvious effect.
+Returning an error from a selector will cause entire graph of dependant sequence transformers to "die" and fail with error. Dying implies that it will release all of its resources and never produce another sequence value. This is usually not an obvious effect.
 
 If there is some UITextField bound to a observable sequence that fails with error or completes, screen won't be updated ever again. 
 
