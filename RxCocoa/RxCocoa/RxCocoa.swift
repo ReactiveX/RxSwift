@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import Rx
+import RxSwift
 
 public enum RxCocoaError : Int {
     case Unknown = 0

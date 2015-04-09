@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Rx
+import RxSwift
 import RxCocoa
 
 public class WikipediaSearchViewController: UIViewController {

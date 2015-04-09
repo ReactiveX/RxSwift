@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import Rx
+import RxSwift
 
 class SearchBarDelegate: NSObject, UISearchBarDelegate {
     typealias Observer = ObserverOf<String>

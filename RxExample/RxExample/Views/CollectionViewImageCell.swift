@@ -8,7 +8,7 @@
 
 import Foundation
 import UIKit
-import Rx
+import RxSwift
 import RxCocoa
 
 public class CollectionViewImageCell: UICollectionViewCell {

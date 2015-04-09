@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import Rx
+import RxSwift
 
 // In Rx every subscription uses it's own set of resources.
 // In case of UI, asynchronous operations are usually used to fetch data from server.

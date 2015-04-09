@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import Rx
+import RxSwift
 
 class ControlTarget: NSObject, Disposable {
     typealias Callback = (UIControl) -> Void

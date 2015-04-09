@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import Rx
+import RxSwift
 import RxCocoa
 
 func apiError(error: String) -> NSError {

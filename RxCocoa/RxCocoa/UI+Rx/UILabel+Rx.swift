@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import Rx
+import RxSwift
 import UIKit
 
 extension UILabel {

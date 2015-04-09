@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import Rx
+import RxSwift
 
 class KVOObserver<Element> : NSObject {
     typealias Callback = (Element) -> Void

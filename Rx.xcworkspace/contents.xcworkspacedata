@@ -8,7 +8,7 @@
       location = "group:README.md">
    </FileRef>
    <FileRef
-      location = "group:Rx/Rx.xcodeproj">
+      location = "group:RxSwift/RxSwift.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:RxCocoa/RxCocoa.xcodeproj">

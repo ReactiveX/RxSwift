@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import Rx
+import RxSwift
 
 extension UITextField {
     public func rx_observableText() -> Observable<String> {

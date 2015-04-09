@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import Rx
+import RxSwift
 
 class Prefix<Element>: Observable<Element> {
     let element: Element

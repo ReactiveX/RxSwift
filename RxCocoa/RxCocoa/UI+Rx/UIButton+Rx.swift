@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import Rx
+import RxSwift
 
 extension UIButton {
     public func rx_observableTap() -> Observable<Void> {

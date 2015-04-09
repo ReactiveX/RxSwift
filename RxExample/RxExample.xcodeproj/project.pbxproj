@@ -27,8 +27,8 @@
 		C8813DAA1AD2EBF30072A050 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8813DA91AD2EBF30072A050 /* RootViewController.swift */; };
 		C8813DAE1AD2F5A40072A050 /* WikipediaSearchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C8813DAD1AD2F5A40072A050 /* WikipediaSearchCell.xib */; };
 		C8813DB01AD2F8800072A050 /* WikipediaImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C8813DAF1AD2F8800072A050 /* WikipediaImageCell.xib */; };
-		C8F57F411AD02DBE006B8702 /* Rx.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8F57F401AD02DBE006B8702 /* Rx.framework */; };
-		C8F57F421AD02DBE006B8702 /* Rx.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C8F57F401AD02DBE006B8702 /* Rx.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		C8A56BCB1AD744E600B4673B /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8A56BCA1AD744E600B4673B /* RxSwift.framework */; };
+		C8A56BCC1AD744E600B4673B /* RxSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C8A56BCA1AD744E600B4673B /* RxSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C8F57F441AD02DBE006B8702 /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8F57F431AD02DBE006B8702 /* RxCocoa.framework */; };
 		C8F57F451AD02DBE006B8702 /* RxCocoa.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C8F57F431AD02DBE006B8702 /* RxCocoa.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
@@ -50,8 +50,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				C8A56BCC1AD744E600B4673B /* RxSwift.framework in Embed Frameworks */,
 				C8F57F451AD02DBE006B8702 /* RxCocoa.framework in Embed Frameworks */,
-				C8F57F421AD02DBE006B8702 /* Rx.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -83,7 +83,7 @@
 		C8813DA91AD2EBF30072A050 /* RootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
 		C8813DAD1AD2F5A40072A050 /* WikipediaSearchCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WikipediaSearchCell.xib; sourceTree = "<group>"; };
 		C8813DAF1AD2F8800072A050 /* WikipediaImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WikipediaImageCell.xib; sourceTree = "<group>"; };
-		C8F57F401AD02DBE006B8702 /* Rx.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Rx.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C8A56BCA1AD744E600B4673B /* RxSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RxSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8F57F431AD02DBE006B8702 /* RxCocoa.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RxCocoa.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -92,8 +92,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C8A56BCB1AD744E600B4673B /* RxSwift.framework in Frameworks */,
 				C8F57F441AD02DBE006B8702 /* RxCocoa.framework in Frameworks */,
-				C8F57F411AD02DBE006B8702 /* Rx.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -110,8 +110,8 @@
 		C83366D41AD0293800C668A7 = {
 			isa = PBXGroup;
 			children = (
+				C8A56BCA1AD744E600B4673B /* RxSwift.framework */,
 				C8F57F431AD02DBE006B8702 /* RxCocoa.framework */,
-				C8F57F401AD02DBE006B8702 /* Rx.framework */,
 				C83366DF1AD0293800C668A7 /* RxExample */,
 				C83366F81AD0293900C668A7 /* RxExampleTests */,
 				C83366DE1AD0293800C668A7 /* Products */,
@@ -437,8 +437,10 @@
 					"$(inherited)",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Rx-cfkyozdvlaegqibzixjokeysigeo/Build/Products/Release-iphoneos",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Rx-cfkyozdvlaegqibzixjokeysigeo/Build/Products/Debug-iphoneos",
+					"/Users/kzaher/Projects/Rx/RxSwift/build/Debug-iphoneos",
 				);
 				INFOPLIST_FILE = RxExample/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-objc_loadall";
 				OTHER_SWIFT_FLAGS = "-D DEBUG";
@@ -454,8 +456,10 @@
 					"$(inherited)",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Rx-cfkyozdvlaegqibzixjokeysigeo/Build/Products/Release-iphoneos",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Rx-cfkyozdvlaegqibzixjokeysigeo/Build/Products/Debug-iphoneos",
+					"/Users/kzaher/Projects/Rx/RxSwift/build/Debug-iphoneos",
 				);
 				INFOPLIST_FILE = RxExample/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-objc_loadall";
 				PRODUCT_NAME = "$(TARGET_NAME)";

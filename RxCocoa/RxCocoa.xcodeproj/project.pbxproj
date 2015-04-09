@@ -25,7 +25,7 @@
 		C8813DA61AD298B20072A050 /* Observable+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8813DA51AD298B20072A050 /* Observable+UI.swift */; };
 		C8813DA81AD298BF0072A050 /* Prefix.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8813DA71AD298BF0072A050 /* Prefix.swift */; };
 		C885B6391AC01F6100AD34DA /* NSURLSession+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C885B6381AC01F6100AD34DA /* NSURLSession+Rx.swift */; };
-		C8F57F471AD02DE5006B8702 /* Rx.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8F57F461AD02DE5006B8702 /* Rx.framework */; };
+		C8A56BCE1AD744FD00B4673B /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8A56BCD1AD744FD00B4673B /* RxSwift.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,7 +60,7 @@
 		C8813DA51AD298B20072A050 /* Observable+UI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Observable+UI.swift"; path = "RxCocoa/Observables/Observable+UI.swift"; sourceTree = SOURCE_ROOT; };
 		C8813DA71AD298BF0072A050 /* Prefix.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Prefix.swift; sourceTree = "<group>"; };
 		C885B6381AC01F6100AD34DA /* NSURLSession+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSURLSession+Rx.swift"; sourceTree = "<group>"; };
-		C8F57F461AD02DE5006B8702 /* Rx.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Rx.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C8A56BCD1AD744FD00B4673B /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RxSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,7 +68,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C8F57F471AD02DE5006B8702 /* Rx.framework in Frameworks */,
+				C8A56BCE1AD744FD00B4673B /* RxSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -86,7 +86,7 @@
 		C81553D41A98AB4A00C63152 = {
 			isa = PBXGroup;
 			children = (
-				C8F57F461AD02DE5006B8702 /* Rx.framework */,
+				C8A56BCD1AD744FD00B4673B /* RxSwift.framework */,
 				C81553E01A98AB4A00C63152 /* RxCocoa */,
 				C81553ED1A98AB4A00C63152 /* RxCocoaTests */,
 				C81553DF1A98AB4A00C63152 /* Products */,
@@ -408,9 +408,11 @@
 					"$(inherited)",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Rx-cfkyozdvlaegqibzixjokeysigeo/Build/Products/Debug-iphoneos",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Rx-cfkyozdvlaegqibzixjokeysigeo/Build/Products/Release-iphoneos",
+					"/Users/kzaher/Projects/Rx/RxSwift/build/Debug-iphoneos",
 				);
 				INFOPLIST_FILE = RxCocoa/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_SWIFT_FLAGS = "-D DEBUG";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -431,9 +433,11 @@
 					"$(inherited)",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Rx-cfkyozdvlaegqibzixjokeysigeo/Build/Products/Debug-iphoneos",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Rx-cfkyozdvlaegqibzixjokeysigeo/Build/Products/Release-iphoneos",
+					"/Users/kzaher/Projects/Rx/RxSwift/build/Debug-iphoneos",
 				);
 				INFOPLIST_FILE = RxCocoa/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";

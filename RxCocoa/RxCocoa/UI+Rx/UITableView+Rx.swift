@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import Rx
+import RxSwift
 
 // This cannot be a generic class because of table view objc runtime that checks for 
 // implemented selectors in data source
@@ -194,7 +194,7 @@ extension UITableView {
     
     public func rx_observableElementTap<E>() -> Observable<E> {
         
-        return rx_observableRowTap() >- Rx.map { (tableView, rowIndex) -> E in
+        return rx_observableRowTap() >- map { (tableView, rowIndex) -> E in
             let maybeDataSource: TableViewDataSource? = self.rx_getTableViewDataSource()
             
             if maybeDataSource == nil {

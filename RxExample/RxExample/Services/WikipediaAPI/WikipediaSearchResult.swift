@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import Rx
+import RxSwift
 
 struct WikipediaSearchResult: Printable {
     let title: String

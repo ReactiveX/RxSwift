@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import Rx
+import RxSwift
 
 // This cannot be a generic class because of collection view objc runtime that checks for
 // implemented selectors in data source
@@ -195,7 +195,7 @@ extension UICollectionView {
     
     public func rx_observableElementTap<E>() -> Observable<E> {
         
-        return rx_observableItemTap() >- Rx.map { (tableView, rowIndex) -> E in
+        return rx_observableItemTap() >- map { (tableView, rowIndex) -> E in
             let maybeDataSource: CollectionViewDataSource? = self.rx_getCollectionViewDataSource()
             
             if maybeDataSource == nil {
