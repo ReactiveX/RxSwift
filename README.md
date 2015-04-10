@@ -1,7 +1,20 @@
-RxSwift (0.7): Reactive extensions for Swift
+RxSwift: Reactive extensions for Swift
 ======================================
 
 Xcode 6.3 / Swift 1.2 required
+
+
+```
+RxSwift
+|
+├-LICENSE.md
+├-README.md
+├-RxSwift         - platform agnostic core
+├-RxCocoa         - extensions for UI (iOS only for now), NSURLSession, KVO ...
+├-RxExample       - example app, Wikipedia image scraper
+└-Rx.xcworkspace  - workspace that contains all of the project hooked up, one
+                    click run the example app
+```		
 
 This is a Swift port of Reactive extensions.
 
@@ -18,7 +31,9 @@ Probably the best analogy for those who have never heard of Rx would be:
 git diff | grep bug | less          #  linux pipes - programs communicate by sending
                                     #  sequences of bytes, words, lines, '\0' terminated strings...
 ```
+
 would become if written in RxSwift
+
 ```
 gitDiff() >- grep("bug") >- less    // rx sink (>-) operator - rx units communicate by sending
                                     // sequences of swift objects
@@ -239,6 +254,27 @@ To make those situations more obvious, RxCocoa will throw an exception in case s
 Using functions without "OrDie" suffix is usually a preferred option.
 
 Best practice would be to use `Result` enum as a `Element` type in observable sequence. This is how example app works. In that way, errors can be safely propagated to UI and observing sequences will continue to produce values in case of some transient server error.
+
+## Build / Install / Run
+
+These are the supported options
+
+* Open Rx.xcworkspace, hit run. This method will build everything and you can run sample app
+* [CocoaPods](https://guides.cocoapods.org/using/using-cocoapods.html) (probably easiest for dependancy management). This method will install frameworks without example app
+
+```
+# Podfile
+use_frameworks!
+
+pod 'RxSwift'
+pod 'RxCocoa'
+```
+
+type in `Podfile` directory
+
+```
+$ pod install
+```
 
 ## Peculiarities
 
