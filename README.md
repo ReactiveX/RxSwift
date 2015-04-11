@@ -12,13 +12,12 @@ RxSwift
 ├-RxSwift         - platform agnostic core
 ├-RxCocoa         - extensions for UI (iOS only for now), NSURLSession, KVO ...
 ├-RxExample       - example app, Wikipedia image scraper
-└-Rx.xcworkspace  - workspace that contains all of the project hooked up, one
-                    click run the example app
+└-Rx.xcworkspace  - workspace that contains all of the projects hooked up
 ```		
 
 This is a Swift port of Reactive extensions.
 
-[https://github.com/Reactive-Extensions](https://github.com/Reactive-Extensions)
+[https://github.com/Reactive-Extensions/Rx.NET](https://github.com/Reactive-Extensions/Rx.NET)
 
 Like the original Rx, its intention is to enable easy composition of asynchronous operations and event streams.
 
