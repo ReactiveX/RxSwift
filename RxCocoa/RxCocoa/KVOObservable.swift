@@ -70,7 +70,9 @@ public class KVOObservable<Element> : Observable<Element> {
             
             return success(AnonymousDisposable { () in
                 self.lock.performLocked {
-                    _ = self.observers.removeKey(key)
+                    if self.observers.removeKey(key) == nil {
+                        removingObserverFailed()
+                    }
                 }
             })
         }
