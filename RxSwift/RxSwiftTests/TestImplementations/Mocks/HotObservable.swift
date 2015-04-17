@@ -29,7 +29,7 @@ class HotObservable<Element : Equatable> : Observable<Element> {
         super.init()
         
         for recordedEvent in recordedEvents {
-            testScheduler.schedule((), date: recordedEvent.time, action: { (Int) in
+            testScheduler.schedule((), time: recordedEvent.time, action: { (Int) in
                 return doAll(self.observers.all.map { o in o.on(recordedEvent.event) })
             })
         }

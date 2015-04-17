@@ -78,7 +78,7 @@ class Throttle_<Element, SchedulerType: Scheduler> : Sink<Element>, ObserverClas
             let scheduler = self.parent.scheduler
             let dueTime = self.parent.dueTime
             
-            return scheduler.schedule(latestId, dueTime: dueTime, action: { (id) in
+            return scheduler.scheduleRelative(latestId, dueTime: dueTime, action: { (id) in
                 return self.propagate()
             }) >== { disposeTimer in
                 d.setDisposable(disposeTimer)

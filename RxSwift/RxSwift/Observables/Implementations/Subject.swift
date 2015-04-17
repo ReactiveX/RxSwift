@@ -127,7 +127,7 @@ public class Subject<Element> : SubjectType<Element, Element>, Disposable {
         self.lock.performLocked {
             let observer = state.observers.removeKey(key)
             if observer == nil {
-                rxFatalError("Something went wrong with dispose")
+                removingObserverFailed()
             }
         }
     }

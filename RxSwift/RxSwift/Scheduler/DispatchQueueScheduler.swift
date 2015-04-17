@@ -44,7 +44,7 @@ public class DispatchQueueScheduler : Scheduler {
         return success(DefaultDisposable())
     }
     
-    public func schedule<StateType>(state: StateType, dueTime: NSTimeInterval, action: (StateType) -> Result<Void>) -> Result<Disposable> {
+    public func scheduleRelative<StateType>(state: StateType, dueTime: NSTimeInterval, action: (StateType) -> Result<Void>) -> Result<Disposable> {
         let timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, self.queue)
         
         let dispatchInterval = MainScheduler.convertTimeIntervalToDispatchTime(dueTime)

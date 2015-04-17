@@ -36,19 +36,15 @@ class VirtualTimeSchedulerBase : Scheduler {
         self.enabled = false
     }
     
-    func scheduleRelative<StateType>(state: StateType, after: Time, action: (StateType) -> Result<Void>) -> Result<Disposable> {
-        return self.schedule(state, date: Time(after + self.clock), action: action)
-    }
-    
     func schedule<StateType>(state: StateType, action: (StateType) -> Result<Void>) -> Result<Disposable> {
-        return self.scheduleRelative(state, after: 0, action: action)
+        return self.scheduleRelative(state, dueTime: 0, action: action)
     }
     
-    func schedule<StateType>(state: StateType, dueTime: TimeInterval, action: (StateType) -> Result<Void>) -> Result<Disposable> {
-        return schedule(state, date: now + dueTime, action: action)
+    func scheduleRelative<StateType>(state: StateType, dueTime: TimeInterval, action: (StateType) -> Result<Void>) -> Result<Disposable> {
+        return schedule(state, time: now + dueTime, action: action)
     }
     
-    func schedule<StateType>(state: StateType, date: Time, action: (StateType) -> Result<Void>) -> Result<Disposable> {
+    func schedule<StateType>(state: StateType, time: Time, action: (StateType) -> Result<Void>) -> Result<Disposable> {
         let latestID = self.ID
         ID = ID + 1
         
@@ -56,7 +52,7 @@ class VirtualTimeSchedulerBase : Scheduler {
         
         let actionDescription : ScheduledItem = ({
             return action(state)
-        }, Box(state), latestID, date)
+        }, Box(state), latestID, time)
         
         schedulerQueue.append(actionDescription)
         

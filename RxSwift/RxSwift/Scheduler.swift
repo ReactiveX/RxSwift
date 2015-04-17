@@ -20,7 +20,7 @@ public protocol Scheduler: ImmediateScheduler {
         get
     }
 
-    func schedule<StateType>(state: StateType, dueTime: TimeInterval, action: (StateType) -> Result<Void>) -> Result<Disposable>
+    func scheduleRelative<StateType>(state: StateType, dueTime: TimeInterval, action: (StateType) -> Result<Void>) -> Result<Disposable>
 }
 
 

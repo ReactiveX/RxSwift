@@ -7,14 +7,14 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>0C665A1D-5FDF-4166-BF63-7B60C8AF931E</string>
 	<key>IDESourceControlProjectName</key>
-	<string>project</string>
+	<string>RxSwift</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>8B123162C394A0A0A138779108E4C59DD771865A</key>
 		<string>github.com:kzaher/RxSwift.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>RxSwift/RxSwift.xcodeproj/project.xcworkspace</string>
+	<string>RxSwift/RxSwift.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>8B123162C394A0A0A138779108E4C59DD771865A</key>

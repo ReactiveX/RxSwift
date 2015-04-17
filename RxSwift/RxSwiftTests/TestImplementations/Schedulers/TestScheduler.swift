@@ -22,24 +22,35 @@ class TestScheduler : VirtualTimeSchedulerBase {
         return ColdObservable(testScheduler: self, recordedEvents: events)
     }
     
+    func createObserver<E>() -> MockObserver<E> {
+        return MockObserver(scheduler: self)
+    }
+    
+    func scheduleAt(time: Time, action: () -> Void) {
+        self.schedule((), time: time) { _ in
+            action()
+            return SuccessResult
+        }
+    }
+    
     func start<Element : Equatable>(created: Time, subscribed: Time, disposed: Time, create: () -> Observable<Element>) -> MockObserver<Element> {
         var source : Observable<Element>? = nil
         var subscription : Disposable? = nil
-        var observer = MockObserver<Element>(scheduler: self)
+        var observer: MockObserver<Element> = createObserver()
         
         let state : Void = ()
         
-        self.schedule(state, date: created) { (state) in
+        self.schedule(state, time: created) { (state) in
             source = create()
             return SuccessResult
         }
         
-        self.schedule(state, date: subscribed) { (state) in
+        self.schedule(state, time: subscribed) { (state) in
             subscription = source!.subscribe(ObserverOf(observer)).value!
             return SuccessResult
         }
         
-        self.schedule(state, date: disposed) { (state) in
+        self.schedule(state, time: disposed) { (state) in
             subscription!.dispose()
             return SuccessResult
         }

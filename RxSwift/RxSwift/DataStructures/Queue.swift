@@ -8,7 +8,9 @@
 
 import Foundation
 
-public struct Queue<T> {
+public struct Queue<T>: SequenceType {
+    typealias Generator = GeneratorOf<T>
+    
     let resizeFactor = 2
     
     private var storage: [T?]
@@ -96,5 +98,24 @@ public struct Queue<T> {
         }
         
         return value
+    }
+    
+    public func generate() -> Generator {
+        var i = dequeueIndex
+        var count = _count
+        
+        return GeneratorOf {
+            if count == 0 {
+                return nil
+            }
+            
+            i++
+            count--
+            if i >= self.storage.count {
+                i -= self.storage.count
+            }
+            
+            return self.storage[i]
+        }
     }
 }

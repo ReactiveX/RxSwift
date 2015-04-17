@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C84F67041ADDC16200EB0CB6 /* ReplaySubject.swift in Sources */ = {isa = PBXBuildFile; fileRef = C84F67031ADDC16200EB0CB6 /* ReplaySubject.swift */; };
+		C84F67061ADE63F600EB0CB6 /* Observable+BindingTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C84F67051ADE63F600EB0CB6 /* Observable+BindingTest.swift */; };
 		C8A56ADD1AD7424700B4673B /* RxSwift.h in Headers */ = {isa = PBXBuildFile; fileRef = C8A56ADC1AD7424700B4673B /* RxSwift.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C8A56AE31AD7424700B4673B /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8A56AD71AD7424700B4673B /* RxSwift.framework */; };
 		C8A56B4C1AD7435900B4673B /* AnyObject+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A56AFC1AD7435800B4673B /* AnyObject+Rx.swift */; };
@@ -115,6 +117,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C84F67031ADDC16200EB0CB6 /* ReplaySubject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReplaySubject.swift; sourceTree = "<group>"; };
+		C84F67051ADE63F600EB0CB6 /* Observable+BindingTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Observable+BindingTest.swift"; sourceTree = "<group>"; };
 		C8A56AD71AD7424700B4673B /* RxSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8A56ADB1AD7424700B4673B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C8A56ADC1AD7424700B4673B /* RxSwift.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RxSwift.h; sourceTree = "<group>"; };
@@ -255,28 +259,28 @@
 		C8A56AD91AD7424700B4673B /* RxSwift */ = {
 			isa = PBXGroup;
 			children = (
+				C8A56B3F1AD7435900B4673B /* Rx.h */,
+				C8A56ADC1AD7424700B4673B /* RxSwift.h */,
+				C8A56B401AD7435900B4673B /* Rx.pch */,
 				C8A56AFC1AD7435800B4673B /* AnyObject+Rx.swift */,
 				C8A56AFD1AD7435800B4673B /* Cancelable.swift */,
-				C8A56AFE1AD7435800B4673B /* Concurrency */,
-				C8A56B011AD7435800B4673B /* DataStructures */,
 				C8A56B041AD7435800B4673B /* Disposable.swift */,
-				C8A56B051AD7435800B4673B /* Disposables */,
 				C8A56B0D1AD7435800B4673B /* Error.swift */,
 				C8A56B0E1AD7435800B4673B /* Event.swift */,
 				C8A56B0F1AD7435800B4673B /* Observable.swift */,
 				C8A56B101AD7435800B4673B /* Observable+Subscription.swift */,
-				C8A56B111AD7435800B4673B /* Observables */,
 				C8A56B331AD7435800B4673B /* ObserverOf.swift */,
-				C8A56B341AD7435800B4673B /* Observers */,
 				C8A56B3D1AD7435900B4673B /* ObserverType.swift */,
 				C8A56B3E1AD7435900B4673B /* Result.swift */,
-				C8A56B3F1AD7435900B4673B /* Rx.h */,
-				C8A56B401AD7435900B4673B /* Rx.pch */,
 				C8A56B411AD7435900B4673B /* Rx.swift */,
-				C8A56B421AD7435900B4673B /* Scheduler */,
 				C8A56B481AD7435900B4673B /* Scheduler.swift */,
+				C8A56AFE1AD7435800B4673B /* Concurrency */,
+				C8A56B011AD7435800B4673B /* DataStructures */,
+				C8A56B051AD7435800B4673B /* Disposables */,
+				C8A56B111AD7435800B4673B /* Observables */,
+				C8A56B341AD7435800B4673B /* Observers */,
+				C8A56B421AD7435900B4673B /* Scheduler */,
 				C8A56B491AD7435900B4673B /* Subjects */,
-				C8A56ADC1AD7424700B4673B /* RxSwift.h */,
 				C8A56ADA1AD7424700B4673B /* Supporting Files */,
 			);
 			path = RxSwift;
@@ -383,6 +387,7 @@
 				C8A56B281AD7435800B4673B /* Throttle.swift */,
 				C8A56B291AD7435800B4673B /* Variable.swift */,
 				C8A56B2A1AD7435800B4673B /* WhereObservable.swift */,
+				C84F67031ADDC16200EB0CB6 /* ReplaySubject.swift */,
 			);
 			path = Implementations;
 			sourceTree = "<group>";
@@ -464,6 +469,7 @@
 				C8A56BA41AD7436D00B4673B /* ConcurrencyTest.swift */,
 				C8A56BA51AD7436D00B4673B /* DisposableTest.swift */,
 				C8A56BA61AD7436D00B4673B /* Observable+AggregateTest.swift */,
+				C84F67051ADE63F600EB0CB6 /* Observable+BindingTest.swift */,
 				C8A56BA71AD7436D00B4673B /* Observable+MultipleTest.swift */,
 				C8A56BA81AD7436D00B4673B /* Observable+SingleTest.swift */,
 				C8A56BA91AD7436D00B4673B /* Observable+StandardSequenceOperatorsTest.swift */,
@@ -631,6 +637,7 @@
 				C8A56B831AD7435900B4673B /* DoneObserver.swift in Sources */,
 				C8A56B931AD7435900B4673B /* SubjectType.swift in Sources */,
 				C8A56B7D1AD7435900B4673B /* Observable+Time.swift in Sources */,
+				C84F67041ADDC16200EB0CB6 /* ReplaySubject.swift in Sources */,
 				C8A56B731AD7435900B4673B /* Throttle.swift in Sources */,
 				C8A56B681AD7435900B4673B /* Multicast.swift in Sources */,
 				C8A56B901AD7435900B4673B /* SchedulerDefaults.swift in Sources */,
@@ -664,6 +671,7 @@
 				C8A56BBF1AD7436D00B4673B /* Observable+TimeTest.swift in Sources */,
 				C8A56BAE1AD7436D00B4673B /* HotObservable.swift in Sources */,
 				C8A56BB01AD7436D00B4673B /* Observable.Extensions.swift in Sources */,
+				C84F67061ADE63F600EB0CB6 /* Observable+BindingTest.swift in Sources */,
 				C8A56BB51AD7436D00B4673B /* VirtualTimeSchedulerBase.swift in Sources */,
 				C8A56BBC1AD7436D00B4673B /* Observable+MultipleTest.swift in Sources */,
 				C8A56BB61AD7436D00B4673B /* Subscription.swift in Sources */,

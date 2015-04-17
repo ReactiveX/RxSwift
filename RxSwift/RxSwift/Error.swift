@@ -27,6 +27,10 @@ public let UnknownError  = NSError(domain: RxErrorDomain, code: RxErrorCode.Unkn
 public let CastError     = NSError(domain: RxErrorDomain, code: RxErrorCode.Cast.rawValue, userInfo: nil)
 public let DisposedError = NSError(domain: RxErrorDomain, code: RxErrorCode.Disposed.rawValue, userInfo: nil)
 
+func removingObserverFailed() {
+    rxFatalError("Removing observer for key failed")
+}
+
 func createCompositeFailure<T>(failures: [Result<T>]) -> Result<T> {
     let description: [NSObject : AnyObject] = [ RxCompositeFailures : Box(failures.map { $0.error! }) ]
     let e = NSError(domain: RxErrorDomain, code: RxErrorCode.Composite.rawValue , userInfo: description)

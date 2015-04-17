@@ -35,7 +35,7 @@ class ColdObservable<Element: Equatable>: Observable<Element> {
         let i = self.subscriptions.count - 1
 
         for recordedEvent in recordedEvents {
-            testScheduler.scheduleRelative((), after: recordedEvent.time, action: { (Int) in
+            testScheduler.scheduleRelative((), dueTime: recordedEvent.time, action: { (Int) in
                 return doAll(self.observers.all.map { o in o.on(recordedEvent.event) })
             })
         }

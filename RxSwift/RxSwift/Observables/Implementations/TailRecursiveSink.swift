@@ -14,7 +14,7 @@ class TailRecursiveSink<ElementType> : Sink<ElementType>, ObserverClassType {
     
     var stack: [StackElementType] = []
     var disposed: Bool = false
-    var subscription: SerialDisposable = SerialDisposable()
+    var subscription = SerialDisposable()
     
     // this is thread safe object
     var gate: AsyncLock = AsyncLock()

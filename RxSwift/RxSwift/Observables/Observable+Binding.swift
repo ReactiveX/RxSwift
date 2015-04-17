@@ -18,6 +18,48 @@ public func multicast<E, R>
     }
 }
 
+public func multicastOrDie<E, I, R>
+    (
+        subjectSelector: () -> Result<SubjectType<E, I>>,
+        selector: (Observable<I>) -> Result<Observable<R>>
+    )
+    -> (Observable<E> -> Observable<R>) {
+    
+    return { source in
+        return Multicast(
+            source: source,
+            subjectSelector: subjectSelector,
+            selector: selector
+        )
+    }
+}
+
+public func multicast<E, I, R>
+    (
+        subjectSelector: () -> SubjectType<E, I>,
+        selector: (Observable<I>) -> Observable<R>
+    )
+    -> (Observable<E> -> Observable<R>) {
+        
+        return { source in
+            return Multicast(
+                source: source,
+                subjectSelector: { success(subjectSelector()) },
+                selector: { success(selector($0)) }
+            )
+        }
+}
+
+// replay 
+
+public func replay<E>
+    (bufferSize: UInt)
+    -> (Observable<E> -> ConnectableObservableType<E>) {
+    return { source in
+        return multicast(ReplaySubject(bufferSize: bufferSize))(source)
+    }
+}
+
 // refcount
 
 public func refCount<E>
