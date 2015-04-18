@@ -12,13 +12,21 @@ private struct BagPrivate {
     static let maxElements = Bag<Void>.KeyType.max - 1 // this is guarding from theoretical endless loop
 }
 
-public struct Bag<Element> {
+public struct Bag<T> : SequenceType, Printable {
+    typealias Generator = GeneratorOf<T>
+    
     public typealias KeyType = Int
     
-    private var map: [KeyType: Element] = Dictionary(minimumCapacity: 5)
+    private var map: [KeyType: T] = Dictionary(minimumCapacity: 5)
     private var nextKey = KeyType.min
 
     public init() {
+    }
+    
+    public var description : String {
+        get {
+            return "\(map.count) elements \(self.map)"
+        }
     }
     
     public var count: Int {
@@ -27,7 +35,7 @@ public struct Bag<Element> {
         }
     }
     
-    public mutating func put(x: Element) -> KeyType {
+    public mutating func put(x: T) -> KeyType {
         if map.count >= BagPrivate.maxElements {
             rxFatalError("Too many elements")
         }
@@ -41,7 +49,21 @@ public struct Bag<Element> {
         return nextKey
     }
     
-    public var all: [Element]
+    public func generate() -> GeneratorOf<T> {
+        var dictionaryGenerator = map.generate()
+        
+        return GeneratorOf {
+            let next = dictionaryGenerator.next()
+            if let (key, value) = next {
+                return value
+            }
+            else {
+                return nil
+            }
+        }
+    }
+    
+    public var all: [T]
     {
         get {
             return self.map.values.array
@@ -52,7 +74,7 @@ public struct Bag<Element> {
         map.removeAll(keepCapacity: false)
     }
     
-    public mutating func removeKey(key: KeyType) -> Element? {
+    public mutating func removeKey(key: KeyType) -> T? {
         return map.removeValueForKey(key)
     }
 
