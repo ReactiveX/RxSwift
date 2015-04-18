@@ -18,12 +18,25 @@ import Foundation
 *   `Box` is there because of a bug in swift compiler
 *       >> error: unimplemented IR generation feature non-fixed multi-payload enum layout
 */
-public enum Event<Element>  {
+public enum Event<Element> : Printable {
     // Box is used is because swift compiler doesn't know
     // how to handle `Next(Element)` and it crashes.
     case Next(Box<Element>) // next element of a sequence
     case Error(ErrorType)   // sequence failed with error
     case Completed          // sequence terminated successfully
+    
+    public var description: String {
+        get {
+            switch self {
+            case .Next(let boxedValue):
+                return "Next(\(boxedValue))"
+            case .Error(let error):
+                return "Error(\(error))"
+            case .Completed:
+                return "Completed"
+            }
+        }
+    }
 }
 
 public func eventType<T>(event: Event<T>) -> String {
