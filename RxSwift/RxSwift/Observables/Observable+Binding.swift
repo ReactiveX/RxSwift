@@ -53,7 +53,7 @@ public func multicast<E, I, R>
 // replay 
 
 public func replay<E>
-    (bufferSize: UInt)
+    (bufferSize: Int)
     -> (Observable<E> -> ConnectableObservableType<E>) {
     return { source in
         return multicast(ReplaySubject(bufferSize: bufferSize))(source)

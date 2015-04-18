@@ -24,6 +24,7 @@ class Connection<SourceType, ResultType> : Disposable {
             parent.lock.performLocked {
                 subscription!.dispose()
                 subscription = nil
+                self.parent!.connection = nil
                 self.parent = nil
             }
         }

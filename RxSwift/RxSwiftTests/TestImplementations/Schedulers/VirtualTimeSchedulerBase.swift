@@ -13,7 +13,7 @@ protocol ScheduledItem {
     
 }
 
-class VirtualTimeSchedulerBase : Scheduler {
+class VirtualTimeSchedulerBase : Scheduler, Printable {
     typealias Time = Int
     typealias TimeInterval = Int
     
@@ -22,9 +22,15 @@ class VirtualTimeSchedulerBase : Scheduler {
     var clock : Time
     var enabled : Bool
     
-    var now : Time {
+    var now: Time {
         get {
             return self.clock
+        }
+    }
+    
+    var description: String {
+        get {
+            return self.schedulerQueue.description
         }
     }
     
@@ -47,8 +53,6 @@ class VirtualTimeSchedulerBase : Scheduler {
     func schedule<StateType>(state: StateType, time: Time, action: (StateType) -> Result<Void>) -> Result<Disposable> {
         let latestID = self.ID
         ID = ID + 1
-        
-        let timeInterval = self.clock
         
         let actionDescription : ScheduledItem = ({
             return action(state)

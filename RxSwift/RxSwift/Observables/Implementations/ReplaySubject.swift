@@ -272,13 +272,12 @@ class ReplaySubject<Element> : SubjectType<Element, Element> {
     
     let implementation: ReplaySubjectImplementation<Element>
     
-    init(bufferSize: UInt) {
+    init(bufferSize: Int) {
         if bufferSize == 1 {
             implementation = ReplayOne()
         }
         else {
-            rxFatalError("Only replay one is supported for now")
-            implementation = ReplayOne()
+            implementation = ReplayMany(bufferSize: bufferSize)
         }
     }
     
