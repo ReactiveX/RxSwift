@@ -75,9 +75,9 @@ class ObserveSingleOnObserver<ElementType> : ObserverClassType, Disposable {
                 
                 r = r >>! { error in
                     observer!.on(.Error(error))
+                } >>> {
+                    observer!.on(stopEventToForward)
                 }
-                
-                r = r >>> { observer!.on(stopEventToForward) }
                 
                 self.dispose()
                 
