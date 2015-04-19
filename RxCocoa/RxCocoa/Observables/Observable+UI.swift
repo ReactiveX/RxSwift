@@ -14,17 +14,9 @@ import RxSwift
 // In case data is fetched from server, stale data can be server first, and then updated with 
 // fresh data from server.
 
-public func sharedSubscriptionWithCachedResult<E>(source: Observable<E>)
+public func sharedWithCachedLastResult<E>(source: Observable<E>)
     -> Observable<E> {
-    return source >- multicast(Variable()) >- refCount
-}
-
-public func sharedSubscriptionWithCachedResult<E>
-    (initialValue: E)
-    -> (Observable<E> -> Observable<E>) {
-    return { source in
-        return source >- multicast(Variable(.Next(Box(initialValue)))) >- refCount
-    }
+    return source >- replay(1) >- refCount
 }
 
 // prefix with
