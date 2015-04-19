@@ -62,3 +62,26 @@ public func merge<E>
 
 // catch
 
+public func catchOrDie<E>
+    (handler: (ErrorType) -> Result<Observable<E>>)
+    -> (Observable<E> -> Observable<E>) {
+    return { source in
+        return Catch(source: source, handler: handler)
+    }
+}
+
+public func catch<E>
+    (handler: (ErrorType) -> Observable<E>)
+    -> (Observable<E> -> Observable<E>) {
+    return { source in
+        return Catch(source: source, handler: { success(handler($0)) })
+    }
+}
+
+// When error happens `error` will be forwarded as a next `Result<E>` value
+// and sequence will be completed
+public func catch<E>
+    (source: Observable<E>)
+    -> Observable<Result<E>> {
+    return CatchToResult(source: source)
+}

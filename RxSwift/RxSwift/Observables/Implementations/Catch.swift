@@ -103,3 +103,51 @@ class Catch<Element> : Producer<Element> {
         return sink.run()
     }
 }
+
+class CatchToResult_<ElementType> : Sink<Result<ElementType>>, ObserverClassType {
+    typealias Element = ElementType
+    typealias Parent = CatchToResult<ElementType>
+    
+    let parent: Parent
+    
+    init(parent: Parent, observer: ObserverOf<Result<ElementType>>, cancel: Disposable) {
+        self.parent = parent
+        super.init(observer: observer, cancel: cancel)
+    }
+    
+    func run() -> Result<Disposable> {
+        return parent.source.subscribeSafe(ObserverOf(self))
+    }
+    
+    func on(event: Event<Element>) -> Result<Void> {
+        switch event {
+        case .Next(let boxedValue):
+            let value = boxedValue.value
+            return self.observer.on(.Next(Box(success(value))))
+        case .Completed:
+            let result = self.observer.on(.Completed)
+            self.dispose()
+            return result
+        case .Error(let error):
+            let result = self.observer.on(.Next(Box(.Error(error)))) >>> {
+                self.observer.on(.Completed)
+            }
+            self.dispose()
+            return result
+        }
+    }
+}
+
+class CatchToResult<Element> : Producer<Result<Element>> {
+    let source: Observable<Element>
+    
+    init(source: Observable<Element>) {
+        self.source = source
+    }
+    
+    override func run(observer: ObserverOf<Result<Element>>, cancel: Disposable, setSink: (Disposable) -> Void) -> Result<Disposable> {
+        let sink = CatchToResult_(parent: self, observer: observer, cancel: cancel)
+        setSink(sink)
+        return sink.run()
+    }
+}
