@@ -9,6 +9,10 @@
 import Foundation
 
 public class ConnectableObservableType<Element>: Observable<Element> {
+    public override init() {
+        
+    }
+    
     public func connect() -> Result<Disposable> {
         return abstractMethod()
     }

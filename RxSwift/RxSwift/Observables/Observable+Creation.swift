@@ -50,3 +50,23 @@ public func returnElement<E>(values: E ...) -> Observable<E> {
         return (result >>> { observer.on(.Completed) }) >>> { (DefaultDisposable()) }
     }
 }
+
+// fail
+
+public func failWith<E>(error: ErrorType) -> Observable<E> {
+    return AnonymousObservable { observer in
+        return observer.on(.Error(error)) >>> { DefaultDisposable() }
+    }
+}
+
+// defer
+
+public func deferOrDie<E>(observableFactory: () -> Result<Observable<E>>)
+    -> Observable<E> {
+    return Defer(observableFactory: observableFactory)
+}
+
+public func defer<E>(observableFactory: () -> Observable<E>)
+    -> Observable<E> {
+    return Defer(observableFactory: { success(observableFactory()) })
+}

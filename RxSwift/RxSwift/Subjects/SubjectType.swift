@@ -11,6 +11,10 @@ import Foundation
 public class SubjectType<SourceType, ResultType> : Observable<ResultType>, ObserverClassType {
     typealias Element = SourceType
     
+    public override init() {
+        
+    }
+    
     public func on(x: Event<Element>) -> Result<Void> {
         return abstractMethod()
     }

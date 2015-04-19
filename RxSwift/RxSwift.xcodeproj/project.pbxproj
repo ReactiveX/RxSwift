@@ -104,6 +104,9 @@
 		C8A56BBF1AD7436D00B4673B /* Observable+TimeTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A56BAA1AD7436D00B4673B /* Observable+TimeTest.swift */; };
 		C8A56BC01AD7436D00B4673B /* QueueTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A56BAB1AD7436D00B4673B /* QueueTests.swift */; };
 		C8A56BC11AD7436D00B4673B /* RxTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A56BAC1AD7436D00B4673B /* RxTest.swift */; };
+		C8D559271AE2FBDC00DE7BDB /* MySubject.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D559261AE2FBDC00DE7BDB /* MySubject.swift */; };
+		C8D559291AE31D4F00DE7BDB /* ConnectableObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D559281AE31D4F00DE7BDB /* ConnectableObservable.swift */; };
+		C8D5592B1AE32FBB00DE7BDB /* Defer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D5592A1AE32FBB00DE7BDB /* Defer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -217,6 +220,9 @@
 		C8A56BAA1AD7436D00B4673B /* Observable+TimeTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Observable+TimeTest.swift"; sourceTree = "<group>"; };
 		C8A56BAB1AD7436D00B4673B /* QueueTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueueTests.swift; sourceTree = "<group>"; };
 		C8A56BAC1AD7436D00B4673B /* RxTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxTest.swift; sourceTree = "<group>"; };
+		C8D559261AE2FBDC00DE7BDB /* MySubject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MySubject.swift; sourceTree = "<group>"; };
+		C8D559281AE31D4F00DE7BDB /* ConnectableObservable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectableObservable.swift; sourceTree = "<group>"; };
+		C8D5592A1AE32FBB00DE7BDB /* Defer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Defer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -388,6 +394,7 @@
 				C8A56B291AD7435800B4673B /* Variable.swift */,
 				C8A56B2A1AD7435800B4673B /* WhereObservable.swift */,
 				C84F67031ADDC16200EB0CB6 /* ReplaySubject.swift */,
+				C8D5592A1AE32FBB00DE7BDB /* Defer.swift */,
 			);
 			path = Implementations;
 			sourceTree = "<group>";
@@ -449,6 +456,8 @@
 				C8A56B991AD7436D00B4673B /* Observable.Extensions.swift */,
 				C8A56B9A1AD7436D00B4673B /* TestObservable.swift */,
 				C8A56B9B1AD7436D00B4673B /* TestObserver.swift */,
+				C8D559261AE2FBDC00DE7BDB /* MySubject.swift */,
+				C8D559281AE31D4F00DE7BDB /* ConnectableObservable.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -593,6 +602,7 @@
 				C8A56B861AD7435900B4673B /* SafeObserver.swift in Sources */,
 				C8A56B541AD7435900B4673B /* CompositeDisposable.swift in Sources */,
 				C8A56B771AD7435900B4673B /* Observable+Binding.swift in Sources */,
+				C8D5592B1AE32FBB00DE7BDB /* Defer.swift in Sources */,
 				C8A56B761AD7435900B4673B /* Observable+Aggregate.swift in Sources */,
 				C8A56B921AD7435900B4673B /* ConnectableObservableType.swift in Sources */,
 				C8A56B7B1AD7435900B4673B /* Observable+Single.swift in Sources */,
@@ -668,6 +678,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C8A56BB11AD7436D00B4673B /* TestObservable.swift in Sources */,
+				C8D559291AE31D4F00DE7BDB /* ConnectableObservable.swift in Sources */,
 				C8A56BBF1AD7436D00B4673B /* Observable+TimeTest.swift in Sources */,
 				C8A56BAE1AD7436D00B4673B /* HotObservable.swift in Sources */,
 				C8A56BB01AD7436D00B4673B /* Observable.Extensions.swift in Sources */,
@@ -683,6 +694,7 @@
 				C8A56BB41AD7436D00B4673B /* TestScheduler.swift in Sources */,
 				C8A56BB31AD7436D00B4673B /* Recorded.swift in Sources */,
 				C8A56BBB1AD7436D00B4673B /* Observable+AggregateTest.swift in Sources */,
+				C8D559271AE2FBDC00DE7BDB /* MySubject.swift in Sources */,
 				C8A56BB21AD7436D00B4673B /* TestObserver.swift in Sources */,
 				C8A56BC11AD7436D00B4673B /* RxTest.swift in Sources */,
 				C8A56BB81AD7436D00B4673B /* AssumptionsTest.swift in Sources */,

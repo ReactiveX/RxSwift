@@ -28,6 +28,7 @@ class Subscription<Element> : Disposable {
     func dispose() {
         lock.performLocked {
             if let observer = self.observer {
+                self.observer = nil
                 self.subject.unsubscribe(self.key)
             }
         }
@@ -59,6 +60,7 @@ public class Subject<Element> : SubjectType<Element, Element>, Disposable {
     public func dispose() {
         self.lock.performLocked {
             state.disposed = true
+            state.observers.removeAll()
         }
     }
     
@@ -125,10 +127,7 @@ public class Subject<Element> : SubjectType<Element, Element>, Disposable {
 
     func unsubscribe(key: KeyType) {
         self.lock.performLocked {
-            let observer = state.observers.removeKey(key)
-            if observer == nil {
-                removingObserverFailed()
-            }
+            _ = state.observers.removeKey(key)
         }
     }
 }

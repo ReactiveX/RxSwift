@@ -161,10 +161,7 @@ class ReplayBufferBase<Element> : ReplaySubjectImplementation<Element> {
                 return
             }
             
-            let observer = self.state.observers.removeKey(key)
-            if observer == nil {
-                removingObserverFailed()
-            }
+            _ = self.state.observers.removeKey(key)
         }
     }
 

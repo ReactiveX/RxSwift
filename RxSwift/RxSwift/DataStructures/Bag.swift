@@ -18,7 +18,7 @@ public struct Bag<T> : SequenceType, Printable {
     public typealias KeyType = Int
     
     private var map: [KeyType: T] = Dictionary(minimumCapacity: 5)
-    private var nextKey = KeyType.min
+    private var nextKey: KeyType = 0
 
     public init() {
     }

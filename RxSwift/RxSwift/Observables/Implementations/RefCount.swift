@@ -20,7 +20,7 @@ class RefCount_<Element> : Sink<Element>, ObserverClassType {
     func run() -> Result<Disposable> {
         let subscriptionResult: Result<Disposable> = self.parent.source.subscribeSafe(ObserverOf(self))
         
-        return subscriptionResult >>> { Void -> Result<Void> in
+        return subscriptionResult >>> { () -> Result<Void> in
             let state = self.parent.state
             
             return self.parent.lock.calculateLocked {
