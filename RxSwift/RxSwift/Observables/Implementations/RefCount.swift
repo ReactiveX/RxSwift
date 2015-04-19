@@ -20,11 +20,7 @@ class RefCount_<Element> : Sink<Element>, ObserverClassType {
     func run() -> Result<Disposable> {
         let subscriptionResult: Result<Disposable> = self.parent.source.subscribeSafe(ObserverOf(self))
         
-        if let subscriptionResultError = subscriptionResult.error {
-            return .Error(subscriptionResultError)
-        }
-        
-        let connectResult: Result<Void> = subscriptionResult >>> {
+        return subscriptionResult >>> { Void -> Result<Void> in
             let state = self.parent.state
             
             return self.parent.lock.calculateLocked {
@@ -33,6 +29,9 @@ class RefCount_<Element> : Sink<Element>, ObserverClassType {
                         self.parent.state.count = 1
                         self.parent.state.connectableSubscription = disposable
                         return SuccessResult
+                    } >>! { e in
+                        (*subscriptionResult).dispose()
+                        return .Error(e)
                     }
                 }
                 else {
@@ -40,30 +39,25 @@ class RefCount_<Element> : Sink<Element>, ObserverClassType {
                     return SuccessResult
                 }
             }
+        } >>> {
+            return success(AnonymousDisposable {
+                (*subscriptionResult).dispose()
+                self.parent.lock.performLocked {
+                    let state = self.parent.state
+                    if state.count == 1 {
+                        state.connectableSubscription!.dispose()
+                        self.parent.state.count = 0
+                        self.parent.state.connectableSubscription = nil
+                    }
+                    else if state.count > 1 {
+                        self.parent.state.count = state.count - 1
+                    }
+                    else {
+                        rxFatalError("Something went wrong with RefCount disposing mechanism")
+                    }
+                }
+            })
         }
-        
-        if let connectResultError = connectResult.error {
-            // cleanup registration
-            (*subscriptionResult).dispose()
-            return .Error(connectResultError)
-        }
-        
-        return success(AnonymousDisposable {
-            self.parent.lock.performLocked {
-                let state = self.parent.state
-                if state.count == 1 {
-                    state.connectableSubscription!.dispose()
-                    self.parent.state.count = 0
-                    self.parent.state.connectableSubscription = nil
-                }
-                else if state.count > 1 {
-                    self.parent.state.count = state.count - 1
-                }
-                else {
-                    rxFatalError("Something went wrong with RefCount disposing mechanism")
-                }
-            }
-        })
     }
 
     func on(event: Event<Element>) -> Result<Void> {
@@ -81,7 +75,10 @@ class RefCount_<Element> : Sink<Element>, ObserverClassType {
 }
 
 class RefCount<Element>: Producer<Element> {
-    typealias State = (count: Int, connectableSubscription: Disposable?)
+    typealias State = (
+        count: Int,
+        connectableSubscription: Disposable?
+    )
     
     var lock = Lock()
     
