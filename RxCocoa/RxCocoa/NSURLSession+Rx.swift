@@ -61,7 +61,7 @@ func convertResponseToString(data: NSData!, response: NSURLResponse!, error: NSE
 }
 
 extension NSURLSession {
-    public func rx_observableRequest(request: NSURLRequest) -> Observable<(NSData!, NSURLResponse!, NSError!)> {
+    public func rx_observableRequest(request: NSURLRequest) -> Observable<(NSData!, NSURLResponse!)> {
         return create { observer in
             
             // smart compiler should be able to optimize this out
@@ -79,8 +79,16 @@ extension NSURLSession {
                     println(convertResponseToString(data, response, error, interval))
                 }
                 
-                handleObserverResult(observer.on(.Next(Box(data, response, error))))
-                handleObserverResult(observer.on(.Completed))
+                if let error = error {
+                    observer.on(.Error(error))
+                }
+                else {
+                    observer.on(.Next(Box(data ?? nil, response ?? nil))) >>> {
+                        observer.on(.Completed)
+                    } >>! { e in
+                        observer.on(.Error(e))
+                    }
+                }
             }
             
             task.resume()
@@ -91,12 +99,8 @@ extension NSURLSession {
         }
     }
     
-    public func rx_observableDataRequest(request: NSURLRequest) -> Observable<Result<NSData>> {
-        return rx_observableRequest(request) >- map { (data, response, e) -> Result<NSData> in
-            if e != nil {
-                return .Error(e)
-            }
-            
+    public func rx_observableDataRequest(request: NSURLRequest) -> Observable<NSData> {
+        return rx_observableRequest(request) >- mapOrDie { (data, response) -> Result<NSData> in
             if let response = response as? NSHTTPURLResponse {
                 if 200 ..< 300 ~= response.statusCode {
                     return success(data!)
@@ -113,23 +117,21 @@ extension NSURLSession {
         }
     }
     
-    public func rx_observableJSONWithRequest(request: NSURLRequest) -> Observable<Result<AnyObject!>> {
-        return rx_observableDataRequest(request) >- map { (maybeData) -> Result<AnyObject!> in
-            maybeData >== { data in
-                var serializationError: NSError?
-                let result: AnyObject? = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.allZeros, error: &serializationError)
-                
-                if let result: AnyObject = result {
-                    return success(result)
-                }
-                else {
-                    return .Error(serializationError!)
-                }
+    public func rx_observableJSONWithRequest(request: NSURLRequest) -> Observable<AnyObject!> {
+        return rx_observableDataRequest(request) >- mapOrDie { (data) -> Result<AnyObject!> in
+            var serializationError: NSError?
+            let result: AnyObject? = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.allZeros, error: &serializationError)
+            
+            if let result: AnyObject = result {
+                return success(result)
+            }
+            else {
+                return .Error(serializationError!)
             }
         }
     }
     
-    public func rx_observableJSONWithURL(URL: NSURL) -> Observable<Result<AnyObject!>> {
+    public func rx_observableJSONWithURL(URL: NSURL) -> Observable<AnyObject!> {
         return rx_observableJSONWithRequest(NSURLRequest(URL: URL))
     }
 }

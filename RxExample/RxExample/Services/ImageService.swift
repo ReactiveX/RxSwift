@@ -38,53 +38,47 @@ class DefaultImageService: ImageService {
         self.imageCache.countLimit = 20
     }
     
-    func decodeImage(imageData: Observable<Result<NSData>>) -> Observable<Result<UIImage>> {
-        return imageData >- observeSingleOn($.imageDecodeScheduler) >- map { maybeData in
-            return maybeData >== { data in
-                let maybeImage = UIImage(data: data)
-                
-                if maybeImage == nil {
-                    // some error
-                    return .Error(apiError("Decoding image error"))
-                }
-                
-                let image = maybeImage!
-                
-                return success(image)
+    func decodeImage(imageData: Observable<NSData>) -> Observable<UIImage> {
+        return imageData >- observeSingleOn($.imageDecodeScheduler) >- mapOrDie { data in
+            let maybeImage = UIImage(data: data)
+            
+            if maybeImage == nil {
+                // some error
+                return .Error(apiError("Decoding image error"))
             }
+            
+            let image = maybeImage!
+            
+            return success(image)
         } >- observeSingleOn($.callbackScheduler)
     }
     
     func imageFromURL(URL: NSURL) -> Observable<Result<UIImage>> {
         let maybeImage = self.imageDataCache.objectForKey(URL) as? UIImage
         
-        let decodedImage: Observable<Result<UIImage>>
+        let decodedImage: Observable<UIImage>
         
         // best case scenario, it's already decoded an in memory
         if let image = maybeImage {
-            decodedImage = returnElement(success(image))
+            decodedImage = returnElement(image)
         }
         else {
             let cachedData = self.imageDataCache.objectForKey(URL) as? NSData
             
             // does image data cache contain anything
             if let cachedData = cachedData {
-                decodedImage = returnElement(success(cachedData)) >- decodeImage
+                decodedImage = returnElement(cachedData) >- decodeImage
             }
             else {
                 // fetch from network
-                decodedImage = $.URLSession.rx_observableDataRequest(NSURLRequest(URL: URL)) >- doOnNext { maybeData in
-                    _ = maybeData >== { data in
-                        self.imageDataCache.setObject(data, forKey: URL)
-                    }
+                decodedImage = $.URLSession.rx_observableDataRequest(NSURLRequest(URL: URL)) >- doOnNext { data in
+                    self.imageDataCache.setObject(data, forKey: URL)
                 } >- decodeImage
             }
         }
         
-        return decodedImage >- doOnNext { maybeImage in
-            if let image = maybeImage.value {
-                self.imageCache.setObject(image, forKey: URL)
-            }
-        }
+        return decodedImage >- doOnNext { image in
+            self.imageCache.setObject(image, forKey: URL)
+        } >- catchToResult
     }
 }
