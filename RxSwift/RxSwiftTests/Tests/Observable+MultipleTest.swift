@@ -20,6 +20,134 @@ class ObservableMultipleTest : RxTest {
     }
 }
 
+// catch
+extension ObservableMultipleTest {
+    func testCatch_ErrorSpecific_Caught() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let o1 = scheduler.createHotObservable([
+            next(150, 1),
+            next(210, 2),
+            next(220, 3),
+            error(230, testError)
+        ])
+        
+        let o2 = scheduler.createHotObservable([
+            next(240, 4),
+            completed(250)
+        ])
+        
+        var handlerCalled: Int?
+        
+        let res = scheduler.start {
+            o1 >- catch { e in
+                handlerCalled = scheduler.clock
+                return o2
+            }
+        }
+        
+        XCTAssertEqual(230, handlerCalled!)
+        
+        XCTAssertEqual(res.messages, [
+            next(210, 2),
+            next(220, 3),
+            next(240, 4),
+            completed(250)
+        ])
+        
+        XCTAssertEqual(o1.subscriptions, [
+            Subscription(200, 230)
+        ])
+        
+        XCTAssertEqual(o2.subscriptions, [
+            Subscription(230, 250)
+        ])
+    }
+    
+    func testCatch_HandlerThrows() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let o1 = scheduler.createHotObservable([
+            next(150, 1),
+            next(210, 2),
+            next(220, 3),
+            error(230, testError)
+        ])
+        
+        var handlerCalled: Int?
+        
+        let res = scheduler.start {
+            o1 >- catchOrDie { e in
+                handlerCalled = scheduler.clock
+                return .Error(testError1)
+            }
+        }
+        
+        XCTAssertEqual(230, handlerCalled!)
+        
+        XCTAssertEqual(res.messages, [
+            next(210, 2),
+            next(220, 3),
+            error(230, testError1),
+        ])
+        
+        XCTAssertEqual(o1.subscriptions, [
+            Subscription(200, 230)
+        ])
+    }
+    
+    func testCatchToResult_ErrorHappened() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createHotObservable([
+            next(150, 1),
+            next(210, 2),
+            next(220, 3),
+            error(230, testError)
+        ])
+        
+        let safeSequence: Observable<Result<Int>> = xs >- catchToResult
+        
+        let res = scheduler.start { () -> Observable<Result<Int>> in safeSequence }
+        
+        XCTAssertEqual(res.messages, [
+            next(210, success(2)),
+            next(220, success(3)),
+            next(230, .Error(testError)),
+            completed(230)
+        ])
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 230)
+        ])
+    }
+    
+    func testCatchToResult_CompletedWithoutError() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createHotObservable([
+            next(150, 1),
+            next(210, 2),
+            next(220, 3),
+            completed(230)
+            ])
+        
+        let safeSequence: Observable<Result<Int>> = xs >- catchToResult
+        
+        let res = scheduler.start { () -> Observable<Result<Int>> in safeSequence }
+        
+        XCTAssertEqual(res.messages, [
+            next(210, success(2)),
+            next(220, success(3)),
+            completed(230)
+            ])
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 230)
+            ])
+    }
+}
+
 // switch
 extension ObservableMultipleTest {
 

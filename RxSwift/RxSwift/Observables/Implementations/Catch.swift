@@ -19,18 +19,18 @@ class Catch_Impl<ElementType> : ObserverClassType {
     }
     
     func on(event: Event<ElementType>) -> Result<Void> {
+        let result = parent.observer.on(event)
+        
         switch event {
         case .Next:
-            return parent.on(event)
+            break
         case .Error:
-            let result = parent.on(event)
             parent.dispose()
-            return result
         case .Completed:
-            let result = parent.on(event)
             parent.dispose()
-            return result
         }
+        
+        return result
     }
 }
 

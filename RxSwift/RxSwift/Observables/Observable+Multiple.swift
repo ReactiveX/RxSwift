@@ -80,7 +80,7 @@ public func catch<E>
 
 // When error happens `error` will be forwarded as a next `Result<E>` value
 // and sequence will be completed
-public func catch<E>
+public func catchToResult<E>
     (source: Observable<E>)
     -> Observable<Result<E>> {
     return CatchToResult(source: source)
