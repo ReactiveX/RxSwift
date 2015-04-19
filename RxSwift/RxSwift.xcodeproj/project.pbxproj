@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		C84F67041ADDC16200EB0CB6 /* ReplaySubject.swift in Sources */ = {isa = PBXBuildFile; fileRef = C84F67031ADDC16200EB0CB6 /* ReplaySubject.swift */; };
 		C84F67061ADE63F600EB0CB6 /* Observable+BindingTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C84F67051ADE63F600EB0CB6 /* Observable+BindingTest.swift */; };
+		C86AE05C1AE3F0ED00C8A2A6 /* Catch.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86AE05B1AE3F0ED00C8A2A6 /* Catch.swift */; };
 		C8A56ADD1AD7424700B4673B /* RxSwift.h in Headers */ = {isa = PBXBuildFile; fileRef = C8A56ADC1AD7424700B4673B /* RxSwift.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C8A56AE31AD7424700B4673B /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8A56AD71AD7424700B4673B /* RxSwift.framework */; };
 		C8A56B4C1AD7435900B4673B /* AnyObject+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A56AFC1AD7435800B4673B /* AnyObject+Rx.swift */; };
@@ -122,6 +123,7 @@
 /* Begin PBXFileReference section */
 		C84F67031ADDC16200EB0CB6 /* ReplaySubject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReplaySubject.swift; sourceTree = "<group>"; };
 		C84F67051ADE63F600EB0CB6 /* Observable+BindingTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Observable+BindingTest.swift"; sourceTree = "<group>"; };
+		C86AE05B1AE3F0ED00C8A2A6 /* Catch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Catch.swift; sourceTree = "<group>"; };
 		C8A56AD71AD7424700B4673B /* RxSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8A56ADB1AD7424700B4673B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C8A56ADC1AD7424700B4673B /* RxSwift.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RxSwift.h; sourceTree = "<group>"; };
@@ -372,10 +374,12 @@
 				C8A56B131AD7435800B4673B /* Aggregate.swift */,
 				C8A56B141AD7435800B4673B /* AnonymousObservable.swift */,
 				C8A56B151AD7435800B4673B /* AsObservable.swift */,
+				C86AE05B1AE3F0ED00C8A2A6 /* Catch.swift */,
 				C8A56B161AD7435800B4673B /* CombineLatest.swift */,
 				C8A56B171AD7435800B4673B /* Concat.swift */,
 				C8A56B181AD7435800B4673B /* ConcatSink.swift */,
 				C8A56B191AD7435800B4673B /* ConnectableObservable.swift */,
+				C8D5592A1AE32FBB00DE7BDB /* Defer.swift */,
 				C8A56B1A1AD7435800B4673B /* DistinctUntilChanged.swift */,
 				C8A56B1B1AD7435800B4673B /* Do.swift */,
 				C8A56B1C1AD7435800B4673B /* Merge.swift */,
@@ -384,6 +388,7 @@
 				C8A56B1F1AD7435800B4673B /* ObserveSingleOn.swift */,
 				C8A56B201AD7435800B4673B /* Producer.swift */,
 				C8A56B211AD7435800B4673B /* RefCount.swift */,
+				C84F67031ADDC16200EB0CB6 /* ReplaySubject.swift */,
 				C8A56B221AD7435800B4673B /* ScheduledObserver.swift */,
 				C8A56B231AD7435800B4673B /* Select.swift */,
 				C8A56B241AD7435800B4673B /* Sink.swift */,
@@ -393,8 +398,6 @@
 				C8A56B281AD7435800B4673B /* Throttle.swift */,
 				C8A56B291AD7435800B4673B /* Variable.swift */,
 				C8A56B2A1AD7435800B4673B /* WhereObservable.swift */,
-				C84F67031ADDC16200EB0CB6 /* ReplaySubject.swift */,
-				C8D5592A1AE32FBB00DE7BDB /* Defer.swift */,
 			);
 			path = Implementations;
 			sourceTree = "<group>";
@@ -600,6 +603,7 @@
 			files = (
 				C8A56B631AD7435900B4673B /* ConcatSink.swift in Sources */,
 				C8A56B861AD7435900B4673B /* SafeObserver.swift in Sources */,
+				C86AE05C1AE3F0ED00C8A2A6 /* Catch.swift in Sources */,
 				C8A56B541AD7435900B4673B /* CompositeDisposable.swift in Sources */,
 				C8A56B771AD7435900B4673B /* Observable+Binding.swift in Sources */,
 				C8D5592B1AE32FBB00DE7BDB /* Defer.swift in Sources */,

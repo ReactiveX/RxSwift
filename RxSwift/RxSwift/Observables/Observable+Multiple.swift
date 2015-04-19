@@ -59,3 +59,6 @@ public func merge<E>
         return Merge(sources: sources, maxConcurrent: maxConcurrent)
     }
 }
+
+// catch
+
