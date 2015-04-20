@@ -44,7 +44,7 @@ class DefaultWikipediaAPI: WikipediaAPI {
         let urlContent = "http://en.wikipedia.org/w/api.php?action=opensearch&search=\(escapedQuery)"
         let url = NSURL(string: urlContent)!
             
-        return $.URLSession.rx_observableJSONWithURL(url) >- observeSingleOn($.backgroundScheduler) >- mapOrDie { json in
+        return $.URLSession.rx_JSONWithURL(url) >- observeSingleOn($.backgroundScheduler) >- mapOrDie { json in
             return castOrFail(json) >== { (json: [AnyObject]) in
                 return WikipediaSearchResult.parseJSON(json)
             }
@@ -60,7 +60,7 @@ class DefaultWikipediaAPI: WikipediaAPI {
             return returnElement(.Error(apiError("Can't create url")))
         }
         
-        return $.URLSession.rx_observableJSONWithURL(url!) >- mapOrDie { jsonResult in
+        return $.URLSession.rx_JSONWithURL(url!) >- mapOrDie { jsonResult in
             return castOrFail(jsonResult) >== { (json: NSDictionary) in
                 return WikipediaPage.parseJSON(json)
             }

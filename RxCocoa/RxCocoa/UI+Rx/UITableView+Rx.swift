@@ -164,7 +164,7 @@ extension UITableView {
             return self.rx_subscribeRowsTo(dataSource)(source: source)
     }
     
-    public func rx_observableRowTap() -> Observable<(UITableView, Int)> {
+    public func rx_rowTap() -> Observable<(UITableView, Int)> {
         _ = rx_checkTableViewDelegate()
         
         return AnonymousObservable { observer in
@@ -192,9 +192,9 @@ extension UITableView {
         }
     }
     
-    public func rx_observableElementTap<E>() -> Observable<E> {
+    public func rx_elementTap<E>() -> Observable<E> {
         
-        return rx_observableRowTap() >- map { (tableView, rowIndex) -> E in
+        return rx_rowTap() >- map { (tableView, rowIndex) -> E in
             let maybeDataSource: TableViewDataSource? = self.rx_getTableViewDataSource()
             
             if maybeDataSource == nil {

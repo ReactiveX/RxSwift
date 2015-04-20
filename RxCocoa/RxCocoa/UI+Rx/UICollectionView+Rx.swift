@@ -165,7 +165,7 @@ extension UICollectionView {
     }
     
     
-    public func rx_observableItemTap() -> Observable<(UICollectionView, Int)> {
+    public func rx_itemTap() -> Observable<(UICollectionView, Int)> {
         _ = rx_checkCollectionViewDelegate()
         
         return AnonymousObservable { observer in
@@ -193,10 +193,10 @@ extension UICollectionView {
         }
     }
     
-    public func rx_observableElementTap<E>() -> Observable<E> {
+    public func rx_elementTap<E>() -> Observable<E> {
         
-        return rx_observableItemTap() >- map { (tableView, rowIndex) -> E in
-            let maybeDataSource: CollectionViewDataSource? = self.rx_getCollectionViewDataSource()
+        return rx_itemTap() >- map { (tableView, rowIndex) -> E in
+            let maybeDataSource: CollectionViewDataSource? = self.rx_collectionViewDataSource()
             
             if maybeDataSource == nil {
                 rxFatalError("To use element tap table view needs to use table view data source. You can still use `rx_observableItemTap`.")
@@ -210,7 +210,7 @@ extension UICollectionView {
     
     // private methods
     
-    private func rx_getCollectionViewDataSource() -> CollectionViewDataSource? {
+    private func rx_collectionViewDataSource() -> CollectionViewDataSource? {
         MainScheduler.ensureExecutingOnScheduler()
         
         if self.dataSource == nil {

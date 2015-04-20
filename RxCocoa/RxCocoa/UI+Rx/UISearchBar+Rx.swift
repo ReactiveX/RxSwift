@@ -40,7 +40,7 @@ class SearchBarDelegate: NSObject, UISearchBarDelegate {
 
 extension UISearchBar {
     
-    public func rx_observableSearchText() -> Observable<String> {
+    public func rx_searchText() -> Observable<String> {
         
         rx_checkSearchBarDelegate()
         

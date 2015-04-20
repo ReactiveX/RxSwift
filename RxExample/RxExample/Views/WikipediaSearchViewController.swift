@@ -64,8 +64,8 @@ public class WikipediaSearchViewController: UIViewController {
                 backgroundWorkScheduler: backgroundScheduler,
                 wireframe: DefaultWireframe()
             ),
-            searchText: searchBar.rx_observableSearchText(),
-            selectedResult: resultsTableView.rx_observableElementTap()
+            searchText: searchBar.rx_searchText(),
+            selectedResult: resultsTableView.rx_elementTap()
         )
         
         // map table view rows
@@ -80,7 +80,7 @@ public class WikipediaSearchViewController: UIViewController {
 
         // dismiss keyboard on scroll
         // {
-        resultsTableView.rx_observableContentOffset() >- subscribeNext { _ in
+        resultsTableView.rx_contentOffset() >- subscribeNext { _ in
             if searchBar.isFirstResponder() {
                 _ = searchBar.resignFirstResponder()
             }

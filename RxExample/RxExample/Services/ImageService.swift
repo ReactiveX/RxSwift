@@ -71,7 +71,7 @@ class DefaultImageService: ImageService {
             }
             else {
                 // fetch from network
-                decodedImage = $.URLSession.rx_observableDataRequest(NSURLRequest(URL: URL)) >- doOnNext { data in
+                decodedImage = $.URLSession.rx_dataRequest(NSURLRequest(URL: URL)) >- doOnNext { data in
                     self.imageDataCache.setObject(data, forKey: URL)
                 } >- decodeImage
             }

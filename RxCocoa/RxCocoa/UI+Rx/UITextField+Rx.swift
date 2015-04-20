@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 
 extension UITextField {
-    public func rx_observableText() -> Observable<String> {
+    public func rx_text() -> Observable<String> {
         return AnonymousObservable { subscriber in
             let observer = ControlTarget(control: self, controlEvents: UIControlEvents.EditingChanged) { control in
                 let text: String = (control as! UITextField).text
