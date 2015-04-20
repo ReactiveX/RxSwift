@@ -13,20 +13,20 @@
 		C83367231AD029AE00C668A7 /* Example.swift in Sources */ = {isa = PBXBuildFile; fileRef = C833670F1AD029AE00C668A7 /* Example.swift */; };
 		C83367241AD029AE00C668A7 /* HtmlParsing.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83367111AD029AE00C668A7 /* HtmlParsing.swift */; };
 		C83367251AD029AE00C668A7 /* ImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83367121AD029AE00C668A7 /* ImageService.swift */; };
-		C83367261AD029AE00C668A7 /* WikipediaAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83367141AD029AE00C668A7 /* WikipediaAPI.swift */; };
-		C83367271AD029AE00C668A7 /* WikipediaPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83367151AD029AE00C668A7 /* WikipediaPage.swift */; };
-		C83367281AD029AE00C668A7 /* WikipediaSearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83367161AD029AE00C668A7 /* WikipediaSearchResult.swift */; };
-		C833672A1AD029AE00C668A7 /* SearchResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83367191AD029AE00C668A7 /* SearchResultViewModel.swift */; };
-		C833672B1AD029AE00C668A7 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C833671A1AD029AE00C668A7 /* SearchViewModel.swift */; };
-		C833672C1AD029AE00C668A7 /* CollectionViewImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C833671C1AD029AE00C668A7 /* CollectionViewImageCell.swift */; };
 		C833672D1AD029AE00C668A7 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = C833671D1AD029AE00C668A7 /* LaunchScreen.xib */; };
 		C833672E1AD029AE00C668A7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C833671E1AD029AE00C668A7 /* Main.storyboard */; };
-		C833672F1AD029AE00C668A7 /* WikipediaSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C833671F1AD029AE00C668A7 /* WikipediaSearchViewController.swift */; };
-		C83367301AD029AE00C668A7 /* WikipediaSearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83367201AD029AE00C668A7 /* WikipediaSearchCell.swift */; };
 		C83367311AD029AE00C668A7 /* Wireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83367211AD029AE00C668A7 /* Wireframe.swift */; };
+		C86E2F3E1AE5A0CA00C31024 /* SearchResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86E2F321AE5A0CA00C31024 /* SearchResultViewModel.swift */; };
+		C86E2F3F1AE5A0CA00C31024 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86E2F331AE5A0CA00C31024 /* SearchViewModel.swift */; };
+		C86E2F401AE5A0CA00C31024 /* CollectionViewImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86E2F351AE5A0CA00C31024 /* CollectionViewImageCell.swift */; };
+		C86E2F411AE5A0CA00C31024 /* WikipediaImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C86E2F361AE5A0CA00C31024 /* WikipediaImageCell.xib */; };
+		C86E2F421AE5A0CA00C31024 /* WikipediaSearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86E2F371AE5A0CA00C31024 /* WikipediaSearchCell.swift */; };
+		C86E2F431AE5A0CA00C31024 /* WikipediaSearchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C86E2F381AE5A0CA00C31024 /* WikipediaSearchCell.xib */; };
+		C86E2F441AE5A0CA00C31024 /* WikipediaSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86E2F391AE5A0CA00C31024 /* WikipediaSearchViewController.swift */; };
+		C86E2F451AE5A0CA00C31024 /* WikipediaAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86E2F3B1AE5A0CA00C31024 /* WikipediaAPI.swift */; };
+		C86E2F461AE5A0CA00C31024 /* WikipediaPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86E2F3C1AE5A0CA00C31024 /* WikipediaPage.swift */; };
+		C86E2F471AE5A0CA00C31024 /* WikipediaSearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86E2F3D1AE5A0CA00C31024 /* WikipediaSearchResult.swift */; };
 		C8813DAA1AD2EBF30072A050 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8813DA91AD2EBF30072A050 /* RootViewController.swift */; };
-		C8813DAE1AD2F5A40072A050 /* WikipediaSearchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C8813DAD1AD2F5A40072A050 /* WikipediaSearchCell.xib */; };
-		C8813DB01AD2F8800072A050 /* WikipediaImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C8813DAF1AD2F8800072A050 /* WikipediaImageCell.xib */; };
 		C8A56BCB1AD744E600B4673B /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8A56BCA1AD744E600B4673B /* RxSwift.framework */; };
 		C8A56BCC1AD744E600B4673B /* RxSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C8A56BCA1AD744E600B4673B /* RxSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C8F57F441AD02DBE006B8702 /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8F57F431AD02DBE006B8702 /* RxCocoa.framework */; };
@@ -69,20 +69,20 @@
 		C833670F1AD029AE00C668A7 /* Example.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Example.swift; sourceTree = "<group>"; };
 		C83367111AD029AE00C668A7 /* HtmlParsing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HtmlParsing.swift; sourceTree = "<group>"; };
 		C83367121AD029AE00C668A7 /* ImageService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageService.swift; sourceTree = "<group>"; };
-		C83367141AD029AE00C668A7 /* WikipediaAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WikipediaAPI.swift; sourceTree = "<group>"; };
-		C83367151AD029AE00C668A7 /* WikipediaPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WikipediaPage.swift; sourceTree = "<group>"; };
-		C83367161AD029AE00C668A7 /* WikipediaSearchResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WikipediaSearchResult.swift; sourceTree = "<group>"; };
-		C83367191AD029AE00C668A7 /* SearchResultViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultViewModel.swift; sourceTree = "<group>"; };
-		C833671A1AD029AE00C668A7 /* SearchViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
-		C833671C1AD029AE00C668A7 /* CollectionViewImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewImageCell.swift; sourceTree = "<group>"; };
 		C833671D1AD029AE00C668A7 /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
 		C833671E1AD029AE00C668A7 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
-		C833671F1AD029AE00C668A7 /* WikipediaSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WikipediaSearchViewController.swift; sourceTree = "<group>"; };
-		C83367201AD029AE00C668A7 /* WikipediaSearchCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WikipediaSearchCell.swift; sourceTree = "<group>"; };
 		C83367211AD029AE00C668A7 /* Wireframe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Wireframe.swift; sourceTree = "<group>"; };
+		C86E2F321AE5A0CA00C31024 /* SearchResultViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultViewModel.swift; sourceTree = "<group>"; };
+		C86E2F331AE5A0CA00C31024 /* SearchViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
+		C86E2F351AE5A0CA00C31024 /* CollectionViewImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewImageCell.swift; sourceTree = "<group>"; };
+		C86E2F361AE5A0CA00C31024 /* WikipediaImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WikipediaImageCell.xib; sourceTree = "<group>"; };
+		C86E2F371AE5A0CA00C31024 /* WikipediaSearchCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WikipediaSearchCell.swift; sourceTree = "<group>"; };
+		C86E2F381AE5A0CA00C31024 /* WikipediaSearchCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WikipediaSearchCell.xib; sourceTree = "<group>"; };
+		C86E2F391AE5A0CA00C31024 /* WikipediaSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WikipediaSearchViewController.swift; sourceTree = "<group>"; };
+		C86E2F3B1AE5A0CA00C31024 /* WikipediaAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WikipediaAPI.swift; sourceTree = "<group>"; };
+		C86E2F3C1AE5A0CA00C31024 /* WikipediaPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WikipediaPage.swift; sourceTree = "<group>"; };
+		C86E2F3D1AE5A0CA00C31024 /* WikipediaSearchResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WikipediaSearchResult.swift; sourceTree = "<group>"; };
 		C8813DA91AD2EBF30072A050 /* RootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
-		C8813DAD1AD2F5A40072A050 /* WikipediaSearchCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WikipediaSearchCell.xib; sourceTree = "<group>"; };
-		C8813DAF1AD2F8800072A050 /* WikipediaImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WikipediaImageCell.xib; sourceTree = "<group>"; };
 		C8A56BCA1AD744E600B4673B /* RxSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RxSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8F57F431AD02DBE006B8702 /* RxCocoa.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RxCocoa.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -130,10 +130,10 @@
 		C83366DF1AD0293800C668A7 /* RxExample */ = {
 			isa = PBXGroup;
 			children = (
+				C86E2F2E1AE5A0CA00C31024 /* Examples */,
 				C833670E1AD029AE00C668A7 /* AppDelegate.swift */,
 				C833670F1AD029AE00C668A7 /* Example.swift */,
 				C83367101AD029AE00C668A7 /* Services */,
-				C83367181AD029AE00C668A7 /* ViewModels */,
 				C833671B1AD029AE00C668A7 /* Views */,
 				C83367211AD029AE00C668A7 /* Wireframe.swift */,
 				C83366EC1AD0293800C668A7 /* Images.xcassets */,
@@ -172,41 +172,97 @@
 			children = (
 				C83367111AD029AE00C668A7 /* HtmlParsing.swift */,
 				C83367121AD029AE00C668A7 /* ImageService.swift */,
-				C83367131AD029AE00C668A7 /* WikipediaAPI */,
 			);
 			path = Services;
-			sourceTree = "<group>";
-		};
-		C83367131AD029AE00C668A7 /* WikipediaAPI */ = {
-			isa = PBXGroup;
-			children = (
-				C83367141AD029AE00C668A7 /* WikipediaAPI.swift */,
-				C83367151AD029AE00C668A7 /* WikipediaPage.swift */,
-				C83367161AD029AE00C668A7 /* WikipediaSearchResult.swift */,
-			);
-			path = WikipediaAPI;
-			sourceTree = "<group>";
-		};
-		C83367181AD029AE00C668A7 /* ViewModels */ = {
-			isa = PBXGroup;
-			children = (
-				C83367191AD029AE00C668A7 /* SearchResultViewModel.swift */,
-				C833671A1AD029AE00C668A7 /* SearchViewModel.swift */,
-			);
-			path = ViewModels;
 			sourceTree = "<group>";
 		};
 		C833671B1AD029AE00C668A7 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				C833671C1AD029AE00C668A7 /* CollectionViewImageCell.swift */,
 				C833671D1AD029AE00C668A7 /* LaunchScreen.xib */,
 				C833671E1AD029AE00C668A7 /* Main.storyboard */,
-				C833671F1AD029AE00C668A7 /* WikipediaSearchViewController.swift */,
-				C83367201AD029AE00C668A7 /* WikipediaSearchCell.swift */,
 				C8813DA91AD2EBF30072A050 /* RootViewController.swift */,
-				C8813DAD1AD2F5A40072A050 /* WikipediaSearchCell.xib */,
-				C8813DAF1AD2F8800072A050 /* WikipediaImageCell.xib */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		C86E2F2E1AE5A0CA00C31024 /* Examples */ = {
+			isa = PBXGroup;
+			children = (
+				C86E2F4C1AE5A10900C31024 /* GitHubSignup */,
+				C86E2F301AE5A0CA00C31024 /* WikipediaImageSearch */,
+			);
+			path = Examples;
+			sourceTree = "<group>";
+		};
+		C86E2F301AE5A0CA00C31024 /* WikipediaImageSearch */ = {
+			isa = PBXGroup;
+			children = (
+				C86E2F311AE5A0CA00C31024 /* ViewModels */,
+				C86E2F341AE5A0CA00C31024 /* Views */,
+				C86E2F3A1AE5A0CA00C31024 /* WikipediaAPI */,
+			);
+			path = WikipediaImageSearch;
+			sourceTree = "<group>";
+		};
+		C86E2F311AE5A0CA00C31024 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				C86E2F321AE5A0CA00C31024 /* SearchResultViewModel.swift */,
+				C86E2F331AE5A0CA00C31024 /* SearchViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		C86E2F341AE5A0CA00C31024 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				C86E2F351AE5A0CA00C31024 /* CollectionViewImageCell.swift */,
+				C86E2F361AE5A0CA00C31024 /* WikipediaImageCell.xib */,
+				C86E2F371AE5A0CA00C31024 /* WikipediaSearchCell.swift */,
+				C86E2F381AE5A0CA00C31024 /* WikipediaSearchCell.xib */,
+				C86E2F391AE5A0CA00C31024 /* WikipediaSearchViewController.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		C86E2F3A1AE5A0CA00C31024 /* WikipediaAPI */ = {
+			isa = PBXGroup;
+			children = (
+				C86E2F3B1AE5A0CA00C31024 /* WikipediaAPI.swift */,
+				C86E2F3C1AE5A0CA00C31024 /* WikipediaPage.swift */,
+				C86E2F3D1AE5A0CA00C31024 /* WikipediaSearchResult.swift */,
+			);
+			path = WikipediaAPI;
+			sourceTree = "<group>";
+		};
+		C86E2F4C1AE5A10900C31024 /* GitHubSignup */ = {
+			isa = PBXGroup;
+			children = (
+				C86E2F4D1AE5A10900C31024 /* GitHubAPI */,
+				C86E2F4E1AE5A10900C31024 /* ViewModels */,
+				C86E2F4F1AE5A10900C31024 /* Views */,
+			);
+			path = GitHubSignup;
+			sourceTree = "<group>";
+		};
+		C86E2F4D1AE5A10900C31024 /* GitHubAPI */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = GitHubAPI;
+			sourceTree = "<group>";
+		};
+		C86E2F4E1AE5A10900C31024 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		C86E2F4F1AE5A10900C31024 /* Views */ = {
+			isa = PBXGroup;
+			children = (
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -292,10 +348,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C86E2F431AE5A0CA00C31024 /* WikipediaSearchCell.xib in Resources */,
 				C833672E1AD029AE00C668A7 /* Main.storyboard in Resources */,
-				C8813DAE1AD2F5A40072A050 /* WikipediaSearchCell.xib in Resources */,
+				C86E2F411AE5A0CA00C31024 /* WikipediaImageCell.xib in Resources */,
 				C833672D1AD029AE00C668A7 /* LaunchScreen.xib in Resources */,
-				C8813DB01AD2F8800072A050 /* WikipediaImageCell.xib in Resources */,
 				C83366ED1AD0293800C668A7 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -314,20 +370,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C83367271AD029AE00C668A7 /* WikipediaPage.swift in Sources */,
+				C86E2F3E1AE5A0CA00C31024 /* SearchResultViewModel.swift in Sources */,
 				C83367241AD029AE00C668A7 /* HtmlParsing.swift in Sources */,
+				C86E2F3F1AE5A0CA00C31024 /* SearchViewModel.swift in Sources */,
 				C83367251AD029AE00C668A7 /* ImageService.swift in Sources */,
-				C83367261AD029AE00C668A7 /* WikipediaAPI.swift in Sources */,
-				C83367281AD029AE00C668A7 /* WikipediaSearchResult.swift in Sources */,
+				C86E2F471AE5A0CA00C31024 /* WikipediaSearchResult.swift in Sources */,
+				C86E2F401AE5A0CA00C31024 /* CollectionViewImageCell.swift in Sources */,
+				C86E2F421AE5A0CA00C31024 /* WikipediaSearchCell.swift in Sources */,
 				C83367231AD029AE00C668A7 /* Example.swift in Sources */,
-				C833672F1AD029AE00C668A7 /* WikipediaSearchViewController.swift in Sources */,
-				C833672C1AD029AE00C668A7 /* CollectionViewImageCell.swift in Sources */,
 				C83367311AD029AE00C668A7 /* Wireframe.swift in Sources */,
-				C833672B1AD029AE00C668A7 /* SearchViewModel.swift in Sources */,
 				C8813DAA1AD2EBF30072A050 /* RootViewController.swift in Sources */,
-				C83367301AD029AE00C668A7 /* WikipediaSearchCell.swift in Sources */,
-				C833672A1AD029AE00C668A7 /* SearchResultViewModel.swift in Sources */,
+				C86E2F441AE5A0CA00C31024 /* WikipediaSearchViewController.swift in Sources */,
+				C86E2F451AE5A0CA00C31024 /* WikipediaAPI.swift in Sources */,
 				C83367221AD029AE00C668A7 /* AppDelegate.swift in Sources */,
+				C86E2F461AE5A0CA00C31024 /* WikipediaPage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
