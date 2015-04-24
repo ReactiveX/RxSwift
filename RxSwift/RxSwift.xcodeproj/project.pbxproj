@@ -406,6 +406,8 @@
 				C8A56B151AD7435800B4673B /* AsObservable.swift */,
 				C86AE05B1AE3F0ED00C8A2A6 /* Catch.swift */,
 				C8A56B161AD7435800B4673B /* CombineLatest.swift */,
+				C8BA11421AE848E0004D2FA8 /* CombineLatest+arity.tt */,
+				C8BA11441AE84932004D2FA8 /* CombineLatest+arity.swift */,
 				C8A56B171AD7435800B4673B /* Concat.swift */,
 				C8A56B181AD7435800B4673B /* ConcatSink.swift */,
 				C8A56B191AD7435800B4673B /* ConnectableObservable.swift */,
@@ -428,8 +430,6 @@
 				C8A56B281AD7435800B4673B /* Throttle.swift */,
 				C8A56B291AD7435800B4673B /* Variable.swift */,
 				C8A56B2A1AD7435800B4673B /* WhereObservable.swift */,
-				C8BA11421AE848E0004D2FA8 /* CombineLatest+arity.tt */,
-				C8BA11441AE84932004D2FA8 /* CombineLatest+arity.swift */,
 			);
 			path = Implementations;
 			sourceTree = "<group>";
@@ -1005,6 +1005,7 @@
 				C8BA11531AE84A54004D2FA8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
