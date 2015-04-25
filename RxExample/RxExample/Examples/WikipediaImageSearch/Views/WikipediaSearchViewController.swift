@@ -10,25 +10,19 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-public class WikipediaSearchViewController: UIViewController {
+class WikipediaSearchViewController: ViewController {
     
     private let disposeBag: DisposeBag = DisposeBag()
     private var viewModel: SearchViewModel? = nil
     
-    override public func awakeFromNib() {
+    override func awakeFromNib() {
         super.awakeFromNib()
     }
     
     // lifecycle
     
-    override public func viewDidLoad() {
+    override func viewDidLoad() {
         super.viewDidLoad()
-#if DEBUG
-        if resourceCount != 1 {
-            println("Number of resources = \(resourceCount)")
-            assert(resourceCount == 1)
-        }
-#endif
         let operationQueue = NSOperationQueue()
         operationQueue.maxConcurrentOperationCount = 2
         operationQueue.qualityOfService = NSQualityOfService.UserInitiated
@@ -92,9 +86,4 @@ public class WikipediaSearchViewController: UIViewController {
         // }
     }
     
-    deinit {
-#if DEBUG
-        println("View controller disposed with \(resourceCount) resournces")
-#endif
-    }
 }
