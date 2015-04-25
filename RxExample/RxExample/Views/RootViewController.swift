@@ -10,9 +10,4 @@ import Foundation
 import UIKit
 
 public class RootViewController : UITableViewController {
-    override public func awakeFromNib() {
-        super.awakeFromNib()
-        
-        self.performSegueWithIdentifier("ShowWikipediaSearch", sender: nil)
-    }
 }

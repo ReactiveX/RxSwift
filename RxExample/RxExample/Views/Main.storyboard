@@ -22,14 +22,33 @@
             </objects>
             <point key="canvasLocation" x="-814.39999999999998" y="75.733333333333334"/>
         </scene>
-        <!--Rx Example App-->
+        <!--GitHub Signup-->
+        <scene sceneID="N2N-1B-sZ4">
+            <objects>
+                <viewController id="dHR-mS-HCG" customClass="GitHubSignupViewController" customModule="RxExample" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="08L-bJ-kbo"/>
+                        <viewControllerLayoutGuide type="bottom" id="iau-x6-9gd"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="LK1-fd-xyr">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="GitHub Signup" id="Cwl-YW-IkD"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3y6-mR-ROv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="158" y="922"/>
+        </scene>
+        <!--Rx Examples-->
         <scene sceneID="TnT-xx-y5Q">
             <objects>
                 <tableViewController id="t5K-0k-3cp" customClass="RootViewController" customModule="RxExample" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="UYP-Va-Aja">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
                         <sections>
                             <tableViewSection headerTitle="Examples" footerTitle="Showcase examples for Rx. You can easily test for proper resource cleanup during poping of the navigation stack" id="QC3-bK-dI7">
                                 <cells>
@@ -41,13 +60,30 @@
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Search Wikipedia" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="pxT-4B-gDc">
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
                                             <segue destination="Iwo-im-m6d" kind="push" identifier="ShowWikipediaSearch" id="Gfh-zm-u0w"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="LN4-l3-ara" style="IBUITableViewCellStyleDefault" id="Hab-23-dUs">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Hab-23-dUs" id="5ox-J8-FhR">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="GitHub Signup" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="LN4-l3-ara">
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="dHR-mS-HCG" kind="push" id="rAe-JJ-Q7U"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>
@@ -58,7 +94,7 @@
                             <outlet property="delegate" destination="t5K-0k-3cp" id="Wpn-ZO-wKV"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Rx Example App" id="UN2-W8-jFx"/>
+                    <navigationItem key="navigationItem" title="Rx Examples" id="UN2-W8-jFx"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Bt6-Sf-4JF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
