@@ -18,23 +18,6 @@ public func switchLatest<T>
     return Switch(sources: sources)
 }
 
-// combine latest
-
-public func combineLatestOrDie<E1, E2, R>
-    (with: Observable<E1>, resultSelector: (E1, E2) -> Result<R>)
-    -> (Observable<E2> -> Observable<R>) {
-    return { source in
-        return CombineLatest(observable1: with, observable2: source, selector: resultSelector)
-    }
-}
-
-public func combineLatest<E1, E2, R>
-    (with: Observable<E1>, resultSelector: (E1, E2) -> R)
-    -> (Observable<E2> -> Observable<R>) {
-    return { source in
-        return CombineLatest(observable1: with, observable2: source, selector: { success(resultSelector($0, $1)) })
-    }
-}
 
 // concat
 
