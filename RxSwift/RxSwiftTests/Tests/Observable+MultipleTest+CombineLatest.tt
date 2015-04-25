@@ -12,21 +12,25 @@ import RxSwift
 
 // combine latest
 extension ObservableMultipleTest {
-    func testCombineLatest_Never2() {
+<% for i in 2 ... 10 { %>
+
+    // <%= i %>
+
+    func testCombineLatest_Never<%= i %>() {
         let scheduler = TestScheduler(initialClock: 0)
-        
-        let e0 = scheduler.createHotObservable([
+
+<% for j in 0..<i { %>
+        let e<%= j %> = scheduler.createHotObservable([
             next(150, 1)
         ])
-        
-        let e1 = scheduler.createHotObservable([
-            next(150, 1)
-        ])
-        
-        let res = scheduler.start {
-            combineLatest(e0, e1) { (_, _) -> Int in
+<% } %>
+
+        let res = scheduler.start { () -> Observable<Int> in
+            let result: Observable<Int> = combineLatest(<%= ", ".join(map(0..<i) { "e\($0)" }) %>) { (<%= ", ".join(map(0..<i) { _ in "_" }) %>) -> Int in
                 return (42)
             }
+
+            return result
         }
         
         XCTAssertEqual(res.messages, [])
@@ -37,14 +41,135 @@ extension ObservableMultipleTest {
             XCTAssertEqual(e.subscriptions, subscriptions)
         }
     }
-    
-    func testCombineLatest_NeverEmpty() {
+
+    func testCombineLatest_Empty<%= i %>() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+<% for j in 0..<i { %>
+        let e<%= j %> = scheduler.createHotObservable([
+            next(150, 1),
+            completed(\(200 + 10 * (j + 1)))
+        ])
+<% } %>
+
+        let res = scheduler.start { () -> Observable<Int> in
+            let result: Observable<Int> = combineLatest(<%= ", ".join(map(0..<i) { "e\($0)" }) %>) { (<%= ", ".join(map(0..<i) { _ in "_" }) %>) -> Int in
+                return (42)
+            }
+
+            return result
+        }
+
+        XCTAssertEqual(res.messages, [completed(<%= 200 + 10 * i %>)])
+
+<% for j in 0..<i { %>
+        XCTAssertEqual(e<%= j %>.subscriptions, [Subscription(200, <%= 200 + 10 * (j + 1) %>)])
+<% } %>
+    }
+
+    func testCombineLatest_SelectorThrows<%= i %>() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+<% for j in 0..<i { %>
+        let e<%= j %> = scheduler.createHotObservable([
+            next(150, 1),
+            next(<%= 200 + 10 * (j + 1) %>, <%= (j + 1) %>),
+            completed(400)
+        ])
+<% } %>
+
+        let res = scheduler.start { () -> Observable<Int> in
+            let result: Observable<Int> = combineLatestOrDie(<%= ", ".join(map(0..<i) { "e\($0)" }) %>) { (<%= ", ".join(map(0..<i) { _ in "_" }) %>) -> Result<Int> in
+                return .Error(testError)
+            }
+
+            return result
+        }
+        
+        XCTAssertEqual(res.messages, [
+            error(<%= 200 + (i * 10) %>, testError)
+        ])
+
+<% for j in 0..<i { %>
+        XCTAssertEqual(e<%= j %>.subscriptions, [Subscription(200, <%= 200 + (10 * i) %>)])
+<% } %>
+    }
+
+    func testCombineLatest_WillNeverBeAbleToCombine<%= i %>() {
         let scheduler = TestScheduler(initialClock: 0)
         
+<% for j in 0..<i-1 { %>
+        let e<%= j %> = scheduler.createHotObservable([
+            next(150, 1),
+            completed(<%= 250 + (10 * j) %>)
+        ])
+<% } %>
+        let e<%= i - 1 %> = scheduler.createHotObservable([
+            next(150, 1),
+            next(500, 2),
+            completed(800)
+        ])
+
+        let res = scheduler.start { () -> Observable<Int> in
+            let result: Observable<Int> = combineLatest(<%= ", ".join(map(0..<i) { "e\($0)" }) %>) { (<%= ", ".join(map(0..<i) { _ in "_" }) %>) -> Int in
+                return (42)
+            }
+
+            return result
+        }
+
+        XCTAssertEqual(res.messages, [
+            completed(500)
+        ])
+
+<% for j in 0..<i-1 { %>
+        XCTAssertEqual(e<%= j %>.subscriptions, [Subscription(200, <%= 250 + j * 10 %>)])
+<% } %>
+        XCTAssertEqual(e<%= i - 1 %>.subscriptions, [Subscription(200, 500)])
+    }
+    
+    func testCombineLatest_Typical<%= i %>() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+<% for j in 0..<i { %>
+        let e<%= j %> = scheduler.createHotObservable([
+            next(150, 1),
+            next(<%= 200 + 10 * (j + 1) %>, <%= j + 1 %>),
+            next(<%= 400 + 10 * (j + 1) %>, <%= i + j + 1 %>),
+            completed(800)
+        ])
+<% } %>
+        let res = scheduler.start { () -> Observable<Int> in
+            let result: Observable<Int> = combineLatest(<%= ", ".join(map(0..<i) { "e\($0)" }) %>) {
+                return (<%= " + ".join(map(0..<i) { "$\($0)" }) %>)
+            }
+
+            return result
+        }
+
+        XCTAssertEqual(res.messages, [
+            <% let sum = ([Int](1...i)).reduce(0) { $0 + $1 } %>
+            next(<%= 200 + i * 10 %>, <%= sum %>),
+<% for j in 1...i { %>
+            next(<%= 400 + 10 * j %>, <%= sum + j * i %>),<% } %>
+            completed(800)
+            ])
+
+<% for j in 0..<i { %>
+        XCTAssertEqual(e<%= j %>.subscriptions, [Subscription(200, 800)])
+<% } %>
+    }
+
+
+<% } %>
+
+    func testCombineLatest_NeverEmpty() {
+        let scheduler = TestScheduler(initialClock: 0)
+
         let e0 = scheduler.createHotObservable([
             next(150, 1)
         ])
-        
+
         let e1 = scheduler.createHotObservable([
             next(150, 1),
             completed(210)
@@ -55,7 +180,7 @@ extension ObservableMultipleTest {
                 return (x1 + x2)
             }
         }
-        
+
         XCTAssertEqual(res.messages, [])
         
         XCTAssertEqual(e0.subscriptions, [Subscription(200, 1000)])
@@ -86,31 +211,7 @@ extension ObservableMultipleTest {
         XCTAssertEqual(e1.subscriptions, [Subscription(200, 1000)])
     }
     
-    func testCombineLatest_Empty2() {
-        let scheduler = TestScheduler(initialClock: 0)
-        
-        let e0 = scheduler.createHotObservable([
-            next(150, 1),
-            completed(210)
-            ])
-        
-        let e1 = scheduler.createHotObservable([
-            next(150, 1),
-            completed(220)
-            ])
-        
-        let res = scheduler.start {
-            combineLatest(e0, e1) { (_, _) -> Int in
-                return (42)
-            }
-        }
-        
-        XCTAssertEqual(res.messages, [completed(220)])
-        
-        XCTAssertEqual(e0.subscriptions, [Subscription(200, 210)])
-        XCTAssertEqual(e1.subscriptions, [Subscription(200, 220)])
-    }
-    
+
     func testCombineLatest_EmptyReturn() {
         let scheduler = TestScheduler(initialClock: 0)
         
@@ -712,94 +813,5 @@ extension ObservableMultipleTest {
         XCTAssertEqual(e1.subscriptions, [Subscription(200, 245)])
     }
     
-    func testCombineLatest_SelectorThrows() {
-        let scheduler = TestScheduler(initialClock: 0)
-        
-        let e0 = scheduler.createHotObservable([
-            next(150, 1),
-            next(215, 2),
-            completed(230)
-            ])
-        
-        let e1 = scheduler.createHotObservable([
-            next(150, 1),
-            next(220, 3),
-            completed(240)
-            ])
-        
-        let res = scheduler.start {
-            combineLatestOrDie(e0, e1) { (x1, x2) -> Result<Int> in
-                return .Error(testError)
-            }
-        }
-        
-        XCTAssertEqual(res.messages, [
-            error(220, testError)
-            ])
-        
-        XCTAssertEqual(e0.subscriptions, [Subscription(200, 220)])
-        XCTAssertEqual(e1.subscriptions, [Subscription(200, 220)])
-    }
-    
-    func testCombineLatest_WillNeverBeAbleToCombine2() {
-        let scheduler = TestScheduler(initialClock: 0)
-        
-        let e0 = scheduler.createHotObservable([
-            next(150, 1),
-            completed(250)
-            ])
-        
-        let e1 = scheduler.createHotObservable([
-            next(150, 1),
-            next(500, 3),
-            completed(800)
-            ])
-        
-        let res = scheduler.start {
-            combineLatestOrDie(e0, e1) { (x1, x2) -> Result<Int> in
-                return .Error(testError)
-            }
-        }
-        
-        XCTAssertEqual(res.messages, [
-            completed(500)
-            ])
-        
-        XCTAssertEqual(e0.subscriptions, [Subscription(200, 250)])
-        XCTAssertEqual(e1.subscriptions, [Subscription(200, 500)])
-    }
-    
-    func testCombineLatest_Typical2() {
-        let scheduler = TestScheduler(initialClock: 0)
-        
-        let e0 = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 1),
-            next(410, 3),
-            completed(800)
-            ])
-        
-        let e1 = scheduler.createHotObservable([
-            next(150, 1),
-            next(220, 2),
-            next(420, 4),
-            completed(800)
-            ])
-        
-        let res = scheduler.start {
-            combineLatestOrDie(e0, e1) { (x1, x2) -> Result<Int> in
-                return success(x1 + x2)
-            }
-        }
-        
-        XCTAssertEqual(res.messages, [
-            next(220, 3),
-            next(410, 5),
-            next(420, 7),
-            completed(800)
-            ])
-        
-        XCTAssertEqual(e0.subscriptions, [Subscription(200, 800)])
-        XCTAssertEqual(e1.subscriptions, [Subscription(200, 800)])
-    }
+
 }
