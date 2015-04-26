@@ -58,6 +58,6 @@ class SearchResultViewModel {
                 } >>! { e in
                     return success([])
                 }
-            } >- observeSingleOn($.mainScheduler) >- sharedWithCachedLastResult
+            } >- observeSingleOn($.mainScheduler) >- variable
     }
 }
