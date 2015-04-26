@@ -8,11 +8,31 @@
 
 import Foundation
 import RxSwift
+import RxCocoa
+
+enum SignupState: Equatable {
+    case InitialState
+    case SigningUp
+    case SignedUp(signedUp: Bool)
+}
+
+func ==(lhs: SignupState, rhs: SignupState) -> Bool {
+    switch (lhs, rhs) {
+    case (.InitialState, .InitialState):
+        return true
+    case (.SigningUp, .SigningUp):
+        return true
+    case (.SignedUp(let lhsSignup), .SignedUp(let rhsSignup)):
+        return lhsSignup == rhsSignup
+    default:
+        return false
+    }
+}
 
 class GitHubAPI {
     let dataScheduler: ImmediateScheduler
     let URLSession: NSURLSession
-    
+
     init(dataScheduler: ImmediateScheduler, URLSession: NSURLSession) {
         self.dataScheduler = dataScheduler
         self.URLSession = URLSession
@@ -30,13 +50,16 @@ class GitHubAPI {
             else {
                 return false
             }
-        } >- catch { result in
+        } >- observeSingleOn(self.dataScheduler) >- catch { result in
             return returnElement(false)
         }
     }
     
-    func signup(username: String, password: String) -> Observable<Void> {
+    func signup(username: String, password: String) -> Observable<SignupState> {
         // this is also just a mock
-        return returnElement(()) >- throttle(0.700, MainScheduler.sharedInstance)
+        let signupResult = SignupState.SignedUp(signedUp: arc4random() % 5 == 0 ? false : true)
+        return concat([returnElement(signupResult), never()])
+            >- throttle(2000, MainScheduler.sharedInstance)
+            >- prefixWith(SignupState.SigningUp)
     }
 }
