@@ -11,7 +11,7 @@ RxSwift
 ├-README.md
 ├-RxSwift         - platform agnostic core
 ├-RxCocoa         - extensions for UI (iOS only for now), NSURLSession, KVO ...
-├-RxExample       - example app, Wikipedia image scraper
+├-RxExample       - example apps: UI bindings example, Wikipedia search example ...
 └-Rx.xcworkspace  - workspace that contains all of the projects hooked up
 ```		
 
@@ -33,22 +33,83 @@ git diff | grep bug | less          #  linux pipes - programs communicate by sen
 
 would become if written in RxSwift
 
-```
+```swift
 gitDiff() >- grep("bug") >- less    // rx sink (>-) operator - rx units communicate by sending
                                     // sequences of swift objects
 ```
 
-Rx is implemented as a slightly modified version of observer pattern.
+Some more examples:
 
-[http://en.wikipedia.org/wiki/Observer_pattern](http://en.wikipedia.org/wiki/Observer_pattern)
+Validating username against server to ensure uniqueness
 
-It probably sounds little weird at first, but those abstractions are equivalent. Following paragraphs explain that in more detail.
 
-## But first, why would somebody want to use Rx?
+```swift
+// bind UI control values directly
+self.usernameOutlet.rx_text() >- map { username in
 
-Writing correct asynchronous programs is hard because every line of code has to deal with following concerns:
+    // synchronous validation, nothing special here
+    if count(username) == 0 {
+        // convenience for constructing synchronous result
+        return returnElement((valid: false, message: "Username can't be empty."))
+    }
+
+    ...
+
+    let loadingValue = (valid: nil, message: "Checking availabilty ...")
+
+    // asynchronous validation is not a problem
+    // this will fire a server call to check does username exist
+    return API.usernameAvailable(username) >- map { available in
+        if available {
+            return (true, "Username available")
+        }
+        else {
+            return (false, "Username already taken")
+        }
+    }
+    // use `loadingValue` until server responds
+        >- prefixWith(loadingValue)
+}
+// use only latest data
+// automatically cancels async validation on next `username` value
+    >- switchLatest
+// bind result to UI
+    >- subscribeNext { valid in
+        errorLabel.textColor = validationColor(valid)
+        errorLabel.text = valid.message
+    }
+// automatic cleanup on dealloc
+    >- disposeBag.addDisposable
+```
+
+This is classic autocomplete example
+
+```swift
+let results =
+    // bind to UITextField `text` property
+        self.searchTextOutlet.rx_text()
+    // forward only distinct values
+        >- distinctUntilChanged 
+    // 300ms throttle interval
+        >- throttle(300, $.mainScheduler) 
+    // selects async call for search value
+        >- map { query in
+            API.getSearchResults(query)
+        } 
+    // cancels previous pending async operation on next value
+        >- switchLatest 
+    // binds to table view
+        >- resultsTableView.rx_subscribeRowsToCellWithIdentifier("Result")
+```
+
+Can't get any simpler then this.
+
+## Why would somebody want to use Rx?
+
+Writing correct asynchronous or event driven programs is hard because every line of code has to deal with following concerns:
 
 * Resource management (disposal of memory allocations, sockets, file handles)
+* State management (invalidating caches)
 * Asynchronous operations (composition, cancellation, deadlocks)
 * Error handling
 
