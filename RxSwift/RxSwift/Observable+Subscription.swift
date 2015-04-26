@@ -34,12 +34,12 @@ public func subscribe<E>
 }
 
 public func subscribeNext<E>
-    (onNext: (element: E) -> Void)
+    (onNext: (E) -> Void)
     (source: Observable<E>) -> Result<Disposable> {
     let observer: ObserverOf<E> = ObserverOf(AnonymousObserver { e in
         switch e {
-        case .Next(let e):
-            onNext(element: e.value)
+        case .Next(let boxedValue):
+            onNext(boxedValue.value)
         default:
             break
         }
