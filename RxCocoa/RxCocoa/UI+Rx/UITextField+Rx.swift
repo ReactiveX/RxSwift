@@ -12,13 +12,19 @@ import RxSwift
 extension UITextField {
     public func rx_text() -> Observable<String> {
         return AnonymousObservable { subscriber in
-            let observer = ControlTarget(control: self, controlEvents: UIControlEvents.EditingChanged) { control in
-                let text: String = (control as! UITextField).text
-                let result = subscriber.on(.Next(Box(text)))
-                handleObserverResult(result)
+            
+            let propagateChange = { (control: UITextField) -> Result<Void> in
+                let text: String = control.text
+                return subscriber.on(.Next(Box(text)))
             }
             
-            return success(observer)
+            return propagateChange(self) >>> {
+                let observer = ControlTarget(control: self, controlEvents: UIControlEvents.EditingChanged) { control in
+                    handleVoidObserverResult(propagateChange(control as! UITextField))
+                }
+                
+                return success(observer)
+            }
         }
     }
 }

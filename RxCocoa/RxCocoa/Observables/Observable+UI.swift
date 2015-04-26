@@ -19,6 +19,12 @@ public func sharedWithCachedLastResult<E>(source: Observable<E>)
     return source >- replay(1) >- refCount
 }
 
+// variable is synonym for `sharedWithCachedLastResult`
+public func variable<E>(source: Observable<E>)
+    -> Observable<E> {
+    return source >- replay(1) >- refCount
+}
+
 // prefix with
 
 // Prefixes observable sequence with `prefix` element.
