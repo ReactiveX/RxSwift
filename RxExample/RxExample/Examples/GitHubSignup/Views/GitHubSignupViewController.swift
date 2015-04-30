@@ -77,10 +77,6 @@ class ValidationService {
     }
 }
 
-func validationColor(result: ValidationResult) -> UIColor {
-    return UIColor.blackColor()
-}
-
 class GitHubSignupViewController : ViewController {
     @IBOutlet weak var usernameOutlet: UITextField!
     @IBOutlet weak var usernameValidationOutlet: UILabel!
@@ -130,47 +126,10 @@ class GitHubSignupViewController : ViewController {
         let username = usernameOutlet.rx_text()
         let password = passwordOutlet.rx_text()
         let repeatPassword = repeatedPasswordOutlet.rx_text()
-       
-        let validCharacters = NSCharacterSet.alphanumericCharacterSet().invertedSet
         
-        let validationErrorLabel = self.usernameValidationOutlet
-        
-        // bind UI control values directly
-        self.usernameOutlet.rx_text() >- map { username -> Observable<ValidationResult> in
-            if count(username) == 0 {
-                return returnElement((valid: false, message: nil))
-            }
-            
-            // synchronous validation, nothing special here
-            if username.rangeOfCharacterFromSet(validCharacters) != nil {
-                return returnElement((valid: false, message: "Username can only contain ..."))
-            }
-            
-            let loadingValue: ValidationResult = (valid: nil, message: "Checking availabilty ...")
-            
-            // asynchronous validation is not a problem
-            // this will fire a call to server to check does username exist
-            return API.usernameAvailable(username) >- map { available in
-                if available {
-                    return (true, "Username available")
-                }
-                else {
-                    return (false, "Username already taken")
-                }
-            }
-            // use `loadingValue` until server responds
-                >- prefixWith(loadingValue)
-        }
-        // use only latest data
-        // automatically cancels async validation on next `username` value
-            >- switchLatest
-        // bind result to user interface
-            >- subscribeNext { valid in
-                validationErrorLabel.textColor = validationColor(valid)
-                validationErrorLabel.text = valid.message
-            }
-        // automatically cleanup everything on dealloc
-            >- disposeBag.addDisposable
+        let usernameValidation = username >- map { username in
+            return validationService.validateUsername(username)
+        } >- switchLatest >- variable
         
         let passwordValidation = password >- map { password in
             return validationService.validatePassword(password)
@@ -189,8 +148,6 @@ class GitHubSignupViewController : ViewController {
             >- switchLatest
             >- prefixWith(.InitialState)
             >- variable
-       
-        let usernameValidation: ValidationObservable = never()
         
         let signupEnabled = combineLatest(
             usernameValidation,
