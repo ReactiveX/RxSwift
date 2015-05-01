@@ -126,6 +126,7 @@ class GitHubSignupViewController : ViewController {
         let username = usernameOutlet.rx_text()
         let password = passwordOutlet.rx_text()
         let repeatPassword = repeatedPasswordOutlet.rx_text()
+        let signupSampler = self.signupOutlet.rx_tap()
         
         let usernameValidation = username >- map { username in
             return validationService.validateUsername(username)
@@ -142,9 +143,11 @@ class GitHubSignupViewController : ViewController {
             return validationService.validateRepeatedPassword(password, repeatedPassword: repeatedPassword)
         } >- variable
         
-        let signingProcess = self.signupOutlet.rx_tap() >- map { [unowned self] () in
-            return API.signup(self.usernameOutlet.text, password: self.passwordOutlet.text)
-        }
+        let signingProcess = combineLatest(username, password) { ($0, $1) }
+            >- sampleLatest(signupSampler)
+            >- map { (username, password) in
+                return API.signup(username, password: password)
+            }
             >- switchLatest
             >- prefixWith(.InitialState)
             >- variable

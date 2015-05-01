@@ -86,8 +86,8 @@
 		C86E2F3C1AE5A0CA00C31024 /* WikipediaPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WikipediaPage.swift; sourceTree = "<group>"; };
 		C86E2F3D1AE5A0CA00C31024 /* WikipediaSearchResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WikipediaSearchResult.swift; sourceTree = "<group>"; };
 		C8813DA91AD2EBF30072A050 /* RootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
-		C890A6571AEBD26B00AFF7E6 /* GitHubSignupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GitHubSignupViewController.swift; sourceTree = "<group>"; };
-		C890A6591AEBD28A00AFF7E6 /* GitHubAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GitHubAPI.swift; sourceTree = "<group>"; };
+		C890A6571AEBD26B00AFF7E6 /* GitHubSignupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GitHubSignupViewController.swift; path = Views/GitHubSignupViewController.swift; sourceTree = "<group>"; };
+		C890A6591AEBD28A00AFF7E6 /* GitHubAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GitHubAPI.swift; path = GitHubAPI/GitHubAPI.swift; sourceTree = "<group>"; };
 		C890A65C1AEC084100AFF7E6 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		C8A56BCA1AD744E600B4673B /* RxSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RxSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8F57F431AD02DBE006B8702 /* RxCocoa.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RxCocoa.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -246,26 +246,10 @@
 		C86E2F4C1AE5A10900C31024 /* GitHubSignup */ = {
 			isa = PBXGroup;
 			children = (
-				C890A6561AEBD26B00AFF7E6 /* Views */,
-				C86E2F4D1AE5A10900C31024 /* GitHubAPI */,
-			);
-			path = GitHubSignup;
-			sourceTree = "<group>";
-		};
-		C86E2F4D1AE5A10900C31024 /* GitHubAPI */ = {
-			isa = PBXGroup;
-			children = (
+				C890A6571AEBD26B00AFF7E6 /* GitHubSignupViewController.swift */,
 				C890A6591AEBD28A00AFF7E6 /* GitHubAPI.swift */,
 			);
-			path = GitHubAPI;
-			sourceTree = "<group>";
-		};
-		C890A6561AEBD26B00AFF7E6 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				C890A6571AEBD26B00AFF7E6 /* GitHubSignupViewController.swift */,
-			);
-			path = Views;
+			path = GitHubSignup;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
