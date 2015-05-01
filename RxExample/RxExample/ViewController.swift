@@ -11,18 +11,24 @@ import UIKit
 import RxSwift
 
 class ViewController: UIViewController {
+#if DEBUG
+    private let startResourceCount = RxSwift.resourceCount
+#endif
+    
     override func viewDidLoad() {
 #if DEBUG
-        if resourceCount != 1 {
-            println("Number of resources = \(resourceCount)")
-            assert(resourceCount == 1)
-        }
+        println("Number of start resources = \(resourceCount)")
 #endif
     }
     
     deinit {
 #if DEBUG
-        println("View controller disposed with \(resourceCount) resournces")
+        println("View controller disposed with \(resourceCount) resources")
+    
+        var numberOfResourcesThatShouldRemain = startResourceCount
+        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            assert(numberOfResourcesThatShouldRemain >= resourceCount, "Resources weren't cleaned properly")
+        })
 #endif
     }
 }
