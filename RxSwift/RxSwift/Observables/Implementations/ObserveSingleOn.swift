@@ -13,7 +13,7 @@ import Foundation
 //
 // In case sequence contains more then one element, it will fire an exception.
 
-class ObserveSingleOnObserver<ElementType> : ObserverClassType, Disposable {
+class ObserveSingleOnObserver<ElementType> : ObserverType, Disposable {
     typealias Element = ElementType
     typealias Parent = ObserveSingleOn<ElementType>
     typealias State = (
@@ -38,7 +38,7 @@ class ObserveSingleOnObserver<ElementType> : ObserverClassType, Disposable {
         )
     }
  
-    func on(event: Event<Element>) -> Result<Void> {
+    func on(event: Event<Element>) {
         var elementToForward: Event<Element>?
         var stopEventToForward: Event<Element>?
         var observer: ObserverOf<Element>?
@@ -68,24 +68,17 @@ class ObserveSingleOnObserver<ElementType> : ObserverClassType, Disposable {
         
         if let stopEventToForward = stopEventToForward {
             self.parent.scheduler.schedule(()) { (_) in
-                var r = SuccessResult
                 if let elementToForward = elementToForward {
-                    r = observer!.on(elementToForward)
+                    observer!.on(elementToForward)
                 }
                 
-                r = r >>! { error in
-                    observer!.on(.Error(error))
-                } >>> {
-                    observer!.on(stopEventToForward)
-                }
+                observer!.on(stopEventToForward)
                 
                 self.dispose()
                 
-                return r
+                return SuccessResult
             }
         }
-        
-        return SuccessResult
     }
     
     func dispose() {
@@ -112,8 +105,8 @@ class ObserveSingleOnObserver<ElementType> : ObserverClassType, Disposable {
         }
     }
     
-    func run() -> Result<Disposable> {
-        return self.parent.source.subscribeSafe(ObserverOf(self))
+    func run() -> Disposable {
+        return self.parent.source.subscribe(ObserverOf(self))
     }
 }
 
@@ -126,7 +119,7 @@ class ObserveSingleOn<Element> : Producer<Element> {
         self.scheduler = scheduler
     }
     
-    override func run(observer: ObserverOf<Element>, cancel: Disposable, setSink: (Disposable) -> Void) -> Result<Disposable> {
+    override func run(observer: ObserverOf<Element>, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
         let sink = ObserveSingleOnObserver(parent: self, observer: observer, cancel: cancel)
         setSink(sink)
         return sink.run()

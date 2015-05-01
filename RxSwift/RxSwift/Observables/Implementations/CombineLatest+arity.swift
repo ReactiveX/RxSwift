@@ -45,20 +45,20 @@ class CombineLatestSink2_<E1, E2, R> : CombineLatestSink<R> {
         super.init(arity: 2, observer: observer, cancel: cancel)
     }
 
-    func run() -> Result<Disposable> {
+    func run() -> Disposable {
         let subscription1 = SingleAssignmentDisposable()
         let subscription2 = SingleAssignmentDisposable()
 
         observer1 = CombineLatestObserver(parent: self, index: 0, this: subscription1)
         observer2 = CombineLatestObserver(parent: self, index: 1, this: subscription2)
 
-        subscription1.setDisposable(*parent.source1.subscribeSafe(ObserverOf(observer1)))
-        subscription2.setDisposable(*parent.source2.subscribeSafe(ObserverOf(observer2)))
+        subscription1.setDisposable(parent.source1.subscribe(ObserverOf(observer1)))
+        subscription2.setDisposable(parent.source2.subscribe(ObserverOf(observer2)))
 
-        return success(CompositeDisposable(disposables: [
+        return CompositeDisposable(disposables: [
                 subscription1,
                 subscription2
-        ]))
+        ])
     }
 
     override func getResult() -> Result<R> {
@@ -81,7 +81,7 @@ class CombineLatest2<E1, E2, R> : Producer<R> {
         self.resultSelector = resultSelector
     }
 
-    override func run(observer: ObserverOf<R>, cancel: Disposable, setSink: (Disposable) -> Void) -> Result<Disposable> {
+    override func run(observer: ObserverOf<R>, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
         let sink = CombineLatestSink2_(parent: self, observer: observer, cancel: cancel)
         setSink(sink)
         return sink.run()
@@ -124,7 +124,7 @@ class CombineLatestSink3_<E1, E2, E3, R> : CombineLatestSink<R> {
         super.init(arity: 3, observer: observer, cancel: cancel)
     }
 
-    func run() -> Result<Disposable> {
+    func run() -> Disposable {
         let subscription1 = SingleAssignmentDisposable()
         let subscription2 = SingleAssignmentDisposable()
         let subscription3 = SingleAssignmentDisposable()
@@ -133,15 +133,15 @@ class CombineLatestSink3_<E1, E2, E3, R> : CombineLatestSink<R> {
         observer2 = CombineLatestObserver(parent: self, index: 1, this: subscription2)
         observer3 = CombineLatestObserver(parent: self, index: 2, this: subscription3)
 
-        subscription1.setDisposable(*parent.source1.subscribeSafe(ObserverOf(observer1)))
-        subscription2.setDisposable(*parent.source2.subscribeSafe(ObserverOf(observer2)))
-        subscription3.setDisposable(*parent.source3.subscribeSafe(ObserverOf(observer3)))
+        subscription1.setDisposable(parent.source1.subscribe(ObserverOf(observer1)))
+        subscription2.setDisposable(parent.source2.subscribe(ObserverOf(observer2)))
+        subscription3.setDisposable(parent.source3.subscribe(ObserverOf(observer3)))
 
-        return success(CompositeDisposable(disposables: [
+        return CompositeDisposable(disposables: [
                 subscription1,
                 subscription2,
                 subscription3
-        ]))
+        ])
     }
 
     override func getResult() -> Result<R> {
@@ -166,7 +166,7 @@ class CombineLatest3<E1, E2, E3, R> : Producer<R> {
         self.resultSelector = resultSelector
     }
 
-    override func run(observer: ObserverOf<R>, cancel: Disposable, setSink: (Disposable) -> Void) -> Result<Disposable> {
+    override func run(observer: ObserverOf<R>, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
         let sink = CombineLatestSink3_(parent: self, observer: observer, cancel: cancel)
         setSink(sink)
         return sink.run()
@@ -210,7 +210,7 @@ class CombineLatestSink4_<E1, E2, E3, E4, R> : CombineLatestSink<R> {
         super.init(arity: 4, observer: observer, cancel: cancel)
     }
 
-    func run() -> Result<Disposable> {
+    func run() -> Disposable {
         let subscription1 = SingleAssignmentDisposable()
         let subscription2 = SingleAssignmentDisposable()
         let subscription3 = SingleAssignmentDisposable()
@@ -221,17 +221,17 @@ class CombineLatestSink4_<E1, E2, E3, E4, R> : CombineLatestSink<R> {
         observer3 = CombineLatestObserver(parent: self, index: 2, this: subscription3)
         observer4 = CombineLatestObserver(parent: self, index: 3, this: subscription4)
 
-        subscription1.setDisposable(*parent.source1.subscribeSafe(ObserverOf(observer1)))
-        subscription2.setDisposable(*parent.source2.subscribeSafe(ObserverOf(observer2)))
-        subscription3.setDisposable(*parent.source3.subscribeSafe(ObserverOf(observer3)))
-        subscription4.setDisposable(*parent.source4.subscribeSafe(ObserverOf(observer4)))
+        subscription1.setDisposable(parent.source1.subscribe(ObserverOf(observer1)))
+        subscription2.setDisposable(parent.source2.subscribe(ObserverOf(observer2)))
+        subscription3.setDisposable(parent.source3.subscribe(ObserverOf(observer3)))
+        subscription4.setDisposable(parent.source4.subscribe(ObserverOf(observer4)))
 
-        return success(CompositeDisposable(disposables: [
+        return CompositeDisposable(disposables: [
                 subscription1,
                 subscription2,
                 subscription3,
                 subscription4
-        ]))
+        ])
     }
 
     override func getResult() -> Result<R> {
@@ -258,7 +258,7 @@ class CombineLatest4<E1, E2, E3, E4, R> : Producer<R> {
         self.resultSelector = resultSelector
     }
 
-    override func run(observer: ObserverOf<R>, cancel: Disposable, setSink: (Disposable) -> Void) -> Result<Disposable> {
+    override func run(observer: ObserverOf<R>, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
         let sink = CombineLatestSink4_(parent: self, observer: observer, cancel: cancel)
         setSink(sink)
         return sink.run()
@@ -303,7 +303,7 @@ class CombineLatestSink5_<E1, E2, E3, E4, E5, R> : CombineLatestSink<R> {
         super.init(arity: 5, observer: observer, cancel: cancel)
     }
 
-    func run() -> Result<Disposable> {
+    func run() -> Disposable {
         let subscription1 = SingleAssignmentDisposable()
         let subscription2 = SingleAssignmentDisposable()
         let subscription3 = SingleAssignmentDisposable()
@@ -316,19 +316,19 @@ class CombineLatestSink5_<E1, E2, E3, E4, E5, R> : CombineLatestSink<R> {
         observer4 = CombineLatestObserver(parent: self, index: 3, this: subscription4)
         observer5 = CombineLatestObserver(parent: self, index: 4, this: subscription5)
 
-        subscription1.setDisposable(*parent.source1.subscribeSafe(ObserverOf(observer1)))
-        subscription2.setDisposable(*parent.source2.subscribeSafe(ObserverOf(observer2)))
-        subscription3.setDisposable(*parent.source3.subscribeSafe(ObserverOf(observer3)))
-        subscription4.setDisposable(*parent.source4.subscribeSafe(ObserverOf(observer4)))
-        subscription5.setDisposable(*parent.source5.subscribeSafe(ObserverOf(observer5)))
+        subscription1.setDisposable(parent.source1.subscribe(ObserverOf(observer1)))
+        subscription2.setDisposable(parent.source2.subscribe(ObserverOf(observer2)))
+        subscription3.setDisposable(parent.source3.subscribe(ObserverOf(observer3)))
+        subscription4.setDisposable(parent.source4.subscribe(ObserverOf(observer4)))
+        subscription5.setDisposable(parent.source5.subscribe(ObserverOf(observer5)))
 
-        return success(CompositeDisposable(disposables: [
+        return CompositeDisposable(disposables: [
                 subscription1,
                 subscription2,
                 subscription3,
                 subscription4,
                 subscription5
-        ]))
+        ])
     }
 
     override func getResult() -> Result<R> {
@@ -357,7 +357,7 @@ class CombineLatest5<E1, E2, E3, E4, E5, R> : Producer<R> {
         self.resultSelector = resultSelector
     }
 
-    override func run(observer: ObserverOf<R>, cancel: Disposable, setSink: (Disposable) -> Void) -> Result<Disposable> {
+    override func run(observer: ObserverOf<R>, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
         let sink = CombineLatestSink5_(parent: self, observer: observer, cancel: cancel)
         setSink(sink)
         return sink.run()
@@ -403,7 +403,7 @@ class CombineLatestSink6_<E1, E2, E3, E4, E5, E6, R> : CombineLatestSink<R> {
         super.init(arity: 6, observer: observer, cancel: cancel)
     }
 
-    func run() -> Result<Disposable> {
+    func run() -> Disposable {
         let subscription1 = SingleAssignmentDisposable()
         let subscription2 = SingleAssignmentDisposable()
         let subscription3 = SingleAssignmentDisposable()
@@ -418,21 +418,21 @@ class CombineLatestSink6_<E1, E2, E3, E4, E5, E6, R> : CombineLatestSink<R> {
         observer5 = CombineLatestObserver(parent: self, index: 4, this: subscription5)
         observer6 = CombineLatestObserver(parent: self, index: 5, this: subscription6)
 
-        subscription1.setDisposable(*parent.source1.subscribeSafe(ObserverOf(observer1)))
-        subscription2.setDisposable(*parent.source2.subscribeSafe(ObserverOf(observer2)))
-        subscription3.setDisposable(*parent.source3.subscribeSafe(ObserverOf(observer3)))
-        subscription4.setDisposable(*parent.source4.subscribeSafe(ObserverOf(observer4)))
-        subscription5.setDisposable(*parent.source5.subscribeSafe(ObserverOf(observer5)))
-        subscription6.setDisposable(*parent.source6.subscribeSafe(ObserverOf(observer6)))
+        subscription1.setDisposable(parent.source1.subscribe(ObserverOf(observer1)))
+        subscription2.setDisposable(parent.source2.subscribe(ObserverOf(observer2)))
+        subscription3.setDisposable(parent.source3.subscribe(ObserverOf(observer3)))
+        subscription4.setDisposable(parent.source4.subscribe(ObserverOf(observer4)))
+        subscription5.setDisposable(parent.source5.subscribe(ObserverOf(observer5)))
+        subscription6.setDisposable(parent.source6.subscribe(ObserverOf(observer6)))
 
-        return success(CompositeDisposable(disposables: [
+        return CompositeDisposable(disposables: [
                 subscription1,
                 subscription2,
                 subscription3,
                 subscription4,
                 subscription5,
                 subscription6
-        ]))
+        ])
     }
 
     override func getResult() -> Result<R> {
@@ -463,7 +463,7 @@ class CombineLatest6<E1, E2, E3, E4, E5, E6, R> : Producer<R> {
         self.resultSelector = resultSelector
     }
 
-    override func run(observer: ObserverOf<R>, cancel: Disposable, setSink: (Disposable) -> Void) -> Result<Disposable> {
+    override func run(observer: ObserverOf<R>, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
         let sink = CombineLatestSink6_(parent: self, observer: observer, cancel: cancel)
         setSink(sink)
         return sink.run()
@@ -510,7 +510,7 @@ class CombineLatestSink7_<E1, E2, E3, E4, E5, E6, E7, R> : CombineLatestSink<R> 
         super.init(arity: 7, observer: observer, cancel: cancel)
     }
 
-    func run() -> Result<Disposable> {
+    func run() -> Disposable {
         let subscription1 = SingleAssignmentDisposable()
         let subscription2 = SingleAssignmentDisposable()
         let subscription3 = SingleAssignmentDisposable()
@@ -527,15 +527,15 @@ class CombineLatestSink7_<E1, E2, E3, E4, E5, E6, E7, R> : CombineLatestSink<R> 
         observer6 = CombineLatestObserver(parent: self, index: 5, this: subscription6)
         observer7 = CombineLatestObserver(parent: self, index: 6, this: subscription7)
 
-        subscription1.setDisposable(*parent.source1.subscribeSafe(ObserverOf(observer1)))
-        subscription2.setDisposable(*parent.source2.subscribeSafe(ObserverOf(observer2)))
-        subscription3.setDisposable(*parent.source3.subscribeSafe(ObserverOf(observer3)))
-        subscription4.setDisposable(*parent.source4.subscribeSafe(ObserverOf(observer4)))
-        subscription5.setDisposable(*parent.source5.subscribeSafe(ObserverOf(observer5)))
-        subscription6.setDisposable(*parent.source6.subscribeSafe(ObserverOf(observer6)))
-        subscription7.setDisposable(*parent.source7.subscribeSafe(ObserverOf(observer7)))
+        subscription1.setDisposable(parent.source1.subscribe(ObserverOf(observer1)))
+        subscription2.setDisposable(parent.source2.subscribe(ObserverOf(observer2)))
+        subscription3.setDisposable(parent.source3.subscribe(ObserverOf(observer3)))
+        subscription4.setDisposable(parent.source4.subscribe(ObserverOf(observer4)))
+        subscription5.setDisposable(parent.source5.subscribe(ObserverOf(observer5)))
+        subscription6.setDisposable(parent.source6.subscribe(ObserverOf(observer6)))
+        subscription7.setDisposable(parent.source7.subscribe(ObserverOf(observer7)))
 
-        return success(CompositeDisposable(disposables: [
+        return CompositeDisposable(disposables: [
                 subscription1,
                 subscription2,
                 subscription3,
@@ -543,7 +543,7 @@ class CombineLatestSink7_<E1, E2, E3, E4, E5, E6, E7, R> : CombineLatestSink<R> 
                 subscription5,
                 subscription6,
                 subscription7
-        ]))
+        ])
     }
 
     override func getResult() -> Result<R> {
@@ -576,7 +576,7 @@ class CombineLatest7<E1, E2, E3, E4, E5, E6, E7, R> : Producer<R> {
         self.resultSelector = resultSelector
     }
 
-    override func run(observer: ObserverOf<R>, cancel: Disposable, setSink: (Disposable) -> Void) -> Result<Disposable> {
+    override func run(observer: ObserverOf<R>, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
         let sink = CombineLatestSink7_(parent: self, observer: observer, cancel: cancel)
         setSink(sink)
         return sink.run()
@@ -624,7 +624,7 @@ class CombineLatestSink8_<E1, E2, E3, E4, E5, E6, E7, E8, R> : CombineLatestSink
         super.init(arity: 8, observer: observer, cancel: cancel)
     }
 
-    func run() -> Result<Disposable> {
+    func run() -> Disposable {
         let subscription1 = SingleAssignmentDisposable()
         let subscription2 = SingleAssignmentDisposable()
         let subscription3 = SingleAssignmentDisposable()
@@ -643,16 +643,16 @@ class CombineLatestSink8_<E1, E2, E3, E4, E5, E6, E7, E8, R> : CombineLatestSink
         observer7 = CombineLatestObserver(parent: self, index: 6, this: subscription7)
         observer8 = CombineLatestObserver(parent: self, index: 7, this: subscription8)
 
-        subscription1.setDisposable(*parent.source1.subscribeSafe(ObserverOf(observer1)))
-        subscription2.setDisposable(*parent.source2.subscribeSafe(ObserverOf(observer2)))
-        subscription3.setDisposable(*parent.source3.subscribeSafe(ObserverOf(observer3)))
-        subscription4.setDisposable(*parent.source4.subscribeSafe(ObserverOf(observer4)))
-        subscription5.setDisposable(*parent.source5.subscribeSafe(ObserverOf(observer5)))
-        subscription6.setDisposable(*parent.source6.subscribeSafe(ObserverOf(observer6)))
-        subscription7.setDisposable(*parent.source7.subscribeSafe(ObserverOf(observer7)))
-        subscription8.setDisposable(*parent.source8.subscribeSafe(ObserverOf(observer8)))
+        subscription1.setDisposable(parent.source1.subscribe(ObserverOf(observer1)))
+        subscription2.setDisposable(parent.source2.subscribe(ObserverOf(observer2)))
+        subscription3.setDisposable(parent.source3.subscribe(ObserverOf(observer3)))
+        subscription4.setDisposable(parent.source4.subscribe(ObserverOf(observer4)))
+        subscription5.setDisposable(parent.source5.subscribe(ObserverOf(observer5)))
+        subscription6.setDisposable(parent.source6.subscribe(ObserverOf(observer6)))
+        subscription7.setDisposable(parent.source7.subscribe(ObserverOf(observer7)))
+        subscription8.setDisposable(parent.source8.subscribe(ObserverOf(observer8)))
 
-        return success(CompositeDisposable(disposables: [
+        return CompositeDisposable(disposables: [
                 subscription1,
                 subscription2,
                 subscription3,
@@ -661,7 +661,7 @@ class CombineLatestSink8_<E1, E2, E3, E4, E5, E6, E7, E8, R> : CombineLatestSink
                 subscription6,
                 subscription7,
                 subscription8
-        ]))
+        ])
     }
 
     override func getResult() -> Result<R> {
@@ -696,7 +696,7 @@ class CombineLatest8<E1, E2, E3, E4, E5, E6, E7, E8, R> : Producer<R> {
         self.resultSelector = resultSelector
     }
 
-    override func run(observer: ObserverOf<R>, cancel: Disposable, setSink: (Disposable) -> Void) -> Result<Disposable> {
+    override func run(observer: ObserverOf<R>, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
         let sink = CombineLatestSink8_(parent: self, observer: observer, cancel: cancel)
         setSink(sink)
         return sink.run()
@@ -745,7 +745,7 @@ class CombineLatestSink9_<E1, E2, E3, E4, E5, E6, E7, E8, E9, R> : CombineLatest
         super.init(arity: 9, observer: observer, cancel: cancel)
     }
 
-    func run() -> Result<Disposable> {
+    func run() -> Disposable {
         let subscription1 = SingleAssignmentDisposable()
         let subscription2 = SingleAssignmentDisposable()
         let subscription3 = SingleAssignmentDisposable()
@@ -766,17 +766,17 @@ class CombineLatestSink9_<E1, E2, E3, E4, E5, E6, E7, E8, E9, R> : CombineLatest
         observer8 = CombineLatestObserver(parent: self, index: 7, this: subscription8)
         observer9 = CombineLatestObserver(parent: self, index: 8, this: subscription9)
 
-        subscription1.setDisposable(*parent.source1.subscribeSafe(ObserverOf(observer1)))
-        subscription2.setDisposable(*parent.source2.subscribeSafe(ObserverOf(observer2)))
-        subscription3.setDisposable(*parent.source3.subscribeSafe(ObserverOf(observer3)))
-        subscription4.setDisposable(*parent.source4.subscribeSafe(ObserverOf(observer4)))
-        subscription5.setDisposable(*parent.source5.subscribeSafe(ObserverOf(observer5)))
-        subscription6.setDisposable(*parent.source6.subscribeSafe(ObserverOf(observer6)))
-        subscription7.setDisposable(*parent.source7.subscribeSafe(ObserverOf(observer7)))
-        subscription8.setDisposable(*parent.source8.subscribeSafe(ObserverOf(observer8)))
-        subscription9.setDisposable(*parent.source9.subscribeSafe(ObserverOf(observer9)))
+        subscription1.setDisposable(parent.source1.subscribe(ObserverOf(observer1)))
+        subscription2.setDisposable(parent.source2.subscribe(ObserverOf(observer2)))
+        subscription3.setDisposable(parent.source3.subscribe(ObserverOf(observer3)))
+        subscription4.setDisposable(parent.source4.subscribe(ObserverOf(observer4)))
+        subscription5.setDisposable(parent.source5.subscribe(ObserverOf(observer5)))
+        subscription6.setDisposable(parent.source6.subscribe(ObserverOf(observer6)))
+        subscription7.setDisposable(parent.source7.subscribe(ObserverOf(observer7)))
+        subscription8.setDisposable(parent.source8.subscribe(ObserverOf(observer8)))
+        subscription9.setDisposable(parent.source9.subscribe(ObserverOf(observer9)))
 
-        return success(CompositeDisposable(disposables: [
+        return CompositeDisposable(disposables: [
                 subscription1,
                 subscription2,
                 subscription3,
@@ -786,7 +786,7 @@ class CombineLatestSink9_<E1, E2, E3, E4, E5, E6, E7, E8, E9, R> : CombineLatest
                 subscription7,
                 subscription8,
                 subscription9
-        ]))
+        ])
     }
 
     override func getResult() -> Result<R> {
@@ -823,7 +823,7 @@ class CombineLatest9<E1, E2, E3, E4, E5, E6, E7, E8, E9, R> : Producer<R> {
         self.resultSelector = resultSelector
     }
 
-    override func run(observer: ObserverOf<R>, cancel: Disposable, setSink: (Disposable) -> Void) -> Result<Disposable> {
+    override func run(observer: ObserverOf<R>, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
         let sink = CombineLatestSink9_(parent: self, observer: observer, cancel: cancel)
         setSink(sink)
         return sink.run()
@@ -873,7 +873,7 @@ class CombineLatestSink10_<E1, E2, E3, E4, E5, E6, E7, E8, E9, E10, R> : Combine
         super.init(arity: 10, observer: observer, cancel: cancel)
     }
 
-    func run() -> Result<Disposable> {
+    func run() -> Disposable {
         let subscription1 = SingleAssignmentDisposable()
         let subscription2 = SingleAssignmentDisposable()
         let subscription3 = SingleAssignmentDisposable()
@@ -896,18 +896,18 @@ class CombineLatestSink10_<E1, E2, E3, E4, E5, E6, E7, E8, E9, E10, R> : Combine
         observer9 = CombineLatestObserver(parent: self, index: 8, this: subscription9)
         observer10 = CombineLatestObserver(parent: self, index: 9, this: subscription10)
 
-        subscription1.setDisposable(*parent.source1.subscribeSafe(ObserverOf(observer1)))
-        subscription2.setDisposable(*parent.source2.subscribeSafe(ObserverOf(observer2)))
-        subscription3.setDisposable(*parent.source3.subscribeSafe(ObserverOf(observer3)))
-        subscription4.setDisposable(*parent.source4.subscribeSafe(ObserverOf(observer4)))
-        subscription5.setDisposable(*parent.source5.subscribeSafe(ObserverOf(observer5)))
-        subscription6.setDisposable(*parent.source6.subscribeSafe(ObserverOf(observer6)))
-        subscription7.setDisposable(*parent.source7.subscribeSafe(ObserverOf(observer7)))
-        subscription8.setDisposable(*parent.source8.subscribeSafe(ObserverOf(observer8)))
-        subscription9.setDisposable(*parent.source9.subscribeSafe(ObserverOf(observer9)))
-        subscription10.setDisposable(*parent.source10.subscribeSafe(ObserverOf(observer10)))
+        subscription1.setDisposable(parent.source1.subscribe(ObserverOf(observer1)))
+        subscription2.setDisposable(parent.source2.subscribe(ObserverOf(observer2)))
+        subscription3.setDisposable(parent.source3.subscribe(ObserverOf(observer3)))
+        subscription4.setDisposable(parent.source4.subscribe(ObserverOf(observer4)))
+        subscription5.setDisposable(parent.source5.subscribe(ObserverOf(observer5)))
+        subscription6.setDisposable(parent.source6.subscribe(ObserverOf(observer6)))
+        subscription7.setDisposable(parent.source7.subscribe(ObserverOf(observer7)))
+        subscription8.setDisposable(parent.source8.subscribe(ObserverOf(observer8)))
+        subscription9.setDisposable(parent.source9.subscribe(ObserverOf(observer9)))
+        subscription10.setDisposable(parent.source10.subscribe(ObserverOf(observer10)))
 
-        return success(CompositeDisposable(disposables: [
+        return CompositeDisposable(disposables: [
                 subscription1,
                 subscription2,
                 subscription3,
@@ -918,7 +918,7 @@ class CombineLatestSink10_<E1, E2, E3, E4, E5, E6, E7, E8, E9, E10, R> : Combine
                 subscription8,
                 subscription9,
                 subscription10
-        ]))
+        ])
     }
 
     override func getResult() -> Result<R> {
@@ -957,7 +957,7 @@ class CombineLatest10<E1, E2, E3, E4, E5, E6, E7, E8, E9, E10, R> : Producer<R> 
         self.resultSelector = resultSelector
     }
 
-    override func run(observer: ObserverOf<R>, cancel: Disposable, setSink: (Disposable) -> Void) -> Result<Disposable> {
+    override func run(observer: ObserverOf<R>, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
         let sink = CombineLatestSink10_(parent: self, observer: observer, cancel: cancel)
         setSink(sink)
         return sink.run()

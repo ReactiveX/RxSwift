@@ -46,7 +46,7 @@ class TestScheduler : VirtualTimeSchedulerBase {
         }
         
         self.schedule(state, time: subscribed) { (state) in
-            subscription = source!.subscribe(ObserverOf(observer)).value!
+            subscription = source!.subscribe(ObserverOf(observer))
             return SuccessResult
         }
         

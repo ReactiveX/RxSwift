@@ -9,7 +9,7 @@
 import Foundation
 import RxSwift
 
-class MockObserver<ElementType : Equatable> : ObserverClassType {
+class MockObserver<ElementType : Equatable> : ObserverType {
     typealias Element = ElementType
     
     let scheduler: TestScheduler
@@ -20,8 +20,7 @@ class MockObserver<ElementType : Equatable> : ObserverClassType {
         self.messages = []
     }
     
-    func on(event: Event<Element>) -> Result<Void> {
+    func on(event: Event<Element>) {
         messages.append(Recorded(time: scheduler.now, event: event))
-        return SuccessResult
     }
 }

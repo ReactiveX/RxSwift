@@ -46,21 +46,20 @@ class ConnectableObservable<SourceType, ResultType> : ConnectableObservableType<
         self.connection = nil
     }
     
-    override func connect() -> Result<Disposable> {
+    override func connect() -> Disposable {
         return self.lock.calculateLocked { oldConnection in
             if let connection = connection {
-                return success(connection)
+                return connection
             }
             else {
-                return self.source.subscribeSafe(ObserverOf(self.subject)) >== { disposable in
-                    self.connection = Connection(parent: self, subscription: disposable)
-                    return success(self.connection!)
-                }
+                let disposable = self.source.subscribe(ObserverOf(self.subject))
+                self.connection = Connection(parent: self, subscription: disposable)
+                return self.connection!
             }
         }
     }
     
-    override func subscribe(observer: ObserverOf<ResultType>) -> Result<Disposable> {
-        return subject.subscribeSafe(observer)
+    override func subscribe(observer: ObserverOf<ResultType>) -> Disposable {
+        return subject.subscribe(observer)
     }
 }

@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Catch_Impl<ElementType> : ObserverClassType {
+class Catch_Impl<ElementType> : ObserverType {
     typealias Element = ElementType
     typealias Parent = Catch_<Element>
     
@@ -18,8 +18,8 @@ class Catch_Impl<ElementType> : ObserverClassType {
         self.parent = parent
     }
     
-    func on(event: Event<ElementType>) -> Result<Void> {
-        let result = parent.observer.on(event)
+    func on(event: Event<ElementType>) {
+        parent.observer.on(event)
         
         switch event {
         case .Next:
@@ -29,12 +29,10 @@ class Catch_Impl<ElementType> : ObserverClassType {
         case .Completed:
             parent.dispose()
         }
-        
-        return result
     }
 }
 
-class Catch_<ElementType> : Sink<ElementType>, ObserverClassType {
+class Catch_<ElementType> : Sink<ElementType>, ObserverType {
     typealias Element = ElementType
     typealias Parent = Catch<Element>
     
@@ -46,41 +44,37 @@ class Catch_<ElementType> : Sink<ElementType>, ObserverClassType {
         super.init(observer: observer, cancel: cancel)
     }
     
-    func run() -> Result<Disposable> {
+    func run() -> Disposable {
         let d1 = SingleAssignmentDisposable()
         subscription.setDisposable(d1)
-        return parent.source.subscribeSafe(ObserverOf(self)) >== { disposableSubscription in
-            d1.setDisposable(disposableSubscription)
-        } >>> {
-            success(subscription)
-        }
+        
+        let disposableSubscription = parent.source.subscribe(ObserverOf(self))
+        d1.setDisposable(disposableSubscription)
+        
+        return subscription
     }
     
-    func on(event: Event<Element>) -> Result<Void> {
+    func on(event: Event<Element>) {
         switch event {
         case .Next:
-            return self.observer.on(event)
+            self.observer.on(event)
         case .Completed:
-            let result = self.observer.on(event)
+            self.observer.on(event)
             self.dispose()
-            return result
         case .Error(let error):
-            return parent.handler(error) >>! { error2 in
-                let result = self.observer.on(.Error(error2))
+            parent.handler(error) >>! { error2 in
+                self.observer.on(.Error(error2))
                 self.dispose()
-                return result >>> {
-                    return .Error(error2)
-                }
-            } >== { catchObservable in
+                return .Error(error2)
+            } >== { catchObservable -> Result<Void> in
                 let d = SingleAssignmentDisposable()
                 subscription.setDisposable(d)
                 
                 let observer = ObserverOf(Catch_Impl(parent: self))
                 
-                return catchObservable.subscribeSafe(observer) >== { subscription2 in
-                    d.setDisposable(subscription2)
-                    return SuccessResult
-                }
+                let subscription2 = catchObservable.subscribe(observer)
+                d.setDisposable(subscription2)
+                return SuccessResult
             }
         }
     }
@@ -97,14 +91,14 @@ class Catch<Element> : Producer<Element> {
         self.handler = handler
     }
     
-    override func run(observer: ObserverOf<Element>, cancel: Disposable, setSink: (Disposable) -> Void) -> Result<Disposable> {
+    override func run(observer: ObserverOf<Element>, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
         let sink = Catch_(parent: self, observer: observer, cancel: cancel)
         setSink(sink)
         return sink.run()
     }
 }
 
-class CatchToResult_<ElementType> : Sink<Result<ElementType>>, ObserverClassType {
+class CatchToResult_<ElementType> : Sink<Result<ElementType>>, ObserverType {
     typealias Element = ElementType
     typealias Parent = CatchToResult<ElementType>
     
@@ -115,25 +109,22 @@ class CatchToResult_<ElementType> : Sink<Result<ElementType>>, ObserverClassType
         super.init(observer: observer, cancel: cancel)
     }
     
-    func run() -> Result<Disposable> {
-        return parent.source.subscribeSafe(ObserverOf(self))
+    func run() -> Disposable {
+        return parent.source.subscribe(ObserverOf(self))
     }
     
-    func on(event: Event<Element>) -> Result<Void> {
+    func on(event: Event<Element>) {
         switch event {
         case .Next(let boxedValue):
             let value = boxedValue.value
             return self.observer.on(.Next(Box(success(value))))
         case .Completed:
-            let result = self.observer.on(.Completed)
+            self.observer.on(.Completed)
             self.dispose()
-            return result
         case .Error(let error):
-            let result = self.observer.on(.Next(Box(.Error(error)))) >>> {
-                self.observer.on(.Completed)
-            }
+            self.observer.on(.Next(Box(.Error(error))))
+            self.observer.on(.Completed)
             self.dispose()
-            return result
         }
     }
 }
@@ -145,7 +136,7 @@ class CatchToResult<Element> : Producer<Result<Element>> {
         self.source = source
     }
     
-    override func run(observer: ObserverOf<Result<Element>>, cancel: Disposable, setSink: (Disposable) -> Void) -> Result<Disposable> {
+    override func run(observer: ObserverOf<Result<Element>>, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
         let sink = CatchToResult_(parent: self, observer: observer, cancel: cancel)
         setSink(sink)
         return sink.run()

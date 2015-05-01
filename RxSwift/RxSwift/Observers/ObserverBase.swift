@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class ObserverBase<ElementType> : ObserverClassType, Disposable {
+public class ObserverBase<ElementType> : ObserverType, Disposable {
     typealias Element = ElementType
     
     var lock = Lock()
@@ -17,16 +17,12 @@ public class ObserverBase<ElementType> : ObserverClassType, Disposable {
     public init() {
     }
     
-    public func on(event: Event<Element>) -> Result<Void> {
+    public func on(event: Event<Element>) {
         switch event {
         case .Next:
             if !isStopped {
-                return onCore(event)
+                onCore(event)
             }
-            else {
-                return SuccessResult
-            }
-            //return abstractMethod()
         case .Error: fallthrough
         case .Completed:
             var wasStopped: Bool = lock.calculateLocked {
@@ -36,31 +32,12 @@ public class ObserverBase<ElementType> : ObserverClassType, Disposable {
             }
             
             if !wasStopped {
-                return self.onCore(event)
+                self.onCore(event)
             }
-            return SuccessResult
         }
     }
     
-    public func onCore(event: Event<Element>) -> Result<Void> {
-        return SuccessResult
-    }
-    
-    func fail(error: ErrorType) -> Result<Bool> {
-        var wasStopped: Bool = lock.calculateLocked {
-            var wasStopped = self.isStopped
-            self.isStopped = true
-            return wasStopped
-        }
-        
-        if !wasStopped {
-            return self.onCore(.Error(error)) >>> {
-                success(true)
-            }
-        }
-        else {
-            return success(false)
-        }
+    public func onCore(event: Event<Element>) {
     }
     
     public func dispose() {

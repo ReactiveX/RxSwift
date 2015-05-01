@@ -8,7 +8,7 @@
 
 import Foundation
 
-class RefCount_<Element> : Sink<Element>, ObserverClassType {
+class RefCount_<Element> : Sink<Element>, ObserverType {
     let parent: RefCount<Element>
     typealias ParentState = RefCount<Element>.State
     
@@ -17,59 +17,51 @@ class RefCount_<Element> : Sink<Element>, ObserverClassType {
         super.init(observer: observer, cancel: cancel)
     }
     
-    func run() -> Result<Disposable> {
-        let subscriptionResult: Result<Disposable> = self.parent.source.subscribeSafe(ObserverOf(self))
+    func run() -> Disposable {
+        let subscription = self.parent.source.subscribe(ObserverOf(self))
         
-        return subscriptionResult >>> { () -> Result<Void> in
-            let state = self.parent.state
-            
-            return self.parent.lock.calculateLocked {
-                if state.count == 0 {
-                    return self.parent.source.connect() >== { disposable in
-                        self.parent.state.count = 1
-                        self.parent.state.connectableSubscription = disposable
-                        return SuccessResult
-                    } >>! { e in
-                        (*subscriptionResult).dispose()
-                        return .Error(e)
-                    }
+        let state = self.parent.state
+        
+        self.parent.lock.performLocked {
+            if state.count == 0 {
+                let disposable = self.parent.source.connect()
+                self.parent.state.count = 1
+                self.parent.state.connectableSubscription = disposable
+            }
+            else {
+                self.parent.state.count = state.count + 1
+            }
+        }
+        
+        return AnonymousDisposable {
+            subscription.dispose()
+            self.parent.lock.performLocked {
+                let state = self.parent.state
+                if state.count == 1 {
+                    state.connectableSubscription!.dispose()
+                    self.parent.state.count = 0
+                    self.parent.state.connectableSubscription = nil
+                }
+                else if state.count > 1 {
+                    self.parent.state.count = state.count - 1
                 }
                 else {
-                    self.parent.state.count = state.count + 1
-                    return SuccessResult
+                    rxFatalError("Something went wrong with RefCount disposing mechanism")
                 }
             }
-        } >>> {
-            return success(AnonymousDisposable {
-                (*subscriptionResult).dispose()
-                self.parent.lock.performLocked {
-                    let state = self.parent.state
-                    if state.count == 1 {
-                        state.connectableSubscription!.dispose()
-                        self.parent.state.count = 0
-                        self.parent.state.connectableSubscription = nil
-                    }
-                    else if state.count > 1 {
-                        self.parent.state.count = state.count - 1
-                    }
-                    else {
-                        rxFatalError("Something went wrong with RefCount disposing mechanism")
-                    }
-                }
-            })
         }
     }
 
-    func on(event: Event<Element>) -> Result<Void> {
+    func on(event: Event<Element>) {
         let observer = state.observer
         
         switch event {
-        case .Next: return observer.on(event)
+        case .Next:
+            observer.on(event)
         case .Error: fallthrough
         case .Completed:
-            let result = observer.on(event)
+            observer.on(event)
             self.dispose()
-            return result
         }
     }
 }
@@ -93,7 +85,7 @@ class RefCount<Element>: Producer<Element> {
         self.source = source
     }
     
-    override func run(observer: ObserverOf<Element>, cancel: Disposable, setSink: (Disposable) -> Void) -> Result<Disposable> {
+    override func run(observer: ObserverOf<Element>, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
         let sink = RefCount_(parent: self, observer: observer, cancel: cancel)
         setSink(sink)
         return sink.run()

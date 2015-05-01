@@ -10,16 +10,15 @@ import Foundation
 
 public class ObservableBase<Element> : Observable<Element> {
     
-    override public func subscribe(observer: ObserverOf<Element>) -> Result<Disposable> {
+    override public func subscribe(observer: ObserverOf<Element>) -> Disposable {
         let autoDetachObserver = AutoDetachObserver(observer: observer)
         
-        return subscribeCore(ObserverOf(autoDetachObserver)) >== { disposable in
-            autoDetachObserver.setDisposable(disposable)
-            return success(disposable)
-        }
+        let disposable = subscribeCore(ObserverOf(autoDetachObserver))
+        autoDetachObserver.setDisposable(disposable)
+        return disposable
     }
     
-    func subscribeCore(observer: ObserverOf<Element>) -> Result<Disposable> {
+    func subscribeCore(observer: ObserverOf<Element>) -> Disposable {
         return abstractMethod()
     }
 }

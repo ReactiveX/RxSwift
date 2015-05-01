@@ -28,7 +28,7 @@ class ColdObservable<Element: Equatable>: Observable<Element> {
         super.init()
     }
     
-    override func subscribe(observer: ObserverOf<Element>) -> Result<Disposable> {
+    override func subscribe(observer: ObserverOf<Element>) -> Disposable {
         let key = observers.put(observer)
         subscriptions.append(Subscription(subscribe: self.testScheduler.now))
         
@@ -36,17 +36,18 @@ class ColdObservable<Element: Equatable>: Observable<Element> {
 
         for recordedEvent in recordedEvents {
             testScheduler.scheduleRelative((), dueTime: recordedEvent.time, action: { (Int) in
-                return doAll(self.observers.all.map { o in o.on(recordedEvent.event) })
+                self.observers.all.map { o in o.on(recordedEvent.event) }
+                return SuccessResult
             })
         }
         
-        return success(AnonymousDisposable { 
+        return AnonymousDisposable {
             let removed = self.observers.removeKey(key)
             assert(removed != nil);
             
             let existing = self.subscriptions[i]
             self.subscriptions[i] = Subscription(existing.subscribe, self.testScheduler.now)
             
-            })
+        }
     }
 }

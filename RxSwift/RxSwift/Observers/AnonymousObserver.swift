@@ -8,10 +8,10 @@
 
 import Foundation
 
-public class AnonymousObserver<ElementType> : ObserverClassType {
+public class AnonymousObserver<ElementType> : ObserverType {
     typealias Element = ElementType
     
-    typealias EventHandler = Event<Element> -> Result<Void>
+    typealias EventHandler = Event<Element> -> Void
     
     private let eventHandler : EventHandler
     
@@ -19,11 +19,7 @@ public class AnonymousObserver<ElementType> : ObserverClassType {
         self.eventHandler = eventHandler
     }
     
-    public func on(event: Event<Element>) -> Result<Void> {
+    public func on(event: Event<Element>) {
         return self.eventHandler(event)
-    }
-    
-    func makeSafe(disposable: Disposable) -> AnonymousSafeObserver<Element> {
-        return AnonymousSafeObserver(eventHandler: eventHandler, disposable: disposable)
     }
 }

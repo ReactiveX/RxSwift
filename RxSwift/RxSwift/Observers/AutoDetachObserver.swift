@@ -23,20 +23,14 @@ class AutoDetachObserver<Element> : ObserverBase<Element> {
         m.setDisposable(disposable)
     }
     
-    override func onCore(event: Event<Element>) -> Result<Void> {
+    override func onCore(event: Event<Element>) {
         switch event {
         case .Next:
-            
-            return observer.on(event) >>! { e in
-                self.dispose()
-                return .Error(e)
-            }
-            
+            observer.on(event)
         case .Completed: fallthrough
         case .Error:
-            let result = observer.on(event)
+            observer.on(event)
             dispose()
-            return result
         }
     }
     

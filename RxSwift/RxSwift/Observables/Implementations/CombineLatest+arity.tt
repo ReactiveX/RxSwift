@@ -42,16 +42,16 @@ class CombineLatestSink<%= i %>_<<%= ", ".join(map(1...i) { "E\($0)" }) %>, R> :
         super.init(arity: <%= i %>, observer: observer, cancel: cancel)
     }
 
-    func run() -> Result<Disposable> {
+    func run() -> Disposable {
 <%= "\n".join(map(1...i) { "        let subscription\($0) = SingleAssignmentDisposable()" }) %>
 
 <%= "\n".join(map(1...i) { "        observer\($0) = CombineLatestObserver(parent: self, index: \($0 - 1), this: subscription\($0))" }) %>
 
-<%= "\n".join(map(1...i) { "        subscription\($0).setDisposable(*parent.source\($0).subscribeSafe(ObserverOf(observer\($0))))" }) %>
+<%= "\n".join(map(1...i) { "        subscription\($0).setDisposable(parent.source\($0).subscribe(ObserverOf(observer\($0))))" }) %>
 
-        return success(CompositeDisposable(disposables: [
+        return CompositeDisposable(disposables: [
 <%= ",\n".join(map(1...i) { "                subscription\($0)" }) %>
-        ]))
+        ])
     }
 
     override func getResult() -> Result<R> {
@@ -72,7 +72,7 @@ class CombineLatest<%= i %><<%= ", ".join(map(1...i) { "E\($0)" }) %>, R> : Prod
         self.resultSelector = resultSelector
     }
 
-    override func run(observer: ObserverOf<R>, cancel: Disposable, setSink: (Disposable) -> Void) -> Result<Disposable> {
+    override func run(observer: ObserverOf<R>, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
         let sink = CombineLatestSink<%= i %>_(parent: self, observer: observer, cancel: cancel)
         setSink(sink)
         return sink.run()

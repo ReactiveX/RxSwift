@@ -8,34 +8,18 @@
 
 import Foundation
 
-extension Observable {
-    func subscribeSafe(observer: ObserverOf<Element>) -> Result<Disposable> {
-        if let observableBase = self as? ObservableBase<Element> {
-            return observableBase.subscribe(observer)
-        }
-        
-        var mutableObserver = observer
-        
-        return self.subscribe(observer) >>! { error in
-            return mutableObserver.on(Event<Element>.Error(error)) >>> { DefaultDisposable() }
-        }
-    }
-    
-}
-
 public func subscribe<E>
     (on: (event: Event<E>) -> Void)
-    (source: Observable<E>) -> Result<Disposable> {
+    (source: Observable<E>) -> Disposable {
     let observer: ObserverOf<E> = ObserverOf(AnonymousObserver { e in
         on(event: e)
-        return SuccessResult
     })
     return source.subscribe(observer)
 }
 
 public func subscribeNext<E>
     (onNext: (E) -> Void)
-    (source: Observable<E>) -> Result<Disposable> {
+    (source: Observable<E>) -> Disposable {
     let observer: ObserverOf<E> = ObserverOf(AnonymousObserver { e in
         switch e {
         case .Next(let boxedValue):
@@ -43,7 +27,6 @@ public func subscribeNext<E>
         default:
             break
         }
-        return SuccessResult
     })
     return source.subscribe(observer)
 }

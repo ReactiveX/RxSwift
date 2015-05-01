@@ -9,11 +9,11 @@
 import Foundation
 
 protocol CombineLatestProtocol : class {
-    func performLocked(@noescape action: () -> Result<Void>) -> Result<Void>
+    func performLocked(@noescape action: () -> Void)
     
-    func next(index: Int) -> Result<Void>
-    func fail(error: ErrorType) -> Result<Void>
-    func done(index: Int) -> Result<Void>
+    func next(index: Int)
+    func fail(error: ErrorType)
+    func done(index: Int)
 }
 
 class CombineLatestSink<Element> : Sink<Element>, CombineLatestProtocol {
@@ -35,11 +35,11 @@ class CombineLatestSink<Element> : Sink<Element>, CombineLatestProtocol {
         return abstractMethod()
     }
    
-    func performLocked(@noescape action: () -> Result<Void>) -> Result<Void> {
+    func performLocked(@noescape action: () -> Void) {
         return lock.calculateLocked(action)
     }
     
-    func next(index: Int) -> Result<Void> {
+    func next(index: Int) {
         if !hasValueAll {
             hasValue[index] = true
             
@@ -57,12 +57,13 @@ class CombineLatestSink<Element> : Sink<Element>, CombineLatestProtocol {
         if hasValueAll {
             let maybeRes = getResult()
             
-            return maybeRes >== { res in
-                return self.observer.on(.Next(Box(res)))
-            } >>! { e in
-                let result = self.observer.on(.Error(e))
+            _ = maybeRes >== { res in
+                self.observer.on(.Next(Box(res)))
+                return SuccessResult
+            } >>! { e -> Result<Void> in
+                self.observer.on(.Error(e))
                 self.dispose()
-                return result
+                return SuccessResult
             }
         }
         else {
@@ -77,22 +78,18 @@ class CombineLatestSink<Element> : Sink<Element>, CombineLatestProtocol {
             }
             
             if allOthersDone {
-                let result = self.observer.on(.Completed)
+                self.observer.on(.Completed)
                 self.dispose()
-                return result
             }
         }
-        
-        return SuccessResult
     }
     
-    func fail(error: ErrorType) -> Result<Void> {
-        let result = self.observer.on(.Error(error))
+    func fail(error: ErrorType) {
+        self.observer.on(.Error(error))
         self.dispose()
-        return result
     }
     
-    func done(index: Int) -> Result<Void> {
+    func done(index: Int) {
         isDone[index] = true
         
         var allDone = true
@@ -105,17 +102,13 @@ class CombineLatestSink<Element> : Sink<Element>, CombineLatestProtocol {
         }
         
         if allDone {
-            let result = observer.on(.Completed)
+            observer.on(.Completed)
             self.dispose()
-            return result
-        }
-        else {
-            return SuccessResult
         }
     }
 }
 
-class CombineLatestObserver<Element> : ObserverClassType {
+class CombineLatestObserver<Element> : ObserverType {
     unowned let _parent: CombineLatestProtocol
     let _index: Int
     let _this: Disposable
@@ -134,19 +127,19 @@ class CombineLatestObserver<Element> : ObserverClassType {
         }
     }
     
-    func on(event: Event<Element>) -> Result<Void> {
-        return _parent.performLocked {
+    func on(event: Event<Element>) {
+        _parent.performLocked {
             switch event {
             case .Next(let boxedValue):
                 let value = boxedValue.value
                 self._value = value
-                return self._parent.next(_index)
+                self._parent.next(_index)
             case .Error(let error):
                 self._this.dispose()
-                return self._parent.fail(error)
+                self._parent.fail(error)
             case .Completed:
                 self._this.dispose()
-                return self._parent.done(_index)
+                self._parent.done(_index)
             }
         }
     }

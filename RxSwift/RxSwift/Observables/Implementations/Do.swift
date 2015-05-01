@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Do_<ElementType> : Sink<ElementType>, ObserverClassType, Disposable {
+class Do_<ElementType> : Sink<ElementType>, ObserverType, Disposable {
     typealias Element = ElementType
     typealias DoType = Do<Element>
     
@@ -19,17 +19,18 @@ class Do_<ElementType> : Sink<ElementType>, ObserverClassType, Disposable {
         super.init(observer: observer, cancel: cancel)
     }
     
-    func on(event: Event<Element>) -> Result<Void> {
-        return (parent.eventHandler(event) >>! { error in
+    func on(event: Event<Element>) {
+        parent.eventHandler(event) >>! { error in
             // catch clause
-            return self.state.observer.on(Event.Error(error)) >>> { self.dispose() }
-        }) >== { _ in
-            return self.state.observer.on(event) >>> {
-                if event.isStopEvent {
-                    self.dispose()
-                }
-                return SuccessResult
+            self.state.observer.on(Event.Error(error))
+            self.dispose()
+            return SuccessResult
+        } >== { _ -> Result<Void> in
+            self.state.observer.on(event)
+            if event.isStopEvent {
+                self.dispose()
             }
+            return SuccessResult
         }
     }
 }
@@ -45,11 +46,11 @@ class Do<Element> : Producer<Element> {
         self.eventHandler = eventHandler
     }
     
-    override func run(observer: ObserverOf<Element>, cancel: Disposable, setSink: (Disposable) -> Void) -> Result<Disposable> {
+    override func run(observer: ObserverOf<Element>, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
         let sink = Do_(parent: self, observer: observer, cancel: cancel)
         
         setSink(sink)
         
-        return self.source.subscribeSafe(ObserverOf(sink))
+        return self.source.subscribe(ObserverOf(sink))
     }
 }

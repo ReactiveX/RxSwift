@@ -8,7 +8,7 @@
 
 import Foundation
 
-class DistinctUntilChanged_<ElementType, Key>: Sink<ElementType>, ObserverClassType {
+class DistinctUntilChanged_<ElementType, Key>: Sink<ElementType>, ObserverType {
     typealias Element = ElementType
     
     let parent: DistinctUntilChanged<ElementType, Key>
@@ -19,7 +19,7 @@ class DistinctUntilChanged_<ElementType, Key>: Sink<ElementType>, ObserverClassT
         super.init(observer: observer, cancel: cancel)
     }
     
-    func on(event: Event<Element>) -> Result<Void> {
+    func on(event: Event<Element>) {
         let observer = super.state.observer
         
         switch event {
@@ -33,26 +33,24 @@ class DistinctUntilChanged_<ElementType, Key>: Sink<ElementType>, ObserverClassT
                 else {
                     return success(false)
                 }
-            }
-            
-            return (areEqualResult >== { areEqual in
+            } >== { areEqual in
                 if areEqual {
                     return SuccessResult
                 }
                 
                 self.currentKey = *keyResult
                 
-                return observer.on(event)
-            }) >>! { error in
-                let result = observer.on(.Error(error))
+                observer.on(event)
+                return SuccessResult
+            } >>! { error -> Result<Void> in
+                observer.on(.Error(error))
                 self.dispose()
-                return result
+                return SuccessResult
             }
         case .Error: fallthrough
         case .Completed:
-            let result = observer.on(event)
+            observer.on(event)
             self.dispose()
-            return result
         }
     }
 }
@@ -71,9 +69,9 @@ class DistinctUntilChanged<Element, Key>: Producer<Element> {
         self.comparer = comparer
     }
     
-    override func run(observer: ObserverOf<Element>, cancel: Disposable, setSink: (Disposable) -> Void) -> Result<Disposable> {
+    override func run(observer: ObserverOf<Element>, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
         let sink = DistinctUntilChanged_(parent: self, observer: observer, cancel: cancel)
         setSink(sink)
-        return source.subscribeSafe(ObserverOf(sink))
+        return source.subscribe(ObserverOf(sink))
     }
 }

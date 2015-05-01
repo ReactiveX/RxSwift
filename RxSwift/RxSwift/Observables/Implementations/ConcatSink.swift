@@ -13,12 +13,12 @@ class ConcatSink<Element> : TailRecursiveSink<Element> {
         super.init(observer: observer, cancel: cancel)
     }
     
-    override func on(event: Event<Element>) -> Result<Void> {
+    override func on(event: Event<Element>){
         switch event {
         case .Completed:
-            return scheduleMoveNext()
+            scheduleMoveNext()
         default:
-            return super.on(event)
+            super.on(event)
         }
     }
     

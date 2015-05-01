@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Select_<ElementType, ResultType> : Sink<ResultType>, ObserverClassType {
+class Select_<ElementType, ResultType> : Sink<ResultType>, ObserverType {
     let parent: Select<ElementType, ResultType>
     
     init(parent: Select<ElementType, ResultType>, observer: ObserverOf<ResultType>, cancel: Disposable) {
@@ -20,28 +20,25 @@ class Select_<ElementType, ResultType> : Sink<ResultType>, ObserverClassType {
         return abstractMethod()
     }
 
-    func on(event: Event<ElementType>) -> Result<Void> {
+    func on(event: Event<ElementType>) {
         let observer = super.state.observer
         
         switch event {
         case .Next(let element):
-            let sendValueResult: Result<Void> = select(element.value) >== { value in
-                return observer.on(.Next(Box(value)))
-            }
-                
-            return sendValueResult >>! { e -> Result<Void> in
-                let result: Result<Void> = observer.on(.Error(e)) >>> { .Error(e) }
+            select(element.value) >== { value in
+                observer.on(.Next(Box(value)))
+                return SuccessResult
+            } >>! { e -> Result<Void> in
+                observer.on(.Error(e))
                 self.dispose()
-                return result
+                return SuccessResult
             }
         case .Error(let error):
-            let result = observer.on(.Error(error))
+            observer.on(.Error(error))
             self.dispose()
-            return result
         case .Completed:
-            let result = observer.on(.Completed)
+            observer.on(.Completed)
             self.dispose()
-            return result
         }
     }
 }
@@ -90,7 +87,7 @@ class Select<ElementType, ResultType>: Producer<ResultType> {
         self.selector1 = nil
     }
     
-    override func run(observer: ObserverOf<ResultType>, cancel: Disposable, setSink: (Disposable) -> Void) -> Result<Disposable> {
+    override func run(observer: ObserverOf<ResultType>, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
         var sink: Select_<ElementType, ResultType>
         if let selector1 = self.selector1 {
             sink = Select_1(parent: self, observer: observer, cancel: cancel)
@@ -101,6 +98,6 @@ class Select<ElementType, ResultType>: Producer<ResultType> {
         
         setSink(sink)
             
-        return self.source.subscribeSafe(ObserverOf(sink))
+        return self.source.subscribe(ObserverOf(sink))
     }
 }

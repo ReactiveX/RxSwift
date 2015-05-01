@@ -9,7 +9,7 @@
 import Foundation
 
 class AsyncLock : Disposable {
-    typealias Action = () -> Result<Void>
+    typealias Action = () -> Void
     
     private var lock: Lock = Lock()
     
@@ -21,7 +21,7 @@ class AsyncLock : Disposable {
         
     }
     
-    func wait(action: Action) -> Result<Void> {
+    func wait(action: Action) {
         let isOwner = lock.calculateLocked { () -> Bool in
             if self.hasFaulted {
                 return false
@@ -35,7 +35,7 @@ class AsyncLock : Disposable {
         }
         
         if !isOwner {
-            return SuccessResult
+            return
         }
         
         while true {
@@ -50,17 +50,10 @@ class AsyncLock : Disposable {
             }
             
             if let nextAction = nextAction {
-                let executeResult = nextAction() >>! { e in
-                    self.dispose()
-                    return .Error(e)
-                }
-                
-                if executeResult.error != nil {
-                    return executeResult
-                }
+                nextAction()
             }
             else {
-                return SuccessResult
+                return
             }
         }
     }

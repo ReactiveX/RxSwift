@@ -17,11 +17,11 @@ class ConnectableObservable<Element> : ConnectableObservableType<Element> {
         super.init()
     }
     
-    override func connect() -> Result<Disposable> {
+    override func connect() -> Disposable {
         return _o.connect()
     }
     
-    override func subscribe(observer: ObserverOf<Element>) -> Result<Disposable> {
+    override func subscribe(observer: ObserverOf<Element>) -> Disposable {
         return _o.subscribe(observer)
     }
 }

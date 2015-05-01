@@ -10,7 +10,7 @@ import Foundation
 
 // sequential
 
-class Merge_Iter<ElementType> : ObserverClassType {
+class Merge_Iter<ElementType> : ObserverType {
     typealias Element = ElementType
     typealias DisposeKey = Bag<Disposable>.KeyType
     
@@ -22,35 +22,33 @@ class Merge_Iter<ElementType> : ObserverClassType {
         self.disposeKey = disposeKey
     }
     
-    func on(event: Event<Element>) -> Result<Void> {
+    func on(event: Event<Element>) {
         switch event {
         case .Next:
-            return parent.lock.calculateLocked {
-                return self.parent.observer.on(event)
+            parent.lock.performLocked {
+                self.parent.observer.on(event)
             }
         case .Error:
-            return parent.lock.calculateLocked {
+            parent.lock.performLocked {
                 self.parent.dispose()
 
-                return self.parent.observer.on(event)
+                self.parent.observer.on(event)
             }
         case .Completed:
             let group = parent.mergeState.group
             group.removeDisposable(disposeKey)
-            return parent.lock.calculateLocked {
+            parent.lock.performLocked {
                 let state = parent.mergeState
                 if state.stopped && state.group.count == 1 {
-                    let result = self.parent.observer.on(.Completed)
+                    self.parent.observer.on(.Completed)
                     self.parent.dispose()
-                    return result
                 }
-                return SuccessResult
             }
         }
     }
 }
 
-class Merge_<ElementType> : Sink<ElementType>, ObserverClassType {
+class Merge_<ElementType> : Sink<ElementType>, ObserverType {
     typealias Element = Observable<ElementType>
     typealias MergeState = (stopped: Bool, group: CompositeDisposable, sourceSubscription: SingleAssignmentDisposable)
     
@@ -72,18 +70,17 @@ class Merge_<ElementType> : Sink<ElementType>, ObserverClassType {
         super.init(observer: observer, cancel: cancel)
     }
     
-    func run() -> Result<Disposable> {
+    func run() -> Disposable {
         let state = self.mergeState
         
         state.group.addDisposable(state.sourceSubscription)
         
-        return self.parent.sources.subscribe(ObserverOf(self)) >== { disposable in
-            state.sourceSubscription.setDisposable(disposable)
-            return success(state.group)
-        }
+        let disposable = self.parent.sources.subscribe(ObserverOf(self))
+        state.sourceSubscription.setDisposable(disposable)
+        return state.group
     }
     
-    func on(event: Event<Observable<ElementType>>) -> Result<Void> {
+    func on(event: Event<Observable<ElementType>>) {
         switch event {
         case .Next(let boxedValue):
             let value = boxedValue.value
@@ -94,23 +91,16 @@ class Merge_<ElementType> : Sink<ElementType>, ObserverClassType {
             
             if let key = maybeKey {
                 let observer = ObserverOf(Merge_Iter(parent: self, disposeKey: key))
-                return value.subscribeSafe(observer) >== { disposable in
-                    innerSubscription.setDisposable(disposable)
-                    return SuccessResult
-                }
-            }
-            // it was already disposed
-            else {
-                return SuccessResult
+                let disposable = value.subscribe(observer)
+                innerSubscription.setDisposable(disposable)
             }
         case .Error(let error):
-            return lock.calculateLocked { Void -> Result<Void> in
-                let result = self.observer.on(.Error(error))
+            lock.performLocked {
+                self.observer.on(.Error(error))
                 self.dispose()
-                return result
             }
         case .Completed:
-            return lock.calculateLocked {
+            lock.performLocked {
                 let mergeState = self.mergeState
                 
                 let group = mergeState.group
@@ -118,13 +108,11 @@ class Merge_<ElementType> : Sink<ElementType>, ObserverClassType {
                 self.mergeState.stopped = true
                 
                 if group.count == 1 {
-                    let result = self.observer.on(.Completed)
+                    self.observer.on(.Completed)
                     self.dispose()
-                    return result
                 }
                 else {
                     mergeState.sourceSubscription.dispose()
-                    return SuccessResult
                 }
             }
         }
@@ -133,7 +121,7 @@ class Merge_<ElementType> : Sink<ElementType>, ObserverClassType {
 
 // concurrent
 
-class Merge_ConcurrentIter<ElementType> : ObserverClassType {
+class Merge_ConcurrentIter<ElementType> : ObserverType {
     typealias Element = ElementType
     typealias DisposeKey = Bag<Disposable>.KeyType
     
@@ -145,43 +133,39 @@ class Merge_ConcurrentIter<ElementType> : ObserverClassType {
         self.disposeKey = disposeKey
     }
     
-    func on(event: Event<Element>) -> Result<Void> {
+    func on(event: Event<Element>) {
         switch event {
         case .Next:
-            return parent.lock.calculateLocked {
-                return self.parent.observer.on(event)
+            parent.lock.performLocked {
+                self.parent.observer.on(event)
             }
         case .Error:
-            return parent.lock.calculateLocked {
-                let result = self.parent.observer.on(event)
+            parent.lock.performLocked {
+                self.parent.observer.on(event)
                 self.parent.dispose()
-                return result
             }
         case .Completed:
             let mergeState = parent.mergeState
             mergeState.group.removeDisposable(disposeKey)
-            return parent.lock.calculateLocked {
+            parent.lock.performLocked {
                 if mergeState.queue.value.count > 0 {
                     let s = mergeState.queue.value.dequeue()
-                    return self.parent.subscribe(s, group: mergeState.group)
+                    self.parent.subscribe(s, group: mergeState.group)
                 }
                 else {
                     parent.mergeState.activeCount = mergeState.activeCount - 1
                     
-                    var result = SuccessResult
                     if mergeState.stopped && mergeState.activeCount == 0 {
-                        result = self.parent.observer.on(.Completed)
+                        self.parent.observer.on(.Completed)
                         self.parent.dispose()
                     }
-                    
-                    return result
                 }
             }
         }
     }
 }
 
-class Merge_Concurrent<ElementType> : Sink<ElementType>, ObserverClassType {
+class Merge_Concurrent<ElementType> : Sink<ElementType>, ObserverType {
     typealias Element = Observable<ElementType>
     typealias QueueType = Queue<Observable<ElementType>>
     
@@ -213,18 +197,17 @@ class Merge_Concurrent<ElementType> : Sink<ElementType>, ObserverClassType {
         super.init(observer: observer, cancel: cancel)
     }
     
-    func run() -> Result<Disposable> {
+    func run() -> Disposable {
         let state = self.mergeState
 
         state.group.addDisposable(state.sourceSubscription)
         
-        return self.parent.sources.subscribe(ObserverOf(self)) >== { disposable in
-            state.sourceSubscription.setDisposable(disposable)
-            return success(state.group)
-        }
+        let disposable = self.parent.sources.subscribe(ObserverOf(self))
+        state.sourceSubscription.setDisposable(disposable)
+        return state.group
     }
     
-    func subscribe(innerSource: Observable<ElementType>, group: CompositeDisposable) -> Result<Void> {
+    func subscribe(innerSource: Observable<ElementType>, group: CompositeDisposable) {
         let subscription = SingleAssignmentDisposable()
         
         let key = group.addDisposable(subscription)
@@ -232,60 +215,45 @@ class Merge_Concurrent<ElementType> : Sink<ElementType>, ObserverClassType {
         if let key = key {
             let observer = ObserverOf(Merge_ConcurrentIter(parent: self, disposeKey: key))
             
-            return innerSource.subscribeSafe(observer) >== { disposable in
-                subscription.setDisposable(disposable)
-                return SuccessResult
-            }
-        }
-        else {
-            return SuccessResult
+            let disposable = innerSource.subscribe(observer)
+            subscription.setDisposable(disposable)
         }
     }
     
-    func on(event: Event<Observable<ElementType>>) -> Result<Void> {
+    func on(event: Event<Observable<ElementType>>) {
         switch event {
         case .Next(let boxedValue):
             let value = boxedValue.value
             
-            return lock.calculateLocked {
+            lock.performLocked {
                 let mergeState = self.mergeState
                 if mergeState.activeCount < self.parent.maxConcurrent {
-                    return self.subscribe(value, group: mergeState.group) >>> {
-                        self.mergeState.activeCount += 1
-                        return SuccessResult
-                    }
+                    self.subscribe(value, group: mergeState.group)
+                    self.mergeState.activeCount += 1
                 }
                 else {
                     mergeState.queue.value.enqueue(value)
-                    return SuccessResult
                 }
             }
         case .Error(let error):
-            return lock.calculateLocked { Void -> Result<Void> in
-                let result = self.observer.on(.Error(error))
+            lock.performLocked {
+                self.observer.on(.Error(error))
                 self.dispose()
-                return result
             }
         case .Completed:
-            return lock.calculateLocked {
+            lock.performLocked {
                 let mergeState = self.mergeState
                 let group = mergeState.group
                 
-                var result: Result<Void>
-                
                 if mergeState.activeCount == 0 {
-                    result = self.observer.on(.Completed)
+                    self.observer.on(.Completed)
                     self.dispose()
                 }
                 else {
                     mergeState.sourceSubscription.dispose()
-                    result = SuccessResult
                 }
                     
-                return result >>> {
-                    self.mergeState.stopped = true
-                    return SuccessResult
-                }
+                self.mergeState.stopped = true
             }
         }
     }
@@ -300,7 +268,7 @@ class Merge<Element> : Producer<Element> {
         self.maxConcurrent = maxConcurrent
     }
     
-    override func run(observer: ObserverOf<Element>, cancel: Disposable, setSink: (Disposable) -> Void) -> Result<Disposable> {
+    override func run(observer: ObserverOf<Element>, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
         if maxConcurrent > 0 {
             let sink = Merge_Concurrent(parent: self, observer: observer, cancel: cancel)
             setSink(sink)

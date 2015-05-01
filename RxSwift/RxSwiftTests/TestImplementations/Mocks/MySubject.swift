@@ -35,29 +35,25 @@ class MySubject<Element where Element : Hashable> : SubjectType<Element, Element
         _disposeOn[value] = disposable
     }
     
-    override func on(event: Event<Element>) -> Result<Void> {
-        return _observer.on(event) >>> {
-            switch event {
-            case .Next(let boxedValue):
-                let value = boxedValue.value
-                if let disposable = _disposeOn[value] {
-                    disposable.dispose()
-                }
-                return SuccessResult
-            default: break
+    override func on(event: Event<Element>) {
+        _observer.on(event)
+        switch event {
+        case .Next(let boxedValue):
+            let value = boxedValue.value
+            if let disposable = _disposeOn[value] {
+                disposable.dispose()
             }
-            
-            return SuccessResult
+        default: break
         }
     }
     
-    override func subscribe(observer: ObserverOf<Element>) -> Result<Disposable> {
+    override func subscribe(observer: ObserverOf<Element>) -> Disposable {
         _subscribeCount++
         _observer = observer
         
-        return success(AnonymousDisposable {
+        return AnonymousDisposable {
             self._observer = ObserverOf(NopObserver<Element>())
             self._disposed = true
-        })
+        }
     }
 }

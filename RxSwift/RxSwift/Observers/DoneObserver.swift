@@ -13,7 +13,6 @@ class DoneObserver<ElementType> : ObserverType {
     
     //static let Instance = DoneObserver<ValueType, ErrorType>()
     
-    func on(event: Event<Element>) -> Result<Void> {
-        return SuccessResult
+    func on(event: Event<Element>) {
     }
 }

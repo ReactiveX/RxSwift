@@ -64,7 +64,7 @@ public class Subject<Element> : SubjectType<Element, Element>, Disposable {
         }
     }
     
-    public override func on(event: Event<Element>) -> Result<Void> {
+    public override func on(event: Event<Element>) {
         switch event {
         case .Next(let value):
             let observers = lock.calculateLocked { () -> [ObserverType]? in
@@ -76,11 +76,9 @@ public class Subject<Element> : SubjectType<Element, Element>, Disposable {
             }
             
             if let observers = observers {
-                return dispatch(event, observers)
+                dispatch(event, observers)
             }
-            else {
-                return SuccessResult
-            }
+            return
         default:
             break
         }
@@ -104,24 +102,24 @@ public class Subject<Element> : SubjectType<Element, Element>, Disposable {
             return observers
         }
         
-        return dispatch(event, observers)
+        dispatch(event, observers)
     }
     
     
-    public override func subscribe(observer: ObserverOf<Element>) -> Result<Disposable> {
+    public override func subscribe(observer: ObserverOf<Element>) -> Disposable {
         return lock.calculateLocked {
             if let stoppedEvent = state.stoppedEvent {
-                return observer.on(stoppedEvent) >>> {
-                    return success(DefaultDisposable())
-                }
+                observer.on(stoppedEvent)
+                return DefaultDisposable()
             }
             
             if state.disposed {
-                return .Error(DisposedError)
+                observer.on(.Error(DisposedError))
+                return DefaultDisposable()
             }
             
             let key = state.observers.put(observer)
-            return success(Subscription(subject: self, key: key, observer: observer))
+            return Subscription(subject: self, key: key, observer: observer)
         }
     }
 

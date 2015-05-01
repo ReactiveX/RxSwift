@@ -8,59 +8,22 @@
 
 import Foundation
 
-struct State<T> {
-    var observer: ObserverOf<T>
-    let sink: SingleAssignmentDisposable
-    let subscription: SingleAssignmentDisposable
-    
-    init(observer: ObserverOf<T>, sink: SingleAssignmentDisposable, subscription: SingleAssignmentDisposable) {
-        self.observer = observer
-        self.sink = sink
-        self.subscription = subscription
-    }
-    
-    func assign(disposable: Disposable) {
-        sink.setDisposable(disposable)
-    }
-}
-
 class Producer<Element> : Observable<Element> {
-    
-    override func subscribe(observer: ObserverOf<Element>) -> Result<Disposable> {
-        return subscribeRaw(observer, enableSafeguard: true)
+    override func subscribe(observer: ObserverOf<Element>) -> Disposable {
+        let sink = SingleAssignmentDisposable()
+        let subscription = SingleAssignmentDisposable()
+        
+        let d = CompositeDisposable(sink, subscription)
+        
+        let setSink: (Disposable) -> Void = { d in sink.setDisposable(d) }
+        let disposable = run(observer, cancel: subscription, setSink: setSink)
+        
+        subscription.setDisposable(disposable)
+        
+        return d
     }
     
-    func subscribeRaw(observer: ObserverOf<Element>, enableSafeguard: Bool) -> Result<Disposable> {
-        var state = State(observer: observer, sink: SingleAssignmentDisposable(), subscription: SingleAssignmentDisposable())
-        
-        let d = CompositeDisposable(state.sink, state.subscription)
-        
-        if enableSafeguard {
-            state.observer = SafeObserver.create(observer, disposable: d)
-        }
-        
-        // TODO
-        /*
-        if (CurrentThreadScheduler.IsScheduleRequired)
-        {
-            CurrentThreadScheduler.Instance.Schedule(state, Run);
-        }
-        */
-        
-        let setSink: (Disposable) -> Void = { d in state.assign(d) }
-        let runResult = run(state.observer, cancel: state.subscription, setSink: setSink)
-        
-        return (runResult >== { disposable in
-            state.subscription.setDisposable(disposable)
-            return success(d)
-        }) >>! { e -> Result<Disposable> in
-            d.dispose()
-            return .Error(e)
-        }
-    }
-    
-    func run(observer: ObserverOf<Element>, cancel: Disposable, setSink: (Disposable) -> Void) -> Result<Disposable> {
+    func run(observer: ObserverOf<Element>, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
         return abstractMethod()
     }
-    
 }

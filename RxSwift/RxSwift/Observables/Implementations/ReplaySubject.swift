@@ -97,7 +97,7 @@ class ReplayBufferBase<Element> : ReplaySubjectImplementation<Element> {
         return abstractMethod()
     }
     
-    func replayBuffer(observer: Observer) -> Result<Void> {
+    func replayBuffer(observer: Observer) {
         return abstractMethod()
     }
     
@@ -107,14 +107,14 @@ class ReplayBufferBase<Element> : ReplaySubjectImplementation<Element> {
         }
     }
     
-    override func on(event: Event<Element>) -> Result<Void> {
-        return lock.calculateLocked {
+    override func on(event: Event<Element>) {
+        let observers: [Observer] = lock.calculateLocked {
             if self.state.disposed {
-                return .Error(DisposedError)
+                return []
             }
             
             if self.state.stoppedEvent != nil {
-                return success([])
+                return []
             }
             
             switch event {
@@ -122,7 +122,7 @@ class ReplayBufferBase<Element> : ReplaySubjectImplementation<Element> {
                 let value = boxedValue.value
                 addValueToBuffer(value)
                 trim()
-                return success(self.state.observers.all)
+                return self.state.observers.all
             case .Error: fallthrough
             case .Completed:
                 state.stoppedEvent = event
@@ -130,27 +130,28 @@ class ReplayBufferBase<Element> : ReplaySubjectImplementation<Element> {
                 var bag = self.state.observers
                 var observers = bag.all
                 bag.removeAll()
-                return success(observers)
+                return observers
             }
-        } >== { observers in
-            return dispatch(event, observers)
         }
+        
+        dispatch(event, observers)
     }
     
-    override func subscribe(observer: ObserverOf<Element>) -> Result<Disposable> {
+    override func subscribe(observer: ObserverOf<Element>) -> Disposable {
         return lock.calculateLocked {
             if self.state.disposed {
-                return .Error(DisposedError)
+                observer.on(.Error(DisposedError))
+                return DefaultDisposable()
             }
             
-            return replayBuffer(observer) >== {
-                if let stoppedEvent = self.state.stoppedEvent {
-                    return observer.on(stoppedEvent) >>> { success(DefaultDisposable()) }
-                }
-                else {
-                    let key = self.state.observers.put(observer)
-                    return success(ReplaySubscription(subject: self, disposeKey: key))
-                }
+            replayBuffer(observer)
+            if let stoppedEvent = self.state.stoppedEvent {
+                observer.on(stoppedEvent)
+                return DefaultDisposable()
+            }
+            else {
+                let key = self.state.observers.put(observer)
+                return ReplaySubscription(subject: self, disposeKey: key)
             }
         }
     }
@@ -190,12 +191,9 @@ class ReplayOne<Element> : ReplayBufferBase<Element> {
         self.value = value
     }
     
-    override func replayBuffer(observer: Observer) -> Result<Void> {
+    override func replayBuffer(observer: Observer) {
         if let value = self.value {
-            return observer.on(.Next(Box(value)))
-        }
-        else {
-            return SuccessResult
+            observer.on(.Next(Box(value)))
         }
     }
     
@@ -217,15 +215,10 @@ class ReplayManyBase<Element> : ReplayBufferBase<Element> {
         queue.enqueue(value)
     }
     
-    override func replayBuffer(observer: Observer) -> Result<Void> {
-        var result = SuccessResult
+    override func replayBuffer(observer: Observer) {
         for item in queue {
-            result = result >>> {
-                observer.on(.Next(Box(item)))
-            }
+            observer.on(.Next(Box(item)))
         }
-        
-        return result
     }
     
     override func lockedDispose() {
@@ -278,11 +271,11 @@ class ReplaySubject<Element> : SubjectType<Element, Element> {
         }
     }
     
-    override func subscribe(observer: ObserverOf<Element>) -> Result<Disposable> {
+    override func subscribe(observer: ObserverOf<Element>) -> Disposable {
         return implementation.subscribe(observer)
     }
     
-    override func on(event: Event<Element>) -> Result<Void> {
-        return implementation.on(event)
+    override func on(event: Event<Element>) {
+        implementation.on(event)
     }
 }

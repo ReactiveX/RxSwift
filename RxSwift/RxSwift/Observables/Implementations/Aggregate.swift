@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Aggregate_<SourceType, AccumulateType, ResultType> : Sink<ResultType>, ObserverClassType {
+class Aggregate_<SourceType, AccumulateType, ResultType> : Sink<ResultType>, ObserverType {
     typealias Element = SourceType
     typealias ParentType = Aggregate<SourceType, AccumulateType, ResultType>
     
@@ -23,33 +23,31 @@ class Aggregate_<SourceType, AccumulateType, ResultType> : Sink<ResultType>, Obs
         super.init(observer: observer, cancel: cancel)
     }
     
-    func on(event: Event<SourceType>) -> Result<Void> {
+    func on(event: Event<SourceType>) {
         switch event {
         case .Next(let boxedValue):
             let value = boxedValue.value
-            return parent.accumulator(accumulation, value) >== { result in
+            parent.accumulator(accumulation, value) >== { result in
                 self.accumulation = result
                 return SuccessResult
-            } >>! { e in
-                let result = self.observer.on(.Error(e))
+            } >>! { e -> Result<Void> in
+                self.observer.on(.Error(e))
                 self.dispose()
-                return result >>> { .Error(e) }
+                return SuccessResult
             }
         case .Error(let e):
-            let result = self.observer.on(.Error(e))
+            self.observer.on(.Error(e))
             self.dispose()
-            return result
         case .Completed:
-            return self.parent.resultSelector(self.accumulation) >== { result in
-                let result = self.observer.on(.Next(Box(result))) >>> {
-                    self.observer.on(.Completed)
-                }
+            parent.resultSelector(self.accumulation) >== { result in
+                self.observer.on(.Next(Box(result)))
+                self.observer.on(.Completed)
                 self.dispose()
-                return result
-            } >>! { error in
-                let result = self.observer.on(.Error(error))
+                return SuccessResult
+            } >>! { error -> Result<Void> in
+                self.observer.on(.Error(error))
                 self.dispose()
-                return result
+                return SuccessResult
             }
         }
     }
@@ -71,9 +69,9 @@ class Aggregate<SourceType, AccumulateType, ResultType> : Producer<ResultType> {
         self.resultSelector = resultSelector
     }
     
-    override func run(observer: ObserverOf<ResultType>, cancel: Disposable, setSink: (Disposable) -> Void) -> Result<Disposable> {
+    override func run(observer: ObserverOf<ResultType>, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
         let sink = Aggregate_(parent: self, observer: observer, cancel: cancel)
         setSink(sink)
-        return source.subscribeSafe(ObserverOf(sink))
+        return source.subscribe(ObserverOf(sink))
     }
 }

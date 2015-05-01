@@ -9,7 +9,7 @@
 import Foundation
 
 public class AnonymousObservable<Element> : ObservableBase<Element> {
-    typealias SubscribeHandler = (ObserverOf<Element>) -> Result<Disposable>
+    typealias SubscribeHandler = (ObserverOf<Element>) -> Disposable
    
     let subscribeHandler: SubscribeHandler
     
@@ -17,7 +17,7 @@ public class AnonymousObservable<Element> : ObservableBase<Element> {
         self.subscribeHandler = subscribeHandler
     }
     
-    public override func subscribeCore(observer: ObserverOf<Element>) -> Result<Disposable> {
+    public override func subscribeCore(observer: ObserverOf<Element>) -> Disposable {
         return subscribeHandler(observer)
     }
 }

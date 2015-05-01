@@ -13,7 +13,7 @@ public class ConnectableObservableType<Element>: Observable<Element> {
         
     }
     
-    public func connect() -> Result<Disposable> {
+    public func connect() -> Disposable {
         return abstractMethod()
     }
 }

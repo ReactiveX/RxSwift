@@ -8,28 +8,6 @@
 
 import Foundation
 
-struct Sink_<ElementType>: ObserverType {
-    typealias Element = ElementType
-    
-    let sink: Sink<Element>
-    
-    init(sink: Sink<Element>) {
-        self.sink = sink
-    }
-    
-    mutating func on(event: Event<Element>) -> Result<Void> {
-        let result = sink.state.observer.on(event)
-        switch event {
-        case .Next:
-            return result
-        case .Completed: fallthrough
-        case .Error:
-            self.sink.dispose()
-            return result
-        }
-    }
-}
-
 class Sink<ElementType> :  Disposable {
     private typealias Element = ElementType
     
@@ -65,10 +43,6 @@ class Sink<ElementType> :  Disposable {
             cancel: cancel,
             disposed: false
         )
-    }
-    
-    func getForwarder() -> Sink_<Element> {
-        return Sink_(sink: self)
     }
     
     func dispose() {

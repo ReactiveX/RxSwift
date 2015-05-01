@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Defer_<ElementType> : Sink<ElementType>, ObserverClassType {
+class Defer_<ElementType> : Sink<ElementType>, ObserverType {
     typealias Parent = Defer<Element>
     typealias Element = ElementType
     
@@ -19,28 +19,28 @@ class Defer_<ElementType> : Sink<ElementType>, ObserverClassType {
         super.init(observer: observer, cancel: cancel)
     }
     
-    func run() -> Result<Disposable> {
-        return parent.eval() >== { result in
-            return result.subscribeSafe(ObserverOf(self))
+    func run() -> Disposable {
+        let disposable = parent.eval() >== { result in
+            return result.subscribe(ObserverOf(self))
         } >>! { e in
-            _ = self.observer.on(.Error(e))
+            self.observer.on(.Error(e))
             self.dispose()
             return success(DefaultDisposable())
         }
+        
+        return *disposable
     }
     
-    func on(event: Event<Element>) -> Result<Void> {
+    func on(event: Event<Element>) {
         switch event {
         case .Next:
-            return observer.on(event)
+            observer.on(event)
         case .Error:
-            let result = observer.on(event)
+            observer.on(event)
             dispose()
-            return result
         case .Completed:
-            let result = observer.on(event)
+            observer.on(event)
             dispose()
-            return result
         }
     }
 }
@@ -54,7 +54,7 @@ class Defer<Element> : Producer<Element> {
         self.observableFactory = observableFactory
     }
     
-    override func run(observer: ObserverOf<Element>, cancel: Disposable, setSink: (Disposable) -> Void) -> Result<Disposable> {
+    override func run(observer: ObserverOf<Element>, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
         let sink = Defer_(parent: self, observer: observer, cancel: cancel)
         setSink(sink)
         return sink.run()

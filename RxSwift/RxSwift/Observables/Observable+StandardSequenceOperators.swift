@@ -30,7 +30,7 @@ public func whereOrDie<E>
     (predicate: (E) -> Result<Bool>)
     -> (Observable<E> -> Observable<E>) {
     return { source in
-        return WhereObservable(source: source, predicate: predicate)
+        return Where(source: source, predicate: predicate)
     }
 }
 
@@ -38,6 +38,6 @@ public func `where`<E>
     (predicate: (E) -> Bool)
     -> (Observable<E> -> Observable<E>) {
     return { source in
-        return WhereObservable(source: source, predicate: { success(predicate($0)) })
+        return Where(source: source, predicate: { success(predicate($0)) })
     }
 }

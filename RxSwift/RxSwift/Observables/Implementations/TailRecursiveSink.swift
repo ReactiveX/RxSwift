@@ -8,7 +8,7 @@
 
 import Foundation
 
-class TailRecursiveSink<ElementType> : Sink<ElementType>, ObserverClassType {
+class TailRecursiveSink<ElementType> : Sink<ElementType>, ObserverType {
     typealias Element = ElementType
     typealias StackElementType = (generator: GeneratorOf<Observable<Element>>, length: Int)
     
@@ -23,35 +23,34 @@ class TailRecursiveSink<ElementType> : Sink<ElementType>, ObserverClassType {
         super.init(observer: observer, cancel: cancel)
     }
     
-    func run(sources: [Observable<Element>]) -> Result<Disposable> {
+    func run(sources: [Observable<Element>]) -> Disposable {
         let generator: GeneratorOf<Observable<Element>> = GeneratorOf(sources.generate())
         self.stack.append((generator: generator, length: sources.count))
         
         let stateSnapshot = self.state
         
-        return scheduleMoveNext() >>> {
-            success(CompositeDisposable(
+        scheduleMoveNext()
+        return CompositeDisposable(
                 self.subscription,
                 stateSnapshot.cancel,
                 AnonymousDisposable {
                     self.disposePrivate()
                 }
-            ))
-        }
+            )
     }
     
-    func scheduleMoveNext() -> Result<Void> {
+    func scheduleMoveNext() {
         return schedule {
             self.moveNext()
         }
     }
     
     // simple implementation for now
-    func schedule(action: () -> Result<Void>) -> Result<Void> {
-        return self.gate.wait(action)
+    func schedule(action: () -> Void) {
+        self.gate.wait(action)
     }
     
-    func moveNext() -> Result<Void> {
+    func moveNext() {
         var next: Observable<Element>? = nil;
         
         do {
@@ -60,7 +59,7 @@ class TailRecursiveSink<ElementType> : Sink<ElementType>, ObserverClassType {
             }
             
             if disposed {
-                return SuccessResult
+                return
             }
             
             var (e, l) = stack.last!
@@ -94,14 +93,12 @@ class TailRecursiveSink<ElementType> : Sink<ElementType>, ObserverClassType {
         } while next == nil
         
         if next == nil  {
-            return done()
+            done()
+            return
         }
         
-        let d = SingleAssignmentDisposable()
-        subscription.setDisposable(d)
-        return next!.subscribeSafe(ObserverOf(self)) >== { subscription in
-            d.setDisposable(subscription)
-        }
+        let subscription2 = next!.subscribe(ObserverOf(self))
+        subscription.setDisposable(subscription2)
     }
     
     private func disposePrivate() {
@@ -110,17 +107,16 @@ class TailRecursiveSink<ElementType> : Sink<ElementType>, ObserverClassType {
         stack.removeAll(keepCapacity: false)
     }
     
-    func done() -> Result<Void> {
-        let result = state.observer.on(.Completed)
+    func done() {
+        state.observer.on(.Completed)
         self.dispose()
-        return result
     }
     
     func extract(observable: Observable<Element>) -> [Observable<Element>]? {
         return abstractMethod()
     }
     
-    func on(event: Event<Element>) -> Result<Void> {
+    func on(event: Event<Element>) {
         return abstractMethod()
     }
 }

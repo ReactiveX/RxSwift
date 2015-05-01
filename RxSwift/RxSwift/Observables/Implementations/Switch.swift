@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Switch_<ElementType> : Sink<ElementType>, ObserverClassType {
+class Switch_<ElementType> : Sink<ElementType>, ObserverType {
     typealias Element = Observable<ElementType>
     typealias SwitchState = (
         subscription: SingleAssignmentDisposable,
@@ -35,15 +35,14 @@ class Switch_<ElementType> : Sink<ElementType>, ObserverClassType {
         super.init(observer: observer, cancel: cancel)
     }
     
-    func run() -> Result<Disposable> {
-        return self.parent.sources.subscribeSafe(ObserverOf(self)) >== { subscription in
-            let switchState = self.switchState
-            switchState.subscription.setDisposable(subscription)
-            return success(CompositeDisposable(switchState.subscription, switchState.innerSubscription))
-        }
+    func run() -> Disposable {
+        let subscription = self.parent.sources.subscribe(ObserverOf(self))
+        let switchState = self.switchState
+        switchState.subscription.setDisposable(subscription)
+        return CompositeDisposable(switchState.subscription, switchState.innerSubscription)
     }
     
-    func on(event: Event<Element>) -> Result<Void> {
+    func on(event: Event<Element>) {
         switch event {
         case .Next(let observable):
             let latest: Int = self.lock.calculateLocked {
@@ -56,35 +55,29 @@ class Switch_<ElementType> : Sink<ElementType>, ObserverClassType {
             self.switchState.innerSubscription.setDisposable(d)
                
             let observer = ObserverOf(SwitchIter(parent: self, id: latest, _self: d))
-            return observable.value.subscribeSafe(observer) >== { disposable in
-                d.setDisposable(disposable)
-                return SuccessResult
-            }
+            let disposable = observable.value.subscribe(observer)
+            d.setDisposable(disposable)
         case .Error(let error):
-            let result = self.lock.calculateLocked {
+            self.lock.performLocked {
                 return self.state.observer.on(.Error(error))
             }
             self.dispose()
-            return result
         case .Completed:
-            return self.lock.calculateLocked {
+            self.lock.performLocked {
                 self.switchState.stopped = true
                 
                 self.switchState.subscription.dispose()
                 
-                var result = SuccessResult
                 if !self.switchState.hasLatest {
-                    result = self.state.observer.on(.Completed)
+                    self.state.observer.on(.Completed)
                     self.dispose()
                 }
-                
-                return result
             }
         }
     }
 }
 
-class SwitchIter<ElementType> : ObserverClassType {
+class SwitchIter<ElementType> : ObserverType {
     typealias Element = ElementType
     
     let parent: Switch_<Element>
@@ -97,7 +90,7 @@ class SwitchIter<ElementType> : ObserverClassType {
         self._self = _self
     }
     
-    func on(event: Event<ElementType>) -> Result<Void> {
+    func on(event: Event<ElementType>) {
         return parent.lock.calculateLocked { state in
             let switchState = self.parent.switchState
             
@@ -108,27 +101,22 @@ class SwitchIter<ElementType> : ObserverClassType {
             }
             
             if switchState.latest != self.id {
-                return success(state)
+                return
             }
            
             let observer = self.parent.state.observer
             
             switch event {
             case .Next:
-                return observer.on(event)
+                observer.on(event)
             case .Error:
-                let result = observer.on(event)
+                observer.on(event)
                 self.parent.dispose()
-                return result
             case .Completed:
                 parent.switchState.hasLatest = false
                 if switchState.stopped {
-                    let result = observer.on(event)
+                    observer.on(event)
                     self.parent.dispose()
-                    return result
-                }
-                else {
-                    return SuccessResult
                 }
             }
         }
@@ -142,7 +130,7 @@ class Switch<Element> : Producer<Element> {
         self.sources = sources
     }
     
-    override func run(observer: ObserverOf<Element>, cancel: Disposable, setSink: (Disposable) -> Void) -> Result<Disposable> {
+    override func run(observer: ObserverOf<Element>, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
         let sink = Switch_(parent: self, observer: observer, cancel: cancel)
         setSink(sink)
         return sink.run()

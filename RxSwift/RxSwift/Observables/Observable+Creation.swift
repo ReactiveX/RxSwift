@@ -10,7 +10,7 @@ import Foundation
 
 // create
 
-public func create<E>(subscribe: (ObserverOf<E>) ->  Result<Disposable>) -> Observable<E> {
+public func create<E>(subscribe: (ObserverOf<E>) -> Disposable) -> Observable<E> {
     return AnonymousObservable(subscribe)
 }
 
@@ -18,8 +18,8 @@ public func create<E>(subscribe: (ObserverOf<E>) ->  Result<Disposable>) -> Obse
 
 public func empty<E>() -> Observable<E> {
     return AnonymousObservable { observer in
-        let result : Result<Void> = observer.on(.Completed)
-        return result >>> { (DefaultDisposable()) }
+        observer.on(.Completed)
+        return DefaultDisposable()
     }
 }
 
@@ -27,7 +27,7 @@ public func empty<E>() -> Observable<E> {
 
 public func never<E>() -> Observable<E> {
     return AnonymousObservable { observer in
-        return success(DefaultDisposable())
+        return DefaultDisposable()
     }
 }
 
@@ -35,19 +35,20 @@ public func never<E>() -> Observable<E> {
 
 public func returnElement<E>(value: E) -> Observable<E> {
     return AnonymousObservable { observer in
-        return observer.on(.Next(Box(value))) >>> { observer.on(.Completed) } >>> { (DefaultDisposable()) }
+        observer.on(.Next(Box(value)))
+        observer.on(.Completed)
+        return DefaultDisposable()
     }
 }
 
 public func returnElement<E>(values: E ...) -> Observable<E> {
     return AnonymousObservable { observer in
-        var result = SuccessResult
-        
         for element in values {
-            result = result >>> { observer.on(.Next(Box(element))) }
+            observer.on(.Next(Box(element)))
         }
         
-        return (result >>> { observer.on(.Completed) }) >>> { (DefaultDisposable()) }
+        observer.on(.Completed)
+        return DefaultDisposable()
     }
 }
 
@@ -55,7 +56,8 @@ public func returnElement<E>(values: E ...) -> Observable<E> {
 
 public func failWith<E>(error: ErrorType) -> Observable<E> {
     return AnonymousObservable { observer in
-        return observer.on(.Error(error)) >>> { DefaultDisposable() }
+        observer.on(.Error(error))
+        return DefaultDisposable()
     }
 }
 

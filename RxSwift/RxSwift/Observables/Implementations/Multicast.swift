@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Multicast_<SourceType, IntermediateType, ResultType>: Sink<ResultType>, ObserverClassType {
+class Multicast_<SourceType, IntermediateType, ResultType>: Sink<ResultType>, ObserverType {
     typealias Element = ResultType
     typealias MutlicastType = Multicast<SourceType, IntermediateType, ResultType>
     
@@ -22,39 +22,30 @@ class Multicast_<SourceType, IntermediateType, ResultType>: Sink<ResultType>, Ob
         super.init(observer: observer, cancel: cancel)
     }
     
-    func run() -> Result<Disposable> {
-        let connectableResult: Result<IntermediateObservable> = parent.subjectSelector() >== { subject in
-            return success(ConnectableObservable(source: self.parent.source, subject: subject))
-        }
-        
-        let observableResult: Result<ResultObservable> = connectableResult >== { connectable in
-            return self.parent.selector(connectable)
-        }
-        
-        let subscribeResult: Result<Disposable> = observableResult >== { observable in
-            let observerOf = ObserverOf(self)
-            return observable.subscribeSafe(observerOf)
-        }
-        
-        let connectResult: Result<Disposable> = connectableResult >== { connectable in
-            return connectable.connect()
-        }
-        
-        let compositeResult = allSucceedOrDispose([subscribeResult, connectResult])
-        
-        return compositeResult >>! { e in
-            return self.state.observer.on(Event.Error(e)) >>> { .Error(e) }
-        }
+    func run() -> Disposable {
+        return *(parent.subjectSelector() >== { subject in
+            let connectable = ConnectableObservable(source: self.parent.source, subject: subject)
+            
+            return self.parent.selector(connectable) >== { observable in
+                let subscription = observable.subscribe(ObserverOf(self))
+                let connection = connectable.connect()
+                
+                return success(CompositeDisposable(subscription, connection))
+            }
+        } >>! { e in
+            self.observer.on(.Error(e))
+            self.dispose()
+            return success(DefaultDisposable())
+        })
     }
     
-    func on(event: Event<ResultType>) -> Result<Void> {
-        let result = self.state.observer.on(event)
+    func on(event: Event<ResultType>) {
+        self.state.observer.on(event)
         switch event {
             case .Next: break
             case .Error: fallthrough
             case .Completed: self.dispose()
         }
-        return result
     }
 }
 
@@ -72,7 +63,7 @@ class Multicast<SourceType, IntermediateType, ResultType>: Producer<ResultType> 
         self.selector = selector
     }
     
-    override func run(observer: ObserverOf<ResultType>, cancel: Disposable, setSink: (Disposable) -> Void) -> Result<Disposable> {
+    override func run(observer: ObserverOf<ResultType>, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
         var sink = Multicast_(parent: self, observer: observer, cancel: cancel)
         setSink(sink)
         return sink.run()

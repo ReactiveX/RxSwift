@@ -29,25 +29,26 @@ class HotObservable<Element : Equatable> : Observable<Element> {
         super.init()
         
         for recordedEvent in recordedEvents {
-            testScheduler.schedule((), time: recordedEvent.time, action: { (Int) in
-                return doAll(self.observers.all.map { o in o.on(recordedEvent.event) })
-            })
+            testScheduler.schedule((), time: recordedEvent.time) { t in
+                _ = self.observers.all.map { o in o.on(recordedEvent.event) }
+                return SuccessResult
+            }
         }
     }
     
-    override func subscribe(observer: ObserverOf<Element>) -> Result<Disposable> {
+    override func subscribe(observer: ObserverOf<Element>) -> Disposable {
         let key = observers.put(observer)
         subscriptions.append(Subscription(subscribe: self.testScheduler.now))
         
         let i = self.subscriptions.count - 1
         
-        return success(AnonymousDisposable { 
+        return AnonymousDisposable {
             let removed = self.observers.removeKey(key)
             assert(removed != nil)
             
             let existing = self.subscriptions[i]
             self.subscriptions[i] = Subscription(existing.subscribe, self.testScheduler.now)
-        })
+        }
     }
 }
 
