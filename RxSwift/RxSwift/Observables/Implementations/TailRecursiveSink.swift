@@ -97,7 +97,7 @@ class TailRecursiveSink<ElementType> : Sink<ElementType>, ObserverType {
             return
         }
         
-        let subscription2 = next!.subscribe(ObserverOf(self))
+        let subscription2 = next!.subscribe(self)
         subscription.setDisposable(subscription2)
     }
     

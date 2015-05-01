@@ -106,7 +106,7 @@ class ObserveSingleOnObserver<ElementType> : ObserverType, Disposable {
     }
     
     func run() -> Disposable {
-        return self.parent.source.subscribe(ObserverOf(self))
+        return self.parent.source.subscribe(self)
     }
 }
 

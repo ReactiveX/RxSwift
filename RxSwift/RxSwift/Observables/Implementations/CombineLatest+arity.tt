@@ -47,7 +47,7 @@ class CombineLatestSink<%= i %>_<<%= ", ".join(map(1...i) { "E\($0)" }) %>, R> :
 
 <%= "\n".join(map(1...i) { "        observer\($0) = CombineLatestObserver(parent: self, index: \($0 - 1), this: subscription\($0))" }) %>
 
-<%= "\n".join(map(1...i) { "        subscription\($0).setDisposable(parent.source\($0).subscribe(ObserverOf(observer\($0))))" }) %>
+<%= "\n".join(map(1...i) { "        subscription\($0).setDisposable(parent.source\($0).subscribe(observer\($0)))" }) %>
 
         return CompositeDisposable(disposables: [
 <%= ",\n".join(map(1...i) { "                subscription\($0)" }) %>

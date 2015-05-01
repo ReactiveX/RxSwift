@@ -80,7 +80,7 @@ public class TableViewDelegate: ScrollViewDelegate, UITableViewDelegate {
         
         let event = Event.Next(Box((tableView, indexPath.row)))
         
-        handleObserverResult(dispatch(event, tableViewObservers.all))
+        dispatch(event, tableViewObservers)
     }
     
     deinit {
@@ -117,7 +117,7 @@ extension UITableView {
             self.dataSource = nil
         }
             
-        return source.subscribe(ObserverOf(AnonymousObserver { event in
+        let disposable = source.subscribe(AnonymousObserver { event in
             switch event {
             case .Next(let boxedValue):
                 let value = boxedValue.value
@@ -128,14 +128,9 @@ extension UITableView {
             case .Completed:
                 break
             }
+        })
             
-            return SuccessResult
-        })) >== { disposable in
-            return success(CompositeDisposable(clearDataSource, disposable))
-        } >>! { e in
-            clearDataSource.dispose()
-            return .Error(e)
-        }
+        return success(CompositeDisposable(clearDataSource, disposable))
     }
     
     public func rx_subscribeRowsTo<E where E : AnyObject>
@@ -180,7 +175,7 @@ extension UITableView {
             
             let key = delegate.addTableViewObserver(observer)
             
-            return success(AnonymousDisposable {
+            return AnonymousDisposable {
                 _ = self.rx_checkTableViewDelegate()
                 
                 delegate.removeTableViewObserver(key)
@@ -188,7 +183,7 @@ extension UITableView {
                 if delegate.tableViewObservers.count == 0 {
                     self.delegate = nil
                 }
-            })
+            }
         }
     }
     

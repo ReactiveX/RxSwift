@@ -13,11 +13,10 @@ extension UIButton {
     public func rx_tap() -> Observable<Void> {
         return AnonymousObservable { subscriber in
             let observer = ControlTarget(control: self, controlEvents: UIControlEvents.TouchUpInside) { control in
-                let result = subscriber.on(.Next(Box(())))
-                handleObserverResult(result)
+                subscriber.on(.Next(Box(())))
             }
             
-            return success(observer)
+            return observer
         }
     }
 }

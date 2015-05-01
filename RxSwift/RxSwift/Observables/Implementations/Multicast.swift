@@ -27,7 +27,7 @@ class Multicast_<SourceType, IntermediateType, ResultType>: Sink<ResultType>, Ob
             let connectable = ConnectableObservable(source: self.parent.source, subject: subject)
             
             return self.parent.selector(connectable) >== { observable in
-                let subscription = observable.subscribe(ObserverOf(self))
+                let subscription = observable.subscribe(self)
                 let connection = connectable.connect()
                 
                 return success(CompositeDisposable(subscription, connection))

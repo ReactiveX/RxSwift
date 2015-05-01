@@ -72,6 +72,6 @@ class Aggregate<SourceType, AccumulateType, ResultType> : Producer<ResultType> {
     override func run(observer: ObserverOf<ResultType>, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
         let sink = Aggregate_(parent: self, observer: observer, cancel: cancel)
         setSink(sink)
-        return source.subscribe(ObserverOf(sink))
+        return source.subscribe(sink)
     }
 }

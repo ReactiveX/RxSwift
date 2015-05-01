@@ -21,7 +21,7 @@ public class Observable<Element> {
     }
     
     /// Subscribes `observer` to receive events from this observable
-    public func subscribe(observer: ObserverOf<Element>) -> Disposable {
+    public func subscribe<O: ObserverType where O.Element == Element>(observer: O) -> Disposable {
         return abstractMethod()
     }
     

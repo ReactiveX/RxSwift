@@ -79,7 +79,7 @@ public class CollectionViewDelegate: ScrollViewDelegate, UICollectionViewDelegat
         
         let event = Event.Next(Box((collectionView, indexPath.item)))
         
-        handleObserverResult(dispatch(event, collectionViewObservers.all))
+        dispatch(event, collectionViewObservers)
     }
     
     deinit {
@@ -98,49 +98,44 @@ extension UICollectionView {
     public func rx_subscribeItemsTo<E where E: AnyObject>
         (dataSource: CollectionViewDataSource)
         (source: Observable<[E]>)
-        -> Result<Disposable> {
+        -> Disposable {
             
-            MainScheduler.ensureExecutingOnScheduler()
-            
+        MainScheduler.ensureExecutingOnScheduler()
+        
+        if self.dataSource != nil && self.dataSource !== dataSource {
+            rxFatalError("Data source is different")
+        }
+        
+        self.dataSource = dataSource
+        
+        let clearDataSource = AnonymousDisposable {
             if self.dataSource != nil && self.dataSource !== dataSource {
                 rxFatalError("Data source is different")
             }
             
-            self.dataSource = dataSource
-            
-            let clearDataSource = AnonymousDisposable {
-                if self.dataSource != nil && self.dataSource !== dataSource {
-                    rxFatalError("Data source is different")
-                }
-                
-                self.dataSource = nil
+            self.dataSource = nil
+        }
+        
+        let disposable = source.subscribe(AnonymousObserver { event in
+            switch event {
+            case .Next(let boxedValue):
+                let value = boxedValue.value
+                dataSource._items = value
+                self.reloadData()
+            case .Error(let error):
+                rxFatalError("Something went wrong: \(error)")
+            case .Completed:
+                break
             }
-            
-            return source.subscribe(ObserverOf(AnonymousObserver { event in
-                switch event {
-                case .Next(let boxedValue):
-                    let value = boxedValue.value
-                    dataSource._items = value
-                    self.reloadData()
-                case .Error(let error):
-                    rxFatalError("Something went wrong: \(error)")
-                case .Completed:
-                    break
-                }
-                
-                return SuccessResult
-                })) >== { disposable in
-                    return success(CompositeDisposable(clearDataSource, disposable))
-                } >>! { e in
-                    clearDataSource.dispose()
-                    return .Error(e)
-            }
+        })
+        
+        return CompositeDisposable(clearDataSource, disposable)
     }
-    
+
     public func rx_subscribeItemsTo<E where E : AnyObject>
         (cellFactory: (UICollectionView, NSIndexPath, E) -> UICollectionViewCell)
         (source: Observable<[E]>)
-        -> Result<Disposable> {
+        -> Disposable {
             
             let dataSource = CollectionViewDataSource(cellFactory: {
                 cellFactory($0, $1, $2 as! E)
@@ -152,7 +147,7 @@ extension UICollectionView {
     public func rx_subscribeItemsWithIdentifierTo<E, Cell where E : AnyObject, Cell : UICollectionViewCell>
         (cellIdentifier: String, configureCell: (UICollectionView, NSIndexPath, E, Cell) -> Void)
         (source: Observable<[E]>)
-        -> Result<Disposable> {
+        -> Disposable {
             
             let dataSource = CollectionViewDataSource {
                 let cell = $0.dequeueReusableCellWithReuseIdentifier(cellIdentifier, forIndexPath: $1) as! Cell
@@ -181,7 +176,7 @@ extension UICollectionView {
             
             let key = delegate.addCollectionViewObserver(observer)
             
-            return success(AnonymousDisposable {
+            return AnonymousDisposable {
                 _ = self.rx_checkCollectionViewDelegate()
                 
                 delegate.removeCollectionViewObserver(key)
@@ -189,7 +184,7 @@ extension UICollectionView {
                 if delegate.collectionViewObservers.count == 0 {
                     self.delegate = nil
                 }
-            })
+            }
         }
     }
     

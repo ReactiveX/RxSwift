@@ -52,8 +52,8 @@ class CombineLatestSink2_<E1, E2, R> : CombineLatestSink<R> {
         observer1 = CombineLatestObserver(parent: self, index: 0, this: subscription1)
         observer2 = CombineLatestObserver(parent: self, index: 1, this: subscription2)
 
-        subscription1.setDisposable(parent.source1.subscribe(ObserverOf(observer1)))
-        subscription2.setDisposable(parent.source2.subscribe(ObserverOf(observer2)))
+        subscription1.setDisposable(parent.source1.subscribe(observer1))
+        subscription2.setDisposable(parent.source2.subscribe(observer2))
 
         return CompositeDisposable(disposables: [
                 subscription1,
@@ -133,9 +133,9 @@ class CombineLatestSink3_<E1, E2, E3, R> : CombineLatestSink<R> {
         observer2 = CombineLatestObserver(parent: self, index: 1, this: subscription2)
         observer3 = CombineLatestObserver(parent: self, index: 2, this: subscription3)
 
-        subscription1.setDisposable(parent.source1.subscribe(ObserverOf(observer1)))
-        subscription2.setDisposable(parent.source2.subscribe(ObserverOf(observer2)))
-        subscription3.setDisposable(parent.source3.subscribe(ObserverOf(observer3)))
+        subscription1.setDisposable(parent.source1.subscribe(observer1))
+        subscription2.setDisposable(parent.source2.subscribe(observer2))
+        subscription3.setDisposable(parent.source3.subscribe(observer3))
 
         return CompositeDisposable(disposables: [
                 subscription1,
@@ -221,10 +221,10 @@ class CombineLatestSink4_<E1, E2, E3, E4, R> : CombineLatestSink<R> {
         observer3 = CombineLatestObserver(parent: self, index: 2, this: subscription3)
         observer4 = CombineLatestObserver(parent: self, index: 3, this: subscription4)
 
-        subscription1.setDisposable(parent.source1.subscribe(ObserverOf(observer1)))
-        subscription2.setDisposable(parent.source2.subscribe(ObserverOf(observer2)))
-        subscription3.setDisposable(parent.source3.subscribe(ObserverOf(observer3)))
-        subscription4.setDisposable(parent.source4.subscribe(ObserverOf(observer4)))
+        subscription1.setDisposable(parent.source1.subscribe(observer1))
+        subscription2.setDisposable(parent.source2.subscribe(observer2))
+        subscription3.setDisposable(parent.source3.subscribe(observer3))
+        subscription4.setDisposable(parent.source4.subscribe(observer4))
 
         return CompositeDisposable(disposables: [
                 subscription1,
@@ -316,11 +316,11 @@ class CombineLatestSink5_<E1, E2, E3, E4, E5, R> : CombineLatestSink<R> {
         observer4 = CombineLatestObserver(parent: self, index: 3, this: subscription4)
         observer5 = CombineLatestObserver(parent: self, index: 4, this: subscription5)
 
-        subscription1.setDisposable(parent.source1.subscribe(ObserverOf(observer1)))
-        subscription2.setDisposable(parent.source2.subscribe(ObserverOf(observer2)))
-        subscription3.setDisposable(parent.source3.subscribe(ObserverOf(observer3)))
-        subscription4.setDisposable(parent.source4.subscribe(ObserverOf(observer4)))
-        subscription5.setDisposable(parent.source5.subscribe(ObserverOf(observer5)))
+        subscription1.setDisposable(parent.source1.subscribe(observer1))
+        subscription2.setDisposable(parent.source2.subscribe(observer2))
+        subscription3.setDisposable(parent.source3.subscribe(observer3))
+        subscription4.setDisposable(parent.source4.subscribe(observer4))
+        subscription5.setDisposable(parent.source5.subscribe(observer5))
 
         return CompositeDisposable(disposables: [
                 subscription1,
@@ -418,12 +418,12 @@ class CombineLatestSink6_<E1, E2, E3, E4, E5, E6, R> : CombineLatestSink<R> {
         observer5 = CombineLatestObserver(parent: self, index: 4, this: subscription5)
         observer6 = CombineLatestObserver(parent: self, index: 5, this: subscription6)
 
-        subscription1.setDisposable(parent.source1.subscribe(ObserverOf(observer1)))
-        subscription2.setDisposable(parent.source2.subscribe(ObserverOf(observer2)))
-        subscription3.setDisposable(parent.source3.subscribe(ObserverOf(observer3)))
-        subscription4.setDisposable(parent.source4.subscribe(ObserverOf(observer4)))
-        subscription5.setDisposable(parent.source5.subscribe(ObserverOf(observer5)))
-        subscription6.setDisposable(parent.source6.subscribe(ObserverOf(observer6)))
+        subscription1.setDisposable(parent.source1.subscribe(observer1))
+        subscription2.setDisposable(parent.source2.subscribe(observer2))
+        subscription3.setDisposable(parent.source3.subscribe(observer3))
+        subscription4.setDisposable(parent.source4.subscribe(observer4))
+        subscription5.setDisposable(parent.source5.subscribe(observer5))
+        subscription6.setDisposable(parent.source6.subscribe(observer6))
 
         return CompositeDisposable(disposables: [
                 subscription1,
@@ -527,13 +527,13 @@ class CombineLatestSink7_<E1, E2, E3, E4, E5, E6, E7, R> : CombineLatestSink<R> 
         observer6 = CombineLatestObserver(parent: self, index: 5, this: subscription6)
         observer7 = CombineLatestObserver(parent: self, index: 6, this: subscription7)
 
-        subscription1.setDisposable(parent.source1.subscribe(ObserverOf(observer1)))
-        subscription2.setDisposable(parent.source2.subscribe(ObserverOf(observer2)))
-        subscription3.setDisposable(parent.source3.subscribe(ObserverOf(observer3)))
-        subscription4.setDisposable(parent.source4.subscribe(ObserverOf(observer4)))
-        subscription5.setDisposable(parent.source5.subscribe(ObserverOf(observer5)))
-        subscription6.setDisposable(parent.source6.subscribe(ObserverOf(observer6)))
-        subscription7.setDisposable(parent.source7.subscribe(ObserverOf(observer7)))
+        subscription1.setDisposable(parent.source1.subscribe(observer1))
+        subscription2.setDisposable(parent.source2.subscribe(observer2))
+        subscription3.setDisposable(parent.source3.subscribe(observer3))
+        subscription4.setDisposable(parent.source4.subscribe(observer4))
+        subscription5.setDisposable(parent.source5.subscribe(observer5))
+        subscription6.setDisposable(parent.source6.subscribe(observer6))
+        subscription7.setDisposable(parent.source7.subscribe(observer7))
 
         return CompositeDisposable(disposables: [
                 subscription1,
@@ -643,14 +643,14 @@ class CombineLatestSink8_<E1, E2, E3, E4, E5, E6, E7, E8, R> : CombineLatestSink
         observer7 = CombineLatestObserver(parent: self, index: 6, this: subscription7)
         observer8 = CombineLatestObserver(parent: self, index: 7, this: subscription8)
 
-        subscription1.setDisposable(parent.source1.subscribe(ObserverOf(observer1)))
-        subscription2.setDisposable(parent.source2.subscribe(ObserverOf(observer2)))
-        subscription3.setDisposable(parent.source3.subscribe(ObserverOf(observer3)))
-        subscription4.setDisposable(parent.source4.subscribe(ObserverOf(observer4)))
-        subscription5.setDisposable(parent.source5.subscribe(ObserverOf(observer5)))
-        subscription6.setDisposable(parent.source6.subscribe(ObserverOf(observer6)))
-        subscription7.setDisposable(parent.source7.subscribe(ObserverOf(observer7)))
-        subscription8.setDisposable(parent.source8.subscribe(ObserverOf(observer8)))
+        subscription1.setDisposable(parent.source1.subscribe(observer1))
+        subscription2.setDisposable(parent.source2.subscribe(observer2))
+        subscription3.setDisposable(parent.source3.subscribe(observer3))
+        subscription4.setDisposable(parent.source4.subscribe(observer4))
+        subscription5.setDisposable(parent.source5.subscribe(observer5))
+        subscription6.setDisposable(parent.source6.subscribe(observer6))
+        subscription7.setDisposable(parent.source7.subscribe(observer7))
+        subscription8.setDisposable(parent.source8.subscribe(observer8))
 
         return CompositeDisposable(disposables: [
                 subscription1,
@@ -766,15 +766,15 @@ class CombineLatestSink9_<E1, E2, E3, E4, E5, E6, E7, E8, E9, R> : CombineLatest
         observer8 = CombineLatestObserver(parent: self, index: 7, this: subscription8)
         observer9 = CombineLatestObserver(parent: self, index: 8, this: subscription9)
 
-        subscription1.setDisposable(parent.source1.subscribe(ObserverOf(observer1)))
-        subscription2.setDisposable(parent.source2.subscribe(ObserverOf(observer2)))
-        subscription3.setDisposable(parent.source3.subscribe(ObserverOf(observer3)))
-        subscription4.setDisposable(parent.source4.subscribe(ObserverOf(observer4)))
-        subscription5.setDisposable(parent.source5.subscribe(ObserverOf(observer5)))
-        subscription6.setDisposable(parent.source6.subscribe(ObserverOf(observer6)))
-        subscription7.setDisposable(parent.source7.subscribe(ObserverOf(observer7)))
-        subscription8.setDisposable(parent.source8.subscribe(ObserverOf(observer8)))
-        subscription9.setDisposable(parent.source9.subscribe(ObserverOf(observer9)))
+        subscription1.setDisposable(parent.source1.subscribe(observer1))
+        subscription2.setDisposable(parent.source2.subscribe(observer2))
+        subscription3.setDisposable(parent.source3.subscribe(observer3))
+        subscription4.setDisposable(parent.source4.subscribe(observer4))
+        subscription5.setDisposable(parent.source5.subscribe(observer5))
+        subscription6.setDisposable(parent.source6.subscribe(observer6))
+        subscription7.setDisposable(parent.source7.subscribe(observer7))
+        subscription8.setDisposable(parent.source8.subscribe(observer8))
+        subscription9.setDisposable(parent.source9.subscribe(observer9))
 
         return CompositeDisposable(disposables: [
                 subscription1,
@@ -896,16 +896,16 @@ class CombineLatestSink10_<E1, E2, E3, E4, E5, E6, E7, E8, E9, E10, R> : Combine
         observer9 = CombineLatestObserver(parent: self, index: 8, this: subscription9)
         observer10 = CombineLatestObserver(parent: self, index: 9, this: subscription10)
 
-        subscription1.setDisposable(parent.source1.subscribe(ObserverOf(observer1)))
-        subscription2.setDisposable(parent.source2.subscribe(ObserverOf(observer2)))
-        subscription3.setDisposable(parent.source3.subscribe(ObserverOf(observer3)))
-        subscription4.setDisposable(parent.source4.subscribe(ObserverOf(observer4)))
-        subscription5.setDisposable(parent.source5.subscribe(ObserverOf(observer5)))
-        subscription6.setDisposable(parent.source6.subscribe(ObserverOf(observer6)))
-        subscription7.setDisposable(parent.source7.subscribe(ObserverOf(observer7)))
-        subscription8.setDisposable(parent.source8.subscribe(ObserverOf(observer8)))
-        subscription9.setDisposable(parent.source9.subscribe(ObserverOf(observer9)))
-        subscription10.setDisposable(parent.source10.subscribe(ObserverOf(observer10)))
+        subscription1.setDisposable(parent.source1.subscribe(observer1))
+        subscription2.setDisposable(parent.source2.subscribe(observer2))
+        subscription3.setDisposable(parent.source3.subscribe(observer3))
+        subscription4.setDisposable(parent.source4.subscribe(observer4))
+        subscription5.setDisposable(parent.source5.subscribe(observer5))
+        subscription6.setDisposable(parent.source6.subscribe(observer6))
+        subscription7.setDisposable(parent.source7.subscribe(observer7))
+        subscription8.setDisposable(parent.source8.subscribe(observer8))
+        subscription9.setDisposable(parent.source9.subscribe(observer9))
+        subscription10.setDisposable(parent.source10.subscribe(observer10))
 
         return CompositeDisposable(disposables: [
                 subscription1,

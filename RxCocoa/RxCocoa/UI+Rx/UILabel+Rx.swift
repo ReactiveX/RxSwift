@@ -11,8 +11,8 @@ import RxSwift
 import UIKit
 
 extension UILabel {
-    public func rx_subscribeTextTo(source: Observable<String>) -> Result<Disposable> {
-        return source.subscribe(ObserverOf(AnonymousObserver { event in
+    public func rx_subscribeTextTo(source: Observable<String>) -> Disposable {
+        return source.subscribe(AnonymousObserver { event in
             switch event {
             case .Next(let boxedValue):
                 let value = boxedValue.value
@@ -23,8 +23,6 @@ extension UILabel {
             case .Completed:
                 break
             }
-            
-            return SuccessResult
-        }))
+        })
     }
 }

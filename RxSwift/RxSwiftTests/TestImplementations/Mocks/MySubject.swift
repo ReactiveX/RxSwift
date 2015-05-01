@@ -47,9 +47,9 @@ class MySubject<Element where Element : Hashable> : SubjectType<Element, Element
         }
     }
     
-    override func subscribe(observer: ObserverOf<Element>) -> Disposable {
+    override func subscribe<O : ObserverType where O.Element == Element>(observer: O) -> Disposable {
         _subscribeCount++
-        _observer = observer
+        _observer = ObserverOf(observer)
         
         return AnonymousDisposable {
             self._observer = ObserverOf(NopObserver<Element>())

@@ -83,19 +83,16 @@ extension NSURLSession {
                     observer.on(.Error(error))
                 }
                 else {
-                    observer.on(.Next(Box(data ?? nil, response ?? nil))) >>> {
-                        observer.on(.Completed)
-                    } >>! { e in
-                        observer.on(.Error(e))
-                    }
+                    observer.on(.Next(Box(data ?? nil, response ?? nil)))
+                    observer.on(.Completed)
                 }
             }
             
             task.resume()
                 
-            return success(AnonymousDisposable {
+            return AnonymousDisposable {
                 task.cancel()
-            })
+            }
         }
     }
     

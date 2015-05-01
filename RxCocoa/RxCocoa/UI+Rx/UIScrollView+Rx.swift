@@ -38,7 +38,7 @@ public class ScrollViewDelegate: NSObject, UIScrollViewDelegate {
     public func scrollViewDidScroll(scrollView: UIScrollView) {
         let event = Event.Next(Box(scrollView.contentOffset))
         
-        handleObserverResult(dispatch(event, scrollViewObsevers.all))
+        dispatch(event, scrollViewObsevers)
     }
     
     deinit {
@@ -69,7 +69,7 @@ extension UIScrollView {
             
             let key = delegate.addScrollViewObserver(observer)
             
-            return success(AnonymousDisposable {
+            return AnonymousDisposable {
                 _ = self.rx_checkScrollViewDelegate()
                 
                 delegate.removeScrollViewObserver(key)
@@ -77,7 +77,7 @@ extension UIScrollView {
                 if delegate.scrollViewObsevers.count == 0 {
                     self.delegate = nil
                 }
-            })
+            }
         }
     }
     

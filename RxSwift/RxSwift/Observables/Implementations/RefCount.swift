@@ -18,7 +18,7 @@ class RefCount_<Element> : Sink<Element>, ObserverType {
     }
     
     func run() -> Disposable {
-        let subscription = self.parent.source.subscribe(ObserverOf(self))
+        let subscription = self.parent.source.subscribe(self)
         
         let state = self.parent.state
         

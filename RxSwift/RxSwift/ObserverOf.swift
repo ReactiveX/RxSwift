@@ -31,8 +31,10 @@ public struct ObserverOf<ElementType> {
     }
 }
 
-public func dispatch<Element>(event: Event<Element>, observers: [ObserverOf<Element>]?) {
+public func dispatch<Element, S: SequenceType where S.Generator.Element == ObserverOf<Element>>(event: Event<Element>, observers: S?) {
     if let observers = observers {
-        observers.map { $0.on(event) }
+        for o in observers {
+            o.on(event)
+        }
     }
 }

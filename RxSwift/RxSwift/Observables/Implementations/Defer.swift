@@ -21,7 +21,7 @@ class Defer_<ElementType> : Sink<ElementType>, ObserverType {
     
     func run() -> Disposable {
         let disposable = parent.eval() >== { result in
-            return result.subscribe(ObserverOf(self))
+            return result.subscribe(self)
         } >>! { e in
             self.observer.on(.Error(e))
             self.dispose()

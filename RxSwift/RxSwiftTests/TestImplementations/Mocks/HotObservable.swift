@@ -11,7 +11,7 @@ import RxSwift
 
 class HotObservable<Element : Equatable> : Observable<Element> {
     typealias Events = Recorded<Element>
-    typealias ObserverType = ObserverOf<Element>
+    typealias Observer = ObserverOf<Element>
     
     let testScheduler: TestScheduler
     
@@ -30,14 +30,14 @@ class HotObservable<Element : Equatable> : Observable<Element> {
         
         for recordedEvent in recordedEvents {
             testScheduler.schedule((), time: recordedEvent.time) { t in
-                _ = self.observers.all.map { o in o.on(recordedEvent.event) }
+                dispatch(recordedEvent.event, self.observers)
                 return SuccessResult
             }
         }
     }
     
-    override func subscribe(observer: ObserverOf<Element>) -> Disposable {
-        let key = observers.put(observer)
+    override func subscribe<O : ObserverType where O.Element == Element>(observer: O) -> Disposable {
+        let key = observers.put(ObserverOf(observer))
         subscriptions.append(Subscription(subscribe: self.testScheduler.now))
         
         let i = self.subscriptions.count - 1

@@ -36,7 +36,7 @@ class Switch_<ElementType> : Sink<ElementType>, ObserverType {
     }
     
     func run() -> Disposable {
-        let subscription = self.parent.sources.subscribe(ObserverOf(self))
+        let subscription = self.parent.sources.subscribe(self)
         let switchState = self.switchState
         switchState.subscription.setDisposable(subscription)
         return CompositeDisposable(switchState.subscription, switchState.innerSubscription)
@@ -54,7 +54,7 @@ class Switch_<ElementType> : Sink<ElementType>, ObserverType {
             let d = SingleAssignmentDisposable()
             self.switchState.innerSubscription.setDisposable(d)
                
-            let observer = ObserverOf(SwitchIter(parent: self, id: latest, _self: d))
+            let observer = SwitchIter(parent: self, id: latest, _self: d)
             let disposable = observable.value.subscribe(observer)
             d.setDisposable(disposable)
         case .Error(let error):

@@ -64,12 +64,12 @@ extension ObservableBindingTest {
         let conn = ConnectableObservable(o: xs, s: subject)
         let refd = conn >- refCount
         
-        var dis1 = refd.subscribe(ObserverOf(NopObserver()))
+        var dis1 = refd.subscribe(NopObserver())
         XCTAssertEqual(1, count)
         XCTAssertEqual(1, subject.subscribeCount)
         XCTAssertFalse(disconnected)
         
-        var dis2 = refd.subscribe(ObserverOf(NopObserver()))
+        var dis2 = refd.subscribe(NopObserver())
         XCTAssertEqual(1, count)
         XCTAssertEqual(2, subject.subscribeCount)
         XCTAssertFalse(disconnected)
@@ -80,7 +80,7 @@ extension ObservableBindingTest {
         XCTAssertTrue(disconnected)
         disconnected = false
         
-        var dis3 = refd.subscribe(ObserverOf(NopObserver()))
+        var dis3 = refd.subscribe(NopObserver())
         XCTAssertEqual(2, count)
         XCTAssertEqual(3, subject.subscribeCount)
         XCTAssertFalse(disconnected)
@@ -135,22 +135,22 @@ extension ObservableBindingTest {
         
         var d1: Disposable!
         var o1: MockObserver<Int> = scheduler.createObserver()
-        scheduler.scheduleAt(215) { d1 = res.subscribe(ObserverOf(o1)) }
+        scheduler.scheduleAt(215) { d1 = res.subscribe(o1) }
         scheduler.scheduleAt(235) { d1.dispose() }
         
         var d2: Disposable!
         var o2: MockObserver<Int> = scheduler.createObserver()
-        scheduler.scheduleAt(225) { d2 = res.subscribe(ObserverOf(o2)) }
+        scheduler.scheduleAt(225) { d2 = res.subscribe(o2) }
         scheduler.scheduleAt(275) { d2.dispose() }
         
         var d3: Disposable!
         var o3: MockObserver<Int> = scheduler.createObserver()
-        scheduler.scheduleAt(255) { d3 = res.subscribe(ObserverOf(o3)) }
+        scheduler.scheduleAt(255) { d3 = res.subscribe(o3) }
         scheduler.scheduleAt(265) { d3.dispose() }
         
         var d4: Disposable!
         var o4: MockObserver<Int> = scheduler.createObserver()
-        scheduler.scheduleAt(285) { d4 = res.subscribe(ObserverOf(o4)) }
+        scheduler.scheduleAt(285) { d4 = res.subscribe(o4) }
         scheduler.scheduleAt(320) { d4.dispose() }
         
         scheduler.start()
@@ -212,7 +212,7 @@ extension ObservableBindingTest {
         var res: MockObserver<Int> = scheduler.createObserver()
         
         scheduler.scheduleAt(Defaults.created) { ys = xs >- replay(3) }
-        scheduler.scheduleAt(450, action: { subscription = ys.subscribe(ObserverOf(res)) })
+        scheduler.scheduleAt(450, action: { subscription = ys.subscribe(res) })
         scheduler.scheduleAt(Defaults.disposed) { subscription.dispose() }
         
         scheduler.scheduleAt(300) { connection = ys.connect() }
@@ -266,7 +266,7 @@ extension ObservableBindingTest {
         var res: MockObserver<Int> = scheduler.createObserver()
         
         scheduler.scheduleAt(Defaults.created) { ys = xs >- replay(3) }
-        scheduler.scheduleAt(450, action: { subscription = ys.subscribe(ObserverOf(res)) })
+        scheduler.scheduleAt(450, action: { subscription = ys.subscribe(res) })
         scheduler.scheduleAt(Defaults.disposed) { subscription.dispose() }
         
         scheduler.scheduleAt(300) { connection = ys.connect() }
@@ -318,7 +318,7 @@ extension ObservableBindingTest {
         var res: MockObserver<Int> = scheduler.createObserver()
         
         scheduler.scheduleAt(Defaults.created) { ys = xs >- replay(3) }
-        scheduler.scheduleAt(450, action: { subscription = ys.subscribe(ObserverOf(res)) })
+        scheduler.scheduleAt(450, action: { subscription = ys.subscribe(res) })
         scheduler.scheduleAt(Defaults.disposed) { subscription.dispose() }
         
         scheduler.scheduleAt(300) { connection = ys.connect() }
@@ -370,7 +370,7 @@ extension ObservableBindingTest {
         var res: MockObserver<Int> = scheduler.createObserver()
         
         scheduler.scheduleAt(Defaults.created) { ys = xs >- replay(3) }
-        scheduler.scheduleAt(450, action: { subscription = ys.subscribe(ObserverOf(res)) })
+        scheduler.scheduleAt(450, action: { subscription = ys.subscribe(res) })
         scheduler.scheduleAt(475) { subscription.dispose() }
         
         scheduler.scheduleAt(300) { connection = ys.connect() }
@@ -423,7 +423,7 @@ extension ObservableBindingTest {
         var res: MockObserver<Int> = scheduler.createObserver()
         
         scheduler.scheduleAt(Defaults.created) { ys = xs >- replay(1) }
-        scheduler.scheduleAt(450, action: { subscription = ys.subscribe(ObserverOf(res)) })
+        scheduler.scheduleAt(450, action: { subscription = ys.subscribe(res) })
         scheduler.scheduleAt(Defaults.disposed) { subscription.dispose() }
         
         scheduler.scheduleAt(300) { connection = ys.connect() }
@@ -475,7 +475,7 @@ extension ObservableBindingTest {
         var res: MockObserver<Int> = scheduler.createObserver()
         
         scheduler.scheduleAt(Defaults.created) { ys = xs >- replay(1) }
-        scheduler.scheduleAt(450, action: { subscription = ys.subscribe(ObserverOf(res)) })
+        scheduler.scheduleAt(450, action: { subscription = ys.subscribe(res) })
         scheduler.scheduleAt(Defaults.disposed) { subscription.dispose() }
         
         scheduler.scheduleAt(300) { connection = ys.connect() }
@@ -525,7 +525,7 @@ extension ObservableBindingTest {
         var res: MockObserver<Int> = scheduler.createObserver()
         
         scheduler.scheduleAt(Defaults.created) { ys = xs >- replay(1) }
-        scheduler.scheduleAt(450, action: { subscription = ys.subscribe(ObserverOf(res)) })
+        scheduler.scheduleAt(450, action: { subscription = ys.subscribe(res) })
         scheduler.scheduleAt(Defaults.disposed) { subscription.dispose() }
         
         scheduler.scheduleAt(300) { connection = ys.connect() }
@@ -575,7 +575,7 @@ extension ObservableBindingTest {
         var res: MockObserver<Int> = scheduler.createObserver()
         
         scheduler.scheduleAt(Defaults.created) { ys = xs >- replay(1) }
-        scheduler.scheduleAt(450, action: { subscription = ys.subscribe(ObserverOf(res)) })
+        scheduler.scheduleAt(450, action: { subscription = ys.subscribe(res) })
         scheduler.scheduleAt(475) { subscription.dispose() }
         
         scheduler.scheduleAt(300) { connection = ys.connect() }

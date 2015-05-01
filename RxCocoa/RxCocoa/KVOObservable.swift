@@ -56,25 +56,21 @@ public class KVOObservable<Element> : Observable<Element> {
         
         self.observer = KVOObserver(object: object, path: path) { [unowned self] value in
             let observers = self.observers
-            let invokeResult = doAll(observers.all.map { observer in
-                observer.on(.Next(Box(value)))
-            })
-            
-            handleObserverResult(invokeResult)
+            dispatch(.Next(Box(value)), observers)
         }
     }
     
-    public override func subscribe(observer: ObserverOf<Element>) -> Result<Disposable> {
+    public override func subscribe<O : ObserverType where O.Element == Element>(observer: O) -> Disposable {
         return lock.calculateLocked {
-            let key = self.observers.put(observer)
+            let key = self.observers.put(ObserverOf(observer))
             
-            return success(AnonymousDisposable { () in
+            return AnonymousDisposable { () in
                 self.lock.performLocked {
                     if self.observers.removeKey(key) == nil {
                         removingObserverFailed()
                     }
                 }
-            })
+            }
         }
     }
 }

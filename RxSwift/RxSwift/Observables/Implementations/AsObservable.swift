@@ -51,6 +51,6 @@ class AsObservable<Element> : Producer<Element> {
     override func run(observer: ObserverOf<Element>, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
         let sink = AsObservableSink_(observer: observer, cancel: cancel)
         setSink(sink)
-        return source.subscribe(ObserverOf(sink))
+        return source.subscribe(sink)
     }
 }

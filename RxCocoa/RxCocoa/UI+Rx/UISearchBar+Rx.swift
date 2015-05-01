@@ -34,7 +34,7 @@ class SearchBarDelegate: NSObject, UISearchBarDelegate {
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
         let event = Event.Next(Box(searchText))
         
-        handleObserverResult(dispatch(event, self.observers.all))
+        dispatch(event, self.observers)
     }
 }
 
@@ -56,9 +56,9 @@ extension UISearchBar {
             
             let key = delegate.addObserver(observer)
             
-            return success(AnonymousDisposable {
+            return AnonymousDisposable {
                 delegate.removeObserver(key)
-            })
+            }
         }
     }
     

@@ -21,7 +21,7 @@ class ConnectableObservable<Element> : ConnectableObservableType<Element> {
         return _o.connect()
     }
     
-    override func subscribe(observer: ObserverOf<Element>) -> Disposable {
+    override func subscribe<O : ObserverType where O.Element == Element>(observer: O) -> Disposable {
         return _o.subscribe(observer)
     }
 }

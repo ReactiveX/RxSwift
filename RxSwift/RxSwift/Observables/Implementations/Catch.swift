@@ -48,7 +48,7 @@ class Catch_<ElementType> : Sink<ElementType>, ObserverType {
         let d1 = SingleAssignmentDisposable()
         subscription.setDisposable(d1)
         
-        let disposableSubscription = parent.source.subscribe(ObserverOf(self))
+        let disposableSubscription = parent.source.subscribe(self)
         d1.setDisposable(disposableSubscription)
         
         return subscription
@@ -70,7 +70,7 @@ class Catch_<ElementType> : Sink<ElementType>, ObserverType {
                 let d = SingleAssignmentDisposable()
                 subscription.setDisposable(d)
                 
-                let observer = ObserverOf(Catch_Impl(parent: self))
+                let observer = Catch_Impl(parent: self)
                 
                 let subscription2 = catchObservable.subscribe(observer)
                 d.setDisposable(subscription2)
@@ -110,7 +110,7 @@ class CatchToResult_<ElementType> : Sink<Result<ElementType>>, ObserverType {
     }
     
     func run() -> Disposable {
-        return parent.source.subscribe(ObserverOf(self))
+        return parent.source.subscribe(self)
     }
     
     func on(event: Event<Element>) {

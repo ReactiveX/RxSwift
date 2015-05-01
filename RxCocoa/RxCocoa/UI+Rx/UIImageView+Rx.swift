@@ -11,14 +11,14 @@ import RxSwift
 import UIKit
 
 extension UIImageView {
-    public func rx_subscribeImageTo(source: Observable<UIImage?>) -> Result<Disposable> {
+    public func rx_subscribeImageTo(source: Observable<UIImage?>) -> Disposable {
         return rx_subscribeImageTo(false)(source: source)
     }
     
     public func rx_subscribeImageTo
         (animated: Bool)
-        (source: Observable<UIImage?>) -> Result<Disposable> {
-        return source.subscribe(ObserverOf(AnonymousObserver { event in
+        (source: Observable<UIImage?>) -> Disposable {
+        return source.subscribe(AnonymousObserver { event in
             switch event {
             case .Next(let boxedValue):
                 let value = boxedValue.value
@@ -39,8 +39,6 @@ extension UIImageView {
             case .Completed:
                 break
             }
-            
-            return SuccessResult
-        }))
+        })
     }
 }

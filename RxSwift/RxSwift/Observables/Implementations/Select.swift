@@ -98,6 +98,6 @@ class Select<ElementType, ResultType>: Producer<ResultType> {
         
         setSink(sink)
             
-        return self.source.subscribe(ObserverOf(sink))
+        return self.source.subscribe(sink)
     }
 }

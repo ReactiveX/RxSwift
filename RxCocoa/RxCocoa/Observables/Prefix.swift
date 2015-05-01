@@ -9,22 +9,18 @@
 import Foundation
 import RxSwift
 
-class Prefix<Element>: Observable<Element> {
+class Prefix<Element>: Producer<Element> {
     let element: Element
     let source: Observable<Element>
     
     init(source: Observable<Element>, element: Element) {
         self.source = source
         self.element = element
+        super.init()
     }
     
-    override func subscribe(observer: ObserverOf<Element>) -> Result<Disposable> {
-        let result = observer.on(.Next(Box(element)))
-     
-        if let error = result.error {
-            observer.on(.Error(error))
-            return .Error(error)
-        }
+    override func subscribe<O : ObserverType where O.Element == Element>(observer: O) -> Disposable {
+        observer.on(.Next(Box(element)))
         
         return source.subscribe(observer)
     }
