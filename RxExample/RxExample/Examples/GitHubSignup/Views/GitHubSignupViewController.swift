@@ -201,4 +201,20 @@ class GitHubSignupViewController : ViewController {
             }
         } >- disposeBag.addDisposable
     }
+   
+    // This is one of the reasons why it's a good idea for disposal to be detached from allocations.
+    // If resources weren't disposed before view controller is being deallocated, signup alert view
+    // could be presented on top of wrong screen or crash your app if it was being presented while
+    // navigation stack is popping.
+    // This will work well with UINavigationController, but has an assumption that view controller will
+    // never be readded as a child view controller.
+    // It it was readded UI wouldn't be bound anymore.
+    override func willMoveToParentViewController(parent: UIViewController?) {
+        if let parent = parent {
+            assert(parent.isKindOfClass(UINavigationController), "Please read comments")
+        }
+        else {
+            self.disposeBag = DisposeBag()
+        }
+    }
 }
