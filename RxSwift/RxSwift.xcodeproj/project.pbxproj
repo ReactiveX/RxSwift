@@ -102,6 +102,7 @@
 		C8A56BBF1AD7436D00B4673B /* Observable+TimeTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A56BAA1AD7436D00B4673B /* Observable+TimeTest.swift */; };
 		C8A56BC01AD7436D00B4673B /* QueueTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A56BAB1AD7436D00B4673B /* QueueTests.swift */; };
 		C8A56BC11AD7436D00B4673B /* RxTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A56BAC1AD7436D00B4673B /* RxTest.swift */; };
+		C8A60C3C1AF4191B007923F0 /* Sample.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A60C3B1AF4191B007923F0 /* Sample.swift */; };
 		C8BA11451AE84932004D2FA8 /* CombineLatest+arity.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8BA11441AE84932004D2FA8 /* CombineLatest+arity.swift */; };
 		C8BA11501AE84A54004D2FA8 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8BA114F1AE84A54004D2FA8 /* main.swift */; };
 		C8D559271AE2FBDC00DE7BDB /* MySubject.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D559261AE2FBDC00DE7BDB /* MySubject.swift */; };
@@ -232,6 +233,7 @@
 		C8A56BAA1AD7436D00B4673B /* Observable+TimeTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Observable+TimeTest.swift"; sourceTree = "<group>"; };
 		C8A56BAB1AD7436D00B4673B /* QueueTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueueTests.swift; sourceTree = "<group>"; };
 		C8A56BAC1AD7436D00B4673B /* RxTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxTest.swift; sourceTree = "<group>"; };
+		C8A60C3B1AF4191B007923F0 /* Sample.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sample.swift; sourceTree = "<group>"; };
 		C8BA11421AE848E0004D2FA8 /* CombineLatest+arity.tt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "CombineLatest+arity.tt"; sourceTree = "<group>"; };
 		C8BA11441AE84932004D2FA8 /* CombineLatest+arity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CombineLatest+arity.swift"; sourceTree = "<group>"; };
 		C8BA114D1AE84A54004D2FA8 /* Preprocessor */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Preprocessor; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -397,6 +399,7 @@
 		C8A56B121AD7435800B4673B /* Implementations */ = {
 			isa = PBXGroup;
 			children = (
+				C8A60C3B1AF4191B007923F0 /* Sample.swift */,
 				C8A56B131AD7435800B4673B /* Aggregate.swift */,
 				C8A56B141AD7435800B4673B /* AnonymousObservable.swift */,
 				C8A56B151AD7435800B4673B /* AsObservable.swift */,
@@ -659,6 +662,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C8A56B631AD7435900B4673B /* ConcatSink.swift in Sources */,
+				C8A60C3C1AF4191B007923F0 /* Sample.swift in Sources */,
 				C86AE05C1AE3F0ED00C8A2A6 /* Catch.swift in Sources */,
 				C8A56B541AD7435900B4673B /* CompositeDisposable.swift in Sources */,
 				C8A56B771AD7435900B4673B /* Observable+Binding.swift in Sources */,
