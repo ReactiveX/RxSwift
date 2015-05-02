@@ -37,10 +37,11 @@
 		C81108691AF50E2A001C13E4 /* RxTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C811084C1AF50E2A001C13E4 /* RxTest.swift */; };
 		C811086C1AF50E43001C13E4 /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C811086A1AF50E43001C13E4 /* RxCocoa.framework */; };
 		C811086D1AF50E43001C13E4 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C811086B1AF50E43001C13E4 /* RxSwift.framework */; };
+		C8B787FA1AF55CDE00206D02 /* Observable+ConcurrencyTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B787F91AF55CDE00206D02 /* Observable+ConcurrencyTest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		C81108201AF50E11001C13E4 /* Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C81108201AF50E11001C13E4 /* RxTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RxTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C81108241AF50E11001C13E4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C811082B1AF50E2A001C13E4 /* NSNotificationCenterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSNotificationCenterTests.swift; sourceTree = "<group>"; };
 		C81108301AF50E2A001C13E4 /* ColdObservable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColdObservable.swift; sourceTree = "<group>"; };
@@ -72,6 +73,7 @@
 		C811084C1AF50E2A001C13E4 /* RxTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxTest.swift; sourceTree = SOURCE_ROOT; };
 		C811086A1AF50E43001C13E4 /* RxCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxCocoa.framework; path = "../Debug-iphoneos/RxCocoa.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C811086B1AF50E43001C13E4 /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = "../Debug-iphoneos/RxSwift.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C8B787F91AF55CDE00206D02 /* Observable+ConcurrencyTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Observable+ConcurrencyTest.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,7 +102,7 @@
 		C81108211AF50E11001C13E4 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				C81108201AF50E11001C13E4 /* Tests.xctest */,
+				C81108201AF50E11001C13E4 /* RxTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -186,6 +188,7 @@
 				C81108421AF50E2A001C13E4 /* DisposableTest.swift */,
 				C81108431AF50E2A001C13E4 /* Observable+AggregateTest.swift */,
 				C81108441AF50E2A001C13E4 /* Observable+BindingTest.swift */,
+				C8B787F91AF55CDE00206D02 /* Observable+ConcurrencyTest.swift */,
 				C81108451AF50E2A001C13E4 /* Observable+MultipleTest+CombineLatest.swift */,
 				C81108461AF50E2A001C13E4 /* Observable+MultipleTest+CombineLatest.tt */,
 				C81108471AF50E2A001C13E4 /* Observable+MultipleTest.swift */,
@@ -214,7 +217,7 @@
 			);
 			name = RxTests;
 			productName = Tests;
-			productReference = C81108201AF50E11001C13E4 /* Tests.xctest */;
+			productReference = C81108201AF50E11001C13E4 /* RxTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -263,6 +266,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C8B787FA1AF55CDE00206D02 /* Observable+ConcurrencyTest.swift in Sources */,
 				C81108691AF50E2A001C13E4 /* RxTest.swift in Sources */,
 				C81108581AF50E2A001C13E4 /* Result+Equatable.swift in Sources */,
 				C81108671AF50E2A001C13E4 /* Observable+TimeTest.swift in Sources */,
