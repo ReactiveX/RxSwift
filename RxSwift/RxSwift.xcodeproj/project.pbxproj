@@ -210,8 +210,8 @@
 		C8A56B461AD7435900B4673B /* OperationQueueScheduler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OperationQueueScheduler.swift; sourceTree = "<group>"; };
 		C8A56B471AD7435900B4673B /* SchedulerDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SchedulerDefaults.swift; sourceTree = "<group>"; };
 		C8A56B481AD7435900B4673B /* Scheduler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scheduler.swift; sourceTree = "<group>"; };
-		C8A56B4A1AD7435900B4673B /* ConnectableObservableType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectableObservableType.swift; sourceTree = "<group>"; };
-		C8A56B4B1AD7435900B4673B /* SubjectType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubjectType.swift; sourceTree = "<group>"; };
+		C8A56B4A1AD7435900B4673B /* ConnectableObservableType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ConnectableObservableType.swift; path = Subjects/ConnectableObservableType.swift; sourceTree = "<group>"; };
+		C8A56B4B1AD7435900B4673B /* SubjectType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SubjectType.swift; path = Subjects/SubjectType.swift; sourceTree = "<group>"; };
 		C8A56B961AD7436D00B4673B /* ColdObservable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColdObservable.swift; sourceTree = "<group>"; };
 		C8A56B971AD7436D00B4673B /* HotObservable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HotObservable.swift; sourceTree = "<group>"; };
 		C8A56B981AD7436D00B4673B /* MockObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockObserver.swift; sourceTree = "<group>"; };
@@ -307,6 +307,8 @@
 				C8A56B101AD7435800B4673B /* Observable+Subscription.swift */,
 				C8A56B331AD7435800B4673B /* ObserverOf.swift */,
 				C8A56B3D1AD7435900B4673B /* ObserverType.swift */,
+				C8A56B4A1AD7435900B4673B /* ConnectableObservableType.swift */,
+				C8A56B4B1AD7435900B4673B /* SubjectType.swift */,
 				C8A56B3E1AD7435900B4673B /* Result.swift */,
 				C8A56B411AD7435900B4673B /* Rx.swift */,
 				C8A56B481AD7435900B4673B /* Scheduler.swift */,
@@ -316,7 +318,6 @@
 				C8A56B111AD7435800B4673B /* Observables */,
 				C8A56B341AD7435800B4673B /* Observers */,
 				C8A56B421AD7435900B4673B /* Scheduler */,
-				C8A56B491AD7435900B4673B /* Subjects */,
 				C8A56ADA1AD7424700B4673B /* Supporting Files */,
 			);
 			path = RxSwift;
@@ -455,15 +456,6 @@
 				C8A56B471AD7435900B4673B /* SchedulerDefaults.swift */,
 			);
 			path = Scheduler;
-			sourceTree = "<group>";
-		};
-		C8A56B491AD7435900B4673B /* Subjects */ = {
-			isa = PBXGroup;
-			children = (
-				C8A56B4A1AD7435900B4673B /* ConnectableObservableType.swift */,
-				C8A56B4B1AD7435900B4673B /* SubjectType.swift */,
-			);
-			path = Subjects;
 			sourceTree = "<group>";
 		};
 		C8A56B941AD7436D00B4673B /* TestImplementations */ = {
