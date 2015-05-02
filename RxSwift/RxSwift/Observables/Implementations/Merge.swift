@@ -225,28 +225,38 @@ class Merge_Concurrent<ElementType> : Sink<ElementType>, ObserverType {
         case .Next(let boxedValue):
             let value = boxedValue.value
             
-            lock.performLocked {
+            let subscribe = lock.calculateLocked { () -> Bool in
                 let mergeState = self.mergeState
                 if mergeState.activeCount < self.parent.maxConcurrent {
-                    self.subscribe(value, group: mergeState.group)
                     self.mergeState.activeCount += 1
+                    return true
                 }
                 else {
                     mergeState.queue.value.enqueue(value)
+                    return false
                 }
             }
-        case .Error(let error):
-            lock.performLocked {
-                self.observer.on(.Error(error))
-                self.dispose()
+            
+            if subscribe {
+                self.subscribe(value, group: mergeState.group)
             }
+        case .Error(let error):
+            let observer = lock.calculateLocked { () -> ObserverOf<ElementType> in
+                let observer = self.observer
+                self.dispose()
+                return observer
+            }
+
+            observer.on(.Error(error))
         case .Completed:
-            lock.performLocked {
+            let observer = lock.calculateLocked { () -> ObserverOf<ElementType>? in
                 let mergeState = self.mergeState
                 let group = mergeState.group
                 
+                var observer: ObserverOf<ElementType>? = nil
+                
                 if mergeState.activeCount == 0 {
-                    self.observer.on(.Completed)
+                    observer = self.observer
                     self.dispose()
                 }
                 else {
@@ -254,6 +264,11 @@ class Merge_Concurrent<ElementType> : Sink<ElementType>, ObserverType {
                 }
                     
                 self.mergeState.stopped = true
+                return observer
+            }
+            
+            if let observer = observer {
+                observer.on(.Completed)
             }
         }
     }

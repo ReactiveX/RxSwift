@@ -12,11 +12,10 @@ class Connection<SourceType, ResultType> : Disposable {
     typealias SelfType = Connection<SourceType, ResultType>
     
     var parent: ConnectableObservable<SourceType, ResultType>?
-    var subscription: Disposable?
+    var subscription: SingleAssignmentDisposable? = SingleAssignmentDisposable()
     
-    init(parent: ConnectableObservable<SourceType, ResultType>, subscription: Disposable) {
+    init(parent: ConnectableObservable<SourceType, ResultType>) {
         self.parent = parent
-        self.subscription = subscription
     }
     
     func dispose() {
@@ -47,16 +46,22 @@ class ConnectableObservable<SourceType, ResultType> : ConnectableObservableType<
     }
     
     override func connect() -> Disposable {
-        return self.lock.calculateLocked { oldConnection in
-            if let connection = connection {
-                return connection
+        let (connection, connect) = self.lock.calculateLocked { oldConnection -> (Connection<SourceType, ResultType>, Bool) in
+            if let connection = self.connection {
+                return (connection, false)
             }
             else {
-                let disposable = self.source.subscribe(self.subject)
-                self.connection = Connection(parent: self, subscription: disposable)
-                return self.connection!
+                self.connection = Connection(parent: self)
+                return (self.connection!, true)
             }
         }
+
+        if connect {
+            let disposable = self.source.subscribe(self.subject)
+            connection.subscription!.setDisposable(disposable)
+        }
+        
+        return connection
     }
     
     override func subscribe<O : ObserverType where O.Element == ResultType>(observer: O) -> Disposable {
