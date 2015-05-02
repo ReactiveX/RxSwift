@@ -8,27 +8,46 @@
 
 import Foundation
 
+// Thread safe bag that disposes objects once it is being deallocated.
+// This returns RAII like resource management to `RxSwift`.
 public class DisposeBag: DisposeBase, Disposable {
-    private var lock = Lock()
+    typealias State = (
+        disposables: [Disposable],
+        disposed: Bool
+    )
     
-    private var disposables: [Disposable] = []
+    private var lock = Lock()
+    var state: State = (
+        disposables: [],
+        disposed: false
+    )
     
     public override init() {
         super.init()
     }
     
     public func addDisposable(disposable: Disposable) {
-        disposables.append(disposable)
+        let dispose = lock.calculateLocked { () -> Bool in
+            if state.disposed {
+                return true
+            }
+            
+            state.disposables.append(disposable)
+            
+            return false
+        }
+        
+        if dispose {
+            disposable.dispose()
+        }
     }
 
-    public func addDisposable(disposable: Result<Disposable>) {
-        disposables.append(*disposable)
-    }
-    
     public func dispose() {
         let oldDisposables = lock.calculateLocked { () -> [Disposable] in
-            var disposables = self.disposables
-            self.disposables.removeAll(keepCapacity: true)
+            var disposables = self.state.disposables
+            
+            self.state.disposables.removeAll(keepCapacity: false)
+            self.state.disposed = true
             
             return disposables
         }
