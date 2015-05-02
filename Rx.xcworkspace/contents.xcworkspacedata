@@ -14,7 +14,7 @@
       location = "group:RxCocoa/RxCocoa.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:Tests/Tests.xcodeproj">
+      location = "group:RxTests/RxTests.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Preprocessor/Preprocessor.xcodeproj">
