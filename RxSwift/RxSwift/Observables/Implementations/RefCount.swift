@@ -53,7 +53,7 @@ class RefCount_<Element> : Sink<Element>, ObserverType {
     }
 
     func on(event: Event<Element>) {
-        let observer = state.observer
+        let observer = self.observer
         
         switch event {
         case .Next:

@@ -40,7 +40,7 @@ class Multicast_<SourceType, IntermediateType, ResultType>: Sink<ResultType>, Ob
     }
     
     func on(event: Event<ResultType>) {
-        self.state.observer.on(event)
+        self.observer.on(event)
         switch event {
             case .Next: break
             case .Error: fallthrough

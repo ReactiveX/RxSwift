@@ -59,9 +59,9 @@ class Switch_<ElementType> : Sink<ElementType>, ObserverType {
             d.setDisposable(disposable)
         case .Error(let error):
             self.lock.performLocked {
-                return self.state.observer.on(.Error(error))
+                self.observer.on(.Error(error))
+                self.dispose()
             }
-            self.dispose()
         case .Completed:
             self.lock.performLocked {
                 self.switchState.stopped = true
@@ -69,7 +69,7 @@ class Switch_<ElementType> : Sink<ElementType>, ObserverType {
                 self.switchState.subscription.dispose()
                 
                 if !self.switchState.hasLatest {
-                    self.state.observer.on(.Completed)
+                    self.observer.on(.Completed)
                     self.dispose()
                 }
             }
@@ -104,7 +104,7 @@ class SwitchIter<ElementType> : ObserverType {
                 return
             }
            
-            let observer = self.parent.state.observer
+            let observer = self.parent.observer
             
             switch event {
             case .Next:

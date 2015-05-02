@@ -21,7 +21,7 @@ class Select_<ElementType, ResultType> : Sink<ResultType>, ObserverType {
     }
 
     func on(event: Event<ElementType>) {
-        let observer = super.state.observer
+        let observer = super.observer
         
         switch event {
         case .Next(let element):
