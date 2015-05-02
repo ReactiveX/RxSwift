@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		C83366ED1AD0293800C668A7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C83366EC1AD0293800C668A7 /* Images.xcassets */; };
-		C83366FC1AD0293900C668A7 /* RxExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83366FB1AD0293900C668A7 /* RxExampleTests.swift */; };
 		C83367221AD029AE00C668A7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C833670E1AD029AE00C668A7 /* AppDelegate.swift */; };
 		C83367231AD029AE00C668A7 /* Example.swift in Sources */ = {isa = PBXBuildFile; fileRef = C833670F1AD029AE00C668A7 /* Example.swift */; };
 		C83367241AD029AE00C668A7 /* HtmlParsing.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83367111AD029AE00C668A7 /* HtmlParsing.swift */; };
@@ -36,16 +35,6 @@
 		C8F57F451AD02DBE006B8702 /* RxCocoa.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C8F57F431AD02DBE006B8702 /* RxCocoa.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		C83366F61AD0293900C668A7 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C83366D51AD0293800C668A7 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = C83366DC1AD0293800C668A7;
-			remoteInfo = RxExample;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXCopyFilesBuildPhase section */
 		C83367351AD029C700C668A7 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -65,9 +54,6 @@
 		C83366DD1AD0293800C668A7 /* RxExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RxExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C83366E11AD0293800C668A7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C83366EC1AD0293800C668A7 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		C83366F51AD0293900C668A7 /* RxExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RxExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		C83366FA1AD0293900C668A7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C83366FB1AD0293900C668A7 /* RxExampleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxExampleTests.swift; sourceTree = "<group>"; };
 		C833670E1AD029AE00C668A7 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C833670F1AD029AE00C668A7 /* Example.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Example.swift; sourceTree = "<group>"; };
 		C83367111AD029AE00C668A7 /* HtmlParsing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HtmlParsing.swift; sourceTree = "<group>"; };
@@ -103,13 +89,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C83366F21AD0293900C668A7 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -119,7 +98,6 @@
 				C8A56BCA1AD744E600B4673B /* RxSwift.framework */,
 				C8F57F431AD02DBE006B8702 /* RxCocoa.framework */,
 				C83366DF1AD0293800C668A7 /* RxExample */,
-				C83366F81AD0293900C668A7 /* RxExampleTests */,
 				C83366DE1AD0293800C668A7 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -128,7 +106,6 @@
 			isa = PBXGroup;
 			children = (
 				C83366DD1AD0293800C668A7 /* RxExample.app */,
-				C83366F51AD0293900C668A7 /* RxExampleTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -153,23 +130,6 @@
 			isa = PBXGroup;
 			children = (
 				C83366E11AD0293800C668A7 /* Info.plist */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		C83366F81AD0293900C668A7 /* RxExampleTests */ = {
-			isa = PBXGroup;
-			children = (
-				C83366FB1AD0293900C668A7 /* RxExampleTests.swift */,
-				C83366F91AD0293900C668A7 /* Supporting Files */,
-			);
-			path = RxExampleTests;
-			sourceTree = "<group>";
-		};
-		C83366F91AD0293900C668A7 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				C83366FA1AD0293900C668A7 /* Info.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -273,24 +233,6 @@
 			productReference = C83366DD1AD0293800C668A7 /* RxExample.app */;
 			productType = "com.apple.product-type.application";
 		};
-		C83366F41AD0293900C668A7 /* RxExampleTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = C83367021AD0293900C668A7 /* Build configuration list for PBXNativeTarget "RxExampleTests" */;
-			buildPhases = (
-				C83366F11AD0293900C668A7 /* Sources */,
-				C83366F21AD0293900C668A7 /* Frameworks */,
-				C83366F31AD0293900C668A7 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				C83366F71AD0293900C668A7 /* PBXTargetDependency */,
-			);
-			name = RxExampleTests;
-			productName = RxExampleTests;
-			productReference = C83366F51AD0293900C668A7 /* RxExampleTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -302,10 +244,6 @@
 				TargetAttributes = {
 					C83366DC1AD0293800C668A7 = {
 						CreatedOnToolsVersion = 6.2;
-					};
-					C83366F41AD0293900C668A7 = {
-						CreatedOnToolsVersion = 6.2;
-						TestTargetID = C83366DC1AD0293800C668A7;
 					};
 				};
 			};
@@ -323,7 +261,6 @@
 			projectRoot = "";
 			targets = (
 				C83366DC1AD0293800C668A7 /* RxExample */,
-				C83366F41AD0293900C668A7 /* RxExampleTests */,
 			);
 		};
 /* End PBXProject section */
@@ -338,13 +275,6 @@
 				C86E2F411AE5A0CA00C31024 /* WikipediaImageCell.xib in Resources */,
 				C833672D1AD029AE00C668A7 /* LaunchScreen.xib in Resources */,
 				C83366ED1AD0293800C668A7 /* Images.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C83366F31AD0293900C668A7 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -375,23 +305,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C83366F11AD0293900C668A7 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C83366FC1AD0293900C668A7 /* RxExampleTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		C83366F71AD0293900C668A7 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = C83366DC1AD0293800C668A7 /* RxExample */;
-			targetProxy = C83366F61AD0293900C668A7 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		C83366FD1AD0293900C668A7 /* Debug */ = {
@@ -510,40 +424,6 @@
 			};
 			name = Release;
 		};
-		C83367031AD0293900C668A7 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = RxExampleTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RxExample.app/RxExample";
-			};
-			name = Debug;
-		};
-		C83367041AD0293900C668A7 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = RxExampleTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RxExample.app/RxExample";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -561,15 +441,6 @@
 			buildConfigurations = (
 				C83367001AD0293900C668A7 /* Debug */,
 				C83367011AD0293900C668A7 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		C83367021AD0293900C668A7 /* Build configuration list for PBXNativeTarget "RxExampleTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				C83367031AD0293900C668A7 /* Debug */,
-				C83367041AD0293900C668A7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

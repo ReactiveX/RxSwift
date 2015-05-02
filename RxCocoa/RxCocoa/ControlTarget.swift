@@ -9,6 +9,7 @@
 import Foundation
 import RxSwift
 
+// This should be only used from `MainScheduler`
 class ControlTarget: NSObject, Disposable {
     typealias Callback = (UIControl) -> Void
     

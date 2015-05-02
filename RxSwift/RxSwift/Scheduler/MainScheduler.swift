@@ -13,7 +13,7 @@ public class MainScheduler : DispatchQueueScheduler {
         static let sharedInstance = MainScheduler()
     }
     
-    init() {
+    private init() {
         super.init(queue: dispatch_get_main_queue())
     }
     

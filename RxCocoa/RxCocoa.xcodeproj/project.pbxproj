@@ -10,8 +10,6 @@
 		C8092BB91AF5041E008D9A2C /* NSNotificationCenter+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8092BB81AF5041E008D9A2C /* NSNotificationCenter+Rx.swift */; };
 		C8092BBB1AF50436008D9A2C /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8092BBA1AF50436008D9A2C /* CoreData.framework */; };
 		C81553E41A98AB4A00C63152 /* RxCocoa.h in Headers */ = {isa = PBXBuildFile; fileRef = C81553E31A98AB4A00C63152 /* RxCocoa.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C81553EA1A98AB4A00C63152 /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C81553DE1A98AB4A00C63152 /* RxCocoa.framework */; };
-		C81553F11A98AB4A00C63152 /* RxCocoaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81553F01A98AB4A00C63152 /* RxCocoaTests.swift */; };
 		C81553FF1A98AC3700C63152 /* KVOObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81553FE1A98AC3700C63152 /* KVOObservable.swift */; };
 		C81554031A9900F700C63152 /* ControlTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81554021A9900F700C63152 /* ControlTarget.swift */; };
 		C81554051A99037500C63152 /* RxCocoa.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81554041A99037500C63152 /* RxCocoa.swift */; };
@@ -30,25 +28,12 @@
 		C8A56BCE1AD744FD00B4673B /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8A56BCD1AD744FD00B4673B /* RxSwift.framework */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		C81553EB1A98AB4A00C63152 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C81553D51A98AB4A00C63152 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = C81553DD1A98AB4A00C63152;
-			remoteInfo = RxCocoa;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
 		C8092BB81AF5041E008D9A2C /* NSNotificationCenter+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSNotificationCenter+Rx.swift"; sourceTree = "<group>"; };
 		C8092BBA1AF50436008D9A2C /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		C81553DE1A98AB4A00C63152 /* RxCocoa.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxCocoa.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C81553E21A98AB4A00C63152 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C81553E31A98AB4A00C63152 /* RxCocoa.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RxCocoa.h; sourceTree = "<group>"; };
-		C81553E91A98AB4A00C63152 /* RxCocoaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RxCocoaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		C81553EF1A98AB4A00C63152 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C81553F01A98AB4A00C63152 /* RxCocoaTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxCocoaTests.swift; sourceTree = "<group>"; };
 		C81553FE1A98AC3700C63152 /* KVOObservable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KVOObservable.swift; sourceTree = "<group>"; };
 		C81554021A9900F700C63152 /* ControlTarget.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ControlTarget.swift; sourceTree = "<group>"; };
 		C81554041A99037500C63152 /* RxCocoa.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxCocoa.swift; sourceTree = "<group>"; };
@@ -77,14 +62,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C81553E61A98AB4A00C63152 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C81553EA1A98AB4A00C63152 /* RxCocoa.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -102,7 +79,6 @@
 			children = (
 				C8092BBC1AF504AD008D9A2C /* Frameworks */,
 				C81553E01A98AB4A00C63152 /* RxCocoa */,
-				C81553ED1A98AB4A00C63152 /* RxCocoaTests */,
 				C81553DF1A98AB4A00C63152 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -111,7 +87,6 @@
 			isa = PBXGroup;
 			children = (
 				C81553DE1A98AB4A00C63152 /* RxCocoa.framework */,
-				C81553E91A98AB4A00C63152 /* RxCocoaTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -137,23 +112,6 @@
 			isa = PBXGroup;
 			children = (
 				C81553E21A98AB4A00C63152 /* Info.plist */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		C81553ED1A98AB4A00C63152 /* RxCocoaTests */ = {
-			isa = PBXGroup;
-			children = (
-				C81553F01A98AB4A00C63152 /* RxCocoaTests.swift */,
-				C81553EE1A98AB4A00C63152 /* Supporting Files */,
-			);
-			path = RxCocoaTests;
-			sourceTree = "<group>";
-		};
-		C81553EE1A98AB4A00C63152 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				C81553EF1A98AB4A00C63152 /* Info.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -214,24 +172,6 @@
 			productReference = C81553DE1A98AB4A00C63152 /* RxCocoa.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		C81553E81A98AB4A00C63152 /* RxCocoaTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = C81553F71A98AB4A00C63152 /* Build configuration list for PBXNativeTarget "RxCocoaTests" */;
-			buildPhases = (
-				C81553E51A98AB4A00C63152 /* Sources */,
-				C81553E61A98AB4A00C63152 /* Frameworks */,
-				C81553E71A98AB4A00C63152 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				C81553EC1A98AB4A00C63152 /* PBXTargetDependency */,
-			);
-			name = RxCocoaTests;
-			productName = RxCocoaTests;
-			productReference = C81553E91A98AB4A00C63152 /* RxCocoaTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -242,9 +182,6 @@
 				ORGANIZATIONNAME = "Krunoslav Zaher";
 				TargetAttributes = {
 					C81553DD1A98AB4A00C63152 = {
-						CreatedOnToolsVersion = 6.1.1;
-					};
-					C81553E81A98AB4A00C63152 = {
 						CreatedOnToolsVersion = 6.1.1;
 					};
 				};
@@ -262,20 +199,12 @@
 			projectRoot = "";
 			targets = (
 				C81553DD1A98AB4A00C63152 /* RxCocoa */,
-				C81553E81A98AB4A00C63152 /* RxCocoaTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		C81553DC1A98AB4A00C63152 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C81553E71A98AB4A00C63152 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -308,23 +237,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C81553E51A98AB4A00C63152 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C81553F11A98AB4A00C63152 /* RxCocoaTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		C81553EC1A98AB4A00C63152 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = C81553DD1A98AB4A00C63152 /* RxCocoa */;
-			targetProxy = C81553EB1A98AB4A00C63152 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		C81553F21A98AB4A00C63152 /* Debug */ = {
@@ -461,36 +374,6 @@
 			};
 			name = Release;
 		};
-		C81553F81A98AB4A00C63152 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = RxCocoaTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Debug;
-		};
-		C81553F91A98AB4A00C63152 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = RxCocoaTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -508,15 +391,6 @@
 			buildConfigurations = (
 				C81553F51A98AB4A00C63152 /* Debug */,
 				C81553F61A98AB4A00C63152 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		C81553F71A98AB4A00C63152 /* Build configuration list for PBXNativeTarget "RxCocoaTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				C81553F81A98AB4A00C63152 /* Debug */,
-				C81553F91A98AB4A00C63152 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
