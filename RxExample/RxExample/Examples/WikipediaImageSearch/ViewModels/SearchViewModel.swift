@@ -38,7 +38,9 @@ class SearchViewModel: Disposable {
         let API = $.API
             
         self.rows = searchText >- throttle(300, $.mainScheduler) >- distinctUntilChanged >- map { query in
-            $.API.getSearchResults(query) >- catch([])
+            $.API.getSearchResults(query)
+                >- prefixWith([]) // clears results on new search term
+                >- catch([])
         } >- switchLatest >- map { results in
             results.map {
                 SearchResultViewModel(
