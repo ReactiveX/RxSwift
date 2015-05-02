@@ -45,11 +45,8 @@ class Catch_<ElementType> : Sink<ElementType>, ObserverType {
     }
     
     func run() -> Disposable {
-        let d1 = SingleAssignmentDisposable()
-        subscription.setDisposable(d1)
-        
         let disposableSubscription = parent.source.subscribe(self)
-        d1.setDisposable(disposableSubscription)
+        subscription.setDisposable(disposableSubscription)
         
         return subscription
     }

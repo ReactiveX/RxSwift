@@ -28,7 +28,7 @@ class ViewController: UIViewController {
         var numberOfResourcesThatShouldRemain = startResourceCount
         let time = dispatch_time(DISPATCH_TIME_NOW, Int64(0.1 * Double(NSEC_PER_SEC)))
         dispatch_after(time, dispatch_get_main_queue(), { () -> Void in
-            assert(numberOfResourcesThatShouldRemain >= resourceCount, "Resources weren't cleaned properly")
+            assert(resourceCount <= numberOfResourcesThatShouldRemain, "Resources weren't cleaned properly")
         })
 #endif
     }

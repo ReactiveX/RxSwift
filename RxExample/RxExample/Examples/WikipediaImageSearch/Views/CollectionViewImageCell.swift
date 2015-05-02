@@ -32,4 +32,7 @@ public class CollectionViewImageCell: UICollectionViewCell {
         disposeBag?.dispose()
         disposeBag = nil
     }
+
+    deinit {
+    }
 }

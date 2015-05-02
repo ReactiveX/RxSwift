@@ -20,7 +20,14 @@ class Debug_<ElementType> : Sink<ElementType>, ObserverType {
     }
     
     func on(event: Event<Element>) {
-        println("Event \(event) @ observer \(self) [\(parent.identifier)]")
+        let maxEventTextLength = 40
+        let ellipsis = "..."
+        
+        let eventText = "\(event)"
+        let eventNormalized = count(eventText) > maxEventTextLength
+            ? prefix(eventText, maxEventTextLength / 2) + "..." + suffix(eventText, maxEventTextLength / 2)
+            : eventText
+        println("Event \(eventNormalized) @ observer \(self) [\(parent.identifier)]")
         self.observer.on(event)
     }
     
