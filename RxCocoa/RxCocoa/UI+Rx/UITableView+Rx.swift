@@ -124,7 +124,9 @@ extension UITableView {
                 dataSource._rows = value
                 self.reloadData()
             case .Error(let error):
+#if DEBUG
                 rxFatalError("Something went wrong: \(error)")
+#endif
             case .Completed:
                 break
             }

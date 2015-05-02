@@ -123,7 +123,10 @@ extension UICollectionView {
                 dataSource._items = value
                 self.reloadData()
             case .Error(let error):
+#if DEBUG
                 rxFatalError("Something went wrong: \(error)")
+#endif
+                break
             case .Completed:
                 break
             }

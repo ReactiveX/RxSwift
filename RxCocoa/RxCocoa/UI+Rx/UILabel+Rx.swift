@@ -18,7 +18,9 @@ extension UILabel {
                 let value = boxedValue.value
                 self.text = value
             case .Error(let error):
+#if DEBUG
                 rxFatalError("Binding error to textbox: \(error)")
+#endif
                 break
             case .Completed:
                 break

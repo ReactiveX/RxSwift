@@ -34,7 +34,9 @@ extension UIImageView {
                 }
                 self.image = value
             case .Error(let error):
+#if DEBUG
                 rxFatalError("Binding error to textbox: \(error)")
+#endif
                 break
             case .Completed:
                 break
