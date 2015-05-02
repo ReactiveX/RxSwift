@@ -185,6 +185,15 @@ class ReplayBufferBase<Element> : ReplaySubjectImplementation<Element> {
 class ReplayOne<Element> : ReplayBufferBase<Element> {
     var value: Element?
     
+    init(firstElement: Element) {
+        self.value = firstElement
+        super.init()
+    }
+    
+    override init() {
+        super.init()
+    }
+    
     override func trim() {
         
     }
@@ -263,6 +272,10 @@ class ReplaySubject<Element> : SubjectType<Element, Element> {
     typealias DisposeKey = BagType.KeyType
     
     let implementation: ReplaySubjectImplementation<Element>
+    
+    init(firstElement: Element) {
+        implementation = ReplayOne(firstElement: firstElement)
+    }
     
     init(bufferSize: Int) {
         if bufferSize == 1 {
