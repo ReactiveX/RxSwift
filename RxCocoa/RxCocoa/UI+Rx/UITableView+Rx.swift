@@ -99,7 +99,7 @@ extension UITableView {
     public func rx_subscribeRowsTo<E where E: AnyObject>
         (dataSource: TableViewDataSource)
         (source: Observable<[E]>)
-        -> Result<Disposable> {
+        -> Disposable {
             
         MainScheduler.ensureExecutingOnScheduler()
         
@@ -132,13 +132,13 @@ extension UITableView {
             }
         })
             
-        return success(CompositeDisposable(clearDataSource, disposable))
+        return CompositeDisposable(clearDataSource, disposable)
     }
     
     public func rx_subscribeRowsTo<E where E : AnyObject>
         (cellFactory: (UITableView, NSIndexPath, E) -> UITableViewCell)
         (source: Observable<[E]>)
-        -> Result<Disposable> {
+        -> Disposable {
             
         let dataSource = TableViewDataSource {
             cellFactory($0, $1, $2 as! E)
@@ -150,7 +150,7 @@ extension UITableView {
     public func rx_subscribeRowsToCellWithIdentifier<E, Cell where E : AnyObject, Cell: UITableViewCell>
         (cellIdentifier: String, configureCell: (UITableView, NSIndexPath, E, Cell) -> Void)
         (source: Observable<[E]>)
-        -> Result<Disposable> {
+        -> Disposable {
             
             let dataSource = TableViewDataSource {
                 let cell = $0.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: $1) as! Cell
