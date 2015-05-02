@@ -14,7 +14,7 @@ class SearchResultViewModel {
     let searchResult: WikipediaSearchResult
     
     var title: Observable<String>
-    var imageURLs: Observable<Result<[NSURL]>>
+    var imageURLs: Observable<[NSURL]>
     
     var $: SearchViewModel.Dependencies
     
@@ -26,38 +26,40 @@ class SearchResultViewModel {
         self.title = never()
         self.imageURLs = never()
         
-        self.imageURLs = configureImageURLs()
-        self.title = configureTitle(self.imageURLs)
+        let URLs = configureImageURLs()
+        
+        self.imageURLs = URLs >- catch([])
+        self.title = configureTitle(URLs) >- catch("Error during fetching")
     }
     
     // private methods
     
-    func configureTitle(imageURLs: Observable<Result<[NSURL]>>) -> Observable<String> {
+    func configureTitle(imageURLs: Observable<[NSURL]>) -> Observable<String> {
         var searchResult = self.searchResult
        
         let loadingValue: [NSURL]? = nil
         
-        return imageURLs >- map {
-            makeOptional(replaceErrorWith($0, []))
-        } >- prefixWith(loadingValue) >- map { URLs in
-            if let URLs = URLs {
-                return "\(searchResult.title) (\(URLs.count)) pictures)"
+        return imageURLs
+            >- map { makeOptional($0) }
+            >- prefixWith(loadingValue)
+            >- map { URLs in
+                if let URLs = URLs {
+                    return "\(searchResult.title) (\(URLs.count)) pictures)"
+                }
+                else {
+                    return "\(searchResult.title) loading ..."
+                }
             }
-            else {
-                return "\(searchResult.title) loading ..."
-            }
-        }
     }
     
-    func configureImageURLs() -> Observable<Result<[NSURL]>> {
+    func configureImageURLs() -> Observable<[NSURL]> {
         let searchResult = self.searchResult
-        return $.API.articleContent(searchResult) >- observeSingleOn($.backgroundWorkScheduler) >- map { (maybePage) in
-                maybePage >== { page in
-                    let URLs = success(parseImageURLsfromHTMLSuitableForDisplay(page.text))
-                    return URLs
-                } >>! { e in
-                    return success([])
-                }
-            } >- observeSingleOn($.mainScheduler) >- variable
+        return $.API.articleContent(searchResult)
+            >- observeSingleOn($.backgroundWorkScheduler)
+            >- map { page in
+                parseImageURLsfromHTMLSuitableForDisplay(page.text)
+            }
+            >- observeSingleOn($.mainScheduler)
+            >- variable
     }
 }

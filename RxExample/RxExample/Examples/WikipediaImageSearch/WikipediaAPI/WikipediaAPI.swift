@@ -17,8 +17,8 @@ func apiError(error: String) -> NSError {
 public let WikipediaParseError = apiError("Error during parsing")
 
 protocol WikipediaAPI {
-    func getSearchResults(query: String) -> Observable<Result<[WikipediaSearchResult]>>
-    func articleContent(searchResult: WikipediaSearchResult) -> Observable<Result<WikipediaPage>>;
+    func getSearchResults(query: String) -> Observable<[WikipediaSearchResult]>
+    func articleContent(searchResult: WikipediaSearchResult) -> Observable<WikipediaPage>
 }
 
 func URLEscape(pathSegment: String) -> String {
@@ -39,7 +39,7 @@ class DefaultWikipediaAPI: WikipediaAPI {
     }
     
     // Example wikipedia response http://en.wikipedia.org/w/api.php?action=opensearch&search=Rx
-    func getSearchResults(query: String) -> Observable<Result<[WikipediaSearchResult]>> {
+    func getSearchResults(query: String) -> Observable<[WikipediaSearchResult]> {
         let escapedQuery = URLEscape(query)
         let urlContent = "http://en.wikipedia.org/w/api.php?action=opensearch&search=\(escapedQuery)"
         let url = NSURL(string: urlContent)!
@@ -48,22 +48,22 @@ class DefaultWikipediaAPI: WikipediaAPI {
             return castOrFail(json) >== { (json: [AnyObject]) in
                 return WikipediaSearchResult.parseJSON(json)
             }
-        } >- observeSingleOn($.callbackScheduler) >- catchToResult
+        } >- observeSingleOn($.callbackScheduler)
     }
     
     // http://en.wikipedia.org/w/api.php?action=parse&page=rx&format=json
-    func articleContent(searchResult: WikipediaSearchResult) -> Observable<Result<WikipediaPage>> {
+    func articleContent(searchResult: WikipediaSearchResult) -> Observable<WikipediaPage> {
         let escapedPage = URLEscape(searchResult.title)
         let url = NSURL(string: "http://en.wikipedia.org/w/api.php?action=parse&page=\(escapedPage)&format=json")
         
         if url == nil {
-            return returnElement(.Error(apiError("Can't create url")))
+            return failWith(apiError("Can't create url"))
         }
         
         return $.URLSession.rx_JSONWithURL(url!) >- mapOrDie { jsonResult in
             return castOrFail(jsonResult) >== { (json: NSDictionary) in
                 return WikipediaPage.parseJSON(json)
             }
-        } >- observeSingleOn($.callbackScheduler) >- catchToResult
+        } >- observeSingleOn($.callbackScheduler)
     }
 }

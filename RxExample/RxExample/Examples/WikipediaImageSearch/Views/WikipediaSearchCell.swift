@@ -34,18 +34,15 @@ public class WikipediaSearchCell: UITableViewCell {
             self.titleOutlet.rx_subscribeTextTo(viewModel?.title ?? returnElement(""))
             self.URLOutlet.text = viewModel.searchResult.URL.absoluteString ?? ""
             
-            viewModel.imageURLs >- map { maybeURLs -> [NSURL] in
-                replaceErrorWith(maybeURLs, [])
-            } >- self.imagesOutlet.rx_subscribeItemsWithIdentifierTo("ImageCell") { (_, _, URL, cell: CollectionViewImageCell) in
-                
-                let resultImage = $.imageService.imageFromURL(URL) >- map { maybeImage in
-                    replaceErrorWithNil(maybeImage)
-                }
-                
-                let loadingPlaceholder: UIImage? = nil // usually not used, but since this is an example
-                
-                cell.image = resultImage >- prefixWith(loadingPlaceholder)
-            } >- disposeBag.addDisposable
+            viewModel.imageURLs
+                >- self.imagesOutlet.rx_subscribeItemsWithIdentifierTo("ImageCell") { (_, _, URL, cell: CollectionViewImageCell) in
+                    let loadingPlaceholder: UIImage? = nil
+                    
+                    cell.image = $.imageService.imageFromURL(URL)
+                        >- map { $0 as UIImage? }
+                        >- catch(nil)
+                        >- prefixWith(loadingPlaceholder)
+                } >- disposeBag.addDisposable
             
             self.disposeBag = disposeBag
         }

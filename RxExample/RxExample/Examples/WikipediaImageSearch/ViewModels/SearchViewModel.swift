@@ -10,8 +10,6 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-
-
 class SearchViewModel: Disposable {
     typealias Dependencies = (
         API: WikipediaAPI,
@@ -22,7 +20,7 @@ class SearchViewModel: Disposable {
     )
     
     // outputs
-    let rows: Observable<Result<[SearchResultViewModel]>>
+    let rows: Observable<[SearchResultViewModel]>
     
     var $: Dependencies
     
@@ -40,9 +38,14 @@ class SearchViewModel: Disposable {
         let API = $.API
             
         self.rows = searchText >- throttle(300, $.mainScheduler) >- distinctUntilChanged >- map { query in
-            $.API.getSearchResults(query)
-        } >- switchLatest >- map { resultsMaybe in
-            SearchViewModel.convertSearchResultModels($, resultsMaybe: resultsMaybe)
+            $.API.getSearchResults(query) >- catch([])
+        } >- switchLatest >- map { results in
+            results.map {
+                SearchResultViewModel(
+                    $: $,
+                    searchResult: $0
+                )
+            }
         }
             
         selectedResult >- subscribeNext { searchResult in
@@ -53,17 +56,4 @@ class SearchViewModel: Disposable {
     func dispose() {
         disposeBag.dispose()
     }
-    
-    // private methods
-
-    class func convertSearchResultModels($: Dependencies, resultsMaybe: Result<[WikipediaSearchResult]>) -> Result<[SearchResultViewModel]> {
-        return resultsMaybe >== { results in
-            return success(results.map { SearchResultViewModel(
-                $: $,
-                searchResult: $0
-                )
-            })
-        }
-    }
-    
 }

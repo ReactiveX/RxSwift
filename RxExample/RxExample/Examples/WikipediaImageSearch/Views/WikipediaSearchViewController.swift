@@ -64,10 +64,7 @@ class WikipediaSearchViewController: ViewController {
         
         // map table view rows
         // {
-        viewModel.rows >- map { rows in
-            replaceErrorWith(rows, [])
-        } >- resultsTableView.rx_subscribeRowsToCellWithIdentifier("WikipediaSearchCell") { (_, _, viewModel, cell: WikipediaSearchCell) in
-            
+        viewModel.rows >- resultsTableView.rx_subscribeRowsToCellWithIdentifier("WikipediaSearchCell") { (_, _, viewModel, cell: WikipediaSearchCell) in
             cell.viewModel = viewModel
         } >- disposeBag.addDisposable
         // }

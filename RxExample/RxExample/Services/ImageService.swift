@@ -11,7 +11,7 @@ import RxSwift
 import RxCocoa
 
 protocol ImageService {
-    func imageFromURL(URL: NSURL) -> Observable<Result<UIImage>>
+    func imageFromURL(URL: NSURL) -> Observable<UIImage>
 }
 
 class DefaultImageService: ImageService {
@@ -53,7 +53,7 @@ class DefaultImageService: ImageService {
         } >- observeSingleOn($.callbackScheduler)
     }
     
-    func imageFromURL(URL: NSURL) -> Observable<Result<UIImage>> {
+    func imageFromURL(URL: NSURL) -> Observable<UIImage> {
         let maybeImage = self.imageDataCache.objectForKey(URL) as? UIImage
         
         let decodedImage: Observable<UIImage>
@@ -79,6 +79,6 @@ class DefaultImageService: ImageService {
         
         return decodedImage >- doOnNext { image in
             self.imageCache.setObject(image, forKey: URL)
-        } >- catchToResult
+        }
     }
 }
