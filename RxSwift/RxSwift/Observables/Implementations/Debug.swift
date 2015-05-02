@@ -7,3 +7,42 @@
 //
 
 import Foundation
+
+class Debug_<ElementType> : Sink<ElementType>, ObserverType {
+    typealias Element = ElementType
+    typealias Parent = Debug<Element>
+    
+    let parent: Parent
+    
+    init(parent: Parent, observer: ObserverOf<Element>, cancel: Disposable) {
+        self.parent = parent
+        super.init(observer: observer, cancel: cancel)
+    }
+    
+    func on(event: Event<Element>) {
+        println("Event \(event) @ observer \(self) [\(parent.identifier)]")
+        self.observer.on(event)
+    }
+    
+    override func dispose() {
+        println("Disposing observer \(self) [\(parent.identifier)]")
+        super.dispose()
+    }
+}
+
+class Debug<Element> : Producer<Element> {
+    let identifier: String
+    
+    let source: Observable<Element>
+    
+    init(identifier: String, source: Observable<Element>) {
+        self.identifier = identifier
+        self.source = source
+    }
+    
+    override func run(observer: ObserverOf<Element>, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
+        let sink = Debug_(parent: self, observer: observer, cancel: cancel)
+        setSink(sink)
+        return self.source.subscribe(sink)
+    }
+}

@@ -7,3 +7,12 @@
 //
 
 import Foundation
+
+// debug
+
+public func debug<E>(identifier: String)
+    -> (Observable<E> -> Observable<E>) {
+    return { source in
+        return Debug(identifier: identifier, source: source)
+    }
+}
