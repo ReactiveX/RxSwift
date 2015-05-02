@@ -8,17 +8,16 @@
 
 import Foundation
 
-class AsObservableSink_<ElementType> : ObserverType, Disposable {
+class AsObservableSink_<ElementType> : Sink<ElementType>, ObserverType {
     typealias Element = ElementType
     
-    let sink: Sink<Element>
- 
-    func dispose() {
-        sink.dispose()
+    override init(observer: ObserverOf<Element>, cancel: Disposable) {
+        super.init(observer: observer, cancel: cancel)
     }
     
     func on(event: Event<Element>) {
-        self.sink.state.observer.on(event)
+        self.observer.on(event)
+        
         switch event {
         case .Error: fallthrough
         case .Completed:
@@ -27,9 +26,6 @@ class AsObservableSink_<ElementType> : ObserverType, Disposable {
         }
     }
     
-    init(observer: ObserverOf<Element>, cancel: Disposable) {
-        self.sink = Sink(observer: observer, cancel: cancel)
-    }
 }
 
 class AsObservable<Element> : Producer<Element> {

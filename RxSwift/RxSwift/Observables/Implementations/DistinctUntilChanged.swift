@@ -24,24 +24,25 @@ class DistinctUntilChanged_<ElementType, Key>: Sink<ElementType>, ObserverType {
         
         switch event {
         case .Next(let value):
-            let keyResult = self.parent.selector(value.value)
-                
-            let areEqualResult = keyResult >== { key -> Result<Bool> in
+            self.parent.selector(value.value) >== { key in
+                var areEqual: Result<Bool>
                 if let currentKey = self.currentKey {
-                    return self.parent.comparer(currentKey, key)
+                    areEqual = self.parent.comparer(currentKey, key)
                 }
                 else {
-                    return success(false)
+                    areEqual = success(false)
                 }
-            } >== { areEqual in
-                if areEqual {
+                
+                return areEqual >== { areEqual in
+                    if areEqual {
+                        return SuccessResult
+                    }
+                    
+                    self.currentKey = key
+                    
+                    observer.on(event)
                     return SuccessResult
                 }
-                
-                self.currentKey = *keyResult
-                
-                observer.on(event)
-                return SuccessResult
             } >>! { error -> Result<Void> in
                 observer.on(.Error(error))
                 self.dispose()

@@ -36,7 +36,8 @@ func isPrime(i: Int) -> Bool {
     return true
 }
 
-// Where Tests
+// where
+
 extension ObservableStandardSequenceOperators  {
     func test_whereComplete() {
         let scheduler = TestScheduler(initialClock: 0)

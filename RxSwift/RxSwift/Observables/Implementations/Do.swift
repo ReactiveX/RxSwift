@@ -22,11 +22,11 @@ class Do_<ElementType> : Sink<ElementType>, ObserverType, Disposable {
     func on(event: Event<Element>) {
         parent.eventHandler(event) >>! { error in
             // catch clause
-            self.state.observer.on(Event.Error(error))
+            self.observer.on(.Error(error))
             self.dispose()
             return SuccessResult
         } >== { _ -> Result<Void> in
-            self.state.observer.on(event)
+            self.observer.on(event)
             if event.isStopEvent {
                 self.dispose()
             }
