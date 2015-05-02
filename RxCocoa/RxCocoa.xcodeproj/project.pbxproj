@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C8092BB91AF5041E008D9A2C /* NSNotificationCenter+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8092BB81AF5041E008D9A2C /* NSNotificationCenter+Rx.swift */; };
+		C8092BBB1AF50436008D9A2C /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8092BBA1AF50436008D9A2C /* CoreData.framework */; };
 		C81553E41A98AB4A00C63152 /* RxCocoa.h in Headers */ = {isa = PBXBuildFile; fileRef = C81553E31A98AB4A00C63152 /* RxCocoa.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C81553EA1A98AB4A00C63152 /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C81553DE1A98AB4A00C63152 /* RxCocoa.framework */; };
 		C81553F11A98AB4A00C63152 /* RxCocoaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81553F01A98AB4A00C63152 /* RxCocoaTests.swift */; };
@@ -39,6 +41,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C8092BB81AF5041E008D9A2C /* NSNotificationCenter+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSNotificationCenter+Rx.swift"; sourceTree = "<group>"; };
+		C8092BBA1AF50436008D9A2C /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		C81553DE1A98AB4A00C63152 /* RxCocoa.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxCocoa.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C81553E21A98AB4A00C63152 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C81553E31A98AB4A00C63152 /* RxCocoa.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RxCocoa.h; sourceTree = "<group>"; };
@@ -68,6 +72,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C8092BBB1AF50436008D9A2C /* CoreData.framework in Frameworks */,
 				C8A56BCE1AD744FD00B4673B /* RxSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -83,10 +88,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C8092BBC1AF504AD008D9A2C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C8092BBA1AF50436008D9A2C /* CoreData.framework */,
+				C8A56BCD1AD744FD00B4673B /* RxSwift.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		C81553D41A98AB4A00C63152 = {
 			isa = PBXGroup;
 			children = (
-				C8A56BCD1AD744FD00B4673B /* RxSwift.framework */,
+				C8092BBC1AF504AD008D9A2C /* Frameworks */,
 				C81553E01A98AB4A00C63152 /* RxCocoa */,
 				C81553ED1A98AB4A00C63152 /* RxCocoaTests */,
 				C81553DF1A98AB4A00C63152 /* Products */,
@@ -114,6 +128,7 @@
 				C81553FE1A98AC3700C63152 /* KVOObservable.swift */,
 				C81554021A9900F700C63152 /* ControlTarget.swift */,
 				C865B8991ACF38A0008BE3B3 /* Logging.swift */,
+				C8092BB81AF5041E008D9A2C /* NSNotificationCenter+Rx.swift */,
 			);
 			path = RxCocoa;
 			sourceTree = "<group>";
@@ -280,6 +295,7 @@
 				C8813D9D1AD2988A0072A050 /* UIButton+Rx.swift in Sources */,
 				C8813DA81AD298BF0072A050 /* Prefix.swift in Sources */,
 				C8813DA01AD2988A0072A050 /* UILabel+Rx.swift in Sources */,
+				C8092BB91AF5041E008D9A2C /* NSNotificationCenter+Rx.swift in Sources */,
 				C81554031A9900F700C63152 /* ControlTarget.swift in Sources */,
 				C8813DA61AD298B20072A050 /* Observable+UI.swift in Sources */,
 				C81553FF1A98AC3700C63152 /* KVOObservable.swift in Sources */,

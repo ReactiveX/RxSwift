@@ -37,9 +37,6 @@ class KVOObserver<Element> : NSObject {
     }
 }
 
-/**
-*  This class should be used from main thread only
-*/
 public class KVOObservable<Element> : Observable<Element> {
     var observer: KVOObserver<Element>!
     
