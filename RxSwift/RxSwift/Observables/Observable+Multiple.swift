@@ -61,8 +61,17 @@ public func catch<E>
     }
 }
 
+// In case of error, terminates sequence with `replaceErrorWith`.
+public func catch<E>
+    (replaceErrorWith: E)
+    -> (Observable<E> -> Observable<E>) {
+    return { source in
+        return Catch(source: source, handler: { _ in success(returnElement(replaceErrorWith)) })
+    }
+}
+
 // When error happens `error` will be forwarded as a next `Result<E>` value
-// and sequence will be completed
+// and sequence will be completed.
 public func catchToResult<E>
     (source: Observable<E>)
     -> Observable<Result<E>> {
