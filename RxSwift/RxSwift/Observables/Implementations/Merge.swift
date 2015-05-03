@@ -30,15 +30,16 @@ class Merge_Iter<ElementType> : ObserverType {
             }
         case .Error:
             parent.lock.performLocked {
-                self.parent.dispose()
-
                 self.parent.observer.on(event)
+                self.parent.dispose()
             }
         case .Completed:
             let group = parent.mergeState.group
             group.removeDisposable(disposeKey)
-            parent.lock.performLocked {
+            
+            self.parent.lock.performLocked {
                 let state = parent.mergeState
+                
                 if state.stopped && state.group.count == 1 {
                     self.parent.observer.on(.Completed)
                     self.parent.dispose()
@@ -54,7 +55,8 @@ class Merge_<ElementType> : Sink<ElementType>, ObserverType {
     
     let parent: Merge<ElementType>
     
-    var lock = Lock()
+    var lock = NSRecursiveLock()
+    
     var mergeState: MergeState = (
         stopped: false,
         group: CompositeDisposable(),
@@ -66,7 +68,6 @@ class Merge_<ElementType> : Sink<ElementType>, ObserverType {
         
         let state = self.mergeState
         
-        state.group.addDisposable(state.sourceSubscription)
         super.init(observer: observer, cancel: cancel)
     }
     
@@ -77,6 +78,7 @@ class Merge_<ElementType> : Sink<ElementType>, ObserverType {
         
         let disposable = self.parent.sources.subscribe(self)
         state.sourceSubscription.setDisposable(disposable)
+        
         return state.group
     }
     
@@ -86,8 +88,7 @@ class Merge_<ElementType> : Sink<ElementType>, ObserverType {
             let value = boxedValue.value
             
             let innerSubscription = SingleAssignmentDisposable()
-            let mergeStateSnapshot = mergeState
-            let maybeKey = mergeStateSnapshot.group.addDisposable(innerSubscription)
+            let maybeKey = mergeState.group.addDisposable(innerSubscription)
             
             if let key = maybeKey {
                 let observer = Merge_Iter(parent: self, disposeKey: key)
@@ -179,7 +180,7 @@ class Merge_Concurrent<ElementType> : Sink<ElementType>, ObserverType {
     
     let parent: Merge<ElementType>
     
-    var lock = Lock()
+    var lock = NSRecursiveLock()
     var mergeState: MergeState = (
         stopped: false,
         queue: MutatingBox(Queue(capacity: 2)),
@@ -241,22 +242,17 @@ class Merge_Concurrent<ElementType> : Sink<ElementType>, ObserverType {
                 self.subscribe(value, group: mergeState.group)
             }
         case .Error(let error):
-            let observer = lock.calculateLocked { () -> ObserverOf<ElementType> in
-                let observer = self.observer
+            lock.performLocked {
+                self.observer.on(.Error(error))
                 self.dispose()
-                return observer
             }
-
-            observer.on(.Error(error))
         case .Completed:
-            let observer = lock.calculateLocked { () -> ObserverOf<ElementType>? in
+            lock.performLocked {
                 let mergeState = self.mergeState
                 let group = mergeState.group
                 
-                var observer: ObserverOf<ElementType>? = nil
-                
                 if mergeState.activeCount == 0 {
-                    observer = self.observer
+                    self.observer.on(.Completed)
                     self.dispose()
                 }
                 else {
@@ -264,11 +260,6 @@ class Merge_Concurrent<ElementType> : Sink<ElementType>, ObserverType {
                 }
                     
                 self.mergeState.stopped = true
-                return observer
-            }
-            
-            if let observer = observer {
-                observer.on(.Completed)
             }
         }
     }

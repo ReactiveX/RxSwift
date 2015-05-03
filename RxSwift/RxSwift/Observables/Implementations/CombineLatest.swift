@@ -17,7 +17,7 @@ protocol CombineLatestProtocol : class {
 }
 
 class CombineLatestSink<Element> : Sink<Element>, CombineLatestProtocol {
-    var lock: Lock = Lock()
+    var lock = NSRecursiveLock()
     
     var hasValueAll: Bool
     var hasValue: [Bool]

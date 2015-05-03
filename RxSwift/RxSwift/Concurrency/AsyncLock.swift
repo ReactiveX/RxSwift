@@ -11,7 +11,7 @@ import Foundation
 class AsyncLock : Disposable {
     typealias Action = () -> Void
     
-    private var lock: Lock = Lock()
+    private var lock = NSRecursiveLock()
     
     private var queue: Queue<Action> = Queue(capacity: 2)
     private var isAcquired: Bool = false

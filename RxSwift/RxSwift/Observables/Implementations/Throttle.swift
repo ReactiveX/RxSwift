@@ -18,7 +18,7 @@ class Throttle_<Element, SchedulerType: Scheduler> : Sink<Element>, ObserverType
     
     let parent: ParentType
     
-    var lock = Lock()
+    var lock = NSRecursiveLock()
     var throttleState: ThrottleState = (
         value: nil,
         cancellable: SerialDisposable(),
@@ -47,26 +47,31 @@ class Throttle_<Element, SchedulerType: Scheduler> : Sink<Element>, ObserverType
             throttleState.cancellable.dispose()
             break
         }
-        
        
-        var (latestId: UInt64, observer: ObserverOf<Element>, oldValue: Element?) = self.lock.calculateLocked {
+        var latestId = self.lock.calculateLocked { () -> UInt64 in
             let observer = self.observer
             
             var oldValue = self.throttleState.value
+            
+            self.throttleState.id = self.throttleState.id &+ 1
             
             switch event {
             case .Next(let boxedValue):
                 self.throttleState.value = boxedValue.value
             case .Error(let error):
-                self.dispose()
                 self.throttleState.value = nil
+                self.observer.on(event)
+                self.dispose()
             case .Completed:
-                self.dispose()
                 self.throttleState.value = nil
+                if let value = oldValue {
+                    self.observer.on(.Next(Box(value)))
+                }
+                self.observer.on(.Completed)
+                self.dispose()
             }
             
-            self.throttleState.id = self.throttleState.id + 1
-            return (self.throttleState.id, observer, oldValue)
+            return self.throttleState.id
         }
         
         
@@ -84,18 +89,13 @@ class Throttle_<Element, SchedulerType: Scheduler> : Sink<Element>, ObserverType
                 d.setDisposable(disposeTimer)
                 return SuccessResult
             } >>! { e -> Result<Void> in
-                self.observer.on(.Error(e))
-                self.dispose()
+                self.lock.performLocked {
+                    self.observer.on(.Error(e))
+                    self.dispose()
+                }
                 return SuccessResult
             }
-        case .Error(let error):
-            return observer.on(.Error(error))
-        case .Completed:
-            if let oldValue = oldValue {
-                observer.on(.Next(Box(oldValue)))
-            }
-            
-            observer.on(.Completed)
+        default: break
         }
     }
     

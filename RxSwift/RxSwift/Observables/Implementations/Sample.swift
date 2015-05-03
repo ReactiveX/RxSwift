@@ -62,7 +62,7 @@ class Sample_<ElementType, SampleType> : Sink<ElementType>, ObserverType {
     
     let parent: Parent
 
-    var lock = Lock()
+    var lock = NSRecursiveLock()
     
     var sampleState: SampleState = (
         element: nil,

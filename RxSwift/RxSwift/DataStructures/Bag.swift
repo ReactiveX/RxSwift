@@ -41,7 +41,7 @@ public struct Bag<T> : SequenceType, Printable {
         }
         
         while map[nextKey] != nil {
-            nextKey++
+            nextKey = nextKey &+ 1
         }
 
         map[nextKey] = x

@@ -41,7 +41,7 @@ public func returnElement<E>(value: E) -> Observable<E> {
     }
 }
 
-public func returnElement<E>(values: E ...) -> Observable<E> {
+public func returnElements<E>(values: E ...) -> Observable<E> {
     return AnonymousObservable { observer in
         for element in values {
             observer.on(.Next(Box(element)))

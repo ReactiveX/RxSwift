@@ -20,7 +20,7 @@ class Switch_<ElementType> : Sink<ElementType>, ObserverType {
     
     let parent: Switch<ElementType>
     
-    var lock = Lock()
+    var lock = NSRecursiveLock()
     var switchState: SwitchState
     
     init(parent: Switch<ElementType>, observer: ObserverOf<ElementType>, cancel: Disposable) {

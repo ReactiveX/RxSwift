@@ -28,3 +28,18 @@ public struct Lock {
         return result
     }
 }
+
+extension NSRecursiveLock {
+    func performLocked(@noescape action: () -> Void) {
+        self.lock()
+        action()
+        self.unlock()
+    }
+    
+    func calculateLocked<T>(@noescape action: () -> T) -> T {
+        self.lock()
+        let result = action()
+        self.unlock()
+        return result
+    }
+}
