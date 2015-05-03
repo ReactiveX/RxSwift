@@ -25,11 +25,14 @@ It tries to port as many concepts from the original Rx as possible, but some con
 
 1. [Introduction](#introduction)
 1. [Build / Install / Run](#build--install--run)
-1. [Comparison with other frameworks](#comparison-with-other-frameworks)
+1. [Comparison with ReactiveCocoa](#comparison-with-reactivecocoa)
+1. [Feature comparison with other frameworks](#feature-comparison-with-other-frameworks)
 1. [What problem does Rx solve?](#what-problem-does-rx-solve)
 1. [Sequences solve everything](#sequences-solve-everything)
 1. [Duality between Observer and Iterator / Enumerator / Generator / Sequences](#duality-between-observer-and-iterator--enumerator--generator--sequences)
-1. [Base classes / interfaces] (#base-classes--interfaces)
+1. [Base classes / interfaces](#base-classes--interfaces)
+1. [Supported operators](#supported-operators)
+1. [Hot and cold observables](#hot-and-cold-observables)
 1. [Error Handling](#error-handling)
 1. [Naming conventions and best practices](#naming-conventions-and-best-practices)
 1. [Peculiarities](#peculiarities)
@@ -158,7 +161,72 @@ type in `Podfile` directory
 $ pod install
 ```
 
-## Comparison with other frameworks
+## Comparison with ReactiveCocoa
+
+So what happened, why did this project start? Two things happened:
+
+* Almost a year ago, Apple announced Swift. That caused a torrent of new projects in the Apple ecosystem. 
+* I've started to learn Haskell and listen more carefully to Erik Meijer
+
+About the same time, ReactiveCocoa team also soon started to investigate how to incorporate Swift into ReactiveCocoa. 
+Initially, ReactiveCocoa was hugely influenced by Reactive Extensions but it was also influenced by other languages. It was in kind of a gray zone, similar, but different. 
+
+Since ReactiveCocoa was influenced hugely by Rx, I wanted to know more about the original Rx. 
+
+I was totally blown away by Rx. It solved everything that was causing me problems in an elegant way (threading, resource management, error management, cache invalidation).
+
+The most subtle thing that lifted a lot of cognitive load was changing the concept from signals to sequences.  It maybe looks like a trivial thing, but it has profound implications.
+
+* It's hard to define properties of signals, but we all already know properties of sequences. (It's funny, but I don't think that ReactiveCocoa team references anywhere signal as a sequence even though they use terms like "streams of values"). 
+* operator definitions become more clear, stateless by default
+* resources management becomes clear, no more confusing situations what gets cancelled
+* interfaces get a lot simpler, it's all about two interfaces, `Observable<Element>` and `Observer<Element>` (ReactiveCocoa v3.0-beta.1 also introduces a very significant SignalProducer)
+
+E.g. 
+```swift
+returnElements(1, 2) 
+	>- observeOn(operationQueueScheduler) 
+	>- map { "n = \($0)" }
+	>- observeOn(MainScheduler.sharedInstance) 
+	>- subscribeNext { println($0) }
+```
+
+If we are talking in terms of sequences, there is no doubt that this code will print:
+
+```
+n = 1
+n = 2
+```
+
+If we are talking in terms of signals, it's not clear can this code produce 
+
+```
+n = 2
+n = 1
+```
+
+Since 
+
+* ReactiveCocoa team has done an amazing job in mapping some of the APIs from Rx to Cocoa
+* Rx was open source
+* I wanted to learn Swift
+
+this project got started.
+
+## Feature comparison with other frameworks
+
+|                                                               | Rx[Swift] |       ReactiveCocoa      | Bolts | PromiseKit |
+|---------------------------------------------------------------|:---------:|:------------------------:|:-----:|:----------:|
+| Language                                                      |   swift   |        objc/swift        |  objc | objc/swift |
+| Basic Concept                                                 |  Sequence |  Signal / SignalProducer |  Task |   Promise  |
+| Cancellation                                                  |     •     |             •            |   •   |      •     |
+| Async operations                                              |     •     |             •            |   •   |      •     |
+| map/filter/...                                                |     •     |             •            |   •   |            |
+| cache invalidation                                            |     •     |             •            |       |            |
+| cross platform                                                |     •     |                          |   •   |            |
+| Unified [hot and cold observables](#hot-and-cold-observables) |     •     |                          |       |            |
+
+
 
 ## What problem does Rx solve?
 
@@ -287,6 +355,45 @@ protocol Disposable
     func dispose()
 }
 ```
+
+## Supported operators
+
+These operators are currently supported. Creating new operators is also pretty straightforward. Operators are by default stateless.
+
+* map (select)
+* filter (where)
+* foldl (aggregate)
+* multicast
+* publish
+* replay
+* refCount
+* observeSingleOn
+* generation operators (returnElement, empty, never, failWith, defer)
+* debug
+* concat
+* merge
+* switchLatest
+* catch
+* asObservable
+* distinctUntilChanged
+* do
+* throttle
+* sample
+
+## Hot and cold observables
+
+There are two basic types of observables. In Rx both are represented by `Observable<Element>`.
+
+| Hot observables                                                                                         | Cold observables                                                              |
+|---------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------|
+| ... are sequences                                                                                       | ... sequences                                                                 |
+| Use resources ("produce heat") no matter is there any observer subscribed.                              | Don't use resources (don't produce heat) until observer subscribes.           |
+| Variables / properties / constants, tap coordinates, mouse coordinates, UI control values, current time | Async operations, HTTP Connections, TCP connections, streams                  |
+| Usually contain ~ N elements                                                                            | Usually contain ~ 1 element                                                   |
+| Sequence elements are produced no matter is there any observer subscribed.                              | Sequence elements are produced if there is a subscribed observer.             |
+| Sequence computation resources are usually shared between all of the subscribed observers.              | Sequence computation resources are usually allocated per subscribed observer. |
+| Usually stateful                                                                                        | Usually stateless                                                             |
+
 
 ## Error handling
 
