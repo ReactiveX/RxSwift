@@ -938,6 +938,140 @@ extension ObservableMultipleTest {
 // merge
 
 extension ObservableMultipleTest {
+    func testMerge_DeadlockSimple() {
+        var nEvents = 0
+        
+        let observable = returnElements(
+            returnElements(0, 1, 2),
+            returnElements(0, 1, 2),
+            returnElements(0, 1, 2)
+        ) >- merge
+        
+        let _d = observable >- subscribeNext { n in
+            nEvents++
+        } >- scopedDispose
+        
+        XCTAssertEqual(nEvents, 9)
+    }
+    
+    func testMerge_DeadlockErrorAfterN() {
+        var nEvents = 0
+        
+        let observable = returnElements(
+            returnElements(0, 1, 2),
+            concat([returnElements(0, 1), failWith(testError)]),
+            returnElements(0, 1, 2)
+        ) >- merge
+        
+        let _d = observable >- subscribeError { n in
+            nEvents++
+        } >- scopedDispose
+        
+        XCTAssertEqual(nEvents, 1)
+    }
+    
+    func testMerge_DeadlockErrorImmediatelly() {
+        var nEvents = 0
+        
+        let observable: Observable<Observable<Int>> = returnElement(
+            failWith(testError)
+        ) >- merge
+        let _d = observable >- subscribeError { n in
+            nEvents++
+        } >- scopedDispose
+        
+        XCTAssertEqual(nEvents, 1)
+    }
+    
+    func testMerge_DeadlockEmpty() {
+        var nEvents = 0
+        
+        let observable: Observable<Int> = empty() >- merge
+        let _d = observable >- subscribeCompleted {
+            nEvents++
+        } >- scopedDispose
+        
+        XCTAssertEqual(nEvents, 1)
+    }
+    
+    func testMerge_DeadlockFirstEmpty() {
+        var nEvents = 0
+        
+        let observable: Observable<Int> = returnElement(empty()) >- merge
+        let _d = observable >- subscribeCompleted { n in
+            nEvents++
+        } >- scopedDispose
+        
+        XCTAssertEqual(nEvents, 1)
+    }
+    
+    func testMergeConcurrent_DeadlockSimple() {
+        var nEvents = 0
+        
+        let observable = returnElements(
+            returnElements(0, 1, 2),
+            returnElements(0, 1, 2),
+            returnElements(0, 1, 2)
+        ) >- merge(maxConcurrent: 1)
+        
+        let _d = observable >- subscribeNext { n in
+            nEvents++
+        } >- scopedDispose
+        
+        XCTAssertEqual(nEvents, 9)
+    }
+    
+    func testMergeConcurrent_DeadlockErrorAfterN() {
+        var nEvents = 0
+        
+        let observable = returnElements(
+            returnElements(0, 1, 2),
+            concat([returnElements(0, 1), failWith(testError)]),
+            returnElements(0, 1, 2)
+        ) >- merge(maxConcurrent: 1)
+        
+        let _d = observable >- subscribeError { n in
+            nEvents++
+        } >- scopedDispose
+        
+        XCTAssertEqual(nEvents, 1)
+    }
+    
+    func testMergeConcurrent_DeadlockErrorImmediatelly() {
+        var nEvents = 0
+        
+        let observable: Observable<Observable<Int>> = returnElement(
+            failWith(testError)
+        ) >- merge(maxConcurrent: 1)
+        let _d = observable >- subscribeError { n in
+            nEvents++
+        } >- scopedDispose
+        
+        XCTAssertEqual(nEvents, 1)
+    }
+    
+    func testMergeConcurrent_DeadlockEmpty() {
+        var nEvents = 0
+        
+        let observable: Observable<Int> = empty() >- merge(maxConcurrent: 1)
+        let _d = observable >- subscribeCompleted {
+            nEvents++
+        } >- scopedDispose
+        
+        XCTAssertEqual(nEvents, 1)
+    }
+    
+    func testMergeConcurrent_DeadlockFirstEmpty() {
+        var nEvents = 0
+        
+        let observable: Observable<Int> = returnElement(empty()) >- merge(maxConcurrent: 1)
+        let _d = observable >- subscribeCompleted { n in
+            nEvents++
+        } >- scopedDispose
+        
+        XCTAssertEqual(nEvents, 1)
+    }
+    
     func testMerge_ObservableOfObservable_Data() {
         let scheduler = TestScheduler(initialClock: 0)
         
@@ -1729,7 +1863,7 @@ extension ObservableMultipleTest {
     func testCombineLatest_DeadlockSimple() {
         var nEvents = 0
         
-        let observable = combineLatest(returnElement(0, 1, 2), returnElement(0, 1, 2)) { $0 + $1 }
+        let observable = combineLatest(returnElements(0, 1, 2), returnElements(0, 1, 2)) { $0 + $1 }
         let _d = observable >- subscribeNext { n in
             nEvents++
         } >- scopedDispose
@@ -1741,8 +1875,8 @@ extension ObservableMultipleTest {
         var nEvents = 0
         
         let observable = combineLatest(
-            concat([returnElement(0, 1, 2), failWith(testError)]),
-            returnElement(0, 1, 2)
+            concat([returnElements(0, 1, 2), failWith(testError)]),
+            returnElements(0, 1, 2)
         ) { $0 + $1 }
         let _d = observable >- subscribeError { n in
             nEvents++
@@ -1756,7 +1890,7 @@ extension ObservableMultipleTest {
         
         let observable = combineLatest(
             failWith(testError),
-            returnElement(0, 1, 2)
+            returnElements(0, 1, 2)
             ) { $0 + $1 }
         let _d = observable >- subscribeError { n in
             nEvents++
@@ -1770,7 +1904,7 @@ extension ObservableMultipleTest {
         
         let observable = combineLatest(
             empty(),
-            returnElement(0, 1, 2)
+            returnElements(0, 1, 2)
             ) { $0 + $1 }
         let _d = observable >- subscribeCompleted {
             nEvents++

@@ -52,7 +52,7 @@ class VirtualTimeSchedulerBase : Scheduler, Printable {
     
     func schedule<StateType>(state: StateType, time: Time, action: (StateType) -> Result<Void>) -> Result<Disposable> {
         let latestID = self.ID
-        ID = ID + 1
+        ID = ID &+ 1
         
         let actionDescription : ScheduledItem = ({
             return action(state)
