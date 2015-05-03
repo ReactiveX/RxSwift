@@ -24,7 +24,13 @@ public func switchLatest<T>
 public func concat<E>
     (sources: [Observable<E>])
     -> Observable<E> {
-        return Concat(sources: sources)
+    return Concat(sources: sources)
+}
+
+public func concat<E>
+    (sources: Observable<Observable<E>>)
+    -> Observable<E> {
+    return merge(maxConcurrent: 1)(sources)
 }
 
 // merge
@@ -36,7 +42,7 @@ public func merge<E>
 }
 
 public func merge<E>
-    (maxConcurrent: Int)
+    (#maxConcurrent: Int)
     -> (Observable<Observable<E>> -> Observable<E>) {
     return  { sources in
         return Merge(sources: sources, maxConcurrent: maxConcurrent)
