@@ -38,6 +38,7 @@
 		C811086C1AF50E43001C13E4 /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C811086A1AF50E43001C13E4 /* RxCocoa.framework */; };
 		C811086D1AF50E43001C13E4 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C811086B1AF50E43001C13E4 /* RxSwift.framework */; };
 		C814CEA31AF5622600E98087 /* VariableTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C814CEA21AF5622600E98087 /* VariableTest.swift */; };
+		C814CEA71AF642D600E98087 /* UI+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C814CEA61AF642D600E98087 /* UI+RxTests.swift */; };
 		C8B787FA1AF55CDE00206D02 /* Observable+ConcurrencyTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B787F91AF55CDE00206D02 /* Observable+ConcurrencyTest.swift */; };
 /* End PBXBuildFile section */
 
@@ -75,6 +76,7 @@
 		C811086A1AF50E43001C13E4 /* RxCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxCocoa.framework; path = "../Debug-iphoneos/RxCocoa.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C811086B1AF50E43001C13E4 /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = "../Debug-iphoneos/RxSwift.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C814CEA21AF5622600E98087 /* VariableTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VariableTest.swift; sourceTree = "<group>"; };
+		C814CEA61AF642D600E98087 /* UI+RxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UI+RxTests.swift"; sourceTree = "<group>"; };
 		C8B787F91AF55CDE00206D02 /* Observable+ConcurrencyTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Observable+ConcurrencyTest.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -132,6 +134,7 @@
 			isa = PBXGroup;
 			children = (
 				C811082B1AF50E2A001C13E4 /* NSNotificationCenterTests.swift */,
+				C814CEA61AF642D600E98087 /* UI+RxTests.swift */,
 			);
 			path = RxCocoaTests;
 			sourceTree = SOURCE_ROOT;
@@ -276,6 +279,7 @@
 				C81108551AF50E2A001C13E4 /* TestObservable.swift in Sources */,
 				C811085B1AF50E2A001C13E4 /* Subscription.swift in Sources */,
 				C81108531AF50E2A001C13E4 /* MySubject.swift in Sources */,
+				C814CEA71AF642D600E98087 /* UI+RxTests.swift in Sources */,
 				C81108611AF50E2A001C13E4 /* Observable+BindingTest.swift in Sources */,
 				C811084D1AF50E2A001C13E4 /* NSNotificationCenterTests.swift in Sources */,
 				C81108621AF50E2A001C13E4 /* Observable+MultipleTest+CombineLatest.swift in Sources */,

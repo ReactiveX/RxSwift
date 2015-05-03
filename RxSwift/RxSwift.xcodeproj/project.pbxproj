@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C814CEA51AF56E6400E98087 /* ScopedDispose.swift in Sources */ = {isa = PBXBuildFile; fileRef = C814CEA41AF56E6400E98087 /* ScopedDispose.swift */; };
 		C84F67041ADDC16200EB0CB6 /* ReplaySubject.swift in Sources */ = {isa = PBXBuildFile; fileRef = C84F67031ADDC16200EB0CB6 /* ReplaySubject.swift */; };
 		C86AE05C1AE3F0ED00C8A2A6 /* Catch.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86AE05B1AE3F0ED00C8A2A6 /* Catch.swift */; };
 		C8A56ADD1AD7424700B4673B /* RxSwift.h in Headers */ = {isa = PBXBuildFile; fileRef = C8A56ADC1AD7424700B4673B /* RxSwift.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -87,6 +88,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C814CEA41AF56E6400E98087 /* ScopedDispose.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScopedDispose.swift; sourceTree = "<group>"; };
 		C84F67031ADDC16200EB0CB6 /* ReplaySubject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReplaySubject.swift; sourceTree = "<group>"; };
 		C86AE05B1AE3F0ED00C8A2A6 /* Catch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Catch.swift; sourceTree = "<group>"; };
 		C8A56AD71AD7424700B4673B /* RxSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -263,6 +265,7 @@
 				C8A56B0A1AD7435800B4673B /* DisposeBase.swift */,
 				C8A56B0B1AD7435800B4673B /* SerialDisposable.swift */,
 				C8A56B0C1AD7435800B4673B /* SingleAssignmentDisposable.swift */,
+				C814CEA41AF56E6400E98087 /* ScopedDispose.swift */,
 			);
 			path = Disposables;
 			sourceTree = "<group>";
@@ -443,6 +446,7 @@
 				C8A56B8E1AD7435900B4673B /* MainScheduler.swift in Sources */,
 				C8A56B501AD7435900B4673B /* Bag.swift in Sources */,
 				C8A56B571AD7435900B4673B /* DisposeBase.swift in Sources */,
+				C814CEA51AF56E6400E98087 /* ScopedDispose.swift in Sources */,
 				C8A56B511AD7435900B4673B /* Queue.swift in Sources */,
 				C8A56B4C1AD7435900B4673B /* AnyObject+Rx.swift in Sources */,
 				C8A56B721AD7435900B4673B /* TailRecursiveSink.swift in Sources */,
