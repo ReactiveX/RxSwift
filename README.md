@@ -23,6 +23,20 @@ Like the original Rx, its intention is to enable easy composition of asynchronou
 
 It tries to port as many concepts from the original Rx as possible, but some concepts were adapted for more pleasant and performant integration with iOS/OSX environment.
 
+1. [Introduction](#introduction)
+1. [Build / Install / Run](#build--install--run)
+1. [Comparison with other frameworks](#comparison-with-other-frameworks)
+1. [What problem does Rx solve?](#what-problem-does-rx-solve)
+1. [Sequences solve everything](#sequences-solve-everything)
+1. [Duality between Observer and Iterator / Enumerator / Generator / Sequences](#duality-between-observer-and-iterator--enumerator--generator--sequences)
+1. [Base classes / interfaces] (#base-classes--interfaces)
+1. [Error Handling](#error-handling)
+1. [Naming conventions and best practices](#naming-conventions-and-best-practices)
+1. [Peculiarities](#peculiarities)
+1. [References](#references)
+
+## Introduction
+
 Probably the best analogy for those who have never heard of Rx would be:
 
 
@@ -38,9 +52,46 @@ gitDiff() >- grep("bug") >- less    // rx sink (>-) operator - rx units communic
                                     // sequences of swift objects
 ```
 
-Some more examples:
+Rx is modular and simple.
+Integrating it comes down to just `import RxSwit`. 
 
-Validating username against server to ensure uniqueness
+```swift
+let a /*: Observable<Int>*/ = Variable(1)
+let b /*: Observable<Int>*/ = Variable(2)
+
+// immediately prints: 3 is positive
+combineLatest(a, b) { $0 + $1 } 
+	>- filter { $0 >= 0 } 
+	>- map { "\($0) is positive" }
+	>- subscribeNext { println($0) }
+
+a << -3 // doesn't print anything
+b << 5 	// prints: 2 is positive
+```
+
+Something more interesting:
+* bind text field value
+* calculate is number prime using async API
+* bind results to label
+
+```swift
+let subscription/*: Disposable */ = primeTextField.rx_text()
+            >- map { WolframAlphaIsPrime($0.toInt() ?? 0) }
+            >- concat
+            >- map { "number \($0.n) is prime? \($0.isPrime)" }
+            >- resultLabel.rx_subscribeTextTo
+        
+// this will set resultLabel.text! == "number 43 is prime? true"
+primeTextField.text = "43"
+
+// ...
+
+// to unbind everything, just call
+subscription.dispose()
+```
+
+Some more complex UI async validation logic with progress notifications.
+All operations are cancelled the moment `disposeBag.dispose()` is called.
 
 
 ```swift
@@ -55,7 +106,7 @@ self.usernameOutlet.rx_text() >- map { username in
 
     ...
 
-    let loadingValue = (valid: nil, message: "Checking availabilty ...")
+    let loadingValue = (valid: nil, message: "Checking availability ...")
 
     // asynchronous validation is not a problem
     // this will fire a server call to check does username exist
@@ -82,29 +133,34 @@ self.usernameOutlet.rx_text() >- map { username in
     >- disposeBag.addDisposable
 ```
 
-This is classic autocomplete example
-
-```swift
-let results =
-    // bind to UITextField `text` property
-        self.searchTextOutlet.rx_text()
-    // forward only distinct values
-        >- distinctUntilChanged 
-    // 300ms throttle interval
-        >- throttle(300, $.mainScheduler) 
-    // selects async call for search value
-        >- map { query in
-            API.getSearchResults(query)
-        } 
-    // cancels previous pending async operation on next value
-        >- switchLatest 
-    // binds to table view
-        >- resultsTableView.rx_subscribeRowsToCellWithIdentifier("Result")
-```
-
 Can't get any simpler then this.
 
-## Why would somebody want to use Rx?
+## Build / Install / Run
+
+Rx doesn't contain any external dependencies.
+
+These are currently supported options:
+
+* Open Rx.xcworkspace, choose `RxExample` and hit run. This method will build everything and run sample app
+* [CocoaPods](https://guides.cocoapods.org/using/using-cocoapods.html) (probably easiest for dependency management). This method will install frameworks without example app
+
+```
+# Podfile
+use_frameworks!
+
+pod 'RxSwift'
+pod 'RxCocoa'
+```
+
+type in `Podfile` directory
+
+```
+$ pod install
+```
+
+## Comparison with other frameworks
+
+## What problem does Rx solve?
 
 Writing correct asynchronous or event driven programs is hard because every line of code has to deal with following concerns:
 
@@ -117,18 +173,20 @@ Thinking about those concerns over and over again is tedious and error prone exp
 
 It provides default implementations of most common units/operations of async programs and enables easy bridging of existing imperative APIs in a couple of lines of code.
 
-In the context of Rx, data is modeled as "lazy evaluated" sequence of swift objects. That includes:
+In the context of Rx, data is modeled as sequence of objects. That includes:
 
 * Asynchronous operations
 * UI actions
 * Observing of property changes
 * ...
 
-It is also pretty straightforward to create custom sequence transformers.
+It is also pretty straightforward to create custom sequence operations.
 
-## What's so special about sequences? 
+## Sequences solve everything
 
-Everybody is familiar with sequences. Lists/sequences are probably one of the first concepts programmers learn.
+Sequences are a simple concept.
+
+Everybody is familiar with sequences. Lists/sequences are probably one of the first concepts mathematicians/programmers learn.
 They are easy to visualize and easy to reason about.
 
 Here is a sequence of numbers
@@ -154,53 +212,30 @@ These diagrams are called marble diagrams.
 
 [http://rxmarbles.com/](http://rxmarbles.com/)
 
-## How do sequences solve anything? 
+If everything is a sequence and every operation is just a transformation of input sequence into output sequence then it's pretty straightforward to compose operations.
 
-If everything is a sequence, and every operation is just a transformation of input sequence into output sequence then it's pretty straightforward to compose operations.
+Asynchronous or time delayed operations don't cause any problems because Rx sequences are enumerated by registering observers and are not enumerated synchronously. This can be viewed as a form of "lazy evaluation". Next elements are only accessed by registering a callback that gets called each time new element is produced. Since elements are already accessed asynchronously, that means that Rx sequences can abstract asynchronous operations. [Duality section](#duality-between-observer-and-iterator--enumerator--generator--sequences) contains further references.
 
-Asynchronous or time delayed operations don't cause any problems because elements of Rx sequences are accessed by registering observers and are not enumerated immediatelly. This can be viewed as a "lazy evaluation" implementation technique.
+Resource management is also pretty natural. Sequence can release element computation resources once the observer has unsubscribed from receiving next elements. If no observer is waiting for next element to arrive, then there isn't a need to waste resources computing next elements. Of course, it's possible to implement other resource management logic.
 
-Resource management is also pretty natural. Sequence can release element computation resources once the observer has unsubscribed from receiving next elements. If no observer is waiting for next element to arrive, then it doesn't make sense to waste resources computing next elements. Of course, it's possible to implement other resource management logic.
+The way sequences are used in Rx is reminiscent to physics because to obtain experiment results one must somehow first observe the experiment.
 
-## Example
+## Duality between Observer and Iterator / Enumerator / Generator / Sequences
 
-This is Rx code taken from Rx example app inside repository. Example app transforms Wikipedia into a image search engine. It scrapes wikipedia pages for image URLs, and displayes all of the images in search results.
+There is a duality between observer and generator pattern. They both describe sequences. Since sequences in Rx are implemented through observer pattern it is important to understand this duality.
 
-```swift
-results =   searchText >- throttle(300, $.mainScheduler) 
-            >- distinctUntilChanged >- map { query in
-                API.getSearchResults(query)
-            } 
-            >- switchLatest >- map { results in
-                convertResults(results)
-            }
-```
+In short, there are two basic ways elements of a sequence can be accessed.
 
-On a conceptual level, this is the explanation of applied transformations:
+* Push interface - Observer
+* Pull interface - Iterator / Enumerator / Generator
 
-* throttle - after new search value arrives, wait for 300 ms, if meanwhile new value is received, wait for another 300 ms
-* distinctUntilChanged - if received value is different then the last one, forward it, otherwise don't send anything
-* map - transforms sequence of search queries into a sequence of asynchronous URL requests
-* switchLatest - if a new search request arrives and old request hasn't finished, old request is cancelled and new search request starts
-* map - transforms a sequence of search results into view models suitable for user interface ingestion
+To learn more about this, these videos should help
 
-That code alone won't actually start any request to server. It will only create a "template" of transformations that will be performed once somebody starts to observe results of that expression.
+* [Erik Meijer on Rx and duality (video)](http://channel9.msdn.com/Events/Lang-NEXT/Lang-NEXT-2014/Keynote-Duality)
+* [Subject/Observer is Dual to Iterator (paper)](http://csl.stanford.edu/~christos/pldi2010.fit/meijer.duality.pdf)
+* [Erik Meijer on Rx and duality 2 (video)](http://channel9.msdn.com/Shows/Going+Deep/Expert-to-Expert-Brian-Beckman-and-Erik-Meijer-Inside-the-NET-Reactive-Framework-Rx)
 
-To start search requests, somebody needs to call something equivalent to. 
-
-```
-// starts listening for search results
-subscription =  results >- subscribeNext { results in               
-                    println("Here are search results \(results)")
-                }
-sleep(10)
-// stops listening for search results
-subscription.dispose()                                              
-```
-
-So ...
-
-## How does that work?
+## Base classes / interfaces
 
 `throttle`, `distinctUntilChanged`, `switchLatest` ... are just normal functions that take `Observable<InputElement>` as input and return `Observable<OutputElement>` as output. `>-` is a sink operator that feeds `lhs` value to `rhs` function.
 
@@ -209,9 +244,10 @@ func >- <In, Out>(source: In, transform: In -> Out) -> Out {
     return transform(source)
 }
 ```
+
 This is actually a general purpose operator and it can be used outside the concept of `Observable<Element>` and sequences.
 
-Sequences usually don't actually exist in memory. It is just an abstraction. Sequences of elements of type `Element` are represented by a corresponding `Observable<Element>`. Every time some element is observed it implicitly becomes next element in observed sequence of values. Even though the sequence of elements is implicit, that doesn't make it any less usefull.
+Sequences usually don't actually exist in memory. It is just an abstraction. Sequences of elements of type `Element` are represented by a corresponding `Observable<Element>`. Every time some element is observed it implicitly becomes next element in observed sequence of values. Even though the sequence of elements is implicit, that doesn't make it any less useful.
 
 ```
 class Observable<Element> {
@@ -219,7 +255,16 @@ class Observable<Element> {
 }
 ```
 
-To observe elements of a sequence `Observer<Element>` needs to subscribe to `Observable<Element>`. Every time next element of a sequence is produced, sequence terminates or fails with error, `Observable<Element>` with fire a notification to `Observer<Element>`.
+To observe elements of a sequence `Observer<Element>` needs to subscribe with `Observable<Element>`.
+
+* Every time next element of a sequence is produced `Observable<Element>` with send a `Next(Element)` notification to `Observer<Element>`.
+
+* If sequence computation ended prematurely because of an error `Observable<Element>` with send an `Error(ErrorType)` notification to `Observer<Element>`. Computation resources have been released and this is the last message that observer will receive for that subscription.
+
+* If sequence end was computed `Observable<Element>` will send a `Completed` notification to `Observer<Element>`. Computation resources have been released and this is the last message observer will receive for that subscription.
+
+This means that sequence can only finish with `Completed` or `Error` message and after that no further messages will be received for that subscription.
+
 
 ```
 enum Event<Element>  {
@@ -245,7 +290,7 @@ protocol Disposable
 
 ## Error handling
 
-Error handling is pretty straightforward. If one sequence terminates with error, then all of the dependant sequences will terminate with error. It's usual short circuit logic.
+Error handling is pretty straightforward. If one sequence terminates with error, then all of the dependent sequences will terminate with error. It's usual short circuit logic.
 
 Swift doesn't have a concept of exceptions so this project introduces `Result` enum.
 _(Haskell [`Either`](https://hackage.haskell.org/package/category-extras-0.52.0/docs/Control-Monad-Either.html) monad)_
@@ -269,7 +314,7 @@ result1 >== { okValue in    // success chaining operator
 } 
 ```
 
-If some action needs to be peformed only after a successfull computation without using its result then `>>>` is used.
+If some action needs to be performed only after a successful computation without using its result then `>>>` is used.
 
 ```
 result1 >>> {              
@@ -305,36 +350,15 @@ public func map<E, R>
 }
 ```
 
-Returning an error from a selector will cause entire graph of dependant sequence transformers to "die" and fail with error. Dying implies that it will release all of its resources and never produce another sequence value. This is usually not an obvious effect.
+Returning an error from a selector will cause entire graph of dependent sequence transformers to "die" and fail with error. Dying implies that it will release all of its resources and never produce another sequence value. This is usually not an obvious effect.
 
 If there is some UITextField bound to a observable sequence that fails with error or completes, screen won't be updated ever again. 
 
-To make those situations more obvious, RxCocoa will throw an exception in case some sequence that is bound to UI control terminates with an error.
+To make those situations more obvious, RxCocoa debug build will throw an exception in case some sequence that is bound to UI control terminates with an error.
 
-Using functions without "OrDie" suffix is usually a preferred option.
+Using functions without "OrDie" suffix is usually more safe option.
 
-Best practice would be to use `Result` enum as a `Element` type in observable sequence. This is how example app works. In that way, errors can be safely propagated to UI and observing sequences will continue to produce values in case of some transient server error.
-
-## Build / Install / Run
-
-These are the supported options
-
-* Open Rx.xcworkspace, hit run. This method will build everything and you can run sample app
-* [CocoaPods](https://guides.cocoapods.org/using/using-cocoapods.html) (probably easiest for dependancy management). This method will install frameworks without example app
-
-```
-# Podfile
-use_frameworks!
-
-pod 'RxSwift'
-pod 'RxCocoa'
-```
-
-type in `Podfile` directory
-
-```
-$ pod install
-```
+There is also `catch` operator for easier error handling.
 
 ## Peculiarities
 
@@ -361,3 +385,16 @@ public func map<E, R>           // this will cause crashes in release version
     return select(selector)(source)
 }
 ```
+
+## References
+
+* [Reactive Extensions GitHub (GitHub)](https://github.com/Reactive-Extensions)
+* [Erik Meijer (Wikipedia)](http://en.wikipedia.org/wiki/Erik_Meijer_%28computer_scientist%29)
+* [Reactive Extensions (MSDN entry)](http://msdn.microsoft.com/en-us/library/hh242985.aspx)
+* [Reactive Cocoa (GitHub)](https://github.com/ReactiveCocoa/ReactiveCocoa)
+* [Erik Meijer on Rx and duality (video)](http://channel9.msdn.com/Events/Lang-NEXT/Lang-NEXT-2014/Keynote-Duality)
+* [Subject/Observer is Dual to Iterator (paper)](http://csl.stanford.edu/~christos/pldi2010.fit/meijer.duality.pdf)
+* [Erik Meijer on Rx and duality 2 (video)](http://channel9.msdn.com/Shows/Going+Deep/Expert-to-Expert-Brian-Beckman-and-Erik-Meijer-Inside-the-NET-Reactive-Framework-Rx)
+* [The Future Of ReactiveCocoa by Justin Spahr-Summers (video)](https://www.youtube.com/watch?v=ICNjRS2X8WM)
+* [Rx standard sequence operators visualized (visualization tool)](http://rxmarbles.com/)
+* [Haskell](https://www.haskell.org/)
