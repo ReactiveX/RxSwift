@@ -1240,7 +1240,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            xs >- merge(2)
+            xs >- merge(maxConcurrent: 2)
         }
         
         let messages = [
@@ -1316,7 +1316,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            xs >- merge(2)
+            xs >- merge(maxConcurrent: 2)
         }
         
         let messages = [
@@ -1392,7 +1392,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            xs >- merge(3)
+            xs >- merge(maxConcurrent: 3)
         }
         
         let messages = [
@@ -1468,7 +1468,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            xs >- merge(3)
+            xs >- merge(maxConcurrent: 3)
         }
         
         let messages = [
@@ -1544,7 +1544,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start(450) {
-            xs >- merge(2)
+            xs >- merge(maxConcurrent: 2)
         }
         
         let messages = [
@@ -1615,7 +1615,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            xs >- merge(2)
+            xs >- merge(maxConcurrent: 2)
         }
         
         let messages = [
@@ -1686,7 +1686,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            xs >- merge(2)
+            xs >- merge(maxConcurrent: 2)
         }
         
         let messages = [
