@@ -8,14 +8,14 @@
 
 import Foundation
 
-public class ScopedDispose : DisposeBase, Disposable {
+class ScopedDispose : DisposeBase, Disposable {
     var disposable: Disposable?
     
-    public init(disposable: Disposable) {
+    init(disposable: Disposable) {
         self.disposable = disposable
     }
     
-    public func dispose() {
+    func dispose() {
         // disposables are already thread safe
         self.disposable?.dispose()
     }
@@ -25,6 +25,6 @@ public class ScopedDispose : DisposeBase, Disposable {
     }
 }
 
-public func scopedDispose(disposable: Disposable) -> ScopedDispose {
+public func scopedDispose(disposable: Disposable) -> Disposable {
     return ScopedDispose(disposable: disposable)
 }
