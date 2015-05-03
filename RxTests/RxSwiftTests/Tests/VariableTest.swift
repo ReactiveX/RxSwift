@@ -131,4 +131,44 @@ class VariableTest : RxTest {
         XCTAssertEqual(latestValue!, 7)
     }
     
+    func testVariable_READMEExample() {
+        
+        // Two simple Rx variables
+        // Every variable is actually a sequence future values in disguise.
+        let a /*: Observable<Int>*/ = Variable(1)
+        let b /*: Observable<Int>*/ = Variable(2)
+        
+        // Computed third variable (or sequence)
+        let c /*: Observable<Int>*/ = combineLatest(a, b) { $0 + $1 }
+        
+        // Reading elements from c.
+        // This is just a demo example.
+        // Sequence elements are usually never enumerated like this.
+        // Sequences are usually combined using map/filter/combineLatest ...
+        //
+        // This will immediatelly print:
+        //      Next value of c = 3
+        // because variables have initial values (starting element)
+        var latestValueOfC : Int? = nil
+        let _d/*: Disposable*/  = c >- subscribeNext { c in
+            println("Next value of c = \(c)")
+            latestValueOfC = c
+        } >- scopedDispose
+        
+        XCTAssertEqual(latestValueOfC!, 3)
+        
+        // This will print:
+        //      Next value of c = 5
+        a << 3
+        
+        XCTAssertEqual(latestValueOfC!, 5)
+        
+        // This will print:
+        //      Next value of c = 8
+        b << 5
+        
+        XCTAssertEqual(latestValueOfC!, 8)
+    }
+    
 }
+
