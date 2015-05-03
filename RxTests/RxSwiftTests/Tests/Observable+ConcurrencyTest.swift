@@ -16,6 +16,51 @@ class ObservableConcurrencyTest : RxTest {
 
 // observeSingleOn
 extension ObservableConcurrencyTest {
+    func testObserveSingleOn_DeadlockSimple() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        var nEvents = 0
+        
+        let observable = returnElement(0) >- observeSingleOn(scheduler)
+        let _d = observable >- subscribeNext { n in
+            nEvents++
+        } >- scopedDispose
+
+        scheduler.start()
+        
+        XCTAssertEqual(nEvents, 1)
+    }
+    
+    func testObserveSingleOn_DeadlockErrorImmediatelly() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        var nEvents = 0
+        
+        let observable: Observable<Int> = failWith(testError) >- observeSingleOn(scheduler)
+        let _d = observable >- subscribeError { n in
+            nEvents++
+        } >- scopedDispose
+        
+        scheduler.start()
+        
+        XCTAssertEqual(nEvents, 1)
+    }
+    
+    func testObserveSingleOn_DeadlockEmpty() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        var nEvents = 0
+        
+        let observable: Observable<Int> = empty() >- observeSingleOn(scheduler)
+        let _d = observable >- subscribeCompleted {
+            nEvents++
+        } >- scopedDispose
+
+        scheduler.start()
+        
+        XCTAssertEqual(nEvents, 1)
+    }
+    
     func testObserveSingleOn_Never() {
         let scheduler = TestScheduler(initialClock: 0)
         

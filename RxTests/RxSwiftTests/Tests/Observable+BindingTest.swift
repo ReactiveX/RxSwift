@@ -16,6 +16,66 @@ class ObservableBindingTest : RxTest {
 
 // refCount
 extension ObservableBindingTest {
+    func testRefCount_DeadlockSimple() {
+        let subject = MySubject<Int>()
+        
+        var nEvents = 0
+        
+        let observable = ConnectableObservable(o: returnElement(0, 1, 2), s: subject)
+        let _d = observable >- subscribeNext { n in
+            nEvents++
+        } >- scopedDispose
+
+        observable.connect().dispose()
+        
+        XCTAssertEqual(nEvents, 3)
+    }
+    
+    func testRefCount_DeadlockErrorAfterN() {
+        let subject = MySubject<Int>()
+        
+        var nEvents = 0
+        
+        let observable = ConnectableObservable(o: concat([returnElement(0, 1, 2), failWith(testError)]), s: subject)
+        let _d = observable >- subscribeError { n in
+            nEvents++
+        } >- scopedDispose
+
+        observable.connect().dispose()
+        
+        XCTAssertEqual(nEvents, 1)
+    }
+    
+    func testRefCount_DeadlockErrorImmediatelly() {
+        let subject = MySubject<Int>()
+        
+        var nEvents = 0
+        
+        let observable = ConnectableObservable(o: failWith(testError), s: subject)
+        let _d = observable >- subscribeError { n in
+            nEvents++
+        } >- scopedDispose
+
+        observable.connect().dispose()
+        
+        XCTAssertEqual(nEvents, 1)
+    }
+
+    func testRefCount_DeadlockEmpty() {
+        let subject = MySubject<Int>()
+        
+        var nEvents = 0
+        
+        let observable = ConnectableObservable(o: empty(), s: subject)
+        let _d = observable >- subscribeCompleted {
+            nEvents++
+        } >- scopedDispose
+
+        observable.connect().dispose()
+        
+        XCTAssertEqual(nEvents, 1)
+    }
+    
     func testRefCount_ConnectsOnFirst() {
         let scheduler = TestScheduler(initialClock: 0)
         
@@ -186,6 +246,94 @@ extension ObservableBindingTest {
 
 // replay
 extension ObservableBindingTest {
+    func testReplay_DeadlockSimple() {
+        var nEvents = 0
+        
+        let observable = returnElement(0, 1, 2) >- replay(3) >- refCount
+        let _d = observable >- subscribeNext { n in
+            nEvents++
+        } >- scopedDispose
+        
+        XCTAssertEqual(nEvents, 3)
+    }
+    
+    func testReplay_DeadlockErrorAfterN() {
+        var nEvents = 0
+        
+        let observable = concat([returnElement(0, 1, 2), failWith(testError)]) >- replay(3) >- refCount
+        let _d = observable >- subscribeError { n in
+            nEvents++
+        } >- scopedDispose
+        
+        XCTAssertEqual(nEvents, 1)
+    }
+    
+    func testReplay_DeadlockErrorImmediatelly() {
+        var nEvents = 0
+        
+        let observable: Observable<Int> = failWith(testError) >- replay(3) >- refCount
+        let _d = observable >- subscribeError { n in
+            nEvents++
+        } >- scopedDispose
+        
+        XCTAssertEqual(nEvents, 1)
+    }
+    
+    func testReplay_DeadlockEmpty() {
+        var nEvents = 0
+        
+        let observable: Observable<Int> = empty() >- replay(3) >- refCount
+        let _d = observable >- subscribeCompleted {
+            nEvents++
+        } >- scopedDispose
+        
+        XCTAssertEqual(nEvents, 1)
+    }
+    
+    func testReplay1_DeadlockSimple() {
+        var nEvents = 0
+        
+        let observable = returnElement(0, 1, 2) >- replay(1) >- refCount
+        let _d = observable >- subscribeNext { n in
+            nEvents++
+            } >- scopedDispose
+        
+        XCTAssertEqual(nEvents, 3)
+    }
+    
+    func testReplay1_DeadlockErrorAfterN() {
+        var nEvents = 0
+        
+        let observable = concat([returnElement(0, 1, 2), failWith(testError)]) >- replay(1) >- refCount
+        let _d = observable >- subscribeError { n in
+            nEvents++
+            } >- scopedDispose
+        
+        XCTAssertEqual(nEvents, 1)
+    }
+    
+    func testReplay1_DeadlockErrorImmediatelly() {
+        var nEvents = 0
+        
+        let observable: Observable<Int> = failWith(testError) >- replay(1) >- refCount
+        let _d = observable >- subscribeError { n in
+            nEvents++
+            } >- scopedDispose
+        
+        XCTAssertEqual(nEvents, 1)
+    }
+    
+    func testReplay1_DeadlockEmpty() {
+        var nEvents = 0
+        
+        let observable: Observable<Int> = empty() >- replay(1) >- refCount
+        let _d = observable >- subscribeCompleted {
+            nEvents++
+            } >- scopedDispose
+        
+        XCTAssertEqual(nEvents, 1)
+    }
+    
     func testReplayCount_Basic() {
         let scheduler = TestScheduler(initialClock: 0)
         

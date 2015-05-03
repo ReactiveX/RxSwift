@@ -1722,3 +1722,60 @@ extension ObservableMultipleTest {
             ])
     }
 }
+
+// combine latest
+
+extension ObservableMultipleTest {
+    func testCombineLatest_DeadlockSimple() {
+        var nEvents = 0
+        
+        let observable = combineLatest(returnElement(0, 1, 2), returnElement(0, 1, 2)) { $0 + $1 }
+        let _d = observable >- subscribeNext { n in
+            nEvents++
+        } >- scopedDispose
+        
+        XCTAssertEqual(nEvents, 3)
+    }
+    
+    func testCombineLatest_DeadlockErrorAfterN() {
+        var nEvents = 0
+        
+        let observable = combineLatest(
+            concat([returnElement(0, 1, 2), failWith(testError)]),
+            returnElement(0, 1, 2)
+        ) { $0 + $1 }
+        let _d = observable >- subscribeError { n in
+            nEvents++
+        } >- scopedDispose
+        
+        XCTAssertEqual(nEvents, 1)
+    }
+    
+    func testCombineLatest_DeadlockErrorImmediatelly() {
+        var nEvents = 0
+        
+        let observable = combineLatest(
+            failWith(testError),
+            returnElement(0, 1, 2)
+            ) { $0 + $1 }
+        let _d = observable >- subscribeError { n in
+            nEvents++
+        } >- scopedDispose
+        
+        XCTAssertEqual(nEvents, 1)
+    }
+    
+    func testReplay_DeadlockEmpty() {
+        var nEvents = 0
+        
+        let observable = combineLatest(
+            empty(),
+            returnElement(0, 1, 2)
+            ) { $0 + $1 }
+        let _d = observable >- subscribeCompleted {
+            nEvents++
+        } >- scopedDispose
+        
+        XCTAssertEqual(nEvents, 1)
+    }
+}

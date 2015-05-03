@@ -30,3 +30,31 @@ public func subscribeNext<E>
     }
     return source.subscribe(observer)
 }
+
+public func subscribeError<E>
+    (onError: (ErrorType) -> Void)
+    (source: Observable<E>) -> Disposable {
+    let observer = AnonymousObserver<E> { e in
+        switch e {
+        case .Error(let error):
+            onError(error)
+        default:
+            break
+        }
+    }
+    return source.subscribe(observer)
+}
+
+public func subscribeCompleted<E>
+    (onCompleted: () -> Void)
+    (source: Observable<E>) -> Disposable {
+    let observer = AnonymousObserver<E> { e in
+        switch e {
+        case .Completed:
+            onCompleted()
+        default:
+            break
+        }
+    }
+    return source.subscribe(observer)
+}
