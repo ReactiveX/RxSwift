@@ -79,11 +79,11 @@ extension NSURLSession {
                     println(convertResponseToString(data, response, error, interval))
                 }
                 
-                if let error = error {
-                    observer.on(.Error(error))
+                if data == nil || response == nil {
+                    observer.on(.Error(error ?? UnknownError))
                 }
                 else {
-                    observer.on(.Next(Box(data ?? nil, response ?? nil)))
+                    observer.on(.Next(Box(data, response)))
                     observer.on(.Completed)
                 }
             }
