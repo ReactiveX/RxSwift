@@ -15,7 +15,7 @@ import Foundation
 public var resourceCount: Int32 = 0
 #endif
 
-// This is the pipline operator
+// This is the pipe operator (left associative function application operator)
 //      a >- b >- c  ==   c(b(a))
 // The reason this one is chosen for now is because
 //  * It's subtle, doesn't add a lot of visual noise
@@ -24,8 +24,8 @@ public var resourceCount: Int32 = 0
 //
 infix operator >- { associativity left precedence 91 }
 
-public func >- <In, Out>(source: In, @noescape transform: In -> Out) -> Out {
-    return transform(source)
+public func >- <In, Out>(lhs: In, @noescape rhs: In -> Out) -> Out {
+    return rhs(lhs)
 }
 
 func contract(@autoclosure  condition: () -> Bool) {
