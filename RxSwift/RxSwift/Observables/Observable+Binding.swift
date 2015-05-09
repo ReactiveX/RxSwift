@@ -74,3 +74,23 @@ public func refCount<E>
         -> Observable<E> {
     return RefCount(source: source)
 }
+
+// sharedWithCachedLastResult
+
+// In Rx every subscription uses it's own set of resources.
+// In case of UI, asynchronous operations are usually used to fetch data from server.
+// In case data is fetched from server, stale data can be server first, and then updated with 
+// fresh data from server.
+
+public func sharedWithCachedLastResult<E>(source: Observable<E>)
+    -> Observable<E> {
+    return source >- replay(1) >- refCount
+}
+
+// variable
+
+// variable is synonym for `sharedWithCachedLastResult`
+public func variable<E>(source: Observable<E>)
+    -> Observable<E> {
+    return source >- replay(1) >- refCount
+}

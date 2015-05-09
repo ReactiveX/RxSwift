@@ -23,7 +23,7 @@ public func asObservable<E>
 // distinct until changed
 
 public func distinctUntilChangedOrDie<E: Equatable>(source: Observable<E>)
-    -> Observable<E>{
+    -> Observable<E> {
     return distinctUntilChangedOrDie({ success($0) }, { success($0 == $1) })(source)
 }
 
@@ -98,6 +98,24 @@ public func `do`<E>
     }
 }
 
+// doOnNext
+
+public func doOnNext<E>
+    (actionOnNext: E -> Void)
+    -> (Observable<E> -> Observable<E>) {
+    return { source in
+        return source >- `do` { event in
+            switch event {
+            case .Next(let boxedValue):
+                let value = boxedValue.value
+                actionOnNext(value)
+            default:
+                break
+            }
+        }
+    }
+}
+
 // map aka select
 
 public func mapOrDie<E, R>
@@ -163,6 +181,17 @@ public func selectWithIndex<E, R>
     -> (Observable<E> -> Observable<R>) {
     return { source in
         return Select(source: source, selector: {success(selector($0, $1)) })
+    }
+}
+
+// Prefixes observable sequence with `firstElement` element.
+// The same functionality could be achieved using `concat([returnElement(prefix), source])`,
+// but this is significantly more efficient implementation.
+public func startWith<E>
+    (firstElement: E)
+    -> (Observable<E> -> Observable<E>) {
+    return { source in
+        return StartWith(source: source, element: firstElement)
     }
 }
 
