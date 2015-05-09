@@ -19,6 +19,10 @@ public class Variable<Element>: ReplaySubject<Element> {
     public init() {
         super.init(bufferSize: 1)
     }
+    
+    public func next(value: Element) {
+        on(.Next(Box(value)))
+    }
 }
 
 public func << <E>(variable: Variable<E>, element: E) {
