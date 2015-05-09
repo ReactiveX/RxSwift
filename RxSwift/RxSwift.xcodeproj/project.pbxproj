@@ -10,6 +10,7 @@
 		C814CEA51AF56E6400E98087 /* ScopedDispose.swift in Sources */ = {isa = PBXBuildFile; fileRef = C814CEA41AF56E6400E98087 /* ScopedDispose.swift */; };
 		C84F67041ADDC16200EB0CB6 /* ReplaySubject.swift in Sources */ = {isa = PBXBuildFile; fileRef = C84F67031ADDC16200EB0CB6 /* ReplaySubject.swift */; };
 		C86AE05C1AE3F0ED00C8A2A6 /* Catch.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86AE05B1AE3F0ED00C8A2A6 /* Catch.swift */; };
+		C88192861AFEA61A00F0F1ED /* StartWith.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88192851AFEA61A00F0F1ED /* StartWith.swift */; };
 		C8A56ADD1AD7424700B4673B /* RxSwift.h in Headers */ = {isa = PBXBuildFile; fileRef = C8A56ADC1AD7424700B4673B /* RxSwift.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C8A56B4C1AD7435900B4673B /* AnyObject+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A56AFC1AD7435800B4673B /* AnyObject+Rx.swift */; };
 		C8A56B4D1AD7435900B4673B /* Cancelable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A56AFD1AD7435800B4673B /* Cancelable.swift */; };
@@ -91,6 +92,7 @@
 		C814CEA41AF56E6400E98087 /* ScopedDispose.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScopedDispose.swift; sourceTree = "<group>"; };
 		C84F67031ADDC16200EB0CB6 /* ReplaySubject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReplaySubject.swift; sourceTree = "<group>"; };
 		C86AE05B1AE3F0ED00C8A2A6 /* Catch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Catch.swift; sourceTree = "<group>"; };
+		C88192851AFEA61A00F0F1ED /* StartWith.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartWith.swift; sourceTree = "<group>"; };
 		C8A56AD71AD7424700B4673B /* RxSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8A56ADB1AD7424700B4673B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C8A56ADC1AD7424700B4673B /* RxSwift.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RxSwift.h; sourceTree = "<group>"; };
@@ -315,6 +317,7 @@
 				C8A56B221AD7435800B4673B /* ScheduledObserver.swift */,
 				C8A56B231AD7435800B4673B /* Select.swift */,
 				C8A56B241AD7435800B4673B /* Sink.swift */,
+				C88192851AFEA61A00F0F1ED /* StartWith.swift */,
 				C8A56B251AD7435800B4673B /* Subject.swift */,
 				C8A56B261AD7435800B4673B /* Switch.swift */,
 				C8A56B271AD7435800B4673B /* TailRecursiveSink.swift */,
@@ -453,6 +456,7 @@
 				C8A56B701AD7435900B4673B /* Subject.swift in Sources */,
 				C8A56B811AD7435900B4673B /* AutoDetachObserver.swift in Sources */,
 				C8A56B8F1AD7435900B4673B /* OperationQueueScheduler.swift in Sources */,
+				C88192861AFEA61A00F0F1ED /* StartWith.swift in Sources */,
 				C8A56B851AD7435900B4673B /* ObserverBase.swift in Sources */,
 				C8A56B621AD7435900B4673B /* Concat.swift in Sources */,
 				C8A56B741AD7435900B4673B /* Variable.swift in Sources */,

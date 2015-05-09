@@ -23,7 +23,6 @@
 		C8813DA31AD2988A0072A050 /* UITableView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8813D9B1AD2988A0072A050 /* UITableView+Rx.swift */; };
 		C8813DA41AD2988A0072A050 /* UITextField+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8813D9C1AD2988A0072A050 /* UITextField+Rx.swift */; };
 		C8813DA61AD298B20072A050 /* Observable+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8813DA51AD298B20072A050 /* Observable+UI.swift */; };
-		C8813DA81AD298BF0072A050 /* StartWith.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8813DA71AD298BF0072A050 /* StartWith.swift */; };
 		C885B6391AC01F6100AD34DA /* NSURLSession+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C885B6381AC01F6100AD34DA /* NSURLSession+Rx.swift */; };
 		C8A56BCE1AD744FD00B4673B /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8A56BCD1AD744FD00B4673B /* RxSwift.framework */; };
 /* End PBXBuildFile section */
@@ -47,7 +46,6 @@
 		C8813D9B1AD2988A0072A050 /* UITableView+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITableView+Rx.swift"; sourceTree = "<group>"; };
 		C8813D9C1AD2988A0072A050 /* UITextField+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITextField+Rx.swift"; sourceTree = "<group>"; };
 		C8813DA51AD298B20072A050 /* Observable+UI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = "Observable+UI.swift"; path = "RxCocoa/Observables/Observable+UI.swift"; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		C8813DA71AD298BF0072A050 /* StartWith.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartWith.swift; sourceTree = "<group>"; };
 		C885B6381AC01F6100AD34DA /* NSURLSession+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSURLSession+Rx.swift"; sourceTree = "<group>"; };
 		C8A56BCD1AD744FD00B4673B /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RxSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -120,7 +118,6 @@
 			isa = PBXGroup;
 			children = (
 				C8813DA51AD298B20072A050 /* Observable+UI.swift */,
-				C8813DA71AD298BF0072A050 /* StartWith.swift */,
 			);
 			path = Observables;
 			sourceTree = "<group>";
@@ -222,7 +219,6 @@
 				C8813DA41AD2988A0072A050 /* UITextField+Rx.swift in Sources */,
 				C865B89A1ACF38A0008BE3B3 /* Logging.swift in Sources */,
 				C8813D9D1AD2988A0072A050 /* UIButton+Rx.swift in Sources */,
-				C8813DA81AD298BF0072A050 /* StartWith.swift in Sources */,
 				C8813DA01AD2988A0072A050 /* UILabel+Rx.swift in Sources */,
 				C8092BB91AF5041E008D9A2C /* NSNotificationCenter+Rx.swift in Sources */,
 				C81554031A9900F700C63152 /* ControlTarget.swift in Sources */,
