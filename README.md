@@ -24,7 +24,8 @@ Like the original Rx, its intention is to enable easy composition of asynchronou
 It tries to port as many concepts from the original Rx as possible, but some concepts were adapted for more pleasant and performant integration with iOS/OSX environment.
 
 1. [Introduction](#introduction)
-1. [Supported operators](#supported-operators)
+1. [RxSwift supported operators](#rxswift-supported-operators)
+1. [RxCocoa extensions](#rxcocoa-extensions)
 1. [Build / Install / Run](#build--install--run)
 1. [Comparison with ReactiveCocoa](#comparison-with-reactivecocoa)
 1. [Feature comparison with other frameworks](#feature-comparison-with-other-frameworks)
@@ -35,28 +36,122 @@ It tries to port as many concepts from the original Rx as possible, but some con
 1. [Hot and cold observables](#hot-and-cold-observables)
 1. [Error Handling](#error-handling)
 1. [Naming conventions and best practices](#naming-conventions-and-best-practices)
+1. [Pipe operator >- vs |> vs ...](#pipe-operator---vs--vs-)
+1. [Roadmap](#roadmap)
 1. [Peculiarities](#peculiarities)
 1. [References](#references)
 
 ## Introduction
 
+[References section](#references) contains plenty of useful information for beginners.
+
 Probably the best analogy for those who have never heard of Rx would be:
 
 
-```
+```bash
 git diff | grep bug | less          #  linux pipes - programs communicate by sending
-                                    #  sequences of bytes, words, lines, '\0' terminated strings...
+                                    #  sequences of bytes, words, lines, ...
 ```
 
 would become if written in RxSwift
 
 ```swift
-gitDiff() >- grep("bug") >- less    // rx sink (>-) operator - rx units communicate by sending
-                                    // sequences of swift objects
+gitDiff() >- grep("bug") >- less    // rx pipe `>-` operator - rx units communicate by 
+                                    // sending sequences of swift objects
+                                    // unfortunately `|` is reserved in swift 
+                                    // for logical or
 ```
 
-Rx is modular and simple.
-Integrating it comes down to just `import RxSwit`. 
+
+This is the definition of `>-` operator
+
+```swift
+func >- <In, Out>(lhs: In, rhs: In -> Out) -> Out {
+    return rhs(lhs)
+}
+```
+More practical explanation
+
+```
+a >- b >- c equals c(b(a))
+```
+
+`>-` is left associative function application. In the presented example it doesn't transform values, it transforms operations, but the principle is the same. If you are wondering is it really that simple, yes, you can check out the [source code](RxSwift/RxSwift/Rx.swift).
+
+[Rationale](#pipe-operator---vs--vs-) why `>-` was chosen and more about how to use your own function application operator (`|>`, `~>`, ...) with RxSwift.
+
+These examples will try to be as friendly as possible for beginners, so for more interesting examples, please scroll down.
+
+Let's first start with some imperative swift code.
+The purpose of example is to bind identifier `c` to a value calculated from `a` and `b` if some condition is satisfied.
+
+Imperative swift code that calculates the value of `c` is
+
+```swift
+// this is usual imperative code
+var c: String
+var a = 1       // this will only assign value `1` to `a` once
+var b = 2       // this will only assign value `2` to `b` once
+
+if a + b >= 0 {
+    c = "\(a + b) is positive" // this will only assign value to `c` once
+}
+```
+
+The value of `c` is now `3 is positive`. But if we change value of `a` to `4`, `c` will still contain old value.
+
+```swift
+a = 4           // c will still be equal "3 is positive" which is not good
+                // c should be equal to "6 is positive" because 4 + 2 = 6
+```
+
+This is not wanted behaviour.
+
+To integrate RxSwift framework into your project just include framework in your project and write `import RxSwit`.
+
+This is the same logic using RxSwift.
+
+```swift
+let a /*: Observable<Int>*/ = Variable(1)   // a = 1
+let b /*: Observable<Int>*/ = Variable(2)   // b = 2
+
+// This will "bind" rx variable `c` to definition
+// if a + b >= 0 {
+//      c = "\(a + b) is positive"
+// }
+let c = combineLatest(a, b) { $0 + $1 }     // combines latest values of variables `a` and `b` using `+`
+	>- filter { $0 >= 0 }                   // if `a + b >= 0` is true, `a + b` is passed to map operator
+	>- map { "\($0) is positive" }          // maps `a + b` to "\(a + b) is positive"
+
+// Since initial values are a = 1, b = 2
+// 1 + 2 = 3 which is >= 0, `c` is intially equal to "3 is positive"
+
+// To pull values out of rx variable `c`, subscribe to values from  `c`.
+// `subscribeNext` means subscribe to next (fresh) values of variable `c`.
+// That also includes inital value of "3 is positive".
+c >- subscribeNext { println($0) }          // prints: "3 is positive"
+
+// Now let's increase value of `a`
+// a = 4 is in RxSwift
+a.next(4)                                   // prints: 6 is positive
+// Sum of latest values is now `4 + 2`, `6` is >= 0, map operator
+// produces "6 is positive" and that result is "assigned" to `c`.
+// Since the value of `c` changed, `{ println($0) }` will get called, 
+// and "6 is positive" is printed.
+
+// Now let's change value of `b`
+// b = -8 is in RxSwift
+b.next(-8)                                  // doesn't print anything
+// Sum of latest values is `4 + (-8)`, `-4` is not >= 0, map doesn't 
+// get executed.
+// That means that `c` still contains "6 is positive" and that's correct.
+// Since `c` hasn't been updated, that means next value hasn't been produced,
+// and `{ println($0) }` won't be called.
+
+// ...
+```
+
+If you have `|>` operator defined as a pipe operator in your project, you can use it too instead of `>-` operator
 
 ```swift
 let a /*: Observable<Int>*/ = Variable(1)
@@ -64,27 +159,29 @@ let b /*: Observable<Int>*/ = Variable(2)
 
 // immediately prints: 3 is positive
 combineLatest(a, b) { $0 + $1 } 
-	>- filter { $0 >= 0 } 
-	>- map { "\($0) is positive" }
-	>- subscribeNext { println($0) }
-
-a << -3 // doesn't print anything
-b << 5 	// prints: 2 is positive
+    |> filter { $0 >= 0 } 
+    |> map { "\($0) is positive" }
+    |> subscribeNext { println($0) }
 ```
 
-Something more interesting:
-* bind text field value
-* calculate is number prime using async API
-* bind results to label
+The choice is yours.
+
+Now something little more interesting:
+
+* instead of binding to variables, let's bind to text field values (rx_text)
+* next, parse that into int and calculate is number prime using async API (map)
+* if text field value is changed before async call completes, new async call will be enqueued (concat)
+* bind results to label (resultLabel.rx_subscribeTextTo)
 
 ```swift
-let subscription/*: Disposable */ = primeTextField.rx_text()
-            >- map { WolframAlphaIsPrime($0.toInt() ?? 0) }
-            >- concat
-            >- map { "number \($0.n) is prime? \($0.isPrime)" }
-            >- resultLabel.rx_subscribeTextTo
+let subscription/*: Disposable */ = primeTextField.rx_text()    // type is Observable<String>
+            >- map { WolframAlphaIsPrime($0.toInt() ?? 0) }     // type is Observable<Observable<Prime>>
+            >- concat                                           // type is Observable<Prime>
+            >- map { "number \($0.n) is prime? \($0.isPrime)" } // type is Observable<String>
+            >- resultLabel.rx_subscribeTextTo                   // return Disposable that can be used to unbind everything
         
-// this will set resultLabel.text! == "number 43 is prime? true"
+// This will set resultLabel.text to "number 43 is prime? true" after
+// server call completes.
 primeTextField.text = "43"
 
 // ...
@@ -93,26 +190,41 @@ primeTextField.text = "43"
 subscription.dispose()
 ```
 
-Some more complex UI async validation logic with progress notifications.
+All of the operators used in this example are the same operators used in the first example with variables. Nothing special about it.
+
+If you are new to Rx, next example will probably be little overwhelming, but it's here to demonstrate how RxSwift code looks like in real world examples. I suggest to take a look at [practical examples](RxExample) in the repository.
+
+The third example is real world complex UI async validation logic with progress notifications.
 All operations are cancelled the moment `disposeBag.dispose()` is called.
 
+Let's give it a shot.
 
 ```swift
 // bind UI control values directly
+// use username from `usernameOutlet` as username values source
 self.usernameOutlet.rx_text() >- map { username in
 
     // synchronous validation, nothing special here
     if count(username) == 0 {
-        // convenience for constructing synchronous result
+        // Convenience for constructing synchronous result.
+        // In case there is mixed synchronous and asychronous code inside the same
+        // metod, this will construct async result that is resolved immediatelly.
         return returnElement((valid: false, message: "Username can't be empty."))
     }
 
     ...
 
+    // Every user interface probably shows some state while async operation
+    // is executing.
+    // Let's assume that we want to show "Checking availability" while waiting for result
+    // valid parameter can be 
+    //  * true  - is valid
+    //  * false - not valid
+    //  * nil   - validation pending
     let loadingValue = (valid: nil, message: "Checking availability ...")
 
-    // asynchronous validation is not a problem
-    // this will fire a server call to check does username exist
+    // This will fire a server call to check does username exist.
+    // Guess what, it's type is `Observable<ValidationResult>`
     return API.usernameAvailable(username) >- map { available in
         if available {
             return (true, "Username available")
@@ -124,21 +236,32 @@ self.usernameOutlet.rx_text() >- map { username in
     // use `loadingValue` until server responds
         >- startWith(loadingValue)
 }
-// use only latest data
-// automatically cancels async validation on next `username` value
+// Since we now have `Observable<Observable<ValidationResult>>`
+// we somehow need to return to normal `Observable` world.
+// We could use `concat` operator from second example, but we really 
+// want to cancel pending asynchronous operation if new username is
+// provided.
+// That's what `switchLatest` does
     >- switchLatest
-// bind result to UI
+// Not we need to bind that to user interface somehow.
+// Good old `subscribeNext` can do that
+// That's the end of `Observable` chain.
+// This will produce `Disposable` object that can unbind everything and cancel
+// pending async operations.
     >- subscribeNext { valid in
         errorLabel.textColor = validationColor(valid)
         errorLabel.text = valid.message
     }
-// automatic cleanup on dealloc
+// Why would we do it manually, that's tedious, 
+// let's dispose everything automagically on view controller dealloc.
     >- disposeBag.addDisposable
 ```
 
-Can't get any simpler then this.
+Can't get any simpler then this. There are more examples in the repository so feel free to check them out. 
 
-## Supported operators
+They include examples how to use it in the context of MVVM pattern of without it.
+
+## RxSwift supported operators
 
 In some cases there are multiple aliases for the same operator because on different platforms / implementations the same operation is sometimes called differently. Sometimes this is because historical reasons, sometimes because of reserved laguage keywords.
 
@@ -162,12 +285,140 @@ Operators are stateless by default.
 * catch
 * asObservable
 * distinctUntilChanged
-* do
+* do / doOnNext
 * throttle
 * sample
 * startWith
+* variable / sharedWithCachedLastResult
 
 Creating new operators is also pretty straightforward. 
+
+## RxCocoa extensions
+
+```swift
+extension NSURLSession {
+
+    public func rx_response(request: NSURLRequest) -> Observable<(NSData!, NSURLResponse!)> {}
+
+    public func rx_data(request: NSURLRequest) -> Observable<NSData> {}
+
+    public func rx_JSON(request: NSURLRequest) -> Observable<AnyObject!> {}
+
+    public func rx_JSON(URL: NSURL) -> Observable<AnyObject!> {}
+
+}
+```
+
+```swift
+extension NSNotificationCenter {
+
+    public func rx_notification(name: String, object: AnyObject?) -> Observable<NSNotification> {}
+
+}
+```
+
+```swift
+extension UIButton {
+
+    public func rx_tap() -> Observable<Void> {}
+
+}
+```
+
+```swift
+extension UITextField {
+
+    public func rx_text() -> Observable<String> {}
+
+}
+```
+
+```swift
+extension UISearchBar {
+
+    public func rx_searchText() -> Observable<String> {}
+
+}
+```
+
+```swift
+extension UILabel {
+
+    public func rx_subscribeTextTo(source: Observable<String>) -> Disposable {}
+
+}
+```
+
+```swift
+extension UIImageView {
+
+    public func rx_subscribeImageTo(source: Observable<UIImage?>) -> Disposable {}
+
+    public func rx_subscribeImageTo
+        (animated: Bool)
+        (source: Observable<UIImage?>) 
+            -> Disposable {}
+
+}
+```
+
+```swift
+extension UIScrollView {
+
+    public func rx_contentOffset() -> Observable<CGPoint> {}
+
+}
+```
+
+```swift
+extension UITableView {
+
+    public func rx_elementTap<E>() -> Observable<E> {}
+
+    public func rx_rowTap() -> Observable<(UITableView, Int)> {}
+
+    public func rx_subscribeRowsTo<E where E: AnyObject>
+        (dataSource: TableViewDataSource)
+        (source: Observable<[E]>)
+            -> Disposable {}
+
+    public func rx_subscribeRowsTo<E where E : AnyObject>
+        (cellFactory: (UITableView, NSIndexPath, E) -> UITableViewCell)
+        (source: Observable<[E]>)
+            -> Disposable {}
+
+    public func rx_subscribeRowsToCellWithIdentifier<E, Cell where E : AnyObject, Cell: UITableViewCell>
+        (cellIdentifier: String, configureCell: (UITableView, NSIndexPath, E, Cell) -> Void)
+        (source: Observable<[E]>) 
+            -> Disposable {}
+
+}
+```
+
+```swift
+extension UICollectionView {
+
+    public func rx_itemTap() -> Observable<(UICollectionView, Int)> {}
+
+    public func rx_elementTap<E>() -> Observable<E> {}
+
+    public func rx_subscribeItemsTo<E where E: AnyObject>
+        (dataSource: CollectionViewDataSource)
+        (source: Observable<[E]>)
+            -> Disposable {}
+
+    public func rx_subscribeItemsTo<E where E : AnyObject>
+        (cellFactory: (UICollectionView, NSIndexPath, E) -> UICollectionViewCell)
+        (source: Observable<[E]>) 
+            -> Disposable {}
+
+    public func rx_subscribeItemsWithIdentifierTo<E, Cell where E : AnyObject, Cell : UICollectionViewCell>
+        (cellIdentifier: String, configureCell: (UICollectionView, NSIndexPath, E, Cell) -> Void)
+        (source: Observable<[E]>)
+            -> Disposable {}
+
+}
+```
 
 ## Build / Install / Run
 
@@ -317,7 +568,11 @@ Asynchronous or time delayed operations don't cause any problems because Rx sequ
 
 Resource management is also pretty natural. Sequence can release element computation resources once the observer has unsubscribed from receiving next elements. If no observer is waiting for next element to arrive, then there isn't a need to waste resources computing next elements. Of course, it's possible to implement other resource management logic.
 
-The way sequences are used in Rx is reminiscent to physics because to obtain experiment results one must somehow first observe the experiment.
+The way sequences are used in Rx is reminiscent to physics because to obtain experiment results one must somehow first observe the experiment. In case the observations stops, results cannot be obtained anymore.
+
+That's probably one of my favorite things about Rx.
+
+This is of course valid for query operations or commands that are scheduled for future execution. For commands that have already started to mutate state the situation is little more complex and depends on the particular case.
 
 ## Duality between Observer and Iterator / Enumerator / Generator / Sequences
 
@@ -336,9 +591,9 @@ To learn more about this, these videos should help
 
 ## Base classes / interfaces
 
-`throttle`, `distinctUntilChanged`, `switchLatest` ... are just normal functions that take `Observable<InputElement>` as input and return `Observable<OutputElement>` as output. `>-` is a sink operator that feeds `lhs` value to `rhs` function.
+`throttle`, `distinctUntilChanged`, `switchLatest` ... are just normal functions that take `Observable<InputElement>` as input and return `Observable<OutputElement>` as output. `>-` is a pipe operator that feeds `lhs` value to `rhs` function.
 
-```
+```swift
 func >- <In, Out>(source: In, transform: In -> Out) -> Out {
     return transform(source)
 }
@@ -393,7 +648,7 @@ There are two basic types of observables. In Rx both are represented by `Observa
 
 | Hot observables                                                                                         | Cold observables                                                              |
 |---------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------|
-| ... are sequences                                                                                       | ... sequences                                                                 |
+| ... are sequences                                                                                       | ... are sequences                                                             |
 | Use resources ("produce heat") no matter is there any observer subscribed.                              | Don't use resources (don't produce heat) until observer subscribes.           |
 | Variables / properties / constants, tap coordinates, mouse coordinates, UI control values, current time | Async operations, HTTP Connections, TCP connections, streams                  |
 | Usually contain ~ N elements                                                                            | Usually contain ~ 1 element                                                   |
@@ -406,7 +661,7 @@ There are two basic types of observables. In Rx both are represented by `Observa
 
 Error handling is pretty straightforward. If one sequence terminates with error, then all of the dependent sequences will terminate with error. It's usual short circuit logic.
 
-Swift doesn't have a concept of exceptions so this project introduces `Result` enum.
+Unfortunately Swift doesn't have a concept of exceptions or some kind of built in error monad so this project introduces `Result` enum.
 _(Haskell [`Either`](https://hackage.haskell.org/package/category-extras-0.52.0/docs/Control-Monad-Either.html) monad)_
 
 ```
@@ -437,7 +692,7 @@ result1 >>> {
 }
 ```
 
-_`>==` and `>>>` were chosen because they are the closest sequence of characters to standard monadic bind `>>=` and `>>` function.
+_`>==` and `>>>` were chosen because they are the closest sequence of characters to standard monadic bind `>>=` and `>>` function (`>>=` is already reserved for logical shift and assign).
 `>>!` was chosen because `!` is easily associated with error._
 
 ## Naming conventions and best practices
@@ -474,6 +729,190 @@ Using functions without "OrDie" suffix is usually more safe option.
 
 There is also `catch` operator for easier error handling.
 
+## Pipe operator >- vs |> vs ...
+
+Unfortunately, as far as I'm aware of there isn't any default left associative function application swift operator. If there was (please let me know). If it does exist or if you have created your own left associative function application operator, you can use it immediately with RxSwift.
+
+This is the default one:
+
+```swift
+func >- <In, Out>(lhs: In, rhs: In -> Out) -> Out {
+    return rhs(lhs)
+}
+```
+
+```
+a >- b >- c is equivalent to c(b(a))
+```
+
+All of the Rx public interfaces don't depend at all on the `>-` operator. 
+
+It was actually introduced quite late and you can use Rx operators (map, filter ...) without it. 
+
+This is how Rx code would look like without `>-` operator
+
+```
+subscribeNext({ println($0) })(map({ "\($0) is positive" })(filter({ $0 >= 0 })(a)))
+```
+
+but it's highly unlikely that anybody would want to code like this, even though the code is technically correct, and will produce wanted results.
+
+If you dislike `>-` operator and want to use `|>` or `~>` operators, just define them in your project in this form:
+
+```swift
+infix operator |> { associativity left precedence 91 }
+
+public func |> <In, Out>(source: In, @noescape transform: In -> Out) -> Out {
+    return transform(source)
+}
+```
+
+or 
+
+```
+infix operator ~> { associativity left precedence 91 }
+
+public func ~> <In, Out>(source: In, @noescape transform: In -> Out) -> Out {
+    return transform(source)
+}
+```
+
+and you can use them instead of `>-` operator.
+
+```swift
+let a /*: Observable<Int>*/ = Variable(1)
+let b /*: Observable<Int>*/ = Variable(2)
+
+combineLatest(a, b) { $0 + $1 } 
+    |> filter { $0 >= 0 } 
+    |> map { "\($0) is positive" }
+    |> subscribeNext { println($0) }
+```
+
+```swift
+let a /*: Observable<Int>*/ = Variable(1)
+let b /*: Observable<Int>*/ = Variable(2)
+
+combineLatest(a, b) { $0 + $1 } 
+    ~> filter { $0 >= 0 } 
+    ~> map { "\($0) is positive" }
+    ~> subscribeNext { println($0) }
+```
+
+So why was `>-` chosen in the end? Well, it was a difficult decision.
+
+Why wasn't standard function application operator used?
+
+I've first tried to find similar operator in swift core libraries, but couldn't find it. That meant that I'll need to define something myself or find some third party library that contains reference function application operator definition and use it.
+Otherwise all of the example code would be unreadable.
+
+Why wasn't some standard library used for that operator?
+
+Well, I'm not sure there is a clear consensus in the community about funtion application operators or libraries that define them.
+
+Why wasn't function application operator defined only for `Observables` and `Disposables`?
+
+One of the solutions could have been to provide a specialized operator that just works for `Observables` and `Disposables`.
+In that case, if an identically named general purpose function application operator is defined somewhere else, there would still be collision, priority or ambiguity problems.
+
+Why wasn't some more standard operator like `|>` or `~>` used?
+
+`|>` or `~>` are probably more commonly used operators in swift, so if there was another definition for them in Rx as general purpose function application operators, there is a high probability they would collide with definitions in other frameworks or project.
+
+The same logic applies for other operators `>==`, `>>!` that are defined on `Result` enum only.
+
+The simplest and safest solution IMHO was to create some new operator that made sense in this context and there is a low probability anyone else uses it.
+In case the operator naming choice was wrong, name is rare and community eventually reaches consensus on the matter, it's more easier to find and replace it in user projects.
+
+I have experimented for a week with different operators and in the end these are the reasons why `>-` was chosen
+
+* It's short, only two characters
+* It looks like a sink to the right, which is a function it actually performs, so it's intuitive.
+* It doesn't create a lot of visual noise. `|>` compared to `>-` IMHO looks a lot more intrusive. When my visual cortex parses `|>` it creates an illusion of a filled triangle, and when it parses `>-`, it sees three lines that don't cover any surface area, but are easily recognizable. Ofc, that experience can be different for other people, but since I really wanted to create something that's pleasurable for me to use, that's a good argument. I'm just hoping that other people have the same experience.
+* In the worst case scenario, if this operator is awkward to somebody, they can easily replace it using instructions above.
+
+## Roadmap
+
+This project has gone a long way since I've started it. I feel it's stable and useful enough for quite sophisticated scenarios.
+It doesn't just port functionality from the original Rx, it also ports all unit tests from the original Rx that are relevant to the ported operators.
+
+This is example of original unit test in C#
+
+```csharp
+[TestMethod]
+public void DistinctUntilChanged_Comparer_AllEqual()
+{
+    var scheduler = new TestScheduler();
+
+    var xs = scheduler.CreateHotObservable(
+        OnNext(150, 1),
+        OnNext(210, 2),
+        OnNext(220, 3),
+        OnNext(230, 4),
+        OnNext(240, 5),
+        OnCompleted<int>(250)
+    );
+
+    var res = scheduler.Start(() =>
+        xs.DistinctUntilChanged(new FuncComparer<int>((x, y) => true))
+    );
+
+    res.Messages.AssertEqual(
+        OnNext(210, 2),
+        OnCompleted<int>(250)
+    );
+
+    xs.Subscriptions.AssertEqual(
+        Subscribe(200, 250)
+    );
+}
+```
+
+compared to RxSwift unit test
+
+```swift
+func testDistinctUntilChanged_allEqual() {
+    let scheduler = TestScheduler(initialClock: 0)
+
+    let xs = scheduler.createHotObservable([
+        next(150, 1),
+        next(210, 2),
+        next(220, 3),
+        next(230, 4),
+        next(240, 5),
+        completed(250)
+    ])
+
+    let res = scheduler.start { xs >- distinctUntilChanged { l, r in true } }
+
+    XCTAssertEqual(res.messages, [
+        next(210, 2),
+        completed(250)
+    ])
+
+    XCTAssertEqual(xs.subscriptions, [
+        Subscription(200, 250)
+    ])
+}
+```
+
+What's more, it also adds additional unit tests that target some specific implementation details of RxSwift.
+
+That being said, there is tons of things I would like to improve, so we'll see how much time will I have.
+
+Here is a rough list of ideas for upcoming versions, I'm open for suggestions:
+
+* Collect feedback, analyse it and prioritize (ease pain points)
+* The focus of next couple of releases will probably be on improving source code readability, performance and documentation.
+* Trying to simplify internal implementation and document it as time allows it. Still not happy with how it looks internally. I think it could be simpler in some cases, and unfortunatelly can't for others, but we'll see.
+* adding visitor to debug sink trees, that would help for other points here
+* Improving debugging experience. Adding debug printouts of sink trees. Have some ideas how to do that transparently.
+* Add examples how to integrate it with other projects
+* Add more detail comparison with other frameworks and try to explain differences better
+* zip and general observeOn operators
+* Adding automatic detection of control dependency cycles for RxCocoa in debug builds. Rx doesn't have any issues currently with leaks, this is preparation for using bind to user controls that is tied to control lifespan without need to externally unbind everything using dispose unsubscribe. It wouldn't be able to detect everything, but if you've accidentally bound control `A` to `B` and `B` is also bound to `A`, it could detect that. That would be awesome, also have some ideas how to do it transparently. Right now it's pretty good situation since everything in `DisposeBag` is disposed immediatelly on view controller dealloc, but I'm toying with the idea.
+* ...
+
 ## Peculiarities
 
 * Swift support for generic enums is limited. That's why there is `Box` hack in `Result` and `Event` enums
@@ -505,6 +944,7 @@ public func map<E, R>           // this will cause crashes in release version
 * [Reactive Extensions GitHub (GitHub)](https://github.com/Reactive-Extensions)
 * [Erik Meijer (Wikipedia)](http://en.wikipedia.org/wiki/Erik_Meijer_%28computer_scientist%29)
 * [Reactive Extensions (MSDN entry)](http://msdn.microsoft.com/en-us/library/hh242985.aspx)
+* [http://reactivex.io/](http://reactivex.io/)
 * [Reactive Cocoa (GitHub)](https://github.com/ReactiveCocoa/ReactiveCocoa)
 * [Erik Meijer on Rx and duality (video)](http://channel9.msdn.com/Events/Lang-NEXT/Lang-NEXT-2014/Keynote-Duality)
 * [Subject/Observer is Dual to Iterator (paper)](http://csl.stanford.edu/~christos/pldi2010.fit/meijer.duality.pdf)
