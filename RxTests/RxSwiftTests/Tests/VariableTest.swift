@@ -29,7 +29,7 @@ class VariableTest : RxTest {
 
         XCTAssertEqual(latestValue!, 7)
         
-        b << 9
+        b.next(7)
 
         XCTAssertEqual(latestValue!, 14)
         
