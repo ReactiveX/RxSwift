@@ -30,11 +30,11 @@ public func variable<E>(source: Observable<E>)
 // Prefixes observable sequence with `prefix` element.
 // The same functionality could be achieved using `concat([returnElement(prefix), source])`,
 // but this is significantly more efficient implementation.
-public func prefixWith<E>
+public func startWith<E>
     (prefix: E)
     -> (Observable<E> -> Observable<E>) {
     return { source in
-        return Prefix(source: source, element: prefix)
+        return StartWith(source: source, element: prefix)
     }
 }
 

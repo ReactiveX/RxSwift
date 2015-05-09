@@ -41,6 +41,10 @@ public func returnElement<E>(value: E) -> Observable<E> {
     }
 }
 
+public func just<E>(value: E) -> Observable<E> {
+    return returnElement(value)
+}
+
 public func returnElements<E>(values: E ...) -> Observable<E> {
     return AnonymousObservable { observer in
         for element in values {

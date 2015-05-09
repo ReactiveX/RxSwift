@@ -47,7 +47,7 @@ class ValidationService {
             else {
                 return (false, "Username already taken")
             }
-        } >- prefixWith(loadingValue)
+        } >- startWith(loadingValue)
     }
     
     func validatePassword(password: String) -> ValidationResult {
@@ -149,7 +149,7 @@ class GitHubSignupViewController : ViewController {
                 return API.signup(username, password: password)
             }
             >- switchLatest
-            >- prefixWith(.InitialState)
+            >- startWith(.InitialState)
             >- variable
         
         let signupEnabled = combineLatest(

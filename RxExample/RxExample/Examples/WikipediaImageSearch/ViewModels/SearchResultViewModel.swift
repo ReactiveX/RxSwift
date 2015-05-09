@@ -41,7 +41,7 @@ class SearchResultViewModel {
         
         return imageURLs
             >- map { makeOptional($0) }
-            >- prefixWith(loadingValue)
+            >- startWith(loadingValue)
             >- map { URLs in
                 if let URLs = URLs {
                     return "\(searchResult.title) (\(URLs.count)) pictures)"

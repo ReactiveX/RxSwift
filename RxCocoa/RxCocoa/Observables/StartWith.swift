@@ -1,5 +1,5 @@
 //
-//  Prefix.swift
+//  StartWith.swift
 //  RxCocoa
 //
 //  Created by Krunoslav Zaher on 4/6/15.
@@ -9,7 +9,7 @@
 import Foundation
 import RxSwift
 
-class Prefix<Element>: Producer<Element> {
+class StartWith<Element>: Producer<Element> {
     let element: Element
     let source: Observable<Element>
     

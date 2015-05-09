@@ -24,6 +24,7 @@ Like the original Rx, its intention is to enable easy composition of asynchronou
 It tries to port as many concepts from the original Rx as possible, but some concepts were adapted for more pleasant and performant integration with iOS/OSX environment.
 
 1. [Introduction](#introduction)
+1. [Supported operators](#supported-operators)
 1. [Build / Install / Run](#build--install--run)
 1. [Comparison with ReactiveCocoa](#comparison-with-reactivecocoa)
 1. [Feature comparison with other frameworks](#feature-comparison-with-other-frameworks)
@@ -31,7 +32,6 @@ It tries to port as many concepts from the original Rx as possible, but some con
 1. [Sequences solve everything](#sequences-solve-everything)
 1. [Duality between Observer and Iterator / Enumerator / Generator / Sequences](#duality-between-observer-and-iterator--enumerator--generator--sequences)
 1. [Base classes / interfaces](#base-classes--interfaces)
-1. [Supported operators](#supported-operators)
 1. [Hot and cold observables](#hot-and-cold-observables)
 1. [Error Handling](#error-handling)
 1. [Naming conventions and best practices](#naming-conventions-and-best-practices)
@@ -122,7 +122,7 @@ self.usernameOutlet.rx_text() >- map { username in
         }
     }
     // use `loadingValue` until server responds
-        >- prefixWith(loadingValue)
+        >- startWith(loadingValue)
 }
 // use only latest data
 // automatically cancels async validation on next `username` value
@@ -137,6 +137,37 @@ self.usernameOutlet.rx_text() >- map { username in
 ```
 
 Can't get any simpler then this.
+
+## Supported operators
+
+In some cases there are multiple aliases for the same operator because on different platforms / implementations the same operation is sometimes called differently. Sometimes this is because historical reasons, sometimes because of reserved laguage keywords.
+
+When lacking a strong community consensus, RxSwift will usually include multiple aliases.
+
+Operators are stateless by default.
+
+* map / select
+* filter / where
+* foldl / aggregate
+* multicast
+* publish
+* replay
+* refCount
+* observeSingleOn
+* generation operators (returnElement/just, empty, never, failWith, defer)
+* debug
+* concat
+* merge
+* switchLatest
+* catch
+* asObservable
+* distinctUntilChanged
+* do
+* throttle
+* sample
+* startWith
+
+Creating new operators is also pretty straightforward. 
 
 ## Build / Install / Run
 
@@ -355,30 +386,6 @@ protocol Disposable
     func dispose()
 }
 ```
-
-## Supported operators
-
-These operators are currently supported. Creating new operators is also pretty straightforward. Operators are by default stateless.
-
-* map (select)
-* filter (where)
-* foldl (aggregate)
-* multicast
-* publish
-* replay
-* refCount
-* observeSingleOn
-* generation operators (returnElement, empty, never, failWith, defer)
-* debug
-* concat
-* merge
-* switchLatest
-* catch
-* asObservable
-* distinctUntilChanged
-* do
-* throttle
-* sample
 
 ## Hot and cold observables
 

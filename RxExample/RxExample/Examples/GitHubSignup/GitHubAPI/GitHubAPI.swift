@@ -60,6 +60,6 @@ class GitHubAPI {
         let signupResult = SignupState.SignedUp(signedUp: arc4random() % 5 == 0 ? false : true)
         return concat([returnElement(signupResult), never()])
             >- throttle(5000, MainScheduler.sharedInstance)
-            >- prefixWith(SignupState.SigningUp)
+            >- startWith(SignupState.SigningUp)
     }
 }

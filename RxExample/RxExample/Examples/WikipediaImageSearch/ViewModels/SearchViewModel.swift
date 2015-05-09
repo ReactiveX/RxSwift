@@ -39,7 +39,7 @@ class SearchViewModel: Disposable {
             
         self.rows = searchText >- throttle(300, $.mainScheduler) >- distinctUntilChanged >- map { query in
             $.API.getSearchResults(query)
-                >- prefixWith([]) // clears results on new search term
+                >- startWith([]) // clears results on new search term
                 >- catch([])
         } >- switchLatest >- map { results in
             results.map {

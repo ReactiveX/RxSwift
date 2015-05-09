@@ -41,7 +41,7 @@ public class WikipediaSearchCell: UITableViewCell {
                     cell.image = $.imageService.imageFromURL(URL)
                         >- map { $0 as UIImage? }
                         >- catch(nil)
-                        >- prefixWith(loadingPlaceholder)
+                        >- startWith(loadingPlaceholder)
                 } >- disposeBag.addDisposable
             
             self.disposeBag = disposeBag
