@@ -28,8 +28,7 @@ Pod::Spec.new do |s|
   s.license          = 'MIT'
   s.author           = { "Krunoslav Zaher" => "krunoslav.zaher@gmail.com" }
   s.source           = { :git => "https://github.com/kzaher/RxSwift.git", :tag => s.version.to_s }
-
   s.requires_arc = true
 
-  s.source_files = 'RxSwift/RxSwift/**/*'
+  s.source_files = 'RxSwift/RxSwift/**/*.swift'
 end
