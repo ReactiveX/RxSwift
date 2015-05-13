@@ -26,17 +26,12 @@ func URLEscape(pathSegment: String) -> String {
 }
 
 class DefaultWikipediaAPI: WikipediaAPI {
-    typealias Dependencies = (
-        URLSession: NSURLSession,
-        callbackScheduler: ImmediateScheduler,
-        backgroundScheduler: ImmediateScheduler
-    )
-    
-    var $: Dependencies
-    
-    init($: Dependencies) {
-        self.$ = $
-    }
+	
+	static let sharedAPI = DefaultWikipediaAPI() // Singleton
+	
+	let $: Dependencies = Dependencies.sharedDependencies
+	
+	private init() {}
     
     // Example wikipedia response http://en.wikipedia.org/w/api.php?action=opensearch&search=Rx
     func getSearchResults(query: String) -> Observable<[WikipediaSearchResult]> {
@@ -44,11 +39,11 @@ class DefaultWikipediaAPI: WikipediaAPI {
         let urlContent = "http://en.wikipedia.org/w/api.php?action=opensearch&search=\(escapedQuery)"
         let url = NSURL(string: urlContent)!
             
-        return $.URLSession.rx_JSON(url) >- observeSingleOn($.backgroundScheduler) >- mapOrDie { json in
+        return $.URLSession.rx_JSON(url) >- observeSingleOn($.backgroundWorkScheduler) >- mapOrDie { json in
             return castOrFail(json) >== { (json: [AnyObject]) in
                 return WikipediaSearchResult.parseJSON(json)
             }
-        } >- observeSingleOn($.callbackScheduler)
+        } >- observeSingleOn($.mainScheduler)
     }
     
     // http://en.wikipedia.org/w/api.php?action=parse&page=rx&format=json
@@ -64,6 +59,6 @@ class DefaultWikipediaAPI: WikipediaAPI {
             return castOrFail(jsonResult) >== { (json: NSDictionary) in
                 return WikipediaPage.parseJSON(json)
             }
-        } >- observeSingleOn($.callbackScheduler)
+        } >- observeSingleOn($.mainScheduler)
     }
 }

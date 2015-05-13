@@ -23,25 +23,8 @@ class WikipediaSearchViewController: ViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let operationQueue = NSOperationQueue()
-        operationQueue.maxConcurrentOperationCount = 2
-        operationQueue.qualityOfService = NSQualityOfService.UserInitiated
-        
-        let backgroundScheduler = OperationQueueScheduler(operationQueue: operationQueue)
-        let mainScheduler = MainScheduler.sharedInstance
         
         weak var weakSelf = self
-        
-        let API = DefaultWikipediaAPI($: (
-            URLSession: NSURLSession.sharedSession(),
-            callbackScheduler: mainScheduler,
-            backgroundScheduler: backgroundScheduler
-        ))
-        let imageService = DefaultImageService($: (
-            URLSession: NSURLSession.sharedSession(),
-            imageDecodeScheduler: backgroundScheduler,
-            callbackScheduler: MainScheduler.sharedInstance
-        ))
         
         let resultsTableView = self.searchDisplayController!.searchResultsTableView
         let searchBar = self.searchDisplayController!.searchBar
@@ -51,13 +34,6 @@ class WikipediaSearchViewController: ViewController {
         resultsTableView.rowHeight = 194
         
         let viewModel = SearchViewModel(
-            $: (
-                API: API,
-                imageService: imageService,
-                mainScheduler: mainScheduler,
-                backgroundWorkScheduler: backgroundScheduler,
-                wireframe: DefaultWireframe()
-            ),
             searchText: searchBar.rx_searchText(),
             selectedResult: resultsTableView.rx_elementTap()
         )
