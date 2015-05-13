@@ -16,12 +16,8 @@ class SearchResultViewModel {
     var title: Observable<String>
     var imageURLs: Observable<[NSURL]>
     
-    var $: SearchViewModel.Dependencies
-    
-    init($: SearchViewModel.Dependencies, searchResult: WikipediaSearchResult) {
+    init(searchResult: WikipediaSearchResult) {
         self.searchResult = searchResult
-       
-        self.$ = $
         
         self.title = never()
         self.imageURLs = never()
@@ -54,12 +50,12 @@ class SearchResultViewModel {
     
     func configureImageURLs() -> Observable<[NSURL]> {
         let searchResult = self.searchResult
-        return $.API.articleContent(searchResult)
-            >- observeSingleOn($.backgroundWorkScheduler)
+        return Dependencies.sharedDependencies.API.articleContent(searchResult)
+            >- observeSingleOn(Dependencies.sharedDependencies.backgroundWorkScheduler)
             >- map { page in
                 parseImageURLsfromHTMLSuitableForDisplay(page.text)
             }
-            >- observeSingleOn($.mainScheduler)
+            >- observeSingleOn(Dependencies.sharedDependencies.mainScheduler)
             >- variable
     }
 }

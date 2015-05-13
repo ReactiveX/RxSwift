@@ -27,8 +27,6 @@ public class WikipediaSearchCell: UITableViewCell {
     
     var viewModel: SearchResultViewModel! {
         didSet {
-            let $ = viewModel.$
-            
             let disposeBag = DisposeBag()
     
             self.titleOutlet.rx_subscribeTextTo(viewModel?.title ?? returnElement("")) >- disposeBag.addDisposable
@@ -38,7 +36,7 @@ public class WikipediaSearchCell: UITableViewCell {
                 >- self.imagesOutlet.rx_subscribeItemsWithIdentifierTo("ImageCell") { (_, _, URL, cell: CollectionViewImageCell) in
                     let loadingPlaceholder: UIImage? = nil
                     
-                    cell.image = $.imageService.imageFromURL(URL)
+                    cell.image = Dependencies.sharedDependencies.imageService.imageFromURL(URL)
                         >- map { $0 as UIImage? }
                         >- catch(nil)
                         >- startWith(loadingPlaceholder)

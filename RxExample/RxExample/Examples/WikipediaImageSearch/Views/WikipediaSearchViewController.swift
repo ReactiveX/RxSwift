@@ -51,13 +51,6 @@ class WikipediaSearchViewController: ViewController {
         resultsTableView.rowHeight = 194
         
         let viewModel = SearchViewModel(
-            $: (
-                API: API,
-                imageService: imageService,
-                mainScheduler: mainScheduler,
-                backgroundWorkScheduler: backgroundScheduler,
-                wireframe: DefaultWireframe()
-            ),
             searchText: searchBar.rx_searchText(),
             selectedResult: resultsTableView.rx_elementTap()
         )
