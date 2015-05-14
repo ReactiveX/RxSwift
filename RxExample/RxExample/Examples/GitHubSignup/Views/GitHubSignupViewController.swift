@@ -40,14 +40,16 @@ class ValidationService {
         
         let loadingValue = (valid: nil as Bool?, message: "Checking availabilty ..." as String?)
         
-        return API.usernameAvailable(username) >- map { available in
-            if available {
-                return (true, "Username available")
+        return API.usernameAvailable(username)
+            >- map { available in
+                if available {
+                    return (true, "Username available")
+                }
+                else {
+                    return (false, "Username already taken")
+                }
             }
-            else {
-                return (false, "Username already taken")
-            }
-        } >- startWith(loadingValue)
+            >- startWith(loadingValue)
     }
     
     func validatePassword(password: String) -> ValidationResult {
@@ -176,33 +178,38 @@ class GitHubSignupViewController : ViewController {
             validationErrorLabel: self.repeatedPasswordValidationOutlet
         )
         
-        signupEnabled >- subscribeNext { [unowned self] valid  in
-            self.signupOutlet.enabled = valid
-            self.signupOutlet.alpha = valid ? 1.0 : 0.5
-        } >- disposeBag.addDisposable
-        
-        
-        signingProcess >- subscribeNext { [unowned self] signingResult in
-            switch signingResult {
-            case .SigningUp:
-                self.signingUpOulet.hidden = false
-            case .SignedUp(let signed):
-                self.signingUpOulet.hidden = true
-                
-                let controller: UIAlertController
-                if signed {
-                    controller = UIAlertController(title: "GitHub", message: "Mock signed up to GitHub", preferredStyle: .Alert)
-                }
-                else {
-                    controller = UIAlertController(title: "GitHub", message: "Mock signed up failed", preferredStyle: .Alert)
-                }
-                
-                controller.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
-                self.presentViewController(controller, animated: true, completion: nil)
-            default:
-                self.signingUpOulet.hidden = true
+        signupEnabled
+            >- subscribeNext { [unowned self] valid  in
+                self.signupOutlet.enabled = valid
+                self.signupOutlet.alpha = valid ? 1.0 : 0.5
             }
-        } >- disposeBag.addDisposable
+            >- disposeBag.addDisposable
+        
+        
+        signingProcess
+            >- subscribeNext { [unowned self] signingResult in
+                switch signingResult {
+                case .SigningUp:
+                    self.signingUpOulet.hidden = false
+                case .SignedUp(let signed):
+                    self.signingUpOulet.hidden = true
+                    
+                    let controller: UIAlertController
+                    
+                    if signed {
+                        controller = UIAlertController(title: "GitHub", message: "Mock signed up to GitHub", preferredStyle: .Alert)
+                    }
+                    else {
+                        controller = UIAlertController(title: "GitHub", message: "Mock signed up failed", preferredStyle: .Alert)
+                    }
+                    
+                    controller.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+                    self.presentViewController(controller, animated: true, completion: nil)
+                default:
+                    self.signingUpOulet.hidden = true
+                }
+            }
+            >- disposeBag.addDisposable
     }
    
     // This is one of the reasons why it's a good idea for disposal to be detached from allocations.

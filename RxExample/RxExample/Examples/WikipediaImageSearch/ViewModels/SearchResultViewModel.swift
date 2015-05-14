@@ -16,12 +16,11 @@ class SearchResultViewModel {
     var title: Observable<String>
     var imageURLs: Observable<[NSURL]>
     
-    var $: SearchViewModel.Dependencies
+    let API = DefaultWikipediaAPI.sharedAPI
+    let $: Dependencies = Dependencies.sharedDependencies
     
-    init($: SearchViewModel.Dependencies, searchResult: WikipediaSearchResult) {
+    init(searchResult: WikipediaSearchResult) {
         self.searchResult = searchResult
-       
-        self.$ = $
         
         self.title = never()
         self.imageURLs = never()
@@ -54,7 +53,7 @@ class SearchResultViewModel {
     
     func configureImageURLs() -> Observable<[NSURL]> {
         let searchResult = self.searchResult
-        return $.API.articleContent(searchResult)
+        return API.articleContent(searchResult)
             >- observeSingleOn($.backgroundWorkScheduler)
             >- map { page in
                 parseImageURLsfromHTMLSuitableForDisplay(page.text)

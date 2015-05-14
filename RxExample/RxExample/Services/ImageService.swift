@@ -15,23 +15,18 @@ protocol ImageService {
 }
 
 class DefaultImageService: ImageService {
-    typealias Dependencies = (
-        URLSession: NSURLSession,
-        imageDecodeScheduler: ImmediateScheduler,
-        callbackScheduler: ImmediateScheduler
-    )
-    
-    var $: Dependencies
-    
+	
+	static let sharedImageService = DefaultImageService() // Singleton
+	
+	let $: Dependencies = Dependencies.sharedDependencies
+	
     // 1rst level cache
     let imageCache = NSCache()
     
     // 2nd level cache
     let imageDataCache = NSCache()
     
-    init($: Dependencies) {
-        self.$ = $
-        
+    private init() {
         // cost is approx memory usage
         self.imageDataCache.totalCostLimit = 10 * MB
         
@@ -39,7 +34,7 @@ class DefaultImageService: ImageService {
     }
     
     func decodeImage(imageData: Observable<NSData>) -> Observable<UIImage> {
-        return imageData >- observeSingleOn($.imageDecodeScheduler) >- mapOrDie { data in
+        return imageData >- observeSingleOn($.backgroundWorkScheduler) >- mapOrDie { data in
             let maybeImage = UIImage(data: data)
             
             if maybeImage == nil {
@@ -50,7 +45,7 @@ class DefaultImageService: ImageService {
             let image = maybeImage!
             
             return success(image)
-        } >- observeSingleOn($.callbackScheduler)
+        } >- observeSingleOn($.mainScheduler)
     }
     
     func imageFromURL(URL: NSURL) -> Observable<UIImage> {

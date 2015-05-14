@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		07E3C2331B03605B0010338D /* Dependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E3C2321B03605B0010338D /* Dependencies.swift */; };
 		C83366ED1AD0293800C668A7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C83366EC1AD0293800C668A7 /* Images.xcassets */; };
 		C83367221AD029AE00C668A7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C833670E1AD029AE00C668A7 /* AppDelegate.swift */; };
 		C83367231AD029AE00C668A7 /* Example.swift in Sources */ = {isa = PBXBuildFile; fileRef = C833670F1AD029AE00C668A7 /* Example.swift */; };
@@ -51,6 +52,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		07E3C2321B03605B0010338D /* Dependencies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Dependencies.swift; path = Examples/Dependencies.swift; sourceTree = "<group>"; };
 		C83366DD1AD0293800C668A7 /* RxExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RxExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C83366E11AD0293800C668A7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C83366EC1AD0293800C668A7 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -113,6 +115,7 @@
 		C83366DF1AD0293800C668A7 /* RxExample */ = {
 			isa = PBXGroup;
 			children = (
+				07E3C2321B03605B0010338D /* Dependencies.swift */,
 				C86E2F2E1AE5A0CA00C31024 /* Examples */,
 				C890A65C1AEC084100AFF7E6 /* ViewController.swift */,
 				C833670E1AD029AE00C668A7 /* AppDelegate.swift */,
@@ -297,6 +300,7 @@
 				C890A65D1AEC084100AFF7E6 /* ViewController.swift in Sources */,
 				C890A6581AEBD26B00AFF7E6 /* GitHubSignupViewController.swift in Sources */,
 				C83367311AD029AE00C668A7 /* Wireframe.swift in Sources */,
+				07E3C2331B03605B0010338D /* Dependencies.swift in Sources */,
 				C8813DAA1AD2EBF30072A050 /* RootViewController.swift in Sources */,
 				C86E2F441AE5A0CA00C31024 /* WikipediaSearchViewController.swift in Sources */,
 				C86E2F451AE5A0CA00C31024 /* WikipediaAPI.swift in Sources */,

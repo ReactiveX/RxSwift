@@ -11,48 +11,43 @@ import RxSwift
 import RxCocoa
 
 class SearchViewModel: Disposable {
-    typealias Dependencies = (
-        API: WikipediaAPI,
-        imageService: ImageService,
-        backgroundWorkScheduler: ImmediateScheduler,
-        mainScheduler: DispatchQueueScheduler,
-        wireframe: Wireframe
-    )
     
     // outputs
     let rows: Observable<[SearchResultViewModel]>
-    
-    var $: Dependencies
     
     let disposeBag = DisposeBag()
 
     // public methods
     
-    init($: Dependencies,
-        searchText: Observable<String>,
+    init(searchText: Observable<String>,
         selectedResult: Observable<SearchResultViewModel>) {
-     
-        self.$ = $
-            
-        let wireframe = $.wireframe
-        let API = $.API
-            
-        self.rows = searchText >- throttle(300, $.mainScheduler) >- distinctUntilChanged >- map { query in
-            $.API.getSearchResults(query)
-                >- startWith([]) // clears results on new search term
-                >- catch([])
-        } >- switchLatest >- map { results in
-            results.map {
-                SearchResultViewModel(
-                    $: $,
-                    searchResult: $0
-                )
+        
+        let $: Dependencies = Dependencies.sharedDependencies
+        let wireframe = Dependencies.sharedDependencies.wireframe
+        let API = DefaultWikipediaAPI.sharedAPI
+        
+        self.rows = searchText
+            >- throttle(300, $.mainScheduler)
+            >- distinctUntilChanged
+            >- map { query in
+                API.getSearchResults(query)
+                    >- startWith([]) // clears results on new search term
+                    >- catch([])
             }
+            >- switchLatest
+            >- map { results in
+                results.map {
+                    SearchResultViewModel(
+                        searchResult: $0
+                    )
+                }
         }
-            
-        selectedResult >- subscribeNext { searchResult in
-            $.wireframe.openURL(searchResult.searchResult.URL)
-        } >- disposeBag.addDisposable
+        
+        selectedResult
+            >- subscribeNext { searchResult in
+                wireframe.openURL(searchResult.searchResult.URL)
+            }
+            >- disposeBag.addDisposable
     }
 
     func dispose() {
