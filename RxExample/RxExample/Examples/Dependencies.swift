@@ -10,23 +10,23 @@ import Foundation
 import RxSwift
 
 class Dependencies {
-	
-	static let sharedDependencies = Dependencies() // Singleton
-	
-	let URLSession = NSURLSession.sharedSession()
-	let backgroundWorkScheduler: ImmediateScheduler
-	let mainScheduler: DispatchQueueScheduler
-	let wireframe: Wireframe
-	
-	private init() {
-		wireframe = DefaultWireframe()
-		
-		let operationQueue = NSOperationQueue()
-		operationQueue.maxConcurrentOperationCount = 2
-		operationQueue.qualityOfService = NSQualityOfService.UserInitiated
-		backgroundWorkScheduler = OperationQueueScheduler(operationQueue: operationQueue)
-		
-		mainScheduler = MainScheduler.sharedInstance
-	}
-	
+    
+    static let sharedDependencies = Dependencies() // Singleton
+    
+    let URLSession = NSURLSession.sharedSession()
+    let backgroundWorkScheduler: ImmediateScheduler
+    let mainScheduler: DispatchQueueScheduler
+    let wireframe: Wireframe
+    
+    private init() {
+        wireframe = DefaultWireframe()
+        
+        let operationQueue = NSOperationQueue()
+        operationQueue.maxConcurrentOperationCount = 2
+        operationQueue.qualityOfService = NSQualityOfService.UserInitiated
+        backgroundWorkScheduler = OperationQueueScheduler(operationQueue: operationQueue)
+        
+        mainScheduler = MainScheduler.sharedInstance
+    }
+    
 }

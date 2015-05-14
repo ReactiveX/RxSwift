@@ -43,16 +43,19 @@ class GitHubAPI {
         
         let URL = NSURL(string: "https://github.com/\(URLEscape(username))")!
         let request = NSURLRequest(URL: URL)
-        return self.URLSession.rx_response(request) >- map { (maybeData, maybeResponse) in
-            if let response = maybeResponse as? NSHTTPURLResponse {
-                return response.statusCode == 404
+        return self.URLSession.rx_response(request)
+            >- map { (maybeData, maybeResponse) in
+                if let response = maybeResponse as? NSHTTPURLResponse {
+                    return response.statusCode == 404
+                }
+                else {
+                    return false
+                }
             }
-            else {
-                return false
+            >- observeSingleOn(self.dataScheduler)
+            >- catch { result in
+                return returnElement(false)
             }
-        } >- observeSingleOn(self.dataScheduler) >- catch { result in
-            return returnElement(false)
-        }
     }
     
     func signup(username: String, password: String) -> Observable<SignupState> {

@@ -14,11 +14,11 @@ class SearchResultViewModel {
     let searchResult: WikipediaSearchResult
     
     var title: Observable<String>
-	var imageURLs: Observable<[NSURL]>
-	
-	let API = DefaultWikipediaAPI.sharedAPI
-	let $: Dependencies = Dependencies.sharedDependencies
-	
+    var imageURLs: Observable<[NSURL]>
+    
+    let API = DefaultWikipediaAPI.sharedAPI
+    let $: Dependencies = Dependencies.sharedDependencies
+    
     init(searchResult: WikipediaSearchResult) {
         self.searchResult = searchResult
         

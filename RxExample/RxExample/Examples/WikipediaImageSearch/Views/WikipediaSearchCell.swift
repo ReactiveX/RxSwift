@@ -18,8 +18,8 @@ public class WikipediaSearchCell: UITableViewCell {
     @IBOutlet var imagesOutlet: UICollectionView!
     
     var disposeBag: DisposeBag!
-	
-	let imageService = DefaultImageService.sharedImageService
+    
+    let imageService = DefaultImageService.sharedImageService
     
     public override func awakeFromNib() {
         super.awakeFromNib()
@@ -44,7 +44,8 @@ public class WikipediaSearchCell: UITableViewCell {
                         >- map { $0 as UIImage? }
                         >- catch(nil)
                         >- startWith(loadingPlaceholder)
-                } >- disposeBag.addDisposable
+                }
+                >- disposeBag.addDisposable
             
             self.disposeBag = disposeBag
         }

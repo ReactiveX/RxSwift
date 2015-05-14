@@ -40,18 +40,22 @@ class WikipediaSearchViewController: ViewController {
         
         // map table view rows
         // {
-        viewModel.rows >- resultsTableView.rx_subscribeRowsToCellWithIdentifier("WikipediaSearchCell") { (_, _, viewModel, cell: WikipediaSearchCell) in
-            cell.viewModel = viewModel
-        } >- disposeBag.addDisposable
+        viewModel.rows
+            >- resultsTableView.rx_subscribeRowsToCellWithIdentifier("WikipediaSearchCell") { (_, _, viewModel, cell: WikipediaSearchCell) in
+                cell.viewModel = viewModel
+            }
+            >- disposeBag.addDisposable
         // }
 
         // dismiss keyboard on scroll
         // {
-        resultsTableView.rx_contentOffset() >- subscribeNext { _ in
-            if searchBar.isFirstResponder() {
-                _ = searchBar.resignFirstResponder()
+        resultsTableView.rx_contentOffset()
+            >- subscribeNext { _ in
+                if searchBar.isFirstResponder() {
+                    _ = searchBar.resignFirstResponder()
+                }
             }
-        } >- disposeBag.addDisposable
+            >- disposeBag.addDisposable
         
         disposeBag.addDisposable(viewModel)
         
