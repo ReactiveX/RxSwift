@@ -151,7 +151,7 @@ class VariableTest : RxTest {
         // because variables have initial values (starting element)
         var latestValueOfC : Int? = nil
         let _d/*: Disposable*/  = c >- subscribeNext { c in
-            println("Next value of c = \(c)")
+            //println("Next value of c = \(c)")
             latestValueOfC = c
         } >- scopedDispose
         
