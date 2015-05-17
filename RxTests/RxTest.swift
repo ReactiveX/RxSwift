@@ -8,9 +8,12 @@
 
 import XCTest
 import RxSwift
-#if os(OSX)
+
 // because otherwise OSX unit tests won't run
-import AppKit
+#if os(iOS)
+    import UIKit
+#elseif os(OSX)
+    import AppKit
 #endif
 
 typealias Time = Int

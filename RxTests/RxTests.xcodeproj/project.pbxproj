@@ -28,7 +28,6 @@
 		C81108601AF50E2A001C13E4 /* Observable+AggregateTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81108431AF50E2A001C13E4 /* Observable+AggregateTest.swift */; };
 		C81108611AF50E2A001C13E4 /* Observable+BindingTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81108441AF50E2A001C13E4 /* Observable+BindingTest.swift */; };
 		C81108621AF50E2A001C13E4 /* Observable+MultipleTest+CombineLatest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81108451AF50E2A001C13E4 /* Observable+MultipleTest+CombineLatest.swift */; };
-		C81108631AF50E2A001C13E4 /* Observable+MultipleTest+CombineLatest.tt in Resources */ = {isa = PBXBuildFile; fileRef = C81108461AF50E2A001C13E4 /* Observable+MultipleTest+CombineLatest.tt */; };
 		C81108641AF50E2A001C13E4 /* Observable+MultipleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81108471AF50E2A001C13E4 /* Observable+MultipleTest.swift */; };
 		C81108651AF50E2A001C13E4 /* Observable+SingleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81108481AF50E2A001C13E4 /* Observable+SingleTest.swift */; };
 		C81108661AF50E2A001C13E4 /* Observable+StandardSequenceOperatorsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81108491AF50E2A001C13E4 /* Observable+StandardSequenceOperatorsTest.swift */; };
@@ -71,7 +70,6 @@
 		C88BB8AE1B07E64B0064D411 /* VariableTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C814CEA21AF5622600E98087 /* VariableTest.swift */; };
 		C88BB8B01B07E64B0064D411 /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C811086A1AF50E43001C13E4 /* RxCocoa.framework */; };
 		C88BB8B11B07E64B0064D411 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C811086B1AF50E43001C13E4 /* RxSwift.framework */; };
-		C88BB8B31B07E64B0064D411 /* Observable+MultipleTest+CombineLatest.tt in Resources */ = {isa = PBXBuildFile; fileRef = C81108461AF50E2A001C13E4 /* Observable+MultipleTest+CombineLatest.tt */; };
 		C8B787FA1AF55CDE00206D02 /* Observable+ConcurrencyTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B787F91AF55CDE00206D02 /* Observable+ConcurrencyTest.swift */; };
 /* End PBXBuildFile section */
 
@@ -323,7 +321,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C81108631AF50E2A001C13E4 /* Observable+MultipleTest+CombineLatest.tt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -331,7 +328,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C88BB8B31B07E64B0064D411 /* Observable+MultipleTest+CombineLatest.tt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -418,6 +414,7 @@
 		C811081A1AF50DDA001C13E4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = Tests/Info.plist;
 				OTHER_LDFLAGS = (
 					"-framework",
@@ -431,6 +428,7 @@
 		C811081B1AF50DDA001C13E4 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = Tests/Info.plist;
 				OTHER_LDFLAGS = (
 					"-framework",
@@ -461,11 +459,6 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Rx-cfkyozdvlaegqibzixjokeysigeo/Build/Products/Debug-iphoneos",
-				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -511,11 +504,6 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Rx-cfkyozdvlaegqibzixjokeysigeo/Build/Products/Debug-iphoneos",
-				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -535,6 +523,7 @@
 		C8633A9D1B09019D00375D60 /* Release-Tests */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = Tests/Info.plist;
 				OTHER_LDFLAGS = (
 					"-framework",
@@ -566,11 +555,6 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Rx-cfkyozdvlaegqibzixjokeysigeo/Build/Products/Debug-iphoneos",
-				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -606,7 +590,6 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -648,7 +631,6 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
@@ -696,7 +678,6 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				FRAMEWORK_SEARCH_PATHS = (
