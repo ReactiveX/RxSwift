@@ -76,7 +76,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		C81108201AF50E11001C13E4 /* RxTests-iOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "RxTests-iOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C81108201AF50E11001C13E4 /* RxTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RxTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C81108241AF50E11001C13E4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C811082B1AF50E2A001C13E4 /* NSNotificationCenterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSNotificationCenterTests.swift; sourceTree = "<group>"; };
 		C81108301AF50E2A001C13E4 /* ColdObservable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColdObservable.swift; sourceTree = "<group>"; };
@@ -106,12 +106,11 @@
 		C811084A1AF50E2A001C13E4 /* Observable+TimeTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Observable+TimeTest.swift"; sourceTree = "<group>"; };
 		C811084B1AF50E2A001C13E4 /* QueueTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueueTests.swift; sourceTree = "<group>"; };
 		C811084C1AF50E2A001C13E4 /* RxTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxTest.swift; sourceTree = SOURCE_ROOT; };
-		C811086A1AF50E43001C13E4 /* RxCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxCocoa.framework; path = "../Debug-iphoneos/RxCocoa.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
-		C811086B1AF50E43001C13E4 /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = "../Debug-iphoneos/RxSwift.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C811086A1AF50E43001C13E4 /* RxCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RxCocoa.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C811086B1AF50E43001C13E4 /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RxSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C814CEA21AF5622600E98087 /* VariableTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VariableTest.swift; sourceTree = "<group>"; };
 		C814CEA61AF642D600E98087 /* UI+RxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UI+RxTests.swift"; sourceTree = "<group>"; };
-		C88BB8B71B07E64B0064D411 /* RxTests copy.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "RxTests copy.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		C88BB8B81B07E64C0064D411 /* RxTests copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "RxTests copy-Info.plist"; path = "/Users/kzaher/Projects/Rx/RxTests/RxTests copy-Info.plist"; sourceTree = "<absolute>"; };
+		C88BB8B71B07E64B0064D411 /* RxTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RxTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8B787F91AF55CDE00206D02 /* Observable+ConcurrencyTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Observable+ConcurrencyTest.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -144,15 +143,14 @@
 				C811086B1AF50E43001C13E4 /* RxSwift.framework */,
 				C81108221AF50E11001C13E4 /* Tests */,
 				C81108211AF50E11001C13E4 /* Products */,
-				C88BB8B81B07E64C0064D411 /* RxTests copy-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
 		C81108211AF50E11001C13E4 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				C81108201AF50E11001C13E4 /* RxTests-iOS.xctest */,
-				C88BB8B71B07E64B0064D411 /* RxTests copy.xctest */,
+				C81108201AF50E11001C13E4 /* RxTests.xctest */,
+				C88BB8B71B07E64B0064D411 /* RxTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -269,7 +267,7 @@
 			);
 			name = "RxTests-iOS";
 			productName = Tests;
-			productReference = C81108201AF50E11001C13E4 /* RxTests-iOS.xctest */;
+			productReference = C81108201AF50E11001C13E4 /* RxTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		C88BB88F1B07E64B0064D411 /* RxTests-OSX */ = {
@@ -286,7 +284,7 @@
 			);
 			name = "RxTests-OSX";
 			productName = Tests;
-			productReference = C88BB8B71B07E64B0064D411 /* RxTests copy.xctest */;
+			productReference = C88BB8B71B07E64B0064D411 /* RxTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -421,7 +419,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				INFOPLIST_FILE = Tests/Info.plist;
+				OTHER_LDFLAGS = (
+					"-framework",
+					XCTest,
+				);
 				OTHER_SWIFT_FLAGS = "-D DEBUG -D TRACE_RESOURCES";
+				PRODUCT_NAME = RxTests;
 			};
 			name = Debug;
 		};
@@ -429,7 +432,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				INFOPLIST_FILE = Tests/Info.plist;
+				OTHER_LDFLAGS = (
+					"-framework",
+					XCTest,
+				);
 				OTHER_SWIFT_FLAGS = "-D RELEASE";
+				PRODUCT_NAME = RxTests;
 			};
 			name = Release;
 		};
@@ -477,7 +485,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -520,7 +527,6 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -530,7 +536,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				INFOPLIST_FILE = Tests/Info.plist;
+				OTHER_LDFLAGS = (
+					"-framework",
+					XCTest,
+				);
 				OTHER_SWIFT_FLAGS = "-D TRACE_RESOURCES";
+				PRODUCT_NAME = RxTests;
 			};
 			name = "Release-Tests";
 		};
@@ -571,7 +582,6 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -596,12 +606,12 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
 					"$(inherited)",
-					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Rx-cfkyozdvlaegqibzixjokeysigeo/Build/Products/Debug-iphoneos",
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -612,9 +622,8 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_NAME = "RxTests copy";
 				SDKROOT = macosx;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -639,11 +648,11 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
 					"$(inherited)",
-					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Rx-cfkyozdvlaegqibzixjokeysigeo/Build/Products/Debug-iphoneos",
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -661,10 +670,8 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				MTL_ENABLE_DEBUG_INFO = YES;
-				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_NAME = "RxTests copy";
 				SDKROOT = macosx;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -689,12 +696,12 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
 					"$(inherited)",
-					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Rx-cfkyozdvlaegqibzixjokeysigeo/Build/Products/Debug-iphoneos",
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -705,9 +712,8 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_NAME = "RxTests copy";
 				SDKROOT = macosx;
 				VALIDATE_PRODUCT = YES;
 			};

@@ -6,9 +6,12 @@
 //  Copyright (c) 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import UIKit
 import XCTest
 import RxSwift
+#if os(OSX)
+// because otherwise OSX unit tests won't run
+import AppKit
+#endif
 
 typealias Time = Int
 
