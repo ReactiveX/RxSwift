@@ -8,6 +8,7 @@
 
 import Foundation
 import RxSwift
+import UIKit
 
 // This cannot be a generic class because of collection view objc runtime that checks for
 // implemented selectors in data source

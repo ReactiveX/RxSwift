@@ -8,6 +8,7 @@
 
 import Foundation
 import RxSwift
+import UIKit
 
 public class ScrollViewDelegate: NSObject, UIScrollViewDelegate {
     public typealias ScrollViewObserver = ObserverOf<CGPoint>

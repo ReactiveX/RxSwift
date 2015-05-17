@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import UIKit
 import RxSwift
 
 func escapeTerminalString(value: String) -> String {

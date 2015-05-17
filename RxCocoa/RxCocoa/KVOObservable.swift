@@ -9,12 +9,14 @@
 import Foundation
 import RxSwift
 
-class KVOObserver<Element> : NSObject {
+class KVOObserver<Element> : NSObject, Disposable {
     typealias Callback = (Element) -> Void
     
     let object: NSObject
     let callback: Callback!
     let path: String
+    
+    var retainSelf: KVOObserver<Element>? = nil
     
     init(object: NSObject, path: String, callback: Callback) {
         self.object = object
@@ -22,6 +24,8 @@ class KVOObserver<Element> : NSObject {
         self.callback = nil
         
         super.init()
+        
+        self.retainSelf = self
         
         self.object.addObserver(self, forKeyPath: self.path, options: NSKeyValueObservingOptions.New, context: nil)
     }
@@ -32,42 +36,32 @@ class KVOObserver<Element> : NSObject {
         self.callback(newValue)
     }
     
-    deinit {
+    func dispose() {
         self.object.removeObserver(self, forKeyPath: self.path)
+        
+        self.retainSelf = nil
+    }
+    
+    deinit {
     }
 }
 
 public class KVOObservable<Element> : Observable<Element> {
-    var observer: KVOObserver<Element>!
-    
-    var observers: Bag<ObserverOf<Element>>
-    
-    var lock = Lock()
+    let object: NSObject
+    let path: String
     
     public init(object: NSObject, path: String) {
-        self.observers = Bag()
-        
-        self.observer = nil
-        
-        super.init()
-        
-        self.observer = KVOObserver(object: object, path: path) { [unowned self] value in
-            let observers = self.observers
-            dispatch(.Next(Box(value)), observers)
-        }
+        self.object = object
+        self.path = path
     }
     
     public override func subscribe<O : ObserverType where O.Element == Element>(observer: O) -> Disposable {
-        return lock.calculateLocked {
-            let key = self.observers.put(ObserverOf(observer))
-            
-            return AnonymousDisposable { () in
-                self.lock.performLocked {
-                    if self.observers.removeKey(key) == nil {
-                        removingObserverFailed()
-                    }
-                }
-            }
+        let observer = KVOObserver(object: object, path: path) { [unowned self] value in
+            observer.on(.Next(Box(value)))
+        }
+        
+        return AnonymousDisposable { () in
+            observer.dispose()
         }
     }
 }

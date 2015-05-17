@@ -27,6 +27,33 @@
 		C86E2F461AE5A0CA00C31024 /* WikipediaPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86E2F3C1AE5A0CA00C31024 /* WikipediaPage.swift */; };
 		C86E2F471AE5A0CA00C31024 /* WikipediaSearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86E2F3D1AE5A0CA00C31024 /* WikipediaSearchResult.swift */; };
 		C8813DAA1AD2EBF30072A050 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8813DA91AD2EBF30072A050 /* RootViewController.swift */; };
+		C88BB8BB1B07E6C90064D411 /* SearchResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86E2F321AE5A0CA00C31024 /* SearchResultViewModel.swift */; };
+		C88BB8BC1B07E6C90064D411 /* HtmlParsing.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83367111AD029AE00C668A7 /* HtmlParsing.swift */; };
+		C88BB8BD1B07E6C90064D411 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86E2F331AE5A0CA00C31024 /* SearchViewModel.swift */; };
+		C88BB8BE1B07E6C90064D411 /* ImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83367121AD029AE00C668A7 /* ImageService.swift */; };
+		C88BB8BF1B07E6C90064D411 /* WikipediaSearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86E2F3D1AE5A0CA00C31024 /* WikipediaSearchResult.swift */; };
+		C88BB8C01B07E6C90064D411 /* CollectionViewImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86E2F351AE5A0CA00C31024 /* CollectionViewImageCell.swift */; };
+		C88BB8C11B07E6C90064D411 /* WikipediaSearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86E2F371AE5A0CA00C31024 /* WikipediaSearchCell.swift */; };
+		C88BB8C21B07E6C90064D411 /* GitHubAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C890A6591AEBD28A00AFF7E6 /* GitHubAPI.swift */; };
+		C88BB8C31B07E6C90064D411 /* Example.swift in Sources */ = {isa = PBXBuildFile; fileRef = C833670F1AD029AE00C668A7 /* Example.swift */; };
+		C88BB8C41B07E6C90064D411 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C890A65C1AEC084100AFF7E6 /* ViewController.swift */; };
+		C88BB8C51B07E6C90064D411 /* GitHubSignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C890A6571AEBD26B00AFF7E6 /* GitHubSignupViewController.swift */; };
+		C88BB8C61B07E6C90064D411 /* Wireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83367211AD029AE00C668A7 /* Wireframe.swift */; };
+		C88BB8C71B07E6C90064D411 /* Dependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E3C2321B03605B0010338D /* Dependencies.swift */; };
+		C88BB8C81B07E6C90064D411 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8813DA91AD2EBF30072A050 /* RootViewController.swift */; };
+		C88BB8C91B07E6C90064D411 /* WikipediaSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86E2F391AE5A0CA00C31024 /* WikipediaSearchViewController.swift */; };
+		C88BB8CA1B07E6C90064D411 /* WikipediaAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86E2F3B1AE5A0CA00C31024 /* WikipediaAPI.swift */; };
+		C88BB8CB1B07E6C90064D411 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C833670E1AD029AE00C668A7 /* AppDelegate.swift */; };
+		C88BB8CC1B07E6C90064D411 /* WikipediaPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86E2F3C1AE5A0CA00C31024 /* WikipediaPage.swift */; };
+		C88BB8CE1B07E6C90064D411 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8A56BCA1AD744E600B4673B /* RxSwift.framework */; };
+		C88BB8CF1B07E6C90064D411 /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8F57F431AD02DBE006B8702 /* RxCocoa.framework */; };
+		C88BB8D11B07E6C90064D411 /* WikipediaSearchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C86E2F381AE5A0CA00C31024 /* WikipediaSearchCell.xib */; };
+		C88BB8D21B07E6C90064D411 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C833671E1AD029AE00C668A7 /* Main.storyboard */; };
+		C88BB8D31B07E6C90064D411 /* WikipediaImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C86E2F361AE5A0CA00C31024 /* WikipediaImageCell.xib */; };
+		C88BB8D41B07E6C90064D411 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = C833671D1AD029AE00C668A7 /* LaunchScreen.xib */; };
+		C88BB8D51B07E6C90064D411 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C83366EC1AD0293800C668A7 /* Images.xcassets */; };
+		C88BB8D71B07E6C90064D411 /* RxSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C8A56BCA1AD744E600B4673B /* RxSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		C88BB8D81B07E6C90064D411 /* RxCocoa.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C8F57F431AD02DBE006B8702 /* RxCocoa.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C890A6581AEBD26B00AFF7E6 /* GitHubSignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C890A6571AEBD26B00AFF7E6 /* GitHubSignupViewController.swift */; };
 		C890A65A1AEBD28A00AFF7E6 /* GitHubAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C890A6591AEBD28A00AFF7E6 /* GitHubAPI.swift */; };
 		C890A65D1AEC084100AFF7E6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C890A65C1AEC084100AFF7E6 /* ViewController.swift */; };
@@ -45,6 +72,18 @@
 			files = (
 				C8A56BCC1AD744E600B4673B /* RxSwift.framework in Embed Frameworks */,
 				C8F57F451AD02DBE006B8702 /* RxCocoa.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C88BB8D61B07E6C90064D411 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				C88BB8D71B07E6C90064D411 /* RxSwift.framework in Embed Frameworks */,
+				C88BB8D81B07E6C90064D411 /* RxCocoa.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -74,6 +113,7 @@
 		C86E2F3C1AE5A0CA00C31024 /* WikipediaPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WikipediaPage.swift; sourceTree = "<group>"; };
 		C86E2F3D1AE5A0CA00C31024 /* WikipediaSearchResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WikipediaSearchResult.swift; sourceTree = "<group>"; };
 		C8813DA91AD2EBF30072A050 /* RootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
+		C88BB8DC1B07E6C90064D411 /* RxExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RxExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C890A6571AEBD26B00AFF7E6 /* GitHubSignupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = GitHubSignupViewController.swift; path = Views/GitHubSignupViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		C890A6591AEBD28A00AFF7E6 /* GitHubAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = GitHubAPI.swift; path = GitHubAPI/GitHubAPI.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		C890A65C1AEC084100AFF7E6 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -88,6 +128,15 @@
 			files = (
 				C8A56BCB1AD744E600B4673B /* RxSwift.framework in Frameworks */,
 				C8F57F441AD02DBE006B8702 /* RxCocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C88BB8CD1B07E6C90064D411 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C88BB8CE1B07E6C90064D411 /* RxSwift.framework in Frameworks */,
+				C88BB8CF1B07E6C90064D411 /* RxCocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -108,6 +157,7 @@
 			isa = PBXGroup;
 			children = (
 				C83366DD1AD0293800C668A7 /* RxExample.app */,
+				C88BB8DC1B07E6C90064D411 /* RxExample.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -218,9 +268,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		C83366DC1AD0293800C668A7 /* RxExample */ = {
+		C83366DC1AD0293800C668A7 /* RxExample-iOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C83366FF1AD0293900C668A7 /* Build configuration list for PBXNativeTarget "RxExample" */;
+			buildConfigurationList = C83366FF1AD0293900C668A7 /* Build configuration list for PBXNativeTarget "RxExample-iOS" */;
 			buildPhases = (
 				C83366D91AD0293800C668A7 /* Sources */,
 				C83366DA1AD0293800C668A7 /* Frameworks */,
@@ -231,9 +281,27 @@
 			);
 			dependencies = (
 			);
-			name = RxExample;
+			name = "RxExample-iOS";
 			productName = RxExample;
 			productReference = C83366DD1AD0293800C668A7 /* RxExample.app */;
+			productType = "com.apple.product-type.application";
+		};
+		C88BB8B91B07E6C90064D411 /* RxExample-OSX */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C88BB8D91B07E6C90064D411 /* Build configuration list for PBXNativeTarget "RxExample-OSX" */;
+			buildPhases = (
+				C88BB8BA1B07E6C90064D411 /* Sources */,
+				C88BB8CD1B07E6C90064D411 /* Frameworks */,
+				C88BB8D01B07E6C90064D411 /* Resources */,
+				C88BB8D61B07E6C90064D411 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "RxExample-OSX";
+			productName = RxExample;
+			productReference = C88BB8DC1B07E6C90064D411 /* RxExample.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -263,7 +331,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				C83366DC1AD0293800C668A7 /* RxExample */,
+				C83366DC1AD0293800C668A7 /* RxExample-iOS */,
+				C88BB8B91B07E6C90064D411 /* RxExample-OSX */,
 			);
 		};
 /* End PBXProject section */
@@ -278,6 +347,18 @@
 				C86E2F411AE5A0CA00C31024 /* WikipediaImageCell.xib in Resources */,
 				C833672D1AD029AE00C668A7 /* LaunchScreen.xib in Resources */,
 				C83366ED1AD0293800C668A7 /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C88BB8D01B07E6C90064D411 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C88BB8D11B07E6C90064D411 /* WikipediaSearchCell.xib in Resources */,
+				C88BB8D21B07E6C90064D411 /* Main.storyboard in Resources */,
+				C88BB8D31B07E6C90064D411 /* WikipediaImageCell.xib in Resources */,
+				C88BB8D41B07E6C90064D411 /* LaunchScreen.xib in Resources */,
+				C88BB8D51B07E6C90064D411 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -306,6 +387,31 @@
 				C86E2F451AE5A0CA00C31024 /* WikipediaAPI.swift in Sources */,
 				C83367221AD029AE00C668A7 /* AppDelegate.swift in Sources */,
 				C86E2F461AE5A0CA00C31024 /* WikipediaPage.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C88BB8BA1B07E6C90064D411 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C88BB8BB1B07E6C90064D411 /* SearchResultViewModel.swift in Sources */,
+				C88BB8BC1B07E6C90064D411 /* HtmlParsing.swift in Sources */,
+				C88BB8BD1B07E6C90064D411 /* SearchViewModel.swift in Sources */,
+				C88BB8BE1B07E6C90064D411 /* ImageService.swift in Sources */,
+				C88BB8BF1B07E6C90064D411 /* WikipediaSearchResult.swift in Sources */,
+				C88BB8C01B07E6C90064D411 /* CollectionViewImageCell.swift in Sources */,
+				C88BB8C11B07E6C90064D411 /* WikipediaSearchCell.swift in Sources */,
+				C88BB8C21B07E6C90064D411 /* GitHubAPI.swift in Sources */,
+				C88BB8C31B07E6C90064D411 /* Example.swift in Sources */,
+				C88BB8C41B07E6C90064D411 /* ViewController.swift in Sources */,
+				C88BB8C51B07E6C90064D411 /* GitHubSignupViewController.swift in Sources */,
+				C88BB8C61B07E6C90064D411 /* Wireframe.swift in Sources */,
+				C88BB8C71B07E6C90064D411 /* Dependencies.swift in Sources */,
+				C88BB8C81B07E6C90064D411 /* RootViewController.swift in Sources */,
+				C88BB8C91B07E6C90064D411 /* WikipediaSearchViewController.swift in Sources */,
+				C88BB8CA1B07E6C90064D411 /* WikipediaAPI.swift in Sources */,
+				C88BB8CB1B07E6C90064D411 /* AppDelegate.swift in Sources */,
+				C88BB8CC1B07E6C90064D411 /* WikipediaPage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -346,10 +452,12 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = RxExample/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = iphoneos;
+				PRODUCT_NAME = RxExample;
+				SDKROOT = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -383,9 +491,11 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = RxExample/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				SDKROOT = iphoneos;
+				PRODUCT_NAME = RxExample;
+				SDKROOT = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -401,12 +511,11 @@
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Rx-cfkyozdvlaegqibzixjokeysigeo/Build/Products/Debug-iphoneos",
 					"/Users/kzaher/Projects/Rx/RxSwift/build/Debug-iphoneos",
 				);
-				INFOPLIST_FILE = RxExample/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-objc_loadall";
 				OTHER_SWIFT_FLAGS = "-D DEBUG";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
 			};
 			name = Debug;
 		};
@@ -420,11 +529,45 @@
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Rx-cfkyozdvlaegqibzixjokeysigeo/Build/Products/Debug-iphoneos",
 					"/Users/kzaher/Projects/Rx/RxSwift/build/Debug-iphoneos",
 				);
-				INFOPLIST_FILE = RxExample/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-objc_loadall";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+			};
+			name = Release;
+		};
+		C88BB8DA1B07E6C90064D411 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Rx-cfkyozdvlaegqibzixjokeysigeo/Build/Products/Release-iphoneos",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Rx-cfkyozdvlaegqibzixjokeysigeo/Build/Products/Debug-iphoneos",
+					"/Users/kzaher/Projects/Rx/RxSwift/build/Debug-iphoneos",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = "-objc_loadall";
+				OTHER_SWIFT_FLAGS = "-D DEBUG";
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		C88BB8DB1B07E6C90064D411 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Rx-cfkyozdvlaegqibzixjokeysigeo/Build/Products/Release-iphoneos",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Rx-cfkyozdvlaegqibzixjokeysigeo/Build/Products/Debug-iphoneos",
+					"/Users/kzaher/Projects/Rx/RxSwift/build/Debug-iphoneos",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = "-objc_loadall";
+				SDKROOT = macosx;
 			};
 			name = Release;
 		};
@@ -440,11 +583,20 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C83366FF1AD0293900C668A7 /* Build configuration list for PBXNativeTarget "RxExample" */ = {
+		C83366FF1AD0293900C668A7 /* Build configuration list for PBXNativeTarget "RxExample-iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C83367001AD0293900C668A7 /* Debug */,
 				C83367011AD0293900C668A7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C88BB8D91B07E6C90064D411 /* Build configuration list for PBXNativeTarget "RxExample-OSX" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C88BB8DA1B07E6C90064D411 /* Debug */,
+				C88BB8DB1B07E6C90064D411 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

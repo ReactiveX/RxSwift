@@ -8,6 +8,7 @@
 
 import Foundation
 import RxSwift
+import UIKit
 
 class SearchBarDelegate: NSObject, UISearchBarDelegate {
     typealias Observer = ObserverOf<String>

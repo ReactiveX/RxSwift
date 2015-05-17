@@ -15,7 +15,7 @@ public class Observable<Element> {
     typealias ObserverAdapter = SinkOf<Event<Element>>
     
     public init() {
-#if DEBUG
+#if TRACE_RESOURCES
         OSAtomicIncrement32(&resourceCount)
 #endif
     }
@@ -26,7 +26,7 @@ public class Observable<Element> {
     }
     
     deinit {
-#if DEBUG
+#if TRACE_RESOURCES
         OSAtomicDecrement32(&resourceCount)
 #endif
     }

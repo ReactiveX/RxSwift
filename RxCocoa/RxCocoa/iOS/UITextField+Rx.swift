@@ -8,6 +8,7 @@
 
 import Foundation
 import RxSwift
+import UIKit
 
 extension UITextField {
     public func rx_text() -> Observable<String> {

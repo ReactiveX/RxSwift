@@ -29,7 +29,7 @@ class RxTest: XCTestCase {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
         
-#if DEBUG
+#if TRACE_RESOURCES
         self.startResourceCount = resourceCount
 #endif
     }
@@ -38,7 +38,7 @@ class RxTest: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
 
-#if DEBUG
+#if TRACE_RESOURCES
         XCTAssertEqual(self.startResourceCount, resourceCount)
 #endif
     }

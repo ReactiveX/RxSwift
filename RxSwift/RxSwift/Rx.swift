@@ -8,7 +8,7 @@
 
 import Foundation
 
-#if DEBUG
+#if TRACE_RESOURCES
 // counts resources
 // used to detect resource leaks during unit tests
 // it's not perfect, but works well

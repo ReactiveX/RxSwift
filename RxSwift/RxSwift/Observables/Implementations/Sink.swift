@@ -35,7 +35,7 @@ class Sink<ElementType> :  Disposable {
     }
     
     init(observer: ObserverOf<ElementType>, cancel: Disposable) {
-#if DEBUG
+#if TRACE_RESOURCES
         OSAtomicIncrement32(&resourceCount)
 #endif
         _state = (
@@ -66,7 +66,7 @@ class Sink<ElementType> :  Disposable {
     }
     
     deinit {
-#if DEBUG
+#if TRACE_RESOURCES
         OSAtomicDecrement32(&resourceCount)
 #endif
     }

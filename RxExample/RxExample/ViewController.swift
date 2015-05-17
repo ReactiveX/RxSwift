@@ -11,18 +11,18 @@ import UIKit
 import RxSwift
 
 class ViewController: UIViewController {
-#if DEBUG
+#if TRACE_RESOURCES
     private let startResourceCount = RxSwift.resourceCount
 #endif
     
     override func viewDidLoad() {
-#if DEBUG
+#if TRACE_RESOURCES
         println("Number of start resources = \(resourceCount)")
 #endif
     }
     
     deinit {
-#if DEBUG
+#if TRACE_RESOURCES
         println("View controller disposed with \(resourceCount) resources")
     
         var numberOfResourcesThatShouldRemain = startResourceCount

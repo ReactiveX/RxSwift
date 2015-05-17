@@ -8,6 +8,7 @@
 
 import Foundation
 import RxSwift
+import UIKit
 
 extension UIButton {
     public func rx_tap() -> Observable<Void> {

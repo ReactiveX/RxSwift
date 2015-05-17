@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Krunoslav Zaher. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 
 //! Project version number for RxCocoa.
 FOUNDATION_EXPORT double RxCocoaVersionNumber;

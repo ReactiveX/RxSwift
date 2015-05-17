@@ -10,13 +10,13 @@ import Foundation
 
 public class DisposeBase {
     init() {
-#if DEBUG
+#if TRACE_RESOURCES
     OSAtomicIncrement32(&resourceCount)
 #endif
     }
     
     deinit {
-#if DEBUG
+#if TRACE_RESOURCES
     OSAtomicDecrement32(&resourceCount)
 #endif
     }

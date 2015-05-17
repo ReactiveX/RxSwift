@@ -21,7 +21,7 @@ class AssumptionsTest : RxTest {
     }
     
     func testResourceLeaksDetectionIsTurnedOn() {
-#if DEBUG
+#if TRACE_RESOURCES
         let startResourceCount = resourceCount
     
         var observable: Observable<Int>! = Observable()
@@ -31,8 +31,10 @@ class AssumptionsTest : RxTest {
         observable = nil
 
         XCTAssertEqual(resourceCount, startResourceCount)
+#elseif RELEASE
+
 #else
-        XCTAssert(false, "Can't run unit tests in release mode")
+        XCTAssert(false, "Can't run unit tests in without tracing")
 #endif
     }
 }
