@@ -29,6 +29,7 @@ class IntroductionExampleViewController : ViewController {
             return (a.toInt() ?? 0, b.toInt() ?? 0)
         }
         
+        // bind result to UI
         sum
             >- map { (a, b) in
                 return "\(a + b)"
@@ -36,8 +37,9 @@ class IntroductionExampleViewController : ViewController {
             >- c.rx_subscribeTextTo
             >- disposeBag.addDisposable
         
-        // also, read the result out loud
+        // Also, tell it out loud
         let speech = NSSpeechSynthesizer()
+        
         sum
             >- map { (a, b) in
                 return "\(a) + \(b) = \(a + b)"

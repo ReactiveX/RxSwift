@@ -130,20 +130,23 @@ class GitHubSignupViewController : ViewController {
         let repeatPassword = repeatedPasswordOutlet.rx_text()
         let signupSampler = self.signupOutlet.rx_tap()
         
-        let usernameValidation = username >- map { username in
-            return validationService.validateUsername(username)
-        } >- switchLatest >- variable
+        let usernameValidation = username
+            >- map { username in
+                return validationService.validateUsername(username)
+            }
+            >- switchLatest
+            >- variable
         
-        let passwordValidation = password >- map { password in
-            return validationService.validatePassword(password)
-        } >- variable
+        let passwordValidation = password
+            >- map { password in
+                return validationService.validatePassword(password)
+            }
+            >- variable
         
-        let repeatPasswordValidation = combineLatest(
-            password,
-            repeatPassword
-        ) { (password, repeatedPassword) in
-            return validationService.validateRepeatedPassword(password, repeatedPassword: repeatedPassword)
-        } >- variable
+        let repeatPasswordValidation = combineLatest(password, repeatPassword) { (password, repeatedPassword) in
+                validationService.validateRepeatedPassword(password, repeatedPassword: repeatedPassword)
+            }
+            >- variable
         
         let signingProcess = combineLatest(username, password) { ($0, $1) }
             >- sampleLatest(signupSampler)

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7702"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7706"/>
     </dependencies>
     <scenes>
         <!--Application-->
@@ -59,7 +59,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="zhP-9C-de5">
-                                <rect key="frame" x="249" y="315" width="96" height="22"/>
+                                <rect key="frame" x="249" y="318" width="96" height="22"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="96" id="K4K-CE-gyz"/>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="96" id="M1P-dU-Rxo"/>
@@ -81,7 +81,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Thn-ge-MNK">
-                                <rect key="frame" x="387" y="317" width="13" height="17"/>
+                                <rect key="frame" x="387" y="320" width="13" height="17"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="=" id="Ms6-O6-Cle">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -100,7 +100,7 @@
                                 </textFieldCell>
                             </textField>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="GIP-PK-nj4">
-                                <rect key="frame" x="229" y="249" width="153" height="32"/>
+                                <rect key="frame" x="221" y="252" width="153" height="32"/>
                                 <buttonCell key="cell" type="push" title="Unbind everything" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="OfL-Xk-Jww">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -121,7 +121,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="uvp-P6-I33">
-                                <rect key="frame" x="115" y="225" width="407" height="17"/>
+                                <rect key="frame" x="94" y="228" width="407" height="17"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Everything is unbound when `Unbind everything` button is clicked" id="oNm-CU-Uq7">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -130,21 +130,21 @@
                             </textField>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="zhP-9C-de5" firstAttribute="centerY" secondItem="Thn-ge-MNK" secondAttribute="centerY" constant="-0.5" id="1hB-vb-8wU"/>
+                            <constraint firstItem="zhP-9C-de5" firstAttribute="centerY" secondItem="Thn-ge-MNK" secondAttribute="centerY" id="1hB-vb-8wU"/>
                             <constraint firstAttribute="centerY" secondItem="6lb-zc-c5S" secondAttribute="centerY" constant="126.5" id="3Es-uc-xme"/>
                             <constraint firstItem="zEm-ia-8D5" firstAttribute="leading" secondItem="6lb-zc-c5S" secondAttribute="trailing" constant="44" id="4YD-Sv-3PW"/>
-                            <constraint firstItem="zhP-9C-de5" firstAttribute="centerY" secondItem="zEm-ia-8D5" secondAttribute="centerY" constant="2.5" id="6x6-ry-73f"/>
+                            <constraint firstItem="zhP-9C-de5" firstAttribute="centerY" secondItem="zEm-ia-8D5" secondAttribute="centerY" id="6x6-ry-73f"/>
                             <constraint firstItem="uvp-P6-I33" firstAttribute="top" secondItem="GIP-PK-nj4" secondAttribute="bottom" constant="14" id="Pp9-qm-Arb"/>
                             <constraint firstItem="6lb-zc-c5S" firstAttribute="leading" secondItem="15P-I4-Ofm" secondAttribute="leading" constant="56" id="PvR-bi-zxk"/>
                             <constraint firstItem="6lb-zc-c5S" firstAttribute="centerY" secondItem="zEm-ia-8D5" secondAttribute="centerY" constant="0.5" id="Yxd-Vc-Mha"/>
                             <constraint firstItem="2kf-g2-Xe7" firstAttribute="leading" secondItem="15P-I4-Ofm" secondAttribute="leading" constant="58" id="aUY-dz-Bkn"/>
-                            <constraint firstItem="OPN-Cj-AXY" firstAttribute="centerY" secondItem="Thn-ge-MNK" secondAttribute="centerY" constant="-3" id="cze-3D-fjj"/>
+                            <constraint firstItem="OPN-Cj-AXY" firstAttribute="centerY" secondItem="Thn-ge-MNK" secondAttribute="centerY" id="cze-3D-fjj"/>
                             <constraint firstItem="2kf-g2-Xe7" firstAttribute="top" secondItem="15P-I4-Ofm" secondAttribute="top" constant="9" id="dVJ-tS-uK5"/>
                             <constraint firstItem="GIP-PK-nj4" firstAttribute="top" secondItem="zhP-9C-de5" secondAttribute="bottom" constant="38" id="hP1-SO-AwZ"/>
-                            <constraint firstItem="zhP-9C-de5" firstAttribute="centerX" secondItem="GIP-PK-nj4" secondAttribute="centerX" constant="-8.5" id="jGy-4g-Az3"/>
+                            <constraint firstItem="zhP-9C-de5" firstAttribute="centerX" secondItem="GIP-PK-nj4" secondAttribute="centerX" id="jGy-4g-Az3"/>
                             <constraint firstItem="Thn-ge-MNK" firstAttribute="leading" secondItem="zhP-9C-de5" secondAttribute="trailing" constant="44" id="s0C-Xr-olp"/>
                             <constraint firstItem="OPN-Cj-AXY" firstAttribute="leading" secondItem="Thn-ge-MNK" secondAttribute="trailing" constant="44" id="wsy-fG-oAX"/>
-                            <constraint firstItem="uvp-P6-I33" firstAttribute="centerX" secondItem="GIP-PK-nj4" secondAttribute="centerX" constant="13" id="y3H-7u-VYu"/>
+                            <constraint firstItem="uvp-P6-I33" firstAttribute="centerX" secondItem="GIP-PK-nj4" secondAttribute="centerX" id="y3H-7u-VYu"/>
                             <constraint firstItem="zhP-9C-de5" firstAttribute="leading" secondItem="zEm-ia-8D5" secondAttribute="trailing" constant="44" id="zH7-w8-JmD"/>
                         </constraints>
                     </view>
