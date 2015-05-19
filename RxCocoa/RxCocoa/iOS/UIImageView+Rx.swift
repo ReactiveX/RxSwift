@@ -19,6 +19,8 @@ extension UIImageView {
         (animated: Bool)
         (source: Observable<UIImage?>) -> Disposable {
         return source.subscribe(AnonymousObserver { event in
+            MainScheduler.ensureExecutingOnScheduler()
+            
             switch event {
             case .Next(let boxedValue):
                 let value = boxedValue.value

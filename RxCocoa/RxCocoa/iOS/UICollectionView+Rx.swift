@@ -12,7 +12,7 @@ import UIKit
 
 // This cannot be a generic class because of collection view objc runtime that checks for
 // implemented selectors in data source
-public class CollectionViewDataSource :  NSObject, UICollectionViewDataSource {
+public class RxCollectionViewDataSource :  NSObject, UICollectionViewDataSource {
     public typealias CellFactory = (UICollectionView, NSIndexPath, AnyObject) -> UICollectionViewCell
     
     public var items: [AnyObject] {
@@ -50,7 +50,7 @@ public class CollectionViewDataSource :  NSObject, UICollectionViewDataSource {
     }
 }
 
-public class CollectionViewDelegate: ScrollViewDelegate, UICollectionViewDelegate {
+public class RxCollectionViewDelegate: RxScrollViewDelegate, UICollectionViewDelegate {
     public typealias Observer = ObserverOf<(UICollectionView, Int)>
     public typealias DisposeKey = Bag<Observer>.KeyType
     
@@ -92,15 +92,14 @@ public class CollectionViewDelegate: ScrollViewDelegate, UICollectionViewDelegat
 
 // This is the most simple (but probably most common) way of using rx with UICollectionView.
 extension UICollectionView {
-    override func rx_createDelegate() -> ScrollViewDelegate {
-        return CollectionViewDelegate()
+    override func rx_createDelegate() -> RxScrollViewDelegate {
+        return RxCollectionViewDelegate()
     }
     
     public func rx_subscribeItemsTo<E where E: AnyObject>
-        (dataSource: CollectionViewDataSource)
+        (dataSource: RxCollectionViewDataSource)
         (source: Observable<[E]>)
         -> Disposable {
-            
         MainScheduler.ensureExecutingOnScheduler()
         
         if self.dataSource != nil && self.dataSource !== dataSource {
@@ -118,6 +117,8 @@ extension UICollectionView {
         }
         
         let disposable = source.subscribe(AnonymousObserver { event in
+            MainScheduler.ensureExecutingOnScheduler()
+            
             switch event {
             case .Next(let boxedValue):
                 let value = boxedValue.value
@@ -141,11 +142,11 @@ extension UICollectionView {
         (source: Observable<[E]>)
         -> Disposable {
             
-            let dataSource = CollectionViewDataSource(cellFactory: {
-                cellFactory($0, $1, $2 as! E)
-            })
-            
-            return self.rx_subscribeItemsTo(dataSource)(source: source)
+        let dataSource = RxCollectionViewDataSource(cellFactory: {
+            cellFactory($0, $1, $2 as! E)
+        })
+        
+        return self.rx_subscribeItemsTo(dataSource)(source: source)
     }
     
     public func rx_subscribeItemsWithIdentifierTo<E, Cell where E : AnyObject, Cell : UICollectionViewCell>
@@ -153,14 +154,14 @@ extension UICollectionView {
         (source: Observable<[E]>)
         -> Disposable {
             
-            let dataSource = CollectionViewDataSource {
-                let cell = $0.dequeueReusableCellWithReuseIdentifier(cellIdentifier, forIndexPath: $1) as! Cell
-                configureCell($0, $1, $2 as! E, cell)
-                
-                return cell
-            }
+        let dataSource = RxCollectionViewDataSource {
+            let cell = $0.dequeueReusableCellWithReuseIdentifier(cellIdentifier, forIndexPath: $1) as! Cell
+            configureCell($0, $1, $2 as! E, cell)
             
-            return self.rx_subscribeItemsTo(dataSource)(source: source)
+            return cell
+        }
+        
+        return self.rx_subscribeItemsTo(dataSource)(source: source)
     }
     
     
@@ -168,10 +169,12 @@ extension UICollectionView {
         _ = rx_checkCollectionViewDelegate()
         
         return AnonymousObservable { observer in
+            MainScheduler.ensureExecutingOnScheduler()
+            
             var maybeDelegate = self.rx_checkCollectionViewDelegate()
             
             if maybeDelegate == nil {
-                let delegate = self.rx_createDelegate() as! CollectionViewDelegate
+                let delegate = self.rx_createDelegate() as! RxCollectionViewDelegate
                 maybeDelegate = delegate
                 self.delegate = maybeDelegate
             }
@@ -181,6 +184,8 @@ extension UICollectionView {
             let key = delegate.addCollectionViewObserver(observer)
             
             return AnonymousDisposable {
+                MainScheduler.ensureExecutingOnScheduler()
+                
                 _ = self.rx_checkCollectionViewDelegate()
                 
                 delegate.removeCollectionViewObserver(key)
@@ -195,7 +200,7 @@ extension UICollectionView {
     public func rx_elementTap<E>() -> Observable<E> {
         
         return rx_itemTap() >- map { (tableView, rowIndex) -> E in
-            let maybeDataSource: CollectionViewDataSource? = self.rx_collectionViewDataSource()
+            let maybeDataSource: RxCollectionViewDataSource? = self.rx_collectionViewDataSource()
             
             if maybeDataSource == nil {
                 rxFatalError("To use element tap table view needs to use table view data source. You can still use `rx_observableItemTap`.")
@@ -209,14 +214,14 @@ extension UICollectionView {
     
     // private methods
     
-    private func rx_collectionViewDataSource() -> CollectionViewDataSource? {
+    private func rx_collectionViewDataSource() -> RxCollectionViewDataSource? {
         MainScheduler.ensureExecutingOnScheduler()
         
         if self.dataSource == nil {
             return nil
         }
         
-        let maybeDataSource = self.dataSource as? CollectionViewDataSource
+        let maybeDataSource = self.dataSource as? RxCollectionViewDataSource
         
         if maybeDataSource == nil {
             rxFatalError("View already has incompatible data source set. Please remove earlier delegate registration.")
@@ -225,14 +230,14 @@ extension UICollectionView {
         return maybeDataSource!
     }
     
-    private func rx_checkCollectionViewDataSource<E>() -> CollectionViewDataSource? {
+    private func rx_checkCollectionViewDataSource<E>() -> RxCollectionViewDataSource? {
         MainScheduler.ensureExecutingOnScheduler()
         
         if self.dataSource == nil {
             return nil
         }
         
-        let maybeDataSource = self.dataSource as? CollectionViewDataSource
+        let maybeDataSource = self.dataSource as? RxCollectionViewDataSource
         
         if maybeDataSource == nil {
             rxFatalError("View already has incompatible data source set. Please remove earlier delegate registration.")
@@ -241,14 +246,14 @@ extension UICollectionView {
         return maybeDataSource!
     }
     
-    private func rx_checkCollectionViewDelegate() -> CollectionViewDelegate? {
+    private func rx_checkCollectionViewDelegate() -> RxCollectionViewDelegate? {
         MainScheduler.ensureExecutingOnScheduler()
         
         if self.delegate == nil {
             return nil
         }
         
-        let maybeDelegate = self.delegate as? CollectionViewDelegate
+        let maybeDelegate = self.delegate as? RxCollectionViewDelegate
         
         if maybeDelegate == nil {
             rxFatalError("View already has incompatible delegate set. To use rx observable (for now) please remove earlier delegate registration.")

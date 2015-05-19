@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 import UIKit
 
-class SearchBarDelegate: NSObject, UISearchBarDelegate {
+class RxSearchBarDelegate: NSObject, UISearchBarDelegate {
     typealias Observer = ObserverOf<String>
     typealias DisposeKey = Bag<ObserverOf<String>>.KeyType
     
@@ -46,10 +46,12 @@ extension UISearchBar {
         rx_checkSearchBarDelegate()
         
         return AnonymousObservable { observer in
+            MainScheduler.ensureExecutingOnScheduler()
+            
             var maybeDelegate = self.rx_checkSearchBarDelegate()
             
             if maybeDelegate == nil {
-                maybeDelegate = SearchBarDelegate()
+                maybeDelegate = RxSearchBarDelegate()
                 self.delegate = maybeDelegate
             }
             
@@ -65,14 +67,14 @@ extension UISearchBar {
     
     // private 
     
-    private func rx_checkSearchBarDelegate() -> SearchBarDelegate? {
+    private func rx_checkSearchBarDelegate() -> RxSearchBarDelegate? {
         MainScheduler.ensureExecutingOnScheduler()
         
         if self.delegate == nil {
             return nil
         }
         
-        let maybeDelegate = self.delegate as? SearchBarDelegate
+        let maybeDelegate = self.delegate as? RxSearchBarDelegate
         
         if maybeDelegate == nil {
             rxFatalError("Search bar already has incompatible delegate set. To use rx observable (for now) please remove earlier delegate registration.")

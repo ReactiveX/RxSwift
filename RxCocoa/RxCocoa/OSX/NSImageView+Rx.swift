@@ -18,6 +18,8 @@ extension NSImageView {
     public func rx_subscribeImageTo
         (animated: Bool)
         (source: Observable<NSImage?>) -> Disposable {
+            MainScheduler.ensureExecutingOnScheduler()
+            
             return source.subscribe(AnonymousObserver { event in
                 switch event {
                 case .Next(let boxedValue):

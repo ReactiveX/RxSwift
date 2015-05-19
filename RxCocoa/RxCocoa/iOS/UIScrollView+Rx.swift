@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 import UIKit
 
-public class ScrollViewDelegate: NSObject, UIScrollViewDelegate {
+public class RxScrollViewDelegate: NSObject, UIScrollViewDelegate {
     public typealias ScrollViewObserver = ObserverOf<CGPoint>
     
     public typealias ScrollViewDisposeKey = Bag<ScrollViewObserver>.KeyType
@@ -50,18 +50,20 @@ public class ScrollViewDelegate: NSObject, UIScrollViewDelegate {
 }
 
 extension UIScrollView {
-    func rx_createDelegate() -> ScrollViewDelegate {
-        return ScrollViewDelegate()
+    func rx_createDelegate() -> RxScrollViewDelegate {
+        return RxScrollViewDelegate()
     }
     
     public func rx_contentOffset() -> Observable<CGPoint> {
         _ = rx_checkScrollViewDelegate()
         
         return AnonymousObservable { observer in
+            MainScheduler.ensureExecutingOnScheduler()
+            
             var maybeDelegate = self.rx_checkScrollViewDelegate()
             
             if maybeDelegate == nil {
-                let delegate = self.rx_createDelegate() as ScrollViewDelegate
+                let delegate = self.rx_createDelegate() as RxScrollViewDelegate
                 maybeDelegate = delegate
                 self.delegate = maybeDelegate
             }
@@ -83,14 +85,14 @@ extension UIScrollView {
     }
     
     // private
-    private func rx_checkScrollViewDelegate() -> ScrollViewDelegate? {
+    private func rx_checkScrollViewDelegate() -> RxScrollViewDelegate? {
         MainScheduler.ensureExecutingOnScheduler()
         
         if self.delegate == nil {
             return nil
         }
         
-        let maybeDelegate = self.delegate as? ScrollViewDelegate
+        let maybeDelegate = self.delegate as? RxScrollViewDelegate
         
         if maybeDelegate == nil {
             rxFatalError("View already has incompatible delegate set. To use rx observable (for now) please remove earlier delegate registration.")

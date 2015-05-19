@@ -8,4 +8,21 @@
 
 import Foundation
 
+#if os(iOS)
+    import UIKit
+    typealias Image = UIImage
+#elseif os(OSX)
+    import Cocoa
+    import AppKit
+    typealias Image = NSImage
+#endif
+
 let MB = 1024 * 1024
+
+extension String {
+    
+    func toFloat() -> Float? {
+        return (self as NSString).floatValue
+    }
+}
+

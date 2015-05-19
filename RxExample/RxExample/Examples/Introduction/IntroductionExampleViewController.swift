@@ -7,3 +7,59 @@
 //
 
 import Foundation
+import RxSwift
+import RxCocoa
+import Cocoa
+import AppKit
+
+class IntroductionExampleViewController : ViewController {
+    @IBOutlet var a: NSTextField!
+    @IBOutlet var b: NSTextField!
+    @IBOutlet var c: NSTextField!
+    
+    @IBOutlet var disposeButton: NSButton!
+    
+    var disposeBag = DisposeBag()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        // c = a + b
+        let sum = combineLatest(a.rx_text(), b.rx_text()) { (a, b) in
+            return (a.toInt() ?? 0, b.toInt() ?? 0)
+        }
+        
+        sum
+            >- map { (a, b) in
+                return "\(a + b)"
+            }
+            >- c.rx_subscribeTextTo
+            >- disposeBag.addDisposable
+        
+        // also, read the result out loud
+        let speech = NSSpeechSynthesizer()
+        sum
+            >- map { (a, b) in
+                return "\(a) + \(b) = \(a + b)"
+            }
+            >- subscribeNext { result in
+                if speech.speaking {
+                    speech.stopSpeaking()
+                }
+                
+                speech.startSpeakingString(result)
+            }
+            >- disposeBag.addDisposable
+        
+        disposeButton.rx_tap()
+            >- subscribeNext { [unowned self] _ in
+                println("Unbound everything")
+                self.disposeBag.dispose()
+            }
+            >- disposeBag.addDisposable
+    }
+    
+    deinit {
+        disposeBag.dispose()
+    }
+}

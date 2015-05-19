@@ -13,6 +13,8 @@ import UIKit
 extension UILabel {
     public func rx_subscribeTextTo(source: Observable<String>) -> Disposable {
         return source.subscribe(AnonymousObserver { event in
+            MainScheduler.ensureExecutingOnScheduler()
+            
             switch event {
             case .Next(let boxedValue):
                 let value = boxedValue.value

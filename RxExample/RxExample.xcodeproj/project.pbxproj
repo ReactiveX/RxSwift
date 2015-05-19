@@ -8,50 +8,28 @@
 
 /* Begin PBXBuildFile section */
 		07E3C2331B03605B0010338D /* Dependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E3C2321B03605B0010338D /* Dependencies.swift */; };
-		C83366ED1AD0293800C668A7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C83366EC1AD0293800C668A7 /* Images.xcassets */; };
-		C83367221AD029AE00C668A7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C833670E1AD029AE00C668A7 /* AppDelegate.swift */; };
 		C83367231AD029AE00C668A7 /* Example.swift in Sources */ = {isa = PBXBuildFile; fileRef = C833670F1AD029AE00C668A7 /* Example.swift */; };
 		C83367241AD029AE00C668A7 /* HtmlParsing.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83367111AD029AE00C668A7 /* HtmlParsing.swift */; };
 		C83367251AD029AE00C668A7 /* ImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83367121AD029AE00C668A7 /* ImageService.swift */; };
-		C833672D1AD029AE00C668A7 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = C833671D1AD029AE00C668A7 /* LaunchScreen.xib */; };
-		C833672E1AD029AE00C668A7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C833671E1AD029AE00C668A7 /* Main.storyboard */; };
 		C83367311AD029AE00C668A7 /* Wireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83367211AD029AE00C668A7 /* Wireframe.swift */; };
 		C86E2F3E1AE5A0CA00C31024 /* SearchResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86E2F321AE5A0CA00C31024 /* SearchResultViewModel.swift */; };
 		C86E2F3F1AE5A0CA00C31024 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86E2F331AE5A0CA00C31024 /* SearchViewModel.swift */; };
-		C86E2F401AE5A0CA00C31024 /* CollectionViewImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86E2F351AE5A0CA00C31024 /* CollectionViewImageCell.swift */; };
-		C86E2F411AE5A0CA00C31024 /* WikipediaImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C86E2F361AE5A0CA00C31024 /* WikipediaImageCell.xib */; };
-		C86E2F421AE5A0CA00C31024 /* WikipediaSearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86E2F371AE5A0CA00C31024 /* WikipediaSearchCell.swift */; };
-		C86E2F431AE5A0CA00C31024 /* WikipediaSearchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C86E2F381AE5A0CA00C31024 /* WikipediaSearchCell.xib */; };
-		C86E2F441AE5A0CA00C31024 /* WikipediaSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86E2F391AE5A0CA00C31024 /* WikipediaSearchViewController.swift */; };
 		C86E2F451AE5A0CA00C31024 /* WikipediaAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86E2F3B1AE5A0CA00C31024 /* WikipediaAPI.swift */; };
 		C86E2F461AE5A0CA00C31024 /* WikipediaPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86E2F3C1AE5A0CA00C31024 /* WikipediaPage.swift */; };
 		C86E2F471AE5A0CA00C31024 /* WikipediaSearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86E2F3D1AE5A0CA00C31024 /* WikipediaSearchResult.swift */; };
-		C8813DAA1AD2EBF30072A050 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8813DA91AD2EBF30072A050 /* RootViewController.swift */; };
 		C88BB8BB1B07E6C90064D411 /* SearchResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86E2F321AE5A0CA00C31024 /* SearchResultViewModel.swift */; };
 		C88BB8BC1B07E6C90064D411 /* HtmlParsing.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83367111AD029AE00C668A7 /* HtmlParsing.swift */; };
 		C88BB8BD1B07E6C90064D411 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86E2F331AE5A0CA00C31024 /* SearchViewModel.swift */; };
 		C88BB8BE1B07E6C90064D411 /* ImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83367121AD029AE00C668A7 /* ImageService.swift */; };
 		C88BB8BF1B07E6C90064D411 /* WikipediaSearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86E2F3D1AE5A0CA00C31024 /* WikipediaSearchResult.swift */; };
-		C88BB8C01B07E6C90064D411 /* CollectionViewImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86E2F351AE5A0CA00C31024 /* CollectionViewImageCell.swift */; };
-		C88BB8C11B07E6C90064D411 /* WikipediaSearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86E2F371AE5A0CA00C31024 /* WikipediaSearchCell.swift */; };
-		C88BB8C21B07E6C90064D411 /* GitHubAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C890A6591AEBD28A00AFF7E6 /* GitHubAPI.swift */; };
 		C88BB8C31B07E6C90064D411 /* Example.swift in Sources */ = {isa = PBXBuildFile; fileRef = C833670F1AD029AE00C668A7 /* Example.swift */; };
 		C88BB8C41B07E6C90064D411 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C890A65C1AEC084100AFF7E6 /* ViewController.swift */; };
-		C88BB8C51B07E6C90064D411 /* GitHubSignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C890A6571AEBD26B00AFF7E6 /* GitHubSignupViewController.swift */; };
 		C88BB8C61B07E6C90064D411 /* Wireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83367211AD029AE00C668A7 /* Wireframe.swift */; };
 		C88BB8C71B07E6C90064D411 /* Dependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E3C2321B03605B0010338D /* Dependencies.swift */; };
-		C88BB8C81B07E6C90064D411 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8813DA91AD2EBF30072A050 /* RootViewController.swift */; };
-		C88BB8C91B07E6C90064D411 /* WikipediaSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86E2F391AE5A0CA00C31024 /* WikipediaSearchViewController.swift */; };
 		C88BB8CA1B07E6C90064D411 /* WikipediaAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86E2F3B1AE5A0CA00C31024 /* WikipediaAPI.swift */; };
-		C88BB8CB1B07E6C90064D411 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C833670E1AD029AE00C668A7 /* AppDelegate.swift */; };
 		C88BB8CC1B07E6C90064D411 /* WikipediaPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86E2F3C1AE5A0CA00C31024 /* WikipediaPage.swift */; };
 		C88BB8CE1B07E6C90064D411 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8A56BCA1AD744E600B4673B /* RxSwift.framework */; };
 		C88BB8CF1B07E6C90064D411 /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8F57F431AD02DBE006B8702 /* RxCocoa.framework */; };
-		C88BB8D11B07E6C90064D411 /* WikipediaSearchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C86E2F381AE5A0CA00C31024 /* WikipediaSearchCell.xib */; };
-		C88BB8D21B07E6C90064D411 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C833671E1AD029AE00C668A7 /* Main.storyboard */; };
-		C88BB8D31B07E6C90064D411 /* WikipediaImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C86E2F361AE5A0CA00C31024 /* WikipediaImageCell.xib */; };
-		C88BB8D41B07E6C90064D411 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = C833671D1AD029AE00C668A7 /* LaunchScreen.xib */; };
-		C88BB8D51B07E6C90064D411 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C83366EC1AD0293800C668A7 /* Images.xcassets */; };
 		C88BB8D71B07E6C90064D411 /* RxSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C8A56BCA1AD744E600B4673B /* RxSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C88BB8D81B07E6C90064D411 /* RxCocoa.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C8F57F431AD02DBE006B8702 /* RxCocoa.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C890A6581AEBD26B00AFF7E6 /* GitHubSignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C890A6571AEBD26B00AFF7E6 /* GitHubSignupViewController.swift */; };
@@ -59,6 +37,20 @@
 		C890A65D1AEC084100AFF7E6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C890A65C1AEC084100AFF7E6 /* ViewController.swift */; };
 		C8A56BCB1AD744E600B4673B /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8A56BCA1AD744E600B4673B /* RxSwift.framework */; };
 		C8A56BCC1AD744E600B4673B /* RxSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C8A56BCA1AD744E600B4673B /* RxSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		C8DF92CD1B0B2F84009BCF9A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8DF92C81B0B2F84009BCF9A /* AppDelegate.swift */; };
+		C8DF92D81B0B3174009BCF9A /* CollectionViewImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8DF92D31B0B3174009BCF9A /* CollectionViewImageCell.swift */; };
+		C8DF92D91B0B3174009BCF9A /* WikipediaImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C8DF92D41B0B3174009BCF9A /* WikipediaImageCell.xib */; };
+		C8DF92DA1B0B3174009BCF9A /* WikipediaSearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8DF92D51B0B3174009BCF9A /* WikipediaSearchCell.swift */; };
+		C8DF92DB1B0B3174009BCF9A /* WikipediaSearchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C8DF92D61B0B3174009BCF9A /* WikipediaSearchCell.xib */; };
+		C8DF92DC1B0B3174009BCF9A /* WikipediaSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8DF92D71B0B3174009BCF9A /* WikipediaSearchViewController.swift */; };
+		C8DF92DF1B0B328B009BCF9A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8DF92DE1B0B328B009BCF9A /* AppDelegate.swift */; };
+		C8DF92E31B0B32DA009BCF9A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = C8DF92E01B0B32DA009BCF9A /* LaunchScreen.xib */; };
+		C8DF92E41B0B32DA009BCF9A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C8DF92E11B0B32DA009BCF9A /* Main.storyboard */; };
+		C8DF92E51B0B32DA009BCF9A /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8DF92E21B0B32DA009BCF9A /* RootViewController.swift */; };
+		C8DF92E71B0B32F2009BCF9A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C8DF92E61B0B32F2009BCF9A /* Main.storyboard */; };
+		C8DF92EA1B0B38C0009BCF9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C8DF92E91B0B38C0009BCF9A /* Images.xcassets */; };
+		C8DF92EB1B0B38C0009BCF9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C8DF92E91B0B38C0009BCF9A /* Images.xcassets */; };
+		C8DF92F61B0B43A4009BCF9A /* IntroductionExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8DF92F51B0B43A4009BCF9A /* IntroductionExampleViewController.swift */; };
 		C8F57F441AD02DBE006B8702 /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8F57F431AD02DBE006B8702 /* RxCocoa.framework */; };
 		C8F57F451AD02DBE006B8702 /* RxCocoa.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C8F57F431AD02DBE006B8702 /* RxCocoa.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
@@ -93,31 +85,35 @@
 /* Begin PBXFileReference section */
 		07E3C2321B03605B0010338D /* Dependencies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Dependencies.swift; path = Examples/Dependencies.swift; sourceTree = "<group>"; };
 		C83366DD1AD0293800C668A7 /* RxExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RxExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		C83366E11AD0293800C668A7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C83366EC1AD0293800C668A7 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		C833670E1AD029AE00C668A7 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C833670F1AD029AE00C668A7 /* Example.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Example.swift; sourceTree = "<group>"; };
 		C83367111AD029AE00C668A7 /* HtmlParsing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HtmlParsing.swift; sourceTree = "<group>"; };
 		C83367121AD029AE00C668A7 /* ImageService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageService.swift; sourceTree = "<group>"; };
-		C833671D1AD029AE00C668A7 /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
-		C833671E1AD029AE00C668A7 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		C83367211AD029AE00C668A7 /* Wireframe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Wireframe.swift; sourceTree = "<group>"; };
 		C86E2F321AE5A0CA00C31024 /* SearchResultViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = SearchResultViewModel.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		C86E2F331AE5A0CA00C31024 /* SearchViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = SearchViewModel.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		C86E2F351AE5A0CA00C31024 /* CollectionViewImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewImageCell.swift; sourceTree = "<group>"; };
-		C86E2F361AE5A0CA00C31024 /* WikipediaImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WikipediaImageCell.xib; sourceTree = "<group>"; };
-		C86E2F371AE5A0CA00C31024 /* WikipediaSearchCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = WikipediaSearchCell.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		C86E2F381AE5A0CA00C31024 /* WikipediaSearchCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WikipediaSearchCell.xib; sourceTree = "<group>"; };
-		C86E2F391AE5A0CA00C31024 /* WikipediaSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WikipediaSearchViewController.swift; sourceTree = "<group>"; };
 		C86E2F3B1AE5A0CA00C31024 /* WikipediaAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WikipediaAPI.swift; sourceTree = "<group>"; };
 		C86E2F3C1AE5A0CA00C31024 /* WikipediaPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WikipediaPage.swift; sourceTree = "<group>"; };
 		C86E2F3D1AE5A0CA00C31024 /* WikipediaSearchResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WikipediaSearchResult.swift; sourceTree = "<group>"; };
-		C8813DA91AD2EBF30072A050 /* RootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
 		C88BB8DC1B07E6C90064D411 /* RxExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RxExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C890A6571AEBD26B00AFF7E6 /* GitHubSignupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = GitHubSignupViewController.swift; path = Views/GitHubSignupViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		C890A6591AEBD28A00AFF7E6 /* GitHubAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = GitHubAPI.swift; path = GitHubAPI/GitHubAPI.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		C890A65C1AEC084100AFF7E6 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		C8A56BCA1AD744E600B4673B /* RxSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RxSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C8DF92C81B0B2F84009BCF9A /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		C8DF92D31B0B3174009BCF9A /* CollectionViewImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewImageCell.swift; sourceTree = "<group>"; };
+		C8DF92D41B0B3174009BCF9A /* WikipediaImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WikipediaImageCell.xib; sourceTree = "<group>"; };
+		C8DF92D51B0B3174009BCF9A /* WikipediaSearchCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WikipediaSearchCell.swift; sourceTree = "<group>"; };
+		C8DF92D61B0B3174009BCF9A /* WikipediaSearchCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WikipediaSearchCell.xib; sourceTree = "<group>"; };
+		C8DF92D71B0B3174009BCF9A /* WikipediaSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WikipediaSearchViewController.swift; sourceTree = "<group>"; };
+		C8DF92DE1B0B328B009BCF9A /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		C8DF92E01B0B32DA009BCF9A /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
+		C8DF92E11B0B32DA009BCF9A /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		C8DF92E21B0B32DA009BCF9A /* RootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
+		C8DF92E61B0B32F2009BCF9A /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		C8DF92E91B0B38C0009BCF9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		C8DF92F01B0B3E67009BCF9A /* Info-OSX.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Info-OSX.plist"; sourceTree = "<group>"; };
+		C8DF92F21B0B3E71009BCF9A /* Info-iOS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Info-iOS.plist"; sourceTree = "<group>"; };
+		C8DF92F51B0B43A4009BCF9A /* IntroductionExampleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntroductionExampleViewController.swift; sourceTree = "<group>"; };
 		C8F57F431AD02DBE006B8702 /* RxCocoa.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RxCocoa.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -165,15 +161,15 @@
 		C83366DF1AD0293800C668A7 /* RxExample */ = {
 			isa = PBXGroup;
 			children = (
-				07E3C2321B03605B0010338D /* Dependencies.swift */,
+				C8DF92E91B0B38C0009BCF9A /* Images.xcassets */,
 				C86E2F2E1AE5A0CA00C31024 /* Examples */,
-				C890A65C1AEC084100AFF7E6 /* ViewController.swift */,
-				C833670E1AD029AE00C668A7 /* AppDelegate.swift */,
-				C833670F1AD029AE00C668A7 /* Example.swift */,
 				C83367101AD029AE00C668A7 /* Services */,
-				C833671B1AD029AE00C668A7 /* Views */,
+				07E3C2321B03605B0010338D /* Dependencies.swift */,
+				C890A65C1AEC084100AFF7E6 /* ViewController.swift */,
+				C833670F1AD029AE00C668A7 /* Example.swift */,
 				C83367211AD029AE00C668A7 /* Wireframe.swift */,
-				C83366EC1AD0293800C668A7 /* Images.xcassets */,
+				C8DF92D11B0B2F8C009BCF9A /* OSX */,
+				C8DF92C71B0B2F84009BCF9A /* iOS */,
 				C83366E01AD0293800C668A7 /* Supporting Files */,
 			);
 			path = RxExample;
@@ -182,7 +178,8 @@
 		C83366E01AD0293800C668A7 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				C83366E11AD0293800C668A7 /* Info.plist */,
+				C8DF92F21B0B3E71009BCF9A /* Info-iOS.plist */,
+				C8DF92F01B0B3E67009BCF9A /* Info-OSX.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -196,19 +193,10 @@
 			path = Services;
 			sourceTree = "<group>";
 		};
-		C833671B1AD029AE00C668A7 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				C833671D1AD029AE00C668A7 /* LaunchScreen.xib */,
-				C833671E1AD029AE00C668A7 /* Main.storyboard */,
-				C8813DA91AD2EBF30072A050 /* RootViewController.swift */,
-			);
-			path = Views;
-			sourceTree = "<group>";
-		};
 		C86E2F2E1AE5A0CA00C31024 /* Examples */ = {
 			isa = PBXGroup;
 			children = (
+				C8DF92F41B0B4392009BCF9A /* Introduction */,
 				C86E2F4C1AE5A10900C31024 /* GitHubSignup */,
 				C86E2F301AE5A0CA00C31024 /* WikipediaImageSearch */,
 			);
@@ -237,11 +225,8 @@
 		C86E2F341AE5A0CA00C31024 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				C86E2F351AE5A0CA00C31024 /* CollectionViewImageCell.swift */,
-				C86E2F361AE5A0CA00C31024 /* WikipediaImageCell.xib */,
-				C86E2F371AE5A0CA00C31024 /* WikipediaSearchCell.swift */,
-				C86E2F381AE5A0CA00C31024 /* WikipediaSearchCell.xib */,
-				C86E2F391AE5A0CA00C31024 /* WikipediaSearchViewController.swift */,
+				C8DF92DD1B0B317C009BCF9A /* OSX */,
+				C8DF92D21B0B3174009BCF9A /* iOS */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -263,6 +248,53 @@
 				C890A6591AEBD28A00AFF7E6 /* GitHubAPI.swift */,
 			);
 			path = GitHubSignup;
+			sourceTree = "<group>";
+		};
+		C8DF92C71B0B2F84009BCF9A /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				C8DF92E01B0B32DA009BCF9A /* LaunchScreen.xib */,
+				C8DF92E11B0B32DA009BCF9A /* Main.storyboard */,
+				C8DF92E21B0B32DA009BCF9A /* RootViewController.swift */,
+				C8DF92C81B0B2F84009BCF9A /* AppDelegate.swift */,
+			);
+			path = iOS;
+			sourceTree = "<group>";
+		};
+		C8DF92D11B0B2F8C009BCF9A /* OSX */ = {
+			isa = PBXGroup;
+			children = (
+				C8DF92DE1B0B328B009BCF9A /* AppDelegate.swift */,
+				C8DF92E61B0B32F2009BCF9A /* Main.storyboard */,
+			);
+			path = OSX;
+			sourceTree = "<group>";
+		};
+		C8DF92D21B0B3174009BCF9A /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				C8DF92D31B0B3174009BCF9A /* CollectionViewImageCell.swift */,
+				C8DF92D41B0B3174009BCF9A /* WikipediaImageCell.xib */,
+				C8DF92D51B0B3174009BCF9A /* WikipediaSearchCell.swift */,
+				C8DF92D61B0B3174009BCF9A /* WikipediaSearchCell.xib */,
+				C8DF92D71B0B3174009BCF9A /* WikipediaSearchViewController.swift */,
+			);
+			path = iOS;
+			sourceTree = "<group>";
+		};
+		C8DF92DD1B0B317C009BCF9A /* OSX */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = OSX;
+			sourceTree = "<group>";
+		};
+		C8DF92F41B0B4392009BCF9A /* Introduction */ = {
+			isa = PBXGroup;
+			children = (
+				C8DF92F51B0B43A4009BCF9A /* IntroductionExampleViewController.swift */,
+			);
+			path = Introduction;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -342,11 +374,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C86E2F431AE5A0CA00C31024 /* WikipediaSearchCell.xib in Resources */,
-				C833672E1AD029AE00C668A7 /* Main.storyboard in Resources */,
-				C86E2F411AE5A0CA00C31024 /* WikipediaImageCell.xib in Resources */,
-				C833672D1AD029AE00C668A7 /* LaunchScreen.xib in Resources */,
-				C83366ED1AD0293800C668A7 /* Images.xcassets in Resources */,
+				C8DF92E31B0B32DA009BCF9A /* LaunchScreen.xib in Resources */,
+				C8DF92EA1B0B38C0009BCF9A /* Images.xcassets in Resources */,
+				C8DF92E41B0B32DA009BCF9A /* Main.storyboard in Resources */,
+				C8DF92DB1B0B3174009BCF9A /* WikipediaSearchCell.xib in Resources */,
+				C8DF92D91B0B3174009BCF9A /* WikipediaImageCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -354,11 +386,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C88BB8D11B07E6C90064D411 /* WikipediaSearchCell.xib in Resources */,
-				C88BB8D21B07E6C90064D411 /* Main.storyboard in Resources */,
-				C88BB8D31B07E6C90064D411 /* WikipediaImageCell.xib in Resources */,
-				C88BB8D41B07E6C90064D411 /* LaunchScreen.xib in Resources */,
-				C88BB8D51B07E6C90064D411 /* Images.xcassets in Resources */,
+				C8DF92E71B0B32F2009BCF9A /* Main.storyboard in Resources */,
+				C8DF92EB1B0B38C0009BCF9A /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -371,21 +400,21 @@
 			files = (
 				C86E2F3E1AE5A0CA00C31024 /* SearchResultViewModel.swift in Sources */,
 				C83367241AD029AE00C668A7 /* HtmlParsing.swift in Sources */,
+				C8DF92E51B0B32DA009BCF9A /* RootViewController.swift in Sources */,
+				C8DF92DC1B0B3174009BCF9A /* WikipediaSearchViewController.swift in Sources */,
+				C8DF92D81B0B3174009BCF9A /* CollectionViewImageCell.swift in Sources */,
 				C86E2F3F1AE5A0CA00C31024 /* SearchViewModel.swift in Sources */,
 				C83367251AD029AE00C668A7 /* ImageService.swift in Sources */,
 				C86E2F471AE5A0CA00C31024 /* WikipediaSearchResult.swift in Sources */,
-				C86E2F401AE5A0CA00C31024 /* CollectionViewImageCell.swift in Sources */,
-				C86E2F421AE5A0CA00C31024 /* WikipediaSearchCell.swift in Sources */,
 				C890A65A1AEBD28A00AFF7E6 /* GitHubAPI.swift in Sources */,
 				C83367231AD029AE00C668A7 /* Example.swift in Sources */,
 				C890A65D1AEC084100AFF7E6 /* ViewController.swift in Sources */,
 				C890A6581AEBD26B00AFF7E6 /* GitHubSignupViewController.swift in Sources */,
 				C83367311AD029AE00C668A7 /* Wireframe.swift in Sources */,
 				07E3C2331B03605B0010338D /* Dependencies.swift in Sources */,
-				C8813DAA1AD2EBF30072A050 /* RootViewController.swift in Sources */,
-				C86E2F441AE5A0CA00C31024 /* WikipediaSearchViewController.swift in Sources */,
+				C8DF92DA1B0B3174009BCF9A /* WikipediaSearchCell.swift in Sources */,
 				C86E2F451AE5A0CA00C31024 /* WikipediaAPI.swift in Sources */,
-				C83367221AD029AE00C668A7 /* AppDelegate.swift in Sources */,
+				C8DF92CD1B0B2F84009BCF9A /* AppDelegate.swift in Sources */,
 				C86E2F461AE5A0CA00C31024 /* WikipediaPage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -394,23 +423,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C8DF92DF1B0B328B009BCF9A /* AppDelegate.swift in Sources */,
 				C88BB8BB1B07E6C90064D411 /* SearchResultViewModel.swift in Sources */,
 				C88BB8BC1B07E6C90064D411 /* HtmlParsing.swift in Sources */,
 				C88BB8BD1B07E6C90064D411 /* SearchViewModel.swift in Sources */,
 				C88BB8BE1B07E6C90064D411 /* ImageService.swift in Sources */,
 				C88BB8BF1B07E6C90064D411 /* WikipediaSearchResult.swift in Sources */,
-				C88BB8C01B07E6C90064D411 /* CollectionViewImageCell.swift in Sources */,
-				C88BB8C11B07E6C90064D411 /* WikipediaSearchCell.swift in Sources */,
-				C88BB8C21B07E6C90064D411 /* GitHubAPI.swift in Sources */,
+				C8DF92F61B0B43A4009BCF9A /* IntroductionExampleViewController.swift in Sources */,
 				C88BB8C31B07E6C90064D411 /* Example.swift in Sources */,
 				C88BB8C41B07E6C90064D411 /* ViewController.swift in Sources */,
-				C88BB8C51B07E6C90064D411 /* GitHubSignupViewController.swift in Sources */,
 				C88BB8C61B07E6C90064D411 /* Wireframe.swift in Sources */,
 				C88BB8C71B07E6C90064D411 /* Dependencies.swift in Sources */,
-				C88BB8C81B07E6C90064D411 /* RootViewController.swift in Sources */,
-				C88BB8C91B07E6C90064D411 /* WikipediaSearchViewController.swift in Sources */,
 				C88BB8CA1B07E6C90064D411 /* WikipediaAPI.swift in Sources */,
-				C88BB8CB1B07E6C90064D411 /* AppDelegate.swift in Sources */,
 				C88BB8CC1B07E6C90064D411 /* WikipediaPage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -422,6 +446,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -437,6 +462,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -467,6 +493,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -482,6 +509,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -504,13 +532,13 @@
 		C83367001AD0293900C668A7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Rx-cfkyozdvlaegqibzixjokeysigeo/Build/Products/Release-iphoneos",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Rx-cfkyozdvlaegqibzixjokeysigeo/Build/Products/Debug-iphoneos",
 					"/Users/kzaher/Projects/Rx/RxSwift/build/Debug-iphoneos",
 				);
+				INFOPLIST_FILE = "RxExample/Info-iOS.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-objc_loadall";
@@ -522,13 +550,13 @@
 		C83367011AD0293900C668A7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Rx-cfkyozdvlaegqibzixjokeysigeo/Build/Products/Release-iphoneos",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Rx-cfkyozdvlaegqibzixjokeysigeo/Build/Products/Debug-iphoneos",
 					"/Users/kzaher/Projects/Rx/RxSwift/build/Debug-iphoneos",
 				);
+				INFOPLIST_FILE = "RxExample/Info-iOS.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-objc_loadall";
@@ -539,15 +567,9 @@
 		C88BB8DA1B07E6C90064D411 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Rx-cfkyozdvlaegqibzixjokeysigeo/Build/Products/Release-iphoneos",
-					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Rx-cfkyozdvlaegqibzixjokeysigeo/Build/Products/Debug-iphoneos",
-					"/Users/kzaher/Projects/Rx/RxSwift/build/Debug-iphoneos",
-				);
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_FRAMEWORKS_DIR)";
+				INFOPLIST_FILE = "RxExample/Info-OSX.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/../Frameworks @executable_path/../Frameworks";
 				OTHER_LDFLAGS = "-objc_loadall";
 				OTHER_SWIFT_FLAGS = "-D DEBUG";
 				SDKROOT = macosx;
@@ -557,19 +579,81 @@
 		C88BB8DB1B07E6C90064D411 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_FRAMEWORKS_DIR)";
+				INFOPLIST_FILE = "RxExample/Info-OSX.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/../Frameworks @executable_path/../Frameworks";
+				OTHER_LDFLAGS = "-objc_loadall";
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		C8DF92ED1B0B3DFA009BCF9A /* Release-Tests */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = RxExample/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = RxExample;
+				SDKROOT = "";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = "Release-Tests";
+		};
+		C8DF92EE1B0B3DFA009BCF9A /* Release-Tests */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Rx-cfkyozdvlaegqibzixjokeysigeo/Build/Products/Release-iphoneos",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Rx-cfkyozdvlaegqibzixjokeysigeo/Build/Products/Debug-iphoneos",
 					"/Users/kzaher/Projects/Rx/RxSwift/build/Debug-iphoneos",
 				);
+				INFOPLIST_FILE = "RxExample/Info-iOS.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-objc_loadall";
+				SDKROOT = iphoneos;
+			};
+			name = "Release-Tests";
+		};
+		C8DF92EF1B0B3DFA009BCF9A /* Release-Tests */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_FRAMEWORKS_DIR)";
+				INFOPLIST_FILE = "RxExample/Info-OSX.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/../Frameworks @executable_path/../Frameworks";
+				OTHER_LDFLAGS = "-objc_loadall";
 				SDKROOT = macosx;
 			};
-			name = Release;
+			name = "Release-Tests";
 		};
 /* End XCBuildConfiguration section */
 
@@ -579,6 +663,7 @@
 			buildConfigurations = (
 				C83366FD1AD0293900C668A7 /* Debug */,
 				C83366FE1AD0293900C668A7 /* Release */,
+				C8DF92ED1B0B3DFA009BCF9A /* Release-Tests */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -588,6 +673,7 @@
 			buildConfigurations = (
 				C83367001AD0293900C668A7 /* Debug */,
 				C83367011AD0293900C668A7 /* Release */,
+				C8DF92EE1B0B3DFA009BCF9A /* Release-Tests */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -597,6 +683,7 @@
 			buildConfigurations = (
 				C88BB8DA1B07E6C90064D411 /* Debug */,
 				C88BB8DB1B07E6C90064D411 /* Release */,
+				C8DF92EF1B0B3DFA009BCF9A /* Release-Tests */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

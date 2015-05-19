@@ -9,59 +9,90 @@
 import Foundation
 import RxSwift
 
-class KVOObserver<Element> : NSObject, Disposable {
-    typealias Callback = (Element) -> Void
+protocol KVOObservableProtocol {
+    var object: NSObject { get }
+    var path: String { get }
+    var options: NSKeyValueObservingOptions { get }
+}
+
+class KVOObserver : NSObject, Disposable {
+    typealias Callback = (AnyObject?) -> Void
     
-    let object: NSObject
-    let callback: Callback!
-    let path: String
+    let parent: KVOObservableProtocol
+    let callback: Callback
     
-    var retainSelf: KVOObserver<Element>? = nil
+    var retainSelf: KVOObserver? = nil
     
-    init(object: NSObject, path: String, callback: Callback) {
-        self.object = object
-        self.path = path
-        self.callback = nil
+    var context: UInt8 = 0
+    
+    init(parent: KVOObservableProtocol, callback: Callback) {
+        self.parent = parent
+        self.callback = callback
         
         super.init()
         
         self.retainSelf = self
         
-        self.object.addObserver(self, forKeyPath: self.path, options: NSKeyValueObservingOptions.New, context: nil)
+        self.parent.object.addObserver(self, forKeyPath: self.parent.path, options: self.parent.options, context: &context)
+#if TRACE_RESOURCES
+        OSAtomicIncrement32(&resourceCount)
+#endif
     }
     
+    
     override func observeValueForKeyPath(keyPath: String, ofObject object: AnyObject, change: [NSObject : AnyObject], context: UnsafeMutablePointer<Void>) {
-        let newValue = change[NSKeyValueChangeNewKey] as! Element
+        let newValue: AnyObject? = change[NSKeyValueChangeNewKey]
         
-        self.callback(newValue)
+        if let newValue: AnyObject = newValue {
+            self.callback(newValue)
+        }
     }
     
     func dispose() {
-        self.object.removeObserver(self, forKeyPath: self.path)
+        self.parent.object.removeObserver(self, forKeyPath: self.parent.path)
         
         self.retainSelf = nil
     }
     
     deinit {
+#if TRACE_RESOURCES
+        OSAtomicDecrement32(&resourceCount)
+#endif
     }
 }
 
-public class KVOObservable<Element> : Observable<Element> {
-    let object: NSObject
-    let path: String
+class KVOObservable<Element> : Observable<Element?>, KVOObservableProtocol {
+    var object: NSObject
+    var path: String
+    var options: NSKeyValueObservingOptions
     
-    public init(object: NSObject, path: String) {
-        self.object = object
-        self.path = path
+    convenience init(object: NSObject, path: String) {
+        self.init(object: object, path: path, options: .Initial | .New)
     }
     
-    public override func subscribe<O : ObserverType where O.Element == Element>(observer: O) -> Disposable {
-        let observer = KVOObserver(object: object, path: path) { [unowned self] value in
-            observer.on(.Next(Box(value)))
+    init(object: NSObject, path: String, options: NSKeyValueObservingOptions) {
+        self.object = object
+        self.path = path
+        self.options = options
+    }
+    
+    override func subscribe<O : ObserverType where O.Element == Element?>(observer: O) -> Disposable {
+        let observer = KVOObserver(parent: self) { (value) in
+            observer.on(.Next(Box(value as? Element)))
         }
         
         return AnonymousDisposable { () in
             observer.dispose()
         }
+    }
+}
+
+extension NSObject {
+    public func rx_observe<Element>(path: String) -> Observable<Element?> {
+        return KVOObservable(object: self, path: path)
+    }
+
+    public func rx_observe<Element>(path: String, options: NSKeyValueObservingOptions) -> Observable<Element?> {
+        return KVOObservable(object: self, path: path, options: options)
     }
 }

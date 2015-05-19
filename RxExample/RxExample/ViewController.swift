@@ -7,10 +7,17 @@
 //
 
 import Foundation
-import UIKit
 import RxSwift
 
-class ViewController: UIViewController {
+#if os(iOS)
+    import UIKit
+    typealias OSViewController = UIViewController
+#elseif os(OSX)
+    import Cocoa
+    typealias OSViewController = NSViewController
+#endif
+
+class ViewController: OSViewController {
 #if TRACE_RESOURCES
     private let startResourceCount = RxSwift.resourceCount
 #endif

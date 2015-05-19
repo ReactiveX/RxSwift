@@ -9,10 +9,15 @@
 import Foundation
 import RxSwift
 import RxCocoa
-import UIKit
+
+#if os(iOS)
+    import UIKit
+#elseif os(OSX)
+    import Cocoa
+#endif 
 
 protocol ImageService {
-    func imageFromURL(URL: NSURL) -> Observable<UIImage>
+    func imageFromURL(URL: NSURL) -> Observable<Image>
 }
 
 class DefaultImageService: ImageService {
@@ -34,9 +39,9 @@ class DefaultImageService: ImageService {
         self.imageCache.countLimit = 20
     }
     
-    func decodeImage(imageData: Observable<NSData>) -> Observable<UIImage> {
+    func decodeImage(imageData: Observable<NSData>) -> Observable<Image> {
         return imageData >- observeSingleOn($.backgroundWorkScheduler) >- mapOrDie { data in
-            let maybeImage = UIImage(data: data)
+            let maybeImage = Image(data: data)
             
             if maybeImage == nil {
                 // some error
@@ -49,10 +54,10 @@ class DefaultImageService: ImageService {
         } >- observeSingleOn($.mainScheduler)
     }
     
-    func imageFromURL(URL: NSURL) -> Observable<UIImage> {
-        let maybeImage = self.imageDataCache.objectForKey(URL) as? UIImage
+    func imageFromURL(URL: NSURL) -> Observable<Image> {
+        let maybeImage = self.imageDataCache.objectForKey(URL) as? Image
         
-        let decodedImage: Observable<UIImage>
+        let decodedImage: Observable<Image>
         
         // best case scenario, it's already decoded an in memory
         if let image = maybeImage {

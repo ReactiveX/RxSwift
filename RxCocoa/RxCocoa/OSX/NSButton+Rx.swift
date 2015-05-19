@@ -13,6 +13,8 @@ import Cocoa
 extension NSButton {
     public func rx_tap() -> Observable<Void> {
         return AnonymousObservable { subscriber in
+            MainScheduler.ensureExecutingOnScheduler()
+            
             let observer = ControlTarget(control: self) { control in
                 subscriber.on(.Next(Box(())))
             }

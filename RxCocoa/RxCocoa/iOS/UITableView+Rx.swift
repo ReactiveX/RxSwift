@@ -12,7 +12,7 @@ import UIKit
 
 // This cannot be a generic class because of table view objc runtime that checks for 
 // implemented selectors in data source
-public class TableViewDataSource :  NSObject, UITableViewDataSource {
+public class RxTableViewDataSource :  NSObject, UITableViewDataSource {
     public typealias CellFactory = (UITableView, NSIndexPath, AnyObject) -> UITableViewCell
     
     public var rows: [AnyObject] {
@@ -51,7 +51,7 @@ public class TableViewDataSource :  NSObject, UITableViewDataSource {
     }
 }
 
-public class TableViewDelegate: ScrollViewDelegate, UITableViewDelegate {
+public class RxTableViewDelegate: RxScrollViewDelegate, UITableViewDelegate {
     public typealias Observer = ObserverOf<(UITableView, Int)>
     public typealias DisposeKey = Bag<Observer>.KeyType
     
@@ -93,15 +93,14 @@ public class TableViewDelegate: ScrollViewDelegate, UITableViewDelegate {
 
 // This is the most simple (but probably most common) way of using rx with UITableView.
 extension UITableView {
-    override func rx_createDelegate() -> ScrollViewDelegate {
-        return TableViewDelegate()
+    override func rx_createDelegate() -> RxScrollViewDelegate {
+        return RxTableViewDelegate()
     }
     
     public func rx_subscribeRowsTo<E where E: AnyObject>
-        (dataSource: TableViewDataSource)
+        (dataSource: RxTableViewDataSource)
         (source: Observable<[E]>)
         -> Disposable {
-            
         MainScheduler.ensureExecutingOnScheduler()
         
         if self.dataSource != nil && self.dataSource !== dataSource {
@@ -119,6 +118,8 @@ extension UITableView {
         }
             
         let disposable = source.subscribe(AnonymousObserver { event in
+            MainScheduler.ensureExecutingOnScheduler()
+            
             switch event {
             case .Next(let boxedValue):
                 let value = boxedValue.value
@@ -141,7 +142,7 @@ extension UITableView {
         (source: Observable<[E]>)
         -> Disposable {
             
-        let dataSource = TableViewDataSource {
+        let dataSource = RxTableViewDataSource {
             cellFactory($0, $1, $2 as! E)
         }
             
@@ -153,23 +154,25 @@ extension UITableView {
         (source: Observable<[E]>)
         -> Disposable {
             
-            let dataSource = TableViewDataSource {
-                let cell = $0.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: $1) as! Cell
-                configureCell($0, $1, $2 as! E, cell)
-                return cell
-            }
-            
-            return self.rx_subscribeRowsTo(dataSource)(source: source)
+        let dataSource = RxTableViewDataSource {
+            let cell = $0.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: $1) as! Cell
+            configureCell($0, $1, $2 as! E, cell)
+            return cell
+        }
+        
+        return self.rx_subscribeRowsTo(dataSource)(source: source)
     }
     
     public func rx_rowTap() -> Observable<(UITableView, Int)> {
         _ = rx_checkTableViewDelegate()
         
         return AnonymousObservable { observer in
+            MainScheduler.ensureExecutingOnScheduler()
+            
             var maybeDelegate = self.rx_checkTableViewDelegate()
             
             if maybeDelegate == nil {
-                let delegate = self.rx_createDelegate() as! TableViewDelegate
+                let delegate = self.rx_createDelegate() as! RxTableViewDelegate
                 maybeDelegate = delegate
                 self.delegate = maybeDelegate
             }
@@ -179,6 +182,8 @@ extension UITableView {
             let key = delegate.addTableViewObserver(observer)
             
             return AnonymousDisposable {
+                MainScheduler.ensureExecutingOnScheduler()
+                
                 _ = self.rx_checkTableViewDelegate()
                 
                 delegate.removeTableViewObserver(key)
@@ -193,7 +198,7 @@ extension UITableView {
     public func rx_elementTap<E>() -> Observable<E> {
         
         return rx_rowTap() >- map { (tableView, rowIndex) -> E in
-            let maybeDataSource: TableViewDataSource? = self.rx_getTableViewDataSource()
+            let maybeDataSource: RxTableViewDataSource? = self.rx_getTableViewDataSource()
             
             if maybeDataSource == nil {
                 rxFatalError("To use element tap table view needs to use table view data source. You can still use `rx_observableRowTap`.")
@@ -207,14 +212,14 @@ extension UITableView {
     
     // private methods
    
-    private func rx_getTableViewDataSource() -> TableViewDataSource? {
+    private func rx_getTableViewDataSource() -> RxTableViewDataSource? {
         MainScheduler.ensureExecutingOnScheduler()
         
         if self.dataSource == nil {
             return nil
         }
         
-        let maybeDataSource = self.dataSource as? TableViewDataSource
+        let maybeDataSource = self.dataSource as? RxTableViewDataSource
         
         if maybeDataSource == nil {
             rxFatalError("View already has incompatible data source set. Please remove earlier delegate registration.")
@@ -223,14 +228,14 @@ extension UITableView {
         return maybeDataSource!
     }
     
-    private func rx_checkTableViewDataSource<E>() -> TableViewDataSource? {
+    private func rx_checkTableViewDataSource<E>() -> RxTableViewDataSource? {
         MainScheduler.ensureExecutingOnScheduler()
         
         if self.dataSource == nil {
             return nil
         }
         
-        let maybeDataSource = self.dataSource as? TableViewDataSource
+        let maybeDataSource = self.dataSource as? RxTableViewDataSource
         
         if maybeDataSource == nil {
             rxFatalError("View already has incompatible data source set. Please remove earlier delegate registration.")
@@ -239,14 +244,14 @@ extension UITableView {
         return maybeDataSource!
     }
     
-    private func rx_checkTableViewDelegate() -> TableViewDelegate? {
+    private func rx_checkTableViewDelegate() -> RxTableViewDelegate? {
         MainScheduler.ensureExecutingOnScheduler()
         
         if self.delegate == nil {
             return nil
         }
         
-        let maybeDelegate = self.delegate as? TableViewDelegate
+        let maybeDelegate = self.delegate as? RxTableViewDelegate
         
         if maybeDelegate == nil {
             rxFatalError("View already has incompatible delegate set. To use rx observable (for now) please remove earlier delegate registration.")
