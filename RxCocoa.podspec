@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "RxCocoa"
-  s.version          = "1.3"
+  s.version          = "1.3.1"
   s.summary          = "RxSwift Cocoa extensions"
   s.description      = <<-DESC
 			* UI extensions
@@ -12,12 +12,14 @@ Pod::Spec.new do |s|
   s.author           = { "Krunoslav Zaher" => "krunoslav.zaher@gmail.com" }
   s.source           = { :git => "https://github.com/kzaher/RxSwift.git", :tag => s.version.to_s }
 
-  s.platform     = :ios, '8.0'
-  s.requires_arc = true
+  s.requires_arc          = true
 
-  s.source_files      = 'RxCocoa/RxCocoa/Common/**/*'
-  s.ios.source_files  = 'RxCocoa/RxCocoa/iOS/**/*'
-  s.osx.source_files  = 'RxCocoa/RxCocoa/OSX/**/*'
+  s.ios.deployment_target = '8.0'
+  s.osx.deployment_target = '10.9'
+
+  s.source_files          = 'RxCocoa/RxCocoa/Common/**/*.swift'
+  s.ios.source_files      = 'RxCocoa/RxCocoa/iOS/**/*.swift'
+  s.osx.source_files      = 'RxCocoa/RxCocoa/OSX/**/*.swift'
 
   s.dependency 'RxSwift'
 end
