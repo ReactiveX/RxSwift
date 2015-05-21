@@ -7,7 +7,7 @@ This is a Swift port of [Microsoft Reactive Extensions](https://github.com/React
 
 Like the original Rx, its intention is to enable easy composition of asynchronous operations and event/data streams.
 
-In the context of Rx, KVO observing, async operations and streams are all unified under [abstraction of sequence](#sequences-solve-everything). This is the reason why Rx is a simple, powerful and elegant.
+KVO observing, async operations and streams are all unified under [abstraction of sequence](#sequences-solve-everything). This is the reason why Rx is so simple, elegant and powerful.
 
 It tries to port as many concepts from the original Rx as possible, but some concepts were adapted for more pleasant and performant integration with iOS/OSX environment.
 
