@@ -24,8 +24,8 @@ class DistinctUntilChanged_<ElementType, Key>: Sink<ElementType>, ObserverType {
         
         switch event {
         case .Next(let value):
-            self.parent.selector(value.value) >== { key in
-                var areEqual: Result<Bool>
+            self.parent.selector(value.value).flatMap { key in
+                var areEqual: RxResult<Bool>
                 if let currentKey = self.currentKey {
                     areEqual = self.parent.comparer(currentKey, key)
                 }
@@ -33,7 +33,7 @@ class DistinctUntilChanged_<ElementType, Key>: Sink<ElementType>, ObserverType {
                     areEqual = success(false)
                 }
                 
-                return areEqual >== { areEqual in
+                return areEqual.flatMap { areEqual in
                     if areEqual {
                         return SuccessResult
                     }
@@ -43,8 +43,8 @@ class DistinctUntilChanged_<ElementType, Key>: Sink<ElementType>, ObserverType {
                     observer.on(event)
                     return SuccessResult
                 }
-            } >>! { error -> Result<Void> in
-                observer.on(.Error(error))
+            }.recoverWith { error -> RxResult<Void> in
+                sendError(observer, error)
                 self.dispose()
                 return SuccessResult
             }
@@ -57,8 +57,8 @@ class DistinctUntilChanged_<ElementType, Key>: Sink<ElementType>, ObserverType {
 }
 
 class DistinctUntilChanged<Element, Key>: Producer<Element> {
-    typealias KeySelector = (Element) -> Result<Key>
-    typealias EqualityComparer = (Key, Key) -> Result<Bool>
+    typealias KeySelector = (Element) -> RxResult<Key>
+    typealias EqualityComparer = (Key, Key) -> RxResult<Bool>
     
     let source: Observable<Element>
     let selector: KeySelector

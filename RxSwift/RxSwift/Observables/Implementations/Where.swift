@@ -23,11 +23,11 @@ class Where_<ElementType>: Sink<ElementType>, ObserverType {
         switch event {
             case .Next(let boxedValue):
                 let value = boxedValue.value
-                _ = self.parent.predicate(value) >>! { e in
-                    self.observer.on(.Error(e))
+                _ = self.parent.predicate(value).recoverWith { e in
+                    sendError(observer, e)
                     self.dispose()
-                    return .Error(e)
-                } >== { satisfies -> Result<Void> in
+                    return failure(e)
+                }.flatMap { satisfies -> RxResult<Void> in
                     if satisfies {
                         self.observer.on(event)
                     }
@@ -42,7 +42,7 @@ class Where_<ElementType>: Sink<ElementType>, ObserverType {
 }
 
 class Where<Element> : Producer<Element> {
-    typealias Predicate = (Element) -> Result<Bool>
+    typealias Predicate = (Element) -> RxResult<Bool>
     
     let source: Observable<Element>
     let predicate: Predicate

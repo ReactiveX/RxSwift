@@ -15,7 +15,7 @@ import Foundation
 // 2
 
 public func combineLatestOrDie<E1, E2, R>
-    (source1: Observable<E1>, source2: Observable<E2>, resultSelector: (E1, E2) -> Result<R>)
+    (source1: Observable<E1>, source2: Observable<E2>, resultSelector: (E1, E2) -> RxResult<R>)
         -> Observable<R> {
     return CombineLatest2(
         source1: source1, source2: source2,
@@ -61,13 +61,13 @@ class CombineLatestSink2_<E1, E2, R> : CombineLatestSink<R> {
         ])
     }
 
-    override func getResult() -> Result<R> {
+    override func getResult() -> RxResult<R> {
         return self.parent.resultSelector(observer1.value, observer2.value)
     }
 }
 
 class CombineLatest2<E1, E2, R> : Producer<R> {
-    typealias ResultSelector = (E1, E2) -> Result<R>
+    typealias ResultSelector = (E1, E2) -> RxResult<R>
 
     let source1: Observable<E1>
     let source2: Observable<E2>
@@ -93,7 +93,7 @@ class CombineLatest2<E1, E2, R> : Producer<R> {
 // 3
 
 public func combineLatestOrDie<E1, E2, E3, R>
-    (source1: Observable<E1>, source2: Observable<E2>, source3: Observable<E3>, resultSelector: (E1, E2, E3) -> Result<R>)
+    (source1: Observable<E1>, source2: Observable<E2>, source3: Observable<E3>, resultSelector: (E1, E2, E3) -> RxResult<R>)
         -> Observable<R> {
     return CombineLatest3(
         source1: source1, source2: source2, source3: source3,
@@ -144,13 +144,13 @@ class CombineLatestSink3_<E1, E2, E3, R> : CombineLatestSink<R> {
         ])
     }
 
-    override func getResult() -> Result<R> {
+    override func getResult() -> RxResult<R> {
         return self.parent.resultSelector(observer1.value, observer2.value, observer3.value)
     }
 }
 
 class CombineLatest3<E1, E2, E3, R> : Producer<R> {
-    typealias ResultSelector = (E1, E2, E3) -> Result<R>
+    typealias ResultSelector = (E1, E2, E3) -> RxResult<R>
 
     let source1: Observable<E1>
     let source2: Observable<E2>
@@ -178,7 +178,7 @@ class CombineLatest3<E1, E2, E3, R> : Producer<R> {
 // 4
 
 public func combineLatestOrDie<E1, E2, E3, E4, R>
-    (source1: Observable<E1>, source2: Observable<E2>, source3: Observable<E3>, source4: Observable<E4>, resultSelector: (E1, E2, E3, E4) -> Result<R>)
+    (source1: Observable<E1>, source2: Observable<E2>, source3: Observable<E3>, source4: Observable<E4>, resultSelector: (E1, E2, E3, E4) -> RxResult<R>)
         -> Observable<R> {
     return CombineLatest4(
         source1: source1, source2: source2, source3: source3, source4: source4,
@@ -234,13 +234,13 @@ class CombineLatestSink4_<E1, E2, E3, E4, R> : CombineLatestSink<R> {
         ])
     }
 
-    override func getResult() -> Result<R> {
+    override func getResult() -> RxResult<R> {
         return self.parent.resultSelector(observer1.value, observer2.value, observer3.value, observer4.value)
     }
 }
 
 class CombineLatest4<E1, E2, E3, E4, R> : Producer<R> {
-    typealias ResultSelector = (E1, E2, E3, E4) -> Result<R>
+    typealias ResultSelector = (E1, E2, E3, E4) -> RxResult<R>
 
     let source1: Observable<E1>
     let source2: Observable<E2>
@@ -270,7 +270,7 @@ class CombineLatest4<E1, E2, E3, E4, R> : Producer<R> {
 // 5
 
 public func combineLatestOrDie<E1, E2, E3, E4, E5, R>
-    (source1: Observable<E1>, source2: Observable<E2>, source3: Observable<E3>, source4: Observable<E4>, source5: Observable<E5>, resultSelector: (E1, E2, E3, E4, E5) -> Result<R>)
+    (source1: Observable<E1>, source2: Observable<E2>, source3: Observable<E3>, source4: Observable<E4>, source5: Observable<E5>, resultSelector: (E1, E2, E3, E4, E5) -> RxResult<R>)
         -> Observable<R> {
     return CombineLatest5(
         source1: source1, source2: source2, source3: source3, source4: source4, source5: source5,
@@ -331,13 +331,13 @@ class CombineLatestSink5_<E1, E2, E3, E4, E5, R> : CombineLatestSink<R> {
         ])
     }
 
-    override func getResult() -> Result<R> {
+    override func getResult() -> RxResult<R> {
         return self.parent.resultSelector(observer1.value, observer2.value, observer3.value, observer4.value, observer5.value)
     }
 }
 
 class CombineLatest5<E1, E2, E3, E4, E5, R> : Producer<R> {
-    typealias ResultSelector = (E1, E2, E3, E4, E5) -> Result<R>
+    typealias ResultSelector = (E1, E2, E3, E4, E5) -> RxResult<R>
 
     let source1: Observable<E1>
     let source2: Observable<E2>
@@ -369,7 +369,7 @@ class CombineLatest5<E1, E2, E3, E4, E5, R> : Producer<R> {
 // 6
 
 public func combineLatestOrDie<E1, E2, E3, E4, E5, E6, R>
-    (source1: Observable<E1>, source2: Observable<E2>, source3: Observable<E3>, source4: Observable<E4>, source5: Observable<E5>, source6: Observable<E6>, resultSelector: (E1, E2, E3, E4, E5, E6) -> Result<R>)
+    (source1: Observable<E1>, source2: Observable<E2>, source3: Observable<E3>, source4: Observable<E4>, source5: Observable<E5>, source6: Observable<E6>, resultSelector: (E1, E2, E3, E4, E5, E6) -> RxResult<R>)
         -> Observable<R> {
     return CombineLatest6(
         source1: source1, source2: source2, source3: source3, source4: source4, source5: source5, source6: source6,
@@ -435,13 +435,13 @@ class CombineLatestSink6_<E1, E2, E3, E4, E5, E6, R> : CombineLatestSink<R> {
         ])
     }
 
-    override func getResult() -> Result<R> {
+    override func getResult() -> RxResult<R> {
         return self.parent.resultSelector(observer1.value, observer2.value, observer3.value, observer4.value, observer5.value, observer6.value)
     }
 }
 
 class CombineLatest6<E1, E2, E3, E4, E5, E6, R> : Producer<R> {
-    typealias ResultSelector = (E1, E2, E3, E4, E5, E6) -> Result<R>
+    typealias ResultSelector = (E1, E2, E3, E4, E5, E6) -> RxResult<R>
 
     let source1: Observable<E1>
     let source2: Observable<E2>
@@ -475,7 +475,7 @@ class CombineLatest6<E1, E2, E3, E4, E5, E6, R> : Producer<R> {
 // 7
 
 public func combineLatestOrDie<E1, E2, E3, E4, E5, E6, E7, R>
-    (source1: Observable<E1>, source2: Observable<E2>, source3: Observable<E3>, source4: Observable<E4>, source5: Observable<E5>, source6: Observable<E6>, source7: Observable<E7>, resultSelector: (E1, E2, E3, E4, E5, E6, E7) -> Result<R>)
+    (source1: Observable<E1>, source2: Observable<E2>, source3: Observable<E3>, source4: Observable<E4>, source5: Observable<E5>, source6: Observable<E6>, source7: Observable<E7>, resultSelector: (E1, E2, E3, E4, E5, E6, E7) -> RxResult<R>)
         -> Observable<R> {
     return CombineLatest7(
         source1: source1, source2: source2, source3: source3, source4: source4, source5: source5, source6: source6, source7: source7,
@@ -546,13 +546,13 @@ class CombineLatestSink7_<E1, E2, E3, E4, E5, E6, E7, R> : CombineLatestSink<R> 
         ])
     }
 
-    override func getResult() -> Result<R> {
+    override func getResult() -> RxResult<R> {
         return self.parent.resultSelector(observer1.value, observer2.value, observer3.value, observer4.value, observer5.value, observer6.value, observer7.value)
     }
 }
 
 class CombineLatest7<E1, E2, E3, E4, E5, E6, E7, R> : Producer<R> {
-    typealias ResultSelector = (E1, E2, E3, E4, E5, E6, E7) -> Result<R>
+    typealias ResultSelector = (E1, E2, E3, E4, E5, E6, E7) -> RxResult<R>
 
     let source1: Observable<E1>
     let source2: Observable<E2>
@@ -588,7 +588,7 @@ class CombineLatest7<E1, E2, E3, E4, E5, E6, E7, R> : Producer<R> {
 // 8
 
 public func combineLatestOrDie<E1, E2, E3, E4, E5, E6, E7, E8, R>
-    (source1: Observable<E1>, source2: Observable<E2>, source3: Observable<E3>, source4: Observable<E4>, source5: Observable<E5>, source6: Observable<E6>, source7: Observable<E7>, source8: Observable<E8>, resultSelector: (E1, E2, E3, E4, E5, E6, E7, E8) -> Result<R>)
+    (source1: Observable<E1>, source2: Observable<E2>, source3: Observable<E3>, source4: Observable<E4>, source5: Observable<E5>, source6: Observable<E6>, source7: Observable<E7>, source8: Observable<E8>, resultSelector: (E1, E2, E3, E4, E5, E6, E7, E8) -> RxResult<R>)
         -> Observable<R> {
     return CombineLatest8(
         source1: source1, source2: source2, source3: source3, source4: source4, source5: source5, source6: source6, source7: source7, source8: source8,
@@ -664,13 +664,13 @@ class CombineLatestSink8_<E1, E2, E3, E4, E5, E6, E7, E8, R> : CombineLatestSink
         ])
     }
 
-    override func getResult() -> Result<R> {
+    override func getResult() -> RxResult<R> {
         return self.parent.resultSelector(observer1.value, observer2.value, observer3.value, observer4.value, observer5.value, observer6.value, observer7.value, observer8.value)
     }
 }
 
 class CombineLatest8<E1, E2, E3, E4, E5, E6, E7, E8, R> : Producer<R> {
-    typealias ResultSelector = (E1, E2, E3, E4, E5, E6, E7, E8) -> Result<R>
+    typealias ResultSelector = (E1, E2, E3, E4, E5, E6, E7, E8) -> RxResult<R>
 
     let source1: Observable<E1>
     let source2: Observable<E2>
@@ -708,7 +708,7 @@ class CombineLatest8<E1, E2, E3, E4, E5, E6, E7, E8, R> : Producer<R> {
 // 9
 
 public func combineLatestOrDie<E1, E2, E3, E4, E5, E6, E7, E8, E9, R>
-    (source1: Observable<E1>, source2: Observable<E2>, source3: Observable<E3>, source4: Observable<E4>, source5: Observable<E5>, source6: Observable<E6>, source7: Observable<E7>, source8: Observable<E8>, source9: Observable<E9>, resultSelector: (E1, E2, E3, E4, E5, E6, E7, E8, E9) -> Result<R>)
+    (source1: Observable<E1>, source2: Observable<E2>, source3: Observable<E3>, source4: Observable<E4>, source5: Observable<E5>, source6: Observable<E6>, source7: Observable<E7>, source8: Observable<E8>, source9: Observable<E9>, resultSelector: (E1, E2, E3, E4, E5, E6, E7, E8, E9) -> RxResult<R>)
         -> Observable<R> {
     return CombineLatest9(
         source1: source1, source2: source2, source3: source3, source4: source4, source5: source5, source6: source6, source7: source7, source8: source8, source9: source9,
@@ -789,13 +789,13 @@ class CombineLatestSink9_<E1, E2, E3, E4, E5, E6, E7, E8, E9, R> : CombineLatest
         ])
     }
 
-    override func getResult() -> Result<R> {
+    override func getResult() -> RxResult<R> {
         return self.parent.resultSelector(observer1.value, observer2.value, observer3.value, observer4.value, observer5.value, observer6.value, observer7.value, observer8.value, observer9.value)
     }
 }
 
 class CombineLatest9<E1, E2, E3, E4, E5, E6, E7, E8, E9, R> : Producer<R> {
-    typealias ResultSelector = (E1, E2, E3, E4, E5, E6, E7, E8, E9) -> Result<R>
+    typealias ResultSelector = (E1, E2, E3, E4, E5, E6, E7, E8, E9) -> RxResult<R>
 
     let source1: Observable<E1>
     let source2: Observable<E2>
@@ -835,7 +835,7 @@ class CombineLatest9<E1, E2, E3, E4, E5, E6, E7, E8, E9, R> : Producer<R> {
 // 10
 
 public func combineLatestOrDie<E1, E2, E3, E4, E5, E6, E7, E8, E9, E10, R>
-    (source1: Observable<E1>, source2: Observable<E2>, source3: Observable<E3>, source4: Observable<E4>, source5: Observable<E5>, source6: Observable<E6>, source7: Observable<E7>, source8: Observable<E8>, source9: Observable<E9>, source10: Observable<E10>, resultSelector: (E1, E2, E3, E4, E5, E6, E7, E8, E9, E10) -> Result<R>)
+    (source1: Observable<E1>, source2: Observable<E2>, source3: Observable<E3>, source4: Observable<E4>, source5: Observable<E5>, source6: Observable<E6>, source7: Observable<E7>, source8: Observable<E8>, source9: Observable<E9>, source10: Observable<E10>, resultSelector: (E1, E2, E3, E4, E5, E6, E7, E8, E9, E10) -> RxResult<R>)
         -> Observable<R> {
     return CombineLatest10(
         source1: source1, source2: source2, source3: source3, source4: source4, source5: source5, source6: source6, source7: source7, source8: source8, source9: source9, source10: source10,
@@ -921,13 +921,13 @@ class CombineLatestSink10_<E1, E2, E3, E4, E5, E6, E7, E8, E9, E10, R> : Combine
         ])
     }
 
-    override func getResult() -> Result<R> {
+    override func getResult() -> RxResult<R> {
         return self.parent.resultSelector(observer1.value, observer2.value, observer3.value, observer4.value, observer5.value, observer6.value, observer7.value, observer8.value, observer9.value, observer10.value)
     }
 }
 
 class CombineLatest10<E1, E2, E3, E4, E5, E6, E7, E8, E9, E10, R> : Producer<R> {
-    typealias ResultSelector = (E1, E2, E3, E4, E5, E6, E7, E8, E9, E10) -> Result<R>
+    typealias ResultSelector = (E1, E2, E3, E4, E5, E6, E7, E8, E9, E10) -> RxResult<R>
 
     let source1: Observable<E1>
     let source2: Observable<E2>

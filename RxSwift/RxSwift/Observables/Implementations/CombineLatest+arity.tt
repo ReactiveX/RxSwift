@@ -13,7 +13,7 @@ import Foundation
 // <%= i %>
 
 public func combineLatestOrDie<<%= ", ".join(map(1...i) { "E\($0)" }) %>, R>
-    (<%= ", ".join(map(1...i) { "source\($0): Observable<E\($0)>" }) %>, resultSelector: (<%= ", ".join(map(1...i) { "E\($0)" }) %>) -> Result<R>)
+    (<%= ", ".join(map(1...i) { "source\($0): Observable<E\($0)>" }) %>, resultSelector: (<%= ", ".join(map(1...i) { "E\($0)" }) %>) -> RxResult<R>)
         -> Observable<R> {
     return CombineLatest<%= i %>(
         <%= ", ".join(map(1...i) { "source\($0): source\($0)" }) %>,
@@ -54,13 +54,13 @@ class CombineLatestSink<%= i %>_<<%= ", ".join(map(1...i) { "E\($0)" }) %>, R> :
         ])
     }
 
-    override func getResult() -> Result<R> {
+    override func getResult() -> RxResult<R> {
         return self.parent.resultSelector(<%= ", ".join(map(1...i) { "observer\($0).value" }) %>)
     }
 }
 
 class CombineLatest<%= i %><<%= ", ".join(map(1...i) { "E\($0)" }) %>, R> : Producer<R> {
-    typealias ResultSelector = (<%= ", ".join(map(1...i) { "E\($0)" }) %>) -> Result<R>
+    typealias ResultSelector = (<%= ", ".join(map(1...i) { "E\($0)" }) %>) -> RxResult<R>
 
 <%= "\n".join(map(1...i) { "    let source\($0): Observable<E\($0)>" }) %>
 

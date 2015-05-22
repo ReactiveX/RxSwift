@@ -31,11 +31,11 @@ class SampleImpl_<ElementType, SampleType> : ObserverType {
                 }
 
                 if parent.sampleState.atEnd {
-                    parent.observer.on(.Completed)
+                    sendCompleted(parent.observer)
                     parent.dispose()
                 }
             case .Error(let e):
-                parent.observer.on(.Error(e))
+                sendError(parent.observer, e)
                 parent.dispose()
             case .Completed:
                 if let element = parent.sampleState.element {
@@ -43,7 +43,7 @@ class SampleImpl_<ElementType, SampleType> : ObserverType {
                     parent.observer.on(element)
                 }
                 if parent.sampleState.atEnd {
-                    parent.observer.on(.Completed)
+                    sendCompleted(parent.observer)
                     parent.dispose()
                 }
             }

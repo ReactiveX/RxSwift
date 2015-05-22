@@ -23,20 +23,20 @@ class Multicast_<SourceType, IntermediateType, ResultType>: Sink<ResultType>, Ob
     }
     
     func run() -> Disposable {
-        return *(parent.subjectSelector() >== { subject in
+        return parent.subjectSelector().flatMap { subject in
             let connectable = ConnectableObservable(source: self.parent.source, subject: subject)
             
-            return self.parent.selector(connectable) >== { observable in
+            return self.parent.selector(connectable).flatMap { observable in
                 let subscription = observable.subscribe(self)
                 let connection = connectable.connect()
                 
                 return success(CompositeDisposable(subscription, connection))
             }
-        } >>! { e in
-            self.observer.on(.Error(e))
+        }.recoverWith { e in
+            sendError(observer, e)
             self.dispose()
             return success(DefaultDisposable())
-        })
+        }.get()
     }
     
     func on(event: Event<ResultType>) {
@@ -50,8 +50,8 @@ class Multicast_<SourceType, IntermediateType, ResultType>: Sink<ResultType>, Ob
 }
 
 class Multicast<SourceType, IntermediateType, ResultType>: Producer<ResultType> {
-    typealias SubjectSelectorType = () -> Result<SubjectType<SourceType, IntermediateType>>
-    typealias SelectorType = (Observable<IntermediateType>) -> Result<Observable<ResultType>>
+    typealias SubjectSelectorType = () -> RxResult<SubjectType<SourceType, IntermediateType>>
+    typealias SelectorType = (Observable<IntermediateType>) -> RxResult<Observable<ResultType>>
     
     let source: Observable<SourceType>
     let subjectSelector: SubjectSelectorType

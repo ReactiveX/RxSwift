@@ -11,7 +11,7 @@ import Foundation
 // aggregate
 
 public func aggregateOrDie<E, A, R>
-    (seed: A, accumulator: (A, E) -> Result<A>, resultSelector: (A) -> Result<R>)
+    (seed: A, accumulator: (A, E) -> RxResult<A>, resultSelector: (A) -> RxResult<R>)
     -> (Observable<E> -> Observable<R>) {
     return { source in
         return Aggregate(source: source, seed: seed, accumulator: accumulator, resultSelector: resultSelector)
@@ -19,7 +19,7 @@ public func aggregateOrDie<E, A, R>
 }
 
 public func aggregateOrDie<E, A>
-    (seed: A, accumulator: (A, E) -> Result<A>)
+    (seed: A, accumulator: (A, E) -> RxResult<A>)
     -> (Observable<E> -> Observable<A>) {
     return { source in
         return Aggregate(source: source, seed: seed, accumulator: accumulator, resultSelector: { success($0) })
@@ -45,7 +45,7 @@ public func aggregate<E, A>
 // foldl
 
 public func foldlOrDie<E, A, R>
-    (seed: A, accumulator: (A, E) -> Result<A>, resultSelector: (A) -> Result<R>)
+    (seed: A, accumulator: (A, E) -> RxResult<A>, resultSelector: (A) -> RxResult<R>)
     -> (Observable<E> -> Observable<R>) {
     return { source in
         return Aggregate(source: source, seed: seed, accumulator: accumulator, resultSelector: resultSelector)
@@ -53,7 +53,7 @@ public func foldlOrDie<E, A, R>
 }
 
 public func foldlOrDie<E, A>
-    (seed: A, accumulator: (A, E) -> Result<A>)
+    (seed: A, accumulator: (A, E) -> RxResult<A>)
     -> (Observable<E> -> Observable<A>) {
     return { source in
         return Aggregate(source: source, seed: seed, accumulator: accumulator, resultSelector: { success($0) })

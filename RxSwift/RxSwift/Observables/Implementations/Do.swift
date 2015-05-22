@@ -20,12 +20,12 @@ class Do_<ElementType> : Sink<ElementType>, ObserverType, Disposable {
     }
     
     func on(event: Event<Element>) {
-        parent.eventHandler(event) >>! { error in
+        parent.eventHandler(event).recoverWith { error in
             // catch clause
-            self.observer.on(.Error(error))
+            sendError(observer, error)
             self.dispose()
             return SuccessResult
-        } >== { _ -> Result<Void> in
+        }.flatMap { _ -> RxResult<Void> in
             self.observer.on(event)
             if event.isStopEvent {
                 self.dispose()
@@ -36,7 +36,7 @@ class Do_<ElementType> : Sink<ElementType>, ObserverType, Disposable {
 }
 
 class Do<Element> : Producer<Element> {
-    typealias EventHandler = Event<Element> -> Result<Void>
+    typealias EventHandler = Event<Element> -> RxResult<Void>
     
     let source: Observable<Element>
     let eventHandler: EventHandler

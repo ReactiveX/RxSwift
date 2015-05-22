@@ -12,20 +12,21 @@ import UIKit
 
 extension UITextField {
     public func rx_text() -> Observable<String> {
-        return AnonymousObservable { subscriber in
+        return AnonymousObservable { observer in
             
             let propagateChange = { (control: UITextField) -> Void in
                 let text: String = control.text
-                subscriber.on(.Next(Box(text)))
+                
+                sendNext(observer, text)
             }
             
             propagateChange(self)
             
-            let observer = ControlTarget(control: self, controlEvents: UIControlEvents.EditingChanged) { control in
+            let subscription = ControlTarget(control: self, controlEvents: UIControlEvents.EditingChanged) { control in
                 propagateChange(control as! UITextField)
             }
             
-            return observer
+            return subscription
         }
     }
 }

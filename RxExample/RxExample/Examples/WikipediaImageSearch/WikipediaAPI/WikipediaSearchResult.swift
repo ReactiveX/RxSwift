@@ -21,7 +21,7 @@ struct WikipediaSearchResult: Printable {
     }
     
     // tedious parsing part
-    static func parseJSON(json: [AnyObject]) -> Result<[WikipediaSearchResult]> {
+    static func parseJSON(json: [AnyObject]) -> RxResult<[WikipediaSearchResult]> {
         let rootArrayTyped = json.map { $0 as? [AnyObject] }
             .filter { $0 != nil }
             .map { $0! }
@@ -33,7 +33,7 @@ struct WikipediaSearchResult: Printable {
         let titleAndDescription = Array(Zip2(rootArrayTyped[0], rootArrayTyped[1]))
         let titleDescriptionAndUrl: [((AnyObject, AnyObject), AnyObject)] = Array(Zip2(titleAndDescription, rootArrayTyped[2]))
         
-        let searchResults: [Result<WikipediaSearchResult>] = titleDescriptionAndUrl.map ( { result -> Result<WikipediaSearchResult> in
+        let searchResults: [Result<WikipediaSearchResult>] = titleDescriptionAndUrl.map ( { result -> RxResult<WikipediaSearchResult> in
             let ((title: AnyObject, description: AnyObject), url: AnyObject) = result
             
             let titleString = title as? String,

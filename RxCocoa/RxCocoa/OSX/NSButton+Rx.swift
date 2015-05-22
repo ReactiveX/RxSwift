@@ -12,11 +12,11 @@ import Cocoa
 
 extension NSButton {
     public func rx_tap() -> Observable<Void> {
-        return AnonymousObservable { subscriber in
+        return AnonymousObservable { observer in
             MainScheduler.ensureExecutingOnScheduler()
             
             let observer = ControlTarget(control: self) { control in
-                subscriber.on(.Next(Box(())))
+                sendNext(observer, ())
             }
             
             return observer

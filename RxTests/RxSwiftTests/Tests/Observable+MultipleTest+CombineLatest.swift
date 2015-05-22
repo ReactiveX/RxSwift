@@ -98,8 +98,8 @@ extension ObservableMultipleTest {
 
 
         let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = combineLatestOrDie(e0, e1) { (_, _) -> Result<Int> in
-                return .Error(testError)
+            let result: Observable<Int> = combineLatestOrDie(e0, e1) { (_, _) -> RxResult<Int> in
+                return failure(testError)
             }
 
             return result
@@ -293,8 +293,8 @@ extension ObservableMultipleTest {
 
 
         let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = combineLatestOrDie(e0, e1, e2) { (_, _, _) -> Result<Int> in
-                return .Error(testError)
+            let result: Observable<Int> = combineLatestOrDie(e0, e1, e2) { (_, _, _) -> RxResult<Int> in
+                return failure(testError)
             }
 
             return result
@@ -524,8 +524,8 @@ extension ObservableMultipleTest {
 
 
         let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = combineLatestOrDie(e0, e1, e2, e3) { (_, _, _, _) -> Result<Int> in
-                return .Error(testError)
+            let result: Observable<Int> = combineLatestOrDie(e0, e1, e2, e3) { (_, _, _, _) -> RxResult<Int> in
+                return failure(testError)
             }
 
             return result
@@ -791,8 +791,8 @@ extension ObservableMultipleTest {
 
 
         let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = combineLatestOrDie(e0, e1, e2, e3, e4) { (_, _, _, _, _) -> Result<Int> in
-                return .Error(testError)
+            let result: Observable<Int> = combineLatestOrDie(e0, e1, e2, e3, e4) { (_, _, _, _, _) -> RxResult<Int> in
+                return failure(testError)
             }
 
             return result
@@ -1094,8 +1094,8 @@ extension ObservableMultipleTest {
 
 
         let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = combineLatestOrDie(e0, e1, e2, e3, e4, e5) { (_, _, _, _, _, _) -> Result<Int> in
-                return .Error(testError)
+            let result: Observable<Int> = combineLatestOrDie(e0, e1, e2, e3, e4, e5) { (_, _, _, _, _, _) -> RxResult<Int> in
+                return failure(testError)
             }
 
             return result
@@ -1433,8 +1433,8 @@ extension ObservableMultipleTest {
 
 
         let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = combineLatestOrDie(e0, e1, e2, e3, e4, e5, e6) { (_, _, _, _, _, _, _) -> Result<Int> in
-                return .Error(testError)
+            let result: Observable<Int> = combineLatestOrDie(e0, e1, e2, e3, e4, e5, e6) { (_, _, _, _, _, _, _) -> RxResult<Int> in
+                return failure(testError)
             }
 
             return result
@@ -1808,8 +1808,8 @@ extension ObservableMultipleTest {
 
 
         let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = combineLatestOrDie(e0, e1, e2, e3, e4, e5, e6, e7) { (_, _, _, _, _, _, _, _) -> Result<Int> in
-                return .Error(testError)
+            let result: Observable<Int> = combineLatestOrDie(e0, e1, e2, e3, e4, e5, e6, e7) { (_, _, _, _, _, _, _, _) -> RxResult<Int> in
+                return failure(testError)
             }
 
             return result
@@ -2219,8 +2219,8 @@ extension ObservableMultipleTest {
 
 
         let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = combineLatestOrDie(e0, e1, e2, e3, e4, e5, e6, e7, e8) { (_, _, _, _, _, _, _, _, _) -> Result<Int> in
-                return .Error(testError)
+            let result: Observable<Int> = combineLatestOrDie(e0, e1, e2, e3, e4, e5, e6, e7, e8) { (_, _, _, _, _, _, _, _, _) -> RxResult<Int> in
+                return failure(testError)
             }
 
             return result
@@ -2666,8 +2666,8 @@ extension ObservableMultipleTest {
 
 
         let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = combineLatestOrDie(e0, e1, e2, e3, e4, e5, e6, e7, e8, e9) { (_, _, _, _, _, _, _, _, _, _) -> Result<Int> in
-                return .Error(testError)
+            let result: Observable<Int> = combineLatestOrDie(e0, e1, e2, e3, e4, e5, e6, e7, e8, e9) { (_, _, _, _, _, _, _, _, _, _) -> RxResult<Int> in
+                return failure(testError)
             }
 
             return result

@@ -79,7 +79,7 @@ extension ObservableMultipleTest {
 <% } %>
 
         let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = combineLatestOrDie(<%= ", ".join(map(0..<i) { "e\($0)" }) %>) { (<%= ", ".join(map(0..<i) { _ in "_" }) %>) -> Result<Int> in
+            let result: Observable<Int> = combineLatestOrDie(<%= ", ".join(map(0..<i) { "e\($0)" }) %>) { (<%= ", ".join(map(0..<i) { _ in "_" }) %>) -> RxResult<Int> in
                 return .Error(testError)
             }
 

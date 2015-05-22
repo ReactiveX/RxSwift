@@ -20,8 +20,8 @@ public func multicast<E, R>
 
 public func multicastOrDie<E, I, R>
     (
-        subjectSelector: () -> Result<SubjectType<E, I>>,
-        selector: (Observable<I>) -> Result<Observable<R>>
+        subjectSelector: () -> RxResult<SubjectType<E, I>>,
+        selector: (Observable<I>) -> RxResult<Observable<R>>
     )
     -> (Observable<E> -> Observable<R>) {
     

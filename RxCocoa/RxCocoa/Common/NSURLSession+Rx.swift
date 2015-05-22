@@ -79,11 +79,11 @@ extension NSURLSession {
                 }
                 
                 if data == nil || response == nil {
-                    observer.on(.Error(error ?? UnknownError))
+                    sendError(observer, error ?? UnknownError)
                 }
                 else {
-                    observer.on(.Next(Box(data, response)))
-                    observer.on(.Completed)
+                    sendNext(observer, (data, response))
+                    sendCompleted(observer)
                 }
             }
             
@@ -96,25 +96,25 @@ extension NSURLSession {
     }
     
     public func rx_data(request: NSURLRequest) -> Observable<NSData> {
-        return rx_response(request) >- mapOrDie { (data, response) -> Result<NSData> in
+        return rx_response(request) >- mapOrDie { (data, response) -> RxResult<NSData> in
             if let response = response as? NSHTTPURLResponse {
                 if 200 ..< 300 ~= response.statusCode {
                     return success(data!)
                 }
                 else {
-                    return .Error(rxError(.NetworkError, "Server return failure", [RxCocoaErrorHTTPResponseKey: response]))
+                    return failure(rxError(.NetworkError, "Server return failure", [RxCocoaErrorHTTPResponseKey: response]))
                 }
             }
             else {
                 rxFatalError("response = nil")
                 
-                return .Error(UnknownError)
+                return failure(UnknownError)
             }
         }
     }
     
     public func rx_JSON(request: NSURLRequest) -> Observable<AnyObject!> {
-        return rx_data(request) >- mapOrDie { (data) -> Result<AnyObject!> in
+        return rx_data(request) >- mapOrDie { (data) -> RxResult<AnyObject!> in
             var serializationError: NSError?
             let result: AnyObject? = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.allZeros, error: &serializationError)
             
@@ -122,7 +122,7 @@ extension NSURLSession {
                 return success(result)
             }
             else {
-                return .Error(serializationError!)
+                return failure(serializationError!)
             }
         }
     }

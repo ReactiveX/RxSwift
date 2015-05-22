@@ -37,14 +37,12 @@ public class RxScrollViewDelegate: NSObject, UIScrollViewDelegate {
     }
     
     public func scrollViewDidScroll(scrollView: UIScrollView) {
-        let event = Event.Next(Box(scrollView.contentOffset))
-        
-        dispatch(event, scrollViewObsevers)
+        dispatchNext(scrollView.contentOffset, scrollViewObsevers)
     }
     
     deinit {
         if scrollViewObsevers.count > 0 {
-            handleVoidObserverResult(.Error(rxError(RxCocoaError.InvalidOperation, "Something went wrong. Deallocating scroll delegate while there are still subscribed observers means that some subscription was left undisposed.")))
+            handleVoidObserverResult(failure(rxError(RxCocoaError.InvalidOperation, "Something went wrong. Deallocating scroll delegate while there are still subscribed observers means that some subscription was left undisposed.")))
         }
     }
 }

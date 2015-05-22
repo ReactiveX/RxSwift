@@ -20,7 +20,7 @@ class StartWith<Element>: Producer<Element> {
     }
     
     override func subscribe<O : ObserverType where O.Element == Element>(observer: O) -> Disposable {
-        observer.on(.Next(Box(element)))
+        sendNext(observer, element)
         
         return source.subscribe(observer)
     }

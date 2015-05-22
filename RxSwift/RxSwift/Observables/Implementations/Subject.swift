@@ -113,7 +113,7 @@ public class Subject<Element> : SubjectType<Element, Element>, Disposable {
             }
             
             if state.disposed {
-                observer.on(.Error(DisposedError))
+                sendError(observer, DisposedError)
                 return DefaultDisposable()
             }
             

@@ -19,7 +19,7 @@ struct WikipediaPage {
     }
     
     // tedious parsing part
-    static func parseJSON(json: NSDictionary) -> Result<WikipediaPage> {
+    static func parseJSON(json: NSDictionary) -> RxResult<WikipediaPage> {
         let title = json.valueForKey("parse")?.valueForKey("title") as? String
         let text = json.valueForKey("parse")?.valueForKey("text")?.valueForKey("*") as? String
         

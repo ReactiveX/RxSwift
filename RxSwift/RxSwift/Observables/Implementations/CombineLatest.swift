@@ -31,7 +31,7 @@ class CombineLatestSink<Element> : Sink<Element>, CombineLatestProtocol {
         super.init(observer: observer, cancel: cancel)
     }
     
-    func getResult() -> Result<Element> {
+    func getResult() -> RxResult<Element> {
         return abstractMethod()
     }
    
@@ -57,11 +57,11 @@ class CombineLatestSink<Element> : Sink<Element>, CombineLatestProtocol {
         if hasValueAll {
             let maybeRes = getResult()
             
-            _ = maybeRes >== { res in
-                self.observer.on(.Next(Box(res)))
+            _ = maybeRes.flatMap { res in
+                sendNext(observer, res)
                 return SuccessResult
-            } >>! { e -> Result<Void> in
-                self.observer.on(.Error(e))
+            }.recoverWith { e -> RxResult<Void> in
+                sendError(observer, e)
                 self.dispose()
                 return SuccessResult
             }
@@ -78,14 +78,14 @@ class CombineLatestSink<Element> : Sink<Element>, CombineLatestProtocol {
             }
             
             if allOthersDone {
-                self.observer.on(.Completed)
+                sendCompleted(observer)
                 self.dispose()
             }
         }
     }
     
     func fail(error: ErrorType) {
-        self.observer.on(.Error(error))
+        sendError(observer, error)
         self.dispose()
     }
     
@@ -102,7 +102,7 @@ class CombineLatestSink<Element> : Sink<Element>, CombineLatestProtocol {
         }
         
         if allDone {
-            observer.on(.Completed)
+            sendCompleted(observer)
             self.dispose()
         }
     }

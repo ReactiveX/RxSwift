@@ -652,11 +652,11 @@ There are two basic types of observables. In Rx both are represented by `Observa
 
 Error handling is pretty straightforward. If one sequence terminates with error, then all of the dependent sequences will terminate with error. It's usual short circuit logic.
 
-Unfortunately Swift doesn't have a concept of exceptions or some kind of built in error monad so this project introduces `Result` enum.
-_(Haskell [`Either`](https://hackage.haskell.org/package/category-extras-0.52.0/docs/Control-Monad-Either.html) monad)_
+Unfortunately Swift doesn't have a concept of exceptions or some kind of built in error monad so this project introduces `RxResult` enum. 
+It is Swift port of Scala [`Try`](http://www.scala-lang.org/api/2.10.2/index.html#scala.util.Try) type. It is also similar to Haskell [`Either`](https://hackage.haskell.org/package/category-extras-0.52.0/docs/Control-Monad-Either.html) monad.
 
 ```
-public enum Result<ResultType> {
+public enum RxResult<ResultType> {
     case Success(ResultType)
     case Error(ErrorType)
 }
@@ -665,26 +665,14 @@ public enum Result<ResultType> {
 To enable writing more readable code, a few `Result` operators are introduced
 
 ```
-result1 >== { okValue in    // success chaining operator
+result1.flatMap { okValue in        // success handling block
     // executed on success
     return ?
-} >>! { error in            // error chaining operator
+}.recoverWith { error in            // error handling block
     //  executed on error
     return ?
 } 
 ```
-
-If some action needs to be performed only after a successful computation without using its result then `>>>` is used.
-
-```
-result1 >>> {              
-    // executed on success
-    return ?
-}
-```
-
-_`>==` and `>>>` were chosen because they are the closest sequence of characters to standard monadic bind `>>=` and `>>` function (`>>=` is already reserved for logical shift and assign).
-`>>!` was chosen because `!` is easily associated with error._
 
 ## Naming conventions and best practices
 
@@ -694,7 +682,7 @@ e.g.
 
 ```
 public func mapOrDie<E, R>
-    (selector: E -> Result<R>)
+    (selector: E -> RxResult<R>)
     -> (Observable<E> -> Observable<R>) {
     return { source in
         return selectOrDie(selector)(source)
@@ -809,8 +797,6 @@ In that case, if an identically named general purpose function application opera
 Why wasn't some more standard operator like `|>` or `~>` used?
 
 `|>` or `~>` are probably more commonly used operators in swift, so if there was another definition for them in Rx as general purpose function application operators, there is a high probability they would collide with definitions in other frameworks or project.
-
-The same logic applies for other operators `>==`, `>>!` that are defined on `Result` enum only.
 
 The simplest and safest solution IMHO was to create some new operator that made sense in this context and there is a low probability anyone else uses it.
 In case the operator naming choice was wrong, name is rare and community eventually reaches consensus on the matter, it's more easier to find and replace it in user projects.

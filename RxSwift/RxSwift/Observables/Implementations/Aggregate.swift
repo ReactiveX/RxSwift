@@ -27,25 +27,25 @@ class Aggregate_<SourceType, AccumulateType, ResultType> : Sink<ResultType>, Obs
         switch event {
         case .Next(let boxedValue):
             let value = boxedValue.value
-            parent.accumulator(accumulation, value) >== { result in
+            parent.accumulator(accumulation, value).flatMap { result in
                 self.accumulation = result
                 return SuccessResult
-            } >>! { e -> Result<Void> in
-                self.observer.on(.Error(e))
+            }.recoverWith { e -> RxResult<Void> in
+                sendError(observer, e)
                 self.dispose()
                 return SuccessResult
             }
         case .Error(let e):
-            self.observer.on(.Error(e))
+            sendError(observer, e)
             self.dispose()
         case .Completed:
-            parent.resultSelector(self.accumulation) >== { result in
-                self.observer.on(.Next(Box(result)))
-                self.observer.on(.Completed)
+            parent.resultSelector(self.accumulation).flatMap { result in
+                sendNext(observer, result)
+                sendCompleted(observer)
                 self.dispose()
                 return SuccessResult
-            } >>! { error -> Result<Void> in
-                self.observer.on(.Error(error))
+            }.recoverWith { error -> RxResult<Void> in
+                sendError(observer, error)
                 self.dispose()
                 return SuccessResult
             }
@@ -54,8 +54,8 @@ class Aggregate_<SourceType, AccumulateType, ResultType> : Sink<ResultType>, Obs
 }
 
 class Aggregate<SourceType, AccumulateType, ResultType> : Producer<ResultType> {
-    typealias AccumulatorType = (AccumulateType, SourceType) -> Result<AccumulateType>
-    typealias ResultSelectorType = (AccumulateType) -> Result<ResultType>
+    typealias AccumulatorType = (AccumulateType, SourceType) -> RxResult<AccumulateType>
+    typealias ResultSelectorType = (AccumulateType) -> RxResult<ResultType>
     
     let source: Observable<SourceType>
     let seed: AccumulateType

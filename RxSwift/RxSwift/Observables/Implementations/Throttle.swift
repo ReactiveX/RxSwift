@@ -65,9 +65,9 @@ class Throttle_<Element, SchedulerType: Scheduler> : Sink<Element>, ObserverType
             case .Completed:
                 self.throttleState.value = nil
                 if let value = oldValue {
-                    self.observer.on(.Next(Box(value)))
+                    sendNext(observer, value)
                 }
-                self.observer.on(.Completed)
+                sendCompleted(observer)
                 self.dispose()
             }
             
@@ -85,12 +85,12 @@ class Throttle_<Element, SchedulerType: Scheduler> : Sink<Element>, ObserverType
             
             let _  = scheduler.scheduleRelative(latestId, dueTime: dueTime) { (id) in
                 return success(self.propagate())
-            } >== { disposeTimer -> Result<Void> in
+            }.flatMap { disposeTimer -> RxResult<Void> in
                 d.setDisposable(disposeTimer)
                 return SuccessResult
-            } >>! { e -> Result<Void> in
+            }.recoverWith { e -> RxResult<Void> in
                 self.lock.performLocked {
-                    self.observer.on(.Error(e))
+                    sendError(observer, e)
                     self.dispose()
                 }
                 return SuccessResult
@@ -107,7 +107,7 @@ class Throttle_<Element, SchedulerType: Scheduler> : Sink<Element>, ObserverType
         }
         
         if let value = originalValue {
-            self.observer.on(.Next(Box(value)))
+            sendNext(observer, value)
         }
     }
 }

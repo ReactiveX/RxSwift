@@ -41,7 +41,7 @@ class Merge_Iter<ElementType> : ObserverType {
                 let state = parent.mergeState
                 
                 if state.stopped && state.group.count == 1 {
-                    self.parent.observer.on(.Completed)
+                    sendCompleted(parent.observer)
                     self.parent.dispose()
                 }
             }
@@ -97,7 +97,7 @@ class Merge_<ElementType> : Sink<ElementType>, ObserverType {
             }
         case .Error(let error):
             lock.performLocked {
-                self.observer.on(.Error(error))
+                sendError(observer, error)
                 self.dispose()
             }
         case .Completed:
@@ -109,7 +109,7 @@ class Merge_<ElementType> : Sink<ElementType>, ObserverType {
                 self.mergeState.stopped = true
                 
                 if group.count == 1 {
-                    self.observer.on(.Completed)
+                    sendCompleted(observer)
                     self.dispose()
                 }
                 else {
@@ -157,7 +157,7 @@ class Merge_ConcurrentIter<ElementType> : ObserverType {
                     parent.mergeState.activeCount = mergeState.activeCount - 1
                     
                     if mergeState.stopped && mergeState.activeCount == 0 {
-                        self.parent.observer.on(.Completed)
+                        sendCompleted(parent.observer)
                         self.parent.dispose()
                     }
                 }
@@ -172,7 +172,7 @@ class Merge_Concurrent<ElementType> : Sink<ElementType>, ObserverType {
     
     typealias MergeState = (
         stopped: Bool,
-        queue: MutatingBox<QueueType>,
+        queue: RxMutableBox<QueueType>,
         sourceSubscription: SingleAssignmentDisposable,
         group: CompositeDisposable,
         activeCount: Int
@@ -183,7 +183,7 @@ class Merge_Concurrent<ElementType> : Sink<ElementType>, ObserverType {
     var lock = NSRecursiveLock()
     var mergeState: MergeState = (
         stopped: false,
-        queue: MutatingBox(Queue(capacity: 2)),
+        queue: RxMutableBox(Queue(capacity: 2)),
         sourceSubscription: SingleAssignmentDisposable(),
         group: CompositeDisposable(),
         activeCount: 0
@@ -243,7 +243,7 @@ class Merge_Concurrent<ElementType> : Sink<ElementType>, ObserverType {
             }
         case .Error(let error):
             lock.performLocked {
-                self.observer.on(.Error(error))
+                sendError(observer, error)
                 self.dispose()
             }
         case .Completed:
@@ -252,7 +252,7 @@ class Merge_Concurrent<ElementType> : Sink<ElementType>, ObserverType {
                 let group = mergeState.group
                 
                 if mergeState.activeCount == 0 {
-                    self.observer.on(.Completed)
+                    sendCompleted(observer)
                     self.dispose()
                 }
                 else {

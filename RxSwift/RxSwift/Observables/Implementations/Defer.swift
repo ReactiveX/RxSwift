@@ -20,15 +20,15 @@ class Defer_<ElementType> : Sink<ElementType>, ObserverType {
     }
     
     func run() -> Disposable {
-        let disposable = parent.eval() >== { result in
-            return result.subscribe(self)
-        } >>! { e in
-            self.observer.on(.Error(e))
+        let disposable = parent.eval().flatMap { result in
+            return success(result.subscribe(self))
+        }.recoverWith { e in
+            sendError(observer, e)
             self.dispose()
             return success(DefaultDisposable())
         }
         
-        return *disposable
+        return disposable.get()
     }
     
     func on(event: Event<Element>) {
@@ -46,7 +46,7 @@ class Defer_<ElementType> : Sink<ElementType>, ObserverType {
 }
 
 class Defer<Element> : Producer<Element> {
-    typealias Factory = () -> Result<Observable<Element>>
+    typealias Factory = () -> RxResult<Observable<Element>>
     
     let observableFactory : Factory
     
@@ -60,7 +60,7 @@ class Defer<Element> : Producer<Element> {
         return sink.run()
     }
     
-    func eval() -> Result<Observable<Element>> {
+    func eval() -> RxResult<Observable<Element>> {
         return observableFactory()
     }
 }

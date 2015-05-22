@@ -152,7 +152,7 @@ extension ObservableAggregateTest {
             completed(260)
             ])
         
-        let res = scheduler.start { xs >- aggregateOrDie(42, { $1 < 3 ? success($0 + $1) : .Error(testError)})  }
+        let res = scheduler.start { xs >- aggregateOrDie(42, { $1 < 3 ? success($0 + $1) : failure(testError)})  }
         
         let correctMessages: [Recorded<Int>] = [
             error(240, testError)
@@ -296,7 +296,7 @@ extension ObservableAggregateTest {
             completed(260)
             ])
         
-        let res = scheduler.start { xs >- aggregateOrDie(42, { $1 < 3 ? success($0 + $1) : .Error(testError) }, { success($0 * 5) }) }
+        let res = scheduler.start { xs >- aggregateOrDie(42, { $1 < 3 ? success($0 + $1) : failure(testError) }, { success($0 * 5) }) }
         
         let correctMessages: [Recorded<Int>] = [
             error(240, testError)
@@ -323,7 +323,7 @@ extension ObservableAggregateTest {
             completed(260)
             ])
         
-        let res = scheduler.start { xs >- aggregateOrDie(42, { success($0 + $1) }, { (_: Int) -> Result<Int> in .Error(testError) }) }
+        let res = scheduler.start { xs >- aggregateOrDie(42, { success($0 + $1) }, { (_: Int) -> RxResult<Int> in failure(testError) }) }
         
         let correctMessages: [Recorded<Int>] = [
             error(260, testError)

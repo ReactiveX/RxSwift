@@ -140,7 +140,7 @@ class ReplayBufferBase<Element> : ReplaySubjectImplementation<Element> {
     override func subscribe<O : ObserverType where O.Element == Element>(observer: O) -> Disposable {
         return lock.calculateLocked {
             if self.state.disposed {
-                observer.on(.Error(DisposedError))
+                sendError(observer, DisposedError)
                 return DefaultDisposable()
             }
          
@@ -204,7 +204,7 @@ class ReplayOne<Element> : ReplayBufferBase<Element> {
     
     override func replayBuffer(observer: Observer) {
         if let value = self.value {
-            observer.on(.Next(Box(value)))
+            sendNext(observer, value)
         }
     }
     
@@ -228,7 +228,7 @@ class ReplayManyBase<Element> : ReplayBufferBase<Element> {
     
     override func replayBuffer(observer: Observer) {
         for item in queue {
-            observer.on(.Next(Box(item)))
+            sendNext(observer, item)
         }
     }
     

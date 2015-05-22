@@ -19,7 +19,7 @@ class RxTextFieldDelegate : NSObject, NSTextFieldDelegate {
     override func controlTextDidChange(notification: NSNotification) {
         let textField = notification.object as! NSTextField
         let nextValue = textField.stringValue
-        dispatch(.Next(Box(nextValue)), observers)
+        dispatchNext(nextValue, observers)
     }
     
     func addObserver(observer: Observer) -> DisposeKey {
@@ -72,7 +72,7 @@ extension NSTextField {
             
             let delegate = maybeDelegate!
             
-            observer.on(.Next(Box(self.stringValue)))
+            sendNext(observer, self.stringValue)
             
             let key = delegate.addObserver(observer)
             

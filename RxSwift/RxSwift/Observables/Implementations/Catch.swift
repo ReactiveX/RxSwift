@@ -59,11 +59,11 @@ class Catch_<ElementType> : Sink<ElementType>, ObserverType {
             self.observer.on(event)
             self.dispose()
         case .Error(let error):
-            parent.handler(error) >>! { error2 in
-                self.observer.on(.Error(error2))
+            parent.handler(error).recoverWith { error2 in
+                sendError(observer, error2)
                 self.dispose()
-                return .Error(error2)
-            } >== { catchObservable -> Result<Void> in
+                return failure(error2)
+            }.flatMap { catchObservable -> RxResult<Void> in
                 let d = SingleAssignmentDisposable()
                 subscription.setDisposable(d)
                 
@@ -78,7 +78,7 @@ class Catch_<ElementType> : Sink<ElementType>, ObserverType {
 }
 
 class Catch<Element> : Producer<Element> {
-    typealias Handler = (ErrorType) -> Result<Observable<Element>>
+    typealias Handler = (ErrorType) -> RxResult<Observable<Element>>
     
     let source: Observable<Element>
     let handler: Handler
@@ -95,13 +95,13 @@ class Catch<Element> : Producer<Element> {
     }
 }
 
-class CatchToResult_<ElementType> : Sink<Result<ElementType>>, ObserverType {
+class CatchToResult_<ElementType> : Sink <RxResult<ElementType>>, ObserverType {
     typealias Element = ElementType
     typealias Parent = CatchToResult<ElementType>
     
     let parent: Parent
     
-    init(parent: Parent, observer: ObserverOf<Result<ElementType>>, cancel: Disposable) {
+    init(parent: Parent, observer: ObserverOf <RxResult<ElementType>>, cancel: Disposable) {
         self.parent = parent
         super.init(observer: observer, cancel: cancel)
     }
@@ -114,26 +114,26 @@ class CatchToResult_<ElementType> : Sink<Result<ElementType>>, ObserverType {
         switch event {
         case .Next(let boxedValue):
             let value = boxedValue.value
-            return self.observer.on(.Next(Box(success(value))))
+            sendNext(observer, success(value))
         case .Completed:
-            self.observer.on(.Completed)
+            sendCompleted(observer)
             self.dispose()
         case .Error(let error):
-            self.observer.on(.Next(Box(.Error(error))))
-            self.observer.on(.Completed)
+            sendNext(observer, failure(error))
+            sendCompleted(observer)
             self.dispose()
         }
     }
 }
 
-class CatchToResult<Element> : Producer<Result<Element>> {
+class CatchToResult<Element> : Producer <RxResult<Element>> {
     let source: Observable<Element>
     
     init(source: Observable<Element>) {
         self.source = source
     }
     
-    override func run(observer: ObserverOf<Result<Element>>, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
+    override func run(observer: ObserverOf <RxResult<Element>>, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
         let sink = CatchToResult_(parent: self, observer: observer, cancel: cancel)
         setSink(sink)
         return sink.run()

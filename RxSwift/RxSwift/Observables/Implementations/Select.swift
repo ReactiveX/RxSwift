@@ -16,7 +16,7 @@ class Select_<ElementType, ResultType> : Sink<ResultType>, ObserverType {
         super.init(observer: observer, cancel: cancel)
     }
     
-    func select(element: ElementType) -> Result<ResultType> {
+    func select(element: ElementType) -> RxResult<ResultType> {
         return abstractMethod()
     }
 
@@ -25,19 +25,19 @@ class Select_<ElementType, ResultType> : Sink<ResultType>, ObserverType {
         
         switch event {
         case .Next(let element):
-            select(element.value) >== { value in
-                observer.on(.Next(Box(value)))
+            select(element.value).flatMap { value in
+                sendNext(observer, value)
                 return SuccessResult
-            } >>! { e -> Result<Void> in
-                observer.on(.Error(e))
+            }.recoverWith { e -> RxResult<Void> in
+                sendError(observer, e)
                 self.dispose()
                 return SuccessResult
             }
         case .Error(let error):
-            observer.on(.Error(error))
+            sendError(observer, error)
             self.dispose()
         case .Completed:
-            observer.on(.Completed)
+            sendCompleted(observer)
             self.dispose()
         }
     }
@@ -49,7 +49,7 @@ class Select_1<ElementType, ResultType> : Select_<ElementType, ResultType> {
         super.init(parent: parent, observer: observer, cancel: cancel)
     }
     
-    override func select(element: ElementType) -> Result<ResultType> {
+    override func select(element: ElementType) -> RxResult<ResultType> {
         return (self.parent.selector1!)(element)
     }
 }
@@ -60,15 +60,15 @@ class Select_2<ElementType, ResultType> : Select_<ElementType, ResultType> {
     override init(parent: Select<ElementType, ResultType>, observer: ObserverOf<ResultType>, cancel: Disposable) {
         super.init(parent: parent, observer: observer, cancel: cancel)
     }
-    override func select(element: ElementType) -> Result<ResultType> {
+    override func select(element: ElementType) -> RxResult<ResultType> {
         return (self.parent.selector2!)(element, index++)
     }
 }
 
 class Select<ElementType, ResultType>: Producer<ResultType> {
     typealias Element = ElementType
-    typealias Selector1 = (Element) -> Result<ResultType>
-    typealias Selector2 = (Element, Int) -> Result<ResultType>
+    typealias Selector1 = (Element) -> RxResult<ResultType>
+    typealias Selector2 = (Element, Int) -> RxResult<ResultType>
     
     let source: Observable<Element>
     
