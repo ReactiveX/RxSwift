@@ -96,6 +96,12 @@
 		C897EC361B10D8F2009C2CB0 /* Subject.swift in Sources */ = {isa = PBXBuildFile; fileRef = C897EC341B10D8F2009C2CB0 /* Subject.swift */; };
 		C897EC381B10DB10009C2CB0 /* Variable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C897EC371B10DB10009C2CB0 /* Variable.swift */; };
 		C897EC391B10DB10009C2CB0 /* Variable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C897EC371B10DB10009C2CB0 /* Variable.swift */; };
+		C897EC3E1B1110FE009C2CB0 /* Zip.swift in Sources */ = {isa = PBXBuildFile; fileRef = C897EC3D1B1110FE009C2CB0 /* Zip.swift */; };
+		C897EC3F1B1110FE009C2CB0 /* Zip.swift in Sources */ = {isa = PBXBuildFile; fileRef = C897EC3D1B1110FE009C2CB0 /* Zip.swift */; };
+		C897EC411B111116009C2CB0 /* Zip+arity.tt in Resources */ = {isa = PBXBuildFile; fileRef = C897EC401B111116009C2CB0 /* Zip+arity.tt */; };
+		C897EC421B111116009C2CB0 /* Zip+arity.tt in Resources */ = {isa = PBXBuildFile; fileRef = C897EC401B111116009C2CB0 /* Zip+arity.tt */; };
+		C897EC441B1119A4009C2CB0 /* Zip+arity.swift in Sources */ = {isa = PBXBuildFile; fileRef = C897EC431B1119A4009C2CB0 /* Zip+arity.swift */; };
+		C897EC451B1119A4009C2CB0 /* Zip+arity.swift in Sources */ = {isa = PBXBuildFile; fileRef = C897EC431B1119A4009C2CB0 /* Zip+arity.swift */; };
 		C8A56ADD1AD7424700B4673B /* RxSwift.h in Headers */ = {isa = PBXBuildFile; fileRef = C8A56ADC1AD7424700B4673B /* RxSwift.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C8A56B4C1AD7435900B4673B /* AnyObject+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A56AFC1AD7435800B4673B /* AnyObject+Rx.swift */; };
 		C8A56B4D1AD7435900B4673B /* Cancelable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A56AFD1AD7435800B4673B /* Cancelable.swift */; };
@@ -184,6 +190,9 @@
 		C897EC311B10D426009C2CB0 /* BehaviorSubject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BehaviorSubject.swift; sourceTree = "<group>"; };
 		C897EC341B10D8F2009C2CB0 /* Subject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Subject.swift; sourceTree = "<group>"; };
 		C897EC371B10DB10009C2CB0 /* Variable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Variable.swift; sourceTree = "<group>"; };
+		C897EC3D1B1110FE009C2CB0 /* Zip.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Zip.swift; sourceTree = "<group>"; };
+		C897EC401B111116009C2CB0 /* Zip+arity.tt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Zip+arity.tt"; sourceTree = "<group>"; };
+		C897EC431B1119A4009C2CB0 /* Zip+arity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Zip+arity.swift"; sourceTree = "<group>"; };
 		C8A56AD71AD7424700B4673B /* RxSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8A56ADB1AD7424700B4673B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C8A56ADC1AD7424700B4673B /* RxSwift.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RxSwift.h; sourceTree = "<group>"; };
@@ -432,6 +441,9 @@
 				C8A56B271AD7435800B4673B /* TailRecursiveSink.swift */,
 				C8A56B281AD7435800B4673B /* Throttle.swift */,
 				C8A56B2A1AD7435800B4673B /* Where.swift */,
+				C897EC3D1B1110FE009C2CB0 /* Zip.swift */,
+				C897EC401B111116009C2CB0 /* Zip+arity.tt */,
+				C897EC431B1119A4009C2CB0 /* Zip+arity.swift */,
 			);
 			path = Implementations;
 			sourceTree = "<group>";
@@ -559,6 +571,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C897EC421B111116009C2CB0 /* Zip+arity.tt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -566,6 +579,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C897EC411B111116009C2CB0 /* Zip+arity.tt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -584,6 +598,7 @@
 				C88BB8211B07E5ED0064D411 /* Defer.swift in Sources */,
 				C88BB8221B07E5ED0064D411 /* Observable+Aggregate.swift in Sources */,
 				C88BB8241B07E5ED0064D411 /* Observable+Single.swift in Sources */,
+				C897EC451B1119A4009C2CB0 /* Zip+arity.swift in Sources */,
 				C88BB8251B07E5ED0064D411 /* Sink.swift in Sources */,
 				C88BB8261B07E5ED0064D411 /* SerialDisposable.swift in Sources */,
 				C88BB8271B07E5ED0064D411 /* CombineLatest+arity.swift in Sources */,
@@ -599,6 +614,7 @@
 				C88BB8301B07E5ED0064D411 /* TailRecursiveSink.swift in Sources */,
 				C88BB8321B07E5ED0064D411 /* AutoDetachObserver.swift in Sources */,
 				C88BB8331B07E5ED0064D411 /* OperationQueueScheduler.swift in Sources */,
+				C897EC3F1B1110FE009C2CB0 /* Zip.swift in Sources */,
 				C88BB8341B07E5ED0064D411 /* StartWith.swift in Sources */,
 				C88BB8351B07E5ED0064D411 /* ObserverBase.swift in Sources */,
 				C88BB8361B07E5ED0064D411 /* Concat.swift in Sources */,
@@ -670,6 +686,7 @@
 				C8D5592B1AE32FBB00DE7BDB /* Defer.swift in Sources */,
 				C8A56B761AD7435900B4673B /* Observable+Aggregate.swift in Sources */,
 				C8A56B7B1AD7435900B4673B /* Observable+Single.swift in Sources */,
+				C897EC441B1119A4009C2CB0 /* Zip+arity.swift in Sources */,
 				C8A56B6F1AD7435900B4673B /* Sink.swift in Sources */,
 				C8A56B581AD7435900B4673B /* SerialDisposable.swift in Sources */,
 				C8BA11451AE84932004D2FA8 /* CombineLatest+arity.swift in Sources */,
@@ -685,6 +702,7 @@
 				C8A56B721AD7435900B4673B /* TailRecursiveSink.swift in Sources */,
 				C8A56B811AD7435900B4673B /* AutoDetachObserver.swift in Sources */,
 				C8A56B8F1AD7435900B4673B /* OperationQueueScheduler.swift in Sources */,
+				C897EC3E1B1110FE009C2CB0 /* Zip.swift in Sources */,
 				C88192861AFEA61A00F0F1ED /* StartWith.swift in Sources */,
 				C8A56B851AD7435900B4673B /* ObserverBase.swift in Sources */,
 				C8A56B621AD7435900B4673B /* Concat.swift in Sources */,

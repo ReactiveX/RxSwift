@@ -43,9 +43,9 @@ extension ObservableMultipleTest {
         
         let subscriptions = [Subscription(200, 1000)]
         
-        for e in [e0, e1] {
-            XCTAssertEqual(e.subscriptions, subscriptions)
-        }
+
+        XCTAssertEqual(e0.subscriptions, subscriptions)
+        XCTAssertEqual(e1.subscriptions, subscriptions)
     }
 
     func testCombineLatest_Empty2() {
@@ -225,9 +225,10 @@ extension ObservableMultipleTest {
         
         let subscriptions = [Subscription(200, 1000)]
         
-        for e in [e0, e1] {
-            XCTAssertEqual(e.subscriptions, subscriptions)
-        }
+
+        XCTAssertEqual(e0.subscriptions, subscriptions)
+        XCTAssertEqual(e1.subscriptions, subscriptions)
+        XCTAssertEqual(e2.subscriptions, subscriptions)
     }
 
     func testCombineLatest_Empty3() {
@@ -443,9 +444,11 @@ extension ObservableMultipleTest {
         
         let subscriptions = [Subscription(200, 1000)]
         
-        for e in [e0, e1] {
-            XCTAssertEqual(e.subscriptions, subscriptions)
-        }
+
+        XCTAssertEqual(e0.subscriptions, subscriptions)
+        XCTAssertEqual(e1.subscriptions, subscriptions)
+        XCTAssertEqual(e2.subscriptions, subscriptions)
+        XCTAssertEqual(e3.subscriptions, subscriptions)
     }
 
     func testCombineLatest_Empty4() {
@@ -697,9 +700,12 @@ extension ObservableMultipleTest {
         
         let subscriptions = [Subscription(200, 1000)]
         
-        for e in [e0, e1] {
-            XCTAssertEqual(e.subscriptions, subscriptions)
-        }
+
+        XCTAssertEqual(e0.subscriptions, subscriptions)
+        XCTAssertEqual(e1.subscriptions, subscriptions)
+        XCTAssertEqual(e2.subscriptions, subscriptions)
+        XCTAssertEqual(e3.subscriptions, subscriptions)
+        XCTAssertEqual(e4.subscriptions, subscriptions)
     }
 
     func testCombineLatest_Empty5() {
@@ -987,9 +993,13 @@ extension ObservableMultipleTest {
         
         let subscriptions = [Subscription(200, 1000)]
         
-        for e in [e0, e1] {
-            XCTAssertEqual(e.subscriptions, subscriptions)
-        }
+
+        XCTAssertEqual(e0.subscriptions, subscriptions)
+        XCTAssertEqual(e1.subscriptions, subscriptions)
+        XCTAssertEqual(e2.subscriptions, subscriptions)
+        XCTAssertEqual(e3.subscriptions, subscriptions)
+        XCTAssertEqual(e4.subscriptions, subscriptions)
+        XCTAssertEqual(e5.subscriptions, subscriptions)
     }
 
     func testCombineLatest_Empty6() {
@@ -1313,9 +1323,14 @@ extension ObservableMultipleTest {
         
         let subscriptions = [Subscription(200, 1000)]
         
-        for e in [e0, e1] {
-            XCTAssertEqual(e.subscriptions, subscriptions)
-        }
+
+        XCTAssertEqual(e0.subscriptions, subscriptions)
+        XCTAssertEqual(e1.subscriptions, subscriptions)
+        XCTAssertEqual(e2.subscriptions, subscriptions)
+        XCTAssertEqual(e3.subscriptions, subscriptions)
+        XCTAssertEqual(e4.subscriptions, subscriptions)
+        XCTAssertEqual(e5.subscriptions, subscriptions)
+        XCTAssertEqual(e6.subscriptions, subscriptions)
     }
 
     func testCombineLatest_Empty7() {
@@ -1675,9 +1690,15 @@ extension ObservableMultipleTest {
         
         let subscriptions = [Subscription(200, 1000)]
         
-        for e in [e0, e1] {
-            XCTAssertEqual(e.subscriptions, subscriptions)
-        }
+
+        XCTAssertEqual(e0.subscriptions, subscriptions)
+        XCTAssertEqual(e1.subscriptions, subscriptions)
+        XCTAssertEqual(e2.subscriptions, subscriptions)
+        XCTAssertEqual(e3.subscriptions, subscriptions)
+        XCTAssertEqual(e4.subscriptions, subscriptions)
+        XCTAssertEqual(e5.subscriptions, subscriptions)
+        XCTAssertEqual(e6.subscriptions, subscriptions)
+        XCTAssertEqual(e7.subscriptions, subscriptions)
     }
 
     func testCombineLatest_Empty8() {
@@ -2073,9 +2094,16 @@ extension ObservableMultipleTest {
         
         let subscriptions = [Subscription(200, 1000)]
         
-        for e in [e0, e1] {
-            XCTAssertEqual(e.subscriptions, subscriptions)
-        }
+
+        XCTAssertEqual(e0.subscriptions, subscriptions)
+        XCTAssertEqual(e1.subscriptions, subscriptions)
+        XCTAssertEqual(e2.subscriptions, subscriptions)
+        XCTAssertEqual(e3.subscriptions, subscriptions)
+        XCTAssertEqual(e4.subscriptions, subscriptions)
+        XCTAssertEqual(e5.subscriptions, subscriptions)
+        XCTAssertEqual(e6.subscriptions, subscriptions)
+        XCTAssertEqual(e7.subscriptions, subscriptions)
+        XCTAssertEqual(e8.subscriptions, subscriptions)
     }
 
     func testCombineLatest_Empty9() {
@@ -2507,9 +2535,17 @@ extension ObservableMultipleTest {
         
         let subscriptions = [Subscription(200, 1000)]
         
-        for e in [e0, e1] {
-            XCTAssertEqual(e.subscriptions, subscriptions)
-        }
+
+        XCTAssertEqual(e0.subscriptions, subscriptions)
+        XCTAssertEqual(e1.subscriptions, subscriptions)
+        XCTAssertEqual(e2.subscriptions, subscriptions)
+        XCTAssertEqual(e3.subscriptions, subscriptions)
+        XCTAssertEqual(e4.subscriptions, subscriptions)
+        XCTAssertEqual(e5.subscriptions, subscriptions)
+        XCTAssertEqual(e6.subscriptions, subscriptions)
+        XCTAssertEqual(e7.subscriptions, subscriptions)
+        XCTAssertEqual(e8.subscriptions, subscriptions)
+        XCTAssertEqual(e9.subscriptions, subscriptions)
     }
 
     func testCombineLatest_Empty10() {

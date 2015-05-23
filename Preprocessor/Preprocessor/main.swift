@@ -52,10 +52,10 @@ func processFile(path: String, outputPath: String) -> String {
             functionContentComponents.append("\(code)\n")
         }
         
-        functionContentComponents.append("components.append(\(escape(suffix)))\n")
+        functionContentComponents.append("components.append(\(escape(suffix)));\n")
     }
     
-    functionContentComponents.append("\"\".join(components).writeToFile(\"\(outputPath)\", atomically: false, encoding: NSUTF8StringEncoding, error: nil)")
+    functionContentComponents.append("\"\".join(components).writeToFile(\"\(outputPath)\", atomically: false, encoding: NSUTF8StringEncoding, error: nil);")
     
     return "".join(functionContentComponents)
 }

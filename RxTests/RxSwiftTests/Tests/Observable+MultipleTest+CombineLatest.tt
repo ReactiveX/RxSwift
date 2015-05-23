@@ -37,9 +37,8 @@ extension ObservableMultipleTest {
         
         let subscriptions = [Subscription(200, 1000)]
         
-        for e in [e0, e1] {
-            XCTAssertEqual(e.subscriptions, subscriptions)
-        }
+<% for j in 0..<i { %>
+        XCTAssertEqual(e<%= j %>.subscriptions, subscriptions)<% } %>
     }
 
     func testCombineLatest_Empty<%= i %>() {
@@ -80,7 +79,7 @@ extension ObservableMultipleTest {
 
         let res = scheduler.start { () -> Observable<Int> in
             let result: Observable<Int> = combineLatestOrDie(<%= ", ".join(map(0..<i) { "e\($0)" }) %>) { (<%= ", ".join(map(0..<i) { _ in "_" }) %>) -> RxResult<Int> in
-                return .Error(testError)
+                return failure(testError)
             }
 
             return result

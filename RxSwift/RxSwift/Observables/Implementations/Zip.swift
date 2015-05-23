@@ -1,66 +1,59 @@
 //
-//  CombineLatest.swift
-//  Rx
+//  Zip.swift
+//  RxSwift
 //
-//  Created by Krunoslav Zaher on 3/21/15.
+//  Created by Krunoslav Zaher on 5/23/15.
 //  Copyright (c) 2015 Krunoslav Zaher. All rights reserved.
 //
 
 import Foundation
 
-protocol CombineLatestProtocol : class {
+protocol ZipSinkProtocol : class
+{
     func next(index: Int)
     func fail(error: ErrorType)
     func done(index: Int)
 }
 
-class CombineLatestSink<O: ObserverType> : Sink<O>, CombineLatestProtocol {
+protocol ZipObserverProtocol {
+    var hasElements: Bool { get }
+}
+
+class ZipSink<O: ObserverType> : Sink<O>, ZipSinkProtocol {
     typealias Element = O.Element
     
-    var lock = NSRecursiveLock()
+    let lock = NSRecursiveLock()
     
-    var hasValueAll: Bool
-    var hasValue: [Bool]
+    var observers: [ZipObserverProtocol] = []
     var isDone: [Bool]
     
     init(arity: Int, observer: O, cancel: Disposable) {
-        self.hasValueAll = false
-        self.hasValue = [Bool](count: arity, repeatedValue: false)
         self.isDone = [Bool](count: arity, repeatedValue: false)
         
         super.init(observer: observer, cancel: cancel)
     }
-    
+
     func getResult() -> RxResult<Element> {
         return abstractMethod()
     }
-   
-    func performLocked(@noescape action: () -> Void) {
-        return lock.calculateLocked(action)
-    }
     
     func next(index: Int) {
-        if !hasValueAll {
-            hasValue[index] = true
-            
-            var hasValueAll = true
-            for hasValue in self.hasValue {
-                if !hasValue {
-                    hasValueAll = false;
-                    break;
-                }
+        var hasValueAll = true
+        
+        for observer in observers {
+            if !observer.hasElements {
+                hasValueAll = false;
+                break;
             }
-            
-            self.hasValueAll = hasValueAll;
         }
         
         if hasValueAll {
-            _ = getResult().flatMap { res in
-                trySendNext(observer, res)
+            _ = getResult().flatMap { result in
+                trySendNext(self.observer, result)
                 return SuccessResult
             }.recoverWith { e -> RxResult<Void> in
-                trySendError(observer, e)
-                self.dispose()
+                trySendError(self.observer, e)
+                dispose()
                 return SuccessResult
             }
         }
@@ -106,41 +99,52 @@ class CombineLatestSink<O: ObserverType> : Sink<O>, CombineLatestProtocol {
     }
 }
 
-class CombineLatestObserver<Element> : ObserverType {
-    weak var parent: CombineLatestProtocol?
+class ZipObserver<ElementType> : ObserverType, ZipObserverProtocol {
+    typealias Element = ElementType
+
+    weak var parent: ZipSinkProtocol?
     
     let lock: NSRecursiveLock
     let index: Int
     let this: Disposable
-    var _value: Element!
     
-    init(lock: NSRecursiveLock, parent: CombineLatestProtocol, index: Int, this: Disposable) {
+    var values: Queue<Element> = Queue(capacity: 2)
+    
+    init(lock: NSRecursiveLock, parent: ZipSinkProtocol, index: Int, this: Disposable) {
         self.lock = lock
         self.parent = parent
         self.index = index
         self.this = this
-        self._value = nil
     }
     
-    var value: Element {
+    var hasElements: Bool {
         get {
-            return _value!
+            return values.count > 0
         }
     }
     
     func on(event: Event<Element>) {
+       
+        if let parent = parent {
+            switch event {
+            case .Next(let boxedValue):
+                break
+            case .Error(let error):
+                this.dispose()
+            case .Completed:
+                this.dispose()
+            }
+        }
+        
         lock.performLocked {
             if let parent = parent {
                 switch event {
                 case .Next(let boxedValue):
-                    let value = boxedValue.value
-                    _value = value
+                    values.enqueue(boxedValue.value)
                     parent.next(index)
                 case .Error(let error):
-                    this.dispose()
                     parent.fail(error)
                 case .Completed:
-                    this.dispose()
                     parent.done(index)
                 }
             }

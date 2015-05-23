@@ -74,6 +74,10 @@
 		C88BB8B11B07E64B0064D411 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C811086B1AF50E43001C13E4 /* RxSwift.framework */; };
 		C897EC3B1B10E000009C2CB0 /* BehaviorSubjectTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C897EC3A1B10E000009C2CB0 /* BehaviorSubjectTest.swift */; };
 		C897EC3C1B10E000009C2CB0 /* BehaviorSubjectTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C897EC3A1B10E000009C2CB0 /* BehaviorSubjectTest.swift */; };
+		C897EC471B112070009C2CB0 /* Observable+MultipleTest+Zip.tt in Resources */ = {isa = PBXBuildFile; fileRef = C897EC461B112070009C2CB0 /* Observable+MultipleTest+Zip.tt */; };
+		C897EC481B112070009C2CB0 /* Observable+MultipleTest+Zip.tt in Resources */ = {isa = PBXBuildFile; fileRef = C897EC461B112070009C2CB0 /* Observable+MultipleTest+Zip.tt */; };
+		C897EC4A1B1123DA009C2CB0 /* Observable+MultipleTest+Zip.swift in Sources */ = {isa = PBXBuildFile; fileRef = C897EC491B1123DA009C2CB0 /* Observable+MultipleTest+Zip.swift */; };
+		C897EC4B1B1123DA009C2CB0 /* Observable+MultipleTest+Zip.swift in Sources */ = {isa = PBXBuildFile; fileRef = C897EC491B1123DA009C2CB0 /* Observable+MultipleTest+Zip.swift */; };
 		C8B787FA1AF55CDE00206D02 /* Observable+ConcurrencyTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B787F91AF55CDE00206D02 /* Observable+ConcurrencyTest.swift */; };
 /* End PBXBuildFile section */
 
@@ -115,6 +119,8 @@
 		C8633AE41B0A9FF300375D60 /* KVOObservableTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KVOObservableTests.swift; sourceTree = "<group>"; };
 		C88BB8B71B07E64B0064D411 /* RxTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RxTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C897EC3A1B10E000009C2CB0 /* BehaviorSubjectTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BehaviorSubjectTest.swift; sourceTree = "<group>"; };
+		C897EC461B112070009C2CB0 /* Observable+MultipleTest+Zip.tt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Observable+MultipleTest+Zip.tt"; sourceTree = "<group>"; };
+		C897EC491B1123DA009C2CB0 /* Observable+MultipleTest+Zip.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Observable+MultipleTest+Zip.swift"; sourceTree = "<group>"; };
 		C8B787F91AF55CDE00206D02 /* Observable+ConcurrencyTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Observable+ConcurrencyTest.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -245,6 +251,8 @@
 				C8B787F91AF55CDE00206D02 /* Observable+ConcurrencyTest.swift */,
 				C81108451AF50E2A001C13E4 /* Observable+MultipleTest+CombineLatest.swift */,
 				C81108461AF50E2A001C13E4 /* Observable+MultipleTest+CombineLatest.tt */,
+				C897EC491B1123DA009C2CB0 /* Observable+MultipleTest+Zip.swift */,
+				C897EC461B112070009C2CB0 /* Observable+MultipleTest+Zip.tt */,
 				C81108471AF50E2A001C13E4 /* Observable+MultipleTest.swift */,
 				C81108481AF50E2A001C13E4 /* Observable+SingleTest.swift */,
 				C81108491AF50E2A001C13E4 /* Observable+StandardSequenceOperatorsTest.swift */,
@@ -329,6 +337,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C897EC471B112070009C2CB0 /* Observable+MultipleTest+Zip.tt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -336,6 +345,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C897EC481B112070009C2CB0 /* Observable+MultipleTest+Zip.tt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -369,6 +379,7 @@
 				C897EC3B1B10E000009C2CB0 /* BehaviorSubjectTest.swift in Sources */,
 				C81108681AF50E2A001C13E4 /* QueueTests.swift in Sources */,
 				C81108651AF50E2A001C13E4 /* Observable+SingleTest.swift in Sources */,
+				C897EC4A1B1123DA009C2CB0 /* Observable+MultipleTest+Zip.swift in Sources */,
 				C81108571AF50E2A001C13E4 /* Recorded.swift in Sources */,
 				C81108591AF50E2A001C13E4 /* TestScheduler.swift in Sources */,
 				C81108601AF50E2A001C13E4 /* Observable+AggregateTest.swift in Sources */,
@@ -408,6 +419,7 @@
 				C897EC3C1B10E000009C2CB0 /* BehaviorSubjectTest.swift in Sources */,
 				C88BB8A51B07E64B0064D411 /* QueueTests.swift in Sources */,
 				C88BB8A61B07E64B0064D411 /* Observable+SingleTest.swift in Sources */,
+				C897EC4B1B1123DA009C2CB0 /* Observable+MultipleTest+Zip.swift in Sources */,
 				C88BB8A71B07E64B0064D411 /* Recorded.swift in Sources */,
 				C88BB8A81B07E64B0064D411 /* TestScheduler.swift in Sources */,
 				C88BB8A91B07E64B0064D411 /* Observable+AggregateTest.swift in Sources */,
