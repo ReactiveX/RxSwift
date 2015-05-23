@@ -81,4 +81,17 @@ extension Event {
             }
         }
     }
+    
+    public var error: ErrorType? {
+        get {
+            switch self {
+            case .Next:
+                return nil
+            case .Error(let error):
+                return error
+            case .Completed:
+                return nil
+            }
+        }
+    }
 }
