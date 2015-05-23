@@ -41,8 +41,8 @@ class VariableTest : RxTest {
     }
     
     func testVariable_NoInitialValues() {
-        let a: Variable<Int> = Variable()
-        let b: Variable<Int> = Variable()
+        let a: Variable<Int> = Variable(0)
+        let b: Variable<Int> = Variable(0)
         
         let c = combineLatest(a, b, +)
         
