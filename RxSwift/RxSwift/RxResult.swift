@@ -33,6 +33,30 @@ public enum RxResult<T> {
 
 extension RxResult {
     
+    // Returns true if `self` is a `Success`, false otherwise.
+    public var isSuccess: Bool {
+        get {
+            switch self {
+            case .Success:
+                return true
+            default:
+                return false
+            }
+        }
+    }
+
+    // Returns true if `self` is a `Failure`, false otherwise.
+    public var isFailure: Bool {
+        get {
+            switch self {
+            case .Failure:
+                return true
+            default:
+                return false
+            }
+        }
+    }
+    
     // Returns the given function applied to the value from `Success` or returns `self` if this is a `Failure`.
     public func flatMap<U>(@noescape f: T -> RxResult<U>) -> RxResult<U> {
         switch self {
