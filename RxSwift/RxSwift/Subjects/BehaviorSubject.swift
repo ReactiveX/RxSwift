@@ -31,16 +31,17 @@ private class BehaviorSubjectSubscription<Element> : Disposable {
 }
 
 public class BehaviorSubject<Element> : SubjectType<Element, Element> {
+    typealias ObserverOf = Observer<Element>
     typealias ObserverBag = Bag<Observer<Element>>
     
     let lock = NSRecursiveLock()
     
-    private var _value: RxResult<Element>
+    private var _value: Element
     private var observers: ObserverBag = Bag()
     private var stoppedEvent: Event<Element>?
  
-    init(value: Element) {
-        self._value = success(value)
+    public init(value: Element) {
+        self._value = value
         super.init()
     }
     
@@ -48,10 +49,31 @@ public class BehaviorSubject<Element> : SubjectType<Element, Element> {
     public var value: Element {
         get {
             return lock.calculateLocked {
-                _value.get()
+                if let error = stoppedEvent?.error {
+                    // intentionally throw exception
+                    return failure(error).get()
+                }
+                else {
+                    return _value
+                }
             }
         }
     }
+
+    public var valueResult: RxResult<Element> {
+        get {
+            return lock.calculateLocked {
+                if let error = stoppedEvent?.error {
+                    // intentionally throw exception
+                    return failure(error)
+                }
+                else {
+                    return success(_value)
+                }
+            }
+        }
+    }
+    
     
     public var hasObservers: Bool {
         get {
@@ -61,35 +83,44 @@ public class BehaviorSubject<Element> : SubjectType<Element, Element> {
         }
     }
     
-    public var valueResult: RxResult<Element> {
-        get {
-            return lock.calculateLocked {
-                _value
-            }
-        }
-    }
-    
     public override func on(event: Event<Element>) {
-        let observers = lock.calculateLocked {
+        let observers = lock.calculateLocked { () -> [Observer<Element>]? in
             if self.stoppedEvent != nil {
                 return nil
             }
             
             switch event {
-            case .Next: break
+            case .Next(let boxedValue):
+                self._value = boxedValue.value
             case .Error:
                 self.stoppedEvent = event
             case .Completed:
                 self.stoppedEvent = event
             }
             
-            return self.observers
+            return self.observers.all
         }
         
         dispatch(event, observers)
     }
     
     override public func subscribe<O : ObserverType where O.Element == Element>(observer: O) -> Disposable {
+        let disposeKey = lock.calculateLocked { () -> ObserverBag.KeyType? in
+            if let stoppedEvent = stoppedEvent {
+                send(observer, stoppedEvent)
+                return nil
+            }
+            
+            let key = observers.put(ObserverOf.normalize(observer))
+            sendNext(observer, _value)
+            return key
+        }
         
+        if let disposeKey = disposeKey {
+            return BehaviorSubjectSubscription(parent: self, disposeKey: disposeKey)
+        }
+        else {
+            return DefaultDisposable()
+        }
     }
 }

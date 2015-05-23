@@ -72,6 +72,8 @@
 		C88BB8AE1B07E64B0064D411 /* VariableTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C814CEA21AF5622600E98087 /* VariableTest.swift */; };
 		C88BB8B01B07E64B0064D411 /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C811086A1AF50E43001C13E4 /* RxCocoa.framework */; };
 		C88BB8B11B07E64B0064D411 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C811086B1AF50E43001C13E4 /* RxSwift.framework */; };
+		C897EC3B1B10E000009C2CB0 /* BehaviorSubjectTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C897EC3A1B10E000009C2CB0 /* BehaviorSubjectTest.swift */; };
+		C897EC3C1B10E000009C2CB0 /* BehaviorSubjectTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C897EC3A1B10E000009C2CB0 /* BehaviorSubjectTest.swift */; };
 		C8B787FA1AF55CDE00206D02 /* Observable+ConcurrencyTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B787F91AF55CDE00206D02 /* Observable+ConcurrencyTest.swift */; };
 /* End PBXBuildFile section */
 
@@ -112,6 +114,7 @@
 		C814CEA61AF642D600E98087 /* UI+RxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UI+RxTests.swift"; sourceTree = "<group>"; };
 		C8633AE41B0A9FF300375D60 /* KVOObservableTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KVOObservableTests.swift; sourceTree = "<group>"; };
 		C88BB8B71B07E64B0064D411 /* RxTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RxTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C897EC3A1B10E000009C2CB0 /* BehaviorSubjectTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BehaviorSubjectTest.swift; sourceTree = "<group>"; };
 		C8B787F91AF55CDE00206D02 /* Observable+ConcurrencyTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Observable+ConcurrencyTest.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -248,6 +251,7 @@
 				C811084A1AF50E2A001C13E4 /* Observable+TimeTest.swift */,
 				C811084B1AF50E2A001C13E4 /* QueueTests.swift */,
 				C814CEA21AF5622600E98087 /* VariableTest.swift */,
+				C897EC3A1B10E000009C2CB0 /* BehaviorSubjectTest.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -362,6 +366,7 @@
 				C811084F1AF50E2A001C13E4 /* ColdObservable.swift in Sources */,
 				C81108511AF50E2A001C13E4 /* HotObservable.swift in Sources */,
 				C81108541AF50E2A001C13E4 /* Observable.Extensions.swift in Sources */,
+				C897EC3B1B10E000009C2CB0 /* BehaviorSubjectTest.swift in Sources */,
 				C81108681AF50E2A001C13E4 /* QueueTests.swift in Sources */,
 				C81108651AF50E2A001C13E4 /* Observable+SingleTest.swift in Sources */,
 				C81108571AF50E2A001C13E4 /* Recorded.swift in Sources */,
@@ -400,6 +405,7 @@
 				C88BB8A21B07E64B0064D411 /* ColdObservable.swift in Sources */,
 				C88BB8A31B07E64B0064D411 /* HotObservable.swift in Sources */,
 				C88BB8A41B07E64B0064D411 /* Observable.Extensions.swift in Sources */,
+				C897EC3C1B10E000009C2CB0 /* BehaviorSubjectTest.swift in Sources */,
 				C88BB8A51B07E64B0064D411 /* QueueTests.swift in Sources */,
 				C88BB8A61B07E64B0064D411 /* Observable+SingleTest.swift in Sources */,
 				C88BB8A71B07E64B0064D411 /* Recorded.swift in Sources */,

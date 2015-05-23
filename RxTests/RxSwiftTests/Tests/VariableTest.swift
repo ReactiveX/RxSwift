@@ -40,35 +40,6 @@ class VariableTest : RxTest {
         XCTAssertEqual(latestValue!, 14)
     }
     
-    func testVariable_NoInitialValues() {
-        let a: Variable<Int> = Variable(0)
-        let b: Variable<Int> = Variable(0)
-        
-        let c = combineLatest(a, b, +)
-        
-        var latestValue: Int? = nil
-        
-        let subscription = c >- subscribeNext { next in
-            latestValue = next
-        }
-        
-        XCTAssertTrue(latestValue == nil)
-        
-        a.next(5)
-        
-        XCTAssertTrue(latestValue == nil)
-        
-        b.next(9)
-        
-        XCTAssertTrue(latestValue == 14)
-        
-        subscription.dispose()
-        
-        a.next(10)
-        
-        XCTAssertTrue(latestValue == 14)
-    }
-    
     func testVariable_Error() {
         let a = Variable(1)
         let b = Variable(2)
