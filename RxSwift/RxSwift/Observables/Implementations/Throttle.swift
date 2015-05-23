@@ -8,8 +8,10 @@
 
 import Foundation
 
-class Throttle_<Element, SchedulerType: Scheduler> : Sink<Element>, ObserverType {
+class Throttle_<O: ObserverType, SchedulerType: Scheduler> : Sink<O>, ObserverType {
+    typealias Element = O.Element
     typealias ParentType = Throttle<Element, SchedulerType>
+    
     typealias ThrottleState = (
         value: Element?,
         cancellable: SerialDisposable,
@@ -25,7 +27,7 @@ class Throttle_<Element, SchedulerType: Scheduler> : Sink<Element>, ObserverType
         id: 0
     )
     
-    init(parent: ParentType, observer: ObserverOf<Element>, cancel: Disposable) {
+    init(parent: ParentType, observer: O, cancel: Disposable) {
         self.parent = parent
         
         super.init(observer: observer, cancel: cancel)
@@ -60,14 +62,14 @@ class Throttle_<Element, SchedulerType: Scheduler> : Sink<Element>, ObserverType
                 self.throttleState.value = boxedValue.value
             case .Error(let error):
                 self.throttleState.value = nil
-                self.observer.on(event)
+                trySend(observer, event)
                 self.dispose()
             case .Completed:
                 self.throttleState.value = nil
                 if let value = oldValue {
-                    sendNext(observer, value)
+                    trySendNext(observer, value)
                 }
-                sendCompleted(observer)
+                trySendCompleted(observer)
                 self.dispose()
             }
             
@@ -90,7 +92,7 @@ class Throttle_<Element, SchedulerType: Scheduler> : Sink<Element>, ObserverType
                 return SuccessResult
             }.recoverWith { e -> RxResult<Void> in
                 self.lock.performLocked {
-                    sendError(observer, e)
+                    trySendError(observer, e)
                     self.dispose()
                 }
                 return SuccessResult
@@ -107,7 +109,7 @@ class Throttle_<Element, SchedulerType: Scheduler> : Sink<Element>, ObserverType
         }
         
         if let value = originalValue {
-            sendNext(observer, value)
+            trySendNext(observer, value)
         }
     }
 }
@@ -124,7 +126,7 @@ class Throttle<Element, SchedulerType: Scheduler> : Producer<Element> {
         self.scheduler = scheduler
     }
     
-    override func run(observer: ObserverOf<Element>, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
+    override func run<O: ObserverType where O.Element == Element>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
         let sink = Throttle_(parent: self, observer: observer, cancel: cancel)
         setSink(sink)
         return sink.run()

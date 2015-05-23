@@ -16,7 +16,11 @@ public protocol ObserverType : class {
     func on(event: Event<Element>)
 }
 
-public func sendNext<O: ObserverType, Element where O.Element == Element>(observer: O, element: Element) {
+public func send<O: ObserverType>(observer: O, event: Event<O.Element>) {
+    observer.on(event)
+}
+
+public func sendNext<O: ObserverType>(observer: O, element: O.Element) {
     observer.on(.Next(RxBox(element)))
 }
 
@@ -28,7 +32,27 @@ public func sendCompleted<O: ObserverType>(observer: O) {
     observer.on(.Completed)
 }
 
+func trySend<O: ObserverType>(observer: O?, event: Event<O.Element>) {
+    observer?.on(event)
+}
+
+func trySendNext<O: ObserverType>(observer: O?, element: O.Element) {
+    observer?.on(.Next(RxBox(element)))
+}
+
+public func trySendError<O: ObserverType>(observer: O?, error: ErrorType) {
+    observer?.on(.Error(error))
+}
+
+public func trySendCompleted<O: ObserverType>(observer: O?) {
+    observer?.on(.Completed)
+}
+
 // this is temporary only
+
+public func send<Element>(observer: ObserverOf<Element>, event: Event<Element>) {
+    observer.on(event)
+}
 
 public func sendNext<Element>(observer: ObserverOf<Element>, element: Element) {
     observer.on(.Next(RxBox(element)))

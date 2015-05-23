@@ -8,9 +8,9 @@
 
 import Foundation
 
-class Catch_Impl<ElementType> : ObserverType {
-    typealias Element = ElementType
-    typealias Parent = Catch_<Element>
+class Catch_Impl<O: ObserverType> : ObserverType {
+    typealias Element = O.Element
+    typealias Parent = Catch_<O>
     
     let parent: Parent
     
@@ -18,8 +18,8 @@ class Catch_Impl<ElementType> : ObserverType {
         self.parent = parent
     }
     
-    func on(event: Event<ElementType>) {
-        parent.observer.on(event)
+    func on(event: Event<Element>) {
+        trySend(parent.observer, event)
         
         switch event {
         case .Next:
@@ -32,14 +32,14 @@ class Catch_Impl<ElementType> : ObserverType {
     }
 }
 
-class Catch_<ElementType> : Sink<ElementType>, ObserverType {
-    typealias Element = ElementType
+class Catch_<O: ObserverType> : Sink<O>, ObserverType {
+    typealias Element = O.Element
     typealias Parent = Catch<Element>
     
     let parent: Parent
     let subscription = SerialDisposable()
     
-    init(parent: Parent, observer: ObserverOf<Element>, cancel: Disposable) {
+    init(parent: Parent, observer: O, cancel: Disposable) {
         self.parent = parent
         super.init(observer: observer, cancel: cancel)
     }
@@ -54,13 +54,13 @@ class Catch_<ElementType> : Sink<ElementType>, ObserverType {
     func on(event: Event<Element>) {
         switch event {
         case .Next:
-            self.observer.on(event)
+            trySend(observer, event)
         case .Completed:
-            self.observer.on(event)
+            trySend(observer, event)
             self.dispose()
         case .Error(let error):
             parent.handler(error).recoverWith { error2 in
-                sendError(observer, error2)
+                trySendError(observer, error2)
                 self.dispose()
                 return failure(error2)
             }.flatMap { catchObservable -> RxResult<Void> in
@@ -88,20 +88,21 @@ class Catch<Element> : Producer<Element> {
         self.handler = handler
     }
     
-    override func run(observer: ObserverOf<Element>, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
+    override func run<O: ObserverType where O.Element == Element>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
         let sink = Catch_(parent: self, observer: observer, cancel: cancel)
         setSink(sink)
         return sink.run()
     }
 }
 
-class CatchToResult_<ElementType> : Sink <RxResult<ElementType>>, ObserverType {
+// O: ObserverType caused compiler crashes, so let's leave that for now
+class CatchToResult_<ElementType> : Sink<Observer<RxResult<ElementType>>>, ObserverType {
     typealias Element = ElementType
-    typealias Parent = CatchToResult<ElementType>
+    typealias Parent = CatchToResult<Element>
     
     let parent: Parent
     
-    init(parent: Parent, observer: ObserverOf <RxResult<ElementType>>, cancel: Disposable) {
+    init(parent: Parent, observer: Observer<RxResult<Element>>, cancel: Disposable) {
         self.parent = parent
         super.init(observer: observer, cancel: cancel)
     }
@@ -114,13 +115,13 @@ class CatchToResult_<ElementType> : Sink <RxResult<ElementType>>, ObserverType {
         switch event {
         case .Next(let boxedValue):
             let value = boxedValue.value
-            sendNext(observer, success(value))
+            trySendNext(observer, success(value))
         case .Completed:
-            sendCompleted(observer)
+            trySendCompleted(observer)
             self.dispose()
         case .Error(let error):
-            sendNext(observer, failure(error))
-            sendCompleted(observer)
+            trySendNext(observer, failure(error))
+            trySendCompleted(observer)
             self.dispose()
         }
     }
@@ -133,8 +134,8 @@ class CatchToResult<Element> : Producer <RxResult<Element>> {
         self.source = source
     }
     
-    override func run(observer: ObserverOf <RxResult<Element>>, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
-        let sink = CatchToResult_(parent: self, observer: observer, cancel: cancel)
+    override func run<O: ObserverType where O.Element == RxResult<Element>>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
+        let sink = CatchToResult_(parent: self, observer: Observer<RxResult<Element>>.normalize(observer), cancel: cancel)
         setSink(sink)
         return sink.run()
     }

@@ -3563,6 +3563,5 @@ extension ObservableMultipleTest {
         XCTAssertEqual(e0.subscriptions, [Subscription(200, 245)])
         XCTAssertEqual(e1.subscriptions, [Subscription(200, 245)])
     }
-    
 
 }

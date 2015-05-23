@@ -8,13 +8,14 @@
 
 import Foundation
 
-class Where_<ElementType>: Sink<ElementType>, ObserverType {
+class Where_<O : ObserverType>: Sink<O>, ObserverType {
+    typealias Element = O.Element
+    
     typealias Parent = Where<Element>
-    typealias Element = ElementType
     
     let parent: Parent
     
-    init(parent: Parent, observer: ObserverOf<Element>, cancel: Disposable) {
+    init(parent: Parent, observer: O, cancel: Disposable) {
         self.parent = parent
         super.init(observer: observer, cancel: cancel)
     }
@@ -24,18 +25,18 @@ class Where_<ElementType>: Sink<ElementType>, ObserverType {
             case .Next(let boxedValue):
                 let value = boxedValue.value
                 _ = self.parent.predicate(value).recoverWith { e in
-                    sendError(observer, e)
+                    trySendError(observer, e)
                     self.dispose()
                     return failure(e)
                 }.flatMap { satisfies -> RxResult<Void> in
                     if satisfies {
-                        self.observer.on(event)
+                        trySend(observer, event)
                     }
                     return SuccessResult
                 }
             case .Completed: fallthrough
             case .Error:
-                observer.on(event)
+                trySend(observer, event)
                 self.dispose()
         }
     }
@@ -52,7 +53,7 @@ class Where<Element> : Producer<Element> {
         self.predicate = predicate
     }
     
-    override func run(observer: ObserverOf<Element>, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
+    override func run<O: ObserverType where O.Element == Element>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
         let sink = Where_(parent: self, observer: observer, cancel: cancel)
         setSink(sink)
         return source.subscribe(sink)

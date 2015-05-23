@@ -8,13 +8,13 @@
 
 import Foundation
 
-class DistinctUntilChanged_<ElementType, Key>: Sink<ElementType>, ObserverType {
-    typealias Element = ElementType
+class DistinctUntilChanged_<O: ObserverType, Key>: Sink<O>, ObserverType {
+    typealias Element = O.Element
     
-    let parent: DistinctUntilChanged<ElementType, Key>
+    let parent: DistinctUntilChanged<Element, Key>
     var currentKey: Key? = nil
     
-    init(parent: DistinctUntilChanged<ElementType, Key>, observer: ObserverOf<ElementType>, cancel: Disposable) {
+    init(parent: DistinctUntilChanged<Element, Key>, observer: O, cancel: Disposable) {
         self.parent = parent
         super.init(observer: observer, cancel: cancel)
     }
@@ -40,17 +40,17 @@ class DistinctUntilChanged_<ElementType, Key>: Sink<ElementType>, ObserverType {
                     
                     self.currentKey = key
                     
-                    observer.on(event)
+                    trySend(observer, event)
                     return SuccessResult
                 }
             }.recoverWith { error -> RxResult<Void> in
-                sendError(observer, error)
+                trySendError(observer, error)
                 self.dispose()
                 return SuccessResult
             }
         case .Error: fallthrough
         case .Completed:
-            observer.on(event)
+            trySend(observer, event)
             self.dispose()
         }
     }
@@ -70,7 +70,7 @@ class DistinctUntilChanged<Element, Key>: Producer<Element> {
         self.comparer = comparer
     }
     
-    override func run(observer: ObserverOf<Element>, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
+    override func run<O: ObserverType where O.Element == Element>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
         let sink = DistinctUntilChanged_(parent: self, observer: observer, cancel: cancel)
         setSink(sink)
         return source.subscribe(sink)

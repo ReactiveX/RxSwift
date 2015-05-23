@@ -16,14 +16,16 @@ protocol CombineLatestProtocol : class {
     func done(index: Int)
 }
 
-class CombineLatestSink<Element> : Sink<Element>, CombineLatestProtocol {
+class CombineLatestSink<O: ObserverType> : Sink<O>, CombineLatestProtocol {
+    typealias Element = O.Element
+    
     var lock = NSRecursiveLock()
     
     var hasValueAll: Bool
     var hasValue: [Bool]
     var isDone: [Bool]
     
-    init(arity: Int, observer: ObserverOf<Element>, cancel: Disposable) {
+    init(arity: Int, observer: O, cancel: Disposable) {
         self.hasValueAll = false
         self.hasValue = [Bool](count: arity, repeatedValue: false)
         self.isDone = [Bool](count: arity, repeatedValue: false)
@@ -58,10 +60,10 @@ class CombineLatestSink<Element> : Sink<Element>, CombineLatestProtocol {
             let maybeRes = getResult()
             
             _ = maybeRes.flatMap { res in
-                sendNext(observer, res)
+                trySendNext(observer, res)
                 return SuccessResult
             }.recoverWith { e -> RxResult<Void> in
-                sendError(observer, e)
+                trySendError(observer, e)
                 self.dispose()
                 return SuccessResult
             }
@@ -78,14 +80,14 @@ class CombineLatestSink<Element> : Sink<Element>, CombineLatestProtocol {
             }
             
             if allOthersDone {
-                sendCompleted(observer)
+                trySendCompleted(observer)
                 self.dispose()
             }
         }
     }
     
     func fail(error: ErrorType) {
-        sendError(observer, error)
+        trySendError(observer, error)
         self.dispose()
     }
     
@@ -102,7 +104,7 @@ class CombineLatestSink<Element> : Sink<Element>, CombineLatestProtocol {
         }
         
         if allDone {
-            sendCompleted(observer)
+            trySendCompleted(observer)
             self.dispose()
         }
     }

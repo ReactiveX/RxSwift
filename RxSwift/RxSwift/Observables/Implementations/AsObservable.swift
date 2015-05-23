@@ -8,15 +8,15 @@
 
 import Foundation
 
-class AsObservableSink_<ElementType> : Sink<ElementType>, ObserverType {
-    typealias Element = ElementType
+class AsObservableSink_<O: ObserverType> : Sink<O>, ObserverType {
+    typealias Element = O.Element
     
-    override init(observer: ObserverOf<Element>, cancel: Disposable) {
+    override init(observer: O, cancel: Disposable) {
         super.init(observer: observer, cancel: cancel)
     }
     
     func on(event: Event<Element>) {
-        self.observer.on(event)
+        trySend(observer, event)
         
         switch event {
         case .Error: fallthrough
@@ -44,7 +44,7 @@ class AsObservable<Element> : Producer<Element> {
         return source
     }
     
-    override func run(observer: ObserverOf<Element>, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
+    override func run<O: ObserverType where O.Element == Element>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
         let sink = AsObservableSink_(observer: observer, cancel: cancel)
         setSink(sink)
         return source.subscribe(sink)

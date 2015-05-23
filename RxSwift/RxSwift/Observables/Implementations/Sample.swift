@@ -8,9 +8,8 @@
 
 import Foundation
 
-class SampleImpl_<ElementType, SampleType> : ObserverType {
-    typealias Element = SampleType
-    typealias Parent = Sample_<ElementType, SampleType>
+class SampleImpl_<O: ObserverType, ElementType, SampleType where O.Element == ElementType> : Observer<SampleType> {
+    typealias Parent = Sample_<O, SampleType>
     
     let parent: Parent
     
@@ -18,7 +17,7 @@ class SampleImpl_<ElementType, SampleType> : ObserverType {
         self.parent = parent
     }
     
-    func on(event: Event<Element>) {
+    override func on(event: Event<Element>) {
         parent.lock.performLocked {
             switch event {
             case .Next:
@@ -27,23 +26,23 @@ class SampleImpl_<ElementType, SampleType> : ObserverType {
                         parent.sampleState.element = nil
                     }
                     
-                    parent.observer.on(element)
+                    trySend(parent.observer, element)
                 }
 
                 if parent.sampleState.atEnd {
-                    sendCompleted(parent.observer)
+                    trySendCompleted(parent.observer)
                     parent.dispose()
                 }
             case .Error(let e):
-                sendError(parent.observer, e)
+                trySendError(parent.observer, e)
                 parent.dispose()
             case .Completed:
                 if let element = parent.sampleState.element {
                     parent.sampleState.element = nil
-                    parent.observer.on(element)
+                    trySend(parent.observer, element)
                 }
                 if parent.sampleState.atEnd {
-                    sendCompleted(parent.observer)
+                    trySendCompleted(parent.observer)
                     parent.dispose()
                 }
             }
@@ -51,11 +50,11 @@ class SampleImpl_<ElementType, SampleType> : ObserverType {
     }
 }
 
-class Sample_<ElementType, SampleType> : Sink<ElementType>, ObserverType {
-    typealias Element = ElementType
-    typealias Parent = Sample<ElementType, SampleType>
+class Sample_<O: ObserverType, SampleType> : Sink<O>, ObserverType {
+    typealias Element = O.Element
+    typealias Parent = Sample<Element, SampleType>
     typealias SampleState = (
-        element: Event<ElementType>?,
+        element: Event<Element>?,
         atEnd: Bool,
         sourceSubscription: SingleAssignmentDisposable
     )
@@ -70,7 +69,7 @@ class Sample_<ElementType, SampleType> : Sink<ElementType>, ObserverType {
         sourceSubscription: SingleAssignmentDisposable()
     )
     
-    init(parent: Parent, observer: ObserverOf<Element>, cancel: Disposable) {
+    init(parent: Parent, observer: O, cancel: Disposable) {
         self.parent = parent
         super.init(observer: observer, cancel: cancel)
     }
@@ -88,7 +87,7 @@ class Sample_<ElementType, SampleType> : Sink<ElementType>, ObserverType {
             case .Next:
                 self.sampleState.element = event
             case .Error:
-                self.observer.on(event)
+                trySend(observer, event)
                 self.dispose()
             case .Completed:
                 self.sampleState.atEnd = true
@@ -110,7 +109,7 @@ class Sample<Element, SampleType> : Producer<Element> {
         self.onlyNew = onlyNew
     }
     
-    override func run(observer: ObserverOf<Element>, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
+    override func run<O: ObserverType where O.Element == Element>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
         let sink = Sample_(parent: self, observer: observer, cancel: cancel)
         setSink(sink)
         return sink.run()

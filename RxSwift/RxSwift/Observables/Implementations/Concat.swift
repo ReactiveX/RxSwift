@@ -9,16 +9,16 @@
 import Foundation
 
 class Concat_<Element> : ConcatSink<Element> {
-    override init(observer: ObserverOf<Element>, cancel: Disposable) {
+    override init(observer: Observer<Element>, cancel: Disposable) {
         super.init(observer: observer, cancel: cancel)
     }
  
     override func on(event: Event<Element>) {
         switch event {
         case .Next(let next):
-            observer.on(event)
+            trySend(observer, event)
         case .Error:
-            observer.on(event)
+            trySend(observer, event)
             dispose()
         case .Completed:
             super.on(event)
@@ -33,8 +33,9 @@ class Concat<Element> : Producer<Element> {
         self.sources = sources
     }
     
-    override func run(observer: ObserverOf<Element>, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
-        let sink = Concat_(observer: observer, cancel: cancel)
+    override func run<O: ObserverType where O.Element == Element>
+        (observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
+        let sink = Concat_(observer: Observer<Element>.normalize(observer), cancel: cancel)
         setSink(sink)
         
         return sink.run(sources)

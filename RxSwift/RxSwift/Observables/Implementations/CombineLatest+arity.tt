@@ -30,14 +30,15 @@ public func combineLatest<<%= ", ".join(map(1...i) { "E\($0)" }) %>, R>
     )
 }
 
-class CombineLatestSink<%= i %>_<<%= ", ".join(map(1...i) { "E\($0)" }) %>, R> : CombineLatestSink<R> {
+class CombineLatestSink<%= i %>_<<%= ", ".join(map(1...i) { "E\($0)" }) %>, O: ObserverType> : CombineLatestSink<O> {
+    typealias R = O.Element
     typealias Parent = CombineLatest<%= i %><<%= ", ".join(map(1...i) { "E\($0)" }) %>, R>
 
     let parent: Parent
 
 <%= "\n".join(map(1...i) { "    var observer\($0): CombineLatestObserver<E\($0)>! = nil" }) %>
 
-    init(parent: Parent, observer: ObserverOf<R>, cancel: Disposable) {
+    init(parent: Parent, observer: O, cancel: Disposable) {
         self.parent = parent
         super.init(arity: <%= i %>, observer: observer, cancel: cancel)
     }
@@ -72,7 +73,7 @@ class CombineLatest<%= i %><<%= ", ".join(map(1...i) { "E\($0)" }) %>, R> : Prod
         self.resultSelector = resultSelector
     }
 
-    override func run(observer: ObserverOf<R>, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
+    override func run<O: ObserverType where O.Element == R>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
         let sink = CombineLatestSink<%= i %>_(parent: self, observer: observer, cancel: cancel)
         setSink(sink)
         return sink.run()

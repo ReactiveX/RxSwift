@@ -8,14 +8,14 @@
 
 import Foundation
 
-class Aggregate_<SourceType, AccumulateType, ResultType> : Sink<ResultType>, ObserverType {
-    typealias Element = SourceType
+class Aggregate_<SourceType, AccumulateType, O: ObserverType> : Sink<O>, ObserverType {
+    typealias ResultType = O.Element
     typealias ParentType = Aggregate<SourceType, AccumulateType, ResultType>
     
     let parent: ParentType
     var accumulation: AccumulateType
     
-    init(parent: ParentType, observer: ObserverOf<ResultType>, cancel: Disposable) {
+    init(parent: ParentType, observer: O, cancel: Disposable) {
         self.parent = parent
         
         self.accumulation = parent.seed
@@ -31,21 +31,21 @@ class Aggregate_<SourceType, AccumulateType, ResultType> : Sink<ResultType>, Obs
                 self.accumulation = result
                 return SuccessResult
             }.recoverWith { e -> RxResult<Void> in
-                sendError(observer, e)
+                trySendError(observer, e)
                 self.dispose()
                 return SuccessResult
             }
         case .Error(let e):
-            sendError(observer, e)
+            trySendError(observer, e)
             self.dispose()
         case .Completed:
             parent.resultSelector(self.accumulation).flatMap { result in
-                sendNext(observer, result)
-                sendCompleted(observer)
+                trySendNext(observer, result)
+                trySendCompleted(observer)
                 self.dispose()
                 return SuccessResult
             }.recoverWith { error -> RxResult<Void> in
-                sendError(observer, error)
+                trySendError(observer, error)
                 self.dispose()
                 return SuccessResult
             }
@@ -69,7 +69,7 @@ class Aggregate<SourceType, AccumulateType, ResultType> : Producer<ResultType> {
         self.resultSelector = resultSelector
     }
     
-    override func run(observer: ObserverOf<ResultType>, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
+    override func run<O: ObserverType where O.Element == ResultType>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
         let sink = Aggregate_(parent: self, observer: observer, cancel: cancel)
         setSink(sink)
         return source.subscribe(sink)
