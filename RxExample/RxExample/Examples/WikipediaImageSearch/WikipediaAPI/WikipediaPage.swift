@@ -24,7 +24,7 @@ struct WikipediaPage {
         let text = json.valueForKey("parse")?.valueForKey("text")?.valueForKey("*") as? String
         
         if title == nil || text == nil {
-            return .Error(apiError("Error parsing page content"))
+            return failure(apiError("Error parsing page content"))
         }
         
         return success(WikipediaPage(title: title!, text: text!))
