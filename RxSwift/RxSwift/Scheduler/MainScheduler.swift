@@ -29,7 +29,7 @@ public class MainScheduler : DispatchQueueScheduler {
         }
     }
     
-    public override func schedule<StateType>(state: StateType, action: (StateType) -> Result<Void>) -> Result<Disposable> {
+    public override func schedule<StateType>(state: StateType, action: (StateType) -> RxResult<Void>) -> RxResult<Disposable> {
         if NSThread.currentThread().isMainThread {
             ensureScheduledSuccessfully(action(state))
                 

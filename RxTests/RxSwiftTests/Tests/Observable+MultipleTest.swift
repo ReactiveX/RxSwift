@@ -79,7 +79,7 @@ extension ObservableMultipleTest {
         let res = scheduler.start {
             o1 >- catchOrDie { e in
                 handlerCalled = scheduler.clock
-                return .Error(testError1)
+                return failure(testError1)
             }
         }
         
@@ -106,14 +106,14 @@ extension ObservableMultipleTest {
             error(230, testError)
         ])
         
-        let safeSequence: Observable<Result<Int>> = xs >- catchToResult
+        let safeSequence: Observable <RxResult<Int>> = xs >- catchToResult
         
-        let res = scheduler.start { () -> Observable<Result<Int>> in safeSequence }
+        let res = scheduler.start { () -> Observable <RxResult<Int>> in safeSequence }
         
         XCTAssertEqual(res.messages, [
             next(210, success(2)),
             next(220, success(3)),
-            next(230, .Error(testError)),
+            next(230, failure(testError)),
             completed(230)
         ])
         
@@ -132,9 +132,9 @@ extension ObservableMultipleTest {
             completed(230)
             ])
         
-        let safeSequence: Observable<Result<Int>> = xs >- catchToResult
+        let safeSequence: Observable <RxResult<Int>> = xs >- catchToResult
         
-        let res = scheduler.start { () -> Observable<Result<Int>> in safeSequence }
+        let res = scheduler.start { () -> Observable <RxResult<Int>> in safeSequence }
         
         XCTAssertEqual(res.messages, [
             next(210, success(2)),

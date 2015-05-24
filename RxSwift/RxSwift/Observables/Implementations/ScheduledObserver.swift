@@ -15,6 +15,6 @@ enum ScheduledState: Int {
     case Faulted = 9
 }
 
-public class ScheduledObserver<Element> : ObserverBase<Element> {
+class ScheduledObserver<Element> : ObserverBase<Element> {
     
 }

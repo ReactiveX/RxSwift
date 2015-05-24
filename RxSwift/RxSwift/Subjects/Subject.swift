@@ -9,7 +9,7 @@
 import Foundation
 
 class Subscription<Element> : Disposable {
-    typealias ObserverType = ObserverOf<Element>
+    typealias ObserverType = Observer<Element>
     typealias KeyType = Bag<Void>.KeyType
     
     private let subject : Subject<Element>
@@ -37,9 +37,10 @@ class Subscription<Element> : Disposable {
 
 
 public class Subject<Element> : SubjectType<Element, Element>, Disposable {
-    typealias Observer = ObserverOf<Element>
+    typealias ObserverOf = Observer<Element>
     typealias KeyType = Bag<Void>.KeyType
-    typealias Observers = Bag<Observer>
+    typealias Observers = Bag<ObserverOf>
+
     typealias State = (
         disposed: Bool,
         observers: Observers,
@@ -67,7 +68,7 @@ public class Subject<Element> : SubjectType<Element, Element>, Disposable {
     public override func on(event: Event<Element>) {
         switch event {
         case .Next(let value):
-            let observers = lock.calculateLocked { () -> [Observer]? in
+            let observers = lock.calculateLocked { () -> [ObserverOf]? in
                 let state = self.state
                 let shouldReturnImmediatelly = state.disposed || state.stoppedEvent != nil
                 let observers: [Observer]? = shouldReturnImmediatelly ? nil : state.observers.all
@@ -83,7 +84,7 @@ public class Subject<Element> : SubjectType<Element, Element>, Disposable {
             break
         }
         
-        let observers: [Observer] = lock.calculateLocked {
+        let observers: [Observer] = lock.calculateLocked { () -> [ObserverOf] in
             let state = self.state
             
             var observers = self.state.observers.all
@@ -113,12 +114,12 @@ public class Subject<Element> : SubjectType<Element, Element>, Disposable {
             }
             
             if state.disposed {
-                observer.on(.Error(DisposedError))
+                sendError(observer, DisposedError)
                 return DefaultDisposable()
             }
             
-            let key = state.observers.put(ObserverOf(observer))
-            return Subscription(subject: self, key: key, observer: ObserverOf(observer))
+            let key = state.observers.put(Observer.normalize(observer))
+            return Subscription(subject: self, key: key, observer: Observer.normalize(observer))
         }
     }
 

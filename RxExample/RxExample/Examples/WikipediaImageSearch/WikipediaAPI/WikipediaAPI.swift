@@ -42,7 +42,7 @@ class DefaultWikipediaAPI: WikipediaAPI {
         return $.URLSession.rx_JSON(url)
             >- observeSingleOn($.backgroundWorkScheduler)
             >- mapOrDie { json in
-                return castOrFail(json) >== { (json: [AnyObject]) in
+                return castOrFail(json).flatMap { (json: [AnyObject]) in
                     return WikipediaSearchResult.parseJSON(json)
                 }
             }
@@ -60,7 +60,7 @@ class DefaultWikipediaAPI: WikipediaAPI {
         
         return $.URLSession.rx_JSON(url!)
             >- mapOrDie { jsonResult in
-                return castOrFail(jsonResult) >== { (json: NSDictionary) in
+                return castOrFail(jsonResult).flatMap { (json: NSDictionary) in
                     return WikipediaPage.parseJSON(json)
                 }
             }

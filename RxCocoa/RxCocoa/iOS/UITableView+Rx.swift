@@ -79,14 +79,12 @@ public class RxTableViewDelegate: RxScrollViewDelegate, UITableViewDelegate {
     public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
-        let event = Event.Next(Box((tableView, indexPath.row)))
-        
-        dispatch(event, tableViewObservers)
+        dispatchNext((tableView, indexPath.row), tableViewObservers)
     }
     
     deinit {
         if tableViewObservers.count > 0 {
-            handleVoidObserverResult(.Error(rxError(RxCocoaError.InvalidOperation, "Something went wrong. Deallocating table view delegate while there are still subscribed observers means that some subscription was left undisposed.")))
+            handleVoidObserverResult(failure(rxError(RxCocoaError.InvalidOperation, "Something went wrong. Deallocating table view delegate while there are still subscribed observers means that some subscription was left undisposed.")))
         }
     }
 }

@@ -12,13 +12,13 @@ public class CompositeDisposable : DisposeBase, Disposable {
     public typealias BagKey = Bag<Disposable>.KeyType
     
     typealias State = (
-        disposables: MutatingBox<Bag<Disposable>>!,
+        disposables: RxMutableBox<Bag<Disposable>>!,
         disposed: Bool
     )
     
     var lock: Lock = Lock()
     var state: State = (
-        disposables: MutatingBox(Bag()),
+        disposables: RxMutableBox(Bag()),
         disposed: false
     )
     

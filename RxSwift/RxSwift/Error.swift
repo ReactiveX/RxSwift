@@ -13,7 +13,6 @@ let RxCompositeFailures = "RxCompositeFailures"
 
 public enum RxErrorCode : Int {
     case Unknown   = 0
-    case Composite = 1
     case Cast      = 2
     case Disposed  = 3
 }
@@ -29,11 +28,4 @@ public let DisposedError = NSError(domain: RxErrorDomain, code: RxErrorCode.Disp
 
 func removingObserverFailed() {
     rxFatalError("Removing observer for key failed")
-}
-
-func createCompositeFailure<T>(failures: [Result<T>]) -> Result<T> {
-    let description: [NSObject : AnyObject] = [ RxCompositeFailures : Box(failures.map { $0.error! }) ]
-    let e = NSError(domain: RxErrorDomain, code: RxErrorCode.Composite.rawValue , userInfo: description)
-    
-    return .Error(e)
 }

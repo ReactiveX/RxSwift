@@ -17,7 +17,7 @@ class VirtualTimeSchedulerBase : Scheduler, Printable {
     typealias Time = Int
     typealias TimeInterval = Int
     
-    typealias ScheduledItem = (() -> Result<Void>, AnyObject, Int, time: Int)
+    typealias ScheduledItem = (() -> RxResult<Void>, AnyObject, Int, time: Int)
     
     var clock : Time
     var enabled : Bool
@@ -42,21 +42,21 @@ class VirtualTimeSchedulerBase : Scheduler, Printable {
         self.enabled = false
     }
     
-    func schedule<StateType>(state: StateType, action: (StateType) -> Result<Void>) -> Result<Disposable> {
+    func schedule<StateType>(state: StateType, action: (StateType) -> RxResult<Void>) -> RxResult<Disposable> {
         return self.scheduleRelative(state, dueTime: 0, action: action)
     }
     
-    func scheduleRelative<StateType>(state: StateType, dueTime: TimeInterval, action: (StateType) -> Result<Void>) -> Result<Disposable> {
+    func scheduleRelative<StateType>(state: StateType, dueTime: TimeInterval, action: (StateType) -> RxResult<Void>) -> RxResult<Disposable> {
         return schedule(state, time: now + dueTime, action: action)
     }
     
-    func schedule<StateType>(state: StateType, time: Time, action: (StateType) -> Result<Void>) -> Result<Disposable> {
+    func schedule<StateType>(state: StateType, time: Time, action: (StateType) -> RxResult<Void>) -> RxResult<Disposable> {
         let latestID = self.ID
         ID = ID &+ 1
         
         let actionDescription : ScheduledItem = ({
             return action(state)
-        }, Box(state), latestID, time)
+        }, RxBox(state), latestID, time)
         
         schedulerQueue.append(actionDescription)
         

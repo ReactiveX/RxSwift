@@ -11,7 +11,7 @@ import Foundation
 // filter aka where
 
 public func filterOrDie<E>
-    (predicate: (E) -> Result<Bool>)
+    (predicate: (E) -> RxResult<Bool>)
     -> (Observable<E> -> Observable<E>) {
     return { source in
         return whereOrDie(predicate)(source)
@@ -27,7 +27,7 @@ public func filter<E>
 }
 
 public func whereOrDie<E>
-    (predicate: (E) -> Result<Bool>)
+    (predicate: (E) -> RxResult<Bool>)
     -> (Observable<E> -> Observable<E>) {
     return { source in
         return Where(source: source, predicate: predicate)

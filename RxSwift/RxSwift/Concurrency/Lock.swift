@@ -8,20 +8,20 @@
 
 import Foundation
 
-public struct Lock {
+struct Lock {
     private var _lock = OS_SPINLOCK_INIT
     
-    public init() {
+    init() {
         
     }
     
-    public mutating func performLocked(@noescape action: () -> Void) {
+    mutating func performLocked(@noescape action: () -> Void) {
         OSSpinLockLock(&_lock)
         action()
         OSSpinLockUnlock(&_lock)
     }
     
-    public mutating func calculateLocked<T>(@noescape action: () -> T) -> T {
+    mutating func calculateLocked<T>(@noescape action: () -> T) -> T {
         OSSpinLockLock(&_lock)
         let result = action()
         OSSpinLockUnlock(&_lock)

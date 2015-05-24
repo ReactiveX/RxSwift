@@ -9,22 +9,20 @@
 import Foundation
 
 // Variables can be useful when interacting with imperative 
-public class Variable<Element>: ReplaySubject<Element> {
+public class Variable<Element>: BehaviorSubject<Element> {
     typealias VariableState = Element
     
-    public init(_ firstElement: Element) {
-        super.init(firstElement: firstElement)
-    }
-    
-    public init() {
-        super.init(bufferSize: 1)
+    public init(_ value: Element) {
+        super.init(value: value)
     }
     
     public func next(value: Element) {
-        on(.Next(Box(value)))
+        sendNext(self, value)
     }
 }
 
+
+@availability(*, deprecated=1.4, message="Please use variable.next, it's more clear")
 public func << <E>(variable: Variable<E>, element: E) {
-    variable.on(.Next(Box(element)))
+    variable.next(element)
 }

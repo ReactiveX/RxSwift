@@ -33,9 +33,7 @@ class RxSearchBarDelegate: NSObject, UISearchBarDelegate {
     }
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
-        let event = Event.Next(Box(searchText))
-        
-        dispatch(event, self.observers)
+        dispatchNext(searchText, observers)
     }
 }
 

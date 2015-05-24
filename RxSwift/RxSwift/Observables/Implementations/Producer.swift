@@ -13,7 +13,7 @@ public class Producer<Element> : Observable<Element> {
         super.init()
     }
     
-    public func subscribe(observer: ObserverOf<Element>) -> Disposable {
+    public override func subscribe<O : ObserverType where O.Element == Element>(observer: O) -> Disposable {
         let sink = SingleAssignmentDisposable()
         let subscription = SingleAssignmentDisposable()
         
@@ -27,11 +27,7 @@ public class Producer<Element> : Observable<Element> {
         return d
     }
     
-    public override func subscribe<O : ObserverType where O.Element == Element>(observer: O) -> Disposable {
-        return self.subscribe(ObserverOf(observer))
-    }
-    
-    public func run(observer: ObserverOf<Element>, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
+    public func run<O : ObserverType where O.Element == Element>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
         return abstractMethod()
     }
 }

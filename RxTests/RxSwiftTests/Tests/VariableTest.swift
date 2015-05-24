@@ -25,7 +25,7 @@ class VariableTest : RxTest {
         
         XCTAssertEqual(latestValue!, 3)
         
-        a << 5
+        a.next(5)
 
         XCTAssertEqual(latestValue!, 7)
         
@@ -35,38 +35,9 @@ class VariableTest : RxTest {
         
         subscription.dispose()
         
-        a << 10
+        a.next(10)
 
         XCTAssertEqual(latestValue!, 14)
-    }
-    
-    func testVariable_NoInitialValues() {
-        let a: Variable<Int> = Variable()
-        let b: Variable<Int> = Variable()
-        
-        let c = combineLatest(a, b, +)
-        
-        var latestValue: Int? = nil
-        
-        let subscription = c >- subscribeNext { next in
-            latestValue = next
-        }
-        
-        XCTAssertTrue(latestValue == nil)
-        
-        a << 5
-        
-        XCTAssertTrue(latestValue == nil)
-        
-        b << 9
-        
-        XCTAssertTrue(latestValue == 14)
-        
-        subscription.dispose()
-        
-        a << 10
-        
-        XCTAssertTrue(latestValue == 14)
     }
     
     func testVariable_Error() {
@@ -83,19 +54,19 @@ class VariableTest : RxTest {
         
         XCTAssertEqual(latestValue!, 3)
         
-        a << 5
+        a.next(5)
         
         XCTAssertEqual(latestValue!, 7)
         
-        b.on(.Error(testError))
+        sendError(b, testError)
         
-        b << 9
+        b.next(9)
         
         XCTAssertEqual(latestValue!, 7)
         
         subscription.dispose()
         
-        a << 10
+        a.next(10)
         
         XCTAssertEqual(latestValue!, 7)
     }
@@ -114,19 +85,19 @@ class VariableTest : RxTest {
         
         XCTAssertEqual(latestValue!, 3)
         
-        a << 5
+        a.next(5)
         
         XCTAssertEqual(latestValue!, 7)
         
-        b.on(.Error(testError))
+        sendError(b, testError)
         
-        b << 9
+        b.next(9)
         
         XCTAssertEqual(latestValue!, 7)
         
         subscription.dispose()
         
-        a << 10
+        a.next(10)
         
         XCTAssertEqual(latestValue!, 7)
     }
@@ -159,13 +130,13 @@ class VariableTest : RxTest {
         
         // This will print:
         //      Next value of c = 5
-        a << 3
+        a.next(3)
         
         XCTAssertEqual(latestValueOfC!, 5)
         
         // This will print:
         //      Next value of c = 8
-        b << 5
+        b.next(5)
         
         XCTAssertEqual(latestValueOfC!, 8)
     }

@@ -8,13 +8,13 @@
 
 import Foundation
 
-class Debug_<ElementType> : Sink<ElementType>, ObserverType {
-    typealias Element = ElementType
+class Debug_<O: ObserverType> : Sink<O>, ObserverType {
+    typealias Element = O.Element
     typealias Parent = Debug<Element>
     
     let parent: Parent
     
-    init(parent: Parent, observer: ObserverOf<Element>, cancel: Disposable) {
+    init(parent: Parent, observer: O, cancel: Disposable) {
         self.parent = parent
         super.init(observer: observer, cancel: cancel)
     }
@@ -28,7 +28,7 @@ class Debug_<ElementType> : Sink<ElementType>, ObserverType {
             ? prefix(eventText, maxEventTextLength / 2) + "..." + suffix(eventText, maxEventTextLength / 2)
             : eventText
         println("Event \(eventNormalized) @ observer \(self) [\(parent.identifier)]")
-        self.observer.on(event)
+        trySend(observer, event)
     }
     
     override func dispose() {
@@ -47,7 +47,7 @@ class Debug<Element> : Producer<Element> {
         self.source = source
     }
     
-    override func run(observer: ObserverOf<Element>, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
+    override func run<O: ObserverType where O.Element == Element>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
         let sink = Debug_(parent: self, observer: observer, cancel: cancel)
         setSink(sink)
         return self.source.subscribe(sink)

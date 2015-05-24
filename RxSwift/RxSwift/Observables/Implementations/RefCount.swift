@@ -8,11 +8,12 @@
 
 import Foundation
 
-class RefCount_<Element> : Sink<Element>, ObserverType {
+class RefCount_<O: ObserverType> : Sink<O>, ObserverType {
+    typealias Element = O.Element
     let parent: RefCount<Element>
     typealias ParentState = RefCount<Element>.State
     
-    init(parent: RefCount<Element>, observer: ObserverOf<Element>, cancel: Disposable) {
+    init(parent: RefCount<Element>, observer: O, cancel: Disposable) {
         self.parent = parent
         super.init(observer: observer, cancel: cancel)
     }
@@ -53,14 +54,12 @@ class RefCount_<Element> : Sink<Element>, ObserverType {
     }
 
     func on(event: Event<Element>) {
-        let observer = self.observer
-        
         switch event {
         case .Next:
-            observer.on(event)
+            trySend(observer, event)
         case .Error: fallthrough
         case .Completed:
-            observer.on(event)
+            trySend(observer, event)
             self.dispose()
         }
     }
@@ -85,7 +84,7 @@ class RefCount<Element>: Producer<Element> {
         self.source = source
     }
     
-    override func run(observer: ObserverOf<Element>, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
+    override func run<O: ObserverType where O.Element == Element>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
         let sink = RefCount_(parent: self, observer: observer, cancel: cancel)
         setSink(sink)
         return sink.run()

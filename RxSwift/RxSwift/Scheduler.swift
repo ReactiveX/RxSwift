@@ -9,7 +9,7 @@
 import Foundation
 
 public protocol ImmediateScheduler {
-    func schedule<StateType>(state: StateType, action: (StateType) -> Result<Void>) -> Result<Disposable>
+    func schedule<StateType>(state: StateType, action: (StateType) -> RxResult<Void>) -> RxResult<Disposable>
 }
 
 public protocol Scheduler: ImmediateScheduler {
@@ -20,7 +20,7 @@ public protocol Scheduler: ImmediateScheduler {
         get
     }
 
-    func scheduleRelative<StateType>(state: StateType, dueTime: TimeInterval, action: (StateType) -> Result<Void>) -> Result<Disposable>
+    func scheduleRelative<StateType>(state: StateType, dueTime: TimeInterval, action: (StateType) -> RxResult<Void>) -> RxResult<Disposable>
 }
 
 
@@ -36,9 +36,9 @@ public protocol Scheduler: ImmediateScheduler {
 // Changing default behavior is not recommended because possible data corruption
 // is "usually" a lot worse then letting program to crash.
 //
-func ensureScheduledSuccessfully(result: Result<Void>) -> Result<Void> {
+func ensureScheduledSuccessfully(result: RxResult<Void>) -> RxResult<Void> {
     switch result {
-    case .Error(let error):
+    case .Failure(let error):
         return errorDuringScheduledAction(error);
     default: break
     }
@@ -46,7 +46,7 @@ func ensureScheduledSuccessfully(result: Result<Void>) -> Result<Void> {
     return SuccessResult
 }
 
-func errorDuringScheduledAction(error: ErrorType) -> Result<Void> {
+func errorDuringScheduledAction(error: ErrorType) -> RxResult<Void> {
     let exception = NSException(name: "ScheduledActionError", reason: "Error happened during scheduled action execution", userInfo: ["error": error])
     exception.raise()
     

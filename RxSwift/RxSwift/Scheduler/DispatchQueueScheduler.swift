@@ -36,7 +36,7 @@ public class DispatchQueueScheduler : Scheduler {
         return dispatch_time(DISPATCH_TIME_NOW, Int64(timeInterval * Double(NSEC_PER_SEC) / 1000))
     }
     
-    public func schedule<StateType>(state: StateType, action: (StateType) -> Result<Void>) -> Result<Disposable> {
+    public func schedule<StateType>(state: StateType, action: (StateType) -> RxResult<Void>) -> RxResult<Disposable> {
         dispatch_async(self.queue, {
             ensureScheduledSuccessfully(action(state))
         })
@@ -44,7 +44,7 @@ public class DispatchQueueScheduler : Scheduler {
         return success(DefaultDisposable())
     }
     
-    public func scheduleRelative<StateType>(state: StateType, dueTime: NSTimeInterval, action: (StateType) -> Result<Void>) -> Result<Disposable> {
+    public func scheduleRelative<StateType>(state: StateType, dueTime: NSTimeInterval, action: (StateType) -> RxResult<Void>) -> RxResult<Disposable> {
         let timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, self.queue)
         
         let dispatchInterval = MainScheduler.convertTimeIntervalToDispatchTime(dueTime)

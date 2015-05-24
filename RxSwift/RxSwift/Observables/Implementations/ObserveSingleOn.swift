@@ -13,66 +13,49 @@ import Foundation
 //
 // In case sequence contains more then one element, it will fire an exception.
 
-class ObserveSingleOnObserver<ElementType> : ObserverType, Disposable {
-    typealias Element = ElementType
-    typealias Parent = ObserveSingleOn<ElementType>
-    typealias State = (
-        observer: ObserverOf<ElementType>,
-        cancel: Disposable,
-        disposed: Bool,
-        element: Event<ElementType>?
-    )
+class ObserveSingleOnObserver<O: ObserverType> : Sink<O>, ObserverType, Disposable {
+    typealias Element = O.Element
+    typealias Parent = ObserveSingleOn<Element>
     
     let parent: Parent
    
-    var lock = Lock()
-    var state: State
+    var lastElement: Event<Element>? = nil
     
-    init(parent: Parent, observer: ObserverOf<ElementType>, cancel: Disposable) {
+    init(parent: Parent, observer: O, cancel: Disposable) {
         self.parent = parent
-        self.state = (
-            observer: observer,
-            cancel: cancel,
-            disposed: false,
-            element: nil
-        )
+        super.init(observer: observer, cancel: cancel)
     }
  
     func on(event: Event<Element>) {
         var elementToForward: Event<Element>?
         var stopEventToForward: Event<Element>?
-        var observer: ObserverOf<Element>?
         
-        self.lock.performLocked {
-            let scheduler = self.parent.scheduler
-            
-            switch event {
-            case .Next:
-                if self.state.element != nil {
-                    rxFatalError("Sequence contains more then one element")
-                }
-                
-                self.state.element = event
-            case .Error:
-                if self.state.element != nil {
-                    rxFatalError("Observed sequence was expected to have more then one element")
-                }
-                stopEventToForward = event
-                observer = self.state.observer
-            case .Completed:
-                elementToForward = self.state.element
-                stopEventToForward = event
-                observer = self.state.observer
+        let scheduler = self.parent.scheduler
+        
+        switch event {
+        case .Next:
+            if self.lastElement != nil {
+                rxFatalError("Sequence contains more then one element")
             }
+            
+            self.lastElement = event
+        case .Error:
+            if self.lastElement != nil {
+                rxFatalError("Observed sequence was expected to have more then one element")
+            }
+            stopEventToForward = event
+        case .Completed:
+            elementToForward = self.lastElement
+            stopEventToForward = event
         }
         
         if let stopEventToForward = stopEventToForward {
             self.parent.scheduler.schedule(()) { (_) in
                 if let elementToForward = elementToForward {
-                    observer!.on(elementToForward)
+                    trySend(self.observer, elementToForward)
                 }
                 
-                observer!.on(stopEventToForward)
+                trySend(self.observer, stopEventToForward)
                 
                 self.dispose()
                 
@@ -80,31 +63,7 @@ class ObserveSingleOnObserver<ElementType> : ObserverType, Disposable {
             }
         }
     }
-    
-    func dispose() {
-        if state.disposed {
-            return
-        }
-        
-        var cancel: Disposable? = self.lock.calculateLocked {
-            if self.state.disposed {
-                return nil
-            }
-            
-            var cancel = self.state.cancel
-            
-            self.state.disposed = true
-            self.state.cancel = DefaultDisposable()
-            self.state.observer = ObserverOf(NopObserver())
-            
-            return cancel
-        }
-        
-        if let cancel = cancel {
-            cancel.dispose()
-        }
-    }
-    
+
     func run() -> Disposable {
         return self.parent.source.subscribe(self)
     }
@@ -119,7 +78,7 @@ class ObserveSingleOn<Element> : Producer<Element> {
         self.scheduler = scheduler
     }
     
-    override func run(observer: ObserverOf<Element>, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
+    override func run<O: ObserverType where O.Element == Element>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
         let sink = ObserveSingleOnObserver(parent: self, observer: observer, cancel: cancel)
         setSink(sink)
         return sink.run()

@@ -13,11 +13,11 @@ import XCTest
 
 class UITextFieldMock {
     
-    let observableText = Variable<String>()
+    let observableText = Variable<String>("")
     
     var text: String! = "" {
         didSet {
-            observableText << self.text
+            observableText.next(self.text)
         }
     }
     
@@ -42,7 +42,7 @@ class UIRxTests : RxTest {
         // We have some async Wolfram Alpha API that calculates is number prime.
         let WolframAlphaIsPrime: (Int) -> Observable<PrimeNumber> = { returnElement(PrimeNumber($0, isPrime($0))) }
         
-        let text = Variable<String>()
+        let text = Variable<String>("")
         let resultText = ""
         
         let primeTextField = UITextFieldMock()

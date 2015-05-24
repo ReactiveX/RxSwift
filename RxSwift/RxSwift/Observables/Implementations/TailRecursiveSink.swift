@@ -8,8 +8,8 @@
 
 import Foundation
 
-class TailRecursiveSink<ElementType> : Sink<ElementType>, ObserverType {
-    typealias Element = ElementType
+class TailRecursiveSink<O: ObserverType> : Sink<O>, ObserverType {
+    typealias Element = O.Element
     typealias StackElementType = (generator: GeneratorOf<Observable<Element>>, length: Int)
     
     var stack: [StackElementType] = []
@@ -19,7 +19,7 @@ class TailRecursiveSink<ElementType> : Sink<ElementType>, ObserverType {
     // this is thread safe object
     var gate: AsyncLock = AsyncLock()
     
-    override init(observer: ObserverOf<Element>, cancel: Disposable) {
+    override init(observer: O, cancel: Disposable) {
         super.init(observer: observer, cancel: cancel)
     }
     
@@ -108,7 +108,7 @@ class TailRecursiveSink<ElementType> : Sink<ElementType>, ObserverType {
     }
     
     func done() {
-        observer.on(.Completed)
+        trySendCompleted(observer)
         self.dispose()
     }
     
