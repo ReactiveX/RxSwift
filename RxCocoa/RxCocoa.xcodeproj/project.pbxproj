@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		653C8BF41B114EB600983087 /* UIControl+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653C8BF31B114EB600983087 /* UIControl+Rx.swift */; };
 		C8092BBB1AF50436008D9A2C /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8092BBA1AF50436008D9A2C /* CoreData.framework */; };
 		C81553E41A98AB4A00C63152 /* RxCocoa.h in Headers */ = {isa = PBXBuildFile; fileRef = C81553E31A98AB4A00C63152 /* RxCocoa.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C8633A981B08FD0600375D60 /* NSTextField+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8633A971B08FD0600375D60 /* NSTextField+Rx.swift */; };
@@ -39,6 +40,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		653C8BF31B114EB600983087 /* UIControl+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIControl+Rx.swift"; sourceTree = "<group>"; };
 		C8092BBA1AF50436008D9A2C /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		C81553DE1A98AB4A00C63152 /* RxCocoa.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxCocoa.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C81553E21A98AB4A00C63152 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -150,11 +152,12 @@
 			isa = PBXGroup;
 			children = (
 				C88BB8E01B07F2BE0064D411 /* UIButton+Rx.swift */,
+				C88BB8E11B07F2BE0064D411 /* UICollectionView+Rx.swift */,
+				653C8BF31B114EB600983087 /* UIControl+Rx.swift */,
 				C88BB8E21B07F2BE0064D411 /* UIImageView+Rx.swift */,
 				C88BB8E31B07F2BE0064D411 /* UILabel+Rx.swift */,
 				C88BB8E41B07F2BE0064D411 /* UIScrollView+Rx.swift */,
 				C88BB8E51B07F2BE0064D411 /* UISearchBar+Rx.swift */,
-				C88BB8E11B07F2BE0064D411 /* UICollectionView+Rx.swift */,
 				C88BB8E61B07F2BE0064D411 /* UITableView+Rx.swift */,
 				C88BB8E71B07F2BE0064D411 /* UITextField+Rx.swift */,
 			);
@@ -295,6 +298,7 @@
 				C88BB8EA1B07F2BE0064D411 /* UIImageView+Rx.swift in Sources */,
 				C88BB8EC1B07F2BE0064D411 /* UIScrollView+Rx.swift in Sources */,
 				C8633AB01B093EDF00375D60 /* ControlTarget.swift in Sources */,
+				653C8BF41B114EB600983087 /* UIControl+Rx.swift in Sources */,
 				C8633AB21B093EDF00375D60 /* KVOObservable.swift in Sources */,
 				C8633AB81B093EDF00375D60 /* NSURLSession+Rx.swift in Sources */,
 			);
