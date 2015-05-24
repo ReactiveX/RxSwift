@@ -9,7 +9,7 @@
 import Foundation
 
 public struct ImmediateSchedulerOnCurrentThread : ImmediateScheduler {
-    public func schedule<StateType>(state: StateType, action: (StateType) -> Result<Void>) -> Result<Disposable> {
-        return action(state) >>> { (DefaultDisposable()) }
+    public func schedule<StateType>(state: StateType, action: (StateType) -> RxResult<Void>) -> RxResult<Disposable> {
+        return action(state).map { (DefaultDisposable()) }
     }
 }

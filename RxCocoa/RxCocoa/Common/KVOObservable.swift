@@ -78,7 +78,7 @@ class KVOObservable<Element> : Observable<Element?>, KVOObservableProtocol {
     
     override func subscribe<O : ObserverType where O.Element == Element?>(observer: O) -> Disposable {
         let observer = KVOObserver(parent: self) { (value) in
-            observer.on(.Next(Box(value as? Element)))
+            sendNext(observer, value as? Element)
         }
         
         return AnonymousDisposable { () in

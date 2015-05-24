@@ -8,16 +8,16 @@
 
 import Foundation
 
-public func castOrFail<T>(result: AnyObject!) -> Result<T> {
+public func castOrFail<T>(result: AnyObject!) -> RxResult<T> {
     if let typedResult = result as? T {
         return success(typedResult)
     }
     else {
-        return .Error(CastError)
+        return failure(CastError)
     }
 }
 
-public func makeOptionalResult<T>(result: T) -> Result<T?> {
+public func makeOptionalResult<T>(result: T) -> RxResult<T?> {
     return success(result)
 }
 

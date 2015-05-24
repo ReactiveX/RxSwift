@@ -45,7 +45,7 @@ class DefaultImageService: ImageService {
             
             if maybeImage == nil {
                 // some error
-                return .Error(apiError("Decoding image error"))
+                return failure(apiError("Decoding image error"))
             }
             
             let image = maybeImage!

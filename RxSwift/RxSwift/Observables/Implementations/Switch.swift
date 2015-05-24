@@ -8,8 +8,10 @@
 
 import Foundation
 
-class Switch_<ElementType> : Sink<ElementType>, ObserverType {
-    typealias Element = Observable<ElementType>
+class Switch_<O: ObserverType> : Sink<O>, ObserverType {
+    typealias Element = Observable<O.Element>
+    typealias Parent = Switch<O.Element>
+    
     typealias SwitchState = (
         subscription: SingleAssignmentDisposable,
         innerSubscription: SerialDisposable,
@@ -18,12 +20,12 @@ class Switch_<ElementType> : Sink<ElementType>, ObserverType {
         hasLatest: Bool
     )
     
-    let parent: Switch<ElementType>
+    let parent: Parent
     
     var lock = NSRecursiveLock()
     var switchState: SwitchState
     
-    init(parent: Switch<ElementType>, observer: ObserverOf<ElementType>, cancel: Disposable) {
+    init(parent: Parent, observer: O, cancel: Disposable) {
         self.parent = parent
         self.switchState = (
                 subscription: SingleAssignmentDisposable(),
@@ -59,7 +61,7 @@ class Switch_<ElementType> : Sink<ElementType>, ObserverType {
             d.setDisposable(disposable)
         case .Error(let error):
             self.lock.performLocked {
-                self.observer.on(.Error(error))
+                trySendError(observer, error)
                 self.dispose()
             }
         case .Completed:
@@ -69,7 +71,7 @@ class Switch_<ElementType> : Sink<ElementType>, ObserverType {
                 self.switchState.subscription.dispose()
                 
                 if !self.switchState.hasLatest {
-                    self.observer.on(.Completed)
+                    trySendCompleted(observer)
                     self.dispose()
                 }
             }
@@ -77,20 +79,21 @@ class Switch_<ElementType> : Sink<ElementType>, ObserverType {
     }
 }
 
-class SwitchIter<ElementType> : ObserverType {
-    typealias Element = ElementType
+class SwitchIter<O: ObserverType> : ObserverType {
+    typealias Element = O.Element
+    typealias Parent = Switch_<O>
     
-    let parent: Switch_<Element>
+    let parent: Parent
     let id: Int
     let _self: Disposable
     
-    init(parent: Switch_<Element>, id: Int, _self: Disposable) {
+    init(parent: Parent, id: Int, _self: Disposable) {
         self.parent = parent
         self.id = id
         self._self = _self
     }
     
-    func on(event: Event<ElementType>) {
+    func on(event: Event<Element>) {
         return parent.lock.calculateLocked { state in
             let switchState = self.parent.switchState
             
@@ -108,14 +111,14 @@ class SwitchIter<ElementType> : ObserverType {
             
             switch event {
             case .Next:
-                observer.on(event)
+                trySend(observer, event)
             case .Error:
-                observer.on(event)
+                trySend(observer, event)
                 self.parent.dispose()
             case .Completed:
                 parent.switchState.hasLatest = false
                 if switchState.stopped {
-                    observer.on(event)
+                    trySend(observer, event)
                     self.parent.dispose()
                 }
             }
@@ -130,7 +133,7 @@ class Switch<Element> : Producer<Element> {
         self.sources = sources
     }
     
-    override func run(observer: ObserverOf<Element>, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
+    override func run<O : ObserverType where O.Element == Element>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
         let sink = Switch_(parent: self, observer: observer, cancel: cancel)
         setSink(sink)
         return sink.run()

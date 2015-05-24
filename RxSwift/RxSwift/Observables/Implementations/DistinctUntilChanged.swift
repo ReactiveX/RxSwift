@@ -8,13 +8,13 @@
 
 import Foundation
 
-class DistinctUntilChanged_<ElementType, Key>: Sink<ElementType>, ObserverType {
-    typealias Element = ElementType
+class DistinctUntilChanged_<O: ObserverType, Key>: Sink<O>, ObserverType {
+    typealias Element = O.Element
     
-    let parent: DistinctUntilChanged<ElementType, Key>
+    let parent: DistinctUntilChanged<Element, Key>
     var currentKey: Key? = nil
     
-    init(parent: DistinctUntilChanged<ElementType, Key>, observer: ObserverOf<ElementType>, cancel: Disposable) {
+    init(parent: DistinctUntilChanged<Element, Key>, observer: O, cancel: Disposable) {
         self.parent = parent
         super.init(observer: observer, cancel: cancel)
     }
@@ -24,8 +24,8 @@ class DistinctUntilChanged_<ElementType, Key>: Sink<ElementType>, ObserverType {
         
         switch event {
         case .Next(let value):
-            self.parent.selector(value.value) >== { key in
-                var areEqual: Result<Bool>
+            self.parent.selector(value.value).flatMap { key in
+                var areEqual: RxResult<Bool>
                 if let currentKey = self.currentKey {
                     areEqual = self.parent.comparer(currentKey, key)
                 }
@@ -33,32 +33,32 @@ class DistinctUntilChanged_<ElementType, Key>: Sink<ElementType>, ObserverType {
                     areEqual = success(false)
                 }
                 
-                return areEqual >== { areEqual in
+                return areEqual.flatMap { areEqual in
                     if areEqual {
                         return SuccessResult
                     }
                     
                     self.currentKey = key
                     
-                    observer.on(event)
+                    trySend(observer, event)
                     return SuccessResult
                 }
-            } >>! { error -> Result<Void> in
-                observer.on(.Error(error))
+            }.recoverWith { error -> RxResult<Void> in
+                trySendError(observer, error)
                 self.dispose()
                 return SuccessResult
             }
         case .Error: fallthrough
         case .Completed:
-            observer.on(event)
+            trySend(observer, event)
             self.dispose()
         }
     }
 }
 
 class DistinctUntilChanged<Element, Key>: Producer<Element> {
-    typealias KeySelector = (Element) -> Result<Key>
-    typealias EqualityComparer = (Key, Key) -> Result<Bool>
+    typealias KeySelector = (Element) -> RxResult<Key>
+    typealias EqualityComparer = (Key, Key) -> RxResult<Bool>
     
     let source: Observable<Element>
     let selector: KeySelector
@@ -70,7 +70,7 @@ class DistinctUntilChanged<Element, Key>: Producer<Element> {
         self.comparer = comparer
     }
     
-    override func run(observer: ObserverOf<Element>, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
+    override func run<O: ObserverType where O.Element == Element>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
         let sink = DistinctUntilChanged_(parent: self, observer: observer, cancel: cancel)
         setSink(sink)
         return source.subscribe(sink)

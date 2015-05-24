@@ -52,7 +52,7 @@ public func merge<E>
 // catch
 
 public func catchOrDie<E>
-    (handler: (ErrorType) -> Result<Observable<E>>)
+    (handler: (ErrorType) -> RxResult<Observable<E>>)
     -> (Observable<E> -> Observable<E>) {
     return { source in
         return Catch(source: source, handler: handler)
@@ -80,6 +80,6 @@ public func catch<E>
 // and sequence will be completed.
 public func catchToResult<E>
     (source: Observable<E>)
-    -> Observable<Result<E>> {
+    -> Observable <RxResult<E>> {
     return CatchToResult(source: source)
 }

@@ -577,7 +577,7 @@ extension ObservableSingleTest {
             error(300, testError)
             ])
         
-        let res = scheduler.start { xs >- mapOrDie { $0 < 2 ? success($0 * 2) : .Error(testError) } }
+        let res = scheduler.start { xs >- mapOrDie { $0 < 2 ? success($0 * 2) : failure(testError) } }
         
         let correctMessages: [Recorded<Int>] = [
             next(210, 0 * 2),
@@ -736,7 +736,7 @@ extension ObservableSingleTest {
             error(300, testError)
             ])
         
-        let res = scheduler.start { xs >- mapWithIndexOrDie { $0 < 7 ? success(($0 + $1) * 2) : .Error(testError) } }
+        let res = scheduler.start { xs >- mapWithIndexOrDie { $0 < 7 ? success(($0 + $1) * 2) : failure(testError) } }
         
         let correctMessages: [Recorded<Int>] = [
             next(210, (5 + 0) * 2),

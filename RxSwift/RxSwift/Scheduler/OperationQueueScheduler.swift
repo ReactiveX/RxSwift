@@ -15,7 +15,7 @@ public class OperationQueueScheduler: ImmediateScheduler {
         self.operationQueue = operationQueue
     }
     
-    public func schedule<StateType>(state: StateType, action: (StateType) -> Result<Void>) -> Result<Disposable> {
+    public func schedule<StateType>(state: StateType, action: (StateType) -> RxResult<Void>) -> RxResult<Disposable> {
         let operation = NSBlockOperation {
             ensureScheduledSuccessfully(action(state))
         }

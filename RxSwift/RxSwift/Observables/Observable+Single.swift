@@ -28,7 +28,7 @@ public func distinctUntilChangedOrDie<E: Equatable>(source: Observable<E>)
 }
 
 public func distinctUntilChangedOrDie<E, K: Equatable>
-    (keySelector: (E) -> Result<K>)
+    (keySelector: (E) -> RxResult<K>)
     -> (Observable<E> -> Observable<E>) {
     return { source in
         return distinctUntilChangedOrDie(keySelector, { success($0 == $1) })(source)
@@ -36,7 +36,7 @@ public func distinctUntilChangedOrDie<E, K: Equatable>
 }
 
 public func distinctUntilChangedOrDie<E>
-    (comparer: (lhs: E, rhs: E) -> Result<Bool>)
+    (comparer: (lhs: E, rhs: E) -> RxResult<Bool>)
     -> (Observable<E> -> Observable<E>) {
     return { source in
         return distinctUntilChangedOrDie({ success($0) }, comparer)(source)
@@ -44,7 +44,7 @@ public func distinctUntilChangedOrDie<E>
 }
 
 public func distinctUntilChangedOrDie<E, K>
-    (keySelector: (E) -> Result<K>, comparer: (lhs: K, rhs: K) -> Result<Bool>)
+    (keySelector: (E) -> RxResult<K>, comparer: (lhs: K, rhs: K) -> RxResult<Bool>)
     -> (Observable<E> -> Observable<E>) {
     return { source in
         return DistinctUntilChanged(source: source, selector: keySelector, comparer: comparer)
@@ -83,7 +83,7 @@ public func distinctUntilChanged<E, K>
 // do
 
 public func doOrDie<E>
-    (eventHandler: (Event<E>) -> Result<Void>)
+    (eventHandler: (Event<E>) -> RxResult<Void>)
     -> (Observable<E> -> Observable<E>) {
     return { source in
         return Do(source: source, eventHandler: eventHandler)
@@ -119,7 +119,7 @@ public func doOnNext<E>
 // map aka select
 
 public func mapOrDie<E, R>
-    (selector: E -> Result<R>)
+    (selector: E -> RxResult<R>)
     -> (Observable<E> -> Observable<R>) {
     return { source in
         return selectOrDie(selector)(source)
@@ -135,7 +135,7 @@ public func map<E, R>
 }
 
 public func mapWithIndexOrDie<E, R>
-    (selector: (E, Int) -> Result<R>)
+    (selector: (E, Int) -> RxResult<R>)
     -> (Observable<E> -> Observable<R>) {
     return { source in
         return selectWithIndexOrDie(selector)(source)
@@ -153,7 +153,7 @@ public func mapWithIndex<E, R>
 // select 
 
 public func selectOrDie<E, R>
-    (selector: (E) -> Result<R>)
+    (selector: (E) -> RxResult<R>)
     -> (Observable<E> -> Observable<R>) {
     return { source in
         return Select(source: source, selector: selector)
@@ -169,7 +169,7 @@ public func select<E, R>
 }
 
 public func selectWithIndexOrDie<E, R>
-    (selector: (E, Int) -> Result<R>)
+    (selector: (E, Int) -> RxResult<R>)
     -> (Observable<E> -> Observable<R>) {
     return { source in
         return Select(source: source, selector: selector)

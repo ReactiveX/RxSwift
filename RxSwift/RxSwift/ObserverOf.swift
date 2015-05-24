@@ -38,3 +38,30 @@ public func dispatch<Element, S: SequenceType where S.Generator.Element == Obser
         }
     }
 }
+
+
+public func dispatchNext<Element, S: SequenceType where S.Generator.Element == ObserverOf<Element>>(element: Element, observers: S?) {
+    if let observers = observers {
+        let event = Event.Next(RxBox(element))
+        for o in observers {
+            o.on(event)
+        }
+    }
+}
+
+public func dispatch<S: SequenceType, O: ObserverType where S.Generator.Element == O>(event: Event<O.Element>, observers: S?) {
+    if let observers = observers {
+        for o in observers {
+            o.on(event)
+        }
+    }
+}
+
+public func dispatchNext<S: SequenceType, O: ObserverType where S.Generator.Element == O>(element: O.Element, observers: S?) {
+    if let observers = observers {
+        let event = Event.Next(RxBox(element))
+        for o in observers {
+            o.on(event)
+        }
+    }
+}

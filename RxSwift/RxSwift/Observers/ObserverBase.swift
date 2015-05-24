@@ -8,16 +8,17 @@
 
 import Foundation
 
-public class ObserverBase<ElementType> : ObserverType, Disposable {
+class ObserverBase<ElementType> : Observer<ElementType>, Disposable {
     typealias Element = ElementType
     
     var lock = Lock()
     var isStopped: Bool = false
     
-    public init() {
+    override init() {
+        super.init()
     }
     
-    public func on(event: Event<Element>) {
+    override func on(event: Event<Element>) {
         switch event {
         case .Next:
             if !isStopped {
@@ -37,9 +38,9 @@ public class ObserverBase<ElementType> : ObserverType, Disposable {
         }
     }
     
-    public func onCore(event: Event<Element>) {
+    func onCore(event: Event<Element>) {
     }
     
-    public func dispose() {
+    func dispose() {
     }
 }

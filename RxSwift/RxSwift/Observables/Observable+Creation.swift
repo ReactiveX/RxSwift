@@ -18,7 +18,7 @@ public func create<E>(subscribe: (ObserverOf<E>) -> Disposable) -> Observable<E>
 
 public func empty<E>() -> Observable<E> {
     return AnonymousObservable { observer in
-        observer.on(.Completed)
+        sendCompleted(observer)
         return DefaultDisposable()
     }
 }
@@ -35,8 +35,8 @@ public func never<E>() -> Observable<E> {
 
 public func returnElement<E>(value: E) -> Observable<E> {
     return AnonymousObservable { observer in
-        observer.on(.Next(Box(value)))
-        observer.on(.Completed)
+        sendNext(observer, value)
+        sendCompleted(observer)
         return DefaultDisposable()
     }
 }
@@ -48,10 +48,10 @@ public func just<E>(value: E) -> Observable<E> {
 public func returnElements<E>(values: E ...) -> Observable<E> {
     return AnonymousObservable { observer in
         for element in values {
-            observer.on(.Next(Box(element)))
+            sendNext(observer, element)
         }
         
-        observer.on(.Completed)
+        sendCompleted(observer)
         return DefaultDisposable()
     }
 }
@@ -60,14 +60,14 @@ public func returnElements<E>(values: E ...) -> Observable<E> {
 
 public func failWith<E>(error: ErrorType) -> Observable<E> {
     return AnonymousObservable { observer in
-        observer.on(.Error(error))
+        sendError(observer, error)
         return DefaultDisposable()
     }
 }
 
 // defer
 
-public func deferOrDie<E>(observableFactory: () -> Result<Observable<E>>)
+public func deferOrDie<E>(observableFactory: () -> RxResult<Observable<E>>)
     -> Observable<E> {
     return Defer(observableFactory: observableFactory)
 }

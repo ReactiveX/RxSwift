@@ -8,14 +8,14 @@
 
 import Foundation
 
-class Aggregate_<SourceType, AccumulateType, ResultType> : Sink<ResultType>, ObserverType {
-    typealias Element = SourceType
+class Aggregate_<SourceType, AccumulateType, O: ObserverType> : Sink<O>, ObserverType {
+    typealias ResultType = O.Element
     typealias ParentType = Aggregate<SourceType, AccumulateType, ResultType>
     
     let parent: ParentType
     var accumulation: AccumulateType
     
-    init(parent: ParentType, observer: ObserverOf<ResultType>, cancel: Disposable) {
+    init(parent: ParentType, observer: O, cancel: Disposable) {
         self.parent = parent
         
         self.accumulation = parent.seed
@@ -27,25 +27,25 @@ class Aggregate_<SourceType, AccumulateType, ResultType> : Sink<ResultType>, Obs
         switch event {
         case .Next(let boxedValue):
             let value = boxedValue.value
-            parent.accumulator(accumulation, value) >== { result in
+            parent.accumulator(accumulation, value).flatMap { result in
                 self.accumulation = result
                 return SuccessResult
-            } >>! { e -> Result<Void> in
-                self.observer.on(.Error(e))
+            }.recoverWith { e -> RxResult<Void> in
+                trySendError(observer, e)
                 self.dispose()
                 return SuccessResult
             }
         case .Error(let e):
-            self.observer.on(.Error(e))
+            trySendError(observer, e)
             self.dispose()
         case .Completed:
-            parent.resultSelector(self.accumulation) >== { result in
-                self.observer.on(.Next(Box(result)))
-                self.observer.on(.Completed)
+            parent.resultSelector(self.accumulation).flatMap { result in
+                trySendNext(observer, result)
+                trySendCompleted(observer)
                 self.dispose()
                 return SuccessResult
-            } >>! { error -> Result<Void> in
-                self.observer.on(.Error(error))
+            }.recoverWith { error -> RxResult<Void> in
+                trySendError(observer, error)
                 self.dispose()
                 return SuccessResult
             }
@@ -54,8 +54,8 @@ class Aggregate_<SourceType, AccumulateType, ResultType> : Sink<ResultType>, Obs
 }
 
 class Aggregate<SourceType, AccumulateType, ResultType> : Producer<ResultType> {
-    typealias AccumulatorType = (AccumulateType, SourceType) -> Result<AccumulateType>
-    typealias ResultSelectorType = (AccumulateType) -> Result<ResultType>
+    typealias AccumulatorType = (AccumulateType, SourceType) -> RxResult<AccumulateType>
+    typealias ResultSelectorType = (AccumulateType) -> RxResult<ResultType>
     
     let source: Observable<SourceType>
     let seed: AccumulateType
@@ -69,7 +69,7 @@ class Aggregate<SourceType, AccumulateType, ResultType> : Producer<ResultType> {
         self.resultSelector = resultSelector
     }
     
-    override func run(observer: ObserverOf<ResultType>, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
+    override func run<O: ObserverType where O.Element == ResultType>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
         let sink = Aggregate_(parent: self, observer: observer, cancel: cancel)
         setSink(sink)
         return source.subscribe(sink)

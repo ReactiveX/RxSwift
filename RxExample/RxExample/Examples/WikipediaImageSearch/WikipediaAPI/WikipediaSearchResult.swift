@@ -21,19 +21,19 @@ struct WikipediaSearchResult: Printable {
     }
     
     // tedious parsing part
-    static func parseJSON(json: [AnyObject]) -> Result<[WikipediaSearchResult]> {
+    static func parseJSON(json: [AnyObject]) -> RxResult<[WikipediaSearchResult]> {
         let rootArrayTyped = json.map { $0 as? [AnyObject] }
             .filter { $0 != nil }
             .map { $0! }
         
         if rootArrayTyped.count != 3 {
-            return .Error(WikipediaParseError)
+            return failure(WikipediaParseError)
         }
         
         let titleAndDescription = Array(Zip2(rootArrayTyped[0], rootArrayTyped[1]))
         let titleDescriptionAndUrl: [((AnyObject, AnyObject), AnyObject)] = Array(Zip2(titleAndDescription, rootArrayTyped[2]))
         
-        let searchResults: [Result<WikipediaSearchResult>] = titleDescriptionAndUrl.map ( { result -> Result<WikipediaSearchResult> in
+        let searchResults: [RxResult<WikipediaSearchResult>] = titleDescriptionAndUrl.map ( { result -> RxResult<WikipediaSearchResult> in
             let ((title: AnyObject, description: AnyObject), url: AnyObject) = result
             
             let titleString = title as? String,
@@ -41,18 +41,18 @@ struct WikipediaSearchResult: Printable {
             urlString = url as? String
             
             if titleString == nil || descriptionString == nil || urlString == nil {
-                return .Error(WikipediaParseError)
+                return failure(WikipediaParseError)
             }
             
             let URL = NSURL(string: urlString!)
             if URL == nil {
-                return .Error(WikipediaParseError)
+                return failure(WikipediaParseError)
             }
             
             return success(WikipediaSearchResult(title: titleString!, description: descriptionString!, URL: URL!))
         })
         
-        let values = (searchResults.filter { $0.value != nil }).map { *$0 }
+        let values = (searchResults.filter { $0.isSuccess }).map { $0.get() }
         
         return success(values)
     }

@@ -54,7 +54,7 @@ class RxTest: XCTestCase {
     }
     
     func next<T>(time: Time, _ value: T) -> Recorded<T> {
-        return Recorded(time: time, event: .Next(Box(value)))
+        return Recorded(time: time, event: .Next(RxBox(value)))
     }
     
     func completed<T>(time: Time) -> Recorded<T> {

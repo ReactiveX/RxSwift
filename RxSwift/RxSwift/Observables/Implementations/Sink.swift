@@ -8,15 +8,19 @@
 
 import Foundation
 
-class Sink<ElementType> :  Disposable {
-    private typealias Element = ElementType
+class Sink<O : ObserverType> :  Disposable {
+    private typealias Element = O.Element
     
-    typealias State = (observer: ObserverOf<ElementType>, cancel: Disposable, disposed: Bool)
+    typealias State = (
+        observer: O?,
+        cancel: Disposable,
+        disposed: Bool
+    )
     
     private var lock = Lock()
     private var _state: State
     
-    var observer: ObserverOf<ElementType> {
+    var observer: O? {
         get {
             return lock.calculateLocked { _state.observer }
         }
@@ -34,7 +38,7 @@ class Sink<ElementType> :  Disposable {
         }
     }
     
-    init(observer: ObserverOf<ElementType>, cancel: Disposable) {
+    init(observer: O, cancel: Disposable) {
 #if TRACE_RESOURCES
         OSAtomicIncrement32(&resourceCount)
 #endif
@@ -54,7 +58,7 @@ class Sink<ElementType> :  Disposable {
             var cancel = _state.cancel
             
             _state.disposed = true
-            _state.observer = ObserverOf(NopObserver())
+            _state.observer = nil
             _state.cancel = DefaultDisposable()
             
             return cancel

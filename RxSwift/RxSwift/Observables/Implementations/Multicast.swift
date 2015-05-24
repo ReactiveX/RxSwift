@@ -8,8 +8,9 @@
 
 import Foundation
 
-class Multicast_<SourceType, IntermediateType, ResultType>: Sink<ResultType>, ObserverType {
-    typealias Element = ResultType
+class Multicast_<SourceType, IntermediateType, O: ObserverType>: Sink<O>, ObserverType {
+    typealias Element = O.Element
+    typealias ResultType = Element
     typealias MutlicastType = Multicast<SourceType, IntermediateType, ResultType>
     
     typealias IntermediateObservable = ConnectableObservableType<IntermediateType>
@@ -17,30 +18,30 @@ class Multicast_<SourceType, IntermediateType, ResultType>: Sink<ResultType>, Ob
     
     let parent: MutlicastType
     
-    init(parent: MutlicastType, observer: ObserverOf<ResultType>, cancel: Disposable) {
+    init(parent: MutlicastType, observer: O, cancel: Disposable) {
         self.parent = parent
         super.init(observer: observer, cancel: cancel)
     }
     
     func run() -> Disposable {
-        return *(parent.subjectSelector() >== { subject in
+        return parent.subjectSelector().flatMap { subject in
             let connectable = ConnectableObservable(source: self.parent.source, subject: subject)
             
-            return self.parent.selector(connectable) >== { observable in
+            return self.parent.selector(connectable).flatMap { observable in
                 let subscription = observable.subscribe(self)
                 let connection = connectable.connect()
                 
                 return success(CompositeDisposable(subscription, connection))
             }
-        } >>! { e in
-            self.observer.on(.Error(e))
+        }.recoverWith { e in
+            trySendError(observer, e)
             self.dispose()
             return success(DefaultDisposable())
-        })
+        }.get()
     }
     
     func on(event: Event<ResultType>) {
-        self.observer.on(event)
+        trySend(observer, event)
         switch event {
             case .Next: break
             case .Error: fallthrough
@@ -50,8 +51,8 @@ class Multicast_<SourceType, IntermediateType, ResultType>: Sink<ResultType>, Ob
 }
 
 class Multicast<SourceType, IntermediateType, ResultType>: Producer<ResultType> {
-    typealias SubjectSelectorType = () -> Result<SubjectType<SourceType, IntermediateType>>
-    typealias SelectorType = (Observable<IntermediateType>) -> Result<Observable<ResultType>>
+    typealias SubjectSelectorType = () -> RxResult<SubjectType<SourceType, IntermediateType>>
+    typealias SelectorType = (Observable<IntermediateType>) -> RxResult<Observable<ResultType>>
     
     let source: Observable<SourceType>
     let subjectSelector: SubjectSelectorType
@@ -63,7 +64,7 @@ class Multicast<SourceType, IntermediateType, ResultType>: Producer<ResultType> 
         self.selector = selector
     }
     
-    override func run(observer: ObserverOf<ResultType>, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
+    override func run<O: ObserverType where O.Element == ResultType>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
         var sink = Multicast_(parent: self, observer: observer, cancel: cancel)
         setSink(sink)
         return sink.run()

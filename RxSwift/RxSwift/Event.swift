@@ -9,7 +9,7 @@
 import Foundation
 
 
-/// Due to current swift limitations, we have to include this Box in Result.
+/// Due to current swift limitations, we have to include this Box in RxResult.
 /// Swift cannot handle an enum with multiple associated data (A, NSError) where one is of unknown size (A)
 /// This can be swiftified once the compiler is completed
 
@@ -21,7 +21,7 @@ import Foundation
 public enum Event<Element> : Printable {
     // Box is used is because swift compiler doesn't know
     // how to handle `Next(Element)` and it crashes.
-    case Next(Box<Element>) // next element of a sequence
+    case Next(RxBox<Element>) // next element of a sequence
     case Error(ErrorType)   // sequence failed with error
     case Completed          // sequence terminated successfully
     
@@ -78,6 +78,19 @@ extension Event {
                 return value.value
             case .Error: fallthrough
             case .Completed: return nil
+            }
+        }
+    }
+    
+    public var error: ErrorType? {
+        get {
+            switch self {
+            case .Next:
+                return nil
+            case .Error(let error):
+                return error
+            case .Completed:
+                return nil
             }
         }
     }

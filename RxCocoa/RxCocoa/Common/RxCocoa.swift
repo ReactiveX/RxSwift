@@ -35,7 +35,7 @@ func removingObserverFailed() {
     rxFatalError("Removing observer for key failed")
 }
 
-func handleVoidObserverResult(result: Result<Void>) {
+func handleVoidObserverResult(result: RxResult<Void>) {
     handleObserverResult(result)
 }
 
@@ -44,9 +44,9 @@ func rxFatalError(lastMessage: String) {
     fatalError(lastMessage)
 }
 
-func handleObserverResult<T>(result: Result<T>) {
+func handleObserverResult<T>(result: RxResult<T>) {
     switch result {
-    case .Error(let error):
+    case .Failure(let error):
         print("Error happened \(error)")
         rxFatalError("Error '\(error)' happened while ");
     default: break

@@ -78,14 +78,12 @@ public class RxCollectionViewDelegate: RxScrollViewDelegate, UICollectionViewDel
     public func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         collectionView.deselectItemAtIndexPath(indexPath, animated: true)
         
-        let event = Event.Next(Box((collectionView, indexPath.item)))
-        
-        dispatch(event, collectionViewObservers)
+        dispatchNext((collectionView, indexPath.item), collectionViewObservers)
     }
     
     deinit {
         if collectionViewObservers.count > 0 {
-            handleVoidObserverResult(.Error(rxError(RxCocoaError.InvalidOperation, "Something went wrong. Deallocating collection view delegate while there are still subscribed observers means that some subscription was left undisposed.")))
+            handleVoidObserverResult(failure(rxError(RxCocoaError.InvalidOperation, "Something went wrong. Deallocating collection view delegate while there are still subscribed observers means that some subscription was left undisposed.")))
         }
     }
 }

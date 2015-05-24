@@ -12,7 +12,6 @@ import Foundation
 *  Using protocol for Observer complicates implementation too much
 */
 public class Observable<Element> {
-    typealias ObserverAdapter = SinkOf<Event<Element>>
     
     public init() {
 #if TRACE_RESOURCES
