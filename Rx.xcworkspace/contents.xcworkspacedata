@@ -8,6 +8,9 @@
       location = "group:README.md">
    </FileRef>
    <FileRef
+      location = "group:OSXPlayground.playground">
+   </FileRef>
+   <FileRef
       location = "group:RxSwift/RxSwift.xcodeproj">
    </FileRef>
    <FileRef
