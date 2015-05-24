@@ -22,6 +22,8 @@ RxSwift
 └-Rx.xcworkspace  - workspace that contains all of the projects hooked up
 ```		
 
+Want to hang out with us on [rxswift.slack.com](https://rxswift.slack.com)? [request access](mailto:krunoslav.zaher@gmail.com?subject=[RxSwift] Hang out on slack).
+
 1. [Introduction](#introduction)
 1. [RxSwift supported operators](#rxswift-supported-operators)
 1. [RxCocoa extensions](#rxcocoa-extensions)
@@ -36,7 +38,7 @@ RxSwift
 1. [Error Handling](#error-handling)
 1. [Naming conventions and best practices](#naming-conventions-and-best-practices)
 1. [Pipe operator >- vs |> vs ...](#pipe-operator---vs--vs-)
-1. [Roadmap](wiki/roadmap)
+1. [Roadmap](/kzaher/RxSwift/wiki/roadmap)
 1. [Peculiarities](#peculiarities)
 1. [References](#references)
 
