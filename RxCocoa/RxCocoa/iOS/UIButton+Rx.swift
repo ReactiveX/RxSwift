@@ -12,14 +12,6 @@ import UIKit
 
 extension UIButton {
     public func rx_tap() -> Observable<Void> {
-        return AnonymousObservable { observer in
-            MainScheduler.ensureExecutingOnScheduler()
-            
-            let observer = ControlTarget(control: self, controlEvents: UIControlEvents.TouchUpInside) { control in
-                sendNext(observer, ())
-            }
-            
-            return observer
-        }
+		return rx_controlEvents(.TouchUpInside)
     }
 }
