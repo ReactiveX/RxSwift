@@ -243,6 +243,7 @@ Operators are stateless by default.
 * sample
 * startWith
 * variable / sharedWithCachedLastResult
+* zip
 
 Creating new operators is also pretty straightforward. 
 
@@ -283,6 +284,16 @@ extension NSNotificationCenter {
 ```
 
 **iOS**
+
+```swift
+
+extension UIControl {
+
+    public func rx_controlEvents(controlEvents: UIControlEvents) -> Observable<Void> { }
+
+}
+
+```
 
 ```swift
 extension UIButton {
@@ -387,6 +398,14 @@ extension UICollectionView {
 }
 ```
 **OSX**
+
+```swift
+extension NSSlider {
+
+    public func rx_value() -> Observable<Double> { }
+
+}
+```
 
 ```swift
 extension NSButton {
