@@ -16,6 +16,8 @@ class IntroductionExampleViewController : ViewController {
     @IBOutlet var a: NSTextField!
     @IBOutlet var b: NSTextField!
     @IBOutlet var c: NSTextField!
+    @IBOutlet var slider: NSSlider!
+    @IBOutlet var sliderValue: NSTextField!
     
     @IBOutlet var disposeButton: NSButton!
     
@@ -59,6 +61,32 @@ class IntroductionExampleViewController : ViewController {
                 self.disposeBag.dispose()
             }
             >- disposeBag.addDisposable
+        
+        // Slider
+        
+        slider.rx_valueChange()
+            >- startWith(50.0)
+            >- subscribeNext { value in
+                self.sliderValue.stringValue = "\(Int(value))"
+            }
+        
+        sliderValue.rx_text()
+            >- subscribeNext { value in
+                let formatter = NSNumberFormatter()
+                if let doubleValue = formatter.numberFromString(value)?.doubleValue {
+                    if doubleValue > 100 {
+                        self.slider.doubleValue = 100
+                        self.sliderValue.stringValue = "100"
+                    } else if doubleValue < 0 {
+                        self.slider.doubleValue = 0.0
+                        self.sliderValue.stringValue = "0"
+                    }
+                    self.slider.doubleValue = doubleValue
+                } else {
+                    self.slider.doubleValue = 0.0
+                    self.sliderValue.stringValue = "0"
+                }
+            }
     }
     
     deinit {
