@@ -55,13 +55,6 @@ class IntroductionExampleViewController : ViewController {
             }
             >- disposeBag.addDisposable
         
-        disposeButton.rx_tap()
-            >- subscribeNext { [unowned self] _ in
-                println("Unbound everything")
-                self.disposeBag.dispose()
-            }
-            >- disposeBag.addDisposable
-        
         // Slider
         
         slider.rx_valueChange()
@@ -69,6 +62,7 @@ class IntroductionExampleViewController : ViewController {
             >- subscribeNext { value in
                 self.sliderValue.stringValue = "\(Int(value))"
             }
+            >- disposeBag.addDisposable
         
         sliderValue.rx_text()
             >- subscribeNext { value in
@@ -81,6 +75,14 @@ class IntroductionExampleViewController : ViewController {
                     self.sliderValue.stringValue = "0"
                 }
             }
+            >- disposeBag.addDisposable
+        
+        disposeButton.rx_tap()
+            >- subscribeNext { [unowned self] _ in
+                println("Unbound everything")
+                self.disposeBag.dispose()
+            }
+            >- disposeBag.addDisposable
     }
     
     deinit {
