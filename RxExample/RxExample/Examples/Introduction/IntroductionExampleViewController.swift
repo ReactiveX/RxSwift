@@ -55,10 +55,8 @@ class IntroductionExampleViewController : ViewController {
             }
             >- disposeBag.addDisposable
         
-        // Slider
         
-        slider.rx_valueChange()
-            >- startWith(50.0)
+        slider.rx_value()
             >- subscribeNext { value in
                 self.sliderValue.stringValue = "\(Int(value))"
             }
@@ -66,14 +64,9 @@ class IntroductionExampleViewController : ViewController {
         
         sliderValue.rx_text()
             >- subscribeNext { value in
-                let formatter = NSNumberFormatter()
-                if let doubleValue = formatter.numberFromString(value)?.doubleValue {
-                    self.slider.doubleValue = doubleValue
-                    self.sliderValue.stringValue = "\(Int(doubleValue))"
-                } else {
-                    self.slider.doubleValue = 0
-                    self.sliderValue.stringValue = "0"
-                }
+                let doubleValue = value.toDouble() ?? 0.0
+                self.slider.doubleValue = doubleValue
+                self.sliderValue.stringValue = "\(Int(doubleValue))"
             }
             >- disposeBag.addDisposable
         
