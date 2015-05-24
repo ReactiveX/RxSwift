@@ -74,16 +74,10 @@ class IntroductionExampleViewController : ViewController {
             >- subscribeNext { value in
                 let formatter = NSNumberFormatter()
                 if let doubleValue = formatter.numberFromString(value)?.doubleValue {
-                    if doubleValue > 100 {
-                        self.slider.doubleValue = 100
-                        self.sliderValue.stringValue = "100"
-                    } else if doubleValue < 0 {
-                        self.slider.doubleValue = 0.0
-                        self.sliderValue.stringValue = "0"
-                    }
                     self.slider.doubleValue = doubleValue
+                    self.sliderValue.stringValue = "\(Int(doubleValue))"
                 } else {
-                    self.slider.doubleValue = 0.0
+                    self.slider.doubleValue = 0
                     self.sliderValue.stringValue = "0"
                 }
             }
