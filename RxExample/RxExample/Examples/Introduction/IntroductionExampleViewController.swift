@@ -16,6 +16,8 @@ class IntroductionExampleViewController : ViewController {
     @IBOutlet var a: NSTextField!
     @IBOutlet var b: NSTextField!
     @IBOutlet var c: NSTextField!
+    @IBOutlet var slider: NSSlider!
+    @IBOutlet var sliderValue: NSTextField!
     
     @IBOutlet var disposeButton: NSButton!
     
@@ -50,6 +52,21 @@ class IntroductionExampleViewController : ViewController {
                 }
                 
                 speech.startSpeakingString(result)
+            }
+            >- disposeBag.addDisposable
+        
+        
+        slider.rx_value()
+            >- subscribeNext { value in
+                self.sliderValue.stringValue = "\(Int(value))"
+            }
+            >- disposeBag.addDisposable
+        
+        sliderValue.rx_text()
+            >- subscribeNext { value in
+                let doubleValue = value.toDouble() ?? 0.0
+                self.slider.doubleValue = doubleValue
+                self.sliderValue.stringValue = "\(Int(doubleValue))"
             }
             >- disposeBag.addDisposable
         

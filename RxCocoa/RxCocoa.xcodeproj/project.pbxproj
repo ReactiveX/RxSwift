@@ -37,6 +37,7 @@
 		C88BB8EF1B07F2BE0064D411 /* UITextField+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88BB8E71B07F2BE0064D411 /* UITextField+Rx.swift */; };
 		C88BB91D1B07FD960064D411 /* NSButton+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88BB91B1B07FD830064D411 /* NSButton+Rx.swift */; };
 		C8A56BCE1AD744FD00B4673B /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8A56BCD1AD744FD00B4673B /* RxSwift.framework */; };
+		CBEEA67A1B12364200176529 /* NSSlider+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBEEA6781B12323800176529 /* NSSlider+Rx.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -51,8 +52,8 @@
 		C8633AAB1B093EDF00375D60 /* KVOObservable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KVOObservable.swift; sourceTree = "<group>"; };
 		C8633AAC1B093EDF00375D60 /* Logging.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logging.swift; sourceTree = "<group>"; };
 		C8633AAD1B093EDF00375D60 /* NSNotificationCenter+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSNotificationCenter+Rx.swift"; sourceTree = "<group>"; };
-		C8633AAE1B093EDF00375D60 /* NSURLSession+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = "NSURLSession+Rx.swift"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		C8633AAF1B093EDF00375D60 /* RxCocoa.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = RxCocoa.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		C8633AAE1B093EDF00375D60 /* NSURLSession+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = "NSURLSession+Rx.swift"; sourceTree = "<group>"; };
+		C8633AAF1B093EDF00375D60 /* RxCocoa.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = RxCocoa.swift; sourceTree = "<group>"; };
 		C88BB88D1B07E6130064D411 /* RxCocoa.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxCocoa.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C88BB8E01B07F2BE0064D411 /* UIButton+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIButton+Rx.swift"; sourceTree = "<group>"; };
 		C88BB8E11B07F2BE0064D411 /* UICollectionView+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Rx.swift"; sourceTree = "<group>"; };
@@ -64,6 +65,7 @@
 		C88BB8E71B07F2BE0064D411 /* UITextField+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITextField+Rx.swift"; sourceTree = "<group>"; };
 		C88BB91B1B07FD830064D411 /* NSButton+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSButton+Rx.swift"; sourceTree = "<group>"; };
 		C8A56BCD1AD744FD00B4673B /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RxSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CBEEA6781B12323800176529 /* NSSlider+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSSlider+Rx.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -167,6 +169,7 @@
 		C88BB8DF1B07F2190064D411 /* OSX */ = {
 			isa = PBXGroup;
 			children = (
+				CBEEA6781B12323800176529 /* NSSlider+Rx.swift */,
 				C88BB91B1B07FD830064D411 /* NSButton+Rx.swift */,
 				C8633A991B08FEBB00375D60 /* NSImageView+Rx.swift */,
 				C8633A971B08FD0600375D60 /* NSTextField+Rx.swift */,
@@ -315,6 +318,7 @@
 				C8633AB11B093EDF00375D60 /* ControlTarget.swift in Sources */,
 				C8633A9A1B08FEBB00375D60 /* NSImageView+Rx.swift in Sources */,
 				C8633AB91B093EDF00375D60 /* NSURLSession+Rx.swift in Sources */,
+				CBEEA67A1B12364200176529 /* NSSlider+Rx.swift in Sources */,
 				C8633AB71B093EDF00375D60 /* NSNotificationCenter+Rx.swift in Sources */,
 				C8633AB31B093EDF00375D60 /* KVOObservable.swift in Sources */,
 			);

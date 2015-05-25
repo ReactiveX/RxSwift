@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "RxCocoa"
-  s.version          = "1.3.1"
+  s.version          = "1.4"
   s.summary          = "RxSwift Cocoa extensions"
   s.description      = <<-DESC
 			* UI extensions
