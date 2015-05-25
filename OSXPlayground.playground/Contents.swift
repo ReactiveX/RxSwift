@@ -51,6 +51,7 @@ let neverSubscriber = neverObservable >- subscribe { _ in
 ### returnElement/just
 These two functions behave identically. They send two messages to subscribers. The first message is the value and the second message is `.Complete`.
 */
+println("---")
 
 let oneObservable = just(32)
 
@@ -73,6 +74,7 @@ Here we see that the `.Next` event is sent just once, then the `.Completed` even
 ### returnElements
 Now we are getting to some more interesting ways to create an Observable. This function creates an observable that produces a number of values before completing.
 */
+println("---")
 
 let multipleObservable = returnElements(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
 
@@ -88,20 +90,21 @@ let multipleObservableSubscriber = multipleObservable >- subscribe { event in
 }
 
 /*:
-With the above, you will see that the `.Next` event was sent four times, once for each element. Then `.Complete` was sent.
+With the above, you will see that the `.Next` event was sent ten times, once for each element. Then `.Complete` was sent.
 
--
 Now these functions are all well and good, but the really useful ones are in the RxCocoa library.
-`rx_observe` exist on every NSObject and wraps KVO.
-`rx_tap` exists on buttons and wraps @IBActions
-`rx_notification` wraps NotificationCenter events
-... and so on.
+
+* `rx_observe` exist on every NSObject and wraps KVO.
+* `rx_tap` exists on buttons and wraps @IBActions
+* `rx_notification` wraps NotificationCenter events
+* ... and so on.
 
 Take some time and search for code matching `-> Observable` in the RxCocoa framework to get a sense of how every action can be modeled as an observable. You can even create your own functions that make Observable objects.
 
 ## Subscribing
 Up to this point, I have only used the `subscribe` method to listen to Observables, but there are several others.
 */
+println("---")
 
 let nextOnlySubscriber = multipleObservable >- subscribeNext { value in
     println("\(value)")
@@ -112,7 +115,7 @@ With the above we only interest ourselves in the values returned by the observab
 
 Also note that you can have multiple subscribers following to the same observable (as I did in the example above.) All the subscribers will be notified when an event occurs.
 */
-
+println("---")
 /*:
 ## Reducing a sequence
 Now that you understand how to create Observables and subscribe to them. Let's look at the various ways we can manipulate an observable sequence. First lets examine ways to reduce a sequence into fewer events.
@@ -133,6 +136,8 @@ var onlyEvensSubscriber = multipleObservable
 ### distinctUntilChanged
 This filter tracks the last value emitted and removes like values. This function is good for reducing noise in a sequence.
 */
+println("---")
+
 let debugSubscriber = returnElements(1, 2, 3, 1, 1, 4)
     >- distinctUntilChanged
     >- subscribeNext { value in
