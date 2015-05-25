@@ -135,7 +135,7 @@ var onlyEvensSubscriber = multipleObservable
 This filter tracks the last value emitted and removes like values. This function is good for reducing noise in a sequence.
 */
 
-let debugSubscriber = returnElements(1, 2, 3, 1, 1, 4)
+let distinctUntilChangedSubscriber = returnElements(1, 2, 3, 1, 1, 4)
     >- distinctUntilChanged
     >- subscribeNext { value in
         println("\(value)")
@@ -143,7 +143,21 @@ let debugSubscriber = returnElements(1, 2, 3, 1, 1, 4)
 
 /*:
 In the example above, the values 1, 2, 3, 1, 4 will be printed. The extra 1 will be filtered out.
+There are several different versions of `distinctUntilChanged`. Have a look in the file Observable+Single.swift to review them.
 */
+
+/*:
+## Aggregating a sequence
+
+### `aggregate`
+This function will perform a function on each element in the sequence until it is completed, then send a message with the aggregate value. It works much like the Swift `reduce` function works on sequences.
+*/
+
+let aggregateSubscriber = multipleObservable
+    >- aggregate(0, +)
+    >- subscribeNext { value in
+        println("\(value)")
+}
 
 /*:
 To be continued...
