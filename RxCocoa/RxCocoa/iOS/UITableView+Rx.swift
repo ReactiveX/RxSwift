@@ -10,10 +10,11 @@ import Foundation
 import RxSwift
 import UIKit
 
-// This cannot be a generic class because of table view objc runtime that checks for 
+// This cannot be a generic class because of table view objc runtime that checks for
 // implemented selectors in data source
 public class RxTableViewDataSource :  NSObject, UITableViewDataSource {
     public typealias CellFactory = (UITableView, NSIndexPath, AnyObject) -> UITableViewCell
+    public typealias CellRemover = (UITableView, NSIndexPath) -> Void
     
     public var rows: [AnyObject] {
         get {
@@ -24,10 +25,12 @@ public class RxTableViewDataSource :  NSObject, UITableViewDataSource {
     var _rows: [AnyObject]
     
     let cellFactory: CellFactory
+    let deleteCallback: CellRemover?
     
-    public init(cellFactory: CellFactory) {
+    public init(cellFactory: CellFactory, deleteCallback: CellRemover? = nil) {
         self._rows = []
         self.cellFactory = cellFactory
+        self.deleteCallback = deleteCallback
     }
     
     public func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -47,6 +50,21 @@ public class RxTableViewDataSource :  NSObject, UITableViewDataSource {
             rxFatalError("something went wrong")
             let cell: UITableViewCell? = nil
             return cell!
+        }
+    }
+    
+    public func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        if let deleteCallback = deleteCallback {
+            return true
+        }
+        return false
+    }
+    
+    public func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if editingStyle == .Delete {
+            if let deleteCallback = deleteCallback {
+                deleteCallback(tableView, indexPath)
+            }
         }
     }
 }
@@ -75,7 +93,7 @@ public class RxTableViewDelegate: RxScrollViewDelegate, UITableViewDelegate {
             removingObserverFailed()
         }
     }
- 
+    
     public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
@@ -104,9 +122,9 @@ extension UITableView {
         if self.dataSource != nil && self.dataSource !== dataSource {
             rxFatalError("Data source is different")
         }
-
+        
         self.dataSource = dataSource
-            
+        
         let clearDataSource = AnonymousDisposable {
             if self.dataSource != nil && self.dataSource !== dataSource {
                 rxFatalError("Data source is different")
@@ -114,7 +132,7 @@ extension UITableView {
             
             self.dataSource = nil
         }
-            
+        
         let disposable = source.subscribe(AnonymousObserver { event in
             MainScheduler.ensureExecutingOnScheduler()
             
@@ -130,33 +148,35 @@ extension UITableView {
             case .Completed:
                 break
             }
-        })
-            
+            })
+        
         return CompositeDisposable(clearDataSource, disposable)
     }
     
     public func rx_subscribeRowsTo<E where E : AnyObject>
-        (cellFactory: (UITableView, NSIndexPath, E) -> UITableViewCell)
+        (cellFactory: RxTableViewDataSource.CellFactory, deleteCallback: RxTableViewDataSource.CellRemover? = nil)
         (source: Observable<[E]>)
         -> Disposable {
             
-        let dataSource = RxTableViewDataSource {
-            cellFactory($0, $1, $2 as! E)
-        }
-            
+        let dataSource = RxTableViewDataSource(cellFactory: {
+                cellFactory($0, $1, $2 as! E)
+            },
+            deleteCallback: deleteCallback)
+        
         return self.rx_subscribeRowsTo(dataSource)(source: source)
     }
     
     public func rx_subscribeRowsToCellWithIdentifier<E, Cell where E : AnyObject, Cell: UITableViewCell>
-        (cellIdentifier: String, configureCell: (UITableView, NSIndexPath, E, Cell) -> Void)
+        (cellIdentifier: String, configureCell: (UITableView, NSIndexPath, E, Cell) -> Void, deleteCallback: RxTableViewDataSource.CellRemover? = nil)
         (source: Observable<[E]>)
         -> Disposable {
             
-        let dataSource = RxTableViewDataSource {
-            let cell = $0.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: $1) as! Cell
-            configureCell($0, $1, $2 as! E, cell)
-            return cell
-        }
+        let dataSource = RxTableViewDataSource(cellFactory: {
+                let cell = $0.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: $1) as! Cell
+                configureCell($0, $1, $2 as! E, cell)
+                return cell
+            },
+            deleteCallback: deleteCallback)
         
         return self.rx_subscribeRowsTo(dataSource)(source: source)
     }
@@ -174,7 +194,7 @@ extension UITableView {
                 maybeDelegate = delegate
                 self.delegate = maybeDelegate
             }
-    
+            
             let delegate = maybeDelegate!
             
             let key = delegate.addTableViewObserver(observer)
@@ -209,7 +229,7 @@ extension UITableView {
     }
     
     // private methods
-   
+    
     private func rx_getTableViewDataSource() -> RxTableViewDataSource? {
         MainScheduler.ensureExecutingOnScheduler()
         
