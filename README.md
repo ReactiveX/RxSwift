@@ -22,7 +22,7 @@ RxSwift
 └-Rx.xcworkspace  - workspace that contains all of the projects hooked up
 ```		
 
-Want to hang out with us on [rxswift.slack.com](https://rxswift.slack.com)? [request access](mailto:krunoslav.zaher@gmail.com?subject=[RxSwift] Hang out on slack).
+Hang out with us on [rxswift.slack.com](http://slack.rxswift.org) <img src="http://slack.rxswift.org/badge.svg">
 
 1. [Introduction](#introduction)
 1. [RxSwift supported operators](#rxswift-supported-operators)
