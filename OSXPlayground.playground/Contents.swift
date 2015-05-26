@@ -4,14 +4,14 @@ import RxSwift
 /*:
 ## Why use RxSwift?
 A vast majority of the code we write revolves around responding to external actions. When a user manipulates a control, we need to write an @IBAction to respond to that. We need to observe Notifications to detect when the keyboard changes position. We must provide blocks to execute when URL Sessions respond with data. And we use KVO to detect changes in variables.
-All of these various systems makes our code needlessly complex. Wouldn't it be better if there was one consistant system that handled all of our call/response code? Rx is such a system.
+All of these various systems makes our code needlessly complex. Wouldn't it be better if there was one consistent system that handled all of our call/response code? Rx is such a system.
 
 ## Observables
 The key to understanding RxSwift is in understanding the notion of Observables. Creating them, manipulating them, and subscribing to them in order to react to changes.
 
 ## Creating and Subscribing to Observables
 The first step in understanding this library is in understanding how to create Observables. There are a number of functions available to make Observables.
-Creating an Observable is one thing, but if nothing subscribes to the observable, then nothing will come of it so both are expalined simultaniously.
+Creating an Observable is one thing, but if nothing subscribes to the observable, then nothing will come of it so both are explained simultaneously.
 */
 
 /*:
@@ -88,9 +88,10 @@ let multipleObservableSubscriber = multipleObservable >- subscribe { event in
 }
 
 /*:
-With the above, you will see that the `.Next` event was sent four times, once for each element. Then `.Complete` was sent.
+With the above, you will see that the `.Next` event was sent ten times, once for each element. Then `.Complete` was sent.
+*/
 
--
+/*:
 Now these functions are all well and good, but the really useful ones are in the RxCocoa library.
 `rx_observe` exist on every NSObject and wraps KVO.
 `rx_tap` exists on buttons and wraps @IBActions
@@ -118,7 +119,7 @@ Also note that you can have multiple subscribers following to the same observabl
 Now that you understand how to create Observables and subscribe to them. Let's look at the various ways we can manipulate an observable sequence. First lets examine ways to reduce a sequence into fewer events.
 
 ### where/filter
-The most common way to reduce a sequence is to apply a filter to it and the most generic of these is `where` or `filter`. You will see in the code below that the messages containing odd numbers are being removed before the subscriber can see them.
+The most common way to reduce a sequence is to apply a filter to it and the most generic of these is `where` or `filter`. You will see in the code below that the messages containing odd numbers are being removed so the subscriber wont see them.
 */
 
 var onlyEvensSubscriber = multipleObservable
@@ -127,13 +128,14 @@ var onlyEvensSubscriber = multipleObservable
     }
     >- subscribeNext { value in
         println("\(value)")
-    }
+}
 
 /*:
 ### distinctUntilChanged
 This filter tracks the last value emitted and removes like values. This function is good for reducing noise in a sequence.
 */
-let debugSubscriber = returnElements(1, 2, 3, 1, 1, 4)
+
+let distinctUntilChangedSubscriber = returnElements(1, 2, 3, 1, 1, 4)
     >- distinctUntilChanged
     >- subscribeNext { value in
         println("\(value)")
@@ -141,7 +143,21 @@ let debugSubscriber = returnElements(1, 2, 3, 1, 1, 4)
 
 /*:
 In the example above, the values 1, 2, 3, 1, 4 will be printed. The extra 1 will be filtered out.
+There are several different versions of `distinctUntilChanged`. Have a look in the file Observable+Single.swift to review them.
 */
+
+/*:
+## Aggregating a sequence
+
+### `aggregate`
+This function will perform a function on each element in the sequence until it is completed, then send a message with the aggregate value. It works much like the Swift `reduce` function works on sequences.
+*/
+
+let aggregateSubscriber = multipleObservable
+    >- aggregate(0, +)
+    >- subscribeNext { value in
+        println("\(value)")
+}
 
 /*:
 To be continued...
