@@ -88,7 +88,7 @@ let multipleObservableSubscriber = multipleObservable >- subscribe { event in
 }
 
 /*:
-With the above, you will see that the `.Next` event was sent four times, once for each element. Then `.Complete` was sent.
+With the above, you will see that the `.Next` event was sent ten times, once for each element. Then `.Complete` was sent.
 
 -
 Now these functions are all well and good, but the really useful ones are in the RxCocoa library.
