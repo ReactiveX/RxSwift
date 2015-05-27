@@ -105,6 +105,7 @@ Up to this point, I have only used the `subscribe` method to listen to Observabl
 
 let nextOnlySubscriber = multipleObservable >- subscribeNext { value in
     println("\(value)")
+    return
 }
 
 /*:
