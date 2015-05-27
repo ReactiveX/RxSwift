@@ -53,13 +53,13 @@ class ZipSink2_<E1, E2, O: ObserverType> : ZipSink<O> {
         observer1 = ZipObserver(lock: lock, parent: self, index: 0, this: subscription1)
         observer2 = ZipObserver(lock: lock, parent: self, index: 1, this: subscription2)
 
+    self.observers = [
+        observer1, 
+        observer2, 
+    ]
+
         subscription1.setDisposable(parent.source1.subscribe(observer1))
         subscription2.setDisposable(parent.source2.subscribe(observer2))
-
-        self.observers = [
-            observer1,
-            observer2,
-        ]
 
         return CompositeDisposable(disposables: [
            subscription1,
@@ -140,15 +140,15 @@ class ZipSink3_<E1, E2, E3, O: ObserverType> : ZipSink<O> {
         observer2 = ZipObserver(lock: lock, parent: self, index: 1, this: subscription2)
         observer3 = ZipObserver(lock: lock, parent: self, index: 2, this: subscription3)
 
+    self.observers = [
+        observer1, 
+        observer2, 
+        observer3, 
+    ]
+
         subscription1.setDisposable(parent.source1.subscribe(observer1))
         subscription2.setDisposable(parent.source2.subscribe(observer2))
         subscription3.setDisposable(parent.source3.subscribe(observer3))
-
-        self.observers = [
-            observer1,
-            observer2,
-            observer3,
-        ]
 
         return CompositeDisposable(disposables: [
            subscription1,
@@ -235,17 +235,17 @@ class ZipSink4_<E1, E2, E3, E4, O: ObserverType> : ZipSink<O> {
         observer3 = ZipObserver(lock: lock, parent: self, index: 2, this: subscription3)
         observer4 = ZipObserver(lock: lock, parent: self, index: 3, this: subscription4)
 
+    self.observers = [
+        observer1, 
+        observer2, 
+        observer3, 
+        observer4, 
+    ]
+
         subscription1.setDisposable(parent.source1.subscribe(observer1))
         subscription2.setDisposable(parent.source2.subscribe(observer2))
         subscription3.setDisposable(parent.source3.subscribe(observer3))
         subscription4.setDisposable(parent.source4.subscribe(observer4))
-
-        self.observers = [
-            observer1,
-            observer2,
-            observer3,
-            observer4,
-        ]
 
         return CompositeDisposable(disposables: [
            subscription1,
@@ -338,19 +338,19 @@ class ZipSink5_<E1, E2, E3, E4, E5, O: ObserverType> : ZipSink<O> {
         observer4 = ZipObserver(lock: lock, parent: self, index: 3, this: subscription4)
         observer5 = ZipObserver(lock: lock, parent: self, index: 4, this: subscription5)
 
+    self.observers = [
+        observer1, 
+        observer2, 
+        observer3, 
+        observer4, 
+        observer5, 
+    ]
+
         subscription1.setDisposable(parent.source1.subscribe(observer1))
         subscription2.setDisposable(parent.source2.subscribe(observer2))
         subscription3.setDisposable(parent.source3.subscribe(observer3))
         subscription4.setDisposable(parent.source4.subscribe(observer4))
         subscription5.setDisposable(parent.source5.subscribe(observer5))
-
-        self.observers = [
-            observer1,
-            observer2,
-            observer3,
-            observer4,
-            observer5,
-        ]
 
         return CompositeDisposable(disposables: [
            subscription1,
@@ -449,21 +449,21 @@ class ZipSink6_<E1, E2, E3, E4, E5, E6, O: ObserverType> : ZipSink<O> {
         observer5 = ZipObserver(lock: lock, parent: self, index: 4, this: subscription5)
         observer6 = ZipObserver(lock: lock, parent: self, index: 5, this: subscription6)
 
+    self.observers = [
+        observer1, 
+        observer2, 
+        observer3, 
+        observer4, 
+        observer5, 
+        observer6, 
+    ]
+
         subscription1.setDisposable(parent.source1.subscribe(observer1))
         subscription2.setDisposable(parent.source2.subscribe(observer2))
         subscription3.setDisposable(parent.source3.subscribe(observer3))
         subscription4.setDisposable(parent.source4.subscribe(observer4))
         subscription5.setDisposable(parent.source5.subscribe(observer5))
         subscription6.setDisposable(parent.source6.subscribe(observer6))
-
-        self.observers = [
-            observer1,
-            observer2,
-            observer3,
-            observer4,
-            observer5,
-            observer6,
-        ]
 
         return CompositeDisposable(disposables: [
            subscription1,
@@ -568,6 +568,16 @@ class ZipSink7_<E1, E2, E3, E4, E5, E6, E7, O: ObserverType> : ZipSink<O> {
         observer6 = ZipObserver(lock: lock, parent: self, index: 5, this: subscription6)
         observer7 = ZipObserver(lock: lock, parent: self, index: 6, this: subscription7)
 
+    self.observers = [
+        observer1, 
+        observer2, 
+        observer3, 
+        observer4, 
+        observer5, 
+        observer6, 
+        observer7, 
+    ]
+
         subscription1.setDisposable(parent.source1.subscribe(observer1))
         subscription2.setDisposable(parent.source2.subscribe(observer2))
         subscription3.setDisposable(parent.source3.subscribe(observer3))
@@ -575,16 +585,6 @@ class ZipSink7_<E1, E2, E3, E4, E5, E6, E7, O: ObserverType> : ZipSink<O> {
         subscription5.setDisposable(parent.source5.subscribe(observer5))
         subscription6.setDisposable(parent.source6.subscribe(observer6))
         subscription7.setDisposable(parent.source7.subscribe(observer7))
-
-        self.observers = [
-            observer1,
-            observer2,
-            observer3,
-            observer4,
-            observer5,
-            observer6,
-            observer7,
-        ]
 
         return CompositeDisposable(disposables: [
            subscription1,
@@ -695,6 +695,17 @@ class ZipSink8_<E1, E2, E3, E4, E5, E6, E7, E8, O: ObserverType> : ZipSink<O> {
         observer7 = ZipObserver(lock: lock, parent: self, index: 6, this: subscription7)
         observer8 = ZipObserver(lock: lock, parent: self, index: 7, this: subscription8)
 
+    self.observers = [
+        observer1, 
+        observer2, 
+        observer3, 
+        observer4, 
+        observer5, 
+        observer6, 
+        observer7, 
+        observer8, 
+    ]
+
         subscription1.setDisposable(parent.source1.subscribe(observer1))
         subscription2.setDisposable(parent.source2.subscribe(observer2))
         subscription3.setDisposable(parent.source3.subscribe(observer3))
@@ -703,17 +714,6 @@ class ZipSink8_<E1, E2, E3, E4, E5, E6, E7, E8, O: ObserverType> : ZipSink<O> {
         subscription6.setDisposable(parent.source6.subscribe(observer6))
         subscription7.setDisposable(parent.source7.subscribe(observer7))
         subscription8.setDisposable(parent.source8.subscribe(observer8))
-
-        self.observers = [
-            observer1,
-            observer2,
-            observer3,
-            observer4,
-            observer5,
-            observer6,
-            observer7,
-            observer8,
-        ]
 
         return CompositeDisposable(disposables: [
            subscription1,
@@ -830,6 +830,18 @@ class ZipSink9_<E1, E2, E3, E4, E5, E6, E7, E8, E9, O: ObserverType> : ZipSink<O
         observer8 = ZipObserver(lock: lock, parent: self, index: 7, this: subscription8)
         observer9 = ZipObserver(lock: lock, parent: self, index: 8, this: subscription9)
 
+    self.observers = [
+        observer1, 
+        observer2, 
+        observer3, 
+        observer4, 
+        observer5, 
+        observer6, 
+        observer7, 
+        observer8, 
+        observer9, 
+    ]
+
         subscription1.setDisposable(parent.source1.subscribe(observer1))
         subscription2.setDisposable(parent.source2.subscribe(observer2))
         subscription3.setDisposable(parent.source3.subscribe(observer3))
@@ -839,18 +851,6 @@ class ZipSink9_<E1, E2, E3, E4, E5, E6, E7, E8, E9, O: ObserverType> : ZipSink<O
         subscription7.setDisposable(parent.source7.subscribe(observer7))
         subscription8.setDisposable(parent.source8.subscribe(observer8))
         subscription9.setDisposable(parent.source9.subscribe(observer9))
-
-        self.observers = [
-            observer1,
-            observer2,
-            observer3,
-            observer4,
-            observer5,
-            observer6,
-            observer7,
-            observer8,
-            observer9,
-        ]
 
         return CompositeDisposable(disposables: [
            subscription1,
@@ -973,6 +973,19 @@ class ZipSink10_<E1, E2, E3, E4, E5, E6, E7, E8, E9, E10, O: ObserverType> : Zip
         observer9 = ZipObserver(lock: lock, parent: self, index: 8, this: subscription9)
         observer10 = ZipObserver(lock: lock, parent: self, index: 9, this: subscription10)
 
+    self.observers = [
+        observer1, 
+        observer2, 
+        observer3, 
+        observer4, 
+        observer5, 
+        observer6, 
+        observer7, 
+        observer8, 
+        observer9, 
+        observer10, 
+    ]
+
         subscription1.setDisposable(parent.source1.subscribe(observer1))
         subscription2.setDisposable(parent.source2.subscribe(observer2))
         subscription3.setDisposable(parent.source3.subscribe(observer3))
@@ -983,19 +996,6 @@ class ZipSink10_<E1, E2, E3, E4, E5, E6, E7, E8, E9, E10, O: ObserverType> : Zip
         subscription8.setDisposable(parent.source8.subscribe(observer8))
         subscription9.setDisposable(parent.source9.subscribe(observer9))
         subscription10.setDisposable(parent.source10.subscribe(observer10))
-
-        self.observers = [
-            observer1,
-            observer2,
-            observer3,
-            observer4,
-            observer5,
-            observer6,
-            observer7,
-            observer8,
-            observer9,
-            observer10,
-        ]
 
         return CompositeDisposable(disposables: [
            subscription1,
