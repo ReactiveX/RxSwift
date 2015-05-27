@@ -134,7 +134,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
                         <sections>
-                            <tableViewSection headerTitle="Examples" footerTitle="Showcase examples for Rx. You can easily test for proper resource cleanup during poping of the navigation stack" id="QC3-bK-dI7">
+                            <tableViewSection headerTitle="Examples" footerTitle="Showcase examples for Rx. You can easily test for proper resource cleanup during popping of the navigation stack" id="QC3-bK-dI7">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="LN4-l3-ara" detailTextLabel="BaB-5r-hmY" style="IBUITableViewCellStyleSubtitle" id="Hab-23-dUs">
                                         <autoresizingMask key="autoresizingMask"/>
