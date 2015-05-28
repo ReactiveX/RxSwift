@@ -154,7 +154,7 @@ public let SuccessResult = success(())
 // lift functions
 
 // "Lifts" functions that take normal arguments to functions that take `Result` monad arguments.
-// Unfortunatelly these are not generic `Monad` lift functions because
+// Unfortunately these are not generic `Monad` lift functions because
 // Creating generic lift functions that work for arbitrary monads is a lot more tricky.
 
 func lift<T1, TRet>(function: (T1) -> TRet) -> (RxResult<T1>) -> RxResult<TRet> {
