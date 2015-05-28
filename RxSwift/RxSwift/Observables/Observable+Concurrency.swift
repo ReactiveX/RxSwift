@@ -14,7 +14,7 @@ import Foundation
 // or return result to main thread.
 //
 // `observeSingleOn` is optimized for that specific purpose. It assumes that sequence will have one element
-// and in cases it has more then one element it will throw an exception.
+// and in cases it has more than one element it will throw an exception.
 //
 // This is a huge performance win considering most general case.
 //
