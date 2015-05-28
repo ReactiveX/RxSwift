@@ -31,10 +31,10 @@ public protocol Scheduler: ImmediateScheduler {
 //
 // It's probably best to make sure all of the errors have been handled before
 // the computation finishes, but it's not unreasonable to change the implementation
-// for release builds to silently fail (although I would not recommended).
+// for release builds to silently fail (although I would not recommend it).
 //
 // Changing default behavior is not recommended because possible data corruption
-// is "usually" a lot worse then letting program to crash.
+// is "usually" a lot worse than letting the program crash.
 //
 func ensureScheduledSuccessfully(result: RxResult<Void>) -> RxResult<Void> {
     switch result {
