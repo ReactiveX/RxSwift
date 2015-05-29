@@ -1,8 +1,9 @@
 //
-//  UIBarButtonItem+RxExt.swift
-//  MVVM
+//  UIBarButtonItem+Rx.swift
+//  RxCocoa
 //
-//  Created by Daniel Tartaglia on 5/25/15.
+//  Created by Daniel Tartaglia on 5/25/15. 
+//  Copyright (c) 2015 Krunoslav Zaher. All rights reserved.
 //
 
 import UIKit
