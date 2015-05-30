@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		653C8BF41B114EB600983087 /* UIControl+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653C8BF31B114EB600983087 /* UIControl+Rx.swift */; };
+		654ED97F1B1A34F600B502C2 /* UIDatePicker+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654ED97E1B1A34F600B502C2 /* UIDatePicker+Rx.swift */; };
 		65CA563F1B1699160065EAC6 /* UIBarButtonItem+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65CA563E1B1699160065EAC6 /* UIBarButtonItem+Rx.swift */; };
 		C8092BBB1AF50436008D9A2C /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8092BBA1AF50436008D9A2C /* CoreData.framework */; };
 		C81553E41A98AB4A00C63152 /* RxCocoa.h in Headers */ = {isa = PBXBuildFile; fileRef = C81553E31A98AB4A00C63152 /* RxCocoa.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -43,6 +44,7 @@
 
 /* Begin PBXFileReference section */
 		653C8BF31B114EB600983087 /* UIControl+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIControl+Rx.swift"; sourceTree = "<group>"; };
+		654ED97E1B1A34F600B502C2 /* UIDatePicker+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIDatePicker+Rx.swift"; sourceTree = "<group>"; };
 		65CA563E1B1699160065EAC6 /* UIBarButtonItem+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIBarButtonItem+Rx.swift"; sourceTree = "<group>"; };
 		C8092BBA1AF50436008D9A2C /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		C81553DE1A98AB4A00C63152 /* RxCocoa.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxCocoa.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -159,6 +161,7 @@
 				C88BB8E01B07F2BE0064D411 /* UIButton+Rx.swift */,
 				C88BB8E11B07F2BE0064D411 /* UICollectionView+Rx.swift */,
 				653C8BF31B114EB600983087 /* UIControl+Rx.swift */,
+				654ED97E1B1A34F600B502C2 /* UIDatePicker+Rx.swift */,
 				C88BB8E21B07F2BE0064D411 /* UIImageView+Rx.swift */,
 				C88BB8E31B07F2BE0064D411 /* UILabel+Rx.swift */,
 				C88BB8E41B07F2BE0064D411 /* UIScrollView+Rx.swift */,
@@ -294,6 +297,7 @@
 			files = (
 				C88BB8EE1B07F2BE0064D411 /* UITableView+Rx.swift in Sources */,
 				C88BB8EF1B07F2BE0064D411 /* UITextField+Rx.swift in Sources */,
+				654ED97F1B1A34F600B502C2 /* UIDatePicker+Rx.swift in Sources */,
 				C8633AB61B093EDF00375D60 /* NSNotificationCenter+Rx.swift in Sources */,
 				C88BB8E81B07F2BE0064D411 /* UIButton+Rx.swift in Sources */,
 				C8633AB41B093EDF00375D60 /* Logging.swift in Sources */,

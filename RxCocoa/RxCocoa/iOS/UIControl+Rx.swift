@@ -11,16 +11,18 @@ import RxSwift
 import UIKit
 
 extension UIControl {
-    public func rx_controlEvents(controlEvents: UIControlEvents) -> Observable<Void> {
+    
+    public func rx_controlEvents(controlEvents: UIControlEvents) -> Observable<UIControl> {
         return AnonymousObservable { observer in
             MainScheduler.ensureExecutingOnScheduler()
             
             let observer = ControlTarget(control: self, controlEvents: controlEvents) {
                 control in
-                sendNext(observer, ())
+                sendNext(observer, control)
             }
             
             return observer
         }
     }
+
 }

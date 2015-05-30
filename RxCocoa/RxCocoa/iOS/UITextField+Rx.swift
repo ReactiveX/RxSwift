@@ -11,32 +11,9 @@ import RxSwift
 import UIKit
 
 extension UITextField {
-    public var rx_text: Observable<String> {
-        return observableForControlEvent(.EditingChanged)
-    }
-
-    public var rx_endOnExit: Observable<String> {
-        return observableForControlEvent(.EditingDidEndOnExit)
-    }
-
-    private func observableForControlEvent(controlEvent: UIControlEvents) -> Observable<String> {
-        return AnonymousObservable { observer in
-
-            let propagateChange = { (control: UITextField) -> Void in
-                let text: String = control.text
-
-                sendNext(observer, text)
-            }
-
-            propagateChange(self)
-
-            let subscription = ControlTarget(control: self, controlEvents: controlEvent) { control in
-                propagateChange(control as! UITextField)
-            }
-            
-            return subscription
-        }
-        
-    }
     
+    public var rx_text: Observable<String> {
+        return rx_controlEvents(.TouchUpInside) >- map { _ in self.text }
+    }
+
 }
