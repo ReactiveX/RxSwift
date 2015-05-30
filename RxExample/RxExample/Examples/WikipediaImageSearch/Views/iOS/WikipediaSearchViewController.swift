@@ -34,7 +34,7 @@ class WikipediaSearchViewController: ViewController {
         resultsTableView.rowHeight = 194
         
         let viewModel = SearchViewModel(
-            searchText: searchBar.rx_searchText(),
+            searchText: searchBar.rx_searchText,
             selectedResult: resultsTableView.rx_elementTap()
         )
         
@@ -49,7 +49,7 @@ class WikipediaSearchViewController: ViewController {
 
         // dismiss keyboard on scroll
         // {
-        resultsTableView.rx_contentOffset()
+        resultsTableView.rx_contentOffset
             >- subscribeNext { _ in
                 if searchBar.isFirstResponder() {
                     _ = searchBar.resignFirstResponder()

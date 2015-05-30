@@ -11,11 +11,11 @@ import RxSwift
 import UIKit
 
 extension UITextField {
-    public func rx_text() -> Observable<String> {
+    public var rx_text: Observable<String> {
         return observableForControlEvent(.EditingChanged)
     }
 
-    public func rx_endOnExit() -> Observable<String> {
+    public var rx_endOnExit: Observable<String> {
         return observableForControlEvent(.EditingDidEndOnExit)
     }
 

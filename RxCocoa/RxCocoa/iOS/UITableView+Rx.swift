@@ -91,7 +91,7 @@ public class RxTableViewDelegate: RxScrollViewDelegate, UITableViewDelegate {
 
 // This is the most simple (but probably most common) way of using rx with UITableView.
 extension UITableView {
-    override func rx_createDelegate() -> RxScrollViewDelegate {
+    override var rx_delegate: RxScrollViewDelegate {
         return RxTableViewDelegate()
     }
     
@@ -161,16 +161,16 @@ extension UITableView {
         return self.rx_subscribeRowsTo(dataSource)(source: source)
     }
     
-    public func rx_rowTap() -> Observable<(UITableView, Int)> {
-        _ = rx_checkTableViewDelegate()
+    public var rx_rowTap: Observable<(UITableView, Int)> {
+        _ = rx_checkTableViewDelegate
         
         return AnonymousObservable { observer in
             MainScheduler.ensureExecutingOnScheduler()
             
-            var maybeDelegate = self.rx_checkTableViewDelegate()
+            var maybeDelegate = self.rx_checkTableViewDelegate
             
             if maybeDelegate == nil {
-                let delegate = self.rx_createDelegate() as! RxTableViewDelegate
+                let delegate = self.rx_delegate as! RxTableViewDelegate
                 maybeDelegate = delegate
                 self.delegate = maybeDelegate
             }
@@ -182,7 +182,7 @@ extension UITableView {
             return AnonymousDisposable {
                 MainScheduler.ensureExecutingOnScheduler()
                 
-                _ = self.rx_checkTableViewDelegate()
+                _ = self.rx_checkTableViewDelegate
                 
                 delegate.removeTableViewObserver(key)
                 
@@ -195,8 +195,8 @@ extension UITableView {
     
     public func rx_elementTap<E>() -> Observable<E> {
         
-        return rx_rowTap() >- map { (tableView, rowIndex) -> E in
-            let maybeDataSource: RxTableViewDataSource? = self.rx_getTableViewDataSource()
+        return rx_rowTap >- map { (tableView, rowIndex) -> E in
+            let maybeDataSource: RxTableViewDataSource? = self.rx_getTableViewDataSource
             
             if maybeDataSource == nil {
                 rxFatalError("To use element tap table view needs to use table view data source. You can still use `rx_observableRowTap`.")
@@ -210,7 +210,7 @@ extension UITableView {
     
     // private methods
    
-    private func rx_getTableViewDataSource() -> RxTableViewDataSource? {
+    private var rx_getTableViewDataSource: RxTableViewDataSource? {
         MainScheduler.ensureExecutingOnScheduler()
         
         if self.dataSource == nil {
@@ -226,7 +226,7 @@ extension UITableView {
         return maybeDataSource!
     }
     
-    private func rx_checkTableViewDataSource<E>() -> RxTableViewDataSource? {
+    private var rx_checkTableViewDataSource: RxTableViewDataSource? {
         MainScheduler.ensureExecutingOnScheduler()
         
         if self.dataSource == nil {
@@ -242,7 +242,7 @@ extension UITableView {
         return maybeDataSource!
     }
     
-    private func rx_checkTableViewDelegate() -> RxTableViewDelegate? {
+    private var rx_checkTableViewDelegate: RxTableViewDelegate? {
         MainScheduler.ensureExecutingOnScheduler()
         
         if self.delegate == nil {
