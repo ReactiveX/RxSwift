@@ -6,13 +6,13 @@
 //  Copyright (c) 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import UIKit
+import Foundation
 import RxSwift
-
+import UIKit
 
 extension UIBarButtonItem {
 
-    func rx_tap() -> Observable<Void> {
+    public var rx_tap: Observable<Void> {
         return AnonymousObservable { observer in
             let target = BarButtonItemTarget(barButtonItem: self) {
                 sendNext(observer, ())
@@ -20,16 +20,18 @@ extension UIBarButtonItem {
             return target
         }
     }
+    
 }
 
 
 @objc
 class BarButtonItemTarget: Disposable {
+    typealias Callback = () -> Void
     
     weak var barButtonItem: UIBarButtonItem?
-    let callback: () -> Void
+    var callback: Callback?
     
-    init(barButtonItem: UIBarButtonItem, callback: () -> Void) {
+    init(barButtonItem: UIBarButtonItem, callback: Callback) {
         self.barButtonItem = barButtonItem
         self.callback = callback
         barButtonItem.target = self
@@ -43,10 +45,13 @@ class BarButtonItemTarget: Disposable {
     func dispose() {
         barButtonItem?.target = nil
         barButtonItem?.action = nil
+        callback = nil
     }
     
     func action(sender: AnyObject) {
-        callback()
+        if let callback = self.callback {
+            callback()
+        }
     }
     
 }

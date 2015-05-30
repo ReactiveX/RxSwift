@@ -25,7 +25,7 @@ class SearchResultViewModel {
         self.title = never()
         self.imageURLs = never()
         
-        let URLs = configureImageURLs()
+        let URLs = configureImageURLs
         
         self.imageURLs = URLs >- catch([])
         self.title = configureTitle(URLs) >- catch("Error during fetching")
@@ -51,7 +51,7 @@ class SearchResultViewModel {
             }
     }
     
-    func configureImageURLs() -> Observable<[NSURL]> {
+    var configureImageURLs: Observable<[NSURL]> {
         let searchResult = self.searchResult
         return API.articleContent(searchResult)
             >- observeSingleOn($.backgroundWorkScheduler)

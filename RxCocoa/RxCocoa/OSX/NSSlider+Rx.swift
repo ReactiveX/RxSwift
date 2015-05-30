@@ -11,7 +11,7 @@ import RxSwift
 import Cocoa
 
 extension NSSlider {
-    public func rx_value() -> Observable<Double> {
+    public var rx_value: Observable<Double> {
         return AnonymousObservable { observer in
             MainScheduler.ensureExecutingOnScheduler()
             

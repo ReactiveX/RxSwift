@@ -125,10 +125,10 @@ class GitHubSignupViewController : ViewController {
         
         let validationService = ValidationService(API: API)
      
-        let username = usernameOutlet.rx_text()
-        let password = passwordOutlet.rx_text()
-        let repeatPassword = repeatedPasswordOutlet.rx_text()
-        let signupSampler = self.signupOutlet.rx_tap()
+        let username = usernameOutlet.rx_text
+        let password = passwordOutlet.rx_text
+        let repeatPassword = repeatedPasswordOutlet.rx_text
+        let signupSampler = self.signupOutlet.rx_tap
         
         let usernameValidation = username
             >- map { username in

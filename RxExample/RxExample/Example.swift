@@ -20,12 +20,12 @@ import Foundation
 let MB = 1024 * 1024
 
 extension String {
-    func toFloat() -> Float? {
+    var toFloat: Float? {
         let numberFormatter = NSNumberFormatter()
         return numberFormatter.numberFromString(self)?.floatValue
     }
     
-    func toDouble() -> Double? {
+    var toDouble: Double? {
         let numberFormatter = NSNumberFormatter()
         return numberFormatter.numberFromString(self)?.doubleValue
     }

@@ -58,14 +58,14 @@ extension NSTextField {
         })
     }
     
-    public func rx_text() -> Observable<String> {
+    public var rx_text: Observable<String> {
         return AnonymousObservable { observer in
             MainScheduler.ensureExecutingOnScheduler()
             
             var maybeDelegate = self.rx_checkDelegate()
             
             if maybeDelegate == nil {
-                let delegate = self.rx_createDelegate()
+                let delegate = self.rx_delegate()
                 maybeDelegate = delegate
                 self.delegate = maybeDelegate
             }
@@ -90,11 +90,11 @@ extension NSTextField {
         }
     }
     
-    private func rx_createDelegate() -> RxTextFieldDelegate {
+    private var rx_delegate: RxTextFieldDelegate {
         return RxTextFieldDelegate()
     }
     
-    private func rx_checkDelegate() -> RxTextFieldDelegate? {
+    private var rx_checkDelegate: RxTextFieldDelegate? {
         MainScheduler.ensureExecutingOnScheduler()
         
         if self.delegate == nil {
