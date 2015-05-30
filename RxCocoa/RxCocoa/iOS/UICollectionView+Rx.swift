@@ -90,7 +90,7 @@ public class RxCollectionViewDelegate: RxScrollViewDelegate, UICollectionViewDel
 
 // This is the most simple (but probably most common) way of using rx with UICollectionView.
 extension UICollectionView {
-    override func rx_createDelegate() -> RxScrollViewDelegate {
+    override var rx_delegate: RxScrollViewDelegate {
         return RxCollectionViewDelegate()
     }
     
@@ -163,16 +163,16 @@ extension UICollectionView {
     }
     
     
-    public func rx_itemTap() -> Observable<(UICollectionView, Int)> {
-        _ = rx_checkCollectionViewDelegate()
+    public var rx_itemTap: Observable<(UICollectionView, Int)> {
+        _ = rx_checkCollectionViewDelegate
         
         return AnonymousObservable { observer in
             MainScheduler.ensureExecutingOnScheduler()
             
-            var maybeDelegate = self.rx_checkCollectionViewDelegate()
+            var maybeDelegate = self.rx_checkCollectionViewDelegate
             
             if maybeDelegate == nil {
-                let delegate = self.rx_createDelegate() as! RxCollectionViewDelegate
+                let delegate = self.rx_delegate as! RxCollectionViewDelegate
                 maybeDelegate = delegate
                 self.delegate = maybeDelegate
             }
@@ -184,7 +184,7 @@ extension UICollectionView {
             return AnonymousDisposable {
                 MainScheduler.ensureExecutingOnScheduler()
                 
-                _ = self.rx_checkCollectionViewDelegate()
+                _ = self.rx_checkCollectionViewDelegate
                 
                 delegate.removeCollectionViewObserver(key)
                 
@@ -197,8 +197,8 @@ extension UICollectionView {
     
     public func rx_elementTap<E>() -> Observable<E> {
         
-        return rx_itemTap() >- map { (tableView, rowIndex) -> E in
-            let maybeDataSource: RxCollectionViewDataSource? = self.rx_collectionViewDataSource()
+        return rx_itemTap >- map { (tableView, rowIndex) -> E in
+            let maybeDataSource: RxCollectionViewDataSource? = self.rx_collectionViewDataSource
             
             if maybeDataSource == nil {
                 rxFatalError("To use element tap table view needs to use table view data source. You can still use `rx_observableItemTap`.")
@@ -212,7 +212,7 @@ extension UICollectionView {
     
     // private methods
     
-    private func rx_collectionViewDataSource() -> RxCollectionViewDataSource? {
+    private var rx_collectionViewDataSource: RxCollectionViewDataSource? {
         MainScheduler.ensureExecutingOnScheduler()
         
         if self.dataSource == nil {
@@ -228,7 +228,7 @@ extension UICollectionView {
         return maybeDataSource!
     }
     
-    private func rx_checkCollectionViewDataSource<E>() -> RxCollectionViewDataSource? {
+    private var rx_checkCollectionViewDataSource: RxCollectionViewDataSource? {
         MainScheduler.ensureExecutingOnScheduler()
         
         if self.dataSource == nil {
@@ -244,7 +244,7 @@ extension UICollectionView {
         return maybeDataSource!
     }
     
-    private func rx_checkCollectionViewDelegate() -> RxCollectionViewDelegate? {
+    private var rx_checkCollectionViewDelegate: RxCollectionViewDelegate? {
         MainScheduler.ensureExecutingOnScheduler()
         
         if self.delegate == nil {

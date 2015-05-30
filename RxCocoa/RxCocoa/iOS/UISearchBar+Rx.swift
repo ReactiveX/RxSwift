@@ -39,14 +39,14 @@ class RxSearchBarDelegate: NSObject, UISearchBarDelegate {
 
 extension UISearchBar {
     
-    public func rx_searchText() -> Observable<String> {
+    public var rx_searchText: Observable<String> {
         
-        rx_checkSearchBarDelegate()
+        _ = rx_checkSearchBarDelegate
         
         return AnonymousObservable { observer in
             MainScheduler.ensureExecutingOnScheduler()
             
-            var maybeDelegate = self.rx_checkSearchBarDelegate()
+            var maybeDelegate = self.rx_checkSearchBarDelegate
             
             if maybeDelegate == nil {
                 maybeDelegate = RxSearchBarDelegate()
@@ -65,7 +65,7 @@ extension UISearchBar {
     
     // private 
     
-    private func rx_checkSearchBarDelegate() -> RxSearchBarDelegate? {
+    private var rx_checkSearchBarDelegate: RxSearchBarDelegate? {
         MainScheduler.ensureExecutingOnScheduler()
         
         if self.delegate == nil {

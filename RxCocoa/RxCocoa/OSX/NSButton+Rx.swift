@@ -11,7 +11,7 @@ import RxSwift
 import Cocoa
 
 extension NSButton {
-    public func rx_tap() -> Observable<Void> {
+    public var rx_tap: Observable<Void> {
         return AnonymousObservable { observer in
             MainScheduler.ensureExecutingOnScheduler()
             

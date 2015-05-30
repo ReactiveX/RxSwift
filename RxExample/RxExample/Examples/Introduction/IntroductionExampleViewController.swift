@@ -70,7 +70,7 @@ class IntroductionExampleViewController : ViewController {
             }
             >- disposeBag.addDisposable
         
-        disposeButton.rx_tap()
+        disposeButton.rx_tap
             >- subscribeNext { [unowned self] _ in
                 println("Unbound everything")
                 self.disposeBag.dispose()
