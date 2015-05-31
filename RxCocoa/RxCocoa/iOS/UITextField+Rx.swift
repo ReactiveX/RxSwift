@@ -11,22 +11,9 @@ import RxSwift
 import UIKit
 
 extension UITextField {
-    public func rx_text() -> Observable<String> {
-        return AnonymousObservable { observer in
-            
-            let propagateChange = { (control: UITextField) -> Void in
-                let text: String = control.text
-                
-                sendNext(observer, text)
-            }
-            
-            propagateChange(self)
-            
-            let subscription = ControlTarget(control: self, controlEvents: UIControlEvents.EditingChanged) { control in
-                propagateChange(control as! UITextField)
-            }
-            
-            return subscription
+    public var rx_text: Observable<String> {
+        return rx_value { [weak self] in
+            self?.text ?? ""
         }
     }
 }

@@ -11,7 +11,7 @@ import RxSwift
 import UIKit
 
 extension UISlider {
-    public func rx_value() -> Observable<Float> {
+    public var rx_value: Observable<Float> {
         return AnonymousObservable { observer in
             MainScheduler.ensureExecutingOnScheduler()
             

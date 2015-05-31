@@ -52,7 +52,7 @@ extension UIScrollView {
         return RxScrollViewDelegate()
     }
     
-    public func rx_contentOffset() -> Observable<CGPoint> {
+    public var rx_contentOffset: Observable<CGPoint> {
         _ = rx_checkScrollViewDelegate()
         
         return AnonymousObservable { observer in

@@ -27,7 +27,7 @@ class IntroductionExampleViewController : ViewController {
         super.viewDidLoad()
         
         // c = a + b
-        let sum = combineLatest(a.rx_text(), b.rx_text()) { (a, b) in
+        let sum = combineLatest(a.rx_text, b.rx_text) { (a, b) in
             return (a.toInt() ?? 0, b.toInt() ?? 0)
         }
         
@@ -56,13 +56,13 @@ class IntroductionExampleViewController : ViewController {
             >- disposeBag.addDisposable
         
         
-        slider.rx_value()
+        slider.rx_value
             >- subscribeNext { value in
                 self.sliderValue.stringValue = "\(Int(value))"
             }
             >- disposeBag.addDisposable
         
-        sliderValue.rx_text()
+        sliderValue.rx_text
             >- subscribeNext { value in
                 let doubleValue = value.toDouble() ?? 0.0
                 self.slider.doubleValue = doubleValue
@@ -70,7 +70,7 @@ class IntroductionExampleViewController : ViewController {
             }
             >- disposeBag.addDisposable
         
-        disposeButton.rx_tap()
+        disposeButton.rx_tap
             >- subscribeNext { [unowned self] _ in
                 println("Unbound everything")
                 self.disposeBag.dispose()

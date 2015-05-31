@@ -58,7 +58,7 @@ extension NSTextField {
         })
     }
     
-    public func rx_text() -> Observable<String> {
+    public var rx_text: Observable<String> {
         return AnonymousObservable { observer in
             MainScheduler.ensureExecutingOnScheduler()
             
