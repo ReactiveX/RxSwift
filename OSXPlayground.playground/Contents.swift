@@ -98,6 +98,10 @@ example("returnElements") {
 }
 
 /*:
+With the above, you will see that the `.Next` event was sent ten times, once for each element. Then `.Complete` was sent.
+*/
+
+/*:
 ### from
 We can also create an observable from any SequenceType, such as an array
 */
@@ -112,10 +116,6 @@ example("from") {
             println(int)
     }
 }
-
-/*:
-With the above, you will see that the `.Next` event was sent ten times, once for each element. Then `.Complete` was sent.
-*/
 
 /*:
 Now these functions are all well and good, but the really useful ones are in the RxCocoa library.
