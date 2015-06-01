@@ -98,6 +98,23 @@ example("returnElements") {
 }
 
 /*:
+### from
+We can also create an observable from any sequence, such as an array
+*/
+
+example("from") {
+    let array = [1, 2, 3, 4, 5]
+    
+    let fromArray = from(array)
+    
+    fromArray
+        >- subscribeNext { int in
+            println(int)
+    }
+}
+
+
+/*:
 With the above, you will see that the `.Next` event was sent ten times, once for each element. Then `.Complete` was sent.
 */
 
