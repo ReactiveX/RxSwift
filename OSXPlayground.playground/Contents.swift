@@ -21,7 +21,7 @@ Creating an Observable is one thing, but if nothing subscribes to the observable
 
 example("Empty observable") {
     let emptyObservable: Observable<Int> = empty()
-    
+
     let emptySubscriber = emptyObservable >- subscribe { event in
         switch event {
         case .Next(let box):
@@ -45,7 +45,7 @@ As you can see, no values are ever sent to the subscriber of an empty observable
 
 example("Never observable") {
     let neverObservable: Observable<String> = never()
-    
+
     let neverSubscriber = neverObservable >- subscribe { _ in
         println("This block is never called.")
     }
@@ -58,7 +58,7 @@ These two functions behave identically. They send two messages to subscribers. T
 
 example("returnElement/just") {
     let oneObservable = just(32)
-    
+
     let oneObservableSubscriber = oneObservable
         >- subscribe { event in
             switch event {
@@ -83,7 +83,7 @@ Now we are getting to some more interesting ways to create an Observable. This f
 
 example("returnElements") {
     let multipleObservable/* : Observable<Int> */ = returnElements(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
-    
+
     let multipleObservableSubscriber = multipleObservable
         >- subscribe { event in
             switch event {
@@ -99,14 +99,14 @@ example("returnElements") {
 
 /*:
 ### from
-We can also create an observable from any sequence, such as an array
+We can also create an observable from any SequenceType, such as an array
 */
 
 example("from") {
     let array = [1, 2, 3, 4, 5]
-    
+
     let fromArray = from(array)
-    
+
     fromArray
         >- subscribeNext { int in
             println(int)
