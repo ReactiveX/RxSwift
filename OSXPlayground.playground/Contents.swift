@@ -107,13 +107,18 @@ We can also create an observable from any SequenceType, such as an array
 */
 
 example("from") {
-    let array = [1, 2, 3, 4, 5]
+    let fromArrayObservable = from([1, 2, 3, 4, 5])
 
-    let fromArray = from(array)
-
-    fromArray
-        >- subscribeNext { int in
-            println(int)
+    let fromArrayObservableSubscriber = fromArrayObservable
+        >- subscribe { event in
+            switch event {
+            case .Next(let box):
+                println("\(box.value)")
+            case .Completed:
+                println("completed")
+            case .Error(let error):
+                println("\(error)")
+        }
     }
 }
 
