@@ -21,7 +21,7 @@ Creating an Observable is one thing, but if nothing subscribes to the observable
 
 example("Empty observable") {
     let emptyObservable: Observable<Int> = empty()
-    
+
     let emptySubscriber = emptyObservable >- subscribe { event in
         switch event {
         case .Next(let box):
@@ -45,7 +45,7 @@ As you can see, no values are ever sent to the subscriber of an empty observable
 
 example("Never observable") {
     let neverObservable: Observable<String> = never()
-    
+
     let neverSubscriber = neverObservable >- subscribe { _ in
         println("This block is never called.")
     }
@@ -58,7 +58,7 @@ These two functions behave identically. They send two messages to subscribers. T
 
 example("returnElement/just") {
     let oneObservable = just(32)
-    
+
     let oneObservableSubscriber = oneObservable
         >- subscribe { event in
             switch event {
@@ -69,7 +69,7 @@ example("returnElement/just") {
             case .Error(let error):
                 println("\(error)")
             }
-    }
+        }
 }
 
 /*:
@@ -83,7 +83,7 @@ Now we are getting to some more interesting ways to create an Observable. This f
 
 example("returnElements") {
     let multipleObservable/* : Observable<Int> */ = returnElements(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
-    
+
     let multipleObservableSubscriber = multipleObservable
         >- subscribe { event in
             switch event {
@@ -93,7 +93,7 @@ example("returnElements") {
                 println("completed")
             case .Error(let error):
                 println("\(error)")
-            }
+        }
     }
 }
 
@@ -104,15 +104,14 @@ We can also create an observable from any SequenceType, such as an array
 
 example("from") {
     let array = [1, 2, 3, 4, 5]
-    
+
     let fromArray = from(array)
-    
+
     fromArray
         >- subscribeNext { int in
             println(int)
     }
 }
-
 
 /*:
 With the above, you will see that the `.Next` event was sent ten times, once for each element. Then `.Complete` was sent.
@@ -135,7 +134,7 @@ example("subscribeNext") {
     let nextOnlySubscriber = returnElements(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
         >- subscribeNext { value in
             println("\(value)")
-    }
+        }
 }
 
 /*:
@@ -159,7 +158,7 @@ example("filter") {
         }
         >- subscribeNext { value in
             println("\(value)")
-    }
+        }
 }
 
 /*:
@@ -172,7 +171,7 @@ example("distinctUntilChanged") {
         >- distinctUntilChanged
         >- subscribeNext { value in
             println("\(value)")
-    }
+        }
 }
 
 
