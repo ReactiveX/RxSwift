@@ -84,6 +84,7 @@
 		C8E381291B207D03008CDC33 /* PrimitiveHotObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E381271B207D03008CDC33 /* PrimitiveHotObservable.swift */; };
 		C8E3812B1B2083C2008CDC33 /* PrimitiveMockObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E3812A1B2083C2008CDC33 /* PrimitiveMockObserver.swift */; };
 		C8E3812C1B2083C2008CDC33 /* PrimitiveMockObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E3812A1B2083C2008CDC33 /* PrimitiveMockObserver.swift */; };
+		C8E3813A1B21B77E008CDC33 /* Observable+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E381221B2063CC008CDC33 /* Observable+Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -444,6 +445,7 @@
 				C88BB8AB1B07E64B0064D411 /* TestExtensions.swift in Sources */,
 				C88BB8AC1B07E64B0064D411 /* AssumptionsTest.swift in Sources */,
 				C88BB8AD1B07E64B0064D411 /* ConnectableObservable.swift in Sources */,
+				C8E3813A1B21B77E008CDC33 /* Observable+Extensions.swift in Sources */,
 				C88BB8AE1B07E64B0064D411 /* VariableTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

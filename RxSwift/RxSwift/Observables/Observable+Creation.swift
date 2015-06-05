@@ -63,7 +63,7 @@ public func from<E, S where S: SequenceType, S.Generator.Element == E>(sequence:
         }
         
         sendCompleted(observer)
-        return DefaultDisposable()
+        return NopDisposable.instance
     }
 }
 

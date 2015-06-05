@@ -491,7 +491,7 @@ extension ObservableConcurrencyTest {
     }
     
     func testObserveOn_EnsureTestsAreExecutedWithRealConcurrentScheduler() {
-        var variable: Int32 = 0
+        var variable: Int = 0
         
         var events: [String] = []
         
@@ -503,6 +503,8 @@ extension ObservableConcurrencyTest {
                 }
                 
                 while variable != 2 {
+                    // to kill compiler optimizations
+                    self.performLocked { }
                     if variable == 0 {
                         variable = 1
                     }
@@ -516,11 +518,14 @@ extension ObservableConcurrencyTest {
             }
             
             let disposable2 = scheduler.schedule(()) { _ in
+                    //println("variable \(variable)")
                 self.performLocked {
                     events.append("Started")
                 }
                 
                 while variable != 2 {
+                    // to kill compiler optimizations
+                    self.performLocked { }
                     if variable == 1 {
                         variable = 2
                     }
