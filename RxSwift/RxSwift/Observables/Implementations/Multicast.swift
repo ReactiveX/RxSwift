@@ -36,7 +36,7 @@ class Multicast_<SourceType, IntermediateType, O: ObserverType>: Sink<O>, Observ
         }.recoverWith { e in
             trySendError(observer, e)
             self.dispose()
-            return success(DefaultDisposable())
+            return success(NopDisposable.instance)
         }.get()
     }
     

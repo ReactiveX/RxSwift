@@ -37,6 +37,12 @@ public struct Queue<T>: SequenceType {
         }
     }
     
+    public var empty: Bool {
+        get {
+            return count == 0
+        }
+    }
+    
     public var count: Int {
         get {
             return _count

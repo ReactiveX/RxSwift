@@ -8,10 +8,6 @@
 
 import Foundation
 
-public protocol ImmediateScheduler {
-    func schedule<StateType>(state: StateType, action: (StateType) -> RxResult<Void>) -> RxResult<Disposable>
-}
-
 public protocol Scheduler: ImmediateScheduler {
     typealias TimeInterval
     typealias Time
@@ -20,7 +16,7 @@ public protocol Scheduler: ImmediateScheduler {
         get
     }
 
-    func scheduleRelative<StateType>(state: StateType, dueTime: TimeInterval, action: (StateType) -> RxResult<Void>) -> RxResult<Disposable>
+    func scheduleRelative<StateType>(state: StateType, dueTime: TimeInterval, action: (StateType) -> RxResult<Disposable>) -> RxResult<Disposable>
 }
 
 

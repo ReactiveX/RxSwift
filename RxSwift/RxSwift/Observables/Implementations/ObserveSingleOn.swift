@@ -59,7 +59,7 @@ class ObserveSingleOnObserver<O: ObserverType> : Sink<O>, ObserverType, Disposab
                 
                 self.dispose()
                 
-                return SuccessResult
+                return success(NopDisposable.instance)
             }
         }
     }

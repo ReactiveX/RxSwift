@@ -15,7 +15,6 @@ class Subscription<Element> : Disposable {
     private let subject : Subject<Element>
     private var key: KeyType
     
-    
     private var lock = Lock()
     private var observer: ObserverType?
     
@@ -110,12 +109,12 @@ public class Subject<Element> : SubjectType<Element, Element>, Disposable {
         return lock.calculateLocked {
             if let stoppedEvent = state.stoppedEvent {
                 observer.on(stoppedEvent)
-                return DefaultDisposable()
+                return NopDisposable.instance
             }
             
             if state.disposed {
                 sendError(observer, DisposedError)
-                return DefaultDisposable()
+                return NopDisposable.instance
             }
             
             let key = state.observers.put(Observer.normalize(observer))

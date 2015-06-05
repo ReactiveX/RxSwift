@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class CompositeDisposable : DisposeBase, Disposable {
+public class CompositeDisposable : DisposeBase, Disposable, Cancelable {
     public typealias BagKey = Bag<Disposable>.KeyType
     
     typealias State = (
@@ -21,6 +21,14 @@ public class CompositeDisposable : DisposeBase, Disposable {
         disposables: RxMutableBox(Bag()),
         disposed: false
     )
+    
+    public var disposed: Bool {
+        get {
+            return self.lock.calculateLocked {
+                state.disposed
+            }
+        }
+    }
     
     public override init() {
     }

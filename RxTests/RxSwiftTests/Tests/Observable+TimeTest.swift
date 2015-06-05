@@ -1,3 +1,4 @@
+
 //
 //  Observable+TimeTest.swift
 //  Rx
@@ -229,7 +230,7 @@ extension ObservableTimeTest {
     
     func test_ThrottleSimple() {
         let scheduler = TestScheduler(initialClock: 0)
-        
+       
         let xs = scheduler.createHotObservable([
             next(150, 0),
             next(210, 1),

@@ -11,7 +11,7 @@ import Foundation
 struct SchedulerDefaults {
     static var ConstantTimeOperations : ImmediateScheduler {
         get {
-            return ImmediateSchedulerOnCurrentThread()
+            return ImmediateSchedulerOnProducerThread()
         }
     }
 }

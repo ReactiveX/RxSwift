@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class SingleAssignmentDisposable : DisposeBase, Disposable {
+public class SingleAssignmentDisposable : DisposeBase, Disposable, Cancelable {
     typealias State = (
         disposed: Bool,
         disposableSet: Bool,
@@ -21,6 +21,14 @@ public class SingleAssignmentDisposable : DisposeBase, Disposable {
         disposableSet: false,
         disposable: nil
     )
+    
+    public var disposed: Bool {
+        get {
+            return lock.calculateLocked {
+                return state.disposed
+            }
+        }
+    }
     
     public override init() {
         super.init()

@@ -86,16 +86,17 @@ class Throttle_<O: ObserverType, SchedulerType: Scheduler> : Sink<O>, ObserverTy
             let dueTime = self.parent.dueTime
             
             let _  = scheduler.scheduleRelative(latestId, dueTime: dueTime) { (id) in
-                return success(self.propagate())
-            }.flatMap { disposeTimer -> RxResult<Void> in
+                self.propagate()
+                return success(NopDisposable.instance)
+            }.map { disposeTimer -> Disposable in
                 d.setDisposable(disposeTimer)
-                return SuccessResult
-            }.recoverWith { e -> RxResult<Void> in
+                return disposeTimer
+            }.recoverWith { e -> RxResult<Disposable> in
                 self.lock.performLocked {
                     trySendError(observer, e)
                     self.dispose()
                 }
-                return SuccessResult
+                return success(NopDisposable.instance)
             }
         default: break
         }

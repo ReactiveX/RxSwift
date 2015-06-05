@@ -8,18 +8,19 @@
 
 import Foundation
 
-public class MainScheduler : DispatchQueueScheduler {
-    struct Singleton {
-        static let sharedInstance = MainScheduler()
-    }
+struct MainSchedulerSingleton {
+    static let sharedInstance = MainScheduler()
+}
+
+public final class MainScheduler : DispatchQueueScheduler {
     
     private init() {
-        super.init(queue: dispatch_get_main_queue())
+        super.init(serialQueue: dispatch_get_main_queue())
     }
     
     public class var sharedInstance: MainScheduler {
         get {
-            return Singleton.sharedInstance
+            return MainSchedulerSingleton.sharedInstance
         }
     }
     
@@ -29,13 +30,11 @@ public class MainScheduler : DispatchQueueScheduler {
         }
     }
     
-    public override func schedule<StateType>(state: StateType, action: (StateType) -> RxResult<Void>) -> RxResult<Disposable> {
+    override func scheduleInternal<StateType>(state: StateType, action: (/*ImmediateScheduler,*/ StateType) -> RxResult<Disposable>) -> RxResult<Disposable> {
         if NSThread.currentThread().isMainThread {
-            ensureScheduledSuccessfully(action(state))
-                
-            return success(DefaultDisposable())
+            return action(state)
         }
         
-        return super.schedule(state, action: action)
+        return super.scheduleInternal(state, action: action)
     }
 }

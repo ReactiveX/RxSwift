@@ -22,6 +22,30 @@ let testError = NSError(domain: "dummyError", code: -232, userInfo: nil)
 let testError1 = NSError(domain: "dummyError1", code: -233, userInfo: nil)
 let testError2 = NSError(domain: "dummyError2", code: -234, userInfo: nil)
 
+func next<T>(value: T) -> Recorded<T> {
+    return Recorded(time: 0, event: .Next(RxBox(value)))
+}
+
+func completed<T>() -> Recorded<T> {
+    return Recorded(time: 0, event: .Completed)
+}
+
+func error<T>(error: NSError) -> Recorded<T> {
+    return Recorded(time: 0, event: .Error(error))
+}
+
+func next<T>(time: Time, value: T) -> Recorded<T> {
+    return Recorded(time: time, event: .Next(RxBox(value)))
+}
+
+func completed<T>(time: Time) -> Recorded<T> {
+    return Recorded(time: time, event: .Completed)
+}
+
+func error<T>(time: Time, error: NSError) -> Recorded<T> {
+    return Recorded(time: time, event: .Error(error))
+}
+
 class RxTest: XCTestCase {
     struct Defaults {
         static let created = 100
@@ -53,15 +77,4 @@ class RxTest: XCTestCase {
         return Recorded(time: time, event: event)
     }
     
-    func next<T>(time: Time, _ value: T) -> Recorded<T> {
-        return Recorded(time: time, event: .Next(RxBox(value)))
-    }
-    
-    func completed<T>(time: Time) -> Recorded<T> {
-        return Recorded(time: time, event: .Completed)
-    }
-    
-    func error<T>(time: Time, _ error: NSError) -> Recorded<T> {
-        return Recorded(time: time, event: .Error(error))
-    }
 }

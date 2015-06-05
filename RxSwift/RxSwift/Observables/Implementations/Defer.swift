@@ -25,7 +25,7 @@ class Defer_<O: ObserverType> : Sink<O>, ObserverType {
         }.recoverWith { e in
             trySendError(observer, e)
             self.dispose()
-            return success(DefaultDisposable())
+            return success(NopDisposable.instance)
         }
         
         return disposable.get()

@@ -153,9 +153,10 @@ class Merge_ConcurrentIter<O: ObserverType> : ObserverType {
                 self.parent.dispose()
             }
         case .Completed:
-            let mergeState = parent.mergeState
-            mergeState.group.removeDisposable(disposeKey)
             parent.lock.performLocked {
+                var mergeState = parent.mergeState
+                mergeState.group.removeDisposable(disposeKey)
+                
                 if mergeState.queue.value.count > 0 {
                     let s = mergeState.queue.value.dequeue()
                     self.parent.subscribe(s, group: mergeState.group)
@@ -163,7 +164,7 @@ class Merge_ConcurrentIter<O: ObserverType> : ObserverType {
                 else {
                     parent.mergeState.activeCount = mergeState.activeCount - 1
                     
-                    if mergeState.stopped && mergeState.activeCount == 0 {
+                    if mergeState.stopped && parent.mergeState.activeCount == 0 {
                         trySendCompleted(parent.observer)
                         self.parent.dispose()
                     }

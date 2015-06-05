@@ -120,7 +120,7 @@ public class BehaviorSubject<Element> : SubjectType<Element, Element> {
             return BehaviorSubjectSubscription(parent: self, disposeKey: disposeKey)
         }
         else {
-            return DefaultDisposable()
+            return NopDisposable.instance
         }
     }
 }

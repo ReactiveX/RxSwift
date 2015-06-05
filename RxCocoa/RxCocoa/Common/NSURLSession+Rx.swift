@@ -102,7 +102,7 @@ extension NSURLSession {
                     return success(data!)
                 }
                 else {
-                    return failure(rxError(.NetworkError, "Server return failure", [RxCocoaErrorHTTPResponseKey: response]))
+                    return failure(rxError(.NetworkError, "Server returned failure", [RxCocoaErrorHTTPResponseKey: response]))
                 }
             }
             else {
