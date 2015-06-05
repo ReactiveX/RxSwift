@@ -102,6 +102,27 @@ With the above, you will see that the `.Next` event was sent ten times, once for
 */
 
 /*:
+### from
+We can also create an observable from any SequenceType, such as an array
+*/
+
+example("from") {
+    let fromArrayObservable = from([1, 2, 3, 4, 5])
+    
+    let fromArrayObservableSubscriber = fromArrayObservable
+        >- subscribe { event in
+            switch event {
+            case .Next(let box):
+                println("\(box.value)")
+            case .Completed:
+                println("completed")
+            case .Error(let error):
+                println("\(error)")
+        }
+    }
+}
+
+/*:
 Now these functions are all well and good, but the really useful ones are in the RxCocoa library.
 `rx_observe` exist on every NSObject and wraps KVO.
 `rx_tap` exists on buttons and wraps @IBActions

@@ -56,6 +56,17 @@ public func returnElements<E>(values: E ...) -> Observable<E> {
     }
 }
 
+public func from<E, S where S: SequenceType, S.Generator.Element == E>(sequence: S) -> Observable<E> {
+    return AnonymousObservable { observer in
+        for element in sequence {
+            sendNext(observer, element)
+        }
+        
+        sendCompleted(observer)
+        return DefaultDisposable()
+    }
+}
+
 // fail
 
 public func failWith<E>(error: ErrorType) -> Observable<E> {
