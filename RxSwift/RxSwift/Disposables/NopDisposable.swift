@@ -11,6 +11,8 @@ import Foundation
 @availability(*, deprecated=1.5, message="NopDisposable")
 typealias DefaultDisposable = NopDisposable
 
+public let NopDisposableResult = success(NopDisposable.instance)
+
 // Disposable that does nothing
 // Nop = No Operation
 public class NopDisposable : Disposable {

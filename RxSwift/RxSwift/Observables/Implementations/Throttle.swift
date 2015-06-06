@@ -87,7 +87,7 @@ class Throttle_<O: ObserverType, SchedulerType: Scheduler> : Sink<O>, ObserverTy
             
             let _  = scheduler.scheduleRelative(latestId, dueTime: dueTime) { (id) in
                 self.propagate()
-                return success(NopDisposable.instance)
+                return NopDisposableResult
             }.map { disposeTimer -> Disposable in
                 d.setDisposable(disposeTimer)
                 return disposeTimer
@@ -96,7 +96,7 @@ class Throttle_<O: ObserverType, SchedulerType: Scheduler> : Sink<O>, ObserverTy
                     trySendError(observer, e)
                     self.dispose()
                 }
-                return success(NopDisposable.instance)
+                return NopDisposableResult
             }
         default: break
         }

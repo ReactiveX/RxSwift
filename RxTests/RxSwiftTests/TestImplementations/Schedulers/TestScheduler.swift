@@ -46,7 +46,7 @@ class TestScheduler : VirtualTimeSchedulerBase {
     func scheduleAt(time: Time, action: () -> Void) {
         self.schedule((), time: time) { _ in
             action()
-            return success(NopDisposable.instance)
+            return NopDisposableResult
         }
     }
     
@@ -59,17 +59,17 @@ class TestScheduler : VirtualTimeSchedulerBase {
         
         self.schedule(state, time: created) { (state) in
             source = create()
-            return success(NopDisposable.instance)
+            return NopDisposableResult
         }
         
         self.schedule(state, time: subscribed) { (state) in
             subscription = source!.subscribe(observer)
-            return success(NopDisposable.instance)
+            return NopDisposableResult
         }
         
         self.schedule(state, time: disposed) { (state) in
             subscription!.dispose()
-            return success(NopDisposable.instance)
+            return NopDisposableResult
         }
 
         start()

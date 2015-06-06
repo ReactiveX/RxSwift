@@ -195,7 +195,7 @@ extension ObservableConcurrencyTest {
         
         scheduler.schedule(()) { s in
             OSSpinLockUnlock(&wait)
-            return success(NopDisposable.instance)
+            return NopDisposableResult
         }
         
         OSSpinLockLock(&wait)
@@ -514,7 +514,7 @@ extension ObservableConcurrencyTest {
                     events.append("Ended")
                 }
                 
-                return success(NopDisposable.instance)
+                return NopDisposableResult
             }
             
             let disposable2 = scheduler.schedule(()) { _ in
@@ -535,7 +535,7 @@ extension ObservableConcurrencyTest {
                     events.append("Ended")
                 }
                 
-                return success(NopDisposable.instance)
+                return NopDisposableResult
             }
             
             return NopDisposable.instance

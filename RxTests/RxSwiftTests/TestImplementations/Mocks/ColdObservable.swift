@@ -37,7 +37,7 @@ class ColdObservable<Element: Equatable>: Observable<Element> {
         for recordedEvent in recordedEvents {
             testScheduler.scheduleRelative((), dueTime: recordedEvent.time, action: { (Int) in
                 dispatch(recordedEvent.event, self.observers)
-                return success(NopDisposable.instance)
+                return NopDisposableResult
             })
         }
         

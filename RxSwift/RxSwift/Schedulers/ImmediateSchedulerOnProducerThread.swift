@@ -93,6 +93,6 @@ struct ImmediateSchedulerOnProducerThread : ImmediateScheduler {
             }
         }
         
-        return success(NopDisposable.instance)
+        return NopDisposableResult
     }
 }

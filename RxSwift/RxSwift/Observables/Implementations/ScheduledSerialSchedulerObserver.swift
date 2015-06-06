@@ -26,7 +26,7 @@ class ScheduledSerialSchedulerObserver<O: ObserverType> : ObserverBase<O.Element
                 self.dispose()
             }
             
-            return success(NopDisposable.instance)
+            return NopDisposableResult
         }
     }
 }
