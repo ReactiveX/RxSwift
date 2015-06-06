@@ -27,7 +27,7 @@ class SearchViewModel: Disposable {
         let API = DefaultWikipediaAPI.sharedAPI
         
         self.rows = searchText
-            >- throttle(300, $.mainScheduler)
+            >- throttle(0.3, $.mainScheduler)
             >- distinctUntilChanged
             >- map { query in
                 API.getSearchResults(query)
