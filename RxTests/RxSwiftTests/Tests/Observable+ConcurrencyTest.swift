@@ -230,9 +230,12 @@ extension ObservableConcurrencyTest {
             }
         }
         
+        
+        
         XCTAssert(didExecute)
     }
     
+#if TRACE_RESOURCES
     func testObserveOnDispatchQueue_EnsureCorrectImplementationIsChosen() {
         runDispatchQueueSchedulerTests { scheduler in
             XCTAssert(numberOfDispatchQueueObservables == 0)
@@ -262,6 +265,7 @@ extension ObservableConcurrencyTest {
         XCTAssert(numberOfDispatchQueueObservables == 0)
         XCTAssert(numberOfExecutions == 11)
     }
+#endif
     
     func testObserveOnDispatchQueue_DeadlockErrorImmediatelly() {
         var nEvents = 0
@@ -479,6 +483,7 @@ extension ObservableConcurrencyTest {
         compositeDisposable.dispose()
     }
    
+#if TRACE_RESOURCES
     func testObserveOn_EnsureCorrectImplementationIsChosen() {
         runConcurentSchedulerTest { scheduler in
             XCTAssert(numberOfDispatchQueueObservables == 0)
@@ -489,6 +494,7 @@ extension ObservableConcurrencyTest {
         
         XCTAssert(numberOfDispatchQueueObservables == 0)
     }
+#endif
     
     func testObserveOn_EnsureTestsAreExecutedWithRealConcurrentScheduler() {
         var variable: Int = 0

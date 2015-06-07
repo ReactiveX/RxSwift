@@ -9,6 +9,12 @@
 import XCTest
 import RxSwift
 
+#if TRACE_RESOURCES
+#elseif RELEASE
+#else
+let a = unknown
+#endif
+
 // because otherwise OSX unit tests won't run
 #if os(iOS)
     import UIKit
@@ -69,6 +75,7 @@ class RxTest: XCTestCase {
         super.tearDown()
 
 #if TRACE_RESOURCES
+        usleep(500) // wait 0.5 ms for proper scheduler disposal
         XCTAssertEqual(self.startResourceCount, resourceCount)
 #endif
     }

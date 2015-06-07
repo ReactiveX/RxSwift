@@ -19,7 +19,7 @@ class RefCount_<O: ObserverType> : Sink<O>, ObserverType {
     }
     
     func run() -> Disposable {
-        let subscription = self.parent.source.subscribe(self)
+        let subscription = self.parent.source.subscribeSafe(self)
         
         let state = self.parent.state
         

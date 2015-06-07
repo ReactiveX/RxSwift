@@ -116,12 +116,12 @@ class TakeWhile<Element>: Producer<Element> {
         if let predicate1 = self.predicate1 {
             let sink = TakeWhileSink1(parent: self, observer: observer, cancel: cancel)
             setSink(sink)
-            return source.subscribe(sink)
+            return source.subscribeSafe(sink)
         }
         else {
             let sink = TakeWhileSink2(parent: self, observer: observer, cancel: cancel)
             setSink(sink)
-            return source.subscribe(sink)
+            return source.subscribeSafe(sink)
         }
     }
 }

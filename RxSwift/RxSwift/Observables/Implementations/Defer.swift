@@ -21,7 +21,7 @@ class Defer_<O: ObserverType> : Sink<O>, ObserverType {
     
     func run() -> Disposable {
         let disposable = parent.eval().flatMap { result in
-            return success(result.subscribe(self))
+            return success(result.subscribeSafe(self))
         }.recoverWith { e in
             trySendError(observer, e)
             self.dispose()

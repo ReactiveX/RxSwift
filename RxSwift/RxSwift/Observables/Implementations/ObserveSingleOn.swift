@@ -65,7 +65,7 @@ class ObserveSingleOnObserver<O: ObserverType> : Sink<O>, ObserverType, Disposab
     }
 
     func run() -> Disposable {
-        return self.parent.source.subscribe(self)
+        return self.parent.source.subscribeSafe(self)
     }
 }
 

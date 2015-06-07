@@ -22,6 +22,6 @@ class StartWith<Element>: Producer<Element> {
     override func subscribe<O : ObserverType where O.Element == Element>(observer: O) -> Disposable {
         sendNext(observer, element)
         
-        return source.subscribe(observer)
+        return source.subscribeSafe(observer)
     }
 }

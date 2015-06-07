@@ -83,3 +83,13 @@ public func catchToResult<E>
     -> Observable <RxResult<E>> {
     return CatchToResult(source: source)
 }
+
+// takeUntil
+
+public func takeUntil<E, O>
+    (other: Observable<O>)
+    -> Observable<E> -> Observable<E> {
+    return { source in
+        return TakeUntil(source: source, other: other)
+    }
+}

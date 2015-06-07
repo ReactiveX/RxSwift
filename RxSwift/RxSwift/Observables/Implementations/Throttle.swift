@@ -35,7 +35,7 @@ class Throttle_<O: ObserverType, SchedulerType: Scheduler> : Sink<O>, ObserverTy
     
     func run() -> Disposable {
         let cancellable = self.throttleState.cancellable
-        let subscription = parent.source.subscribe(self)
+        let subscription = parent.source.subscribeSafe(self)
         
         return CompositeDisposable(subscription, cancellable)
     }

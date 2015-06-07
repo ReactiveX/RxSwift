@@ -96,12 +96,12 @@ class Select<SourceType, ResultType>: Producer<ResultType> {
         if let selector1 = self.selector1 {
             let sink = Select_1(parent: self, observer: observer, cancel: cancel)
             setSink(sink)
-            return self.source.subscribe(sink)
+            return self.source.subscribeSafe(sink)
         }
         else {
             let sink = Select_2(parent: self, observer: observer, cancel: cancel)
             setSink(sink)
-            return self.source.subscribe(sink)
+            return self.source.subscribeSafe(sink)
         }
         
     }

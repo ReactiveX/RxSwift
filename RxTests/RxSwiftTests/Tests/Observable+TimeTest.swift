@@ -752,15 +752,40 @@ extension ObservableTimeTest {
         
         OSSpinLockLock(&lock)
         
-        interval(0, scheduler) >- takeWhile { $0 < 10 } >- subscribe(next: { t in
+        let d = interval(0, scheduler) >- takeWhile { $0 < 10 } >- subscribe(next: { t in
             sendNext(observer, t)
         }, error: { _ in
         }, completed: {
             OSSpinLockUnlock(&lock)
-        })
+        }) >- scopedDispose
         
+        OSSpinLockLock(&lock)
+        OSSpinLockUnlock(&lock)
+        
+        scheduler.schedule(()) { _ in
+            OSSpinLockUnlock(&lock)
+            return NopDisposableResult
+        }
+
+        // wait until dispatch queue cleans it's resources
         OSSpinLockLock(&lock)
         
         XCTAssertTrue(observer.messages.count == 10)
+        
+    }
+    
+    func testInterval_TimeSpan_Disposed() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let res = scheduler.start {
+            interval(1000, scheduler)
+        }
+        
+        let correct: [Recorded<Int64>] = [
+         
+        ]
+        
+        XCTAssertEqual(res.messages, correct)
+        
     }
 }

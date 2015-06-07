@@ -45,7 +45,7 @@ class Catch_<O: ObserverType> : Sink<O>, ObserverType {
     }
     
     func run() -> Disposable {
-        let disposableSubscription = parent.source.subscribe(self)
+        let disposableSubscription = parent.source.subscribeSafe(self)
         subscription.setDisposable(disposableSubscription)
         
         return subscription
@@ -69,7 +69,7 @@ class Catch_<O: ObserverType> : Sink<O>, ObserverType {
                 
                 let observer = Catch_Impl(parent: self)
                 
-                let subscription2 = catchObservable.subscribe(observer)
+                let subscription2 = catchObservable.subscribeSafe(observer)
                 d.setDisposable(subscription2)
                 return SuccessResult
             }
@@ -108,7 +108,7 @@ class CatchToResult_<ElementType> : Sink<Observer<RxResult<ElementType>>>, Obser
     }
     
     func run() -> Disposable {
-        return parent.source.subscribe(self)
+        return parent.source.subscribeSafe(self)
     }
     
     func on(event: Event<Element>) {

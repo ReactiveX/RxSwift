@@ -51,7 +51,7 @@ class ObserveOnDispatchQueue<E> : Producer<E> {
     override func run<O : ObserverType where O.Element == E>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
         let sink = ObserveOnDispatchQueueSink(scheduler: scheduler, observer: observer, cancel: cancel)
         setSink(sink)
-        return source.subscribe(sink)
+        return source.subscribeSafe(sink)
     }
     
 #if TRACE_RESOURCES
