@@ -16,10 +16,19 @@ public class AnonymousObserver<ElementType> : ObserverType {
     private let eventHandler : EventHandler
     
     public init(_ eventHandler: EventHandler) {
+#if TRACE_RESOURCES
+        OSAtomicIncrement32(&resourceCount)
+#endif
         self.eventHandler = eventHandler
     }
     
     public func on(event: Event<Element>) {
         return self.eventHandler(event)
     }
+    
+#if TRACE_RESOURCES
+    deinit {
+        OSAtomicDecrement32(&resourceCount)
+    }
+#endif
 }

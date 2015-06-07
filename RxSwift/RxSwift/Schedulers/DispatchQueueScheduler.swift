@@ -23,7 +23,7 @@ import Foundation
 // internal serial queue can be customized using `serialQueueConfiguration` 
 // callback.
 //
-public class DispatchQueueScheduler: Scheduler {
+public class DispatchQueueScheduler: Scheduler, PeriodicScheduler {
     public typealias TimeInterval = NSTimeInterval
     public typealias Time = NSDate
     
@@ -34,6 +34,9 @@ public class DispatchQueueScheduler: Scheduler {
             return NSDate()
         }
     }
+    
+    // leeway for scheduling timers
+    var leeway: Int64 = 0
     
     init(serialQueue: dispatch_queue_t) {
         self.serialQueue = serialQueue
@@ -70,8 +73,12 @@ public class DispatchQueueScheduler: Scheduler {
         self.init(queue: dispatch_get_global_queue(globalConcurrentQueuePriority, UInt(0)), internalSerialQueueName: internalSerialQueueName)
     }
     
+    class func convertTimeIntervalToDispatchInterval(timeInterval: NSTimeInterval) -> Int64 {
+        return Int64(timeInterval * Double(NSEC_PER_SEC))
+    }
+    
     class func convertTimeIntervalToDispatchTime(timeInterval: NSTimeInterval) -> dispatch_time_t {
-        return dispatch_time(DISPATCH_TIME_NOW, Int64(timeInterval * Double(NSEC_PER_SEC)))
+        return dispatch_time(DISPATCH_TIME_NOW, convertTimeIntervalToDispatchInterval(timeInterval))
     }
     
     public final func schedule<StateType>(state: StateType, action: (/*ImmediateScheduler,*/ StateType) -> RxResult<Disposable>) -> RxResult<Disposable> {
@@ -117,5 +124,28 @@ public class DispatchQueueScheduler: Scheduler {
         })
         
         return success(compositeDisposable)
+    }
+    
+    public func schedulePeriodic<StateType>(state: StateType, startAfter: TimeInterval, period: TimeInterval, action: (StateType) -> StateType) -> RxResult<Disposable> {
+        let timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, self.serialQueue)
+        
+        let initial = MainScheduler.convertTimeIntervalToDispatchTime(startAfter)
+        let dispatchInterval = MainScheduler.convertTimeIntervalToDispatchTime(period)
+        
+        var timerState = state
+        
+        dispatch_source_set_timer(timer, initial, dispatchInterval, 0)
+        let cancel = AnonymousDisposable {
+            dispatch_source_cancel(timer)
+        }
+        dispatch_source_set_event_handler(timer, {
+            if cancel.disposed {
+                return
+            }
+            timerState = action(timerState)
+        })
+        dispatch_resume(timer)
+        
+        return success(cancel)
     }
 }
