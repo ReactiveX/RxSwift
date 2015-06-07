@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class AnonymousObserver<ElementType> : ObserverType {
+public class AnonymousObserver<ElementType> : ObserverBase<ElementType> {
     typealias Element = ElementType
     
     typealias EventHandler = Event<Element> -> Void
@@ -22,7 +22,7 @@ public class AnonymousObserver<ElementType> : ObserverType {
         self.eventHandler = eventHandler
     }
     
-    public func on(event: Event<Element>) {
+    public override func onCore(event: Event<Element>) {
         return self.eventHandler(event)
     }
     

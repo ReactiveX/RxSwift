@@ -8,6 +8,12 @@
 
 import Foundation
 
+public enum DispatchQueueSchedulerPriority {
+    case High
+    case Default
+    case Low
+}
+
 // This is a scheduler that wraps dispatch queue.
 // It can wrap both serial and concurrent dispatch queues.
 //
@@ -65,12 +71,21 @@ public class DispatchQueueScheduler: Scheduler, PeriodicScheduler {
     // DISPATCH_QUEUE_PRIORITY_DEFAULT
     // DISPATCH_QUEUE_PRIORITY_HIGH
     // DISPATCH_QUEUE_PRIORITY_LOW
-    public convenience init(globalConcurrentQueuePriority: Int) {
+    public convenience init(globalConcurrentQueuePriority: DispatchQueueSchedulerPriority) {
         self.init(globalConcurrentQueuePriority: globalConcurrentQueuePriority, internalSerialQueueName: "rx.global_dispatch_queue.serial.\(globalConcurrentQueuePriority)")
     }
 
-    public convenience init(globalConcurrentQueuePriority: Int, internalSerialQueueName: String) {
-        self.init(queue: dispatch_get_global_queue(globalConcurrentQueuePriority, UInt(0)), internalSerialQueueName: internalSerialQueueName)
+    public convenience init(globalConcurrentQueuePriority: DispatchQueueSchedulerPriority, internalSerialQueueName: String) {
+        var priority: Int = 0
+        switch globalConcurrentQueuePriority {
+        case .High:
+            priority = DISPATCH_QUEUE_PRIORITY_HIGH
+        case .Default:
+            priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
+        case .Low:
+            priority = DISPATCH_QUEUE_PRIORITY_LOW
+        }
+        self.init(queue: dispatch_get_global_queue(priority, UInt(0)), internalSerialQueueName: internalSerialQueueName)
     }
     
     class func convertTimeIntervalToDispatchInterval(timeInterval: NSTimeInterval) -> Int64 {
@@ -130,11 +145,13 @@ public class DispatchQueueScheduler: Scheduler, PeriodicScheduler {
         let timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, self.serialQueue)
         
         let initial = MainScheduler.convertTimeIntervalToDispatchTime(startAfter)
-        let dispatchInterval = MainScheduler.convertTimeIntervalToDispatchTime(period)
+        let dispatchInterval = MainScheduler.convertTimeIntervalToDispatchInterval(period)
         
         var timerState = state
         
-        dispatch_source_set_timer(timer, initial, dispatchInterval, 0)
+        let validDispatchInterval = dispatchInterval < 0 ? 0 : UInt64(dispatchInterval)
+        
+        dispatch_source_set_timer(timer, initial, validDispatchInterval, 0)
         let cancel = AnonymousDisposable {
             dispatch_source_cancel(timer)
         }

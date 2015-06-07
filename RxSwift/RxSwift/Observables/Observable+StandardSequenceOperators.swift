@@ -41,3 +41,21 @@ public func `where`<E>
         return Where(source: source, predicate: { success(predicate($0)) })
     }
 }
+
+// takeWhile
+
+public func takeWhile<E>
+    (predicate: (E) -> Bool)
+    -> (Observable<E> -> Observable<E>) {
+    return { source in
+        return TakeWhile(source: source, predicate: predicate)
+    }
+}
+
+public func takeWhile<E>
+    (predicate: (E, Int) -> Bool)
+    -> (Observable<E> -> Observable<E>) {
+    return { source in
+        return TakeWhile(source: source, predicate: predicate)
+    }
+}

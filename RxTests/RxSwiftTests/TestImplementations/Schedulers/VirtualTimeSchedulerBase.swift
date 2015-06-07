@@ -14,7 +14,7 @@ protocol ScheduledItemProtocol : Cancelable {
         get
     }
     
-    func invoke() -> RxResult<Disposable>
+    func invoke()
 }
 
 class ScheduledItem<T> : ScheduledItemProtocol {
@@ -24,7 +24,13 @@ class ScheduledItem<T> : ScheduledItemProtocol {
     let state: T
     let time: Int
     
-    var disposed = false
+    var disposed: Bool {
+        get {
+            return disposable.disposed
+        }
+    }
+    
+    var disposable = SingleAssignmentDisposable()
     
     init(action: Action, state: T, time: Int) {
         self.action = action
@@ -32,12 +38,12 @@ class ScheduledItem<T> : ScheduledItemProtocol {
         self.time = time
     }
     
-    func invoke() -> RxResult<Disposable> {
-        return action(/*scheduler,*/ state)
+    func invoke() {
+         self.disposable.setDisposable(action(/*scheduler,*/ state).get())
     }
     
     func dispose() {
-        self.disposed = true
+        self.disposable.dispose()
     }
 }
 
@@ -81,7 +87,41 @@ class VirtualTimeSchedulerBase : Scheduler, Printable {
     func schedule<StateType>(state: StateType, time: Int, action: (/*Scheduler<Int, Int>,*/ StateType) -> RxResult<Disposable>) -> RxResult<Disposable> {
         let compositeDisposable = CompositeDisposable()
         
-        let item =  ScheduledItem(action: action, state: state, time: time)
+        let scheduleTime: Int
+        if time <= self.now {
+            scheduleTime = self.now + 1
+        }
+        else {
+            scheduleTime = time
+        }
+        
+        let item = ScheduledItem(action: action, state: state, time: scheduleTime)
+        
+        schedulerQueue.append(item)
+        
+        compositeDisposable.addDisposable(item)
+        
+        return success(compositeDisposable)
+    }
+    
+    func schedulePeriodic<StateType>(state: StateType, startAfter: TimeInterval, period: TimeInterval, action: (StateType) -> StateType) -> RxResult<Disposable> {
+        let compositeDisposable = CompositeDisposable()
+        
+        let scheduleTime: Int
+        if startAfter <= 0 {
+            scheduleTime = self.now + 1
+        }
+        else {
+            scheduleTime = self.now + startAfter
+        }
+        
+        let item = ScheduledItem(action: { [unowned self] state in
+            if compositeDisposable.disposed {
+                return NopDisposableResult
+            }
+            let nextState = action(state)
+            return self.schedulePeriodic(nextState, startAfter: period, period: period, action: action)
+        }, state: state, time: scheduleTime)
         
         schedulerQueue.append(item)
         

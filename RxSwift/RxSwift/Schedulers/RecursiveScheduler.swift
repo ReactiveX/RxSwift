@@ -120,7 +120,7 @@ public class RecursiveSchedulerOf<State, TimeInterval> : Disposable {
         ensureScheduledSuccessfully(d.map { disposable in
             lock.performLocked {
                 if !isDone {
-                    group.addDisposable(d.get())
+                    removeKey = group.addDisposable(d.get())
                     isAdded = true
                 }
             }

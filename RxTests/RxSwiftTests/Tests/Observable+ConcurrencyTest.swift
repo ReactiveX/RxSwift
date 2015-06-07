@@ -98,11 +98,11 @@ extension ObservableConcurrencyTest {
         let res = scheduler.start { xs >- observeSingleOn(scheduler) }
         
         let correctMessages: [Recorded<Int>] = [
-            completed(300)
+            completed(301)
         ]
         
         let correctSubscriptions = [
-            Subscription(200, 300)
+            Subscription(200, 301)
         ]
         
         XCTAssertEqual(res.messages, correctMessages)
@@ -121,12 +121,12 @@ extension ObservableConcurrencyTest {
         let res = scheduler.start { xs >- observeSingleOn(scheduler) }
         
         let correctMessages: [Recorded<Int>] = [
-            next(300, 0),
-            completed(300)
+            next(301, 0),
+            completed(301)
         ]
         
         let correctSubscriptions = [
-            Subscription(200, 300)
+            Subscription(200, 301)
         ]
         
         XCTAssertEqual(res.messages, correctMessages)
@@ -144,11 +144,11 @@ extension ObservableConcurrencyTest {
         let res = scheduler.start { xs >- observeSingleOn(scheduler) }
         
         let correctMessages: [Recorded<Int>] = [
-            error(300, testError)
+            error(301, testError)
         ]
         
         let correctSubscriptions = [
-            Subscription(200, 300)
+            Subscription(200, 301)
         ]
         
         XCTAssertEqual(res.messages, correctMessages)

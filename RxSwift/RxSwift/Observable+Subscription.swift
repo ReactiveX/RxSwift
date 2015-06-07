@@ -19,6 +19,25 @@ public func subscribe<E>
     }
 }
 
+public func subscribe<E>
+    (#next: (E) -> Void, #error: (ErrorType) -> Void, #completed: () -> Void)
+    -> (Observable<E> -> Disposable) {
+    return { source in
+        let observer = AnonymousObserver<E> { e in
+            switch e {
+            case .Next(let boxedValue):
+                let value = boxedValue.value
+                next(value)
+            case .Error(let e):
+                error(e)
+            case .Completed:
+                completed()
+            }
+        }
+        return source.subscribe(observer)
+    }
+}
+
 public func subscribeNext<E>
     (onNext: (E) -> Void)
     -> (Observable<E>) -> Disposable {

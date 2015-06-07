@@ -21,6 +21,14 @@ func createObserver<E>(scheduler: TestScheduler) -> MockObserver<E> {
     return MockObserver(scheduler: scheduler)
 }
 
+class PeriodicTestScheduler : TestScheduler, PeriodicScheduler {
+    
+    override init(initialClock: Time) {
+        super.init(initialClock: initialClock)
+    }
+    
+}
+
 class TestScheduler : VirtualTimeSchedulerBase {
     
     override init(initialClock: Time) {

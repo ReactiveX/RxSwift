@@ -696,3 +696,71 @@ extension ObservableTimeTest {
             ])
     }
 }
+
+// interval
+
+extension ObservableTimeTest {
+    
+    func testInterval_TimeSpan_Basic() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let res = scheduler.start {
+            interval(100, scheduler)
+        }
+        
+        let correct: [Recorded<Int64>] = [
+            next(300, 0),
+            next(400, 1),
+            next(500, 2),
+            next(600, 3),
+            next(700, 4),
+            next(800, 5),
+            next(900, 6)
+        ]
+        
+        XCTAssertEqual(res.messages, correct)
+    }
+    
+    func testInterval_TimeSpan_Zero() {
+        let scheduler = PeriodicTestScheduler(initialClock: 0)
+        
+        let res = scheduler.start(210) {
+            interval(0, scheduler)
+        }
+        
+        let correct: [Recorded<Int64>] = [
+            next(201, 0),
+            next(202, 1),
+            next(203, 2),
+            next(204, 3),
+            next(205, 4),
+            next(206, 5),
+            next(207, 6),
+            next(208, 7),
+            next(209, 8),
+        ]
+        
+        XCTAssertEqual(res.messages, correct)
+    }
+    
+    func testInterval_TimeSpan_Zero_DefaultScheduler() {
+        var scheduler = DispatchQueueScheduler(globalConcurrentQueuePriority: .Default)
+        
+        let observer = PrimitiveMockObserver<Int64>()
+        
+        var lock = OS_SPINLOCK_INIT
+        
+        OSSpinLockLock(&lock)
+        
+        interval(0, scheduler) >- takeWhile { $0 < 10 } >- subscribe(next: { t in
+            sendNext(observer, t)
+        }, error: { _ in
+        }, completed: {
+            OSSpinLockUnlock(&lock)
+        })
+        
+        OSSpinLockLock(&lock)
+        
+        XCTAssertTrue(observer.messages.count == 10)
+    }
+}
