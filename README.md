@@ -28,7 +28,6 @@ Hang out with us on [rxswift.slack.com](http://slack.rxswift.org) <img src="http
 1. [RxSwift supported operators](#rxswift-supported-operators)
 1. [RxCocoa extensions](#rxcocoa-extensions)
 1. [Build / Install / Run](#build--install--run)
-1. [Comparison with ReactiveCocoa](#comparison-with-reactivecocoa)
 1. [Feature comparison with other frameworks](#feature-comparison-with-other-frameworks)
 1. [What problem does Rx solve?](#what-problem-does-rx-solve)
 1. [Sequences solve everything](#sequences-solve-everything)
@@ -458,58 +457,6 @@ type in `Podfile` directory
 ```
 $ pod install
 ```
-
-## Comparison with ReactiveCocoa
-
-So what happened, why did this project start? Two things happened:
-
-* Almost a year ago, Apple announced Swift. That caused a torrent of new projects in the Apple ecosystem. 
-* I've started to learn Haskell and listen more carefully to Erik Meijer
-
-About the same time, ReactiveCocoa team also soon started to investigate how to incorporate Swift into ReactiveCocoa. 
-Initially, ReactiveCocoa was hugely influenced by Reactive Extensions but it was also influenced by other languages. It was in kind of a gray zone, similar, but different. 
-
-Since ReactiveCocoa was influenced hugely by Rx, I wanted to know more about the original Rx. 
-
-I was totally blown away by Rx. It solved everything that was causing me problems in an elegant way (threading, resource management, error management, cache invalidation).
-
-The most subtle thing that lifted a lot of cognitive load was changing the concept from signals to sequences.  It maybe looks like a trivial thing, but it has profound implications.
-
-* It's hard to define properties of signals, but we all already know properties of sequences. (It's funny, but I don't think that ReactiveCocoa team references anywhere signal as a sequence even though they use terms like "streams of values"). 
-* operator definitions become more clear, stateless by default
-* resources management becomes clear, no more confusing situations what gets cancelled
-* interfaces get a lot simpler, it's all about two interfaces, `Observable<Element>` and `Observer<Element>` (ReactiveCocoa v3.0-beta.1 also introduces a very significant SignalProducer)
-
-E.g. 
-```swift
-returnElements(1, 2) 
-	>- observeOn(operationQueueScheduler) 
-	>- map { "n = \($0)" }
-	>- observeOn(MainScheduler.sharedInstance) 
-	>- subscribeNext { println($0) }
-```
-
-If we are talking in terms of sequences, there is no doubt that this code will print:
-
-```
-n = 1
-n = 2
-```
-
-If we are talking in terms of signals, it's not clear can this code produce 
-
-```
-n = 2
-n = 1
-```
-
-Since 
-
-* ReactiveCocoa team has done an amazing job in mapping some of the APIs from Rx to Cocoa
-* Rx was open source
-* I wanted to learn Swift
-
-this project got started.
 
 ## Feature comparison with other frameworks
 
