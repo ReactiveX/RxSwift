@@ -221,26 +221,35 @@ When lacking a strong community consensus, RxSwift will usually include multiple
 
 Operators are stateless by default.
 
-* map / select
-* filter / where
-* foldl / aggregate
-* multicast
-* publish
-* replay
-* refCount
-* observeSingleOn
-* generation operators (returnElement/just, empty, never, failWith, defer)
-* debug
-* concat
-* merge
-* switchLatest
-* catch
 * asObservable
+* catch
+* concat
+* debug
+* defer
 * distinctUntilChanged
 * do / doOnNext
-* throttle
+* empty
+* failWith
+* filter / where
+* foldl / aggregate
+* from (array)
+* interval
+* map / select
+* merge
+* multicast
+* never
+* observeOn / observeSingleOn
+* publish
+* refCount
+* replay
+* returnElement / just
 * sample
 * startWith
+* switchLatest
+* throttle
+* timer
+* takeUntil
+* takeWhile
 * variable / sharedWithCachedLastResult
 * zip
 
@@ -297,7 +306,7 @@ extension UIControl {
 ```swift
 extension UIButton {
 
-    public func rx_tap() -> Observable<Void> {}
+    public var rx_tap: Observable<Void> {}
 
 }
 ```
@@ -305,7 +314,7 @@ extension UIButton {
 ```swift
 extension UITextField {
 
-    public func rx_text() -> Observable<String> {}
+    public var rx_text: Observable<String> {}
 
 }
 ```
@@ -313,7 +322,7 @@ extension UITextField {
 ```swift
 extension UISearchBar {
 
-    public func rx_searchText() -> Observable<String> {}
+    public var rx_searchText: Observable<String> {}
 
 }
 ```
@@ -322,6 +331,14 @@ extension UISearchBar {
 extension UILabel {
 
     public func rx_subscribeTextTo(source: Observable<String>) -> Disposable {}
+
+}
+```
+
+```swift
+extension UIDatePicker {
+
+    public var rx_date: Observable<NSDate> {}
 
 }
 ```
@@ -342,7 +359,23 @@ extension UIImageView {
 ```swift
 extension UIScrollView {
 
-    public func rx_contentOffset() -> Observable<CGPoint> {}
+    public var rx_contentOffset: Observable<CGPoint> {}
+
+}
+```
+
+```swift
+extension UIBarButtonItem {
+
+    public var rx_tap: Observable<Void> {}
+
+}
+```
+
+```swift
+extension UISlider {
+
+    public var rx_value: Observable<Float> {}
 
 }
 ```
@@ -375,7 +408,7 @@ extension UITableView {
 ```swift
 extension UICollectionView {
 
-    public func rx_itemTap() -> Observable<(UICollectionView, Int)> {}
+    public var rx_itemTap: -> Observable<(UICollectionView, Int)> {}
 
     public func rx_elementTap<E>() -> Observable<E> {}
 
@@ -399,9 +432,18 @@ extension UICollectionView {
 **OSX**
 
 ```swift
+extension NSControl {
+
+    public var rx_controlEvents: Observable<()> {}
+
+}
+```
+
+```swift
+
 extension NSSlider {
 
-    public func rx_value() -> Observable<Double> { }
+    public var rx_value: Observable<Double> {}
 
 }
 ```
@@ -409,7 +451,7 @@ extension NSSlider {
 ```swift
 extension NSButton {
 
-    public func rx_tap() -> Observable<Void> { }
+    public var rx_tap: Observable<Void> {}
 
 }
 ```
@@ -417,20 +459,20 @@ extension NSButton {
 ```swift
 extension NSImageView {
 
-    public func rx_subscribeImageTo(source: Observable<NSImage?>) -> Disposable { }
+    public func rx_subscribeImageTo(source: Observable<NSImage?>) -> Disposable {}
     
     public func rx_subscribeImageTo
         (animated: Bool)
-        (source: Observable<NSImage?>) -> Disposable { }
+        (source: Observable<NSImage?>) -> Disposable {}
 }
 ```
 
 ```swift
 extension NSTextField {
 
-    public func rx_subscribeTextTo(source: Observable<String>) -> Disposable { }
+    public func rx_subscribeTextTo(source: Observable<String>) -> Disposable {}
 
-    public func rx_text() -> Observable<String> { }
+    public var rx_text: Observable<String> {}
 
 } 
 ```
