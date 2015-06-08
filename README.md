@@ -223,6 +223,7 @@ Operators are stateless by default.
 
 #### Creating Observables
  * asObservable
+ * defer
  * empty
  * failWith
  * from (array)
@@ -253,7 +254,6 @@ Operators are stateless by default.
 #### Error Handling Operators
 
  * catch
- * defer
 
 #### Observable Utility Operators
 
@@ -262,17 +262,16 @@ Operators are stateless by default.
   * debug
 
 #### Conditional and Boolean Operators
-  _None Just Yet_
+  * _None Just Yet_
 
 #### Mathematical and Aggregate Operators
 
- * concat
- * foldl / aggregate
+  * concat
+  * foldl / aggregate
 
 #### Backpressure Operators
  
- * throttle
- 
+  * throttle
 
 #### Connectable Observable Operators
 
