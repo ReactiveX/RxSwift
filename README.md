@@ -221,37 +221,66 @@ When lacking a strong community consensus, RxSwift will usually include multiple
 
 Operators are stateless by default.
 
-* asObservable
-* catch
-* concat
-* debug
-* defer
-* distinctUntilChanged
-* do / doOnNext
-* empty
-* failWith
-* filter / where
-* foldl / aggregate
-* from (array)
-* interval
-* map / select
-* merge
-* multicast
-* never
-* observeOn / observeSingleOn
-* publish
-* refCount
-* replay
-* returnElement / just
-* sample
-* startWith
-* switchLatest
-* throttle
-* timer
-* takeUntil
-* takeWhile
-* variable / sharedWithCachedLastResult
-* zip
+#### Creating Observables
+ * asObservable
+ * empty
+ * failWith
+ * from (array)
+ * interval
+ * never
+ * returnElement / just
+ * timer
+
+#### Transforming Observables
+
+  * map / select
+
+#### Filtering Observables
+
+  * distinctUntilChanged
+  * filter / where
+  * sample
+  * takeUntil
+  * takeWhile
+
+#### Combining Observables
+
+  * merge
+  * startWith
+  * switchLatest
+  * zip
+
+#### Error Handling Operators
+
+ * catch
+ * defer
+
+#### Observable Utility Operators
+
+  * do / doOnNext
+  * observeOn / observeSingleOn
+  * debug
+
+#### Conditional and Boolean Operators
+  _None Just Yet_
+
+#### Mathematical and Aggregate Operators
+
+ * concat
+ * foldl / aggregate
+
+#### Backpressure Operators
+ 
+ * throttle
+ 
+
+#### Connectable Observable Operators
+
+  * multicast
+  * publish
+  * refCount
+  * replay
+  * variable / sharedWithCachedLastResult
 
 Creating new operators is also pretty straightforward. 
 
