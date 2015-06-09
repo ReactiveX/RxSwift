@@ -222,63 +222,67 @@ When lacking a strong community consensus, RxSwift will usually include multiple
 Operators are stateless by default.
 
 #### Creating Observables
- * asObservable
- * defer
- * empty
- * failWith
- * from (array)
- * interval
- * never
- * returnElement / just
- * timer
+
+ * [`asObservable`](http://reactivex.io/documentation/operators/from.html)
+ * [`create`](http://reactivex.io/documentation/operators/create.html)
+ * [`defer`](http://reactivex.io/documentation/operators/defer.html)
+ * [`empty`](http://reactivex.io/documentation/operators/empty-never-throw.html)
+ * [`failWith`](http://reactivex.io/documentation/operators/empty-never-throw.html)
+ * [`from` (array)](http://reactivex.io/documentation/operators/from.html)
+ * [`interval`](http://reactivex.io/documentation/operators/interval.html)
+ * [`never`](http://reactivex.io/documentation/operators/empty-never-throw.html)
+ * [`returnElement` / `just`](http://reactivex.io/documentation/operators/just.html)
+ * [`returnElements`](http://reactivex.io/documentation/operators/from.html)
+ * [`timer`](http://reactivex.io/documentation/operators/timer.html)
 
 #### Transforming Observables
 
-  * map / select
+  * [`map` / `select`](http://reactivex.io/documentation/operators/map.html)
 
 #### Filtering Observables
 
-  * distinctUntilChanged
-  * filter / where
-  * sample
-  * takeUntil
-  * takeWhile
+  * [`distinctUntilChanged`](http://reactivex.io/documentation/operators/distinct.html)
+  * [`filter` / `where`](http://reactivex.io/documentation/operators/filter.html)
+  * [`sample`](http://reactivex.io/documentation/operators/sample.html)
 
 #### Combining Observables
 
-  * merge
-  * startWith
-  * switchLatest
-  * zip
+  * [`merge`](http://reactivex.io/documentation/operators/merge.html)
+  * [`startWith`](http://reactivex.io/documentation/operators/startwith.html)
+  * [`switchLatest`](http://reactivex.io/documentation/operators/switch.html)
+  * [`combineLatest`](http://reactivex.io/documentation/operators/combinelatest.html)
+  * [`zip`](http://reactivex.io/documentation/operators/zip.html)
 
 #### Error Handling Operators
 
- * catch
+ * [`catch`](http://reactivex.io/documentation/operators/catch.html)
 
 #### Observable Utility Operators
 
-  * do / doOnNext
-  * observeOn / observeSingleOn
+  * [`do` / `doOnNext`](http://reactivex.io/documentation/operators/do.html)
+  * [`observeOn` / `observeSingleOn`](http://reactivex.io/documentation/operators/observeon.html)
+  * [`subscribe`](http://reactivex.io/documentation/operators/subscribe.html)
   * debug
 
 #### Conditional and Boolean Operators
-  * _None Just Yet_
+  * [`takeUntil`](http://reactivex.io/documentation/operators/takeuntil.html)
+  * [`takeWhile`](http://reactivex.io/documentation/operators/takewhile.html)
 
 #### Mathematical and Aggregate Operators
 
-  * concat
-  * foldl / aggregate
+  * [`concat`](http://reactivex.io/documentation/operators/concat.html)
+  * [`foldl` / `aggregate`](http://reactivex.io/documentation/operators/reduce.html)
 
 #### Backpressure Operators
  
-  * throttle
+  * [`throttle`](http://reactivex.io/documentation/operators/debounce.html)
 
 #### Connectable Observable Operators
 
-  * multicast
-  * publish
-  * refCount
-  * replay
+  * [`multicast`](http://reactivex.io/documentation/operators/publish.html)
+  * [`publish`](http://reactivex.io/documentation/operators/publish.html)
+  * [`refCount`](http://reactivex.io/documentation/operators/refcount.html)
+  * [`replay`](http://reactivex.io/documentation/operators/replay.html)
   * variable / sharedWithCachedLastResult
 
 Creating new operators is also pretty straightforward. 
