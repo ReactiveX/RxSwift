@@ -15,7 +15,7 @@ class SearchViewModel: Disposable {
     // outputs
     let rows: Observable<[SearchResultViewModel]>
     
-    let disposeBag = DisposeBag()
+    let subscriptions = CompositeDisposable()
 
     // public methods
     
@@ -47,10 +47,10 @@ class SearchViewModel: Disposable {
             >- subscribeNext { searchResult in
                 wireframe.openURL(searchResult.searchResult.URL)
             }
-            >- disposeBag.addDisposable
+            >- subscriptions.addDisposable
     }
 
     func dispose() {
-        disposeBag.dispose()
+        subscriptions.dispose()
     }
 }

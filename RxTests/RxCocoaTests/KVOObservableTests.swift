@@ -23,7 +23,7 @@ class KVOObservableTests : RxTest {
         
         var latest: String?
         
-        let _d = os >- subscribeNext { latest = $0 } >- scopedDispose
+        var _d: ScopedDispose! = os >- subscribeNext { latest = $0 } >- scopedDispose
         
         XCTAssertTrue(latest == nil)
         
@@ -43,7 +43,7 @@ class KVOObservableTests : RxTest {
         
         XCTAssertEqual(latest!, "3")
         
-        _d.dispose()
+        _d = nil
         
         testClass.pr = "4"
 
@@ -57,7 +57,7 @@ class KVOObservableTests : RxTest {
         
         var latest: String?
         
-        let _d = os >- subscribeNext { latest = $0 } >- scopedDispose
+        var _d: ScopedDispose! = os >- subscribeNext { latest = $0 } >- scopedDispose
         
         XCTAssertTrue(latest == "0")
         
@@ -77,7 +77,7 @@ class KVOObservableTests : RxTest {
         
         XCTAssertEqual(latest!, "3")
         
-        _d.dispose()
+        _d = nil
         
         testClass.pr = "4"
         
@@ -91,7 +91,7 @@ class KVOObservableTests : RxTest {
         
         var latest: String?
         
-        let _d = os >- subscribeNext { latest = $0 } >- scopedDispose
+        var _d: ScopedDispose! = os >- subscribeNext { latest = $0 } >- scopedDispose
         
         XCTAssertTrue(latest == "0")
         
@@ -111,7 +111,7 @@ class KVOObservableTests : RxTest {
         
         XCTAssertEqual(latest!, "3")
         
-        _d.dispose()
+        _d = nil
         
         testClass.pr = "4"
         

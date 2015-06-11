@@ -29,7 +29,6 @@ public class CollectionViewImageCell: UICollectionViewCell {
     override public func prepareForReuse() {
         super.prepareForReuse()
         
-        disposeBag?.dispose()
         disposeBag = nil
     }
 
