@@ -36,23 +36,39 @@ class ZipSink<%= i %>_<<%= ", ".join(map(1...i) { "E\($0)" }) %>, O: ObserverTyp
 
     let parent: Parent
 
-    <%= "\n".join(map(1...i) { "    var observer\($0): ZipObserver<E\($0)>! = nil" }) %>
+<%= "\n".join(map(1...i) {
+"    var values\($0): Queue<E\($0)> = Queue(capacity: 2)"
+}) %>
 
     init(parent: Parent, observer: O, cancel: Disposable) {
         self.parent = parent
         super.init(arity: <%= i %>, observer: observer, cancel: cancel)
     }
 
+    override func hasElements(index: Int) -> Bool {
+        switch (index) {
+<%= "".join(map(0..<i) {
+"        case \($0): return values\($0 + 1).count > 0\n"
+}) %>
+        default:
+            rxFatalError("Unhandled case \(index)")
+        }
+
+        return false
+    }
+
     func run() -> Disposable {
-<%= "\n".join(map(1...i) { "        let subscription\($0) = SingleAssignmentDisposable()" }) %>
+<%= "\n".join(map(1...i) {
+"        let subscription\($0) = SingleAssignmentDisposable()"
+}) %>
 
-<%= "\n".join(map(1...i) { "        observer\($0) = ZipObserver(lock: lock, parent: self, index: \($0 - 1), this: subscription\($0))" }) %>
+<%= "\n".join(map(1...i) {
+"        let observer\($0) = ZipObserver(lock: lock, parent: self, index: \($0 - 1), setNextValue: { self.values\($0).enqueue($0) }, this: subscription\($0))"
+}) %>
 
-    self.observers = [<% for i in 1 ... i { %>
-        observer<%= i %>, <% } %>
-    ]
-
-<%= "\n".join(map(1...i) { "        subscription\($0).setDisposable(parent.source\($0).subscribeSafe(observer\($0)))" }) %>
+<%= "\n".join(map(1...i) {
+"        subscription\($0).setDisposable(parent.source\($0).subscribeSafe(observer\($0)))" })
+%>
 
         return CompositeDisposable(disposables: [
 <%= ",\n".join(map(1...i) { "           subscription\($0)" }) %>
@@ -60,7 +76,7 @@ class ZipSink<%= i %>_<<%= ", ".join(map(1...i) { "E\($0)" }) %>, O: ObserverTyp
     }
 
     override func getResult() -> RxResult<R> {
-        return self.parent.resultSelector(<%= ", ".join(map(1...i) { "observer\($0).values.dequeue()" }) %>)
+        return self.parent.resultSelector(<%= ", ".join(map(1...i) { "values\($0).dequeue()" }) %>)
     }
 }
 
@@ -72,7 +88,9 @@ class Zip<%= i %><<%= ", ".join(map(1...i) { "E\($0)" }) %>, R> : Producer<R> {
     let resultSelector: ResultSelector
 
     init(<%= ", ".join(map(1...i) { "source\($0): Observable<E\($0)>" }) %>, resultSelector: ResultSelector) {
-<%= "\n".join(map(1...i) { "        self.source\($0) = source\($0)" })  %>
+<%= "\n".join(map(1...i) {
+"        self.source\($0) = source\($0)" })
+%>
 
         self.resultSelector = resultSelector
     }
