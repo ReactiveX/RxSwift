@@ -122,3 +122,13 @@ public func timer<S: PeriodicScheduler>
 }
 
     // }
+
+// take
+
+public func take<E, S: Scheduler>
+    (duration: S.TimeInterval, scheduler: S)
+    -> Observable<E> -> Observable<E> {
+    return { source in
+        return TakeTime(source: source, duration: duration, scheduler: scheduler)
+    }
+}

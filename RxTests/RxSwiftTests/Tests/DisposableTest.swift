@@ -68,4 +68,59 @@ class DisposableTest : RxTest {
             ])
     }
     
+    func testCompositeDisposable_TestNormal() {
+        var numberDisposed = 0
+        let compositeDisposable = CompositeDisposable()
+        
+        let result1 = compositeDisposable.addDisposable(AnonymousDisposable {
+            numberDisposed++
+        })
+        
+        let result2 = compositeDisposable.addDisposable(AnonymousDisposable {
+            numberDisposed++
+        })
+        
+        XCTAssertEqual(numberDisposed, 0)
+        XCTAssertEqual(compositeDisposable.count, 2)
+        XCTAssertTrue(result1 != nil)
+        
+        compositeDisposable.dispose()
+        XCTAssertEqual(numberDisposed, 2)
+        XCTAssertEqual(compositeDisposable.count, 0)
+        
+        let result = compositeDisposable.addDisposable(AnonymousDisposable {
+            numberDisposed++
+        })
+
+        XCTAssertEqual(numberDisposed, 3)
+        XCTAssertEqual(compositeDisposable.count, 0)
+        XCTAssertTrue(result == nil)
+    }
+    
+    func testCompositeDisposable_TestRemoving() {
+        var numberDisposed = 0
+        let compositeDisposable = CompositeDisposable()
+        
+        let result1 = compositeDisposable.addDisposable(AnonymousDisposable {
+            numberDisposed++
+            })
+        
+        let result2 = compositeDisposable.addDisposable(AnonymousDisposable {
+            numberDisposed++
+            })
+        
+        XCTAssertEqual(numberDisposed, 0)
+        XCTAssertEqual(compositeDisposable.count, 2)
+        XCTAssertTrue(result1 != nil)
+        
+        compositeDisposable.removeDisposable(result2!)
+
+        XCTAssertEqual(numberDisposed, 1)
+        XCTAssertEqual(compositeDisposable.count, 1)
+     
+        compositeDisposable.dispose()
+
+        XCTAssertEqual(numberDisposed, 2)
+        XCTAssertEqual(compositeDisposable.count, 0)
+    }
 }

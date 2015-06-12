@@ -57,7 +57,7 @@ public class RecursiveSchedulerOf<State, TimeInterval> : Disposable {
         var isAdded = false
         var isDone = false
         
-        var removeKey: CompositeDisposable.BagKey? = nil
+        var removeKey: CompositeDisposable.DisposeKey? = nil
         let d = scheduleRelativeAdapter(state, dueTime: dueTime) { (state) -> RxResult<Disposable> in
             // best effort
             if self.group.disposed {
@@ -96,7 +96,7 @@ public class RecursiveSchedulerOf<State, TimeInterval> : Disposable {
         var isAdded = false
         var isDone = false
         
-        var removeKey: CompositeDisposable.BagKey? = nil
+        var removeKey: CompositeDisposable.DisposeKey? = nil
         let d = scheduleAdapter(state) { (state) -> RxResult<Disposable> in
             // best effort
             if self.group.disposed {

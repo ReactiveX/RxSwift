@@ -789,3 +789,179 @@ extension ObservableTimeTest {
         
     }
 }
+
+// take
+
+extension ObservableTimeTest {
+    
+    func testTake_TakeZero() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createHotObservable([
+            next(210, 1),
+            next(220, 2),
+            completed(230)
+        ])
+        
+        let res = scheduler.start {
+            xs >- take(0, scheduler)
+        }
+        
+        XCTAssertEqual(res.messages, [
+            completed(201)
+            ])
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 201)
+            ])
+    }
+    
+    func testTake_Some() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createHotObservable([
+            next(210, 1),
+            next(220, 2),
+            next(230, 3),
+            completed(240)
+            ])
+        
+        let res = scheduler.start {
+            xs >- take(25, scheduler)
+        }
+        
+        XCTAssertEqual(res.messages, [
+            next(210, 1),
+            next(220, 2),
+            completed(225)
+            ])
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 225)
+            ])
+    }
+    
+    func testTake_TakeLate() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createHotObservable([
+            next(210, 1),
+            next(220, 2),
+            completed(230),
+            ])
+        
+        let res = scheduler.start {
+            xs >- take(50, scheduler)
+        }
+        
+        XCTAssertEqual(res.messages, [
+            next(210, 1),
+            next(220, 2),
+            completed(230)
+            ])
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 230)
+            ])
+    }
+    
+    func testTake_TakeError() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createHotObservable([
+            next(0, 0),
+            error(210, testError)
+            ])
+        
+        let res = scheduler.start {
+            xs >- take(50, scheduler)
+        }
+        
+        XCTAssertEqual(res.messages, [
+            error(210, testError),
+            ])
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 210)
+            ])
+    }
+    
+    func testTake_TakeNever() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createHotObservable([
+            next(0, 0),
+            ])
+        
+        let res = scheduler.start {
+            xs >- take(50, scheduler)
+        }
+        
+        XCTAssertEqual(res.messages, [
+            completed(250)
+            ])
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 250)
+            ])
+    }
+    
+    func testTake_TakeTwice1() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createHotObservable([
+            next(210, 1),
+            next(220, 2),
+            next(230, 3),
+            next(240, 4),
+            next(250, 5),
+            next(260, 6),
+            completed(270)
+            ])
+        
+        let res = scheduler.start {
+            xs >- take(35, scheduler)
+        }
+        
+        XCTAssertEqual(res.messages, [
+            next(210, 1),
+            next(220, 2),
+            next(230, 3),
+            completed(235)
+            ])
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 235)
+            ])
+    }
+
+    func testTake_TakeDefault() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createHotObservable([
+            next(210, 1),
+            next(220, 2),
+            next(230, 3),
+            next(240, 4),
+            next(250, 5),
+            next(260, 6),
+            completed(270)
+            ])
+        
+        let res = scheduler.start {
+            xs >- take(35, scheduler)
+        }
+        
+        XCTAssertEqual(res.messages, [
+            next(210, 1),
+            next(220, 2),
+            next(230, 3),
+            completed(235)
+            ])
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 235)
+            ])
+    }
+
+}

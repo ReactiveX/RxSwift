@@ -1,5 +1,5 @@
 //
-//  Select.swift
+//  Map.swift
 //  Rx
 //
 //  Created by Krunoslav Zaher on 3/15/15.
@@ -8,13 +8,14 @@
 
 import Foundation
 
-class Select_<SourceType, O : ObserverType> : Sink<O>, ObserverType {
+class MapSink<SourceType, O : ObserverType> : Sink<O>, ObserverType {
     typealias ResultType = O.Element
     typealias Element = SourceType
+    typealias Parent = Map<SourceType, ResultType>
     
-    let parent: Select<SourceType, ResultType>
+    let parent: Parent
     
-    init(parent: Select<SourceType, ResultType>, observer: O, cancel: Disposable) {
+    init(parent: Parent, observer: O, cancel: Disposable) {
         self.parent = parent
         super.init(observer: observer, cancel: cancel)
     }
@@ -46,10 +47,10 @@ class Select_<SourceType, O : ObserverType> : Sink<O>, ObserverType {
     }
 }
 
-class Select_1<SourceType, O: ObserverType> : Select_<SourceType, O> {
+class MapSink1<SourceType, O: ObserverType> : MapSink<SourceType, O> {
     typealias ResultType = O.Element
     
-    override init(parent: Select<SourceType, ResultType>, observer: O, cancel: Disposable) {
+    override init(parent: Map<SourceType, ResultType>, observer: O, cancel: Disposable) {
         super.init(parent: parent, observer: observer, cancel: cancel)
     }
     
@@ -58,12 +59,12 @@ class Select_1<SourceType, O: ObserverType> : Select_<SourceType, O> {
     }
 }
 
-class Select_2<SourceType, O: ObserverType> : Select_<SourceType, O> {
+class MapSink2<SourceType, O: ObserverType> : MapSink<SourceType, O> {
     typealias ResultType = O.Element
     
     var index = 0
     
-    override init(parent: Select<SourceType, ResultType>, observer: O, cancel: Disposable) {
+    override init(parent: Map<SourceType, ResultType>, observer: O, cancel: Disposable) {
         super.init(parent: parent, observer: observer, cancel: cancel)
     }
     override func select(element: SourceType) -> RxResult<ResultType> {
@@ -71,7 +72,7 @@ class Select_2<SourceType, O: ObserverType> : Select_<SourceType, O> {
     }
 }
 
-class Select<SourceType, ResultType>: Producer<ResultType> {
+class Map<SourceType, ResultType>: Producer<ResultType> {
     typealias Selector1 = (SourceType) -> RxResult<ResultType>
     typealias Selector2 = (SourceType, Int) -> RxResult<ResultType>
     
@@ -94,12 +95,12 @@ class Select<SourceType, ResultType>: Producer<ResultType> {
     
     override func run<O: ObserverType where O.Element == ResultType>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
         if let selector1 = self.selector1 {
-            let sink = Select_1(parent: self, observer: observer, cancel: cancel)
+            let sink = MapSink1(parent: self, observer: observer, cancel: cancel)
             setSink(sink)
             return self.source.subscribeSafe(sink)
         }
         else {
-            let sink = Select_2(parent: self, observer: observer, cancel: cancel)
+            let sink = MapSink2(parent: self, observer: observer, cancel: cancel)
             setSink(sink)
             return self.source.subscribeSafe(sink)
         }

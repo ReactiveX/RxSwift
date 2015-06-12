@@ -18,6 +18,17 @@ struct Recorded<Element : Equatable> : Printable, Equatable {
         self.event = event
     }
     
+    var value: Element {
+        get {
+            switch self.event {
+            case .Next(let boxedValue):
+                return boxedValue.value
+            default:
+                assert(false)
+            }
+        }
+    }
+    
     var description: String {
         get {
             return "\(event) @ \(time)"

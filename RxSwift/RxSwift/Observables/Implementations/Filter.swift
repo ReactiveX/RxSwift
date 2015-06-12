@@ -1,5 +1,5 @@
 //
-//  Where.swift
+//  Filter.swift
 //  Rx
 //
 //  Created by Krunoslav Zaher on 2/17/15.
