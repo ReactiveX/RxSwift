@@ -34,26 +34,33 @@ public class SingleAssignmentDisposable : DisposeBase, Disposable, Cancelable {
         super.init()
     }
 
-    public func setDisposable(newDisposable: Disposable) {
-        var disposable: Disposable? = self.lock.calculateLocked { oldState in
-            
-            if state.disposableSet {
-                rxFatalError("oldState.disposable != nil")
+    public var disposable: Disposable {
+        get {
+            return lock.calculateLocked {
+                return self.state.disposable ?? NopDisposable.instance
             }
-            
-            state.disposableSet = true
-            
-            if state.disposed {
-                return newDisposable
-            }
-            
-            state.disposable = newDisposable
-            
-            return nil
         }
-        
-        if let disposable = disposable {
-            return disposable.dispose()
+        set(newDisposable) {
+            var disposable: Disposable? = lock.calculateLocked { oldState in
+                
+                if state.disposableSet {
+                    rxFatalError("oldState.disposable != nil")
+                }
+                
+                state.disposableSet = true
+                
+                if state.disposed {
+                    return newDisposable
+                }
+                
+                state.disposable = newDisposable
+                
+                return nil
+            }
+            
+            if let disposable = disposable {
+                return disposable.dispose()
+            }
         }
     }
     

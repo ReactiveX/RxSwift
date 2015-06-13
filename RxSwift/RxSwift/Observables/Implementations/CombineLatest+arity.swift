@@ -53,8 +53,8 @@ class CombineLatestSink2_<E1, E2, O: ObserverType> : CombineLatestSink<O> {
          let observer1 = CombineLatestObserver(lock: lock, parent: self, index: 0, setLatestValue: { (e: E1) -> Void in self.latestElement1 = e }, this: subscription1)
          let observer2 = CombineLatestObserver(lock: lock, parent: self, index: 1, setLatestValue: { (e: E2) -> Void in self.latestElement2 = e }, this: subscription2)
 
-         subscription1.setDisposable(parent.source1.subscribeSafe(observer1))
-         subscription2.setDisposable(parent.source2.subscribeSafe(observer2))
+         subscription1.disposable = parent.source1.subscribeSafe(observer1)
+         subscription2.disposable = parent.source2.subscribeSafe(observer2)
 
         return CompositeDisposable(disposables: [
                 subscription1,
@@ -135,9 +135,9 @@ class CombineLatestSink3_<E1, E2, E3, O: ObserverType> : CombineLatestSink<O> {
          let observer2 = CombineLatestObserver(lock: lock, parent: self, index: 1, setLatestValue: { (e: E2) -> Void in self.latestElement2 = e }, this: subscription2)
          let observer3 = CombineLatestObserver(lock: lock, parent: self, index: 2, setLatestValue: { (e: E3) -> Void in self.latestElement3 = e }, this: subscription3)
 
-         subscription1.setDisposable(parent.source1.subscribeSafe(observer1))
-         subscription2.setDisposable(parent.source2.subscribeSafe(observer2))
-         subscription3.setDisposable(parent.source3.subscribeSafe(observer3))
+         subscription1.disposable = parent.source1.subscribeSafe(observer1)
+         subscription2.disposable = parent.source2.subscribeSafe(observer2)
+         subscription3.disposable = parent.source3.subscribeSafe(observer3)
 
         return CompositeDisposable(disposables: [
                 subscription1,
@@ -224,10 +224,10 @@ class CombineLatestSink4_<E1, E2, E3, E4, O: ObserverType> : CombineLatestSink<O
          let observer3 = CombineLatestObserver(lock: lock, parent: self, index: 2, setLatestValue: { (e: E3) -> Void in self.latestElement3 = e }, this: subscription3)
          let observer4 = CombineLatestObserver(lock: lock, parent: self, index: 3, setLatestValue: { (e: E4) -> Void in self.latestElement4 = e }, this: subscription4)
 
-         subscription1.setDisposable(parent.source1.subscribeSafe(observer1))
-         subscription2.setDisposable(parent.source2.subscribeSafe(observer2))
-         subscription3.setDisposable(parent.source3.subscribeSafe(observer3))
-         subscription4.setDisposable(parent.source4.subscribeSafe(observer4))
+         subscription1.disposable = parent.source1.subscribeSafe(observer1)
+         subscription2.disposable = parent.source2.subscribeSafe(observer2)
+         subscription3.disposable = parent.source3.subscribeSafe(observer3)
+         subscription4.disposable = parent.source4.subscribeSafe(observer4)
 
         return CompositeDisposable(disposables: [
                 subscription1,
@@ -320,11 +320,11 @@ class CombineLatestSink5_<E1, E2, E3, E4, E5, O: ObserverType> : CombineLatestSi
          let observer4 = CombineLatestObserver(lock: lock, parent: self, index: 3, setLatestValue: { (e: E4) -> Void in self.latestElement4 = e }, this: subscription4)
          let observer5 = CombineLatestObserver(lock: lock, parent: self, index: 4, setLatestValue: { (e: E5) -> Void in self.latestElement5 = e }, this: subscription5)
 
-         subscription1.setDisposable(parent.source1.subscribeSafe(observer1))
-         subscription2.setDisposable(parent.source2.subscribeSafe(observer2))
-         subscription3.setDisposable(parent.source3.subscribeSafe(observer3))
-         subscription4.setDisposable(parent.source4.subscribeSafe(observer4))
-         subscription5.setDisposable(parent.source5.subscribeSafe(observer5))
+         subscription1.disposable = parent.source1.subscribeSafe(observer1)
+         subscription2.disposable = parent.source2.subscribeSafe(observer2)
+         subscription3.disposable = parent.source3.subscribeSafe(observer3)
+         subscription4.disposable = parent.source4.subscribeSafe(observer4)
+         subscription5.disposable = parent.source5.subscribeSafe(observer5)
 
         return CompositeDisposable(disposables: [
                 subscription1,
@@ -423,12 +423,12 @@ class CombineLatestSink6_<E1, E2, E3, E4, E5, E6, O: ObserverType> : CombineLate
          let observer5 = CombineLatestObserver(lock: lock, parent: self, index: 4, setLatestValue: { (e: E5) -> Void in self.latestElement5 = e }, this: subscription5)
          let observer6 = CombineLatestObserver(lock: lock, parent: self, index: 5, setLatestValue: { (e: E6) -> Void in self.latestElement6 = e }, this: subscription6)
 
-         subscription1.setDisposable(parent.source1.subscribeSafe(observer1))
-         subscription2.setDisposable(parent.source2.subscribeSafe(observer2))
-         subscription3.setDisposable(parent.source3.subscribeSafe(observer3))
-         subscription4.setDisposable(parent.source4.subscribeSafe(observer4))
-         subscription5.setDisposable(parent.source5.subscribeSafe(observer5))
-         subscription6.setDisposable(parent.source6.subscribeSafe(observer6))
+         subscription1.disposable = parent.source1.subscribeSafe(observer1)
+         subscription2.disposable = parent.source2.subscribeSafe(observer2)
+         subscription3.disposable = parent.source3.subscribeSafe(observer3)
+         subscription4.disposable = parent.source4.subscribeSafe(observer4)
+         subscription5.disposable = parent.source5.subscribeSafe(observer5)
+         subscription6.disposable = parent.source6.subscribeSafe(observer6)
 
         return CompositeDisposable(disposables: [
                 subscription1,
@@ -533,13 +533,13 @@ class CombineLatestSink7_<E1, E2, E3, E4, E5, E6, E7, O: ObserverType> : Combine
          let observer6 = CombineLatestObserver(lock: lock, parent: self, index: 5, setLatestValue: { (e: E6) -> Void in self.latestElement6 = e }, this: subscription6)
          let observer7 = CombineLatestObserver(lock: lock, parent: self, index: 6, setLatestValue: { (e: E7) -> Void in self.latestElement7 = e }, this: subscription7)
 
-         subscription1.setDisposable(parent.source1.subscribeSafe(observer1))
-         subscription2.setDisposable(parent.source2.subscribeSafe(observer2))
-         subscription3.setDisposable(parent.source3.subscribeSafe(observer3))
-         subscription4.setDisposable(parent.source4.subscribeSafe(observer4))
-         subscription5.setDisposable(parent.source5.subscribeSafe(observer5))
-         subscription6.setDisposable(parent.source6.subscribeSafe(observer6))
-         subscription7.setDisposable(parent.source7.subscribeSafe(observer7))
+         subscription1.disposable = parent.source1.subscribeSafe(observer1)
+         subscription2.disposable = parent.source2.subscribeSafe(observer2)
+         subscription3.disposable = parent.source3.subscribeSafe(observer3)
+         subscription4.disposable = parent.source4.subscribeSafe(observer4)
+         subscription5.disposable = parent.source5.subscribeSafe(observer5)
+         subscription6.disposable = parent.source6.subscribeSafe(observer6)
+         subscription7.disposable = parent.source7.subscribeSafe(observer7)
 
         return CompositeDisposable(disposables: [
                 subscription1,
@@ -650,14 +650,14 @@ class CombineLatestSink8_<E1, E2, E3, E4, E5, E6, E7, E8, O: ObserverType> : Com
          let observer7 = CombineLatestObserver(lock: lock, parent: self, index: 6, setLatestValue: { (e: E7) -> Void in self.latestElement7 = e }, this: subscription7)
          let observer8 = CombineLatestObserver(lock: lock, parent: self, index: 7, setLatestValue: { (e: E8) -> Void in self.latestElement8 = e }, this: subscription8)
 
-         subscription1.setDisposable(parent.source1.subscribeSafe(observer1))
-         subscription2.setDisposable(parent.source2.subscribeSafe(observer2))
-         subscription3.setDisposable(parent.source3.subscribeSafe(observer3))
-         subscription4.setDisposable(parent.source4.subscribeSafe(observer4))
-         subscription5.setDisposable(parent.source5.subscribeSafe(observer5))
-         subscription6.setDisposable(parent.source6.subscribeSafe(observer6))
-         subscription7.setDisposable(parent.source7.subscribeSafe(observer7))
-         subscription8.setDisposable(parent.source8.subscribeSafe(observer8))
+         subscription1.disposable = parent.source1.subscribeSafe(observer1)
+         subscription2.disposable = parent.source2.subscribeSafe(observer2)
+         subscription3.disposable = parent.source3.subscribeSafe(observer3)
+         subscription4.disposable = parent.source4.subscribeSafe(observer4)
+         subscription5.disposable = parent.source5.subscribeSafe(observer5)
+         subscription6.disposable = parent.source6.subscribeSafe(observer6)
+         subscription7.disposable = parent.source7.subscribeSafe(observer7)
+         subscription8.disposable = parent.source8.subscribeSafe(observer8)
 
         return CompositeDisposable(disposables: [
                 subscription1,
@@ -774,15 +774,15 @@ class CombineLatestSink9_<E1, E2, E3, E4, E5, E6, E7, E8, E9, O: ObserverType> :
          let observer8 = CombineLatestObserver(lock: lock, parent: self, index: 7, setLatestValue: { (e: E8) -> Void in self.latestElement8 = e }, this: subscription8)
          let observer9 = CombineLatestObserver(lock: lock, parent: self, index: 8, setLatestValue: { (e: E9) -> Void in self.latestElement9 = e }, this: subscription9)
 
-         subscription1.setDisposable(parent.source1.subscribeSafe(observer1))
-         subscription2.setDisposable(parent.source2.subscribeSafe(observer2))
-         subscription3.setDisposable(parent.source3.subscribeSafe(observer3))
-         subscription4.setDisposable(parent.source4.subscribeSafe(observer4))
-         subscription5.setDisposable(parent.source5.subscribeSafe(observer5))
-         subscription6.setDisposable(parent.source6.subscribeSafe(observer6))
-         subscription7.setDisposable(parent.source7.subscribeSafe(observer7))
-         subscription8.setDisposable(parent.source8.subscribeSafe(observer8))
-         subscription9.setDisposable(parent.source9.subscribeSafe(observer9))
+         subscription1.disposable = parent.source1.subscribeSafe(observer1)
+         subscription2.disposable = parent.source2.subscribeSafe(observer2)
+         subscription3.disposable = parent.source3.subscribeSafe(observer3)
+         subscription4.disposable = parent.source4.subscribeSafe(observer4)
+         subscription5.disposable = parent.source5.subscribeSafe(observer5)
+         subscription6.disposable = parent.source6.subscribeSafe(observer6)
+         subscription7.disposable = parent.source7.subscribeSafe(observer7)
+         subscription8.disposable = parent.source8.subscribeSafe(observer8)
+         subscription9.disposable = parent.source9.subscribeSafe(observer9)
 
         return CompositeDisposable(disposables: [
                 subscription1,
@@ -905,16 +905,16 @@ class CombineLatestSink10_<E1, E2, E3, E4, E5, E6, E7, E8, E9, E10, O: ObserverT
          let observer9 = CombineLatestObserver(lock: lock, parent: self, index: 8, setLatestValue: { (e: E9) -> Void in self.latestElement9 = e }, this: subscription9)
          let observer10 = CombineLatestObserver(lock: lock, parent: self, index: 9, setLatestValue: { (e: E10) -> Void in self.latestElement10 = e }, this: subscription10)
 
-         subscription1.setDisposable(parent.source1.subscribeSafe(observer1))
-         subscription2.setDisposable(parent.source2.subscribeSafe(observer2))
-         subscription3.setDisposable(parent.source3.subscribeSafe(observer3))
-         subscription4.setDisposable(parent.source4.subscribeSafe(observer4))
-         subscription5.setDisposable(parent.source5.subscribeSafe(observer5))
-         subscription6.setDisposable(parent.source6.subscribeSafe(observer6))
-         subscription7.setDisposable(parent.source7.subscribeSafe(observer7))
-         subscription8.setDisposable(parent.source8.subscribeSafe(observer8))
-         subscription9.setDisposable(parent.source9.subscribeSafe(observer9))
-         subscription10.setDisposable(parent.source10.subscribeSafe(observer10))
+         subscription1.disposable = parent.source1.subscribeSafe(observer1)
+         subscription2.disposable = parent.source2.subscribeSafe(observer2)
+         subscription3.disposable = parent.source3.subscribeSafe(observer3)
+         subscription4.disposable = parent.source4.subscribeSafe(observer4)
+         subscription5.disposable = parent.source5.subscribeSafe(observer5)
+         subscription6.disposable = parent.source6.subscribeSafe(observer6)
+         subscription7.disposable = parent.source7.subscribeSafe(observer7)
+         subscription8.disposable = parent.source8.subscribeSafe(observer8)
+         subscription9.disposable = parent.source9.subscribeSafe(observer9)
+         subscription10.disposable = parent.source10.subscribeSafe(observer10)
 
         return CompositeDisposable(disposables: [
                 subscription1,

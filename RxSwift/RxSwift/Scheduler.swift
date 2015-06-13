@@ -42,6 +42,16 @@ func ensureScheduledSuccessfully(result: RxResult<Void>) -> RxResult<Void> {
     return SuccessResult
 }
 
+func getScheduledDisposable(disposable: RxResult<Disposable>) -> Disposable {
+    switch disposable {
+    case .Failure(let error):
+        errorDuringScheduledAction(error);
+        return NopDisposable.instance
+    default:
+        return disposable.get()
+    }
+}
+
 func errorDuringScheduledAction(error: ErrorType) -> RxResult<Void> {
     let exception = NSException(name: "ScheduledActionError", reason: "Error happened during scheduled action execution", userInfo: ["error": error])
     exception.raise()

@@ -40,10 +40,10 @@ public class Producer<Element> : Observable<Element> {
             resultObserver = Observer.normalize(observer)
         }
         
-        let setSink: (Disposable) -> Void = { d in sink.setDisposable(d) }
+        let setSink: (Disposable) -> Void = { d in sink.disposable = d }
         let disposable = run(observer, cancel: subscription, setSink: setSink)
         
-        subscription.setDisposable(disposable)
+        subscription.disposable = disposable
         
         return d
     }

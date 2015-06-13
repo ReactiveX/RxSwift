@@ -58,7 +58,7 @@ class ConnectableObservable<SourceType, ResultType> : ConnectableObservableType<
 
         if connect {
             let disposable = self.source.subscribeSafe(self.subject)
-            connection.subscription!.setDisposable(disposable)
+            connection.subscription!.disposable = disposable
         }
         
         return connection

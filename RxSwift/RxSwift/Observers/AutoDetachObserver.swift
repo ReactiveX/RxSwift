@@ -20,7 +20,7 @@ class AutoDetachObserver<O: ObserverType> : ObserverBase<O.Element> {
     }
     
     func setDisposable(disposable: Disposable) {
-        m.setDisposable(disposable)
+        m.disposable = disposable
     }
     
     override func onCore(event: Event<Element>) {

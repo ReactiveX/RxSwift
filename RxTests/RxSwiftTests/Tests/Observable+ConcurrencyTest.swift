@@ -18,6 +18,13 @@ class ObservableConcurrencyTest : RxTest {
         action()
         OSSpinLockUnlock(&lock)
     }
+    
+    override func tearDown() {
+#if TRACE_RESOURCES
+        usleep(500) // wait 0.5 ms for proper scheduler disposal
+#endif
+        super.tearDown()
+    }
 }
 
 // observeSingleOn
@@ -750,4 +757,93 @@ extension ObservableConcurrencyTest {
     }
 }
 
-   
+// subscribeOn
+
+extension ObservableConcurrencyTest {
+    func testSubscribeOn_SchedulerSleep() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        var scheduled = 0
+        var disposed = 0
+        
+        let xs: Observable<Int> = create { observer in
+            scheduled = scheduler.clock
+            return AnonymousDisposable {
+                disposed = scheduler.clock
+            }
+        }
+        
+        let res = scheduler.start {
+            xs >- subscribeOn(scheduler)
+        }
+
+        XCTAssertEqual(res.messages, [
+            
+            ])
+        
+        XCTAssertEqual(scheduled, 201)
+        XCTAssertEqual(disposed, 1001)
+    }
+    
+    func testSubscribeOn_SchedulerCompleted() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs: HotObservable<Int> = scheduler.createHotObservable([
+            completed(300)
+            ])
+        
+        let res = scheduler.start {
+            xs >- subscribeOn(scheduler)
+        }
+        
+        XCTAssertEqual(res.messages, [
+            completed(300)
+            ])
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(201, 301)
+            ])
+    }
+    
+    func testSubscribeOn_SchedulerError() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs: HotObservable<Int> = scheduler.createHotObservable([
+            error(300, testError)
+            ])
+        
+        let res = scheduler.start {
+            xs >- subscribeOn(scheduler)
+        }
+        
+        XCTAssertEqual(res.messages, [
+            error(300, testError)
+            ])
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(201, 301)
+            ])
+    }
+    
+    func testSubscribeOn_SchedulerDispose() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createHotObservable([
+            next(150, 1),
+            next(210, 2),
+            ])
+        
+        let res = scheduler.start {
+            xs >- subscribeOn(scheduler)
+        }
+        
+        XCTAssertEqual(res.messages, [
+            next(210, 2),
+            ])
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(201, 1001)
+            ])
+    }
+}
+    

@@ -89,7 +89,7 @@ class Throttle_<O: ObserverType, SchedulerType: Scheduler> : Sink<O>, ObserverTy
                 self.propagate()
                 return NopDisposableResult
             }.map { disposeTimer -> Disposable in
-                d.setDisposable(disposeTimer)
+                d.disposable = disposeTimer
                 return disposeTimer
             }.recoverWith { e -> RxResult<Disposable> in
                 self.lock.performLocked {

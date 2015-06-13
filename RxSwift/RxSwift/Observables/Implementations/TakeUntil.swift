@@ -21,7 +21,7 @@ class TakeUntilSinkOther<ElementType, Other, O: ObserverType where O.Element == 
             return abstractMethod()
         }
         set(value) {
-            singleAssignmentDisposable.setDisposable(value)
+            singleAssignmentDisposable.disposable = value
         }
     }
     

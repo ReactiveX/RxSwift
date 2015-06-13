@@ -30,14 +30,14 @@ public class SerialDisposable : DisposeBase, Cancelable {
         super.init()
     }
     
-    public func setDisposable(disposable: Disposable) {
+    public func setDisposable(newDisposable: Disposable) {
         var disposable: Disposable? = self.lock.calculateLocked {
             if state.disposed {
-                return disposable
+                return newDisposable
             }
             else {
                 var toDispose = state.current
-                state.current = disposable
+                state.current = newDisposable
                 return toDispose
             }
         }

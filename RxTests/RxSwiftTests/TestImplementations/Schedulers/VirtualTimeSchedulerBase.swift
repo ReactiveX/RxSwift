@@ -39,7 +39,7 @@ class ScheduledItem<T> : ScheduledItemProtocol {
     }
     
     func invoke() {
-         self.disposable.setDisposable(action(/*scheduler,*/ state).get())
+         self.disposable.disposable = (action(/*scheduler,*/ state).get())
     }
     
     func dispose() {

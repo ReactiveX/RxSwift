@@ -60,3 +60,11 @@ public func observeOn<E>
         }
     }
 }
+
+public func subscribeOn<E>
+    (scheduler: ImmediateScheduler)
+    -> Observable<E> -> Observable<E> {
+    return { source in
+        return SubscribeOn(source: source, scheduler: scheduler)
+    }
+}

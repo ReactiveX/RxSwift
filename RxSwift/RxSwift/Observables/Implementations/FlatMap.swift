@@ -117,7 +117,7 @@ class FlatMapSink<SourceType, O : ObserverType> : Sink<O>, ObserverType {
         if let disposeKey = group.addDisposable(iterDisposable) {
             let iter = FlatMapSinkIter(parent: self, disposeKey: disposeKey)
             let subscription = source.subscribeSafe(iter)
-            iterDisposable.setDisposable(subscription)
+            iterDisposable.disposable = subscription
         }
     }
     
@@ -125,7 +125,7 @@ class FlatMapSink<SourceType, O : ObserverType> : Sink<O>, ObserverType {
         group.addDisposable(sourceSubscription)
 
         let subscription = self.parent.source.subscribeSafe(self)
-        sourceSubscription.setDisposable(subscription)
+        sourceSubscription.disposable = subscription
         
         return group
     }

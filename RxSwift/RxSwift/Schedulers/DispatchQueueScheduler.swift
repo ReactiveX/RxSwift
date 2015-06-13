@@ -109,7 +109,7 @@ public class DispatchQueueScheduler: Scheduler, PeriodicScheduler {
             }
             
             _ = ensureScheduledSuccessfully(action(/*self,*/ state).map { disposable in
-                cancel.setDisposable(disposable)
+                cancel.disposable = disposable
             })
         }
         

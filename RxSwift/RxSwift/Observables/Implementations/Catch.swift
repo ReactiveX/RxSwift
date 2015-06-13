@@ -72,7 +72,7 @@ class CatchSink<O: ObserverType> : Sink<O>, ObserverType {
                 let observer = CatchSinkProxy(parent: self)
                 
                 let subscription2 = catchObservable.subscribeSafe(observer)
-                d.setDisposable(subscription2)
+                d.disposable = subscription2
                 return SuccessResult
             }
         }

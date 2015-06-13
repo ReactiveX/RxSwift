@@ -67,7 +67,7 @@ class ZipSink<%= i %>_<<%= ", ".join(map(1...i) { "E\($0)" }) %>, O: ObserverTyp
 }) %>
 
 <%= "\n".join(map(1...i) {
-"        subscription\($0).setDisposable(parent.source\($0).subscribeSafe(observer\($0)))" })
+"        subscription\($0).disposable = parent.source\($0).subscribeSafe(observer\($0))" })
 %>
 
         return CompositeDisposable(disposables: [
