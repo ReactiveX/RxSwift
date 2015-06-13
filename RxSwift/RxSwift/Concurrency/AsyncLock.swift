@@ -8,6 +8,14 @@
 
 import Foundation
 
+// In case nobody holds this lock, the work will be queued and executed immediately
+// on thread that is requesting lock.
+//
+// In case there is somebody currently holding that lock, action will be enqueued.
+// When owned of the lock finishes with it's processing, it will also execute
+// and pending work.
+//
+// That means that enqueued work could possibly be executed later on a different thread.
 class AsyncLock : Disposable {
     typealias Action = () -> Void
     
@@ -60,7 +68,7 @@ class AsyncLock : Disposable {
     
     func dispose() {
         lock.performLocked { oldState in
-            self.queue = Queue(capacity: 2)
+            self.queue = Queue(capacity: 0)
             self.hasFaulted = true
         }
     }

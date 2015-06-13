@@ -148,6 +148,296 @@ extension ObservableMultipleTest {
     }
 }
 
+// catch enumerable
+extension ObservableMultipleTest {
+    func testCatchSequenceOf_IEofIO() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs1 = scheduler.createColdObservable([
+            next(10, 1),
+            next(20, 2),
+            next(30, 3),
+            error(40, testError)
+        ])
+        
+        let xs2 = scheduler.createColdObservable([
+            next(10, 4),
+            next(20, 5),
+            error(30, testError)
+        ])
+        
+        let xs3 = scheduler.createColdObservable([
+            next(10, 6),
+            next(20, 7),
+            next(30, 8),
+            next(40, 9),
+            completed(50)
+        ])
+        
+        let res = scheduler.start {
+            SequenceOf([xs1, xs2, xs3]) >- catch
+        }
+        
+        XCTAssertEqual(res.messages, [
+            next(210, 1),
+            next(220, 2),
+            next(230, 3),
+            next(250, 4),
+            next(260, 5),
+            next(280, 6),
+            next(290, 7),
+            next(300, 8),
+            next(310, 9),
+            completed(320)
+            ])
+        
+        XCTAssertEqual(xs1.subscriptions, [
+            Subscription(200, 240)
+            ])
+        
+        XCTAssertEqual(xs2.subscriptions, [
+            Subscription(240, 270)
+            ])
+        
+        XCTAssertEqual(xs3.subscriptions, [
+            Subscription(270, 320)
+            ])
+    }
+    
+    func testCatchSequenceOf_NoErrors() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs1 = scheduler.createHotObservable([
+            next(150, 1),
+            next(210, 2),
+            next(220, 3),
+            completed(230)
+            ])
+        
+        let xs2 = scheduler.createHotObservable([
+            next(240, 4),
+            completed(250)
+            ])
+        
+        let res = scheduler.start {
+            SequenceOf([xs1, xs2]) >- catch
+        }
+        
+        XCTAssertEqual(res.messages, [
+            next(210, 2),
+            next(220, 3),
+            completed(230)
+            ])
+        
+        XCTAssertEqual(xs1.subscriptions, [
+            Subscription(200, 230)
+            ])
+        
+        XCTAssertEqual(xs2.subscriptions, [
+            ])
+    }
+
+    func testCatchSequenceOf_Never() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs1 = scheduler.createHotObservable([
+            next(150, 1),
+            ])
+        
+        let xs2 = scheduler.createHotObservable([
+            next(240, 4),
+            completed(250)
+            ])
+        
+        let res = scheduler.start {
+            SequenceOf([xs1, xs2]) >- catch
+        }
+        
+        XCTAssertEqual(res.messages, [
+            ])
+        
+        XCTAssertEqual(xs1.subscriptions, [
+            Subscription(200, 1000)
+            ])
+        
+        XCTAssertEqual(xs2.subscriptions, [
+            ])
+    }
+    
+    func testCatchSequenceOf_Empty() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs1 = scheduler.createHotObservable([
+            next(150, 1),
+            completed(230)
+            ])
+        
+        let xs2 = scheduler.createHotObservable([
+            next(240, 4),
+            completed(250)
+            ])
+        
+        let res = scheduler.start {
+            SequenceOf([xs1, xs2]) >- catch
+        }
+        
+        XCTAssertEqual(res.messages, [
+            completed(230)
+            ])
+        
+        XCTAssertEqual(xs1.subscriptions, [
+            Subscription(200, 230)
+            ])
+        
+        XCTAssertEqual(xs2.subscriptions, [
+            ])
+    }
+    
+    func testCatchSequenceOf_Error() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs1 = scheduler.createHotObservable([
+            next(150, 1),
+            next(210, 2),
+            next(220, 3),
+            error(230, testError)
+            ])
+        
+        let xs2 = scheduler.createHotObservable([
+            next(240, 4),
+            completed(250)
+            ])
+        
+        let res = scheduler.start {
+            SequenceOf([xs1, xs2]) >- catch
+        }
+        
+        XCTAssertEqual(res.messages, [
+            next(210, 2),
+            next(220, 3),
+            next(240, 4),
+            completed(250)
+            ])
+        
+        XCTAssertEqual(xs1.subscriptions, [
+            Subscription(200, 230)
+            ])
+        
+        XCTAssertEqual(xs2.subscriptions, [
+            Subscription(230, 250)
+            ])
+    }
+    
+    func testCatchSequenceOf_ErrorNever() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs1 = scheduler.createHotObservable([
+            next(150, 1),
+            next(210, 2),
+            next(220, 3),
+            error(230, testError)
+            ])
+        
+        let xs2 = scheduler.createHotObservable([
+            next(150, 1),
+            ])
+        
+        let res = scheduler.start {
+            SequenceOf([xs1, xs2]) >- catch
+        }
+        
+        XCTAssertEqual(res.messages, [
+            next(210, 2),
+            next(220, 3),
+            ])
+        
+        XCTAssertEqual(xs1.subscriptions, [
+            Subscription(200, 230)
+            ])
+        
+        XCTAssertEqual(xs2.subscriptions, [
+            Subscription(230, 1000)
+            ])
+    }
+    
+    func testCatchSequenceOf_ErrorError() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs1 = scheduler.createHotObservable([
+            next(150, 1),
+            next(210, 2),
+            next(220, 3),
+            error(230, testError)
+            ])
+        
+        let xs2 = scheduler.createHotObservable([
+            next(150, 1),
+            error(250, testError)
+            ])
+        
+        let res = scheduler.start {
+            SequenceOf([xs1, xs2]) >- catch
+        }
+        
+        XCTAssertEqual(res.messages, [
+            next(210, 2),
+            next(220, 3),
+            error(250, testError)
+            ])
+        
+        XCTAssertEqual(xs1.subscriptions, [
+            Subscription(200, 230)
+            ])
+        
+        XCTAssertEqual(xs2.subscriptions, [
+            Subscription(230, 250)
+            ])
+    }
+    
+    func testCatchSequenceOf_Multiple() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs1 = scheduler.createHotObservable([
+            next(150, 1),
+            next(210, 2),
+            error(215, testError)
+            ])
+        
+        let xs2 = scheduler.createHotObservable([
+            next(220, 3),
+            error(225, testError)
+            ])
+        
+        let xs3 = scheduler.createHotObservable([
+            next(230, 4),
+            completed(235)
+            ])
+        
+        let res = scheduler.start {
+            SequenceOf([xs1, xs2, xs3]) >- catch
+        }
+        
+        XCTAssertEqual(res.messages, [
+            next(210, 2),
+            next(220, 3),
+            next(230, 4),
+            completed(235)
+            ])
+        
+        XCTAssertEqual(xs1.subscriptions, [
+            Subscription(200, 215)
+            ])
+        
+        XCTAssertEqual(xs2.subscriptions, [
+            Subscription(215, 225)
+            ])
+        
+        XCTAssertEqual(xs3.subscriptions, [
+            Subscription(225, 235)
+            ])
+    }
+}
+
 // switch
 extension ObservableMultipleTest {
 

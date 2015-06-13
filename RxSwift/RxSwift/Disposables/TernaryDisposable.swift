@@ -1,5 +1,5 @@
 //
-//  BinaryDisposable.swift
+//  TernaryDisposable.swift
 //  RxSwift
 //
 //  Created by Krunoslav Zaher on 6/12/15.
@@ -8,9 +8,10 @@
 
 import Foundation
 
-class BinaryDisposable : DisposeBase, Cancelable {
+class TernaryDisposable : DisposeBase, Cancelable {
     var disposable1: Disposable?
     var disposable2: Disposable?
+    var disposable3: Disposable?
     
     var _disposed: Int32 = 0
     
@@ -20,9 +21,10 @@ class BinaryDisposable : DisposeBase, Cancelable {
         }
     }
     
-    init(_ disposable1: Disposable, _ disposable2: Disposable) {
+    init(_ disposable1: Disposable, _ disposable2: Disposable, _ disposable3: Disposable) {
         self.disposable1 = disposable1
         self.disposable2 = disposable2
+        self.disposable3 = disposable3
         super.init()
     }
     
@@ -30,8 +32,10 @@ class BinaryDisposable : DisposeBase, Cancelable {
         if OSAtomicCompareAndSwap32(0, 1, &_disposed) {
             disposable1?.dispose()
             disposable2?.dispose()
+            disposable3?.dispose()
             disposable1 = nil
             disposable2 = nil
+            disposable3 = nil
         }
     }
 }

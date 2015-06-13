@@ -67,6 +67,13 @@ public func catch<E>
     }
 }
 
+public func catch<E>
+    (sources: SequenceOf<Observable<E>>)
+    -> Observable<E> {
+    // just wrapping it in sequence of for now
+    return CatchSequence(sources: SequenceOf(sources))
+}
+
 // In case of error, terminates sequence with `replaceErrorWith`.
 public func catch<E>
     (replaceErrorWith: E)

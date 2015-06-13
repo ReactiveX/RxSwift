@@ -1,5 +1,5 @@
 //
-//  Observable+Subscription.swift
+//  Observable+Extensions.swift
 //  Rx
 //
 //  Created by Krunoslav Zaher on 2/21/15.

@@ -116,6 +116,8 @@ public func doOnNext<E>
     }
 }
 
+// startWith
+
 // Prefixes observable sequence with `firstElement` element.
 // The same functionality could be achieved using `concat([returnElement(prefix), source])`,
 // but this is significantly more efficient implementation.
@@ -127,3 +129,18 @@ public func startWith<E>
     }
 }
 
+// retry
+
+public func retry<E>
+    (source: Observable<E>)
+    -> Observable<E> {
+    return SequenceOf(InifiniteSequence(repeatedValue: source)) >- catch
+}
+
+public func retry<E>
+    (retryCount: Int)
+    -> Observable<E> -> Observable<E> {
+    return { source in
+        return SequenceOf(Repeat(count: retryCount, repeatedValue: source)) >- catch
+    }
+}
