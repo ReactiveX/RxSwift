@@ -42,9 +42,9 @@ public func aggregate<E, A>
     }
 }
 
-// foldl
+// reduce
 
-public func foldlOrDie<E, A, R>
+public func reduceOrDie<E, A, R>
     (seed: A, accumulator: (A, E) -> RxResult<A>, resultSelector: (A) -> RxResult<R>)
     -> (Observable<E> -> Observable<R>) {
     return { source in
@@ -52,7 +52,7 @@ public func foldlOrDie<E, A, R>
     }
 }
 
-public func foldlOrDie<E, A>
+public func reduceOrDie<E, A>
     (seed: A, accumulator: (A, E) -> RxResult<A>)
     -> (Observable<E> -> Observable<A>) {
     return { source in
@@ -60,7 +60,7 @@ public func foldlOrDie<E, A>
     }
 }
 
-public func foldl<E, A, R>
+public func reduce<E, A, R>
     (seed: A, accumulator: (A, E) -> A, resultSelector: (A) -> R)
     -> (Observable<E> -> Observable<R>) {
     return { source in
@@ -68,7 +68,7 @@ public func foldl<E, A, R>
     }
 }
 
-public func foldl<E, A>
+public func reduce<E, A>
     (seed: A, accumulator: (A, E) -> A)
     -> (Observable<E> -> Observable<A>) {
     return { source in

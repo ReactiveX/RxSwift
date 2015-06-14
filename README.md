@@ -236,14 +236,16 @@ Operators are stateless by default.
  * [`timer`](http://reactivex.io/documentation/operators/timer.html)
 
 #### Transforming Observables
-
+  * [`flatMap`](http://reactivex.io/documentation/operators/flatmap.html)
   * [`map` / `select`](http://reactivex.io/documentation/operators/map.html)
+  * [`scan`](http://reactivex.io/documentation/operators/scan.html)
 
 #### Filtering Observables
-
+  * [`debounce` / `throttle`](http://reactivex.io/documentation/operators/debounce.html)
   * [`distinctUntilChanged`](http://reactivex.io/documentation/operators/distinct.html)
   * [`filter` / `where`](http://reactivex.io/documentation/operators/filter.html)
   * [`sample`](http://reactivex.io/documentation/operators/sample.html)
+  * [`take`](http://reactivex.io/documentation/operators/take.html)
 
 #### Combining Observables
 
@@ -256,26 +258,26 @@ Operators are stateless by default.
 #### Error Handling Operators
 
  * [`catch`](http://reactivex.io/documentation/operators/catch.html)
+ * [`retry`](http://reactivex.io/documentation/operators/retry.html)
 
 #### Observable Utility Operators
 
+  * [`delaySubscription`](http://reactivex.io/documentation/operators/delay.html)
   * [`do` / `doOnNext`](http://reactivex.io/documentation/operators/do.html)
   * [`observeOn` / `observeSingleOn`](http://reactivex.io/documentation/operators/observeon.html)
   * [`subscribe`](http://reactivex.io/documentation/operators/subscribe.html)
+  * [`subscribeOn`](http://reactivex.io/documentation/operators/subscribeon.html)
   * debug
 
 #### Conditional and Boolean Operators
+  * [`amb`](http://reactivex.io/documentation/operators/amb.html)
   * [`takeUntil`](http://reactivex.io/documentation/operators/takeuntil.html)
   * [`takeWhile`](http://reactivex.io/documentation/operators/takewhile.html)
 
 #### Mathematical and Aggregate Operators
 
   * [`concat`](http://reactivex.io/documentation/operators/concat.html)
-  * [`foldl` / `aggregate`](http://reactivex.io/documentation/operators/reduce.html)
-
-#### Backpressure Operators
- 
-  * [`throttle`](http://reactivex.io/documentation/operators/debounce.html)
+  * [`reduce` / `aggregate`](http://reactivex.io/documentation/operators/reduce.html)
 
 #### Connectable Observable Operators
 
