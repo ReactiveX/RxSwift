@@ -100,3 +100,19 @@ public func takeUntil<E, O>
         return TakeUntil(source: source, other: other)
     }
 }
+
+// amb 
+
+public func amb<E>
+    (left: Observable<E>, right: Observable<E>)
+    -> Observable<E> {
+    return Amb(left: left, right: right)
+}
+
+public func amb<E>
+    (observables: SequenceOf<Observable<E>>)
+    -> Observable<E> {
+    return reduce(observables, never()) { a, o in
+        return amb(a, o)
+    }
+}
