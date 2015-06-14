@@ -18,6 +18,14 @@ public func throttle<E, S: Scheduler>
     }
 }
 
+public func debounce<E, S: Scheduler>
+    (dueTime: S.TimeInterval, scheduler: S)
+    -> (Observable<E> -> Observable<E>) {
+    return { source in
+        return Throttle(source: source, dueTime: dueTime, scheduler: scheduler)
+    }
+}
+
 // sample
 
 // If there isn't a new value in `source` sequence from the last sample time
