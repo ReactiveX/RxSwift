@@ -25,6 +25,8 @@ struct Recorded<Element : Equatable> : Printable, Equatable {
                 return boxedValue.value
             default:
                 assert(false)
+                let element: Element! = nil
+                return element!
             }
         }
     }
