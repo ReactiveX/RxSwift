@@ -144,3 +144,21 @@ public func retry<E>
         return SequenceOf(Repeat(count: retryCount, repeatedValue: source)) >- catch
     }
 }
+
+// scan
+
+public func scan<E, A>
+    (seed: A, accumulator: (A, E) -> A)
+    -> Observable<E> -> Observable<A> {
+    return { source in
+        return Scan(source: source, seed: seed, accumulator: { success(accumulator($0, $1)) })
+    }
+}
+
+public func scanOrDie<E, A>
+    (seed: A, accumulator: (A, E) -> RxResult<A>)
+    -> Observable<E> -> Observable<A> {
+    return { source in
+        return Scan(source: source, seed: seed, accumulator: accumulator)
+    }
+}
