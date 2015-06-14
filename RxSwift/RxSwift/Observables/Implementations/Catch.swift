@@ -158,7 +158,6 @@ class CatchSequenceSink<O: ObserverType> : TailRecursiveSink<O> {
     }
     
     override func on(event: Event<Element>) {
-        println(event)
         switch event {
         case .Next:
             trySend(observer, event)
