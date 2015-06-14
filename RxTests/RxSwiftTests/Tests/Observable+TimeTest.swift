@@ -965,3 +965,79 @@ extension ObservableTimeTest {
     }
 
 }
+
+// take
+
+extension ObservableTimeTest {
+    
+    func testDelaySubscription_TimeSpan_Simple() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createColdObservable([
+            next(50, 42),
+            next(60, 43),
+            completed(70)
+            ])
+        
+        let res = scheduler.start {
+            xs >- delaySubscription(30, scheduler)
+        }
+        
+        XCTAssertEqual(res.messages, [
+            next(280, 42),
+            next(290, 43),
+            completed(300)
+        ])
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(230, 300)
+        ])
+    }
+    
+    func testDelaySubscription_TimeSpan_Error() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createColdObservable([
+            next(50, 42),
+            next(60, 43),
+            error(70, testError)
+            ])
+        
+        let res = scheduler.start {
+            xs >- delaySubscription(30, scheduler)
+        }
+        
+        XCTAssertEqual(res.messages, [
+            next(280, 42),
+            next(290, 43),
+            error(300, testError)
+            ])
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(230, 300)
+            ])
+    }
+    
+    func testDelaySubscription_TimeSpan_Dispose() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createColdObservable([
+            next(50, 42),
+            next(60, 43),
+            error(70, testError)
+            ])
+        
+        let res = scheduler.start(291) {
+            xs >- delaySubscription(30, scheduler)
+        }
+        
+        XCTAssertEqual(res.messages, [
+            next(280, 42),
+            next(290, 43),
+            ])
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(230, 291)
+            ])
+    }
+}

@@ -132,3 +132,13 @@ public func take<E, S: Scheduler>
         return TakeTime(source: source, duration: duration, scheduler: scheduler)
     }
 }
+
+// delaySubscription
+
+public func delaySubscription<E, S: Scheduler>
+    (dueTime: S.TimeInterval, scheduler: S)
+    -> Observable<E> -> Observable<E> {
+    return { source in
+        return DelaySubscription(source: source, dueTime: dueTime, scheduler: scheduler)
+    }
+}
