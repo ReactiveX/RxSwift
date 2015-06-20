@@ -126,7 +126,7 @@ Now something a little more interesting:
 * bind results to label (resultLabel.rx_subscribeTextTo)
 
 ```swift
-let subscription/*: Disposable */ = primeTextField.rx_text()    // type is Observable<String>
+let subscription/*: Disposable */ = primeTextField.rx_text    // type is Observable<String>
             >- map { WolframAlphaIsPrime($0.toInt() ?? 0) }     // type is Observable<Observable<Prime>>
             >- concat                                           // type is Observable<Prime>
             >- map { "number \($0.n) is prime? \($0.isPrime)" } // type is Observable<String>
@@ -154,7 +154,7 @@ Let's give it a shot.
 ```swift
 // bind UI control values directly
 // use username from `usernameOutlet` as username values source
-self.usernameOutlet.rx_text() >- map { username in
+self.usernameOutlet.rx_text >- map { username in
 
     // synchronous validation, nothing special here
     if count(username) == 0 {
