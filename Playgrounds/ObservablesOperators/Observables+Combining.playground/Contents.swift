@@ -1,14 +1,15 @@
-
 import Cocoa
 import RxSwift
 
-/*:
 
+/*:
 ## Combination operators
 
-Operators that work with multiple source Observables to create a single Observable
+Operators that work with multiple source Observables to create a single Observable.
+*/
 
 
+/*:
 ### `startWith`
 Return an observeble which emits a specified item before emitting the items from the source Observable.
 [More info in reactive.io website]( http://reactivex.io/documentation/operators/startwith.html )
@@ -186,7 +187,7 @@ example("zip 3th") {
 
 ### `merge`
 Combine multiple Observables, of the same type, into one by merging their emissions
-[More info in reactive.io website](http://reactivex.io/documentation/operators/merge.html)
+[More info in reactive.io website]( http://reactivex.io/documentation/operators/merge.html )
 */
 
 example("merge 1st") {
@@ -231,7 +232,8 @@ example("merge 2nd") {
 /*:
 
 ### `switchLatest`
-[More info in reactive.io website](http://reactivex.io/documentation/operators/switch.html)
+Convert an Observable that emits Observables into a single Observable that emits the items emitted by the most-recently-emitted of those Observables.
+[More info in reactive.io website]( http://reactivex.io/documentation/operators/switch.html )
 */
 
 
@@ -268,7 +270,3 @@ example("switchLatest") {
     var2.next(204)
 }
 
-
-/*:
-To be continued...
-*/

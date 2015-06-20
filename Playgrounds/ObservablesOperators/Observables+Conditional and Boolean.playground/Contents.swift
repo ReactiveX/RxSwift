@@ -1,11 +1,26 @@
-//: Playground - noun: a place where people can play
-
 import Cocoa
 import RxSwift
 
+
 /*:
-## takeUntil
-Discard any items emitted by an Observable after a second Observable emits an item or terminates
+## Conditional and Boolean Operators
+
+Operators that evaluate one or more Observables or items emitted by Observables.
+*/
+
+
+/*:
+### `amb`
+Given two or more source Observables, emit all of the items from only the first of these Observables to emit an item or notification
+[More info in reactive.io website]( http://reactivex.io/documentation/operators/amb.html )
+*/
+
+
+
+/*:
+### `takeUntil`
+Discard any items emitted by an Observable after a second Observable emits an item or terminates.
+[More info in reactive.io website]( http://reactivex.io/documentation/operators/takeuntil.html )
 */
 
 example("takeUntil") {
@@ -32,9 +47,9 @@ example("takeUntil") {
 
 
 /*:
-## takeUntil
+### `takeWhile`
 Mirror items emitted by an Observable until a specified condition becomes false
-
+[More info in reactive.io website]( http://reactivex.io/documentation/operators/takewhile.html )
 */
 
 example("takeWhile") {

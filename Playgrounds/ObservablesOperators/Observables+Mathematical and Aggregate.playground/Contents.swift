@@ -1,11 +1,18 @@
-//: Playground - noun: a place where people can play
-
 import Cocoa
 import RxSwift
 
+
 /*:
-## concat
-Emit the emissions from two or more Observables without interleaving them
+## Mathematical and Aggregate Operators
+
+Operators that operate on the entire sequence of items emitted by an Observable
+*/
+
+
+/*:
+### `concat`
+Emit the emissions from two or more Observables without interleaving them.
+[More info in reactive.io website]( http://reactivex.io/documentation/operators/concat.html )
 */
 
 example("concat") {
@@ -38,4 +45,21 @@ example("concat") {
     var2.next(202)
     var2.next(203)
     var2.next(204)
+}
+
+
+/*:
+### `reduce` / `aggregate`
+Apply a function to each item emitted by an Observable, sequentially, and emit the final value.
+This function will perform a function on each element in the sequence until it is completed, then send a message with the aggregate value. It works much like the Swift `reduce` function works on sequences.
+[More info in reactive.io website]( http://reactivex.io/documentation/operators/reduce.html )
+
+*/
+
+example("aggregate") {
+    let aggregateSubscriber = returnElements(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
+        >- aggregate(0, +)
+        >- subscribeNext { value in
+            println("\(value)")
+    }
 }

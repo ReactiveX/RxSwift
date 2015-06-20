@@ -1,12 +1,19 @@
-//: Playground - noun: a place where people can play
-
 import Cocoa
 import RxSwift
 
+
 /*:
-## catch
+## Error Handling Operators
+
+Operators that help to recover from error notifications from an Observable.
+*/
+
+
+/*:
+## `catch`
 
 Recover from an onError notification by continuing the sequence without error
+[More info in reactive.io website]( http://reactivex.io/documentation/operators/catch.html )
 */
 
 example("catch") {
