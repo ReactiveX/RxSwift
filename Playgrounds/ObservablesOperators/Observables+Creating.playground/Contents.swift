@@ -182,7 +182,12 @@ example("create") {
     observable
         >- subscribeNext {
             println($0)
-    }
+        }
+    
+    observable
+        >- subscribeNext {
+            println($0)
+        }
 }
 
 
@@ -196,7 +201,7 @@ Create an Observable from a function which create an observable. But do not crea
 
 example("defer") {
     
-    let defered: Observable<Int> = defer({
+    let defered: Observable<Int> = defer {
         println("creating")
         return create { observer in
             println("emmiting")
@@ -206,17 +211,17 @@ example("defer") {
             
             return AnonymousDisposable {}
         }
-    })
-    
-    defered
-        >- subscribeNext {
-            println($0)
     }
     
     defered
         >- subscribeNext {
             println($0)
-    }
+        }
+    
+    defered
+        >- subscribeNext {
+            println($0)
+        }
 }
 
 
