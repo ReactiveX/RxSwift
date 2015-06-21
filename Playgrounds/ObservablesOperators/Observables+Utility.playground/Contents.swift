@@ -85,7 +85,7 @@ example("subscribeError") {
 
 ### `do`
 Returns the same source Observable but the given closure responsible for the actions to perform when the even is produced. The gived closure obtain the event produced by the source observable
-[More info in reactive.io website](http://reactivex.io/documentation/operators/do.html)
+[More info in reactive.io website]( http://reactivex.io/documentation/operators/do.html )
 */
 
 example("do") {
@@ -108,7 +108,7 @@ example("do") {
 /*:
 ### `doOnNext`
 It is a variant of the `do` operator. Returns the same source Observable but the given closure responsible for the actions to perform when the Next even is produced. The gived closure obtain the value of the Next event produced by the source observable.
-[More info in reactive.io website](http://reactivex.io/documentation/operators/do.html)
+[More info in reactive.io website]( http://reactivex.io/documentation/operators/do.html )
 */
 
 example("doOnNext") {
@@ -127,24 +127,3 @@ example("doOnNext") {
     sendNext(intOb1, 1)
     
 }
-
-
-/*:
-### `observeSingleOn`
-Specify the Scheduler on which an observer will observe this Observable
-[More info in reactive.io website](http://reactivex.io/documentation/operators/observeon.html)
-*/
-
-//TODO: Do not work in playgrounds
-example("observeSingleOn") {
-    let intOb1 = Subject<Int>()
-    
-    intOb1
-        >- observeSingleOn(MainScheduler.sharedInstance)
-        >- subscribeNext { int in
-            println(int)
-    }
-    
-    sendNext(intOb1, 1)
-}
-
