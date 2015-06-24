@@ -6,11 +6,11 @@ import RxSwift
 ## Mathematical and Aggregate Operators
 
 Operators that operate on the entire sequence of items emitted by an Observable
-*/
 
 
-/*:
+
 ### `concat`
+
 Emit the emissions from two or more Observables without interleaving them.
 [More info in reactive.io website]( http://reactivex.io/documentation/operators/concat.html )
 */
@@ -47,9 +47,11 @@ example("concat") {
     var2.next(204)
 }
 
-
 /*:
+
+
 ### `reduce` / `aggregate`
+
 Apply a function to each item emitted by an Observable, sequentially, and emit the final value.
 This function will perform a function on each element in the sequence until it is completed, then send a message with the aggregate value. It works much like the Swift `reduce` function works on sequences.
 [More info in reactive.io website]( http://reactivex.io/documentation/operators/reduce.html )

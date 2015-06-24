@@ -6,10 +6,8 @@ import RxSwift
 ## Transforming Observables
 
 Operators that transform items that are emitted by an Observable.
-*/
 
 
-/*:
 ### `map` / `select`
 
 Transform the items emitted by an Observable by applying a function to each item

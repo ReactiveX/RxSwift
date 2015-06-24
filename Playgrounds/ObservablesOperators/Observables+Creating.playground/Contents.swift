@@ -6,23 +6,13 @@ import RxSwift
 ## Creating observables
 
 Operators that originate new Observables.
-*/
 
 
-
-/*:
-### asObservable
-
-*/
-
-
-
-/*:
 ### `empty`
-`empty` creates an observable that contains no objects. The only message it sends is the `.Completed` message.
+
+Creates an observable that contains no objects. The only message it sends is the `.Completed` message.
 [More info in reactive.io website]( http://reactivex.io/documentation/operators/empty-never-throw.html )
 */
-
 example("Empty observable") {
     let emptyObservable: Observable<Int> = empty()
     
@@ -40,16 +30,14 @@ example("Empty observable") {
 
 /*:
 As you can see, no values are ever sent to the subscriber of an empty observable. It just completes and is done.
-*/
 
 
 
-/*:
 ### `never`
-`never` creates an observable that contains no objects and never completes or errors out.
+
+Creates an observable that contains no objects and never completes or errors out.
 [More info in reactive.io website]( http://reactivex.io/documentation/operators/empty-never-throw.html )
 */
-
 example("Never observable") {
     let neverObservable: Observable<String> = never()
     
@@ -59,11 +47,11 @@ example("Never observable") {
         }
 }
 
-
-
 /*:
+
 ### `failWith`
-`never` creates an observable that contains no objects and send only a error out.
+
+Creates an observable that contains no objects and send only a error out.
 [More info in reactive.io website]( http://reactivex.io/documentation/operators/empty-never-throw.html )
 */
 
@@ -87,6 +75,7 @@ example("failWith") {
 
 /*:
 ### `returnElement` / `just`
+
 These two functions behave identically. They send two messages to subscribers. The first message is the value and the second message is `.Complete`.
 [More info in reactive.io website]( http://reactivex.io/documentation/operators/just.html )
 */
@@ -109,10 +98,11 @@ example("returnElement/just") {
 
 /*:
 Here we see that the `.Next` event is sent just once, then the `.Completed` event is sent.
-*/
 
-/*:
+
+
 ### `returnElements`
+
 Now we are getting to some more interesting ways to create an Observable. This function creates an observable that produces a number of values before completing.
 */
 
@@ -134,11 +124,9 @@ example("returnElements") {
 
 /*:
 With the above, you will see that the `.Next` event was sent ten times, once for each element. Then `.Complete` was sent.
-*/
 
 
 
-/*:
 ### `from`
 We can also create an observable from any SequenceType, such as an array
 [More info in reactive.io website]( http://reactivex.io/documentation/operators/from.html )
@@ -161,7 +149,7 @@ example("from") {
 }
 
 /*:
-## `create`
+### `create`
 
 Create an Observable from scratch by means of a function
 [More info in reactive.io website]( http://reactivex.io/documentation/operators/create.html )
@@ -190,10 +178,8 @@ example("create") {
         }
 }
 
-
-
 /*:
-## `defer`
+### `defer`
 
 Create an Observable from a function which create an observable. But do not create the Observable until the observer subscribes, and create a fresh Observable for each observer
 [More info in reactive.io website]( http://reactivex.io/documentation/operators/defer.html )
@@ -224,10 +210,4 @@ example("defer") {
         }
 }
 
-
-
-/*:
-### `timer`
-
-*/
 

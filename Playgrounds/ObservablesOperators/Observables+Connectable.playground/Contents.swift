@@ -9,6 +9,7 @@ Specialty Observables that have more precisely-controlled subscription dynamics.
 */
 
 
+
 /*:
 ### `multicast`
 [More info in reactive.io website]( http://reactivex.io/documentation/operators/publish.html )
@@ -43,11 +44,6 @@ Ensure that all observers see the same sequence of emitted items, even if they s
 /*:
 ### `Variable` / `sharedWithCachedLastResult`
 */
-
-
-
-
-
 
 
 

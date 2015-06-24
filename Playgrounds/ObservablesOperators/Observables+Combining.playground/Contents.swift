@@ -1,16 +1,15 @@
 import Cocoa
 import RxSwift
 
-
 /*:
 ## Combination operators
 
 Operators that work with multiple source Observables to create a single Observable.
-*/
 
 
-/*:
+
 ### `startWith`
+
 Return an observeble which emits a specified item before emitting the items from the source Observable.
 [More info in reactive.io website]( http://reactivex.io/documentation/operators/startwith.html )
 */
@@ -28,18 +27,15 @@ example("startWith") {
     
 }
 
-
-
 /*:
-
 ### `combineLatest`
+
 Takes several source Obserbables and a closure as parameters, returns an Observable which emits the latest items of each source Obsevable,  procesed through the closure.
 Once each source Observables have each emitted an item, `combineLatest` emits an item every time either source Observable emits an item.
 [More info in reactive.io website]( http://reactivex.io/documentation/operators/combinelatest.html )
 
 The next example shows how 
 */
-
 
 example("combineLatest 1st") {
     let intOb1 = Subject<String>()
@@ -85,7 +81,6 @@ example("combineLatest 2nd") {
     }
 }
 
-
 /*:
 There are a serie of functions `combineLatest`, they take from two to ten sources Obserbables and the closure
 The next sample shows combineLatest called with three sorce Observables
@@ -104,11 +99,9 @@ example("combineLatest 3th") {
     }
 }
 
-
-
 /*:
-
 ### `zip`
+
 Takes several source Observables and a closure as parameters, returns an Observable  which emit the items of the second Obsevable procesed, through the closure, with the last item of first Observable
 The Observable returned by `zip` emits an item only when all of the imputs Observables have emited an item
 [More info in reactive.io website](http://reactivex.io/documentation/operators/zip.html)
@@ -184,8 +177,8 @@ example("zip 3th") {
 
 
 /*:
-
 ### `merge`
+
 Combine multiple Observables, of the same type, into one by merging their emissions
 [More info in reactive.io website]( http://reactivex.io/documentation/operators/merge.html )
 */
@@ -230,8 +223,8 @@ example("merge 2nd") {
 
 
 /*:
-
 ### `switchLatest`
+
 Convert an Observable that emits Observables into a single Observable that emits the items emitted by the most-recently-emitted of those Observables.
 [More info in reactive.io website]( http://reactivex.io/documentation/operators/switch.html )
 */
