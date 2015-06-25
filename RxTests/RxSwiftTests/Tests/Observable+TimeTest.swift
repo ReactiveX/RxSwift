@@ -1041,3 +1041,113 @@ extension ObservableTimeTest {
             ])
     }
 }
+
+// skip 
+extension ObservableTimeTest {
+    func testSkip_Zero() {
+        let scheduler = TestScheduler(initialClock: 0)
+       
+        let xs = scheduler.createHotObservable([
+            next(210, 1),
+            next(220, 2),
+            completed(230)
+        ])
+        
+        let res = scheduler.start {
+            xs >- skip(0, scheduler)
+        }
+        
+        XCTAssertEqual(res.messages, [
+            next(210, 1),
+            next(220, 2),
+            completed(230)
+        ])
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 230)
+            ])
+    }
+    
+    func testSkip_Some() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createHotObservable([
+            next(210, 1),
+            next(220, 2),
+            completed(230)
+            ])
+        
+        let res = scheduler.start {
+            xs >- skip(15, scheduler)
+        }
+        
+        XCTAssertEqual(res.messages, [
+            next(220, 2),
+            completed(230)
+            ])
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 230)
+            ])
+    }
+    
+    func testSkip_Late() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createHotObservable([
+            next(210, 1),
+            next(220, 2),
+            completed(230)
+            ])
+        
+        let res = scheduler.start {
+            xs >- skip(50, scheduler)
+        }
+        
+        XCTAssertEqual(res.messages, [
+            completed(230)
+            ])
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 230)
+            ])
+    }
+    
+    func testSkip_Error() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs: HotObservable<Int> = scheduler.createHotObservable([
+            error(210, testError)
+            ])
+        
+        let res = scheduler.start {
+            xs >- skip(50, scheduler)
+        }
+        
+        XCTAssertEqual(res.messages, [
+            error(210, testError)
+            ])
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 210)
+            ])
+    }
+    
+    func testSkip_Never() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs: HotObservable<Int> = scheduler.createHotObservable([
+            ])
+        
+        let res = scheduler.start {
+            xs >- skip(50, scheduler)
+        }
+        
+        XCTAssertEqual(res.messages, [
+            ])
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 1000)
+            ])
+    }
+}
