@@ -17,8 +17,8 @@ Recover from an onError notification by continuing the sequence without error
 
 example("catch 1st") {
     
-    let observable1 = Subject<Int>()
-    let observable2 = Subject<Int>()
+    let observable1 = PublishSubject<Int>()
+    let observable2 = PublishSubject<Int>()
     
     observable1
         >- catch { error in
@@ -53,7 +53,7 @@ example("catch 1st") {
 
 example("catch 2nd") {
     
-    let observable1 = Subject<Int>()
+    let observable1 = PublishSubject<Int>()
     
     observable1
         >- catch(100)

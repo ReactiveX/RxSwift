@@ -16,8 +16,8 @@ Discard any items emitted by an Observable after a second Observable emits an it
 
 example("takeUntil") {
     
-    let observable1 = Subject<Int>()
-    let observable2 = Subject<Int>()
+    let observable1 = PublishSubject<Int>()
+    let observable2 = PublishSubject<Int>()
     
     observable1
         >- takeUntil(observable2)
@@ -47,7 +47,7 @@ Mirror items emitted by an Observable until a specified condition becomes false
 
 example("takeWhile") {
     
-    let observable1 = Subject<Int>()
+    let observable1 = PublishSubject<Int>()
     
     observable1
         >- takeWhile { int in

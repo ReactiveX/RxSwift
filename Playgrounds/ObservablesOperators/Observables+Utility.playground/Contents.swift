@@ -16,7 +16,7 @@ Create an Disposable which listen events from source Observable, the given closu
 */
 
 example("subscribe") {
-    let intOb1 = Subject<Int>()
+    let intOb1 = PublishSubject<Int>()
     
     intOb1
         >- subscribe { event in
@@ -38,7 +38,7 @@ Create an Disposable which listen only Next event from source Observable, the gi
 */
 
 example("subscribeNext") {
-    let intOb1 = Subject<Int>()
+    let intOb1 = PublishSubject<Int>()
     
     intOb1
         >- subscribeNext { int in
@@ -58,7 +58,7 @@ Create an Disposable which listen only Completed event from source Observable, t
 */
 
 example("subscribeCompleted") {
-    let intOb1 = Subject<Int>()
+    let intOb1 = PublishSubject<Int>()
     
     intOb1
         >- subscribeCompleted {
@@ -77,7 +77,7 @@ Create an Disposable which listen only Error event from source Observable, the g
 */
 
 example("subscribeError") {
-    let intOb1 = Subject<Int>()
+    let intOb1 = PublishSubject<Int>()
     
     intOb1
         >- subscribeError { error in
@@ -98,7 +98,7 @@ Returns the same source Observable but the given closure responsible for the act
 */
 
 example("do") {
-    let intOb1 = Subject<Int>()
+    let intOb1 = PublishSubject<Int>()
     
     let intOb2 = intOb1
         >- `do` { event in
@@ -123,7 +123,7 @@ It is a variant of the `do` operator. Returns the same source Observable but the
 */
 
 example("doOnNext") {
-    let intOb1 = Subject<Int>()
+    let intOb1 = PublishSubject<Int>()
     
     let intOb2 = intOb1
         >- doOnNext { int in
