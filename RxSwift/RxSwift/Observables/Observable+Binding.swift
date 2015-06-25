@@ -54,7 +54,7 @@ public func multicast<E, I, R>
 
 public func publish<E>(source: Observable<E>)
     -> ConnectableObservableType<E> {
-    return source >- multicast(Subject())
+    return source >- multicast(PublishSubject())
 }
 
 // replay 
