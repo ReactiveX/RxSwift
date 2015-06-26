@@ -38,8 +38,8 @@ The next example shows how
 */
 
 example("combineLatest 1st") {
-    let intOb1 = Subject<String>()
-    let intOb2 = Subject<Int>()
+    let intOb1 = PublishSubject<String>()
+    let intOb2 = PublishSubject<Int>()
     
     combineLatest(intOb1, intOb2) {
         "\($0) \($1)"
@@ -108,8 +108,8 @@ The Observable returned by `zip` emits an item only when all of the imputs Obser
 */
 
 example("zip 1st") {
-    let intOb1 = Subject<String>()
-    let intOb2 = Subject<Int>()
+    let intOb1 = PublishSubject<String>()
+    let intOb2 = PublishSubject<Int>()
     
     zip(intOb1, intOb2) {
         "\($0) \($1)"
@@ -184,8 +184,8 @@ Combine multiple Observables, of the same type, into one by merging their emissi
 */
 
 example("merge 1st") {
-    let subject1 = Subject<Int>()
-    let subject2 = Subject<Int>()
+    let subject1 = PublishSubject<Int>()
+    let subject2 = PublishSubject<Int>()
     
     merge(returnElements(subject1, subject2))
         >- subscribeNext { int in
@@ -203,8 +203,8 @@ example("merge 1st") {
 
 
 example("merge 2nd") {
-    let subject1 = Subject<Int>()
-    let subject2 = Subject<Int>()
+    let subject1 = PublishSubject<Int>()
+    let subject2 = PublishSubject<Int>()
     
     returnElements(subject1, subject2) 
         >- merge(maxConcurrent: 2)

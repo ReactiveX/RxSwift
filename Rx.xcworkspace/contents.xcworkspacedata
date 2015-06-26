@@ -11,7 +11,7 @@
       location = "group:Playgrounds"
       name = "Playgrounds">
       <FileRef
-         location = "group:OSXPlayground.playground">
+         location = "group:Introduction.playground">
       </FileRef>
       <Group
          location = "group:ObservablesOperators"
