@@ -73,6 +73,6 @@ class DistinctUntilChanged<Element, Key>: Producer<Element> {
     override func run<O: ObserverType where O.Element == Element>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
         let sink = DistinctUntilChanged_(parent: self, observer: observer, cancel: cancel)
         setSink(sink)
-        return source.subscribe(sink)
+        return source.subscribeSafe(sink)
     }
 }

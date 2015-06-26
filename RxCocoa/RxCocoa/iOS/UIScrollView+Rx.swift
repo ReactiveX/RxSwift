@@ -48,20 +48,20 @@ public class RxScrollViewDelegate: NSObject, UIScrollViewDelegate {
 }
 
 extension UIScrollView {
-    var rx_delegate: RxScrollViewDelegate {
+    func rx_createDelegate() -> RxScrollViewDelegate {
         return RxScrollViewDelegate()
     }
     
     public var rx_contentOffset: Observable<CGPoint> {
-        _ = rx_checkScrollViewDelegate
+        _ = rx_checkScrollViewDelegate()
         
         return AnonymousObservable { observer in
             MainScheduler.ensureExecutingOnScheduler()
             
-            var maybeDelegate = self.rx_checkScrollViewDelegate
+            var maybeDelegate = self.rx_checkScrollViewDelegate()
             
             if maybeDelegate == nil {
-                let delegate = self.rx_delegate as RxScrollViewDelegate
+                let delegate = self.rx_createDelegate() as RxScrollViewDelegate
                 maybeDelegate = delegate
                 self.delegate = maybeDelegate
             }
@@ -71,7 +71,7 @@ extension UIScrollView {
             let key = delegate.addScrollViewObserver(observer)
             
             return AnonymousDisposable {
-                _ = self.rx_checkScrollViewDelegate
+                _ = self.rx_checkScrollViewDelegate()
                 
                 delegate.removeScrollViewObserver(key)
                 
@@ -83,7 +83,7 @@ extension UIScrollView {
     }
     
     // private
-    private var rx_checkScrollViewDelegate: RxScrollViewDelegate? {
+    private func rx_checkScrollViewDelegate() -> RxScrollViewDelegate? {
         MainScheduler.ensureExecutingOnScheduler()
         
         if self.delegate == nil {

@@ -11,9 +11,7 @@ import RxSwift
 import UIKit
 
 extension UIButton {
-    
     public var rx_tap: Observable<Void> {
-        return rx_controlEvents(.TouchUpInside) >- map { _ in () }
+		return rx_controlEvents(.TouchUpInside)
     }
-    
 }

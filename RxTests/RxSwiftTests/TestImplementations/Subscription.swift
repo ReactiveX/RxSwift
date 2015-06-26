@@ -12,7 +12,7 @@ struct Subscription : Equatable, Hashable, Printable {
     let subscribe : Time
     let unsubscribe : Time
     
-    init(subscribe: Time) {
+    init(_ subscribe: Time) {
         self.subscribe = subscribe
         self.unsubscribe = Int.max
     }

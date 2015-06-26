@@ -8,6 +8,8 @@
 
 import Foundation
 
+let ObserveSingleOnMoreThenOneElement = "Observed sequence was expected to have more then one element, and `observeSingleOn` operator works on sequences with at most one element."
+
 // This class is used to forward sequence of AT MOST ONE observed element to
 // another schedule.
 //
@@ -35,13 +37,13 @@ class ObserveSingleOnObserver<O: ObserverType> : Sink<O>, ObserverType, Disposab
         switch event {
         case .Next:
             if self.lastElement != nil {
-                rxFatalError("Sequence contains more then one element")
+                rxFatalError(ObserveSingleOnMoreThenOneElement)
             }
             
             self.lastElement = event
         case .Error:
             if self.lastElement != nil {
-                rxFatalError("Observed sequence was expected to have more then one element")
+                rxFatalError(ObserveSingleOnMoreThenOneElement)
             }
             stopEventToForward = event
         case .Completed:
@@ -59,13 +61,13 @@ class ObserveSingleOnObserver<O: ObserverType> : Sink<O>, ObserverType, Disposab
                 
                 self.dispose()
                 
-                return SuccessResult
+                return NopDisposableResult
             }
         }
     }
 
     func run() -> Disposable {
-        return self.parent.source.subscribe(self)
+        return self.parent.source.subscribeSafe(self)
     }
 }
 

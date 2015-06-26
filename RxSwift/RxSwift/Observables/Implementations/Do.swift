@@ -51,6 +51,6 @@ class Do<Element> : Producer<Element> {
         
         setSink(sink)
         
-        return self.source.subscribe(sink)
+        return self.source.subscribeSafe(sink)
     }
 }

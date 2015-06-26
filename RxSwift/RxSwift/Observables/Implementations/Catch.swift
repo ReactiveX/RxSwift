@@ -8,9 +8,11 @@
 
 import Foundation
 
-class Catch_Impl<O: ObserverType> : ObserverType {
+// catch with callback
+
+class CatchSinkProxy<O: ObserverType> : ObserverType {
     typealias Element = O.Element
-    typealias Parent = Catch_<O>
+    typealias Parent = CatchSink<O>
     
     let parent: Parent
     
@@ -32,7 +34,7 @@ class Catch_Impl<O: ObserverType> : ObserverType {
     }
 }
 
-class Catch_<O: ObserverType> : Sink<O>, ObserverType {
+class CatchSink<O: ObserverType> : Sink<O>, ObserverType {
     typealias Element = O.Element
     typealias Parent = Catch<Element>
     
@@ -45,7 +47,7 @@ class Catch_<O: ObserverType> : Sink<O>, ObserverType {
     }
     
     func run() -> Disposable {
-        let disposableSubscription = parent.source.subscribe(self)
+        let disposableSubscription = parent.source.subscribeSafe(self)
         subscription.setDisposable(disposableSubscription)
         
         return subscription
@@ -67,10 +69,10 @@ class Catch_<O: ObserverType> : Sink<O>, ObserverType {
                 let d = SingleAssignmentDisposable()
                 subscription.setDisposable(d)
                 
-                let observer = Catch_Impl(parent: self)
+                let observer = CatchSinkProxy(parent: self)
                 
-                let subscription2 = catchObservable.subscribe(observer)
-                d.setDisposable(subscription2)
+                let subscription2 = catchObservable.subscribeSafe(observer)
+                d.disposable = subscription2
                 return SuccessResult
             }
         }
@@ -89,14 +91,16 @@ class Catch<Element> : Producer<Element> {
     }
     
     override func run<O: ObserverType where O.Element == Element>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
-        let sink = Catch_(parent: self, observer: observer, cancel: cancel)
+        let sink = CatchSink(parent: self, observer: observer, cancel: cancel)
         setSink(sink)
         return sink.run()
     }
 }
 
+// catch to result
+
 // O: ObserverType caused compiler crashes, so let's leave that for now
-class CatchToResult_<ElementType> : Sink<Observer<RxResult<ElementType>>>, ObserverType {
+class CatchToResultSink<ElementType> : Sink<Observer<RxResult<ElementType>>>, ObserverType {
     typealias Element = ElementType
     typealias Parent = CatchToResult<Element>
     
@@ -108,7 +112,7 @@ class CatchToResult_<ElementType> : Sink<Observer<RxResult<ElementType>>>, Obser
     }
     
     func run() -> Disposable {
-        return parent.source.subscribe(self)
+        return parent.source.subscribeSafe(self)
     }
     
     func on(event: Event<Element>) {
@@ -135,8 +139,68 @@ class CatchToResult<Element> : Producer <RxResult<Element>> {
     }
     
     override func run<O: ObserverType where O.Element == RxResult<Element>>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
-        let sink = CatchToResult_(parent: self, observer: Observer<RxResult<Element>>.normalize(observer), cancel: cancel)
+        let sink = CatchToResultSink(parent: self, observer: Observer<RxResult<Element>>.normalize(observer), cancel: cancel)
         setSink(sink)
         return sink.run()
+    }
+}
+
+// catch enumerable
+
+class CatchSequenceSink<O: ObserverType> : TailRecursiveSink<O> {
+    typealias Element = O.Element
+    typealias Parent = CatchSequence<Element>
+    
+    var lastError: ErrorType?
+    
+    override init(observer: O, cancel: Disposable) {
+        super.init(observer: observer, cancel: cancel)
+    }
+    
+    override func on(event: Event<Element>) {
+        switch event {
+        case .Next:
+            trySend(observer, event)
+        case .Error(let error):
+            self.lastError = error
+            self.scheduleMoveNext()
+        case .Completed:
+            trySend(self.observer, event)
+            self.dispose()
+        }
+    }
+    
+    override func done() {
+        if let lastError = self.lastError {
+            trySendError(observer, lastError)
+        }
+        else {
+            trySendCompleted(observer)
+        }
+        
+        self.dispose()
+    }
+    
+    override func extract(observable: Observable<Element>) -> GeneratorOf<Observable<O.Element>>? {
+        if let catch = observable as? CatchSequence<Element> {
+            return catch.sources.generate()
+        }
+        else {
+            return nil
+        }
+    }
+}
+
+class CatchSequence<Element> : Producer<Element> {
+    let sources: SequenceOf<Observable<Element>>
+    
+    init(sources: SequenceOf<Observable<Element>>) {
+        self.sources = sources
+    }
+    
+    override func run<O : ObserverType where O.Element == Element>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
+        let sink = CatchSequenceSink(observer: observer, cancel: cancel)
+        setSink(sink)
+        return sink.run(self.sources.generate())
     }
 }

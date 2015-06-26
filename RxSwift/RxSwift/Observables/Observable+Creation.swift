@@ -19,7 +19,7 @@ public func create<E>(subscribe: (ObserverOf<E>) -> Disposable) -> Observable<E>
 public func empty<E>() -> Observable<E> {
     return AnonymousObservable { observer in
         sendCompleted(observer)
-        return DefaultDisposable()
+        return NopDisposable.instance
     }
 }
 
@@ -27,7 +27,7 @@ public func empty<E>() -> Observable<E> {
 
 public func never<E>() -> Observable<E> {
     return AnonymousObservable { observer in
-        return DefaultDisposable()
+        return NopDisposable.instance
     }
 }
 
@@ -37,7 +37,7 @@ public func returnElement<E>(value: E) -> Observable<E> {
     return AnonymousObservable { observer in
         sendNext(observer, value)
         sendCompleted(observer)
-        return DefaultDisposable()
+        return NopDisposable.instance
     }
 }
 
@@ -52,7 +52,18 @@ public func returnElements<E>(values: E ...) -> Observable<E> {
         }
         
         sendCompleted(observer)
-        return DefaultDisposable()
+        return NopDisposable.instance
+    }
+}
+
+public func from<E, S where S: SequenceType, S.Generator.Element == E>(sequence: S) -> Observable<E> {
+    return AnonymousObservable { observer in
+        for element in sequence {
+            sendNext(observer, element)
+        }
+        
+        sendCompleted(observer)
+        return NopDisposable.instance
     }
 }
 
@@ -61,7 +72,7 @@ public func returnElements<E>(values: E ...) -> Observable<E> {
 public func failWith<E>(error: ErrorType) -> Observable<E> {
     return AnonymousObservable { observer in
         sendError(observer, error)
-        return DefaultDisposable()
+        return NopDisposable.instance
     }
 }
 

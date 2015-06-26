@@ -19,9 +19,9 @@ class StartWith<Element>: Producer<Element> {
         super.init()
     }
     
-    override func subscribe<O : ObserverType where O.Element == Element>(observer: O) -> Disposable {
+    override func run<O : ObserverType where O.Element == Element>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
         sendNext(observer, element)
         
-        return source.subscribe(observer)
+        return source.subscribeSafe(observer)
     }
 }

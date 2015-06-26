@@ -431,324 +431,370 @@ extension ObservableSingleTest {
     // ...
 }
 
-// map
-// these test are not port from Rx
+// retry
 extension ObservableSingleTest {
-    func testMap_Never() {
+    func testRetry_Basic() {
         let scheduler = TestScheduler(initialClock: 0)
         
-        let xs = scheduler.createHotObservable([
-            next(150, 1),
+        let xs = scheduler.createColdObservable([
+            next(100, 1),
+            next(150, 2),
+            next(200, 3),
+            completed(250)
             ])
         
-        let res = scheduler.start { xs >- map { $0 * 2 } }
+        let res = scheduler.start {
+            xs >- retry
+        }
         
-        let correctMessages: [Recorded<Int>] = [
-        ]
+        XCTAssertEqual(res.messages, [
+            next(300, 1),
+            next(350, 2),
+            next(400, 3),
+            completed(450)
+            ])
         
-        let correctSubscriptions = [
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 450)
+            ])
+    }
+
+    func testRetry_Infinite() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createColdObservable([
+            next(100, 1),
+            next(150, 2),
+            next(200, 3),
+            ])
+        
+        let res = scheduler.start {
+            xs >- retry
+        }
+        
+        XCTAssertEqual(res.messages, [
+            next(300, 1),
+            next(350, 2),
+            next(400, 3),
+            ])
+        
+        XCTAssertEqual(xs.subscriptions, [
             Subscription(200, 1000)
-        ]
-        
-        XCTAssertEqual(res.messages, correctMessages)
-        XCTAssertEqual(xs.subscriptions, correctSubscriptions)
+            ])
     }
     
-    func testMap_Empty() {
+    func testRetry_Observable_Error() {
         let scheduler = TestScheduler(initialClock: 0)
         
-        let xs = scheduler.createHotObservable([
-            next(150, 1),
-            completed(300)
+        let xs = scheduler.createColdObservable([
+            next(100, 1),
+            next(150, 2),
+            next(200, 3),
+            error(250, testError),
             ])
         
-        let res = scheduler.start { xs >- map { $0 * 2 } }
+        let res = scheduler.start(1100) {
+            xs >- retry
+        }
         
-        let correctMessages: [Recorded<Int>] = [
-            completed(300)
-        ]
+        XCTAssertEqual(res.messages, [
+            next(300, 1),
+            next(350, 2),
+            next(400, 3),
+            next(550, 1),
+            next(600, 2),
+            next(650, 3),
+            next(800, 1),
+            next(850, 2),
+            next(900, 3),
+            next(1050, 1)
+            ])
         
-        let correctSubscriptions = [
-            Subscription(200, 300)
-        ]
-        
-        XCTAssertEqual(res.messages, correctMessages)
-        XCTAssertEqual(xs.subscriptions, correctSubscriptions)
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 450),
+            Subscription(450, 700),
+            Subscription(700, 950),
+            Subscription(950, 1100)
+            ])
     }
     
-    func testMap_Range() {
+    func testRetryCount_Basic() {
         let scheduler = TestScheduler(initialClock: 0)
         
-        let xs = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 0),
-            next(220, 1),
+        let xs = scheduler.createColdObservable([
+            next(5, 1),
+            next(10, 2),
+            next(15, 3),
+            error(20, testError)
+            ])
+        
+        let res = scheduler.start {
+            xs >- retry(3)
+        }
+        
+        XCTAssertEqual(res.messages, [
+            next(205, 1),
+            next(210, 2),
+            next(215, 3),
+            next(225, 1),
             next(230, 2),
-            next(240, 4),
-            completed(300)
+            next(235, 3),
+            next(245, 1),
+            next(250, 2),
+            next(255, 3),
+            error(260, testError)
             ])
         
-        let res = scheduler.start { xs >- map { $0 * 2 } }
-        
-        let correctMessages: [Recorded<Int>] = [
-            next(210, 0 * 2),
-            next(220, 1 * 2),
-            next(230, 2 * 2),
-            next(240, 4 * 2),
-            completed(300)
-        ]
-        
-        let correctSubscriptions = [
-            Subscription(200, 300)
-        ]
-        
-        XCTAssertEqual(res.messages, correctMessages)
-        XCTAssertEqual(xs.subscriptions, correctSubscriptions)
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 220),
+            Subscription(220, 240),
+            Subscription(240, 260)
+            ])
     }
-    
-    func testMap_Error() {
+
+    func testRetryCount_Dispose() {
         let scheduler = TestScheduler(initialClock: 0)
         
-        let xs = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 0),
-            next(220, 1),
+        let xs = scheduler.createColdObservable([
+            next(5, 1),
+            next(10, 2),
+            next(15, 3),
+            error(20, testError)
+            ])
+        
+        let res = scheduler.start(231) {
+            xs >- retry(3)
+        }
+        
+        XCTAssertEqual(res.messages, [
+            next(205, 1),
+            next(210, 2),
+            next(215, 3),
+            next(225, 1),
             next(230, 2),
-            next(240, 4),
-            error(300, testError)
             ])
         
-        let res = scheduler.start { xs >- map { $0 * 2 } }
-        
-        let correctMessages: [Recorded<Int>] = [
-            next(210, 0 * 2),
-            next(220, 1 * 2),
-            next(230, 2 * 2),
-            next(240, 4 * 2),
-            error(300, testError)
-        ]
-        
-        let correctSubscriptions = [
-            Subscription(200, 300)
-        ]
-        
-        XCTAssertEqual(res.messages, correctMessages)
-        XCTAssertEqual(xs.subscriptions, correctSubscriptions)
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 220),
+            Subscription(220, 231),
+            ])
     }
     
-    func testMap_Dispose() {
+    func testRetryCount_Infinite() {
         let scheduler = TestScheduler(initialClock: 0)
         
-        let xs = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 0),
-            next(220, 1),
+        let xs = scheduler.createColdObservable([
+            next(5, 1),
+            next(10, 2),
+            next(15, 3),
+            error(20, testError)
+            ])
+        
+        let res = scheduler.start(231) {
+            xs >- retry(3)
+        }
+        
+        XCTAssertEqual(res.messages, [
+            next(205, 1),
+            next(210, 2),
+            next(215, 3),
+            next(225, 1),
             next(230, 2),
-            next(240, 4),
-            error(300, testError)
             ])
         
-        let res = scheduler.start(290) { xs >- map { $0 * 2 } }
-        
-        let correctMessages: [Recorded<Int>] = [
-            next(210, 0 * 2),
-            next(220, 1 * 2),
-            next(230, 2 * 2),
-            next(240, 4 * 2),
-        ]
-        
-        let correctSubscriptions = [
-            Subscription(200, 290)
-        ]
-        
-        XCTAssertEqual(res.messages, correctMessages)
-        XCTAssertEqual(xs.subscriptions, correctSubscriptions)
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 220),
+            Subscription(220, 231),
+            ])
     }
     
-    func testMap_SelectorThrows() {
+    func testRetryCount_Completed() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createColdObservable([
+            next(100, 1),
+            next(150, 2),
+            next(200, 3),
+            completed(250)
+            ])
+        
+        let res = scheduler.start {
+            xs >- retry(3)
+        }
+        
+        XCTAssertEqual(res.messages, [
+            next(300, 1),
+            next(350, 2),
+            next(400, 3),
+            completed(450)
+            ])
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 450),
+            ])
+    }
+}
+
+// scan
+
+extension ObservableSingleTest {
+    func testScan_Seed_Never() {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 0),
-            next(220, 1),
-            next(230, 2),
-            next(240, 4),
-            error(300, testError)
+            next(0, 0)
             ])
         
-        let res = scheduler.start { xs >- mapOrDie { $0 < 2 ? success($0 * 2) : failure(testError) } }
+        var seed = 42
         
-        let correctMessages: [Recorded<Int>] = [
-            next(210, 0 * 2),
-            next(220, 1 * 2),
-            error(230, testError)
-        ]
+        let res = scheduler.start {
+            xs >- scan(seed) { $0 + $1 }
+        }
         
-        let correctSubscriptions = [
-            Subscription(200, 230)
-        ]
-        
-        XCTAssertEqual(res.messages, correctMessages)
-        XCTAssertEqual(xs.subscriptions, correctSubscriptions)
-    }
-    
-    func testMap1_Never() {
-        let scheduler = TestScheduler(initialClock: 0)
-        
-        let xs = scheduler.createHotObservable([
-            next(150, 1),
+        XCTAssertEqual(res.messages, [
             ])
         
-        let res = scheduler.start { xs >- mapWithIndex { ($0 + $1) * 2 } }
-        
-        let correctMessages: [Recorded<Int>] = [
-        ]
-        
-        let correctSubscriptions = [
+        XCTAssertEqual(xs.subscriptions, [
             Subscription(200, 1000)
-        ]
-        
-        XCTAssertEqual(res.messages, correctMessages)
-        XCTAssertEqual(xs.subscriptions, correctSubscriptions)
+            ])
     }
     
-    func testMap1_Empty() {
+    func testScan_Seed_Empty() {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs = scheduler.createHotObservable([
             next(150, 1),
-            completed(300)
+            completed(250)
             ])
         
-        let res = scheduler.start { xs >- mapWithIndex { ($0 + $1) * 2 } }
+        var seed = 42
         
-        let correctMessages: [Recorded<Int>] = [
-            completed(300)
-        ]
+        let res = scheduler.start {
+            xs >- scan(seed) { $0 + $1 }
+        }
         
-        let correctSubscriptions = [
-            Subscription(200, 300)
-        ]
+        XCTAssertEqual(res.messages, [
+            completed(250)
+            ])
         
-        XCTAssertEqual(res.messages, correctMessages)
-        XCTAssertEqual(xs.subscriptions, correctSubscriptions)
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 250)
+            ])
     }
     
-    func testMap1_Range() {
+    func testScan_Seed_Return() {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs = scheduler.createHotObservable([
             next(150, 1),
-            next(210, 5),
-            next(220, 6),
-            next(230, 7),
-            next(240, 8),
-            completed(300)
+            next(220, 2),
+            completed(250)
             ])
         
-        let res = scheduler.start { xs >- mapWithIndex { ($0 + $1) * 2 } }
+        var seed = 42
         
-        let correctMessages: [Recorded<Int>] = [
-            next(210, (5 + 0) * 2),
-            next(220, (6 + 1) * 2),
-            next(230, (7 + 2) * 2),
-            next(240, (8 + 3) * 2),
-            completed(300)
-        ]
+        let res = scheduler.start {
+            xs >- scan(seed) { $0 + $1 }
+        }
         
-        let correctSubscriptions = [
-            Subscription(200, 300)
-        ]
+        XCTAssertEqual(res.messages, [
+            next(220, seed + 2),
+            completed(250)
+            ])
         
-        XCTAssertEqual(res.messages, correctMessages)
-        XCTAssertEqual(xs.subscriptions, correctSubscriptions)
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 250)
+            ])
     }
     
-    func testMap1_Error() {
+    func testScan_Seed_Throw() {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs = scheduler.createHotObservable([
             next(150, 1),
-            next(210, 5),
-            next(220, 6),
-            next(230, 7),
-            next(240, 8),
-            error(300, testError)
+            error(250, testError)
             ])
         
-        let res = scheduler.start { xs >- mapWithIndex { ($0 + $1) * 2 }  }
+        var seed = 42
         
-        let correctMessages: [Recorded<Int>] = [
-            next(210, (5 + 0) * 2),
-            next(220, (6 + 1) * 2),
-            next(230, (7 + 2) * 2),
-            next(240, (8 + 3) * 2),
-            error(300, testError)
-        ]
+        let res = scheduler.start {
+            xs >- scan(seed) { $0 + $1 }
+        }
         
-        let correctSubscriptions = [
-            Subscription(200, 300)
-        ]
+        XCTAssertEqual(res.messages, [
+            error(250, testError)
+            ])
         
-        XCTAssertEqual(res.messages, correctMessages)
-        XCTAssertEqual(xs.subscriptions, correctSubscriptions)
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 250)
+            ])
     }
     
-    func testMap1_Dispose() {
+    func testScan_Seed_SomeData() {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs = scheduler.createHotObservable([
             next(150, 1),
-            next(210, 5),
-            next(220, 6),
-            next(230, 7),
-            next(240, 8),
-            error(300, testError)
+            next(210, 2),
+            next(220, 3),
+            next(230, 4),
+            next(240, 5),
+            completed(250)
             ])
         
-        let res = scheduler.start(290) { xs >- mapWithIndex { ($0 + $1) * 2 } }
+        var seed = 42
         
-        let correctMessages: [Recorded<Int>] = [
-            next(210, (5 + 0) * 2),
-            next(220, (6 + 1) * 2),
-            next(230, (7 + 2) * 2),
-            next(240, (8 + 3) * 2),
+        let res = scheduler.start {
+            xs >- scan(seed) { $0 + $1 }
+        }
+        
+        let messages: [Recorded<Int>] = [
+            next(210, seed + 2),
+            next(220, seed + 2 + 3),
+            next(230, seed + 2 + 3 + 4),
+            next(240, seed + 2 + 3 + 4 + 5),
+            completed(250)
         ]
         
-        let correctSubscriptions = [
-            Subscription(200, 290)
-        ]
+        XCTAssertEqual(res.messages, messages)
         
-        XCTAssertEqual(res.messages, correctMessages)
-        XCTAssertEqual(xs.subscriptions, correctSubscriptions)
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 250)
+            ])
     }
     
-    func testMap1_SelectorThrows() {
+    func testScan_Seed_AccumulatorThrows() {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs = scheduler.createHotObservable([
             next(150, 1),
-            next(210, 5),
-            next(220, 6),
-            next(230, 7),
-            next(240, 8),
-            error(300, testError)
+            next(210, 2),
+            next(220, 3),
+            next(230, 4),
+            next(240, 5),
+            completed(250)
             ])
         
-        let res = scheduler.start { xs >- mapWithIndexOrDie { $0 < 7 ? success(($0 + $1) * 2) : failure(testError) } }
+        var seed = 42
         
-        let correctMessages: [Recorded<Int>] = [
-            next(210, (5 + 0) * 2),
-            next(220, (6 + 1) * 2),
+        let res = scheduler.start {
+            xs >- scanOrDie(seed) { (a, e) in
+                if e == 4 {
+                    return failure(testError)
+                } else {
+                    return success(a + e)
+                }
+            }
+        }
+        
+        XCTAssertEqual(res.messages, [
+            next(210, seed + 2),
+            next(220, seed + 2 + 3),
             error(230, testError)
-        ]
+            ])
         
-        let correctSubscriptions = [
+        XCTAssertEqual(xs.subscriptions, [
             Subscription(200, 230)
-        ]
-        
-        XCTAssertEqual(res.messages, correctMessages)
-        XCTAssertEqual(xs.subscriptions, correctSubscriptions)
+            ])
     }
 }

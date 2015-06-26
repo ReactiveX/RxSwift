@@ -11,10 +11,11 @@ import Foundation
 public class ObservableBase<Element> : Observable<Element> {
     
     override public func subscribe<O : ObserverType where O.Element == Element>(observer: O) -> Disposable {
-        let autoDetachObserver = AutoDetachObserver(observer: ObserverOf(observer))
+        let autoDetachObserver = AutoDetachObserver(observer: observer)
         
         let disposable = subscribeCore(ObserverOf(autoDetachObserver))
         autoDetachObserver.setDisposable(disposable)
+        
         return disposable
     }
     

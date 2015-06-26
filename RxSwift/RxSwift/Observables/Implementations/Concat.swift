@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Concat_<Element> : ConcatSink<Element> {
+class ConcatSinkImplementation<Element> : ConcatSink<Element> {
     override init(observer: Observer<Element>, cancel: Disposable) {
         super.init(observer: observer, cancel: cancel)
     }
@@ -35,9 +35,9 @@ class Concat<Element> : Producer<Element> {
     
     override func run<O: ObserverType where O.Element == Element>
         (observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
-        let sink = Concat_(observer: Observer<Element>.normalize(observer), cancel: cancel)
+        let sink = ConcatSinkImplementation(observer: Observer<Element>.normalize(observer), cancel: cancel)
         setSink(sink)
         
-        return sink.run(sources)
+        return sink.run(GeneratorOf(sources.generate()))
     }
 }

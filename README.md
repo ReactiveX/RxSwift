@@ -22,13 +22,12 @@ RxSwift
 └-Rx.xcworkspace  - workspace that contains all of the projects hooked up
 ```		
 
-Want to hang out with us on [rxswift.slack.com](https://rxswift.slack.com)? [request access](mailto:krunoslav.zaher@gmail.com?subject=[RxSwift] Hang out on slack).
+Hang out with us on [rxswift.slack.com](http://slack.rxswift.org) <img src="http://slack.rxswift.org/badge.svg">
 
 1. [Introduction](#introduction)
 1. [RxSwift supported operators](#rxswift-supported-operators)
 1. [RxCocoa extensions](#rxcocoa-extensions)
 1. [Build / Install / Run](#build--install--run)
-1. [Comparison with ReactiveCocoa](#comparison-with-reactivecocoa)
 1. [Feature comparison with other frameworks](#feature-comparison-with-other-frameworks)
 1. [What problem does Rx solve?](#what-problem-does-rx-solve)
 1. [Sequences solve everything](#sequences-solve-everything)
@@ -127,7 +126,7 @@ Now something a little more interesting:
 * bind results to label (resultLabel.rx_subscribeTextTo)
 
 ```swift
-let subscription/*: Disposable */ = primeTextField.rx_text()    // type is Observable<String>
+let subscription/*: Disposable */ = primeTextField.rx_text    // type is Observable<String>
             >- map { WolframAlphaIsPrime($0.toInt() ?? 0) }     // type is Observable<Observable<Prime>>
             >- concat                                           // type is Observable<Prime>
             >- map { "number \($0.n) is prime? \($0.isPrime)" } // type is Observable<String>
@@ -155,7 +154,7 @@ Let's give it a shot.
 ```swift
 // bind UI control values directly
 // use username from `usernameOutlet` as username values source
-self.usernameOutlet.rx_text() >- map { username in
+self.usernameOutlet.rx_text >- map { username in
 
     // synchronous validation, nothing special here
     if count(username) == 0 {
@@ -222,28 +221,71 @@ When lacking a strong community consensus, RxSwift will usually include multiple
 
 Operators are stateless by default.
 
-* map / select
-* filter / where
-* foldl / aggregate
-* multicast
-* publish
-* replay
-* refCount
-* observeSingleOn
-* generation operators (returnElement/just, empty, never, failWith, defer)
-* debug
-* concat
-* merge
-* switchLatest
-* catch
-* asObservable
-* distinctUntilChanged
-* do / doOnNext
-* throttle
-* sample
-* startWith
-* variable / sharedWithCachedLastResult
-* zip
+#### Creating Observables
+
+ * [`asObservable`](http://reactivex.io/documentation/operators/from.html)
+ * [`create`](http://reactivex.io/documentation/operators/create.html)
+ * [`defer`](http://reactivex.io/documentation/operators/defer.html)
+ * [`empty`](http://reactivex.io/documentation/operators/empty-never-throw.html)
+ * [`failWith`](http://reactivex.io/documentation/operators/empty-never-throw.html)
+ * [`from` (array)](http://reactivex.io/documentation/operators/from.html)
+ * [`interval`](http://reactivex.io/documentation/operators/interval.html)
+ * [`never`](http://reactivex.io/documentation/operators/empty-never-throw.html)
+ * [`returnElement` / `just`](http://reactivex.io/documentation/operators/just.html)
+ * [`returnElements`](http://reactivex.io/documentation/operators/from.html)
+ * [`timer`](http://reactivex.io/documentation/operators/timer.html)
+
+#### Transforming Observables
+  * [`flatMap`](http://reactivex.io/documentation/operators/flatmap.html)
+  * [`map` / `select`](http://reactivex.io/documentation/operators/map.html)
+  * [`scan`](http://reactivex.io/documentation/operators/scan.html)
+
+#### Filtering Observables
+  * [`debounce` / `throttle`](http://reactivex.io/documentation/operators/debounce.html)
+  * [`distinctUntilChanged`](http://reactivex.io/documentation/operators/distinct.html)
+  * [`filter` / `where`](http://reactivex.io/documentation/operators/filter.html)
+  * [`sample`](http://reactivex.io/documentation/operators/sample.html)
+  * [`take`](http://reactivex.io/documentation/operators/take.html)
+
+#### Combining Observables
+
+  * [`merge`](http://reactivex.io/documentation/operators/merge.html)
+  * [`startWith`](http://reactivex.io/documentation/operators/startwith.html)
+  * [`switchLatest`](http://reactivex.io/documentation/operators/switch.html)
+  * [`combineLatest`](http://reactivex.io/documentation/operators/combinelatest.html)
+  * [`zip`](http://reactivex.io/documentation/operators/zip.html)
+
+#### Error Handling Operators
+
+ * [`catch`](http://reactivex.io/documentation/operators/catch.html)
+ * [`retry`](http://reactivex.io/documentation/operators/retry.html)
+
+#### Observable Utility Operators
+
+  * [`delaySubscription`](http://reactivex.io/documentation/operators/delay.html)
+  * [`do` / `doOnNext`](http://reactivex.io/documentation/operators/do.html)
+  * [`observeOn` / `observeSingleOn`](http://reactivex.io/documentation/operators/observeon.html)
+  * [`subscribe`](http://reactivex.io/documentation/operators/subscribe.html)
+  * [`subscribeOn`](http://reactivex.io/documentation/operators/subscribeon.html)
+  * debug
+
+#### Conditional and Boolean Operators
+  * [`amb`](http://reactivex.io/documentation/operators/amb.html)
+  * [`takeUntil`](http://reactivex.io/documentation/operators/takeuntil.html)
+  * [`takeWhile`](http://reactivex.io/documentation/operators/takewhile.html)
+
+#### Mathematical and Aggregate Operators
+
+  * [`concat`](http://reactivex.io/documentation/operators/concat.html)
+  * [`reduce` / `aggregate`](http://reactivex.io/documentation/operators/reduce.html)
+
+#### Connectable Observable Operators
+
+  * [`multicast`](http://reactivex.io/documentation/operators/publish.html)
+  * [`publish`](http://reactivex.io/documentation/operators/publish.html)
+  * [`refCount`](http://reactivex.io/documentation/operators/refcount.html)
+  * [`replay`](http://reactivex.io/documentation/operators/replay.html)
+  * variable / sharedWithCachedLastResult
 
 Creating new operators is also pretty straightforward. 
 
@@ -298,7 +340,7 @@ extension UIControl {
 ```swift
 extension UIButton {
 
-    public func rx_tap() -> Observable<Void> {}
+    public var rx_tap: Observable<Void> {}
 
 }
 ```
@@ -306,7 +348,7 @@ extension UIButton {
 ```swift
 extension UITextField {
 
-    public func rx_text() -> Observable<String> {}
+    public var rx_text: Observable<String> {}
 
 }
 ```
@@ -314,7 +356,7 @@ extension UITextField {
 ```swift
 extension UISearchBar {
 
-    public func rx_searchText() -> Observable<String> {}
+    public var rx_searchText: Observable<String> {}
 
 }
 ```
@@ -323,6 +365,14 @@ extension UISearchBar {
 extension UILabel {
 
     public func rx_subscribeTextTo(source: Observable<String>) -> Disposable {}
+
+}
+```
+
+```swift
+extension UIDatePicker {
+
+    public var rx_date: Observable<NSDate> {}
 
 }
 ```
@@ -343,7 +393,23 @@ extension UIImageView {
 ```swift
 extension UIScrollView {
 
-    public func rx_contentOffset() -> Observable<CGPoint> {}
+    public var rx_contentOffset: Observable<CGPoint> {}
+
+}
+```
+
+```swift
+extension UIBarButtonItem {
+
+    public var rx_tap: Observable<Void> {}
+
+}
+```
+
+```swift
+extension UISlider {
+
+    public var rx_value: Observable<Float> {}
 
 }
 ```
@@ -376,7 +442,7 @@ extension UITableView {
 ```swift
 extension UICollectionView {
 
-    public func rx_itemTap() -> Observable<(UICollectionView, Int)> {}
+    public var rx_itemTap: -> Observable<(UICollectionView, Int)> {}
 
     public func rx_elementTap<E>() -> Observable<E> {}
 
@@ -400,9 +466,18 @@ extension UICollectionView {
 **OSX**
 
 ```swift
+extension NSControl {
+
+    public var rx_controlEvents: Observable<()> {}
+
+}
+```
+
+```swift
+
 extension NSSlider {
 
-    public func rx_value() -> Observable<Double> { }
+    public var rx_value: Observable<Double> {}
 
 }
 ```
@@ -410,7 +485,7 @@ extension NSSlider {
 ```swift
 extension NSButton {
 
-    public func rx_tap() -> Observable<Void> { }
+    public var rx_tap: Observable<Void> {}
 
 }
 ```
@@ -418,20 +493,20 @@ extension NSButton {
 ```swift
 extension NSImageView {
 
-    public func rx_subscribeImageTo(source: Observable<NSImage?>) -> Disposable { }
+    public func rx_subscribeImageTo(source: Observable<NSImage?>) -> Disposable {}
     
     public func rx_subscribeImageTo
         (animated: Bool)
-        (source: Observable<NSImage?>) -> Disposable { }
+        (source: Observable<NSImage?>) -> Disposable {}
 }
 ```
 
 ```swift
 extension NSTextField {
 
-    public func rx_subscribeTextTo(source: Observable<String>) -> Disposable { }
+    public func rx_subscribeTextTo(source: Observable<String>) -> Disposable {}
 
-    public func rx_text() -> Observable<String> { }
+    public var rx_text: Observable<String> {}
 
 } 
 ```
@@ -458,58 +533,6 @@ type in `Podfile` directory
 ```
 $ pod install
 ```
-
-## Comparison with ReactiveCocoa
-
-So what happened, why did this project start? Two things happened:
-
-* Almost a year ago, Apple announced Swift. That caused a torrent of new projects in the Apple ecosystem. 
-* I've started to learn Haskell and listen more carefully to Erik Meijer
-
-About the same time, ReactiveCocoa team also soon started to investigate how to incorporate Swift into ReactiveCocoa. 
-Initially, ReactiveCocoa was hugely influenced by Reactive Extensions but it was also influenced by other languages. It was in kind of a gray zone, similar, but different. 
-
-Since ReactiveCocoa was influenced hugely by Rx, I wanted to know more about the original Rx. 
-
-I was totally blown away by Rx. It solved everything that was causing me problems in an elegant way (threading, resource management, error management, cache invalidation).
-
-The most subtle thing that lifted a lot of cognitive load was changing the concept from signals to sequences.  It maybe looks like a trivial thing, but it has profound implications.
-
-* It's hard to define properties of signals, but we all already know properties of sequences. (It's funny, but I don't think that ReactiveCocoa team references anywhere signal as a sequence even though they use terms like "streams of values"). 
-* operator definitions become more clear, stateless by default
-* resources management becomes clear, no more confusing situations what gets cancelled
-* interfaces get a lot simpler, it's all about two interfaces, `Observable<Element>` and `Observer<Element>` (ReactiveCocoa v3.0-beta.1 also introduces a very significant SignalProducer)
-
-E.g. 
-```swift
-returnElements(1, 2) 
-	>- observeOn(operationQueueScheduler) 
-	>- map { "n = \($0)" }
-	>- observeOn(MainScheduler.sharedInstance) 
-	>- subscribeNext { println($0) }
-```
-
-If we are talking in terms of sequences, there is no doubt that this code will print:
-
-```
-n = 1
-n = 2
-```
-
-If we are talking in terms of signals, it's not clear can this code produce 
-
-```
-n = 2
-n = 1
-```
-
-Since 
-
-* ReactiveCocoa team has done an amazing job in mapping some of the APIs from Rx to Cocoa
-* Rx was open source
-* I wanted to learn Swift
-
-this project got started.
 
 ## Feature comparison with other frameworks
 

@@ -12,14 +12,6 @@ import Cocoa
 
 extension NSButton {
     public var rx_tap: Observable<Void> {
-        return AnonymousObservable { observer in
-            MainScheduler.ensureExecutingOnScheduler()
-            
-            let observer = ControlTarget(control: self) { control in
-                sendNext(observer, ())
-            }
-            
-            return observer
-        }
+        return rx_controlEvents
     }
 }

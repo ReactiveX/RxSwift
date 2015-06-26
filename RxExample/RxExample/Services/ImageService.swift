@@ -55,31 +55,33 @@ class DefaultImageService: ImageService {
     }
     
     func imageFromURL(URL: NSURL) -> Observable<Image> {
-        let maybeImage = self.imageDataCache.objectForKey(URL) as? Image
-        
-        let decodedImage: Observable<Image>
-        
-        // best case scenario, it's already decoded an in memory
-        if let image = maybeImage {
-            decodedImage = returnElement(image)
-        }
-        else {
-            let cachedData = self.imageDataCache.objectForKey(URL) as? NSData
+        return defer {
+            let maybeImage = self.imageDataCache.objectForKey(URL) as? Image
             
-            // does image data cache contain anything
-            if let cachedData = cachedData {
-                decodedImage = returnElement(cachedData) >- decodeImage
+            let decodedImage: Observable<Image>
+            
+            // best case scenario, it's already decoded an in memory
+            if let image = maybeImage {
+                decodedImage = returnElement(image)
             }
             else {
-                // fetch from network
-                decodedImage = $.URLSession.rx_data(NSURLRequest(URL: URL)) >- doOnNext { data in
-                    self.imageDataCache.setObject(data, forKey: URL)
-                } >- decodeImage
+                let cachedData = self.imageDataCache.objectForKey(URL) as? NSData
+                
+                // does image data cache contain anything
+                if let cachedData = cachedData {
+                    decodedImage = returnElement(cachedData) >- self.decodeImage
+                }
+                else {
+                    // fetch from network
+                    decodedImage = self.$.URLSession.rx_data(NSURLRequest(URL: URL)) >- doOnNext { data in
+                        self.imageDataCache.setObject(data, forKey: URL)
+                    } >- self.decodeImage
+                }
             }
-        }
-        
-        return decodedImage >- doOnNext { image in
-            self.imageCache.setObject(image, forKey: URL)
+            
+            return decodedImage >- doOnNext { image in
+                self.imageCache.setObject(image, forKey: URL)
+            }
         }
     }
 }

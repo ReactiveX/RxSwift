@@ -50,6 +50,6 @@ class Debug<Element> : Producer<Element> {
     override func run<O: ObserverType where O.Element == Element>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
         let sink = Debug_(parent: self, observer: observer, cancel: cancel)
         setSink(sink)
-        return self.source.subscribe(sink)
+        return self.source.subscribeSafe(sink)
     }
 }

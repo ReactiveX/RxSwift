@@ -57,14 +57,14 @@ class ConnectableObservable<SourceType, ResultType> : ConnectableObservableType<
         }
 
         if connect {
-            let disposable = self.source.subscribe(self.subject)
-            connection.subscription!.setDisposable(disposable)
+            let disposable = self.source.subscribeSafe(self.subject)
+            connection.subscription!.disposable = disposable
         }
         
         return connection
     }
     
     override func subscribe<O : ObserverType where O.Element == ResultType>(observer: O) -> Disposable {
-        return subject.subscribe(observer)
+        return subject.subscribeSafe(observer)
     }
 }

@@ -28,7 +28,7 @@ class Multicast_<SourceType, IntermediateType, O: ObserverType>: Sink<O>, Observ
             let connectable = ConnectableObservable(source: self.parent.source, subject: subject)
             
             return self.parent.selector(connectable).flatMap { observable in
-                let subscription = observable.subscribe(self)
+                let subscription = observable.subscribeSafe(self)
                 let connection = connectable.connect()
                 
                 return success(CompositeDisposable(subscription, connection))
@@ -36,7 +36,7 @@ class Multicast_<SourceType, IntermediateType, O: ObserverType>: Sink<O>, Observ
         }.recoverWith { e in
             trySendError(observer, e)
             self.dispose()
-            return success(DefaultDisposable())
+            return NopDisposableResult
         }.get()
     }
     

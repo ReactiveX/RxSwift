@@ -35,7 +35,7 @@ class Throttle_<O: ObserverType, SchedulerType: Scheduler> : Sink<O>, ObserverTy
     
     func run() -> Disposable {
         let cancellable = self.throttleState.cancellable
-        let subscription = parent.source.subscribe(self)
+        let subscription = parent.source.subscribeSafe(self)
         
         return CompositeDisposable(subscription, cancellable)
     }
@@ -86,16 +86,17 @@ class Throttle_<O: ObserverType, SchedulerType: Scheduler> : Sink<O>, ObserverTy
             let dueTime = self.parent.dueTime
             
             let _  = scheduler.scheduleRelative(latestId, dueTime: dueTime) { (id) in
-                return success(self.propagate())
-            }.flatMap { disposeTimer -> RxResult<Void> in
-                d.setDisposable(disposeTimer)
-                return SuccessResult
-            }.recoverWith { e -> RxResult<Void> in
+                self.propagate()
+                return NopDisposableResult
+            }.map { disposeTimer -> Disposable in
+                d.disposable = disposeTimer
+                return disposeTimer
+            }.recoverWith { e -> RxResult<Disposable> in
                 self.lock.performLocked {
                     trySendError(observer, e)
                     self.dispose()
                 }
-                return SuccessResult
+                return NopDisposableResult
             }
         default: break
         }

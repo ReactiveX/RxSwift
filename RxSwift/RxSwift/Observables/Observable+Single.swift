@@ -116,73 +116,7 @@ public func doOnNext<E>
     }
 }
 
-// map aka select
-
-public func mapOrDie<E, R>
-    (selector: E -> RxResult<R>)
-    -> (Observable<E> -> Observable<R>) {
-    return { source in
-        return selectOrDie(selector)(source)
-    }
-}
-
-public func map<E, R>
-    (selector: E -> R)
-    -> (Observable<E> -> Observable<R>) {
-    return { source in
-        return select(selector)(source)
-    }
-}
-
-public func mapWithIndexOrDie<E, R>
-    (selector: (E, Int) -> RxResult<R>)
-    -> (Observable<E> -> Observable<R>) {
-    return { source in
-        return selectWithIndexOrDie(selector)(source)
-    }
-}
-
-public func mapWithIndex<E, R>
-    (selector: (E, Int) -> R)
-    -> (Observable<E> -> Observable<R>) {
-    return { source in
-        return selectWithIndex(selector)(source)
-    }
-}
-
-// select 
-
-public func selectOrDie<E, R>
-    (selector: (E) -> RxResult<R>)
-    -> (Observable<E> -> Observable<R>) {
-    return { source in
-        return Select(source: source, selector: selector)
-    }
-}
-
-public func select<E, R>
-    (selector: (E) -> R)
-    -> (Observable<E> -> Observable<R>) {
-    return { source in
-        return Select(source: source, selector: {success(selector($0)) })
-    }
-}
-
-public func selectWithIndexOrDie<E, R>
-    (selector: (E, Int) -> RxResult<R>)
-    -> (Observable<E> -> Observable<R>) {
-    return { source in
-        return Select(source: source, selector: selector)
-    }
-}
-
-public func selectWithIndex<E, R>
-    (selector: (E, Int) -> R)
-    -> (Observable<E> -> Observable<R>) {
-    return { source in
-        return Select(source: source, selector: {success(selector($0, $1)) })
-    }
-}
+// startWith
 
 // Prefixes observable sequence with `firstElement` element.
 // The same functionality could be achieved using `concat([returnElement(prefix), source])`,
@@ -195,3 +129,36 @@ public func startWith<E>
     }
 }
 
+// retry
+
+public func retry<E>
+    (source: Observable<E>)
+    -> Observable<E> {
+    return SequenceOf(InifiniteSequence(repeatedValue: source)) >- catch
+}
+
+public func retry<E>
+    (retryCount: Int)
+    -> Observable<E> -> Observable<E> {
+    return { source in
+        return SequenceOf(Repeat(count: retryCount, repeatedValue: source)) >- catch
+    }
+}
+
+// scan
+
+public func scan<E, A>
+    (seed: A, accumulator: (A, E) -> A)
+    -> Observable<E> -> Observable<A> {
+    return { source in
+        return Scan(source: source, seed: seed, accumulator: { success(accumulator($0, $1)) })
+    }
+}
+
+public func scanOrDie<E, A>
+    (seed: A, accumulator: (A, E) -> RxResult<A>)
+    -> Observable<E> -> Observable<A> {
+    return { source in
+        return Scan(source: source, seed: seed, accumulator: accumulator)
+    }
+}

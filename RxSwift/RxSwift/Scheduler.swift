@@ -8,10 +8,6 @@
 
 import Foundation
 
-public protocol ImmediateScheduler {
-    func schedule<StateType>(state: StateType, action: (StateType) -> RxResult<Void>) -> RxResult<Disposable>
-}
-
 public protocol Scheduler: ImmediateScheduler {
     typealias TimeInterval
     typealias Time
@@ -20,7 +16,7 @@ public protocol Scheduler: ImmediateScheduler {
         get
     }
 
-    func scheduleRelative<StateType>(state: StateType, dueTime: TimeInterval, action: (StateType) -> RxResult<Void>) -> RxResult<Disposable>
+    func scheduleRelative<StateType>(state: StateType, dueTime: TimeInterval, action: (StateType) -> RxResult<Disposable>) -> RxResult<Disposable>
 }
 
 
@@ -31,10 +27,10 @@ public protocol Scheduler: ImmediateScheduler {
 //
 // It's probably best to make sure all of the errors have been handled before
 // the computation finishes, but it's not unreasonable to change the implementation
-// for release builds to silently fail (although I would not recommended).
+// for release builds to silently fail (although I would not recommend it).
 //
 // Changing default behavior is not recommended because possible data corruption
-// is "usually" a lot worse then letting program to crash.
+// is "usually" a lot worse than letting the program crash.
 //
 func ensureScheduledSuccessfully(result: RxResult<Void>) -> RxResult<Void> {
     switch result {
@@ -44,6 +40,16 @@ func ensureScheduledSuccessfully(result: RxResult<Void>) -> RxResult<Void> {
     }
     
     return SuccessResult
+}
+
+func getScheduledDisposable(disposable: RxResult<Disposable>) -> Disposable {
+    switch disposable {
+    case .Failure(let error):
+        errorDuringScheduledAction(error);
+        return NopDisposable.instance
+    default:
+        return disposable.get()
+    }
 }
 
 func errorDuringScheduledAction(error: ErrorType) -> RxResult<Void> {

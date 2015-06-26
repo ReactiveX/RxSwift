@@ -8,11 +8,11 @@
 
 import Foundation
 
+// This class is usually used with `GeneratorOf` version of the operators.
 class TailRecursiveSink<O: ObserverType> : Sink<O>, ObserverType {
     typealias Element = O.Element
-    typealias StackElementType = (generator: GeneratorOf<Observable<Element>>, length: Int)
     
-    var stack: [StackElementType] = []
+    var generators: [GeneratorOf<Observable<Element>>] = []
     var disposed: Bool = false
     var subscription = SerialDisposable()
     
@@ -23,20 +23,18 @@ class TailRecursiveSink<O: ObserverType> : Sink<O>, ObserverType {
         super.init(observer: observer, cancel: cancel)
     }
     
-    func run(sources: [Observable<Element>]) -> Disposable {
-        let generator: GeneratorOf<Observable<Element>> = GeneratorOf(sources.generate())
-        self.stack.append((generator: generator, length: sources.count))
-        
-        let stateSnapshot = self.state
+    func run(sources: GeneratorOf<Observable<Element>>) -> Disposable {
+        self.generators.append(sources.generate())
         
         scheduleMoveNext()
-        return CompositeDisposable(
-                self.subscription,
-                stateSnapshot.cancel,
-                AnonymousDisposable {
-                    self.disposePrivate()
-                }
-            )
+        
+        let disposeSinkStack = AnonymousDisposable {
+            self.schedule {
+                self.disposePrivate()
+            }
+        }
+        
+        return StableCompositeDisposable.create(self.subscription, disposeSinkStack)
     }
     
     func scheduleMoveNext() {
@@ -49,12 +47,27 @@ class TailRecursiveSink<O: ObserverType> : Sink<O>, ObserverType {
     func schedule(action: () -> Void) {
         self.gate.wait(action)
     }
+
+    func done() {
+        trySendCompleted(observer)
+        self.dispose()
+    }
     
-    func moveNext() {
+    func extract(observable: Observable<Element>) -> GeneratorOf<Observable<Element>>? {
+        return abstractMethod()
+    }
+    
+    func on(event: Event<Element>) {
+        return abstractMethod()
+    }
+    
+    // should be done on gate locked
+
+    private func moveNext() {
         var next: Observable<Element>? = nil;
         
         do {
-            if self.stack.count == 0 {
+            if self.generators.count == 0 {
                 break
             }
             
@@ -62,33 +75,22 @@ class TailRecursiveSink<O: ObserverType> : Sink<O>, ObserverType {
                 return
             }
             
-            var (e, l) = stack.last!
+            var e = generators.last!
             
-            let current = e.next()
+            let nextCandidate = e.next()
         
-            if current == nil {
-                stack.removeLast()
+            if nextCandidate == nil {
+                generators.removeLast()
                 continue;
             }
+       
+            let nextGenerator = extract(nextCandidate!)
         
-            let r = l - 1
-            
-            stack.removeLast()
-            stack.append((generator: e, length: r))
-            
-            next = current
-            
-            if r == 0 {
-                stack.removeLast()
+            if let nextGenerator = nextGenerator {
+                self.generators.append(nextGenerator)
             }
-            
-            let nextSeq = extract(next!)
-        
-            if let nextSeq = nextSeq {
-                let generator = GeneratorOf(nextSeq.generate())
-                let length = nextSeq.count
-             
-                next = nil
+            else {
+                next = nextCandidate
             }
         } while next == nil
         
@@ -97,26 +99,13 @@ class TailRecursiveSink<O: ObserverType> : Sink<O>, ObserverType {
             return
         }
         
-        let subscription2 = next!.subscribe(self)
+        let subscription2 = next!.subscribeSafe(self)
         subscription.setDisposable(subscription2)
     }
     
     private func disposePrivate() {
         disposed = true
-        
-        stack.removeAll(keepCapacity: false)
+        generators.removeAll(keepCapacity: false)
     }
     
-    func done() {
-        trySendCompleted(observer)
-        self.dispose()
-    }
-    
-    func extract(observable: Observable<Element>) -> [Observable<Element>]? {
-        return abstractMethod()
-    }
-    
-    func on(event: Event<Element>) {
-        return abstractMethod()
-    }
 }

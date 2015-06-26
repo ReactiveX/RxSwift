@@ -39,8 +39,10 @@ class ObserverBase<ElementType> : Observer<ElementType>, Disposable {
     }
     
     func onCore(event: Event<Element>) {
+        return abstractMethod()
     }
     
     func dispose() {
+        isStopped = true
     }
 }

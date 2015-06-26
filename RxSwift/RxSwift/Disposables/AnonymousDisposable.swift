@@ -8,11 +8,19 @@
 
 import Foundation
 
-public class AnonymousDisposable : DisposeBase, Disposable {
+public class AnonymousDisposable : DisposeBase, Cancelable {
     public typealias DisposeAction = () -> Void
     
     var lock = Lock()
     var disposeAction: DisposeAction?
+    
+    public var disposed: Bool {
+        get {
+            return lock.calculateLocked {
+                return self.disposeAction == nil
+            }
+        }
+    }
     
     public init(_ disposeAction: DisposeAction) {
         self.disposeAction = disposeAction

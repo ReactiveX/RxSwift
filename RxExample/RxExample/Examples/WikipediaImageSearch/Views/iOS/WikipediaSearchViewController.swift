@@ -12,7 +12,7 @@ import RxCocoa
 
 class WikipediaSearchViewController: ViewController {
     
-    private let disposeBag: DisposeBag = DisposeBag()
+    private var disposeBag = DisposeBag()
     private var viewModel: SearchViewModel? = nil
     
     override func awakeFromNib() {

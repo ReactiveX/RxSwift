@@ -67,6 +67,13 @@ public func catch<E>
     }
 }
 
+public func catch<E>
+    (sources: SequenceOf<Observable<E>>)
+    -> Observable<E> {
+    // just wrapping it in sequence of for now
+    return CatchSequence(sources: SequenceOf(sources))
+}
+
 // In case of error, terminates sequence with `replaceErrorWith`.
 public func catch<E>
     (replaceErrorWith: E)
@@ -82,4 +89,30 @@ public func catchToResult<E>
     (source: Observable<E>)
     -> Observable <RxResult<E>> {
     return CatchToResult(source: source)
+}
+
+// takeUntil
+
+public func takeUntil<E, O>
+    (other: Observable<O>)
+    -> Observable<E> -> Observable<E> {
+    return { source in
+        return TakeUntil(source: source, other: other)
+    }
+}
+
+// amb 
+
+public func amb<E>
+    (left: Observable<E>, right: Observable<E>)
+    -> Observable<E> {
+    return Amb(left: left, right: right)
+}
+
+public func amb<E>
+    (observables: SequenceOf<Observable<E>>)
+    -> Observable<E> {
+    return reduce(observables, never()) { a, o in
+        return amb(a, o)
+    }
 }

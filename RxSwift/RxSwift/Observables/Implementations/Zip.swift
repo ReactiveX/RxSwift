@@ -15,20 +15,19 @@ protocol ZipSinkProtocol : class
     func done(index: Int)
 }
 
-protocol ZipObserverProtocol {
-    var hasElements: Bool { get }
-}
-
 class ZipSink<O: ObserverType> : Sink<O>, ZipSinkProtocol {
     typealias Element = O.Element
     
+    let arity: Int
+    
     let lock = NSRecursiveLock()
     
-    var observers: [ZipObserverProtocol] = []
+    // state
     var isDone: [Bool]
     
     init(arity: Int, observer: O, cancel: Disposable) {
         self.isDone = [Bool](count: arity, repeatedValue: false)
+        self.arity = arity
         
         super.init(observer: observer, cancel: cancel)
     }
@@ -37,11 +36,15 @@ class ZipSink<O: ObserverType> : Sink<O>, ZipSinkProtocol {
         return abstractMethod()
     }
     
+    func hasElements(index: Int) -> Bool {
+        return abstractMethod()
+    }
+    
     func next(index: Int) {
         var hasValueAll = true
         
-        for observer in observers {
-            if !observer.hasElements {
+        for i in 0 ..< arity {
+            if !hasElements(i) {
                 hasValueAll = false;
                 break;
             }
@@ -99,28 +102,23 @@ class ZipSink<O: ObserverType> : Sink<O>, ZipSinkProtocol {
     }
 }
 
-class ZipObserver<ElementType> : ObserverType, ZipObserverProtocol {
+class ZipObserver<ElementType> : ObserverType {
     typealias Element = ElementType
+    typealias ValueSetter = (ElementType) -> ()
 
-    weak var parent: ZipSinkProtocol?
+    var parent: ZipSinkProtocol?
     
     let lock: NSRecursiveLock
     let index: Int
     let this: Disposable
+    let setNextValue: ValueSetter
     
-    var values: Queue<Element> = Queue(capacity: 2)
-    
-    init(lock: NSRecursiveLock, parent: ZipSinkProtocol, index: Int, this: Disposable) {
+    init(lock: NSRecursiveLock, parent: ZipSinkProtocol, index: Int, setNextValue: ValueSetter, this: Disposable) {
         self.lock = lock
         self.parent = parent
         self.index = index
         self.this = this
-    }
-    
-    var hasElements: Bool {
-        get {
-            return values.count > 0
-        }
+        self.setNextValue = setNextValue
     }
     
     func on(event: Event<Element>) {
@@ -140,7 +138,7 @@ class ZipObserver<ElementType> : ObserverType, ZipObserverProtocol {
             if let parent = parent {
                 switch event {
                 case .Next(let boxedValue):
-                    values.enqueue(boxedValue.value)
+                    setNextValue(boxedValue.value)
                     parent.next(index)
                 case .Error(let error):
                     parent.fail(error)

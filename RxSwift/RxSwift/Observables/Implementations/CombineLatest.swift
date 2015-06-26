@@ -104,45 +104,44 @@ class CombineLatestSink<O: ObserverType> : Sink<O>, CombineLatestProtocol {
             dispose()
         }
     }
+    
+    deinit {
+        
+    }
 }
 
-class CombineLatestObserver<Element> : ObserverType {
-    weak var parent: CombineLatestProtocol?
+class CombineLatestObserver<ElementType> : ObserverType {
+    typealias Element = ElementType
+    typealias ValueSetter = (Element) -> Void
+    
+    let parent: CombineLatestProtocol
     
     let lock: NSRecursiveLock
     let index: Int
     let this: Disposable
-    var _value: Element!
+    let setLatestValue: ValueSetter
     
-    init(lock: NSRecursiveLock, parent: CombineLatestProtocol, index: Int, this: Disposable) {
+    init(lock: NSRecursiveLock, parent: CombineLatestProtocol, index: Int, setLatestValue: ValueSetter, this: Disposable) {
         self.lock = lock
         self.parent = parent
         self.index = index
         self.this = this
-        self._value = nil
-    }
-    
-    var value: Element {
-        get {
-            return _value!
-        }
+        self.setLatestValue = setLatestValue
     }
     
     func on(event: Event<Element>) {
         lock.performLocked {
-            if let parent = parent {
-                switch event {
-                case .Next(let boxedValue):
-                    let value = boxedValue.value
-                    _value = value
-                    parent.next(index)
-                case .Error(let error):
-                    this.dispose()
-                    parent.fail(error)
-                case .Completed:
-                    this.dispose()
-                    parent.done(index)
-                }
+            switch event {
+            case .Next(let boxedValue):
+                let value = boxedValue.value
+                setLatestValue(value)
+                parent.next(index)
+            case .Error(let error):
+                this.dispose()
+                parent.fail(error)
+            case .Completed:
+                this.dispose()
+                parent.done(index)
             }
         }
     }

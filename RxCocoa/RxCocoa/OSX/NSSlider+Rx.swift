@@ -12,16 +12,10 @@ import Cocoa
 
 extension NSSlider {
     public var rx_value: Observable<Double> {
-        return AnonymousObservable { observer in
-            MainScheduler.ensureExecutingOnScheduler()
-            
-            sendNext(observer, self.doubleValue)
-            
-            let observer = ControlTarget(control: self) { control in
-                sendNext(observer, self.doubleValue)
-            }
-            
-            return observer
+        
+        return rx_value { [weak self] in
+            return self?.doubleValue ?? 0
         }
+        
     }
 }

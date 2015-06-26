@@ -82,8 +82,8 @@ class Merge_<O: ObserverType> : Sink<O>, ObserverType {
         
         state.group.addDisposable(state.sourceSubscription)
         
-        let disposable = self.parent.sources.subscribe(self)
-        state.sourceSubscription.setDisposable(disposable)
+        let disposable = self.parent.sources.subscribeSafe(self)
+        state.sourceSubscription.disposable = disposable
         
         return state.group
     }
@@ -98,8 +98,8 @@ class Merge_<O: ObserverType> : Sink<O>, ObserverType {
             
             if let key = maybeKey {
                 let observer = Merge_Iter(parent: self, disposeKey: key)
-                let disposable = value.subscribe(observer)
-                innerSubscription.setDisposable(disposable)
+                let disposable = value.subscribeSafe(observer)
+                innerSubscription.disposable = disposable
             }
         case .Error(let error):
             lock.performLocked {
@@ -153,9 +153,10 @@ class Merge_ConcurrentIter<O: ObserverType> : ObserverType {
                 self.parent.dispose()
             }
         case .Completed:
-            let mergeState = parent.mergeState
-            mergeState.group.removeDisposable(disposeKey)
             parent.lock.performLocked {
+                var mergeState = parent.mergeState
+                mergeState.group.removeDisposable(disposeKey)
+                
                 if mergeState.queue.value.count > 0 {
                     let s = mergeState.queue.value.dequeue()
                     self.parent.subscribe(s, group: mergeState.group)
@@ -163,7 +164,7 @@ class Merge_ConcurrentIter<O: ObserverType> : ObserverType {
                 else {
                     parent.mergeState.activeCount = mergeState.activeCount - 1
                     
-                    if mergeState.stopped && mergeState.activeCount == 0 {
+                    if mergeState.stopped && parent.mergeState.activeCount == 0 {
                         trySendCompleted(parent.observer)
                         self.parent.dispose()
                     }
@@ -211,8 +212,8 @@ class Merge_Concurrent<O: ObserverType> : Sink<O>, ObserverType {
 
         state.group.addDisposable(state.sourceSubscription)
         
-        let disposable = self.parent.sources.subscribe(self)
-        state.sourceSubscription.setDisposable(disposable)
+        let disposable = self.parent.sources.subscribeSafe(self)
+        state.sourceSubscription.disposable = disposable
         return state.group
     }
     
@@ -224,8 +225,8 @@ class Merge_Concurrent<O: ObserverType> : Sink<O>, ObserverType {
         if let key = key {
             let observer = Merge_ConcurrentIter(parent: self, disposeKey: key)
             
-            let disposable = innerSource.subscribe(observer)
-            subscription.setDisposable(disposable)
+            let disposable = innerSource.subscribeSafe(observer)
+            subscription.disposable = disposable
         }
     }
     

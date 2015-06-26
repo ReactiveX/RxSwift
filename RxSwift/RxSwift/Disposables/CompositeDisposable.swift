@@ -8,57 +8,60 @@
 
 import Foundation
 
-public class CompositeDisposable : DisposeBase, Disposable {
-    public typealias BagKey = Bag<Disposable>.KeyType
-    
-    typealias State = (
-        disposables: RxMutableBox<Bag<Disposable>>!,
-        disposed: Bool
-    )
+public class CompositeDisposable : DisposeBase, Disposable, Cancelable {
+    public typealias DisposeKey = Bag<Disposable>.KeyType
     
     var lock: Lock = Lock()
-    var state: State = (
-        disposables: RxMutableBox(Bag()),
-        disposed: false
-    )
+    var disposables: RxMutableBox<Bag<Disposable>>? = RxMutableBox(Bag())
+    
+    public var disposed: Bool {
+        get {
+            return self.lock.calculateLocked {
+                return disposables == nil
+            }
+        }
+    }
     
     public override init() {
     }
     
     public init(_ disposable1: Disposable, _ disposable2: Disposable) {
-        let bag = state.disposables
-        
-        bag.value.put(disposable1)
-        bag.value.put(disposable2)
-    }
-    
-    public init(_ disposable1: Disposable, _ disposable2: Disposable, _ disposable3: Disposable) {
-        let bag = state.disposables
-        
-        bag.value.put(disposable1)
-        bag.value.put(disposable2)
-        bag.value.put(disposable3)
-    }
-    
-    public init(disposables: [Disposable]) {
-        let bag = state.disposables
-        
-        for disposable in disposables {
-            bag.value.put(disposable)
+        if let disposables = self.disposables {
+            disposables.value.put(disposable1)
+            disposables.value.put(disposable2)
+        }
+        else {
+            rxFatalError("Bag should exist")
         }
     }
     
-    public func addDisposable(disposable: Disposable) -> BagKey? {
+    public init(_ disposable1: Disposable, _ disposable2: Disposable, _ disposable3: Disposable) {
+        if let disposables = self.disposables {
+            disposables.value.put(disposable1)
+            disposables.value.put(disposable2)
+            disposables.value.put(disposable3)
+        }
+        else {
+            rxFatalError("Bag should exist")
+        }
+    }
+    
+    public init(disposables: [Disposable]) {
+        if let disposablesBox = self.disposables {
+            for disposable in disposables {
+                disposablesBox.value.put(disposable)
+            }
+        }
+        else {
+            rxFatalError("Bag should exist")
+        }
+    }
+    
+    public func addDisposable(disposable: Disposable) -> DisposeKey? {
         // this should be let
         // bucause of compiler bug it's var
-        let key  = self.lock.calculateLocked { oldState -> BagKey? in
-            if state.disposed {
-                return nil
-            }
-            else {
-                let key = state.disposables.value.put(disposable)
-                return key
-            }
+        let key  = self.lock.calculateLocked { oldState -> DisposeKey? in
+            return disposables?.value.put(disposable)
         }
         
         if key == nil {
@@ -71,14 +74,14 @@ public class CompositeDisposable : DisposeBase, Disposable {
     public var count: Int {
         get {
             return self.lock.calculateLocked {
-                self.state.disposables.value.count
+                return disposables?.value.count ?? 0
             }
         }
     }
     
-    public func removeDisposable(disposeKey: BagKey) {
-        let disposable = self.lock.calculateLocked { Void -> Disposable? in
-            return state.disposables.value.removeKey(disposeKey)
+    public func removeDisposable(disposeKey: DisposeKey) {
+        let disposable = self.lock.calculateLocked { () -> Disposable? in
+            return disposables?.value.removeKey(disposeKey)
         }
         
         if let disposable = disposable {
@@ -87,22 +90,17 @@ public class CompositeDisposable : DisposeBase, Disposable {
     }
     
     public func dispose() {
-        let oldDisposables = self.lock.calculateLocked { Void -> [Disposable] in
-            if state.disposed {
-                return []
-            }
+        let oldDisposables = self.lock.calculateLocked { Void -> [Disposable]? in
+            let allDisposables = disposables?.value.all
+            self.disposables = nil
             
-            let disposables = state.disposables
-            var allValues = disposables.value.all
-            
-            state.disposed = true
-            state.disposables = nil
-            
-            return allValues
+            return allDisposables
         }
         
-        for d in oldDisposables {
-            d.dispose()
+        if let oldDisposables = oldDisposables {
+            for d in oldDisposables {
+                d.dispose()
+            }
         }
     }
 }

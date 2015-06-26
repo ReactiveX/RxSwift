@@ -8,11 +8,7 @@
 
 import Foundation
 
-/**
-*  Using protocol for Observer complicates implementation too much
-*/
 public class Observable<Element> {
-    
     public init() {
 #if TRACE_RESOURCES
         OSAtomicIncrement32(&resourceCount)
@@ -30,3 +26,4 @@ public class Observable<Element> {
 #endif
     }
 }
+

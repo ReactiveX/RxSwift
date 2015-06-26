@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class SingleAssignmentDisposable : DisposeBase, Disposable {
+public class SingleAssignmentDisposable : DisposeBase, Disposable, Cancelable {
     typealias State = (
         disposed: Bool,
         disposableSet: Bool,
@@ -22,30 +22,45 @@ public class SingleAssignmentDisposable : DisposeBase, Disposable {
         disposable: nil
     )
     
+    public var disposed: Bool {
+        get {
+            return lock.calculateLocked {
+                return state.disposed
+            }
+        }
+    }
+    
     public override init() {
         super.init()
     }
 
-    public func setDisposable(newDisposable: Disposable) {
-        var disposable: Disposable? = self.lock.calculateLocked { oldState in
-            
-            if state.disposableSet {
-                rxFatalError("oldState.disposable != nil")
+    public var disposable: Disposable {
+        get {
+            return lock.calculateLocked {
+                return self.state.disposable ?? NopDisposable.instance
             }
-            
-            state.disposableSet = true
-            
-            if state.disposed {
-                return newDisposable
-            }
-            
-            state.disposable = newDisposable
-            
-            return nil
         }
-        
-        if let disposable = disposable {
-            return disposable.dispose()
+        set(newDisposable) {
+            var disposable: Disposable? = lock.calculateLocked { oldState in
+                
+                if state.disposableSet {
+                    rxFatalError("oldState.disposable != nil")
+                }
+                
+                state.disposableSet = true
+                
+                if state.disposed {
+                    return newDisposable
+                }
+                
+                state.disposable = newDisposable
+                
+                return nil
+            }
+            
+            if let disposable = disposable {
+                return disposable.dispose()
+            }
         }
     }
     

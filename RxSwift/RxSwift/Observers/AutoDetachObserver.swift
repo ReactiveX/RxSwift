@@ -8,11 +8,11 @@
 
 import Foundation
 
-class AutoDetachObserver<Element> : ObserverBase<Element> {
-    private let observer : ObserverOf<Element>
+class AutoDetachObserver<O: ObserverType> : ObserverBase<O.Element> {
+    private let observer : O
     private let m : SingleAssignmentDisposable
     
-    init(observer: ObserverOf<Element>) {
+    init(observer: O) {
         self.observer = observer
         self.m = SingleAssignmentDisposable()
         
@@ -20,7 +20,7 @@ class AutoDetachObserver<Element> : ObserverBase<Element> {
     }
     
     func setDisposable(disposable: Disposable) {
-        m.setDisposable(disposable)
+        m.disposable = disposable
     }
     
     override func onCore(event: Event<Element>) {

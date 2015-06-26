@@ -11,9 +11,9 @@ import RxSwift
 import UIKit
 
 extension UITextField {
-    
     public var rx_text: Observable<String> {
-        return rx_controlEvents(.TouchUpInside) >- map { _ in self.text }
+        return rx_value { [weak self] in
+            self?.text ?? ""
+        }
     }
-
 }
