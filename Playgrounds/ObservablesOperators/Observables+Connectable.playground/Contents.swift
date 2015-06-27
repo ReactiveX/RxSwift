@@ -150,7 +150,7 @@ func sampleWithReplayBuffer2() {
     delay(6) {
         int1
             >- subscribeNext {
-                println("thirth subscription \($0)")
+                println("third subscription \($0)")
         }
     }
     
@@ -197,7 +197,7 @@ func sampleWithPublish() {
     delay(6) {
         int1
             >- subscribeNext {
-                println("thirth subscription \($0)")
+                println("third subscription \($0)")
         }
     }
     

@@ -266,18 +266,18 @@ class ReplayAll<Element> : ReplayManyBase<Element> {
     }
 }
 
-class ReplaySubject<Element> : SubjectType<Element, Element> {
+public class ReplaySubject<Element> : SubjectType<Element, Element> {
     typealias Observer = ObserverOf<Element>
     typealias BagType = Bag<Observer>
     typealias DisposeKey = BagType.KeyType
     
     let implementation: ReplaySubjectImplementation<Element>
     
-    init(firstElement: Element) {
+    public init(firstElement: Element) {
         implementation = ReplayOne(firstElement: firstElement)
     }
     
-    init(bufferSize: Int) {
+    public init(bufferSize: Int) {
         if bufferSize == 1 {
             implementation = ReplayOne()
         }
@@ -286,11 +286,11 @@ class ReplaySubject<Element> : SubjectType<Element, Element> {
         }
     }
     
-    override func subscribe<O : ObserverType where O.Element == Element>(observer: O) -> Disposable {
+    public override func subscribe<O : ObserverType where O.Element == Element>(observer: O) -> Disposable {
         return implementation.subscribe(observer)
     }
     
-    override func on(event: Event<Element>) {
+    public override func on(event: Event<Element>) {
         implementation.on(event)
     }
 }

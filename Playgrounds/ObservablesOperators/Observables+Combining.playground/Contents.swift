@@ -86,7 +86,7 @@ There are a serie of functions `combineLatest`, they take from two to ten source
 The next sample shows combineLatest called with three sorce Observables
 */
 
-example("combineLatest 3th") {
+example("combineLatest 3rd") {
     let intOb1 = just(2)
     let intOb2 = from([0, 1, 2, 3])
     let intOb3 = from([0, 1, 2, 3, 4])
@@ -161,7 +161,7 @@ There are a serie of functions `zip`, they take from two to ten sources Obserbab
 The next sample shows zip called with three sorce Observables
 */
 
-example("zip 3th") {
+example("zip 3rd") {
     let intOb1 = from([0, 1])
     let intOb2 = from([0, 1, 2, 3])
     let intOb3 = from([0, 1, 2, 3, 4])
