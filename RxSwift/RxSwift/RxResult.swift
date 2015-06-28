@@ -103,7 +103,7 @@ extension RxResult {
         case .Success(let boxedValue):
             return boxedValue.value
         case .Failure(let error):
-            rxFatalError("Result doesn't contain any value: [\(error)]")
+            rxFatalError("Result represents failure: \(error)")
             return (nil as T?)!
         }
     }

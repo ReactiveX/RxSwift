@@ -72,6 +72,12 @@
 		C88BB8AE1B07E64B0064D411 /* VariableTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C814CEA21AF5622600E98087 /* VariableTest.swift */; };
 		C88BB8B01B07E64B0064D411 /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C811086A1AF50E43001C13E4 /* RxCocoa.framework */; };
 		C88BB8B11B07E64B0064D411 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C811086B1AF50E43001C13E4 /* RxSwift.framework */; };
+		C88C78821B3EB0C50061C5AB /* RxTableViewSectionedAnimatedDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88C78781B3EB0C50061C5AB /* RxTableViewSectionedAnimatedDataSource.swift */; };
+		C88C78831B3EB0C50061C5AB /* RxTableViewSectionedDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88C78791B3EB0C50061C5AB /* RxTableViewSectionedDataSource.swift */; };
+		C88C78841B3EB0C50061C5AB /* RxTableViewSectionedReloadDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88C787A1B3EB0C50061C5AB /* RxTableViewSectionedReloadDataSource.swift */; };
+		C88C78881B3EB0C50061C5AB /* SectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88C787F1B3EB0C50061C5AB /* SectionModel.swift */; };
+		C88C78911B3F17C40061C5AB /* SectionedViewType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88C78901B3F17C40061C5AB /* SectionedViewType.swift */; };
+		C88C78931B3F17CB0061C5AB /* Changeset.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88C78921B3F17CB0061C5AB /* Changeset.swift */; };
 		C897EC3B1B10E000009C2CB0 /* BehaviorSubjectTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C897EC3A1B10E000009C2CB0 /* BehaviorSubjectTest.swift */; };
 		C897EC3C1B10E000009C2CB0 /* BehaviorSubjectTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C897EC3A1B10E000009C2CB0 /* BehaviorSubjectTest.swift */; };
 		C897EC471B112070009C2CB0 /* Observable+MultipleTest+Zip.tt in Resources */ = {isa = PBXBuildFile; fileRef = C897EC461B112070009C2CB0 /* Observable+MultipleTest+Zip.tt */; };
@@ -126,6 +132,12 @@
 		C814CEA61AF642D600E98087 /* UI+RxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UI+RxTests.swift"; sourceTree = "<group>"; };
 		C8633AE41B0A9FF300375D60 /* KVOObservableTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KVOObservableTests.swift; sourceTree = "<group>"; };
 		C88BB8B71B07E64B0064D411 /* RxTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RxTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C88C78781B3EB0C50061C5AB /* RxTableViewSectionedAnimatedDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxTableViewSectionedAnimatedDataSource.swift; sourceTree = "<group>"; };
+		C88C78791B3EB0C50061C5AB /* RxTableViewSectionedDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxTableViewSectionedDataSource.swift; sourceTree = "<group>"; };
+		C88C787A1B3EB0C50061C5AB /* RxTableViewSectionedReloadDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxTableViewSectionedReloadDataSource.swift; sourceTree = "<group>"; };
+		C88C787F1B3EB0C50061C5AB /* SectionModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionModel.swift; sourceTree = "<group>"; };
+		C88C78901B3F17C40061C5AB /* SectionedViewType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionedViewType.swift; sourceTree = "<group>"; };
+		C88C78921B3F17CB0061C5AB /* Changeset.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Changeset.swift; sourceTree = "<group>"; };
 		C897EC3A1B10E000009C2CB0 /* BehaviorSubjectTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BehaviorSubjectTest.swift; sourceTree = "<group>"; };
 		C897EC461B112070009C2CB0 /* Observable+MultipleTest+Zip.tt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Observable+MultipleTest+Zip.tt"; sourceTree = "<group>"; };
 		C897EC491B1123DA009C2CB0 /* Observable+MultipleTest+Zip.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Observable+MultipleTest+Zip.swift"; sourceTree = "<group>"; };
@@ -163,6 +175,7 @@
 			children = (
 				C811086A1AF50E43001C13E4 /* RxCocoa.framework */,
 				C811086B1AF50E43001C13E4 /* RxSwift.framework */,
+				C88C78761B3EB0C50061C5AB /* RxDataSourceStarterKit */,
 				C81108221AF50E11001C13E4 /* Tests */,
 				C81108211AF50E11001C13E4 /* Products */,
 			);
@@ -280,6 +293,28 @@
 			path = Tests;
 			sourceTree = "<group>";
 		};
+		C88C78761B3EB0C50061C5AB /* RxDataSourceStarterKit */ = {
+			isa = PBXGroup;
+			children = (
+				C88C78771B3EB0C50061C5AB /* DataSources */,
+				C88C78921B3F17CB0061C5AB /* Changeset.swift */,
+				C88C78901B3F17C40061C5AB /* SectionedViewType.swift */,
+				C88C787F1B3EB0C50061C5AB /* SectionModel.swift */,
+			);
+			name = RxDataSourceStarterKit;
+			path = ../RxDataSourceStarterKit;
+			sourceTree = "<group>";
+		};
+		C88C78771B3EB0C50061C5AB /* DataSources */ = {
+			isa = PBXGroup;
+			children = (
+				C88C78781B3EB0C50061C5AB /* RxTableViewSectionedAnimatedDataSource.swift */,
+				C88C78791B3EB0C50061C5AB /* RxTableViewSectionedDataSource.swift */,
+				C88C787A1B3EB0C50061C5AB /* RxTableViewSectionedReloadDataSource.swift */,
+			);
+			path = DataSources;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -373,10 +408,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C88C78821B3EB0C50061C5AB /* RxTableViewSectionedAnimatedDataSource.swift in Sources */,
 				C8B787FA1AF55CDE00206D02 /* Observable+ConcurrencyTest.swift in Sources */,
 				C81108691AF50E2A001C13E4 /* RxTest.swift in Sources */,
+				C88C78831B3EB0C50061C5AB /* RxTableViewSectionedDataSource.swift in Sources */,
 				C81108581AF50E2A001C13E4 /* Result+Equatable.swift in Sources */,
 				C81108671AF50E2A001C13E4 /* Observable+TimeTest.swift in Sources */,
+				C88C78931B3F17CB0061C5AB /* Changeset.swift in Sources */,
 				C81108551AF50E2A001C13E4 /* TestObservable.swift in Sources */,
 				C8E3812B1B2083C2008CDC33 /* PrimitiveMockObserver.swift in Sources */,
 				C811085B1AF50E2A001C13E4 /* Subscription.swift in Sources */,
@@ -389,6 +427,7 @@
 				C81108561AF50E2A001C13E4 /* TestObserver.swift in Sources */,
 				C811085A1AF50E2A001C13E4 /* VirtualTimeSchedulerBase.swift in Sources */,
 				C811085F1AF50E2A001C13E4 /* DisposableTest.swift in Sources */,
+				C88C78881B3EB0C50061C5AB /* SectionModel.swift in Sources */,
 				C8E381281B207D03008CDC33 /* PrimitiveHotObservable.swift in Sources */,
 				C81108661AF50E2A001C13E4 /* Observable+StandardSequenceOperatorsTest.swift in Sources */,
 				C81108641AF50E2A001C13E4 /* Observable+MultipleTest.swift in Sources */,
@@ -405,7 +444,9 @@
 				C81108591AF50E2A001C13E4 /* TestScheduler.swift in Sources */,
 				C81108601AF50E2A001C13E4 /* Observable+AggregateTest.swift in Sources */,
 				C81108521AF50E2A001C13E4 /* MockObserver.swift in Sources */,
+				C88C78841B3EB0C50061C5AB /* RxTableViewSectionedReloadDataSource.swift in Sources */,
 				C8633AE51B0A9FF300375D60 /* KVOObservableTests.swift in Sources */,
+				C88C78911B3F17C40061C5AB /* SectionedViewType.swift in Sources */,
 				C811085C1AF50E2A001C13E4 /* TestExtensions.swift in Sources */,
 				C811085D1AF50E2A001C13E4 /* AssumptionsTest.swift in Sources */,
 				C81108501AF50E2A001C13E4 /* ConnectableObservable.swift in Sources */,

@@ -15,12 +15,14 @@ extension UIControl {
         return AnonymousObservable { observer in
             MainScheduler.ensureExecutingOnScheduler()
             
-            let observer = ControlTarget(control: self, controlEvents: controlEvents) {
+            let controlTarget = ControlTarget(control: self, controlEvents: controlEvents) {
                 control in
                 sendNext(observer, ())
             }
             
-            return observer
+            return AnonymousDisposable {
+                controlTarget.dispose()
+            }
         }
     }
     
@@ -29,12 +31,13 @@ extension UIControl {
             
             sendNext(observer, getValue())
             
-            let subscription = ControlTarget(control: self, controlEvents: UIControlEvents.EditingChanged) { control in
+            let controlTarget = ControlTarget(control: self, controlEvents: UIControlEvents.EditingChanged) { control in
                 sendNext(observer, getValue())
             }
             
-            return subscription
-            
+            return AnonymousDisposable {
+                controlTarget.dispose()
+            }
         }
     }
 }

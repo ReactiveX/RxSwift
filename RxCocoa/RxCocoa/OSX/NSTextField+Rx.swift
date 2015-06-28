@@ -10,31 +10,22 @@ import Foundation
 import Cocoa
 import RxSwift
 
-class RxTextFieldDelegate : NSObject, NSTextFieldDelegate {
+class RxTextFieldDelegate : Delegate, NSTextFieldDelegate {
     typealias Observer = ObserverOf<String>
     typealias DisposeKey = Bag<Observer>.KeyType
     
     var observers: Bag<Observer> = Bag()
     
+    let textField: NSTextField
+    
+    init(textField: NSTextField) {
+        self.textField = textField
+    }
+    
     override func controlTextDidChange(notification: NSNotification) {
         let textField = notification.object as! NSTextField
         let nextValue = textField.stringValue
         dispatchNext(nextValue, observers)
-    }
-    
-    func addObserver(observer: Observer) -> DisposeKey {
-        MainScheduler.ensureExecutingOnScheduler()
-        
-        return observers.put(observer)
-    }
-    
-    func removeObserver(key: DisposeKey) {
-        MainScheduler.ensureExecutingOnScheduler()
-        
-        let element = observers.removeKey(key)
-        if element == nil {
-            removingObserverFailed()
-        }
     }
 }
 
@@ -84,6 +75,7 @@ extension NSTextField {
                 delegate.removeObserver(key)
                 
                 if delegate.observers.count == 0 {
+                    delegate.dispose()
                     self.delegate = nil
                 }
             }
@@ -91,7 +83,7 @@ extension NSTextField {
     }
     
     private func rx_createDelegate() -> RxTextFieldDelegate {
-        return RxTextFieldDelegate()
+        return RxTextFieldDelegate(textField: self)
     }
     
     private func rx_checkDelegate() -> RxTextFieldDelegate? {

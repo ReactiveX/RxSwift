@@ -50,14 +50,17 @@ public class RxCollectionViewDataSource :  NSObject, UICollectionViewDataSource 
     }
 }
 
-public class RxCollectionViewDelegate: RxScrollViewDelegate, UICollectionViewDelegate {
+public class RxCollectionViewDelegate: RxScrollViewDelegateBridge, UICollectionViewDelegate {
     public typealias Observer = ObserverOf<(UICollectionView, Int)>
     public typealias DisposeKey = Bag<Observer>.KeyType
     
-    var collectionViewObservers: Bag<Observer>
+    var collectionViewObservers: Bag<Observer> = Bag()
     
-    override public init() {
-        collectionViewObservers = Bag()
+    public let collectionView: UICollectionView
+    
+    public init(collectionView: UICollectionView) {
+        self.collectionView = collectionView
+        super.init(view: collectionView)
     }
     
     public func addCollectionViewObserver(observer: Observer) -> DisposeKey {
@@ -90,8 +93,8 @@ public class RxCollectionViewDelegate: RxScrollViewDelegate, UICollectionViewDel
 
 // This is the most simple (but probably most common) way of using rx with UICollectionView.
 extension UICollectionView {
-    override func rx_createDelegate() -> RxScrollViewDelegate {
-        return RxCollectionViewDelegate()
+    override public func rx_createDelegateBridge() -> RxScrollViewDelegateBridge {
+        return RxCollectionViewDelegate(collectionView: self)
     }
     
     public func rx_subscribeItemsTo<E where E: AnyObject>
@@ -172,7 +175,7 @@ extension UICollectionView {
             var maybeDelegate = self.rx_checkCollectionViewDelegate()
             
             if maybeDelegate == nil {
-                let delegate = self.rx_createDelegate() as! RxCollectionViewDelegate
+                let delegate = self.rx_createDelegateBridge() as! RxCollectionViewDelegate
                 maybeDelegate = delegate
                 self.delegate = maybeDelegate
             }
