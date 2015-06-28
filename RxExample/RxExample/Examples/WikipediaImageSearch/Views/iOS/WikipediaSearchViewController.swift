@@ -33,15 +33,17 @@ class WikipediaSearchViewController: ViewController {
         
         resultsTableView.rowHeight = 194
         
+        let selectedResult: Observable<SearchResultViewModel> = resultsTableView.rx_selectedModel()
+        
         let viewModel = SearchViewModel(
             searchText: searchBar.rx_searchText,
-            selectedResult: resultsTableView.rx_elementTap()
+            selectedResult: selectedResult
         )
         
         // map table view rows
         // {
         viewModel.rows
-            >- resultsTableView.rx_subscribeRowsToCellWithIdentifier("WikipediaSearchCell") { (_, _, viewModel, cell: WikipediaSearchCell) in
+            >- resultsTableView.rx_subscribeItemsToWithCellIdentifier("WikipediaSearchCell") { (_, viewModel, cell: WikipediaSearchCell) in
                 cell.viewModel = viewModel
             }
             >- disposeBag.addDisposable

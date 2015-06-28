@@ -188,8 +188,8 @@
 		C8A60C3C1AF4191B007923F0 /* Sample.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A60C3B1AF4191B007923F0 /* Sample.swift */; };
 		C8AED7A91B3C2ACA00678DDE /* Skip.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8AED7A81B3C2ACA00678DDE /* Skip.swift */; };
 		C8AED7AA1B3C2ACA00678DDE /* Skip.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8AED7A81B3C2ACA00678DDE /* Skip.swift */; };
-		C8AED7B81B3C855A00678DDE /* ReplaySubject.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8AED7B71B3C855A00678DDE /* ReplaySubject.swift */; };
-		C8AED7B91B3C855A00678DDE /* ReplaySubject.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8AED7B71B3C855A00678DDE /* ReplaySubject.swift */; };
+		C8AED7B21B3C66B000678DDE /* ReplaySubject.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8AED7B11B3C66B000678DDE /* ReplaySubject.swift */; };
+		C8AED7B31B3C66B000678DDE /* ReplaySubject.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8AED7B11B3C66B000678DDE /* ReplaySubject.swift */; };
 		C8B35B831B234BF7009851DA /* PeriodicScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B35B821B234BF7009851DA /* PeriodicScheduler.swift */; };
 		C8B35B841B234BF7009851DA /* PeriodicScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B35B821B234BF7009851DA /* PeriodicScheduler.swift */; };
 		C8B35B8A1B2393A1009851DA /* SchedulerServices+Emulation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B35B891B2393A1009851DA /* SchedulerServices+Emulation.swift */; };
@@ -315,7 +315,7 @@
 		C8A56B411AD7435900B4673B /* Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Rx.swift; sourceTree = "<group>"; };
 		C8A60C3B1AF4191B007923F0 /* Sample.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sample.swift; sourceTree = "<group>"; };
 		C8AED7A81B3C2ACA00678DDE /* Skip.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Skip.swift; sourceTree = "<group>"; };
-		C8AED7B71B3C855A00678DDE /* ReplaySubject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReplaySubject.swift; sourceTree = "<group>"; };
+		C8AED7B11B3C66B000678DDE /* ReplaySubject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReplaySubject.swift; sourceTree = "<group>"; };
 		C8B35B821B234BF7009851DA /* PeriodicScheduler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PeriodicScheduler.swift; sourceTree = "<group>"; };
 		C8B35B891B2393A1009851DA /* SchedulerServices+Emulation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SchedulerServices+Emulation.swift"; sourceTree = "<group>"; };
 		C8B787F51AF544A200206D02 /* Observable+Debug.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Observable+Debug.swift"; sourceTree = "<group>"; };
@@ -375,6 +375,7 @@
 				C897EC311B10D426009C2CB0 /* BehaviorSubject.swift */,
 				C897EC2B1B10D3F4009C2CB0 /* ConnectableObservableType.swift */,
 				C897EC341B10D8F2009C2CB0 /* PublishSubject.swift */,
+				C8AED7B11B3C66B000678DDE /* ReplaySubject.swift */,
 				C897EC2C1B10D3F4009C2CB0 /* SubjectType.swift */,
 				C897EC371B10DB10009C2CB0 /* Variable.swift */,
 			);
@@ -701,7 +702,7 @@
 				C80B56151B2CE16E008F915D /* SubscribeOn.swift in Sources */,
 				C88BB8271B07E5ED0064D411 /* CombineLatest+arity.swift in Sources */,
 				C8B35B841B234BF7009851DA /* PeriodicScheduler.swift in Sources */,
-				C8AED7B91B3C855A00678DDE /* ReplaySubject.swift in Sources */,
+				C8AED7B31B3C66B000678DDE /* ReplaySubject.swift in Sources */,
 				C8FBCF9E1B0FE2B00091DBFA /* Observer.swift in Sources */,
 				C88BB8291B07E5ED0064D411 /* CombineLatest.swift in Sources */,
 				C87CF6061B1B7EC300283912 /* MainScheduler.swift in Sources */,
@@ -811,7 +812,7 @@
 				C80B56141B2CE16E008F915D /* SubscribeOn.swift in Sources */,
 				C8BA11451AE84932004D2FA8 /* CombineLatest+arity.swift in Sources */,
 				C8B35B831B234BF7009851DA /* PeriodicScheduler.swift in Sources */,
-				C8AED7B81B3C855A00678DDE /* ReplaySubject.swift in Sources */,
+				C8AED7B21B3C66B000678DDE /* ReplaySubject.swift in Sources */,
 				C8FBCF9D1B0FE2B00091DBFA /* Observer.swift in Sources */,
 				C8DA57E91AEB9F7D0035AF28 /* CombineLatest.swift in Sources */,
 				C87CF6051B1B7EC300283912 /* MainScheduler.swift in Sources */,

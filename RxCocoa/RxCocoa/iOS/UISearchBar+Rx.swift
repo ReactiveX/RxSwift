@@ -10,11 +10,17 @@ import Foundation
 import RxSwift
 import UIKit
 
-class RxSearchBarDelegate: NSObject, UISearchBarDelegate {
+class RxSearchBarDelegate: Delegate, UISearchBarDelegate {
     typealias Observer = ObserverOf<String>
     typealias DisposeKey = Bag<ObserverOf<String>>.KeyType
     
     var observers: Bag<Observer> = Bag()
+    
+    let searchBar: UISearchBar
+    
+    init(searchBar: UISearchBar) {
+        self.searchBar = searchBar
+    }
     
     func addObserver(observer: Observer) -> DisposeKey {
         MainScheduler.ensureExecutingOnScheduler()
@@ -35,6 +41,20 @@ class RxSearchBarDelegate: NSObject, UISearchBarDelegate {
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
         dispatchNext(searchText, observers)
     }
+    
+    // dispose
+    
+    override var isDisposable: Bool {
+        get {
+            return super.isDisposable && observers.count == 0
+        }
+    }
+    
+    override func dispose() {
+        super.dispose()
+        assert(self.searchBar.delegate === self)
+        self.searchBar.delegate = nil
+    }
 }
 
 extension UISearchBar {
@@ -49,7 +69,7 @@ extension UISearchBar {
             var maybeDelegate = self.rx_checkSearchBarDelegate()
             
             if maybeDelegate == nil {
-                maybeDelegate = RxSearchBarDelegate()
+                maybeDelegate = RxSearchBarDelegate(searchBar: self)
                 self.delegate = maybeDelegate
             }
             
@@ -59,6 +79,7 @@ extension UISearchBar {
             
             return AnonymousDisposable {
                 delegate.removeObserver(key)
+                delegate.disposeIfNecessary()
             }
         }
     }

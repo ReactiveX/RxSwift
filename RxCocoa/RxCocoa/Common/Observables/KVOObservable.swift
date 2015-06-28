@@ -15,13 +15,11 @@ protocol KVOObservableProtocol {
     var options: NSKeyValueObservingOptions { get }
 }
 
-class KVOObserver : NSObject, Disposable {
+class KVOObserver : Delegate {
     typealias Callback = (AnyObject?) -> Void
     
     let parent: KVOObservableProtocol
     let callback: Callback
-    
-    var retainSelf: KVOObserver? = nil
     
     var context: UInt8 = 0
     
@@ -31,14 +29,8 @@ class KVOObserver : NSObject, Disposable {
         
         super.init()
         
-        self.retainSelf = self
-        
         self.parent.object.addObserver(self, forKeyPath: self.parent.path, options: self.parent.options, context: &context)
-#if TRACE_RESOURCES
-        OSAtomicIncrement32(&resourceCount)
-#endif
     }
-    
     
     override func observeValueForKeyPath(keyPath: String, ofObject object: AnyObject, change: [NSObject : AnyObject], context: UnsafeMutablePointer<Void>) {
         let newValue: AnyObject? = change[NSKeyValueChangeNewKey]
@@ -48,16 +40,9 @@ class KVOObserver : NSObject, Disposable {
         }
     }
     
-    func dispose() {
+    override func dispose() {
+        super.dispose()
         self.parent.object.removeObserver(self, forKeyPath: self.parent.path)
-        
-        self.retainSelf = nil
-    }
-    
-    deinit {
-#if TRACE_RESOURCES
-        OSAtomicDecrement32(&resourceCount)
-#endif
     }
 }
 
@@ -81,7 +66,7 @@ class KVOObservable<Element> : Observable<Element?>, KVOObservableProtocol {
             sendNext(observer, value as? Element)
         }
         
-        return AnonymousDisposable { () in
+        return AnonymousDisposable {
             observer.dispose()
         }
     }
