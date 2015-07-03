@@ -1,21 +1,22 @@
 //
-//  RxTableViewDataSource.swift
-//  RxCocoa
+//  RxCollectionViewSectionedDataSource.swift
+//  RxExample
 //
-//  Created by Krunoslav Zaher on 6/15/15.
+//  Created by Krunoslav Zaher on 7/2/15.
 //  Copyright (c) 2015 Krunoslav Zaher. All rights reserved.
 //
 
 import Foundation
+import UIKit
 import RxSwift
 import RxCocoa
-import UIKit
 
-public class RxTableViewSectionedDataSource<S: SectionModelType> : RxTableViewNopDataSource {
+public class RxCollectionViewSectionedDataSource<S: SectionModelType> : RxCollectionViewNopDataSource, RxCollectionViewDataSourceType {
     
     public typealias I = S.Item
     public typealias Section = S
-    public typealias CellFactory = (UITableView, NSIndexPath, Section, I) -> UITableViewCell
+    public typealias CellFactory = (UICollectionView, NSIndexPath, Section, I) -> UICollectionViewCell
+    public typealias SupplementaryViewFactory = (UICollectionView, String, NSIndexPath, I) -> UICollectionReusableView
     
     public typealias IncrementalUpdateObserver = ObserverOf<Changeset<S>>
     
@@ -30,11 +31,11 @@ public class RxTableViewSectionedDataSource<S: SectionModelType> : RxTableViewNo
     public typealias SectionModelSnapshot = SectionModel<S, I>
     
     var sectionModels: [SectionModelSnapshot] = []
-
+    
     public func sectionAtIndex(section: Int) -> S {
         return self.sectionModels[section].model
     }
-
+    
     var incrementalUpdateObservers: Bag<IncrementalUpdateObserver> = Bag()
     
     public func setSections(sections: [S]) {
@@ -42,20 +43,22 @@ public class RxTableViewSectionedDataSource<S: SectionModelType> : RxTableViewNo
     }
     
     public var cellFactory: CellFactory! = nil
-    
-    public var titleForHeaderInSection: ((section: Int) -> String)?
-    public var titleForFooterInSection: ((section: Int) -> String)?
-    
-    public var rowAnimation: UITableViewRowAnimation = .Automatic
+    public var supplementaryViewFactory: SupplementaryViewFactory
     
     public override init() {
+        self.cellFactory = { _, _, _, _ in castOrFail(nil).get() }
+        self.supplementaryViewFactory = { _, _, _, _ in castOrFail(nil).get() }
+        
         super.init()
         self.cellFactory = { [weak self] _ in
-            if let strongSelf = self {
-                precondition(false, "There is a minor problem. `cellFactory` property on \(strongSelf) was not set. Please set it manually, or use one of the `rx_subscribeTo` methods.")
-            }
+            precondition(false, "There is a minor problem. `cellFactory` property on \(self!) was not set. Please set it manually, or use one of the `rx_subscribeTo` methods.")
             
-            return (nil as UITableViewCell!)!
+            return (nil as UICollectionViewCell!)!
+        }
+        
+        self.supplementaryViewFactory = { [weak self] _, _, _, _ in
+            precondition(false, "There is a minor problem. `supplementaryViewFactory` property on \(self!) was not set.")
+            return (nil as UICollectionReusableView?)!
         }
     }
     
@@ -72,28 +75,23 @@ public class RxTableViewSectionedDataSource<S: SectionModelType> : RxTableViewNo
     
     // UITableViewDataSource
     
-    public override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    public override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         return sectionModels.count
     }
     
-    public override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    public override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return sectionModels[section].items.count
     }
     
-    public override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    public override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         precondition(indexPath.item < sectionModels[indexPath.section].items.count)
         
         let item = indexPath.item
         let section = sectionModels[indexPath.section]
-        return cellFactory(tableView, indexPath, section.model, section.items[item])
+        return cellFactory(collectionView, indexPath, section.model, section.items[item])
     }
     
-    public override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return titleForHeaderInSection?(section: section)
+    public func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
+        return supplementaryViewFactory(collectionView, kind, indexPath, sectionModels[indexPath.section].items[indexPath.item])
     }
-    
-    public override func tableView(tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-        return titleForFooterInSection?(section: section)
-    }
-    
 }

@@ -25,7 +25,7 @@ public class RxTableViewNopDataSource : RxTableViewDataSourceType {
     }
     
     public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        return UITableViewCell()
+        return rxAbstractMethod()
     }
     
     public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

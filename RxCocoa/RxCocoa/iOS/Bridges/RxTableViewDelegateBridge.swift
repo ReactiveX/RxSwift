@@ -52,8 +52,8 @@ public class RxTableViewDelegateBridgeWithProxyFiltering: RxTableViewDelegateBri
 }
 
 // Please take a look at `DelegateBridgeType.swift`
-public class RxTableViewDelegateBridge: RxScrollViewDelegateBridge, UITableViewDelegate {
-    public typealias View = UITableView
+public class RxTableViewDelegateBridge : RxScrollViewDelegateBridge
+                                       , UITableViewDelegate {
     public typealias ItemSelectedObserver = ObserverOf<ItemSelectedEvent<UITableView>>
     public typealias ItemSelectedDisposeKey = Bag<ItemSelectedObserver>.KeyType
 

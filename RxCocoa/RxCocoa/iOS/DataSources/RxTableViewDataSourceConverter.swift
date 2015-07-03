@@ -29,7 +29,7 @@ public class RxTableViewDataSourceConverter : RxTableViewDataSourceType
     
     public var targetDelegate: NSObjectProtocol? {
         get {
-            return dataSource as? NSObjectProtocol
+            return dataSource
         }
     }
     

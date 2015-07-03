@@ -11,7 +11,9 @@ import RxSwift
 import UIKit
 
 // Please take a look at `DelegateBridgeType.swift`
-public class RxScrollViewDelegateBridge: Delegate, UIScrollViewDelegate, DelegateBridgeType {
+public class RxScrollViewDelegateBridge : Delegate
+                                        , UIScrollViewDelegate
+                                        , DelegateBridgeType {
     public typealias ContentOffsetObserver = ObserverOf<CGPoint>
     public typealias ContentOffsetDisposeKey = Bag<ContentOffsetObserver>.KeyType
 

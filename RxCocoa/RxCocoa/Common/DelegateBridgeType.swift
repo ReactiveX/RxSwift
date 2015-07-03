@@ -225,6 +225,6 @@ func subscribeObservableUsingDelegateBridgeAndDataSource<B: DelegateBridgeType, 
             binding(bridge, event)
         })
             
-        return StableCompositeDisposable.create(subscription, bridge)
+        return StableCompositeDisposable.create(subscription, result.disposable)
     }
 }

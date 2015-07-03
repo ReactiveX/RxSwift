@@ -11,8 +11,9 @@ import UIKit
 import RxSwift
 
 // Please take a look at `DelegateBridgeType.swift`
-public class RxTableViewDataSourceBridge : Delegate, UITableViewDataSource, DelegateBridgeType {
-    public typealias View = UITableView
+public class RxTableViewDataSourceBridge : Delegate
+                                         , UITableViewDataSource
+                                         , DelegateBridgeType {
     
     public typealias InsertItemObserver = ObserverOf<InsertItemEvent<UITableView>>
     public typealias DeleteItemObserver = ObserverOf<DeleteItemEvent<UITableView>>
