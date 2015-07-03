@@ -62,6 +62,16 @@
 		C88C788C1B3EBA050061C5AB /* DelegateConverterType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88C788B1B3EBA050061C5AB /* DelegateConverterType.swift */; };
 		C88C788D1B3EBA050061C5AB /* DelegateConverterType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88C788B1B3EBA050061C5AB /* DelegateConverterType.swift */; };
 		C8A56BCE1AD744FD00B4673B /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8A56BCD1AD744FD00B4673B /* RxSwift.framework */; };
+		C8A57F761B4141CC00D5570A /* RxCollectionViewDataSourceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A57F751B4141CC00D5570A /* RxCollectionViewDataSourceType.swift */; };
+		C8A57F781B41424800D5570A /* RxCollectionViewDelegateType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A57F771B41424800D5570A /* RxCollectionViewDelegateType.swift */; };
+		C8A57F7A1B41431600D5570A /* RxCollectionViewReactiveDataSourceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A57F791B41431600D5570A /* RxCollectionViewReactiveDataSourceType.swift */; };
+		C8A57F7C1B41438700D5570A /* RxCollectionViewDataSourceBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A57F7B1B41438700D5570A /* RxCollectionViewDataSourceBridge.swift */; };
+		C8A57F7E1B41464C00D5570A /* RxCollectionViewNopDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A57F7D1B41464C00D5570A /* RxCollectionViewNopDelegate.swift */; };
+		C8A57F801B41478A00D5570A /* RxCollectionViewDelegateBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A57F7F1B41478A00D5570A /* RxCollectionViewDelegateBridge.swift */; };
+		C8A57F821B41479A00D5570A /* RxCollectionViewDelegateConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A57F811B41479A00D5570A /* RxCollectionViewDelegateConverter.swift */; };
+		C8A57F841B41514E00D5570A /* RxCollectionViewNopDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A57F831B41514E00D5570A /* RxCollectionViewNopDataSource.swift */; };
+		C8A57F861B41520C00D5570A /* RxCollectionViewDataSourceConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A57F851B41520C00D5570A /* RxCollectionViewDataSourceConverter.swift */; };
+		C8A57F881B41530A00D5570A /* RxCollectionViewReactiveArrayDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A57F871B41530A00D5570A /* RxCollectionViewReactiveArrayDataSource.swift */; };
 		C8AED7C41B3C91B700678DDE /* RxScrollViewDelegateBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8AED7BC1B3C91B700678DDE /* RxScrollViewDelegateBridge.swift */; };
 		C8AED7C51B3C91B700678DDE /* RxScrollViewDelegateBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8AED7BC1B3C91B700678DDE /* RxScrollViewDelegateBridge.swift */; };
 		C8AED7C81B3C91B700678DDE /* RxTableViewDataSourceBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8AED7BE1B3C91B700678DDE /* RxTableViewDataSourceBridge.swift */; };
@@ -123,6 +133,16 @@
 		C88BB91B1B07FD830064D411 /* NSButton+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSButton+Rx.swift"; sourceTree = "<group>"; };
 		C88C788B1B3EBA050061C5AB /* DelegateConverterType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DelegateConverterType.swift; sourceTree = "<group>"; };
 		C8A56BCD1AD744FD00B4673B /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RxSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C8A57F751B4141CC00D5570A /* RxCollectionViewDataSourceType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxCollectionViewDataSourceType.swift; sourceTree = "<group>"; };
+		C8A57F771B41424800D5570A /* RxCollectionViewDelegateType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxCollectionViewDelegateType.swift; sourceTree = "<group>"; };
+		C8A57F791B41431600D5570A /* RxCollectionViewReactiveDataSourceType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxCollectionViewReactiveDataSourceType.swift; sourceTree = "<group>"; };
+		C8A57F7B1B41438700D5570A /* RxCollectionViewDataSourceBridge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxCollectionViewDataSourceBridge.swift; sourceTree = "<group>"; };
+		C8A57F7D1B41464C00D5570A /* RxCollectionViewNopDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxCollectionViewNopDelegate.swift; sourceTree = "<group>"; };
+		C8A57F7F1B41478A00D5570A /* RxCollectionViewDelegateBridge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxCollectionViewDelegateBridge.swift; sourceTree = "<group>"; };
+		C8A57F811B41479A00D5570A /* RxCollectionViewDelegateConverter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxCollectionViewDelegateConverter.swift; sourceTree = "<group>"; };
+		C8A57F831B41514E00D5570A /* RxCollectionViewNopDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxCollectionViewNopDataSource.swift; sourceTree = "<group>"; };
+		C8A57F851B41520C00D5570A /* RxCollectionViewDataSourceConverter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxCollectionViewDataSourceConverter.swift; sourceTree = "<group>"; };
+		C8A57F871B41530A00D5570A /* RxCollectionViewReactiveArrayDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxCollectionViewReactiveArrayDataSource.swift; sourceTree = "<group>"; };
 		C8AED7BC1B3C91B700678DDE /* RxScrollViewDelegateBridge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxScrollViewDelegateBridge.swift; sourceTree = "<group>"; };
 		C8AED7BE1B3C91B700678DDE /* RxTableViewDataSourceBridge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxTableViewDataSourceBridge.swift; sourceTree = "<group>"; };
 		C8AED7C01B3C91B700678DDE /* RxTableViewDelegateBridge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxTableViewDelegateBridge.swift; sourceTree = "<group>"; };
@@ -290,6 +310,8 @@
 				C8AED7BC1B3C91B700678DDE /* RxScrollViewDelegateBridge.swift */,
 				C8AED7BE1B3C91B700678DDE /* RxTableViewDataSourceBridge.swift */,
 				C8AED7C01B3C91B700678DDE /* RxTableViewDelegateBridge.swift */,
+				C8A57F7B1B41438700D5570A /* RxCollectionViewDataSourceBridge.swift */,
+				C8A57F7F1B41478A00D5570A /* RxCollectionViewDelegateBridge.swift */,
 			);
 			path = Bridges;
 			sourceTree = "<group>";
@@ -301,6 +323,8 @@
 				C83CF87C1B3E0316001359E7 /* RxScrollViewNopDelegate.swift */,
 				C83CF87E1B3E0A25001359E7 /* RxTableViewDelegateConverter.swift */,
 				C83CF8801B3E0B9D001359E7 /* RxTableViewNopDelegate.swift */,
+				C8A57F7D1B41464C00D5570A /* RxCollectionViewNopDelegate.swift */,
+				C8A57F811B41479A00D5570A /* RxCollectionViewDelegateConverter.swift */,
 			);
 			path = Delegates;
 			sourceTree = "<group>";
@@ -312,6 +336,9 @@
 				C8AED7E81B3CC93600678DDE /* RxTableViewReactiveDataSourceType.swift */,
 				C83CF8761B3DE811001359E7 /* RxScrollViewDelegateType.swift */,
 				C83CF8781B3DE923001359E7 /* RxTableViewDelegateType.swift */,
+				C8A57F751B4141CC00D5570A /* RxCollectionViewDataSourceType.swift */,
+				C8A57F771B41424800D5570A /* RxCollectionViewDelegateType.swift */,
+				C8A57F791B41431600D5570A /* RxCollectionViewReactiveDataSourceType.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -322,6 +349,9 @@
 				C8AED7E51B3CC60300678DDE /* RxTableViewNopDataSource.swift */,
 				C8AED7EB1B3D4F3700678DDE /* RxTableViewDataSourceConverter.swift */,
 				C83CF8621B3DDD54001359E7 /* RxTableViewReactiveArrayDataSource.swift */,
+				C8A57F831B41514E00D5570A /* RxCollectionViewNopDataSource.swift */,
+				C8A57F851B41520C00D5570A /* RxCollectionViewDataSourceConverter.swift */,
+				C8A57F871B41530A00D5570A /* RxCollectionViewReactiveArrayDataSource.swift */,
 			);
 			path = DataSources;
 			sourceTree = "<group>";
@@ -440,12 +470,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				C86282391B36037100500DC3 /* ControlTarget.swift in Sources */,
+				C8A57F761B4141CC00D5570A /* RxCollectionViewDataSourceType.swift in Sources */,
 				C88BB8EE1B07F2BE0064D411 /* UITableView+Rx.swift in Sources */,
+				C8A57F7C1B41438700D5570A /* RxCollectionViewDataSourceBridge.swift in Sources */,
 				C88BB8EF1B07F2BE0064D411 /* UITextField+Rx.swift in Sources */,
+				C8A57F7A1B41431600D5570A /* RxCollectionViewReactiveDataSourceType.swift in Sources */,
+				C8A57F821B41479A00D5570A /* RxCollectionViewDelegateConverter.swift in Sources */,
 				C862823B1B36037100500DC3 /* KVOObservable.swift in Sources */,
 				C83CF8811B3E0B9D001359E7 /* RxTableViewNopDelegate.swift in Sources */,
 				C83CF8771B3DE811001359E7 /* RxScrollViewDelegateType.swift in Sources */,
 				493693671B173C8F006FA450 /* UISlider+Rx.swift in Sources */,
+				C8A57F841B41514E00D5570A /* RxCollectionViewNopDataSource.swift in Sources */,
+				C8A57F861B41520C00D5570A /* RxCollectionViewDataSourceConverter.swift in Sources */,
 				C862823D1B36037100500DC3 /* NSNotificationCenter+Rx.swift in Sources */,
 				C86282501B370C7E00500DC3 /* ItemEvents.swift in Sources */,
 				C83225471B1A9CCB0048EC77 /* UIDatePicker.swift in Sources */,
@@ -453,7 +489,9 @@
 				C8AED7CC1B3C91B700678DDE /* RxTableViewDelegateBridge.swift in Sources */,
 				C83CF8631B3DDD54001359E7 /* RxTableViewReactiveArrayDataSource.swift in Sources */,
 				C83CF87B1B3DFDF8001359E7 /* RxScrollViewDelegateConverter.swift in Sources */,
+				C8A57F7E1B41464C00D5570A /* RxCollectionViewNopDelegate.swift in Sources */,
 				C86282441B36038800500DC3 /* Derive.swift in Sources */,
+				C8A57F801B41478A00D5570A /* RxCollectionViewDelegateBridge.swift in Sources */,
 				C88BB8E81B07F2BE0064D411 /* UIButton+Rx.swift in Sources */,
 				C86282471B36038F00500DC3 /* Integrate.swift in Sources */,
 				C8633AB41B093EDF00375D60 /* Logging.swift in Sources */,
@@ -466,6 +504,7 @@
 				C80B56221B2DFCA0008F915D /* NSManagedObjectContext+Rx.swift in Sources */,
 				C88BB8E91B07F2BE0064D411 /* UICollectionView+Rx.swift in Sources */,
 				C862824A1B3607D500500DC3 /* CoreDataEntityEvent.swift in Sources */,
+				C8A57F781B41424800D5570A /* RxCollectionViewDelegateType.swift in Sources */,
 				C8633ABA1B093EDF00375D60 /* RxCocoa.swift in Sources */,
 				C8AED7E61B3CC60300678DDE /* RxTableViewNopDataSource.swift in Sources */,
 				C88BB8ED1B07F2BE0064D411 /* UISearchBar+Rx.swift in Sources */,
@@ -478,6 +517,7 @@
 				C80B562B1B2E242D008F915D /* Delegate.swift in Sources */,
 				C8AED7C81B3C91B700678DDE /* RxTableViewDataSourceBridge.swift in Sources */,
 				653C8BF41B114EB600983087 /* UIControl+Rx.swift in Sources */,
+				C8A57F881B41530A00D5570A /* RxCollectionViewReactiveArrayDataSource.swift in Sources */,
 				C8AED7E91B3CC93600678DDE /* RxTableViewReactiveDataSourceType.swift in Sources */,
 				C8D95C171B2F0CD700FA661F /* DelegateBridgeType.swift in Sources */,
 			);

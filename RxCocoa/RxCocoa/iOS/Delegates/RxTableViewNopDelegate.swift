@@ -11,7 +11,8 @@ import UIKit
 import RxSwift
 
 // Please take a look at `DelegateBridgeType.swift`
-public class RxTableViewNopDelegate : RxScrollViewNopDelegate, RxTableViewDelegateType {
+public class RxTableViewNopDelegate : RxScrollViewNopDelegate
+                                    , RxTableViewDelegateType {
     
     public override init() {
     #if TRACE_RESOURCES

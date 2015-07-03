@@ -330,7 +330,7 @@ func differentiate<S: SectionModelType where S: Hashable, S.Item: Hashable>(
     // }
     
     // mark new and moved items {
-    // 3rs stage
+    // 3rd stage
     for (i, finalSection) in enumerate(finalSections) {
         let finalSection = finalSections[i]
         

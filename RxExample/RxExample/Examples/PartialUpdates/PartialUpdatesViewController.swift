@@ -1,5 +1,5 @@
 //
-//  TableViewPartialUpdatesViewController.swift
+//  PartialUpdatesViewController.swift
 //  RxExample
 //
 //  Created by Krunoslav Zaher on 6/8/15.
@@ -12,11 +12,10 @@ import RxSwift
 import RxCocoa
 import CoreData
 
-
-
-class TableViewPartialUpdatesViewController : ViewController, UITableViewDelegate {
+class PartialUpdatesViewController : ViewController {
     @IBOutlet weak var reloadTableViewOutlet: UITableView!
     @IBOutlet weak var partialUpdatesTableViewOutlet: UITableView!
+    @IBOutlet weak var partialUpdatesCollectionViewOutlet: UICollectionView!
     
     var moc: NSManagedObjectContext!
     var child: NSManagedObjectContext!
@@ -39,17 +38,12 @@ class TableViewPartialUpdatesViewController : ViewController, UITableViewDelegat
     
     var generator = Randomizer(rng: PseudoRandomGenerator(4, 3), sections: initialValue)
 
-    /*var generator = Randomizer(rng: PseudoRandomGenerator(4, 3), sections: [
-        NumberSection(model: "1", items: [1111]),
-        NumberSection(model: "2", items: [2222]),
-    ])
-    */
     var sections = Variable([NumberSection]())
     
     let disposeBag = DisposeBag()
     
-    func skinDataSource(dataSource: RxTableViewSectionedDataSource<NumberSection>) {
-        dataSource.cellFactory = { (tv: UITableView, ip, s, i) in
+    func skinTableViewDataSource(dataSource: RxTableViewSectionedDataSource<NumberSection>) {
+        dataSource.cellFactory = { (tv, ip, s, i) in
             let cell = tv.dequeueReusableCellWithIdentifier("Cell") as? UITableViewCell
                 ?? UITableViewCell(style:.Default, reuseIdentifier: "Cell")
             
@@ -63,17 +57,28 @@ class TableViewPartialUpdatesViewController : ViewController, UITableViewDelegat
         }
     }
     
+    func skinCollectionViewDataSource(dataSource: RxCollectionViewSectionedDataSource<NumberSection>) {
+        dataSource.cellFactory = { (cv, ip, s, i) in
+            let cell = cv.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: ip) as! NumberCell
+            
+            cell.value!.text = "\(i)"
+            
+            return cell
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
      
         self.sections.next(generator.sections)
         
-        let animatedDataSource = RxTableViewSectionedAnimatedDataSource<NumberSection>()
+        let tvAnimatedDataSource = RxTableViewSectionedAnimatedDataSource<NumberSection>()
+        let cvAnimatedDataSource = RxCollectionViewSectionedAnimatedDataSource<NumberSection>()
         let reloadDataSource = RxTableViewSectionedReloadDataSource<NumberSection>()
         
-        skinDataSource(animatedDataSource)
-        skinDataSource(reloadDataSource)
+        skinTableViewDataSource(tvAnimatedDataSource)
+        skinTableViewDataSource(reloadDataSource)
+        skinCollectionViewDataSource(cvAnimatedDataSource)
         
         let newSections = self.sections >- skip(1)
         
@@ -81,15 +86,21 @@ class TableViewPartialUpdatesViewController : ViewController, UITableViewDelegat
         
         // reactive data sources
         
-        zip(self.sections, newSections) { (old, new) in
+        let updates = zip(self.sections, newSections) { (old, new) in
                 return differentiate(old, new)
             }
             >- startWith(initialState)
-            >- partialUpdatesTableViewOutlet.rx_subscribeWithReactiveDataSource(animatedDataSource)
+            
+        updates
+            >- partialUpdatesTableViewOutlet.rx_subscribeWithReactiveDataSource(tvAnimatedDataSource)
             >- disposeBag.addDisposable
 
         self.sections
             >- reloadTableViewOutlet.rx_subscribeWithReactiveDataSource(reloadDataSource)
+            >- disposeBag.addDisposable
+        
+        updates
+            >- partialUpdatesCollectionViewOutlet.rx_subscribeWithReactiveDataSource(cvAnimatedDataSource)
             >- disposeBag.addDisposable
     }
     
@@ -98,8 +109,8 @@ class TableViewPartialUpdatesViewController : ViewController, UITableViewDelegat
         var values = generator.sections
        
         // useful for debugging
-        if TableViewPartialUpdatesViewController.firstChange != nil {
-            values = TableViewPartialUpdatesViewController.firstChange!
+        if PartialUpdatesViewController.firstChange != nil {
+            values = PartialUpdatesViewController.firstChange!
         }
         
         sections.next(values)
