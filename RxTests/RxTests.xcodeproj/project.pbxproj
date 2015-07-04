@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5E5D10BB1B48355200432B25 /* UIControl+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5D10BA1B48355200432B25 /* UIControl+RxTests.swift */; };
 		C811084D1AF50E2A001C13E4 /* NSNotificationCenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C811082B1AF50E2A001C13E4 /* NSNotificationCenterTests.swift */; };
 		C811084F1AF50E2A001C13E4 /* ColdObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81108301AF50E2A001C13E4 /* ColdObservable.swift */; };
 		C81108501AF50E2A001C13E4 /* ConnectableObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81108311AF50E2A001C13E4 /* ConnectableObservable.swift */; };
@@ -90,6 +91,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5E5D10BA1B48355200432B25 /* UIControl+RxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIControl+RxTests.swift"; sourceTree = "<group>"; };
 		C81108201AF50E11001C13E4 /* RxTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RxTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C81108241AF50E11001C13E4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C811082B1AF50E2A001C13E4 /* NSNotificationCenterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSNotificationCenterTests.swift; sourceTree = "<group>"; };
@@ -201,6 +203,7 @@
 			children = (
 				C811082B1AF50E2A001C13E4 /* NSNotificationCenterTests.swift */,
 				C814CEA61AF642D600E98087 /* UI+RxTests.swift */,
+				5E5D10BA1B48355200432B25 /* UIControl+RxTests.swift */,
 				C8633AE41B0A9FF300375D60 /* KVOObservableTests.swift */,
 			);
 			path = RxCocoaTests;
@@ -400,6 +403,7 @@
 				C897EC3B1B10E000009C2CB0 /* BehaviorSubjectTest.swift in Sources */,
 				C81108681AF50E2A001C13E4 /* QueueTests.swift in Sources */,
 				C81108651AF50E2A001C13E4 /* Observable+SingleTest.swift in Sources */,
+				5E5D10BB1B48355200432B25 /* UIControl+RxTests.swift in Sources */,
 				C897EC4A1B1123DA009C2CB0 /* Observable+MultipleTest+Zip.swift in Sources */,
 				C81108571AF50E2A001C13E4 /* Recorded.swift in Sources */,
 				C81108591AF50E2A001C13E4 /* TestScheduler.swift in Sources */,
