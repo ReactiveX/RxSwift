@@ -18,7 +18,7 @@ public struct ObserverOf<ElementType> {
 
     /// Construct an instance whose `on(event)` calls `observer.on(event)`
     public init<O : ObserverType where O.Element == Element>(_ observer: O) {
-        var observerReference = observer // this is because swift compiler crashing
+        let observerReference = observer // this is because swift compiler crashing
         self.instance = observerReference
         self.observer = { e in
             return observerReference.on(e)
@@ -31,25 +31,45 @@ public struct ObserverOf<ElementType> {
     }
 }
 
-public func dispatch<Element, S: SequenceType where S.Generator.Element == ObserverOf<Element>>(event: Event<Element>, observers: S?) {
-    if let observers = observers {
-        for o in observers {
+//  where S.Generator.Element == ObserverOf<Element> 
+//  Crashes the compiler
+//public func dispatch<Element, S: SequenceType where S.Generator.Element == ObserverOf<Element>>(event: Event<Element>, _ observers: S?) {
+//    if let observers = observers {
+//        for o in observers {
+//            o.on(event)
+//        }
+//    }
+//}
+
+public func dispatch<Element, S: SequenceType where S.Generator.Element == ObserverOf<Element>>(event: Event<Element>, _ observers: S) {
+    for o in observers {
             o.on(event)
-        }
     }
+
 }
 
 
-public func dispatchNext<Element, S: SequenceType where S.Generator.Element == ObserverOf<Element>>(element: Element, observers: S?) {
-    if let observers = observers {
-        let event = Event.Next(RxBox(element))
+//  where S.Generator.Element == ObserverOf<Element>
+//  Crashes the compiler
+//public func dispatchNext<Element, S: SequenceType where S.Generator.Element == ObserverOf<Element>>(element: Element, observers: S?) {
+//    if let observers = observers {
+//        let event = Event.Next(RxBox(element))
+//        for o in observers {
+//            o.on(event)
+//        }
+//    }
+//}
+
+
+public func dispatchNext<Element, S: SequenceType where S.Generator.Element == ObserverOf<Element>>(element: Element, observers: S) {
+    let event = Event.Next(RxBox(element))
         for o in observers {
             o.on(event)
-        }
     }
+
 }
 
-public func dispatch<S: SequenceType, O: ObserverType where S.Generator.Element == O>(event: Event<O.Element>, observers: S?) {
+public func dispatch<S: SequenceType, O: ObserverType where S.Generator.Element == O>(event: Event<O.Element>, _ observers: S?) {
     if let observers = observers {
         for o in observers {
             o.on(event)

@@ -15,7 +15,7 @@ let ObserveSingleOnMoreThenOneElement = "Observed sequence was expected to have 
 //
 // In case sequence contains more then one element, it will fire an exception.
 
-class ObserveSingleOnObserver<O: ObserverType> : Sink<O>, ObserverType, Disposable {
+class ObserveSingleOnObserver<O: ObserverType> : Sink<O>, ObserverType {
     typealias Element = O.Element
     typealias Parent = ObserveSingleOn<Element>
     
@@ -32,7 +32,7 @@ class ObserveSingleOnObserver<O: ObserverType> : Sink<O>, ObserverType, Disposab
         var elementToForward: Event<Element>?
         var stopEventToForward: Event<Element>?
         
-        let scheduler = self.parent.scheduler
+        _ = self.parent.scheduler
         
         switch event {
         case .Next:

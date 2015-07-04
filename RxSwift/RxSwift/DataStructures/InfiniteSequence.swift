@@ -10,7 +10,7 @@ import Foundation
 
 class InifiniteSequence<E> : SequenceType {
     typealias Element = E
-    typealias Generator = GeneratorOf<E>
+    typealias Generator = AnyGenerator<E>
     
     let repeatedValue: E
     
@@ -20,7 +20,7 @@ class InifiniteSequence<E> : SequenceType {
     
     func generate() -> Generator {
         let repeatedValue = self.repeatedValue
-        return GeneratorOf {
+        return anyGenerator {
             return repeatedValue
         }
     }

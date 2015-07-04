@@ -18,7 +18,7 @@ import Foundation
 *   `Box` is there because of a bug in swift compiler
 *       >> error: unimplemented IR generation feature non-fixed multi-payload enum layout
 */
-public enum Event<Element> : Printable {
+public enum Event<Element> : CustomStringConvertible {
     // Box is used because swift compiler doesn't know
     // how to handle `Next(Element)` and it crashes.
     case Next(RxBox<Element>) // next element of a sequence

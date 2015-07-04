@@ -67,7 +67,7 @@ class CombineLatestSink<O: ObserverType> : Sink<O>, CombineLatestProtocol {
         else {
             var allOthersDone = true
             
-            var arity = self.isDone.count
+            let arity = self.isDone.count
             for var i = 0; i < arity; ++i {
                 if i != index && !isDone[i] {
                     allOthersDone = false

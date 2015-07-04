@@ -50,17 +50,17 @@ class Throttle_<O: ObserverType, SchedulerType: Scheduler> : Sink<O>, ObserverTy
             break
         }
        
-        var latestId = self.lock.calculateLocked { () -> UInt64 in
+        let latestId = self.lock.calculateLocked { () -> UInt64 in
             let observer = self.observer
             
-            var oldValue = self.throttleState.value
+            let oldValue = self.throttleState.value
             
             self.throttleState.id = self.throttleState.id &+ 1
             
             switch event {
             case .Next(let boxedValue):
                 self.throttleState.value = boxedValue.value
-            case .Error(let error):
+            case .Error(_):
                 self.throttleState.value = nil
                 trySend(observer, event)
                 self.dispose()
@@ -78,7 +78,7 @@ class Throttle_<O: ObserverType, SchedulerType: Scheduler> : Sink<O>, ObserverTy
         
         
         switch event {
-        case .Next(let boxedValue):
+        case .Next(_):
             let d = SingleAssignmentDisposable()
             self.throttleState.cancellable.setDisposable(d)
             
@@ -103,8 +103,8 @@ class Throttle_<O: ObserverType, SchedulerType: Scheduler> : Sink<O>, ObserverTy
     }
     
     func propagate() {
-        var originalValue: Element? = self.lock.calculateLocked {
-            var originalValue = self.throttleState.value
+        let originalValue: Element? = self.lock.calculateLocked {
+            let originalValue = self.throttleState.value
             self.throttleState.value = nil
             return originalValue
         }

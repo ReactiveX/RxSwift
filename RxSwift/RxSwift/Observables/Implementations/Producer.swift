@@ -26,7 +26,7 @@ public class Producer<Element> : Observable<Element> {
     }
     
     public func subscribeRaw<O : ObserverType where O.Element == Element>(observer: O, enableSafeguard: Bool) -> Disposable {
-        let resultObserver: Observer<Element>
+        let _: Observer<Element>
         
         let sink = SingleAssignmentDisposable()
         let subscription = SingleAssignmentDisposable()
@@ -34,10 +34,10 @@ public class Producer<Element> : Observable<Element> {
         let d = CompositeDisposable(sink, subscription)
 
         if enableSafeguard {
-            resultObserver = makeSafe(observer, d)
+            let _ = makeSafe(observer, d)
         }
         else {
-            resultObserver = Observer.normalize(observer)
+            let _ = Observer.normalize(observer)
         }
         
         let setSink: (Disposable) -> Void = { d in sink.disposable = d }

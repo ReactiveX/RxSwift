@@ -24,7 +24,7 @@ extension ObservableAggregateTest {
     func test_AggregateWithSeed_Empty() {
         let scheduler = TestScheduler(initialClock: 0)
         
-        var xs = scheduler.createHotObservable([
+        let xs = scheduler.createHotObservable([
             next(150, 1),
             completed(250)
             ])

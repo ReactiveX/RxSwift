@@ -63,7 +63,7 @@ class ZipSink<O: ObserverType> : Sink<O>, ZipSinkProtocol {
         else {
             var allOthersDone = true
             
-            var arity = self.isDone.count
+            let arity = self.isDone.count
             for var i = 0; i < arity; ++i {
                 if i != index && !isDone[i] {
                     allOthersDone = false
@@ -123,11 +123,11 @@ class ZipObserver<ElementType> : ObserverType {
     
     func on(event: Event<Element>) {
        
-        if let parent = parent {
+        if let _ = parent {
             switch event {
-            case .Next(let boxedValue):
+            case .Next(_):
                 break
-            case .Error(let error):
+            case .Error(_):
                 this.dispose()
             case .Completed:
                 this.dispose()

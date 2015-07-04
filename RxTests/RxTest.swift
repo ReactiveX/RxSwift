@@ -12,7 +12,7 @@ import RxSwift
 #if TRACE_RESOURCES
 #elseif RELEASE
 #else
-let a = unknown
+//let a = unknown
 #endif
 
 // because otherwise OSX unit tests won't run
@@ -40,7 +40,7 @@ func error<T>(error: NSError) -> Recorded<T> {
     return Recorded(time: 0, event: .Error(error))
 }
 
-func next<T>(time: Time, value: T) -> Recorded<T> {
+func next<T>(time: Time, _ value: T) -> Recorded<T> {
     return Recorded(time: time, event: .Next(RxBox(value)))
 }
 
@@ -48,7 +48,7 @@ func completed<T>(time: Time) -> Recorded<T> {
     return Recorded(time: time, event: .Completed)
 }
 
-func error<T>(time: Time, error: NSError) -> Recorded<T> {
+func error<T>(time: Time, _ error: NSError) -> Recorded<T> {
     return Recorded(time: time, event: .Error(error))
 }
 

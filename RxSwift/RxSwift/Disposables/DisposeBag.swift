@@ -44,7 +44,7 @@ public class DisposeBag: DisposeBase {
 
     func dispose() {
         let oldDisposables = lock.calculateLocked { () -> [Disposable] in
-            var disposables = self.state.disposables
+            let disposables = self.state.disposables
             
             self.state.disposables.removeAll(keepCapacity: false)
             self.state.disposed = true

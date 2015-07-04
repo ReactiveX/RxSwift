@@ -189,14 +189,14 @@ func lift<T1, T2, T3, TRet>(function: (T1, T2, T3) -> TRet) -> (RxResult<T1>, Rx
 
 // depricated
 
-@availability(*, deprecated=1.4, message="Replaced by success")
+@available(*, deprecated=1.4, message="Replaced by success")
 public func `return`<T>(value: T) -> RxResult<T> {
     return .Success(RxBox(value))
 }
 
 infix operator >== { associativity left precedence 95 }
 
-@availability(*, deprecated=1.4, message="Replaced by flatMap")
+@available(*, deprecated=1.4, message="Replaced by flatMap")
 public func >== <In, Out>(lhs: RxResult<In>, @noescape rhs: (In) -> RxResult<Out>) -> RxResult<Out> {
     switch lhs {
     case .Success(let result): return rhs(result.value)
@@ -204,7 +204,7 @@ public func >== <In, Out>(lhs: RxResult<In>, @noescape rhs: (In) -> RxResult<Out
     }
 }
 
-@availability(*, deprecated=1.4, message="Replaced by map")
+@available(*, deprecated=1.4, message="Replaced by map")
 public func >== <In, Out>(lhs: RxResult<In>, @noescape rhs: (In) -> Out) -> RxResult<Out> {
     switch lhs {
     case .Success(let result): return success(rhs(result.value))
@@ -214,7 +214,7 @@ public func >== <In, Out>(lhs: RxResult<In>, @noescape rhs: (In) -> Out) -> RxRe
 
 infix operator >>> { associativity left precedence 95 }
 
-@availability(*, deprecated=1.4, message="Replaced by map")
+@available(*, deprecated=1.4, message="Replaced by map")
 public func >>> <In, Out>(lhs: RxResult<In>, @noescape rhs: () -> Out) -> RxResult<Out> {
     switch lhs {
     case .Success: return success(rhs())
@@ -222,7 +222,7 @@ public func >>> <In, Out>(lhs: RxResult<In>, @noescape rhs: () -> Out) -> RxResu
     }
 }
 
-@availability(*, deprecated=1.4, message="Replaced by flatMap")
+@available(*, deprecated=1.4, message="Replaced by flatMap")
 public func >>> <In, Out>(lhs: RxResult<In>, @noescape rhs: () -> RxResult<Out>) -> RxResult<Out> {
     switch lhs {
     case .Success: return rhs()
@@ -232,7 +232,7 @@ public func >>> <In, Out>(lhs: RxResult<In>, @noescape rhs: () -> RxResult<Out>)
 
 infix operator >>! { associativity left precedence 95 }
 
-@availability(*, deprecated=1.4, message="Replaced by recoverWith")
+@available(*, deprecated=1.4, message="Replaced by recoverWith")
 public func >>! <In>(lhs: RxResult<In>, @noescape rhs: (ErrorType) -> RxResult<In>) -> RxResult<In> {
     switch lhs {
     case .Failure(let error):
@@ -244,17 +244,17 @@ public func >>! <In>(lhs: RxResult<In>, @noescape rhs: (ErrorType) -> RxResult<I
 
 prefix operator * { }
 
-@availability(*, deprecated=1.4, message="Replaced by get")
+@available(*, deprecated=1.4, message="Replaced by get")
 public prefix func *<T>(result: RxResult<T>) -> T {
     switch result {
     case .Success(let value): return value.value
     default:
-        var result: T? = nil
+        let result: T? = nil
         return result!
     }
 }
 
-@availability(*, deprecated=1.4, message="Replaced by recover")
+@available(*, deprecated=1.4, message="Replaced by recover")
 public func replaceErrorWith<T>(result: RxResult<T>, errorValue: T) -> T {
     switch result {
     case .Success(let boxedValue):
@@ -264,7 +264,7 @@ public func replaceErrorWith<T>(result: RxResult<T>, errorValue: T) -> T {
     }
 }
 
-@availability(*, deprecated=1.4, message="Replaced by recoverWith")
+@available(*, deprecated=1.4, message="Replaced by recoverWith")
 public func replaceErrorWithNil<T>(result: RxResult<T>) -> T? {
     switch result {
     case .Success(let boxedValue):

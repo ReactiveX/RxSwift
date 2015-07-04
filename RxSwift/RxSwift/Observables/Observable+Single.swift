@@ -44,7 +44,7 @@ public func distinctUntilChangedOrDie<E>
 }
 
 public func distinctUntilChangedOrDie<E, K>
-    (keySelector: (E) -> RxResult<K>, comparer: (lhs: K, rhs: K) -> RxResult<Bool>)
+    (keySelector: (E) -> RxResult<K>, _ comparer: (lhs: K, rhs: K) -> RxResult<Bool>)
     -> (Observable<E> -> Observable<E>) {
     return { source in
         return DistinctUntilChanged(source: source, selector: keySelector, comparer: comparer)
@@ -54,6 +54,7 @@ public func distinctUntilChangedOrDie<E, K>
 public func distinctUntilChanged<E: Equatable>(source: Observable<E>)
     -> Observable<E> {
     return distinctUntilChanged({ $0 }, { ($0 == $1) })(source)
+        
 }
 
 public func distinctUntilChanged<E, K: Equatable>
@@ -73,7 +74,7 @@ public func distinctUntilChanged<E>
 }
 
 public func distinctUntilChanged<E, K>
-    (keySelector: (E) -> K, comparer: (lhs: K, rhs: K) -> Bool)
+    (keySelector: (E) -> K, _ comparer: (lhs: K, rhs: K) -> Bool)
     -> (Observable<E> -> Observable<E>) {
     return { source in
         return DistinctUntilChanged(source: source, selector: {success(keySelector($0)) }, comparer: { success(comparer(lhs: $0, rhs: $1))})
@@ -134,14 +135,14 @@ public func startWith<E>
 public func retry<E>
     (source: Observable<E>)
     -> Observable<E> {
-    return SequenceOf(InifiniteSequence(repeatedValue: source)) >- catch
+    return AnySequence(InifiniteSequence(repeatedValue: source)) >- onError
 }
 
 public func retry<E>
     (retryCount: Int)
     -> Observable<E> -> Observable<E> {
     return { source in
-        return SequenceOf(Repeat(count: retryCount, repeatedValue: source)) >- catch
+        return AnySequence(Repeat(count: retryCount, repeatedValue: source)) >- onError 
     }
 }
 

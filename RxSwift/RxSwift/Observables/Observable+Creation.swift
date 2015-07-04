@@ -83,7 +83,7 @@ public func deferOrDie<E>(observableFactory: () -> RxResult<Observable<E>>)
     return Defer(observableFactory: observableFactory)
 }
 
-public func defer<E>(observableFactory: () -> Observable<E>)
+public func deferred<E>(observableFactory: () -> Observable<E>)
     -> Observable<E> {
     return Defer(observableFactory: { success(observableFactory()) })
 }

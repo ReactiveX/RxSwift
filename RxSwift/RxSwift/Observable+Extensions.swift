@@ -20,7 +20,7 @@ public func subscribe<E>
 }
 
 public func subscribe<E>
-    (#next: (E) -> Void, #error: (ErrorType) -> Void, #completed: () -> Void)
+    (next: (E) -> Void, error: (ErrorType) -> Void, completed: () -> Void)
     -> (Observable<E> -> Disposable) {
     return { source in
         let observer = AnonymousObserver<E> { e in

@@ -42,7 +42,7 @@ public func merge<E>
 }
 
 public func merge<E>
-    (#maxConcurrent: Int)
+    (maxConcurrent maxConcurrent: Int)
     -> (Observable<Observable<E>> -> Observable<E>) {
     return  { sources in
         return Merge(sources: sources, maxConcurrent: maxConcurrent)
@@ -59,7 +59,7 @@ public func catchOrDie<E>
     }
 }
 
-public func catch<E>
+public func onError<E>
     (handler: (ErrorType) -> Observable<E>)
     -> (Observable<E> -> Observable<E>) {
     return { source in
@@ -67,15 +67,15 @@ public func catch<E>
     }
 }
 
-public func catch<E>
-    (sources: SequenceOf<Observable<E>>)
+public func onError<E>
+    (sources: AnySequence<Observable<E>>)
     -> Observable<E> {
     // just wrapping it in sequence of for now
-    return CatchSequence(sources: SequenceOf(sources))
+    return CatchSequence(sources: AnySequence(sources))
 }
 
 // In case of error, terminates sequence with `replaceErrorWith`.
-public func catch<E>
+public func onError<E>
     (replaceErrorWith: E)
     -> (Observable<E> -> Observable<E>) {
     return { source in
@@ -104,15 +104,16 @@ public func takeUntil<E, O>
 // amb 
 
 public func amb<E>
-    (left: Observable<E>, right: Observable<E>)
+    (left: Observable<E>, _ right: Observable<E>)
     -> Observable<E> {
     return Amb(left: left, right: right)
 }
 
 public func amb<E>
-    (observables: SequenceOf<Observable<E>>)
+    (observables: AnySequence<Observable<E>>)
     -> Observable<E> {
-    return reduce(observables, never()) { a, o in
+    return observables.reduce(never()) { a, o in
         return amb(a, o)
     }
+        
 }

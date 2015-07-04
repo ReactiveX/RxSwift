@@ -50,7 +50,7 @@ class ReplaySubscription<Element> : Disposable {
     
     func dispose() {
         let oldState = lock.calculateLocked { () -> State in
-            var state = self.state
+            let state = self.state
             self.state = (
                 subject: nil,
                 disposeKey: nil
@@ -128,7 +128,7 @@ class ReplayBufferBase<Element> : ReplaySubjectImplementation<Element> {
                 state.stoppedEvent = event
                 trim()
                 var bag = self.state.observers
-                var observers = bag.all
+                let observers = bag.all
                 bag.removeAll()
                 return observers
             }

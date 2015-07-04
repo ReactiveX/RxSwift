@@ -22,9 +22,9 @@ class ConcatSink<Element> : TailRecursiveSink<Observer<Element>> {
         }
     }
     
-    override func extract(observable: Observable<Element>) -> GeneratorOf<Observable<Element>>? {
+    override func extract(observable: Observable<Element>) -> AnyGenerator<Observable<Element>>? {
         if let source = observable as? Concat<Element> {
-            return GeneratorOf(source.sources.generate())
+            return anyGenerator(source.sources.generate())
         }
         else {
             return nil

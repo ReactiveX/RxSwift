@@ -184,7 +184,7 @@ extension ObservableSingleTest {
         var sum = 2 + 3 + 4 + 5
         let res = scheduler.start { xs >- `do` { e in
                 switch e {
-                case .Next(let value):
+                case .Next(let _):
                     i++
                     sum -= e.value ?? 0
                     
@@ -227,7 +227,7 @@ extension ObservableSingleTest {
         var i = 0
         let res = scheduler.start { xs >- `do` { e in
             switch e {
-            case .Next(let value):
+            case .Next(_):
                 i++
             default: break
             }
@@ -311,7 +311,7 @@ extension ObservableSingleTest {
         var completedEvaluation = false
         let res = scheduler.start { xs >- `do` { e in
             switch e {
-            case .Next(let value):
+            case .Next(_):
                 i++
             case .Completed:
                 completedEvaluation = true
@@ -645,7 +645,7 @@ extension ObservableSingleTest {
             next(0, 0)
             ])
         
-        var seed = 42
+        let seed = 42
         
         let res = scheduler.start {
             xs >- scan(seed) { $0 + $1 }
@@ -667,7 +667,7 @@ extension ObservableSingleTest {
             completed(250)
             ])
         
-        var seed = 42
+        let seed = 42
         
         let res = scheduler.start {
             xs >- scan(seed) { $0 + $1 }
@@ -691,7 +691,7 @@ extension ObservableSingleTest {
             completed(250)
             ])
         
-        var seed = 42
+        let seed = 42
         
         let res = scheduler.start {
             xs >- scan(seed) { $0 + $1 }
@@ -715,7 +715,7 @@ extension ObservableSingleTest {
             error(250, testError)
             ])
         
-        var seed = 42
+        let seed = 42
         
         let res = scheduler.start {
             xs >- scan(seed) { $0 + $1 }
@@ -742,7 +742,7 @@ extension ObservableSingleTest {
             completed(250)
             ])
         
-        var seed = 42
+        let seed = 42
         
         let res = scheduler.start {
             xs >- scan(seed) { $0 + $1 }
@@ -775,7 +775,7 @@ extension ObservableSingleTest {
             completed(250)
             ])
         
-        var seed = 42
+        let seed = 42
         
         let res = scheduler.start {
             xs >- scanOrDie(seed) { (a, e) in

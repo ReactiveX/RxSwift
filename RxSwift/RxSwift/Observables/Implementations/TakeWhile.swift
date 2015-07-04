@@ -113,7 +113,7 @@ class TakeWhile<Element>: Producer<Element> {
     }
     
     override func run<O : ObserverType where O.Element == Element>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
-        if let predicate1 = self.predicate1 {
+        if let _ = self.predicate1 {
             let sink = TakeWhileSink1(parent: self, observer: observer, cancel: cancel)
             setSink(sink)
             return source.subscribeSafe(sink)

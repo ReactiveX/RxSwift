@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Do_<O: ObserverType> : Sink<O>, ObserverType, Disposable {
+class Do_<O: ObserverType> : Sink<O>, ObserverType {
     typealias Element = O.Element
     typealias DoType = Do<Element>
     

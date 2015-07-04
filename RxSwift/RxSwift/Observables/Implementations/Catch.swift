@@ -181,9 +181,9 @@ class CatchSequenceSink<O: ObserverType> : TailRecursiveSink<O> {
         self.dispose()
     }
     
-    override func extract(observable: Observable<Element>) -> GeneratorOf<Observable<O.Element>>? {
-        if let catch = observable as? CatchSequence<Element> {
-            return catch.sources.generate()
+    override func extract(observable: Observable<Element>) -> AnyGenerator<Observable<O.Element>>? {
+        if let onError = observable as? CatchSequence<Element> {
+            return onError.sources.generate()
         }
         else {
             return nil
@@ -192,15 +192,15 @@ class CatchSequenceSink<O: ObserverType> : TailRecursiveSink<O> {
 }
 
 class CatchSequence<Element> : Producer<Element> {
-    let sources: SequenceOf<Observable<Element>>
+    let sources: AnySequence<Observable<Element>>
     
-    init(sources: SequenceOf<Observable<Element>>) {
+    init(sources: AnySequence<Observable<Element>>) {
         self.sources = sources
     }
     
     override func run<O : ObserverType where O.Element == Element>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
         let sink = CatchSequenceSink(observer: observer, cancel: cancel)
         setSink(sink)
-        return sink.run(self.sources.generate())
+        return sink.run(AnySequence(self.sources.generate()))
     }
 }
