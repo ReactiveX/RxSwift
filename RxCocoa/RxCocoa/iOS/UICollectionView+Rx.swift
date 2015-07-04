@@ -15,12 +15,12 @@ extension UICollectionView {
     
     // factories
     
-    override public func rx_createDelegateBridge() -> RxScrollViewDelegateBridge {
-        return RxCollectionViewDelegateBridge(view: self)
+    override public func rx_createDelegateProxy() -> RxScrollViewDelegateProxy {
+        return RxCollectionViewDelegateProxy(view: self)
     }
     
-    public func rx_createDataSourceBridge() -> RxCollectionViewDataSourceBridge {
-        return RxCollectionViewDataSourceBridge(view: self)
+    public func rx_createDataSourceProxy() -> RxCollectionViewDataSourceProxy {
+        return RxCollectionViewDataSourceProxy(view: self)
     }
     
     // data source
@@ -34,48 +34,29 @@ extension UICollectionView {
     // ```
     //
     // If you want to register non reactive data source, please use `rx_setDataSource` method
-    public func rx_subscribeWithReactiveDataSource<DataSource: RxCollectionViewReactiveDataSourceType>
+    public func rx_subscribeWithReactiveDataSource<DataSource: protocol<RxCollectionViewDataSourceType, UICollectionViewDataSource>>
         (dataSource: DataSource)
         -> Observable<DataSource.Element> -> Disposable {
-            return subscribeObservableUsingDelegateBridgeAndDataSource(self, dataSource, { (_: RxCollectionViewDataSourceBridge, event) -> Void in
+            return subscribeObservableUsingDelegateProxyAndDataSource(self, dataSource, { (_: RxCollectionViewDataSourceProxy, event) -> Void in
                 dataSource.collectionView(self, observedEvent: event)
             })
     }
     
-    // Registers `RxCollectionViewDataSourceType`.
-    // For more detailed explanations, take a look at `RxCollectionViewDataSourceType.swift` and `DelegateBridgeType.swift`
-    public func rx_setDataSource(dataSource: RxCollectionViewDataSourceType)
-        -> Disposable {
-            let result: BridgeDisposablePair<RxCollectionViewDataSourceBridge> = installDelegateOnBridge(self, dataSource)
-            
-            return result.disposable
-    }
-    
     // Registers `UICollectionViewDataSource`.
-    // For more detailed explanations, take a look at `RxCollectionViewDataSourceType.swift` and `DelegateBridgeType.swift`
+    // For more detailed explanations, take a look at `RxCollectionViewDataSourceType.swift` and `DelegateProxyType.swift`
     public func rx_setDataSource(dataSource: UICollectionViewDataSource, retainDataSource: Bool)
         -> Disposable {
-            let converter = RxCollectionViewDataSourceConverter(dataSource: dataSource, retainDataSource: retainDataSource)
-            let result: BridgeDisposablePair<RxCollectionViewDataSourceBridge> = installDelegateOnBridge(self, dataSource)
+            let result: ProxyDisposablePair<RxCollectionViewDataSourceProxy> = installDelegateOnProxy(self, dataSource)
             
             return result.disposable
     }
     
     // delegate
     
-    // For more detailed explanations, take a look at `DelegateBridgeType.swift`
-    // Retains delegate
-    public func rx_setDelegate(delegate: RxCollectionViewDelegateType) -> Disposable {
-        let result: BridgeDisposablePair<RxCollectionViewDelegateBridge> = installDelegateOnBridge(self, delegate)
-        
-        return result.disposable
-    }
-    
-    // For more detailed explanations, take a look at `DelegateBridgeType.swift`
+    // For more detailed explanations, take a look at `DelegateProxyType.swift`
     public func rx_setDelegate(delegate: UICollectionViewDelegate, retainDelegate: Bool)
         -> Disposable {
-            let converter = RxCollectionViewDelegateConverter(delegate: delegate, retainDelegate: retainDelegate)
-            let result: BridgeDisposablePair<RxCollectionViewDelegateBridge> = installDelegateOnBridge(self, converter)
+            let result: ProxyDisposablePair<RxCollectionViewDelegateProxy> = installDelegateOnProxy(self, delegate)
             
             return result.disposable
     }
@@ -121,9 +102,9 @@ extension UICollectionView {
         return rx_selectedItem() >- map { e in
             let indexPath = e.indexPath
             
-            let bridge = RxCollectionViewDataSourceBridge.getBridgeForView(self)!
+            let proxy = RxCollectionViewDataSourceProxy.getProxyForView(self)!
             
-            let dataSource: RxCollectionViewReactiveArrayDataSource<T> = castOrFatalError(bridge.getDelegate())
+            let dataSource: RxCollectionViewReactiveArrayDataSource<T> = castOrFatalError(proxy.getDelegate())
             
             return dataSource.modelAtIndex(indexPath.item)!
         }
@@ -131,13 +112,13 @@ extension UICollectionView {
     
     // private methods
     
-    private func createDelegateObservable<E, DisposeKey>(addObserver: (RxCollectionViewDelegateBridge, ObserverOf<E>) -> DisposeKey, removeObserver: (RxCollectionViewDelegateBridge, DisposeKey) -> Void) -> Observable<E> {
-        return createObservableUsingDelegateBridge(self, addObserver, removeObserver)
+    private func createDelegateObservable<E, DisposeKey>(addObserver: (RxCollectionViewDelegateProxy, ObserverOf<E>) -> DisposeKey, removeObserver: (RxCollectionViewDelegateProxy, DisposeKey) -> Void) -> Observable<E> {
+        return createObservableUsingDelegateProxy(self, addObserver, removeObserver)
     }
     
-    private func createDataSourceObservable<E, DisposeKey>(addObserver: (RxCollectionViewDataSourceBridge, ObserverOf<E>) -> DisposeKey,
-        removeObserver: (RxCollectionViewDataSourceBridge, DisposeKey) -> Void)
+    private func createDataSourceObservable<E, DisposeKey>(addObserver: (RxCollectionViewDataSourceProxy, ObserverOf<E>) -> DisposeKey,
+        removeObserver: (RxCollectionViewDataSourceProxy, DisposeKey) -> Void)
         -> Observable<E> {
-            return createObservableUsingDelegateBridge(self, addObserver, removeObserver)
+            return createObservableUsingDelegateProxy(self, addObserver, removeObserver)
     }
 }

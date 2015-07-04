@@ -58,12 +58,20 @@ class PartialUpdatesViewController : ViewController {
     }
     
     func skinCollectionViewDataSource(dataSource: RxCollectionViewSectionedDataSource<NumberSection>) {
-        dataSource.cellFactory = { (cv, ip, s, i) in
+        dataSource.cellFactory = { [unowned dataSource] (cv, ip, i) in
             let cell = cv.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: ip) as! NumberCell
             
             cell.value!.text = "\(i)"
             
             return cell
+        }
+        
+        dataSource.supplementaryViewFactory = { [unowned dataSource] (cv, kind, ip) in
+            let section = cv.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: "Section", forIndexPath: ip) as! NumberSectionView
+            
+            section.value!.text = "\(dataSource.sectionAtIndex(ip.section).model)"
+            
+            return section
         }
     }
     
@@ -73,6 +81,7 @@ class PartialUpdatesViewController : ViewController {
         self.sections.next(generator.sections)
         
         let tvAnimatedDataSource = RxTableViewSectionedAnimatedDataSource<NumberSection>()
+        //let cvAnimatedDataSource = RxCollectionViewSectionedReloadDataSource<NumberSection>()
         let cvAnimatedDataSource = RxCollectionViewSectionedAnimatedDataSource<NumberSection>()
         let reloadDataSource = RxTableViewSectionedReloadDataSource<NumberSection>()
         
@@ -102,6 +111,7 @@ class PartialUpdatesViewController : ViewController {
         updates
             >- partialUpdatesCollectionViewOutlet.rx_subscribeWithReactiveDataSource(cvAnimatedDataSource)
             >- disposeBag.addDisposable
+        
     }
     
     @IBAction func randomize() {

@@ -1,5 +1,5 @@
 //
-//  RxScrollViewDelegateBridge.swift
+//  RxScrollViewDelegateProxy.swift
 //  RxCocoa
 //
 //  Created by Krunoslav Zaher on 6/19/15.
@@ -10,10 +10,10 @@ import Foundation
 import RxSwift
 import UIKit
 
-// Please take a look at `DelegateBridgeType.swift`
-public class RxScrollViewDelegateBridge : Delegate
-                                        , UIScrollViewDelegate
-                                        , DelegateBridgeType {
+// Please take a look at `DelegateProxyType.swift`
+public class RxScrollViewDelegateProxy : Delegate
+                                       , UIScrollViewDelegate
+                                       , DelegateProxyType {
     public typealias ContentOffsetObserver = ObserverOf<CGPoint>
     public typealias ContentOffsetDisposeKey = Bag<ContentOffsetObserver>.KeyType
 
@@ -29,7 +29,7 @@ public class RxScrollViewDelegateBridge : Delegate
     
     let scrollView: UIScrollView
     
-    var scrollViewDelegate: RxScrollViewDelegateType? = nil
+    var scrollViewDelegate: UIScrollViewDelegate? = nil
     
     public init(view: UIView) {
         contentOffsetObservers = Bag()
@@ -93,22 +93,22 @@ public class RxScrollViewDelegateBridge : Delegate
     
     public func scrollViewDidScroll(scrollView: UIScrollView) {
         dispatchNext(scrollView.contentOffset, contentOffsetObservers)
-        scrollViewDelegate?.scrollViewDidScroll(scrollView)
+        scrollViewDelegate?.scrollViewDidScroll?(scrollView)
     }
     
     public func scrollViewWillBeginDecelerating(scrollView: UIScrollView) {
         dispatchNext((), willBeginDeceleratingObservers)
-        scrollViewDelegate?.scrollViewWillBeginDecelerating(scrollView)
+        scrollViewDelegate?.scrollViewWillBeginDecelerating?(scrollView)
     }
     
     public func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
         dispatchNext((), didEndDeceleratingObservers)
-        scrollViewDelegate?.scrollViewDidEndDecelerating(scrollView)
+        scrollViewDelegate?.scrollViewDidEndDecelerating?(scrollView)
     }
     
-    // delegate bridge
+    // delegate proxy
     
-    public class func getBridgeForView(view: UIView) -> Self? {
+    public class func getProxyForView(view: UIView) -> Self? {
         MainScheduler.ensureExecutingOnScheduler()
         
         let scrollView = view as! UIScrollView
@@ -120,17 +120,17 @@ public class RxScrollViewDelegateBridge : Delegate
         return castOptionalOrFatalError(scrollView.delegate)
     }
     
-    public class func setBridgeToView(view: UIView, bridge: AnyObject) {
+    public class func setProxyToView(view: UIView, proxy: AnyObject) {
         let scrollView = view as! UIScrollView
         
-        let delegate: UIScrollViewDelegate = castOrFatalError(bridge)
+        let delegate: UIScrollViewDelegate = castOrFatalError(proxy)
         scrollView.delegate = delegate
     }
     
-    public class func createBridgeForView(view: UIView) -> Self {
+    public class func createProxyForView(view: UIView) -> Self {
         let scrollView = view as! UIScrollView
         
-        return castOrFatalError(scrollView.rx_createDelegateBridge())
+        return castOrFatalError(scrollView.rx_createDelegateProxy())
     }
     
     public func setDelegate(delegate: AnyObject?) {
@@ -145,6 +145,14 @@ public class RxScrollViewDelegateBridge : Delegate
     
     public func getDelegate() -> AnyObject? {
         return self.scrollViewDelegate
+    }
+    
+    override public func forwardingTargetForSelector(aSelector: Selector) -> AnyObject? {
+        return self.scrollViewDelegate
+    }
+    
+    override public func respondsToSelector(aSelector: Selector) -> Bool {
+        return super.respondsToSelector(aSelector) || (self.scrollViewDelegate?.respondsToSelector(aSelector) ?? false)
     }
     
     // dispose

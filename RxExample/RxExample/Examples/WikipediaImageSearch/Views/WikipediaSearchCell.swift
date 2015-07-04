@@ -33,7 +33,7 @@ public class WikipediaSearchCell: UITableViewCell {
             
             let disposeBag = DisposeBag()
     
-            self.titleOutlet.rx_subscribeTextTo(viewModel?.title ?? returnElement("")) >- disposeBag.addDisposable
+            self.titleOutlet.rx_subscribeTextTo(viewModel?.title ?? just("")) >- disposeBag.addDisposable
             self.URLOutlet.text = viewModel.searchResult.URL.absoluteString ?? ""
            
             viewModel.imageURLs

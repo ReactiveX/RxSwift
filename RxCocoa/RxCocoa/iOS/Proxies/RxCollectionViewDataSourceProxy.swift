@@ -1,5 +1,5 @@
 //
-//  RxCollectionViewDataSourceBridge.swift
+//  RxCollectionViewDataSourceProxy.swift
 //  RxCocoa
 //
 //  Created by Krunoslav Zaher on 6/29/15.
@@ -10,13 +10,14 @@ import Foundation
 import UIKit
 import RxSwift
 
-// Please take a look at `DelegateBridgeType.swift`
-public class RxCollectionViewDataSourceBridge : Delegate
-                                              , UICollectionViewDataSource
-                                              , DelegateBridgeType {
+// Please take a look at `DelegateProxyType.swift`
+public class RxCollectionViewDataSourceProxy : Delegate
+                                             , UICollectionViewDataSource
+                                             , DelegateProxyType {
+    
     public let collectionView: UICollectionView
     
-    var dataSource: RxCollectionViewDataSourceType?
+    var dataSource: UICollectionViewDataSource?
     
     public init(view: UICollectionView) {
         self.collectionView = view
@@ -35,30 +36,29 @@ public class RxCollectionViewDataSourceBridge : Delegate
     }
     
     public func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-        return dataSource?.numberOfSectionsInCollectionView(collectionView) ?? 1
+        return dataSource?.numberOfSectionsInCollectionView?(collectionView) ?? 0
     }
     
-    // The view that is returned must be retrieved from a call to -dequeueReusableSupplementaryViewOfKind:withReuseIdentifier:forIndexPath:
     public func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
-        return dataSource!.collectionView(collectionView, viewForSupplementaryElementOfKind: kind, atIndexPath: indexPath)
+        return dataSource!.collectionView!(collectionView, viewForSupplementaryElementOfKind: kind, atIndexPath: indexPath)
     }
     
-    // bridge
+    // proxy
     
-    public class func createBridgeForView(view: UIView) -> Self {
+    public class func createProxyForView(view: UIView) -> Self {
         let collectionView = view as! UICollectionView
-        return castOrFatalError(collectionView.rx_createDataSourceBridge())
+        return castOrFatalError(collectionView.rx_createDataSourceProxy())
     }
     
-    public class func getBridgeForView(view: UIView) -> Self? {
+    public class func getProxyForView(view: UIView) -> Self? {
         let collectionView = view as! UICollectionView
         return castOptionalOrFatalError(collectionView.dataSource)
     }
     
     // tried using `Self` instead of Any object, didn't work out
-    public class func setBridgeToView(view: UIView, bridge: AnyObject) {
+    public class func setProxyToView(view: UIView, proxy: AnyObject) {
         let collectionView = view as! UICollectionView
-        collectionView.dataSource = castOptionalOrFatalError(bridge)
+        collectionView.dataSource = castOptionalOrFatalError(proxy)
     }
     
     public func setDelegate(delegate: AnyObject?) {
@@ -69,6 +69,9 @@ public class RxCollectionViewDataSourceBridge : Delegate
         return dataSource
     }
     
+    override public func respondsToSelector(aSelector: Selector) -> Bool {
+        return super.respondsToSelector(aSelector)// || (self.dataSource?.respondsToSelector(aSelector) ?? false)
+    }
     
     // disposable
     

@@ -11,7 +11,8 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class RxCollectionViewSectionedReloadDataSource<S: SectionModelType> : RxCollectionViewSectionedDataSource<S>, RxCollectionViewReactiveDataSourceType {
+class RxCollectionViewSectionedReloadDataSource<S: SectionModelType> : RxCollectionViewSectionedDataSource<S>
+                                                                     , RxCollectionViewDataSourceType {
     typealias Element = [S]
     
     func collectionView(collectionView: UICollectionView, observedEvent: Event<Element>) {

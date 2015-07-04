@@ -7,21 +7,12 @@
 //
 
 import Foundation
-
 import UIKit
 import RxSwift
 
-// Please take a look at `DelegateBridgeType.swift`
-public protocol RxCollectionViewDataSourceType : class /* UICollectionViewDataSource */ {
-    // copied methods from UICollectionViewDataSource
+// Please take a look at `DelegateProxyType.swift`
+public protocol RxCollectionViewDataSourceType /*: UICollectionViewDataSource*/ {
+    typealias Element
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
-    
-    // The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell
-    
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int
-    
-    // The view that is returned must be retrieved from a call to -dequeueReusableSupplementaryViewOfKind:withReuseIdentifier:forIndexPath:
-    func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView
+    func collectionView(collectionView: UICollectionView, observedEvent: Event<Element>) -> Void
 }

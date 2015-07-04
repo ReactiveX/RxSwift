@@ -11,12 +11,47 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-public class RxCollectionViewSectionedDataSource<S: SectionModelType> : RxCollectionViewNopDataSource, RxCollectionViewDataSourceType {
+public class _RxCollectionViewSectionedDataSource : NSObject
+                                                  , UICollectionViewDataSource {
     
+    func _numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+        return 0
+    }
+    
+    public func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+        return _numberOfSectionsInCollectionView(collectionView)
+    }
+
+    func _collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 0
+    }
+    
+    public func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return _collectionView(collectionView, numberOfItemsInSection: section)
+    }
+
+    func _collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        return (nil as UICollectionViewCell?)!
+    }
+    
+    public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        return _collectionView(collectionView, cellForItemAtIndexPath: indexPath)
+    }
+
+    func _collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
+        return (nil as UICollectionReusableView?)!
+    }
+    
+    public func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
+        return _collectionView(collectionView, viewForSupplementaryElementOfKind: kind, atIndexPath: indexPath)
+    }
+}
+
+public class RxCollectionViewSectionedDataSource<S: SectionModelType> : _RxCollectionViewSectionedDataSource {
     public typealias I = S.Item
     public typealias Section = S
-    public typealias CellFactory = (UICollectionView, NSIndexPath, Section, I) -> UICollectionViewCell
-    public typealias SupplementaryViewFactory = (UICollectionView, String, NSIndexPath, I) -> UICollectionReusableView
+    public typealias CellFactory = (UICollectionView, NSIndexPath, I) -> UICollectionViewCell
+    public typealias SupplementaryViewFactory = (UICollectionView, String, NSIndexPath) -> UICollectionReusableView
     
     public typealias IncrementalUpdateObserver = ObserverOf<Changeset<S>>
     
@@ -35,6 +70,10 @@ public class RxCollectionViewSectionedDataSource<S: SectionModelType> : RxCollec
     public func sectionAtIndex(section: Int) -> S {
         return self.sectionModels[section].model
     }
+
+    public func itemAtIndexPath(indexPath: NSIndexPath) -> I {
+        return self.sectionModels[indexPath.section].items[indexPath.item]
+    }
     
     var incrementalUpdateObservers: Bag<IncrementalUpdateObserver> = Bag()
     
@@ -46,8 +85,8 @@ public class RxCollectionViewSectionedDataSource<S: SectionModelType> : RxCollec
     public var supplementaryViewFactory: SupplementaryViewFactory
     
     public override init() {
-        self.cellFactory = { _, _, _, _ in castOrFail(nil).get() }
-        self.supplementaryViewFactory = { _, _, _, _ in castOrFail(nil).get() }
+        self.cellFactory = { _, _, _ in castOrFail(nil).get() }
+        self.supplementaryViewFactory = { _, _, _ in castOrFail(nil).get() }
         
         super.init()
         self.cellFactory = { [weak self] _ in
@@ -56,7 +95,7 @@ public class RxCollectionViewSectionedDataSource<S: SectionModelType> : RxCollec
             return (nil as UICollectionViewCell!)!
         }
         
-        self.supplementaryViewFactory = { [weak self] _, _, _, _ in
+        self.supplementaryViewFactory = { [weak self] _, _, _ in
             precondition(false, "There is a minor problem. `supplementaryViewFactory` property on \(self!) was not set.")
             return (nil as UICollectionReusableView?)!
         }
@@ -75,23 +114,21 @@ public class RxCollectionViewSectionedDataSource<S: SectionModelType> : RxCollec
     
     // UITableViewDataSource
     
-    public override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    override func _numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         return sectionModels.count
     }
     
-    public override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    override func _collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return sectionModels[section].items.count
     }
     
-    public override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+    override func _collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         precondition(indexPath.item < sectionModels[indexPath.section].items.count)
         
-        let item = indexPath.item
-        let section = sectionModels[indexPath.section]
-        return cellFactory(collectionView, indexPath, section.model, section.items[item])
+        return cellFactory(collectionView, indexPath, itemAtIndexPath(indexPath))
     }
     
-    public func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
-        return supplementaryViewFactory(collectionView, kind, indexPath, sectionModels[indexPath.section].items[indexPath.item])
+    override func _collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
+        return supplementaryViewFactory(collectionView, kind, indexPath)
     }
 }

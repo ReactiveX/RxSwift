@@ -10,8 +10,34 @@ import Foundation
 import UIKit
 import RxSwift
 
-// Please take a look at `DelegateBridgeType.swift`
-public class RxTableViewReactiveArrayDataSource<ElementType> : RxTableViewNopDataSource, RxTableViewReactiveDataSourceType {
+// objc monkey business
+public class _RxTableViewReactiveArrayDataSource: NSObject, UITableViewDataSource {
+    
+    public func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
+    }
+   
+    func _tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 0
+    }
+    
+    public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return _tableView(tableView, numberOfRowsInSection: section)
+    }
+
+    func _tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        return rxAbstractMethod()
+    }
+    
+    public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        return _tableView(tableView, cellForRowAtIndexPath: indexPath)
+    }
+}
+
+// Please take a look at `DelegateProxyType.swift`
+public class RxTableViewReactiveArrayDataSource<ElementType> : _RxTableViewReactiveArrayDataSource
+    
+                                                             , RxTableViewDataSourceType {
     typealias Element = [ElementType]
     
     typealias CellFactory = (UITableView, NSIndexPath, ElementType) -> UITableViewCell
@@ -28,15 +54,11 @@ public class RxTableViewReactiveArrayDataSource<ElementType> : RxTableViewNopDat
         self.cellFactory = cellFactory
     }
     
-    override public func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
-    }
-    
-    override public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func _tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return itemModels?.count ?? 0
     }
     
-    override public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func _tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         return cellFactory(tableView, indexPath, itemModels![indexPath.row])
     }
     

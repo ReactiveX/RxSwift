@@ -11,7 +11,8 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class RxTableViewSectionedAnimatedDataSource<S: SectionModelType> : RxTableViewSectionedDataSource<S>, RxTableViewReactiveDataSourceType {
+class RxTableViewSectionedAnimatedDataSource<S: SectionModelType> : RxTableViewSectionedDataSource<S>
+                                                                  , RxTableViewDataSourceType {
     typealias Element = [Changeset<S>]
     
     func tableView(tableView: UITableView, observedEvent: Event<Element>) {
