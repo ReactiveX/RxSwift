@@ -11,8 +11,13 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class RxCollectionViewSectionedAnimatedDataSource<S: SectionModelType> : RxCollectionViewSectionedDataSource<S>, RxCollectionViewReactiveDataSourceType {
+class RxCollectionViewSectionedAnimatedDataSource<S: SectionModelType> : RxCollectionViewSectionedDataSource<S>
+                                                                       , RxCollectionViewDataSourceType {
     typealias Element = [Changeset<S>]
+    
+    // For some inexplicable reason, when doing animated updates first time
+    // it crashes. Still need to figure out that one.
+    var set = false
     
     func collectionView(collectionView: UICollectionView, observedEvent: Event<Element>) {
         switch observedEvent {
@@ -20,6 +25,12 @@ class RxCollectionViewSectionedAnimatedDataSource<S: SectionModelType> : RxColle
             for c in boxedSections.value {
                 //println("Animating ==============================\n\(c)\n===============================\n")
                 setSections(c.finalSections)
+                
+                if !set {
+                    collectionView.reloadData()
+                    set = true
+                    return
+                }
                 collectionView.performBatchUpdates(c)
             }
         case .Error(let error):

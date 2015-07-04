@@ -11,7 +11,8 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class RxTableViewSectionedReloadDataSource<S: SectionModelType> : RxTableViewSectionedDataSource<S>, RxTableViewReactiveDataSourceType {
+class RxTableViewSectionedReloadDataSource<S: SectionModelType> : RxTableViewSectionedDataSource<S>
+                                                                , RxTableViewDataSourceType {
     typealias Element = [S]
     
     func tableView(tableView: UITableView, observedEvent: Event<Element>) {

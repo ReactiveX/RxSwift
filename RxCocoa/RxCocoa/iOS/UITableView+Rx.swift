@@ -14,12 +14,12 @@ extension UITableView {
  
     // factories
 
-    public func rx_createDataSourceBridge() -> RxTableViewDataSourceBridge {
-        return RxTableViewDataSourceBridge(view: self)
+    public func rx_createDataSourceProxy() -> RxTableViewDataSourceProxy {
+        return RxTableViewDataSourceProxy(view: self)
     }
     
-    public override func rx_createDelegateBridge() -> RxScrollViewDelegateBridge {
-        return RxTableViewDelegateBridgeWithProxyFiltering(view: self)
+    public override func rx_createDelegateProxy() -> RxScrollViewDelegateProxy {
+        return RxTableViewDelegateProxy(view: self)
     }
    
     
@@ -34,48 +34,29 @@ extension UITableView {
     // ```
     //
     // If you want to register non reactive data source, please use `rx_setDataSource` method
-    public func rx_subscribeWithReactiveDataSource<DataSource: RxTableViewReactiveDataSourceType>
+    public func rx_subscribeWithReactiveDataSource<DataSource: protocol<RxTableViewDataSourceType, UITableViewDataSource>>
         (dataSource: DataSource)
         -> Observable<DataSource.Element> -> Disposable {
-        return subscribeObservableUsingDelegateBridgeAndDataSource(self, dataSource, { (_: RxTableViewDataSourceBridge, event) -> Void in
+        return subscribeObservableUsingDelegateProxyAndDataSource(self, dataSource, { (_: RxTableViewDataSourceProxy, event) -> Void in
             dataSource.tableView(self, observedEvent: event)
         })
     }
     
-    // Registers `RxTableViewDataSourceType`.
-    // For more detailed explanations, take a look at `RxTableViewDataSourceType.swift` and `DelegateBridgeType.swift`
-    public func rx_setDataSource(dataSource: RxTableViewDataSourceType)
-        -> Disposable {
-        let result: BridgeDisposablePair<RxTableViewDataSourceBridge> = installDelegateOnBridge(self, dataSource)
-            
-        return result.disposable
-    }
-
     // Registers `UITableViewDataSource`.
-    // For more detailed explanations, take a look at `RxTableViewDataSourceType.swift` and `DelegateBridgeType.swift`
+    // For more detailed explanations, take a look at `RxTableViewDataSourceType.swift` and `DelegateProxyType.swift`
     public func rx_setDataSource(dataSource: UITableViewDataSource, retainDataSource: Bool)
         -> Disposable {
-            let converter = RxTableViewDataSourceConverter(dataSource: dataSource, retainDataSource: retainDataSource)
-        let result: BridgeDisposablePair<RxTableViewDataSourceBridge> = installDelegateOnBridge(self, dataSource)
+        let result: ProxyDisposablePair<RxTableViewDataSourceProxy> = installDelegateOnProxy(self, dataSource)
             
         return result.disposable
     }
     
     // delegate 
     
-    // For more detailed explanations, take a look at `DelegateBridgeType.swift`
-    // Retains delegate
-    public func rx_setDelegate(delegate: RxTableViewDelegateType) -> Disposable {
-        let result: BridgeDisposablePair<RxTableViewDelegateBridge> = installDelegateOnBridge(self, delegate)
-        
-        return result.disposable
-    }
-    
-    // For more detailed explanations, take a look at `DelegateBridgeType.swift`
+    // For more detailed explanations, take a look at `DelegateProxyType.swift`
     public func rx_setDelegate(delegate: UITableViewDelegate, retainDelegate: Bool)
         -> Disposable {
-            let converter = RxTableViewDelegateConverter(delegate: delegate, retainDelegate: retainDelegate)
-            let result: BridgeDisposablePair<RxTableViewDelegateBridge> = installDelegateOnBridge(self, converter)
+            let result: ProxyDisposablePair<RxTableViewDelegateProxy> = installDelegateOnProxy(self, delegate)
             
             return result.disposable
     }
@@ -138,9 +119,9 @@ extension UITableView {
         return rx_selectedItem() >- map { e in
             let indexPath = e.indexPath
             
-            let bridge = RxTableViewDataSourceBridge.getBridgeForView(self)!
+            let proxy = RxTableViewDataSourceProxy.getProxyForView(self)!
             
-            let dataSource: RxTableViewReactiveArrayDataSource<T> = castOrFatalError(bridge.getDelegate())
+            let dataSource: RxTableViewReactiveArrayDataSource<T> = castOrFatalError(proxy.getDelegate())
             
             return dataSource.modelAtIndex(indexPath.item)!
         }
@@ -148,13 +129,13 @@ extension UITableView {
     
     // private methods
     
-    private func createDelegateObservable<E, DisposeKey>(addObserver: (RxTableViewDelegateBridge, ObserverOf<E>) -> DisposeKey, removeObserver: (RxTableViewDelegateBridge, DisposeKey) -> Void) -> Observable<E> {
-        return createObservableUsingDelegateBridge(self, addObserver, removeObserver)
+    private func createDelegateObservable<E, DisposeKey>(addObserver: (RxTableViewDelegateProxy, ObserverOf<E>) -> DisposeKey, removeObserver: (RxTableViewDelegateProxy, DisposeKey) -> Void) -> Observable<E> {
+        return createObservableUsingDelegateProxy(self, addObserver, removeObserver)
     }
     
-    private func createDataSourceObservable<E, DisposeKey>(addObserver: (RxTableViewDataSourceBridge, ObserverOf<E>) -> DisposeKey,
-        removeObserver: (RxTableViewDataSourceBridge, DisposeKey) -> Void)
+    private func createDataSourceObservable<E, DisposeKey>(addObserver: (RxTableViewDataSourceProxy, ObserverOf<E>) -> DisposeKey,
+        removeObserver: (RxTableViewDataSourceProxy, DisposeKey) -> Void)
         -> Observable<E> {
-        return createObservableUsingDelegateBridge(self, addObserver, removeObserver)
+        return createObservableUsingDelegateProxy(self, addObserver, removeObserver)
     }
 }

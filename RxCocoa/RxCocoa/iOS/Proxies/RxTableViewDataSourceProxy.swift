@@ -1,5 +1,5 @@
 //
-//  RxTableViewDataSourceBridge.swift
+//  RxTableViewDataSourceProxy.swift
 //  RxCocoa
 //
 //  Created by Krunoslav Zaher on 6/15/15.
@@ -10,10 +10,10 @@ import Foundation
 import UIKit
 import RxSwift
 
-// Please take a look at `DelegateBridgeType.swift`
-public class RxTableViewDataSourceBridge : Delegate
-                                         , UITableViewDataSource
-                                         , DelegateBridgeType {
+// Please take a look at `DelegateProxyType.swift`
+public class RxTableViewDataSourceProxy : Delegate
+                                        , UITableViewDataSource
+                                        , DelegateProxyType {
     
     public typealias InsertItemObserver = ObserverOf<InsertItemEvent<UITableView>>
     public typealias DeleteItemObserver = ObserverOf<DeleteItemEvent<UITableView>>
@@ -29,7 +29,7 @@ public class RxTableViewDataSourceBridge : Delegate
     
     public let tableView: UITableView
     
-    var dataSource: RxTableViewDataSourceType?
+    var dataSource: UITableViewDataSource?
     
     public init(view: UITableView) {
         self.tableView = view
@@ -116,68 +116,34 @@ public class RxTableViewDataSourceBridge : Delegate
     
     // data source delegate
     
+    public func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return self.dataSource!.numberOfSectionsInTableView?(tableView) ?? 1
+    }
+    
     public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.dataSource?.tableView(tableView, numberOfRowsInSection: section) ?? 0
+        return self.dataSource!.tableView(tableView, numberOfRowsInSection: section)
     }
     
     public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         return self.dataSource!.tableView(tableView, cellForRowAtIndexPath: indexPath)
     }
     
-    public func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return self.dataSource?.numberOfSectionsInTableView(tableView) ?? 1
-    }
+    // proxy
     
-    public func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return self.dataSource?.tableView(tableView, titleForHeaderInSection: section)
-    }
-    
-    public func tableView(tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-        return self.dataSource?.tableView(tableView, titleForFooterInSection: section)
-    }
-    
-    public func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        return self.dataSource?.tableView(tableView, canEditRowAtIndexPath: indexPath) ?? false
-    }
-    
-    public func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        return self.dataSource?.tableView(tableView, canMoveRowAtIndexPath: indexPath) ?? false
-    }
-    
-    public func sectionIndexTitlesForTableView(tableView: UITableView) -> [AnyObject]!  {
-        return self.dataSource?.sectionIndexTitlesForTableView(tableView)
-    }
-    
-    public func tableView(tableView: UITableView, sectionForSectionIndexTitle title: String, atIndex index: Int) -> Int {
-        return self.dataSource?.tableView(tableView, sectionForSectionIndexTitle: title, atIndex: index) ?? 0
-    }
-    
-    public func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        commitEditingStyle(editingStyle, forRowAtIndexPath: indexPath)
-        self.dataSource?.tableView(tableView, commitEditingStyle: editingStyle, forRowAtIndexPath: indexPath)
-    }
-    
-    public func tableView(tableView: UITableView, moveRowAtIndexPath sourceIndexPath: NSIndexPath, toIndexPath destinationIndexPath: NSIndexPath) {
-        moveRowAtIndexPath(sourceIndexPath, toIndexPath: destinationIndexPath)
-        self.dataSource?.tableView(tableView, moveRowAtIndexPath: sourceIndexPath, toIndexPath: destinationIndexPath)
-    }
-    
-    // bridge
-    
-    public class func createBridgeForView(view: UIView) -> Self {
+    public class func createProxyForView(view: UIView) -> Self {
         let tableView = view as! UITableView
-        return castOrFatalError(tableView.rx_createDataSourceBridge())
+        return castOrFatalError(tableView.rx_createDataSourceProxy())
     }
     
-    public class func getBridgeForView(view: UIView) -> Self? {
+    public class func getProxyForView(view: UIView) -> Self? {
         let tableView = view as! UITableView
         return castOptionalOrFatalError(tableView.dataSource)
     }
     
     // tried using `Self` instead of Any object, didn't work out
-    public class func setBridgeToView(view: UIView, bridge: AnyObject) {
+    public class func setProxyToView(view: UIView, proxy: AnyObject) {
         let tableView = view as! UITableView
-        tableView.dataSource = castOptionalOrFatalError(bridge)
+        tableView.dataSource = castOptionalOrFatalError(proxy)
     }
     
     public func setDelegate(delegate: AnyObject?) {
@@ -188,6 +154,13 @@ public class RxTableViewDataSourceBridge : Delegate
         return dataSource
     }
     
+    override public func forwardingTargetForSelector(aSelector: Selector) -> AnyObject? {
+        return dataSource
+    }
+    
+    override public func respondsToSelector(aSelector: Selector) -> Bool {
+        return super.respondsToSelector(aSelector) || (self.dataSource?.respondsToSelector(aSelector) ?? false)
+    }
     
     // disposable
     

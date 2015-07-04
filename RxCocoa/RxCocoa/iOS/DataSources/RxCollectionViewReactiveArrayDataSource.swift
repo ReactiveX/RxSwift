@@ -10,13 +10,36 @@ import Foundation
 import UIKit
 import RxSwift
 
-// Please take a look at `DelegateBridgeType.swift`
-public class RxCollectionViewReactiveArrayDataSource<ElementType> : RxCollectionViewNopDataSource
-                                                                  , RxCollectionViewReactiveDataSourceType {
+// objc monkey business
+public class _RxCollectionViewReactiveArrayDataSource: NSObject, UICollectionViewDataSource {
+    
+    public func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+        return 1
+    }
+
+    func _collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 0
+    }
+    
+    public func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return _collectionView(collectionView, numberOfItemsInSection: section)
+    }
+
+    func _collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        return rxAbstractMethod()
+    }
+    
+    public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        return _collectionView(collectionView, cellForItemAtIndexPath: indexPath)
+    }
+}
+
+// Please take a look at `DelegateProxyType.swift`
+public class RxCollectionViewReactiveArrayDataSource<ElementType> : _RxCollectionViewReactiveArrayDataSource
+                                                                  , RxCollectionViewDataSourceType {
     typealias Element = [ElementType]
     
     typealias CellFactory = (UICollectionView, NSIndexPath, ElementType) -> UICollectionViewCell
-    typealias SupplementaryViewFactory = (UICollectionView, String, NSIndexPath, ElementType) -> UICollectionReusableView
     
     var itemModels: [ElementType]? = nil
     
@@ -25,29 +48,19 @@ public class RxCollectionViewReactiveArrayDataSource<ElementType> : RxCollection
     }
     
     public var cellFactory: CellFactory
-    public var supplementaryViewFactory: SupplementaryViewFactory
     
     init(cellFactory: CellFactory) {
         self.cellFactory = cellFactory
-        self.supplementaryViewFactory = { (_, _, _, _) in
-            rxFatalError("Supplementary view factory not set")
-            return rxAbstractMethod()
-        }
     }
-    
     
     // data source
     
-    public override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    override func _collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return itemModels?.count ?? 0
     }
     
-    public override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+    override func _collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         return cellFactory(collectionView, indexPath, itemModels![indexPath.item])
-    }
-    
-    public func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
-        return supplementaryViewFactory(collectionView, kind, indexPath, itemModels![indexPath.item])
     }
     
     // reactive

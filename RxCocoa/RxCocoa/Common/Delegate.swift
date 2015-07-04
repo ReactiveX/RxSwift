@@ -11,7 +11,7 @@ import RxSwift
 
 // This should be only used from `MainScheduler`
 // 
-// Also, please take a look at `RxDelegateBridge` protocol implementation
+// Also, please take a look at `RxDelegateProxy` protocol implementation
 public class Delegate : NSObject, Disposable {
     private var retainSelf: Delegate! = nil
     

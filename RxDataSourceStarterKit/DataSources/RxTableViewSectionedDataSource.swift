@@ -11,7 +11,52 @@ import RxSwift
 import RxCocoa
 import UIKit
 
-public class RxTableViewSectionedDataSource<S: SectionModelType> : RxTableViewNopDataSource {
+// objc monkey business
+public class _RxTableViewSectionedDataSource : NSObject
+                                             , UITableViewDataSource {
+    
+    func _numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    public func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return _numberOfSectionsInTableView(tableView)
+    }
+
+    func _tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 0
+    }
+    
+    public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return _tableView(tableView, numberOfRowsInSection: section)
+    }
+
+    func _tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        return (nil as UITableViewCell?)!
+    }
+    
+    public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        return _tableView(tableView, cellForRowAtIndexPath: indexPath)
+    }
+
+    func _tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return nil
+    }
+    
+    public func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return _tableView(tableView, titleForHeaderInSection: section)
+    }
+
+    func _tableView(tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+        return nil
+    }
+    
+    public func tableView(tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+        return _tableView(tableView, titleForFooterInSection: section)
+    }
+}
+
+public class RxTableViewSectionedDataSource<S: SectionModelType> : _RxTableViewSectionedDataSource {
     
     public typealias I = S.Item
     public typealias Section = S
@@ -72,15 +117,15 @@ public class RxTableViewSectionedDataSource<S: SectionModelType> : RxTableViewNo
     
     // UITableViewDataSource
     
-    public override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func _numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return sectionModels.count
     }
     
-    public override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func _tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return sectionModels[section].items.count
     }
     
-    public override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func _tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         precondition(indexPath.item < sectionModels[indexPath.section].items.count)
         
         let item = indexPath.item
@@ -88,11 +133,11 @@ public class RxTableViewSectionedDataSource<S: SectionModelType> : RxTableViewNo
         return cellFactory(tableView, indexPath, section.model, section.items[item])
     }
     
-    public override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    override func _tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return titleForHeaderInSection?(section: section)
     }
     
-    public override func tableView(tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+    override func _tableView(tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         return titleForFooterInSection?(section: section)
     }
     

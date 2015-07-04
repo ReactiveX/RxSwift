@@ -62,14 +62,14 @@ class DefaultImageService: ImageService {
             
             // best case scenario, it's already decoded an in memory
             if let image = maybeImage {
-                decodedImage = returnElement(image)
+                decodedImage = just(image)
             }
             else {
                 let cachedData = self.imageDataCache.objectForKey(URL) as? NSData
                 
                 // does image data cache contain anything
                 if let cachedData = cachedData {
-                    decodedImage = returnElement(cachedData) >- self.decodeImage
+                    decodedImage = just(cachedData) >- self.decodeImage
                 }
                 else {
                     // fetch from network

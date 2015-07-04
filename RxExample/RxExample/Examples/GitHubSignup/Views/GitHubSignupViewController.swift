@@ -30,12 +30,12 @@ class ValidationService {
     
     func validateUsername(username: String) -> Observable<ValidationResult> {
         if count(username) == 0 {
-            return returnElement((false, nil))
+            return just((false, nil))
         }
         
         // this obviously won't be
         if username.rangeOfCharacterFromSet(NSCharacterSet.alphanumericCharacterSet().invertedSet) != nil {
-            return returnElement((false, "Username can only contain numbers or digits"))
+            return just((false, "Username can only contain numbers or digits"))
         }
         
         let loadingValue = (valid: nil as Bool?, message: "Checking availabilty ..." as String?)
