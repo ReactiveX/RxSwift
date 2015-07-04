@@ -26,7 +26,7 @@ class Subscription<Element> : Disposable {
     
     func dispose() {
         lock.performLocked {
-            if let observer = self.observer {
+            if let _ = self.observer {
                 self.observer = nil
                 self.subject.unsubscribe(self.key)
             }
@@ -81,7 +81,7 @@ public class PublishSubject<Element> : SubjectType<Element, Element>, Cancelable
     
     public override func on(event: Event<Element>) {
         switch event {
-        case .Next(let value):
+        case .Next(_):
             let observers = lock.calculateLocked { () -> [ObserverOf]? in
                 let state = self.state
                 let shouldReturnImmediatelly = state.disposed || state.stoppedEvent != nil
@@ -101,7 +101,7 @@ public class PublishSubject<Element> : SubjectType<Element, Element>, Cancelable
         let observers: [Observer] = lock.calculateLocked { () -> [ObserverOf] in
             let state = self.state
             
-            var observers = self.state.observers.all
+            let observers = self.state.observers.all
             
             switch event {
             case .Completed: fallthrough

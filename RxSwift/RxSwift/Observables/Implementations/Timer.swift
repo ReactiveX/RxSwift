@@ -75,7 +75,7 @@ class Timer<S: Scheduler>: Producer<Int64> {
     }
     
     override func run<O : ObserverType where O.Element == Int64>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
-        if let period = period {
+        if let _ = period {
             let sink = TimerSink(parent: self, observer: observer, cancel: cancel)
             setSink(sink)
             return sink.run()

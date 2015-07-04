@@ -35,7 +35,7 @@ class SafeObserver<O: ObserverType> : Observer<O.Element> {
 }
 
 
-func makeSafe<O: ObserverType>(observer: O, disposable: Disposable) -> Observer<O.Element> {
+func makeSafe<O: ObserverType>(observer: O, _ disposable: Disposable) -> Observer<O.Element> {
     if let anonymousObserver = observer as? AnonymousObserver<O.Element> {
         return anonymousObserver.makeSafe(disposable)
     }

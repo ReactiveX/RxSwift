@@ -13,7 +13,7 @@ import Foundation
 // <%= i %>
 
 public func combineLatestOrDie<<%= ", ".join(map(1...i) { "E\($0)" }) %>, R>
-    (<%= ", ".join(map(1...i) { "source\($0): Observable<E\($0)>" }) %>, resultSelector: (<%= ", ".join(map(1...i) { "E\($0)" }) %>) -> RxResult<R>)
+    (<%= ", _ ".join(map(1...i) { "source\($0): Observable<E\($0)>" }) %>, _ resultSelector: (<%= ", ".join(map(1...i) { "E\($0)" }) %>) -> RxResult<R>)
         -> Observable<R> {
     return CombineLatest<%= i %>(
         <%= ", ".join(map(1...i) { "source\($0): source\($0)" }) %>,
@@ -22,7 +22,7 @@ public func combineLatestOrDie<<%= ", ".join(map(1...i) { "E\($0)" }) %>, R>
 }
 
 public func combineLatest<<%= ", ".join(map(1...i) { "E\($0)" }) %>, R>
-    (<%= ", ".join(map(1...i) { "source\($0): Observable<E\($0)>" }) %>, resultSelector: (<%= ", ".join(map(1...i) { "E\($0)" }) %>) -> R)
+    (<%= ", _ ".join(map(1...i) { "source\($0): Observable<E\($0)>" }) %>, _ resultSelector: (<%= ", ".join(map(1...i) { "E\($0)" }) %>) -> R)
         -> Observable<R> {
     return CombineLatest<%= i %>(
         <%= ", ".join(map(1...i) { "source\($0): source\($0)" }) %>,

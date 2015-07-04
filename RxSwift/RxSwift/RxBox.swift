@@ -13,7 +13,7 @@ import Foundation
 // Because ... compiler bugs
 
 // Wrapper for any value type
-public class RxBox<T> : Printable {
+public class RxBox<T> : CustomStringConvertible {
     public let value : T
     public init (_ value: T) {
         self.value = value
@@ -27,7 +27,7 @@ public class RxBox<T> : Printable {
 }
 
 // Wrapper for any value type that can be mutated
-public class RxMutableBox<T> : Printable {
+public class RxMutableBox<T> : CustomStringConvertible {
     public var value : T
     public init (_ value: T) {
         self.value = value

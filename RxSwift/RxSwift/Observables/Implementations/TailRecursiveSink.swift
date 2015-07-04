@@ -12,7 +12,7 @@ import Foundation
 class TailRecursiveSink<O: ObserverType> : Sink<O>, ObserverType {
     typealias Element = O.Element
     
-    var generators: [GeneratorOf<Observable<Element>>] = []
+    var generators: [AnyGenerator<Observable<Element>>] = []
     var disposed: Bool = false
     var subscription = SerialDisposable()
     
@@ -23,7 +23,7 @@ class TailRecursiveSink<O: ObserverType> : Sink<O>, ObserverType {
         super.init(observer: observer, cancel: cancel)
     }
     
-    func run(sources: GeneratorOf<Observable<Element>>) -> Disposable {
+    func run(sources: AnySequence<Observable<Element>>) -> Disposable {
         self.generators.append(sources.generate())
         
         scheduleMoveNext()
@@ -53,7 +53,7 @@ class TailRecursiveSink<O: ObserverType> : Sink<O>, ObserverType {
         self.dispose()
     }
     
-    func extract(observable: Observable<Element>) -> GeneratorOf<Observable<Element>>? {
+    func extract(observable: Observable<Element>) -> AnyGenerator<Observable<Element>>? {
         return abstractMethod()
     }
     
@@ -66,7 +66,7 @@ class TailRecursiveSink<O: ObserverType> : Sink<O>, ObserverType {
     private func moveNext() {
         var next: Observable<Element>? = nil;
         
-        do {
+        repeat {
             if self.generators.count == 0 {
                 break
             }
@@ -75,7 +75,7 @@ class TailRecursiveSink<O: ObserverType> : Sink<O>, ObserverType {
                 return
             }
             
-            var e = generators.last!
+            let e = generators.last!
             
             let nextCandidate = e.next()
         

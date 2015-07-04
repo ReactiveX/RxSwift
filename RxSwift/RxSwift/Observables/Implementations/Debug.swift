@@ -21,18 +21,16 @@ class Debug_<O: ObserverType> : Sink<O>, ObserverType {
     
     func on(event: Event<Element>) {
         let maxEventTextLength = 40
-        let ellipsis = "..."
-        
         let eventText = "\(event)"
-        let eventNormalized = count(eventText) > maxEventTextLength
-            ? prefix(eventText, maxEventTextLength / 2) + "..." + suffix(eventText, maxEventTextLength / 2)
+        let eventNormalized = eventText.characters.count > maxEventTextLength
+            ? String(prefix(eventText.characters, maxEventTextLength / 2)) + "..." + String(suffix(eventText.characters, maxEventTextLength / 2))
             : eventText
-        println("Event \(eventNormalized) @ observer \(self) [\(parent.identifier)]")
+        print("Event \(eventNormalized) @ observer \(self) [\(parent.identifier)]")
         trySend(observer, event)
     }
     
     override func dispose() {
-        println("Disposing observer \(self) [\(parent.identifier)]")
+        print("Disposing observer \(self) [\(parent.identifier)]")
         super.dispose()
     }
 }

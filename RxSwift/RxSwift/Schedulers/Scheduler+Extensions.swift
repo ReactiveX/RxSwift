@@ -50,8 +50,8 @@ func abstractSchedulePeriodic<State, S: Scheduler>(
 
 // recursive scheduling
 
-func scheduleRecursive<State, S: Scheduler>(scheduler: S, state: State, dueTime: S.TimeInterval,
-    action: (state: State, scheduler: RecursiveSchedulerOf<State, S.TimeInterval>) -> Void) -> Disposable {
+func scheduleRecursive<State, S: Scheduler>(scheduler: S,  _ state: State, _ dueTime: S.TimeInterval,
+    _ action: (state: State, scheduler: RecursiveSchedulerOf<State, S.TimeInterval>) -> Void) -> Disposable {
      
     let scheduler = RecursiveScheduler<State, S>(scheduler: scheduler, action: action)
      

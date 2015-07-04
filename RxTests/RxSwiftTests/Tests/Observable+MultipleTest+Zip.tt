@@ -22,7 +22,7 @@ extension ObservableMultipleTest {
 
         var result: Int! = nil
 
-        let d = zip(<%= ", ".join(map(0..<i) { "v\($0)" }) %>) { (<%= ", ".join(map(0..<i) { "a\($0)" }) %>) in <%= " + ".join(map(0..<i) { "a\($0)" }) %> } >- subscribeNext { result = $0 }
+        let _ = zip(<%= ", ".join(map(0..<i) { "v\($0)" }) %>) { (<%= ", ".join(map(0..<i) { "a\($0)" }) %>) in <%= " + ".join(map(0..<i) { "a\($0)" }) %> } >- subscribeNext { result = $0 }
 
         XCTAssertEqual(result, <%= (i + 1) * i / 2 %>)
     }

@@ -20,7 +20,7 @@ class ObservableMultipleTest : RxTest {
     }
 }
 
-// catch
+// onError
 extension ObservableMultipleTest {
     func testCatch_ErrorSpecific_Caught() {
         let scheduler = TestScheduler(initialClock: 0)
@@ -40,7 +40,7 @@ extension ObservableMultipleTest {
         var handlerCalled: Int?
         
         let res = scheduler.start {
-            o1 >- catch { e in
+            o1 >- onError { e in
                 handlerCalled = scheduler.clock
                 return o2
             }
@@ -175,7 +175,7 @@ extension ObservableMultipleTest {
         ])
         
         let res = scheduler.start {
-            SequenceOf([xs1, xs2, xs3]) >- catch
+            AnySequence([xs1, xs2, xs3]) >- onError
         }
         
         XCTAssertEqual(res.messages, [
@@ -204,7 +204,7 @@ extension ObservableMultipleTest {
             ])
     }
     
-    func testCatchSequenceOf_NoErrors() {
+    func testCatchAnySequence_NoErrors() {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs1 = scheduler.createHotObservable([
@@ -220,7 +220,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            SequenceOf([xs1, xs2]) >- catch
+            AnySequence([xs1, xs2]) >- onError
         }
         
         XCTAssertEqual(res.messages, [
@@ -237,7 +237,7 @@ extension ObservableMultipleTest {
             ])
     }
 
-    func testCatchSequenceOf_Never() {
+    func testCatchAnySequence_Never() {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs1 = scheduler.createHotObservable([
@@ -250,7 +250,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            SequenceOf([xs1, xs2]) >- catch
+            AnySequence([xs1, xs2]) >- onError
         }
         
         XCTAssertEqual(res.messages, [
@@ -264,7 +264,7 @@ extension ObservableMultipleTest {
             ])
     }
     
-    func testCatchSequenceOf_Empty() {
+    func testCatchAnySequence_Empty() {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs1 = scheduler.createHotObservable([
@@ -278,7 +278,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            SequenceOf([xs1, xs2]) >- catch
+            AnySequence([xs1, xs2]) >- onError
         }
         
         XCTAssertEqual(res.messages, [
@@ -309,7 +309,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            SequenceOf([xs1, xs2]) >- catch
+            AnySequence([xs1, xs2]) >- onError
         }
         
         XCTAssertEqual(res.messages, [
@@ -343,7 +343,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            SequenceOf([xs1, xs2]) >- catch
+            AnySequence([xs1, xs2]) >- onError
         }
         
         XCTAssertEqual(res.messages, [
@@ -376,7 +376,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            SequenceOf([xs1, xs2]) >- catch
+            AnySequence([xs1, xs2]) >- onError
         }
         
         XCTAssertEqual(res.messages, [
@@ -414,7 +414,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            SequenceOf([xs1, xs2, xs3]) >- catch
+            AnySequence([xs1, xs2, xs3]) >- onError
         }
         
         XCTAssertEqual(res.messages, [
@@ -477,7 +477,7 @@ extension ObservableMultipleTest {
             completed(600)
         ]
         
-        var xs = scheduler.createHotObservable(xSequence)
+        let xs = scheduler.createHotObservable(xSequence)
         
         let res = scheduler.start {
             switchLatest(xs)
@@ -560,7 +560,7 @@ extension ObservableMultipleTest {
             completed(600)
         ]
         
-        var xs = scheduler.createHotObservable(xSequence)
+        let xs = scheduler.createHotObservable(xSequence)
         
         let res = scheduler.start {
             switchLatest(xs)
@@ -629,7 +629,7 @@ extension ObservableMultipleTest {
             error(500, testError)
         ]
         
-        var xs = scheduler.createHotObservable(xSequence)
+        let xs = scheduler.createHotObservable(xSequence)
         
         let res = scheduler.start {
             switchLatest(xs)
@@ -703,11 +703,11 @@ extension ObservableMultipleTest {
             completed(50)
         ])
         
-        let res = scheduler.start {
+        _ = scheduler.start {
             concat([xs1, xs2, xs3])
         }
         
-        let messages = [
+        _ = [
             next(210, 1),
             next(220, 2),
             next(230, 3),
@@ -746,11 +746,11 @@ extension ObservableMultipleTest {
             completed(250),
             ])
         
-        let res = scheduler.start {
+        let _ = scheduler.start {
             concat([xs1, xs2])
         }
         
-        let messages: [Recorded<Int>] = [
+        let _: [Recorded<Int>] = [
             completed(250)
         ]
         
@@ -775,11 +775,11 @@ extension ObservableMultipleTest {
             next(150, 1),
             ])
         
-        let res = scheduler.start {
+        let _ = scheduler.start {
             concat([xs1, xs2])
         }
         
-        let messages: [Recorded<Int>] = [
+        let _: [Recorded<Int>] = [
             completed(250)
         ]
         
@@ -803,11 +803,11 @@ extension ObservableMultipleTest {
             next(150, 1),
             ])
         
-        let res = scheduler.start {
+        _ = scheduler.start {
             concat([xs1, xs2])
         }
         
-        let messages: [Recorded<Int>] = [
+        let _: [Recorded<Int>] = [
         ]
         
         XCTAssertEqual(xs1.subscriptions, [
@@ -831,11 +831,11 @@ extension ObservableMultipleTest {
             error(250, testError)
             ])
         
-        let res = scheduler.start {
+        _ = scheduler.start {
             concat([xs1, xs2])
         }
         
-        let messages: [Recorded<Int>] = [
+        let _: [Recorded<Int>] = [
             error(250, testError)
         ]
         
@@ -861,11 +861,11 @@ extension ObservableMultipleTest {
             completed(250)
             ])
         
-        let res = scheduler.start {
+        _ = scheduler.start {
             concat([xs1, xs2])
         }
         
-        let messages: [Recorded<Int>] = [
+        let _: [Recorded<Int>] = [
             error(230, testError)
         ]
         
@@ -890,11 +890,11 @@ extension ObservableMultipleTest {
             error(250, testError2)
             ])
         
-        let res = scheduler.start {
+        _ = scheduler.start {
             concat([xs1, xs2])
         }
         
-        let messages: [Recorded<Int>] = [
+        let _: [Recorded<Int>] = [
             error(230, testError1)
         ]
         
@@ -920,11 +920,11 @@ extension ObservableMultipleTest {
             completed(250)
             ])
         
-        let res = scheduler.start {
+        _ = scheduler.start {
             concat([xs1, xs2])
         }
         
-        let messages: [Recorded<Int>] = [
+        let _: [Recorded<Int>] = [
             next(210, 1),
             completed(250)
         ]
@@ -952,11 +952,11 @@ extension ObservableMultipleTest {
             completed(250)
             ])
         
-        let res = scheduler.start {
+        _ = scheduler.start {
             concat([xs1, xs2])
         }
         
-        let messages: [Recorded<Int>] = [
+        let _:[Recorded<Int>] = [
             next(240, 1),
             completed(250)
         ]
@@ -983,11 +983,11 @@ extension ObservableMultipleTest {
             next(150, 1),
             ])
         
-        let res = scheduler.start {
+        _ = scheduler.start {
             concat([xs1, xs2])
         }
         
-        let messages: [Recorded<Int>] = [
+        let _:[Recorded<Int>] = [
             next(210, 1),
         ]
         
@@ -1013,11 +1013,11 @@ extension ObservableMultipleTest {
             completed(230),
             ])
         
-        let res = scheduler.start {
+        let _ = scheduler.start {
             concat([xs1, xs2])
         }
         
-        let messages: [Recorded<Int>] = [
+        let _: [Recorded<Int>] = [
         ]
         
         XCTAssertEqual(xs1.subscriptions, [
@@ -1043,11 +1043,11 @@ extension ObservableMultipleTest {
             completed(250),
             ])
         
-        let res = scheduler.start {
+        _ = scheduler.start {
             concat([xs1, xs2])
         }
         
-        let messages: [Recorded<Int>] = [
+        let _ : [Recorded<Int>] = [
             next(220, 2),
             next(240, 3),
             completed(250)
@@ -1076,11 +1076,11 @@ extension ObservableMultipleTest {
             completed(250),
             ])
         
-        let res = scheduler.start {
+        let _ = scheduler.start {
             concat([xs1, xs2])
         }
         
-        let messages: [Recorded<Int>] = [
+        let _: [Recorded<Int>] = [
             error(230, testError1)
         ]
         
@@ -1106,11 +1106,11 @@ extension ObservableMultipleTest {
             error(250, testError2),
             ])
         
-        let res = scheduler.start {
+        let _ = scheduler.start {
             concat([xs1, xs2])
         }
         
-        let messages: [Recorded<Int>] = [
+        let _: [Recorded<Int>] = [
             next(220, 2),
             error(250, testError1)
         ]
@@ -1141,11 +1141,11 @@ extension ObservableMultipleTest {
             completed(250)
             ])
         
-        let res = scheduler.start {
+        let _ = scheduler.start {
             concat([xs1, xs2])
         }
         
-        let messages: [Recorded<Int>] = [
+        let _: [Recorded<Int>] = [
             next(210, 1),
             next(220, 3),
             next(230, 4),
@@ -1191,11 +1191,11 @@ extension ObservableMultipleTest {
             completed(340)
             ])
         
-        let res = scheduler.start {
+        let _ = scheduler.start {
             concat([xs1, xs2, xs3, xs2])
         }
         
-        let messages: [Recorded<Int>] = [
+        let _: [Recorded<Int>] = [
             next(210, 2),
             next(220, 3),
             next(280, 4),
@@ -1237,7 +1237,7 @@ extension ObservableMultipleTest {
             returnElements(0, 1, 2)
         ) >- merge
         
-        let _d = observable >- subscribeNext { n in
+        let _ = observable >- subscribeNext { n in
             nEvents++
         } >- scopedDispose
         
@@ -1253,7 +1253,7 @@ extension ObservableMultipleTest {
             returnElements(0, 1, 2)
         ) >- merge
         
-        let _d = observable >- subscribeError { n in
+        let _ = observable >- subscribeError { n in
             nEvents++
         } >- scopedDispose
         
@@ -1266,7 +1266,7 @@ extension ObservableMultipleTest {
         let observable: Observable<Observable<Int>> = returnElement(
             failWith(testError)
         ) >- merge
-        let _d = observable >- subscribeError { n in
+        let _ = observable >- subscribeError { n in
             nEvents++
         } >- scopedDispose
         
@@ -1277,7 +1277,7 @@ extension ObservableMultipleTest {
         var nEvents = 0
         
         let observable: Observable<Int> = empty() >- merge
-        let _d = observable >- subscribeCompleted {
+        let _ = observable >- subscribeCompleted {
             nEvents++
         } >- scopedDispose
         
@@ -1288,7 +1288,7 @@ extension ObservableMultipleTest {
         var nEvents = 0
         
         let observable: Observable<Int> = returnElement(empty()) >- merge
-        let _d = observable >- subscribeCompleted { n in
+        let _ = observable >- subscribeCompleted { n in
             nEvents++
         } >- scopedDispose
         
@@ -1304,7 +1304,7 @@ extension ObservableMultipleTest {
             returnElements(0, 1, 2)
         ) >- merge(maxConcurrent: 1)
         
-        let _d = observable >- subscribeNext { n in
+        let _ = observable >- subscribeNext { n in
             nEvents++
         } >- scopedDispose
         
@@ -1320,7 +1320,7 @@ extension ObservableMultipleTest {
             returnElements(0, 1, 2)
         ) >- merge(maxConcurrent: 1)
         
-        let _d = observable >- subscribeError { n in
+        let _ = observable >- subscribeError { n in
             nEvents++
         } >- scopedDispose
         
@@ -1333,7 +1333,7 @@ extension ObservableMultipleTest {
         let observable: Observable<Observable<Int>> = returnElement(
             failWith(testError)
         ) >- merge(maxConcurrent: 1)
-        let _d = observable >- subscribeError { n in
+        let _ = observable >- subscribeError { n in
             nEvents++
         } >- scopedDispose
         
@@ -1344,7 +1344,7 @@ extension ObservableMultipleTest {
         var nEvents = 0
         
         let observable: Observable<Int> = empty() >- merge(maxConcurrent: 1)
-        let _d = observable >- subscribeCompleted {
+        let _ = observable >- subscribeCompleted {
             nEvents++
         } >- scopedDispose
         
@@ -1355,7 +1355,7 @@ extension ObservableMultipleTest {
         var nEvents = 0
         
         let observable: Observable<Int> = returnElement(empty()) >- merge(maxConcurrent: 1)
-        let _d = observable >- subscribeCompleted { n in
+        let _ = observable >- subscribeCompleted { n in
             nEvents++
         } >- scopedDispose
         
@@ -1399,11 +1399,11 @@ extension ObservableMultipleTest {
             completed(600)
         ])
         
-        let res = scheduler.start {
+        let _ = scheduler.start {
             xs >- merge
         }
         
-        let messages = [
+        let _ = [
             next(310, 101),
             next(320, 102),
             next(410, 103),
@@ -1467,11 +1467,11 @@ extension ObservableMultipleTest {
             completed(600)
             ])
         
-        let res = scheduler.start {
+        let _ = scheduler.start {
             xs >- merge
         }
         
-        let messages = [
+        let _ = [
             next(310, 101),
             next(320, 102),
             next(410, 201),
@@ -1538,11 +1538,11 @@ extension ObservableMultipleTest {
             completed(600)
             ])
         
-        let res = scheduler.start {
+        let _ = scheduler.start {
             xs >- merge
         }
         
-        let messages = [
+        let _ = [
             next(310, 101),
             next(320, 102),
             next(410, 103),
@@ -1597,11 +1597,11 @@ extension ObservableMultipleTest {
             error(500, testError1),
             ])
         
-        let res = scheduler.start {
+        let _ = scheduler.start {
             xs >- merge
         }
         
-        let messages = [
+        let _ = [
             next(310, 101),
             next(320, 102),
             next(410, 103),
@@ -1663,11 +1663,11 @@ extension ObservableMultipleTest {
             completed(400)
             ])
         
-        let res = scheduler.start {
+        let _ = scheduler.start {
             xs >- merge(maxConcurrent: 2)
         }
         
-        let messages = [
+        let _ = [
             next(260, 1),
             next(280, 4),
             next(310, 2),
@@ -1739,11 +1739,11 @@ extension ObservableMultipleTest {
             completed(400)
             ])
         
-        let res = scheduler.start {
+        let _ = scheduler.start {
             xs >- merge(maxConcurrent: 2)
         }
         
-        let messages = [
+        let _ = [
             next(260, 1),
             next(280, 4),
             next(310, 2),
@@ -1815,11 +1815,11 @@ extension ObservableMultipleTest {
             completed(450)
             ])
         
-        let res = scheduler.start {
+        let _ = scheduler.start {
             xs >- merge(maxConcurrent: 3)
         }
         
-        let messages = [
+        let _ = [
             next(260, 1),
             next(280, 4),
             next(280, 6),
@@ -1891,11 +1891,11 @@ extension ObservableMultipleTest {
             completed(750)
             ])
         
-        let res = scheduler.start {
+        let _ = scheduler.start {
             xs >- merge(maxConcurrent: 3)
         }
         
-        let messages = [
+        let _ = [
             next(260, 1),
             next(280, 4),
             next(280, 6),
@@ -1967,11 +1967,11 @@ extension ObservableMultipleTest {
             completed(400)
             ])
         
-        let res = scheduler.start(450) {
+        let _ = scheduler.start(450) {
             xs >- merge(maxConcurrent: 2)
         }
         
-        let messages = [
+        let _ = [
             next(260, 1),
             next(280, 4),
             next(310, 2),
@@ -2038,11 +2038,11 @@ extension ObservableMultipleTest {
             error(400, testError1)
             ])
         
-        let res = scheduler.start {
+        let _ = scheduler.start {
             xs >- merge(maxConcurrent: 2)
         }
         
-        let messages = [
+        let _ = [
             next(260, 1),
             next(280, 4),
             next(310, 2),
@@ -2109,11 +2109,11 @@ extension ObservableMultipleTest {
             completed(400)
             ])
         
-        let res = scheduler.start {
+        let _ = scheduler.start {
             xs >- merge(maxConcurrent: 2)
         }
         
-        let messages = [
+        let _ = [
             next(260, 1),
             next(280, 4),
             next(310, 2),
@@ -2154,7 +2154,7 @@ extension ObservableMultipleTest {
         var nEvents = 0
         
         let observable = combineLatest(returnElements(0, 1, 2), returnElements(0, 1, 2)) { $0 + $1 }
-        let _d = observable >- subscribeNext { n in
+        let _ = observable >- subscribeNext { n in
             nEvents++
         } >- scopedDispose
         
@@ -2168,7 +2168,7 @@ extension ObservableMultipleTest {
             concat([returnElements(0, 1, 2), failWith(testError)]),
             returnElements(0, 1, 2)
         ) { $0 + $1 }
-        let _d = observable >- subscribeError { n in
+        let _ = observable >- subscribeError { n in
             nEvents++
         } >- scopedDispose
         
@@ -2182,7 +2182,7 @@ extension ObservableMultipleTest {
             failWith(testError),
             returnElements(0, 1, 2)
             ) { $0 + $1 }
-        let _d = observable >- subscribeError { n in
+        let _ = observable >- subscribeError { n in
             nEvents++
         } >- scopedDispose
         
@@ -2192,11 +2192,12 @@ extension ObservableMultipleTest {
     func testReplay_DeadlockEmpty() {
         var nEvents = 0
         
+        
         let observable = combineLatest(
             empty(),
             returnElements(0, 1, 2)
             ) { $0 + $1 }
-        let _d = observable >- subscribeCompleted {
+        let _ = observable >- subscribeCompleted {
             nEvents++
         } >- scopedDispose
         
@@ -2571,7 +2572,7 @@ extension ObservableMultipleTest {
             next(240, 2),
             ])
         
-        var sourceNotDisposed = false
+        let sourceNotDisposed = false
         
         let res = scheduler.start {
             l >- takeUntil(r)
@@ -2633,7 +2634,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            amb(SequenceOf([x1, x2, x3]))
+            amb(AnySequence([x1, x2, x3]))
         }
         
         XCTAssertEqual(res.messages, [

@@ -26,7 +26,7 @@ func isPrime(i: Int) -> Bool {
         return false
     }
     
-    var max = Int(sqrt(Float(i)))
+    let max = Int(sqrt(Float(i)))
     for (var j = 2; j <= max; ++j) {
         if i % j == 0 {
             return false
@@ -523,7 +523,7 @@ extension ObservableStandardSequenceOperators {
             error(600, testError),
             ])
         
-        var invoked = 0
+        _ = 0
         
         let res = scheduler.start { () -> Observable<Int> in
             return xs >- takeWhile { (num: Int, index) -> Bool in

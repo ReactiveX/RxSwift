@@ -19,7 +19,7 @@ func clearRealTest() {
 
 class AssumptionsTest : RxTest {
     func testAssumptionInCodeIsThatArraysAreStructs() {
-        var a = ["a"]
+        let a = ["a"]
         var b = a
         b += ["b"]
         
@@ -34,7 +34,7 @@ class AssumptionsTest : RxTest {
         // first check is dealloc method working
         
         var a: Anything? = Anything()
-        
+        print(a)
         XCTAssertFalse(deallocated)
         a = nil
         XCTAssertTrue(deallocated)

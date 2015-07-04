@@ -764,7 +764,7 @@ extension ObservableTimeTest {
     }
     
     func testInterval_TimeSpan_Zero_DefaultScheduler() {
-        var scheduler = SerialDispatchQueueScheduler(globalConcurrentQueuePriority: .Default)
+        let scheduler = SerialDispatchQueueScheduler(globalConcurrentQueuePriority: .Default)
         
         let observer = PrimitiveMockObserver<Int64>()
         
@@ -772,7 +772,7 @@ extension ObservableTimeTest {
         
         OSSpinLockLock(&lock)
         
-        let d = interval(0, scheduler) >- takeWhile { $0 < 10 } >- subscribe(next: { t in
+        _ = interval(0, scheduler) >- takeWhile { $0 < 10 } >- subscribe( { t in
             sendNext(observer, t)
         }, error: { _ in
         }, completed: {

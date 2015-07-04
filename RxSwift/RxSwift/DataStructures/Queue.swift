@@ -9,7 +9,7 @@
 import Foundation
 
 public struct Queue<T>: SequenceType {
-    typealias Generator = GeneratorOf<T>
+    typealias Generator = AnyGenerator<T>
     
     let resizeFactor = 2
     
@@ -32,7 +32,7 @@ public struct Queue<T>: SequenceType {
     
     private var dequeueIndex: Int {
         get {
-            var index = pushNextIndex - count
+           let index = pushNextIndex - count
             return index < 0 ? index + self.storage.count : index
         }
     }
@@ -59,7 +59,7 @@ public struct Queue<T>: SequenceType {
         var newStorage: [T?] = []
         newStorage.reserveCapacity(size)
         
-        var count = _count
+        let count = _count
         
         for var i = 0; i < count; ++i {
             // does swift array have some more efficient methods of copying?
@@ -78,7 +78,7 @@ public struct Queue<T>: SequenceType {
     public mutating func enqueue(item: T) {
         version++
         
-        let queueFull = count == storage.count
+        _ = count == storage.count
         if count == storage.count {
             resizeTo(storage.count * resizeFactor)
         }
@@ -116,9 +116,9 @@ public struct Queue<T>: SequenceType {
         var i = dequeueIndex
         var count = _count
         
-        var lastVersion = version
+        let lastVersion = version
         
-        return GeneratorOf {
+        return anyGenerator {
             if lastVersion != self.version {
                 rxFatalError("Collection was modified while enumerated")
             }

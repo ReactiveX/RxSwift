@@ -65,7 +65,7 @@ class Multicast<SourceType, IntermediateType, ResultType>: Producer<ResultType> 
     }
     
     override func run<O: ObserverType where O.Element == ResultType>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
-        var sink = Multicast_(parent: self, observer: observer, cancel: cancel)
+        let sink = Multicast_(parent: self, observer: observer, cancel: cancel)
         setSink(sink)
         return sink.run()
     }

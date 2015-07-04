@@ -9,7 +9,7 @@
 import Foundation
 import RxSwift
 
-struct Recorded<Element : Equatable> : Printable, Equatable {
+struct Recorded<Element : Equatable> : CustomStringConvertible, Equatable {
     let time: Time
     let event: Event<Element>
     
