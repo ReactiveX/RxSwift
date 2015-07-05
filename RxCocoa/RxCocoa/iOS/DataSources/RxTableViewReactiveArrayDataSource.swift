@@ -39,7 +39,7 @@ class RxTableViewReactiveArrayDataSource<ElementType> : _RxTableViewReactiveArra
                                                       , RxTableViewDataSourceType {
     typealias Element = [ElementType]
     
-    typealias CellFactory = (UITableView, NSIndexPath, ElementType) -> UITableViewCell
+    typealias CellFactory = (UITableView, Int, ElementType) -> UITableViewCell
     
     var itemModels: [ElementType]? = nil
     
@@ -58,7 +58,7 @@ class RxTableViewReactiveArrayDataSource<ElementType> : _RxTableViewReactiveArra
     }
     
     override func _tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        return cellFactory(tableView, indexPath, itemModels![indexPath.row])
+        return cellFactory(tableView, indexPath.item, itemModels![indexPath.row])
     }
     
     // reactive

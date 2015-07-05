@@ -61,7 +61,7 @@ class RxCollectionViewDataSourceProxy : DelegateProxy
         collectionView.dataSource = castOptionalOrFatalError(delegate)
     }
     
-    class func getCurrentDelegateFor(object: AnyObject) -> AnyObject? {
+    class func currentDelegateFor(object: AnyObject) -> AnyObject? {
         let collectionView: UICollectionView = castOrFatalError(object)
         return collectionView.dataSource
     }

@@ -39,7 +39,7 @@ class RxCollectionViewReactiveArrayDataSource<ElementType> : _RxCollectionViewRe
                                                            , RxCollectionViewDataSourceType {
     typealias Element = [ElementType]
     
-    typealias CellFactory = (UICollectionView, NSIndexPath, ElementType) -> UICollectionViewCell
+    typealias CellFactory = (UICollectionView, Int, ElementType) -> UICollectionViewCell
     
     var itemModels: [ElementType]? = nil
     
@@ -60,7 +60,7 @@ class RxCollectionViewReactiveArrayDataSource<ElementType> : _RxCollectionViewRe
     }
     
     override func _collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        return cellFactory(collectionView, indexPath, itemModels![indexPath.item])
+        return cellFactory(collectionView, indexPath.item, itemModels![indexPath.item])
     }
     
     // reactive

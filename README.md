@@ -126,7 +126,7 @@ Now something a little more interesting:
 * bind results to label (resultLabel.rx_subscribeTextTo)
 
 ```swift
-let subscription/*: Disposable */ = primeTextField.rx_text    // type is Observable<String>
+let subscription/*: Disposable */ = primeTextField.rx_text      // type is Observable<String>
             >- map { WolframAlphaIsPrime($0.toInt() ?? 0) }     // type is Observable<Observable<Prime>>
             >- concat                                           // type is Observable<Prime>
             >- map { "number \($0.n) is prime? \($0.isPrime)" } // type is Observable<String>
@@ -245,6 +245,7 @@ Operators are stateless by default.
   * [`distinctUntilChanged`](http://reactivex.io/documentation/operators/distinct.html)
   * [`filter` / `where`](http://reactivex.io/documentation/operators/filter.html)
   * [`sample`](http://reactivex.io/documentation/operators/sample.html)
+  * [`skip`](http://reactivex.io/documentation/operators/skip.html)
   * [`take`](http://reactivex.io/documentation/operators/take.html)
 
 #### Combining Observables
@@ -325,6 +326,16 @@ extension NSNotificationCenter {
 }
 ```
 
+```swift
+class DelegateProxy {
+    
+    public func observe(selector: Selector) -> Observable<[AnyObject]> {}
+
+    public dispose() {}
+
+}
+```
+
 **iOS**
 
 ```swift
@@ -332,6 +343,8 @@ extension NSNotificationCenter {
 extension UIControl {
 
     public func rx_controlEvents(controlEvents: UIControlEvents) -> Observable<Void> { }
+
+    public func rx_subscribeEnabledTo(source: Observable<Bool>) -> Disposable {}
 
 }
 
@@ -355,6 +368,8 @@ extension UITextField {
 
 ```swift
 extension UISearchBar {
+
+    public var rx_delegate: DelegateProxy {}
 
     public var rx_searchText: Observable<String> {}
 
@@ -393,6 +408,10 @@ extension UIImageView {
 ```swift
 extension UIScrollView {
 
+    public var rx_delegate: DelegateProxy {}
+
+    public func rx_setDelegate(delegate: UIScrollViewDelegate) {}
+    
     public var rx_contentOffset: Observable<CGPoint> {}
 
 }
@@ -416,51 +435,54 @@ extension UISlider {
 
 ```swift
 extension UITableView {
+    
+    public var rx_dataSource: DelegateProxy {}
 
-    public func rx_elementTap<E>() -> Observable<E> {}
+    public func rx_setDataSource(dataSource: UITableViewDataSource) -> Disposable {}
 
-    public func rx_rowTap() -> Observable<(UITableView, Int)> {}
+    public func rx_subscribeWithReactiveDataSource<DataSource: protocol<RxTableViewDataSourceType, UITableViewDataSource>>(dataSource: DataSource)
+        -> Observable<DataSource.Element> -> Disposable {}
 
-    public func rx_subscribeRowsTo<E where E: AnyObject>
-        (dataSource: TableViewDataSource)
-        (source: Observable<[E]>)
-            -> Disposable {}
+    public func rx_subscribeItemsTo<Item>(cellFactory: (UITableView, Int, Item) -> UITableViewCell)
+        -> Observable<[Item]> -> Disposable {}
 
-    public func rx_subscribeRowsTo<E where E : AnyObject>
-        (cellFactory: (UITableView, NSIndexPath, E) -> UITableViewCell)
-        (source: Observable<[E]>)
-            -> Disposable {}
+    public func rx_subscribeItemsToWithCellIdentifier<Item, Cell: UITableViewCell>(cellIdentifier: String, configureCell: (NSIndexPath, Item, Cell) -> Void)
+        -> Observable<[Item]> -> Disposable {}
 
-    public func rx_subscribeRowsToCellWithIdentifier<E, Cell where E : AnyObject, Cell: UITableViewCell>
-        (cellIdentifier: String, configureCell: (UITableView, NSIndexPath, E, Cell) -> Void)
-        (source: Observable<[E]>) 
-            -> Disposable {}
+    public var rx_itemSelected: Observable<NSIndexPath> {}
+
+    public var rx_itemInserted: Observable<NSIndexPath> {}
+
+    public var rx_itemDeleted: Observable<NSIndexPath> {}
+
+    public var rx_itemMoved: Observable<ItemMovedEvent> {}
+
+    // This method only works in case one of the `rx_subscribeItemsTo` methods was used.
+    public func rx_modelSelected<T>() -> Observable<T> {}
 
 }
 ```
 
 ```swift
 extension UICollectionView {
+    
+    public var rx_dataSource: DelegateProxy {}
 
-    public var rx_itemTap: -> Observable<(UICollectionView, Int)> {}
+    public func rx_setDataSource(dataSource: UICollectionViewDataSource) -> Disposable {}
+    
+    public func rx_subscribeWithReactiveDataSource<DataSource: protocol<RxCollectionViewDataSourceType, UICollectionViewDataSource>>(dataSource: DataSource)
+        -> Observable<DataSource.Element> -> Disposable {}
 
-    public func rx_elementTap<E>() -> Observable<E> {}
+    public func rx_subscribeItemsTo<Item>(cellFactory: (UICollectionView, Int, Item) -> UICollectionViewCell)
+        -> Observable<[Item]> -> Disposable {}
 
-    public func rx_subscribeItemsTo<E where E: AnyObject>
-        (dataSource: CollectionViewDataSource)
-        (source: Observable<[E]>)
-            -> Disposable {}
+    public func rx_subscribeItemsToWithCellIdentifier<Item, Cell: UICollectionViewCell>(cellIdentifier: String, configureCell: (Int, Item, Cell) -> Void)
+        -> Observable<[Item]> -> Disposable {}
 
-    public func rx_subscribeItemsTo<E where E : AnyObject>
-        (cellFactory: (UICollectionView, NSIndexPath, E) -> UICollectionViewCell)
-        (source: Observable<[E]>) 
-            -> Disposable {}
+    public var rx_itemSelected: Observable<NSIndexPath> {}
 
-    public func rx_subscribeItemsWithIdentifierTo<E, Cell where E : AnyObject, Cell : UICollectionViewCell>
-        (cellIdentifier: String, configureCell: (UICollectionView, NSIndexPath, E, Cell) -> Void)
-        (source: Observable<[E]>)
-            -> Disposable {}
-
+    // This method only works in case one of the `rx_subscribeItemsTo` methods was used.
+    public func rx_modelSelected<T>() -> Observable<T> {}
 }
 ```
 **OSX**
@@ -504,10 +526,11 @@ extension NSImageView {
 ```swift
 extension NSTextField {
 
-    public func rx_subscribeTextTo(source: Observable<String>) -> Disposable {}
-
+    public var rx_delegate: DelegateProxy {}
+    
     public var rx_text: Observable<String> {}
 
+    public func rx_subscribeTextTo(source: Observable<String>) -> Disposable {}
 } 
 ```
 

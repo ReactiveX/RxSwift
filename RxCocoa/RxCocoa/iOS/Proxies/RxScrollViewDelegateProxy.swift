@@ -10,12 +10,6 @@ import Foundation
 import RxSwift
 import UIKit
 
-let scrollViewDelegateNotSet = ScrollViewDelegateNotSet()
-
-class ScrollViewDelegateNotSet : NSObject
-                               , UIScrollViewDelegate {
-}
-
 // Please take a look at `DelegateProxyType.swift`
 class RxScrollViewDelegateProxy : DelegateProxy
                                 , UIScrollViewDelegate
@@ -26,8 +20,6 @@ class RxScrollViewDelegateProxy : DelegateProxy
     var contentOffsetObservers: Bag<ContentOffsetObserver>?
     
     unowned let scrollView: UIScrollView
-    
-    unowned var scrollViewDelegate: UIScrollViewDelegate = scrollViewDelegateNotSet
     
     required init(parentObject: AnyObject) {
         self.scrollView = parentObject as! UIScrollView
@@ -57,7 +49,7 @@ class RxScrollViewDelegateProxy : DelegateProxy
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
         dispatchNext(scrollView.contentOffset, contentOffsetObservers)
-        scrollViewDelegate.scrollViewDidScroll?(scrollView)
+        self._forwardToDelegate?.scrollViewDidScroll?(scrollView)
     }
     
     // delegate proxy
@@ -73,7 +65,7 @@ class RxScrollViewDelegateProxy : DelegateProxy
         collectionView.delegate = castOptionalOrFatalError(delegate)
     }
     
-    class func getCurrentDelegateFor(object: AnyObject) -> AnyObject? {
+    class func currentDelegateFor(object: AnyObject) -> AnyObject? {
         let collectionView: UIScrollView = castOrFatalError(object)
         return collectionView.delegate
     }

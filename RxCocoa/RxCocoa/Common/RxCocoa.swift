@@ -97,6 +97,16 @@ func castOptionalOrFatalError<T>(value: AnyObject?) -> T? {
     return v
 }
 
+func castOrFatalError<T>(value: AnyObject!, message: String) -> T {
+    let result: RxResult<T> = castOrFail(value)
+    
+    if result.isFailure {
+        rxFatalError(message)
+    }
+    
+    return result.get()
+}
+
 func castOrFatalError<T>(value: AnyObject!) -> T {
     let result: RxResult<T> = castOrFail(value)
     

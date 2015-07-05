@@ -9,4 +9,4 @@
 import Foundation
 import UIKit
 
-public typealias ItemMovedEvent = (sourceIndexPath: NSIndexPath, destinationIndexPath: NSIndexPath)
+public typealias ItemMovedEvent = (sourceIndex: NSIndexPath, destinationIndex: NSIndexPath)

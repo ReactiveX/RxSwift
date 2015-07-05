@@ -14,7 +14,7 @@ class RxSearchBarDelegateProxy : DelegateProxy
                                , UISearchBarDelegate
                                , DelegateProxyType {
     
-    class func getCurrentDelegateFor(object: AnyObject) -> AnyObject? {
+    class func currentDelegateFor(object: AnyObject) -> AnyObject? {
         let searchBar: UISearchBar = castOrFatalError(object)
         return searchBar.delegate
     }

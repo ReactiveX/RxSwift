@@ -62,7 +62,7 @@ class TableViewController: ViewController, UITableViewDelegate {
         
         // customization using delegate
         // RxTableViewDelegateBridge will forward correct messages
-        tableView.rx_setDelegate(self, retainDelegate: false)
+        tableView.rx_setDelegate(self)
             >- disposeBag.addDisposable
         
         tableView.rx_itemSelected

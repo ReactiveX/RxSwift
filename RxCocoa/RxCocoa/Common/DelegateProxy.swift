@@ -70,7 +70,7 @@ public class DelegateProxy : _RXDelegateProxy {
         return self(parentObject: object)
     }
     
-    public class func getAssignedProxyFor(object: AnyObject) -> Self? {
+    public class func assignedProxyFor(object: AnyObject) -> Self? {
         let maybeDelegate: AnyObject! = objc_getAssociatedObject(object, self.delegateAssociatedObjectTag())
         return castOptionalOrFatalError(maybeDelegate)
     }
@@ -85,7 +85,7 @@ public class DelegateProxy : _RXDelegateProxy {
         self._setForwardToDelegate(delegate, retainDelegate: retainDelegate)
     }
     
-    public func getForwardToDelegate() -> AnyObject? {
+    public func forwardToDelegate() -> AnyObject? {
         return self._forwardToDelegate
     }
     

@@ -138,7 +138,20 @@ class PartialUpdatesViewController : ViewController {
         updates
             >- partialUpdatesCollectionViewOutlet.rx_subscribeWithReactiveDataSource(cvAnimatedDataSource)
             >- disposeBag.addDisposable
-
+        
+        // touches
+        
+        partialUpdatesCollectionViewOutlet.rx_itemSelected
+            >- subscribeNext { [unowned self] i in
+                println("Let me guess, it's .... It's \(self.generator.sections[i.section].items[i.item]), isn't it? Yeah, I've got it.")
+            }
+            >- disposeBag.addDisposable
+        
+        merge(from([partialUpdatesTableViewOutlet.rx_itemSelected, reloadTableViewOutlet.rx_itemSelected]))
+            >- subscribeNext { [unowned self] i in
+                println("I have a feeling it's .... \(self.generator.sections[i.section].items[i.item])?")
+            }
+            >- disposeBag.addDisposable
     }
     
     override func viewWillDisappear(animated: Bool) {

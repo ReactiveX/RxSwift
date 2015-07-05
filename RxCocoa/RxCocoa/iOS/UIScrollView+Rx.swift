@@ -37,9 +37,9 @@ extension UIScrollView {
     // delegate
 
     // For more detailed explanations, take a look at `DelegateProxyType.swift`
-    public func rx_setDelegate(delegate: UIScrollViewDelegate, retainDelegate: Bool)
+    public func rx_setDelegate(delegate: UIScrollViewDelegate)
         -> Disposable {
         let proxy: RxScrollViewDelegateProxy = proxyForObject(self)
-        return installDelegate(proxy, delegate, retainDelegate, onProxyForObject: self)
+        return installDelegate(proxy, delegate, false, onProxyForObject: self)
     }
 }

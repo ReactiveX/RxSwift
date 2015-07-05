@@ -31,7 +31,7 @@ class RxTextFieldDelegate : DelegateProxy
         dispatchNext(nextValue, observers)
     }
 
-    class func getCurrentDelegateFor(object: AnyObject) -> AnyObject? {
+    class func currentDelegateFor(object: AnyObject) -> AnyObject? {
         let textField: NSTextField = castOrFatalError(object)
         return textField.delegate
     }

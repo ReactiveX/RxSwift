@@ -34,6 +34,13 @@ class Subscription<Element> : Disposable {
     }
 }
 
+@availability(*, deprecated=1.7, message="Replaced by PublishSubject")
+public class Subject<Element> : PublishSubject<Element> {
+    
+    public override init() {
+        super.init()
+    }
+}
 
 public class PublishSubject<Element> : SubjectType<Element, Element>, Disposable {
     typealias ObserverOf = Observer<Element>
