@@ -54,7 +54,7 @@ public func multicast<E, I, R>
 
 public func publish<E>(source: Observable<E>)
     -> ConnectableObservableType<E> {
-    return source >- multicast(Subject())
+    return source >- multicast(PublishSubject())
 }
 
 // replay 
@@ -79,7 +79,7 @@ public func refCount<E>
 
 // In Rx every subscription uses it's own set of resources.
 // In case of UI, asynchronous operations are usually used to fetch data from server.
-// In case data is fetched from server, stale data can be server first, and then updated with 
+// In case data is fetched from server, stale data can be served first, and then updated with
 // fresh data from server.
 
 public func sharedWithCachedLastResult<E>(source: Observable<E>)

@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "_RXDelegateProxy.h"
 
 //! Project version number for RxCocoa.
 FOUNDATION_EXPORT double RxCocoaVersionNumber;

@@ -1,5 +1,5 @@
 //
-//  Subject.swift
+//  PublishSubject.swift
 //  Rx
 //
 //  Created by Krunoslav Zaher on 2/11/15.
@@ -12,13 +12,13 @@ class Subscription<Element> : Disposable {
     typealias ObserverType = Observer<Element>
     typealias KeyType = Bag<Void>.KeyType
     
-    private let subject : Subject<Element>
+    private let subject : PublishSubject<Element>
     private var key: KeyType
     
     private var lock = Lock()
     private var observer: ObserverType?
     
-    init(subject: Subject<Element>, key: KeyType, observer: ObserverType) {
+    init(subject: PublishSubject<Element>, key: KeyType, observer: ObserverType) {
         self.key = key
         self.subject = subject
         self.observer = observer
@@ -35,7 +35,7 @@ class Subscription<Element> : Disposable {
 }
 
 
-public class Subject<Element> : SubjectType<Element, Element>, Disposable {
+public class PublishSubject<Element> : SubjectType<Element, Element>, Disposable {
     typealias ObserverOf = Observer<Element>
     typealias KeyType = Bag<Void>.KeyType
     typealias Observers = Bag<ObserverOf>

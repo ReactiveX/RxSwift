@@ -88,6 +88,7 @@
 		C811086F1AF5114D001C13E4 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0700;
 				LastUpgradeCheck = 0630;
 				ORGANIZATIONNAME = "Krunoslav Zaher";
 				TargetAttributes = {
@@ -236,6 +237,7 @@
 				C81108801AF5114D001C13E4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

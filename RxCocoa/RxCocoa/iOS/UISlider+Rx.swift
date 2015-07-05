@@ -21,7 +21,9 @@ extension UISlider {
                 sendNext(observer, (control as! UISlider).value)
             }
             
-            return observer
+            return AnonymousDisposable {
+                observer.dispose()
+            }
         }
     }
 }

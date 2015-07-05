@@ -75,6 +75,16 @@ public func take<E>
     }
 }
 
+// skip
+
+public func skip<E>
+    (count: Int)
+    -> Observable<E> -> Observable<E> {
+    return  { source in
+        return SkipCount(source: source, count: count)
+    }
+}
+
 // map aka select
 
 public func mapOrDie<E, R>

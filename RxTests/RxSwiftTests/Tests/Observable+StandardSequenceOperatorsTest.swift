@@ -2724,7 +2724,396 @@ extension ObservableStandardSequenceOperators {
     }
 }
 
-// take time
+// skip
 extension ObservableStandardSequenceOperators {
+    func testSkip_Complete_After() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createHotObservable([
+            next(70, 6),
+            next(150, 4),
+            next(210, 9),
+            next(230, 13),
+            next(270, 7),
+            next(280, 1),
+            next(300, -1),
+            next(310, 3),
+            next(340, 8),
+            next(370, 11),
+            next(410, 15),
+            next(415, 16),
+            next(460, 72),
+            next(510, 76),
+            next(560, 32),
+            next(570, -100),
+            next(580, -3),
+            next(590, 5),
+            next(630, 10),
+            completed(690)
+            ])
+        
+        let res = scheduler.start {
+            xs >- skip(20)
+        }
+        
+        XCTAssertEqual(res.messages, [
+            completed(690)
+        ])
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 690)
+        ])
+    }
     
+    
+    func testSkip_Complete_Some() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createHotObservable([
+            next(70, 6),
+            next(150, 4),
+            next(210, 9),
+            next(230, 13),
+            next(270, 7),
+            next(280, 1),
+            next(300, -1),
+            next(310, 3),
+            next(340, 8),
+            next(370, 11),
+            next(410, 15),
+            next(415, 16),
+            next(460, 72),
+            next(510, 76),
+            next(560, 32),
+            next(570, -100),
+            next(580, -3),
+            next(590, 5),
+            next(630, 10),
+            completed(690)
+            ])
+        
+        let res = scheduler.start {
+            xs >- skip(17)
+        }
+        
+        XCTAssertEqual(res.messages, [
+            completed(690)
+            ])
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 690)
+            ])
+    }
+    
+    func testSkip_Complete_Before() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createHotObservable([
+            next(70, 6),
+            next(150, 4),
+            next(210, 9),
+            next(230, 13),
+            next(270, 7),
+            next(280, 1),
+            next(300, -1),
+            next(310, 3),
+            next(340, 8),
+            next(370, 11),
+            next(410, 15),
+            next(415, 16),
+            next(460, 72),
+            next(510, 76),
+            next(560, 32),
+            next(570, -100),
+            next(580, -3),
+            next(590, 5),
+            next(630, 10),
+            completed(690)
+            ])
+        
+        let res = scheduler.start {
+            xs >- skip(10)
+        }
+        
+        XCTAssertEqual(res.messages, [
+            next(460, 72),
+            next(510, 76),
+            next(560, 32),
+            next(570, -100),
+            next(580, -3),
+            next(590, 5),
+            next(630, 10),
+            completed(690)
+            ])
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 690)
+            ])
+    }
+    
+    func testSkip_Complete_Zero() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createHotObservable([
+            next(70, 6),
+            next(150, 4),
+            next(210, 9),
+            next(230, 13),
+            next(270, 7),
+            next(280, 1),
+            next(300, -1),
+            next(310, 3),
+            next(340, 8),
+            next(370, 11),
+            next(410, 15),
+            next(415, 16),
+            next(460, 72),
+            next(510, 76),
+            next(560, 32),
+            next(570, -100),
+            next(580, -3),
+            next(590, 5),
+            next(630, 10),
+            completed(690)
+            ])
+        
+        let res = scheduler.start {
+            xs >- skip(0)
+        }
+        
+        XCTAssertEqual(res.messages, [
+            next(210, 9),
+            next(230, 13),
+            next(270, 7),
+            next(280, 1),
+            next(300, -1),
+            next(310, 3),
+            next(340, 8),
+            next(370, 11),
+            next(410, 15),
+            next(415, 16),
+            next(460, 72),
+            next(510, 76),
+            next(560, 32),
+            next(570, -100),
+            next(580, -3),
+            next(590, 5),
+            next(630, 10),
+            completed(690)
+            ])
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 690)
+            ])
+    }
+    
+    func testSkip_Error_After() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createHotObservable([
+            next(70, 6),
+            next(150, 4),
+            next(210, 9),
+            next(230, 13),
+            next(270, 7),
+            next(280, 1),
+            next(300, -1),
+            next(310, 3),
+            next(340, 8),
+            next(370, 11),
+            next(410, 15),
+            next(415, 16),
+            next(460, 72),
+            next(510, 76),
+            next(560, 32),
+            next(570, -100),
+            next(580, -3),
+            next(590, 5),
+            next(630, 10),
+            error(690, testError)
+            ])
+        
+        let res = scheduler.start {
+            xs >- skip(20)
+        }
+        
+        XCTAssertEqual(res.messages, [
+            error(690, testError)
+            ])
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 690)
+            ])
+    }
+    
+    func testSkip_Error_Same() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createHotObservable([
+            next(70, 6),
+            next(150, 4),
+            next(210, 9),
+            next(230, 13),
+            next(270, 7),
+            next(280, 1),
+            next(300, -1),
+            next(310, 3),
+            next(340, 8),
+            next(370, 11),
+            next(410, 15),
+            next(415, 16),
+            next(460, 72),
+            next(510, 76),
+            next(560, 32),
+            next(570, -100),
+            next(580, -3),
+            next(590, 5),
+            next(630, 10),
+            error(690, testError)
+            ])
+        
+        let res = scheduler.start {
+            xs >- skip(17)
+        }
+        
+        XCTAssertEqual(res.messages, [
+            error(690, testError)
+            ])
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 690)
+            ])
+    }
+    
+    func testSkip_Error_Before() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createHotObservable([
+            next(70, 6),
+            next(150, 4),
+            next(210, 9),
+            next(230, 13),
+            next(270, 7),
+            next(280, 1),
+            next(300, -1),
+            next(310, 3),
+            next(340, 8),
+            next(370, 11),
+            next(410, 15),
+            next(415, 16),
+            next(460, 72),
+            next(510, 76),
+            next(560, 32),
+            next(570, -100),
+            next(580, -3),
+            next(590, 5),
+            next(630, 10),
+            error(690, testError)
+            ])
+        
+        let res = scheduler.start {
+            xs >- skip(3)
+        }
+        
+        XCTAssertEqual(res.messages, [
+            next(280, 1),
+            next(300, -1),
+            next(310, 3),
+            next(340, 8),
+            next(370, 11),
+            next(410, 15),
+            next(415, 16),
+            next(460, 72),
+            next(510, 76),
+            next(560, 32),
+            next(570, -100),
+            next(580, -3),
+            next(590, 5),
+            next(630, 10),
+            error(690, testError)
+            ])
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 690)
+            ])
+    }
+    
+    func testSkip_Dispose_Before() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createHotObservable([
+            next(70, 6),
+            next(150, 4),
+            next(210, 9),
+            next(230, 13),
+            next(270, 7),
+            next(280, 1),
+            next(300, -1),
+            next(310, 3),
+            next(340, 8),
+            next(370, 11),
+            next(410, 15),
+            next(415, 16),
+            next(460, 72),
+            next(510, 76),
+            next(560, 32),
+            next(570, -100),
+            next(580, -3),
+            next(590, 5),
+            next(630, 10),
+            ])
+        
+        let res = scheduler.start(250) {
+            xs >- skip(3)
+        }
+        
+        XCTAssertEqual(res.messages, [
+            ])
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 250)
+            ])
+    }
+    
+    func testSkip_Dispose_After() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createHotObservable([
+            next(70, 6),
+            next(150, 4),
+            next(210, 9),
+            next(230, 13),
+            next(270, 7),
+            next(280, 1),
+            next(300, -1),
+            next(310, 3),
+            next(340, 8),
+            next(370, 11),
+            next(410, 15),
+            next(415, 16),
+            next(460, 72),
+            next(510, 76),
+            next(560, 32),
+            next(570, -100),
+            next(580, -3),
+            next(590, 5),
+            next(630, 10),
+            ])
+        
+        let res = scheduler.start(400) {
+            xs >- skip(3)
+        }
+        
+        XCTAssertEqual(res.messages, [
+            next(280, 1),
+            next(300, -1),
+            next(310, 3),
+            next(340, 8),
+            next(370, 11),
+            ])
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 400)
+            ])
+    }
 }

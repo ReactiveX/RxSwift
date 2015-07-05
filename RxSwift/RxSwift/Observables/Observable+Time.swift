@@ -141,6 +141,17 @@ public func take<E, S: Scheduler>
     }
 }
 
+// skip
+
+public func skip<E, S: Scheduler>
+    (duration: S.TimeInterval, scheduler: S)
+    -> Observable<E> -> Observable<E> {
+    return { source in
+        return SkipTime(source: source, duration: duration, scheduler: scheduler)
+    }
+}
+
+
 // delaySubscription
 
 public func delaySubscription<E, S: Scheduler>

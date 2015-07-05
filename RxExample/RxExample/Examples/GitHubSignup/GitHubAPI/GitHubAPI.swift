@@ -54,14 +54,14 @@ class GitHubAPI {
             }
             >- observeSingleOn(self.dataScheduler)
             >- catch { result in
-                return returnElement(false)
+                return just(false)
             }
     }
     
     func signup(username: String, password: String) -> Observable<SignupState> {
         // this is also just a mock
         let signupResult = SignupState.SignedUp(signedUp: arc4random() % 5 == 0 ? false : true)
-        return concat([returnElement(signupResult), never()])
+        return concat([just(signupResult), never()])
             >- throttle(5, MainScheduler.sharedInstance)
             >- startWith(SignupState.SigningUp)
     }

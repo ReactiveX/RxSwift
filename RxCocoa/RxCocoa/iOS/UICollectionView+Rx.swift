@@ -10,253 +10,113 @@ import Foundation
 import RxSwift
 import UIKit
 
-// This cannot be a generic class because of collection view objc runtime that checks for
-// implemented selectors in data source
-public class RxCollectionViewDataSource :  NSObject, UICollectionViewDataSource {
-    public typealias CellFactory = (UICollectionView, NSIndexPath, AnyObject) -> UICollectionViewCell
-    
-    public var items: [AnyObject] {
-        get {
-            return _items
-        }
-    }
-    
-    var _items: [AnyObject]
-    
-    let cellFactory: CellFactory
-    
-    public init(cellFactory: CellFactory) {
-        self._items = []
-        self.cellFactory = cellFactory
-    }
-    
-    public func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-        return 1
-    }
-    
-    public func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return _items.count
-    }
-    
-    public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        if indexPath.item < _items.count {
-            return cellFactory(collectionView, indexPath, self._items[indexPath.item])
-        }
-        else {
-            rxFatalError("something went wrong")
-            let cell: UICollectionViewCell? = nil
-            return cell!
-        }
-    }
-}
-
-public class RxCollectionViewDelegate: RxScrollViewDelegate, UICollectionViewDelegate {
-    public typealias Observer = ObserverOf<(UICollectionView, Int)>
-    public typealias DisposeKey = Bag<Observer>.KeyType
-    
-    var collectionViewObservers: Bag<Observer>
-    
-    override public init() {
-        collectionViewObservers = Bag()
-    }
-    
-    public func addCollectionViewObserver(observer: Observer) -> DisposeKey {
-        MainScheduler.ensureExecutingOnScheduler()
-        
-        return collectionViewObservers.put(observer)
-    }
-    
-    public func removeCollectionViewObserver(key: DisposeKey) {
-        MainScheduler.ensureExecutingOnScheduler()
-        
-        let element = collectionViewObservers.removeKey(key)
-        if element == nil {
-            removingObserverFailed()
-        }
-    }
-    
-    public func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        collectionView.deselectItemAtIndexPath(indexPath, animated: true)
-        
-        dispatchNext((collectionView, indexPath.item), collectionViewObservers)
-    }
-    
-    deinit {
-        if collectionViewObservers.count > 0 {
-            handleVoidObserverResult(failure(rxError(RxCocoaError.InvalidOperation, "Something went wrong. Deallocating collection view delegate while there are still subscribed observers means that some subscription was left undisposed.")))
-        }
-    }
-}
-
 // This is the most simple (but probably most common) way of using rx with UICollectionView.
 extension UICollectionView {
-    override func rx_createDelegate() -> RxScrollViewDelegate {
-        return RxCollectionViewDelegate()
+    
+    // factories
+    
+    override func rx_createDelegateProxy() -> RxScrollViewDelegateProxy {
+        return RxCollectionViewDelegateProxy(parentObject: self)
     }
     
-    public func rx_subscribeItemsTo<E where E: AnyObject>
-        (dataSource: RxCollectionViewDataSource)
-        (source: Observable<[E]>)
-        -> Disposable {
-        MainScheduler.ensureExecutingOnScheduler()
-        
-        if self.dataSource != nil && self.dataSource !== dataSource {
-            rxFatalError("Data source is different")
+    // proxies
+    
+    public var rx_dataSource: DelegateProxy {
+        get {
+            return proxyForObject(self) as RxCollectionViewDataSourceProxy
         }
-        
-        self.dataSource = dataSource
-        
-        let clearDataSource = AnonymousDisposable {
-            if self.dataSource != nil && self.dataSource !== dataSource {
-                rxFatalError("Data source is different")
-            }
-            
-            self.dataSource = nil
-        }
-        
-        let disposable = source.subscribe(AnonymousObserver { event in
-            MainScheduler.ensureExecutingOnScheduler()
-            
-            switch event {
-            case .Next(let boxedValue):
-                let value = boxedValue.value
-                dataSource._items = value
-                self.reloadData()
-            case .Error(let error):
-#if DEBUG
-                rxFatalError("Something went wrong: \(error)")
-#endif
-                break
-            case .Completed:
-                break
-            }
-        })
-        
-        return CompositeDisposable(clearDataSource, disposable)
     }
-
-    public func rx_subscribeItemsTo<E where E : AnyObject>
-        (cellFactory: (UICollectionView, NSIndexPath, E) -> UICollectionViewCell)
-        (source: Observable<[E]>)
+    
+    // data source
+    
+    // Registers reactive data source with collection view.
+    // Difference between reactive data source and UICollectionViewDataSource is that reactive
+    // has additional method:
+    //
+    // ```
+    //     func collectionView(collectionView: UICollectionView, observedEvent: Event<Element>) -> Void
+    // ```
+    //
+    // If you want to register non reactive data source, please use `rx_setDataSource` method
+    public func rx_subscribeWithReactiveDataSource<DataSource: protocol<RxCollectionViewDataSourceType, UICollectionViewDataSource>>
+        (dataSource: DataSource)
+        -> Observable<DataSource.Element> -> Disposable {
+            return setProxyDataSourceForObject(self, dataSource, false) { (_: RxCollectionViewDataSourceProxy, event) -> Void in
+                dataSource.collectionView(self, observedEvent: event)
+            }
+    }
+    
+    // Registers `UICollectionViewDataSource`.
+    // For more detailed explanations, take a look at `RxCollectionViewDataSourceType.swift` and `DelegateProxyType.swift`
+    public func rx_setDataSource(dataSource: UICollectionViewDataSource)
         -> Disposable {
-            
-        let dataSource = RxCollectionViewDataSource(cellFactory: {
-            cellFactory($0, $1, $2 as! E)
-        })
-        
-        return self.rx_subscribeItemsTo(dataSource)(source: source)
+        let proxy: RxCollectionViewDataSourceProxy = proxyForObject(self)
+        return installDelegate(proxy, dataSource, false, onProxyForObject: self)
     }
     
-    public func rx_subscribeItemsWithIdentifierTo<E, Cell where E : AnyObject, Cell : UICollectionViewCell>
-        (cellIdentifier: String, configureCell: (UICollectionView, NSIndexPath, E, Cell) -> Void)
-        (source: Observable<[E]>)
+    // delegate
+    
+    // For more detailed explanations, take a look at `DelegateProxyType.swift`
+    public func rx_setDelegate(delegate: UICollectionViewDelegate)
         -> Disposable {
-            
-        let dataSource = RxCollectionViewDataSource {
-            let cell = $0.dequeueReusableCellWithReuseIdentifier(cellIdentifier, forIndexPath: $1) as! Cell
-            configureCell($0, $1, $2 as! E, cell)
-            
-            return cell
-        }
-        
-        return self.rx_subscribeItemsTo(dataSource)(source: source)
+        let proxy: RxCollectionViewDelegateProxy = proxyForObject(self)
+        return installDelegate(proxy, delegate, false, onProxyForObject: self)
     }
     
+    // `reloadData` - items subscription methods (it's assumed that there is one section, and it is typed `Void`)
     
-    public func rx_itemTap() -> Observable<(UICollectionView, Int)> {
-        _ = rx_checkCollectionViewDelegate()
-        
-        return AnonymousObservable { observer in
-            MainScheduler.ensureExecutingOnScheduler()
-            
-            var maybeDelegate = self.rx_checkCollectionViewDelegate()
-            
-            if maybeDelegate == nil {
-                let delegate = self.rx_createDelegate() as! RxCollectionViewDelegate
-                maybeDelegate = delegate
-                self.delegate = maybeDelegate
+    public func rx_subscribeItemsTo<Item>
+        (cellFactory: (UICollectionView, NSIndexPath, Item) -> UICollectionViewCell)
+        -> Observable<[Item]> -> Disposable {
+            return { source in
+                let dataSource = RxCollectionViewReactiveArrayDataSource<Item>(cellFactory: cellFactory)
+                return self.rx_subscribeWithReactiveDataSource(dataSource)(source)
             }
-            
-            let delegate = maybeDelegate!
-            
-            let key = delegate.addCollectionViewObserver(observer)
-            
-            return AnonymousDisposable {
-                MainScheduler.ensureExecutingOnScheduler()
-                
-                _ = self.rx_checkCollectionViewDelegate()
-                
-                delegate.removeCollectionViewObserver(key)
-                
-                if delegate.collectionViewObservers.count == 0 {
-                    self.delegate = nil
+    }
+    
+    public func rx_subscribeItemsToWithCellIdentifier<Item, Cell: UICollectionViewCell>
+        (cellIdentifier: String, configureCell: (NSIndexPath, Item, Cell) -> Void)
+        -> Observable<[Item]> -> Disposable {
+            return { source in
+                let dataSource = RxCollectionViewReactiveArrayDataSource<Item> { (cv, indexPath, item) in
+                    let cell = cv.dequeueReusableCellWithReuseIdentifier(cellIdentifier, forIndexPath: indexPath) as! Cell
+                    configureCell(indexPath, item, cell)
+                    return cell
                 }
+                
+                return self.rx_subscribeWithReactiveDataSource(dataSource)(source)
             }
-        }
     }
     
-    public func rx_elementTap<E>() -> Observable<E> {
-        
-        return rx_itemTap() >- map { (tableView, rowIndex) -> E in
-            let maybeDataSource: RxCollectionViewDataSource? = self.rx_collectionViewDataSource()
+    // events
+    
+    public var rx_itemSelected: Observable<NSIndexPath> {
+        return _proxyObservableForObject({ d, o in
+            return d.addItemSelectedObserver(o)
+            }, removeObserver: { (delegate, disposeKey) -> Void in
+                delegate.removeItemSelectedObserver(disposeKey)
+        })
+    }
+    
+    // typed events
+    
+    public func rx_modelSelected<T>() -> Observable<T> {
+        return rx_itemSelected >- map { indexPath in
+            let dataSource: RxCollectionViewReactiveArrayDataSource<T> = castOrFatalError(self.rx_dataSource.getForwardToDelegate())
             
-            if maybeDataSource == nil {
-                rxFatalError("To use element tap table view needs to use table view data source. You can still use `rx_observableItemTap`.")
-            }
-            
-            let dataSource = maybeDataSource!
-            
-            return dataSource.items[rowIndex] as! E
+            return dataSource.modelAtIndex(indexPath.item)!
         }
     }
     
     // private methods
     
-    private func rx_collectionViewDataSource() -> RxCollectionViewDataSource? {
-        MainScheduler.ensureExecutingOnScheduler()
-        
-        if self.dataSource == nil {
-            return nil
-        }
-        
-        let maybeDataSource = self.dataSource as? RxCollectionViewDataSource
-        
-        if maybeDataSource == nil {
-            rxFatalError("View already has incompatible data source set. Please remove earlier delegate registration.")
-        }
-        
-        return maybeDataSource!
+    private func _proxyObservableForObject<E, DisposeKey>(addObserver: (RxCollectionViewDelegateProxy, ObserverOf<E>) -> DisposeKey, removeObserver: (RxCollectionViewDelegateProxy, DisposeKey) -> Void) -> Observable<E> {
+        return proxyObservableForObject(self, addObserver, removeObserver)
     }
     
-    private func rx_checkCollectionViewDataSource<E>() -> RxCollectionViewDataSource? {
-        MainScheduler.ensureExecutingOnScheduler()
-        
-        if self.dataSource == nil {
-            return nil
-        }
-        
-        let maybeDataSource = self.dataSource as? RxCollectionViewDataSource
-        
-        if maybeDataSource == nil {
-            rxFatalError("View already has incompatible data source set. Please remove earlier delegate registration.")
-        }
-        
-        return maybeDataSource!
-    }
-    
-    private func rx_checkCollectionViewDelegate() -> RxCollectionViewDelegate? {
-        MainScheduler.ensureExecutingOnScheduler()
-        
-        if self.delegate == nil {
-            return nil
-        }
-        
-        let maybeDelegate = self.delegate as? RxCollectionViewDelegate
-        
-        if maybeDelegate == nil {
-            rxFatalError("View already has incompatible delegate set. To use rx observable (for now) please remove earlier delegate registration.")
-        }
-        
-        return maybeDelegate!
+    private func _dataSourceObservable<E, DisposeKey>(addObserver: (RxCollectionViewDataSourceProxy, ObserverOf<E>) -> DisposeKey,
+        removeObserver: (RxCollectionViewDataSourceProxy, DisposeKey) -> Void)
+        -> Observable<E> {
+            return proxyObservableForObject(self, addObserver, removeObserver)
     }
 }

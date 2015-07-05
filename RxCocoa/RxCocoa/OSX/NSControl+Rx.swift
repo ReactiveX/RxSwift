@@ -26,8 +26,6 @@ extension NSControl {
     
     func rx_value<T>(getValue: () -> T) -> Observable<T> {
         return AnonymousObservable { observer in
-            MainScheduler.ensureExecutingOnScheduler()
-            
             sendNext(observer, getValue())
             
             let observer = ControlTarget(control: self) { control in

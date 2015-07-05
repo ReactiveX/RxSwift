@@ -10,251 +10,141 @@ import Foundation
 import RxSwift
 import UIKit
 
-// This cannot be a generic class because of table view objc runtime that checks for 
-// implemented selectors in data source
-public class RxTableViewDataSource :  NSObject, UITableViewDataSource {
-    public typealias CellFactory = (UITableView, NSIndexPath, AnyObject) -> UITableViewCell
-    
-    public var rows: [AnyObject] {
-        get {
-            return _rows
-        }
-    }
-    
-    var _rows: [AnyObject]
-    
-    let cellFactory: CellFactory
-    
-    public init(cellFactory: CellFactory) {
-        self._rows = []
-        self.cellFactory = cellFactory
-    }
-    
-    public func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
-    }
-    
-    public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return _rows.count
-    }
-    
-    public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        if indexPath.row < _rows.count {
-            let row = indexPath.row
-            return cellFactory(tableView, indexPath, self._rows[row])
-        }
-        else {
-            rxFatalError("something went wrong")
-            let cell: UITableViewCell? = nil
-            return cell!
-        }
-    }
-}
+extension UITableView {
+ 
+    // factories
 
-public class RxTableViewDelegate: RxScrollViewDelegate, UITableViewDelegate {
-    public typealias Observer = ObserverOf<(UITableView, Int)>
-    public typealias DisposeKey = Bag<Observer>.KeyType
-    
-    var tableViewObservers: Bag<Observer>
-    
-    override public init() {
-        tableViewObservers = Bag()
+    override func rx_createDelegateProxy() -> RxScrollViewDelegateProxy {
+        return RxTableViewDelegateProxy(parentObject: self)
     }
     
-    public func addTableViewObserver(observer: Observer) -> DisposeKey {
-        MainScheduler.ensureExecutingOnScheduler()
-        
-        return tableViewObservers.put(observer)
-    }
+    // proxies
     
-    public func removeTableViewObserver(key: DisposeKey) {
-        MainScheduler.ensureExecutingOnScheduler()
-        
-        let element = tableViewObservers.removeKey(key)
-        if element == nil {
-            removingObserverFailed()
+    public var rx_dataSource: DelegateProxy {
+        return proxyForObject(self) as RxTableViewDataSourceProxy
+    }
+   
+    // data source
+    
+    // Registers reactive data source with table view.
+    // Difference between reactive data source and UITableViewDataSource is that reactive 
+    // has additional method:
+    //
+    // ```
+    //     func tableView(tableView: UITableView, observedEvent: Event<Element>) -> Void
+    // ```
+    //
+    // If you want to register non reactive data source, please use `rx_setDataSource` method
+    public func rx_subscribeWithReactiveDataSource<DataSource: protocol<RxTableViewDataSourceType, UITableViewDataSource>>
+        (dataSource: DataSource)
+        -> Observable<DataSource.Element> -> Disposable {
+        return setProxyDataSourceForObject(self, dataSource, false) { (_: RxTableViewDataSourceProxy, event) -> Void in
+            dataSource.tableView(self, observedEvent: event)
         }
+    }
+    
+    // Registers `UITableViewDataSource`.
+    // For more detailed explanations, take a look at `RxTableViewDataSourceType.swift` and `DelegateProxyType.swift`
+    public func rx_setDataSource(dataSource: UITableViewDataSource)
+        -> Disposable {
+        let proxy: RxTableViewDataSourceProxy = proxyForObject(self)
+            
+        return installDelegate(proxy, dataSource, false, onProxyForObject: self)
+    }
+    
+    // delegate 
+    
+    // For more detailed explanations, take a look at `DelegateProxyType.swift`
+    public func rx_setDelegate(delegate: UITableViewDelegate)
+        -> Disposable {
+        let proxy: RxTableViewDelegateProxy = proxyForObject(self)
+            
+        return installDelegate(proxy, delegate, false, onProxyForObject: self)
+    }
+    
+    // `reloadData` - items subscription methods (it's assumed that there is one section, and it is typed `Void`)
+    
+    public func rx_subscribeItemsTo<Item>
+        (cellFactory: (UITableView, NSIndexPath, Item) -> UITableViewCell)
+        -> Observable<[Item]> -> Disposable {
+        return { source in
+            let dataSource = RxTableViewReactiveArrayDataSource<Item>(cellFactory: cellFactory)
+            
+            return self.rx_subscribeWithReactiveDataSource(dataSource)(source)
+        }
+    }
+    
+    public func rx_subscribeItemsToWithCellIdentifier<Item, Cell: UITableViewCell>
+        (cellIdentifier: String, configureCell: (NSIndexPath, Item, Cell) -> Void)
+        -> Observable<[Item]> -> Disposable {
+        return { source in
+            let dataSource = RxTableViewReactiveArrayDataSource<Item> { (tv, indexPath, item) in
+                let cell = tv.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! Cell
+                configureCell(indexPath, item, cell)
+                return cell
+            }
+
+            return self.rx_subscribeWithReactiveDataSource(dataSource)(source)
+        }
+    }
+
+    // events
+    
+    
+    public var rx_itemSelected: Observable<NSIndexPath> {
+        return _proxyObservableForObject({ d, o in
+            return d.addItemSelectedObserver(o)
+        }, removeObserver: { (delegate, disposeKey) -> Void in
+            delegate.removeItemSelectedObserver(disposeKey)
+        })
     }
  
-    public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        
-        dispatchNext((tableView, indexPath.row), tableViewObservers)
-    }
-    
-    deinit {
-        if tableViewObservers.count > 0 {
-            handleVoidObserverResult(failure(rxError(RxCocoaError.InvalidOperation, "Something went wrong. Deallocating table view delegate while there are still subscribed observers means that some subscription was left undisposed.")))
-        }
-    }
-}
-
-// This is the most simple (but probably most common) way of using rx with UITableView.
-extension UITableView {
-    override func rx_createDelegate() -> RxScrollViewDelegate {
-        return RxTableViewDelegate()
-    }
-    
-    public func rx_subscribeRowsTo<E where E: AnyObject>
-        (dataSource: RxTableViewDataSource)
-        (source: Observable<[E]>)
-        -> Disposable {
-        MainScheduler.ensureExecutingOnScheduler()
-        
-        if self.dataSource != nil && self.dataSource !== dataSource {
-            rxFatalError("Data source is different")
-        }
-
-        self.dataSource = dataSource
-            
-        let clearDataSource = AnonymousDisposable {
-            if self.dataSource != nil && self.dataSource !== dataSource {
-                rxFatalError("Data source is different")
+    public var rx_itemInserted: Observable<NSIndexPath> {
+        return rx_dataSource.observe("tableView:commitEditingStyle:forRowAtIndexPath:")
+            >- filter { a in
+                return UITableViewCellEditingStyle(rawValue: (a[1] as! NSNumber).integerValue) == .Insert
             }
-            
-            self.dataSource = nil
-        }
-            
-        let disposable = source.subscribe(AnonymousObserver { event in
-            MainScheduler.ensureExecutingOnScheduler()
-            
-            switch event {
-            case .Next(let boxedValue):
-                let value = boxedValue.value
-                dataSource._rows = value
-                self.reloadData()
-            case .Error(let error):
-#if DEBUG
-                rxFatalError("Something went wrong: \(error)")
-#endif
-            case .Completed:
-                break
-            }
-        })
-            
-        return CompositeDisposable(clearDataSource, disposable)
-    }
-    
-    public func rx_subscribeRowsTo<E where E : AnyObject>
-        (cellFactory: (UITableView, NSIndexPath, E) -> UITableViewCell)
-        (source: Observable<[E]>)
-        -> Disposable {
-            
-        let dataSource = RxTableViewDataSource {
-            cellFactory($0, $1, $2 as! E)
-        }
-            
-        return self.rx_subscribeRowsTo(dataSource)(source: source)
-    }
-    
-    public func rx_subscribeRowsToCellWithIdentifier<E, Cell where E : AnyObject, Cell: UITableViewCell>
-        (cellIdentifier: String, configureCell: (UITableView, NSIndexPath, E, Cell) -> Void)
-        (source: Observable<[E]>)
-        -> Disposable {
-            
-        let dataSource = RxTableViewDataSource {
-            let cell = $0.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: $1) as! Cell
-            configureCell($0, $1, $2 as! E, cell)
-            return cell
-        }
-        
-        return self.rx_subscribeRowsTo(dataSource)(source: source)
-    }
-    
-    public func rx_rowTap() -> Observable<(UITableView, Int)> {
-        _ = rx_checkTableViewDelegate()
-        
-        return AnonymousObservable { observer in
-            MainScheduler.ensureExecutingOnScheduler()
-            
-            var maybeDelegate = self.rx_checkTableViewDelegate()
-            
-            if maybeDelegate == nil {
-                let delegate = self.rx_createDelegate() as! RxTableViewDelegate
-                maybeDelegate = delegate
-                self.delegate = maybeDelegate
-            }
-    
-            let delegate = maybeDelegate!
-            
-            let key = delegate.addTableViewObserver(observer)
-            
-            return AnonymousDisposable {
-                MainScheduler.ensureExecutingOnScheduler()
-                
-                _ = self.rx_checkTableViewDelegate()
-                
-                delegate.removeTableViewObserver(key)
-                
-                if delegate.tableViewObservers.count == 0 {
-                    self.delegate = nil
-                }
-            }
+            >- map { a in
+                return a[2] as! NSIndexPath
         }
     }
     
-    public func rx_elementTap<E>() -> Observable<E> {
-        
-        return rx_rowTap() >- map { (tableView, rowIndex) -> E in
-            let maybeDataSource: RxTableViewDataSource? = self.rx_getTableViewDataSource()
-            
-            if maybeDataSource == nil {
-                rxFatalError("To use element tap table view needs to use table view data source. You can still use `rx_observableRowTap`.")
+    public var rx_itemDeleted: Observable<NSIndexPath> {
+        return rx_dataSource.observe("tableView:commitEditingStyle:forRowAtIndexPath:")
+            >- filter { a in
+                return UITableViewCellEditingStyle(rawValue: (a[1] as! NSNumber).integerValue) == .Delete
             }
+            >- map { a in
+                return a[2] as! NSIndexPath
+            }
+    }
+    
+    public var rx_itemMoved: Observable<ItemMovedEvent> {
+        return rx_dataSource.observe("tableView:moveRowAtIndexPath:toIndexPath:")
+            >- map { a in
+                return (a[1] as! NSIndexPath, a[2] as! NSIndexPath)
+            }
+    }
+    
+    // typed events
+    
+    public func rx_modelSelected<T>() -> Observable<T> {
+        return rx_itemSelected >- map { indexPath in
+            let dataSource: RxTableViewReactiveArrayDataSource<T> = castOrFatalError(self.rx_dataSource.getForwardToDelegate())
             
-            let dataSource = maybeDataSource!
-            
-            return dataSource.rows[rowIndex] as! E
+            return dataSource.modelAtIndex(indexPath.item)!
         }
     }
     
     // private methods
-   
-    private func rx_getTableViewDataSource() -> RxTableViewDataSource? {
-        MainScheduler.ensureExecutingOnScheduler()
-        
-        if self.dataSource == nil {
-            return nil
-        }
-        
-        let maybeDataSource = self.dataSource as? RxTableViewDataSource
-        
-        if maybeDataSource == nil {
-            rxFatalError("View already has incompatible data source set. Please remove earlier delegate registration.")
-        }
-        
-        return maybeDataSource!
+    
+    private func _proxyObservableForObject<E, DisposeKey>(addObserver: (RxTableViewDelegateProxy, ObserverOf<E>) -> DisposeKey, removeObserver: (RxTableViewDelegateProxy, DisposeKey) -> Void) -> Observable<E> {
+        return proxyObservableForObject(self, addObserver, removeObserver)
     }
     
-    private func rx_checkTableViewDataSource<E>() -> RxTableViewDataSource? {
-        MainScheduler.ensureExecutingOnScheduler()
-        
-        if self.dataSource == nil {
-            return nil
-        }
-        
-        let maybeDataSource = self.dataSource as? RxTableViewDataSource
-        
-        if maybeDataSource == nil {
-            rxFatalError("View already has incompatible data source set. Please remove earlier delegate registration.")
-        }
-        
-        return maybeDataSource!
-    }
-    
-    private func rx_checkTableViewDelegate() -> RxTableViewDelegate? {
-        MainScheduler.ensureExecutingOnScheduler()
-        
-        if self.delegate == nil {
-            return nil
-        }
-        
-        let maybeDelegate = self.delegate as? RxTableViewDelegate
-        
-        if maybeDelegate == nil {
-            rxFatalError("View already has incompatible delegate set. To use rx observable (for now) please remove earlier delegate registration.")
-        }
-        
-        return maybeDelegate!
+    private func _createDataSourceObservable<E, DisposeKey>(addObserver: (RxTableViewDataSourceProxy, ObserverOf<E>) -> DisposeKey,
+        removeObserver: (RxTableViewDataSourceProxy, DisposeKey) -> Void)
+        -> Observable<E> {
+        return proxyObservableForObject(self, addObserver, removeObserver)
     }
 }
