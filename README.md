@@ -331,8 +331,6 @@ class DelegateProxy {
     
     public func observe(selector: Selector) -> Observable<[AnyObject]> {}
 
-    public dispose() {}
-
 }
 ```
 
