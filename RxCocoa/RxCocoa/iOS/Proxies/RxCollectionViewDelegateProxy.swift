@@ -10,61 +10,37 @@ import Foundation
 import UIKit
 import RxSwift
 
+let collectionViewDelegateNotSet = CollectionViewDelegateNotSet()
+
+class CollectionViewDelegateNotSet : NSObject
+                                   , UICollectionViewDelegate {
+}
+
 // Please take a look at `DelegateProxyType.swift`
-public class RxCollectionViewDelegateProxy : RxScrollViewDelegateProxy
-                                           , UICollectionViewDelegate {
+class RxCollectionViewDelegateProxy : RxScrollViewDelegateProxy
+                                    , UICollectionViewDelegate {
     
-    public typealias ItemSelectedObserver = ObserverOf<ItemSelectedEvent<UICollectionView>>
-    public typealias ItemSelectedDisposeKey = Bag<ItemSelectedObserver>.KeyType
+    typealias ItemSelectedObserver = ObserverOf<NSIndexPath>
+    typealias ItemSelectedDisposeKey = Bag<ItemSelectedObserver>.KeyType
     
-    public let collectionView: UICollectionView
+    unowned let collectionView: UICollectionView
     
     var itemSelectedObservers: Bag<ItemSelectedObserver> = Bag()
     
-    var collectionViewDelegate: UICollectionViewDelegate?
-    
-    public override init(view: UIView) {
-        self.collectionView = view as! UICollectionView
+    required init(parentObject: AnyObject) {
+        self.collectionView = parentObject as! UICollectionView
         
-        super.init(view: view)
+        super.init(parentObject: parentObject)
     }
     
-    public func addItemSelectedObserver(observer: ItemSelectedObserver) -> ItemSelectedDisposeKey {
+    func addItemSelectedObserver(observer: ItemSelectedObserver) -> ItemSelectedDisposeKey {
         return itemSelectedObservers.put(observer)
     }
     
-    public func removeItemSelectedObserver(key: ItemSelectedDisposeKey) {
+    func removeItemSelectedObserver(key: ItemSelectedDisposeKey) {
         let element = itemSelectedObservers.removeKey(key)
         if element == nil {
             removingObserverFailed()
-        }
-    }
-    
-    // delegate proxy
-    
-    override public class func setProxyToView(view: UIView, proxy: AnyObject) {
-        let _: UICollectionViewDelegate = castOrFatalError(proxy)
-        super.setProxyToView(view, proxy: proxy)
-    }
-    
-    override public func setDelegate(delegate: AnyObject?) {
-        let typedDelegate: UICollectionViewDelegate? = castOptionalOrFatalError(delegate)
-        self.collectionViewDelegate = typedDelegate
-        
-        super.setDelegate(delegate)
-    }
-    
-    // dispose
-    
-    public override var isDisposable: Bool {
-        get {
-            return super.isDisposable && self.itemSelectedObservers.count == 0
-        }
-    }
-    
-    deinit {
-        if !isDisposable {
-            handleVoidObserverResult(failure(rxError(RxCocoaError.InvalidOperation, "Something went wrong. Deallocating collection view delegate while there are still subscribed observers means that some subscription was left undisposed.")))
         }
     }
 }

@@ -21,7 +21,7 @@ import RxSwift
 #endif
 
 // This should be only used from `MainScheduler`
-class ControlTarget: Delegate {
+class ControlTarget: NSObject, Disposable {
     typealias Callback = (Control) -> Void
     
     let selector: Selector = "eventHandler:"
@@ -34,6 +34,8 @@ class ControlTarget: Delegate {
     
 #if os(iOS)
     init(control: Control, controlEvents: UIControlEvents, callback: Callback) {
+        MainScheduler.ensureExecutingOnScheduler()
+        
         self.control = control
         self.controlEvents = controlEvents
         self.callback = callback
@@ -49,6 +51,8 @@ class ControlTarget: Delegate {
     }
 #elseif os(OSX)
     init(control: Control, callback: Callback) {
+        MainScheduler.ensureExecutingOnScheduler()
+    
         self.control = control
         self.callback = callback
         
@@ -66,13 +70,12 @@ class ControlTarget: Delegate {
    
     func eventHandler(sender: Control!) {
         if let callback = self.callback {
-            callback(self.control)
+            callback(control)
         }
     }
     
-    override func dispose() {
-        super.dispose()
-        
+    func dispose() {
+        MainScheduler.ensureExecutingOnScheduler()
 #if os(iOS)
         self.control.removeTarget(self, action: self.selector, forControlEvents: self.controlEvents)
 #elseif os(OSX)

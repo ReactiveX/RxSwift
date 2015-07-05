@@ -45,7 +45,7 @@ class TableViewController: ViewController, UITableViewDelegate {
             }
             >- disposeBag.addDisposable
         
-        dataSource.cellFactory = { (tv, ip, _: Section, user: User) in
+        dataSource.cellFactory = { (tv, ip, user: User) in
             let cell = tv.dequeueReusableCellWithIdentifier("Cell") as! UITableViewCell
             cell.textLabel?.text = user.firstName + " " + user.lastName
             return cell
@@ -65,21 +65,21 @@ class TableViewController: ViewController, UITableViewDelegate {
         tableView.rx_setDelegate(self, retainDelegate: false)
             >- disposeBag.addDisposable
         
-        tableView.rx_selectedItem()
-            >- subscribeNext { [unowned self] e in
-                self.showDetailsForUserAtIndexPath(e.indexPath)
+        tableView.rx_itemSelected
+            >- subscribeNext { [unowned self] indexPath in
+                self.showDetailsForUserAtIndexPath(indexPath)
             }
             >- disposeBag.addDisposable
         
-        tableView.rx_deleteItem()
-            >- subscribeNext { [unowned self] e in
-                self.removeUser(e.indexPath)
+        tableView.rx_itemDeleted
+            >- subscribeNext { [unowned self] indexPath in
+                self.removeUser(indexPath)
             }
             >- disposeBag.addDisposable
         
-        tableView.rx_moveItem()
-            >- subscribeNext { [unowned self] e in
-                self.moveUserFrom(e.sourceIndexPath, to: e.destinationIndexPath)
+        tableView.rx_itemMoved
+            >- subscribeNext { [unowned self] (s, d) in
+                self.moveUserFrom(s, to: d)
             }
             >- disposeBag.addDisposable
         

@@ -10,60 +10,37 @@ import Foundation
 import UIKit
 import RxSwift
 
-// Please take a look at `DelegateProxyType.swift`
-public class RxTableViewDelegateProxy : RxScrollViewDelegateProxy
-                                       , UITableViewDelegate {
-    public typealias ItemSelectedObserver = ObserverOf<ItemSelectedEvent<UITableView>>
-    public typealias ItemSelectedDisposeKey = Bag<ItemSelectedObserver>.KeyType
+let tableViewDelegateNotSet = TableViewDelegateNotSet()
 
-    public let tableView: UITableView
+class TableViewDelegateNotSet : NSObject
+                              , UITableViewDelegate {
+    
+}
+
+// Please take a look at `DelegateProxyType.swift`
+class RxTableViewDelegateProxy : RxScrollViewDelegateProxy
+                               , UITableViewDelegate {
+    typealias ItemSelectedObserver = ObserverOf<NSIndexPath>
+    typealias ItemSelectedDisposeKey = Bag<ItemSelectedObserver>.KeyType
+
+    let tableView: UITableView
     
     var itemSelectedObservers: Bag<ItemSelectedObserver> = Bag()
     
-    var tableViewDelegate: UITableViewDelegate?
-    
-    public override init(view: UIView) {
-        self.tableView = view as! UITableView
+    required init(parentObject: AnyObject) {
+        self.tableView = parentObject as! UITableView
         
-        super.init(view: view)
+        super.init(parentObject: parentObject)
     }
     
-    public func addItemSelectedObserver(observer: ItemSelectedObserver) -> ItemSelectedDisposeKey {
+    func addItemSelectedObserver(observer: ItemSelectedObserver) -> ItemSelectedDisposeKey {
         return itemSelectedObservers.put(observer)
     }
     
-    public func removeItemSelectedObserver(key: ItemSelectedDisposeKey) {
+    func removeItemSelectedObserver(key: ItemSelectedDisposeKey) {
         let element = itemSelectedObservers.removeKey(key)
         if element == nil {
             removingObserverFailed()
-        }
-    }
-    
-    // delegate proxy
-    
-    override public class func setProxyToView(view: UIView, proxy: AnyObject) {
-        let _: UITableViewDelegate = castOrFatalError(proxy)
-        super.setProxyToView(view, proxy: proxy)
-    }
-    
-    override public func setDelegate(delegate: AnyObject?) {
-        let typedDelegate: UITableViewDelegate? = castOptionalOrFatalError(delegate)
-        self.tableViewDelegate = typedDelegate
-        
-        super.setDelegate(delegate)
-    }
-    
-    // dispose
-    
-    public override var isDisposable: Bool {
-        get {
-            return super.isDisposable && self.itemSelectedObservers.count == 0
-        }
-    }
-    
-    deinit {
-        if !isDisposable {
-            handleVoidObserverResult(failure(rxError(RxCocoaError.InvalidOperation, "Something went wrong. Deallocating table view delegate while there are still subscribed observers means that some subscription was left undisposed.")))
         }
     }
 }

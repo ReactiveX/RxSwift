@@ -25,11 +25,11 @@ public func sendCompleted<O: ObserverType>(observer: O) {
     observer.on(.Completed)
 }
 
-func trySend<O: ObserverType>(observer: O?, event: Event<O.Element>) {
+public func trySend<O: ObserverType>(observer: O?, event: Event<O.Element>) {
     observer?.on(event)
 }
 
-func trySendNext<O: ObserverType>(observer: O?, element: O.Element) {
+public func trySendNext<O: ObserverType>(observer: O?, element: O.Element) {
     observer?.on(.Next(RxBox(element)))
 }
 
