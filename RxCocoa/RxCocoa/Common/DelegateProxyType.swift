@@ -99,7 +99,7 @@ public protocol DelegateProxyType : AnyObject {
 // future extensions :)
 
 // this will install proxy if needed
-func proxyForObject<P: DelegateProxyType>(object: AnyObject) -> P {
+public func proxyForObject<P: DelegateProxyType>(object: AnyObject) -> P {
     MainScheduler.ensureExecutingOnScheduler()
     
     let maybeProxy = P.assignedProxyFor(object)
