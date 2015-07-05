@@ -60,7 +60,7 @@ public class RxTableViewSectionedDataSource<S: SectionModelType> : _RxTableViewS
     
     public typealias I = S.Item
     public typealias Section = S
-    public typealias CellFactory = (UITableView, NSIndexPath, Section, I) -> UITableViewCell
+    public typealias CellFactory = (UITableView, NSIndexPath, I) -> UITableViewCell
     
     public typealias IncrementalUpdateObserver = ObserverOf<Changeset<S>>
     
@@ -78,6 +78,10 @@ public class RxTableViewSectionedDataSource<S: SectionModelType> : _RxTableViewS
 
     public func sectionAtIndex(section: Int) -> S {
         return self.sectionModels[section].model
+    }
+
+    public func itemAtIndexPath(indexPath: NSIndexPath) -> I {
+        return self.sectionModels[indexPath.section].items[indexPath.item]
     }
 
     var incrementalUpdateObservers: Bag<IncrementalUpdateObserver> = Bag()
@@ -128,9 +132,7 @@ public class RxTableViewSectionedDataSource<S: SectionModelType> : _RxTableViewS
     override func _tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         precondition(indexPath.item < sectionModels[indexPath.section].items.count)
         
-        let item = indexPath.item
-        let section = sectionModels[indexPath.section]
-        return cellFactory(tableView, indexPath, section.model, section.items[item])
+        return cellFactory(tableView, indexPath, itemAtIndexPath(indexPath))
     }
     
     override func _tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {

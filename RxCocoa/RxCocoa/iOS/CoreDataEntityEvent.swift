@@ -10,9 +10,9 @@ import Foundation
 import CoreData
 import RxSwift
 
-public enum CoreDataEntityEvent : Printable {
+enum CoreDataEntityEvent : Printable {
     
-    public typealias SectionInfo = NSFetchedResultsSectionInfo
+    typealias SectionInfo = NSFetchedResultsSectionInfo
     
     case Snapshot(sections: [SectionInfo])
     
@@ -29,7 +29,7 @@ public enum CoreDataEntityEvent : Printable {
     case SectionUpdated(section: SectionInfo, atIndex: Int)
     
     
-    public var description: String {
+    var description: String {
         get {
             switch self {
             case .Snapshot(sections: let snapshot):

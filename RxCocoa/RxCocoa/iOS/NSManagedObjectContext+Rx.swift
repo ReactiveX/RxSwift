@@ -162,11 +162,11 @@ class FetchResultControllerIncrementalObserver: NSObject, NSFetchedResultsContro
 
 extension NSManagedObjectContext {
     
-    public func rx_entitiesAndChanges(query: NSFetchRequest) -> Observable<CoreDataEntityEvent> {
+    func rx_entitiesAndChanges(query: NSFetchRequest) -> Observable<CoreDataEntityEvent> {
         return rx_sectionsAndChanges(query, sectionNameKeyPath: nil)
     }
     
-    public func rx_sectionsAndChanges(query: NSFetchRequest, sectionNameKeyPath: String? = nil) -> Observable<CoreDataEntityEvent> {
+    func rx_sectionsAndChanges(query: NSFetchRequest, sectionNameKeyPath: String? = nil) -> Observable<CoreDataEntityEvent> {
         return AnonymousObservable { observer in
             let frc = NSFetchedResultsController(fetchRequest: query, managedObjectContext: self, sectionNameKeyPath: sectionNameKeyPath, cacheName: nil)
             
@@ -178,7 +178,7 @@ extension NSManagedObjectContext {
         }
     }
     
-    public func rx_entities(query: NSFetchRequest) -> Observable<[NSManagedObject]> {
+    func rx_entities(query: NSFetchRequest) -> Observable<[NSManagedObject]> {
         return AnonymousObservable { observer in
             let frc = NSFetchedResultsController(fetchRequest: query, managedObjectContext: self, sectionNameKeyPath: nil, cacheName: nil)
             
@@ -190,7 +190,7 @@ extension NSManagedObjectContext {
         }
     }
     
-    public func rx_sections(query: NSFetchRequest, sectionNameKeyPath: String) -> Observable<[NSFetchedResultsSectionInfo]> {
+    func rx_sections(query: NSFetchRequest, sectionNameKeyPath: String) -> Observable<[NSFetchedResultsSectionInfo]> {
         return AnonymousObservable { observer in
             let frc = NSFetchedResultsController(fetchRequest: query, managedObjectContext: self, sectionNameKeyPath: sectionNameKeyPath, cacheName: nil)
             

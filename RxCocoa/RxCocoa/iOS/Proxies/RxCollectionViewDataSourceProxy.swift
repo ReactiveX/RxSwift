@@ -10,87 +10,65 @@ import Foundation
 import UIKit
 import RxSwift
 
+let collectionViewDataSourceNotSet = CollectionViewDataSourceNotSet()
+
+class CollectionViewDataSourceNotSet : NSObject
+                                     , UICollectionViewDataSource {
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return rxAbstractMethodWithMessage(dataSourceNotSet)
+    }
+    
+    // The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        return rxAbstractMethodWithMessage(dataSourceNotSet)
+    }
+    
+}
+
 // Please take a look at `DelegateProxyType.swift`
-public class RxCollectionViewDataSourceProxy : Delegate
-                                             , UICollectionViewDataSource
-                                             , DelegateProxyType {
+class RxCollectionViewDataSourceProxy : DelegateProxy
+                                      , UICollectionViewDataSource
+                                      , DelegateProxyType {
     
-    public let collectionView: UICollectionView
+    unowned let collectionView: UICollectionView
     
-    var dataSource: UICollectionViewDataSource?
+    unowned var dataSource: UICollectionViewDataSource = collectionViewDataSourceNotSet
     
-    public init(view: UICollectionView) {
-        self.collectionView = view
-        super.init()
+    required init(parentObject: AnyObject) {
+        self.collectionView = parentObject as! UICollectionView
+        super.init(parentObject: parentObject)
     }
     
     // data source methods
     
-    public func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return dataSource?.collectionView(collectionView, numberOfItemsInSection: section) ?? 0
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return dataSource.collectionView(collectionView, numberOfItemsInSection: section) ?? 0
     }
     
     // The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
-    public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        return dataSource!.collectionView(collectionView, cellForItemAtIndexPath: indexPath)
-    }
-    
-    public func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-        return dataSource?.numberOfSectionsInCollectionView?(collectionView) ?? 0
-    }
-    
-    public func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
-        return dataSource!.collectionView!(collectionView, viewForSupplementaryElementOfKind: kind, atIndexPath: indexPath)
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        return dataSource.collectionView(collectionView, cellForItemAtIndexPath: indexPath)
     }
     
     // proxy
     
-    public class func createProxyForView(view: UIView) -> Self {
-        let collectionView = view as! UICollectionView
-        return castOrFatalError(collectionView.rx_createDataSourceProxy())
+    override class func delegateAssociatedObjectTag() -> UnsafePointer<Void> {
+        return _pointer(&dataSourceAssociatedTag)
+    }
+ 
+    class func setCurrentDelegate(delegate: AnyObject?, toObject object: AnyObject) {
+        let collectionView: UICollectionView = castOrFatalError(object)
+        collectionView.dataSource = castOptionalOrFatalError(delegate)
     }
     
-    public class func getProxyForView(view: UIView) -> Self? {
-        let collectionView = view as! UICollectionView
-        return castOptionalOrFatalError(collectionView.dataSource)
+    class func getCurrentDelegateFor(object: AnyObject) -> AnyObject? {
+        let collectionView: UICollectionView = castOrFatalError(object)
+        return collectionView.dataSource
     }
     
-    // tried using `Self` instead of Any object, didn't work out
-    public class func setProxyToView(view: UIView, proxy: AnyObject) {
-        let collectionView = view as! UICollectionView
-        collectionView.dataSource = castOptionalOrFatalError(proxy)
-    }
-    
-    public func setDelegate(delegate: AnyObject?) {
-        dataSource = castOptionalOrFatalError(delegate)
-    }
-    
-    public func getDelegate() -> AnyObject? {
-        return dataSource
-    }
-    
-    override public func respondsToSelector(aSelector: Selector) -> Bool {
-        return super.respondsToSelector(aSelector)// || (self.dataSource?.respondsToSelector(aSelector) ?? false)
-    }
-    
-    // disposable
-    
-    override public var isDisposable: Bool {
-        get {
-            return super.isDisposable
-                && self.dataSource == nil
-        }
-    }
-    
-    override public func dispose() {
-        super.dispose()
-        assert(collectionView.dataSource == nil || collectionView.dataSource === self)
-        collectionView.dataSource = nil
-    }
-    
-    deinit {
-        if !isDisposable {
-            handleVoidObserverResult(failure(rxError(RxCocoaError.InvalidOperation, "Something went wrong. Deallocating collection view delegate while there are still subscribed observers means that some subscription was left undisposed.")))
-        }
+    override func setForwardToDelegate(forwardToDelegate: AnyObject?, retainDelegate: Bool) {
+        let dataSource: UICollectionViewDataSource? = castOptionalOrFatalError(forwardToDelegate)
+        self.dataSource = dataSource ?? collectionViewDataSourceNotSet
+        super.setForwardToDelegate(forwardToDelegate, retainDelegate: retainDelegate)
     }
 }

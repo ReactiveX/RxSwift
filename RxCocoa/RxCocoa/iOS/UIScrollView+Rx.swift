@@ -11,13 +11,23 @@ import RxSwift
 import UIKit
 
 extension UIScrollView {
-    public func rx_createDelegateProxy() -> RxScrollViewDelegateProxy {
-        return RxScrollViewDelegateProxy(view: self)
+    
+    // factory
+    
+    func rx_createDelegateProxy() -> RxScrollViewDelegateProxy {
+        return RxScrollViewDelegateProxy(parentObject: self)
     }
     
+    // proxy 
+    
+    public var rx_delegate: DelegateProxy {
+        return proxyForObject(self) as RxScrollViewDelegateProxy
+    }
+    
+    // properties
     
     public var rx_contentOffset: Observable<CGPoint> {
-        return createObservableUsingDelegateProxy(self, { (b: RxScrollViewDelegateProxy, o) in
+        return proxyObservableForObject(self, { (b: RxScrollViewDelegateProxy, o) in
             return b.addContentOffsetObserver(o)
         }, { (b, d) -> () in
             b.removeContentOffsetObserver(d)
@@ -29,8 +39,7 @@ extension UIScrollView {
     // For more detailed explanations, take a look at `DelegateProxyType.swift`
     public func rx_setDelegate(delegate: UIScrollViewDelegate, retainDelegate: Bool)
         -> Disposable {
-            let result: ProxyDisposablePair<RxScrollViewDelegateProxy> = installDelegateOnProxy(self, delegate)
-            
-            return result.disposable
+        let proxy: RxScrollViewDelegateProxy = proxyForObject(self)
+        return installDelegate(proxy, delegate, retainDelegate, onProxyForObject: self)
     }
 }

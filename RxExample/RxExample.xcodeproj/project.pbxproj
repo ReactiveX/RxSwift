@@ -56,9 +56,7 @@
 		C890A65A1AEBD28A00AFF7E6 /* GitHubAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C890A6591AEBD28A00AFF7E6 /* GitHubAPI.swift */; };
 		C890A65D1AEC084100AFF7E6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C890A65C1AEC084100AFF7E6 /* ViewController.swift */; };
 		C8A2A2C81B4049E300F11F09 /* PseudoRandomGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A2A2C71B4049E300F11F09 /* PseudoRandomGenerator.swift */; };
-		C8A2A2C91B4049E300F11F09 /* PseudoRandomGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A2A2C71B4049E300F11F09 /* PseudoRandomGenerator.swift */; };
 		C8A2A2CB1B404A1200F11F09 /* Randomizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A2A2CA1B404A1200F11F09 /* Randomizer.swift */; };
-		C8A2A2CC1B404A1200F11F09 /* Randomizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A2A2CA1B404A1200F11F09 /* Randomizer.swift */; };
 		C8A56BCB1AD744E600B4673B /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8A56BCA1AD744E600B4673B /* RxSwift.framework */; };
 		C8A56BCC1AD744E600B4673B /* RxSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C8A56BCA1AD744E600B4673B /* RxSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C8A57F741B40AF7C00D5570A /* Random.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C8A57F721B40AF7C00D5570A /* Random.xcdatamodeld */; };
@@ -577,9 +575,7 @@
 				C88BB8BB1B07E6C90064D411 /* SearchResultViewModel.swift in Sources */,
 				C88BB8BC1B07E6C90064D411 /* HtmlParsing.swift in Sources */,
 				C88BB8BD1B07E6C90064D411 /* SearchViewModel.swift in Sources */,
-				C8A2A2C91B4049E300F11F09 /* PseudoRandomGenerator.swift in Sources */,
 				C88BB8BE1B07E6C90064D411 /* ImageService.swift in Sources */,
-				C8A2A2CC1B404A1200F11F09 /* Randomizer.swift in Sources */,
 				C88BB8BF1B07E6C90064D411 /* WikipediaSearchResult.swift in Sources */,
 				C8DF92F61B0B43A4009BCF9A /* IntroductionExampleViewController.swift in Sources */,
 				C88BB8C31B07E6C90064D411 /* Example.swift in Sources */,

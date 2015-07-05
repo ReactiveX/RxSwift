@@ -14,15 +14,16 @@ extension UITableView {
  
     // factories
 
-    public func rx_createDataSourceProxy() -> RxTableViewDataSourceProxy {
-        return RxTableViewDataSourceProxy(view: self)
+    override func rx_createDelegateProxy() -> RxScrollViewDelegateProxy {
+        return RxTableViewDelegateProxy(parentObject: self)
     }
     
-    public override func rx_createDelegateProxy() -> RxScrollViewDelegateProxy {
-        return RxTableViewDelegateProxy(view: self)
+    // proxies
+    
+    public var rx_dataSource: DelegateProxy {
+        return proxyForObject(self) as RxTableViewDataSourceProxy
     }
    
-    
     // data source
     
     // Registers reactive data source with table view.
@@ -37,28 +38,28 @@ extension UITableView {
     public func rx_subscribeWithReactiveDataSource<DataSource: protocol<RxTableViewDataSourceType, UITableViewDataSource>>
         (dataSource: DataSource)
         -> Observable<DataSource.Element> -> Disposable {
-        return subscribeObservableUsingDelegateProxyAndDataSource(self, dataSource, { (_: RxTableViewDataSourceProxy, event) -> Void in
+        return setProxyDataSourceForObject(self, dataSource, false) { (_: RxTableViewDataSourceProxy, event) -> Void in
             dataSource.tableView(self, observedEvent: event)
-        })
+        }
     }
     
     // Registers `UITableViewDataSource`.
     // For more detailed explanations, take a look at `RxTableViewDataSourceType.swift` and `DelegateProxyType.swift`
-    public func rx_setDataSource(dataSource: UITableViewDataSource, retainDataSource: Bool)
+    public func rx_setDataSource(dataSource: UITableViewDataSource)
         -> Disposable {
-        let result: ProxyDisposablePair<RxTableViewDataSourceProxy> = installDelegateOnProxy(self, dataSource)
+        let proxy: RxTableViewDataSourceProxy = proxyForObject(self)
             
-        return result.disposable
+        return installDelegate(proxy, dataSource, false, onProxyForObject: self)
     }
     
     // delegate 
     
     // For more detailed explanations, take a look at `DelegateProxyType.swift`
-    public func rx_setDelegate(delegate: UITableViewDelegate, retainDelegate: Bool)
+    public func rx_setDelegate(delegate: UITableViewDelegate)
         -> Disposable {
-            let result: ProxyDisposablePair<RxTableViewDelegateProxy> = installDelegateOnProxy(self, delegate)
+        let proxy: RxTableViewDelegateProxy = proxyForObject(self)
             
-            return result.disposable
+        return installDelegate(proxy, delegate, false, onProxyForObject: self)
     }
     
     // `reloadData` - items subscription methods (it's assumed that there is one section, and it is typed `Void`)
@@ -82,46 +83,54 @@ extension UITableView {
                 configureCell(indexPath, item, cell)
                 return cell
             }
-           
+
             return self.rx_subscribeWithReactiveDataSource(dataSource)(source)
         }
     }
 
     // events
     
-    public func rx_selectedItem() -> Observable<ItemSelectedEvent<UITableView>> {
-        return createDelegateObservable({ d, o in
+    
+    public var rx_itemSelected: Observable<NSIndexPath> {
+        return _proxyObservableForObject({ d, o in
             return d.addItemSelectedObserver(o)
         }, removeObserver: { (delegate, disposeKey) -> Void in
             delegate.removeItemSelectedObserver(disposeKey)
         })
     }
-    
-    public func rx_deleteItem() -> Observable<DeleteItemEvent<UITableView>> {
-        return createDataSourceObservable({ d, o in
-            return d.addDeleteItemObserver(o)
-            }, removeObserver: { (dataSource, disposeKey) -> () in
-                dataSource.removeDeleteItemObserver(disposeKey)
-        })
+ 
+    public var rx_itemInserted: Observable<NSIndexPath> {
+        return rx_dataSource.observe("tableView:commitEditingStyle:forRowAtIndexPath:")
+            >- filter { a in
+                return UITableViewCellEditingStyle(rawValue: (a[1] as! NSNumber).integerValue) == .Insert
+            }
+            >- map { a in
+                return a[2] as! NSIndexPath
+        }
     }
     
-    public func rx_moveItem() -> Observable<MoveItemEvent<UITableView>> {
-        return createDataSourceObservable({ d, o in
-            return d.addMoveItemObserver(o)
-            }, removeObserver: { (dataSource, disposeKey) -> () in
-                dataSource.removeMoveItemObserver(disposeKey)
-        })
+    public var rx_itemDeleted: Observable<NSIndexPath> {
+        return rx_dataSource.observe("tableView:commitEditingStyle:forRowAtIndexPath:")
+            >- filter { a in
+                return UITableViewCellEditingStyle(rawValue: (a[1] as! NSNumber).integerValue) == .Delete
+            }
+            >- map { a in
+                return a[2] as! NSIndexPath
+            }
+    }
+    
+    public var rx_itemMoved: Observable<ItemMovedEvent> {
+        return rx_dataSource.observe("tableView:moveRowAtIndexPath:toIndexPath:")
+            >- map { a in
+                return (a[1] as! NSIndexPath, a[2] as! NSIndexPath)
+            }
     }
     
     // typed events
     
-    public func rx_selectedModel<T>() -> Observable<T> {
-        return rx_selectedItem() >- map { e in
-            let indexPath = e.indexPath
-            
-            let proxy = RxTableViewDataSourceProxy.getProxyForView(self)!
-            
-            let dataSource: RxTableViewReactiveArrayDataSource<T> = castOrFatalError(proxy.getDelegate())
+    public func rx_modelSelected<T>() -> Observable<T> {
+        return rx_itemSelected >- map { indexPath in
+            let dataSource: RxTableViewReactiveArrayDataSource<T> = castOrFatalError(self.rx_dataSource.getForwardToDelegate())
             
             return dataSource.modelAtIndex(indexPath.item)!
         }
@@ -129,13 +138,13 @@ extension UITableView {
     
     // private methods
     
-    private func createDelegateObservable<E, DisposeKey>(addObserver: (RxTableViewDelegateProxy, ObserverOf<E>) -> DisposeKey, removeObserver: (RxTableViewDelegateProxy, DisposeKey) -> Void) -> Observable<E> {
-        return createObservableUsingDelegateProxy(self, addObserver, removeObserver)
+    private func _proxyObservableForObject<E, DisposeKey>(addObserver: (RxTableViewDelegateProxy, ObserverOf<E>) -> DisposeKey, removeObserver: (RxTableViewDelegateProxy, DisposeKey) -> Void) -> Observable<E> {
+        return proxyObservableForObject(self, addObserver, removeObserver)
     }
     
-    private func createDataSourceObservable<E, DisposeKey>(addObserver: (RxTableViewDataSourceProxy, ObserverOf<E>) -> DisposeKey,
+    private func _createDataSourceObservable<E, DisposeKey>(addObserver: (RxTableViewDataSourceProxy, ObserverOf<E>) -> DisposeKey,
         removeObserver: (RxTableViewDataSourceProxy, DisposeKey) -> Void)
         -> Observable<E> {
-        return createObservableUsingDelegateProxy(self, addObserver, removeObserver)
+        return proxyObservableForObject(self, addObserver, removeObserver)
     }
 }

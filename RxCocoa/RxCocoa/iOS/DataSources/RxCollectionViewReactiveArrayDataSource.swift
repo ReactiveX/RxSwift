@@ -11,9 +11,9 @@ import UIKit
 import RxSwift
 
 // objc monkey business
-public class _RxCollectionViewReactiveArrayDataSource: NSObject, UICollectionViewDataSource {
+class _RxCollectionViewReactiveArrayDataSource: NSObject, UICollectionViewDataSource {
     
-    public func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         return 1
     }
 
@@ -21,7 +21,7 @@ public class _RxCollectionViewReactiveArrayDataSource: NSObject, UICollectionVie
         return 0
     }
     
-    public func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return _collectionView(collectionView, numberOfItemsInSection: section)
     }
 
@@ -29,25 +29,25 @@ public class _RxCollectionViewReactiveArrayDataSource: NSObject, UICollectionVie
         return rxAbstractMethod()
     }
     
-    public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         return _collectionView(collectionView, cellForItemAtIndexPath: indexPath)
     }
 }
 
 // Please take a look at `DelegateProxyType.swift`
-public class RxCollectionViewReactiveArrayDataSource<ElementType> : _RxCollectionViewReactiveArrayDataSource
-                                                                  , RxCollectionViewDataSourceType {
+class RxCollectionViewReactiveArrayDataSource<ElementType> : _RxCollectionViewReactiveArrayDataSource
+                                                           , RxCollectionViewDataSourceType {
     typealias Element = [ElementType]
     
     typealias CellFactory = (UICollectionView, NSIndexPath, ElementType) -> UICollectionViewCell
     
     var itemModels: [ElementType]? = nil
     
-    public func modelAtIndex(index: Int) -> ElementType? {
+    func modelAtIndex(index: Int) -> ElementType? {
         return itemModels?[index]
     }
     
-    public var cellFactory: CellFactory
+    var cellFactory: CellFactory
     
     init(cellFactory: CellFactory) {
         self.cellFactory = cellFactory
@@ -65,7 +65,7 @@ public class RxCollectionViewReactiveArrayDataSource<ElementType> : _RxCollectio
     
     // reactive
     
-    public func collectionView(collectionView: UICollectionView, observedEvent: Event<Element>) {
+    func collectionView(collectionView: UICollectionView, observedEvent: Event<Element>) {
         switch observedEvent {
         case .Next(let boxedNext):
             self.itemModels = boxedNext.value

@@ -2,12 +2,14 @@
 //  KVOObservable.swift
 //  RxCocoa
 //
-//  Created by Krunoslav Zaher on 2/21/15.
+//  Created by Krunoslav Zaher on 7/5/15.
 //  Copyright (c) 2015 Krunoslav Zaher. All rights reserved.
 //
 
 import Foundation
 import RxSwift
+
+var context: UInt8 = 0
 
 protocol KVOObservableProtocol {
     var object: NSObject { get }
@@ -15,19 +17,26 @@ protocol KVOObservableProtocol {
     var options: NSKeyValueObservingOptions { get }
 }
 
-class KVOObserver : Delegate {
+class KVOObserver : NSObject
+                  , Disposable {
     typealias Callback = (AnyObject?) -> Void
     
     let parent: KVOObservableProtocol
     let callback: Callback
     
-    var context: UInt8 = 0
+    var retainSelf: KVOObserver?
     
     init(parent: KVOObservableProtocol, callback: Callback) {
         self.parent = parent
         self.callback = callback
         
+    #if TRACE_RESOURCES
+        OSAtomicIncrement32(&resourceCount)
+    #endif
+        
         super.init()
+        
+        retainSelf = self
         
         self.parent.object.addObserver(self, forKeyPath: self.parent.path, options: self.parent.options, context: &context)
     }
@@ -40,9 +49,15 @@ class KVOObserver : Delegate {
         }
     }
     
-    override func dispose() {
-        super.dispose()
+    func dispose() {
         self.parent.object.removeObserver(self, forKeyPath: self.parent.path)
+        self.retainSelf = nil
+    }
+    
+    deinit {
+    #if TRACE_RESOURCES
+        OSAtomicDecrement32(&resourceCount)
+    #endif
     }
 }
 
@@ -72,12 +87,3 @@ class KVOObservable<Element> : Observable<Element?>, KVOObservableProtocol {
     }
 }
 
-extension NSObject {
-    public func rx_observe<Element>(path: String) -> Observable<Element?> {
-        return KVOObservable(object: self, path: path)
-    }
-
-    public func rx_observe<Element>(path: String, options: NSKeyValueObservingOptions) -> Observable<Element?> {
-        return KVOObservable(object: self, path: path, options: options)
-    }
-}

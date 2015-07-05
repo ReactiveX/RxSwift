@@ -11,9 +11,9 @@ import UIKit
 import RxSwift
 
 // objc monkey business
-public class _RxTableViewReactiveArrayDataSource: NSObject, UITableViewDataSource {
+class _RxTableViewReactiveArrayDataSource: NSObject, UITableViewDataSource {
     
-    public func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
    
@@ -21,7 +21,7 @@ public class _RxTableViewReactiveArrayDataSource: NSObject, UITableViewDataSourc
         return 0
     }
     
-    public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return _tableView(tableView, numberOfRowsInSection: section)
     }
 
@@ -29,22 +29,21 @@ public class _RxTableViewReactiveArrayDataSource: NSObject, UITableViewDataSourc
         return rxAbstractMethod()
     }
     
-    public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         return _tableView(tableView, cellForRowAtIndexPath: indexPath)
     }
 }
 
 // Please take a look at `DelegateProxyType.swift`
-public class RxTableViewReactiveArrayDataSource<ElementType> : _RxTableViewReactiveArrayDataSource
-    
-                                                             , RxTableViewDataSourceType {
+class RxTableViewReactiveArrayDataSource<ElementType> : _RxTableViewReactiveArrayDataSource
+                                                      , RxTableViewDataSourceType {
     typealias Element = [ElementType]
     
     typealias CellFactory = (UITableView, NSIndexPath, ElementType) -> UITableViewCell
     
     var itemModels: [ElementType]? = nil
     
-    public func modelAtIndex(index: Int) -> ElementType? {
+    func modelAtIndex(index: Int) -> ElementType? {
         return itemModels?[index]
     }
     
@@ -64,7 +63,7 @@ public class RxTableViewReactiveArrayDataSource<ElementType> : _RxTableViewReact
     
     // reactive
     
-    public func tableView(tableView: UITableView, observedEvent: Event<[ElementType]>) {
+    func tableView(tableView: UITableView, observedEvent: Event<[ElementType]>) {
         switch observedEvent {
         case .Next(let boxedNext):
             self.itemModels = boxedNext.value

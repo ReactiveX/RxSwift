@@ -247,7 +247,7 @@
                             </tableView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="hob-nw-Jrs">
                                 <rect key="frame" x="212.5" y="64" width="107.5" height="504"/>
-                                <color key="backgroundColor" cocoaTouchSystemColor="tableCellGroupedBackgroundColor"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="m51-be-PcL">
                                     <size key="itemSize" width="55" height="35"/>
                                     <size key="headerReferenceSize" width="50" height="25"/>
@@ -265,7 +265,7 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vIm-V4-xJI">
                                                     <rect key="frame" x="4" y="14.5" width="42" height="20.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -281,7 +281,7 @@
                                     </collectionViewCell>
                                 </cells>
                                 <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Section" id="myv-cg-TS9" customClass="NumberSectionView" customModule="RxExample" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="0.0" width="91.5" height="50"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="107.5" height="25"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dob-Ct-qBk">
@@ -484,21 +484,30 @@ This is only showcase app, not intended for production purposes.</string>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="TKD-6V-72I">
+                                <rect key="frame" x="29" y="201" width="254" height="340"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="q4t-TG-WEX" secondAttribute="trailing" constant="-16" id="9Bk-YV-Ndt"/>
                             <constraint firstItem="q4t-TG-WEX" firstAttribute="leading" secondItem="rhi-Gj-NG4" secondAttribute="leadingMargin" constant="-16" id="IIN-VP-EdF"/>
+                            <constraint firstItem="qRP-g3-i5K" firstAttribute="top" secondItem="TKD-6V-72I" secondAttribute="bottom" constant="27" id="LMY-eV-QRF"/>
                             <constraint firstItem="FeZ-zt-ZeK" firstAttribute="leading" secondItem="rhi-Gj-NG4" secondAttribute="leadingMargin" constant="13" id="MSu-fp-qv1"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="TKD-6V-72I" secondAttribute="trailing" constant="21" id="Nq9-33-tL6"/>
                             <constraint firstAttribute="centerX" secondItem="FeZ-zt-ZeK" secondAttribute="centerX" constant="-0.5" id="UXX-0S-lap"/>
                             <constraint firstAttribute="trailingMargin" secondItem="FeZ-zt-ZeK" secondAttribute="trailing" constant="12" id="ahS-rn-Gm5"/>
+                            <constraint firstItem="TKD-6V-72I" firstAttribute="top" secondItem="q4t-TG-WEX" secondAttribute="bottom" constant="93" id="bDD-vT-mV4"/>
                             <constraint firstItem="q4t-TG-WEX" firstAttribute="top" secondItem="5dr-42-uib" secondAttribute="bottom" id="cYt-41-Gst"/>
                             <constraint firstAttribute="centerY" secondItem="FeZ-zt-ZeK" secondAttribute="centerY" multiplier="1.2" id="d4B-SW-gN2"/>
+                            <constraint firstItem="TKD-6V-72I" firstAttribute="leading" secondItem="rhi-Gj-NG4" secondAttribute="leadingMargin" constant="13" id="oF7-X9-Vcx"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Search Wikipedia" id="QNG-ow-NDA"/>
                     <connections>
                         <outlet property="searchDisplayController" destination="4OD-HT-2f1" id="hGe-qe-2O9"/>
+                        <outlet property="tv" destination="TKD-6V-72I" id="oaa-cF-0UX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mQm-27-dBN" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -7,8 +7,10 @@
 //
 
 import Foundation
-import UIKit
 import RxSwift
+#if os(iOS)
+    import UIKit
+#endif
 
 public enum RxCocoaError : Int {
     case Unknown = 0
@@ -69,6 +71,10 @@ func rxFatalErrorAndDontReturn<T>(lastMessage: String) -> T {
     return (nil as T!)!
 }
 
+func rxAbstractMethodWithMessage<T>(message: String) -> T {
+    return rxFatalErrorAndDontReturn(message)
+}
+
 func rxAbstractMethod<T>() -> T {
     return rxFatalErrorAndDontReturn("Abstract method")
 }
@@ -100,3 +106,10 @@ func castOrFatalError<T>(value: AnyObject!) -> T {
     
     return result.get()
 }
+
+// Error messages {
+
+let dataSourceNotSet = "DataSource not set"
+let delegateNotSet = "Delegate not set"
+
+// }

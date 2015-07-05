@@ -10,7 +10,9 @@ import Foundation
 import Cocoa
 import RxSwift
 
-class RxTextFieldDelegate : Delegate, NSTextFieldDelegate {
+class RxTextFieldDelegate : DelegateProxy
+                          , NSTextFieldDelegate
+                          , DelegateProxyType {
     typealias Observer = ObserverOf<String>
     typealias DisposeKey = Bag<Observer>.KeyType
     
@@ -18,14 +20,25 @@ class RxTextFieldDelegate : Delegate, NSTextFieldDelegate {
     
     let textField: NSTextField
     
-    init(textField: NSTextField) {
-        self.textField = textField
+    required init(parentObject: AnyObject) {
+        self.textField = parentObject as! NSTextField
+        super.init(parentObject: parentObject)
     }
     
     override func controlTextDidChange(notification: NSNotification) {
         let textField = notification.object as! NSTextField
         let nextValue = textField.stringValue
         dispatchNext(nextValue, observers)
+    }
+
+    class func getCurrentDelegateFor(object: AnyObject) -> AnyObject? {
+        let textField: NSTextField = castOrFatalError(object)
+        return textField.delegate
+    }
+    
+    class func setCurrentDelegate(delegate: AnyObject?, toObject object: AnyObject) {
+        let textField: NSTextField = castOrFatalError(object)
+        textField.delegate = castOptionalOrFatalError(delegate)
     }
 }
 
@@ -49,56 +62,16 @@ extension NSTextField {
         })
     }
     
+    public var rx_delegate: DelegateProxy {
+        return proxyForObject(self) as RxTextFieldDelegate
+    }
+    
     public var rx_text: Observable<String> {
-        return AnonymousObservable { observer in
-            MainScheduler.ensureExecutingOnScheduler()
-            
-            var maybeDelegate = self.rx_checkDelegate()
-            
-            if maybeDelegate == nil {
-                let delegate = self.rx_createDelegate()
-                maybeDelegate = delegate
-                self.delegate = maybeDelegate
-            }
-            
-            let delegate = maybeDelegate!
-            
-            sendNext(observer, self.stringValue)
-            
-            let key = delegate.addObserver(observer)
-            
-            return AnonymousDisposable {
-                MainScheduler.ensureExecutingOnScheduler()
-                
-                _ = self.rx_checkDelegate()
-                
-                delegate.removeObserver(key)
-                
-                if delegate.observers.count == 0 {
-                    delegate.dispose()
-                    self.delegate = nil
-                }
-            }
-        }
-    }
-    
-    private func rx_createDelegate() -> RxTextFieldDelegate {
-        return RxTextFieldDelegate(textField: self)
-    }
-    
-    private func rx_checkDelegate() -> RxTextFieldDelegate? {
-        MainScheduler.ensureExecutingOnScheduler()
-        
-        if self.delegate == nil {
-            return nil
-        }
-        
-        let maybeDelegate = self.delegate as? RxTextFieldDelegate
-        
-        if maybeDelegate == nil {
-            rxFatalError("View already has incompatible delegate set. To use rx observable (for now) please remove earlier delegate registration.")
-        }
-        
-        return maybeDelegate!
+        return proxyObservableForObject(self, { (p: RxTextFieldDelegate, o) in
+            sendNext(o, self.stringValue)
+            return p.observers.put(o)
+        }, { p, d in
+            p.observers.removeKey(d)
+        })
     }
 }

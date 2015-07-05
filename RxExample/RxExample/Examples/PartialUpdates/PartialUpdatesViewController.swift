@@ -43,7 +43,7 @@ class PartialUpdatesViewController : ViewController {
     let disposeBag = DisposeBag()
     
     func skinTableViewDataSource(dataSource: RxTableViewSectionedDataSource<NumberSection>) {
-        dataSource.cellFactory = { (tv, ip, s, i) in
+        dataSource.cellFactory = { (tv, ip, i) in
             let cell = tv.dequeueReusableCellWithIdentifier("Cell") as? UITableViewCell
                 ?? UITableViewCell(style:.Default, reuseIdentifier: "Cell")
             
@@ -111,7 +111,6 @@ class PartialUpdatesViewController : ViewController {
         updates
             >- partialUpdatesCollectionViewOutlet.rx_subscribeWithReactiveDataSource(cvAnimatedDataSource)
             >- disposeBag.addDisposable
-        
     }
     
     @IBAction func randomize() {
