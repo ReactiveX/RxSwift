@@ -24,9 +24,6 @@ class WikipediaSearchViewController: ViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let a = Subject<Int>()
-        sendNext(a, 1)
-        
         let resultsTableView = self.searchDisplayController!.searchResultsTableView
         let searchBar = self.searchDisplayController!.searchBar
         

@@ -15,7 +15,7 @@ class Dependencies {
     
     let URLSession = NSURLSession.sharedSession()
     let backgroundWorkScheduler: ImmediateScheduler
-    let mainScheduler: DispatchQueueScheduler
+    let mainScheduler: SerialDispatchQueueScheduler
     let wireframe: Wireframe
     
     private init() {

@@ -12,7 +12,7 @@ struct MainSchedulerSingleton {
     static let sharedInstance = MainScheduler()
 }
 
-public final class MainScheduler : DispatchQueueScheduler {
+public final class MainScheduler : SerialDispatchQueueScheduler {
     
     private init() {
         super.init(serialQueue: dispatch_get_main_queue())

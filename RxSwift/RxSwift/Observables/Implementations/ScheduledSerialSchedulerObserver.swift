@@ -9,10 +9,10 @@
 import Foundation
 
 class ScheduledSerialSchedulerObserver<O: ObserverType> : ObserverBase<O.Element> {
-    let scheduler: DispatchQueueScheduler
+    let scheduler: SerialDispatchQueueScheduler
     let observer: O
     
-    init(scheduler: DispatchQueueScheduler, observer: O) {
+    init(scheduler: SerialDispatchQueueScheduler, observer: O) {
         self.scheduler = scheduler
         self.observer = observer
         super.init()

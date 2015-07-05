@@ -1,5 +1,5 @@
 //
-//  DispatchQueueScheduler.swift
+//  SerialQueueScheduler.swift
 //  Rx
 //
 //  Created by Krunoslav Zaher on 2/8/15.
@@ -8,11 +8,8 @@
 
 import Foundation
 
-public enum DispatchQueueSchedulerPriority {
-    case High
-    case Default
-    case Low
-}
+@availability(*, deprecated=1.7, message="Replaced by `SerialDispatchQueueScheduler`")
+public typealias DispatchQueueScheduler = SerialDispatchQueueScheduler
 
 // This is a scheduler that wraps dispatch queue.
 // It can wrap both serial and concurrent dispatch queues.
@@ -29,7 +26,7 @@ public enum DispatchQueueSchedulerPriority {
 // internal serial queue can be customized using `serialQueueConfiguration` 
 // callback.
 //
-public class DispatchQueueScheduler: Scheduler, PeriodicScheduler {
+public class SerialDispatchQueueScheduler: Scheduler, PeriodicScheduler {
     public typealias TimeInterval = NSTimeInterval
     public typealias Time = NSDate
     

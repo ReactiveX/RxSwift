@@ -13,7 +13,7 @@ class ObserveOnDispatchQueueSink<O: ObserverType> : ScheduledSerialSchedulerObse
     
     var cancel: Disposable
     
-    init(scheduler: DispatchQueueScheduler, observer: O, cancel: Disposable) {
+    init(scheduler: SerialDispatchQueueScheduler, observer: O, cancel: Disposable) {
         self.cancel = cancel
         super.init(scheduler: scheduler, observer: observer)
     }
@@ -36,10 +36,10 @@ public var numberOfDispatchQueueObservables: Int32 = 0
 #endif
     
 class ObserveOnDispatchQueue<E> : Producer<E> {
-    let scheduler: DispatchQueueScheduler
+    let scheduler: SerialDispatchQueueScheduler
     let source: Observable<E>
     
-    init(source: Observable<E>, scheduler: DispatchQueueScheduler) {
+    init(source: Observable<E>, scheduler: SerialDispatchQueueScheduler) {
         self.scheduler = scheduler
         self.source = source
         

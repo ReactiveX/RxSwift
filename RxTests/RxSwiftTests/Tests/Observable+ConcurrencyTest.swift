@@ -10,7 +10,7 @@ import Foundation
 import XCTest
 import RxSwift
 
-class ObservableConcurrencyTest : RxTest {
+class ObservableConcurrencyTestBase : RxTest {
     var lock = OS_SPINLOCK_INIT
     
     func performLocked(action: () -> Void) {
@@ -25,6 +25,9 @@ class ObservableConcurrencyTest : RxTest {
 #endif
         super.tearDown()
     }
+}
+
+class ObservableConcurrencyTest : ObservableConcurrencyTestBase {
 }
 
 // observeSingleOn
@@ -188,12 +191,12 @@ extension ObservableConcurrencyTest {
 // observeOn serial scheduler
 extension ObservableConcurrencyTest {
 
-    func runDispatchQueueSchedulerTests(tests: (scheduler: DispatchQueueScheduler) -> Disposable) {
-        let scheduler = DispatchQueueScheduler(internalSerialQueueName: "testQueue1")
+    func runDispatchQueueSchedulerTests(tests: (scheduler: SerialDispatchQueueScheduler) -> Disposable) {
+        let scheduler = SerialDispatchQueueScheduler(internalSerialQueueName: "testQueue1")
         let _ = runDispatchQueueSchedulerTests(scheduler, tests: tests) >- scopedDispose
     }
     
-    func runDispatchQueueSchedulerTests(scheduler: DispatchQueueScheduler, tests: (scheduler: DispatchQueueScheduler) -> Disposable) -> Disposable {
+    func runDispatchQueueSchedulerTests(scheduler: SerialDispatchQueueScheduler, tests: (scheduler: SerialDispatchQueueScheduler) -> Disposable) -> Disposable {
         // simplest possible solution, even though it has horrible efficiency in this case probably
         var wait = OS_SPINLOCK_INIT
         OSSpinLockLock(&wait)
@@ -210,8 +213,8 @@ extension ObservableConcurrencyTest {
         return disposable
     }
     
-    func runDispatchQueueSchedulerMultiplexedTests(tests: [(scheduler: DispatchQueueScheduler) -> Disposable]) {
-        let scheduler = DispatchQueueScheduler(internalSerialQueueName: "testQueue1")
+    func runDispatchQueueSchedulerMultiplexedTests(tests: [(scheduler: SerialDispatchQueueScheduler) -> Disposable]) {
+        let scheduler = SerialDispatchQueueScheduler(internalSerialQueueName: "testQueue1")
         
         let compositeDisposable = CompositeDisposable()
         
@@ -458,28 +461,32 @@ extension ObservableConcurrencyTest {
 }
 
 // observeOn concurrent scheduler
-extension ObservableConcurrencyTest {
-    
-    func runConcurentSchedulerTest(test: (scheduler: OperationQueueScheduler) -> Disposable) {
+class ObservableConcurrentSchedulerConcurrencyTest: ObservableConcurrencyTestBase {
+   
+    func createScheduler() -> ImmediateScheduler {
         let operationQueue = NSOperationQueue()
         operationQueue.maxConcurrentOperationCount = 8
-        let scheduler = OperationQueueScheduler(operationQueue: operationQueue)
+        return OperationQueueScheduler(operationQueue: operationQueue)
+    }
+    
+    func runConcurentSchedulerTest(test: (scheduler: ImmediateScheduler) -> Disposable) {
+        let scheduler = createScheduler()
         let d1 = runConcurentSchedulerTest(scheduler, test: test) >- scopedDispose
     }
     
-    func runConcurentSchedulerTest(scheduler: OperationQueueScheduler, test: (scheduler: OperationQueueScheduler) -> Disposable) -> Disposable {
+    func runConcurentSchedulerTest(scheduler: ImmediateScheduler, test: (scheduler: ImmediateScheduler) -> Disposable) -> Disposable {
         
         let disposable = test(scheduler: scheduler)
         
-        scheduler.operationQueue.waitUntilAllOperationsAreFinished()
+        //scheduler.operationQueue.waitUntilAllOperationsAreFinished()
+        // stupid solution, but works
+        NSThread.sleepForTimeInterval(0.01)
         
         return disposable
     }
     
-    func runConcurentSchedulerMutiplexedTests(tests: [(scheduler: OperationQueueScheduler) -> Disposable]) {
-        let operationQueue = NSOperationQueue()
-        operationQueue.maxConcurrentOperationCount = 8
-        let scheduler = OperationQueueScheduler(operationQueue: operationQueue)
+    func runConcurentSchedulerMutiplexedTests(tests: [(scheduler: ImmediateScheduler) -> Disposable]) {
+        let scheduler = createScheduler()
         
         let compositeDisposable = CompositeDisposable()
         
@@ -754,6 +761,12 @@ extension ObservableConcurrencyTest {
                 return NopDisposable.instance
             }
         ])
+    }
+}
+
+class ObservableConcurrentSchedulerConcurrencyTest2 : ObservableConcurrentSchedulerConcurrencyTest {
+    override func createScheduler() -> ImmediateScheduler {
+        return ConcurrentDispatchQueueScheduler(globalConcurrentQueuePriority: .Default)
     }
 }
 

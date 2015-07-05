@@ -48,7 +48,7 @@ public func observeOn<E>
     (scheduler: ImmediateScheduler)
     -> Observable<E> -> Observable<E> {
     return { source in
-        if let scheduler = scheduler as? DispatchQueueScheduler {
+        if let scheduler = scheduler as? SerialDispatchQueueScheduler {
             return ObserveOnDispatchQueue(source: source, scheduler: scheduler)
         }
         else {

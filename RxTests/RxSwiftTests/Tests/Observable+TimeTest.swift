@@ -744,7 +744,7 @@ extension ObservableTimeTest {
     }
     
     func testInterval_TimeSpan_Zero_DefaultScheduler() {
-        var scheduler = DispatchQueueScheduler(globalConcurrentQueuePriority: .Default)
+        var scheduler = SerialDispatchQueueScheduler(globalConcurrentQueuePriority: .Default)
         
         let observer = PrimitiveMockObserver<Int64>()
         
