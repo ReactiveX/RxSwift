@@ -20,6 +20,8 @@ class PartialUpdatesViewController : ViewController {
     var moc: NSManagedObjectContext!
     var child: NSManagedObjectContext!
     
+    var timer: NSTimer? = nil
+    
     static let initialValue: [HashableSectionModel<String, Int>] = [
         NumberSection(model: "section 1", items: [1, 2, 3]),
         NumberSection(model: "section 2", items: [4, 5, 6]),
@@ -77,7 +79,32 @@ class PartialUpdatesViewController : ViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-     
+    
+        let generateCustomSize = true
+        let runAutomatically = false
+        
+        // For UICollectionView, if another animation starts before previous one is finished, it will sometimes crash :(
+        // It's not deterministic (because Randomizer generates deterministic updates), and if you click fast
+        // It sometimes will and sometimes wont crash, depending on tapping speed.
+        // I guess you can maybe try some tricks with timeout, hard to tell :( That's on Apple side.
+        
+        if generateCustomSize {
+            let nSections = 10
+            let nItems = 100
+            
+            var sections = [HashableSectionModel<String, Int>]()
+            
+            for i in 0 ..< nSections {
+                sections.append(HashableSectionModel(model: "Section \(i + 1)", items: Array(i * nItems ..< (i + 1) * nItems)))
+            }
+            
+            generator = Randomizer(rng: PseudoRandomGenerator(4, 3), sections: sections)
+        }
+
+        if runAutomatically {
+            timer = NSTimer.scheduledTimerWithTimeInterval(0.6, target: self, selector: "randomize", userInfo: nil, repeats: true)
+        }
+        
         self.sections.next(generator.sections)
         
         let tvAnimatedDataSource = RxTableViewSectionedAnimatedDataSource<NumberSection>()
@@ -111,6 +138,11 @@ class PartialUpdatesViewController : ViewController {
         updates
             >- partialUpdatesCollectionViewOutlet.rx_subscribeWithReactiveDataSource(cvAnimatedDataSource)
             >- disposeBag.addDisposable
+
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        self.timer?.invalidate()
     }
     
     @IBAction func randomize() {
@@ -121,6 +153,8 @@ class PartialUpdatesViewController : ViewController {
         if PartialUpdatesViewController.firstChange != nil {
             values = PartialUpdatesViewController.firstChange!
         }
+        
+        //println(values)
         
         sections.next(values)
     }

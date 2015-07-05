@@ -24,13 +24,14 @@ class RxCollectionViewSectionedAnimatedDataSource<S: SectionModelType> : RxColle
         case .Next(let boxedSections):
             for c in boxedSections.value {
                 //println("Animating ==============================\n\(c)\n===============================\n")
-                setSections(c.finalSections)
                 
                 if !set {
+                    setSections(c.finalSections)
                     collectionView.reloadData()
                     set = true
                     return
                 }
+                setSections(c.finalSections)
                 collectionView.performBatchUpdates(c)
             }
         case .Error(let error):

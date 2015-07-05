@@ -89,6 +89,10 @@ public class DelegateProxy : _RXDelegateProxy {
         return self._forwardToDelegate
     }
     
+    public func dispose() {
+        objc_setAssociatedObject(parentObject, self.classForCoder.delegateAssociatedObjectTag(), nil, UInt(OBJC_ASSOCIATION_RETAIN))
+    }
+    
     deinit {
 #if TRACE_RESOURCES
         OSAtomicDecrement32(&resourceCount)

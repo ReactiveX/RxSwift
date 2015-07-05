@@ -23,7 +23,7 @@ class RxTableViewDelegateProxy : RxScrollViewDelegateProxy
     typealias ItemSelectedObserver = ObserverOf<NSIndexPath>
     typealias ItemSelectedDisposeKey = Bag<ItemSelectedObserver>.KeyType
 
-    let tableView: UITableView
+    unowned let tableView: UITableView
     
     var itemSelectedObservers: Bag<ItemSelectedObserver> = Bag()
     

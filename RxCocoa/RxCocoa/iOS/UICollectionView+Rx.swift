@@ -10,7 +10,6 @@ import Foundation
 import RxSwift
 import UIKit
 
-// This is the most simple (but probably most common) way of using rx with UICollectionView.
 extension UICollectionView {
     
     // factories

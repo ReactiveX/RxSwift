@@ -66,10 +66,16 @@ func indexSections<S: SectionModelType where S: Hashable, S.Item: Hashable>(sect
 }
 
 func indexSectionItems<S: SectionModelType where S: Hashable, S.Item: Hashable>(sections: [S]) -> [S.Item : (Int, Int)] {
-    var indexedItems: [S.Item : (Int, Int)] = [:]
+    var totalItems = 0
+    for i in 0 ..< sections.count {
+        totalItems += sections[i].items.count
+    }
     
-    for (i, section) in enumerate(sections) {
-        for (j, item) in enumerate(section.items) {
+    // let's make sure it's enough
+    var indexedItems: [S.Item : (Int, Int)] = Dictionary(minimumCapacity: totalItems * 3)
+    
+    for i in 0 ..< sections.count {
+        for (j, item) in enumerate(sections[i].items) {
             precondition(indexedItems[item] == nil, "Item \(item) has already been indexed at \(indexedItems[item]!)" )
             indexedItems[item] = (i, j)
         }
@@ -252,6 +258,8 @@ func differentiate<S: SectionModelType where S: Hashable, S.Item: Hashable>(
         }
     }
     
+    deletes.deletedSections = deletes.deletedSections.reverse()
+        
     // }
 
     var untouchedOldIndex: Int? = 0
@@ -328,6 +336,8 @@ func differentiate<S: SectionModelType where S: Hashable, S.Item: Hashable>(
         }
     }
     // }
+        
+    deletes.deletedItems = deletes.deletedItems.reverse()
     
     // mark new and moved items {
     // 3rd stage

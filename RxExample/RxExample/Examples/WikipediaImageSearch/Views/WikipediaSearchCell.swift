@@ -46,7 +46,7 @@ public class WikipediaSearchCell: UITableViewCell {
                         >- startWith(loadingPlaceholder)
                 }
                 >- disposeBag.addDisposable
-            
+
             self.disposeBag = disposeBag
         }
     }
