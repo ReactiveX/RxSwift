@@ -99,9 +99,9 @@ class MockThreeDSectionedViewProtocol : NSObject, ThreeDSectionedViewProtocol {
         return 3
     }
     
-    func threeDView(threeDView: ThreeDSectionedView, didGetXXX: NSIndexPath) {
+    /*func threeDView(threeDView: ThreeDSectionedView, didGetXXX: NSIndexPath) {
         messages.append("didGetXXX")
-    }
+    }*/
     
     func threeDView(threeDView: ThreeDSectionedView, didLearnSomething: String) {
         messages.append("didLearnSomething")
@@ -196,5 +196,31 @@ class DelegateProxyTest : RxTest {
         view.delegate?.threeDView?(view, didLearnSomething: "Psssst ...")
         
         XCTAssertEqual(mock.messages, ["didLearnSomething"])
+    }
+    
+    func test_observesUnimplementedOptionalMethods() {
+        let view = ThreeDSectionedView()
+        let mock = MockThreeDSectionedViewProtocol()
+        
+        view.delegate = mock
+       
+        XCTAssertTrue(!mock.respondsToSelector("threeDView(threeDView:didGetXXX:"))
+        
+        let sentArgument = NSIndexPath(index: 0)
+        
+        var receivedArgument: NSIndexPath? = nil
+        
+        let d = view.rx_proxy.observe("threeDView:didGetXXX:")
+            >- subscribeNext { n in
+                let ip = n[1] as! NSIndexPath
+                receivedArgument = ip
+            }
+            >- scopedDispose
+
+        XCTAssertTrue(receivedArgument === nil)
+        view.delegate?.threeDView?(view, didGetXXX: sentArgument)
+        XCTAssertTrue(receivedArgument === sentArgument)
+        
+        XCTAssertEqual(mock.messages, [])
     }
 }
