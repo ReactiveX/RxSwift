@@ -12,6 +12,7 @@ import RxCocoa
 
 class TableViewController: ViewController, UITableViewDelegate {
     
+    /*
     @IBOutlet weak var tableView: UITableView!
     
     var disposeBag = DisposeBag()
@@ -46,7 +47,7 @@ class TableViewController: ViewController, UITableViewDelegate {
             >- disposeBag.addDisposable
         
         dataSource.cellFactory = { (tv, ip, user: User) in
-            let cell = tv.dequeueReusableCellWithIdentifier("Cell") as! UITableViewCell
+            let cell = tv.dequeueReusableCellWithIdentifier("Cell")!
             cell.textLabel?.text = user.firstName + " " + user.lastName
             return cell
         }
@@ -86,7 +87,7 @@ class TableViewController: ViewController, UITableViewDelegate {
         // Rx content offset
         tableView.rx_contentOffset
             >- subscribeNext { co in
-                println("Content offset from Rx observer \(co)")
+                print("Content offset from Rx observer \(co)")
             }
         
         RandomUserAPI.sharedAPI.getExampleUserResultSet()
@@ -123,7 +124,7 @@ class TableViewController: ViewController, UITableViewDelegate {
     }
 
     func scrollViewDidScroll(scrollView: UIScrollView) {
-        println("Content offset from delegate \(scrollView.contentOffset)")
+        print("Content offset from delegate \(scrollView.contentOffset)")
     }
     
     // MARK: Navigation
@@ -204,5 +205,5 @@ class TableViewController: ViewController, UITableViewDelegate {
             fatalError("Section out of range")
         }
     }
-    
+    */
 }

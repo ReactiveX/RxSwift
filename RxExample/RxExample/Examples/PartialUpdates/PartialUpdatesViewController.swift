@@ -13,6 +13,7 @@ import RxCocoa
 import CoreData
 
 class PartialUpdatesViewController : ViewController {
+    /*
     @IBOutlet weak var reloadTableViewOutlet: UITableView!
     @IBOutlet weak var partialUpdatesTableViewOutlet: UITableView!
     @IBOutlet weak var partialUpdatesCollectionViewOutlet: UICollectionView!
@@ -46,7 +47,7 @@ class PartialUpdatesViewController : ViewController {
     
     func skinTableViewDataSource(dataSource: RxTableViewSectionedDataSource<NumberSection>) {
         dataSource.cellFactory = { (tv, ip, i) in
-            let cell = tv.dequeueReusableCellWithIdentifier("Cell") as? UITableViewCell
+            let cell = tv.dequeueReusableCellWithIdentifier("Cell")!
                 ?? UITableViewCell(style:.Default, reuseIdentifier: "Cell")
             
             cell.textLabel!.text = "\(i)"
@@ -123,7 +124,7 @@ class PartialUpdatesViewController : ViewController {
         // reactive data sources
         
         let updates = zip(self.sections, newSections) { (old, new) in
-                return differentiate(old, new)
+                return differentiate(old, finalSections: new)
             }
             >- startWith(initialState)
             
@@ -143,13 +144,13 @@ class PartialUpdatesViewController : ViewController {
         
         partialUpdatesCollectionViewOutlet.rx_itemSelected
             >- subscribeNext { [unowned self] i in
-                println("Let me guess, it's .... It's \(self.generator.sections[i.section].items[i.item]), isn't it? Yeah, I've got it.")
+                print("Let me guess, it's .... It's \(self.generator.sections[i.section].items[i.item]), isn't it? Yeah, I've got it.")
             }
             >- disposeBag.addDisposable
         
         merge(from([partialUpdatesTableViewOutlet.rx_itemSelected, reloadTableViewOutlet.rx_itemSelected]))
             >- subscribeNext { [unowned self] i in
-                println("I have a feeling it's .... \(self.generator.sections[i.section].items[i.item])?")
+                print("I have a feeling it's .... \(self.generator.sections[i.section].items[i.item])?")
             }
             >- disposeBag.addDisposable
     }
@@ -167,8 +168,8 @@ class PartialUpdatesViewController : ViewController {
             values = PartialUpdatesViewController.firstChange!
         }
         
-        //println(values)
+        //print(values)
         
         sections.next(values)
-    }
+    }*/
 }

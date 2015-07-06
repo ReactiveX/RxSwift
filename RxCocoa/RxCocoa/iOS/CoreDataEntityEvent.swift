@@ -10,7 +10,7 @@ import Foundation
 import CoreData
 import RxSwift
 
-enum CoreDataEntityEvent : Printable {
+enum CoreDataEntityEvent : CustomStringConvertible {
     
     typealias SectionInfo = NSFetchedResultsSectionInfo
     

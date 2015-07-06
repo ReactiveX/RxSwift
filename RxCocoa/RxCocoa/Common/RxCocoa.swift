@@ -24,13 +24,13 @@ public let RxCocoaErrorDomain = "RxCocoaError"
 
 public let RxCocoaErrorHTTPResponseKey = "RxCocoaErrorHTTPResponseKey"
 
-func rxError(errorCode: RxCocoaError, message: String) -> NSError {
+func rxError(errorCode: RxCocoaError, _ message: String) -> NSError {
     return NSError(domain: RxCocoaErrorDomain, code: errorCode.rawValue, userInfo: [NSLocalizedDescriptionKey: message])
 }
 
 #if !RELEASE
 public func _rxError(errorCode: RxCocoaError, message: String, userInfo: NSDictionary) -> NSError {
-    return rxError(errorCode, message, userInfo)
+    return rxError(errorCode, message: message, userInfo: userInfo)
 }
 #endif
 
@@ -69,7 +69,7 @@ func rxPossiblyFatalError(error: String) {
 #if DEBUG
     rxFatalError(error)
 #else
-    println("[RxSwift]: \(error)")
+    print("[RxSwift]: \(error)")
 #endif
 }
 

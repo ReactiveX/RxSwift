@@ -11,7 +11,7 @@ import RxSwift
 import RxCocoa
 import CoreData
 
-struct ItemPath : Printable {
+struct ItemPath : CustomStringConvertible {
     let sectionIndex: Int
     let itemIndex: Int
     
@@ -22,7 +22,7 @@ struct ItemPath : Printable {
     }
 }
 
-public struct Changeset<S: SectionModelType> : Printable {
+public struct Changeset<S: SectionModelType> : CustomStringConvertible {
     typealias I = S.Item
     
     var finalSections: [S] = []

@@ -32,7 +32,7 @@ class SearchViewModel: Disposable {
             >- map { query in
                 API.getSearchResults(query)
                     >- startWith([]) // clears results on new search term
-                    >- catch([])
+                    >- onError ([])
             }
             >- switchLatest
             >- map { results in

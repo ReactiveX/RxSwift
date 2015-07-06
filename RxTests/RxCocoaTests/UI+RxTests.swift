@@ -50,7 +50,7 @@ class UIRxTests : RxTest {
         let resultLabel = UILabelMock()
         
         let disposable = primeTextField.rx_text()
-            >- map { WolframAlphaIsPrime($0.toInt() ?? 0) }
+            >- map { WolframAlphaIsPrime(Int($0) ?? 0) }
             >- concat
             >- map { "number \($0.n) is prime? \($0.isPrime)" }
             >- resultLabel.rx_subscribeTextTo

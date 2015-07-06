@@ -23,7 +23,7 @@ class RxCollectionViewSectionedAnimatedDataSource<S: SectionModelType> : RxColle
         switch observedEvent {
         case .Next(let boxedSections):
             for c in boxedSections.value {
-                //println("Animating ==============================\n\(c)\n===============================\n")
+                //print("Animating ==============================\n\(c)\n===============================\n")
                 
                 if !set {
                     setSections(c.finalSections)

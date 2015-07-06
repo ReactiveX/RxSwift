@@ -41,8 +41,8 @@ class KVOObserver : NSObject
         self.parent.object.addObserver(self, forKeyPath: self.parent.path, options: self.parent.options, context: &context)
     }
     
-    override func observeValueForKeyPath(keyPath: String, ofObject object: AnyObject, change: [NSObject : AnyObject], context: UnsafeMutablePointer<Void>) {
-        let newValue: AnyObject? = change[NSKeyValueChangeNewKey]
+    override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [NSObject : AnyObject]?, context: UnsafeMutablePointer<Void>) {
+        let newValue: AnyObject? = change?[NSKeyValueChangeNewKey]
         
         if let newValue: AnyObject = newValue {
             self.callback(newValue)
@@ -67,7 +67,7 @@ class KVOObservable<Element> : Observable<Element?>, KVOObservableProtocol {
     var options: NSKeyValueObservingOptions
     
     convenience init(object: NSObject, path: String) {
-        self.init(object: object, path: path, options: .Initial | .New)
+        self.init(object: object, path: path, options: NSKeyValueObservingOptions([.Initial, .New]))
     }
     
     init(object: NSObject, path: String, options: NSKeyValueObservingOptions) {

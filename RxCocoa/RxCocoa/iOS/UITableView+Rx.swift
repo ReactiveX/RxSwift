@@ -28,7 +28,7 @@ extension UITableView {
         -> Disposable {
         let proxy: RxTableViewDataSourceProxy = proxyForObject(self)
             
-        return installDelegate(proxy, dataSource, false, onProxyForObject: self)
+        return installDelegate(proxy, delegate: dataSource, retainDelegate: false, onProxyForObject: self)
     }
     
     // data source
@@ -45,7 +45,7 @@ extension UITableView {
     public func rx_subscribeWithReactiveDataSource<DataSource: protocol<RxTableViewDataSourceType, UITableViewDataSource>>
         (dataSource: DataSource)
         -> Observable<DataSource.Element> -> Disposable {
-        return setProxyDataSourceForObject(self, dataSource, false) { (_: RxTableViewDataSourceProxy, event) -> Void in
+        return setProxyDataSourceForObject(self, dataSource: dataSource, retainDataSource: false) { (_: RxTableViewDataSourceProxy, event) -> Void in
             dataSource.tableView(self, observedEvent: event)
         }
     }
@@ -118,7 +118,7 @@ extension UITableView {
     // This method only works in case one of the `rx_subscribeItemsTo` methods was used.
     public func rx_modelSelected<T>() -> Observable<T> {
         return rx_itemSelected >- map { ip in
-            let dataSource: RxTableViewReactiveArrayDataSource<T> = castOrFatalError(self.rx_dataSource.forwardToDelegate(), "This method only works in case one of the `rx_subscribeItemsTo` methods was used.")
+            let dataSource: RxTableViewReactiveArrayDataSource<T> = castOrFatalError(self.rx_dataSource.forwardToDelegate(), message: "This method only works in case one of the `rx_subscribeItemsTo` methods was used.")
             
             return dataSource.modelAtIndex(ip.item)!
         }
@@ -128,7 +128,7 @@ extension UITableView {
 
 // deprecated
 extension UITableView {
-    @availability(*, deprecated=1.7, message="Replaced by `rx_subscribeWithReactiveDataSource`")
+    @available(*, deprecated=1.7, message="Replaced by `rx_subscribeWithReactiveDataSource`")
     public func rx_subscribeRowsTo<E where E: AnyObject>
         (dataSource: UITableViewDataSource)
         (source: Observable<[E]>)
@@ -136,7 +136,7 @@ extension UITableView {
         return rx_setDataSource(dataSource)
     }
     
-    @availability(*, deprecated=1.7, message="Replaced by `rx_setDataSource`")
+    @available(*, deprecated=1.7, message="Replaced by `rx_setDataSource`")
     public func rx_subscribeRowsTo<E where E : AnyObject>
         (cellFactory: (UITableView, NSIndexPath, E) -> UITableViewCell)
         (source: Observable<[E]>)
@@ -148,7 +148,7 @@ extension UITableView {
         return l(source)
     }
     
-    @availability(*, deprecated=1.7, message="Replaced by `rx_subscribeItemsToWithCellIdentifier`")
+    @available(*, deprecated=1.7, message="Replaced by `rx_subscribeItemsToWithCellIdentifier`")
     public func rx_subscribeRowsToCellWithIdentifier<E, Cell where E : AnyObject, Cell: UITableViewCell>
         (cellIdentifier: String, configureCell: (UITableView, NSIndexPath, E, Cell) -> Void)
         (source: Observable<[E]>)
@@ -159,7 +159,7 @@ extension UITableView {
         return l(source)
     }
     
-    @availability(*, deprecated=1.7, message="Replaced by `rx_itemSelected`")
+    @available(*, deprecated=1.7, message="Replaced by `rx_itemSelected`")
     public func rx_rowTap() -> Observable<(UITableView, Int)> {
         return rx_itemSelected
             >- map { ip in
@@ -167,7 +167,7 @@ extension UITableView {
             }
     }
     
-    @availability(*, deprecated=1.7, message="Replaced by `rx_modelSelected`")
+    @available(*, deprecated=1.7, message="Replaced by `rx_modelSelected`")
     public func rx_elementTap<E>() -> Observable<E> {
         return rx_modelSelected()
     }

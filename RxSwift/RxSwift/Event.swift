@@ -53,7 +53,8 @@ public func eventType<T>(event: Event<T>) -> String {
 public func == <T: Equatable>(lhs: Event<T>, rhs: Event<T>) -> Bool {
     switch (lhs, rhs) {
     case (.Completed, .Completed): return true
-    case (.Error(let e1), .Error(let e2)): return e1 == e2
+    // really stupid fix for now
+    case (.Error(let e1), .Error(let e2)): return "\(e1)" == "\(e2)"
     case (.Next(let v1), .Next(let v2)): return v1.value == v2.value
     default: return false
     }

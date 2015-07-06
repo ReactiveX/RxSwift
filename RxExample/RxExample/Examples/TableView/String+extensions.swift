@@ -8,10 +8,4 @@
 
 extension String {
     
-    func uppercaseFirstCharacter() -> String {
-        var result = Array(self)
-        if !isEmpty { result[0] = Character(String(result.first!).uppercaseString) }
-        return String(result)
-    }
-    
 }

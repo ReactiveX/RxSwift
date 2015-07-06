@@ -53,7 +53,7 @@ class KVOObservableTests : RxTest {
     func test_New_And_Initial() {
         let testClass = TestClass()
         
-        let os: Observable<String?> = testClass.rx_observe("pr", options: .Initial | .New)
+        let os: Observable<String?> = testClass.rx_observe("pr", options: .Initial)
         
         var latest: String?
         

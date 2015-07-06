@@ -67,10 +67,10 @@ extension NSTextField {
     }
     
     public var rx_text: Observable<String> {
-        return proxyObservableForObject(self, { (p: RxTextFieldDelegate, o) in
+        return proxyObservableForObject(self, addObserver: { (p: RxTextFieldDelegate, o) in
             sendNext(o, self.stringValue)
             return p.observers.put(o)
-        }, { p, d in
+        }, removeObserver: { p, d in
             p.observers.removeKey(d)
         })
     }

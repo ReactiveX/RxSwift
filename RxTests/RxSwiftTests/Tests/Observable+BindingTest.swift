@@ -158,7 +158,7 @@ extension ObservableBindingTest {
             case .Next:
                 XCTAssertTrue(false)
             case .Error(let error):
-                XCTAssertEqual(error, testError)
+                XCTAssertErrorEqual(error, testError)
             case .Completed:
                 XCTAssertTrue(false)
             }
@@ -168,7 +168,7 @@ extension ObservableBindingTest {
             case .Next:
                 XCTAssertTrue(false)
             case .Error(let error):
-                XCTAssertEqual(error, testError)
+                XCTAssertErrorEqual(error, testError)
             case .Completed:
                 XCTAssertTrue(false)
             }

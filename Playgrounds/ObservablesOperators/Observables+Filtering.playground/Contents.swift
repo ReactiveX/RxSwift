@@ -21,37 +21,37 @@ example("filter") {
             $0 % 2 == 0
         }
         >- subscribeNext { value in
-            println("\(value)")
+            print("\(value)")
     }
 }
 
-/*:
+
+e/*:
 ### `distinctUntilChanged`
 
 suppress duplicate items emitted by an Observable
 [More info in reactive.io website]( http://reactivex.io/documentation/operators/distinct.html )
 */
-
-example("distinctUntilChanged") {
+xample("distinctUntilChanged") {
     let distinctUntilChangedSubscriber = returnElements(1, 2, 3, 1, 1, 4)
         >- distinctUntilChanged
         >- subscribeNext { value in
-            println("\(value)")
+            print("\(value)")
     }
 }
 
-/*:
+
+exa/*:
 ### `take`
 
 Emit only the first n items emitted by an Observable
 [More info in reactive.io website]( http://reactivex.io/documentation/operators/take.html )
 */
-
-example("take") {
+mple("take") {
     let distinctUntilChangedSubscriber = returnElements(1, 2, 3, 4, 5, 6)
         >- take(3)
         >- subscribeNext { value in
-            println("\(value)")
+            print("\(value)")
     }
 }
 
