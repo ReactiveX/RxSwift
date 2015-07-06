@@ -28,11 +28,18 @@ func rxError(errorCode: RxCocoaError, message: String) -> NSError {
     return NSError(domain: RxCocoaErrorDomain, code: errorCode.rawValue, userInfo: [NSLocalizedDescriptionKey: message])
 }
 
+#if !RELEASE
+public func _rxError(errorCode: RxCocoaError, message: String, userInfo: NSDictionary) -> NSError {
+    return rxError(errorCode, message, userInfo)
+}
+#endif
+
 func rxError(errorCode: RxCocoaError, message: String, userInfo: NSDictionary) -> NSError {
-    let mutableDictionary = NSMutableDictionary(dictionary: userInfo as! [NSObject : AnyObject])
-    mutableDictionary[NSLocalizedDescriptionKey] = message
-    // swift compiler :(
-    let resultInfo: [NSObject: AnyObject] = (userInfo as NSObject) as! [NSObject: AnyObject]
+    var resultInfo: [NSObject: AnyObject] = [:]
+    resultInfo[NSLocalizedDescriptionKey] = message
+    for k in userInfo.allKeys {
+        resultInfo[k as! NSObject] = userInfo[k as! NSCopying]
+    }
     return NSError(domain: RxCocoaErrorDomain, code: Int(errorCode.rawValue), userInfo: resultInfo)
 }
 
