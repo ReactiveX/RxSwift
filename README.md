@@ -37,7 +37,7 @@ Hang out with us on [rxswift.slack.com](http://slack.rxswift.org) <img src="http
 1. [Error Handling](#error-handling)
 1. [Naming conventions and best practices](#naming-conventions-and-best-practices)
 1. [Pipe operator >- vs |> vs ...](#pipe-operator---vs--vs-)
-1. [Roadmap](/kzaher/RxSwift/wiki/roadmap)
+1. [Roadmap](https://github.com/kzaher/RxSwift/wiki/roadmap)
 1. [Peculiarities](#peculiarities)
 1. [References](#references)
 
