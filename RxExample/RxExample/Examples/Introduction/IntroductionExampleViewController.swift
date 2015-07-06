@@ -27,8 +27,8 @@ class IntroductionExampleViewController : ViewController {
         super.viewDidLoad()
         
         // c = a + b
-        let sum = combineLatest(a.rx_text, b.rx_text) { (a, b) in
-            return (a.toInt() ?? 0, b.toInt() ?? 0)
+        let sum = combineLatest(a.rx_text, b.rx_text) { (a, b) -> Int in
+            return (Int(a) ?? 0, Int(b) ?? 0)
         }
         
         // bind result to UI
@@ -72,7 +72,7 @@ class IntroductionExampleViewController : ViewController {
         
         disposeButton.rx_tap
             >- subscribeNext { [unowned self] _ in
-                println("Unbound everything")
+                print("Unbound everything")
                 self.disposeBag = DisposeBag()
             }
             >- disposeBag.addDisposable

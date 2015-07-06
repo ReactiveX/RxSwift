@@ -21,7 +21,7 @@ RxSwift
 ├-RxBlocking      - set of blocking operators for unit testing
 ├-RxExample       - example apps: taste of Rx
 └-Rx.xcworkspace  - workspace that contains all of the projects hooked up
-```		
+```
 
 Hang out with us on [rxswift.slack.com](http://slack.rxswift.org) <img src="http://slack.rxswift.org/badge.svg">
 
@@ -56,9 +56,9 @@ git diff | grep bug | less          #  linux pipes - programs communicate by sen
 would become if written in RxSwift
 
 ```swift
-gitDiff() >- grep("bug") >- less    // rx pipe `>-` operator - rx units communicate by 
+gitDiff() >- grep("bug") >- less    // rx pipe `>-` operator - rx units communicate by
                                     // sending sequences of swift objects
-                                    // unfortunately `|` is reserved in swift 
+                                    // unfortunately `|` is reserved in swift
                                     // for logical or
 ```
 
@@ -83,10 +83,10 @@ Here is an example of calculated variable:
 let a = Variable(1)
 let b = Variable(2)
 
-combineLatest(a, b) { $0 + $1 } 
-    >- filter { $0 >= 0 } 
+combineLatest(a, b) { $0 + $1 }
+    >- filter { $0 >= 0 }
     >- map { "\($0) is positive" }
-    >- subscribeNext { println($0) }    // prints: 3 is positive
+    >- subscribeNext { print($0) }    // prints: 3 is positive
 
 a.next(4)                               // prints: 6 is positive
 
@@ -106,10 +106,10 @@ let a = Variable(1)
 let b = Variable(2)
 
 // immediately prints: 3 is positive
-combineLatest(a, b) { $0 + $1 } 
-    |> filter { $0 >= 0 } 
+combineLatest(a, b) { $0 + $1 }
+    |> filter { $0 >= 0 }
     |> map { "\($0) is positive" }
-    |> subscribeNext { println($0) }
+    |> subscribeNext { print($0) }
 
 // ...
 ```
@@ -129,7 +129,7 @@ let subscription/*: Disposable */ = primeTextField.rx_text      // type is Obser
             >- concat                                           // type is Observable<Prime>
             >- map { "number \($0.n) is prime? \($0.isPrime)" } // type is Observable<String>
             >- resultLabel.rx_subscribeTextTo                   // return Disposable that can be used to unbind everything
-        
+
 // This will set resultLabel.text to "number 43 is prime? true" after
 // server call completes.
 primeTextField.text = "43"
@@ -167,7 +167,7 @@ self.usernameOutlet.rx_text >- map { username in
     // Every user interface probably shows some state while async operation
     // is executing.
     // Let's assume that we want to show "Checking availability" while waiting for result.
-    // valid parameter can be 
+    // valid parameter can be
     //  * true  - is valid
     //  * false - not valid
     //  * nil   - validation pending
@@ -188,7 +188,7 @@ self.usernameOutlet.rx_text >- map { username in
 }
 // Since we now have `Observable<Observable<ValidationResult>>`
 // we somehow need to return to normal `Observable` world.
-// We could use `concat` operator from second example, but we really 
+// We could use `concat` operator from second example, but we really
 // want to cancel pending asynchronous operation if new username is
 // provided.
 // That's what `switchLatest` does
@@ -202,15 +202,14 @@ self.usernameOutlet.rx_text >- map { username in
         errorLabel.textColor = validationColor(valid)
         errorLabel.text = valid.message
     }
-// Why would we do it manually, that's tedious, 
+// Why would we do it manually, that's tedious,
 // let's dispose everything automagically on view controller dealloc.
     >- disposeBag.addDisposable
 ```
 
-Can't get any simpler than this. There are more examples in the repository, so feel free to check them out. 
+Can't get any simpler than this. There are more examples in the repository, so feel free to check them out.
 
 They include examples on how to use it in the context of MVVM pattern or without it.
-
 
 ## Build / Install / Run
 
@@ -431,7 +430,7 @@ There are two basic types of observables. In Rx both are represented by `Observa
 
 Error handling is pretty straightforward. If one sequence terminates with error, then all of the dependent sequences will terminate with error. It's usual short circuit logic.
 
-Unfortunately Swift doesn't have a concept of exceptions or some kind of built in error monad so this project introduces `RxResult` enum. 
+Unfortunately Swift doesn't have a concept of exceptions or some kind of built in error monad so this project introduces `RxResult` enum.
 It is Swift port of Scala [`Try`](http://www.scala-lang.org/api/2.10.2/index.html#scala.util.Try) type. It is also similar to Haskell [`Either`](https://hackage.haskell.org/package/category-extras-0.52.0/docs/Control-Monad-Either.html) monad.
 
 ```
@@ -450,7 +449,7 @@ result1.flatMap { okValue in        // success handling block
 }.recoverWith { error in            // error handling block
     //  executed on error
     return ?
-} 
+}
 ```
 
 ## Naming conventions and best practices
@@ -479,7 +478,7 @@ public func map<E, R>
 
 Returning an error from a selector will cause entire graph of dependent sequence transformers to "die" and fail with error. Dying implies that it will release all of its resources and never produce another sequence value. This is usually not an obvious effect.
 
-If there is some `UITextField` bound to a observable sequence that fails with error or completes, screen won't be updated ever again. 
+If there is some `UITextField` bound to a observable sequence that fails with error or completes, screen won't be updated ever again.
 
 To make those situations more obvious, RxCocoa debug build will throw an exception in case some sequence that is bound to UI control terminates with an error.
 
@@ -503,14 +502,14 @@ func >- <In, Out>(lhs: In, rhs: In -> Out) -> Out {
 a >- b >- c is equivalent to c(b(a))
 ```
 
-All of the Rx public interfaces don't depend at all on the `>-` operator. 
+All of the Rx public interfaces don't depend at all on the `>-` operator.
 
-It was actually introduced quite late and you can use Rx operators (map, filter ...) without it. 
+It was actually introduced quite late and you can use Rx operators (map, filter ...) without it.
 
 This is how Rx code would look like without `>-` operator
 
 ```
-subscribeNext({ println($0) })(map({ "\($0) is positive" })(filter({ $0 >= 0 })(a)))
+subscribeNext({ print($0) })(map({ "\($0) is positive" })(filter({ $0 >= 0 })(a)))
 ```
 
 but it's highly unlikely that anybody would want to code like this, even though the code is technically correct, and will produce wanted results.
@@ -525,7 +524,7 @@ public func |> <In, Out>(source: In, @noescape transform: In -> Out) -> Out {
 }
 ```
 
-or 
+or
 
 ```
 infix operator ~> { associativity left precedence 91 }
@@ -541,20 +540,20 @@ and you can use them instead of `>-` operator.
 let a /*: Observable<Int>*/ = Variable(1)
 let b /*: Observable<Int>*/ = Variable(2)
 
-combineLatest(a, b) { $0 + $1 } 
-    |> filter { $0 >= 0 } 
+combineLatest(a, b) { $0 + $1 }
+    |> filter { $0 >= 0 }
     |> map { "\($0) is positive" }
-    |> subscribeNext { println($0) }
+    |> subscribeNext { print($0) }
 ```
 
 ```swift
 let a /*: Observable<Int>*/ = Variable(1)
 let b /*: Observable<Int>*/ = Variable(2)
 
-combineLatest(a, b) { $0 + $1 } 
-    ~> filter { $0 >= 0 } 
+combineLatest(a, b) { $0 + $1 }
+    ~> filter { $0 >= 0 }
     ~> map { "\($0) is positive" }
-    ~> subscribeNext { println($0) }
+    ~> subscribeNext { print($0) }
 ```
 
 So why was `>-` chosen in the end? Well, it was a difficult decision.
@@ -590,7 +589,7 @@ I have experimented for a week with different operators and in the end these are
 ## Peculiarities
 
 * Swift support for generic enums is limited. That's why there is the `Box` hack in `Result` and `Event` enums
-``` 
+```
 unimplemented IR generation feature non-fixed multi-payload enum layout
 ```
 * Swift compiler had troubles with curried functions in release mode
@@ -605,7 +604,7 @@ public func map<E, R>  // this is ok
     }
 }
 
-public func map<E, R>           // this will cause crashes in release version 
+public func map<E, R>           // this will cause crashes in release version
     (selector: E -> R)          // of your program if >- operator is used
     (source: Observable<E>)
         -> Observable<R> {

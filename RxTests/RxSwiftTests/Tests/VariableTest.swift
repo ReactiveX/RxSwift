@@ -123,7 +123,7 @@ class VariableTest : RxTest {
         var latestValueOfC : Int? = nil
         // let _ = doesn't retain.
         _/*: Disposable*/  = c >- subscribeNext { c in
-            //println("Next value of c = \(c)")
+            //print("Next value of c = \(c)")
             latestValueOfC = c
         } >- scopedDispose
         

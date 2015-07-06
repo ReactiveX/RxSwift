@@ -39,8 +39,8 @@ class RandomUserAPI {
                 let pictures = user?["picture"] as? [String: String]
                 
                 if let firstName = name?["first"], let lastName = name?["last"], let imageURL = pictures?["medium"] {
-                    let returnUser = User(firstName: firstName.uppercaseFirstCharacter(),
-                        lastName: lastName.uppercaseFirstCharacter(),
+                    let returnUser = User(firstName: firstName.capitalizedString,
+                        lastName: lastName.capitalizedString,
                         imageURL: imageURL)
                     return success(returnUser)
                 }

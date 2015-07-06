@@ -22,7 +22,7 @@ example("takeUntil") {
     observable1
         >- takeUntil(observable2)
         >- subscribeNext { int in
-            println(int)
+            print(int)
     }
     
     sendNext(observable1, 1)
@@ -36,7 +36,8 @@ example("takeUntil") {
     
 }
 
-/*:
+
+e/*:
 
 
 ### `takeWhile`
@@ -44,8 +45,7 @@ example("takeUntil") {
 Mirror items emitted by an Observable until a specified condition becomes false
 [More info in reactive.io website]( http://reactivex.io/documentation/operators/takewhile.html )
 */
-
-example("takeWhile") {
+xample("takeWhile") {
     
     let observable1 = PublishSubject<Int>()
     
@@ -54,7 +54,7 @@ example("takeWhile") {
             int < 4
         }
         >- subscribeNext { int in
-            println(int)
+            print(int)
     }
     
     sendNext(observable1, 1)

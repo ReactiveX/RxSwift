@@ -17,10 +17,17 @@ public enum RxErrorCode : Int {
     case Disposed  = 3
 }
 
-// This defines error type for entire project.
-// It's not practical to have different error handling types for different areas of the app.
-// This is good enough solution for now unless proven otherwise
-public typealias ErrorType = NSError
+// just temporary
+
+public func errorEquals(lhs: ErrorType, _ rhs: ErrorType) -> Bool {
+    if let error1 = lhs as? NSError {
+        if let error2 = rhs as? NSError {
+            return error1 === error2
+        }
+    }
+    
+    return false
+}
 
 public let UnknownError  = NSError(domain: RxErrorDomain, code: RxErrorCode.Unknown.rawValue, userInfo: nil)
 public let CastError     = NSError(domain: RxErrorDomain, code: RxErrorCode.Cast.rawValue, userInfo: nil)

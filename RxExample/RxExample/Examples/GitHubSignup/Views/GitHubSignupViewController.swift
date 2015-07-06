@@ -29,7 +29,7 @@ class ValidationService {
     let minPasswordCount = 5
     
     func validateUsername(username: String) -> Observable<ValidationResult> {
-        if count(username) == 0 {
+        if username.characters.count == 0 {
             return just((false, nil))
         }
         
@@ -53,7 +53,7 @@ class ValidationService {
     }
     
     func validatePassword(password: String) -> ValidationResult {
-        let numberOfCharacters = count(password)
+        let numberOfCharacters = password.characters.count
         if numberOfCharacters == 0 {
             return (false, nil)
         }
@@ -66,7 +66,7 @@ class ValidationService {
     }
     
     func validateRepeatedPassword(password: String, repeatedPassword: String) -> ValidationResult {
-        if count(repeatedPassword) == 0 {
+        if repeatedPassword.characters.count == 0 {
             return (false, nil)
         }
         

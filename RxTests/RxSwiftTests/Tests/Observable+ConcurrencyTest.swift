@@ -540,7 +540,7 @@ class ObservableConcurrentSchedulerConcurrencyTest: ObservableConcurrencyTestBas
             }
             
             let disposable2 = scheduler.schedule(()) { _ in
-                    //println("variable \(variable)")
+                    //print("variable \(variable)")
                 self.performLocked {
                     events.append("Started")
                 }

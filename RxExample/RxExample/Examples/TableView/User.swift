@@ -1,7 +1,7 @@
 
 import Foundation
 
-struct User: Equatable, Printable {
+struct User: Equatable, CustomStringConvertible {
     
     var firstName: String
     var lastName: String

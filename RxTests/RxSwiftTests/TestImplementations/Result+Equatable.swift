@@ -20,7 +20,7 @@ public func == <E>(lhs: RxResult<E>, rhs: RxResult<E>) -> Bool {
         var val2 = boxed2.value
         return memcmp(&val1, &val2, sizeof(E)) == 0
     case (.Failure(let error1), .Failure(let error2)):
-        return error1 === error2
+        return errorEquals(error1, error2)
     default:
         return false
     }

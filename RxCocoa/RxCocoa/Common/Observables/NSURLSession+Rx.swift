@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 
 func escapeTerminalString(value: String) -> String {
-    return value.stringByReplacingOccurrencesOfString("\"", withString: "\\\"", options: NSStringCompareOptions.allZeros, range: nil)
+    return value.stringByReplacingOccurrencesOfString("\"", withString: "\\\"", options:[], range: nil)
 }
 
 func convertURLRequestToCurlCommand(request: NSURLRequest) -> String {
@@ -20,13 +20,13 @@ func convertURLRequestToCurlCommand(request: NSURLRequest) -> String {
     if  request.HTTPMethod == "POST" && request.HTTPBody != nil {
         let maybeBody = NSString(data: request.HTTPBody!, encoding: NSUTF8StringEncoding) as? String
         if let body = maybeBody {
-            returnValue += "-d \"\(maybeBody)\""
+            returnValue += "-d \"\(body)\""
         }
     }
     
     for (key, value) in request.allHTTPHeaderFields ?? [:] {
-        let escapedKey = escapeTerminalString((key as? String) ?? "")
-        let escapedValue = escapeTerminalString((value as? String) ?? "")
+        let escapedKey = escapeTerminalString((key as String) ?? "")
+        let escapedValue = escapeTerminalString((value as String) ?? "")
         returnValue += "-H \"\(escapedKey): \(escapedValue)\" "
     }
     
@@ -37,7 +37,7 @@ func convertURLRequestToCurlCommand(request: NSURLRequest) -> String {
     return returnValue
 }
 
-func convertResponseToString(data: NSData!, response: NSURLResponse!, error: NSError!, interval: NSTimeInterval) -> String {
+func convertResponseToString(data: NSData!, _ response: NSURLResponse!, _ error: NSError!, _ interval: NSTimeInterval) -> String {
     let ms = Int(interval * 1000)
     
     if let response = response as? NSHTTPURLResponse {
@@ -74,8 +74,8 @@ extension NSURLSession {
                 
                 if Logging.URLRequests {
                     let interval = NSDate().timeIntervalSinceDate(d)
-                    println(convertURLRequestToCurlCommand(request))
-                    println(convertResponseToString(data, response, error, interval))
+                    print(convertURLRequestToCurlCommand(request))
+                    print(convertResponseToString(data, response, error, interval))
                 }
                 
                 if data == nil || response == nil {
@@ -87,10 +87,13 @@ extension NSURLSession {
                 }
             }
             
-            task.resume()
+            
+            if let t = task { t.resume() }
+            else { sendError(observer, UnknownError) }
+            
                 
             return AnonymousDisposable {
-                task.cancel()
+                task?.cancel()
             }
         }
     }
@@ -102,7 +105,7 @@ extension NSURLSession {
                     return success(data!)
                 }
                 else {
-                    return failure(rxError(.NetworkError, "Server returned failure", [RxCocoaErrorHTTPResponseKey: response]))
+                    return failure(rxError(.NetworkError, message: "Server returned failure", userInfo: [RxCocoaErrorHTTPResponseKey: response]))
                 }
             }
             else {
@@ -115,15 +118,17 @@ extension NSURLSession {
     
     public func rx_JSON(request: NSURLRequest) -> Observable<AnyObject!> {
         return rx_data(request) >- mapOrDie { (data) -> RxResult<AnyObject!> in
-            var serializationError: NSError?
-            let result: AnyObject? = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.allZeros, error: &serializationError)
+            do {
+              let result = try NSJSONSerialization.JSONObjectWithData(data, options: [])
+              return success(result)
+            }
+            catch let caught as NSError  {
+                return failure(caught)
+            }
+            catch {
+                return failure(UnknownError)
+            }
             
-            if let result: AnyObject = result {
-                return success(result)
-            }
-            else {
-                return failure(serializationError!)
-            }
         }
     }
     

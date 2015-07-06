@@ -1,7 +1,7 @@
 
 
 public func example(description: String, action: () -> ()) {
-    println("\n--- \(description) example ---")
+    print("\n--- \(description) example ---")
     action()
 }
 

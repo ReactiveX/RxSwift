@@ -25,11 +25,11 @@ example("Empty observable") {
     let emptySubscriber = emptyObservable >- subscribe { event in
         switch event {
         case .Next(let box):
-            println("\(box.value)")
+            print("\(box.value)")
         case .Completed:
-            println("completed")
+            print("completed")
         case .Error(let error):
-            println("\(error)")
+            print("\(error)")
         }
     }
 }
@@ -47,7 +47,7 @@ example("Never observable") {
     let neverObservable: Observable<String> = never()
     
     let neverSubscriber = neverObservable >- subscribe { _ in
-        println("This block is never called.")
+        print("This block is never called.")
     }
 }
 
@@ -63,11 +63,11 @@ example("returnElement/just") {
         >- subscribe { event in
             switch event {
             case .Next(let box):
-                println("\(box.value)")
+                print("\(box.value)")
             case .Completed:
-                println("completed")
+                print("completed")
             case .Error(let error):
-                println("\(error)")
+                print("\(error)")
             }
         }
 }
@@ -88,11 +88,11 @@ example("returnElements") {
         >- subscribe { event in
             switch event {
             case .Next(let box):
-                println("\(box.value)")
+                print("\(box.value)")
             case .Completed:
-                println("completed")
+                print("completed")
             case .Error(let error):
-                println("\(error)")
+                print("\(error)")
         }
     }
 }
@@ -113,11 +113,11 @@ example("from") {
         >- subscribe { event in
             switch event {
             case .Next(let box):
-                println("\(box.value)")
+                print("\(box.value)")
             case .Completed:
-                println("completed")
+                print("completed")
             case .Error(let error):
-                println("\(error)")
+                print("\(error)")
         }
     }
 }
@@ -138,7 +138,7 @@ Up to this point, I have only used the `subscribe` method to listen to Observabl
 example("subscribeNext") {
     let nextOnlySubscriber = returnElements(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
         >- subscribeNext { value in
-            println("\(value)")
+            print("\(value)")
         }
 }
 
@@ -162,7 +162,7 @@ example("filter") {
             $0 % 2 == 0
         }
         >- subscribeNext { value in
-            println("\(value)")
+            print("\(value)")
         }
 }
 
@@ -175,7 +175,7 @@ example("distinctUntilChanged") {
     let distinctUntilChangedSubscriber = returnElements(1, 2, 3, 1, 1, 4)
         >- distinctUntilChanged
         >- subscribeNext { value in
-            println("\(value)")
+            print("\(value)")
         }
 }
 
@@ -196,7 +196,7 @@ example("aggregate") {
     let aggregateSubscriber = returnElements(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
         >- aggregate(0, +)
         >- subscribeNext { value in
-            println("\(value)")
+            print("\(value)")
     }
 }
 

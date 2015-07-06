@@ -37,7 +37,7 @@ class Randomizer {
     }
     
     func countTotalItemsInSections(sections: [NumberSection]) -> Int {
-        return reduce(sections, 0) { p, s in
+        return sections.reduce(0) { p, s in
             return p + s.items.count
         }
     }

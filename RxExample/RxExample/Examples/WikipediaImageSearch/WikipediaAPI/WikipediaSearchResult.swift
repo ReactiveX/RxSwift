@@ -9,7 +9,7 @@
 import Foundation
 import RxSwift
 
-struct WikipediaSearchResult: Printable {
+struct WikipediaSearchResult: CustomStringConvertible {
     let title: String
     let description: String
     let URL: NSURL
@@ -34,7 +34,8 @@ struct WikipediaSearchResult: Printable {
         let titleDescriptionAndUrl: [((AnyObject, AnyObject), AnyObject)] = Array(Zip2(titleAndDescription, rootArrayTyped[2]))
         
         let searchResults: [RxResult<WikipediaSearchResult>] = titleDescriptionAndUrl.map ( { result -> RxResult<WikipediaSearchResult> in
-            let ((title: AnyObject, description: AnyObject), url: AnyObject) = result
+            let (first, url) = result
+            let (title, description) = first
             
             let titleString = title as? String,
             descriptionString = description as? String,

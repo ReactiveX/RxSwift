@@ -51,7 +51,7 @@ public func dispatch<Element, S: SequenceType where S.Generator.Element == Obser
 
 //  where S.Generator.Element == ObserverOf<Element>
 //  Crashes the compiler
-//public func dispatchNext<Element, S: SequenceType where S.Generator.Element == ObserverOf<Element>>(element: Element, observers: S?) {
+//public func dispatchNext<Element, S: SequenceType where S.Generator.Element == ObserverOf<Element>>(element: Element, _ observers: S?) {
 //    if let observers = observers {
 //        let event = Event.Next(RxBox(element))
 //        for o in observers {
@@ -61,7 +61,7 @@ public func dispatch<Element, S: SequenceType where S.Generator.Element == Obser
 //}
 
 
-public func dispatchNext<Element, S: SequenceType where S.Generator.Element == ObserverOf<Element>>(element: Element, observers: S) {
+public func dispatchNext<Element, S: SequenceType where S.Generator.Element == ObserverOf<Element>>(element: Element, _ observers: S) {
     let event = Event.Next(RxBox(element))
         for o in observers {
             o.on(event)

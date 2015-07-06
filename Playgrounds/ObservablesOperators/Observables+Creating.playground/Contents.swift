@@ -19,16 +19,16 @@ example("Empty observable") {
     let emptySubscriber = emptyObservable >- subscribe { event in
         switch event {
         case .Next(let box):
-            println("\(box.value)")
+            print("\(box.value)")
         case .Completed:
-            println("completed")
+            print("completed")
         case .Error(let error):
-            println("\(error)")
+            print("\(error)")
         }
     }
 }
 
-/*:
+exampl/*:
 As you can see, no values are ever sent to the subscriber of an empty observable. It just completes and is done.
 
 
@@ -38,24 +38,24 @@ As you can see, no values are ever sent to the subscriber of an empty observable
 Creates an observable that contains no objects and never completes or errors out.
 [More info in reactive.io website]( http://reactivex.io/documentation/operators/empty-never-throw.html )
 */
-example("Never observable") {
+e("Never observable") {
     let neverObservable: Observable<String> = never()
     
     let neverSubscriber = neverObservable 
         >- subscribe { _ in
-            println("This block is never called.")
+            print("This block is never called.")
         }
 }
 
-/*:
+
+example/*:
 
 ### `failWith`
 
 Creates an observable that contains no objects and send only a error out.
 [More info in reactive.io website]( http://reactivex.io/documentation/operators/empty-never-throw.html )
 */
-
-example("failWith") {
+("failWith") {
     let error = NSError(domain: "Test", code: -1, userInfo: nil)
     
     let errorObservable: Observable<Int> = failWith(error)
@@ -64,39 +64,40 @@ example("failWith") {
         >- subscribe { event in
             switch event {
             case .Next(let box):
-                println("\(box.value)")
+                print("\(box.value)")
             case .Completed:
-                println("completed")
+                print("completed")
             case .Error(let error):
-                println("\(error)")
+                print("\(error)")
             }
     }
 }
 
-/*:
+
+example("retu/*:
 ### `returnElement` / `just`
 
 These two functions behave identically. They send two messages to subscribers. The first message is the value and the second message is `.Complete`.
 [More info in reactive.io website]( http://reactivex.io/documentation/operators/just.html )
 */
-
-example("returnElement/just") {
+rnElement/just") {
     let oneObservable = just(32)
     
     let oneObservableSubscriber = oneObservable
         >- subscribe { event in
             switch event {
             case .Next(let box):
-                println("\(box.value)")
+                print("\(box.value)")
             case .Completed:
-                println("completed")
+                print("completed")
             case .Error(let error):
-                println("\(error)")
+                print("\(error)")
             }
     }
 }
 
-/*:
+
+example("returnElem/*:
 Here we see that the `.Next` event is sent just once, then the `.Completed` event is sent.
 
 
@@ -105,24 +106,25 @@ Here we see that the `.Next` event is sent just once, then the `.Completed` even
 
 Now we are getting to some more interesting ways to create an Observable. This function creates an observable that produces a number of values before completing.
 */
-
-example("returnElements") {
+ents") {
     let multipleObservable/* : Observable<Int> */ = returnElements(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
     
     let multipleObservableSubscriber = multipleObservable
         >- subscribe { event in
             switch event {
             case .Next(let box):
-                println("\(box.value)")
+                print("\(box.value)")
             case .Completed:
-                println("completed")
+                print("completed")
             case .Error(let error):
-                println("\(error)")
+                print("\(error)")
             }
     }
 }
 
-/*:
+
+example("from") {
+    let/*:
 With the above, you will see that the `.Next` event was sent ten times, once for each element. Then `.Complete` was sent.
 
 
@@ -131,35 +133,33 @@ With the above, you will see that the `.Next` event was sent ten times, once for
 We can also create an observable from any SequenceType, such as an array
 [More info in reactive.io website]( http://reactivex.io/documentation/operators/from.html )
 */
-
-example("from") {
-    let fromArrayObservable = from([1, 2, 3, 4, 5])
+ fromArrayObservable = from([1, 2, 3, 4, 5])
     
     let fromArrayObservableSubscriber = fromArrayObservable
         >- subscribe { event in
             switch event {
             case .Next(let box):
-                println("\(box.value)")
+                print("\(box.value)")
             case .Completed:
-                println("completed")
+                print("completed")
             case .Error(let error):
-                println("\(error)")
+                print("\(error)")
             }
     }
 }
 
-/*:
+
+example("create") {
+    
+    pr/*:
 ### `create`
 
 Create an Observable from scratch by means of a function
 [More info in reactive.io website]( http://reactivex.io/documentation/operators/create.html )
 */
-
-example("create") {
-    
-    println("creating")
+int("creating")
     let observable: Observable<Int> = create { observer in
-        println("emmiting")
+        print("emmiting")
         sendNext(observer, 0)
         sendNext(observer, 1)
         sendNext(observer, 2)
@@ -169,28 +169,28 @@ example("create") {
     
     observable
         >- subscribeNext {
-            println($0)
+            print($0)
         }
     
     observable
         >- subscribeNext {
-            println($0)
+            print($0)
         }
 }
 
-/*:
+
+example("defer") {
+    
+    let defered/*:
 ### `defer`
 
 Create an Observable from a function which create an observable. But do not create the Observable until the observer subscribes, and create a fresh Observable for each observer
 [More info in reactive.io website]( http://reactivex.io/documentation/operators/defer.html )
 */
-
-example("defer") {
-    
-    let defered: Observable<Int> = defer {
-        println("creating")
+: Observable<Int> = defer {
+        print("creating")
         return create { observer in
-            println("emmiting")
+            print("emmiting")
             sendNext(observer, 0)
             sendNext(observer, 1)
             sendNext(observer, 2)
@@ -201,12 +201,12 @@ example("defer") {
     
     defered
         >- subscribeNext {
-            println($0)
+            print($0)
         }
     
     defered
         >- subscribeNext {
-            println($0)
+            print($0)
         }
 }
 

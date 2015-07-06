@@ -80,11 +80,11 @@ import RxSwift
 //
 public protocol DelegateProxyType : AnyObject {
     // Creates new proxy for target object.
-    static func createProxyForObject(object: AnyObject) -> Self
+    static func createProxyForObject(object: AnyObject) -> AnyObject
    
     // There can be only one registered proxy per object
     // These functions control that.
-    static func assignedProxyFor(object: AnyObject) -> Self?
+    static func assignedProxyFor(object: AnyObject) -> AnyObject?
     static func assignProxy(proxy: AnyObject, toObject object: AnyObject)
     
     // Set/Get current delegate for object
@@ -102,11 +102,11 @@ public protocol DelegateProxyType : AnyObject {
 public func proxyForObject<P: DelegateProxyType>(object: AnyObject) -> P {
     MainScheduler.ensureExecutingOnScheduler()
     
-    let maybeProxy = P.assignedProxyFor(object)
+    let maybeProxy = P.assignedProxyFor(object) as? P
     
     let proxy: P
     if maybeProxy == nil {
-        proxy = P.createProxyForObject(object)
+        proxy = P.createProxyForObject(object) as! P
         P.assignProxy(proxy, toObject: object)
         assert(P.assignedProxyFor(object) === proxy)
     }
@@ -155,7 +155,7 @@ func setProxyDataSourceForObject<P: DelegateProxyType, Element>(object: AnyObjec
     -> Observable<Element> -> Disposable {
     return { source  in
         let proxy: P = proxyForObject(object)
-        let disposable = installDelegate(proxy, dataSource, retainDataSource, onProxyForObject: object)
+        let disposable = installDelegate(proxy, delegate: dataSource, retainDelegate: retainDataSource, onProxyForObject: object)
         
         // we should never let the subscriber to complete because it should retain data source
         let subscription = concat(returnElements(source, never())).subscribe(AnonymousObserver { event in
