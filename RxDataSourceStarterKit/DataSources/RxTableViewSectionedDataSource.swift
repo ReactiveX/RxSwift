@@ -76,7 +76,7 @@ public class RxTableViewSectionedDataSource<S: SectionModelType> : _RxTableViewS
     
     var sectionModels: [SectionModelSnapshot] = []
 
-    public func sectionAtIndex(section: Int) -> S {
+    public func sectionModelAtIndex(section: Int) -> S {
         return self.sectionModels[section].model
     }
 

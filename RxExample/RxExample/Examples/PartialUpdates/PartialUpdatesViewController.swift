@@ -55,7 +55,7 @@ class PartialUpdatesViewController : ViewController {
         }
         
         dataSource.titleForHeaderInSection = { [unowned dataSource] (section: Int) -> String in
-            return dataSource.sectionAtIndex(section).model
+            return dataSource.sectionModelAtIndex(section).model
         }
     }
     
@@ -71,7 +71,7 @@ class PartialUpdatesViewController : ViewController {
         dataSource.supplementaryViewFactory = { [unowned dataSource] (cv, kind, ip) in
             let section = cv.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: "Section", forIndexPath: ip) as! NumberSectionView
             
-            section.value!.text = "\(dataSource.sectionAtIndex(ip.section).model)"
+            section.value!.text = "\(dataSource.sectionModelAtIndex(ip.section).model)"
             
             return section
         }

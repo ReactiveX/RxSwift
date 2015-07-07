@@ -67,7 +67,7 @@ public class RxCollectionViewSectionedDataSource<S: SectionModelType> : _RxColle
     
     var sectionModels: [SectionModelSnapshot] = []
     
-    public func sectionAtIndex(section: Int) -> S {
+    public func sectionModelAtIndex(section: Int) -> S {
         return self.sectionModels[section].model
     }
 

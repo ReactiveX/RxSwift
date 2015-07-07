@@ -52,7 +52,7 @@ class TableViewController: ViewController, UITableViewDelegate {
         }
         
         dataSource.titleForHeaderInSection = { [unowned dataSource] sectionIndex in
-            return dataSource.sectionAtIndex(sectionIndex).model
+            return dataSource.sectionModelAtIndex(sectionIndex).model
         }
         
         // reactive data source
@@ -106,7 +106,7 @@ class TableViewController: ViewController, UITableViewDelegate {
     // MARK: Table view delegate ;)
     
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let title = dataSource.sectionAtIndex(section)
+        let title = dataSource.sectionModelAtIndex(section)
         
         let label = UILabel(frame: CGRect.zeroRect)
         // hacky I know :)
