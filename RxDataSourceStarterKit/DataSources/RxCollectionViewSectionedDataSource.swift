@@ -45,6 +45,8 @@ public class _RxCollectionViewSectionedDataSource : NSObject
     public func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
         return _collectionView(collectionView, viewForSupplementaryElementOfKind: kind, atIndexPath: indexPath)
     }
+    
+    
 }
 
 public class RxCollectionViewSectionedDataSource<S: SectionModelType> : _RxCollectionViewSectionedDataSource {
@@ -81,15 +83,32 @@ public class RxCollectionViewSectionedDataSource<S: SectionModelType> : _RxColle
         self.sectionModels = sections.map { SectionModelSnapshot(model: $0, items: $0.items) }
     }
     
-    public var cellFactory: CellFactory! = nil
+    var _cellFactory: CellFactory! = nil
+    
+    public func cellFactory(cf: CellFactory) {
+        _cellFactory = cf
+    }
+    
+    private var _titleForHeaderInSection: ((section: Int) -> String)?
+    
+    public func titleForHeaderInSection(cf: ((section: Int) -> String)) {
+        self._titleForHeaderInSection = cf
+    }
+    
+    private var _titleForFooterInSection: ((section: Int) -> String)?
+    
+    public func titleForFooterInSection(cf: ((section: Int) -> String)) {
+        self._titleForFooterInSection = cf
+    }
+    
     public var supplementaryViewFactory: SupplementaryViewFactory
     
     public override init() {
-        self.cellFactory = { _, _, _ in castOrFail(nil).get() }
+        self._cellFactory = { _, _, _ in castOrFail(nil).get() }
         self.supplementaryViewFactory = { _, _, _ in castOrFail(nil).get() }
         
         super.init()
-        self.cellFactory = { [weak self] _ in
+        self.cellFactory { [weak self] _ in
             precondition(false, "There is a minor problem. `cellFactory` property on \(self!) was not set. Please set it manually, or use one of the `rx_subscribeTo` methods.")
             
             return (nil as UICollectionViewCell!)!
@@ -125,7 +144,7 @@ public class RxCollectionViewSectionedDataSource<S: SectionModelType> : _RxColle
     override func _collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         precondition(indexPath.item < sectionModels[indexPath.section].items.count)
         
-        return cellFactory(collectionView, indexPath, itemAtIndexPath(indexPath))
+        return _cellFactory(collectionView, indexPath, itemAtIndexPath(indexPath))
     }
     
     override func _collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {

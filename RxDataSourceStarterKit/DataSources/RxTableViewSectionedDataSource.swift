@@ -90,16 +90,31 @@ public class RxTableViewSectionedDataSource<S: SectionModelType> : _RxTableViewS
         self.sectionModels = sections.map { SectionModelSnapshot(model: $0, items: $0.items) }
     }
     
-    public var cellFactory: CellFactory! = nil
+    private var _cellFactory: CellFactory! = nil
     
-    public var titleForHeaderInSection: ((section: Int) -> String)?
-    public var titleForFooterInSection: ((section: Int) -> String)?
+    public func cellFactory(cf: CellFactory) {
+        self._cellFactory = cf
+    }
+    
+    private var _titleForHeaderInSection: ((section: Int) -> String)?
+    
+    public func titleForHeaderInSection(cf: ((section: Int) -> String)) {
+        self._titleForHeaderInSection = cf
+    }
+    
+    private var _titleForFooterInSection: ((section: Int) -> String)?
+    
+    public func titleForFooterInSection(cf: ((section: Int) -> String)) {
+        self._titleForFooterInSection = cf
+    }
+    
+    
     
     public var rowAnimation: UITableViewRowAnimation = .Automatic
     
     public override init() {
         super.init()
-        self.cellFactory = { [weak self] _ in
+        self.cellFactory { [weak self] _ in
             if let strongSelf = self {
                 precondition(false, "There is a minor problem. `cellFactory` property on \(strongSelf) was not set. Please set it manually, or use one of the `rx_subscribeTo` methods.")
             }
@@ -132,15 +147,15 @@ public class RxTableViewSectionedDataSource<S: SectionModelType> : _RxTableViewS
     override func _tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         precondition(indexPath.item < sectionModels[indexPath.section].items.count)
         
-        return cellFactory(tableView, indexPath, itemAtIndexPath(indexPath))
+        return _cellFactory(tableView, indexPath, itemAtIndexPath(indexPath))
     }
     
     override func _tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return titleForHeaderInSection?(section: section)
+        return _titleForHeaderInSection?(section: section)
     }
     
     override func _tableView(tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-        return titleForFooterInSection?(section: section)
+        return _titleForFooterInSection?(section: section)
     }
     
 }

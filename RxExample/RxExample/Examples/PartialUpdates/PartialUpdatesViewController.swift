@@ -45,7 +45,7 @@ class PartialUpdatesViewController : ViewController {
     let disposeBag = DisposeBag()
     
     func skinTableViewDataSource(dataSource: RxTableViewSectionedDataSource<NumberSection>) {
-        dataSource.cellFactory = { (tv, ip, i) in
+        dataSource.cellFactory { (tv, ip, i) in
             let cell = tv.dequeueReusableCellWithIdentifier("Cell") as? UITableViewCell
                 ?? UITableViewCell(style:.Default, reuseIdentifier: "Cell")
             
@@ -54,13 +54,13 @@ class PartialUpdatesViewController : ViewController {
             return cell
         }
         
-        dataSource.titleForHeaderInSection = { [unowned dataSource] (section: Int) -> String in
+        dataSource.titleForHeaderInSection { [unowned dataSource] (section: Int) -> String in
             return dataSource.sectionModelAtIndex(section).model
         }
     }
     
     func skinCollectionViewDataSource(dataSource: RxCollectionViewSectionedDataSource<NumberSection>) {
-        dataSource.cellFactory = { [unowned dataSource] (cv, ip, i) in
+        dataSource.cellFactory { [unowned dataSource] (cv, ip, i) in
             let cell = cv.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: ip) as! NumberCell
             
             cell.value!.text = "\(i)"

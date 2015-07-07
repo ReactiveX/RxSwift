@@ -45,13 +45,13 @@ class TableViewController: ViewController, UITableViewDelegate {
             }
             >- disposeBag.addDisposable
         
-        dataSource.cellFactory = { (tv, ip, user: User) in
+        dataSource.cellFactory { (tv, ip, user: User) in
             let cell = tv.dequeueReusableCellWithIdentifier("Cell") as! UITableViewCell
             cell.textLabel?.text = user.firstName + " " + user.lastName
             return cell
         }
         
-        dataSource.titleForHeaderInSection = { [unowned dataSource] sectionIndex in
+        dataSource.titleForHeaderInSection { [unowned dataSource] sectionIndex in
             return dataSource.sectionModelAtIndex(sectionIndex).model
         }
         
