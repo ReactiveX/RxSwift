@@ -26,8 +26,7 @@ class SkipCountSink<ElementType, O: ObserverType where O.Element == ElementType>
     
     func on(event: Event<Element>) {
         switch event {
-        case .Next(let boxedValue):
-            let value = boxedValue.value
+        case .Next(let value):
             
             if remaining <= 0 {
                 trySendNext(observer, value)
@@ -81,9 +80,9 @@ class SkipTimeSink<ElementType, S: Scheduler, O: ObserverType where O.Element ==
     func on(event: Event<Element>) {
         lock.performLocked {
             switch event {
-            case .Next(let boxedValue):
+            case .Next(let value):
                 if open {
-                    trySendNext(observer, boxedValue.value)
+                    trySendNext(observer, value)
                 }
             case .Error:
                 trySend(observer, event)

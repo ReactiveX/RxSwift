@@ -271,7 +271,7 @@ extension ObservableSingleTest {
             switch e {
             case .Next(let value):
                 i++
-                sum -= value.value
+                sum -= value
             case .Completed:
                 completedEvaluation = true
             default: break
@@ -353,7 +353,7 @@ extension ObservableSingleTest {
             switch e {
             case .Next(let value):
                 i++
-                sum -= value.value
+                sum -= value
             case .Error:
                 sawError = true
             default: break
@@ -400,7 +400,7 @@ extension ObservableSingleTest {
             switch e {
             case .Next(let value):
                 i++
-                sum -= value.value
+                sum -= value
             case .Error:
                 sawError = true
             default: break

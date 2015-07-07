@@ -26,8 +26,7 @@ class TakeWhileSink1<ElementType, O: ObserverType where O.Element == ElementType
             return
         }
         switch event {
-        case .Next(let boxedValue):
-            let value = boxedValue.value
+        case .Next(let value):
             
             running = self.parent.predicate1(value)
 
@@ -68,8 +67,7 @@ class TakeWhileSink2<ElementType, O: ObserverType where O.Element == ElementType
             return
         }
         switch event {
-        case .Next(let boxedValue):
-            let value = boxedValue.value
+        case .Next(let value):
             
             running = self.parent.predicate2(value, index)
             self.index = index + 1

@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		493693671B173C8F006FA450 /* UISlider+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493693661B173C8F006FA450 /* UISlider+Rx.swift */; };
 		653C8BF41B114EB600983087 /* UIControl+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653C8BF31B114EB600983087 /* UIControl+Rx.swift */; };
-		C8092BBB1AF50436008D9A2C /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8092BBA1AF50436008D9A2C /* CoreData.framework */; };
 		C80B56221B2DFCA0008F915D /* NSManagedObjectContext+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80B56211B2DFCA0008F915D /* NSManagedObjectContext+Rx.swift */; };
 		C80B562B1B2E242D008F915D /* DelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80B562A1B2E242D008F915D /* DelegateProxy.swift */; };
 		C80B562C1B2E242D008F915D /* DelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80B562A1B2E242D008F915D /* DelegateProxy.swift */; };
@@ -42,7 +41,6 @@
 		C8633AB51B093EDF00375D60 /* Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8633AAC1B093EDF00375D60 /* Logging.swift */; };
 		C8633ABA1B093EDF00375D60 /* RxCocoa.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8633AAF1B093EDF00375D60 /* RxCocoa.swift */; };
 		C8633ABB1B093EDF00375D60 /* RxCocoa.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8633AAF1B093EDF00375D60 /* RxCocoa.swift */; };
-		C88BB8851B07E6130064D411 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8092BBA1AF50436008D9A2C /* CoreData.framework */; };
 		C88BB8861B07E6130064D411 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8A56BCD1AD744FD00B4673B /* RxSwift.framework */; };
 		C88BB8881B07E6130064D411 /* RxCocoa.h in Headers */ = {isa = PBXBuildFile; fileRef = C81553E31A98AB4A00C63152 /* RxCocoa.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C88BB8E81B07F2BE0064D411 /* UIButton+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88BB8E01B07F2BE0064D411 /* UIButton+Rx.swift */; };
@@ -70,7 +68,6 @@
 /* Begin PBXFileReference section */
 		493693661B173C8F006FA450 /* UISlider+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UISlider+Rx.swift"; sourceTree = "<group>"; };
 		653C8BF31B114EB600983087 /* UIControl+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIControl+Rx.swift"; sourceTree = "<group>"; };
-		C8092BBA1AF50436008D9A2C /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		C80B56211B2DFCA0008F915D /* NSManagedObjectContext+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSManagedObjectContext+Rx.swift"; sourceTree = "<group>"; };
 		C80B562A1B2E242D008F915D /* DelegateProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DelegateProxy.swift; sourceTree = "<group>"; };
 		C813F95C1B48799200620334 /* RxSeachBarDelegateProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxSeachBarDelegateProxy.swift; sourceTree = "<group>"; };
@@ -122,7 +119,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C8092BBB1AF50436008D9A2C /* CoreData.framework in Frameworks */,
 				C8A56BCE1AD744FD00B4673B /* RxSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -131,7 +127,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C88BB8851B07E6130064D411 /* CoreData.framework in Frameworks */,
 				C88BB8861B07E6130064D411 /* RxSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -142,7 +137,6 @@
 		C8092BBC1AF504AD008D9A2C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				C8092BBA1AF50436008D9A2C /* CoreData.framework */,
 				C8A56BCD1AD744FD00B4673B /* RxSwift.framework */,
 			);
 			name = Frameworks;

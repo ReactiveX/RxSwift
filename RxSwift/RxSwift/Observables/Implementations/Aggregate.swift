@@ -25,8 +25,7 @@ class Aggregate_<SourceType, AccumulateType, O: ObserverType> : Sink<O>, Observe
     
     func on(event: Event<SourceType>) {
         switch event {
-        case .Next(let boxedValue):
-            let value = boxedValue.value
+        case .Next(let value):
             parent.accumulator(accumulation, value).flatMap { result in
                 self.accumulation = result
                 return SuccessResult

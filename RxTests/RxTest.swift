@@ -33,7 +33,7 @@ let testError1 = NSError(domain: "dummyError1", code: -233, userInfo: nil)
 let testError2 = NSError(domain: "dummyError2", code: -234, userInfo: nil)
 
 func next<T>(value: T) -> Recorded<T> {
-    return Recorded(time: 0, event: .Next(RxBox(value)))
+    return Recorded(time: 0, event: .Next(value))
 }
 
 func completed<T>() -> Recorded<T> {
@@ -45,7 +45,7 @@ func error<T>(error: NSError) -> Recorded<T> {
 }
 
 func next<T>(time: Time, _ value: T) -> Recorded<T> {
-    return Recorded(time: time, event: .Next(RxBox(value)))
+    return Recorded(time: time, event: .Next(value))
 }
 
 func completed<T>(time: Time) -> Recorded<T> {

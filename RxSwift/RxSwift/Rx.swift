@@ -8,7 +8,7 @@
 
 import Foundation
 
-func justUseIt<T>(_: T) {
+public func justUseIt<T>(_: T) {
     
 }
 

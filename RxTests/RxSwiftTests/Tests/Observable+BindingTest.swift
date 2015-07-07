@@ -22,7 +22,7 @@ extension ObservableBindingTest {
         var nEvents = 0
         
         let observable = ConnectableObservable(o: returnElements(0, 1, 2), s: subject)
-        _ = observable >- subscribeNext { n in
+        let _d = observable >- subscribeNext { n in
             nEvents++
         } >- scopedDispose
 
@@ -37,7 +37,7 @@ extension ObservableBindingTest {
         var nEvents = 0
         
         let observable = ConnectableObservable(o: concat([returnElements(0, 1, 2), failWith(testError)]), s: subject)
-        _ = observable >- subscribeError { n in
+        let _d = observable >- subscribeError { n in
             nEvents++
         } >- scopedDispose
 
@@ -52,7 +52,7 @@ extension ObservableBindingTest {
         var nEvents = 0
         
         let observable = ConnectableObservable(o: failWith(testError), s: subject)
-        _ = observable >- subscribeError { n in
+        let _d = observable >- subscribeError { n in
             nEvents++
         } >- scopedDispose
 
@@ -67,7 +67,7 @@ extension ObservableBindingTest {
         var nEvents = 0
         
         let observable = ConnectableObservable(o: empty(), s: subject)
-        _ = observable >- subscribeCompleted {
+        let d = observable >- subscribeCompleted {
             nEvents++
         } >- scopedDispose
 

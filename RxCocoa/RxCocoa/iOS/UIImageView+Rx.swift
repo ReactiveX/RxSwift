@@ -22,8 +22,7 @@ extension UIImageView {
             MainScheduler.ensureExecutingOnScheduler()
             
             switch event {
-            case .Next(let boxedValue):
-                let value = boxedValue.value
+            case .Next(let value):
                 if animated && value != nil {
                     let transition = CATransition()
                     transition.duration = 0.25
