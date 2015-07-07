@@ -21,8 +21,8 @@ struct Recorded<Element : Equatable> : CustomStringConvertible, Equatable {
     var value: Element {
         get {
             switch self.event {
-            case .Next(let boxedValue):
-                return boxedValue.value
+            case .Next(let value):
+                return value
             default:
                 assert(false)
                 let element: Element! = nil

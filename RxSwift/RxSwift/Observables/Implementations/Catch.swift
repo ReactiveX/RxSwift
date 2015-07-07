@@ -117,8 +117,7 @@ class CatchToResultSink<ElementType> : Sink<Observer<RxResult<ElementType>>>, Ob
     
     func on(event: Event<Element>) {
         switch event {
-        case .Next(let boxedValue):
-            let value = boxedValue.value
+        case .Next(let value):
             trySendNext(observer, success(value))
         case .Completed:
             trySendCompleted(observer)

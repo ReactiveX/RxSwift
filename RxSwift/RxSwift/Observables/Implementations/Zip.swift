@@ -137,8 +137,8 @@ class ZipObserver<ElementType> : ObserverType {
         lock.performLocked {
             if let parent = parent {
                 switch event {
-                case .Next(let boxedValue):
-                    setNextValue(boxedValue.value)
+                case .Next(let value):
+                    setNextValue(value)
                     parent.next(index)
                 case .Error(let error):
                     parent.fail(error)

@@ -24,7 +24,7 @@ class DistinctUntilChanged_<O: ObserverType, Key>: Sink<O>, ObserverType {
         
         switch event {
         case .Next(let value):
-            self.parent.selector(value.value).flatMap { key in
+            self.parent.selector(value).flatMap { key in
                 var areEqual: RxResult<Bool>
                 if let currentKey = self.currentKey {
                     areEqual = self.parent.comparer(currentKey, key)

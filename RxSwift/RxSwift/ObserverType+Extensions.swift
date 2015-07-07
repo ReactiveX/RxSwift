@@ -14,7 +14,7 @@ public func send<O: ObserverType>(observer: O, _ event: Event<O.Element>) {
 }
 
 public func sendNext<O: ObserverType>(observer: O, _ element: O.Element) {
-    observer.on(.Next(RxBox(element)))
+    observer.on(.Next(element))
 }
 
 public func sendError<O: ObserverType>(observer: O, _ error: ErrorType) {
@@ -30,7 +30,7 @@ public func trySend<O: ObserverType>(observer: O?, _ event: Event<O.Element>) {
 }
 
 public func trySendNext<O: ObserverType>(observer: O?, _ element: O.Element) {
-    observer?.on(.Next(RxBox(element)))
+    observer?.on(.Next(element))
 }
 
 public func trySendError<O: ObserverType>(observer: O?, _ error: ErrorType) {
@@ -48,7 +48,7 @@ public func send<Element>(observer: ObserverOf<Element>, _ event: Event<Element>
 }
 
 public func sendNext<Element>(observer: ObserverOf<Element>, _ element: Element) {
-    observer.on(.Next(RxBox(element)))
+    observer.on(.Next(element))
 }
 
 public func sendError<Element>(observer: ObserverOf<Element>, _ error: ErrorType) {

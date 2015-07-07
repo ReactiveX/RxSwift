@@ -90,8 +90,7 @@ class Merge_<O: ObserverType> : Sink<O>, ObserverType {
     
     func on(event: Event<Element>) {
         switch event {
-        case .Next(let boxedValue):
-            let value = boxedValue.value
+        case .Next(let value):
             
             let innerSubscription = SingleAssignmentDisposable()
             let maybeKey = mergeState.group.addDisposable(innerSubscription)
@@ -232,8 +231,7 @@ class Merge_Concurrent<O: ObserverType> : Sink<O>, ObserverType {
     
     func on(event: Event<Element>) {
         switch event {
-        case .Next(let boxedValue):
-            let value = boxedValue.value
+        case .Next(let value):
             
             let subscribe = lock.calculateLocked { () -> Bool in
                 let mergeState = self.mergeState

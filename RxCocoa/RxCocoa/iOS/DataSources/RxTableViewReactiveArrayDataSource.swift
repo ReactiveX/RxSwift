@@ -65,8 +65,8 @@ class RxTableViewReactiveArrayDataSource<ElementType> : _RxTableViewReactiveArra
     
     func tableView(tableView: UITableView, observedEvent: Event<[ElementType]>) {
         switch observedEvent {
-        case .Next(let boxedNext):
-            self.itemModels = boxedNext.value
+        case .Next(let value):
+            self.itemModels = value
         case .Error(let error):
             bindingErrorToInterface(error)
         case .Completed:

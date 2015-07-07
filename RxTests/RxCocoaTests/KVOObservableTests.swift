@@ -103,7 +103,7 @@ extension KVOObservableTests {
         
         var latest: String?
         
-        var _d: ScopedDispose! = os >- subscribeNext { latest = $0 } >- scopedDispose
+        var _d: ScopedDispose? = os >- subscribeNext { latest = $0 } >- scopedDispose
         
         XCTAssertTrue(latest == nil)
         
@@ -133,21 +133,21 @@ extension KVOObservableTests {
     func test_New_And_Initial() {
         let testClass = TestClass()
         
-        let os: Observable<String?> = testClass.rx_observe("pr", options: .Initial)
+        let os: Observable<String?> = testClass.rx_observe("pr", options: NSKeyValueObservingOptions(rawValue: NSKeyValueObservingOptions.Initial.rawValue | NSKeyValueObservingOptions.New.rawValue))
         
         var latest: String?
         
-        var _d: ScopedDispose! = os >- subscribeNext { latest = $0 } >- scopedDispose
+        var _d: ScopedDispose? = os >- subscribeNext { latest = $0 } >- scopedDispose
         
         XCTAssertTrue(latest == "0")
         
         testClass.pr = "1"
         
-        XCTAssertEqual(latest!, "1")
+        XCTAssertEqual(latest ?? "", "1")
         
         testClass.pr = "2"
         
-        XCTAssertEqual(latest!, "2")
+        XCTAssertEqual(latest ?? "", "2")
         
         testClass.pr = nil
         
@@ -155,13 +155,13 @@ extension KVOObservableTests {
         
         testClass.pr = "3"
         
-        XCTAssertEqual(latest!, "3")
+        XCTAssertEqual(latest ?? "", "3")
         
         _d = nil
         
         testClass.pr = "4"
         
-        XCTAssertEqual(latest!, "3")
+        XCTAssertEqual(latest ?? "", "3")
     }
     
     func test_Default() {

@@ -57,7 +57,7 @@ class Switch_<O: ObserverType> : Sink<O>, ObserverType {
             self.switchState.innerSubscription.setDisposable(d)
                
             let observer = SwitchIter(parent: self, id: latest, _self: d)
-            let disposable = observable.value.subscribeSafe(observer)
+            let disposable = observable.subscribeSafe(observer)
             d.disposable = disposable
         case .Error(let error):
             self.lock.performLocked {

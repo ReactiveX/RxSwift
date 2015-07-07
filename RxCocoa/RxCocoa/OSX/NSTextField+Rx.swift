@@ -45,8 +45,7 @@ extension NSTextField {
             MainScheduler.ensureExecutingOnScheduler()
             
             switch event {
-            case .Next(let boxedValue):
-                let value = boxedValue.value
+            case .Next(let value):
                 self.stringValue = value
             case .Error(let error):
                 #if DEBUG

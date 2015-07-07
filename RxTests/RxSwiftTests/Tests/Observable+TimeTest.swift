@@ -772,7 +772,7 @@ extension ObservableTimeTest {
         
         OSSpinLockLock(&lock)
         
-        _ = interval(0, scheduler) >- takeWhile { $0 < 10 } >- subscribe( { t in
+        let d = interval(0, scheduler) >- takeWhile { $0 < 10 } >- subscribe( { t in
             sendNext(observer, t)
         }, error: { _ in
         }, completed: {

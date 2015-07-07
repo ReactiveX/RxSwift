@@ -15,10 +15,11 @@ extension RxResult : Equatable {
 
 public func == <E>(lhs: RxResult<E>, rhs: RxResult<E>) -> Bool {
     switch (lhs, rhs) {
-    case (.Success(let boxed1), .Success(let boxed2)):
-        var val1 = boxed1.value
-        var val2 = boxed2.value
-        return memcmp(&val1, &val2, sizeof(E)) == 0
+    case (.Success(let val1), .Success(let val2)):
+        if let val1 = val1 as? Int, val2 = val2 as? Int {
+            return val1 == val2
+        }
+        return false
     case (.Failure(let error1), .Failure(let error2)):
         return errorEquals(error1, error2)
     default:

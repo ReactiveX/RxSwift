@@ -58,8 +58,8 @@ class Throttle_<O: ObserverType, SchedulerType: Scheduler> : Sink<O>, ObserverTy
             self.throttleState.id = self.throttleState.id &+ 1
             
             switch event {
-            case .Next(let boxedValue):
-                self.throttleState.value = boxedValue.value
+            case .Next(let value):
+                self.throttleState.value = value
             case .Error(_):
                 self.throttleState.value = nil
                 trySend(observer, event)

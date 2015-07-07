@@ -90,8 +90,8 @@ public class BehaviorSubject<Element> : SubjectType<Element, Element> {
             }
             
             switch event {
-            case .Next(let boxedValue):
-                self._value = boxedValue.value
+            case .Next(let value):
+                self._value = value
             case .Error:
                 self.stoppedEvent = event
             case .Completed:

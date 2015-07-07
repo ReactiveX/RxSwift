@@ -118,8 +118,7 @@ class ReplayBufferBase<Element> : ReplaySubjectImplementation<Element> {
             }
             
             switch event {
-            case .Next(let boxedValue):
-                let value = boxedValue.value
+            case .Next(let value):
                 addValueToBuffer(value)
                 trim()
                 return self.state.observers.all

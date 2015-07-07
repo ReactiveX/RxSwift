@@ -29,7 +29,7 @@ class MapSink<SourceType, O : ObserverType> : Sink<O>, ObserverType {
         
         switch event {
         case .Next(let element):
-            select(element.value).flatMap { value in
+            select(element).flatMap { value in
                 trySendNext(observer, value)
                 return SuccessResult
             }.recoverWith { e -> RxResult<Void> in

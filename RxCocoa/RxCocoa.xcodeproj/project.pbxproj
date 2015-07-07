@@ -176,7 +176,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C8092BBB1AF50436008D9A2C /* CoreData.framework in Frameworks */,
 				C8A56BCE1AD744FD00B4673B /* RxSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -185,7 +184,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C88BB8851B07E6130064D411 /* CoreData.framework in Frameworks */,
 				C88BB8861B07E6130064D411 /* RxSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -196,7 +194,6 @@
 		C8092BBC1AF504AD008D9A2C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				C8092BBA1AF50436008D9A2C /* CoreData.framework */,
 				C8A56BCD1AD744FD00B4673B /* RxSwift.framework */,
 			);
 			name = Frameworks;

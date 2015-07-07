@@ -107,8 +107,7 @@ public func doOnNext<E>
     return { source in
         return source >- `do` { event in
             switch event {
-            case .Next(let boxedValue):
-                let value = boxedValue.value
+            case .Next(let value):
                 actionOnNext(value)
             default:
                 break
