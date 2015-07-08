@@ -1,0 +1,148 @@
+//
+//  CLLocationManager+Rx.swift
+//  RxCocoa
+//
+//  Created by Carlos García on 8/7/15.
+//  Copyright (c) 2015 Krunoslav Zaher. All rights reserved.
+//
+
+import UIKit
+import CoreLocation
+import RxSwift
+
+
+extension CLLocationManager {
+    
+    public var rx_delegate: DelegateProxy {
+        return proxyForObject(self) as RxCLLocationManagerDelegateProxy
+    }
+    
+    // MARK: Responding to Location Events
+    
+    public var rx_didUpdateLocations: Observable<[AnyObject]> {
+        return rx_delegate.observe("locationManager:didUpdateLocations:")
+            >- map { a in
+                return a[1] as! [AnyObject]
+            }
+    }
+    
+    public var rx_didFailWithError: Observable<NSError> {
+        return rx_delegate.observe("locationManager:didFailWithError:")
+            >- map { a in
+                return a[1] as! NSError
+            }
+    }
+    
+    public var rx_didFinishDeferredUpdatesWithError: Observable<NSError> {
+        return rx_delegate.observe("locationManager:didFinishDeferredUpdatesWithError:")
+            >- map { a in
+                return a[1] as! NSError
+            }
+    }
+    
+    // MARK: Pausing Location Updates
+    
+    public var rx_didPauseLocationUpdates: Observable<Void> {
+        return rx_delegate.observe("locationManagerDidPauseLocationUpdates:")
+            >- map { a in
+                return Void()
+            }
+    }
+    
+    public var rx_didResumeLocationUpdates: Observable<Void> {
+        return rx_delegate.observe("locationManagerDidResumeLocationUpdates:")
+            >- map { a in
+                return Void()
+            }
+    }
+    
+    // MARK: Responding to Heading Events
+    
+    public var rx_didUpdateHeading: Observable<CLHeading> {
+        return rx_delegate.observe("locationManager:didUpdateHeading:")
+            >- map { a in
+                return a[1] as! CLHeading
+            }
+    }
+    
+    public var rx_shouldDisplayHeadingCalibration: Observable<Void> {
+        return rx_delegate.observe("locationManagerShouldDisplayHeadingCalibration:")
+            >- map { a in
+                return Void()
+            }
+    }
+    
+    // MARK: Responding to Region Events
+    
+    public var rx_didEnterRegion: Observable<CLRegion> {
+        return rx_delegate.observe("locationManager:didEnterRegion:")
+            >- map { a in
+                return a[1] as! CLRegion
+            }
+    }
+    
+    public var rx_didExitRegion: Observable<CLRegion> {
+        return rx_delegate.observe("locationManager:didExitRegion:")
+            >- map { a in
+                return a[1] as! CLRegion
+            }
+    }
+    
+    public var rx_didDetermineStateForRegion: Observable<(state: CLRegionState, region: CLRegion)> {
+        return rx_delegate.observe("locationManager:didDetermineState:forRegion:")
+            >- map { a in
+                return (state: a[1] as! CLRegionState, region: a[2] as! CLRegion)
+            }
+    }
+    
+    public var rx_monitoringDidFailForRegionWithError: Observable<(region: CLRegion, error: NSError)> {
+        return rx_delegate.observe("locationManager:monitoringDidFailForRegion:withError:")
+            >- map { a in
+                return (region: a[1] as! CLRegion, error: a[2] as! NSError)
+            }
+    }
+    
+    public var rx_didStartMonitoringForRegion: Observable<CLRegion> {
+        return rx_delegate.observe("locationManager:didStartMonitoringForRegion:")
+            >- map { a in
+                return a[1] as! CLRegion
+            }
+    }
+    
+    // MARK: Responding to Ranging Events
+    
+    public var rx_didRangeBeaconsInRegion: Observable<(beacons: [AnyObject], region: CLBeaconRegion)> {
+        return rx_delegate.observe("locationManager:didRangeBeacons:inRegion:")
+            >- map { a in
+                return (beacons: a[1] as! [AnyObject], region: a[2] as! CLBeaconRegion)
+            }
+    }
+    
+    public var rx_rangingBeaconsDidFailForRegionWithError: Observable<(region: CLBeaconRegion, error: NSError)> {
+        return rx_delegate.observe("locationManager:rangingBeaconsDidFailForRegion:withError:")
+            >- map { a in
+                return (region: a[1] as! CLBeaconRegion, error: a[2] as! NSError)
+            }
+    }
+    
+    // MARK: Responding to Visit Events
+    
+    public var rx_didVisit: Observable<CLVisit> {
+        return rx_delegate.observe("locationManager:didVisit:")
+            >- map { a in
+                return a[1] as! CLVisit
+            }
+    }
+    
+    // MARK: Responding to Authorization Changes
+    
+    public var rx_didChangeAuthorizationStatus: Observable<CLAuthorizationStatus> {
+        return rx_delegate.observe("locationManager:didChangeAuthorizationStatus:")
+            >- map { a in
+                return a[1] as! CLAuthorizationStatus
+            }
+    }
+    
+    
+    
+}
