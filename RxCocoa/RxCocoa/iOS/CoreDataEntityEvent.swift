@@ -6,6 +6,7 @@
 //  Copyright (c) 2015 Krunoslav Zaher. All rights reserved.
 //
 
+/*
 import Foundation
 import CoreData
 import RxSwift
@@ -56,3 +57,4 @@ enum CoreDataEntityEvent : CustomStringConvertible {
         }
     }
 }
+*/

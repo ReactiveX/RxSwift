@@ -27,7 +27,7 @@ class IntroductionExampleViewController : ViewController {
         super.viewDidLoad()
         
         // c = a + b
-        let sum = combineLatest(a.rx_text, b.rx_text) { (a, b) -> Int in
+        let sum = combineLatest(a.rx_text, b.rx_text) { (a: String, b: String) -> (Int, Int) in
             return (Int(a) ?? 0, Int(b) ?? 0)
         }
         

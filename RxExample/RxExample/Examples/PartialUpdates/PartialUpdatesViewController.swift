@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import RxSwift
 import RxCocoa
-import CoreData
+//import CoreData
 
 class PartialUpdatesViewController : ViewController {
     /*
