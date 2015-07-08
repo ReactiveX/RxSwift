@@ -9,7 +9,6 @@
 import Foundation
 import RxSwift
 import RxCocoa
-import CoreData
 
 struct ItemPath : CustomStringConvertible {
     let sectionIndex: Int
