@@ -27,7 +27,7 @@
 		C83111711B491C9F001F3D67 /* KVOObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83111701B491C9F001F3D67 /* KVOObservable.swift */; };
 		C83111721B491C9F001F3D67 /* KVOObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83111701B491C9F001F3D67 /* KVOObservable.swift */; };
 		C83225451B1A9ACC0048EC77 /* UIBarButtonItem+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83225441B1A9ACC0048EC77 /* UIBarButtonItem+Rx.swift */; };
-		C83225471B1A9CCB0048EC77 /* UIDatePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83225461B1A9CCB0048EC77 /* UIDatePicker.swift */; };
+		C83225471B1A9CCB0048EC77 /* UIDatePicker+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83225461B1A9CCB0048EC77 /* UIDatePicker+Rx.swift */; };
 		C83225491B1A9ECC0048EC77 /* NSControl+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83225481B1A9ECC0048EC77 /* NSControl+Rx.swift */; };
 		C83CF8631B3DDD54001359E7 /* RxTableViewReactiveArrayDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83CF8621B3DDD54001359E7 /* RxTableViewReactiveArrayDataSource.swift */; };
 		C84969CA1B47DE1D00E0BDB9 /* RxCollectionViewDataSourceProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C84969C51B47DE1D00E0BDB9 /* RxCollectionViewDataSourceProxy.swift */; };
@@ -97,7 +97,7 @@
 		C81553E31A98AB4A00C63152 /* RxCocoa.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RxCocoa.h; sourceTree = "<group>"; };
 		C83111701B491C9F001F3D67 /* KVOObservable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KVOObservable.swift; sourceTree = "<group>"; };
 		C83225441B1A9ACC0048EC77 /* UIBarButtonItem+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIBarButtonItem+Rx.swift"; sourceTree = "<group>"; };
-		C83225461B1A9CCB0048EC77 /* UIDatePicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIDatePicker.swift; sourceTree = "<group>"; };
+		C83225461B1A9CCB0048EC77 /* UIDatePicker+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIDatePicker+Rx.swift"; sourceTree = "<group>"; };
 		C83225481B1A9ECC0048EC77 /* NSControl+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSControl+Rx.swift"; sourceTree = "<group>"; };
 		C83CF8621B3DDD54001359E7 /* RxTableViewReactiveArrayDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxTableViewReactiveArrayDataSource.swift; sourceTree = "<group>"; };
 		C84969C51B47DE1D00E0BDB9 /* RxCollectionViewDataSourceProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxCollectionViewDataSourceProxy.swift; sourceTree = "<group>"; };
@@ -275,7 +275,7 @@
 				C88BB8E01B07F2BE0064D411 /* UIButton+Rx.swift */,
 				C88BB8E11B07F2BE0064D411 /* UICollectionView+Rx.swift */,
 				653C8BF31B114EB600983087 /* UIControl+Rx.swift */,
-				C83225461B1A9CCB0048EC77 /* UIDatePicker.swift */,
+				C83225461B1A9CCB0048EC77 /* UIDatePicker+Rx.swift */,
 				C88BB8E21B07F2BE0064D411 /* UIImageView+Rx.swift */,
 				C88BB8E31B07F2BE0064D411 /* UILabel+Rx.swift */,
 				C88BB8E41B07F2BE0064D411 /* UIScrollView+Rx.swift */,
@@ -447,7 +447,7 @@
 				C862823D1B36037100500DC3 /* NSNotificationCenter+Rx.swift in Sources */,
 				C84969CE1B47DE1D00E0BDB9 /* RxTableViewDelegateProxy.swift in Sources */,
 				C86282501B370C7E00500DC3 /* ItemEvents.swift in Sources */,
-				C83225471B1A9CCB0048EC77 /* UIDatePicker.swift in Sources */,
+				C83225471B1A9CCB0048EC77 /* UIDatePicker+Rx.swift in Sources */,
 				C83225451B1A9ACC0048EC77 /* UIBarButtonItem+Rx.swift in Sources */,
 				075F130C1B4DD100000D7861 /* UISegmentedControl+Rx.swift in Sources */,
 				075F13001B4DD075000D7861 /* RxAlertViewDelegateProxy.swift in Sources */,
