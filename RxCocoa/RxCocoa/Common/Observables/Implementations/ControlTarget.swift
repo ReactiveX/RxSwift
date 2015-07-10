@@ -31,7 +31,7 @@ class ControlTarget: NSObject, Disposable {
     let controlEvents: UIControlEvents
 #endif
     var callback: Callback?
-    
+    var retainSelf: ControlTarget?
 #if os(iOS)
     init(control: Control, controlEvents: UIControlEvents, callback: Callback) {
         MainScheduler.ensureExecutingOnScheduler()
@@ -41,6 +41,8 @@ class ControlTarget: NSObject, Disposable {
         self.callback = callback
         
         super.init()
+        
+        self.retainSelf = self
         
         control.addTarget(self, action: selector, forControlEvents: controlEvents)
         
@@ -57,6 +59,8 @@ class ControlTarget: NSObject, Disposable {
         self.callback = callback
         
         super.init()
+        
+        self.retainSelf = self
         
         control.target = self
         control.action = selector
@@ -83,5 +87,7 @@ class ControlTarget: NSObject, Disposable {
         self.control.action = nil
 #endif
         self.callback = nil
+        
+        self.retainSelf = nil
     }
 }

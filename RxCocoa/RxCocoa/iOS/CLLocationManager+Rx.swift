@@ -22,7 +22,7 @@ extension CLLocationManager {
     public var rx_didUpdateLocations: Observable<[CLLocation]!> {
         return rx_delegate.observe("locationManager:didUpdateLocations:")
             >- map { a in
-                return a[1] as! [CLLocation]
+                return a[1] as? [CLLocation]
             }
     }
     
@@ -44,15 +44,15 @@ extension CLLocationManager {
     
     public var rx_didPauseLocationUpdates: Observable<Void> {
         return rx_delegate.observe("locationManagerDidPauseLocationUpdates:")
-            >- map { a in
-                return Void()
+            >- map { _ in
+                return ()
             }
     }
     
     public var rx_didResumeLocationUpdates: Observable<Void> {
         return rx_delegate.observe("locationManagerDidResumeLocationUpdates:")
-            >- map { a in
-                return Void()
+            >- map { _ in
+                return ()
             }
     }
     
@@ -67,8 +67,8 @@ extension CLLocationManager {
     
     public var rx_shouldDisplayHeadingCalibration: Observable<Void> {
         return rx_delegate.observe("locationManagerShouldDisplayHeadingCalibration:")
-            >- map { a in
-                return Void()
+            >- map { _ in
+                return ()
             }
     }
     

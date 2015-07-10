@@ -13,18 +13,7 @@ import RxSwift
 extension UISegmentedControl {
     
     public var rx_value: Observable<Int> {
-        return AnonymousObservable { observer in
-            
-            sendNext(observer, self.selectedSegmentIndex)
-            
-            let controlTarget = ControlTarget(control: self, controlEvents: UIControlEvents.ValueChanged) { control in
-                sendNext(observer, (control as! UISegmentedControl).selectedSegmentIndex)
-            }
-            
-            return AnonymousDisposable {
-                controlTarget.dispose()
-            }
-        }
+        return rx_value { [unowned self] in self.selectedSegmentIndex }
     }
     
 }
