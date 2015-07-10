@@ -15,7 +15,7 @@ import UIKit
 extension UIDatePicker {
     
     public var rx_date: Observable<NSDate> {
-        return rx_value { [weak self] in self?.date ?? NSDate() }
+        return rx_value { [unowned self] in self.date }
     }
     
 }

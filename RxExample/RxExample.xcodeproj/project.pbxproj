@@ -11,6 +11,7 @@
 		0706E19B1B17361100BA2D3A /* UIImageView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0706E19A1B17361100BA2D3A /* UIImageView+Extensions.swift */; };
 		0706E19D1B176EE200BA2D3A /* String+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0706E19C1B176EE200BA2D3A /* String+extensions.swift */; };
 		0706E19F1B17703E00BA2D3A /* RandomUserAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0706E19E1B17703E00BA2D3A /* RandomUserAPI.swift */; };
+		075F13101B4E9D5A000D7861 /* APIWrappersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 075F130F1B4E9D5A000D7861 /* APIWrappersViewController.swift */; };
 		07E300071B14995F00F00100 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E300061B14995F00F00100 /* TableViewController.swift */; };
 		07E300091B149A2A00F00100 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E300081B149A2A00F00100 /* User.swift */; };
 		07E3C2331B03605B0010338D /* Dependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E3C2321B03605B0010338D /* Dependencies.swift */; };
@@ -110,6 +111,7 @@
 		0706E19A1B17361100BA2D3A /* UIImageView+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extensions.swift"; sourceTree = "<group>"; };
 		0706E19C1B176EE200BA2D3A /* String+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+extensions.swift"; sourceTree = "<group>"; };
 		0706E19E1B17703E00BA2D3A /* RandomUserAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomUserAPI.swift; sourceTree = "<group>"; };
+		075F130F1B4E9D5A000D7861 /* APIWrappersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIWrappersViewController.swift; sourceTree = "<group>"; };
 		07E300061B14995F00F00100 /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		07E300081B149A2A00F00100 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		07E3C2321B03605B0010338D /* Dependencies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Dependencies.swift; path = Examples/Dependencies.swift; sourceTree = "<group>"; };
@@ -213,14 +215,23 @@
 			name = UIKitExtensions;
 			sourceTree = "<group>";
 		};
-		07E300051B14994500F00100 /* 04 TableView */ = {
+		075F130E1B4E9D10000D7861 /* 04 APIWrappers */ = {
+			isa = PBXGroup;
+			children = (
+				075F130F1B4E9D5A000D7861 /* APIWrappersViewController.swift */,
+			);
+			name = "04 APIWrappers";
+			path = APIWrappers;
+			sourceTree = "<group>";
+		};
+		07E300051B14994500F00100 /* 05 TableView */ = {
 			isa = PBXGroup;
 			children = (
 				0706E1A01B1770C800BA2D3A /* RandomUserAPI */,
 				0706E1A11B1770D300BA2D3A /* Controllers */,
 				0706E1A21B1770E200BA2D3A /* UIKitExtensions */,
 			);
-			name = "04 TableView";
+			name = "05 TableView";
 			path = TableView;
 			sourceTree = "<group>";
 		};
@@ -281,14 +292,14 @@
 			path = Services;
 			sourceTree = "<group>";
 		};
-		C859B9A21B45C5D900D012D7 /* 05 PartialUpdates */ = {
+		C859B9A21B45C5D900D012D7 /* 06 PartialUpdates */ = {
 			isa = PBXGroup;
 			children = (
 				C859B9A31B45C5D900D012D7 /* PartialUpdatesViewController.swift */,
 				C859B9AB1B45CF9100D012D7 /* NumberCell.swift */,
 				C859B9AD1B45CFAB00D012D7 /* NumberSectionView.swift */,
 			);
-			name = "05 PartialUpdates";
+			name = "06 PartialUpdates";
 			path = PartialUpdates;
 			sourceTree = "<group>";
 		};
@@ -298,8 +309,9 @@
 				C8DF92F41B0B4392009BCF9A /* 01 Introduction */,
 				C86E2F4C1AE5A10900C31024 /* 02 GitHubSignup */,
 				C86E2F301AE5A0CA00C31024 /* 03 WikipediaImageSearch */,
-				07E300051B14994500F00100 /* 04 TableView */,
-				C859B9A21B45C5D900D012D7 /* 05 PartialUpdates */,
+				075F130E1B4E9D10000D7861 /* 04 APIWrappers */,
+				07E300051B14994500F00100 /* 05 TableView */,
+				C859B9A21B45C5D900D012D7 /* 06 PartialUpdates */,
 				C8A57F711B40AF4E00D5570A /* 06 CoreData */,
 			);
 			path = Examples;
@@ -554,6 +566,7 @@
 				C8C46DAA1B47F7110020D71E /* WikipediaSearchCell.swift in Sources */,
 				C890A6581AEBD26B00AFF7E6 /* GitHubSignupViewController.swift in Sources */,
 				C8A57F741B40AF7C00D5570A /* Random.xcdatamodeld in Sources */,
+				075F13101B4E9D5A000D7861 /* APIWrappersViewController.swift in Sources */,
 				C88C786F1B3EB0A00061C5AB /* RxTableViewSectionedReloadDataSource.swift in Sources */,
 				C859B9AA1B45CB0900D012D7 /* RxCollectionViewSectionedAnimatedDataSource.swift in Sources */,
 				C83367311AD029AE00C668A7 /* Wireframe.swift in Sources */,
