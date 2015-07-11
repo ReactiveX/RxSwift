@@ -42,7 +42,7 @@ public class Subject<Element> : PublishSubject<Element> {
     }
 }
 
-public class PublishSubject<Element> : SubjectType<Element, Element>, Disposable {
+public class PublishSubject<Element> : SubjectType<Element, Element>, Cancelable {
     typealias ObserverOf = Observer<Element>
     typealias KeyType = Bag<Void>.KeyType
     typealias Observers = Bag<ObserverOf>
@@ -59,6 +59,14 @@ public class PublishSubject<Element> : SubjectType<Element, Element>, Disposable
         observers: Observers(),
         stoppedEvent: nil
     )
+    
+    public var disposed: Bool {
+        get {
+            return self.lock.calculateLocked {
+                return state.disposed
+            }
+        }
+    }
     
     public override init() {
         super.init()

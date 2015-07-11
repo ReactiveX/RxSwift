@@ -9,48 +9,30 @@
 import Foundation
 import RxSwift
 
-var context: UInt8 = 0
-
 protocol KVOObservableProtocol {
-    var object: NSObject { get }
-    var path: String { get }
+    var target: NSObject { get }
+    var keyPath: String { get }
+    var retainTarget: Bool { get }
     var options: NSKeyValueObservingOptions { get }
 }
 
-class KVOObserver : NSObject
+class KVOObserver : _RXKVOObserver
                   , Disposable {
     typealias Callback = (AnyObject?) -> Void
-    
-    let parent: KVOObservableProtocol
-    let callback: Callback
-    
-    var retainSelf: KVOObserver?
-    
+
+    var retainSelf: KVOObserver? = nil
+
     init(parent: KVOObservableProtocol, callback: Callback) {
-        self.parent = parent
-        self.callback = callback
-        
     #if TRACE_RESOURCES
         OSAtomicIncrement32(&resourceCount)
     #endif
         
-        super.init()
-        
-        retainSelf = self
-        
-        self.parent.object.addObserver(self, forKeyPath: self.parent.path, options: self.parent.options, context: &context)
+        super.init(target: parent.target, retainTarget: parent.retainTarget, keyPath: parent.keyPath, options: parent.options, callback: callback)
+        self.retainSelf = self
     }
     
-    override func observeValueForKeyPath(keyPath: String, ofObject object: AnyObject, change: [NSObject : AnyObject], context: UnsafeMutablePointer<Void>) {
-        let newValue: AnyObject? = change[NSKeyValueChangeNewKey]
-        
-        if let newValue: AnyObject = newValue {
-            self.callback(newValue)
-        }
-    }
-    
-    func dispose() {
-        self.parent.object.removeObserver(self, forKeyPath: self.parent.path)
+    override func dispose() {
+        super.dispose()
         self.retainSelf = nil
     }
     
@@ -62,18 +44,21 @@ class KVOObserver : NSObject
 }
 
 class KVOObservable<Element> : Observable<Element?>, KVOObservableProtocol {
-    var object: NSObject
-    var path: String
+    unowned var target: NSObject
+    var strongTarget: NSObject?
+    
+    var keyPath: String
     var options: NSKeyValueObservingOptions
+    var retainTarget: Bool
     
-    convenience init(object: NSObject, path: String) {
-        self.init(object: object, path: path, options: .Initial | .New)
-    }
-    
-    init(object: NSObject, path: String, options: NSKeyValueObservingOptions) {
-        self.object = object
-        self.path = path
+    init(object: NSObject, path: String, options: NSKeyValueObservingOptions, retainTarget: Bool) {
+        self.target = object
+        self.keyPath = path
         self.options = options
+        self.retainTarget = retainTarget
+        if retainTarget {
+            self.strongTarget = object
+        }
     }
     
     override func subscribe<O : ObserverType where O.Element == Element?>(observer: O) -> Disposable {

@@ -19,11 +19,17 @@
 		493693671B173C8F006FA450 /* UISlider+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493693661B173C8F006FA450 /* UISlider+Rx.swift */; };
 		653C8BF41B114EB600983087 /* UIControl+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653C8BF31B114EB600983087 /* UIControl+Rx.swift */; };
 		C8092BBB1AF50436008D9A2C /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8092BBA1AF50436008D9A2C /* CoreData.framework */; };
+		C80A4E301B517F4E00C24BD5 /* _RXKVOObserver.h in Headers */ = {isa = PBXBuildFile; fileRef = C80A4E2E1B517F4E00C24BD5 /* _RXKVOObserver.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C80A4E311B517F4E00C24BD5 /* _RXKVOObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = C80A4E2F1B517F4E00C24BD5 /* _RXKVOObserver.m */; };
+		C80A4E321B51814100C24BD5 /* _RXKVOObserver.h in Headers */ = {isa = PBXBuildFile; fileRef = C80A4E2E1B517F4E00C24BD5 /* _RXKVOObserver.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C80A4E331B51814300C24BD5 /* _RXKVOObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = C80A4E2F1B517F4E00C24BD5 /* _RXKVOObserver.m */; };
 		C80B56221B2DFCA0008F915D /* NSManagedObjectContext+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80B56211B2DFCA0008F915D /* NSManagedObjectContext+Rx.swift */; };
 		C80B562B1B2E242D008F915D /* DelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80B562A1B2E242D008F915D /* DelegateProxy.swift */; };
 		C80B562C1B2E242D008F915D /* DelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80B562A1B2E242D008F915D /* DelegateProxy.swift */; };
 		C813F95D1B48799200620334 /* RxSeachBarDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C813F95C1B48799200620334 /* RxSeachBarDelegateProxy.swift */; };
 		C81553E41A98AB4A00C63152 /* RxCocoa.h in Headers */ = {isa = PBXBuildFile; fileRef = C81553E31A98AB4A00C63152 /* RxCocoa.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C81CC9281B513B4900915606 /* DeallocSubject.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81CC9271B513B4900915606 /* DeallocSubject.swift */; };
+		C81CC9291B513B4900915606 /* DeallocSubject.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81CC9271B513B4900915606 /* DeallocSubject.swift */; };
 		C83111711B491C9F001F3D67 /* KVOObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83111701B491C9F001F3D67 /* KVOObservable.swift */; };
 		C83111721B491C9F001F3D67 /* KVOObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83111701B491C9F001F3D67 /* KVOObservable.swift */; };
 		C83225451B1A9ACC0048EC77 /* UIBarButtonItem+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83225441B1A9ACC0048EC77 /* UIBarButtonItem+Rx.swift */; };
@@ -89,12 +95,15 @@
 		493693661B173C8F006FA450 /* UISlider+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UISlider+Rx.swift"; sourceTree = "<group>"; };
 		653C8BF31B114EB600983087 /* UIControl+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIControl+Rx.swift"; sourceTree = "<group>"; };
 		C8092BBA1AF50436008D9A2C /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		C80A4E2E1B517F4E00C24BD5 /* _RXKVOObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _RXKVOObserver.h; sourceTree = "<group>"; };
+		C80A4E2F1B517F4E00C24BD5 /* _RXKVOObserver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _RXKVOObserver.m; sourceTree = "<group>"; };
 		C80B56211B2DFCA0008F915D /* NSManagedObjectContext+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSManagedObjectContext+Rx.swift"; sourceTree = "<group>"; };
 		C80B562A1B2E242D008F915D /* DelegateProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DelegateProxy.swift; sourceTree = "<group>"; };
 		C813F95C1B48799200620334 /* RxSeachBarDelegateProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxSeachBarDelegateProxy.swift; sourceTree = "<group>"; };
 		C81553DE1A98AB4A00C63152 /* RxCocoa.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxCocoa.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C81553E21A98AB4A00C63152 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C81553E31A98AB4A00C63152 /* RxCocoa.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RxCocoa.h; sourceTree = "<group>"; };
+		C81CC9271B513B4900915606 /* DeallocSubject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeallocSubject.swift; sourceTree = "<group>"; };
 		C83111701B491C9F001F3D67 /* KVOObservable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KVOObservable.swift; sourceTree = "<group>"; };
 		C83225441B1A9ACC0048EC77 /* UIBarButtonItem+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIBarButtonItem+Rx.swift"; sourceTree = "<group>"; };
 		C83225461B1A9CCB0048EC77 /* UIDatePicker+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIDatePicker+Rx.swift"; sourceTree = "<group>"; };
@@ -236,6 +245,7 @@
 			children = (
 				C86282321B36037100500DC3 /* ControlTarget.swift */,
 				C83111701B491C9F001F3D67 /* KVOObservable.swift */,
+				C81CC9271B513B4900915606 /* DeallocSubject.swift */,
 			);
 			path = Implementations;
 			sourceTree = "<group>";
@@ -258,6 +268,8 @@
 				C8633AAF1B093EDF00375D60 /* RxCocoa.swift */,
 				C8C46DAD1B47FD0B0020D71E /* _RXDelegateProxy.h */,
 				C8C46DAE1B47FD0B0020D71E /* _RXDelegateProxy.m */,
+				C80A4E2E1B517F4E00C24BD5 /* _RXKVOObserver.h */,
+				C80A4E2F1B517F4E00C24BD5 /* _RXKVOObserver.m */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -331,6 +343,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C8C46DAF1B47FD0B0020D71E /* _RXDelegateProxy.h in Headers */,
+				C80A4E301B517F4E00C24BD5 /* _RXKVOObserver.h in Headers */,
 				C81553E41A98AB4A00C63152 /* RxCocoa.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -341,6 +354,7 @@
 			files = (
 				C8C46DB41B4800270020D71E /* _RXDelegateProxy.h in Headers */,
 				C88BB8881B07E6130064D411 /* RxCocoa.h in Headers */,
+				C80A4E321B51814100C24BD5 /* _RXKVOObserver.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -441,6 +455,7 @@
 				C86282391B36037100500DC3 /* ControlTarget.swift in Sources */,
 				C88BB8EE1B07F2BE0064D411 /* UITableView+Rx.swift in Sources */,
 				C88BB8EF1B07F2BE0064D411 /* UITextField+Rx.swift in Sources */,
+				C81CC9281B513B4900915606 /* DeallocSubject.swift in Sources */,
 				C8A57F7A1B41431600D5570A /* RxCollectionViewDataSourceType.swift in Sources */,
 				C862823B1B36037100500DC3 /* NSObject+Rx.swift in Sources */,
 				493693671B173C8F006FA450 /* UISlider+Rx.swift in Sources */,
@@ -464,6 +479,7 @@
 				C88BB8EB1B07F2BE0064D411 /* UILabel+Rx.swift in Sources */,
 				C80B56221B2DFCA0008F915D /* NSManagedObjectContext+Rx.swift in Sources */,
 				075F130A1B4DD100000D7861 /* CLLocationManager+Rx.swift in Sources */,
+				C80A4E311B517F4E00C24BD5 /* _RXKVOObserver.m in Sources */,
 				C88BB8E91B07F2BE0064D411 /* UICollectionView+Rx.swift in Sources */,
 				075F130B1B4DD100000D7861 /* UIAlertView+Rx.swift in Sources */,
 				C862824A1B3607D500500DC3 /* CoreDataEntityEvent.swift in Sources */,
@@ -492,7 +508,9 @@
 				C80B562C1B2E242D008F915D /* DelegateProxy.swift in Sources */,
 				C86282401B36037100500DC3 /* NSURLSession+Rx.swift in Sources */,
 				C862823E1B36037100500DC3 /* NSNotificationCenter+Rx.swift in Sources */,
+				C81CC9291B513B4900915606 /* DeallocSubject.swift in Sources */,
 				C88BB91D1B07FD960064D411 /* NSButton+Rx.swift in Sources */,
+				C80A4E331B51814300C24BD5 /* _RXKVOObserver.m in Sources */,
 				C862823A1B36037100500DC3 /* ControlTarget.swift in Sources */,
 				C862823C1B36037100500DC3 /* NSObject+Rx.swift in Sources */,
 				C8C46DB11B47FD170020D71E /* _RXDelegateProxy.m in Sources */,
@@ -610,11 +628,6 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Rx-cfkyozdvlaegqibzixjokeysigeo/Build/Products/Debug-iphoneos",
-					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Rx-cfkyozdvlaegqibzixjokeysigeo/Build/Products/Release-iphoneos",
-				);
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -633,11 +646,6 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Rx-cfkyozdvlaegqibzixjokeysigeo/Build/Products/Debug-iphoneos",
-					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Rx-cfkyozdvlaegqibzixjokeysigeo/Build/Products/Release-iphoneos",
-				);
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -698,11 +706,6 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Rx-cfkyozdvlaegqibzixjokeysigeo/Build/Products/Debug-iphoneos",
-					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Rx-cfkyozdvlaegqibzixjokeysigeo/Build/Products/Release-iphoneos",
-				);
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";

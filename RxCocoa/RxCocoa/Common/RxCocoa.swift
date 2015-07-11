@@ -130,3 +130,13 @@ let dataSourceNotSet = "DataSource not set"
 let delegateNotSet = "Delegate not set"
 
 // }
+
+
+extension NSObject {
+    func rx_synchronized<T>(@noescape action: () -> T) -> T {
+        objc_sync_enter(self)
+        let result = action()
+        objc_sync_exit(self)
+        return result
+    }
+}

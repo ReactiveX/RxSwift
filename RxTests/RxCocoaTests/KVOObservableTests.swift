@@ -15,6 +15,50 @@ class TestClass : NSObject {
     dynamic var pr: String? = "0"
 }
 
+class Parent : NSObject {
+    var disposeBag: DisposeBag! = DisposeBag()
+
+    dynamic var val: String = ""
+    
+    init(callback: String? -> Void) {
+        super.init()
+        
+        self.rx_observe("val", options: .Initial | .New, retainSelf: false)
+            >- subscribeNext(callback)
+            >- disposeBag.addDisposable
+    }
+    
+    deinit {
+        disposeBag = nil
+    }
+}
+
+class Child : NSObject {
+    let disposeBag = DisposeBag()
+    
+    init(parent: ParentWithChild, callback: String? -> Void) {
+        super.init()
+        parent.rx_observe("val", options: .Initial | .New, retainSelf: false)
+            >- subscribeNext(callback)
+            >- disposeBag.addDisposable
+    }
+    
+    deinit {
+        
+    }
+}
+
+class ParentWithChild : NSObject {
+    dynamic var val: String = ""
+    
+    var child: Child? = nil
+    
+    init(callback: String? -> Void) {
+        super.init()
+        child = Child(parent: self, callback: callback)
+    }
+}
+
 class KVOObservableTests : RxTest {
     func test_New() {
         let testClass = TestClass()
@@ -116,5 +160,59 @@ class KVOObservableTests : RxTest {
         testClass.pr = "4"
         
         XCTAssertEqual(latest!, "3")
+    }
+    
+    func test_ObserveAndDontRetainWorks() {
+        var latest: String?
+        var disposed = false
+        
+        var parent: Parent! = Parent { n in
+            latest = n
+        }
+        
+        parent.rx_deallocated
+            >- subscribeCompleted {
+                disposed = true
+            }
+        
+        XCTAssertTrue(latest == "")
+        XCTAssertTrue(disposed == false)
+        
+        parent.val = "1"
+        
+        XCTAssertTrue(latest == "1")
+        XCTAssertTrue(disposed == false)
+        
+        parent = nil
+        
+        XCTAssertTrue(latest == "1")
+        XCTAssertTrue(disposed == true)
+    }
+    
+    func test_ObserveAndDontRetainWorks2() {
+        var latest: String?
+        var disposed = false
+        
+        var parent: ParentWithChild! = ParentWithChild { n in
+            latest = n
+        }
+        
+        parent.rx_deallocated
+            >- subscribeCompleted {
+                disposed = true
+        }
+        
+        XCTAssertTrue(latest == "")
+        XCTAssertTrue(disposed == false)
+        
+        parent.val = "1"
+        
+        XCTAssertTrue(latest == "1")
+        XCTAssertTrue(disposed == false)
+        
+        parent = nil
+        
+        XCTAssertTrue(latest == "1")
+        XCTAssertTrue(disposed == true)
     }
 }
