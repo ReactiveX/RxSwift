@@ -12,7 +12,12 @@ import RxCocoa
 import XCTest
 
 class NSObjectTests: RxTest {
-    func testDeallocObservableFires() {
+    
+}
+
+// rx_deallocated
+extension NSObjectTests {
+    func testDeallocated_ObservableFires() {
         var a = NSObject()
         
         var fired = false
@@ -29,7 +34,7 @@ class NSObjectTests: RxTest {
         XCTAssertTrue(fired)
     }
     
-    func testDeallocObservableCompletes() {
+    func testDeallocated_ObservableCompletes() {
         var a = NSObject()
         
         var fired = false
@@ -46,12 +51,67 @@ class NSObjectTests: RxTest {
         XCTAssertTrue(fired)
     }
 
-    func testDeallocObservableDispose() {
+    func testDeallocated_ObservableDispose() {
         var a = NSObject()
         
         var fired = false
         
         a.rx_deallocated
+            >- subscribeNext { _ in
+                fired = true
+            }
+            >- scopedDispose
+        
+        XCTAssertFalse(fired)
+        
+        a = NSObject()
+        
+        XCTAssertFalse(fired)
+    }
+}
+
+// rx_deallocating
+extension NSObjectTests {
+    func testDeallocating_ObservableFires() {
+        var a = NSObject()
+        
+        var fired = false
+        
+        a.rx_deallocating
+            >- subscribeNext { _ in
+                fired = true
+        }
+        
+        XCTAssertFalse(fired)
+        
+        a = NSObject()
+        
+        XCTAssertTrue(fired)
+    }
+    
+    func testDeallocating_ObservableCompletes() {
+        var a = NSObject()
+        
+        var fired = false
+        
+        a.rx_deallocating
+            >- subscribeCompleted {
+                fired = true
+        }
+        
+        XCTAssertFalse(fired)
+        
+        a = NSObject()
+        
+        XCTAssertTrue(fired)
+    }
+    
+    func testDeallocating_ObservableDispose() {
+        var a = NSObject()
+        
+        var fired = false
+        
+        a.rx_deallocating
             >- subscribeNext { _ in
                 fired = true
             }

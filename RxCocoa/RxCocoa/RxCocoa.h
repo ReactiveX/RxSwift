@@ -10,6 +10,8 @@
 #import "_RXDelegateProxy.h"
 #import "_RXKVOObserver.h"
 
+#import "_RXSwizzling.h"
+
 //! Project version number for RxCocoa.
 FOUNDATION_EXPORT double RxCocoaVersionNumber;
 

@@ -18,6 +18,8 @@
 		075F130D1B4DD100000D7861 /* UISwitch+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 075F13071B4DD100000D7861 /* UISwitch+Rx.swift */; };
 		493693671B173C8F006FA450 /* UISlider+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493693661B173C8F006FA450 /* UISlider+Rx.swift */; };
 		653C8BF41B114EB600983087 /* UIControl+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653C8BF31B114EB600983087 /* UIControl+Rx.swift */; };
+		C8003BA81B51AB760002F09F /* _RXSwizzling.h in Headers */ = {isa = PBXBuildFile; fileRef = C8003BA61B51AB760002F09F /* _RXSwizzling.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C8003BA91B51AB760002F09F /* _RXSwizzling.m in Sources */ = {isa = PBXBuildFile; fileRef = C8003BA71B51AB760002F09F /* _RXSwizzling.m */; };
 		C8092BBB1AF50436008D9A2C /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8092BBA1AF50436008D9A2C /* CoreData.framework */; };
 		C80A4E301B517F4E00C24BD5 /* _RXKVOObserver.h in Headers */ = {isa = PBXBuildFile; fileRef = C80A4E2E1B517F4E00C24BD5 /* _RXKVOObserver.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C80A4E311B517F4E00C24BD5 /* _RXKVOObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = C80A4E2F1B517F4E00C24BD5 /* _RXKVOObserver.m */; };
@@ -57,6 +59,14 @@
 		C8633AB51B093EDF00375D60 /* Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8633AAC1B093EDF00375D60 /* Logging.swift */; };
 		C8633ABA1B093EDF00375D60 /* RxCocoa.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8633AAF1B093EDF00375D60 /* RxCocoa.swift */; };
 		C8633ABB1B093EDF00375D60 /* RxCocoa.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8633AAF1B093EDF00375D60 /* RxCocoa.swift */; };
+		C87360AC1B51C9A300FDA532 /* _RXSwizzling.h in Headers */ = {isa = PBXBuildFile; fileRef = C8003BA61B51AB760002F09F /* _RXSwizzling.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C87360AE1B51D9D400FDA532 /* Deallocating.swift in Sources */ = {isa = PBXBuildFile; fileRef = C87360AD1B51D9D400FDA532 /* Deallocating.swift */; };
+		C87360AF1B51D9D400FDA532 /* Deallocating.swift in Sources */ = {isa = PBXBuildFile; fileRef = C87360AD1B51D9D400FDA532 /* Deallocating.swift */; };
+		C87360B11B51DB0000FDA532 /* KVOWeakObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C87360B01B51DB0000FDA532 /* KVOWeakObservable.swift */; };
+		C87360B21B51DB0000FDA532 /* KVOWeakObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C87360B01B51DB0000FDA532 /* KVOWeakObservable.swift */; };
+		C87360B41B51E0A100FDA532 /* KVOObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C87360B31B51E0A100FDA532 /* KVOObserver.swift */; };
+		C87360B51B51E0A100FDA532 /* KVOObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C87360B31B51E0A100FDA532 /* KVOObserver.swift */; };
+		C87360B61B51E57500FDA532 /* _RXSwizzling.m in Sources */ = {isa = PBXBuildFile; fileRef = C8003BA71B51AB760002F09F /* _RXSwizzling.m */; };
 		C88BB8851B07E6130064D411 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8092BBA1AF50436008D9A2C /* CoreData.framework */; };
 		C88BB8861B07E6130064D411 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8A56BCD1AD744FD00B4673B /* RxSwift.framework */; };
 		C88BB8881B07E6130064D411 /* RxCocoa.h in Headers */ = {isa = PBXBuildFile; fileRef = C81553E31A98AB4A00C63152 /* RxCocoa.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -94,6 +104,8 @@
 		075F13071B4DD100000D7861 /* UISwitch+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UISwitch+Rx.swift"; sourceTree = "<group>"; };
 		493693661B173C8F006FA450 /* UISlider+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UISlider+Rx.swift"; sourceTree = "<group>"; };
 		653C8BF31B114EB600983087 /* UIControl+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIControl+Rx.swift"; sourceTree = "<group>"; };
+		C8003BA61B51AB760002F09F /* _RXSwizzling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _RXSwizzling.h; sourceTree = "<group>"; };
+		C8003BA71B51AB760002F09F /* _RXSwizzling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _RXSwizzling.m; sourceTree = "<group>"; };
 		C8092BBA1AF50436008D9A2C /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		C80A4E2E1B517F4E00C24BD5 /* _RXKVOObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _RXKVOObserver.h; sourceTree = "<group>"; };
 		C80A4E2F1B517F4E00C24BD5 /* _RXKVOObserver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _RXKVOObserver.m; sourceTree = "<group>"; };
@@ -124,6 +136,9 @@
 		C8633A991B08FEBB00375D60 /* NSImageView+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSImageView+Rx.swift"; sourceTree = "<group>"; };
 		C8633AAC1B093EDF00375D60 /* Logging.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logging.swift; sourceTree = "<group>"; };
 		C8633AAF1B093EDF00375D60 /* RxCocoa.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = RxCocoa.swift; sourceTree = "<group>"; };
+		C87360AD1B51D9D400FDA532 /* Deallocating.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Deallocating.swift; sourceTree = "<group>"; };
+		C87360B01B51DB0000FDA532 /* KVOWeakObservable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KVOWeakObservable.swift; sourceTree = "<group>"; };
+		C87360B31B51E0A100FDA532 /* KVOObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KVOObserver.swift; sourceTree = "<group>"; };
 		C88BB88D1B07E6130064D411 /* RxCocoa.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxCocoa.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C88BB8E01B07F2BE0064D411 /* UIButton+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIButton+Rx.swift"; sourceTree = "<group>"; };
 		C88BB8E11B07F2BE0064D411 /* UICollectionView+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Rx.swift"; sourceTree = "<group>"; };
@@ -244,8 +259,11 @@
 			isa = PBXGroup;
 			children = (
 				C86282321B36037100500DC3 /* ControlTarget.swift */,
-				C83111701B491C9F001F3D67 /* KVOObservable.swift */,
+				C87360AD1B51D9D400FDA532 /* Deallocating.swift */,
 				C81CC9271B513B4900915606 /* DeallocSubject.swift */,
+				C83111701B491C9F001F3D67 /* KVOObservable.swift */,
+				C87360B31B51E0A100FDA532 /* KVOObserver.swift */,
+				C87360B01B51DB0000FDA532 /* KVOWeakObservable.swift */,
 			);
 			path = Implementations;
 			sourceTree = "<group>";
@@ -266,6 +284,8 @@
 				C8D95C161B2F0CD700FA661F /* DelegateProxyType.swift */,
 				C8633AAC1B093EDF00375D60 /* Logging.swift */,
 				C8633AAF1B093EDF00375D60 /* RxCocoa.swift */,
+				C8003BA61B51AB760002F09F /* _RXSwizzling.h */,
+				C8003BA71B51AB760002F09F /* _RXSwizzling.m */,
 				C8C46DAD1B47FD0B0020D71E /* _RXDelegateProxy.h */,
 				C8C46DAE1B47FD0B0020D71E /* _RXDelegateProxy.m */,
 				C80A4E2E1B517F4E00C24BD5 /* _RXKVOObserver.h */,
@@ -344,6 +364,7 @@
 			files = (
 				C8C46DAF1B47FD0B0020D71E /* _RXDelegateProxy.h in Headers */,
 				C80A4E301B517F4E00C24BD5 /* _RXKVOObserver.h in Headers */,
+				C8003BA81B51AB760002F09F /* _RXSwizzling.h in Headers */,
 				C81553E41A98AB4A00C63152 /* RxCocoa.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -353,8 +374,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				C8C46DB41B4800270020D71E /* _RXDelegateProxy.h in Headers */,
-				C88BB8881B07E6130064D411 /* RxCocoa.h in Headers */,
 				C80A4E321B51814100C24BD5 /* _RXKVOObserver.h in Headers */,
+				C87360AC1B51C9A300FDA532 /* _RXSwizzling.h in Headers */,
+				C88BB8881B07E6130064D411 /* RxCocoa.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -455,9 +477,12 @@
 				C86282391B36037100500DC3 /* ControlTarget.swift in Sources */,
 				C88BB8EE1B07F2BE0064D411 /* UITableView+Rx.swift in Sources */,
 				C88BB8EF1B07F2BE0064D411 /* UITextField+Rx.swift in Sources */,
+				C8003BA91B51AB760002F09F /* _RXSwizzling.m in Sources */,
 				C81CC9281B513B4900915606 /* DeallocSubject.swift in Sources */,
 				C8A57F7A1B41431600D5570A /* RxCollectionViewDataSourceType.swift in Sources */,
 				C862823B1B36037100500DC3 /* NSObject+Rx.swift in Sources */,
+				C87360B11B51DB0000FDA532 /* KVOWeakObservable.swift in Sources */,
+				C87360B41B51E0A100FDA532 /* KVOObserver.swift in Sources */,
 				493693671B173C8F006FA450 /* UISlider+Rx.swift in Sources */,
 				C862823D1B36037100500DC3 /* NSNotificationCenter+Rx.swift in Sources */,
 				C84969CE1B47DE1D00E0BDB9 /* RxTableViewDelegateProxy.swift in Sources */,
@@ -473,6 +498,7 @@
 				C88BB8E81B07F2BE0064D411 /* UIButton+Rx.swift in Sources */,
 				C8633AB41B093EDF00375D60 /* Logging.swift in Sources */,
 				075F13011B4DD075000D7861 /* RxCLLocationManagerDelegateProxy.swift in Sources */,
+				C87360AE1B51D9D400FDA532 /* Deallocating.swift in Sources */,
 				C813F95D1B48799200620334 /* RxSeachBarDelegateProxy.swift in Sources */,
 				075F13091B4DD100000D7861 /* UIActionSheet+Rx.swift in Sources */,
 				C862823F1B36037100500DC3 /* NSURLSession+Rx.swift in Sources */,
@@ -508,7 +534,10 @@
 				C80B562C1B2E242D008F915D /* DelegateProxy.swift in Sources */,
 				C86282401B36037100500DC3 /* NSURLSession+Rx.swift in Sources */,
 				C862823E1B36037100500DC3 /* NSNotificationCenter+Rx.swift in Sources */,
+				C87360B21B51DB0000FDA532 /* KVOWeakObservable.swift in Sources */,
 				C81CC9291B513B4900915606 /* DeallocSubject.swift in Sources */,
+				C87360B61B51E57500FDA532 /* _RXSwizzling.m in Sources */,
+				C87360B51B51E0A100FDA532 /* KVOObserver.swift in Sources */,
 				C88BB91D1B07FD960064D411 /* NSButton+Rx.swift in Sources */,
 				C80A4E331B51814300C24BD5 /* _RXKVOObserver.m in Sources */,
 				C862823A1B36037100500DC3 /* ControlTarget.swift in Sources */,
@@ -517,6 +546,7 @@
 				C8633AB51B093EDF00375D60 /* Logging.swift in Sources */,
 				C83111721B491C9F001F3D67 /* KVOObservable.swift in Sources */,
 				C8633ABB1B093EDF00375D60 /* RxCocoa.swift in Sources */,
+				C87360AF1B51D9D400FDA532 /* Deallocating.swift in Sources */,
 				C8633A981B08FD0600375D60 /* NSTextField+Rx.swift in Sources */,
 				C8D95C181B2F0CD700FA661F /* DelegateProxyType.swift in Sources */,
 				C8633A9A1B08FEBB00375D60 /* NSImageView+Rx.swift in Sources */,
@@ -556,6 +586,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
+					"ENABLE_SWIZZLING=1",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -568,7 +599,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_SWIFT_FLAGS = "-D DEBUG -D TRACE_RESOURCES";
+				OTHER_SWIFT_FLAGS = "-D DEBUG -D TRACE_RESOURCES -D ENABLE_SWIZZLING";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -602,6 +633,7 @@
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PREPROCESSOR_DEFINITIONS = "ENABLE_SWIZZLING=1";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -611,6 +643,7 @@
 				INFOPLIST_FILE = RxCocoa/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_SWIFT_FLAGS = "-D ENABLE_SWIZZLING";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -679,6 +712,7 @@
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PREPROCESSOR_DEFINITIONS = "ENABLE_SWIZZLING=1";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -688,7 +722,7 @@
 				INFOPLIST_FILE = RxCocoa/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_SWIFT_FLAGS = "-D TRACE_RESOURCES";
+				OTHER_SWIFT_FLAGS = "-D TRACE_RESOURCES -D ENABLE_SWIZZLING";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = "";
 				TARGETED_DEVICE_FAMILY = "1,2";

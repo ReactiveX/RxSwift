@@ -75,7 +75,6 @@ class RxTest: XCTestCase {
         super.tearDown()
 
 #if TRACE_RESOURCES
-        usleep(500) // wait 0.5 ms for proper scheduler disposal
         XCTAssertEqual(self.startResourceCount, resourceCount)
 #endif
     }
