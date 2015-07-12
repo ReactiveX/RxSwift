@@ -218,8 +218,11 @@ Rx doesn't contain any external dependencies.
 
 These are currently supported options:
 
-* Open Rx.xcworkspace, choose `RxExample` and hit run. This method will build everything and run sample app
-* [CocoaPods](https://guides.cocoapods.org/using/using-cocoapods.html)
+### Manual
+
+Open Rx.xcworkspace, choose `RxExample` and hit run. This method will build everything and run sample app
+
+### [CocoaPods](https://guides.cocoapods.org/using/using-cocoapods.html)
 
 ```
 # Podfile
@@ -233,6 +236,37 @@ type in `Podfile` directory
 
 ```
 $ pod install
+```
+
+### [Carthage](https://github.com/Carthage/Carthage)
+
+It's little tricky, but possible. Carthage still has troubles resolving multiple targets inside same repository (https://github.com/Carthage/Carthage/issues/395).
+
+This is the workaround:
+
+```
+git "git@github.com:kzaher/RxSwift.git" "latest-carthage/rxswift"
+git "git@github.com:kzaher/RxSwift.git" "latest-carthage/rxcocoa"
+```
+
+Unfortunatelly, you can update only one target at a time beecause Carthage doesn't know how to resolve them properly. You'll probably need to do something like:
+
+```
+git "git@github.com:kzaher/RxSwift.git" "latest-carthage/rxswift"
+#git "git@github.com:kzaher/RxSwift.git" "latest-carthage/rxcocoa"
+```
+
+```bash
+carthage update
+```
+
+```
+#git "git@github.com:kzaher/RxSwift.git" "latest-carthage/rxswift"
+git "git@github.com:kzaher/RxSwift.git" "latest-carthage/rxcocoa"
+```
+
+```bash
+carthage update
 ```
 
 ## Feature comparison with other frameworks
