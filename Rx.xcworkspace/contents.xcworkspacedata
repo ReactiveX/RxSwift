@@ -52,6 +52,9 @@
       location = "group:RxCocoa/RxCocoa.xcodeproj">
    </FileRef>
    <FileRef
+      location = "group:RxBlocking/RxBlocking.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:RxTests/RxTests.xcodeproj">
    </FileRef>
    <FileRef
