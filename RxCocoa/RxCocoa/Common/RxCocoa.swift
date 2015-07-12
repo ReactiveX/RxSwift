@@ -16,6 +16,7 @@ public enum RxCocoaError : Int {
     case Unknown = 0
     case NetworkError = 1
     case InvalidOperation = 2
+    case KeyPathInvalid = 3
 }
 
 let defaultHeight: CGFloat = -1

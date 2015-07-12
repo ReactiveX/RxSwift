@@ -946,6 +946,26 @@ extension ObservableStandardSequenceOperators {
         XCTAssertEqual(res.messages, correctMessages)
         XCTAssertEqual(xs.subscriptions, correctSubscriptions)
     }
+    
+    func testMap_DisposeOnCompleted() {
+        just("A")
+            >- map { a in
+                return a
+            }
+            >- subscribeNext { _ in
+                
+            }
+    }
+    
+    func testMap1_DisposeOnCompleted() {
+        just("A")
+            >- mapWithIndex { (a, i) in
+                return a
+            }
+            >- subscribeNext { _ in
+                
+            }
+    }
 }
 
 // flatMap

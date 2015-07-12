@@ -12,7 +12,7 @@ class Subscription<Element> : Disposable {
     typealias ObserverType = Observer<Element>
     typealias KeyType = Bag<Void>.KeyType
     
-    private let subject : PublishSubject<Element>
+    private let subject: PublishSubject<Element>
     private var key: KeyType
     
     private var lock = Lock()

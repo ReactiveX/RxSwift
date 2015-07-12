@@ -10,8 +10,10 @@ import Foundation
 import RxSwift
 
 #if ENABLE_SWIZZLING
+var deallocatingSubjectTriggerContext: UInt8 = 0
 var deallocatingSubjectContext: UInt8 = 0
 #endif
+var deallocatedSubjectTriggerContext: UInt8 = 0
 var deallocatedSubjectContext: UInt8 = 0
 
 // KVO is a tricky mechanism.
@@ -57,16 +59,13 @@ extension NSObject {
     // Observes values on `keyPath` starting from `self` with `.Initial | .New` options.
     // Doesn't retain `self` and when `self` is deallocated, completes the sequence.
     public func rx_observeWeakly<Element>(keyPath: String) -> Observable<Element?> {
-        return observeWeaklyKeyPathFor(self, keyPath: keyPath, options: .Initial | .New)
-            >- map { n in
-                return n as? Element
-            }
+        return rx_observeWeakly(keyPath, options: .New | .Initial)
     }
     
     // Observes values on `keyPath` starting from `self` with `options`
     // Doesn't retain `self` and when `self` is deallocated, completes the sequence.
     public func rx_observeWeakly<Element>(keyPath: String, options: NSKeyValueObservingOptions) -> Observable<Element?> {
-        return observeWeaklyKeyPathFor(self, keyPath: keyPath, options: .Initial | .New)
+        return observeWeaklyKeyPathFor(self, keyPath: keyPath, options: options)
             >- map { n in
                 return n as? Element
             }
@@ -79,15 +78,17 @@ extension NSObject {
     // Sends next element when object is deallocated and immediately completes sequence.
     public var rx_deallocated: Observable<Void> {
         return rx_synchronized {
-            if let subject = objc_getAssociatedObject(self, &deallocatedSubjectContext) as? DeallocSubject<Void> {
+            if let subject = objc_getAssociatedObject(self, &deallocatedSubjectContext) as? ReplaySubject<Void> {
                 return subject
             }
             else {
-                let subject = createDeallocDisposable { s in
-                    sendNext(s, ())
-                    sendCompleted(s)
+                let subject = ReplaySubject<Void>(bufferSize: 1)
+                let deinitAction = DeinitAction {
+                    sendNext(subject, ())
+                    sendCompleted(subject)
                 }
                 objc_setAssociatedObject(self, &deallocatedSubjectContext, subject, objc_AssociationPolicy(OBJC_ASSOCIATION_RETAIN_NONATOMIC))
+                objc_setAssociatedObject(self, &deallocatedSubjectTriggerContext, deinitAction, objc_AssociationPolicy(OBJC_ASSOCIATION_RETAIN_NONATOMIC))
                 return subject
             }
         }
@@ -100,13 +101,11 @@ extension NSObject {
     // Has performance penalty, so prefer `rx_deallocated` when ever possible.
     public var rx_deallocating: Observable<Void> {
         return rx_synchronized {
-            if let subject = objc_getAssociatedObject(self, &deallocatingSubjectContext) as? DeallocSubject<Void> {
+            if let subject = objc_getAssociatedObject(self, &deallocatingSubjectContext) as? ReplaySubject<Void> {
                 return subject
             }
             else {
-                let subject = createDeallocDisposable { s in
-                    sendCompleted(s)
-                }
+                let subject = ReplaySubject<Void>(bufferSize: 1)
                 objc_setAssociatedObject(
                     self,
                     &deallocatingSubjectContext,
@@ -118,9 +117,18 @@ extension NSObject {
                     sendNext(subject, ())
                 }
                 
+                let deinitAction = DeinitAction {
+                    sendCompleted(subject)
+                }
+                
                 objc_setAssociatedObject(self,
                     RXDeallocatingAssociatedAction,
                     proxy,
+                    objc_AssociationPolicy(OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+                )
+                objc_setAssociatedObject(self,
+                    &deallocatingSubjectTriggerContext,
+                    deinitAction,
                     objc_AssociationPolicy(OBJC_ASSOCIATION_RETAIN_NONATOMIC)
                 )
                 

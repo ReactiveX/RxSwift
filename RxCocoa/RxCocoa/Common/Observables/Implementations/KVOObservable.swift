@@ -31,6 +31,10 @@ class KVOObservable<Element> : Producer<Element?>
     
     override func run<O : ObserverType where O.Element == Element?>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
         let observer = KVOObserver(parent: self) { (value) in
+            if value as? NSNull != nil {
+                sendNext(observer, nil)
+                return
+            }
             sendNext(observer, value as? Element)
         }
         
@@ -42,18 +46,95 @@ class KVOObservable<Element> : Producer<Element?>
 }
 
 func observeWeaklyKeyPathFor(target: NSObject, # keyPath: String, # options: NSKeyValueObservingOptions) -> Observable<AnyObject?> {
-    return empty()
+    let components = keyPath.componentsSeparatedByString(".").filter { $0 != "self" }
+    
+    let observable = observeWeaklyKeyPathFor(target, keyPathSections: components, options: options)
+        >- distinctUntilChanged { $0 === $1 }
+        >- finishWithNilWhenDealloc(target)
+ 
+    if options & .Initial != .allZeros {
+        return observable
+    }
+    else {
+        return observable
+            >- skip(1)
+    }
 }
 
-func observeWeaklyPropertyFor(target: NSObject, # named: String, # options: NSKeyValueObservingOptions) -> Observable<AnyObject?> {
-    let kvoObservable = KVOObservable(object: target, keyPath: named, options: options, retainTarget: false) as KVOObservable<AnyObject>
- 
-    let result: Observable<AnyObject?> = target.rx_deallocating
-        >- map { _ in
-            return just(nil)
-        }
-        >- startWith(kvoObservable)
-        >- switchLatest
+// This should work correctly
+// Identifiers can't contain `,`, so the only place where `,` can appear
+// is as a delimiter.
+// This means there is `W` as element in an array of property attributes.
+func isWeakProperty(properyRuntimeInfo: String) -> Bool {
+    return properyRuntimeInfo.rangeOfString(",W,") != nil
+}
+
+func finishWithNilWhenDealloc(target: NSObject)
+    -> Observable<AnyObject?> -> Observable<AnyObject?> {
+    let deallocating = target.rx_deallocating
+        
+    return { source in
+        return deallocating
+            >- map { _ in
+                return just(nil)
+            }
+            >- startWith(source)
+            >- switchLatest
+    }
+}
+
+func observeWeaklyKeyPathFor(
+        target: NSObject,
+        # keyPathSections: [String],
+        # options: NSKeyValueObservingOptions
+    ) -> Observable<AnyObject?> {
     
-    return result
+    weak var weakTarget: AnyObject? = target
+        
+    let propertyName = keyPathSections[0]
+    let remainingPaths = Array(keyPathSections[1..<keyPathSections.count])
+    
+    let property = class_getProperty(object_getClass(target), propertyName);
+    if property == nil {
+        return failWith(rxError(.KeyPathInvalid, "Object \(target) doesn't have property named `\(propertyName)`"))
+    }
+    let propertyAttributes = property_getAttributes(property);
+    
+    // should dealloc hook be in place if week property, or just create strong reference because it doesn't matter
+    let isWeak = isWeakProperty(String.fromCString(propertyAttributes) ?? "")
+    let propertyObservable = KVOObservable(object: target, keyPath: propertyName, options: options | .Initial, retainTarget: false) as KVOObservable<AnyObject>
+    
+    // KVO recursion for value changes
+    return propertyObservable
+        >- map { (nextTarget: AnyObject?) in
+            if nextTarget == nil {
+               return just(nil)
+            }
+            let nextObject = nextTarget! as? NSObject
+
+            let strongTarget: AnyObject? = weakTarget
+            
+            if nextObject == nil {
+                return failWith(rxError(.KeyPathInvalid, "Observed \(nextTarget) as property `\(propertyName)` on `\(strongTarget)` which is not `NSObject`."))
+            }
+
+            // if target is alive, then send change
+            // if it's deallocated, don't send anything
+            if strongTarget == nil {
+                return empty()
+            }
+            
+            let nextElementsObservable = keyPathSections.count == 1
+                ? just(nextTarget)
+                : observeWeaklyKeyPathFor(nextObject!, keyPathSections: remainingPaths, options: options)
+           
+            if isWeak {
+                return nextElementsObservable
+                    >- finishWithNilWhenDealloc(nextObject!)
+            }
+            else {
+                return nextElementsObservable
+            }
+        }
+        >- switchLatest
 }

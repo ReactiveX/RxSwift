@@ -10,6 +10,8 @@
 #import <Foundation/Foundation.h>
 #import <objc/runtime.h>
 #import <objc/message.h>
+
+#import "_RX.h"
 #import "_RXSwizzling.h"
 
 #if ENABLE_SWIZZLING
@@ -46,6 +48,8 @@ static RXSwizzling *_instance = nil;
     self = [super init];
     if (!self) return nil;
     
+    self.swizzledDeallocClasses = [NSMutableSet set];
+    
     pthread_mutexattr_t lock_attr;
     pthread_mutexattr_init(&lock_attr);
     pthread_mutexattr_settype(&lock_attr, PTHREAD_MUTEX_RECURSIVE);
@@ -65,6 +69,10 @@ static RXSwizzling *_instance = nil;
     if ([self.swizzledDeallocClasses containsObject:targetClass]) {
         return;
     }
+    
+    DLOG(@"Rx is swizzling dealloc for: %@", targetClass);
+    [self.swizzledDeallocClasses addObject:targetClass];
+    NSAssert([self.swizzledDeallocClasses containsObject:targetClass], @"Class should have been swizzled");
     
     __block void (*originalDealloc)(__unsafe_unretained id, SEL) = NULL;
     

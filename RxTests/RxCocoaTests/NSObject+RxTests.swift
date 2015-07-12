@@ -23,6 +23,9 @@ extension NSObjectTests {
         var fired = false
         
         a.rx_deallocated
+            >- map { _ in
+                return 1
+            }
             >- subscribeNext { _ in
                 fired = true
             }
@@ -40,6 +43,9 @@ extension NSObjectTests {
         var fired = false
         
         a.rx_deallocated
+            >- map { _ in
+                return 1
+            }
             >- subscribeCompleted {
                 fired = true
             }
@@ -57,6 +63,9 @@ extension NSObjectTests {
         var fired = false
         
         a.rx_deallocated
+            >- map { _ in
+                return 1
+            }
             >- subscribeNext { _ in
                 fired = true
             }
@@ -78,9 +87,12 @@ extension NSObjectTests {
         var fired = false
         
         a.rx_deallocating
+            >- map { _ in
+                return 1
+            }
             >- subscribeNext { _ in
                 fired = true
-        }
+            }
         
         XCTAssertFalse(fired)
         
@@ -95,9 +107,12 @@ extension NSObjectTests {
         var fired = false
         
         a.rx_deallocating
+            >- map { _ in
+                return 1
+            }
             >- subscribeCompleted {
                 fired = true
-        }
+            }
         
         XCTAssertFalse(fired)
         
@@ -112,6 +127,9 @@ extension NSObjectTests {
         var fired = false
         
         a.rx_deallocating
+            >- map { _ in
+                return 1
+            }
             >- subscribeNext { _ in
                 fired = true
             }
