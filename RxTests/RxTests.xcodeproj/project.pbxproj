@@ -41,6 +41,7 @@
 		C814CEA71AF642D600E98087 /* UI+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C814CEA61AF642D600E98087 /* UI+RxTests.swift */; };
 		C81CC92B1B513FD400915606 /* NSObject+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81CC92A1B513FD400915606 /* NSObject+RxTests.swift */; };
 		C81CC92C1B513FD400915606 /* NSObject+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81CC92A1B513FD400915606 /* NSObject+RxTests.swift */; };
+		C838E9061B52F8D8000DFFDD /* RxBlocking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8CDD7CA1B52B0730043F0C5 /* RxBlocking.framework */; };
 		C8633AE51B0A9FF300375D60 /* KVOObservableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8633AE41B0A9FF300375D60 /* KVOObservableTests.swift */; };
 		C8633AE61B0AA0ED00375D60 /* KVOObservableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8633AE41B0A9FF300375D60 /* KVOObservableTests.swift */; };
 		C88BB8911B07E64B0064D411 /* Observable+ConcurrencyTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B787F91AF55CDE00206D02 /* Observable+ConcurrencyTest.swift */; };
@@ -85,7 +86,6 @@
 		C8AF26F01B499E5C00131C03 /* DelegateProxyTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8AF26EE1B499E5C00131C03 /* DelegateProxyTest.swift */; };
 		C8B5BEA11B4A6A82000D732C /* RxCocoaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B5BEA01B4A6A82000D732C /* RxCocoaTests.swift */; };
 		C8B787FA1AF55CDE00206D02 /* Observable+ConcurrencyTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B787F91AF55CDE00206D02 /* Observable+ConcurrencyTest.swift */; };
-		C8CDD7C91B52B06A0043F0C5 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		C8CDD7CB1B52B0730043F0C5 /* RxBlocking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8CDD7CA1B52B0730043F0C5 /* RxBlocking.framework */; };
 		C8CDD7D41B52BEC40043F0C5 /* Observable+BlockingTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8CDD7D31B52BEC40043F0C5 /* Observable+BlockingTest.swift */; };
 		C8CDD7D51B52BEC40043F0C5 /* Observable+BlockingTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8CDD7D31B52BEC40043F0C5 /* Observable+BlockingTest.swift */; };
@@ -157,9 +157,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C8CDD7C91B52B06A0043F0C5 /* (null) in Frameworks */,
 				C811086C1AF50E43001C13E4 /* RxCocoa.framework in Frameworks */,
 				C811086D1AF50E43001C13E4 /* RxSwift.framework in Frameworks */,
+				C838E9061B52F8D8000DFFDD /* RxBlocking.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -12,7 +12,10 @@ import RxBlocking
 import XCTest
 
 class ObservableBlockingTest : RxTest {
-    
+    override func tearDown() {
+        usleep(1000)
+        super.tearDown()
+    }
 }
 
 // toArray
