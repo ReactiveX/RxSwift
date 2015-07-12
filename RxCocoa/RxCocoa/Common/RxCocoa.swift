@@ -16,6 +16,7 @@ public enum RxCocoaError : Int {
     case Unknown = 0
     case NetworkError = 1
     case InvalidOperation = 2
+    case KeyPathInvalid = 3
 }
 
 let defaultHeight: CGFloat = -1
@@ -130,3 +131,13 @@ let dataSourceNotSet = "DataSource not set"
 let delegateNotSet = "Delegate not set"
 
 // }
+
+
+extension NSObject {
+    func rx_synchronized<T>(@noescape action: () -> T) -> T {
+        objc_sync_enter(self)
+        let result = action()
+        objc_sync_exit(self)
+        return result
+    }
+}

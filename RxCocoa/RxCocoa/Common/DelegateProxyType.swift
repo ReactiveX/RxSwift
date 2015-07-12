@@ -149,23 +149,6 @@ func installDelegate<P: DelegateProxyType>(proxy: P, delegate: AnyObject, retain
     }
 }
 
-func proxyObservableForObject<P: DelegateProxyType, Element, DisposeKey>(object: AnyObject,
-    addObserver: (P, ObserverOf<Element>) -> DisposeKey,
-    removeObserver: (P, DisposeKey) -> ())
-    -> Observable<Element> {
-    
-    return AnonymousObservable { observer in
-        let proxy: P = proxyForObject(object)
-        let key = addObserver(proxy, observer)
-        
-        return AnonymousDisposable {
-            MainScheduler.ensureExecutingOnScheduler()
-            
-            removeObserver(proxy, key)
-        }
-    }
-}
-
 func setProxyDataSourceForObject<P: DelegateProxyType, Element>(object: AnyObject, dataSource: AnyObject, retainDataSource: Bool, binding: (P, Event<Element>) -> Void)
     -> Observable<Element> -> Disposable {
     return { source  in

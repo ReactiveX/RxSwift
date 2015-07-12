@@ -47,3 +47,12 @@ func rxFatalError(lastMessage: String) {
     // The temptation to comment this line is great, but please don't, it's for your own good. The choice is yours.
     fatalError(lastMessage)
 }
+
+extension NSObject {
+    func rx_synchronized<T>(@noescape action: () -> T) -> T {
+        objc_sync_enter(self)
+        let result = action()
+        objc_sync_exit(self)
+        return result
+    }
+}

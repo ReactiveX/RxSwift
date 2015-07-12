@@ -11,11 +11,91 @@ import XCTest
 import RxSwift
 import RxCocoa
 
+#if os(iOS)
+import UIKit
+#endif
+
+class KVOObservableTests : RxTest {
+}
+
 class TestClass : NSObject {
     dynamic var pr: String? = "0"
 }
 
-class KVOObservableTests : RxTest {
+class Parent : NSObject {
+    var disposeBag: DisposeBag! = DisposeBag()
+
+    dynamic var val: String = ""
+    
+    init(callback: String? -> Void) {
+        super.init()
+        
+        self.rx_observe("val", options: .Initial | .New, retainSelf: false)
+            >- subscribeNext(callback)
+            >- disposeBag.addDisposable
+    }
+    
+    deinit {
+        disposeBag = nil
+    }
+}
+
+class Child : NSObject {
+    let disposeBag = DisposeBag()
+    
+    init(parent: ParentWithChild, callback: String? -> Void) {
+        super.init()
+        parent.rx_observe("val", options: .Initial | .New, retainSelf: false)
+            >- subscribeNext(callback)
+            >- disposeBag.addDisposable
+    }
+    
+    deinit {
+        
+    }
+}
+
+class ParentWithChild : NSObject {
+    dynamic var val: String = ""
+    
+    var child: Child? = nil
+    
+    init(callback: String? -> Void) {
+        super.init()
+        child = Child(parent: self, callback: callback)
+    }
+}
+
+class HasStrongProperty : NSObject {
+    dynamic var property: NSObject? = nil
+    #if os(iOS)
+    dynamic var frame: CGRect
+    dynamic var point: CGPoint
+    dynamic var integer: Int
+    #endif
+    
+    override init() {
+    #if os(iOS)
+        self.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
+        self.point = CGPoint(x: 0, y: 1)
+        self.integer = 1
+    #endif
+        super.init()
+    }
+}
+
+class HasWeakProperty : NSObject {
+    dynamic weak var property: NSObject? = nil
+    
+    override init() {
+        super.init()
+    }
+}
+
+// test fast observe
+
+
+extension KVOObservableTests {
     func test_New() {
         let testClass = TestClass()
         
@@ -117,4 +197,597 @@ class KVOObservableTests : RxTest {
         
         XCTAssertEqual(latest!, "3")
     }
+    
+    func test_ObserveAndDontRetainWorks() {
+        var latest: String?
+        var disposed = false
+        
+        var parent: Parent! = Parent { n in
+            latest = n
+        }
+        
+        parent.rx_deallocated
+            >- subscribeCompleted {
+                disposed = true
+            }
+        
+        XCTAssertTrue(latest == "")
+        XCTAssertTrue(disposed == false)
+        
+        parent.val = "1"
+        
+        XCTAssertTrue(latest == "1")
+        XCTAssertTrue(disposed == false)
+        
+        parent = nil
+        
+        XCTAssertTrue(latest == "1")
+        XCTAssertTrue(disposed == true)
+    }
+    
+    func test_ObserveAndDontRetainWorks2() {
+        var latest: String?
+        var disposed = false
+        
+        var parent: ParentWithChild! = ParentWithChild { n in
+            latest = n
+        }
+        
+        parent.rx_deallocated
+            >- subscribeCompleted {
+                disposed = true
+        }
+        
+        XCTAssertTrue(latest == "")
+        XCTAssertTrue(disposed == false)
+        
+        parent.val = "1"
+        
+        XCTAssertTrue(latest == "1")
+        XCTAssertTrue(disposed == false)
+        
+        parent = nil
+        
+        XCTAssertTrue(latest == "1")
+        XCTAssertTrue(disposed == true)
+    }
 }
+
+#if ENABLE_SWIZZLING
+// test weak observe 
+
+extension KVOObservableTests {
+    
+    func testObserveWeak_SimpleStrongProperty() {
+        var latest: String?
+        var disposed = false
+        
+        var root: HasStrongProperty! = HasStrongProperty()
+        
+        root.rx_observeWeakly("property")
+            >- subscribeNext { (n: String?) in
+                latest = n
+            }
+        
+        root.rx_deallocated
+            >- subscribeCompleted {
+                disposed = true
+            }
+        
+        XCTAssertTrue(latest == nil)
+        XCTAssertTrue(!disposed)
+        
+        root.property = "a"
+
+        XCTAssertTrue(latest == "a")
+        XCTAssertTrue(!disposed)
+        
+        root = nil
+
+        XCTAssertTrue(latest == nil)
+        XCTAssertTrue(disposed)
+    }
+    
+    func testObserveWeak_SimpleWeakProperty() {
+        var latest: String?
+        var disposed = false
+        
+        var root: HasWeakProperty! = HasWeakProperty()
+        
+        root.rx_observeWeakly("property")
+            >- subscribeNext { (n: String?) in
+                latest = n
+        }
+        
+        root.rx_deallocated
+            >- subscribeCompleted {
+                disposed = true
+        }
+        
+        XCTAssertTrue(latest == nil)
+        XCTAssertTrue(!disposed)
+    
+        var a: NSString! = "a"
+        
+        root.property = a
+        
+        XCTAssertTrue(latest == "a")
+        XCTAssertTrue(!disposed)
+        
+        root = nil
+        
+        XCTAssertTrue(latest == nil)
+        XCTAssertTrue(disposed)
+    }
+
+    func testObserveWeak_ObserveFirst_Weak_Strong_Basic() {
+        var latest: String?
+        var disposed = false
+        
+        var child: HasStrongProperty! = HasStrongProperty()
+        
+        var root: HasWeakProperty! = HasWeakProperty()
+        
+        root.rx_observeWeakly("property.property")
+            >- subscribeNext { (n: String?) in
+                latest = n
+            }
+        
+        root.rx_deallocated
+            >- subscribeCompleted {
+                disposed = true
+            }
+        
+        XCTAssertTrue(latest == nil)
+        XCTAssertTrue(disposed == false)
+        
+        root.property = child
+        
+        XCTAssertTrue(latest == nil)
+        XCTAssertTrue(disposed == false)
+        
+        var one: NSString! = "1"
+        
+        child.property = one
+        
+        XCTAssertTrue(latest == "1")
+        XCTAssertTrue(disposed == false)
+        
+        root = nil
+        child = nil
+     
+        XCTAssertTrue(latest == nil)
+        XCTAssertTrue(disposed == true)
+    }
+    
+    func testObserveWeak_Weak_Strong_Observe_Basic() {
+        var latest: String?
+        var disposed = false
+        
+        var child: HasStrongProperty! = HasStrongProperty()
+        
+        var root: HasWeakProperty! = HasWeakProperty()
+        
+        root.property = child
+        
+        var one: NSString! = "1"
+        
+        child.property = one
+        
+        XCTAssertTrue(latest == nil)
+        XCTAssertTrue(disposed == false)
+        
+        root.rx_observeWeakly("property.property")
+            >- subscribeNext { (n: String?) in
+                latest = n
+        }
+        
+        root.rx_deallocated
+            >- subscribeCompleted {
+                disposed = true
+        }
+        
+        XCTAssertTrue(latest == "1")
+        XCTAssertTrue(disposed == false)
+        
+        root = nil
+        child = nil
+        
+        XCTAssertTrue(latest == nil)
+        XCTAssertTrue(disposed == true)
+    }
+    
+    func testObserveWeak_ObserveFirst_Strong_Weak_Basic() {
+        var latest: String?
+        var disposed = false
+        
+        var child: HasWeakProperty! = HasWeakProperty()
+        
+        var root: HasStrongProperty! = HasStrongProperty()
+        
+        root.rx_observeWeakly("property.property")
+            >- subscribeNext { (n: String?) in
+                latest = n
+        }
+        
+        root.rx_deallocated
+            >- subscribeCompleted {
+                disposed = true
+        }
+        
+        XCTAssertTrue(latest == nil)
+        XCTAssertTrue(disposed == false)
+        
+        root.property = child
+        
+        XCTAssertTrue(latest == nil)
+        XCTAssertTrue(disposed == false)
+        
+        var one: NSString! = "1"
+        
+        child.property = one
+        
+        XCTAssertTrue(latest == "1")
+        XCTAssertTrue(disposed == false)
+        
+        root = nil
+        child = nil
+        
+        XCTAssertTrue(latest == nil)
+        XCTAssertTrue(disposed == true)
+    }
+    
+    func testObserveWeak_Strong_Weak_Observe_Basic() {
+        var latest: String?
+        var disposed = false
+        
+        var child: HasWeakProperty! = HasWeakProperty()
+        
+        var root: HasStrongProperty! = HasStrongProperty()
+        
+        root.property = child
+        
+        var one: NSString! = "1"
+        
+        child.property = one
+        
+        XCTAssertTrue(latest == nil)
+        XCTAssertTrue(disposed == false)
+        
+        root.rx_observeWeakly("property.property")
+            >- subscribeNext { (n: String?) in
+                latest = n
+            }
+        
+        root.rx_deallocated
+            >- subscribeCompleted {
+                disposed = true
+        }
+        
+        XCTAssertTrue(latest == "1")
+        XCTAssertTrue(disposed == false)
+        
+        root = nil
+        child = nil
+        
+        XCTAssertTrue(latest == nil)
+        XCTAssertTrue(disposed == true)
+    }
+    
+    // compiler won't release weak references otherwise :(
+    func _testObserveWeak_Strong_Weak_Observe_NilLastPropertyBecauseOfWeak() -> (HasWeakProperty, RxMutableBox<NSObject?>, Observable<Void>) {
+        var dealloc: Observable<Void>! = nil
+        var child: HasWeakProperty! = HasWeakProperty()
+        var latest: RxMutableBox<NSObject?>! = RxMutableBox(nil)
+        
+        autoreleasepool {
+            var root: HasStrongProperty! = HasStrongProperty()
+            
+            root.property = child
+            
+            var one: NSObject! = nil
+            
+            one = NSObject()
+            
+            child.property = one
+            
+            XCTAssertTrue(latest.value == nil)
+            
+            let observable: Observable<NSObject?> = root.rx_observeWeakly("property.property")
+            observable >- subscribeNext { n in
+                latest?.value = n
+            }
+            
+            XCTAssertTrue(latest.value! === one)
+         
+            dealloc = one.rx_deallocating
+            
+            one = nil
+        }
+        return (child, latest, dealloc)
+    }
+    
+    func testObserveWeak_Strong_Weak_Observe_NilLastPropertyBecauseOfWeak() {
+        var gone = false
+        let (child, latest, dealloc) = _testObserveWeak_Strong_Weak_Observe_NilLastPropertyBecauseOfWeak()
+        dealloc
+            >- subscribeNext { n in
+                gone = true
+            }
+        
+        XCTAssertTrue(gone)
+        XCTAssertTrue(child.property == nil)
+        XCTAssertTrue(latest.value == nil)
+    }
+    
+    func _testObserveWeak_Weak_Weak_Weak_middle_NilifyCorrectly() -> (HasWeakProperty, RxMutableBox<NSObject?>, Observable<Void>) {
+        var dealloc: Observable<Void>! = nil
+        var middle: HasWeakProperty! = HasWeakProperty()
+        var latest: RxMutableBox<NSObject?>! = RxMutableBox(nil)
+        var root: HasWeakProperty! = HasWeakProperty()
+        
+        autoreleasepool {
+            middle = HasWeakProperty()
+            var leaf = HasWeakProperty()
+            
+            root.property = middle
+            middle.property = leaf
+            
+            XCTAssertTrue(latest.value == nil)
+            
+            let observable: Observable<NSObject?> = root.rx_observeWeakly("property.property.property")
+            observable >- subscribeNext { n in
+                latest?.value = n
+            }
+            
+            XCTAssertTrue(latest.value == nil)
+            
+            let one = NSObject()
+            
+            leaf.property = one
+            
+            XCTAssertTrue(latest.value === one)
+            
+            dealloc = middle.rx_deallocating
+        }
+        return (root!, latest, dealloc)
+    }
+    
+    func testObserveWeak_Weak_Weak_Weak_middle_NilifyCorrectly() {
+        let (root, latest, deallocatedMiddle) = _testObserveWeak_Weak_Weak_Weak_middle_NilifyCorrectly()
+        
+        var gone = false
+        
+        deallocatedMiddle
+            >- subscribeCompleted {
+                gone = true
+            }
+        
+        XCTAssertTrue(gone)
+        XCTAssertTrue(root.property == nil)
+        XCTAssertTrue(latest.value == nil)
+    }
+    
+    func testObserveWeak_TargetDeallocated() {
+        var root: HasStrongProperty! = HasStrongProperty()
+        
+        let latest = RxMutableBox<String?>(nil)
+        
+        root.property = "a"
+        
+        XCTAssertTrue(latest.value == nil)
+        
+        root.rx_observeWeakly("property")
+            >- subscribeNext { (n: String?) in
+                latest.value = n
+            }
+       
+        XCTAssertTrue(latest.value == "a")
+     
+        var rootDeallocated = false
+        
+        root.rx_deallocated
+            >- subscribeCompleted {
+                rootDeallocated = true
+            }
+        
+        root = nil
+        
+        XCTAssertTrue(latest.value == nil)
+        XCTAssertTrue(rootDeallocated)
+    }
+    
+    func testObserveWeakWithOptions_ObserveNotInitialValue() {
+        var root: HasStrongProperty! = HasStrongProperty()
+        
+        let latest = RxMutableBox<String?>(nil)
+        
+        root.property = "a"
+        
+        XCTAssertTrue(latest.value == nil)
+        
+        root.rx_observeWeakly("property", options: .New)
+            >- subscribeNext { (n: String?) in
+                latest.value = n
+        }
+        
+        XCTAssertTrue(latest.value == nil)
+        
+        root.property = "b"
+
+        XCTAssertTrue(latest.value == "b")
+        
+        var rootDeallocated = false
+        
+        root.rx_deallocated
+            >- subscribeCompleted {
+                rootDeallocated = true
+        }
+        
+        root = nil
+        
+        XCTAssertTrue(latest.value == nil)
+        XCTAssertTrue(rootDeallocated)
+    }
+    
+    #if os(iOS)
+    
+    func testObserveWeak_ObserveCGRect() {
+        var root: HasStrongProperty! = HasStrongProperty()
+        
+        let latest = RxMutableBox<CGRect?>(nil)
+        
+        XCTAssertTrue(latest.value == nil)
+        
+        root.rx_observeWeakly("frame")
+            >- subscribeNext { (n: NSValue?) in
+                if let n = n {
+                    var frameValue = CGRect(x: 0, y: 0, width: 0, height: 0)
+                    n.getValue(&frameValue)
+                    latest.value = frameValue
+                }
+                else {
+                    latest.value = nil
+                }
+            }
+        XCTAssertTrue(latest.value == root.frame)
+        
+        root.frame = CGRectMake(0, 0, 0, 1)
+        
+        XCTAssertTrue(latest.value == CGRectMake(0, 0, 0, 1))
+        
+        var rootDeallocated = false
+        
+        root.rx_deallocated
+            >- subscribeCompleted {
+                rootDeallocated = true
+        }
+        
+        root = nil
+        
+        XCTAssertTrue(latest.value == nil)
+        XCTAssertTrue(rootDeallocated)
+    }
+    
+    func testObserveWeak_ObserveCGPoint() {
+        var root: HasStrongProperty! = HasStrongProperty()
+        
+        let latest = RxMutableBox<CGPoint?>(nil)
+        
+        XCTAssertTrue(latest.value == nil)
+        
+        root.rx_observeWeakly("point")
+            >- subscribeNext { (n: NSValue?) in
+                if let n = n {
+                    var point = CGPoint(x: 0, y: 0)
+                    n.getValue(&point)
+                    latest.value = point
+                }
+                else {
+                    latest.value = nil
+                }
+            }
+        
+        XCTAssertTrue(latest.value == root.point)
+        
+        root.point = CGPoint(x: -100, y: 1)
+        
+        XCTAssertTrue(latest.value == CGPoint(x: -100, y: 1))
+        
+        var rootDeallocated = false
+        
+        root.rx_deallocated
+            >- subscribeCompleted {
+                rootDeallocated = true
+        }
+        
+        root = nil
+        
+        XCTAssertTrue(latest.value == nil)
+        XCTAssertTrue(rootDeallocated)
+    }
+    
+    func testObserveWeak_ObserveInt() {
+        var root: HasStrongProperty! = HasStrongProperty()
+        
+        let latest = RxMutableBox<Int?>(nil)
+        
+        XCTAssertTrue(latest.value == nil)
+        
+        root.rx_observeWeakly("integer")
+            >- subscribeNext { (n: NSNumber?) in
+                latest.value = n?.integerValue
+            }
+        XCTAssertTrue(latest.value == root.integer)
+        
+        root.integer = 10
+        
+        XCTAssertTrue(latest.value == 10)
+        
+        var rootDeallocated = false
+        
+        root.rx_deallocated
+            >- subscribeCompleted {
+                rootDeallocated = true
+        }
+        
+        root = nil
+        
+        XCTAssertTrue(latest.value == nil)
+        XCTAssertTrue(rootDeallocated)
+    }
+    #endif
+    
+    func testObserveWeak_PropertyDoesntExist() {
+        var root: HasStrongProperty! = HasStrongProperty()
+        
+        var lastError: ErrorType? = nil
+        
+        root.rx_observeWeakly("notExist") as Observable<NSNumber?>
+            >- subscribeError { error in
+                lastError = error
+            }
+        
+        XCTAssertTrue(lastError != nil)
+        
+        var rootDeallocated = false
+        
+        root.rx_deallocated
+            >- subscribeCompleted {
+                rootDeallocated = true
+            }
+        
+        root = nil
+        
+        XCTAssertTrue(rootDeallocated)
+    }
+    
+    func testObserveWeak_HierarchyPropertyDoesntExist() {
+        var root: HasStrongProperty! = HasStrongProperty()
+        
+        var lastError: ErrorType? = nil
+        
+        root.rx_observeWeakly("property.notExist") as Observable<NSNumber?>
+            >- subscribeError { error in
+                lastError = error
+        }
+        
+        XCTAssertTrue(lastError == nil)
+        
+        root.property = HasStrongProperty()
+
+        XCTAssertTrue(lastError != nil)
+        
+        var rootDeallocated = false
+        
+        root.rx_deallocated
+            >- subscribeCompleted {
+                rootDeallocated = true
+            }
+        
+        root = nil
+        
+        XCTAssertTrue(rootDeallocated)
+    }
+}
+#endif

@@ -23,7 +23,7 @@ extension UIControl {
             return AnonymousDisposable {
                 controlTarget.dispose()
             }
-        }
+        } >- takeUntil(rx_deallocated)
     }
     
     func rx_value<T>(getValue: () -> T) -> Observable<T> {
@@ -38,7 +38,7 @@ extension UIControl {
             return AnonymousDisposable {
                 controlTarget.dispose()
             }
-        }
+        } >- takeUntil(rx_deallocated)
     }
 
     public func rx_subscribeEnabledTo(source: Observable<Bool>) -> Disposable {

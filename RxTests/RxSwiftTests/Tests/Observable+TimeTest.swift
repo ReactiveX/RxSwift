@@ -772,6 +772,7 @@ extension ObservableTimeTest {
         
         XCTAssertTrue(observer.messages.count == 10)
         
+        usleep(1000)
     }
     
     func testInterval_TimeSpan_Disposed() {

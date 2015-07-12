@@ -17,7 +17,7 @@ extension UIBarButtonItem {
                 sendNext(observer, ())
             }
             return target
-        }
+        } >- takeUntil(rx_deallocated)
     }
     
 }

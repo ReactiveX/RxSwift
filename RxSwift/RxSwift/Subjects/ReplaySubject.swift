@@ -273,10 +273,6 @@ public class ReplaySubject<Element> : SubjectType<Element, Element> {
     
     let implementation: ReplaySubjectImplementation<Element>
     
-    public init(firstElement: Element) {
-        implementation = ReplayOne(firstElement: firstElement)
-    }
-    
     public init(bufferSize: Int) {
         if bufferSize == 1 {
             implementation = ReplayOne()
