@@ -8,7 +8,7 @@
 
 import Foundation
 
-#if ENABLE_SWIZZLING
+#if !DISABLE_SWIZZLING
 class Deallocating : NSObject
                    , RXDeallocating {
     typealias DeallocatingAction = () -> ()

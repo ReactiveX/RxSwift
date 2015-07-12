@@ -21,17 +21,16 @@ import RxSwift
 #endif
 
 // This should be only used from `MainScheduler`
-class ControlTarget: NSObject, Disposable {
+class ControlTarget: RxTarget {
     typealias Callback = (Control) -> Void
     
     let selector: Selector = "eventHandler:"
     
-    let control: Control
+    unowned let control: Control
 #if os(iOS)
     let controlEvents: UIControlEvents
 #endif
     var callback: Callback?
-    var retainSelf: ControlTarget?
 #if os(iOS)
     init(control: Control, controlEvents: UIControlEvents, callback: Callback) {
         MainScheduler.ensureExecutingOnScheduler()
@@ -41,8 +40,6 @@ class ControlTarget: NSObject, Disposable {
         self.callback = callback
         
         super.init()
-        
-        self.retainSelf = self
         
         control.addTarget(self, action: selector, forControlEvents: controlEvents)
         
@@ -60,8 +57,6 @@ class ControlTarget: NSObject, Disposable {
         
         super.init()
         
-        self.retainSelf = self
-        
         control.target = self
         control.action = selector
         
@@ -78,8 +73,8 @@ class ControlTarget: NSObject, Disposable {
         }
     }
     
-    func dispose() {
-        MainScheduler.ensureExecutingOnScheduler()
+    override func dispose() {
+        super.dispose()
 #if os(iOS)
         self.control.removeTarget(self, action: self.selector, forControlEvents: self.controlEvents)
 #elseif os(OSX)
@@ -87,7 +82,5 @@ class ControlTarget: NSObject, Disposable {
         self.control.action = nil
 #endif
         self.callback = nil
-        
-        self.retainSelf = nil
     }
 }

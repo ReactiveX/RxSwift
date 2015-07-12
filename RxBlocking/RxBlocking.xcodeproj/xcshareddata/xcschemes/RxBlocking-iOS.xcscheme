@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "C8CDD7951B52ADC00043F0C5"
-               BuildableName = "RxBlocking-iOS.framework"
+               BuildableName = "RxBlocking.framework"
                BlueprintName = "RxBlocking-iOS"
                ReferencedContainer = "container:RxBlocking.xcodeproj">
             </BuildableReference>
@@ -47,7 +47,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C8CDD7951B52ADC00043F0C5"
-            BuildableName = "RxBlocking-iOS.framework"
+            BuildableName = "RxBlocking.framework"
             BlueprintName = "RxBlocking-iOS"
             ReferencedContainer = "container:RxBlocking.xcodeproj">
          </BuildableReference>
@@ -66,7 +66,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C8CDD7951B52ADC00043F0C5"
-            BuildableName = "RxBlocking-iOS.framework"
+            BuildableName = "RxBlocking.framework"
             BlueprintName = "RxBlocking-iOS"
             ReferencedContainer = "container:RxBlocking.xcodeproj">
          </BuildableReference>
@@ -84,7 +84,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C8CDD7951B52ADC00043F0C5"
-            BuildableName = "RxBlocking-iOS.framework"
+            BuildableName = "RxBlocking.framework"
             BlueprintName = "RxBlocking-iOS"
             ReferencedContainer = "container:RxBlocking.xcodeproj">
          </BuildableReference>

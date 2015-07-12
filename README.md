@@ -295,12 +295,38 @@ Creating new operators is also pretty straightforward.
 **iOS / OSX**
 
 ```swift
+
 extension NSObject {
 
-    public func rx_observe<Element>(path: String) -> Observable<Element?> { }
+    public var rx_deallocated: Observable<Void> {}
 
-    public func rx_observe<Element>(path: String, options: NSKeyValueObservingOptions) -> Observable<Element?> { }
+#if !DISABLE_SWIZZLING
 
+    public var rx_deallocating: Observable<Void> {}
+
+#endif
+
+}
+
+```
+
+
+```swift
+extension NSObject {
+
+    public func rx_observe<Element>(keyPath: String) -> Observable<Element?> {}
+
+    public func rx_observe<Element>(keyPath: String, options: NSKeyValueObservingOptions) -> Observable<Element?> {}
+
+    public func rx_observe<Element>(keyPath: String, options: NSKeyValueObservingOptions, retainSelf: Bool) -> Observable<Element?> {}
+
+#if !DISABLE_SWIZZLING
+
+    public func rx_observeWeakly<Element>(keyPath: String) -> Observable<Element?> {}
+
+    public func rx_observeWeakly<Element>(keyPath: String, options: NSKeyValueObservingOptions) -> Observable<Element?> {}
+
+#endif
 }
 ```
 
@@ -330,6 +356,44 @@ extension NSNotificationCenter {
 class DelegateProxy {
     
     public func observe(selector: Selector) -> Observable<[AnyObject]> {}
+
+}
+```
+
+```swift
+extension CLLocationManager {
+
+    public var rx_delegate: DelegateProxy {}
+
+    public var rx_didUpdateLocations: Observable<[CLLocation]!> {}
+
+    public var rx_didFailWithError: Observable<NSError!> {}
+
+    public var rx_didFinishDeferredUpdatesWithError: Observable<NSError!> {}
+
+    public var rx_didPauseLocationUpdates: Observable<Void> {}
+
+    public var rx_didResumeLocationUpdates: Observable<Void> {}
+
+    public var rx_didUpdateHeading: Observable<CLHeading!> {}
+
+    public var rx_didEnterRegion: Observable<CLRegion!> {}
+
+    public var rx_didExitRegion: Observable<CLRegion!> {}
+
+    public var rx_didDetermineStateForRegion: Observable<(state: CLRegionState, region: CLRegion!)> {}
+
+    public var rx_monitoringDidFailForRegionWithError: Observable<(region: CLRegion!, error: NSError!)> {}
+
+    public var rx_didStartMonitoringForRegion: Observable<CLRegion!> {}
+
+    public var rx_didRangeBeaconsInRegion: Observable<(beacons: [CLBeacon]!, region: CLBeaconRegion!)> {}
+
+    public var rx_rangingBeaconsDidFailForRegionWithError: Observable<(region: CLBeaconRegion!, error: NSError!)> {}
+
+    public var rx_didVisit: Observable<CLVisit!> {}
+
+    public var rx_didChangeAuthorizationStatus: Observable<CLAuthorizationStatus> {}
 
 }
 ```
@@ -483,6 +547,60 @@ extension UICollectionView {
     public func rx_modelSelected<T>() -> Observable<T> {}
 }
 ```
+
+```swift
+extension UIGestureRecognizer {
+
+    public var rx_event: Observable<UIGestureRecognizer> {}
+
+}
+```
+
+```swift
+extension UIActionSheet {
+
+    public var rx_delegate: DelegateProxy {}
+
+    public var rx_clickedButtonAtIndex: Observable<Int> {}
+
+    public var rx_willDismissWithButtonIndex: Observable<Int> {}
+
+    public var rx_didDismissWithButtonIndex: Observable<Int> {}
+
+}
+```
+
+
+```swift
+extension UIAlertView {
+
+    public var rx_delegate: DelegateProxy {}
+
+    public var rx_clickedButtonAtIndex: Observable<Int> {}
+
+    public var rx_willDismissWithButtonIndex: Observable<Int> {}
+    
+    public var rx_didDismissWithButtonIndex: Observable<Int> {}
+
+}
+```
+
+```swift
+extension UISegmentedControl {
+
+    public var rx_value: Observable<Int> {}
+
+}
+```
+
+```swift
+extension UISwitch {
+
+    public var rx_value: Observable<Bool> {}
+
+}
+```
+
 **OSX**
 
 ```swift

@@ -253,7 +253,7 @@ extension KVOObservableTests {
     }
 }
 
-#if ENABLE_SWIZZLING
+#if !DISABLE_SWIZZLING
 // test weak observe 
 
 extension KVOObservableTests {

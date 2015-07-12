@@ -10,15 +10,13 @@ import UIKit
 import RxSwift
 
 
-
-
 // This should be only used from `MainScheduler`
-class GestureTarget: NSObject, Disposable {
+class GestureTarget: RxTarget {
     typealias Callback = (UIGestureRecognizer) -> Void
     
     let selector = Selector("eventHandler:")
     
-    let gestureRecognizer: UIGestureRecognizer
+    unowned let gestureRecognizer: UIGestureRecognizer
     var callback: Callback?
     
     init(_ gestureRecognizer: UIGestureRecognizer, callback: Callback) {
@@ -41,15 +39,11 @@ class GestureTarget: NSObject, Disposable {
         }
     }
     
-    func dispose() {
-        MainScheduler.ensureExecutingOnScheduler()
+    override func dispose() {
+        super.dispose()
         
         self.gestureRecognizer.removeTarget(self, action: self.selector)
         self.callback = nil
-    }
-    
-    deinit {
-        dispose()
     }
 }
 

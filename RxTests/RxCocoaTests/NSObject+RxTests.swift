@@ -79,7 +79,7 @@ extension NSObjectTests {
     }
 }
 
-#if ENABLE_SWIZZLING
+#if !DISABLE_SWIZZLING
 // rx_deallocating
 extension NSObjectTests {
     func testDeallocating_ObservableFires() {

@@ -6,7 +6,6 @@
 //  Copyright (c) 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import UIKit
 import CoreLocation
 import RxSwift
 
@@ -65,13 +64,6 @@ extension CLLocationManager {
             }
     }
     
-    public var rx_shouldDisplayHeadingCalibration: Observable<Void> {
-        return rx_delegate.observe("locationManagerShouldDisplayHeadingCalibration:")
-            >- map { _ in
-                return ()
-            }
-    }
-    
     // MARK: Responding to Region Events
     
     public var rx_didEnterRegion: Observable<CLRegion!> {
@@ -111,6 +103,8 @@ extension CLLocationManager {
     
     // MARK: Responding to Ranging Events
     
+#if os(iOS)
+    
     public var rx_didRangeBeaconsInRegion: Observable<(beacons: [CLBeacon]!, region: CLBeaconRegion!)> {
         return rx_delegate.observe("locationManager:didRangeBeacons:inRegion:")
             >- map { a in
@@ -133,6 +127,8 @@ extension CLLocationManager {
                 return a[1] as? CLVisit
             }
     }
+    
+#endif
     
     // MARK: Responding to Authorization Changes
     

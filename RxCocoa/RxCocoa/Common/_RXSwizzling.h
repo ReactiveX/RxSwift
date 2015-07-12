@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-#if ENABLE_SWIZZLING
+#if !DISABLE_SWIZZLING
 
 extern void * const RXDeallocatingAssociatedAction;
 

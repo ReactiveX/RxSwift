@@ -14,7 +14,7 @@
 #import "_RX.h"
 #import "_RXSwizzling.h"
 
-#if ENABLE_SWIZZLING
+#if !DISABLE_SWIZZLING
 
 // inspired by
 // https://github.com/mikeash/MAZeroingWeakRef/blob/master/Source/MAZeroingWeakRef.m

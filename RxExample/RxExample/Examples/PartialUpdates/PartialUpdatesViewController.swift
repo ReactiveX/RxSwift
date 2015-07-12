@@ -79,7 +79,7 @@ class PartialUpdatesViewController : ViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    
+        
         let generateCustomSize = true
         let runAutomatically = false
         
@@ -108,14 +108,10 @@ class PartialUpdatesViewController : ViewController {
         self.sections.next(generator.sections)
         
         let tvAnimatedDataSource = RxTableViewSectionedAnimatedDataSource<NumberSection>()
-        //let cvAnimatedDataSource = RxCollectionViewSectionedReloadDataSource<NumberSection>()
-        let cvAnimatedDataSource = RxCollectionViewSectionedAnimatedDataSource<NumberSection>()
         let reloadDataSource = RxTableViewSectionedReloadDataSource<NumberSection>()
         
         skinTableViewDataSource(tvAnimatedDataSource)
         skinTableViewDataSource(reloadDataSource)
-        skinCollectionViewDataSource(cvAnimatedDataSource)
-        
         let newSections = self.sections >- skip(1)
         
         let initialState = [Changeset.initialValue(self.sections.value)]
@@ -135,9 +131,34 @@ class PartialUpdatesViewController : ViewController {
             >- reloadTableViewOutlet.rx_subscribeWithReactiveDataSource(reloadDataSource)
             >- disposeBag.addDisposable
         
-        updates
-            >- partialUpdatesCollectionViewOutlet.rx_subscribeWithReactiveDataSource(cvAnimatedDataSource)
-            >- disposeBag.addDisposable
+        // Collection view logic works, but when clicking fast because of internal bugs
+        // collection view will sometimes get confused. I know what you are thinking,
+        // but this is really not a bug in the algorithm. The generated changes are 
+        // pseudorandom, and crash happens depending on clicking speed.
+        //
+        // More info in `RxDataSourceStarterKit/README.md`
+        //
+        // If you want, turn this to true, just click slow :)
+        //
+        // While `useAnimatedUpdateForCollectionView` is false, you can click as fast as
+        // you want, table view doesn't seem to have same issues like collection view.
+        let useAnimatedUpdateForCollectionView = false
+        
+        if useAnimatedUpdateForCollectionView {
+            let cvAnimatedDataSource = RxCollectionViewSectionedAnimatedDataSource<NumberSection>()
+            skinCollectionViewDataSource(cvAnimatedDataSource)
+        
+            updates
+                >- partialUpdatesCollectionViewOutlet.rx_subscribeWithReactiveDataSource(cvAnimatedDataSource)
+                >- disposeBag.addDisposable
+        }
+        else {
+            let cvReloadDataSource = RxCollectionViewSectionedReloadDataSource<NumberSection>()
+            skinCollectionViewDataSource(cvReloadDataSource)
+            self.sections
+                >- partialUpdatesCollectionViewOutlet.rx_subscribeWithReactiveDataSource(cvReloadDataSource)
+                >- disposeBag.addDisposable
+        }
         
         // touches
         

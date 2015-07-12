@@ -502,7 +502,7 @@
 					"-framework",
 					XCTest,
 				);
-				OTHER_SWIFT_FLAGS = "-D DEBUG -D TRACE_RESOURCES -D ENABLE_SWIZZLING";
+				OTHER_SWIFT_FLAGS = "-D DEBUG -D TRACE_RESOURCES";
 				PRODUCT_NAME = RxTests;
 			};
 			name = Debug;
@@ -611,7 +611,7 @@
 					"-framework",
 					XCTest,
 				);
-				OTHER_SWIFT_FLAGS = "-D TRACE_RESOURCES -D ENABLE_SWIZZLING";
+				OTHER_SWIFT_FLAGS = "-D TRACE_RESOURCES";
 				PRODUCT_NAME = RxTests;
 			};
 			name = "Release-Tests";

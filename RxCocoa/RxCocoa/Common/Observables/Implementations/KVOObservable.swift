@@ -44,7 +44,7 @@ class KVOObservable<Element> : Producer<Element?>
     
 }
 
-#if ENABLE_SWIZZLING
+#if !DISABLE_SWIZZLING
 
 func observeWeaklyKeyPathFor(target: NSObject, # keyPath: String, # options: NSKeyValueObservingOptions) -> Observable<AnyObject?> {
     let components = keyPath.componentsSeparatedByString(".").filter { $0 != "self" }

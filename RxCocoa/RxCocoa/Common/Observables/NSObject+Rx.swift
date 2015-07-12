@@ -9,7 +9,7 @@
 import Foundation
 import RxSwift
 
-#if ENABLE_SWIZZLING
+#if !DISABLE_SWIZZLING
 var deallocatingSubjectTriggerContext: UInt8 = 0
 var deallocatingSubjectContext: UInt8 = 0
 #endif
@@ -56,7 +56,7 @@ extension NSObject {
     }
 }
 
-#if ENABLE_SWIZZLING
+#if !DISABLE_SWIZZLING
 // KVO
 extension NSObject {
     // Observes values on `keyPath` starting from `self` with `.Initial | .New` options.
@@ -97,7 +97,7 @@ extension NSObject {
         }
     }
     
-#if ENABLE_SWIZZLING
+#if !DISABLE_SWIZZLING
     // Sends element when object `dealloc` message is sent to `self`.
     // Completes when `self` was deallocated.
     //

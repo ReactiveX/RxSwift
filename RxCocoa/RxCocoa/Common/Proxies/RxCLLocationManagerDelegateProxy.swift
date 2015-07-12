@@ -6,7 +6,6 @@
 //  Copyright (c) 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import UIKit
 import CoreLocation
 import RxSwift
 

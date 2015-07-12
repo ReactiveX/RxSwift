@@ -9,10 +9,8 @@
 /* Begin PBXBuildFile section */
 		075F12FF1B4DD075000D7861 /* RxActionSheetDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 075F12FC1B4DD075000D7861 /* RxActionSheetDelegateProxy.swift */; };
 		075F13001B4DD075000D7861 /* RxAlertViewDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 075F12FD1B4DD075000D7861 /* RxAlertViewDelegateProxy.swift */; };
-		075F13011B4DD075000D7861 /* RxCLLocationManagerDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 075F12FE1B4DD075000D7861 /* RxCLLocationManagerDelegateProxy.swift */; };
 		075F13081B4DD100000D7861 /* UIGestureRecognizer+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 075F13021B4DD100000D7861 /* UIGestureRecognizer+Rx.swift */; };
 		075F13091B4DD100000D7861 /* UIActionSheet+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 075F13031B4DD100000D7861 /* UIActionSheet+Rx.swift */; };
-		075F130A1B4DD100000D7861 /* CLLocationManager+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 075F13041B4DD100000D7861 /* CLLocationManager+Rx.swift */; };
 		075F130B1B4DD100000D7861 /* UIAlertView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 075F13051B4DD100000D7861 /* UIAlertView+Rx.swift */; };
 		075F130C1B4DD100000D7861 /* UISegmentedControl+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 075F13061B4DD100000D7861 /* UISegmentedControl+Rx.swift */; };
 		075F130D1B4DD100000D7861 /* UISwitch+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 075F13071B4DD100000D7861 /* UISwitch+Rx.swift */; };
@@ -89,6 +87,12 @@
 		C8C46DB01B47FD0B0020D71E /* _RXDelegateProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = C8C46DAE1B47FD0B0020D71E /* _RXDelegateProxy.m */; };
 		C8C46DB11B47FD170020D71E /* _RXDelegateProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = C8C46DAE1B47FD0B0020D71E /* _RXDelegateProxy.m */; };
 		C8C46DB41B4800270020D71E /* _RXDelegateProxy.h in Headers */ = {isa = PBXBuildFile; fileRef = C8C46DAD1B47FD0B0020D71E /* _RXDelegateProxy.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C8CDD7D91B52DA570043F0C5 /* RxCLLocationManagerDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8CDD7D81B52DA570043F0C5 /* RxCLLocationManagerDelegateProxy.swift */; };
+		C8CDD7DA1B52DA570043F0C5 /* RxCLLocationManagerDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8CDD7D81B52DA570043F0C5 /* RxCLLocationManagerDelegateProxy.swift */; };
+		C8CDD7DC1B52DA790043F0C5 /* CLLocationManager+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8CDD7DB1B52DA790043F0C5 /* CLLocationManager+Rx.swift */; };
+		C8CDD7DD1B52DA790043F0C5 /* CLLocationManager+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8CDD7DB1B52DA790043F0C5 /* CLLocationManager+Rx.swift */; };
+		C8CDD7DF1B52DAA80043F0C5 /* RxTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8CDD7DE1B52DAA80043F0C5 /* RxTarget.swift */; };
+		C8CDD7E01B52DAA80043F0C5 /* RxTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8CDD7DE1B52DAA80043F0C5 /* RxTarget.swift */; };
 		C8D95C171B2F0CD700FA661F /* DelegateProxyType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D95C161B2F0CD700FA661F /* DelegateProxyType.swift */; };
 		C8D95C181B2F0CD700FA661F /* DelegateProxyType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D95C161B2F0CD700FA661F /* DelegateProxyType.swift */; };
 		CBEEA67A1B12364200176529 /* NSSlider+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBEEA6781B12323800176529 /* NSSlider+Rx.swift */; };
@@ -97,10 +101,8 @@
 /* Begin PBXFileReference section */
 		075F12FC1B4DD075000D7861 /* RxActionSheetDelegateProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxActionSheetDelegateProxy.swift; sourceTree = "<group>"; };
 		075F12FD1B4DD075000D7861 /* RxAlertViewDelegateProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxAlertViewDelegateProxy.swift; sourceTree = "<group>"; };
-		075F12FE1B4DD075000D7861 /* RxCLLocationManagerDelegateProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxCLLocationManagerDelegateProxy.swift; sourceTree = "<group>"; };
 		075F13021B4DD100000D7861 /* UIGestureRecognizer+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIGestureRecognizer+Rx.swift"; sourceTree = "<group>"; };
 		075F13031B4DD100000D7861 /* UIActionSheet+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIActionSheet+Rx.swift"; sourceTree = "<group>"; };
-		075F13041B4DD100000D7861 /* CLLocationManager+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CLLocationManager+Rx.swift"; sourceTree = "<group>"; };
 		075F13051B4DD100000D7861 /* UIAlertView+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIAlertView+Rx.swift"; sourceTree = "<group>"; };
 		075F13061B4DD100000D7861 /* UISegmentedControl+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UISegmentedControl+Rx.swift"; sourceTree = "<group>"; };
 		075F13071B4DD100000D7861 /* UISwitch+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UISwitch+Rx.swift"; sourceTree = "<group>"; };
@@ -158,6 +160,9 @@
 		C8AED7E81B3CC93600678DDE /* RxTableViewDataSourceType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxTableViewDataSourceType.swift; sourceTree = "<group>"; };
 		C8C46DAD1B47FD0B0020D71E /* _RXDelegateProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _RXDelegateProxy.h; sourceTree = "<group>"; };
 		C8C46DAE1B47FD0B0020D71E /* _RXDelegateProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _RXDelegateProxy.m; sourceTree = "<group>"; };
+		C8CDD7D81B52DA570043F0C5 /* RxCLLocationManagerDelegateProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxCLLocationManagerDelegateProxy.swift; sourceTree = "<group>"; };
+		C8CDD7DB1B52DA790043F0C5 /* CLLocationManager+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CLLocationManager+Rx.swift"; sourceTree = "<group>"; };
+		C8CDD7DE1B52DAA80043F0C5 /* RxTarget.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxTarget.swift; sourceTree = "<group>"; };
 		C8D95C161B2F0CD700FA661F /* DelegateProxyType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DelegateProxyType.swift; sourceTree = "<group>"; };
 		CBEEA6781B12323800176529 /* NSSlider+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSSlider+Rx.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -242,7 +247,6 @@
 				C813F95C1B48799200620334 /* RxSeachBarDelegateProxy.swift */,
 				075F12FC1B4DD075000D7861 /* RxActionSheetDelegateProxy.swift */,
 				075F12FD1B4DD075000D7861 /* RxAlertViewDelegateProxy.swift */,
-				075F12FE1B4DD075000D7861 /* RxCLLocationManagerDelegateProxy.swift */,
 			);
 			path = Proxies;
 			sourceTree = "<group>";
@@ -281,11 +285,14 @@
 		C8633AA91B093EDF00375D60 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				C8CDD7D71B52DA570043F0C5 /* Proxies */,
 				C86282301B36037100500DC3 /* Observables */,
+				C8CDD7DB1B52DA790043F0C5 /* CLLocationManager+Rx.swift */,
 				C80B562A1B2E242D008F915D /* DelegateProxy.swift */,
 				C8D95C161B2F0CD700FA661F /* DelegateProxyType.swift */,
 				C8633AAC1B093EDF00375D60 /* Logging.swift */,
 				C8633AAF1B093EDF00375D60 /* RxCocoa.swift */,
+				C8CDD7DE1B52DAA80043F0C5 /* RxTarget.swift */,
 				C8003BA61B51AB760002F09F /* _RXSwizzling.h */,
 				C8003BA71B51AB760002F09F /* _RXSwizzling.m */,
 				C8C46DAD1B47FD0B0020D71E /* _RXDelegateProxy.h */,
@@ -321,7 +328,6 @@
 				C88BB8E71B07F2BE0064D411 /* UITextField+Rx.swift */,
 				075F13021B4DD100000D7861 /* UIGestureRecognizer+Rx.swift */,
 				075F13031B4DD100000D7861 /* UIActionSheet+Rx.swift */,
-				075F13041B4DD100000D7861 /* CLLocationManager+Rx.swift */,
 				075F13051B4DD100000D7861 /* UIAlertView+Rx.swift */,
 				075F13061B4DD100000D7861 /* UISegmentedControl+Rx.swift */,
 				075F13071B4DD100000D7861 /* UISwitch+Rx.swift */,
@@ -357,6 +363,14 @@
 				C8A57F871B41530A00D5570A /* RxCollectionViewReactiveArrayDataSource.swift */,
 			);
 			path = DataSources;
+			sourceTree = "<group>";
+		};
+		C8CDD7D71B52DA570043F0C5 /* Proxies */ = {
+			isa = PBXGroup;
+			children = (
+				C8CDD7D81B52DA570043F0C5 /* RxCLLocationManagerDelegateProxy.swift */,
+			);
+			path = Proxies;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -491,6 +505,7 @@
 				C83F694C1B527229008356A0 /* DeinitAction.swift in Sources */,
 				C862823D1B36037100500DC3 /* NSNotificationCenter+Rx.swift in Sources */,
 				C84969CE1B47DE1D00E0BDB9 /* RxTableViewDelegateProxy.swift in Sources */,
+				C8CDD7DF1B52DAA80043F0C5 /* RxTarget.swift in Sources */,
 				C86282501B370C7E00500DC3 /* ItemEvents.swift in Sources */,
 				C83225471B1A9CCB0048EC77 /* UIDatePicker+Rx.swift in Sources */,
 				C83225451B1A9ACC0048EC77 /* UIBarButtonItem+Rx.swift in Sources */,
@@ -503,14 +518,12 @@
 				C84969CC1B47DE1D00E0BDB9 /* RxScrollViewDelegateProxy.swift in Sources */,
 				C88BB8E81B07F2BE0064D411 /* UIButton+Rx.swift in Sources */,
 				C8633AB41B093EDF00375D60 /* Logging.swift in Sources */,
-				075F13011B4DD075000D7861 /* RxCLLocationManagerDelegateProxy.swift in Sources */,
 				C87360AE1B51D9D400FDA532 /* Deallocating.swift in Sources */,
 				C813F95D1B48799200620334 /* RxSeachBarDelegateProxy.swift in Sources */,
 				075F13091B4DD100000D7861 /* UIActionSheet+Rx.swift in Sources */,
 				C862823F1B36037100500DC3 /* NSURLSession+Rx.swift in Sources */,
 				C88BB8EB1B07F2BE0064D411 /* UILabel+Rx.swift in Sources */,
 				C80B56221B2DFCA0008F915D /* NSManagedObjectContext+Rx.swift in Sources */,
-				075F130A1B4DD100000D7861 /* CLLocationManager+Rx.swift in Sources */,
 				C80A4E311B517F4E00C24BD5 /* _RXKVOObserver.m in Sources */,
 				C88BB8E91B07F2BE0064D411 /* UICollectionView+Rx.swift in Sources */,
 				075F130B1B4DD100000D7861 /* UIAlertView+Rx.swift in Sources */,
@@ -524,10 +537,12 @@
 				C88BB8EC1B07F2BE0064D411 /* UIScrollView+Rx.swift in Sources */,
 				C84969CA1B47DE1D00E0BDB9 /* RxCollectionViewDataSourceProxy.swift in Sources */,
 				075F12FF1B4DD075000D7861 /* RxActionSheetDelegateProxy.swift in Sources */,
+				C8CDD7D91B52DA570043F0C5 /* RxCLLocationManagerDelegateProxy.swift in Sources */,
 				C80B562B1B2E242D008F915D /* DelegateProxy.swift in Sources */,
 				653C8BF41B114EB600983087 /* UIControl+Rx.swift in Sources */,
 				C8A57F881B41530A00D5570A /* RxCollectionViewReactiveArrayDataSource.swift in Sources */,
 				C8AED7E91B3CC93600678DDE /* RxTableViewDataSourceType.swift in Sources */,
+				C8CDD7DC1B52DA790043F0C5 /* CLLocationManager+Rx.swift in Sources */,
 				C8D95C171B2F0CD700FA661F /* DelegateProxyType.swift in Sources */,
 				075F13081B4DD100000D7861 /* UIGestureRecognizer+Rx.swift in Sources */,
 			);
@@ -539,6 +554,7 @@
 			files = (
 				C83F69531B527C2F008356A0 /* _RX.m in Sources */,
 				C80B562C1B2E242D008F915D /* DelegateProxy.swift in Sources */,
+				C8CDD7E01B52DAA80043F0C5 /* RxTarget.swift in Sources */,
 				C86282401B36037100500DC3 /* NSURLSession+Rx.swift in Sources */,
 				C862823E1B36037100500DC3 /* NSNotificationCenter+Rx.swift in Sources */,
 				C87360B61B51E57500FDA532 /* _RXSwizzling.m in Sources */,
@@ -553,10 +569,12 @@
 				C83111721B491C9F001F3D67 /* KVOObservable.swift in Sources */,
 				C8633ABB1B093EDF00375D60 /* RxCocoa.swift in Sources */,
 				C87360AF1B51D9D400FDA532 /* Deallocating.swift in Sources */,
+				C8CDD7DD1B52DA790043F0C5 /* CLLocationManager+Rx.swift in Sources */,
 				C8633A981B08FD0600375D60 /* NSTextField+Rx.swift in Sources */,
 				C8D95C181B2F0CD700FA661F /* DelegateProxyType.swift in Sources */,
 				C8633A9A1B08FEBB00375D60 /* NSImageView+Rx.swift in Sources */,
 				CBEEA67A1B12364200176529 /* NSSlider+Rx.swift in Sources */,
+				C8CDD7DA1B52DA570043F0C5 /* RxCLLocationManagerDelegateProxy.swift in Sources */,
 				C83225491B1A9ECC0048EC77 /* NSControl+Rx.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -592,7 +610,6 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
-					"ENABLE_SWIZZLING=1",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -605,7 +622,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_SWIFT_FLAGS = "-D DEBUG -D TRACE_RESOURCES -D ENABLE_SWIZZLING";
+				OTHER_SWIFT_FLAGS = "-D DEBUG -D TRACE_RESOURCES";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -717,7 +734,6 @@
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_PREPROCESSOR_DEFINITIONS = "ENABLE_SWIZZLING=1";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -727,7 +743,7 @@
 				INFOPLIST_FILE = RxCocoa/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_SWIFT_FLAGS = "-D TRACE_RESOURCES -D ENABLE_SWIZZLING";
+				OTHER_SWIFT_FLAGS = "-D TRACE_RESOURCES";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
