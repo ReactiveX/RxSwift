@@ -11,7 +11,7 @@ import RxSwift
 import RxCocoa
 import CoreLocation
 
-class APIWrappersViewController: UIViewController {
+class APIWrappersViewController: ViewController {
     
     @IBOutlet weak var bbitem: UIBarButtonItem!
     
@@ -144,7 +144,7 @@ class APIWrappersViewController: UIViewController {
         // MARK: UITextField
         
         textField.rx_text
-            >- subscribeNext { x in 
+            >- subscribeNext { [unowned self] x in
                 println("UITextField text \(x)")
                 self.textField.resignFirstResponder()
             }
@@ -179,8 +179,6 @@ class APIWrappersViewController: UIViewController {
             
         
         manager.startUpdatingLocation()
-        
-        
         
     }
 

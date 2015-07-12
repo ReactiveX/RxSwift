@@ -697,12 +697,6 @@
 		C83367001AD0293900C668A7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Rx-cfkyozdvlaegqibzixjokeysigeo/Build/Products/Release-iphoneos",
-					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Rx-cfkyozdvlaegqibzixjokeysigeo/Build/Products/Debug-iphoneos",
-					"/Users/kzaher/Projects/Rx/RxSwift/build/Debug-iphoneos",
-				);
 				INFOPLIST_FILE = "RxExample/Info-iOS.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -714,12 +708,6 @@
 		C83367011AD0293900C668A7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Rx-cfkyozdvlaegqibzixjokeysigeo/Build/Products/Release-iphoneos",
-					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Rx-cfkyozdvlaegqibzixjokeysigeo/Build/Products/Debug-iphoneos",
-					"/Users/kzaher/Projects/Rx/RxSwift/build/Debug-iphoneos",
-				);
 				INFOPLIST_FILE = "RxExample/Info-iOS.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -732,7 +720,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_FRAMEWORKS_DIR)";
 				INFOPLIST_FILE = "RxExample/Info-OSX.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/../Frameworks @executable_path/../Frameworks";
 				OTHER_LDFLAGS = "-objc_loadall";
@@ -744,7 +731,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_FRAMEWORKS_DIR)";
 				INFOPLIST_FILE = "RxExample/Info-OSX.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/../Frameworks @executable_path/../Frameworks";
 				OTHER_LDFLAGS = "-objc_loadall";
@@ -797,12 +783,6 @@
 		C8DF92EE1B0B3DFA009BCF9A /* Release-Tests */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Rx-cfkyozdvlaegqibzixjokeysigeo/Build/Products/Release-iphoneos",
-					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Rx-cfkyozdvlaegqibzixjokeysigeo/Build/Products/Debug-iphoneos",
-					"/Users/kzaher/Projects/Rx/RxSwift/build/Debug-iphoneos",
-				);
 				INFOPLIST_FILE = "RxExample/Info-iOS.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -815,7 +795,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_FRAMEWORKS_DIR)";
 				INFOPLIST_FILE = "RxExample/Info-OSX.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/../Frameworks @executable_path/../Frameworks";
 				OTHER_LDFLAGS = "-objc_loadall";

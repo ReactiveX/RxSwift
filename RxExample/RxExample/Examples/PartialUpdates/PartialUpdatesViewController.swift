@@ -12,6 +12,10 @@ import RxSwift
 import RxCocoa
 import CoreData
 
+let generateCustomSize = true
+let runAutomatically = false
+let useAnimatedUpdateForCollectionView = false
+
 class PartialUpdatesViewController : ViewController {
     @IBOutlet weak var reloadTableViewOutlet: UITableView!
     @IBOutlet weak var partialUpdatesTableViewOutlet: UITableView!
@@ -80,9 +84,6 @@ class PartialUpdatesViewController : ViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let generateCustomSize = true
-        let runAutomatically = false
-        
         // For UICollectionView, if another animation starts before previous one is finished, it will sometimes crash :(
         // It's not deterministic (because Randomizer generates deterministic updates), and if you click fast
         // It sometimes will and sometimes wont crash, depending on tapping speed.
@@ -101,9 +102,9 @@ class PartialUpdatesViewController : ViewController {
             generator = Randomizer(rng: PseudoRandomGenerator(4, 3), sections: sections)
         }
 
-        if runAutomatically {
+        #if runAutomatically
             timer = NSTimer.scheduledTimerWithTimeInterval(0.6, target: self, selector: "randomize", userInfo: nil, repeats: true)
-        }
+        #endif
         
         self.sections.next(generator.sections)
         
@@ -142,23 +143,21 @@ class PartialUpdatesViewController : ViewController {
         //
         // While `useAnimatedUpdateForCollectionView` is false, you can click as fast as
         // you want, table view doesn't seem to have same issues like collection view.
-        let useAnimatedUpdateForCollectionView = false
-        
-        if useAnimatedUpdateForCollectionView {
+       
+        #if useAnimatedUpdateForCollectionView
             let cvAnimatedDataSource = RxCollectionViewSectionedAnimatedDataSource<NumberSection>()
             skinCollectionViewDataSource(cvAnimatedDataSource)
         
             updates
                 >- partialUpdatesCollectionViewOutlet.rx_subscribeWithReactiveDataSource(cvAnimatedDataSource)
                 >- disposeBag.addDisposable
-        }
-        else {
+        #else
             let cvReloadDataSource = RxCollectionViewSectionedReloadDataSource<NumberSection>()
             skinCollectionViewDataSource(cvReloadDataSource)
             self.sections
                 >- partialUpdatesCollectionViewOutlet.rx_subscribeWithReactiveDataSource(cvReloadDataSource)
                 >- disposeBag.addDisposable
-        }
+        #endif
         
         // touches
         

@@ -127,8 +127,8 @@ public func proxyForObject<P: DelegateProxyType>(object: AnyObject) -> P {
 }
 
 func installDelegate<P: DelegateProxyType>(proxy: P, delegate: AnyObject, retainDelegate: Bool, onProxyForObject object: AnyObject) -> Disposable {
+    weak var weakDelegate: AnyObject? = delegate
     
-    //assert(proxy === proxyForObject(object))
     assert(proxy.forwardToDelegate() === nil, "There is already a set delegate \(proxy.forwardToDelegate())")
     
     proxy.setForwardToDelegate(delegate, retainDelegate: retainDelegate)
@@ -143,7 +143,9 @@ func installDelegate<P: DelegateProxyType>(proxy: P, delegate: AnyObject, retain
     return AnonymousDisposable {
         MainScheduler.ensureExecutingOnScheduler()
         
-        assert(proxy.forwardToDelegate() === delegate, "Delegate was changed from time it was first set. Current \(proxy.forwardToDelegate()), and it should have been \(proxy)")
+        let delegate: AnyObject? = weakDelegate
+        
+        assert(delegate == nil || proxy.forwardToDelegate() === delegate, "Delegate was changed from time it was first set. Current \(proxy.forwardToDelegate()), and it should have been \(proxy)")
         
         proxy.setForwardToDelegate(nil, retainDelegate: retainDelegate)
     }
