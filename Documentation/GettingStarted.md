@@ -1,8 +1,8 @@
 **Content**
 
-1. [Getting started examples](#getting-started-examples)
+1. [Simple example]
 
-## Getting started examples
+## Simple example
 
 To understand these examples, you will need to understand to `>-` operator.
 
