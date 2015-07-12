@@ -9,7 +9,6 @@
 import Foundation
 import RxSwift
 
-
 class KVOObservable<Element> : Producer<Element?>
                              , KVOObservableProtocol {
     unowned var target: AnyObject
@@ -44,6 +43,8 @@ class KVOObservable<Element> : Producer<Element?>
     }
     
 }
+
+#if ENABLE_SWIZZLING
 
 func observeWeaklyKeyPathFor(target: NSObject, # keyPath: String, # options: NSKeyValueObservingOptions) -> Observable<AnyObject?> {
     let components = keyPath.componentsSeparatedByString(".").filter { $0 != "self" }
@@ -138,3 +139,4 @@ func observeWeaklyKeyPathFor(
         }
         >- switchLatest
 }
+#endif

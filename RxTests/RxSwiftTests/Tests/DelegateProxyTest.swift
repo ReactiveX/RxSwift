@@ -223,4 +223,31 @@ class DelegateProxyTest : RxTest {
         
         XCTAssertEqual(mock.messages, [])
     }
+    
+    func test_delegateProxyCompletesOnDealloc() {
+        var view: ThreeDSectionedView! = ThreeDSectionedView()
+        let mock = MockThreeDSectionedViewProtocol()
+        
+        view.delegate = mock
+        
+        let completed = RxMutableBox(false)
+        
+        autoreleasepool {
+            XCTAssertTrue(!mock.respondsToSelector("threeDView(threeDView:didGetXXX:"))
+            
+            let sentArgument = NSIndexPath(index: 0)
+            
+            var receivedArgument: NSIndexPath? = nil
+            
+            view.rx_proxy.observe("threeDView:didGetXXX:")
+                >- subscribeCompleted {
+                    completed.value = true
+                }
+            
+            view.delegate?.threeDView?(view, didGetXXX: sentArgument)
+        }
+        XCTAssertTrue(!completed.value)
+        view = nil
+        XCTAssertTrue(completed.value)
+    }
 }

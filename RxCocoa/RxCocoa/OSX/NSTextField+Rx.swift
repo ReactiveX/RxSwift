@@ -13,22 +13,19 @@ import RxSwift
 class RxTextFieldDelegate : DelegateProxy
                           , NSTextFieldDelegate
                           , DelegateProxyType {
-    typealias Observer = ObserverOf<String>
-    typealias DisposeKey = Bag<Observer>.KeyType
-    
-    var observers: Bag<Observer> = Bag()
-    
     let textField: NSTextField
+    let textSubject = ReplaySubject<String>(bufferSize: 1)
     
     required init(parentObject: AnyObject) {
         self.textField = parentObject as! NSTextField
         super.init(parentObject: parentObject)
+        sendNext(self.textSubject, self.textField.stringValue)
     }
     
     override func controlTextDidChange(notification: NSNotification) {
         let textField = notification.object as! NSTextField
         let nextValue = textField.stringValue
-        dispatchNext(nextValue, observers)
+        sendNext(self.textSubject, nextValue)
     }
 
     class func currentDelegateFor(object: AnyObject) -> AnyObject? {
@@ -67,11 +64,8 @@ extension NSTextField {
     }
     
     public var rx_text: Observable<String> {
-        return proxyObservableForObject(self, { (p: RxTextFieldDelegate, o) in
-            sendNext(o, self.stringValue)
-            return p.observers.put(o)
-        }, { p, d in
-            p.observers.removeKey(d)
-        })
+        let delegate = proxyForObject(self) as RxTextFieldDelegate
+        
+        return delegate.textSubject
     }
 }

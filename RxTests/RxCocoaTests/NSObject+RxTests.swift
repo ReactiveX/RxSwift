@@ -79,6 +79,7 @@ extension NSObjectTests {
     }
 }
 
+#if ENABLE_SWIZZLING
 // rx_deallocating
 extension NSObjectTests {
     func testDeallocating_ObservableFires() {
@@ -142,3 +143,4 @@ extension NSObjectTests {
         XCTAssertFalse(fired)
     }
 }
+#endif

@@ -253,6 +253,7 @@ extension KVOObservableTests {
     }
 }
 
+#if ENABLE_SWIZZLING
 // test weak observe 
 
 extension KVOObservableTests {
@@ -789,3 +790,4 @@ extension KVOObservableTests {
         XCTAssertTrue(rootDeallocated)
     }
 }
+#endif

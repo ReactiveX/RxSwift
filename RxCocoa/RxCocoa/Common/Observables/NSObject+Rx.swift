@@ -54,8 +54,11 @@ extension NSObject {
     public func rx_observe<Element>(keyPath: String, options: NSKeyValueObservingOptions, retainSelf: Bool) -> Observable<Element?> {
         return KVOObservable(object: self, keyPath: keyPath, options: options, retainTarget: retainSelf)
     }
-    
+}
+
 #if ENABLE_SWIZZLING
+// KVO
+extension NSObject {
     // Observes values on `keyPath` starting from `self` with `.Initial | .New` options.
     // Doesn't retain `self` and when `self` is deallocated, completes the sequence.
     public func rx_observeWeakly<Element>(keyPath: String) -> Observable<Element?> {
@@ -70,8 +73,8 @@ extension NSObject {
                 return n as? Element
             }
     }
-#endif
 }
+#endif
 
 // Dealloc
 extension NSObject {

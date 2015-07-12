@@ -12,35 +12,37 @@ import UIKit
 
 extension UIImageView {
     public func rx_subscribeImageTo(source: Observable<UIImage?>) -> Disposable {
-        return rx_subscribeImageTo(false)(source: source)
+        return rx_subscribeImageTo(false)(source)
     }
     
     public func rx_subscribeImageTo
         (animated: Bool)
-        (source: Observable<UIImage?>) -> Disposable {
-        return source.subscribe(AnonymousObserver { event in
-            MainScheduler.ensureExecutingOnScheduler()
-            
-            switch event {
-            case .Next(let boxedValue):
-                let value = boxedValue.value
-                if animated && value != nil {
-                    let transition = CATransition()
-                    transition.duration = 0.25
-                    transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
-                    transition.type = kCATransitionFade
-                    self.layer.addAnimation(transition, forKey: kCATransition)
+        -> Observable<UIImage?> -> Disposable {
+        return { source in
+            return source.subscribe(AnonymousObserver { event in
+                MainScheduler.ensureExecutingOnScheduler()
+                
+                switch event {
+                case .Next(let boxedValue):
+                    let value = boxedValue.value
+                    if animated && value != nil {
+                        let transition = CATransition()
+                        transition.duration = 0.25
+                        transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+                        transition.type = kCATransitionFade
+                        self.layer.addAnimation(transition, forKey: kCATransition)
+                    }
+                    else {
+                        self.layer.removeAllAnimations()
+                    }
+                    self.image = value
+                case .Error(let error):
+                    bindingErrorToInterface(error)
+                    break
+                case .Completed:
+                    break
                 }
-                else {
-                    self.layer.removeAllAnimations()
-                }
-                self.image = value
-            case .Error(let error):
-                bindingErrorToInterface(error)
-                break
-            case .Completed:
-                break
-            }
-        })
+            })
+        }
     }
 }
