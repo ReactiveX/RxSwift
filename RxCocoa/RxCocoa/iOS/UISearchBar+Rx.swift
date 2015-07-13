@@ -19,9 +19,14 @@ extension UISearchBar {
     }
     
     public var rx_searchText: Observable<String> {
-        return rx_delegate.observe("searchBar:textDidChange:")
-            >- map { a in
-                return a[1] as? String ?? ""
-            }
+        return defer { [weak self] in
+            let text = self?.text ?? ""
+            
+            return self?.rx_delegate.observe("searchBar:textDidChange:") ?? empty()
+                    >- map { a in
+                        return a[1] as? String ?? ""
+                    }
+                    >- startWith(text)
+        }
     }
 }
