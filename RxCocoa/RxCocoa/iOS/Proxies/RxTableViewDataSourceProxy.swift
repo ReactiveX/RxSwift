@@ -34,7 +34,7 @@ class RxTableViewDataSourceProxy : DelegateProxy
     
     unowned let tableView: UITableView
     
-    unowned var dataSource: UITableViewDataSource = tableViewDataSourceNotSet
+    var dataSource: UITableViewDataSource = tableViewDataSourceNotSet
     
     required init(parentObject: AnyObject) {
         self.tableView = parentObject as! UITableView
