@@ -96,6 +96,7 @@
 		C8D95C171B2F0CD700FA661F /* DelegateProxyType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D95C161B2F0CD700FA661F /* DelegateProxyType.swift */; };
 		C8D95C181B2F0CD700FA661F /* DelegateProxyType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D95C161B2F0CD700FA661F /* DelegateProxyType.swift */; };
 		CBEEA67A1B12364200176529 /* NSSlider+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBEEA6781B12323800176529 /* NSSlider+Rx.swift */; };
+		F333C2E21B5A503900F1D8D9 /* UITextView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = F333C2E11B5A503900F1D8D9 /* UITextView+Rx.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -165,6 +166,7 @@
 		C8CDD7DE1B52DAA80043F0C5 /* RxTarget.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxTarget.swift; sourceTree = "<group>"; };
 		C8D95C161B2F0CD700FA661F /* DelegateProxyType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DelegateProxyType.swift; sourceTree = "<group>"; };
 		CBEEA6781B12323800176529 /* NSSlider+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSSlider+Rx.swift"; sourceTree = "<group>"; };
+		F333C2E11B5A503900F1D8D9 /* UITextView+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITextView+Rx.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -326,6 +328,7 @@
 				493693661B173C8F006FA450 /* UISlider+Rx.swift */,
 				C88BB8E61B07F2BE0064D411 /* UITableView+Rx.swift */,
 				C88BB8E71B07F2BE0064D411 /* UITextField+Rx.swift */,
+				F333C2E11B5A503900F1D8D9 /* UITextView+Rx.swift */,
 				075F13021B4DD100000D7861 /* UIGestureRecognizer+Rx.swift */,
 				075F13031B4DD100000D7861 /* UIActionSheet+Rx.swift */,
 				075F13051B4DD100000D7861 /* UIAlertView+Rx.swift */,
@@ -531,6 +534,7 @@
 				C84969CD1B47DE1D00E0BDB9 /* RxTableViewDataSourceProxy.swift in Sources */,
 				C8633ABA1B093EDF00375D60 /* RxCocoa.swift in Sources */,
 				C88BB8ED1B07F2BE0064D411 /* UISearchBar+Rx.swift in Sources */,
+				F333C2E21B5A503900F1D8D9 /* UITextView+Rx.swift in Sources */,
 				C88BB8EA1B07F2BE0064D411 /* UIImageView+Rx.swift in Sources */,
 				C8C46DB01B47FD0B0020D71E /* _RXDelegateProxy.m in Sources */,
 				C83111711B491C9F001F3D67 /* KVOObservable.swift in Sources */,
