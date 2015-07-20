@@ -41,7 +41,7 @@ extension NSObject {
     // Observes values on `keyPath` starting from `self` with `.Initial | .New` options.
     // Retains `self` while observing.
     public func rx_observe<Element>(keyPath: String) -> Observable<Element?> {
-        return KVOObservable(object: self, keyPath: keyPath, options: .Initial | .New, retainTarget: true)
+        return KVOObservable(object: self, keyPath: keyPath, options: NSKeyValueObservingOptions.Initial.union(NSKeyValueObservingOptions.New), retainTarget: true)
     }
 
     // Observes values on `keyPath` starting from `self` with `options`
@@ -62,7 +62,7 @@ extension NSObject {
     // Observes values on `keyPath` starting from `self` with `.Initial | .New` options.
     // Doesn't retain `self` and when `self` is deallocated, completes the sequence.
     public func rx_observeWeakly<Element>(keyPath: String) -> Observable<Element?> {
-        return rx_observeWeakly(keyPath, options: .New | .Initial)
+        return rx_observeWeakly(keyPath, options: NSKeyValueObservingOptions.New.union(.Initial))
     }
     
     // Observes values on `keyPath` starting from `self` with `options`
@@ -90,8 +90,8 @@ extension NSObject {
                     sendNext(subject, ())
                     sendCompleted(subject)
                 }
-                objc_setAssociatedObject(self, &deallocatedSubjectContext, subject, objc_AssociationPolicy(OBJC_ASSOCIATION_RETAIN_NONATOMIC))
-                objc_setAssociatedObject(self, &deallocatedSubjectTriggerContext, deinitAction, objc_AssociationPolicy(OBJC_ASSOCIATION_RETAIN_NONATOMIC))
+                objc_setAssociatedObject(self, &deallocatedSubjectContext, subject, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+                objc_setAssociatedObject(self, &deallocatedSubjectTriggerContext, deinitAction, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
                 return subject
             }
         }
@@ -113,7 +113,7 @@ extension NSObject {
                     self,
                     &deallocatingSubjectContext,
                     subject,
-                    objc_AssociationPolicy(OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+                    .OBJC_ASSOCIATION_RETAIN_NONATOMIC
                 )
                 
                 let proxy = Deallocating {
@@ -127,12 +127,12 @@ extension NSObject {
                 objc_setAssociatedObject(self,
                     RXDeallocatingAssociatedAction,
                     proxy,
-                    objc_AssociationPolicy(OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+                    .OBJC_ASSOCIATION_RETAIN_NONATOMIC
                 )
                 objc_setAssociatedObject(self,
                     &deallocatingSubjectTriggerContext,
                     deinitAction,
-                    objc_AssociationPolicy(OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+                    .OBJC_ASSOCIATION_RETAIN_NONATOMIC
                 )
                 
                 RX_ensure_deallocating_swizzled(self.dynamicType)

@@ -8,6 +8,7 @@
 
 import XCTest
 import RxSwift
+import CoreLocation
 
 #if TRACE_RESOURCES
 #elseif RELEASE

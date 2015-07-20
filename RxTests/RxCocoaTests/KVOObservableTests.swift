@@ -30,7 +30,7 @@ class Parent : NSObject {
     init(callback: String? -> Void) {
         super.init()
         
-        self.rx_observe("val", options: .Initial | .New, retainSelf: false)
+        self.rx_observe("val", options: NSKeyValueObservingOptions.Initial.union(.New), retainSelf: false)
             >- subscribeNext(callback)
             >- disposeBag.addDisposable
     }
@@ -45,7 +45,7 @@ class Child : NSObject {
     
     init(parent: ParentWithChild, callback: String? -> Void) {
         super.init()
-        parent.rx_observe("val", options: .Initial | .New, retainSelf: false)
+        parent.rx_observe("val", options: NSKeyValueObservingOptions.Initial.union(.New), retainSelf: false)
             >- subscribeNext(callback)
             >- disposeBag.addDisposable
     }

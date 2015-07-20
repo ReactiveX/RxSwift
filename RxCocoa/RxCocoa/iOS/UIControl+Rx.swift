@@ -31,7 +31,7 @@ extension UIControl {
             
             sendNext(observer, getValue())
             
-            let controlTarget = ControlTarget(control: self, controlEvents: UIControlEvents.EditingChanged | .ValueChanged) { control in
+            let controlTarget = ControlTarget(control: self, controlEvents: UIControlEvents.EditingChanged.union(.ValueChanged)) { control in
                 sendNext(observer, getValue())
             }
             
