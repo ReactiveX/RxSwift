@@ -96,6 +96,8 @@
 		C8D95C171B2F0CD700FA661F /* DelegateProxyType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D95C161B2F0CD700FA661F /* DelegateProxyType.swift */; };
 		C8D95C181B2F0CD700FA661F /* DelegateProxyType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D95C161B2F0CD700FA661F /* DelegateProxyType.swift */; };
 		CBEEA67A1B12364200176529 /* NSSlider+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBEEA6781B12323800176529 /* NSSlider+Rx.swift */; };
+		F333C2EA1B5AF33E00F1D8D9 /* UITextView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = F333C2E91B5AF33E00F1D8D9 /* UITextView+Rx.swift */; };
+		F333C2EC1B5AF35400F1D8D9 /* RxTextViewDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = F333C2EB1B5AF35400F1D8D9 /* RxTextViewDelegateProxy.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -165,6 +167,8 @@
 		C8CDD7DE1B52DAA80043F0C5 /* RxTarget.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxTarget.swift; sourceTree = "<group>"; };
 		C8D95C161B2F0CD700FA661F /* DelegateProxyType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DelegateProxyType.swift; sourceTree = "<group>"; };
 		CBEEA6781B12323800176529 /* NSSlider+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSSlider+Rx.swift"; sourceTree = "<group>"; };
+		F333C2E91B5AF33E00F1D8D9 /* UITextView+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITextView+Rx.swift"; sourceTree = "<group>"; };
+		F333C2EB1B5AF35400F1D8D9 /* RxTextViewDelegateProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxTextViewDelegateProxy.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -247,6 +251,7 @@
 				C813F95C1B48799200620334 /* RxSearchBarDelegateProxy.swift */,
 				075F12FC1B4DD075000D7861 /* RxActionSheetDelegateProxy.swift */,
 				075F12FD1B4DD075000D7861 /* RxAlertViewDelegateProxy.swift */,
+				F333C2EB1B5AF35400F1D8D9 /* RxTextViewDelegateProxy.swift */,
 			);
 			path = Proxies;
 			sourceTree = "<group>";
@@ -326,6 +331,7 @@
 				493693661B173C8F006FA450 /* UISlider+Rx.swift */,
 				C88BB8E61B07F2BE0064D411 /* UITableView+Rx.swift */,
 				C88BB8E71B07F2BE0064D411 /* UITextField+Rx.swift */,
+				F333C2E91B5AF33E00F1D8D9 /* UITextView+Rx.swift */,
 				075F13021B4DD100000D7861 /* UIGestureRecognizer+Rx.swift */,
 				075F13031B4DD100000D7861 /* UIActionSheet+Rx.swift */,
 				075F13051B4DD100000D7861 /* UIAlertView+Rx.swift */,
@@ -500,6 +506,7 @@
 				C8003BA91B51AB760002F09F /* _RXSwizzling.m in Sources */,
 				C8A57F7A1B41431600D5570A /* RxCollectionViewDataSourceType.swift in Sources */,
 				C862823B1B36037100500DC3 /* NSObject+Rx.swift in Sources */,
+				F333C2EC1B5AF35400F1D8D9 /* RxTextViewDelegateProxy.swift in Sources */,
 				C87360B41B51E0A100FDA532 /* KVOObserver.swift in Sources */,
 				493693671B173C8F006FA450 /* UISlider+Rx.swift in Sources */,
 				C83F694C1B527229008356A0 /* DeinitAction.swift in Sources */,
@@ -531,6 +538,7 @@
 				C84969CD1B47DE1D00E0BDB9 /* RxTableViewDataSourceProxy.swift in Sources */,
 				C8633ABA1B093EDF00375D60 /* RxCocoa.swift in Sources */,
 				C88BB8ED1B07F2BE0064D411 /* UISearchBar+Rx.swift in Sources */,
+				F333C2EA1B5AF33E00F1D8D9 /* UITextView+Rx.swift in Sources */,
 				C88BB8EA1B07F2BE0064D411 /* UIImageView+Rx.swift in Sources */,
 				C8C46DB01B47FD0B0020D71E /* _RXDelegateProxy.m in Sources */,
 				C83111711B491C9F001F3D67 /* KVOObservable.swift in Sources */,
