@@ -276,7 +276,7 @@ extension ObservableTimeTest {
         
         let end = NSDate()
         
-        XCTAssertEqualWithAccuracy(0.5, end.timeIntervalSinceDate(start), 0.15)
+        XCTAssertEqualWithAccuracy(0.5, end.timeIntervalSinceDate(start), accuracy: 0.15)
         XCTAssertEqual(a.get()!, 0)
     }
 }
@@ -821,7 +821,7 @@ extension ObservableTimeTest {
         
         let end = NSDate()
         
-        XCTAssertEqualWithAccuracy(1, end.timeIntervalSinceDate(start), 0.1)
+        XCTAssertEqualWithAccuracy(1, end.timeIntervalSinceDate(start), accuracy: 0.1)
         XCTAssertEqual(a.get(), [0, 1])
     }
 }
