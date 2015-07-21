@@ -26,7 +26,7 @@
 		C80B56221B2DFCA0008F915D /* NSManagedObjectContext+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80B56211B2DFCA0008F915D /* NSManagedObjectContext+Rx.swift */; };
 		C80B562B1B2E242D008F915D /* DelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80B562A1B2E242D008F915D /* DelegateProxy.swift */; };
 		C80B562C1B2E242D008F915D /* DelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80B562A1B2E242D008F915D /* DelegateProxy.swift */; };
-		C813F95D1B48799200620334 /* RxSeachBarDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C813F95C1B48799200620334 /* RxSeachBarDelegateProxy.swift */; };
+		C813F95D1B48799200620334 /* RxSearchBarDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C813F95C1B48799200620334 /* RxSearchBarDelegateProxy.swift */; };
 		C81553E41A98AB4A00C63152 /* RxCocoa.h in Headers */ = {isa = PBXBuildFile; fileRef = C81553E31A98AB4A00C63152 /* RxCocoa.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C83111711B491C9F001F3D67 /* KVOObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83111701B491C9F001F3D67 /* KVOObservable.swift */; };
 		C83111721B491C9F001F3D67 /* KVOObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83111701B491C9F001F3D67 /* KVOObservable.swift */; };
@@ -115,7 +115,7 @@
 		C80A4E2F1B517F4E00C24BD5 /* _RXKVOObserver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _RXKVOObserver.m; sourceTree = "<group>"; };
 		C80B56211B2DFCA0008F915D /* NSManagedObjectContext+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSManagedObjectContext+Rx.swift"; sourceTree = "<group>"; };
 		C80B562A1B2E242D008F915D /* DelegateProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DelegateProxy.swift; sourceTree = "<group>"; };
-		C813F95C1B48799200620334 /* RxSeachBarDelegateProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxSeachBarDelegateProxy.swift; sourceTree = "<group>"; };
+		C813F95C1B48799200620334 /* RxSearchBarDelegateProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxSearchBarDelegateProxy.swift; sourceTree = "<group>"; };
 		C81553DE1A98AB4A00C63152 /* RxCocoa.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxCocoa.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C81553E21A98AB4A00C63152 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C81553E31A98AB4A00C63152 /* RxCocoa.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RxCocoa.h; sourceTree = "<group>"; };
@@ -244,7 +244,7 @@
 				C84969C71B47DE1D00E0BDB9 /* RxScrollViewDelegateProxy.swift */,
 				C84969C81B47DE1D00E0BDB9 /* RxTableViewDataSourceProxy.swift */,
 				C84969C91B47DE1D00E0BDB9 /* RxTableViewDelegateProxy.swift */,
-				C813F95C1B48799200620334 /* RxSeachBarDelegateProxy.swift */,
+				C813F95C1B48799200620334 /* RxSearchBarDelegateProxy.swift */,
 				075F12FC1B4DD075000D7861 /* RxActionSheetDelegateProxy.swift */,
 				075F12FD1B4DD075000D7861 /* RxAlertViewDelegateProxy.swift */,
 			);
@@ -519,7 +519,7 @@
 				C88BB8E81B07F2BE0064D411 /* UIButton+Rx.swift in Sources */,
 				C8633AB41B093EDF00375D60 /* Logging.swift in Sources */,
 				C87360AE1B51D9D400FDA532 /* Deallocating.swift in Sources */,
-				C813F95D1B48799200620334 /* RxSeachBarDelegateProxy.swift in Sources */,
+				C813F95D1B48799200620334 /* RxSearchBarDelegateProxy.swift in Sources */,
 				075F13091B4DD100000D7861 /* UIActionSheet+Rx.swift in Sources */,
 				C862823F1B36037100500DC3 /* NSURLSession+Rx.swift in Sources */,
 				C88BB8EB1B07F2BE0064D411 /* UILabel+Rx.swift in Sources */,

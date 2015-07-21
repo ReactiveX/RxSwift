@@ -1,5 +1,5 @@
 //
-//  RxSeachBarDelegateProxy.swift
+//  RxSearchBarDelegateProxy.swift
 //  RxCocoa
 //
 //  Created by Krunoslav Zaher on 7/4/15.

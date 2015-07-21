@@ -157,12 +157,25 @@ func setProxyDataSourceForObject<P: DelegateProxyType, Element>(object: AnyObjec
         let proxy: P = proxyForObject(object)
         let disposable = installDelegate(proxy, dataSource, retainDataSource, onProxyForObject: object)
         
-        let subscription = source.subscribe(AnonymousObserver { event in
+        // we should never let the subscriber to complete because it should retain data source
+        let subscription = concat(returnElements(source, never())).subscribe(AnonymousObserver { event in
             MainScheduler.ensureExecutingOnScheduler()
             
             assert(proxy === P.currentDelegateFor(object), "Proxy changed from the time it was first set.\nOriginal: \(proxy)\nExisting: \(P.currentDelegateFor(object))")
             
             binding(proxy, event)
+            
+            switch event {
+            case .Error(let error):
+#if DEBUG
+               rxFatalError("Binding error to data source: \(error)")
+#endif
+                disposable.dispose()
+            case .Completed:
+                disposable.dispose()
+            default:
+                break
+            }
         })
             
         return StableCompositeDisposable.create(subscription, disposable)
