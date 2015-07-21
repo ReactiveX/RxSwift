@@ -43,19 +43,19 @@ class APIWrappersViewController: ViewController {
         
         ash.rx_clickedButtonAtIndex
             >- subscribeNext { x in 
-                println("UIActionSheet clickedButtonAtIndex \(x)")
+                print("UIActionSheet clickedButtonAtIndex \(x)")
             }
             >- disposeBag.addDisposable
         
         ash.rx_willDismissWithButtonIndex
             >- subscribeNext { x in 
-                println("UIActionSheet willDismissWithButtonIndex \(x)")
+                print("UIActionSheet willDismissWithButtonIndex \(x)")
             }
             >- disposeBag.addDisposable
         
         ash.rx_didDismissWithButtonIndex
             >- subscribeNext { x in 
-                println("UIActionSheet didDismissWithButtonIndex \(x)")
+                print("UIActionSheet didDismissWithButtonIndex \(x)")
                 
                 av.show()
             }
@@ -66,19 +66,19 @@ class APIWrappersViewController: ViewController {
         
         av.rx_clickedButtonAtIndex
             >- subscribeNext { x in 
-                println("UIAlertView clickedButtonAtIndex \(x)")
+                print("UIAlertView clickedButtonAtIndex \(x)")
             }
             >- disposeBag.addDisposable
         
         av.rx_willDismissWithButtonIndex
             >- subscribeNext { x in 
-                println("UIAlertView willDismissWithButtonIndex \(x)")
+                print("UIAlertView willDismissWithButtonIndex \(x)")
             }
             >- disposeBag.addDisposable
         
         av.rx_didDismissWithButtonIndex
             >- subscribeNext { x in 
-                println("UIAlertView didDismissWithButtonIndex \(x)")
+                print("UIAlertView didDismissWithButtonIndex \(x)")
             }
             >- disposeBag.addDisposable
         
@@ -92,7 +92,7 @@ class APIWrappersViewController: ViewController {
         
         bbitem.rx_tap
             >- subscribeNext { x in 
-                println("UIBarButtonItem Tapped")
+                print("UIBarButtonItem Tapped")
             }
             >- disposeBag.addDisposable
         
@@ -100,7 +100,7 @@ class APIWrappersViewController: ViewController {
         
         segmentedControl.rx_value
             >- subscribeNext { x in 
-                println("UISegmentedControl value \(x)")
+                print("UISegmentedControl value \(x)")
             }
             >- disposeBag.addDisposable
         
@@ -109,7 +109,7 @@ class APIWrappersViewController: ViewController {
         
         switcher.rx_value
             >- subscribeNext { x in 
-                println("UISwitch value \(x)")
+                print("UISwitch value \(x)")
             }
             >- disposeBag.addDisposable
         
@@ -118,7 +118,7 @@ class APIWrappersViewController: ViewController {
         
         button.rx_tap
             >- subscribeNext { x in 
-                println("UIButton Tapped")
+                print("UIButton Tapped")
             }
             >- disposeBag.addDisposable
         
@@ -127,7 +127,7 @@ class APIWrappersViewController: ViewController {
         
         slider.rx_value
             >- subscribeNext { x in 
-                println("UISlider value \(x)")
+                print("UISlider value \(x)")
             }
             >- disposeBag.addDisposable
         
@@ -136,7 +136,7 @@ class APIWrappersViewController: ViewController {
         
         datePicker.rx_date
             >- subscribeNext { x in 
-                println("UIDatePicker date \(x)")
+                print("UIDatePicker date \(x)")
             }
             >- disposeBag.addDisposable
         
@@ -145,7 +145,7 @@ class APIWrappersViewController: ViewController {
         
         textField.rx_text
             >- subscribeNext { [unowned self] x in
-                println("UITextField text \(x)")
+                print("UITextField text \(x)")
                 self.textField.resignFirstResponder()
             }
             >- disposeBag.addDisposable
@@ -155,7 +155,7 @@ class APIWrappersViewController: ViewController {
         
         mypan.rx_event
             >- subscribeNext { x in 
-                println("UIGestureRecognizer event \(x)")
+                print("UIGestureRecognizer event \(x)")
             }
             >- disposeBag.addDisposable
         
@@ -167,13 +167,13 @@ class APIWrappersViewController: ViewController {
         
         manager.rx_didUpdateLocations
             >- subscribeNext { x in 
-                println("rx_didUpdateLocations \(x)")
+                print("rx_didUpdateLocations \(x)")
             }
             >- disposeBag.addDisposable
         
         manager.rx_didFailWithError
             >- subscribeNext { x in 
-                println("rx_didFailWithError \(x)")
+                print("rx_didFailWithError \(x)")
             }
             >- disposeBag.addDisposable
             

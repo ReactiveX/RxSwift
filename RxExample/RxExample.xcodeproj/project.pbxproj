@@ -558,8 +558,6 @@
 				C890A6581AEBD26B00AFF7E6 /* GitHubSignupViewController.swift in Sources */,
 				C8A57F741B40AF7C00D5570A /* Random.xcdatamodeld in Sources */,
 				075F13101B4E9D5A000D7861 /* APIWrappersViewController.swift in Sources */,
-				C88C786F1B3EB0A00061C5AB /* RxTableViewSectionedReloadDataSource.swift in Sources */,
-				C859B9AA1B45CB0900D012D7 /* RxCollectionViewSectionedAnimatedDataSource.swift in Sources */,
 				C83367311AD029AE00C668A7 /* Wireframe.swift in Sources */,
 				07E300071B14995F00F00100 /* TableViewController.swift in Sources */,
 				C859B9A41B45C5D900D012D7 /* PartialUpdatesViewController.swift in Sources */,
@@ -633,6 +631,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = RxExample/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_SWIFT_FLAGS = "-D DEBUG -D TRACE_RESOURCES";
@@ -675,6 +674,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = RxExample/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_SWIFT_FLAGS = "-D RELEASE";
 				PRODUCT_NAME = RxExample;
@@ -761,6 +761,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = RxExample/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_SWIFT_FLAGS = "-D TRACE_RESOURCES";
 				PRODUCT_NAME = RxExample;

@@ -18,7 +18,6 @@
 		653C8BF41B114EB600983087 /* UIControl+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653C8BF31B114EB600983087 /* UIControl+Rx.swift */; };
 		C8003BA81B51AB760002F09F /* _RXSwizzling.h in Headers */ = {isa = PBXBuildFile; fileRef = C8003BA61B51AB760002F09F /* _RXSwizzling.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C8003BA91B51AB760002F09F /* _RXSwizzling.m in Sources */ = {isa = PBXBuildFile; fileRef = C8003BA71B51AB760002F09F /* _RXSwizzling.m */; };
-		C8092BBB1AF50436008D9A2C /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8092BBA1AF50436008D9A2C /* CoreData.framework */; };
 		C80A4E301B517F4E00C24BD5 /* _RXKVOObserver.h in Headers */ = {isa = PBXBuildFile; fileRef = C80A4E2E1B517F4E00C24BD5 /* _RXKVOObserver.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C80A4E311B517F4E00C24BD5 /* _RXKVOObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = C80A4E2F1B517F4E00C24BD5 /* _RXKVOObserver.m */; };
 		C80A4E321B51814100C24BD5 /* _RXKVOObserver.h in Headers */ = {isa = PBXBuildFile; fileRef = C80A4E2E1B517F4E00C24BD5 /* _RXKVOObserver.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -67,7 +66,6 @@
 		C87360B41B51E0A100FDA532 /* KVOObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C87360B31B51E0A100FDA532 /* KVOObserver.swift */; };
 		C87360B51B51E0A100FDA532 /* KVOObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C87360B31B51E0A100FDA532 /* KVOObserver.swift */; };
 		C87360B61B51E57500FDA532 /* _RXSwizzling.m in Sources */ = {isa = PBXBuildFile; fileRef = C8003BA71B51AB760002F09F /* _RXSwizzling.m */; };
-		C88BB8851B07E6130064D411 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8092BBA1AF50436008D9A2C /* CoreData.framework */; };
 		C88BB8861B07E6130064D411 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8A56BCD1AD744FD00B4673B /* RxSwift.framework */; };
 		C88BB8881B07E6130064D411 /* RxCocoa.h in Headers */ = {isa = PBXBuildFile; fileRef = C81553E31A98AB4A00C63152 /* RxCocoa.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C88BB8E81B07F2BE0064D411 /* UIButton+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88BB8E01B07F2BE0064D411 /* UIButton+Rx.swift */; };
@@ -112,7 +110,6 @@
 		653C8BF31B114EB600983087 /* UIControl+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIControl+Rx.swift"; sourceTree = "<group>"; };
 		C8003BA61B51AB760002F09F /* _RXSwizzling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _RXSwizzling.h; sourceTree = "<group>"; };
 		C8003BA71B51AB760002F09F /* _RXSwizzling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _RXSwizzling.m; sourceTree = "<group>"; };
-		C8092BBA1AF50436008D9A2C /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		C80A4E2E1B517F4E00C24BD5 /* _RXKVOObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _RXKVOObserver.h; sourceTree = "<group>"; };
 		C80A4E2F1B517F4E00C24BD5 /* _RXKVOObserver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _RXKVOObserver.m; sourceTree = "<group>"; };
 		C80B56211B2DFCA0008F915D /* NSManagedObjectContext+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSManagedObjectContext+Rx.swift"; sourceTree = "<group>"; };
@@ -625,6 +622,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = RxCocoa/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_SWIFT_FLAGS = "-D DEBUG -D TRACE_RESOURCES";
@@ -670,6 +668,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = RxCocoa/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = "";
@@ -747,6 +746,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = RxCocoa/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_SWIFT_FLAGS = "-D TRACE_RESOURCES";
 				PRODUCT_NAME = "$(TARGET_NAME)";
