@@ -18,6 +18,10 @@ class ObservableTimeTest : RxTest {
     }
     
     override func tearDown() {
+    #if TRACE_RESOURCES
+        usleep(500) // wait 0.5 ms for proper scheduler disposal
+    #endif
+        
         super.tearDown()
     }
 }
@@ -272,7 +276,7 @@ extension ObservableTimeTest {
         
         let end = NSDate()
         
-        XCTAssertEqualWithAccuracy(0.5, end.timeIntervalSinceDate(start), 0.1)
+        XCTAssertEqualWithAccuracy(0.5, end.timeIntervalSinceDate(start), 0.15)
         XCTAssertEqual(a.get()!, 0)
     }
 }

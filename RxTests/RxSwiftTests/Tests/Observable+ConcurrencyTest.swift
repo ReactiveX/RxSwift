@@ -494,6 +494,8 @@ class ObservableConcurrentSchedulerConcurrencyTest: ObservableConcurrencyTestBas
             compositeDisposable.addDisposable(runConcurentSchedulerTest(scheduler, test: test))
         }
         
+        usleep(1000) // sleep 1ms
+        
         compositeDisposable.dispose()
     }
    
