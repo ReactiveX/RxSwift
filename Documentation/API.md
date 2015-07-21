@@ -214,6 +214,16 @@ extension UITextField {
 ```
 
 ```swift
+extension UITextView {
+    
+    override func rx_createDelegateProxy() -> RxScrollViewDelegateProxy { }
+    
+    public var rx_text: Observable<String> { }
+    
+}
+```
+
+```swift
 extension UISearchBar {
 
     public var rx_delegate: DelegateProxy {}
