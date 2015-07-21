@@ -480,7 +480,7 @@ class ObservableConcurrentSchedulerConcurrencyTest: ObservableConcurrencyTestBas
         
         //scheduler.operationQueue.waitUntilAllOperationsAreFinished()
         // stupid solution, but works
-        NSThread.sleepForTimeInterval(0.01)
+        NSThread.sleepForTimeInterval(0.05)
         
         return disposable
     }
@@ -639,13 +639,8 @@ class ObservableConcurrentSchedulerConcurrencyTest: ObservableConcurrencyTestBas
             }
         ])
     }
-   
-    // It could be maybe written nicer, but the assumptions are reasonable.
-    // If first element processing takes 100ms, that should be more then enough
-    // for second element to pass by it if operator isn't serializing elements.
-    // If that doesn't happen, then it looks like scheduler is serializing
-    // processing of elements.
-    func testObserveOn_ConcurrentSchedulerIsSerialized() {
+    
+    func _testObserveOn_ConcurrentSchedulerIsSerialized() {
         let xs = PrimitiveHotObservable<Int>()
         let observer = PrimitiveMockObserver<Int>()
         
@@ -661,7 +656,7 @@ class ObservableConcurrentSchedulerConcurrencyTest: ObservableConcurrencyTestBas
                             executed = true
                         }
                         return v
-                    }
+                }
                 let subscription = res.subscribe(observer)
                 XCTAssert(xs.subscriptions == [SubscribedToHotObservable])
                 sendNext(xs, 0)
@@ -679,9 +674,20 @@ class ObservableConcurrentSchedulerConcurrencyTest: ObservableConcurrencyTestBas
                 XCTAssert(xs.subscriptions == [UnsunscribedFromHotObservable])
                 return NopDisposable.instance
             }
-        ])
+            ])
         
         XCTAssert(executed)
+    }
+   
+    // It could be maybe written nicer, but the assumptions are reasonable.
+    // If first element processing takes 100ms, that should be more then enough
+    // for second element to pass by it if operator isn't serializing elements.
+    // If that doesn't happen, then it looks like scheduler is serializing
+    // processing of elements.
+    func testObserveOn_ConcurrentSchedulerIsSerialized() {
+        for i in 0 ..< 10 {
+            _testObserveOn_ConcurrentSchedulerIsSerialized()
+        }
     }
     
     func testObserveOn_Error() {

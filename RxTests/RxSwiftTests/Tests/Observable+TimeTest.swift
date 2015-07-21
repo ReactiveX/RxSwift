@@ -9,6 +9,7 @@
 
 import Foundation
 import RxSwift
+import RxBlocking
 import XCTest
 
 class ObservableTimeTest : RxTest {
@@ -258,6 +259,21 @@ extension ObservableTimeTest {
         ]
         
         XCTAssertEqual(xs.subscriptions, subscriptions)
+    }
+    
+    func test_ThrottleWithRealScheduler() {
+        let scheduler = ConcurrentDispatchQueueScheduler(globalConcurrentQueuePriority: .Default)
+     
+        let start = NSDate()
+        
+        let a = concat(from([just(0), never()]))
+            >- throttle(0.5, scheduler)
+            >- first
+        
+        let end = NSDate()
+        
+        XCTAssertEqualWithAccuracy(0.5, end.timeIntervalSinceDate(start), 0.1)
+        XCTAssertEqual(a.get()!, 0)
     }
 }
 
@@ -788,6 +804,21 @@ extension ObservableTimeTest {
         
         XCTAssertEqual(res.messages, correct)
         
+    }
+    
+    func test_IntervalWithRealScheduler() {
+        let scheduler = ConcurrentDispatchQueueScheduler(globalConcurrentQueuePriority: .Default)
+        
+        let start = NSDate()
+        
+        let a = interval(0.5, scheduler)
+            >- take(2)
+            >- toArray
+        
+        let end = NSDate()
+        
+        XCTAssertEqualWithAccuracy(1, end.timeIntervalSinceDate(start), 0.1)
+        XCTAssertEqual(a.get(), [0, 1])
     }
 }
 
