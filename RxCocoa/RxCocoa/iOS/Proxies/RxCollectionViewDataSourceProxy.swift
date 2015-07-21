@@ -32,7 +32,7 @@ class RxCollectionViewDataSourceProxy : DelegateProxy
     
     unowned let collectionView: UICollectionView
     
-    unowned var dataSource: UICollectionViewDataSource = collectionViewDataSourceNotSet
+    var dataSource: UICollectionViewDataSource = collectionViewDataSourceNotSet
     
     required init(parentObject: AnyObject) {
         self.collectionView = parentObject as! UICollectionView
