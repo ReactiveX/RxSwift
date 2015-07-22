@@ -9,7 +9,7 @@
 import Foundation
 
 public struct ObserverOf<ElementType> {
-    typealias Element = ElementType
+    public typealias Element = ElementType
     
     private typealias ObserverSinkType = (Event<Element>) -> Void
 

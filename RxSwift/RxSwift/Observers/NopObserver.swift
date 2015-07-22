@@ -9,7 +9,7 @@
 import Foundation
 
 public class NopObserver<ElementType> : ObserverType {
-    typealias Element = ElementType
+    public typealias Element = ElementType
     
     public init() {
         

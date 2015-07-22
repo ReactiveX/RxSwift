@@ -9,9 +9,9 @@
 import Foundation
 
 public class AnonymousObserver<ElementType> : ObserverBase<ElementType> {
-    typealias Element = ElementType
+    public typealias Element = ElementType
     
-    typealias EventHandler = Event<Element> -> Void
+    public typealias EventHandler = Event<Element> -> Void
     
     private let eventHandler : EventHandler
     
@@ -38,9 +38,9 @@ public class AnonymousObserver<ElementType> : ObserverBase<ElementType> {
 }
 
 public class AnonymousSafeObserver<ElementType> : Observer<ElementType> {
-    typealias Element = ElementType
+    public typealias Element = ElementType
     
-    typealias EventHandler = Event<Element> -> Void
+    public typealias EventHandler = Event<Element> -> Void
     
     private let eventHandler : EventHandler
     private let disposable: Disposable
