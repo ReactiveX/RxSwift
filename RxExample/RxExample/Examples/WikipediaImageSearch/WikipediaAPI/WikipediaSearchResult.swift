@@ -30,8 +30,8 @@ struct WikipediaSearchResult: CustomStringConvertible {
             return failure(WikipediaParseError)
         }
         
-        let titleAndDescription = Array(Zip2(rootArrayTyped[0], rootArrayTyped[1]))
-        let titleDescriptionAndUrl: [((AnyObject, AnyObject), AnyObject)] = Array(Zip2(titleAndDescription, rootArrayTyped[2]))
+        let titleAndDescription = Array(Zip2Sequence(rootArrayTyped[0], rootArrayTyped[1]))
+        let titleDescriptionAndUrl: [((AnyObject, AnyObject), AnyObject)] = Array(Zip2Sequence(titleAndDescription, rootArrayTyped[2]))
         
         let searchResults: [RxResult<WikipediaSearchResult>] = titleDescriptionAndUrl.map ( { result -> RxResult<WikipediaSearchResult> in
             let (first, url) = result
