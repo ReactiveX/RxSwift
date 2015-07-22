@@ -20,13 +20,9 @@ public enum RxErrorCode : Int {
 // just temporary
 
 public func errorEquals(lhs: ErrorType, _ rhs: ErrorType) -> Bool {
-    if let error1 = lhs as? NSError {
-        if let error2 = rhs as? NSError {
-            return error1 === error2
-        }
-    }
-    
-    return false
+    let error1 = lhs as NSError
+    let error2 = rhs as NSError
+    return error1 === error2
 }
 
 public let UnknownError  = NSError(domain: RxErrorDomain, code: RxErrorCode.Unknown.rawValue, userInfo: nil)
