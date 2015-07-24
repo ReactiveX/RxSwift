@@ -16,7 +16,7 @@ public class ObservableBase<Element> : Observable<Element> {
         let disposable = subscribeCore(ObserverOf(autoDetachObserver))
         autoDetachObserver.setDisposable(disposable)
         
-        return disposable
+        return autoDetachObserver
     }
     
     func subscribeCore(observer: ObserverOf<Element>) -> Disposable {

@@ -85,6 +85,8 @@
 		C8AF26EF1B499E5C00131C03 /* DelegateProxyTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8AF26EE1B499E5C00131C03 /* DelegateProxyTest.swift */; };
 		C8AF26F01B499E5C00131C03 /* DelegateProxyTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8AF26EE1B499E5C00131C03 /* DelegateProxyTest.swift */; };
 		C8B5BEA11B4A6A82000D732C /* RxCocoaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B5BEA01B4A6A82000D732C /* RxCocoaTests.swift */; };
+		C8B605EC1B6260A10044410E /* AnonymousObservable+Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B605EB1B6260A10044410E /* AnonymousObservable+Test.swift */; };
+		C8B605ED1B6260A10044410E /* AnonymousObservable+Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B605EB1B6260A10044410E /* AnonymousObservable+Test.swift */; };
 		C8B787FA1AF55CDE00206D02 /* Observable+ConcurrencyTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B787F91AF55CDE00206D02 /* Observable+ConcurrencyTest.swift */; };
 		C8CDD7CB1B52B0730043F0C5 /* RxBlocking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8CDD7CA1B52B0730043F0C5 /* RxBlocking.framework */; };
 		C8CDD7D41B52BEC40043F0C5 /* Observable+BlockingTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8CDD7D31B52BEC40043F0C5 /* Observable+BlockingTest.swift */; };
@@ -143,6 +145,7 @@
 		C897EC491B1123DA009C2CB0 /* Observable+MultipleTest+Zip.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Observable+MultipleTest+Zip.swift"; sourceTree = "<group>"; };
 		C8AF26EE1B499E5C00131C03 /* DelegateProxyTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DelegateProxyTest.swift; sourceTree = "<group>"; };
 		C8B5BEA01B4A6A82000D732C /* RxCocoaTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxCocoaTests.swift; sourceTree = "<group>"; };
+		C8B605EB1B6260A10044410E /* AnonymousObservable+Test.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AnonymousObservable+Test.swift"; sourceTree = "<group>"; };
 		C8B787F91AF55CDE00206D02 /* Observable+ConcurrencyTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Observable+ConcurrencyTest.swift"; sourceTree = "<group>"; };
 		C8CDD7CA1B52B0730043F0C5 /* RxBlocking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RxBlocking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8CDD7D31B52BEC40043F0C5 /* Observable+BlockingTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Observable+BlockingTest.swift"; sourceTree = "<group>"; };
@@ -281,25 +284,26 @@
 		C811083F1AF50E2A001C13E4 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				C8B605EB1B6260A10044410E /* AnonymousObservable+Test.swift */,
 				C81108401AF50E2A001C13E4 /* AssumptionsTest.swift */,
+				C897EC3A1B10E000009C2CB0 /* BehaviorSubjectTest.swift */,
 				C81108411AF50E2A001C13E4 /* ConcurrencyTest.swift */,
+				C8AF26EE1B499E5C00131C03 /* DelegateProxyTest.swift */,
 				C81108421AF50E2A001C13E4 /* DisposableTest.swift */,
 				C81108431AF50E2A001C13E4 /* Observable+AggregateTest.swift */,
 				C81108441AF50E2A001C13E4 /* Observable+BindingTest.swift */,
 				C8CDD7D31B52BEC40043F0C5 /* Observable+BlockingTest.swift */,
 				C8B787F91AF55CDE00206D02 /* Observable+ConcurrencyTest.swift */,
+				C81108471AF50E2A001C13E4 /* Observable+MultipleTest.swift */,
 				C81108451AF50E2A001C13E4 /* Observable+MultipleTest+CombineLatest.swift */,
 				C81108461AF50E2A001C13E4 /* Observable+MultipleTest+CombineLatest.tt */,
 				C897EC491B1123DA009C2CB0 /* Observable+MultipleTest+Zip.swift */,
 				C897EC461B112070009C2CB0 /* Observable+MultipleTest+Zip.tt */,
-				C81108471AF50E2A001C13E4 /* Observable+MultipleTest.swift */,
 				C81108481AF50E2A001C13E4 /* Observable+SingleTest.swift */,
 				C81108491AF50E2A001C13E4 /* Observable+StandardSequenceOperatorsTest.swift */,
 				C811084A1AF50E2A001C13E4 /* Observable+TimeTest.swift */,
 				C811084B1AF50E2A001C13E4 /* QueueTests.swift */,
 				C814CEA21AF5622600E98087 /* VariableTest.swift */,
-				C897EC3A1B10E000009C2CB0 /* BehaviorSubjectTest.swift */,
-				C8AF26EE1B499E5C00131C03 /* DelegateProxyTest.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -435,6 +439,7 @@
 				C81108521AF50E2A001C13E4 /* MockObserver.swift in Sources */,
 				C8633AE51B0A9FF300375D60 /* KVOObservableTests.swift in Sources */,
 				C811085C1AF50E2A001C13E4 /* TestExtensions.swift in Sources */,
+				C8B605EC1B6260A10044410E /* AnonymousObservable+Test.swift in Sources */,
 				C811085D1AF50E2A001C13E4 /* AssumptionsTest.swift in Sources */,
 				C81108501AF50E2A001C13E4 /* ConnectableObservable.swift in Sources */,
 				C814CEA31AF5622600E98087 /* VariableTest.swift in Sources */,
@@ -466,6 +471,7 @@
 				C88BB8A01B07E64B0064D411 /* Observable+StandardSequenceOperatorsTest.swift in Sources */,
 				C88BB8A11B07E64B0064D411 /* Observable+MultipleTest.swift in Sources */,
 				C81CC92C1B513FD400915606 /* NSObject+RxTests.swift in Sources */,
+				C8B605ED1B6260A10044410E /* AnonymousObservable+Test.swift in Sources */,
 				C88BB8A21B07E64B0064D411 /* ColdObservable.swift in Sources */,
 				C88BB8A31B07E64B0064D411 /* HotObservable.swift in Sources */,
 				C8FDC5F91B2B5B7E0065F8D9 /* ElementIndexPair.swift in Sources */,

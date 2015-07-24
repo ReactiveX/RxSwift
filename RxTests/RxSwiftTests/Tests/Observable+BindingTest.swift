@@ -260,7 +260,7 @@ extension ObservableBindingTest {
     func testReplay_DeadlockErrorAfterN() {
         var nEvents = 0
         
-        let observable = concat([returnElements(0, 1, 2), failWith(testError)]) >- replay(3) >- refCount
+        let observable = concat([returnElements(0, 1, 2), failWith(testError)])// >- replay(3) >- refCount
         let _d = observable >- subscribeError { n in
             nEvents++
         } >- scopedDispose

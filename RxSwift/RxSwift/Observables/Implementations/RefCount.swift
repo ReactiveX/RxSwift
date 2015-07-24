@@ -25,9 +25,8 @@ class RefCount_<O: ObserverType> : Sink<O>, ObserverType {
         
         self.parent.lock.performLocked {
             if state.count == 0 {
-                let disposable = self.parent.source.connect()
                 self.parent.state.count = 1
-                self.parent.state.connectableSubscription = disposable
+                self.parent.state.connectableSubscription = self.parent.source.connect()
             }
             else {
                 self.parent.state.count = state.count + 1
