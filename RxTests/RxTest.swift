@@ -59,6 +59,10 @@ class RxTest: XCTestCase {
         static let disposed = 1000
     }
     
+    func sleep(time: NSTimeInterval) {
+       NSThread.sleepForTimeInterval(time)
+    }
+    
     private var startResourceCount: Int32 = 0
     
     override func setUp() {

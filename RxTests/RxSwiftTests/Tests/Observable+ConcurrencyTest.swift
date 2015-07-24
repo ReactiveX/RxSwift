@@ -21,7 +21,7 @@ class ObservableConcurrencyTestBase : RxTest {
     
     override func tearDown() {
 #if TRACE_RESOURCES
-        usleep(500) // wait 0.5 ms for proper scheduler disposal
+        sleep(0.1) // wait 100 ms for proper scheduler disposal
 #endif
         super.tearDown()
     }
@@ -266,7 +266,7 @@ extension ObservableConcurrencyTest {
                 >- observeOn(scheduler)
                 >- subscribeNext { e in
                     XCTAssert(OSAtomicIncrement32(&numberOfConcurrentEvents) == 1)
-                    usleep(1000) // should be enough to block the queue, so if it's concurrent, it will fail
+                    self.sleep(0.1) // should be enough to block the queue, so if it's concurrent, it will fail
                     XCTAssert(OSAtomicDecrement32(&numberOfConcurrentEvents) == 0)
                     numberOfExecutions++
                 }
@@ -494,7 +494,7 @@ class ObservableConcurrentSchedulerConcurrencyTest: ObservableConcurrencyTestBas
             compositeDisposable.addDisposable(runConcurentSchedulerTest(scheduler, test: test))
         }
         
-        usleep(1000) // sleep 1ms
+        sleep(0.1) // sleep 100ms
         
         compositeDisposable.dispose()
     }
@@ -654,7 +654,7 @@ class ObservableConcurrentSchedulerConcurrencyTest: ObservableConcurrencyTestBas
                     >- observeOn(scheduler)
                     >- map { v -> Int in
                         if v == 0 {
-                            usleep(100 * 1000) // 100 ms is enough
+                            self.sleep(0.3) // 300 ms is enough
                             executed = true
                         }
                         return v

@@ -19,7 +19,7 @@ class ObservableTimeTest : RxTest {
     
     override func tearDown() {
     #if TRACE_RESOURCES
-        usleep(500) // wait 0.5 ms for proper scheduler disposal
+        sleep(0.1) // wait 100 ms for proper scheduler disposal
     #endif
         
         super.tearDown()
@@ -791,8 +791,6 @@ extension ObservableTimeTest {
         OSSpinLockLock(&lock)
         
         XCTAssertTrue(observer.messages.count == 10)
-        
-        usleep(1000)
     }
     
     func testInterval_TimeSpan_Disposed() {
