@@ -9,7 +9,7 @@
 import Foundation
 
 public struct Queue<T>: SequenceType {
-    typealias Generator = AnyGenerator<T>
+    public typealias Generator = AnyGenerator<T>
     
     let resizeFactor = 2
     

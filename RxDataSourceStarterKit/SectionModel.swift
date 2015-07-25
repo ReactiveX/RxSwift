@@ -9,7 +9,7 @@
 import Foundation
 
 public struct SectionModel<Section, ItemType> : SectionModelType, CustomStringConvertible {
-    typealias Item = ItemType
+    public typealias Item = ItemType
     public var model: Section
     
     public var items: [Item]
@@ -32,7 +32,7 @@ public struct SectionModel<Section, ItemType> : SectionModelType, CustomStringCo
 }
 
 public struct HashableSectionModel<Section: Hashable, ItemType: Hashable> : Hashable, SectionModelType, CustomStringConvertible {
-    typealias Item = ItemType
+    public typealias Item = ItemType
     public var model: Section
     
     public var items: [Item]

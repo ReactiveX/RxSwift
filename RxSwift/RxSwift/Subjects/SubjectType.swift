@@ -9,7 +9,7 @@
 import Foundation
 
 public class SubjectType<SourceType, ResultType> : Observable<ResultType>, ObserverType {
-    typealias Element = SourceType
+    public typealias Element = SourceType
     
     public override init() {
         

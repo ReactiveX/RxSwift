@@ -13,7 +13,7 @@ private struct BagPrivate {
 }
 
 public struct Bag<T> : SequenceType, CustomStringConvertible {
-    typealias Generator = AnyGenerator<T>
+    public typealias Generator = AnyGenerator<T>
     
     public typealias KeyType = Int
     
