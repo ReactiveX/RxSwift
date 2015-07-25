@@ -12,6 +12,12 @@ import Foundation
 class Observer<ElementType> : ObserverType {
     typealias Element = ElementType
 
+    init() {
+#if TRACE_RESOURCES
+        OSAtomicIncrement32(&resourceCount)
+#endif
+    }
+    
     func on(event: Event<Element>) {
         return abstractMethod()
     }
@@ -24,6 +30,12 @@ class Observer<ElementType> : ObserverType {
             return ObserverAdapter(observer: observer)
         }
     }
+    
+#if TRACE_RESOURCES
+    deinit {
+        OSAtomicDecrement32(&resourceCount)
+    }
+#endif
 }
 
 class ObserverAdapter<O: ObserverType> : Observer<O.Element> {
@@ -31,9 +43,19 @@ class ObserverAdapter<O: ObserverType> : Observer<O.Element> {
     
     init(observer: O) {
         self.observer = observer
+#if TRACE_RESOURCES
+        OSAtomicIncrement32(&resourceCount)
+#endif
+        super.init()
     }
     
     override func on(event: Event<Element>) {
         self.observer.on(event)
     }
+    
+#if TRACE_RESOURCES
+    deinit {
+        OSAtomicDecrement32(&resourceCount)
+    }
+#endif
 }

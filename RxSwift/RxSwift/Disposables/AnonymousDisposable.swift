@@ -11,7 +11,7 @@ import Foundation
 public class AnonymousDisposable : DisposeBase, Cancelable {
     public typealias DisposeAction = () -> Void
     
-    var lock = Lock()
+    var lock = SpinLock()
     var disposeAction: DisposeAction?
     
     public var disposed: Bool {

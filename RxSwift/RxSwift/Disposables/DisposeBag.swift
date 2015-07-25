@@ -16,7 +16,7 @@ public class DisposeBag: DisposeBase {
         disposed: Bool
     )
     
-    private var lock = Lock()
+    private var lock = SpinLock()
     var state: State = (
         disposables: [],
         disposed: false

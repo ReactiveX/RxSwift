@@ -80,7 +80,7 @@ class Throttle_<O: ObserverType, SchedulerType: Scheduler> : Sink<O>, ObserverTy
         switch event {
         case .Next(let boxedValue):
             let d = SingleAssignmentDisposable()
-            self.throttleState.cancellable.setDisposable(d)
+            self.throttleState.cancellable.disposable = d
             
             let scheduler = self.parent.scheduler
             let dueTime = self.parent.dueTime

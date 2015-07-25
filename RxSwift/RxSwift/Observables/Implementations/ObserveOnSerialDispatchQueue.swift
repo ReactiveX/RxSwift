@@ -1,5 +1,5 @@
 //
-//  ObserveOnDispatchQueue.swift
+//  ObserveOnSerialDispatchQueue.swift
 //  RxSwift
 //
 //  Created by Krunoslav Zaher on 5/31/15.
@@ -8,14 +8,32 @@
 
 import Foundation
 
-class ObserveOnDispatchQueueSink<O: ObserverType> : ScheduledSerialSchedulerObserver<O> {
-    var disposeLock = Lock()
+class ObserveOnSerialDispatchQueueSink<O: ObserverType> : ObserverBase<O.Element> {
+    
+    let scheduler: SerialDispatchQueueScheduler
+    let observer: O
+    
+    var disposeLock = SpinLock()
     
     var cancel: Disposable
     
     init(scheduler: SerialDispatchQueueScheduler, observer: O, cancel: Disposable) {
         self.cancel = cancel
-        super.init(scheduler: scheduler, observer: observer)
+        self.scheduler = scheduler
+        self.observer = observer
+        super.init()
+    }
+
+    override func onCore(event: Event<Element>) {
+        self.scheduler.schedule(()) { (_) -> RxResult<Disposable> in
+            send(self.observer, event)
+            
+            if event.isStopEvent {
+                self.dispose()
+            }
+            
+            return NopDisposableResult
+        }
     }
    
     override func dispose() {
@@ -30,12 +48,8 @@ class ObserveOnDispatchQueueSink<O: ObserverType> : ScheduledSerialSchedulerObse
         toDispose.dispose()
     }
 }
-
-#if TRACE_RESOURCES
-public var numberOfDispatchQueueObservables: Int32 = 0
-#endif
     
-class ObserveOnDispatchQueue<E> : Producer<E> {
+class ObserveOnSerialDispatchQueue<E> : Producer<E> {
     let scheduler: SerialDispatchQueueScheduler
     let source: Observable<E>
     
@@ -44,19 +58,21 @@ class ObserveOnDispatchQueue<E> : Producer<E> {
         self.source = source
         
 #if TRACE_RESOURCES
-        OSAtomicIncrement32(&numberOfDispatchQueueObservables)
+        OSAtomicIncrement32(&resourceCount)
+        OSAtomicIncrement32(&numberOfSerialDispatchQueueObservables)
 #endif
     }
     
     override func run<O : ObserverType where O.Element == E>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
-        let sink = ObserveOnDispatchQueueSink(scheduler: scheduler, observer: observer, cancel: cancel)
+        let sink = ObserveOnSerialDispatchQueueSink(scheduler: scheduler, observer: observer, cancel: cancel)
         setSink(sink)
         return source.subscribeSafe(sink)
     }
     
 #if TRACE_RESOURCES
     deinit {
-        OSAtomicDecrement32(&numberOfDispatchQueueObservables)
+        OSAtomicDecrement32(&resourceCount)
+        OSAtomicDecrement32(&numberOfSerialDispatchQueueObservables)
     }
 #endif
 }

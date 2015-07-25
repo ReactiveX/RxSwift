@@ -11,7 +11,7 @@ import Foundation
 class ObserverBase<ElementType> : Observer<ElementType>, Disposable {
     typealias Element = ElementType
     
-    var lock = Lock()
+    var lock = SpinLock()
     var isStopped: Bool = false
     
     override init() {

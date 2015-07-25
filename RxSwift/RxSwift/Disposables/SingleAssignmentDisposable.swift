@@ -15,7 +15,7 @@ public class SingleAssignmentDisposable : DisposeBase, Disposable, Cancelable {
         disposable: Disposable?
     )
     
-    var lock = Lock()
+    var lock = SpinLock()
     var state: State = (
         disposed: false,
         disposableSet: false,

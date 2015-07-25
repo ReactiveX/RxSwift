@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Lock {
+struct SpinLock {
     private var _lock = OS_SPINLOCK_INIT
     
     init() {

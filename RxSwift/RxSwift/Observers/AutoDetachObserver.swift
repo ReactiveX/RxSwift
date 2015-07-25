@@ -11,7 +11,7 @@ import Foundation
 class AutoDetachObserver<O: ObserverType> : ObserverBase<O.Element> {
     private var observer : O?
     private let m : SingleAssignmentDisposable
-    private var observerLock = Lock()
+    private var observerLock = SpinLock()
     
     init(observer: O) {
         self.observer = observer

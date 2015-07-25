@@ -11,7 +11,7 @@ import Foundation
 public class CompositeDisposable : DisposeBase, Disposable, Cancelable {
     public typealias DisposeKey = Bag<Disposable>.KeyType
     
-    var lock: Lock = Lock()
+    var lock = SpinLock()
     var disposables: RxMutableBox<Bag<Disposable>>? = RxMutableBox(Bag())
     
     public var disposed: Bool {

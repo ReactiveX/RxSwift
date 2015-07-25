@@ -9,6 +9,7 @@
 import Foundation
 import XCTest
 import RxSwift
+import RxBlocking
 
 class ObservableConcurrencyTestBase : RxTest {
     var lock = OS_SPINLOCK_INIT
@@ -248,20 +249,20 @@ extension ObservableConcurrencyTest {
 #if TRACE_RESOURCES
     func testObserveOnDispatchQueue_EnsureCorrectImplementationIsChosen() {
         runDispatchQueueSchedulerTests { scheduler in
-            XCTAssert(numberOfDispatchQueueObservables == 0)
+            XCTAssert(numberOfSerialDispatchQueueObservables == 0)
             let observable = returnElement(0) >- observeOn(scheduler)
-            XCTAssert(numberOfDispatchQueueObservables == 1)
+            XCTAssert(numberOfSerialDispatchQueueObservables == 1)
             return NopDisposable.instance
         }
 
-        XCTAssert(numberOfDispatchQueueObservables == 0)
+        XCTAssert(numberOfSerialDispatchQueueObservables == 0)
     }
     
     func testObserveOnDispatchQueue_DispatchQueueSchedulerIsSerial() {
         var numberOfConcurrentEvents: Int32 = 0
         var numberOfExecutions = 0
         runDispatchQueueSchedulerTests { scheduler in
-            XCTAssert(numberOfDispatchQueueObservables == 0)
+            XCTAssert(numberOfSerialDispatchQueueObservables == 0)
             return returnElements(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
                 >- observeOn(scheduler)
                 >- subscribeNext { e in
@@ -272,7 +273,7 @@ extension ObservableConcurrencyTest {
                 }
         }
         
-        XCTAssert(numberOfDispatchQueueObservables == 0)
+        XCTAssert(numberOfSerialDispatchQueueObservables == 0)
         XCTAssert(numberOfExecutions == 11)
     }
 #endif
@@ -469,46 +470,14 @@ class ObservableConcurrentSchedulerConcurrencyTest: ObservableConcurrencyTestBas
         return OperationQueueScheduler(operationQueue: operationQueue)
     }
     
-    func runConcurentSchedulerTest(test: (scheduler: ImmediateScheduler) -> Disposable) {
-        let scheduler = createScheduler()
-        let d1 = runConcurentSchedulerTest(scheduler, test: test) >- scopedDispose
-    }
-    
-    func runConcurentSchedulerTest(scheduler: ImmediateScheduler, test: (scheduler: ImmediateScheduler) -> Disposable) -> Disposable {
-        
-        let disposable = test(scheduler: scheduler)
-        
-        //scheduler.operationQueue.waitUntilAllOperationsAreFinished()
-        // stupid solution, but works
-        NSThread.sleepForTimeInterval(0.05)
-        
-        return disposable
-    }
-    
-    func runConcurentSchedulerMutiplexedTests(tests: [(scheduler: ImmediateScheduler) -> Disposable]) {
-        let scheduler = createScheduler()
-        
-        let compositeDisposable = CompositeDisposable()
-        
-        for test in tests {
-            compositeDisposable.addDisposable(runConcurentSchedulerTest(scheduler, test: test))
-        }
-        
-        sleep(0.1) // sleep 100ms
-        
-        compositeDisposable.dispose()
-    }
-   
 #if TRACE_RESOURCES
     func testObserveOn_EnsureCorrectImplementationIsChosen() {
-        runConcurentSchedulerTest { scheduler in
-            XCTAssert(numberOfDispatchQueueObservables == 0)
-            let observable = returnElement(0) >- observeOn(scheduler)
-            XCTAssert(numberOfDispatchQueueObservables == 0)
-            return NopDisposable.instance
-        }
+        let scheduler = self.createScheduler()
         
-        XCTAssert(numberOfDispatchQueueObservables == 0)
+        XCTAssert(numberOfSerialDispatchQueueObservables == 0)
+        let observable = returnElement(0) >- observeOn(scheduler)
+        self.sleep(0.1)
+        XCTAssert(numberOfSerialDispatchQueueObservables == 0)
     }
 #endif
     
@@ -517,258 +486,241 @@ class ObservableConcurrentSchedulerConcurrencyTest: ObservableConcurrencyTestBas
         
         var events: [String] = []
         
-        runConcurentSchedulerTest { scheduler in
-            let disposable1 = scheduler.schedule(()) { _ in
-                
-                self.performLocked {
-                    events.append("Started")
-                }
-                
-                while variable != 2 {
-                    // to kill compiler optimizations
-                    self.performLocked { }
-                    if variable == 0 {
-                        variable = 1
-                    }
-                }
-                
-                self.performLocked {
-                    events.append("Ended")
-                }
-                
-                return NopDisposableResult
+        var stop = Variable(0)
+        
+        let scheduler = createScheduler()
+            
+        _ = scheduler.schedule(()) { _ in
+            self.performLocked {
+                events.append("Started")
             }
             
-            let disposable2 = scheduler.schedule(()) { _ in
-                    //println("variable \(variable)")
-                self.performLocked {
-                    events.append("Started")
-                }
-                
-                while variable != 2 {
-                    // to kill compiler optimizations
-                    self.performLocked { }
-                    if variable == 1 {
-                        variable = 2
+            while variable != 2 {
+                // to kill compiler optimizations
+                self.performLocked { }
+                if variable == 1 {
+                    self.performLocked {
+                        events.append("Ended 2")
                     }
+                    variable = 2
                 }
-                
-                self.performLocked {
-                    events.append("Ended")
-                }
-                
-                return NopDisposableResult
             }
             
-            return NopDisposable.instance
+            sendCompleted(stop)
+            
+            return NopDisposableResult
         }
         
-        XCTAssertEqual(events, ["Started", "Started", "Ended", "Ended"])
+        _ = scheduler.schedule(()) { _ in
+            
+            self.performLocked {
+                events.append("Started")
+            }
+            
+            while variable != 2 {
+                // to kill compiler optimizations
+                self.performLocked { }
+                if variable == 0 {
+                    self.performLocked {
+                        events.append("Ended 1")
+                    }
+            
+                    variable = 1
+                }
+            }
+            
+            return NopDisposableResult
+        }
+        
+        stop >-
+            last
+        
+        XCTAssertEqual(events, ["Started", "Started", "Ended 1", "Ended 2"])
     }
     
     func testObserveOn_Never() {
-        runConcurentSchedulerTest { scheduler in
-            let xs: Observable<Int> = never()
-            return xs
-                >- observeOn(scheduler)
-                >- subscribeNext { n in
-                    XCTAssert(false)
-            }
+        let scheduler = createScheduler()
+        
+        let xs: Observable<Int> = never()
+        let subscription = xs
+            >- observeOn(scheduler)
+            >- subscribeNext { n in
+                XCTAssert(false)
         }
+        
+        sleep(0.1)
+        
+        subscription.dispose()
     }
     
     func testObserveOn_Simple() {
         let xs = PrimitiveHotObservable<Int>()
         let observer = PrimitiveMockObserver<Int>()
         
-        runConcurentSchedulerMutiplexedTests([
-            { scheduler in
-                let subscription = (xs >- observeOn(scheduler)).subscribe(observer)
-                XCTAssert(xs.subscriptions == [SubscribedToHotObservable])
-                sendNext(xs, 0)
-                
-                return subscription
-            },
-            { scheduler in
-                XCTAssertEqual(observer.messages, [
-                    next(0)
-                    ])
-                sendNext(xs, 1)
-                sendNext(xs, 2)
-                return NopDisposable.instance
-            },
-            { scheduler in
-                XCTAssertEqual(observer.messages, [
-                    next(0),
-                    next(1),
-                    next(2)
-                    ])
-                XCTAssert(xs.subscriptions == [SubscribedToHotObservable])
-                sendCompleted(xs)
-                return NopDisposable.instance
-            },
-            { scheduler in
-                XCTAssertEqual(observer.messages, [
-                    next(0),
-                    next(1),
-                    next(2),
-                    completed(0)
-                    ])
-                XCTAssert(xs.subscriptions == [UnsunscribedFromHotObservable])
-                return NopDisposable.instance
-            },
-        ])
+        let scheduler = createScheduler()
+        
+        let stop = Variable(0)
+        
+        let subscription = (xs >- observeOn(scheduler)).subscribe(observer)
+        XCTAssert(xs.subscriptions == [SubscribedToHotObservable])
+        sendNext(xs, 0)
+                    
+        sleep(0.1)
+        
+        XCTAssertEqual(observer.messages, [
+            next(0)
+            ])
+        sendNext(xs, 1)
+        sendNext(xs, 2)
+                    
+        sleep(0.1)
+        
+        XCTAssertEqual(observer.messages, [
+            next(0),
+            next(1),
+            next(2)
+            ])
+        XCTAssert(xs.subscriptions == [SubscribedToHotObservable])
+        sendCompleted(xs)
+                    
+        sleep(0.1)
+        
+        XCTAssertEqual(observer.messages, [
+            next(0),
+            next(1),
+            next(2),
+            completed(0)
+            ])
+        XCTAssert(xs.subscriptions == [UnsunscribedFromHotObservable])
+        
+        subscription.dispose()
+
+        sleep(0.1)
     }
     
     func testObserveOn_Empty() {
         let xs = PrimitiveHotObservable<Int>()
         let observer = PrimitiveMockObserver<Int>()
         
-        runConcurentSchedulerMutiplexedTests([
-            { scheduler in
-                let subscription = (xs >- observeOn(scheduler)).subscribe(observer)
-                XCTAssert(xs.subscriptions == [SubscribedToHotObservable])
-                sendCompleted(xs)
-                
-                return subscription
-            },
-            { scheduler in
-                XCTAssertEqual(observer.messages, [
-                    completed()
-                    ])
-                XCTAssert(xs.subscriptions == [UnsunscribedFromHotObservable])
-                return NopDisposable.instance
-            }
-        ])
+        let scheduler = createScheduler()
+        
+        _ = (xs >- observeOn(scheduler)).subscribe(observer)
+        XCTAssert(xs.subscriptions == [SubscribedToHotObservable])
+        sendCompleted(xs)
+        
+        sleep(0.1)
+        
+        XCTAssertEqual(observer.messages, [
+            completed()
+            ])
+        XCTAssert(xs.subscriptions == [UnsunscribedFromHotObservable])
     }
-    
-    func _testObserveOn_ConcurrentSchedulerIsSerialized() {
+   
+    func testObserveOn_ConcurrentSchedulerIsSerialized() {
         let xs = PrimitiveHotObservable<Int>()
         let observer = PrimitiveMockObserver<Int>()
         
         var executed = false
         
-        runConcurentSchedulerMutiplexedTests([
-            { scheduler in
-                let res = xs
-                    >- observeOn(scheduler)
-                    >- map { v -> Int in
-                        if v == 0 {
-                            self.sleep(0.3) // 300 ms is enough
-                            executed = true
-                        }
-                        return v
+        let scheduler = createScheduler()
+        
+        let res = xs
+            >- observeOn(scheduler)
+            >- map { v -> Int in
+                if v == 0 {
+                    self.sleep(0.1) // 100 ms is enough
+                    executed = true
                 }
-                let subscription = res.subscribe(observer)
-                XCTAssert(xs.subscriptions == [SubscribedToHotObservable])
-                sendNext(xs, 0)
-                sendNext(xs, 1)
-                sendCompleted(xs)
-                
-                return NopDisposable.instance
-            },
-            { scheduler in
-                XCTAssertEqual(observer.messages, [
-                    next(0, 0),
-                    next(0, 1),
-                    completed()
-                    ])
-                XCTAssert(xs.subscriptions == [UnsunscribedFromHotObservable])
-                return NopDisposable.instance
-            }
+                return v
+        }
+        let subscription = res.subscribe(observer)
+        
+        XCTAssert(xs.subscriptions == [SubscribedToHotObservable])
+        sendNext(xs, 0)
+        sendNext(xs, 1)
+        sendCompleted(xs)
+        
+        sleep(0.3)
+        
+        XCTAssertEqual(observer.messages, [
+            next(0, 0),
+            next(0, 1),
+            completed()
             ])
+        XCTAssert(xs.subscriptions == [UnsunscribedFromHotObservable])
         
         XCTAssert(executed)
-    }
-   
-    // It could be maybe written nicer, but the assumptions are reasonable.
-    // If first element processing takes 100ms, that should be more then enough
-    // for second element to pass by it if operator isn't serializing elements.
-    // If that doesn't happen, then it looks like scheduler is serializing
-    // processing of elements.
-    func testObserveOn_ConcurrentSchedulerIsSerialized() {
-        for i in 0 ..< 10 {
-            _testObserveOn_ConcurrentSchedulerIsSerialized()
-        }
+        
+        subscription.dispose()
     }
     
     func testObserveOn_Error() {
         let xs = PrimitiveHotObservable<Int>()
         let observer = PrimitiveMockObserver<Int>()
         
-        runConcurentSchedulerMutiplexedTests([
-            { scheduler in
-                let subscription = (xs >- observeOn(scheduler)).subscribe(observer)
-                XCTAssert(xs.subscriptions == [SubscribedToHotObservable])
-                sendNext(xs, 0)
-                
-                return subscription
-            },
-            { scheduler in
-                XCTAssertEqual(observer.messages, [
-                    next(0)
-                    ])
-                sendNext(xs, 1)
-                sendNext(xs, 2)
-                return NopDisposable.instance
-            },
-            { scheduler in
-                XCTAssertEqual(observer.messages, [
-                    next(0),
-                    next(1),
-                    next(2)
-                    ])
-                XCTAssert(xs.subscriptions == [SubscribedToHotObservable])
-                sendError(xs, testError)
-                return NopDisposable.instance
-            },
-            { scheduler in
-                XCTAssertEqual(observer.messages, [
-                    next(0),
-                    next(1),
-                    next(2),
-                    error(testError)
-                    ])
-                XCTAssert(xs.subscriptions == [UnsunscribedFromHotObservable])
-                return NopDisposable.instance
-            },
-        ])
+        let scheduler = createScheduler()
+        
+        let _ = (xs >- observeOn(scheduler)).subscribe(observer)
+        XCTAssert(xs.subscriptions == [SubscribedToHotObservable])
+        sendNext(xs, 0)
+        
+        sleep(0.1)
+        
+        XCTAssertEqual(observer.messages, [
+            next(0)
+            ])
+        sendNext(xs, 1)
+        sendNext(xs, 2)
+        
+        sleep(0.1)
+        
+        XCTAssertEqual(observer.messages, [
+            next(0),
+            next(1),
+            next(2)
+            ])
+        XCTAssert(xs.subscriptions == [SubscribedToHotObservable])
+        sendError(xs, testError)
+        
+        sleep(0.1)
+        
+        XCTAssertEqual(observer.messages, [
+            next(0),
+            next(1),
+            next(2),
+            error(testError)
+            ])
+        XCTAssert(xs.subscriptions == [UnsunscribedFromHotObservable])
+        
     }
     
     func testObserveOn_Dispose() {
         let xs = PrimitiveHotObservable<Int>()
         let observer = PrimitiveMockObserver<Int>()
-        var subscription: Disposable!
         
-        runConcurentSchedulerMutiplexedTests([
-            { scheduler in
-                subscription = (xs >- observeOn(scheduler)).subscribe(observer)
-                XCTAssert(xs.subscriptions == [SubscribedToHotObservable])
-                sendNext(xs, 0)
-                
-                return subscription
-            },
-            { scheduler in
-                XCTAssertEqual(observer.messages, [
-                    next(0)
-                    ])
-                
-                XCTAssert(xs.subscriptions == [SubscribedToHotObservable])
-                subscription.dispose()
-                XCTAssert(xs.subscriptions == [UnsunscribedFromHotObservable])
-                
-                sendError(xs, testError)
-                
-                return NopDisposable.instance
-            },
-            { scheduler in
-                XCTAssertEqual(observer.messages, [
-                    next(0),
-                    ])
-                XCTAssert(xs.subscriptions == [UnsunscribedFromHotObservable])
-                return NopDisposable.instance
-            }
-        ])
+        let scheduler = createScheduler()
+        let subscription = (xs >- observeOn(scheduler)).subscribe(observer)
+        XCTAssert(xs.subscriptions == [SubscribedToHotObservable])
+        sendNext(xs, 0)
+        
+        sleep(0.1)
+        
+        XCTAssertEqual(observer.messages, [
+            next(0)
+            ])
+        
+        XCTAssert(xs.subscriptions == [SubscribedToHotObservable])
+        subscription.dispose()
+        XCTAssert(xs.subscriptions == [UnsunscribedFromHotObservable])
+        
+        sendError(xs, testError)
+        
+        sleep(0.1)
+        
+        XCTAssertEqual(observer.messages, [
+            next(0),
+            ])
+        XCTAssert(xs.subscriptions == [UnsunscribedFromHotObservable])
     }
 }
 

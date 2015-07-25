@@ -36,7 +36,7 @@ class ConnectableObservable<SourceType, ResultType> : ConnectableObservableType<
     let subject: SubjectType<SourceType, ResultType>
     let source: Observable<SourceType>
     
-    var lock = Lock()
+    var lock = SpinLock()
     var connection: ConnectionType?
     
     init(source: Observable<SourceType>, subject: SubjectType<SourceType, ResultType>) {

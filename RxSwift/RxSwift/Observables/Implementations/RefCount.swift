@@ -70,7 +70,7 @@ class RefCount<Element>: Producer<Element> {
         connectableSubscription: Disposable?
     )
     
-    var lock = Lock()
+    var lock = SpinLock()
     
     var state: State = (
         count: 0,
