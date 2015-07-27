@@ -93,17 +93,14 @@ class AssumptionsTest : RxTest {
         XCTAssert(false, "Can't run unit tests in without tracing")
 #endif
     }
-}
-
-class Anything {
-    var elements = [Int]()
     
-    func justCallIt(action: () -> Void) {
-        clearRealTest()
-        action()
-    }
-    
-    deinit {
-        deallocated = true
+    func testCalShuo() {
+        let chartType = Variable(1)
+        let a = Variable(chartType as Observable<Int>)
+            >- switchLatest
+            >- throttle(0.3, MainScheduler.sharedInstance)
+            >- distinctUntilChanged
+        
+        
     }
 }

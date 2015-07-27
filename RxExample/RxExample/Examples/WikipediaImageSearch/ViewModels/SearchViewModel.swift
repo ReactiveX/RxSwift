@@ -31,6 +31,7 @@ class SearchViewModel: Disposable {
             >- distinctUntilChanged
             >- map { query in
                 API.getSearchResults(query)
+                    >- retry(3)
                     >- startWith([]) // clears results on new search term
                     >- catch([])
             }
