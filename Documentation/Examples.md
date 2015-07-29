@@ -159,7 +159,7 @@ self.usernameOutlet.rx_text >- map { username in
 // provided.
 // That's what `switchLatest` does
     >- switchLatest
-// Not we need to bind that to the user interface somehow.
+// Now we need to bind that to the user interface somehow.
 // Good old `subscribeNext` can do that
 // That's the end of `Observable` chain.
 // This will produce a `Disposable` object that can unbind everything and cancel

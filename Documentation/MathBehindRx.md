@@ -16,6 +16,6 @@ In short, there are two basic ways elements of a sequence can be accessed.
 
 To learn more about this, these videos should help
 
-You can also see a more formal explanation in this video:
+You can also see a more formal explanation explained in a fun way in this video:
 
 [Expert to Expert: Brian Beckman and Erik Meijer - Inside the .NET Reactive Framework (Rx) (video)](https://www.youtube.com/watch?v=looJcaeboBY)
