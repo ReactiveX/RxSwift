@@ -94,7 +94,7 @@ class SwitchIter<O: ObserverType> : ObserverType {
     }
     
     func on(event: Event<Element>) {
-        return parent.lock.calculateLocked { state in
+        return parent.lock.calculateLocked {
             let switchState = self.parent.switchState
             
             switch event {

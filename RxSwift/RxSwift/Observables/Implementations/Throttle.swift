@@ -13,7 +13,7 @@ class Throttle_<O: ObserverType, SchedulerType: Scheduler> : Sink<O>, ObserverTy
     typealias ParentType = Throttle<Element, SchedulerType>
     
     typealias ThrottleState = (
-        value: Element?,
+        value: RxMutableBox<Element?>,
         cancellable: SerialDisposable,
         id: UInt64
     )
@@ -22,7 +22,7 @@ class Throttle_<O: ObserverType, SchedulerType: Scheduler> : Sink<O>, ObserverTy
     
     var lock = NSRecursiveLock()
     var throttleState: ThrottleState = (
-        value: nil,
+        value: RxMutableBox(nil),
         cancellable: SerialDisposable(),
         id: 0
     )
@@ -53,19 +53,19 @@ class Throttle_<O: ObserverType, SchedulerType: Scheduler> : Sink<O>, ObserverTy
         var latestId = self.lock.calculateLocked { () -> UInt64 in
             let observer = self.observer
             
-            var oldValue = self.throttleState.value
+            var oldValue = self.throttleState.value.value
             
             self.throttleState.id = self.throttleState.id &+ 1
             
             switch event {
             case .Next(let boxedValue):
-                self.throttleState.value = boxedValue.value
+                self.throttleState.value.value = boxedValue.value
             case .Error(let error):
-                self.throttleState.value = nil
+                self.throttleState.value.value = nil
                 trySend(observer, event)
                 self.dispose()
             case .Completed:
-                self.throttleState.value = nil
+                self.throttleState.value.value = nil
                 if let value = oldValue {
                     trySendNext(observer, value)
                 }
@@ -104,8 +104,8 @@ class Throttle_<O: ObserverType, SchedulerType: Scheduler> : Sink<O>, ObserverTy
     
     func propagate() {
         var originalValue: Element? = self.lock.calculateLocked {
-            var originalValue = self.throttleState.value
-            self.throttleState.value = nil
+            var originalValue = self.throttleState.value.value
+            self.throttleState.value.value = nil
             return originalValue
         }
         
