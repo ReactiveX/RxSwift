@@ -10,9 +10,11 @@ import Foundation
 
 // read your own configuration
 struct Logging {
+    typealias LogURLRequest = (NSURLRequest) -> Bool
+    
     #if DEBUG
-    static let URLRequests = true
+    static var URLRequests: LogURLRequest = { _ in true }
     #else
-    static let URLRequests = false
+    static var URLRequests: LogURLRequest = { _ in false }
     #endif
 }

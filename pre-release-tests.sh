@@ -27,3 +27,6 @@ do
 		xcodebuild -workspace Rx.xcworkspace -scheme "${scheme}" -configuration "${configuration}" ${CLEAN} build
 	done
 done
+
+mdast -u mdast-slug -u mdast-validate-links ./*.md
+mdast -u mdast-slug -u mdast-validate-links ./**/*.md

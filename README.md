@@ -106,7 +106,7 @@ If you were to write the autocomplete code without Rx, first problem that probab
 
 The next problem is if the request fails, you need to do that messy retry logic. But ok, a couple of more fields that capture number of retries that need to be cleaned up.
 
-It would be great if program would wait for some time before firing that request to server, after all, we don't want to spam our servers. Additional field timer maybe?
+It would be great if program would wait for some time before firing that request to server, after all, we don't want to spam our servers in case somebody is in the process of fast typing something very long. Additional timer field maybe?
 
 There is also a question of what needs to be shown on screen while that search is executing, and also what needs to be shown in case we fail even with all of the retries.
 
@@ -148,7 +148,7 @@ Well, there is of course `zip` operator
     }
 ```
 
-So what if those API return results on a background thread, and binding has to happen on main UI thread? There is `observeOn`.
+So what if those APIs return results on a background thread, and binding has to happen on main UI thread? There is `observeOn`.
 
 ```swift
   let userRequest: Observable<User> = API.getUser("me")
@@ -201,7 +201,7 @@ It would also be nice if that entire process could be cancelled if cell exists v
 
 It would also be nice if we didn't just immediately start to fetch image once the cell enters visible area because if user swipes really fast there could be a lot of requests fired and cancelled.
 
-It would be also nice if we could limit the number of concurrent image operations because blurring images is expensive operation.
+It would be also nice if we could limit the number of concurrent image operations because blurring images is an expensive operation.
 
 This is how we can do it using Rx.
 
@@ -231,21 +231,23 @@ This code will do all that, and when `imageSubscription` is disposed it will can
 
 ### Benefits
 
-In short, the parts where you use Rx will be:
+In short using Rx will make your code:
 
-* composable <- because Rx is built for composition
+* composable <- because Rx is composition's nick name
 * reusable <- because it's composable
-* declarative <- because definitions are immutable and handle different state in a same way
-* understandable and concise <- because you are raising level of abstraction
-* stable <- because Rx code is thoroughly unit tested, and handles transient states
-* less statefull <- because you are modeling application as unidirectional data flows
+* declarative <- because definitions are immutable and only data changes
+* understandable and concise <- raising level of abstraction and removing transient states
+* stable <- because Rx code is thoroughly unit tested
+* less stateful <- because you are modeling application as unidirectional data flows
 * without leaks <- because resource management is easy
 
 ### It's not all or nothing
 
 It is usually a good idea to model as much of your application as possible using Rx.
 
-But what if you don't know all of the operators and does there even exist some operator that models your particular case. Well, all of the Rx operators are based on math and should be intuitive.
+But what if you don't know all of the operators and does there even exist some operator that models your particular case?
+
+Well, all of the Rx operators are based on math and should be intuitive.
 
 The good news is that about 10-15 operators cover most typical use cases. And that list already includes some of the familiar ones like `map`, `filter`, `zip`, `observeOn` ...
 
@@ -255,7 +257,7 @@ For each operator there is [marble diagram](http://reactivex.io/documentation/op
 
 But what if you need some operator that isn't on that list? Well, you can make your own operator.
 
-What if creating that kind of operator is really hard for some reason, or you have some legacy stateful that you need to work with? Well, you've got yourself in a mess, but you can [jump out of Rx monad](Documentation/GettingStarted.md#life-happens) easily, process the data, and return back into it.
+What if creating that kind of operator is really hard for some reason, or you have some legacy stateful piece of code that you need to work with? Well, you've got yourself in a mess, but you can [jump out of Rx monad](Documentation/GettingStarted.md#life-happens) easily, process the data, and return back into it.
 
 ## Build / Install / Run
 
@@ -294,7 +296,7 @@ git "git@github.com:kzaher/RxSwift.git" "latest-carthage/rxswift"
 git "git@github.com:kzaher/RxSwift.git" "latest-carthage/rxcocoa"
 ```
 
-Unfortunatelly, you can update only one target at a time beecause Carthage doesn't know how to resolve them properly. You'll probably need to do something like:
+Unfortunately, you can update only one target at a time because Carthage doesn't know how to resolve them properly. You'll probably need to do something like:
 
 ```
 git "git@github.com:kzaher/RxSwift.git" "latest-carthage/rxswift"

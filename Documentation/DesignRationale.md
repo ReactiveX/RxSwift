@@ -118,9 +118,11 @@ observable
     >- disposeBag.addDisposable
 ```
 
-All of the Rx public interfaces don't depend at all on the `>-` operator.
+None of the Rx public interfaces depend on the >- operator.
 
 It was actually introduced quite late and you can use Rx operators (map, filter ...) without it.
+
+### Replacing `>-` with your own operator
 
 If you dislike `>-` operator and want to use `|>` or `~>` operators, just define them in your project in this form:
 
@@ -134,7 +136,7 @@ public func |> <In, Out>(source: In, @noescape transform: In -> Out) -> Out {
 
 or
 
-```
+```swift
 infix operator ~> { associativity left precedence 91 }
 
 public func ~> <In, Out>(source: In, @noescape transform: In -> Out) -> Out {
@@ -164,30 +166,28 @@ combineLatest(a, b) { $0 + $1 }
     ~> subscribeNext { println($0) }
 ```
 
-So why was `>-` chosen in the end? Well, it was a difficult decision.
-
-Why wasn't standard function application operator used?
+### Why wasn't standard function application operator used?
 
 I've first tried to find a similar operator in swift core libraries, but couldn't find it. That meant that I'll need to define something myself or find some third party library that contains reference function application operator definition and use it.
 Otherwise all of the example code would be unreadable.
 
-Why wasn't some standard library used for that operator?
+### Why wasn't some standard library used for that operator?
 
 Well, I'm not sure there is a clear consensus in the community about funtion application operators or libraries that define them.
 
-Why wasn't function application operator defined only for `Observables` and `Disposables`?
+### Why wasn't function application operator defined only for `Observables` and `Disposables`?
 
 One of the solutions could have been to provide a specialized operator that just works for `Observables` and `Disposables`.
 In that case, if an identically named general purpose function application operator is defined somewhere else, there would still be collision, priority or ambiguity problems.
 
-Why wasn't some more standard operator like `|>` or `~>` used?
+### Why wasn't some more standard operator like `|>` or `~>` used?
 
 `|>` or `~>` are probably more commonly used operators in swift, so if there was another definition for them in Rx as general purpose function application operators, there is a high probability they would collide with definitions in other frameworks or project.
 
 The simplest and safest solution IMHO was to create some new operator that made sense in this context and there is a low probability anyone else uses it.
 In case the operator naming choice was wrong, name is rare and community eventually reaches consensus on the matter, it's more easier to find and replace it in user projects.
 
-I have experimented for a week with different operators and in the end these are the reasons why `>-` was chosen
+### Rationale why `>-` was chosen
 
 * It's short, only two characters
 * It looks like a sink to the right, which is a function it actually performs, so it's intuitive.
