@@ -60,7 +60,7 @@ public class CompositeDisposable : DisposeBase, Disposable, Cancelable {
     public func addDisposable(disposable: Disposable) -> DisposeKey? {
         // this should be let
         // bucause of compiler bug it's var
-        let key  = self.lock.calculateLocked { oldState -> DisposeKey? in
+        let key  = self.lock.calculateLocked { () -> DisposeKey? in
             return disposables?.value.put(disposable)
         }
         
@@ -90,7 +90,7 @@ public class CompositeDisposable : DisposeBase, Disposable, Cancelable {
     }
     
     public func dispose() {
-        let oldDisposables = self.lock.calculateLocked { Void -> [Disposable]? in
+        let oldDisposables = self.lock.calculateLocked { () -> [Disposable]? in
             let allDisposables = disposables?.value.all
             self.disposables = nil
             

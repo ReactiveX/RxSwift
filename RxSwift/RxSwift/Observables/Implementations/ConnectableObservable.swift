@@ -46,7 +46,7 @@ class ConnectableObservable<SourceType, ResultType> : ConnectableObservableType<
     }
     
     override func connect() -> Disposable {
-        let (connection, connect) = self.lock.calculateLocked { oldConnection -> (Connection<SourceType, ResultType>, Bool) in
+        let (connection, connect) = self.lock.calculateLocked { () -> (Connection<SourceType, ResultType>, Bool) in
             if let connection = self.connection {
                 return (connection, false)
             }

@@ -40,9 +40,8 @@ public class SingleAssignmentDisposable : DisposeBase, Disposable, Cancelable {
                 return self.state.disposable ?? NopDisposable.instance
             }
         }
-        set(newDisposable) {
-            var disposable: Disposable? = lock.calculateLocked { oldState in
-                
+        set {
+            var disposable: Disposable? = lock.calculateLocked {
                 if state.disposableSet {
                     rxFatalError("oldState.disposable != nil")
                 }
@@ -50,22 +49,22 @@ public class SingleAssignmentDisposable : DisposeBase, Disposable, Cancelable {
                 state.disposableSet = true
                 
                 if state.disposed {
-                    return newDisposable
+                    return newValue
                 }
                 
-                state.disposable = newDisposable
+                state.disposable = newValue
                 
                 return nil
             }
             
             if let disposable = disposable {
-                return disposable.dispose()
+                disposable.dispose()
             }
         }
     }
     
     public func dispose() {
-        var disposable: Disposable? = lock.calculateLocked { old in
+        var disposable: Disposable? = lock.calculateLocked {
             state.disposed = true
             var dispose = state.disposable
             state.disposable = nil
