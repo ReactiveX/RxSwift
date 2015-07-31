@@ -45,6 +45,8 @@
 		C84969CC1B47DE1D00E0BDB9 /* RxScrollViewDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C84969C71B47DE1D00E0BDB9 /* RxScrollViewDelegateProxy.swift */; };
 		C84969CD1B47DE1D00E0BDB9 /* RxTableViewDataSourceProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C84969C81B47DE1D00E0BDB9 /* RxTableViewDataSourceProxy.swift */; };
 		C84969CE1B47DE1D00E0BDB9 /* RxTableViewDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C84969C91B47DE1D00E0BDB9 /* RxTableViewDelegateProxy.swift */; };
+		C852A1BE1B6A30DF007A6944 /* NSObject+Rx+CoreGraphics.swift in Sources */ = {isa = PBXBuildFile; fileRef = C852A1BD1B6A30DF007A6944 /* NSObject+Rx+CoreGraphics.swift */; };
+		C852A1BF1B6A30DF007A6944 /* NSObject+Rx+CoreGraphics.swift in Sources */ = {isa = PBXBuildFile; fileRef = C852A1BD1B6A30DF007A6944 /* NSObject+Rx+CoreGraphics.swift */; };
 		C86282391B36037100500DC3 /* ControlTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86282321B36037100500DC3 /* ControlTarget.swift */; };
 		C862823A1B36037100500DC3 /* ControlTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86282321B36037100500DC3 /* ControlTarget.swift */; };
 		C862823B1B36037100500DC3 /* NSObject+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86282331B36037100500DC3 /* NSObject+Rx.swift */; };
@@ -134,6 +136,7 @@
 		C84969C71B47DE1D00E0BDB9 /* RxScrollViewDelegateProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxScrollViewDelegateProxy.swift; sourceTree = "<group>"; };
 		C84969C81B47DE1D00E0BDB9 /* RxTableViewDataSourceProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxTableViewDataSourceProxy.swift; sourceTree = "<group>"; };
 		C84969C91B47DE1D00E0BDB9 /* RxTableViewDelegateProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxTableViewDelegateProxy.swift; sourceTree = "<group>"; };
+		C852A1BD1B6A30DF007A6944 /* NSObject+Rx+CoreGraphics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSObject+Rx+CoreGraphics.swift"; sourceTree = "<group>"; };
 		C86282321B36037100500DC3 /* ControlTarget.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ControlTarget.swift; sourceTree = "<group>"; };
 		C86282331B36037100500DC3 /* NSObject+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSObject+Rx.swift"; sourceTree = "<group>"; };
 		C86282341B36037100500DC3 /* NSNotificationCenter+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSNotificationCenter+Rx.swift"; sourceTree = "<group>"; };
@@ -261,6 +264,7 @@
 			children = (
 				C86282311B36037100500DC3 /* Implementations */,
 				C86282331B36037100500DC3 /* NSObject+Rx.swift */,
+				C852A1BD1B6A30DF007A6944 /* NSObject+Rx+CoreGraphics.swift */,
 				C86282341B36037100500DC3 /* NSNotificationCenter+Rx.swift */,
 				C86282351B36037100500DC3 /* NSURLSession+Rx.swift */,
 			);
@@ -545,6 +549,7 @@
 				C88BB8EC1B07F2BE0064D411 /* UIScrollView+Rx.swift in Sources */,
 				C84969CA1B47DE1D00E0BDB9 /* RxCollectionViewDataSourceProxy.swift in Sources */,
 				075F12FF1B4DD075000D7861 /* RxActionSheetDelegateProxy.swift in Sources */,
+				C852A1BE1B6A30DF007A6944 /* NSObject+Rx+CoreGraphics.swift in Sources */,
 				C8CDD7D91B52DA570043F0C5 /* RxCLLocationManagerDelegateProxy.swift in Sources */,
 				C80B562B1B2E242D008F915D /* DelegateProxy.swift in Sources */,
 				653C8BF41B114EB600983087 /* UIControl+Rx.swift in Sources */,
@@ -568,6 +573,7 @@
 				C87360B61B51E57500FDA532 /* _RXSwizzling.m in Sources */,
 				C87360B51B51E0A100FDA532 /* KVOObserver.swift in Sources */,
 				C88BB91D1B07FD960064D411 /* NSButton+Rx.swift in Sources */,
+				C852A1BF1B6A30DF007A6944 /* NSObject+Rx+CoreGraphics.swift in Sources */,
 				C80A4E331B51814300C24BD5 /* _RXKVOObserver.m in Sources */,
 				C862823A1B36037100500DC3 /* ControlTarget.swift in Sources */,
 				C83F694D1B527229008356A0 /* DeinitAction.swift in Sources */,

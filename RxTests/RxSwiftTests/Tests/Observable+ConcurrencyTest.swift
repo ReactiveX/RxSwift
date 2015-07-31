@@ -489,53 +489,50 @@ class ObservableConcurrentSchedulerConcurrencyTest: ObservableConcurrencyTestBas
         var stop = Variable(0)
         
         let scheduler = createScheduler()
-            
-        _ = scheduler.schedule(()) { _ in
+        
+        let condition = NSCondition()
+        
+        var writtenStarted = 0
+        var writtenEnded = 0
+        
+        var concurrent = { () -> RxResult<Disposable> in
             self.performLocked {
                 events.append("Started")
             }
             
-            while variable != 2 {
-                // to kill compiler optimizations
-                self.performLocked { }
-                if variable == 1 {
-                    self.performLocked {
-                        events.append("Ended 2")
-                    }
-                    variable = 2
-                }
+            condition.lock()
+            writtenStarted++
+            condition.signal()
+            while writtenStarted < 2 {
+                condition.wait()
             }
+            condition.unlock()
+            
+            self.performLocked {
+                events.append("Ended")
+            }
+            
+            condition.lock()
+            writtenEnded++
+            condition.signal()
+            while writtenEnded < 2 {
+                condition.wait()
+            }
+            condition.unlock()
             
             sendCompleted(stop)
             
             return NopDisposableResult
         }
         
-        _ = scheduler.schedule(()) { _ in
-            
-            self.performLocked {
-                events.append("Started")
-            }
-            
-            while variable != 2 {
-                // to kill compiler optimizations
-                self.performLocked { }
-                if variable == 0 {
-                    self.performLocked {
-                        events.append("Ended 1")
-                    }
-            
-                    variable = 1
-                }
-            }
-            
-            return NopDisposableResult
-        }
+        _ = scheduler.schedule((), action: concurrent)
+        
+        _ = scheduler.schedule((), action: concurrent)
         
         stop >-
             last
         
-        XCTAssertEqual(events, ["Started", "Started", "Ended 1", "Ended 2"])
+        XCTAssertEqual(events, ["Started", "Started", "Ended", "Ended"])
     }
     
     func testObserveOn_Never() {

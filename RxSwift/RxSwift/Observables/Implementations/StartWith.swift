@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import RxSwift
 
 class StartWith<Element>: Producer<Element> {
     let element: Element
