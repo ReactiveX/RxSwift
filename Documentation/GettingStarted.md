@@ -863,7 +863,7 @@ Disposed
 
 You can also use `subscribe` instead of `subscribeNext`
 
-```
+```swift
 NSURLSession.sharedSession().rx_JSON(request)
    >- map { json in
        return parse()
@@ -1003,7 +1003,7 @@ view.rx_observe("frame") as Observable<CGRect?>
 
 or
 
-```
+```swift
 view.rx_observe("frame")
     >- map { (rect: CGRect?) in
         //
