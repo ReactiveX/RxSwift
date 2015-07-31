@@ -13,6 +13,9 @@
       <FileRef
          location = "group:Introduction.playground">
       </FileRef>
+      <FileRef
+         location = "group:Subjects.playground">
+      </FileRef>
       <Group
          location = "group:ObservablesOperators"
          name = "ObservablesOperators">
