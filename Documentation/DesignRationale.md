@@ -38,7 +38,7 @@ What you really need is a generic way to prove traits for sequences (`Observable
 * sequence terminates in finite time (server side)
 * sequence contains only one element (if you are running some computation)
 * sequence doesn't error out, never terminates and elements are delivered on main scheduler (UI)
-* sequence doesn't error out, never terminates and elements are delivered on main scheduler, and have refcounted sharing (UI)
+* sequence doesn't error out, never terminates and elements are delivered on main scheduler, and has refcounted sharing (UI)
 * sequence doesn't error out, never terminates and elements are delivered on specific background scheduler (audio engine)
 
 What you really want is a general compiler enforced system of traits for observable sequences, and a set of invariant operators for those wanted properties.

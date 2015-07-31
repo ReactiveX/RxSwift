@@ -44,7 +44,7 @@ function runTests() {
 	#then
 	#	SDK="-sdk iphonesimulator"
 	#fi
-	#xctool -workspace Rx.xcworkspace -scheme "$1" -configuration "$2" ${SDK} -derivedDataPath  ${BUILD_DIRECTORY} test 
+	#xctool -workspace Rx.xcworkspace -scheme "$1" -configuration "$2" ${SDK} -derivedDataPath  ${BUILD_DIRECTORY} test
 }
 
 function buildExample() {
@@ -58,7 +58,7 @@ function buildExample() {
 #runTests "RxTests-iOS" "Release-Tests"
 
 #make sure all unit tests pass
-for scheme in "RxTests-iOS" "RxTests-OSX" 
+for scheme in "RxTests-iOS" "RxTests-OSX"
 do
 	for configuration in "Debug" "Release-Tests" "Release"
 	do
@@ -68,13 +68,17 @@ done
 
 
 # make sure it all build
-for scheme in "RxExample-iOS" "RxExample-OSX" 
+for scheme in "RxExample-iOS" "RxExample-OSX"
 do
 	for configuration in "Debug" "Release-Tests" "Release"
 	do
 		buildExample ${scheme} ${configuration}
 	done
 done
+
+echo
+printf "Validating documentation ...\n"
+echo
 
 mdast -u mdast-slug -u mdast-validate-links ./*.md
 mdast -u mdast-slug -u mdast-validate-links ./**/*.md

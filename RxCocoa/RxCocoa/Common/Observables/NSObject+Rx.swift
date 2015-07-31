@@ -40,7 +40,7 @@ var deallocatedSubjectContext: UInt8 = 0
 extension NSObject {
 
     // Observes values on `keyPath` starting from `self` with `options` and retainsSelf if `retainSelf` is set.
-    public func rx_observe<Element>(keyPath: String, options: NSKeyValueObservingOptions = NSKeyValueObservingOptions.New | NSKeyValueObservingOptions.Initial, retainSelf: Bool = true) -> Observable<Element?> {
+    public func rx_observe<Element>(keyPath: String, options: NSKeyValueObservingOptions = .New | .Initial, retainSelf: Bool = true) -> Observable<Element?> {
         return KVOObservable(object: self, keyPath: keyPath, options: options, retainTarget: retainSelf)
     }
     

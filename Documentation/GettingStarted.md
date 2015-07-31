@@ -11,10 +11,13 @@ This project tries to be consistent with [ReactiveX.io](http://reactivex.io/). T
 1. [Creating an `Observable` that performs work](#creating-an-observable-that-performs-work)
 1. [Sharing subscription, refCount and variable operator](#sharing-subscription-refcount-and-variable-operator)
 1. [Operators](#operators)
+1. [Playgrounds](#playgrounds)
 1. [Custom operators](#custom-operators)
 1. [Error handling](#error-handling)
+1. [Debugging Compile Errors](#debugging-compile-errors)
 1. [Debugging](#debugging)
 1. [Debugging memory leaks](#debugging-memory-leaks)
+1. [KVO](#kvo)
 1. [UI layer tips](#ui-layer-tips)
 1. [Making HTTP requests](#making-http-requests)
 1. [Examples](Examples.md)
@@ -91,7 +94,7 @@ In case you are curious why `ErrorType` isn't generic, you can find explanation 
 
 So the only thing left on the table is `Disposable`.
 
-```
+```swift
 protocol Disposable
 {
     func dispose()
@@ -104,7 +107,7 @@ There is one additional way an observed sequence can terminate. When you are don
 
 Here is an example with `interval` operator. [Definition of `>-` operator is here](DesignRationale.md#pipe-operator)
 
-```
+```swift
 let subscription = interval(0.3, scheduler)
             >- subscribe { (e: Event<Int64>) in
                 println(e)
@@ -148,7 +151,7 @@ A few more examples just to be sure (`observeOn` is explained [here](Schedulers.
 
 In case you have something like:
 
-```
+```swift
 let subscription = interval(0.3, scheduler)
             >- observeOn(MainScheduler.sharedInstance)
             >- subscribe { (e: Event<Int64>) in
@@ -165,7 +168,7 @@ subscription.dispose() // called from main thread
 
 Also in this case:
 
-```
+```swift
 let subscription = interval(0.3, scheduler)
             >- observeOn(serialScheduler)
             >- subscribe { (e: Event<Int64>) in
@@ -188,13 +191,13 @@ To understand following examples, you will need to understand what is [pipe oper
 
 There is also a couple of additional guarantees that all sequence producers (`Observable`s) must honor.
 
-It doesn't matter on which thread they produce elements but if they generate one element and send it to the observer `observer.on(.Next(nextElement))`, they can't send next element until `observer.on` method has finished execution.
+It doesn't matter on which thread they produce elements, but if they generate one element and send it to the observer `observer.on(.Next(nextElement))`, they can't send next element until `observer.on` method has finished execution.
 
 Producers also cannot send terminating `.Completed` or `.Error` in case `.Next` event hasn't finished.
 
 In short, consider this example:
 
-```
+```swift
 someObservable
   >- subscribe { (e: Event<Element>) in
       println("Event processing started")
@@ -235,11 +238,11 @@ It is true that `Observable` can generate elements in many ways. Some of them ca
 
 E.g. Let's say you have a method with similar prototype:
 
-```
+```swift
 func searchWikipedia(searchTerm: String) -> Observable<Results> {}
 ```
 
-```
+```swift
 let searchForMe = searchWikipedia("me")
 
 // no requests are performed, no work is being done, no URL requests were fired
@@ -346,7 +349,7 @@ Ok, now something more interesting. Let's create that `interval` operator that w
 
 *This is equivalent of actual implementation for dispatch queue schedulers*
 
-```
+```swift
 func myInterval(interval: NSTimeInterval) -> Observable<Int> {
     return create { observer in
         println("Subscribed")
@@ -460,12 +463,12 @@ Ended ----
 
 ## Sharing subscription, refCount and variable operator
 
-But what if you want multiple observers to share one subscription?
+But what if you want that multiple observers share events (elements) from only one subscription?
 
 There are two things that need to be defined.
 
-* How to handle historical elements (replay latest only, replay all, replay last n)
-* How to control when to subscribe to shared sequence (refCount, manual or some other algorithm)
+* How to handle past elements that have been received before the new subscriber was interested in observing them (replay latest only, replay all, replay last n)
+* How to decide when to fire that shared subscription (refCount, manual or some other algorithm)
 
 The usual choice is a combination of `replay(1) >- refCount`.
 
@@ -579,7 +582,7 @@ Fortunately there is an easier way to create operators. Creating new operators i
 
 Lets see how an unoptimized map operator can be implemented.
 
-```
+```swift
 func myMap<E, R>(transform: E -> R)(source: Observable<E>) -> Observable<R> {
     return create { observer in
 
@@ -601,7 +604,7 @@ func myMap<E, R>(transform: E -> R)(source: Observable<E>) -> Observable<R> {
 
 So now you can use your own map:
 
-```
+```swift
 let subscription = myInterval(0.1)
     >- myMap { e in
         return "This is simply \(e)"
@@ -693,6 +696,12 @@ Every time you do this, somebody will probably write this code somewhere
 
 so please try not to do this.
 
+## Playgrounds
+
+If you are unsure how exactly some of the operators work, [playgrounds](../Playgrounds) contain almost all of the operators already prepared with small examples that illustrate their behavior.
+
+**To use playgrounds please open Rx.xcworkspace, build RxSwift-OSX scheme and then open playgrounds in Rx.xcworkspace tree view.**
+
 ## Error handling
 
 The are two error mechanisms.
@@ -767,6 +776,51 @@ Using functions without "OrDie" suffix is usually a more safe option.
 
 There is also the `catch` operator for easier error handling.
 
+## Debugging Compile Errors
+
+When writing elegant RxSwift/RxCocoa code, you are probably relying heavily on compiler to deduce types of `Observable`s. This is one of the reasons why Swift is awesome, but it can also be frustrating sometimes.
+
+```swift
+images = word
+    >- filter { $0.rangeOfString("important") != nil }
+    >- flatMap { word in
+        return self.api.loadFlickrFeed("karate")
+            >- catch { error in
+                return just(JSON(1))
+            }
+      }
+```
+
+If compiler reports that there is an error somewhere in this expression, I would suggest first annotating return types.
+
+```swift
+images = word
+    >- filter { s -> Bool in s.rangeOfString("important") != nil }
+    >- flatMap { word -> Observable<JSON> in
+        return self.api.loadFlickrFeed("karate")
+            >- catch { error -> Observable<JSON> in
+                return just(JSON(1))
+            }
+      }
+```
+
+If that doesn't work, you can continue adding more type annotations until you've localized the error.
+
+```swift
+images = word
+    >- filter { (s: String) -> Bool in s.rangeOfString("important") != nil }
+    >- flatMap { (word: String) -> Observable<JSON> in
+        return self.api.loadFlickrFeed("karate")
+            >- catch { (error: NSError) -> Observable<JSON> in
+                return just(JSON(1))
+            }
+      }
+```
+
+**I would suggest first annotating return types and arguments of closures.**
+
+Sometimes after the error has been fixed you can remove those type annotations and make your code cleaner.
+
 ## Debugging
 
 Using debugger alone is useful, but you can also use `>- debug`. `debug` operator will print out all events to standard output and you can add also label those events.
@@ -821,15 +875,15 @@ NSURLSession.sharedSession().rx_JSON(request)
 
 ## Debugging memory leaks
 
-**All of the unit tests run with leak profiling. In case there is a leak there is a fair chance that it's not caused by Rx.**
+In debug mode Rx tracks all allocated resources in a global variable `resourceCount`.
 
-In debug mode Rx tracks all allocated resources into a global variable `resourceCount`.
+**Printing `Rx.resourceCount` after pushing a view controller onto navigation stack, using it, and then popping back is usually the best way to detect and debug resource leaks.**
 
 As a sanity check, you can just do a `println` in your view controller `deinit` method.
 
 The code would look something like this.
 
-```
+```swift
 class ViewController: UIViewController {
 #if TRACE_RESOURCES
     private let startResourceCount = RxSwift.resourceCount
@@ -919,25 +973,107 @@ When they contain value (and `Variable` always contains it), they broadcast it i
 
 The difference is that `Variable` enables you to manually choose elements of a sequence by using `sendNext`, and you can think of `>- variable` as a kind calculated "variable".
 
+## KVO
+
+KVO is an Objective-C mechanism. That means that it wasn't built with type safety in mind. This project tries to solve some of the problems.
+
+There are two built in ways this library supports KVO.
+
+```swift
+// KVO
+extension NSObject {
+    public func rx_observe<Element>(keyPath: String, retainSelf: Bool = true) -> Observable<Element?> {}
+}
+
+#if !DISABLE_SWIZZLING
+// KVO
+extension NSObject {
+    public func rx_observeWeakly<Element>(keyPath: String) -> Observable<Element?> {}
+}
+#endif
+```
+
+**If Swift compiler doesn't have a way to deduct observed type (return Observable type), it will report error that the function doesn't exists.**
+
+Here are some ways you can give him hints about observed type:
+
+```swift
+view.rx_observe("frame") as Observable<CGRect?>
+```
+
+or
+
+```
+view.rx_observe("frame")
+    >- map { (rect: CGRect?) in
+        //
+    }
+```
+
+### `rx_observe`
+
+`rx_observe` is more performant because it's just a simple wrapper around KVO mechanism, but it has more limited usage scenarios
+
+* it can be used to observe paths starting from `self` or from ancestors in ownership graph (`retainSelf = false`)
+* it can be used to observe paths starting from descendants in ownership graph (`retainSelf = true`)
+* the paths have to consist only of `strong` properties, otherwise you are risking crashing the system by not unregistering KVO observer before dealloc.
+
+E.g.
+
+```swift
+self.rx_observe("view.frame", retainSelf = false) as Observable<CGRect?>
+```
+
+### `rx_observeWeakly`
+
+`rx_observeWeakly` has somewhat worse performance because it has to handle object deallocation in case of weak references.
+
+It can be used in all cases where `rx_observe` can be used and additionally
+
+* because it won't retain observed target, it can be used to observe arbitrary object graph whose ownership relation is unknown
+* it can be used to observe `weak` properties
+
+E.g.
+
+```swift
+someSuspiciousViewController.rx_observeWeakly("behavingOk") as Observable<Bool?>
+```
+
+### Observing structs
+
+KVO is an Objective-C mechanism so it relies heavily on `NSValue`. RxCocoa has additional specializations for `CGRect`, `CGSize` and `CGPoint` that make it convenient to observe those types.
+
+When observing some other structures it is necessary to extract those structures from `NSValue` manually, or creating your own observable sequence specializations.
+
+[Here](../RxCocoa/RxCocoa/Common/Observables/NSObject+Rx+CoreGraphics.swift) are examples how to correctly extract structures from `NSValue`.
+
 ## UI layer tips
 
 There are certain things that your `Observable`s need to satisfy in the UI layer when binding to UIKit controls.
 
-* They need to observe values on `MainScheduler`(UIThread). That's just a normal UIKit/Cocoa property. It is usually a good idea that you APIs return results on `MainScheduler`. In case that doesn't happen, RxCocoa will throw an exception to inform you of that and crash the app.
+### Threading
+
+`Observable`s need to send values on `MainScheduler`(UIThread). That's just a normal UIKit/Cocoa requirement.
+
+It is usually a good idea for you APIs to return results on `MainScheduler`. In case you try to bind something to UI from background thread, in **Debug** build RxCocoa will usually throw an exception to inform you of that.
 
 To fix this you need to add `>- observeOn(MainScheduler.sharedInstance)`.
 
 **NSURLSession extensions don't return result on `MainScheduler` by default.**
 
-* You can't bind errors to UIKit controls because that makes no sense.
+### Errors
+
+You can't bind failure to UIKit controls because that is undefined behavior.
 
 If you don't know if `Observable` can fail, you can ensure it can't fail using `>-catch(valueThatIsReturnedWhenErrorHappens)`
 
-* You usually want to share subscription
+### Sharing subscription
 
-Lets say you have something like this:
+You usually want to share subscription in the UI layer. You don't want to make separate HTTP calls to bind the same data to multiple UI elements.
 
-```
+Let's say you have something like this:
+
+```swift
 let searchResults = searchText
     >- throttle(0.3, $.mainScheduler)
     >- distinctUntilChanged
@@ -953,15 +1089,17 @@ let searchResults = searchText
 
 What you usually want is to share search results once calculated. That is what `>- variable` means.
 
-**It is usually a good rule of thumb in the UI layer to add `>- variable` at the end of transformation chain because you really want to share calculated results, and not fire separate HTTP connections when binding `searchResults` to multiple UI elements.**
+**It is usually a good rule of thumb in the UI layer to add `>- variable` at the end of transformation chain because you really want to share calculated results. You don't want to fire separate HTTP connections when binding `searchResults` to multiple UI elements.**
 
 *Additional information about `>- variable` can be found [here](#sharing-subscription-refcount-and-variable-operator)*
 
 ## Making HTTP requests
 
-Making http requests is one of the first things people try to do with Rx.
+Making http requests is one of the first things people try.
 
-You first need to build `NSURLRequest` object that represents the work that needs to be made. Is it a GET request, or a POST request, what is the request body, query parameters ...
+You first need to build `NSURLRequest` object that represents the work that needs to be done.
+
+Request determines is it a GET request, or a POST request, what is the request body, query parameters ...
 
 This is how you can create a simple GET request
 
@@ -971,7 +1109,7 @@ let request = NSURLRequest(URL: NSURL(string: "http://en.wikipedia.org/w/api.php
 
 If you want to just execute that request outside of composition with other observables, this is what needs to be done.
 
-```
+```swift
 let responseJSON = NSURLSession.sharedSession().rx_JSON(request)
 
 // no requests will be performed up to this point
@@ -994,7 +1132,7 @@ cancelRequest.dispose()
 
 In case you want a more low level access to response, you can use:
 
-```
+```swift
 NSURLSession.sharedSession().rx_response(myNSURLRequest)
     >- debug("my request") // this will print out information to console
     >- flatMap { (data: NSData!, response: NSURLResponse!) -> Observable<String> in
@@ -1014,4 +1152,22 @@ NSURLSession.sharedSession().rx_response(myNSURLRequest)
     >- subscribe { event in
         println(event) // if error happened, this will also print out error to console
     }
+```
+### Logging HTTP traffic
+
+In debug mode RxCocoa will log all HTTP request to console by default. In case you want to change that behavior, please set `Logging.URLRequests` filter.
+
+```swift
+// read your own configuration
+public struct Logging {
+    public typealias LogURLRequest = (NSURLRequest) -> Bool
+
+    public static var URLRequests: LogURLRequest =  { _ in
+    #if DEBUG
+        return true
+    #else
+        return false
+    #endif
+    }
+}
 ```

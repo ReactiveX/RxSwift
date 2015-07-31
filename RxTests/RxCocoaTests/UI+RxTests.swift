@@ -38,7 +38,11 @@ class UILabelMock {
 
 class UIRxTests : RxTest {
     
+    func testArea() {
+    }
+    
     func testReadmeExample() {
+        
         // We have some async Wolfram Alpha API that calculates is number prime.
         let WolframAlphaIsPrime: (Int) -> Observable<PrimeNumber> = { returnElement(PrimeNumber($0, isPrime($0))) }
         

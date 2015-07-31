@@ -31,6 +31,18 @@ RxSwift
 Hang out with us on [rxswift.slack.com](http://slack.rxswift.org) <img src="http://slack.rxswift.org/badge.svg">
 
 1. [Why](#why)
+  1. [State](#state)
+  1. [Bindings](#bindings)
+  1. [Retries](#retries)
+  1. [Transient state](#transient-state)
+  1. [Aggregating network requests](#aggregating-network-requests)
+  1. [Easy integration](#easy-integration)
+  1. [Compositional disposal](#compositional-disposal)
+  1. [Delegates](#delegates)
+  1. [Notifications](#notifications)
+  1. [KVO](#kvo)
+  1. [Benefits](#benefits)
+  1. [It's not all or nothing](#its-not-all-or-nothing)
 1. [Getting started](Documentation/GettingStarted.md)
 1. [Examples](Documentation/Examples.md)
 1. [API - RxSwift operators / RxCocoa extensions](Documentation/API.md)
@@ -130,9 +142,9 @@ Writing all of this and properly testing it would be tedious. This is that same 
 
 There is no additional flags or fields required. Rx takes care of all that transient mess.
 
-### Other use cases
+### Aggregating network requests
 
-But what if you need to fire two requests, and aggregate results when they have both finished?
+What if you need to fire two requests, and aggregate results when they have both finished?
 
 Well, there is of course `zip` operator
 
@@ -229,6 +241,121 @@ override func prepareForReuse() {
 
 This code will do all that, and when `imageSubscription` is disposed it will cancel all dependent async operations and make sure no rogue image is bound to UI.
 
+
+### Delegates
+
+Delegates can be used both as a hook for customizing behavior and as an observing mechanism.
+
+Each usage has it's drawbacks, but Rx can help remedy some of the problem with using delegates as a observing mechanism.
+
+Using delegates and optional methods to report changes can be problematic because there can be usually only one delegate registered, so there is no way to register multiple observers.
+
+Also, delegates usually don't fire initial value upon invoking delegate setter, so you'll also need to read that initial value in some other way. That is kind of tedios.
+
+RxCocoa not only provides wrappers for popular UIKit/Cocoa classes, but it also provides a generic mechanism called `DelegateProxy` that enables wrapping your own delegates and exposing them as observable sequences.
+
+This is real code taken from `UISearchBar` integration.
+
+It uses delegate as a notification mechanism to create an `Observable<String>` that immediately returns current search text upon subscription, and then emits changed search values.
+
+```swift
+extension UISearchBar {
+
+    public var rx_delegate: DelegateProxy {
+        return proxyForObject(self) as RxSearchBarDelegateProxy
+    }
+
+    public var rx_searchText: Observable<String> {
+        return defer { [weak self] in
+            let text = self?.text ?? ""
+
+            return self?.rx_delegate.observe("searchBar:textDidChange:") ?? empty()
+                    >- map { a in
+                        return a[1] as? String ?? ""
+                    }
+                    >- startWith(text)
+        }
+    }
+}
+```
+
+Definition of `RxSearchBarDelegateProxy` can be found [here](RxCocoa/RxCocoa/iOS/Proxies/RxSearchBarDelegateProxy.swift)
+
+This is how that API can be now used
+
+```swift
+
+searchBar.rx_searchText
+    >- subscribeNext { searchText in
+        println("Current search text '\(searchText)'")
+    }
+
+```
+
+### Notifications
+
+Notifications enable registering multiple observers easily, but they are also untyped. Values need to be extracted from either `userInfo` or original target once they fire.
+
+They are just a notification mechanism, and initial value usually has to be acquired in some other way.
+
+That leads to this tedious pattern:
+
+```swift
+let initialText = object.text
+
+doSomething(initialText)
+
+// ....
+
+func controlTextDidChange(notification: NSNotification) {
+    doSomething(object.text)
+}
+
+```
+
+You can use `rx_notification` to create an observable sequence with wanted properties in a similar fashion like `searchText` was constructed in delegate example, and thus reduce scattering of logic and duplication of code.
+
+### KVO
+
+KVO is a handy observing mechanism, but not without flaws. It's biggest flaw is confusing memory management.
+
+In case of observing a property on some object, the object has to outlive the KVO observer registration otherwise your system will crash with an exception.
+
+```
+`TickTock` was deallocated while key value observers were still registered with it. Observation info was leaked, and may even become mistakenly attached to some other object.
+```
+
+There are some rules that you can follow when observing some object that is a direct descendant or ancestor in ownership chain, but if that relation is unknown, then it becomes tricky.
+
+It also has a really awkward callback method that needs to be implemented
+
+```objc
+-(void)observeValueForKeyPath:(NSString *)keyPath
+                     ofObject:(id)object
+                       change:(NSDictionary *)change
+                      context:(void *)context
+```
+
+RxCocoa provides a really convenient observable sequence that solves those issues called [`rx_observe` and `rx_observeWeakly`](Documentation/GettingStarted.md#kvo)
+
+This is how they can be used:
+
+```swift
+view.rx_observe("frame")
+    >- subscribeNext { (frame: CGRect?) in
+        println("Got new frame \(frame)")
+    }
+```
+
+or
+
+```swift
+someSuspiciousViewController.rx_observeWeakly("behavingOk")
+    >- subscribeNext { (behavingOk: Bool?) in
+        println("Cats can purr? \(behavingOk)")
+    }
+```
+
 ### Benefits
 
 In short using Rx will make your code:
@@ -320,11 +447,21 @@ carthage update
 
 iOS 7 is little tricky, but it can be done. The main problem is that iOS 7 doesn't support dynamic frameworks.
 
-RxSwift/RxCocoa projects have no external dependencies so it should come down to just manually including all of the `.swift`, `.m`, `.h` files in build target.
+These are the steps to include RxSwift/RxCocoa projects in an iOS7 project
 
-**If you are including `RxCocoa` project you should also find replace `import RxSwift` with `` because now you aren't using modules.**
+* RxSwift/RxCocoa projects have no external dependencies so just manually including all of the `.swift`, `.m`, `.h` files in build target should import all of the necessary source code.
 
-Is someone knows a smarter way to do this, please share.
+You can either do that by copying the files manually or using git submodules.
+
+* Add `RX_NO_MODULE` as a custom Swift preprocessor flag
+
+Go to your target's `Build Settings > Swift Compiler - Custom Flags` and add `-D RX_NO_MODULE`
+
+* Include `RxCocoa.h` in your bridging header
+
+If you already have a bridging header, adding `#import "RxCocoa.h"` should be sufficient.
+
+If you don't have a bridging header, you can go to your target's `Build Settings > Swift Compiler - Code Generation > Objective-C Bridging Header` and point it to `[path to RxCocoa.h parent directory]/RxCocoa.h`.
 
 ## Feature comparison with other frameworks
 

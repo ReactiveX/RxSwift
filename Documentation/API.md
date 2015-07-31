@@ -102,17 +102,18 @@ extension NSObject {
 ```swift
 extension NSObject {
 
-    public func rx_observe<Element>(keyPath: String) -> Observable<Element?> {}
-
-    public func rx_observe<Element>(keyPath: String, options: NSKeyValueObservingOptions) -> Observable<Element?> {}
-
-    public func rx_observe<Element>(keyPath: String, options: NSKeyValueObservingOptions, retainSelf: Bool) -> Observable<Element?> {}
+    public func rx_observe<Element>(
+        keyPath: String,
+        options: NSKeyValueObservingOptions = .New | .Initial,
+        retainSelf: Bool = true
+    )  -> Observable<Element?> {}
 
 #if !DISABLE_SWIZZLING
 
-    public func rx_observeWeakly<Element>(keyPath: String) -> Observable<Element?> {}
-
-    public func rx_observeWeakly<Element>(keyPath: String, options: NSKeyValueObservingOptions) -> Observable<Element?> {}
+    public func rx_observeWeakly<Element>(
+        keyPath: String,
+        options: NSKeyValueObservingOptions = .New | .Initial
+    ) -> Observable<Element?> {}
 
 #endif
 }

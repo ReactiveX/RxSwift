@@ -667,6 +667,7 @@ extension KVOObservableTests {
     }
     #endif
 
+    
     // let's just check for one, otherones should have the same check
     func testObserve_ObserveCGRectForBiggerStructureDoesntCrashPropertyTypeReturnsNil() {
         var root: HasStrongProperty! = HasStrongProperty()

@@ -94,13 +94,17 @@ class AssumptionsTest : RxTest {
 #endif
     }
     
-    func testCalShuo() {
-        let chartType = Variable(1)
-        let a = Variable(chartType as Observable<Int>)
-            >- switchLatest
-            >- throttle(0.3, MainScheduler.sharedInstance)
-            >- distinctUntilChanged
-        
-        
+}
+
+class Anything {
+    var elements = [Int]()
+    
+    func justCallIt(action: () -> Void) {
+        clearRealTest()
+        action()
+    }
+    
+    deinit {
+        deallocated = true
     }
 }
