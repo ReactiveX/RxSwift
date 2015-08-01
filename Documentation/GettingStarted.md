@@ -20,6 +20,7 @@ This project tries to be consistent with [ReactiveX.io](http://reactivex.io/). T
 1. [KVO](#kvo)
 1. [UI layer tips](#ui-layer-tips)
 1. [Making HTTP requests](#making-http-requests)
+1. [RxDataSourceStarterKit](#rxdatasourcestarterkit)
 1. [Examples](Examples.md)
 
 # Observables aka Sequences
@@ -821,7 +822,7 @@ images = word
 
 **I would suggest first annotating return types and arguments of closures.**
 
-Sometimes after the error has been fixed you can remove those type annotations and make your code cleaner.
+Usually after you have fixed the error, you can remove the type annotations to clean up your code again.
 
 ## Debugging
 
@@ -1173,3 +1174,13 @@ public struct Logging {
     }
 }
 ```
+
+## RxDataSourceStarterKit
+
+... is a set of classes that implement fully functional reactive data sources for `UITableView`s and `UICollectionView`s.
+
+Source code, more information and rationale why these classes are separated into their directory can be found [here](../RxDataSourceStarterKit).
+
+Using them should come down to just importing all of the files into your project.
+
+Fully functional demonstration how to use them is included in the [RxExample](../RxExample) project.

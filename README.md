@@ -449,15 +449,23 @@ iOS 7 is little tricky, but it can be done. The main problem is that iOS 7 doesn
 
 These are the steps to include RxSwift/RxCocoa projects in an iOS7 project
 
-* RxSwift/RxCocoa projects have no external dependencies so just manually including all of the `.swift`, `.m`, `.h` files in build target should import all of the necessary source code.
+* RxSwift/RxCocoa projects have no external dependencies so just manually **including all of the `.swift`, `.m`, `.h` files** in build target should import all of the necessary source code.
 
 You can either do that by copying the files manually or using git submodules.
 
-* Add `RX_NO_MODULE` as a custom Swift preprocessor flag
+`git submodule add git@github.com:kzaher/RxSwift.git`
+
+After you've included files from `RxSwift/RxSwift` and `RxSwift/RxCocoa` folders, you'll need to remove files that are platform specific.
+
+If you are compiling for **`iOS`**, please **remove references** to OSX specific files located in **`RxCocoa/RxCocoa/OSX`**.
+
+If you are compiling for **`OSX`**, please **remove references** to iOS specific files located in **`RxCocoa/RxCocoa/iOS`**.
+
+* Add **`RX_NO_MODULE`** as a custom Swift preprocessor flag
 
 Go to your target's `Build Settings > Swift Compiler - Custom Flags` and add `-D RX_NO_MODULE`
 
-* Include `RxCocoa.h` in your bridging header
+* Include **`RxCocoa.h`** in your bridging header
 
 If you already have a bridging header, adding `#import "RxCocoa.h"` should be sufficient.
 
