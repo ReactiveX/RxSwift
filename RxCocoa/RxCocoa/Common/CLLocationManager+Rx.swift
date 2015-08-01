@@ -7,7 +7,9 @@
 //
 
 import CoreLocation
+#if !RX_NO_MODULE
 import RxSwift
+#endif
 
 
 extension CLLocationManager {

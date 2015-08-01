@@ -7,7 +7,9 @@
 //
 
 import Foundation
+#if !RX_NO_MODULE
 import RxSwift
+#endif
 
 struct WikipediaSearchResult: Printable {
     let title: String
@@ -30,8 +32,8 @@ struct WikipediaSearchResult: Printable {
             return failure(WikipediaParseError)
         }
         
-        let titleAndDescription = Array(Zip2(rootArrayTyped[0], rootArrayTyped[1]))
-        let titleDescriptionAndUrl: [((AnyObject, AnyObject), AnyObject)] = Array(Zip2(titleAndDescription, rootArrayTyped[2]))
+        let titleAndDescription = Array(Swift.Zip2(rootArrayTyped[0], rootArrayTyped[1]))
+        let titleDescriptionAndUrl: [((AnyObject, AnyObject), AnyObject)] = Array(Swift.Zip2(titleAndDescription, rootArrayTyped[2]))
         
         let searchResults: [RxResult<WikipediaSearchResult>] = titleDescriptionAndUrl.map ( { result -> RxResult<WikipediaSearchResult> in
             let ((title: AnyObject, description: AnyObject), url: AnyObject) = result

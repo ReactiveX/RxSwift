@@ -7,7 +7,9 @@
 //
 
 import Foundation
+#if !RX_NO_MODULE
 import RxSwift
+#endif
 
 class Dependencies {
     
@@ -23,7 +25,9 @@ class Dependencies {
         
         let operationQueue = NSOperationQueue()
         operationQueue.maxConcurrentOperationCount = 2
-        operationQueue.qualityOfService = NSQualityOfService.UserInitiated
+        if operationQueue.respondsToSelector("qualityOfService") {
+            operationQueue.qualityOfService = NSQualityOfService.UserInitiated
+        }
         backgroundWorkScheduler = OperationQueueScheduler(operationQueue: operationQueue)
         
         mainScheduler = MainScheduler.sharedInstance

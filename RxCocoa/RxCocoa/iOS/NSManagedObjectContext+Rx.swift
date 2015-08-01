@@ -8,7 +8,9 @@
 
 import Foundation
 import CoreData
+#if !RX_NO_MODULE
 import RxSwift
+#endif
 
 class FetchResultControllerSectionObserver: NSObject, NSFetchedResultsControllerDelegate, Disposable {
     typealias Observer = ObserverOf<[NSFetchedResultsSectionInfo]>

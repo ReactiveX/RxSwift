@@ -8,7 +8,9 @@
 
 import Foundation
 import UIKit
+#if !RX_NO_MODULE
 import RxSwift
+#endif
 
 // objc monkey business
 class _RxTableViewReactiveArrayDataSource: NSObject, UITableViewDataSource {

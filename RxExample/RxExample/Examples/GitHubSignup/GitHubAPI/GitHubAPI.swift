@@ -7,8 +7,10 @@
 //
 
 import Foundation
+#if !RX_NO_MODULE
 import RxSwift
 import RxCocoa
+#endif
 
 enum SignupState: Equatable {
     case InitialState

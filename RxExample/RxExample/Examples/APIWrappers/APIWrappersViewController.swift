@@ -7,9 +7,11 @@
 //
 
 import UIKit
+import CoreLocation
+#if !RX_NO_MODULE
 import RxSwift
 import RxCocoa
-import CoreLocation
+#endif
 
 extension UILabel {
     public override var accessibilityValue: String! {
@@ -193,7 +195,9 @@ class APIWrappersViewController: ViewController {
         // MARK: CLLocationManager
         
         
-        manager.requestWhenInUseAuthorization()
+        if manager.respondsToSelector("requestWhenInUseAuthorization") {
+            manager.requestWhenInUseAuthorization()
+        }
         
         manager.rx_didUpdateLocations
             >- subscribeNext { [weak self] x in 

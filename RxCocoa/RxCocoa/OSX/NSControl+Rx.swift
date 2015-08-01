@@ -8,7 +8,9 @@
 
 import Foundation
 import Cocoa
+#if !RX_NO_MODULE
 import RxSwift
+#endif
 
 extension NSControl {
     

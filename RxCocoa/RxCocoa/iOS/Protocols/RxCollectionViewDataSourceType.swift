@@ -8,7 +8,9 @@
 
 import Foundation
 import UIKit
+#if !RX_NO_MODULE
 import RxSwift
+#endif
 
 // Please take a look at `DelegateProxyType.swift`
 public protocol RxCollectionViewDataSourceType /*: UICollectionViewDataSource*/ {

@@ -8,8 +8,10 @@
 
 import Foundation
 import UIKit
+#if !RX_NO_MODULE
 import RxSwift
 import RxCocoa
+#endif
 
 public class CollectionViewImageCell: UICollectionViewCell {
     @IBOutlet var imageOutlet: UIImageView!
