@@ -702,6 +702,8 @@ If you are unsure how exactly some of the operators work, [playgrounds](../Playg
 
 **To use playgrounds please open Rx.xcworkspace, build RxSwift-OSX scheme and then open playgrounds in Rx.xcworkspace tree view.**
 
+**To view the results of the examples in the playgrounds, please open the `Assistant Editor`. You can open `Assistant Editor` by clicking on `View > Assistant Editor > Show Assistant Editor`**
+
 ## Error handling
 
 The are two error mechanisms.
