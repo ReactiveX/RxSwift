@@ -1,30 +1,63 @@
 #!/bin/bash
 
+. scripts/common.sh
+
 set -e
-
 CURRENT_DIR="$( dirname "${BASH_SOURCE[0]}" )"
+BUILD_DIRECTORY=build
+APP=RxExample
+CONFIGURATIONS="Debug Release-Tests Release"
+SIMULATORS="RxSwiftTest-iPhone6-iOS8.4"
 
-cd $CURRENT_DIR
+echo "(Rx root ${CURRENT_DIR})"
 
-RxSwiftTest='iPhone 6 Plus'
+cd "${CURRENT_DIR}"
 
-xcodebuild -workspace Rx.xcworkspace -scheme RxExample-iOS -derivedDataPath $TMPDIR/build -configuration Release -destination name='iPhone 6 Plus' build
+CURRENT_DIR=`pwd`
 
-osascript -e 'quit app "iOS Simulator.app"'
+function runAutomation() {
+	SIMULATOR=$1
+	CONFIGURATION=$2
 
-xcrun instruments -w 'iPhone 6 Plus' > /dev/null 2>&1 || echo
+	echo
+	printf "${GREEN}Building example for automation ${BOLDCYAN}${SIMULATOR} - ${CONFIGURATION}${RESET}"
+	echo
 
-sleep 2
+	xcodebuild -workspace Rx.xcworkspace -scheme RxExample-iOS -derivedDataPath ${BUILD_DIRECTORY} -configuration ${CONFIGURATION} -destination platform='iOS Simulator',name="${SIMULATOR}" build > /dev/null
 
-xcrun simctl install 'iPhone 6 Plus' $TMPDIR/build/Build/Products/Release-iphonesimulator/RxExample.app
+	echo
+	printf "${GREEN}Quitting iOS Simulator ...${RESET}"
+	echo
 
-sleep 10
+	osascript -e 'quit app "iOS Simulator.app"' > /dev/null
 
-cd $TMPDIR
+	echo
+	printf "${GREEN}Firing up simulator ${BOLDCYAN}${SIMULATOR}${GREEN}...${RESET}\n"
+	echo
 
-rm -rf instrumentscli0.trace || echo
+	xcrun instruments -w ${SIMULATOR} > /dev/null 2>&1 || echo
 
-instruments -w 'iPhone 6 Plus' -t Automation RxExample -e UIASCRIPT $CURRENT_DIR/automation-tests/main.js
+	echo
+	printf "${GREEN}Installing the app ...${RESET}\n"
+	echo
 
-open instrumentscli0.trace
+	xcrun simctl install ${SIMULATOR} ${BUILD_DIRECTORY}/Build/Products/${CONFIGURATION}-iphonesimulator/${APP}.app
 
+	pushd $TMPDIR
+	rm -rf instrumentscli0.trace || echo
+	echo
+	printf "${GREEN}Running instruments ...${RESET}\n"
+	echo
+
+	instruments -w ${SIMULATOR} -t Automation ${APP} -e UIASCRIPT $CURRENT_DIR/automation-tests/main.js #|| (open instrumentscli0.trace; exit -1;)
+	echo "Instruments return value" $?
+	popd
+}
+
+for simulator in ${SIMULATORS}
+do
+		for configuration in ${CONFIGURATIONS}
+		do
+			runAutomation ${simulator} ${configuration}
+		done
+done

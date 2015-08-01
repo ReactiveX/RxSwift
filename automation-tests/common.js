@@ -1,9 +1,15 @@
 
 
+function sleep(time) {
+  var target = UIATarget.localTarget();
+  target.delay(time);
+}
 
 function test(testName, callback) {
   var target = UIATarget.localTarget();
   var app = target.frontMostApp();
+
+  target.delay(1)
 
   function pass() {
     UIALogger.logPass( testName );

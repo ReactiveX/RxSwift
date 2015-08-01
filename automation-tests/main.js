@@ -6,3 +6,4 @@
 #import "04_controlsTests.js"
 #import "05_reactivePartialUpdates.js"
 
+UIALogger.logPass("All");
