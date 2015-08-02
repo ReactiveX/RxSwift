@@ -8,7 +8,9 @@ BUILD_DIRECTORY=build
 APP=RxExample
 CONFIGURATIONS="Debug Release-Tests Release"
 #SIMULATORS="RxSwiftTest-iPhone4s-iOS_8.4 RxSwiftTest-iPhone5-iOS_8.4 RxSwiftTest-iPhone5s-iOS_8.4 RxSwiftTest-iPhone6-iOS_8.4 RxSwiftTest-iPhone6Plus-iOS_8.4 RxSwiftTest-iPhone4s-iOS_8.1 RxSwiftTest-iPhone5-iOS_8.1 RxSwiftTest-iPhone5s-iOS_8.1 RxSwiftTest-iPhone6-iOS_8.1 RxSwiftTest-iPhone6Plus-iOS_8.1"
-IOS7_SIMULATORS="RxSwiftTest-iPhone4s-iOS_7.1 RxSwiftTest-iPhone5-iOS_7.1 RxSwiftTest-iPhone5s-iOS_7.1"
+
+#IOS7_SIMULATORS="RxSwiftTest-iPhone4s-iOS_7.1 RxSwiftTest-iPhone5-iOS_7.1 RxSwiftTest-iPhone5s-iOS_7.1"
+IOS7_SIMULATORS=""
 IOS8_SIMULATORS="RxSwiftTest-iPhone4s-iOS_8.4 RxSwiftTest-iPhone5-iOS_8.4 RxSwiftTest-iPhone5s-iOS_8.4 RxSwiftTest-iPhone6-iOS_8.4 RxSwiftTest-iPhone6Plus-iOS_8.4"
 
 #open $TMPDIR
