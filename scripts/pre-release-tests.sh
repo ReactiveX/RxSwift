@@ -29,4 +29,6 @@ done
 
 if [ "${IS_LOCAL}" -eq 1 ]; then
 	. scripts/automation-tests.sh
+	mdast -u mdast-slug -u mdast-validate-links ./*.md
+	mdast -u mdast-slug -u mdast-validate-links ./**/*.md
 fi

@@ -93,6 +93,7 @@ class AssumptionsTest : RxTest {
         XCTAssert(false, "Can't run unit tests in without tracing")
 #endif
     }
+    
 }
 
 class Anything {

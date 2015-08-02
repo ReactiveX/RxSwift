@@ -9,10 +9,14 @@
 import Foundation
 
 // read your own configuration
-struct Logging {
+public struct Logging {
+    public typealias LogURLRequest = (NSURLRequest) -> Bool
+    
+    public static var URLRequests: LogURLRequest =  { _ in
     #if DEBUG
-    static let URLRequests = true
+        return true
     #else
-    static let URLRequests = false
+        return false
     #endif
+    }
 }
