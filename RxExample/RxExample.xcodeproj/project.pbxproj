@@ -171,7 +171,6 @@
 		C8297F511B6CF94B000589EA /* SchedulerServices+Emulation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8297EE01B6CF94B000589EA /* SchedulerServices+Emulation.swift */; };
 		C8297F521B6CF94B000589EA /* SerialDispatchQueueScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8297EE11B6CF94B000589EA /* SerialDispatchQueueScheduler.swift */; };
 		C8297F531B6CF94B000589EA /* DispatchQueueSchedulerPriority.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8297EE21B6CF94B000589EA /* DispatchQueueSchedulerPriority.swift */; };
-		C8297F541B6CF94B000589EA /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C8297EE41B6CF94B000589EA /* Info.plist */; };
 		C8297FA21B6CF953000589EA /* RxCLLocationManagerDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8297F551B6CF953000589EA /* RxCLLocationManagerDelegateProxy.swift */; };
 		C8297FA31B6CF953000589EA /* ControlTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8297F571B6CF953000589EA /* ControlTarget.swift */; };
 		C8297FA41B6CF953000589EA /* Deallocating.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8297F581B6CF953000589EA /* Deallocating.swift */; };
@@ -226,7 +225,6 @@
 		C8297FDA1B6CF953000589EA /* UIAlertView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8297F9A1B6CF953000589EA /* UIAlertView+Rx.swift */; };
 		C8297FDB1B6CF953000589EA /* UISegmentedControl+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8297F9B1B6CF953000589EA /* UISegmentedControl+Rx.swift */; };
 		C8297FDC1B6CF953000589EA /* UISwitch+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8297F9C1B6CF953000589EA /* UISwitch+Rx.swift */; };
-		C8297FDD1B6CF953000589EA /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C8297F9F1B6CF953000589EA /* Info.plist */; };
 		C83367231AD029AE00C668A7 /* Example.swift in Sources */ = {isa = PBXBuildFile; fileRef = C833670F1AD029AE00C668A7 /* Example.swift */; };
 		C83367241AD029AE00C668A7 /* HtmlParsing.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83367111AD029AE00C668A7 /* HtmlParsing.swift */; };
 		C83367251AD029AE00C668A7 /* ImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83367121AD029AE00C668A7 /* ImageService.swift */; };
@@ -460,7 +458,7 @@
 		C8297F5D1B6CF953000589EA /* NSObject+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = "NSObject+Rx.swift"; sourceTree = "<group>"; };
 		C8297F5E1B6CF953000589EA /* NSObject+Rx+CoreGraphics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = "NSObject+Rx+CoreGraphics.swift"; sourceTree = "<group>"; };
 		C8297F5F1B6CF953000589EA /* NSNotificationCenter+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = "NSNotificationCenter+Rx.swift"; sourceTree = "<group>"; };
-		C8297F601B6CF953000589EA /* NSURLSession+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = "NSURLSession+Rx.swift"; sourceTree = "<group>"; };
+		C8297F601B6CF953000589EA /* NSURLSession+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = "NSURLSession+Rx.swift"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		C8297F621B6CF953000589EA /* CLLocationManager+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = "CLLocationManager+Rx.swift"; sourceTree = "<group>"; };
 		C8297F631B6CF953000589EA /* DelegateProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = DelegateProxy.swift; sourceTree = "<group>"; };
 		C8297F641B6CF953000589EA /* DelegateProxyType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = DelegateProxyType.swift; sourceTree = "<group>"; };
@@ -511,7 +509,7 @@
 		C8297F9C1B6CF953000589EA /* UISwitch+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = "UISwitch+Rx.swift"; sourceTree = "<group>"; };
 		C8297F9E1B6CF953000589EA /* RxCocoa.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RxCocoa.h; sourceTree = "<group>"; };
 		C8297F9F1B6CF953000589EA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C83366DD1AD0293800C668A7 /* RxExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RxExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C83366DD1AD0293800C668A7 /* RxExample-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "RxExample-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C833670F1AD029AE00C668A7 /* Example.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Example.swift; sourceTree = "<group>"; };
 		C83367111AD029AE00C668A7 /* HtmlParsing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HtmlParsing.swift; sourceTree = "<group>"; };
 		C83367121AD029AE00C668A7 /* ImageService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageService.swift; sourceTree = "<group>"; };
@@ -1003,7 +1001,7 @@
 		C83366DE1AD0293800C668A7 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				C83366DD1AD0293800C668A7 /* RxExample.app */,
+				C83366DD1AD0293800C668A7 /* RxExample-iOS.app */,
 				C88BB8DC1B07E6C90064D411 /* RxExample.app */,
 				C8297E691B6CF905000589EA /* RxExample-iOS-no-module.app */,
 			);
@@ -1226,7 +1224,7 @@
 			);
 			name = "RxExample-iOS";
 			productName = RxExample;
-			productReference = C83366DD1AD0293800C668A7 /* RxExample.app */;
+			productReference = C83366DD1AD0293800C668A7 /* RxExample-iOS.app */;
 			productType = "com.apple.product-type.application";
 		};
 		C88BB8B91B07E6C90064D411 /* RxExample-OSX */ = {
@@ -1287,9 +1285,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C8297F541B6CF94B000589EA /* Info.plist in Resources */,
 				C8297E5D1B6CF905000589EA /* WikipediaSearchCell.xib in Resources */,
-				C8297FDD1B6CF953000589EA /* Info.plist in Resources */,
 				C8297E5E1B6CF905000589EA /* LaunchScreen.xib in Resources */,
 				C8297F181B6CF94B000589EA /* CombineLatest+arity.tt in Resources */,
 				C8297E5F1B6CF905000589EA /* WikipediaImageCell.xib in Resources */,
@@ -1743,6 +1739,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-objc_loadall";
+				PRODUCT_NAME = "RxExample-iOS";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -1754,6 +1751,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-objc_loadall";
+				PRODUCT_NAME = "RxExample-iOS";
 				SDKROOT = iphoneos;
 			};
 			name = Release;
@@ -1829,6 +1827,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-objc_loadall";
+				PRODUCT_NAME = "RxExample-iOS";
 				SDKROOT = iphoneos;
 			};
 			name = "Release-Tests";

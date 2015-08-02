@@ -47,5 +47,11 @@ function sleep(time) {
   UIATarget.localTarget().delay(time);
 }
 
+function writeInElement(element, text) {
+  var char
+  for (var i = 1; i < text.length + 1; i++) {
+    element.setValue(text.substring(0, i));
+  }
+}
 
 

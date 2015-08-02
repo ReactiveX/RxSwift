@@ -1,5 +1,11 @@
 . scripts/common.sh
 
+IS_LOCAL=0
+if [ "$#" -eq 1 ]; then
+	echo "Local test"
+	IS_LOCAL=1
+fi
+
 #runTests "RxTests-iOS" "Release-Tests"
 
 #make sure all unit tests pass
@@ -13,7 +19,7 @@ done
 
 
 # make sure it all build
-for scheme in "RxExample-iOS" "RxExample-OSX"
+for scheme in "RxExample-iOS" "RxExample-iOS-no-module" "RxExample-OSX"
 do
 	for configuration in "Debug" "Release-Tests" "Release"
 	do
@@ -21,4 +27,6 @@ do
 	done
 done
 
-./automation-tests.sh
+if [ "${IS_LOCAL}" -eq 1 ]; then
+	. scripts/automation-tests.sh
+fi

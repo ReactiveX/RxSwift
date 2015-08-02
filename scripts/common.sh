@@ -1,17 +1,6 @@
 #!/bin/bash
 set -e
 
-CLEAN=""
-
-if [ "$#" -eq 1 ]; then
-	echo "Not cleaning up"
-	CLEAN=" clean "
-else
-	echo "Cleaning up first"
-fi
-
-echo "CLEAN=${CLEAN}"
-
 RESET="\033[0m"
 BLACK="\033[30m"
 RED="\033[31m"
@@ -38,7 +27,8 @@ function runTests() {
 	echo
 	printf "${GREEN}Running tests for ${BOLDCYAN}$1 - $2${RESET}\n"
 	echo
-	xcodebuild -workspace Rx.xcworkspace -scheme "$1" -configuration "$2" -derivedDataPath ${BUILD_DIRECTORY} ${CLEAN} test > /dev/null
+
+	xcodebuild -workspace Rx.xcworkspace -scheme "$1" -configuration "$2" -derivedDataPath ${BUILD_DIRECTORY} test | xcpretty -c
 
 	#if [[ $scheme == *"iOS"* ]]
 	#then
@@ -52,7 +42,7 @@ function buildExample() {
 	printf "${GREEN}Building example for ${BOLDCYAN}$1 - $2${RESET}\n"
 	echo
 
-	xcodebuild -workspace Rx.xcworkspace -scheme "$1" -configuration "$2" ${CLEAN} build > /dev/null
+	xcodebuild -workspace Rx.xcworkspace -scheme "$1" -configuration "$2" build | xcpretty -c
 }
 
 # simulators
@@ -60,14 +50,31 @@ function buildExample() {
 # xcrun simctl list devicetypes
 # xcrun simctl list runtimes
 
+#IOS7_SIMULATORS="RxSwiftTest-iPhone4s-iOS_7.1 RxSwiftTest-iPhone5-iOS_7.1 RxSwiftTest-iPhone5s-iOS_7.1"
+#IOS8_SIMULATORS="RxSwiftTest-iPhone4s-iOS_8.4 RxSwiftTest-iPhone5-iOS_8.4 RxSwiftTest-iPhone5s-iOS_8.4 RxSwiftTest-iPhone6-iOS_8.4 RxSwiftTest-iPhone6Plus-iOS_8.4"
+
 function createDevices() {
-	xcrun simctl create RxSwiftTest-iPhone5s-iOS7.1 'iPhone 5s' 'com.apple.CoreSimulator.SimRuntime.iOS-7-1'
-	xcrun simctl create RxSwiftTest-iPhone5-iOS7.1 'iPhone 5' 'com.apple.CoreSimulator.SimRuntime.iOS-7-1'
-	xcrun simctl create RxSwiftTest-iPhone6-iOS8.4 'iPhone 6' 'com.apple.CoreSimulator.SimRuntime.iOS-8-4'
+	xcrun simctl create RxSwiftTest-iPhone4s-iOS_7.1 'iPhone 4s' 'com.apple.CoreSimulator.SimRuntime.iOS-7-1'
+	xcrun simctl create RxSwiftTest-iPhone5-iOS_7.1 'iPhone 5' 'com.apple.CoreSimulator.SimRuntime.iOS-7-1'
+	xcrun simctl create RxSwiftTest-iPhone5s-iOS_7.1 'iPhone 5s' 'com.apple.CoreSimulator.SimRuntime.iOS-7-1'
+
+	xcrun simctl create RxSwiftTest-iPhone4s-iOS_8.4 'iPhone 4s' 'com.apple.CoreSimulator.SimRuntime.iOS-8-4'
+	xcrun simctl create RxSwiftTest-iPhone5-iOS_8.4 'iPhone 5' 'com.apple.CoreSimulator.SimRuntime.iOS-8-4'
+	xcrun simctl create RxSwiftTest-iPhone5s-iOS_8.4 'iPhone 5s' 'com.apple.CoreSimulator.SimRuntime.iOS-8-4'
+
+	xcrun simctl create RxSwiftTest-iPhone6-iOS_8.4 'iPhone 6' 'com.apple.CoreSimulator.SimRuntime.iOS-8-4'
+	xcrun simctl create RxSwiftTest-iPhone6Plus-iOS_8.4 'iPhone 6 Plus' 'com.apple.CoreSimulator.SimRuntime.iOS-8-4'
 }
 
 function deleteDevices() {
-	xcrun simctl delete RxSwiftTest-iPhone5s-iOS7.1
-	xcrun simctl delete RxSwiftTest-iPhone5-iOS7.1
-	xcrun simctl delete RxSwiftTest-iPhone6-iOS8.4
+	xcrun simctl delete RxSwiftTest-iPhone4s-iOS_7.1
+	xcrun simctl delete RxSwiftTest-iPhone5-iOS_7.1
+	xcrun simctl delete RxSwiftTest-iPhone5s-iOS_7.1
+
+	xcrun simctl delete RxSwiftTest-iPhone4s-iOS_8.4
+	xcrun simctl delete RxSwiftTest-iPhone5-iOS_8.4
+	xcrun simctl delete RxSwiftTest-iPhone5s-iOS_8.4
+
+	xcrun simctl delete RxSwiftTest-iPhone6-iOS_8.4
+	xcrun simctl delete RxSwiftTest-iPhone6Plus-iOS_8.4
 }
