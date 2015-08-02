@@ -1,15 +1,5 @@
 
-
-function sleep(time) {
-  var target = UIATarget.localTarget();
-  target.delay(time);
-}
-
 function test(testName, callback) {
-  var target = UIATarget.localTarget();
-  var app = target.frontMostApp();
-
-  target.delay(1)
 
   function pass() {
     UIALogger.logPass( testName );
@@ -28,8 +18,9 @@ function test(testName, callback) {
     }
   }
 
+  sleep(1)
   UIALogger.logStart( testName );
-  callback(target, app, check, pass)
+  callback(check, pass)
 }
 
 function log(string) {
@@ -40,6 +31,10 @@ function debug(string) {
   UIALogger.logDebug(string)
 }
 
+function logElement(element) {
+  UIALogger.logDebug(element.toString())
+}
+
 function error(string) {
   UIALogger.logError(string)
 }
@@ -47,3 +42,10 @@ function error(string) {
 function warning(string) {
   UIALogger.logWarning(string)
 }
+
+function sleep(time) {
+  UIATarget.localTarget().delay(time);
+}
+
+
+

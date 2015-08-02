@@ -1,18 +1,27 @@
 
 
-test("----- masterDetail -----", function (target, app, check, pass) {
-  var window = app.mainWindow();
+test("----- masterDetail -----", function (check, pass) {
 
-  window.tableViews()[0].tapWithOptions({tapOffset:{x:0.41, y:0.32}});
-  app.navigationBar().rightButton().tap();
-  window.tableViews()[0].dragInsideWithOptions({startOffset:{x:0.93, y:0.58}, endOffset:{x:0.95, y:0.28}, duration:1.5});
-  window.tableViews()[0].dragInsideWithOptions({startOffset:{x:0.94, y:0.58}, endOffset:{x:0.92, y:0.18}, duration:1.5});
-  window.tableViews()[0].tapWithOptions({tapOffset:{x:0.07, y:0.35}});
-  window.tableViews()[0].cells()[2].tapWithOptions({tapOffset:{x:0.93, y:0.64}});
-  app.navigationBar().rightButton().tap();
-  window.tableViews()[0].tapWithOptions({tapOffset:{x:0.30, y:0.23}});
-  app.navigationBar().leftButton().tap();
-  app.navigationBar().leftButton().tap();
+  function yOffset (pixels) {
+    return pixels / UIATarget.localTarget().frontMostApp().mainWindow().rect().size.height
+  }
+
+
+  UIATarget.localTarget().frontMostApp().mainWindow().tableViews()[0].cells()[2].tapWithOptions({tapOffset:{x:0.24, y:0.20}});
+  UIATarget.localTarget().frontMostApp().navigationBar().rightButton().tap();
+  UIATarget.localTarget().frontMostApp().mainWindow().dragInsideWithOptions({startOffset:{x:0.93, y:yOffset(300)}, endOffset:{x:0.95, y:yOffset(200)}, duration:1.5});
+  UIATarget.localTarget().frontMostApp().mainWindow().dragInsideWithOptions({startOffset:{x:0.93, y:yOffset(300)}, endOffset:{x:0.95, y:yOffset(100)}, duration:1.5});
+
+  UIATarget.localTarget().frontMostApp().mainWindow().tableViews()[0].cells()[1].buttons()[0].tap();
+
+  UIATarget.localTarget().frontMostApp().mainWindow().tableViews()[0].cells()[1].buttons()[2].tap();
+
+  UIATarget.localTarget().delay( 2 );
+
+  UIATarget.localTarget().frontMostApp().navigationBar().rightButton().tap();
+  UIATarget.localTarget().frontMostApp().mainWindow().tableViews()[0].cells()[1].tap();
+  UIATarget.localTarget().frontMostApp().navigationBar().leftButton().tap();
+  UIATarget.localTarget().frontMostApp().navigationBar().leftButton().tap();
 
   pass()
 });
