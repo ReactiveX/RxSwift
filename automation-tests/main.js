@@ -5,5 +5,3 @@
 #import "03_masterDetail.js"
 #import "04_controlsTests.js"
 #import "05_reactivePartialUpdates.js"
-
-UIALogger.logPass("All");

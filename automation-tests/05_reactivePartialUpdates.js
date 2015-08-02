@@ -1,18 +1,16 @@
 
 
-test("----- reactivePartialUpdates -----", function (target, app, check, pass) {
-  var window = app.mainWindow();
+test("----- reactivePartialUpdates -----", function (check, pass) {
 
-  window.tableViews()[0].tapWithOptions({tapOffset:{x:0.49, y:0.70}});
-  window.tableViews()[0].tapWithOptions({tapOffset:{x:0.36, y:0.56}});
-  app.navigationBar().rightButton().tap();
-  app.navigationBar().rightButton().tap();
-  app.navigationBar().rightButton().tap();
-  app.navigationBar().rightButton().tap();
-  app.navigationBar().rightButton().tap();
-  app.navigationBar().rightButton().tap();
-  app.navigationBar().rightButton().tap();
-  app.navigationBar().leftButton().tap();
+  UIATarget.localTarget().frontMostApp().mainWindow().tableViews()[0].cells()[4].tapWithOptions({tapOffset:{x:0.24, y:0.20}});
+  UIATarget.localTarget().frontMostApp().navigationBar().rightButton().tap();
+  UIATarget.localTarget().frontMostApp().navigationBar().rightButton().tap();
+  UIATarget.localTarget().frontMostApp().navigationBar().rightButton().tap();
+  UIATarget.localTarget().frontMostApp().navigationBar().rightButton().tap();
+  UIATarget.localTarget().frontMostApp().navigationBar().rightButton().tap();
+  UIATarget.localTarget().frontMostApp().navigationBar().rightButton().tap();
+  UIATarget.localTarget().frontMostApp().navigationBar().rightButton().tap();
+  UIATarget.localTarget().frontMostApp().navigationBar().leftButton().tap();
 
   pass()
 });

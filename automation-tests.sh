@@ -1,13 +1,19 @@
 #!/bin/bash
 
-. scripts/common.sh
 
 set -e
+NUM_OF_TESTS=14
 CURRENT_DIR="$( dirname "${BASH_SOURCE[0]}" )"
-BUILD_DIRECTORY=build
+BUILD_DIRECTORY=$TMPDIR/build
 APP=RxExample
 CONFIGURATIONS="Debug Release-Tests Release"
-SIMULATORS="RxSwiftTest-iPhone6-iOS8.4"
+SIMULATORS="RxSwiftTest-iPhone4s-iOS_8.4 RxSwiftTest-iPhone5-iOS_8.4 RxSwiftTest-iPhone5s-iOS_8.4 RxSwiftTest-iPhone6-iOS_8.4 RxSwiftTest-iPhone6Plus-iOS_8.4 RxSwiftTest-iPhone4s-iOS_8.1 RxSwiftTest-iPhone5-iOS_8.1 RxSwiftTest-iPhone5s-iOS_8.1 RxSwiftTest-iPhone6-iOS_8.1 RxSwiftTest-iPhone6Plus-iOS_8.1"
+
+open $TMPDIR
+
+cd $CURRENT_DIR
+
+. scripts/common.sh
 
 echo "(Rx root ${CURRENT_DIR})"
 
@@ -20,10 +26,14 @@ function runAutomation() {
 	CONFIGURATION=$2
 
 	echo
+	echo
+	echo
+	echo
 	printf "${GREEN}Building example for automation ${BOLDCYAN}${SIMULATOR} - ${CONFIGURATION}${RESET}"
 	echo
 
-	xcodebuild -workspace Rx.xcworkspace -scheme RxExample-iOS -derivedDataPath ${BUILD_DIRECTORY} -configuration ${CONFIGURATION} -destination platform='iOS Simulator',name="${SIMULATOR}" build > /dev/null
+	OS=`echo $SIMULATOR| cut -d'_' -f 2`
+	xcodebuild -workspace Rx.xcworkspace -scheme RxExample-iOS -derivedDataPath ${BUILD_DIRECTORY} -configuration ${CONFIGURATION} -destination platform='iOS Simulator',OS="${OS}",name="${SIMULATOR}" build > /dev/null
 
 	echo
 	printf "${GREEN}Quitting iOS Simulator ...${RESET}"
@@ -49,8 +59,18 @@ function runAutomation() {
 	printf "${GREEN}Running instruments ...${RESET}\n"
 	echo
 
-	instruments -w ${SIMULATOR} -t Automation ${APP} -e UIASCRIPT $CURRENT_DIR/automation-tests/main.js #|| (open instrumentscli0.trace; exit -1;)
-	echo "Instruments return value" $?
+	instruments -w ${SIMULATOR} -t Automation ${APP} -e UIASCRIPT $CURRENT_DIR/automation-tests/main.js > $TMPDIR/output.txt #|| (open instrumentscli0.trace; exit -1;)
+	COUNT=`grep Pass: $TMPDIR/output.txt | wc -l`
+
+	if [ "$COUNT" -lt "$NUM_OF_TESTS" ]; then
+			echo
+			printf "${RED}${SIMULATOR} - ${CONFIGURATION} tests do not passes${RESET}"
+			echo
+			printf "${RED}Pases ${COUNT} tests of ${NUM_OF_TESTS} ${RESET}"
+			echo
+			open ./instrumentscli0.trace;
+			exit;
+	fi
 	popd
 }
 

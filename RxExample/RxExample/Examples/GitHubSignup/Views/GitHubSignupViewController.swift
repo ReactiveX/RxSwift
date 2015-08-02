@@ -118,8 +118,16 @@ class GitHubSignupViewController : ViewController {
         } >- disposeBag.addDisposable
     }
     
+    func dismissKeyboard(gr: UITapGestureRecognizer) {
+        view.endEditing(true)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let tapBackground = UITapGestureRecognizer(target: self, action: Selector("dismissKeyboard:"))
+        tapBackground.numberOfTouchesRequired = 1
+        view.addGestureRecognizer(tapBackground)
         
         self.disposeBag = DisposeBag()
         
