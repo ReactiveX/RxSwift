@@ -171,7 +171,7 @@ public func flatMapOrDie<E, R>
     }
 }
 
-public func flatMap<E, R>
+public func flatMapWithIndex<E, R>
     (selector: (E, Int) -> Observable<R>)
     -> Observable<E> -> Observable<R> {
     return { source in
@@ -179,7 +179,7 @@ public func flatMap<E, R>
     }
 }
 
-public func flatMapOrDie<E, R>
+public func flatMapWithIndexOrDie<E, R>
     (selector: (E, Int) -> RxResult<Observable<R>>)
     -> Observable<E> -> Observable<R> {
     return { source in
