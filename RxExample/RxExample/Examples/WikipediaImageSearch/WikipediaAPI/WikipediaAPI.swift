@@ -7,8 +7,10 @@
 //
 
 import Foundation
+#if !RX_NO_MODULE
 import RxSwift
 import RxCocoa
+#endif
 
 func apiError(error: String) -> NSError {
     return NSError(domain: "WikipediaAPI", code: -1, userInfo: [NSLocalizedDescriptionKey: error])

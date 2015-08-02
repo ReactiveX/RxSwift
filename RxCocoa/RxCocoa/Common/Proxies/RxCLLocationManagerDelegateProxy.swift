@@ -7,7 +7,9 @@
 //
 
 import CoreLocation
+#if !RX_NO_MODULE
 import RxSwift
+#endif
 
 class RxCLLocationManagerDelegateProxy : DelegateProxy
                                        , CLLocationManagerDelegate

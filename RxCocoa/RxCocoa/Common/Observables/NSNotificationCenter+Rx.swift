@@ -7,7 +7,9 @@
 //
 
 import Foundation
+#if !RX_NO_MODULE
 import RxSwift
+#endif
 
 extension NSNotificationCenter {
     public func rx_notification(name: String, object: AnyObject?) -> Observable<NSNotification> {

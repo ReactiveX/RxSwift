@@ -8,9 +8,11 @@
 
 import Foundation
 import UIKit
+import CoreData
+#if !RX_NO_MODULE
 import RxSwift
 import RxCocoa
-import CoreData
+#endif
 
 let generateCustomSize = true
 let runAutomatically = false

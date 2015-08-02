@@ -7,7 +7,9 @@
 //
 
 import UIKit
+#if !RX_NO_MODULE
 import RxSwift
+#endif
 
 
 extension UISwitch {

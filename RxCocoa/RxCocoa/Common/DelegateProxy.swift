@@ -7,7 +7,9 @@
 //
 
 import Foundation
+#if !RX_NO_MODULE
 import RxSwift
+#endif
 
 var delegateAssociatedTag: UInt8 = 0
 var dataSourceAssociatedTag: UInt8 = 0

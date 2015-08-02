@@ -8,8 +8,10 @@
 
 import Foundation
 import UIKit
+#if !RX_NO_MODULE
 import RxSwift
 import RxCocoa
+#endif
 
 let okColor = UIColor(red: 138.0 / 255.0, green: 221.0 / 255.0, blue: 109.0 / 255.0, alpha: 1.0)
 let errorColor = UIColor.redColor()
@@ -116,8 +118,16 @@ class GitHubSignupViewController : ViewController {
         } >- disposeBag.addDisposable
     }
     
+    func dismissKeyboard(gr: UITapGestureRecognizer) {
+        view.endEditing(true)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let tapBackground = UITapGestureRecognizer(target: self, action: Selector("dismissKeyboard:"))
+        tapBackground.numberOfTouchesRequired = 1
+        view.addGestureRecognizer(tapBackground)
         
         self.disposeBag = DisposeBag()
         

@@ -271,12 +271,12 @@ extension ObservableTimeTest {
         let start = NSDate()
         
         let a = concat(from([just(0), never()]))
-            >- throttle(0.5, scheduler)
+            >- throttle(2, scheduler)
             >- first
         
         let end = NSDate()
         
-        XCTAssertEqualWithAccuracy(0.5, end.timeIntervalSinceDate(start), 0.15)
+        XCTAssertEqualWithAccuracy(2, end.timeIntervalSinceDate(start), 0.5)
         XCTAssertEqual(a.get()!, 0)
     }
 }
@@ -813,13 +813,13 @@ extension ObservableTimeTest {
         
         let start = NSDate()
         
-        let a = interval(0.5, scheduler)
+        let a = interval(1, scheduler)
             >- take(2)
             >- toArray
         
         let end = NSDate()
         
-        XCTAssertEqualWithAccuracy(1, end.timeIntervalSinceDate(start), 0.15)
+        XCTAssertEqualWithAccuracy(2, end.timeIntervalSinceDate(start), 0.3)
         XCTAssertEqual(a.get(), [0, 1])
     }
 }

@@ -7,7 +7,9 @@
 //
 
 import Foundation
+#if !RX_NO_MODULE
 import RxSwift
+#endif
 
 struct WikipediaPage {
     let title: String

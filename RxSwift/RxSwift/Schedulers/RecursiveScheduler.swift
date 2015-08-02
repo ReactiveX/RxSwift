@@ -201,7 +201,7 @@ class RecursiveImmediateSchedulerOf<State> : Disposable {
             })
     }
     
-    public func dispose() {
+    func dispose() {
         self.lock.performLocked {
             self.action = nil
         }

@@ -7,7 +7,9 @@
 //
 
 import Foundation
+#if !RX_NO_MODULE
 import RxSwift
+#endif
 import CoreGraphics
 
 #if arch(x86_64) || arch(arm64)
