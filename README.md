@@ -1,6 +1,8 @@
 <img src="assets/Rx_Logo_M.png" width="36" height="36"> RxSwift: ReactiveX for Swift
 ======================================
 
+[![Travis CI](https://travis-ci.org/kzaher/RxSwift.svg?branch=master)](https://travis-ci.org/kzaher/RxSwift)
+
 Xcode 6.3 / Swift 1.2 required
 
 Rx is a [generic abstraction of computation](https://youtu.be/looJcaeboBY) expressed through `Observable<Element>` interface.

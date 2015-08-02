@@ -23,7 +23,7 @@ There isn't much you can do with them without figuring out what will be the resu
 
 Will it be `E1`, `E2` or some new `E3` maybe? So you need a new set of operators just to solve that impedance mismatch.
 
-This for sure hurts composition properties, and Rx really doesn't care about why sequence fails, it just forwards failure further.
+This for sure hurts composition properties, and Rx really doesn't care about why sequence fails, it just usually forwards failure further down the observable chain.
 
 There is additional problem that maybe in some cases operators will fail for some internal error, and in that case you won't be able to construct resulting error and report failure.
 

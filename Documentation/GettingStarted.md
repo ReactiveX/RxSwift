@@ -996,7 +996,7 @@ extension NSObject {
 #endif
 ```
 
-**If Swift compiler doesn't have a way to deduct observed type (return Observable type), it will report error that the function doesn't exists.**
+**If Swift compiler doesn't have a way to deduce observed type (return Observable type), it will report error about function not existing.**
 
 Here are some ways you can give him hints about observed type:
 
