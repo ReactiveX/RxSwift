@@ -1,5 +1,6 @@
 #!/bin/bash
 set -e
+#set -o xtrace
 
 RESET="\033[0m"
 BLACK="\033[30m"
@@ -21,37 +22,60 @@ BOLDWHITE="\033[1m\033[37m"
 
 # make sure all tests are passing
 
+DEFAULT_IOS7_SIMULATOR=RxSwiftTest-iPhone4s-iOS_7.1
+DEFAULT_IOS8_SIMULATOR=RxSwiftTest-iPhone6-iOS_8.4
+
+IOS7_SIMULATORS="RxSwiftTest-iPhone4s-iOS_7.1 RxSwiftTest-iPhone5-iOS_7.1 RxSwiftTest-iPhone5s-iOS_7.1"
+IOS8_SIMULATORS="RxSwiftTest-iPhone4s-iOS_8.4 RxSwiftTest-iPhone5-iOS_8.4 RxSwiftTest-iPhone5s-iOS_8.4 RxSwiftTest-iPhone6-iOS_8.4 RxSwiftTest-iPhone6Plus-iOS_8.4"
+
 BUILD_DIRECTORY=build
 
-function runTests() {
-	echo
-	printf "${GREEN}Running tests for ${BOLDCYAN}$1 - $2${RESET}\n"
-	echo
-
-	xcodebuild -workspace Rx.xcworkspace -scheme "$1" -configuration "$2" -derivedDataPath ${BUILD_DIRECTORY} test | xcpretty -c
-
-	#if [[ $scheme == *"iOS"* ]]
-	#then
-	#	SDK="-sdk iphonesimulator"
-	#fi
-	#xctool -workspace Rx.xcworkspace -scheme "$1" -configuration "$2" ${SDK} -derivedDataPath  ${BUILD_DIRECTORY} test
+function ios7simulator() {
+	A=($IOS7_SIMULATORS)
+	echo ${A[$1]}
 }
 
-function buildExample() {
+function ios8simulator() {
+	A=($IOS8_SIMULATORS)
+	echo ${A[$1]}
+}
+
+function rx() {
+	SCHEME=$1
+	CONFIGURATION=$2
+	SIMULATOR=$3
+	ACTION=$4
+
 	echo
-	printf "${GREEN}Building example for ${BOLDCYAN}$1 - $2${RESET}\n"
+	printf "${GREEN}${ACTION} ${BOLDCYAN}$1 - $2 ($SIMULATOR)${RESET}\n"
 	echo
 
-	xcodebuild -workspace Rx.xcworkspace -scheme "$1" -configuration "$2" build | xcpretty -c
+	DESTINATION=""
+	if [ "$SIMULATOR" != "" ]; then
+			OS=`echo $SIMULATOR| cut -d'_' -f 2`
+			DESTINATION='platform=iOS Simulator,OS='$OS',name='$SIMULATOR''
+	else
+			DESTINATION='platform=OS X,arch=x86_64'
+	fi
+
+	STATUS=""
+	xcodebuild -workspace Rx.xcworkspace \
+				-scheme $SCHEME \
+				-configuration $CONFIGURATION \
+				-derivedDataPath "${BUILD_DIRECTORY}" \
+				-destination "$DESTINATION" \
+				$ACTION | xcpretty -c; STATUS=${PIPESTATUS[0]}
+
+	if [ $STATUS -ne 0 ]; then
+		echo $STATUS
+ 		exit $STATUS
+	fi
 }
 
 # simulators
 
 # xcrun simctl list devicetypes
 # xcrun simctl list runtimes
-
-#IOS7_SIMULATORS="RxSwiftTest-iPhone4s-iOS_7.1 RxSwiftTest-iPhone5-iOS_7.1 RxSwiftTest-iPhone5s-iOS_7.1"
-#IOS8_SIMULATORS="RxSwiftTest-iPhone4s-iOS_8.4 RxSwiftTest-iPhone5-iOS_8.4 RxSwiftTest-iPhone5s-iOS_8.4 RxSwiftTest-iPhone6-iOS_8.4 RxSwiftTest-iPhone6Plus-iOS_8.4"
 
 function createDevices() {
 	xcrun simctl create RxSwiftTest-iPhone4s-iOS_7.1 'iPhone 4s' 'com.apple.CoreSimulator.SimRuntime.iOS-7-1'
