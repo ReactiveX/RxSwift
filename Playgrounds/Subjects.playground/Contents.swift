@@ -55,10 +55,10 @@ example("ReplaySubject") {
 
 ## BehaviorSubject a.k.a. Variable
 
-ReplaySubject emits to any observer all of the items, in the buffer, that were emitted by the source 
+[Edit me too] ReplaySubject emits to any observer all of the items, in the buffer, that were emitted by the source 
 
 */
-example("ReplaySubject") {
+example("BehaviorSubject") {
     let subject = BehaviorSubject(value: "z")
     writeSequenceToConsole("1", subject)
     sendNext(subject, "a")
