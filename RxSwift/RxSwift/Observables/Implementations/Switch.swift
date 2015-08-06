@@ -54,7 +54,7 @@ class Switch_<O: ObserverType> : Sink<O>, ObserverType {
             }
             
             let d = SingleAssignmentDisposable()
-            self.switchState.innerSubscription.setDisposable(d)
+            self.switchState.innerSubscription.disposable = d
                
             let observer = SwitchIter(parent: self, id: latest, _self: d)
             let disposable = observable.subscribeSafe(observer)
@@ -94,7 +94,7 @@ class SwitchIter<O: ObserverType> : ObserverType {
     }
     
     func on(event: Event<Element>) {
-        return parent.lock.calculateLocked { state in
+        return parent.lock.calculateLocked {
             let switchState = self.parent.switchState
             
             switch event {

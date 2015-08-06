@@ -14,7 +14,7 @@ public class SerialDisposable : DisposeBase, Cancelable {
         disposed: Bool
     )
     
-    var lock = Lock()
+    var lock = SpinLock()
     var state: State = (
         current: nil,
         disposed: false
@@ -30,20 +30,27 @@ public class SerialDisposable : DisposeBase, Cancelable {
         super.init()
     }
     
-    public func setDisposable(newDisposable: Disposable) {
-        let disposable: Disposable? = self.lock.calculateLocked {
-            if state.disposed {
-                return newDisposable
-            }
-            else {
-                let toDispose = state.current
-                state.current = newDisposable
-                return toDispose
+    var disposable: Disposable {
+        get {
+            return self.lock.calculateLocked {
+                return self.disposable
             }
         }
-        
-        if let disposable = disposable {
-            disposable.dispose()
+        set (newDisposable) {
+            let disposable: Disposable? = self.lock.calculateLocked {
+                if state.disposed {
+                    return newDisposable
+                }
+                else {
+                    let toDispose = state.current
+                    state.current = newDisposable
+                    return toDispose
+                }
+            }
+            
+            if let disposable = disposable {
+                disposable.dispose()
+            }
         }
     }
     

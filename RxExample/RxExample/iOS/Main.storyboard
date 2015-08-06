@@ -46,16 +46,19 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
+                                        <accessibility key="accessibilityConfiguration">
+                                            <bool key="isElement" value="YES"/>
+                                        </accessibility>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="LL7-L6-PAN" firstAttribute="top" secondItem="Ykd-ED-72a" secondAttribute="bottom" id="AW4-VN-deD"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="Ykd-ED-72a" secondAttribute="trailing" constant="-16" id="HHf-o6-Nhf"/>
-                            <constraint firstItem="Ykd-ED-72a" firstAttribute="leading" secondItem="SVj-VH-wgI" secondAttribute="leadingMargin" constant="-16" id="ScA-bo-tHw"/>
-                            <constraint firstItem="Ykd-ED-72a" firstAttribute="top" secondItem="SVj-VH-wgI" secondAttribute="topMargin" id="iOO-4F-fTM"/>
+                            <constraint firstItem="Ykd-ED-72a" firstAttribute="bottom" secondItem="LL7-L6-PAN" secondAttribute="top" id="1l8-Du-X1S"/>
+                            <constraint firstAttribute="trailing" secondItem="Ykd-ED-72a" secondAttribute="trailing" id="2jg-pR-iuD"/>
+                            <constraint firstItem="Ykd-ED-72a" firstAttribute="top" secondItem="SVj-VH-wgI" secondAttribute="top" id="Q5a-et-oZ4"/>
+                            <constraint firstItem="Ykd-ED-72a" firstAttribute="leading" secondItem="SVj-VH-wgI" secondAttribute="leading" id="oly-BI-P6E"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="2Vl-fK-l12"/>
@@ -566,37 +569,37 @@ This is only showcase app, not intended for production purposes.</string>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="UpX-Bf-ZT6">
-                                <rect key="frame" x="16" y="85" width="123" height="29"/>
+                                <rect key="frame" x="16" y="110" width="123" height="29"/>
                                 <segments>
                                     <segment title="First"/>
                                     <segment title="Second"/>
                                 </segments>
                             </segmentedControl>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="WB2-p2-bYm">
-                                <rect key="frame" x="14" y="124" width="292" height="31"/>
+                                <rect key="frame" x="14" y="149" width="292" height="31"/>
                             </slider>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QsG-uN-yAh">
-                                <rect key="frame" x="147" y="85" width="51" height="31"/>
+                                <rect key="frame" x="147" y="110" width="51" height="31"/>
                             </switch>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0br-EX-AUP">
-                                <rect key="frame" x="204" y="85" width="46" height="30"/>
+                                <rect key="frame" x="204" y="110" width="46" height="30"/>
                                 <state key="normal" title="TapMe">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                             </button>
                             <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="JEV-nj-tQA">
-                                <rect key="frame" x="16" y="162" width="288" height="162"/>
+                                <rect key="frame" x="16" y="187" width="288" height="162"/>
                                 <date key="date" timeIntervalSinceReferenceDate="458137679.98291397">
                                     <!--2015-07-09 12:27:59 +0000-->
                                 </date>
                             </datePicker>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Eas-vY-Wds">
-                                <rect key="frame" x="258" y="86" width="46" height="30"/>
+                                <rect key="frame" x="258" y="111" width="46" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gjR-nX-oAX">
-                                <rect key="frame" x="16" y="332" width="288" height="116"/>
+                                <rect key="frame" x="16" y="357" width="288" height="116"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Test Pan gesture in this view" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fQw-v9-hRf">
                                         <rect key="frame" x="35" y="47" width="218" height="21"/>
@@ -611,13 +614,32 @@ This is only showcase app, not intended for production purposes.</string>
                                     <outletCollection property="gestureRecognizers" destination="Shn-qP-Kjy" appends="YES" id="3n5-2m-td7"/>
                                 </connections>
                             </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FAz-sk-QmU">
+                                <rect key="frame" x="16" y="481" width="288" height="21"/>
+                                <accessibility key="accessibilityConfiguration" label="debugLabel"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VeZ-e0-mdh">
+                                <rect key="frame" x="16" y="72" width="125" height="30"/>
+                                <state key="normal" title="Open ActionSheet">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gVF-My-cWk">
+                                <rect key="frame" x="198" y="73" width="106" height="30"/>
+                                <state key="normal" title="Open AlertView">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="WB2-p2-bYm" firstAttribute="trailing" secondItem="wXQ-4H-OJk" secondAttribute="trailingMargin" id="bhR-hJ-vQh"/>
                             <constraint firstItem="WB2-p2-bYm" firstAttribute="leading" secondItem="wXQ-4H-OJk" secondAttribute="leadingMargin" id="gkz-kY-Bej"/>
-                            <constraint firstItem="WB2-p2-bYm" firstAttribute="top" secondItem="wXQ-4H-OJk" secondAttribute="topMargin" constant="124" id="xVe-Ni-yEy"/>
+                            <constraint firstItem="WB2-p2-bYm" firstAttribute="top" secondItem="wXQ-4H-OJk" secondAttribute="topMargin" constant="149" id="xVe-Ni-yEy"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="jLb-0R-htG">
@@ -627,7 +649,10 @@ This is only showcase app, not intended for production purposes.</string>
                         <outlet property="bbitem" destination="PtG-IX-ax4" id="Sl6-M4-8r0"/>
                         <outlet property="button" destination="0br-EX-AUP" id="6RQ-bH-oin"/>
                         <outlet property="datePicker" destination="JEV-nj-tQA" id="LdZ-qr-RIy"/>
+                        <outlet property="debugLabel" destination="FAz-sk-QmU" id="nRF-PL-5LD"/>
                         <outlet property="mypan" destination="Shn-qP-Kjy" id="sbA-Xi-VQW"/>
+                        <outlet property="openActionSheet" destination="VeZ-e0-mdh" id="yif-jw-oVc"/>
+                        <outlet property="openAlertView" destination="gVF-My-cWk" id="aVd-Gf-sqQ"/>
                         <outlet property="segmentedControl" destination="UpX-Bf-ZT6" id="QKf-Ut-0ah"/>
                         <outlet property="slider" destination="WB2-p2-bYm" id="XV2-ty-qzT"/>
                         <outlet property="switcher" destination="QsG-uN-yAh" id="wpt-IK-hWW"/>

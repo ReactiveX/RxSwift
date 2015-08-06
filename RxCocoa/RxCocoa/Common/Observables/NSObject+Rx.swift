@@ -7,7 +7,9 @@
 //
 
 import Foundation
+#if !RX_NO_MODULE
 import RxSwift
+#endif
 
 #if !DISABLE_SWIZZLING
 var deallocatingSubjectTriggerContext: UInt8 = 0
@@ -38,36 +40,21 @@ var deallocatedSubjectContext: UInt8 = 0
 
 // KVO
 extension NSObject {
-    // Observes values on `keyPath` starting from `self` with `.Initial | .New` options.
-    // Retains `self` while observing.
-    public func rx_observe<Element>(keyPath: String) -> Observable<Element?> {
-        return KVOObservable(object: self, keyPath: keyPath, options: NSKeyValueObservingOptions.Initial.union(NSKeyValueObservingOptions.New), retainTarget: true)
-    }
-
-    // Observes values on `keyPath` starting from `self` with `options`
-    // Retains `self` while observing.
-    public func rx_observe<Element>(keyPath: String, options: NSKeyValueObservingOptions) -> Observable<Element?> {
-        return KVOObservable(object: self, keyPath: keyPath, options: options, retainTarget: true)
-    }
 
     // Observes values on `keyPath` starting from `self` with `options` and retainsSelf if `retainSelf` is set.
-    public func rx_observe<Element>(keyPath: String, options: NSKeyValueObservingOptions, retainSelf: Bool) -> Observable<Element?> {
+    public func rx_observe<Element>(keyPath: String, options: NSKeyValueObservingOptions = NSKeyValueObservingOptions.New.union(NSKeyValueObservingOptions.Initial), retainSelf: Bool = true) -> Observable<Element?> {
         return KVOObservable(object: self, keyPath: keyPath, options: options, retainTarget: retainSelf)
     }
+
 }
 
 #if !DISABLE_SWIZZLING
 // KVO
 extension NSObject {
-    // Observes values on `keyPath` starting from `self` with `.Initial | .New` options.
-    // Doesn't retain `self` and when `self` is deallocated, completes the sequence.
-    public func rx_observeWeakly<Element>(keyPath: String) -> Observable<Element?> {
-        return rx_observeWeakly(keyPath, options: NSKeyValueObservingOptions.New.union(.Initial))
-    }
     
     // Observes values on `keyPath` starting from `self` with `options`
     // Doesn't retain `self` and when `self` is deallocated, completes the sequence.
-    public func rx_observeWeakly<Element>(keyPath: String, options: NSKeyValueObservingOptions) -> Observable<Element?> {
+    public func rx_observeWeakly<Element>(keyPath: String, options: NSKeyValueObservingOptions = NSKeyValueObservingOptions.New.union(NSKeyValueObservingOptions.Initial)) -> Observable<Element?> {
         return observeWeaklyKeyPathFor(self, keyPath: keyPath, options: options)
             >- map { n in
                 return n as? Element
@@ -96,7 +83,7 @@ extension NSObject {
             }
         }
     }
-    
+
 #if !DISABLE_SWIZZLING
     // Sends element when object `dealloc` message is sent to `self`.
     // Completes when `self` was deallocated.
@@ -115,15 +102,15 @@ extension NSObject {
                     subject,
                     .OBJC_ASSOCIATION_RETAIN_NONATOMIC
                 )
-                
+
                 let proxy = Deallocating {
                     sendNext(subject, ())
                 }
-                
+
                 let deinitAction = DeinitAction {
                     sendCompleted(subject)
                 }
-                
+
                 objc_setAssociatedObject(self,
                     RXDeallocatingAssociatedAction,
                     proxy,
@@ -134,7 +121,7 @@ extension NSObject {
                     deinitAction,
                     .OBJC_ASSOCIATION_RETAIN_NONATOMIC
                 )
-                
+
                 RX_ensure_deallocating_swizzled(self.dynamicType)
                 return subject
             }

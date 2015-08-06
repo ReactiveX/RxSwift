@@ -1,11 +1,9 @@
 Pod::Spec.new do |s|
   s.name             = "RxBlocking"
-  s.version          = "1.8.1"
-  s.summary          = "RxSwift Cocoa extensions"
+  s.version          = "1.9"
+  s.summary          = "RxSwift Blocking operatos"
   s.description      = <<-DESC
-			* UI extensions
-			* NSURL extensions
-			* KVO extensions
+                        Set of blocking operators for unit testing
                         DESC
   s.homepage         = "https://github.com/kzaher/RxSwift"
   s.license          = 'MIT'

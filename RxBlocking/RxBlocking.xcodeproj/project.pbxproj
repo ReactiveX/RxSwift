@@ -20,7 +20,7 @@
 		C8CDD79B1B52ADC00043F0C5 /* RxBlocking.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RxBlocking.h; sourceTree = "<group>"; };
 		C8CDD7B71B52AEC70043F0C5 /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RxSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8CDD7C41B52AF290043F0C5 /* RxBlocking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxBlocking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		C8CDD7CC1B52B1E80043F0C5 /* Observable+Blocking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Observable+Blocking.swift"; sourceTree = "<group>"; };
+		C8CDD7CC1B52B1E80043F0C5 /* Observable+Blocking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = "Observable+Blocking.swift"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */

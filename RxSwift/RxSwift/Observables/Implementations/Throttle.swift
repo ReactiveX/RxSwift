@@ -13,7 +13,7 @@ class Throttle_<O: ObserverType, SchedulerType: Scheduler> : Sink<O>, ObserverTy
     typealias ParentType = Throttle<Element, SchedulerType>
     
     typealias ThrottleState = (
-        value: Element?,
+        value: RxMutableBox<Element?>,
         cancellable: SerialDisposable,
         id: UInt64
     )
@@ -22,7 +22,7 @@ class Throttle_<O: ObserverType, SchedulerType: Scheduler> : Sink<O>, ObserverTy
     
     var lock = NSRecursiveLock()
     var throttleState: ThrottleState = (
-        value: nil,
+        value: RxMutableBox(nil),
         cancellable: SerialDisposable(),
         id: 0
     )
@@ -53,19 +53,19 @@ class Throttle_<O: ObserverType, SchedulerType: Scheduler> : Sink<O>, ObserverTy
         let latestId = self.lock.calculateLocked { () -> UInt64 in
             let observer = self.observer
             
-            let oldValue = self.throttleState.value
+            var oldValue = self.throttleState.value.value
             
             self.throttleState.id = self.throttleState.id &+ 1
             
             switch event {
-            case .Next(let value):
-                self.throttleState.value = value
-            case .Error(_):
-                self.throttleState.value = nil
+            case .Next(let element):
+                self.throttleState.value.value = element
+            case .Error(let error):
+                self.throttleState.value.value = nil
                 trySend(observer, event)
                 self.dispose()
             case .Completed:
-                self.throttleState.value = nil
+                self.throttleState.value.value = nil
                 if let value = oldValue {
                     trySendNext(observer, value)
                 }
@@ -80,7 +80,7 @@ class Throttle_<O: ObserverType, SchedulerType: Scheduler> : Sink<O>, ObserverTy
         switch event {
         case .Next(_):
             let d = SingleAssignmentDisposable()
-            self.throttleState.cancellable.setDisposable(d)
+            self.throttleState.cancellable.disposable = d
             
             let scheduler = self.parent.scheduler
             let dueTime = self.parent.dueTime
@@ -103,9 +103,9 @@ class Throttle_<O: ObserverType, SchedulerType: Scheduler> : Sink<O>, ObserverTy
     }
     
     func propagate() {
-        let originalValue: Element? = self.lock.calculateLocked {
-            let originalValue = self.throttleState.value
-            self.throttleState.value = nil
+        var originalValue: Element? = self.lock.calculateLocked {
+            var originalValue = self.throttleState.value.value
+            self.throttleState.value.value = nil
             return originalValue
         }
         

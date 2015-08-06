@@ -100,7 +100,7 @@ class TailRecursiveSink<O: ObserverType> : Sink<O>, ObserverType {
         }
         
         let subscription2 = next!.subscribeSafe(self)
-        subscription.setDisposable(subscription2)
+        subscription.disposable = subscription2
     }
     
     private func disposePrivate() {

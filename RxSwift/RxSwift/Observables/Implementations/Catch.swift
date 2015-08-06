@@ -48,7 +48,7 @@ class CatchSink<O: ObserverType> : Sink<O>, ObserverType {
     
     func run() -> Disposable {
         let disposableSubscription = parent.source.subscribeSafe(self)
-        subscription.setDisposable(disposableSubscription)
+        subscription.disposable = disposableSubscription
         
         return subscription
     }
@@ -67,7 +67,7 @@ class CatchSink<O: ObserverType> : Sink<O>, ObserverType {
                 return failure(error2)
             }.flatMap { catchObservable -> RxResult<Void> in
                 let d = SingleAssignmentDisposable()
-                subscription.setDisposable(d)
+                subscription.disposable = d
                 
                 let observer = CatchSinkProxy(parent: self)
                 

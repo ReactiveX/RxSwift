@@ -17,6 +17,7 @@ public func justUseIt<T>(_: T) {
 // used to detect resource leaks during unit tests
 // it's not perfect, but works well
 public var resourceCount: Int32 = 0
+public var numberOfSerialDispatchQueueObservables: Int32 = 0
 #endif
 
 // This is the pipe operator (left associative function application operator)

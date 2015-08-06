@@ -7,7 +7,9 @@
 //
 
 import Foundation
+#if !RX_NO_MODULE
 import RxSwift
+#endif
 
 class KVOObservable<Element> : Producer<Element?>
                              , KVOObservableProtocol {

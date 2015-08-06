@@ -36,7 +36,7 @@ class ConnectableObservable<SourceType, ResultType> : ConnectableObservableType<
     let subject: SubjectType<SourceType, ResultType>
     let source: Observable<SourceType>
     
-    var lock = Lock()
+    var lock = SpinLock()
     var connection: ConnectionType?
     
     init(source: Observable<SourceType>, subject: SubjectType<SourceType, ResultType>) {
@@ -46,7 +46,7 @@ class ConnectableObservable<SourceType, ResultType> : ConnectableObservableType<
     }
     
     override func connect() -> Disposable {
-        let (connection, connect) = self.lock.calculateLocked { oldConnection -> (Connection<SourceType, ResultType>, Bool) in
+        let (connection, connect) = self.lock.calculateLocked { () -> (Connection<SourceType, ResultType>, Bool) in
             if let connection = self.connection {
                 return (connection, false)
             }

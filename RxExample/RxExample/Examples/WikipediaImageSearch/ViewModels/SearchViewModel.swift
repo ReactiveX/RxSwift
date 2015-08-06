@@ -7,8 +7,10 @@
 //
 
 import Foundation
+#if !RX_NO_MODULE
 import RxSwift
 import RxCocoa
+#endif
 
 class SearchViewModel: Disposable {
     
@@ -31,6 +33,7 @@ class SearchViewModel: Disposable {
             >- distinctUntilChanged
             >- map { query in
                 API.getSearchResults(query)
+                    >- retry(3)
                     >- startWith([]) // clears results on new search term
                     >- onError ([])
             }

@@ -1620,7 +1620,7 @@ extension ObservableStandardSequenceOperators {
             ])
         
         let res = scheduler.start {
-            xs >- flatMap { (x, i) in
+            xs >- flatMapWithIndex { (x, i) in
                 return just(ElementIndexPair(x, i))
             }
         }
@@ -1682,7 +1682,7 @@ extension ObservableStandardSequenceOperators {
             ])
         
         let res = scheduler.start {
-            xs >- flatMap { x, _ in x }
+            xs >- flatMapWithIndex { x, _ in x }
         }
         
         XCTAssertEqual(res.messages, [
@@ -1770,7 +1770,7 @@ extension ObservableStandardSequenceOperators {
             ])
         
         let res = scheduler.start {
-            xs >- flatMap { x, _ in x }
+            xs >- flatMapWithIndex { x, _ in x }
         }
         
         XCTAssertEqual(res.messages, [
@@ -1858,7 +1858,7 @@ extension ObservableStandardSequenceOperators {
             ])
         
         let res = scheduler.start {
-            xs >- flatMap { x, _ in x }
+            xs >- flatMapWithIndex { x, _ in x }
         }
         
         XCTAssertEqual(res.messages, [
@@ -1946,7 +1946,7 @@ extension ObservableStandardSequenceOperators {
             ])
         
         let res = scheduler.start {
-            xs >- flatMap { x, _ in x }
+            xs >- flatMapWithIndex { x, _ in x }
         }
         
         XCTAssertEqual(res.messages, [
@@ -2033,7 +2033,7 @@ extension ObservableStandardSequenceOperators {
             ])
         
         let res = scheduler.start {
-            xs >- flatMap { x, _ in x }
+            xs >- flatMapWithIndex { x, _ in x }
         }
         
         XCTAssertEqual(res.messages, [
@@ -2117,7 +2117,7 @@ extension ObservableStandardSequenceOperators {
             ])
         
         let res = scheduler.start(700) {
-            xs >- flatMap { x, _ in x }
+            xs >- flatMapWithIndex { x, _ in x }
         }
         
         XCTAssertEqual(res.messages, [
@@ -2199,7 +2199,7 @@ extension ObservableStandardSequenceOperators {
         
         var invoked = 0
         let res = scheduler.start {
-            return xs >- flatMapOrDie { (x: ColdObservable<Int>, _: Int) -> RxResult<Observable<Int>> in
+            return xs >- flatMapWithIndexOrDie { (x: ColdObservable<Int>, _: Int) -> RxResult<Observable<Int>> in
                 invoked++
                 if invoked == 3 {
                     return failure(testError)
@@ -2251,7 +2251,7 @@ extension ObservableStandardSequenceOperators {
         
         var invoked = 0
         let res = scheduler.start {
-            xs >- flatMap { (x, _) in
+            xs >- flatMapWithIndex { (x, _) in
                 return interval(10, scheduler) >- map { _ in x } >- take(x)
             }
         }

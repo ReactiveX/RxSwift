@@ -8,8 +8,10 @@
 
 import Foundation
 import UIKit
+#if !RX_NO_MODULE
 import RxSwift
 import RxCocoa
+#endif
 
 class RxTableViewSectionedAnimatedDataSource<S: SectionModelType> : RxTableViewSectionedDataSource<S>
                                                                   , RxTableViewDataSourceType {
@@ -17,8 +19,8 @@ class RxTableViewSectionedAnimatedDataSource<S: SectionModelType> : RxTableViewS
     
     func tableView(tableView: UITableView, observedEvent: Event<Element>) {
         switch observedEvent {
-        case .Next(let boxedSections):
-            for c in boxedSections.value {
+        case .Next(let element):
+            for c in element {
                 //print("Animating ==============================\n\(c)\n===============================\n")
                 setSections(c.finalSections)
                 tableView.performBatchUpdates(c)

@@ -17,7 +17,7 @@ class Sink<O : ObserverType> :  Disposable {
         disposed: Bool
     )
     
-    private var lock = Lock()
+    private var lock = SpinLock()
     private var _state: State
     
     var observer: O? {

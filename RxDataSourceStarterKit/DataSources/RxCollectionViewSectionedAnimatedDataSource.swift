@@ -8,8 +8,10 @@
 
 import Foundation
 import UIKit
+#if !RX_NO_MODULE
 import RxSwift
 import RxCocoa
+#endif
 
 class RxCollectionViewSectionedAnimatedDataSource<S: SectionModelType> : RxCollectionViewSectionedDataSource<S>
                                                                        , RxCollectionViewDataSourceType {
@@ -21,8 +23,8 @@ class RxCollectionViewSectionedAnimatedDataSource<S: SectionModelType> : RxColle
     
     func collectionView(collectionView: UICollectionView, observedEvent: Event<Element>) {
         switch observedEvent {
-        case .Next(let boxedSections):
-            for c in boxedSections.value {
+        case .Next(let element):
+            for c in element {
                 //print("Animating ==============================\n\(c)\n===============================\n")
                 
                 if !set {

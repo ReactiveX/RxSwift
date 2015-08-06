@@ -23,40 +23,15 @@ public func observeSingleOn<E>
     }
 }
 
-// `observeOn` operator observes elements on `scheduler`.
-//
-// That means that any further processing operator, like `map`, `filer` will be executed
-// on that `scheduler`.
-//
-// If is optimized internally for two cases.
-//
-// More performant case is when `DispatchQueueScheduler` is passed.
-// Because of serial nature of that scheduler, operator can optimize observing process.
-//
-// One of the typical use cases is observing elements on main thread, and `MainScheduler` is
-// subtype of `DispatchQueueScheduler`, so it should have really low overhead.
-//
-// On the other hand, if some concurrent background scheduler is passed, 
-// the typical use case for that would be getting long running work of main thread 
-// and onto background thread.
-//
-// In that case, the workload will probably be intensive, so using unoptimized version
-// shouldn't cause problems.
-//
-// This could be further optimized in future if needed.
 public func observeOn<E>
     (scheduler: ImmediateScheduler)
     -> Observable<E> -> Observable<E> {
     return { source in
         if let scheduler = scheduler as? SerialDispatchQueueScheduler {
-            return ObserveOnDispatchQueue(source: source, scheduler: scheduler)
+            return ObserveOnSerialDispatchQueue(source: source, scheduler: scheduler)
         }
         else {
-            return source
-                >- map { e in
-                    returnElement(e) >- observeSingleOn(scheduler)
-                }
-                >- concat
+            return ObserveOn(source: source, scheduler: scheduler)
         }
     }
 }

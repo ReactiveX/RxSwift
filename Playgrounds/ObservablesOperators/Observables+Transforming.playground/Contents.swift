@@ -1,6 +1,9 @@
 import Cocoa
 import RxSwift
 
+/*:
+# To use playgrounds please open `Rx.xcworkspace`, build `RxSwift-OSX` scheme and then open playgrounds in `Rx.xcworkspace` tree view.
+*/
 
 /*:
 ## Transforming Observables

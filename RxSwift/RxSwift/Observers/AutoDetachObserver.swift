@@ -9,8 +9,9 @@
 import Foundation
 
 class AutoDetachObserver<O: ObserverType> : ObserverBase<O.Element> {
-    private let observer : O
+    private var observer : O?
     private let m : SingleAssignmentDisposable
+    private var observerLock = SpinLock()
     
     init(observer: O) {
         self.observer = observer
@@ -24,12 +25,16 @@ class AutoDetachObserver<O: ObserverType> : ObserverBase<O.Element> {
     }
     
     override func onCore(event: Event<Element>) {
+        let observer = self.observerLock.calculateLocked {
+            return self.observer
+        }
+        
         switch event {
         case .Next:
-            observer.on(event)
+            trySend(observer, event)
         case .Completed: fallthrough
         case .Error:
-            observer.on(event)
+            trySend(observer, event)
             dispose()
         }
     }
@@ -37,5 +42,8 @@ class AutoDetachObserver<O: ObserverType> : ObserverBase<O.Element> {
     override func dispose() {
         super.dispose()
         m.dispose()
+        observerLock.performLocked {
+            self.observer = nil
+        }
     }
 }

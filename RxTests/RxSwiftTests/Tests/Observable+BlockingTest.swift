@@ -13,7 +13,7 @@ import XCTest
 
 class ObservableBlockingTest : RxTest {
     override func tearDown() {
-        usleep(1000)
+        sleep(0.1)
         super.tearDown()
     }
 }

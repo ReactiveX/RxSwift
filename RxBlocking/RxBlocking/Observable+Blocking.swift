@@ -7,7 +7,9 @@
 //
 
 import Foundation
+#if !RX_NO_MODULE
 import RxSwift
+#endif
 
 public func toArray<E>(source: Observable<E>)
     -> RxResult<[E]> {

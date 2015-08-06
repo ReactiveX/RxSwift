@@ -7,7 +7,9 @@
 //
 
 import Foundation
+#if !RX_NO_MODULE
 import RxSwift
+#endif
 #if os(iOS)
     import UIKit
 #endif
@@ -44,17 +46,8 @@ func rxError(errorCode: RxCocoaError, message: String, userInfo: NSDictionary) -
     return NSError(domain: RxCocoaErrorDomain, code: Int(errorCode.rawValue), userInfo: resultInfo)
 }
 
-func removingObserverFailed() {
-    rxFatalError("Removing observer for key failed")
-}
-
 func handleVoidObserverResult(result: RxResult<Void>) {
     handleObserverResult(result)
-}
-
-func rxFatalError(lastMessage: String) {
-    // The temptation to comment this line is great, but please don't, it's for your own good. The choice is yours.
-    fatalError(lastMessage)
 }
 
 func bindingErrorToInterface(error: ErrorType) {
@@ -72,11 +65,6 @@ func rxPossiblyFatalError(error: String) {
 #else
     print("[RxSwift]: \(error)")
 #endif
-}
-
-func rxFatalErrorAndDontReturn<T>(lastMessage: String) -> T {
-    rxFatalError(lastMessage)
-    return (nil as T!)!
 }
 
 func rxAbstractMethodWithMessage<T>(message: String) -> T {
@@ -133,6 +121,18 @@ let delegateNotSet = "Delegate not set"
 // }
 
 
+func rxFatalErrorAndDontReturn<T>(lastMessage: String) -> T {
+    rxFatalError(lastMessage)
+    return (nil as T!)!
+}
+
+#if !RX_NO_MODULE
+
+func rxFatalError(lastMessage: String) {
+    // The temptation to comment this line is great, but please don't, it's for your own good. The choice is yours.
+    fatalError(lastMessage)
+}
+
 extension NSObject {
     func rx_synchronized<T>(@noescape action: () -> T) -> T {
         objc_sync_enter(self)
@@ -141,3 +141,9 @@ extension NSObject {
         return result
     }
 }
+
+func removingObserverFailed() {
+    rxFatalError("Removing observer for key failed")
+}
+    
+#endif

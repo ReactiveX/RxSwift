@@ -9,12 +9,21 @@
 import Foundation
 import XCTest
 import RxSwift
+import CoreGraphics
 
 var deallocated = false
 var realTest: Anything? = nil
 
 func clearRealTest() {
     realTest = nil
+}
+
+func returnSomething() -> Observable<AnyObject?> {
+    return just("a")
+}
+
+func returnSomething() -> Observable<CGRect?> {
+    return just(CGRectMake(0, 0, 100, 100))
 }
 
 class AssumptionsTest : RxTest {
@@ -55,6 +64,18 @@ class AssumptionsTest : RxTest {
         XCTAssertTrue(deallocated)
     }
     
+    func testFunctionReturnValueOverload() {
+        returnSomething()
+            >- subscribeNext { (n: AnyObject?) in
+                XCTAssertEqual("\(n ?? NSNull())", "a")
+            }
+
+        returnSomething()
+            >- subscribeNext { (n: CGRect?) in
+                XCTAssertEqual(n!, CGRectMake(0, 0, 100, 100))
+             }
+    }
+    
     func testResourceLeaksDetectionIsTurnedOn() {
 #if TRACE_RESOURCES
         let startResourceCount = resourceCount
@@ -72,6 +93,7 @@ class AssumptionsTest : RxTest {
         XCTAssert(false, "Can't run unit tests in without tracing")
 #endif
     }
+    
 }
 
 class Anything {

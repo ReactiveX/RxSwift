@@ -37,7 +37,7 @@ class CombineLatestSink<%= i %>_<<%= ", ".join(map(1...i) { "E\($0)" }) %>, O: O
     let parent: Parent
 
 <%= "\n".join(map(1...i) {
-"     var latestElement\($0): E\($0)! = nil"
+"    var latestElement\($0): RxMutableBox<E\($0)!> = RxMutableBox(nil)"
 }) %>
 
     init(parent: Parent, observer: O, cancel: Disposable) {
@@ -51,7 +51,7 @@ class CombineLatestSink<%= i %>_<<%= ", ".join(map(1...i) { "E\($0)" }) %>, O: O
 }) %>
 
 <%= "\n".join(map(1...i) {
-"         let observer\($0) = CombineLatestObserver(lock: lock, parent: self, index: \($0 - 1), setLatestValue: { (e: E\($0)) -> Void in self.latestElement\($0) = e }, this: subscription\($0))"
+"        let observer\($0) = CombineLatestObserver(lock: lock, parent: self, index: \($0 - 1), setLatestValue: { (e: E\($0)) -> Void in self.latestElement\($0).value = e }, this: subscription\($0))"
 }) %>
 
 <%= "\n".join(map(1...i) {
@@ -64,7 +64,7 @@ class CombineLatestSink<%= i %>_<<%= ", ".join(map(1...i) { "E\($0)" }) %>, O: O
     }
 
     override func getResult() -> RxResult<R> {
-        return self.parent.resultSelector(<%= ", ".join(map(1...i) { "latestElement\($0)" }) %>)
+        return self.parent.resultSelector(<%= ", ".join(map(1...i) { "latestElement\($0).value" }) %>)
     }
 }
 

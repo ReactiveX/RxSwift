@@ -7,13 +7,16 @@
 //
 
 import Foundation
+import CoreData
+#if !RX_NO_MODULE
 import RxSwift
 import RxCocoa
+#endif
 
 struct ItemPath : CustomStringConvertible {
     let sectionIndex: Int
     let itemIndex: Int
-    
+
     var description : String {
         get {
             return "(\(sectionIndex), \(itemIndex))"
@@ -23,26 +26,26 @@ struct ItemPath : CustomStringConvertible {
 
 public struct Changeset<S: SectionModelType> : CustomStringConvertible {
     typealias I = S.Item
-    
+
     var finalSections: [S] = []
-    
+
     var insertedSections: [Int] = []
     var deletedSections: [Int] = []
     var movedSections: [(from: Int, to: Int)] = []
     var updatedSections: [Int] = []
-    
+
     var insertedItems: [ItemPath] = []
     var deletedItems: [ItemPath] = []
     var movedItems: [(from: ItemPath, to: ItemPath)] = []
     var updatedItems: [ItemPath] = []
-    
+
     public static func initialValue(sections: [S]) -> Changeset<S> {
         var initialValue = Changeset<S>()
         initialValue.insertedSections = Array(0 ..< sections.count)
         initialValue.finalSections = sections
         return initialValue
     }
-    
+
     public var description : String {
         get {
             let serializedSections = "[\n" + ",\n".join(finalSections.map { "\($0)" }) + "\n]\n"

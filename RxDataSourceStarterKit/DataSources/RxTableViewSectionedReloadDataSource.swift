@@ -8,8 +8,10 @@
 
 import Foundation
 import UIKit
+#if !RX_NO_MODULE
 import RxSwift
 import RxCocoa
+#endif
 
 class RxTableViewSectionedReloadDataSource<S: SectionModelType> : RxTableViewSectionedDataSource<S>
                                                                 , RxTableViewDataSourceType {
@@ -17,8 +19,8 @@ class RxTableViewSectionedReloadDataSource<S: SectionModelType> : RxTableViewSec
     
     func tableView(tableView: UITableView, observedEvent: Event<Element>) {
         switch observedEvent {
-        case .Next(let boxedSections):
-            setSections(boxedSections.value)
+        case .Next(let element):
+            setSections(element)
             tableView.reloadData()
         case .Error(let error):
         #if DEBUG

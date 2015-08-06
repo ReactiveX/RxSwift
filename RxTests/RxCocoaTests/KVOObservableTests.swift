@@ -12,7 +12,9 @@ import RxSwift
 import RxCocoa
 
 #if os(iOS)
-import UIKit
+    import UIKit
+#elseif os(OSX)
+    import Cocoa
 #endif
 
 class KVOObservableTests : RxTest {
@@ -68,18 +70,18 @@ class ParentWithChild : NSObject {
 
 class HasStrongProperty : NSObject {
     dynamic var property: NSObject? = nil
-    #if os(iOS)
     dynamic var frame: CGRect
     dynamic var point: CGPoint
+    dynamic var size: CGSize
+
     dynamic var integer: Int
-    #endif
     
     override init() {
-    #if os(iOS)
         self.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
-        self.point = CGPoint(x: 0, y: 1)
+        self.point = CGPoint(x: 3, y: 5)
+        self.size = CGSizeMake(1, 2)
+        
         self.integer = 1
-    #endif
         super.init()
     }
 }
@@ -630,7 +632,168 @@ extension KVOObservableTests {
         XCTAssertTrue(rootDeallocated)
     }
     
-    #if os(iOS)
+    #if os(OSX)
+    // just making sure it's all the same for NS extensions
+    func testObserve_ObserveNSRect() {
+        var root: HasStrongProperty! = HasStrongProperty()
+        
+        let latest = RxMutableBox<NSRect?>(nil)
+        
+        XCTAssertTrue(latest.value == nil)
+        
+        let disposable = root.rx_observe("frame")
+            >- subscribeNext { (n: NSRect?) in
+                latest.value = n
+            }
+        XCTAssertTrue(latest.value == root.frame)
+        
+        root.frame = NSRect(x: -2, y: 0, width: 0, height: 1)
+        
+        XCTAssertTrue(latest.value == NSRect(x: -2, y: 0, width: 0, height: 1))
+        
+        var rootDeallocated = false
+        
+        root.rx_deallocated
+            >- subscribeCompleted {
+                rootDeallocated = true
+            }
+        
+        root = nil
+        
+        XCTAssertTrue(latest.value == NSRect(x: -2, y: 0, width: 0, height: 1))
+        XCTAssertTrue(!rootDeallocated)
+        
+        disposable.dispose()
+    }
+    #endif
+
+    
+    // let's just check for one, otherones should have the same check
+    func testObserve_ObserveCGRectForBiggerStructureDoesntCrashPropertyTypeReturnsNil() {
+        var root: HasStrongProperty! = HasStrongProperty()
+        
+        let latest = RxMutableBox<CGSize?>(nil)
+        
+        XCTAssertTrue(latest.value == nil)
+        
+        let d = root.rx_observe("frame")
+            >- subscribeNext { (n: CGSize?) in
+                latest.value = n
+            }
+            >- scopedDispose
+        XCTAssertTrue(latest.value == nil)
+        
+        root.size = CGSizeMake(56, 1)
+        
+        XCTAssertTrue(latest.value == nil)
+        
+        var rootDeallocated = false
+        
+        root.rx_deallocated
+            >- subscribeCompleted {
+                rootDeallocated = true
+        }
+        
+        root = nil
+        
+        XCTAssertTrue(latest.value == nil)
+        XCTAssertTrue(!rootDeallocated)
+    }
+    
+    func testObserve_ObserveCGRect() {
+        var root: HasStrongProperty! = HasStrongProperty()
+        
+        let latest = RxMutableBox<CGRect?>(nil)
+        
+        XCTAssertTrue(latest.value == nil)
+        
+        let d = root.rx_observe("frame")
+            >- subscribeNext { (n: CGRect?) in
+                latest.value = n
+            }
+            >- scopedDispose
+        XCTAssertTrue(latest.value == root.frame)
+        
+        root.frame = CGRectMake(-2, 0, 0, 1)
+        
+        XCTAssertTrue(latest.value == CGRectMake(-2, 0, 0, 1))
+        
+        var rootDeallocated = false
+        
+        root.rx_deallocated
+            >- subscribeCompleted {
+                rootDeallocated = true
+            }
+        
+        root = nil
+        
+        XCTAssertTrue(latest.value == CGRectMake(-2, 0, 0, 1))
+        XCTAssertTrue(!rootDeallocated)
+    }
+    
+    func testObserve_ObserveCGSize() {
+        var root: HasStrongProperty! = HasStrongProperty()
+        
+        let latest = RxMutableBox<CGSize?>(nil)
+        
+        XCTAssertTrue(latest.value == nil)
+        
+        let d = root.rx_observe("size")
+            >- subscribeNext { (n: CGSize?) in
+                latest.value = n
+            }
+            >- scopedDispose
+        XCTAssertTrue(latest.value == root.size)
+        
+        root.size = CGSizeMake(56, 1)
+        
+        XCTAssertTrue(latest.value == CGSizeMake(56, 1))
+        
+        var rootDeallocated = false
+        
+        root.rx_deallocated
+            >- subscribeCompleted {
+                rootDeallocated = true
+            }
+        
+        root = nil
+        
+        XCTAssertTrue(latest.value == CGSizeMake(56, 1))
+        XCTAssertTrue(!rootDeallocated)
+    }
+    
+    func testObserve_ObserveCGPoint() {
+        var root: HasStrongProperty! = HasStrongProperty()
+        
+        let latest = RxMutableBox<CGPoint?>(nil)
+        
+        XCTAssertTrue(latest.value == nil)
+        
+        let d = root.rx_observe("point")
+            >- subscribeNext { (n: CGPoint?) in
+                latest.value = n
+            }
+            >- scopedDispose
+        
+        XCTAssertTrue(latest.value == root.point)
+        
+        root.point = CGPoint(x: -100, y: 1)
+        
+        XCTAssertTrue(latest.value == CGPoint(x: -100, y: 1))
+        
+        var rootDeallocated = false
+        
+        root.rx_deallocated
+            >- subscribeCompleted {
+                rootDeallocated = true
+            }
+        
+        root = nil
+        
+        XCTAssertTrue(latest.value == CGPoint(x: -100, y: 1))
+        XCTAssertTrue(!rootDeallocated)
+    }
+    
     
     func testObserveWeak_ObserveCGRect() {
         var root: HasStrongProperty! = HasStrongProperty()
@@ -640,21 +803,44 @@ extension KVOObservableTests {
         XCTAssertTrue(latest.value == nil)
         
         root.rx_observeWeakly("frame")
-            >- subscribeNext { (n: NSValue?) in
-                if let n = n {
-                    var frameValue = CGRect(x: 0, y: 0, width: 0, height: 0)
-                    n.getValue(&frameValue)
-                    latest.value = frameValue
-                }
-                else {
-                    latest.value = nil
-                }
+            >- subscribeNext { (n: CGRect?) in
+                latest.value = n
             }
         XCTAssertTrue(latest.value == root.frame)
         
-        root.frame = CGRectMake(0, 0, 0, 1)
+        root.frame = CGRectMake(-2, 0, 0, 1)
         
-        XCTAssertTrue(latest.value == CGRectMake(0, 0, 0, 1))
+        XCTAssertTrue(latest.value == CGRectMake(-2, 0, 0, 1))
+        
+        var rootDeallocated = false
+        
+        root.rx_deallocated
+            >- subscribeCompleted {
+                rootDeallocated = true
+            }
+        
+        root = nil
+        
+        XCTAssertTrue(latest.value == nil)
+        XCTAssertTrue(rootDeallocated)
+    }
+    
+    func testObserveWeak_ObserveCGSize() {
+        var root: HasStrongProperty! = HasStrongProperty()
+        
+        let latest = RxMutableBox<CGSize?>(nil)
+        
+        XCTAssertTrue(latest.value == nil)
+        
+        root.rx_observeWeakly("size")
+            >- subscribeNext { (n: CGSize?) in
+                latest.value = n
+            }
+        XCTAssertTrue(latest.value == root.size)
+        
+        root.size = CGSizeMake(56, 1)
+        
+        XCTAssertTrue(latest.value == CGSizeMake(56, 1))
         
         var rootDeallocated = false
         
@@ -677,15 +863,8 @@ extension KVOObservableTests {
         XCTAssertTrue(latest.value == nil)
         
         root.rx_observeWeakly("point")
-            >- subscribeNext { (n: NSValue?) in
-                if let n = n {
-                    var point = CGPoint(x: 0, y: 0)
-                    n.getValue(&point)
-                    latest.value = point
-                }
-                else {
-                    latest.value = nil
-                }
+            >- subscribeNext { (n: CGPoint?) in
+                latest.value = n
             }
         
         XCTAssertTrue(latest.value == root.point)
@@ -699,7 +878,7 @@ extension KVOObservableTests {
         root.rx_deallocated
             >- subscribeCompleted {
                 rootDeallocated = true
-        }
+            }
         
         root = nil
         
@@ -736,7 +915,6 @@ extension KVOObservableTests {
         XCTAssertTrue(latest.value == nil)
         XCTAssertTrue(rootDeallocated)
     }
-    #endif
     
     func testObserveWeak_PropertyDoesntExist() {
         var root: HasStrongProperty! = HasStrongProperty()

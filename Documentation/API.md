@@ -1,3 +1,6 @@
+API
+===
+
 ## RxSwift supported operators
 
 In some cases there are multiple aliases for the same operator, because on different platforms / implementations, the same operation is sometimes called differently. Sometimes this is because historical reasons, sometimes because of reserved language keywords.
@@ -73,7 +76,7 @@ Operators are stateless by default.
   * [`replay`](http://reactivex.io/documentation/operators/replay.html)
   * variable / sharedWithCachedLastResult
 
-Creating new operators is also pretty straightforward. 
+Creating new operators is also pretty straightforward.
 
 ## RxCocoa extensions
 
@@ -99,17 +102,18 @@ extension NSObject {
 ```swift
 extension NSObject {
 
-    public func rx_observe<Element>(keyPath: String) -> Observable<Element?> {}
-
-    public func rx_observe<Element>(keyPath: String, options: NSKeyValueObservingOptions) -> Observable<Element?> {}
-
-    public func rx_observe<Element>(keyPath: String, options: NSKeyValueObservingOptions, retainSelf: Bool) -> Observable<Element?> {}
+    public func rx_observe<Element>(
+        keyPath: String,
+        options: NSKeyValueObservingOptions = .New | .Initial,
+        retainSelf: Bool = true
+    )  -> Observable<Element?> {}
 
 #if !DISABLE_SWIZZLING
 
-    public func rx_observeWeakly<Element>(keyPath: String) -> Observable<Element?> {}
-
-    public func rx_observeWeakly<Element>(keyPath: String, options: NSKeyValueObservingOptions) -> Observable<Element?> {}
+    public func rx_observeWeakly<Element>(
+        keyPath: String,
+        options: NSKeyValueObservingOptions = .New | .Initial
+    ) -> Observable<Element?> {}
 
 #endif
 }
@@ -139,7 +143,7 @@ extension NSNotificationCenter {
 
 ```swift
 class DelegateProxy {
-    
+
     public func observe(selector: Selector) -> Observable<[AnyObject]> {}
 
 }
@@ -215,11 +219,11 @@ extension UITextField {
 
 ```swift
 extension UITextView {
-    
+
     override func rx_createDelegateProxy() -> RxScrollViewDelegateProxy { }
-    
+
     public var rx_text: Observable<String> { }
-    
+
 }
 ```
 
@@ -256,7 +260,7 @@ extension UIImageView {
 
     public func rx_subscribeImageTo
         (animated: Bool)
-        (source: Observable<UIImage?>) 
+        (source: Observable<UIImage?>)
             -> Disposable {}
 
 }
@@ -268,7 +272,7 @@ extension UIScrollView {
     public var rx_delegate: DelegateProxy {}
 
     public func rx_setDelegate(delegate: UIScrollViewDelegate) {}
-    
+
     public var rx_contentOffset: Observable<CGPoint> {}
 
 }
@@ -292,7 +296,7 @@ extension UISlider {
 
 ```swift
 extension UITableView {
-    
+
     public var rx_dataSource: DelegateProxy {}
 
     public func rx_setDataSource(dataSource: UITableViewDataSource) -> Disposable {}
@@ -322,11 +326,11 @@ extension UITableView {
 
 ```swift
 extension UICollectionView {
-    
+
     public var rx_dataSource: DelegateProxy {}
 
     public func rx_setDataSource(dataSource: UICollectionViewDataSource) -> Disposable {}
-    
+
     public func rx_subscribeWithReactiveDataSource<DataSource: protocol<RxCollectionViewDataSourceType, UICollectionViewDataSource>>(dataSource: DataSource)
         -> Observable<DataSource.Element> -> Disposable {}
 
@@ -374,7 +378,7 @@ extension UIAlertView {
     public var rx_clickedButtonAtIndex: Observable<Int> {}
 
     public var rx_willDismissWithButtonIndex: Observable<Int> {}
-    
+
     public var rx_didDismissWithButtonIndex: Observable<Int> {}
 
 }
@@ -427,7 +431,7 @@ extension NSButton {
 extension NSImageView {
 
     public func rx_subscribeImageTo(source: Observable<NSImage?>) -> Disposable {}
-    
+
     public func rx_subscribeImageTo
         (animated: Bool)
         (source: Observable<NSImage?>) -> Disposable {}
@@ -438,10 +442,9 @@ extension NSImageView {
 extension NSTextField {
 
     public var rx_delegate: DelegateProxy {}
-    
+
     public var rx_text: Observable<String> {}
 
     public func rx_subscribeTextTo(source: Observable<String>) -> Disposable {}
-} 
+}
 ```
-

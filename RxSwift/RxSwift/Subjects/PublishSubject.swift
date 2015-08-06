@@ -15,7 +15,7 @@ class Subscription<Element> : Disposable {
     private let subject: PublishSubject<Element>
     private var key: KeyType
     
-    private var lock = Lock()
+    private var lock = SpinLock()
     private var observer: ObserverType?
     
     init(subject: PublishSubject<Element>, key: KeyType, observer: ObserverType) {
@@ -53,7 +53,7 @@ public class PublishSubject<Element> : SubjectType<Element, Element>, Cancelable
         stoppedEvent: Event<Element>?
     )
     
-    private var lock = Lock()
+    private var lock = SpinLock()
     private var state: State = (
         disposed: false,
         observers: Observers(),

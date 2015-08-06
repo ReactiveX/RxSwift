@@ -14,14 +14,14 @@ public class SingleAssignmentDisposable : DisposeBase, Disposable, Cancelable {
         disposableSet: Bool,
         disposable: Disposable?
     )
-    
-    var lock = Lock()
+
+    var lock = SpinLock()
     var state: State = (
         disposed: false,
         disposableSet: false,
         disposable: nil
     )
-    
+
     public var disposed: Bool {
         get {
             return lock.calculateLocked {
@@ -29,7 +29,7 @@ public class SingleAssignmentDisposable : DisposeBase, Disposable, Cancelable {
             }
         }
     }
-    
+
     public override init() {
         super.init()
     }
@@ -40,39 +40,38 @@ public class SingleAssignmentDisposable : DisposeBase, Disposable, Cancelable {
                 return self.state.disposable ?? NopDisposable.instance
             }
         }
-        set(newDisposable) {
-            let disposable: Disposable? = lock.calculateLocked { oldState in
-                
+        set {
+            var disposable: Disposable? = lock.calculateLocked {
                 if state.disposableSet {
                     rxFatalError("oldState.disposable != nil")
                 }
-                
+
                 state.disposableSet = true
-                
+
                 if state.disposed {
-                    return newDisposable
+                    return newValue
                 }
-                
-                state.disposable = newDisposable
-                
+
+                state.disposable = newValue
+
                 return nil
             }
-            
+
             if let disposable = disposable {
-                return disposable.dispose()
+                disposable.dispose()
             }
         }
     }
-    
+
     public func dispose() {
-        let disposable: Disposable? = lock.calculateLocked { old in
+        var disposable: Disposable? = lock.calculateLocked {
             state.disposed = true
             let dispose = state.disposable
             state.disposable = nil
-            
+
             return dispose
         }
-        
+
         if let disposable = disposable {
             disposable.dispose()
         }

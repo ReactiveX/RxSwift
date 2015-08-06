@@ -9,7 +9,9 @@
 /*
 import Foundation
 import CoreData
+#if !RX_NO_MODULE
 import RxSwift
+#endif
 
 enum CoreDataEntityEvent : CustomStringConvertible {
     

@@ -7,7 +7,9 @@
 //
 
 import Foundation
+#if !RX_NO_MODULE
 import RxSwift
+#endif
 
 #if os(iOS)
     import UIKit
@@ -19,7 +21,11 @@ import RxSwift
 
 class ViewController: OSViewController {
 #if TRACE_RESOURCES
+    #if !RX_NO_MODULE
     private let startResourceCount = RxSwift.resourceCount
+    #else
+    private let startResourceCount = resourceCount
+    #endif
 #endif
     
     override func viewDidLoad() {
