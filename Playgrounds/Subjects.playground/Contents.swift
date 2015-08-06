@@ -55,10 +55,9 @@ example("ReplaySubject") {
 
 ## BehaviorSubject a.k.a. Variable
 
-ReplaySubject emits to any observer all of the items, in the buffer, that were emitted by the source 
-
+BehaviorSubject is similar to ReplaySubject except it only remembers the last item. This means that all subscribers will receive a value immediately (unless it is already completed).
 */
-example("ReplaySubject") {
+example("BehaviorSubject") {
     let subject = BehaviorSubject(value: "z")
     writeSequenceToConsole("1", subject)
     sendNext(subject, "a")
