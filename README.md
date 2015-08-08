@@ -1,7 +1,7 @@
 <img src="assets/Rx_Logo_M.png" width="36" height="36"> RxSwift: ReactiveX for Swift
 ======================================
 
-[![Travis CI](https://travis-ci.org/kzaher/RxSwift.svg?branch=master)](https://travis-ci.org/kzaher/RxSwift)
+[![Travis CI](https://travis-ci.org/ReactiveX/RxSwift.svg?branch=master)](https://travis-ci.org/ReactiveX/RxSwift)
 
 Xcode 6.3 / Swift 1.2 required
 

@@ -23,7 +23,7 @@ class Debug_<O: ObserverType> : Sink<O>, ObserverType {
         let maxEventTextLength = 40
         let eventText = "\(event)"
         let eventNormalized = eventText.characters.count > maxEventTextLength
-            ? String(prefix(eventText.characters, maxEventTextLength / 2)) + "..." + String(suffix(eventText.characters, maxEventTextLength / 2))
+            ? String(eventText.characters.prefix(maxEventTextLength / 2)) + "..." + String(eventText.characters.suffix(maxEventTextLength / 2))
             : eventText
         print("[\(parent.identifier)] -> Event \(eventNormalized)")
         trySend(observer, event)
