@@ -42,18 +42,19 @@ var deallocatedSubjectContext: UInt8 = 0
 extension NSObject {
 
     // Observes values on `keyPath` starting from `self` with `options` and retainsSelf if `retainSelf` is set.
-    public func rx_observe<Element>(keyPath: String, options: NSKeyValueObservingOptions = .New | .Initial, retainSelf: Bool = true) -> Observable<Element?> {
+    public func rx_observe<Element>(keyPath: String, options: NSKeyValueObservingOptions = NSKeyValueObservingOptions.New.union(NSKeyValueObservingOptions.Initial), retainSelf: Bool = true) -> Observable<Element?> {
         return KVOObservable(object: self, keyPath: keyPath, options: options, retainTarget: retainSelf)
     }
-    
+
 }
 
 #if !DISABLE_SWIZZLING
 // KVO
 extension NSObject {
+    
     // Observes values on `keyPath` starting from `self` with `options`
     // Doesn't retain `self` and when `self` is deallocated, completes the sequence.
-    public func rx_observeWeakly<Element>(keyPath: String, options: NSKeyValueObservingOptions = .New | .Initial) -> Observable<Element?> {
+    public func rx_observeWeakly<Element>(keyPath: String, options: NSKeyValueObservingOptions = NSKeyValueObservingOptions.New.union(NSKeyValueObservingOptions.Initial)) -> Observable<Element?> {
         return observeWeaklyKeyPathFor(self, keyPath: keyPath, options: options)
             >- map { n in
                 return n as? Element
@@ -76,13 +77,13 @@ extension NSObject {
                     sendNext(subject, ())
                     sendCompleted(subject)
                 }
-                objc_setAssociatedObject(self, &deallocatedSubjectContext, subject, objc_AssociationPolicy(OBJC_ASSOCIATION_RETAIN_NONATOMIC))
-                objc_setAssociatedObject(self, &deallocatedSubjectTriggerContext, deinitAction, objc_AssociationPolicy(OBJC_ASSOCIATION_RETAIN_NONATOMIC))
+                objc_setAssociatedObject(self, &deallocatedSubjectContext, subject, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+                objc_setAssociatedObject(self, &deallocatedSubjectTriggerContext, deinitAction, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
                 return subject
             }
         }
     }
-    
+
 #if !DISABLE_SWIZZLING
     // Sends element when object `dealloc` message is sent to `self`.
     // Completes when `self` was deallocated.
@@ -99,28 +100,28 @@ extension NSObject {
                     self,
                     &deallocatingSubjectContext,
                     subject,
-                    objc_AssociationPolicy(OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+                    .OBJC_ASSOCIATION_RETAIN_NONATOMIC
                 )
-                
+
                 let proxy = Deallocating {
                     sendNext(subject, ())
                 }
-                
+
                 let deinitAction = DeinitAction {
                     sendCompleted(subject)
                 }
-                
+
                 objc_setAssociatedObject(self,
                     RXDeallocatingAssociatedAction,
                     proxy,
-                    objc_AssociationPolicy(OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+                    .OBJC_ASSOCIATION_RETAIN_NONATOMIC
                 )
                 objc_setAssociatedObject(self,
                     &deallocatingSubjectTriggerContext,
                     deinitAction,
-                    objc_AssociationPolicy(OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+                    .OBJC_ASSOCIATION_RETAIN_NONATOMIC
                 )
-                
+
                 RX_ensure_deallocating_swizzled(self.dynamicType)
                 return subject
             }

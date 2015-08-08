@@ -123,6 +123,7 @@ extension CLLocationManager {
     
     // MARK: Responding to Visit Events
     
+    @available(iOS 8.0, *)
     public var rx_didVisit: Observable<CLVisit!> {
         return rx_delegate.observe("locationManager:didVisit:")
             >- map { a in

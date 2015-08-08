@@ -11,7 +11,7 @@ import Foundation
 // aggregate
 
 public func aggregateOrDie<E, A, R>
-    (seed: A, accumulator: (A, E) -> RxResult<A>, resultSelector: (A) -> RxResult<R>)
+    (seed: A, _ accumulator: (A, E) -> RxResult<A>, _ resultSelector: (A) -> RxResult<R>)
     -> (Observable<E> -> Observable<R>) {
     return { source in
         return Aggregate(source: source, seed: seed, accumulator: accumulator, resultSelector: resultSelector)
@@ -19,7 +19,7 @@ public func aggregateOrDie<E, A, R>
 }
 
 public func aggregateOrDie<E, A>
-    (seed: A, accumulator: (A, E) -> RxResult<A>)
+    (seed: A, _ accumulator: (A, E) -> RxResult<A>)
     -> (Observable<E> -> Observable<A>) {
     return { source in
         return Aggregate(source: source, seed: seed, accumulator: accumulator, resultSelector: { success($0) })
@@ -27,7 +27,7 @@ public func aggregateOrDie<E, A>
 }
 
 public func aggregate<E, A, R>
-    (seed: A, accumulator: (A, E) -> A, resultSelector: (A) -> R)
+    (seed: A, _ accumulator: (A, E) -> A, _ resultSelector: (A) -> R)
     -> (Observable<E> -> Observable<R>) {
     return { source in
         return Aggregate(source: source, seed: seed, accumulator: { success(accumulator($0, $1)) }, resultSelector: { success(resultSelector($0)) })
@@ -35,7 +35,7 @@ public func aggregate<E, A, R>
 }
 
 public func aggregate<E, A>
-    (seed: A, accumulator: (A, E) -> A)
+    (seed: A, _ accumulator: (A, E) -> A)
     -> (Observable<E> -> Observable<A>) {
     return { source in
         return Aggregate(source: source, seed: seed, accumulator: { success(accumulator($0, $1)) }, resultSelector: { success($0) })
@@ -45,7 +45,7 @@ public func aggregate<E, A>
 // reduce
 
 public func reduceOrDie<E, A, R>
-    (seed: A, accumulator: (A, E) -> RxResult<A>, resultSelector: (A) -> RxResult<R>)
+    (seed: A, _ accumulator: (A, E) -> RxResult<A>, _ resultSelector: (A) -> RxResult<R>)
     -> (Observable<E> -> Observable<R>) {
     return { source in
         return Aggregate(source: source, seed: seed, accumulator: accumulator, resultSelector: resultSelector)
@@ -53,7 +53,7 @@ public func reduceOrDie<E, A, R>
 }
 
 public func reduceOrDie<E, A>
-    (seed: A, accumulator: (A, E) -> RxResult<A>)
+    (seed: A, _ accumulator: (A, E) -> RxResult<A>)
     -> (Observable<E> -> Observable<A>) {
     return { source in
         return Aggregate(source: source, seed: seed, accumulator: accumulator, resultSelector: { success($0) })
@@ -61,7 +61,7 @@ public func reduceOrDie<E, A>
 }
 
 public func reduce<E, A, R>
-    (seed: A, accumulator: (A, E) -> A, resultSelector: (A) -> R)
+    (seed: A, _ accumulator: (A, E) -> A, _ resultSelector: (A) -> R)
     -> (Observable<E> -> Observable<R>) {
     return { source in
         return Aggregate(source: source, seed: seed, accumulator: { success(accumulator($0, $1)) }, resultSelector: { success(resultSelector($0)) })
@@ -69,7 +69,7 @@ public func reduce<E, A, R>
 }
 
 public func reduce<E, A>
-    (seed: A, accumulator: (A, E) -> A)
+    (seed: A, _ accumulator: (A, E) -> A)
     -> (Observable<E> -> Observable<A>) {
     return { source in
         return Aggregate(source: source, seed: seed, accumulator: { success(accumulator($0, $1)) }, resultSelector: { success($0) })

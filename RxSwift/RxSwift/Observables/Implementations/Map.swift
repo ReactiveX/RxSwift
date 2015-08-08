@@ -29,7 +29,7 @@ class MapSink<SourceType, O : ObserverType> : Sink<O>, ObserverType {
         
         switch event {
         case .Next(let element):
-            select(element.value).flatMap { value in
+            select(element).flatMap { value in
                 trySendNext(observer, value)
                 return SuccessResult
             }.recoverWith { e -> RxResult<Void> in
@@ -94,7 +94,7 @@ class Map<SourceType, ResultType>: Producer<ResultType> {
     }
     
     override func run<O: ObserverType where O.Element == ResultType>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
-        if let selector1 = self.selector1 {
+        if let _ = self.selector1 {
             let sink = MapSink1(parent: self, observer: observer, cancel: cancel)
             setSink(sink)
             return self.source.subscribeSafe(sink)

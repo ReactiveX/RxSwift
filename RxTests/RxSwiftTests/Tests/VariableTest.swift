@@ -121,10 +121,13 @@ class VariableTest : RxTest {
         //      Next value of c = 3
         // because variables have initial values (starting element)
         var latestValueOfC : Int? = nil
-        let _d/*: Disposable*/  = c >- subscribeNext { c in
-            //println("Next value of c = \(c)")
+        // let _ = doesn't retain.
+        let d/*: Disposable*/  = c >- subscribeNext { c in
+            //print("Next value of c = \(c)")
             latestValueOfC = c
         } >- scopedDispose
+        
+        justUseIt(d)
         
         XCTAssertEqual(latestValueOfC!, 3)
         

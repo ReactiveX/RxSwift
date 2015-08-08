@@ -32,7 +32,7 @@ extension UICollectionView {
     public func rx_setDataSource(dataSource: UICollectionViewDataSource)
         -> Disposable {
         let proxy: RxCollectionViewDataSourceProxy = proxyForObject(self)
-        return installDelegate(proxy, dataSource, false, onProxyForObject: self)
+        return installDelegate(proxy, delegate: dataSource, retainDelegate: false, onProxyForObject: self)
     }
     
     // data source
@@ -49,7 +49,7 @@ extension UICollectionView {
     public func rx_subscribeWithReactiveDataSource<DataSource: protocol<RxCollectionViewDataSourceType, UICollectionViewDataSource>>
         (dataSource: DataSource)
         -> Observable<DataSource.Element> -> Disposable {
-        return setProxyDataSourceForObject(self, dataSource, false) { (_: RxCollectionViewDataSourceProxy, event) -> Void in
+        return setProxyDataSourceForObject(self, dataSource: dataSource, retainDataSource: false) { (_: RxCollectionViewDataSourceProxy, event) -> Void in
             dataSource.collectionView(self, observedEvent: event)
         }
     }
@@ -93,7 +93,7 @@ extension UICollectionView {
     
     public func rx_modelSelected<T>() -> Observable<T> {
         return rx_itemSelected >- map { indexPath in
-            let dataSource: RxCollectionViewReactiveArrayDataSource<T> = castOrFatalError(self.rx_dataSource.forwardToDelegate(), "This method only works in case one of the `rx_subscribeItemsTo` methods was used.")
+            let dataSource: RxCollectionViewReactiveArrayDataSource<T> = castOrFatalError(self.rx_dataSource.forwardToDelegate(), message: "This method only works in case one of the `rx_subscribeItemsTo` methods was used.")
             
             return dataSource.modelAtIndex(indexPath.item)!
         }
@@ -102,7 +102,7 @@ extension UICollectionView {
 
 // deprecated
 extension UICollectionView {
-    @availability(*, deprecated=1.7, message="Replaced by `rx_subscribeItemsToWithCellIdentifier`")
+    @available(*, deprecated=1.7, message="Replaced by `rx_subscribeItemsToWithCellIdentifier`")
     public func rx_subscribeItemsWithIdentifierTo<E, Cell where E : AnyObject, Cell : UICollectionViewCell>
         (cellIdentifier: String, configureCell: (UICollectionView, NSIndexPath, E, Cell) -> Void)
         (source: Observable<[E]>)
@@ -114,7 +114,7 @@ extension UICollectionView {
         return l(source)
     }
     
-    @availability(*, deprecated=1.7, message="Replaced by `rx_itemSelected`")
+    @available(*, deprecated=1.7, message="Replaced by `rx_itemSelected`")
     public func rx_itemTap() -> Observable<(UICollectionView, Int)> {
         return rx_itemSelected
             >- map { i in
@@ -122,7 +122,7 @@ extension UICollectionView {
             }
     }
     
-    @availability(*, deprecated=1.7, message="Replaced by `rx_modelSelected`")
+    @available(*, deprecated=1.7, message="Replaced by `rx_modelSelected`")
     public func rx_elementTap<E>() -> Observable<E> {
         return rx_modelSelected()
     }

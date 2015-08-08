@@ -24,7 +24,7 @@ let CGPointType = "{CGPoint=ff}"
 
 // rx_observe + CoreGraphics
 extension NSObject {
-    public func rx_observe(keyPath: String, options: NSKeyValueObservingOptions = NSKeyValueObservingOptions.New | NSKeyValueObservingOptions.Initial, retainSelf: Bool = true) -> Observable<CGRect?> {
+    public func rx_observe(keyPath: String, options: NSKeyValueObservingOptions = NSKeyValueObservingOptions.New.union(NSKeyValueObservingOptions.Initial), retainSelf: Bool = true) -> Observable<CGRect?> {
         return rx_observe(keyPath, options: options, retainSelf: retainSelf) as Observable<NSValue?>
             >- map { value in
                 if let value = value {
@@ -41,7 +41,7 @@ extension NSObject {
             }
     }
     
-    public func rx_observe(keyPath: String, options: NSKeyValueObservingOptions = NSKeyValueObservingOptions.New | NSKeyValueObservingOptions.Initial, retainSelf: Bool = true) -> Observable<CGSize?> {
+    public func rx_observe(keyPath: String, options: NSKeyValueObservingOptions = NSKeyValueObservingOptions.New.union(NSKeyValueObservingOptions.Initial), retainSelf: Bool = true) -> Observable<CGSize?> {
         return rx_observe(keyPath, options: options, retainSelf: retainSelf) as Observable<NSValue?>
             >- map { value in
                 if let value = value {
@@ -58,7 +58,7 @@ extension NSObject {
             }
     }
     
-    public func rx_observe(keyPath: String, options: NSKeyValueObservingOptions = NSKeyValueObservingOptions.New | NSKeyValueObservingOptions.Initial, retainSelf: Bool = true) -> Observable<CGPoint?> {
+    public func rx_observe(keyPath: String, options: NSKeyValueObservingOptions = NSKeyValueObservingOptions.New.union(NSKeyValueObservingOptions.Initial), retainSelf: Bool = true) -> Observable<CGPoint?> {
         return rx_observe(keyPath, options: options, retainSelf: retainSelf) as Observable<NSValue?>
             >- map { value in
                 if let value = value {
@@ -80,7 +80,7 @@ extension NSObject {
 
 // rx_observeWeakly + CoreGraphics
 extension NSObject {
-    public func rx_observeWeakly(keyPath: String, options: NSKeyValueObservingOptions = .New | .Initial) -> Observable<CGRect?> {
+    public func rx_observeWeakly(keyPath: String, options: NSKeyValueObservingOptions = NSKeyValueObservingOptions.New.union(NSKeyValueObservingOptions.Initial)) -> Observable<CGRect?> {
         return rx_observeWeakly(keyPath, options: options) as Observable<NSValue?>
             >- map { value in
                 if let value = value {
@@ -97,7 +97,7 @@ extension NSObject {
         }
     }
     
-    public func rx_observeWeakly(keyPath: String, options: NSKeyValueObservingOptions = .New | .Initial) -> Observable<CGSize?> {
+    public func rx_observeWeakly(keyPath: String, options: NSKeyValueObservingOptions = NSKeyValueObservingOptions.New.union(NSKeyValueObservingOptions.Initial)) -> Observable<CGSize?> {
         return rx_observeWeakly(keyPath, options: options) as Observable<NSValue?>
             >- map { value in
                 if let value = value {
@@ -114,7 +114,7 @@ extension NSObject {
         }
     }
     
-    public func rx_observeWeakly(keyPath: String, options: NSKeyValueObservingOptions = .New | .Initial) -> Observable<CGPoint?> {
+    public func rx_observeWeakly(keyPath: String, options: NSKeyValueObservingOptions = NSKeyValueObservingOptions.New.union(NSKeyValueObservingOptions.Initial)) -> Observable<CGPoint?> {
         return rx_observeWeakly(keyPath, options: options) as Observable<NSValue?>
             >- map { value in
                 if let value = value {

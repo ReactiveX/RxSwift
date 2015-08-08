@@ -21,7 +21,7 @@ extension UISearchBar {
     }
     
     public var rx_searchText: Observable<String> {
-        return defer { [weak self] in
+        return deferred { [weak self] in
             let text = self?.text ?? ""
             
             return self?.rx_delegate.observe("searchBar:textDidChange:") ?? empty()

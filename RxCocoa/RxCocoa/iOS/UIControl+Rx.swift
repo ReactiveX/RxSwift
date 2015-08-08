@@ -33,7 +33,7 @@ extension UIControl {
             
             sendNext(observer, getValue())
             
-            let controlTarget = ControlTarget(control: self, controlEvents: UIControlEvents.EditingChanged | .ValueChanged) { control in
+            let controlTarget = ControlTarget(control: self, controlEvents: UIControlEvents.EditingChanged.union(.ValueChanged)) { control in
                 sendNext(observer, getValue())
             }
             
@@ -48,8 +48,7 @@ extension UIControl {
             MainScheduler.ensureExecutingOnScheduler()
 
             switch event {
-            case .Next(let boxedValue):
-                let value = boxedValue.value
+            case .Next(let value):
                 self?.enabled = value
             case .Error(let error):
 #if DEBUG

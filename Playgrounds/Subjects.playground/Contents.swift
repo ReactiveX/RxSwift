@@ -10,7 +10,7 @@ To use playgrounds please open Rx.xcworkspace, build RxSwift-OSX scheme and then
 func writeSequenceToConsole(name: String, sequence: Observable<String>) {
     sequence
         >- subscribeNext {
-            println("Subscription: \(name), value: \($0)")
+            print("Subscription: \(name), value: \($0)")
         }
 }
 

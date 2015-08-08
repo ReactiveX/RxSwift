@@ -21,18 +21,16 @@ class Debug_<O: ObserverType> : Sink<O>, ObserverType {
     
     func on(event: Event<Element>) {
         let maxEventTextLength = 40
-        let ellipsis = "..."
-        
         let eventText = "\(event)"
-        let eventNormalized = count(eventText) > maxEventTextLength
-            ? prefix(eventText, maxEventTextLength / 2) + "..." + suffix(eventText, maxEventTextLength / 2)
+        let eventNormalized = eventText.characters.count > maxEventTextLength
+            ? String(eventText.characters.prefix(maxEventTextLength / 2)) + "..." + String(eventText.characters.suffix(maxEventTextLength / 2))
             : eventText
-        println("[\(parent.identifier)] -> Event \(eventNormalized)")
+        print("[\(parent.identifier)] -> Event \(eventNormalized)")
         trySend(observer, event)
     }
     
     override func dispose() {
-        println("[\(parent.identifier)] dispose")
+        print("[\(parent.identifier)] dispose")
         super.dispose()
     }
 }
@@ -48,7 +46,7 @@ class Debug<Element> : Producer<Element> {
     }
     
     override func run<O: ObserverType where O.Element == Element>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
-        println("[\(identifier)] subscribed")
+        print("[\(identifier)] subscribed")
         let sink = Debug_(parent: self, observer: observer, cancel: cancel)
         setSink(sink)
         return self.source.subscribeSafe(sink)

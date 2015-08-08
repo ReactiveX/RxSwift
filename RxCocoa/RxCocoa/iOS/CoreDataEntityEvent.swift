@@ -6,13 +6,14 @@
 //  Copyright (c) 2015 Krunoslav Zaher. All rights reserved.
 //
 
+/*
 import Foundation
 import CoreData
 #if !RX_NO_MODULE
 import RxSwift
 #endif
 
-enum CoreDataEntityEvent : Printable {
+enum CoreDataEntityEvent : CustomStringConvertible {
     
     typealias SectionInfo = NSFetchedResultsSectionInfo
     
@@ -58,3 +59,4 @@ enum CoreDataEntityEvent : Printable {
         }
     }
 }
+*/

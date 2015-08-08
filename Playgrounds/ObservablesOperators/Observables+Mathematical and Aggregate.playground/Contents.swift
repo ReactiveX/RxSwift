@@ -27,7 +27,7 @@ example("concat") {
     let d = var3
         >- concat
         >- subscribeNext { (e: Int) -> Void in
-            println("\(e)")
+            print("\(e)")
     }
     
     var1.next(1)
@@ -49,7 +49,8 @@ example("concat") {
     var2.next(204)
 }
 
-/*:
+
+e/*:
 
 
 ### `reduce` / `aggregate`
@@ -59,11 +60,10 @@ This function will perform a function on each element in the sequence until it i
 [More info in reactive.io website]( http://reactivex.io/documentation/operators/reduce.html )
 
 */
-
-example("aggregate") {
+xample("aggregate") {
     let aggregateSubscriber = returnElements(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
         >- aggregate(0, +)
         >- subscribeNext { value in
-            println("\(value)")
+            print("\(value)")
     }
 }

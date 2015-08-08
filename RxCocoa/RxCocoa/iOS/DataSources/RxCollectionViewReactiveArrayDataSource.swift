@@ -69,8 +69,8 @@ class RxCollectionViewReactiveArrayDataSource<ElementType> : _RxCollectionViewRe
     
     func collectionView(collectionView: UICollectionView, observedEvent: Event<Element>) {
         switch observedEvent {
-        case .Next(let boxedNext):
-            self.itemModels = boxedNext.value
+        case .Next(let value):
+            self.itemModels = value
         case .Error(let error):
             bindingErrorToInterface(error)
         case .Completed:

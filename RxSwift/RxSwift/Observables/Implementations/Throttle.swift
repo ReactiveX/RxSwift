@@ -50,7 +50,7 @@ class Throttle_<O: ObserverType, SchedulerType: Scheduler> : Sink<O>, ObserverTy
             break
         }
        
-        var latestId = self.lock.calculateLocked { () -> UInt64 in
+        let latestId = self.lock.calculateLocked { () -> UInt64 in
             let observer = self.observer
             
             var oldValue = self.throttleState.value.value
@@ -58,8 +58,8 @@ class Throttle_<O: ObserverType, SchedulerType: Scheduler> : Sink<O>, ObserverTy
             self.throttleState.id = self.throttleState.id &+ 1
             
             switch event {
-            case .Next(let boxedValue):
-                self.throttleState.value.value = boxedValue.value
+            case .Next(let element):
+                self.throttleState.value.value = element
             case .Error(let error):
                 self.throttleState.value.value = nil
                 trySend(observer, event)
@@ -78,7 +78,7 @@ class Throttle_<O: ObserverType, SchedulerType: Scheduler> : Sink<O>, ObserverTy
         
         
         switch event {
-        case .Next(let boxedValue):
+        case .Next(_):
             let d = SingleAssignmentDisposable()
             self.throttleState.cancellable.disposable = d
             

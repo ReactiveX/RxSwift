@@ -72,7 +72,7 @@ class Merge_<O: ObserverType> : Sink<O>, ObserverType {
     init(parent: Parent, observer: O, cancel: Disposable) {
         self.parent = parent
         
-        let state = self.mergeState
+        _ = self.mergeState
         
         super.init(observer: observer, cancel: cancel)
     }
@@ -90,8 +90,7 @@ class Merge_<O: ObserverType> : Sink<O>, ObserverType {
     
     func on(event: Event<Element>) {
         switch event {
-        case .Next(let boxedValue):
-            let value = boxedValue.value
+        case .Next(let value):
             
             let innerSubscription = SingleAssignmentDisposable()
             let maybeKey = mergeState.group.addDisposable(innerSubscription)
@@ -154,7 +153,7 @@ class Merge_ConcurrentIter<O: ObserverType> : ObserverType {
             }
         case .Completed:
             parent.lock.performLocked {
-                var mergeState = parent.mergeState
+                let mergeState = parent.mergeState
                 mergeState.group.removeDisposable(disposeKey)
                 
                 if mergeState.queue.value.count > 0 {
@@ -232,8 +231,7 @@ class Merge_Concurrent<O: ObserverType> : Sink<O>, ObserverType {
     
     func on(event: Event<Element>) {
         switch event {
-        case .Next(let boxedValue):
-            let value = boxedValue.value
+        case .Next(let value):
             
             let subscribe = lock.calculateLocked { () -> Bool in
                 let mergeState = self.mergeState
@@ -258,7 +256,7 @@ class Merge_Concurrent<O: ObserverType> : Sink<O>, ObserverType {
         case .Completed:
             lock.performLocked {
                 let mergeState = self.mergeState
-                let group = mergeState.group
+                _ = mergeState.group
                 
                 if mergeState.activeCount == 0 {
                     trySendCompleted(observer)

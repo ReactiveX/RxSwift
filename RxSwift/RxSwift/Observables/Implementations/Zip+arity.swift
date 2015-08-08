@@ -15,7 +15,7 @@ import Foundation
 // 2
 
 public func zipOrDie<E1, E2, R>
-    (source1: Observable<E1>, source2: Observable<E2>, resultSelector: (E1, E2) -> RxResult<R>)
+    (source1: Observable<E1>, _ source2: Observable<E2>, _ resultSelector: (E1, E2) -> RxResult<R>)
     -> Observable<R> {
     return Zip2(
         source1: source1, source2: source2,
@@ -24,7 +24,7 @@ public func zipOrDie<E1, E2, R>
 }
 
 public func zip<E1, E2, R>
-    (source1: Observable<E1>, source2: Observable<E2>, resultSelector: (E1, E2) -> R)
+    (source1: Observable<E1>, _ source2: Observable<E2>, _ resultSelector: (E1, E2) -> R)
     -> Observable<R> {
     return Zip2(
         source1: source1, source2: source2,
@@ -106,7 +106,7 @@ class Zip2<E1, E2, R> : Producer<R> {
 // 3
 
 public func zipOrDie<E1, E2, E3, R>
-    (source1: Observable<E1>, source2: Observable<E2>, source3: Observable<E3>, resultSelector: (E1, E2, E3) -> RxResult<R>)
+    (source1: Observable<E1>, _ source2: Observable<E2>, _ source3: Observable<E3>, _ resultSelector: (E1, E2, E3) -> RxResult<R>)
     -> Observable<R> {
     return Zip3(
         source1: source1, source2: source2, source3: source3,
@@ -115,7 +115,7 @@ public func zipOrDie<E1, E2, E3, R>
 }
 
 public func zip<E1, E2, E3, R>
-    (source1: Observable<E1>, source2: Observable<E2>, source3: Observable<E3>, resultSelector: (E1, E2, E3) -> R)
+    (source1: Observable<E1>, _ source2: Observable<E2>, _ source3: Observable<E3>, _ resultSelector: (E1, E2, E3) -> R)
     -> Observable<R> {
     return Zip3(
         source1: source1, source2: source2, source3: source3,
@@ -205,7 +205,7 @@ class Zip3<E1, E2, E3, R> : Producer<R> {
 // 4
 
 public func zipOrDie<E1, E2, E3, E4, R>
-    (source1: Observable<E1>, source2: Observable<E2>, source3: Observable<E3>, source4: Observable<E4>, resultSelector: (E1, E2, E3, E4) -> RxResult<R>)
+    (source1: Observable<E1>, _ source2: Observable<E2>, _ source3: Observable<E3>, _ source4: Observable<E4>, _ resultSelector: (E1, E2, E3, E4) -> RxResult<R>)
     -> Observable<R> {
     return Zip4(
         source1: source1, source2: source2, source3: source3, source4: source4,
@@ -214,7 +214,7 @@ public func zipOrDie<E1, E2, E3, E4, R>
 }
 
 public func zip<E1, E2, E3, E4, R>
-    (source1: Observable<E1>, source2: Observable<E2>, source3: Observable<E3>, source4: Observable<E4>, resultSelector: (E1, E2, E3, E4) -> R)
+    (source1: Observable<E1>, _ source2: Observable<E2>, _ source3: Observable<E3>, _ source4: Observable<E4>, _ resultSelector: (E1, E2, E3, E4) -> R)
     -> Observable<R> {
     return Zip4(
         source1: source1, source2: source2, source3: source3, source4: source4,
@@ -312,7 +312,7 @@ class Zip4<E1, E2, E3, E4, R> : Producer<R> {
 // 5
 
 public func zipOrDie<E1, E2, E3, E4, E5, R>
-    (source1: Observable<E1>, source2: Observable<E2>, source3: Observable<E3>, source4: Observable<E4>, source5: Observable<E5>, resultSelector: (E1, E2, E3, E4, E5) -> RxResult<R>)
+    (source1: Observable<E1>, _ source2: Observable<E2>, _ source3: Observable<E3>, _ source4: Observable<E4>, _ source5: Observable<E5>, _ resultSelector: (E1, E2, E3, E4, E5) -> RxResult<R>)
     -> Observable<R> {
     return Zip5(
         source1: source1, source2: source2, source3: source3, source4: source4, source5: source5,
@@ -321,7 +321,7 @@ public func zipOrDie<E1, E2, E3, E4, E5, R>
 }
 
 public func zip<E1, E2, E3, E4, E5, R>
-    (source1: Observable<E1>, source2: Observable<E2>, source3: Observable<E3>, source4: Observable<E4>, source5: Observable<E5>, resultSelector: (E1, E2, E3, E4, E5) -> R)
+    (source1: Observable<E1>, _ source2: Observable<E2>, _ source3: Observable<E3>, _ source4: Observable<E4>, _ source5: Observable<E5>, _ resultSelector: (E1, E2, E3, E4, E5) -> R)
     -> Observable<R> {
     return Zip5(
         source1: source1, source2: source2, source3: source3, source4: source4, source5: source5,
@@ -427,7 +427,7 @@ class Zip5<E1, E2, E3, E4, E5, R> : Producer<R> {
 // 6
 
 public func zipOrDie<E1, E2, E3, E4, E5, E6, R>
-    (source1: Observable<E1>, source2: Observable<E2>, source3: Observable<E3>, source4: Observable<E4>, source5: Observable<E5>, source6: Observable<E6>, resultSelector: (E1, E2, E3, E4, E5, E6) -> RxResult<R>)
+    (source1: Observable<E1>, _ source2: Observable<E2>, _ source3: Observable<E3>, _ source4: Observable<E4>, _ source5: Observable<E5>, _ source6: Observable<E6>, _ resultSelector: (E1, E2, E3, E4, E5, E6) -> RxResult<R>)
     -> Observable<R> {
     return Zip6(
         source1: source1, source2: source2, source3: source3, source4: source4, source5: source5, source6: source6,
@@ -436,7 +436,7 @@ public func zipOrDie<E1, E2, E3, E4, E5, E6, R>
 }
 
 public func zip<E1, E2, E3, E4, E5, E6, R>
-    (source1: Observable<E1>, source2: Observable<E2>, source3: Observable<E3>, source4: Observable<E4>, source5: Observable<E5>, source6: Observable<E6>, resultSelector: (E1, E2, E3, E4, E5, E6) -> R)
+    (source1: Observable<E1>, _ source2: Observable<E2>, _ source3: Observable<E3>, _ source4: Observable<E4>, _ source5: Observable<E5>, _ source6: Observable<E6>, _ resultSelector: (E1, E2, E3, E4, E5, E6) -> R)
     -> Observable<R> {
     return Zip6(
         source1: source1, source2: source2, source3: source3, source4: source4, source5: source5, source6: source6,
@@ -550,7 +550,7 @@ class Zip6<E1, E2, E3, E4, E5, E6, R> : Producer<R> {
 // 7
 
 public func zipOrDie<E1, E2, E3, E4, E5, E6, E7, R>
-    (source1: Observable<E1>, source2: Observable<E2>, source3: Observable<E3>, source4: Observable<E4>, source5: Observable<E5>, source6: Observable<E6>, source7: Observable<E7>, resultSelector: (E1, E2, E3, E4, E5, E6, E7) -> RxResult<R>)
+    (source1: Observable<E1>, _ source2: Observable<E2>, _ source3: Observable<E3>, _ source4: Observable<E4>, _ source5: Observable<E5>, _ source6: Observable<E6>, _ source7: Observable<E7>, _ resultSelector: (E1, E2, E3, E4, E5, E6, E7) -> RxResult<R>)
     -> Observable<R> {
     return Zip7(
         source1: source1, source2: source2, source3: source3, source4: source4, source5: source5, source6: source6, source7: source7,
@@ -559,7 +559,7 @@ public func zipOrDie<E1, E2, E3, E4, E5, E6, E7, R>
 }
 
 public func zip<E1, E2, E3, E4, E5, E6, E7, R>
-    (source1: Observable<E1>, source2: Observable<E2>, source3: Observable<E3>, source4: Observable<E4>, source5: Observable<E5>, source6: Observable<E6>, source7: Observable<E7>, resultSelector: (E1, E2, E3, E4, E5, E6, E7) -> R)
+    (source1: Observable<E1>, _ source2: Observable<E2>, _ source3: Observable<E3>, _ source4: Observable<E4>, _ source5: Observable<E5>, _ source6: Observable<E6>, _ source7: Observable<E7>, _ resultSelector: (E1, E2, E3, E4, E5, E6, E7) -> R)
     -> Observable<R> {
     return Zip7(
         source1: source1, source2: source2, source3: source3, source4: source4, source5: source5, source6: source6, source7: source7,
@@ -681,7 +681,7 @@ class Zip7<E1, E2, E3, E4, E5, E6, E7, R> : Producer<R> {
 // 8
 
 public func zipOrDie<E1, E2, E3, E4, E5, E6, E7, E8, R>
-    (source1: Observable<E1>, source2: Observable<E2>, source3: Observable<E3>, source4: Observable<E4>, source5: Observable<E5>, source6: Observable<E6>, source7: Observable<E7>, source8: Observable<E8>, resultSelector: (E1, E2, E3, E4, E5, E6, E7, E8) -> RxResult<R>)
+    (source1: Observable<E1>, _ source2: Observable<E2>, _ source3: Observable<E3>, _ source4: Observable<E4>, _ source5: Observable<E5>, _ source6: Observable<E6>, _ source7: Observable<E7>, _ source8: Observable<E8>, _ resultSelector: (E1, E2, E3, E4, E5, E6, E7, E8) -> RxResult<R>)
     -> Observable<R> {
     return Zip8(
         source1: source1, source2: source2, source3: source3, source4: source4, source5: source5, source6: source6, source7: source7, source8: source8,
@@ -690,7 +690,7 @@ public func zipOrDie<E1, E2, E3, E4, E5, E6, E7, E8, R>
 }
 
 public func zip<E1, E2, E3, E4, E5, E6, E7, E8, R>
-    (source1: Observable<E1>, source2: Observable<E2>, source3: Observable<E3>, source4: Observable<E4>, source5: Observable<E5>, source6: Observable<E6>, source7: Observable<E7>, source8: Observable<E8>, resultSelector: (E1, E2, E3, E4, E5, E6, E7, E8) -> R)
+    (source1: Observable<E1>, _ source2: Observable<E2>, _ source3: Observable<E3>, _ source4: Observable<E4>, _ source5: Observable<E5>, _ source6: Observable<E6>, _ source7: Observable<E7>, _ source8: Observable<E8>, _ resultSelector: (E1, E2, E3, E4, E5, E6, E7, E8) -> R)
     -> Observable<R> {
     return Zip8(
         source1: source1, source2: source2, source3: source3, source4: source4, source5: source5, source6: source6, source7: source7, source8: source8,
@@ -820,7 +820,7 @@ class Zip8<E1, E2, E3, E4, E5, E6, E7, E8, R> : Producer<R> {
 // 9
 
 public func zipOrDie<E1, E2, E3, E4, E5, E6, E7, E8, E9, R>
-    (source1: Observable<E1>, source2: Observable<E2>, source3: Observable<E3>, source4: Observable<E4>, source5: Observable<E5>, source6: Observable<E6>, source7: Observable<E7>, source8: Observable<E8>, source9: Observable<E9>, resultSelector: (E1, E2, E3, E4, E5, E6, E7, E8, E9) -> RxResult<R>)
+    (source1: Observable<E1>, _ source2: Observable<E2>, _ source3: Observable<E3>, _ source4: Observable<E4>, _ source5: Observable<E5>, _ source6: Observable<E6>, _ source7: Observable<E7>, _ source8: Observable<E8>, _ source9: Observable<E9>, _ resultSelector: (E1, E2, E3, E4, E5, E6, E7, E8, E9) -> RxResult<R>)
     -> Observable<R> {
     return Zip9(
         source1: source1, source2: source2, source3: source3, source4: source4, source5: source5, source6: source6, source7: source7, source8: source8, source9: source9,
@@ -829,7 +829,7 @@ public func zipOrDie<E1, E2, E3, E4, E5, E6, E7, E8, E9, R>
 }
 
 public func zip<E1, E2, E3, E4, E5, E6, E7, E8, E9, R>
-    (source1: Observable<E1>, source2: Observable<E2>, source3: Observable<E3>, source4: Observable<E4>, source5: Observable<E5>, source6: Observable<E6>, source7: Observable<E7>, source8: Observable<E8>, source9: Observable<E9>, resultSelector: (E1, E2, E3, E4, E5, E6, E7, E8, E9) -> R)
+    (source1: Observable<E1>, _ source2: Observable<E2>, _ source3: Observable<E3>, _ source4: Observable<E4>, _ source5: Observable<E5>, _ source6: Observable<E6>, _ source7: Observable<E7>, _ source8: Observable<E8>, _ source9: Observable<E9>, _ resultSelector: (E1, E2, E3, E4, E5, E6, E7, E8, E9) -> R)
     -> Observable<R> {
     return Zip9(
         source1: source1, source2: source2, source3: source3, source4: source4, source5: source5, source6: source6, source7: source7, source8: source8, source9: source9,
@@ -967,7 +967,7 @@ class Zip9<E1, E2, E3, E4, E5, E6, E7, E8, E9, R> : Producer<R> {
 // 10
 
 public func zipOrDie<E1, E2, E3, E4, E5, E6, E7, E8, E9, E10, R>
-    (source1: Observable<E1>, source2: Observable<E2>, source3: Observable<E3>, source4: Observable<E4>, source5: Observable<E5>, source6: Observable<E6>, source7: Observable<E7>, source8: Observable<E8>, source9: Observable<E9>, source10: Observable<E10>, resultSelector: (E1, E2, E3, E4, E5, E6, E7, E8, E9, E10) -> RxResult<R>)
+    (source1: Observable<E1>, _ source2: Observable<E2>, _ source3: Observable<E3>, _ source4: Observable<E4>, _ source5: Observable<E5>, _ source6: Observable<E6>, _ source7: Observable<E7>, _ source8: Observable<E8>, _ source9: Observable<E9>, _ source10: Observable<E10>, _ resultSelector: (E1, E2, E3, E4, E5, E6, E7, E8, E9, E10) -> RxResult<R>)
     -> Observable<R> {
     return Zip10(
         source1: source1, source2: source2, source3: source3, source4: source4, source5: source5, source6: source6, source7: source7, source8: source8, source9: source9, source10: source10,
@@ -976,7 +976,7 @@ public func zipOrDie<E1, E2, E3, E4, E5, E6, E7, E8, E9, E10, R>
 }
 
 public func zip<E1, E2, E3, E4, E5, E6, E7, E8, E9, E10, R>
-    (source1: Observable<E1>, source2: Observable<E2>, source3: Observable<E3>, source4: Observable<E4>, source5: Observable<E5>, source6: Observable<E6>, source7: Observable<E7>, source8: Observable<E8>, source9: Observable<E9>, source10: Observable<E10>, resultSelector: (E1, E2, E3, E4, E5, E6, E7, E8, E9, E10) -> R)
+    (source1: Observable<E1>, _ source2: Observable<E2>, _ source3: Observable<E3>, _ source4: Observable<E4>, _ source5: Observable<E5>, _ source6: Observable<E6>, _ source7: Observable<E7>, _ source8: Observable<E8>, _ source9: Observable<E9>, _ source10: Observable<E10>, _ resultSelector: (E1, E2, E3, E4, E5, E6, E7, E8, E9, E10) -> R)
     -> Observable<R> {
     return Zip10(
         source1: source1, source2: source2, source3: source3, source4: source4, source5: source5, source6: source6, source7: source7, source8: source8, source9: source9, source10: source10,

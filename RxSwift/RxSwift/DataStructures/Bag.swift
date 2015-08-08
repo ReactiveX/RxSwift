@@ -12,8 +12,8 @@ private struct BagPrivate {
     static let maxElements = Bag<Void>.KeyType.max - 1 // this is guarding from theoretical endless loop
 }
 
-public struct Bag<T> : SequenceType, Printable {
-    typealias Generator = GeneratorOf<T>
+public struct Bag<T> : SequenceType, CustomStringConvertible {
+    public typealias Generator = AnyGenerator<T>
     
     public typealias KeyType = Int
     
@@ -49,12 +49,12 @@ public struct Bag<T> : SequenceType, Printable {
         return nextKey
     }
     
-    public func generate() -> GeneratorOf<T> {
+    public func generate() -> AnyGenerator<T> {
         var dictionaryGenerator = map.generate()
         
-        return GeneratorOf {
+        return anyGenerator {
             let next = dictionaryGenerator.next()
-            if let (key, value) = next {
+            if let (_, value) = next {
                 return value
             }
             else {

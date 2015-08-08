@@ -38,8 +38,7 @@ class MySubject<Element where Element : Hashable> : SubjectType<Element, Element
     override func on(event: Event<Element>) {
         _observer.on(event)
         switch event {
-        case .Next(let boxedValue):
-            let value = boxedValue.value
+        case .Next(let value):
             if let disposable = _disposeOn[value] {
                 disposable.dispose()
             }

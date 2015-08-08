@@ -9,7 +9,7 @@
 import Foundation
 import RxSwift
 
-struct Recorded<Element : Equatable> : Printable, Equatable {
+struct Recorded<Element : Equatable> : CustomStringConvertible, Equatable {
     let time: Time
     let event: Event<Element>
     
@@ -21,8 +21,8 @@ struct Recorded<Element : Equatable> : Printable, Equatable {
     var value: Element {
         get {
             switch self.event {
-            case .Next(let boxedValue):
-                return boxedValue.value
+            case .Next(let value):
+                return value
             default:
                 assert(false)
                 let element: Element! = nil

@@ -11,7 +11,7 @@ import Foundation
 // throttle
 
 public func throttle<E, S: Scheduler>
-    (dueTime: S.TimeInterval, scheduler: S)
+    (dueTime: S.TimeInterval, _ scheduler: S)
     -> (Observable<E> -> Observable<E>) {
     return { source in
         return Throttle(source: source, dueTime: dueTime, scheduler: scheduler)
@@ -52,7 +52,7 @@ public func sampleLatest<E, S>
     // fallback {
 
 public func interval<S: Scheduler>
-    (period: S.TimeInterval, scheduler: S)
+    (period: S.TimeInterval, _ scheduler: S)
     -> Observable<Int64> {
         return Timer(dueTime: period,
             period: period,
@@ -66,7 +66,7 @@ public func interval<S: Scheduler>
     // periodic schedulers {
 
 public func interval<S: PeriodicScheduler>
-    (period: S.TimeInterval, scheduler: S)
+    (period: S.TimeInterval, _ scheduler: S)
     -> Observable<Int64> {
         return Timer(dueTime: period,
             period: period,
@@ -82,7 +82,7 @@ public func interval<S: PeriodicScheduler>
     // fallback {
 
 public func timer<S: Scheduler>
-    (#dueTime: S.TimeInterval, #period: S.TimeInterval, scheduler: S)
+    (dueTime: S.TimeInterval, _ period: S.TimeInterval, scheduler: S)
     -> Observable<Int64> {
         return Timer(
             dueTime: dueTime,
@@ -93,7 +93,7 @@ public func timer<S: Scheduler>
 }
 
 public func timer<S: Scheduler>
-    (#dueTime: S.TimeInterval, scheduler: S)
+    (dueTime: S.TimeInterval, scheduler: S)
     -> Observable<Int64> {
         return Timer(
             dueTime: dueTime,
@@ -108,7 +108,7 @@ public func timer<S: Scheduler>
     // periodic schedulers {
 
 public func timer<S: PeriodicScheduler>
-    (#dueTime: S.TimeInterval, #period: S.TimeInterval, scheduler: S)
+    (dueTime: S.TimeInterval, _ period: S.TimeInterval, scheduler: S)
     -> Observable<Int64> {
         return Timer(
             dueTime: dueTime,
@@ -119,7 +119,7 @@ public func timer<S: PeriodicScheduler>
 }
 
 public func timer<S: PeriodicScheduler>
-    (#dueTime: S.TimeInterval, scheduler: S)
+    (dueTime: S.TimeInterval, scheduler: S)
     -> Observable<Int64> {
         return Timer(
             dueTime: dueTime,
@@ -134,7 +134,7 @@ public func timer<S: PeriodicScheduler>
 // take
 
 public func take<E, S: Scheduler>
-    (duration: S.TimeInterval, scheduler: S)
+    (duration: S.TimeInterval, _ scheduler: S)
     -> Observable<E> -> Observable<E> {
     return { source in
         return TakeTime(source: source, duration: duration, scheduler: scheduler)
@@ -144,7 +144,7 @@ public func take<E, S: Scheduler>
 // skip
 
 public func skip<E, S: Scheduler>
-    (duration: S.TimeInterval, scheduler: S)
+    (duration: S.TimeInterval, _ scheduler: S)
     -> Observable<E> -> Observable<E> {
     return { source in
         return SkipTime(source: source, duration: duration, scheduler: scheduler)
@@ -155,7 +155,7 @@ public func skip<E, S: Scheduler>
 // delaySubscription
 
 public func delaySubscription<E, S: Scheduler>
-    (dueTime: S.TimeInterval, scheduler: S)
+    (dueTime: S.TimeInterval, _ scheduler: S)
     -> Observable<E> -> Observable<E> {
     return { source in
         return DelaySubscription(source: source, dueTime: dueTime, scheduler: scheduler)

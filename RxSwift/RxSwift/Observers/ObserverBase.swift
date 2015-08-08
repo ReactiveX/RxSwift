@@ -26,8 +26,8 @@ class ObserverBase<ElementType> : Observer<ElementType>, Disposable {
             }
         case .Error: fallthrough
         case .Completed:
-            var wasStopped: Bool = lock.calculateLocked {
-                var wasStopped = self.isStopped
+            let wasStopped: Bool = lock.calculateLocked {
+                let wasStopped = self.isStopped
                 self.isStopped = true
                 return wasStopped
             }

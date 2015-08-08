@@ -24,7 +24,7 @@ public func toArray<E>(source: Observable<E>)
     source.subscribeSafe(AnonymousObserver { e in
         switch e {
         case .Next(let element):
-            elements.append(element.value)
+            elements.append(element)
         case .Error(let e):
             error = e
             condition.lock()
@@ -67,7 +67,7 @@ public func first<E>(source: Observable<E>)
         switch e {
         case .Next(let e):
             if element == nil {
-                element = e.value
+                element = e
             }
             break
         case .Error(let e):
@@ -111,7 +111,7 @@ public func last<E>(source: Observable<E>)
     d.disposable = source.subscribeSafe(AnonymousObserver { e in
         switch e {
         case .Next(let e):
-            element = e.value
+            element = e
             return
         case .Error(let e):
             error = e

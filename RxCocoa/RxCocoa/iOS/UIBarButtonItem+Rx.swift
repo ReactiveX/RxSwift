@@ -25,7 +25,7 @@ extension UIBarButtonItem {
 }
 
 
-@objc
+
 class BarButtonItemTarget: Disposable {
     typealias Callback = () -> Void
     

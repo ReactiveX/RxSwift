@@ -50,12 +50,12 @@ class Sink<O : ObserverType> :  Disposable {
     }
     
     func dispose() {
-        var cancel: Disposable? = lock.calculateLocked {
+        let cancel: Disposable? = lock.calculateLocked {
             if _state.disposed {
                 return nil
             }
             
-            var cancel = _state.cancel
+            let cancel = _state.cancel
             
             _state.disposed = true
             _state.observer = nil

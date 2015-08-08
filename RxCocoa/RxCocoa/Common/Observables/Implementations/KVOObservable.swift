@@ -48,14 +48,14 @@ class KVOObservable<Element> : Producer<Element?>
 
 #if !DISABLE_SWIZZLING
 
-func observeWeaklyKeyPathFor(target: NSObject, # keyPath: String, # options: NSKeyValueObservingOptions) -> Observable<AnyObject?> {
+func observeWeaklyKeyPathFor(target: NSObject, keyPath: String, options: NSKeyValueObservingOptions) -> Observable<AnyObject?> {
     let components = keyPath.componentsSeparatedByString(".").filter { $0 != "self" }
     
     let observable = observeWeaklyKeyPathFor(target, keyPathSections: components, options: options)
         >- distinctUntilChanged { $0 === $1 }
         >- finishWithNilWhenDealloc(target)
  
-    if options & .Initial != .allZeros {
+    if !options.intersect(.Initial).isEmpty {
         return observable
     }
     else {
@@ -88,8 +88,8 @@ func finishWithNilWhenDealloc(target: NSObject)
 
 func observeWeaklyKeyPathFor(
         target: NSObject,
-        # keyPathSections: [String],
-        # options: NSKeyValueObservingOptions
+        keyPathSections: [String],
+        options: NSKeyValueObservingOptions
     ) -> Observable<AnyObject?> {
     
     weak var weakTarget: AnyObject? = target
@@ -105,7 +105,7 @@ func observeWeaklyKeyPathFor(
     
     // should dealloc hook be in place if week property, or just create strong reference because it doesn't matter
     let isWeak = isWeakProperty(String.fromCString(propertyAttributes) ?? "")
-    let propertyObservable = KVOObservable(object: target, keyPath: propertyName, options: options | .Initial, retainTarget: false) as KVOObservable<AnyObject>
+    let propertyObservable = KVOObservable(object: target, keyPath: propertyName, options: options.union(.Initial), retainTarget: false) as KVOObservable<AnyObject>
     
     // KVO recursion for value changes
     return propertyObservable
@@ -142,3 +142,4 @@ func observeWeaklyKeyPathFor(
         >- switchLatest
 }
 #endif
+

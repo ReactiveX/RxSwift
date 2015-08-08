@@ -55,7 +55,7 @@ class GitHubAPI {
                 }
             }
             >- observeSingleOn(self.dataScheduler)
-            >- catch { result in
+            >- onError { result in
                 return just(false)
             }
     }

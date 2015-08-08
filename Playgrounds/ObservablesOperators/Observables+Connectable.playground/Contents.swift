@@ -19,13 +19,13 @@ func sampleWithoutConnectableOperators() {
     
     int1
         >- subscribeNext {
-            println("first subscription \($0)")
+            print("first subscription \($0)")
     }
     
     delay(5) {
         int1
             >- subscribeNext {
-                println("second subscription \($0)")
+                print("second subscription \($0)")
         }
     }
     
@@ -33,19 +33,19 @@ func sampleWithoutConnectableOperators() {
 
 sampleWithoutConnectableOperators()
 
-/*:
+
+
+fu/*:
 ### `multicast`
 [More info in reactive.io website]( http://reactivex.io/documentation/operators/publish.html )
 */
-
-
-func sampleWithMulticast() {
+nc sampleWithMulticast() {
     
     let subject1 = PublishSubject<Int64>()
     
     subject1
         >- subscribeNext {
-            println("Subject \($0)")
+            print("Subject \($0)")
         }
     
     let int1 = interval(1, MainScheduler.sharedInstance)
@@ -53,7 +53,7 @@ func sampleWithMulticast() {
     
     int1
         >- subscribeNext {
-            println("first subscription \($0)")
+            print("first subscription \($0)")
     }
     
     delay(2) {
@@ -63,15 +63,15 @@ func sampleWithMulticast() {
     delay(4) {
         int1
             >- subscribeNext {
-                println("second subscription \($0)")
-                println("---")
+                print("second subscription \($0)")
+                print("---")
         }
     }
     
     delay(6) {
         int1
             >- subscribeNext {
-                println("thirth subscription \($0)")
+                print("thirth subscription \($0)")
         }
     }
     
@@ -81,7 +81,9 @@ func sampleWithMulticast() {
 
 
 
-/*:
+
+
+func sampleW/*:
 ### `replay`
 Ensure that all observers see the same sequence of emitted items, even if they subscribe after the Observable has begun emitting items.
 
@@ -90,16 +92,14 @@ publish = multicast + replay subject
 
 [More info in reactive.io website]( http://reactivex.io/documentation/operators/replay.html )
 */
-
-
-func sampleWithReplayBuffer0() {
+ithReplayBuffer0() {
     
     let int1 = interval(1, MainScheduler.sharedInstance)
         >- replay(0)
     
     int1
         >- subscribeNext {
-            println("first subscription \($0)")
+            print("first subscription \($0)")
     }
     
     delay(2) {
@@ -109,15 +109,15 @@ func sampleWithReplayBuffer0() {
     delay(4) {
         int1
             >- subscribeNext {
-                println("second subscription \($0)")
-                println("---")
+                print("second subscription \($0)")
+                print("---")
         }
     }
     
     delay(6) {
         int1
             >- subscribeNext {
-                println("thirth subscription \($0)")
+                print("thirth subscription \($0)")
         }
     }
     
@@ -128,14 +128,14 @@ func sampleWithReplayBuffer0() {
 
 func sampleWithReplayBuffer2() {
     
-    println("--- sampleWithReplayBuffer2 ---\n")
+    print("--- sampleWithReplayBuffer2 ---\n")
     
     let int1 = interval(1, MainScheduler.sharedInstance)
         >- replay(2)
     
     int1
         >- subscribeNext {
-            println("first subscription \($0)")
+            print("first subscription \($0)")
     }
     
     delay(2) {
@@ -145,15 +145,15 @@ func sampleWithReplayBuffer2() {
     delay(4) {
         int1
             >- subscribeNext {
-                println("second subscription \($0)")
-                println("---")
+                print("second subscription \($0)")
+                print("---")
         }
     }
     
     delay(6) {
         int1
             >- subscribeNext {
-                println("third subscription \($0)")
+                print("third subscription \($0)")
         }
     }
     
@@ -163,7 +163,10 @@ func sampleWithReplayBuffer2() {
 
 
 
-/*:
+
+
+func sampleWithPublish() {
+   /*:
 ### `publish`
 Convert an ordinary Observable into a connectable Observable.
 
@@ -173,16 +176,13 @@ so publish is basically replay(0)
 
 [More info in reactive.io website]( http://reactivex.io/documentation/operators/publish.html )
 */
-
-
-func sampleWithPublish() {
-    
+ 
     let int1 = interval(1, MainScheduler.sharedInstance)
         >- publish
     
     int1
         >- subscribeNext {
-            println("first subscription \($0)")
+            print("first subscription \($0)")
     }
     
     delay(2) {
@@ -192,15 +192,15 @@ func sampleWithPublish() {
     delay(4) {
         int1
             >- subscribeNext {
-                println("second subscription \($0)")
-                println("---")
+                print("second subscription \($0)")
+                print("---")
         }
     }
     
     delay(6) {
         int1
             >- subscribeNext {
-                println("third subscription \($0)")
+                print("third subscription \($0)")
         }
     }
     
@@ -209,18 +209,18 @@ func sampleWithPublish() {
 //sampleWithPublish()
 
 
-/*:
+
+
+
+
+
+XCPSetExecutionShouldContinueIndefi/*:
 ### `refCount`
 Make a Connectable Observable behave like an ordinary Observable.
 [More info in reactive.io website]( http://reactivex.io/documentation/operators/refcount.html )
 */
-
-
-
-/*:
+nit/*:
 ### `Variable` / `sharedWithCachedLastResult`
 */
-
-
-XCPSetExecutionShouldContinueIndefinitely(continueIndefinitely: true)
+ely(continueIndefinitely: true)
 

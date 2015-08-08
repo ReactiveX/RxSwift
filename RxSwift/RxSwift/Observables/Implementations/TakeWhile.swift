@@ -26,8 +26,7 @@ class TakeWhileSink1<ElementType, O: ObserverType where O.Element == ElementType
             return
         }
         switch event {
-        case .Next(let boxedValue):
-            let value = boxedValue.value
+        case .Next(let value):
             
             running = self.parent.predicate1(value)
 
@@ -68,8 +67,7 @@ class TakeWhileSink2<ElementType, O: ObserverType where O.Element == ElementType
             return
         }
         switch event {
-        case .Next(let boxedValue):
-            let value = boxedValue.value
+        case .Next(let value):
             
             running = self.parent.predicate2(value, index)
             self.index = index + 1
@@ -113,7 +111,7 @@ class TakeWhile<Element>: Producer<Element> {
     }
     
     override func run<O : ObserverType where O.Element == Element>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
-        if let predicate1 = self.predicate1 {
+        if let _ = self.predicate1 {
             let sink = TakeWhileSink1(parent: self, observer: observer, cancel: cancel)
             setSink(sink)
             return source.subscribeSafe(sink)

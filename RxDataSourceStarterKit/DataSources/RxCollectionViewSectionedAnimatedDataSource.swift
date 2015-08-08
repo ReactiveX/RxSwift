@@ -23,9 +23,9 @@ class RxCollectionViewSectionedAnimatedDataSource<S: SectionModelType> : RxColle
     
     func collectionView(collectionView: UICollectionView, observedEvent: Event<Element>) {
         switch observedEvent {
-        case .Next(let boxedSections):
-            for c in boxedSections.value {
-                //println("Animating ==============================\n\(c)\n===============================\n")
+        case .Next(let element):
+            for c in element {
+                //print("Animating ==============================\n\(c)\n===============================\n")
                 
                 if !set {
                     setSections(c.finalSections)

@@ -48,7 +48,7 @@ class ScheduledItem<T> : ScheduledItemProtocol {
 }
 
 
-class VirtualTimeSchedulerBase : Scheduler, Printable {
+class VirtualTimeSchedulerBase : Scheduler, CustomStringConvertible {
     typealias TimeInterval = Int
     typealias Time = Int
     
@@ -133,7 +133,7 @@ class VirtualTimeSchedulerBase : Scheduler, Printable {
     func start() {
         if !enabled {
             enabled = true
-            do {
+            repeat {
                 if let next = getNext() {
                     if next.disposed {
                         continue

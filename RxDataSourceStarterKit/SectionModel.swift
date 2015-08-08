@@ -8,8 +8,8 @@
 
 import Foundation
 
-public struct SectionModel<Section, ItemType> : SectionModelType, Printable {
-    typealias Item = ItemType
+public struct SectionModel<Section, ItemType> : SectionModelType, CustomStringConvertible {
+    public typealias Item = ItemType
     public var model: Section
     
     public var items: [Item]
@@ -31,8 +31,8 @@ public struct SectionModel<Section, ItemType> : SectionModelType, Printable {
     }
 }
 
-public struct HashableSectionModel<Section: Hashable, ItemType: Hashable> : Hashable, SectionModelType, Printable {
-    typealias Item = ItemType
+public struct HashableSectionModel<Section: Hashable, ItemType: Hashable> : Hashable, SectionModelType, CustomStringConvertible {
+    public typealias Item = ItemType
     public var model: Section
     
     public var items: [Item]

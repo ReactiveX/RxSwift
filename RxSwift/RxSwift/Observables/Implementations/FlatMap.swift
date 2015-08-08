@@ -26,9 +26,9 @@ class FlatMapSinkIter<SourceType, O: ObserverType> : ObserverType {
     
     func on(event: Event<Element>) {
         switch event {
-        case .Next(let boxedValue):
+        case .Next(let value):
             parent.lock.performLocked {
-                trySendNext(parent.observer, boxedValue.value)
+                trySendNext(parent.observer, value)
             }
         case .Error(let error):
             parent.lock.performLocked {
@@ -79,7 +79,7 @@ class FlatMapSink<SourceType, O : ObserverType> : Sink<O>, ObserverType {
         
         switch event {
         case .Next(let element):
-            select(element.value).flatMap { value in
+            select(element).flatMap { value in
                 subscribeInner(value)
                 return SuccessResult
             }.recoverWith { e -> RxResult<Void> in
@@ -175,7 +175,7 @@ class FlatMap<SourceType, ResultType>: Producer<ResultType> {
     }
     
     override func run<O: ObserverType where O.Element == ResultType>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
-        if let selector1 = self.selector1 {
+        if let _ = self.selector1 {
             let sink = FlatMapSink1(parent: self, observer: observer, cancel: cancel)
             setSink(sink)
             return sink.run()

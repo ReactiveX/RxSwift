@@ -26,7 +26,7 @@ extension UIImageView {
                 
                 switch event {
                 case .Next(let boxedValue):
-                    let value = boxedValue.value
+                    let value = boxedValue
                     if animated && value != nil {
                         let transition = CATransition()
                         transition.duration = 0.25

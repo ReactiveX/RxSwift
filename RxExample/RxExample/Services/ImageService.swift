@@ -57,7 +57,7 @@ class DefaultImageService: ImageService {
     }
     
     func imageFromURL(URL: NSURL) -> Observable<Image> {
-        return defer {
+        return deferred {
             let maybeImage = self.imageDataCache.objectForKey(URL) as? Image
             
             let decodedImage: Observable<Image>

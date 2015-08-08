@@ -14,14 +14,14 @@ public class SingleAssignmentDisposable : DisposeBase, Disposable, Cancelable {
         disposableSet: Bool,
         disposable: Disposable?
     )
-    
+
     var lock = SpinLock()
     var state: State = (
         disposed: false,
         disposableSet: false,
         disposable: nil
     )
-    
+
     public var disposed: Bool {
         get {
             return lock.calculateLocked {
@@ -29,7 +29,7 @@ public class SingleAssignmentDisposable : DisposeBase, Disposable, Cancelable {
             }
         }
     }
-    
+
     public override init() {
         super.init()
     }
@@ -45,33 +45,33 @@ public class SingleAssignmentDisposable : DisposeBase, Disposable, Cancelable {
                 if state.disposableSet {
                     rxFatalError("oldState.disposable != nil")
                 }
-                
+
                 state.disposableSet = true
-                
+
                 if state.disposed {
                     return newValue
                 }
-                
+
                 state.disposable = newValue
-                
+
                 return nil
             }
-            
+
             if let disposable = disposable {
                 disposable.dispose()
             }
         }
     }
-    
+
     public func dispose() {
         var disposable: Disposable? = lock.calculateLocked {
             state.disposed = true
-            var dispose = state.disposable
+            let dispose = state.disposable
             state.disposable = nil
-            
+
             return dispose
         }
-        
+
         if let disposable = disposable {
             disposable.dispose()
         }

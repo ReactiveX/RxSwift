@@ -29,7 +29,7 @@ public class AnonymousDisposable : DisposeBase, Cancelable {
 
     public func dispose() {
         let toDispose: DisposeAction? = lock.calculateLocked {
-            var action = self.disposeAction
+            let action = self.disposeAction
             self.disposeAction = nil
             return action
         }

@@ -31,7 +31,7 @@ class ValidationService {
     let minPasswordCount = 5
     
     func validateUsername(username: String) -> Observable<ValidationResult> {
-        if count(username) == 0 {
+        if username.characters.count == 0 {
             return just((false, nil))
         }
         
@@ -55,7 +55,7 @@ class ValidationService {
     }
     
     func validatePassword(password: String) -> ValidationResult {
-        let numberOfCharacters = count(password)
+        let numberOfCharacters = password.characters.count
         if numberOfCharacters == 0 {
             return (false, nil)
         }
@@ -68,7 +68,7 @@ class ValidationService {
     }
     
     func validateRepeatedPassword(password: String, repeatedPassword: String) -> ValidationResult {
-        if count(repeatedPassword) == 0 {
+        if repeatedPassword.characters.count == 0 {
             return (false, nil)
         }
         
@@ -207,17 +207,16 @@ class GitHubSignupViewController : ViewController {
                 case .SignedUp(let signed):
                     self.signingUpOulet.hidden = true
                     
-                    let controller: UIAlertController
+                    let alertView: UIAlertView
                     
                     if signed {
-                        controller = UIAlertController(title: "GitHub", message: "Mock signed up to GitHub", preferredStyle: .Alert)
+                        alertView = UIAlertView(title: "GitHub", message: "Mock signed up to GitHub", delegate: nil, cancelButtonTitle: nil)
                     }
                     else {
-                        controller = UIAlertController(title: "GitHub", message: "Mock signed up failed", preferredStyle: .Alert)
+                        alertView = UIAlertView(title: "GitHub", message: "Mock signed up failed", delegate: nil, cancelButtonTitle: nil)
                     }
                     
-                    controller.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
-                    self.presentViewController(controller, animated: true, completion: nil)
+                    alertView.show()
                 default:
                     self.signingUpOulet.hidden = true
                 }

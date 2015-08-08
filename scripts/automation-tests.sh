@@ -1,19 +1,11 @@
 #!/bin/bash
-
-
 set -e
+
 NUM_OF_TESTS=14
 CURRENT_DIR="$( dirname "${BASH_SOURCE[0]}" )"
 BUILD_DIRECTORY=build
 APP=RxExample
 CONFIGURATIONS="Debug Release-Tests Release"
-#SIMULATORS="RxSwiftTest-iPhone4s-iOS_8.4 RxSwiftTest-iPhone5-iOS_8.4 RxSwiftTest-iPhone5s-iOS_8.4 RxSwiftTest-iPhone6-iOS_8.4 RxSwiftTest-iPhone6Plus-iOS_8.4 RxSwiftTest-iPhone4s-iOS_8.1 RxSwiftTest-iPhone5-iOS_8.1 RxSwiftTest-iPhone5s-iOS_8.1 RxSwiftTest-iPhone6-iOS_8.1 RxSwiftTest-iPhone6Plus-iOS_8.1"
-
-#IOS7_SIMULATORS="RxSwiftTest-iPhone4s-iOS_7.1 RxSwiftTest-iPhone5-iOS_7.1 RxSwiftTest-iPhone5s-iOS_7.1"
-IOS7_SIMULATORS=""
-IOS8_SIMULATORS="RxSwiftTest-iPhone4s-iOS_8.4 RxSwiftTest-iPhone5-iOS_8.4 RxSwiftTest-iPhone5s-iOS_8.4 RxSwiftTest-iPhone6-iOS_8.4 RxSwiftTest-iPhone6Plus-iOS_8.4"
-
-#open $TMPDIR
 
 . scripts/common.sh
 
@@ -23,9 +15,9 @@ ROOT=`pwd`
 BUILD_DIRECTORY="${ROOT}/build"
 
 function runAutomation() {
-	SIMULATOR=$1
+	SCHEME=$1
 	CONFIGURATION=$2
-	SCHEME=$3
+	SIMULATOR=$3
 
 	APP="${SCHEME}"
 
@@ -36,8 +28,7 @@ function runAutomation() {
 	printf "${GREEN}Building example for automation ${BOLDCYAN}${SIMULATOR} - ${CONFIGURATION}${RESET}"
 	echo
 
-	OS=`echo $SIMULATOR| cut -d'_' -f 2`
-	xcodebuild -workspace Rx.xcworkspace -scheme ${SCHEME} -derivedDataPath ${BUILD_DIRECTORY} -configuration ${CONFIGURATION} -destination platform='iOS Simulator',OS="${OS}",name="${SIMULATOR}" build | xcpretty -c
+	rx $SCHEME $CONFIGURATION $SIMULATOR build
 
 	echo
 	printf "${GREEN}Quitting iOS Simulator ...${RESET}"
@@ -83,19 +74,19 @@ function runAutomation() {
 }
 
 # ios 7
-for simulator in ${IOS7_SIMULATORS}
-do
-		for configuration in ${CONFIGURATIONS}
-		do
-			runAutomation ${simulator} ${configuration} "RxExample-iOS-no-module"
-		done
-done
+#for simulator in ${IOS7_SIMULATORS}
+#do
+#			for configuration in ${CONFIGURATIONS}
+#			do
+#					runAutomation "RxExample-iOS" ${configuration} ${simulator}
+#			done
+#done
 
 # ios 8
 for simulator in ${IOS8_SIMULATORS}
 do
 		for configuration in ${CONFIGURATIONS}
 		do
-			runAutomation ${simulator} ${configuration} "RxExample-iOS"
+				runAutomation "RxExample-iOS" ${configuration} ${simulator}
 		done
 done

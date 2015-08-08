@@ -22,7 +22,7 @@ public class Variable<Element>: BehaviorSubject<Element> {
 }
 
 
-@availability(*, deprecated=1.4, message="Please use variable.next, it's more clear")
+@available(*, deprecated=1.4, message="Please use variable.next, it's more clear")
 public func << <E>(variable: Variable<E>, element: E) {
     variable.next(element)
 }

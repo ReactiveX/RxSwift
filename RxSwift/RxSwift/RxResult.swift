@@ -27,7 +27,7 @@ import Foundation
 public enum RxResult<T> {
     // Box is used is because swift compiler doesn't know
     // how to handle `Success(ResultType)` and it crashes.
-    case Success(RxBox<T>)
+    case Success(T)
     case Failure(ErrorType)
 }
 
@@ -60,8 +60,8 @@ extension RxResult {
     // Returns the given function applied to the value from `Success` or returns `self` if this is a `Failure`.
     public func flatMap<U>(@noescape f: T -> RxResult<U>) -> RxResult<U> {
         switch self {
-        case .Success(let boxedValue):
-            return f(boxedValue.value)
+        case .Success(let value):
+            return f(value)
         case .Failure(let error):
             return failure(error)
         }
@@ -70,8 +70,8 @@ extension RxResult {
     // Maps the given function to the value from `Success` or returns `self` if this is a `Failure`.
     public func map<U>(@noescape f: T -> U) -> RxResult<U> {
         switch self {
-        case .Success(let boxedValue):
-            return success(f(boxedValue.value))
+        case .Success(let value):
+            return success(f(value))
         case .Failure(let error):
             return failure(error)
         }
@@ -100,8 +100,8 @@ extension RxResult {
     // Returns the value if `Success` or throws the exception if this is a Failure.
     public func get() -> T {
         switch self {
-        case .Success(let boxedValue):
-            return boxedValue.value
+        case .Success(let value):
+            return value
         case .Failure(let error):
             rxFatalError("Result represents failure: \(error)")
             return (nil as T?)!
@@ -111,8 +111,8 @@ extension RxResult {
     // Returns the value if `Success` or the given `defaultValue` if this is a `Failure`.
     public func getOrElse(defaultValue: T) -> T {
         switch self {
-        case .Success(let boxedValue):
-            return boxedValue.value
+        case .Success(let value):
+            return value
         case .Failure(_):
             return defaultValue
         }
@@ -131,8 +131,8 @@ extension RxResult {
     // Returns `nil` if this is a `Failure` or a `T` containing the value if this is a `Success`
     public func toOptional() -> T? {
         switch self {
-        case .Success(let boxedValue):
-            return boxedValue.value
+        case .Success(let value):
+            return value
         case .Failure(_):
             return nil
         }
@@ -142,7 +142,7 @@ extension RxResult {
 // convenience constructor
 
 public func success<T>(value: T) -> RxResult<T> {
-    return .Success(RxBox(value))
+    return .Success(value)
 }
 
 public func failure<T>(error: ErrorType) -> RxResult<T> {
@@ -189,32 +189,32 @@ func lift<T1, T2, T3, TRet>(function: (T1, T2, T3) -> TRet) -> (RxResult<T1>, Rx
 
 // depricated
 
-@availability(*, deprecated=1.4, message="Replaced by success")
+@available(*, deprecated=1.4, message="Replaced by success")
 public func `return`<T>(value: T) -> RxResult<T> {
-    return .Success(RxBox(value))
+    return .Success(value)
 }
 
 infix operator >== { associativity left precedence 95 }
 
-@availability(*, deprecated=1.4, message="Replaced by flatMap")
+@available(*, deprecated=1.4, message="Replaced by flatMap")
 public func >== <In, Out>(lhs: RxResult<In>, @noescape rhs: (In) -> RxResult<Out>) -> RxResult<Out> {
     switch lhs {
-    case .Success(let result): return rhs(result.value)
+    case .Success(let result): return rhs(result)
     case .Failure(let error): return .Failure(error)
     }
 }
 
-@availability(*, deprecated=1.4, message="Replaced by map")
+@available(*, deprecated=1.4, message="Replaced by map")
 public func >== <In, Out>(lhs: RxResult<In>, @noescape rhs: (In) -> Out) -> RxResult<Out> {
     switch lhs {
-    case .Success(let result): return success(rhs(result.value))
+    case .Success(let result): return success(rhs(result))
     case .Failure(let error): return .Failure(error)
     }
 }
 
 infix operator >>> { associativity left precedence 95 }
 
-@availability(*, deprecated=1.4, message="Replaced by map")
+@available(*, deprecated=1.4, message="Replaced by map")
 public func >>> <In, Out>(lhs: RxResult<In>, @noescape rhs: () -> Out) -> RxResult<Out> {
     switch lhs {
     case .Success: return success(rhs())
@@ -222,7 +222,7 @@ public func >>> <In, Out>(lhs: RxResult<In>, @noescape rhs: () -> Out) -> RxResu
     }
 }
 
-@availability(*, deprecated=1.4, message="Replaced by flatMap")
+@available(*, deprecated=1.4, message="Replaced by flatMap")
 public func >>> <In, Out>(lhs: RxResult<In>, @noescape rhs: () -> RxResult<Out>) -> RxResult<Out> {
     switch lhs {
     case .Success: return rhs()
@@ -232,7 +232,7 @@ public func >>> <In, Out>(lhs: RxResult<In>, @noescape rhs: () -> RxResult<Out>)
 
 infix operator >>! { associativity left precedence 95 }
 
-@availability(*, deprecated=1.4, message="Replaced by recoverWith")
+@available(*, deprecated=1.4, message="Replaced by recoverWith")
 public func >>! <In>(lhs: RxResult<In>, @noescape rhs: (ErrorType) -> RxResult<In>) -> RxResult<In> {
     switch lhs {
     case .Failure(let error):
@@ -244,31 +244,31 @@ public func >>! <In>(lhs: RxResult<In>, @noescape rhs: (ErrorType) -> RxResult<I
 
 prefix operator * { }
 
-@availability(*, deprecated=1.4, message="Replaced by get")
+@available(*, deprecated=1.4, message="Replaced by get")
 public prefix func *<T>(result: RxResult<T>) -> T {
     switch result {
-    case .Success(let value): return value.value
+    case .Success(let value): return value
     default:
-        var result: T? = nil
+        let result: T? = nil
         return result!
     }
 }
 
-@availability(*, deprecated=1.4, message="Replaced by recover")
+@available(*, deprecated=1.4, message="Replaced by recover")
 public func replaceErrorWith<T>(result: RxResult<T>, errorValue: T) -> T {
     switch result {
-    case .Success(let boxedValue):
-        return boxedValue.value
+    case .Success(let value):
+        return value
     case .Failure:
         return errorValue
     }
 }
 
-@availability(*, deprecated=1.4, message="Replaced by recoverWith")
+@available(*, deprecated=1.4, message="Replaced by recoverWith")
 public func replaceErrorWithNil<T>(result: RxResult<T>) -> T? {
     switch result {
-    case .Success(let boxedValue):
-        return boxedValue.value
+    case .Success(let value):
+        return value
     case .Failure:
         return nil
     }

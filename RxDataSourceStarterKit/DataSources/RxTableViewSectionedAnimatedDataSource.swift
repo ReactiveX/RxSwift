@@ -19,9 +19,9 @@ class RxTableViewSectionedAnimatedDataSource<S: SectionModelType> : RxTableViewS
     
     func tableView(tableView: UITableView, observedEvent: Event<Element>) {
         switch observedEvent {
-        case .Next(let boxedSections):
-            for c in boxedSections.value {
-                //println("Animating ==============================\n\(c)\n===============================\n")
+        case .Next(let element):
+            for c in element {
+                //print("Animating ==============================\n\(c)\n===============================\n")
                 setSections(c.finalSections)
                 tableView.performBatchUpdates(c)
             }

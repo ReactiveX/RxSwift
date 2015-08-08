@@ -35,7 +35,7 @@ public class DelegateProxy : _RXDelegateProxy {
     
     public func observe(selector: Selector) -> Observable<[AnyObject]> {
         if hasWiredImplementationForSelector(selector) {
-            println("Delegate proxy is already implementing `\(selector)`, a more performant way of registering might exist.")
+            print("Delegate proxy is already implementing `\(selector)`, a more performant way of registering might exist.")
         }
 
         if !self.respondsToSelector(selector) {
@@ -68,19 +68,19 @@ public class DelegateProxy : _RXDelegateProxy {
         return _pointer(&delegateAssociatedTag)
     }
     
-    public class func createProxyForObject(object: AnyObject) -> Self {
-        return self(parentObject: object)
+    public class func createProxyForObject(object: AnyObject) -> AnyObject {
+        return self.init(parentObject: object)
     }
     
-    public class func assignedProxyFor(object: AnyObject) -> Self? {
-        let maybeDelegate: AnyObject! = objc_getAssociatedObject(object, self.delegateAssociatedObjectTag())
+    public class func assignedProxyFor(object: AnyObject) -> AnyObject? {
+        let maybeDelegate: AnyObject? = objc_getAssociatedObject(object, self.delegateAssociatedObjectTag())
         return castOptionalOrFatalError(maybeDelegate)
     }
     
     public class func assignProxy(proxy: AnyObject, toObject object: AnyObject) {
         precondition(proxy.isKindOfClass(self.classForCoder()))
-        
-        objc_setAssociatedObject(object, self.delegateAssociatedObjectTag(), proxy, UInt(OBJC_ASSOCIATION_RETAIN))
+       
+        objc_setAssociatedObject(object, self.delegateAssociatedObjectTag(), proxy, .OBJC_ASSOCIATION_RETAIN)
     }
     
     public func setForwardToDelegate(delegate: AnyObject?, retainDelegate: Bool) {

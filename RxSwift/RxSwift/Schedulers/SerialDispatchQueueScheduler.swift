@@ -8,7 +8,7 @@
 
 import Foundation
 
-@availability(*, deprecated=1.7, message="Replaced by `SerialDispatchQueueScheduler`")
+@available(*, deprecated=1.7, message="Replaced by `SerialDispatchQueueScheduler`")
 public typealias DispatchQueueScheduler = SerialDispatchQueueScheduler
 
 // This is a scheduler that wraps dispatch queue.

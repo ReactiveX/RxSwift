@@ -18,10 +18,10 @@ import Foundation
 *   `Box` is there because of a bug in swift compiler
 *       >> error: unimplemented IR generation feature non-fixed multi-payload enum layout
 */
-public enum Event<Element> : Printable {
+public enum Event<Element> : CustomStringConvertible {
     // Box is used because swift compiler doesn't know
     // how to handle `Next(Element)` and it crashes.
-    case Next(RxBox<Element>) // next element of a sequence
+    case Next(Element) // next element of a sequence
     case Error(ErrorType)   // sequence failed with error
     case Completed          // sequence terminated successfully
     
@@ -53,8 +53,9 @@ public func eventType<T>(event: Event<T>) -> String {
 public func == <T: Equatable>(lhs: Event<T>, rhs: Event<T>) -> Bool {
     switch (lhs, rhs) {
     case (.Completed, .Completed): return true
-    case (.Error(let e1), .Error(let e2)): return e1 == e2
-    case (.Next(let v1), .Next(let v2)): return v1.value == v2.value
+    // really stupid fix for now
+    case (.Error(let e1), .Error(let e2)): return "\(e1)" == "\(e2)"
+    case (.Next(let v1), .Next(let v2)): return v1 == v2
     default: return false
     }
 }
@@ -75,7 +76,7 @@ extension Event {
         get {
             switch self {
             case .Next(let value):
-                return value.value
+                return value
             case .Error: fallthrough
             case .Completed: return nil
             }

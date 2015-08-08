@@ -45,7 +45,7 @@ class RxScrollViewDelegateProxy : DelegateProxy
     
     // delegate proxy
     
-    override class func createProxyForObject(object: AnyObject) -> Self {
+    override class func createProxyForObject(object: AnyObject) -> AnyObject {
         let scrollView = object as! UIScrollView
         
         return castOrFatalError(scrollView.rx_createDelegateProxy())

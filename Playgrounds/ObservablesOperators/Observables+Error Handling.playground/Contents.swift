@@ -29,11 +29,11 @@ example("catch 1st") {
         >- subscribe { event in
             switch event {
             case .Next(let box):
-                println("\(box.value)")
+                print("\(box.value)")
             case .Completed:
-                println("completed")
+                print("completed")
             case .Error(let error):
-                println("\(error)")
+                print("\(error)")
             }
     }
     
@@ -62,11 +62,11 @@ example("catch 2nd") {
         >- subscribe { event in
             switch event {
             case .Next(let box):
-                println("\(box.value)")
+                print("\(box.value)")
             case .Completed:
-                println("completed")
+                print("completed")
             case .Error(let error):
-                println("\(error)")
+                print("\(error)")
             }
     }
     
@@ -81,14 +81,14 @@ example("catch 2nd") {
 }
 
 
-/*:
+
+example("re/*:
 ### `retry`
 
 If a source Observable emits an error, resubscribe to it in the hopes that it will complete without error
 [More info in reactive.io website]( http://reactivex.io/documentation/operators/retry.html )
 */
-
-example("retry") {
+try") {
     
     var count = 1 // bad practice, only for example purposes
     let observable: Observable<Int> = create { observer in
@@ -113,11 +113,11 @@ example("retry") {
         >- subscribe { event in
             switch event {
             case .Next(let box):
-                println("\(box.value)")
+                print("\(box.value)")
             case .Completed:
-                println("completed")
+                print("completed")
             case .Error(let error):
-                println("\(error)")
+                print("\(error)")
             }
     }
 }

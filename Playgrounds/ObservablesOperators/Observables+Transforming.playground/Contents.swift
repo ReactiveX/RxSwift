@@ -32,18 +32,18 @@ example("map") {
             char.hashValue
         }
         >- subscribeNext { int in
-            println(int)
+            print(int)
     }
 }
 
-/*:
+
+e/*:
 ### `flatMap`
 
 Transform the items emitted by an Observable into Observables, then flatten the emissions from those into a single Observable
 [More info in reactive.io website]( http://reactivex.io/documentation/operators/flatmap.html )
 */
-
-example("flatMap") {
+xample("flatMap") {
     
     let observable1: Observable<Int> = create { observer in
         sendNext(observer, 1)
@@ -69,18 +69,18 @@ example("flatMap") {
             observable2
         }
         >- subscribeNext {
-            println($0)
+            print($0)
     }
 }
 
-/*:
+
+exa/*:
 ### `scan`
 
 Apply a function to each item emitted by an Observable, sequentially, and emit each successive value
 [More info in reactive.io website]( http://reactivex.io/documentation/operators/scan.html )
 */
-
-example("scan") {
+mple("scan") {
     
     let observable: Observable<Int> = create { observer in
         sendNext(observer, 0)
@@ -98,6 +98,6 @@ example("scan") {
             acum + elem
         }
         >- subscribeNext {
-            println($0)
+            print($0)
     }
 }

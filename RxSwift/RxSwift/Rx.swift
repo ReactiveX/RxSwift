@@ -8,6 +8,10 @@
 
 import Foundation
 
+public func justUseIt<T>(_: T) {
+    
+}
+
 #if TRACE_RESOURCES
 // counts resources
 // used to detect resource leaks during unit tests

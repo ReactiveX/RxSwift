@@ -26,8 +26,7 @@ class TakeCountSink<ElementType, O: ObserverType where O.Element == ElementType>
     
     func on(event: Event<Element>) {
         switch event {
-        case .Next(let boxedValue):
-            let value = boxedValue.value
+        case .Next(let value):
             
             if remaining > 0 {
                 remaining--
@@ -83,8 +82,8 @@ class TakeTimeSink<ElementType, S: Scheduler, O: ObserverType where O.Element ==
     func on(event: Event<Element>) {
         lock.performLocked {
             switch event {
-            case .Next(let boxedValue):
-                trySendNext(observer, boxedValue.value)
+            case .Next(let value):
+                trySendNext(observer, value)
             case .Error:
                 trySend(observer, event)
                 self.dispose()

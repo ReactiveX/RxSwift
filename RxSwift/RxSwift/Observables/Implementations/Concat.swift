@@ -15,7 +15,7 @@ class ConcatSinkImplementation<Element> : ConcatSink<Element> {
  
     override func on(event: Event<Element>) {
         switch event {
-        case .Next(let next):
+        case .Next(_):
             trySend(observer, event)
         case .Error:
             trySend(observer, event)
@@ -38,6 +38,6 @@ class Concat<Element> : Producer<Element> {
         let sink = ConcatSinkImplementation(observer: Observer<Element>.normalize(observer), cancel: cancel)
         setSink(sink)
         
-        return sink.run(GeneratorOf(sources.generate()))
+        return sink.run(AnySequence(sources.generate()))
     }
 }

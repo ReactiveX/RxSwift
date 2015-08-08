@@ -23,8 +23,7 @@ class ScanSink<ElementType, Accumulate, O: ObserverType where O.Element == Accum
     
     func on(event: Event<ElementType>) {
         switch event {
-        case .Next(let boxedElement):
-            let element = boxedElement.value
+        case .Next(let element):
             self.parent.accumulator(self.accumulate, element).map { result -> Void in
                 self.accumulate = result
                 trySendNext(observer, result)
