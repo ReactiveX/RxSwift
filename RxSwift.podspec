@@ -33,6 +33,9 @@ Pod::Spec.new do |s|
 
   s.ios.deployment_target = '8.0'
   s.osx.deployment_target = '10.9'
+  if s.respond_to?(:watchos)
+    s.watchos.deployment_target = '2.0'
+  end
 
   s.source_files          = 'RxSwift/RxSwift/**/*.swift'
 end
