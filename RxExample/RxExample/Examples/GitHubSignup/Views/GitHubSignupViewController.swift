@@ -43,7 +43,7 @@ class ValidationService {
         let loadingValue = (valid: nil as Bool?, message: "Checking availabilty ..." as String?)
         
         return API.usernameAvailable(username)
-            >- map { available in
+            .map { available in
                 if available {
                     return (true, "Username available")
                 }
@@ -51,7 +51,7 @@ class ValidationService {
                     return (false, "Username already taken")
                 }
             }
-            >- startWith(loadingValue)
+            .startWith(loadingValue)
     }
     
     func validatePassword(password: String) -> ValidationResult {
@@ -103,19 +103,21 @@ class GitHubSignupViewController : ViewController {
     
     func bindValidationResultToUI(source: Observable<(valid: Bool?, message: String?)>,
         validationErrorLabel: UILabel) {
-        source >- subscribeNext { [unowned self] v in
-            let validationColor: UIColor
-            
-            if let valid = v.valid {
-                validationColor = valid ? okColor : errorColor
+        source
+            .subscribeNext { [unowned self] v in
+                let validationColor: UIColor
+                
+                if let valid = v.valid {
+                    validationColor = valid ? okColor : errorColor
+                }
+                else {
+                   validationColor = UIColor.grayColor()
+                }
+                
+                validationErrorLabel.textColor = validationColor
+                validationErrorLabel.text = v.message ?? ""
             }
-            else {
-               validationColor = UIColor.grayColor()
-            }
-            
-            validationErrorLabel.textColor = validationColor
-            validationErrorLabel.text = v.message ?? ""
-        } >- disposeBag.addDisposable
+            .addDisposableTo(disposeBag)
     }
     
     func dismissKeyboard(gr: UITapGestureRecognizer) {
@@ -141,31 +143,31 @@ class GitHubSignupViewController : ViewController {
         let signupSampler = self.signupOutlet.rx_tap
         
         let usernameValidation = username
-            >- map { username in
+            .map { username in
                 return validationService.validateUsername(username)
             }
-            >- switchLatest
-            >- variable
+            .switchLatest
+            .variable
         
         let passwordValidation = password
-            >- map { password in
+            .map { password in
                 return validationService.validatePassword(password)
             }
-            >- variable
+            .variable
         
         let repeatPasswordValidation = combineLatest(password, repeatPassword) { (password, repeatedPassword) in
                 validationService.validateRepeatedPassword(password, repeatedPassword: repeatedPassword)
             }
-            >- variable
+            .variable
         
         let signingProcess = combineLatest(username, password) { ($0, $1) }
-            >- sampleLatest(signupSampler)
-            >- map { (username, password) in
+            .sampleLatest(signupSampler)
+            .map { (username, password) in
                 return API.signup(username, password: password)
             }
-            >- switchLatest
-            >- startWith(.InitialState)
-            >- variable
+            .switchLatest
+            .startWith(.InitialState)
+            .variable
         
         let signupEnabled = combineLatest(
             usernameValidation,
@@ -192,15 +194,15 @@ class GitHubSignupViewController : ViewController {
         )
         
         signupEnabled
-            >- subscribeNext { [unowned self] valid  in
+            .subscribeNext { [unowned self] valid  in
                 self.signupOutlet.enabled = valid
                 self.signupOutlet.alpha = valid ? 1.0 : 0.5
             }
-            >- disposeBag.addDisposable
+            .addDisposableTo(disposeBag)
         
         
         signingProcess
-            >- subscribeNext { [unowned self] signingResult in
+            .subscribeNext { [unowned self] signingResult in
                 switch signingResult {
                 case .SigningUp:
                     self.signingUpOulet.hidden = false
@@ -221,7 +223,7 @@ class GitHubSignupViewController : ViewController {
                     self.signingUpOulet.hidden = true
                 }
             }
-            >- disposeBag.addDisposable
+            .addDisposableTo(disposeBag)
     }
    
     // This is one of the reasons why it's a good idea for disposal to be detached from allocations.

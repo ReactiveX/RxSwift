@@ -11,130 +11,134 @@ import Foundation
 import RxSwift
 #endif
 
-public func toArray<E>(source: Observable<E>)
-    -> RxResult<[E]> {
-    let condition = NSCondition()
-    
-    var elements = [E]()
-    
-    var error: ErrorType?
+extension ObservableType {
+    public func toArray()
+        -> RxResult<[E]> {
+        let condition = NSCondition()
         
-    var ended = false
+        var elements = [E]()
+        
+        var error: ErrorType?
+            
+        var ended = false
 
-    source.subscribeSafe(AnonymousObserver { e in
-        switch e {
-        case .Next(let element):
-            elements.append(element)
-        case .Error(let e):
-            error = e
-            condition.lock()
-            ended = true
-            condition.signal()
-            condition.unlock()
-        case .Completed:
-            condition.lock()
-            ended = true
-            condition.signal()
-            condition.unlock()
-        }
-    })
-    condition.lock()
-    while !ended {
-        condition.wait()
-    }
-    condition.unlock()
-    
-    if let error = error {
-        return failure(error)
-    }
-
-    return success(elements)
-}
-
-public func first<E>(source: Observable<E>)
-    -> RxResult<E?> {
-    let condition = NSCondition()
-    
-    var element: E?
-    
-    var error: ErrorType?
-    
-    var ended = false
-    
-    let d = SingleAssignmentDisposable()
-    
-    d.disposable = source.subscribeSafe(AnonymousObserver { e in
-        switch e {
-        case .Next(let e):
-            if element == nil {
-                element = e
+        self.subscribeSafe(AnonymousObserver { e in
+            switch e {
+            case .Next(let element):
+                elements.append(element)
+            case .Error(let e):
+                error = e
+                condition.lock()
+                ended = true
+                condition.signal()
+                condition.unlock()
+            case .Completed:
+                condition.lock()
+                ended = true
+                condition.signal()
+                condition.unlock()
             }
-            break
-        case .Error(let e):
-            error = e
-        default:
-            break
-        }
-        
+        })
         condition.lock()
-        ended = true
-        condition.signal()
+        while !ended {
+            condition.wait()
+        }
         condition.unlock()
-    })
-    
-    condition.lock()
-    while !ended {
-        condition.wait()
+        
+        if let error = error {
+            return failure(error)
+        }
+
+        return success(elements)
     }
-    d.dispose()
-    condition.unlock()
-    
-    if let error = error {
-        return failure(error)
-    }
-    
-    return success(element)
 }
 
-public func last<E>(source: Observable<E>)
-    -> RxResult<E?> {
-    let condition = NSCondition()
-    
-    var element: E?
-    
-    var error: ErrorType?
-    
-    var ended = false
-    
-    let d = SingleAssignmentDisposable()
-    
-    d.disposable = source.subscribeSafe(AnonymousObserver { e in
-        switch e {
-        case .Next(let e):
-            element = e
-            return
-        case .Error(let e):
-            error = e
-        default:
-            break
-        }
+extension ObservableType {
+    public var first: RxResult<E?> {
+        let condition = NSCondition()
+        
+        var element: E?
+        
+        var error: ErrorType?
+        
+        var ended = false
+        
+        let d = SingleAssignmentDisposable()
+        
+        d.disposable = self.subscribeSafe(AnonymousObserver { e in
+            switch e {
+            case .Next(let e):
+                if element == nil {
+                    element = e
+                }
+                break
+            case .Error(let e):
+                error = e
+            default:
+                break
+            }
+            
+            condition.lock()
+            ended = true
+            condition.signal()
+            condition.unlock()
+        })
         
         condition.lock()
-        ended = true
-        condition.signal()
+        while !ended {
+            condition.wait()
+        }
+        d.dispose()
         condition.unlock()
-        })
-    
-    condition.lock()
-    while !ended {
-        condition.wait()
+        
+        if let error = error {
+            return failure(error)
+        }
+        
+        return success(element)
     }
-    d.dispose()
-    condition.unlock()
-    
-    if let error = error {
-        return failure(error)
+}
+
+extension ObservableType {
+    public var last: RxResult<E?> {
+        let condition = NSCondition()
+        
+        var element: E?
+        
+        var error: ErrorType?
+        
+        var ended = false
+        
+        let d = SingleAssignmentDisposable()
+        
+        d.disposable = self.subscribeSafe(AnonymousObserver { e in
+            switch e {
+            case .Next(let e):
+                element = e
+                return
+            case .Error(let e):
+                error = e
+            default:
+                break
+            }
+            
+            condition.lock()
+            ended = true
+            condition.signal()
+            condition.unlock()
+            })
+        
+        condition.lock()
+        while !ended {
+            condition.wait()
+        }
+        d.dispose()
+        condition.unlock()
+        
+        if let error = error {
+            return failure(error)
+        }
+        
+        return success(element)
     }
-    
-    return success(element)
 }

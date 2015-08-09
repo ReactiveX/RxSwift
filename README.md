@@ -85,8 +85,8 @@ These are so called bindings and Rx can help you model your system that way.
 
 ```swift
 combineLatest(firstName.rx_text, lastName.rx_text) { $0 + " " + $1 }
-            >- map { "Greeting \($0)" }
-            >- subscribeNext { greeting in
+            .map { "Greeting \($0)" }
+            .subscribeNext { greeting in
                 greetingLabel.text = greeting
             }
 ```
@@ -107,7 +107,7 @@ This is how you can do simple retries with Rx
 
 ```swift
   doSomethingIncredible("me")
-    >- retry(3)
+    .retry(3)
 ```
 
 You can also easily create custom retry operators.
@@ -128,16 +128,16 @@ Writing all of this and properly testing it would be tedious. This is that same 
 
 ```swift
   searchTextField.rx_text
-    >- throttle(0.3, MainScheduler.sharedInstance)
-    >- distinctUntilChanged
-    >- map { query in
+    .throttle(0.3, MainScheduler.sharedInstance)
+    .distinctUntilChanged
+    .map { query in
         API.getSearchResults(query)
-            >- retry(3)
-            >- startWith([]) // clears results on new search term
-            >- catch([])
+            .retry(3)
+            .startWith([]) // clears results on new search term
+            .catch([])
     }
-    >- switchLatest
-    >- map { results in
+    .switchLatest
+    .map { results in
       // bind to ui
     }
 ```
@@ -157,7 +157,7 @@ Well, there is of course `zip` operator
   zip(userRequest, friendsRequest) { user, friends in
       return (user, friends)
     }
-    >- subscribeNext { user, friends in
+    .subscribeNext { user, friends in
         // bind them to user interface
     }
 ```
@@ -171,8 +171,8 @@ So what if those APIs return results on a background thread, and binding has to 
   zip(userRequest, friendsRequest) { user, friends in
       return (user, friends)
     }
-    >- observeOn(MainScheduler.sharedInstance)
-    >- subscribeNext { user, friends in
+    .observeOn(MainScheduler.sharedInstance)
+    .subscribeNext { user, friends in
         // bind them to user interface
     }
 ```
@@ -221,16 +221,16 @@ This is how we can do it using Rx.
 
 ```swift
 let imageSubscripton = just(imageURL)
-    >- throttle(0.2, MainScheduler.sharedInstance)
-    >- flatMap { imageURL in
+    .throttle(0.2, MainScheduler.sharedInstance)
+    .flatMap { imageURL in
         API.fetchImage(imageURL)
     }
-    >- observeOn(operationScheduler)
-    >- map { imageData in
+    .observeOn(operationScheduler)
+    .map { imageData in
         return decodeAndBlurImage(imageData)
     }
-    >- observeOn(MainScheduler.sharedInstance)
-    >- subscribeNext { blurredImage in
+    .observeOn(MainScheduler.sharedInstance)
+    .subscribeNext { blurredImage in
         imageView.image = blurredImage
     }
 
@@ -272,10 +272,10 @@ extension UISearchBar {
             let text = self?.text ?? ""
 
             return self?.rx_delegate.observe("searchBar:textDidChange:") ?? empty()
-                    >- map { a in
+                    .map { a in
                         return a[1] as? String ?? ""
                     }
-                    >- startWith(text)
+                    .startWith(text)
         }
     }
 }
@@ -288,7 +288,7 @@ This is how that API can be now used
 ```swift
 
 searchBar.rx_searchText
-    >- subscribeNext { searchText in
+    .subscribeNext { searchText in
         print("Current search text '\(searchText)'")
     }
 
@@ -344,7 +344,7 @@ This is how they can be used:
 
 ```swift
 view.rx_observe("frame")
-    >- subscribeNext { (frame: CGRect?) in
+    .subscribeNext { (frame: CGRect?) in
         print("Got new frame \(frame)")
     }
 ```
@@ -353,7 +353,7 @@ or
 
 ```swift
 someSuspiciousViewController.rx_observeWeakly("behavingOk")
-    >- subscribeNext { (behavingOk: Bool?) in
+    .subscribeNext { (behavingOk: Bool?) in
         print("Cats can purr? \(behavingOk)")
     }
 ```

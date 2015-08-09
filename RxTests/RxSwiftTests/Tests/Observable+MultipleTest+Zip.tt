@@ -18,11 +18,12 @@ extension ObservableMultipleTest {
 
     func testZip_ImmediateSchedule<%= i %>() {
         <% for j in 0..<i { %>
-        let v<%= j %>: Observable<Int> = returnElement(<%= j + 1 %>)<% } %>
+        let v<%= j %>: Observable<Int> = just(<%= j + 1 %>)<% } %>
 
         var result: Int! = nil
 
-        let _ = zip(<%= ", ".join(map(0..<i) { "v\($0)" }) %>) { (<%= ", ".join(map(0..<i) { "a\($0)" }) %>) in <%= " + ".join(map(0..<i) { "a\($0)" }) %> } >- subscribeNext { result = $0 }
+        let _ = zip(<%= ", ".join(map(0..<i) { "v\($0)" }) %>) { (<%= ", ".join(map(0..<i) { "a\($0)" }) %>) in <%= " + ".join(map(0..<i) { "a\($0)" }) %> }
+            .subscribeNext { (Int) -> Void in result = $0 }
 
         XCTAssertEqual(result, <%= (i + 1) * i / 2 %>)
     }

@@ -20,13 +20,13 @@ class RandomUserAPI {
     func getExampleUserResultSet() -> Observable<[User]> {
         let url = NSURL(string: "http://api.randomuser.me/?results=20")!
         return NSURLSession.sharedSession().rx_JSON(url)
-            >- observeSingleOn(Dependencies.sharedDependencies.backgroundWorkScheduler)
-            >- mapOrDie { json in
+            .observeSingleOn(Dependencies.sharedDependencies.backgroundWorkScheduler)
+            .mapOrDie { json in
                 return castOrFail(json).flatMap { (json: [String: AnyObject]) in
                     return self.parseJSON(json)
                 }
             }
-            >- observeSingleOn(Dependencies.sharedDependencies.mainScheduler)
+            .observeSingleOn(Dependencies.sharedDependencies.mainScheduler)
     }
     
     private func parseJSON(json: [String: AnyObject]) -> RxResult<[User]> {

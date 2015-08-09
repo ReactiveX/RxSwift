@@ -36,16 +36,34 @@ class _RxTableViewReactiveArrayDataSource: NSObject, UITableViewDataSource {
     }
 }
 
+
+class RxTableViewReactiveArrayDataSourceSequenceWrapper<S: SequenceType> : RxTableViewReactiveArrayDataSource<S.Generator.Element>
+                                                                         , RxTableViewDataSourceType {
+    typealias Element = S
+
+    override init(cellFactory: CellFactory) {
+        super.init(cellFactory: cellFactory)
+    }
+    
+    func tableView(tableView: UITableView, observedEvent: Event<S>) {
+        switch observedEvent {
+        case .Next(let value):
+            super.tableView(tableView, observedElements: Array(value))
+        case .Error(let error):
+            bindingErrorToInterface(error)
+        case .Completed:
+            break
+        }
+    }
+}
+
 // Please take a look at `DelegateProxyType.swift`
-class RxTableViewReactiveArrayDataSource<ElementType> : _RxTableViewReactiveArrayDataSource
-                                                      , RxTableViewDataSourceType {
-    typealias Element = [ElementType]
+class RxTableViewReactiveArrayDataSource<Element> : _RxTableViewReactiveArrayDataSource {
+    typealias CellFactory = (UITableView, Int, Element) -> UITableViewCell
     
-    typealias CellFactory = (UITableView, Int, ElementType) -> UITableViewCell
+    var itemModels: [Element]? = nil
     
-    var itemModels: [ElementType]? = nil
-    
-    func modelAtIndex(index: Int) -> ElementType? {
+    func modelAtIndex(index: Int) -> Element? {
         return itemModels?[index]
     }
     
@@ -65,15 +83,8 @@ class RxTableViewReactiveArrayDataSource<ElementType> : _RxTableViewReactiveArra
     
     // reactive
     
-    func tableView(tableView: UITableView, observedEvent: Event<[ElementType]>) {
-        switch observedEvent {
-        case .Next(let value):
-            self.itemModels = value
-        case .Error(let error):
-            bindingErrorToInterface(error)
-        case .Completed:
-            break
-        }
+    func tableView(tableView: UITableView, observedElements: [Element]) {
+        self.itemModels = observedElements
         
         tableView.reloadData()
     }

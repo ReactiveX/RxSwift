@@ -24,11 +24,11 @@ extension UISearchBar {
         return deferred { [weak self] in
             let text = self?.text ?? ""
             
-            return self?.rx_delegate.observe("searchBar:textDidChange:") ?? empty()
-                    >- map { a in
+            return (self?.rx_delegate.observe("searchBar:textDidChange:") ?? empty())
+                    .map { a in
                         return a[1] as? String ?? ""
                     }
-                    >- startWith(text)
+                    .startWith(text)
         }
     }
 }

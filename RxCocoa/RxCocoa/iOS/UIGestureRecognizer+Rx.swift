@@ -61,7 +61,7 @@ extension UIGestureRecognizer {
             }
             
             return observer
-        } >- takeUntil(rx_deallocated)
+        } .takeUntil(rx_deallocated)
     }
     
 }

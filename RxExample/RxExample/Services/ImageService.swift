@@ -41,19 +41,22 @@ class DefaultImageService: ImageService {
         self.imageCache.countLimit = 20
     }
     
-    func decodeImage(imageData: Observable<NSData>) -> Observable<Image> {
-        return imageData >- observeSingleOn($.backgroundWorkScheduler) >- mapOrDie { data in
-            let maybeImage = Image(data: data)
-            
-            if maybeImage == nil {
-                // some error
-                return failure(apiError("Decoding image error"))
+    func decodeImage(imageData: NSData) -> Observable<Image> {
+        return just(imageData)
+            .observeSingleOn($.backgroundWorkScheduler)
+            .mapOrDie { data in
+                let maybeImage = Image(data: data)
+                
+                if maybeImage == nil {
+                    // some error
+                    return failure(apiError("Decoding image error"))
+                }
+                
+                let image = maybeImage!
+                
+                return success(image)
             }
-            
-            let image = maybeImage!
-            
-            return success(image)
-        } >- observeSingleOn($.mainScheduler)
+            .observeSingleOn($.mainScheduler)
     }
     
     func imageFromURL(URL: NSURL) -> Observable<Image> {
@@ -71,17 +74,19 @@ class DefaultImageService: ImageService {
                 
                 // does image data cache contain anything
                 if let cachedData = cachedData {
-                    decodedImage = just(cachedData) >- self.decodeImage
+                    decodedImage = self.decodeImage(cachedData)
                 }
                 else {
                     // fetch from network
-                    decodedImage = self.$.URLSession.rx_data(NSURLRequest(URL: URL)) >- doOnNext { data in
-                        self.imageDataCache.setObject(data, forKey: URL)
-                    } >- self.decodeImage
+                    decodedImage = self.$.URLSession.rx_data(NSURLRequest(URL: URL))
+                        .doOnNext { data in
+                            self.imageDataCache.setObject(data, forKey: URL)
+                        }
+                        .flatMap(self.decodeImage)
                 }
             }
             
-            return decodedImage >- doOnNext { image in
+            return decodedImage .doOnNext { image in
                 self.imageCache.setObject(image, forKey: URL)
             }
         }

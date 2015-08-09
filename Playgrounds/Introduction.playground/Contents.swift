@@ -26,7 +26,7 @@ Creating an Observable is one thing, but if nothing subscribes to the observable
 example("Empty observable") {
     let emptyObservable: Observable<Int> = empty()
     
-    let emptySubscriber = emptyObservable >- subscribe { event in
+    let emptySubscriber = emptyObservable .subscribe { event in
         switch event {
         case .Next(let box):
             print("\(box.value)")
@@ -50,7 +50,7 @@ As you can see, no values are ever sent to the subscriber of an empty observable
 example("Never observable") {
     let neverObservable: Observable<String> = never()
     
-    let neverSubscriber = neverObservable >- subscribe { _ in
+    let neverSubscriber = neverObservable .subscribe { _ in
         print("This block is never called.")
     }
 }
@@ -64,7 +64,7 @@ example("returnElement/just") {
     let oneObservable = just(32)
     
     let oneObservableSubscriber = oneObservable
-        >- subscribe { event in
+        .subscribe { event in
             switch event {
             case .Next(let box):
                 print("\(box.value)")
@@ -81,15 +81,15 @@ Here we see that the `.Next` event is sent just once, then the `.Completed` even
 */
 
 /*:
-### returnElements
+### sequence
 Now we are getting to some more interesting ways to create an Observable. This function creates an observable that produces a number of values before completing.
 */
 
-example("returnElements") {
-    let multipleObservable/* : Observable<Int> */ = returnElements(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
+example("sequence") {
+    let multipleObservable/* : Observable<Int> */ = sequence(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
     
     let multipleObservableSubscriber = multipleObservable
-        >- subscribe { event in
+        .subscribe { event in
             switch event {
             case .Next(let box):
                 print("\(box.value)")
@@ -114,7 +114,7 @@ example("from") {
     let fromArrayObservable = from([1, 2, 3, 4, 5])
     
     let fromArrayObservableSubscriber = fromArrayObservable
-        >- subscribe { event in
+        .subscribe { event in
             switch event {
             case .Next(let box):
                 print("\(box.value)")
@@ -140,8 +140,8 @@ Up to this point, I have only used the `subscribe` method to listen to Observabl
 */
 
 example("subscribeNext") {
-    let nextOnlySubscriber = returnElements(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
-        >- subscribeNext { value in
+    let nextOnlySubscriber = sequence(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
+        .subscribeNext { value in
             print("\(value)")
         }
 }
@@ -161,11 +161,11 @@ The most common way to reduce a sequence is to apply a filter to it and the most
 */
 
 example("filter") {
-    let onlyEvensSubscriber = returnElements(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
-        >- filter {
+    let onlyEvensSubscriber = sequence(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
+        .filter {
             $0 % 2 == 0
         }
-        >- subscribeNext { value in
+        .subscribeNext { value in
             print("\(value)")
         }
 }
@@ -176,9 +176,9 @@ This filter tracks the last value emitted and removes like values. This function
 */
 
 example("distinctUntilChanged") {
-    let distinctUntilChangedSubscriber = returnElements(1, 2, 3, 1, 1, 4)
-        >- distinctUntilChanged
-        >- subscribeNext { value in
+    let distinctUntilChangedSubscriber = sequence(1, 2, 3, 1, 1, 4)
+        .distinctUntilChanged
+        .subscribeNext { value in
             print("\(value)")
         }
 }
@@ -197,9 +197,9 @@ This function will perform a function on each element in the sequence until it i
 */
 
 example("aggregate") {
-    let aggregateSubscriber = returnElements(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
-        >- aggregate(0, +)
-        >- subscribeNext { value in
+    let aggregateSubscriber = sequence(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
+        .aggregate(0, +)
+        .subscribeNext { value in
             print("\(value)")
     }
 }

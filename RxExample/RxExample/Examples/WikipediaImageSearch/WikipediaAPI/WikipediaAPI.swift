@@ -42,13 +42,13 @@ class DefaultWikipediaAPI: WikipediaAPI {
         let url = NSURL(string: urlContent)!
             
         return $.URLSession.rx_JSON(url)
-            >- observeSingleOn($.backgroundWorkScheduler)
-            >- mapOrDie { json in
+            .observeSingleOn($.backgroundWorkScheduler)
+            .mapOrDie { json in
                 return castOrFail(json).flatMap { (json: [AnyObject]) in
                     return WikipediaSearchResult.parseJSON(json)
                 }
             }
-            >- observeSingleOn($.mainScheduler)
+            .observeSingleOn($.mainScheduler)
     }
     
     // http://en.wikipedia.org/w/api.php?action=parse&page=rx&format=json
@@ -61,11 +61,11 @@ class DefaultWikipediaAPI: WikipediaAPI {
         }
         
         return $.URLSession.rx_JSON(url!)
-            >- mapOrDie { jsonResult in
+            .mapOrDie { jsonResult in
                 return castOrFail(jsonResult).flatMap { (json: NSDictionary) in
                     return WikipediaPage.parseJSON(json)
                 }
             }
-            >- observeSingleOn($.mainScheduler)
+            .observeSingleOn($.mainScheduler)
     }
 }

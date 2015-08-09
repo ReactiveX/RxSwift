@@ -8,9 +8,9 @@
 
 import Foundation
 
-class Switch_<O: ObserverType> : Sink<O>, ObserverType {
-    typealias Element = Observable<O.Element>
-    typealias Parent = Switch<O.Element>
+class SwitchSink<S: ObservableType, O: ObserverType where S.E == O.Element> : Sink<O>, ObserverType {
+    typealias Element = S
+    typealias Parent = Switch<S>
     
     typealias SwitchState = (
         subscription: SingleAssignmentDisposable,
@@ -49,14 +49,14 @@ class Switch_<O: ObserverType> : Sink<O>, ObserverType {
         case .Next(let observable):
             let latest: Int = self.lock.calculateLocked {
                 self.switchState.hasLatest = true
-                self.switchState.latest = self.switchState.latest + 1
+                self.switchState.latest = self.switchState.latest &+ 1
                 return self.switchState.latest
             }
             
             let d = SingleAssignmentDisposable()
             self.switchState.innerSubscription.disposable = d
                
-            let observer = SwitchIter(parent: self, id: latest, _self: d)
+            let observer = SwitchSinkIter(parent: self, id: latest, _self: d)
             let disposable = observable.subscribeSafe(observer)
             d.disposable = disposable
         case .Error(let error):
@@ -79,9 +79,9 @@ class Switch_<O: ObserverType> : Sink<O>, ObserverType {
     }
 }
 
-class SwitchIter<O: ObserverType> : ObserverType {
+class SwitchSinkIter<S: ObservableType, O: ObserverType where S.E == O.Element> : ObserverType {
     typealias Element = O.Element
-    typealias Parent = Switch_<O>
+    typealias Parent = SwitchSink<S, O>
     
     let parent: Parent
     let id: Int
@@ -126,15 +126,15 @@ class SwitchIter<O: ObserverType> : ObserverType {
     }
 }
 
-class Switch<Element> : Producer<Element> {
-    let sources: Observable<Observable<Element>>
+class Switch<S: ObservableType> : Producer<S.E> {
+    let sources: Observable<S>
     
-    init(sources: Observable<Observable<Element>>) {
+    init(sources: Observable<S>) {
         self.sources = sources
     }
     
-    override func run<O : ObserverType where O.Element == Element>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
-        let sink = Switch_(parent: self, observer: observer, cancel: cancel)
+    override func run<O : ObserverType where O.Element == S.E>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
+        let sink = SwitchSink(parent: self, observer: observer, cancel: cancel)
         setSink(sink)
         return sink.run()
     }

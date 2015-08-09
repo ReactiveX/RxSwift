@@ -56,7 +56,7 @@ extension NSObject {
     // Doesn't retain `self` and when `self` is deallocated, completes the sequence.
     public func rx_observeWeakly<Element>(keyPath: String, options: NSKeyValueObservingOptions = NSKeyValueObservingOptions.New.union(NSKeyValueObservingOptions.Initial)) -> Observable<Element?> {
         return observeWeaklyKeyPathFor(self, keyPath: keyPath, options: options)
-            >- map { n in
+            .map { n in
                 return n as? Element
             }
     }

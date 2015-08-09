@@ -23,10 +23,10 @@ example("catch 1st") {
     let observable2 = PublishSubject<Int>()
     
     observable1
-        >- catch { error in
+        .catch { error in
             return observable2
         }
-        >- subscribe { event in
+        .subscribe { event in
             switch event {
             case .Next(let box):
                 print("\(box.value)")
@@ -58,8 +58,8 @@ example("catch 2nd") {
     let observable1 = PublishSubject<Int>()
     
     observable1
-        >- catch(100)
-        >- subscribe { event in
+        .catch(100)
+        .subscribe { event in
             switch event {
             case .Next(let box):
                 print("\(box.value)")
@@ -109,8 +109,8 @@ try") {
     }
     
     observable
-        >- retry
-        >- subscribe { event in
+        .retry
+        .subscribe { event in
             switch event {
             case .Next(let box):
                 print("\(box.value)")

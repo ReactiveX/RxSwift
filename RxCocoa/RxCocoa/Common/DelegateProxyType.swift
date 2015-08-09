@@ -153,14 +153,15 @@ func installDelegate<P: DelegateProxyType>(proxy: P, delegate: AnyObject, retain
     }
 }
 
-func setProxyDataSourceForObject<P: DelegateProxyType, Element>(object: AnyObject, dataSource: AnyObject, retainDataSource: Bool, binding: (P, Event<Element>) -> Void)
-    -> Observable<Element> -> Disposable {
-    return { source  in
+extension ObservableType {
+    func subscribeProxyDataSourceForObject<P: DelegateProxyType>(object: AnyObject, dataSource: AnyObject, retainDataSource: Bool, binding: (P, Event<E>) -> Void)
+        -> Disposable {
         let proxy: P = proxyForObject(object)
         let disposable = installDelegate(proxy, delegate: dataSource, retainDelegate: retainDataSource, onProxyForObject: object)
         
         // we should never let the subscriber to complete because it should retain data source
-        let subscription = concat(returnElements(source, never())).subscribe(AnonymousObserver { event in
+        let source = sequence(self.normalize(), never()) as Observable<Observable<E>>
+        let subscription = source.concat.subscribe { (event: Event<E>) in
             MainScheduler.ensureExecutingOnScheduler()
             
             assert(proxy === P.currentDelegateFor(object), "Proxy changed from the time it was first set.\nOriginal: \(proxy)\nExisting: \(P.currentDelegateFor(object))")
@@ -178,7 +179,7 @@ func setProxyDataSourceForObject<P: DelegateProxyType, Element>(object: AnyObjec
             default:
                 break
             }
-        })
+        }
             
         return StableCompositeDisposable.create(subscription, disposable)
     }

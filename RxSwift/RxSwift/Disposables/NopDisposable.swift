@@ -8,9 +8,6 @@
 
 import Foundation
 
-@available(*, deprecated=1.5, message="NopDisposable")
-typealias DefaultDisposable = NopDisposable
-
 public let NopDisposableResult = success(NopDisposable.instance)
 
 // Disposable that does nothing

@@ -22,8 +22,8 @@ example("takeUntil") {
     let observable2 = PublishSubject<Int>()
     
     observable1
-        >- takeUntil(observable2)
-        >- subscribeNext { int in
+        .takeUntil(observable2)
+        .subscribeNext { int in
             print(int)
     }
     
@@ -52,10 +52,10 @@ xample("takeWhile") {
     let observable1 = PublishSubject<Int>()
     
     observable1
-        >- takeWhile { int in
+        .takeWhile { int in
             int < 4
         }
-        >- subscribeNext { int in
+        .subscribeNext { int in
             print(int)
     }
     

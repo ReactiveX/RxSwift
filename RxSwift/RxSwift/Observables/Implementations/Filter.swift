@@ -8,10 +8,10 @@
 
 import Foundation
 
-class Where_<O : ObserverType>: Sink<O>, ObserverType {
+class FilterSink<O : ObserverType>: Sink<O>, ObserverType {
     typealias Element = O.Element
     
-    typealias Parent = Where<Element>
+    typealias Parent = Filter<Element>
     
     let parent: Parent
     
@@ -41,7 +41,7 @@ class Where_<O : ObserverType>: Sink<O>, ObserverType {
     }
 }
 
-class Where<Element> : Producer<Element> {
+class Filter<Element> : Producer<Element> {
     typealias Predicate = (Element) -> RxResult<Bool>
     
     let source: Observable<Element>
@@ -53,7 +53,7 @@ class Where<Element> : Producer<Element> {
     }
     
     override func run<O: ObserverType where O.Element == Element>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
-        let sink = Where_(parent: self, observer: observer, cancel: cancel)
+        let sink = FilterSink(parent: self, observer: observer, cancel: cancel)
         setSink(sink)
         return source.subscribeSafe(sink)
     }

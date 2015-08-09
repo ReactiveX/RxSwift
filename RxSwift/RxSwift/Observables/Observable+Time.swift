@@ -9,70 +9,61 @@
 import Foundation
 
 // throttle
-
-public func throttle<E, S: Scheduler>
-    (dueTime: S.TimeInterval, _ scheduler: S)
-    -> (Observable<E> -> Observable<E>) {
-    return { source in
-        return Throttle(source: source, dueTime: dueTime, scheduler: scheduler)
+extension ObservableType {
+    public func throttle<S: Scheduler>(dueTime: S.TimeInterval, _ scheduler: S)
+        -> Observable<E> {
+        return Throttle(source: self.normalize(), dueTime: dueTime, scheduler: scheduler)
     }
-}
 
-public func debounce<E, S: Scheduler>
-    (dueTime: S.TimeInterval, scheduler: S)
-    -> (Observable<E> -> Observable<E>) {
-    return { source in
-        return Throttle(source: source, dueTime: dueTime, scheduler: scheduler)
+    public func debounce<S: Scheduler>(dueTime: S.TimeInterval, scheduler: S)
+        -> Observable<E> {
+        return Throttle(source: self.normalize(), dueTime: dueTime, scheduler: scheduler)
     }
 }
 
 // sample
 
-// If there isn't a new value in `source` sequence from the last sample time
-// nothing will be forwarded.
-public func sample<E, S>
-    (sampler: Observable<S>)
-    -> (Observable<E> -> Observable<E>) {
-    return { source in
-        return Sample(source: source, sampler: sampler, onlyNew: true)
+extension ObservableType {
+    // If there isn't a new value in `source` sequence from the last sample time
+    // nothing will be forwarded.
+    public func sample<S>(sampler: Observable<S>)
+        -> Observable<E> {
+        return Sample(source: self.normalize(), sampler: sampler, onlyNew: true)
     }
-}
 
-// On each sample latest element will always be forwarded.
-public func sampleLatest<E, S>
-    (sampler: Observable<S>)
-    -> (Observable<E> -> Observable<E>) {
-    return { source in
-        return Sample(source: source, sampler: sampler, onlyNew: false)
+    // On each sample latest element will always be forwarded.
+    public func sampleLatest<S>(sampler: Observable<S>)
+        -> Observable<E> {
+        return Sample(source: self.normalize(), sampler: sampler, onlyNew: false)
     }
 }
 
 // interval
 
+
+
     // fallback {
 
-public func interval<S: Scheduler>
-    (period: S.TimeInterval, _ scheduler: S)
+public func interval<S: Scheduler>(period: S.TimeInterval, _ scheduler: S)
     -> Observable<Int64> {
-        return Timer(dueTime: period,
-            period: period,
-            scheduler: scheduler,
-            schedulePeriodic: abstractSchedulePeriodic(scheduler)
-        )
+    return Timer(dueTime: period,
+        period: period,
+        scheduler: scheduler,
+        schedulePeriodic: abstractSchedulePeriodic(scheduler)
+    )
 }
 
     // }
 
     // periodic schedulers {
 
-public func interval<S: PeriodicScheduler>
-    (period: S.TimeInterval, _ scheduler: S)
+public func interval<S: PeriodicScheduler>(period: S.TimeInterval, _ scheduler: S)
     -> Observable<Int64> {
-        return Timer(dueTime: period,
-            period: period,
-            scheduler: scheduler,
-            schedulePeriodic: abstractSchedulePeriodic(scheduler)
-        )
+    return Timer(dueTime: period,
+        period: period,
+        scheduler: scheduler,
+        schedulePeriodic: abstractSchedulePeriodic(scheduler)
+    )
 }
 
     // }
@@ -81,83 +72,76 @@ public func interval<S: PeriodicScheduler>
 
     // fallback {
 
-public func timer<S: Scheduler>
-    (dueTime: S.TimeInterval, _ period: S.TimeInterval, scheduler: S)
+public func timer<S: Scheduler>(dueTime: S.TimeInterval, _ period: S.TimeInterval, scheduler: S)
     -> Observable<Int64> {
-        return Timer(
-            dueTime: dueTime,
-            period: period,
-            scheduler: scheduler,
-            schedulePeriodic: abstractSchedulePeriodic(scheduler)
-        )
+    return Timer(
+        dueTime: dueTime,
+        period: period,
+        scheduler: scheduler,
+        schedulePeriodic: abstractSchedulePeriodic(scheduler)
+    )
 }
 
-public func timer<S: Scheduler>
-    (dueTime: S.TimeInterval, scheduler: S)
+public func timer<S: Scheduler>(dueTime: S.TimeInterval, scheduler: S)
     -> Observable<Int64> {
-        return Timer(
-            dueTime: dueTime,
-            period: nil,
-            scheduler: scheduler,
-            schedulePeriodic: abstractSchedulePeriodic(scheduler)
-        )
+    return Timer(
+        dueTime: dueTime,
+        period: nil,
+        scheduler: scheduler,
+        schedulePeriodic: abstractSchedulePeriodic(scheduler)
+    )
 }
 
     // }
 
     // periodic schedulers {
 
-public func timer<S: PeriodicScheduler>
-    (dueTime: S.TimeInterval, _ period: S.TimeInterval, scheduler: S)
+public func timer<S: PeriodicScheduler>(dueTime: S.TimeInterval, _ period: S.TimeInterval, scheduler: S)
     -> Observable<Int64> {
-        return Timer(
-            dueTime: dueTime,
-            period: period,
-            scheduler: scheduler,
-            schedulePeriodic: abstractSchedulePeriodic(scheduler)
-        )
+    return Timer(
+        dueTime: dueTime,
+        period: period,
+        scheduler: scheduler,
+        schedulePeriodic: abstractSchedulePeriodic(scheduler)
+    )
 }
 
-public func timer<S: PeriodicScheduler>
-    (dueTime: S.TimeInterval, scheduler: S)
+public func timer<S: PeriodicScheduler>(dueTime: S.TimeInterval, scheduler: S)
     -> Observable<Int64> {
-        return Timer(
-            dueTime: dueTime,
-            period: nil,
-            scheduler: scheduler,
-            schedulePeriodic: abstractSchedulePeriodic(scheduler)
-        )
+    return Timer(
+        dueTime: dueTime,
+        period: nil,
+        scheduler: scheduler,
+        schedulePeriodic: abstractSchedulePeriodic(scheduler)
+    )
 }
 
     // }
 
 // take
 
-public func take<E, S: Scheduler>
-    (duration: S.TimeInterval, _ scheduler: S)
-    -> Observable<E> -> Observable<E> {
-    return { source in
-        return TakeTime(source: source, duration: duration, scheduler: scheduler)
+extension ObservableType {
+    public func take<S: Scheduler>(duration: S.TimeInterval, _ scheduler: S)
+        -> Observable<E> {
+        return TakeTime(source: self.normalize(), duration: duration, scheduler: scheduler)
     }
 }
 
 // skip
 
-public func skip<E, S: Scheduler>
-    (duration: S.TimeInterval, _ scheduler: S)
-    -> Observable<E> -> Observable<E> {
-    return { source in
-        return SkipTime(source: source, duration: duration, scheduler: scheduler)
+extension ObservableType {
+    public func skip<S: Scheduler>(duration: S.TimeInterval, _ scheduler: S)
+        -> Observable<E> {
+        return SkipTime(source: self.normalize(), duration: duration, scheduler: scheduler)
     }
 }
 
 
 // delaySubscription
 
-public func delaySubscription<E, S: Scheduler>
-    (dueTime: S.TimeInterval, _ scheduler: S)
-    -> Observable<E> -> Observable<E> {
-    return { source in
-        return DelaySubscription(source: source, dueTime: dueTime, scheduler: scheduler)
+extension ObservableType {
+    public func delaySubscription<S: Scheduler>(dueTime: S.TimeInterval, _ scheduler: S)
+        -> Observable<E> {
+        return DelaySubscription(source: self.normalize(), dueTime: dueTime, scheduler: scheduler)
     }
 }

@@ -10,14 +10,15 @@ import Foundation
 
 // sequential
 
-class Merge_Iter<O: ObserverType> : ObserverType {
+class MergeSinkIter<S: ObservableType, O: ObserverType where O.Element == S.E> : ObserverType {
     typealias Element = O.Element
     typealias DisposeKey = Bag<Disposable>.KeyType
+    typealias Parent = MergeSink<S, O>
     
-    let parent: Merge_<O>
+    let parent: Parent
     let disposeKey: DisposeKey
     
-    init(parent: Merge_<O>, disposeKey: DisposeKey) {
+    init(parent: Parent, disposeKey: DisposeKey) {
         self.parent = parent
         self.disposeKey = disposeKey
     }
@@ -49,9 +50,9 @@ class Merge_Iter<O: ObserverType> : ObserverType {
     }
 }
 
-class Merge_<O: ObserverType> : Sink<O>, ObserverType {
-    typealias Element = Observable<O.Element>
-    typealias Parent = Merge<O.Element>
+class MergeSink<S: ObservableType, O: ObserverType where O.Element == S.E> : Sink<O>, ObserverType {
+    typealias Element = S
+    typealias Parent = Merge<S>
     
     typealias MergeState = (
         stopped: Bool,
@@ -96,7 +97,7 @@ class Merge_<O: ObserverType> : Sink<O>, ObserverType {
             let maybeKey = mergeState.group.addDisposable(innerSubscription)
             
             if let key = maybeKey {
-                let observer = Merge_Iter(parent: self, disposeKey: key)
+                let observer = MergeSinkIter(parent: self, disposeKey: key)
                 let disposable = value.subscribeSafe(observer)
                 innerSubscription.disposable = disposable
             }
@@ -127,10 +128,10 @@ class Merge_<O: ObserverType> : Sink<O>, ObserverType {
 
 // concurrent
 
-class Merge_ConcurrentIter<O: ObserverType> : ObserverType {
+class MergeConcurrentSinkIter<S: ObservableType, O: ObserverType where S.E == O.Element> : ObserverType {
     typealias Element = O.Element
     typealias DisposeKey = Bag<Disposable>.KeyType
-    typealias Parent = Merge_Concurrent<O>
+    typealias Parent = MergeConcurrentSink<S, O>
     
     let parent: Parent
     let disposeKey: DisposeKey
@@ -173,10 +174,10 @@ class Merge_ConcurrentIter<O: ObserverType> : ObserverType {
     }
 }
 
-class Merge_Concurrent<O: ObserverType> : Sink<O>, ObserverType {
-    typealias Element = Observable<O.Element>
-    typealias Parent = Merge<O.Element>
-    typealias QueueType = Queue<Observable<O.Element>>
+class MergeConcurrentSink<S: ObservableType, O: ObserverType where S.E == O.Element> : Sink<O>, ObserverType {
+    typealias Element = S
+    typealias Parent = Merge<S>
+    typealias QueueType = Queue<S>
     
     typealias MergeState = (
         stopped: Bool,
@@ -222,7 +223,7 @@ class Merge_Concurrent<O: ObserverType> : Sink<O>, ObserverType {
         let key = group.addDisposable(subscription)
         
         if let key = key {
-            let observer = Merge_ConcurrentIter(parent: self, disposeKey: key)
+            let observer = MergeConcurrentSinkIter(parent: self, disposeKey: key)
             
             let disposable = innerSource.subscribeSafe(observer)
             subscription.disposable = disposable
@@ -272,23 +273,23 @@ class Merge_Concurrent<O: ObserverType> : Sink<O>, ObserverType {
     }
 }
 
-class Merge<Element> : Producer<Element> {
-    let sources: Observable<Observable<Element>>
+class Merge<S: ObservableType> : Producer<S.E> {
+    let sources: Observable<S>
     let maxConcurrent: Int
     
-    init(sources: Observable<Observable<Element>>, maxConcurrent: Int) {
+    init(sources: Observable<S>, maxConcurrent: Int) {
         self.sources = sources
         self.maxConcurrent = maxConcurrent
     }
     
-    override func run<O: ObserverType where O.Element == Element>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
+    override func run<O: ObserverType where O.Element == S.E>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
         if maxConcurrent > 0 {
-            let sink = Merge_Concurrent(parent: self, observer: observer, cancel: cancel)
+            let sink = MergeConcurrentSink(parent: self, observer: observer, cancel: cancel)
             setSink(sink)
             return sink.run()
         }
         else {
-            let sink = Merge_(parent: self, observer: observer, cancel: cancel)
+            let sink = MergeSink(parent: self, observer: observer, cancel: cancel)
             setSink(sink)
             return sink.run()
         }

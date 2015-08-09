@@ -20,12 +20,12 @@ extension ObservableMultipleTest {
 
     func testZip_ImmediateSchedule2() {
         
-        let v0: Observable<Int> = returnElement(1)
-        let v1: Observable<Int> = returnElement(2)
+        let v0: Observable<Int> = just(1)
+        let v1: Observable<Int> = just(2)
 
         var result: Int! = nil
 
-        let _ = zip(v0, v1) { (a0, a1) in a0 + a1 } >- subscribeNext { result = $0 }
+        let _ = zip(v0, v1) { (a0, a1) in a0 + a1 } .subscribeNext { (next: Int) -> Void in result = next }
 
         XCTAssertEqual(result, 3)
     }
@@ -171,13 +171,13 @@ extension ObservableMultipleTest {
 
     func testZip_ImmediateSchedule3() {
         
-        let v0: Observable<Int> = returnElement(1)
-        let v1: Observable<Int> = returnElement(2)
-        let v2: Observable<Int> = returnElement(3)
+        let v0: Observable<Int> = just(1)
+        let v1: Observable<Int> = just(2)
+        let v2: Observable<Int> = just(3)
 
         var result: Int! = nil
 
-        let _ = zip(v0, v1, v2) { (a0, a1, a2) in a0 + a1 + a2 } >- subscribeNext { result = $0 }
+        let _ = zip(v0, v1, v2) { (a0, a1, a2) in a0 + a1 + a2 } .subscribeNext { (next: Int) -> Void in result = next }
 
         XCTAssertEqual(result, 6)
     }
@@ -350,14 +350,14 @@ extension ObservableMultipleTest {
 
     func testZip_ImmediateSchedule4() {
         
-        let v0: Observable<Int> = returnElement(1)
-        let v1: Observable<Int> = returnElement(2)
-        let v2: Observable<Int> = returnElement(3)
-        let v3: Observable<Int> = returnElement(4)
+        let v0: Observable<Int> = just(1)
+        let v1: Observable<Int> = just(2)
+        let v2: Observable<Int> = just(3)
+        let v3: Observable<Int> = just(4)
 
         var result: Int! = nil
 
-        let _ = zip(v0, v1, v2, v3) { (a0, a1, a2, a3) in a0 + a1 + a2 + a3 } >- subscribeNext { result = $0 }
+        let _ = zip(v0, v1, v2, v3) { (a0, a1, a2, a3) in a0 + a1 + a2 + a3 } .subscribeNext { (next: Int) -> Void in result = next }
 
         XCTAssertEqual(result, 10)
     }
@@ -558,15 +558,15 @@ extension ObservableMultipleTest {
 
     func testZip_ImmediateSchedule5() {
         
-        let v0: Observable<Int> = returnElement(1)
-        let v1: Observable<Int> = returnElement(2)
-        let v2: Observable<Int> = returnElement(3)
-        let v3: Observable<Int> = returnElement(4)
-        let v4: Observable<Int> = returnElement(5)
+        let v0: Observable<Int> = just(1)
+        let v1: Observable<Int> = just(2)
+        let v2: Observable<Int> = just(3)
+        let v3: Observable<Int> = just(4)
+        let v4: Observable<Int> = just(5)
 
         var result: Int! = nil
 
-        let _ = zip(v0, v1, v2, v3, v4) { (a0, a1, a2, a3, a4) in a0 + a1 + a2 + a3 + a4 } >- subscribeNext { result = $0 }
+        let _ = zip(v0, v1, v2, v3, v4) { (a0, a1, a2, a3, a4) in a0 + a1 + a2 + a3 + a4 } .subscribeNext { (next: Int) -> Void in result = next }
 
         XCTAssertEqual(result, 15)
     }
@@ -796,16 +796,16 @@ extension ObservableMultipleTest {
 
     func testZip_ImmediateSchedule6() {
         
-        let v0: Observable<Int> = returnElement(1)
-        let v1: Observable<Int> = returnElement(2)
-        let v2: Observable<Int> = returnElement(3)
-        let v3: Observable<Int> = returnElement(4)
-        let v4: Observable<Int> = returnElement(5)
-        let v5: Observable<Int> = returnElement(6)
+        let v0: Observable<Int> = just(1)
+        let v1: Observable<Int> = just(2)
+        let v2: Observable<Int> = just(3)
+        let v3: Observable<Int> = just(4)
+        let v4: Observable<Int> = just(5)
+        let v5: Observable<Int> = just(6)
 
         var result: Int! = nil
 
-        let _ = zip(v0, v1, v2, v3, v4, v5) { (a0, a1, a2, a3, a4, a5) in a0 + a1 + a2 + a3 + a4 + a5 } >- subscribeNext { result = $0 }
+        let _ = zip(v0, v1, v2, v3, v4, v5) { (a0, a1, a2, a3, a4, a5) in a0 + a1 + a2 + a3 + a4 + a5 } .subscribeNext { (next: Int) -> Void in result = next }
 
         XCTAssertEqual(result, 21)
     }
@@ -1065,17 +1065,17 @@ extension ObservableMultipleTest {
 
     func testZip_ImmediateSchedule7() {
         
-        let v0: Observable<Int> = returnElement(1)
-        let v1: Observable<Int> = returnElement(2)
-        let v2: Observable<Int> = returnElement(3)
-        let v3: Observable<Int> = returnElement(4)
-        let v4: Observable<Int> = returnElement(5)
-        let v5: Observable<Int> = returnElement(6)
-        let v6: Observable<Int> = returnElement(7)
+        let v0: Observable<Int> = just(1)
+        let v1: Observable<Int> = just(2)
+        let v2: Observable<Int> = just(3)
+        let v3: Observable<Int> = just(4)
+        let v4: Observable<Int> = just(5)
+        let v5: Observable<Int> = just(6)
+        let v6: Observable<Int> = just(7)
 
         var result: Int! = nil
 
-        let _ = zip(v0, v1, v2, v3, v4, v5, v6) { (a0, a1, a2, a3, a4, a5, a6) in a0 + a1 + a2 + a3 + a4 + a5 + a6 } >- subscribeNext { result = $0 }
+        let _ = zip(v0, v1, v2, v3, v4, v5, v6) { (a0, a1, a2, a3, a4, a5, a6) in a0 + a1 + a2 + a3 + a4 + a5 + a6 } .subscribeNext { (next: Int) -> Void in result = next }
 
         XCTAssertEqual(result, 28)
     }
@@ -1366,18 +1366,18 @@ extension ObservableMultipleTest {
 
     func testZip_ImmediateSchedule8() {
         
-        let v0: Observable<Int> = returnElement(1)
-        let v1: Observable<Int> = returnElement(2)
-        let v2: Observable<Int> = returnElement(3)
-        let v3: Observable<Int> = returnElement(4)
-        let v4: Observable<Int> = returnElement(5)
-        let v5: Observable<Int> = returnElement(6)
-        let v6: Observable<Int> = returnElement(7)
-        let v7: Observable<Int> = returnElement(8)
+        let v0: Observable<Int> = just(1)
+        let v1: Observable<Int> = just(2)
+        let v2: Observable<Int> = just(3)
+        let v3: Observable<Int> = just(4)
+        let v4: Observable<Int> = just(5)
+        let v5: Observable<Int> = just(6)
+        let v6: Observable<Int> = just(7)
+        let v7: Observable<Int> = just(8)
 
         var result: Int! = nil
 
-        let _ = zip(v0, v1, v2, v3, v4, v5, v6, v7) { (a0, a1, a2, a3, a4, a5, a6, a7) in a0 + a1 + a2 + a3 + a4 + a5 + a6 + a7 } >- subscribeNext { result = $0 }
+        let _ = zip(v0, v1, v2, v3, v4, v5, v6, v7) { (a0, a1, a2, a3, a4, a5, a6, a7) in a0 + a1 + a2 + a3 + a4 + a5 + a6 + a7 } .subscribeNext { (next: Int) -> Void in result = next }
 
         XCTAssertEqual(result, 36)
     }
@@ -1700,19 +1700,19 @@ extension ObservableMultipleTest {
 
     func testZip_ImmediateSchedule9() {
         
-        let v0: Observable<Int> = returnElement(1)
-        let v1: Observable<Int> = returnElement(2)
-        let v2: Observable<Int> = returnElement(3)
-        let v3: Observable<Int> = returnElement(4)
-        let v4: Observable<Int> = returnElement(5)
-        let v5: Observable<Int> = returnElement(6)
-        let v6: Observable<Int> = returnElement(7)
-        let v7: Observable<Int> = returnElement(8)
-        let v8: Observable<Int> = returnElement(9)
+        let v0: Observable<Int> = just(1)
+        let v1: Observable<Int> = just(2)
+        let v2: Observable<Int> = just(3)
+        let v3: Observable<Int> = just(4)
+        let v4: Observable<Int> = just(5)
+        let v5: Observable<Int> = just(6)
+        let v6: Observable<Int> = just(7)
+        let v7: Observable<Int> = just(8)
+        let v8: Observable<Int> = just(9)
 
         var result: Int! = nil
 
-        let _ = zip(v0, v1, v2, v3, v4, v5, v6, v7, v8) { (a0, a1, a2, a3, a4, a5, a6, a7, a8) in a0 + a1 + a2 + a3 + a4 + a5 + a6 + a7 + a8 } >- subscribeNext { result = $0 }
+        let _ = zip(v0, v1, v2, v3, v4, v5, v6, v7, v8) { (a0, a1, a2, a3, a4, a5, a6, a7, a8) in a0 + a1 + a2 + a3 + a4 + a5 + a6 + a7 + a8 } .subscribeNext { (next: Int) -> Void in result = next }
 
         XCTAssertEqual(result, 45)
     }
@@ -2068,20 +2068,20 @@ extension ObservableMultipleTest {
 
     func testZip_ImmediateSchedule10() {
         
-        let v0: Observable<Int> = returnElement(1)
-        let v1: Observable<Int> = returnElement(2)
-        let v2: Observable<Int> = returnElement(3)
-        let v3: Observable<Int> = returnElement(4)
-        let v4: Observable<Int> = returnElement(5)
-        let v5: Observable<Int> = returnElement(6)
-        let v6: Observable<Int> = returnElement(7)
-        let v7: Observable<Int> = returnElement(8)
-        let v8: Observable<Int> = returnElement(9)
-        let v9: Observable<Int> = returnElement(10)
+        let v0: Observable<Int> = just(1)
+        let v1: Observable<Int> = just(2)
+        let v2: Observable<Int> = just(3)
+        let v3: Observable<Int> = just(4)
+        let v4: Observable<Int> = just(5)
+        let v5: Observable<Int> = just(6)
+        let v6: Observable<Int> = just(7)
+        let v7: Observable<Int> = just(8)
+        let v8: Observable<Int> = just(9)
+        let v9: Observable<Int> = just(10)
 
         var result: Int! = nil
 
-        let _ = zip(v0, v1, v2, v3, v4, v5, v6, v7, v8, v9) { (a0, a1, a2, a3, a4, a5, a6, a7, a8, a9) in a0 + a1 + a2 + a3 + a4 + a5 + a6 + a7 + a8 + a9 } >- subscribeNext { result = $0 }
+        let _ = zip(v0, v1, v2, v3, v4, v5, v6, v7, v8, v9) { (a0, a1, a2, a3, a4, a5, a6, a7, a8, a9) in a0 + a1 + a2 + a3 + a4 + a5 + a6 + a7 + a8 + a9 } .subscribeNext { (next: Int) -> Void in result = next }
 
         XCTAssertEqual(result, 55)
     }

@@ -28,10 +28,10 @@ example("map") {
     }
     
     observable1
-        >- map { char in
+        .map { char in
             char.hashValue
         }
-        >- subscribeNext { int in
+        .subscribeNext { int in
             print(int)
     }
 }
@@ -65,10 +65,10 @@ xample("flatMap") {
     }
     
     observable1
-        >- flatMap { int in
+        .flatMap { int in
             observable2
         }
-        >- subscribeNext {
+        .subscribeNext {
             print($0)
     }
 }
@@ -94,10 +94,10 @@ mple("scan") {
     }
     
     observable
-        >- scan(0) { acum, elem in
+        .scan(0) { acum, elem in
             acum + elem
         }
-        >- subscribeNext {
+        .subscribeNext {
             print($0)
     }
 }

@@ -19,7 +19,7 @@ Creates an observable that contains no objects. The only message it sends is the
 example("Empty observable") {
     let emptyObservable: Observable<Int> = empty()
     
-    let emptySubscriber = emptyObservable >- subscribe { event in
+    let emptySubscriber = emptyObservable .subscribe { event in
         switch event {
         case .Next(let box):
             print("\(box.value)")
@@ -45,7 +45,7 @@ e("Never observable") {
     let neverObservable: Observable<String> = never()
     
     let neverSubscriber = neverObservable 
-        >- subscribe { _ in
+        .subscribe { _ in
             print("This block is never called.")
         }
 }
@@ -64,7 +64,7 @@ Creates an observable that contains no objects and send only a error out.
     let errorObservable: Observable<Int> = failWith(error)
     
     let errorSubscriber = errorObservable 
-        >- subscribe { event in
+        .subscribe { event in
             switch event {
             case .Next(let box):
                 print("\(box.value)")
@@ -87,7 +87,7 @@ rnElement/just") {
     let oneObservable = just(32)
     
     let oneObservableSubscriber = oneObservable
-        >- subscribe { event in
+        .subscribe { event in
             switch event {
             case .Next(let box):
                 print("\(box.value)")
@@ -105,15 +105,15 @@ Here we see that the `.Next` event is sent just once, then the `.Completed` even
 
 
 
-### `returnElements`
+### `sequence`
 
 Now we are getting to some more interesting ways to create an Observable. This function creates an observable that produces a number of values before completing.
 */
 ents") {
-    let multipleObservable/* : Observable<Int> */ = returnElements(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
+    let multipleObservable/* : Observable<Int> */ = sequence(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
     
     let multipleObservableSubscriber = multipleObservable
-        >- subscribe { event in
+        .subscribe { event in
             switch event {
             case .Next(let box):
                 print("\(box.value)")
@@ -139,7 +139,7 @@ We can also create an observable from any SequenceType, such as an array
  fromArrayObservable = from([1, 2, 3, 4, 5])
     
     let fromArrayObservableSubscriber = fromArrayObservable
-        >- subscribe { event in
+        .subscribe { event in
             switch event {
             case .Next(let box):
                 print("\(box.value)")
@@ -171,12 +171,12 @@ int("creating")
     }
     
     observable
-        >- subscribeNext {
+        .subscribeNext {
             print($0)
         }
     
     observable
-        >- subscribeNext {
+        .subscribeNext {
             print($0)
         }
 }
@@ -203,12 +203,12 @@ Create an Observable from a function which create an observable. But do not crea
     }
     
     defered
-        >- subscribeNext {
+        .subscribeNext {
             print($0)
         }
     
     defered
-        >- subscribeNext {
+        .subscribeNext {
             print($0)
         }
 }

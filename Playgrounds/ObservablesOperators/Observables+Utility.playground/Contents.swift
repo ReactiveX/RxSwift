@@ -21,7 +21,7 @@ example("subscribe") {
     let intOb1 = PublishSubject<Int>()
     
     intOb1
-        >- subscribe { event in
+        .subscribe { event in
             print(event)
     }
     
@@ -43,7 +43,7 @@ xample("subscribeNext") {
     let intOb1 = PublishSubject<Int>()
     
     intOb1
-        >- subscribeNext { int in
+        .subscribeNext { int in
             print(int)
     }
     
@@ -63,7 +63,7 @@ mple("subscribeCompleted") {
     let intOb1 = PublishSubject<Int>()
     
     intOb1
-        >- subscribeCompleted {
+        .subscribeCompleted {
             print("It's completed")
     }
     
@@ -82,7 +82,7 @@ le("subscribeError") {
     let intOb1 = PublishSubject<Int>()
     
     intOb1
-        >- subscribeError { error in
+        .subscribeError { error in
             print(error)
     }
     
@@ -103,12 +103,12 @@ Returns the same source Observable but the given closure responsible for the act
     let intOb1 = PublishSubject<Int>()
     
     let intOb2 = intOb1
-        >- `do` { event in
+        .`do` { event in
             print("first \(event)")
     }
     
     intOb2
-        >- subscribeNext { int in
+        .subscribeNext { int in
             print("second \(int)")
     }
     
@@ -128,12 +128,12 @@ OnNext") {
     let intOb1 = PublishSubject<Int>()
     
     let intOb2 = intOb1
-        >- doOnNext { int in
+        .doOnNext { int in
             print("first \(int)")
     }
     
     intOb2
-        >- subscribeNext { int in
+        .subscribeNext { int in
             print("second \(int)")
     }
     

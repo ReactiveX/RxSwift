@@ -21,11 +21,11 @@ extension UITextView {
     public var rx_text: Observable<String> {
         return deferred { [weak self] in
             let text = self?.text ?? ""
-            return self?.rx_delegate.observe("textViewDidChange:") ?? empty()
-                >- map { a in
+            return (self?.rx_delegate.observe("textViewDidChange:") ?? empty())
+                .map { a in
                     return (a[0] as? UITextView)?.text ?? ""
                 }
-                >- startWith(text)
+                .startWith(text)
         }
     }
     

@@ -12,6 +12,27 @@ import RxSwift
 #endif
 import UIKit
 
+extension ObservableType where E == Bool {
+    public func subscribeEnabledOf(control: UIControl) -> Disposable {
+        weak var weakControl: UIControl? = control
+        return self.subscribe { event in
+            MainScheduler.ensureExecutingOnScheduler()
+
+            switch event {
+            case .Next(let value):
+                weakControl?.enabled = value
+            case .Error(let error):
+#if DEBUG
+                rxFatalError("Binding error to textbox: \(error)")
+#endif
+                break
+            case .Completed:
+                break
+            }
+        }
+    }
+}
+
 extension UIControl {
     public func rx_controlEvents(controlEvents: UIControlEvents) -> Observable<Void> {
         return AnonymousObservable { observer in
@@ -25,7 +46,7 @@ extension UIControl {
             return AnonymousDisposable {
                 controlTarget.dispose()
             }
-        } >- takeUntil(rx_deallocated)
+        } .takeUntil(rx_deallocated)
     }
     
     func rx_value<T>(getValue: () -> T) -> Observable<T> {
@@ -40,24 +61,7 @@ extension UIControl {
             return AnonymousDisposable {
                 controlTarget.dispose()
             }
-        } >- takeUntil(rx_deallocated)
+        } .takeUntil(rx_deallocated)
     }
 
-    public func rx_subscribeEnabledTo(source: Observable<Bool>) -> Disposable {
-        return source.subscribe(AnonymousObserver { [weak self] event in
-            MainScheduler.ensureExecutingOnScheduler()
-
-            switch event {
-            case .Next(let value):
-                self?.enabled = value
-            case .Error(let error):
-#if DEBUG
-                    rxFatalError("Binding error to textbox: \(error)")
-#endif
-                break
-            case .Completed:
-                break
-            }
-        })
-    }
 }

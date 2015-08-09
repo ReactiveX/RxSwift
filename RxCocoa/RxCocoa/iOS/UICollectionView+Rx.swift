@@ -12,6 +12,48 @@ import RxSwift
 #endif
 import UIKit
 
+extension ObservableType {
+    // data source
+    
+    // Registers reactive data source with collection view.
+    // Difference between reactive data source and UICollectionViewDataSource is that reactive
+    // has additional method:
+    //
+    // ```
+    //     func collectionView(collectionView: UICollectionView, observedEvent: Event<Element>) -> Void
+    // ```
+    //
+    // If you want to register non reactive data source, please use `rx_setDataSource` method
+    public func subscribe<DataSource: protocol<RxCollectionViewDataSourceType, UICollectionViewDataSource> where E == DataSource.Element>(collectionView: UICollectionView, withReactiveDataSource dataSource: DataSource)
+        -> Disposable {
+        return self.subscribeProxyDataSourceForObject(collectionView, dataSource: dataSource, retainDataSource: false) { (_: RxCollectionViewDataSourceProxy, event) -> Void in
+            dataSource.collectionView(collectionView, observedEvent: event)
+        }
+    }
+}
+
+extension ObservableType where E: SequenceType {
+    // `reloadData` - items subscription methods (it's assumed that there is one section, and it is typed `Void`)
+    
+    public func subscribeItemsOf(collectionView: UICollectionView, cellFactory: (UICollectionView, Int, E.Generator.Element) -> UICollectionViewCell)
+        -> Disposable {
+        let dataSource = RxCollectionViewReactiveArrayDataSourceSequenceWrapper<E>(cellFactory: cellFactory)
+        return self.subscribe(collectionView, withReactiveDataSource: dataSource)
+    }
+    
+    public func subscribeItemsOf<Cell: UICollectionViewCell>(collectionView: UICollectionView, withCellIdentifier cellIdentifier: String, configureCell: (Int, E.Generator.Element, Cell) -> Void)
+        -> Disposable {
+        let dataSource = RxCollectionViewReactiveArrayDataSourceSequenceWrapper<E> { (cv, i, item) in
+            let indexPath = NSIndexPath(forItem: i, inSection: 0)
+            let cell = cv.dequeueReusableCellWithReuseIdentifier(cellIdentifier, forIndexPath: indexPath) as! Cell
+            configureCell(i, item, cell)
+            return cell
+        }
+        
+        return self.subscribe(collectionView, withReactiveDataSource: dataSource)
+    }
+}
+
 extension UICollectionView {
     
     // factories
@@ -34,57 +76,12 @@ extension UICollectionView {
         let proxy: RxCollectionViewDataSourceProxy = proxyForObject(self)
         return installDelegate(proxy, delegate: dataSource, retainDelegate: false, onProxyForObject: self)
     }
-    
-    // data source
-    
-    // Registers reactive data source with collection view.
-    // Difference between reactive data source and UICollectionViewDataSource is that reactive
-    // has additional method:
-    //
-    // ```
-    //     func collectionView(collectionView: UICollectionView, observedEvent: Event<Element>) -> Void
-    // ```
-    //
-    // If you want to register non reactive data source, please use `rx_setDataSource` method
-    public func rx_subscribeWithReactiveDataSource<DataSource: protocol<RxCollectionViewDataSourceType, UICollectionViewDataSource>>
-        (dataSource: DataSource)
-        -> Observable<DataSource.Element> -> Disposable {
-        return setProxyDataSourceForObject(self, dataSource: dataSource, retainDataSource: false) { (_: RxCollectionViewDataSourceProxy, event) -> Void in
-            dataSource.collectionView(self, observedEvent: event)
-        }
-    }
    
-    // `reloadData` - items subscription methods (it's assumed that there is one section, and it is typed `Void`)
-    
-    public func rx_subscribeItemsTo<Item>
-        (cellFactory: (UICollectionView, Int, Item) -> UICollectionViewCell)
-        -> Observable<[Item]> -> Disposable {
-            return { source in
-                let dataSource = RxCollectionViewReactiveArrayDataSource<Item>(cellFactory: cellFactory)
-                return self.rx_subscribeWithReactiveDataSource(dataSource)(source)
-            }
-    }
-    
-    public func rx_subscribeItemsToWithCellIdentifier<Item, Cell: UICollectionViewCell>
-        (cellIdentifier: String, configureCell: (Int, Item, Cell) -> Void)
-        -> Observable<[Item]> -> Disposable {
-            return { source in
-                let dataSource = RxCollectionViewReactiveArrayDataSource<Item> { (cv, i, item) in
-                    let indexPath = NSIndexPath(forItem: i, inSection: 0)
-                    let cell = cv.dequeueReusableCellWithReuseIdentifier(cellIdentifier, forIndexPath: indexPath) as! Cell
-                    configureCell(i, item, cell)
-                    return cell
-                }
-                
-                return self.rx_subscribeWithReactiveDataSource(dataSource)(source)
-            }
-    }
-    
     // events
     
     public var rx_itemSelected: Observable<NSIndexPath> {
         return rx_delegate.observe("collectionView:didSelectItemAtIndexPath:")
-            >- map { a in
+            .map { a in
                 return a[1] as! NSIndexPath
             }
     }
@@ -92,38 +89,10 @@ extension UICollectionView {
     // typed events
     
     public func rx_modelSelected<T>() -> Observable<T> {
-        return rx_itemSelected >- map { indexPath in
+        return rx_itemSelected .map { indexPath in
             let dataSource: RxCollectionViewReactiveArrayDataSource<T> = castOrFatalError(self.rx_dataSource.forwardToDelegate(), message: "This method only works in case one of the `rx_subscribeItemsTo` methods was used.")
             
             return dataSource.modelAtIndex(indexPath.item)!
         }
-    }
-}
-
-// deprecated
-extension UICollectionView {
-    @available(*, deprecated=1.7, message="Replaced by `rx_subscribeItemsToWithCellIdentifier`")
-    public func rx_subscribeItemsWithIdentifierTo<E, Cell where E : AnyObject, Cell : UICollectionViewCell>
-        (cellIdentifier: String, configureCell: (UICollectionView, NSIndexPath, E, Cell) -> Void)
-        (source: Observable<[E]>)
-        -> Disposable {
-        let l = rx_subscribeItemsToWithCellIdentifier(cellIdentifier) { (i: Int, e: E, cell: Cell) in
-            return configureCell(self, NSIndexPath(forItem: i, inSection: 0), e, cell)
-        }
-            
-        return l(source)
-    }
-    
-    @available(*, deprecated=1.7, message="Replaced by `rx_itemSelected`")
-    public func rx_itemTap() -> Observable<(UICollectionView, Int)> {
-        return rx_itemSelected
-            >- map { i in
-                return (self, i.item)
-            }
-    }
-    
-    @available(*, deprecated=1.7, message="Replaced by `rx_modelSelected`")
-    public func rx_elementTap<E>() -> Observable<E> {
-        return rx_modelSelected()
     }
 }

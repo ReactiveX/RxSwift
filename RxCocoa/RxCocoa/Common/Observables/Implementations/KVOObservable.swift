@@ -52,15 +52,15 @@ func observeWeaklyKeyPathFor(target: NSObject, keyPath: String, options: NSKeyVa
     let components = keyPath.componentsSeparatedByString(".").filter { $0 != "self" }
     
     let observable = observeWeaklyKeyPathFor(target, keyPathSections: components, options: options)
-        >- distinctUntilChanged { $0 === $1 }
-        >- finishWithNilWhenDealloc(target)
+        .distinctUntilChanged { $0 === $1 }
+        .finishWithNilWhenDealloc(target)
  
     if !options.intersect(.Initial).isEmpty {
         return observable
     }
     else {
         return observable
-            >- skip(1)
+            .skip(1)
     }
 }
 
@@ -72,17 +72,17 @@ func isWeakProperty(properyRuntimeInfo: String) -> Bool {
     return properyRuntimeInfo.rangeOfString(",W,") != nil
 }
 
-func finishWithNilWhenDealloc(target: NSObject)
-    -> Observable<AnyObject?> -> Observable<AnyObject?> {
-    let deallocating = target.rx_deallocating
-        
-    return { source in
+extension ObservableType where E == AnyObject? {
+    func finishWithNilWhenDealloc(target: NSObject)
+        -> Observable<AnyObject?> {
+        let deallocating = target.rx_deallocating
+            
         return deallocating
-            >- map { _ in
+            .map { _ in
                 return just(nil)
             }
-            >- startWith(source)
-            >- switchLatest
+            .startWith(self.normalize())
+            .switchLatest
     }
 }
 
@@ -109,7 +109,7 @@ func observeWeaklyKeyPathFor(
     
     // KVO recursion for value changes
     return propertyObservable
-        >- map { (nextTarget: AnyObject?) in
+        .map { (nextTarget: AnyObject?) -> Observable<AnyObject?> in
             if nextTarget == nil {
                return just(nil)
             }
@@ -133,13 +133,13 @@ func observeWeaklyKeyPathFor(
            
             if isWeak {
                 return nextElementsObservable
-                    >- finishWithNilWhenDealloc(nextObject!)
+                    .finishWithNilWhenDealloc(nextObject!)
             }
             else {
                 return nextElementsObservable
             }
         }
-        >- switchLatest
+        .switchLatest
 }
 #endif
 

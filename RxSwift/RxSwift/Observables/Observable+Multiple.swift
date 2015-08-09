@@ -10,110 +10,92 @@ import Foundation
 
 // switch
 
-public func switchLatest<T>
-    (sources: Observable<Observable<T>>)
-    -> Observable<T> {
-        
-    // swift doesn't have co/contravariance
-    return Switch(sources: sources)
+extension ObservableType where E : ObservableType {
+    public var switchLatest: Observable<E.E> {
+        // swift doesn't have co/contravariance
+        return Switch(sources: self.normalize())
+    }
 }
-
 
 // concat
 
-public func concat<E>
-    (sources: [Observable<E>])
-    -> Observable<E> {
-    return Concat(sources: sources)
+public func concat<O: ObservableType>(sources: [O])
+    -> Observable<O.E> {
+    return Concat(sources: LazySequence(sources).map { $0.normalize() })
 }
 
-public func concat<E>
-    (sources: Observable<Observable<E>>)
-    -> Observable<E> {
-    return merge(maxConcurrent: 1)(sources)
+extension ObservableType where E : ObservableType {
+    public var concat: Observable<E.E> {
+        return self.merge(maxConcurrent: 1)
+    }
 }
 
 // merge
 
-public func merge<E>
-    (sources: Observable<Observable<E>>)
-    -> Observable<E> {
-        return Merge(sources: sources, maxConcurrent: 0)
-}
+extension ObservableType where E : ObservableType {
+    public var merge: Observable<E.E> {
+        return Merge(sources: self.normalize(), maxConcurrent: 0)
+    }
 
-public func merge<E>
-    (maxConcurrent maxConcurrent: Int)
-    -> (Observable<Observable<E>> -> Observable<E>) {
-    return  { sources in
-        return Merge(sources: sources, maxConcurrent: maxConcurrent)
+    public func merge(maxConcurrent maxConcurrent: Int)
+        -> Observable<E.E> {
+        return Merge(sources: self.normalize(), maxConcurrent: maxConcurrent)
     }
 }
 
 // catch
 
-public func catchOrDie<E>
-    (handler: (ErrorType) -> RxResult<Observable<E>>)
-    -> (Observable<E> -> Observable<E>) {
-    return { source in
-        return Catch(source: source, handler: handler)
+extension ObservableType {
+    public func catchErrorOrDie(handler: (ErrorType) -> RxResult<Observable<E>>)
+        -> Observable<E> {
+        return Catch(source: self.normalize(), handler: handler)
+    }
+    
+    public func catchError(handler: (ErrorType) -> Observable<E>)
+        -> Observable<E> {
+        return Catch(source: self.normalize(), handler: { success(handler($0)) })
+    }
+
+    // In case of error, terminates sequence with `replaceErrorWith`.
+    public func catchError(replaceErrorWith: E)
+        -> Observable<E> {
+        return Catch(source: self.normalize(), handler: { _ in success(just(replaceErrorWith)) })
+    }
+    
+    // When error happens `error` will be forwarded as a next `Result<E>` value
+    // and sequence will be completed.
+    public var catchErrorToResult: Observable <RxResult<E>> {
+        return CatchToResult(source: self.normalize())
     }
 }
 
-public func onError<E>
-    (handler: (ErrorType) -> Observable<E>)
-    -> (Observable<E> -> Observable<E>) {
-    return { source in
-        return Catch(source: source, handler: { success(handler($0)) })
-    }
-}
-
-public func onError<E>
-    (sources: AnySequence<Observable<E>>)
+public func catchError<E>(sources: AnySequence<Observable<E>>)
     -> Observable<E> {
     // just wrapping it in sequence of for now
-    return CatchSequence(sources: AnySequence(sources))
-}
-
-// In case of error, terminates sequence with `replaceErrorWith`.
-public func onError<E>
-    (replaceErrorWith: E)
-    -> (Observable<E> -> Observable<E>) {
-    return { source in
-        return Catch(source: source, handler: { _ in success(returnElement(replaceErrorWith)) })
-    }
-}
-
-// When error happens `error` will be forwarded as a next `Result<E>` value
-// and sequence will be completed.
-public func catchToResult<E>
-    (source: Observable<E>)
-    -> Observable <RxResult<E>> {
-    return CatchToResult(source: source)
+    return CatchSequence(sources: sources)
 }
 
 // takeUntil
 
-public func takeUntil<E, O>
-    (other: Observable<O>)
-    -> Observable<E> -> Observable<E> {
-    return { source in
-        return TakeUntil(source: source, other: other)
+extension ObservableType {
+    public func takeUntil<O: ObservableType>(other: O)
+        -> Observable<E> {
+        return TakeUntil(source: self.normalize(), other: other.normalize())
     }
 }
 
-// amb 
+// amb
 
-public func amb<E>
-    (left: Observable<E>, _ right: Observable<E>)
-    -> Observable<E> {
-    return Amb(left: left, right: right)
+public func amb<O: ObservableType>
+    (left: O, _ right: O)
+    -> Observable<O.E> {
+    return Amb(left: left.normalize(), right: right.normalize())
 }
 
-public func amb<E>
-    (observables: AnySequence<Observable<E>>)
-    -> Observable<E> {
+public func amb<O: ObservableType>
+    (observables: AnySequence<O>)
+    -> Observable<O.E> {
     return observables.reduce(never()) { a, o in
-        return amb(a, o)
+        return amb(a, o.normalize())
     }
-        
 }

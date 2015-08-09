@@ -16,13 +16,7 @@ public class Variable<Element>: BehaviorSubject<Element> {
         super.init(value: value)
     }
     
-    public func next(value: Element) {
-        sendNext(self, value)
+    public func sendNext(value: Element) {
+        self.on(.Next(value))
     }
-}
-
-
-@available(*, deprecated=1.4, message="Please use variable.next, it's more clear")
-public func << <E>(variable: Variable<E>, element: E) {
-    variable.next(element)
 }

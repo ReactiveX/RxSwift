@@ -100,7 +100,7 @@ extension NSURLSession {
     }
 
     public func rx_data(request: NSURLRequest) -> Observable<NSData> {
-        return rx_response(request) >- mapOrDie { (data, response) -> RxResult<NSData> in
+        return rx_response(request).mapOrDie { (data, response) -> RxResult<NSData> in
             if let response = response as? NSHTTPURLResponse {
                 if 200 ..< 300 ~= response.statusCode {
                     return success(data!)
@@ -118,7 +118,7 @@ extension NSURLSession {
     }
 
     public func rx_JSON(request: NSURLRequest) -> Observable<AnyObject!> {
-        return rx_data(request) >- mapOrDie { (data) -> RxResult<AnyObject!> in
+        return rx_data(request).mapOrDie { (data) -> RxResult<AnyObject!> in
             do {
               let result = try NSJSONSerialization.JSONObjectWithData(data, options: [])
               return success(result)

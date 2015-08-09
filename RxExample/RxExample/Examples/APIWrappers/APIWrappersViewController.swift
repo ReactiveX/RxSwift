@@ -62,57 +62,57 @@ class APIWrappersViewController: ViewController {
         let av = UIAlertView(title: "Title", message: "The message", delegate: nil, cancelButtonTitle: "Cancel", otherButtonTitles: "OK", "Two", "Three", "Four", "Five")
 
         openActionSheet.rx_tap
-            >- subscribeNext { x in
+            .subscribeNext { x in
                 ash.showInView(self.view)
             }
-            >- disposeBag.addDisposable
+            .addDisposableTo(disposeBag)
 
         openAlertView.rx_tap
-            >- subscribeNext { x in
+            .subscribeNext { x in
                 av.show()
             }
-            >- disposeBag.addDisposable
+            .addDisposableTo(disposeBag)
 
         // MARK: UIActionSheet
 
         ash.rx_clickedButtonAtIndex
-            >- subscribeNext { [weak self] x in
+            .subscribeNext { [weak self] x in
                 self?.debug("UIActionSheet clickedButtonAtIndex \(x)")
             }
-            >- disposeBag.addDisposable
+            .addDisposableTo(disposeBag)
 
         ash.rx_willDismissWithButtonIndex
-            >- subscribeNext { [weak self] x in
+            .subscribeNext { [weak self] x in
                 self?.debug("UIActionSheet willDismissWithButtonIndex \(x)")
             }
-            >- disposeBag.addDisposable
+            .addDisposableTo(disposeBag)
 
         ash.rx_didDismissWithButtonIndex
-            >- subscribeNext { [weak self] x in
+            .subscribeNext { [weak self] x in
                 self?.debug("UIActionSheet didDismissWithButtonIndex \(x)")
             }
-            >- disposeBag.addDisposable
+            .addDisposableTo(disposeBag)
 
 
         // MARK: UIAlertView
 
         av.rx_clickedButtonAtIndex
-            >- subscribeNext { [weak self] x in
+            .subscribeNext { [weak self] x in
                 self?.debug("UIAlertView clickedButtonAtIndex \(x)")
             }
-            >- disposeBag.addDisposable
+            .addDisposableTo(disposeBag)
 
         av.rx_willDismissWithButtonIndex
-            >- subscribeNext { [weak self] x in
+            .subscribeNext { [weak self] x in
                 self?.debug("UIAlertView willDismissWithButtonIndex \(x)")
             }
-            >- disposeBag.addDisposable
+            .addDisposableTo(disposeBag)
 
         av.rx_didDismissWithButtonIndex
-            >- subscribeNext { [weak self] x in
+            .subscribeNext { [weak self] x in
                 self?.debug("UIAlertView didDismissWithButtonIndex \(x)")
             }
-            >- disposeBag.addDisposable
+            .addDisposableTo(disposeBag)
 
 
 
@@ -123,73 +123,73 @@ class APIWrappersViewController: ViewController {
         // MARK: UIBarButtonItem
 
         bbitem.rx_tap
-            >- subscribeNext { [weak self] x in
+            .subscribeNext { [weak self] x in
                 self?.debug("UIBarButtonItem Tapped")
             }
-            >- disposeBag.addDisposable
+            .addDisposableTo(disposeBag)
 
         // MARK: UISegmentedControl
 
         segmentedControl.rx_value
-            >- subscribeNext { [weak self] x in
+            .subscribeNext { [weak self] x in
                 self?.debug("UISegmentedControl value \(x)")
             }
-            >- disposeBag.addDisposable
+            .addDisposableTo(disposeBag)
 
 
         // MARK: UISwitch
 
         switcher.rx_value
-            >- subscribeNext { [weak self] x in
+            .subscribeNext { [weak self] x in
                 self?.debug("UISwitch value \(x)")
             }
-            >- disposeBag.addDisposable
+            .addDisposableTo(disposeBag)
 
 
         // MARK: UIButton
 
         button.rx_tap
-            >- subscribeNext { [weak self] x in
+            .subscribeNext { [weak self] x in
                 self?.debug("UIButton Tapped")
             }
-            >- disposeBag.addDisposable
+            .addDisposableTo(disposeBag)
 
 
         // MARK: UISlider
 
         slider.rx_value
-            >- subscribeNext { [weak self] x in
+            .subscribeNext { [weak self] x in
                 self?.debug("UISlider value \(x)")
             }
-            >- disposeBag.addDisposable
+            .addDisposableTo(disposeBag)
 
 
         // MARK: UIDatePicker
 
         datePicker.rx_date
-            >- subscribeNext { [weak self] x in
+            .subscribeNext { [weak self] x in
                 self?.debug("UIDatePicker date \(x)")
             }
-            >- disposeBag.addDisposable
+            .addDisposableTo(disposeBag)
 
 
         // MARK: UITextField
 
         textField.rx_text
-            >- subscribeNext { [weak self] x in
+            .subscribeNext { [weak self] x in
                 self?.debug("UITextField text \(x)")
                 self?.textField.resignFirstResponder()
             }
-            >- disposeBag.addDisposable
+            .addDisposableTo(disposeBag)
 
 
         // MARK: UIGestureRecognizer
 
         mypan.rx_event
-            >- subscribeNext { [weak self] x in
+            .subscribeNext { [weak self] x in
                 self?.debug("UIGestureRecognizer event \(x.state)")
             }
-            >- disposeBag.addDisposable
+            .addDisposableTo(disposeBag)
 
 
         // MARK: CLLocationManager
@@ -201,16 +201,16 @@ class APIWrappersViewController: ViewController {
         }
 
         manager.rx_didUpdateLocations
-            >- subscribeNext { [weak self] x in
+            .subscribeNext { [weak self] x in
                 self?.debug("rx_didUpdateLocations \(x)")
             }
-            >- disposeBag.addDisposable
+            .addDisposableTo(disposeBag)
 
         manager.rx_didFailWithError
-            >- subscribeNext { [weak self] x in
+            .subscribeNext { [weak self] x in
                 self?.debug("rx_didFailWithError \(x)")
             }
-            >- disposeBag.addDisposable
+            .addDisposableTo(disposeBag)
 
 
         manager.startUpdatingLocation()

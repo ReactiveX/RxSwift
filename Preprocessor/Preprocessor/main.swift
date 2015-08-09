@@ -81,11 +81,11 @@ let files = fileManager.subpathsAtPath(sourceFilesRoot)
 var generateAllFiles = ["// Generated code\n", "import Foundation\n"]
 
 for file in files! {
-    if (file.pathExtension ?? "") != "tt" {
+    if ((file as NSString).pathExtension ?? "") != "tt" {
         continue
     }
     
-    let path = sourceFilesRoot.stringByAppendingPathComponent(file as String)
+    let path = (sourceFilesRoot as NSString).stringByAppendingPathComponent(file as String)
     
     let outputPath = path.substringToIndex(path.endIndex.predecessor().predecessor().predecessor()) + ".swift"
     
@@ -93,7 +93,7 @@ for file in files! {
 }
 
 let script = "".join(generateAllFiles)
-let scriptPath = derivedData.stringByAppendingPathComponent("_preprocessor.sh")
+let scriptPath = (derivedData as NSString).stringByAppendingPathComponent("_preprocessor.sh")
 
 do {
     try script.writeToFile(scriptPath, atomically: true, encoding: NSUTF8StringEncoding)

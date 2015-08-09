@@ -109,14 +109,14 @@ class PartialUpdatesViewController : ViewController {
             timer = NSTimer.scheduledTimerWithTimeInterval(0.6, target: self, selector: "randomize", userInfo: nil, repeats: true)
         #endif
 
-        self.sections.next(generator.sections)
+        self.sections.sendNext(generator.sections)
 
         let tvAnimatedDataSource = RxTableViewSectionedAnimatedDataSource<NumberSection>()
         let reloadDataSource = RxTableViewSectionedReloadDataSource<NumberSection>()
 
         skinTableViewDataSource(tvAnimatedDataSource)
         skinTableViewDataSource(reloadDataSource)
-        let newSections = self.sections >- skip(1)
+        let newSections = self.sections .skip(1)
 
         let initialState = [Changeset.initialValue(self.sections.value)]
 
@@ -125,15 +125,15 @@ class PartialUpdatesViewController : ViewController {
         let updates = zip(self.sections, newSections) { (old, new) in
                 return differentiate(old, finalSections: new)
             }
-            >- startWith(initialState)
+            .startWith(initialState)
 
         updates
-            >- partialUpdatesTableViewOutlet.rx_subscribeWithReactiveDataSource(tvAnimatedDataSource)
-            >- disposeBag.addDisposable
+            .partialUpdatesTableViewOutlet.rx_subscribeWithReactiveDataSource(tvAnimatedDataSource)
+            .disposeBag.addDisposable
 
         self.sections
-            >- reloadTableViewOutlet.rx_subscribeWithReactiveDataSource(reloadDataSource)
-            >- disposeBag.addDisposable
+            .reloadTableViewOutlet.rx_subscribeWithReactiveDataSource(reloadDataSource)
+            .disposeBag.addDisposable
 
         // Collection view logic works, but when clicking fast because of internal bugs
         // collection view will sometimes get confused. I know what you are thinking,
@@ -152,29 +152,29 @@ class PartialUpdatesViewController : ViewController {
             skinCollectionViewDataSource(cvAnimatedDataSource)
 
             updates
-                >- partialUpdatesCollectionViewOutlet.rx_subscribeWithReactiveDataSource(cvAnimatedDataSource)
-                >- disposeBag.addDisposable
+                .partialUpdatesCollectionViewOutlet.rx_subscribeWithReactiveDataSource(cvAnimatedDataSource)
+                .disposeBag.addDisposable
         #else
             let cvReloadDataSource = RxCollectionViewSectionedReloadDataSource<NumberSection>()
             skinCollectionViewDataSource(cvReloadDataSource)
             self.sections
-                >- partialUpdatesCollectionViewOutlet.rx_subscribeWithReactiveDataSource(cvReloadDataSource)
-                >- disposeBag.addDisposable
+                .partialUpdatesCollectionViewOutlet.rx_subscribeWithReactiveDataSource(cvReloadDataSource)
+                .disposeBag.addDisposable
         #endif
 
         // touches
 
         partialUpdatesCollectionViewOutlet.rx_itemSelected
-            >- subscribeNext { [unowned self] i in
+            .subscribeNext { [unowned self] i in
                 print("Let me guess, it's .... It's \(self.generator.sections[i.section].items[i.item]), isn't it? Yeah, I've got it.")
             }
-            >- disposeBag.addDisposable
+            .disposeBag.addDisposable
 
         merge(from([partialUpdatesTableViewOutlet.rx_itemSelected, reloadTableViewOutlet.rx_itemSelected]))
-            >- subscribeNext { [unowned self] i in
+            .subscribeNext { [unowned self] i in
                 print("I have a feeling it's .... \(self.generator.sections[i.section].items[i.item])?")
             }
-            >- disposeBag.addDisposable
+            .disposeBag.addDisposable
     }
 
     override func viewWillDisappear(animated: Bool) {
@@ -192,6 +192,6 @@ class PartialUpdatesViewController : ViewController {
 
         //print(values)
 
-        sections.next(values)
+        sections.sendNext(values)
     }*/
 }

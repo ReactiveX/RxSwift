@@ -36,16 +36,36 @@ class _RxCollectionViewReactiveArrayDataSource: NSObject, UICollectionViewDataSo
     }
 }
 
+class RxCollectionViewReactiveArrayDataSourceSequenceWrapper<S: SequenceType> : RxCollectionViewReactiveArrayDataSource<S.Generator.Element>
+                                                                              , RxCollectionViewDataSourceType {
+    typealias Element = S
+
+    override init(cellFactory: CellFactory) {
+        super.init(cellFactory: cellFactory)
+    }
+    
+    func collectionView(collectionView: UICollectionView, observedEvent: Event<S>) {
+        switch observedEvent {
+        case .Next(let value):
+            super.collectionView(collectionView, observedElements: Array(value))
+            self.itemModels = Array(value)
+        case .Error(let error):
+            bindingErrorToInterface(error)
+        case .Completed:
+            break
+        }
+    }
+}
+
+
 // Please take a look at `DelegateProxyType.swift`
-class RxCollectionViewReactiveArrayDataSource<ElementType> : _RxCollectionViewReactiveArrayDataSource
-                                                           , RxCollectionViewDataSourceType {
-    typealias Element = [ElementType]
+class RxCollectionViewReactiveArrayDataSource<Element> : _RxCollectionViewReactiveArrayDataSource {
     
-    typealias CellFactory = (UICollectionView, Int, ElementType) -> UICollectionViewCell
+    typealias CellFactory = (UICollectionView, Int, Element) -> UICollectionViewCell
     
-    var itemModels: [ElementType]? = nil
+    var itemModels: [Element]? = nil
     
-    func modelAtIndex(index: Int) -> ElementType? {
+    func modelAtIndex(index: Int) -> Element? {
         return itemModels?[index]
     }
     
@@ -67,15 +87,8 @@ class RxCollectionViewReactiveArrayDataSource<ElementType> : _RxCollectionViewRe
     
     // reactive
     
-    func collectionView(collectionView: UICollectionView, observedEvent: Event<Element>) {
-        switch observedEvent {
-        case .Next(let value):
-            self.itemModels = value
-        case .Error(let error):
-            bindingErrorToInterface(error)
-        case .Completed:
-            break
-        }
+    func collectionView(collectionView: UICollectionView, observedElements: [Element]) {
+        self.itemModels = observedElements
         
         collectionView.reloadData()
     }

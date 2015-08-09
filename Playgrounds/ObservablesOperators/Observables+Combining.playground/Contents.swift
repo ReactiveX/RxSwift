@@ -20,11 +20,11 @@ Return an observeble which emits a specified item before emitting the items from
 example("startWith") {
     
     let aggregateSubscriber = from([4, 5, 6, 7, 8, 9])
-        >- startWith(3)
-        >- startWith(2)
-        >- startWith(1)
-        >- startWith(0)
-        >- subscribeNext { int in
+        .startWith(3)
+        .startWith(2)
+        .startWith(1)
+        .startWith(0)
+        .subscribeNext { int in
             print(int)
     }
     
@@ -47,7 +47,7 @@ xample("combineLatest 1st") {
     combineLatest(intOb1, intOb2) {
         "\($0) \($1)"
         }
-        >- subscribeNext {
+        .subscribeNext {
             print($0)
     }
     
@@ -79,7 +79,7 @@ est 2nd") {
     combineLatest(intOb1, intOb2) {
         $0 * $1
         }
-        >- subscribeNext {
+        .subscribeNext {
             print($0)
     }
 }
@@ -97,7 +97,7 @@ t 3rd") {
     combineLatest(intOb1, intOb2, intOb3) {
         ($0 + $1) * $2
         }
-        >- subscribeNext {
+        .subscribeNext {
             print($0)
     }
 }
@@ -117,7 +117,7 @@ The Observable returned by `zip` emits an item only when all of the imputs Obser
     zip(intOb1, intOb2) {
         "\($0) \($1)"
         }
-        >- subscribeNext {
+        .subscribeNext {
             print($0)
     }
     
@@ -154,7 +154,7 @@ example("zip 2nd") {
     zip(intOb1, intOb2) {
         $0 * $1
         }
-        >- subscribeNext {
+        .subscribeNext {
             print($0)
     }
 }
@@ -172,7 +172,7 @@ The next sample shows zip called with three sorce Observables
     zip(intOb1, intOb2, intOb3) {
         ($0 + $1) * $2
         }
-        >- subscribeNext {
+        .subscribeNext {
             print($0)
     }
 }
@@ -190,8 +190,8 @@ Combine multiple Observables, of the same type, into one by merging their emissi
 Subject<Int>()
     let subject2 = PublishSubject<Int>()
     
-    merge(returnElements(subject1, subject2))
-        >- subscribeNext { int in
+    merge(sequence(subject1, subject2))
+        .subscribeNext { int in
             print(int)
     }
     
@@ -209,9 +209,9 @@ example("merge 2nd") {
     let subject1 = PublishSubject<Int>()
     let subject2 = PublishSubject<Int>()
     
-    returnElements(subject1, subject2) 
-        >- merge(maxConcurrent: 2)
-        >- subscribeNext { int in
+    sequence(subject1, subject2) 
+        .merge(maxConcurrent: 2)
+        .subscribeNext { int in
             print(int)
     }
     
@@ -241,28 +241,25 @@ Convert an Observable that emits Observables into a single Observable that emits
     let var3 = Variable(var1 as Observable<Int>)
     
     let d = var3
-        >- switchLatest
-        >- subscribeNext { (e: Int) -> Void in
+        .switchLatest
+        .subscribeNext { (e: Int) -> Void in
             print("\(e)")
     }
     
-    var1.next(1)
-    var1.next(2)
-    var1.next(3)
-    var1.next(4)
+    var1.sendNext(1)
+    var1.sendNext(2)
+    var1.sendNext(3)
+    var1.sendNext(4)
     
-    var3.next(var2)
+    var3.sendNext(var2)
     
-    var2.next(201)
+    var2.sendNext(201)
     
     print("Note which no listen to var1")
-    var1.next(5)
-    var1.next(6)
-    var1.next(7)
+    var1.sendNext(5)
+    var1.sendNext(6)
+    var1.sendNext(7)
     sendCompleted(var1)
     
-    var2.next(202)
-    var2.next(203)
-    var2.next(204)
-}
-
+    var2.sendNext(202)
+    var2.send

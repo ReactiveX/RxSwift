@@ -20,21 +20,21 @@ extension UIActionSheet {
     
     public var rx_clickedButtonAtIndex: Observable<Int> {
         return rx_delegate.observe("actionSheet:clickedButtonAtIndex:")
-            >- map { a in
+            .map { a in
                 return a[1] as! Int
             }
     }
     
     public var rx_willDismissWithButtonIndex: Observable<Int> {
         return rx_delegate.observe("actionSheet:willDismissWithButtonIndex:")
-            >- map { a in
+            .map { a in
                 return a[1] as! Int
             }
     }
     
     public var rx_didDismissWithButtonIndex: Observable<Int> {
         return rx_delegate.observe("actionSheet:didDismissWithButtonIndex:")
-            >- map { a in
+            .map { a in
                 return a[1] as! Int
             }
     }

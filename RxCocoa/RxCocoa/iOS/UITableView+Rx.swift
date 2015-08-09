@@ -12,6 +12,49 @@ import RxSwift
 #endif
 import UIKit
 
+
+extension ObservableType {
+    // data source
+    
+    // Registers reactive data source with table view.
+    // Difference between reactive data source and UITableViewDataSource is that reactive
+    // has additional method:
+    //
+    // ```
+    //     func tableView(tableView: UITableView, observedEvent: Event<Element>) -> Void
+    // ```
+    //
+    // If you want to register non reactive data source, please use `rx_setDataSource` method
+    public func subscribe<DataSource: protocol<RxTableViewDataSourceType, UITableViewDataSource> where E == DataSource.Element>(tableView: UITableView, withReactiveDataSource dataSource: DataSource)
+        -> Disposable {
+        return self.subscribeProxyDataSourceForObject(tableView, dataSource: dataSource, retainDataSource: false) { (_: RxTableViewDataSourceProxy, event) -> Void in
+            dataSource.tableView(tableView, observedEvent: event)
+        }
+    }
+}
+
+extension ObservableType where E: SequenceType {
+    // `reloadData` - items subscription methods (it's assumed that there is one section, and it is typed `Void`)
+    
+    public func subscribeItemsOf(tableView: UITableView, cellFactory: (UITableView, Int, E.Generator.Element) -> UITableViewCell)
+        -> Disposable {
+        let dataSource = RxTableViewReactiveArrayDataSourceSequenceWrapper<E>(cellFactory: cellFactory)
+        return self.subscribe(tableView, withReactiveDataSource: dataSource)
+    }
+    
+    public func subscribeItemsOf<Cell: UITableViewCell>(tableView: UITableView, withCellIdentifier cellIdentifier: String, configureCell: (Int, E.Generator.Element, Cell) -> Void)
+        -> Disposable {
+        let dataSource = RxTableViewReactiveArrayDataSourceSequenceWrapper<E> { (tv, i, item) in
+            let indexPath = NSIndexPath(forItem: i, inSection: 0)
+            let cell = tv.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! Cell
+            configureCell(i, item, cell)
+            return cell
+        }
+        
+        return self.subscribe(tableView, withReactiveDataSource: dataSource)
+    }
+}
+
 extension UITableView {
  
     // factories
@@ -33,85 +76,39 @@ extension UITableView {
         return installDelegate(proxy, delegate: dataSource, retainDelegate: false, onProxyForObject: self)
     }
     
-    // data source
-    
-    // Registers reactive data source with table view.
-    // Difference between reactive data source and UITableViewDataSource is that reactive 
-    // has additional method:
-    //
-    // ```
-    //     func tableView(tableView: UITableView, observedEvent: Event<Element>) -> Void
-    // ```
-    //
-    // If you want to register non reactive data source, please use `rx_setDataSource` method
-    public func rx_subscribeWithReactiveDataSource<DataSource: protocol<RxTableViewDataSourceType, UITableViewDataSource>>
-        (dataSource: DataSource)
-        -> Observable<DataSource.Element> -> Disposable {
-        return setProxyDataSourceForObject(self, dataSource: dataSource, retainDataSource: false) { (_: RxTableViewDataSourceProxy, event) -> Void in
-            dataSource.tableView(self, observedEvent: event)
-        }
-    }
-    
-    // `reloadData` - items subscription methods (it's assumed that there is one section, and it is typed `Void`)
-    
-    public func rx_subscribeItemsTo<Item>
-        (cellFactory: (UITableView, Int, Item) -> UITableViewCell)
-        -> Observable<[Item]> -> Disposable {
-        return { source in
-            let dataSource = RxTableViewReactiveArrayDataSource<Item>(cellFactory: cellFactory)
-            
-            return self.rx_subscribeWithReactiveDataSource(dataSource)(source)
-        }
-    }
-    
-    public func rx_subscribeItemsToWithCellIdentifier<Item, Cell: UITableViewCell>
-        (cellIdentifier: String, configureCell: (NSIndexPath, Item, Cell) -> Void)
-        -> Observable<[Item]> -> Disposable {
-        return { source in
-            let dataSource = RxTableViewReactiveArrayDataSource<Item> { (tv, i, item) in
-                let indexPath = NSIndexPath(forItem: i, inSection: 0)
-                let cell = tv.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! Cell
-                configureCell(indexPath, item, cell)
-                return cell
-            }
-
-            return self.rx_subscribeWithReactiveDataSource(dataSource)(source)
-        }
-    }
-
     // events
     
     
     public var rx_itemSelected: Observable<NSIndexPath> {
         return rx_delegate.observe("tableView:didSelectRowAtIndexPath:")
-            >- map { a in
+            .map { a in
                 return a[1] as! NSIndexPath
             }
     }
  
     public var rx_itemInserted: Observable<NSIndexPath> {
         return rx_dataSource.observe("tableView:commitEditingStyle:forRowAtIndexPath:")
-            >- filter { a in
+            .filter { a in
                 return UITableViewCellEditingStyle(rawValue: (a[1] as! NSNumber).integerValue) == .Insert
             }
-            >- map { a in
+            .map { a in
                 return (a[2] as! NSIndexPath)
         }
     }
     
     public var rx_itemDeleted: Observable<NSIndexPath> {
         return rx_dataSource.observe("tableView:commitEditingStyle:forRowAtIndexPath:")
-            >- filter { a in
+            .filter { a in
                 return UITableViewCellEditingStyle(rawValue: (a[1] as! NSNumber).integerValue) == .Delete
             }
-            >- map { a in
+            .map { a in
                 return (a[2] as! NSIndexPath)
             }
     }
     
     public var rx_itemMoved: Observable<ItemMovedEvent> {
         return rx_dataSource.observe("tableView:moveRowAtIndexPath:toIndexPath:")
-            >- map { a in
+            .map { a in
                 return ((a[1] as! NSIndexPath), (a[2] as! NSIndexPath))
             }
     }
@@ -119,58 +116,11 @@ extension UITableView {
     // typed events
     // This method only works in case one of the `rx_subscribeItemsTo` methods was used.
     public func rx_modelSelected<T>() -> Observable<T> {
-        return rx_itemSelected >- map { ip in
+        return rx_itemSelected .map { ip in
             let dataSource: RxTableViewReactiveArrayDataSource<T> = castOrFatalError(self.rx_dataSource.forwardToDelegate(), message: "This method only works in case one of the `rx_subscribeItemsTo` methods was used.")
             
             return dataSource.modelAtIndex(ip.item)!
         }
     }
     
-}
-
-// deprecated
-extension UITableView {
-    @available(*, deprecated=1.7, message="Replaced by `rx_subscribeWithReactiveDataSource`")
-    public func rx_subscribeRowsTo<E where E: AnyObject>
-        (dataSource: UITableViewDataSource)
-        (source: Observable<[E]>)
-        -> Disposable {
-        return rx_setDataSource(dataSource)
-    }
-    
-    @available(*, deprecated=1.7, message="Replaced by `rx_setDataSource`")
-    public func rx_subscribeRowsTo<E where E : AnyObject>
-        (cellFactory: (UITableView, NSIndexPath, E) -> UITableViewCell)
-        (source: Observable<[E]>)
-        -> Disposable {
-        let l = rx_subscribeItemsTo { (tv: UITableView, i: Int, e: E) -> UITableViewCell in
-            return cellFactory(tv, NSIndexPath(forItem: i, inSection: 0), e)
-        }
-            
-        return l(source)
-    }
-    
-    @available(*, deprecated=1.7, message="Replaced by `rx_subscribeItemsToWithCellIdentifier`")
-    public func rx_subscribeRowsToCellWithIdentifier<E, Cell where E : AnyObject, Cell: UITableViewCell>
-        (cellIdentifier: String, configureCell: (UITableView, NSIndexPath, E, Cell) -> Void)
-        (source: Observable<[E]>)
-        -> Disposable {
-        let l = rx_subscribeItemsToWithCellIdentifier(cellIdentifier) { (ip: NSIndexPath, e: E, c: Cell) -> Void in
-            configureCell(self, ip, e, c)
-        }
-        return l(source)
-    }
-    
-    @available(*, deprecated=1.7, message="Replaced by `rx_itemSelected`")
-    public func rx_rowTap() -> Observable<(UITableView, Int)> {
-        return rx_itemSelected
-            >- map { ip in
-                return (self, ip.item)
-            }
-    }
-    
-    @available(*, deprecated=1.7, message="Replaced by `rx_modelSelected`")
-    public func rx_elementTap<E>() -> Observable<E> {
-        return rx_modelSelected()
-    }
 }

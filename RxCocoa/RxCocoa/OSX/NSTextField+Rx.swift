@@ -41,6 +41,26 @@ class RxTextFieldDelegate : DelegateProxy
     }
 }
 
+extension ObservableType where E == String {
+    public func subscribeTextOf(textField: NSTextField) -> Disposable {
+        return self.subscribe { event in
+            MainScheduler.ensureExecutingOnScheduler()
+            
+            switch event {
+            case .Next(let value):
+                textField.stringValue = value
+            case .Error(let error):
+                #if DEBUG
+                    rxFatalError("Binding error to textbox: \(error)")
+                #endif
+                break
+            case .Completed:
+                break
+            }
+        }
+    }
+}
+
 extension NSTextField {
     public func rx_subscribeTextTo(source: Observable<String>) -> Disposable {
         return source.subscribe(AnonymousObserver { event in

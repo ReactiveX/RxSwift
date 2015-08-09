@@ -33,49 +33,49 @@ class IntroductionExampleViewController : ViewController {
         
         // bind result to UI
         sum
-            >- map { (a, b) in
+            .map { (a, b) in
                 return "\(a + b)"
             }
-            >- c.rx_subscribeTextTo
-            >- disposeBag.addDisposable
+            .subscribeTextOf(c)
+            .addDisposableTo(disposeBag)
         
         // Also, tell it out loud
         let speech = NSSpeechSynthesizer()
         
         sum
-            >- map { (a, b) in
+            .map { (a, b) in
                 return "\(a) + \(b) = \(a + b)"
             }
-            >- subscribeNext { result in
+            .subscribeNext { result in
                 if speech.speaking {
                     speech.stopSpeaking()
                 }
                 
                 speech.startSpeakingString(result)
             }
-            >- disposeBag.addDisposable
+            .addDisposableTo(disposeBag)
         
         
         slider.rx_value
-            >- subscribeNext { value in
+            .subscribeNext { value in
                 self.sliderValue.stringValue = "\(Int(value))"
             }
-            >- disposeBag.addDisposable
+            .addDisposableTo(disposeBag)
         
         sliderValue.rx_text
-            >- subscribeNext { value in
+            .subscribeNext { value in
                 let doubleValue = value.toDouble() ?? 0.0
                 self.slider.doubleValue = doubleValue
                 self.sliderValue.stringValue = "\(Int(doubleValue))"
             }
-            >- disposeBag.addDisposable
+            .addDisposableTo(disposeBag)
         
         disposeButton.rx_tap
-            >- subscribeNext { [unowned self] _ in
+            .subscribeNext { [unowned self] _ in
                 print("Unbound everything")
                 self.disposeBag = DisposeBag()
             }
-            >- disposeBag.addDisposable
+            .addDisposableTo(disposeBag)
     }
     
 }

@@ -19,23 +19,23 @@ class VariableTest : RxTest {
         
         var latestValue: Int?
         
-        let subscription = c >- subscribeNext { next in
+        let subscription = c .subscribeNext { next in
             latestValue = next
         }
         
         XCTAssertEqual(latestValue!, 3)
         
-        a.next(5)
+        a.sendNext(5)
 
         XCTAssertEqual(latestValue!, 7)
         
-        b.next(9)
+        b.sendNext(9)
 
         XCTAssertEqual(latestValue!, 14)
         
         subscription.dispose()
         
-        a.next(10)
+        a.sendNext(10)
 
         XCTAssertEqual(latestValue!, 14)
     }
@@ -48,25 +48,25 @@ class VariableTest : RxTest {
         
         var latestValue: Int?
         
-        let subscription = c >- subscribeNext { next in
+        let subscription = c .subscribeNext { next in
             latestValue = next
         }
         
         XCTAssertEqual(latestValue!, 3)
         
-        a.next(5)
+        a.sendNext(5)
         
         XCTAssertEqual(latestValue!, 7)
         
         sendError(b, testError)
         
-        b.next(9)
+        b.sendNext(9)
         
         XCTAssertEqual(latestValue!, 7)
         
         subscription.dispose()
         
-        a.next(10)
+        a.sendNext(10)
         
         XCTAssertEqual(latestValue!, 7)
     }
@@ -79,25 +79,25 @@ class VariableTest : RxTest {
         
         var latestValue: Int?
         
-        let subscription = c >- subscribeNext { next in
+        let subscription = c .subscribeNext { next in
             latestValue = next
         }
         
         XCTAssertEqual(latestValue!, 3)
         
-        a.next(5)
+        a.sendNext(5)
         
         XCTAssertEqual(latestValue!, 7)
         
         sendError(b, testError)
         
-        b.next(9)
+        b.sendNext(9)
         
         XCTAssertEqual(latestValue!, 7)
         
         subscription.dispose()
         
-        a.next(10)
+        a.sendNext(10)
         
         XCTAssertEqual(latestValue!, 7)
     }
@@ -122,10 +122,10 @@ class VariableTest : RxTest {
         // because variables have initial values (starting element)
         var latestValueOfC : Int? = nil
         // let _ = doesn't retain.
-        let d/*: Disposable*/  = c >- subscribeNext { c in
+        let d/*: Disposable*/  = c .subscribeNext { c in
             //print("Next value of c = \(c)")
             latestValueOfC = c
-        } >- scopedDispose
+        } .scopedDispose
         
         justUseIt(d)
         
@@ -133,13 +133,13 @@ class VariableTest : RxTest {
         
         // This will print:
         //      Next value of c = 5
-        a.next(3)
+        a.sendNext(3)
         
         XCTAssertEqual(latestValueOfC!, 5)
         
         // This will print:
         //      Next value of c = 8
-        b.next(5)
+        b.sendNext(5)
         
         XCTAssertEqual(latestValueOfC!, 8)
     }

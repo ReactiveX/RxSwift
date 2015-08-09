@@ -40,7 +40,7 @@ class ConnectableObservable<SourceType, ResultType> : ConnectableObservableType<
     var connection: ConnectionType?
     
     init(source: Observable<SourceType>, subject: SubjectType<SourceType, ResultType>) {
-        self.source = asObservable(source)
+        self.source = source.asObservable()
         self.subject = subject
         self.connection = nil
     }

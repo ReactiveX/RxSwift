@@ -20,19 +20,6 @@ public var resourceCount: Int32 = 0
 public var numberOfSerialDispatchQueueObservables: Int32 = 0
 #endif
 
-// This is the pipe operator (left associative function application operator)
-//      a >- b >- c  ==   c(b(a))
-// The reason this one is chosen for now is because
-//  * It's subtle, doesn't add a lot of visual noise
-//  * It's short
-//  * It kind of looks like ASCII art horizontal sink to the right
-//
-infix operator >- { associativity left precedence 91 }
-
-public func >- <In, Out>(lhs: In, @noescape rhs: In -> Out) -> Out {
-    return rhs(lhs)
-}
-
 func contract(@autoclosure  condition: () -> Bool) {
     if !condition() {
         let exception = NSException(name: "ContractError", reason: "Contract failed", userInfo: nil)

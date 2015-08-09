@@ -18,13 +18,13 @@ func sampleWithoutConnectableOperators() {
     let int1 = interval(1, MainScheduler.sharedInstance)
     
     int1
-        >- subscribeNext {
+        .subscribeNext {
             print("first subscription \($0)")
     }
     
     delay(5) {
         int1
-            >- subscribeNext {
+            .subscribeNext {
                 print("second subscription \($0)")
         }
     }
@@ -44,15 +44,15 @@ nc sampleWithMulticast() {
     let subject1 = PublishSubject<Int64>()
     
     subject1
-        >- subscribeNext {
+        .subscribeNext {
             print("Subject \($0)")
         }
     
     let int1 = interval(1, MainScheduler.sharedInstance)
-        >- multicast(subject1)
+        .multicast(subject1)
     
     int1
-        >- subscribeNext {
+        .subscribeNext {
             print("first subscription \($0)")
     }
     
@@ -62,7 +62,7 @@ nc sampleWithMulticast() {
     
     delay(4) {
         int1
-            >- subscribeNext {
+            .subscribeNext {
                 print("second subscription \($0)")
                 print("---")
         }
@@ -70,7 +70,7 @@ nc sampleWithMulticast() {
     
     delay(6) {
         int1
-            >- subscribeNext {
+            .subscribeNext {
                 print("thirth subscription \($0)")
         }
     }
@@ -95,10 +95,10 @@ publish = multicast + replay subject
 ithReplayBuffer0() {
     
     let int1 = interval(1, MainScheduler.sharedInstance)
-        >- replay(0)
+        .replay(0)
     
     int1
-        >- subscribeNext {
+        .subscribeNext {
             print("first subscription \($0)")
     }
     
@@ -108,7 +108,7 @@ ithReplayBuffer0() {
     
     delay(4) {
         int1
-            >- subscribeNext {
+            .subscribeNext {
                 print("second subscription \($0)")
                 print("---")
         }
@@ -116,7 +116,7 @@ ithReplayBuffer0() {
     
     delay(6) {
         int1
-            >- subscribeNext {
+            .subscribeNext {
                 print("thirth subscription \($0)")
         }
     }
@@ -131,10 +131,10 @@ func sampleWithReplayBuffer2() {
     print("--- sampleWithReplayBuffer2 ---\n")
     
     let int1 = interval(1, MainScheduler.sharedInstance)
-        >- replay(2)
+        .replay(2)
     
     int1
-        >- subscribeNext {
+        .subscribeNext {
             print("first subscription \($0)")
     }
     
@@ -144,7 +144,7 @@ func sampleWithReplayBuffer2() {
     
     delay(4) {
         int1
-            >- subscribeNext {
+            .subscribeNext {
                 print("second subscription \($0)")
                 print("---")
         }
@@ -152,7 +152,7 @@ func sampleWithReplayBuffer2() {
     
     delay(6) {
         int1
-            >- subscribeNext {
+            .subscribeNext {
                 print("third subscription \($0)")
         }
     }
@@ -178,10 +178,10 @@ so publish is basically replay(0)
 */
  
     let int1 = interval(1, MainScheduler.sharedInstance)
-        >- publish
+        .publish
     
     int1
-        >- subscribeNext {
+        .subscribeNext {
             print("first subscription \($0)")
     }
     
@@ -191,7 +191,7 @@ so publish is basically replay(0)
     
     delay(4) {
         int1
-            >- subscribeNext {
+            .subscribeNext {
                 print("second subscription \($0)")
                 print("---")
         }
@@ -199,7 +199,7 @@ so publish is basically replay(0)
     
     delay(6) {
         int1
-            >- subscribeNext {
+            .subscribeNext {
                 print("third subscription \($0)")
         }
     }

@@ -22,7 +22,9 @@ public class CollectionViewImageCell: UICollectionViewCell {
         didSet {
             let disposeBag = DisposeBag()
             
-            self.image >- imageOutlet.rx_subscribeImageTo(true) >- disposeBag.addDisposable
+            self.image
+                .subscribeImageOf(imageOutlet, animated: true)
+                .addDisposableTo(disposeBag)
             
             self.disposeBag = disposeBag
         }

@@ -43,10 +43,10 @@ class TableViewController: ViewController, UITableViewDelegate {
         // This is for demonstration purposes of UITableViewDelegate/DataSource
         // only, try to not do something like this in your app
         allUsers
-            >- subscribeNext { [unowned self] n in
+            .subscribeNext { [unowned self] n in
                 self.allSections = n
             }
-            >- disposeBag.addDisposable
+            .disposeBag.addDisposable
         
         dataSource.cellFactory = { (tv, ip, user: User) in
             let cell = tv.dequeueReusableCellWithIdentifier("Cell")!
@@ -60,45 +60,45 @@ class TableViewController: ViewController, UITableViewDelegate {
         
         // reactive data source
         allUsers
-            >- tableView.rx_subscribeWithReactiveDataSource(dataSource)
-            >- disposeBag.addDisposable
+            .tableView.rx_subscribeWithReactiveDataSource(dataSource)
+            .disposeBag.addDisposable
         
         // customization using delegate
         // RxTableViewDelegateBridge will forward correct messages
         tableView.rx_setDelegate(self)
-            >- disposeBag.addDisposable
+            .disposeBag.addDisposable
         
         tableView.rx_itemSelected
-            >- subscribeNext { [unowned self] indexPath in
+            .subscribeNext { [unowned self] indexPath in
                 self.showDetailsForUserAtIndexPath(indexPath)
             }
-            >- disposeBag.addDisposable
+            .disposeBag.addDisposable
         
         tableView.rx_itemDeleted
-            >- subscribeNext { [unowned self] indexPath in
+            .subscribeNext { [unowned self] indexPath in
                 self.removeUser(indexPath)
             }
-            >- disposeBag.addDisposable
+            .disposeBag.addDisposable
         
         tableView.rx_itemMoved
-            >- subscribeNext { [unowned self] (s, d) in
+            .subscribeNext { [unowned self] (s, d) in
                 self.moveUserFrom(s, to: d)
             }
-            >- disposeBag.addDisposable
+            .disposeBag.addDisposable
         
         // Rx content offset
         tableView.rx_contentOffset
-            >- subscribeNext { co in
+            .subscribeNext { co in
                 print("Content offset from Rx observer \(co)")
             }
         
         RandomUserAPI.sharedAPI.getExampleUserResultSet()
-            >- subscribeNext { [unowned self] array in
-                self.users.next(array)
+            .subscribeNext { [unowned self] array in
+                self.users.sendNext(array)
             }
-            >- disposeBag.addDisposable
+            .disposeBag.addDisposable
         
-        favoriteUsers.next([User(firstName: "Super", lastName: "Man", imageURL: "http://nerdreactor.com/wp-content/uploads/2015/02/Superman1.jpg")])
+        favoriteUsers.sendNext([User(firstName: "Super", lastName: "Man", imageURL: "http://nerdreactor.com/wp-content/uploads/2015/02/Superman1.jpg")])
     }
     
     override func setEditing(editing: Bool, animated: Bool) {
@@ -162,11 +162,11 @@ class TableViewController: ViewController, UITableViewDelegate {
         case 0:
             fromArray = favoriteUsers.value
             user = fromArray.removeAtIndex(from.row)
-            favoriteUsers.next(fromArray)
+            favoriteUsers.sendNext(fromArray)
         case 1:
             fromArray = users.value
             user = fromArray.removeAtIndex(from.row)
-            users.next(fromArray)
+            users.sendNext(fromArray)
         default:
             fatalError("Section out of range")
         }
@@ -176,11 +176,11 @@ class TableViewController: ViewController, UITableViewDelegate {
         case 0:
             toArray = favoriteUsers.value
             toArray.insert(user, atIndex: to.row)
-            favoriteUsers.next(toArray)
+            favoriteUsers.sendNext(toArray)
         case 1:
             toArray = users.value
             toArray.insert(user, atIndex: to.row)
-            users.next(toArray)
+            users.sendNext(toArray)
         default:
             fatalError("Section out of range")
         }
@@ -189,7 +189,7 @@ class TableViewController: ViewController, UITableViewDelegate {
     func addUser(user: User) {
         var array = users.value
         array.append(user)
-        users.next(array)
+        users.sendNext(array)
     }
     
     func removeUser(indexPath: NSIndexPath) {
@@ -198,11 +198,11 @@ class TableViewController: ViewController, UITableViewDelegate {
         case 0:
             array = favoriteUsers.value
             array.removeAtIndex(indexPath.row)
-            favoriteUsers.next(array)
+            favoriteUsers.sendNext(array)
         case 1:
             array = users.value
             array.removeAtIndex(indexPath.row)
-            users.next(array)
+            users.sendNext(array)
         default:
             fatalError("Section out of range")
         }

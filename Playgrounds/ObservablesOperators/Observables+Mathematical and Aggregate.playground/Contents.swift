@@ -25,28 +25,28 @@ example("concat") {
     let var3 = Variable(var1 as Observable<Int>)
     
     let d = var3
-        >- concat
-        >- subscribeNext { (e: Int) -> Void in
+        .concat
+        .subscribeNext { (e: Int) -> Void in
             print("\(e)")
     }
     
-    var1.next(1)
-    var1.next(2)
-    var1.next(3)
-    var1.next(4)
+    var1.sendNext(1)
+    var1.sendNext(2)
+    var1.sendNext(3)
+    var1.sendNext(4)
     
-    var3.next(var2)
+    var3.sendNext(var2)
     
-    var2.next(201)
+    var2.sendNext(201)
     
-    var1.next(5)
-    var1.next(6)
-    var1.next(7)
+    var1.sendNext(5)
+    var1.sendNext(6)
+    var1.sendNext(7)
     sendCompleted(var1)
     
-    var2.next(202)
-    var2.next(203)
-    var2.next(204)
+    var2.sendNext(202)
+    var2.sendNext(203)
+    var2.sendNext(204)
 }
 
 
@@ -61,9 +61,6 @@ This function will perform a function on each element in the sequence until it i
 
 */
 xample("aggregate") {
-    let aggregateSubscriber = returnElements(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
-        >- aggregate(0, +)
-        >- subscribeNext { value in
-            print("\(value)")
-    }
-}
+    let aggregateSubscriber = sequence(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
+        .aggregate(0, +)
+        .subscribeNext { value

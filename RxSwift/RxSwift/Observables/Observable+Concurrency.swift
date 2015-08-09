@@ -8,38 +8,42 @@
 
 import Foundation
 
-// `observeSingleOn` assumes that observed sequence will have one element
-// and in cases it has more than one element it will throw an exception.
-//
-// Most common use case for `observeSingleOn` would be to execute some work on background thread
-// and return result to main thread.
-//
-// This is a performance gain considering general case.
-public func observeSingleOn<E>
-    (scheduler: ImmediateScheduler)
-    -> Observable<E> -> Observable<E> {
-    return { source in
-        return ObserveSingleOn(source: source, scheduler: scheduler)
+// observeOnSingle
+
+extension ObservableType {
+    // `observeSingleOn` assumes that observed sequence will have one element
+    // and in cases it has more than one element it will throw an exception.
+    //
+    // Most common use case for `observeSingleOn` would be to execute some work on background thread
+    // and return result to main thread.
+    //
+    // This is a performance gain considering general case.
+    public func observeSingleOn(scheduler: ImmediateScheduler)
+        -> Observable<E> {
+        return ObserveSingleOn(source: self.normalize(), scheduler: scheduler)
     }
 }
 
-public func observeOn<E>
-    (scheduler: ImmediateScheduler)
-    -> Observable<E> -> Observable<E> {
-    return { source in
+// observeOn
+
+extension ObservableType {
+
+    public func observeOn(scheduler: ImmediateScheduler)
+        -> Observable<E> {
         if let scheduler = scheduler as? SerialDispatchQueueScheduler {
-            return ObserveOnSerialDispatchQueue(source: source, scheduler: scheduler)
+            return ObserveOnSerialDispatchQueue(source: self.normalize(), scheduler: scheduler)
         }
         else {
-            return ObserveOn(source: source, scheduler: scheduler)
+            return ObserveOn(source: self.normalize(), scheduler: scheduler)
         }
     }
 }
 
-public func subscribeOn<E>
-    (scheduler: ImmediateScheduler)
-    -> Observable<E> -> Observable<E> {
-    return { source in
-        return SubscribeOn(source: source, scheduler: scheduler)
+// subscribeOn
+
+extension ObservableType {
+    public func subscribeOn(scheduler: ImmediateScheduler)
+        -> Observable<E> {
+        return SubscribeOn(source: self.normalize(), scheduler: scheduler)
     }
 }

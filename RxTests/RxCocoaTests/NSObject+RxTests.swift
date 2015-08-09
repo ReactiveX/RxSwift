@@ -23,10 +23,10 @@ extension NSObjectTests {
         var fired = false
         
         a.rx_deallocated
-            >- map { _ in
+            .map { _ in
                 return 1
             }
-            >- subscribeNext { _ in
+            .subscribeNext { _ in
                 fired = true
             }
         
@@ -43,10 +43,10 @@ extension NSObjectTests {
         var fired = false
         
         a.rx_deallocated
-            >- map { _ in
+            .map { _ in
                 return 1
             }
-            >- subscribeCompleted {
+            .subscribeCompleted {
                 fired = true
             }
         
@@ -63,13 +63,13 @@ extension NSObjectTests {
         var fired = false
         
         a.rx_deallocated
-            >- map { _ in
+            .map { _ in
                 return 1
             }
-            >- subscribeNext { _ in
+            .subscribeNext { _ in
                 fired = true
             }
-            >- scopedDispose
+            .scopedDispose
         
         XCTAssertFalse(fired)
         
@@ -88,10 +88,10 @@ extension NSObjectTests {
         var fired = false
         
         a.rx_deallocating
-            >- map { _ in
+            .map { _ in
                 return 1
             }
-            >- subscribeNext { _ in
+            .subscribeNext { _ in
                 fired = true
             }
         
@@ -108,10 +108,10 @@ extension NSObjectTests {
         var fired = false
         
         a.rx_deallocating
-            >- map { _ in
+            .map { _ in
                 return 1
             }
-            >- subscribeCompleted {
+            .subscribeCompleted {
                 fired = true
             }
         
@@ -128,13 +128,13 @@ extension NSObjectTests {
         var fired = false
         
         a.rx_deallocating
-            >- map { _ in
+            .map { _ in
                 return 1
             }
-            >- subscribeNext { _ in
+            .subscribeNext { _ in
                 fired = true
             }
-            >- scopedDispose
+            .scopedDispose
         
         XCTAssertFalse(fired)
         

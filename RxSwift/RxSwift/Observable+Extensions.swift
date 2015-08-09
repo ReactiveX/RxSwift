@@ -8,39 +8,32 @@
 
 import Foundation
 
-public func subscribe<E>
-    (on: (event: Event<E>) -> Void)
-    -> (Observable<E> -> Disposable) {
-    return { source in
+extension ObservableType {
+    public func subscribe(on: (event: Event<E>) -> Void)
+        -> Disposable {
         let observer = AnonymousObserver { e in
             on(event: e)
         }
-        return source.subscribeSafe(observer)
+        return self.subscribeSafe(observer)
     }
-}
 
-public func subscribe<E>
-    (next: (E) -> Void, error: (ErrorType) -> Void, completed: () -> Void)
-    -> (Observable<E> -> Disposable) {
-    return { source in
+    public func subscribe(next: ((E) -> Void)? = nil, error: ((ErrorType) -> Void)? = nil, completed: (() -> Void)? = nil)
+        -> Disposable {
         let observer = AnonymousObserver<E> { e in
             switch e {
             case .Next(let value):
-                next(value)
+                next?(value)
             case .Error(let e):
-                error(e)
+                error?(e)
             case .Completed:
-                completed()
+                completed?()
             }
         }
-        return source.subscribeSafe(observer)
+        return self.subscribeSafe(observer)
     }
-}
 
-public func subscribeNext<E>
-    (onNext: (E) -> Void)
-    -> (Observable<E>) -> Disposable {
-    return { source in
+    public func subscribeNext(onNext: (E) -> Void)
+        -> Disposable {
         let observer = AnonymousObserver<E> { e in
             switch e {
             case .Next(let value):
@@ -49,14 +42,11 @@ public func subscribeNext<E>
                 break
             }
         }
-        return source.subscribeSafe(observer)
+        return self.subscribeSafe(observer)
     }
-}
 
-public func subscribeError<E>
-    (onError: (ErrorType) -> Void)
-    -> (Observable<E> -> Disposable) {
-    return { source in
+    public func subscribeError(onError: (ErrorType) -> Void)
+        -> Disposable {
         let observer = AnonymousObserver<E> { e in
             switch e {
             case .Error(let error):
@@ -65,14 +55,11 @@ public func subscribeError<E>
                 break
             }
         }
-        return source.subscribeSafe(observer)
+        return self.subscribeSafe(observer)
     }
-}
 
-public func subscribeCompleted<E>
-    (onCompleted: () -> Void)
-    -> (Observable<E> -> Disposable) {
-    return { source in
+    public func subscribeCompleted(onCompleted: () -> Void)
+        -> Disposable {
         let observer = AnonymousObserver<E> { e in
             switch e {
             case .Completed:
@@ -81,11 +68,11 @@ public func subscribeCompleted<E>
                 break
             }
         }
-        return source.subscribeSafe(observer)
+        return self.subscribeSafe(observer)
     }
 }
 
-public extension Observable {
+public extension ObservableType {
     /*
     Observables can really be anything, implemented by anyone and hooked into large `Observable` chains.
 
@@ -101,7 +88,7 @@ public extension Observable {
     `Producers` are special kind of observables that need to make sure that message grammar is respected.
     
     */
-    public func subscribeSafe<O: ObserverType where O.Element == Element>(observer: O) -> Disposable {
+    public func subscribeSafe<O: ObserverType where O.Element == E>(observer: O) -> Disposable {
         if let source = self as? Producer<O.Element> {
             return source.subscribeRaw(observer, enableSafeguard: false)
         }

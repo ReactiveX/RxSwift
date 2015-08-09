@@ -10,102 +10,83 @@ import Foundation
 
 // as observable
 
-public func asObservable<E>
-    (source: Observable<E>) -> Observable<E> {
-    if let asObservable = source as? AsObservable<E> {
-        return asObservable.omega()
-    }
-    else {
-        return AsObservable(source: source)
+extension ObservableType {
+    public func asObservable() -> Observable<E> {
+        if let asObservable = self as? AsObservable<E> {
+            return asObservable.omega()
+        }
+        else {
+            return AsObservable(source: self.normalize())
+        }
     }
 }
 
 // distinct until changed
 
-public func distinctUntilChangedOrDie<E: Equatable>(source: Observable<E>)
-    -> Observable<E> {
-    return distinctUntilChangedOrDie({ success($0) }, { success($0 == $1) })(source)
-}
+extension ObservableType where E: Equatable {
+    public func distinctUntilChangedOrDie()
+        -> Observable<E> {
+        return self.distinctUntilChangedOrDie({ success($0) }, { success($0 == $1) })
+    }
 
-public func distinctUntilChangedOrDie<E, K: Equatable>
-    (keySelector: (E) -> RxResult<K>)
-    -> (Observable<E> -> Observable<E>) {
-    return { source in
-        return distinctUntilChangedOrDie(keySelector, { success($0 == $1) })(source)
+    public func distinctUntilChanged()
+        -> Observable<E> {
+        return self.distinctUntilChanged({ $0 }, { ($0 == $1) })
     }
 }
 
-public func distinctUntilChangedOrDie<E>
-    (comparer: (lhs: E, rhs: E) -> RxResult<Bool>)
-    -> (Observable<E> -> Observable<E>) {
-    return { source in
-        return distinctUntilChangedOrDie({ success($0) }, comparer)(source)
+extension ObservableType {
+    public func distinctUntilChangedOrDie<K: Equatable>(keySelector: (E) -> RxResult<K>)
+        -> Observable<E> {
+        return self.distinctUntilChangedOrDie(keySelector, { success($0 == $1) })
     }
-}
 
-public func distinctUntilChangedOrDie<E, K>
-    (keySelector: (E) -> RxResult<K>, _ comparer: (lhs: K, rhs: K) -> RxResult<Bool>)
-    -> (Observable<E> -> Observable<E>) {
-    return { source in
-        return DistinctUntilChanged(source: source, selector: keySelector, comparer: comparer)
+    public func distinctUntilChangedOrDie(comparer: (lhs: E, rhs: E) -> RxResult<Bool>)
+        -> Observable<E> {
+        return self.distinctUntilChangedOrDie({ success($0) }, comparer)
     }
-}
 
-public func distinctUntilChanged<E: Equatable>(source: Observable<E>)
-    -> Observable<E> {
-    return distinctUntilChanged({ $0 }, { ($0 == $1) })(source)
-        
-}
-
-public func distinctUntilChanged<E, K: Equatable>
-    (keySelector: (E) -> K)
-    -> (Observable<E> -> Observable<E>) {
-    return { source in
-        return distinctUntilChanged(keySelector, { ($0 == $1) })(source)
+    public func distinctUntilChangedOrDie<K>(keySelector: (E) -> RxResult<K>, _ comparer: (lhs: K, rhs: K) -> RxResult<Bool>)
+        -> Observable<E> {
+        return DistinctUntilChanged(source: self.normalize(), selector: keySelector, comparer: comparer)
     }
-}
 
-public func distinctUntilChanged<E>
-    (comparer: (lhs: E, rhs: E) -> Bool)
-    -> (Observable<E> -> Observable<E>) {
-    return { source in
-        return distinctUntilChanged({ ($0) }, comparer)(source)
+    public func distinctUntilChanged<K: Equatable>(keySelector: (E) -> K)
+        -> Observable<E> {
+        return distinctUntilChanged(keySelector, { ($0 == $1) })
     }
-}
 
-public func distinctUntilChanged<E, K>
-    (keySelector: (E) -> K, _ comparer: (lhs: K, rhs: K) -> Bool)
-    -> (Observable<E> -> Observable<E>) {
-    return { source in
-        return DistinctUntilChanged(source: source, selector: {success(keySelector($0)) }, comparer: { success(comparer(lhs: $0, rhs: $1))})
+    public func distinctUntilChanged(comparer: (lhs: E, rhs: E) -> Bool)
+        -> Observable<E> {
+        return distinctUntilChanged({ ($0) }, comparer)
+    }
+
+    public func distinctUntilChanged<K>(keySelector: (E) -> K, _ comparer: (lhs: K, rhs: K) -> Bool)
+        -> Observable<E> {
+        return DistinctUntilChanged(source: self.normalize(), selector: {success(keySelector($0)) }, comparer: { success(comparer(lhs: $0, rhs: $1))})
     }
 }
 
 // do
 
-public func doOrDie<E>
-    (eventHandler: (Event<E>) -> RxResult<Void>)
-    -> (Observable<E> -> Observable<E>) {
-    return { source in
-        return Do(source: source, eventHandler: eventHandler)
+extension ObservableType {
+    public func doOrDie(eventHandler: (Event<E>) -> RxResult<Void>)
+        -> Observable<E> {
+        return Do(source: self.normalize(), eventHandler: eventHandler)
     }
-}
 
-public func `do`<E>
-    (eventHandler: (Event<E>) -> Void)
-    -> (Observable<E> -> Observable<E>) {
-    return { source in
-        return Do(source: source, eventHandler: { success(eventHandler($0)) })
+    public func `do`(eventHandler: (Event<E>) -> Void)
+        -> Observable<E> {
+        return Do(source: self.normalize(), eventHandler: { success(eventHandler($0)) })
     }
 }
 
 // doOnNext
 
-public func doOnNext<E>
-    (actionOnNext: E -> Void)
-    -> (Observable<E> -> Observable<E>) {
-    return { source in
-        return source >- `do` { event in
+extension ObservableType {
+    public func doOnNext(actionOnNext: E -> Void)
+        -> Observable<E> {
+        return self.`do` { event in
             switch event {
             case .Next(let value):
                 actionOnNext(value)
@@ -118,47 +99,39 @@ public func doOnNext<E>
 
 // startWith
 
-// Prefixes observable sequence with `firstElement` element.
-// The same functionality could be achieved using `concat([returnElement(prefix), source])`,
-// but this is significantly more efficient implementation.
-public func startWith<E>
-    (firstElement: E)
-    -> (Observable<E> -> Observable<E>) {
-    return { source in
-        return StartWith(source: source, element: firstElement)
+extension ObservableType {
+    // Prefixes observable sequence with `firstElement` element.
+    // The same functionality could be achieved using `concat([just(prefix), source])`,
+    // but this is significantly more efficient implementation.
+    public func startWith(firstElement: E)
+        -> Observable<E> {
+        return StartWith(source: self.normalize(), element: firstElement)
     }
 }
 
 // retry
 
-public func retry<E>
-    (source: Observable<E>)
-    -> Observable<E> {
-    return AnySequence(InifiniteSequence(repeatedValue: source)) >- onError
-}
+extension ObservableType {
+    public var retry: Observable<E> {
+        return CatchSequence(sources: AnySequence(InifiniteSequence(repeatedValue: self.normalize())))
+    }
 
-public func retry<E>
-    (retryCount: Int)
-    -> Observable<E> -> Observable<E> {
-    return { source in
-        return AnySequence(Repeat(count: retryCount, repeatedValue: source)) >- onError 
+    public func retry(retryCount: Int)
+        -> Observable<E> {
+        return CatchSequence(sources: AnySequence(Repeat(count: retryCount, repeatedValue: self.normalize())))
     }
 }
 
 // scan
 
-public func scan<E, A>
-    (seed: A, accumulator: (A, E) -> A)
-    -> Observable<E> -> Observable<A> {
-    return { source in
-        return Scan(source: source, seed: seed, accumulator: { success(accumulator($0, $1)) })
+extension ObservableType {
+    public func scan<A>(seed: A, accumulator: (A, E) -> A)
+        -> Observable<A> {
+        return Scan(source: self.normalize(), seed: seed, accumulator: { success(accumulator($0, $1)) })
     }
-}
 
-public func scanOrDie<E, A>
-    (seed: A, accumulator: (A, E) -> RxResult<A>)
-    -> Observable<E> -> Observable<A> {
-    return { source in
-        return Scan(source: source, seed: seed, accumulator: accumulator)
+    public func scanOrDie<A>(seed: A, accumulator: (A, E) -> RxResult<A>)
+        -> Observable<A> {
+        return Scan(source: self.normalize(), seed: seed, accumulator: accumulator)
     }
 }

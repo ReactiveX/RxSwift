@@ -8,6 +8,13 @@
 
 import Foundation
 
+extension Disposable {
+    public var scopedDispose: ScopedDispose {
+        return ScopedDispose(disposable: self)
+    }
+}
+
+
 // It will dispose `disposable` on `deinit`.
 // This returns ARC (RAII) like resource management to `RxSwift`.
 public class ScopedDispose : DisposeBase {
@@ -25,8 +32,4 @@ public class ScopedDispose : DisposeBase {
     deinit {
         self.dispose()
     }
-}
-
-public func scopedDispose(disposable: Disposable) -> ScopedDispose {
-    return ScopedDispose(disposable: disposable)
 }

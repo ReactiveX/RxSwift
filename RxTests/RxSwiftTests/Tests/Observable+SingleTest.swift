@@ -31,7 +31,7 @@ extension ObservableSingleTest {
             completed(250)
         ])
         
-        let ys = asObservable(xs)
+        let ys = xs.asObservable()
         
         XCTAssert(xs !== ys)
         
@@ -49,7 +49,7 @@ extension ObservableSingleTest {
     func testAsObservable_hides() {
         let xs : Observable<Int> = empty()
         
-        let res = asObservable(xs)
+        let res = xs.asObservable()
         
         XCTAssertTrue(res !== xs)
     }
@@ -83,7 +83,7 @@ extension ObservableSingleTest {
             completed(250)
         ])
         
-        let res = scheduler.start { xs >- distinctUntilChanged { $0 } }
+        let res = scheduler.start { xs.distinctUntilChanged { $0 } }
 
         let correctMessages = [
             next(210, 2),
@@ -117,7 +117,7 @@ extension ObservableSingleTest {
             ])
 
 
-        let res = scheduler.start { xs >- distinctUntilChanged { $0 } }
+        let res = scheduler.start { xs.distinctUntilChanged { $0 } }
         
         let correctMessages = [
             next(210, 2),
@@ -148,7 +148,7 @@ extension ObservableSingleTest {
             completed(250)
             ])
         
-        let res = scheduler.start { xs >- distinctUntilChanged { l, r in true } }
+        let res = scheduler.start { xs.distinctUntilChanged { l, r in true } }
         
         let correctMessages = [
             next(210, 2),
@@ -182,7 +182,7 @@ extension ObservableSingleTest {
     
         var i = 0
         var sum = 2 + 3 + 4 + 5
-        let res = scheduler.start { xs >- `do` { e in
+        let res = scheduler.start { xs.`do` { e in
                 switch e {
                 case .Next(let _):
                     i++
@@ -225,7 +225,7 @@ extension ObservableSingleTest {
             ])
         
         var i = 0
-        let res = scheduler.start { xs >- `do` { e in
+        let res = scheduler.start { xs.`do` { e in
             switch e {
             case .Next(_):
                 i++
@@ -267,7 +267,7 @@ extension ObservableSingleTest {
         var i = 0
         var sum = 2 + 3 + 4 + 5
         var completedEvaluation = false
-        let res = scheduler.start { xs >- `do` { e in
+        let res = scheduler.start { xs.`do` { e in
             switch e {
             case .Next(let value):
                 i++
@@ -309,7 +309,7 @@ extension ObservableSingleTest {
         
         var i = 0
         var completedEvaluation = false
-        let res = scheduler.start { xs >- `do` { e in
+        let res = scheduler.start { xs.`do` { e in
             switch e {
             case .Next(_):
                 i++
@@ -349,7 +349,7 @@ extension ObservableSingleTest {
         var i = 0
         var sum = 2 + 3 + 4 + 5
         var sawError = false
-        let res = scheduler.start { xs >- `do` { e in
+        let res = scheduler.start { xs.`do` { e in
             switch e {
             case .Next(let value):
                 i++
@@ -396,7 +396,7 @@ extension ObservableSingleTest {
         var i = 0
         var sum = 2 + 3 + 4 + 5
         var sawError = false
-        let res = scheduler.start { xs >- `do` { e in
+        let res = scheduler.start { xs.`do` { e in
             switch e {
             case .Next(let value):
                 i++
@@ -444,7 +444,7 @@ extension ObservableSingleTest {
             ])
         
         let res = scheduler.start {
-            xs >- retry
+            xs.retry
         }
         
         XCTAssertEqual(res.messages, [
@@ -469,7 +469,7 @@ extension ObservableSingleTest {
             ])
         
         let res = scheduler.start {
-            xs >- retry
+            xs.retry
         }
         
         XCTAssertEqual(res.messages, [
@@ -494,7 +494,7 @@ extension ObservableSingleTest {
             ])
         
         let res = scheduler.start(1100) {
-            xs >- retry
+            xs.retry
         }
         
         XCTAssertEqual(res.messages, [
@@ -529,7 +529,7 @@ extension ObservableSingleTest {
             ])
         
         let res = scheduler.start {
-            xs >- retry(3)
+            xs.retry(3)
         }
         
         XCTAssertEqual(res.messages, [
@@ -563,7 +563,7 @@ extension ObservableSingleTest {
             ])
         
         let res = scheduler.start(231) {
-            xs >- retry(3)
+            xs.retry(3)
         }
         
         XCTAssertEqual(res.messages, [
@@ -591,7 +591,7 @@ extension ObservableSingleTest {
             ])
         
         let res = scheduler.start(231) {
-            xs >- retry(3)
+            xs.retry(3)
         }
         
         XCTAssertEqual(res.messages, [
@@ -619,7 +619,7 @@ extension ObservableSingleTest {
             ])
         
         let res = scheduler.start {
-            xs >- retry(3)
+            xs.retry(3)
         }
         
         XCTAssertEqual(res.messages, [
@@ -648,7 +648,7 @@ extension ObservableSingleTest {
         let seed = 42
         
         let res = scheduler.start {
-            xs >- scan(seed) { $0 + $1 }
+            xs.scan(seed) { $0 + $1 }
         }
         
         XCTAssertEqual(res.messages, [
@@ -670,7 +670,7 @@ extension ObservableSingleTest {
         let seed = 42
         
         let res = scheduler.start {
-            xs >- scan(seed) { $0 + $1 }
+            xs.scan(seed) { $0 + $1 }
         }
         
         XCTAssertEqual(res.messages, [
@@ -694,7 +694,7 @@ extension ObservableSingleTest {
         let seed = 42
         
         let res = scheduler.start {
-            xs >- scan(seed) { $0 + $1 }
+            xs.scan(seed) { $0 + $1 }
         }
         
         XCTAssertEqual(res.messages, [
@@ -718,7 +718,7 @@ extension ObservableSingleTest {
         let seed = 42
         
         let res = scheduler.start {
-            xs >- scan(seed) { $0 + $1 }
+            xs.scan(seed) { $0 + $1 }
         }
         
         XCTAssertEqual(res.messages, [
@@ -745,7 +745,7 @@ extension ObservableSingleTest {
         let seed = 42
         
         let res = scheduler.start {
-            xs >- scan(seed) { $0 + $1 }
+            xs.scan(seed) { $0 + $1 }
         }
         
         let messages: [Recorded<Int>] = [
@@ -778,7 +778,7 @@ extension ObservableSingleTest {
         let seed = 42
         
         let res = scheduler.start {
-            xs >- scanOrDie(seed) { (a, e) in
+            xs.scanOrDie(seed) { (a, e) in
                 if e == 4 {
                     return failure(testError)
                 } else {

@@ -8,6 +8,12 @@
 
 import Foundation
 
+extension Disposable {
+    public func addDisposableTo(bag: DisposeBag) {
+        bag.addDisposable(self)
+    }
+}
+
 // Thread safe bag that disposes disposables that have been added to it on `deinit`.
 // This returns ARC (RAII) like resource management to `RxSwift`.
 public class DisposeBag: DisposeBase {

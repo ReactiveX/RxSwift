@@ -8,7 +8,9 @@
 
 import Foundation
 
-public class Observable<Element> {
+public class Observable<Element> : ObservableType {
+    public typealias E = Element
+    
     public init() {
 #if TRACE_RESOURCES
         OSAtomicIncrement32(&resourceCount)
@@ -16,8 +18,12 @@ public class Observable<Element> {
     }
     
     /// Subscribes `observer` to receive events from this observable
-    public func subscribe<O: ObserverType where O.Element == Element>(observer: O) -> Disposable {
+    public func subscribe<O: ObserverType where O.Element == E>(observer: O) -> Disposable {
         return abstractMethod()
+    }
+    
+    public func normalize() -> Observable<E> {
+        return self
     }
     
     deinit {
@@ -26,4 +32,3 @@ public class Observable<Element> {
 #endif
     }
 }
-

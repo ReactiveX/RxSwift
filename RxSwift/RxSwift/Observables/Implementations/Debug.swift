@@ -40,7 +40,7 @@ class Debug<Element> : Producer<Element> {
     
     let source: Observable<Element>
     
-    init(identifier: String, source: Observable<Element>) {
+    init(source: Observable<Element>, identifier: String) {
         self.identifier = identifier
         self.source = source
     }

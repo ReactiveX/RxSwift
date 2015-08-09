@@ -13,7 +13,7 @@ class ConnectableObservable<Element> : ConnectableObservableType<Element> {
     let _o: ConnectableObservableType<Element>
     
     init(o: Observable<Element>, s: SubjectType<Element, Element>) {
-        _o = o >- multicast(s)
+        _o = o .multicast(s)
         super.init()
     }
     
