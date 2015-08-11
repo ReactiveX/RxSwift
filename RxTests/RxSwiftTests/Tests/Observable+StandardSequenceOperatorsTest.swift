@@ -39,7 +39,7 @@ func isPrime(i: Int) -> Bool {
 // where
 
 extension ObservableStandardSequenceOperators  {
-    func test_whereComplete() {
+    func test_filterComplete() {
         let scheduler = TestScheduler(initialClock: 0)
         
         var invoked = 0
@@ -84,7 +84,7 @@ extension ObservableStandardSequenceOperators  {
         XCTAssertEqual(9, invoked)
     }
     
-    func test_whereTrue() {
+    func test_filterTrue() {
         let scheduler = TestScheduler(initialClock: 0)
         
         var invoked = 0
@@ -131,7 +131,7 @@ extension ObservableStandardSequenceOperators  {
         XCTAssertEqual(9, invoked)
     }
    
-    func test_whereFalse() {
+    func test_filterFalse() {
         let scheduler = TestScheduler(initialClock: 0)
         
         var invoked = 0
@@ -169,7 +169,7 @@ extension ObservableStandardSequenceOperators  {
         XCTAssertEqual(9, invoked)
     }
     
-    func test_whereDisposed() {
+    func test_filterDisposed() {
         let scheduler = TestScheduler(initialClock: 0)
         
         var invoked = 0
