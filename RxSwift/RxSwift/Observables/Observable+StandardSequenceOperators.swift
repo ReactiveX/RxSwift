@@ -62,24 +62,24 @@ extension ObservableType {
 // map aka select
 
 extension ObservableType {
-    public func mapOrDie<R>(selector: E -> RxResult<R>)
+    public func map<R>(selector: E throws -> R)
         -> Observable<R> {
         return Map(source: self.normalize(), selector: selector)
     }
 
     public func map<R>(selector: E -> R)
         -> Observable<R> {
-        return Map(source: self.normalize(), selector: { success(selector($0)) })
+        return Map(source: self.normalize(), selector: selector)
     }
 
-    public func mapWithIndexOrDie<R>(selector: (E, Int) -> RxResult<R>)
+    public func mapWithIndex<R>(selector: (E, Int) throws -> R)
         -> Observable<R> {
         return Map(source: self.normalize(), selector: selector)
     }
 
     public func mapWithIndex<R>(selector: (E, Int) -> R)
         -> Observable<R> {
-        return Map(source: self.normalize(), selector: { success(selector($0, $1)) })
+        return Map(source: self.normalize(), selector: selector)
     }
 }
     

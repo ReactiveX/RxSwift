@@ -772,7 +772,7 @@ extension ObservableStandardSequenceOperators {
             error(300, testError)
             ])
         
-        let res = scheduler.start { xs.mapOrDie { $0 < 2 ? success($0 * 2) : failure(testError) } }
+        let res = scheduler.start { xs.map { x throws -> Int in if x < 2 { return x * 2 } else { throw testError } } }
         
         let correctMessages: [Recorded<Int>] = [
             next(210, 0 * 2),
@@ -931,7 +931,7 @@ extension ObservableStandardSequenceOperators {
             error(300, testError)
             ])
         
-        let res = scheduler.start { xs.mapWithIndexOrDie { $0 < 7 ? success(($0 + $1) * 2) : failure(testError) } }
+        let res = scheduler.start { xs.mapWithIndex { x, i throws -> Int in if x < 7 { return ((x + i) * 2) } else { throw testError } } }
         
         let correctMessages: [Recorded<Int>] = [
             next(210, (5 + 0) * 2),

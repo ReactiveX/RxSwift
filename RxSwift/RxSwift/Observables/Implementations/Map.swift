@@ -20,7 +20,7 @@ class MapSink<SourceType, O : ObserverType> : Sink<O>, ObserverType {
         super.init(observer: observer, cancel: cancel)
     }
     
-    func select(element: SourceType) -> RxResult<ResultType> {
+    func performMap(element: SourceType) throws -> ResultType {
         return abstractMethod()
     }
 
@@ -29,19 +29,19 @@ class MapSink<SourceType, O : ObserverType> : Sink<O>, ObserverType {
         
         switch event {
         case .Next(let element):
-            select(element).flatMap { value in
-                trySendNext(observer, value)
-                return SuccessResult
-            }.recoverWith { e -> RxResult<Void> in
-                trySendError(observer, e)
+            do {
+                let mappedElement = try performMap(element)
+                observer?.on(.Next(mappedElement))
+            }
+            catch let e {
+                observer?.on(.Error(e))
                 self.dispose()
-                return SuccessResult
             }
         case .Error(let error):
-            trySendError(observer, error)
+            observer?.on(.Error(error))
             self.dispose()
         case .Completed:
-            trySendCompleted(observer)
+            observer?.on(.Completed)
             self.dispose()
         }
     }
@@ -54,8 +54,8 @@ class MapSink1<SourceType, O: ObserverType> : MapSink<SourceType, O> {
         super.init(parent: parent, observer: observer, cancel: cancel)
     }
     
-    override func select(element: SourceType) -> RxResult<ResultType> {
-        return (self.parent.selector1!)(element)
+    override func performMap(element: SourceType) throws -> ResultType {
+        return try self.parent.selector1!(element)
     }
 }
 
@@ -67,14 +67,14 @@ class MapSink2<SourceType, O: ObserverType> : MapSink<SourceType, O> {
     override init(parent: Map<SourceType, ResultType>, observer: O, cancel: Disposable) {
         super.init(parent: parent, observer: observer, cancel: cancel)
     }
-    override func select(element: SourceType) -> RxResult<ResultType> {
-        return (self.parent.selector2!)(element, index++)
+    override func performMap(element: SourceType) throws -> ResultType {
+        return try self.parent.selector2!(element, index++)
     }
 }
 
 class Map<SourceType, ResultType>: Producer<ResultType> {
-    typealias Selector1 = (SourceType) -> RxResult<ResultType>
-    typealias Selector2 = (SourceType, Int) -> RxResult<ResultType>
+    typealias Selector1 = (SourceType) throws -> ResultType
+    typealias Selector2 = (SourceType, Int) throws -> ResultType
     
     let source: Observable<SourceType>
     
