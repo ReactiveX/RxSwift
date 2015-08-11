@@ -11,14 +11,14 @@ import Foundation
 // filter aka where
 
 extension ObservableType {
-    public func filterOrDie(predicate: (E) -> RxResult<Bool>)
+    public func filter(predicate: (E) throws -> Bool)
         -> Observable<E> {
         return Filter(source: self.normalize(), predicate: predicate)
     }
 
     public func filter(predicate: (E) -> Bool)
         -> Observable<E> {
-        return Filter(source: self.normalize(), predicate: { success(predicate($0)) })
+        return Filter(source: self.normalize(), predicate: predicate)
     }
 }
 

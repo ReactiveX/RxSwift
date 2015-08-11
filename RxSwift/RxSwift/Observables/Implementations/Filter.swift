@@ -23,26 +23,26 @@ class FilterSink<O : ObserverType>: Sink<O>, ObserverType {
     func on(event: Event<Element>) {
         switch event {
             case .Next(let value):
-                _ = self.parent.predicate(value).recoverWith { e in
-                    trySendError(observer, e)
-                    self.dispose()
-                    return failure(e)
-                }.flatMap { satisfies -> RxResult<Void> in
+                do {
+                    let satisfies = try self.parent.predicate(value)
                     if satisfies {
-                        trySend(observer, event)
+                        observer?.on(.Next(value))
                     }
-                    return SuccessResult
+                }
+                catch let e {
+                    observer?.on(.Error(e))
+                    self.dispose()
                 }
             case .Completed: fallthrough
             case .Error:
-                trySend(observer, event)
+                observer?.on(event)
                 self.dispose()
         }
     }
 }
 
 class Filter<Element> : Producer<Element> {
-    typealias Predicate = (Element) -> RxResult<Bool>
+    typealias Predicate = (Element) throws -> Bool
     
     let source: Observable<Element>
     let predicate: Predicate
