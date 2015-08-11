@@ -28,11 +28,11 @@ class FlatMapSinkIter<SourceType, O: ObserverType> : ObserverType {
         switch event {
         case .Next(let value):
             parent.lock.performLocked {
-                trySendNext(parent.observer, value)
+                parent.observer?.on(.Next(value))
             }
         case .Error(let error):
             parent.lock.performLocked {
-                trySendError(parent.observer, error)
+                parent.observer?.on(.Error(error))
                 self.parent.dispose()
             }
         case .Completed:
@@ -44,7 +44,7 @@ class FlatMapSinkIter<SourceType, O: ObserverType> : ObserverType {
             // to be sent, and thus preserving the sequence grammar.
             if parent.stopped && parent.group.count == FlatMapNoIterators {
                 parent.lock.performLocked {
-                    trySendCompleted(parent.observer)
+                    parent.observer?.on(.Completed)
                     self.parent.dispose()
                 }
             }
@@ -70,7 +70,7 @@ class FlatMapSink<SourceType, O : ObserverType> : Sink<O>, ObserverType {
         super.init(observer: observer, cancel: cancel)
     }
     
-    func select(element: SourceType) -> RxResult<Observable<ResultType>> {
+    func performMap(element: SourceType) throws -> Observable<ResultType> {
         return abstractMethod()
     }
     
@@ -79,17 +79,17 @@ class FlatMapSink<SourceType, O : ObserverType> : Sink<O>, ObserverType {
         
         switch event {
         case .Next(let element):
-            select(element).flatMap { value in
+            do {
+                let value = try performMap(element)
                 subscribeInner(value)
-                return SuccessResult
-            }.recoverWith { e -> RxResult<Void> in
-                trySendError(observer, e)
+            }
+            catch let e {
+                observer?.on(.Error(e))
                 self.dispose()
-                return SuccessResult
             }
         case .Error(let error):
             lock.performLocked {
-                trySendError(observer, error)
+                observer?.on(.Error(error))
                 self.dispose()
             }
         case .Completed:
@@ -103,7 +103,7 @@ class FlatMapSink<SourceType, O : ObserverType> : Sink<O>, ObserverType {
         stopped = true
         if group.count == FlatMapNoIterators {
             lock.performLocked {
-                trySendCompleted(observer)
+                observer?.on(.Completed)
                 dispose()
             }
         }
@@ -136,8 +136,8 @@ class FlatMapSink1<SourceType, O : ObserverType> : FlatMapSink<SourceType, O> {
         super.init(parent: parent, observer: observer, cancel: cancel)
     }
     
-    override func select(element: SourceType) -> RxResult<Observable<O.Element>> {
-        return self.parent.selector1!(element)
+    override func performMap(element: SourceType) throws -> Observable<O.Element> {
+        return try self.parent.selector1!(element)
     }
 }
 
@@ -148,14 +148,14 @@ class FlatMapSink2<SourceType, O : ObserverType> : FlatMapSink<SourceType, O> {
         super.init(parent: parent, observer: observer, cancel: cancel)
     }
     
-    override func select(element: SourceType) -> RxResult<Observable<O.Element>> {
-        return self.parent.selector2!(element, index++)
+    override func performMap(element: SourceType) throws -> Observable<O.Element> {
+        return try self.parent.selector2!(element, index++)
     }
 }
 
 class FlatMap<SourceType, ResultType>: Producer<ResultType> {
-    typealias Selector1 = (SourceType) -> RxResult<Observable<ResultType>>
-    typealias Selector2 = (SourceType, Int) -> RxResult<Observable<ResultType>>
+    typealias Selector1 = (SourceType) throws -> Observable<ResultType>
+    typealias Selector2 = (SourceType, Int) throws -> Observable<ResultType>
     
     let source: Observable<SourceType>
     

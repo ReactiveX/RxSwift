@@ -88,20 +88,20 @@ extension ObservableType {
 extension ObservableType {
     public func flatMap<R>(selector: (E) -> Observable<R>)
         -> Observable<R> {
-        return FlatMap(source: self.normalize(), selector: { success(selector($0)) })
+        return FlatMap(source: self.normalize(), selector: selector)
     }
 
-    public func flatMapOrDie<R>(selector: (E) -> RxResult<Observable<R>>)
+    public func flatMap<R>(selector: (E) throws -> Observable<R>)
         -> Observable<R> {
         return FlatMap(source: self.normalize(), selector: selector)
     }
 
     public func flatMapWithIndex<R>(selector: (E, Int) -> Observable<R>)
         -> Observable<R> {
-        return FlatMap(source: self.normalize(), selector: { success(selector($0, $1)) })
+        return FlatMap(source: self.normalize(), selector: selector)
     }
 
-    public func flatMapWithIndexOrDie<R>(selector: (E, Int) -> RxResult<Observable<R>>)
+    public func flatMapWithIndex<R>(selector: (E, Int) throws -> Observable<R>)
         -> Observable<R> {
         return FlatMap(source: self.normalize(), selector: selector)
     }
