@@ -31,17 +31,17 @@ class TakeWhileSink1<ElementType, O: ObserverType where O.Element == ElementType
             running = self.parent.predicate1(value)
 
             if running  {
-                trySendNext(observer, value)
+                observer?.on(.Next(value))
             }
             else {
-                trySendCompleted(observer)
+                observer?.on(.Completed)
                 self.dispose()
             }
         case .Error:
-            trySend(observer, event)
+            observer?.on(event)
             self.dispose()
         case .Completed:
-            trySend(observer, event)
+            observer?.on(event)
             self.dispose()
         }
     }
@@ -73,17 +73,17 @@ class TakeWhileSink2<ElementType, O: ObserverType where O.Element == ElementType
             self.index = index + 1
             
             if running  {
-                trySendNext(observer, value)
+                observer?.on(.Next(value))
             }
             else {
-                trySendCompleted(observer)
+                observer?.on(.Completed)
                 self.dispose()
             }
         case .Error:
-            trySend(observer, event)
+            observer?.on(event)
             self.dispose()
         case .Completed:
-            trySend(observer, event)
+            observer?.on(event)
             self.dispose()
         }
     }
