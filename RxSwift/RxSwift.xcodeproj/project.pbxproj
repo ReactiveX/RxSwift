@@ -305,7 +305,7 @@
 		C8A56B2B1AD7435800B4673B /* Observable+Aggregate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Observable+Aggregate.swift"; sourceTree = "<group>"; };
 		C8A56B2C1AD7435800B4673B /* Observable+Binding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Observable+Binding.swift"; sourceTree = "<group>"; };
 		C8A56B2D1AD7435800B4673B /* Observable+Concurrency.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Observable+Concurrency.swift"; sourceTree = "<group>"; };
-		C8A56B2E1AD7435800B4673B /* Observable+Creation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = "Observable+Creation.swift"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		C8A56B2E1AD7435800B4673B /* Observable+Creation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = "Observable+Creation.swift"; sourceTree = "<group>"; };
 		C8A56B2F1AD7435800B4673B /* Observable+Multiple.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Observable+Multiple.swift"; sourceTree = "<group>"; };
 		C8A56B301AD7435800B4673B /* Observable+Single.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Observable+Single.swift"; sourceTree = "<group>"; };
 		C8A56B311AD7435800B4673B /* Observable+StandardSequenceOperators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Observable+StandardSequenceOperators.swift"; sourceTree = "<group>"; };

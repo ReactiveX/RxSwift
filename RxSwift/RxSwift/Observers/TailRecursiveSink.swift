@@ -49,7 +49,7 @@ class TailRecursiveSink<O: ObserverType> : Sink<O>, ObserverType {
     }
 
     func done() {
-        trySendCompleted(observer)
+        observer?.on(.Completed)
         self.dispose()
     }
     

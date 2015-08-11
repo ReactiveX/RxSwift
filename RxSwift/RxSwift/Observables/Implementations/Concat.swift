@@ -16,9 +16,9 @@ class ConcatSinkImplementation<Element> : ConcatSink<Element> {
     override func on(event: Event<Element>) {
         switch event {
         case .Next(_):
-            trySend(observer, event)
+            observer?.on(event)
         case .Error:
-            trySend(observer, event)
+            observer?.on(event)
             dispose()
         case .Completed:
             super.on(event)
