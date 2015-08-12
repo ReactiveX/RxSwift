@@ -134,10 +134,10 @@ extension CLLocationManager {
     
     // MARK: Responding to Authorization Changes
     
-    public var rx_didChangeAuthorizationStatus: Observable<CLAuthorizationStatus> {
+    public var rx_didChangeAuthorizationStatus: Observable<CLAuthorizationStatus?> {
         return rx_delegate.observe("locationManager:didChangeAuthorizationStatus:")
             >- map { a in
-                return a[1] as! CLAuthorizationStatus
+                return CLAuthorizationStatus(rawValue: Int32((a[1] as! NSNumber).integerValue))
             }
     }
     

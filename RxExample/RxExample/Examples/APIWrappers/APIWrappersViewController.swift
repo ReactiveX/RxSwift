@@ -212,6 +212,12 @@ class APIWrappersViewController: ViewController {
             >- disposeBag.addDisposable
         
         
+        manager.rx_didChangeAuthorizationStatus
+            >- subscribeNext { status in
+                println("Authorization status \(status)")
+            }
+            >- disposeBag.addDisposable
+        
         manager.startUpdatingLocation()
         
         
