@@ -55,6 +55,7 @@ class AmbSink<ElementType, O: ObserverType where O.Element == ElementType> : Sin
     let parent: Parent
     
     let lock = NSRecursiveLock()
+    // state
     var choice = AmbState.Neither
     
     init(parent: Parent, observer: O, cancel: Disposable) {
@@ -67,8 +68,8 @@ class AmbSink<ElementType, O: ObserverType where O.Element == ElementType> : Sin
         let subscription2 = SingleAssignmentDisposable()
         let disposeAll = StableCompositeDisposable.create(subscription1, subscription2)
         
-        let forwardEvent = { (o: AmbObserverType, event: Event<ElementType>) in
-            trySend(self.observer, event)
+        let forwardEvent = { (o: AmbObserverType, event: Event<ElementType>) -> Void in
+            self.observer?.on(event)
         }
         
         let decide = { (o: AmbObserverType, event: Event<ElementType>, me: AmbState, otherSubscription: Disposable) in
@@ -81,7 +82,7 @@ class AmbSink<ElementType, O: ObserverType where O.Element == ElementType> : Sin
                 }
                 
                 if self.choice == me {
-                    trySend(self.observer, event)
+                    self.observer?.on(event)
                     if event.isStopEvent {
                         self.dispose()
                     }
