@@ -24,18 +24,19 @@ class ScanSink<ElementType, Accumulate, O: ObserverType where O.Element == Accum
     func on(event: Event<ElementType>) {
         switch event {
         case .Next(let element):
-            self.parent.accumulator(self.accumulate, element).map { result -> Void in
-                self.accumulate = result
-                trySendNext(observer, result)
-            }.recover { error in
-                trySendError(self.observer, error)
+            do {
+                self.accumulate = try self.parent.accumulator(self.accumulate, element)
+                observer?.on(.Next(self.accumulate))
+            }
+            catch let error {
+                self.observer?.on(.Error(error))
                 self.dispose()
             }
         case .Error(let error):
-            trySendError(observer, error)
+            observer?.on(.Error(error))
             self.dispose()
         case .Completed:
-            trySendCompleted(observer)
+            observer?.on(.Completed)
             self.dispose()
         }
     }
@@ -43,7 +44,7 @@ class ScanSink<ElementType, Accumulate, O: ObserverType where O.Element == Accum
 }
 
 class Scan<Element, Accumulate>: Producer<Accumulate> {
-    typealias Accumulator = (Accumulate, Element) -> RxResult<Accumulate>
+    typealias Accumulator = (Accumulate, Element) throws -> Accumulate
     
     let source: Observable<Element>
     let seed: Accumulate

@@ -115,13 +115,10 @@ extension ObservableType {
 // scan
 
 extension ObservableType {
-    public func scan<A>(seed: A, accumulator: (A, E) -> A)
-        -> Observable<A> {
-        return Scan(source: self.normalize(), seed: seed, accumulator: { success(accumulator($0, $1)) })
-    }
-
-    public func scanOrDie<A>(seed: A, accumulator: (A, E) -> RxResult<A>)
+    
+    public func scan<A>(seed: A, accumulator: (A, E) throws -> A)
         -> Observable<A> {
         return Scan(source: self.normalize(), seed: seed, accumulator: accumulator)
     }
+    
 }

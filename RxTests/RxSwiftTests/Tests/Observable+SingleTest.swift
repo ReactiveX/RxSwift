@@ -908,11 +908,11 @@ extension ObservableSingleTest {
         let seed = 42
         
         let res = scheduler.start {
-            xs.scanOrDie(seed) { (a, e) in
+            xs.scan(seed) { (a, e) in
                 if e == 4 {
-                    return failure(testError)
+                    throw testError
                 } else {
-                    return success(a + e)
+                    return a + e
                 }
             }
         }
