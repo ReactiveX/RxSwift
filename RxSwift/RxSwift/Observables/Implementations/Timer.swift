@@ -20,7 +20,7 @@ class TimerSink<S: Scheduler, O: ObserverType where O.Element == Int64> : Sink<O
     
     func run() -> Disposable {
         let result = self.parent.schedulePeriodic(state: 0, startAfter: self.parent.dueTime, period: self.parent.period!) { state in
-            trySendNext(self.observer, state)
+            self.observer?.on(.Next(state))
             return state &+ 1
         }
         
@@ -40,8 +40,8 @@ class TimerOneOffSink<S: Scheduler, O: ObserverType where O.Element == Int64> : 
     
     func run() -> Disposable {
         let result = self.parent.scheduler.scheduleRelative((), dueTime: self.parent.dueTime) { (_) -> RxResult<Disposable> in
-            trySendNext(self.observer, 0)
-            trySendCompleted(self.observer)
+            self.observer?.on(.Next(0))
+            self.observer?.on(.Completed)
             
             return NopDisposableResult
         }
