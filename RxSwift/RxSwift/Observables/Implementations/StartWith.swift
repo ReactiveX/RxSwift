@@ -9,17 +9,19 @@
 import Foundation
 
 class StartWith<Element>: Producer<Element> {
-    let element: Element
+    let elements: [Element]
     let source: Observable<Element>
 
-    init(source: Observable<Element>, element: Element) {
+    init(source: Observable<Element>, elements: [Element]) {
         self.source = source
-        self.element = element
+        self.elements = elements
         super.init()
     }
 
     override func run<O : ObserverType where O.Element == Element>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
-        sendNext(observer, element)
+        for e in elements {
+            observer.on(.Next(e))
+        }
 
         return source.subscribeSafe(observer)
     }

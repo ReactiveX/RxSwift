@@ -93,9 +93,9 @@ extension ObservableType {
     // Prefixes observable sequence with `firstElement` element.
     // The same functionality could be achieved using `concat([just(prefix), source])`,
     // but this is significantly more efficient implementation.
-    public func startWith(firstElement: E)
+    public func startWith(elements: E ...)
         -> Observable<E> {
-        return StartWith(source: self.normalize(), element: firstElement)
+        return StartWith(source: self.normalize(), elements: elements)
     }
 }
 
