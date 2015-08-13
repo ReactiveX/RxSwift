@@ -91,21 +91,21 @@ function createDevices() {
 }
 
 function deleteDevices() {
-	xcrun simctl delete RxSwiftTest-iPhone4s-iOS_7.1
-	xcrun simctl delete RxSwiftTest-iPhone5-iOS_7.1
-	xcrun simctl delete RxSwiftTest-iPhone5s-iOS_7.1
+	xcrun simctl delete RxSwiftTest-iPhone4s-iOS_7.1 || echo "failed"
+	xcrun simctl delete RxSwiftTest-iPhone5-iOS_7.1 || echo "failed"
+	xcrun simctl delete RxSwiftTest-iPhone5s-iOS_7.1 || echo "failed"
 
-	xcrun simctl delete RxSwiftTest-iPhone4s-iOS_8.4
-	xcrun simctl delete RxSwiftTest-iPhone5-iOS_8.4
-	xcrun simctl delete RxSwiftTest-iPhone5s-iOS_8.4
+	xcrun simctl delete RxSwiftTest-iPhone4s-iOS_8.4 || echo "failed"
+	xcrun simctl delete RxSwiftTest-iPhone5-iOS_8.4 || echo "failed"
+	xcrun simctl delete RxSwiftTest-iPhone5s-iOS_8.4 || echo "failed"
 
-	xcrun simctl delete RxSwiftTest-iPhone6-iOS_8.4
-	xcrun simctl delete RxSwiftTest-iPhone6Plus-iOS_8.4
+	xcrun simctl delete RxSwiftTest-iPhone6-iOS_8.4 || echo "failed"
+	xcrun simctl delete RxSwiftTest-iPhone6Plus-iOS_8.4 || echo "failed"
 
-	xcrun simctl delete RxSwiftTest-iPhone4s-iOS_9.0
-	xcrun simctl delete RxSwiftTest-iPhone5-iOS_9.0
-	xcrun simctl delete RxSwiftTest-iPhone5s-iOS_9.0
+	xcrun simctl delete RxSwiftTest-iPhone4s-iOS_9.0 || echo "failed"
+	xcrun simctl delete RxSwiftTest-iPhone5-iOS_9.0 || echo "failed"
+	xcrun simctl delete RxSwiftTest-iPhone5s-iOS_9.0 || echo "failed"
 
-	xcrun simctl delete RxSwiftTest-iPhone6-iOS_9.0
-	xcrun simctl delete RxSwiftTest-iPhone6Plus-iOS_9.0
+	xcrun simctl delete RxSwiftTest-iPhone6-iOS_9.0 || echo "failed"
+	xcrun simctl delete RxSwiftTest-iPhone6Plus-iOS_9.0 || echo "failed"
 }
