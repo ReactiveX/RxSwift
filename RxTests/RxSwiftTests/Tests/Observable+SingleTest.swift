@@ -288,7 +288,7 @@ extension ObservableSingleTest {
     
         var i = 0
         var sum = 2 + 3 + 4 + 5
-        let res = scheduler.start { xs.`do` { e in
+        let res = scheduler.start { xs.tap { e in
                 switch e {
                 case .Next(let _):
                     i++
@@ -331,7 +331,7 @@ extension ObservableSingleTest {
             ])
         
         var i = 0
-        let res = scheduler.start { xs.`do` { e in
+        let res = scheduler.start { xs.tap { e in
             switch e {
             case .Next(_):
                 i++
@@ -373,7 +373,7 @@ extension ObservableSingleTest {
         var i = 0
         var sum = 2 + 3 + 4 + 5
         var completedEvaluation = false
-        let res = scheduler.start { xs.`do` { e in
+        let res = scheduler.start { xs.tap { e in
             switch e {
             case .Next(let value):
                 i++
@@ -415,7 +415,7 @@ extension ObservableSingleTest {
         
         var i = 0
         var completedEvaluation = false
-        let res = scheduler.start { xs.`do` { e in
+        let res = scheduler.start { xs.tap { e in
             switch e {
             case .Next(_):
                 i++
@@ -455,7 +455,7 @@ extension ObservableSingleTest {
         var i = 0
         var sum = 2 + 3 + 4 + 5
         var sawError = false
-        let res = scheduler.start { xs.`do` { e in
+        let res = scheduler.start { xs.tap { e in
             switch e {
             case .Next(let value):
                 i++
@@ -502,7 +502,7 @@ extension ObservableSingleTest {
         var i = 0
         var sum = 2 + 3 + 4 + 5
         var sawError = false
-        let res = scheduler.start { xs.`do` { e in
+        let res = scheduler.start { xs.tap { e in
             switch e {
             case .Next(let value):
                 i++
@@ -534,7 +534,31 @@ extension ObservableSingleTest {
         XCTAssertEqual(xs.subscriptions, correctSubscriptions)
     }
     
-    // ...
+    func testDo_Throws() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createHotObservable([
+            next(150, 1),
+            next(210, 2),
+            completed(250)
+            ])
+        
+        let res = scheduler.start { xs.tap { _ in
+                throw testError
+            }
+        }
+        
+        let correctMessages = [
+            error(210, testError) as Recorded<Int>
+        ]
+        
+        let correctSubscriptions = [
+            Subscription(200, 210)
+        ]
+        
+        XCTAssertEqual(res.messages, correctMessages)
+        XCTAssertEqual(xs.subscriptions, correctSubscriptions)
+    }
 }
 
 // retry

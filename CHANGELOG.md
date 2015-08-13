@@ -11,5 +11,6 @@ All notable changes to this project will be documented in this file.
 * Moved from using `>-` operator to protocol extensions
 * Change from `disposeBag.addDisposable` to `disposable.addDisposableTo`
 * Changes in RxCocoa extensions to enable fluent style
+* Rename of `do*` to `tap*`
 
 ####Fixed

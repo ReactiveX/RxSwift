@@ -65,23 +65,18 @@ extension ObservableType {
 // do
 
 extension ObservableType {
-    public func doOrDie(eventHandler: (Event<E>) -> RxResult<Void>)
+    public func tap(eventHandler: (Event<E>) throws -> Void)
         -> Observable<E> {
-        return Do(source: self.normalize(), eventHandler: eventHandler)
-    }
-
-    public func `do`(eventHandler: (Event<E>) -> Void)
-        -> Observable<E> {
-        return Do(source: self.normalize(), eventHandler: { success(eventHandler($0)) })
+        return Tap(source: self.normalize(), eventHandler: eventHandler)
     }
 }
 
 // doOnNext
 
 extension ObservableType {
-    public func doOnNext(actionOnNext: E -> Void)
+    public func tapOnNext(actionOnNext: E -> Void)
         -> Observable<E> {
-        return self.`do` { event in
+        return self.tap { event in
             switch event {
             case .Next(let value):
                 actionOnNext(value)

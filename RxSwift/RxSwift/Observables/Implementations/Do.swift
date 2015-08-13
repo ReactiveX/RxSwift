@@ -8,35 +8,34 @@
 
 import Foundation
 
-class Do_<O: ObserverType> : Sink<O>, ObserverType {
+class TapSink<O: ObserverType> : Sink<O>, ObserverType {
     typealias Element = O.Element
-    typealias DoType = Do<Element>
+    typealias Parent = Tap<Element>
     
-    let parent: DoType
+    let parent: Parent
     
-    init(parent: DoType, observer: O, cancel: Disposable) {
+    init(parent: Parent, observer: O, cancel: Disposable) {
         self.parent = parent
         super.init(observer: observer, cancel: cancel)
     }
     
     func on(event: Event<Element>) {
-        parent.eventHandler(event).recoverWith { error in
-            // catch clause
-            trySendError(observer, error)
-            self.dispose()
-            return SuccessResult
-        }.flatMap { _ -> RxResult<Void> in
-            trySend(observer, event)
+        do {
+            try parent.eventHandler(event)
+            observer?.on(event)
             if event.isStopEvent {
                 self.dispose()
             }
-            return SuccessResult
+        }
+        catch let error {
+            observer?.on(.Error(error))
+            self.dispose()
         }
     }
 }
 
-class Do<Element> : Producer<Element> {
-    typealias EventHandler = Event<Element> -> RxResult<Void>
+class Tap<Element> : Producer<Element> {
+    typealias EventHandler = Event<Element> throws -> Void
     
     let source: Observable<Element>
     let eventHandler: EventHandler
@@ -47,7 +46,7 @@ class Do<Element> : Producer<Element> {
     }
     
     override func run<O: ObserverType where O.Element == Element>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
-        let sink = Do_(parent: self, observer: observer, cancel: cancel)
+        let sink = TapSink(parent: self, observer: observer, cancel: cancel)
         
         setSink(sink)
         
