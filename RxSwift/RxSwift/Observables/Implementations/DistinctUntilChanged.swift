@@ -8,7 +8,7 @@
 
 import Foundation
 
-class DistinctUntilChanged_<O: ObserverType, Key>: Sink<O>, ObserverType {
+class DistinctUntilChangedSink<O: ObserverType, Key>: Sink<O>, ObserverType {
     typealias Element = O.Element
     
     let parent: DistinctUntilChanged<Element, Key>
@@ -24,41 +24,36 @@ class DistinctUntilChanged_<O: ObserverType, Key>: Sink<O>, ObserverType {
         
         switch event {
         case .Next(let value):
-            self.parent.selector(value).flatMap { key in
-                var areEqual: RxResult<Bool>
+            do {
+                let key = try self.parent.selector(value)
+                var areEqual = false
                 if let currentKey = self.currentKey {
-                    areEqual = self.parent.comparer(currentKey, key)
-                }
-                else {
-                    areEqual = success(false)
+                    areEqual = try self.parent.comparer(currentKey, key)
                 }
                 
-                return areEqual.flatMap { areEqual in
-                    if areEqual {
-                        return SuccessResult
-                    }
-                    
-                    self.currentKey = key
-                    
-                    trySend(observer, event)
-                    return SuccessResult
+                if areEqual {
+                    return
                 }
-            }.recoverWith { error -> RxResult<Void> in
-                trySendError(observer, error)
+                
+                self.currentKey = key
+                
+                observer?.on(event)
+            }
+            catch let error {
+                observer?.on(.Error(error))
                 self.dispose()
-                return SuccessResult
             }
         case .Error: fallthrough
         case .Completed:
-            trySend(observer, event)
+            observer?.on(event)
             self.dispose()
         }
     }
 }
 
 class DistinctUntilChanged<Element, Key>: Producer<Element> {
-    typealias KeySelector = (Element) -> RxResult<Key>
-    typealias EqualityComparer = (Key, Key) -> RxResult<Bool>
+    typealias KeySelector = (Element) throws -> Key
+    typealias EqualityComparer = (Key, Key) throws -> Bool
     
     let source: Observable<Element>
     let selector: KeySelector
@@ -71,7 +66,7 @@ class DistinctUntilChanged<Element, Key>: Producer<Element> {
     }
     
     override func run<O: ObserverType where O.Element == Element>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
-        let sink = DistinctUntilChanged_(parent: self, observer: observer, cancel: cancel)
+        let sink = DistinctUntilChangedSink(parent: self, observer: observer, cancel: cancel)
         setSink(sink)
         return source.subscribeSafe(sink)
     }

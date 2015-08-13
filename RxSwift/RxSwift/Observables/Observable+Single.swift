@@ -24,46 +24,41 @@ extension ObservableType {
 // distinct until changed
 
 extension ObservableType where E: Equatable {
-    public func distinctUntilChangedOrDie()
-        -> Observable<E> {
-        return self.distinctUntilChangedOrDie({ success($0) }, { success($0 == $1) })
-    }
-
     public func distinctUntilChanged()
         -> Observable<E> {
-        return self.distinctUntilChanged({ $0 }, { ($0 == $1) })
+        return self.distinctUntilChanged({ $0 }, comparer: { ($0 == $1) })
     }
 }
 
 extension ObservableType {
-    public func distinctUntilChangedOrDie<K: Equatable>(keySelector: (E) -> RxResult<K>)
+    public func distinctUntilChanged<K: Equatable>(keySelector: (E) throws -> K)
         -> Observable<E> {
-        return self.distinctUntilChangedOrDie(keySelector, { success($0 == $1) })
+        return self.distinctUntilChanged(keySelector, comparer: { $0 == $1 })
     }
 
-    public func distinctUntilChangedOrDie(comparer: (lhs: E, rhs: E) -> RxResult<Bool>)
+    public func distinctUntilChanged(comparer: (lhs: E, rhs: E) throws -> Bool)
         -> Observable<E> {
-        return self.distinctUntilChangedOrDie({ success($0) }, comparer)
+        return self.distinctUntilChanged({ $0 }, comparer: comparer)
     }
 
-    public func distinctUntilChangedOrDie<K>(keySelector: (E) -> RxResult<K>, _ comparer: (lhs: K, rhs: K) -> RxResult<Bool>)
+    public func distinctUntilChanged<K>(keySelector: (E) throws -> K, comparer: (lhs: K, rhs: K) throws -> Bool)
         -> Observable<E> {
         return DistinctUntilChanged(source: self.normalize(), selector: keySelector, comparer: comparer)
     }
 
     public func distinctUntilChanged<K: Equatable>(keySelector: (E) -> K)
         -> Observable<E> {
-        return distinctUntilChanged(keySelector, { ($0 == $1) })
+        return distinctUntilChanged(keySelector, comparer: { ($0 == $1) })
     }
 
     public func distinctUntilChanged(comparer: (lhs: E, rhs: E) -> Bool)
         -> Observable<E> {
-        return distinctUntilChanged({ ($0) }, comparer)
+        return distinctUntilChanged({ ($0) }, comparer: comparer)
     }
 
-    public func distinctUntilChanged<K>(keySelector: (E) -> K, _ comparer: (lhs: K, rhs: K) -> Bool)
+    public func distinctUntilChanged<K>(keySelector: (E) -> K, comparer: (lhs: K, rhs: K) -> Bool)
         -> Observable<E> {
-        return DistinctUntilChanged(source: self.normalize(), selector: {success(keySelector($0)) }, comparer: { success(comparer(lhs: $0, rhs: $1))})
+        return DistinctUntilChanged(source: self.normalize(), selector: keySelector, comparer: comparer)
     }
 }
 
