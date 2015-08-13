@@ -8,8 +8,8 @@
 
 import Foundation
 
-class SampleImpl_<O: ObserverType, ElementType, SampleType where O.Element == ElementType> : Observer<SampleType> {
-    typealias Parent = Sample_<O, SampleType>
+class SamplerSink<O: ObserverType, ElementType, SampleType where O.Element == ElementType> : Observer<SampleType> {
+    typealias Parent = SampleSequenceSink<O, SampleType>
     
     let parent: Parent
     
@@ -21,28 +21,28 @@ class SampleImpl_<O: ObserverType, ElementType, SampleType where O.Element == El
         parent.lock.performLocked {
             switch event {
             case .Next:
-                if let element = parent.sampleState.element {
+                if let element = parent.element {
                     if self.parent.parent.onlyNew {
-                        parent.sampleState.element = nil
+                        parent.element = nil
                     }
                     
-                    trySend(parent.observer, element)
+                    parent.observer?.on(.Next(element))
                 }
 
-                if parent.sampleState.atEnd {
-                    trySendCompleted(parent.observer)
+                if parent.atEnd {
+                    parent.observer?.on(.Completed)
                     parent.dispose()
                 }
             case .Error(let e):
-                trySendError(parent.observer, e)
+                parent.observer?.on(.Error(e))
                 parent.dispose()
             case .Completed:
-                if let element = parent.sampleState.element {
-                    parent.sampleState.element = nil
-                    trySend(parent.observer, element)
+                if let element = parent.element {
+                    parent.element = nil
+                    parent.observer?.on(.Next(element))
                 }
-                if parent.sampleState.atEnd {
-                    trySendCompleted(parent.observer)
+                if parent.atEnd {
+                    parent.observer?.on(.Completed)
                     parent.dispose()
                 }
             }
@@ -50,24 +50,18 @@ class SampleImpl_<O: ObserverType, ElementType, SampleType where O.Element == El
     }
 }
 
-class Sample_<O: ObserverType, SampleType> : Sink<O>, ObserverType {
+class SampleSequenceSink<O: ObserverType, SampleType> : Sink<O>, ObserverType {
     typealias Element = O.Element
     typealias Parent = Sample<Element, SampleType>
-    typealias SampleState = (
-        element: Event<Element>?,
-        atEnd: Bool,
-        sourceSubscription: SingleAssignmentDisposable
-    )
     
     let parent: Parent
 
     var lock = NSRecursiveLock()
+    // state
+    var element = nil as Element?
+    var atEnd = false
     
-    var sampleState: SampleState = (
-        element: nil,
-        atEnd: false,
-        sourceSubscription: SingleAssignmentDisposable()
-    )
+    let sourceSubscription = SingleAssignmentDisposable()
     
     init(parent: Parent, observer: O, cancel: Disposable) {
         self.parent = parent
@@ -75,23 +69,23 @@ class Sample_<O: ObserverType, SampleType> : Sink<O>, ObserverType {
     }
     
     func run() -> Disposable {
-        sampleState.sourceSubscription.disposable = parent.source.subscribeSafe(self)
-        let samplerSubscription = parent.sampler.subscribeSafe(SampleImpl_(parent: self))
+        sourceSubscription.disposable = parent.source.subscribeSafe(self)
+        let samplerSubscription = parent.sampler.subscribeSafe(SamplerSink(parent: self))
         
-        return CompositeDisposable(sampleState.sourceSubscription, samplerSubscription)
+        return CompositeDisposable(sourceSubscription, samplerSubscription)
     }
     
     func on(event: Event<Element>) {
         self.lock.performLocked {
             switch event {
-            case .Next:
-                self.sampleState.element = event
+            case .Next(let element):
+                self.element = element
             case .Error:
-                trySend(observer, event)
+                observer?.on(event)
                 self.dispose()
             case .Completed:
-                self.sampleState.atEnd = true
-                self.sampleState.sourceSubscription.dispose()
+                atEnd = true
+                sourceSubscription.dispose()
             }
         }
     }
@@ -110,7 +104,7 @@ class Sample<Element, SampleType> : Producer<Element> {
     }
     
     override func run<O: ObserverType where O.Element == Element>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
-        let sink = Sample_(parent: self, observer: observer, cancel: cancel)
+        let sink = SampleSequenceSink(parent: self, observer: observer, cancel: cancel)
         setSink(sink)
         return sink.run()
     }
