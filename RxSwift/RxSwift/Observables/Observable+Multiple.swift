@@ -46,20 +46,20 @@ extension ObservableType where E : ObservableType {
 // catch
 
 extension ObservableType {
-    public func catchErrorOrDie(handler: (ErrorType) -> RxResult<Observable<E>>)
+    public func catchErrorOrDie(handler: (ErrorType) throws -> Observable<E>)
         -> Observable<E> {
         return Catch(source: self.normalize(), handler: handler)
     }
     
     public func catchError(handler: (ErrorType) -> Observable<E>)
         -> Observable<E> {
-        return Catch(source: self.normalize(), handler: { success(handler($0)) })
+        return Catch(source: self.normalize(), handler: handler)
     }
 
-    // In case of error, terminates sequence with `replaceErrorWith`.
-    public func catchError(replaceErrorWith: E)
+    // In case of error sends `errorElementValue` and completes sequence
+    public func catchError(errorElementValue: E)
         -> Observable<E> {
-        return Catch(source: self.normalize(), handler: { _ in success(just(replaceErrorWith)) })
+        return Catch(source: self.normalize(), handler: { _ in just(errorElementValue) })
     }
     
     // When error happens `error` will be forwarded as a next `Result<E>` value

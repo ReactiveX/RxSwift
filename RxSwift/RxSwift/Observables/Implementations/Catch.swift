@@ -21,7 +21,7 @@ class CatchSinkProxy<O: ObserverType> : ObserverType {
     }
     
     func on(event: Event<Element>) {
-        trySend(parent.observer, event)
+        parent.observer?.on(event)
         
         switch event {
         case .Next:
@@ -56,31 +56,29 @@ class CatchSink<O: ObserverType> : Sink<O>, ObserverType {
     func on(event: Event<Element>) {
         switch event {
         case .Next:
-            trySend(observer, event)
+            observer?.on(event)
         case .Completed:
-            trySend(observer, event)
+            observer?.on(event)
             self.dispose()
         case .Error(let error):
-            parent.handler(error).recoverWith { error2 in
-                trySendError(observer, error2)
-                self.dispose()
-                return failure(error2)
-            }.flatMap { catchObservable -> RxResult<Void> in
-                let d = SingleAssignmentDisposable()
-                subscription.disposable = d
-                
+            do {
+                let catchSequence = try parent.handler(error)
+
                 let observer = CatchSinkProxy(parent: self)
                 
-                let subscription2 = catchObservable.subscribeSafe(observer)
-                d.disposable = subscription2
-                return SuccessResult
+                let subscription2 = catchSequence.subscribeSafe(observer)
+                subscription.disposable = subscription2
+            }
+            catch let e {
+                observer?.on(.Error(e))
+                self.dispose()
             }
         }
     }
 }
 
 class Catch<Element> : Producer<Element> {
-    typealias Handler = (ErrorType) -> RxResult<Observable<Element>>
+    typealias Handler = (ErrorType) throws -> Observable<Element>
     
     let source: Observable<Element>
     let handler: Handler
@@ -118,13 +116,13 @@ class CatchToResultSink<ElementType> : Sink<Observer<RxResult<ElementType>>>, Ob
     func on(event: Event<Element>) {
         switch event {
         case .Next(let value):
-            trySendNext(observer, success(value))
+            observer?.on(.Next(success(value)))
         case .Completed:
-            trySendCompleted(observer)
+            observer?.on(.Completed)
             self.dispose()
         case .Error(let error):
-            trySendNext(observer, failure(error))
-            trySendCompleted(observer)
+            observer?.on(.Next(failure(error)))
+            observer?.on(.Completed)
             self.dispose()
         }
     }
@@ -159,22 +157,22 @@ class CatchSequenceSink<O: ObserverType> : TailRecursiveSink<O> {
     override func on(event: Event<Element>) {
         switch event {
         case .Next:
-            trySend(observer, event)
+            observer?.on(event)
         case .Error(let error):
             self.lastError = error
             self.scheduleMoveNext()
         case .Completed:
-            trySend(self.observer, event)
+            self.observer?.on(event)
             self.dispose()
         }
     }
     
     override func done() {
         if let lastError = self.lastError {
-            trySendError(observer, lastError)
+            observer?.on(.Error(lastError))
         }
         else {
-            trySendCompleted(observer)
+            observer?.on(.Completed)
         }
         
         self.dispose()
