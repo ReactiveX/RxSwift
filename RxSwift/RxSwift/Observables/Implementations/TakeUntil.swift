@@ -33,19 +33,15 @@ class TakeUntilSinkOther<ElementType, Other, O: ObserverType where O.Element == 
     }
     
     func on(event: Event<Element>) {
-        switch event {
-        case .Next:
-            parent.lock.performLocked {
-                trySendCompleted(parent.observer)
+        parent.lock.performLocked {
+            switch event {
+            case .Next:
+                parent.observer?.on(.Completed)
                 parent.dispose()
-            }
-        case .Error(let e):
-            parent.lock.performLocked {
-                trySendError(parent.observer, e)
+            case .Error(let e):
+                parent.observer?.on(.Error(e))
                 parent.dispose()
-            }
-        case .Completed:
-            parent.lock.performLocked { () -> Void in
+            case .Completed:
                 parent.open = true
                 singleAssignmentDisposable.dispose()
             }
@@ -66,7 +62,7 @@ class TakeUntilSink<ElementType, Other, O: ObserverType where O.Element == Eleme
     let parent: Parent
  
     let lock = NSRecursiveLock()
-    
+    // state
     var open = false
     
     init(parent: Parent, observer: O, cancel: Disposable) {
@@ -78,23 +74,23 @@ class TakeUntilSink<ElementType, Other, O: ObserverType where O.Element == Eleme
         switch event {
         case .Next:
             if open {
-                trySend(observer, event)
+                observer?.on(event)
             }
             else {
                 lock.performLocked {
-                    trySend(observer, event)
+                    observer?.on(event)
                 }
             }
             break
         case .Error:
             lock.performLocked {
-                trySend(observer, event)
+                observer?.on(event)
                 self.dispose()
             }
             break
         case .Completed:
             lock.performLocked {
-                trySend(observer, event)
+                observer?.on(event)
                 self.dispose()
             }
             break
