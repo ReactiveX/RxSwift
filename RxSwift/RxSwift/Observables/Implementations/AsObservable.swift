@@ -16,7 +16,7 @@ class AsObservableSink_<O: ObserverType> : Sink<O>, ObserverType {
     }
     
     func on(event: Event<Element>) {
-        trySend(observer, event)
+        observer?.on(event)
         
         switch event {
         case .Error: fallthrough
