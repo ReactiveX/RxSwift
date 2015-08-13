@@ -8,24 +8,18 @@
 
 import Foundation
 
-class Throttle_<O: ObserverType, SchedulerType: Scheduler> : Sink<O>, ObserverType {
+class ThrottleSink<O: ObserverType, SchedulerType: Scheduler> : Sink<O>, ObserverType {
     typealias Element = O.Element
     typealias ParentType = Throttle<Element, SchedulerType>
-    
-    typealias ThrottleState = (
-        value: RxMutableBox<Element?>,
-        cancellable: SerialDisposable,
-        id: UInt64
-    )
     
     let parent: ParentType
     
     var lock = NSRecursiveLock()
-    var throttleState: ThrottleState = (
-        value: RxMutableBox(nil),
-        cancellable: SerialDisposable(),
-        id: 0
-    )
+    // state
+    var id = 0 as UInt64
+    let value = RxMutableBox<Element?>(nil)
+    
+    let cancellable = SerialDisposable()
     
     init(parent: ParentType, observer: O, cancel: Disposable) {
         self.parent = parent
@@ -34,7 +28,6 @@ class Throttle_<O: ObserverType, SchedulerType: Scheduler> : Sink<O>, ObserverTy
     }
     
     func run() -> Disposable {
-        let cancellable = self.throttleState.cancellable
         let subscription = parent.source.subscribeSafe(self)
         
         return CompositeDisposable(subscription, cancellable)
@@ -46,41 +39,41 @@ class Throttle_<O: ObserverType, SchedulerType: Scheduler> : Sink<O>, ObserverTy
             break
         case .Error: fallthrough
         case .Completed:
-            throttleState.cancellable.dispose()
+            cancellable.dispose()
             break
         }
        
         let latestId = self.lock.calculateLocked { () -> UInt64 in
             let observer = self.observer
             
-            var oldValue = self.throttleState.value.value
+            var oldValue = self.value.value
             
-            self.throttleState.id = self.throttleState.id &+ 1
+            self.id = self.id &+ 1
             
             switch event {
             case .Next(let element):
-                self.throttleState.value.value = element
+                self.value.value = element
             case .Error(let error):
-                self.throttleState.value.value = nil
-                trySend(observer, event)
+                self.value.value = nil
+                observer?.on(event)
                 self.dispose()
             case .Completed:
-                self.throttleState.value.value = nil
+                self.value.value = nil
                 if let value = oldValue {
-                    trySendNext(observer, value)
+                    observer?.on(.Next(value))
                 }
-                trySendCompleted(observer)
+                observer?.on(.Completed)
                 self.dispose()
             }
             
-            return self.throttleState.id
+            return id
         }
         
         
         switch event {
         case .Next(_):
             let d = SingleAssignmentDisposable()
-            self.throttleState.cancellable.disposable = d
+            self.cancellable.disposable = d
             
             let scheduler = self.parent.scheduler
             let dueTime = self.parent.dueTime
@@ -93,7 +86,7 @@ class Throttle_<O: ObserverType, SchedulerType: Scheduler> : Sink<O>, ObserverTy
                 return disposeTimer
             }.recoverWith { e -> RxResult<Disposable> in
                 self.lock.performLocked {
-                    trySendError(observer, e)
+                    observer?.on(.Error(e))
                     self.dispose()
                 }
                 return NopDisposableResult
@@ -104,13 +97,13 @@ class Throttle_<O: ObserverType, SchedulerType: Scheduler> : Sink<O>, ObserverTy
     
     func propagate() {
         var originalValue: Element? = self.lock.calculateLocked {
-            var originalValue = self.throttleState.value.value
-            self.throttleState.value.value = nil
+            var originalValue = self.value.value
+            self.value.value = nil
             return originalValue
         }
         
         if let value = originalValue {
-            trySendNext(observer, value)
+            observer?.on(.Next(value))
         }
     }
 }
@@ -128,7 +121,7 @@ class Throttle<Element, SchedulerType: Scheduler> : Producer<Element> {
     }
     
     override func run<O: ObserverType where O.Element == Element>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
-        let sink = Throttle_(parent: self, observer: observer, cancel: cancel)
+        let sink = ThrottleSink(parent: self, observer: observer, cancel: cancel)
         setSink(sink)
         return sink.run()
     }
