@@ -20,7 +20,7 @@ class DelaySubscriptionSink<ElementType, O: ObserverType, S: Scheduler where O.E
     }
     
     func on(event: Event<Element>) {
-        trySend(observer, event)
+        observer?.on(event)
         if event.isStopEvent {
             self.dispose()
         }
