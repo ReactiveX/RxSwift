@@ -497,7 +497,7 @@
 		C8AEFFCE1B78BFE100C6B54F /* ObservableBase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObservableBase.swift; sourceTree = "<group>"; };
 		C8AEFFCF1B78BFE100C6B54F /* ObserveOn.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObserveOn.swift; sourceTree = "<group>"; };
 		C8AEFFD01B78BFE100C6B54F /* ObserveOnSerialDispatchQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ObserveOnSerialDispatchQueue.swift; sourceTree = "<group>"; };
-		C8AEFFD11B78BFE100C6B54F /* ObserveSingleOn.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ObserveSingleOn.swift; sourceTree = "<group>"; };
+		C8AEFFD11B78BFE100C6B54F /* ObserveSingleOn.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ObserveSingleOn.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		C8AEFFD21B78BFE100C6B54F /* Producer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Producer.swift; sourceTree = "<group>"; };
 		C8AEFFD31B78BFE100C6B54F /* RefCount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RefCount.swift; sourceTree = "<group>"; };
 		C8AEFFD41B78BFE100C6B54F /* Sample.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sample.swift; sourceTree = "<group>"; };
