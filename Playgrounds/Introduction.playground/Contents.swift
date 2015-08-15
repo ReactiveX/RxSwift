@@ -177,7 +177,7 @@ This filter tracks the last value emitted and removes like values. This function
 
 example("distinctUntilChanged") {
     let distinctUntilChangedSubscriber = sequence(1, 2, 3, 1, 1, 4)
-        .distinctUntilChanged
+        .distinctUntilChanged()
         .subscribeNext { value in
             print("\(value)")
         }
