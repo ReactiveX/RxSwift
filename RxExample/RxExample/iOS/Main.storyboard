@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14F19a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="E5v-jn-n2n">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14F25a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="E5v-jn-n2n">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
@@ -67,7 +67,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yYr-Cu-KXe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="151" y="272"/>
+            <point key="canvasLocation" x="151" y="-370"/>
         </scene>
         <!--Detail View Controller-->
         <scene sceneID="n26-Ac-tgu">
@@ -124,7 +124,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NGu-t4-MLa" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="595" y="272"/>
+            <point key="canvasLocation" x="595" y="-370"/>
         </scene>
         <!--GitHub Signup-->
         <scene sceneID="N2N-1B-sZ4">
@@ -338,7 +338,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iOF-ih-lLu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="151" y="2471"/>
+            <point key="canvasLocation" x="151" y="2344"/>
         </scene>
         <!--Rx Examples-->
         <scene sceneID="TnT-xx-y5Q">
@@ -372,29 +372,6 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <segue destination="dHR-mS-HCG" kind="push" id="rAe-JJ-Q7U"/>
-                                        </connections>
-                                    </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="pxT-4B-gDc" detailTextLabel="xZJ-Xt-MqD" style="IBUITableViewCellStyleSubtitle" id="yAf-eB-mRo">
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="yAf-eB-mRo" id="M3Y-AJ-f8i">
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Search Wikipedia" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="pxT-4B-gDc">
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="MVVM Example" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="xZJ-Xt-MqD">
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="11"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                        <connections>
-                                            <segue destination="Iwo-im-m6d" kind="push" identifier="ShowWikipediaSearch" id="Gfh-zm-u0w"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="x4u-zK-muO" detailTextLabel="nuf-1K-ITV" style="IBUITableViewCellStyleSubtitle" id="HTx-Ei-Vlj">
@@ -441,6 +418,29 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <segue destination="ErT-E8-uY3" kind="push" id="3is-Gn-lDH"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="pxT-4B-gDc" detailTextLabel="xZJ-Xt-MqD" style="IBUITableViewCellStyleSubtitle" id="yAf-eB-mRo">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="yAf-eB-mRo" id="M3Y-AJ-f8i">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Search Wikipedia" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="pxT-4B-gDc">
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="MVVM Example" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="xZJ-Xt-MqD">
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="Iwo-im-m6d" kind="push" identifier="ShowWikipediaSearch" id="Gfh-zm-u0w"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="siT-mr-b8A" detailTextLabel="BSH-sG-bpY" style="IBUITableViewCellStyleSubtitle" id="VBq-7j-4vQ">
@@ -560,7 +560,7 @@ This is only showcase app, not intended for production purposes.</string>
                     </connections>
                 </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="151" y="-379"/>
+            <point key="canvasLocation" x="151" y="995"/>
         </scene>
         <!--Wrappers View Controller-->
         <scene sceneID="GYg-hz-8N5">
@@ -668,7 +668,7 @@ This is only showcase app, not intended for production purposes.</string>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="k4I-9E-5OJ" sceneMemberID="firstResponder"/>
                 <panGestureRecognizer minimumNumberOfTouches="1" id="Shn-qP-Kjy"/>
             </objects>
-            <point key="canvasLocation" x="151" y="955"/>
+            <point key="canvasLocation" x="151" y="1665"/>
         </scene>
         <!--Calculator-->
         <scene sceneID="Xfe-3i-xhv">
@@ -1008,10 +1008,10 @@ This is only showcase app, not intended for production purposes.</string>
                         <outlet property="fourButton" destination="rUw-vf-PNm" id="7xg-NF-12b"/>
                         <outlet property="lastSignLabel" destination="YZh-2c-lxk" id="9eW-Xe-JWt"/>
                         <outlet property="minusButton" destination="hyZ-GS-b4n" id="hg4-5p-4PH"/>
-                        <outlet property="moduleButton" destination="Bck-k4-Rnw" id="z1w-Pd-w0J"/>
                         <outlet property="multiplyButton" destination="Lef-oq-6tF" id="LJ7-bN-1Ok"/>
                         <outlet property="nineButton" destination="ScB-JD-pYD" id="qEp-ke-pJD"/>
                         <outlet property="oneButton" destination="cEb-GT-XMg" id="7ND-Jm-7he"/>
+                        <outlet property="percentButton" destination="Bck-k4-Rnw" id="2HI-1N-V3v"/>
                         <outlet property="plusButton" destination="prS-ma-oED" id="wsH-hh-cHi"/>
                         <outlet property="resultLabel" destination="xws-I8-RiJ" id="X21-5l-a8h"/>
                         <outlet property="sevenButton" destination="w1G-BD-RaP" id="vbU-5M-YfS"/>
@@ -1023,7 +1023,7 @@ This is only showcase app, not intended for production purposes.</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Hlb-0U-7wp" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="151" y="1657"/>
+            <point key="canvasLocation" x="151" y="296"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
