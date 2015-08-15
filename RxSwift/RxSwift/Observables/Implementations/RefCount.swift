@@ -8,10 +8,11 @@
 
 import Foundation
 
-class RefCount_<O: ObserverType> : Sink<O>, ObserverType {
+class RefCountSink<O: ObserverType> : Sink<O>, ObserverType {
     typealias Element = O.Element
-    let parent: RefCount<Element>
-    typealias ParentState = RefCount<Element>.State
+    typealias Parent = RefCount<Element>
+    
+    let parent: Parent
     
     init(parent: RefCount<Element>, observer: O, cancel: Disposable) {
         self.parent = parent
@@ -21,29 +22,26 @@ class RefCount_<O: ObserverType> : Sink<O>, ObserverType {
     func run() -> Disposable {
         let subscription = self.parent.source.subscribeSafe(self)
         
-        let state = self.parent.state
-        
         self.parent.lock.performLocked {
-            if state.count == 0 {
-                self.parent.state.count = 1
-                self.parent.state.connectableSubscription = self.parent.source.connect()
+            if parent.count == 0 {
+                parent.count = 1
+                parent.connectableSubscription = self.parent.source.connect()
             }
             else {
-                self.parent.state.count = state.count + 1
+                parent.count = parent.count + 1
             }
         }
         
         return AnonymousDisposable {
             subscription.dispose()
             self.parent.lock.performLocked {
-                let state = self.parent.state
-                if state.count == 1 {
-                    state.connectableSubscription!.dispose()
-                    self.parent.state.count = 0
-                    self.parent.state.connectableSubscription = nil
+                if self.parent.count == 1 {
+                    self.parent.connectableSubscription!.dispose()
+                    self.parent.count = 0
+                    self.parent.connectableSubscription = nil
                 }
-                else if state.count > 1 {
-                    self.parent.state.count = state.count - 1
+                else if self.parent.count > 1 {
+                    self.parent.count = self.parent.count - 1
                 }
                 else {
                     rxFatalError("Something went wrong with RefCount disposing mechanism")
@@ -55,27 +53,21 @@ class RefCount_<O: ObserverType> : Sink<O>, ObserverType {
     func on(event: Event<Element>) {
         switch event {
         case .Next:
-            trySend(observer, event)
+            observer?.on(event)
         case .Error: fallthrough
         case .Completed:
-            trySend(observer, event)
+            observer?.on(event)
             self.dispose()
         }
     }
 }
 
 class RefCount<Element>: Producer<Element> {
-    typealias State = (
-        count: Int,
-        connectableSubscription: Disposable?
-    )
+    var lock = NSRecursiveLock()
     
-    var lock = SpinLock()
-    
-    var state: State = (
-        count: 0,
-        connectableSubscription: nil
-    )
+    // state
+    var count = 0
+    var connectableSubscription = nil as Disposable?
     
     let source: ConnectableObservableType<Element>
     
@@ -84,7 +76,7 @@ class RefCount<Element>: Producer<Element> {
     }
     
     override func run<O: ObserverType where O.Element == Element>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
-        let sink = RefCount_(parent: self, observer: observer, cancel: cancel)
+        let sink = RefCountSink(parent: self, observer: observer, cancel: cancel)
         setSink(sink)
         return sink.run()
     }

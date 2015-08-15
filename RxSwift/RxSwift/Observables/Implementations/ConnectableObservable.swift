@@ -11,21 +11,28 @@ import Foundation
 class Connection<SourceType, ResultType> : Disposable {
     typealias SelfType = Connection<SourceType, ResultType>
     
-    var parent: ConnectableObservable<SourceType, ResultType>?
-    var subscription: SingleAssignmentDisposable? = SingleAssignmentDisposable()
+    // state
+    weak var parent: ConnectableObservable<SourceType, ResultType>?
+    var subscription : Disposable?
     
-    init(parent: ConnectableObservable<SourceType, ResultType>) {
+    init(parent: ConnectableObservable<SourceType, ResultType>, subscription: Disposable) {
         self.parent = parent
+        self.subscription = subscription
     }
     
     func dispose() {
-        if let parent = parent {
-            parent.lock.performLocked {
-                subscription!.dispose()
-                subscription = nil
-                self.parent!.connection = nil
-                self.parent = nil
+        guard let parent = self.parent else { return }
+        
+        parent.lock.performLocked {
+            guard let oldSubscription = self.subscription else {
+                return
             }
+            
+            self.subscription = nil
+            self.parent!.connection = nil
+            self.parent = nil
+            
+            oldSubscription.dispose()
         }
     }
 }
@@ -36,7 +43,7 @@ class ConnectableObservable<SourceType, ResultType> : ConnectableObservableType<
     let subject: SubjectType<SourceType, ResultType>
     let source: Observable<SourceType>
     
-    var lock = SpinLock()
+    var lock = NSRecursiveLock()
     var connection: ConnectionType?
     
     init(source: Observable<SourceType>, subject: SubjectType<SourceType, ResultType>) {
@@ -46,22 +53,16 @@ class ConnectableObservable<SourceType, ResultType> : ConnectableObservableType<
     }
     
     override func connect() -> Disposable {
-        let (connection, connect) = self.lock.calculateLocked { () -> (Connection<SourceType, ResultType>, Bool) in
+        return self.lock.calculateLocked {
             if let connection = self.connection {
-                return (connection, false)
+                return connection
             }
-            else {
-                self.connection = Connection(parent: self)
-                return (self.connection!, true)
-            }
-        }
-
-        if connect {
+            
             let disposable = self.source.subscribeSafe(self.subject)
-            connection.subscription!.disposable = disposable
+            let connection = Connection(parent: self, subscription: disposable)
+            self.connection = connection
+            return connection
         }
-        
-        return connection
     }
     
     override func subscribe<O : ObserverType where O.Element == ResultType>(observer: O) -> Disposable {

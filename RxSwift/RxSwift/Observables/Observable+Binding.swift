@@ -16,29 +16,12 @@ extension ObservableType {
         return ConnectableObservable(source: self.normalize(), subject: subject)
     }
 
-    public func multicastOrDie<I, R>(
-            subjectSelector: () -> RxResult<SubjectType<E, I>>,
-            selector: (Observable<I>) -> RxResult<Observable<R>>
-        )
+    public func multicast<I, R>(subjectSelector: () throws -> SubjectType<E, I>, selector: (Observable<I>) throws -> Observable<R>)
         -> Observable<R> {
         return Multicast(
             source: self.normalize(),
             subjectSelector: subjectSelector,
             selector: selector
-        )
-    }
-
-    public func multicast<I, R>
-        (
-            subjectSelector: () -> SubjectType<E, I>,
-            selector: (Observable<I>) -> Observable<R>
-        )
-        -> Observable<R> {
-            
-        return Multicast(
-            source: self.normalize(),
-            subjectSelector: { success(subjectSelector()) },
-            selector: { success(selector($0)) }
         )
     }
 }

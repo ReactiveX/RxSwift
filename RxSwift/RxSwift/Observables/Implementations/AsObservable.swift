@@ -8,7 +8,7 @@
 
 import Foundation
 
-class AsObservableSink_<O: ObserverType> : Sink<O>, ObserverType {
+class AsObservableSink<O: ObserverType> : Sink<O>, ObserverType {
     typealias Element = O.Element
     
     override init(observer: O, cancel: Disposable) {
@@ -45,7 +45,7 @@ class AsObservable<Element> : Producer<Element> {
     }
     
     override func run<O: ObserverType where O.Element == Element>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
-        let sink = AsObservableSink_(observer: observer, cancel: cancel)
+        let sink = AsObservableSink(observer: observer, cancel: cancel)
         setSink(sink)
         return source.subscribeSafe(sink)
     }
