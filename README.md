@@ -494,6 +494,25 @@ If you don't have a bridging header, you can go to your target's `Build Settings
 
 ** Comparison with RAC with respect to v3.0-RC.1
 
+### Is RxSwift Functional Reactive Programming?
+
+Why this question is important? Because RxSwift is **NOT** *Functional Reactive Programming*. This clarification is important for 2 big reasons:
+
+* the Rx world is not time-continuous and doesn't have a denotative semantics, so all fundamentals of FRP are missing
+* concepts and names are different, so when you start to learn Rx you should not link Rx and FRP
+
+If you are interested in learning more about what FRP is and to understand why is different from the Reactive Extensions this list of resources might help:
+
+* [Functional Reactive Animations](http://conal.net/papers/icfp97/)
+* [Essence and Origins of FRP](http://conal.net/talks/essence-and-origins-of-frp-lambdajam-2015.pdf)
+* [What is (functional) reactive programming?](http://stackoverflow.com/questions/1028250/what-is-functional-reactive-programming/1030631#1030631)
+* [Specification for a Functional Reactive Programming language](http://stackoverflow.com/questions/5875929/specification-for-a-functional-reactive-programming-language)
+
+**So what RxSwift and the Rx world is?**
+
+*Rx is not FRP and was explicitly designed as a discrete collection API on purpose (as opposed to continuous time varying values).* [Source.](https://github.com/ReactiveX/reactivex.github.io/issues/130#issuecomment-123795960)
+
+
 ## References
 
 * [http://reactivex.io/](http://reactivex.io/)
