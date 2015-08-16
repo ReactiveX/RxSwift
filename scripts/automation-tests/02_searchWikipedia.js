@@ -4,7 +4,7 @@ test("----- searchWikipedia -----", function (check, pass) {
 
   var width = UIATarget.localTarget().frontMostApp().mainWindow().rect().size.width
 
-  UIATarget.localTarget().frontMostApp().mainWindow().tableViews()[0].cells()[1].tap();
+  UIATarget.localTarget().frontMostApp().mainWindow().tableViews()[0].cells()[3].tap();
 
   UIATarget.localTarget().frontMostApp().mainWindow().searchBars()[0].searchBars()[0].tap();
   writeInElement(UIATarget.localTarget().frontMostApp().mainWindow().searchBars()[0].searchBars()[0], "banana")
