@@ -7,6 +7,9 @@
    <FileRef
       location = "group:README.md">
    </FileRef>
+   <FileRef
+      location = "group:CHANGELOG.md">
+   </FileRef>
    <Group
       location = "group:Playgrounds"
       name = "Playgrounds">
