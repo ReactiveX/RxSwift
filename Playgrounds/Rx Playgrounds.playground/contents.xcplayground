@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<playground version='6.0' target-platform='osx' requires-full-environment='true'>
+    <pages>
+        <page name='Introduction'/>
+        <page name='Subjects'/>
+        <page name='Creating'/>
+        <page name='Transforming'/>
+        <page name='Filtering'/>
+        <page name='Combining'/>
+        <page name='Error handling'/>
+        <page name='Utility'/>
+        <page name='Conditional and Boolean'/>
+        <page name='Mathematical and Aggregate'/>
+    </pages>
+</playground>
