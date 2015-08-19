@@ -10,47 +10,9 @@
    <FileRef
       location = "group:CHANGELOG.md">
    </FileRef>
-   <Group
-      location = "group:Playgrounds"
-      name = "Playgrounds">
-      <FileRef
-         location = "group:Introduction.playground">
-      </FileRef>
-      <FileRef
-         location = "group:Subjects.playground">
-      </FileRef>
-      <Group
-         location = "group:ObservablesOperators"
-         name = "ObservablesOperators">
-         <FileRef
-            location = "group:Observables+Creating.playground">
-         </FileRef>
-         <FileRef
-            location = "group:Observables+Transforming.playground">
-         </FileRef>
-         <FileRef
-            location = "group:Observables+Filtering.playground">
-         </FileRef>
-         <FileRef
-            location = "group:Observables+Combining.playground">
-         </FileRef>
-         <FileRef
-            location = "group:Observables+Error Handling.playground">
-         </FileRef>
-         <FileRef
-            location = "group:Observables+Utility.playground">
-         </FileRef>
-         <FileRef
-            location = "group:Observables+Conditional and Boolean.playground">
-         </FileRef>
-         <FileRef
-            location = "group:Observables+Mathematical and Aggregate.playground">
-         </FileRef>
-         <FileRef
-            location = "group:Observables+Connectable.playground">
-         </FileRef>
-      </Group>
-   </Group>
+   <FileRef
+      location = "group:/Volumes/230gb/carlos/Desktop/Swift/Functional/Reactive/RxSwift/RxSwift/RxSamples.playground">
+   </FileRef>
    <FileRef
       location = "group:RxSwift/RxSwift.xcodeproj">
    </FileRef>
