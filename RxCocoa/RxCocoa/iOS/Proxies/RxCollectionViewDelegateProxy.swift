@@ -14,6 +14,6 @@ import RxSwift
 
 // Please take a look at `DelegateProxyType.swift`
 class RxCollectionViewDelegateProxy : RxScrollViewDelegateProxy
-                                    , UICollectionViewDelegate {
+                                    , UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
 }
