@@ -494,6 +494,29 @@ If you don't have a bridging header, you can go to your target's `Build Settings
 
 ** Comparison with RAC with respect to v3.0-RC.1
 
+## Origin of RxSwift
+
+In the introduction the following sentence describes what RxSwift is in nutshell:
+
+> Rx is a [generic abstraction of computation](https://youtu.be/looJcaeboBY) expressed through `Observable<Element>` interface.
+
+The previous explanation is the short version, what is the long one?
+
+RxSwift is a port of the [Reactive Extensions](https://msdn.microsoft.com/en-us/data/gg577609.aspx) for .NET that is a work of [Erik Meijer](https://twitter.com/headinthebox). This is the original formulation of what Rx is:
+
+> The Reactive Extensions (Rx) is a library for composing asynchronous and event-based programs using observable sequences and LINQ-style query operators. Using Rx, developers represent asynchronous data streams with Observables, query asynchronous data streams using LINQ operators, and parameterize the concurrency in the asynchronous data streams using Schedulers.
+
+For a Cocoa developer this definition doesn't add any extra value to understand what RxSwift is, being related to the .Net world, it is difficult to understand, but it is important to know which is the origin of the abstraction RxSwift relies on. For this reason, it's also good to know that a lot of resources about concepts of Rx written on ports like RxJava or RxJS are also valid for RxSwift, following the philosophy: **learn once, apply everywhere**.
+
+RxSwift is about composition of events sequences, in an asynchronous world, turning this framework into a good solution to work with streams of events also called **compositional event programming**. Describing events as a sequence seems to be a natural approach, developers are habit to manage sequences like lists or arrays everyday and the Rx abstraction is a natural evolution of this usage, with the major goal of simplify asynchronous programming.
+
+#### RxSwift is not Functional Reactive Programming
+
+The last thing to take in consideration and that is important to understand to avoid confusion while reading resources around the Internet is that RxSwift is **not** *Functional Reactive Programming*. The latter formulation is a work of Conal Elliott, so is very important to remember that [Rx is not FRP and was explicitly designed as a discrete collection API on purpose, as opposed to continuous time varying values](https://github.com/ReactiveX/reactivex.github.io/issues/130#issuecomment-123795960) that is the foundation of FRP. If you are interested in more information about the original formulation of what *Functional Reactive Programming* is, please take in consideration these resources:
+
+* [Functional Reactive Animations](http://conal.net/papers/icfp97/)
+* [Essence and Origins of FRP](http://conal.net/talks/essence-and-origins-of-frp-lambdajam-2015.pdf)
+
 ## References
 
 * [http://reactivex.io/](http://reactivex.io/)
