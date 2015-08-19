@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<playground version='6.0' target-platform='osx' requires-full-environment='true' display-mode='rendered'>
+    <pages>
+        <page name='Index'/>
+        <page name='Introduction'/>
+        <page name='Subjects'/>
+        <page name='Creating_observables'/>
+        <page name='Transforming_Observables'/>
+        <page name='Filtering_Observables'/>
+        <page name='Combining_Observables'/>
+        <page name='Error_Handling_Operators'/>
+        <page name='Observable_Utility_Operators'/>
+        <page name='Conditional_and_Boolean_Operators'/>
+        <page name='Mathematical_and_Aggregate_Operators'/>
+        <page name='Connectable_Observable_Operators'/>
+    </pages>
+</playground>
