@@ -39,6 +39,7 @@ func sampleWithoutConnectableOperators() {
 
 /*:
 ### `multicast`
+![](publishConnect.c.png)
 [More info in reactive.io website]( http://reactivex.io/documentation/operators/publish.html )
 */
 func sampleWithMulticast() {
@@ -91,6 +92,7 @@ Ensure that all observers see the same sequence of emitted items, even if they s
 
 publish = multicast + replay subject
 
+![](replay.c.png)
 
 [More info in reactive.io website]( http://reactivex.io/documentation/operators/replay.html )
 */

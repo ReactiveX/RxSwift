@@ -4,9 +4,6 @@ import Cocoa
 import RxSwift
 
 /*:
-# To use playgrounds please open `Rx.xcworkspace`, build `RxSwift-OSX` scheme and then open playgrounds in `Rx.xcworkspace` tree view.
-*/
-/*:
 ## Conditional and Boolean Operators
 
 Operators that evaluate one or more Observables or items emitted by Observables.
@@ -15,6 +12,7 @@ Operators that evaluate one or more Observables or items emitted by Observables.
 
 ### `takeUntil`
 Discard any items emitted by an Observable after a second Observable emits an item or terminates.
+![](takeuntil.png)
 [More info in reactive.io website]( http://reactivex.io/documentation/operators/takeuntil.html )
 */
 
@@ -43,6 +41,7 @@ example("takeUntil") {
 ### `takeWhile`
 
 Mirror items emitted by an Observable until a specified condition becomes false
+![](takeWhile.c.png)
 [More info in reactive.io website]( http://reactivex.io/documentation/operators/takewhile.html )
 */
 example("takeWhile") {

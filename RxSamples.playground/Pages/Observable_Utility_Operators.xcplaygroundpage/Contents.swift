@@ -1,11 +1,7 @@
 //: [<< Previous](@previous) - [Index](Index)
 
-import Cocoa
 import RxSwift
 
-/*:
-# To use playgrounds please open `Rx.xcworkspace`, build `RxSwift-OSX` scheme and then open playgrounds in `Rx.xcworkspace` tree view.
-*/
 /*:
 ## Observable Utility Operators
 
@@ -97,6 +93,7 @@ example("subscribeError") {
 ### `tap` a.k.a. `do`
 
 Returns the same source Observable but the given closure responsible for the actions to perform when the even is produced. The gived closure obtain the event produced by the source observable
+![](do.c.png)
 [More info in reactive.io website]( http://reactivex.io/documentation/operators/do.html )
 */
 example("tap") {

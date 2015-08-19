@@ -12,6 +12,7 @@ Operators that help to recover from error notifications from an Observable.
 ### `catchError`
 
 Recover from an onError notification by continuing the sequence without error
+![](catch.png)
 [More info in reactive.io website]( http://reactivex.io/documentation/operators/catch.html )
 */
 example("catchError 1st") {
@@ -76,6 +77,7 @@ example("catchError 2nd") {
 ### `retry`
 
 If a source Observable emits an error, resubscribe to it in the hopes that it will complete without error
+![](retry.c.png)
 [More info in reactive.io website]( http://reactivex.io/documentation/operators/retry.html )
 */
 example("retry") {

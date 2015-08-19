@@ -11,6 +11,7 @@ Operators that transform items that are emitted by an Observable.
 ### `map` / `select`
 
 Transform the items emitted by an Observable by applying a function to each item
+![](map.png)
 [More info in reactive.io website]( http://reactivex.io/documentation/operators/map.html )
 */
 
@@ -37,6 +38,7 @@ example("map") {
 ### `flatMap`
 
 Transform the items emitted by an Observable into Observables, then flatten the emissions from those into a single Observable
+![](flatMap.c.png)
 [More info in reactive.io website]( http://reactivex.io/documentation/operators/flatmap.html )
 */
 example("flatMap") {
@@ -73,6 +75,7 @@ example("flatMap") {
 ### `scan`
 
 Apply a function to each item emitted by an Observable, sequentially, and emit each successive value
+![](scan.png)
 [More info in reactive.io website]( http://reactivex.io/documentation/operators/scan.html )
 */
 example("scan") {

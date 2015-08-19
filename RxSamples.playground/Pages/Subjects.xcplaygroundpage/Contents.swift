@@ -15,7 +15,8 @@ func writeSequenceToConsole(name: String, sequence: Observable<String>) {
 ## PublishSubject
 
 PublishSubject can begin emitting items immediately upon creation, but there is a risk that one or more items may be lost between the time the Subject is created and the observer subscribes to it.
-
+![](S.PublishSubject.png)
+![](S.PublishSubject.e.png)
 */
 example("PublishSubject") {
     let subject = PublishSubject<String>()
@@ -33,7 +34,7 @@ example("PublishSubject") {
 ## ReplaySubject
 
 ReplaySubject emits to any observer all of the items, in the buffer, that were emitted by the source
-
+![](S.ReplaySubject.png)
 */
 example("ReplaySubject") {
     let subject = ReplaySubject<String>(bufferSize: 1)
@@ -50,10 +51,11 @@ example("ReplaySubject") {
 
 ## BehaviorSubject a.k.a. Variable
 
-ReplaySubject emits to any observer all of the items, in the buffer, that were emitted by the source
-
+When an observer subscribes to a `BehaviorSubject`, it begins by emitting the item most recently emitted by the source Observable (or a seed/default value if none has yet been emitted) and then continues to emit any other items emitted later by the source Observable(s).
+![](S.BehaviorSubject.png)
+![](S.BehaviorSubject.e.png)
 */
-example("ReplaySubject") {
+example("BehaviorSubject") {
     let subject = BehaviorSubject(value: "z")
     writeSequenceToConsole("1", sequence: subject)
     sendNext(subject, "a")

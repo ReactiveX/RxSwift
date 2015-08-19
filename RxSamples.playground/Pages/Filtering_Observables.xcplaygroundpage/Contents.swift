@@ -11,7 +11,8 @@ Operators that selectively emit items from a source Observable.
 
 ### `where` / `filter`
 
-emit only those items from an Observable that pass a predicate test
+Emit only those items from an Observable that pass a predicate test
+![](filter.png)
 [More info in reactive.io website]( http://reactivex.io/documentation/operators/filter.html )
 */
 
@@ -29,7 +30,8 @@ example("filter") {
 /*:
 ### `distinctUntilChanged`
 
-suppress duplicate items emitted by an Observable
+Suppress duplicate items emitted by an Observable
+![](distinct.png)
 [More info in reactive.io website]( http://reactivex.io/documentation/operators/distinct.html )
 */
 example("distinctUntilChanged") {
@@ -45,6 +47,7 @@ example("distinctUntilChanged") {
 ### `take`
 
 Emit only the first n items emitted by an Observable
+![](take.png)
 [More info in reactive.io website]( http://reactivex.io/documentation/operators/take.html )
 */
 example("take") {
