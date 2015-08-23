@@ -212,10 +212,10 @@ class GitHubSignupViewController : ViewController {
                     let alertView: UIAlertView
                     
                     if signed {
-                        alertView = UIAlertView(title: "GitHub", message: "Mock signed up to GitHub", delegate: nil, cancelButtonTitle: nil)
+                        alertView = UIAlertView(title: "GitHub", message: "Mock signed up to GitHub", delegate: nil, cancelButtonTitle: "OK")
                     }
                     else {
-                        alertView = UIAlertView(title: "GitHub", message: "Mock signed up failed", delegate: nil, cancelButtonTitle: nil)
+                        alertView = UIAlertView(title: "GitHub", message: "Mock signed up failed", delegate: nil, cancelButtonTitle: "OK")
                     }
                     
                     alertView.show()

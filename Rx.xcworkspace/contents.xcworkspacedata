@@ -52,13 +52,7 @@
       </Group>
    </Group>
    <FileRef
-      location = "group:RxSwift/RxSwift.xcodeproj">
-   </FileRef>
-   <FileRef
-      location = "group:RxCocoa/RxCocoa.xcodeproj">
-   </FileRef>
-   <FileRef
-      location = "group:RxBlocking/RxBlocking.xcodeproj">
+      location = "group:Rx.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:RxTests/RxTests.xcodeproj">
