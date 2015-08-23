@@ -197,18 +197,12 @@
 		C8093D7E1B8A72BE0088E94D /* ObserverType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093CAB1B8A72BE0088E94D /* ObserverType.swift */; };
 		C8093D7F1B8A72BE0088E94D /* PeriodicScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093CAC1B8A72BE0088E94D /* PeriodicScheduler.swift */; };
 		C8093D801B8A72BE0088E94D /* PeriodicScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093CAC1B8A72BE0088E94D /* PeriodicScheduler.swift */; };
-		C8093D811B8A72BE0088E94D /* Rx.h in Headers */ = {isa = PBXBuildFile; fileRef = C8093CAD1B8A72BE0088E94D /* Rx.h */; };
-		C8093D821B8A72BE0088E94D /* Rx.h in Headers */ = {isa = PBXBuildFile; fileRef = C8093CAD1B8A72BE0088E94D /* Rx.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C8093D831B8A72BE0088E94D /* Rx.pch in Headers */ = {isa = PBXBuildFile; fileRef = C8093CAE1B8A72BE0088E94D /* Rx.pch */; };
-		C8093D841B8A72BE0088E94D /* Rx.pch in Headers */ = {isa = PBXBuildFile; fileRef = C8093CAE1B8A72BE0088E94D /* Rx.pch */; settings = {ATTRIBUTES = (Public, ); }; };
 		C8093D851B8A72BE0088E94D /* Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093CAF1B8A72BE0088E94D /* Rx.swift */; };
 		C8093D861B8A72BE0088E94D /* Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093CAF1B8A72BE0088E94D /* Rx.swift */; };
 		C8093D871B8A72BE0088E94D /* RxBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093CB01B8A72BE0088E94D /* RxBox.swift */; };
 		C8093D881B8A72BE0088E94D /* RxBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093CB01B8A72BE0088E94D /* RxBox.swift */; };
 		C8093D891B8A72BE0088E94D /* RxResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093CB11B8A72BE0088E94D /* RxResult.swift */; };
 		C8093D8A1B8A72BE0088E94D /* RxResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093CB11B8A72BE0088E94D /* RxResult.swift */; };
-		C8093D8B1B8A72BE0088E94D /* RxSwift.h in Headers */ = {isa = PBXBuildFile; fileRef = C8093CB21B8A72BE0088E94D /* RxSwift.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C8093D8C1B8A72BE0088E94D /* RxSwift.h in Headers */ = {isa = PBXBuildFile; fileRef = C8093CB21B8A72BE0088E94D /* RxSwift.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C8093D8D1B8A72BE0088E94D /* Scheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093CB31B8A72BE0088E94D /* Scheduler.swift */; };
 		C8093D8E1B8A72BE0088E94D /* Scheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093CB31B8A72BE0088E94D /* Scheduler.swift */; };
 		C8093D8F1B8A72BE0088E94D /* ConcurrentDispatchQueueScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093CB51B8A72BE0088E94D /* ConcurrentDispatchQueueScheduler.swift */; };
@@ -296,8 +290,6 @@
 		C8093F501B8A732E0088E94D /* RxCocoa.h in Headers */ = {isa = PBXBuildFile; fileRef = C8093ECB1B8A732E0088E94D /* RxCocoa.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C8093F5E1B8A73A20088E94D /* Observable+Blocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093F581B8A73A20088E94D /* Observable+Blocking.swift */; };
 		C8093F5F1B8A73A20088E94D /* Observable+Blocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093F581B8A73A20088E94D /* Observable+Blocking.swift */; };
-		C8093F601B8A73A20088E94D /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = C8093F591B8A73A20088E94D /* README.md */; };
-		C8093F611B8A73A20088E94D /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = C8093F591B8A73A20088E94D /* README.md */; };
 		C8093F621B8A73A20088E94D /* RxBlocking.h in Headers */ = {isa = PBXBuildFile; fileRef = C8093F5A1B8A73A20088E94D /* RxBlocking.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C8093F631B8A73A20088E94D /* RxBlocking.h in Headers */ = {isa = PBXBuildFile; fileRef = C8093F5A1B8A73A20088E94D /* RxBlocking.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C88254151B8A752B00B02D69 /* CoreDataEntityEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88253EF1B8A752B00B02D69 /* CoreDataEntityEvent.swift */; };
@@ -334,6 +326,10 @@
 		C88254341B8A752B00B02D69 /* UITableView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88254121B8A752B00B02D69 /* UITableView+Rx.swift */; };
 		C88254351B8A752B00B02D69 /* UITextField+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88254131B8A752B00B02D69 /* UITextField+Rx.swift */; };
 		C88254361B8A752B00B02D69 /* UITextView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88254141B8A752B00B02D69 /* UITextView+Rx.swift */; };
+		C8A468C81B8A892A00BF917B /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8A56AD71AD7424700B4673B /* RxSwift.framework */; };
+		C8A468C91B8A893400BF917B /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C88BB8711B07E5ED0064D411 /* RxSwift.framework */; };
+		C8A468CA1B8A893A00BF917B /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8A56AD71AD7424700B4673B /* RxSwift.framework */; };
+		C8A468CB1B8A894100BF917B /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C88BB8711B07E5ED0064D411 /* RxSwift.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -436,12 +432,9 @@
 		C8093CAA1B8A72BE0088E94D /* ObserverType+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ObserverType+Extensions.swift"; sourceTree = "<group>"; };
 		C8093CAB1B8A72BE0088E94D /* ObserverType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObserverType.swift; sourceTree = "<group>"; };
 		C8093CAC1B8A72BE0088E94D /* PeriodicScheduler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PeriodicScheduler.swift; sourceTree = "<group>"; };
-		C8093CAD1B8A72BE0088E94D /* Rx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Rx.h; sourceTree = "<group>"; };
-		C8093CAE1B8A72BE0088E94D /* Rx.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Rx.pch; sourceTree = "<group>"; };
 		C8093CAF1B8A72BE0088E94D /* Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Rx.swift; sourceTree = "<group>"; };
 		C8093CB01B8A72BE0088E94D /* RxBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxBox.swift; sourceTree = "<group>"; };
 		C8093CB11B8A72BE0088E94D /* RxResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxResult.swift; sourceTree = "<group>"; };
-		C8093CB21B8A72BE0088E94D /* RxSwift.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RxSwift.h; sourceTree = "<group>"; };
 		C8093CB31B8A72BE0088E94D /* Scheduler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scheduler.swift; sourceTree = "<group>"; };
 		C8093CB51B8A72BE0088E94D /* ConcurrentDispatchQueueScheduler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConcurrentDispatchQueueScheduler.swift; sourceTree = "<group>"; };
 		C8093CB61B8A72BE0088E94D /* DispatchQueueSchedulerPriority.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DispatchQueueSchedulerPriority.swift; sourceTree = "<group>"; };
@@ -533,6 +526,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C8A468C81B8A892A00BF917B /* RxSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -540,6 +534,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C8A468C91B8A893400BF917B /* RxSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -547,6 +542,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C8A468CA1B8A893A00BF917B /* RxSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -554,6 +550,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C8A468CB1B8A894100BF917B /* RxSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -598,12 +595,9 @@
 				C8093CAA1B8A72BE0088E94D /* ObserverType+Extensions.swift */,
 				C8093CAB1B8A72BE0088E94D /* ObserverType.swift */,
 				C8093CAC1B8A72BE0088E94D /* PeriodicScheduler.swift */,
-				C8093CAD1B8A72BE0088E94D /* Rx.h */,
-				C8093CAE1B8A72BE0088E94D /* Rx.pch */,
 				C8093CAF1B8A72BE0088E94D /* Rx.swift */,
 				C8093CB01B8A72BE0088E94D /* RxBox.swift */,
 				C8093CB11B8A72BE0088E94D /* RxResult.swift */,
-				C8093CB21B8A72BE0088E94D /* RxSwift.h */,
 				C8093CB31B8A72BE0088E94D /* Scheduler.swift */,
 				C8093CB41B8A72BE0088E94D /* Schedulers */,
 				C8093CBD1B8A72BE0088E94D /* Subjects */,
@@ -992,9 +986,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C8093D821B8A72BE0088E94D /* Rx.h in Headers */,
-				C8093D8C1B8A72BE0088E94D /* RxSwift.h in Headers */,
-				C8093D841B8A72BE0088E94D /* Rx.pch in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1002,9 +993,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C8093D8B1B8A72BE0088E94D /* RxSwift.h in Headers */,
-				C8093D811B8A72BE0088E94D /* Rx.h in Headers */,
-				C8093D831B8A72BE0088E94D /* Rx.pch in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1126,7 +1114,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0700;
-				LastUpgradeCheck = 0640;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "Krunoslav Zaher";
 				TargetAttributes = {
 					C8A56AD61AD7424700B4673B = {
@@ -1309,7 +1297,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C8093F601B8A73A20088E94D /* README.md in Sources */,
 				C8093F5E1B8A73A20088E94D /* Observable+Blocking.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1318,7 +1305,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C8093F611B8A73A20088E94D /* README.md in Sources */,
 				C8093F5F1B8A73A20088E94D /* Observable+Blocking.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1775,6 +1761,7 @@
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -1887,7 +1874,9 @@
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -1938,6 +1927,7 @@
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
