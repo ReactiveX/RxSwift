@@ -11,7 +11,7 @@
       location = "group:CHANGELOG.md">
    </FileRef>
    <FileRef
-      location = "group:RxSamples.playground">
+      location = "group:/Users/kzaher/Projects/Rx/Rx.playground">
    </FileRef>
    <FileRef
       location = "group:Rx.xcodeproj">
