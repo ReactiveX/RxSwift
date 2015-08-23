@@ -39,7 +39,7 @@ example("takeUntil") {
 }
 
 
-e/*:
+/*:
 
 
 ### `takeWhile`
@@ -47,7 +47,7 @@ e/*:
 Mirror items emitted by an Observable until a specified condition becomes false
 [More info in reactive.io website]( http://reactivex.io/documentation/operators/takewhile.html )
 */
-xample("takeWhile") {
+example("takeWhile") {
     
     let observable1 = PublishSubject<Int>()
     

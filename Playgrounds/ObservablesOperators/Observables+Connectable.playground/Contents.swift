@@ -35,11 +35,11 @@ sampleWithoutConnectableOperators()
 
 
 
-fu/*:
+/*:
 ### `multicast`
 [More info in reactive.io website]( http://reactivex.io/documentation/operators/publish.html )
 */
-nc sampleWithMulticast() {
+func sampleWithMulticast() {
     
     let subject1 = PublishSubject<Int64>()
     
@@ -83,7 +83,7 @@ nc sampleWithMulticast() {
 
 
 
-func sampleW/*:
+/*:
 ### `replay`
 Ensure that all observers see the same sequence of emitted items, even if they subscribe after the Observable has begun emitting items.
 
@@ -92,7 +92,7 @@ publish = multicast + replay subject
 
 [More info in reactive.io website]( http://reactivex.io/documentation/operators/replay.html )
 */
-ithReplayBuffer0() {
+func sampleWithReplayBuffer0() {
     
     let int1 = interval(1, MainScheduler.sharedInstance)
         .replay(0)
@@ -165,8 +165,7 @@ func sampleWithReplayBuffer2() {
 
 
 
-func sampleWithPublish() {
-   /*:
+/*:
 ### `publish`
 Convert an ordinary Observable into a connectable Observable.
 
@@ -176,7 +175,7 @@ so publish is basically replay(0)
 
 [More info in reactive.io website]( http://reactivex.io/documentation/operators/publish.html )
 */
- 
+func sampleWithPublish() {
     let int1 = interval(1, MainScheduler.sharedInstance)
         .publish
     
@@ -210,17 +209,5 @@ so publish is basically replay(0)
 
 
 
-
-
-
-
-XCPSetExecutionShouldContinueIndefi/*:
-### `refCount`
-Make a Connectable Observable behave like an ordinary Observable.
-[More info in reactive.io website]( http://reactivex.io/documentation/operators/refcount.html )
-*/
-nit/*:
-### `Variable` / `sharedWithCachedLastResult`
-*/
-ely(continueIndefinitely: true)
+XCPSetExecutionShouldContinueIndefinitely(true)
 

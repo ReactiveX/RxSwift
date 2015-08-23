@@ -21,7 +21,7 @@ extension ObservableBindingTest {
         
         var nEvents = 0
         
-        let observable = TestConnectableObservable(o: sequence(0, 1, 2), s: subject)
+        let observable = TestConnectableObservable(o: sequenceOf(0, 1, 2), s: subject)
         let _d = observable .subscribeNext { n in
             nEvents++
         } .scopedDispose
@@ -36,7 +36,7 @@ extension ObservableBindingTest {
         
         var nEvents = 0
         
-        let observable = TestConnectableObservable(o: concat([sequence(0, 1, 2), failWith(testError)]), s: subject)
+        let observable = TestConnectableObservable(o: concat([sequenceOf(0, 1, 2), failWith(testError)]), s: subject)
         let _d = observable .subscribeError { n in
             nEvents++
         } .scopedDispose
@@ -249,7 +249,7 @@ extension ObservableBindingTest {
     func testReplay_DeadlockSimple() {
         var nEvents = 0
         
-        let observable = sequence(0, 1, 2).replay(3).refCount
+        let observable = sequenceOf(0, 1, 2).replay(3).refCount
         _ = observable .subscribeNext { n in
             nEvents++
         } .scopedDispose
@@ -260,7 +260,7 @@ extension ObservableBindingTest {
     func testReplay_DeadlockErrorAfterN() {
         var nEvents = 0
         
-        let observable = concat([sequence(0, 1, 2), failWith(testError)]).replay(3).refCount
+        let observable = concat([sequenceOf(0, 1, 2), failWith(testError)]).replay(3).refCount
         _ = observable .subscribeError { n in
             nEvents++
         } .scopedDispose
@@ -293,7 +293,7 @@ extension ObservableBindingTest {
     func testReplay1_DeadlockSimple() {
         var nEvents = 0
         
-        let observable = sequence(0, 1, 2).replay(1).refCount
+        let observable = sequenceOf(0, 1, 2).replay(1).refCount
         _ = observable .subscribeNext { n in
             nEvents++
             } .scopedDispose

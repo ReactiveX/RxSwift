@@ -18,7 +18,7 @@ emit only those items from an Observable that pass a predicate test
 */
 
 example("filter") {
-    let onlyEvensSubscriber = sequence(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
+    let onlyEvensSubscriber = sequenceOf(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
         .filter {
             $0 % 2 == 0
         }
@@ -28,32 +28,30 @@ example("filter") {
 }
 
 
-e/*:
+/*:
 ### `distinctUntilChanged`
 
 suppress duplicate items emitted by an Observable
 [More info in reactive.io website]( http://reactivex.io/documentation/operators/distinct.html )
 */
-xample("distinctUntilChanged") {
-    let distinctUntilChangedSubscriber = sequence(1, 2, 3, 1, 1, 4)
-        .distinctUntilChanged
+example("distinctUntilChanged") {
+    let distinctUntilChangedSubscriber = sequenceOf(1, 2, 3, 1, 1, 4)
+        .distinctUntilChanged()
         .subscribeNext { value in
             print("\(value)")
     }
 }
 
 
-exa/*:
+/*:
 ### `take`
 
 Emit only the first n items emitted by an Observable
 [More info in reactive.io website]( http://reactivex.io/documentation/operators/take.html )
 */
-mple("take") {
-    let distinctUntilChangedSubscriber = sequence(1, 2, 3, 4, 5, 6)
+example("take") {
+    let distinctUntilChangedSubscriber = sequenceOf(1, 2, 3, 4, 5, 6)
         .take(3)
         .subscribeNext { value in
             print("\(value)")
-    }
-}
-
+   

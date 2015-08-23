@@ -7,7 +7,7 @@ To use playgrounds please open Rx.xcworkspace, build RxSwift-OSX scheme and then
 
 */
 
-func writeSequenceToConsole(name: String, sequence: Observable<String>) {
+func writeSequenceToConsole(name: String, _ sequence: Observable<String>) {
     sequence
         .subscribeNext {
             print("Subscription: \(name), value: \($0)")
@@ -15,14 +15,14 @@ func writeSequenceToConsole(name: String, sequence: Observable<String>) {
 }
 
 
-ex/*:
+/*:
 
 ## PublishSubject
 
 PublishSubject can begin emitting items immediately upon creation, but there is a risk that one or more items may be lost between the time the Subject is created and the observer subscribes to it.
 
 */
-ample("PublishSubject") {
+example("PublishSubject") {
     let subject = PublishSubject<String>()
     writeSequenceToConsole("1", subject)
     sendNext(subject, "a")
@@ -33,15 +33,15 @@ ample("PublishSubject") {
 }
 
 
-ex/*:
+/*:
 
 ## ReplaySubject
 
 ReplaySubject emits to any observer all of the items, in the buffer, that were emitted by the source 
 
 */
-ample("ReplaySubject") {
-    let subject = ReplaySubject<String>(bufferSize: 1)
+example("ReplaySubject") {
+    let subject = ReplaySubject<String>.create(bufferSize: 1)
     writeSequenceToConsole("1", subject)
     sendNext(subject, "a")
     sendNext(subject, "b")
@@ -51,14 +51,13 @@ ample("ReplaySubject") {
 }
 
 
-ex/*:
+/*:
 
 ## BehaviorSubject a.k.a. Variable
 
-ReplaySubject emits to any observer all of the items, in the buffer, that were emitted by the source 
-
+BehaviorSubject is similar to ReplaySubject except it only remembers the last item. This means that all subscribers will receive a value immediately (unless it is already completed).
 */
-ample("ReplaySubject") {
+example("BehaviorSubject") {
     let subject = BehaviorSubject(value: "z")
     writeSequenceToConsole("1", subject)
     sendNext(subject, "a")

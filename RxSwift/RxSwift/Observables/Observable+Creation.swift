@@ -41,7 +41,7 @@ public func just<E>(value: E) -> Observable<E> {
     }
 }
 
-public func sequence<E>(values: E ...) -> Observable<E> {
+public func sequenceOf<E>(values: E ...) -> Observable<E> {
     return AnonymousObservable { observer in
         for element in values {
             sendNext(observer, element)

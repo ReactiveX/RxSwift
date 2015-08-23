@@ -23,7 +23,7 @@ example("catch 1st") {
     let observable2 = PublishSubject<Int>()
     
     observable1
-        .catch { error in
+        .catchError { error in
             return observable2
         }
         .subscribe { event in
@@ -58,7 +58,7 @@ example("catch 2nd") {
     let observable1 = PublishSubject<Int>()
     
     observable1
-        .catch(100)
+        .catchError(100)
         .subscribe { event in
             switch event {
             case .Next(let box):
@@ -82,13 +82,13 @@ example("catch 2nd") {
 
 
 
-example("re/*:
+/*:
 ### `retry`
 
 If a source Observable emits an error, resubscribe to it in the hopes that it will complete without error
 [More info in reactive.io website]( http://reactivex.io/documentation/operators/retry.html )
 */
-try") {
+example("retry") {
     
     var count = 1 // bad practice, only for example purposes
     let observable: Observable<Int> = create { observer in

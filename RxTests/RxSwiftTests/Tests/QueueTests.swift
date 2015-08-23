@@ -47,4 +47,16 @@ extension QueueTest {
             XCTAssertEqual(queue.count, 200 - i - 1)
         }
     }
+    
+    func testComplexity() {
+        var queue: Queue<Int> = Queue(capacity: 2)
+        
+        XCTAssertEqual(queue.count, 0)
+        
+        for var i = 0; i < 200000; ++i {
+            queue.enqueue(i)
+        }
+        
+        XCTAssertEqual(Array(0 ..< 200000), Array(queue))
+    }
 }

@@ -86,7 +86,7 @@ Now we are getting to some more interesting ways to create an Observable. This f
 */
 
 example("sequence") {
-    let multipleObservable/* : Observable<Int> */ = sequence(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
+    let multipleObservable/* : Observable<Int> */ = sequenceOf(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
     
     let multipleObservableSubscriber = multipleObservable
         .subscribe { event in
@@ -140,7 +140,7 @@ Up to this point, I have only used the `subscribe` method to listen to Observabl
 */
 
 example("subscribeNext") {
-    let nextOnlySubscriber = sequence(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
+    let nextOnlySubscriber = sequenceOf(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
         .subscribeNext { value in
             print("\(value)")
         }
@@ -161,7 +161,7 @@ The most common way to reduce a sequence is to apply a filter to it and the most
 */
 
 example("filter") {
-    let onlyEvensSubscriber = sequence(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
+    let onlyEvensSubscriber = sequenceOf(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
         .filter {
             $0 % 2 == 0
         }
@@ -176,8 +176,8 @@ This filter tracks the last value emitted and removes like values. This function
 */
 
 example("distinctUntilChanged") {
-    let distinctUntilChangedSubscriber = sequence(1, 2, 3, 1, 1, 4)
-        .distinctUntilChanged
+    let distinctUntilChangedSubscriber = sequenceOf(1, 2, 3, 1, 1, 4)
+        .distinctUntilChanged()
         .subscribeNext { value in
             print("\(value)")
         }
@@ -190,20 +190,19 @@ There are several different versions of `distinctUntilChanged`. Have a look in t
 */
 
 /*:
-## Aggregating a sequence
+## Reducing a sequence
 
-### `aggregate`
+### `reduce`
 This function will perform a function on each element in the sequence until it is completed, then send a message with the aggregate value. It works much like the Swift `reduce` function works on sequences.
 */
 
-example("aggregate") {
-    let aggregateSubscriber = sequence(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
-        .aggregate(0, +)
+example("reduce") {
+    let aggregateSubscriber = sequenceOf(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
+        .reduce(0, +)
         .subscribeNext { value in
             print("\(value)")
     }
 }
 
 /*:
-To be continued...
-*/
+To be contin

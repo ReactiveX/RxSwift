@@ -41,7 +41,7 @@ public struct Bag<T> : CustomStringConvertible {
     
     public var description : String {
         get {
-            return "\(self.count) elements in \(self)"
+            return "\(self.count) elements in Bag"
         }
     }
     

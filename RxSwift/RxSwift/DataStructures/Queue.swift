@@ -23,11 +23,10 @@ public struct Queue<T>: SequenceType {
         initialCapacity = capacity
         
         version = 0
-        storage = []
         _count = 0
         pushNextIndex = 0
-        
-        resizeTo(capacity)
+     
+        storage = [T?](count: capacity, repeatedValue: nil)
     }
     
     private var dequeueIndex: Int {
@@ -56,19 +55,20 @@ public struct Queue<T>: SequenceType {
     }
     
     mutating private func resizeTo(size: Int) {
-        var newStorage: [T?] = []
-        newStorage.reserveCapacity(size)
+        var newStorage = [T?](count: size, repeatedValue: nil)
         
         let count = _count
         
-        for var i = 0; i < count; ++i {
-            // does swift array have some more efficient methods of copying?
-            newStorage.append(dequeue())
-        }
+        let dequeueIndex = self.dequeueIndex
+        let spaceToEndOfQueue = self.storage.count - dequeueIndex
         
-        while newStorage.count < size {
-            newStorage.append(nil)
-        }
+        // first batch is from dequeue index to end of array
+        let countElementsInFirstBatch = min(count, spaceToEndOfQueue)
+        // second batch is wrapped from start of array to end of queue
+        let numberOfElementsInSecondBatch = count - countElementsInFirstBatch
+        
+        newStorage[0 ..< countElementsInFirstBatch] = self.storage[dequeueIndex ..< (dequeueIndex + countElementsInFirstBatch)]
+        newStorage[countElementsInFirstBatch ..< (countElementsInFirstBatch + numberOfElementsInSecondBatch)] = self.storage[0 ..< numberOfElementsInSecondBatch]
         
         _count = count
         pushNextIndex = count
@@ -92,17 +92,23 @@ public struct Queue<T>: SequenceType {
         }
     }
     
-    public mutating func dequeue() -> T {
+    private mutating func dequeueElementOnly() -> T {
         version++
         
         contract(count > 0)
-       
+        
         let index = dequeueIndex
         let value = storage[index]!
         
         storage[index] = nil
         
         _count = _count - 1
+        
+        return value
+    }
+    
+    public mutating func dequeue() -> T {
+        let value = dequeueElementOnly()
         
         let downsizeLimit = storage.count / (resizeFactor * resizeFactor)
         if _count < downsizeLimit && downsizeLimit >= initialCapacity {

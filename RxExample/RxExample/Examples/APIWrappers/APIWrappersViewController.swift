@@ -211,8 +211,14 @@ class APIWrappersViewController: ViewController {
                 self?.debug("rx_didFailWithError \(x)")
             }
             .addDisposableTo(disposeBag)
-
-
+        
+        
+        manager.rx_didChangeAuthorizationStatus
+            .subscribeNext { status in
+                print("Authorization status \(status)")
+            }
+            .addDisposableTo(disposeBag)
+        
         manager.startUpdatingLocation()
 
 

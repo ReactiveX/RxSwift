@@ -31,7 +31,7 @@ example("startWith") {
 }
 
 
-e/*:
+/*:
 ### `combineLatest`
 
 Takes several source Obserbables and a closure as parameters, returns an Observable which emits the latest items of each source Obsevable,  procesed through the closure.
@@ -40,7 +40,7 @@ Once each source Observables have each emitted an item, `combineLatest` emits an
 
 The next example shows how 
 */
-xample("combineLatest 1st") {
+example("combineLatest 1st") {
     let intOb1 = PublishSubject<String>()
     let intOb2 = PublishSubject<Int>()
     
@@ -71,8 +71,8 @@ xample("combineLatest 1st") {
 }
 
 
-example("combineLat//: This example show once in each channel there are output for each new channel output the resulting observable also produces an output
-est 2nd") {
+//: This example show once in each channel there are output for each new channel output the resulting observable also produces an output
+example("combineLatest 2nd") {
     let intOb1 = just(2)
     let intOb2 = from([0, 1, 2, 3, 4])
     
@@ -85,11 +85,11 @@ est 2nd") {
 }
 
 
-example("combineLates/*:
+/*:
 There are a serie of functions `combineLatest`, they take from two to ten sources Obserbables and the closure
 The next sample shows combineLatest called with three sorce Observables
 */
-t 3rd") {
+example("combineLatest 3rd") {
     let intOb1 = just(2)
     let intOb2 = from([0, 1, 2, 3])
     let intOb3 = from([0, 1, 2, 3, 4])
@@ -103,14 +103,15 @@ t 3rd") {
 }
 
 
-example("zip 1st") {
-  /*:
+
+/*:
 ### `zip`
 
 Takes several source Observables and a closure as parameters, returns an Observable  which emit the items of the second Obsevable procesed, through the closure, with the last item of first Observable
 The Observable returned by `zip` emits an item only when all of the imputs Observables have emited an item
 [More info in reactive.io website](http://reactivex.io/documentation/operators/zip.html)
 */
+example("zip 1st") {
   let intOb1 = PublishSubject<String>()
     let intOb2 = PublishSubject<Int>()
     
@@ -145,10 +146,9 @@ The Observable returned by `zip` emits an item only when all of the imputs Obser
 }
 
 
-
+//: This example show once in each channel there are output for each new channel output the resulting observable also produces an output
 example("zip 2nd") {
-    let intOb1 = just(2)//: This example show once in each channel there are output for each new channel output the resulting observable also produces an output
-
+    let intOb1 = just(2)
     let intOb2 = from([0, 1, 2, 3, 4])
     
     zip(intOb1, intOb2) {
@@ -160,12 +160,12 @@ example("zip 2nd") {
 }
 
 
-example("zip 3rd") {
-    let intOb1 = from([0, /*:
+/*:
 There are a serie of functions `zip`, they take from two to ten sources Obserbables and the closure
 The next sample shows zip called with three sorce Observables
 */
-1])
+example("zip 3rd") {
+    let intOb1 = from([0, 1])
     let intOb2 = from([0, 1, 2, 3])
     let intOb3 = from([0, 1, 2, 3, 4])
     
@@ -180,20 +180,21 @@ The next sample shows zip called with three sorce Observables
 
 
 
-example("merge 1st") {
-    let subject1 = Publish/*:
+/*:
 ### `merge`
 
 Combine multiple Observables, of the same type, into one by merging their emissions
 [More info in reactive.io website]( http://reactivex.io/documentation/operators/merge.html )
 */
-Subject<Int>()
+example("merge 1st") {
+    let subject1 = PublishSubject<Int>()
     let subject2 = PublishSubject<Int>()
     
-    merge(sequence(subject1, subject2))
+    sequenceOf(subject1, subject2)
+        .merge
         .subscribeNext { int in
             print(int)
-    }
+        }
     
     sendNext(subject1, 20)
     sendNext(subject1, 40)
@@ -209,7 +210,7 @@ example("merge 2nd") {
     let subject1 = PublishSubject<Int>()
     let subject2 = PublishSubject<Int>()
     
-    sequence(subject1, subject2) 
+    sequenceOf(subject1, subject2) 
         .merge(maxConcurrent: 2)
         .subscribeNext { int in
             print(int)
@@ -226,19 +227,18 @@ example("merge 2nd") {
 
 
 
-
-example("switchLatest") {
-    let var1 = Variable(0)/*:
+/*:
 ### `switchLatest`
 
 Convert an Observable that emits Observables into a single Observable that emits the items emitted by the most-recently-emitted of those Observables.
 [More info in reactive.io website]( http://reactivex.io/documentation/operators/switch.html )
 */
-
+example("switchLatest") {
+    let var1 = Variable(0)
     let var2 = Variable(200)
     
     // var3 is like an Observable<Observable<Int>>
-    let var3 = Variable(var1 as Observable<Int>)
+    let var3 = Variable(var1)
     
     let d = var3
         .switchLatest
@@ -255,11 +255,8 @@ Convert an Observable that emits Observables into a single Observable that emits
     
     var2.sendNext(201)
     
-    print("Note which no listen to var1")
+    print("var1 isn't observed anymore")
     var1.sendNext(5)
     var1.sendNext(6)
     var1.sendNext(7)
-    sendCompleted(var1)
-    
-    var2.sendNext(202)
-    var2.send
+}

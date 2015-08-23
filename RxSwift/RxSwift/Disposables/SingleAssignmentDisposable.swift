@@ -34,7 +34,7 @@ public class SingleAssignmentDisposable : DisposeBase, Disposable, Cancelable {
             }
         }
         set {
-            var disposable: Disposable? = lock.calculateLocked {
+            let disposable: Disposable? = lock.calculateLocked {
                 if _disposableSet {
                     rxFatalError("oldState.disposable != nil")
                 }
@@ -57,7 +57,7 @@ public class SingleAssignmentDisposable : DisposeBase, Disposable, Cancelable {
     }
 
     public func dispose() {
-        var disposable: Disposable? = lock.calculateLocked {
+        let disposable: Disposable? = lock.calculateLocked {
             _disposed = true
             let dispose = _disposable
             _disposable = nil

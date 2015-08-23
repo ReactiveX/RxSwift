@@ -34,7 +34,7 @@ extension ObservableBlockingTest {
     }
     
     func testToArray_someData() {
-        XCTAssert((sequence(42, 43, 44, 45).toArray()).get() == [42, 43, 44, 45])
+        XCTAssert((sequenceOf(42, 43, 44, 45).toArray()).get() == [42, 43, 44, 45])
     }
     
     func testToArray_withRealScheduler() {
@@ -64,7 +64,7 @@ extension ObservableBlockingTest {
     }
     
     func testFirst_someData() {
-        XCTAssert((sequence(42, 43, 44, 45).first).get() == 42)
+        XCTAssert((sequenceOf(42, 43, 44, 45).first).get() == 42)
     }
     
     func testFirst_withRealScheduler() {
@@ -94,7 +94,7 @@ extension ObservableBlockingTest {
     }
     
     func testLast_someData() {
-        XCTAssert((sequence(42, 43, 44, 45).last).get() == 45)
+        XCTAssert((sequenceOf(42, 43, 44, 45).last).get() == 45)
     }
     
     func testLast_withRealScheduler() {

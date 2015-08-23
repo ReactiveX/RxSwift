@@ -268,7 +268,7 @@ extension ObservableConcurrencyTest {
         var numberOfExecutions = 0
         runDispatchQueueSchedulerTests { scheduler in
             XCTAssert(numberOfSerialDispatchQueueObservables == 0)
-            return sequence(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+            return sequenceOf(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
                 .observeOn(scheduler)
                 .subscribeNext { e in
                     XCTAssert(OSAtomicIncrement32(&numberOfConcurrentEvents) == 1)

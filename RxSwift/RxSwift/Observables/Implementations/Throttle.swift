@@ -46,14 +46,14 @@ class ThrottleSink<O: ObserverType, SchedulerType: Scheduler> : Sink<O>, Observe
         let latestId = self.lock.calculateLocked { () -> UInt64 in
             let observer = self.observer
             
-            var oldValue = self.value.value
+            let oldValue = self.value.value
             
             self.id = self.id &+ 1
             
             switch event {
             case .Next(let element):
                 self.value.value = element
-            case .Error(let error):
+            case .Error:
                 self.value.value = nil
                 observer?.on(event)
                 self.dispose()
@@ -96,8 +96,8 @@ class ThrottleSink<O: ObserverType, SchedulerType: Scheduler> : Sink<O>, Observe
     }
     
     func propagate() {
-        var originalValue: Element? = self.lock.calculateLocked {
-            var originalValue = self.value.value
+        let originalValue: Element? = self.lock.calculateLocked {
+            let originalValue = self.value.value
             self.value.value = nil
             return originalValue
         }
