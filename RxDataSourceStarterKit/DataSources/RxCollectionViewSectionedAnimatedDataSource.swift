@@ -36,7 +36,7 @@ class RxCollectionViewSectionedAnimatedDataSource<S: SectionModelType> : RxColle
                 setSections(c.finalSections)
                 collectionView.performBatchUpdates(c)
             }
-        case .Error(let _):
+        case .Error:
             #if DEBUG
                 fatalError("Binding error to UI")
             #endif

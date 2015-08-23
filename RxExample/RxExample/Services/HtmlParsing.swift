@@ -11,7 +11,7 @@ import Foundation
 func parseImageURLsfromHTML(html: NSString) throws -> [NSURL]  {
     let regularExpression = try NSRegularExpression(pattern: "<img[^>]*src=\"([^\"]+)\"[^>]*>", options: [])
     
-    let matches = regularExpression.matchesInString(html as String, options: [], range: NSMakeRange(0, html.length)) as! [NSTextCheckingResult]
+    let matches = regularExpression.matchesInString(html as String, options: [], range: NSMakeRange(0, html.length))
     
     return matches.map { match -> NSURL? in
         if match.numberOfRanges != 2 {

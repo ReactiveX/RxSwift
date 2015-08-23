@@ -22,7 +22,7 @@ class RxCollectionViewSectionedReloadDataSource<S: SectionModelType> : RxCollect
         case .Next(let element):
             setSections(element)
             collectionView.reloadData()
-        case .Error(let error):
+        case .Error:
             #if DEBUG
                 fatalError("Binding error to UI")
             #endif
