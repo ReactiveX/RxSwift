@@ -12,6 +12,8 @@
 		0706E19D1B176EE200BA2D3A /* String+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0706E19C1B176EE200BA2D3A /* String+extensions.swift */; };
 		0706E19F1B17703E00BA2D3A /* RandomUserAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0706E19E1B17703E00BA2D3A /* RandomUserAPI.swift */; };
 		075F13101B4E9D5A000D7861 /* APIWrappersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 075F130F1B4E9D5A000D7861 /* APIWrappersViewController.swift */; };
+		07A5C3DB1B70B703001EFE5C /* CalculatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07A5C3DA1B70B703001EFE5C /* CalculatorViewController.swift */; };
+		07A5C3DC1B70B703001EFE5C /* CalculatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07A5C3DA1B70B703001EFE5C /* CalculatorViewController.swift */; };
 		07E300071B14995F00F00100 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E300061B14995F00F00100 /* TableViewController.swift */; };
 		07E300091B149A2A00F00100 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E300081B149A2A00F00100 /* User.swift */; };
 		07E3C2331B03605B0010338D /* Dependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E3C2321B03605B0010338D /* Dependencies.swift */; };
@@ -335,6 +337,7 @@
 		0706E19C1B176EE200BA2D3A /* String+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+extensions.swift"; sourceTree = "<group>"; };
 		0706E19E1B17703E00BA2D3A /* RandomUserAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomUserAPI.swift; sourceTree = "<group>"; };
 		075F130F1B4E9D5A000D7861 /* APIWrappersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIWrappersViewController.swift; sourceTree = "<group>"; };
+		07A5C3DA1B70B703001EFE5C /* CalculatorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalculatorViewController.swift; sourceTree = "<group>"; };
 		07E300061B14995F00F00100 /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		07E300081B149A2A00F00100 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		07E3C2321B03605B0010338D /* Dependencies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Dependencies.swift; path = Examples/Dependencies.swift; sourceTree = "<group>"; };
@@ -632,6 +635,15 @@
 			);
 			name = "04 APIWrappers";
 			path = APIWrappers;
+			sourceTree = "<group>";
+		};
+		07A5C3D91B70B6B8001EFE5C /* 06 Calculator */ = {
+			isa = PBXGroup;
+			children = (
+				07A5C3DA1B70B703001EFE5C /* CalculatorViewController.swift */,
+			);
+			name = "06 Calculator";
+			path = Calculator;
 			sourceTree = "<group>";
 		};
 		07E300051B14994500F00100 /* 05 TableView */ = {
@@ -1052,14 +1064,14 @@
 			path = OSX;
 			sourceTree = "<group>";
 		};
-		C859B9A21B45C5D900D012D7 /* 06 PartialUpdates */ = {
+		C859B9A21B45C5D900D012D7 /* 07 PartialUpdates */ = {
 			isa = PBXGroup;
 			children = (
 				C859B9A31B45C5D900D012D7 /* PartialUpdatesViewController.swift */,
 				C859B9AB1B45CF9100D012D7 /* NumberCell.swift */,
 				C859B9AD1B45CFAB00D012D7 /* NumberSectionView.swift */,
 			);
-			name = "06 PartialUpdates";
+			name = "07 PartialUpdates";
 			path = PartialUpdates;
 			sourceTree = "<group>";
 		};
@@ -1071,8 +1083,9 @@
 				C86E2F301AE5A0CA00C31024 /* 03 WikipediaImageSearch */,
 				075F130E1B4E9D10000D7861 /* 04 APIWrappers */,
 				07E300051B14994500F00100 /* 05 TableView */,
-				C859B9A21B45C5D900D012D7 /* 06 PartialUpdates */,
-				C8A57F711B40AF4E00D5570A /* 06 CoreData */,
+				07A5C3D91B70B6B8001EFE5C /* 06 Calculator */,
+				C859B9A21B45C5D900D012D7 /* 07 PartialUpdates */,
+				C8A57F711B40AF4E00D5570A /* 08 CoreData */,
 			);
 			path = Examples;
 			sourceTree = "<group>";
@@ -1157,12 +1170,12 @@
 			path = DataSources;
 			sourceTree = "<group>";
 		};
-		C8A57F711B40AF4E00D5570A /* 06 CoreData */ = {
+		C8A57F711B40AF4E00D5570A /* 08 CoreData */ = {
 			isa = PBXGroup;
 			children = (
 				C8A57F721B40AF7C00D5570A /* Random.xcdatamodeld */,
 			);
-			name = "06 CoreData";
+			name = "08 CoreData";
 			path = CoreData;
 			sourceTree = "<group>";
 		};
@@ -1347,6 +1360,10 @@
 				C8297E321B6CF905000589EA /* HtmlParsing.swift in Sources */,
 				C84B909C1B8A268800C9CCCF /* ObserverType+Extensions.swift in Sources */,
 				C8297E331B6CF905000589EA /* NumberCell.swift in Sources */,
+				C8297FBB1B6CF953000589EA /* RxCollectionViewDataSourceProxy.swift in Sources */,
+				07A5C3DC1B70B703001EFE5C /* CalculatorViewController.swift in Sources */,
+				C8297FA61B6CF953000589EA /* KVOObserver.swift in Sources */,
+				C8297F321B6CF94B000589EA /* Switch.swift in Sources */,
 				C8297E341B6CF905000589EA /* UIImageView+Extensions.swift in Sources */,
 				C84B91061B8A26A700C9CCCF /* DeinitAction.swift in Sources */,
 				C84B91111B8A26A700C9CCCF /* CoreDataEntityEvent.swift in Sources */,
@@ -1554,6 +1571,7 @@
 				C88C788F1B3F14FD0061C5AB /* Changeset.swift in Sources */,
 				C8C46DA81B47F7110020D71E /* CollectionViewImageCell.swift in Sources */,
 				C8C46DAC1B47F7110020D71E /* WikipediaSearchViewController.swift in Sources */,
+				07A5C3DB1B70B703001EFE5C /* CalculatorViewController.swift in Sources */,
 				0706E19D1B176EE200BA2D3A /* String+extensions.swift in Sources */,
 				C84B913B1B8A282000C9CCCF /* RxCollectionViewSectionedReloadDataSource.swift in Sources */,
 				C88C78731B3EB0A00061C5AB /* SectionModel.swift in Sources */,

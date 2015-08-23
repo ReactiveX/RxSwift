@@ -10,7 +10,7 @@ test("----- githubSignUp -----", function (check, pass) {
     return false;
   }
 
-  UIATarget.localTarget().frontMostApp().mainWindow().tableViews()[0].cells()[0].tapWithOptions({tapOffset:{x:0.24, y:0.20}});
+  UIATarget.localTarget().frontMostApp().mainWindow().tableViews()[0].cells()[0].tap();
 
   UIATarget.localTarget().frontMostApp().mainWindow().textFields()[0].tap();
   writeInElement(UIATarget.localTarget().frontMostApp().mainWindow().textFields()[0], "rxrevolution")

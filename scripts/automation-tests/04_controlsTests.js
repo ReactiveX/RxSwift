@@ -5,7 +5,7 @@
 
 test("----- UIBarButtonItem tap -----", function (check, pass) {
 
-  UIATarget.localTarget().frontMostApp().mainWindow().tableViews()[0].cells()[3].tapWithOptions({tapOffset:{x:0.24, y:0.20}});
+  UIATarget.localTarget().frontMostApp().mainWindow().tableViews()[0].cells()[4].tap();
 
   UIATarget.localTarget().frontMostApp().navigationBar().rightButton().tap();
 
@@ -21,7 +21,7 @@ test("----- UIBarButtonItem tap -----", function (check, pass) {
 
 test("----- UIBarButtonItem tap -----", function (check, pass) {
 
-  UIATarget.localTarget().frontMostApp().mainWindow().tableViews()[0].cells()[3].tapWithOptions({tapOffset:{x:0.24, y:0.20}});
+  UIATarget.localTarget().frontMostApp().mainWindow().tableViews()[0].cells()[4].tap();
 
   UIATarget.localTarget().frontMostApp().mainWindow().buttons()["TapMe"].tap();
 
@@ -39,7 +39,7 @@ test("----- UIBarButtonItem tap -----", function (check, pass) {
 
 test("----- UISegmentedControl tap -----", function (check, pass) {
 
-  UIATarget.localTarget().frontMostApp().mainWindow().tableViews()[0].cells()[3].tapWithOptions({tapOffset:{x:0.24, y:0.20}});
+  UIATarget.localTarget().frontMostApp().mainWindow().tableViews()[0].cells()[4].tap();
 
   UIATarget.localTarget().frontMostApp().mainWindow().segmentedControls()[0].buttons()["Second"].tap();
 
@@ -63,7 +63,7 @@ test("----- UISegmentedControl tap -----", function (check, pass) {
 
 test("----- UISwitch tap -----", function (check, pass) {
 
-  UIATarget.localTarget().frontMostApp().mainWindow().tableViews()[0].cells()[3].tapWithOptions({tapOffset:{x:0.24, y:0.20}});
+  UIATarget.localTarget().frontMostApp().mainWindow().tableViews()[0].cells()[4].tap();
 
   UIATarget.localTarget().frontMostApp().mainWindow().switches()[0].setValue(0);
 
@@ -87,7 +87,7 @@ test("----- UISwitch tap -----", function (check, pass) {
 
 test("----- UITextField text -----", function (check, pass) {
 
-  UIATarget.localTarget().frontMostApp().mainWindow().tableViews()[0].cells()[3].tapWithOptions({tapOffset:{x:0.24, y:0.20}});
+  UIATarget.localTarget().frontMostApp().mainWindow().tableViews()[0].cells()[4].tap();
 
   UIATarget.localTarget().frontMostApp().mainWindow().textFields()[0].textFields()[0].tap();
   // UIATarget.localTarget().frontMostApp().keyboard().typeString("t");// fails if software keyboard is disabled
@@ -107,7 +107,7 @@ test("----- UITextField text -----", function (check, pass) {
 
 test("----- UISlider value -----", function (check, pass) {
 
-  UIATarget.localTarget().frontMostApp().mainWindow().tableViews()[0].cells()[3].tapWithOptions({tapOffset:{x:0.24, y:0.20}});
+  UIATarget.localTarget().frontMostApp().mainWindow().tableViews()[0].cells()[4].tap();
 
   UIATarget.localTarget().frontMostApp().mainWindow().sliders()[0].dragToValue(0.00);
 
@@ -124,7 +124,7 @@ test("----- UISlider value -----", function (check, pass) {
 
 test("----- UIDatePicker date -----", function (check, pass) {
 
-  UIATarget.localTarget().frontMostApp().mainWindow().tableViews()[0].cells()[3].tapWithOptions({tapOffset:{x:0.24, y:0.20}});
+  UIATarget.localTarget().frontMostApp().mainWindow().tableViews()[0].cells()[4].tap();
 
   UIATarget.localTarget().frontMostApp().mainWindow().pickers()[0].wheels()[0].tapWithOptions({tapOffset:{x:0.49, y:0.65}});
   UIATarget.localTarget().frontMostApp().mainWindow().pickers()[0].wheels()[1].tapWithOptions({tapOffset:{x:0.35, y:0.64}});
@@ -143,7 +143,7 @@ test("----- UIDatePicker date -----", function (check, pass) {
 
 test("----- UIActionSheet tap -----", function (check, pass) {
 
-  UIATarget.localTarget().frontMostApp().mainWindow().tableViews()[0].cells()[3].tapWithOptions({tapOffset:{x:0.24, y:0.20}});
+  UIATarget.localTarget().frontMostApp().mainWindow().tableViews()[0].cells()[4].tap();
 
   UIATarget.localTarget().frontMostApp().mainWindow().buttons()["Open ActionSheet"].tap();
   UIATarget.localTarget().frontMostApp().actionSheet().collectionViews()[0].cells()["OK"].buttons()["OK"].tap();
@@ -161,7 +161,7 @@ test("----- UIActionSheet tap -----", function (check, pass) {
 
 test("----- UIAlertView tap -----", function (check, pass) {
 
-  UIATarget.localTarget().frontMostApp().mainWindow().tableViews()[0].cells()[3].tapWithOptions({tapOffset:{x:0.24, y:0.20}});
+  UIATarget.localTarget().frontMostApp().mainWindow().tableViews()[0].cells()[4].tap();
 
   UIATarget.localTarget().onAlert = function(alert){
     UIATarget.localTarget().onAlert = null
@@ -184,15 +184,3 @@ test("----- UIAlertView tap -----", function (check, pass) {
   UIATarget.localTarget().frontMostApp().mainWindow().buttons()["Open AlertView"].tap();
   UIATarget.localTarget().delay( 4 );
 });
-
-
-
-
-
-
-
-
-
-
-
-

@@ -210,7 +210,6 @@ class APIWrappersViewController: ViewController {
             .subscribeNext { [weak self] x in
                 self?.debug("rx_didFailWithError \(x)")
             }
-            .addDisposableTo(disposeBag)
         
         
         manager.rx_didChangeAuthorizationStatus

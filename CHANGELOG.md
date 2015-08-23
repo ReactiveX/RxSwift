@@ -1,11 +1,11 @@
-#Change Log
+# Change Log
 All notable changes to this project will be documented in this file.
 
 ---
 
 ## [2.0](https://github.com/ReactiveX/RxSwift/pull/50) (WIP)
 
-####Updated
+#### Updated
 
 * Removes deprecated APIs
 * Adds `ObservableType`
@@ -15,4 +15,15 @@ All notable changes to this project will be documented in this file.
 * Rename of `do*` to `tap*`
 * Deprecates `aggregate` in favor of `reduce`
 
-####Fixed
+#### Fixed
+
+## [1.9.1](https://github.com/ReactiveX/RxSwift/releases/tag/1.9.1)
+
+#### Updated
+
+* Adds Calculator example app
+* Performance improvements for Queue
+
+#### Fixed
+
+* Crash in `rx_didChangeAuthorizationStatus`. [#89](https://github.com/ReactiveX/RxSwift/issues/89)

@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "RxBlocking"
-  s.version          = "1.9"
+  s.version          = "1.9.1"
   s.summary          = "RxSwift Blocking operatos"
   s.description      = <<-DESC
                         Set of blocking operators for unit testing
@@ -17,5 +17,5 @@ Pod::Spec.new do |s|
 
   s.source_files          = 'RxBlocking/RxBlocking/**/*.swift'
 
-  s.dependency 'RxSwift'
+  s.dependency 'RxSwift', '~> 1.0'
 end
