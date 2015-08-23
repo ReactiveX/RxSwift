@@ -104,7 +104,7 @@ class GitHubSignupViewController : ViewController {
     func bindValidationResultToUI(source: Observable<(valid: Bool?, message: String?)>,
         validationErrorLabel: UILabel) {
         source
-            .subscribeNext { [unowned self] v in
+            .subscribeNext { v in
                 let validationColor: UIColor
                 
                 if let valid = v.valid {
@@ -166,7 +166,7 @@ class GitHubSignupViewController : ViewController {
                 return API.signup(username, password: password)
             }
             .switchLatest
-            .startWith(.InitialState)
+            .startWith(SignupState.InitialState)
             .variable
         
         let signupEnabled = combineLatest(

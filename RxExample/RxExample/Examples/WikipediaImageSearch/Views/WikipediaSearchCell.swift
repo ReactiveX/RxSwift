@@ -31,8 +31,6 @@ public class WikipediaSearchCell: UITableViewCell {
     
     var viewModel: SearchResultViewModel! {
         didSet {
-            let $ = viewModel.$
-            
             let disposeBag = DisposeBag()
     
             (viewModel?.title ?? just(""))

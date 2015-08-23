@@ -23,13 +23,13 @@ struct WikipediaSearchResult: CustomStringConvertible {
     }
 
     // tedious parsing part
-    static func parseJSON(json: [AnyObject]) -> RxResult<[WikipediaSearchResult]> {
+    static func parseJSON(json: [AnyObject]) throws -> [WikipediaSearchResult] {
         let rootArrayTyped = json.map { $0 as? [AnyObject] }
             .filter { $0 != nil }
             .map { $0! }
 
         if rootArrayTyped.count != 3 {
-            return failure(WikipediaParseError)
+            throw WikipediaParseError
         }
 
         let titleAndDescription = Array(Swift.zip(rootArrayTyped[0], rootArrayTyped[1]))
@@ -57,6 +57,6 @@ struct WikipediaSearchResult: CustomStringConvertible {
 
         let values = (searchResults.filter { $0.isSuccess }).map { $0.get() }
 
-        return success(values)
+        return values
     }
 }

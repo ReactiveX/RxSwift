@@ -106,7 +106,7 @@ class Randomizer {
         let sectionActionCount = sectionCount / 3
         
         // move items
-        for i in 0 ..< itemActionCount {
+        for _ in 0 ..< itemActionCount {
             if self.sections.count == 0 {
                 continue
             }
@@ -135,7 +135,7 @@ class Randomizer {
         assert(sections.count + nextUnusedSections.count == startSectionCount)
         
         // delete items
-        for i in 0 ..< itemActionCount {
+        for _ in 0 ..< itemActionCount {
             if self.sections.count == 0 {
                 continue
             }
@@ -159,7 +159,7 @@ class Randomizer {
         assert(sections.count + nextUnusedSections.count == startSectionCount)
         
         // move sections
-        for i in 0 ..< sectionActionCount {
+        for _ in 0 ..< sectionActionCount {
             if sections.count == 0 {
                 continue
             }
@@ -177,7 +177,7 @@ class Randomizer {
         assert(sections.count + nextUnusedSections.count == startSectionCount)
         
         // delete sections 
-        for i in 0 ..< sectionActionCount {
+        for _ in 0 ..< sectionActionCount {
             if sections.count == 0 {
                 continue
             }

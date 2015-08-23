@@ -44,17 +44,17 @@ class DefaultImageService: ImageService {
     func decodeImage(imageData: NSData) -> Observable<Image> {
         return just(imageData)
             .observeSingleOn($.backgroundWorkScheduler)
-            .mapOrDie { data in
+            .map { data in
                 let maybeImage = Image(data: data)
                 
                 if maybeImage == nil {
                     // some error
-                    return failure(apiError("Decoding image error"))
+                    throw apiError("Decoding image error")
                 }
                 
                 let image = maybeImage!
                 
-                return success(image)
+                return image
             }
             .observeSingleOn($.mainScheduler)
     }
@@ -79,16 +79,16 @@ class DefaultImageService: ImageService {
                 else {
                     // fetch from network
                     decodedImage = self.$.URLSession.rx_data(NSURLRequest(URL: URL))
-                        .doOnNext { data in
+                        .doOn(next: { data in
                             self.imageDataCache.setObject(data, forKey: URL)
-                        }
+                        })
                         .flatMap(self.decodeImage)
                 }
             }
             
-            return decodedImage .doOnNext { image in
+            return decodedImage.doOn(next: { image in
                 self.imageCache.setObject(image, forKey: URL)
-            }
+            })
         }
     }
 }

@@ -221,8 +221,6 @@ func differentiate<S: SectionModelType where S: Hashable, S.Item: Hashable>(
     var newAndMovedSections = Changeset<S>()
     var newAndMovedItems = Changeset<S>()
         
-    let minSectionsLength = min(initialSections.count, finalSections.count)
- 
     var initialSectionInfos = [SectionAdditionalInfo](count: initialSections.count, repeatedValue: SectionAdditionalInfo(event: .Untouched,  indexAfterDelete: nil))
     var finalSectionInfos = [SectionAdditionalInfo](count: finalSections.count, repeatedValue: SectionAdditionalInfo(event: .Untouched, indexAfterDelete: nil))
     
@@ -341,10 +339,10 @@ func differentiate<S: SectionModelType where S: Hashable, S.Item: Hashable>(
     
     // mark new and moved items {
     // 3rd stage
-    for (i, finalSection) in finalSections.enumerate() {
+    for (i, _) in finalSections.enumerate() {
         let finalSection = finalSections[i]
         
-        var originalSection: Int? = initialSectionIndexes[finalSection]
+        let originalSection: Int? = initialSectionIndexes[finalSection]
         
         var untouchedOldIndex: Int? = 0
         let findNextUntouchedOldIndex = { (initialSearchIndex: Int?) -> Int? in
@@ -389,9 +387,6 @@ func differentiate<S: SectionModelType where S: Hashable, S.Item: Hashable>(
                 // what's left is moved section
                 else {
                     precondition(initialSectionInfos[originalIndex.0].event == .Moved || initialSectionInfos[originalIndex.0].event == .MovedAutomatically)
-                    
-                    let currentItemSectionIndexAfterDelete = initialSectionInfos[originalIndex.0].indexAfterDelete!
-                    let currentItemIndexAfterDelete = initialItemInfos[originalIndex.0][originalIndex.1].indexAfterDelete!
                     
                     let eventType =
                            originalIndex.0 == (originalSection ?? -1)
