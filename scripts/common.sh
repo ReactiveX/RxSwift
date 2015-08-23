@@ -26,10 +26,18 @@ DEFAULT_IOS7_SIMULATOR=RxSwiftTest-iPhone4s-iOS_7.1
 DEFAULT_IOS8_SIMULATOR=RxSwiftTest-iPhone6-iOS_8.4
 DEFAULT_IOS9_SIMULATOR=RxSwiftTest-iPhone6-iOS_9.0
 
+if [ "${IS_LOCAL}" -eq 1 ]; then
 IOS7_SIMULATORS="RxSwiftTest-iPhone4s-iOS_7.1 RxSwiftTest-iPhone5-iOS_7.1 RxSwiftTest-iPhone5s-iOS_7.1"
 IOS8_SIMULATORS="RxSwiftTest-iPhone4s-iOS_8.4 RxSwiftTest-iPhone5-iOS_8.4 RxSwiftTest-iPhone5s-iOS_8.4 RxSwiftTest-iPhone6-iOS_8.4 RxSwiftTest-iPhone6Plus-iOS_8.4"
 #IOS9_SIMULATORS="RxSwiftTest-iPhone4s-iOS_9.0 RxSwiftTest-iPhone5-iOS_9.0 RxSwiftTest-iPhone5s-iOS_9.0 RxSwiftTest-iPhone6-iOS_9.0 RxSwiftTest-iPhone6Plus-iOS_9.0"
 IOS9_SIMULATORS="cRxSwiftTest-iPhone6-iOS_9.0"
+else
+IOS7_SIMULATORS="RxSwiftTest-iPhone4s-iOS_7.1"
+IOS8_SIMULATORS="RxSwiftTest-iPhone4s-iOS_8.4"
+#IOS9_SIMULATORS="RxSwiftTest-iPhone4s-iOS_9.0"
+IOS9_SIMULATORS="RxSwiftTest-iPhone6-iOS_9.0"
+fi
+
 
 BUILD_DIRECTORY=build
 
