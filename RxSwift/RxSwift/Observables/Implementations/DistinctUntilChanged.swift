@@ -9,17 +9,17 @@
 import Foundation
 
 class DistinctUntilChangedSink<O: ObserverType, Key>: Sink<O>, ObserverType {
-    typealias Element = O.Element
+    typealias E = O.E
     
-    let parent: DistinctUntilChanged<Element, Key>
+    let parent: DistinctUntilChanged<E, Key>
     var currentKey: Key? = nil
     
-    init(parent: DistinctUntilChanged<Element, Key>, observer: O, cancel: Disposable) {
+    init(parent: DistinctUntilChanged<E, Key>, observer: O, cancel: Disposable) {
         self.parent = parent
         super.init(observer: observer, cancel: cancel)
     }
     
-    func on(event: Event<Element>) {
+    func on(event: Event<E>) {
         let observer = super.observer
         
         switch event {
@@ -65,7 +65,7 @@ class DistinctUntilChanged<Element, Key>: Producer<Element> {
         self.comparer = comparer
     }
     
-    override func run<O: ObserverType where O.Element == Element>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
+    override func run<O: ObserverType where O.E == Element>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
         let sink = DistinctUntilChangedSink(parent: self, observer: observer, cancel: cancel)
         setSink(sink)
         return source.subscribeSafe(sink)

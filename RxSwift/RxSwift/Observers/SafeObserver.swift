@@ -8,8 +8,8 @@
 
 import Foundation
 
-class SafeObserver<O: ObserverType> : Observer<O.Element> {
-    typealias Element = O.Element
+class SafeObserver<O: ObserverType> : Observer<O.E> {
+    typealias Element = O.E
     
     let observer: O
     let disposable: Disposable
@@ -35,8 +35,8 @@ class SafeObserver<O: ObserverType> : Observer<O.Element> {
 }
 
 
-func makeSafe<O: ObserverType>(observer: O, _ disposable: Disposable) -> Observer<O.Element> {
-    if let anonymousObserver = observer as? AnonymousObserver<O.Element> {
+func makeSafe<O: ObserverType>(observer: O, _ disposable: Disposable) -> Observer<O.E> {
+    if let anonymousObserver = observer as? AnonymousObserver<O.E> {
         return anonymousObserver.makeSafe(disposable)
     }
     else {

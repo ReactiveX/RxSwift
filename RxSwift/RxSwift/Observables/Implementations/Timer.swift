@@ -8,7 +8,7 @@
 
 import Foundation
 
-class TimerSink<S: Scheduler, O: ObserverType where O.Element == Int64> : Sink<O> {
+class TimerSink<S: Scheduler, O: ObserverType where O.E == Int64> : Sink<O> {
     typealias Parent = Timer<S>
     
     let parent: Parent
@@ -28,7 +28,7 @@ class TimerSink<S: Scheduler, O: ObserverType where O.Element == Int64> : Sink<O
     }
 }
 
-class TimerOneOffSink<S: Scheduler, O: ObserverType where O.Element == Int64> : Sink<O> {
+class TimerOneOffSink<S: Scheduler, O: ObserverType where O.E == Int64> : Sink<O> {
     typealias Parent = Timer<S>
     
     let parent: Parent
@@ -74,7 +74,7 @@ class Timer<S: Scheduler>: Producer<Int64> {
         self.schedulePeriodic = schedulePeriodic
     }
     
-    override func run<O : ObserverType where O.Element == Int64>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
+    override func run<O : ObserverType where O.E == Int64>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
         if let _ = period {
             let sink = TimerSink(parent: self, observer: observer, cancel: cancel)
             setSink(sink)

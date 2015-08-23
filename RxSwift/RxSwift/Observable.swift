@@ -18,11 +18,11 @@ public class Observable<Element> : ObservableType {
     }
     
     /// Subscribes `observer` to receive events from this observable
-    public func subscribe<O: ObserverType where O.Element == E>(observer: O) -> Disposable {
+    public func subscribe<O: ObserverType where O.E == E>(observer: O) -> Disposable {
         return abstractMethod()
     }
     
-    public func normalize() -> Observable<E> {
+    public func asObservable() -> Observable<E> {
         return self
     }
     

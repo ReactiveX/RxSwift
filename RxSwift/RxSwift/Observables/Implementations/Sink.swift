@@ -8,33 +8,23 @@
 
 import Foundation
 
-class Sink<O : ObserverType> :  Disposable {
-    private typealias Element = O.Element
-    
-    typealias State = (
-        observer: O?,
-        cancel: Disposable,
-        disposed: Bool
-    )
-    
+class Sink<O : ObserverType> : Disposable {
     private var lock = SpinLock()
-    private var _state: State
+    
+    // state
+    var _observer: O?
+    var _cancel: Disposable
+    var _disposed: Bool = false
     
     var observer: O? {
         get {
-            return lock.calculateLocked { _state.observer }
+            return lock.calculateLocked { _observer }
         }
     }
     
     var cancel: Disposable {
         get {
-            return lock.calculateLocked { _state.cancel }
-        }
-    }
-    
-    var state: State {
-        get {
-            return lock.calculateLocked { _state }
+            return lock.calculateLocked { _cancel }
         }
     }
     
@@ -42,24 +32,21 @@ class Sink<O : ObserverType> :  Disposable {
 #if TRACE_RESOURCES
         OSAtomicIncrement32(&resourceCount)
 #endif
-        _state = (
-            observer: observer,
-            cancel: cancel,
-            disposed: false
-        )
+        _observer = observer
+        _cancel = cancel
     }
     
     func dispose() {
         let cancel: Disposable? = lock.calculateLocked {
-            if _state.disposed {
+            if _disposed {
                 return nil
             }
             
-            let cancel = _state.cancel
+            let cancel = _cancel
             
-            _state.disposed = true
-            _state.observer = nil
-            _state.cancel = NopDisposable.instance
+            _disposed = true
+            _observer = nil
+            _cancel = NopDisposable.instance
             
             return cancel
         }

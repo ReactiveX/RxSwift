@@ -72,7 +72,7 @@ extension NSObject {
                 return subject
             }
             else {
-                let subject = ReplaySubject<Void>(bufferSize: 1)
+                let subject = ReplaySubject<Void>.create(bufferSize: 1)
                 let deinitAction = DeinitAction {
                     sendNext(subject, ())
                     sendCompleted(subject)
@@ -95,7 +95,7 @@ extension NSObject {
                 return subject
             }
             else {
-                let subject = ReplaySubject<Void>(bufferSize: 1)
+                let subject = ReplaySubject<Void>.create(bufferSize: 1)
                 objc_setAssociatedObject(
                     self,
                     &deallocatingSubjectContext,

@@ -15,7 +15,7 @@ protocol CombineLatestProtocol : class {
 }
 
 class CombineLatestSink<O: ObserverType> : Sink<O>, CombineLatestProtocol {
-    typealias Element = O.Element
+    typealias Element = O.E
    
     var lock = NSRecursiveLock()
     
@@ -52,10 +52,10 @@ class CombineLatestSink<O: ObserverType> : Sink<O>, CombineLatestProtocol {
         
         if hasValueAll {
             _ = getResult().flatMap { res in
-                trySendNext(observer, res)
+                observer?.on(.Next(res))
                 return SuccessResult
             }.recoverWith { e -> RxResult<Void> in
-                trySendError(observer, e)
+                observer?.on(.Error(e))
                 self.dispose()
                 return SuccessResult
             }
@@ -72,14 +72,14 @@ class CombineLatestSink<O: ObserverType> : Sink<O>, CombineLatestProtocol {
             }
             
             if allOthersDone {
-                trySendCompleted(observer)
+                observer?.on(.Completed)
                 self.dispose()
             }
         }
     }
     
     func fail(error: ErrorType) {
-        trySendError(observer, error)
+        observer?.on(.Error(error))
         dispose()
     }
     
@@ -96,7 +96,7 @@ class CombineLatestSink<O: ObserverType> : Sink<O>, CombineLatestProtocol {
         }
         
         if allDone {
-            trySendCompleted(observer)
+            observer?.on(.Completed)
             dispose()
         }
     }

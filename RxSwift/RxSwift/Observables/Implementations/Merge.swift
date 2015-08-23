@@ -10,8 +10,8 @@ import Foundation
 
 // sequential
 
-class MergeSinkIter<S: ObservableType, O: ObserverType where O.Element == S.E> : ObserverType {
-    typealias Element = O.Element
+class MergeSinkIter<S: ObservableType, O: ObserverType where O.E == S.E> : ObserverType {
+    typealias E = O.E
     typealias DisposeKey = Bag<Disposable>.KeyType
     typealias Parent = MergeSink<S, O>
     
@@ -23,7 +23,7 @@ class MergeSinkIter<S: ObservableType, O: ObserverType where O.Element == S.E> :
         self.disposeKey = disposeKey
     }
     
-    func on(event: Event<Element>) {
+    func on(event: Event<E>) {
         parent.lock.performLocked {
             switch event {
             case .Next:
@@ -43,8 +43,8 @@ class MergeSinkIter<S: ObservableType, O: ObserverType where O.Element == S.E> :
     }
 }
 
-class MergeSink<S: ObservableType, O: ObserverType where O.Element == S.E> : Sink<O>, ObserverType {
-    typealias Element = S
+class MergeSink<S: ObservableType, O: ObserverType where O.E == S.E> : Sink<O>, ObserverType {
+    typealias E = S
     typealias Parent = Merge<S>
     
     let parent: Parent
@@ -72,7 +72,7 @@ class MergeSink<S: ObservableType, O: ObserverType where O.Element == S.E> : Sin
         return group
     }
     
-    func on(event: Event<Element>) {
+    func on(event: Event<E>) {
         switch event {
         case .Next(let value):
             let innerSubscription = SingleAssignmentDisposable()
@@ -106,8 +106,8 @@ class MergeSink<S: ObservableType, O: ObserverType where O.Element == S.E> : Sin
 
 // concurrent
 
-class MergeConcurrentSinkIter<S: ObservableType, O: ObserverType where S.E == O.Element> : ObserverType {
-    typealias Element = O.Element
+class MergeConcurrentSinkIter<S: ObservableType, O: ObserverType where S.E == O.E> : ObserverType {
+    typealias E = O.E
     typealias DisposeKey = Bag<Disposable>.KeyType
     typealias Parent = MergeConcurrentSink<S, O>
     
@@ -119,7 +119,7 @@ class MergeConcurrentSinkIter<S: ObservableType, O: ObserverType where S.E == O.
         self.disposeKey = disposeKey
     }
     
-    func on(event: Event<Element>) {
+    func on(event: Event<E>) {
         parent.lock.performLocked {
             switch event {
             case .Next:
@@ -147,8 +147,8 @@ class MergeConcurrentSinkIter<S: ObservableType, O: ObserverType where S.E == O.
     }
 }
 
-class MergeConcurrentSink<S: ObservableType, O: ObserverType where S.E == O.Element> : Sink<O>, ObserverType {
-    typealias Element = S
+class MergeConcurrentSink<S: ObservableType, O: ObserverType where S.E == O.E> : Sink<O>, ObserverType {
+    typealias E = S
     typealias Parent = Merge<S>
     typealias QueueType = Queue<S>
     
@@ -177,7 +177,7 @@ class MergeConcurrentSink<S: ObservableType, O: ObserverType where S.E == O.Elem
         return group
     }
     
-    func subscribe(innerSource: Element, group: CompositeDisposable) {
+    func subscribe(innerSource: E, group: CompositeDisposable) {
         let subscription = SingleAssignmentDisposable()
         
         let key = group.addDisposable(subscription)
@@ -190,7 +190,7 @@ class MergeConcurrentSink<S: ObservableType, O: ObserverType where S.E == O.Elem
         }
     }
     
-    func on(event: Event<Element>) {
+    func on(event: Event<E>) {
         switch event {
         case .Next(let value):
             let subscribe = lock.calculateLocked { () -> Bool in
@@ -237,7 +237,7 @@ class Merge<S: ObservableType> : Producer<S.E> {
         self.maxConcurrent = maxConcurrent
     }
     
-    override func run<O: ObserverType where O.Element == S.E>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
+    override func run<O: ObserverType where O.E == S.E>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
         if maxConcurrent > 0 {
             let sink = MergeConcurrentSink(parent: self, observer: observer, cancel: cancel)
             setSink(sink)

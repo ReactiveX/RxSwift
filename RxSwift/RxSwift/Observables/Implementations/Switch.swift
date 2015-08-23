@@ -8,8 +8,8 @@
 
 import Foundation
 
-class SwitchSink<S: ObservableType, O: ObserverType where S.E == O.Element> : Sink<O>, ObserverType {
-    typealias Element = S
+class SwitchSink<S: ObservableType, O: ObserverType where S.E == O.E> : Sink<O>, ObserverType {
+    typealias E = S
     typealias Parent = Switch<S>
 
     let subscriptions: SingleAssignmentDisposable = SingleAssignmentDisposable()
@@ -35,7 +35,7 @@ class SwitchSink<S: ObservableType, O: ObserverType where S.E == O.Element> : Si
         return CompositeDisposable(subscriptions, innerSubscription)
     }
     
-    func on(event: Event<Element>) {
+    func on(event: Event<E>) {
         switch event {
         case .Next(let observable):
             let latest: Int = self.lock.calculateLocked {
@@ -70,8 +70,8 @@ class SwitchSink<S: ObservableType, O: ObserverType where S.E == O.Element> : Si
     }
 }
 
-class SwitchSinkIter<S: ObservableType, O: ObserverType where S.E == O.Element> : ObserverType {
-    typealias Element = O.Element
+class SwitchSinkIter<S: ObservableType, O: ObserverType where S.E == O.E> : ObserverType {
+    typealias E = O.E
     typealias Parent = SwitchSink<S, O>
     
     let parent: Parent
@@ -84,7 +84,7 @@ class SwitchSinkIter<S: ObservableType, O: ObserverType where S.E == O.Element> 
         self._self = _self
     }
     
-    func on(event: Event<Element>) {
+    func on(event: Event<E>) {
         return parent.lock.calculateLocked {
             
             switch event {
@@ -123,7 +123,7 @@ class Switch<S: ObservableType> : Producer<S.E> {
         self.sources = sources
     }
     
-    override func run<O : ObserverType where O.Element == S.E>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
+    override func run<O : ObserverType where O.E == S.E>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
         let sink = SwitchSink(parent: self, observer: observer, cancel: cancel)
         setSink(sink)
         return sink.run()

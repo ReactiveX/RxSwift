@@ -12,7 +12,7 @@ public protocol ObservableType {
     typealias E
     
     /// Subscribes `observer` to receive events from this observable
-    func subscribe<O: ObserverType where O.Element == E>(observer: O) -> Disposable
+    func subscribe<O: ObserverType where O.E == E>(observer: O) -> Disposable
     
-    func normalize() -> Observable<E>
+    func asObservable() -> Observable<E>
 }

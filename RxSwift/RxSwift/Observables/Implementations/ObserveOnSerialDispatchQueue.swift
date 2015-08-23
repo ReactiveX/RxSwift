@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ObserveOnSerialDispatchQueueSink<O: ObserverType> : ObserverBase<O.Element> {
+class ObserveOnSerialDispatchQueueSink<O: ObserverType> : ObserverBase<O.E> {
     
     let scheduler: SerialDispatchQueueScheduler
     let observer: O
@@ -24,7 +24,7 @@ class ObserveOnSerialDispatchQueueSink<O: ObserverType> : ObserverBase<O.Element
         super.init()
     }
 
-    override func onCore(event: Event<Element>) {
+    override func onCore(event: Event<E>) {
         self.scheduler.schedule(()) { (_) -> RxResult<Disposable> in
             send(self.observer, event)
             
@@ -63,7 +63,7 @@ class ObserveOnSerialDispatchQueue<E> : Producer<E> {
 #endif
     }
     
-    override func run<O : ObserverType where O.Element == E>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
+    override func run<O : ObserverType where O.E == E>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
         let sink = ObserveOnSerialDispatchQueueSink(scheduler: scheduler, observer: observer, cancel: cancel)
         setSink(sink)
         return source.subscribeSafe(sink)

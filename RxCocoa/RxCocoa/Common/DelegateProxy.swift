@@ -57,7 +57,7 @@ public class DelegateProxy : _RXDelegateProxy {
     // proxy
     
     public override func interceptedSelector(selector: Selector, withArguments arguments: [AnyObject]!) {
-        trySendNext(subjectsForSelector[selector], arguments)
+        subjectsForSelector[selector]?.on(.Next(arguments))
     }
     
     class func _pointer(p: UnsafePointer<Void>) -> UnsafePointer<Void> {

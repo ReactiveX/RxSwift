@@ -8,12 +8,6 @@
 
 import Foundation
 
-public class ConnectableObservableType<Element>: Observable<Element> {
-    public override init() {
-        
-    }
-    
-    public func connect() -> Disposable {
-        return abstractMethod()
-    }
+public protocol ConnectableObservableType : ObservableType {
+    func connect() -> Disposable
 }

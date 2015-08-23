@@ -9,7 +9,7 @@
 import Foundation
 
 class ReduceSink<SourceType, AccumulateType, O: ObserverType> : Sink<O>, ObserverType {
-    typealias ResultType = O.Element
+    typealias ResultType = O.E
     typealias Parent = Reduce<SourceType, AccumulateType, ResultType>
     
     let parent: Parent
@@ -67,7 +67,7 @@ class Reduce<SourceType, AccumulateType, ResultType> : Producer<ResultType> {
         self.mapResult = mapResult
     }
     
-    override func run<O: ObserverType where O.Element == ResultType>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
+    override func run<O: ObserverType where O.E == ResultType>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
         let sink = ReduceSink(parent: self, observer: observer, cancel: cancel)
         setSink(sink)
         return source.subscribeSafe(sink)

@@ -10,16 +10,18 @@ import Foundation
 
 // as observable
 
+/* part of interface now
 extension ObservableType {
     public func asObservable() -> Observable<E> {
         if let asObservable = self as? AsObservable<E> {
             return asObservable.omega()
         }
         else {
-            return AsObservable(source: self.normalize())
+            return AsObservable(source: self.asObservable())
         }
     }
 }
+*/
 
 // distinct until changed
 
@@ -43,7 +45,7 @@ extension ObservableType {
 
     public func distinctUntilChanged<K>(keySelector: (E) throws -> K, comparer: (lhs: K, rhs: K) throws -> Bool)
         -> Observable<E> {
-        return DistinctUntilChanged(source: self.normalize(), selector: keySelector, comparer: comparer)
+        return DistinctUntilChanged(source: self.asObservable(), selector: keySelector, comparer: comparer)
     }
 
     public func distinctUntilChanged<K: Equatable>(keySelector: (E) -> K)
@@ -58,7 +60,7 @@ extension ObservableType {
 
     public func distinctUntilChanged<K>(keySelector: (E) -> K, comparer: (lhs: K, rhs: K) -> Bool)
         -> Observable<E> {
-        return DistinctUntilChanged(source: self.normalize(), selector: keySelector, comparer: comparer)
+        return DistinctUntilChanged(source: self.asObservable(), selector: keySelector, comparer: comparer)
     }
 }
 
@@ -67,7 +69,7 @@ extension ObservableType {
 extension ObservableType {
     public func tap(eventHandler: (Event<E>) throws -> Void)
         -> Observable<E> {
-        return Tap(source: self.normalize(), eventHandler: eventHandler)
+        return Tap(source: self.asObservable(), eventHandler: eventHandler)
     }
 }
 
@@ -95,7 +97,7 @@ extension ObservableType {
     // but this is significantly more efficient implementation.
     public func startWith(elements: E ...)
         -> Observable<E> {
-        return StartWith(source: self.normalize(), elements: elements)
+        return StartWith(source: self.asObservable(), elements: elements)
     }
 }
 
@@ -103,12 +105,12 @@ extension ObservableType {
 
 extension ObservableType {
     public var retry: Observable<E> {
-        return CatchSequence(sources: AnySequence(InifiniteSequence(repeatedValue: self.normalize())))
+        return CatchSequence(sources: AnySequence(InifiniteSequence(repeatedValue: self.asObservable())))
     }
 
     public func retry(retryCount: Int)
         -> Observable<E> {
-        return CatchSequence(sources: AnySequence(Repeat(count: retryCount, repeatedValue: self.normalize())))
+        return CatchSequence(sources: AnySequence(Repeat(count: retryCount, repeatedValue: self.asObservable())))
     }
 }
 
@@ -118,7 +120,7 @@ extension ObservableType {
     
     public func scan<A>(seed: A, accumulator: (A, E) throws -> A)
         -> Observable<A> {
-        return Scan(source: self.normalize(), seed: seed, accumulator: accumulator)
+        return Scan(source: self.asObservable(), seed: seed, accumulator: accumulator)
     }
     
 }

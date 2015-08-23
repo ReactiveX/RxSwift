@@ -21,25 +21,18 @@ public class Producer<Element> : Observable<Element> {
         super.init()
     }
     
-    public override func subscribe<O : ObserverType where O.Element == Element>(observer: O) -> Disposable {
+    public override func subscribe<O : ObserverType where O.E == Element>(observer: O) -> Disposable {
         return self.subscribeRaw(observer, enableSafeguard: true)
     }
     
-    public func subscribeRaw<O : ObserverType where O.Element == Element>(observer: O, enableSafeguard: Bool) -> Disposable {
+    public func subscribeRaw<O : ObserverType where O.E == Element>(observer: O, enableSafeguard: Bool) -> Disposable {
         let _: Observer<Element>
         
         let sink = SingleAssignmentDisposable()
         let subscription = SingleAssignmentDisposable()
         
-        let d = CompositeDisposable(sink, subscription)
+        let d = BinaryDisposable(sink, subscription)
 
-        if enableSafeguard {
-            let _ = makeSafe(observer, d)
-        }
-        else {
-            let _ = Observer.normalize(observer)
-        }
-        
         let setSink: (Disposable) -> Void = { d in sink.disposable = d }
         let disposable = run(observer, cancel: subscription, setSink: setSink)
         
@@ -48,7 +41,7 @@ public class Producer<Element> : Observable<Element> {
         return d
     }
     
-    public func run<O : ObserverType where O.Element == Element>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
+    public func run<O : ObserverType where O.E == Element>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
         return abstractMethod()
     }
 }

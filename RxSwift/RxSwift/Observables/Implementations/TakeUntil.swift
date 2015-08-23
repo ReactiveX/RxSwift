@@ -8,9 +8,9 @@
 
 import Foundation
 
-class TakeUntilSinkOther<ElementType, Other, O: ObserverType where O.Element == ElementType> : ObserverType {
+class TakeUntilSinkOther<ElementType, Other, O: ObserverType where O.E == ElementType> : ObserverType {
     typealias Parent = TakeUntilSink<ElementType, Other, O>
-    typealias Element = Other
+    typealias E = Other
     
     let parent: Parent
     
@@ -32,7 +32,7 @@ class TakeUntilSinkOther<ElementType, Other, O: ObserverType where O.Element == 
 #endif
     }
     
-    func on(event: Event<Element>) {
+    func on(event: Event<E>) {
         parent.lock.performLocked {
             switch event {
             case .Next:
@@ -55,9 +55,9 @@ class TakeUntilSinkOther<ElementType, Other, O: ObserverType where O.Element == 
 #endif
 }
 
-class TakeUntilSink<ElementType, Other, O: ObserverType where O.Element == ElementType> : Sink<O>, ObserverType {
-    typealias Element = ElementType
-    typealias Parent = TakeUntil<Element, Other>
+class TakeUntilSink<ElementType, Other, O: ObserverType where O.E == ElementType> : Sink<O>, ObserverType {
+    typealias E = ElementType
+    typealias Parent = TakeUntil<E, Other>
     
     let parent: Parent
  
@@ -70,7 +70,7 @@ class TakeUntilSink<ElementType, Other, O: ObserverType where O.Element == Eleme
         super.init(observer: observer, cancel: cancel)
     }
     
-    func on(event: Event<Element>) {
+    func on(event: Event<E>) {
         switch event {
         case .Next:
             if open {
@@ -117,7 +117,7 @@ class TakeUntil<Element, Other>: Producer<Element> {
         self.other = other
     }
     
-    override func run<O : ObserverType where O.Element == Element>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
+    override func run<O : ObserverType where O.E == Element>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
         let sink = TakeUntilSink(parent: self, observer: observer, cancel: cancel)
         setSink(sink)
         return sink.run()

@@ -17,7 +17,7 @@ extension ObservableType {
         return self.subscribeSafe(observer)
     }
 
-    public func subscribe(next: ((E) -> Void)? = nil, error: ((ErrorType) -> Void)? = nil, completed: (() -> Void)? = nil)
+    public func subscribe(next next: ((E) -> Void)? = nil, error: ((ErrorType) -> Void)? = nil, completed: (() -> Void)? = nil, disposed: (() -> Void)? = nil)
         -> Disposable {
         let observer = AnonymousObserver<E> { e in
             switch e {
@@ -25,8 +25,10 @@ extension ObservableType {
                 next?(value)
             case .Error(let e):
                 error?(e)
+                disposed?()
             case .Completed:
                 completed?()
+                disposed?()
             }
         }
         return self.subscribeSafe(observer)
@@ -88,12 +90,12 @@ public extension ObservableType {
     `Producers` are special kind of observables that need to make sure that message grammar is respected.
     
     */
-    public func subscribeSafe<O: ObserverType where O.Element == E>(observer: O) -> Disposable {
-        if let source = self as? Producer<O.Element> {
+    public func subscribeSafe<O: ObserverType where O.E == E>(observer: O) -> Disposable {
+        if let source = self as? Producer<O.E> {
             return source.subscribeRaw(observer, enableSafeguard: false)
         }
             
-        if let source = self as? ObservableBase<O.Element> {
+        if let source = self as? ObservableBase<O.E> {
             return source.subscribe(observer)
         }
 

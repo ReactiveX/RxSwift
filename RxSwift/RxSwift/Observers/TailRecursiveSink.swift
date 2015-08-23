@@ -10,9 +10,9 @@ import Foundation
 
 // This class is usually used with `GeneratorOf` version of the operators.
 class TailRecursiveSink<O: ObserverType> : Sink<O>, ObserverType {
-    typealias Element = O.Element
+    typealias E = O.E
     
-    var generators: [AnyGenerator<Observable<Element>>] = []
+    var generators: [AnyGenerator<Observable<E>>] = []
     var disposed: Bool = false
     var subscription = SerialDisposable()
     
@@ -23,7 +23,7 @@ class TailRecursiveSink<O: ObserverType> : Sink<O>, ObserverType {
         super.init(observer: observer, cancel: cancel)
     }
     
-    func run(sources: AnySequence<Observable<Element>>) -> Disposable {
+    func run(sources: AnySequence<Observable<E>>) -> Disposable {
         self.generators.append(sources.generate())
         
         scheduleMoveNext()
@@ -53,18 +53,18 @@ class TailRecursiveSink<O: ObserverType> : Sink<O>, ObserverType {
         self.dispose()
     }
     
-    func extract(observable: Observable<Element>) -> AnyGenerator<Observable<Element>>? {
+    func extract(observable: Observable<E>) -> AnyGenerator<Observable<E>>? {
         return abstractMethod()
     }
     
-    func on(event: Event<Element>) {
+    func on(event: Event<E>) {
         return abstractMethod()
     }
     
     // should be done on gate locked
 
     private func moveNext() {
-        var next: Observable<Element>? = nil;
+        var next: Observable<E>? = nil;
         
         repeat {
             if self.generators.count == 0 {

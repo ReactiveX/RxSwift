@@ -21,7 +21,7 @@ extension ObservableBindingTest {
         
         var nEvents = 0
         
-        let observable = ConnectableObservable(o: sequence(0, 1, 2), s: subject)
+        let observable = TestConnectableObservable(o: sequence(0, 1, 2), s: subject)
         let _d = observable .subscribeNext { n in
             nEvents++
         } .scopedDispose
@@ -36,7 +36,7 @@ extension ObservableBindingTest {
         
         var nEvents = 0
         
-        let observable = ConnectableObservable(o: concat([sequence(0, 1, 2), failWith(testError)]), s: subject)
+        let observable = TestConnectableObservable(o: concat([sequence(0, 1, 2), failWith(testError)]), s: subject)
         let _d = observable .subscribeError { n in
             nEvents++
         } .scopedDispose
@@ -51,7 +51,7 @@ extension ObservableBindingTest {
         
         var nEvents = 0
         
-        let observable = ConnectableObservable(o: failWith(testError), s: subject)
+        let observable = TestConnectableObservable(o: failWith(testError), s: subject)
         let _d = observable .subscribeError { n in
             nEvents++
         } .scopedDispose
@@ -66,7 +66,7 @@ extension ObservableBindingTest {
         
         var nEvents = 0
         
-        let observable = ConnectableObservable(o: empty(), s: subject)
+        let observable = TestConnectableObservable(o: empty(), s: subject)
         let d = observable .subscribeCompleted {
             nEvents++
         } .scopedDispose
@@ -89,7 +89,7 @@ extension ObservableBindingTest {
         
         let subject = MySubject<Int>()
         
-        let conn = ConnectableObservable(o: xs, s: subject)
+        let conn = TestConnectableObservable(o: xs, s: subject)
         
         let res = scheduler.start { conn .refCount }
         
@@ -121,7 +121,7 @@ extension ObservableBindingTest {
         
         let subject = MySubject<Int>()
         
-        let conn = ConnectableObservable(o: xs, s: subject)
+        let conn = TestConnectableObservable(o: xs, s: subject)
         let refd = conn .refCount
         
         let dis1 = refd.subscribe(NopObserver())
@@ -354,7 +354,7 @@ extension ObservableBindingTest {
             error(600, testError)
             ])
         
-        var ys: ConnectableObservableType<Int>! = nil
+        var ys: ConnectableObservable<ReplaySubject<Int>>! = nil
         var subscription: Disposable! = nil
         var connection: Disposable! = nil
         let res: MockObserver<Int> = scheduler.createObserver()
@@ -408,7 +408,7 @@ extension ObservableBindingTest {
             error(600, testError)
             ])
         
-        var ys: ConnectableObservableType<Int>! = nil
+        var ys: ConnectableObservable<ReplaySubject<Int>>! = nil
         var subscription: Disposable! = nil
         var connection: Disposable! = nil
         let res: MockObserver<Int> = scheduler.createObserver()
@@ -460,7 +460,7 @@ extension ObservableBindingTest {
             completed(600)
             ])
         
-        var ys: ConnectableObservableType<Int>! = nil
+        var ys: ConnectableObservable<ReplaySubject<Int>>! = nil
         var subscription: Disposable! = nil
         var connection: Disposable! = nil
         let res: MockObserver<Int> = scheduler.createObserver()
@@ -512,7 +512,7 @@ extension ObservableBindingTest {
             completed(600)
             ])
         
-        var ys: ConnectableObservableType<Int>! = nil
+        var ys: ConnectableObservable<ReplaySubject<Int>>! = nil
         var subscription: Disposable! = nil
         var connection: Disposable! = nil
         let res: MockObserver<Int> = scheduler.createObserver()
@@ -565,7 +565,7 @@ extension ObservableBindingTest {
             error(600, testError)
             ])
         
-        var ys: ConnectableObservableType<Int>! = nil
+        var ys: ConnectableObservable<ReplaySubject<Int>>! = nil
         var subscription: Disposable! = nil
         var connection: Disposable! = nil
         let res: MockObserver<Int> = scheduler.createObserver()
@@ -617,7 +617,7 @@ extension ObservableBindingTest {
             error(600, testError)
             ])
         
-        var ys: ConnectableObservableType<Int>! = nil
+        var ys: ConnectableObservable<ReplaySubject<Int>>! = nil
         var subscription: Disposable! = nil
         var connection: Disposable! = nil
         let res: MockObserver<Int> = scheduler.createObserver()
@@ -667,7 +667,7 @@ extension ObservableBindingTest {
             completed(600)
             ])
         
-        var ys: ConnectableObservableType<Int>! = nil
+        var ys: ConnectableObservable<ReplaySubject<Int>>! = nil
         var subscription: Disposable! = nil
         var connection: Disposable! = nil
         let res: MockObserver<Int> = scheduler.createObserver()
@@ -717,7 +717,7 @@ extension ObservableBindingTest {
             completed(600)
             ])
         
-        var ys: ConnectableObservableType<Int>! = nil
+        var ys: ConnectableObservable<ReplaySubject<Int>>! = nil
         var subscription: Disposable! = nil
         var connection: Disposable! = nil
         let res: MockObserver<Int> = scheduler.createObserver()

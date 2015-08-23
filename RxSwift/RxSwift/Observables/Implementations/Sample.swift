@@ -8,7 +8,7 @@
 
 import Foundation
 
-class SamplerSink<O: ObserverType, ElementType, SampleType where O.Element == ElementType> : Observer<SampleType> {
+class SamplerSink<O: ObserverType, ElementType, SampleType where O.E == ElementType> : Observer<SampleType> {
     typealias Parent = SampleSequenceSink<O, SampleType>
     
     let parent: Parent
@@ -17,7 +17,7 @@ class SamplerSink<O: ObserverType, ElementType, SampleType where O.Element == El
         self.parent = parent
     }
     
-    override func on(event: Event<Element>) {
+    override func on(event: Event<E>) {
         parent.lock.performLocked {
             switch event {
             case .Next:
@@ -51,7 +51,7 @@ class SamplerSink<O: ObserverType, ElementType, SampleType where O.Element == El
 }
 
 class SampleSequenceSink<O: ObserverType, SampleType> : Sink<O>, ObserverType {
-    typealias Element = O.Element
+    typealias Element = O.E
     typealias Parent = Sample<Element, SampleType>
     
     let parent: Parent
@@ -103,7 +103,7 @@ class Sample<Element, SampleType> : Producer<Element> {
         self.onlyNew = onlyNew
     }
     
-    override func run<O: ObserverType where O.Element == Element>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
+    override func run<O: ObserverType where O.E == Element>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
         let sink = SampleSequenceSink(parent: self, observer: observer, cancel: cancel)
         setSink(sink)
         return sink.run()

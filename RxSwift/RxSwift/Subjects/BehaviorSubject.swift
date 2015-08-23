@@ -10,7 +10,7 @@ import Foundation
 
 private class BehaviorSubjectSubscription<Element> : Disposable {
     typealias Parent = BehaviorSubject<Element>
-    typealias DisposeKey = Parent.ObserverBag.KeyType
+    typealias DisposeKey = Bag<ObserverOf<Element>>.KeyType
     
     let parent: Parent
     var disposeKey: DisposeKey?
@@ -30,63 +30,38 @@ private class BehaviorSubjectSubscription<Element> : Disposable {
     }
 }
 
-public class BehaviorSubject<Element> : SubjectType<Element, Element> {
-    typealias ObserverOf = Observer<Element>
-    typealias ObserverBag = Bag<Observer<Element>>
+public class BehaviorSubject<Element> : Observable<Element>, SubjectType, ObserverType {
+    public typealias E = Element
+    public typealias SubjectObserverType = BehaviorSubject<Element>
     
     let lock = NSRecursiveLock()
     
+    // state
     private var _value: Element
-    private var observers: ObserverBag = Bag()
+    private var observers = Bag<ObserverOf<Element>>()
     private var stoppedEvent: Event<Element>?
  
     public init(value: Element) {
         self._value = value
-        super.init()
     }
     
     // Returns value if value exists or throws exception if subject contains error
-    public var value: Element {
-        get {
-            return lock.calculateLocked {
-                if let error = stoppedEvent?.error {
-                    // intentionally throw exception
-                    return failure(error).get()
-                }
-                else {
-                    return _value
-                }
+    public func value() throws -> Element {
+        return try lock.calculateLockedOrFail {
+            if let error = stoppedEvent?.error {
+                // intentionally throw exception
+                throw error
+            }
+            else {
+                return _value
             }
         }
     }
 
-    public var valueResult: RxResult<Element> {
-        get {
-            return lock.calculateLocked {
-                if let error = stoppedEvent?.error {
-                    // intentionally throw exception
-                    return failure(error)
-                }
-                else {
-                    return success(_value)
-                }
-            }
-        }
-    }
-    
-    
-    public var hasObservers: Bool {
-        get {
-            return lock.calculateLocked {
-                observers.count > 0
-            }
-        }
-    }
-    
-    public override func on(event: Event<Element>) {
-        let observers = lock.calculateLocked { () -> [Observer<Element>]? in
+    public func on(event: Event<E>) {
+        lock.performLocked {
             if self.stoppedEvent != nil {
-                return nil
+                return
             }
             
             switch event {
@@ -98,29 +73,25 @@ public class BehaviorSubject<Element> : SubjectType<Element, Element> {
                 self.stoppedEvent = event
             }
             
-            return self.observers.all
+            self.observers.forEach { $0.on(event) }
         }
-        
-        dispatch(event, observers)
     }
     
-    override public func subscribe<O : ObserverType where O.Element == Element>(observer: O) -> Disposable {
-        let disposeKey = lock.calculateLocked { () -> ObserverBag.KeyType? in
+    public override func subscribe<O : ObserverType where O.E == Element>(observer: O) -> Disposable {
+        return lock.calculateLocked {
             if let stoppedEvent = stoppedEvent {
-                send(observer, stoppedEvent)
-                return nil
+                observer.on(stoppedEvent)
+                return NopDisposable.instance
             }
             
-            let key = observers.put(ObserverOf.normalize(observer))
-            sendNext(observer, _value)
-            return key
-        }
+            let key = observers.put(observer.asObserver())
+            observer.on(.Next(_value))
         
-        if let disposeKey = disposeKey {
-            return BehaviorSubjectSubscription(parent: self, disposeKey: disposeKey)
+            return BehaviorSubjectSubscription(parent: self, disposeKey: key)
         }
-        else {
-            return NopDisposable.instance
-        }
+    }
+
+    public func asObserver() -> BehaviorSubject<Element> {
+        return self
     }
 }

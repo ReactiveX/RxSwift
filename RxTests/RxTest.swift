@@ -26,7 +26,7 @@ import CoreLocation
 typealias Time = Int
 
 func XCTAssertErrorEqual(lhs: ErrorType, _ rhs: ErrorType) {
-    XCTAssertTrue(errorEquals(lhs, rhs))
+    XCTAssertTrue(lhs as NSError === rhs as NSError)
 }
 
 let testError = NSError(domain: "dummyError", code: -232, userInfo: nil)

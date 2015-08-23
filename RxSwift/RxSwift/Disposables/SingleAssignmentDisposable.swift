@@ -9,23 +9,16 @@
 import Foundation
 
 public class SingleAssignmentDisposable : DisposeBase, Disposable, Cancelable {
-    typealias State = (
-        disposed: Bool,
-        disposableSet: Bool,
-        disposable: Disposable?
-    )
-
     var lock = SpinLock()
-    var state: State = (
-        disposed: false,
-        disposableSet: false,
-        disposable: nil
-    )
+    // state
+    var _disposed = false
+    var _disposableSet = false
+    var _disposable = nil as Disposable?
 
     public var disposed: Bool {
         get {
             return lock.calculateLocked {
-                return state.disposed
+                return _disposed
             }
         }
     }
@@ -37,22 +30,22 @@ public class SingleAssignmentDisposable : DisposeBase, Disposable, Cancelable {
     public var disposable: Disposable {
         get {
             return lock.calculateLocked {
-                return self.state.disposable ?? NopDisposable.instance
+                return _disposable ?? NopDisposable.instance
             }
         }
         set {
             var disposable: Disposable? = lock.calculateLocked {
-                if state.disposableSet {
+                if _disposableSet {
                     rxFatalError("oldState.disposable != nil")
                 }
 
-                state.disposableSet = true
+                _disposableSet = true
 
-                if state.disposed {
+                if _disposed {
                     return newValue
                 }
 
-                state.disposable = newValue
+                _disposable = newValue
 
                 return nil
             }
@@ -65,9 +58,9 @@ public class SingleAssignmentDisposable : DisposeBase, Disposable, Cancelable {
 
     public func dispose() {
         var disposable: Disposable? = lock.calculateLocked {
-            state.disposed = true
-            let dispose = state.disposable
-            state.disposable = nil
+            _disposed = true
+            let dispose = _disposable
+            _disposable = nil
 
             return dispose
         }

@@ -76,6 +76,20 @@ class AssumptionsTest : RxTest {
              }
     }
     
+    func testArrayMutation() {
+        var a = [1, 2, 3, 4]
+        
+        let b = a
+        
+        var count = 0
+        for _ in b {
+            a.removeAll()
+            count++
+        }
+        
+        XCTAssertTrue(count == 4)
+    }
+    
     func testResourceLeaksDetectionIsTurnedOn() {
 #if TRACE_RESOURCES
         let startResourceCount = resourceCount
@@ -93,8 +107,9 @@ class AssumptionsTest : RxTest {
         XCTAssert(false, "Can't run unit tests in without tracing")
 #endif
     }
-    
 }
+
+
 
 class Anything {
     var elements = [Int]()

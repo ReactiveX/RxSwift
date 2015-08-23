@@ -8,82 +8,45 @@
 
 import Foundation
 
-class ReplaySubjectImplementation<Element> : SubjectType<Element, Element>, Disposable {
-    typealias Observer = ObserverOf<Element>
-    typealias BagType = Bag<Observer>
-    typealias DisposeKey = BagType.KeyType
+public class ReplaySubject<Element> : Observable<Element>, SubjectType, ObserverType, Disposable {
+    public typealias E = Element
     
-    var hasObservers: Bool {
-        get {
-            return abstractMethod()
-        }
-    }
-        
+    public typealias SubjectObserverType = ReplaySubject<Element>
+    typealias DisposeKey = Bag<ObserverOf<Element>>.KeyType
+    
     func unsubscribe(key: DisposeKey) {
         return abstractMethod()
     }
     
-    func dispose() {
+    public func on(event: Event<E>) {
+        return abstractMethod()
+    }
+    
+    public func asObserver() -> SubjectObserverType {
+        return self
+    }
+    
+    public func dispose() {
         
     }
-}
 
-class ReplaySubscription<Element> : Disposable {
-    typealias Observer = ObserverOf<Element>
-    typealias BagType = Bag<Observer>
-    typealias DisposeKey = BagType.KeyType
-    typealias Subject = ReplaySubjectImplementation<Element>
-    typealias State = (
-        subject: Subject?,
-        disposeKey: DisposeKey?
-    )
-    
-    var lock = SpinLock()
-    var state: State
-    
-    init(subject: Subject, disposeKey: DisposeKey) {
-        self.state = (
-            subject: subject,
-            disposeKey: disposeKey
-        )
-    }
-    
-    func dispose() {
-        let oldState = lock.calculateLocked { () -> State in
-            let state = self.state
-            self.state = (
-                subject: nil,
-                disposeKey: nil
-            )
-            
-            return state
+    public static func create(bufferSize bufferSize: Int) -> ReplaySubject<Element> {
+        if bufferSize == 1 {
+            return ReplayOne()
         }
-        
-        if let subject = oldState.subject, disposeKey = oldState.disposeKey {
-            subject.unsubscribe(disposeKey)
+        else {
+            return ReplayMany(bufferSize: bufferSize)
         }
     }
 }
 
-class ReplayBufferBase<Element> : ReplaySubjectImplementation<Element> {
-    typealias Observer = ObserverOf<Element>
-    typealias BagType = Bag<Observer>
-    typealias DisposeKey = BagType.KeyType
+class ReplayBufferBase<Element> : ReplaySubject<Element> {
+    var lock = NSRecursiveLock()
     
-    typealias State = (
-        disposed: Bool,
-        stoppedEvent: Event<Element>?,
-        observers: BagType
-    )
-    
-    
-    var lock = SpinLock()
-    
-    var state: State = (
-        disposed: false,
-        stoppedEvent: nil,
-        observers: Bag()
-    )
+    // state
+    var disposed = false
+    var stoppedEvent = nil as Event<Element>?
+    var observers = Bag<ObserverOf<Element>>()
     
     override init() {
         
@@ -97,61 +60,52 @@ class ReplayBufferBase<Element> : ReplaySubjectImplementation<Element> {
         return abstractMethod()
     }
     
-    func replayBuffer(observer: Observer) {
+    func replayBuffer(observer: ObserverOf<Element>) {
         return abstractMethod()
     }
     
-    override var hasObservers: Bool {
-        get {
-            return state.observers.count > 0
-        }
-    }
-    
     override func on(event: Event<Element>) {
-        let observers: [Observer] = lock.calculateLocked {
-            if self.state.disposed {
-                return []
+        lock.performLocked {
+            if self.disposed {
+                return
             }
             
-            if self.state.stoppedEvent != nil {
-                return []
+            if self.stoppedEvent != nil {
+                return
             }
             
             switch event {
             case .Next(let value):
                 addValueToBuffer(value)
                 trim()
-                return self.state.observers.all
+                self.observers.forEach { $0.on(event) }
             case .Error: fallthrough
             case .Completed:
-                state.stoppedEvent = event
+                stoppedEvent = event
                 trim()
-                var bag = self.state.observers
-                let observers = bag.all
-                bag.removeAll()
-                return observers
+                self.observers.forEach { $0.on(event) }
+                observers.removeAll()
             }
+            
         }
-        
-        dispatch(event, observers)
     }
     
-    override func subscribe<O : ObserverType where O.Element == Element>(observer: O) -> Disposable {
+    override func subscribe<O : ObserverType where O.E == Element>(observer: O) -> Disposable {
         return lock.calculateLocked {
-            if self.state.disposed {
-                sendError(observer, DisposedError)
+            if self.disposed {
+                observers.forEach { $0.on(.Error(DisposedError)) }
                 return NopDisposable.instance
             }
          
-            let observerOf = ObserverOf(observer)
+            let observerOf = observer.asObserver()
             
             replayBuffer(observerOf)
-            if let stoppedEvent = self.state.stoppedEvent {
+            if let stoppedEvent = self.stoppedEvent {
                 observer.on(stoppedEvent)
                 return NopDisposable.instance
             }
             else {
-                let key = self.state.observers.put(observerOf)
+                let key = self.observers.put(observerOf)
                 return ReplaySubscription(subject: self, disposeKey: key)
             }
         }
@@ -159,17 +113,17 @@ class ReplayBufferBase<Element> : ReplaySubjectImplementation<Element> {
     
     override func unsubscribe(key: DisposeKey) {
         lock.performLocked {
-            if self.state.disposed {
+            if self.disposed {
                 return
             }
             
-            _ = self.state.observers.removeKey(key)
+            _ = self.observers.removeKey(key)
         }
     }
 
     func lockedDispose() {
-        state.disposed = true
-        state.observers.removeAll()
+        disposed = true
+        observers.removeAll()
     }
     
     override func dispose() {
@@ -184,11 +138,6 @@ class ReplayBufferBase<Element> : ReplaySubjectImplementation<Element> {
 class ReplayOne<Element> : ReplayBufferBase<Element> {
     var value: Element?
     
-    init(firstElement: Element) {
-        self.value = firstElement
-        super.init()
-    }
-    
     override init() {
         super.init()
     }
@@ -201,9 +150,9 @@ class ReplayOne<Element> : ReplayBufferBase<Element> {
         self.value = value
     }
     
-    override func replayBuffer(observer: Observer) {
+    override func replayBuffer(observer: ObserverOf<Element>) {
         if let value = self.value {
-            sendNext(observer, value)
+            observer.on(.Next(value))
         }
     }
     
@@ -225,9 +174,9 @@ class ReplayManyBase<Element> : ReplayBufferBase<Element> {
         queue.enqueue(value)
     }
     
-    override func replayBuffer(observer: Observer) {
+    override func replayBuffer(observer: ObserverOf<E>) {
         for item in queue {
-            sendNext(observer, item)
+            observer.on(.Next(item))
         }
     }
     
@@ -265,27 +214,32 @@ class ReplayAll<Element> : ReplayManyBase<Element> {
     }
 }
 
-public class ReplaySubject<Element> : SubjectType<Element, Element> {
-    typealias Observer = ObserverOf<Element>
-    typealias BagType = Bag<Observer>
-    typealias DisposeKey = BagType.KeyType
+class ReplaySubscription<Element> : Disposable {
+    typealias Subject = ReplaySubject<Element>
+    typealias DisposeKey = ReplayBufferBase<Element>.DisposeKey
     
-    let implementation: ReplaySubjectImplementation<Element>
+    var lock = SpinLock()
     
-    public init(bufferSize: Int) {
-        if bufferSize == 1 {
-            implementation = ReplayOne()
-        }
-        else {
-            implementation = ReplayMany(bufferSize: bufferSize)
-        }
+    // state
+    var subject: Subject?
+    var disposeKey: DisposeKey?
+    
+    init(subject: Subject, disposeKey: DisposeKey) {
+        self.subject = subject
+        self.disposeKey = disposeKey
     }
     
-    public override func subscribe<O : ObserverType where O.Element == Element>(observer: O) -> Disposable {
-        return implementation.subscribe(observer)
-    }
-    
-    public override func on(event: Event<Element>) {
-        implementation.on(event)
+    func dispose() {
+        let oldState = lock.calculateLocked { () -> (Subject?, DisposeKey?) in
+            let state = (self.subject, self.disposeKey)
+            self.subject = nil
+            self.disposeKey = nil
+            
+            return state
+        }
+        
+        if let subject = oldState.0, let disposeKey = oldState.1 {
+            subject.unsubscribe(disposeKey)
+        }
     }
 }

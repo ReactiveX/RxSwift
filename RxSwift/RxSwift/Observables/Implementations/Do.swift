@@ -9,7 +9,7 @@
 import Foundation
 
 class TapSink<O: ObserverType> : Sink<O>, ObserverType {
-    typealias Element = O.Element
+    typealias Element = O.E
     typealias Parent = Tap<Element>
     
     let parent: Parent
@@ -45,7 +45,7 @@ class Tap<Element> : Producer<Element> {
         self.eventHandler = eventHandler
     }
     
-    override func run<O: ObserverType where O.Element == Element>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
+    override func run<O: ObserverType where O.E == Element>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
         let sink = TapSink(parent: self, observer: observer, cancel: cancel)
         
         setSink(sink)

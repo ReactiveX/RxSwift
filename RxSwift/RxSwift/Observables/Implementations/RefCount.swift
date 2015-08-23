@@ -8,13 +8,13 @@
 
 import Foundation
 
-class RefCountSink<O: ObserverType> : Sink<O>, ObserverType {
-    typealias Element = O.Element
-    typealias Parent = RefCount<Element>
+class RefCountSink<CO: ConnectableObservableType, O: ObserverType where CO.E == O.E> : Sink<O>, ObserverType {
+    typealias Element = O.E
+    typealias Parent = RefCount<CO>
     
     let parent: Parent
     
-    init(parent: RefCount<Element>, observer: O, cancel: Disposable) {
+    init(parent: Parent, observer: O, cancel: Disposable) {
         self.parent = parent
         super.init(observer: observer, cancel: cancel)
     }
@@ -62,20 +62,20 @@ class RefCountSink<O: ObserverType> : Sink<O>, ObserverType {
     }
 }
 
-class RefCount<Element>: Producer<Element> {
+class RefCount<CO: ConnectableObservableType>: Producer<CO.E> {
     var lock = NSRecursiveLock()
     
     // state
     var count = 0
     var connectableSubscription = nil as Disposable?
     
-    let source: ConnectableObservableType<Element>
+    let source: CO
     
-    init(source: ConnectableObservableType<Element>) {
+    init(source: CO) {
         self.source = source
     }
     
-    override func run<O: ObserverType where O.Element == Element>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
+    override func run<O: ObserverType where O.E == CO.E>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
         let sink = RefCountSink(parent: self, observer: observer, cancel: cancel)
         setSink(sink)
         return sink.run()

@@ -30,13 +30,13 @@ class HotObservable<Element : Equatable> : Observable<Element> {
         
         for recordedEvent in recordedEvents {
             testScheduler.schedule((), time: recordedEvent.time) { t in
-                dispatch(recordedEvent.event, self.observers)
+                self.observers.forEach { $0.on(recordedEvent.event) }
                 return NopDisposableResult
             }
         }
     }
     
-    override func subscribe<O : ObserverType where O.Element == Element>(observer: O) -> Disposable {
+    override func subscribe<O : ObserverType where O.E == E>(observer: O) -> Disposable {
         let key = observers.put(ObserverOf(observer))
         subscriptions.append(Subscription(self.testScheduler.now))
         

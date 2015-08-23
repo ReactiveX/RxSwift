@@ -17,14 +17,6 @@ public enum RxErrorCode : Int {
     case Disposed  = 3
 }
 
-// just temporary
-
-public func errorEquals(lhs: ErrorType, _ rhs: ErrorType) -> Bool {
-    let error1 = lhs as NSError
-    let error2 = rhs as NSError
-    return error1 === error2
-}
-
 public let UnknownError  = NSError(domain: RxErrorDomain, code: RxErrorCode.Unknown.rawValue, userInfo: nil)
 public let CastError     = NSError(domain: RxErrorDomain, code: RxErrorCode.Cast.rawValue, userInfo: nil)
 public let DisposedError = NSError(domain: RxErrorDomain, code: RxErrorCode.Disposed.rawValue, userInfo: nil)

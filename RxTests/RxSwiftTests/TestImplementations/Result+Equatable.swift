@@ -21,7 +21,7 @@ public func == <E>(lhs: RxResult<E>, rhs: RxResult<E>) -> Bool {
         }
         return false
     case (.Failure(let error1), .Failure(let error2)):
-        return errorEquals(error1, error2)
+        return error1 as NSError === error2 as NSError
     default:
         return false
     }

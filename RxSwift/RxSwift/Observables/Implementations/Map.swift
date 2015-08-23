@@ -9,7 +9,7 @@
 import Foundation
 
 class MapSink<SourceType, O : ObserverType> : Sink<O>, ObserverType {
-    typealias ResultType = O.Element
+    typealias ResultType = O.E
     typealias Element = SourceType
     typealias Parent = Map<SourceType, ResultType>
     
@@ -48,7 +48,7 @@ class MapSink<SourceType, O : ObserverType> : Sink<O>, ObserverType {
 }
 
 class MapSink1<SourceType, O: ObserverType> : MapSink<SourceType, O> {
-    typealias ResultType = O.Element
+    typealias ResultType = O.E
     
     override init(parent: Map<SourceType, ResultType>, observer: O, cancel: Disposable) {
         super.init(parent: parent, observer: observer, cancel: cancel)
@@ -60,7 +60,7 @@ class MapSink1<SourceType, O: ObserverType> : MapSink<SourceType, O> {
 }
 
 class MapSink2<SourceType, O: ObserverType> : MapSink<SourceType, O> {
-    typealias ResultType = O.Element
+    typealias ResultType = O.E
     
     var index = 0
     
@@ -93,7 +93,7 @@ class Map<SourceType, ResultType>: Producer<ResultType> {
         self.selector1 = nil
     }
     
-    override func run<O: ObserverType where O.Element == ResultType>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
+    override func run<O: ObserverType where O.E == ResultType>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
         if let _ = self.selector1 {
             let sink = MapSink1(parent: self, observer: observer, cancel: cancel)
             setSink(sink)

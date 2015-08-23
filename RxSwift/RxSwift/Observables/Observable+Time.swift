@@ -12,12 +12,12 @@ import Foundation
 extension ObservableType {
     public func throttle<S: Scheduler>(dueTime: S.TimeInterval, _ scheduler: S)
         -> Observable<E> {
-        return Throttle(source: self.normalize(), dueTime: dueTime, scheduler: scheduler)
+        return Throttle(source: self.asObservable(), dueTime: dueTime, scheduler: scheduler)
     }
 
     public func debounce<S: Scheduler>(dueTime: S.TimeInterval, scheduler: S)
         -> Observable<E> {
-        return Throttle(source: self.normalize(), dueTime: dueTime, scheduler: scheduler)
+        return Throttle(source: self.asObservable(), dueTime: dueTime, scheduler: scheduler)
     }
 }
 
@@ -28,13 +28,13 @@ extension ObservableType {
     // nothing will be forwarded.
     public func sample<S>(sampler: Observable<S>)
         -> Observable<E> {
-        return Sample(source: self.normalize(), sampler: sampler, onlyNew: true)
+        return Sample(source: self.asObservable(), sampler: sampler, onlyNew: true)
     }
 
     // On each sample latest element will always be forwarded.
     public func sampleLatest<S>(sampler: Observable<S>)
         -> Observable<E> {
-        return Sample(source: self.normalize(), sampler: sampler, onlyNew: false)
+        return Sample(source: self.asObservable(), sampler: sampler, onlyNew: false)
     }
 }
 
@@ -123,7 +123,7 @@ public func timer<S: PeriodicScheduler>(dueTime: S.TimeInterval, scheduler: S)
 extension ObservableType {
     public func take<S: Scheduler>(duration: S.TimeInterval, _ scheduler: S)
         -> Observable<E> {
-        return TakeTime(source: self.normalize(), duration: duration, scheduler: scheduler)
+        return TakeTime(source: self.asObservable(), duration: duration, scheduler: scheduler)
     }
 }
 
@@ -132,7 +132,7 @@ extension ObservableType {
 extension ObservableType {
     public func skip<S: Scheduler>(duration: S.TimeInterval, _ scheduler: S)
         -> Observable<E> {
-        return SkipTime(source: self.normalize(), duration: duration, scheduler: scheduler)
+        return SkipTime(source: self.asObservable(), duration: duration, scheduler: scheduler)
     }
 }
 
@@ -142,6 +142,6 @@ extension ObservableType {
 extension ObservableType {
     public func delaySubscription<S: Scheduler>(dueTime: S.TimeInterval, _ scheduler: S)
         -> Observable<E> {
-        return DelaySubscription(source: self.normalize(), dueTime: dueTime, scheduler: scheduler)
+        return DelaySubscription(source: self.asObservable(), dueTime: dueTime, scheduler: scheduler)
     }
 }

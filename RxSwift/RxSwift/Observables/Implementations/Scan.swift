@@ -8,9 +8,9 @@
 
 import Foundation
 
-class ScanSink<ElementType, Accumulate, O: ObserverType where O.Element == Accumulate> : Sink<O>, ObserverType {
+class ScanSink<ElementType, Accumulate, O: ObserverType where O.E == Accumulate> : Sink<O>, ObserverType {
     typealias Parent = Scan<ElementType, Accumulate>
-    typealias Element = ElementType
+    typealias E = ElementType
     
     let parent: Parent
     var accumulate: Accumulate
@@ -56,7 +56,7 @@ class Scan<Element, Accumulate>: Producer<Accumulate> {
         self.accumulator = accumulator
     }
     
-    override func run<O : ObserverType where O.Element == Accumulate>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
+    override func run<O : ObserverType where O.E == Accumulate>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
         let sink = ScanSink(parent: self, observer: observer, cancel: cancel)
         setSink(sink)
         return source.subscribeSafe(sink)

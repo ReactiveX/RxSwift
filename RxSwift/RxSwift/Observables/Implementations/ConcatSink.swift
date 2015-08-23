@@ -8,8 +8,8 @@
 
 import Foundation
 
-class ConcatSink<Element> : TailRecursiveSink<Observer<Element>> {
-    override init(observer: Observer<Element>, cancel: Disposable) {
+class ConcatSink<Element> : TailRecursiveSink<ObserverOf<Element>> {
+    override init(observer: ObserverOf<Element>, cancel: Disposable) {
         super.init(observer: observer, cancel: cancel)
     }
     

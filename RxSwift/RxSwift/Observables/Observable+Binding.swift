@@ -11,15 +11,15 @@ import Foundation
 // multicast
 
 extension ObservableType {
-    public func multicast<R>(subject: SubjectType<E, R>)
-        -> ConnectableObservableType<R> {
-        return ConnectableObservable(source: self.normalize(), subject: subject)
+    public func multicast<S: SubjectType where S.SubjectObserverType.E == E>(subject: S)
+        -> ConnectableObservable<S> {
+        return ConnectableObservable(source: self.asObservable(), subject: subject)
     }
 
-    public func multicast<I, R>(subjectSelector: () throws -> SubjectType<E, I>, selector: (Observable<I>) throws -> Observable<R>)
+    public func multicast<S: SubjectType, R where S.SubjectObserverType.E == E>(subjectSelector: () throws -> S, selector: (Observable<S.E>) throws -> Observable<R>)
         -> Observable<R> {
         return Multicast(
-            source: self.normalize(),
+            source: self.asObservable(),
             subjectSelector: subjectSelector,
             selector: selector
         )
@@ -29,7 +29,7 @@ extension ObservableType {
 // publish
 
 extension ObservableType {
-    public var publish: ConnectableObservableType<E> {
+    public var publish: ConnectableObservable<PublishSubject<E>> {
         return self.multicast(PublishSubject())
     }
 }
@@ -38,8 +38,8 @@ extension ObservableType {
 
 extension ObservableType {
     public func replay(bufferSize: Int)
-        -> ConnectableObservableType<E> {
-        return self.multicast(ReplaySubject(bufferSize: bufferSize))
+        -> ConnectableObservable<ReplaySubject<E>> {
+        return self.multicast(ReplaySubject.create(bufferSize: bufferSize))
     }
 }
 

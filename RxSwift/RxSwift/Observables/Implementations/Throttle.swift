@@ -9,7 +9,7 @@
 import Foundation
 
 class ThrottleSink<O: ObserverType, SchedulerType: Scheduler> : Sink<O>, ObserverType {
-    typealias Element = O.Element
+    typealias Element = O.E
     typealias ParentType = Throttle<Element, SchedulerType>
     
     let parent: ParentType
@@ -120,7 +120,7 @@ class Throttle<Element, SchedulerType: Scheduler> : Producer<Element> {
         self.scheduler = scheduler
     }
     
-    override func run<O: ObserverType where O.Element == Element>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
+    override func run<O: ObserverType where O.E == Element>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
         let sink = ThrottleSink(parent: self, observer: observer, cancel: cancel)
         setSink(sink)
         return sink.run()

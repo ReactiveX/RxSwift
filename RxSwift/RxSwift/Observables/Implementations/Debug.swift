@@ -9,7 +9,7 @@
 import Foundation
 
 class Debug_<O: ObserverType> : Sink<O>, ObserverType {
-    typealias Element = O.Element
+    typealias Element = O.E
     typealias Parent = Debug<Element>
     
     let parent: Parent
@@ -26,7 +26,7 @@ class Debug_<O: ObserverType> : Sink<O>, ObserverType {
             ? String(eventText.characters.prefix(maxEventTextLength / 2)) + "..." + String(eventText.characters.suffix(maxEventTextLength / 2))
             : eventText
         print("[\(parent.identifier)] -> Event \(eventNormalized)")
-        trySend(observer, event)
+        observer?.on(event)
     }
     
     override func dispose() {
@@ -45,7 +45,7 @@ class Debug<Element> : Producer<Element> {
         self.source = source
     }
     
-    override func run<O: ObserverType where O.Element == Element>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
+    override func run<O: ObserverType where O.E == Element>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
         print("[\(identifier)] subscribed")
         let sink = Debug_(parent: self, observer: observer, cancel: cancel)
         setSink(sink)

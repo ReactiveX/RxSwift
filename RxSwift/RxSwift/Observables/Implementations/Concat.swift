@@ -9,7 +9,7 @@
 import Foundation
 
 class ConcatSinkImplementation<Element> : ConcatSink<Element> {
-    override init(observer: Observer<Element>, cancel: Disposable) {
+    override init(observer: ObserverOf<Element>, cancel: Disposable) {
         super.init(observer: observer, cancel: cancel)
     }
  
@@ -33,9 +33,9 @@ class Concat<Element> : Producer<Element> {
         self.sources = sources
     }
     
-    override func run<O: ObserverType where O.Element == Element>
+    override func run<O: ObserverType where O.E == Element>
         (observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
-        let sink = ConcatSinkImplementation(observer: Observer<Element>.normalize(observer), cancel: cancel)
+        let sink = ConcatSinkImplementation(observer: observer.asObserver(), cancel: cancel)
         setSink(sink)
         
         return sink.run(AnySequence(sources.generate()))

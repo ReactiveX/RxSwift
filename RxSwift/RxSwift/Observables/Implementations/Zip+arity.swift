@@ -33,7 +33,7 @@ public func zip<E1, E2, R>
 }
 
 class ZipSink2_<E1, E2, O: ObserverType> : ZipSink<O> {
-    typealias R = O.Element
+    typealias R = O.E
     typealias Parent = Zip2<E1, E2, R>
 
     let parent: Parent
@@ -94,7 +94,7 @@ class Zip2<E1, E2, R> : Producer<R> {
         self.resultSelector = resultSelector
     }
 
-    override func run<O: ObserverType where O.Element == R>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
+    override func run<O: ObserverType where O.E == R>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
         let sink = ZipSink2_(parent: self, observer: observer, cancel: cancel)
         setSink(sink)
         return sink.run()
@@ -124,7 +124,7 @@ public func zip<E1, E2, E3, R>
 }
 
 class ZipSink3_<E1, E2, E3, O: ObserverType> : ZipSink<O> {
-    typealias R = O.Element
+    typealias R = O.E
     typealias Parent = Zip3<E1, E2, E3, R>
 
     let parent: Parent
@@ -193,7 +193,7 @@ class Zip3<E1, E2, E3, R> : Producer<R> {
         self.resultSelector = resultSelector
     }
 
-    override func run<O: ObserverType where O.Element == R>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
+    override func run<O: ObserverType where O.E == R>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
         let sink = ZipSink3_(parent: self, observer: observer, cancel: cancel)
         setSink(sink)
         return sink.run()
@@ -223,7 +223,7 @@ public func zip<E1, E2, E3, E4, R>
 }
 
 class ZipSink4_<E1, E2, E3, E4, O: ObserverType> : ZipSink<O> {
-    typealias R = O.Element
+    typealias R = O.E
     typealias Parent = Zip4<E1, E2, E3, E4, R>
 
     let parent: Parent
@@ -300,7 +300,7 @@ class Zip4<E1, E2, E3, E4, R> : Producer<R> {
         self.resultSelector = resultSelector
     }
 
-    override func run<O: ObserverType where O.Element == R>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
+    override func run<O: ObserverType where O.E == R>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
         let sink = ZipSink4_(parent: self, observer: observer, cancel: cancel)
         setSink(sink)
         return sink.run()
@@ -330,7 +330,7 @@ public func zip<E1, E2, E3, E4, E5, R>
 }
 
 class ZipSink5_<E1, E2, E3, E4, E5, O: ObserverType> : ZipSink<O> {
-    typealias R = O.Element
+    typealias R = O.E
     typealias Parent = Zip5<E1, E2, E3, E4, E5, R>
 
     let parent: Parent
@@ -415,7 +415,7 @@ class Zip5<E1, E2, E3, E4, E5, R> : Producer<R> {
         self.resultSelector = resultSelector
     }
 
-    override func run<O: ObserverType where O.Element == R>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
+    override func run<O: ObserverType where O.E == R>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
         let sink = ZipSink5_(parent: self, observer: observer, cancel: cancel)
         setSink(sink)
         return sink.run()
@@ -445,7 +445,7 @@ public func zip<E1, E2, E3, E4, E5, E6, R>
 }
 
 class ZipSink6_<E1, E2, E3, E4, E5, E6, O: ObserverType> : ZipSink<O> {
-    typealias R = O.Element
+    typealias R = O.E
     typealias Parent = Zip6<E1, E2, E3, E4, E5, E6, R>
 
     let parent: Parent
@@ -538,7 +538,7 @@ class Zip6<E1, E2, E3, E4, E5, E6, R> : Producer<R> {
         self.resultSelector = resultSelector
     }
 
-    override func run<O: ObserverType where O.Element == R>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
+    override func run<O: ObserverType where O.E == R>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
         let sink = ZipSink6_(parent: self, observer: observer, cancel: cancel)
         setSink(sink)
         return sink.run()
@@ -568,7 +568,7 @@ public func zip<E1, E2, E3, E4, E5, E6, E7, R>
 }
 
 class ZipSink7_<E1, E2, E3, E4, E5, E6, E7, O: ObserverType> : ZipSink<O> {
-    typealias R = O.Element
+    typealias R = O.E
     typealias Parent = Zip7<E1, E2, E3, E4, E5, E6, E7, R>
 
     let parent: Parent
@@ -669,7 +669,7 @@ class Zip7<E1, E2, E3, E4, E5, E6, E7, R> : Producer<R> {
         self.resultSelector = resultSelector
     }
 
-    override func run<O: ObserverType where O.Element == R>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
+    override func run<O: ObserverType where O.E == R>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
         let sink = ZipSink7_(parent: self, observer: observer, cancel: cancel)
         setSink(sink)
         return sink.run()
@@ -699,7 +699,7 @@ public func zip<E1, E2, E3, E4, E5, E6, E7, E8, R>
 }
 
 class ZipSink8_<E1, E2, E3, E4, E5, E6, E7, E8, O: ObserverType> : ZipSink<O> {
-    typealias R = O.Element
+    typealias R = O.E
     typealias Parent = Zip8<E1, E2, E3, E4, E5, E6, E7, E8, R>
 
     let parent: Parent
@@ -808,7 +808,7 @@ class Zip8<E1, E2, E3, E4, E5, E6, E7, E8, R> : Producer<R> {
         self.resultSelector = resultSelector
     }
 
-    override func run<O: ObserverType where O.Element == R>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
+    override func run<O: ObserverType where O.E == R>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
         let sink = ZipSink8_(parent: self, observer: observer, cancel: cancel)
         setSink(sink)
         return sink.run()
@@ -838,7 +838,7 @@ public func zip<E1, E2, E3, E4, E5, E6, E7, E8, E9, R>
 }
 
 class ZipSink9_<E1, E2, E3, E4, E5, E6, E7, E8, E9, O: ObserverType> : ZipSink<O> {
-    typealias R = O.Element
+    typealias R = O.E
     typealias Parent = Zip9<E1, E2, E3, E4, E5, E6, E7, E8, E9, R>
 
     let parent: Parent
@@ -955,7 +955,7 @@ class Zip9<E1, E2, E3, E4, E5, E6, E7, E8, E9, R> : Producer<R> {
         self.resultSelector = resultSelector
     }
 
-    override func run<O: ObserverType where O.Element == R>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
+    override func run<O: ObserverType where O.E == R>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
         let sink = ZipSink9_(parent: self, observer: observer, cancel: cancel)
         setSink(sink)
         return sink.run()
@@ -985,7 +985,7 @@ public func zip<E1, E2, E3, E4, E5, E6, E7, E8, E9, E10, R>
 }
 
 class ZipSink10_<E1, E2, E3, E4, E5, E6, E7, E8, E9, E10, O: ObserverType> : ZipSink<O> {
-    typealias R = O.Element
+    typealias R = O.E
     typealias Parent = Zip10<E1, E2, E3, E4, E5, E6, E7, E8, E9, E10, R>
 
     let parent: Parent
@@ -1110,7 +1110,7 @@ class Zip10<E1, E2, E3, E4, E5, E6, E7, E8, E9, E10, R> : Producer<R> {
         self.resultSelector = resultSelector
     }
 
-    override func run<O: ObserverType where O.Element == R>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
+    override func run<O: ObserverType where O.E == R>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
         let sink = ZipSink10_(parent: self, observer: observer, cancel: cancel)
         setSink(sink)
         return sink.run()

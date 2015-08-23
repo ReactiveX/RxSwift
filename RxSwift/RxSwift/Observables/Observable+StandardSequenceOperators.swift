@@ -13,12 +13,12 @@ import Foundation
 extension ObservableType {
     public func filter(predicate: (E) throws -> Bool)
         -> Observable<E> {
-        return Filter(source: self.normalize(), predicate: predicate)
+        return Filter(source: self.asObservable(), predicate: predicate)
     }
 
     public func filter(predicate: (E) -> Bool)
         -> Observable<E> {
-        return Filter(source: self.normalize(), predicate: predicate)
+        return Filter(source: self.asObservable(), predicate: predicate)
     }
 }
 
@@ -27,12 +27,12 @@ extension ObservableType {
 extension ObservableType {
     public func takeWhile(predicate: (E) -> Bool)
         -> Observable<E> {
-        return TakeWhile(source: self.normalize(), predicate: predicate)
+        return TakeWhile(source: self.asObservable(), predicate: predicate)
     }
 
     public func takeWhile(predicate: (E, Int) -> Bool)
         -> Observable<E> {
-        return TakeWhile(source: self.normalize(), predicate: predicate)
+        return TakeWhile(source: self.asObservable(), predicate: predicate)
     }
 }
 
@@ -45,7 +45,7 @@ extension ObservableType {
             return empty()
         }
         else {
-            return TakeCount(source: self.normalize(), count: count)
+            return TakeCount(source: self.asObservable(), count: count)
         }
     }
 }
@@ -55,7 +55,7 @@ extension ObservableType {
 extension ObservableType {
     public func skip(count: Int)
         -> Observable<E> {
-        return SkipCount(source: self.normalize(), count: count)
+        return SkipCount(source: self.asObservable(), count: count)
     }
 }
 
@@ -64,22 +64,22 @@ extension ObservableType {
 extension ObservableType {
     public func map<R>(selector: E throws -> R)
         -> Observable<R> {
-        return Map(source: self.normalize(), selector: selector)
+        return Map(source: self.asObservable(), selector: selector)
     }
 
     public func map<R>(selector: E -> R)
         -> Observable<R> {
-        return Map(source: self.normalize(), selector: selector)
+        return Map(source: self.asObservable(), selector: selector)
     }
 
     public func mapWithIndex<R>(selector: (E, Int) throws -> R)
         -> Observable<R> {
-        return Map(source: self.normalize(), selector: selector)
+        return Map(source: self.asObservable(), selector: selector)
     }
 
     public func mapWithIndex<R>(selector: (E, Int) -> R)
         -> Observable<R> {
-        return Map(source: self.normalize(), selector: selector)
+        return Map(source: self.asObservable(), selector: selector)
     }
 }
     
@@ -88,21 +88,21 @@ extension ObservableType {
 extension ObservableType {
     public func flatMap<R>(selector: (E) -> Observable<R>)
         -> Observable<R> {
-        return FlatMap(source: self.normalize(), selector: selector)
+        return FlatMap(source: self.asObservable(), selector: selector)
     }
 
     public func flatMap<R>(selector: (E) throws -> Observable<R>)
         -> Observable<R> {
-        return FlatMap(source: self.normalize(), selector: selector)
+        return FlatMap(source: self.asObservable(), selector: selector)
     }
 
     public func flatMapWithIndex<R>(selector: (E, Int) -> Observable<R>)
         -> Observable<R> {
-        return FlatMap(source: self.normalize(), selector: selector)
+        return FlatMap(source: self.asObservable(), selector: selector)
     }
 
     public func flatMapWithIndex<R>(selector: (E, Int) throws -> Observable<R>)
         -> Observable<R> {
-        return FlatMap(source: self.normalize(), selector: selector)
+        return FlatMap(source: self.asObservable(), selector: selector)
     }
 }

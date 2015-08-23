@@ -8,13 +8,10 @@
 
 import Foundation
 
-class MulticastSink<SourceType, IntermediateType, O: ObserverType>: Sink<O>, ObserverType {
-    typealias Element = O.Element
+class MulticastSink<S: SubjectType, O: ObserverType>: Sink<O>, ObserverType {
+    typealias Element = O.E
     typealias ResultType = Element
-    typealias MutlicastType = Multicast<SourceType, IntermediateType, ResultType>
-    
-    typealias IntermediateObservable = ConnectableObservableType<IntermediateType>
-    typealias ResultObservable = Observable<ResultType>
+    typealias MutlicastType = Multicast<S, O.E>
     
     let parent: MutlicastType
     
@@ -52,21 +49,21 @@ class MulticastSink<SourceType, IntermediateType, O: ObserverType>: Sink<O>, Obs
     }
 }
 
-class Multicast<SourceType, IntermediateType, ResultType>: Producer<ResultType> {
-    typealias SubjectSelectorType = () throws -> SubjectType<SourceType, IntermediateType>
-    typealias SelectorType = (Observable<IntermediateType>) throws -> Observable<ResultType>
+class Multicast<S: SubjectType, R>: Producer<R> {
+    typealias SubjectSelectorType = () throws -> S
+    typealias SelectorType = (Observable<S.E>) throws -> Observable<R>
     
-    let source: Observable<SourceType>
+    let source: Observable<S.SubjectObserverType.E>
     let subjectSelector: SubjectSelectorType
     let selector: SelectorType
     
-    init(source: Observable<SourceType>, subjectSelector: SubjectSelectorType, selector: SelectorType) {
+    init(source: Observable<S.SubjectObserverType.E>, subjectSelector: SubjectSelectorType, selector: SelectorType) {
         self.source = source
         self.subjectSelector = subjectSelector
         self.selector = selector
     }
     
-    override func run<O: ObserverType where O.Element == ResultType>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
+    override func run<O: ObserverType where O.E == R>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
         let sink = MulticastSink(parent: self, observer: observer, cancel: cancel)
         setSink(sink)
         return sink.run()

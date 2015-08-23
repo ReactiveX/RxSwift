@@ -22,6 +22,8 @@
 		C80B561F1B2DC7CA008F915D /* Amb.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80B561E1B2DC7CA008F915D /* Amb.swift */; };
 		C80B56201B2DC7CA008F915D /* Amb.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80B561E1B2DC7CA008F915D /* Amb.swift */; };
 		C814CEA51AF56E6400E98087 /* ScopedDispose.swift in Sources */ = {isa = PBXBuildFile; fileRef = C814CEA41AF56E6400E98087 /* ScopedDispose.swift */; };
+		C82EC0041B87193000EC98DC /* Bag.swift in Sources */ = {isa = PBXBuildFile; fileRef = C82EC0031B87193000EC98DC /* Bag.swift */; };
+		C82EC0051B87193000EC98DC /* Bag.swift in Sources */ = {isa = PBXBuildFile; fileRef = C82EC0031B87193000EC98DC /* Bag.swift */; };
 		C83CEA291B23AFEE006828AC /* RecursiveScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83CEA281B23AFEE006828AC /* RecursiveScheduler.swift */; };
 		C83CEA2A1B23AFEE006828AC /* RecursiveScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83CEA281B23AFEE006828AC /* RecursiveScheduler.swift */; };
 		C83CEA2C1B23B267006828AC /* Scheduler+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83CEA2B1B23B267006828AC /* Scheduler+Extensions.swift */; };
@@ -54,7 +56,6 @@
 		C88BB8261B07E5ED0064D411 /* SerialDisposable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A56B0B1AD7435800B4673B /* SerialDisposable.swift */; };
 		C88BB8271B07E5ED0064D411 /* CombineLatest+arity.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8BA11441AE84932004D2FA8 /* CombineLatest+arity.swift */; };
 		C88BB8291B07E5ED0064D411 /* CombineLatest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8DA57E81AEB9F7D0035AF28 /* CombineLatest.swift */; };
-		C88BB82B1B07E5ED0064D411 /* Bag.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A56B021AD7435800B4673B /* Bag.swift */; };
 		C88BB82C1B07E5ED0064D411 /* DisposeBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A56B0A1AD7435800B4673B /* DisposeBase.swift */; };
 		C88BB82D1B07E5ED0064D411 /* ScopedDispose.swift in Sources */ = {isa = PBXBuildFile; fileRef = C814CEA41AF56E6400E98087 /* ScopedDispose.swift */; };
 		C88BB82E1B07E5ED0064D411 /* Queue.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A56B031AD7435800B4673B /* Queue.swift */; };
@@ -118,8 +119,6 @@
 		C897EC391B10DB10009C2CB0 /* Variable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C897EC371B10DB10009C2CB0 /* Variable.swift */; };
 		C897EC3E1B1110FE009C2CB0 /* Zip.swift in Sources */ = {isa = PBXBuildFile; fileRef = C897EC3D1B1110FE009C2CB0 /* Zip.swift */; };
 		C897EC3F1B1110FE009C2CB0 /* Zip.swift in Sources */ = {isa = PBXBuildFile; fileRef = C897EC3D1B1110FE009C2CB0 /* Zip.swift */; };
-		C897EC411B111116009C2CB0 /* Zip+arity.tt in Resources */ = {isa = PBXBuildFile; fileRef = C897EC401B111116009C2CB0 /* Zip+arity.tt */; };
-		C897EC421B111116009C2CB0 /* Zip+arity.tt in Resources */ = {isa = PBXBuildFile; fileRef = C897EC401B111116009C2CB0 /* Zip+arity.tt */; };
 		C897EC441B1119A4009C2CB0 /* Zip+arity.swift in Sources */ = {isa = PBXBuildFile; fileRef = C897EC431B1119A4009C2CB0 /* Zip+arity.swift */; };
 		C897EC451B1119A4009C2CB0 /* Zip+arity.swift in Sources */ = {isa = PBXBuildFile; fileRef = C897EC431B1119A4009C2CB0 /* Zip+arity.swift */; };
 		C899907D1B1B40DF008444B5 /* ObserveOnSerialDispatchQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = C899907C1B1B40DF008444B5 /* ObserveOnSerialDispatchQueue.swift */; };
@@ -129,7 +128,6 @@
 		C8A56B4D1AD7435900B4673B /* Cancelable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A56AFD1AD7435800B4673B /* Cancelable.swift */; };
 		C8A56B4E1AD7435900B4673B /* AsyncLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A56AFF1AD7435800B4673B /* AsyncLock.swift */; };
 		C8A56B4F1AD7435900B4673B /* Lock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A56B001AD7435800B4673B /* Lock.swift */; };
-		C8A56B501AD7435900B4673B /* Bag.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A56B021AD7435800B4673B /* Bag.swift */; };
 		C8A56B511AD7435900B4673B /* Queue.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A56B031AD7435800B4673B /* Queue.swift */; };
 		C8A56B521AD7435900B4673B /* Disposable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A56B041AD7435800B4673B /* Disposable.swift */; };
 		C8A56B531AD7435900B4673B /* AnonymousDisposable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A56B061AD7435800B4673B /* AnonymousDisposable.swift */; };
@@ -242,6 +240,8 @@
 		C80B561B1B2DBE18008F915D /* Scan.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scan.swift; sourceTree = "<group>"; };
 		C80B561E1B2DC7CA008F915D /* Amb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Amb.swift; sourceTree = "<group>"; };
 		C814CEA41AF56E6400E98087 /* ScopedDispose.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScopedDispose.swift; sourceTree = "<group>"; };
+		C82EC0021B865AAE00EC98DC /* NAryDisposable.tt */ = {isa = PBXFileReference; lastKnownFileType = text; path = NAryDisposable.tt; sourceTree = "<group>"; };
+		C82EC0031B87193000EC98DC /* Bag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bag.swift; sourceTree = "<group>"; };
 		C83CEA281B23AFEE006828AC /* RecursiveScheduler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecursiveScheduler.swift; sourceTree = "<group>"; };
 		C83CEA2B1B23B267006828AC /* Scheduler+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Scheduler+Extensions.swift"; sourceTree = "<group>"; };
 		C83CEA2E1B23D27E006828AC /* Timer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Timer.swift; sourceTree = "<group>"; };
@@ -256,7 +256,7 @@
 		C88BB8711B07E5ED0064D411 /* RxSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C897EC2C1B10D3F4009C2CB0 /* SubjectType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubjectType.swift; sourceTree = "<group>"; };
 		C897EC311B10D426009C2CB0 /* BehaviorSubject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BehaviorSubject.swift; sourceTree = "<group>"; };
-		C897EC341B10D8F2009C2CB0 /* PublishSubject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = PublishSubject.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		C897EC341B10D8F2009C2CB0 /* PublishSubject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = PublishSubject.swift; sourceTree = "<group>"; };
 		C897EC371B10DB10009C2CB0 /* Variable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Variable.swift; sourceTree = "<group>"; };
 		C897EC3D1B1110FE009C2CB0 /* Zip.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Zip.swift; sourceTree = "<group>"; };
 		C897EC401B111116009C2CB0 /* Zip+arity.tt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Zip+arity.tt"; sourceTree = "<group>"; };
@@ -269,7 +269,6 @@
 		C8A56AFD1AD7435800B4673B /* Cancelable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cancelable.swift; sourceTree = "<group>"; };
 		C8A56AFF1AD7435800B4673B /* AsyncLock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AsyncLock.swift; sourceTree = "<group>"; };
 		C8A56B001AD7435800B4673B /* Lock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lock.swift; sourceTree = "<group>"; };
-		C8A56B021AD7435800B4673B /* Bag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bag.swift; sourceTree = "<group>"; };
 		C8A56B031AD7435800B4673B /* Queue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Queue.swift; sourceTree = "<group>"; };
 		C8A56B041AD7435800B4673B /* Disposable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Disposable.swift; sourceTree = "<group>"; };
 		C8A56B061AD7435800B4673B /* AnonymousDisposable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnonymousDisposable.swift; sourceTree = "<group>"; };
@@ -471,7 +470,7 @@
 		C8A56B011AD7435800B4673B /* DataStructures */ = {
 			isa = PBXGroup;
 			children = (
-				C8A56B021AD7435800B4673B /* Bag.swift */,
+				C82EC0031B87193000EC98DC /* Bag.swift */,
 				C8A56B031AD7435800B4673B /* Queue.swift */,
 				C8FDC6081B2CBEE70065F8D9 /* InfiniteSequence.swift */,
 			);
@@ -495,6 +494,7 @@
 				C8A56B0C1AD7435800B4673B /* SingleAssignmentDisposable.swift */,
 				C8FDC5FA1B2B884F0065F8D9 /* StableCompositeDisposable.swift */,
 				C8FDC6001B2B89800065F8D9 /* TernaryDisposable.swift */,
+				C82EC0021B865AAE00EC98DC /* NAryDisposable.tt */,
 			);
 			path = Disposables;
 			sourceTree = "<group>";
@@ -680,7 +680,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C897EC421B111116009C2CB0 /* Zip+arity.tt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -688,7 +687,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C897EC411B111116009C2CB0 /* Zip+arity.tt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -727,7 +725,6 @@
 				C8FBCF9E1B0FE2B00091DBFA /* Observer.swift in Sources */,
 				C88BB8291B07E5ED0064D411 /* CombineLatest.swift in Sources */,
 				C87CF6061B1B7EC300283912 /* MainScheduler.swift in Sources */,
-				C88BB82B1B07E5ED0064D411 /* Bag.swift in Sources */,
 				C805FC441B6437F80072FB83 /* BooleanDisposable.swift in Sources */,
 				C8D6756B1B76AD46005264ED /* ObservableType.swift in Sources */,
 				C8FDC5FF1B2B88670065F8D9 /* NAryDisposable.swift in Sources */,
@@ -797,6 +794,7 @@
 				C88BB85C1B07E5ED0064D411 /* Do.swift in Sources */,
 				C88BB85D1B07E5ED0064D411 /* SingleAssignmentDisposable.swift in Sources */,
 				C88BB85E1B07E5ED0064D411 /* Error.swift in Sources */,
+				C82EC0051B87193000EC98DC /* Bag.swift in Sources */,
 				C88BB85F1B07E5ED0064D411 /* AnonymousObservable.swift in Sources */,
 				C88BB8601B07E5ED0064D411 /* ObserverType.swift in Sources */,
 				C8CC5E791B24D7440074DCE0 /* TakeUntil.swift in Sources */,
@@ -842,7 +840,6 @@
 				C8FBCF9D1B0FE2B00091DBFA /* Observer.swift in Sources */,
 				C8DA57E91AEB9F7D0035AF28 /* CombineLatest.swift in Sources */,
 				C87CF6051B1B7EC300283912 /* MainScheduler.swift in Sources */,
-				C8A56B501AD7435900B4673B /* Bag.swift in Sources */,
 				C805FC431B6437F80072FB83 /* BooleanDisposable.swift in Sources */,
 				C8D6756A1B76AD46005264ED /* ObservableType.swift in Sources */,
 				C8FDC5FE1B2B88670065F8D9 /* NAryDisposable.swift in Sources */,
@@ -912,6 +909,7 @@
 				C8A56B661AD7435900B4673B /* Do.swift in Sources */,
 				C8A56B591AD7435900B4673B /* SingleAssignmentDisposable.swift in Sources */,
 				C8A56B5A1AD7435900B4673B /* Error.swift in Sources */,
+				C82EC0041B87193000EC98DC /* Bag.swift in Sources */,
 				C8A56B5F1AD7435900B4673B /* AnonymousObservable.swift in Sources */,
 				C8A56B871AD7435900B4673B /* ObserverType.swift in Sources */,
 				C8CC5E781B24D7440074DCE0 /* TakeUntil.swift in Sources */,

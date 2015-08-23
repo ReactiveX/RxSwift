@@ -10,9 +10,9 @@ import Foundation
 
 // count version
 
-class TakeCountSink<ElementType, O: ObserverType where O.Element == ElementType> : Sink<O>, ObserverType {
+class TakeCountSink<ElementType, O: ObserverType where O.E == ElementType> : Sink<O>, ObserverType {
     typealias Parent = TakeCount<ElementType>
-    typealias Element = ElementType
+    typealias E = ElementType
     
     let parent: Parent
     
@@ -24,7 +24,7 @@ class TakeCountSink<ElementType, O: ObserverType where O.Element == ElementType>
         super.init(observer: observer, cancel: cancel)
     }
     
-    func on(event: Event<Element>) {
+    func on(event: Event<E>) {
         switch event {
         case .Next(let value):
             
@@ -58,7 +58,7 @@ class TakeCount<Element>: Producer<Element> {
         self.count = count
     }
     
-    override func run<O : ObserverType where O.Element == Element>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
+    override func run<O : ObserverType where O.E == Element>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
         let sink = TakeCountSink(parent: self, observer: observer, cancel: cancel)
         setSink(sink)
         return source.subscribeSafe(sink)
@@ -67,9 +67,9 @@ class TakeCount<Element>: Producer<Element> {
 
 // time version
 
-class TakeTimeSink<ElementType, S: Scheduler, O: ObserverType where O.Element == ElementType> : Sink<O>, ObserverType {
+class TakeTimeSink<ElementType, S: Scheduler, O: ObserverType where O.E == ElementType> : Sink<O>, ObserverType {
     typealias Parent = TakeTime<ElementType, S>
-    typealias Element = ElementType
+    typealias E = ElementType
     
     let lock = NSRecursiveLock()
     let parent: Parent
@@ -79,7 +79,7 @@ class TakeTimeSink<ElementType, S: Scheduler, O: ObserverType where O.Element ==
         super.init(observer: observer, cancel: cancel)
     }
     
-    func on(event: Event<Element>) {
+    func on(event: Event<E>) {
         lock.performLocked {
             switch event {
             case .Next(let value):
@@ -126,7 +126,7 @@ class TakeTime<Element, S: Scheduler>: Producer<Element> {
         self.duration = duration
     }
     
-    override func run<O : ObserverType where O.Element == Element>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
+    override func run<O : ObserverType where O.E == Element>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
         let sink = TakeTimeSink(parent: self, observer: observer, cancel: cancel)
         setSink(sink)
         return sink.run()

@@ -21,6 +21,8 @@ class ObservableSingleTest : RxTest {
 }
 
 // Creation
+// this is now part of interface 
+/*
 extension ObservableSingleTest {
     func testAsObservable_asObservable() {
         let scheduler = TestScheduler(initialClock: 0)
@@ -68,6 +70,7 @@ extension ObservableSingleTest {
     
     // ...
 }
+*/
 
 // Distinct
 extension ObservableSingleTest {

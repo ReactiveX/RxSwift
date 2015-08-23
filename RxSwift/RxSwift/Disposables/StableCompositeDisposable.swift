@@ -17,7 +17,4 @@ public final class StableCompositeDisposable {
         return TernaryDisposable(disposable1, disposable2, disposable3)
     }
     
-    /*static func create(disposables: Disposable ...) -> Disposable {
-        return NAryDisposable(disposables)
-    }*/
 }

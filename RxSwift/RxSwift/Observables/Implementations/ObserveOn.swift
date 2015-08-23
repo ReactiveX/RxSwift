@@ -1,4 +1,4 @@
-//
+
 //  ObserveOn.swift
 //  RxSwift
 //
@@ -21,7 +21,7 @@ class ObserveOn<E> : Producer<E> {
 #endif
     }
     
-    override func run<O : ObserverType where O.Element == E>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
+    override func run<O : ObserverType where O.E == E>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
         let sink = ObserveOnSink(scheduler: scheduler, observer: observer, cancel: cancel)
         setSink(sink)
         return source.subscribeSafe(sink)
@@ -41,15 +41,17 @@ enum ObserveOnState : Int32 {
     case Running = 1
 }
 
-class ObserveOnSink<O: ObserverType> : ObserverBase<O.Element> {
+class ObserveOnSink<O: ObserverType> : ObserverBase<O.E> {
+    typealias E = O.E
+    
     var cancel: Disposable
-
+    
     let scheduler: ImmediateScheduler
     var observer: O?
     
     var state = ObserveOnState.Stopped
     
-    var queue = Queue<Event<Element>>(capacity: 10)
+    var queue = Queue<Event<E>>(capacity: 10)
     let scheduleDisposable = SerialDisposable()
     
     init(scheduler: ImmediateScheduler, observer: O, cancel: Disposable) {
@@ -58,7 +60,7 @@ class ObserveOnSink<O: ObserverType> : ObserverBase<O.Element> {
         self.observer = observer
     }
 
-    override func onCore(event: Event<Element>) {
+    override func onCore(event: Event<E>) {
         let shouldStart = lock.calculateLocked { () -> Bool in
             self.queue.enqueue(event)
             
@@ -77,7 +79,7 @@ class ObserveOnSink<O: ObserverType> : ObserverBase<O.Element> {
     }
     
     func run(state: Void, recurse: Void -> Void) {
-        let (nextEvent, observer) = self.lock.calculateLocked { () -> (Event<Element>?, O?) in
+        let (nextEvent, observer) = self.lock.calculateLocked { () -> (Event<E>?, O?) in
             if self.queue.count > 0 {
                 return (self.queue.dequeue(), self.observer)
             }
@@ -88,7 +90,7 @@ class ObserveOnSink<O: ObserverType> : ObserverBase<O.Element> {
         }
         
         if let nextEvent = nextEvent {
-            trySend(observer, nextEvent)
+            observer?.on(nextEvent)
             if nextEvent.isStopEvent {
                 self.dispose()
             }

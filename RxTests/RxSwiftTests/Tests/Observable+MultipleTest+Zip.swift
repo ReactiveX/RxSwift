@@ -25,7 +25,8 @@ extension ObservableMultipleTest {
 
         var result: Int! = nil
 
-        let _ = zip(v0, v1) { (a0, a1) in a0 + a1 } .subscribeNext { (next: Int) -> Void in result = next }
+        let _ = zip(v0, v1) { (a0, a1) in a0 + a1 }
+            .subscribeNext { (x: Int) -> Void in result = x }
 
         XCTAssertEqual(result, 3)
     }
@@ -109,7 +110,7 @@ extension ObservableMultipleTest {
 
         let res = scheduler.start { () -> Observable<Int> in
             let result: Observable<Int> = zip(e0, e1) { (_0, _1) -> Int in
-                return (_0 + _1) 
+                return (_0 + _1)
             }
 
             return result
@@ -147,7 +148,7 @@ extension ObservableMultipleTest {
 
         let res = scheduler.start { () -> Observable<Int> in
             let result: Observable<Int> = zip(e0, e1) { (_0, _1) -> Int in
-                return (_0 + _1) 
+                return (_0 + _1)
             }
 
             return result
@@ -177,7 +178,8 @@ extension ObservableMultipleTest {
 
         var result: Int! = nil
 
-        let _ = zip(v0, v1, v2) { (a0, a1, a2) in a0 + a1 + a2 } .subscribeNext { (next: Int) -> Void in result = next }
+        let _ = zip(v0, v1, v2) { (a0, a1, a2) in a0 + a1 + a2 }
+            .subscribeNext { (x: Int) -> Void in result = x }
 
         XCTAssertEqual(result, 6)
     }
@@ -277,7 +279,7 @@ extension ObservableMultipleTest {
 
         let res = scheduler.start { () -> Observable<Int> in
             let result: Observable<Int> = zip(e0, e1, e2) { (_0, _1, _2) -> Int in
-                return (_0 + _1 + _2) 
+                return (_0 + _1 + _2)
             }
 
             return result
@@ -325,7 +327,7 @@ extension ObservableMultipleTest {
 
         let res = scheduler.start { () -> Observable<Int> in
             let result: Observable<Int> = zip(e0, e1, e2) { (_0, _1, _2) -> Int in
-                return (_0 + _1 + _2) 
+                return (_0 + _1 + _2)
             }
 
             return result
@@ -357,7 +359,8 @@ extension ObservableMultipleTest {
 
         var result: Int! = nil
 
-        let _ = zip(v0, v1, v2, v3) { (a0, a1, a2, a3) in a0 + a1 + a2 + a3 } .subscribeNext { (next: Int) -> Void in result = next }
+        let _ = zip(v0, v1, v2, v3) { (a0, a1, a2, a3) in a0 + a1 + a2 + a3 }
+            .subscribeNext { (x: Int) -> Void in result = x }
 
         XCTAssertEqual(result, 10)
     }
@@ -473,7 +476,7 @@ extension ObservableMultipleTest {
 
         let res = scheduler.start { () -> Observable<Int> in
             let result: Observable<Int> = zip(e0, e1, e2, e3) { (_0, _1, _2, _3) -> Int in
-                return (_0 + _1 + _2 + _3) 
+                return (_0 + _1 + _2 + _3)
             }
 
             return result
@@ -532,7 +535,7 @@ extension ObservableMultipleTest {
 
         let res = scheduler.start { () -> Observable<Int> in
             let result: Observable<Int> = zip(e0, e1, e2, e3) { (_0, _1, _2, _3) -> Int in
-                return (_0 + _1 + _2 + _3) 
+                return (_0 + _1 + _2 + _3)
             }
 
             return result
@@ -566,7 +569,8 @@ extension ObservableMultipleTest {
 
         var result: Int! = nil
 
-        let _ = zip(v0, v1, v2, v3, v4) { (a0, a1, a2, a3, a4) in a0 + a1 + a2 + a3 + a4 } .subscribeNext { (next: Int) -> Void in result = next }
+        let _ = zip(v0, v1, v2, v3, v4) { (a0, a1, a2, a3, a4) in a0 + a1 + a2 + a3 + a4 }
+            .subscribeNext { (x: Int) -> Void in result = x }
 
         XCTAssertEqual(result, 15)
     }
@@ -698,7 +702,7 @@ extension ObservableMultipleTest {
 
         let res = scheduler.start { () -> Observable<Int> in
             let result: Observable<Int> = zip(e0, e1, e2, e3, e4) { (_0, _1, _2, _3, _4) -> Int in
-                return (_0 + _1 + _2 + _3 + _4) 
+                return (_0 + _1 + _2 + _3 + _4)
             }
 
             return result
@@ -769,7 +773,7 @@ extension ObservableMultipleTest {
 
         let res = scheduler.start { () -> Observable<Int> in
             let result: Observable<Int> = zip(e0, e1, e2, e3, e4) { (_0, _1, _2, _3, _4) -> Int in
-                return (_0 + _1 + _2 + _3 + _4) 
+                return (_0 + _1 + _2 + _3 + _4)
             }
 
             return result
@@ -805,7 +809,8 @@ extension ObservableMultipleTest {
 
         var result: Int! = nil
 
-        let _ = zip(v0, v1, v2, v3, v4, v5) { (a0, a1, a2, a3, a4, a5) in a0 + a1 + a2 + a3 + a4 + a5 } .subscribeNext { (next: Int) -> Void in result = next }
+        let _ = zip(v0, v1, v2, v3, v4, v5) { (a0, a1, a2, a3, a4, a5) in a0 + a1 + a2 + a3 + a4 + a5 }
+            .subscribeNext { (x: Int) -> Void in result = x }
 
         XCTAssertEqual(result, 21)
     }
@@ -953,7 +958,7 @@ extension ObservableMultipleTest {
 
         let res = scheduler.start { () -> Observable<Int> in
             let result: Observable<Int> = zip(e0, e1, e2, e3, e4, e5) { (_0, _1, _2, _3, _4, _5) -> Int in
-                return (_0 + _1 + _2 + _3 + _4 + _5) 
+                return (_0 + _1 + _2 + _3 + _4 + _5)
             }
 
             return result
@@ -1037,7 +1042,7 @@ extension ObservableMultipleTest {
 
         let res = scheduler.start { () -> Observable<Int> in
             let result: Observable<Int> = zip(e0, e1, e2, e3, e4, e5) { (_0, _1, _2, _3, _4, _5) -> Int in
-                return (_0 + _1 + _2 + _3 + _4 + _5) 
+                return (_0 + _1 + _2 + _3 + _4 + _5)
             }
 
             return result
@@ -1075,7 +1080,8 @@ extension ObservableMultipleTest {
 
         var result: Int! = nil
 
-        let _ = zip(v0, v1, v2, v3, v4, v5, v6) { (a0, a1, a2, a3, a4, a5, a6) in a0 + a1 + a2 + a3 + a4 + a5 + a6 } .subscribeNext { (next: Int) -> Void in result = next }
+        let _ = zip(v0, v1, v2, v3, v4, v5, v6) { (a0, a1, a2, a3, a4, a5, a6) in a0 + a1 + a2 + a3 + a4 + a5 + a6 }
+            .subscribeNext { (x: Int) -> Void in result = x }
 
         XCTAssertEqual(result, 28)
     }
@@ -1239,7 +1245,7 @@ extension ObservableMultipleTest {
 
         let res = scheduler.start { () -> Observable<Int> in
             let result: Observable<Int> = zip(e0, e1, e2, e3, e4, e5, e6) { (_0, _1, _2, _3, _4, _5, _6) -> Int in
-                return (_0 + _1 + _2 + _3 + _4 + _5 + _6) 
+                return (_0 + _1 + _2 + _3 + _4 + _5 + _6)
             }
 
             return result
@@ -1337,7 +1343,7 @@ extension ObservableMultipleTest {
 
         let res = scheduler.start { () -> Observable<Int> in
             let result: Observable<Int> = zip(e0, e1, e2, e3, e4, e5, e6) { (_0, _1, _2, _3, _4, _5, _6) -> Int in
-                return (_0 + _1 + _2 + _3 + _4 + _5 + _6) 
+                return (_0 + _1 + _2 + _3 + _4 + _5 + _6)
             }
 
             return result
@@ -1377,7 +1383,8 @@ extension ObservableMultipleTest {
 
         var result: Int! = nil
 
-        let _ = zip(v0, v1, v2, v3, v4, v5, v6, v7) { (a0, a1, a2, a3, a4, a5, a6, a7) in a0 + a1 + a2 + a3 + a4 + a5 + a6 + a7 } .subscribeNext { (next: Int) -> Void in result = next }
+        let _ = zip(v0, v1, v2, v3, v4, v5, v6, v7) { (a0, a1, a2, a3, a4, a5, a6, a7) in a0 + a1 + a2 + a3 + a4 + a5 + a6 + a7 }
+            .subscribeNext { (x: Int) -> Void in result = x }
 
         XCTAssertEqual(result, 36)
     }
@@ -1557,7 +1564,7 @@ extension ObservableMultipleTest {
 
         let res = scheduler.start { () -> Observable<Int> in
             let result: Observable<Int> = zip(e0, e1, e2, e3, e4, e5, e6, e7) { (_0, _1, _2, _3, _4, _5, _6, _7) -> Int in
-                return (_0 + _1 + _2 + _3 + _4 + _5 + _6 + _7) 
+                return (_0 + _1 + _2 + _3 + _4 + _5 + _6 + _7)
             }
 
             return result
@@ -1670,7 +1677,7 @@ extension ObservableMultipleTest {
 
         let res = scheduler.start { () -> Observable<Int> in
             let result: Observable<Int> = zip(e0, e1, e2, e3, e4, e5, e6, e7) { (_0, _1, _2, _3, _4, _5, _6, _7) -> Int in
-                return (_0 + _1 + _2 + _3 + _4 + _5 + _6 + _7) 
+                return (_0 + _1 + _2 + _3 + _4 + _5 + _6 + _7)
             }
 
             return result
@@ -1712,7 +1719,8 @@ extension ObservableMultipleTest {
 
         var result: Int! = nil
 
-        let _ = zip(v0, v1, v2, v3, v4, v5, v6, v7, v8) { (a0, a1, a2, a3, a4, a5, a6, a7, a8) in a0 + a1 + a2 + a3 + a4 + a5 + a6 + a7 + a8 } .subscribeNext { (next: Int) -> Void in result = next }
+        let _ = zip(v0, v1, v2, v3, v4, v5, v6, v7, v8) { (a0, a1, a2, a3, a4, a5, a6, a7, a8) in a0 + a1 + a2 + a3 + a4 + a5 + a6 + a7 + a8 }
+            .subscribeNext { (x: Int) -> Void in result = x }
 
         XCTAssertEqual(result, 45)
     }
@@ -1908,7 +1916,7 @@ extension ObservableMultipleTest {
 
         let res = scheduler.start { () -> Observable<Int> in
             let result: Observable<Int> = zip(e0, e1, e2, e3, e4, e5, e6, e7, e8) { (_0, _1, _2, _3, _4, _5, _6, _7, _8) -> Int in
-                return (_0 + _1 + _2 + _3 + _4 + _5 + _6 + _7 + _8) 
+                return (_0 + _1 + _2 + _3 + _4 + _5 + _6 + _7 + _8)
             }
 
             return result
@@ -2037,7 +2045,7 @@ extension ObservableMultipleTest {
 
         let res = scheduler.start { () -> Observable<Int> in
             let result: Observable<Int> = zip(e0, e1, e2, e3, e4, e5, e6, e7, e8) { (_0, _1, _2, _3, _4, _5, _6, _7, _8) -> Int in
-                return (_0 + _1 + _2 + _3 + _4 + _5 + _6 + _7 + _8) 
+                return (_0 + _1 + _2 + _3 + _4 + _5 + _6 + _7 + _8)
             }
 
             return result
@@ -2081,7 +2089,8 @@ extension ObservableMultipleTest {
 
         var result: Int! = nil
 
-        let _ = zip(v0, v1, v2, v3, v4, v5, v6, v7, v8, v9) { (a0, a1, a2, a3, a4, a5, a6, a7, a8, a9) in a0 + a1 + a2 + a3 + a4 + a5 + a6 + a7 + a8 + a9 } .subscribeNext { (next: Int) -> Void in result = next }
+        let _ = zip(v0, v1, v2, v3, v4, v5, v6, v7, v8, v9) { (a0, a1, a2, a3, a4, a5, a6, a7, a8, a9) in a0 + a1 + a2 + a3 + a4 + a5 + a6 + a7 + a8 + a9 }
+            .subscribeNext { (x: Int) -> Void in result = x }
 
         XCTAssertEqual(result, 55)
     }
@@ -2293,7 +2302,7 @@ extension ObservableMultipleTest {
 
         let res = scheduler.start { () -> Observable<Int> in
             let result: Observable<Int> = zip(e0, e1, e2, e3, e4, e5, e6, e7, e8, e9) { (_0, _1, _2, _3, _4, _5, _6, _7, _8, _9) -> Int in
-                return (_0 + _1 + _2 + _3 + _4 + _5 + _6 + _7 + _8 + _9) 
+                return (_0 + _1 + _2 + _3 + _4 + _5 + _6 + _7 + _8 + _9)
             }
 
             return result
@@ -2439,7 +2448,7 @@ extension ObservableMultipleTest {
 
         let res = scheduler.start { () -> Observable<Int> in
             let result: Observable<Int> = zip(e0, e1, e2, e3, e4, e5, e6, e7, e8, e9) { (_0, _1, _2, _3, _4, _5, _6, _7, _8, _9) -> Int in
-                return (_0 + _1 + _2 + _3 + _4 + _5 + _6 + _7 + _8 + _9) 
+                return (_0 + _1 + _2 + _3 + _4 + _5 + _6 + _7 + _8 + _9)
             }
 
             return result

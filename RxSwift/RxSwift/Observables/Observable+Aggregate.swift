@@ -13,11 +13,11 @@ import Foundation
 extension ObservableType {
     public func reduce<A, R>(seed: A, _ accumulator: (A, E) throws -> A, mapResult: (A) throws -> R)
         -> Observable<R> {
-        return Reduce(source: self.normalize(), seed: seed, accumulator: accumulator, mapResult: mapResult)
+        return Reduce(source: self.asObservable(), seed: seed, accumulator: accumulator, mapResult: mapResult)
     }
     
     public func reduce<A>(seed: A, _ accumulator: (A, E) throws -> A)
         -> Observable<A> {
-        return Reduce(source: self.normalize(), seed: seed, accumulator: accumulator, mapResult: { $0 })
+        return Reduce(source: self.asObservable(), seed: seed, accumulator: accumulator, mapResult: { $0 })
     }
 }

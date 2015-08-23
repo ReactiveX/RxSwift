@@ -160,7 +160,7 @@ extension ObservableType {
         let disposable = installDelegate(proxy, delegate: dataSource, retainDelegate: retainDataSource, onProxyForObject: object)
         
         // we should never let the subscriber to complete because it should retain data source
-        let source = sequence(self.normalize(), never()) as Observable<Observable<E>>
+        let source = sequence(self.asObservable(), never()) as Observable<Observable<E>>
         let subscription = source.concat.subscribe { (event: Event<E>) in
             MainScheduler.ensureExecutingOnScheduler()
             

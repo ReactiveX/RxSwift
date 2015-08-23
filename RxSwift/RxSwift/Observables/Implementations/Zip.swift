@@ -16,7 +16,7 @@ protocol ZipSinkProtocol : class
 }
 
 class ZipSink<O: ObserverType> : Sink<O>, ZipSinkProtocol {
-    typealias Element = O.Element
+    typealias Element = O.E
     
     let arity: Int
     
@@ -52,10 +52,10 @@ class ZipSink<O: ObserverType> : Sink<O>, ZipSinkProtocol {
         
         if hasValueAll {
             _ = getResult().flatMap { result in
-                trySendNext(self.observer, result)
+                self.observer?.on(.Next(result))
                 return SuccessResult
             }.recoverWith { e -> RxResult<Void> in
-                trySendError(self.observer, e)
+                self.observer?.on(.Error(e))
                 dispose()
                 return SuccessResult
             }
@@ -72,14 +72,14 @@ class ZipSink<O: ObserverType> : Sink<O>, ZipSinkProtocol {
             }
             
             if allOthersDone {
-                trySendCompleted(observer)
+                observer?.on(.Completed)
                 self.dispose()
             }
         }
     }
     
     func fail(error: ErrorType) {
-        trySendError(observer, error)
+        observer?.on(.Error(error))
         dispose()
     }
     
@@ -96,14 +96,14 @@ class ZipSink<O: ObserverType> : Sink<O>, ZipSinkProtocol {
         }
         
         if allDone {
-            trySendCompleted(observer)
+            observer?.on(.Completed)
             dispose()
         }
     }
 }
 
 class ZipObserver<ElementType> : ObserverType {
-    typealias Element = ElementType
+    typealias E = ElementType
     typealias ValueSetter = (ElementType) -> ()
 
     var parent: ZipSinkProtocol?
@@ -121,7 +121,7 @@ class ZipObserver<ElementType> : ObserverType {
         self.setNextValue = setNextValue
     }
     
-    func on(event: Event<Element>) {
+    func on(event: Event<E>) {
        
         if let _ = parent {
             switch event {

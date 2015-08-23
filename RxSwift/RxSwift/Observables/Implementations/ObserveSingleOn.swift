@@ -16,7 +16,7 @@ let ObserveSingleOnMoreThenOneElement = "Observed sequence was expected to have 
 // In case sequence contains more then one element, it will fire an exception.
 
 class ObserveSingleOnObserver<O: ObserverType> : Sink<O>, ObserverType {
-    typealias Element = O.Element
+    typealias Element = O.E
     typealias Parent = ObserveSingleOn<Element>
     
     let parent: Parent
@@ -54,10 +54,10 @@ class ObserveSingleOnObserver<O: ObserverType> : Sink<O>, ObserverType {
         if let stopEventToForward = stopEventToForward {
             self.parent.scheduler.schedule(()) { (_) in
                 if let elementToForward = elementToForward {
-                    trySend(self.observer, elementToForward)
+                    self.observer?.on(elementToForward)
                 }
                 
-                trySend(self.observer, stopEventToForward)
+                self.observer?.on(stopEventToForward)
                 
                 self.dispose()
                 
@@ -80,7 +80,7 @@ class ObserveSingleOn<Element> : Producer<Element> {
         self.scheduler = scheduler
     }
     
-    override func run<O: ObserverType where O.Element == Element>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
+    override func run<O: ObserverType where O.E == Element>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
         let sink = ObserveSingleOnObserver(parent: self, observer: observer, cancel: cancel)
         setSink(sink)
         return sink.run()

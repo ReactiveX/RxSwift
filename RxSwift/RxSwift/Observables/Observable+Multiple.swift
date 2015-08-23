@@ -13,7 +13,7 @@ import Foundation
 extension ObservableType where E : ObservableType {
     public var switchLatest: Observable<E.E> {
         // swift doesn't have co/contravariance
-        return Switch(sources: self.normalize())
+        return Switch(sources: self.asObservable())
     }
 }
 
@@ -21,7 +21,7 @@ extension ObservableType where E : ObservableType {
 
 public func concat<O: ObservableType>(sources: [O])
     -> Observable<O.E> {
-    return Concat(sources: LazySequence(sources).map { $0.normalize() })
+    return Concat(sources: LazySequence(sources).map { $0.asObservable() })
 }
 
 extension ObservableType where E : ObservableType {
@@ -34,12 +34,12 @@ extension ObservableType where E : ObservableType {
 
 extension ObservableType where E : ObservableType {
     public var merge: Observable<E.E> {
-        return Merge(sources: self.normalize(), maxConcurrent: 0)
+        return Merge(sources: self.asObservable(), maxConcurrent: 0)
     }
 
     public func merge(maxConcurrent maxConcurrent: Int)
         -> Observable<E.E> {
-        return Merge(sources: self.normalize(), maxConcurrent: maxConcurrent)
+        return Merge(sources: self.asObservable(), maxConcurrent: maxConcurrent)
     }
 }
 
@@ -48,24 +48,24 @@ extension ObservableType where E : ObservableType {
 extension ObservableType {
     public func catchErrorOrDie(handler: (ErrorType) throws -> Observable<E>)
         -> Observable<E> {
-        return Catch(source: self.normalize(), handler: handler)
+        return Catch(source: self.asObservable(), handler: handler)
     }
     
     public func catchError(handler: (ErrorType) -> Observable<E>)
         -> Observable<E> {
-        return Catch(source: self.normalize(), handler: handler)
+        return Catch(source: self.asObservable(), handler: handler)
     }
 
     // In case of error sends `errorElementValue` and completes sequence
     public func catchError(errorElementValue: E)
         -> Observable<E> {
-        return Catch(source: self.normalize(), handler: { _ in just(errorElementValue) })
+        return Catch(source: self.asObservable(), handler: { _ in just(errorElementValue) })
     }
     
     // When error happens `error` will be forwarded as a next `Result<E>` value
     // and sequence will be completed.
     public var catchErrorToResult: Observable <RxResult<E>> {
-        return CatchToResult(source: self.normalize())
+        return CatchToResult(source: self.asObservable())
     }
 }
 
@@ -80,7 +80,7 @@ public func catchError<E>(sources: AnySequence<Observable<E>>)
 extension ObservableType {
     public func takeUntil<O: ObservableType>(other: O)
         -> Observable<E> {
-        return TakeUntil(source: self.normalize(), other: other.normalize())
+        return TakeUntil(source: self.asObservable(), other: other.asObservable())
     }
 }
 
@@ -89,13 +89,13 @@ extension ObservableType {
 public func amb<O: ObservableType>
     (left: O, _ right: O)
     -> Observable<O.E> {
-    return Amb(left: left.normalize(), right: right.normalize())
+    return Amb(left: left.asObservable(), right: right.asObservable())
 }
 
 public func amb<O: ObservableType>
     (observables: AnySequence<O>)
     -> Observable<O.E> {
     return observables.reduce(never()) { a, o in
-        return amb(a, o.normalize())
+        return amb(a, o.asObservable())
     }
 }

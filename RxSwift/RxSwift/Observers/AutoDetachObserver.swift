@@ -8,7 +8,7 @@
 
 import Foundation
 
-class AutoDetachObserver<O: ObserverType> : ObserverBase<O.Element> {
+class AutoDetachObserver<O: ObserverType> : ObserverBase<O.E> {
     private var observer : O?
     private let m : SingleAssignmentDisposable
     private var observerLock = SpinLock()
@@ -31,10 +31,10 @@ class AutoDetachObserver<O: ObserverType> : ObserverBase<O.Element> {
         
         switch event {
         case .Next:
-            trySend(observer, event)
+            observer?.on(event)
         case .Completed: fallthrough
         case .Error:
-            trySend(observer, event)
+            observer?.on(event)
             dispose()
         }
     }

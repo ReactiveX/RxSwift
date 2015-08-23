@@ -8,7 +8,7 @@
 
 import Foundation
 
-class TakeWhileSink1<ElementType, O: ObserverType where O.Element == ElementType> : Sink<O>, ObserverType {
+class TakeWhileSink1<ElementType, O: ObserverType where O.E == ElementType> : Sink<O>, ObserverType {
     typealias Parent = TakeWhile<ElementType>
     typealias Element = ElementType
 
@@ -48,7 +48,7 @@ class TakeWhileSink1<ElementType, O: ObserverType where O.Element == ElementType
     
 }
 
-class TakeWhileSink2<ElementType, O: ObserverType where O.Element == ElementType> : Sink<O>, ObserverType {
+class TakeWhileSink2<ElementType, O: ObserverType where O.E == ElementType> : Sink<O>, ObserverType {
     typealias Parent = TakeWhile<ElementType>
     typealias Element = ElementType
     
@@ -110,7 +110,7 @@ class TakeWhile<Element>: Producer<Element> {
         self.predicate2 = predicate
     }
     
-    override func run<O : ObserverType where O.Element == Element>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
+    override func run<O : ObserverType where O.E == Element>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
         if let _ = self.predicate1 {
             let sink = TakeWhileSink1(parent: self, observer: observer, cancel: cancel)
             setSink(sink)

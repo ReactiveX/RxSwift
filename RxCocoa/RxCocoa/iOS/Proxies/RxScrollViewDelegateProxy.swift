@@ -22,7 +22,7 @@ class RxScrollViewDelegateProxy : DelegateProxy
     
     var contentOffsetSubject: Observable<CGPoint> {
         if _contentOffsetSubject == nil {
-            _contentOffsetSubject = ReplaySubject(bufferSize: 1)
+            _contentOffsetSubject = ReplaySubject.create(bufferSize: 1)
             sendNext(_contentOffsetSubject!, self.scrollView.contentOffset)
         }
         

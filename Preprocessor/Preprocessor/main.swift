@@ -55,7 +55,7 @@ func processFile(path: String, outputPath: String) -> String {
         functionContentComponents.append("components.append(\(escape(suffix)));\n")
     }
     
-    functionContentComponents.append("\"\".join(components).writeToFile(\"\(outputPath)\", atomically: false, encoding: NSUTF8StringEncoding, error: nil);")
+    functionContentComponents.append("try! \"\".join(components).writeToFile(\"\(outputPath)\", atomically: false, encoding: NSUTF8StringEncoding)")
     
     return "".join(functionContentComponents)
 }
@@ -84,6 +84,8 @@ for file in files! {
     if ((file as NSString).pathExtension ?? "") != "tt" {
         continue
     }
+    
+    print(file)
     
     let path = (sourceFilesRoot as NSString).stringByAppendingPathComponent(file as String)
     

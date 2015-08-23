@@ -27,6 +27,15 @@ struct SpinLock {
         OSSpinLockUnlock(&_lock)
         return result
     }
+
+    mutating func calculateLockedOrFail<T>(@noescape action: () throws -> T) throws -> T {
+        OSSpinLockLock(&_lock)
+        defer {
+            OSSpinLockUnlock(&_lock)
+        }
+        let result = try action()
+        return result
+    }
 }
 
 extension NSRecursiveLock {
@@ -40,6 +49,15 @@ extension NSRecursiveLock {
         self.lock()
         let result = action()
         self.unlock()
+        return result
+    }
+    
+    func calculateLockedOrFail<T>(@noescape action: () throws -> T) throws -> T {
+        self.lock()
+        defer {
+            self.unlock()
+        }
+        let result = try action()
         return result
     }
 }

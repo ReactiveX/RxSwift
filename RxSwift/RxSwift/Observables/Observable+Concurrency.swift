@@ -20,7 +20,7 @@ extension ObservableType {
     // This is a performance gain considering general case.
     public func observeSingleOn(scheduler: ImmediateScheduler)
         -> Observable<E> {
-        return ObserveSingleOn(source: self.normalize(), scheduler: scheduler)
+        return ObserveSingleOn(source: self.asObservable(), scheduler: scheduler)
     }
 }
 
@@ -31,10 +31,10 @@ extension ObservableType {
     public func observeOn(scheduler: ImmediateScheduler)
         -> Observable<E> {
         if let scheduler = scheduler as? SerialDispatchQueueScheduler {
-            return ObserveOnSerialDispatchQueue(source: self.normalize(), scheduler: scheduler)
+            return ObserveOnSerialDispatchQueue(source: self.asObservable(), scheduler: scheduler)
         }
         else {
-            return ObserveOn(source: self.normalize(), scheduler: scheduler)
+            return ObserveOn(source: self.asObservable(), scheduler: scheduler)
         }
     }
 }
@@ -44,6 +44,6 @@ extension ObservableType {
 extension ObservableType {
     public func subscribeOn(scheduler: ImmediateScheduler)
         -> Observable<E> {
-        return SubscribeOn(source: self.normalize(), scheduler: scheduler)
+        return SubscribeOn(source: self.asObservable(), scheduler: scheduler)
     }
 }

@@ -30,7 +30,7 @@ class KVOObservable<Element> : Producer<Element?>
         }
     }
     
-    override func run<O : ObserverType where O.Element == Element?>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
+    override func run<O : ObserverType where O.E == Element?>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
         let observer = KVOObserver(parent: self) { (value) in
             if value as? NSNull != nil {
                 sendNext(observer, nil)
@@ -81,7 +81,7 @@ extension ObservableType where E == AnyObject? {
             .map { _ in
                 return just(nil)
             }
-            .startWith(self.normalize())
+            .startWith(self.asObservable())
             .switchLatest
     }
 }

@@ -772,9 +772,8 @@ extension ObservableTimeTest {
 
         OSSpinLockLock(&lock)
 
-        let d = interval(0, scheduler).takeWhile { $0 < 10 } .subscribe( { t in
-            sendNext(observer, t)
-        }, error: { _ in
+        let d = interval(0, scheduler).takeWhile { $0 < 10 } .subscribe(next: { t in
+            observer.on(.Next(t))
         }, completed: {
             OSSpinLockUnlock(&lock)
         }).scopedDispose

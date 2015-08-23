@@ -8,11 +8,11 @@
 
 import Foundation
 
-public protocol ObserverType : class {
+public protocol ObserverType {
     /// The type of event to be written to this observer.
-    typealias Element
+    typealias E
 
     /// Send `event` to this observer.
-    func on(event: Event<Element>)
+    func on(event: Event<E>)
 }
 

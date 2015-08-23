@@ -17,16 +17,10 @@ extension Disposable {
 // Thread safe bag that disposes disposables that have been added to it on `deinit`.
 // This returns ARC (RAII) like resource management to `RxSwift`.
 public class DisposeBag: DisposeBase {
-    typealias State = (
-        disposables: [Disposable],
-        disposed: Bool
-    )
     
     private var lock = SpinLock()
-    var state: State = (
-        disposables: [],
-        disposed: false
-    )
+    var disposables = [Disposable]()
+    var disposed = false
     
     public override init() {
         super.init()
@@ -34,11 +28,11 @@ public class DisposeBag: DisposeBase {
     
     public func addDisposable(disposable: Disposable) {
         let dispose = lock.calculateLocked { () -> Bool in
-            if state.disposed {
+            if disposed {
                 return true
             }
             
-            state.disposables.append(disposable)
+            disposables.append(disposable)
             
             return false
         }
@@ -50,10 +44,10 @@ public class DisposeBag: DisposeBase {
 
     func dispose() {
         let oldDisposables = lock.calculateLocked { () -> [Disposable] in
-            let disposables = self.state.disposables
+            let disposables = self.disposables
             
-            self.state.disposables.removeAll(keepCapacity: false)
-            self.state.disposed = true
+            self.disposables.removeAll(keepCapacity: false)
+            self.disposed = true
             
             return disposables
         }

@@ -10,52 +10,53 @@ import Foundation
 
 class Subscription<Element> : Disposable {
     typealias ObserverType = Observer<Element>
-    typealias KeyType = Bag<Void>.KeyType
-    
-    private let subject: PublishSubject<Element>
-    private var key: KeyType
+    typealias KeyType = Bag<ObserverOf<Element>>.KeyType
     
     private var lock = SpinLock()
-    private var observer: ObserverType?
+
+    // state
+    private var subject: PublishSubject<Element>?
+    private var key: KeyType?
     
-    init(subject: PublishSubject<Element>, key: KeyType, observer: ObserverType) {
+    init(subject: PublishSubject<Element>, key: KeyType) {
         self.key = key
         self.subject = subject
-        self.observer = observer
     }
     
     func dispose() {
         lock.performLocked {
-            if let _ = self.observer {
-                self.observer = nil
-                self.subject.unsubscribe(self.key)
+            guard let subject = subject else {
+                return
             }
+            
+            guard let key = key else {
+                return
+            }
+            
+            self.subject = nil
+            self.key = nil
+            
+            subject.unsubscribe(key)
         }
     }
 }
 
-public class PublishSubject<Element> : SubjectType<Element, Element>, Cancelable {
-    typealias ObserverOf = Observer<Element>
-    typealias KeyType = Bag<Void>.KeyType
-    typealias Observers = Bag<ObserverOf>
-
-    typealias State = (
-        disposed: Bool,
-        observers: Observers,
-        stoppedEvent: Event<Element>?
-    )
+public class PublishSubject<Element> : Observable<Element>, SubjectType, Cancelable, ObserverType {
+    public typealias E = Element
+    public typealias SubjectObserverType = PublishSubject<Element>
     
-    private var lock = SpinLock()
-    private var state: State = (
-        disposed: false,
-        observers: Observers(),
-        stoppedEvent: nil
-    )
+    typealias DisposeKey = Bag<ObserverOf<Element>>.KeyType
+    
+    private var lock = NSRecursiveLock()
+    // state
+    var _disposed = false
+    var observers = Bag<ObserverOf<Element>>()
+    var stoppedEvent = nil as Event<Element>?
     
     public var disposed: Bool {
         get {
             return self.lock.calculateLocked {
-                return state.disposed
+                return _disposed
             }
         }
     }
@@ -66,72 +67,56 @@ public class PublishSubject<Element> : SubjectType<Element, Element>, Cancelable
     
     public func dispose() {
         self.lock.performLocked {
-            state.disposed = true
-            state.observers.removeAll()
+            _disposed = true
+            self.observers = Bag()
         }
     }
     
-    public override func on(event: Event<Element>) {
-        switch event {
-        case .Next(_):
-            let observers = lock.calculateLocked { () -> [ObserverOf]? in
-                let state = self.state
-                let shouldReturnImmediatelly = state.disposed || state.stoppedEvent != nil
-                let observers: [Observer]? = shouldReturnImmediatelly ? nil : state.observers.all
-                
-                return observers
-            }
-            
-            if let observers = observers {
-                dispatch(event, observers)
-            }
-            return
-        default:
-            break
-        }
-        
-        let observers: [Observer] = lock.calculateLocked { () -> [ObserverOf] in
-            let state = self.state
-            
-            let observers = self.state.observers.all
-            
+    public func on(event: Event<Element>) {
+        lock.performLocked {
             switch event {
+            case .Next(_):
+                if disposed || stoppedEvent != nil {
+                    return
+                }
+                
+                observers.forEach { $0.on(event) }
             case .Completed: fallthrough
             case .Error:
-                if state.stoppedEvent == nil {
-                    self.state.stoppedEvent = event
-                    self.state.observers.removeAll()
+                if stoppedEvent == nil {
+                    self.stoppedEvent = event
+                    observers.forEach { $0.on(event) }
+                    self.observers.removeAll()
                 }
-            default:
-                rxFatalError("Something went wrong")
             }
-            
-            return observers
         }
-        
-        dispatch(event, observers)
     }
     
-    public override func subscribe<O : ObserverType where O.Element == Element>(observer: O) -> Disposable {
+    public override func subscribe<O : ObserverType where O.E == Element>(observer: O) -> Disposable {
         return lock.calculateLocked {
-            if let stoppedEvent = state.stoppedEvent {
+            if let stoppedEvent = stoppedEvent {
                 observer.on(stoppedEvent)
                 return NopDisposable.instance
             }
             
-            if state.disposed {
-                sendError(observer, DisposedError)
+            if disposed {
+                observer.on(.Error(DisposedError))
                 return NopDisposable.instance
             }
             
-            let key = state.observers.put(Observer.normalize(observer))
-            return Subscription(subject: self, key: key, observer: Observer.normalize(observer))
+            let key = observers.put(observer.asObserver())
+            return Subscription(subject: self, key: key)
         }
     }
 
-    func unsubscribe(key: KeyType) {
+    func unsubscribe(key: DisposeKey) {
         self.lock.performLocked {
-            _ = state.observers.removeKey(key)
+            _ = observers.removeKey(key)
         }
     }
+    
+    public func asObserver() -> PublishSubject<Element> {
+        return self
+    }
+    
 }

@@ -8,14 +8,8 @@
 
 import Foundation
 
-public class SubjectType<SourceType, ResultType> : Observable<ResultType>, ObserverType {
-    public typealias Element = SourceType
+public protocol SubjectType : ObservableType {
+    typealias SubjectObserverType : ObserverType
     
-    public override init() {
-        
-    }
-    
-    public func on(x: Event<Element>) {
-        return abstractMethod()
-    }
+    func asObserver() -> SubjectObserverType
 }

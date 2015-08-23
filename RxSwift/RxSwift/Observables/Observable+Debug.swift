@@ -13,6 +13,6 @@ import Foundation
 extension ObservableType {
     public func debug(identifier: String = "\(__FILE__):\(__LINE__)")
         -> Observable<E> {
-        return Debug(source: self.normalize(), identifier: identifier)
+        return Debug(source: self.asObservable(), identifier: identifier)
     }
 }
