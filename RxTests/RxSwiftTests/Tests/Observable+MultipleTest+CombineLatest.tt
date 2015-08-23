@@ -12,7 +12,7 @@ import RxSwift
 
 // combine latest
 extension ObservableMultipleTest {
-<% for i in 2 ... 10 { %>
+<% for i in 2 ... 8 { %>
 
     // <%= i %>
 
@@ -78,8 +78,8 @@ extension ObservableMultipleTest {
 <% } %>
 
         let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = combineLatestOrDie(<%= ", ".join(Array(0..<i).map { "e\($0)" }) %>) { (<%= ", ".join(Array(0..<i).map { _ in "_" }) %>) -> RxResult<Int> in
-                return failure(testError)
+            let result: Observable<Int> = combineLatest(<%= ", ".join(Array(0..<i).map { "e\($0)" }) %>) { (<%= ", ".join(Array(0..<i).map { _ in "_" }) %>) throws -> Int in
+                throw testError
             }
 
             return result

@@ -22,7 +22,7 @@ class UITextFieldMock {
     }
     
     func rx_text() -> Observable<String> {
-        return observableText
+        return observableText.asObservable()
     }
 }
 

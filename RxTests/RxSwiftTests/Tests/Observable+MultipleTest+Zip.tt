@@ -12,7 +12,7 @@ import RxSwift
 
 // combine latest
 extension ObservableMultipleTest {
-<% for i in 2 ... 10 { %>
+<% for i in 2 ... 8 { %>
 
     // <%= i %>
 
@@ -22,7 +22,7 @@ extension ObservableMultipleTest {
 
         var result: Int! = nil
 
-        let _ = zip(<%= ", ".join(Array(0..<i).map { "v\($0)" }) %>) { (<%= ", ".join(Array(0..<i).map { "a\($0)" }) %>) in <%= " + ".join(Array(0..<i).map { "a\($0)" }) %> }
+        let _ = zip(<%= ", ".join(Array(0..<i).map { "v\($0)" }) %>) { (<%= ", ".join(Array(0..<i).map { "a\($0): Int" }) %>) -> Int in <%= " + ".join(Array(0..<i).map { "a\($0)" }) %> }
             .subscribeNext { (x: Int) -> Void in result = x }
 
         XCTAssertEqual(result, <%= (i + 1) * i / 2 %>)
@@ -657,7 +657,7 @@ extension ObservableMultipleTest {
         ])
 
         let res = scheduler.start {
-            zipOrDie(o1, o2) { (_, _) -> RxResult<Int> in failure(testError) }
+            zip(o1, o2) { (_, _) throws -> Int in throw testError }
         }
    
         let messages: [Recorded<Int>] = [
@@ -690,7 +690,7 @@ extension ObservableMultipleTest {
         ])
 
         let res = scheduler.start {
-            zipOrDie(o2, o1) { (_, _) -> RxResult<Int> in failure(testError) }
+            zip(o2, o1) { (_, _) throws -> Int in throw testError }
         }
    
         let messages: [Recorded<Int>] = [

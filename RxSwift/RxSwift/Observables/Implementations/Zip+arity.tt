@@ -8,25 +8,16 @@
 
 import Foundation
 
-<% for i in 2 ... 10 { %>
+<% for i in 2 ... 8 { %>
 
 // <%= i %>
 
-public func zipOrDie<<%= ", ".join(Array(1...i).map { "E\($0)" }) %>, R>
-    (<%= ", _ ".join(Array(1...i).map { "source\($0): Observable<E\($0)>" }) %>, _ resultSelector: (<%= ", ".join(Array(1...i).map { "E\($0)" }) %>) -> RxResult<R>)
+public func zip<<%= ", ".join(Array(1...i).map { "O\($0): ObservableType" }) %>, R>
+    (<%= ", _ ".join(Array(1...i).map { "source\($0): O\($0)" }) %>, _ resultSelector: (<%= ", ".join(Array(1...i).map { "O\($0).E" }) %>) throws -> R)
     -> Observable<R> {
     return Zip<%= i %>(
-        <%= ", ".join(Array(1...i).map { "source\($0): source\($0)" }) %>,
+        <%= ", ".join(Array(1...i).map { "source\($0): source\($0).asObservable()" }) %>,
         resultSelector: resultSelector
-    )
-}
-
-public func zip<<%= ", ".join(Array(1...i).map { "E\($0)" }) %>, R>
-    (<%= ", _ ".join(Array(1...i).map { "source\($0): Observable<E\($0)>" }) %>, _ resultSelector: (<%= ", ".join(Array(1...i).map { "E\($0)" }) %>) -> R)
-    -> Observable<R> {
-    return Zip<%= i %>(
-        <%= ", ".join(Array(1...i).map { "source\($0): source\($0)" }) %>,
-        resultSelector: { success(resultSelector(<%= ", ".join(Array(0..<i).map { "$\($0)" }) %>)) }
     )
 }
 
@@ -75,13 +66,13 @@ class ZipSink<%= i %>_<<%= ", ".join(Array(1...i).map { "E\($0)" }) %>, O: Obser
         ])
     }
 
-    override func getResult() -> RxResult<R> {
-        return self.parent.resultSelector(<%= ", ".join(Array(1...i).map { "values\($0).dequeue()" }) %>)
+    override func getResult() throws -> R {
+        return try self.parent.resultSelector(<%= ", ".join(Array(1...i).map { "values\($0).dequeue()" }) %>)
     }
 }
 
 class Zip<%= i %><<%= ", ".join(Array(1...i).map { "E\($0)" }) %>, R> : Producer<R> {
-    typealias ResultSelector = (<%= ", ".join(Array(1...i).map { "E\($0)" }) %>) -> RxResult<R>
+    typealias ResultSelector = (<%= ", ".join(Array(1...i).map { "E\($0)" }) %>) throws -> R
 
 <%= "\n".join(Array(1...i).map { "    let source\($0): Observable<E\($0)>" }) %>
 

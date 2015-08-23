@@ -32,19 +32,17 @@ class RandomUserAPI {
     }
     
     private func parseJSON(json: [String: AnyObject]) throws -> [User] {
-        guard let results = json["results"] as? [String: AnyObject] else {
+        guard let results = json["results"] as? [[String: AnyObject]] else {
             throw exampleError("Can't find results")
         }
         
-        guard let users = results["user"] as? [[String: AnyObject]] else {
-            throw exampleError("Can't find users")
-        }
+        let users = results.map { $0["user"] as? [String: AnyObject] }.filter { $0 != nil }
         
         let userParsingError = exampleError("Can't parse user")
         
         let searchResults: [RxResult<User>] = users.map { user in
-            let name = user["name"] as? [String: String]
-            let pictures = user["picture"] as? [String: String]
+            let name = user?["name"] as? [String: String]
+            let pictures = user?["picture"] as? [String: String]
             
             guard let firstName = name?["first"], let lastName = name?["last"], let imageURL = pictures?["medium"] else {
                 return failure(userParsingError)

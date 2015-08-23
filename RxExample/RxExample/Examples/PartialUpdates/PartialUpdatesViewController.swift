@@ -8,7 +8,7 @@
 
 import Foundation
 import UIKit
-//import CoreData
+import CoreData
 #if !RX_NO_MODULE
 import RxSwift
 import RxCocoa
@@ -19,7 +19,7 @@ let runAutomatically = false
 let useAnimatedUpdateForCollectionView = false
 
 class PartialUpdatesViewController : ViewController {
-    /*
+    
     @IBOutlet weak var reloadTableViewOutlet: UITableView!
     @IBOutlet weak var partialUpdatesTableViewOutlet: UITableView!
     @IBOutlet weak var partialUpdatesCollectionViewOutlet: UICollectionView!
@@ -53,7 +53,7 @@ class PartialUpdatesViewController : ViewController {
 
     func skinTableViewDataSource(dataSource: RxTableViewSectionedDataSource<NumberSection>) {
         dataSource.cellFactory = { (tv, ip, i) in
-            let cell = tv.dequeueReusableCellWithIdentifier("Cell")!
+            let cell = tv.dequeueReusableCellWithIdentifier("Cell")
                 ?? UITableViewCell(style:.Default, reuseIdentifier: "Cell")
 
             cell.textLabel!.text = "\(i)"
@@ -67,7 +67,7 @@ class PartialUpdatesViewController : ViewController {
     }
 
     func skinCollectionViewDataSource(dataSource: RxCollectionViewSectionedDataSource<NumberSection>) {
-        dataSource.cellFactory = { [unowned dataSource] (cv, ip, i) in
+        dataSource.cellFactory = { (cv, ip, i) in
             let cell = cv.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: ip) as! NumberCell
 
             cell.value!.text = "\(i)"
@@ -128,12 +128,12 @@ class PartialUpdatesViewController : ViewController {
             .startWith(initialState)
 
         updates
-            .partialUpdatesTableViewOutlet.rx_subscribeWithReactiveDataSource(tvAnimatedDataSource)
-            .disposeBag.addDisposable
+            .subscribe(partialUpdatesTableViewOutlet, withReactiveDataSource: tvAnimatedDataSource)
+            .addDisposableTo(disposeBag)
 
         self.sections
-            .reloadTableViewOutlet.rx_subscribeWithReactiveDataSource(reloadDataSource)
-            .disposeBag.addDisposable
+            .subscribe(reloadTableViewOutlet, withReactiveDataSource: reloadDataSource)
+            .addDisposableTo(disposeBag)
 
         // Collection view logic works, but when clicking fast because of internal bugs
         // collection view will sometimes get confused. I know what you are thinking,
@@ -158,8 +158,8 @@ class PartialUpdatesViewController : ViewController {
             let cvReloadDataSource = RxCollectionViewSectionedReloadDataSource<NumberSection>()
             skinCollectionViewDataSource(cvReloadDataSource)
             self.sections
-                .partialUpdatesCollectionViewOutlet.rx_subscribeWithReactiveDataSource(cvReloadDataSource)
-                .disposeBag.addDisposable
+                .subscribe(partialUpdatesCollectionViewOutlet, withReactiveDataSource: cvReloadDataSource)
+                .addDisposableTo(disposeBag)
         #endif
 
         // touches
@@ -168,13 +168,14 @@ class PartialUpdatesViewController : ViewController {
             .subscribeNext { [unowned self] i in
                 print("Let me guess, it's .... It's \(self.generator.sections[i.section].items[i.item]), isn't it? Yeah, I've got it.")
             }
-            .disposeBag.addDisposable
+            .addDisposableTo(disposeBag)
 
-        merge(from([partialUpdatesTableViewOutlet.rx_itemSelected, reloadTableViewOutlet.rx_itemSelected]))
+        sequence(partialUpdatesTableViewOutlet.rx_itemSelected, reloadTableViewOutlet.rx_itemSelected)
+            .merge
             .subscribeNext { [unowned self] i in
                 print("I have a feeling it's .... \(self.generator.sections[i.section].items[i.item])?")
             }
-            .disposeBag.addDisposable
+            .addDisposableTo(disposeBag)
     }
 
     override func viewWillDisappear(animated: Bool) {
@@ -193,5 +194,5 @@ class PartialUpdatesViewController : ViewController {
         //print(values)
 
         sections.sendNext(values)
-    }*/
+    }
 }

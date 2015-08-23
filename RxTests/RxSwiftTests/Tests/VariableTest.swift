@@ -40,48 +40,20 @@ class VariableTest : RxTest {
         XCTAssertEqual(latestValue!, 14)
     }
     
-    func testVariable_Error() {
-        let a = Variable(1)
-        let b = Variable(2)
-        
-        let c = combineLatest(a, b, +)
-        
-        var latestValue: Int?
-        
-        let subscription = c .subscribeNext { next in
-            latestValue = next
-        }
-        
-        XCTAssertEqual(latestValue!, 3)
-        
-        a.sendNext(5)
-        
-        XCTAssertEqual(latestValue!, 7)
-        
-        sendError(b, testError)
-        
-        b.sendNext(9)
-        
-        XCTAssertEqual(latestValue!, 7)
-        
-        subscription.dispose()
-        
-        a.sendNext(10)
-        
-        XCTAssertEqual(latestValue!, 7)
-    }
-    
     func testVariable_Completed() {
-        let a = Variable(1)
-        let b = Variable(2)
+        var a = Variable(1)
+        var b = Variable(2)
         
         let c = combineLatest(a, b, +)
         
         var latestValue: Int?
+        var completed = false
         
-        let subscription = c .subscribeNext { next in
+        let subscription = c.subscribe(next: { next in
             latestValue = next
-        }
+        }, completed: {
+            completed = true
+        })
         
         XCTAssertEqual(latestValue!, 3)
         
@@ -89,17 +61,10 @@ class VariableTest : RxTest {
         
         XCTAssertEqual(latestValue!, 7)
         
-        sendError(b, testError)
-        
-        b.sendNext(9)
-        
-        XCTAssertEqual(latestValue!, 7)
-        
-        subscription.dispose()
-        
-        a.sendNext(10)
-        
-        XCTAssertEqual(latestValue!, 7)
+        XCTAssertTrue(!completed)
+        a = Variable(0)
+        b = Variable(0)
+        XCTAssertTrue(completed)
     }
     
     func testVariable_READMEExample() {

@@ -32,7 +32,7 @@ class ZipSink<O: ObserverType> : Sink<O>, ZipSinkProtocol {
         super.init(observer: observer, cancel: cancel)
     }
 
-    func getResult() -> RxResult<Element> {
+    func getResult() throws -> Element {
         return abstractMethod()
     }
     
@@ -51,13 +51,13 @@ class ZipSink<O: ObserverType> : Sink<O>, ZipSinkProtocol {
         }
         
         if hasValueAll {
-            _ = getResult().flatMap { result in
+            do {
+                let result = try getResult()
                 self.observer?.on(.Next(result))
-                return SuccessResult
-            }.recoverWith { e -> RxResult<Void> in
+            }
+            catch let e {
                 self.observer?.on(.Error(e))
                 dispose()
-                return SuccessResult
             }
         }
         else {

@@ -232,6 +232,12 @@
 		C84B91301B8A26A700C9CCCF /* UITableView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C84B90F21B8A26A700C9CCCF /* UITableView+Rx.swift */; };
 		C84B91311B8A26A700C9CCCF /* UITextField+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C84B90F31B8A26A700C9CCCF /* UITextField+Rx.swift */; };
 		C84B91321B8A26A700C9CCCF /* UITextView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C84B90F41B8A26A700C9CCCF /* UITextView+Rx.swift */; };
+		C84B91381B8A282000C9CCCF /* RxTableViewSectionedAnimatedDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88C78631B3EB0A00061C5AB /* RxTableViewSectionedAnimatedDataSource.swift */; };
+		C84B91391B8A282000C9CCCF /* RxTableViewSectionedDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88C78641B3EB0A00061C5AB /* RxTableViewSectionedDataSource.swift */; };
+		C84B913A1B8A282000C9CCCF /* RxTableViewSectionedReloadDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88C78651B3EB0A00061C5AB /* RxTableViewSectionedReloadDataSource.swift */; };
+		C84B913B1B8A282000C9CCCF /* RxCollectionViewSectionedReloadDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C859B9A51B45C80700D012D7 /* RxCollectionViewSectionedReloadDataSource.swift */; };
+		C84B913C1B8A282000C9CCCF /* RxCollectionViewSectionedDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C859B9A71B45C83700D012D7 /* RxCollectionViewSectionedDataSource.swift */; };
+		C84B913D1B8A282000C9CCCF /* RxCollectionViewSectionedAnimatedDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C859B9A91B45CB0900D012D7 /* RxCollectionViewSectionedAnimatedDataSource.swift */; };
 		C859B9A41B45C5D900D012D7 /* PartialUpdatesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C859B9A31B45C5D900D012D7 /* PartialUpdatesViewController.swift */; };
 		C859B9AC1B45CF9100D012D7 /* NumberCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C859B9AB1B45CF9100D012D7 /* NumberCell.swift */; };
 		C859B9AE1B45CFAB00D012D7 /* NumberSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C859B9AD1B45CFAB00D012D7 /* NumberSectionView.swift */; };
@@ -1541,6 +1547,7 @@
 				C86E2F3E1AE5A0CA00C31024 /* SearchResultViewModel.swift in Sources */,
 				C83367241AD029AE00C668A7 /* HtmlParsing.swift in Sources */,
 				C859B9AC1B45CF9100D012D7 /* NumberCell.swift in Sources */,
+				C84B913C1B8A282000C9CCCF /* RxCollectionViewSectionedDataSource.swift in Sources */,
 				0706E19B1B17361100BA2D3A /* UIImageView+Extensions.swift in Sources */,
 				C859B9AE1B45CFAB00D012D7 /* NumberSectionView.swift in Sources */,
 				C8DF92E51B0B32DA009BCF9A /* RootViewController.swift in Sources */,
@@ -1548,15 +1555,19 @@
 				C8C46DA81B47F7110020D71E /* CollectionViewImageCell.swift in Sources */,
 				C8C46DAC1B47F7110020D71E /* WikipediaSearchViewController.swift in Sources */,
 				0706E19D1B176EE200BA2D3A /* String+extensions.swift in Sources */,
+				C84B913B1B8A282000C9CCCF /* RxCollectionViewSectionedReloadDataSource.swift in Sources */,
 				C88C78731B3EB0A00061C5AB /* SectionModel.swift in Sources */,
 				C86E2F3F1AE5A0CA00C31024 /* SearchViewModel.swift in Sources */,
+				C84B913D1B8A282000C9CCCF /* RxCollectionViewSectionedAnimatedDataSource.swift in Sources */,
 				0706E1961B14AF5100BA2D3A /* DetailViewController.swift in Sources */,
 				C88C78991B4012A90061C5AB /* SectionModelType.swift in Sources */,
 				C83367251AD029AE00C668A7 /* ImageService.swift in Sources */,
 				C86E2F471AE5A0CA00C31024 /* WikipediaSearchResult.swift in Sources */,
 				C890A65A1AEBD28A00AFF7E6 /* GitHubAPI.swift in Sources */,
 				C8A2A2C81B4049E300F11F09 /* PseudoRandomGenerator.swift in Sources */,
+				C84B91381B8A282000C9CCCF /* RxTableViewSectionedAnimatedDataSource.swift in Sources */,
 				C88C78721B3EB0A00061C5AB /* SectionedViewType.swift in Sources */,
+				C84B91391B8A282000C9CCCF /* RxTableViewSectionedDataSource.swift in Sources */,
 				C83367231AD029AE00C668A7 /* Example.swift in Sources */,
 				C890A65D1AEC084100AFF7E6 /* ViewController.swift in Sources */,
 				C88C78951B3F20DB0061C5AB /* Differentiator.swift in Sources */,
@@ -1568,6 +1579,7 @@
 				07E300071B14995F00F00100 /* TableViewController.swift in Sources */,
 				C859B9A41B45C5D900D012D7 /* PartialUpdatesViewController.swift in Sources */,
 				07E3C2331B03605B0010338D /* Dependencies.swift in Sources */,
+				C84B913A1B8A282000C9CCCF /* RxTableViewSectionedReloadDataSource.swift in Sources */,
 				C86E2F451AE5A0CA00C31024 /* WikipediaAPI.swift in Sources */,
 				C8DF92CD1B0B2F84009BCF9A /* AppDelegate.swift in Sources */,
 				C86E2F461AE5A0CA00C31024 /* WikipediaPage.swift in Sources */,

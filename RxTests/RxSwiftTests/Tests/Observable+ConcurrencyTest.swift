@@ -491,7 +491,7 @@ class ObservableConcurrentSchedulerConcurrencyTest: ObservableConcurrencyTestBas
 
         var events: [String] = []
 
-        var stop = Variable(0)
+        var stop = BehaviorSubject(value: 0)
 
         let scheduler = createScheduler()
 
@@ -525,7 +525,7 @@ class ObservableConcurrentSchedulerConcurrencyTest: ObservableConcurrencyTestBas
             }
             condition.unlock()
 
-            sendCompleted(stop)
+            stop.on(.Completed)
 
             return NopDisposableResult
         }

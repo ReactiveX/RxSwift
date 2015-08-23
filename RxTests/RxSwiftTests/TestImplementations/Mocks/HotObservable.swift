@@ -10,6 +10,7 @@ import Foundation
 import RxSwift
 
 class HotObservable<Element : Equatable> : Observable<Element> {
+    
     typealias Events = Recorded<Element>
     typealias Observer = ObserverOf<Element>
     

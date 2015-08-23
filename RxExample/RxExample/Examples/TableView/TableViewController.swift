@@ -14,7 +14,7 @@ import RxCocoa
 
 class TableViewController: ViewController, UITableViewDelegate {
     
-    /*
+    
     @IBOutlet weak var tableView: UITableView!
     
     var disposeBag = DisposeBag()
@@ -46,7 +46,7 @@ class TableViewController: ViewController, UITableViewDelegate {
             .subscribeNext { [unowned self] n in
                 self.allSections = n
             }
-            .disposeBag.addDisposable
+            .addDisposableTo(disposeBag)
         
         dataSource.cellFactory = { (tv, ip, user: User) in
             let cell = tv.dequeueReusableCellWithIdentifier("Cell")!
@@ -60,31 +60,31 @@ class TableViewController: ViewController, UITableViewDelegate {
         
         // reactive data source
         allUsers
-            .tableView.rx_subscribeWithReactiveDataSource(dataSource)
-            .disposeBag.addDisposable
+            .subscribe(tableView, withReactiveDataSource: dataSource)
+            .addDisposableTo(disposeBag)
         
         // customization using delegate
         // RxTableViewDelegateBridge will forward correct messages
         tableView.rx_setDelegate(self)
-            .disposeBag.addDisposable
+            .addDisposableTo(disposeBag)
         
         tableView.rx_itemSelected
             .subscribeNext { [unowned self] indexPath in
                 self.showDetailsForUserAtIndexPath(indexPath)
             }
-            .disposeBag.addDisposable
+            .addDisposableTo(disposeBag)
         
         tableView.rx_itemDeleted
             .subscribeNext { [unowned self] indexPath in
                 self.removeUser(indexPath)
             }
-            .disposeBag.addDisposable
+            .addDisposableTo(disposeBag)
         
         tableView.rx_itemMoved
             .subscribeNext { [unowned self] (s, d) in
                 self.moveUserFrom(s, to: d)
             }
-            .disposeBag.addDisposable
+            .addDisposableTo(disposeBag)
         
         // Rx content offset
         tableView.rx_contentOffset
@@ -96,7 +96,7 @@ class TableViewController: ViewController, UITableViewDelegate {
             .subscribeNext { [unowned self] array in
                 self.users.sendNext(array)
             }
-            .disposeBag.addDisposable
+            .addDisposableTo(disposeBag)
         
         favoriteUsers.sendNext([User(firstName: "Super", lastName: "Man", imageURL: "http://nerdreactor.com/wp-content/uploads/2015/02/Superman1.jpg")])
     }
@@ -207,5 +207,5 @@ class TableViewController: ViewController, UITableViewDelegate {
             fatalError("Section out of range")
         }
     }
-    */
+    
 }

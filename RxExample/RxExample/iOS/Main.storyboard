@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8121.20" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="E5v-jn-n2n">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8173.3" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="E5v-jn-n2n">
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8101.16"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8142"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
@@ -26,7 +25,7 @@
         <!--Table View Controller-->
         <scene sceneID="Mhm-lU-Uhj">
             <objects>
-                <viewController id="bZo-ey-Nha" customClass="TableViewController" customModule="RxExample" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="bZo-ey-Nha" customClass="TableViewController" customModule="RxExample_iOS" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="uYL-wL-0i2"/>
                         <viewControllerLayoutGuide type="bottom" id="LL7-L6-PAN"/>
@@ -40,7 +39,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" id="Pbx-dk-7Jc">
-                                        <rect key="frame" x="0.0" y="22" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="86" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Pbx-dk-7Jc" id="gCd-uh-Y2z">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
@@ -73,7 +72,7 @@
         <!--Detail View Controller-->
         <scene sceneID="n26-Ac-tgu">
             <objects>
-                <viewController storyboardIdentifier="DetailViewController" id="ack-C5-IwI" customClass="DetailViewController" customModule="RxExample" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="DetailViewController" id="ack-C5-IwI" customClass="DetailViewController" customModule="RxExample_iOS" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ByU-ts-Mke"/>
                         <viewControllerLayoutGuide type="bottom" id="zIc-eF-yeA"/>
@@ -130,7 +129,7 @@
         <!--GitHub Signup-->
         <scene sceneID="N2N-1B-sZ4">
             <objects>
-                <viewController id="dHR-mS-HCG" customClass="GitHubSignupViewController" customModule="RxExample" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="dHR-mS-HCG" customClass="GitHubSignupViewController" customModule="RxExample_iOS" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="08L-bJ-kbo"/>
                         <viewControllerLayoutGuide type="bottom" id="iau-x6-9gd"/>
@@ -233,7 +232,7 @@
         <!--Partial Updates View Controller-->
         <scene sceneID="7Pq-0W-ati">
             <objects>
-                <viewController id="HRf-Xk-9iT" customClass="PartialUpdatesViewController" customModule="RxExample" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="HRf-Xk-9iT" customClass="PartialUpdatesViewController" customModule="RxExample_iOS" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="rR0-FR-HFT"/>
                         <viewControllerLayoutGuide type="bottom" id="t4S-nP-d6Z"/>
@@ -260,7 +259,7 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Cell" id="aNq-h7-r3z" customClass="NumberCell" customModule="RxExample" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Cell" id="aNq-h7-r3z" customClass="NumberCell" customModule="RxExample_iOS" customModuleProvider="target">
                                         <rect key="frame" x="26.5" y="25" width="55" height="35"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -285,7 +284,7 @@
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
-                                <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Section" id="myv-cg-TS9" customClass="NumberSectionView" customModule="RxExample" customModuleProvider="target">
+                                <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Section" id="myv-cg-TS9" customClass="NumberSectionView" customModule="RxExample_iOS" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="0.0" width="108" height="25"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
@@ -344,7 +343,7 @@
         <!--Rx Examples-->
         <scene sceneID="TnT-xx-y5Q">
             <objects>
-                <tableViewController id="t5K-0k-3cp" customClass="RootViewController" customModule="RxExample" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="t5K-0k-3cp" customClass="RootViewController" customModule="RxExample_iOS" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="UYP-Va-Aja">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -429,7 +428,9 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
-                                        <color key="backgroundColor" red="1" green="0.0" blue="0.090283701899999999" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <segue destination="bZo-ey-Nha" kind="push" id="RsC-bM-gga"/>
+                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="siT-mr-b8A" detailTextLabel="BSH-sG-bpY" style="IBUITableViewCellStyleSubtitle" id="VBq-7j-4vQ">
                                         <rect key="frame" x="0.0" y="245.5" width="320" height="44"/>
@@ -463,7 +464,7 @@
                             <tableViewSection headerTitle="iPad Examples" footerTitle="Showcase examples for Rx. You can easily test for proper resource cleanup during popping of the navigation stack" id="dLK-dJ-eIx">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="vX5-dK-JyH" detailTextLabel="Ilb-8Z-x8X" style="IBUITableViewCellStyleSubtitle" id="i2V-3v-lig">
-                                        <rect key="frame" x="0.0" y="383.5" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="388" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="i2V-3v-lig" id="ysT-9y-Klh">
                                             <rect key="frame" x="0.0" y="0.0" width="287" height="43.5"/>
@@ -477,7 +478,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Table and Collection view with partial updates" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Ilb-8Z-x8X">
-                                                    <rect key="frame" x="15" y="25.5" width="241.5" height="13.5"/>
+                                                    <rect key="frame" x="15" y="25.5" width="241" height="13.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -485,7 +486,9 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
-                                        <color key="backgroundColor" red="1" green="0.0" blue="0.090283701899999999" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <segue destination="HRf-Xk-9iT" kind="push" id="JsE-oF-S0j"/>
+                                        </connections>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
@@ -504,7 +507,7 @@
         <!--Search Wikipedia-->
         <scene sceneID="W3v-Hb-gUk">
             <objects>
-                <viewController id="Iwo-im-m6d" customClass="WikipediaSearchViewController" customModule="RxExample" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="Iwo-im-m6d" customClass="WikipediaSearchViewController" customModule="RxExample_iOS" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="5dr-42-uib"/>
                         <viewControllerLayoutGuide type="bottom" id="qRP-g3-i5K"/>
@@ -559,7 +562,7 @@ This is only showcase app, not intended for production purposes.</string>
         <!--Wrappers View Controller-->
         <scene sceneID="GYg-hz-8N5">
             <objects>
-                <viewController id="J6V-0T-aRq" customClass="APIWrappersViewController" customModule="RxExample" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="J6V-0T-aRq" customClass="APIWrappersViewController" customModule="RxExample_iOS" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="anJ-3z-vFC"/>
                         <viewControllerLayoutGuide type="bottom" id="bgd-ny-eho"/>
