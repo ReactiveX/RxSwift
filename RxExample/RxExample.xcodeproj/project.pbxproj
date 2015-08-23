@@ -107,7 +107,7 @@
 		C84B90661B8A268800C9CCCF /* ConcatSink.swift in Sources */ = {isa = PBXBuildFile; fileRef = C84B8FF01B8A268800C9CCCF /* ConcatSink.swift */; };
 		C84B90671B8A268800C9CCCF /* ConnectableObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C84B8FF11B8A268800C9CCCF /* ConnectableObservable.swift */; };
 		C84B90681B8A268800C9CCCF /* Debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = C84B8FF21B8A268800C9CCCF /* Debug.swift */; };
-		C84B90691B8A268800C9CCCF /* Defer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C84B8FF31B8A268800C9CCCF /* Defer.swift */; };
+		C84B90691B8A268800C9CCCF /* Deferred.swift in Sources */ = {isa = PBXBuildFile; fileRef = C84B8FF31B8A268800C9CCCF /* Deferred.swift */; };
 		C84B906A1B8A268800C9CCCF /* DelaySubscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = C84B8FF41B8A268800C9CCCF /* DelaySubscription.swift */; };
 		C84B906B1B8A268800C9CCCF /* DistinctUntilChanged.swift in Sources */ = {isa = PBXBuildFile; fileRef = C84B8FF51B8A268800C9CCCF /* DistinctUntilChanged.swift */; };
 		C84B906C1B8A268800C9CCCF /* Do.swift in Sources */ = {isa = PBXBuildFile; fileRef = C84B8FF61B8A268800C9CCCF /* Do.swift */; };
@@ -385,7 +385,7 @@
 		C84B8FF01B8A268800C9CCCF /* ConcatSink.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConcatSink.swift; sourceTree = "<group>"; };
 		C84B8FF11B8A268800C9CCCF /* ConnectableObservable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectableObservable.swift; sourceTree = "<group>"; };
 		C84B8FF21B8A268800C9CCCF /* Debug.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Debug.swift; sourceTree = "<group>"; };
-		C84B8FF31B8A268800C9CCCF /* Defer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Defer.swift; sourceTree = "<group>"; };
+		C84B8FF31B8A268800C9CCCF /* Deferred.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Deferred.swift; sourceTree = "<group>"; };
 		C84B8FF41B8A268800C9CCCF /* DelaySubscription.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DelaySubscription.swift; sourceTree = "<group>"; };
 		C84B8FF51B8A268800C9CCCF /* DistinctUntilChanged.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DistinctUntilChanged.swift; sourceTree = "<group>"; };
 		C84B8FF61B8A268800C9CCCF /* Do.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Do.swift; sourceTree = "<group>"; };
@@ -823,7 +823,7 @@
 				C84B8FF01B8A268800C9CCCF /* ConcatSink.swift */,
 				C84B8FF11B8A268800C9CCCF /* ConnectableObservable.swift */,
 				C84B8FF21B8A268800C9CCCF /* Debug.swift */,
-				C84B8FF31B8A268800C9CCCF /* Defer.swift */,
+				C84B8FF31B8A268800C9CCCF /* Deferred.swift */,
 				C84B8FF41B8A268800C9CCCF /* DelaySubscription.swift */,
 				C84B8FF51B8A268800C9CCCF /* DistinctUntilChanged.swift */,
 				C84B8FF61B8A268800C9CCCF /* Do.swift */,
@@ -1443,7 +1443,7 @@
 				C8297E411B6CF905000589EA /* RxCollectionViewSectionedReloadDataSource.swift in Sources */,
 				C84B90781B8A268800C9CCCF /* RefCount.swift in Sources */,
 				C8297E421B6CF905000589EA /* WikipediaSearchResult.swift in Sources */,
-				C84B90691B8A268800C9CCCF /* Defer.swift in Sources */,
+				C84B90691B8A268800C9CCCF /* Deferred.swift in Sources */,
 				C8297E431B6CF905000589EA /* GitHubAPI.swift in Sources */,
 				C84B90831B8A268800C9CCCF /* Throttle.swift in Sources */,
 				C84B90461B8A268800C9CCCF /* InfiniteSequence.swift in Sources */,

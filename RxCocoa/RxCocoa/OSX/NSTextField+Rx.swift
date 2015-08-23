@@ -16,7 +16,7 @@ class RxTextFieldDelegate : DelegateProxy
                           , NSTextFieldDelegate
                           , DelegateProxyType {
     let textField: NSTextField
-    let textSubject = ReplaySubject<String>(bufferSize: 1)
+    let textSubject = ReplaySubject<String>.create(bufferSize: 1)
     
     required init(parentObject: AnyObject) {
         self.textField = parentObject as! NSTextField

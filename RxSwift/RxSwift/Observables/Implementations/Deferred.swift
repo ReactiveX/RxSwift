@@ -1,5 +1,5 @@
 //
-//  Defer.swift
+//  Deferred.swift
 //  RxSwift
 //
 //  Created by Krunoslav Zaher on 4/19/15.
@@ -8,9 +8,9 @@
 
 import Foundation
 
-class Defer_<O: ObserverType> : Sink<O>, ObserverType {
+class DeferredSink<O: ObserverType> : Sink<O>, ObserverType {
     typealias E = O.E
-    typealias Parent = Defer<E>
+    typealias Parent = Deferred<E>
     
     let parent: Parent
     
@@ -20,15 +20,15 @@ class Defer_<O: ObserverType> : Sink<O>, ObserverType {
     }
     
     func run() -> Disposable {
-        let disposable = parent.eval().flatMap { result in
-            return success(result.subscribeSafe(self))
-        }.recoverWith { e in
+        do {
+            let result = try parent.eval()
+            return result.subscribeSafe(self)
+        }
+        catch let e {
             observer?.on(.Error(e))
             self.dispose()
-            return NopDisposableResult
+            return NopDisposable.instance
         }
-        
-        return disposable.get()
     }
     
     func on(event: Event<E>) {
@@ -45,8 +45,8 @@ class Defer_<O: ObserverType> : Sink<O>, ObserverType {
     }
 }
 
-class Defer<Element> : Producer<Element> {
-    typealias Factory = () -> RxResult<Observable<Element>>
+class Deferred<Element> : Producer<Element> {
+    typealias Factory = () throws -> Observable<Element>
     
     let observableFactory : Factory
     
@@ -55,12 +55,12 @@ class Defer<Element> : Producer<Element> {
     }
     
     override func run<O: ObserverType where O.E == Element>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
-        let sink = Defer_(parent: self, observer: observer, cancel: cancel)
+        let sink = DeferredSink(parent: self, observer: observer, cancel: cancel)
         setSink(sink)
         return sink.run()
     }
     
-    func eval() -> RxResult<Observable<Element>> {
-        return observableFactory()
+    func eval() throws -> Observable<Element> {
+        return try observableFactory()
     }
 }

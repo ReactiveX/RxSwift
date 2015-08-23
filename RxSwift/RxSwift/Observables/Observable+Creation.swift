@@ -74,12 +74,7 @@ public func failWith<E>(error: ErrorType) -> Observable<E> {
 
 // defer
 
-public func deferOrDie<E>(observableFactory: () -> RxResult<Observable<E>>)
+public func deferred<E>(observableFactory: () throws -> Observable<E>)
     -> Observable<E> {
-    return Defer(observableFactory: observableFactory)
-}
-
-public func deferred<E>(observableFactory: () -> Observable<E>)
-    -> Observable<E> {
-    return Defer(observableFactory: { success(observableFactory()) })
+    return Deferred(observableFactory: observableFactory)
 }
