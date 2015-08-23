@@ -291,7 +291,7 @@ extension ObservableSingleTest {
     
         var i = 0
         var sum = 2 + 3 + 4 + 5
-        let res = scheduler.start { xs.tap { e in
+        let res = scheduler.start { xs.doOn { e in
                 switch e {
                 case .Next(let _):
                     i++
@@ -334,7 +334,7 @@ extension ObservableSingleTest {
             ])
         
         var i = 0
-        let res = scheduler.start { xs.tap { e in
+        let res = scheduler.start { xs.doOn { e in
             switch e {
             case .Next(_):
                 i++
@@ -376,7 +376,7 @@ extension ObservableSingleTest {
         var i = 0
         var sum = 2 + 3 + 4 + 5
         var completedEvaluation = false
-        let res = scheduler.start { xs.tap { e in
+        let res = scheduler.start { xs.doOn { e in
             switch e {
             case .Next(let value):
                 i++
@@ -418,7 +418,7 @@ extension ObservableSingleTest {
         
         var i = 0
         var completedEvaluation = false
-        let res = scheduler.start { xs.tap { e in
+        let res = scheduler.start { xs.doOn { e in
             switch e {
             case .Next(_):
                 i++
@@ -458,7 +458,7 @@ extension ObservableSingleTest {
         var i = 0
         var sum = 2 + 3 + 4 + 5
         var sawError = false
-        let res = scheduler.start { xs.tap { e in
+        let res = scheduler.start { xs.doOn { e in
             switch e {
             case .Next(let value):
                 i++
@@ -505,7 +505,7 @@ extension ObservableSingleTest {
         var i = 0
         var sum = 2 + 3 + 4 + 5
         var sawError = false
-        let res = scheduler.start { xs.tap { e in
+        let res = scheduler.start { xs.doOn { e in
             switch e {
             case .Next(let value):
                 i++
@@ -546,7 +546,7 @@ extension ObservableSingleTest {
             completed(250)
             ])
         
-        let res = scheduler.start { xs.tap { _ in
+        let res = scheduler.start { xs.doOn { _ in
                 throw testError
             }
         }

@@ -67,23 +67,23 @@ extension ObservableType {
 // do
 
 extension ObservableType {
-    public func tap(eventHandler: (Event<E>) throws -> Void)
+    public func doOn(eventHandler: (Event<E>) throws -> Void)
         -> Observable<E> {
-        return Tap(source: self.asObservable(), eventHandler: eventHandler)
+        return Do(source: self.asObservable(), eventHandler: eventHandler)
     }
-}
 
-// doOnNext
-
-extension ObservableType {
-    public func tapOnNext(actionOnNext: E -> Void)
+    public func doOn(next next: (E throws -> Void)? = nil, error: (ErrorType throws -> Void)? = nil, completed: (() throws -> Void)? = nil, disposed: (() throws -> Void)? = nil)
         -> Observable<E> {
-        return self.tap { event in
-            switch event {
-            case .Next(let value):
-                actionOnNext(value)
-            default:
-                break
+        return Do(source: self.asObservable()) { e in
+            switch e {
+            case .Next(let element):
+                try next?(element)
+            case .Error(let e):
+                try error?(e)
+                try disposed?()
+            case .Completed:
+                try completed?()
+                try disposed?()
             }
         }
     }

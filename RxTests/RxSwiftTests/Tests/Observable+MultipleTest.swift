@@ -2520,7 +2520,7 @@ extension ObservableMultipleTest {
         var sourceNotDisposed = false
         
         let res = scheduler.start {
-            l .tap { _ in sourceNotDisposed = true } .takeUntil(r)
+            l .doOn { _ in sourceNotDisposed = true } .takeUntil(r)
         }
         
         XCTAssertEqual(res.messages, [
@@ -2548,7 +2548,7 @@ extension ObservableMultipleTest {
         var sourceNotDisposed = false
         
         let res = scheduler.start {
-            l .takeUntil(r .tap { _ in sourceNotDisposed = true })
+            l .takeUntil(r .doOn { _ in sourceNotDisposed = true })
         }
         
         XCTAssertEqual(res.messages, [
