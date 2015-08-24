@@ -1,4 +1,3 @@
-. scripts/common.sh
 
 IS_LOCAL=0
 if [ "$#" -eq 1 ]; then
@@ -26,6 +25,8 @@ else
 		echo "${DEFAULT_IOS9_SIMULATOR} exists"
 	fi
 fi
+
+ISLOCAL="${IS_LOCAL}" . scripts/common.sh
 
 #make sure all iOS tests pass
 for configuration in "Debug" "Release-Tests" "Release"
