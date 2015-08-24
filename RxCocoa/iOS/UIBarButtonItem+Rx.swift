@@ -25,8 +25,8 @@ extension UIBarButtonItem {
 }
 
 
-
-class BarButtonItemTarget: Disposable {
+@objc
+class BarButtonItemTarget: NSObject, Disposable {
     typealias Callback = () -> Void
     
     weak var barButtonItem: UIBarButtonItem?
@@ -35,6 +35,7 @@ class BarButtonItemTarget: Disposable {
     init(barButtonItem: UIBarButtonItem, callback: () -> Void) {
         self.barButtonItem = barButtonItem
         self.callback = callback
+        super.init()
         barButtonItem.target = self
         barButtonItem.action = Selector("action:")
     }
