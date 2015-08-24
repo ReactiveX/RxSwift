@@ -17,7 +17,7 @@ Pod::Spec.new do |s|
   s.ios.deployment_target = '8.0'
   s.osx.deployment_target = '10.9'
 
-  s.source_files          = 'RxCocoa/RxCocoa.h', 'RxCocoa/RxCocoa/Common/**/*.{swift,h,m}'
+  s.source_files          = 'RxCocoa/RxCocoa.h', 'RxCocoa/Common/**/*.{swift,h,m}'
   s.ios.source_files      = 'RxCocoa/iOS/**/*.swift'
   s.osx.source_files      = 'RxCocoa/OSX/**/*.swift'
 
