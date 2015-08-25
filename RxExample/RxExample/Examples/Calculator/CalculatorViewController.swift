@@ -96,7 +96,7 @@ class CalculatorViewController: ViewController {
             eightButton.rx_tap.map { _ in .AddNumber("8") },
             nineButton.rx_tap.map { _ in .AddNumber("9") }
         ]
-         
+        
         from(commands)
             .merge
             .scan(CLEAR_STATE) { a, x in
@@ -133,10 +133,10 @@ class CalculatorViewController: ViewController {
         case .AddDot:
             return addDot(a)
         case .ChangeSign:
-            let d = "\(-a.inScreen.toDouble()!)"
+            let d = "\(-Double(a.inScreen)!)"
             return CalState(previousNumber: a.previousNumber, action: a.action, currentNumber: d, inScreen: d, replace: true)
         case .Percent:
-            let d = "\(a.inScreen.toDouble()!/100)"
+            let d = "\(Double(a.inScreen)!/100)"
             return CalState(previousNumber: a.previousNumber, action: a.action, currentNumber: d, inScreen: d, replace: true)
         case .Operation(let o):
             return performOperation(a, o)
@@ -161,8 +161,8 @@ class CalculatorViewController: ViewController {
             return CalState(previousNumber: a.currentNumber, action: .Operation(o), currentNumber: nil, inScreen: a.currentNumber, replace: true)
         }
         else {
-            let previous = a.previousNumber.toDouble()!
-            let current = a.inScreen.toDouble()!
+            let previous = Double(a.previousNumber)!
+            let current = Double(a.inScreen)!
             
             switch a.action {
             case .Operation(let op):
@@ -189,8 +189,8 @@ class CalculatorViewController: ViewController {
     }
     
     func performEqual(a: CalState) -> CalState {
-        let previous = (a.previousNumber ?? "0").toDouble()
-        let current = a.inScreen.toDouble()!
+        let previous = Double(a.previousNumber ?? "0")
+        let current = Double(a.inScreen)!
         
         switch a.action {
         case .Operation(let op):
@@ -222,5 +222,8 @@ class CalculatorViewController: ViewController {
         return str
     }
 }
+
+
+
 
 
