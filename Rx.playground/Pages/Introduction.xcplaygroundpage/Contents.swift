@@ -16,20 +16,22 @@ The key to understanding RxSwift is in understanding the notion of Observables. 
 ## Creating and Subscribing to Observables
 The first step in understanding this library is in understanding how to create Observables. There are a number of functions available to make Observables.
 Creating an Observable is one thing, but if nothing subscribes to the observable, then nothing will come of it so both are explained simultaneously.
+
+*NOTE: Activate the Debug Area*
 */
 
 /*:
 ### empty
-`empty` creates an observable that contains no objects. The only message it sends is the `.Completed` message.
+`empty` create an Observable that emits no values but terminates normally with a completed event.
 */
 
 example("Empty observable") {
     let emptyObservable: Observable<Int> = empty()
-
-    let emptySubscriber = emptyObservable .subscribe { event in
+    
+    let emptySubscriber = emptyObservable.subscribe { event in
         switch event {
         case .Next(let box):
-            print("\(box.value)")
+            print("\(box)")
         case .Completed:
             print("completed")
         case .Error(let error):
@@ -38,44 +40,74 @@ example("Empty observable") {
     }
 }
 
-
-
 /*:
-As you can see, no values are ever sent to the subscriber of an empty observable. It just completes and is done.
+As you can see, no values are emitted from an empty observable. It just completes and is done.
 */
+
 
 /*:
 ### never
-`never` creates an observable that contains no objects and never completes or errors out.
+`never` creates an Observable that emits no items and does not terminate.
 */
 
 example("Never observable") {
     let neverObservable: Observable<String> = never()
-
-    let neverSubscriber = neverObservable .subscribe { _ in
-        print("This block is never called.")
-    }
-}
-
-/*:
-### returnElement/just
-These two functions behave identically. They send two messages to subscribers. The first message is the value and the second message is `.Complete`.
-*/
-
-example("returnElement/just") {
-    let oneObservable = just(32)
-
-    let oneObservableSubscriber = oneObservable
+    
+    let neverSubscriber = neverObservable
         .subscribe { event in
             switch event {
-            case .Next(let box):
-                print("\(box.value)")
+            case .Next(let value):
+                print("\(value)")
             case .Completed:
                 print("completed")
             case .Error(let error):
                 print("\(error)")
             }
-        }
+    }
+}
+
+/*:
+### error
+`failWith` creates an Observable that emits no items and terminates with an error.
+*/
+
+example("failWith observable") {
+    enum FailWithError: ErrorType {case RxError(String)}
+    
+    let errorObservable: Observable<String> = failWith(FailWithError.RxError("failure"))
+    
+    let errorSubscriber = errorObservable
+        .subscribe { event in
+            switch event {
+            case .Next(let value):
+                print("\(value)")
+            case .Completed:
+                print("completed")
+            case .Error(let error):
+                print("\(error)")
+            }
+    }
+}
+
+/*:
+### just
+`just` creates an Observable that emits one particular item.
+*/
+
+example("just") {
+    let oneObservable = just("Just this string please!")
+    
+    let oneObservableSubscriber = oneObservable
+        .subscribe { event in
+            switch event {
+            case .Next(let box):
+                print("\(box)")
+            case .Completed:
+                print("completed")
+            case .Error(let error):
+                print("\(error)")
+            }
+    }
 }
 
 /*:
@@ -94,13 +126,13 @@ example("sequence") {
         .subscribe { event in
             switch event {
             case .Next(let box):
-                print("\(box.value)")
+                print("\(box)")
             case .Completed:
                 print("completed")
             case .Error(let error):
                 print("\(error)")
             }
-        }
+    }
 }
 
 /*:
@@ -114,18 +146,18 @@ We can also create an observable from any SequenceType, such as an array
 
 example("from") {
     let fromArrayObservable = from([1, 2, 3, 4, 5])
-
+    
     let fromArrayObservableSubscriber = fromArrayObservable
         .subscribe { event in
             switch event {
             case .Next(let box):
-                print("\(box.value)")
+                print("\(box)")
             case .Completed:
                 print("completed")
             case .Error(let error):
                 print("\(error)")
             }
-        }
+    }
 }
 
 /*:
@@ -145,13 +177,13 @@ example("subscribeNext") {
     let nextOnlySubscriber = sequenceOf(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
         .subscribeNext { value in
             print("\(value)")
-        }
+    }
 }
 
 /*:
 With the above we only interest ourselves in the values returned by the observable without regard to whether/when it completes or errors. Many of the observables that we use have an indefinite lifespan. There is also `subscribeCompleted` and `subscribeError` for when you are looking for when an observable will stop sending.
 
-Also note that you can have multiple subscribers following to the same observable (as I did in the example above.) All the subscribers will be notified when an event occurs.
+Also note that you can have multiple subscribers following to the same observable (as we did in the example above.) All the subscribers will be notified when an event occurs.
 */
 
 /*:
@@ -169,7 +201,7 @@ example("filter") {
         }
         .subscribeNext { value in
             print("\(value)")
-        }
+    }
 }
 
 /*:
@@ -182,7 +214,7 @@ example("distinctUntilChanged") {
         .distinctUntilChanged()
         .subscribeNext { value in
             print("\(value)")
-        }
+    }
 }
 
 
@@ -203,7 +235,7 @@ example("reduce") {
         .reduce(0, +)
         .subscribeNext { value in
             print("\(value)")
-        }
+    }
 }
 
 //: [Index](Index) - [Next >>](@next)
