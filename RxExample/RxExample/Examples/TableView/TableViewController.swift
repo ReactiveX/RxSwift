@@ -111,7 +111,7 @@ class TableViewController: ViewController, UITableViewDelegate {
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let title = dataSource.sectionAtIndex(section)
         
-        let label = UILabel(frame: CGRect.zeroRect)
+        let label = UILabel(frame: CGRect.zero)
         // hacky I know :)
         label.text = "  \(title)"
         label.textColor = UIColor.whiteColor()
