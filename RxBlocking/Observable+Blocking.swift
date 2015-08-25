@@ -11,23 +11,45 @@ import Foundation
 import RxSwift
 #endif
 
+
 extension ObservableType {
-    public func toArray()
-        -> RxResult<[E]> {
-        let condition = NSCondition()
-        
-        var elements = [E]()
-        
-        var error: ErrorType?
+    
+    /**
+    This operator blocks the thread until the Observable terminates
+    and then produces an equivalent object or data structure.
+    
+    - seeAlso:
+    [http://reactivex.io/documentation/operators/to.html](http://reactivex.io/documentation/operators/to.html)
+    
+    ```Swift
+    // This example runs in a Playground
+    let source = timer(0, 1000, scheduler: MainScheduler.sharedInstance)
+        .take(5)
+        .toArray() // not recommended for production code
+    
+    let subscription = source.get()
+    ```
+    
+    - todo: Improve operator's description @kzaher
+    - warning: Use with caution, blocking operators are not meant for production code and are
+    mainly designed for Unit Tests usage.
+    
+    - requires: ObservableType
+    - returns: RxResult - which encapsulates a result or an error
+    */
+    public func toArray() -> RxResult<[E]> {
             
+        let condition = NSCondition()
+        var elements = [E]()
+        var error: ErrorType?
         var ended = false
 
-        self.subscribeSafe(AnonymousObserver { e in
-            switch e {
+        self.subscribeSafe(AnonymousObserver { event in
+            switch event {
             case .Next(let element):
                 elements.append(element)
-            case .Error(let e):
-                error = e
+            case .Error(let element):
+                error = element
                 condition.lock()
                 ended = true
                 condition.signal()
@@ -52,6 +74,7 @@ extension ObservableType {
         return success(elements)
     }
 }
+
 
 extension ObservableType {
     public var first: RxResult<E?> {
