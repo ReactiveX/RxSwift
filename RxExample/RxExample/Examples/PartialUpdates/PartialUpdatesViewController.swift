@@ -19,15 +19,16 @@ let runAutomatically = false
 let useAnimatedUpdateForCollectionView = false
 
 class PartialUpdatesViewController : ViewController {
+    
     @IBOutlet weak var reloadTableViewOutlet: UITableView!
     @IBOutlet weak var partialUpdatesTableViewOutlet: UITableView!
     @IBOutlet weak var partialUpdatesCollectionViewOutlet: UICollectionView!
-    
+
     var moc: NSManagedObjectContext!
     var child: NSManagedObjectContext!
-    
+
     var timer: NSTimer? = nil
-    
+
     static let initialValue: [HashableSectionModel<String, Int>] = [
         NumberSection(model: "section 1", items: [1, 2, 3]),
         NumberSection(model: "section 2", items: [4, 5, 6]),
@@ -40,103 +41,103 @@ class PartialUpdatesViewController : ViewController {
         NumberSection(model: "section 9", items: [25, 26, 27]),
         NumberSection(model: "section 10", items: [28, 29, 30])
         ]
-    
-    
+
+
     static let firstChange: [HashableSectionModel<String, Int>]? = nil
-    
+
     var generator = Randomizer(rng: PseudoRandomGenerator(4, 3), sections: initialValue)
 
     var sections = Variable([NumberSection]())
-    
+
     let disposeBag = DisposeBag()
-    
+
     func skinTableViewDataSource(dataSource: RxTableViewSectionedDataSource<NumberSection>) {
         dataSource.cellFactory = { (tv, ip, i) in
-            let cell = tv.dequeueReusableCellWithIdentifier("Cell") as? UITableViewCell
+            let cell = tv.dequeueReusableCellWithIdentifier("Cell")
                 ?? UITableViewCell(style:.Default, reuseIdentifier: "Cell")
-            
+
             cell.textLabel!.text = "\(i)"
-            
+
             return cell
         }
-        
+
         dataSource.titleForHeaderInSection = { [unowned dataSource] (section: Int) -> String in
             return dataSource.sectionAtIndex(section).model
         }
     }
-    
+
     func skinCollectionViewDataSource(dataSource: RxCollectionViewSectionedDataSource<NumberSection>) {
-        dataSource.cellFactory = { [unowned dataSource] (cv, ip, i) in
+        dataSource.cellFactory = { (cv, ip, i) in
             let cell = cv.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: ip) as! NumberCell
-            
+
             cell.value!.text = "\(i)"
-            
+
             return cell
         }
-        
+
         dataSource.supplementaryViewFactory = { [unowned dataSource] (cv, kind, ip) in
             let section = cv.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: "Section", forIndexPath: ip) as! NumberSectionView
-            
+
             section.value!.text = "\(dataSource.sectionAtIndex(ip.section).model)"
-            
+
             return section
         }
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         // For UICollectionView, if another animation starts before previous one is finished, it will sometimes crash :(
         // It's not deterministic (because Randomizer generates deterministic updates), and if you click fast
         // It sometimes will and sometimes wont crash, depending on tapping speed.
         // I guess you can maybe try some tricks with timeout, hard to tell :( That's on Apple side.
-        
+
         if generateCustomSize {
             let nSections = 10
             let nItems = 100
-            
+
             var sections = [HashableSectionModel<String, Int>]()
-            
+
             for i in 0 ..< nSections {
                 sections.append(HashableSectionModel(model: "Section \(i + 1)", items: Array(i * nItems ..< (i + 1) * nItems)))
             }
-            
+
             generator = Randomizer(rng: PseudoRandomGenerator(4, 3), sections: sections)
         }
 
         #if runAutomatically
             timer = NSTimer.scheduledTimerWithTimeInterval(0.6, target: self, selector: "randomize", userInfo: nil, repeats: true)
         #endif
-        
-        self.sections.next(generator.sections)
-        
+
+        self.sections.sendNext(generator.sections)
+
         let tvAnimatedDataSource = RxTableViewSectionedAnimatedDataSource<NumberSection>()
         let reloadDataSource = RxTableViewSectionedReloadDataSource<NumberSection>()
-        
+
         skinTableViewDataSource(tvAnimatedDataSource)
         skinTableViewDataSource(reloadDataSource)
-        let newSections = self.sections >- skip(1)
-        
+        let newSections = self.sections .skip(1)
+
         let initialState = [Changeset.initialValue(self.sections.value)]
-        
+
         // reactive data sources
-        
+
         let updates = zip(self.sections, newSections) { (old, new) in
-                return differentiate(old, new)
+                return differentiate(old, finalSections: new)
             }
-            >- startWith(initialState)
-            
+            .startWith(initialState)
+
         updates
-            >- partialUpdatesTableViewOutlet.rx_subscribeWithReactiveDataSource(tvAnimatedDataSource)
-            >- disposeBag.addDisposable
+            .subscribe(partialUpdatesTableViewOutlet, withReactiveDataSource: tvAnimatedDataSource)
+            .addDisposableTo(disposeBag)
 
         self.sections
-            >- reloadTableViewOutlet.rx_subscribeWithReactiveDataSource(reloadDataSource)
-            >- disposeBag.addDisposable
-        
+            .subscribe(reloadTableViewOutlet, withReactiveDataSource: reloadDataSource)
+            .addDisposableTo(disposeBag)
+
         // Collection view logic works, but when clicking fast because of internal bugs
         // collection view will sometimes get confused. I know what you are thinking,
-        // but this is really not a bug in the algorithm. The generated changes are 
+        // but this is really not a bug in the algorithm. The generated changes are
         // pseudorandom, and crash happens depending on clicking speed.
         //
         // More info in `RxDataSourceStarterKit/README.md`
@@ -145,52 +146,53 @@ class PartialUpdatesViewController : ViewController {
         //
         // While `useAnimatedUpdateForCollectionView` is false, you can click as fast as
         // you want, table view doesn't seem to have same issues like collection view.
-       
+
         #if useAnimatedUpdateForCollectionView
             let cvAnimatedDataSource = RxCollectionViewSectionedAnimatedDataSource<NumberSection>()
             skinCollectionViewDataSource(cvAnimatedDataSource)
-        
+
             updates
-                >- partialUpdatesCollectionViewOutlet.rx_subscribeWithReactiveDataSource(cvAnimatedDataSource)
-                >- disposeBag.addDisposable
+                .partialUpdatesCollectionViewOutlet.rx_subscribeWithReactiveDataSource(cvAnimatedDataSource)
+                .disposeBag.addDisposable
         #else
             let cvReloadDataSource = RxCollectionViewSectionedReloadDataSource<NumberSection>()
             skinCollectionViewDataSource(cvReloadDataSource)
             self.sections
-                >- partialUpdatesCollectionViewOutlet.rx_subscribeWithReactiveDataSource(cvReloadDataSource)
-                >- disposeBag.addDisposable
+                .subscribe(partialUpdatesCollectionViewOutlet, withReactiveDataSource: cvReloadDataSource)
+                .addDisposableTo(disposeBag)
         #endif
-        
+
         // touches
-        
+
         partialUpdatesCollectionViewOutlet.rx_itemSelected
-            >- subscribeNext { [unowned self] i in
-                println("Let me guess, it's .... It's \(self.generator.sections[i.section].items[i.item]), isn't it? Yeah, I've got it.")
+            .subscribeNext { [unowned self] i in
+                print("Let me guess, it's .... It's \(self.generator.sections[i.section].items[i.item]), isn't it? Yeah, I've got it.")
             }
-            >- disposeBag.addDisposable
-        
-        merge(from([partialUpdatesTableViewOutlet.rx_itemSelected, reloadTableViewOutlet.rx_itemSelected]))
-            >- subscribeNext { [unowned self] i in
-                println("I have a feeling it's .... \(self.generator.sections[i.section].items[i.item])?")
+            .addDisposableTo(disposeBag)
+
+        sequenceOf(partialUpdatesTableViewOutlet.rx_itemSelected, reloadTableViewOutlet.rx_itemSelected)
+            .merge
+            .subscribeNext { [unowned self] i in
+                print("I have a feeling it's .... \(self.generator.sections[i.section].items[i.item])?")
             }
-            >- disposeBag.addDisposable
+            .addDisposableTo(disposeBag)
     }
-    
+
     override func viewWillDisappear(animated: Bool) {
         self.timer?.invalidate()
     }
-    
+
     @IBAction func randomize() {
         generator.randomize()
         var values = generator.sections
-       
+
         // useful for debugging
         if PartialUpdatesViewController.firstChange != nil {
             values = PartialUpdatesViewController.firstChange!
         }
-        
-        //println(values)
-        
-        sections.next(values)
+
+        //print(values)
+
+        sections.sendNext(values)
     }
 }

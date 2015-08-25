@@ -52,7 +52,7 @@ extension UITableView : SectionedViewType {
 
     func performBatchUpdates<S: SectionModelType>(changes: Changeset<S>) {
         self.beginUpdates()
-        _performBatchUpdates(self, changes)
+        _performBatchUpdates(self, changes: changes)
         self.endUpdates()
     }
 }
@@ -92,7 +92,7 @@ extension UICollectionView : SectionedViewType {
     
     func performBatchUpdates<S: SectionModelType>(changes: Changeset<S>) {
         self.performBatchUpdates({ () -> Void in
-            _performBatchUpdates(self, changes)
+            _performBatchUpdates(self, changes: changes)
         }, completion: { (completed: Bool) -> Void in
         })
     }
@@ -125,8 +125,6 @@ func setFor<E, K>(items: [E], transform: E -> K) -> [K : K] {
 
 func _performBatchUpdates<V: SectionedViewType, S: SectionModelType>(view: V, changes: Changeset<S>) {
     typealias I = S.Item
-    
-    let cv: UICollectionView
     let rowAnimation = UITableViewRowAnimation.Automatic
     
     view.deleteSections(changes.deletedSections, animationStyle: rowAnimation)

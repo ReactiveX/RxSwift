@@ -31,23 +31,24 @@ public class WikipediaSearchCell: UITableViewCell {
     
     var viewModel: SearchResultViewModel! {
         didSet {
-            let $ = viewModel.$
-            
             let disposeBag = DisposeBag()
     
-            self.titleOutlet.rx_subscribeTextTo(viewModel?.title ?? just("")) >- disposeBag.addDisposable
+            (viewModel?.title ?? just(""))
+                .subscribeTextOf(self.titleOutlet)
+                .addDisposableTo(disposeBag)
+            
             self.URLOutlet.text = viewModel.searchResult.URL.absoluteString ?? ""
            
             viewModel.imageURLs
-                >- self.imagesOutlet.rx_subscribeItemsToWithCellIdentifier("ImageCell") { [unowned self] (_, URL, cell: CollectionViewImageCell) in
+                .subscribeItemsOf(self.imagesOutlet, withCellIdentifier: "ImageCell") { [unowned self] (_, URL, cell: CollectionViewImageCell) in
                     let loadingPlaceholder: UIImage? = nil
                     
                     cell.image = self.imageService.imageFromURL(URL)
-                        >- map { $0 as UIImage? }
-                        >- catch(nil)
-                        >- startWith(loadingPlaceholder)
+                        .map { $0 as UIImage? }
+                        .catchError(nil)
+                        .startWith(loadingPlaceholder)
                 }
-                >- disposeBag.addDisposable
+                .addDisposableTo(disposeBag)
 
             self.disposeBag = disposeBag
         }

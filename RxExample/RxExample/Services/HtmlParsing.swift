@@ -8,10 +8,10 @@
 
 import Foundation
 
-func parseImageURLsfromHTML(html: NSString) -> [NSURL] {
-    let regularExpression = NSRegularExpression(pattern: "<img[^>]*src=\"([^\"]+)\"[^>]*>", options: NSRegularExpressionOptions.allZeros, error: nil)!
+func parseImageURLsfromHTML(html: NSString) throws -> [NSURL]  {
+    let regularExpression = try NSRegularExpression(pattern: "<img[^>]*src=\"([^\"]+)\"[^>]*>", options: [])
     
-    let matches = regularExpression.matchesInString(html as! String, options: NSMatchingOptions.allZeros, range: NSMakeRange(0, html.length)) as! [NSTextCheckingResult]
+    let matches = regularExpression.matchesInString(html as String, options: [], range: NSMakeRange(0, html.length))
     
     return matches.map { match -> NSURL? in
         if match.numberOfRanges != 2 {
@@ -29,13 +29,8 @@ func parseImageURLsfromHTML(html: NSString) -> [NSURL] {
     }.filter { $0 != nil }.map { $0! }
 }
 
-func parseImageURLsfromHTMLSuitableForDisplay(html: NSString) -> [NSURL] {
-    return parseImageURLsfromHTML(html).filter {
-        if let absoluteString = $0.absoluteString {
-            return absoluteString.rangeOfString(".svg.") == nil
-        }
-        else {
-            return false
-        }
+func parseImageURLsfromHTMLSuitableForDisplay(html: NSString) throws -> [NSURL] {
+    return try parseImageURLsfromHTML(html).filter {
+        return $0.absoluteString.rangeOfString(".svg.") == nil
     }
 }

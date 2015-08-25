@@ -13,13 +13,11 @@ let SubscribedToHotObservable = Subscription(0)
 let UnsunscribedFromHotObservable = Subscription(0, 0)
 
 class PrimitiveHotObservable<ElementType : Equatable> : Observable<ElementType>, ObserverType {
-    typealias Element = ElementType
-    
-    typealias Events = Recorded<Element>
-    typealias Observer = ObserverOf<Element>
+    typealias Events = Recorded<E>
+    typealias Observer = ObserverOf<E>
     
     var subscriptions: [Subscription]
-    var observers: Bag<ObserverOf<Element>>
+    var observers: Bag<ObserverOf<E>>
     
     override init() {
         self.subscriptions = []
@@ -28,11 +26,11 @@ class PrimitiveHotObservable<ElementType : Equatable> : Observable<ElementType>,
         super.init()
     }
     
-    func on(event: Event<Element>) {
-        dispatch(event, observers.all)
+    func on(event: Event<E>) {
+        observers.forEach { $0.on(event) }
     }
     
-    override func subscribe<O : ObserverType where O.Element == Element>(observer: O) -> Disposable {
+    override func subscribe<O : ObserverType where O.E == E>(observer: O) -> Disposable {
         let key = observers.put(ObserverOf(observer))
         subscriptions.append(SubscribedToHotObservable)
         
@@ -42,7 +40,6 @@ class PrimitiveHotObservable<ElementType : Equatable> : Observable<ElementType>,
             let removed = self.observers.removeKey(key)
             assert(removed != nil)
             
-            let existing = self.subscriptions[i]
             self.subscriptions[i] = UnsunscribedFromHotObservable
         }
     }

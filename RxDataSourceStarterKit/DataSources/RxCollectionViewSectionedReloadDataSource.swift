@@ -19,10 +19,10 @@ class RxCollectionViewSectionedReloadDataSource<S: SectionModelType> : RxCollect
     
     func collectionView(collectionView: UICollectionView, observedEvent: Event<Element>) {
         switch observedEvent {
-        case .Next(let boxedSections):
-            setSections(boxedSections.value)
+        case .Next(let element):
+            setSections(element)
             collectionView.reloadData()
-        case .Error(let error):
+        case .Error:
             #if DEBUG
                 fatalError("Binding error to UI")
             #endif

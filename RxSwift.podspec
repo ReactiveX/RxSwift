@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "RxSwift"
-  s.version          = "1.9.1"
+  s.version          = "2.0-alpha.1"
   s.summary          = "Microsoft Reactive Extensions (Rx) for Swift and iOS/OSX platform"
   s.description      = <<-DESC
 			This is a Swift port of Reactive extensions.
@@ -34,5 +34,5 @@ Pod::Spec.new do |s|
   s.ios.deployment_target = '8.0'
   s.osx.deployment_target = '10.9'
 
-  s.source_files          = 'RxSwift/RxSwift/**/*.swift'
+  s.source_files          = 'RxSwift/**/*.swift'
 end

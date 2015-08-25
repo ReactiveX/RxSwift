@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "RxCocoa"
-  s.version          = "1.9.1"
+  s.version          = "2.0-alpha.1"
   s.summary          = "RxSwift Cocoa extensions"
   s.description      = <<-DESC
 			* UI extensions
@@ -17,9 +17,9 @@ Pod::Spec.new do |s|
   s.ios.deployment_target = '8.0'
   s.osx.deployment_target = '10.9'
 
-  s.source_files          = 'RxCocoa/RxCocoa/RxCocoa.h', 'RxCocoa/RxCocoa/Common/**/*.{swift,h,m}'
-  s.ios.source_files      = 'RxCocoa/RxCocoa/iOS/**/*.swift'
-  s.osx.source_files      = 'RxCocoa/RxCocoa/OSX/**/*.swift'
+  s.source_files          = 'RxCocoa/RxCocoa.h', 'RxCocoa/Common/**/*.{swift,h,m}'
+  s.ios.source_files      = 'RxCocoa/iOS/**/*.swift'
+  s.osx.source_files      = 'RxCocoa/OSX/**/*.swift'
 
-  s.dependency 'RxSwift', '~> 1.0'
+  s.dependency 'RxSwift'
 end

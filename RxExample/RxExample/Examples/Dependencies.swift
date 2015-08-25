@@ -25,8 +25,10 @@ class Dependencies {
         
         let operationQueue = NSOperationQueue()
         operationQueue.maxConcurrentOperationCount = 2
-        if operationQueue.respondsToSelector("qualityOfService") {
+        if #available(iOS 8.0, *) {
             operationQueue.qualityOfService = NSQualityOfService.UserInitiated
+        } else {
+            // Fallback on earlier versions
         }
         backgroundWorkScheduler = OperationQueueScheduler(operationQueue: operationQueue)
         

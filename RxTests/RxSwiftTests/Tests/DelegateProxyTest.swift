@@ -151,10 +151,10 @@ class DelegateProxyTest : RxTest {
         var observedFeedRequest = false
         
         let d = view.rx_proxy.observe("threeDView:didLearnSomething:")
-            >- subscribeNext { n in
+            .subscribeNext { n in
                 observedFeedRequest = true
             }
-            >- scopedDispose
+            .scopedDispose
 
         XCTAssertTrue(!observedFeedRequest)
         view.delegate?.threeDView?(view, didLearnSomething: "Psssst ...")
@@ -172,16 +172,16 @@ class DelegateProxyTest : RxTest {
         var nMessages = 0
         
         var d = view.rx_proxy.observe("threeDView:didLearnSomething:")
-            >- subscribeNext { n in
+            .subscribeNext { n in
                 nMessages++
             }
-            >- scopedDispose
+            .scopedDispose
         
         XCTAssertTrue(nMessages == 0)
         view.delegate?.threeDView?(view, didLearnSomething: "Psssst ...")
         XCTAssertTrue(nMessages == 1)
         
-        d = scopedDispose(NopDisposable.instance)
+        d = NopDisposable.instance.scopedDispose
 
         view.delegate?.threeDView?(view, didLearnSomething: "Psssst ...")
         XCTAssertTrue(nMessages == 1)
@@ -211,11 +211,11 @@ class DelegateProxyTest : RxTest {
         var receivedArgument: NSIndexPath? = nil
         
         let d = view.rx_proxy.observe("threeDView:didGetXXX:")
-            >- subscribeNext { n in
+            .subscribeNext { n in
                 let ip = n[1] as! NSIndexPath
                 receivedArgument = ip
             }
-            >- scopedDispose
+            .scopedDispose
 
         XCTAssertTrue(receivedArgument === nil)
         view.delegate?.threeDView?(view, didGetXXX: sentArgument)
@@ -240,7 +240,7 @@ class DelegateProxyTest : RxTest {
             var receivedArgument: NSIndexPath? = nil
             
             view.rx_proxy.observe("threeDView:didGetXXX:")
-                >- subscribeCompleted {
+                .subscribeCompleted {
                     completed.value = true
                 }
             

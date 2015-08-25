@@ -24,21 +24,22 @@ BOLDWHITE="\033[1m\033[37m"
 
 DEFAULT_IOS7_SIMULATOR=RxSwiftTest-iPhone4s-iOS_7.1
 DEFAULT_IOS8_SIMULATOR=RxSwiftTest-iPhone6-iOS_8.4
+DEFAULT_IOS9_SIMULATOR=RxSwiftTest-iPhone6-iOS_9.0
 
+if [ "${IS_LOCAL}" -eq 1 ]; then
 IOS7_SIMULATORS="RxSwiftTest-iPhone4s-iOS_7.1 RxSwiftTest-iPhone5-iOS_7.1 RxSwiftTest-iPhone5s-iOS_7.1"
 IOS8_SIMULATORS="RxSwiftTest-iPhone4s-iOS_8.4 RxSwiftTest-iPhone5-iOS_8.4 RxSwiftTest-iPhone5s-iOS_8.4 RxSwiftTest-iPhone6-iOS_8.4 RxSwiftTest-iPhone6Plus-iOS_8.4"
+#IOS9_SIMULATORS="RxSwiftTest-iPhone4s-iOS_9.0 RxSwiftTest-iPhone5-iOS_9.0 RxSwiftTest-iPhone5s-iOS_9.0 RxSwiftTest-iPhone6-iOS_9.0 RxSwiftTest-iPhone6Plus-iOS_9.0"
+IOS9_SIMULATORS="RxSwiftTest-iPhone6-iOS_9.0"
+else
+IOS7_SIMULATORS="RxSwiftTest-iPhone4s-iOS_7.1"
+IOS8_SIMULATORS="RxSwiftTest-iPhone4s-iOS_8.4"
+#IOS9_SIMULATORS="RxSwiftTest-iPhone4s-iOS_9.0"
+IOS9_SIMULATORS="RxSwiftTest-iPhone6-iOS_9.0"
+fi
+
 
 BUILD_DIRECTORY=build
-
-function ios7simulator() {
-	A=($IOS7_SIMULATORS)
-	echo ${A[$1]}
-}
-
-function ios8simulator() {
-	A=($IOS8_SIMULATORS)
-	echo ${A[$1]}
-}
 
 function rx() {
 	SCHEME=$1
@@ -88,17 +89,31 @@ function createDevices() {
 
 	xcrun simctl create RxSwiftTest-iPhone6-iOS_8.4 'iPhone 6' 'com.apple.CoreSimulator.SimRuntime.iOS-8-4'
 	xcrun simctl create RxSwiftTest-iPhone6Plus-iOS_8.4 'iPhone 6 Plus' 'com.apple.CoreSimulator.SimRuntime.iOS-8-4'
+
+	xcrun simctl create RxSwiftTest-iPhone4s-iOS_9.0 'iPhone 4s' 'com.apple.CoreSimulator.SimRuntime.iOS-9-0'
+	xcrun simctl create RxSwiftTest-iPhone5-iOS_9.0 'iPhone 5' 'com.apple.CoreSimulator.SimRuntime.iOS-9-0'
+	xcrun simctl create RxSwiftTest-iPhone5s-iOS_9.0 'iPhone 5s' 'com.apple.CoreSimulator.SimRuntime.iOS-9-0'
+
+	xcrun simctl create RxSwiftTest-iPhone6-iOS_9.0 'iPhone 6' 'com.apple.CoreSimulator.SimRuntime.iOS-9-0'
+	xcrun simctl create RxSwiftTest-iPhone6Plus-iOS_9.0 'iPhone 6 Plus' 'com.apple.CoreSimulator.SimRuntime.iOS-9-0'
 }
 
 function deleteDevices() {
-	xcrun simctl delete RxSwiftTest-iPhone4s-iOS_7.1 || echo "fail"
-	xcrun simctl delete RxSwiftTest-iPhone5-iOS_7.1 || echo "fail"
-	xcrun simctl delete RxSwiftTest-iPhone5s-iOS_7.1 || echo "fail"
+	xcrun simctl delete RxSwiftTest-iPhone4s-iOS_7.1 || echo "failed"
+	xcrun simctl delete RxSwiftTest-iPhone5-iOS_7.1 || echo "failed"
+	xcrun simctl delete RxSwiftTest-iPhone5s-iOS_7.1 || echo "failed"
 
-	xcrun simctl delete RxSwiftTest-iPhone4s-iOS_8.4 || echo "fail"
-	xcrun simctl delete RxSwiftTest-iPhone5-iOS_8.4 || echo "fail"
-	xcrun simctl delete RxSwiftTest-iPhone5s-iOS_8.4 || echo "fail"
+	xcrun simctl delete RxSwiftTest-iPhone4s-iOS_8.4 || echo "failed"
+	xcrun simctl delete RxSwiftTest-iPhone5-iOS_8.4 || echo "failed"
+	xcrun simctl delete RxSwiftTest-iPhone5s-iOS_8.4 || echo "failed"
 
-	xcrun simctl delete RxSwiftTest-iPhone6-iOS_8.4 || echo "fail"
-	xcrun simctl delete RxSwiftTest-iPhone6Plus-iOS_8.4 || echo "fail"
+	xcrun simctl delete RxSwiftTest-iPhone6-iOS_8.4 || echo "failed"
+	xcrun simctl delete RxSwiftTest-iPhone6Plus-iOS_8.4 || echo "failed"
+
+	xcrun simctl delete RxSwiftTest-iPhone4s-iOS_9.0 || echo "failed"
+	xcrun simctl delete RxSwiftTest-iPhone5-iOS_9.0 || echo "failed"
+	xcrun simctl delete RxSwiftTest-iPhone5s-iOS_9.0 || echo "failed"
+
+	xcrun simctl delete RxSwiftTest-iPhone6-iOS_9.0 || echo "failed"
+	xcrun simctl delete RxSwiftTest-iPhone6Plus-iOS_9.0 || echo "failed"
 }

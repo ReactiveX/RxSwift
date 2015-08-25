@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum EditEvent : Printable {
+enum EditEvent : CustomStringConvertible {
     case Inserted           // can't be found in old sections
     case Deleted            // Was in old, not in new, in it's place is something "not new" :(, otherwise it's Updated
     case Moved              // same item, but was on different index, and needs explicit move
@@ -33,7 +33,7 @@ enum EditEvent : Printable {
     }
 }
 
-struct SectionAdditionalInfo : Printable {
+struct SectionAdditionalInfo : CustomStringConvertible {
     var event: EditEvent
     var indexAfterDelete: Int?
     
@@ -44,7 +44,7 @@ struct SectionAdditionalInfo : Printable {
     }
 }
 
-struct ItemAdditionalInfo : Printable {
+struct ItemAdditionalInfo : CustomStringConvertible {
     var event: EditEvent
     var indexAfterDelete: Int?
     
@@ -57,7 +57,7 @@ struct ItemAdditionalInfo : Printable {
 
 func indexSections<S: SectionModelType where S: Hashable, S.Item: Hashable>(sections: [S]) -> [S : Int] {
     var indexedSections: [S : Int] = [:]
-    for (i, section) in enumerate(sections) {
+    for (i, section) in sections.enumerate() {
         precondition(indexedSections[section] == nil, "Section \(section) has already been indexed at \(indexedSections[section]!)")
         indexedSections[section] = i
     }
@@ -75,7 +75,7 @@ func indexSectionItems<S: SectionModelType where S: Hashable, S.Item: Hashable>(
     var indexedItems: [S.Item : (Int, Int)] = Dictionary(minimumCapacity: totalItems * 3)
     
     for i in 0 ..< sections.count {
-        for (j, item) in enumerate(sections[i].items) {
+        for (j, item) in sections[i].items.enumerate() {
             precondition(indexedItems[item] == nil, "Item \(item) has already been indexed at \(indexedItems[item]!)" )
             indexedItems[item] = (i, j)
         }
@@ -221,8 +221,6 @@ func differentiate<S: SectionModelType where S: Hashable, S.Item: Hashable>(
     var newAndMovedSections = Changeset<S>()
     var newAndMovedItems = Changeset<S>()
         
-    let minSectionsLength = min(initialSections.count, finalSections.count)
- 
     var initialSectionInfos = [SectionAdditionalInfo](count: initialSections.count, repeatedValue: SectionAdditionalInfo(event: .Untouched,  indexAfterDelete: nil))
     var finalSectionInfos = [SectionAdditionalInfo](count: finalSections.count, repeatedValue: SectionAdditionalInfo(event: .Untouched, indexAfterDelete: nil))
     
@@ -247,7 +245,7 @@ func differentiate<S: SectionModelType where S: Hashable, S.Item: Hashable>(
     // mark deleted sections {
     // 1rst stage
     var sectionIndexAfterDelete = 0
-    for (i, initialSection) in enumerate(initialSections) {
+    for (i, initialSection) in initialSections.enumerate() {
         if finalSectionIndexes[initialSection] == nil {
             initialSectionInfos[i].event = .Deleted
             deletes.deletedSections.append(i)
@@ -280,7 +278,7 @@ func differentiate<S: SectionModelType where S: Hashable, S.Item: Hashable>(
     // inserted and moved sections {
     // this should fix all sections and move them into correct places
     // 2nd stage
-    for (i, finalSection) in enumerate(finalSections) {
+    for (i, finalSection) in finalSections.enumerate() {
         untouchedOldIndex = findNextUntouchedOldIndex(untouchedOldIndex)
         
         // oh, it did exist
@@ -304,7 +302,7 @@ func differentiate<S: SectionModelType where S: Hashable, S.Item: Hashable>(
     
     // mark deleted items {
     // 1rst stage again (I know, I know ...)
-    for (i, initialSection) in enumerate(initialSections) {
+    for (i, initialSection) in initialSections.enumerate() {
         let event = initialSectionInfos[i].event
         
         // Deleted section will take care of deleting child items.
@@ -315,7 +313,7 @@ func differentiate<S: SectionModelType where S: Hashable, S.Item: Hashable>(
         }
         
         var indexAfterDelete = 0
-        for (j, initialItem) in enumerate(initialSection.items) {
+        for (j, initialItem) in initialSection.items.enumerate() {
             if let finalItemIndex = finalItemIndexes[initialItem] {
                 let targetSectionEvent = finalSectionInfos[finalItemIndex.0].event
                 // In case there is move of item from existing section into new section
@@ -341,10 +339,10 @@ func differentiate<S: SectionModelType where S: Hashable, S.Item: Hashable>(
     
     // mark new and moved items {
     // 3rd stage
-    for (i, finalSection) in enumerate(finalSections) {
+    for (i, _) in finalSections.enumerate() {
         let finalSection = finalSections[i]
         
-        var originalSection: Int? = initialSectionIndexes[finalSection]
+        let originalSection: Int? = initialSectionIndexes[finalSection]
         
         var untouchedOldIndex: Int? = 0
         let findNextUntouchedOldIndex = { (initialSearchIndex: Int?) -> Int? in
@@ -367,7 +365,7 @@ func differentiate<S: SectionModelType where S: Hashable, S.Item: Hashable>(
             continue
         }
         
-        for (j, finalItem) in enumerate(finalSection.items) {
+        for (j, finalItem) in finalSection.items.enumerate() {
             let currentItemEvent = finalItemInfos[i][j].event
             
             precondition(currentItemEvent == .Untouched)
@@ -390,16 +388,13 @@ func differentiate<S: SectionModelType where S: Hashable, S.Item: Hashable>(
                 else {
                     precondition(initialSectionInfos[originalIndex.0].event == .Moved || initialSectionInfos[originalIndex.0].event == .MovedAutomatically)
                     
-                    let currentItemSectionIndexAfterDelete = initialSectionInfos[originalIndex.0].indexAfterDelete!
-                    let currentItemIndexAfterDelete = initialItemInfos[originalIndex.0][originalIndex.1].indexAfterDelete!
-                    
                     let eventType =
                            originalIndex.0 == (originalSection ?? -1)
                         && originalIndex.1 == (untouchedOldIndex ?? -1)
                         
                         ? EditEvent.MovedAutomatically : EditEvent.Moved
                     
-                    // println("\(finalItem) \(eventType) \(originalIndex), \(originalSection) \(untouchedOldIndex)")
+                    // print("\(finalItem) \(eventType) \(originalIndex), \(originalSection) \(untouchedOldIndex)")
                     
                     initialItemInfos[originalIndex.0][originalIndex.1].event = eventType
                     finalItemInfos[i][j].event = eventType
@@ -429,13 +424,13 @@ func differentiate<S: SectionModelType where S: Hashable, S.Item: Hashable>(
     
     if deletes.deletedItems.count > 0 || deletes.deletedSections.count > 0 {
         deletes.finalSections = []
-        for (i, s) in enumerate(initialSections) {
+        for (i, s) in initialSections.enumerate() {
             if initialSectionInfos[i].event == .Deleted {
                 continue
             }
             
             var items: [I] = []
-            for (j, item) in enumerate(s.items) {
+            for (j, item) in s.items.enumerate() {
                 if initialItemInfos[i][j].event != .Deleted {
                     items.append(item)
                 }
@@ -448,7 +443,7 @@ func differentiate<S: SectionModelType where S: Hashable, S.Item: Hashable>(
     if newAndMovedSections.insertedSections.count > 0 || newAndMovedSections.movedSections.count > 0 || newAndMovedSections.updatedSections.count != 0 {
         // sections should be in place, but items should be original without deleted ones
         newAndMovedSections.finalSections = []
-        for (i, s) in enumerate(finalSections) {
+        for (i, s) in finalSections.enumerate() {
             let event = finalSectionInfos[i].event
             
             if event == .Inserted {
@@ -460,7 +455,7 @@ func differentiate<S: SectionModelType where S: Hashable, S.Item: Hashable>(
                 let originalSection = initialSections[originalSectionIndex]
                 
                 var items: [I] = []
-                for (j, item) in enumerate(originalSection.items) {
+                for (j, item) in originalSection.items.enumerate() {
                     if initialItemInfos[originalSectionIndex][j].event != .Deleted {
                         items.append(item)
                     }

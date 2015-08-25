@@ -14,9 +14,9 @@ import RxCocoa
 class RxCocoaTest : RxTest {
 #if !RELEASE
     func testRxError() {
-        let result = _rxError(RxCocoaError.NetworkError, "my bad", ["a": 1])
+        let result = _rxError(RxCocoaError.NetworkError, message: "my bad", userInfo: ["a": 1])
         
-        let dUserInfo = NSDictionary(dictionary: result.userInfo!)
+        let dUserInfo = NSDictionary(dictionary: result.userInfo)
         XCTAssertTrue(dUserInfo.isEqualToDictionary([NSLocalizedDescriptionKey: "my bad", "a" : 1]))
     }
 #endif

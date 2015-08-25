@@ -1,4 +1,3 @@
-. scripts/common.sh
 
 IS_LOCAL=0
 if [ "$#" -eq 1 ]; then
@@ -6,24 +5,33 @@ if [ "$#" -eq 1 ]; then
 	IS_LOCAL=1
 else
 	# ios 7 sim
-	if [ `xcrun simctl list | grep "${DEFAULT_IOS7_SIMULATOR}" | wc -l` == 0 ]; then
-		xcrun simctl create $DEFAULT_IOS7_SIMULATOR 'iPhone 4s' 'com.apple.CoreSimulator.SimRuntime.iOS-7-1'
-	else
-		echo "${DEFAULT_IOS7_SIMULATOR} exists"
-	fi
+	#if [ `xcrun simctl list | grep "${DEFAULT_IOS7_SIMULATOR}" | wc -l` == 0 ]; then
+	#	xcrun simctl create $DEFAULT_IOS7_SIMULATOR 'iPhone 4s' 'com.apple.CoreSimulator.SimRuntime.iOS-7-1'
+	#else
+	#	echo "${DEFAULT_IOS7_SIMULATOR} exists"
+	#fi
 
 	#ios 8 sim
-	if [ `xcrun simctl list | grep "${DEFAULT_IOS8_SIMULATOR}" | wc -l` == 0 ]; then
-		xcrun simctl create $DEFAULT_IOS8_SIMULATOR 'iPhone 6' 'com.apple.CoreSimulator.SimRuntime.iOS-8-4'
+	#if [ `xcrun simctl list | grep "${DEFAULT_IOS8_SIMULATOR}" | wc -l` == 0 ]; then
+	#	xcrun simctl create $DEFAULT_IOS8_SIMULATOR 'iPhone 6' 'com.apple.CoreSimulator.SimRuntime.iOS-8-4'
+	#else
+	#	echo "${DEFAULT_IOS8_SIMULATOR} exists"
+	#fi
+
+	#ios 9 sim
+	if [ `xcrun simctl list | grep "${DEFAULT_IOS9_SIMULATOR}" | wc -l` == 0 ]; then
+		xcrun simctl create $DEFAULT_IOS9_SIMULATOR 'iPhone 6' 'com.apple.CoreSimulator.SimRuntime.iOS-9-0'
 	else
-		echo "${DEFAULT_IOS8_SIMULATOR} exists"
+		echo "${DEFAULT_IOS9_SIMULATOR} exists"
 	fi
 fi
+
+ISLOCAL="${IS_LOCAL}" . scripts/common.sh
 
 #make sure all iOS tests pass
 for configuration in "Debug" "Release-Tests" "Release"
 do
-	rx "RxTests-iOS" ${configuration} $DEFAULT_IOS8_SIMULATOR test
+	rx "RxTests-iOS" ${configuration} $DEFAULT_IOS9_SIMULATOR test
 done
 
 #make sure all OSX tests pass
@@ -37,8 +45,9 @@ for scheme in "RxExample-iOS-no-module"
 do
 	for configuration in "Debug" "Release-Tests" "Release"
 	do
-		rx ${scheme} ${configuration} $DEFAULT_IOS7_SIMULATOR build
-		rx ${scheme} ${configuration} $DEFAULT_IOS8_SIMULATOR build
+		#rx ${scheme} ${configuration} $DEFAULT_IOS7_SIMULATOR build
+		#rx ${scheme} ${configuration} $DEFAULT_IOS8_SIMULATOR build
+		rx ${scheme} ${configuration} $DEFAULT_IOS9_SIMULATOR build
 	done
 done
 
@@ -47,7 +56,7 @@ for scheme in "RxExample-iOS"
 do
 	for configuration in "Debug" "Release-Tests" "Release"
 	do
-	rx ${scheme} ${configuration} $DEFAULT_IOS8_SIMULATOR build
+	rx ${scheme} ${configuration} $DEFAULT_IOS9_SIMULATOR build
 	done
 done
 

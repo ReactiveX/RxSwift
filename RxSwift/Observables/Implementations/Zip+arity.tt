@@ -1,0 +1,96 @@
+//
+//  Zip+arity.tt
+//  RxSwift
+//
+//  Created by Krunoslav Zaher on 5/23/15.
+//  Copyright (c) 2015 Krunoslav Zaher. All rights reserved.
+//
+
+import Foundation
+
+<% for i in 2 ... 8 { %>
+
+// <%= i %>
+
+public func zip<<%= ", ".join(Array(1...i).map { "O\($0): ObservableType" }) %>, R>
+    (<%= ", _ ".join(Array(1...i).map { "source\($0): O\($0)" }) %>, _ resultSelector: (<%= ", ".join(Array(1...i).map { "O\($0).E" }) %>) throws -> R)
+    -> Observable<R> {
+    return Zip<%= i %>(
+        <%= ", ".join(Array(1...i).map { "source\($0): source\($0).asObservable()" }) %>,
+        resultSelector: resultSelector
+    )
+}
+
+class ZipSink<%= i %>_<<%= ", ".join(Array(1...i).map { "E\($0)" }) %>, O: ObserverType> : ZipSink<O> {
+    typealias R = O.E
+    typealias Parent = Zip<%= i %><<%= ", ".join(Array(1...i).map { "E\($0)" }) %>, R>
+
+    let parent: Parent
+
+<%= "\n".join(Array(1...i).map {
+"    var values\($0): Queue<E\($0)> = Queue(capacity: 2)"
+}) %>
+
+    init(parent: Parent, observer: O, cancel: Disposable) {
+        self.parent = parent
+        super.init(arity: <%= i %>, observer: observer, cancel: cancel)
+    }
+
+    override func hasElements(index: Int) -> Bool {
+        switch (index) {
+<%= "".join(Array(0..<i).map {
+"        case \($0): return values\($0 + 1).count > 0\n"
+}) %>
+        default:
+            rxFatalError("Unhandled case \(index)")
+        }
+
+        return false
+    }
+
+    func run() -> Disposable {
+<%= "\n".join(Array(1...i).map {
+"        let subscription\($0) = SingleAssignmentDisposable()"
+}) %>
+
+<%= "\n".join(Array(1...i).map {
+"        let observer\($0) = ZipObserver(lock: lock, parent: self, index: \($0 - 1), setNextValue: { self.values\($0).enqueue($0) }, this: subscription\($0))"
+}) %>
+
+<%= "\n".join(Array(1...i).map {
+"        subscription\($0).disposable = parent.source\($0).subscribeSafe(observer\($0))" })
+%>
+
+        return CompositeDisposable(disposables: [
+<%= ",\n".join(Array(1...i).map { "           subscription\($0)" }) %>
+        ])
+    }
+
+    override func getResult() throws -> R {
+        return try self.parent.resultSelector(<%= ", ".join(Array(1...i).map { "values\($0).dequeue()" }) %>)
+    }
+}
+
+class Zip<%= i %><<%= ", ".join(Array(1...i).map { "E\($0)" }) %>, R> : Producer<R> {
+    typealias ResultSelector = (<%= ", ".join(Array(1...i).map { "E\($0)" }) %>) throws -> R
+
+<%= "\n".join(Array(1...i).map { "    let source\($0): Observable<E\($0)>" }) %>
+
+    let resultSelector: ResultSelector
+
+    init(<%= ", ".join(Array(1...i).map { "source\($0): Observable<E\($0)>" }) %>, resultSelector: ResultSelector) {
+<%= "\n".join(Array(1...i).map {
+"        self.source\($0) = source\($0)" })
+%>
+
+        self.resultSelector = resultSelector
+    }
+
+    override func run<O: ObserverType where O.E == R>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
+        let sink = ZipSink<%= i %>_(parent: self, observer: observer, cancel: cancel)
+        setSink(sink)
+        return sink.run()
+    }
+}
+
+<% } %>

@@ -13,10 +13,10 @@ import RxSwift
 import RxCocoa
 #endif
 
-struct ItemPath : Printable {
+struct ItemPath : CustomStringConvertible {
     let sectionIndex: Int
     let itemIndex: Int
-    
+
     var description : String {
         get {
             return "(\(sectionIndex), \(itemIndex))"
@@ -24,31 +24,31 @@ struct ItemPath : Printable {
     }
 }
 
-public struct Changeset<S: SectionModelType> : Printable {
+public struct Changeset<S: SectionModelType> : CustomStringConvertible {
     typealias I = S.Item
-    
+
     var finalSections: [S] = []
-    
+
     var insertedSections: [Int] = []
     var deletedSections: [Int] = []
     var movedSections: [(from: Int, to: Int)] = []
     var updatedSections: [Int] = []
-    
+
     var insertedItems: [ItemPath] = []
     var deletedItems: [ItemPath] = []
     var movedItems: [(from: ItemPath, to: ItemPath)] = []
     var updatedItems: [ItemPath] = []
-    
+
     public static func initialValue(sections: [S]) -> Changeset<S> {
         var initialValue = Changeset<S>()
         initialValue.insertedSections = Array(0 ..< sections.count)
         initialValue.finalSections = sections
         return initialValue
     }
-    
+
     public var description : String {
         get {
-            let serializedSections = "[\n" + ",\n".join(finalSections.map { "\($0)" }) + "\n]\n"
+            let serializedSections = "[\n" + finalSections.map { "\($0)" }.joinWithSeparator(",\n") + "\n]\n"
             return " >> Final sections"
             + "   \n\(serializedSections)"
             + (insertedSections.count > 0 || deletedSections.count > 0 || movedSections.count > 0 || updatedSections.count > 0 ? "\nSections:" : "")

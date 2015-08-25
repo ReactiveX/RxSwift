@@ -20,41 +20,41 @@ class RandomUserAPI {
     func getExampleUserResultSet() -> Observable<[User]> {
         let url = NSURL(string: "http://api.randomuser.me/?results=20")!
         return NSURLSession.sharedSession().rx_JSON(url)
-            >- observeSingleOn(Dependencies.sharedDependencies.backgroundWorkScheduler)
-            >- mapOrDie { json in
-                return castOrFail(json).flatMap { (json: [String: AnyObject]) in
-                    return self.parseJSON(json)
+            .observeSingleOn(Dependencies.sharedDependencies.backgroundWorkScheduler)
+            .map { json in
+                guard let json = json as? [String: AnyObject] else {
+                    throw exampleError("Casting to dictionary failed")
                 }
+                
+                return try self.parseJSON(json)
             }
-            >- observeSingleOn(Dependencies.sharedDependencies.mainScheduler)
+            .observeSingleOn(Dependencies.sharedDependencies.mainScheduler)
     }
     
-    private func parseJSON(json: [String: AnyObject]) -> RxResult<[User]> {
-        let results = json["results"] as? [[String: AnyObject]]
-        let users = results?.map { $0["user"] as? [String: AnyObject] }
+    private func parseJSON(json: [String: AnyObject]) throws -> [User] {
+        guard let results = json["results"] as? [[String: AnyObject]] else {
+            throw exampleError("Can't find results")
+        }
         
-        let error = NSError(domain: "UserAPI", code: 0, userInfo: nil)
+        let users = results.map { $0["user"] as? [String: AnyObject] }.filter { $0 != nil }
         
-        if let users = users {
-            let searchResults: [RxResult<User>] = users.map { user in
-                let name = user?["name"] as? [String: String]
-                let pictures = user?["picture"] as? [String: String]
-                
-                if let firstName = name?["first"], let lastName = name?["last"], let imageURL = pictures?["medium"] {
-                    let returnUser = User(firstName: firstName.uppercaseFirstCharacter(),
-                        lastName: lastName.uppercaseFirstCharacter(),
-                        imageURL: imageURL)
-                    return success(returnUser)
-                }
-                else {
-                    return failure(error)
-                }
+        let userParsingError = exampleError("Can't parse user")
+        
+        let searchResults: [RxResult<User>] = users.map { user in
+            let name = user?["name"] as? [String: String]
+            let pictures = user?["picture"] as? [String: String]
+            
+            guard let firstName = name?["first"], let lastName = name?["last"], let imageURL = pictures?["medium"] else {
+                return failure(userParsingError)
             }
             
-            let values = (searchResults.filter { $0.isSuccess }).map { $0.get() }
-            return success(values)
+            let returnUser = User(firstName: firstName.capitalizedString,
+                lastName: lastName.capitalizedString,
+                imageURL: imageURL)
+            return success(returnUser)
         }
-        return failure(error)
+        
+        let values = (searchResults.filter { $0.isSuccess }).map { $0.get() }
+        return values
     }
-    
 }

@@ -20,12 +20,13 @@ extension ObservableMultipleTest {
 
     func testZip_ImmediateSchedule2() {
         
-        let v0: Observable<Int> = returnElement(1)
-        let v1: Observable<Int> = returnElement(2)
+        let v0: Observable<Int> = just(1)
+        let v1: Observable<Int> = just(2)
 
         var result: Int! = nil
 
-        let d = zip(v0, v1) { (a0, a1) in a0 + a1 } >- subscribeNext { result = $0 }
+        let _ = zip(v0, v1) { (a0: Int, a1: Int) -> Int in a0 + a1 }
+            .subscribeNext { (x: Int) -> Void in result = x }
 
         XCTAssertEqual(result, 3)
     }
@@ -109,7 +110,7 @@ extension ObservableMultipleTest {
 
         let res = scheduler.start { () -> Observable<Int> in
             let result: Observable<Int> = zip(e0, e1) { (_0, _1) -> Int in
-                return (_0 + _1) 
+                return (_0 + _1)
             }
 
             return result
@@ -147,7 +148,7 @@ extension ObservableMultipleTest {
 
         let res = scheduler.start { () -> Observable<Int> in
             let result: Observable<Int> = zip(e0, e1) { (_0, _1) -> Int in
-                return (_0 + _1) 
+                return (_0 + _1)
             }
 
             return result
@@ -171,13 +172,14 @@ extension ObservableMultipleTest {
 
     func testZip_ImmediateSchedule3() {
         
-        let v0: Observable<Int> = returnElement(1)
-        let v1: Observable<Int> = returnElement(2)
-        let v2: Observable<Int> = returnElement(3)
+        let v0: Observable<Int> = just(1)
+        let v1: Observable<Int> = just(2)
+        let v2: Observable<Int> = just(3)
 
         var result: Int! = nil
 
-        let d = zip(v0, v1, v2) { (a0, a1, a2) in a0 + a1 + a2 } >- subscribeNext { result = $0 }
+        let _ = zip(v0, v1, v2) { (a0: Int, a1: Int, a2: Int) -> Int in a0 + a1 + a2 }
+            .subscribeNext { (x: Int) -> Void in result = x }
 
         XCTAssertEqual(result, 6)
     }
@@ -277,7 +279,7 @@ extension ObservableMultipleTest {
 
         let res = scheduler.start { () -> Observable<Int> in
             let result: Observable<Int> = zip(e0, e1, e2) { (_0, _1, _2) -> Int in
-                return (_0 + _1 + _2) 
+                return (_0 + _1 + _2)
             }
 
             return result
@@ -325,7 +327,7 @@ extension ObservableMultipleTest {
 
         let res = scheduler.start { () -> Observable<Int> in
             let result: Observable<Int> = zip(e0, e1, e2) { (_0, _1, _2) -> Int in
-                return (_0 + _1 + _2) 
+                return (_0 + _1 + _2)
             }
 
             return result
@@ -350,14 +352,15 @@ extension ObservableMultipleTest {
 
     func testZip_ImmediateSchedule4() {
         
-        let v0: Observable<Int> = returnElement(1)
-        let v1: Observable<Int> = returnElement(2)
-        let v2: Observable<Int> = returnElement(3)
-        let v3: Observable<Int> = returnElement(4)
+        let v0: Observable<Int> = just(1)
+        let v1: Observable<Int> = just(2)
+        let v2: Observable<Int> = just(3)
+        let v3: Observable<Int> = just(4)
 
         var result: Int! = nil
 
-        let d = zip(v0, v1, v2, v3) { (a0, a1, a2, a3) in a0 + a1 + a2 + a3 } >- subscribeNext { result = $0 }
+        let _ = zip(v0, v1, v2, v3) { (a0: Int, a1: Int, a2: Int, a3: Int) -> Int in a0 + a1 + a2 + a3 }
+            .subscribeNext { (x: Int) -> Void in result = x }
 
         XCTAssertEqual(result, 10)
     }
@@ -473,7 +476,7 @@ extension ObservableMultipleTest {
 
         let res = scheduler.start { () -> Observable<Int> in
             let result: Observable<Int> = zip(e0, e1, e2, e3) { (_0, _1, _2, _3) -> Int in
-                return (_0 + _1 + _2 + _3) 
+                return (_0 + _1 + _2 + _3)
             }
 
             return result
@@ -532,7 +535,7 @@ extension ObservableMultipleTest {
 
         let res = scheduler.start { () -> Observable<Int> in
             let result: Observable<Int> = zip(e0, e1, e2, e3) { (_0, _1, _2, _3) -> Int in
-                return (_0 + _1 + _2 + _3) 
+                return (_0 + _1 + _2 + _3)
             }
 
             return result
@@ -558,15 +561,16 @@ extension ObservableMultipleTest {
 
     func testZip_ImmediateSchedule5() {
         
-        let v0: Observable<Int> = returnElement(1)
-        let v1: Observable<Int> = returnElement(2)
-        let v2: Observable<Int> = returnElement(3)
-        let v3: Observable<Int> = returnElement(4)
-        let v4: Observable<Int> = returnElement(5)
+        let v0: Observable<Int> = just(1)
+        let v1: Observable<Int> = just(2)
+        let v2: Observable<Int> = just(3)
+        let v3: Observable<Int> = just(4)
+        let v4: Observable<Int> = just(5)
 
         var result: Int! = nil
 
-        let d = zip(v0, v1, v2, v3, v4) { (a0, a1, a2, a3, a4) in a0 + a1 + a2 + a3 + a4 } >- subscribeNext { result = $0 }
+        let _ = zip(v0, v1, v2, v3, v4) { (a0: Int, a1: Int, a2: Int, a3: Int, a4: Int) -> Int in a0 + a1 + a2 + a3 + a4 }
+            .subscribeNext { (x: Int) -> Void in result = x }
 
         XCTAssertEqual(result, 15)
     }
@@ -698,7 +702,7 @@ extension ObservableMultipleTest {
 
         let res = scheduler.start { () -> Observable<Int> in
             let result: Observable<Int> = zip(e0, e1, e2, e3, e4) { (_0, _1, _2, _3, _4) -> Int in
-                return (_0 + _1 + _2 + _3 + _4) 
+                return (_0 + _1 + _2 + _3 + _4)
             }
 
             return result
@@ -769,7 +773,7 @@ extension ObservableMultipleTest {
 
         let res = scheduler.start { () -> Observable<Int> in
             let result: Observable<Int> = zip(e0, e1, e2, e3, e4) { (_0, _1, _2, _3, _4) -> Int in
-                return (_0 + _1 + _2 + _3 + _4) 
+                return (_0 + _1 + _2 + _3 + _4)
             }
 
             return result
@@ -796,16 +800,17 @@ extension ObservableMultipleTest {
 
     func testZip_ImmediateSchedule6() {
         
-        let v0: Observable<Int> = returnElement(1)
-        let v1: Observable<Int> = returnElement(2)
-        let v2: Observable<Int> = returnElement(3)
-        let v3: Observable<Int> = returnElement(4)
-        let v4: Observable<Int> = returnElement(5)
-        let v5: Observable<Int> = returnElement(6)
+        let v0: Observable<Int> = just(1)
+        let v1: Observable<Int> = just(2)
+        let v2: Observable<Int> = just(3)
+        let v3: Observable<Int> = just(4)
+        let v4: Observable<Int> = just(5)
+        let v5: Observable<Int> = just(6)
 
         var result: Int! = nil
 
-        let d = zip(v0, v1, v2, v3, v4, v5) { (a0, a1, a2, a3, a4, a5) in a0 + a1 + a2 + a3 + a4 + a5 } >- subscribeNext { result = $0 }
+        let _ = zip(v0, v1, v2, v3, v4, v5) { (a0: Int, a1: Int, a2: Int, a3: Int, a4: Int, a5: Int) -> Int in a0 + a1 + a2 + a3 + a4 + a5 }
+            .subscribeNext { (x: Int) -> Void in result = x }
 
         XCTAssertEqual(result, 21)
     }
@@ -953,7 +958,7 @@ extension ObservableMultipleTest {
 
         let res = scheduler.start { () -> Observable<Int> in
             let result: Observable<Int> = zip(e0, e1, e2, e3, e4, e5) { (_0, _1, _2, _3, _4, _5) -> Int in
-                return (_0 + _1 + _2 + _3 + _4 + _5) 
+                return (_0 + _1 + _2 + _3 + _4 + _5)
             }
 
             return result
@@ -1037,7 +1042,7 @@ extension ObservableMultipleTest {
 
         let res = scheduler.start { () -> Observable<Int> in
             let result: Observable<Int> = zip(e0, e1, e2, e3, e4, e5) { (_0, _1, _2, _3, _4, _5) -> Int in
-                return (_0 + _1 + _2 + _3 + _4 + _5) 
+                return (_0 + _1 + _2 + _3 + _4 + _5)
             }
 
             return result
@@ -1065,17 +1070,18 @@ extension ObservableMultipleTest {
 
     func testZip_ImmediateSchedule7() {
         
-        let v0: Observable<Int> = returnElement(1)
-        let v1: Observable<Int> = returnElement(2)
-        let v2: Observable<Int> = returnElement(3)
-        let v3: Observable<Int> = returnElement(4)
-        let v4: Observable<Int> = returnElement(5)
-        let v5: Observable<Int> = returnElement(6)
-        let v6: Observable<Int> = returnElement(7)
+        let v0: Observable<Int> = just(1)
+        let v1: Observable<Int> = just(2)
+        let v2: Observable<Int> = just(3)
+        let v3: Observable<Int> = just(4)
+        let v4: Observable<Int> = just(5)
+        let v5: Observable<Int> = just(6)
+        let v6: Observable<Int> = just(7)
 
         var result: Int! = nil
 
-        let d = zip(v0, v1, v2, v3, v4, v5, v6) { (a0, a1, a2, a3, a4, a5, a6) in a0 + a1 + a2 + a3 + a4 + a5 + a6 } >- subscribeNext { result = $0 }
+        let _ = zip(v0, v1, v2, v3, v4, v5, v6) { (a0: Int, a1: Int, a2: Int, a3: Int, a4: Int, a5: Int, a6: Int) -> Int in a0 + a1 + a2 + a3 + a4 + a5 + a6 }
+            .subscribeNext { (x: Int) -> Void in result = x }
 
         XCTAssertEqual(result, 28)
     }
@@ -1239,7 +1245,7 @@ extension ObservableMultipleTest {
 
         let res = scheduler.start { () -> Observable<Int> in
             let result: Observable<Int> = zip(e0, e1, e2, e3, e4, e5, e6) { (_0, _1, _2, _3, _4, _5, _6) -> Int in
-                return (_0 + _1 + _2 + _3 + _4 + _5 + _6) 
+                return (_0 + _1 + _2 + _3 + _4 + _5 + _6)
             }
 
             return result
@@ -1337,7 +1343,7 @@ extension ObservableMultipleTest {
 
         let res = scheduler.start { () -> Observable<Int> in
             let result: Observable<Int> = zip(e0, e1, e2, e3, e4, e5, e6) { (_0, _1, _2, _3, _4, _5, _6) -> Int in
-                return (_0 + _1 + _2 + _3 + _4 + _5 + _6) 
+                return (_0 + _1 + _2 + _3 + _4 + _5 + _6)
             }
 
             return result
@@ -1366,18 +1372,19 @@ extension ObservableMultipleTest {
 
     func testZip_ImmediateSchedule8() {
         
-        let v0: Observable<Int> = returnElement(1)
-        let v1: Observable<Int> = returnElement(2)
-        let v2: Observable<Int> = returnElement(3)
-        let v3: Observable<Int> = returnElement(4)
-        let v4: Observable<Int> = returnElement(5)
-        let v5: Observable<Int> = returnElement(6)
-        let v6: Observable<Int> = returnElement(7)
-        let v7: Observable<Int> = returnElement(8)
+        let v0: Observable<Int> = just(1)
+        let v1: Observable<Int> = just(2)
+        let v2: Observable<Int> = just(3)
+        let v3: Observable<Int> = just(4)
+        let v4: Observable<Int> = just(5)
+        let v5: Observable<Int> = just(6)
+        let v6: Observable<Int> = just(7)
+        let v7: Observable<Int> = just(8)
 
         var result: Int! = nil
 
-        let d = zip(v0, v1, v2, v3, v4, v5, v6, v7) { (a0, a1, a2, a3, a4, a5, a6, a7) in a0 + a1 + a2 + a3 + a4 + a5 + a6 + a7 } >- subscribeNext { result = $0 }
+        let _ = zip(v0, v1, v2, v3, v4, v5, v6, v7) { (a0: Int, a1: Int, a2: Int, a3: Int, a4: Int, a5: Int, a6: Int, a7: Int) -> Int in a0 + a1 + a2 + a3 + a4 + a5 + a6 + a7 }
+            .subscribeNext { (x: Int) -> Void in result = x }
 
         XCTAssertEqual(result, 36)
     }
@@ -1557,7 +1564,7 @@ extension ObservableMultipleTest {
 
         let res = scheduler.start { () -> Observable<Int> in
             let result: Observable<Int> = zip(e0, e1, e2, e3, e4, e5, e6, e7) { (_0, _1, _2, _3, _4, _5, _6, _7) -> Int in
-                return (_0 + _1 + _2 + _3 + _4 + _5 + _6 + _7) 
+                return (_0 + _1 + _2 + _3 + _4 + _5 + _6 + _7)
             }
 
             return result
@@ -1670,7 +1677,7 @@ extension ObservableMultipleTest {
 
         let res = scheduler.start { () -> Observable<Int> in
             let result: Observable<Int> = zip(e0, e1, e2, e3, e4, e5, e6, e7) { (_0, _1, _2, _3, _4, _5, _6, _7) -> Int in
-                return (_0 + _1 + _2 + _3 + _4 + _5 + _6 + _7) 
+                return (_0 + _1 + _2 + _3 + _4 + _5 + _6 + _7)
             }
 
             return result
@@ -1690,777 +1697,6 @@ extension ObservableMultipleTest {
         XCTAssertEqual(e5.subscriptions, [Subscription(200, 270)])
         XCTAssertEqual(e6.subscriptions, [Subscription(200, 280)])
         XCTAssertEqual(e7.subscriptions, [Subscription(200, 280)])
-    }
-
-
-
-    
-
-    // 9
-
-    func testZip_ImmediateSchedule9() {
-        
-        let v0: Observable<Int> = returnElement(1)
-        let v1: Observable<Int> = returnElement(2)
-        let v2: Observable<Int> = returnElement(3)
-        let v3: Observable<Int> = returnElement(4)
-        let v4: Observable<Int> = returnElement(5)
-        let v5: Observable<Int> = returnElement(6)
-        let v6: Observable<Int> = returnElement(7)
-        let v7: Observable<Int> = returnElement(8)
-        let v8: Observable<Int> = returnElement(9)
-
-        var result: Int! = nil
-
-        let d = zip(v0, v1, v2, v3, v4, v5, v6, v7, v8) { (a0, a1, a2, a3, a4, a5, a6, a7, a8) in a0 + a1 + a2 + a3 + a4 + a5 + a6 + a7 + a8 } >- subscribeNext { result = $0 }
-
-        XCTAssertEqual(result, 45)
-    }
-
-    func testZip_Never9() {
-        let scheduler = TestScheduler(initialClock: 0)
-
-        
-        let e0 = scheduler.createHotObservable([
-            next(150, 1)
-        ])
-        
-        let e1 = scheduler.createHotObservable([
-            next(150, 1)
-        ])
-        
-        let e2 = scheduler.createHotObservable([
-            next(150, 1)
-        ])
-        
-        let e3 = scheduler.createHotObservable([
-            next(150, 1)
-        ])
-        
-        let e4 = scheduler.createHotObservable([
-            next(150, 1)
-        ])
-        
-        let e5 = scheduler.createHotObservable([
-            next(150, 1)
-        ])
-        
-        let e6 = scheduler.createHotObservable([
-            next(150, 1)
-        ])
-        
-        let e7 = scheduler.createHotObservable([
-            next(150, 1)
-        ])
-        
-        let e8 = scheduler.createHotObservable([
-            next(150, 1)
-        ])
-        
-
-        let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = zip(e0, e1, e2, e3, e4, e5, e6, e7, e8) { (_, _, _, _, _, _, _, _, _) -> Int in
-                return (42)
-            }
-
-            return result
-        }
-
-        XCTAssertEqual(res.messages, [])
-
-        let subscriptions = [Subscription(200, 1000)]
-
-
-        XCTAssertEqual(e0.subscriptions, subscriptions)
-        XCTAssertEqual(e1.subscriptions, subscriptions)
-        XCTAssertEqual(e2.subscriptions, subscriptions)
-        XCTAssertEqual(e3.subscriptions, subscriptions)
-        XCTAssertEqual(e4.subscriptions, subscriptions)
-        XCTAssertEqual(e5.subscriptions, subscriptions)
-        XCTAssertEqual(e6.subscriptions, subscriptions)
-        XCTAssertEqual(e7.subscriptions, subscriptions)
-        XCTAssertEqual(e8.subscriptions, subscriptions)
-    }
-
-    func testZip_Empty9() {
-        let scheduler = TestScheduler(initialClock: 0)
-
-        
-        let e0: HotObservable<Int> = scheduler.createHotObservable([
-            completed(210)
-        ])
-        
-        let e1: HotObservable<Int> = scheduler.createHotObservable([
-            completed(220)
-        ])
-        
-        let e2: HotObservable<Int> = scheduler.createHotObservable([
-            completed(230)
-        ])
-        
-        let e3: HotObservable<Int> = scheduler.createHotObservable([
-            completed(240)
-        ])
-        
-        let e4: HotObservable<Int> = scheduler.createHotObservable([
-            completed(250)
-        ])
-        
-        let e5: HotObservable<Int> = scheduler.createHotObservable([
-            completed(260)
-        ])
-        
-        let e6: HotObservable<Int> = scheduler.createHotObservable([
-            completed(270)
-        ])
-        
-        let e7: HotObservable<Int> = scheduler.createHotObservable([
-            completed(280)
-        ])
-        
-        let e8: HotObservable<Int> = scheduler.createHotObservable([
-            completed(290)
-        ])
-        
-
-        let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = zip(e0, e1, e2, e3, e4, e5, e6, e7, e8) { (_, _, _, _, _, _, _, _, _) -> Int in
-                return (42)
-            }
-
-            return result
-        }
-
-        XCTAssertEqual(res.messages, [
-            completed(290)
-        ])
-
-
-        XCTAssertEqual(e0.subscriptions, [Subscription(200, 210)])
-        XCTAssertEqual(e1.subscriptions, [Subscription(200, 220)])
-        XCTAssertEqual(e2.subscriptions, [Subscription(200, 230)])
-        XCTAssertEqual(e3.subscriptions, [Subscription(200, 240)])
-        XCTAssertEqual(e4.subscriptions, [Subscription(200, 250)])
-        XCTAssertEqual(e5.subscriptions, [Subscription(200, 260)])
-        XCTAssertEqual(e6.subscriptions, [Subscription(200, 270)])
-        XCTAssertEqual(e7.subscriptions, [Subscription(200, 280)])
-        XCTAssertEqual(e8.subscriptions, [Subscription(200, 290)])
-    }
-
-    func testZip_SymmetricReturn9() {
-        let scheduler = TestScheduler(initialClock: 0)
-
-        
-        let e0: HotObservable<Int> = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 1),
-            completed(400)
-        ])
-        
-        let e1: HotObservable<Int> = scheduler.createHotObservable([
-            next(150, 1),
-            next(220, 2),
-            completed(400)
-        ])
-        
-        let e2: HotObservable<Int> = scheduler.createHotObservable([
-            next(150, 1),
-            next(230, 3),
-            completed(400)
-        ])
-        
-        let e3: HotObservable<Int> = scheduler.createHotObservable([
-            next(150, 1),
-            next(240, 4),
-            completed(400)
-        ])
-        
-        let e4: HotObservable<Int> = scheduler.createHotObservable([
-            next(150, 1),
-            next(250, 5),
-            completed(400)
-        ])
-        
-        let e5: HotObservable<Int> = scheduler.createHotObservable([
-            next(150, 1),
-            next(260, 6),
-            completed(400)
-        ])
-        
-        let e6: HotObservable<Int> = scheduler.createHotObservable([
-            next(150, 1),
-            next(270, 7),
-            completed(400)
-        ])
-        
-        let e7: HotObservable<Int> = scheduler.createHotObservable([
-            next(150, 1),
-            next(280, 8),
-            completed(400)
-        ])
-        
-        let e8: HotObservable<Int> = scheduler.createHotObservable([
-            next(150, 1),
-            next(290, 9),
-            completed(400)
-        ])
-        
-
-        let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = zip(e0, e1, e2, e3, e4, e5, e6, e7, e8) { (_0, _1, _2, _3, _4, _5, _6, _7, _8) -> Int in
-                return (_0 + _1 + _2 + _3 + _4 + _5 + _6 + _7 + _8) 
-            }
-
-            return result
-        }
-
-        XCTAssertEqual(res.messages, [
-            next(290, 45),
-            completed(400)
-        ])
-
-
-        XCTAssertEqual(e0.subscriptions, [Subscription(200, 400)])
-        XCTAssertEqual(e1.subscriptions, [Subscription(200, 400)])
-        XCTAssertEqual(e2.subscriptions, [Subscription(200, 400)])
-        XCTAssertEqual(e3.subscriptions, [Subscription(200, 400)])
-        XCTAssertEqual(e4.subscriptions, [Subscription(200, 400)])
-        XCTAssertEqual(e5.subscriptions, [Subscription(200, 400)])
-        XCTAssertEqual(e6.subscriptions, [Subscription(200, 400)])
-        XCTAssertEqual(e7.subscriptions, [Subscription(200, 400)])
-        XCTAssertEqual(e8.subscriptions, [Subscription(200, 400)])
-    }
-
-    func testZip_AllCompleted9() {
-        let scheduler = TestScheduler(initialClock: 0)
-
-        
-        let e0: HotObservable<Int> = scheduler.createHotObservable([
-            next(150, 1),
- 
-            next(210, 5),
-            completed(220)
-        ])
-        
-        let e1: HotObservable<Int> = scheduler.createHotObservable([
-            next(150, 1),
- 
-            next(210, 5), 
-            next(220, 6),
-            completed(230)
-        ])
-        
-        let e2: HotObservable<Int> = scheduler.createHotObservable([
-            next(150, 1),
- 
-            next(210, 5), 
-            next(220, 6), 
-            next(230, 7),
-            completed(240)
-        ])
-        
-        let e3: HotObservable<Int> = scheduler.createHotObservable([
-            next(150, 1),
- 
-            next(210, 5), 
-            next(220, 6), 
-            next(230, 7), 
-            next(240, 8),
-            completed(250)
-        ])
-        
-        let e4: HotObservable<Int> = scheduler.createHotObservable([
-            next(150, 1),
- 
-            next(210, 5), 
-            next(220, 6), 
-            next(230, 7), 
-            next(240, 8), 
-            next(250, 9),
-            completed(260)
-        ])
-        
-        let e5: HotObservable<Int> = scheduler.createHotObservable([
-            next(150, 1),
- 
-            next(210, 5), 
-            next(220, 6), 
-            next(230, 7), 
-            next(240, 8), 
-            next(250, 9), 
-            next(260, 10),
-            completed(270)
-        ])
-        
-        let e6: HotObservable<Int> = scheduler.createHotObservable([
-            next(150, 1),
- 
-            next(210, 5), 
-            next(220, 6), 
-            next(230, 7), 
-            next(240, 8), 
-            next(250, 9), 
-            next(260, 10), 
-            next(270, 11),
-            completed(280)
-        ])
-        
-        let e7: HotObservable<Int> = scheduler.createHotObservable([
-            next(150, 1),
- 
-            next(210, 5), 
-            next(220, 6), 
-            next(230, 7), 
-            next(240, 8), 
-            next(250, 9), 
-            next(260, 10), 
-            next(270, 11), 
-            next(280, 12),
-            completed(290)
-        ])
-        
-        let e8: HotObservable<Int> = scheduler.createHotObservable([
-            next(150, 1),
- 
-            next(210, 5), 
-            next(220, 6), 
-            next(230, 7), 
-            next(240, 8), 
-            next(250, 9), 
-            next(260, 10), 
-            next(270, 11), 
-            next(280, 12), 
-            next(290, 13),
-            completed(300)
-        ])
-        
-
-        let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = zip(e0, e1, e2, e3, e4, e5, e6, e7, e8) { (_0, _1, _2, _3, _4, _5, _6, _7, _8) -> Int in
-                return (_0 + _1 + _2 + _3 + _4 + _5 + _6 + _7 + _8) 
-            }
-
-            return result
-        }
-
-        XCTAssertEqual(res.messages, [
-            next(210, 45),
-            completed(290)
-        ])
-
-
-        XCTAssertEqual(e0.subscriptions, [Subscription(200, 220)])
-        XCTAssertEqual(e1.subscriptions, [Subscription(200, 230)])
-        XCTAssertEqual(e2.subscriptions, [Subscription(200, 240)])
-        XCTAssertEqual(e3.subscriptions, [Subscription(200, 250)])
-        XCTAssertEqual(e4.subscriptions, [Subscription(200, 260)])
-        XCTAssertEqual(e5.subscriptions, [Subscription(200, 270)])
-        XCTAssertEqual(e6.subscriptions, [Subscription(200, 280)])
-        XCTAssertEqual(e7.subscriptions, [Subscription(200, 290)])
-        XCTAssertEqual(e8.subscriptions, [Subscription(200, 290)])
-    }
-
-
-
-    
-
-    // 10
-
-    func testZip_ImmediateSchedule10() {
-        
-        let v0: Observable<Int> = returnElement(1)
-        let v1: Observable<Int> = returnElement(2)
-        let v2: Observable<Int> = returnElement(3)
-        let v3: Observable<Int> = returnElement(4)
-        let v4: Observable<Int> = returnElement(5)
-        let v5: Observable<Int> = returnElement(6)
-        let v6: Observable<Int> = returnElement(7)
-        let v7: Observable<Int> = returnElement(8)
-        let v8: Observable<Int> = returnElement(9)
-        let v9: Observable<Int> = returnElement(10)
-
-        var result: Int! = nil
-
-        let d = zip(v0, v1, v2, v3, v4, v5, v6, v7, v8, v9) { (a0, a1, a2, a3, a4, a5, a6, a7, a8, a9) in a0 + a1 + a2 + a3 + a4 + a5 + a6 + a7 + a8 + a9 } >- subscribeNext { result = $0 }
-
-        XCTAssertEqual(result, 55)
-    }
-
-    func testZip_Never10() {
-        let scheduler = TestScheduler(initialClock: 0)
-
-        
-        let e0 = scheduler.createHotObservable([
-            next(150, 1)
-        ])
-        
-        let e1 = scheduler.createHotObservable([
-            next(150, 1)
-        ])
-        
-        let e2 = scheduler.createHotObservable([
-            next(150, 1)
-        ])
-        
-        let e3 = scheduler.createHotObservable([
-            next(150, 1)
-        ])
-        
-        let e4 = scheduler.createHotObservable([
-            next(150, 1)
-        ])
-        
-        let e5 = scheduler.createHotObservable([
-            next(150, 1)
-        ])
-        
-        let e6 = scheduler.createHotObservable([
-            next(150, 1)
-        ])
-        
-        let e7 = scheduler.createHotObservable([
-            next(150, 1)
-        ])
-        
-        let e8 = scheduler.createHotObservable([
-            next(150, 1)
-        ])
-        
-        let e9 = scheduler.createHotObservable([
-            next(150, 1)
-        ])
-        
-
-        let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = zip(e0, e1, e2, e3, e4, e5, e6, e7, e8, e9) { (_, _, _, _, _, _, _, _, _, _) -> Int in
-                return (42)
-            }
-
-            return result
-        }
-
-        XCTAssertEqual(res.messages, [])
-
-        let subscriptions = [Subscription(200, 1000)]
-
-
-        XCTAssertEqual(e0.subscriptions, subscriptions)
-        XCTAssertEqual(e1.subscriptions, subscriptions)
-        XCTAssertEqual(e2.subscriptions, subscriptions)
-        XCTAssertEqual(e3.subscriptions, subscriptions)
-        XCTAssertEqual(e4.subscriptions, subscriptions)
-        XCTAssertEqual(e5.subscriptions, subscriptions)
-        XCTAssertEqual(e6.subscriptions, subscriptions)
-        XCTAssertEqual(e7.subscriptions, subscriptions)
-        XCTAssertEqual(e8.subscriptions, subscriptions)
-        XCTAssertEqual(e9.subscriptions, subscriptions)
-    }
-
-    func testZip_Empty10() {
-        let scheduler = TestScheduler(initialClock: 0)
-
-        
-        let e0: HotObservable<Int> = scheduler.createHotObservable([
-            completed(210)
-        ])
-        
-        let e1: HotObservable<Int> = scheduler.createHotObservable([
-            completed(220)
-        ])
-        
-        let e2: HotObservable<Int> = scheduler.createHotObservable([
-            completed(230)
-        ])
-        
-        let e3: HotObservable<Int> = scheduler.createHotObservable([
-            completed(240)
-        ])
-        
-        let e4: HotObservable<Int> = scheduler.createHotObservable([
-            completed(250)
-        ])
-        
-        let e5: HotObservable<Int> = scheduler.createHotObservable([
-            completed(260)
-        ])
-        
-        let e6: HotObservable<Int> = scheduler.createHotObservable([
-            completed(270)
-        ])
-        
-        let e7: HotObservable<Int> = scheduler.createHotObservable([
-            completed(280)
-        ])
-        
-        let e8: HotObservable<Int> = scheduler.createHotObservable([
-            completed(290)
-        ])
-        
-        let e9: HotObservable<Int> = scheduler.createHotObservable([
-            completed(300)
-        ])
-        
-
-        let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = zip(e0, e1, e2, e3, e4, e5, e6, e7, e8, e9) { (_, _, _, _, _, _, _, _, _, _) -> Int in
-                return (42)
-            }
-
-            return result
-        }
-
-        XCTAssertEqual(res.messages, [
-            completed(300)
-        ])
-
-
-        XCTAssertEqual(e0.subscriptions, [Subscription(200, 210)])
-        XCTAssertEqual(e1.subscriptions, [Subscription(200, 220)])
-        XCTAssertEqual(e2.subscriptions, [Subscription(200, 230)])
-        XCTAssertEqual(e3.subscriptions, [Subscription(200, 240)])
-        XCTAssertEqual(e4.subscriptions, [Subscription(200, 250)])
-        XCTAssertEqual(e5.subscriptions, [Subscription(200, 260)])
-        XCTAssertEqual(e6.subscriptions, [Subscription(200, 270)])
-        XCTAssertEqual(e7.subscriptions, [Subscription(200, 280)])
-        XCTAssertEqual(e8.subscriptions, [Subscription(200, 290)])
-        XCTAssertEqual(e9.subscriptions, [Subscription(200, 300)])
-    }
-
-    func testZip_SymmetricReturn10() {
-        let scheduler = TestScheduler(initialClock: 0)
-
-        
-        let e0: HotObservable<Int> = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 1),
-            completed(400)
-        ])
-        
-        let e1: HotObservable<Int> = scheduler.createHotObservable([
-            next(150, 1),
-            next(220, 2),
-            completed(400)
-        ])
-        
-        let e2: HotObservable<Int> = scheduler.createHotObservable([
-            next(150, 1),
-            next(230, 3),
-            completed(400)
-        ])
-        
-        let e3: HotObservable<Int> = scheduler.createHotObservable([
-            next(150, 1),
-            next(240, 4),
-            completed(400)
-        ])
-        
-        let e4: HotObservable<Int> = scheduler.createHotObservable([
-            next(150, 1),
-            next(250, 5),
-            completed(400)
-        ])
-        
-        let e5: HotObservable<Int> = scheduler.createHotObservable([
-            next(150, 1),
-            next(260, 6),
-            completed(400)
-        ])
-        
-        let e6: HotObservable<Int> = scheduler.createHotObservable([
-            next(150, 1),
-            next(270, 7),
-            completed(400)
-        ])
-        
-        let e7: HotObservable<Int> = scheduler.createHotObservable([
-            next(150, 1),
-            next(280, 8),
-            completed(400)
-        ])
-        
-        let e8: HotObservable<Int> = scheduler.createHotObservable([
-            next(150, 1),
-            next(290, 9),
-            completed(400)
-        ])
-        
-        let e9: HotObservable<Int> = scheduler.createHotObservable([
-            next(150, 1),
-            next(300, 10),
-            completed(400)
-        ])
-        
-
-        let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = zip(e0, e1, e2, e3, e4, e5, e6, e7, e8, e9) { (_0, _1, _2, _3, _4, _5, _6, _7, _8, _9) -> Int in
-                return (_0 + _1 + _2 + _3 + _4 + _5 + _6 + _7 + _8 + _9) 
-            }
-
-            return result
-        }
-
-        XCTAssertEqual(res.messages, [
-            next(300, 55),
-            completed(400)
-        ])
-
-
-        XCTAssertEqual(e0.subscriptions, [Subscription(200, 400)])
-        XCTAssertEqual(e1.subscriptions, [Subscription(200, 400)])
-        XCTAssertEqual(e2.subscriptions, [Subscription(200, 400)])
-        XCTAssertEqual(e3.subscriptions, [Subscription(200, 400)])
-        XCTAssertEqual(e4.subscriptions, [Subscription(200, 400)])
-        XCTAssertEqual(e5.subscriptions, [Subscription(200, 400)])
-        XCTAssertEqual(e6.subscriptions, [Subscription(200, 400)])
-        XCTAssertEqual(e7.subscriptions, [Subscription(200, 400)])
-        XCTAssertEqual(e8.subscriptions, [Subscription(200, 400)])
-        XCTAssertEqual(e9.subscriptions, [Subscription(200, 400)])
-    }
-
-    func testZip_AllCompleted10() {
-        let scheduler = TestScheduler(initialClock: 0)
-
-        
-        let e0: HotObservable<Int> = scheduler.createHotObservable([
-            next(150, 1),
- 
-            next(210, 5),
-            completed(220)
-        ])
-        
-        let e1: HotObservable<Int> = scheduler.createHotObservable([
-            next(150, 1),
- 
-            next(210, 5), 
-            next(220, 6),
-            completed(230)
-        ])
-        
-        let e2: HotObservable<Int> = scheduler.createHotObservable([
-            next(150, 1),
- 
-            next(210, 5), 
-            next(220, 6), 
-            next(230, 7),
-            completed(240)
-        ])
-        
-        let e3: HotObservable<Int> = scheduler.createHotObservable([
-            next(150, 1),
- 
-            next(210, 5), 
-            next(220, 6), 
-            next(230, 7), 
-            next(240, 8),
-            completed(250)
-        ])
-        
-        let e4: HotObservable<Int> = scheduler.createHotObservable([
-            next(150, 1),
- 
-            next(210, 5), 
-            next(220, 6), 
-            next(230, 7), 
-            next(240, 8), 
-            next(250, 9),
-            completed(260)
-        ])
-        
-        let e5: HotObservable<Int> = scheduler.createHotObservable([
-            next(150, 1),
- 
-            next(210, 5), 
-            next(220, 6), 
-            next(230, 7), 
-            next(240, 8), 
-            next(250, 9), 
-            next(260, 10),
-            completed(270)
-        ])
-        
-        let e6: HotObservable<Int> = scheduler.createHotObservable([
-            next(150, 1),
- 
-            next(210, 5), 
-            next(220, 6), 
-            next(230, 7), 
-            next(240, 8), 
-            next(250, 9), 
-            next(260, 10), 
-            next(270, 11),
-            completed(280)
-        ])
-        
-        let e7: HotObservable<Int> = scheduler.createHotObservable([
-            next(150, 1),
- 
-            next(210, 5), 
-            next(220, 6), 
-            next(230, 7), 
-            next(240, 8), 
-            next(250, 9), 
-            next(260, 10), 
-            next(270, 11), 
-            next(280, 12),
-            completed(290)
-        ])
-        
-        let e8: HotObservable<Int> = scheduler.createHotObservable([
-            next(150, 1),
- 
-            next(210, 5), 
-            next(220, 6), 
-            next(230, 7), 
-            next(240, 8), 
-            next(250, 9), 
-            next(260, 10), 
-            next(270, 11), 
-            next(280, 12), 
-            next(290, 13),
-            completed(300)
-        ])
-        
-        let e9: HotObservable<Int> = scheduler.createHotObservable([
-            next(150, 1),
- 
-            next(210, 5), 
-            next(220, 6), 
-            next(230, 7), 
-            next(240, 8), 
-            next(250, 9), 
-            next(260, 10), 
-            next(270, 11), 
-            next(280, 12), 
-            next(290, 13), 
-            next(300, 14),
-            completed(310)
-        ])
-        
-
-        let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = zip(e0, e1, e2, e3, e4, e5, e6, e7, e8, e9) { (_0, _1, _2, _3, _4, _5, _6, _7, _8, _9) -> Int in
-                return (_0 + _1 + _2 + _3 + _4 + _5 + _6 + _7 + _8 + _9) 
-            }
-
-            return result
-        }
-
-        XCTAssertEqual(res.messages, [
-            next(210, 50),
-            completed(300)
-        ])
-
-
-        XCTAssertEqual(e0.subscriptions, [Subscription(200, 220)])
-        XCTAssertEqual(e1.subscriptions, [Subscription(200, 230)])
-        XCTAssertEqual(e2.subscriptions, [Subscription(200, 240)])
-        XCTAssertEqual(e3.subscriptions, [Subscription(200, 250)])
-        XCTAssertEqual(e4.subscriptions, [Subscription(200, 260)])
-        XCTAssertEqual(e5.subscriptions, [Subscription(200, 270)])
-        XCTAssertEqual(e6.subscriptions, [Subscription(200, 280)])
-        XCTAssertEqual(e7.subscriptions, [Subscription(200, 290)])
-        XCTAssertEqual(e8.subscriptions, [Subscription(200, 300)])
-        XCTAssertEqual(e9.subscriptions, [Subscription(200, 300)])
     }
 
 
@@ -2984,7 +2220,7 @@ extension ObservableMultipleTest {
         ])
 
         let res = scheduler.start {
-            zipOrDie(o1, o2) { (_, _) -> RxResult<Int> in failure(testError) }
+            zip(o1, o2) { (_, _) throws -> Int in throw testError }
         }
    
         let messages: [Recorded<Int>] = [
@@ -3017,7 +2253,7 @@ extension ObservableMultipleTest {
         ])
 
         let res = scheduler.start {
-            zipOrDie(o2, o1) { (_, _) -> RxResult<Int> in failure(testError) }
+            zip(o2, o1) { (_, _) throws -> Int in throw testError }
         }
    
         let messages: [Recorded<Int>] = [

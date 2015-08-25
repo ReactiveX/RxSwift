@@ -29,21 +29,21 @@ class SearchResultViewModel {
         
         let URLs = configureImageURLs()
         
-        self.imageURLs = URLs >- catch([])
-        self.title = configureTitle(URLs) >- catch("Error during fetching")
+        self.imageURLs = URLs.catchError ([])
+        self.title = configureTitle(URLs).catchError("Error during fetching")
     }
     
     // private methods
     
     func configureTitle(imageURLs: Observable<[NSURL]>) -> Observable<String> {
-        var searchResult = self.searchResult
+        let searchResult = self.searchResult
        
         let loadingValue: [NSURL]? = nil
         
         return imageURLs
-            >- map { makeOptional($0) }
-            >- startWith(loadingValue)
-            >- map { URLs in
+            .map { makeOptional($0) }
+            .startWith(loadingValue)
+            .map { URLs in
                 if let URLs = URLs {
                     return "\(searchResult.title) (\(URLs.count)) pictures)"
                 }
@@ -56,11 +56,15 @@ class SearchResultViewModel {
     func configureImageURLs() -> Observable<[NSURL]> {
         let searchResult = self.searchResult
         return API.articleContent(searchResult)
-            >- observeSingleOn($.backgroundWorkScheduler)
-            >- map { page in
-                parseImageURLsfromHTMLSuitableForDisplay(page.text)
+            .observeSingleOn($.backgroundWorkScheduler)
+            .map { page in
+                do {
+                    return try parseImageURLsfromHTMLSuitableForDisplay(page.text)
+                } catch {
+                    return []
+                }
             }
-            >- observeSingleOn($.mainScheduler)
-            >- variable
+            .observeSingleOn($.mainScheduler)
+            .variable
     }
 }

@@ -19,10 +19,10 @@ class RxTableViewSectionedReloadDataSource<S: SectionModelType> : RxTableViewSec
     
     func tableView(tableView: UITableView, observedEvent: Event<Element>) {
         switch observedEvent {
-        case .Next(let boxedSections):
-            setSections(boxedSections.value)
+        case .Next(let element):
+            setSections(element)
             tableView.reloadData()
-        case .Error(let error):
+        case .Error(_):
         #if DEBUG
             fatalError("Binding error to UI")
         #endif

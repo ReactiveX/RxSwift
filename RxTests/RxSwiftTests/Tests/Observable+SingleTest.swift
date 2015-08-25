@@ -21,6 +21,8 @@ class ObservableSingleTest : RxTest {
 }
 
 // Creation
+// this is now part of interface 
+/*
 extension ObservableSingleTest {
     func testAsObservable_asObservable() {
         let scheduler = TestScheduler(initialClock: 0)
@@ -31,7 +33,7 @@ extension ObservableSingleTest {
             completed(250)
         ])
         
-        let ys = asObservable(xs)
+        let ys = xs.asObservable()
         
         XCTAssert(xs !== ys)
         
@@ -49,7 +51,7 @@ extension ObservableSingleTest {
     func testAsObservable_hides() {
         let xs : Observable<Int> = empty()
         
-        let res = asObservable(xs)
+        let res = xs.asObservable()
         
         XCTAssertTrue(res !== xs)
     }
@@ -68,6 +70,7 @@ extension ObservableSingleTest {
     
     // ...
 }
+*/
 
 // Distinct
 extension ObservableSingleTest {
@@ -83,7 +86,7 @@ extension ObservableSingleTest {
             completed(250)
         ])
         
-        let res = scheduler.start { xs >- distinctUntilChanged { $0 } }
+        let res = scheduler.start { xs.distinctUntilChanged { $0 } }
 
         let correctMessages = [
             next(210, 2),
@@ -117,7 +120,7 @@ extension ObservableSingleTest {
             ])
 
 
-        let res = scheduler.start { xs >- distinctUntilChanged { $0 } }
+        let res = scheduler.start { xs.distinctUntilChanged { $0 } }
         
         let correctMessages = [
             next(210, 2),
@@ -148,7 +151,7 @@ extension ObservableSingleTest {
             completed(250)
             ])
         
-        let res = scheduler.start { xs >- distinctUntilChanged { l, r in true } }
+        let res = scheduler.start { xs.distinctUntilChanged { l, r in true } }
         
         let correctMessages = [
             next(210, 2),
@@ -163,7 +166,113 @@ extension ObservableSingleTest {
         XCTAssertEqual(xs.subscriptions, correctSubscriptions)
     }
     
-    // ...
+    func testDistinctUntilChanged_allDifferent() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createHotObservable([
+            next(150, 1),
+            next(210, 2),
+            next(220, 2),
+            next(230, 2),
+            next(240, 2),
+            completed(250)
+            ])
+        
+        let res = scheduler.start { xs.distinctUntilChanged({ l, r in false }) }
+        
+        let correctMessages = [
+            next(210, 2),
+            next(220, 2),
+            next(230, 2),
+            next(240, 2),
+            completed(250)
+        ]
+        
+        let correctSubscriptions = [
+            Subscription(200, 250)
+        ]
+        
+        XCTAssertEqual(res.messages, correctMessages)
+        XCTAssertEqual(xs.subscriptions, correctSubscriptions)
+    }
+    
+    func testDistinctUntilChanged_keySelector_Div2() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createHotObservable([
+            next(150, 1),
+            next(210, 2),
+            next(220, 4),
+            next(230, 3),
+            next(240, 5),
+            completed(250)
+            ])
+        
+        let res = scheduler.start { xs.distinctUntilChanged({ $0 % 2 }) }
+        
+        let correctMessages = [
+            next(210, 2),
+            next(230, 3),
+            completed(250)
+        ]
+        
+        let correctSubscriptions = [
+            Subscription(200, 250)
+        ]
+        
+        XCTAssertEqual(res.messages, correctMessages)
+        XCTAssertEqual(xs.subscriptions, correctSubscriptions)
+    }
+    
+    func testDistinctUntilChanged_keySelectorThrows() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createHotObservable([
+            next(150, 1),
+            next(210, 2),
+            next(220, 3),
+            completed(250)
+            ])
+        
+        let res = scheduler.start { xs.distinctUntilChanged({ _ in throw testError }) }
+        
+        let correctMessages = [
+            next(210, 2),
+            error(220, testError)
+        ]
+        
+        let correctSubscriptions = [
+            Subscription(200, 220)
+        ]
+        
+        XCTAssertEqual(res.messages, correctMessages)
+        XCTAssertEqual(xs.subscriptions, correctSubscriptions)
+    }
+    
+    func testDistinctUntilChanged_comparerThrows() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createHotObservable([
+            next(150, 1),
+            next(210, 2),
+            next(220, 3),
+            completed(250)
+            ])
+        
+        let res = scheduler.start { xs.distinctUntilChanged({ $0 }, comparer: { _, _ in throw testError }) }
+        
+        let correctMessages = [
+            next(210, 2),
+            error(220, testError)
+        ]
+        
+        let correctSubscriptions = [
+            Subscription(200, 220)
+        ]
+        
+        XCTAssertEqual(res.messages, correctMessages)
+        XCTAssertEqual(xs.subscriptions, correctSubscriptions)
+    }
 }
 
 // Do 
@@ -182,9 +291,9 @@ extension ObservableSingleTest {
     
         var i = 0
         var sum = 2 + 3 + 4 + 5
-        let res = scheduler.start { xs >- `do` { e in
+        let res = scheduler.start { xs.doOn { e in
                 switch e {
-                case .Next(let value):
+                case .Next(let _):
                     i++
                     sum -= e.value ?? 0
                     
@@ -225,9 +334,9 @@ extension ObservableSingleTest {
             ])
         
         var i = 0
-        let res = scheduler.start { xs >- `do` { e in
+        let res = scheduler.start { xs.doOn { e in
             switch e {
-            case .Next(let value):
+            case .Next(_):
                 i++
             default: break
             }
@@ -267,11 +376,11 @@ extension ObservableSingleTest {
         var i = 0
         var sum = 2 + 3 + 4 + 5
         var completedEvaluation = false
-        let res = scheduler.start { xs >- `do` { e in
+        let res = scheduler.start { xs.doOn { e in
             switch e {
             case .Next(let value):
                 i++
-                sum -= value.value
+                sum -= value
             case .Completed:
                 completedEvaluation = true
             default: break
@@ -309,9 +418,9 @@ extension ObservableSingleTest {
         
         var i = 0
         var completedEvaluation = false
-        let res = scheduler.start { xs >- `do` { e in
+        let res = scheduler.start { xs.doOn { e in
             switch e {
-            case .Next(let value):
+            case .Next(_):
                 i++
             case .Completed:
                 completedEvaluation = true
@@ -349,11 +458,11 @@ extension ObservableSingleTest {
         var i = 0
         var sum = 2 + 3 + 4 + 5
         var sawError = false
-        let res = scheduler.start { xs >- `do` { e in
+        let res = scheduler.start { xs.doOn { e in
             switch e {
             case .Next(let value):
                 i++
-                sum -= value.value
+                sum -= value
             case .Error:
                 sawError = true
             default: break
@@ -396,11 +505,11 @@ extension ObservableSingleTest {
         var i = 0
         var sum = 2 + 3 + 4 + 5
         var sawError = false
-        let res = scheduler.start { xs >- `do` { e in
+        let res = scheduler.start { xs.doOn { e in
             switch e {
             case .Next(let value):
                 i++
-                sum -= value.value
+                sum -= value
             case .Error:
                 sawError = true
             default: break
@@ -428,7 +537,31 @@ extension ObservableSingleTest {
         XCTAssertEqual(xs.subscriptions, correctSubscriptions)
     }
     
-    // ...
+    func testDo_Throws() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createHotObservable([
+            next(150, 1),
+            next(210, 2),
+            completed(250)
+            ])
+        
+        let res = scheduler.start { xs.doOn { _ in
+                throw testError
+            }
+        }
+        
+        let correctMessages = [
+            error(210, testError) as Recorded<Int>
+        ]
+        
+        let correctSubscriptions = [
+            Subscription(200, 210)
+        ]
+        
+        XCTAssertEqual(res.messages, correctMessages)
+        XCTAssertEqual(xs.subscriptions, correctSubscriptions)
+    }
 }
 
 // retry
@@ -444,7 +577,7 @@ extension ObservableSingleTest {
             ])
         
         let res = scheduler.start {
-            xs >- retry
+            xs.retry
         }
         
         XCTAssertEqual(res.messages, [
@@ -469,7 +602,7 @@ extension ObservableSingleTest {
             ])
         
         let res = scheduler.start {
-            xs >- retry
+            xs.retry
         }
         
         XCTAssertEqual(res.messages, [
@@ -494,7 +627,7 @@ extension ObservableSingleTest {
             ])
         
         let res = scheduler.start(1100) {
-            xs >- retry
+            xs.retry
         }
         
         XCTAssertEqual(res.messages, [
@@ -529,7 +662,7 @@ extension ObservableSingleTest {
             ])
         
         let res = scheduler.start {
-            xs >- retry(3)
+            xs.retry(3)
         }
         
         XCTAssertEqual(res.messages, [
@@ -563,7 +696,7 @@ extension ObservableSingleTest {
             ])
         
         let res = scheduler.start(231) {
-            xs >- retry(3)
+            xs.retry(3)
         }
         
         XCTAssertEqual(res.messages, [
@@ -591,7 +724,7 @@ extension ObservableSingleTest {
             ])
         
         let res = scheduler.start(231) {
-            xs >- retry(3)
+            xs.retry(3)
         }
         
         XCTAssertEqual(res.messages, [
@@ -619,7 +752,7 @@ extension ObservableSingleTest {
             ])
         
         let res = scheduler.start {
-            xs >- retry(3)
+            xs.retry(3)
         }
         
         XCTAssertEqual(res.messages, [
@@ -645,10 +778,10 @@ extension ObservableSingleTest {
             next(0, 0)
             ])
         
-        var seed = 42
+        let seed = 42
         
         let res = scheduler.start {
-            xs >- scan(seed) { $0 + $1 }
+            xs.scan(seed) { $0 + $1 }
         }
         
         XCTAssertEqual(res.messages, [
@@ -667,10 +800,10 @@ extension ObservableSingleTest {
             completed(250)
             ])
         
-        var seed = 42
+        let seed = 42
         
         let res = scheduler.start {
-            xs >- scan(seed) { $0 + $1 }
+            xs.scan(seed) { $0 + $1 }
         }
         
         XCTAssertEqual(res.messages, [
@@ -691,10 +824,10 @@ extension ObservableSingleTest {
             completed(250)
             ])
         
-        var seed = 42
+        let seed = 42
         
         let res = scheduler.start {
-            xs >- scan(seed) { $0 + $1 }
+            xs.scan(seed) { $0 + $1 }
         }
         
         XCTAssertEqual(res.messages, [
@@ -715,10 +848,10 @@ extension ObservableSingleTest {
             error(250, testError)
             ])
         
-        var seed = 42
+        let seed = 42
         
         let res = scheduler.start {
-            xs >- scan(seed) { $0 + $1 }
+            xs.scan(seed) { $0 + $1 }
         }
         
         XCTAssertEqual(res.messages, [
@@ -742,10 +875,10 @@ extension ObservableSingleTest {
             completed(250)
             ])
         
-        var seed = 42
+        let seed = 42
         
         let res = scheduler.start {
-            xs >- scan(seed) { $0 + $1 }
+            xs.scan(seed) { $0 + $1 }
         }
         
         let messages: [Recorded<Int>] = [
@@ -775,14 +908,14 @@ extension ObservableSingleTest {
             completed(250)
             ])
         
-        var seed = 42
+        let seed = 42
         
         let res = scheduler.start {
-            xs >- scanOrDie(seed) { (a, e) in
+            xs.scan(seed) { (a, e) in
                 if e == 4 {
-                    return failure(testError)
+                    throw testError
                 } else {
-                    return success(a + e)
+                    return a + e
                 }
             }
         }
