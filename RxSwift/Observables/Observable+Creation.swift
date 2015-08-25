@@ -33,6 +33,33 @@ public func never<E>() -> Observable<E> {
 
 // return
 
+/**
+The Just operator converts an item into an Observable that emits that item.
+
+Just is similar to `From`, but note that `From` will dive into an array or an iterable or something of that sort to pull out items to emit, while `Just` will simply emit the array or iterable or what-have-you as it is, unchanged, as a single item.
+
+- note: If you pass `nil` to `Just`, it will return an Observable that emits `nil` as an item. Do not make the mistake of assuming that this will return an empty Observable (one that emits no items at all). For that, you will need the `Empty` operator.
+
+- seeAlso:
+[ReactiveX.io/Just](http://reactivex.io/documentation/operators/just.html)
+
+```Swift
+// This example runs in a Playground
+let oneObservable = just("Just this string please!")
+
+let oneObservableSubscriber = oneObservable
+    .subscribe { event in
+        switch event {
+        case .Next(let value):
+        print("\(value)")
+        case .Completed:
+        print("completed")
+        case .Error(let error):
+        print("\(error)")
+    }
+```
+- returns: an Observable that emits a particular item
+*/
 public func just<E>(value: E) -> Observable<E> {
     return AnonymousObservable { observer in
         sendNext(observer, value)
@@ -76,5 +103,5 @@ public func failWith<E>(error: ErrorType) -> Observable<E> {
 
 public func deferred<E>(observableFactory: () throws -> Observable<E>)
     -> Observable<E> {
-    return Deferred(observableFactory: observableFactory)
+        return Deferred(observableFactory: observableFactory)
 }
