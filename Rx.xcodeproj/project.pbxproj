@@ -39,8 +39,6 @@
 		C8093CE01B8A72BE0088E94D /* DisposeBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C591B8A72BE0088E94D /* DisposeBase.swift */; };
 		C8093CE11B8A72BE0088E94D /* NAryDisposable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C5A1B8A72BE0088E94D /* NAryDisposable.swift */; };
 		C8093CE21B8A72BE0088E94D /* NAryDisposable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C5A1B8A72BE0088E94D /* NAryDisposable.swift */; };
-		C8093CE31B8A72BE0088E94D /* NAryDisposable.tt in Resources */ = {isa = PBXBuildFile; fileRef = C8093C5B1B8A72BE0088E94D /* NAryDisposable.tt */; };
-		C8093CE41B8A72BE0088E94D /* NAryDisposable.tt in Resources */ = {isa = PBXBuildFile; fileRef = C8093C5B1B8A72BE0088E94D /* NAryDisposable.tt */; };
 		C8093CE51B8A72BE0088E94D /* NopDisposable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C5C1B8A72BE0088E94D /* NopDisposable.swift */; };
 		C8093CE61B8A72BE0088E94D /* NopDisposable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C5C1B8A72BE0088E94D /* NopDisposable.swift */; };
 		C8093CE71B8A72BE0088E94D /* ScheduledDisposable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C5D1B8A72BE0088E94D /* ScheduledDisposable.swift */; };
@@ -61,8 +59,6 @@
 		C8093CF61B8A72BE0088E94D /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C641B8A72BE0088E94D /* Event.swift */; };
 		C8093CF71B8A72BE0088E94D /* ImmediateScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C651B8A72BE0088E94D /* ImmediateScheduler.swift */; };
 		C8093CF81B8A72BE0088E94D /* ImmediateScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C651B8A72BE0088E94D /* ImmediateScheduler.swift */; };
-		C8093CF91B8A72BE0088E94D /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C8093C661B8A72BE0088E94D /* Info.plist */; };
-		C8093CFA1B8A72BE0088E94D /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C8093C661B8A72BE0088E94D /* Info.plist */; };
 		C8093CFB1B8A72BE0088E94D /* Observable+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C671B8A72BE0088E94D /* Observable+Extensions.swift */; };
 		C8093CFC1B8A72BE0088E94D /* Observable+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C671B8A72BE0088E94D /* Observable+Extensions.swift */; };
 		C8093CFD1B8A72BE0088E94D /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C681B8A72BE0088E94D /* Observable.swift */; };
@@ -77,8 +73,6 @@
 		C8093D061B8A72BE0088E94D /* Catch.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C6E1B8A72BE0088E94D /* Catch.swift */; };
 		C8093D071B8A72BE0088E94D /* CombineLatest+arity.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C6F1B8A72BE0088E94D /* CombineLatest+arity.swift */; };
 		C8093D081B8A72BE0088E94D /* CombineLatest+arity.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C6F1B8A72BE0088E94D /* CombineLatest+arity.swift */; };
-		C8093D091B8A72BE0088E94D /* CombineLatest+arity.tt in Resources */ = {isa = PBXBuildFile; fileRef = C8093C701B8A72BE0088E94D /* CombineLatest+arity.tt */; };
-		C8093D0A1B8A72BE0088E94D /* CombineLatest+arity.tt in Resources */ = {isa = PBXBuildFile; fileRef = C8093C701B8A72BE0088E94D /* CombineLatest+arity.tt */; };
 		C8093D0B1B8A72BE0088E94D /* CombineLatest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C711B8A72BE0088E94D /* CombineLatest.swift */; };
 		C8093D0C1B8A72BE0088E94D /* CombineLatest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C711B8A72BE0088E94D /* CombineLatest.swift */; };
 		C8093D0D1B8A72BE0088E94D /* Concat.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C721B8A72BE0088E94D /* Concat.swift */; };
@@ -147,8 +141,6 @@
 		C8093D4C1B8A72BE0088E94D /* Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C911B8A72BE0088E94D /* Timer.swift */; };
 		C8093D4D1B8A72BE0088E94D /* Zip+arity.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C921B8A72BE0088E94D /* Zip+arity.swift */; };
 		C8093D4E1B8A72BE0088E94D /* Zip+arity.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C921B8A72BE0088E94D /* Zip+arity.swift */; };
-		C8093D4F1B8A72BE0088E94D /* Zip+arity.tt in Resources */ = {isa = PBXBuildFile; fileRef = C8093C931B8A72BE0088E94D /* Zip+arity.tt */; };
-		C8093D501B8A72BE0088E94D /* Zip+arity.tt in Resources */ = {isa = PBXBuildFile; fileRef = C8093C931B8A72BE0088E94D /* Zip+arity.tt */; };
 		C8093D511B8A72BE0088E94D /* Zip.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C941B8A72BE0088E94D /* Zip.swift */; };
 		C8093D521B8A72BE0088E94D /* Zip.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C941B8A72BE0088E94D /* Zip.swift */; };
 		C8093D531B8A72BE0088E94D /* Observable+Aggregate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C951B8A72BE0088E94D /* Observable+Aggregate.swift */; };
@@ -279,8 +271,6 @@
 		C8093EFC1B8A732E0088E94D /* RxCocoa.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093E9B1B8A732E0088E94D /* RxCocoa.swift */; };
 		C8093EFD1B8A732E0088E94D /* RxTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093E9C1B8A732E0088E94D /* RxTarget.swift */; };
 		C8093EFE1B8A732E0088E94D /* RxTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093E9C1B8A732E0088E94D /* RxTarget.swift */; };
-		C8093EFF1B8A732E0088E94D /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C8093E9D1B8A732E0088E94D /* Info.plist */; };
-		C8093F001B8A732E0088E94D /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C8093E9D1B8A732E0088E94D /* Info.plist */; };
 		C8093F461B8A732E0088E94D /* NSButton+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093EC61B8A732E0088E94D /* NSButton+Rx.swift */; };
 		C8093F481B8A732E0088E94D /* NSControl+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093EC71B8A732E0088E94D /* NSControl+Rx.swift */; };
 		C8093F4A1B8A732E0088E94D /* NSImageView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093EC81B8A732E0088E94D /* NSImageView+Rx.swift */; };
@@ -290,8 +280,6 @@
 		C8093F501B8A732E0088E94D /* RxCocoa.h in Headers */ = {isa = PBXBuildFile; fileRef = C8093ECB1B8A732E0088E94D /* RxCocoa.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C8093F5E1B8A73A20088E94D /* Observable+Blocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093F581B8A73A20088E94D /* Observable+Blocking.swift */; };
 		C8093F5F1B8A73A20088E94D /* Observable+Blocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093F581B8A73A20088E94D /* Observable+Blocking.swift */; };
-		C8093F621B8A73A20088E94D /* RxBlocking.h in Headers */ = {isa = PBXBuildFile; fileRef = C8093F5A1B8A73A20088E94D /* RxBlocking.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C8093F631B8A73A20088E94D /* RxBlocking.h in Headers */ = {isa = PBXBuildFile; fileRef = C8093F5A1B8A73A20088E94D /* RxBlocking.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C88254151B8A752B00B02D69 /* CoreDataEntityEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88253EF1B8A752B00B02D69 /* CoreDataEntityEvent.swift */; };
 		C88254161B8A752B00B02D69 /* RxCollectionViewReactiveArrayDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88253F11B8A752B00B02D69 /* RxCollectionViewReactiveArrayDataSource.swift */; };
 		C88254171B8A752B00B02D69 /* RxTableViewReactiveArrayDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88253F21B8A752B00B02D69 /* RxTableViewReactiveArrayDataSource.swift */; };
@@ -482,7 +470,6 @@
 		C8093ECB1B8A732E0088E94D /* RxCocoa.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RxCocoa.h; sourceTree = "<group>"; };
 		C8093F581B8A73A20088E94D /* Observable+Blocking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Observable+Blocking.swift"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		C8093F591B8A73A20088E94D /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		C8093F5A1B8A73A20088E94D /* RxBlocking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RxBlocking.h; sourceTree = "<group>"; };
 		C88253EF1B8A752B00B02D69 /* CoreDataEntityEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataEntityEvent.swift; sourceTree = "<group>"; };
 		C88253F11B8A752B00B02D69 /* RxCollectionViewReactiveArrayDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxCollectionViewReactiveArrayDataSource.swift; sourceTree = "<group>"; };
 		C88253F21B8A752B00B02D69 /* RxTableViewReactiveArrayDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxTableViewReactiveArrayDataSource.swift; sourceTree = "<group>"; };
@@ -838,7 +825,6 @@
 			children = (
 				C8093F581B8A73A20088E94D /* Observable+Blocking.swift */,
 				C8093F591B8A73A20088E94D /* README.md */,
-				C8093F5A1B8A73A20088E94D /* RxBlocking.h */,
 			);
 			path = RxBlocking;
 			sourceTree = "<group>";
@@ -970,7 +956,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C8093F621B8A73A20088E94D /* RxBlocking.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -978,7 +963,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C8093F631B8A73A20088E94D /* RxBlocking.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1149,7 +1133,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C8093EFF1B8A732E0088E94D /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1157,7 +1140,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C8093F001B8A732E0088E94D /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1179,10 +1161,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C8093CFA1B8A72BE0088E94D /* Info.plist in Resources */,
-				C8093D501B8A72BE0088E94D /* Zip+arity.tt in Resources */,
-				C8093CE41B8A72BE0088E94D /* NAryDisposable.tt in Resources */,
-				C8093D0A1B8A72BE0088E94D /* CombineLatest+arity.tt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1190,10 +1168,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C8093CF91B8A72BE0088E94D /* Info.plist in Resources */,
-				C8093D4F1B8A72BE0088E94D /* Zip+arity.tt in Resources */,
-				C8093CE31B8A72BE0088E94D /* NAryDisposable.tt in Resources */,
-				C8093D091B8A72BE0088E94D /* CombineLatest+arity.tt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
