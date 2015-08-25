@@ -48,7 +48,7 @@ public struct Changeset<S: SectionModelType> : CustomStringConvertible {
 
     public var description : String {
         get {
-            let serializedSections = "[\n" + ",\n".join(finalSections.map { "\($0)" }) + "\n]\n"
+            let serializedSections = "[\n" + finalSections.map { "\($0)" }.joinWithSeparator(",\n") + "\n]\n"
             return " >> Final sections"
             + "   \n\(serializedSections)"
             + (insertedSections.count > 0 || deletedSections.count > 0 || movedSections.count > 0 || updatedSections.count > 0 ? "\nSections:" : "")
