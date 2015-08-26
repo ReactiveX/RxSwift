@@ -11,21 +11,22 @@ import Foundation
 // switch
 
 extension ObservableType where E : ObservableType {
-    public var switchLatest: Observable<E.E> {
-        // swift doesn't have co/contravariance
+    public func switchLatest() -> Observable<E.E> {
         return Switch(sources: self.asObservable())
     }
 }
 
 // concat
 
-public func concat<O: ObservableType>(sources: [O])
-    -> Observable<O.E> {
-    return Concat(sources: LazySequence(sources).map { $0.asObservable() })
+extension SequenceType where Generator.Element : ObservableType {
+    public func concat()
+        -> Observable<Generator.Element.E> {
+        return Concat(sources: self)
+    }
 }
 
 extension ObservableType where E : ObservableType {
-    public var concat: Observable<E.E> {
+    public func concat() -> Observable<E.E> {
         return self.merge(maxConcurrent: 1)
     }
 }
@@ -33,7 +34,7 @@ extension ObservableType where E : ObservableType {
 // merge
 
 extension ObservableType where E : ObservableType {
-    public var merge: Observable<E.E> {
+    public func merge() -> Observable<E.E> {
         return Merge(sources: self.asObservable(), maxConcurrent: 0)
     }
 
@@ -46,18 +47,13 @@ extension ObservableType where E : ObservableType {
 // catch
 
 extension ObservableType {
-    public func catchErrorOrDie(handler: (ErrorType) throws -> Observable<E>)
-        -> Observable<E> {
-        return Catch(source: self.asObservable(), handler: handler)
-    }
-    
-    public func catchError(handler: (ErrorType) -> Observable<E>)
+    public func catchError(handler: (ErrorType) throws -> Observable<E>)
         -> Observable<E> {
         return Catch(source: self.asObservable(), handler: handler)
     }
 
     // In case of error sends `errorElementValue` and completes sequence
-    public func catchError(errorElementValue: E)
+    public func catchErrorResumeNext(errorElementValue: E)
         -> Observable<E> {
         return Catch(source: self.asObservable(), handler: { _ in just(errorElementValue) })
     }
@@ -69,10 +65,11 @@ extension ObservableType {
     }
 }
 
-public func catchError<E>(sources: AnySequence<Observable<E>>)
-    -> Observable<E> {
-    // just wrapping it in sequence of for now
-    return CatchSequence(sources: sources)
+extension SequenceType where Generator.Element : ObservableType {
+    public func catchError()
+        -> Observable<Generator.Element.E> {
+        return CatchSequence(sources: self)
+    }
 }
 
 // takeUntil
@@ -86,16 +83,19 @@ extension ObservableType {
 
 // amb
 
-public func amb<O: ObservableType>
-    (left: O, _ right: O)
-    -> Observable<O.E> {
-    return Amb(left: left.asObservable(), right: right.asObservable())
+extension ObservableType {
+    public func amb<O2: ObservableType where O2.E == E>
+        (right: O2)
+        -> Observable<E> {
+        return Amb(left: self.asObservable(), right: right.asObservable())
+    }
 }
 
-public func amb<O: ObservableType>
-    (observables: AnySequence<O>)
-    -> Observable<O.E> {
-    return observables.reduce(never()) { a, o in
-        return amb(a, o.asObservable())
+extension SequenceType where Generator.Element : ObservableType {
+    public func amb()
+        -> Observable<Generator.Element.E> {
+        return self.reduce(never()) { a, o in
+            return a.amb(o)
+        }
     }
 }

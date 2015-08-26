@@ -161,7 +161,7 @@ extension ObservableType {
         
         // we should never let the subscriber to complete because it should retain data source
         let source = sequenceOf(self.asObservable(), never()) as Observable<Observable<E>>
-        let subscription = source.concat.subscribe { (event: Event<E>) in
+        let subscription = source.concat().subscribe { (event: Event<E>) in
             MainScheduler.ensureExecutingOnScheduler()
             
             assert(proxy === P.currentDelegateFor(object), "Proxy changed from the time it was first set.\nOriginal: \(proxy)\nExisting: \(P.currentDelegateFor(object))")

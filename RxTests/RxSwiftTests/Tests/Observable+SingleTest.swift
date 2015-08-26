@@ -577,7 +577,7 @@ extension ObservableSingleTest {
             ])
         
         let res = scheduler.start {
-            xs.retry
+            xs.retry()
         }
         
         XCTAssertEqual(res.messages, [
@@ -602,7 +602,7 @@ extension ObservableSingleTest {
             ])
         
         let res = scheduler.start {
-            xs.retry
+            xs.retry()
         }
         
         XCTAssertEqual(res.messages, [
@@ -627,7 +627,7 @@ extension ObservableSingleTest {
             ])
         
         let res = scheduler.start(1100) {
-            xs.retry
+            xs.retry()
         }
         
         XCTAssertEqual(res.messages, [

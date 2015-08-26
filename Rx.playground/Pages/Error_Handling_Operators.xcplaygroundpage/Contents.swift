@@ -1,7 +1,7 @@
 //: [<< Previous](@previous) - [Index](Index)
 
 import RxSwift
-
+import Foundation
 /*:
 ## Error Handling Operators
 
@@ -54,7 +54,7 @@ example("catchError 2nd") {
     let observable1 = PublishSubject<Int>()
 
     observable1
-        .catchError(100)
+        .catchErrorResumeNext(100)
         .subscribe { event in
             switch event {
             case .Next(let value):
@@ -104,7 +104,7 @@ example("retry") {
     }
 
     observable
-        .retry
+        .retry()
         .subscribe { event in
             switch event {
             case .Next(let value):

@@ -14,6 +14,8 @@ All notable changes to this project will be documented in this file.
 * Changes in RxCocoa extensions to enable fluent style
 * Rename of `do*` to `tap*`
 * Deprecates `aggregate` in favor of `reduce`
+* Deprecates `variable` in favor of `shareReplay(1)` (to be consistent with RxJS version)
+
 
 #### Fixed
 

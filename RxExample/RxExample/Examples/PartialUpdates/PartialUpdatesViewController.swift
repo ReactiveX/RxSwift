@@ -171,7 +171,7 @@ class PartialUpdatesViewController : ViewController {
             .addDisposableTo(disposeBag)
 
         sequenceOf(partialUpdatesTableViewOutlet.rx_itemSelected, reloadTableViewOutlet.rx_itemSelected)
-            .merge
+            .merge()
             .subscribeNext { [unowned self] i in
                 print("I have a feeling it's .... \(self.generator.sections[i.section].items[i.item])?")
             }

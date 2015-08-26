@@ -35,9 +35,9 @@ class SearchViewModel {
                 API.getSearchResults(query)
                     .retry(3)
                     .startWith([]) // clears results on new search term
-                    .catchError([])
+                    .catchErrorResumeNext([])
             }
-            .switchLatest
+            .switchLatest()
             .map { results in
                 results.map {
                     SearchResultViewModel(

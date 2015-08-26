@@ -25,7 +25,7 @@ example("concat") {
     let var3 = BehaviorSubject(value: var1)
     
     let d = var3
-        .concat
+        .concat()
         .subscribeNext { (e: Int) -> Void in
             print("\(e)")
         }

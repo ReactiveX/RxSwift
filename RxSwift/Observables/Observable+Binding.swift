@@ -29,7 +29,7 @@ extension ObservableType {
 // publish
 
 extension ObservableType {
-    public var publish: ConnectableObservable<PublishSubject<E>> {
+    public func publish() -> ConnectableObservable<PublishSubject<E>> {
         return self.multicast(PublishSubject())
     }
 }
@@ -46,7 +46,7 @@ extension ObservableType {
 // refcount
 
 extension ConnectableObservableType {
-    public var refCount: Observable<E> {
+    public func refCount() -> Observable<E> {
         return RefCount(source: self)
     }
 }
@@ -54,8 +54,8 @@ extension ConnectableObservableType {
 // share 
 
 extension ObservableType {
-    public var share: Observable<E> {
-        return self.publish.refCount
+    public func share() -> Observable<E> {
+        return self.publish().refCount()
     }
 }
 
@@ -64,15 +64,6 @@ extension ObservableType {
 extension ObservableType {
     public func shareReplay(bufferSize: Int)
         -> Observable<E> {
-        return self.replay(bufferSize).refCount
-    }
-}
-
-// variable
-
-extension ObservableType {
-    // variable is alias for `shareReplay(1)`
-    public var variable: Observable<E> {
-        return self.replay(1).refCount
+        return self.replay(bufferSize).refCount()
     }
 }

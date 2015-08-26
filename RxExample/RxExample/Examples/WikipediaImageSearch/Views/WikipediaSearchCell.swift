@@ -45,7 +45,7 @@ public class WikipediaSearchCell: UITableViewCell {
                     
                     cell.image = self.imageService.imageFromURL(URL)
                         .map { $0 as UIImage? }
-                        .catchError(nil)
+                        .catchErrorResumeNext(nil)
                         .startWith(loadingPlaceholder)
                 }
                 .addDisposableTo(disposeBag)

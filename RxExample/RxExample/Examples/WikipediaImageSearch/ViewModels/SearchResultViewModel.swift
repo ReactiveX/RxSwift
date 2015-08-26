@@ -29,8 +29,8 @@ class SearchResultViewModel {
         
         let URLs = configureImageURLs()
         
-        self.imageURLs = URLs.catchError ([])
-        self.title = configureTitle(URLs).catchError("Error during fetching")
+        self.imageURLs = URLs.catchErrorResumeNext([])
+        self.title = configureTitle(URLs).catchErrorResumeNext("Error during fetching")
     }
     
     // private methods
@@ -65,6 +65,6 @@ class SearchResultViewModel {
                 }
             }
             .observeSingleOn($.mainScheduler)
-            .variable
+            .shareReplay(1)
     }
 }
