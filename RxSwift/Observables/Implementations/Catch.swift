@@ -144,9 +144,9 @@ class CatchToResult<Element> : Producer <RxResult<Element>> {
 
 // catch enumerable
 
-class CatchSequenceSink<O: ObserverType> : TailRecursiveSink<O> {
+class CatchSequenceSink<S: SequenceType, O: ObserverType where S.Generator.Element : ObservableType, S.Generator.Element.E == O.E> : TailRecursiveSink<S, O> {
     typealias Element = O.E
-    typealias Parent = CatchSequence<Element>
+    typealias Parent = CatchSequence<S>
     
     var lastError: ErrorType?
     
@@ -178,8 +178,8 @@ class CatchSequenceSink<O: ObserverType> : TailRecursiveSink<O> {
         self.dispose()
     }
     
-    override func extract(observable: Observable<Element>) -> AnyGenerator<Observable<O.E>>? {
-        if let onError = observable as? CatchSequence<Element> {
+    override func extract(observable: Observable<Element>) -> S.Generator? {
+        if let onError = observable as? CatchSequence<S> {
             return onError.sources.generate()
         }
         else {
@@ -188,16 +188,18 @@ class CatchSequenceSink<O: ObserverType> : TailRecursiveSink<O> {
     }
 }
 
-class CatchSequence<Element> : Producer<Element> {
-    let sources: AnySequence<Observable<Element>>
+class CatchSequence<S: SequenceType where S.Generator.Element : ObservableType> : Producer<S.Generator.Element.E> {
+    typealias Element = S.Generator.Element.E
     
-    init(sources: AnySequence<Observable<Element>>) {
+    let sources: S
+    
+    init(sources: S) {
         self.sources = sources
     }
     
     override func run<O : ObserverType where O.E == Element>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
-        let sink = CatchSequenceSink(observer: observer, cancel: cancel)
+        let sink = CatchSequenceSink<S, O>(observer: observer, cancel: cancel)
         setSink(sink)
-        return sink.run(AnySequence(self.sources.generate()))
+        return sink.run(self.sources.generate())
     }
 }

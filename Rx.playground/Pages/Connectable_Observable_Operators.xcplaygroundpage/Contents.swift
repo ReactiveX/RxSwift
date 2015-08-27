@@ -180,7 +180,7 @@ so publish is basically replay(0)
 func sampleWithPublish() {
 
     let int1 = interval(1, MainScheduler.sharedInstance)
-        .publish
+        .publish()
 
     int1
         .subscribeNext {

@@ -77,7 +77,7 @@ extension ObservableMultipleTest {
         var handlerCalled: Int?
         
         let res = scheduler.start {
-            o1.catchErrorOrDie { e in
+            o1.catchError { e in
                 handlerCalled = scheduler.clock
                 throw testError1
             }
@@ -175,7 +175,7 @@ extension ObservableMultipleTest {
         ])
         
         let res = scheduler.start {
-            catchError(AnySequence([xs1, xs2, xs3]))
+            [xs1, xs2, xs3].catchError()
         }
         
         XCTAssertEqual(res.messages, [
@@ -220,7 +220,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            catchError(AnySequence([xs1, xs2]))
+            [xs1, xs2].catchError()
         }
         
         XCTAssertEqual(res.messages, [
@@ -250,7 +250,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            catchError(AnySequence([xs1, xs2]))
+            [xs1, xs2].catchError()
         }
         
         XCTAssertEqual(res.messages, [
@@ -278,7 +278,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            catchError(AnySequence([xs1, xs2]))
+            [xs1, xs2].catchError()
         }
         
         XCTAssertEqual(res.messages, [
@@ -309,7 +309,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            catchError(AnySequence([xs1, xs2]))
+            [xs1, xs2].catchError()
         }
         
         XCTAssertEqual(res.messages, [
@@ -343,7 +343,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            catchError(AnySequence([xs1, xs2]))
+            [xs1, xs2].catchError()
         }
         
         XCTAssertEqual(res.messages, [
@@ -376,7 +376,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            catchError(AnySequence([xs1, xs2]))
+            [xs1, xs2].catchError()
         }
         
         XCTAssertEqual(res.messages, [
@@ -414,7 +414,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            catchError(AnySequence([xs1, xs2, xs3]))
+            [xs1, xs2, xs3].catchError()
         }
         
         XCTAssertEqual(res.messages, [
@@ -480,7 +480,7 @@ extension ObservableMultipleTest {
         let xs = scheduler.createHotObservable(xSequence)
         
         let res = scheduler.start {
-            xs.switchLatest
+            xs.switchLatest()
         }
         
         let correct = [
@@ -563,7 +563,7 @@ extension ObservableMultipleTest {
         let xs = scheduler.createHotObservable(xSequence)
         
         let res = scheduler.start {
-            xs.switchLatest
+            xs.switchLatest()
         }
         
         let correct = [
@@ -632,7 +632,7 @@ extension ObservableMultipleTest {
         let xs = scheduler.createHotObservable(xSequence)
         
         let res = scheduler.start {
-            xs.switchLatest
+            xs.switchLatest()
         }
         
         let correct = [
@@ -672,7 +672,7 @@ extension ObservableMultipleTest {
 extension ObservableMultipleTest {
     func testConcat_DefaultScheduler() {
         var sum = 0
-        concat([just(1), just(2), just(3)]).subscribeNext { (e) -> Void in
+        [just(1), just(2), just(3)].concat().subscribeNext { (e) -> Void in
             sum += e
         }
         
@@ -704,7 +704,7 @@ extension ObservableMultipleTest {
         ])
         
         _ = scheduler.start {
-            concat([xs1, xs2, xs3])
+            [xs1, xs2, xs3].concat()
         }
         
         _ = [
@@ -747,7 +747,7 @@ extension ObservableMultipleTest {
             ])
         
         let _ = scheduler.start {
-            concat([xs1, xs2])
+            [xs1, xs2].concat()
         }
         
         let _: [Recorded<Int>] = [
@@ -776,7 +776,7 @@ extension ObservableMultipleTest {
             ])
         
         let _ = scheduler.start {
-            concat([xs1, xs2])
+            [xs1, xs2].concat()
         }
         
         let _: [Recorded<Int>] = [
@@ -804,7 +804,7 @@ extension ObservableMultipleTest {
             ])
         
         _ = scheduler.start {
-            concat([xs1, xs2])
+            [xs1, xs2].concat()
         }
         
         let _: [Recorded<Int>] = [
@@ -832,7 +832,7 @@ extension ObservableMultipleTest {
             ])
         
         _ = scheduler.start {
-            concat([xs1, xs2])
+            [xs1, xs2].concat()
         }
         
         let _: [Recorded<Int>] = [
@@ -862,7 +862,7 @@ extension ObservableMultipleTest {
             ])
         
         _ = scheduler.start {
-            concat([xs1, xs2])
+            [xs1, xs2].concat()
         }
         
         let _: [Recorded<Int>] = [
@@ -891,7 +891,7 @@ extension ObservableMultipleTest {
             ])
         
         _ = scheduler.start {
-            concat([xs1, xs2])
+            [xs1, xs2].concat()
         }
         
         let _: [Recorded<Int>] = [
@@ -921,7 +921,7 @@ extension ObservableMultipleTest {
             ])
         
         _ = scheduler.start {
-            concat([xs1, xs2])
+            [xs1, xs2].concat()
         }
         
         let _: [Recorded<Int>] = [
@@ -953,7 +953,7 @@ extension ObservableMultipleTest {
             ])
         
         _ = scheduler.start {
-            concat([xs1, xs2])
+            [xs1, xs2].concat()
         }
         
         let _:[Recorded<Int>] = [
@@ -984,7 +984,7 @@ extension ObservableMultipleTest {
             ])
         
         _ = scheduler.start {
-            concat([xs1, xs2])
+            [xs1, xs2].concat()
         }
         
         let _:[Recorded<Int>] = [
@@ -1014,7 +1014,7 @@ extension ObservableMultipleTest {
             ])
         
         let _ = scheduler.start {
-            concat([xs1, xs2])
+            [xs1, xs2].concat()
         }
         
         let _: [Recorded<Int>] = [
@@ -1044,7 +1044,7 @@ extension ObservableMultipleTest {
             ])
         
         _ = scheduler.start {
-            concat([xs1, xs2])
+            [xs1, xs2].concat()
         }
         
         let _ : [Recorded<Int>] = [
@@ -1077,7 +1077,7 @@ extension ObservableMultipleTest {
             ])
         
         let _ = scheduler.start {
-            concat([xs1, xs2])
+            [xs1, xs2].concat()
         }
         
         let _: [Recorded<Int>] = [
@@ -1107,7 +1107,7 @@ extension ObservableMultipleTest {
             ])
         
         let _ = scheduler.start {
-            concat([xs1, xs2])
+            [xs1, xs2].concat()
         }
         
         let _: [Recorded<Int>] = [
@@ -1142,7 +1142,7 @@ extension ObservableMultipleTest {
             ])
         
         let _ = scheduler.start {
-            concat([xs1, xs2])
+            [xs1, xs2].concat()
         }
         
         let _: [Recorded<Int>] = [
@@ -1192,7 +1192,7 @@ extension ObservableMultipleTest {
             ])
         
         let _ = scheduler.start {
-            concat([xs1, xs2, xs3, xs2])
+            [xs1, xs2, xs3, xs2].concat()
         }
         
         let _: [Recorded<Int>] = [
@@ -1235,7 +1235,7 @@ extension ObservableMultipleTest {
             sequenceOf(0, 1, 2),
             sequenceOf(0, 1, 2),
             sequenceOf(0, 1, 2)
-        ).merge
+        ).merge()
         
         let _ = observable .subscribeNext { n in
             nEvents++
@@ -1249,9 +1249,9 @@ extension ObservableMultipleTest {
         
         let observable = sequenceOf(
             sequenceOf(0, 1, 2),
-            concat([sequenceOf(0, 1), failWith(testError)]),
+            [sequenceOf(0, 1), failWith(testError)].concat(),
             sequenceOf(0, 1, 2)
-        ).merge
+        ).merge()
         
         let _ = observable .subscribeError { n in
             nEvents++
@@ -1265,7 +1265,7 @@ extension ObservableMultipleTest {
         
         let observable: Observable<Observable<Int>> = just(
             failWith(testError)
-        ).merge
+        ).merge()
         let _ = observable .subscribeError { n in
             nEvents++
         } .scopedDispose
@@ -1276,7 +1276,7 @@ extension ObservableMultipleTest {
     func testMerge_DeadlockEmpty() {
         var nEvents = 0
         
-        let observable: Observable<Int> = (empty() as Observable<Observable<Int>>).merge
+        let observable: Observable<Int> = (empty() as Observable<Observable<Int>>).merge()
         let _ = observable .subscribeCompleted {
             nEvents++
         } .scopedDispose
@@ -1287,7 +1287,7 @@ extension ObservableMultipleTest {
     func testMerge_DeadlockFirstEmpty() {
         var nEvents = 0
         
-        let observable: Observable<Int> = just(empty()).merge
+        let observable: Observable<Int> = just(empty()).merge()
         let _ = observable .subscribeCompleted { n in
             nEvents++
         } .scopedDispose
@@ -1316,7 +1316,7 @@ extension ObservableMultipleTest {
         
         let observable = sequenceOf(
             sequenceOf(0, 1, 2),
-            concat([sequenceOf(0, 1), failWith(testError)]),
+            [sequenceOf(0, 1), failWith(testError)].concat(),
             sequenceOf(0, 1, 2)
         ).merge(maxConcurrent: 1)
         
@@ -1400,7 +1400,7 @@ extension ObservableMultipleTest {
         ])
         
         let _ = scheduler.start {
-            xs.merge
+            xs.merge()
         }
         
         let _ = [
@@ -1468,7 +1468,7 @@ extension ObservableMultipleTest {
             ])
         
         let _ = scheduler.start {
-            xs.merge
+            xs.merge()
         }
         
         let _ = [
@@ -1539,7 +1539,7 @@ extension ObservableMultipleTest {
             ])
         
         let _ = scheduler.start {
-            xs.merge
+            xs.merge()
         }
         
         let _ = [
@@ -1598,7 +1598,7 @@ extension ObservableMultipleTest {
             ])
         
         let _ = scheduler.start {
-            xs.merge
+            xs.merge()
         }
         
         let _ = [
@@ -2165,7 +2165,7 @@ extension ObservableMultipleTest {
         var nEvents = 0
         
         let observable = combineLatest(
-            concat([sequenceOf(0, 1, 2), failWith(testError)]),
+            [sequenceOf(0, 1, 2), failWith(testError)].concat(),
             sequenceOf(0, 1, 2)
         ) { $0 + $1 }
         let _ = observable .subscribeError { n in
@@ -2603,7 +2603,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            amb(x1, x2)
+            x1.amb(x2)
         }
         
         XCTAssertEqual(res.messages, [
@@ -2634,7 +2634,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            amb(AnySequence([x1, x2, x3]))
+            [x1, x2, x3].amb()
         }
         
         XCTAssertEqual(res.messages, [
@@ -2666,7 +2666,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            amb(x1, x2)
+            x1.amb(x2)
         }
         
         XCTAssertEqual(res.messages, [
@@ -2698,7 +2698,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            amb(x1, x2)
+            x1.amb(x2)
         }
         
         XCTAssertEqual(res.messages, [
@@ -2731,7 +2731,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            amb(x1, x2)
+            x1.amb(x2)
         }
         
         XCTAssertEqual(res.messages, [
@@ -2764,7 +2764,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            amb(x1, x2)
+            x1.amb(x2)
         }
         
         XCTAssertEqual(res.messages, [
@@ -2796,7 +2796,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            amb(x1, x2)
+            x1.amb(x2)
         }
         
         XCTAssertEqual(res.messages, [
@@ -2827,7 +2827,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            amb(x1, x2)
+            x1.amb(x2)
         }
         
         XCTAssertEqual(res.messages, [

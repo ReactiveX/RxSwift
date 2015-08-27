@@ -136,7 +136,7 @@ Writing all of this and properly testing it would be tedious. This is that same 
             .startWith([]) // clears results on new search term
             .catch([])
     }
-    .switchLatest
+    .switchLatest()
     .map { results in
       // bind to ui
     }

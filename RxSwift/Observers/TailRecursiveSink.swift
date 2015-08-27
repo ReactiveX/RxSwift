@@ -9,10 +9,10 @@
 import Foundation
 
 // This class is usually used with `GeneratorOf` version of the operators.
-class TailRecursiveSink<O: ObserverType> : Sink<O>, ObserverType {
+class TailRecursiveSink<S: SequenceType, O: ObserverType where S.Generator.Element: ObservableType, S.Generator.Element.E == O.E> : Sink<O>, ObserverType {
     typealias E = O.E
     
-    var generators: [AnyGenerator<Observable<E>>] = []
+    var generators: [S.Generator] = []
     var disposed: Bool = false
     var subscription = SerialDisposable()
     
@@ -23,8 +23,8 @@ class TailRecursiveSink<O: ObserverType> : Sink<O>, ObserverType {
         super.init(observer: observer, cancel: cancel)
     }
     
-    func run(sources: AnySequence<Observable<E>>) -> Disposable {
-        self.generators.append(sources.generate())
+    func run(sources: S.Generator) -> Disposable {
+        self.generators.append(sources)
         
         scheduleMoveNext()
         
@@ -53,7 +53,7 @@ class TailRecursiveSink<O: ObserverType> : Sink<O>, ObserverType {
         self.dispose()
     }
     
-    func extract(observable: Observable<E>) -> AnyGenerator<Observable<E>>? {
+    func extract(observable: Observable<E>) -> S.Generator? {
         return abstractMethod()
     }
     
@@ -75,9 +75,11 @@ class TailRecursiveSink<O: ObserverType> : Sink<O>, ObserverType {
                 return
             }
             
-            let e = generators.last!
+            var e = generators.last!
             
-            let nextCandidate = e.next()
+            let nextCandidate = e.next()?.asObservable()
+            generators.removeLast()
+            generators.append(e)
         
             if nextCandidate == nil {
                 generators.removeLast()

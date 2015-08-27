@@ -80,8 +80,8 @@ example("combineLatest 2nd") {
     combineLatest(intOb1, intOb2) {
             $0 * $1
         }
-        .subscribeNext {
-            print($0)
+        .subscribeNext { (x: Int) in
+            print(x)
         }
 }
 
@@ -98,9 +98,9 @@ example("combineLatest 3rd") {
     combineLatest(intOb1, intOb2, intOb3) {
         ($0 + $1) * $2
         }
-        .subscribeNext {
-            print($0)
-    }
+        .subscribeNext { (x: Int) in
+            print(x)
+        }
 }
 
 
@@ -122,8 +122,8 @@ example("zip 1st") {
     zip(intOb1, intOb2) {
         "\($0) \($1)"
         }
-        .subscribeNext {
-            print($0)
+        .subscribeNext { (x: String) in
+            print(x)
         }
 
     print("send A to first channel")
@@ -157,8 +157,8 @@ example("zip 2nd") {
     zip(intOb1, intOb2) {
             $0 * $1
         }
-        .subscribeNext {
-            print($0)
+        .subscribeNext { (x: Int) in
+            print(x)
         }
 }
 
@@ -174,8 +174,8 @@ example("zip 3rd") {
     zip(intOb1, intOb2, intOb3) {
         ($0 + $1) * $2
         }
-        .subscribeNext {
-            print($0)
+        .subscribeNext { (x: Int) in
+            print(x)
         }
 }
 
@@ -196,7 +196,7 @@ example("merge 1st") {
     let subject2 = PublishSubject<Int>()
     
     sequenceOf(subject1, subject2)
-        .merge
+        .merge()
         .subscribeNext { int in
             print(int)
         }
@@ -250,10 +250,10 @@ example("switchLatest") {
     let var3 = Variable(var1)
     
     let d = var3
-        .switchLatest
+        .switchLatest()
         .subscribeNext { (e: Int) -> Void in
             print("\(e)")
-    }
+        }
 
     var1.sendNext(1)
     var1.sendNext(2)

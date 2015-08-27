@@ -106,7 +106,6 @@
 		C836EC311B8A7A4500AB941D /* CombineLatest+arity.tt in Resources */ = {isa = PBXBuildFile; fileRef = C836EBBB1B8A7A4500AB941D /* CombineLatest+arity.tt */; };
 		C836EC321B8A7A4500AB941D /* CombineLatest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C836EBBC1B8A7A4500AB941D /* CombineLatest.swift */; };
 		C836EC331B8A7A4500AB941D /* Concat.swift in Sources */ = {isa = PBXBuildFile; fileRef = C836EBBD1B8A7A4500AB941D /* Concat.swift */; };
-		C836EC341B8A7A4500AB941D /* ConcatSink.swift in Sources */ = {isa = PBXBuildFile; fileRef = C836EBBE1B8A7A4500AB941D /* ConcatSink.swift */; };
 		C836EC351B8A7A4500AB941D /* ConnectableObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C836EBBF1B8A7A4500AB941D /* ConnectableObservable.swift */; };
 		C836EC361B8A7A4500AB941D /* Debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = C836EBC01B8A7A4500AB941D /* Debug.swift */; };
 		C836EC371B8A7A4500AB941D /* Deferred.swift in Sources */ = {isa = PBXBuildFile; fileRef = C836EBC11B8A7A4500AB941D /* Deferred.swift */; };
@@ -380,7 +379,6 @@
 		C836EBBB1B8A7A4500AB941D /* CombineLatest+arity.tt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "CombineLatest+arity.tt"; sourceTree = "<group>"; };
 		C836EBBC1B8A7A4500AB941D /* CombineLatest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CombineLatest.swift; sourceTree = "<group>"; };
 		C836EBBD1B8A7A4500AB941D /* Concat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Concat.swift; sourceTree = "<group>"; };
-		C836EBBE1B8A7A4500AB941D /* ConcatSink.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConcatSink.swift; sourceTree = "<group>"; };
 		C836EBBF1B8A7A4500AB941D /* ConnectableObservable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectableObservable.swift; sourceTree = "<group>"; };
 		C836EBC01B8A7A4500AB941D /* Debug.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Debug.swift; sourceTree = "<group>"; };
 		C836EBC11B8A7A4500AB941D /* Deferred.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Deferred.swift; sourceTree = "<group>"; };
@@ -823,7 +821,6 @@
 				C836EBBB1B8A7A4500AB941D /* CombineLatest+arity.tt */,
 				C836EBBC1B8A7A4500AB941D /* CombineLatest.swift */,
 				C836EBBD1B8A7A4500AB941D /* Concat.swift */,
-				C836EBBE1B8A7A4500AB941D /* ConcatSink.swift */,
 				C836EBBF1B8A7A4500AB941D /* ConnectableObservable.swift */,
 				C836EBC01B8A7A4500AB941D /* Debug.swift */,
 				C836EBC11B8A7A4500AB941D /* Deferred.swift */,
@@ -1461,7 +1458,6 @@
 				C836EC5F1B8A7A4500AB941D /* ObservableType.swift in Sources */,
 				C8297E4C1B6CF905000589EA /* APIWrappersViewController.swift in Sources */,
 				C8297E4D1B6CF905000589EA /* RxTableViewSectionedReloadDataSource.swift in Sources */,
-				C836EC341B8A7A4500AB941D /* ConcatSink.swift in Sources */,
 				C836EC521B8A7A4500AB941D /* Timer.swift in Sources */,
 				C8297E4E1B6CF905000589EA /* RxCollectionViewSectionedAnimatedDataSource.swift in Sources */,
 				C836EC1D1B8A7A4500AB941D /* NAryDisposable.swift in Sources */,

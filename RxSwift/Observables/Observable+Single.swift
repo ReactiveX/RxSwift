@@ -8,21 +8,6 @@
 
 import Foundation
 
-// as observable
-
-/* part of interface now
-extension ObservableType {
-    public func asObservable() -> Observable<E> {
-        if let asObservable = self as? AsObservable<E> {
-            return asObservable.omega()
-        }
-        else {
-            return AsObservable(source: self.asObservable())
-        }
-    }
-}
-*/
-
 // distinct until changed
 
 extension ObservableType where E: Equatable {
@@ -44,21 +29,6 @@ extension ObservableType {
     }
 
     public func distinctUntilChanged<K>(keySelector: (E) throws -> K, comparer: (lhs: K, rhs: K) throws -> Bool)
-        -> Observable<E> {
-        return DistinctUntilChanged(source: self.asObservable(), selector: keySelector, comparer: comparer)
-    }
-
-    public func distinctUntilChanged<K: Equatable>(keySelector: (E) -> K)
-        -> Observable<E> {
-        return distinctUntilChanged(keySelector, comparer: { ($0 == $1) })
-    }
-
-    public func distinctUntilChanged(comparer: (lhs: E, rhs: E) -> Bool)
-        -> Observable<E> {
-        return distinctUntilChanged({ ($0) }, comparer: comparer)
-    }
-
-    public func distinctUntilChanged<K>(keySelector: (E) -> K, comparer: (lhs: K, rhs: K) -> Bool)
         -> Observable<E> {
         return DistinctUntilChanged(source: self.asObservable(), selector: keySelector, comparer: comparer)
     }
@@ -92,9 +62,6 @@ extension ObservableType {
 // startWith
 
 extension ObservableType {
-    // Prefixes observable sequence with `firstElement` element.
-    // The same functionality could be achieved using `concat([just(prefix), source])`,
-    // but this is significantly more efficient implementation.
     public func startWith(elements: E ...)
         -> Observable<E> {
         return StartWith(source: self.asObservable(), elements: elements)
@@ -104,13 +71,13 @@ extension ObservableType {
 // retry
 
 extension ObservableType {
-    public var retry: Observable<E> {
-        return CatchSequence(sources: AnySequence(InifiniteSequence(repeatedValue: self.asObservable())))
+    public func retry() -> Observable<E> {
+        return CatchSequence(sources: InifiniteSequence(repeatedValue: self.asObservable()))
     }
 
     public func retry(retryCount: Int)
         -> Observable<E> {
-        return CatchSequence(sources: AnySequence(Repeat(count: retryCount, repeatedValue: self.asObservable())))
+        return CatchSequence(sources: Repeat(count: retryCount, repeatedValue: self.asObservable()))
     }
 }
 

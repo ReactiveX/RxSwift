@@ -15,11 +15,6 @@ extension ObservableType {
         -> Observable<E> {
         return Filter(source: self.asObservable(), predicate: predicate)
     }
-
-    public func filter(predicate: (E) -> Bool)
-        -> Observable<E> {
-        return Filter(source: self.asObservable(), predicate: predicate)
-    }
 }
 
 // takeWhile
@@ -67,17 +62,7 @@ extension ObservableType {
         return Map(source: self.asObservable(), selector: selector)
     }
 
-    public func map<R>(selector: E -> R)
-        -> Observable<R> {
-        return Map(source: self.asObservable(), selector: selector)
-    }
-
     public func mapWithIndex<R>(selector: (E, Int) throws -> R)
-        -> Observable<R> {
-        return Map(source: self.asObservable(), selector: selector)
-    }
-
-    public func mapWithIndex<R>(selector: (E, Int) -> R)
         -> Observable<R> {
         return Map(source: self.asObservable(), selector: selector)
     }
@@ -86,17 +71,8 @@ extension ObservableType {
 // flatMap
 
 extension ObservableType {
-    public func flatMap<R>(selector: (E) -> Observable<R>)
-        -> Observable<R> {
-        return FlatMap(source: self.asObservable(), selector: selector)
-    }
 
     public func flatMap<R>(selector: (E) throws -> Observable<R>)
-        -> Observable<R> {
-        return FlatMap(source: self.asObservable(), selector: selector)
-    }
-
-    public func flatMapWithIndex<R>(selector: (E, Int) -> Observable<R>)
         -> Observable<R> {
         return FlatMap(source: self.asObservable(), selector: selector)
     }

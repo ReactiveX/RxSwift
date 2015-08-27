@@ -1,7 +1,7 @@
 //: [<< Previous](@previous) - [Index](Index)
 
 import RxSwift
-
+import Foundation
 /*:
 ## Creating observables
 

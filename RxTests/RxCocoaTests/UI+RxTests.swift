@@ -58,7 +58,7 @@ class UIRxTests : RxTest {
         
         let disposable = primeTextField.rx_text()
             .map { WolframAlphaIsPrime(Int($0) ?? 0) }
-            .concat
+            .concat()
             .map { "number \($0.n) is prime? \($0.isPrime)" }
             .subscribeTextOf(resultLabel)
             .scopedDispose

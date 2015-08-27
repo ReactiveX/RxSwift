@@ -82,7 +82,7 @@ extension ObservableType where E == AnyObject? {
                 return just(nil)
             }
             .startWith(self.asObservable())
-            .switchLatest
+            .switchLatest()
     }
 }
 
@@ -139,7 +139,7 @@ func observeWeaklyKeyPathFor(
                 return nextElementsObservable
             }
         }
-        .switchLatest
+        .switchLatest()
 }
 #endif
 

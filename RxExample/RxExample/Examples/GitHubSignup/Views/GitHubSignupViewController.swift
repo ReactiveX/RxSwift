@@ -146,28 +146,28 @@ class GitHubSignupViewController : ViewController {
             .map { username in
                 return validationService.validateUsername(username)
             }
-            .switchLatest
-            .variable
+            .switchLatest()
+            .shareReplay(1)
         
         let passwordValidation = password
             .map { password in
                 return validationService.validatePassword(password)
             }
-            .variable
+            .shareReplay(1)
         
         let repeatPasswordValidation = combineLatest(password, repeatPassword) { (password, repeatedPassword) in
                 validationService.validateRepeatedPassword(password, repeatedPassword: repeatedPassword)
             }
-            .variable
+            .shareReplay(1)
         
         let signingProcess = combineLatest(username, password) { ($0, $1) }
             .sampleLatest(signupSampler)
             .map { (username, password) in
                 return API.signup(username, password: password)
             }
-            .switchLatest
+            .switchLatest()
             .startWith(SignupState.InitialState)
-            .variable
+            .shareReplay(1)
         
         let signupEnabled = combineLatest(
             usernameValidation,
