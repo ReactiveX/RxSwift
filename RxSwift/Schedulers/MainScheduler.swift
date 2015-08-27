@@ -8,22 +8,14 @@
 
 import Foundation
 
-struct MainSchedulerSingleton {
-    static let sharedInstance = MainScheduler()
-}
-
 public final class MainScheduler : SerialDispatchQueueScheduler {
     
     private init() {
         super.init(serialQueue: dispatch_get_main_queue())
     }
-    
-    public class var sharedInstance: MainScheduler {
-        get {
-            return MainSchedulerSingleton.sharedInstance
-        }
-    }
-    
+
+    public static let sharedInstance: MainScheduler = MainScheduler()
+
     public class func ensureExecutingOnScheduler() {
         if !NSThread.currentThread().isMainThread {
             rxFatalError("Executing on wrong scheduler")
