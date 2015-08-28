@@ -17,6 +17,10 @@ class WikipediaSearchViewController: ViewController {
     private var disposeBag = DisposeBag()
     private var viewModel: SearchViewModel? = nil
     
+    
+    @IBOutlet weak var tableView: UITableView!
+    let searchController = UISearchController(searchResultsController: nil)
+    
     override func awakeFromNib() {
         super.awakeFromNib()
     }
@@ -26,14 +30,17 @@ class WikipediaSearchViewController: ViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let resultsTableView = self.searchDisplayController!.searchResultsTableView
-        let searchBar = self.searchDisplayController!.searchBar
+        searchController.hidesNavigationBarDuringPresentation = false
+        searchController.dimsBackgroundDuringPresentation = false
+        searchController.searchBar.sizeToFit()
+        self.tableView.tableHeaderView = searchController.searchBar
+        let searchBar = searchController.searchBar
         
-        resultsTableView.registerNib(UINib(nibName: "WikipediaSearchCell", bundle: nil), forCellReuseIdentifier: "WikipediaSearchCell")
+        tableView.registerNib(UINib(nibName: "WikipediaSearchCell", bundle: nil), forCellReuseIdentifier: "WikipediaSearchCell")
         
-        resultsTableView.rowHeight = 194
+        tableView.rowHeight = 194
         
-        let selectedResult: Observable<SearchResultViewModel> = resultsTableView.rx_modelSelected()
+        let selectedResult: Observable<SearchResultViewModel> = tableView.rx_modelSelected()
         
         let viewModel = SearchViewModel(
             searchText: searchBar.rx_searchText,
@@ -43,7 +50,7 @@ class WikipediaSearchViewController: ViewController {
         // map table view rows
         // {
         viewModel.rows
-            .subscribeItemsOf(resultsTableView, withCellIdentifier: "WikipediaSearchCell") { (_, viewModel, cell: WikipediaSearchCell) in
+            .subscribeItemsOf(tableView, withCellIdentifier: "WikipediaSearchCell") { (_, viewModel, cell: WikipediaSearchCell) in
                 cell.viewModel = viewModel
             }
             .addDisposableTo(disposeBag)
@@ -51,7 +58,7 @@ class WikipediaSearchViewController: ViewController {
 
         // dismiss keyboard on scroll
         // {
-        resultsTableView.rx_contentOffset
+        tableView.rx_contentOffset
             .subscribeNext { _ in
                 if searchBar.isFirstResponder() {
                     _ = searchBar.resignFirstResponder()

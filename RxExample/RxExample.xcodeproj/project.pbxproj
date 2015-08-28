@@ -1248,7 +1248,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0700;
-				LastUpgradeCheck = 0640;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "Krunoslav Zaher";
 				TargetAttributes = {
 					C83366DC1AD0293800C668A7 = {
@@ -1610,6 +1610,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-objc_loadall";
 				OTHER_SWIFT_FLAGS = "$(inherited) -D RX_NO_MODULE";
+				PRODUCT_BUNDLE_IDENTIFIER = "Krunoslav-Zaher.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "RxExample-iOS-no-module";
 				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = ../RxCocoa/RxCocoa.h;
@@ -1624,6 +1625,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-objc_loadall";
 				OTHER_SWIFT_FLAGS = "$(inherited) -D RX_NO_MODULE";
+				PRODUCT_BUNDLE_IDENTIFIER = "Krunoslav-Zaher.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "RxExample-iOS-no-module";
 				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = ../RxCocoa/RxCocoa.h;
@@ -1638,6 +1640,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-objc_loadall";
 				OTHER_SWIFT_FLAGS = "$(inherited) -D RX_NO_MODULE";
+				PRODUCT_BUNDLE_IDENTIFIER = "Krunoslav-Zaher.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "RxExample-iOS-no-module";
 				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = ../RxCocoa/RxCocoa.h;
@@ -1666,6 +1669,7 @@
 				COPY_PHASE_STRIP = NO;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -1740,6 +1744,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-objc_loadall";
+				PRODUCT_BUNDLE_IDENTIFIER = "Krunoslav-Zaher.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "RxExample-iOS";
 				SDKROOT = iphoneos;
 			};
@@ -1752,6 +1757,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-objc_loadall";
+				PRODUCT_BUNDLE_IDENTIFIER = "Krunoslav-Zaher.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "RxExample-iOS";
 				SDKROOT = iphoneos;
 			};
@@ -1765,6 +1771,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/../Frameworks @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				OTHER_LDFLAGS = "-objc_loadall";
+				PRODUCT_BUNDLE_IDENTIFIER = "Krunoslav-Zaher.$(PRODUCT_NAME:rfc1034identifier)";
 				SDKROOT = macosx;
 			};
 			name = Debug;
@@ -1777,6 +1784,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/../Frameworks @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				OTHER_LDFLAGS = "-objc_loadall";
+				PRODUCT_BUNDLE_IDENTIFIER = "Krunoslav-Zaher.$(PRODUCT_NAME:rfc1034identifier)";
 				SDKROOT = macosx;
 			};
 			name = Release;
@@ -1830,6 +1838,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-objc_loadall";
+				PRODUCT_BUNDLE_IDENTIFIER = "Krunoslav-Zaher.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "RxExample-iOS";
 				SDKROOT = iphoneos;
 			};
@@ -1843,6 +1852,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/../Frameworks @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				OTHER_LDFLAGS = "-objc_loadall";
+				PRODUCT_BUNDLE_IDENTIFIER = "Krunoslav-Zaher.$(PRODUCT_NAME:rfc1034identifier)";
 				SDKROOT = macosx;
 			};
 			name = "Release-Tests";
