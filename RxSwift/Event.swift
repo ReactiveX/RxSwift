@@ -9,18 +9,10 @@
 import Foundation
 
 
-/// Due to current swift limitations, we have to include this Box in RxResult.
-/// Swift cannot handle an enum with multiple associated data (A, NSError) where one is of unknown size (A)
-/// This can be swiftified once the compiler is completed
-
 /**
 *   Represents event that happened
-*   `Box` is there because of a bug in swift compiler
-*       >> error: unimplemented IR generation feature non-fixed multi-payload enum layout
 */
 public enum Event<Element> : CustomStringConvertible {
-    // Box is used because swift compiler doesn't know
-    // how to handle `Next(Element)` and it crashes.
     case Next(Element) // next element of a sequence
     case Error(ErrorType)   // sequence failed with error
     case Completed          // sequence terminated successfully
@@ -28,8 +20,8 @@ public enum Event<Element> : CustomStringConvertible {
     public var description: String {
         get {
             switch self {
-            case .Next(let boxedValue):
-                return "Next(\(boxedValue))"
+            case .Next(let value):
+                return "Next(\(value))"
             case .Error(let error):
                 return "Error(\(error))"
             case .Completed:
