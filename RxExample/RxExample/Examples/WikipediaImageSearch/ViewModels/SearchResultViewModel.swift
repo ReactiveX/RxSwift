@@ -41,7 +41,7 @@ class SearchResultViewModel {
         let loadingValue: [NSURL]? = nil
         
         return imageURLs
-            .map { makeOptional($0) }
+            .map(Optional.init)
             .startWith(loadingValue)
             .map { URLs in
                 if let URLs = URLs {

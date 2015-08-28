@@ -20,8 +20,3 @@ public func castOrFail<T>(result: AnyObject!) -> RxResult<T> {
 public func makeOptionalResult<T>(result: T) -> RxResult<T?> {
     return success(result)
 }
-
-public func makeOptional<T>(result: T) -> T? {
-    return result
-}
-
