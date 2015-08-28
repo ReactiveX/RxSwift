@@ -8,10 +8,6 @@
 
 import Foundation
 
-// Because ... Swift
-// Because ... Crash
-// Because ... compiler bugs
-
 // Wrapper for any value type
 public class RxBox<T> : CustomStringConvertible {
     public let value : T

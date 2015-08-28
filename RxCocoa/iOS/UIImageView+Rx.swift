@@ -22,8 +22,7 @@ extension ObservableType where E == UIImage? {
             MainScheduler.ensureExecutingOnScheduler()
             
             switch event {
-            case .Next(let boxedValue):
-                let value = boxedValue
+            case .Next(let value):
                 if animated && value != nil {
                     let transition = CATransition()
                     transition.duration = 0.25

@@ -25,8 +25,6 @@ import Foundation
 // result types.
 //
 public enum RxResult<T> {
-    // Box is used is because swift compiler doesn't know
-    // how to handle `Success(ResultType)` and it crashes.
     case Success(T)
     case Failure(ErrorType)
 }
