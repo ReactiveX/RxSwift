@@ -18,24 +18,30 @@ extension UIAlertView {
         return proxyForObject(self) as RxAlertViewDelegateProxy
     }
     
-    public var rx_clickedButtonAtIndex: Observable<Int> {
-        return rx_delegate.observe("alertView:clickedButtonAtIndex:")
+    public var rx_clickedButtonAtIndex: ControlEvent<Int> {
+        let source = rx_delegate.observe("alertView:clickedButtonAtIndex:")
             .map { a in
                 return a[1] as! Int
             }
+
+        return ControlEvent(source: source)
     }
     
-    public var rx_willDismissWithButtonIndex: Observable<Int> {
-        return rx_delegate.observe("alertView:willDismissWithButtonIndex:")
+    public var rx_willDismissWithButtonIndex: ControlEvent<Int> {
+        let source = rx_delegate.observe("alertView:willDismissWithButtonIndex:")
             .map { a in
                 return a[1] as! Int
             }
+        
+        return ControlEvent(source: source)
     }
     
-    public var rx_didDismissWithButtonIndex: Observable<Int> {
-        return rx_delegate.observe("alertView:didDismissWithButtonIndex:")
+    public var rx_didDismissWithButtonIndex: ControlEvent<Int> {
+        let source = rx_delegate.observe("alertView:didDismissWithButtonIndex:")
             .map { a in
                 return a[1] as! Int
             }
+        
+        return ControlEvent(source: source)
     }
 }

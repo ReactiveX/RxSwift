@@ -18,15 +18,26 @@ extension UITextView {
         return RxTextViewDelegateProxy(parentObject: self)
     }
     
-    public var rx_text: Observable<String> {
-        return deferred { [weak self] in
+    public var rx_text: ControlProperty<String> {
+        let source: Observable<String> = deferred { [weak self] in
             let text = self?.text ?? ""
             return (self?.rx_delegate.observe("textViewDidChange:") ?? empty())
                 .map { a in
                     return (a[0] as? UITextView)?.text ?? ""
                 }
                 .startWith(text)
-        }
+            }
+        
+        return ControlProperty(source: source, observer: ObserverOf { [weak self] event in
+            switch event {
+            case .Next(let value):
+                self?.text = value
+            case .Error(let error):
+                bindingErrorToInterface(error)
+            case .Completed:
+                break
+            }
+        })
     }
     
 }

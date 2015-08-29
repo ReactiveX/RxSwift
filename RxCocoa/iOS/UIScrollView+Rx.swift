@@ -28,10 +28,19 @@ extension UIScrollView {
     
     // properties
     
-    public var rx_contentOffset: Observable<CGPoint> {
+    public var rx_contentOffset: ControlProperty<CGPoint> {
         let proxy = proxyForObject(self) as RxScrollViewDelegateProxy
         
-        return proxy.contentOffsetSubject
+        return ControlProperty(source: proxy.contentOffsetSubject, observer: ObserverOf { [weak self] event in
+            switch event {
+            case .Next(let value):
+                self?.contentOffset = value
+            case .Error(let error):
+                bindingErrorToInterface(error)
+            case .Completed:
+                break
+            }
+        })
     }
     
     // delegate

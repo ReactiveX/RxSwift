@@ -12,13 +12,14 @@ import RxSwift
 #endif
 import UIKit
 
-extension ObservableType where E == UIImage? {
-    public func subscribeImageOf(imageView: UIImageView) -> Disposable {
-        return subscribeImageOf(imageView, animated: false)
+extension UIImageView {
+    
+    public var rx_image: ObserverOf<UIImage!> {
+        return self.rx_imageAnimated(false)
     }
     
-    public func subscribeImageOf(imageView: UIImageView, animated: Bool) -> Disposable {
-        return self.subscribe { event in
+    public func rx_imageAnimated(animated: Bool) -> ObserverOf<UIImage!> {
+        return ObserverOf { [weak self] event in
             MainScheduler.ensureExecutingOnScheduler()
             
             switch event {
@@ -28,12 +29,12 @@ extension ObservableType where E == UIImage? {
                     transition.duration = 0.25
                     transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
                     transition.type = kCATransitionFade
-                    imageView.layer.addAnimation(transition, forKey: kCATransition)
+                    self?.layer.addAnimation(transition, forKey: kCATransition)
                 }
                 else {
-                    imageView.layer.removeAllAnimations()
+                    self?.layer.removeAllAnimations()
                 }
-                imageView.image = value
+                self?.image = value
             case .Error(let error):
                 bindingErrorToInterface(error)
                 break
@@ -42,7 +43,5 @@ extension ObservableType where E == UIImage? {
             }
         }
     }
-}
-
-extension UIImageView {
+    
 }

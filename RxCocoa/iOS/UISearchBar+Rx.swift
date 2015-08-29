@@ -20,8 +20,8 @@ extension UISearchBar {
         return proxyForObject(self) as RxSearchBarDelegateProxy
     }
     
-    public var rx_searchText: Observable<String> {
-        return deferred { [weak self] in
+    public var rx_searchText: ControlProperty<String> {
+        let source: Observable<String> = deferred { [weak self] in
             let text = self?.text ?? ""
             
             return (self?.rx_delegate.observe("searchBar:textDidChange:") ?? empty())
@@ -30,5 +30,16 @@ extension UISearchBar {
                     }
                     .startWith(text)
         }
+        
+        return ControlProperty(source: source, observer: ObserverOf { [weak self] event in
+            switch event {
+            case .Next(let value):
+                self?.text = value
+            case .Error(let error):
+                bindingErrorToInterface(error)
+            case .Completed:
+                break
+            }
+        })
     }
 }

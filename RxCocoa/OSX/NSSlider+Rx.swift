@@ -13,11 +13,13 @@ import RxSwift
 import Cocoa
 
 extension NSSlider {
-    public var rx_value: Observable<Double> {
-        
-        return rx_value { [weak self] in
+    
+    public var rx_value: ControlProperty<Double> {
+        return rx_value(getter: { [weak self] in
             return self?.doubleValue ?? 0
-        }
-        
+        }, setter: { [weak self] value in
+            self?.doubleValue = value
+        })
     }
+    
 }

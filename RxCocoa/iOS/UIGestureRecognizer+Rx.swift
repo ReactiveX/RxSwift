@@ -51,17 +51,19 @@ class GestureTarget: RxTarget {
 
 extension UIGestureRecognizer {
     
-    public var rx_event: Observable<UIGestureRecognizer> {
-        return AnonymousObservable { observer in
+    public var rx_event: ControlEvent<UIGestureRecognizer> {
+        let source: Observable<UIGestureRecognizer> = AnonymousObservable { [weak self] observer in
             MainScheduler.ensureExecutingOnScheduler()
             
-            let observer = GestureTarget(self) {
+            let observer = GestureTarget(self!) {
                 control in
-                sendNext(observer, self)
+                sendNext(observer, self!)
             }
             
             return observer
-        } .takeUntil(rx_deallocated)
+        }.takeUntil(rx_deallocated)
+        
+        return ControlEvent(source: source)
     }
     
 }

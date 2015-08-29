@@ -170,9 +170,7 @@ extension ObservableType {
             
             switch event {
             case .Error(let error):
-#if DEBUG
-               rxFatalError("Binding error to data source: \(error)")
-#endif
+                bindingErrorToInterface(error)
                 disposable.dispose()
             case .Completed:
                 disposable.dispose()

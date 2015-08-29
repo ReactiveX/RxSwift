@@ -14,8 +14,8 @@ import RxSwift
 
 extension NSControl {
     
-    public var rx_controlEvents: Observable<Void> {
-        return AnonymousObservable { observer in
+    public var rx_controlEvents: ControlEvent<Void> {
+        let source: Observable<Void> = AnonymousObservable { observer in
             MainScheduler.ensureExecutingOnScheduler()
             
             let observer = ControlTarget(control: self) { control in
@@ -23,19 +23,32 @@ extension NSControl {
             }
             
             return observer
-        }
+        }.takeUntil(rx_deallocated)
+        
+        return ControlEvent(source: source)
     }
     
-    func rx_value<T>(getValue: () -> T) -> Observable<T> {
-        return AnonymousObservable { observer in
-            sendNext(observer, getValue())
+    func rx_value<T>(getter getter: () -> T, setter: T -> Void) -> ControlProperty<T> {
+        let source: Observable<T> = AnonymousObservable { observer in
+            sendNext(observer, getter())
             
             let observer = ControlTarget(control: self) { control in
-                sendNext(observer, getValue())
+                sendNext(observer, getter())
             }
             
             return observer
-        }
+        }.takeUntil(rx_deallocated)
+        
+        return ControlProperty(source: source, observer: ObserverOf { event in
+            switch event {
+            case .Next(let value):
+                setter(value)
+            case .Error(let error):
+                bindingErrorToInterface(error)
+            case .Completed:
+                break
+            }
+        })
     }
     
 }

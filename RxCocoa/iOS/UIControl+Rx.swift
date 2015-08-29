@@ -12,30 +12,25 @@ import RxSwift
 #endif
 import UIKit
 
-extension ObservableType where E == Bool {
-    public func subscribeEnabledOf(control: UIControl) -> Disposable {
-        weak var weakControl: UIControl? = control
-        return self.subscribe { event in
+extension UIControl {
+    public var rx_enabled: ObserverOf<Bool> {
+        return ObserverOf { [weak self] event in
             MainScheduler.ensureExecutingOnScheduler()
-
+            
             switch event {
             case .Next(let value):
-                weakControl?.enabled = value
+                self?.enabled = value
             case .Error(let error):
-#if DEBUG
-                rxFatalError("Binding error to textbox: \(error)")
-#endif
+                bindingErrorToInterface(error)
                 break
             case .Completed:
                 break
             }
         }
     }
-}
-
-extension UIControl {
-    public func rx_controlEvents(controlEvents: UIControlEvents) -> Observable<Void> {
-        return AnonymousObservable { observer in
+    
+    public func rx_controlEvents(controlEvents: UIControlEvents) -> ControlEvent<Void> {
+        let source: Observable<Void> = AnonymousObservable { observer in
             MainScheduler.ensureExecutingOnScheduler()
             
             let controlTarget = ControlTarget(control: self, controlEvents: controlEvents) {
@@ -46,22 +41,38 @@ extension UIControl {
             return AnonymousDisposable {
                 controlTarget.dispose()
             }
-        } .takeUntil(rx_deallocated)
+        }.takeUntil(rx_deallocated)
+        
+        return ControlEvent(source: source)
     }
     
-    func rx_value<T>(getValue: () -> T) -> Observable<T> {
-        return AnonymousObservable { observer in
+    func rx_value<T>(getter getter: () -> T, setter: T -> Void) -> ControlProperty<T> {
+        let source: Observable<T> = AnonymousObservable { observer in
             
-            sendNext(observer, getValue())
+            sendNext(observer, getter())
             
             let controlTarget = ControlTarget(control: self, controlEvents: UIControlEvents.EditingChanged.union(.ValueChanged)) { control in
-                sendNext(observer, getValue())
+                sendNext(observer, getter())
             }
             
             return AnonymousDisposable {
                 controlTarget.dispose()
             }
-        } .takeUntil(rx_deallocated)
+        }.takeUntil(rx_deallocated)
+        
+        return ControlProperty<T>(source: source, observer: ObserverOf { event in
+            MainScheduler.ensureExecutingOnScheduler()
+            
+            switch event {
+            case .Next(let value):
+                setter(value)
+            case .Error(let error):
+                bindingErrorToInterface(error)
+                break
+            case .Completed:
+                break
+            }
+        })
     }
 
 }

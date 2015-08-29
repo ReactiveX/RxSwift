@@ -128,11 +128,11 @@ class PartialUpdatesViewController : ViewController {
             .startWith(initialState)
 
         updates
-            .subscribe(partialUpdatesTableViewOutlet, withReactiveDataSource: tvAnimatedDataSource)
+            .bindTo(partialUpdatesTableViewOutlet.rx_itemsWithDataSource(tvAnimatedDataSource))
             .addDisposableTo(disposeBag)
 
         self.sections
-            .subscribe(reloadTableViewOutlet, withReactiveDataSource: reloadDataSource)
+            .bindTo(reloadTableViewOutlet.rx_itemsWithDataSource(reloadDataSource))
             .addDisposableTo(disposeBag)
 
         // Collection view logic works, but when clicking fast because of internal bugs
@@ -147,18 +147,18 @@ class PartialUpdatesViewController : ViewController {
         // While `useAnimatedUpdateForCollectionView` is false, you can click as fast as
         // you want, table view doesn't seem to have same issues like collection view.
 
-        #if useAnimatedUpdateForCollectionView
+        #if useAnimatedUpdateForCollectionView 
             let cvAnimatedDataSource = RxCollectionViewSectionedAnimatedDataSource<NumberSection>()
             skinCollectionViewDataSource(cvAnimatedDataSource)
 
             updates
-                .partialUpdatesCollectionViewOutlet.rx_subscribeWithReactiveDataSource(cvAnimatedDataSource)
-                .disposeBag.addDisposable
+                .bindTo(partialUpdatesCollectionViewOutlet.rx_itemsWithDataSource(cvAnimatedDataSource))
+                .addDisposableTo(disposeBag)
         #else
             let cvReloadDataSource = RxCollectionViewSectionedReloadDataSource<NumberSection>()
             skinCollectionViewDataSource(cvReloadDataSource)
             self.sections
-                .subscribe(partialUpdatesCollectionViewOutlet, withReactiveDataSource: cvReloadDataSource)
+                .bindTo(partialUpdatesCollectionViewOutlet.rx_itemsWithDataSource(cvReloadDataSource))
                 .addDisposableTo(disposeBag)
         #endif
 

@@ -60,7 +60,7 @@ class TableViewController: ViewController, UITableViewDelegate {
         
         // reactive data source
         allUsers
-            .subscribe(tableView, withReactiveDataSource: dataSource)
+            .bindTo(tableView.rx_itemsWithDataSource(dataSource))
             .addDisposableTo(disposeBag)
         
         // customization using delegate

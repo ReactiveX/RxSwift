@@ -18,12 +18,12 @@ public class CollectionViewImageCell: UICollectionViewCell {
     
     var disposeBag: DisposeBag!
     
-    var image: Observable<UIImage?>! {
+    var image: Observable<UIImage!>! {
         didSet {
             let disposeBag = DisposeBag()
             
             self.image
-                .subscribeImageOf(imageOutlet, animated: true)
+                .subscribe(imageOutlet.rx_imageAnimated(true))
                 .addDisposableTo(disposeBag)
             
             self.disposeBag = disposeBag

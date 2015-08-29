@@ -39,40 +39,28 @@ class RxTextFieldDelegate : DelegateProxy
         let textField: NSTextField = castOrFatalError(object)
         textField.delegate = castOptionalOrFatalError(delegate)
     }
-}
-
-extension ObservableType where E == String {
-    public func subscribeTextOf(textField: NSTextField) -> Disposable {
-        return self.subscribe { event in
-            MainScheduler.ensureExecutingOnScheduler()
-            
-            switch event {
-            case .Next(let value):
-                textField.stringValue = value
-            case .Error(let error):
-                #if DEBUG
-                    rxFatalError("Binding error to textbox: \(error)")
-                #endif
-                break
-            case .Completed:
-                break
-            }
-        }
-    }
+    
 }
 
 extension NSTextField {
-    public func rx_subscribeTextTo(source: Observable<String>) -> Disposable {
-        return source.subscribe(AnonymousObserver { event in
+    
+    public var rx_delegate: DelegateProxy {
+        return proxyForObject(self) as RxTextFieldDelegate
+    }
+    
+    public var rx_text: ControlProperty<String> {
+        let delegate = proxyForObject(self) as RxTextFieldDelegate
+        
+        let source = delegate.textSubject
+        
+        return ControlProperty(source: source, observer: ObserverOf { [weak self] event in
             MainScheduler.ensureExecutingOnScheduler()
             
             switch event {
             case .Next(let value):
-                self.stringValue = value
+                self?.stringValue = value
             case .Error(let error):
-                #if DEBUG
-                    rxFatalError("Binding error to textbox: \(error)")
-                #endif
+                bindingErrorToInterface(error)
                 break
             case .Completed:
                 break
@@ -80,13 +68,4 @@ extension NSTextField {
         })
     }
     
-    public var rx_delegate: DelegateProxy {
-        return proxyForObject(self) as RxTextFieldDelegate
-    }
-    
-    public var rx_text: Observable<String> {
-        let delegate = proxyForObject(self) as RxTextFieldDelegate
-        
-        return delegate.textSubject
-    }
 }

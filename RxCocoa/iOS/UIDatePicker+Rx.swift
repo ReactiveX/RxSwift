@@ -16,8 +16,12 @@ import UIKit
 
 extension UIDatePicker {
     
-    public var rx_date: Observable<NSDate> {
-        return rx_value { [unowned self] in self.date }
+    public var rx_date: ControlProperty<NSDate> {
+        return rx_value(getter: { [unowned self] in
+            self.date
+        }, setter: { [weak self] value in
+            self?.date = value
+        })
     }
     
 }

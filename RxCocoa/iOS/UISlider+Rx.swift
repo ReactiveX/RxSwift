@@ -13,7 +13,13 @@ import RxSwift
 import UIKit
 
 extension UISlider {
-    public var rx_value: Observable<Float> {
-        return rx_value { [unowned self] in self.value }
+    
+    public var rx_value: ControlProperty<Float> {
+        return rx_value(getter: { [unowned self] in
+            self.value
+        }, setter: { [weak self] value in
+            self?.value = value
+        })
     }
+    
 }

@@ -14,8 +14,12 @@ import RxSwift
 
 extension UISegmentedControl {
     
-    public var rx_value: Observable<Int> {
-        return rx_value { [unowned self] in self.selectedSegmentIndex }
+    public var rx_value: ControlProperty<Int> {
+        return rx_value(getter: { [unowned self] in
+            self.selectedSegmentIndex
+        }, setter: { [weak self] value in
+            self?.selectedSegmentIndex = value
+        })
     }
     
 }

@@ -25,10 +25,8 @@ class RxTableViewSectionedAnimatedDataSource<S: SectionModelType> : RxTableViewS
                 setSections(c.finalSections)
                 tableView.performBatchUpdates(c)
             }
-        case .Error(_):
-            #if DEBUG
-                fatalError("Binding error to UI")
-            #endif
+        case .Error(let error):
+            bindingErrorToInterface(error)
         case .Completed:
             break
         }
