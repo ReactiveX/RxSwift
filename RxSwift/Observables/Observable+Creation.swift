@@ -33,17 +33,17 @@ public func never<E>() -> Observable<E> {
 
 // return
 
-public func just<E>(value: E) -> Observable<E> {
+public func just<E>(element: E) -> Observable<E> {
     return AnonymousObservable { observer in
-        sendNext(observer, value)
+        sendNext(observer, element)
         sendCompleted(observer)
         return NopDisposable.instance
     }
 }
 
-public func sequenceOf<E>(values: E ...) -> Observable<E> {
+public func sequenceOf<E>(elements: E ...) -> Observable<E> {
     return AnonymousObservable { observer in
-        for element in values {
+        for element in elements {
             sendNext(observer, element)
         }
         

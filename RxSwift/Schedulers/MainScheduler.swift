@@ -18,7 +18,7 @@ public final class MainScheduler : SerialDispatchQueueScheduler {
 
     public class func ensureExecutingOnScheduler() {
         if !NSThread.currentThread().isMainThread {
-            rxFatalError("Executing on wrong scheduler")
+            rxFatalError("Executing on scheduler that is not main. Please use `MainScheduler.sharedInstance`.")
         }
     }
     

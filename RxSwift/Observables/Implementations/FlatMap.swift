@@ -11,8 +11,8 @@ import Foundation
 // It's value is one because initial source subscription is always in CompositeDisposable
 let FlatMapNoIterators = 1
 
-class FlatMapSinkIter<SourceType, O: ObserverType> : ObserverType {
-    typealias Parent = FlatMapSink<SourceType, O>
+class FlatMapSinkIter<SourceType, S: ObservableType, O: ObserverType where O.E == S.E> : ObserverType {
+    typealias Parent = FlatMapSink<SourceType, S, O>
     typealias DisposeKey = CompositeDisposable.DisposeKey
     typealias E = O.E
     
@@ -52,10 +52,10 @@ class FlatMapSinkIter<SourceType, O: ObserverType> : ObserverType {
     }
 }
 
-class FlatMapSink<SourceType, O : ObserverType> : Sink<O>, ObserverType {
+class FlatMapSink<SourceType, S: ObservableType, O: ObserverType where O.E == S.E> : Sink<O>, ObserverType {
     typealias ResultType = O.E
     typealias Element = SourceType
-    typealias Parent = FlatMap<SourceType, ResultType>
+    typealias Parent = FlatMap<SourceType, S>
     
     let parent: Parent
     
@@ -70,7 +70,7 @@ class FlatMapSink<SourceType, O : ObserverType> : Sink<O>, ObserverType {
         super.init(observer: observer, cancel: cancel)
     }
     
-    func performMap(element: SourceType) throws -> Observable<ResultType> {
+    func performMap(element: SourceType) throws -> S {
         return abstractMethod()
     }
     
@@ -81,7 +81,7 @@ class FlatMapSink<SourceType, O : ObserverType> : Sink<O>, ObserverType {
         case .Next(let element):
             do {
                 let value = try performMap(element)
-                subscribeInner(value)
+                subscribeInner(value.asObservable())
             }
             catch let e {
                 observer?.on(.Error(e))
@@ -131,31 +131,31 @@ class FlatMapSink<SourceType, O : ObserverType> : Sink<O>, ObserverType {
     }
 }
 
-class FlatMapSink1<SourceType, O : ObserverType> : FlatMapSink<SourceType, O> {
+class FlatMapSink1<SourceType, S: ObservableType, O : ObserverType where S.E == O.E> : FlatMapSink<SourceType, S, O> {
     override init(parent: Parent, observer: O, cancel: Disposable) {
         super.init(parent: parent, observer: observer, cancel: cancel)
     }
     
-    override func performMap(element: SourceType) throws -> Observable<O.E> {
+    override func performMap(element: SourceType) throws -> S {
         return try self.parent.selector1!(element)
     }
 }
 
-class FlatMapSink2<SourceType, O : ObserverType> : FlatMapSink<SourceType, O> {
+class FlatMapSink2<SourceType, S: ObservableType, O: ObserverType where S.E == O.E> : FlatMapSink<SourceType, S, O> {
     var index = 0
     
     override init(parent: Parent, observer: O, cancel: Disposable) {
         super.init(parent: parent, observer: observer, cancel: cancel)
     }
     
-    override func performMap(element: SourceType) throws -> Observable<O.E> {
+    override func performMap(element: SourceType) throws -> S {
         return try self.parent.selector2!(element, index++)
     }
 }
 
-class FlatMap<SourceType, ResultType>: Producer<ResultType> {
-    typealias Selector1 = (SourceType) throws -> Observable<ResultType>
-    typealias Selector2 = (SourceType, Int) throws -> Observable<ResultType>
+class FlatMap<SourceType, S: ObservableType>: Producer<S.E> {
+    typealias Selector1 = (SourceType) throws -> S
+    typealias Selector2 = (SourceType, Int) throws -> S
     
     let source: Observable<SourceType>
     
@@ -174,7 +174,7 @@ class FlatMap<SourceType, ResultType>: Producer<ResultType> {
         self.selector1 = nil
     }
     
-    override func run<O: ObserverType where O.E == ResultType>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
+    override func run<O: ObserverType where O.E == S.E>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
         if let _ = self.selector1 {
             let sink = FlatMapSink1(parent: self, observer: observer, cancel: cancel)
             setSink(sink)

@@ -72,13 +72,13 @@ extension ObservableType {
 
 extension ObservableType {
 
-    public func flatMap<R>(selector: (E) throws -> Observable<R>)
-        -> Observable<R> {
+    public func flatMap<O: ObservableType>(selector: (E) throws -> O)
+        -> Observable<O.E> {
         return FlatMap(source: self.asObservable(), selector: selector)
     }
 
-    public func flatMapWithIndex<R>(selector: (E, Int) throws -> Observable<R>)
-        -> Observable<R> {
+    public func flatMapWithIndex<O: ObservableType>(selector: (E, Int) throws -> O)
+        -> Observable<O.E> {
         return FlatMap(source: self.asObservable(), selector: selector)
     }
 }

@@ -26,15 +26,15 @@ extension ObservableType {
 extension ObservableType {
     // If there isn't a new value in `source` sequence from the last sample time
     // nothing will be forwarded.
-    public func sample<S>(sampler: Observable<S>)
+    public func sample<O: ObservableType>(sampler: O)
         -> Observable<E> {
-        return Sample(source: self.asObservable(), sampler: sampler, onlyNew: true)
+        return Sample(source: self.asObservable(), sampler: sampler.asObservable(), onlyNew: true)
     }
 
     // On each sample latest element will always be forwarded.
-    public func sampleLatest<S>(sampler: Observable<S>)
+    public func sampleLatest<O: ObservableType>(sampler: O)
         -> Observable<E> {
-        return Sample(source: self.asObservable(), sampler: sampler, onlyNew: false)
+        return Sample(source: self.asObservable(), sampler: sampler.asObservable(), onlyNew: false)
     }
 }
 

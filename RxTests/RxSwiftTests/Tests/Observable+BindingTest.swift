@@ -153,7 +153,7 @@ extension ObservableBindingTest {
         let xs: Observable<Int> = failWith(testError)
         
         let res = xs.publish().refCount()
-        res .subscribe { event in
+        res.subscribe { event in
             switch event {
             case .Next:
                 XCTAssertTrue(false)
@@ -163,7 +163,7 @@ extension ObservableBindingTest {
                 XCTAssertTrue(false)
             }
         }
-        res .subscribe { event in
+        res.subscribe { event in
             switch event {
             case .Next:
                 XCTAssertTrue(false)
