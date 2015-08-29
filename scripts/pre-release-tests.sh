@@ -1,8 +1,14 @@
 
 IS_LOCAL=0
-if [ "$#" -eq 1 ]; then
+IS_QUICK=0
+if [ "$1" == "l" ]; then
 	echo "Local test"
 	IS_LOCAL=1
+fi
+
+if [ "$1" == "q" ]; then
+	echo "Quick"
+	IS_QUICK=1
 fi
 
 ISLOCAL="${IS_LOCAL}" . scripts/common.sh
@@ -28,14 +34,20 @@ else
 	echo "${DEFAULT_IOS9_SIMULATOR} exists"
 fi
 
+if [ "${IS_QUICK}" -eq 1 ]; then
+	CONFIGURATIONS=(Release)
+else
+	CONFIGURATIONS=(Debug Release-Tests Release)
+fi
+
 #make sure all iOS tests pass
-for configuration in "Debug" "Release-Tests" "Release"
+for configuration in ${CONFIGURATIONS[@]}
 do
 	rx "RxTests-iOS" ${configuration} $DEFAULT_IOS9_SIMULATOR test
 done
 
 #make sure all OSX tests pass
-for configuration in "Debug" "Release-Tests" "Release"
+for configuration in ${CONFIGURATIONS[@]}
 do
 	rx "RxTests-OSX" ${configuration} "" test
 done
@@ -43,7 +55,7 @@ done
 # make sure no module can be built
 for scheme in "RxExample-iOS-no-module"
 do
-	for configuration in "Debug" "Release-Tests" "Release"
+	for configuration in ${CONFIGURATIONS[@]}
 	do
 		#rx ${scheme} ${configuration} $DEFAULT_IOS7_SIMULATOR build
 		#rx ${scheme} ${configuration} $DEFAULT_IOS8_SIMULATOR build
@@ -54,7 +66,7 @@ done
 # make sure with modules can be built
 for scheme in "RxExample-iOS"
 do
-	for configuration in "Debug" "Release-Tests" "Release"
+	for configuration in ${CONFIGURATIONS[@]}
 	do
 	rx ${scheme} ${configuration} $DEFAULT_IOS9_SIMULATOR build
 	done
@@ -63,7 +75,7 @@ done
 # make sure osx builds
 for scheme in "RxExample-OSX"
 do
-	for configuration in "Debug" "Release-Tests" "Release"
+	for configuration in ${CONFIGURATIONS[@]}
 	do
 		rx ${scheme} ${configuration} "" build
 	done
