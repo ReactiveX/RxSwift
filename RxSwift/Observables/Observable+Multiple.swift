@@ -8,6 +8,14 @@
 
 import Foundation
 
+// combineLatest
+
+extension CollectionType where Generator.Element : ObservableType {
+    public func combineLatest<R>(resultSelector: [Generator.Element.E] throws -> R) -> Observable<R> {
+        return CombineLatestCollectionType(sources: self, resultSelector: resultSelector)
+    }
+}
+
 // switch
 
 extension ObservableType where E : ObservableType {

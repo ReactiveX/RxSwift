@@ -35,10 +35,6 @@ class TestScheduler : VirtualTimeSchedulerBase {
         super.init(initialClock: initialClock)
     }
     
-    func advanceTimeFor(interval: Time) {
-        
-    }
-    
     func createHotObservable<Element>(events: [Recorded<Element>]) -> HotObservable<Element> {
         return HotObservable(testScheduler: self as AnyObject as! TestScheduler, recordedEvents: events)
     }

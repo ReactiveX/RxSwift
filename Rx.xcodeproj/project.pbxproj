@@ -278,6 +278,8 @@
 		C8093F501B8A732E0088E94D /* RxCocoa.h in Headers */ = {isa = PBXBuildFile; fileRef = C8093ECB1B8A732E0088E94D /* RxCocoa.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C8093F5E1B8A73A20088E94D /* Observable+Blocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093F581B8A73A20088E94D /* Observable+Blocking.swift */; };
 		C8093F5F1B8A73A20088E94D /* Observable+Blocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093F581B8A73A20088E94D /* Observable+Blocking.swift */; };
+		C80D342E1B9245A40014629D /* CombineLatest+CollectionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80D342D1B9245A40014629D /* CombineLatest+CollectionType.swift */; settings = {ASSET_TAGS = (); }; };
+		C80D342F1B9245A40014629D /* CombineLatest+CollectionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80D342D1B9245A40014629D /* CombineLatest+CollectionType.swift */; settings = {ASSET_TAGS = (); }; };
 		C88254151B8A752B00B02D69 /* CoreDataEntityEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88253EF1B8A752B00B02D69 /* CoreDataEntityEvent.swift */; };
 		C88254161B8A752B00B02D69 /* RxCollectionViewReactiveArrayDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88253F11B8A752B00B02D69 /* RxCollectionViewReactiveArrayDataSource.swift */; };
 		C88254171B8A752B00B02D69 /* RxTableViewReactiveArrayDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88253F21B8A752B00B02D69 /* RxTableViewReactiveArrayDataSource.swift */; };
@@ -468,6 +470,7 @@
 		C8093ECB1B8A732E0088E94D /* RxCocoa.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RxCocoa.h; sourceTree = "<group>"; };
 		C8093F581B8A73A20088E94D /* Observable+Blocking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Observable+Blocking.swift"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		C8093F591B8A73A20088E94D /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		C80D342D1B9245A40014629D /* CombineLatest+CollectionType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CombineLatest+CollectionType.swift"; sourceTree = "<group>"; };
 		C88253EF1B8A752B00B02D69 /* CoreDataEntityEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataEntityEvent.swift; sourceTree = "<group>"; };
 		C88253F11B8A752B00B02D69 /* RxCollectionViewReactiveArrayDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxCollectionViewReactiveArrayDataSource.swift; sourceTree = "<group>"; };
 		C88253F21B8A752B00B02D69 /* RxTableViewReactiveArrayDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxTableViewReactiveArrayDataSource.swift; sourceTree = "<group>"; };
@@ -692,6 +695,7 @@
 				C8093C921B8A72BE0088E94D /* Zip+arity.swift */,
 				C8093C931B8A72BE0088E94D /* Zip+arity.tt */,
 				C8093C941B8A72BE0088E94D /* Zip.swift */,
+				C80D342D1B9245A40014629D /* CombineLatest+CollectionType.swift */,
 			);
 			path = Implementations;
 			sourceTree = "<group>";
@@ -1333,6 +1337,7 @@
 				C8093CEA1B8A72BE0088E94D /* ScopedDispose.swift in Sources */,
 				C8093D261B8A72BE0088E94D /* Multicast.swift in Sources */,
 				C8093D861B8A72BE0088E94D /* Rx.swift in Sources */,
+				C80D342F1B9245A40014629D /* CombineLatest+CollectionType.swift in Sources */,
 				C8093DA61B8A72BE0088E94D /* SubjectType.swift in Sources */,
 				C8093D5C1B8A72BE0088E94D /* Observable+Debug.swift in Sources */,
 				C8093D581B8A72BE0088E94D /* Observable+Concurrency.swift in Sources */,
@@ -1447,6 +1452,7 @@
 				C8093CE91B8A72BE0088E94D /* ScopedDispose.swift in Sources */,
 				C8093D251B8A72BE0088E94D /* Multicast.swift in Sources */,
 				C8093D851B8A72BE0088E94D /* Rx.swift in Sources */,
+				C80D342E1B9245A40014629D /* CombineLatest+CollectionType.swift in Sources */,
 				C8093DA51B8A72BE0088E94D /* SubjectType.swift in Sources */,
 				C8093D5B1B8A72BE0088E94D /* Observable+Debug.swift in Sources */,
 				C8093D571B8A72BE0088E94D /* Observable+Concurrency.swift in Sources */,

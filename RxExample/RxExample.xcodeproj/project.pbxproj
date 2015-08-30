@@ -276,6 +276,7 @@
 		C8A468F21B8A8C2600BF917B /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8A468ED1B8A8BCC00BF917B /* RxCocoa.framework */; };
 		C8A468F31B8A8C2600BF917B /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8A468EB1B8A8BC900BF917B /* RxSwift.framework */; };
 		C8A57F741B40AF7C00D5570A /* Random.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C8A57F721B40AF7C00D5570A /* Random.xcdatamodeld */; };
+		C8C3D9FC1B935D1E004D233E /* CombineLatest+CollectionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C3D9FB1B935D1E004D233E /* CombineLatest+CollectionType.swift */; settings = {ASSET_TAGS = (); }; };
 		C8C46DA81B47F7110020D71E /* CollectionViewImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C46DA31B47F7110020D71E /* CollectionViewImageCell.swift */; };
 		C8C46DA91B47F7110020D71E /* WikipediaImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C8C46DA41B47F7110020D71E /* WikipediaImageCell.xib */; };
 		C8C46DAA1B47F7110020D71E /* WikipediaSearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C46DA51B47F7110020D71E /* WikipediaSearchCell.swift */; };
@@ -435,7 +436,6 @@
 		C836EBF51B8A7A4500AB941D /* ObserverType+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ObserverType+Extensions.swift"; sourceTree = "<group>"; };
 		C836EBF61B8A7A4500AB941D /* ObserverType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObserverType.swift; sourceTree = "<group>"; };
 		C836EBF71B8A7A4500AB941D /* PeriodicScheduler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PeriodicScheduler.swift; sourceTree = "<group>"; };
-		C836EBF91B8A7A4500AB941D /* Rx.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Rx.pch; sourceTree = "<group>"; };
 		C836EBFA1B8A7A4500AB941D /* Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Rx.swift; sourceTree = "<group>"; };
 		C836EBFB1B8A7A4500AB941D /* RxBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxBox.swift; sourceTree = "<group>"; };
 		C836EBFC1B8A7A4500AB941D /* RxResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxResult.swift; sourceTree = "<group>"; };
@@ -543,6 +543,7 @@
 		C8A468EF1B8A8BD000BF917B /* RxBlocking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RxBlocking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8A57F731B40AF7C00D5570A /* Random.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Random.xcdatamodel; sourceTree = "<group>"; };
 		C8AF26F11B49ABD300131C03 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		C8C3D9FB1B935D1E004D233E /* CombineLatest+CollectionType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CombineLatest+CollectionType.swift"; sourceTree = "<group>"; };
 		C8C46DA31B47F7110020D71E /* CollectionViewImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewImageCell.swift; sourceTree = "<group>"; };
 		C8C46DA41B47F7110020D71E /* WikipediaImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WikipediaImageCell.xib; sourceTree = "<group>"; };
 		C8C46DA51B47F7110020D71E /* WikipediaSearchCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WikipediaSearchCell.swift; sourceTree = "<group>"; };
@@ -740,7 +741,6 @@
 				C836EBF51B8A7A4500AB941D /* ObserverType+Extensions.swift */,
 				C836EBF61B8A7A4500AB941D /* ObserverType.swift */,
 				C836EBF71B8A7A4500AB941D /* PeriodicScheduler.swift */,
-				C836EBF91B8A7A4500AB941D /* Rx.pch */,
 				C836EBFA1B8A7A4500AB941D /* Rx.swift */,
 				C836EBFB1B8A7A4500AB941D /* RxBox.swift */,
 				C836EBFC1B8A7A4500AB941D /* RxResult.swift */,
@@ -817,9 +817,10 @@
 				C836EBB71B8A7A4500AB941D /* AnonymousObservable.swift */,
 				C836EBB81B8A7A4500AB941D /* AsObservable.swift */,
 				C836EBB91B8A7A4500AB941D /* Catch.swift */,
+				C836EBBC1B8A7A4500AB941D /* CombineLatest.swift */,
 				C836EBBA1B8A7A4500AB941D /* CombineLatest+arity.swift */,
 				C836EBBB1B8A7A4500AB941D /* CombineLatest+arity.tt */,
-				C836EBBC1B8A7A4500AB941D /* CombineLatest.swift */,
+				C8C3D9FB1B935D1E004D233E /* CombineLatest+CollectionType.swift */,
 				C836EBBD1B8A7A4500AB941D /* Concat.swift */,
 				C836EBBF1B8A7A4500AB941D /* ConnectableObservable.swift */,
 				C836EBC01B8A7A4500AB941D /* Debug.swift */,
@@ -851,9 +852,9 @@
 				C836EBDA1B8A7A4500AB941D /* TakeWhile.swift */,
 				C836EBDB1B8A7A4500AB941D /* Throttle.swift */,
 				C836EBDC1B8A7A4500AB941D /* Timer.swift */,
+				C836EBDF1B8A7A4500AB941D /* Zip.swift */,
 				C836EBDD1B8A7A4500AB941D /* Zip+arity.swift */,
 				C836EBDE1B8A7A4500AB941D /* Zip+arity.tt */,
-				C836EBDF1B8A7A4500AB941D /* Zip.swift */,
 			);
 			path = Implementations;
 			sourceTree = "<group>";
@@ -1510,6 +1511,7 @@
 				C836EC3A1B8A7A4500AB941D /* Do.swift in Sources */,
 				C836ECFB1B8A7AA600AB941D /* UISegmentedControl+Rx.swift in Sources */,
 				C836EC431B8A7A4500AB941D /* ObserveSingleOn.swift in Sources */,
+				C8C3D9FC1B935D1E004D233E /* CombineLatest+CollectionType.swift in Sources */,
 				C836EC0F1B8A7A4500AB941D /* Cancelable.swift in Sources */,
 				C836EC331B8A7A4500AB941D /* Concat.swift in Sources */,
 				C836ECDA1B8A7AA600AB941D /* NSURLSession+Rx.swift in Sources */,
