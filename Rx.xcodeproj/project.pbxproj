@@ -318,6 +318,8 @@
 		C8A468C91B8A893400BF917B /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C88BB8711B07E5ED0064D411 /* RxSwift.framework */; };
 		C8A468CA1B8A893A00BF917B /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8A56AD71AD7424700B4673B /* RxSwift.framework */; };
 		C8A468CB1B8A894100BF917B /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C88BB8711B07E5ED0064D411 /* RxSwift.framework */; };
+		C8C3D9FE1B935EDF004D233E /* Zip+CollectionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C3D9FD1B935EDF004D233E /* Zip+CollectionType.swift */; settings = {ASSET_TAGS = (); }; };
+		C8C3D9FF1B935EDF004D233E /* Zip+CollectionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C3D9FD1B935EDF004D233E /* Zip+CollectionType.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -507,6 +509,7 @@
 		C88254141B8A752B00B02D69 /* UITextView+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITextView+Rx.swift"; sourceTree = "<group>"; };
 		C88BB8711B07E5ED0064D411 /* RxSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8A56AD71AD7424700B4673B /* RxSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C8C3D9FD1B935EDF004D233E /* Zip+CollectionType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Zip+CollectionType.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -658,9 +661,10 @@
 				C8093C6C1B8A72BE0088E94D /* AnonymousObservable.swift */,
 				C8093C6D1B8A72BE0088E94D /* AsObservable.swift */,
 				C8093C6E1B8A72BE0088E94D /* Catch.swift */,
+				C8093C711B8A72BE0088E94D /* CombineLatest.swift */,
 				C8093C6F1B8A72BE0088E94D /* CombineLatest+arity.swift */,
 				C8093C701B8A72BE0088E94D /* CombineLatest+arity.tt */,
-				C8093C711B8A72BE0088E94D /* CombineLatest.swift */,
+				C80D342D1B9245A40014629D /* CombineLatest+CollectionType.swift */,
 				C8093C721B8A72BE0088E94D /* Concat.swift */,
 				C8093C741B8A72BE0088E94D /* ConnectableObservable.swift */,
 				C8093C751B8A72BE0088E94D /* Debug.swift */,
@@ -692,10 +696,10 @@
 				C8093C8F1B8A72BE0088E94D /* TakeWhile.swift */,
 				C8093C901B8A72BE0088E94D /* Throttle.swift */,
 				C8093C911B8A72BE0088E94D /* Timer.swift */,
+				C8093C941B8A72BE0088E94D /* Zip.swift */,
 				C8093C921B8A72BE0088E94D /* Zip+arity.swift */,
 				C8093C931B8A72BE0088E94D /* Zip+arity.tt */,
-				C8093C941B8A72BE0088E94D /* Zip.swift */,
-				C80D342D1B9245A40014629D /* CombineLatest+CollectionType.swift */,
+				C8C3D9FD1B935EDF004D233E /* Zip+CollectionType.swift */,
 			);
 			path = Implementations;
 			sourceTree = "<group>";
@@ -1313,6 +1317,7 @@
 				C8093D941B8A72BE0088E94D /* MainScheduler.swift in Sources */,
 				C8093D161B8A72BE0088E94D /* Deferred.swift in Sources */,
 				C8093DA41B8A72BE0088E94D /* ReplaySubject.swift in Sources */,
+				C8C3D9FF1B935EDF004D233E /* Zip+CollectionType.swift in Sources */,
 				C8093D641B8A72BE0088E94D /* Observable+Time.swift in Sources */,
 				C8093CFC1B8A72BE0088E94D /* Observable+Extensions.swift in Sources */,
 				C8093D4A1B8A72BE0088E94D /* Throttle.swift in Sources */,
@@ -1428,6 +1433,7 @@
 				C8093D931B8A72BE0088E94D /* MainScheduler.swift in Sources */,
 				C8093D151B8A72BE0088E94D /* Deferred.swift in Sources */,
 				C8093DA31B8A72BE0088E94D /* ReplaySubject.swift in Sources */,
+				C8C3D9FE1B935EDF004D233E /* Zip+CollectionType.swift in Sources */,
 				C8093D631B8A72BE0088E94D /* Observable+Time.swift in Sources */,
 				C8093CFB1B8A72BE0088E94D /* Observable+Extensions.swift in Sources */,
 				C8093D491B8A72BE0088E94D /* Throttle.swift in Sources */,

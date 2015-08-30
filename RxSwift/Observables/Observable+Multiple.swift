@@ -16,6 +16,14 @@ extension CollectionType where Generator.Element : ObservableType {
     }
 }
 
+// zip
+
+extension CollectionType where Generator.Element : ObservableType {
+    public func zip<R>(resultSelector: [Generator.Element.E] throws -> R) -> Observable<R> {
+        return ZipCollectionType(sources: self, resultSelector: resultSelector)
+    }
+}
+
 // switch
 
 extension ObservableType where E : ObservableType {

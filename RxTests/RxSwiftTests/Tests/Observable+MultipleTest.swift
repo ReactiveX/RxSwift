@@ -3434,3 +3434,158 @@ extension ObservableMultipleTest {
         
     }
 }
+
+// zip + CollectionType
+
+extension ObservableMultipleTest {
+    func testZip_NAry_symmetric() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let e0 = scheduler.createHotObservable([
+            next(150, 1),
+            next(210, 1),
+            next(250, 4),
+            completed(420)
+            ])
+        let e1 = scheduler.createHotObservable([
+            next(150, 1),
+            next(220, 2),
+            next(240, 5),
+            completed(410)
+            ])
+        let e2 = scheduler.createHotObservable([
+            next(150, 1),
+            next(230, 3),
+            next(260, 6),
+            completed(400)
+            ])
+        
+        let res = scheduler.start {
+            [e0, e1, e2].zip { EquatableArray($0) }
+        }
+        
+        XCTAssertEqual(res.messages, [
+            next(230, EquatableArray([1, 2, 3])),
+            next(260, EquatableArray([4, 5, 6])),
+            completed(420)
+            ])
+        
+        XCTAssertEqual(e0.subscriptions, [Subscription(200, 420)])
+        XCTAssertEqual(e1.subscriptions, [Subscription(200, 410)])
+        XCTAssertEqual(e2.subscriptions, [Subscription(200, 400)])
+        
+    }
+    
+    func testZip_NAry_asymmetric() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let e0 = scheduler.createHotObservable([
+            next(150, 1),
+            next(210, 1),
+            next(250, 4),
+            completed(270)
+            ])
+        let e1 = scheduler.createHotObservable([
+            next(150, 1),
+            next(220, 2),
+            next(240, 5),
+            next(290, 7),
+            next(310, 9),
+            completed(410)
+            ])
+        let e2 = scheduler.createHotObservable([
+            next(150, 1),
+            next(230, 3),
+            next(260, 6),
+            next(280, 8),
+            completed(300)
+            ])
+        
+        let res = scheduler.start {
+            [e0, e1, e2].zip { EquatableArray($0) }
+        }
+        
+        XCTAssertEqual(res.messages, [
+            next(230, EquatableArray([1, 2, 3])),
+            next(260, EquatableArray([4, 5, 6])),
+            completed(310)
+            ])
+        
+        XCTAssertEqual(e0.subscriptions, [Subscription(200, 270)])
+        XCTAssertEqual(e1.subscriptions, [Subscription(200, 310)])
+        XCTAssertEqual(e2.subscriptions, [Subscription(200, 300)])
+        
+    }
+    
+    func testZip_NAry_error() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let e0 = scheduler.createHotObservable([
+            next(150, 1),
+            next(210, 1),
+            error(250, testError),
+            ])
+        let e1 = scheduler.createHotObservable([
+            next(150, 1),
+            next(220, 2),
+            next(240, 5),
+            completed(410)
+            ])
+        let e2 = scheduler.createHotObservable([
+            next(150, 1),
+            next(230, 3),
+            next(260, 6),
+            completed(400)
+            ])
+        
+        let res = scheduler.start {
+            [e0, e1, e2].zip { EquatableArray($0) }
+        }
+        
+        XCTAssertEqual(res.messages, [
+            next(230, EquatableArray([1, 2, 3])),
+            error(250, testError)
+            ])
+        
+        XCTAssertEqual(e0.subscriptions, [Subscription(200, 250)])
+        XCTAssertEqual(e1.subscriptions, [Subscription(200, 250)])
+        XCTAssertEqual(e2.subscriptions, [Subscription(200, 250)])
+    }
+    
+    func testZip_NAry_atLeastOneErrors4() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let e0 = scheduler.createHotObservable([
+            next(150, 1),
+            next(210, 1),
+            completed(400)
+            ])
+        let e1 = scheduler.createHotObservable([
+            next(150, 1),
+            next(220, 2),
+            completed(400)
+            ])
+        let e2 = scheduler.createHotObservable([
+            next(150, 1),
+            error(230, testError)
+            ])
+        let e3 = scheduler.createHotObservable([
+            next(150, 1),
+            next(240, 4),
+            completed(400)
+            ])
+        
+        let res = scheduler.start {
+            [e0, e1, e2, e3].zip { _ in 42 }
+        }
+        
+        XCTAssertEqual(res.messages, [
+            error(230, testError)
+            ])
+        
+        XCTAssertEqual(e0.subscriptions, [Subscription(200, 230)])
+        XCTAssertEqual(e1.subscriptions, [Subscription(200, 230)])
+        XCTAssertEqual(e2.subscriptions, [Subscription(200, 230)])
+        XCTAssertEqual(e3.subscriptions, [Subscription(200, 230)])
+    }
+}

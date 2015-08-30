@@ -277,6 +277,7 @@
 		C8A468F31B8A8C2600BF917B /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8A468EB1B8A8BC900BF917B /* RxSwift.framework */; };
 		C8A57F741B40AF7C00D5570A /* Random.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C8A57F721B40AF7C00D5570A /* Random.xcdatamodeld */; };
 		C8C3D9FC1B935D1E004D233E /* CombineLatest+CollectionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C3D9FB1B935D1E004D233E /* CombineLatest+CollectionType.swift */; settings = {ASSET_TAGS = (); }; };
+		C8C3DA011B936C11004D233E /* Zip+CollectionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C3DA001B936C11004D233E /* Zip+CollectionType.swift */; settings = {ASSET_TAGS = (); }; };
 		C8C46DA81B47F7110020D71E /* CollectionViewImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C46DA31B47F7110020D71E /* CollectionViewImageCell.swift */; };
 		C8C46DA91B47F7110020D71E /* WikipediaImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C8C46DA41B47F7110020D71E /* WikipediaImageCell.xib */; };
 		C8C46DAA1B47F7110020D71E /* WikipediaSearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C46DA51B47F7110020D71E /* WikipediaSearchCell.swift */; };
@@ -544,6 +545,7 @@
 		C8A57F731B40AF7C00D5570A /* Random.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Random.xcdatamodel; sourceTree = "<group>"; };
 		C8AF26F11B49ABD300131C03 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		C8C3D9FB1B935D1E004D233E /* CombineLatest+CollectionType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CombineLatest+CollectionType.swift"; sourceTree = "<group>"; };
+		C8C3DA001B936C11004D233E /* Zip+CollectionType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Zip+CollectionType.swift"; sourceTree = "<group>"; };
 		C8C46DA31B47F7110020D71E /* CollectionViewImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewImageCell.swift; sourceTree = "<group>"; };
 		C8C46DA41B47F7110020D71E /* WikipediaImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WikipediaImageCell.xib; sourceTree = "<group>"; };
 		C8C46DA51B47F7110020D71E /* WikipediaSearchCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WikipediaSearchCell.swift; sourceTree = "<group>"; };
@@ -855,6 +857,7 @@
 				C836EBDF1B8A7A4500AB941D /* Zip.swift */,
 				C836EBDD1B8A7A4500AB941D /* Zip+arity.swift */,
 				C836EBDE1B8A7A4500AB941D /* Zip+arity.tt */,
+				C8C3DA001B936C11004D233E /* Zip+CollectionType.swift */,
 			);
 			path = Implementations;
 			sourceTree = "<group>";
@@ -1330,6 +1333,7 @@
 				C836ECE01B8A7AA600AB941D /* RxCollectionViewReactiveArrayDataSource.swift in Sources */,
 				C836ECE81B8A7AA600AB941D /* RxCollectionViewDataSourceProxy.swift in Sources */,
 				C836EC2E1B8A7A4500AB941D /* AsObservable.swift in Sources */,
+				C8C3DA011B936C11004D233E /* Zip+CollectionType.swift in Sources */,
 				C8297E301B6CF905000589EA /* RandomUserAPI.swift in Sources */,
 				C836EC591B8A7A4500AB941D /* Observable+Creation.swift in Sources */,
 				C8297E311B6CF905000589EA /* SearchResultViewModel.swift in Sources */,
