@@ -23,7 +23,7 @@ import Foundation
 // internal serial queue can be customized using `serialQueueConfiguration` 
 // callback.
 //
-public class SerialDispatchQueueScheduler: Scheduler, PeriodicScheduler {
+public class SerialDispatchQueueScheduler: Scheduler {
     public typealias TimeInterval = NSTimeInterval
     public typealias Time = NSDate
     
@@ -90,11 +90,11 @@ public class SerialDispatchQueueScheduler: Scheduler, PeriodicScheduler {
         return dispatch_time(DISPATCH_TIME_NOW, convertTimeIntervalToDispatchInterval(timeInterval))
     }
     
-    public final func schedule<StateType>(state: StateType, action: (/*ImmediateScheduler,*/ StateType) -> RxResult<Disposable>) -> RxResult<Disposable> {
+    public final func schedule<StateType>(state: StateType, action: (StateType) -> Disposable) -> Disposable {
         return self.scheduleInternal(state, action: action)
     }
     
-    func scheduleInternal<StateType>(state: StateType, action: (/*ImmediateScheduler,*/ StateType) -> RxResult<Disposable>) -> RxResult<Disposable> {
+    func scheduleInternal<StateType>(state: StateType, action: (StateType) -> Disposable) -> Disposable {
         let cancel = SingleAssignmentDisposable()
         
         dispatch_async(self.serialQueue) {
@@ -102,15 +102,14 @@ public class SerialDispatchQueueScheduler: Scheduler, PeriodicScheduler {
                 return
             }
             
-            _ = ensureScheduledSuccessfully(action(/*self,*/ state).map { disposable in
-                cancel.disposable = disposable
-            })
+            
+            cancel.disposable = action(state)
         }
         
-        return success(cancel)
+        return cancel
     }
     
-    public final func scheduleRelative<StateType>(state: StateType, dueTime: NSTimeInterval, action: (/*Scheduler<NSTimeInterval, NSDate>,*/ StateType) -> RxResult<Disposable>) -> RxResult<Disposable> {
+    public final func scheduleRelative<StateType>(state: StateType, dueTime: NSTimeInterval, action: (StateType) -> Disposable) -> Disposable {
         let timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, self.serialQueue)
         
         let dispatchInterval = MainScheduler.convertTimeIntervalToDispatchTime(dueTime)
@@ -122,9 +121,7 @@ public class SerialDispatchQueueScheduler: Scheduler, PeriodicScheduler {
             if compositeDisposable.disposed {
                 return
             }
-            ensureScheduledSuccessfully(action(/*self,*/ state).map { disposable in
-                compositeDisposable.addDisposable(disposable)
-            })
+            compositeDisposable.addDisposable(action(state))
         })
         dispatch_resume(timer)
         
@@ -132,10 +129,10 @@ public class SerialDispatchQueueScheduler: Scheduler, PeriodicScheduler {
             dispatch_source_cancel(timer)
         })
         
-        return success(compositeDisposable)
+        return compositeDisposable
     }
     
-    public func schedulePeriodic<StateType>(state: StateType, startAfter: TimeInterval, period: TimeInterval, action: (StateType) -> StateType) -> RxResult<Disposable> {
+    public func schedulePeriodic<StateType>(state: StateType, startAfter: TimeInterval, period: TimeInterval, action: (StateType) -> StateType) -> Disposable {
         let timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, self.serialQueue)
         
         let initial = MainScheduler.convertTimeIntervalToDispatchTime(startAfter)
@@ -157,6 +154,6 @@ public class SerialDispatchQueueScheduler: Scheduler, PeriodicScheduler {
         })
         dispatch_resume(timer)
         
-        return success(cancel)
+        return cancel
     }
 }

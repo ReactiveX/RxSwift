@@ -22,29 +22,35 @@ class ObservableBlockingTest : RxTest {
 
 extension ObservableBlockingTest {
     func testToArray_empty() {
-        XCTAssert(((empty() as Observable<Int>).toArray()).get() == [])
+        XCTAssert(try! (empty() as Observable<Int>).toArray() == [])
     }
     
     func testToArray_return() {
-        XCTAssert((just(42).toArray()).get() == [42])
+        XCTAssert(try! just(42).toArray() == [42])
     }
     
     func testToArray_fail() {
-        XCTAssert(((failWith(testError) as Observable<Int>).toArray()).isFailure)
+        do {
+            try (failWith(testError) as Observable<Int>).toArray()
+            XCTFail("It should fail")
+        }
+        catch {
+            
+        }
     }
     
     func testToArray_someData() {
-        XCTAssert((sequenceOf(42, 43, 44, 45).toArray()).get() == [42, 43, 44, 45])
+        XCTAssert(try! sequenceOf(42, 43, 44, 45).toArray() == [42, 43, 44, 45])
     }
     
     func testToArray_withRealScheduler() {
         let scheduler = ConcurrentDispatchQueueScheduler(globalConcurrentQueuePriority: .Default)
         
-        let array = interval(0.001, scheduler)
+        let array = try! interval(0.001, scheduler)
             .take(10)
             .toArray()
         
-        XCTAssert(array.get() == Array(0..<10))
+        XCTAssert(array == Array(0..<10))
     }
 }
 
@@ -52,29 +58,35 @@ extension ObservableBlockingTest {
 
 extension ObservableBlockingTest {
     func testFirst_empty() {
-        XCTAssert(((empty() as Observable<Int>).first).get() == nil)
+        XCTAssert(try! (empty() as Observable<Int>).first() == nil)
     }
     
     func testFirst_return() {
-        XCTAssert((just(42).first).get() == 42)
+        XCTAssert(try! just(42).first() == 42)
     }
     
     func testFirst_fail() {
-        XCTAssert(((failWith(testError) as Observable<Int>).first).isFailure)
+        do {
+            try (failWith(testError) as Observable<Int>).first()
+            XCTFail()
+        }
+        catch {
+            
+        }
     }
     
     func testFirst_someData() {
-        XCTAssert((sequenceOf(42, 43, 44, 45).first).get() == 42)
+        XCTAssert(try! sequenceOf(42, 43, 44, 45).first() == 42)
     }
     
     func testFirst_withRealScheduler() {
         let scheduler = ConcurrentDispatchQueueScheduler(globalConcurrentQueuePriority: .Default)
         
-        let array = interval(0.001, scheduler)
+        let array = try! interval(0.001, scheduler)
             .take(10)
-            .first
+            .first()
         
-        XCTAssert(array.get() == 0)
+        XCTAssert(array == 0)
     }
 }
 
@@ -82,29 +94,35 @@ extension ObservableBlockingTest {
 
 extension ObservableBlockingTest {
     func testLast_empty() {
-        XCTAssert(((empty() as Observable<Int>).last).get() == nil)
+        XCTAssert(try! (empty() as Observable<Int>).last() == nil)
     }
     
     func testLast_return() {
-        XCTAssert((just(42).last).get() == 42)
+        XCTAssert(try! just(42).last() == 42)
     }
     
     func testLast_fail() {
-        XCTAssert(((failWith(testError) as Observable<Int>).last).isFailure)
+        do {
+            try (failWith(testError) as Observable<Int>).last()
+            XCTFail()
+        }
+        catch {
+            
+        }
     }
     
     func testLast_someData() {
-        XCTAssert((sequenceOf(42, 43, 44, 45).last).get() == 45)
+        XCTAssert(try! sequenceOf(42, 43, 44, 45).last() == 45)
     }
     
     func testLast_withRealScheduler() {
         let scheduler = ConcurrentDispatchQueueScheduler(globalConcurrentQueuePriority: .Default)
         
-        let array = interval(0.001, scheduler)
+        let array = try! interval(0.001, scheduler)
             .take(10)
-            .last
+            .last()
         
-        XCTAssert(array.get() == 9)
+        XCTAssert(array == 9)
     }
 }
 

@@ -209,7 +209,7 @@ extension ObservableConcurrencyTest {
 
         scheduler.schedule(()) { s in
             OSSpinLockUnlock(&wait)
-            return NopDisposableResult
+            return NopDisposable.instance
         }
 
         OSSpinLockLock(&wait)
@@ -500,7 +500,7 @@ class ObservableConcurrentSchedulerConcurrencyTest: ObservableConcurrencyTestBas
         var writtenStarted = 0
         var writtenEnded = 0
 
-        var concurrent = { () -> RxResult<Disposable> in
+        var concurrent = { () -> Disposable in
             self.performLocked {
                 events.append("Started")
             }
@@ -527,14 +527,14 @@ class ObservableConcurrentSchedulerConcurrencyTest: ObservableConcurrencyTestBas
 
             stop.on(.Completed)
 
-            return NopDisposableResult
+            return NopDisposable.instance
         }
 
         _ = scheduler.schedule((), action: concurrent)
 
         _ = scheduler.schedule((), action: concurrent)
 
-        let _ = stop.last
+        let _ = try! stop.last()
 
         XCTAssertEqual(events, ["Started", "Started", "Ended", "Ended"])
     }

@@ -18,7 +18,7 @@ protocol ScheduledItemProtocol : Cancelable {
 }
 
 class ScheduledItem<T> : ScheduledItemProtocol {
-    typealias Action = (/*Scheduler<Int, Int>,*/ T) -> RxResult<Disposable>
+    typealias Action = T -> Disposable
     
     let action: Action
     let state: T
@@ -39,7 +39,7 @@ class ScheduledItem<T> : ScheduledItemProtocol {
     }
     
     func invoke() {
-         self.disposable.disposable = (action(/*scheduler,*/ state).get())
+         self.disposable.disposable = action(state)
     }
     
     func dispose() {
@@ -74,17 +74,17 @@ class VirtualTimeSchedulerBase : Scheduler, CustomStringConvertible {
         self.enabled = false
     }
     
-    func schedule<StateType>(state: StateType, action: (/*ImmediateScheduler,*/ StateType) -> RxResult<Disposable>) -> RxResult<Disposable> {
-        return self.scheduleRelative(state, dueTime: 0) { /*s,*/ a in
-            return action(/*s,*/ a)
+    func schedule<StateType>(state: StateType, action: StateType -> Disposable) -> Disposable {
+        return self.scheduleRelative(state, dueTime: 0) { a in
+            return action(a)
         }
     }
     
-    func scheduleRelative<StateType>(state: StateType, dueTime: Int, action: (/*Scheduler<Int, Int>,*/ StateType) -> RxResult<Disposable>) -> RxResult<Disposable> {
+    func scheduleRelative<StateType>(state: StateType, dueTime: Int, action: StateType -> Disposable) -> Disposable {
         return schedule(state, time: now + dueTime, action: action)
     }
     
-    func schedule<StateType>(state: StateType, time: Int, action: (/*Scheduler<Int, Int>,*/ StateType) -> RxResult<Disposable>) -> RxResult<Disposable> {
+    func schedule<StateType>(state: StateType, time: Int, action: StateType -> Disposable) -> Disposable {
         let compositeDisposable = CompositeDisposable()
         
         let scheduleTime: Int
@@ -101,10 +101,10 @@ class VirtualTimeSchedulerBase : Scheduler, CustomStringConvertible {
         
         compositeDisposable.addDisposable(item)
         
-        return success(compositeDisposable)
+        return compositeDisposable
     }
     
-    func schedulePeriodic<StateType>(state: StateType, startAfter: TimeInterval, period: TimeInterval, action: (StateType) -> StateType) -> RxResult<Disposable> {
+    func schedulePeriodic<StateType>(state: StateType, startAfter: TimeInterval, period: TimeInterval, action: (StateType) -> StateType) -> Disposable {
         let compositeDisposable = CompositeDisposable()
         
         let scheduleTime: Int
@@ -117,7 +117,7 @@ class VirtualTimeSchedulerBase : Scheduler, CustomStringConvertible {
         
         let item = ScheduledItem(action: { [unowned self] state in
             if compositeDisposable.disposed {
-                return NopDisposableResult
+                return NopDisposable.instance
             }
             let nextState = action(state)
             return self.schedulePeriodic(nextState, startAfter: period, period: period, action: action)
@@ -127,7 +127,7 @@ class VirtualTimeSchedulerBase : Scheduler, CustomStringConvertible {
         
         compositeDisposable.addDisposable(item)
         
-        return success(compositeDisposable)
+        return compositeDisposable
     }
     
     func start() {

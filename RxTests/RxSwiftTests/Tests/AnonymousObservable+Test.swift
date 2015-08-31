@@ -24,7 +24,7 @@ extension AnonymousObservableTests {
         
         var elements = [Int]()
         
-        let d = a .subscribeNext { n in
+        let d = a.subscribeNext { n in
             elements.append(n)
         }
         
@@ -48,7 +48,7 @@ extension AnonymousObservableTests {
         
         var elements = [Int]()
         
-        let d = a .subscribeNext { n in
+        let d = a.subscribeNext { n in
             elements.append(n)
         }
         
@@ -72,7 +72,7 @@ extension AnonymousObservableTests {
         
         var elements = [Int]()
         
-        let d = a .subscribeNext { n in
+        let d = a.subscribeNext { n in
             elements.append(n)
         }
         

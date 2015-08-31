@@ -22,7 +22,7 @@ public final class MainScheduler : SerialDispatchQueueScheduler {
         }
     }
     
-    override func scheduleInternal<StateType>(state: StateType, action: (/*ImmediateScheduler,*/ StateType) -> RxResult<Disposable>) -> RxResult<Disposable> {
+    override func scheduleInternal<StateType>(state: StateType, action: StateType -> Disposable) -> Disposable {
         if NSThread.currentThread().isMainThread {
             return action(state)
         }

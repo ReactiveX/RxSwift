@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class ConcurrentDispatchQueueScheduler: Scheduler, PeriodicScheduler {
+public class ConcurrentDispatchQueueScheduler: Scheduler {
     public typealias TimeInterval = NSTimeInterval
     public typealias Time = NSDate
     
@@ -53,11 +53,11 @@ public class ConcurrentDispatchQueueScheduler: Scheduler, PeriodicScheduler {
         return dispatch_time(DISPATCH_TIME_NOW, convertTimeIntervalToDispatchInterval(timeInterval))
     }
     
-    public final func schedule<StateType>(state: StateType, action: (/*ImmediateScheduler,*/ StateType) -> RxResult<Disposable>) -> RxResult<Disposable> {
+    public final func schedule<StateType>(state: StateType, action: StateType -> Disposable) -> Disposable {
         return self.scheduleInternal(state, action: action)
     }
     
-    func scheduleInternal<StateType>(state: StateType, action: (/*ImmediateScheduler,*/ StateType) -> RxResult<Disposable>) -> RxResult<Disposable> {
+    func scheduleInternal<StateType>(state: StateType, action: StateType -> Disposable) -> Disposable {
         let cancel = SingleAssignmentDisposable()
         
         dispatch_async(self.queue) {
@@ -65,15 +65,13 @@ public class ConcurrentDispatchQueueScheduler: Scheduler, PeriodicScheduler {
                 return
             }
             
-            _ = ensureScheduledSuccessfully(action(/*self,*/ state).map { disposable in
-                cancel.disposable = disposable
-                })
+            cancel.disposable = action(state)
         }
         
-        return success(cancel)
+        return cancel
     }
     
-    public final func scheduleRelative<StateType>(state: StateType, dueTime: NSTimeInterval, action: (/*Scheduler<NSTimeInterval, NSDate>,*/ StateType) -> RxResult<Disposable>) -> RxResult<Disposable> {
+    public final func scheduleRelative<StateType>(state: StateType, dueTime: NSTimeInterval, action: (StateType) -> Disposable) -> Disposable {
         let timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, self.queue)
         
         let dispatchInterval = MainScheduler.convertTimeIntervalToDispatchTime(dueTime)
@@ -85,9 +83,7 @@ public class ConcurrentDispatchQueueScheduler: Scheduler, PeriodicScheduler {
             if compositeDisposable.disposed {
                 return
             }
-            ensureScheduledSuccessfully(action(/*self,*/ state).map { disposable in
-                compositeDisposable.addDisposable(disposable)
-                })
+           compositeDisposable.addDisposable(action(state))
         })
         dispatch_resume(timer)
         
@@ -95,7 +91,7 @@ public class ConcurrentDispatchQueueScheduler: Scheduler, PeriodicScheduler {
             dispatch_source_cancel(timer)
             })
         
-        return success(compositeDisposable)
+        return compositeDisposable
     }
     
     public func schedulePeriodic<StateType>(state: StateType, startAfter: TimeInterval, period: TimeInterval, action: (StateType) -> StateType) -> RxResult<Disposable> {

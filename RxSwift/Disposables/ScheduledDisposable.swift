@@ -37,7 +37,7 @@ public class ScheduledDisposable : Cancelable {
     public func dispose() {
         scheduler.schedule(()) {
             self.disposeInner()
-            return NopDisposableResult
+            return NopDisposable.instance
         }
     }
     

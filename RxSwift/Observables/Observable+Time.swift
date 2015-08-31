@@ -40,45 +40,22 @@ extension ObservableType {
 
 // interval
 
-
-
-    // fallback {
-
 public func interval<S: Scheduler>(period: S.TimeInterval, _ scheduler: S)
     -> Observable<Int64> {
     return Timer(dueTime: period,
         period: period,
-        scheduler: scheduler,
-        schedulePeriodic: abstractSchedulePeriodic(scheduler)
+        scheduler: scheduler
     )
 }
-
-    // }
-
-    // periodic schedulers {
-
-public func interval<S: PeriodicScheduler>(period: S.TimeInterval, _ scheduler: S)
-    -> Observable<Int64> {
-    return Timer(dueTime: period,
-        period: period,
-        scheduler: scheduler,
-        schedulePeriodic: abstractSchedulePeriodic(scheduler)
-    )
-}
-
-    // }
 
 // timer
-
-    // fallback {
 
 public func timer<S: Scheduler>(dueTime: S.TimeInterval, _ period: S.TimeInterval, scheduler: S)
     -> Observable<Int64> {
     return Timer(
         dueTime: dueTime,
         period: period,
-        scheduler: scheduler,
-        schedulePeriodic: abstractSchedulePeriodic(scheduler)
+        scheduler: scheduler
     )
 }
 
@@ -87,36 +64,9 @@ public func timer<S: Scheduler>(dueTime: S.TimeInterval, scheduler: S)
     return Timer(
         dueTime: dueTime,
         period: nil,
-        scheduler: scheduler,
-        schedulePeriodic: abstractSchedulePeriodic(scheduler)
+        scheduler: scheduler
     )
 }
-
-    // }
-
-    // periodic schedulers {
-
-public func timer<S: PeriodicScheduler>(dueTime: S.TimeInterval, _ period: S.TimeInterval, scheduler: S)
-    -> Observable<Int64> {
-    return Timer(
-        dueTime: dueTime,
-        period: period,
-        scheduler: scheduler,
-        schedulePeriodic: abstractSchedulePeriodic(scheduler)
-    )
-}
-
-public func timer<S: PeriodicScheduler>(dueTime: S.TimeInterval, scheduler: S)
-    -> Observable<Int64> {
-    return Timer(
-        dueTime: dueTime,
-        period: nil,
-        scheduler: scheduler,
-        schedulePeriodic: abstractSchedulePeriodic(scheduler)
-    )
-}
-
-    // }
 
 // take
 

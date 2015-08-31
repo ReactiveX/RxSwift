@@ -33,13 +33,11 @@ class SubscribeOnSink<O: ObserverType> : Sink<O>, ObserverType {
         
         disposeEverything.disposable = cancelSchedule
         
-        let scheduleResult = parent.scheduler.schedule(()) { (_) -> RxResult<Disposable> in
+        cancelSchedule.disposable = parent.scheduler.schedule(()) { (_) -> Disposable in
             let subscription = self.parent.source.subscribeSafe(self)
             disposeEverything.disposable = ScheduledDisposable(scheduler: self.parent.scheduler, disposable: subscription)
-            return NopDisposableResult
+            return NopDisposable.instance
         }
-    
-        cancelSchedule.disposable = getScheduledDisposable(scheduleResult)
     
         return disposeEverything
     }

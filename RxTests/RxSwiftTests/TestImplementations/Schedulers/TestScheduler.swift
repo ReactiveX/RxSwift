@@ -21,14 +21,6 @@ func createObserver<E>(scheduler: TestScheduler) -> MockObserver<E> {
     return MockObserver(scheduler: scheduler)
 }
 
-class PeriodicTestScheduler : TestScheduler, PeriodicScheduler {
-    
-    override init(initialClock: Time) {
-        super.init(initialClock: initialClock)
-    }
-    
-}
-
 class TestScheduler : VirtualTimeSchedulerBase {
     
     override init(initialClock: Time) {
@@ -50,7 +42,7 @@ class TestScheduler : VirtualTimeSchedulerBase {
     func scheduleAt(time: Time, action: () -> Void) {
         self.schedule((), time: time) { _ in
             action()
-            return NopDisposableResult
+            return NopDisposable.instance
         }
     }
     
@@ -63,17 +55,17 @@ class TestScheduler : VirtualTimeSchedulerBase {
         
         self.schedule(state, time: created) { (state) in
             source = create()
-            return NopDisposableResult
+            return NopDisposable.instance
         }
         
         self.schedule(state, time: subscribed) { (state) in
             subscription = source!.subscribe(observer)
-            return NopDisposableResult
+            return NopDisposable.instance
         }
         
         self.schedule(state, time: disposed) { (state) in
             subscription!.dispose()
-            return NopDisposableResult
+            return NopDisposable.instance
         }
 
         start()

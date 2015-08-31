@@ -17,28 +17,19 @@ public func create<E>(subscribe: (ObserverOf<E>) -> Disposable) -> Observable<E>
 // empty
 
 public func empty<E>() -> Observable<E> {
-    return AnonymousObservable { observer in
-        sendCompleted(observer)
-        return NopDisposable.instance
-    }
+    return Empty<E>()
 }
 
 // never
 
 public func never<E>() -> Observable<E> {
-    return AnonymousObservable { observer in
-        return NopDisposable.instance
-    }
+    return Never()
 }
 
 // return
 
 public func just<E>(element: E) -> Observable<E> {
-    return AnonymousObservable { observer in
-        sendNext(observer, element)
-        sendCompleted(observer)
-        return NopDisposable.instance
-    }
+    return Just(element: element)
 }
 
 public func sequenceOf<E>(elements: E ...) -> Observable<E> {
@@ -66,10 +57,7 @@ public func from<E, S where S: SequenceType, S.Generator.Element == E>(sequence:
 // fail
 
 public func failWith<E>(error: ErrorType) -> Observable<E> {
-    return AnonymousObservable { observer in
-        sendError(observer, error)
-        return NopDisposable.instance
-    }
+    return FailWith(error: error)
 }
 
 // defer

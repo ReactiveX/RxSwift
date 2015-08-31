@@ -74,7 +74,7 @@ class ObserveOnSink<O: ObserverType> : ObserverBase<O.E> {
         }
         
         if shouldStart {
-            scheduleDisposable.disposable = scheduleRecursively(self.scheduler, state: (), action: self.run)
+            scheduleDisposable.disposable = self.scheduler.scheduleRecursively((), action: self.run)
         }
     }
     

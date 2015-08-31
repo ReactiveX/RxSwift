@@ -15,7 +15,7 @@ public class OperationQueueScheduler: ImmediateScheduler {
         self.operationQueue = operationQueue
     }
     
-    public func schedule<StateType>(state: StateType, action: (/*ImmediateScheduler,*/ StateType) -> RxResult<Disposable>) -> RxResult<Disposable> {
+    public func schedule<StateType>(state: StateType, action: (StateType) -> Disposable) -> Disposable {
         
         let compositeDisposable = CompositeDisposable()
         
@@ -26,10 +26,8 @@ public class OperationQueueScheduler: ImmediateScheduler {
                 return
             }
             
-            ensureScheduledSuccessfully(action(/*self,*/ state).map { disposable in
-                compositeDisposableWeak?.addDisposable(disposable)
-                return ()
-            })
+            let disposable = action(state)
+            compositeDisposableWeak?.addDisposable(disposable)
         }
 
         self.operationQueue.addOperation(operation)
@@ -38,7 +36,7 @@ public class OperationQueueScheduler: ImmediateScheduler {
             operation.cancel()
         })
 
-        return success(compositeDisposable)
+        return compositeDisposable
     }
 
 }

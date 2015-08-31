@@ -25,14 +25,14 @@ class ObserveOnSerialDispatchQueueSink<O: ObserverType> : ObserverBase<O.E> {
     }
 
     override func onCore(event: Event<E>) {
-        self.scheduler.schedule(()) { (_) -> RxResult<Disposable> in
+        self.scheduler.schedule(()) { (_) -> Disposable in
             send(self.observer, event)
             
             if event.isStopEvent {
                 self.dispose()
             }
             
-            return NopDisposableResult
+            return NopDisposable.instance
         }
     }
    

@@ -11,7 +11,7 @@ import Foundation
 import RxSwift
 #endif
 
-class KVOObservable<Element> : Producer<Element?>
+class KVOObservable<Element> : _Producer<Element?>
                              , KVOObservableProtocol {
     unowned var target: AnyObject
     var strongTarget: AnyObject?

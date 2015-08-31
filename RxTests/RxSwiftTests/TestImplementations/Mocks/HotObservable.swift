@@ -32,7 +32,7 @@ class HotObservable<Element : Equatable> : Observable<Element> {
         for recordedEvent in recordedEvents {
             testScheduler.schedule((), time: recordedEvent.time) { t in
                 self.observers.forEach { $0.on(recordedEvent.event) }
-                return NopDisposableResult
+                return NopDisposable.instance
             }
         }
     }

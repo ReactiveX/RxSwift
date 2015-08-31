@@ -16,11 +16,11 @@ class RecursiveScheduler<State, S: Scheduler>: RecursiveSchedulerOf<State, S.Tim
         super.init(action: action)
     }
     
-    override func scheduleRelativeAdapter(state: State, dueTime: S.TimeInterval, action: (State) -> RxResult<Disposable>) -> RxResult<Disposable> {
+    override func scheduleRelativeAdapter(state: State, dueTime: S.TimeInterval, action: State -> Disposable) -> Disposable {
         return scheduler.scheduleRelative(state, dueTime: dueTime, action: action)
     }
     
-    override func scheduleAdapter(state: State, action: (State) -> RxResult<Disposable>) -> RxResult<Disposable> {
+    override func scheduleAdapter(state: State, action: State -> Disposable) -> Disposable {
         return scheduler.schedule(state, action: action)
     }
 }
@@ -42,11 +42,11 @@ public class RecursiveSchedulerOf<State, TimeInterval> : Disposable {
 
     // abstract methods
 
-    func scheduleRelativeAdapter(state: State, dueTime: TimeInterval, action: (State) -> RxResult<Disposable>) -> RxResult<Disposable> {
+    func scheduleRelativeAdapter(state: State, dueTime: TimeInterval, action: State -> Disposable) -> Disposable {
         return abstractMethod()
     }
     
-    func scheduleAdapter(state: State, action: (State) -> RxResult<Disposable>) -> RxResult<Disposable> {
+    func scheduleAdapter(state: State, action: State -> Disposable) -> Disposable {
         return abstractMethod()
     }
     
@@ -58,10 +58,10 @@ public class RecursiveSchedulerOf<State, TimeInterval> : Disposable {
         var isDone = false
         
         var removeKey: CompositeDisposable.DisposeKey? = nil
-        let d = scheduleRelativeAdapter(state, dueTime: dueTime) { (state) -> RxResult<Disposable> in
+        let d = scheduleRelativeAdapter(state, dueTime: dueTime) { (state) -> Disposable in
             // best effort
             if self.group.disposed {
-                return NopDisposableResult
+                return NopDisposable.instance
             }
             
             let action = self.lock.calculateLocked { () -> Action? in
@@ -79,18 +79,15 @@ public class RecursiveSchedulerOf<State, TimeInterval> : Disposable {
                 action(state: state, scheduler: self)
             }
             
-            return NopDisposableResult
+            return NopDisposable.instance
         }
             
-        ensureScheduledSuccessfully(d.map { disposable in
-            lock.performLocked {
-                if !isDone {
-                    removeKey = group.addDisposable(d.get())
-                    isAdded = true
-                }
+        lock.performLocked {
+            if !isDone {
+                removeKey = group.addDisposable(d)
+                isAdded = true
             }
-            return ()
-        })
+        }
     }
 
     // immediate scheduling
@@ -101,10 +98,10 @@ public class RecursiveSchedulerOf<State, TimeInterval> : Disposable {
         var isDone = false
         
         var removeKey: CompositeDisposable.DisposeKey? = nil
-        let d = scheduleAdapter(state) { (state) -> RxResult<Disposable> in
+        let d = scheduleAdapter(state) { (state) -> Disposable in
             // best effort
             if self.group.disposed {
-                return NopDisposableResult
+                return NopDisposable.instance
             }
             
             let action = self.lock.calculateLocked { () -> Action? in
@@ -122,18 +119,15 @@ public class RecursiveSchedulerOf<State, TimeInterval> : Disposable {
                 action(state: state, scheduler: self)
             }
             
-            return NopDisposableResult
+            return NopDisposable.instance
         }
         
-        ensureScheduledSuccessfully(d.map { disposable in
-            lock.performLocked {
-                if !isDone {
-                    removeKey = group.addDisposable(d.get())
-                    isAdded = true
-                }
+        lock.performLocked {
+            if !isDone {
+                removeKey = group.addDisposable(d)
+                isAdded = true
             }
-            return ()
-        })
+        }
     }
     
     public func dispose() {
@@ -166,10 +160,10 @@ class RecursiveImmediateSchedulerOf<State> : Disposable {
         var isDone = false
         
         var removeKey: CompositeDisposable.DisposeKey? = nil
-        let d = self.scheduler.schedule(state) { (state) -> RxResult<Disposable> in
+        let d = self.scheduler.schedule(state) { (state) -> Disposable in
             // best effort
             if self.group.disposed {
-                return NopDisposableResult
+                return NopDisposable.instance
             }
             
             let action = self.lock.calculateLocked { () -> Action? in
@@ -187,18 +181,15 @@ class RecursiveImmediateSchedulerOf<State> : Disposable {
                 action(state: state, recurse: self.schedule)
             }
             
-            return NopDisposableResult
+            return NopDisposable.instance
         }
         
-        ensureScheduledSuccessfully(d.map { disposable in
-            lock.performLocked {
-                if !isDone {
-                    removeKey = group.addDisposable(d.get())
-                    isAdded = true
-                }
+        lock.performLocked {
+            if !isDone {
+                removeKey = group.addDisposable(d)
+                isAdded = true
             }
-            return ()
-            })
+        }
     }
     
     func dispose() {

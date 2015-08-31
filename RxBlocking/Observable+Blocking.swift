@@ -12,8 +12,7 @@ import RxSwift
 #endif
 
 extension ObservableType {
-    public func toArray()
-        -> RxResult<[E]> {
+    public func toArray() throws -> [E] {
         let condition = NSCondition()
         
         var elements = [E]()
@@ -46,15 +45,15 @@ extension ObservableType {
         condition.unlock()
         
         if let error = error {
-            return failure(error)
+            throw error
         }
 
-        return success(elements)
+        return elements
     }
 }
 
 extension ObservableType {
-    public var first: RxResult<E?> {
+    public func first() throws -> E? {
         let condition = NSCondition()
         
         var element: E?
@@ -92,15 +91,15 @@ extension ObservableType {
         condition.unlock()
         
         if let error = error {
-            return failure(error)
+            throw error
         }
         
-        return success(element)
+        return element
     }
 }
 
 extension ObservableType {
-    public var last: RxResult<E?> {
+    public func last() throws -> E? {
         let condition = NSCondition()
         
         var element: E?
@@ -136,9 +135,9 @@ extension ObservableType {
         condition.unlock()
         
         if let error = error {
-            return failure(error)
+            throw error
         }
         
-        return success(element)
+        return element
     }
 }

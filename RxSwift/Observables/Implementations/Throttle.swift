@@ -17,7 +17,7 @@ class ThrottleSink<O: ObserverType, SchedulerType: Scheduler> : Sink<O>, Observe
     var lock = NSRecursiveLock()
     // state
     var id = 0 as UInt64
-    let value = RxMutableBox<Element?>(nil)
+    var value: Element? = nil
     
     let cancellable = SerialDisposable()
     
@@ -46,19 +46,19 @@ class ThrottleSink<O: ObserverType, SchedulerType: Scheduler> : Sink<O>, Observe
         let latestId = self.lock.calculateLocked { () -> UInt64 in
             let observer = self.observer
             
-            let oldValue = self.value.value
+            let oldValue = self.value
             
             self.id = self.id &+ 1
             
             switch event {
             case .Next(let element):
-                self.value.value = element
+                self.value = element
             case .Error:
-                self.value.value = nil
+                self.value = nil
                 observer?.on(event)
                 self.dispose()
             case .Completed:
-                self.value.value = nil
+                self.value = nil
                 if let value = oldValue {
                     observer?.on(.Next(value))
                 }
@@ -78,27 +78,20 @@ class ThrottleSink<O: ObserverType, SchedulerType: Scheduler> : Sink<O>, Observe
             let scheduler = self.parent.scheduler
             let dueTime = self.parent.dueTime
             
-            let _  = scheduler.scheduleRelative(latestId, dueTime: dueTime) { (id) in
+            let disposeTimer = scheduler.scheduleRelative(latestId, dueTime: dueTime) { (id) in
                 self.propagate()
-                return NopDisposableResult
-            }.map { disposeTimer -> Disposable in
-                d.disposable = disposeTimer
-                return disposeTimer
-            }.recoverWith { e -> RxResult<Disposable> in
-                self.lock.performLocked {
-                    observer?.on(.Error(e))
-                    self.dispose()
-                }
-                return NopDisposableResult
+                return NopDisposable.instance
             }
+            
+            d.disposable = disposeTimer
         default: break
         }
     }
     
     func propagate() {
         let originalValue: Element? = self.lock.calculateLocked {
-            let originalValue = self.value.value
-            self.value.value = nil
+            let originalValue = self.value
+            self.value = nil
             return originalValue
         }
         

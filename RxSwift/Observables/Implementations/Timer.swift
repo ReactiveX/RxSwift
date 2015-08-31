@@ -19,12 +19,10 @@ class TimerSink<S: Scheduler, O: ObserverType where O.E == Int64> : Sink<O> {
     }
     
     func run() -> Disposable {
-        let result = self.parent.schedulePeriodic(state: 0, startAfter: self.parent.dueTime, period: self.parent.period!) { state in
+        return self.parent.scheduler.schedulePeriodic(0 as Int64, startAfter: self.parent.dueTime, period: self.parent.period!) { state in
             self.observer?.on(.Next(state))
             return state &+ 1
         }
-        
-        return result
     }
 }
 
@@ -39,39 +37,26 @@ class TimerOneOffSink<S: Scheduler, O: ObserverType where O.E == Int64> : Sink<O
     }
     
     func run() -> Disposable {
-        let result = self.parent.scheduler.scheduleRelative((), dueTime: self.parent.dueTime) { (_) -> RxResult<Disposable> in
+        return self.parent.scheduler.scheduleRelative((), dueTime: self.parent.dueTime) { (_) -> Disposable in
             self.observer?.on(.Next(0))
             self.observer?.on(.Completed)
             
-            return NopDisposableResult
+            return NopDisposable.instance
         }
-        
-        ensureScheduledSuccessfully(result.map { _ in () })
-        
-        return result.get()
     }
 }
 
 class Timer<S: Scheduler>: Producer<Int64> {
     typealias TimeInterval = S.TimeInterval
-    typealias SchedulePeriodic = (
-        state: Int64,
-        startAfter: S.TimeInterval,
-        period: S.TimeInterval,
-        action: (state: Int64) -> Int64
-    ) -> Disposable
     
     let scheduler: S
     let dueTime: TimeInterval
     let period: TimeInterval?
     
-    let schedulePeriodic: SchedulePeriodic
-    
-    init(dueTime: TimeInterval, period: TimeInterval?, scheduler: S, schedulePeriodic: SchedulePeriodic) {
+    init(dueTime: TimeInterval, period: TimeInterval?, scheduler: S) {
         self.scheduler = scheduler
         self.dueTime = dueTime
         self.period = period
-        self.schedulePeriodic = schedulePeriodic
     }
     
     override func run<O : ObserverType where O.E == Int64>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {

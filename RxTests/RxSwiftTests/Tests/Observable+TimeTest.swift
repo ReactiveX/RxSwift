@@ -270,14 +270,14 @@ extension ObservableTimeTest {
 
         let start = NSDate()
 
-        let a = from([just(0), never()]).concat()
+        let a = try! from([just(0), never()]).concat()
             .throttle(2.0, scheduler)
-            .first
+            .first()
 
         let end = NSDate()
 
         XCTAssertEqualWithAccuracy(2, end.timeIntervalSinceDate(start), accuracy: 0.5)
-        XCTAssertEqual(a.get()!, 0)
+        XCTAssertEqual(a, 0)
     }
 }
 
@@ -742,7 +742,7 @@ extension ObservableTimeTest {
     }
 
     func testInterval_TimeSpan_Zero() {
-        let scheduler = PeriodicTestScheduler(initialClock: 0)
+        let scheduler = TestScheduler(initialClock: 0)
 
         let res = scheduler.start(210) {
             interval(0, scheduler)
@@ -783,7 +783,7 @@ extension ObservableTimeTest {
 
         scheduler.schedule(()) { _ in
             OSSpinLockUnlock(&lock)
-            return NopDisposableResult
+            return NopDisposable.instance
         }
 
         // wait until dispatch queue cleans it's resources
@@ -812,14 +812,14 @@ extension ObservableTimeTest {
 
         let start = NSDate()
 
-        let a = interval(1, scheduler)
+        let a = try! interval(1, scheduler)
             .take(2)
             .toArray()
 
         let end = NSDate()
 
         XCTAssertEqualWithAccuracy(2, end.timeIntervalSinceDate(start), accuracy: 0.3)
-        XCTAssertEqual(a.get(), [0, 1])
+        XCTAssertEqual(a, [0, 1])
     }
 }
 
