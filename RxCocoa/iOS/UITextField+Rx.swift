@@ -13,9 +13,13 @@ import RxSwift
 import UIKit
 
 extension UITextField {
-    public var rx_text: Observable<String> {
-        return rx_value { [weak self] in
+    
+    public var rx_text: ControlProperty<String> {
+        return rx_value(getter: { [weak self] in
             self?.text ?? ""
-        }
+        }, setter: { [weak self] value in
+            self?.text = value
+        })
     }
+    
 }

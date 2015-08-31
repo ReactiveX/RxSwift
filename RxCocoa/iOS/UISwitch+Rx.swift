@@ -14,8 +14,12 @@ import RxSwift
 
 extension UISwitch {
     
-    public var rx_value: Observable<Bool> {
-        return rx_value { [unowned self] in self.on }
+    public var rx_value: ControlProperty<Bool> {
+        return rx_value(getter: { [unowned self] in
+            return self.on
+        }, setter: { [weak self] value in
+            self?.on = value
+        })
     }
     
 }

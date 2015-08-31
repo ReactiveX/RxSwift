@@ -12,25 +12,22 @@ import RxSwift
 #endif
 import UIKit
 
-extension ObservableType where E == String {
-    public func subscribeTextOf(label: UILabel) -> Disposable {
-        return self.subscribe { event in
+extension UILabel {
+    
+    public var rx_text: ObserverOf<String> {
+        return ObserverOf { [weak self] event in
             MainScheduler.ensureExecutingOnScheduler()
             
             switch event {
             case .Next(let value):
-                label.text = value
+                self?.text = value
             case .Error(let error):
-#if DEBUG
-                rxFatalError("Binding error to textbox: \(error)")
-#endif
+                bindingErrorToInterface(error)
                 break
             case .Completed:
                 break
             }
         }
     }
-}
-
-extension UILabel {
+    
 }

@@ -22,10 +22,8 @@ class RxTableViewSectionedReloadDataSource<S: SectionModelType> : RxTableViewSec
         case .Next(let element):
             setSections(element)
             tableView.reloadData()
-        case .Error(_):
-        #if DEBUG
-            fatalError("Binding error to UI")
-        #endif
+        case .Error(let error):
+            bindingErrorToInterface(error)
         case .Completed:
             break
         }

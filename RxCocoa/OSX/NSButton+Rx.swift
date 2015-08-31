@@ -13,7 +13,7 @@ import RxSwift
 import Cocoa
 
 extension NSButton {
-    public var rx_tap: Observable<Void> {
+    public var rx_tap: ControlEvent<Void> {
         return rx_controlEvents
     }
 }

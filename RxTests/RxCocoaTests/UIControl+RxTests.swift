@@ -15,7 +15,7 @@ class UIControlRxTests : RxTest {
     func testSubscribeEnabledToTrue() {
         let subject = UIControl()
         let enabledSequence = Variable<Bool>(false)
-        let disposable = enabledSequence.subscribeEnabledOf(subject)
+        let disposable = enabledSequence.subscribe(subject.rx_enabled)
 
         enabledSequence.sendNext(true)
         XCTAssert(subject.enabled == true, "Expected enabled set to true")
@@ -24,7 +24,7 @@ class UIControlRxTests : RxTest {
     func testSubscribeEnabledToFalse() {
         let subject = UIControl()
         let enabledSequence = Variable<Bool>(true)
-        let disposable = enabledSequence.subscribeEnabledOf(subject)
+        let disposable = enabledSequence.subscribe(subject.rx_enabled)
 
         enabledSequence.sendNext(false)
         XCTAssert(subject.enabled == false, "Expected enabled set to false")

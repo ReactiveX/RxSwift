@@ -103,7 +103,7 @@ extension NSURLSession {
         return rx_response(request).map { (data, response) -> NSData in
             if let response = response as? NSHTTPURLResponse {
                 if 200 ..< 300 ~= response.statusCode {
-                    return data!
+                    return data ?? NSData()
                 }
                 else {
                     throw rxError(.NetworkError, message: "Server returned failure", userInfo: [RxCocoaErrorHTTPResponseKey: response])
@@ -119,7 +119,7 @@ extension NSURLSession {
 
     public func rx_JSON(request: NSURLRequest) -> Observable<AnyObject!> {
         return rx_data(request).map { (data) -> AnyObject! in
-            return try NSJSONSerialization.JSONObjectWithData(data, options: [])
+            return try NSJSONSerialization.JSONObjectWithData(data ?? NSData(), options: [])
         }
     }
 

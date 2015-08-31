@@ -13,37 +13,36 @@ import RxSwift
 import Cocoa
 
 extension NSImageView {
-    public func rx_subscribeImageTo(source: Observable<NSImage?>) -> Disposable {
-        return rx_subscribeImageTo(false)(source: source)
+    
+    public var rx_image: ObserverOf<NSImage!> {
+        return self.rx_imageAnimated(false)
     }
     
-    public func rx_subscribeImageTo
-        (animated: Bool)
-        (source: Observable<NSImage?>) -> Disposable {
+    public func rx_imageAnimated(animated: Bool) -> ObserverOf<NSImage!> {
+        return ObserverOf { [weak self] event in
             MainScheduler.ensureExecutingOnScheduler()
             
-            return source.subscribe(AnonymousObserver { event in
-                switch event {
-                case .Next(let value):
-                    if animated && value != nil {
-                        let transition = CATransition()
-                        transition.duration = 0.25
-                        transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
-                        transition.type = kCATransitionFade
-                        self.layer!.addAnimation(transition, forKey: kCATransition)
-                    }
-                    else {
-                        self.layer!.removeAllAnimations()
-                    }
-                    self.image = value
-                case .Error(let error):
-                    #if DEBUG
-                        rxFatalError("Binding error to textbox: \(error)")
-                    #endif
-                    break
-                case .Completed:
-                    break
+            switch event {
+            case .Next(let boxedValue):
+                let value = boxedValue
+                if animated && value != nil {
+                    let transition = CATransition()
+                    transition.duration = 0.25
+                    transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+                    transition.type = kCATransitionFade
+                    self?.layer?.addAnimation(transition, forKey: kCATransition)
                 }
-                })
+                else {
+                    self?.layer?.removeAllAnimations()
+                }
+                self?.image = value
+            case .Error(let error):
+                bindingErrorToInterface(error)
+                break
+            case .Completed:
+                break
+            }
+        }
     }
+    
 }

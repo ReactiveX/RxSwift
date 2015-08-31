@@ -36,7 +36,7 @@ class IntroductionExampleViewController : ViewController {
             .map { (a, b) in
                 return "\(a + b)"
             }
-            .subscribeTextOf(c)
+            .bindTo(c.rx_text)
             .addDisposableTo(disposeBag)
         
         // Also, tell it out loud

@@ -13,13 +13,15 @@ import RxSwift
 
 extension UIBarButtonItem {
     
-    public var rx_tap: Observable<Void> {
-        return AnonymousObservable { observer in
+    public var rx_tap: ControlEvent<Void> {
+        let source: Observable<Void> = AnonymousObservable { observer in
             let target = BarButtonItemTarget(barButtonItem: self) {
                 sendNext(observer, ())
             }
             return target
-        } .takeUntil(rx_deallocated)
+        }.takeUntil(rx_deallocated)
+        
+        return ControlEvent(source: source)
     }
     
 }

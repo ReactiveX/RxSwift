@@ -51,19 +51,11 @@ func handleVoidObserverResult(result: RxResult<Void>) {
 }
 
 func bindingErrorToInterface(error: ErrorType) {
-#if DEBUG
-    rxFatalError("Binding error to UI: \(error)")
-#endif
-}
-
-// There are certain kinds of errors that shouldn't be silenced, but it could be weird to crash the app because of them.
-// DEBUG -> crash the app
-// RELEASE -> log to console
-func rxPossiblyFatalError(error: String) {
+    let error = "Binding error to UI: \(error)"
 #if DEBUG
     rxFatalError(error)
 #else
-    print("[RxSwift]: \(error)")
+    print(error)
 #endif
 }
 
