@@ -99,7 +99,7 @@ class CalculatorViewController: ViewController {
         
         from(commands)
             .merge()
-            .scan(CLEAR_STATE) { a, x in
+            .scan(CLEAR_STATE) { [unowned self] a, x in
                 return self.tranformState(a, x)
             }
             .debug("debugging")
