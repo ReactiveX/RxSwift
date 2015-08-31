@@ -1,14 +1,16 @@
 
 IS_LOCAL=0
-IS_QUICK=0
+IS_QUICK=1
 if [ "$1" == "l" ]; then
 	echo "Local test"
 	IS_LOCAL=1
 fi
 
-if [ "$1" == "q" ]; then
+if [ "$1" == "f" ]; then
+	echo "Full"
+	IS_QUICK=0
+else
 	echo "Quick"
-	IS_QUICK=1
 fi
 
 ISLOCAL="${IS_LOCAL}" . scripts/common.sh
