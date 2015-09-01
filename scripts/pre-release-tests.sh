@@ -29,6 +29,10 @@ ISLOCAL="${IS_LOCAL}" . scripts/common.sh
 #	echo "${DEFAULT_IOS8_SIMULATOR} exists"
 #fi
 
+if [ "${IS_LOCAL}" -eq 1 ]; then
+	. scripts/automation-tests.sh
+fi
+
 #ios 9 sim
 if [ `xcrun simctl list | grep "${DEFAULT_IOS9_SIMULATOR}" | wc -l` == 0 ]; then
 	xcrun simctl create $DEFAULT_IOS9_SIMULATOR 'iPhone 6' 'com.apple.CoreSimulator.SimRuntime.iOS-9-0'
@@ -84,7 +88,6 @@ do
 done
 
 if [ "${IS_LOCAL}" -eq 1 ]; then
-	. scripts/automation-tests.sh
 	mdast -u mdast-slug -u mdast-validate-links ./*.md
 	mdast -u mdast-slug -u mdast-validate-links ./**/*.md
 fi

@@ -5,10 +5,10 @@ Pod::Spec.new do |s|
   s.description      = <<-DESC
                         Set of blocking operators for unit testing
                         DESC
-  s.homepage         = "https://github.com/kzaher/RxSwift"
+  s.homepage         = "https://github.com/ReactiveX/RxSwift"
   s.license          = 'MIT'
   s.author           = { "Krunoslav Zaher" => "krunoslav.zaher@gmail.com" }
-  s.source           = { :git => "https://github.com/kzaher/RxSwift.git", :tag => s.version.to_s }
+  s.source           = { :git => "https://github.com/ReactiveX/RxSwift.git", :tag => s.version.to_s }
 
   s.requires_arc          = true
 

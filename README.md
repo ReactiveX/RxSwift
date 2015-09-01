@@ -3,7 +3,63 @@
 
 [![Travis CI](https://travis-ci.org/ReactiveX/RxSwift.svg?branch=master)](https://travis-ci.org/ReactiveX/RxSwift)
 
-Xcode 6.3 / Swift 1.2 required
+Xcode 7 beta 6 (7A192o) / Swift 2.0 required
+
+**This README.md describes alpha version of RxSwift 2.0.**
+
+**You can find RxSwift 1.9 for Swift 1.2 [here](https://github.com/ReactiveX/RxSwift/tree/master).**
+
+**Don't worry, we will be applying critical hotfixes to 1.9 version, but since the entire ecosystem is migrating towards Swift 2.0, we will be focusing on adding new features only to RxSwift 2.0 version.**
+
+### Change Log (from 1.9 version)
+
+* Removes deprecated APIs
+* Adds `ObservableType`
+* Moved from using `>-` operator to protocol extensions `.`
+* Adds support for Swift 2.0 error handling `try`/`do`/`catch`
+
+You can now just write
+
+```swift
+    API.fetchData(URL)
+      .map { rawData in
+          if invalidData(rawData) {
+              throw myParsingError
+          }
+
+          ...
+
+          return parsedData
+      }
+```
+
+* RxCocoa introduces `bindTo` extensions
+
+```swift
+    combineLatest(firstName.rx_text, lastName.rx_text) { $0 + " " + $1 }
+            .map { "Greeting \($0)" }
+            .bindTo(greetingLabel.rx_text)
+```
+
+... works for `UITableView`/`UICollectionView` too
+
+```swift
+viewModel.rows
+            .bindTo(resultsTableView.rx_itemsWithCellIdentifier("WikipediaSearchCell")) { (_, viewModel, cell: WikipediaSearchCell) in
+                cell.viewModel = viewModel
+            }
+            .addDisposableTo(disposeBag)
+```
+
+* Adds new operators (array version of `zip`, array version of `combineLatest`, ...)
+* Renames `catch` to `catchError`
+* Change from `disposeBag.addDisposable` to `disposable.addDisposableTo`
+* Deprecates `aggregate` in favor of `reduce`
+* Deprecates `variable` in favor of `shareReplay(1)` (to be consistent with RxJS version)
+
+Check out [Migration guide to RxSwift 2.0](Documentation/Migration.md)
+
+## About Rx
 
 Rx is a [generic abstraction of computation](https://youtu.be/looJcaeboBY) expressed through `Observable<Element>` interface.
 
@@ -52,7 +108,7 @@ Hang out with us on [rxswift.slack.com](http://slack.rxswift.org) <img src="http
 1. [Math behind](Documentation/MathBehindRx.md)
 1. [Hot and cold observables](Documentation/HotAndColdObservables.md)
 1. [Feature comparison with other frameworks](#feature-comparison-with-other-frameworks)
-1. [Roadmap](https://github.com/kzaher/RxSwift/wiki/roadmap)
+1. [Roadmap](https://github.com/ReactiveX/RxSwift/wiki/roadmap)
 1. [References](#references)
 
 ## Why
@@ -81,15 +137,13 @@ When writing embedded UI applications you would ideally want your program interf
 
 These are so called bindings and Rx can help you model your system that way.
 
-[Definition of `>-` operator is here](Documentation/DesignRationale.md#pipe-operator)
-
 ```swift
 combineLatest(firstName.rx_text, lastName.rx_text) { $0 + " " + $1 }
             .map { "Greeting \($0)" }
-            .subscribeNext { greeting in
-                greetingLabel.text = greeting
-            }
+            .bindTo(greetingLabel.rx_text)
 ```
+
+** Official suggestion is to always use `.addDisposableTo(disposeBag)` even though that's not necessary for simple bindings.**
 
 ### Retries
 
@@ -129,15 +183,15 @@ Writing all of this and properly testing it would be tedious. This is that same 
 ```swift
   searchTextField.rx_text
     .throttle(0.3, MainScheduler.sharedInstance)
-    .distinctUntilChanged
+    .distinctUntilChanged()
     .map { query in
         API.getSearchResults(query)
             .retry(3)
             .startWith([]) // clears results on new search term
-            .catch([])
+            .catchErrorResumeNext([])
     }
     .switchLatest()
-    .map { results in
+    .subscribeNext { results in
       // bind to ui
     }
 ```
@@ -220,7 +274,8 @@ It would be also nice if we could limit the number of concurrent image operation
 This is how we can do it using Rx.
 
 ```swift
-let imageSubscripton = just(imageURL)
+
+let imageSubscripton = imageURLs
     .throttle(0.2, MainScheduler.sharedInstance)
     .flatMap { imageURL in
         API.fetchImage(imageURL)
@@ -233,12 +288,7 @@ let imageSubscripton = just(imageURL)
     .subscribeNext { blurredImage in
         imageView.image = blurredImage
     }
-
-//
-
-override func prepareForReuse() {
-    imageSubscripton.dispose()
-}
+    .addDisposableTo(reuseDisposeBag)
 ```
 
 This code will do all that, and when `imageSubscription` is disposed it will cancel all dependent async operations and make sure no rogue image is bound to UI.
@@ -252,7 +302,7 @@ Each usage has it's drawbacks, but Rx can help remedy some of the problem with u
 
 Using delegates and optional methods to report changes can be problematic because there can be usually only one delegate registered, so there is no way to register multiple observers.
 
-Also, delegates usually don't fire initial value upon invoking delegate setter, so you'll also need to read that initial value in some other way. That is kind of tedios.
+Also, delegates usually don't fire initial value upon invoking delegate setter, so you'll also need to read that initial value in some other way. That is kind of tedious.
 
 RxCocoa not only provides wrappers for popular UIKit/Cocoa classes, but it also provides a generic mechanism called `DelegateProxy` that enables wrapping your own delegates and exposing them as observable sequences.
 
@@ -281,7 +331,7 @@ extension UISearchBar {
 }
 ```
 
-Definition of `RxSearchBarDelegateProxy` can be found [here](RxCocoa/RxCocoa/iOS/Proxies/RxSearchBarDelegateProxy.swift)
+Definition of `RxSearchBarDelegateProxy` can be found [here](RxCocoa/iOS/Proxies/RxSearchBarDelegateProxy.swift)
 
 This is how that API can be now used
 
@@ -404,8 +454,8 @@ Open Rx.xcworkspace, choose `RxExample` and hit run. This method will build ever
 # Podfile
 use_frameworks!
 
-pod 'RxSwift'
-pod 'RxCocoa'
+pod 'RxSwift', :git => "git@github.com:ReactiveX/RxSwift.git", :branch => 'rxswift-2.0'
+pod 'RxCocoa', :git => "git@github.com:ReactiveX/RxSwift.git", :branch => 'rxswift-2.0'
 ```
 
 type in `Podfile` directory
@@ -416,34 +466,26 @@ $ pod install
 
 ### [Carthage](https://github.com/Carthage/Carthage)
 
-It's little tricky, but possible. Carthage still has troubles resolving multiple targets inside same repository (https://github.com/Carthage/Carthage/issues/395).
-
-This is the workaround:
+Add this to `Cartfile`
 
 ```
-git "git@github.com:kzaher/RxSwift.git" "latest-carthage/rxswift"
-git "git@github.com:kzaher/RxSwift.git" "latest-carthage/rxcocoa"
-```
-
-Unfortunately, you can update only one target at a time because Carthage doesn't know how to resolve them properly. You'll probably need to do something like:
-
-```
-git "git@github.com:kzaher/RxSwift.git" "latest-carthage/rxswift"
-#git "git@github.com:kzaher/RxSwift.git" "latest-carthage/rxcocoa"
-```
-
-```bash
-carthage update
+git "git@github.com:ReactiveX/RxSwift.git" "rxswift-2.0"
 ```
 
 ```
-#git "git@github.com:kzaher/RxSwift.git" "latest-carthage/rxswift"
-git "git@github.com:kzaher/RxSwift.git" "latest-carthage/rxcocoa"
+$ carthage update
 ```
 
-```bash
-carthage update
-```
+### Manually using git submodules
+
+* Add RxSwift as a submodule
+
+`$ git submodule add git@github.com:ReactiveX/RxSwift.git`
+`$ cd RxSwift`
+`$ git checkout rxswift-2.0`
+
+* Drag `Rx.xcodeproj` into Project Navigator
+* Go to `Project > Targets > Build Phases > Link Binary With Libraries`, click `+` and select `RxSwift-[Platform]` and `RxCocoa-[Platform]` targets
 
 ### iOS 7
 
@@ -455,7 +497,7 @@ These are the steps to include RxSwift/RxCocoa projects in an iOS7 project
 
 You can either do that by copying the files manually or using git submodules.
 
-`git submodule add git@github.com:kzaher/RxSwift.git`
+`git submodule add git@github.com:ReactiveX/RxSwift.git`
 
 After you've included files from `RxSwift/RxSwift` and `RxSwift/RxCocoa` folders, you'll need to remove files that are platform specific.
 

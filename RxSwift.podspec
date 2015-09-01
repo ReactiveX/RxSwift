@@ -20,14 +20,13 @@ Pod::Spec.new do |s|
 			```
 			would become if written in RxSwift
 			```
-			gitDiff() >- grep("bug") >- less    // rx sink (>-) operator - rx units communicate by sending
-							    // sequences of swift objects
+			gitDiff().grep("bug").less          // sequences of swift objects
 			```
                         DESC
-  s.homepage         = "https://github.com/kzaher/RxSwift"
+  s.homepage         = "https://github.com/ReactiveX/RxSwift"
   s.license          = 'MIT'
   s.author           = { "Krunoslav Zaher" => "krunoslav.zaher@gmail.com" }
-  s.source           = { :git => "https://github.com/kzaher/RxSwift.git", :tag => s.version.to_s }
+  s.source           = { :git => "https://github.com/ReactiveX/RxSwift.git", :tag => s.version.to_s }
 
   s.requires_arc          = true
 

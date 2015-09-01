@@ -74,7 +74,7 @@ Operators are stateless by default.
   * [`publish`](http://reactivex.io/documentation/operators/publish.html)
   * [`refCount`](http://reactivex.io/documentation/operators/refcount.html)
   * [`replay`](http://reactivex.io/documentation/operators/replay.html)
-  * variable / sharedWithCachedLastResult
+  * [`shareReplay`](http://reactivex.io/documentation/operators/replay.html)
 
 Creating new operators is also pretty straightforward.
 
@@ -193,10 +193,9 @@ extension CLLocationManager {
 
 extension UIControl {
 
-    public func rx_controlEvents(controlEvents: UIControlEvents) -> Observable<Void> { }
+    public func rx_controlEvents(controlEvents: UIControlEvents) -> ControlEvent<Void> {}
 
-    public func rx_subscribeEnabledTo(source: Observable<Bool>) -> Disposable {}
-
+    public var rx_enabled: ObserverOf<Bool> {}
 }
 
 ```
@@ -204,7 +203,7 @@ extension UIControl {
 ```swift
 extension UIButton {
 
-    public var rx_tap: Observable<Void> {}
+    public var rx_tap: ControlEvent<Void> {}
 
 }
 ```
@@ -212,7 +211,7 @@ extension UIButton {
 ```swift
 extension UITextField {
 
-    public var rx_text: Observable<String> {}
+    public var rx_text: ControlProperty<String> {}
 
 }
 ```
@@ -220,9 +219,9 @@ extension UITextField {
 ```swift
 extension UITextView {
 
-    override func rx_createDelegateProxy() -> RxScrollViewDelegateProxy { }
+    override func rx_createDelegateProxy() -> RxScrollViewDelegateProxy {}
 
-    public var rx_text: Observable<String> { }
+    public var rx_text: ControlProperty<String> {}
 
 }
 ```
@@ -232,7 +231,7 @@ extension UISearchBar {
 
     public var rx_delegate: DelegateProxy {}
 
-    public var rx_searchText: Observable<String> {}
+    public var rx_searchText: ControlProperty<String> {}
 
 }
 ```
@@ -240,7 +239,7 @@ extension UISearchBar {
 ```swift
 extension UILabel {
 
-    public func rx_subscribeTextTo(source: Observable<String>) -> Disposable {}
+    public var rx_text: ObserverOf<String> {}
 
 }
 ```
@@ -248,7 +247,7 @@ extension UILabel {
 ```swift
 extension UIDatePicker {
 
-    public var rx_date: Observable<NSDate> {}
+    public var rx_date: ControlProperty<NSDate> {}
 
 }
 ```
@@ -256,12 +255,9 @@ extension UIDatePicker {
 ```swift
 extension UIImageView {
 
-    public func rx_subscribeImageTo(source: Observable<UIImage?>) -> Disposable {}
+    public var rx_image: ObserverOf<UIImage!> {}
 
-    public func rx_subscribeImageTo
-        (animated: Bool)
-        (source: Observable<UIImage?>)
-            -> Disposable {}
+    public func rx_imageAnimated(animated: Bool) -> ObserverOf<UIImage!> {}
 
 }
 ```
@@ -273,7 +269,7 @@ extension UIScrollView {
 
     public func rx_setDelegate(delegate: UIScrollViewDelegate) {}
 
-    public var rx_contentOffset: Observable<CGPoint> {}
+    public var rx_contentOffset: ControlProperty<CGPoint> {}
 
 }
 ```
@@ -281,7 +277,7 @@ extension UIScrollView {
 ```swift
 extension UIBarButtonItem {
 
-    public var rx_tap: Observable<Void> {}
+    public var rx_tap: ControlEvent<Void> {}
 
 }
 ```
@@ -289,7 +285,7 @@ extension UIBarButtonItem {
 ```swift
 extension UISlider {
 
-    public var rx_value: Observable<Float> {}
+    public var rx_value: ControlProperty<Float> {}
 
 }
 ```
@@ -301,25 +297,22 @@ extension UITableView {
 
     public func rx_setDataSource(dataSource: UITableViewDataSource) -> Disposable {}
 
-    public func rx_subscribeWithReactiveDataSource<DataSource: protocol<RxTableViewDataSourceType, UITableViewDataSource>>(dataSource: DataSource)
-        -> Observable<DataSource.Element> -> Disposable {}
+    public func rx_itemsWithCellFactory(source: O)(cellFactory: (UITableView, Int, S.Generator.Element) -> UITableViewCell) -> Disposable {}
 
-    public func rx_subscribeItemsTo<Item>(cellFactory: (UITableView, Int, Item) -> UITableViewCell)
-        -> Observable<[Item]> -> Disposable {}
+    public func rx_itemsWithCellIdentifier(cellIdentifier: String)(source: O)(configureCell: (Int, S.Generator.Element, Cell) -> Void) -> Disposable {}
 
-    public func rx_subscribeItemsToWithCellIdentifier<Item, Cell: UITableViewCell>(cellIdentifier: String, configureCell: (NSIndexPath, Item, Cell) -> Void)
-        -> Observable<[Item]> -> Disposable {}
+    public func rx_itemsWithDataSource(dataSource: DataSource)(source: O) -> Disposable {}
 
-    public var rx_itemSelected: Observable<NSIndexPath> {}
+    public var rx_itemSelected: ControlEvent<NSIndexPath> {}
 
-    public var rx_itemInserted: Observable<NSIndexPath> {}
+    public var rx_itemInserted: ControlEvent<NSIndexPath> {}
 
-    public var rx_itemDeleted: Observable<NSIndexPath> {}
+    public var rx_itemDeleted: ControlEvent<NSIndexPath> {}
 
-    public var rx_itemMoved: Observable<ItemMovedEvent> {}
+    public var rx_itemMoved: ControlEvent<ItemMovedEvent> {}
 
-    // This method only works in case one of the `rx_subscribeItemsTo` methods was used.
-    public func rx_modelSelected<T>() -> Observable<T> {}
+    // This method only works in case one of the `rx_itemsWith*` methods was used.
+    public func rx_modelSelected<T>() -> ControlEvent<T> {}
 
 }
 ```
@@ -331,26 +324,23 @@ extension UICollectionView {
 
     public func rx_setDataSource(dataSource: UICollectionViewDataSource) -> Disposable {}
 
-    public func rx_subscribeWithReactiveDataSource<DataSource: protocol<RxCollectionViewDataSourceType, UICollectionViewDataSource>>(dataSource: DataSource)
-        -> Observable<DataSource.Element> -> Disposable {}
+    public func rx_itemsWithCellFactory(source: O)(cellFactory: (UICollectionView, Int, S.Generator.Element) -> UICollectionViewCell) -> Disposable {}
 
-    public func rx_subscribeItemsTo<Item>(cellFactory: (UICollectionView, Int, Item) -> UICollectionViewCell)
-        -> Observable<[Item]> -> Disposable {}
+    public func rx_itemsWithCellIdentifier(cellIdentifier: String)(source: O)(configureCell: (Int, S.Generator.Element, Cell) -> Void) -> Disposable {}
 
-    public func rx_subscribeItemsToWithCellIdentifier<Item, Cell: UICollectionViewCell>(cellIdentifier: String, configureCell: (Int, Item, Cell) -> Void)
-        -> Observable<[Item]> -> Disposable {}
+    public func rx_itemsWithDataSource(dataSource: DataSource)(source: O) -> Disposable {}
 
-    public var rx_itemSelected: Observable<NSIndexPath> {}
+    public var rx_itemSelected: ControlEvent<NSIndexPath> {}
 
-    // This method only works in case one of the `rx_subscribeItemsTo` methods was used.
-    public func rx_modelSelected<T>() -> Observable<T> {}
+    // This method only works in case one of the `rx_itemsWith*` methods was used.
+    public func rx_modelSelected<T>() -> ControlEvent<T> {}
 }
 ```
 
 ```swift
 extension UIGestureRecognizer {
 
-    public var rx_event: Observable<UIGestureRecognizer> {}
+    public var rx_event: ControlEvent<UIGestureRecognizer> {}
 
 }
 ```
@@ -360,11 +350,11 @@ extension UIActionSheet {
 
     public var rx_delegate: DelegateProxy {}
 
-    public var rx_clickedButtonAtIndex: Observable<Int> {}
+    public var rx_clickedButtonAtIndex: ControlEvent<Int> {}
 
-    public var rx_willDismissWithButtonIndex: Observable<Int> {}
+    public var rx_willDismissWithButtonIndex: ControlEvent<Int> {}
 
-    public var rx_didDismissWithButtonIndex: Observable<Int> {}
+    public var rx_didDismissWithButtonIndex: ControlEvent<Int> {}
 
 }
 ```
@@ -375,11 +365,11 @@ extension UIAlertView {
 
     public var rx_delegate: DelegateProxy {}
 
-    public var rx_clickedButtonAtIndex: Observable<Int> {}
+    public var rx_clickedButtonAtIndex: ControlEvent<Int> {}
 
-    public var rx_willDismissWithButtonIndex: Observable<Int> {}
+    public var rx_willDismissWithButtonIndex: ControlEvent<Int> {}
 
-    public var rx_didDismissWithButtonIndex: Observable<Int> {}
+    public var rx_didDismissWithButtonIndex: ControlEvent<Int> {}
 
 }
 ```
@@ -387,7 +377,7 @@ extension UIAlertView {
 ```swift
 extension UISegmentedControl {
 
-    public var rx_value: Observable<Int> {}
+    public var rx_value: ControlProperty<Int> {}
 
 }
 ```
@@ -395,7 +385,7 @@ extension UISegmentedControl {
 ```swift
 extension UISwitch {
 
-    public var rx_value: Observable<Bool> {}
+    public var rx_value: ControlProperty<Bool> {}
 
 }
 ```
@@ -405,7 +395,7 @@ extension UISwitch {
 ```swift
 extension NSControl {
 
-    public var rx_controlEvents: Observable<()> {}
+    public var rx_controlEvents: ControlEvent<()> {}
 
 }
 ```
@@ -414,7 +404,7 @@ extension NSControl {
 
 extension NSSlider {
 
-    public var rx_value: Observable<Double> {}
+    public var rx_value: ControlProperty<Double> {}
 
 }
 ```
@@ -422,7 +412,7 @@ extension NSSlider {
 ```swift
 extension NSButton {
 
-    public var rx_tap: Observable<Void> {}
+    public var rx_tap: ControlEvent<Void> {}
 
 }
 ```
@@ -430,11 +420,9 @@ extension NSButton {
 ```swift
 extension NSImageView {
 
-    public func rx_subscribeImageTo(source: Observable<NSImage?>) -> Disposable {}
+    public var rx_image: ObserverOf<NSImage!> {}
 
-    public func rx_subscribeImageTo
-        (animated: Bool)
-        (source: Observable<NSImage?>) -> Disposable {}
+    public func rx_imageAnimated(animated: Bool) -> ObserverOf<NSImage!> {}
 }
 ```
 
@@ -443,8 +431,7 @@ extension NSTextField {
 
     public var rx_delegate: DelegateProxy {}
 
-    public var rx_text: Observable<String> {}
-
-    public func rx_subscribeTextTo(source: Observable<String>) -> Disposable {}
+    public var rx_text: ControlProperty<String> {}
+      
 }
 ```

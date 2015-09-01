@@ -54,19 +54,19 @@ example("combineLatest 1st") {
         }
 
     print("send A to first channel")
-    sendNext(intOb1, "A")
+    intOb1.on(.Next("A"))
     print("note that nothing outputs")
 
     print("\nsend 1 to second channel")
-    sendNext(intOb2, 1)
+    intOb2.on(.Next(1))
     print("now that there is something in both channels, there is output")
 
     print("\nsend B to first channel")
-    sendNext(intOb1, "B")
+    intOb1.on(.Next("B"))
     print("now that both channels are full, whenever either channel emits a value, the combined channel also emits a value")
 
     print("\nsend 2 to second channel")
-    sendNext(intOb2, 2)
+    intOb2.on(.Next(2))
     print("note that the combined channel emits a value whenever either sub-channel emits a value, even if the value is the same")
 }
 

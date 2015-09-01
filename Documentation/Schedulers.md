@@ -11,7 +11,7 @@ Different mechanisms for performing work include, current thread, dispatch queue
 
 There are two main operators that work with schedulers. `observeOn` and `subscribeOn`.
 
-If you want to perform work on different scheduler just use `>- observeOn(scheduler)` operator.
+If you want to perform work on different scheduler just use `observeOn(scheduler)` operator.
 
 You would usually use `observeOn` a lot more often then `subscribeOn`.
 
@@ -21,17 +21,17 @@ Example of using `observeOn` operator
 
 ```
 sequence1
-  >- observeOn(backgroundScheduler)
-  >- map { n in
+  .observeOn(backgroundScheduler)
+  .map { n in
       println("This is performed on background scheduler")
   }
-  >- observeOn(MainScheduler.sharedInstance)
-  >- map { n in
+  .observeOn(MainScheduler.sharedInstance)
+  .map { n in
       println("This is performed on main scheduler")
   }
 ```
 
-If you want to start sequence generation (`subscribe` method) and call dispose on a specific scheduler, use `>- subscribeOn(scheduler)`.
+If you want to start sequence generation (`subscribe` method) and call dispose on a specific scheduler, use `subscribeOn(scheduler)`.
 
 In case `subscribeOn` isn't explicitly specified, `subscribe` method will be called on the same thread/scheduler that `subscribeNext` or `subscribe` is called.
 
