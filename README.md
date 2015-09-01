@@ -7,7 +7,7 @@ Xcode 7 beta 6 (7A192o) / Swift 2.0 required
 
 **This README.md describes alpha version of RxSwift 2.0.**
 
-**You can find RxSwift 1.9 for Swift 1.2 [here](https://github.com/ReactiveX/RxSwift/tree/master).**
+**You can find RxSwift 1.9 for Swift 1.2 [here](https://github.com/ReactiveX/RxSwift/tree/rxswift-1.0).**
 
 **Don't worry, we will be applying critical hotfixes to 1.9 version, but since the entire ecosystem is migrating towards Swift 2.0, we will be focusing on adding new features only to RxSwift 2.0 version.**
 
@@ -456,8 +456,8 @@ Open Rx.xcworkspace, choose `RxExample` and hit run. This method will build ever
 # Podfile
 use_frameworks!
 
-pod 'RxSwift', :git => "git@github.com:ReactiveX/RxSwift.git", :branch => 'rxswift-2.0'
-pod 'RxCocoa', :git => "git@github.com:ReactiveX/RxSwift.git", :branch => 'rxswift-2.0'
+pod 'RxSwift'
+pod 'RxCocoa'
 ```
 
 type in `Podfile` directory
@@ -471,7 +471,7 @@ $ pod install
 Add this to `Cartfile`
 
 ```
-git "git@github.com:ReactiveX/RxSwift.git" "rxswift-2.0"
+git "git@github.com:ReactiveX/RxSwift.git"
 ```
 
 ```
@@ -484,8 +484,6 @@ $ carthage update
 
 ```
 $ git submodule add git@github.com:ReactiveX/RxSwift.git
-$ cd RxSwift
-$ git checkout rxswift-2.0
 ```
 
 * Drag `Rx.xcodeproj` into Project Navigator
