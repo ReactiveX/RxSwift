@@ -38,7 +38,7 @@ class FetchResultControllerSectionObserver: NSObject, NSFetchedResultsController
 
     func sendNextElement() {
         let sections = self.frc.sections as! [NSFetchedResultsSectionInfo]
-        sendNext(observer, sections)
+        observer.on(.Next(sections))
     }
 
     func controllerDidChangeContent(controller: NSFetchedResultsController) {
@@ -76,7 +76,7 @@ class FetchResultControllerEntityObserver: NSObject, NSFetchedResultsControllerD
     func sendNextElement() {
         let entities = self.frc.fetchedObjects as! [NSManagedObject]
 
-        sendNext(observer, entities)
+        observer.on(.Next(entities))
     }
 
     func controllerDidChangeContent(controller: NSFetchedResultsController) {
@@ -110,7 +110,7 @@ class FetchResultControllerIncrementalObserver: NSObject, NSFetchedResultsContro
 
         let sections = self.frc.sections as! [NSFetchedResultsSectionInfo]
 
-        sendNext(observer, .Snapshot(sections: sections))
+        observer.on(.Next(.Snapshot(sections: sections)))
     }
 
     func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
@@ -128,7 +128,7 @@ class FetchResultControllerIncrementalObserver: NSObject, NSFetchedResultsContro
             event = .ItemUpdated(item: anObject as! NSManagedObject, atIndexPath: indexPath!)
         }
 
-        sendNext(observer, event)
+        observer.on(.Next(event))
     }
 
     func controller(controller: NSFetchedResultsController, didChangeSection sectionInfo: NSFetchedResultsSectionInfo, atIndex sectionIndex: Int, forChangeType type: NSFetchedResultsChangeType) {
@@ -147,15 +147,15 @@ class FetchResultControllerIncrementalObserver: NSObject, NSFetchedResultsContro
             event = .SectionUpdated(section: sectionInfo, atIndex: sectionIndex)
         }
 
-        sendNext(observer, event)
+        observer.on(.Next(event))
     }
 
     func controllerWillChangeContent(controller: NSFetchedResultsController) {
-        sendNext(observer, .TransactionStarted)
+        observer.on(.Next(.TransactionStarted))
     }
 
     func controllerDidChangeContent(controller: NSFetchedResultsController) {
-        sendNext(observer, .TransactionEnded)
+        observer.on(.Next(.TransactionEnded))
     }
 
     func dispose() {

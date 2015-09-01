@@ -74,8 +74,8 @@ extension NSObject {
             else {
                 let subject = ReplaySubject<Void>.create(bufferSize: 1)
                 let deinitAction = DeinitAction {
-                    sendNext(subject, ())
-                    sendCompleted(subject)
+                    subject.on(.Next())
+                    subject.on(.Completed)
                 }
                 objc_setAssociatedObject(self, &deallocatedSubjectContext, subject, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
                 objc_setAssociatedObject(self, &deallocatedSubjectTriggerContext, deinitAction, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
@@ -104,11 +104,11 @@ extension NSObject {
                 )
 
                 let proxy = Deallocating {
-                    sendNext(subject, ())
+                    subject.on(.Next())
                 }
 
                 let deinitAction = DeinitAction {
-                    sendCompleted(subject)
+                    subject.on(.Completed)
                 }
 
                 objc_setAssociatedObject(self,

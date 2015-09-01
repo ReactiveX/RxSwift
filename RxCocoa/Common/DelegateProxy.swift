@@ -93,7 +93,7 @@ public class DelegateProxy : _RXDelegateProxy {
     
     deinit {
         for v in subjectsForSelector.values {
-            sendCompleted(v)
+            v.on(.Completed)
         }
 #if TRACE_RESOURCES
         OSAtomicDecrement32(&resourceCount)

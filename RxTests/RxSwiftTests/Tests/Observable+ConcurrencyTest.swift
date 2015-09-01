@@ -328,7 +328,7 @@ extension ObservableConcurrencyTest {
             { scheduler in
                 let subscription = (xs.observeOn(scheduler)).subscribe(observer)
                 XCTAssert(xs.subscriptions == [SubscribedToHotObservable])
-                sendNext(xs, 0)
+                xs.on(.Next(0))
 
                 return subscription
             },
@@ -336,8 +336,8 @@ extension ObservableConcurrencyTest {
                 XCTAssertEqual(observer.messages, [
                     next(0)
                     ])
-                sendNext(xs, 1)
-                sendNext(xs, 2)
+                xs.on(.Next(1))
+                xs.on(.Next(2))
                 return NopDisposable.instance
             },
             { scheduler in
@@ -347,7 +347,7 @@ extension ObservableConcurrencyTest {
                     next(2)
                     ])
                 XCTAssert(xs.subscriptions == [SubscribedToHotObservable])
-                sendCompleted(xs)
+                xs.on(.Completed)
                 return NopDisposable.instance
             },
             { scheduler in
@@ -371,7 +371,7 @@ extension ObservableConcurrencyTest {
             { scheduler in
                 let subscription = (xs.observeOn(scheduler)).subscribe(observer)
                 XCTAssert(xs.subscriptions == [SubscribedToHotObservable])
-                sendCompleted(xs)
+                xs.on(.Completed)
                 XCTAssert(xs.subscriptions == [SubscribedToHotObservable])
 
                 return subscription
@@ -394,7 +394,7 @@ extension ObservableConcurrencyTest {
             { scheduler in
                 let subscription = (xs.observeOn(scheduler)).subscribe(observer)
                 XCTAssert(xs.subscriptions == [SubscribedToHotObservable])
-                sendNext(xs, 0)
+                xs.on(.Next(0))
 
                 return subscription
             },
@@ -402,8 +402,8 @@ extension ObservableConcurrencyTest {
                 XCTAssertEqual(observer.messages, [
                     next(0)
                     ])
-                sendNext(xs, 1)
-                sendNext(xs, 2)
+                xs.on(.Next(1))
+                xs.on(.Next(2))
                 return NopDisposable.instance
             },
             { scheduler in
@@ -413,7 +413,7 @@ extension ObservableConcurrencyTest {
                     next(2)
                     ])
                 XCTAssert(xs.subscriptions == [SubscribedToHotObservable])
-                sendError(xs, testError)
+                xs.on(.Error(testError))
                 return NopDisposable.instance
             },
             { scheduler in
@@ -438,7 +438,7 @@ extension ObservableConcurrencyTest {
             { scheduler in
                 subscription = (xs.observeOn(scheduler)).subscribe(observer)
                 XCTAssert(xs.subscriptions == [SubscribedToHotObservable])
-                sendNext(xs, 0)
+                xs.on(.Next(0))
 
                 return subscription
             },
@@ -451,7 +451,7 @@ extension ObservableConcurrencyTest {
                 subscription.dispose()
                 XCTAssert(xs.subscriptions == [UnsunscribedFromHotObservable])
 
-                sendError(xs, testError)
+                xs.on(.Error(testError))
 
                 return NopDisposable.instance
             },
@@ -564,15 +564,15 @@ class ObservableConcurrentSchedulerConcurrencyTest: ObservableConcurrencyTestBas
 
         let subscription = (xs.observeOn(scheduler)).subscribe(observer)
         XCTAssert(xs.subscriptions == [SubscribedToHotObservable])
-        sendNext(xs, 0)
+        xs.on(.Next(0))
 
         sleep(0.1)
 
         XCTAssertEqual(observer.messages, [
             next(0)
             ])
-        sendNext(xs, 1)
-        sendNext(xs, 2)
+        xs.on(.Next(1))
+        xs.on(.Next(2))
 
         sleep(0.1)
 
@@ -582,7 +582,7 @@ class ObservableConcurrentSchedulerConcurrencyTest: ObservableConcurrencyTestBas
             next(2)
             ])
         XCTAssert(xs.subscriptions == [SubscribedToHotObservable])
-        sendCompleted(xs)
+        xs.on(.Completed)
 
         sleep(0.1)
 
@@ -607,7 +607,7 @@ class ObservableConcurrentSchedulerConcurrencyTest: ObservableConcurrencyTestBas
 
         _ = (xs.observeOn(scheduler)).subscribe(observer)
         XCTAssert(xs.subscriptions == [SubscribedToHotObservable])
-        sendCompleted(xs)
+        xs.on(.Completed)
 
         sleep(0.1)
 
@@ -637,9 +637,9 @@ class ObservableConcurrentSchedulerConcurrencyTest: ObservableConcurrencyTestBas
         let subscription = res.subscribe(observer)
 
         XCTAssert(xs.subscriptions == [SubscribedToHotObservable])
-        sendNext(xs, 0)
-        sendNext(xs, 1)
-        sendCompleted(xs)
+        xs.on(.Next(0))
+        xs.on(.Next(1))
+        xs.on(.Completed)
 
         sleep(0.3)
 
@@ -663,15 +663,15 @@ class ObservableConcurrentSchedulerConcurrencyTest: ObservableConcurrencyTestBas
 
         let _ = (xs.observeOn(scheduler)).subscribe(observer)
         XCTAssert(xs.subscriptions == [SubscribedToHotObservable])
-        sendNext(xs, 0)
+        xs.on(.Next(0))
 
         sleep(0.1)
 
         XCTAssertEqual(observer.messages, [
             next(0)
             ])
-        sendNext(xs, 1)
-        sendNext(xs, 2)
+        xs.on(.Next(1))
+        xs.on(.Next(2))
 
         sleep(0.1)
 
@@ -681,7 +681,7 @@ class ObservableConcurrentSchedulerConcurrencyTest: ObservableConcurrencyTestBas
             next(2)
             ])
         XCTAssert(xs.subscriptions == [SubscribedToHotObservable])
-        sendError(xs, testError)
+        xs.on(.Error(testError))
 
         sleep(0.1)
 
@@ -702,7 +702,7 @@ class ObservableConcurrentSchedulerConcurrencyTest: ObservableConcurrencyTestBas
         let scheduler = createScheduler()
         let subscription = (xs.observeOn(scheduler)).subscribe(observer)
         XCTAssert(xs.subscriptions == [SubscribedToHotObservable])
-        sendNext(xs, 0)
+        xs.on(.Next(0))
 
         sleep(0.1)
 
@@ -714,7 +714,7 @@ class ObservableConcurrentSchedulerConcurrencyTest: ObservableConcurrencyTestBas
         subscription.dispose()
         XCTAssert(xs.subscriptions == [UnsunscribedFromHotObservable])
 
-        sendError(xs, testError)
+        xs.on(.Error(testError))
 
         sleep(0.1)
 

@@ -33,10 +33,10 @@ class KVOObservable<Element> : _Producer<Element?>
     override func run<O : ObserverType where O.E == Element?>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
         let observer = KVOObserver(parent: self) { (value) in
             if value as? NSNull != nil {
-                sendNext(observer, nil)
+                observer.on(.Next(nil))
                 return
             }
-            sendNext(observer, value as? Element)
+            observer.on(.Next(value as? Element))
         }
         
         return AnonymousDisposable {

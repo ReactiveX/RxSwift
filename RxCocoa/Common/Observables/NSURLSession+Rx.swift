@@ -81,11 +81,11 @@ extension NSURLSession {
                 }
 
                 if data == nil || response == nil {
-                    sendError(observer, error ?? UnknownError)
+                    observer.on(.Error(error ?? UnknownError))
                 }
                 else {
-                    sendNext(observer, (data, response))
-                    sendCompleted(observer)
+                    observer.on(.Next(data as NSData!, response as NSURLResponse!))
+                    observer.on(.Completed)
                 }
             }
 

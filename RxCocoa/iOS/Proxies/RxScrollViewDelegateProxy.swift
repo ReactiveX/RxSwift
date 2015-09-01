@@ -23,7 +23,7 @@ class RxScrollViewDelegateProxy : DelegateProxy
     var contentOffsetSubject: Observable<CGPoint> {
         if _contentOffsetSubject == nil {
             _contentOffsetSubject = ReplaySubject.create(bufferSize: 1)
-            sendNext(_contentOffsetSubject!, self.scrollView.contentOffset)
+            _contentOffsetSubject!.on(.Next(self.scrollView.contentOffset))
         }
         
         return _contentOffsetSubject!
@@ -38,7 +38,7 @@ class RxScrollViewDelegateProxy : DelegateProxy
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
         if let contentOffset = _contentOffsetSubject {
-            sendNext(contentOffset, self.scrollView.contentOffset)
+            contentOffset.on(.Next(self.scrollView.contentOffset))
         }
         self._forwardToDelegate?.scrollViewDidScroll?(scrollView)
     }
@@ -63,7 +63,7 @@ class RxScrollViewDelegateProxy : DelegateProxy
     
     deinit {
         if let contentOffset = _contentOffsetSubject {
-            sendCompleted(contentOffset)
+            contentOffset.on(.Completed)
         }
     }
 }

@@ -35,7 +35,7 @@ extension UIControl {
             
             let controlTarget = ControlTarget(control: self, controlEvents: controlEvents) {
                 control in
-                sendNext(observer, ())
+                observer.on(.Next())
             }
             
             return AnonymousDisposable {
@@ -49,10 +49,10 @@ extension UIControl {
     func rx_value<T>(getter getter: () -> T, setter: T -> Void) -> ControlProperty<T> {
         let source: Observable<T> = AnonymousObservable { observer in
             
-            sendNext(observer, getter())
+            observer.on(.Next(getter()))
             
             let controlTarget = ControlTarget(control: self, controlEvents: UIControlEvents.EditingChanged.union(.ValueChanged)) { control in
-                sendNext(observer, getter())
+                observer.on(.Next(getter()))
             }
             
             return AnonymousDisposable {

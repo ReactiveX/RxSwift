@@ -21,13 +21,13 @@ class RxTextFieldDelegate : DelegateProxy
     required init(parentObject: AnyObject) {
         self.textField = parentObject as! NSTextField
         super.init(parentObject: parentObject)
-        sendNext(self.textSubject, self.textField.stringValue)
+        self.textSubject.on(.Next(self.textField.stringValue))
     }
     
     override func controlTextDidChange(notification: NSNotification) {
         let textField = notification.object as! NSTextField
         let nextValue = textField.stringValue
-        sendNext(self.textSubject, nextValue)
+        self.textSubject.on(.Next(nextValue))
     }
 
     class func currentDelegateFor(object: AnyObject) -> AnyObject? {

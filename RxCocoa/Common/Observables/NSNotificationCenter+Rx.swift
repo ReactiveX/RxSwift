@@ -15,7 +15,7 @@ extension NSNotificationCenter {
     public func rx_notification(name: String, object: AnyObject?) -> Observable<NSNotification> {
         return AnonymousObservable { observer in
             let nsObserver = self.addObserverForName(name, object: object, queue: nil) { notification in
-                sendNext(observer, notification)
+                observer.on(.Next(notification))
             }
             
             return AnonymousDisposable {

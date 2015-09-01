@@ -2738,8 +2738,8 @@ extension ObservableStandardSequenceOperators {
     func testTake_DecrementCountsFirst() {
         let k = BehaviorSubject(value: false)
         
-        k .take(1).subscribeNext { n in
-            sendNext(k, !n)
+        k.take(1).subscribeNext { n in
+            k.on(.Next(!n))
         }
     }
 }

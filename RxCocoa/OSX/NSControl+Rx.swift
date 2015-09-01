@@ -19,7 +19,7 @@ extension NSControl {
             MainScheduler.ensureExecutingOnScheduler()
             
             let observer = ControlTarget(control: self) { control in
-                sendNext(observer, ())
+                observer.on(.Next())
             }
             
             return observer
@@ -30,10 +30,10 @@ extension NSControl {
     
     func rx_value<T>(getter getter: () -> T, setter: T -> Void) -> ControlProperty<T> {
         let source: Observable<T> = AnonymousObservable { observer in
-            sendNext(observer, getter())
+            observer.on(.Next(getter()))
             
             let observer = ControlTarget(control: self) { control in
-                sendNext(observer, getter())
+                observer.on(.Next(getter()))
             }
             
             return observer

@@ -35,10 +35,10 @@ public func just<E>(element: E) -> Observable<E> {
 public func sequenceOf<E>(elements: E ...) -> Observable<E> {
     return AnonymousObservable { observer in
         for element in elements {
-            sendNext(observer, element)
+            observer.on(.Next(element))
         }
         
-        sendCompleted(observer)
+        observer.on(.Completed)
         return NopDisposable.instance
     }
 }
@@ -46,10 +46,10 @@ public func sequenceOf<E>(elements: E ...) -> Observable<E> {
 public func from<E, S where S: SequenceType, S.Generator.Element == E>(sequence: S) -> Observable<E> {
     return AnonymousObservable { observer in
         for element in sequence {
-            sendNext(observer, element)
+            observer.on(.Next(element))
         }
         
-        sendCompleted(observer)
+        observer.on(.Completed)
         return NopDisposable.instance
     }
 }

@@ -57,7 +57,7 @@ extension UIGestureRecognizer {
             
             let observer = GestureTarget(self!) {
                 control in
-                sendNext(observer, self!)
+                observer.on(.Next(self!))
             }
             
             return observer
