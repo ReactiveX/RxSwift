@@ -82,6 +82,7 @@ extension CLLocationManager {
             }
     }
     
+    @available(OSX 10.10, *)
     public var rx_didDetermineStateForRegion: Observable<(state: CLRegionState, region: CLRegion!)> {
         return rx_delegate.observe("locationManager:didDetermineState:forRegion:")
             .map { a in
