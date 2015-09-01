@@ -11,6 +11,8 @@ Xcode 7 beta 6 (7A192o) / Swift 2.0 required
 
 **Don't worry, we will be applying critical hotfixes to 1.9 version, but since the entire ecosystem is migrating towards Swift 2.0, we will be focusing on adding new features only to RxSwift 2.0 version.**
 
+**We will support all environments where Swift 2.0 will run.**
+
 ### Change Log (from 1.9 version)
 
 * Removes deprecated APIs
@@ -243,11 +245,11 @@ extension NSURLSession {
         return create { observer in
             let task = self.dataTaskWithRequest(request) { (data, response, error) in
                 if data == nil || response == nil {
-                    sendError(observer, error ?? UnknownError)
+                    observer.on(.Error(error ?? UnknownError))
                 }
                 else {
-                    sendNext(observer, (data, response))
-                    sendCompleted(observer)
+                    observer.on(.Next(data, response))
+                    observer.on(.Completed)
                 }
             }
 
@@ -480,9 +482,11 @@ $ carthage update
 
 * Add RxSwift as a submodule
 
-`$ git submodule add git@github.com:ReactiveX/RxSwift.git`
-`$ cd RxSwift`
-`$ git checkout rxswift-2.0`
+```
+$ git submodule add git@github.com:ReactiveX/RxSwift.git
+$ cd RxSwift
+$ git checkout rxswift-2.0
+```
 
 * Drag `Rx.xcodeproj` into Project Navigator
 * Go to `Project > Targets > Build Phases > Link Binary With Libraries`, click `+` and select `RxSwift-[Platform]` and `RxCocoa-[Platform]` targets
@@ -499,11 +503,11 @@ You can either do that by copying the files manually or using git submodules.
 
 `git submodule add git@github.com:ReactiveX/RxSwift.git`
 
-After you've included files from `RxSwift/RxSwift` and `RxSwift/RxCocoa` folders, you'll need to remove files that are platform specific.
+After you've included files from `RxSwift` and `RxCocoa` directories, you'll need to remove files that are platform specific.
 
-If you are compiling for **`iOS`**, please **remove references** to OSX specific files located in **`RxCocoa/RxCocoa/OSX`**.
+If you are compiling for **`iOS`**, please **remove references** to OSX specific files located in **`RxCocoa/OSX`**.
 
-If you are compiling for **`OSX`**, please **remove references** to iOS specific files located in **`RxCocoa/RxCocoa/iOS`**.
+If you are compiling for **`OSX`**, please **remove references** to iOS specific files located in **`RxCocoa/iOS`**.
 
 * Add **`RX_NO_MODULE`** as a custom Swift preprocessor flag
 
