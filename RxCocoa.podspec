@@ -21,5 +21,5 @@ Pod::Spec.new do |s|
   s.ios.source_files      = 'RxCocoa/iOS/**/*.swift'
   s.osx.source_files      = 'RxCocoa/OSX/**/*.swift'
 
-  s.dependency 'RxSwift'
+  s.dependency 'RxSwift', '~> 2.0-alpha'
 end

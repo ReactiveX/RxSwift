@@ -17,5 +17,5 @@ Pod::Spec.new do |s|
 
   s.source_files          = 'RxBlocking/**/*.swift'
 
-  s.dependency 'RxSwift'
+  s.dependency 'RxSwift', '~> 2.0-alpha'
 end
