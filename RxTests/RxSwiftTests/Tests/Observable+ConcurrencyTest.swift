@@ -265,21 +265,23 @@ extension ObservableConcurrencyTest {
 
     func testObserveOnDispatchQueue_DispatchQueueSchedulerIsSerial() {
         var numberOfConcurrentEvents: Int32 = 0
-        var numberOfExecutions = 0
+        var numberOfExecutions: Int32 = 0
         runDispatchQueueSchedulerTests { scheduler in
             XCTAssert(numberOfSerialDispatchQueueObservables == 0)
-            return sequenceOf(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
-                .observeOn(scheduler)
-                .subscribeNext { e in
-                    XCTAssert(OSAtomicIncrement32(&numberOfConcurrentEvents) == 1)
-                    self.sleep(0.1) // should be enough to block the queue, so if it's concurrent, it will fail
-                    XCTAssert(OSAtomicDecrement32(&numberOfConcurrentEvents) == 0)
-                    numberOfExecutions++
-                }
+            let action = { (s: Void) -> Disposable in
+                XCTAssert(OSAtomicIncrement32(&numberOfConcurrentEvents) == 1)
+                self.sleep(0.1) // should be enough to block the queue, so if it's concurrent, it will fail
+                XCTAssert(OSAtomicDecrement32(&numberOfConcurrentEvents) == 0)
+                OSAtomicIncrement32(&numberOfExecutions)
+                return NopDisposable.instance
+            }
+            scheduler.schedule((), action: action)
+            scheduler.schedule((), action: action)
+            return NopDisposable.instance
         }
 
         XCTAssert(numberOfSerialDispatchQueueObservables == 0)
-        XCTAssert(numberOfExecutions == 11)
+        XCTAssert(numberOfExecutions == 2)
     }
 #endif
 
@@ -372,8 +374,6 @@ extension ObservableConcurrencyTest {
                 let subscription = (xs.observeOn(scheduler)).subscribe(observer)
                 XCTAssert(xs.subscriptions == [SubscribedToHotObservable])
                 xs.on(.Completed)
-                XCTAssert(xs.subscriptions == [SubscribedToHotObservable])
-
                 return subscription
             },
             { scheduler in
