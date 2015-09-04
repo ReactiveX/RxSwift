@@ -6,11 +6,13 @@ import RxSwift
 ## Combination operators
 
 Operators that work with multiple source Observables to create a single Observable.
+*/
 
+/*:
 
 ### `startWith`
 
-Return an observeble which emits a specified item before emitting the items from the source Observable.
+emit a specified sequence of items before beginning to emit the items from the source Observable
 
 ![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/startwith.png)
 
@@ -18,79 +20,67 @@ Return an observeble which emits a specified item before emitting the items from
 */
 example("startWith") {
 
-    let aggregateSubscriber = sequenceOf(4, 5, 6, 7, 8, 9)
+    let subscription = sequenceOf(4, 5, 6, 7, 8, 9)
         .startWith(3)
         .startWith(2)
         .startWith(1)
         .startWith(0)
-        .subscribeNext { int in
-            print(int)
+        .subscribe {
+            print($0)
         }
-
 }
 
 
 /*:
 ### `combineLatest`
 
-Takes several source Obserbables and a closure as parameters, returns an Observable which emits the latest items of each source Obsevable,  procesed through the closure.
-Once each source Observables have each emitted an item, `combineLatest` emits an item every time either source Observable emits an item.
+when an item is emitted by either of two Observables, combine the latest item emitted by each Observable via a specified function and emit items based on the results of this function
 
 ![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/combinelatest.png)
 
 [More info in reactive.io website]( http://reactivex.io/documentation/operators/combinelatest.html )
 
-The next example shows how
 */
-example("combineLatest 1st") {
+example("combineLatest 1") {
     let intOb1 = PublishSubject<String>()
     let intOb2 = PublishSubject<Int>()
 
     combineLatest(intOb1, intOb2) {
         "\($0) \($1)"
         }
-        .subscribeNext {
+        .subscribe {
             print($0)
         }
 
-    print("send A to first channel")
     intOb1.on(.Next("A"))
-    print("note that nothing outputs")
 
-    print("\nsend 1 to second channel")
     intOb2.on(.Next(1))
-    print("now that there is something in both channels, there is output")
 
-    print("\nsend B to first channel")
     intOb1.on(.Next("B"))
-    print("now that both channels are full, whenever either channel emits a value, the combined channel also emits a value")
 
-    print("\nsend 2 to second channel")
     intOb2.on(.Next(2))
-    print("note that the combined channel emits a value whenever either sub-channel emits a value, even if the value is the same")
 }
 
 
-//: This example show once in each channel there are output for each new channel output the resulting observable also produces an output
+//: To produce output, at least one element has to be received from each sequence in arguements.
 
-example("combineLatest 2nd") {
+example("combineLatest 2") {
     let intOb1 = just(2)
     let intOb2 = sequenceOf(0, 1, 2, 3, 4)
 
     combineLatest(intOb1, intOb2) {
             $0 * $1
         }
-        .subscribeNext { (x: Int) in
-            print(x)
+        .subscribe {
+            print($0)
         }
 }
 
 
-/*:
-Rx has a group of `combineLatest` functions.
-The next sample demonstrates `combineLatest` with three arguments.
-*/
-example("combineLatest 3rd") {
+
+//: Combine latest has versions with more then 2 arguments.
+
+example("combineLatest 3") {
     let intOb1 = just(2)
     let intOb2 = sequenceOf(0, 1, 2, 3)
     let intOb3 = sequenceOf(0, 1, 2, 3, 4)
@@ -98,8 +88,8 @@ example("combineLatest 3rd") {
     combineLatest(intOb1, intOb2, intOb3) {
         ($0 + $1) * $2
         }
-        .subscribeNext { (x: Int) in
-            print(x)
+        .subscribe {
+            print($0)
         }
 }
 
@@ -108,48 +98,36 @@ example("combineLatest 3rd") {
 /*:
 ### `zip`
 
-Takes several source Observables and a closure as parameters, returns an Observable  which emit the items of the second Obsevable procesed, through the closure, with the last item of first Observable
-The Observable returned by `zip` emits an item only when all of the imputs Observables have emited an item
+combine the emissions of multiple Observables together via a specified function and emit single items for each combination based on the results of this function
 
 ![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/zip.png)
 
 [More info in reactive.io website](http://reactivex.io/documentation/operators/zip.html)
 */
-example("zip 1st") {
+example("zip 1") {
     let intOb1 = PublishSubject<String>()
     let intOb2 = PublishSubject<Int>()
 
     zip(intOb1, intOb2) {
         "\($0) \($1)"
         }
-        .subscribeNext { (x: String) in
-            print(x)
+        .subscribe {
+            print($0)
         }
 
-    print("send A to first channel")
-    sendNext(intOb1, "A")
-    print("note that nothing outputs")
+    intOb1.on(.Next("A"))
 
-    print("\nsend 1 to second channel")
-    sendNext(intOb2, 1)
-    print("now that both source channels have output, there is output")
+    intOb2.on(.Next(1))
 
-    print("\nsend B to first channel")
-    sendNext(intOb1, "B")
-    print("note that nothing outputs, since channel 1 has two outputs but channel 2 only has one")
+    intOb1.on(.Next("B"))
 
-    print("\nsend C to first channel")
-    sendNext(intOb1, "C")
-    print("note that nothing outputs, it is the same as in the previous step, since channel 1 has three outputs but channel 2 only has one")
+    intOb1.on(.Next("C"))
 
-    print("\nsend 2 to second channel")
-    sendNext(intOb2, 2)
-    print("note that the combined channel emits a value with the second output of each channel")
+    intOb2.on(.Next(2))
 }
 
 
-//: This example show once in each channel there are output for each new channel output the resulting observable also produces an output
-example("zip 2nd") {
+example("zip 2") {
     let intOb1 = just(2)
 
     let intOb2 = sequenceOf(0, 1, 2, 3, 4)
@@ -157,25 +135,22 @@ example("zip 2nd") {
     zip(intOb1, intOb2) {
             $0 * $1
         }
-        .subscribeNext { (x: Int) in
-            print(x)
+        .subscribe {
+            print($0)
         }
 }
 
 
-/*:
-Demostrates simple usage of `zip` operator.
-*/
-example("zip 3rd") {
+example("zip 3") {
     let intOb1 = sequenceOf(0, 1)
     let intOb2 = sequenceOf(0, 1, 2, 3)
     let intOb3 = sequenceOf(0, 1, 2, 3, 4)
 
     zip(intOb1, intOb2, intOb3) {
-        ($0 + $1) * $2
+            ($0 + $1) * $2
         }
-        .subscribeNext { (x: Int) in
-            print(x)
+        .subscribe {
+            print($0)
         }
 }
 
@@ -185,13 +160,13 @@ example("zip 3rd") {
 /*:
 ### `merge`
 
-Combine multiple Observables, of the same type, into one by merging their emissions
+combine multiple Observables into one by merging their emissions
 
 ![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/merge.png)
 
 [More info in reactive.io website]( http://reactivex.io/documentation/operators/merge.html )
 */
-example("merge 1st") {
+example("merge 1") {
     let subject1 = PublishSubject<Int>()
     let subject2 = PublishSubject<Int>()
     
@@ -201,33 +176,33 @@ example("merge 1st") {
             print(int)
         }
     
-    sendNext(subject1, 20)
-    sendNext(subject1, 40)
-    sendNext(subject1, 60)
-    sendNext(subject2, 1)
-    sendNext(subject1, 80)
-    sendNext(subject1, 100)
-    sendNext(subject2, 1)
+    subject1.on(.Next(20))
+    subject1.on(.Next(40))
+    subject1.on(.Next(60))
+    subject2.on(.Next(1))
+    subject1.on(.Next(80))
+    subject1.on(.Next(100))
+    subject2.on(.Next(1))
 }
 
 
-example("merge 2nd") {
+example("merge 2") {
     let subject1 = PublishSubject<Int>()
     let subject2 = PublishSubject<Int>()
     
     sequenceOf(subject1, subject2) 
         .merge(maxConcurrent: 2)
-        .subscribeNext { int in
-            print(int)
+        .subscribe {
+            print($0)
         }
 
-    sendNext(subject1, 20)
-    sendNext(subject1, 40)
-    sendNext(subject1, 60)
-    sendNext(subject2, 1)
-    sendNext(subject1, 80)
-    sendNext(subject1, 100)
-    sendNext(subject2, 1)
+    subject1.on(.Next(20))
+    subject1.on(.Next(40))
+    subject1.on(.Next(60))
+    subject2.on(.Next(1))
+    subject1.on(.Next(80))
+    subject1.on(.Next(100))
+    subject2.on(.Next(1))
 }
 
 
@@ -235,7 +210,7 @@ example("merge 2nd") {
 /*:
 ### `switchLatest`
 
-Convert an Observable that emits Observables into a single Observable that emits the items emitted by the most-recently-emitted of those Observables.
+convert an Observable that emits Observables into a single Observable that emits the items emitted by the most-recently-emitted of those Observables
 
 ![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/switch.png)
 
@@ -251,8 +226,8 @@ example("switchLatest") {
     
     let d = var3
         .switchLatest()
-        .subscribeNext { (e: Int) -> Void in
-            print("\(e)")
+        .subscribe {
+            print($0)
         }
 
     var1.sendNext(1)
@@ -264,7 +239,6 @@ example("switchLatest") {
 
     var2.sendNext(201)
     
-    print("var1 isn't observed anymore")
     var1.sendNext(5)
     var1.sendNext(6)
     var1.sendNext(7)

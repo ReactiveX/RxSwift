@@ -1,6 +1,7 @@
 //: [<< Index](@previous)
 
 import RxSwift
+import Foundation
 
 /*:
 # Introduction
@@ -20,190 +21,151 @@ Creating an Observable is one thing, but if nothing subscribes to the observable
 
 /*:
 ### empty
-`empty` creates an observable that contains no objects. The only message it sends is the `.Completed` message.
+`empty` creates an empty sequence. The only message it sends is the `.Completed` message.
 */
 
-example("Empty observable") {
-    let emptyObservable: Observable<Int> = empty()
+example("empty") {
+    let emptySequence: Observable<Int> = empty()
 
-    let emptySubscriber = emptyObservable .subscribe { event in
-        switch event {
-        case .Next(let box):
-            print("\(box.value)")
-        case .Completed:
-            print("completed")
-        case .Error(let error):
-            print("\(error)")
+    let subscription = emptySequence
+        .subscribe { event in
+            print(event)
         }
-    }
 }
 
-
-
-/*:
-As you can see, no values are ever sent to the subscriber of an empty observable. It just completes and is done.
-*/
 
 /*:
 ### never
-`never` creates an observable that contains no objects and never completes or errors out.
+`never` creates a sequence that never sends any element or completes.
 */
 
-example("Never observable") {
-    let neverObservable: Observable<String> = never()
+example("never") {
+    let neverSequence: Observable<String> = never()
 
-    let neverSubscriber = neverObservable .subscribe { _ in
-        print("This block is never called.")
-    }
-}
-
-/*:
-### returnElement/just
-These two functions behave identically. They send two messages to subscribers. The first message is the value and the second message is `.Complete`.
-*/
-
-example("returnElement/just") {
-    let oneObservable = just(32)
-
-    let oneObservableSubscriber = oneObservable
-        .subscribe { event in
-            switch event {
-            case .Next(let box):
-                print("\(box.value)")
-            case .Completed:
-                print("completed")
-            case .Error(let error):
-                print("\(error)")
-            }
+    let subscription = neverSequence
+        .subscribe { _ in
+            print("This block is never called.")
         }
 }
 
 /*:
-Here we see that the `.Next` event is sent just once, then the `.Completed` event is sent.
+### just
+`just` represents sequence that contains one element. It sends two messages to subscribers. The first message is the value of single element and the second message is `.Completed`.
 */
+
+example("just") {
+    let singleElementSequence = just(32)
+
+    let subscription = singleElementSequence
+        .subscribe { event in
+            print(event)
+        }
+}
 
 /*:
-### sequence
-Now we are getting to some more interesting ways to create an Observable. This function creates an observable that produces a number of values before completing.
+### sequenceOf
+`sequenceOf` creates a sequence of a fixed number of elements.
 */
 
-example("sequence") {
-    let multipleObservable/* : Observable<Int> */ = sequenceOf(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
+example("sequenceOf") {
+    let sequenceOfElements/* : Observable<Int> */ = sequenceOf(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
     
-    let multipleObservableSubscriber = multipleObservable
+    let subscription = sequenceOfElements
         .subscribe { event in
-            switch event {
-            case .Next(let box):
-                print("\(box.value)")
-            case .Completed:
-                print("completed")
-            case .Error(let error):
-                print("\(error)")
-            }
+            print(event)
         }
 }
-
-/*:
-With the above, you will see that the `.Next` event was sent ten times, once for each element. Then `.Complete` was sent.
-*/
 
 /*:
 ### from
-We can also create an observable from any SequenceType, such as an array
+`from` creates a sequence from `SequenceType`
 */
 
 example("from") {
-    let fromArrayObservable = from([1, 2, 3, 4, 5])
+    let sequenceFromArray = from([1, 2, 3, 4, 5])
 
-    let fromArrayObservableSubscriber = fromArrayObservable
+    let subscription = sequenceFromArray
         .subscribe { event in
-            switch event {
-            case .Next(let box):
-                print("\(box.value)")
-            case .Completed:
-                print("completed")
-            case .Error(let error):
-                print("\(error)")
-            }
+            print(event)
         }
 }
 
 /*:
-Now these functions are all well and good, but the really useful ones are in the RxCocoa library.
-`rx_observe` exist on every NSObject and wraps KVO.
-`rx_tap` exists on buttons and wraps @IBActions
-`rx_notification` wraps NotificationCenter events
-... and so on.
-
-Take some time and search for code matching `-> Observable` in the RxCocoa framework to get a sense of how every action can be modeled as an observable. You can even create your own functions that make Observable objects.
-
-## Subscribing
-Up to this point, I have only used the `subscribe` method to listen to Observables, but there are several others.
+### create
+`create` creates sequence using Swift closure. This examples creates custom version of `just` operator.
 */
 
-example("subscribeNext") {
-    let nextOnlySubscriber = sequenceOf(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
-        .subscribeNext { value in
-            print("\(value)")
+example("create") {
+    let myJust = { (singleElement: Int) -> Observable<Int> in
+        return create { observer in
+            observer.on(.Next(singleElement))
+            observer.on(.Completed)
+            
+            return NopDisposable.instance
+        }
+    }
+    
+    let subscription = myJust(5)
+        .subscribe { event in
+            print(event)
         }
 }
 
 /*:
-With the above we only interest ourselves in the values returned by the observable without regard to whether/when it completes or errors. Many of the observables that we use have an indefinite lifespan. There is also `subscribeCompleted` and `subscribeError` for when you are looking for when an observable will stop sending.
-
-Also note that you can have multiple subscribers following to the same observable (as I did in the example above.) All the subscribers will be notified when an event occurs.
+### failWith
+create an Observable that emits no items and terminates with an error
 */
 
-/*:
-## Reducing a sequence
-Now that you understand how to create Observables and subscribe to them. Let's look at the various ways we can manipulate an observable sequence. First lets examine ways to reduce a sequence into fewer events.
-
-### where/filter
-The most common way to reduce a sequence is to apply a filter to it and the most generic of these is `where` or `filter`. You will see in the code below that the messages containing odd numbers are being removed so the subscriber wont see them.
-*/
-
-example("filter") {
-    let onlyEvensSubscriber = sequenceOf(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
-        .filter {
-            $0 % 2 == 0
-        }
-        .subscribeNext { value in
-            print("\(value)")
+example("failWith") {
+    let error = NSError(domain: "Test", code: -1, userInfo: nil)
+    
+    let erroredSequence: Observable<Int> = failWith(error)
+    
+    let subscription = erroredSequence
+        .subscribe { event in
+            print(event)
         }
 }
 
 /*:
-### distinctUntilChanged
-This filter tracks the last value emitted and removes like values. This function is good for reducing noise in a sequence.
-*/
+### `deferred`
 
-example("distinctUntilChanged") {
-    let distinctUntilChangedSubscriber = sequenceOf(1, 2, 3, 1, 1, 4)
-        .distinctUntilChanged()
-        .subscribeNext { value in
-            print("\(value)")
+do not create the Observable until the observer subscribes, and create a fresh Observable for each observer
+
+![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/defer.png)
+
+[More info in reactive.io website]( http://reactivex.io/documentation/operators/defer.html )
+*/
+example("deferred") {
+    let deferredSequence: Observable<Int> = deferred {
+        print("creating")
+        return create { observer in
+            print("emmiting")
+            observer.on(.Next(0))
+            observer.on(.Next(1))
+            observer.on(.Next(2))
+
+            return NopDisposable.instance
+        }
+    }
+
+    deferredSequence
+        .subscribe { event in
+            print(event)
+    }
+
+    deferredSequence
+        .subscribe { event in
+            print(event)
         }
 }
 
-
 /*:
-In the example above, the values 1, 2, 3, 1, 4 will be printed. The extra 1 will be filtered out.
-There are several different versions of `distinctUntilChanged`. Have a look in the file Observable+Single.swift to review them.
+There is a lot more useful methods in the RxCocoa library, so check them out: 
+* `rx_observe` exist on every NSObject and wraps KVO.
+* `rx_tap` exists on buttons and wraps @IBActions
+* `rx_notification` wraps NotificationCenter events
+* ... and many others
 */
-
-/*:
-## Reducing a sequence
-
-### `reduce`
-This function will perform a function on each element in the sequence until it is completed, then send a message with the aggregate value. It works much like the Swift `reduce` function works on sequences.
-*/
-
-example("reduce") {
-    let aggregateSubscriber = sequenceOf(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
-        .reduce(0, +)
-        .subscribeNext { value in
-            print("\(value)")
-        }
-}
 
 //: [Index](Index) - [Next >>](@next)

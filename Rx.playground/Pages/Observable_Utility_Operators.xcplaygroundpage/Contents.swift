@@ -7,112 +7,107 @@ import Foundation
 
 A toolbox of useful Operators for working with Observables.
 
+*/
 
-
+/*:
 ### `subscribe`
 
-Create an Disposable which listen events from source Observable, the given closure take the Even and is responsible for the actions to perform when the it is produced.
 [More info in reactive.io website]( http://reactivex.io/documentation/operators/subscribe.html )
 */
 
 example("subscribe") {
-    let intOb1 = PublishSubject<Int>()
+    let sequenceOfInts = PublishSubject<Int>()
 
-    intOb1
-        .subscribe { event in
-            print(event)
+    sequenceOfInts
+        .subscribe {
+            print($0)
         }
 
-    sendNext(intOb1, 1)
-    sendCompleted(intOb1)
+    sequenceOfInts.on(.Next(1))
+    sequenceOfInts.on(.Completed)
 }
 
 
 /*:
-There are several variants of the `subscribe` operator. They works over one posible event type:
+There are several variants of the `subscribe` operator.
+*/
 
-
+/*:
 
 ### `subscribeNext`
 
-Create an Disposable which listen only Next event from source Observable, the given closure take the Even's value and is responsible for the actions to perform only when the Next even is produced.
 */
 example("subscribeNext") {
-    let intOb1 = PublishSubject<Int>()
+    let sequenceOfInts = PublishSubject<Int>()
 
-    intOb1
-        .subscribeNext { int in
-            print(int)
+    sequenceOfInts
+        .subscribeNext {
+            print($0)
         }
 
-    sendNext(intOb1, 1)
-    sendCompleted(intOb1)
+    sequenceOfInts.on(.Next(1))
+    sequenceOfInts.on(.Completed)
 }
 
 
 /*:
 
-
 ### `subscribeCompleted`
 
-Create an Disposable which listen only Completed event from source Observable, the given closure take the Even's value and is responsible for the actions to perform only when the Completed even is produced.
 */
 example("subscribeCompleted") {
-    let intOb1 = PublishSubject<Int>()
+    let sequenceOfInts = PublishSubject<Int>()
 
-    intOb1
+    sequenceOfInts
         .subscribeCompleted {
             print("It's completed")
         }
 
-    sendNext(intOb1, 1)
-    sendCompleted(intOb1)
+    sequenceOfInts.on(.Next(1))
+    sequenceOfInts.on(.Completed)
 }
 
 
 /*:
 
-### `subscribeError
+### `subscribeError`
 
-Create an Disposable which listen only Error event from source Observable, the given closure take the Even's value and is responsible for the actions to perform only when the Error even is produced
 */
 example("subscribeError") {
-    let intOb1 = PublishSubject<Int>()
+    let sequenceOfInts = PublishSubject<Int>()
 
-    intOb1
+    sequenceOfInts
         .subscribeError { error in
             print(error)
         }
 
-    sendNext(intOb1, 1)
-    sendError(intOb1, NSError(domain: "Examples", code: -1, userInfo: nil))
+    sequenceOfInts.on(.Next(1))
+    sequenceOfInts.on(.Error(NSError(domain: "Examples", code: -1, userInfo: nil)))
 }
 
 
 /*:
 ### `doOn`
 
-Returns the same source Observable but the given closure responsible for the actions to perform when the even is produced. The gived closure obtain the event produced by the source observable
+register an action to take upon a variety of Observable lifecycle events
 
 ![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/do.png)
 
 [More info in reactive.io website]( http://reactivex.io/documentation/operators/do.html )
 */
 example("doOn") {
-    let intOb1 = PublishSubject<Int>()
+    let sequenceOfInts = PublishSubject<Int>()
 
-    let intOb2 = intOb1
-        .doOn { event in
-            print("first \(event)")
+    sequenceOfInts
+        .doOn {
+            print("Intercepted event \($0)")
         }
-    
-
-    intOb2
-        .subscribeNext { int in
-            print("second \(int)")
+        .subscribe {
+            print($0)
         }
 
-    sendNext(intOb1, 1)
+    sequenceOfInts.on(.Next(1))
+    sequenceOfInts.on(.Completed)
 }
 
 //: [Index](Index) - [Next >>](@next)

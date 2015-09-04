@@ -8,8 +8,9 @@ import RxSwift
 
 Operators that evaluate one or more Observables or items emitted by Observables.
 
+*/
 
-
+/*:
 ### `takeUntil`
 Discard any items emitted by an Observable after a second Observable emits an item or terminates.
 
@@ -19,23 +20,23 @@ Discard any items emitted by an Observable after a second Observable emits an it
 */
 
 example("takeUntil") {
-    let observable1 = PublishSubject<Int>()
-    let observable2 = PublishSubject<Int>()
+    let originalSequence = PublishSubject<Int>()
+    let whenThisSendsNextWorldStops = PublishSubject<Int>()
 
-    observable1
-        .takeUntil(observable2)
-        .subscribeNext { int in
-            print(int)
-    }
+    originalSequence
+        .takeUntil(whenThisSendsNextWorldStops)
+        .subscribe {
+            print($0)
+        }
 
-    sendNext(observable1, 1)
-    sendNext(observable1, 2)
-    sendNext(observable1, 3)
-    sendNext(observable1, 4)
+    originalSequence.on(.Next(1))
+    originalSequence.on(.Next(2))
+    originalSequence.on(.Next(3))
+    originalSequence.on(.Next(4))
 
-    sendNext(observable2, 1)
+    whenThisSendsNextWorldStops.on(.Next(1))
 
-    sendNext(observable1, 5)
+    originalSequence.on(.Next(5))
 }
 
 
@@ -50,21 +51,21 @@ Mirror items emitted by an Observable until a specified condition becomes false
 */
 example("takeWhile") {
 
-    let observable1 = PublishSubject<Int>()
+    let sequence = PublishSubject<Int>()
 
-    observable1
+    sequence
         .takeWhile { int in
             int < 4
         }
-        .subscribeNext { int in
-            print(int)
-    }
+        .subscribe {
+            print($0)
+        }
 
-    sendNext(observable1, 1)
-    sendNext(observable1, 2)
-    sendNext(observable1, 3)
-    sendNext(observable1, 4)
-    sendNext(observable1, 5)
+    sequence.on(.Next(1))
+    sequence.on(.Next(2))
+    sequence.on(.Next(3))
+    sequence.on(.Next(4))
+    sequence.on(.Next(5))
 }
 
 

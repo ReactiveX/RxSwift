@@ -6,10 +6,10 @@ import RxSwift
 ## Filtering Observables
 
 Operators that selectively emit items from a source Observable.
+*/
 
-
-
-### `where` / `filter`
+/*:
+### `filter`
 
 Emit only those items from an Observable that pass a predicate test
 
@@ -19,12 +19,12 @@ Emit only those items from an Observable that pass a predicate test
 */
 
 example("filter") {
-    let onlyEvensSubscriber = sequenceOf(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
+    let subscription = sequenceOf(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
         .filter {
             $0 % 2 == 0
         }
-        .subscribeNext { value in
-            print("\(value)")
+        .subscribe {
+            print($0)
         }
 }
 
@@ -39,10 +39,10 @@ Suppress duplicate items emitted by an Observable
 [More info in reactive.io website]( http://reactivex.io/documentation/operators/distinct.html )
 */
 example("distinctUntilChanged") {
-    let distinctUntilChangedSubscriber = sequenceOf(1, 2, 3, 1, 1, 4)
+    let subscription = sequenceOf(1, 2, 3, 1, 1, 4)
         .distinctUntilChanged()
-        .subscribeNext { value in
-            print("\(value)")
+        .subscribe {
+            print($0)
         }
 }
 
@@ -57,10 +57,10 @@ Emit only the first n items emitted by an Observable
 [More info in reactive.io website]( http://reactivex.io/documentation/operators/take.html )
 */
 example("take") {
-    let distinctUntilChangedSubscriber = sequenceOf(1, 2, 3, 4, 5, 6)
+    let subscription = sequenceOf(1, 2, 3, 4, 5, 6)
         .take(3)
-        .subscribeNext { value in
-            print("\(value)")
+        .subscribe {
+            print($0)
         }
 }
 

@@ -2,10 +2,15 @@
 
 import RxSwift
 
-func writeSequenceToConsole(name: String, sequence: Observable<String>) {
+/*:
+
+A Subject is a sort of bridge or proxy that is available in some implementations of ReactiveX that acts both as an observer and as an Observable. Because it is an observer, it can subscribe to one or more Observables, and because it is an Observable, it can pass through the items it observes by reemitting them, and it can also emit new items.
+*/
+
+func writeSequenceToConsole<O: ObservableType>(name: String, sequence: O) {
     sequence
-        .subscribeNext {
-            print("Subscription: \(name), value: \($0)")
+        .subscribe { e in
+            print("Subscription: \(name), event: \(e)")
         }
 }
 
@@ -14,7 +19,7 @@ func writeSequenceToConsole(name: String, sequence: Observable<String>) {
 
 ## PublishSubject
 
-PublishSubject can begin emitting items immediately upon creation, but there is a risk that one or more items may be lost between the time the Subject is created and the observer subscribes to it.
+`PublishSubject` emits to an observer only those items that are emitted by the source Observable(s) subsequent to the time of the subscription.
 
 ![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/publishsubject.png)
 
@@ -24,11 +29,11 @@ PublishSubject can begin emitting items immediately upon creation, but there is 
 example("PublishSubject") {
     let subject = PublishSubject<String>()
     writeSequenceToConsole("1", sequence: subject)
-    sendNext(subject, "a")
-    sendNext(subject, "b")
+    subject.on(.Next("a"))
+    subject.on(.Next("b"))
     writeSequenceToConsole("2", sequence: subject)
-    sendNext(subject, "c")
-    sendNext(subject, "d")
+    subject.on(.Next("c"))
+    subject.on(.Next("d"))
 }
 
 
@@ -36,23 +41,25 @@ example("PublishSubject") {
 
 ## ReplaySubject
 
-ReplaySubject emits to any observer all of the items, in the buffer, that were emitted by the source
+`ReplaySubject` emits to any observer all of the items that were emitted by the source Observable(s), regardless of when the observer subscribes.
+
 ![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/replaysubject.png)
 */
 example("ReplaySubject") {
     let subject = ReplaySubject<String>.create(bufferSize: 1)
+    
     writeSequenceToConsole("1", sequence: subject)
-    sendNext(subject, "a")
-    sendNext(subject, "b")
+    subject.on(.Next("a"))
+    subject.on(.Next("b"))
     writeSequenceToConsole("2", sequence: subject)
-    sendNext(subject, "c")
-    sendNext(subject, "d")
+    subject.on(.Next("c"))
+    subject.on(.Next("d"))
 }
 
 
 /*:
 
-## BehaviorSubject a.k.a. Variable
+## BehaviorSubject
 
 When an observer subscribes to a `BehaviorSubject`, it begins by emitting the item most recently emitted by the source Observable (or a seed/default value if none has yet been emitted) and then continues to emit any other items emitted later by the source Observable(s).
 
@@ -63,12 +70,29 @@ When an observer subscribes to a `BehaviorSubject`, it begins by emitting the it
 example("BehaviorSubject") {
     let subject = BehaviorSubject(value: "z")
     writeSequenceToConsole("1", sequence: subject)
-    sendNext(subject, "a")
-    sendNext(subject, "b")
+    subject.on(.Next("a"))
+    subject.on(.Next("b"))
     writeSequenceToConsole("2", sequence: subject)
-    sendNext(subject, "c")
-    sendNext(subject, "d")
+    subject.on(.Next("c"))
+    subject.on(.Next("d"))
+    subject.on(.Completed)
 }
 
+/*:
+
+## Variable
+
+`Variable` wraps `BehaviorSubject`. Advantage of using variable over `BehaviorSubject` is that variable can never explicitly complete or error out, and `BehaviorSubject` can in case `Error` or `Completed` message is send to it. `Variable` will also automatically complete in case it's being deallocated.
+
+*/
+example("Variable") {
+    let variable = Variable("z")
+    writeSequenceToConsole("1", sequence: variable)
+    variable.sendNext("a")
+    variable.sendNext("b")
+    writeSequenceToConsole("2", sequence: variable)
+    variable.sendNext("c")
+    variable.sendNext("d")
+}
 
 //: [Index](Index) - [Next >>](@next)

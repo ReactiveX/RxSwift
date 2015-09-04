@@ -4,7 +4,6 @@
         <page name='Index'/>
         <page name='Introduction'/>
         <page name='Subjects'/>
-        <page name='Creating_observables'/>
         <page name='Transforming_Observables'/>
         <page name='Filtering_Observables'/>
         <page name='Combining_Observables'/>

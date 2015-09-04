@@ -16,15 +16,15 @@ func sampleWithoutConnectableOperators() {
     let int1 = interval(1, MainScheduler.sharedInstance)
 
     int1
-        .subscribeNext {
+        .subscribe {
             print("first subscription \($0)")
         }
 
     delay(5) {
         int1
-            .subscribeNext {
+            .subscribe {
                 print("second subscription \($0)")
-        }
+            }
     }
 
 }
@@ -45,17 +45,17 @@ func sampleWithMulticast() {
     let subject1 = PublishSubject<Int64>()
 
     subject1
-        .subscribeNext {
+        .subscribe {
             print("Subject \($0)")
-    }
+        }
 
     let int1 = interval(1, MainScheduler.sharedInstance)
         .multicast(subject1)
 
     int1
-        .subscribeNext {
+        .subscribe {
             print("first subscription \($0)")
-    }
+        }
 
     delay(2) {
         int1.connect()
@@ -63,25 +63,21 @@ func sampleWithMulticast() {
 
     delay(4) {
         int1
-            .subscribeNext {
+            .subscribe {
                 print("second subscription \($0)")
-                print("---")
-        }
+            }
     }
 
     delay(6) {
         int1
-            .subscribeNext {
-                print("thirth subscription \($0)")
-        }
+            .subscribe {
+                print("third subscription \($0)")
+            }
     }
 
 }
 
-//sampleWithMulticast()
-
-
-
+// sampleWithMulticast()
 
 
 /*:
@@ -100,7 +96,7 @@ func sampleWithReplayBuffer0() {
         .replay(0)
 
     int1
-        .subscribeNext {
+        .subscribe {
             print("first subscription \($0)")
         }
 
@@ -110,22 +106,21 @@ func sampleWithReplayBuffer0() {
 
     delay(4) {
         int1
-            .subscribeNext {
+            .subscribe {
                 print("second subscription \($0)")
-                print("---")
-        }
+            }
     }
 
     delay(6) {
         int1
-            .subscribeNext {
-                print("thirth subscription \($0)")
-        }
+            .subscribe {
+                print("third subscription \($0)")
+            }
     }
 
 }
 
-//sampleWithReplayBuffer0()
+// sampleWithReplayBuffer0()
 
 
 func sampleWithReplayBuffer2() {
@@ -136,7 +131,7 @@ func sampleWithReplayBuffer2() {
         .replay(2)
 
     int1
-        .subscribeNext {
+        .subscribe {
             print("first subscription \($0)")
         }
 
@@ -146,25 +141,21 @@ func sampleWithReplayBuffer2() {
 
     delay(4) {
         int1
-            .subscribeNext {
+            .subscribe {
                 print("second subscription \($0)")
-                print("---")
             }
     }
 
     delay(6) {
         int1
-            .subscribeNext {
+            .subscribe {
                 print("third subscription \($0)")
             }
     }
 
 }
 
-//sampleWithReplayBuffer2()
-
-
-
+// sampleWithReplayBuffer2()
 
 
 /*:
@@ -183,7 +174,7 @@ func sampleWithPublish() {
         .publish()
 
     int1
-        .subscribeNext {
+        .subscribe {
             print("first subscription \($0)")
         }
 
@@ -193,20 +184,21 @@ func sampleWithPublish() {
 
     delay(4) {
         int1
-            .subscribeNext {
+            .subscribe {
                 print("second subscription \($0)")
-                print("---")
-        }
+            }
     }
 
     delay(6) {
         int1
-            .subscribeNext {
+            .subscribe {
                 print("third subscription \($0)")
-        }
+            }
     }
 
 }
+
+// sampleWithPublish()
 
 XCPSetExecutionShouldContinueIndefinitely(true)
 

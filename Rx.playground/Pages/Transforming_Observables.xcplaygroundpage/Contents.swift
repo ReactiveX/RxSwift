@@ -6,8 +6,9 @@ import RxSwift
 ## Transforming Observables
 
 Operators that transform items that are emitted by an Observable.
+*/
 
-
+/*:
 ### `map` / `select`
 
 Transform the items emitted by an Observable by applying a function to each item
@@ -18,21 +19,13 @@ Transform the items emitted by an Observable by applying a function to each item
 */
 
 example("map") {
-    let observable1: Observable<Character> = create { observer in
-        sendNext(observer, Character("A"))
-        sendNext(observer, Character("B"))
-        sendNext(observer, Character("C"))
+    let originalSequence = sequenceOf(Character("A"), Character("B"), Character("C"))
 
-        return AnonymousDisposable {}
-    }
-
-    observable1
+    originalSequence
         .map { char in
             char.hashValue
         }
-        .subscribeNext { int in
-            print(int)
-        }
+        .subscribe { print($0) }
 }
 
 
@@ -46,32 +39,17 @@ Transform the items emitted by an Observable into Observables, then flatten the 
 [More info in reactive.io website]( http://reactivex.io/documentation/operators/flatmap.html )
 */
 example("flatMap") {
-    let observable1: Observable<Int> = create { observer in
-        sendNext(observer, 1)
-        sendNext(observer, 2)
-        sendNext(observer, 3)
+    let sequenceInt = sequenceOf(1, 2, 3)
 
-        return AnonymousDisposable {}
-    }
+    let sequenceString = sequenceOf("A", "B", "C", "D", "E", "F", "--")
 
-    let observable2: Observable<String> = create { observer in
-        sendNext(observer, "A")
-        sendNext(observer, "B")
-        sendNext(observer, "C")
-        sendNext(observer, "D")
-        sendNext(observer, "F")
-        sendNext(observer, "--")
-
-        return AnonymousDisposable {}
-    }
-
-    observable1
+    sequenceInt
         .flatMap { int in
-            observable2
+            sequenceString
         }
-        .subscribeNext {
+        .subscribe {
             print($0)
-    }
+        }
 }
 
 
@@ -85,24 +63,15 @@ Apply a function to each item emitted by an Observable, sequentially, and emit e
 [More info in reactive.io website]( http://reactivex.io/documentation/operators/scan.html )
 */
 example("scan") {
-    let observable: Observable<Int> = create { observer in
-        sendNext(observer, 0)
-        sendNext(observer, 1)
-        sendNext(observer, 2)
-        sendNext(observer, 3)
-        sendNext(observer, 4)
-        sendNext(observer, 5)
+    let sequenceToSum = sequenceOf(0, 1, 2, 3, 4, 5)
 
-        return AnonymousDisposable {}
-    }
-
-    observable
+    sequenceToSum
         .scan(0) { acum, elem in
             acum + elem
         }
-        .subscribeNext {
+        .subscribe {
             print($0)
-    }
+        }
 }
 
 

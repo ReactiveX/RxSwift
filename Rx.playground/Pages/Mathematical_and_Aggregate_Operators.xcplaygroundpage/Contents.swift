@@ -7,8 +7,9 @@ import RxSwift
 
 Operators that operate on the entire sequence of items emitted by an Observable
 
+*/
 
-
+/*:
 ### `concat`
 
 Emit the emissions from two or more Observables without interleaving them.
@@ -26,8 +27,8 @@ example("concat") {
     
     let d = var3
         .concat()
-        .subscribeNext { (e: Int) -> Void in
-            print("\(e)")
+        .subscribe {
+            print($0)
         }
     
     var1.on(.Next(1))
@@ -64,10 +65,10 @@ This function will perform a function on each element in the sequence until it i
 
 */
 example("reduce") {
-    let reduceSubscriber = sequenceOf(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
+    sequenceOf(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
         .reduce(0, +)
-        .subscribeNext { value in
-            print("\(value)")
+        .subscribe {
+            print($0)
         }
 }
 

@@ -456,8 +456,9 @@ Open Rx.xcworkspace, choose `RxExample` and hit run. This method will build ever
 # Podfile
 use_frameworks!
 
-pod 'RxSwift'
-pod 'RxCocoa'
+pod 'RxSwift', '~> 2.0-alpha'
+pod 'RxCocoa', '~> 2.0-alpha'
+pod 'RxBlocking', '~> 2.0-alpha'
 ```
 
 type in `Podfile` directory
@@ -471,7 +472,7 @@ $ pod install
 Add this to `Cartfile`
 
 ```
-git "git@github.com:ReactiveX/RxSwift.git"
+git "git@github.com:ReactiveX/RxSwift.git" "2.0-alpha.1"
 ```
 
 ```

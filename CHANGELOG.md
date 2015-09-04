@@ -13,8 +13,10 @@ All notable changes to this project will be documented in this file.
 * Change from `disposeBag.addDisposable` to `disposable.addDisposableTo`
 * Changes in RxCocoa extensions to enable fluent style
 * Rename of `do*` to `doOn*`
+* Deprecates `returnElement` in favor of `just`
 * Deprecates `aggregate` in favor of `reduce`
 * Deprecates `variable` in favor of `shareReplay(1)` (to be consistent with RxJS version)
+* Method `next` on `Variable` is now `sendNext`
 
 
 #### Fixed

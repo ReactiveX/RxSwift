@@ -11,66 +11,46 @@ Operators that help to recover from error notifications from an Observable.
 /*:
 ### `catchError`
 
-Recover from an onError notification by continuing the sequence without error
+Recover from an `Error` notification by continuing the sequence without error
 
 ![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/catch.png)
 
 [More info in reactive.io website]( http://reactivex.io/documentation/operators/catch.html )
 */
-example("catchError 1st") {
-    let observable1 = PublishSubject<Int>()
-    let observable2 = PublishSubject<Int>()
+example("catchError 1") {
+    let sequenceThatFails = PublishSubject<Int>()
+    let recoverySequence = sequenceOf(100, 200, 300, 400)
 
-    observable1
+    sequenceThatFails
         .catchError { error in
-            return observable2
+            return recoverySequence
         }
-        .subscribe { event in
-            switch event {
-            case .Next(let value):
-                print("\(value)")
-            case .Completed:
-                print("completed")
-            case .Error(let error):
-                print("\(error)")
-            }
+        .subscribe {
+            print($0)
         }
 
-    sendNext(observable1, 1)
-    sendNext(observable1, 2)
-    sendNext(observable1, 3)
-    sendNext(observable1, 4)
-    sendError(observable1, NSError(domain: "Test", code: 0, userInfo: nil))
-
-    sendNext(observable2, 100)
-    sendNext(observable2, 200)
-    sendNext(observable2, 300)
-    sendNext(observable2, 400)
-    sendCompleted(observable2)
+    sequenceThatFails.on(.Next(1))
+    sequenceThatFails.on(.Next(2))
+    sequenceThatFails.on(.Next(3))
+    sequenceThatFails.on(.Next(4))
+    sequenceThatFails.on(.Error(NSError(domain: "Test", code: 0, userInfo: nil)))
 }
 
 
-example("catchError 2nd") {
-    let observable1 = PublishSubject<Int>()
+example("catchError 2") {
+    let sequenceThatFails = PublishSubject<Int>()
 
-    observable1
+    sequenceThatFails
         .catchErrorResumeNext(100)
-        .subscribe { event in
-            switch event {
-            case .Next(let value):
-                print("\(value)")
-            case .Completed:
-                print("completed")
-            case .Error(let error):
-                print("\(error)")
-            }
+        .subscribe {
+            print($0)
         }
 
-    sendNext(observable1, 1)
-    sendNext(observable1, 2)
-    sendNext(observable1, 3)
-    sendNext(observable1, 4)
-    sendError(observable1, NSError(domain: "Test", code: 0, userInfo: nil))
+    sequenceThatFails.on(.Next(1))
+    sequenceThatFails.on(.Next(2))
+    sequenceThatFails.on(.Next(3))
+    sequenceThatFails.on(.Next(4))
+    sequenceThatFails.on(.Error(NSError(domain: "Test", code: 0, userInfo: nil)))
 }
 
 
@@ -86,34 +66,27 @@ If a source Observable emits an error, resubscribe to it in the hopes that it wi
 */
 example("retry") {
     var count = 1 // bad practice, only for example purposes
-    let observable: Observable<Int> = create { observer in
+    let funnyLookingSequence: Observable<Int> = create { observer in
         let error = NSError(domain: "Test", code: 0, userInfo: nil)
-        sendNext(observer, 0)
-        sendNext(observer, 1)
-        sendNext(observer, 2)
+        observer.on(.Next(0))
+        observer.on(.Next(1))
+        observer.on(.Next(2))
         if count < 2 {
-            sendError(observer, error)
+            observer.on(.Error(error))
             count++
         }
-        sendNext(observer, 3)
-        sendNext(observer, 4)
-        sendNext(observer, 5)
-        sendCompleted(observer)
+        observer.on(.Next(3))
+        observer.on(.Next(4))
+        observer.on(.Next(5))
+        observer.on(.Completed)
 
-        return AnonymousDisposable {}
+        return NopDisposable.instance
     }
 
-    observable
+    funnyLookingSequence
         .retry()
-        .subscribe { event in
-            switch event {
-            case .Next(let value):
-                print("\(value)")
-            case .Completed:
-                print("completed")
-            case .Error(let error):
-                print("\(error)")
-            }
+        .subscribe {
+            print($0)
         }
 }
 
