@@ -3,7 +3,24 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-## [2.0](https://github.com/ReactiveX/RxSwift/pull/50) (WIP)
+## [2.0.0-alpha.2](https://github.com/ReactiveX/RxSwift/pull/50) (WIP)
+
+#### Updated
+
+* Renames `ScopedDispose` to `ScopedDisposable`
+* Deprecates `observeSingleOn` in favor of `observeOn`
+* Adds inline documentation
+* Renames `from` to `asObservable` extension method on `SequenceType`
+* Renames `catchErrorResumeNext` in favor of `catchErrorJustReturn`
+* Deprecates `catchErrorToResult`, the preferred way is to use Swift `do/try/catch` mechanism.
+* Deprecates `RxResult`, the preferred way is to use Swift `do/try/catch` mechanism.
+* Deprecates `sendNext` on `Variable` in favor of just using `value` setter.
+
+## [2.0.0-alpha.1](https://github.com/ReactiveX/RxSwift/pull/50) (WIP)
+
+#### Fixed
+
+* Problem in RxExample with missing `observeOn` for images.
 
 #### Updated
 
@@ -16,7 +33,7 @@ All notable changes to this project will be documented in this file.
 * Deprecates `returnElement` in favor of `just`
 * Deprecates `aggregate` in favor of `reduce`
 * Deprecates `variable` in favor of `shareReplay(1)` (to be consistent with RxJS version)
-* Method `next` on `Variable` is now `sendNext`
+* Method `next` on `Variable` in favor of `sendNext`
 
 
 #### Fixed

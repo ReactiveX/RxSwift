@@ -25,17 +25,17 @@ class VariableTest : RxTest {
         
         XCTAssertEqual(latestValue!, 3)
         
-        a.sendNext(5)
+        a.value = 5
 
         XCTAssertEqual(latestValue!, 7)
         
-        b.sendNext(9)
+        b.value = 9
 
         XCTAssertEqual(latestValue!, 14)
         
         subscription.dispose()
         
-        a.sendNext(10)
+        a.value = 10
 
         XCTAssertEqual(latestValue!, 14)
     }
@@ -57,7 +57,7 @@ class VariableTest : RxTest {
         
         XCTAssertEqual(latestValue!, 3)
         
-        a.sendNext(5)
+        a.value = 5
         
         XCTAssertEqual(latestValue!, 7)
         
@@ -92,19 +92,17 @@ class VariableTest : RxTest {
             latestValueOfC = c
         } .scopedDispose
         
-        justUseIt(d)
-        
         XCTAssertEqual(latestValueOfC!, 3)
         
         // This will print:
         //      Next value of c = 5
-        a.sendNext(3)
+        a.value = 3
         
         XCTAssertEqual(latestValueOfC!, 5)
         
         // This will print:
         //      Next value of c = 8
-        b.sendNext(5)
+        b.value = 5
         
         XCTAssertEqual(latestValueOfC!, 8)
     }

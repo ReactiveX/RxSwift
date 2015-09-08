@@ -38,7 +38,7 @@ class HotObservable<Element : Equatable> : Observable<Element> {
     }
     
     override func subscribe<O : ObserverType where O.E == E>(observer: O) -> Disposable {
-        let key = observers.put(ObserverOf(observer))
+        let key = observers.insert(ObserverOf(observer))
         subscriptions.append(Subscription(self.testScheduler.now))
         
         let i = self.subscriptions.count - 1

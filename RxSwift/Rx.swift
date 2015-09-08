@@ -8,24 +8,14 @@
 
 import Foundation
 
-public func justUseIt<T>(_: T) {
-    
-}
-
 #if TRACE_RESOURCES
-// counts resources
-// used to detect resource leaks during unit tests
-// it's not perfect, but works well
-public var resourceCount: Int32 = 0
-public var numberOfSerialDispatchQueueObservables: Int32 = 0
-#endif
+/**
+Counts internal Rx resources (Observables, Observers, Disposables ...).
 
-func contract(@autoclosure  condition: () -> Bool) {
-    if !condition() {
-        let exception = NSException(name: "ContractError", reason: "Contract failed", userInfo: nil)
-        exception.raise()
-    }
-}
+It provides a really simple way to detect leaks early during development.
+*/
+public var resourceCount: Int32 = 0
+#endif
 
 // Swift doesn't have a concept of abstract metods.
 // This function is being used as a runtime check that abstract methods aren't being called.

@@ -95,57 +95,6 @@ extension ObservableMultipleTest {
             Subscription(200, 230)
         ])
     }
-    
-    func testCatchToResult_ErrorHappened() {
-        let scheduler = TestScheduler(initialClock: 0)
-        
-        let xs = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 2),
-            next(220, 3),
-            error(230, testError)
-        ])
-        
-        let safeSequence: Observable <RxResult<Int>> = xs.catchErrorToResult
-        
-        let res = scheduler.start { () -> Observable <RxResult<Int>> in safeSequence }
-        
-        XCTAssertEqual(res.messages, [
-            next(210, success(2)),
-            next(220, success(3)),
-            next(230, failure(testError)),
-            completed(230)
-        ])
-        
-        XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 230)
-        ])
-    }
-    
-    func testCatchToResult_CompletedWithoutError() {
-        let scheduler = TestScheduler(initialClock: 0)
-        
-        let xs = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 2),
-            next(220, 3),
-            completed(230)
-            ])
-        
-        let safeSequence: Observable <RxResult<Int>> = xs.catchErrorToResult
-        
-        let res = scheduler.start { () -> Observable <RxResult<Int>> in safeSequence }
-        
-        XCTAssertEqual(res.messages, [
-            next(210, success(2)),
-            next(220, success(3)),
-            completed(230)
-            ])
-        
-        XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 230)
-            ])
-    }
 }
 
 // catch enumerable

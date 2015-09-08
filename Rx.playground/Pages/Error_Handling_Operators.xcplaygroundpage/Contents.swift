@@ -41,7 +41,7 @@ example("catchError 2") {
     let sequenceThatFails = PublishSubject<Int>()
 
     sequenceThatFails
-        .catchErrorResumeNext(100)
+        .catchErrorJustReturn(100)
         .subscribe {
             print($0)
         }

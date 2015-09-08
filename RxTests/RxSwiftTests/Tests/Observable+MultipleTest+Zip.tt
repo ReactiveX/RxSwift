@@ -22,7 +22,7 @@ extension ObservableMultipleTest {
 
         var result: Int! = nil
 
-        let _ = zip(<%= ", ".join(Array(0..<i).map { "v\($0)" }) %>) { (<%= ", ".join(Array(0..<i).map { "a\($0): Int" }) %>) -> Int in <%= " + ".join(Array(0..<i).map { "a\($0)" }) %> }
+        let _ = zip(<%= (Array(0..<i).map { "v\($0)" }).joinWithSeparator(", ") %>) { (<%= (Array(0..<i).map { "a\($0): Int" }).joinWithSeparator(", ") %>) -> Int in <%= (Array(0..<i).map { "a\($0)" }).joinWithSeparator(" + ") %> }
             .subscribeNext { (x: Int) -> Void in result = x }
 
         XCTAssertEqual(result, <%= (i + 1) * i / 2 %>)
@@ -38,7 +38,7 @@ extension ObservableMultipleTest {
         <% } %>
 
         let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = zip(<%= ", ".join(Array(0..<i).map { "e\($0)" }) %>) { (<%= ", ".join(Array(0..<i).map { _ in "_" }) %>) -> Int in
+            let result: Observable<Int> = zip(<%= (Array(0..<i).map { "e\($0)" }).joinWithSeparator(", ") %>) { (<%= (Array(0..<i).map { _ in "_" }).joinWithSeparator(", ") %>) -> Int in
                 return (42)
             }
 
@@ -63,7 +63,7 @@ extension ObservableMultipleTest {
         <% } %>
 
         let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = zip(<%= ", ".join(Array(0..<i).map { "e\($0)" }) %>) { (<%= ", ".join(Array(0..<i).map { _ in "_" }) %>) -> Int in
+            let result: Observable<Int> = zip(<%= (Array(0..<i).map { "e\($0)" }).joinWithSeparator(", ") %>) { (<%= (Array(0..<i).map { _ in "_" }).joinWithSeparator(", ") %>) -> Int in
                 return (42)
             }
 
@@ -90,8 +90,8 @@ extension ObservableMultipleTest {
         <% } %>
 
         let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = zip(<%= ", ".join(Array(0..<i).map { "e\($0)" }) %>) { (<%= ", ".join(Array(0..<i).map { "_\($0)" }) %>) -> Int in
-                return (<%= " + ".join(Array(0..<i).map { "_\($0)" }) %>)
+            let result: Observable<Int> = zip(<%= (Array(0..<i).map { "e\($0)" }).joinWithSeparator(", ") %>) { (<%= (Array(0..<i).map { "_\($0)" }).joinWithSeparator(", ") %>) -> Int in
+                return (<%= (Array(0..<i).map { "_\($0)" }).joinWithSeparator(" + ") %>)
             }
 
             return result
@@ -119,8 +119,8 @@ extension ObservableMultipleTest {
         <% } %>
 
         let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = zip(<%= ", ".join(Array(0..<i).map { "e\($0)" }) %>) { (<%= ", ".join(Array(0..<i).map { "_\($0)" }) %>) -> Int in
-                return (<%= " + ".join(Array(0..<i).map { "_\($0)" }) %>)
+            let result: Observable<Int> = zip(<%= (Array(0..<i).map { "e\($0)" }).joinWithSeparator(", ") %>) { (<%= (Array(0..<i).map { "_\($0)" }).joinWithSeparator(", ") %>) -> Int in
+                return (<%= (Array(0..<i).map { "_\($0)" }).joinWithSeparator(" + ") %>)
             }
 
             return result

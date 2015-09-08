@@ -8,11 +8,20 @@
 
 import Foundation
 
+/**
+Supports push-style iteration over an observable sequence.
+*/
 public protocol ObserverType {
-    /// The type of event to be written to this observer.
+    /**
+    The type of elements in sequence that observer can observe.
+    */
     typealias E
 
-    /// Send `event` to this observer.
+    /**
+    Notify observer about sequence event.
+    
+    - parameter event: Event that occured.
+    */
     func on(event: Event<E>)
 }
 

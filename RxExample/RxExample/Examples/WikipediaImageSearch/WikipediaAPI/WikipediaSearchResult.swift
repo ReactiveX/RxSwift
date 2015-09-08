@@ -35,7 +35,7 @@ struct WikipediaSearchResult: CustomStringConvertible {
         let titleAndDescription = Array(Swift.zip(rootArrayTyped[0], rootArrayTyped[1]))
         let titleDescriptionAndUrl: [((AnyObject, AnyObject), AnyObject)] = Array(Swift.zip(titleAndDescription, rootArrayTyped[2]))
         
-        let searchResults: [RxResult<WikipediaSearchResult>] = titleDescriptionAndUrl.map ( { result -> RxResult<WikipediaSearchResult> in
+        let searchResults: [WikipediaSearchResult] = try titleDescriptionAndUrl.map ( { result -> WikipediaSearchResult in
             let (first, url) = result
             let (title, description) = first
 
@@ -44,19 +44,17 @@ struct WikipediaSearchResult: CustomStringConvertible {
             urlString = url as? String
 
             if titleString == nil || descriptionString == nil || urlString == nil {
-                return failure(WikipediaParseError)
+                throw WikipediaParseError
             }
 
             let URL = NSURL(string: urlString!)
             if URL == nil {
-                return failure(WikipediaParseError)
+                throw WikipediaParseError
             }
 
-            return success(WikipediaSearchResult(title: titleString!, description: descriptionString!, URL: URL!))
+            return WikipediaSearchResult(title: titleString!, description: descriptionString!, URL: URL!)
         })
 
-        let values = (searchResults.filter { $0.isSuccess }).map { $0.get() }
-
-        return values
+        return searchResults
     }
 }

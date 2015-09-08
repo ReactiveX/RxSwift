@@ -12,6 +12,13 @@ import RxSwift
 #endif
 
 extension ObservableType {
+    /**
+    Blocks current thread until sequence terminates.
+    
+    If sequence terminates with error, terminating error will be thrown.
+    
+    - returns: All elements of sequence.
+    */
     public func toArray() throws -> [E] {
         let condition = NSCondition()
         
@@ -21,7 +28,7 @@ extension ObservableType {
             
         var ended = false
 
-        self.subscribeSafe(AnonymousObserver { e in
+        self.subscribe { e in
             switch e {
             case .Next(let element):
                 elements.append(element)
@@ -37,7 +44,7 @@ extension ObservableType {
                 condition.signal()
                 condition.unlock()
             }
-        })
+        }
         condition.lock()
         while !ended {
             condition.wait()
@@ -53,6 +60,13 @@ extension ObservableType {
 }
 
 extension ObservableType {
+    /**
+    Blocks current thread until sequence produces first element.
+    
+    If sequence terminates with error before producing first element, terminating error will be thrown.
+    
+    - returns: First element of sequence. If sequence is empty `nil` is returned.
+    */
     public func first() throws -> E? {
         let condition = NSCondition()
         
@@ -64,7 +78,7 @@ extension ObservableType {
         
         let d = SingleAssignmentDisposable()
         
-        d.disposable = self.subscribeSafe(AnonymousObserver { e in
+        d.disposable = self.subscribe { e in
             switch e {
             case .Next(let e):
                 if element == nil {
@@ -81,7 +95,7 @@ extension ObservableType {
             ended = true
             condition.signal()
             condition.unlock()
-        })
+        }
         
         condition.lock()
         while !ended {
@@ -99,6 +113,13 @@ extension ObservableType {
 }
 
 extension ObservableType {
+    /**
+    Blocks current thread until sequence terminates.
+    
+    If sequence terminates with error, terminating error will be thrown.
+    
+    - returns: Last element in the sequence. If sequence is empty `nil` is returned.
+    */
     public func last() throws -> E? {
         let condition = NSCondition()
         
@@ -110,7 +131,7 @@ extension ObservableType {
         
         let d = SingleAssignmentDisposable()
         
-        d.disposable = self.subscribeSafe(AnonymousObserver { e in
+        d.disposable = self.subscribe { e in
             switch e {
             case .Next(let e):
                 element = e
@@ -125,7 +146,7 @@ extension ObservableType {
             ended = true
             condition.signal()
             condition.unlock()
-            })
+        }
         
         condition.lock()
         while !ended {

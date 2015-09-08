@@ -19,7 +19,7 @@ let runAutomatically = false
 let useAnimatedUpdateForCollectionView = false
 
 class PartialUpdatesViewController : ViewController {
-    
+
     @IBOutlet weak var reloadTableViewOutlet: UITableView!
     @IBOutlet weak var partialUpdatesTableViewOutlet: UITableView!
     @IBOutlet weak var partialUpdatesCollectionViewOutlet: UICollectionView!
@@ -109,7 +109,7 @@ class PartialUpdatesViewController : ViewController {
             timer = NSTimer.scheduledTimerWithTimeInterval(0.6, target: self, selector: "randomize", userInfo: nil, repeats: true)
         #endif
 
-        self.sections.sendNext(generator.sections)
+        self.sections.value = generator.sections
 
         let tvAnimatedDataSource = RxTableViewSectionedAnimatedDataSource<NumberSection>()
         let reloadDataSource = RxTableViewSectionedReloadDataSource<NumberSection>()
@@ -147,7 +147,7 @@ class PartialUpdatesViewController : ViewController {
         // While `useAnimatedUpdateForCollectionView` is false, you can click as fast as
         // you want, table view doesn't seem to have same issues like collection view.
 
-        #if useAnimatedUpdateForCollectionView 
+        #if useAnimatedUpdateForCollectionView
             let cvAnimatedDataSource = RxCollectionViewSectionedAnimatedDataSource<NumberSection>()
             skinCollectionViewDataSource(cvAnimatedDataSource)
 
@@ -193,6 +193,6 @@ class PartialUpdatesViewController : ViewController {
 
         //print(values)
 
-        sections.sendNext(values)
+        sections.value = values
     }
 }

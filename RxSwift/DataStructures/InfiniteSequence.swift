@@ -8,7 +8,10 @@
 
 import Foundation
 
-class InifiniteSequence<E> : SequenceType {
+/**
+Sequence that repeats `repeatedValue` infinite number of times.
+*/
+class InfiniteSequence<E> : SequenceType {
     typealias Element = E
     typealias Generator = AnyGenerator<E>
     

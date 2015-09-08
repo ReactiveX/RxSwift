@@ -8,13 +8,27 @@
 
 import Foundation
 
-// Wrapper for any value type
+/**
+Creates immutable reference wrapper for any type.
+*/
 public class RxBox<T> : CustomStringConvertible {
+    /**
+    Wrapped value
+    */
     public let value : T
+    
+    /**
+    Creates reference wrapper for `value`.
+    
+    - parameter value: Value to wrap.
+    */
     public init (_ value: T) {
         self.value = value
     }
     
+    /**
+    - returns: Box description.
+    */
     public var description: String {
         get {
             return "Box(\(self.value))"
@@ -22,13 +36,27 @@ public class RxBox<T> : CustomStringConvertible {
     }
 }
 
-// Wrapper for any value type that can be mutated
+/**
+Creates mutable reference wrapper for any type.
+*/
 public class RxMutableBox<T> : CustomStringConvertible {
+    /**
+    Wrapped value
+    */
     public var value : T
+    
+    /**
+    Creates reference wrapper for `value`.
+    
+    - parameter value: Value to wrap.
+    */
     public init (_ value: T) {
         self.value = value
     }
     
+    /**
+    - returns: Box description.
+    */
     public var description: String {
         get {
             return "MutatingBox(\(self.value))"

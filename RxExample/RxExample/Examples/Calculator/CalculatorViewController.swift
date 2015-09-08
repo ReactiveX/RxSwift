@@ -97,7 +97,8 @@ class CalculatorViewController: ViewController {
             nineButton.rx_tap.map { _ in .AddNumber("9") }
         ]
         
-        from(commands)
+        commands
+            .asObservable()
             .merge()
             .scan(CLEAR_STATE) { [unowned self] a, x in
                 return self.tranformState(a, x)

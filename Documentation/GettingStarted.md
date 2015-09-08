@@ -90,16 +90,17 @@ protocol ObserverType {
 }
 ```
 
+**When sequence sends `Complete` or `Error` event all internal resources that compute sequence elements will be freed.**
+
+**To cancel production of sequence elements and free resources immediatelly, call `dispose` on returned subscription.**
+
+If a sequence terminates in finite time, not calling `dispose` or not using `addDisposableTo(disposeBag)` won't cause any permanent resource leaks, but those resources will be used until sequence completes in some way (finishes producing elements or error happens).
+
+If a sequence doesn't terminate in some way, resources will be allocated permanently unless `dispose` is being called manually, automatically inside of a `disposeBag`, `scopedDispose`, `takeUntil` or some other way.
+
+**Using dispose bags, scoped dispose or `takeUntil` operator are all robust ways of making sure resources are cleaned up and we recommend using them in production even though sequence will terminate in finite time.**
+
 In case you are curious why `ErrorType` isn't generic, you can find explanation [here](DesignRationale.md#why-error-type-isnt-generic).
-
-So the only thing left on the table is `Disposable`.
-
-```swift
-protocol Disposable
-{
-    func dispose()
-}
-```
 
 ## Disposing
 
@@ -130,7 +131,7 @@ This will print:
 5
 ```
 
-One thing to note here is that you usually don't want to manually call `dispose` and this is only educational example. Calling dispose manually is usually bad code smell, and there are better ways to dispose subscriptions. You can either use `DisposeBag`, `ScopedDispose`, `takeUntil` operator or some other mechanism.
+One thing to note here is that you usually don't want to manually call `dispose` and this is only educational example. Calling dispose manually is usually bad code smell, and there are better ways to dispose subscriptions. You can either use `DisposeBag`, `ScopedDisposable`, `takeUntil` operator or some other mechanism.
 
 So can this code print something after `dispose` call executed? The answer is, it depends.
 
@@ -182,6 +183,48 @@ subscription.dispose() // executing on same `serialScheduler`
 ```
 
 **After `dispose` call returns, nothing will be printed. That is a guarantee.**
+
+### Dispose Bags
+
+Dispose bags are used to return ARC like behavior to RX.
+
+When `DisposeBag` is deallocated, it will call `dispose` on each of the added disposables.
+
+It doesn't have a `dispose` method and it doesn't allow calling explicit dispose on purpose. If immediate cleanup is needed just create a new bag.
+
+```swift
+  self.disposeBag = DisposeBag()
+```
+
+That should clear references to old one and cause disposal of resources.
+
+If that explicit manual disposal is still wanted, use `CompositeDisposable`. **It has the wanted behavior but once that `dispose` method is called, it will immediately dispose any newly added disposable.**
+
+### Scoped Dispose
+
+In case disposal is wanted immediately after leaving scope of execution, there is `scopedDispose()`.
+
+```swift
+let autoDispose = sequence
+    .subscribe {
+        print($0)
+    }
+    .scopedDispose()
+```
+
+This will dispose the subscription when execution leaves current scope.
+
+### Take until
+
+Additional way to automatically dispose subscription on dealloc is to use `takeUntil` operator.
+
+```swift
+sequence
+    .takeUntil(self.rx_deallocated)
+    .subscribe {
+        print($0)
+    }
+```
 
 ## Implicit `Observable` guarantees
 
@@ -363,7 +406,7 @@ func myInterval(interval: NSTimeInterval) -> Observable<Int> {
             if cancel.disposed {
                 return
             }
-            sendNext(observer, next++)
+            observer.on(.Next(next++))
         })
         dispatch_resume(timer)
 
@@ -912,7 +955,7 @@ The reason why you should use a small delay is because sometimes it takes a smal
 
 `Variable`s represent some observable state. `Variable` without containing value can't exist because initializer requires initial value.
 
-Variable wraps a [`Subject`](http://reactivex.io/documentation/subject.html). More specifically it is a `BehaviorSubject`.  Unlike `BehaviorSubject`, it only exposes `sendNext` interface, so variable can never terminate or fail.
+Variable wraps a [`Subject`](http://reactivex.io/documentation/subject.html). More specifically it is a `BehaviorSubject`.  Unlike `BehaviorSubject`, it only exposes `value` interface, so variable can never terminate or fail.
 
 It will also broadcast it's current value immediately on subscription.
 
@@ -928,7 +971,7 @@ variable
 
 println("Before send 1")
 
-variable.sendNext(1)
+variable.value = 1
 
 println("Before second subscription ---")
 
@@ -937,7 +980,7 @@ variable
         println("Second \(n)")
     }
 
-variable.sendNext(2)
+variable.value = 2
 
 println("End ---")
 ```
@@ -1048,7 +1091,7 @@ To fix this you need to add `observeOn(MainScheduler.sharedInstance)`.
 
 You can't bind failure to UIKit controls because that is undefined behavior.
 
-If you don't know if `Observable` can fail, you can ensure it can't fail using `catchErrorResumeNext(valueThatIsReturnedWhenErrorHappens)`, **but after an error happens the underlying sequence will still complete**.
+If you don't know if `Observable` can fail, you can ensure it can't fail using `catchErrorJustReturn(valueThatIsReturnedWhenErrorHappens)`, **but after an error happens the underlying sequence will still complete**.
 
 If the wanted behavior is for underlying sequence to continue producing elements, some version of `retry` operator is needed.
 
@@ -1066,7 +1109,7 @@ let searchResults = searchText
         API.getSearchResults(query)
             .retry(3)
             .startWith([]) // clears results on new search term
-            .catchErrorResumeNext([])
+            .catchErrorJustReturn([])
     }
     .switchLatest()
     .shareReplay(1)              // <- notice the `shareReplay` operator

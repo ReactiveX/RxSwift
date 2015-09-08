@@ -8,6 +8,12 @@
 
 import Foundation
 
+/**
+Represents disposable resource with state tracking.
+*/
 public protocol Cancelable : Disposable {
+    /**
+    - returns: Was resource disposed.
+    */
     var disposed: Bool { get }
 }

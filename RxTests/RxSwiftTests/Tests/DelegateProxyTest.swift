@@ -154,7 +154,7 @@ class DelegateProxyTest : RxTest {
             .subscribeNext { n in
                 observedFeedRequest = true
             }
-            .scopedDispose
+            .scopedDispose()
 
         XCTAssertTrue(!observedFeedRequest)
         view.delegate?.threeDView?(view, didLearnSomething: "Psssst ...")
@@ -175,13 +175,13 @@ class DelegateProxyTest : RxTest {
             .subscribeNext { n in
                 nMessages++
             }
-            .scopedDispose
+            .scopedDispose()
         
         XCTAssertTrue(nMessages == 0)
         view.delegate?.threeDView?(view, didLearnSomething: "Psssst ...")
         XCTAssertTrue(nMessages == 1)
         
-        d = NopDisposable.instance.scopedDispose
+        d = NopDisposable.instance.scopedDispose()
 
         view.delegate?.threeDView?(view, didLearnSomething: "Psssst ...")
         XCTAssertTrue(nMessages == 1)

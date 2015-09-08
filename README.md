@@ -190,7 +190,7 @@ Writing all of this and properly testing it would be tedious. This is that same 
         API.getSearchResults(query)
             .retry(3)
             .startWith([]) // clears results on new search term
-            .catchErrorResumeNext([])
+            .catchErrorJustReturn([])
     }
     .switchLatest()
     .subscribeNext { results in

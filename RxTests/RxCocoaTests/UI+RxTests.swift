@@ -17,7 +17,7 @@ class UITextFieldMock {
     
     var text: String! = "" {
         didSet {
-            observableText.sendNext(self.text)
+            observableText.value = self.text
         }
     }
     

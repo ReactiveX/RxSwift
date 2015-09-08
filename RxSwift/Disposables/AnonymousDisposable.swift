@@ -8,12 +8,20 @@
 
 import Foundation
 
-public class AnonymousDisposable : DisposeBase, Cancelable {
+/**
+Represents an Action-based disposable.
+
+When dispose method is called, disposal action will be dereferenced.
+*/
+public final class AnonymousDisposable : DisposeBase, Cancelable {
     public typealias DisposeAction = () -> Void
     
     var lock = SpinLock()
     var disposeAction: DisposeAction?
     
+    /**
+    - returns: Was resource disposed.
+    */
     public var disposed: Bool {
         get {
             return lock.calculateLocked {
@@ -22,11 +30,21 @@ public class AnonymousDisposable : DisposeBase, Cancelable {
         }
     }
     
+    /**
+    Constructs a new disposable with the given action used for disposal.
+    
+    - parameter disposeAction: Disposal action which will be run upon calling `dispose`.
+    */
     public init(_ disposeAction: DisposeAction) {
         self.disposeAction = disposeAction
         super.init()
     }
 
+    /**
+    Calls the disposal action if and only if the current instance hasn't been disposed yet.
+    
+    After invoking disposal action, disposal action will be dereferenced.
+    */
     public func dispose() {
         let toDispose: DisposeAction? = lock.calculateLocked {
             let action = self.disposeAction

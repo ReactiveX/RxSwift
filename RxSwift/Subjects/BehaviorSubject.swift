@@ -30,24 +30,51 @@ private class BehaviorSubjectSubscription<Element> : Disposable {
     }
 }
 
-public class BehaviorSubject<Element> : Observable<Element>, SubjectType, ObserverType {
-    public typealias E = Element
+/**
+Represents a value that changes over time.
+
+Observers can subscribe to the subject to receive the last (or initial) value and all subsequent notifications.
+*/
+public final class BehaviorSubject<Element> : Observable<Element>, SubjectType, ObserverType, Disposable {
     public typealias SubjectObserverType = BehaviorSubject<Element>
     
     let lock = NSRecursiveLock()
     
     // state
+    private var _disposed = false
     private var _value: Element
     private var observers = Bag<ObserverOf<Element>>()
     private var stoppedEvent: Event<Element>?
+
+    /**
+    Indicates whether the subject has been disposed.
+    */
+    public var disposed: Bool {
+        return lock.calculateLocked {
+            return _disposed
+        }
+    }
  
+    /**
+    Initializes a new instance of the subject that caches its last value and starts with the specified value.
+    
+    - parameter value: Initial value sent to observers when no other value has been received by the subject yet.
+    */
     public init(value: Element) {
         self._value = value
     }
     
-    // Returns value if value exists or throws exception if subject contains error
+    /**
+    Gets the current value or throws an error.
+    
+    - returns: Latest value.
+    */
     public func value() throws -> Element {
         return try lock.calculateLockedOrFail {
+            if _disposed {
+                throw RxError.DisposedError
+            }
+            
             if let error = stoppedEvent?.error {
                 // intentionally throw exception
                 throw error
@@ -57,10 +84,15 @@ public class BehaviorSubject<Element> : Observable<Element>, SubjectType, Observ
             }
         }
     }
-
+    
+    /**
+    Notifies all subscribed observers about next event.
+    
+    - parameter event: Event to send to the observers.
+    */
     public func on(event: Event<E>) {
         lock.performLocked {
-            if self.stoppedEvent != nil {
+            if self.stoppedEvent != nil || _disposed {
                 return
             }
             
@@ -77,21 +109,46 @@ public class BehaviorSubject<Element> : Observable<Element>, SubjectType, Observ
         }
     }
     
+    /**
+    Subscribes an observer to the subject.
+    
+    - parameter observer: Observer to subscribe to the subject.
+    - returns: Disposable object that can be used to unsubscribe the observer from the subject.
+    */
     public override func subscribe<O : ObserverType where O.E == Element>(observer: O) -> Disposable {
         return lock.calculateLocked {
+            if _disposed {
+                observer.on(.Error(RxError.DisposedError))
+                return NopDisposable.instance
+            }
+            
             if let stoppedEvent = stoppedEvent {
                 observer.on(stoppedEvent)
                 return NopDisposable.instance
             }
             
-            let key = observers.put(observer.asObserver())
+            let key = observers.insert(observer.asObserver())
             observer.on(.Next(_value))
         
             return BehaviorSubjectSubscription(parent: self, disposeKey: key)
         }
     }
 
+    /**
+    Returns observer interface for subject.
+    */
     public func asObserver() -> BehaviorSubject<Element> {
         return self
+    }
+
+    /**
+    Unsubscribe all observers and release resources.
+    */
+    public func dispose() {
+        lock.performLocked {
+            _disposed = true
+            observers.removeAll()
+            stoppedEvent = nil
+        }
     }
 }

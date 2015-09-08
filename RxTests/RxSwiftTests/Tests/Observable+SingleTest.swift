@@ -295,7 +295,7 @@ extension ObservableSingleTest {
                 switch e {
                 case .Next(let _):
                     i++
-                    sum -= e.value ?? 0
+                    sum -= e.element ?? 0
                     
                 default: break
                 }

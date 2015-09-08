@@ -82,7 +82,7 @@ example("sequenceOf") {
 */
 
 example("from") {
-    let sequenceFromArray = from([1, 2, 3, 4, 5])
+    let sequenceFromArray = [1, 2, 3, 4, 5].asObservable()
 
     let subscription = sequenceFromArray
         .subscribe { event in

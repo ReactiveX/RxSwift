@@ -12,7 +12,9 @@ import UIKit
 import RxSwift
 #endif
 
-// Please take a look at `DelegateProxyType.swift`
+/**
+Reactive data source for collection view.
+*/
 public protocol RxCollectionViewDataSourceType /*: UICollectionViewDataSource*/ {
     typealias Element
     

@@ -11,7 +11,14 @@ import Foundation
 import RxSwift
 #endif
 
+/**
+Protocol that enables extension of `ControlProperty`.
+*/
 public protocol ControlPropertyType : ObservableType, ObserverType {
+    
+    /**
+    - returns: `ControlProperty` interface
+    */
     func asControlProperty() -> ControlProperty<E>
 }
 
@@ -38,18 +45,37 @@ public struct ControlProperty<PropertyType> : ControlPropertyType {
         self.observer = observer
     }
     
+    /**
+    Subscribes an observer to control property values.
+    
+    - parameter observer: Observer to subscribe to property values.
+    - returns: Disposable object that can be used to unsubscribe the observer from receiving control property values.
+    */
     public func subscribe<O : ObserverType where O.E == E>(observer: O) -> Disposable {
         return self.source.subscribe(observer)
     }
     
+    /**
+    - returns: `Observable` interface.
+    */
     public func asObservable() -> Observable<E> {
         return self.source
     }
     
+    /**
+    - returns: `ControlProperty` interface.
+    */
     public func asControlProperty() -> ControlProperty<E> {
         return self
     }
  
+    /**
+    Binds event to user interface.
+    
+    - In case next element is received, it is being set to control value.
+    - In case error is received, DEBUG buids raise fatal error, RELEASE builds log event to standard output.
+    - In case sequence completes, nothing happens.
+    */
     public func on(event: Event<E>) {
         switch event {
         case .Error(let error):

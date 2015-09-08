@@ -8,13 +8,13 @@
 
 import Foundation
 
-public class NopObserver<ElementType> : ObserverType {
-    public typealias Element = ElementType
+class NopObserver<ElementType> : ObserverType {
+    typealias Element = ElementType
     
-    public init() {
+    init() {
         
     }
     
-    public func on(event: Event<Element>) {
+    func on(event: Event<Element>) {
     }
 }

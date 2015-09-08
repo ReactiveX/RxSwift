@@ -8,28 +8,48 @@
 
 import Foundation
 
+/**
+Represents an object that is both an observable sequence as well as an observer.
+
+Each notification is broadcasted to all subscribed and future observers, subject to buffer trimming policies.
+*/
 public class ReplaySubject<Element> : Observable<Element>, SubjectType, ObserverType, Disposable {
-    public typealias E = Element
-    
     public typealias SubjectObserverType = ReplaySubject<Element>
+    
     typealias DisposeKey = Bag<ObserverOf<Element>>.KeyType
     
     func unsubscribe(key: DisposeKey) {
         return abstractMethod()
     }
     
+    /**
+    Notifies all subscribed observers about next event.
+    
+    - parameter event: Event to send to the observers.
+    */
     public func on(event: Event<E>) {
         return abstractMethod()
     }
     
+    /**
+    Returns observer interface for subject.
+    */
     public func asObserver() -> SubjectObserverType {
         return self
     }
     
+    /**
+    Unsubscribe all observers and release resources.
+    */
     public func dispose() {
-        
     }
 
+    /**
+    Creates new instance of `ReplaySubject` that replays at most `bufferSize` last elements of sequence.
+    
+    - parameter bufferSize: Maximal number of elements to replay to observer after subscription.
+    - returns: New instance of replay subject.
+    */
     public static func create(bufferSize bufferSize: Int) -> ReplaySubject<Element> {
         if bufferSize == 1 {
             return ReplayOne()
@@ -93,7 +113,7 @@ class ReplayBufferBase<Element> : ReplaySubject<Element> {
     override func subscribe<O : ObserverType where O.E == Element>(observer: O) -> Disposable {
         return lock.calculateLocked {
             if self.disposed {
-                observers.forEach { $0.on(.Error(DisposedError)) }
+                observer.on(.Error(RxError.DisposedError))
                 return NopDisposable.instance
             }
          
@@ -105,7 +125,7 @@ class ReplayBufferBase<Element> : ReplaySubject<Element> {
                 return NopDisposable.instance
             }
             else {
-                let key = self.observers.put(observerOf)
+                let key = self.observers.insert(observerOf)
                 return ReplaySubscription(subject: self, disposeKey: key)
             }
         }
@@ -123,6 +143,7 @@ class ReplayBufferBase<Element> : ReplaySubject<Element> {
 
     func lockedDispose() {
         disposed = true
+        stoppedEvent = nil
         observers.removeAll()
     }
     
@@ -182,9 +203,7 @@ class ReplayManyBase<Element> : ReplayBufferBase<Element> {
     
     override func lockedDispose() {
         super.lockedDispose()
-        while queue.count > 0 {
-            queue.dequeue()
-        }
+        self.queue = Queue(capacity: 0)
     }
 }
 

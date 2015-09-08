@@ -25,7 +25,7 @@ extension BagTest {
         var keys = [KeyType]()
         
         for _ in 0 ..< nInsertions {
-            keys.append(bag.put({
+            keys.append(bag.insert({
                 increment++
             }))
         }
@@ -56,7 +56,7 @@ extension BagTest {
         var keys = [KeyType]()
         
         for _ in 0 ..< nInsertions {
-            keys.append(bag.put({
+            keys.append(bag.insert({
                 increment++
             }))
         }
@@ -87,7 +87,7 @@ extension BagTest {
         var keys = [KeyType]()
         
         for _ in 0 ..< 10 {
-            keys.append(bag.put({
+            keys.append(bag.insert({
                 increment++
             }))
         }

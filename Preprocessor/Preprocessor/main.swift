@@ -55,9 +55,9 @@ func processFile(path: String, outputPath: String) -> String {
         functionContentComponents.append("components.append(\(escape(suffix)));\n")
     }
     
-    functionContentComponents.append("try! \"\".join(components).writeToFile(\"\(outputPath)\", atomically: false, encoding: NSUTF8StringEncoding)")
+    functionContentComponents.append("try! components.joinWithSeparator(\"\").writeToFile(\"\(outputPath)\", atomically: false, encoding: NSUTF8StringEncoding)")
     
-    return "".join(functionContentComponents)
+    return functionContentComponents.joinWithSeparator("")
 }
 
 func runCommand(path: String) {
@@ -94,7 +94,7 @@ for file in files! {
     generateAllFiles.append("_ = { () -> Void in\n\(processFile(path, outputPath: outputPath))\n}()\n")
 }
 
-let script = "".join(generateAllFiles)
+let script = generateAllFiles.joinWithSeparator("")
 let scriptPath = (derivedData as NSString).stringByAppendingPathComponent("_preprocessor.sh")
 
 do {

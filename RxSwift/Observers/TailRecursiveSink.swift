@@ -8,7 +8,7 @@
 
 import Foundation
 
-// This class is usually used with `GeneratorOf` version of the operators.
+/// This class is usually used with `Generator` version of the operators.
 class TailRecursiveSink<S: SequenceType, O: ObserverType where S.Generator.Element: ObservableType, S.Generator.Element.E == O.E> : Sink<O>, ObserverType {
     typealias E = O.E
     

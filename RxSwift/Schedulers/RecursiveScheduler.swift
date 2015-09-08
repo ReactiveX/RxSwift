@@ -25,10 +25,10 @@ class RecursiveScheduler<State, S: Scheduler>: RecursiveSchedulerOf<State, S.Tim
     }
 }
 
-public class RecursiveSchedulerOf<State, TimeInterval> : Disposable {
-    public typealias ScheduleRelative = (State, TimeInterval) -> Void
-    public typealias ScheduleImmediate = (State) -> Void
-    
+/**
+Type erased recursive scheduler.
+*/
+public class RecursiveSchedulerOf<State, TimeInterval> {
     typealias Action =  (state: State, scheduler: RecursiveSchedulerOf<State, TimeInterval>) -> Void
 
     let lock = NSRecursiveLock()
@@ -50,8 +50,12 @@ public class RecursiveSchedulerOf<State, TimeInterval> : Disposable {
         return abstractMethod()
     }
     
-    // relative scheduling
+    /**
+    Schedules an action to be executed recursively.
     
+    - parameter state: State passed to the action to be executed.
+    - parameter dueTime: Relative time after which to execute the recursive action.
+    */
     public func schedule(state: State, dueTime: TimeInterval) {
 
         var isAdded = false
@@ -90,8 +94,11 @@ public class RecursiveSchedulerOf<State, TimeInterval> : Disposable {
         }
     }
 
-    // immediate scheduling
+    /**
+    Schedules an action to be executed recursively.
     
+    - parameter state: State passed to the action to be executed.
+    */
     public func schedule(state: State) {
             
         var isAdded = false
@@ -130,7 +137,7 @@ public class RecursiveSchedulerOf<State, TimeInterval> : Disposable {
         }
     }
     
-    public func dispose() {
+    func dispose() {
         self.lock.performLocked {
             self.action = nil
         }
@@ -138,7 +145,10 @@ public class RecursiveSchedulerOf<State, TimeInterval> : Disposable {
     }
 }
 
-class RecursiveImmediateSchedulerOf<State> : Disposable {
+/**
+Type erased recursive scheduler.
+*/
+public class RecursiveImmediateSchedulerOf<State> {
     typealias Action =  (state: State, recurse: State -> Void) -> Void
     
     var lock = SpinLock()
@@ -154,7 +164,12 @@ class RecursiveImmediateSchedulerOf<State> : Disposable {
     
     // immediate scheduling
     
-    func schedule(state: State) {
+    /**
+    Schedules an action to be executed recursively.
+    
+    - parameter state: State passed to the action to be executed.
+    */
+    public func schedule(state: State) {
         
         var isAdded = false
         var isDone = false

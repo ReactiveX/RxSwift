@@ -8,6 +8,9 @@
 
 import Foundation
 
+/**
+Base class for all disposables.
+*/
 public class DisposeBase {
     init() {
 #if TRACE_RESOURCES

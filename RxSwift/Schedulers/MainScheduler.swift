@@ -8,17 +8,30 @@
 
 import Foundation
 
+/**
+Abstracts work that needs to be performed on `MainThread`. In case `schedule` methods are called from main thread, it will perform action immediately without scheduling.
+
+This scheduler is usually used to perform UI work.
+
+Main scheduler is a specialization of `SerialDispatchQueueScheduler`.
+*/
 public final class MainScheduler : SerialDispatchQueueScheduler {
     
     private init() {
         super.init(serialQueue: dispatch_get_main_queue())
     }
 
+    /**
+    Singleton instance of `MainScheduler`
+    */
     public static let sharedInstance: MainScheduler = MainScheduler()
 
+    /**
+    In case this method is called on a background thread it will throw an exception.
+    */
     public class func ensureExecutingOnScheduler() {
         if !NSThread.currentThread().isMainThread {
-            rxFatalError("Executing on scheduler that is not main. Please use `MainScheduler.sharedInstance`.")
+            rxFatalError("Executing on backgound thread. Please use `MainScheduler.sharedInstance.schedule` to schedule work on main thread.")
         }
     }
     
