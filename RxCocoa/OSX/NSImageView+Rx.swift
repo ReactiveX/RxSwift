@@ -33,7 +33,7 @@ extension NSImageView {
             switch event {
             case .Next(let value):
                 if let transitionType = transitionType {
-                    if let value = value {
+                    if value != nil {
                         let transition = CATransition()
                         transition.duration = 0.25
                         transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
