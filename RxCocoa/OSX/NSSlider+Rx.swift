@@ -14,6 +14,9 @@ import Cocoa
 
 extension NSSlider {
     
+    /**
+    Reactive wrapper for `value` property.
+    */
     public var rx_value: ControlProperty<Double> {
         return rx_value(getter: { [weak self] in
             return self?.doubleValue ?? 0

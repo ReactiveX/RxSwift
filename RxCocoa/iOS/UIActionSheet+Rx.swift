@@ -14,10 +14,18 @@ import RxSwift
 
 extension UIActionSheet {
     
+    /**
+    Reactive wrapper for `delegate`.
+    
+    For more information take a look at `DelegateProxyType` protocol documentation.
+    */
     public var rx_delegate: DelegateProxy {
         return proxyForObject(self) as RxActionSheetDelegateProxy
     }
     
+    /**
+    Reactive wrapper for `delegate` message.
+    */
     public var rx_clickedButtonAtIndex: ControlEvent<Int> {
         let source = rx_delegate.observe("actionSheet:clickedButtonAtIndex:")
             .map { a in
@@ -27,6 +35,9 @@ extension UIActionSheet {
         return ControlEvent(source: source)
     }
     
+    /**
+    Reactive wrapper for `delegate` message.
+    */
     public var rx_willDismissWithButtonIndex: ControlEvent<Int> {
         let source = rx_delegate.observe("actionSheet:willDismissWithButtonIndex:")
             .map { a in
@@ -36,6 +47,9 @@ extension UIActionSheet {
         return ControlEvent(source: source)
     }
     
+    /**
+    Reactive wrapper for `delegate` message.
+    */
     public var rx_didDismissWithButtonIndex: ControlEvent<Int> {
         let source = rx_delegate.observe("actionSheet:didDismissWithButtonIndex:")
             .map { a in

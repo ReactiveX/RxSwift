@@ -14,10 +14,18 @@ import RxSwift
 
 extension UITextView {
     
+    /**
+    Factory method that enables subclasses to implement their own `rx_delegate`.
+    
+    - returns: Instance of delegate proxy that wraps `delegate`.
+    */
     override func rx_createDelegateProxy() -> RxScrollViewDelegateProxy {
         return RxTextViewDelegateProxy(parentObject: self)
     }
     
+    /**
+    Reactive wrapper for `text` property.
+    */
     public var rx_text: ControlProperty<String> {
         let source: Observable<String> = deferred { [weak self] in
             let text = self?.text ?? ""

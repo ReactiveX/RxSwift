@@ -44,10 +44,18 @@ class RxTextFieldDelegate : DelegateProxy
 
 extension NSTextField {
     
+    /**
+    Reactive wrapper for `delegate`.
+    
+    For more information take a look at `DelegateProxyType` protocol documentation.
+    */
     public var rx_delegate: DelegateProxy {
         return proxyForObject(self) as RxTextFieldDelegate
     }
     
+    /**
+    Reactive wrapper for `text` property.
+    */
     public var rx_text: ControlProperty<String> {
         let delegate = proxyForObject(self) as RxTextFieldDelegate
         

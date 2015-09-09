@@ -14,6 +14,9 @@ import UIKit
 
 extension UISlider {
     
+    /**
+    Reactive wrapper for `value` property.
+    */
     public var rx_value: ControlProperty<Float> {
         return rx_value(getter: { [unowned self] in
             self.value

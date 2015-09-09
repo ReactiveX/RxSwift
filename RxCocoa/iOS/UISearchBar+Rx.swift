@@ -16,11 +16,19 @@ import UIKit
 
 extension UISearchBar {
     
+    /**
+    Reactive wrapper for `delegate`.
+    
+    For more information take a look at `DelegateProxyType` protocol documentation.
+    */
     public var rx_delegate: DelegateProxy {
         return proxyForObject(self) as RxSearchBarDelegateProxy
     }
     
-    public var rx_searchText: ControlProperty<String> {
+    /**
+    Reactive wrapper for `text` property.
+    */
+    public var rx_text: ControlProperty<String> {
         let source: Observable<String> = deferred { [weak self] in
             let text = self?.text ?? ""
             

@@ -14,20 +14,27 @@ import UIKit
 
 extension UIScrollView {
     
-    // factory
+    /**
+    Factory method that enables subclasses to implement their own `rx_delegate`.
     
+    - returns: Instance of delegate proxy that wraps `delegate`.
+    */
     func rx_createDelegateProxy() -> RxScrollViewDelegateProxy {
         return RxScrollViewDelegateProxy(parentObject: self)
     }
     
-    // proxy 
+    /**
+    Reactive wrapper for `delegate`.
     
+    For more information take a look at `DelegateProxyType` protocol documentation.
+    */
     public var rx_delegate: DelegateProxy {
         return proxyForObject(self) as RxScrollViewDelegateProxy
     }
     
-    // properties
-    
+    /**
+    Reactive wrapper for `contentOffset`.
+    */
     public var rx_contentOffset: ControlProperty<CGPoint> {
         let proxy = proxyForObject(self) as RxScrollViewDelegateProxy
         
@@ -43,9 +50,14 @@ extension UIScrollView {
         })
     }
     
-    // delegate
-
-    // For more detailed explanations, take a look at `DelegateProxyType.swift`
+    /**
+    Installs delegate as forwarding delegate on `rx_delegate`.
+    
+    It enables using normal delegate mechanism with reactive delegate mechanism.
+    
+    - parameter delegate: Delegate object.
+    - returns: Disposable object that can be used to unbind the delegate.
+    */
     public func rx_setDelegate(delegate: UIScrollViewDelegate)
         -> Disposable {
         let proxy: RxScrollViewDelegateProxy = proxyForObject(self)

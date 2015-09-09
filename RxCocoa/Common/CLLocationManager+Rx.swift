@@ -14,6 +14,11 @@ import RxSwift
 
 extension CLLocationManager {
     
+    /**
+    Reactive wrapper for `delegate`.
+    
+    For more information take a look at `DelegateProxyType` protocol documentation.
+    */
     public var rx_delegate: DelegateProxy {
         return proxyForObject(self) as RxCLLocationManagerDelegateProxy
     }
@@ -21,7 +26,7 @@ extension CLLocationManager {
     // MARK: Responding to Location Events
     
     /**
-    Reactive wrapper for `delegate` method.
+    Reactive wrapper for `delegate` message.
     */
     public var rx_didUpdateLocations: Observable<[CLLocation]!> {
         return rx_delegate.observe("locationManager:didUpdateLocations:")
@@ -31,7 +36,7 @@ extension CLLocationManager {
     }
     
     /**
-    Reactive wrapper for `delegate` method.
+    Reactive wrapper for `delegate` message.
     */
     public var rx_didFailWithError: Observable<NSError!> {
         return rx_delegate.observe("locationManager:didFailWithError:")
@@ -41,7 +46,7 @@ extension CLLocationManager {
     }
     
     /**
-    Reactive wrapper for `delegate` method.
+    Reactive wrapper for `delegate` message.
     */
     public var rx_didFinishDeferredUpdatesWithError: Observable<NSError!> {
         return rx_delegate.observe("locationManager:didFinishDeferredUpdatesWithError:")
@@ -53,7 +58,7 @@ extension CLLocationManager {
     // MARK: Pausing Location Updates
     
     /**
-    Reactive wrapper for `delegate` method.
+    Reactive wrapper for `delegate` message.
     */
     public var rx_didPauseLocationUpdates: Observable<Void> {
         return rx_delegate.observe("locationManagerDidPauseLocationUpdates:")
@@ -63,7 +68,7 @@ extension CLLocationManager {
     }
     
     /**
-    Reactive wrapper for `delegate` method.
+    Reactive wrapper for `delegate` message.
     */
     public var rx_didResumeLocationUpdates: Observable<Void> {
         return rx_delegate.observe("locationManagerDidResumeLocationUpdates:")
@@ -75,7 +80,7 @@ extension CLLocationManager {
     // MARK: Responding to Heading Events
     
     /**
-    Reactive wrapper for `delegate` method.
+    Reactive wrapper for `delegate` message.
     */
     public var rx_didUpdateHeading: Observable<CLHeading!> {
         return rx_delegate.observe("locationManager:didUpdateHeading:")
@@ -87,7 +92,7 @@ extension CLLocationManager {
     // MARK: Responding to Region Events
     
     /**
-    Reactive wrapper for `delegate` method.
+    Reactive wrapper for `delegate` message.
     */
     public var rx_didEnterRegion: Observable<CLRegion!> {
         return rx_delegate.observe("locationManager:didEnterRegion:")
@@ -97,7 +102,7 @@ extension CLLocationManager {
     }
     
     /**
-    Reactive wrapper for `delegate` method.
+    Reactive wrapper for `delegate` message.
     */
     public var rx_didExitRegion: Observable<CLRegion!> {
         return rx_delegate.observe("locationManager:didExitRegion:")
@@ -107,7 +112,7 @@ extension CLLocationManager {
     }
     
     /**
-    Reactive wrapper for `delegate` method.
+    Reactive wrapper for `delegate` message.
     */
     @available(OSX 10.10, *)
     public var rx_didDetermineStateForRegion: Observable<(state: CLRegionState, region: CLRegion!)> {
@@ -118,7 +123,7 @@ extension CLLocationManager {
     }
     
     /**
-    Reactive wrapper for `delegate` method.
+    Reactive wrapper for `delegate` message.
     */
     public var rx_monitoringDidFailForRegionWithError: Observable<(region: CLRegion!, error: NSError!)> {
         return rx_delegate.observe("locationManager:monitoringDidFailForRegion:withError:")
@@ -128,7 +133,7 @@ extension CLLocationManager {
     }
     
     /**
-    Reactive wrapper for `delegate` method.
+    Reactive wrapper for `delegate` message.
     */
     public var rx_didStartMonitoringForRegion: Observable<CLRegion!> {
         return rx_delegate.observe("locationManager:didStartMonitoringForRegion:")
@@ -142,7 +147,7 @@ extension CLLocationManager {
 #if os(iOS)
     
     /**
-    Reactive wrapper for `delegate` method.
+    Reactive wrapper for `delegate` message.
     */
     public var rx_didRangeBeaconsInRegion: Observable<(beacons: [CLBeacon]!, region: CLBeaconRegion!)> {
         return rx_delegate.observe("locationManager:didRangeBeacons:inRegion:")
@@ -152,7 +157,7 @@ extension CLLocationManager {
     }
     
     /**
-    Reactive wrapper for `delegate` method.
+    Reactive wrapper for `delegate` message.
     */
     public var rx_rangingBeaconsDidFailForRegionWithError: Observable<(region: CLBeaconRegion!, error: NSError!)> {
         return rx_delegate.observe("locationManager:rangingBeaconsDidFailForRegion:withError:")
@@ -164,7 +169,7 @@ extension CLLocationManager {
     // MARK: Responding to Visit Events
     
     /**
-    Reactive wrapper for `delegate` method.
+    Reactive wrapper for `delegate` message.
     */
     @available(iOS 8.0, *)
     public var rx_didVisit: Observable<CLVisit!> {
@@ -179,7 +184,7 @@ extension CLLocationManager {
     // MARK: Responding to Authorization Changes
     
     /**
-    Reactive wrapper for `delegate` method.
+    Reactive wrapper for `delegate` message.
     */
     public var rx_didChangeAuthorizationStatus: Observable<CLAuthorizationStatus?> {
         return rx_delegate.observe("locationManager:didChangeAuthorizationStatus:")

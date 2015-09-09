@@ -13,6 +13,9 @@ import RxSwift
 
 extension UIBarButtonItem {
     
+    /**
+    Reactive wrapper for target action pattern on `self`.
+    */
     public var rx_tap: ControlEvent<Void> {
         let source: Observable<Void> = AnonymousObservable { observer in
             let target = BarButtonItemTarget(barButtonItem: self) {
