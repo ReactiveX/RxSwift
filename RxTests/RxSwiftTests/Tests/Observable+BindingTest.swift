@@ -122,14 +122,14 @@ extension ObservableBindingTest {
         let subject = MySubject<Int>()
         
         let conn = TestConnectableObservable(o: xs, s: subject)
-        let refd = conn .refCount()
+        let refd = conn.refCount()
         
-        let dis1 = refd.subscribe(NopObserver())
+        let dis1 = refd.subscribe { _ -> Void in () }
         XCTAssertEqual(1, count)
         XCTAssertEqual(1, subject.subscribeCount)
         XCTAssertFalse(disconnected)
         
-        let dis2 = refd.subscribe(NopObserver())
+        let dis2 = refd.subscribe { _ -> Void in () }
         XCTAssertEqual(1, count)
         XCTAssertEqual(2, subject.subscribeCount)
         XCTAssertFalse(disconnected)
@@ -140,7 +140,7 @@ extension ObservableBindingTest {
         XCTAssertTrue(disconnected)
         disconnected = false
         
-        let dis3 = refd.subscribe(NopObserver())
+        let dis3 = refd.subscribe { _ -> Void in () }
         XCTAssertEqual(2, count)
         XCTAssertEqual(3, subject.subscribeCount)
         XCTAssertFalse(disconnected)

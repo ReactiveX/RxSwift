@@ -95,53 +95,6 @@ class Catch<Element> : Producer<Element> {
     }
 }
 
-// catch to result
-
-// O: ObserverType caused compiler crashes, so let's leave that for now
-class CatchToResultSink<ElementType> : Sink<ObserverOf<RxResult<ElementType>>>, ObserverType {
-    typealias E = ElementType
-    typealias Parent = CatchToResult<E>
-    
-    let parent: Parent
-    
-    init(parent: Parent, observer: ObserverOf<RxResult<E>>, cancel: Disposable) {
-        self.parent = parent
-        super.init(observer: observer, cancel: cancel)
-    }
-    
-    func run() -> Disposable {
-        return parent.source.subscribeSafe(self)
-    }
-    
-    func on(event: Event<E>) {
-        switch event {
-        case .Next(let value):
-            observer?.on(.Next(success(value)))
-        case .Completed:
-            observer?.on(.Completed)
-            self.dispose()
-        case .Error(let error):
-            observer?.on(.Next(failure(error)))
-            observer?.on(.Completed)
-            self.dispose()
-        }
-    }
-}
-
-class CatchToResult<Element> : Producer <RxResult<Element>> {
-    let source: Observable<Element>
-    
-    init(source: Observable<Element>) {
-        self.source = source
-    }
-    
-    override func run<O: ObserverType where O.E == RxResult<Element>>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
-        let sink = CatchToResultSink(parent: self, observer: observer.asObserver(), cancel: cancel)
-        setSink(sink)
-        return sink.run()
-    }
-}
-
 // catch enumerable
 
 class CatchSequenceSink<S: SequenceType, O: ObserverType where S.Generator.Element : ObservableType, S.Generator.Element.E == O.E> : TailRecursiveSink<S, O> {

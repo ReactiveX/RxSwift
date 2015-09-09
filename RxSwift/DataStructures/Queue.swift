@@ -8,7 +8,18 @@
 
 import Foundation
 
+/**
+Data structure that represents queue.
+
+Complexity of `enqueue`, `dequeue` is O(1) when number of operations is
+averaged over N operations.
+
+Complexity of `peek` is O(1).
+*/
 public struct Queue<T>: SequenceType {
+    /**
+    Type of generator.
+    */
     public typealias Generator = AnyGenerator<T>
     
     let resizeFactor = 2
@@ -19,6 +30,11 @@ public struct Queue<T>: SequenceType {
     private var initialCapacity: Int
     private var version: Int
     
+    /**
+    Creates new queue.
+    
+    - parameter capacity: Capacity of newly created queue.
+    */
     public init(capacity: Int) {
         initialCapacity = capacity
         
@@ -36,20 +52,29 @@ public struct Queue<T>: SequenceType {
         }
     }
     
+    /**
+    - returns: Is queue empty.
+    */
     public var empty: Bool {
         get {
             return count == 0
         }
     }
     
+    /**
+    - returns: Number of elements inside queue.
+    */
     public var count: Int {
         get {
             return _count
         }
     }
     
+    /**
+    - returns: Element in front of a list of elements to `dequeue`.
+    */
     public func peek() -> T {
-        contract(count > 0)
+        precondition(count > 0)
         
         return storage[dequeueIndex]!
     }
@@ -75,7 +100,12 @@ public struct Queue<T>: SequenceType {
         storage = newStorage
     }
     
-    public mutating func enqueue(item: T) {
+    /**
+    Enqueues `element`.
+    
+    - parameter element: Element to enqueue.
+    */
+    public mutating func enqueue(element: T) {
         version++
         
         _ = count == storage.count
@@ -83,7 +113,7 @@ public struct Queue<T>: SequenceType {
             resizeTo(storage.count * resizeFactor)
         }
         
-        storage[pushNextIndex] = item
+        storage[pushNextIndex] = element
         pushNextIndex++
         _count = _count + 1
         
@@ -93,9 +123,9 @@ public struct Queue<T>: SequenceType {
     }
     
     private mutating func dequeueElementOnly() -> T {
-        version++
+        precondition(count > 0)
         
-        contract(count > 0)
+        version++
         
         let index = dequeueIndex
         let value = storage[index]!
@@ -107,6 +137,11 @@ public struct Queue<T>: SequenceType {
         return value
     }
     
+    /**
+    Dequeues element or throws an exception in case queue is empty.
+    
+    - returns: Dequeued element.
+    */
     public mutating func dequeue() -> T {
         let value = dequeueElementOnly()
         
@@ -118,6 +153,9 @@ public struct Queue<T>: SequenceType {
         return value
     }
     
+    /**
+    - returns: Generator of contained elements.
+    */
     public func generate() -> Generator {
         var i = dequeueIndex
         var count = _count

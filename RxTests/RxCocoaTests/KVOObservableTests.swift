@@ -105,7 +105,7 @@ extension KVOObservableTests {
         
         var latest: String?
         
-        var _d: ScopedDispose? = os .subscribeNext { latest = $0 } .scopedDispose
+        var _d: ScopedDisposable? = os .subscribeNext { latest = $0 }.scopedDispose()
         
         XCTAssertTrue(latest == nil)
         
@@ -139,7 +139,7 @@ extension KVOObservableTests {
         
         var latest: String?
         
-        var _d: ScopedDispose? = os .subscribeNext { latest = $0 } .scopedDispose
+        var _d: ScopedDisposable? = os .subscribeNext { latest = $0 }.scopedDispose()
         
         XCTAssertTrue(latest == "0")
         
@@ -173,7 +173,7 @@ extension KVOObservableTests {
         
         var latest: String?
         
-        var _d: ScopedDispose! = os .subscribeNext { latest = $0 } .scopedDispose
+        var _d: ScopedDisposable! = os .subscribeNext { latest = $0 }.scopedDispose()
         
         XCTAssertTrue(latest == "0")
         
@@ -680,7 +680,7 @@ extension KVOObservableTests {
             .subscribeNext { (n: CGSize?) in
                 latest.value = n
             }
-            .scopedDispose
+            .scopedDispose()
         XCTAssertTrue(latest.value == nil)
         
         root.size = CGSizeMake(56, 1)
@@ -711,7 +711,7 @@ extension KVOObservableTests {
             .subscribeNext { (n: CGRect?) in
                 latest.value = n
             }
-            .scopedDispose
+            .scopedDispose()
         XCTAssertTrue(latest.value == root.frame)
         
         root.frame = CGRectMake(-2, 0, 0, 1)
@@ -742,7 +742,7 @@ extension KVOObservableTests {
             .subscribeNext { (n: CGSize?) in
                 latest.value = n
             }
-            .scopedDispose
+            .scopedDispose()
         XCTAssertTrue(latest.value == root.size)
         
         root.size = CGSizeMake(56, 1)
@@ -773,7 +773,7 @@ extension KVOObservableTests {
             .subscribeNext { (n: CGPoint?) in
                 latest.value = n
             }
-            .scopedDispose
+            .scopedDispose()
         
         XCTAssertTrue(latest.value == root.point)
         

@@ -4,8 +4,8 @@
 
 1. Open `Rx.xcworkspace`
 2. Build `RxSwift-OSX` scheme
-3. And then open `RxSamples` in `Rx.xcworkspace` tree view.
-4. View the console to view log strings. Choose `View > Show Debug Area`
+3. And then open `Rx` playground in `Rx.xcworkspace` tree view.
+4. Choose `View > Show Debug Area`
 */
 
 /*:

@@ -14,22 +14,32 @@ import UIKit
 
 extension UIImageView {
     
+    /**
+    Bindable sink for `image` property.
+    */
     public var rx_image: ObserverOf<UIImage!> {
-        return self.rx_imageAnimated(false)
+        return self.rx_imageAnimated(nil)
     }
     
-    public func rx_imageAnimated(animated: Bool) -> ObserverOf<UIImage!> {
+    /**
+    Bindable sink for `image` property.
+    
+    - parameter transitionType: Optional transition type while setting the image (kCATransitionFade, kCATransitionMoveIn, ...)
+    */
+    public func rx_imageAnimated(transitionType: String?) -> ObserverOf<UIImage!> {
         return ObserverOf { [weak self] event in
             MainScheduler.ensureExecutingOnScheduler()
             
             switch event {
             case .Next(let value):
-                if animated && value != nil {
-                    let transition = CATransition()
-                    transition.duration = 0.25
-                    transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
-                    transition.type = kCATransitionFade
-                    self?.layer.addAnimation(transition, forKey: kCATransition)
+                if let transitionType = transitionType {
+                    if value != nil {
+                        let transition = CATransition()
+                        transition.duration = 0.25
+                        transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+                        transition.type = transitionType
+                        self?.layer.addAnimation(transition, forKey: kCATransition)
+                    }
                 }
                 else {
                     self?.layer.removeAllAnimations()

@@ -53,7 +53,7 @@ class MySubject<Element where Element : Hashable> : Observable<Element>, Subject
         _observer = ObserverOf(observer)
         
         return AnonymousDisposable {
-            self._observer = ObserverOf(NopObserver<Element>())
+            self._observer = ObserverOf { _ -> Void in () }
             self._disposed = true
         }
     }

@@ -21,10 +21,14 @@ public enum RxCocoaError : Int {
     case KeyPathInvalid = 3
 }
 
-let defaultHeight: CGFloat = -1
-
+/**
+Error domain for internal RxCocoa errors.
+*/
 public let RxCocoaErrorDomain = "RxCocoaError"
 
+/**
+`userInfo` key for `NSURLResponse` object when `RxCocoaError.NetworkError` happens.
+*/
 public let RxCocoaErrorHTTPResponseKey = "RxCocoaErrorHTTPResponseKey"
 
 func rxError(errorCode: RxCocoaError, _ message: String) -> NSError {
@@ -46,10 +50,6 @@ func rxError(errorCode: RxCocoaError, message: String, userInfo: NSDictionary) -
     return NSError(domain: RxCocoaErrorDomain, code: Int(errorCode.rawValue), userInfo: resultInfo)
 }
 
-func handleVoidObserverResult(result: RxResult<Void>) {
-    handleObserverResult(result)
-}
-
 func bindingErrorToInterface(error: ErrorType) {
     let error = "Binding error to UI: \(error)"
 #if DEBUG
@@ -67,15 +67,6 @@ func rxAbstractMethod<T>() -> T {
     return rxFatalErrorAndDontReturn("Abstract method")
 }
 
-func handleObserverResult<T>(result: RxResult<T>) {
-    switch result {
-    case .Failure(let error):
-        print("Error happened \(error)")
-        rxFatalError("Error '\(error)' happened while ");
-    default: break
-    }
-}
-
 // workaround for Swift compiler bug, cheers compiler team :)
 func castOptionalOrFatalError<T>(value: AnyObject?) -> T? {
     if value == nil {
@@ -86,23 +77,23 @@ func castOptionalOrFatalError<T>(value: AnyObject?) -> T? {
 }
 
 func castOrFatalError<T>(value: AnyObject!, message: String) -> T {
-    let result: RxResult<T> = castOrFail(value)
-    
-    if result.isFailure {
+    let maybeResult: T? = value as? T
+    guard let result = maybeResult else {
         rxFatalError(message)
+        return maybeResult!
     }
     
-    return result.get()
+    return result
 }
 
 func castOrFatalError<T>(value: AnyObject!) -> T {
-    let result: RxResult<T> = castOrFail(value)
-    
-    if result.isFailure {
+    let maybeResult: T? = value as? T
+    guard let result = maybeResult else {
         rxFatalError("Failure converting from \(value) to \(T.self)")
+        return maybeResult!
     }
     
-    return result.get()
+    return result
 }
 
 // Error messages {
@@ -134,8 +125,4 @@ extension NSObject {
     }
 }
 
-func removingObserverFailed() {
-    rxFatalError("Removing observer for key failed")
-}
-    
 #endif

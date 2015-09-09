@@ -8,9 +8,11 @@
 
 import Foundation
 
-// This is a base class for all of the internal observers/sinks
-public class Observer<ElementType> : ObserverType {
-    public typealias E = ElementType
+/**
+This is a base class for all of the internal observers/sinks
+*/
+class Observer<ElementType> : ObserverType {
+    typealias E = ElementType
 
     init() {
 #if TRACE_RESOURCES
@@ -18,7 +20,7 @@ public class Observer<ElementType> : ObserverType {
 #endif
     }
     
-    public func on(event: Event<E>) {
+    func on(event: Event<E>) {
         return abstractMethod()
     }
     

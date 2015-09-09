@@ -54,8 +54,8 @@ class GitHubAPI {
                     return false
                 }
             }
-            .observeSingleOn(self.dataScheduler)
-            .catchErrorResumeNext(false)
+            .observeOn(self.dataScheduler)
+            .catchErrorJustReturn(false)
     }
     
     func signup(username: String, password: String) -> Observable<SignupState> {

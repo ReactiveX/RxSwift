@@ -43,7 +43,7 @@ class DefaultImageService: ImageService {
     
     func decodeImage(imageData: NSData) -> Observable<Image> {
         return just(imageData)
-            .observeSingleOn($.backgroundWorkScheduler)
+            .observeOn($.backgroundWorkScheduler)
             .map { data in
                 let maybeImage = Image(data: data)
                 
@@ -56,7 +56,7 @@ class DefaultImageService: ImageService {
                 
                 return image
             }
-            .observeSingleOn($.mainScheduler)
+            .observeOn($.mainScheduler)
     }
     
     func imageFromURL(URL: NSURL) -> Observable<Image> {
@@ -89,6 +89,6 @@ class DefaultImageService: ImageService {
             return decodedImage.doOn(next: { image in
                 self.imageCache.setObject(image, forKey: URL)
             })
-        }
+        }.observeOn($.mainScheduler)
     }
 }

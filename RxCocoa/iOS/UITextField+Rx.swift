@@ -14,6 +14,9 @@ import UIKit
 
 extension UITextField {
     
+    /**
+    Reactive wrapper for `text` property.
+    */
     public var rx_text: ControlProperty<String> {
         return rx_value(getter: { [weak self] in
             self?.text ?? ""

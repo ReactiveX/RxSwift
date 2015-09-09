@@ -8,16 +8,25 @@
 
 import Foundation
 
-// Disposable that does nothing
-// Nop = No Operation
+/**
+Represents a disposable that does nothing on disposal.
+
+Nop = No Operation
+*/
 public class NopDisposable : Disposable {
  
+    /**
+    Singleton instance of `NopDisposable`.
+    */
     public static let instance: Disposable = NopDisposable()
     
     init() {
         
     }
     
+    /**
+    Does nothing.
+    */
     public func dispose() {
     }
 }

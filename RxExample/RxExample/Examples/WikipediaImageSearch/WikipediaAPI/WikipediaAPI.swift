@@ -42,7 +42,7 @@ class DefaultWikipediaAPI: WikipediaAPI {
         let url = NSURL(string: urlContent)!
             
         return $.URLSession.rx_JSON(url)
-            .observeSingleOn($.backgroundWorkScheduler)
+            .observeOn($.backgroundWorkScheduler)
             .map { json in
                 guard let json = json as? [AnyObject] else {
                     throw exampleError("Parsing error")
@@ -50,7 +50,7 @@ class DefaultWikipediaAPI: WikipediaAPI {
                 
                 return try WikipediaSearchResult.parseJSON(json)
             }
-            .observeSingleOn($.mainScheduler)
+            .observeOn($.mainScheduler)
     }
     
     // http://en.wikipedia.org/w/api.php?action=parse&page=rx&format=json
@@ -70,6 +70,6 @@ class DefaultWikipediaAPI: WikipediaAPI {
                 
                 return try WikipediaPage.parseJSON(json)
             }
-            .observeSingleOn($.mainScheduler)
+            .observeOn($.mainScheduler)
     }
 }

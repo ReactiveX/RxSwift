@@ -270,7 +270,7 @@ extension ObservableTimeTest {
 
         let start = NSDate()
 
-        let a = try! from([just(0), never()]).concat()
+        let a = try! [just(0), never()].asObservable().concat()
             .throttle(2.0, scheduler)
             .first()
 

@@ -13,6 +13,10 @@ import RxSwift
 import UIKit
 
 extension UIControl {
+    
+    /**
+    Bindable sink for `enabled` property.
+    */
     public var rx_enabled: ObserverOf<Bool> {
         return ObserverOf { [weak self] event in
             MainScheduler.ensureExecutingOnScheduler()
@@ -29,6 +33,11 @@ extension UIControl {
         }
     }
     
+    /**
+    Reactive wrapper for target action pattern.
+    
+    - parameter controlEvents: Filter for observed event types.
+    */
     public func rx_controlEvents(controlEvents: UIControlEvents) -> ControlEvent<Void> {
         let source: Observable<Void> = AnonymousObservable { observer in
             MainScheduler.ensureExecutingOnScheduler()

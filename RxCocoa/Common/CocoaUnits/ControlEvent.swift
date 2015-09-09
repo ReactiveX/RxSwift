@@ -11,8 +11,14 @@ import Foundation
 import RxSwift
 #endif
 
-protocol ControlEventType : ObservableType {
-    typealias E
+/**
+Protocol that enables extension of `ControlEvent`.
+*/
+public protocol ControlEventType : ObservableType {
+    
+    /**
+    - returns: `ControlEvent` interface
+    */
     func asControlEvent() -> ControlEvent<E>
 }
 
@@ -36,14 +42,26 @@ public struct ControlEvent<PropertyType> : ControlEventType {
         self.source = source
     }
     
+    /**
+    Subscribes an observer to control events.
+    
+    - parameter observer: Observer to subscribe to events.
+    - returns: Disposable object that can be used to unsubscribe the observer from receiving control events.
+    */
     public func subscribe<O : ObserverType where O.E == E>(observer: O) -> Disposable {
         return self.source.subscribe(observer)
     }
     
+    /**
+    - returns: `Observable` interface.
+    */
     public func asObservable() -> Observable<E> {
         return self.source
     }
     
+    /**
+    - returns: `ControlEvent` interface.
+    */
     public func asControlEvent() -> ControlEvent<E> {
         return self
     }

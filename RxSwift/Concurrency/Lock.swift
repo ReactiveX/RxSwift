@@ -8,6 +8,9 @@
 
 import Foundation
 
+/**
+Simple wrapper for spin lock.
+*/
 struct SpinLock {
     private var _lock = OS_SPINLOCK_INIT
     

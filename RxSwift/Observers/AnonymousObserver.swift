@@ -8,14 +8,14 @@
 
 import Foundation
 
-public class AnonymousObserver<ElementType> : ObserverBase<ElementType> {
-    public typealias Element = ElementType
+class AnonymousObserver<ElementType> : ObserverBase<ElementType> {
+    typealias Element = ElementType
     
-    public typealias EventHandler = Event<Element> -> Void
+    typealias EventHandler = Event<Element> -> Void
     
     private let eventHandler : EventHandler
     
-    public init(_ eventHandler: EventHandler) {
+    init(_ eventHandler: EventHandler) {
 #if TRACE_RESOURCES
         OSAtomicIncrement32(&resourceCount)
 #endif
@@ -26,7 +26,7 @@ public class AnonymousObserver<ElementType> : ObserverBase<ElementType> {
         return AnonymousSafeObserver(self.eventHandler, disposable: disposable)
     }
 
-    public override func onCore(event: Event<Element>) {
+    override func onCore(event: Event<Element>) {
         return self.eventHandler(event)
     }
     
@@ -37,17 +37,17 @@ public class AnonymousObserver<ElementType> : ObserverBase<ElementType> {
 #endif
 }
 
-public class AnonymousSafeObserver<ElementType> : Observer<ElementType> {
-    public typealias Element = ElementType
+class AnonymousSafeObserver<ElementType> : Observer<ElementType> {
+    typealias Element = ElementType
     
-    public typealias EventHandler = Event<Element> -> Void
+    typealias EventHandler = Event<Element> -> Void
     
     private let eventHandler : EventHandler
     private let disposable: Disposable
 
     var stopped: Int32 = 0
 
-    public init(_ eventHandler: EventHandler, disposable: Disposable) {
+    init(_ eventHandler: EventHandler, disposable: Disposable) {
 #if TRACE_RESOURCES
         OSAtomicIncrement32(&resourceCount)
 #endif
@@ -55,7 +55,7 @@ public class AnonymousSafeObserver<ElementType> : Observer<ElementType> {
         self.disposable = disposable
     }
     
-    public override func on(event: Event<Element>) {
+    override func on(event: Event<Element>) {
         switch event {
         case .Next:
             if stopped == 0 {

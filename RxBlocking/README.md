@@ -7,14 +7,17 @@ Set of blocking operators for easy unit testing.
 
 
 ```swift
-public func toArray<E>(source: Observable<E>)
-    -> RxResult<[E]> {}
+extension ObservableType {
+    public func toArray() throws -> [E] {}
+}
 
-public func first<E>(source: Observable<E>)
-    -> RxResult<E?> {}
+extension ObservableType {
+    public func first() throws -> E? {}
+}
 
-public func last<E>(source: Observable<E>)
-    -> RxResult<E?> {}
+extension ObservableType {
+    public func last() throws -> E? {}
+}
 ```
 
 

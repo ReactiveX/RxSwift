@@ -103,7 +103,7 @@ public class RxTableViewSectionedDataSource<S: SectionModelType> : _RxTableViewS
         super.init()
         self.cellFactory = { [weak self] _ in
             if let strongSelf = self {
-                precondition(false, "There is a minor problem. `cellFactory` property on \(strongSelf) was not set. Please set it manually, or use one of the `rx_subscribeTo` methods.")
+                precondition(false, "There is a minor problem. `cellFactory` property on \(strongSelf) was not set. Please set it manually, or use one of the `rx_bindTo` methods.")
             }
             
             return (nil as UITableViewCell!)!
@@ -113,7 +113,7 @@ public class RxTableViewSectionedDataSource<S: SectionModelType> : _RxTableViewS
     // observers
     
     public func addIncrementalUpdatesObserver(observer: IncrementalUpdateObserver) -> IncrementalUpdateDisposeKey {
-        return incrementalUpdateObservers.put(observer)
+        return incrementalUpdateObservers.insert(observer)
     }
     
     public func removeIncrementalUpdatesObserver(key: IncrementalUpdateDisposeKey) {

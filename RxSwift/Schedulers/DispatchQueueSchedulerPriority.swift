@@ -8,8 +8,23 @@
 
 import Foundation
 
+/**
+Identifies one of the global concurrent dispatch queues with specified priority.
+*/
 public enum DispatchQueueSchedulerPriority {
+    
+    /**
+    Identifies global dispatch queue with `DISPATCH_QUEUE_PRIORITY_HIGH`
+    */
     case High
+    
+    /**
+    Identifies global dispatch queue with `DISPATCH_QUEUE_PRIORITY_DEFAULT`
+    */
     case Default
+    
+    /**
+    Identifies global dispatch queue with `DISPATCH_QUEUE_PRIORITY_LOW`
+    */
     case Low
 }

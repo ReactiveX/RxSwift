@@ -169,13 +169,13 @@ combine multiple Observables into one by merging their emissions
 example("merge 1") {
     let subject1 = PublishSubject<Int>()
     let subject2 = PublishSubject<Int>()
-    
+
     sequenceOf(subject1, subject2)
         .merge()
         .subscribeNext { int in
             print(int)
         }
-    
+
     subject1.on(.Next(20))
     subject1.on(.Next(40))
     subject1.on(.Next(60))
@@ -189,8 +189,8 @@ example("merge 1") {
 example("merge 2") {
     let subject1 = PublishSubject<Int>()
     let subject2 = PublishSubject<Int>()
-    
-    sequenceOf(subject1, subject2) 
+
+    sequenceOf(subject1, subject2)
         .merge(maxConcurrent: 2)
         .subscribe {
             print($0)
@@ -223,25 +223,25 @@ example("switchLatest") {
 
     // var3 is like an Observable<Observable<Int>>
     let var3 = Variable(var1)
-    
+
     let d = var3
         .switchLatest()
         .subscribe {
             print($0)
         }
 
-    var1.sendNext(1)
-    var1.sendNext(2)
-    var1.sendNext(3)
-    var1.sendNext(4)
+    var1.value = 1
+    var1.value = 2
+    var1.value = 3
+    var1.value = 4
 
-    var3.sendNext(var2)
+    var3.value = var2
 
-    var2.sendNext(201)
-    
-    var1.sendNext(5)
-    var1.sendNext(6)
-    var1.sendNext(7)
+    var2.value = 201
+
+    var1.value = 5
+    var1.value = 6
+    var1.value = 7
 }
 
 //: [Index](Index) - [Next >>](@next)

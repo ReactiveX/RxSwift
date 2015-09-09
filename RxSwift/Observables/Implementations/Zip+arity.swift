@@ -14,6 +14,12 @@ import Foundation
 
 // 2
 
+/**
+Merges the specified observable sequences into one observable sequence by using the selector function whenever all of the observable sequences have produced an element at a corresponding index.
+
+- parameter resultSelector: Function to invoke for each series of elements at corresponding indexes in the sources.
+- returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
+*/
 public func zip<O1: ObservableType, O2: ObservableType, R>
     (source1: O1, _ source2: O2, _ resultSelector: (O1.E, O2.E) throws -> R)
     -> Observable<R> {
@@ -96,6 +102,12 @@ class Zip2<E1, E2, R> : Producer<R> {
 
 // 3
 
+/**
+Merges the specified observable sequences into one observable sequence by using the selector function whenever all of the observable sequences have produced an element at a corresponding index.
+
+- parameter resultSelector: Function to invoke for each series of elements at corresponding indexes in the sources.
+- returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
+*/
 public func zip<O1: ObservableType, O2: ObservableType, O3: ObservableType, R>
     (source1: O1, _ source2: O2, _ source3: O3, _ resultSelector: (O1.E, O2.E, O3.E) throws -> R)
     -> Observable<R> {
@@ -186,6 +198,12 @@ class Zip3<E1, E2, E3, R> : Producer<R> {
 
 // 4
 
+/**
+Merges the specified observable sequences into one observable sequence by using the selector function whenever all of the observable sequences have produced an element at a corresponding index.
+
+- parameter resultSelector: Function to invoke for each series of elements at corresponding indexes in the sources.
+- returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
+*/
 public func zip<O1: ObservableType, O2: ObservableType, O3: ObservableType, O4: ObservableType, R>
     (source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ resultSelector: (O1.E, O2.E, O3.E, O4.E) throws -> R)
     -> Observable<R> {
@@ -284,6 +302,12 @@ class Zip4<E1, E2, E3, E4, R> : Producer<R> {
 
 // 5
 
+/**
+Merges the specified observable sequences into one observable sequence by using the selector function whenever all of the observable sequences have produced an element at a corresponding index.
+
+- parameter resultSelector: Function to invoke for each series of elements at corresponding indexes in the sources.
+- returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
+*/
 public func zip<O1: ObservableType, O2: ObservableType, O3: ObservableType, O4: ObservableType, O5: ObservableType, R>
     (source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ resultSelector: (O1.E, O2.E, O3.E, O4.E, O5.E) throws -> R)
     -> Observable<R> {
@@ -390,6 +414,12 @@ class Zip5<E1, E2, E3, E4, E5, R> : Producer<R> {
 
 // 6
 
+/**
+Merges the specified observable sequences into one observable sequence by using the selector function whenever all of the observable sequences have produced an element at a corresponding index.
+
+- parameter resultSelector: Function to invoke for each series of elements at corresponding indexes in the sources.
+- returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
+*/
 public func zip<O1: ObservableType, O2: ObservableType, O3: ObservableType, O4: ObservableType, O5: ObservableType, O6: ObservableType, R>
     (source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6, _ resultSelector: (O1.E, O2.E, O3.E, O4.E, O5.E, O6.E) throws -> R)
     -> Observable<R> {
@@ -504,6 +534,12 @@ class Zip6<E1, E2, E3, E4, E5, E6, R> : Producer<R> {
 
 // 7
 
+/**
+Merges the specified observable sequences into one observable sequence by using the selector function whenever all of the observable sequences have produced an element at a corresponding index.
+
+- parameter resultSelector: Function to invoke for each series of elements at corresponding indexes in the sources.
+- returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
+*/
 public func zip<O1: ObservableType, O2: ObservableType, O3: ObservableType, O4: ObservableType, O5: ObservableType, O6: ObservableType, O7: ObservableType, R>
     (source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6, _ source7: O7, _ resultSelector: (O1.E, O2.E, O3.E, O4.E, O5.E, O6.E, O7.E) throws -> R)
     -> Observable<R> {
@@ -626,6 +662,12 @@ class Zip7<E1, E2, E3, E4, E5, E6, E7, R> : Producer<R> {
 
 // 8
 
+/**
+Merges the specified observable sequences into one observable sequence by using the selector function whenever all of the observable sequences have produced an element at a corresponding index.
+
+- parameter resultSelector: Function to invoke for each series of elements at corresponding indexes in the sources.
+- returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
+*/
 public func zip<O1: ObservableType, O2: ObservableType, O3: ObservableType, O4: ObservableType, O5: ObservableType, O6: ObservableType, O7: ObservableType, O8: ObservableType, R>
     (source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6, _ source7: O7, _ source8: O8, _ resultSelector: (O1.E, O2.E, O3.E, O4.E, O5.E, O6.E, O7.E, O8.E) throws -> R)
     -> Observable<R> {

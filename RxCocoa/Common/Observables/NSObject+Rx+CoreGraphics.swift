@@ -24,6 +24,11 @@ let CGPointType = "{CGPoint=ff}"
 
 // rx_observe + CoreGraphics
 extension NSObject {
+    /**
+    Specialization of generic `rx_observe` method.
+    
+    For more information take a look at `rx_observe` method.
+    */
     public func rx_observe(keyPath: String, options: NSKeyValueObservingOptions = NSKeyValueObservingOptions.New.union(NSKeyValueObservingOptions.Initial), retainSelf: Bool = true) -> Observable<CGRect?> {
         return rx_observe(keyPath, options: options, retainSelf: retainSelf)
             .map { (value: NSValue?) in
@@ -41,6 +46,11 @@ extension NSObject {
             }
     }
     
+    /**
+    Specialization of generic `rx_observe` method.
+    
+    For more information take a look at `rx_observe` method.
+    */
     public func rx_observe(keyPath: String, options: NSKeyValueObservingOptions = NSKeyValueObservingOptions.New.union(NSKeyValueObservingOptions.Initial), retainSelf: Bool = true) -> Observable<CGSize?> {
         return rx_observe(keyPath, options: options, retainSelf: retainSelf)
             .map { (value: NSValue?) in
@@ -58,6 +68,11 @@ extension NSObject {
             }
     }
     
+    /**
+    Specialization of generic `rx_observe` method.
+    
+    For more information take a look at `rx_observe` method.
+    */
     public func rx_observe(keyPath: String, options: NSKeyValueObservingOptions = NSKeyValueObservingOptions.New.union(NSKeyValueObservingOptions.Initial), retainSelf: Bool = true) -> Observable<CGPoint?> {
         return rx_observe(keyPath, options: options, retainSelf: retainSelf)
             .map { (value: NSValue?) in
@@ -80,6 +95,12 @@ extension NSObject {
 
 // rx_observeWeakly + CoreGraphics
 extension NSObject {
+
+    /**
+    Specialization of generic `rx_observeWeakly` method.
+    
+    For more information take a look at `rx_observeWeakly` method.
+    */
     public func rx_observeWeakly(keyPath: String, options: NSKeyValueObservingOptions = NSKeyValueObservingOptions.New.union(NSKeyValueObservingOptions.Initial)) -> Observable<CGRect?> {
         return rx_observeWeakly(keyPath, options: options)
             .map { (value: NSValue?) in
@@ -97,6 +118,11 @@ extension NSObject {
         }
     }
     
+    /**
+    Specialization of generic `rx_observeWeakly` method.
+    
+    For more information take a look at `rx_observeWeakly` method.
+    */
     public func rx_observeWeakly(keyPath: String, options: NSKeyValueObservingOptions = NSKeyValueObservingOptions.New.union(NSKeyValueObservingOptions.Initial)) -> Observable<CGSize?> {
         return rx_observeWeakly(keyPath, options: options)
             .map { (value: NSValue?) in
@@ -114,6 +140,11 @@ extension NSObject {
         }
     }
     
+    /**
+    Specialization of generic `rx_observeWeakly` method.
+    
+    For more information take a look at `rx_observeWeakly` method.
+    */
     public func rx_observeWeakly(keyPath: String, options: NSKeyValueObservingOptions = NSKeyValueObservingOptions.New.union(NSKeyValueObservingOptions.Initial)) -> Observable<CGPoint?> {
         return rx_observeWeakly(keyPath, options: options)
             .map { (value: NSValue?) in

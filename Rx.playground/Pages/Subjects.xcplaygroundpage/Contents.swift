@@ -47,7 +47,7 @@ example("PublishSubject") {
 */
 example("ReplaySubject") {
     let subject = ReplaySubject<String>.create(bufferSize: 1)
-    
+
     writeSequenceToConsole("1", sequence: subject)
     subject.on(.Next("a"))
     subject.on(.Next("b"))
@@ -88,11 +88,11 @@ example("BehaviorSubject") {
 example("Variable") {
     let variable = Variable("z")
     writeSequenceToConsole("1", sequence: variable)
-    variable.sendNext("a")
-    variable.sendNext("b")
+    variable.value = "a"
+    variable.value = "b"
     writeSequenceToConsole("2", sequence: variable)
-    variable.sendNext("c")
-    variable.sendNext("d")
+    variable.value = "c"
+    variable.value = "d"
 }
 
 //: [Index](Index) - [Next >>](@next)

@@ -14,32 +14,32 @@ import RxCocoa
 
 class SearchResultViewModel {
     let searchResult: WikipediaSearchResult
-    
+
     var title: Observable<String>
     var imageURLs: Observable<[NSURL]>
-    
+
     let API = DefaultWikipediaAPI.sharedAPI
     let $: Dependencies = Dependencies.sharedDependencies
-    
+
     init(searchResult: WikipediaSearchResult) {
         self.searchResult = searchResult
-        
+
         self.title = never()
         self.imageURLs = never()
-        
+
         let URLs = configureImageURLs()
-        
-        self.imageURLs = URLs.catchErrorResumeNext([])
-        self.title = configureTitle(URLs).catchErrorResumeNext("Error during fetching")
+
+        self.imageURLs = URLs.catchErrorJustReturn([])
+        self.title = configureTitle(URLs).catchErrorJustReturn("Error during fetching")
     }
-    
+
     // private methods
-    
+
     func configureTitle(imageURLs: Observable<[NSURL]>) -> Observable<String> {
         let searchResult = self.searchResult
-       
+
         let loadingValue: [NSURL]? = nil
-        
+
         return imageURLs
             .map(Optional.init)
             .startWith(loadingValue)
@@ -52,11 +52,11 @@ class SearchResultViewModel {
                 }
             }
     }
-    
+
     func configureImageURLs() -> Observable<[NSURL]> {
         let searchResult = self.searchResult
         return API.articleContent(searchResult)
-            .observeSingleOn($.backgroundWorkScheduler)
+            .observeOn($.backgroundWorkScheduler)
             .map { page in
                 do {
                     return try parseImageURLsfromHTMLSuitableForDisplay(page.text)
@@ -64,7 +64,7 @@ class SearchResultViewModel {
                     return []
                 }
             }
-            .observeSingleOn($.mainScheduler)
+            .observeOn($.mainScheduler)
             .shareReplay(1)
     }
 }

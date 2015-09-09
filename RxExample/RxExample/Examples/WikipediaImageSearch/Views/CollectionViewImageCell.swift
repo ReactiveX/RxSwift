@@ -23,7 +23,7 @@ public class CollectionViewImageCell: UICollectionViewCell {
             let disposeBag = DisposeBag()
             
             self.image
-                .subscribe(imageOutlet.rx_imageAnimated(true))
+                .subscribe(imageOutlet.rx_imageAnimated(kCATransitionFade))
                 .addDisposableTo(disposeBag)
             
             self.disposeBag = disposeBag

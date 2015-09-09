@@ -8,7 +8,15 @@
 
 import Foundation
 
+/**
+A type-erased `ObservableType`. 
+
+It represents a push style sequence.
+*/
 public class Observable<Element> : ObservableType {
+    /**
+    Type of elements in sequence.
+    */
     public typealias E = Element
     
     public init() {
@@ -17,7 +25,6 @@ public class Observable<Element> : ObservableType {
 #endif
     }
     
-    /// Subscribes `observer` to receive events from this observable
     public func subscribe<O: ObserverType where O.E == E>(observer: O) -> Disposable {
         return abstractMethod()
     }

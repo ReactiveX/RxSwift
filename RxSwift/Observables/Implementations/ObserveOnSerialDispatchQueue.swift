@@ -8,6 +8,15 @@
 
 import Foundation
 
+#if TRACE_RESOURCES
+/**
+Counts number of `SerialDispatchQueueObservables`.
+
+Purposed for unit tests.
+*/
+public var numberOfSerialDispatchQueueObservables: Int32 = 0
+#endif
+
 class ObserveOnSerialDispatchQueueSink<O: ObserverType> : ObserverBase<O.E> {
     
     let scheduler: SerialDispatchQueueScheduler
@@ -26,7 +35,7 @@ class ObserveOnSerialDispatchQueueSink<O: ObserverType> : ObserverBase<O.E> {
 
     override func onCore(event: Event<E>) {
         self.scheduler.schedule(()) { (_) -> Disposable in
-            send(self.observer, event)
+            self.observer.on(event)
             
             if event.isStopEvent {
                 self.dispose()

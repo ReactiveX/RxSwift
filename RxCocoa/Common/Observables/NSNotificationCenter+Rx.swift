@@ -12,8 +12,15 @@ import RxSwift
 #endif
 
 extension NSNotificationCenter {
-    public func rx_notification(name: String, object: AnyObject?) -> Observable<NSNotification> {
-        return AnonymousObservable { observer in
+    /**
+    Transforms notifications posted to notification center to observable sequence of notifications.
+    
+    - parameter name: Filter notifications by name.
+    - parameter object: Optional object used to filter notifications.
+    - returns: Observable sequence of posted notifications.
+    */
+    public func rx_notification(name: String, object: AnyObject? = nil) -> Observable<NSNotification> {
+        return create { observer in
             let nsObserver = self.addObserverForName(name, object: object, queue: nil) { notification in
                 observer.on(.Next(notification))
             }

@@ -35,7 +35,7 @@ class DetailViewController: ViewController {
             .map { data in
                 UIImage(data: data)
             }
-            .observeSingleOn($.mainScheduler)
+            .observeOn($.mainScheduler)
             .subscribe(imageView.rx_image)
             .addDisposableTo(disposeBag)
         

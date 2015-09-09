@@ -14,6 +14,9 @@ import RxSwift
 
 extension UISwitch {
     
+    /**
+    Reactive wrapper for `on` property.
+    */
     public var rx_value: ControlProperty<Bool> {
         return rx_value(getter: { [unowned self] in
             return self.on

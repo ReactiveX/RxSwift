@@ -62,6 +62,18 @@ func convertResponseToString(data: NSData!, _ response: NSURLResponse!, _ error:
 }
 
 extension NSURLSession {
+    /**
+    Observable sequence of responses for URL request.
+    
+    Performing of request starts after observer is subscribed and not after invoking this method.
+    
+    **URL requests will be performed per subscribed observer.**
+    
+    Any error during fetching of the response will cause observed sequence to terminate with error.
+    
+    - parameter request: URL request.
+    - returns: Observable sequence of URL responses.
+    */
     public func rx_response(request: NSURLRequest) -> Observable<(NSData!, NSURLResponse!)> {
         return create { observer in
 
@@ -81,7 +93,7 @@ extension NSURLSession {
                 }
 
                 if data == nil || response == nil {
-                    observer.on(.Error(error ?? UnknownError))
+                    observer.on(.Error(error ?? RxError.UnknownError))
                 }
                 else {
                     observer.on(.Next(data as NSData!, response as NSURLResponse!))
@@ -99,30 +111,76 @@ extension NSURLSession {
         }
     }
 
+    /**
+    Observable sequence of response data for URL request.
+    
+    Performing of request starts after observer is subscribed and not after invoking this method.
+    
+    **URL requests will be performed per subscribed observer.**
+    
+    Any error during fetching of the response will cause observed sequence to terminate with error.
+    
+    If response is not HTTP response with status code in the range of `200 ..< 300`, sequence
+    will terminate with `(RxCocoaErrorDomain, RxCocoaError.NetworkError)`.
+    
+    - parameter request: URL request.
+    - returns: Observable sequence of response data.
+    */
     public func rx_data(request: NSURLRequest) -> Observable<NSData> {
         return rx_response(request).map { (data, response) -> NSData in
-            if let response = response as? NSHTTPURLResponse {
-                if 200 ..< 300 ~= response.statusCode {
-                    return data ?? NSData()
-                }
-                else {
-                    throw rxError(.NetworkError, message: "Server returned failure", userInfo: [RxCocoaErrorHTTPResponseKey: response])
-                }
+            guard let response = response as? NSHTTPURLResponse else {
+                throw RxError.UnknownError
+            }
+            
+            if 200 ..< 300 ~= response.statusCode {
+                return data ?? NSData()
             }
             else {
-                rxFatalError("response = nil")
-
-                throw UnknownError
+                throw rxError(.NetworkError, message: "Server returned failure", userInfo: [RxCocoaErrorHTTPResponseKey: response])
             }
         }
     }
 
+    /**
+    Observable sequence of response JSON for URL request.
+    
+    Performing of request starts after observer is subscribed and not after invoking this method.
+    
+    **URL requests will be performed per subscribed observer.**
+    
+    Any error during fetching of the response will cause observed sequence to terminate with error.
+    
+    If response is not HTTP response with status code in the range of `200 ..< 300`, sequence
+    will terminate with `(RxCocoaErrorDomain, RxCocoaError.NetworkError)`.
+    
+    If there is an error during JSON deserialization observable sequence will fail with that error.
+    
+    - parameter request: URL request.
+    - returns: Observable sequence of response JSON.
+    */
     public func rx_JSON(request: NSURLRequest) -> Observable<AnyObject!> {
         return rx_data(request).map { (data) -> AnyObject! in
             return try NSJSONSerialization.JSONObjectWithData(data ?? NSData(), options: [])
         }
     }
 
+    /**
+    Observable sequence of response JSON for GET request with `URL`.
+    
+    Performing of request starts after observer is subscribed and not after invoking this method.
+    
+    **URL requests will be performed per subscribed observer.**
+    
+    Any error during fetching of the response will cause observed sequence to terminate with error.
+    
+    If response is not HTTP response with status code in the range of `200 ..< 300`, sequence
+    will terminate with `(RxCocoaErrorDomain, RxCocoaError.NetworkError)`.
+    
+    If there is an error during JSON deserialization observable sequence will fail with that error.
+    
+    - parameter URL: URL of `NSURLRequest` request.
+    - returns: Observable sequence of response JSON.
+    */
     public func rx_JSON(URL: NSURL) -> Observable<AnyObject!> {
         return rx_JSON(NSURLRequest(URL: URL))
     }

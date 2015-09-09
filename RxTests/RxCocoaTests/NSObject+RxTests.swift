@@ -69,7 +69,7 @@ extension NSObjectTests {
             .subscribeNext { _ in
                 fired = true
             }
-            .scopedDispose
+            .scopedDispose()
         
         XCTAssertFalse(fired)
         
@@ -134,7 +134,7 @@ extension NSObjectTests {
             .subscribeNext { _ in
                 fired = true
             }
-            .scopedDispose
+            .scopedDispose()
         
         XCTAssertFalse(fired)
         

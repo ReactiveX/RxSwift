@@ -13,24 +13,33 @@ import RxSwift
 import Cocoa
 
 extension NSImageView {
-    
+   
+    /**
+    Bindable sink for `image` property.
+    */
     public var rx_image: ObserverOf<NSImage!> {
-        return self.rx_imageAnimated(false)
+        return self.rx_imageAnimated(nil)
     }
     
-    public func rx_imageAnimated(animated: Bool) -> ObserverOf<NSImage!> {
+    /**
+    Bindable sink for `image` property.
+    
+    - parameter transitionType: Optional transition type while setting the image (kCATransitionFade, kCATransitionMoveIn, ...)
+    */
+    public func rx_imageAnimated(transitionType: String?) -> ObserverOf<NSImage!> {
         return ObserverOf { [weak self] event in
             MainScheduler.ensureExecutingOnScheduler()
             
             switch event {
-            case .Next(let boxedValue):
-                let value = boxedValue
-                if animated && value != nil {
-                    let transition = CATransition()
-                    transition.duration = 0.25
-                    transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
-                    transition.type = kCATransitionFade
-                    self?.layer?.addAnimation(transition, forKey: kCATransition)
+            case .Next(let value):
+                if let transitionType = transitionType {
+                    if let value = value {
+                        let transition = CATransition()
+                        transition.duration = 0.25
+                        transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+                        transition.type = transitionType
+                        self?.layer?.addAnimation(transition, forKey: kCATransition)
+                    }
                 }
                 else {
                     self?.layer?.removeAllAnimations()

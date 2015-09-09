@@ -41,7 +41,23 @@ var deallocatedSubjectContext: UInt8 = 0
 // KVO
 extension NSObject {
 
-    // Observes values on `keyPath` starting from `self` with `options` and retainsSelf if `retainSelf` is set.
+    /**
+    Observes values on `keyPath` starting from `self` with `options` and retains `self` if `retainSelf` is set.
+    
+    `rx_observe` is just a simple and performant wrapper around KVO mechanism.
+    
+    * it can be used to observe paths starting from `self` or from ancestors in ownership graph (`retainSelf = false`)
+    * it can be used to observe paths starting from descendants in ownership graph (`retainSelf = true`)
+    * the paths have to consist only of `strong` properties, otherwise you are risking crashing the system by not unregistering KVO observer before dealloc.
+    
+    If support for weak properties is needed or observing arbitrary or unknown relationships in the
+    ownership tree, `rx_observeWeakly` is the preferred option.
+    
+    - parameter keyPath: Key path of property names to observe.
+    - parameter options: KVO mechanism notification options.
+    - parameter retainSelf: Retains self during observation if set `true`.
+    - returns: Observable sequence of objects on `keyPath`.
+    */
     public func rx_observe<Element>(keyPath: String, options: NSKeyValueObservingOptions = NSKeyValueObservingOptions.New.union(NSKeyValueObservingOptions.Initial), retainSelf: Bool = true) -> Observable<Element?> {
         return KVOObservable(object: self, keyPath: keyPath, options: options, retainTarget: retainSelf)
     }
@@ -52,8 +68,20 @@ extension NSObject {
 // KVO
 extension NSObject {
     
-    // Observes values on `keyPath` starting from `self` with `options`
-    // Doesn't retain `self` and when `self` is deallocated, completes the sequence.
+    /**
+    Observes values on `keyPath` starting from `self` with `options` and doesn't retain `self`.
+    
+    It can be used in all cases where `rx_observe` can be used and additionally
+    
+    * because it won't retain observed target, it can be used to observe arbitrary object graph whose ownership relation is unknown
+    * it can be used to observe `weak` properties
+    
+    **Since it needs to intercept object deallocation process it needs to perform swizzling of `dealloc` method on observed object.**
+    
+    - parameter keyPath: Key path of property names to observe.
+    - parameter options: KVO mechanism notification options.
+    - returns: Observable sequence of objects on `keyPath`.
+    */
     public func rx_observeWeakly<Element>(keyPath: String, options: NSKeyValueObservingOptions = NSKeyValueObservingOptions.New.union(NSKeyValueObservingOptions.Initial)) -> Observable<Element?> {
         return observeWeaklyKeyPathFor(self, keyPath: keyPath, options: options)
             .map { n in
@@ -65,7 +93,14 @@ extension NSObject {
 
 // Dealloc
 extension NSObject {
-    // Sends next element when object is deallocated and immediately completes sequence.
+    
+    /**
+    Observable sequence of object deallocated events.
+    
+    After object is deallocated one `()` element will be produced and sequence will immediately complete.
+    
+    - returns: Observable sequence of object deallocated events.
+    */
     public var rx_deallocated: Observable<Void> {
         return rx_synchronized {
             if let subject = objc_getAssociatedObject(self, &deallocatedSubjectContext) as? ReplaySubject<Void> {
@@ -85,10 +120,15 @@ extension NSObject {
     }
 
 #if !DISABLE_SWIZZLING
-    // Sends element when object `dealloc` message is sent to `self`.
-    // Completes when `self` was deallocated.
-    //
-    // Has performance penalty, so prefer `rx_deallocated` when ever possible.
+    
+    /**
+    Observable sequence of object deallocating events.
+    
+    When `dealloc` message is sent to `self` one `()` element will be produced and after object is deallocated sequence
+    will immediately complete.
+    
+    - returns: Observable sequence of object deallocating events.
+    */
     public var rx_deallocating: Observable<Void> {
         return rx_synchronized {
             if let subject = objc_getAssociatedObject(self, &deallocatingSubjectContext) as? ReplaySubject<Void> {

@@ -87,12 +87,13 @@ public class RxCollectionViewSectionedDataSource<S: SectionModelType> : _RxColle
     public var supplementaryViewFactory: SupplementaryViewFactory
     
     public override init() {
-        self.cellFactory = { _, _, _ in castOrFail(nil).get() }
-        self.supplementaryViewFactory = { _, _, _ in castOrFail(nil).get() }
+        self.cellFactory = { _, _, _ in return (nil as UICollectionViewCell?)! }
+        self.supplementaryViewFactory = { _, _, _ in (nil as UICollectionReusableView?)! }
         
         super.init()
+        
         self.cellFactory = { [weak self] _ in
-            precondition(false, "There is a minor problem. `cellFactory` property on \(self!) was not set. Please set it manually, or use one of the `rx_subscribeTo` methods.")
+            precondition(false, "There is a minor problem. `cellFactory` property on \(self!) was not set. Please set it manually, or use one of the `rx_bindTo` methods.")
             
             return (nil as UICollectionViewCell!)!
         }
@@ -106,7 +107,7 @@ public class RxCollectionViewSectionedDataSource<S: SectionModelType> : _RxColle
     // observers
     
     public func addIncrementalUpdatesObserver(observer: IncrementalUpdateObserver) -> IncrementalUpdateDisposeKey {
-        return incrementalUpdateObservers.put(observer)
+        return incrementalUpdateObservers.insert(observer)
     }
     
     public func removeIncrementalUpdatesObserver(key: IncrementalUpdateDisposeKey) {

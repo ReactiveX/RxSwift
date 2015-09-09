@@ -14,6 +14,9 @@ import RxSwift
 
 extension NSControl {
     
+    /**
+    Reactive wrapper for control event.
+    */
     public var rx_controlEvents: ControlEvent<Void> {
         let source: Observable<Void> = AnonymousObservable { observer in
             MainScheduler.ensureExecutingOnScheduler()

@@ -36,7 +36,7 @@ class WikipediaSearchViewController: ViewController {
         let selectedResult: Observable<SearchResultViewModel> = resultsTableView.rx_modelSelected().asObservable()
         
         let viewModel = SearchViewModel(
-            searchText: searchBar.rx_searchText.asObservable(),
+            searchText: searchBar.rx_text.asObservable(),
             selectedResult: selectedResult
         )
         

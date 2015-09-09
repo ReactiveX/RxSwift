@@ -11,96 +11,161 @@ import Foundation
 import RxSwift
 #endif
 
-// `DelegateProxyType` protocol enables using both normal delegates and Rx observables with
-// views that can have only one delegate/datasource registered.
-//
-// `Proxies` store information about observers, subscriptions and delegates
-// for specific views.
-//
-//
-// This is more or less how it works.
-//
-/*
+/**
+`DelegateProxyType` protocol enables using both normal delegates and Rx observable sequences with
+views that can have only one delegate/datasource registered.
 
-  +-------------------------------------------+                           
-  |                                           |                           
-  | UIView subclass (UIScrollView)            |                           
-  |                                           |
-  +-----------+-------------------------------+                           
-              |                                                           
-              | Delegate                                                  
-              |                                                           
-              |                                                           
-  +-----------v-------------------------------+                           
-  |                                           |                           
-  | Delegate proxy : DelegateProxyType        +-----+---->  Observable<T1>
-  |                , UIScrollViewDelegate     |     |
-  +-----------+-------------------------------+     +---->  Observable<T2>
-              |                                     |                     
-              | rx_bind(delegate) -> Disposable     +---->  Observable<T3>
-              |                                     |                     
-              | proxies events                      |                     
-              |                                     |                     
-              |                                     v                     
-  +-----------v-------------------------------+                           
-  |                                           |                           
-  | Custom delegate (UIScrollViewDelegate)    |                           
-  |                                           |
-  +-------------------------------------------+                           
+`Proxies` store information about observers, subscriptions and delegates
+for specific views.
+
+Type implementing `DelegateProxyType` should never be initialized directly.
+
+To fetch initialized instance of type implementing `DelegateProxyType`, `proxyForObject` method
+should be used.
+
+This is more or less how it works.
+
+
+
+      +-------------------------------------------+
+      |                                           |                           
+      | UIView subclass (UIScrollView)            |                           
+      |                                           |
+      +-----------+-------------------------------+                           
+                  |                                                           
+                  | Delegate                                                  
+                  |                                                           
+                  |                                                           
+      +-----------v-------------------------------+                           
+      |                                           |                           
+      | Delegate proxy : DelegateProxyType        +-----+---->  Observable<T1>
+      |                , UIScrollViewDelegate     |     |
+      +-----------+-------------------------------+     +---->  Observable<T2>
+                  |                                     |                     
+                  |                                     +---->  Observable<T3>
+                  |                                     |                     
+                  | forwards events                     |
+                  | to custom delegate                  |
+                  |                                     v                     
+      +-----------v-------------------------------+                           
+      |                                           |                           
+      | Custom delegate (UIScrollViewDelegate)    |                           
+      |                                           |
+      +-------------------------------------------+                           
+
+
+Since RxCocoa needs to automagically create those Proxys
+..and because views that have delegates can be hierarchical
+
+UITableView : UIScrollView : UIView
+
+.. and corresponding delegates are also hierarchical
+
+UITableViewDelegate : UIScrollViewDelegate : NSObject
+
+.. and sometimes there can be only one proxy/delegate registered,
+every view has a corresponding delegate virtual factory method.
+
+In case of UITableView / UIScrollView, there is
+
+    extensions UIScrollView {
+        public func rx_createDelegateProxy() -> RxScrollViewDelegateProxy {
+            return RxScrollViewDelegateProxy(view: self)
+        }
+    ....
+
+
+and override in UITableView
+
+    extension UITableView {
+        public override func rx_createDelegateProxy() -> RxScrollViewDelegateProxy {
+        ....
+
 
 */
-// Since RxCocoa needs to automagically create those Proxys 
-// ..and because views that have delegates can be hierarchical
-//
-//      UITableView : UIScrollView : UIView
-//
-// .. and corresponding delegates are also hierarchical
-//
-//      UITableViewDelegate : UIScrollViewDelegate : NSObject
-//
-// .. and sometimes there can be only one proxy/delegate registered,
-// every view has a corresponding delegate virtual factory method.
-//
-// In case of UITableView / UIScrollView, there is
-//
-// ```
-// extensions UIScrollView {
-//     public func rx_createDelegateProxy() -> RxScrollViewDelegateProxy {
-//         return RxScrollViewDelegateProxy(view: self)
-//     }
-//
-//     ....
-// ```
-//
-// and override in UITableView
-//
-//```
-// extension UITableView {
-//     public override func rx_createDelegateProxy() -> RxScrollViewDelegateProxy {
-//         ....
-//```
-//
 public protocol DelegateProxyType : AnyObject {
-    // Creates new proxy for target object.
+    /**
+    Creates new proxy for target object.
+    */
     static func createProxyForObject(object: AnyObject) -> AnyObject
    
-    // There can be only one registered proxy per object
-    // These functions control that.
+    /**
+    Returns assigned proxy for object.
+    
+    - parameter object: Object that can have assigned delegate proxy.
+    - returns: Assigned delegate proxy or `nil` if no delegate proxy is assigned.
+    */
     static func assignedProxyFor(object: AnyObject) -> AnyObject?
+    
+    /**
+    Assigns proxy to object.
+    
+    - parameter object: Object that can have assigned delegate proxy.
+    - parameter proxy: Delegate proxy object to assign to `object`.
+    */
     static func assignProxy(proxy: AnyObject, toObject object: AnyObject)
     
-    // Set/Get current delegate for object
+    /**
+    Returns designated delegate property for object.
+    
+    Objects can have mutltiple delegate properties.
+    
+    Each delegate property needs to have it's own type implementing `DelegateProxyType`.
+    
+    - parameter object: Object that has delegate property.
+    - returns: Value of delegate property.
+    */
     static func currentDelegateFor(object: AnyObject) -> AnyObject?
+
+    /**
+    Sets designated delegate property for object.
+    
+    Objects can have mutltiple delegate properties.
+    
+    Each delegate property needs to have it's own type implementing `DelegateProxyType`.
+    
+    - parameter toObject: Object that has delegate property.
+    - parameter delegate: Delegate value.
+    */
     static func setCurrentDelegate(delegate: AnyObject?, toObject object: AnyObject)
     
-    // Set/Get current delegate on proxy
+    /**
+    Returns reference of normal delegate that receives all forwarded messages
+    through `self`.
+    
+    - returns: Value of reference if set or nil.
+    */
     func forwardToDelegate() -> AnyObject?
+
+    /**
+    Sets reference of normal delegate that receives all forwarded messages
+    through `self`.
+    
+    - parameter forwardToDelegate: Reference of delegate that receives all messages through `self`.
+    - parameter retainDelegate: Should `self` retain `forwardToDelegate`.
+    */
     func setForwardToDelegate(forwardToDelegate: AnyObject?, retainDelegate: Bool)
 }
 
-// future extensions :)
+/**
+Returns existing proxy for object or installs new instance of delegate proxy.
 
-// this will install proxy if needed
+- parameter object: Target object on which to install delegate proxy.
+- returns: Installed instance of delegate proxy.
+
+
+    extension UISearchBar {
+
+        public var rx_delegate: DelegateProxy {
+            return proxyForObject(self) as RxSearchBarDelegateProxy
+        }
+        
+        public var rx_searchText: ControlProperty<String> {
+            let source: Observable<String> = self.rx_delegate.observe("searchBar:textDidChange:")
+            ...
+        }
+    }
+*/
 public func proxyForObject<P: DelegateProxyType>(object: AnyObject) -> P {
     MainScheduler.ensureExecutingOnScheduler()
     
