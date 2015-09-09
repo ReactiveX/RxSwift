@@ -111,6 +111,8 @@ Hang out with us on [rxswift.slack.com](http://slack.rxswift.org) <img src="http
 1. [Hot and cold observables](Documentation/HotAndColdObservables.md)
 1. [Feature comparison with other frameworks](#feature-comparison-with-other-frameworks)
 1. [Roadmap](https://github.com/ReactiveX/RxSwift/wiki/roadmap)
+1. [Playgrounds](#playgrounds)
+1. [RxExamples](#rxexamples)
 1. [References](#references)
 
 ## Why
@@ -456,9 +458,9 @@ Open Rx.xcworkspace, choose `RxExample` and hit run. This method will build ever
 # Podfile
 use_frameworks!
 
-pod 'RxSwift', '~> 2.0-alpha'
-pod 'RxCocoa', '~> 2.0-alpha'
-pod 'RxBlocking', '~> 2.0-alpha'
+pod 'RxSwift', '~> 2.0.0-alpha'
+pod 'RxCocoa', '~> 2.0.0-alpha'
+pod 'RxBlocking', '~> 2.0.0-alpha'
 ```
 
 type in `Podfile` directory
@@ -472,7 +474,7 @@ $ pod install
 Add this to `Cartfile`
 
 ```
-git "git@github.com:ReactiveX/RxSwift.git" "2.0-alpha.1"
+git "git@github.com:ReactiveX/RxSwift.git" "2.0.0-alpha.2"
 ```
 
 ```
@@ -538,6 +540,22 @@ If you don't have a bridging header, you can go to your target's `Build Settings
 | Reentrant operators                                       |     •     |                        |  N/A  |     N/A    |
 
 ** Comparison with RAC with respect to v3.0-RC.1
+
+## Playgrounds
+
+To use playgrounds:
+
+* Open `Rx.xcworkspace`
+* Build `RxSwift-OSX` scheme
+* And then open `Rx` playground in `Rx.xcworkspace` tree view.
+* Choose `View > Show Debug Area`
+
+## RxExamples
+
+To use playgrounds:
+
+* Open `Rx.xcworkspace`
+* Choose one of example schemes and hit `Run`.
 
 ## References
 
