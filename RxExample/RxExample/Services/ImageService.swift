@@ -28,7 +28,7 @@ class DefaultImageService: ImageService {
 	
 	let $: Dependencies = Dependencies.sharedDependencies
 	
-    // 1rst level cache
+    // 1st level cache
     let imageCache = NSCache()
     
     // 2nd level cache
