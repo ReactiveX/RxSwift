@@ -14,7 +14,7 @@ class ThrottleSink<O: ObserverType, SchedulerType: Scheduler> : Sink<O>, Observe
     
     let parent: ParentType
     
-    var lock = NSRecursiveLock()
+    let lock = NSRecursiveLock()
     // state
     var id = 0 as UInt64
     var value: Element? = nil

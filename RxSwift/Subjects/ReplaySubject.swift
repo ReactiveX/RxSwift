@@ -61,7 +61,7 @@ public class ReplaySubject<Element> : Observable<Element>, SubjectType, Observer
 }
 
 class ReplayBufferBase<Element> : ReplaySubject<Element> {
-    var lock = NSRecursiveLock()
+    let lock = NSRecursiveLock()
     
     // state
     var disposed = false

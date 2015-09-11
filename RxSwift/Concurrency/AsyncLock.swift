@@ -21,7 +21,7 @@ That means that enqueued work could possibly be executed later on a different th
 class AsyncLock : Disposable {
     typealias Action = () -> Void
     
-    private var lock = NSRecursiveLock()
+    private let lock = NSRecursiveLock()
     
     private var queue: Queue<Action> = Queue(capacity: 2)
     private var isAcquired: Bool = false
