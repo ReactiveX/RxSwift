@@ -8,59 +8,31 @@
 
 import Foundation
 
-/**
-Simple wrapper for spin lock.
-*/
-struct SpinLock {
-    private var _lock = OS_SPINLOCK_INIT
+extension NSLocking {
     
-    init() {
-        
+    func performLocked(@noescape action: () throws -> Void) rethrows {
+        try calculateLocked(action)
     }
     
-    mutating func performLocked(@noescape action: () -> Void) {
-        OSSpinLockLock(&_lock)
-        action()
-        OSSpinLockUnlock(&_lock)
-    }
-    
-    mutating func calculateLocked<T>(@noescape action: () -> T) -> T {
-        OSSpinLockLock(&_lock)
-        let result = action()
-        OSSpinLockUnlock(&_lock)
-        return result
-    }
-
-    mutating func calculateLockedOrFail<T>(@noescape action: () throws -> T) throws -> T {
-        OSSpinLockLock(&_lock)
-        defer {
-            OSSpinLockUnlock(&_lock)
-        }
-        let result = try action()
-        return result
+    func calculateLocked<T>(@noescape action: () throws -> T) rethrows -> T {
+        lock()
+        defer { unlock() }
+        return try action()
     }
 }
 
-extension NSRecursiveLock {
-    func performLocked(@noescape action: () -> Void) {
-        self.lock()
-        action()
-        self.unlock()
+/**
+Simple wrapper for spin lock.
+*/
+class SpinLock: NSLocking {
+    
+    private var _lock = OS_SPINLOCK_INIT
+    
+    @objc func lock() {
+        OSSpinLockLock(&_lock)
     }
     
-    func calculateLocked<T>(@noescape action: () -> T) -> T {
-        self.lock()
-        let result = action()
-        self.unlock()
-        return result
-    }
-    
-    func calculateLockedOrFail<T>(@noescape action: () throws -> T) throws -> T {
-        self.lock()
-        defer {
-            self.unlock()
-        }
-        let result = try action()
-        return result
+    @objc func unlock() {
+        OSSpinLockUnlock(&_lock)
     }
 }

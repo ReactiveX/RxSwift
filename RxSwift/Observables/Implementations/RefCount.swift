@@ -63,7 +63,7 @@ class RefCountSink<CO: ConnectableObservableType, O: ObserverType where CO.E == 
 }
 
 class RefCount<CO: ConnectableObservableType>: Producer<CO.E> {
-    var lock = NSRecursiveLock()
+    let lock = NSRecursiveLock()
     
     // state
     var count = 0

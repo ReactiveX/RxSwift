@@ -151,7 +151,7 @@ Type erased recursive scheduler.
 public class RecursiveImmediateSchedulerOf<State> {
     typealias Action =  (state: State, recurse: State -> Void) -> Void
     
-    var lock = SpinLock()
+    let lock = SpinLock()
     let group = CompositeDisposable()
     
     var action: Action?

@@ -13,32 +13,31 @@ Represents a disposable resource which only allows a single assignment of its un
 
 If an underlying disposable resource has already been set, future attempts to set the underlying disposable resource will throw an exception.
 */
-public class SingleAssignmentDisposable : DisposeBase, Disposable, Cancelable {
+public class SingleAssignmentDisposable : DisposeBase, Cancelable {
+    
     var lock = SpinLock()
     
     // state
     var _disposed = false
     var _disposableSet = false
-    var _disposable = nil as Disposable?
-
+    var _disposable: Disposable?
+    
     /**
     - returns: A value that indicates whether the object is disposed.
     */
     public var disposed: Bool {
-        get {
-            return lock.calculateLocked {
-                return _disposed
-            }
+        return lock.calculateLocked {
+            return _disposed
         }
     }
-
+    
     /**
     Initializes a new instance of the `SingleAssignmentDisposable`.
     */
     public override init() {
         super.init()
     }
-
+    
     /**
     Gets or sets the underlying disposable. After disposal, the result of getting this property is undefined.
     
@@ -55,24 +54,24 @@ public class SingleAssignmentDisposable : DisposeBase, Disposable, Cancelable {
                 if _disposableSet {
                     rxFatalError("oldState.disposable != nil")
                 }
-
+                
                 _disposableSet = true
-
+                
                 if _disposed {
                     return newValue
                 }
-
+                
                 _disposable = newValue
-
+                
                 return nil
             }
-
+            
             if let disposable = disposable {
                 disposable.dispose()
             }
         }
     }
-
+    
     /**
     Disposes the underlying disposable.
     */
@@ -81,10 +80,10 @@ public class SingleAssignmentDisposable : DisposeBase, Disposable, Cancelable {
             _disposed = true
             let dispose = _disposable
             _disposable = nil
-
+            
             return dispose
         }
-
+        
         if let disposable = disposable {
             disposable.dispose()
         }

@@ -56,7 +56,7 @@ class SampleSequenceSink<O: ObserverType, SampleType> : Sink<O>, ObserverType {
     
     let parent: Parent
 
-    var lock = NSRecursiveLock()
+    let lock = NSRecursiveLock()
     // state
     var element = nil as Element?
     var atEnd = false

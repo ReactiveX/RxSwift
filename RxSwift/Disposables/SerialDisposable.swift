@@ -12,27 +12,14 @@ import Foundation
 Represents a disposable resource whose underlying disposable resource can be replaced by another disposable resource, causing automatic disposal of the previous underlying disposable resource.
 */
 public class SerialDisposable : DisposeBase, Cancelable {
-    var lock = SpinLock()
     
-    // state
-    var _current = nil as Disposable?
-    var _disposed = false
+    private let lock = SpinLock()
+    private var current: Disposable?
     
     /**
     - returns: Was resource disposed.
     */
-    public var disposed: Bool {
-        get {
-            return _disposed
-        }
-    }
-    
-    /**
-    Initializes a new instance of the `SerialDisposable`.
-    */
-    override public init() {
-        super.init()
-    }
+    public private(set) var disposed = false
     
     /**
     Gets or sets the underlying disposable.
@@ -47,21 +34,17 @@ public class SerialDisposable : DisposeBase, Cancelable {
                 return self.disposable
             }
         }
-        set (newDisposable) {
-            let disposable: Disposable? = self.lock.calculateLocked {
-                if _disposed {
-                    return newDisposable
-                }
-                else {
-                    let toDispose = _current
-                    _current = newDisposable
+        set {
+            lock.calculateLocked { () -> Disposable? in
+                if disposed {
+                    return newValue
+                } else {
+                    let toDispose = current
+                    current = newValue
                     return toDispose
-                }
-            }
-            
-            if let disposable = disposable {
-                disposable.dispose()
-            }
+                } }?
+                
+                .dispose()
         }
     }
     
@@ -69,18 +52,15 @@ public class SerialDisposable : DisposeBase, Cancelable {
     Disposes the underlying disposable as well as all future replacements.
     */
     public func dispose() {
-        let disposable: Disposable? = self.lock.calculateLocked {
-            if _disposed {
-                return nil
-            }
-            else {
-                _disposed = true
-                return _current
-            }
-        }
         
-        if let disposable = disposable {
-            disposable.dispose()
-        }
+        lock.calculateLocked { () -> Disposable? in
+            if disposed {
+                return nil
+            } else {
+                disposed = true
+                return current
+            } }?
+            
+            .dispose()
     }
 }

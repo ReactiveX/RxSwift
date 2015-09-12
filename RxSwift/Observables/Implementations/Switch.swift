@@ -16,7 +16,7 @@ class SwitchSink<S: ObservableType, O: ObserverType where S.E == O.E> : Sink<O>,
     let innerSubscription: SerialDisposable = SerialDisposable()
     let parent: Parent
     
-    var lock = NSRecursiveLock()
+    let lock = NSRecursiveLock()
     
     // state
     var stopped = false

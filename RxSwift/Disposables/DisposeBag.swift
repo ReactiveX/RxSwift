@@ -32,9 +32,9 @@ or create new one in it's place.
 In case explicit disposal is necessary, there is also `CompositeDisposable`.
 */
 public class DisposeBag: DisposeBase {
-    private var lock = SpinLock()
-    var disposables = [Disposable]()
-    var disposed = false
+    
+    private let lock = SpinLock()
+    private var disposables = [Disposable]()
     
     /**
     Constructs new empty dispose bag.
@@ -49,40 +49,14 @@ public class DisposeBag: DisposeBase {
     - parameter disposable: Disposable to add.
     */
     public func addDisposable(disposable: Disposable) {
-        let dispose = lock.calculateLocked { () -> Bool in
-            if disposed {
-                return true
-            }
-            
+        lock.performLocked {
             disposables.append(disposable)
-            
-            return false
-        }
-        
-        if dispose {
-            disposable.dispose()
-        }
-    }
-
-    /**
-    This is internal on purpose, take a look at `CompositeDisposable` instead.
-    */
-    func dispose() {
-        let oldDisposables = lock.calculateLocked { () -> [Disposable] in
-            let disposables = self.disposables
-            
-            self.disposables.removeAll(keepCapacity: false)
-            self.disposed = true
-            
-            return disposables
-        }
-        
-        for disposable in oldDisposables {
-            disposable.dispose()
         }
     }
     
     deinit {
-        dispose()
+        disposables.forEach {
+            $0.dispose()
+        }
     }
 }

@@ -9,6 +9,7 @@
 import Foundation
 
 class TernaryDisposable : DisposeBase, Cancelable {
+    
     var disposable1: Disposable?
     var disposable2: Disposable?
     var disposable3: Disposable?

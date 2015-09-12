@@ -12,7 +12,7 @@ class Subscription<Element> : Disposable {
     typealias ObserverType = Observer<Element>
     typealias KeyType = Bag<ObserverOf<Element>>.KeyType
     
-    private var lock = SpinLock()
+    private let lock = SpinLock()
 
     // state
     private var subject: PublishSubject<Element>?

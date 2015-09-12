@@ -22,7 +22,7 @@ class ObserveOnSerialDispatchQueueSink<O: ObserverType> : ObserverBase<O.E> {
     let scheduler: SerialDispatchQueueScheduler
     let observer: O
     
-    var disposeLock = SpinLock()
+    let disposeLock = SpinLock()
     
     var cancel: Disposable
     

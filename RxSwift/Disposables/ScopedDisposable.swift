@@ -12,8 +12,7 @@ extension Disposable {
     /**
     Returns `ScopedDispose` that will dispose `self` when execution exits current block.
     
-    **If the reference to returned instance isn't named, it will be deallocated 
-    immediately and subscription will be immediately disposed.**
+    **If the reference to returned instance isn't named, it will be deallocated immediately and subscription will be immediately disposed.**
     
     Example usage:
     
@@ -33,7 +32,8 @@ extension Disposable {
 This returns ARC (RAII) like resource management to `RxSwift`.
 */
 public class ScopedDisposable : DisposeBase {
-    var disposable: Disposable?
+    
+    private let disposable: Disposable
     
     /**
     Initializes new instance with a single disposable.
@@ -44,14 +44,7 @@ public class ScopedDisposable : DisposeBase {
         self.disposable = disposable
     }
     
-    /**
-    This is intentionally private.
-    */
-    func dispose() {
-        self.disposable?.dispose()
-    }
-    
     deinit {
-        self.dispose()
+        disposable.dispose()
     }
 }

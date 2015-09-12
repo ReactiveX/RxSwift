@@ -70,7 +70,7 @@ public final class BehaviorSubject<Element> : Observable<Element>, SubjectType, 
     - returns: Latest value.
     */
     public func value() throws -> Element {
-        return try lock.calculateLockedOrFail {
+        return try lock.calculateLocked {
             if _disposed {
                 throw RxError.DisposedError
             }

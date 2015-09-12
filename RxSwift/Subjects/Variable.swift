@@ -20,7 +20,7 @@ public class Variable<Element> : ObservableType {
     
     let subject: BehaviorSubject<Element>
     
-    private var lock = SpinLock()
+    private let lock = SpinLock()
  
     // state
     private var _value: E

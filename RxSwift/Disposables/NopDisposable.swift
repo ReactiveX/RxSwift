@@ -18,11 +18,7 @@ public class NopDisposable : Disposable {
     /**
     Singleton instance of `NopDisposable`.
     */
-    public static let instance: Disposable = NopDisposable()
-    
-    init() {
-        
-    }
+    public static let instance = NopDisposable()
     
     /**
     Does nothing.
