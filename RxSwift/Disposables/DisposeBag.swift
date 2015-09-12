@@ -37,6 +37,13 @@ public class DisposeBag: DisposeBase {
     private var disposables = [Disposable]()
     
     /**
+    Constructs new empty dispose bag.
+    */
+    public override init() {
+        super.init()
+    }
+    
+    /**
     Adds `disposable` to be disposed when dispose bag is being deinited.
     
     - parameter disposable: Disposable to add.
