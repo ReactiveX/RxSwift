@@ -9,7 +9,6 @@
 import Foundation
 
 class Subscription<Element> : Disposable {
-    typealias ObserverType = Observer<Element>
     typealias KeyType = Bag<ObserverOf<Element>>.KeyType
     
     private var lock = SpinLock()

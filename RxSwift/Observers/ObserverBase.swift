@@ -8,41 +8,37 @@
 
 import Foundation
 
-class ObserverBase<ElementType> : Observer<ElementType>, Disposable {
-    typealias Element = ElementType
+class ObserverBase<ElementType> : Disposable, ObserverType {
+    typealias E = ElementType
     
     var lock = SpinLock()
-    var isStopped: Bool = false
+    var isStopped: Int32 = 0
     
-    override init() {
-        super.init()
+    init() {
     }
     
-    override func on(event: Event<Element>) {
+    func on(event: Event<E>) {
         switch event {
         case .Next:
-            if !isStopped {
+            if isStopped == 0 {
                 onCore(event)
             }
         case .Error: fallthrough
         case .Completed:
-            let wasStopped: Bool = lock.calculateLocked {
-                let wasStopped = self.isStopped
-                self.isStopped = true
-                return wasStopped
+           
+            if !OSAtomicCompareAndSwap32(0, 1, &isStopped) {
+                return
             }
             
-            if !wasStopped {
-                self.onCore(event)
-            }
+            self.onCore(event)
         }
     }
     
-    func onCore(event: Event<Element>) {
+    func onCore(event: Event<E>) {
         return abstractMethod()
     }
     
     func dispose() {
-        isStopped = true
+        isStopped = 1
     }
 }

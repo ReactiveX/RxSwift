@@ -3,7 +3,15 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-## [2.0.0-alpha.2](https://github.com/ReactiveX/RxSwift/pull/50) (WIP)
+## [2.0.0-alpha.3](https://github.com/ReactiveX/RxSwift/releases/tag/2.0.0-alpha.3)
+
+* Renames `ImmediateScheduler` protocol to `ImmediateSchedulerType`
+* Renames `Scheduler` protocol to `SchedulerType`
+* Adds `generate` operator
+* Cleanup of dead observer code.
+* Removes `SpinLock`s in disposables in favor of more performant `OSAtomicCompareAndSwap32`.
+
+## [2.0.0-alpha.2](https://github.com/ReactiveX/RxSwift/releases/tag/2.0.0-alpha.2)
 
 #### Updated
 
@@ -18,7 +26,7 @@ All notable changes to this project will be documented in this file.
 * Renames `rx_searchText` to `rx_text` on `UISearchBar+Rx`.
 * Changes parameter type for `rx_imageAnimated` to be transitionType (kCATransitionFade, kCATransitionMoveIn, ...).
 
-## [2.0.0-alpha.1](https://github.com/ReactiveX/RxSwift/pull/50) (WIP)
+## [2.0.0-alpha.1](https://github.com/ReactiveX/RxSwift/releases/tag/2.0-alpha.1)
 
 #### Fixed
 

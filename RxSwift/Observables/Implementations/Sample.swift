@@ -8,7 +8,9 @@
 
 import Foundation
 
-class SamplerSink<O: ObserverType, ElementType, SampleType where O.E == ElementType> : Observer<SampleType> {
+class SamplerSink<O: ObserverType, ElementType, SampleType where O.E == ElementType> : ObserverType {
+    typealias E = SampleType
+    
     typealias Parent = SampleSequenceSink<O, SampleType>
     
     let parent: Parent
@@ -17,7 +19,7 @@ class SamplerSink<O: ObserverType, ElementType, SampleType where O.E == ElementT
         self.parent = parent
     }
     
-    override func on(event: Event<E>) {
+    func on(event: Event<E>) {
         parent.lock.performLocked {
             switch event {
             case .Next:

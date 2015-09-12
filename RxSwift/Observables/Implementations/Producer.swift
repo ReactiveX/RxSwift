@@ -33,11 +33,11 @@ public class Producer<Element> : Observable<Element> {
             subscription.disposable = disposable
         }
         else {
-            CurrentThreadScheduler.instance.schedule(sink, action: { sink in
+            CurrentThreadScheduler.instance.schedule(sink) { sink in
                 let disposable = self.run(observer, cancel: subscription, setSink: setSink)
                 subscription.disposable = disposable
                 return NopDisposable.instance
-            })
+            }
         }
         
         return d

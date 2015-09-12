@@ -151,22 +151,12 @@
 		C8093D641B8A72BE0088E94D /* Observable+Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C9D1B8A72BE0088E94D /* Observable+Time.swift */; };
 		C8093D651B8A72BE0088E94D /* ObservableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C9E1B8A72BE0088E94D /* ObservableType.swift */; };
 		C8093D661B8A72BE0088E94D /* ObservableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C9E1B8A72BE0088E94D /* ObservableType.swift */; };
-		C8093D671B8A72BE0088E94D /* Observer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C9F1B8A72BE0088E94D /* Observer.swift */; };
-		C8093D681B8A72BE0088E94D /* Observer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C9F1B8A72BE0088E94D /* Observer.swift */; };
 		C8093D691B8A72BE0088E94D /* ObserverOf.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093CA01B8A72BE0088E94D /* ObserverOf.swift */; };
 		C8093D6A1B8A72BE0088E94D /* ObserverOf.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093CA01B8A72BE0088E94D /* ObserverOf.swift */; };
 		C8093D6B1B8A72BE0088E94D /* AnonymousObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093CA21B8A72BE0088E94D /* AnonymousObserver.swift */; };
 		C8093D6C1B8A72BE0088E94D /* AnonymousObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093CA21B8A72BE0088E94D /* AnonymousObserver.swift */; };
-		C8093D6D1B8A72BE0088E94D /* AutoDetachObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093CA31B8A72BE0088E94D /* AutoDetachObserver.swift */; };
-		C8093D6E1B8A72BE0088E94D /* AutoDetachObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093CA31B8A72BE0088E94D /* AutoDetachObserver.swift */; };
-		C8093D6F1B8A72BE0088E94D /* DoneObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093CA41B8A72BE0088E94D /* DoneObserver.swift */; };
-		C8093D701B8A72BE0088E94D /* DoneObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093CA41B8A72BE0088E94D /* DoneObserver.swift */; };
-		C8093D711B8A72BE0088E94D /* NopObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093CA51B8A72BE0088E94D /* NopObserver.swift */; };
-		C8093D721B8A72BE0088E94D /* NopObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093CA51B8A72BE0088E94D /* NopObserver.swift */; };
 		C8093D731B8A72BE0088E94D /* ObserverBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093CA61B8A72BE0088E94D /* ObserverBase.swift */; };
 		C8093D741B8A72BE0088E94D /* ObserverBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093CA61B8A72BE0088E94D /* ObserverBase.swift */; };
-		C8093D751B8A72BE0088E94D /* SafeObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093CA71B8A72BE0088E94D /* SafeObserver.swift */; };
-		C8093D761B8A72BE0088E94D /* SafeObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093CA71B8A72BE0088E94D /* SafeObserver.swift */; };
 		C8093D791B8A72BE0088E94D /* TailRecursiveSink.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093CA91B8A72BE0088E94D /* TailRecursiveSink.swift */; };
 		C8093D7A1B8A72BE0088E94D /* TailRecursiveSink.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093CA91B8A72BE0088E94D /* TailRecursiveSink.swift */; };
 		C8093D7B1B8A72BE0088E94D /* ObserverType+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093CAA1B8A72BE0088E94D /* ObserverType+Extensions.swift */; };
@@ -406,14 +396,9 @@
 		C8093C9C1B8A72BE0088E94D /* Observable+StandardSequenceOperators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Observable+StandardSequenceOperators.swift"; sourceTree = "<group>"; };
 		C8093C9D1B8A72BE0088E94D /* Observable+Time.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Observable+Time.swift"; sourceTree = "<group>"; };
 		C8093C9E1B8A72BE0088E94D /* ObservableType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObservableType.swift; sourceTree = "<group>"; };
-		C8093C9F1B8A72BE0088E94D /* Observer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Observer.swift; sourceTree = "<group>"; };
 		C8093CA01B8A72BE0088E94D /* ObserverOf.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObserverOf.swift; sourceTree = "<group>"; };
 		C8093CA21B8A72BE0088E94D /* AnonymousObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnonymousObserver.swift; sourceTree = "<group>"; };
-		C8093CA31B8A72BE0088E94D /* AutoDetachObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoDetachObserver.swift; sourceTree = "<group>"; };
-		C8093CA41B8A72BE0088E94D /* DoneObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoneObserver.swift; sourceTree = "<group>"; };
-		C8093CA51B8A72BE0088E94D /* NopObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NopObserver.swift; sourceTree = "<group>"; };
 		C8093CA61B8A72BE0088E94D /* ObserverBase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObserverBase.swift; sourceTree = "<group>"; };
-		C8093CA71B8A72BE0088E94D /* SafeObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SafeObserver.swift; sourceTree = "<group>"; };
 		C8093CA91B8A72BE0088E94D /* TailRecursiveSink.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TailRecursiveSink.swift; sourceTree = "<group>"; };
 		C8093CAA1B8A72BE0088E94D /* ObserverType+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ObserverType+Extensions.swift"; sourceTree = "<group>"; };
 		C8093CAB1B8A72BE0088E94D /* ObserverType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObserverType.swift; sourceTree = "<group>"; };
@@ -577,7 +562,6 @@
 				C8093C681B8A72BE0088E94D /* Observable.swift */,
 				C8093C671B8A72BE0088E94D /* Observable+Extensions.swift */,
 				C8093C9E1B8A72BE0088E94D /* ObservableType.swift */,
-				C8093C9F1B8A72BE0088E94D /* Observer.swift */,
 				C8093CA01B8A72BE0088E94D /* ObserverOf.swift */,
 				C8093CAB1B8A72BE0088E94D /* ObserverType.swift */,
 				C8093CAA1B8A72BE0088E94D /* ObserverType+Extensions.swift */,
@@ -709,11 +693,7 @@
 			isa = PBXGroup;
 			children = (
 				C8093CA21B8A72BE0088E94D /* AnonymousObserver.swift */,
-				C8093CA31B8A72BE0088E94D /* AutoDetachObserver.swift */,
-				C8093CA41B8A72BE0088E94D /* DoneObserver.swift */,
-				C8093CA51B8A72BE0088E94D /* NopObserver.swift */,
 				C8093CA61B8A72BE0088E94D /* ObserverBase.swift */,
-				C8093CA71B8A72BE0088E94D /* SafeObserver.swift */,
 				C8093CA91B8A72BE0088E94D /* TailRecursiveSink.swift */,
 			);
 			path = Observers;
@@ -1313,7 +1293,6 @@
 				C8093CE61B8A72BE0088E94D /* NopDisposable.swift in Sources */,
 				C8093CD41B8A72BE0088E94D /* Disposable.swift in Sources */,
 				C8093CEE1B8A72BE0088E94D /* SingleAssignmentDisposable.swift in Sources */,
-				C8093D681B8A72BE0088E94D /* Observer.swift in Sources */,
 				C8C3DA0A1B93941E004D233E /* FailWith.swift in Sources */,
 				C8093D9C1B8A72BE0088E94D /* SchedulerServices+Emulation.swift in Sources */,
 				C8093D6A1B8A72BE0088E94D /* ObserverOf.swift in Sources */,
@@ -1322,7 +1301,6 @@
 				C8093D4E1B8A72BE0088E94D /* Zip+arity.swift in Sources */,
 				C8093D4C1B8A72BE0088E94D /* Timer.swift in Sources */,
 				C8C3DA071B9393AC004D233E /* Empty.swift in Sources */,
-				C8093D761B8A72BE0088E94D /* SafeObserver.swift in Sources */,
 				C8093D881B8A72BE0088E94D /* RxBox.swift in Sources */,
 				C8093D3A1B8A72BE0088E94D /* Sink.swift in Sources */,
 				C8093D461B8A72BE0088E94D /* TakeUntil.swift in Sources */,
@@ -1389,7 +1367,6 @@
 				C8093D341B8A72BE0088E94D /* RefCount.swift in Sources */,
 				C8093D0E1B8A72BE0088E94D /* Concat.swift in Sources */,
 				C8093CCA1B8A72BE0088E94D /* Lock.swift in Sources */,
-				C8093D6E1B8A72BE0088E94D /* AutoDetachObserver.swift in Sources */,
 				C8093D441B8A72BE0088E94D /* Take.swift in Sources */,
 				C8093D321B8A72BE0088E94D /* Reduce.swift in Sources */,
 				C84B38EA1BA43380001B7D88 /* ScheduledItem.swift in Sources */,
@@ -1397,7 +1374,6 @@
 				C8093D141B8A72BE0088E94D /* Debug.swift in Sources */,
 				C8093CCE1B8A72BE0088E94D /* Bag.swift in Sources */,
 				C8093D301B8A72BE0088E94D /* Producer.swift in Sources */,
-				C8093D701B8A72BE0088E94D /* DoneObserver.swift in Sources */,
 				C8093CF21B8A72BE0088E94D /* TernaryDisposable.swift in Sources */,
 				C8093CF81B8A72BE0088E94D /* ImmediateSchedulerType.swift in Sources */,
 				C8093CC61B8A72BE0088E94D /* Cancelable.swift in Sources */,
@@ -1411,7 +1387,6 @@
 				C8093CE21B8A72BE0088E94D /* NAryDisposable.swift in Sources */,
 				C8093CEC1B8A72BE0088E94D /* SerialDisposable.swift in Sources */,
 				C8C3DA0D1B93959F004D233E /* Never.swift in Sources */,
-				C8093D721B8A72BE0088E94D /* NopObserver.swift in Sources */,
 				C8093D7C1B8A72BE0088E94D /* ObserverType+Extensions.swift in Sources */,
 				C8093CF61B8A72BE0088E94D /* Event.swift in Sources */,
 				C8093D521B8A72BE0088E94D /* Zip.swift in Sources */,
@@ -1428,7 +1403,6 @@
 				C8093CE51B8A72BE0088E94D /* NopDisposable.swift in Sources */,
 				C8093CD31B8A72BE0088E94D /* Disposable.swift in Sources */,
 				C8093CED1B8A72BE0088E94D /* SingleAssignmentDisposable.swift in Sources */,
-				C8093D671B8A72BE0088E94D /* Observer.swift in Sources */,
 				C8C3DA091B93941E004D233E /* FailWith.swift in Sources */,
 				C8093D9B1B8A72BE0088E94D /* SchedulerServices+Emulation.swift in Sources */,
 				C8093D691B8A72BE0088E94D /* ObserverOf.swift in Sources */,
@@ -1437,7 +1411,6 @@
 				C8093D4D1B8A72BE0088E94D /* Zip+arity.swift in Sources */,
 				C8093D4B1B8A72BE0088E94D /* Timer.swift in Sources */,
 				C8C3DA061B9393AC004D233E /* Empty.swift in Sources */,
-				C8093D751B8A72BE0088E94D /* SafeObserver.swift in Sources */,
 				C8093D871B8A72BE0088E94D /* RxBox.swift in Sources */,
 				C8093D391B8A72BE0088E94D /* Sink.swift in Sources */,
 				C8093D451B8A72BE0088E94D /* TakeUntil.swift in Sources */,
@@ -1504,7 +1477,6 @@
 				C8093D331B8A72BE0088E94D /* RefCount.swift in Sources */,
 				C8093D0D1B8A72BE0088E94D /* Concat.swift in Sources */,
 				C8093CC91B8A72BE0088E94D /* Lock.swift in Sources */,
-				C8093D6D1B8A72BE0088E94D /* AutoDetachObserver.swift in Sources */,
 				C8093D431B8A72BE0088E94D /* Take.swift in Sources */,
 				C8093D311B8A72BE0088E94D /* Reduce.swift in Sources */,
 				C84B38E91BA43380001B7D88 /* ScheduledItem.swift in Sources */,
@@ -1512,7 +1484,6 @@
 				C8093D131B8A72BE0088E94D /* Debug.swift in Sources */,
 				C8093CCD1B8A72BE0088E94D /* Bag.swift in Sources */,
 				C8093D2F1B8A72BE0088E94D /* Producer.swift in Sources */,
-				C8093D6F1B8A72BE0088E94D /* DoneObserver.swift in Sources */,
 				C8093CF11B8A72BE0088E94D /* TernaryDisposable.swift in Sources */,
 				C8093CF71B8A72BE0088E94D /* ImmediateSchedulerType.swift in Sources */,
 				C8093CC51B8A72BE0088E94D /* Cancelable.swift in Sources */,
@@ -1526,7 +1497,6 @@
 				C8093CE11B8A72BE0088E94D /* NAryDisposable.swift in Sources */,
 				C8093CEB1B8A72BE0088E94D /* SerialDisposable.swift in Sources */,
 				C8C3DA0C1B93959F004D233E /* Never.swift in Sources */,
-				C8093D711B8A72BE0088E94D /* NopObserver.swift in Sources */,
 				C8093D7B1B8A72BE0088E94D /* ObserverType+Extensions.swift in Sources */,
 				C8093CF51B8A72BE0088E94D /* Event.swift in Sources */,
 				C8093D511B8A72BE0088E94D /* Zip.swift in Sources */,

@@ -13,25 +13,16 @@ Represents a disposable resource whose disposal invocation will be scheduled on 
 */
 public class ScheduledDisposable : Cancelable {
     public let scheduler: ImmediateSchedulerType
-    var _disposable: Disposable?
-    var lock = SpinLock()
-
-    var disposable: Disposable {
-        get {
-            return lock.calculateLocked {
-                _disposable ?? NopDisposable.instance
-            }
-        }
-    }
     
+    var _disposed: Int32 = 0
+    var _disposable: Disposable?
+
     /**
     - returns: Was resource disposed.
     */
     public var disposed: Bool {
         get {
-            return lock.calculateLocked {
-                return _disposable == nil
-            }
+            return _disposed == 1
         }
     }
     
@@ -57,11 +48,9 @@ public class ScheduledDisposable : Cancelable {
     }
     
     func disposeInner() {
-        lock.performLocked {
-            if let disposable = _disposable {
-                disposable.dispose()
-                _disposable = nil
-            }
+        if OSAtomicCompareAndSwap32(0, 1, &_disposed) {
+            _disposable!.dispose()
+            _disposable = nil
         }
     }
 }
