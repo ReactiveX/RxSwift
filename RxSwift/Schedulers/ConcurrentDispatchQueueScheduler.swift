@@ -13,7 +13,7 @@ Abstracts the work that needs to be peformed on a specific `dispatch_queue_t`. Y
 
 This scheduler is suitable when some work needs to be performed in background.
 */
-public class ConcurrentDispatchQueueScheduler: Scheduler {
+public class ConcurrentDispatchQueueScheduler: SchedulerType {
     public typealias TimeInterval = NSTimeInterval
     public typealias Time = NSDate
     

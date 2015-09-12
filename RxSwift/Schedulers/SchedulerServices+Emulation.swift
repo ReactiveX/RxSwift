@@ -14,7 +14,7 @@ enum SchedulePeriodicRecursiveCommand {
     case DispatchEnd
 }
 
-class SchedulePeriodicRecursive<State, S: Scheduler> {
+class SchedulePeriodicRecursive<State, S: SchedulerType> {
     typealias RecursiveAction = State -> State
     typealias TimeInterval = S.TimeInterval
     typealias RecursiveScheduler = RecursiveSchedulerOf<SchedulePeriodicRecursiveCommand, S.TimeInterval>

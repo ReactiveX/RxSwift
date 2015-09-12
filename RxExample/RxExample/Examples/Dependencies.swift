@@ -16,7 +16,7 @@ class Dependencies {
     static let sharedDependencies = Dependencies() // Singleton
     
     let URLSession = NSURLSession.sharedSession()
-    let backgroundWorkScheduler: ImmediateScheduler
+    let backgroundWorkScheduler: ImmediateSchedulerType
     let mainScheduler: SerialDispatchQueueScheduler
     let wireframe: Wireframe
     

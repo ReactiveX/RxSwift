@@ -25,7 +25,7 @@ In case some customization need to be made on it before usage,
 internal serial queue can be customized using `serialQueueConfiguration`
 callback.
 */
-public class SerialDispatchQueueScheduler: Scheduler {
+public class SerialDispatchQueueScheduler: SchedulerType {
     public typealias TimeInterval = NSTimeInterval
     public typealias Time = NSDate
     

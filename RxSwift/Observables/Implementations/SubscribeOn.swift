@@ -45,9 +45,9 @@ class SubscribeOnSink<O: ObserverType> : Sink<O>, ObserverType {
 
 class SubscribeOn<Element> : Producer<Element> {
     let source: Observable<Element>
-    let scheduler: ImmediateScheduler
+    let scheduler: ImmediateSchedulerType
     
-    init(source: Observable<Element>, scheduler: ImmediateScheduler) {
+    init(source: Observable<Element>, scheduler: ImmediateSchedulerType) {
         self.source = source
         self.scheduler = scheduler
     }

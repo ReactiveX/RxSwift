@@ -32,10 +32,10 @@ func ==(lhs: SignupState, rhs: SignupState) -> Bool {
 }
 
 class GitHubAPI {
-    let dataScheduler: ImmediateScheduler
+    let dataScheduler: ImmediateSchedulerType
     let URLSession: NSURLSession
 
-    init(dataScheduler: ImmediateScheduler, URLSession: NSURLSession) {
+    init(dataScheduler: ImmediateSchedulerType, URLSession: NSURLSession) {
         self.dataScheduler = dataScheduler
         self.URLSession = URLSession
     }

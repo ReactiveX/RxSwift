@@ -9,10 +9,10 @@
 import Foundation
 
 class ObserveOn<E> : Producer<E> {
-    let scheduler: ImmediateScheduler
+    let scheduler: ImmediateSchedulerType
     let source: Observable<E>
     
-    init(source: Observable<E>, scheduler: ImmediateScheduler) {
+    init(source: Observable<E>, scheduler: ImmediateSchedulerType) {
         self.scheduler = scheduler
         self.source = source
         
@@ -46,7 +46,7 @@ class ObserveOnSink<O: ObserverType> : ObserverBase<O.E> {
     
     var cancel: Disposable
     
-    let scheduler: ImmediateScheduler
+    let scheduler: ImmediateSchedulerType
     var observer: O?
     
     var state = ObserveOnState.Stopped
@@ -54,7 +54,7 @@ class ObserveOnSink<O: ObserverType> : ObserverBase<O.E> {
     var queue = Queue<Event<E>>(capacity: 10)
     let scheduleDisposable = SerialDisposable()
     
-    init(scheduler: ImmediateScheduler, observer: O, cancel: Disposable) {
+    init(scheduler: ImmediateSchedulerType, observer: O, cancel: Disposable) {
         self.cancel = cancel
         self.scheduler = scheduler
         self.observer = observer
@@ -74,7 +74,7 @@ class ObserveOnSink<O: ObserverType> : ObserverBase<O.E> {
         }
         
         if shouldStart {
-            scheduleDisposable.disposable = self.scheduler.scheduleRecursively((), action: self.run)
+            scheduleDisposable.disposable = self.scheduler.scheduleRecursive((), action: self.run)
         }
     }
     

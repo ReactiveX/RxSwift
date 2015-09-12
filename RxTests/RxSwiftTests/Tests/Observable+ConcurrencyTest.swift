@@ -308,7 +308,7 @@ extension ObservableConcurrencyTest {
 // observeOn concurrent scheduler
 class ObservableConcurrentSchedulerConcurrencyTest: ObservableConcurrencyTestBase {
 
-    func createScheduler() -> ImmediateScheduler {
+    func createScheduler() -> ImmediateSchedulerType {
         let operationQueue = NSOperationQueue()
         operationQueue.maxConcurrentOperationCount = 8
         return OperationQueueScheduler(operationQueue: operationQueue)
@@ -565,7 +565,7 @@ class ObservableConcurrentSchedulerConcurrencyTest: ObservableConcurrencyTestBas
 }
 
 class ObservableConcurrentSchedulerConcurrencyTest2 : ObservableConcurrentSchedulerConcurrencyTest {
-    override func createScheduler() -> ImmediateScheduler {
+    override func createScheduler() -> ImmediateSchedulerType {
         return ConcurrentDispatchQueueScheduler(globalConcurrentQueuePriority: .Default)
     }
 }

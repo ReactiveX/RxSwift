@@ -1,5 +1,5 @@
 //
-//  ImmediateScheduler.swift
+//  ImmediateSchedulerType.swift
 //  RxSwift
 //
 //  Created by Krunoslav Zaher on 5/31/15.
@@ -11,7 +11,7 @@ import Foundation
 /**
 Represents an object that immediately schedules units of work.
 */
-public protocol ImmediateScheduler {
+public protocol ImmediateSchedulerType {
     /**
     Schedules an action to be executed immediatelly.
     
@@ -22,7 +22,7 @@ public protocol ImmediateScheduler {
     func schedule<StateType>(state: StateType, action: (StateType) -> Disposable) -> Disposable
 }
 
-extension ImmediateScheduler {
+extension ImmediateSchedulerType {
     /**
     Schedules an action to be executed recursively.
     
@@ -30,7 +30,7 @@ extension ImmediateScheduler {
     - parameter action: Action to execute recursively. The last parameter passed to the action is used to trigger recursive scheduling of the action, passing in recursive invocation state.
     - returns: The disposable object used to cancel the scheduled action (best effort).
     */
-    public func scheduleRecursively<State>(state: State, action: (state: State, recurse: (State) -> Void) -> Void) -> Disposable {
+    public func scheduleRecursive<State>(state: State, action: (state: State, recurse: (State) -> Void) -> Void) -> Disposable {
         let recursiveScheduler = RecursiveImmediateSchedulerOf(action: action, scheduler: self)
         
         recursiveScheduler.schedule(state)

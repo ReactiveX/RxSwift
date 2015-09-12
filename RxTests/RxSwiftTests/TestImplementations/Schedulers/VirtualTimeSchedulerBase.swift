@@ -48,7 +48,7 @@ class ScheduledItem<T> : ScheduledItemProtocol {
 }
 
 
-class VirtualTimeSchedulerBase : Scheduler, CustomStringConvertible {
+class VirtualTimeSchedulerBase : SchedulerType, CustomStringConvertible {
     typealias TimeInterval = Int
     typealias Time = Int
     

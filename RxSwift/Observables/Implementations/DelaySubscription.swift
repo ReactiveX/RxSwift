@@ -8,7 +8,7 @@
 
 import Foundation
 
-class DelaySubscriptionSink<ElementType, O: ObserverType, S: Scheduler where O.E == ElementType> : Sink<O>, ObserverType {
+class DelaySubscriptionSink<ElementType, O: ObserverType, S: SchedulerType where O.E == ElementType> : Sink<O>, ObserverType {
     typealias Parent = DelaySubscription<ElementType, S>
     typealias E = O.E
     
@@ -28,7 +28,7 @@ class DelaySubscriptionSink<ElementType, O: ObserverType, S: Scheduler where O.E
     
 }
 
-class DelaySubscription<Element, S: Scheduler>: Producer<Element> {
+class DelaySubscription<Element, S: SchedulerType>: Producer<Element> {
     typealias TimeInterval = S.TimeInterval
     
     let source: Observable<Element>

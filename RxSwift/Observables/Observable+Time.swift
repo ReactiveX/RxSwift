@@ -20,7 +20,7 @@ extension ObservableType {
     - parameter scheduler: Scheduler to run the throttle timers and send events on.
     - returns: The throttled sequence.
     */
-    public func throttle<S: Scheduler>(dueTime: S.TimeInterval, _ scheduler: S)
+    public func throttle<S: SchedulerType>(dueTime: S.TimeInterval, _ scheduler: S)
         -> Observable<E> {
         return Throttle(source: self.asObservable(), dueTime: dueTime, scheduler: scheduler)
     }
@@ -34,7 +34,7 @@ extension ObservableType {
     - parameter scheduler: Scheduler to run the throttle timers and send events on.
     - returns: The throttled sequence.
     */
-    public func debounce<S: Scheduler>(dueTime: S.TimeInterval, scheduler: S)
+    public func debounce<S: SchedulerType>(dueTime: S.TimeInterval, scheduler: S)
         -> Observable<E> {
         return Throttle(source: self.asObservable(), dueTime: dueTime, scheduler: scheduler)
     }
@@ -84,7 +84,7 @@ Returns an observable sequence that produces a value after each period, using th
 - parameter scheduler: Scheduler to run the timer on.
 - returns: An observable sequence that produces a value after each period.
 */
-public func interval<S: Scheduler>(period: S.TimeInterval, _ scheduler: S)
+public func interval<S: SchedulerType>(period: S.TimeInterval, _ scheduler: S)
     -> Observable<Int64> {
     return Timer(dueTime: period,
         period: period,
@@ -102,7 +102,7 @@ Returns an observable sequence that periodically produces a value after the spec
 - parameter scheduler: Scheduler to run timers on.
 - returns: An observable sequence that produces a value after due time has elapsed and then each period.
 */
-public func timer<S: Scheduler>(dueTime: S.TimeInterval, _ period: S.TimeInterval, _ scheduler: S)
+public func timer<S: SchedulerType>(dueTime: S.TimeInterval, _ period: S.TimeInterval, _ scheduler: S)
     -> Observable<Int64> {
     return Timer(
         dueTime: dueTime,
@@ -118,7 +118,7 @@ Returns an observable sequence that produces a single value at the specified abs
 - parameter scheduler: Scheduler to run the timer on.
 - returns: An observable sequence that produces a value at due time.
 */
-public func timer<S: Scheduler>(dueTime: S.TimeInterval, _ scheduler: S)
+public func timer<S: SchedulerType>(dueTime: S.TimeInterval, _ scheduler: S)
     -> Observable<Int64> {
     return Timer(
         dueTime: dueTime,
@@ -138,7 +138,7 @@ extension ObservableType {
     - parameter scheduler: Scheduler to run the timer on.
     - returns: An observable sequence with the elements taken during the specified duration from the start of the source sequence.
     */
-    public func take<S: Scheduler>(duration: S.TimeInterval, _ scheduler: S)
+    public func take<S: SchedulerType>(duration: S.TimeInterval, _ scheduler: S)
         -> Observable<E> {
         return TakeTime(source: self.asObservable(), duration: duration, scheduler: scheduler)
     }
@@ -155,7 +155,7 @@ extension ObservableType {
     - parameter scheduler: Scheduler to run the timer on.
     - returns: An observable sequence with the elements skipped during the specified duration from the start of the source sequence.
     */
-    public func skip<S: Scheduler>(duration: S.TimeInterval, _ scheduler: S)
+    public func skip<S: SchedulerType>(duration: S.TimeInterval, _ scheduler: S)
         -> Observable<E> {
         return SkipTime(source: self.asObservable(), duration: duration, scheduler: scheduler)
     }
@@ -173,7 +173,7 @@ extension ObservableType {
     - parameter scheduler: Scheduler to run the subscription delay timer on.
     - returns: Time-shifted sequence.
     */
-    public func delaySubscription<S: Scheduler>(dueTime: S.TimeInterval, _ scheduler: S)
+    public func delaySubscription<S: SchedulerType>(dueTime: S.TimeInterval, _ scheduler: S)
         -> Observable<E> {
         return DelaySubscription(source: self.asObservable(), dueTime: dueTime, scheduler: scheduler)
     }

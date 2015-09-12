@@ -63,7 +63,7 @@ class SkipCount<Element>: Producer<Element> {
 
 // time version
 
-class SkipTimeSink<ElementType, S: Scheduler, O: ObserverType where O.E == ElementType> : Sink<O>, ObserverType {
+class SkipTimeSink<ElementType, S: SchedulerType, O: ObserverType where O.E == ElementType> : Sink<O>, ObserverType {
     typealias Parent = SkipTime<ElementType, S>
     typealias Element = ElementType
 
@@ -110,7 +110,7 @@ class SkipTimeSink<ElementType, S: Scheduler, O: ObserverType where O.E == Eleme
     }
 }
 
-class SkipTime<Element, S: Scheduler>: Producer<Element> {
+class SkipTime<Element, S: SchedulerType>: Producer<Element> {
     typealias TimeInterval = S.TimeInterval
     
     let source: Observable<Element>

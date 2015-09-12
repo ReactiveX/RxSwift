@@ -12,7 +12,7 @@ import Foundation
 Represents a disposable resource whose disposal invocation will be scheduled on the specified scheduler.
 */
 public class ScheduledDisposable : Cancelable {
-    public let scheduler: ImmediateScheduler
+    public let scheduler: ImmediateSchedulerType
     var _disposable: Disposable?
     var lock = SpinLock()
 
@@ -41,7 +41,7 @@ public class ScheduledDisposable : Cancelable {
     - parameter scheduler: Scheduler where the disposable resource will be disposed on.
     - parameter disposable: Disposable resource to dispose on the given scheduler.
     */
-    init(scheduler: ImmediateScheduler, disposable: Disposable) {
+    init(scheduler: ImmediateSchedulerType, disposable: Disposable) {
         self.scheduler = scheduler
         self._disposable = disposable
     }

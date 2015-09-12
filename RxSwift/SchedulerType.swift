@@ -1,5 +1,5 @@
 //
-//  Scheduler.swift
+//  SchedulerType.swift
 //  Rx
 //
 //  Created by Krunoslav Zaher on 2/8/15.
@@ -11,7 +11,7 @@ import Foundation
 /**
 Represents an object that schedules units of work.
 */
-public protocol Scheduler: ImmediateScheduler {
+public protocol SchedulerType: ImmediateSchedulerType {
     /**
     Type that represents time interval in the context of this scheduler.
     */
@@ -51,7 +51,7 @@ public protocol Scheduler: ImmediateScheduler {
     func schedulePeriodic<StateType>(state: StateType, startAfter: TimeInterval, period: TimeInterval, action: (StateType) -> StateType) -> Disposable
 }
 
-extension Scheduler {
+extension SchedulerType {
     public func schedulePeriodic<StateType>(state: StateType, startAfter: TimeInterval, period: TimeInterval, action: (StateType) -> StateType) -> Disposable {
         let schedule = SchedulePeriodicRecursive(scheduler: self, startAfter: startAfter, period: period, action: action, state: state)
             

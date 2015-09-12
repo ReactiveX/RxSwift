@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		5E5D10BB1B48355200432B25 /* UIControl+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5D10BA1B48355200432B25 /* UIControl+RxTests.swift */; };
+		C801EB5A1B97951100C4D8C4 /* Observable+CreationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C801EB591B97951100C4D8C4 /* Observable+CreationTest.swift */; settings = {ASSET_TAGS = (); }; };
+		C801EB5B1B97951100C4D8C4 /* Observable+CreationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C801EB591B97951100C4D8C4 /* Observable+CreationTest.swift */; settings = {ASSET_TAGS = (); }; };
 		C811084D1AF50E2A001C13E4 /* NSNotificationCenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C811082B1AF50E2A001C13E4 /* NSNotificationCenterTests.swift */; };
 		C811084F1AF50E2A001C13E4 /* ColdObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81108301AF50E2A001C13E4 /* ColdObservable.swift */; };
 		C81108501AF50E2A001C13E4 /* TestConnectableObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81108311AF50E2A001C13E4 /* TestConnectableObservable.swift */; };
@@ -103,6 +105,7 @@
 
 /* Begin PBXFileReference section */
 		5E5D10BA1B48355200432B25 /* UIControl+RxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIControl+RxTests.swift"; sourceTree = "<group>"; };
+		C801EB591B97951100C4D8C4 /* Observable+CreationTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Observable+CreationTest.swift"; sourceTree = "<group>"; };
 		C81108201AF50E11001C13E4 /* RxTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RxTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C81108241AF50E11001C13E4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C811082B1AF50E2A001C13E4 /* NSNotificationCenterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSNotificationCenterTests.swift; sourceTree = "<group>"; };
@@ -296,6 +299,7 @@
 				C81108441AF50E2A001C13E4 /* Observable+BindingTest.swift */,
 				C8CDD7D31B52BEC40043F0C5 /* Observable+BlockingTest.swift */,
 				C8B787F91AF55CDE00206D02 /* Observable+ConcurrencyTest.swift */,
+				C801EB591B97951100C4D8C4 /* Observable+CreationTest.swift */,
 				C81108471AF50E2A001C13E4 /* Observable+MultipleTest.swift */,
 				C81108451AF50E2A001C13E4 /* Observable+MultipleTest+CombineLatest.swift */,
 				C81108461AF50E2A001C13E4 /* Observable+MultipleTest+CombineLatest.tt */,
@@ -435,6 +439,7 @@
 				5E5D10BB1B48355200432B25 /* UIControl+RxTests.swift in Sources */,
 				C897EC4A1B1123DA009C2CB0 /* Observable+MultipleTest+Zip.swift in Sources */,
 				C81108571AF50E2A001C13E4 /* Recorded.swift in Sources */,
+				C801EB5A1B97951100C4D8C4 /* Observable+CreationTest.swift in Sources */,
 				C81108591AF50E2A001C13E4 /* TestScheduler.swift in Sources */,
 				C81108601AF50E2A001C13E4 /* Observable+AggregateTest.swift in Sources */,
 				C81108521AF50E2A001C13E4 /* MockObserver.swift in Sources */,
@@ -472,6 +477,7 @@
 				C88BB8A11B07E64B0064D411 /* Observable+MultipleTest.swift in Sources */,
 				C81CC92C1B513FD400915606 /* NSObject+RxTests.swift in Sources */,
 				C8B605ED1B6260A10044410E /* AnonymousObservable+Test.swift in Sources */,
+				C801EB5B1B97951100C4D8C4 /* Observable+CreationTest.swift in Sources */,
 				C88BB8A21B07E64B0064D411 /* ColdObservable.swift in Sources */,
 				C85F4E441B7F70EA00A866C7 /* CompositeObserverTest.swift in Sources */,
 				C88BB8A31B07E64B0064D411 /* HotObservable.swift in Sources */,

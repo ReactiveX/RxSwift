@@ -114,3 +114,18 @@ public func deferred<E>(observableFactory: () throws -> Observable<E>)
     -> Observable<E> {
     return Deferred(observableFactory: observableFactory)
 }
+
+
+/**
+Generates an observable sequence by running a state-driven loop producing the sequence's elements, using the specified scheduler 
+to run the loop send out observer messages.
+
+- parameter initialState: Initial state.
+- parameter condition: Condition to terminate generation (upon returning `false`).
+- parameter iterate: Iteration step function.
+- parameter scheduler: Scheduler on which to run the generator loop.
+- returns: The generated sequence.
+*/
+public func generate<E>(initialState: E, condition: E throws -> Bool, scheduler: ImmediateSchedulerType = CurrentThreadScheduler.instance, iterate: E throws -> E) -> Observable<E> {
+    return Generate(initialState: initialState, condition: condition, iterate: iterate, resultSelector: { $0 }, scheduler: scheduler)
+}

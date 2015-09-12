@@ -13,7 +13,7 @@ Abstracts the work that needs to be peformed on a specific `NSOperationQueue`.
 
 This scheduler is suitable for cases when there is some bigger chunk of work that needs to be performed in background and you want to fine tune concurrent processing using `maxConcurrentOperationCount`.
 */
-public class OperationQueueScheduler: ImmediateScheduler {
+public class OperationQueueScheduler: ImmediateSchedulerType {
     public let operationQueue: NSOperationQueue
     
     /**

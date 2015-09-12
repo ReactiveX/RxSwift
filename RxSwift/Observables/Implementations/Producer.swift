@@ -26,9 +26,19 @@ public class Producer<Element> : Observable<Element> {
         let d = BinaryDisposable(sink, subscription)
 
         let setSink: (Disposable) -> Void = { d in sink.disposable = d }
-        let disposable = run(observer, cancel: subscription, setSink: setSink)
         
-        subscription.disposable = disposable
+        if !CurrentThreadScheduler.isScheduleRequired {
+            let disposable = run(observer, cancel: subscription, setSink: setSink)
+            
+            subscription.disposable = disposable
+        }
+        else {
+            CurrentThreadScheduler.instance.schedule(sink, action: { sink in
+                let disposable = self.run(observer, cancel: subscription, setSink: setSink)
+                subscription.disposable = disposable
+                return NopDisposable.instance
+            })
+        }
         
         return d
     }

@@ -8,7 +8,7 @@
 
 import Foundation
 
-class TimerSink<S: Scheduler, O: ObserverType where O.E == Int64> : Sink<O> {
+class TimerSink<S: SchedulerType, O: ObserverType where O.E == Int64> : Sink<O> {
     typealias Parent = Timer<S>
     
     let parent: Parent
@@ -26,7 +26,7 @@ class TimerSink<S: Scheduler, O: ObserverType where O.E == Int64> : Sink<O> {
     }
 }
 
-class TimerOneOffSink<S: Scheduler, O: ObserverType where O.E == Int64> : Sink<O> {
+class TimerOneOffSink<S: SchedulerType, O: ObserverType where O.E == Int64> : Sink<O> {
     typealias Parent = Timer<S>
     
     let parent: Parent
@@ -46,7 +46,7 @@ class TimerOneOffSink<S: Scheduler, O: ObserverType where O.E == Int64> : Sink<O
     }
 }
 
-class Timer<S: Scheduler>: Producer<Int64> {
+class Timer<S: SchedulerType>: Producer<Int64> {
     typealias TimeInterval = S.TimeInterval
     
     let scheduler: S
