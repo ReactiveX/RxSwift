@@ -237,7 +237,7 @@ class ReplaySubscription<Element> : Disposable {
     typealias Subject = ReplaySubject<Element>
     typealias DisposeKey = ReplayBufferBase<Element>.DisposeKey
     
-    var lock = SpinLock()
+    let lock = SpinLock()
     
     // state
     var subject: Subject?

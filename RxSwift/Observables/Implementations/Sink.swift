@@ -9,7 +9,7 @@
 import Foundation
 
 class Sink<O : ObserverType> : Disposable {
-    private var lock = SpinLock()
+    private let lock = SpinLock()
     
     // state
     var _observer: O?
