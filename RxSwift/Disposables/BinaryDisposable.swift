@@ -12,18 +12,17 @@ import Foundation
 Represents two disposable resources that are disposed together.
 */
 public final class BinaryDisposable : DisposeBase, Cancelable {
-    var disposable1: Disposable?
-    var disposable2: Disposable?
     
-    var _disposed: Int32 = 0
+    private var disposable1: Disposable?
+    private var disposable2: Disposable?
+    
+    private var _disposed: Int32 = 0
     
     /**
     - returns: Was resource disposed.
     */
     public var disposed: Bool {
-        get {
-            return _disposed > 0
-        }
+        return _disposed > 0
     }
     
     /**
@@ -35,7 +34,6 @@ public final class BinaryDisposable : DisposeBase, Cancelable {
     init(_ disposable1: Disposable, _ disposable2: Disposable) {
         self.disposable1 = disposable1
         self.disposable2 = disposable2
-        super.init()
     }
     
     /**

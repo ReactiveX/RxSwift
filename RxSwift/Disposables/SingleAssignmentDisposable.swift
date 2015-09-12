@@ -31,14 +31,7 @@ public class SingleAssignmentDisposable : DisposeBase, Disposable, Cancelable {
             }
         }
     }
-
-    /**
-    Initializes a new instance of the `SingleAssignmentDisposable`.
-    */
-    public override init() {
-        super.init()
-    }
-
+    
     /**
     Gets or sets the underlying disposable. After disposal, the result of getting this property is undefined.
     
