@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "RxBlocking"
-  s.version          = "2.0.0-alpha.2"
+  s.version          = "2.0.0-alpha.3"
   s.summary          = "RxSwift Blocking operatos"
   s.description      = <<-DESC
                         Set of blocking operators for unit testing
