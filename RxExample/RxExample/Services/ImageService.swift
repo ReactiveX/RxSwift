@@ -28,7 +28,7 @@ class DefaultImageService: ImageService {
 	
 	let $: Dependencies = Dependencies.sharedDependencies
 	
-    // 1rst level cache
+    // 1st level cache
     let imageCache = NSCache()
     
     // 2nd level cache
@@ -61,7 +61,7 @@ class DefaultImageService: ImageService {
     
     func imageFromURL(URL: NSURL) -> Observable<Image> {
         return deferred {
-            let maybeImage = self.imageDataCache.objectForKey(URL) as? Image
+            let maybeImage = self.imageCache.objectForKey(URL) as? Image
             
             let decodedImage: Observable<Image>
             
