@@ -241,6 +241,7 @@
 		C86409F91BA5909000D3C4E8 /* SubjectType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C864098E1BA5909000D3C4E8 /* SubjectType.swift */; };
 		C86409FA1BA5909000D3C4E8 /* Variable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C864098F1BA5909000D3C4E8 /* Variable.swift */; };
 		C86409FF1BA5A87200D3C4E8 /* Range.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86409FE1BA5A87200D3C4E8 /* Range.swift */; };
+		C8640A011BA5AB5A00D3C4E8 /* Repeat.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8640A001BA5AB5A00D3C4E8 /* Repeat.swift */; };
 		C86E2F3E1AE5A0CA00C31024 /* SearchResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86E2F321AE5A0CA00C31024 /* SearchResultViewModel.swift */; };
 		C86E2F3F1AE5A0CA00C31024 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86E2F331AE5A0CA00C31024 /* SearchViewModel.swift */; };
 		C86E2F451AE5A0CA00C31024 /* WikipediaAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86E2F3B1AE5A0CA00C31024 /* WikipediaAPI.swift */; };
@@ -522,6 +523,7 @@
 		C864098E1BA5909000D3C4E8 /* SubjectType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubjectType.swift; sourceTree = "<group>"; };
 		C864098F1BA5909000D3C4E8 /* Variable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Variable.swift; sourceTree = "<group>"; };
 		C86409FE1BA5A87200D3C4E8 /* Range.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Range.swift; sourceTree = "<group>"; };
+		C8640A001BA5AB5A00D3C4E8 /* Repeat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Repeat.swift; sourceTree = "<group>"; };
 		C86E2F321AE5A0CA00C31024 /* SearchResultViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = SearchResultViewModel.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		C86E2F331AE5A0CA00C31024 /* SearchViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = SearchViewModel.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		C86E2F3B1AE5A0CA00C31024 /* WikipediaAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WikipediaAPI.swift; sourceTree = "<group>"; };
@@ -1002,6 +1004,7 @@
 				C86409FE1BA5A87200D3C4E8 /* Range.swift */,
 				C864095A1BA5909000D3C4E8 /* Reduce.swift */,
 				C864095B1BA5909000D3C4E8 /* RefCount.swift */,
+				C8640A001BA5AB5A00D3C4E8 /* Repeat.swift */,
 				C864095C1BA5909000D3C4E8 /* Sample.swift */,
 				C864095D1BA5909000D3C4E8 /* Scan.swift */,
 				C864095E1BA5909000D3C4E8 /* Sink.swift */,
@@ -1516,6 +1519,7 @@
 				C8297E561B6CF905000589EA /* WikipediaPage.swift in Sources */,
 				C86409921BA5909000D3C4E8 /* Lock.swift in Sources */,
 				C86409901BA5909000D3C4E8 /* Cancelable.swift in Sources */,
+				C8640A011BA5AB5A00D3C4E8 /* Repeat.swift in Sources */,
 				C84B3A2F1BA4345A001B7D88 /* _RXKVOObserver.m in Sources */,
 				C8297E571B6CF905000589EA /* Randomizer.swift in Sources */,
 				C86409981BA5909000D3C4E8 /* AnonymousDisposable.swift in Sources */,

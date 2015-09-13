@@ -115,7 +115,6 @@ public func deferred<E>(observableFactory: () throws -> Observable<E>)
     return Deferred(observableFactory: observableFactory)
 }
 
-
 /**
 Generates an observable sequence by running a state-driven loop producing the sequence's elements, using the specified scheduler 
 to run the loop send out observer messages.
@@ -148,4 +147,15 @@ public func range(start: Int, _ count: Int, _ scheduler: ImmediateSchedulerType 
     }
     
     return RangeProducer<Int>(start: start, count: count, scheduler: scheduler)
+}
+
+/**
+Generates an observable sequence that repeats the given element infinitely, using the specified scheduler to send out observer messages.
+
+- parameter element: Element to repeat.
+- parameter scheduler: Scheduler to run the producer loop on.
+- returns: An observable sequence that repeats the given element infinitely.
+*/
+public func repeatElement<E>(element: E, _ scheduler: ImmediateSchedulerType) -> Observable<E> {
+    return RepeatElement(element: element, scheduler: scheduler)
 }

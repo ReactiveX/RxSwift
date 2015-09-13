@@ -100,6 +100,7 @@ extension ObservableCreationTests {
     }
 }
 
+// range
 extension ObservableCreationTests {
     func testRange_Boundaries() {
         let scheduler = TestScheduler(initialClock: 0)
@@ -126,5 +127,25 @@ extension ObservableCreationTests {
             next(202, -9),
             next(203, -8)
             ])
+    }
+}
+
+// repeatElement
+extension ObservableCreationTests {
+    func testRepeat_Element() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let res = scheduler.start(207) {
+            repeatElement(42, scheduler)
+        }
+        
+        XCTAssertEqual(res.messages, [
+            next(201, 42),
+            next(202, 42),
+            next(203, 42),
+            next(204, 42),
+            next(205, 42),
+            next(206, 42)
+        ])
     }
 }
