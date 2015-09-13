@@ -15,8 +15,8 @@ public class SerialDisposable : DisposeBase, Cancelable {
     var lock = SpinLock()
     
     // state
-    var _current = nil as Disposable?
-    var _disposed = false
+    private var _current = nil as Disposable?
+    private var _disposed = false
     
     /**
     - returns: Was resource disposed.

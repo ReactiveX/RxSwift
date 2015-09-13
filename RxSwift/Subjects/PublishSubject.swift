@@ -50,7 +50,7 @@ public class PublishSubject<Element> : Observable<Element>, SubjectType, Cancela
     
     typealias DisposeKey = Bag<ObserverOf<Element>>.KeyType
     
-    private var lock = NSRecursiveLock()
+    private let lock = NSRecursiveLock()
     
     // state
     var _disposed = false

@@ -70,9 +70,10 @@ class TakeCount<Element>: Producer<Element> {
 class TakeTimeSink<ElementType, S: SchedulerType, O: ObserverType where O.E == ElementType> : Sink<O>, ObserverType {
     typealias Parent = TakeTime<ElementType, S>
     typealias E = ElementType
+
+    let parent: Parent
     
     let lock = NSRecursiveLock()
-    let parent: Parent
     
     init(parent: Parent, observer: O, cancel: Disposable) {
         self.parent = parent

@@ -70,6 +70,8 @@ class SkipTimeSink<ElementType, S: SchedulerType, O: ObserverType where O.E == E
     let parent: Parent
     
     let lock = NSRecursiveLock()
+    
+    // state
     var open = false
     
     init(parent: Parent, observer: O, cancel: Disposable) {

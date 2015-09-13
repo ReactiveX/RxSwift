@@ -14,12 +14,12 @@ Represents a disposable resource which only allows a single assignment of its un
 If an underlying disposable resource has already been set, future attempts to set the underlying disposable resource will throw an exception.
 */
 public class SingleAssignmentDisposable : DisposeBase, Disposable, Cancelable {
-    var lock = SpinLock()
+    private var lock = SpinLock()
     
     // state
-    var _disposed = false
-    var _disposableSet = false
-    var _disposable = nil as Disposable?
+    private var _disposed = false
+    private var _disposableSet = false
+    private var _disposable = nil as Disposable?
 
     /**
     - returns: A value that indicates whether the object is disposed.

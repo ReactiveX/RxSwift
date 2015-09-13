@@ -12,9 +12,4 @@ public final class StableCompositeDisposable {
     public static func create(disposable1: Disposable, _ disposable2: Disposable) -> Disposable {
         return BinaryDisposable(disposable1, disposable2)
     }
-    
-    public static func create(disposable1: Disposable, _ disposable2: Disposable, _ disposable3: Disposable) -> Disposable {
-        return TernaryDisposable(disposable1, disposable2, disposable3)
-    }
-    
 }

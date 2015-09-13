@@ -17,7 +17,7 @@ protocol CombineLatestProtocol : class {
 class CombineLatestSink<O: ObserverType> : Sink<O>, CombineLatestProtocol {
     typealias Element = O.E
    
-    var lock = NSRecursiveLock()
+    let lock = NSRecursiveLock()
     
     var hasValueAll: Bool
     var hasValue: [Bool]

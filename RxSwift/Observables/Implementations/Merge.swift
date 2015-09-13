@@ -49,7 +49,7 @@ class MergeSink<S: ObservableType, O: ObserverType where O.E == S.E> : Sink<O>, 
     
     let parent: Parent
     
-    var lock = NSRecursiveLock()
+    let lock = NSRecursiveLock()
     
     // state
     var stopped = false
@@ -154,7 +154,9 @@ class MergeConcurrentSink<S: ObservableType, O: ObserverType where S.E == O.E> :
     
     let parent: Parent
     
-    var lock = NSRecursiveLock()
+    let lock = NSRecursiveLock()
+    
+    // state
     var stopped = false
     var activeCount = 0
     var queue = RxMutableBox(QueueType(capacity: 2))

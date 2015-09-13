@@ -62,6 +62,7 @@ class TakeUntilSink<ElementType, Other, O: ObserverType where O.E == ElementType
     let parent: Parent
  
     let lock = NSRecursiveLock()
+    
     // state
     var open = false
     

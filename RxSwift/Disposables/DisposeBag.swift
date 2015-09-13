@@ -32,9 +32,12 @@ or create new one in it's place.
 In case explicit disposal is necessary, there is also `CompositeDisposable`.
 */
 public class DisposeBag: DisposeBase {
+    
     private var lock = SpinLock()
-    var disposables = [Disposable]()
-    var disposed = false
+    
+    // state
+    private var disposables = [Disposable]()
+    private var disposed = false
     
     /**
     Constructs new empty dispose bag.

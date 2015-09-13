@@ -42,7 +42,9 @@ public class ConnectableObservable<S: SubjectType> : Observable<S.E>, Connectabl
     let subject: S
     let source: Observable<S.SubjectObserverType.E>
     
-    var lock = NSRecursiveLock()
+    let lock = NSRecursiveLock()
+    
+    // state
     var connection: ConnectionType?
     
     public init(source: Observable<S.SubjectObserverType.E>, subject: S) {

@@ -14,8 +14,10 @@ Represents a group of disposable resources that are disposed together.
 public class CompositeDisposable : DisposeBase, Disposable, Cancelable {
     public typealias DisposeKey = Bag<Disposable>.KeyType
     
-    var lock = SpinLock()
-    var disposables: Bag<Disposable>? = Bag()
+    private var lock = SpinLock()
+    
+    // state
+    private var disposables: Bag<Disposable>? = Bag()
 
     public var disposed: Bool {
         get {

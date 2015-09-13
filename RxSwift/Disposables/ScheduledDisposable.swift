@@ -14,8 +14,10 @@ Represents a disposable resource whose disposal invocation will be scheduled on 
 public class ScheduledDisposable : Cancelable {
     public let scheduler: ImmediateSchedulerType
     
-    var _disposed: Int32 = 0
-    var _disposable: Disposable?
+    private var _disposed: Int32 = 0
+    
+    // state
+    private var _disposable: Disposable?
 
     /**
     - returns: Was resource disposed.

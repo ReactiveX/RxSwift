@@ -109,6 +109,8 @@ class ZipObserver<ElementType> : ObserverType {
     var parent: ZipSinkProtocol?
     
     let lock: NSRecursiveLock
+    
+    // state
     let index: Int
     let this: Disposable
     let setNextValue: ValueSetter

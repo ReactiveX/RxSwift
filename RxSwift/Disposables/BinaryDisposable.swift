@@ -12,10 +12,12 @@ import Foundation
 Represents two disposable resources that are disposed together.
 */
 public final class BinaryDisposable : DisposeBase, Cancelable {
-    var disposable1: Disposable?
-    var disposable2: Disposable?
     
-    var _disposed: Int32 = 0
+    private var _disposed: Int32 = 0
+
+    // state
+    private var disposable1: Disposable?
+    private var disposable2: Disposable?
     
     /**
     - returns: Was resource disposed.

@@ -178,3 +178,23 @@ extension ObservableType {
         return DelaySubscription(source: self.asObservable(), dueTime: dueTime, scheduler: scheduler)
     }
 }
+
+// buffer 
+
+extension ObservableType {
+
+    /**
+    Projects each element of an observable sequence into a buffer that's sent out when either it's full or a given amount of time has elapsed, using the specified scheduler to run timers.
+    
+    A useful real-world analogy of this overload is the behavior of a ferry leaving the dock when all seats are taken, or at the scheduled time of departure, whichever event occurs first.
+    
+    - parameter timeSpan: Maximum time length of a buffer.
+    - parameter count: Maximum element count of a buffer.
+    - parameter scheduler: Scheduler to run buffering timers on.
+    - returns: An observable sequence of buffers.
+    */
+    public func buffer<S: SchedulerType>(timeSpan timeSpan: S.TimeInterval, count: Int, scheduler: S)
+        -> Observable<[E]> {
+        return BufferTimeCount(source: self.asObservable(), timeSpan: timeSpan, count: count, scheduler: scheduler)
+    }
+}

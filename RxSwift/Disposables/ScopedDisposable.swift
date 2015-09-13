@@ -33,7 +33,7 @@ extension Disposable {
 This returns ARC (RAII) like resource management to `RxSwift`.
 */
 public class ScopedDisposable : DisposeBase {
-    var disposable: Disposable?
+    private var disposable: Disposable?
     
     /**
     Initializes new instance with a single disposable.

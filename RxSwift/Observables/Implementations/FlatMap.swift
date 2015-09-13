@@ -58,11 +58,13 @@ class FlatMapSink<SourceType, S: ObservableType, O: ObserverType where O.E == S.
     typealias Parent = FlatMap<SourceType, S>
     
     let parent: Parent
-    
+
     let lock = NSRecursiveLock()
+    
+    // state
     let group = CompositeDisposable()
     let sourceSubscription = SingleAssignmentDisposable()
-    
+
     var stopped = false
     
     init(parent: Parent, observer: O, cancel: Disposable) {

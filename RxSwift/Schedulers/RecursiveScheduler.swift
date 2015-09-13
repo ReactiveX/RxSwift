@@ -32,6 +32,8 @@ public class RecursiveSchedulerOf<State, TimeInterval> {
     typealias Action =  (state: State, scheduler: RecursiveSchedulerOf<State, TimeInterval>) -> Void
 
     let lock = NSRecursiveLock()
+    
+    // state
     let group = CompositeDisposable()
     
     var action: Action?

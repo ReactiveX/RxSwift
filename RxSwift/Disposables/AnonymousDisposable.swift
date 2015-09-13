@@ -16,8 +16,8 @@ When dispose method is called, disposal action will be dereferenced.
 public final class AnonymousDisposable : DisposeBase, Cancelable {
     public typealias DisposeAction = () -> Void
     
-    var _disposed: Int32 = 0
-    var disposeAction: DisposeAction?
+    private var _disposed: Int32 = 0
+    private var disposeAction: DisposeAction?
     
     /**
     - returns: Was resource disposed.
