@@ -113,9 +113,8 @@ public struct Queue<T>: SequenceType {
     public mutating func enqueue(element: T) {
         version++
         
-        _ = count == storage.count
         if count == storage.count {
-            resizeTo(storage.count * resizeFactor)
+            resizeTo(max(storage.count, 1) * resizeFactor)
         }
         
         storage[pushNextIndex] = element

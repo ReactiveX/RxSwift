@@ -1289,4 +1289,14 @@ extension ObservableTimeTest {
             ])
     }
 
+    func bufferWithTimeOrCount_Default() {
+        let backgroundScheduler = SerialDispatchQueueScheduler(globalConcurrentQueuePriority: .Default)
+        
+        let result = try! range(1, 10, backgroundScheduler)
+            .buffer(timeSpan: 1000, count: 3, scheduler: backgroundScheduler)
+            .skip(1)
+            .first()
+            
+        XCTAssertEqual(result!, [4, 5, 6])
+    }
 }

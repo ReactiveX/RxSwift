@@ -7,9 +7,12 @@ All notable changes to this project will be documented in this file.
 
 * Renames `ImmediateScheduler` protocol to `ImmediateSchedulerType`
 * Renames `Scheduler` protocol to `SchedulerType`
+* Adds `CurrentThreadScheduler`
 * Adds `generate` operator
 * Cleanup of dead observer code.
 * Removes `SpinLock`s in disposables in favor of more performant `OSAtomicCompareAndSwap32`.
+* Adds `buffer` operator (version with time and count).
+* Adds `range` operator.
 
 ## [2.0.0-alpha.2](https://github.com/ReactiveX/RxSwift/releases/tag/2.0.0-alpha.2)
 

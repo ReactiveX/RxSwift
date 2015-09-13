@@ -129,3 +129,23 @@ to run the loop send out observer messages.
 public func generate<E>(initialState: E, condition: E throws -> Bool, scheduler: ImmediateSchedulerType = CurrentThreadScheduler.instance, iterate: E throws -> E) -> Observable<E> {
     return Generate(initialState: initialState, condition: condition, iterate: iterate, resultSelector: { $0 }, scheduler: scheduler)
 }
+
+/**
+Generates an observable sequence of integral numbers within a specified range, using the specified scheduler to generate and send out observer messages.
+
+- parameter start: The value of the first integer in the sequence.
+- parameter count: The number of sequential integers to generate.
+- parameter scheduler: Scheduler to run the generator loop on.
+- returns: An observable sequence that contains a range of sequential integral numbers.
+*/
+public func range(start: Int, _ count: Int, _ scheduler: ImmediateSchedulerType = CurrentThreadScheduler.instance) -> Observable<Int> {
+    if count < 0 {
+        rxFatalError("count can't be negative")
+    }
+
+    if start &+ (count - 1) < start {
+        rxFatalError("overflow of count")
+    }
+    
+    return RangeProducer<Int>(start: start, count: count, scheduler: scheduler)
+}

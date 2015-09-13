@@ -240,6 +240,7 @@
 		C86409F81BA5909000D3C4E8 /* ReplaySubject.swift in Sources */ = {isa = PBXBuildFile; fileRef = C864098D1BA5909000D3C4E8 /* ReplaySubject.swift */; };
 		C86409F91BA5909000D3C4E8 /* SubjectType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C864098E1BA5909000D3C4E8 /* SubjectType.swift */; };
 		C86409FA1BA5909000D3C4E8 /* Variable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C864098F1BA5909000D3C4E8 /* Variable.swift */; };
+		C86409FF1BA5A87200D3C4E8 /* Range.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86409FE1BA5A87200D3C4E8 /* Range.swift */; };
 		C86E2F3E1AE5A0CA00C31024 /* SearchResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86E2F321AE5A0CA00C31024 /* SearchResultViewModel.swift */; };
 		C86E2F3F1AE5A0CA00C31024 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86E2F331AE5A0CA00C31024 /* SearchViewModel.swift */; };
 		C86E2F451AE5A0CA00C31024 /* WikipediaAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86E2F3B1AE5A0CA00C31024 /* WikipediaAPI.swift */; };
@@ -520,6 +521,7 @@
 		C864098D1BA5909000D3C4E8 /* ReplaySubject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReplaySubject.swift; sourceTree = "<group>"; };
 		C864098E1BA5909000D3C4E8 /* SubjectType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubjectType.swift; sourceTree = "<group>"; };
 		C864098F1BA5909000D3C4E8 /* Variable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Variable.swift; sourceTree = "<group>"; };
+		C86409FE1BA5A87200D3C4E8 /* Range.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Range.swift; sourceTree = "<group>"; };
 		C86E2F321AE5A0CA00C31024 /* SearchResultViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = SearchResultViewModel.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		C86E2F331AE5A0CA00C31024 /* SearchViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = SearchViewModel.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		C86E2F3B1AE5A0CA00C31024 /* WikipediaAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WikipediaAPI.swift; sourceTree = "<group>"; };
@@ -973,10 +975,10 @@
 				C864093F1BA5909000D3C4E8 /* AsObservable.swift */,
 				C86409401BA5909000D3C4E8 /* Buffer.swift */,
 				C86409411BA5909000D3C4E8 /* Catch.swift */,
+				C86409451BA5909000D3C4E8 /* CombineLatest.swift */,
 				C86409421BA5909000D3C4E8 /* CombineLatest+arity.swift */,
 				C86409431BA5909000D3C4E8 /* CombineLatest+arity.tt */,
 				C86409441BA5909000D3C4E8 /* CombineLatest+CollectionType.swift */,
-				C86409451BA5909000D3C4E8 /* CombineLatest.swift */,
 				C86409461BA5909000D3C4E8 /* Concat.swift */,
 				C86409471BA5909000D3C4E8 /* ConnectableObservable.swift */,
 				C86409481BA5909000D3C4E8 /* Debug.swift */,
@@ -997,6 +999,7 @@
 				C86409571BA5909000D3C4E8 /* ObserveOn.swift */,
 				C86409581BA5909000D3C4E8 /* ObserveOnSerialDispatchQueue.swift */,
 				C86409591BA5909000D3C4E8 /* Producer.swift */,
+				C86409FE1BA5A87200D3C4E8 /* Range.swift */,
 				C864095A1BA5909000D3C4E8 /* Reduce.swift */,
 				C864095B1BA5909000D3C4E8 /* RefCount.swift */,
 				C864095C1BA5909000D3C4E8 /* Sample.swift */,
@@ -1011,10 +1014,10 @@
 				C86409651BA5909000D3C4E8 /* TakeWhile.swift */,
 				C86409661BA5909000D3C4E8 /* Throttle.swift */,
 				C86409671BA5909000D3C4E8 /* Timer.swift */,
+				C864096B1BA5909000D3C4E8 /* Zip.swift */,
 				C86409681BA5909000D3C4E8 /* Zip+arity.swift */,
 				C86409691BA5909000D3C4E8 /* Zip+arity.tt */,
 				C864096A1BA5909000D3C4E8 /* Zip+CollectionType.swift */,
-				C864096B1BA5909000D3C4E8 /* Zip.swift */,
 			);
 			path = Implementations;
 			sourceTree = "<group>";
@@ -1405,6 +1408,7 @@
 				C86409B51BA5909000D3C4E8 /* ConnectableObservable.swift in Sources */,
 				C84B3A3A1BA4345A001B7D88 /* DeinitAction.swift in Sources */,
 				C84B3A621BA4345A001B7D88 /* UITableView+Rx.swift in Sources */,
+				C86409FF1BA5A87200D3C4E8 /* Range.swift in Sources */,
 				C86409E61BA5909000D3C4E8 /* ObserverBase.swift in Sources */,
 				C84B3A631BA4345A001B7D88 /* UITextField+Rx.swift in Sources */,
 				C84B3A571BA4345A001B7D88 /* UICollectionView+Rx.swift in Sources */,

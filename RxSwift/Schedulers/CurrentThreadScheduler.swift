@@ -26,9 +26,19 @@ class CurrentThreadSchedulerKey : NSObject, NSCopying {
     }
 }
 
+/**
+Represents an object that schedules units of work on the current thread.
+
+This is the default scheduler for operators that generate elements.
+
+This scheduler is also sometimes called `trampoline scheduler`.
+*/
 public class CurrentThreadScheduler : ImmediateSchedulerType {
     typealias ScheduleQueue = RxMutableBox<Queue<ScheduledItemType>>
     
+    /**
+    The singleton instance of the current thread scheduler.
+    */
     public static let instance = CurrentThreadScheduler()
     
     static var queue : ScheduleQueue? {
@@ -40,10 +50,23 @@ public class CurrentThreadScheduler : ImmediateSchedulerType {
         }
     }
     
-    static var isScheduleRequired: Bool {
+    /**
+    Gets a value that indicates whether the caller must call a `schedule` method.
+    */
+    public static var isScheduleRequired: Bool {
         return NSThread.currentThread().threadDictionary[CurrentThreadSchedulerKeyInstance] == nil
     }
     
+    /**
+    Schedules an action to be executed as soon as possible on current thread.
+    
+    If this method is called on some thread that doesn't have `CurrentThreadScheduler` installed, scheduler will be
+    automatically installed and uninstalled after all work is performed.
+    
+    - parameter state: State passed to the action to be executed.
+    - parameter action: Action to be executed.
+    - returns: The disposable object used to cancel the scheduled action (best effort).
+    */
     public func schedule<StateType>(state: StateType, action: (StateType) -> Disposable) -> Disposable {
         let queue = CurrentThreadScheduler.queue
         
@@ -53,7 +76,7 @@ public class CurrentThreadScheduler : ImmediateSchedulerType {
             return scheduledItem
         }
         
-        let newQueue = RxMutableBox(Queue<ScheduledItemType>(capacity: 10))
+        let newQueue = RxMutableBox(Queue<ScheduledItemType>(capacity: 0))
         CurrentThreadScheduler.queue = newQueue
         
         action(state)

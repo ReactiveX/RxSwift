@@ -99,3 +99,32 @@ extension ObservableCreationTests {
         XCTAssertEqual(count, 3)
     }
 }
+
+extension ObservableCreationTests {
+    func testRange_Boundaries() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let res = scheduler.start {
+            range(Int.max, 1, scheduler)
+        }
+        
+        XCTAssertEqual(res.messages, [
+            next(201, Int.max),
+            completed(202)
+            ])
+    }
+    
+    func testRange_Dispose() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let res = scheduler.start(204) {
+            range(-10, 5, scheduler)
+        }
+        
+        XCTAssertEqual(res.messages, [
+            next(201, -10),
+            next(202, -9),
+            next(203, -8)
+            ])
+    }
+}
