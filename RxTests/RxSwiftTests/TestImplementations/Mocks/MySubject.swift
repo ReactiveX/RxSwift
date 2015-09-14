@@ -9,7 +9,9 @@
 import Foundation
 import RxSwift
 
-class MySubject<Element where Element : Hashable> : SubjectType<Element, Element> {
+class MySubject<Element where Element : Hashable> : Observable<Element>, SubjectType, ObserverType {
+    typealias SubjectObserverType = MySubject<E>
+
     var _disposeOn: [Element : Disposable] = [:]
     var _observer: ObserverOf<Element>! = nil
     var _subscribeCount: Int = 0
@@ -35,11 +37,10 @@ class MySubject<Element where Element : Hashable> : SubjectType<Element, Element
         _disposeOn[value] = disposable
     }
     
-    override func on(event: Event<Element>) {
+    func on(event: Event<E>) {
         _observer.on(event)
         switch event {
-        case .Next(let boxedValue):
-            let value = boxedValue.value
+        case .Next(let value):
             if let disposable = _disposeOn[value] {
                 disposable.dispose()
             }
@@ -47,13 +48,17 @@ class MySubject<Element where Element : Hashable> : SubjectType<Element, Element
         }
     }
     
-    override func subscribe<O : ObserverType where O.Element == Element>(observer: O) -> Disposable {
+    override func subscribe<O : ObserverType where O.E == E>(observer: O) -> Disposable {
         _subscribeCount++
         _observer = ObserverOf(observer)
         
         return AnonymousDisposable {
-            self._observer = ObserverOf(NopObserver<Element>())
+            self._observer = ObserverOf { _ -> Void in () }
             self._disposed = true
         }
+    }
+
+    func asObserver() -> MySubject<E> {
+        return self
     }
 }

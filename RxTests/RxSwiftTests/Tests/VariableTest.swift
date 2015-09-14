@@ -19,87 +19,52 @@ class VariableTest : RxTest {
         
         var latestValue: Int?
         
-        let subscription = c >- subscribeNext { next in
+        let subscription = c .subscribeNext { next in
             latestValue = next
         }
         
         XCTAssertEqual(latestValue!, 3)
         
-        a.next(5)
+        a.value = 5
 
         XCTAssertEqual(latestValue!, 7)
         
-        b.next(9)
+        b.value = 9
 
         XCTAssertEqual(latestValue!, 14)
         
         subscription.dispose()
         
-        a.next(10)
+        a.value = 10
 
         XCTAssertEqual(latestValue!, 14)
-    }
-    
-    func testVariable_Error() {
-        let a = Variable(1)
-        let b = Variable(2)
-        
-        let c = combineLatest(a, b, +)
-        
-        var latestValue: Int?
-        
-        let subscription = c >- subscribeNext { next in
-            latestValue = next
-        }
-        
-        XCTAssertEqual(latestValue!, 3)
-        
-        a.next(5)
-        
-        XCTAssertEqual(latestValue!, 7)
-        
-        sendError(b, testError)
-        
-        b.next(9)
-        
-        XCTAssertEqual(latestValue!, 7)
-        
-        subscription.dispose()
-        
-        a.next(10)
-        
-        XCTAssertEqual(latestValue!, 7)
     }
     
     func testVariable_Completed() {
-        let a = Variable(1)
-        let b = Variable(2)
+        var a = Variable(1)
+        var b = Variable(2)
         
         let c = combineLatest(a, b, +)
         
         var latestValue: Int?
+        var completed = false
         
-        let subscription = c >- subscribeNext { next in
+        let subscription = c.subscribe(next: { next in
             latestValue = next
-        }
+        }, completed: {
+            completed = true
+        })
         
         XCTAssertEqual(latestValue!, 3)
         
-        a.next(5)
+        a.value = 5
         
         XCTAssertEqual(latestValue!, 7)
         
-        sendError(b, testError)
-        
-        b.next(9)
-        
-        XCTAssertEqual(latestValue!, 7)
-        
-        subscription.dispose()
-        
-        a.next(10)
-        
-        XCTAssertEqual(latestValue!, 7)
+        XCTAssertTrue(!completed)
+        a = Variable(0)
+        b = Variable(0)
+        XCTAssertTrue(completed)
     }
     
     func testVariable_READMEExample() {
@@ -121,22 +86,23 @@ class VariableTest : RxTest {
         //      Next value of c = 3
         // because variables have initial values (starting element)
         var latestValueOfC : Int? = nil
-        let _d/*: Disposable*/  = c >- subscribeNext { c in
-            //println("Next value of c = \(c)")
+        // let _ = doesn't retain.
+        let d/*: Disposable*/  = c .subscribeNext { c in
+            //print("Next value of c = \(c)")
             latestValueOfC = c
-        } >- scopedDispose
+        } .scopedDispose
         
         XCTAssertEqual(latestValueOfC!, 3)
         
         // This will print:
         //      Next value of c = 5
-        a.next(3)
+        a.value = 3
         
         XCTAssertEqual(latestValueOfC!, 5)
         
         // This will print:
         //      Next value of c = 8
-        b.next(5)
+        b.value = 5
         
         XCTAssertEqual(latestValueOfC!, 8)
     }

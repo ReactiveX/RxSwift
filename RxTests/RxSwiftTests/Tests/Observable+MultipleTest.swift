@@ -20,7 +20,7 @@ class ObservableMultipleTest : RxTest {
     }
 }
 
-// catch
+// onError
 extension ObservableMultipleTest {
     func testCatch_ErrorSpecific_Caught() {
         let scheduler = TestScheduler(initialClock: 0)
@@ -40,7 +40,7 @@ extension ObservableMultipleTest {
         var handlerCalled: Int?
         
         let res = scheduler.start {
-            o1 >- catch { e in
+            o1.catchError { e in
                 handlerCalled = scheduler.clock
                 return o2
             }
@@ -77,9 +77,9 @@ extension ObservableMultipleTest {
         var handlerCalled: Int?
         
         let res = scheduler.start {
-            o1 >- catchOrDie { e in
+            o1.catchError { e in
                 handlerCalled = scheduler.clock
-                return failure(testError1)
+                throw testError1
             }
         }
         
@@ -94,57 +94,6 @@ extension ObservableMultipleTest {
         XCTAssertEqual(o1.subscriptions, [
             Subscription(200, 230)
         ])
-    }
-    
-    func testCatchToResult_ErrorHappened() {
-        let scheduler = TestScheduler(initialClock: 0)
-        
-        let xs = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 2),
-            next(220, 3),
-            error(230, testError)
-        ])
-        
-        let safeSequence: Observable <RxResult<Int>> = xs >- catchToResult
-        
-        let res = scheduler.start { () -> Observable <RxResult<Int>> in safeSequence }
-        
-        XCTAssertEqual(res.messages, [
-            next(210, success(2)),
-            next(220, success(3)),
-            next(230, failure(testError)),
-            completed(230)
-        ])
-        
-        XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 230)
-        ])
-    }
-    
-    func testCatchToResult_CompletedWithoutError() {
-        let scheduler = TestScheduler(initialClock: 0)
-        
-        let xs = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 2),
-            next(220, 3),
-            completed(230)
-            ])
-        
-        let safeSequence: Observable <RxResult<Int>> = xs >- catchToResult
-        
-        let res = scheduler.start { () -> Observable <RxResult<Int>> in safeSequence }
-        
-        XCTAssertEqual(res.messages, [
-            next(210, success(2)),
-            next(220, success(3)),
-            completed(230)
-            ])
-        
-        XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 230)
-            ])
     }
 }
 
@@ -175,7 +124,7 @@ extension ObservableMultipleTest {
         ])
         
         let res = scheduler.start {
-            SequenceOf([xs1, xs2, xs3]) >- catch
+            [xs1, xs2, xs3].catchError()
         }
         
         XCTAssertEqual(res.messages, [
@@ -204,7 +153,7 @@ extension ObservableMultipleTest {
             ])
     }
     
-    func testCatchSequenceOf_NoErrors() {
+    func testCatchAnySequence_NoErrors() {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs1 = scheduler.createHotObservable([
@@ -220,7 +169,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            SequenceOf([xs1, xs2]) >- catch
+            [xs1, xs2].catchError()
         }
         
         XCTAssertEqual(res.messages, [
@@ -237,7 +186,7 @@ extension ObservableMultipleTest {
             ])
     }
 
-    func testCatchSequenceOf_Never() {
+    func testCatchAnySequence_Never() {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs1 = scheduler.createHotObservable([
@@ -250,7 +199,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            SequenceOf([xs1, xs2]) >- catch
+            [xs1, xs2].catchError()
         }
         
         XCTAssertEqual(res.messages, [
@@ -264,7 +213,7 @@ extension ObservableMultipleTest {
             ])
     }
     
-    func testCatchSequenceOf_Empty() {
+    func testCatchAnySequence_Empty() {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs1 = scheduler.createHotObservable([
@@ -278,7 +227,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            SequenceOf([xs1, xs2]) >- catch
+            [xs1, xs2].catchError()
         }
         
         XCTAssertEqual(res.messages, [
@@ -309,7 +258,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            SequenceOf([xs1, xs2]) >- catch
+            [xs1, xs2].catchError()
         }
         
         XCTAssertEqual(res.messages, [
@@ -343,7 +292,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            SequenceOf([xs1, xs2]) >- catch
+            [xs1, xs2].catchError()
         }
         
         XCTAssertEqual(res.messages, [
@@ -376,7 +325,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            SequenceOf([xs1, xs2]) >- catch
+            [xs1, xs2].catchError()
         }
         
         XCTAssertEqual(res.messages, [
@@ -414,7 +363,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            SequenceOf([xs1, xs2, xs3]) >- catch
+            [xs1, xs2, xs3].catchError()
         }
         
         XCTAssertEqual(res.messages, [
@@ -477,10 +426,10 @@ extension ObservableMultipleTest {
             completed(600)
         ]
         
-        var xs = scheduler.createHotObservable(xSequence)
+        let xs = scheduler.createHotObservable(xSequence)
         
         let res = scheduler.start {
-            switchLatest(xs)
+            xs.switchLatest()
         }
         
         let correct = [
@@ -560,10 +509,10 @@ extension ObservableMultipleTest {
             completed(600)
         ]
         
-        var xs = scheduler.createHotObservable(xSequence)
+        let xs = scheduler.createHotObservable(xSequence)
         
         let res = scheduler.start {
-            switchLatest(xs)
+            xs.switchLatest()
         }
         
         let correct = [
@@ -629,10 +578,10 @@ extension ObservableMultipleTest {
             error(500, testError)
         ]
         
-        var xs = scheduler.createHotObservable(xSequence)
+        let xs = scheduler.createHotObservable(xSequence)
         
         let res = scheduler.start {
-            switchLatest(xs)
+            xs.switchLatest()
         }
         
         let correct = [
@@ -672,7 +621,7 @@ extension ObservableMultipleTest {
 extension ObservableMultipleTest {
     func testConcat_DefaultScheduler() {
         var sum = 0
-        concat([returnElement(1), returnElement(2), returnElement(3)]) >- subscribeNext { (e) -> Void in
+        [just(1), just(2), just(3)].concat().subscribeNext { (e) -> Void in
             sum += e
         }
         
@@ -703,11 +652,11 @@ extension ObservableMultipleTest {
             completed(50)
         ])
         
-        let res = scheduler.start {
-            concat([xs1, xs2, xs3])
+        _ = scheduler.start {
+            [xs1, xs2, xs3].concat()
         }
         
-        let messages = [
+        _ = [
             next(210, 1),
             next(220, 2),
             next(230, 3),
@@ -746,11 +695,11 @@ extension ObservableMultipleTest {
             completed(250),
             ])
         
-        let res = scheduler.start {
-            concat([xs1, xs2])
+        let _ = scheduler.start {
+            [xs1, xs2].concat()
         }
         
-        let messages: [Recorded<Int>] = [
+        let _: [Recorded<Int>] = [
             completed(250)
         ]
         
@@ -775,11 +724,11 @@ extension ObservableMultipleTest {
             next(150, 1),
             ])
         
-        let res = scheduler.start {
-            concat([xs1, xs2])
+        let _ = scheduler.start {
+            [xs1, xs2].concat()
         }
         
-        let messages: [Recorded<Int>] = [
+        let _: [Recorded<Int>] = [
             completed(250)
         ]
         
@@ -803,11 +752,11 @@ extension ObservableMultipleTest {
             next(150, 1),
             ])
         
-        let res = scheduler.start {
-            concat([xs1, xs2])
+        _ = scheduler.start {
+            [xs1, xs2].concat()
         }
         
-        let messages: [Recorded<Int>] = [
+        let _: [Recorded<Int>] = [
         ]
         
         XCTAssertEqual(xs1.subscriptions, [
@@ -831,11 +780,11 @@ extension ObservableMultipleTest {
             error(250, testError)
             ])
         
-        let res = scheduler.start {
-            concat([xs1, xs2])
+        _ = scheduler.start {
+            [xs1, xs2].concat()
         }
         
-        let messages: [Recorded<Int>] = [
+        let _: [Recorded<Int>] = [
             error(250, testError)
         ]
         
@@ -861,11 +810,11 @@ extension ObservableMultipleTest {
             completed(250)
             ])
         
-        let res = scheduler.start {
-            concat([xs1, xs2])
+        _ = scheduler.start {
+            [xs1, xs2].concat()
         }
         
-        let messages: [Recorded<Int>] = [
+        let _: [Recorded<Int>] = [
             error(230, testError)
         ]
         
@@ -890,11 +839,11 @@ extension ObservableMultipleTest {
             error(250, testError2)
             ])
         
-        let res = scheduler.start {
-            concat([xs1, xs2])
+        _ = scheduler.start {
+            [xs1, xs2].concat()
         }
         
-        let messages: [Recorded<Int>] = [
+        let _: [Recorded<Int>] = [
             error(230, testError1)
         ]
         
@@ -920,11 +869,11 @@ extension ObservableMultipleTest {
             completed(250)
             ])
         
-        let res = scheduler.start {
-            concat([xs1, xs2])
+        _ = scheduler.start {
+            [xs1, xs2].concat()
         }
         
-        let messages: [Recorded<Int>] = [
+        let _: [Recorded<Int>] = [
             next(210, 1),
             completed(250)
         ]
@@ -952,11 +901,11 @@ extension ObservableMultipleTest {
             completed(250)
             ])
         
-        let res = scheduler.start {
-            concat([xs1, xs2])
+        _ = scheduler.start {
+            [xs1, xs2].concat()
         }
         
-        let messages: [Recorded<Int>] = [
+        let _:[Recorded<Int>] = [
             next(240, 1),
             completed(250)
         ]
@@ -983,11 +932,11 @@ extension ObservableMultipleTest {
             next(150, 1),
             ])
         
-        let res = scheduler.start {
-            concat([xs1, xs2])
+        _ = scheduler.start {
+            [xs1, xs2].concat()
         }
         
-        let messages: [Recorded<Int>] = [
+        let _:[Recorded<Int>] = [
             next(210, 1),
         ]
         
@@ -1013,11 +962,11 @@ extension ObservableMultipleTest {
             completed(230),
             ])
         
-        let res = scheduler.start {
-            concat([xs1, xs2])
+        let _ = scheduler.start {
+            [xs1, xs2].concat()
         }
         
-        let messages: [Recorded<Int>] = [
+        let _: [Recorded<Int>] = [
         ]
         
         XCTAssertEqual(xs1.subscriptions, [
@@ -1043,11 +992,11 @@ extension ObservableMultipleTest {
             completed(250),
             ])
         
-        let res = scheduler.start {
-            concat([xs1, xs2])
+        _ = scheduler.start {
+            [xs1, xs2].concat()
         }
         
-        let messages: [Recorded<Int>] = [
+        let _ : [Recorded<Int>] = [
             next(220, 2),
             next(240, 3),
             completed(250)
@@ -1076,11 +1025,11 @@ extension ObservableMultipleTest {
             completed(250),
             ])
         
-        let res = scheduler.start {
-            concat([xs1, xs2])
+        let _ = scheduler.start {
+            [xs1, xs2].concat()
         }
         
-        let messages: [Recorded<Int>] = [
+        let _: [Recorded<Int>] = [
             error(230, testError1)
         ]
         
@@ -1106,11 +1055,11 @@ extension ObservableMultipleTest {
             error(250, testError2),
             ])
         
-        let res = scheduler.start {
-            concat([xs1, xs2])
+        let _ = scheduler.start {
+            [xs1, xs2].concat()
         }
         
-        let messages: [Recorded<Int>] = [
+        let _: [Recorded<Int>] = [
             next(220, 2),
             error(250, testError1)
         ]
@@ -1141,11 +1090,11 @@ extension ObservableMultipleTest {
             completed(250)
             ])
         
-        let res = scheduler.start {
-            concat([xs1, xs2])
+        let _ = scheduler.start {
+            [xs1, xs2].concat()
         }
         
-        let messages: [Recorded<Int>] = [
+        let _: [Recorded<Int>] = [
             next(210, 1),
             next(220, 3),
             next(230, 4),
@@ -1191,11 +1140,11 @@ extension ObservableMultipleTest {
             completed(340)
             ])
         
-        let res = scheduler.start {
-            concat([xs1, xs2, xs3, xs2])
+        let _ = scheduler.start {
+            [xs1, xs2, xs3, xs2].concat()
         }
         
-        let messages: [Recorded<Int>] = [
+        let _: [Recorded<Int>] = [
             next(210, 2),
             next(220, 3),
             next(280, 4),
@@ -1231,15 +1180,15 @@ extension ObservableMultipleTest {
     func testMerge_DeadlockSimple() {
         var nEvents = 0
         
-        let observable = returnElements(
-            returnElements(0, 1, 2),
-            returnElements(0, 1, 2),
-            returnElements(0, 1, 2)
-        ) >- merge
+        let observable = sequenceOf(
+            sequenceOf(0, 1, 2),
+            sequenceOf(0, 1, 2),
+            sequenceOf(0, 1, 2)
+        ).merge()
         
-        let _d = observable >- subscribeNext { n in
+        let _ = observable .subscribeNext { n in
             nEvents++
-        } >- scopedDispose
+        } .scopedDispose
         
         XCTAssertEqual(nEvents, 9)
     }
@@ -1247,15 +1196,15 @@ extension ObservableMultipleTest {
     func testMerge_DeadlockErrorAfterN() {
         var nEvents = 0
         
-        let observable = returnElements(
-            returnElements(0, 1, 2),
-            concat([returnElements(0, 1), failWith(testError)]),
-            returnElements(0, 1, 2)
-        ) >- merge
+        let observable = sequenceOf(
+            sequenceOf(0, 1, 2),
+            [sequenceOf(0, 1), failWith(testError)].concat(),
+            sequenceOf(0, 1, 2)
+        ).merge()
         
-        let _d = observable >- subscribeError { n in
+        let _ = observable .subscribeError { n in
             nEvents++
-        } >- scopedDispose
+        } .scopedDispose
         
         XCTAssertEqual(nEvents, 1)
     }
@@ -1263,12 +1212,12 @@ extension ObservableMultipleTest {
     func testMerge_DeadlockErrorImmediatelly() {
         var nEvents = 0
         
-        let observable: Observable<Observable<Int>> = returnElement(
+        let observable: Observable<Observable<Int>> = just(
             failWith(testError)
-        ) >- merge
-        let _d = observable >- subscribeError { n in
+        ).merge()
+        let _ = observable .subscribeError { n in
             nEvents++
-        } >- scopedDispose
+        } .scopedDispose
         
         XCTAssertEqual(nEvents, 1)
     }
@@ -1276,10 +1225,10 @@ extension ObservableMultipleTest {
     func testMerge_DeadlockEmpty() {
         var nEvents = 0
         
-        let observable: Observable<Int> = empty() >- merge
-        let _d = observable >- subscribeCompleted {
+        let observable: Observable<Int> = (empty() as Observable<Observable<Int>>).merge()
+        let _ = observable .subscribeCompleted {
             nEvents++
-        } >- scopedDispose
+        } .scopedDispose
         
         XCTAssertEqual(nEvents, 1)
     }
@@ -1287,10 +1236,10 @@ extension ObservableMultipleTest {
     func testMerge_DeadlockFirstEmpty() {
         var nEvents = 0
         
-        let observable: Observable<Int> = returnElement(empty()) >- merge
-        let _d = observable >- subscribeCompleted { n in
+        let observable: Observable<Int> = just(empty()).merge()
+        let _ = observable .subscribeCompleted { n in
             nEvents++
-        } >- scopedDispose
+        } .scopedDispose
         
         XCTAssertEqual(nEvents, 1)
     }
@@ -1298,15 +1247,15 @@ extension ObservableMultipleTest {
     func testMergeConcurrent_DeadlockSimple() {
         var nEvents = 0
         
-        let observable = returnElements(
-            returnElements(0, 1, 2),
-            returnElements(0, 1, 2),
-            returnElements(0, 1, 2)
-        ) >- merge(maxConcurrent: 1)
+        let observable = sequenceOf(
+            sequenceOf(0, 1, 2),
+            sequenceOf(0, 1, 2),
+            sequenceOf(0, 1, 2)
+        ).merge(maxConcurrent: 1)
         
-        let _d = observable >- subscribeNext { n in
+        let _ = observable .subscribeNext { n in
             nEvents++
-        } >- scopedDispose
+        } .scopedDispose
         
         XCTAssertEqual(nEvents, 9)
     }
@@ -1314,15 +1263,15 @@ extension ObservableMultipleTest {
     func testMergeConcurrent_DeadlockErrorAfterN() {
         var nEvents = 0
         
-        let observable = returnElements(
-            returnElements(0, 1, 2),
-            concat([returnElements(0, 1), failWith(testError)]),
-            returnElements(0, 1, 2)
-        ) >- merge(maxConcurrent: 1)
+        let observable = sequenceOf(
+            sequenceOf(0, 1, 2),
+            [sequenceOf(0, 1), failWith(testError)].concat(),
+            sequenceOf(0, 1, 2)
+        ).merge(maxConcurrent: 1)
         
-        let _d = observable >- subscribeError { n in
+        let _ = observable .subscribeError { n in
             nEvents++
-        } >- scopedDispose
+        } .scopedDispose
         
         XCTAssertEqual(nEvents, 1)
     }
@@ -1330,12 +1279,12 @@ extension ObservableMultipleTest {
     func testMergeConcurrent_DeadlockErrorImmediatelly() {
         var nEvents = 0
         
-        let observable: Observable<Observable<Int>> = returnElement(
+        let observable: Observable<Observable<Int>> = just(
             failWith(testError)
-        ) >- merge(maxConcurrent: 1)
-        let _d = observable >- subscribeError { n in
+        ).merge(maxConcurrent: 1)
+        let _ = observable .subscribeError { n in
             nEvents++
-        } >- scopedDispose
+        } .scopedDispose
         
         XCTAssertEqual(nEvents, 1)
     }
@@ -1343,10 +1292,10 @@ extension ObservableMultipleTest {
     func testMergeConcurrent_DeadlockEmpty() {
         var nEvents = 0
         
-        let observable: Observable<Int> = empty() >- merge(maxConcurrent: 1)
-        let _d = observable >- subscribeCompleted {
+        let observable: Observable<Int> = (empty() as Observable<Observable<Int>>).merge(maxConcurrent: 1)
+        let _ = observable .subscribeCompleted {
             nEvents++
-        } >- scopedDispose
+        } .scopedDispose
         
         XCTAssertEqual(nEvents, 1)
     }
@@ -1354,10 +1303,10 @@ extension ObservableMultipleTest {
     func testMergeConcurrent_DeadlockFirstEmpty() {
         var nEvents = 0
         
-        let observable: Observable<Int> = returnElement(empty()) >- merge(maxConcurrent: 1)
-        let _d = observable >- subscribeCompleted { n in
+        let observable: Observable<Int> = just(empty()).merge(maxConcurrent: 1)
+        let _ = observable .subscribeCompleted { n in
             nEvents++
-        } >- scopedDispose
+        } .scopedDispose
         
         XCTAssertEqual(nEvents, 1)
     }
@@ -1399,11 +1348,11 @@ extension ObservableMultipleTest {
             completed(600)
         ])
         
-        let res = scheduler.start {
-            xs >- merge
+        let _ = scheduler.start {
+            xs.merge()
         }
         
-        let messages = [
+        let _ = [
             next(310, 101),
             next(320, 102),
             next(410, 103),
@@ -1467,11 +1416,11 @@ extension ObservableMultipleTest {
             completed(600)
             ])
         
-        let res = scheduler.start {
-            xs >- merge
+        let _ = scheduler.start {
+            xs.merge()
         }
         
-        let messages = [
+        let _ = [
             next(310, 101),
             next(320, 102),
             next(410, 201),
@@ -1538,11 +1487,11 @@ extension ObservableMultipleTest {
             completed(600)
             ])
         
-        let res = scheduler.start {
-            xs >- merge
+        let _ = scheduler.start {
+            xs.merge()
         }
         
-        let messages = [
+        let _ = [
             next(310, 101),
             next(320, 102),
             next(410, 103),
@@ -1597,11 +1546,11 @@ extension ObservableMultipleTest {
             error(500, testError1),
             ])
         
-        let res = scheduler.start {
-            xs >- merge
+        let _ = scheduler.start {
+            xs.merge()
         }
         
-        let messages = [
+        let _ = [
             next(310, 101),
             next(320, 102),
             next(410, 103),
@@ -1663,11 +1612,11 @@ extension ObservableMultipleTest {
             completed(400)
             ])
         
-        let res = scheduler.start {
-            xs >- merge(maxConcurrent: 2)
+        let _ = scheduler.start {
+            xs.merge(maxConcurrent: 2)
         }
         
-        let messages = [
+        let _ = [
             next(260, 1),
             next(280, 4),
             next(310, 2),
@@ -1739,11 +1688,11 @@ extension ObservableMultipleTest {
             completed(400)
             ])
         
-        let res = scheduler.start {
-            xs >- merge(maxConcurrent: 2)
+        let _ = scheduler.start {
+            xs.merge(maxConcurrent: 2)
         }
         
-        let messages = [
+        let _ = [
             next(260, 1),
             next(280, 4),
             next(310, 2),
@@ -1815,11 +1764,11 @@ extension ObservableMultipleTest {
             completed(450)
             ])
         
-        let res = scheduler.start {
-            xs >- merge(maxConcurrent: 3)
+        let _ = scheduler.start {
+            xs.merge(maxConcurrent: 3)
         }
         
-        let messages = [
+        let _ = [
             next(260, 1),
             next(280, 4),
             next(280, 6),
@@ -1891,11 +1840,11 @@ extension ObservableMultipleTest {
             completed(750)
             ])
         
-        let res = scheduler.start {
-            xs >- merge(maxConcurrent: 3)
+        let _ = scheduler.start {
+            xs.merge(maxConcurrent: 3)
         }
         
-        let messages = [
+        let _ = [
             next(260, 1),
             next(280, 4),
             next(280, 6),
@@ -1967,11 +1916,11 @@ extension ObservableMultipleTest {
             completed(400)
             ])
         
-        let res = scheduler.start(450) {
-            xs >- merge(maxConcurrent: 2)
+        let _ = scheduler.start(450) {
+            xs.merge(maxConcurrent: 2)
         }
         
-        let messages = [
+        let _ = [
             next(260, 1),
             next(280, 4),
             next(310, 2),
@@ -2038,11 +1987,11 @@ extension ObservableMultipleTest {
             error(400, testError1)
             ])
         
-        let res = scheduler.start {
-            xs >- merge(maxConcurrent: 2)
+        let _ = scheduler.start {
+            xs.merge(maxConcurrent: 2)
         }
         
-        let messages = [
+        let _ = [
             next(260, 1),
             next(280, 4),
             next(310, 2),
@@ -2109,11 +2058,11 @@ extension ObservableMultipleTest {
             completed(400)
             ])
         
-        let res = scheduler.start {
-            xs >- merge(maxConcurrent: 2)
+        let _ = scheduler.start {
+            xs.merge(maxConcurrent: 2)
         }
         
-        let messages = [
+        let _ = [
             next(260, 1),
             next(280, 4),
             next(310, 2),
@@ -2153,10 +2102,10 @@ extension ObservableMultipleTest {
     func testCombineLatest_DeadlockSimple() {
         var nEvents = 0
         
-        let observable = combineLatest(returnElements(0, 1, 2), returnElements(0, 1, 2)) { $0 + $1 }
-        let _d = observable >- subscribeNext { n in
+        let observable = combineLatest(sequenceOf(0, 1, 2), sequenceOf(0, 1, 2)) { $0 + $1 }
+        let _ = observable .subscribeNext { n in
             nEvents++
-        } >- scopedDispose
+        } .scopedDispose
         
         XCTAssertEqual(nEvents, 3)
     }
@@ -2165,12 +2114,12 @@ extension ObservableMultipleTest {
         var nEvents = 0
         
         let observable = combineLatest(
-            concat([returnElements(0, 1, 2), failWith(testError)]),
-            returnElements(0, 1, 2)
+            [sequenceOf(0, 1, 2), failWith(testError)].concat(),
+            sequenceOf(0, 1, 2)
         ) { $0 + $1 }
-        let _d = observable >- subscribeError { n in
+        let _ = observable .subscribeError { n in
             nEvents++
-        } >- scopedDispose
+        } .scopedDispose
         
         XCTAssertEqual(nEvents, 1)
     }
@@ -2180,11 +2129,11 @@ extension ObservableMultipleTest {
         
         let observable = combineLatest(
             failWith(testError),
-            returnElements(0, 1, 2)
+            sequenceOf(0, 1, 2)
             ) { $0 + $1 }
-        let _d = observable >- subscribeError { n in
+        let _ = observable .subscribeError { n in
             nEvents++
-        } >- scopedDispose
+        } .scopedDispose
         
         XCTAssertEqual(nEvents, 1)
     }
@@ -2192,13 +2141,14 @@ extension ObservableMultipleTest {
     func testReplay_DeadlockEmpty() {
         var nEvents = 0
         
+        
         let observable = combineLatest(
             empty(),
-            returnElements(0, 1, 2)
+            sequenceOf(0, 1, 2)
             ) { $0 + $1 }
-        let _d = observable >- subscribeCompleted {
+        let _ = observable .subscribeCompleted {
             nEvents++
-        } >- scopedDispose
+        } .scopedDispose
         
         XCTAssertEqual(nEvents, 1)
     }
@@ -2226,7 +2176,7 @@ extension ObservableMultipleTest {
         ])
         
         let res = scheduler.start {
-            l >- takeUntil(r)
+            l .takeUntil(r)
         }
     
         XCTAssertEqual(res.messages, [
@@ -2262,7 +2212,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            l >- takeUntil(r)
+            l .takeUntil(r)
         }
 
         XCTAssertEqual(res.messages, [
@@ -2298,7 +2248,7 @@ extension ObservableMultipleTest {
         ])
         
         let res = scheduler.start {
-            l >- takeUntil(r)
+            l .takeUntil(r)
         }
         
         XCTAssertEqual(res.messages, [
@@ -2335,7 +2285,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            l >- takeUntil(r)
+            l .takeUntil(r)
         }
         
         XCTAssertEqual(res.messages, [
@@ -2369,7 +2319,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            l >- takeUntil(r)
+            l .takeUntil(r)
         }
         
         XCTAssertEqual(res.messages, [
@@ -2398,7 +2348,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            l >- takeUntil(r)
+            l .takeUntil(r)
         }
         
         XCTAssertEqual(res.messages, [
@@ -2427,7 +2377,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            l >- takeUntil(r)
+            l .takeUntil(r)
         }
         
         XCTAssertEqual(res.messages, [
@@ -2454,7 +2404,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            l >- takeUntil(r)
+            l .takeUntil(r)
         }
         
         XCTAssertEqual(res.messages, [
@@ -2485,7 +2435,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            l >- takeUntil(r)
+            l .takeUntil(r)
         }
         
         XCTAssertEqual(res.messages, [
@@ -2519,7 +2469,7 @@ extension ObservableMultipleTest {
         var sourceNotDisposed = false
         
         let res = scheduler.start {
-            l >- `do` { _ in sourceNotDisposed = true } >- takeUntil(r)
+            l .doOn { _ in sourceNotDisposed = true } .takeUntil(r)
         }
         
         XCTAssertEqual(res.messages, [
@@ -2547,7 +2497,7 @@ extension ObservableMultipleTest {
         var sourceNotDisposed = false
         
         let res = scheduler.start {
-            l >- takeUntil(r >- `do` { _ in sourceNotDisposed = true })
+            l .takeUntil(r .doOn { _ in sourceNotDisposed = true })
         }
         
         XCTAssertEqual(res.messages, [
@@ -2571,10 +2521,10 @@ extension ObservableMultipleTest {
             next(240, 2),
             ])
         
-        var sourceNotDisposed = false
+        let sourceNotDisposed = false
         
         let res = scheduler.start {
-            l >- takeUntil(r)
+            l .takeUntil(r)
         }
         
         XCTAssertEqual(res.messages, [
@@ -2602,7 +2552,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            amb(x1, x2)
+            x1.amb(x2)
         }
         
         XCTAssertEqual(res.messages, [
@@ -2633,7 +2583,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            amb(SequenceOf([x1, x2, x3]))
+            [x1, x2, x3].amb()
         }
         
         XCTAssertEqual(res.messages, [
@@ -2665,7 +2615,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            amb(x1, x2)
+            x1.amb(x2)
         }
         
         XCTAssertEqual(res.messages, [
@@ -2697,7 +2647,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            amb(x1, x2)
+            x1.amb(x2)
         }
         
         XCTAssertEqual(res.messages, [
@@ -2730,7 +2680,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            amb(x1, x2)
+            x1.amb(x2)
         }
         
         XCTAssertEqual(res.messages, [
@@ -2763,7 +2713,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            amb(x1, x2)
+            x1.amb(x2)
         }
         
         XCTAssertEqual(res.messages, [
@@ -2795,7 +2745,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            amb(x1, x2)
+            x1.amb(x2)
         }
         
         XCTAssertEqual(res.messages, [
@@ -2826,7 +2776,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            amb(x1, x2)
+            x1.amb(x2)
         }
         
         XCTAssertEqual(res.messages, [
@@ -2840,5 +2790,751 @@ extension ObservableMultipleTest {
         XCTAssertEqual(x2.subscriptions, [
             Subscription(200, 210)
             ])
+    }
+}
+
+// combineLatest + CollectionType
+
+extension ObservableMultipleTest {
+    func testCombineLatest_NeverN() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let e0 = scheduler.createHotObservable([
+            next(150, 1)
+        ])
+        
+        let e1 = scheduler.createHotObservable([
+            next(150, 1)
+        ])
+        
+        let e2 = scheduler.createHotObservable([
+            next(150, 1)
+        ])
+        
+        let res = scheduler.start {
+            [e0, e1, e2].combineLatest { $0.reduce(0, combine:+) }
+        }
+        
+        XCTAssertEqual(res.messages, [])
+     
+        for e in [e0, e1, e2] {
+            XCTAssertEqual(e.subscriptions, [Subscription(200, 1000)])
+        }
+    }
+    
+    func testCombineLatest_NeverEmptyN() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let e0 = scheduler.createHotObservable([
+            next(150, 1)
+            ])
+        
+        let e1 = scheduler.createHotObservable([
+            next(150, 1),
+            completed(210)
+            ])
+        
+        let res = scheduler.start {
+            [e0, e1].combineLatest { $0.reduce(0, combine:+) }
+        }
+        
+        XCTAssertEqual(res.messages, [])
+        
+        XCTAssertEqual(e0.subscriptions, [Subscription(200, 1000)])
+        XCTAssertEqual(e1.subscriptions, [Subscription(200, 210)])
+    }
+    
+    func testCombineLatest_EmptyNeverN() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let e0 = scheduler.createHotObservable([
+            next(150, 1),
+            completed(210)
+            ])
+        
+        let e1 = scheduler.createHotObservable([
+            next(150, 1)
+            ])
+        
+        let res = scheduler.start {
+            [e0, e1].combineLatest { $0.reduce(0, combine:+) }
+        }
+        
+        XCTAssertEqual(res.messages, [])
+        
+        XCTAssertEqual(e0.subscriptions, [Subscription(200, 210)])
+        XCTAssertEqual(e1.subscriptions, [Subscription(200, 1000)])
+    }
+    
+    func testCombineLatest_EmptyReturnN() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let e0 = scheduler.createHotObservable([
+            next(150, 1),
+            completed(210)
+            ])
+        
+        let e1 = scheduler.createHotObservable([
+            next(150, 1),
+            next(215, 2),
+            completed(220)
+            ])
+        
+        let res = scheduler.start {
+            ([e0, e1] as [HotObservable<Int>]).combineLatest { $0.reduce(0, combine:+) }
+        }
+        
+        XCTAssertEqual(res.messages, [
+            completed(215)
+            ])
+        
+        XCTAssertEqual(e0.subscriptions, [Subscription(200, 210)])
+        XCTAssertEqual(e1.subscriptions, [Subscription(200, 215)])
+    }
+    
+    func testCombineLatest_ReturnReturnN() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let e0 = scheduler.createHotObservable([
+            next(150, 1),
+            next(215, 2),
+            completed(230)
+            ])
+        
+        let e1 = scheduler.createHotObservable([
+            next(150, 1),
+            next(220, 3),
+            completed(240)
+            ])
+        
+        let res = scheduler.start {
+            [e0, e1].combineLatest { $0.reduce(0, combine:+) }
+        }
+        
+        XCTAssertEqual(res.messages, [
+            next(220, 2 + 3),
+            completed(240)
+            ])
+        
+        XCTAssertEqual(e0.subscriptions, [Subscription(200, 230)])
+        XCTAssertEqual(e1.subscriptions, [Subscription(200, 240)])
+    }
+    
+    func testCombineLatest_EmptyErrorN() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let e0 = scheduler.createHotObservable([
+            next(150, 1),
+            completed(230)
+            ])
+        
+        let e1 = scheduler.createHotObservable([
+            next(150, 1),
+            error(220, testError),
+            ])
+        
+        let res = scheduler.start {
+            [e0, e1].combineLatest { $0.reduce(0, combine:+) }
+        }
+        
+        XCTAssertEqual(res.messages, [
+            error(220, testError)
+            ])
+        
+        XCTAssertEqual(e0.subscriptions, [Subscription(200, 220)])
+        XCTAssertEqual(e1.subscriptions, [Subscription(200, 220)])
+    }
+    
+    func testCombineLatest_ReturnErrorN() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let e0 = scheduler.createHotObservable([
+            next(150, 1),
+            next(210, 2),
+            completed(230)
+            ])
+        
+        let e1 = scheduler.createHotObservable([
+            next(150, 1),
+            error(220, testError),
+            ])
+        
+        let res = scheduler.start {
+            [e0, e1].combineLatest { $0.reduce(0, combine:+) }
+        }
+        
+        XCTAssertEqual(res.messages, [
+            error(220, testError)
+            ])
+        
+        XCTAssertEqual(e0.subscriptions, [Subscription(200, 220)])
+        XCTAssertEqual(e1.subscriptions, [Subscription(200, 220)])
+    }
+    
+    func testCombineLatest_ErrorErrorN() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let e0 = scheduler.createHotObservable([
+            next(150, 1),
+            error(220, testError1)
+            ])
+        
+        let e1 = scheduler.createHotObservable([
+            next(150, 1),
+            error(230, testError2),
+            ])
+        
+        let res = scheduler.start {
+            [e0, e1].combineLatest { $0.reduce(0, combine:+) }
+        }
+        
+        XCTAssertEqual(res.messages, [
+            error(220, testError1)
+            ])
+        
+        XCTAssertEqual(e0.subscriptions, [Subscription(200, 220)])
+        XCTAssertEqual(e1.subscriptions, [Subscription(200, 220)])
+    }
+    
+    func testCombineLatest_NeverErrorN() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let e0 = scheduler.createHotObservable([
+            next(150, 1),
+            ])
+        
+        let e1 = scheduler.createHotObservable([
+            next(150, 1),
+            error(220, testError2),
+            ])
+        
+        let res = scheduler.start {
+            [e0, e1].combineLatest { $0.reduce(0, combine:+) }
+        }
+        
+        XCTAssertEqual(res.messages, [
+            error(220, testError2)
+            ])
+        
+        XCTAssertEqual(e0.subscriptions, [Subscription(200, 220)])
+        XCTAssertEqual(e1.subscriptions, [Subscription(200, 220)])
+    }
+    
+    func testCombineLatest_SomeErrorN() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let e0 = scheduler.createHotObservable([
+            next(150, 1),
+            next(215, 2),
+            completed(230)
+            ])
+        
+        let e1 = scheduler.createHotObservable([
+            next(150, 1),
+            error(220, testError2),
+            ])
+        
+        let res = scheduler.start {
+            [e0, e1].combineLatest { $0.reduce(0, combine:+) }
+        }
+        
+        XCTAssertTrue(res.messages == [
+            error(220, testError2)
+            ])
+        
+        XCTAssertEqual(e0.subscriptions, [Subscription(200, 220)])
+        XCTAssertEqual(e1.subscriptions, [Subscription(200, 220)])
+    }
+    
+    func testCombineLatest_ErrorAfterCompletedN() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let e0 = scheduler.createHotObservable([
+            next(150, 1),
+            next(215, 2),
+            completed(220)
+            ])
+        
+        let e1 = scheduler.createHotObservable([
+            next(150, 1),
+            error(230, testError2),
+            ])
+        
+        let res = scheduler.start {
+            [e0, e1].combineLatest { $0.reduce(0, combine:+) }
+        }
+        
+        XCTAssertTrue(res.messages == [
+            error(230, testError2)
+            ])
+        
+        XCTAssertEqual(e0.subscriptions, [Subscription(200, 220)])
+        XCTAssertEqual(e1.subscriptions, [Subscription(200, 230)])
+    }
+    
+    func testCombineLatest_InterleavedWithTailN() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let e0 = scheduler.createHotObservable([
+            next(150, 1),
+            next(215, 2),
+            next(225, 4),
+            completed(230)
+            ])
+        
+        let e1 = scheduler.createHotObservable([
+            next(150, 1),
+            next(220, 3),
+            next(230, 5),
+            next(235, 6),
+            next(240, 7),
+            completed(250)
+            ])
+        
+        let res = scheduler.start {
+            [e0, e1].combineLatest { $0.reduce(0, combine:+) }
+        }
+        
+        XCTAssertEqual(res.messages, [
+            next(220, 2 + 3),
+            next(225, 3 + 4),
+            next(230, 4 + 5),
+            next(235, 4 + 6),
+            next(240, 4 + 7),
+            completed(250)
+            ] as [Recorded<Int>])
+        
+        XCTAssertEqual(e0.subscriptions, [Subscription(200, 230)])
+        XCTAssertEqual(e1.subscriptions, [Subscription(200, 250)])
+    }
+    
+    func testCombineLatest_ConsecutiveN() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let e0 = scheduler.createHotObservable([
+            next(150, 1),
+            next(215, 2),
+            next(225, 4),
+            completed(230)
+            ])
+        
+        let e1 = scheduler.createHotObservable([
+            next(150, 1),
+            next(235, 6),
+            next(240, 7),
+            completed(250)
+            ])
+        
+        let res = scheduler.start {
+            [e0, e1].combineLatest { $0.reduce(0, combine:+) }
+        }
+        
+        XCTAssertEqual(res.messages, [
+            next(235, 4 + 6),
+            next(240, 4 + 7),
+            completed(250)
+            ])
+        
+        XCTAssertEqual(e0.subscriptions, [Subscription(200, 230)])
+        XCTAssertEqual(e1.subscriptions, [Subscription(200, 250)])
+    }
+    
+    func testCombineLatest_ConsecutiveNWithErrorLeft() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let e0 = scheduler.createHotObservable([
+            next(150, 1),
+            next(215, 2),
+            next(225, 4),
+            error(230, testError)
+            ])
+        
+        let e1 = scheduler.createHotObservable([
+            next(150, 1),
+            next(235, 6),
+            next(240, 7),
+            completed(250)
+            ])
+        
+        let res = scheduler.start {
+            [e0, e1].combineLatest { $0.reduce(0, combine:+) }
+        }
+        
+        XCTAssertEqual(res.messages, [
+            error(230, testError)
+            ])
+        
+        XCTAssertEqual(e0.subscriptions, [Subscription(200, 230)])
+        XCTAssertEqual(e1.subscriptions, [Subscription(200, 230)])
+    }
+    
+    func testCombineLatest_ConsecutiveNWithErrorRight() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let e0 = scheduler.createHotObservable([
+            next(150, 1),
+            next(215, 2),
+            next(225, 4),
+            completed(250)
+            ])
+        
+        let e1 = scheduler.createHotObservable([
+            next(150, 1),
+            next(235, 6),
+            next(240, 7),
+            error(245, testError)
+            ])
+        
+        let res = scheduler.start {
+            [e0, e1].combineLatest { $0.reduce(0, combine:+) }
+        }
+        
+        XCTAssertEqual(res.messages, [
+            next(235, 4 + 6),
+            next(240, 4 + 7),
+            error(245, testError)
+            ])
+        
+        XCTAssertEqual(e0.subscriptions, [Subscription(200, 245)])
+        XCTAssertEqual(e1.subscriptions, [Subscription(200, 245)])
+    }
+    
+    func testCombineLatest_SelectorThrowsN() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let e0 = scheduler.createHotObservable([
+            next(150, 1),
+            next(215, 2),
+            completed(230)
+            ])
+        
+        let e1 = scheduler.createHotObservable([
+            next(150, 1),
+            next(220, 3),
+            completed(240)
+            ])
+        
+        let res = scheduler.start {
+            [e0, e1].combineLatest { x throws -> Int in throw testError }
+        }
+        
+        XCTAssertEqual(res.messages, [
+            error(220, testError)
+            ])
+        
+        XCTAssertEqual(e0.subscriptions, [Subscription(200, 220)])
+        XCTAssertEqual(e1.subscriptions, [Subscription(200, 220)])
+    }
+    
+    func testCombineLatest_willNeverBeAbleToCombineN() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let e0 = scheduler.createHotObservable([
+            next(150, 1),
+            completed(250)
+            ])
+        
+        let e1 = scheduler.createHotObservable([
+            next(150, 1),
+            completed(260)
+            ])
+        
+        let e2 = scheduler.createHotObservable([
+            next(150, 1),
+            next(500, 2),
+            completed(800)
+            ])
+        
+        let res = scheduler.start {
+            [e0, e1, e2].combineLatest { _ in 42 }
+        }
+        
+        XCTAssertEqual(res.messages, [
+            completed(500)
+            ])
+        
+        XCTAssertEqual(e0.subscriptions, [Subscription(200, 250)])
+        XCTAssertEqual(e1.subscriptions, [Subscription(200, 260)])
+        XCTAssertEqual(e2.subscriptions, [Subscription(200, 500)])
+    }
+    
+    func testCombineLatest_typicalN() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let e0 = scheduler.createHotObservable([
+            next(150, 1),
+            next(210, 1),
+            next(410, 4),
+            completed(800)
+        ])
+        let e1 = scheduler.createHotObservable([
+            next(150, 1),
+            next(220, 2),
+            next(420, 5),
+            completed(800)
+        ])
+        let e2 = scheduler.createHotObservable([
+            next(150, 1),
+            next(230, 3),
+            next(430, 6),
+            completed(800)
+        ])
+        
+        let res = scheduler.start {
+            [e0, e1, e2].combineLatest { $0.reduce(0, combine:+) }
+        }
+        
+        XCTAssertEqual(res.messages, [
+            next(230, 6),
+            next(410, 9),
+            next(420, 12),
+            next(430, 15),
+            completed(800)
+            ])
+        
+        for e in [e0, e1, e2] {
+            XCTAssertEqual(e.subscriptions, [Subscription(200, 800)])
+        }
+    }
+    
+    func testCombineLatest_NAry_symmetric() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let e0 = scheduler.createHotObservable([
+            next(150, 1),
+            next(210, 1),
+            next(250, 4),
+            completed(420)
+            ])
+        let e1 = scheduler.createHotObservable([
+            next(150, 1),
+            next(220, 2),
+            next(240, 5),
+            completed(410)
+            ])
+        let e2 = scheduler.createHotObservable([
+            next(150, 1),
+            next(230, 3),
+            next(260, 6),
+            completed(400)
+            ])
+        
+        let res = scheduler.start {
+            [e0, e1, e2].combineLatest { EquatableArray($0) }
+        }
+        
+        XCTAssertEqual(res.messages, [
+            next(230, EquatableArray([1, 2, 3])),
+            next(240, EquatableArray([1, 5, 3])),
+            next(250, EquatableArray([4, 5, 3])),
+            next(260, EquatableArray([4, 5, 6])),
+            completed(420)
+            ])
+        
+        XCTAssertEqual(e0.subscriptions, [Subscription(200, 420)])
+        XCTAssertEqual(e1.subscriptions, [Subscription(200, 410)])
+        XCTAssertEqual(e2.subscriptions, [Subscription(200, 400)])
+        
+    }
+    
+    func testCombineLatest_NAry_asymmetric() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let e0 = scheduler.createHotObservable([
+            next(150, 1),
+            next(210, 1),
+            next(250, 4),
+            completed(270)
+            ])
+        let e1 = scheduler.createHotObservable([
+            next(150, 1),
+            next(220, 2),
+            next(240, 5),
+            next(290, 7),
+            next(310, 9),
+            completed(410)
+            ])
+        let e2 = scheduler.createHotObservable([
+            next(150, 1),
+            next(230, 3),
+            next(260, 6),
+            next(280, 8),
+            completed(300)
+            ])
+        
+        let res = scheduler.start {
+            [e0, e1, e2].combineLatest { EquatableArray($0) }
+        }
+        
+        XCTAssertEqual(res.messages, [
+            next(230, EquatableArray([1, 2, 3])),
+            next(240, EquatableArray([1, 5, 3])),
+            next(250, EquatableArray([4, 5, 3])),
+            next(260, EquatableArray([4, 5, 6])),
+            next(280, EquatableArray([4, 5, 8])),
+            next(290, EquatableArray([4, 7, 8])),
+            next(310, EquatableArray([4, 9, 8])),
+            completed(410)
+            ])
+        
+        XCTAssertEqual(e0.subscriptions, [Subscription(200, 270)])
+        XCTAssertEqual(e1.subscriptions, [Subscription(200, 410)])
+        XCTAssertEqual(e2.subscriptions, [Subscription(200, 300)])
+        
+    }
+}
+
+// zip + CollectionType
+
+extension ObservableMultipleTest {
+    func testZip_NAry_symmetric() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let e0 = scheduler.createHotObservable([
+            next(150, 1),
+            next(210, 1),
+            next(250, 4),
+            completed(420)
+            ])
+        let e1 = scheduler.createHotObservable([
+            next(150, 1),
+            next(220, 2),
+            next(240, 5),
+            completed(410)
+            ])
+        let e2 = scheduler.createHotObservable([
+            next(150, 1),
+            next(230, 3),
+            next(260, 6),
+            completed(400)
+            ])
+        
+        let res = scheduler.start {
+            [e0, e1, e2].zip { EquatableArray($0) }
+        }
+        
+        XCTAssertEqual(res.messages, [
+            next(230, EquatableArray([1, 2, 3])),
+            next(260, EquatableArray([4, 5, 6])),
+            completed(420)
+            ])
+        
+        XCTAssertEqual(e0.subscriptions, [Subscription(200, 420)])
+        XCTAssertEqual(e1.subscriptions, [Subscription(200, 410)])
+        XCTAssertEqual(e2.subscriptions, [Subscription(200, 400)])
+        
+    }
+    
+    func testZip_NAry_asymmetric() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let e0 = scheduler.createHotObservable([
+            next(150, 1),
+            next(210, 1),
+            next(250, 4),
+            completed(270)
+            ])
+        let e1 = scheduler.createHotObservable([
+            next(150, 1),
+            next(220, 2),
+            next(240, 5),
+            next(290, 7),
+            next(310, 9),
+            completed(410)
+            ])
+        let e2 = scheduler.createHotObservable([
+            next(150, 1),
+            next(230, 3),
+            next(260, 6),
+            next(280, 8),
+            completed(300)
+            ])
+        
+        let res = scheduler.start {
+            [e0, e1, e2].zip { EquatableArray($0) }
+        }
+        
+        XCTAssertEqual(res.messages, [
+            next(230, EquatableArray([1, 2, 3])),
+            next(260, EquatableArray([4, 5, 6])),
+            completed(310)
+            ])
+        
+        XCTAssertEqual(e0.subscriptions, [Subscription(200, 270)])
+        XCTAssertEqual(e1.subscriptions, [Subscription(200, 310)])
+        XCTAssertEqual(e2.subscriptions, [Subscription(200, 300)])
+        
+    }
+    
+    func testZip_NAry_error() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let e0 = scheduler.createHotObservable([
+            next(150, 1),
+            next(210, 1),
+            error(250, testError),
+            ])
+        let e1 = scheduler.createHotObservable([
+            next(150, 1),
+            next(220, 2),
+            next(240, 5),
+            completed(410)
+            ])
+        let e2 = scheduler.createHotObservable([
+            next(150, 1),
+            next(230, 3),
+            next(260, 6),
+            completed(400)
+            ])
+        
+        let res = scheduler.start {
+            [e0, e1, e2].zip { EquatableArray($0) }
+        }
+        
+        XCTAssertEqual(res.messages, [
+            next(230, EquatableArray([1, 2, 3])),
+            error(250, testError)
+            ])
+        
+        XCTAssertEqual(e0.subscriptions, [Subscription(200, 250)])
+        XCTAssertEqual(e1.subscriptions, [Subscription(200, 250)])
+        XCTAssertEqual(e2.subscriptions, [Subscription(200, 250)])
+    }
+    
+    func testZip_NAry_atLeastOneErrors4() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let e0 = scheduler.createHotObservable([
+            next(150, 1),
+            next(210, 1),
+            completed(400)
+            ])
+        let e1 = scheduler.createHotObservable([
+            next(150, 1),
+            next(220, 2),
+            completed(400)
+            ])
+        let e2 = scheduler.createHotObservable([
+            next(150, 1),
+            error(230, testError)
+            ])
+        let e3 = scheduler.createHotObservable([
+            next(150, 1),
+            next(240, 4),
+            completed(400)
+            ])
+        
+        let res = scheduler.start {
+            [e0, e1, e2, e3].zip { _ in 42 }
+        }
+        
+        XCTAssertEqual(res.messages, [
+            error(230, testError)
+            ])
+        
+        XCTAssertEqual(e0.subscriptions, [Subscription(200, 230)])
+        XCTAssertEqual(e1.subscriptions, [Subscription(200, 230)])
+        XCTAssertEqual(e2.subscriptions, [Subscription(200, 230)])
+        XCTAssertEqual(e3.subscriptions, [Subscription(200, 230)])
     }
 }

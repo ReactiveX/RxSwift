@@ -7,15 +7,17 @@
 //
 
 import Foundation
+#if !RX_NO_MODULE
 import RxSwift
+#endif
 
 class Dependencies {
     
     static let sharedDependencies = Dependencies() // Singleton
     
     let URLSession = NSURLSession.sharedSession()
-    let backgroundWorkScheduler: ImmediateScheduler
-    let mainScheduler: DispatchQueueScheduler
+    let backgroundWorkScheduler: ImmediateSchedulerType
+    let mainScheduler: SerialDispatchQueueScheduler
     let wireframe: Wireframe
     
     private init() {
@@ -23,7 +25,11 @@ class Dependencies {
         
         let operationQueue = NSOperationQueue()
         operationQueue.maxConcurrentOperationCount = 2
-        operationQueue.qualityOfService = NSQualityOfService.UserInitiated
+        if #available(iOS 8.0, *) {
+            operationQueue.qualityOfService = NSQualityOfService.UserInitiated
+        } else {
+            // Fallback on earlier versions
+        }
         backgroundWorkScheduler = OperationQueueScheduler(operationQueue: operationQueue)
         
         mainScheduler = MainScheduler.sharedInstance

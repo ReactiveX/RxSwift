@@ -26,7 +26,7 @@ func isPrime(i: Int) -> Bool {
         return false
     }
     
-    var max = Int(sqrt(Float(i)))
+    let max = Int(sqrt(Float(i)))
     for (var j = 2; j <= max; ++j) {
         if i % j == 0 {
             return false
@@ -39,7 +39,7 @@ func isPrime(i: Int) -> Bool {
 // where
 
 extension ObservableStandardSequenceOperators  {
-    func test_whereComplete() {
+    func test_filterComplete() {
         let scheduler = TestScheduler(initialClock: 0)
         
         var invoked = 0
@@ -63,7 +63,7 @@ extension ObservableStandardSequenceOperators  {
         ])
         
         let res = scheduler.start { () -> Observable<Int> in
-            return xs >- filter { (num: Int) -> Bool in
+            return xs.filter { (num: Int) -> Bool in
                 invoked++;
                 return isPrime(num);
             }
@@ -84,7 +84,7 @@ extension ObservableStandardSequenceOperators  {
         XCTAssertEqual(9, invoked)
     }
     
-    func test_whereTrue() {
+    func test_filterTrue() {
         let scheduler = TestScheduler(initialClock: 0)
         
         var invoked = 0
@@ -105,7 +105,7 @@ extension ObservableStandardSequenceOperators  {
             ])
         
         let res = scheduler.start { () -> Observable<Int> in
-            return xs >- filter { (num: Int) -> Bool in
+            return xs.filter { (num: Int) -> Bool in
                 invoked++
                 return true
             }
@@ -131,7 +131,7 @@ extension ObservableStandardSequenceOperators  {
         XCTAssertEqual(9, invoked)
     }
    
-    func test_whereFalse() {
+    func test_filterFalse() {
         let scheduler = TestScheduler(initialClock: 0)
         
         var invoked = 0
@@ -152,7 +152,7 @@ extension ObservableStandardSequenceOperators  {
             ])
         
         let res = scheduler.start { () -> Observable<Int> in
-            return xs >- filter { (num: Int) -> Bool in
+            return xs.filter { (num: Int) -> Bool in
                 invoked++
                 return false
             }
@@ -169,7 +169,7 @@ extension ObservableStandardSequenceOperators  {
         XCTAssertEqual(9, invoked)
     }
     
-    func test_whereDisposed() {
+    func test_filterDisposed() {
         let scheduler = TestScheduler(initialClock: 0)
         
         var invoked = 0
@@ -190,7 +190,7 @@ extension ObservableStandardSequenceOperators  {
             ])
         
         let res = scheduler.start(400) { () -> Observable<Int> in
-            return xs >- filter { (num: Int) -> Bool in
+            return xs.filter { (num: Int) -> Bool in
                 invoked++;
                 return isPrime(num)
             }
@@ -234,7 +234,7 @@ extension ObservableStandardSequenceOperators {
         var invoked = 0
         
         let res = scheduler.start { () -> Observable<Int> in
-            return xs >- takeWhile { (num: Int) -> Bool in
+            return xs.takeWhile { (num: Int) -> Bool in
                 invoked++;
                 return isPrime(num)
             }
@@ -276,7 +276,7 @@ extension ObservableStandardSequenceOperators {
         var invoked = 0
         
         let res = scheduler.start { () -> Observable<Int> in
-            return xs >- takeWhile { (num: Int) -> Bool in
+            return xs.takeWhile { (num: Int) -> Bool in
                 invoked++;
                 return isPrime(num)
             }
@@ -320,7 +320,7 @@ extension ObservableStandardSequenceOperators {
         var invoked = 0
         
         let res = scheduler.start { () -> Observable<Int> in
-            return xs >- takeWhile { (num: Int) -> Bool in
+            return xs.takeWhile { (num: Int) -> Bool in
                 invoked++;
                 return isPrime(num)
             }
@@ -360,7 +360,7 @@ extension ObservableStandardSequenceOperators {
         var invoked = 0
         
         let res = scheduler.start { () -> Observable<Int> in
-            return xs >- takeWhile { (num: Int) -> Bool in
+            return xs.takeWhile { (num: Int) -> Bool in
                 invoked++;
                 return isPrime(num)
             }
@@ -403,7 +403,7 @@ extension ObservableStandardSequenceOperators {
         var invoked = 0
         
         let res = scheduler.start(300) { () -> Observable<Int> in
-            return xs >- takeWhile { (num: Int) -> Bool in
+            return xs.takeWhile { (num: Int) -> Bool in
                 invoked++;
                 return isPrime(num)
             }
@@ -443,7 +443,7 @@ extension ObservableStandardSequenceOperators {
         var invoked = 0
         
         let res = scheduler.start(400) { () -> Observable<Int> in
-            return xs >- takeWhile { (num: Int) -> Bool in
+            return xs.takeWhile { (num: Int) -> Bool in
                 invoked++;
                 return isPrime(num)
             }
@@ -487,7 +487,7 @@ extension ObservableStandardSequenceOperators {
         var invoked = 0
         
         let res = scheduler.start(300) { () -> Observable<Int> in
-            return xs >- takeWhile { (num: Int) -> Bool in
+            return xs.takeWhile { (num: Int) -> Bool in
                 invoked++;
                 return isPrime(num)
             }
@@ -523,10 +523,10 @@ extension ObservableStandardSequenceOperators {
             error(600, testError),
             ])
         
-        var invoked = 0
+        _ = 0
         
         let res = scheduler.start { () -> Observable<Int> in
-            return xs >- takeWhile { (num: Int, index) -> Bool in
+            return xs.takeWhile { (num: Int, index) -> Bool in
                 return index < 5
             }
         }
@@ -564,7 +564,7 @@ extension ObservableStandardSequenceOperators {
         var invoked = 0
         
         let res = scheduler.start { () -> Observable<Int> in
-            return xs >- takeWhile { (num: Int, index) -> Bool in
+            return xs.takeWhile { (num: Int, index) -> Bool in
                 return index >= 0
             }
         }
@@ -604,7 +604,7 @@ extension ObservableStandardSequenceOperators {
         var invoked = 0
         
         let res = scheduler.start { () -> Observable<Int> in
-            return xs >- takeWhile { (num: Int, index) -> Bool in
+            return xs.takeWhile { (num: Int, index) -> Bool in
                 return index >= 0
             }
         }
@@ -636,7 +636,7 @@ extension ObservableStandardSequenceOperators {
             next(150, 1),
             ])
         
-        let res = scheduler.start { xs >- map { $0 * 2 } }
+        let res = scheduler.start { xs.map { $0 * 2 } }
         
         let correctMessages: [Recorded<Int>] = [
         ]
@@ -657,7 +657,7 @@ extension ObservableStandardSequenceOperators {
             completed(300)
             ])
         
-        let res = scheduler.start { xs >- map { $0 * 2 } }
+        let res = scheduler.start { xs.map { $0 * 2 } }
         
         let correctMessages: [Recorded<Int>] = [
             completed(300)
@@ -683,7 +683,7 @@ extension ObservableStandardSequenceOperators {
             completed(300)
             ])
         
-        let res = scheduler.start { xs >- map { $0 * 2 } }
+        let res = scheduler.start { xs.map { $0 * 2 } }
         
         let correctMessages: [Recorded<Int>] = [
             next(210, 0 * 2),
@@ -713,7 +713,7 @@ extension ObservableStandardSequenceOperators {
             error(300, testError)
             ])
         
-        let res = scheduler.start { xs >- map { $0 * 2 } }
+        let res = scheduler.start { xs.map { $0 * 2 } }
         
         let correctMessages: [Recorded<Int>] = [
             next(210, 0 * 2),
@@ -743,7 +743,7 @@ extension ObservableStandardSequenceOperators {
             error(300, testError)
             ])
         
-        let res = scheduler.start(290) { xs >- map { $0 * 2 } }
+        let res = scheduler.start(290) { xs.map { $0 * 2 } }
         
         let correctMessages: [Recorded<Int>] = [
             next(210, 0 * 2),
@@ -772,7 +772,7 @@ extension ObservableStandardSequenceOperators {
             error(300, testError)
             ])
         
-        let res = scheduler.start { xs >- mapOrDie { $0 < 2 ? success($0 * 2) : failure(testError) } }
+        let res = scheduler.start { xs.map { x throws -> Int in if x < 2 { return x * 2 } else { throw testError } } }
         
         let correctMessages: [Recorded<Int>] = [
             next(210, 0 * 2),
@@ -795,7 +795,7 @@ extension ObservableStandardSequenceOperators {
             next(150, 1),
             ])
         
-        let res = scheduler.start { xs >- mapWithIndex { ($0 + $1) * 2 } }
+        let res = scheduler.start { xs.mapWithIndex { ($0 + $1) * 2 } }
         
         let correctMessages: [Recorded<Int>] = [
         ]
@@ -816,7 +816,7 @@ extension ObservableStandardSequenceOperators {
             completed(300)
             ])
         
-        let res = scheduler.start { xs >- mapWithIndex { ($0 + $1) * 2 } }
+        let res = scheduler.start { xs.mapWithIndex { ($0 + $1) * 2 } }
         
         let correctMessages: [Recorded<Int>] = [
             completed(300)
@@ -842,7 +842,7 @@ extension ObservableStandardSequenceOperators {
             completed(300)
             ])
         
-        let res = scheduler.start { xs >- mapWithIndex { ($0 + $1) * 2 } }
+        let res = scheduler.start { xs.mapWithIndex { ($0 + $1) * 2 } }
         
         let correctMessages: [Recorded<Int>] = [
             next(210, (5 + 0) * 2),
@@ -872,7 +872,7 @@ extension ObservableStandardSequenceOperators {
             error(300, testError)
             ])
         
-        let res = scheduler.start { xs >- mapWithIndex { ($0 + $1) * 2 }  }
+        let res = scheduler.start { xs.mapWithIndex { ($0 + $1) * 2 }  }
         
         let correctMessages: [Recorded<Int>] = [
             next(210, (5 + 0) * 2),
@@ -902,7 +902,7 @@ extension ObservableStandardSequenceOperators {
             error(300, testError)
             ])
         
-        let res = scheduler.start(290) { xs >- mapWithIndex { ($0 + $1) * 2 } }
+        let res = scheduler.start(290) { xs.mapWithIndex { ($0 + $1) * 2 } }
         
         let correctMessages: [Recorded<Int>] = [
             next(210, (5 + 0) * 2),
@@ -931,7 +931,7 @@ extension ObservableStandardSequenceOperators {
             error(300, testError)
             ])
         
-        let res = scheduler.start { xs >- mapWithIndexOrDie { $0 < 7 ? success(($0 + $1) * 2) : failure(testError) } }
+        let res = scheduler.start { xs.mapWithIndex { x, i throws -> Int in if x < 7 { return ((x + i) * 2) } else { throw testError } } }
         
         let correctMessages: [Recorded<Int>] = [
             next(210, (5 + 0) * 2),
@@ -945,6 +945,26 @@ extension ObservableStandardSequenceOperators {
         
         XCTAssertEqual(res.messages, correctMessages)
         XCTAssertEqual(xs.subscriptions, correctSubscriptions)
+    }
+    
+    func testMap_DisposeOnCompleted() {
+        just("A")
+            .map { a in
+                return a
+            }
+            .subscribeNext { _ in
+                
+            }
+    }
+    
+    func testMap1_DisposeOnCompleted() {
+        just("A")
+            .mapWithIndex { (a, i) in
+                return a
+            }
+            .subscribeNext { _ in
+                
+            }
     }
 }
 
@@ -994,7 +1014,7 @@ extension ObservableStandardSequenceOperators {
         ])
         
         let res = scheduler.start {
-            xs >- flatMap { $0 }
+            xs.flatMap { $0 }
         }
         
         XCTAssertEqual(res.messages, [
@@ -1082,7 +1102,7 @@ extension ObservableStandardSequenceOperators {
             ])
         
         let res = scheduler.start {
-            xs >- flatMap { $0 }
+            xs.flatMap { $0 }
         }
         
         XCTAssertEqual(res.messages, [
@@ -1169,7 +1189,7 @@ extension ObservableStandardSequenceOperators {
             ])
         
         let res = scheduler.start {
-            xs >- flatMap { $0 }
+            xs.flatMap { $0 }
         }
         
         XCTAssertEqual(res.messages, [
@@ -1256,7 +1276,7 @@ extension ObservableStandardSequenceOperators {
             ])
         
         let res = scheduler.start {
-            xs >- flatMap { $0 }
+            xs.flatMap { $0 }
         }
         
         XCTAssertEqual(res.messages, [
@@ -1343,7 +1363,7 @@ extension ObservableStandardSequenceOperators {
             ])
         
         let res = scheduler.start {
-            xs >- flatMap { $0 }
+            xs.flatMap { $0 }
         }
         
         XCTAssertEqual(res.messages, [
@@ -1427,7 +1447,7 @@ extension ObservableStandardSequenceOperators {
             ])
         
         let res = scheduler.start(700) {
-            xs >- flatMap { $0 }
+            xs.flatMap { $0 }
         }
         
         XCTAssertEqual(res.messages, [
@@ -1509,12 +1529,12 @@ extension ObservableStandardSequenceOperators {
         
         var invoked = 0
         let res = scheduler.start {
-            return xs >- flatMapOrDie { (x: ColdObservable<Int>) -> RxResult<Observable<Int>> in
+            return xs.flatMap { (x: ColdObservable<Int>) -> Observable<Int> in
                 invoked++
                 if invoked == 3 {
-                    return failure(testError)
+                    throw testError
                 }
-                return success(x)
+                return x
             }
         }
         
@@ -1561,8 +1581,8 @@ extension ObservableStandardSequenceOperators {
         
         var invoked = 0
         let res = scheduler.start {
-            xs >- flatMap { (x) in
-                return interval(10, scheduler) >- map { _ in x } >- take(x)
+            xs.flatMap { (x) in
+                return interval(10, scheduler).map { _ in x } .take(x)
             }
         }
         
@@ -1600,7 +1620,7 @@ extension ObservableStandardSequenceOperators {
             ])
         
         let res = scheduler.start {
-            xs >- flatMap { (x, i) in
+            xs.flatMapWithIndex { (x, i) in
                 return just(ElementIndexPair(x, i))
             }
         }
@@ -1662,7 +1682,7 @@ extension ObservableStandardSequenceOperators {
             ])
         
         let res = scheduler.start {
-            xs >- flatMap { x, _ in x }
+            xs.flatMapWithIndex { x, _ in x }
         }
         
         XCTAssertEqual(res.messages, [
@@ -1750,7 +1770,7 @@ extension ObservableStandardSequenceOperators {
             ])
         
         let res = scheduler.start {
-            xs >- flatMap { x, _ in x }
+            xs.flatMapWithIndex { x, _ in x }
         }
         
         XCTAssertEqual(res.messages, [
@@ -1838,7 +1858,7 @@ extension ObservableStandardSequenceOperators {
             ])
         
         let res = scheduler.start {
-            xs >- flatMap { x, _ in x }
+            xs.flatMapWithIndex { x, _ in x }
         }
         
         XCTAssertEqual(res.messages, [
@@ -1926,7 +1946,7 @@ extension ObservableStandardSequenceOperators {
             ])
         
         let res = scheduler.start {
-            xs >- flatMap { x, _ in x }
+            xs.flatMapWithIndex { x, _ in x }
         }
         
         XCTAssertEqual(res.messages, [
@@ -2013,7 +2033,7 @@ extension ObservableStandardSequenceOperators {
             ])
         
         let res = scheduler.start {
-            xs >- flatMap { x, _ in x }
+            xs.flatMapWithIndex { x, _ in x }
         }
         
         XCTAssertEqual(res.messages, [
@@ -2097,7 +2117,7 @@ extension ObservableStandardSequenceOperators {
             ])
         
         let res = scheduler.start(700) {
-            xs >- flatMap { x, _ in x }
+            xs.flatMapWithIndex { x, _ in x }
         }
         
         XCTAssertEqual(res.messages, [
@@ -2179,12 +2199,12 @@ extension ObservableStandardSequenceOperators {
         
         var invoked = 0
         let res = scheduler.start {
-            return xs >- flatMapOrDie { (x: ColdObservable<Int>, _: Int) -> RxResult<Observable<Int>> in
+            return xs.flatMapWithIndex { (x: ColdObservable<Int>, _: Int) -> Observable<Int> in
                 invoked++
                 if invoked == 3 {
-                    return failure(testError)
+                    throw testError
                 }
-                return success(x)
+                return x
             }
         }
         
@@ -2231,8 +2251,8 @@ extension ObservableStandardSequenceOperators {
         
         var invoked = 0
         let res = scheduler.start {
-            xs >- flatMap { (x, _) in
-                return interval(10, scheduler) >- map { _ in x } >- take(x)
+            xs.flatMapWithIndex { (x, _) in
+                return interval(10, scheduler).map { _ in x } .take(x)
             }
         }
         
@@ -2290,7 +2310,7 @@ extension ObservableStandardSequenceOperators {
             ])
         
         let res = scheduler.start {
-            xs >- take(20)
+            xs.take(20)
         }
         
         XCTAssertEqual(res.messages, [
@@ -2346,7 +2366,7 @@ extension ObservableStandardSequenceOperators {
             ])
         
         let res = scheduler.start {
-            xs >- take(17)
+            xs.take(17)
         }
         
         XCTAssertEqual(res.messages, [
@@ -2402,7 +2422,7 @@ extension ObservableStandardSequenceOperators {
             ])
         
         let res = scheduler.start {
-            xs >- take(10)
+            xs.take(10)
         }
         
         XCTAssertEqual(res.messages, [
@@ -2451,7 +2471,7 @@ extension ObservableStandardSequenceOperators {
             ])
         
         let res = scheduler.start {
-            xs >- take(20)
+            xs.take(20)
         }
         
         XCTAssertEqual(res.messages, [
@@ -2507,7 +2527,7 @@ extension ObservableStandardSequenceOperators {
             ])
         
         let res = scheduler.start {
-            xs >- take(17)
+            xs.take(17)
         }
         
         XCTAssertEqual(res.messages, [
@@ -2563,7 +2583,7 @@ extension ObservableStandardSequenceOperators {
             ])
         
         let res = scheduler.start {
-            xs >- take(3)
+            xs.take(3)
         }
         
         XCTAssertEqual(res.messages, [
@@ -2605,7 +2625,7 @@ extension ObservableStandardSequenceOperators {
             ])
         
         let res = scheduler.start(250) {
-            xs >- take(3)
+            xs.take(3)
         }
         
         XCTAssertEqual(res.messages, [
@@ -2645,7 +2665,7 @@ extension ObservableStandardSequenceOperators {
             ])
         
         let res = scheduler.start(400) {
-            xs >- take(3)
+            xs.take(3)
         }
         
         XCTAssertEqual(res.messages, [
@@ -2671,7 +2691,7 @@ extension ObservableStandardSequenceOperators {
         ])
         
         let res = scheduler.start {
-            xs >- take(0)
+            xs.take(0)
         }
         
         XCTAssertEqual(res.messages, [
@@ -2700,7 +2720,7 @@ extension ObservableStandardSequenceOperators {
             ])
         
         let res = scheduler.start {
-            xs >- take(3)
+            xs.take(3)
         }
         
         XCTAssertEqual(res.messages, [
@@ -2718,8 +2738,8 @@ extension ObservableStandardSequenceOperators {
     func testTake_DecrementCountsFirst() {
         let k = BehaviorSubject(value: false)
         
-        k >- take(1) >- subscribeNext { n in
-            sendNext(k, !n)
+        k.take(1).subscribeNext { n in
+            k.on(.Next(!n))
         }
     }
 }
@@ -2753,7 +2773,7 @@ extension ObservableStandardSequenceOperators {
             ])
         
         let res = scheduler.start {
-            xs >- skip(20)
+            xs.skip(20)
         }
         
         XCTAssertEqual(res.messages, [
@@ -2793,7 +2813,7 @@ extension ObservableStandardSequenceOperators {
             ])
         
         let res = scheduler.start {
-            xs >- skip(17)
+            xs.skip(17)
         }
         
         XCTAssertEqual(res.messages, [
@@ -2832,7 +2852,7 @@ extension ObservableStandardSequenceOperators {
             ])
         
         let res = scheduler.start {
-            xs >- skip(10)
+            xs.skip(10)
         }
         
         XCTAssertEqual(res.messages, [
@@ -2878,7 +2898,7 @@ extension ObservableStandardSequenceOperators {
             ])
         
         let res = scheduler.start {
-            xs >- skip(0)
+            xs.skip(0)
         }
         
         XCTAssertEqual(res.messages, [
@@ -2934,7 +2954,7 @@ extension ObservableStandardSequenceOperators {
             ])
         
         let res = scheduler.start {
-            xs >- skip(20)
+            xs.skip(20)
         }
         
         XCTAssertEqual(res.messages, [
@@ -2973,7 +2993,7 @@ extension ObservableStandardSequenceOperators {
             ])
         
         let res = scheduler.start {
-            xs >- skip(17)
+            xs.skip(17)
         }
         
         XCTAssertEqual(res.messages, [
@@ -3012,7 +3032,7 @@ extension ObservableStandardSequenceOperators {
             ])
         
         let res = scheduler.start {
-            xs >- skip(3)
+            xs.skip(3)
         }
         
         XCTAssertEqual(res.messages, [
@@ -3064,7 +3084,7 @@ extension ObservableStandardSequenceOperators {
             ])
         
         let res = scheduler.start(250) {
-            xs >- skip(3)
+            xs.skip(3)
         }
         
         XCTAssertEqual(res.messages, [
@@ -3101,7 +3121,7 @@ extension ObservableStandardSequenceOperators {
             ])
         
         let res = scheduler.start(400) {
-            xs >- skip(3)
+            xs.skip(3)
         }
         
         XCTAssertEqual(res.messages, [

@@ -7,8 +7,10 @@
 //
 
 import Foundation
+#if !RX_NO_MODULE
 import RxSwift
 import RxCocoa
+#endif
 
 enum SignupState: Equatable {
     case InitialState
@@ -30,10 +32,10 @@ func ==(lhs: SignupState, rhs: SignupState) -> Bool {
 }
 
 class GitHubAPI {
-    let dataScheduler: ImmediateScheduler
+    let dataScheduler: ImmediateSchedulerType
     let URLSession: NSURLSession
 
-    init(dataScheduler: ImmediateScheduler, URLSession: NSURLSession) {
+    init(dataScheduler: ImmediateSchedulerType, URLSession: NSURLSession) {
         self.dataScheduler = dataScheduler
         self.URLSession = URLSession
     }
@@ -44,7 +46,7 @@ class GitHubAPI {
         let URL = NSURL(string: "https://github.com/\(URLEscape(username))")!
         let request = NSURLRequest(URL: URL)
         return self.URLSession.rx_response(request)
-            >- map { (maybeData, maybeResponse) in
+            .map { (maybeData, maybeResponse) in
                 if let response = maybeResponse as? NSHTTPURLResponse {
                     return response.statusCode == 404
                 }
@@ -52,17 +54,16 @@ class GitHubAPI {
                     return false
                 }
             }
-            >- observeSingleOn(self.dataScheduler)
-            >- catch { result in
-                return returnElement(false)
-            }
+            .observeOn(self.dataScheduler)
+            .catchErrorJustReturn(false)
     }
     
     func signup(username: String, password: String) -> Observable<SignupState> {
         // this is also just a mock
         let signupResult = SignupState.SignedUp(signedUp: arc4random() % 5 == 0 ? false : true)
-        return concat([returnElement(signupResult), never()])
-            >- throttle(5, MainScheduler.sharedInstance)
-            >- startWith(SignupState.SigningUp)
+        return [just(signupResult), never()]
+            .concat()
+            .throttle(2, MainScheduler.sharedInstance)
+            .startWith(SignupState.SigningUp)
     }
 }

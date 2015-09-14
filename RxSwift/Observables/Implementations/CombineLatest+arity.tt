@@ -1,0 +1,92 @@
+//
+//  CombineLatest.tt.swift
+//  RxSwift
+//
+//  Created by Krunoslav Zaher on 4/22/15.
+//  Copyright (c) 2015 Krunoslav Zaher. All rights reserved.
+//
+
+import Foundation
+
+<% for i in 2 ... 8 { %>
+
+// <%= i %>
+
+/**
+Merges the specified observable sequences into one observable sequence by using the selector function whenever any of the observable sequences produces an element.
+
+- parameter resultSelector: Function to invoke whenever any of the sources produces an element.
+- returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
+*/
+public func combineLatest<<%= (Array(1...i).map { "O\($0): ObservableType" }).joinWithSeparator(", ") %>, R>
+    (<%= (Array(1...i).map { "source\($0): O\($0)" }).joinWithSeparator(", _ ") %>, _ resultSelector: (<%= (Array(1...i).map { "O\($0).E" }).joinWithSeparator(", ") %>) throws -> R)
+        -> Observable<R> {
+    return CombineLatest<%= i %>(
+        <%= (Array(1...i).map { "source\($0): source\($0).asObservable()" }).joinWithSeparator(", ") %>,
+        resultSelector: resultSelector
+    )
+}
+
+class CombineLatestSink<%= i %>_<<%= (Array(1...i).map { "E\($0)" }).joinWithSeparator(", ") %>, O: ObserverType> : CombineLatestSink<O> {
+    typealias R = O.E
+    typealias Parent = CombineLatest<%= i %><<%= (Array(1...i).map { "E\($0)" }).joinWithSeparator(", ") %>, R>
+
+    let parent: Parent
+
+<%= (Array(1...i).map {
+"    var latestElement\($0): E\($0)! = nil"
+}).joinWithSeparator("\n") %>
+
+    init(parent: Parent, observer: O, cancel: Disposable) {
+        self.parent = parent
+        super.init(arity: <%= i %>, observer: observer, cancel: cancel)
+    }
+
+    func run() -> Disposable {
+<%= (Array(1...i).map {
+"        let subscription\($0) = SingleAssignmentDisposable()"
+}).joinWithSeparator("\n") %>
+
+<%= (Array(1...i).map {
+"        let observer\($0) = CombineLatestObserver(lock: lock, parent: self, index: \($0 - 1), setLatestValue: { (e: E\($0)) -> Void in self.latestElement\($0) = e }, this: subscription\($0))"
+}).joinWithSeparator("\n") %>
+
+<%= (Array(1...i).map {
+"         subscription\($0).disposable = parent.source\($0).subscribeSafe(observer\($0))"
+}).joinWithSeparator("\n") %>
+
+        return CompositeDisposable(disposables: [
+<%= (Array(1...i).map { "                subscription\($0)" }).joinWithSeparator(",\n") %>
+        ])
+    }
+
+    override func getResult() throws -> R {
+        return try self.parent.resultSelector(<%= (Array(1...i).map { "latestElement\($0)" }).joinWithSeparator(", ") %>)
+    }
+}
+
+class CombineLatest<%= i %><<%= (Array(1...i).map { "E\($0)" }).joinWithSeparator(", ") %>, R> : Producer<R> {
+    typealias ResultSelector = (<%= (Array(1...i).map { "E\($0)" }).joinWithSeparator(", ") %>) throws -> R
+
+<%= (Array(1...i).map {
+"    let source\($0): Observable<E\($0)>"
+}).joinWithSeparator("\n") %>
+
+    let resultSelector: ResultSelector
+
+    init(<%= (Array(1...i).map { "source\($0): Observable<E\($0)>" }).joinWithSeparator(", ") %>, resultSelector: ResultSelector) {
+<%= (Array(1...i).map {
+"        self.source\($0) = source\($0)"
+}).joinWithSeparator("\n")  %>
+
+        self.resultSelector = resultSelector
+    }
+
+    override func run<O: ObserverType where O.E == R>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
+        let sink = CombineLatestSink<%= i %>_(parent: self, observer: observer, cancel: cancel)
+        setSink(sink)
+        return sink.run()
+    }
+}
+
+<% } %>

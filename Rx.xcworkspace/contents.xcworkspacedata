@@ -7,49 +7,14 @@
    <FileRef
       location = "group:README.md">
    </FileRef>
-   <Group
-      location = "group:Playgrounds"
-      name = "Playgrounds">
-      <FileRef
-         location = "group:Introduction.playground">
-      </FileRef>
-      <Group
-         location = "group:ObservablesOperators"
-         name = "ObservablesOperators">
-         <FileRef
-            location = "group:Observables+Creating.playground">
-         </FileRef>
-         <FileRef
-            location = "group:Observables+Transforming.playground">
-         </FileRef>
-         <FileRef
-            location = "group:Observables+Filtering.playground">
-         </FileRef>
-         <FileRef
-            location = "group:Observables+Combining.playground">
-         </FileRef>
-         <FileRef
-            location = "group:Observables+Error Handling.playground">
-         </FileRef>
-         <FileRef
-            location = "group:Observables+Utility.playground">
-         </FileRef>
-         <FileRef
-            location = "group:Observables+Conditional and Boolean.playground">
-         </FileRef>
-         <FileRef
-            location = "group:Observables+Mathematical and Aggregate.playground">
-         </FileRef>
-         <FileRef
-            location = "group:Observables+Connectable.playground">
-         </FileRef>
-      </Group>
-   </Group>
    <FileRef
-      location = "group:RxSwift/RxSwift.xcodeproj">
+      location = "group:CHANGELOG.md">
    </FileRef>
    <FileRef
-      location = "group:RxCocoa/RxCocoa.xcodeproj">
+      location = "group:Rx.playground">
+   </FileRef>
+   <FileRef
+      location = "group:Rx.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:RxTests/RxTests.xcodeproj">

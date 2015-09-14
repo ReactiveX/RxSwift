@@ -7,15 +7,17 @@
 //
 
 import Foundation
+#if !RX_NO_MODULE
 import RxSwift
 import RxCocoa
+#endif
 
-class SearchViewModel: Disposable {
+class SearchViewModel {
     
     // outputs
     let rows: Observable<[SearchResultViewModel]>
     
-    let subscriptions = CompositeDisposable()
+    let subscriptions = DisposeBag()
 
     // public methods
     
@@ -27,30 +29,28 @@ class SearchViewModel: Disposable {
         let API = DefaultWikipediaAPI.sharedAPI
         
         self.rows = searchText
-            >- throttle(0.3, $.mainScheduler)
-            >- distinctUntilChanged
-            >- map { query in
+            .throttle(0.3, $.mainScheduler)
+            .distinctUntilChanged()
+            .map { query in
                 API.getSearchResults(query)
-                    >- startWith([]) // clears results on new search term
-                    >- catch([])
+                    .retry(3)
+                    .startWith([]) // clears results on new search term
+                    .catchErrorJustReturn([])
             }
-            >- switchLatest
-            >- map { results in
+            .switchLatest()
+            .map { results in
                 results.map {
                     SearchResultViewModel(
                         searchResult: $0
                     )
                 }
-        }
+            }
         
         selectedResult
-            >- subscribeNext { searchResult in
+            .subscribeNext { searchResult in
                 wireframe.openURL(searchResult.searchResult.URL)
             }
-            >- subscriptions.addDisposable
+            .addDisposableTo(subscriptions)
     }
 
-    func dispose() {
-        subscriptions.dispose()
-    }
 }

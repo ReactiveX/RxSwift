@@ -24,13 +24,13 @@ extension ObservableAggregateTest {
     func test_AggregateWithSeed_Empty() {
         let scheduler = TestScheduler(initialClock: 0)
         
-        var xs = scheduler.createHotObservable([
+        let xs = scheduler.createHotObservable([
             next(150, 1),
             completed(250)
             ])
         
         
-        let res = scheduler.start { xs >- aggregate(42, +) }
+        let res = scheduler.start { xs.reduce(42, +) }
         
         let correctMessages = [
             next(250, 42),
@@ -54,7 +54,7 @@ extension ObservableAggregateTest {
             completed(250)
             ])
         
-        let res = scheduler.start { xs >- aggregate(42, +) }
+        let res = scheduler.start { xs.reduce(42, +) }
         
         let correctMessages = [
             next(250, 42 + 24),
@@ -77,7 +77,7 @@ extension ObservableAggregateTest {
             error(210, testError),
             ])
         
-        let res = scheduler.start { xs >- aggregate(42, +) }
+        let res = scheduler.start { xs.reduce(42, +) }
         
         let correctMessages: [Recorded<Int>] = [
             error(210, testError)
@@ -98,7 +98,7 @@ extension ObservableAggregateTest {
             next(150, 1),
             ])
         
-        let res = scheduler.start { xs >- aggregate(42, +) }
+        let res = scheduler.start { xs.reduce(42, +) }
         
         let correctMessages: [Recorded<Int>] = [
         ]
@@ -124,7 +124,7 @@ extension ObservableAggregateTest {
             completed(260)
             ])
         
-        let res = scheduler.start { xs >- aggregate(42, +) }
+        let res = scheduler.start { xs.reduce(42, +) }
         
         let correctMessages: [Recorded<Int>] = [
             next(260, 42 + 0 + 1 + 2 + 3 + 4),
@@ -152,7 +152,16 @@ extension ObservableAggregateTest {
             completed(260)
             ])
         
-        let res = scheduler.start { xs >- aggregateOrDie(42, { $1 < 3 ? success($0 + $1) : failure(testError)})  }
+        let res = scheduler.start {
+            xs.reduce(42) { (a: Int, x: Int) throws -> Int in
+                if x < 3 {
+                    return a + x
+                }
+                else {
+                    throw testError
+                }
+            }
+        }
         
         let correctMessages: [Recorded<Int>] = [
             error(240, testError)
@@ -174,7 +183,7 @@ extension ObservableAggregateTest {
             completed(250)
             ])
         
-        let res = scheduler.start { xs >- aggregate(42, +, { $0 * 5 }) }
+        let res = scheduler.start { xs.reduce(42, +) { $0 * 5 } }
         
         let correctMessages = [
             next(250, 42 * 5),
@@ -198,7 +207,7 @@ extension ObservableAggregateTest {
             completed(250)
             ])
         
-        let res = scheduler.start { xs >- aggregate(42, { $0 + $1 }, { $0 * 5 }) }
+        let res = scheduler.start { xs.reduce(42, +, mapResult: { $0 * 5 }) }
         
         let correctMessages = [
             next(250, (42 + 24) * 5),
@@ -221,7 +230,7 @@ extension ObservableAggregateTest {
             error(210, testError),
             ])
         
-        let res = scheduler.start { xs >- aggregate(42, { $0 + $1 }, { $0 * 5 }) }
+        let res = scheduler.start { xs.reduce(42, +, mapResult: { $0 * 5 }) }
         
         let correctMessages: [Recorded<Int>] = [
             error(210, testError)
@@ -242,7 +251,7 @@ extension ObservableAggregateTest {
             next(150, 1),
             ])
         
-        let res = scheduler.start { xs >- aggregate(42, { $0 + $1 }, { $0 * 5 }) }
+        let res = scheduler.start { xs.reduce(42, +, mapResult: { $0 * 5 }) }
         
         let correctMessages: [Recorded<Int>] = [
         ]
@@ -268,7 +277,7 @@ extension ObservableAggregateTest {
             completed(260)
             ])
         
-        let res = scheduler.start { xs >- aggregate(42, { $0 + $1 }, { $0 * 5 }) }
+        let res = scheduler.start { xs.reduce(42, +, mapResult: { $0 * 5 }) }
         
         let correctMessages: [Recorded<Int>] = [
             next(260, (42 + 0 + 1 + 2 + 3 + 4) * 5),
@@ -296,7 +305,7 @@ extension ObservableAggregateTest {
             completed(260)
             ])
         
-        let res = scheduler.start { xs >- aggregateOrDie(42, { $1 < 3 ? success($0 + $1) : failure(testError) }, { success($0 * 5) }) }
+        let res = scheduler.start { xs.reduce(42, { a, x in if x < 3 { return a + x } else { throw testError } }, mapResult: { $0 * 5 }) }
         
         let correctMessages: [Recorded<Int>] = [
             error(240, testError)
@@ -323,7 +332,7 @@ extension ObservableAggregateTest {
             completed(260)
             ])
         
-        let res = scheduler.start { xs >- aggregateOrDie(42, { success($0 + $1) }, { (_: Int) -> RxResult<Int> in failure(testError) }) }
+        let res = scheduler.start { xs.reduce(42, +, mapResult: { (_: Int) throws -> Int in throw testError }) }
         
         let correctMessages: [Recorded<Int>] = [
             error(260, testError)

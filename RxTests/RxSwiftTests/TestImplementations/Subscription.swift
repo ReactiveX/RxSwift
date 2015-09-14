@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Subscription : Equatable, Hashable, Printable {
+struct Subscription : Equatable, Hashable, CustomStringConvertible {
     let subscribe : Time
     let unsubscribe : Time
     

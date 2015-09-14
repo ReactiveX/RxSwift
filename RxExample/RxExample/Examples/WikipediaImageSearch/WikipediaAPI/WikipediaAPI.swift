@@ -7,8 +7,10 @@
 //
 
 import Foundation
+#if !RX_NO_MODULE
 import RxSwift
 import RxCocoa
+#endif
 
 func apiError(error: String) -> NSError {
     return NSError(domain: "WikipediaAPI", code: -1, userInfo: [NSLocalizedDescriptionKey: error])
@@ -40,13 +42,15 @@ class DefaultWikipediaAPI: WikipediaAPI {
         let url = NSURL(string: urlContent)!
             
         return $.URLSession.rx_JSON(url)
-            >- observeSingleOn($.backgroundWorkScheduler)
-            >- mapOrDie { json in
-                return castOrFail(json).flatMap { (json: [AnyObject]) in
-                    return WikipediaSearchResult.parseJSON(json)
+            .observeOn($.backgroundWorkScheduler)
+            .map { json in
+                guard let json = json as? [AnyObject] else {
+                    throw exampleError("Parsing error")
                 }
+                
+                return try WikipediaSearchResult.parseJSON(json)
             }
-            >- observeSingleOn($.mainScheduler)
+            .observeOn($.mainScheduler)
     }
     
     // http://en.wikipedia.org/w/api.php?action=parse&page=rx&format=json
@@ -59,11 +63,13 @@ class DefaultWikipediaAPI: WikipediaAPI {
         }
         
         return $.URLSession.rx_JSON(url!)
-            >- mapOrDie { jsonResult in
-                return castOrFail(jsonResult).flatMap { (json: NSDictionary) in
-                    return WikipediaPage.parseJSON(json)
+            .map { jsonResult in
+                guard let json = jsonResult as? NSDictionary else {
+                    throw exampleError("Parsing error")
                 }
+                
+                return try WikipediaPage.parseJSON(json)
             }
-            >- observeSingleOn($.mainScheduler)
+            .observeOn($.mainScheduler)
     }
 }

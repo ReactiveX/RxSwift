@@ -9,7 +9,7 @@
 import Foundation
 import RxSwift
 
-struct Recorded<Element : Equatable> : Printable, Equatable {
+struct Recorded<Element : Equatable> : CustomStringConvertible, Equatable {
     let time: Time
     let event: Event<Element>
     
@@ -21,8 +21,8 @@ struct Recorded<Element : Equatable> : Printable, Equatable {
     var value: Element {
         get {
             switch self.event {
-            case .Next(let boxedValue):
-                return boxedValue.value
+            case .Next(let value):
+                return value
             default:
                 assert(false)
                 let element: Element! = nil
@@ -40,4 +40,17 @@ struct Recorded<Element : Equatable> : Printable, Equatable {
 
 func == <T: Equatable>(lhs: Recorded<T>, rhs: Recorded<T>) -> Bool {
     return lhs.time == rhs.time && lhs.event == rhs.event
+}
+
+
+// workaround for swift compiler bug
+struct EquatableArray<Element: Equatable> : Equatable {
+    let elements: [Element]
+    init(_ elements: [Element]) {
+        self.elements = elements
+    }
+}
+
+func == <E: Equatable>(lhs: EquatableArray<E>, rhs: EquatableArray<E>) -> Bool {
+    return lhs.elements == rhs.elements
 }

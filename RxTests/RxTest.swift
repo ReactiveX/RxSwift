@@ -8,11 +8,12 @@
 
 import XCTest
 import RxSwift
+import CoreLocation
 
 #if TRACE_RESOURCES
 #elseif RELEASE
 #else
-let a = unknown
+//let a = unknown
 #endif
 
 // because otherwise OSX unit tests won't run
@@ -24,12 +25,16 @@ let a = unknown
 
 typealias Time = Int
 
+func XCTAssertErrorEqual(lhs: ErrorType, _ rhs: ErrorType) {
+    XCTAssertTrue(lhs as NSError === rhs as NSError)
+}
+
 let testError = NSError(domain: "dummyError", code: -232, userInfo: nil)
 let testError1 = NSError(domain: "dummyError1", code: -233, userInfo: nil)
 let testError2 = NSError(domain: "dummyError2", code: -234, userInfo: nil)
 
 func next<T>(value: T) -> Recorded<T> {
-    return Recorded(time: 0, event: .Next(RxBox(value)))
+    return Recorded(time: 0, event: .Next(value))
 }
 
 func completed<T>() -> Recorded<T> {
@@ -40,15 +45,15 @@ func error<T>(error: NSError) -> Recorded<T> {
     return Recorded(time: 0, event: .Error(error))
 }
 
-func next<T>(time: Time, value: T) -> Recorded<T> {
-    return Recorded(time: time, event: .Next(RxBox(value)))
+func next<T>(time: Time, _ value: T) -> Recorded<T> {
+    return Recorded(time: time, event: .Next(value))
 }
 
 func completed<T>(time: Time) -> Recorded<T> {
     return Recorded(time: time, event: .Completed)
 }
 
-func error<T>(time: Time, error: NSError) -> Recorded<T> {
+func error<T>(time: Time, _ error: NSError) -> Recorded<T> {
     return Recorded(time: time, event: .Error(error))
 }
 
@@ -57,6 +62,10 @@ class RxTest: XCTestCase {
         static let created = 100
         static let subscribed = 200
         static let disposed = 1000
+    }
+    
+    func sleep(time: NSTimeInterval) {
+       NSThread.sleepForTimeInterval(time)
     }
     
     private var startResourceCount: Int32 = 0
@@ -75,7 +84,6 @@ class RxTest: XCTestCase {
         super.tearDown()
 
 #if TRACE_RESOURCES
-        usleep(500) // wait 0.5 ms for proper scheduler disposal
         XCTAssertEqual(self.startResourceCount, resourceCount)
 #endif
     }

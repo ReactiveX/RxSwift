@@ -9,7 +9,7 @@
 import Foundation
 
 if Process.argc != 3 {
-    println("./Preprocessor <source-files-root> <derived-data> ")
+    print("./Preprocessor <source-files-root> <derived-data> ")
     exit(-1)
 }
 
@@ -55,13 +55,13 @@ func processFile(path: String, outputPath: String) -> String {
         functionContentComponents.append("components.append(\(escape(suffix)));\n")
     }
     
-    functionContentComponents.append("\"\".join(components).writeToFile(\"\(outputPath)\", atomically: false, encoding: NSUTF8StringEncoding, error: nil);")
+    functionContentComponents.append("try! components.joinWithSeparator(\"\").writeToFile(\"\(outputPath)\", atomically: false, encoding: NSUTF8StringEncoding)")
     
-    return "".join(functionContentComponents)
+    return functionContentComponents.joinWithSeparator("")
 }
 
 func runCommand(path: String) {
-    let pid = NSProcessInfo().processIdentifier
+    _ = NSProcessInfo().processIdentifier
     
     let task = NSTask()
     task.launchPath = "/bin/bash"
@@ -81,19 +81,24 @@ let files = fileManager.subpathsAtPath(sourceFilesRoot)
 var generateAllFiles = ["// Generated code\n", "import Foundation\n"]
 
 for file in files! {
-    if (file.pathExtension ?? "") != "tt" {
+    if ((file as NSString).pathExtension ?? "") != "tt" {
         continue
     }
     
-    let path = sourceFilesRoot.stringByAppendingPathComponent(file as! String)
+    print(file)
+    
+    let path = (sourceFilesRoot as NSString).stringByAppendingPathComponent(file as String)
     
     let outputPath = path.substringToIndex(path.endIndex.predecessor().predecessor().predecessor()) + ".swift"
     
-    generateAllFiles.append("_ = { () -> Void in\n\(processFile(path, outputPath))\n}()\n")
+    generateAllFiles.append("_ = { () -> Void in\n\(processFile(path, outputPath: outputPath))\n}()\n")
 }
 
-let script = "".join(generateAllFiles)
-let scriptPath = derivedData.stringByAppendingPathComponent("_preprocessor.sh")
+let script = generateAllFiles.joinWithSeparator("")
+let scriptPath = (derivedData as NSString).stringByAppendingPathComponent("_preprocessor.sh")
 
-script.writeToFile(scriptPath, atomically: true, encoding: NSUTF8StringEncoding, error: nil)
+do {
+    try script.writeToFile(scriptPath, atomically: true, encoding: NSUTF8StringEncoding)
+} catch _ {
+}
 runCommand(scriptPath)

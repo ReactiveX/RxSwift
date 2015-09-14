@@ -7,7 +7,9 @@
 //
 
 import Foundation
+#if !RX_NO_MODULE
 import RxSwift
+#endif
 
 struct WikipediaPage {
     let title: String
@@ -19,14 +21,14 @@ struct WikipediaPage {
     }
     
     // tedious parsing part
-    static func parseJSON(json: NSDictionary) -> RxResult<WikipediaPage> {
+    static func parseJSON(json: NSDictionary) throws -> WikipediaPage {
         let title = json.valueForKey("parse")?.valueForKey("title") as? String
         let text = json.valueForKey("parse")?.valueForKey("text")?.valueForKey("*") as? String
         
         if title == nil || text == nil {
-            return failure(apiError("Error parsing page content"))
+            throw apiError("Error parsing page content")
         }
         
-        return success(WikipediaPage(title: title!, text: text!))
+        return WikipediaPage(title: title!, text: text!)
     }
 }

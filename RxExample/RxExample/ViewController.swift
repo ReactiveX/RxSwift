@@ -7,7 +7,9 @@
 //
 
 import Foundation
+#if !RX_NO_MODULE
 import RxSwift
+#endif
 
 #if os(iOS)
     import UIKit
@@ -19,20 +21,24 @@ import RxSwift
 
 class ViewController: OSViewController {
 #if TRACE_RESOURCES
+    #if !RX_NO_MODULE
     private let startResourceCount = RxSwift.resourceCount
+    #else
+    private let startResourceCount = resourceCount
+    #endif
 #endif
     
     override func viewDidLoad() {
 #if TRACE_RESOURCES
-        println("Number of start resources = \(resourceCount)")
+        print("Number of start resources = \(resourceCount)")
 #endif
     }
     
     deinit {
 #if TRACE_RESOURCES
-        println("View controller disposed with \(resourceCount) resources")
+        print("View controller disposed with \(resourceCount) resources")
     
-        var numberOfResourcesThatShouldRemain = startResourceCount
+        let numberOfResourcesThatShouldRemain = startResourceCount
         let time = dispatch_time(DISPATCH_TIME_NOW, Int64(0.1 * Double(NSEC_PER_SEC)))
         dispatch_after(time, dispatch_get_main_queue(), { () -> Void in
             assert(resourceCount <= numberOfResourcesThatShouldRemain, "Resources weren't cleaned properly")

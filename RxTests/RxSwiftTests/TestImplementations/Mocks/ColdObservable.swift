@@ -28,16 +28,16 @@ class ColdObservable<Element: Equatable>: Observable<Element> {
         super.init()
     }
     
-    override func subscribe<O : ObserverType where O.Element == Element>(observer: O) -> Disposable {
-        let key = observers.put(ObserverOf(observer))
+    override func subscribe<O : ObserverType where O.E == E>(observer: O) -> Disposable {
+        let key = observers.insert(ObserverOf(observer))
         subscriptions.append(Subscription(self.testScheduler.now))
         
         let i = self.subscriptions.count - 1
 
         for recordedEvent in recordedEvents {
             testScheduler.scheduleRelative((), dueTime: recordedEvent.time, action: { (Int) in
-                dispatch(recordedEvent.event, self.observers)
-                return NopDisposableResult
+                self.observers.forEach { $0.on(recordedEvent.event) }
+                return NopDisposable.instance
             })
         }
         

@@ -1,0 +1,10 @@
+language: objective-c
+
+osx_image: xcode7
+xcode_sdk: iphonesimulator9.0
+
+notifications:
+  slack: rxswift:3ykt2Z61f8GkdvhCZTYPduOL
+  email: false
+
+script: ./scripts/pre-release-tests.sh
