@@ -13,6 +13,25 @@ import RxSwift
 
 extension UIBarButtonItem {
     
+	/**
+	Bindable sink for `enabled` property.
+	*/
+	public var rx_enabled: ObserverOf<Bool> {
+		return ObserverOf { [weak self] event in
+			MainScheduler.ensureExecutingOnScheduler()
+			
+			switch event {
+			case .Next(let value):
+				self?.enabled = value
+			case .Error(let error):
+				bindingErrorToInterface(error)
+				break
+			case .Completed:
+				break
+			}
+		}
+	}
+	
     /**
     Reactive wrapper for target action pattern on `self`.
     */
