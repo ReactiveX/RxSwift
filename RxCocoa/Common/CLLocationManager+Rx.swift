@@ -118,7 +118,8 @@ extension CLLocationManager {
     public var rx_didDetermineStateForRegion: Observable<(state: CLRegionState, region: CLRegion!)> {
         return rx_delegate.observe("locationManager:didDetermineState:forRegion:")
             .map { a in
-                return (state: a[1] as! CLRegionState, region: a[2] as? CLRegion)
+                let stateNumber = a[1] as! NSNumber
+                return (state: CLRegionState(rawValue: stateNumber.integerValue) ?? CLRegionState.Unknown, region: a[2] as? CLRegion)
             }
     }
     
@@ -189,7 +190,8 @@ extension CLLocationManager {
     public var rx_didChangeAuthorizationStatus: Observable<CLAuthorizationStatus?> {
         return rx_delegate.observe("locationManager:didChangeAuthorizationStatus:")
             .map { a in
-                return CLAuthorizationStatus(rawValue: Int32((a[1] as! NSNumber).integerValue))
+                let number = a[1] as! NSNumber
+                return CLAuthorizationStatus(rawValue: Int32(number.integerValue))
             }
     }
     
