@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		5E5D10BB1B48355200432B25 /* UIControl+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5D10BA1B48355200432B25 /* UIControl+RxTests.swift */; };
+		C69B65001BA88FAC00A7FA73 /* ObserverTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C69B64FF1BA88FAC00A7FA73 /* ObserverTests.swift */; settings = {ASSET_TAGS = (); }; };
+		C69B65011BA8957C00A7FA73 /* ObserverTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C69B64FF1BA88FAC00A7FA73 /* ObserverTests.swift */; settings = {ASSET_TAGS = (); }; };
 		C801EB5A1B97951100C4D8C4 /* Observable+CreationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C801EB591B97951100C4D8C4 /* Observable+CreationTest.swift */; settings = {ASSET_TAGS = (); }; };
 		C801EB5B1B97951100C4D8C4 /* Observable+CreationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C801EB591B97951100C4D8C4 /* Observable+CreationTest.swift */; settings = {ASSET_TAGS = (); }; };
 		C811084D1AF50E2A001C13E4 /* NSNotificationCenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C811082B1AF50E2A001C13E4 /* NSNotificationCenterTests.swift */; };
@@ -105,6 +107,7 @@
 
 /* Begin PBXFileReference section */
 		5E5D10BA1B48355200432B25 /* UIControl+RxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIControl+RxTests.swift"; sourceTree = "<group>"; };
+		C69B64FF1BA88FAC00A7FA73 /* ObserverTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObserverTests.swift; sourceTree = "<group>"; };
 		C801EB591B97951100C4D8C4 /* Observable+CreationTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Observable+CreationTest.swift"; sourceTree = "<group>"; };
 		C81108201AF50E11001C13E4 /* RxTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RxTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C81108241AF50E11001C13E4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -310,6 +313,7 @@
 				C811084A1AF50E2A001C13E4 /* Observable+TimeTest.swift */,
 				C811084B1AF50E2A001C13E4 /* QueueTests.swift */,
 				C814CEA21AF5622600E98087 /* VariableTest.swift */,
+				C69B64FF1BA88FAC00A7FA73 /* ObserverTests.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -414,6 +418,7 @@
 				C81108531AF50E2A001C13E4 /* MySubject.swift in Sources */,
 				C814CEA71AF642D600E98087 /* UI+RxTests.swift in Sources */,
 				C81108611AF50E2A001C13E4 /* Observable+BindingTest.swift in Sources */,
+				C69B65001BA88FAC00A7FA73 /* ObserverTests.swift in Sources */,
 				C85F4E431B7F70EA00A866C7 /* CompositeObserverTest.swift in Sources */,
 				C811084D1AF50E2A001C13E4 /* NSNotificationCenterTests.swift in Sources */,
 				C81108621AF50E2A001C13E4 /* Observable+MultipleTest+CombineLatest.swift in Sources */,
@@ -494,6 +499,7 @@
 				C88BB8A91B07E64B0064D411 /* Observable+AggregateTest.swift in Sources */,
 				C88BB8AA1B07E64B0064D411 /* MockObserver.swift in Sources */,
 				C8AF26F01B499E5C00131C03 /* DelegateProxyTest.swift in Sources */,
+				C69B65011BA8957C00A7FA73 /* ObserverTests.swift in Sources */,
 				C8633AE61B0AA0ED00375D60 /* KVOObservableTests.swift in Sources */,
 				C88BB8AB1B07E64B0064D411 /* TestExtensions.swift in Sources */,
 				C88BB8AC1B07E64B0064D411 /* AssumptionsTest.swift in Sources */,
