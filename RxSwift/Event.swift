@@ -74,10 +74,8 @@ extension Event {
     public var isStopEvent: Bool {
         get {
             switch self {
-            case .Next:
-                return false
-            case .Error: fallthrough
-            case .Completed: return true
+            case .Next: return false
+            case .Error, .Completed: return true
             }
         }
     }
