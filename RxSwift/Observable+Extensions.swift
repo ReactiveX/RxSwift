@@ -72,11 +72,8 @@ extension ObservableType {
     public func subscribeNext(onNext: (E) -> Void)
         -> Disposable {
         let observer = AnonymousObserver<E> { e in
-            switch e {
-            case .Next(let value):
+            if case .Next(let value) = e {
                 onNext(value)
-            default:
-                break
             }
         }
         return self.subscribeSafe(observer)
@@ -91,11 +88,8 @@ extension ObservableType {
     public func subscribeError(onError: (ErrorType) -> Void)
         -> Disposable {
         let observer = AnonymousObserver<E> { e in
-            switch e {
-            case .Error(let error):
+            if case .Error(let error) = e {
                 onError(error)
-            default:
-                break
             }
         }
         return self.subscribeSafe(observer)
@@ -110,11 +104,8 @@ extension ObservableType {
     public func subscribeCompleted(onCompleted: () -> Void)
         -> Disposable {
         let observer = AnonymousObserver<E> { e in
-            switch e {
-            case .Completed:
+            if case .Completed = e {
                 onCompleted()
-            default:
-                break
             }
         }
         return self.subscribeSafe(observer)
