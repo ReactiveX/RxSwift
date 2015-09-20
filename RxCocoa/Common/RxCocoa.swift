@@ -31,6 +31,11 @@ public let RxCocoaErrorDomain = "RxCocoaError"
 */
 public let RxCocoaErrorHTTPResponseKey = "RxCocoaErrorHTTPResponseKey"
 
+/**
+`userInfo` key for `NSData` object when `RxCocoaError.NetworkError` happens.
+*/
+public let RxCocoaErrorHTTPResponseDataKey = "RxCocoaErrorHTTPResponseDataKey"
+
 func rxError(errorCode: RxCocoaError, _ message: String) -> NSError {
     return NSError(domain: RxCocoaErrorDomain, code: errorCode.rawValue, userInfo: [NSLocalizedDescriptionKey: message])
 }
