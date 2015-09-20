@@ -26,7 +26,7 @@ public class Observable<Element> : ObservableType {
     }
     
     public func subscribe<O: ObserverType where O.E == E>(observer: O) -> Disposable {
-        return abstractMethod()
+        abstractMethod()
     }
     
     public func asObservable() -> Observable<E> {

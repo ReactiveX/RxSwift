@@ -44,6 +44,6 @@ public class Producer<Element> : Observable<Element> {
     }
     
     public func run<O : ObserverType where O.E == Element>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
-        return abstractMethod()
+        abstractMethod()
     }
 }

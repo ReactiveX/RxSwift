@@ -11,7 +11,6 @@ import Foundation
 class ObserverBase<ElementType> : Disposable, ObserverType {
     typealias E = ElementType
     
-    var lock = SpinLock()
     var isStopped: Int32 = 0
     
     init() {
@@ -34,7 +33,7 @@ class ObserverBase<ElementType> : Disposable, ObserverType {
     }
     
     func onCore(event: Event<E>) {
-        return abstractMethod()
+        abstractMethod()
     }
     
     func dispose() {

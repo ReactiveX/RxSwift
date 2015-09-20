@@ -65,11 +65,11 @@ func bindingErrorToInterface(error: ErrorType) {
 }
 
 func rxAbstractMethodWithMessage<T>(message: String) -> T {
-    return rxFatalErrorAndDontReturn(message)
+    rxFatalError(message)
 }
 
 func rxAbstractMethod<T>() -> T {
-    return rxFatalErrorAndDontReturn("Abstract method")
+    rxFatalError("Abstract method")
 }
 
 // workaround for Swift compiler bug, cheers compiler team :)
@@ -85,7 +85,6 @@ func castOrFatalError<T>(value: AnyObject!, message: String) -> T {
     let maybeResult: T? = value as? T
     guard let result = maybeResult else {
         rxFatalError(message)
-        return maybeResult!
     }
     
     return result
@@ -95,7 +94,6 @@ func castOrFatalError<T>(value: AnyObject!) -> T {
     let maybeResult: T? = value as? T
     guard let result = maybeResult else {
         rxFatalError("Failure converting from \(value) to \(T.self)")
-        return maybeResult!
     }
     
     return result
@@ -109,14 +107,9 @@ let delegateNotSet = "Delegate not set"
 // }
 
 
-func rxFatalErrorAndDontReturn<T>(lastMessage: String) -> T {
-    rxFatalError(lastMessage)
-    return (nil as T!)!
-}
-
 #if !RX_NO_MODULE
 
-func rxFatalError(lastMessage: String) {
+@noreturn func rxFatalError(lastMessage: String) {
     // The temptation to comment this line is great, but please don't, it's for your own good. The choice is yours.
     fatalError(lastMessage)
 }

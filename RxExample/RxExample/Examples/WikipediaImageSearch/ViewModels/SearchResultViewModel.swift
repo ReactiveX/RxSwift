@@ -15,8 +15,8 @@ import RxCocoa
 class SearchResultViewModel {
     let searchResult: WikipediaSearchResult
 
-    var title: Observable<String>
-    var imageURLs: Observable<[NSURL]>
+    var title: Driver<String>
+    var imageURLs: Driver<[NSURL]>
 
     let API = DefaultWikipediaAPI.sharedAPI
     let $: Dependencies = Dependencies.sharedDependencies
@@ -24,13 +24,13 @@ class SearchResultViewModel {
     init(searchResult: WikipediaSearchResult) {
         self.searchResult = searchResult
 
-        self.title = never()
-        self.imageURLs = never()
+        self.title = Drive.never()
+        self.imageURLs = Drive.never()
 
         let URLs = configureImageURLs()
 
-        self.imageURLs = URLs.catchErrorJustReturn([])
-        self.title = configureTitle(URLs).catchErrorJustReturn("Error during fetching")
+        self.imageURLs = URLs.asDriver(onErrorJustReturn: [])
+        self.title = configureTitle(URLs).asDriver(onErrorJustReturn: "Error during fetching")
     }
 
     // private methods
@@ -64,7 +64,5 @@ class SearchResultViewModel {
                     return []
                 }
             }
-            .observeOn($.mainScheduler)
-            .shareReplay(1)
     }
 }

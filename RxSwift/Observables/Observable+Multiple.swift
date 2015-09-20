@@ -40,7 +40,7 @@ extension CollectionType where Generator.Element : ObservableType {
 
 // switch
 
-extension ObservableType where E : ObservableType {
+extension ObservableType where E : ObservableConvertibleType {
     
     /**
     Transforms an observable sequence of observable sequences into an observable sequence
@@ -51,7 +51,6 @@ extension ObservableType where E : ObservableType {
     
     - returns: The observable sequence that at any point in time produces the elements of the most recent inner observable sequence that has been received.
     */
-    
     public func switchLatest() -> Observable<E.E> {
         return Switch(sources: self.asObservable())
     }
@@ -59,7 +58,7 @@ extension ObservableType where E : ObservableType {
 
 // concat
 
-extension SequenceType where Generator.Element : ObservableType {
+extension SequenceType where Generator.Element : ObservableConvertibleType {
     
     /**
     Concatenates all observable sequences in the given sequence, as long as the previous observable sequence terminated successfully.
@@ -72,7 +71,7 @@ extension SequenceType where Generator.Element : ObservableType {
     }
 }
 
-extension ObservableType where E : ObservableType {
+extension ObservableType where E : ObservableConvertibleType {
     
     /**
     Concatenates all inner observable sequences, as long as the previous observable sequence terminated successfully.
@@ -86,7 +85,7 @@ extension ObservableType where E : ObservableType {
 
 // merge
 
-extension ObservableType where E : ObservableType {
+extension ObservableType where E : ObservableConvertibleType {
     
     /**
     Merges elements from all observable sequences in the given enumerable sequence into a single observable sequence.
@@ -137,7 +136,7 @@ extension ObservableType {
     
 }
 
-extension SequenceType where Generator.Element : ObservableType {
+extension SequenceType where Generator.Element : ObservableConvertibleType {
     /**
     Continues an observable sequence that is terminated by an error with the next observable sequence.
     
@@ -198,7 +197,7 @@ extension ObservableType {
     }
 }
 
-extension SequenceType where Generator.Element : ObservableType {
+extension SequenceType where Generator.Element : ObservableConvertibleType {
     
     /**
     Propagates the observable sequence that reacts first.
@@ -208,7 +207,7 @@ extension SequenceType where Generator.Element : ObservableType {
     public func amb()
         -> Observable<Generator.Element.E> {
         return self.reduce(never()) { a, o in
-            return a.amb(o)
+            return a.amb(o.asObservable())
         }
     }
 }
