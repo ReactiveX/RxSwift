@@ -164,6 +164,13 @@ extension NSURLSession {
     public func rx_JSON(request: NSURLRequest) -> Observable<AnyObject!> {
         return rx_data(request).map { (data) -> AnyObject! in
             return try NSJSONSerialization.JSONObjectWithData(data ?? NSData(), options: [])
+        }.catchError { e in
+            let error = e as NSError
+            var userInfo = error.userInfo
+            if let response = userInfo[RxCocoaErrorHTTPResponseDataKey] as? NSData {
+                userInfo[RxCocoaErrorHTTPResponseDataKey] = try NSJSONSerialization.JSONObjectWithData(response, options: [])
+            }
+            return failWith(NSError(domain: error.domain, code: error.code, userInfo: userInfo))
         }
     }
 
