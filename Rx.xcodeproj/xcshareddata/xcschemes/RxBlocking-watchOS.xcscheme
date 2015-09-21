@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "45DB98A71BAFB76F008F0F74"
-               BuildableName = "RxBlocking-watchOS.framework"
+               BuildableName = "RxBlocking.framework"
                BlueprintName = "RxBlocking-watchOS"
                ReferencedContainer = "container:Rx.xcodeproj">
             </BuildableReference>
@@ -46,7 +46,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "45DB98A71BAFB76F008F0F74"
-            BuildableName = "RxBlocking-watchOS.framework"
+            BuildableName = "RxBlocking.framework"
             BlueprintName = "RxBlocking-watchOS"
             ReferencedContainer = "container:Rx.xcodeproj">
          </BuildableReference>
@@ -64,7 +64,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "45DB98A71BAFB76F008F0F74"
-            BuildableName = "RxBlocking-watchOS.framework"
+            BuildableName = "RxBlocking.framework"
             BlueprintName = "RxBlocking-watchOS"
             ReferencedContainer = "container:Rx.xcodeproj">
          </BuildableReference>

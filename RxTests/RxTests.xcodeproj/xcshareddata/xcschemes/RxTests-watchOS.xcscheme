@@ -17,7 +17,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "45DB98B41BAFB7BA008F0F74"
-               BuildableName = "RxTests-watchOS.xctest"
+               BuildableName = "RxTests.xctest"
                BlueprintName = "RxTests-watchOS"
                ReferencedContainer = "container:RxTests.xcodeproj">
             </BuildableReference>
