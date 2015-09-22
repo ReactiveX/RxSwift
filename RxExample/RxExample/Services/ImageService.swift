@@ -45,15 +45,10 @@ class DefaultImageService: ImageService {
         return just(imageData)
             .observeOn($.backgroundWorkScheduler)
             .map { data in
-                let maybeImage = Image(data: data)
-                
-                if maybeImage == nil {
+                guard let image = Image(data: data) else {
                     // some error
                     throw apiError("Decoding image error")
                 }
-                
-                let image = maybeImage!
-                
                 return image
             }
             .observeOn($.mainScheduler)
