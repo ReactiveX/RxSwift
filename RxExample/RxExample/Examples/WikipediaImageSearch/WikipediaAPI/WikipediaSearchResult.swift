@@ -39,20 +39,14 @@ struct WikipediaSearchResult: CustomStringConvertible {
             let (first, url) = result
             let (title, description) = first
 
-            let titleString = title as? String,
-            descriptionString = description as? String,
-            urlString = url as? String
-
-            if titleString == nil || descriptionString == nil || urlString == nil {
+            guard let titleString = title as? String,
+                  let descriptionString = description as? String,
+                  let urlString = url as? String,
+                  let URL = NSURL(string: urlString) else {
                 throw WikipediaParseError
             }
 
-            let URL = NSURL(string: urlString!)
-            if URL == nil {
-                throw WikipediaParseError
-            }
-
-            return WikipediaSearchResult(title: titleString!, description: descriptionString!, URL: URL!)
+            return WikipediaSearchResult(title: titleString, description: descriptionString, URL: URL)
         })
 
         return searchResults
