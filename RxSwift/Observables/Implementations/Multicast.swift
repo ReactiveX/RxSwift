@@ -43,8 +43,8 @@ class MulticastSink<S: SubjectType, O: ObserverType>: Sink<O>, ObserverType {
         observer?.on(event)
         switch event {
             case .Next: break
-            case .Error: fallthrough
-            case .Completed: self.dispose()
+            case .Error, .Completed:
+                self.dispose()
         }
     }
 }

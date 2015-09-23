@@ -89,8 +89,8 @@ class SwitchSinkIter<S: ObservableType, O: ObserverType where S.E == O.E> : Obse
             
             switch event {
             case .Next: break
-            case .Error: fallthrough
-            case .Completed: self._self.dispose()
+            case .Error, .Completed:
+                self._self.dispose()
             }
             
             if parent.latest != self.id {

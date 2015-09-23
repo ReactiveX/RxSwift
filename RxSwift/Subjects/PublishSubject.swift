@@ -89,8 +89,7 @@ public class PublishSubject<Element> : Observable<Element>, SubjectType, Cancela
                 }
                 
                 observers.forEach { $0.on(event) }
-            case .Completed: fallthrough
-            case .Error:
+            case .Completed, .Error:
                 if stoppedEvent == nil {
                     self.stoppedEvent = event
                     observers.forEach { $0.on(event) }

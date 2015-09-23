@@ -19,8 +19,7 @@ class AsObservableSink<O: ObserverType> : Sink<O>, ObserverType {
         observer?.on(event)
         
         switch event {
-        case .Error: fallthrough
-        case .Completed:
+        case .Error, .Completed:
             self.dispose()
         default: break
         }

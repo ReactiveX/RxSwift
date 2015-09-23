@@ -22,13 +22,11 @@ struct WikipediaPage {
     
     // tedious parsing part
     static func parseJSON(json: NSDictionary) throws -> WikipediaPage {
-        let title = json.valueForKey("parse")?.valueForKey("title") as? String
-        let text = json.valueForKey("parse")?.valueForKey("text")?.valueForKey("*") as? String
-        
-        if title == nil || text == nil {
+        guard let title = json.valueForKey("parse")?.valueForKey("title") as? String,
+              let text = json.valueForKey("parse")?.valueForKey("text")?.valueForKey("*") as? String else {
             throw apiError("Error parsing page content")
         }
         
-        return WikipediaPage(title: title!, text: text!)
+        return WikipediaPage(title: title, text: text)
     }
 }
