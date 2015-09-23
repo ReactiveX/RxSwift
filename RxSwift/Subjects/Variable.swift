@@ -12,8 +12,6 @@ import Foundation
 Variable is a wrapper for `BehaviorSubject`.
 
 Unlike `BehaviorSubject` it can't terminate with error.
-
-Before variable is deallocated, `Completed` event will be sent to all observers.
 */
 public class Variable<Element> : ObservableType {
     public typealias E = Element
@@ -73,9 +71,5 @@ public class Variable<Element> : ObservableType {
     */
     public func asObservable() -> Observable<E> {
         return self.subject
-    }
-    
-    deinit {
-        self.subject.on(.Completed)
     }
 }
