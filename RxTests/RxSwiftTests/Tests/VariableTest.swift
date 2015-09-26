@@ -66,7 +66,10 @@ class VariableTest : RxTest {
                 //print("Next value of c = \(c)")
                 latestValueOfC = c
             }
-            .scopedDispose()
+
+        defer {
+            d.dispose()
+        }
         
         XCTAssertEqual(latestValueOfC!, 3)
         

@@ -22,9 +22,13 @@ extension ObservableBindingTest {
         var nEvents = 0
         
         let observable = TestConnectableObservable(o: sequenceOf(0, 1, 2), s: subject)
-        let _d = observable .subscribeNext { n in
+        let d = observable .subscribeNext { n in
             nEvents++
-        } .scopedDispose
+        }
+
+        defer {
+            d.dispose()
+        }
 
         observable.connect().dispose()
         
@@ -37,9 +41,13 @@ extension ObservableBindingTest {
         var nEvents = 0
         
         let observable = TestConnectableObservable(o: [sequenceOf(0, 1, 2), failWith(testError)].concat(), s: subject)
-        let _d = observable.subscribeError { n in
+        let d = observable.subscribeError { n in
             nEvents++
-        } .scopedDispose
+        }
+
+        defer {
+            d.dispose()
+        }
 
         observable.connect().dispose()
         
@@ -52,9 +60,13 @@ extension ObservableBindingTest {
         var nEvents = 0
         
         let observable = TestConnectableObservable(o: failWith(testError), s: subject)
-        let _d = observable.subscribeError { n in
+        let d = observable.subscribeError { n in
             nEvents++
-        } .scopedDispose
+        }
+
+        defer {
+            d.dispose()
+        }
 
         observable.connect().dispose()
         
@@ -69,7 +81,11 @@ extension ObservableBindingTest {
         let observable = TestConnectableObservable(o: empty(), s: subject)
         let d = observable.subscribeCompleted {
             nEvents++
-        } .scopedDispose
+        }
+
+        defer {
+            d.dispose()
+        }
 
         observable.connect().dispose()
         
@@ -250,9 +266,9 @@ extension ObservableBindingTest {
         var nEvents = 0
         
         let observable = sequenceOf(0, 1, 2).replay(3).refCount()
-        _ = observable .subscribeNext { n in
+        observable.subscribeNext { n in
             nEvents++
-        } .scopedDispose
+        }
         
         XCTAssertEqual(nEvents, 3)
     }
@@ -261,9 +277,9 @@ extension ObservableBindingTest {
         var nEvents = 0
         
         let observable = [sequenceOf(0, 1, 2), failWith(testError)].concat().replay(3).refCount()
-        _ = observable .subscribeError { n in
+        observable.subscribeError { n in
             nEvents++
-        } .scopedDispose
+        }
         
         XCTAssertEqual(nEvents, 1)
     }
@@ -272,9 +288,9 @@ extension ObservableBindingTest {
         var nEvents = 0
         
         let observable: Observable<Int> = failWith(testError).replay(3).refCount()
-        _ = observable.subscribeError { n in
+        observable.subscribeError { n in
             nEvents++
-        } .scopedDispose
+        }
         
         XCTAssertEqual(nEvents, 1)
     }
@@ -283,9 +299,9 @@ extension ObservableBindingTest {
         var nEvents = 0
         
         let observable: Observable<Int> = empty().replay(3).refCount()
-        _ = observable.subscribeCompleted {
+        observable.subscribeCompleted {
             nEvents++
-        } .scopedDispose
+        }
         
         XCTAssertEqual(nEvents, 1)
     }
@@ -294,9 +310,9 @@ extension ObservableBindingTest {
         var nEvents = 0
         
         let observable = sequenceOf(0, 1, 2).replay(1).refCount()
-        _ = observable .subscribeNext { n in
+        observable.subscribeNext { n in
             nEvents++
-            } .scopedDispose
+        }
         
         XCTAssertEqual(nEvents, 3)
     }
@@ -305,9 +321,9 @@ extension ObservableBindingTest {
         var nEvents = 0
         
         let observable = [just(0, 1, 2), failWith(testError)].concat().replay(1).refCount()
-        _ = observable.subscribeError { n in
+        observable.subscribeError { n in
             nEvents++
-            } .scopedDispose
+        }
         
         XCTAssertEqual(nEvents, 1)
     }
@@ -316,9 +332,9 @@ extension ObservableBindingTest {
         var nEvents = 0
         
         let observable: Observable<Int> = failWith(testError).replay(1).refCount()
-        _ = observable.subscribeError { n in
+        observable.subscribeError { n in
             nEvents++
-            } .scopedDispose
+        }
         
         XCTAssertEqual(nEvents, 1)
     }
@@ -327,9 +343,9 @@ extension ObservableBindingTest {
         var nEvents = 0
         
         let observable: Observable<Int> = empty().replay(1).refCount()
-        _ = observable.subscribeCompleted {
+        observable.subscribeCompleted {
             nEvents++
-            } .scopedDispose
+        }
         
         XCTAssertEqual(nEvents, 1)
     }

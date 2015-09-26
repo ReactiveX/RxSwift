@@ -36,7 +36,7 @@ class DisposableTest : RxTest {
     func testHotObservable_Disposing() {
         let scheduler = TestScheduler(initialClock: 0)
         
-        var xs = scheduler.createHotObservable([
+        let xs = scheduler.createHotObservable([
             next(110, 1),
             next(180, 2),
             next(230, 3),
@@ -76,7 +76,7 @@ class DisposableTest : RxTest {
             numberDisposed++
         })
         
-        let result2 = compositeDisposable.addDisposable(AnonymousDisposable {
+        compositeDisposable.addDisposable(AnonymousDisposable {
             numberDisposed++
         })
         

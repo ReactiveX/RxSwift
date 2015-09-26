@@ -776,7 +776,11 @@ extension ObservableTimeTest {
             observer.on(.Next(t))
         }, completed: {
             OSSpinLockUnlock(&lock)
-        }).scopedDispose
+        })
+
+        defer {
+            d.dispose()
+        }
 
         OSSpinLockLock(&lock)
         OSSpinLockUnlock(&lock)

@@ -105,7 +105,7 @@ extension KVOObservableTests {
         
         var latest: String?
         
-        var _d: ScopedDisposable? = os .subscribeNext { latest = $0 }.scopedDispose()
+        let d = os .subscribeNext { latest = $0 }
         
         XCTAssertTrue(latest == nil)
         
@@ -125,7 +125,7 @@ extension KVOObservableTests {
         
         XCTAssertEqual(latest!, "3")
         
-        _d = nil
+        d.dispose()
         
         testClass.pr = "4"
 
@@ -139,7 +139,7 @@ extension KVOObservableTests {
         
         var latest: String?
         
-        var _d: ScopedDisposable? = os .subscribeNext { latest = $0 }.scopedDispose()
+        let d = os .subscribeNext { latest = $0 }
         
         XCTAssertTrue(latest == "0")
         
@@ -159,7 +159,7 @@ extension KVOObservableTests {
         
         XCTAssertEqual(latest ?? "", "3")
         
-        _d = nil
+        d.dispose()
         
         testClass.pr = "4"
         
@@ -173,7 +173,7 @@ extension KVOObservableTests {
         
         var latest: String?
         
-        var _d: ScopedDisposable! = os .subscribeNext { latest = $0 }.scopedDispose()
+        let d = os .subscribeNext { latest = $0 }
         
         XCTAssertTrue(latest == "0")
         
@@ -193,7 +193,7 @@ extension KVOObservableTests {
         
         XCTAssertEqual(latest!, "3")
         
-        _d = nil
+        d.dispose()
         
         testClass.pr = "4"
         
@@ -309,7 +309,7 @@ extension KVOObservableTests {
         XCTAssertTrue(latest == nil)
         XCTAssertTrue(!disposed)
     
-        var a: NSString! = "a"
+        let a: NSString! = "a"
         
         root.property = a
         
@@ -348,7 +348,7 @@ extension KVOObservableTests {
         XCTAssertTrue(latest == nil)
         XCTAssertTrue(disposed == false)
         
-        var one: NSString! = "1"
+        let one: NSString! = "1"
         
         child.property = one
         
@@ -372,7 +372,7 @@ extension KVOObservableTests {
         
         root.property = child
         
-        var one: NSString! = "1"
+        let one: NSString! = "1"
         
         child.property = one
         
@@ -425,7 +425,7 @@ extension KVOObservableTests {
         XCTAssertTrue(latest == nil)
         XCTAssertTrue(disposed == false)
         
-        var one: NSString! = "1"
+        let one: NSString! = "1"
         
         child.property = one
         
@@ -449,7 +449,7 @@ extension KVOObservableTests {
         
         root.property = child
         
-        var one: NSString! = "1"
+        let one: NSString! = "1"
         
         child.property = one
         
@@ -479,11 +479,11 @@ extension KVOObservableTests {
     // compiler won't release weak references otherwise :(
     func _testObserveWeak_Strong_Weak_Observe_NilLastPropertyBecauseOfWeak() -> (HasWeakProperty, RxMutableBox<NSObject?>, Observable<Void>) {
         var dealloc: Observable<Void>! = nil
-        var child: HasWeakProperty! = HasWeakProperty()
-        var latest: RxMutableBox<NSObject?>! = RxMutableBox(nil)
+        let child: HasWeakProperty! = HasWeakProperty()
+        let latest: RxMutableBox<NSObject?>! = RxMutableBox(nil)
         
         autoreleasepool {
-            var root: HasStrongProperty! = HasStrongProperty()
+            let root: HasStrongProperty! = HasStrongProperty()
             
             root.property = child
             
@@ -525,12 +525,12 @@ extension KVOObservableTests {
     func _testObserveWeak_Weak_Weak_Weak_middle_NilifyCorrectly() -> (HasWeakProperty, RxMutableBox<NSObject?>, Observable<Void>) {
         var dealloc: Observable<Void>! = nil
         var middle: HasWeakProperty! = HasWeakProperty()
-        var latest: RxMutableBox<NSObject?>! = RxMutableBox(nil)
-        var root: HasWeakProperty! = HasWeakProperty()
+        let latest: RxMutableBox<NSObject?>! = RxMutableBox(nil)
+        let root: HasWeakProperty! = HasWeakProperty()
         
         autoreleasepool {
             middle = HasWeakProperty()
-            var leaf = HasWeakProperty()
+            let leaf = HasWeakProperty()
             
             root.property = middle
             middle.property = leaf
@@ -680,7 +680,11 @@ extension KVOObservableTests {
             .subscribeNext { (n: CGSize?) in
                 latest.value = n
             }
-            .scopedDispose()
+
+        defer {
+            d.dispose()
+        }
+
         XCTAssertTrue(latest.value == nil)
         
         root.size = CGSizeMake(56, 1)
@@ -711,7 +715,11 @@ extension KVOObservableTests {
             .subscribeNext { (n: CGRect?) in
                 latest.value = n
             }
-            .scopedDispose()
+
+        defer {
+            d.dispose()
+        }
+
         XCTAssertTrue(latest.value == root.frame)
         
         root.frame = CGRectMake(-2, 0, 0, 1)
@@ -742,7 +750,11 @@ extension KVOObservableTests {
             .subscribeNext { (n: CGSize?) in
                 latest.value = n
             }
-            .scopedDispose()
+
+        defer {
+            d.dispose()
+        }
+
         XCTAssertTrue(latest.value == root.size)
         
         root.size = CGSizeMake(56, 1)
@@ -773,7 +785,9 @@ extension KVOObservableTests {
             .subscribeNext { (n: CGPoint?) in
                 latest.value = n
             }
-            .scopedDispose()
+        defer {
+            d.dispose()
+        }
         
         XCTAssertTrue(latest.value == root.point)
         
