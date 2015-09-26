@@ -60,7 +60,7 @@ extension UIControl {
             
             observer.on(.Next(getter()))
             
-            let controlTarget = ControlTarget(control: self, controlEvents: UIControlEvents.EditingChanged.union(.ValueChanged)) { control in
+            let controlTarget = ControlTarget(control: self, controlEvents: [.EditingChanged, .ValueChanged]) { control in
                 observer.on(.Next(getter()))
             }
             
