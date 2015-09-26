@@ -38,16 +38,8 @@ class CombineLatestSink<O: ObserverType> : Sink<O>, CombineLatestProtocol {
     func next(index: Int) {
         if !hasValueAll {
             hasValue[index] = true
-            
-            var hasValueAll = true
-            for hasValue in self.hasValue {
-                if !hasValue {
-                    hasValueAll = false;
-                    break;
-                }
-            }
-            
-            self.hasValueAll = hasValueAll;
+
+            self.hasValueAll = self.hasValue.reduce(true, combine: {$0 && $1})
         }
         
         if hasValueAll {
@@ -85,16 +77,9 @@ class CombineLatestSink<O: ObserverType> : Sink<O>, CombineLatestProtocol {
     
     func done(index: Int) {
         isDone[index] = true
-        
-        var allDone = true
-        
-        for done in self.isDone {
-            if !done {
-                allDone = false
-                break
-            }
-        }
-        
+
+        let allDone = self.isDone.reduce(true, combine: {$0 && $1})
+
         if allDone {
             observer?.on(.Completed)
             dispose()
