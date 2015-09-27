@@ -7,57 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		45DB98B61BAFB7BA008F0F74 /* Observable+ConcurrencyTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B787F91AF55CDE00206D02 /* Observable+ConcurrencyTest.swift */; };
-		45DB98B71BAFB7BA008F0F74 /* RxTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C811084C1AF50E2A001C13E4 /* RxTest.swift */; };
-		45DB98B81BAFB7BA008F0F74 /* Observable+TimeTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C811084A1AF50E2A001C13E4 /* Observable+TimeTest.swift */; };
-		45DB98B91BAFB7BA008F0F74 /* TestObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81108361AF50E2A001C13E4 /* TestObservable.swift */; };
-		45DB98BA1BAFB7BA008F0F74 /* PrimitiveMockObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E3812A1B2083C2008CDC33 /* PrimitiveMockObserver.swift */; };
-		45DB98BB1BAFB7BA008F0F74 /* Subscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = C811083D1AF50E2A001C13E4 /* Subscription.swift */; };
-		45DB98BC1BAFB7BA008F0F74 /* MySubject.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81108341AF50E2A001C13E4 /* MySubject.swift */; };
-		45DB98BD1BAFB7BA008F0F74 /* UI+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C814CEA61AF642D600E98087 /* UI+RxTests.swift */; };
-		45DB98BE1BAFB7BA008F0F74 /* Observable+BindingTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81108441AF50E2A001C13E4 /* Observable+BindingTest.swift */; };
-		45DB98BF1BAFB7BA008F0F74 /* CompositeObserverTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C85F4E421B7F70EA00A866C7 /* CompositeObserverTest.swift */; };
-		45DB98C01BAFB7BA008F0F74 /* NSNotificationCenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C811082B1AF50E2A001C13E4 /* NSNotificationCenterTests.swift */; };
-		45DB98C11BAFB7BA008F0F74 /* Observable+MultipleTest+CombineLatest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81108451AF50E2A001C13E4 /* Observable+MultipleTest+CombineLatest.swift */; };
-		45DB98C21BAFB7BA008F0F74 /* ConcurrencyTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81108411AF50E2A001C13E4 /* ConcurrencyTest.swift */; };
-		45DB98C31BAFB7BA008F0F74 /* TestObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81108371AF50E2A001C13E4 /* TestObserver.swift */; };
-		45DB98C41BAFB7BA008F0F74 /* VirtualTimeSchedulerBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C811083C1AF50E2A001C13E4 /* VirtualTimeSchedulerBase.swift */; };
-		45DB98C51BAFB7BA008F0F74 /* Observable+BlockingTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8CDD7D31B52BEC40043F0C5 /* Observable+BlockingTest.swift */; };
-		45DB98C61BAFB7BA008F0F74 /* NSObject+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81CC92A1B513FD400915606 /* NSObject+RxTests.swift */; };
-		45DB98C71BAFB7BA008F0F74 /* DisposableTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81108421AF50E2A001C13E4 /* DisposableTest.swift */; };
-		45DB98C81BAFB7BA008F0F74 /* DelegateProxyTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8AF26EE1B499E5C00131C03 /* DelegateProxyTest.swift */; };
-		45DB98C91BAFB7BA008F0F74 /* PrimitiveHotObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E381271B207D03008CDC33 /* PrimitiveHotObservable.swift */; };
-		45DB98CA1BAFB7BA008F0F74 /* Observable+StandardSequenceOperatorsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81108491AF50E2A001C13E4 /* Observable+StandardSequenceOperatorsTest.swift */; };
-		45DB98CB1BAFB7BA008F0F74 /* Observable+MultipleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81108471AF50E2A001C13E4 /* Observable+MultipleTest.swift */; };
-		45DB98CC1BAFB7BA008F0F74 /* ColdObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81108301AF50E2A001C13E4 /* ColdObservable.swift */; };
-		45DB98CD1BAFB7BA008F0F74 /* ElementIndexPair.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8FDC5F71B2B5B7E0065F8D9 /* ElementIndexPair.swift */; };
-		45DB98CE1BAFB7BA008F0F74 /* Observable+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E381221B2063CC008CDC33 /* Observable+Extensions.swift */; };
-		45DB98CF1BAFB7BA008F0F74 /* BagTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C84B8FC11B89D0D500C9CCCF /* BagTest.swift */; };
-		45DB98D01BAFB7BA008F0F74 /* HotObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81108321AF50E2A001C13E4 /* HotObservable.swift */; };
-		45DB98D11BAFB7BA008F0F74 /* Observable.Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81108351AF50E2A001C13E4 /* Observable.Extensions.swift */; };
-		45DB98D21BAFB7BA008F0F74 /* BehaviorSubjectTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C897EC3A1B10E000009C2CB0 /* BehaviorSubjectTest.swift */; };
-		45DB98D31BAFB7BA008F0F74 /* QueueTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C811084B1AF50E2A001C13E4 /* QueueTests.swift */; };
-		45DB98D41BAFB7BA008F0F74 /* Observable+SingleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81108481AF50E2A001C13E4 /* Observable+SingleTest.swift */; };
-		45DB98D51BAFB7BA008F0F74 /* UIControl+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5D10BA1B48355200432B25 /* UIControl+RxTests.swift */; };
-		45DB98D61BAFB7BA008F0F74 /* Observable+MultipleTest+Zip.swift in Sources */ = {isa = PBXBuildFile; fileRef = C897EC491B1123DA009C2CB0 /* Observable+MultipleTest+Zip.swift */; };
-		45DB98D71BAFB7BA008F0F74 /* Recorded.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81108381AF50E2A001C13E4 /* Recorded.swift */; };
-		45DB98D81BAFB7BA008F0F74 /* Observable+CreationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C801EB591B97951100C4D8C4 /* Observable+CreationTest.swift */; settings = {ASSET_TAGS = (); }; };
-		45DB98D91BAFB7BA008F0F74 /* TestScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C811083B1AF50E2A001C13E4 /* TestScheduler.swift */; };
-		45DB98DA1BAFB7BA008F0F74 /* Observable+AggregateTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81108431AF50E2A001C13E4 /* Observable+AggregateTest.swift */; };
-		45DB98DB1BAFB7BA008F0F74 /* MockObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81108331AF50E2A001C13E4 /* MockObserver.swift */; };
-		45DB98DC1BAFB7BA008F0F74 /* KVOObservableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8633AE41B0A9FF300375D60 /* KVOObservableTests.swift */; };
-		45DB98DD1BAFB7BA008F0F74 /* TestExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C811083E1AF50E2A001C13E4 /* TestExtensions.swift */; };
-		45DB98DE1BAFB7BA008F0F74 /* AnonymousObservable+Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B605EB1B6260A10044410E /* AnonymousObservable+Test.swift */; };
-		45DB98DF1BAFB7BA008F0F74 /* AssumptionsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81108401AF50E2A001C13E4 /* AssumptionsTest.swift */; };
-		45DB98E01BAFB7BA008F0F74 /* TestConnectableObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81108311AF50E2A001C13E4 /* TestConnectableObservable.swift */; };
-		45DB98E11BAFB7BA008F0F74 /* VariableTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C814CEA21AF5622600E98087 /* VariableTest.swift */; };
-		45DB98E21BAFB7BA008F0F74 /* RxCocoaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B5BEA01B4A6A82000D732C /* RxCocoaTests.swift */; };
-		45DB98E41BAFB7BA008F0F74 /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8A468CC1B8A897800BF917B /* RxCocoa.framework */; };
-		45DB98E51BAFB7BA008F0F74 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C836EA001B8A76A900AB941D /* RxSwift.framework */; };
-		45DB98E61BAFB7BA008F0F74 /* RxBlocking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8A468CE1B8A897D00BF917B /* RxBlocking.framework */; };
 		5E5D10BB1B48355200432B25 /* UIControl+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5D10BA1B48355200432B25 /* UIControl+RxTests.swift */; };
-		C801EB5A1B97951100C4D8C4 /* Observable+CreationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C801EB591B97951100C4D8C4 /* Observable+CreationTest.swift */; settings = {ASSET_TAGS = (); }; };
-		C801EB5B1B97951100C4D8C4 /* Observable+CreationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C801EB591B97951100C4D8C4 /* Observable+CreationTest.swift */; settings = {ASSET_TAGS = (); }; };
+		C801EB5A1B97951100C4D8C4 /* Observable+CreationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C801EB591B97951100C4D8C4 /* Observable+CreationTest.swift */; };
+		C801EB5B1B97951100C4D8C4 /* Observable+CreationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C801EB591B97951100C4D8C4 /* Observable+CreationTest.swift */; };
 		C811084D1AF50E2A001C13E4 /* NSNotificationCenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C811082B1AF50E2A001C13E4 /* NSNotificationCenterTests.swift */; };
 		C811084F1AF50E2A001C13E4 /* ColdObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81108301AF50E2A001C13E4 /* ColdObservable.swift */; };
 		C81108501AF50E2A001C13E4 /* TestConnectableObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81108311AF50E2A001C13E4 /* TestConnectableObservable.swift */; };
@@ -152,7 +104,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		45DB98EC1BAFB7BA008F0F74 /* RxTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RxTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E5D10BA1B48355200432B25 /* UIControl+RxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIControl+RxTests.swift"; sourceTree = "<group>"; };
 		C801EB591B97951100C4D8C4 /* Observable+CreationTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Observable+CreationTest.swift"; sourceTree = "<group>"; };
 		C81108201AF50E11001C13E4 /* RxTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RxTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -209,16 +160,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		45DB98E31BAFB7BA008F0F74 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				45DB98E41BAFB7BA008F0F74 /* RxCocoa.framework in Frameworks */,
-				45DB98E51BAFB7BA008F0F74 /* RxSwift.framework in Frameworks */,
-				45DB98E61BAFB7BA008F0F74 /* RxBlocking.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		C811081D1AF50E11001C13E4 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -258,7 +199,6 @@
 			children = (
 				C81108201AF50E11001C13E4 /* RxTests.xctest */,
 				C88BB8B71B07E64B0064D411 /* RxTests.xctest */,
-				45DB98EC1BAFB7BA008F0F74 /* RxTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -377,23 +317,6 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		45DB98B41BAFB7BA008F0F74 /* RxTests-watchOS */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 45DB98E81BAFB7BA008F0F74 /* Build configuration list for PBXNativeTarget "RxTests-watchOS" */;
-			buildPhases = (
-				45DB98B51BAFB7BA008F0F74 /* Sources */,
-				45DB98E31BAFB7BA008F0F74 /* Frameworks */,
-				45DB98E71BAFB7BA008F0F74 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "RxTests-watchOS";
-			productName = Tests;
-			productReference = 45DB98EC1BAFB7BA008F0F74 /* RxTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 		C811081F1AF50E11001C13E4 /* RxTests-iOS */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = C81108291AF50E11001C13E4 /* Build configuration list for PBXNativeTarget "RxTests-iOS" */;
@@ -456,19 +379,11 @@
 			targets = (
 				C811081F1AF50E11001C13E4 /* RxTests-iOS */,
 				C88BB88F1B07E64B0064D411 /* RxTests-OSX */,
-				45DB98B41BAFB7BA008F0F74 /* RxTests-watchOS */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		45DB98E71BAFB7BA008F0F74 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		C811081E1AF50E11001C13E4 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -486,58 +401,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		45DB98B51BAFB7BA008F0F74 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				45DB98B61BAFB7BA008F0F74 /* Observable+ConcurrencyTest.swift in Sources */,
-				45DB98B71BAFB7BA008F0F74 /* RxTest.swift in Sources */,
-				45DB98B81BAFB7BA008F0F74 /* Observable+TimeTest.swift in Sources */,
-				45DB98B91BAFB7BA008F0F74 /* TestObservable.swift in Sources */,
-				45DB98BA1BAFB7BA008F0F74 /* PrimitiveMockObserver.swift in Sources */,
-				45DB98BB1BAFB7BA008F0F74 /* Subscription.swift in Sources */,
-				45DB98BC1BAFB7BA008F0F74 /* MySubject.swift in Sources */,
-				45DB98BD1BAFB7BA008F0F74 /* UI+RxTests.swift in Sources */,
-				45DB98BE1BAFB7BA008F0F74 /* Observable+BindingTest.swift in Sources */,
-				45DB98BF1BAFB7BA008F0F74 /* CompositeObserverTest.swift in Sources */,
-				45DB98C01BAFB7BA008F0F74 /* NSNotificationCenterTests.swift in Sources */,
-				45DB98C11BAFB7BA008F0F74 /* Observable+MultipleTest+CombineLatest.swift in Sources */,
-				45DB98C21BAFB7BA008F0F74 /* ConcurrencyTest.swift in Sources */,
-				45DB98C31BAFB7BA008F0F74 /* TestObserver.swift in Sources */,
-				45DB98C41BAFB7BA008F0F74 /* VirtualTimeSchedulerBase.swift in Sources */,
-				45DB98C51BAFB7BA008F0F74 /* Observable+BlockingTest.swift in Sources */,
-				45DB98C61BAFB7BA008F0F74 /* NSObject+RxTests.swift in Sources */,
-				45DB98C71BAFB7BA008F0F74 /* DisposableTest.swift in Sources */,
-				45DB98C81BAFB7BA008F0F74 /* DelegateProxyTest.swift in Sources */,
-				45DB98C91BAFB7BA008F0F74 /* PrimitiveHotObservable.swift in Sources */,
-				45DB98CA1BAFB7BA008F0F74 /* Observable+StandardSequenceOperatorsTest.swift in Sources */,
-				45DB98CB1BAFB7BA008F0F74 /* Observable+MultipleTest.swift in Sources */,
-				45DB98CC1BAFB7BA008F0F74 /* ColdObservable.swift in Sources */,
-				45DB98CD1BAFB7BA008F0F74 /* ElementIndexPair.swift in Sources */,
-				45DB98CE1BAFB7BA008F0F74 /* Observable+Extensions.swift in Sources */,
-				45DB98CF1BAFB7BA008F0F74 /* BagTest.swift in Sources */,
-				45DB98D01BAFB7BA008F0F74 /* HotObservable.swift in Sources */,
-				45DB98D11BAFB7BA008F0F74 /* Observable.Extensions.swift in Sources */,
-				45DB98D21BAFB7BA008F0F74 /* BehaviorSubjectTest.swift in Sources */,
-				45DB98D31BAFB7BA008F0F74 /* QueueTests.swift in Sources */,
-				45DB98D41BAFB7BA008F0F74 /* Observable+SingleTest.swift in Sources */,
-				45DB98D51BAFB7BA008F0F74 /* UIControl+RxTests.swift in Sources */,
-				45DB98D61BAFB7BA008F0F74 /* Observable+MultipleTest+Zip.swift in Sources */,
-				45DB98D71BAFB7BA008F0F74 /* Recorded.swift in Sources */,
-				45DB98D81BAFB7BA008F0F74 /* Observable+CreationTest.swift in Sources */,
-				45DB98D91BAFB7BA008F0F74 /* TestScheduler.swift in Sources */,
-				45DB98DA1BAFB7BA008F0F74 /* Observable+AggregateTest.swift in Sources */,
-				45DB98DB1BAFB7BA008F0F74 /* MockObserver.swift in Sources */,
-				45DB98DC1BAFB7BA008F0F74 /* KVOObservableTests.swift in Sources */,
-				45DB98DD1BAFB7BA008F0F74 /* TestExtensions.swift in Sources */,
-				45DB98DE1BAFB7BA008F0F74 /* AnonymousObservable+Test.swift in Sources */,
-				45DB98DF1BAFB7BA008F0F74 /* AssumptionsTest.swift in Sources */,
-				45DB98E01BAFB7BA008F0F74 /* TestConnectableObservable.swift in Sources */,
-				45DB98E11BAFB7BA008F0F74 /* VariableTest.swift in Sources */,
-				45DB98E21BAFB7BA008F0F74 /* RxCocoaTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		C811081C1AF50E11001C13E4 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -643,124 +506,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		45DB98E91BAFB7BA008F0F74 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MTL_ENABLE_DEBUG_INFO = YES;
-				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = watchos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-			};
-			name = Debug;
-		};
-		45DB98EA1BAFB7BA008F0F74 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				ENABLE_NS_ASSERTIONS = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MTL_ENABLE_DEBUG_INFO = NO;
-				SDKROOT = watchos;
-				VALIDATE_PRODUCT = YES;
-			};
-			name = Release;
-		};
-		45DB98EB1BAFB7BA008F0F74 /* Release-Tests */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				ENABLE_NS_ASSERTIONS = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MTL_ENABLE_DEBUG_INFO = NO;
-				SDKROOT = watchos;
-				VALIDATE_PRODUCT = YES;
-			};
-			name = "Release-Tests";
-		};
 		C811081A1AF50DDA001C13E4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1045,16 +790,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		45DB98E81BAFB7BA008F0F74 /* Build configuration list for PBXNativeTarget "RxTests-watchOS" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				45DB98E91BAFB7BA008F0F74 /* Debug */,
-				45DB98EA1BAFB7BA008F0F74 /* Release */,
-				45DB98EB1BAFB7BA008F0F74 /* Release-Tests */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		C81108191AF50DDA001C13E4 /* Build configuration list for PBXProject "RxTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
