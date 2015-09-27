@@ -8,8 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		5E5D10BB1B48355200432B25 /* UIControl+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5D10BA1B48355200432B25 /* UIControl+RxTests.swift */; };
-		C801EB5A1B97951100C4D8C4 /* Observable+CreationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C801EB591B97951100C4D8C4 /* Observable+CreationTest.swift */; settings = {ASSET_TAGS = (); }; };
-		C801EB5B1B97951100C4D8C4 /* Observable+CreationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C801EB591B97951100C4D8C4 /* Observable+CreationTest.swift */; settings = {ASSET_TAGS = (); }; };
+		C801EB5A1B97951100C4D8C4 /* Observable+CreationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C801EB591B97951100C4D8C4 /* Observable+CreationTest.swift */; };
+		C801EB5B1B97951100C4D8C4 /* Observable+CreationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C801EB591B97951100C4D8C4 /* Observable+CreationTest.swift */; };
 		C811084D1AF50E2A001C13E4 /* NSNotificationCenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C811082B1AF50E2A001C13E4 /* NSNotificationCenterTests.swift */; };
 		C811084F1AF50E2A001C13E4 /* ColdObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81108301AF50E2A001C13E4 /* ColdObservable.swift */; };
 		C81108501AF50E2A001C13E4 /* TestConnectableObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81108311AF50E2A001C13E4 /* TestConnectableObservable.swift */; };
