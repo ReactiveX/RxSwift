@@ -27,6 +27,7 @@ Operators are stateless by default.
   * [`flatMap`](http://reactivex.io/documentation/operators/flatmap.html)
   * [`map` / `select`](http://reactivex.io/documentation/operators/map.html)
   * [`scan`](http://reactivex.io/documentation/operators/scan.html)
+  * [`buffer`](http://reactivex.io/documentation/operators/buffer.html)
 
 #### Filtering Observables
   * [`debounce` / `throttle`](http://reactivex.io/documentation/operators/debounce.html)
