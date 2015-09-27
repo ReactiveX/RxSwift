@@ -95,7 +95,8 @@ class AssumptionsTest : RxTest {
         let startResourceCount = resourceCount
     
         var observable: Observable<Int>! = Observable()
-        
+
+        XCTAssertTrue(observable != nil)
         XCTAssertEqual(resourceCount, startResourceCount + 1)
         
         observable = nil

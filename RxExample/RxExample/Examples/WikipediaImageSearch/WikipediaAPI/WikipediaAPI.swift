@@ -56,13 +56,11 @@ class DefaultWikipediaAPI: WikipediaAPI {
     // http://en.wikipedia.org/w/api.php?action=parse&page=rx&format=json
     func articleContent(searchResult: WikipediaSearchResult) -> Observable<WikipediaPage> {
         let escapedPage = URLEscape(searchResult.title)
-        let url = NSURL(string: "http://en.wikipedia.org/w/api.php?action=parse&page=\(escapedPage)&format=json")
-        
-        if url == nil {
+        guard let url = NSURL(string: "http://en.wikipedia.org/w/api.php?action=parse&page=\(escapedPage)&format=json") else {
             return failWith(apiError("Can't create url"))
         }
         
-        return $.URLSession.rx_JSON(url!)
+        return $.URLSession.rx_JSON(url)
             .map { jsonResult in
                 guard let json = jsonResult as? NSDictionary else {
                     throw exampleError("Parsing error")

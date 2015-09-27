@@ -43,8 +43,7 @@ class DistinctUntilChangedSink<O: ObserverType, Key>: Sink<O>, ObserverType {
                 observer?.on(.Error(error))
                 self.dispose()
             }
-        case .Error: fallthrough
-        case .Completed:
+        case .Error, .Completed:
             observer?.on(event)
             self.dispose()
         }

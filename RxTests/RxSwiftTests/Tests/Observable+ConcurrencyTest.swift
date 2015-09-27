@@ -93,8 +93,9 @@ extension ObservableConcurrencyTest {
     func testObserveOnDispatchQueue_EnsureCorrectImplementationIsChosen() {
         runDispatchQueueSchedulerTests { scheduler in
             XCTAssert(numberOfSerialDispatchQueueObservables == 0)
-            let observable = just(0)
+            let a = just(0)
                 .observeOn(scheduler)
+            XCTAssertTrue(a == a) // shut up swift compiler :(, we only need to keep this in memory
             XCTAssert(numberOfSerialDispatchQueueObservables == 1)
             return NopDisposable.instance
         }
@@ -142,7 +143,8 @@ extension ObservableConcurrencyTest {
 
         runDispatchQueueSchedulerTests { scheduler in
             let observable: Observable<Int> = empty().observeOn(scheduler)
-            return observable .subscribeCompleted {
+
+            return observable.subscribeCompleted {
                 nEvents++
             }
         }
@@ -319,18 +321,16 @@ class ObservableConcurrentSchedulerConcurrencyTest: ObservableConcurrencyTestBas
         let scheduler = self.createScheduler()
 
         XCTAssert(numberOfSerialDispatchQueueObservables == 0)
-        let observable = just(0).observeOn(scheduler)
+        just(0).observeOn(scheduler)
         self.sleep(0.1)
         XCTAssert(numberOfSerialDispatchQueueObservables == 0)
     }
 #endif
 
     func testObserveOn_EnsureTestsAreExecutedWithRealConcurrentScheduler() {
-        var variable: Int = 0
-
         var events: [String] = []
 
-        var stop = BehaviorSubject(value: 0)
+        let stop = BehaviorSubject(value: 0)
 
         let scheduler = createScheduler()
 
@@ -339,7 +339,7 @@ class ObservableConcurrentSchedulerConcurrencyTest: ObservableConcurrencyTestBas
         var writtenStarted = 0
         var writtenEnded = 0
 
-        var concurrent = { () -> Disposable in
+        let concurrent = { () -> Disposable in
             self.performLocked {
                 events.append("Started")
             }
@@ -369,11 +369,11 @@ class ObservableConcurrentSchedulerConcurrencyTest: ObservableConcurrencyTestBas
             return NopDisposable.instance
         }
 
-        _ = scheduler.schedule((), action: concurrent)
+        scheduler.schedule((), action: concurrent)
 
-        _ = scheduler.schedule((), action: concurrent)
+        scheduler.schedule((), action: concurrent)
 
-        let _ = try! stop.last()
+        try! stop.last()
 
         XCTAssertEqual(events, ["Started", "Started", "Ended", "Ended"])
     }
@@ -398,8 +398,6 @@ class ObservableConcurrentSchedulerConcurrencyTest: ObservableConcurrencyTestBas
         let observer = PrimitiveMockObserver<Int>()
 
         let scheduler = createScheduler()
-
-        let stop = Variable(0)
 
         let subscription = (xs.observeOn(scheduler)).subscribe(observer)
         XCTAssert(xs.subscriptions == [SubscribedToHotObservable])
@@ -444,7 +442,8 @@ class ObservableConcurrentSchedulerConcurrencyTest: ObservableConcurrencyTestBas
 
         let scheduler = createScheduler()
 
-        _ = (xs.observeOn(scheduler)).subscribe(observer)
+        xs.observeOn(scheduler).subscribe(observer)
+
         XCTAssert(xs.subscriptions == [SubscribedToHotObservable])
         xs.on(.Completed)
 
@@ -500,7 +499,8 @@ class ObservableConcurrentSchedulerConcurrencyTest: ObservableConcurrencyTestBas
 
         let scheduler = createScheduler()
 
-        let _ = (xs.observeOn(scheduler)).subscribe(observer)
+        xs.observeOn(scheduler).subscribe(observer)
+
         XCTAssert(xs.subscriptions == [SubscribedToHotObservable])
         xs.on(.Next(0))
 
@@ -539,7 +539,7 @@ class ObservableConcurrentSchedulerConcurrencyTest: ObservableConcurrencyTestBas
         let observer = PrimitiveMockObserver<Int>()
 
         let scheduler = createScheduler()
-        let subscription = (xs.observeOn(scheduler)).subscribe(observer)
+        let subscription = xs.observeOn(scheduler).subscribe(observer)
         XCTAssert(xs.subscriptions == [SubscribedToHotObservable])
         xs.on(.Next(0))
 

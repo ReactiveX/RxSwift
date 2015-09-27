@@ -523,8 +523,6 @@ extension ObservableStandardSequenceOperators {
             error(600, testError),
             ])
         
-        _ = 0
-        
         let res = scheduler.start { () -> Observable<Int> in
             return xs.takeWhile { (num: Int, index) -> Bool in
                 return index < 5
@@ -560,8 +558,6 @@ extension ObservableStandardSequenceOperators {
             next(390, 4),
             completed(400)
             ])
-        
-        var invoked = 0
         
         let res = scheduler.start { () -> Observable<Int> in
             return xs.takeWhile { (num: Int, index) -> Bool in
@@ -600,8 +596,6 @@ extension ObservableStandardSequenceOperators {
             next(390, 4),
             error(400, testError)
             ])
-        
-        var invoked = 0
         
         let res = scheduler.start { () -> Observable<Int> in
             return xs.takeWhile { (num: Int, index) -> Bool in
@@ -1579,7 +1573,6 @@ extension ObservableStandardSequenceOperators {
             completed(290)
             ])
         
-        var invoked = 0
         let res = scheduler.start {
             xs.flatMap { (x) in
                 return interval(10, scheduler).map { _ in x } .take(x)
@@ -2249,7 +2242,6 @@ extension ObservableStandardSequenceOperators {
             completed(290)
             ])
         
-        var invoked = 0
         let res = scheduler.start {
             xs.flatMapWithIndex { (x, _) in
                 return interval(10, scheduler).map { _ in x } .take(x)

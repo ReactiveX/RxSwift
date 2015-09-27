@@ -23,14 +23,13 @@ class ObserverBase<ElementType> : Disposable, ObserverType {
             if isStopped == 0 {
                 onCore(event)
             }
-        case .Error: fallthrough
-        case .Completed:
+        case .Error, .Completed:
            
             if !OSAtomicCompareAndSwap32(0, 1, &isStopped) {
                 return
             }
             
-            self.onCore(event)
+            onCore(event)
         }
     }
     

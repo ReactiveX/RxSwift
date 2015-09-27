@@ -25,3 +25,32 @@ public protocol ObserverType {
     func on(event: Event<E>)
 }
 
+/**
+Convienence API extensions to provide alternate next, error, completed events
+*/
+public extension ObserverType {
+    
+    /**
+    Convienence method equivalent to `on(.Next(element: E))`
+    
+    - parameter element: Next element to send to observer(s)
+    */
+    final func onNext(element: E) {
+        on(.Next(element))
+    }
+    
+    /**
+    Convienence method equivalent to `on(.Completed)`
+    */
+    final func onComplete() {
+        on(.Completed)
+    }
+    
+    /**
+    Convienence method equivalent to `on(.Error(error: ErrorType))`
+    - parameter error: ErrorType to send to observer(s)
+    */
+    final func onError(error: ErrorType) {
+        on(.Error(error))
+    }
+}

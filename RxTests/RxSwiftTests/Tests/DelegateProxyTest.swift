@@ -154,7 +154,9 @@ class DelegateProxyTest : RxTest {
             .subscribeNext { n in
                 observedFeedRequest = true
             }
-            .scopedDispose()
+        defer {
+            d.dispose()
+        }
 
         XCTAssertTrue(!observedFeedRequest)
         view.delegate?.threeDView?(view, didLearnSomething: "Psssst ...")
@@ -171,17 +173,16 @@ class DelegateProxyTest : RxTest {
         
         var nMessages = 0
         
-        var d = view.rx_proxy.observe("threeDView:didLearnSomething:")
+        let d = view.rx_proxy.observe("threeDView:didLearnSomething:")
             .subscribeNext { n in
                 nMessages++
             }
-            .scopedDispose()
         
         XCTAssertTrue(nMessages == 0)
         view.delegate?.threeDView?(view, didLearnSomething: "Psssst ...")
         XCTAssertTrue(nMessages == 1)
-        
-        d = NopDisposable.instance.scopedDispose()
+
+        d.dispose()
 
         view.delegate?.threeDView?(view, didLearnSomething: "Psssst ...")
         XCTAssertTrue(nMessages == 1)
@@ -215,7 +216,9 @@ class DelegateProxyTest : RxTest {
                 let ip = n[1] as! NSIndexPath
                 receivedArgument = ip
             }
-            .scopedDispose
+        defer {
+            d.dispose()
+        }
 
         XCTAssertTrue(receivedArgument === nil)
         view.delegate?.threeDView?(view, didGetXXX: sentArgument)
@@ -236,8 +239,6 @@ class DelegateProxyTest : RxTest {
             XCTAssertTrue(!mock.respondsToSelector("threeDView(threeDView:didGetXXX:"))
             
             let sentArgument = NSIndexPath(index: 0)
-            
-            var receivedArgument: NSIndexPath? = nil
             
             view.rx_proxy.observe("threeDView:didGetXXX:")
                 .subscribeCompleted {

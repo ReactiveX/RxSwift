@@ -78,7 +78,7 @@ example("combineLatest 2") {
 
 
 
-//: Combine latest has versions with more then 2 arguments.
+//: Combine latest has versions with more than 2 arguments.
 
 example("combineLatest 3") {
     let intOb1 = just(2)
