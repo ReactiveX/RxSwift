@@ -18,13 +18,15 @@ class CombineLatestSink<O: ObserverType> : Sink<O>, CombineLatestProtocol {
     typealias Element = O.E
    
     let lock = NSRecursiveLock()
-    
-    var hasValueAll: Bool
+
+    let arity: Int
+    var numberOfValues = 0
+    var numberOfDone = 0
     var hasValue: [Bool]
     var isDone: [Bool]
    
     init(arity: Int, observer: O, cancel: Disposable) {
-        self.hasValueAll = false
+        self.arity = arity
         self.hasValue = [Bool](count: arity, repeatedValue: false)
         self.isDone = [Bool](count: arity, repeatedValue: false)
         
@@ -36,13 +38,12 @@ class CombineLatestSink<O: ObserverType> : Sink<O>, CombineLatestProtocol {
     }
     
     func next(index: Int) {
-        if !hasValueAll {
+        if !hasValue[index] {
             hasValue[index] = true
-
-            self.hasValueAll = self.hasValue.reduce(true, combine: {$0 && $1})
+            numberOfValues++
         }
-        
-        if hasValueAll {
+
+        if numberOfValues == arity {
             do {
                 let result = try getResult()
                 observer?.on(.Next(result))
@@ -54,8 +55,7 @@ class CombineLatestSink<O: ObserverType> : Sink<O>, CombineLatestProtocol {
         }
         else {
             var allOthersDone = true
-            
-            let arity = self.isDone.count
+
             for var i = 0; i < arity; ++i {
                 if i != index && !isDone[i] {
                     allOthersDone = false
@@ -76,11 +76,14 @@ class CombineLatestSink<O: ObserverType> : Sink<O>, CombineLatestProtocol {
     }
     
     func done(index: Int) {
+        if isDone[index] {
+            return
+        }
+
         isDone[index] = true
+        numberOfDone++
 
-        let allDone = self.isDone.reduce(true, combine: {$0 && $1})
-
-        if allDone {
+        if numberOfDone == self.arity {
             observer?.on(.Completed)
             dispose()
         }
