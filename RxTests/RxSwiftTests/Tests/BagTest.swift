@@ -11,6 +11,9 @@ import XCTest
 import RxSwift
 
 class BagTest : RxTest {
+    override var accumulateStatistics: Bool {
+        return false
+    }
 }
 
 extension BagTest {
