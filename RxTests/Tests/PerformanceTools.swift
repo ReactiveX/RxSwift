@@ -25,7 +25,13 @@ func call1(p: UnsafeMutablePointer<_malloc_zone_t>, size: Int) -> UnsafeMutableP
     return mallocFunctions[1](p, size)
 }
 
-var proxies: [(@convention(c) (UnsafeMutablePointer<_malloc_zone_t>, Int) -> UnsafeMutablePointer<Void>)] = [call0, call1]
+func call2(p: UnsafeMutablePointer<_malloc_zone_t>, size: Int) -> UnsafeMutablePointer<Void> {
+    OSAtomicIncrement64(&allocCalls)
+    OSAtomicAdd64(Int64(size), &bytesAllocated)
+    return mallocFunctions[2](p, size)
+}
+
+var proxies: [(@convention(c) (UnsafeMutablePointer<_malloc_zone_t>, Int) -> UnsafeMutablePointer<Void>)] = [call0, call1, call2]
 
 func getMemoryInfo() -> (bytes: Int64, allocations: Int64) {
     return (bytesAllocated, allocCalls)

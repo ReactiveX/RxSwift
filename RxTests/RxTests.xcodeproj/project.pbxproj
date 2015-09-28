@@ -50,11 +50,11 @@
 		C85F4E441B7F70EA00A866C7 /* CompositeObserverTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C85F4E421B7F70EA00A866C7 /* CompositeObserverTest.swift */; };
 		C8633AE51B0A9FF300375D60 /* KVOObservableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8633AE41B0A9FF300375D60 /* KVOObservableTests.swift */; };
 		C8633AE61B0AA0ED00375D60 /* KVOObservableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8633AE41B0A9FF300375D60 /* KVOObservableTests.swift */; };
-		C868D0F01BB75EA1003D1474 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = C868D0EF1BB75EA1003D1474 /* main.swift */; };
 		C868D0F71BB75EAE003D1474 /* RxTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C811084C1AF50E2A001C13E4 /* RxTest.swift */; settings = {ASSET_TAGS = (); }; };
 		C868D0F91BB76A29003D1474 /* PerformanceTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = C868D0F81BB76A29003D1474 /* PerformanceTools.swift */; settings = {ASSET_TAGS = (); }; };
 		C868D0FA1BB76A29003D1474 /* PerformanceTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = C868D0F81BB76A29003D1474 /* PerformanceTools.swift */; settings = {ASSET_TAGS = (); }; };
-		C868D0FB1BB76A29003D1474 /* PerformanceTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = C868D0F81BB76A29003D1474 /* PerformanceTools.swift */; settings = {ASSET_TAGS = (); }; };
+		C868D10C1BB950D4003D1474 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = C868D10B1BB950D4003D1474 /* main.swift */; };
+		C868D1171BB9512B003D1474 /* PerformanceTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = C868D0F81BB76A29003D1474 /* PerformanceTools.swift */; settings = {ASSET_TAGS = (); }; };
 		C88BB8911B07E64B0064D411 /* Observable+ConcurrencyTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B787F91AF55CDE00206D02 /* Observable+ConcurrencyTest.swift */; };
 		C88BB8941B07E64B0064D411 /* Observable+TimeTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C811084A1AF50E2A001C13E4 /* Observable+TimeTest.swift */; };
 		C88BB8951B07E64B0064D411 /* TestObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81108361AF50E2A001C13E4 /* TestObservable.swift */; };
@@ -109,18 +109,6 @@
 		C8FDC5F91B2B5B7E0065F8D9 /* ElementIndexPair.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8FDC5F71B2B5B7E0065F8D9 /* ElementIndexPair.swift */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXCopyFilesBuildPhase section */
-		C868D0EB1BB75EA1003D1474 /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1/;
-			dstSubfolderSpec = 0;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 1;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
 /* Begin PBXFileReference section */
 		5E5D10BA1B48355200432B25 /* UIControl+RxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIControl+RxTests.swift"; sourceTree = "<group>"; };
 		C69B64FF1BA88FAC00A7FA73 /* ObserverTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObserverTests.swift; sourceTree = "<group>"; };
@@ -161,9 +149,11 @@
 		C84B8FC11B89D0D500C9CCCF /* BagTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BagTest.swift; sourceTree = "<group>"; };
 		C85F4E421B7F70EA00A866C7 /* CompositeObserverTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompositeObserverTest.swift; sourceTree = "<group>"; };
 		C8633AE41B0A9FF300375D60 /* KVOObservableTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KVOObservableTests.swift; sourceTree = "<group>"; };
-		C868D0ED1BB75EA1003D1474 /* PerformanceTests */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = PerformanceTests; sourceTree = BUILT_PRODUCTS_DIR; };
 		C868D0EF1BB75EA1003D1474 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		C868D0F81BB76A29003D1474 /* PerformanceTools.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PerformanceTools.swift; sourceTree = "<group>"; };
+		C868D1091BB950D3003D1474 /* PerformanceTests.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PerformanceTests.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C868D10B1BB950D4003D1474 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		C868D1121BB950D4003D1474 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C88BB8B71B07E64B0064D411 /* RxTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RxTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C897EC3A1B10E000009C2CB0 /* BehaviorSubjectTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BehaviorSubjectTest.swift; sourceTree = "<group>"; };
 		C897EC461B112070009C2CB0 /* Observable+MultipleTest+Zip.tt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Observable+MultipleTest+Zip.tt"; sourceTree = "<group>"; };
@@ -192,7 +182,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C868D0EA1BB75EA1003D1474 /* Frameworks */ = {
+		C868D1061BB950D3003D1474 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -220,6 +210,7 @@
 				C836EA001B8A76A900AB941D /* RxSwift.framework */,
 				C81108221AF50E11001C13E4 /* Tests */,
 				C868D0EE1BB75EA1003D1474 /* PerformanceTests */,
+				C868D10A1BB950D4003D1474 /* PerformanceTests */,
 				C81108211AF50E11001C13E4 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -229,7 +220,7 @@
 			children = (
 				C81108201AF50E11001C13E4 /* RxTests.xctest */,
 				C88BB8B71B07E64B0064D411 /* RxTests.xctest */,
-				C868D0ED1BB75EA1003D1474 /* PerformanceTests */,
+				C868D1091BB950D3003D1474 /* PerformanceTests.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -355,6 +346,15 @@
 			path = PerformanceTests;
 			sourceTree = "<group>";
 		};
+		C868D10A1BB950D4003D1474 /* PerformanceTests */ = {
+			isa = PBXGroup;
+			children = (
+				C868D10B1BB950D4003D1474 /* main.swift */,
+				C868D1121BB950D4003D1474 /* Info.plist */,
+			);
+			path = PerformanceTests;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -375,13 +375,13 @@
 			productReference = C81108201AF50E11001C13E4 /* RxTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		C868D0EC1BB75EA1003D1474 /* PerformanceTests */ = {
+		C868D1081BB950D3003D1474 /* PerformanceTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C868D0F11BB75EA1003D1474 /* Build configuration list for PBXNativeTarget "PerformanceTests" */;
+			buildConfigurationList = C868D1131BB950D4003D1474 /* Build configuration list for PBXNativeTarget "PerformanceTests" */;
 			buildPhases = (
-				C868D0E91BB75EA1003D1474 /* Sources */,
-				C868D0EA1BB75EA1003D1474 /* Frameworks */,
-				C868D0EB1BB75EA1003D1474 /* CopyFiles */,
+				C868D1051BB950D3003D1474 /* Sources */,
+				C868D1061BB950D3003D1474 /* Frameworks */,
+				C868D1071BB950D3003D1474 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -389,8 +389,8 @@
 			);
 			name = PerformanceTests;
 			productName = PerformanceTests;
-			productReference = C868D0ED1BB75EA1003D1474 /* PerformanceTests */;
-			productType = "com.apple.product-type.tool";
+			productReference = C868D1091BB950D3003D1474 /* PerformanceTests.app */;
+			productType = "com.apple.product-type.application";
 		};
 		C88BB88F1B07E64B0064D411 /* RxTests-OSX */ = {
 			isa = PBXNativeTarget;
@@ -421,7 +421,7 @@
 					C811081F1AF50E11001C13E4 = {
 						CreatedOnToolsVersion = 6.3;
 					};
-					C868D0EC1BB75EA1003D1474 = {
+					C868D1081BB950D3003D1474 = {
 						CreatedOnToolsVersion = 7.0;
 					};
 				};
@@ -432,6 +432,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = C81108151AF50DDA001C13E4;
 			productRefGroup = C81108211AF50E11001C13E4 /* Products */;
@@ -440,13 +441,20 @@
 			targets = (
 				C811081F1AF50E11001C13E4 /* RxTests-iOS */,
 				C88BB88F1B07E64B0064D411 /* RxTests-OSX */,
-				C868D0EC1BB75EA1003D1474 /* PerformanceTests */,
+				C868D1081BB950D3003D1474 /* PerformanceTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		C811081E1AF50E11001C13E4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C868D1071BB950D3003D1474 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -517,12 +525,12 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C868D0E91BB75EA1003D1474 /* Sources */ = {
+		C868D1051BB950D3003D1474 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C868D0FB1BB76A29003D1474 /* PerformanceTools.swift in Sources */,
-				C868D0F01BB75EA1003D1474 /* main.swift in Sources */,
+				C868D1171BB9512B003D1474 /* PerformanceTools.swift in Sources */,
+				C868D10C1BB950D4003D1474 /* main.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -782,10 +790,11 @@
 			};
 			name = "Release-Tests";
 		};
-		C868D0F21BB75EA1003D1474 /* Debug */ = {
+		C868D1141BB950D4003D1474 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -799,6 +808,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -816,19 +827,23 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = PerformanceTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				OTHER_LDFLAGS = "";
+				PRODUCT_BUNDLE_IDENTIFIER = "Krunoslav-Zaher.PerformanceTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
-		C868D0F31BB75EA1003D1474 /* Release */ = {
+		C868D1151BB950D4003D1474 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -842,6 +857,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -854,18 +871,22 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = PerformanceTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LDFLAGS = "";
+				PRODUCT_BUNDLE_IDENTIFIER = "Krunoslav-Zaher.PerformanceTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 			};
 			name = Release;
 		};
-		C868D0F41BB75EA1003D1474 /* Release-Tests */ = {
+		C868D1161BB950D4003D1474 /* Release-Tests */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -879,6 +900,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -891,9 +914,12 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = PerformanceTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LDFLAGS = "";
+				PRODUCT_BUNDLE_IDENTIFIER = "Krunoslav-Zaher.PerformanceTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 			};
@@ -1006,15 +1032,14 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C868D0F11BB75EA1003D1474 /* Build configuration list for PBXNativeTarget "PerformanceTests" */ = {
+		C868D1131BB950D4003D1474 /* Build configuration list for PBXNativeTarget "PerformanceTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				C868D0F21BB75EA1003D1474 /* Debug */,
-				C868D0F31BB75EA1003D1474 /* Release */,
-				C868D0F41BB75EA1003D1474 /* Release-Tests */,
+				C868D1141BB950D4003D1474 /* Debug */,
+				C868D1151BB950D4003D1474 /* Release */,
+				C868D1161BB950D4003D1474 /* Release-Tests */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
 		};
 		C88BB8B41B07E64B0064D411 /* Build configuration list for PBXNativeTarget "RxTests-OSX" */ = {
 			isa = XCConfigurationList;
