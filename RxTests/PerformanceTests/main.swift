@@ -32,7 +32,7 @@ func measureTime(@noescape work: () -> ()) -> UInt64 {
     }
     let timeInNano = (mach_absolute_time() - start) * UInt64(timebaseInfo.numer) / UInt64(timebaseInfo.denom)
 
-    return approxValuePerIteration(timeInNano) / 1000
+    return approxValuePerIteration(timeInNano) / UInt64(NumberOfIterations)
 }
 
 func measureMemoryUsage(@noescape work: () -> ()) -> (bytesAllocated: UInt64, allocations: UInt64) {
