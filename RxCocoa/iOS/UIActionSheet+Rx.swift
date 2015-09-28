@@ -6,6 +6,8 @@
 //  Copyright (c) 2015 Krunoslav Zaher. All rights reserved.
 //
 
+#if os(iOS)
+
 import UIKit
 #if !RX_NO_MODULE
 import RxSwift
@@ -59,3 +61,5 @@ extension UIActionSheet {
         return ControlEvent(source: source)
     }
 }
+
+#endif
