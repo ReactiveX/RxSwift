@@ -27,9 +27,7 @@ class AnonymousObservableSink<O: ObserverType> : Sink<O>, ObserverType {
                 return
             }
             self.observer?.on(event)
-        case .Error:
-            fallthrough
-        case .Completed:
+        case .Error, .Completed:
             if OSAtomicCompareAndSwap32(0, 1, &isStopped) {
                 self.observer?.on(event)
                 self.dispose()

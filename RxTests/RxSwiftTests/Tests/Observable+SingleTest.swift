@@ -293,7 +293,7 @@ extension ObservableSingleTest {
         var sum = 2 + 3 + 4 + 5
         let res = scheduler.start { xs.doOn { e in
                 switch e {
-                case .Next(let _):
+                case .Next:
                     i++
                     sum -= e.element ?? 0
                     

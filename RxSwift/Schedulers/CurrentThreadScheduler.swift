@@ -46,7 +46,13 @@ public class CurrentThreadScheduler : ImmediateSchedulerType {
             return NSThread.currentThread().threadDictionary[CurrentThreadSchedulerKeyInstance] as? ScheduleQueue
         }
         set {
-            NSThread.currentThread().threadDictionary[CurrentThreadSchedulerKeyInstance] = newValue
+            let threadDictionary = NSThread.currentThread().threadDictionary
+            if let newValue = newValue {
+                threadDictionary[CurrentThreadSchedulerKeyInstance] = newValue
+            }
+            else {
+                threadDictionary.removeObjectForKey(CurrentThreadSchedulerKeyInstance)
+            }
         }
     }
     

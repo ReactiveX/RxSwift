@@ -69,13 +69,29 @@ class RxTest: XCTestCase {
     }
     
     private var startResourceCount: Int32 = 0
-    
+
+    var accumulateStatistics: Bool {
+        get {
+            return true
+        }
+    }
+
+#if TRACE_RESOURCES
+    static var totalNumberOfAllocations: Int64 = 0
+    static var totalNumberOfAllocatedBytes: Int64 = 0
+
+    var startNumberOfAllocations: Int64 = 0
+    var startNumberOfAllocatedBytes: Int64 = 0
+#endif
+
     override func setUp() {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
         
 #if TRACE_RESOURCES
         self.startResourceCount = resourceCount
+        registerMallocHooks()
+        (startNumberOfAllocatedBytes, startNumberOfAllocations) = getMemoryInfo()
 #endif
     }
     
@@ -85,6 +101,15 @@ class RxTest: XCTestCase {
 
 #if TRACE_RESOURCES
         XCTAssertEqual(self.startResourceCount, resourceCount)
+        let (endNumberOfAllocatedBytes, endNumberOfAllocations) = getMemoryInfo()
+
+        let (newBytes, newAllocations) = (endNumberOfAllocatedBytes - startNumberOfAllocatedBytes, endNumberOfAllocations - startNumberOfAllocations)
+
+        if accumulateStatistics {
+            RxTest.totalNumberOfAllocations += newAllocations
+            RxTest.totalNumberOfAllocatedBytes += newBytes
+        }
+        print("allocatedBytes = \(newBytes), allocations = \(newAllocations) (totalBytes = \(RxTest.totalNumberOfAllocatedBytes), totalAllocations = \(RxTest.totalNumberOfAllocations))")
 #endif
     }
     

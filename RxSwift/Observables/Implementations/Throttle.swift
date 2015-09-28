@@ -38,10 +38,8 @@ class ThrottleSink<O: ObserverType, Scheduler: SchedulerType> : Sink<O>, Observe
         switch event {
         case .Next:
             break
-        case .Error: fallthrough
-        case .Completed:
+        case .Error, .Completed:
             cancellable.dispose()
-            break
         }
        
         let latestId = self.lock.calculateLocked { () -> UInt64 in

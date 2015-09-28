@@ -13,18 +13,18 @@ import RxSwift
 
 
 extension CLLocationManager {
-    
+
     /**
     Reactive wrapper for `delegate`.
-    
+
     For more information take a look at `DelegateProxyType` protocol documentation.
     */
     public var rx_delegate: DelegateProxy {
         return proxyForObject(self) as RxCLLocationManagerDelegateProxy
     }
-    
+
     // MARK: Responding to Location Events
-    
+
     /**
     Reactive wrapper for `delegate` message.
     */
@@ -34,7 +34,7 @@ extension CLLocationManager {
                 return a[1] as? [CLLocation]
             }
     }
-    
+
     /**
     Reactive wrapper for `delegate` message.
     */
@@ -44,7 +44,7 @@ extension CLLocationManager {
                 return a[1] as? NSError
             }
     }
-    
+
     /**
     Reactive wrapper for `delegate` message.
     */
@@ -54,9 +54,9 @@ extension CLLocationManager {
                 return a[1] as? NSError
             }
     }
-    
+
     // MARK: Pausing Location Updates
-    
+
     /**
     Reactive wrapper for `delegate` message.
     */
@@ -66,7 +66,7 @@ extension CLLocationManager {
                 return ()
             }
     }
-    
+
     /**
     Reactive wrapper for `delegate` message.
     */
@@ -76,21 +76,23 @@ extension CLLocationManager {
                 return ()
             }
     }
-    
+
     // MARK: Responding to Heading Events
-    
+
     /**
     Reactive wrapper for `delegate` message.
     */
+    #if os(iOS) || os(OSX)
     public var rx_didUpdateHeading: Observable<CLHeading!> {
         return rx_delegate.observe("locationManager:didUpdateHeading:")
             .map { a in
                 return a[1] as? CLHeading
             }
     }
-    
+    #endif
+
     // MARK: Responding to Region Events
-    
+
     /**
     Reactive wrapper for `delegate` message.
     */
@@ -100,7 +102,7 @@ extension CLLocationManager {
                 return a[1] as? CLRegion
             }
     }
-    
+
     /**
     Reactive wrapper for `delegate` message.
     */
@@ -110,18 +112,21 @@ extension CLLocationManager {
                 return a[1] as? CLRegion
             }
     }
-    
+
     /**
     Reactive wrapper for `delegate` message.
     */
+    #if os(iOS) || os(OSX)
     @available(OSX 10.10, *)
     public var rx_didDetermineStateForRegion: Observable<(state: CLRegionState, region: CLRegion!)> {
         return rx_delegate.observe("locationManager:didDetermineState:forRegion:")
             .map { a in
-                return (state: a[1] as! CLRegionState, region: a[2] as? CLRegion)
+                let stateNumber = a[1] as! NSNumber
+                return (state: CLRegionState(rawValue: stateNumber.integerValue) ?? CLRegionState.Unknown, region: a[2] as? CLRegion)
             }
     }
-    
+    #endif
+
     /**
     Reactive wrapper for `delegate` message.
     */
@@ -131,7 +136,7 @@ extension CLLocationManager {
                 return (region: a[1] as? CLRegion, error: a[2] as? NSError)
             }
     }
-    
+
     /**
     Reactive wrapper for `delegate` message.
     */
@@ -141,11 +146,11 @@ extension CLLocationManager {
                 return a[1] as? CLRegion
             }
     }
-    
+
     // MARK: Responding to Ranging Events
-    
+
 #if os(iOS)
-    
+
     /**
     Reactive wrapper for `delegate` message.
     */
@@ -155,7 +160,7 @@ extension CLLocationManager {
                 return (beacons: a[1] as? [CLBeacon], region: a[2] as? CLBeaconRegion)
             }
     }
-    
+
     /**
     Reactive wrapper for `delegate` message.
     */
@@ -165,9 +170,9 @@ extension CLLocationManager {
                 return (region: a[1] as? CLBeaconRegion, error: a[2] as? NSError)
             }
     }
-    
+
     // MARK: Responding to Visit Events
-    
+
     /**
     Reactive wrapper for `delegate` message.
     */
@@ -178,21 +183,22 @@ extension CLLocationManager {
                 return a[1] as? CLVisit
             }
     }
-    
+
 #endif
-    
+
     // MARK: Responding to Authorization Changes
-    
+
     /**
     Reactive wrapper for `delegate` message.
     */
     public var rx_didChangeAuthorizationStatus: Observable<CLAuthorizationStatus?> {
         return rx_delegate.observe("locationManager:didChangeAuthorizationStatus:")
             .map { a in
-                return CLAuthorizationStatus(rawValue: Int32((a[1] as! NSNumber).integerValue))
+                let number = a[1] as! NSNumber
+                return CLAuthorizationStatus(rawValue: Int32(number.integerValue))
             }
     }
-    
-    
-    
+
+
+
 }

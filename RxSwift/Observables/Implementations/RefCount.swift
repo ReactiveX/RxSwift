@@ -54,8 +54,7 @@ class RefCountSink<CO: ConnectableObservableType, O: ObserverType where CO.E == 
         switch event {
         case .Next:
             observer?.on(event)
-        case .Error: fallthrough
-        case .Completed:
+        case .Error, .Completed:
             observer?.on(event)
             self.dispose()
         }

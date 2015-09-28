@@ -99,8 +99,7 @@ class ReplayBufferBase<Element> : ReplaySubject<Element> {
                 addValueToBuffer(value)
                 trim()
                 self.observers.forEach { $0.on(event) }
-            case .Error: fallthrough
-            case .Completed:
+            case .Error, .Completed:
                 stoppedEvent = event
                 trim()
                 self.observers.forEach { $0.on(event) }

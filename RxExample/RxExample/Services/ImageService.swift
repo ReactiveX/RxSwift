@@ -28,7 +28,7 @@ class DefaultImageService: ImageService {
 	
 	let $: Dependencies = Dependencies.sharedDependencies
 	
-    // 1rst level cache
+    // 1st level cache
     let imageCache = NSCache()
     
     // 2nd level cache
@@ -45,15 +45,10 @@ class DefaultImageService: ImageService {
         return just(imageData)
             .observeOn($.backgroundWorkScheduler)
             .map { data in
-                let maybeImage = Image(data: data)
-                
-                if maybeImage == nil {
+                guard let image = Image(data: data) else {
                     // some error
                     throw apiError("Decoding image error")
                 }
-                
-                let image = maybeImage!
-                
                 return image
             }
             .observeOn($.mainScheduler)
@@ -61,7 +56,7 @@ class DefaultImageService: ImageService {
     
     func imageFromURL(URL: NSURL) -> Observable<Image> {
         return deferred {
-            let maybeImage = self.imageDataCache.objectForKey(URL) as? Image
+            let maybeImage = self.imageCache.objectForKey(URL) as? Image
             
             let decodedImage: Observable<Image>
             

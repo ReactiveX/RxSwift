@@ -49,20 +49,17 @@ class UIRxTests : RxTest {
         // We have some async Wolfram Alpha API that calculates is number prime.
         let WolframAlphaIsPrime: (Int) -> Observable<PrimeNumber> = { just(PrimeNumber($0, isPrime($0))) }
         
-        let text = Variable<String>("")
-        let resultText = ""
-        
         let primeTextField = UITextFieldMock()
         
         let resultLabel = UILabelMock()
         
-        let disposable = primeTextField.rx_text()
+        let _ = primeTextField.rx_text()
             .map { WolframAlphaIsPrime(Int($0) ?? 0) }
             .concat()
             .map { "number \($0.n) is prime? \($0.isPrime)" }
             .subscribeTextOf(resultLabel)
-            .scopedDispose
-        
+            .scopedDispose()
+
         // this will set resultLabel.text! == "number 43 is prime? true"
         primeTextField.text = "43"
     }

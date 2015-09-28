@@ -33,8 +33,7 @@ class FilterSink<O : ObserverType>: Sink<O>, ObserverType {
                     observer?.on(.Error(e))
                     self.dispose()
                 }
-            case .Completed: fallthrough
-            case .Error:
+            case .Completed, .Error:
                 observer?.on(event)
                 self.dispose()
         }

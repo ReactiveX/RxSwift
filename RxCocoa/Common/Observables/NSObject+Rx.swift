@@ -58,7 +58,7 @@ extension NSObject {
     - parameter retainSelf: Retains self during observation if set `true`.
     - returns: Observable sequence of objects on `keyPath`.
     */
-    public func rx_observe<Element>(keyPath: String, options: NSKeyValueObservingOptions = NSKeyValueObservingOptions.New.union(NSKeyValueObservingOptions.Initial), retainSelf: Bool = true) -> Observable<Element?> {
+    public func rx_observe<Element>(keyPath: String, options: NSKeyValueObservingOptions = [.New, .Initial], retainSelf: Bool = true) -> Observable<Element?> {
         return KVOObservable(object: self, keyPath: keyPath, options: options, retainTarget: retainSelf)
     }
 
@@ -82,7 +82,7 @@ extension NSObject {
     - parameter options: KVO mechanism notification options.
     - returns: Observable sequence of objects on `keyPath`.
     */
-    public func rx_observeWeakly<Element>(keyPath: String, options: NSKeyValueObservingOptions = NSKeyValueObservingOptions.New.union(NSKeyValueObservingOptions.Initial)) -> Observable<Element?> {
+    public func rx_observeWeakly<Element>(keyPath: String, options: NSKeyValueObservingOptions = [.New, .Initial]) -> Observable<Element?> {
         return observeWeaklyKeyPathFor(self, keyPath: keyPath, options: options)
             .map { n in
                 return n as? Element

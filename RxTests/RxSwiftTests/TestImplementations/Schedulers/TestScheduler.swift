@@ -49,7 +49,7 @@ class TestScheduler : VirtualTimeSchedulerBase {
     func start<Element : Equatable>(created: Time, subscribed: Time, disposed: Time, create: () -> Observable<Element>) -> MockObserver<Element> {
         var source : Observable<Element>? = nil
         var subscription : Disposable? = nil
-        var observer: MockObserver<Element> = createObserver()
+        let observer: MockObserver<Element> = createObserver()
         
         let state : Void = ()
         

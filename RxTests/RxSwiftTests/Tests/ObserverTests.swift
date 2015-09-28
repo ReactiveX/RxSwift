@@ -1,74 +1,24 @@
 //
-//  AnonymousObservable+Test.swift
+//  ObserverTests.swift
 //  RxTests
 //
-//  Created by Krunoslav Zaher on 7/24/15.
+//  Created by Rob Cheung on 9/15/15.
 //
 //
 
-import Foundation
-import RxSwift
 import XCTest
+import RxSwift
 
-class AnonymousObservableTests : RxTest {
+class ObserverTests: RxTest { }
+
+extension ObserverTests {
     
-}
-
-extension AnonymousObservableTests {
-    func testAnonymousObservable_detachesOnDispose() {
+    func testConvenienceOn_Next() {
         var observer: ObserverOf<Int>!
-        let a = create { o in
+        let a: Observable<Int> = create { o in
             observer = o
             return NopDisposable.instance
-        } as Observable<Int>
-        
-        var elements = [Int]()
-        
-        let d = a.subscribeNext { n in
-            elements.append(n)
         }
-        
-        XCTAssertEqual(elements, [])
-        
-        observer.on(.Next(0))
-        XCTAssertEqual(elements, [0])
-        
-        d.dispose()
-
-        observer.on(.Next(1))
-        XCTAssertEqual(elements, [0])
-    }
-    
-    func testAnonymousObservable_detachesOnComplete() {
-        var observer: ObserverOf<Int>!
-        let a = create { o in
-            observer = o
-            return NopDisposable.instance
-        } as Observable<Int>
-        
-        var elements = [Int]()
-        
-        a.subscribeNext { n in
-            elements.append(n)
-        }
-
-        XCTAssertEqual(elements, [])
-        
-        observer.on(.Next(0))
-        XCTAssertEqual(elements, [0])
-        
-        observer.on(.Completed)
-        
-        observer.on(.Next(1))
-        XCTAssertEqual(elements, [0])
-    }
-
-    func testAnonymousObservable_detachesOnError() {
-        var observer: ObserverOf<Int>!
-        let a = create { o in
-            observer = o
-            return NopDisposable.instance
-        } as Observable<Int>
         
         var elements = [Int]()
         
@@ -78,12 +28,61 @@ extension AnonymousObservableTests {
         
         XCTAssertEqual(elements, [])
         
-        observer.on(.Next(0))
+        observer.onNext(0)
+        
+        XCTAssertEqual(elements, [0])
+    }
+    
+    func testConvenienceOn_Error() {
+        var observer: ObserverOf<Int>!
+        let a: Observable<Int> = create { o in
+            observer = o
+            return NopDisposable.instance
+        }
+        
+        var elements = [Int]()
+        var errrorNotification: NSError!
+        
+        a.subscribe(
+            next: { n in elements.append(n) },
+            error: { e in
+                errrorNotification = e as NSError
+            }
+        )
+        
+        XCTAssertEqual(elements, [])
+        
+        observer.onNext(0)
         XCTAssertEqual(elements, [0])
         
-        observer.on(.Error(testError))
+        observer.onError(testError)
         
-        observer.on(.Next(1))
+        observer.onNext(1)
+        XCTAssertEqual(elements, [0])
+        XCTAssertEqual(errrorNotification, testError)
+    }
+    
+    func testConvenienceOn_Complete() {
+        var observer: ObserverOf<Int>!
+        let a: Observable<Int> = create { o in
+            observer = o
+            return NopDisposable.instance
+        }
+        
+        var elements = [Int]()
+        
+        a.subscribeNext { n in
+            elements.append(n)
+        }
+        
+        XCTAssertEqual(elements, [])
+        
+        observer.onNext(0)
+        XCTAssertEqual(elements, [0])
+        
+        observer.onComplete()
+        
+        observer.onNext(1)
         XCTAssertEqual(elements, [0])
     }
 }

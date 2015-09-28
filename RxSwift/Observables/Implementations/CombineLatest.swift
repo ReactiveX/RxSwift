@@ -18,13 +18,15 @@ class CombineLatestSink<O: ObserverType> : Sink<O>, CombineLatestProtocol {
     typealias Element = O.E
    
     let lock = NSRecursiveLock()
-    
-    var hasValueAll: Bool
+
+    let arity: Int
+    var numberOfValues = 0
+    var numberOfDone = 0
     var hasValue: [Bool]
     var isDone: [Bool]
    
     init(arity: Int, observer: O, cancel: Disposable) {
-        self.hasValueAll = false
+        self.arity = arity
         self.hasValue = [Bool](count: arity, repeatedValue: false)
         self.isDone = [Bool](count: arity, repeatedValue: false)
         
@@ -36,21 +38,12 @@ class CombineLatestSink<O: ObserverType> : Sink<O>, CombineLatestProtocol {
     }
     
     func next(index: Int) {
-        if !hasValueAll {
+        if !hasValue[index] {
             hasValue[index] = true
-            
-            var hasValueAll = true
-            for hasValue in self.hasValue {
-                if !hasValue {
-                    hasValueAll = false;
-                    break;
-                }
-            }
-            
-            self.hasValueAll = hasValueAll;
+            numberOfValues++
         }
-        
-        if hasValueAll {
+
+        if numberOfValues == arity {
             do {
                 let result = try getResult()
                 observer?.on(.Next(result))
@@ -62,8 +55,7 @@ class CombineLatestSink<O: ObserverType> : Sink<O>, CombineLatestProtocol {
         }
         else {
             var allOthersDone = true
-            
-            let arity = self.isDone.count
+
             for var i = 0; i < arity; ++i {
                 if i != index && !isDone[i] {
                     allOthersDone = false
@@ -84,18 +76,14 @@ class CombineLatestSink<O: ObserverType> : Sink<O>, CombineLatestProtocol {
     }
     
     func done(index: Int) {
-        isDone[index] = true
-        
-        var allDone = true
-        
-        for done in self.isDone {
-            if !done {
-                allDone = false
-                break
-            }
+        if isDone[index] {
+            return
         }
-        
-        if allDone {
+
+        isDone[index] = true
+        numberOfDone++
+
+        if numberOfDone == self.arity {
             observer?.on(.Completed)
             dispose()
         }

@@ -45,9 +45,10 @@ public final class AnonymousDisposable : DisposeBase, Cancelable {
     */
     public func dispose() {
         if OSAtomicCompareAndSwap32(0, 1, &_disposed) {
-            let action = self.disposeAction!
-            self.disposeAction = nil
-            action()
+            if let action = self.disposeAction {
+                self.disposeAction = nil
+                action()
+            }
         }
     }
 }
