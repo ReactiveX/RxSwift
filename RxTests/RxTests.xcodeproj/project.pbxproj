@@ -199,7 +199,6 @@
 		C84B8FC11B89D0D500C9CCCF /* BagTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BagTest.swift; sourceTree = "<group>"; };
 		C85F4E421B7F70EA00A866C7 /* CompositeObserverTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompositeObserverTest.swift; sourceTree = "<group>"; };
 		C8633AE41B0A9FF300375D60 /* KVOObservableTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KVOObservableTests.swift; sourceTree = "<group>"; };
-		C868D0EF1BB75EA1003D1474 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		C868D0F81BB76A29003D1474 /* PerformanceTools.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PerformanceTools.swift; sourceTree = "<group>"; };
 		C868D1091BB950D3003D1474 /* PerformanceTests.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PerformanceTests.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C868D10B1BB950D4003D1474 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
@@ -270,7 +269,6 @@
 				C8A468CC1B8A897800BF917B /* RxCocoa.framework */,
 				C836EA001B8A76A900AB941D /* RxSwift.framework */,
 				C81108221AF50E11001C13E4 /* Tests */,
-				C868D0EE1BB75EA1003D1474 /* PerformanceTests */,
 				C868D10A1BB950D4003D1474 /* PerformanceTests */,
 				C81108211AF50E11001C13E4 /* Products */,
 			);
@@ -398,14 +396,6 @@
 				C69B64FF1BA88FAC00A7FA73 /* ObserverTests.swift */,
 			);
 			path = Tests;
-			sourceTree = "<group>";
-		};
-		C868D0EE1BB75EA1003D1474 /* PerformanceTests */ = {
-			isa = PBXGroup;
-			children = (
-				C868D0EF1BB75EA1003D1474 /* main.swift */,
-			);
-			path = PerformanceTests;
 			sourceTree = "<group>";
 		};
 		C868D10A1BB950D4003D1474 /* PerformanceTests */ = {
