@@ -57,8 +57,6 @@ func registerMallocHooks() {
 
     assert(Int(count) <= proxies.count)
 
-    let defaultZone = malloc_default_zone()
-
     for i in 0 ..< Int(count) {
         let zoneArray = zones.advancedBy(i)
         let name = malloc_get_zone_name(zoneArray.memory)
@@ -72,7 +70,7 @@ func registerMallocHooks() {
 
         let protectSize = vm_size_t(sizeof(malloc_zone_t)) * vm_size_t(count)
 
-        if zone.version >= 8 {
+        if true {
             let addressPointer = UnsafeMutablePointer<vm_address_t>(zoneArray)
             let res = vm_protect(mach_task_self_, addressPointer.memory, protectSize, 0, PROT_READ | PROT_WRITE)
             assert(res == 0)
@@ -80,7 +78,7 @@ func registerMallocHooks() {
 
         zoneArray.memory.memory = zone
 
-        if defaultZone.memory.version == 8 {
+        if true {
             let res = vm_protect(mach_task_self_, _zones.memory, protectSize, 0, PROT_READ)
             assert(res == 0)
         }
