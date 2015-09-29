@@ -59,7 +59,8 @@ class GitHubSearchRepositoriesAPI {
 class GitHubSearchRepositoriesViewController: ViewController, UITableViewDelegate {
     
     @IBOutlet weak var tableView: UITableView!
-    
+    @IBOutlet weak var searchBar: UISearchBar!
+
     var disposeBag = DisposeBag()
     let repositories = Variable([Repository]())
     let dataSource = RxTableViewSectionedReloadDataSource<SectionModel<String, Repository>>()

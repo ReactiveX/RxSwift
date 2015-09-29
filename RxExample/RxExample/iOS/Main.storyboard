@@ -31,9 +31,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <searchBar key="tableHeaderView" contentMode="redraw" placeholder="Search Repository" id="zFx-qa-Lve">
+                            <rect key="frame" x="0.0" y="64" width="320" height="44"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </searchBar>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" id="rON-a5-sdH">
-                                <rect key="frame" x="0.0" y="92" width="320" height="44"/>
+                                <rect key="frame" x="0.0" y="136" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="rON-a5-sdH" id="Vgz-Eb-3T3">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -44,6 +49,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" id="Dx0-YN-Pwz"/>
                     <connections>
+                        <outlet property="searchBar" destination="zFx-qa-Lve" id="jV0-Kc-EOW"/>
                         <outlet property="tableView" destination="nwe-iR-nbz" id="o8o-DW-fJo"/>
                     </connections>
                 </tableViewController>
