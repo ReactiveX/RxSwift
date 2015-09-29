@@ -2,7 +2,7 @@
 //  GitHubSearchRepositoriesViewController.swift
 //  RxExample
 //
-//  Created by yoshinori_sano on 9/29/15.
+//  Created by Yoshinori Sano on 9/29/15.
 //  Copyright (c) 2015 Krunoslav Zaher. All rights reserved.
 //
 
