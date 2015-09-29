@@ -294,6 +294,7 @@
 		C8DF92EA1B0B38C0009BCF9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C8DF92E91B0B38C0009BCF9A /* Images.xcassets */; };
 		C8DF92EB1B0B38C0009BCF9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C8DF92E91B0B38C0009BCF9A /* Images.xcassets */; };
 		C8DF92F61B0B43A4009BCF9A /* IntroductionExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8DF92F51B0B43A4009BCF9A /* IntroductionExampleViewController.swift */; };
+		EC91FB951BBA144400973245 /* GitHubSearchRepositoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC91FB941BBA144400973245 /* GitHubSearchRepositoriesViewController.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -564,6 +565,7 @@
 		C8DF92F01B0B3E67009BCF9A /* Info-OSX.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Info-OSX.plist"; sourceTree = "<group>"; };
 		C8DF92F21B0B3E71009BCF9A /* Info-iOS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Info-iOS.plist"; sourceTree = "<group>"; };
 		C8DF92F51B0B43A4009BCF9A /* IntroductionExampleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = IntroductionExampleViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		EC91FB941BBA144400973245 /* GitHubSearchRepositoriesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GitHubSearchRepositoriesViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1074,6 +1076,7 @@
 				07A5C3D91B70B6B8001EFE5C /* 06 Calculator */,
 				C859B9A21B45C5D900D012D7 /* 07 PartialUpdates */,
 				C8A57F711B40AF4E00D5570A /* 08 CoreData */,
+				EC91FB931BBA12E800973245 /* 09 AutoLoading */,
 			);
 			path = Examples;
 			sourceTree = "<group>";
@@ -1195,6 +1198,15 @@
 			);
 			name = "01 Introduction";
 			path = Introduction;
+			sourceTree = "<group>";
+		};
+		EC91FB931BBA12E800973245 /* 09 AutoLoading */ = {
+			isa = PBXGroup;
+			children = (
+				EC91FB941BBA144400973245 /* GitHubSearchRepositoriesViewController.swift */,
+			);
+			name = "09 AutoLoading";
+			path = AutoLoading;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1569,6 +1581,7 @@
 				C83367251AD029AE00C668A7 /* ImageService.swift in Sources */,
 				C86E2F471AE5A0CA00C31024 /* WikipediaSearchResult.swift in Sources */,
 				C890A65A1AEBD28A00AFF7E6 /* GitHubAPI.swift in Sources */,
+				EC91FB951BBA144400973245 /* GitHubSearchRepositoriesViewController.swift in Sources */,
 				C8A2A2C81B4049E300F11F09 /* PseudoRandomGenerator.swift in Sources */,
 				C84B91381B8A282000C9CCCF /* RxTableViewSectionedAnimatedDataSource.swift in Sources */,
 				C88C78721B3EB0A00061C5AB /* SectionedViewType.swift in Sources */,
