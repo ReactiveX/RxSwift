@@ -6,6 +6,8 @@
 //  Copyright (c) 2015 Krunoslav Zaher. All rights reserved.
 //
 
+#if os(iOS)
+
 import UIKit
 #if !RX_NO_MODULE
 import RxSwift
@@ -25,3 +27,6 @@ class RxAlertViewDelegateProxy : DelegateProxy
         alertView.delegate = castOptionalOrFatalError(delegate)
     }
 }
+
+#endif
+
