@@ -30,8 +30,9 @@ class GitHubSearchRepositoriesAPI {
     
     private init() {}
     
-    func search() -> Observable<[Repository]> {
-        let url = NSURL(string: "https://api.github.com/search/repositories?q=othello")!
+    func search(query: String) -> Observable<[Repository]> {
+        let escapedQuery = URLEscape(query)
+        let url = NSURL(string: "https://api.github.com/search/repositories?q=\(escapedQuery)")!
         return NSURLSession.sharedSession().rx_JSON(url)
             .observeOn(Dependencies.sharedDependencies.backgroundWorkScheduler)
             .map { json in
@@ -87,8 +88,19 @@ class GitHubSearchRepositoriesViewController: ViewController, UITableViewDelegat
         allRepositories
             .bindTo(tableView.rx_itemsWithDataSource(dataSource))
             .addDisposableTo(disposeBag)
+        
+        let $: Dependencies = Dependencies.sharedDependencies
 
-        GitHubSearchRepositoriesAPI.sharedAPI.search()
+        searchBar.rx_text
+            .throttle(0.3, $.mainScheduler)
+            .distinctUntilChanged()
+            .map { query in
+                GitHubSearchRepositoriesAPI.sharedAPI.search(query)
+                    .retry(3)
+                    .startWith([])
+                    .catchErrorJustReturn([])
+            }
+            .switchLatest()
             .subscribeNext { [unowned self] array in
                 self.repositories.value = array
             }
