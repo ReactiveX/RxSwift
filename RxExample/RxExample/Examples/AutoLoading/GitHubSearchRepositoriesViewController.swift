@@ -72,9 +72,9 @@ class GitHubSearchRepositoriesViewController: ViewController, UITableViewDelegat
                 return [SectionModel(model: "Repositories", items: repositories)]
             }
 
-        dataSource.cellFactory = { (tv, ip, user: Repository) in
+        dataSource.cellFactory = { (tv, ip, repository: Repository) in
             let cell = tv.dequeueReusableCellWithIdentifier("Cell")!
-            cell.textLabel?.text = user.name
+            cell.textLabel?.text = repository.name
             return cell
         }
 
