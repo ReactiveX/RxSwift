@@ -16,10 +16,12 @@ Pod::Spec.new do |s|
 
   s.ios.deployment_target = '8.0'
   s.osx.deployment_target = '10.9'
+  s.watchos.deployment_target = '2.0'
 
   s.source_files          = 'RxCocoa/RxCocoa.h', 'RxCocoa/Common/**/*.{swift,h,m}'
   s.ios.source_files      = 'RxCocoa/iOS/**/*.swift'
   s.osx.source_files      = 'RxCocoa/OSX/**/*.swift'
+  s.watchos.source_files  = 'RxCocoa/iOS/**/*.swift'
 
   s.dependency 'RxSwift', '~> 2.0.0-alpha'
 end

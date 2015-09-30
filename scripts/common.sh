@@ -25,6 +25,7 @@ BOLDWHITE="\033[1m\033[37m"
 DEFAULT_IOS7_SIMULATOR=RxSwiftTest-iPhone4s-iOS_7.1
 DEFAULT_IOS8_SIMULATOR=RxSwiftTest-iPhone6-iOS_8.4
 DEFAULT_IOS9_SIMULATOR=RxSwiftTest-iPhone6-iOS_9.0
+DEFAULT_WATCHOS2_SIMULATOR=RxSwiftTest-AppleWatch-watchOS_2.0
 
 if [ "${IS_LOCAL}" -eq 1 ]; then
 IOS7_SIMULATORS="RxSwiftTest-iPhone4s-iOS_7.1 RxSwiftTest-iPhone5-iOS_7.1 RxSwiftTest-iPhone5s-iOS_7.1"
@@ -54,7 +55,11 @@ function rx() {
 	DESTINATION=""
 	if [ "$SIMULATOR" != "" ]; then
 			OS=`echo $SIMULATOR| cut -d'_' -f 2`
-			DESTINATION='platform=iOS Simulator,OS='$OS',name='$SIMULATOR''
+			if contains $SIMULATOR "watchOS"; then
+				DESTINATION='platform=watchOS Simulator,OS='$OS',name='$SIMULATOR''
+			else
+				DESTINATION='platform=iOS Simulator,OS='$OS',name='$SIMULATOR''
+			fi
 	else
 			DESTINATION='platform=OS X,arch=x86_64'
 	fi
@@ -116,4 +121,16 @@ function deleteDevices() {
 
 	xcrun simctl delete RxSwiftTest-iPhone6-iOS_9.0 || echo "failed"
 	xcrun simctl delete RxSwiftTest-iPhone6Plus-iOS_9.0 || echo "failed"
+}
+
+# used to check simulator name
+contains() {
+    string="$1"
+    substring="$2"
+    if test "${string#*$substring}" != "$string"
+    then
+        return 0    # $substring is in $string
+    else
+        return 1    # $substring is not in $string
+    fi
 }
