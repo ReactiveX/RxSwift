@@ -48,7 +48,7 @@ function rx() {
 	ACTION=$4
 
 	echo
-	printf "${GREEN}${ACTION} ${BOLDCYAN}$1 - $2 ($SIMULATOR)${RESET}\n"
+	printf "${GREEN}${ACTION} ${BOLDCYAN}$SCHEME - $CONFIGURATION ($SIMULATOR)${RESET}\n"
 	echo
 
 	DESTINATION=""

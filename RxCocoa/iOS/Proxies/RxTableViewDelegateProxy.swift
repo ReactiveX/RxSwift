@@ -6,6 +6,8 @@
 //  Copyright (c) 2015 Krunoslav Zaher. All rights reserved.
 //
 
+#if os(iOS) || os(tvOS)
+
 import Foundation
 import UIKit
 #if !RX_NO_MODULE
@@ -17,3 +19,5 @@ class RxTableViewDelegateProxy : RxScrollViewDelegateProxy
                                , UITableViewDelegate {
 
 }
+
+#endif

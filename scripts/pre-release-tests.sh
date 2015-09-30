@@ -46,6 +46,24 @@ else
 	CONFIGURATIONS=(Debug Release-Tests Release)
 fi
 
+# make sure watchos builds
+# temporary solution
+WATCH_OS_BUILD_TARGETS=(RxSwift-watchOS RxCocoa-watchOS RxBlocking-watchOS)
+for scheme in ${WATCH_OS_BUILD_TARGETS[@]}
+do
+	for configuration in ${CONFIGURATIONS[@]}
+	do
+		echo
+		printf "${GREEN}${build} ${BOLDCYAN}${scheme} - ${configuration} ($SIMULATOR)${RESET}\n"
+		echo
+		xcodebuild -workspace Rx.xcworkspace \
+					-scheme ${scheme} \
+					-configuration ${configuration} \
+					-derivedDataPath "${BUILD_DIRECTORY}" \
+					build | xcpretty -c; STATUS=${PIPESTATUS[0]}
+	done
+done
+
 #make sure all iOS tests pass
 for configuration in ${CONFIGURATIONS[@]}
 do

@@ -6,6 +6,8 @@
 //  Copyright (c) 2015 Krunoslav Zaher. All rights reserved.
 //
 
+#if os(iOS) || os(tvOS) || os(OSX)
+
 import Foundation
 #if !RX_NO_MODULE
 import RxSwift
@@ -86,3 +88,5 @@ class ControlTarget: RxTarget {
         self.callback = nil
     }
 }
+
+#endif
