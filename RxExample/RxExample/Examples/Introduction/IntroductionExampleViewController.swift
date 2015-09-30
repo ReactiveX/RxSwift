@@ -25,7 +25,9 @@ class IntroductionExampleViewController : ViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
+        showAlert("After you close this, prepare for a loud sound ...")
+
         // c = a + b
         let sum = combineLatest(a.rx_text, b.rx_text) { (a: String, b: String) -> (Int, Int) in
             return (Int(a) ?? 0, Int(b) ?? 0)
@@ -77,5 +79,4 @@ class IntroductionExampleViewController : ViewController {
             }
             .addDisposableTo(disposeBag)
     }
-    
 }

@@ -35,3 +35,13 @@ extension String {
     }
 }
 
+
+func showAlert(message: String) {
+    #if os(iOS)
+        UIAlertView(title: "RxExample", message: message, delegate: nil, cancelButtonTitle: "OK").show()
+    #elseif os(OSX)
+        let alert = NSAlert()
+        alert.messageText = message
+        alert.runModal()
+    #endif
+}

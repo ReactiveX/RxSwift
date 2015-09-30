@@ -41,7 +41,8 @@ class DefaultWikipediaAPI: WikipediaAPI {
         let urlContent = "http://en.wikipedia.org/w/api.php?action=opensearch&search=\(escapedQuery)"
         let url = NSURL(string: urlContent)!
             
-        return $.URLSession.rx_JSON(url)
+        return $.URLSession
+            .rx_JSON(url)
             .observeOn($.backgroundWorkScheduler)
             .map { json in
                 guard let json = json as? [AnyObject] else {
