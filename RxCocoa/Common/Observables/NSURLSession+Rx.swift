@@ -136,7 +136,7 @@ extension NSURLSession {
                 return data ?? NSData()
             }
             else {
-                throw rxError(.NetworkError, message: "Server returned failure", userInfo: [RxCocoaErrorHTTPResponseKey: response])
+                throw rxError(.NetworkError, message: "Server returned failure", userInfo: [RxCocoaErrorHTTPResponseKey: response, RxCocoaErrorHTTPResponseDataKey : data ?? NSData()])
             }
         }
     }
