@@ -139,7 +139,7 @@ class GitHubSearchRepositoriesAPI {
                     throw exampleError("Casting to dictionary failed")
                 }
 
-                let repositories = try self.parseJSON(json)
+                let repositories = try GitHubSearchRepositoriesAPI.parseRepositories(json)
 
                 let nextURL = try GitHubSearchRepositoriesAPI.parseNextURL(httpResponse)
 
@@ -156,7 +156,7 @@ class GitHubSearchRepositoriesAPI {
         return try NSJSONSerialization.JSONObjectWithData(data ?? NSData(), options: [])
     }
     
-    private func parseJSON(json: [String: AnyObject]) throws -> [Repository] {
+    private static func parseRepositories(json: [String: AnyObject]) throws -> [Repository] {
         guard let items = json["items"] as? [[String: AnyObject]] else {
             throw exampleError("Can't find results")
         }
