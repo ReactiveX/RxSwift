@@ -197,6 +197,9 @@ class GitHubSearchRepositoriesViewController: ViewController, UITableViewDelegat
                 return [SectionModel(model: "Repositories", items: repositories)]
             }
 
+        tableView.rx_setDelegate(self)
+            .addDisposableTo(disposeBag)
+
         dataSource.cellFactory = { (tv, ip, repository: Repository) in
             let cell = tv.dequeueReusableCellWithIdentifier("Cell")!
             cell.textLabel?.text = repository.name
