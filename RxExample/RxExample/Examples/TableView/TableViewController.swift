@@ -22,8 +22,6 @@ class TableViewController: ViewController, UITableViewDelegate {
     let users = Variable([User]())
     let favoriteUsers = Variable([User]())
 
-    var allSections: [SectionModel<String, User>] = []
-
     let dataSource = RxTableViewSectionedReloadDataSource<SectionModel<String, User>>()
 
     typealias Section = SectionModel<String, User>
@@ -39,14 +37,6 @@ class TableViewController: ViewController, UITableViewDelegate {
                 SectionModel(model: "Normal Users", items: users)
             ]
         }
-
-        // This is for demonstration purposes of UITableViewDelegate/DataSource
-        // only, try to not do something like this in your app
-        allUsers
-            .subscribeNext { [unowned self] n in
-                self.allSections = n
-            }
-            .addDisposableTo(disposeBag)
 
         dataSource.cellFactory = { (tv, ip, user: User) in
             let cell = tv.dequeueReusableCellWithIdentifier("Cell")!
