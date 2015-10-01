@@ -843,14 +843,10 @@
 		C8C3DA0E1B939767004D233E /* CurrentThreadScheduler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentThreadScheduler.swift; sourceTree = "<group>"; };
 		C8C3DA111B93A3EA004D233E /* AnonymousObservable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnonymousObservable.swift; sourceTree = "<group>"; };
 		C8F0C0021BBBFB8B001B112F /* RxSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		C8F0C0031BBBFB8B001B112F /* RxSwift-iOS copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "RxSwift-iOS copy-Info.plist"; path = "/Users/kzaher/Projects/Rx/RxSwift-iOS copy-Info.plist"; sourceTree = "<absolute>"; };
 		C8F0C04B1BBBFBB9001B112F /* RxCocoa.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxCocoa.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		C8F0C04C1BBBFBB9001B112F /* RxCocoa-iOS copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "RxCocoa-iOS copy-Info.plist"; path = "/Users/kzaher/Projects/Rx/RxCocoa-iOS copy-Info.plist"; sourceTree = "<absolute>"; };
 		C8F0C0581BBBFBCE001B112F /* RxBlocking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxBlocking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		C8F0C0591BBBFBCF001B112F /* RxBlocking-iOS copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "RxBlocking-iOS copy-Info.plist"; path = "/Users/kzaher/Projects/Rx/RxBlocking-iOS copy-Info.plist"; sourceTree = "<absolute>"; };
 		D2138C751BB9BE9800339B5C /* RxCocoa.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxCocoa.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2EA280C1BB9B5A200880ED3 /* RxSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		D2EA280E1BB9B5A200880ED3 /* RxSwift.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RxSwift.h; sourceTree = "<group>"; };
 		D2EA28101BB9B5A200880ED3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D2EBEB811BB9B99D003A27DC /* RxBlocking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxBlocking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F31F35AF1BB4FED800961002 /* UIStepper+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIStepper+Rx.swift"; sourceTree = "<group>"; };
@@ -1312,9 +1308,6 @@
 				C8093E801B8A732E0088E94D /* RxCocoa */,
 				D2EA280D1BB9B5A200880ED3 /* RxSwift */,
 				C8A56AD81AD7424700B4673B /* Products */,
-				C8F0C0031BBBFB8B001B112F /* RxSwift-iOS copy-Info.plist */,
-				C8F0C04C1BBBFBB9001B112F /* RxCocoa-iOS copy-Info.plist */,
-				C8F0C0591BBBFBCF001B112F /* RxBlocking-iOS copy-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1340,7 +1333,6 @@
 		D2EA280D1BB9B5A200880ED3 /* RxSwift */ = {
 			isa = PBXGroup;
 			children = (
-				D2EA280E1BB9B5A200880ED3 /* RxSwift.h */,
 				D2EA28101BB9B5A200880ED3 /* Info.plist */,
 			);
 			path = RxSwift;
@@ -2750,6 +2742,7 @@
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_BITCODE = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -2866,6 +2859,7 @@
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_BITCODE = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -2918,6 +2912,7 @@
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_BITCODE = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
