@@ -158,7 +158,7 @@ class GitHubSearchRepositoriesAPI {
     
     private static func parseRepositories(json: [String: AnyObject]) throws -> [Repository] {
         guard let items = json["items"] as? [[String: AnyObject]] else {
-            throw exampleError("Can't find results")
+            throw exampleError("Can't find items")
         }
         return try items.map { item in
             guard let name = item["name"] as? String,
