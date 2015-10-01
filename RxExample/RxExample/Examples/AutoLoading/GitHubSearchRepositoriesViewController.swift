@@ -223,11 +223,14 @@ class GitHubSearchRepositoriesViewController: ViewController, UITableViewDelegat
         searchBar.rx_text
             .throttle(0.3, $.mainScheduler)
             .distinctUntilChanged()
-            .filter { $0 != "" }
-            .map { query in
-                GitHubSearchRepositoriesAPI.sharedAPI.search(query, loadNextPageTrigger: loadNextPageTrigger)
-                    .retry(3)
-                    .catchErrorJustReturn(.Repositories([]))
+            .map { query -> Observable<SearchRepositoryResponse> in
+                if query.isEmpty {
+                    return just(.Repositories([]))
+                } else {
+                    return GitHubSearchRepositoriesAPI.sharedAPI.search(query, loadNextPageTrigger: loadNextPageTrigger)
+                        .retry(3)
+                        .catchErrorJustReturn(.Repositories([]))
+                }
             }
             .switchLatest()
             .subscribeNext { [unowned self] result in
