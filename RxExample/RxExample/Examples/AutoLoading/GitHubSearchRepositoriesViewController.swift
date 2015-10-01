@@ -158,7 +158,7 @@ class GitHubSearchRepositoriesAPI {
     
     private static func parseRepositories(json: [String: AnyObject]) throws -> [Repository] {
         guard let items = json["items"] as? [[String: AnyObject]] else {
-            throw exampleError("Can't find results")
+            throw exampleError("Can't find items")
         }
         return try items.map { item in
             guard let name = item["name"] as? String,
@@ -197,6 +197,9 @@ class GitHubSearchRepositoriesViewController: ViewController, UITableViewDelegat
                 return [SectionModel(model: "Repositories", items: repositories)]
             }
 
+        tableView.rx_setDelegate(self)
+            .addDisposableTo(disposeBag)
+
         dataSource.cellFactory = { (tv, ip, repository: Repository) in
             let cell = tv.dequeueReusableCellWithIdentifier("Cell")!
             cell.textLabel?.text = repository.name
@@ -223,11 +226,14 @@ class GitHubSearchRepositoriesViewController: ViewController, UITableViewDelegat
         searchBar.rx_text
             .throttle(0.3, $.mainScheduler)
             .distinctUntilChanged()
-            .filter { $0 != "" }
-            .map { query in
-                GitHubSearchRepositoriesAPI.sharedAPI.search(query, loadNextPageTrigger: loadNextPageTrigger)
-                    .retry(3)
-                    .catchErrorJustReturn(.Repositories([]))
+            .map { query -> Observable<SearchRepositoryResponse> in
+                if query.isEmpty {
+                    return just(.Repositories([]))
+                } else {
+                    return GitHubSearchRepositoriesAPI.sharedAPI.search(query, loadNextPageTrigger: loadNextPageTrigger)
+                        .retry(3)
+                        .catchErrorJustReturn(.Repositories([]))
+                }
             }
             .switchLatest()
             .subscribeNext { [unowned self] result in
