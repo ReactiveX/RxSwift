@@ -81,8 +81,9 @@ do
 		xcodebuild -workspace Rx.xcworkspace \
 					-scheme ${scheme} \
 					-configuration ${configuration} \
+					-sdk watchos \
 					-derivedDataPath "${BUILD_DIRECTORY}" \
-					build | xcpretty -c; STATUS=${PIPESTATUS[0]}
+					build CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO | xcpretty -c; STATUS=${PIPESTATUS[0]}
 
 		if [ $STATUS -ne 0 ]; then
 			echo $STATUS
