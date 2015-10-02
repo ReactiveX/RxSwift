@@ -316,6 +316,8 @@
 		C8C3DA101B939767004D233E /* CurrentThreadScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C3DA0E1B939767004D233E /* CurrentThreadScheduler.swift */; };
 		C8C3DA121B93A3EA004D233E /* AnonymousObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C3DA111B93A3EA004D233E /* AnonymousObservable.swift */; };
 		C8C3DA131B93A3EA004D233E /* AnonymousObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C3DA111B93A3EA004D233E /* AnonymousObservable.swift */; };
+		C8DD8F4C1BBE79190046F35C /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2EA280C1BB9B5A200880ED3 /* RxSwift.framework */; };
+		C8DD8F4D1BBE79260046F35C /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2EA280C1BB9B5A200880ED3 /* RxSwift.framework */; };
 		C8F0BF921BBBFB8B001B112F /* Observable+Creation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C981B8A72BE0088E94D /* Observable+Creation.swift */; };
 		C8F0BF931BBBFB8B001B112F /* ConnectableObservableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C4D1B8A72BE0088E94D /* ConnectableObservableType.swift */; };
 		C8F0BF941BBBFB8B001B112F /* Just.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C3DA021B9390C4004D233E /* Just.swift */; };
@@ -483,8 +485,6 @@
 		C8F0C0441BBBFBB9001B112F /* _RXSwizzling.h in Headers */ = {isa = PBXBuildFile; fileRef = C8093E881B8A732E0088E94D /* _RXSwizzling.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C8F0C0451BBBFBB9001B112F /* _RXKVOObserver.h in Headers */ = {isa = PBXBuildFile; fileRef = C8093E861B8A732E0088E94D /* _RXKVOObserver.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C8F0C04F1BBBFBCE001B112F /* Observable+Blocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093F581B8A73A20088E94D /* Observable+Blocking.swift */; };
-		C8F0C05A1BBC016A001B112F /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8F0C0021BBBFB8B001B112F /* RxSwift.framework */; };
-		C8F0C05B1BBC0171001B112F /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8F0C0021BBBFB8B001B112F /* RxSwift.framework */; };
 		D203C4F31BB9C4CA00D02D00 /* RxCollectionViewReactiveArrayDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88253F11B8A752B00B02D69 /* RxCollectionViewReactiveArrayDataSource.swift */; };
 		D203C4F41BB9C52400D02D00 /* RxTableViewReactiveArrayDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88253F21B8A752B00B02D69 /* RxTableViewReactiveArrayDataSource.swift */; };
 		D203C4F51BB9C52900D02D00 /* ItemEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88253F41B8A752B00B02D69 /* ItemEvents.swift */; };
@@ -518,7 +518,6 @@
 		D203C5111BB9C53E00D02D00 /* UITableView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88254121B8A752B00B02D69 /* UITableView+Rx.swift */; };
 		D203C5121BB9C53E00D02D00 /* UITextField+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88254131B8A752B00B02D69 /* UITextField+Rx.swift */; };
 		D203C5131BB9C53E00D02D00 /* UITextView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88254141B8A752B00B02D69 /* UITextView+Rx.swift */; };
-		D203C5151BB9CA5200D02D00 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2EA280C1BB9B5A200880ED3 /* RxSwift.framework */; };
 		D2138C7E1BB9BEBE00339B5C /* _RX.h in Headers */ = {isa = PBXBuildFile; fileRef = C8093E821B8A732E0088E94D /* _RX.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D2138C7F1BB9BEBE00339B5C /* _RX.m in Sources */ = {isa = PBXBuildFile; fileRef = C8093E831B8A732E0088E94D /* _RX.m */; };
 		D2138C801BB9BEBE00339B5C /* _RXDelegateProxy.h in Headers */ = {isa = PBXBuildFile; fileRef = C8093E841B8A732E0088E94D /* _RXDelegateProxy.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -653,7 +652,6 @@
 		D2EBEB431BB9B6DE003A27DC /* SubjectType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093CC11B8A72BE0088E94D /* SubjectType.swift */; };
 		D2EBEB441BB9B6DE003A27DC /* Variable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093CC21B8A72BE0088E94D /* Variable.swift */; };
 		D2EBEB8A1BB9B9EE003A27DC /* Observable+Blocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093F581B8A73A20088E94D /* Observable+Blocking.swift */; };
-		D2EBEB8B1BB9BA62003A27DC /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2EA280C1BB9B5A200880ED3 /* RxSwift.framework */; };
 		F31F35B01BB4FED800961002 /* UIStepper+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = F31F35AF1BB4FED800961002 /* UIStepper+Rx.swift */; };
 /* End PBXBuildFile section */
 
@@ -847,7 +845,6 @@
 		C8F0C0581BBBFBCE001B112F /* RxBlocking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxBlocking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2138C751BB9BE9800339B5C /* RxCocoa.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxCocoa.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2EA280C1BB9B5A200880ED3 /* RxSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		D2EA28101BB9B5A200880ED3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D2EBEB811BB9B99D003A27DC /* RxBlocking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxBlocking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F31F35AF1BB4FED800961002 /* UIStepper+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIStepper+Rx.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -910,7 +907,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C8F0C05A1BBC016A001B112F /* RxSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -918,7 +914,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C8F0C05B1BBC0171001B112F /* RxSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -926,7 +921,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D203C5151BB9CA5200D02D00 /* RxSwift.framework in Frameworks */,
+				C8DD8F4D1BBE79260046F35C /* RxSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -941,7 +936,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D2EBEB8B1BB9BA62003A27DC /* RxSwift.framework in Frameworks */,
+				C8DD8F4C1BBE79190046F35C /* RxSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1306,7 +1301,6 @@
 				C8093C471B8A72BE0088E94D /* RxSwift */,
 				C8093F571B8A73A20088E94D /* RxBlocking */,
 				C8093E801B8A732E0088E94D /* RxCocoa */,
-				D2EA280D1BB9B5A200880ED3 /* RxSwift */,
 				C8A56AD81AD7424700B4673B /* Products */,
 			);
 			sourceTree = "<group>";
@@ -1328,14 +1322,6 @@
 				C8F0C0581BBBFBCE001B112F /* RxBlocking.framework */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		D2EA280D1BB9B5A200880ED3 /* RxSwift */ = {
-			isa = PBXGroup;
-			children = (
-				D2EA28101BB9B5A200880ED3 /* Info.plist */,
-			);
-			path = RxSwift;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -2520,7 +2506,6 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = "$(SRCROOT)/RxCocoa/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = RxCocoa;
 				SDKROOT = iphoneos;
@@ -2537,7 +2522,6 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = "$(SRCROOT)/RxCocoa/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = RxCocoa;
 				SDKROOT = iphoneos;
@@ -2554,7 +2538,6 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = "$(SRCROOT)/RxCocoa/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = RxCocoa;
 				SDKROOT = iphoneos;
@@ -2573,7 +2556,6 @@
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "$(SRCROOT)/RxCocoa/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = RxCocoa;
 				SDKROOT = macosx;
@@ -2592,7 +2574,6 @@
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "$(SRCROOT)/RxCocoa/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = RxCocoa;
 				SDKROOT = macosx;
@@ -2611,7 +2592,6 @@
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "$(SRCROOT)/RxCocoa/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = RxCocoa;
 				SDKROOT = macosx;
@@ -2628,7 +2608,6 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = "$(SRCROOT)/RxBlocking/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = RxBlocking;
 				SDKROOT = iphoneos;
@@ -2645,7 +2624,6 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = "$(SRCROOT)/RxBlocking/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = RxBlocking;
 				SDKROOT = iphoneos;
@@ -2662,7 +2640,6 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = "$(SRCROOT)/RxBlocking/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = RxBlocking;
 				SDKROOT = iphoneos;
@@ -2681,7 +2658,6 @@
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "$(SRCROOT)/RxBlocking/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = RxBlocking;
 				SDKROOT = macosx;
@@ -2700,7 +2676,6 @@
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "$(SRCROOT)/RxBlocking/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = RxBlocking;
 				SDKROOT = macosx;
@@ -2719,7 +2694,6 @@
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "$(SRCROOT)/RxBlocking/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = RxBlocking;
 				SDKROOT = macosx;
@@ -2761,7 +2735,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_SWIFT_FLAGS = "-D TRACE_RESOURCES";
@@ -2801,7 +2775,6 @@
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "$(SRCROOT)/RxSwift/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = RxSwift;
 				SDKROOT = macosx;
@@ -2820,7 +2793,6 @@
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "$(SRCROOT)/RxSwift/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = RxSwift;
 				SDKROOT = macosx;
@@ -2839,7 +2811,6 @@
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "$(SRCROOT)/RxSwift/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = RxSwift;
 				SDKROOT = macosx;
@@ -2887,7 +2858,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -2933,7 +2904,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = "";
@@ -2987,11 +2958,12 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = "$(SRCROOT)/RxSwift/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = RxSwift;
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,4";
 			};
 			name = Debug;
 		};
@@ -3004,11 +2976,12 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = "$(SRCROOT)/RxSwift/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = RxSwift;
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,4";
 			};
 			name = Release;
 		};
@@ -3021,11 +2994,12 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = "$(SRCROOT)/RxSwift/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = RxSwift;
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,4";
 			};
 			name = "Release-Tests";
 		};
@@ -3038,11 +3012,12 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = "$(SRCROOT)/RxCocoa/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = RxCocoa;
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,4";
 			};
 			name = Debug;
 		};
@@ -3055,11 +3030,12 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = "$(SRCROOT)/RxCocoa/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = RxCocoa;
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,4";
 			};
 			name = Release;
 		};
@@ -3072,11 +3048,12 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = "$(SRCROOT)/RxCocoa/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = RxCocoa;
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,4";
 			};
 			name = "Release-Tests";
 		};
@@ -3089,11 +3066,12 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = "$(SRCROOT)/RxBlocking/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = RxBlocking;
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,4";
 			};
 			name = Debug;
 		};
@@ -3106,11 +3084,12 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = "$(SRCROOT)/RxBlocking/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = RxBlocking;
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,4";
 			};
 			name = Release;
 		};
@@ -3123,11 +3102,12 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = "$(SRCROOT)/RxBlocking/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = RxBlocking;
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,4";
 			};
 			name = "Release-Tests";
 		};
