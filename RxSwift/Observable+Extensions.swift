@@ -15,6 +15,7 @@ extension ObservableType {
     - parameter on: Action to invoke for each event in the observable sequence.
     - returns: Subscription object used to unsubscribe from the observable sequence.
     */
+    @warn_unused_result
     public func subscribe(on: (event: Event<E>) -> Void)
         -> Disposable {
         let observer = AnonymousObserver { e in
@@ -33,6 +34,7 @@ extension ObservableType {
         gracefully completed, errored, or if the generation is cancelled by disposing subscription)
     - returns: Subscription object used to unsubscribe from the observable sequence.
     */
+    @warn_unused_result
     public func subscribe(next next: ((E) -> Void)? = nil, error: ((ErrorType) -> Void)? = nil, completed: (() -> Void)? = nil, disposed: (() -> Void)? = nil)
         -> Disposable {
         
@@ -69,6 +71,7 @@ extension ObservableType {
     - parameter onNext: Action to invoke for each element in the observable sequence.
     - returns: Subscription object used to unsubscribe from the observable sequence.
     */
+    @warn_unused_result
     public func subscribeNext(onNext: (E) -> Void)
         -> Disposable {
         let observer = AnonymousObserver<E> { e in
@@ -85,6 +88,7 @@ extension ObservableType {
     - parameter onRrror: Action to invoke upon errored termination of the observable sequence.
     - returns: Subscription object used to unsubscribe from the observable sequence.
     */
+    @warn_unused_result
     public func subscribeError(onError: (ErrorType) -> Void)
         -> Disposable {
         let observer = AnonymousObserver<E> { e in
@@ -101,6 +105,7 @@ extension ObservableType {
     - parameter onCompleted: Action to invoke upon graceful termination of the observable sequence.
     - returns: Subscription object used to unsubscribe from the observable sequence.
     */
+    @warn_unused_result
     public func subscribeCompleted(onCompleted: () -> Void)
         -> Disposable {
         let observer = AnonymousObserver<E> { e in
