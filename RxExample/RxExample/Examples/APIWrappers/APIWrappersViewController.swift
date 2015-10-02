@@ -206,7 +206,7 @@ class APIWrappersViewController: ViewController {
             }
             .addDisposableTo(disposeBag)
 
-        manager.rx_didFailWithError
+        _ = manager.rx_didFailWithError
             .subscribeNext { [weak self] x in
                 self?.debug("rx_didFailWithError \(x)")
             }

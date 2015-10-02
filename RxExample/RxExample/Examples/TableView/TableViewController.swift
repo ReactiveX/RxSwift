@@ -77,7 +77,7 @@ class TableViewController: ViewController, UITableViewDelegate {
             .addDisposableTo(disposeBag)
 
         // Rx content offset
-        tableView.rx_contentOffset
+        _ = tableView.rx_contentOffset
             .subscribeNext { co in
                 print("Content offset from Rx observer \(co)")
             }
