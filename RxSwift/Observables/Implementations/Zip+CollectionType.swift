@@ -12,44 +12,44 @@ class ZipCollectionTypeSink<C: CollectionType, R, O: ObserverType where C.Genera
     typealias Parent = ZipCollectionType<C, R>
     typealias SourceElement = C.Generator.Element.E
     
-    let parent: Parent
+    private let _parent: Parent
     
-    let lock = NSRecursiveLock()
+    private let _lock = NSRecursiveLock()
     
     // state
-    var numberOfValues = 0
-    var values: [Queue<SourceElement>]
-    var isDone: [Bool]
-    var numberOfDone = 0
-    var subscriptions: [SingleAssignmentDisposable]
+    private var _numberOfValues = 0
+    private var _values: [Queue<SourceElement>]
+    private var _isDone: [Bool]
+    private var _numberOfDone = 0
+    private var _subscriptions: [SingleAssignmentDisposable]
     
     init(parent: Parent, observer: O, cancel: Disposable) {
-        self.parent = parent
-        self.values = [Queue<SourceElement>](count: parent.count, repeatedValue: Queue(capacity: 4))
-        self.isDone = [Bool](count: parent.count, repeatedValue: false)
-        self.subscriptions = Array<SingleAssignmentDisposable>()
-        self.subscriptions.reserveCapacity(parent.count)
+        _parent = parent
+        _values = [Queue<SourceElement>](count: parent.count, repeatedValue: Queue(capacity: 4))
+        _isDone = [Bool](count: parent.count, repeatedValue: false)
+        _subscriptions = Array<SingleAssignmentDisposable>()
+        _subscriptions.reserveCapacity(parent.count)
         
         for _ in 0 ..< parent.count {
-            self.subscriptions.append(SingleAssignmentDisposable())
+            _subscriptions.append(SingleAssignmentDisposable())
         }
         
         super.init(observer: observer, cancel: cancel)
     }
     
     func on(event: Event<SourceElement>, atIndex: Int) {
-        lock.performLocked {
+        _lock.performLocked {
             switch event {
             case .Next(let element):
-                values[atIndex].enqueue(element)
+                _values[atIndex].enqueue(element)
                 
-                if values[atIndex].count == 1 {
-                    numberOfValues++
+                if _values[atIndex].count == 1 {
+                    _numberOfValues++
                 }
                 
-                if numberOfValues < parent.count {
-                    let numberOfOthersThatAreDone = self.numberOfDone - (isDone[atIndex] ? 1 : 0)
-                    if numberOfOthersThatAreDone == self.parent.count - 1 {
+                if _numberOfValues < _parent.count {
+                    let numberOfOthersThatAreDone = _numberOfDone - (_isDone[atIndex] ? 1 : 0)
+                    if numberOfOthersThatAreDone == _parent.count - 1 {
                         self.observer?.on(.Completed)
                         self.dispose()
                     }
@@ -58,19 +58,19 @@ class ZipCollectionTypeSink<C: CollectionType, R, O: ObserverType where C.Genera
                 
                 do {
                     var arguments = [SourceElement]()
-                    arguments.reserveCapacity(parent.count)
+                    arguments.reserveCapacity(_parent.count)
                     
                     // recalculate number of values
-                    numberOfValues = 0
+                    _numberOfValues = 0
                     
-                    for i in 0 ..< values.count {
-                        arguments.append(values[i].dequeue())
-                        if values[i].count > 0 {
-                            numberOfValues++
+                    for i in 0 ..< _values.count {
+                        arguments.append(_values[i].dequeue())
+                        if _values[i].count > 0 {
+                            _numberOfValues++
                         }
                     }
                     
-                    let result = try parent.resultSelector(arguments)
+                    let result = try _parent.resultSelector(arguments)
                     self.observer?.on(.Next(result))
                 }
                 catch let error {
@@ -82,19 +82,19 @@ class ZipCollectionTypeSink<C: CollectionType, R, O: ObserverType where C.Genera
                 self.observer?.on(.Error(error))
                 self.dispose()
             case .Completed:
-                if isDone[atIndex] {
+                if _isDone[atIndex] {
                     return
                 }
                 
-                isDone[atIndex] = true
-                numberOfDone++
+                _isDone[atIndex] = true
+                _numberOfDone++
                 
-                if numberOfDone == self.parent.count {
+                if _numberOfDone == _parent.count {
                     self.observer?.on(.Completed)
                     self.dispose()
                 }
                 else {
-                    self.subscriptions[atIndex].dispose()
+                    _subscriptions[atIndex].dispose()
                 }
             }
         }
@@ -102,15 +102,15 @@ class ZipCollectionTypeSink<C: CollectionType, R, O: ObserverType where C.Genera
     
     func run() -> Disposable {
         var j = 0
-        for i in parent.sources.startIndex ..< parent.sources.endIndex {
+        for i in _parent.sources.startIndex ..< _parent.sources.endIndex {
             let index = j
-            self.subscriptions[j].disposable = self.parent.sources[i].subscribeSafe(ObserverOf { event in
+            _subscriptions[j].disposable = _parent.sources[i].subscribeSafe(ObserverOf { event in
                 self.on(event, atIndex: index)
                 })
             j++
         }
         
-        return CompositeDisposable(disposables: self.subscriptions.map { $0 })
+        return CompositeDisposable(disposables: _subscriptions.map { $0 })
     }
 }
 

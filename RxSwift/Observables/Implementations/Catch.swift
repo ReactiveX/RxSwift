@@ -14,22 +14,22 @@ class CatchSinkProxy<O: ObserverType> : ObserverType {
     typealias E = O.E
     typealias Parent = CatchSink<O>
     
-    let parent: Parent
+    private let _parent: Parent
     
     init(parent: Parent) {
-        self.parent = parent
+        _parent = parent
     }
     
     func on(event: Event<E>) {
-        parent.observer?.on(event)
+        _parent.observer?.on(event)
         
         switch event {
         case .Next:
             break
         case .Error:
-            parent.dispose()
+            _parent.dispose()
         case .Completed:
-            parent.dispose()
+            _parent.dispose()
         }
     }
 }
@@ -38,20 +38,20 @@ class CatchSink<O: ObserverType> : Sink<O>, ObserverType {
     typealias E = O.E
     typealias Parent = Catch<E>
     
-    let parent: Parent
-    let subscription = SerialDisposable()
+    private let _parent: Parent
+    private let _subscription = SerialDisposable()
     
     init(parent: Parent, observer: O, cancel: Disposable) {
-        self.parent = parent
+        _parent = parent
         super.init(observer: observer, cancel: cancel)
     }
     
     func run() -> Disposable {
         let d1 = SingleAssignmentDisposable()
-        subscription.disposable = d1
-        d1.disposable = parent.source.subscribeSafe(self)
+        _subscription.disposable = d1
+        d1.disposable = _parent.source.subscribeSafe(self)
         
-        return subscription
+        return _subscription
     }
     
     func on(event: Event<E>) {
@@ -63,11 +63,11 @@ class CatchSink<O: ObserverType> : Sink<O>, ObserverType {
             self.dispose()
         case .Error(let error):
             do {
-                let catchSequence = try parent.handler(error)
+                let catchSequence = try _parent.handler(error)
 
                 let observer = CatchSinkProxy(parent: self)
                 
-                subscription.disposable = catchSequence.subscribeSafe(observer)
+                _subscription.disposable = catchSequence.subscribeSafe(observer)
             }
             catch let e {
                 observer?.on(.Error(e))

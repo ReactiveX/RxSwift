@@ -34,7 +34,7 @@ class BufferTimeCountSink<S: SchedulerType, Element, O: ObserverType where O.E =
     
     let parent: Parent
     
-    let lock = NSRecursiveLock()
+    private let _lock = NSRecursiveLock()
     
     // state
     let timerD = SerialDisposable()
@@ -63,7 +63,7 @@ class BufferTimeCountSink<S: SchedulerType, Element, O: ObserverType where O.E =
     }
     
     func on(event: Event<E>) {
-        self.lock.performLocked {
+        _lock.performLocked {
             switch event {
             case .Next(let element):
                 buffer.append(element)
@@ -94,7 +94,7 @@ class BufferTimeCountSink<S: SchedulerType, Element, O: ObserverType where O.E =
         }
         
         timerD.disposable = parent.scheduler.scheduleRelative(windowID, dueTime: self.parent.timeSpan) { previousWindowID in
-            self.lock.performLocked {
+            self._lock.performLocked {
                 if previousWindowID != self.windowID {
                     return
                 }

@@ -54,9 +54,9 @@ class AmbSink<ElementType, O: ObserverType where O.E == ElementType> : Sink<O> {
 
     let parent: Parent
     
-    let lock = NSRecursiveLock()
+    private let _lock = NSRecursiveLock()
     // state
-    var choice = AmbState.Neither
+    private var _choice = AmbState.Neither
     
     init(parent: Parent, observer: O, cancel: Disposable) {
         self.parent = parent
@@ -73,15 +73,15 @@ class AmbSink<ElementType, O: ObserverType where O.E == ElementType> : Sink<O> {
         }
         
         let decide = { (o: AmbObserverType, event: Event<ElementType>, me: AmbState, otherSubscription: Disposable) in
-            self.lock.performLocked {
-                if self.choice == .Neither {
-                    self.choice = me
+            self._lock.performLocked {
+                if self._choice == .Neither {
+                    self._choice = me
                     o.sink = forwardEvent
                     o.cancel = disposeAll
                     otherSubscription.dispose()
                 }
                 
-                if self.choice == me {
+                if self._choice == me {
                     self.observer?.on(event)
                     if event.isStopEvent {
                         self.dispose()

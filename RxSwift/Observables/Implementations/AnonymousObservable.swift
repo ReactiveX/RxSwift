@@ -14,7 +14,7 @@ class AnonymousObservableSink<O: ObserverType> : Sink<O>, ObserverType {
     typealias Parent = AnonymousObservable<E>
     
     // state
-    var isStopped: Int32 = 0
+    private var _isStopped: Int32 = 0
 
     override init(observer: O, cancel: Disposable) {
         super.init(observer: observer, cancel: cancel)
@@ -23,12 +23,12 @@ class AnonymousObservableSink<O: ObserverType> : Sink<O>, ObserverType {
     func on(event: Event<E>) {
         switch event {
         case .Next:
-            if isStopped == 1 {
+            if _isStopped == 1 {
                 return
             }
             self.observer?.on(event)
         case .Error, .Completed:
-            if OSAtomicCompareAndSwap32(0, 1, &isStopped) {
+            if OSAtomicCompareAndSwap32(0, 1, &_isStopped) {
                 self.observer?.on(event)
                 self.dispose()
             }
