@@ -191,14 +191,12 @@ class GitHubSearchRepositoriesViewController: ViewController, UITableViewDelegat
         let $: Dependencies = Dependencies.sharedDependencies
 
         let tableView = self.tableView
+        let searchBar = self.searchBar
 
         let allRepositories = repositories
             .map { repositories in
                 return [SectionModel(model: "Repositories", items: repositories)]
             }
-
-        tableView.rx_setDelegate(self)
-            .addDisposableTo(disposeBag)
 
         dataSource.cellFactory = { (tv, ip, repository: Repository) in
             let cell = tv.dequeueReusableCellWithIdentifier("Cell")!
@@ -208,14 +206,15 @@ class GitHubSearchRepositoriesViewController: ViewController, UITableViewDelegat
         }
 
         dataSource.titleForHeaderInSection = { [unowned dataSource] sectionIndex in
-            return dataSource.sectionAtIndex(sectionIndex).model
+            let section = dataSource.sectionAtIndex(sectionIndex)
+            return section.items.count > 0 ? "Repositories (\(section.items.count))" : "No repositories found"
         }
 
         // reactive data source
         allRepositories
             .bindTo(tableView.rx_itemsWithDataSource(dataSource))
             .addDisposableTo(disposeBag)
-        
+
         let loadNextPageTrigger = tableView.rx_contentOffset
             .flatMap { offset in
                 GitHubSearchRepositoriesViewController.isNearTheBottomEdge(offset, tableView)
@@ -246,28 +245,24 @@ class GitHubSearchRepositoriesViewController: ViewController, UITableViewDelegat
                 }
             }
             .addDisposableTo(disposeBag)
+
+        // dismiss keyboard on scroll
+        tableView.rx_contentOffset
+            .subscribe { _ in
+                if searchBar.isFirstResponder() {
+                    _ = searchBar.resignFirstResponder()
+                }
+            }
+            .addDisposableTo(disposeBag)
+
+        // so normal delegate customization can also be used
+        tableView.rx_setDelegate(self)
+            .addDisposableTo(disposeBag)
     }
 
-    override func setEditing(editing: Bool, animated: Bool) {
-        super.setEditing(editing, animated: animated)
-        tableView.editing = editing
-    }
-    
     // MARK: Table view delegate
     
-    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let title = dataSource.sectionAtIndex(section)
-        
-        let label = UILabel(frame: CGRect.zero)
-        label.text = "  \(title)"
-        label.textColor = UIColor.whiteColor()
-        label.backgroundColor = UIColor.darkGrayColor()
-        label.alpha = 0.9
-        
-        return label
-    }
-    
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 40
+        return 30
     }
 }
