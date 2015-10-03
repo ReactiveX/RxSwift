@@ -11,7 +11,7 @@ import Foundation
 class Subscription<Element> : Disposable {
     typealias KeyType = Bag<ObserverOf<Element>>.KeyType
     
-    private var lock = SpinLock()
+    private var _lock = SpinLock()
 
     // state
     private var subject: PublishSubject<Element>?
@@ -23,13 +23,10 @@ class Subscription<Element> : Disposable {
     }
     
     func dispose() {
-        lock.performLocked {
-            guard let subject = subject else {
-                return
-            }
-            
-            guard let key = key else {
-                return
+        _lock.performLocked {
+            guard let subject = subject,
+                let key = key else {
+                    return
             }
             
             self.subject = nil

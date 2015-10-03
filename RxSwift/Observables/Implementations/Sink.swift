@@ -9,22 +9,22 @@
 import Foundation
 
 class Sink<O : ObserverType> : Disposable {
-    private var lock = SpinLock()
+    private var _lock = SpinLock()
     
     // state
-    var _observer: O?
-    var _cancel: Disposable
-    var _disposed: Bool = false
+    private var _observer: O?
+    private var _cancel: Disposable
+    private var _disposed: Bool = false
     
     var observer: O? {
         get {
-            return lock.calculateLocked { _observer }
+            return _lock.calculateLocked { _observer }
         }
     }
     
     var cancel: Disposable {
         get {
-            return lock.calculateLocked { _cancel }
+            return _lock.calculateLocked { _cancel }
         }
     }
     
@@ -37,7 +37,7 @@ class Sink<O : ObserverType> : Disposable {
     }
     
     func dispose() {
-        let cancel: Disposable? = lock.calculateLocked {
+        let cancel: Disposable? = _lock.calculateLocked {
             if _disposed {
                 return nil
             }

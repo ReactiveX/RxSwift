@@ -18,7 +18,7 @@ public class Variable<Element> : ObservableType {
     
     let subject: BehaviorSubject<Element>
     
-    private var lock = SpinLock()
+    private var _lock = SpinLock()
  
     // state
     private var _value: E
@@ -32,12 +32,12 @@ public class Variable<Element> : ObservableType {
     */
     public var value: E {
         get {
-            return lock.calculateLocked {
+            return _lock.calculateLocked {
                 return _value
             }
         }
         set(newValue) {
-            lock.performLocked {
+            _lock.performLocked {
                 _value = newValue
             }
             self.subject.on(.Next(newValue))
@@ -50,7 +50,7 @@ public class Variable<Element> : ObservableType {
     - parameter value: Initial variable value.
     */
     public init(_ value: Element) {
-        self._value = value
+        _value = value
         self.subject = BehaviorSubject(value: value)
     }
     

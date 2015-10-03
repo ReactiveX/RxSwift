@@ -21,25 +21,25 @@ That means that enqueued work could possibly be executed later on a different th
 class AsyncLock : Disposable {
     typealias Action = () -> Void
     
-    private var lock = NSRecursiveLock()
+    private var _lock = NSRecursiveLock()
     
-    private var queue: Queue<Action> = Queue(capacity: 2)
-    private var isAcquired: Bool = false
-    private var hasFaulted: Bool = false
+    private var _queue: Queue<Action> = Queue(capacity: 2)
+    private var _isAcquired: Bool = false
+    private var _hasFaulted: Bool = false
     
     init() {
         
     }
     
     func wait(action: Action) {
-        let isOwner = lock.calculateLocked { () -> Bool in
-            if self.hasFaulted {
+        let isOwner = _lock.calculateLocked { () -> Bool in
+            if _hasFaulted {
                 return false
             }
             
-            self.queue.enqueue(action)
-            let isOwner = !self.isAcquired
-            self.isAcquired = true
+            _queue.enqueue(action)
+            let isOwner = !_isAcquired
+            _isAcquired = true
             
             return isOwner
         }
@@ -49,12 +49,12 @@ class AsyncLock : Disposable {
         }
         
         while true {
-            let nextAction = lock.calculateLocked { () -> Action? in
-                if self.queue.count > 0 {
-                    return self.queue.dequeue()
+            let nextAction = _lock.calculateLocked { () -> Action? in
+                if _queue.count > 0 {
+                    return _queue.dequeue()
                 }
                 else {
-                    self.isAcquired = false
+                    _isAcquired = false
                     return nil
                 }
             }
@@ -69,9 +69,9 @@ class AsyncLock : Disposable {
     }
     
     func dispose() {
-        lock.performLocked { oldState in
-            self.queue = Queue(capacity: 0)
-            self.hasFaulted = true
+        _lock.performLocked { oldState in
+            _queue = Queue(capacity: 0)
+            _hasFaulted = true
         }
     }
 }

@@ -12,7 +12,7 @@ import Foundation
 Represents a disposable resource whose underlying disposable resource can be replaced by another disposable resource, causing automatic disposal of the previous underlying disposable resource.
 */
 public class SerialDisposable : DisposeBase, Cancelable {
-    var lock = SpinLock()
+    private var _lock = SpinLock()
     
     // state
     private var _current = nil as Disposable?
@@ -43,12 +43,12 @@ public class SerialDisposable : DisposeBase, Cancelable {
     */
     public var disposable: Disposable {
         get {
-            return self.lock.calculateLocked {
+            return _lock.calculateLocked {
                 return self.disposable
             }
         }
         set (newDisposable) {
-            let disposable: Disposable? = self.lock.calculateLocked {
+            let disposable: Disposable? = _lock.calculateLocked {
                 if _disposed {
                     return newDisposable
                 }
@@ -69,7 +69,7 @@ public class SerialDisposable : DisposeBase, Cancelable {
     Disposes the underlying disposable as well as all future replacements.
     */
     public func dispose() {
-        let disposable: Disposable? = self.lock.calculateLocked {
+        let disposable: Disposable? = _lock.calculateLocked {
             if _disposed {
                 return nil
             }
