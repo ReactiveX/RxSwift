@@ -17,12 +17,12 @@ public class CompositeDisposable : DisposeBase, Disposable, Cancelable {
     private var _lock = SpinLock()
     
     // state
-    private var disposables: Bag<Disposable>? = Bag()
+    private var _disposables: Bag<Disposable>? = Bag()
 
     public var disposed: Bool {
         get {
             return _lock.calculateLocked {
-                return disposables == nil
+                return _disposables == nil
             }
         }
     }
@@ -34,17 +34,17 @@ public class CompositeDisposable : DisposeBase, Disposable, Cancelable {
      Initializes a new instance of composite disposable with the specified number of disposables.
     */
     public init(_ disposable1: Disposable, _ disposable2: Disposable) {
-        disposables!.insert(disposable1)
-        disposables!.insert(disposable2)
+        _disposables!.insert(disposable1)
+        _disposables!.insert(disposable2)
     }
     
     /**
      Initializes a new instance of composite disposable with the specified number of disposables.
     */
     public init(_ disposable1: Disposable, _ disposable2: Disposable, _ disposable3: Disposable) {
-        disposables!.insert(disposable1)
-        disposables!.insert(disposable2)
-        disposables!.insert(disposable3)
+        _disposables!.insert(disposable1)
+        _disposables!.insert(disposable2)
+        _disposables!.insert(disposable3)
     }
     
     /**
@@ -52,7 +52,7 @@ public class CompositeDisposable : DisposeBase, Disposable, Cancelable {
     */
     public init(disposables: [Disposable]) {
         for disposable in disposables {
-            self.disposables!.insert(disposable)
+            _disposables!.insert(disposable)
         }
     }
     
@@ -67,7 +67,7 @@ public class CompositeDisposable : DisposeBase, Disposable, Cancelable {
         // this should be let
         // bucause of compiler bug it's var
         let key  = _lock.calculateLocked { () -> DisposeKey? in
-            return disposables?.insert(disposable)
+            return _disposables?.insert(disposable)
         }
         
         if key == nil {
@@ -83,7 +83,7 @@ public class CompositeDisposable : DisposeBase, Disposable, Cancelable {
     public var count: Int {
         get {
             return _lock.calculateLocked {
-                return disposables?.count ?? 0
+                return _disposables?.count ?? 0
             }
         }
     }
@@ -95,7 +95,7 @@ public class CompositeDisposable : DisposeBase, Disposable, Cancelable {
     */
     public func removeDisposable(disposeKey: DisposeKey) {
         let disposable = _lock.calculateLocked { () -> Disposable? in
-            return disposables?.removeKey(disposeKey)
+            return _disposables?.removeKey(disposeKey)
         }
         
         if let disposable = disposable {
@@ -108,8 +108,8 @@ public class CompositeDisposable : DisposeBase, Disposable, Cancelable {
     */
     public func dispose() {
         let oldDisposables = _lock.calculateLocked { () -> Bag<Disposable>? in
-            let disposeBag = disposables
-            self.disposables = nil
+            let disposeBag = _disposables
+            _disposables = nil
             
             return disposeBag
         }
