@@ -12,16 +12,16 @@ class DoSink<O: ObserverType> : Sink<O>, ObserverType {
     typealias Element = O.E
     typealias Parent = Do<Element>
     
-    let parent: Parent
+    private let _parent: Parent
     
     init(parent: Parent, observer: O, cancel: Disposable) {
-        self.parent = parent
+        _parent = parent
         super.init(observer: observer, cancel: cancel)
     }
     
     func on(event: Event<Element>) {
         do {
-            try parent.eventHandler(event)
+            try _parent.eventHandler(event)
             observer?.on(event)
             if event.isStopEvent {
                 self.dispose()
