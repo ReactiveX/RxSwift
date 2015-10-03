@@ -298,10 +298,6 @@
 		C88254341B8A752B00B02D69 /* UITableView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88254121B8A752B00B02D69 /* UITableView+Rx.swift */; };
 		C88254351B8A752B00B02D69 /* UITextField+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88254131B8A752B00B02D69 /* UITextField+Rx.swift */; };
 		C88254361B8A752B00B02D69 /* UITextView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88254141B8A752B00B02D69 /* UITextView+Rx.swift */; };
-		C8A468C81B8A892A00BF917B /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8A56AD71AD7424700B4673B /* RxSwift.framework */; };
-		C8A468C91B8A893400BF917B /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C88BB8711B07E5ED0064D411 /* RxSwift.framework */; };
-		C8A468CA1B8A893A00BF917B /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8A56AD71AD7424700B4673B /* RxSwift.framework */; };
-		C8A468CB1B8A894100BF917B /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C88BB8711B07E5ED0064D411 /* RxSwift.framework */; };
 		C8C3D9FE1B935EDF004D233E /* Zip+CollectionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C3D9FD1B935EDF004D233E /* Zip+CollectionType.swift */; };
 		C8C3D9FF1B935EDF004D233E /* Zip+CollectionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C3D9FD1B935EDF004D233E /* Zip+CollectionType.swift */; };
 		C8C3DA031B9390C4004D233E /* Just.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C3DA021B9390C4004D233E /* Just.swift */; };
@@ -316,8 +312,6 @@
 		C8C3DA101B939767004D233E /* CurrentThreadScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C3DA0E1B939767004D233E /* CurrentThreadScheduler.swift */; };
 		C8C3DA121B93A3EA004D233E /* AnonymousObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C3DA111B93A3EA004D233E /* AnonymousObservable.swift */; };
 		C8C3DA131B93A3EA004D233E /* AnonymousObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C3DA111B93A3EA004D233E /* AnonymousObservable.swift */; };
-		C8DD8F4C1BBE79190046F35C /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2EA280C1BB9B5A200880ED3 /* RxSwift.framework */; };
-		C8DD8F4D1BBE79260046F35C /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2EA280C1BB9B5A200880ED3 /* RxSwift.framework */; };
 		C8F0BF921BBBFB8B001B112F /* Observable+Creation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C981B8A72BE0088E94D /* Observable+Creation.swift */; };
 		C8F0BF931BBBFB8B001B112F /* ConnectableObservableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C4D1B8A72BE0088E94D /* ConnectableObservableType.swift */; };
 		C8F0BF941BBBFB8B001B112F /* Just.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C3DA021B9390C4004D233E /* Just.swift */; };
@@ -655,6 +649,65 @@
 		F31F35B01BB4FED800961002 /* UIStepper+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = F31F35AF1BB4FED800961002 /* UIStepper+Rx.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		C872BD1B1BC0529600D7175E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C8A56ACE1AD7424700B4673B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C8A56AD61AD7424700B4673B;
+			remoteInfo = "RxSwift-iOS";
+		};
+		C872BD1D1BC052A200D7175E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C8A56ACE1AD7424700B4673B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C88BB81A1B07E5ED0064D411;
+			remoteInfo = "RxSwift-OSX";
+		};
+		C872BD1F1BC052A800D7175E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C8A56ACE1AD7424700B4673B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D2EA280B1BB9B5A200880ED3;
+			remoteInfo = "RxSwift-tvOS";
+		};
+		C872BD211BC052AC00D7175E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C8A56ACE1AD7424700B4673B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C8F0BF901BBBFB8B001B112F;
+			remoteInfo = "RxSwift-watchOS";
+		};
+		C872BD231BC052B800D7175E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C8A56ACE1AD7424700B4673B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C8A56AD61AD7424700B4673B;
+			remoteInfo = "RxSwift-iOS";
+		};
+		C872BD251BC052BB00D7175E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C8A56ACE1AD7424700B4673B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C88BB81A1B07E5ED0064D411;
+			remoteInfo = "RxSwift-OSX";
+		};
+		C872BD271BC052BF00D7175E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C8A56ACE1AD7424700B4673B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D2EA280B1BB9B5A200880ED3;
+			remoteInfo = "RxSwift-tvOS";
+		};
+		C872BD291BC052C200D7175E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C8A56ACE1AD7424700B4673B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C8F0BF901BBBFB8B001B112F;
+			remoteInfo = "RxSwift-watchOS";
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		A111CE961B91C97C00D0DCEE /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C809396D1B8A71760088E94D /* RxCocoa.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxCocoa.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -854,7 +907,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C8A468C81B8A892A00BF917B /* RxSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -862,7 +914,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C8A468C91B8A893400BF917B /* RxSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -870,7 +921,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C8A468CA1B8A893A00BF917B /* RxSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -878,7 +928,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C8A468CB1B8A894100BF917B /* RxSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -921,7 +970,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C8DD8F4D1BBE79260046F35C /* RxSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -936,7 +984,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C8DD8F4C1BBE79190046F35C /* RxSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1446,6 +1493,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				C872BD1C1BC0529600D7175E /* PBXTargetDependency */,
 			);
 			name = "RxCocoa-iOS";
 			productName = RxSwift;
@@ -1464,6 +1512,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				C872BD1E1BC052A200D7175E /* PBXTargetDependency */,
 			);
 			name = "RxCocoa-OSX";
 			productName = RxSwift;
@@ -1482,6 +1531,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				C872BD241BC052B800D7175E /* PBXTargetDependency */,
 			);
 			name = "RxBlocking-iOS";
 			productName = RxSwift;
@@ -1500,6 +1550,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				C872BD261BC052BB00D7175E /* PBXTargetDependency */,
 			);
 			name = "RxBlocking-OSX";
 			productName = RxSwift;
@@ -1572,6 +1623,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				C872BD221BC052AC00D7175E /* PBXTargetDependency */,
 			);
 			name = "RxCocoa-watchOS";
 			productName = RxSwift;
@@ -1590,6 +1642,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				C872BD2A1BC052C200D7175E /* PBXTargetDependency */,
 			);
 			name = "RxBlocking-watchOS";
 			productName = RxSwift;
@@ -1608,6 +1661,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				C872BD201BC052A800D7175E /* PBXTargetDependency */,
 			);
 			name = "RxCocoa-tvOS";
 			productName = "RxCocoa-tvOS";
@@ -1644,6 +1698,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				C872BD281BC052BF00D7175E /* PBXTargetDependency */,
 			);
 			name = "RxBlocking-tvOS";
 			productName = "RxBlocking-tvOS";
@@ -2495,6 +2550,49 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		C872BD1C1BC0529600D7175E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C8A56AD61AD7424700B4673B /* RxSwift-iOS */;
+			targetProxy = C872BD1B1BC0529600D7175E /* PBXContainerItemProxy */;
+		};
+		C872BD1E1BC052A200D7175E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C88BB81A1B07E5ED0064D411 /* RxSwift-OSX */;
+			targetProxy = C872BD1D1BC052A200D7175E /* PBXContainerItemProxy */;
+		};
+		C872BD201BC052A800D7175E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D2EA280B1BB9B5A200880ED3 /* RxSwift-tvOS */;
+			targetProxy = C872BD1F1BC052A800D7175E /* PBXContainerItemProxy */;
+		};
+		C872BD221BC052AC00D7175E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C8F0BF901BBBFB8B001B112F /* RxSwift-watchOS */;
+			targetProxy = C872BD211BC052AC00D7175E /* PBXContainerItemProxy */;
+		};
+		C872BD241BC052B800D7175E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C8A56AD61AD7424700B4673B /* RxSwift-iOS */;
+			targetProxy = C872BD231BC052B800D7175E /* PBXContainerItemProxy */;
+		};
+		C872BD261BC052BB00D7175E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C88BB81A1B07E5ED0064D411 /* RxSwift-OSX */;
+			targetProxy = C872BD251BC052BB00D7175E /* PBXContainerItemProxy */;
+		};
+		C872BD281BC052BF00D7175E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D2EA280B1BB9B5A200880ED3 /* RxSwift-tvOS */;
+			targetProxy = C872BD271BC052BF00D7175E /* PBXContainerItemProxy */;
+		};
+		C872BD2A1BC052C200D7175E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C8F0BF901BBBFB8B001B112F /* RxSwift-watchOS */;
+			targetProxy = C872BD291BC052C200D7175E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		C809396A1B8A71760088E94D /* Debug */ = {
