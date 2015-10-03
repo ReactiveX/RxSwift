@@ -112,9 +112,9 @@ test("----- UITextField text -----", function (check, pass) {
 
   UIATarget.localTarget().frontMostApp().mainWindow().tableViews()[0].cells()[4].tap();
 
-  UIATarget.localTarget().frontMostApp().mainWindow().textFields()[0].textFields()[0].tap();
+  UIATarget.localTarget().frontMostApp().mainWindow().textFields()[0].tap();
   // UIATarget.localTarget().frontMostApp().keyboard().typeString("t");// fails if software keyboard is disabled
-  UIATarget.localTarget().frontMostApp().mainWindow().textFields()[0].textFields()[0].setValue("t");
+  UIATarget.localTarget().frontMostApp().mainWindow().textFields()[0].setValue("t");
 
   check(function () {
     var textValue = UIATarget.localTarget().frontMostApp().mainWindow().staticTexts()["debugLabel"].value();

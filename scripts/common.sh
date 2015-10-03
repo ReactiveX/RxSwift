@@ -40,7 +40,7 @@ function runtime_available() {
 function contains() {
     string="$1"
     substring="$2"
-    if test "${string#*$substring}" != "$string"
+    if [[ $string == *"$substring"* ]]
     then
         return 0    # $substring is in $string
     else
@@ -73,6 +73,10 @@ function simulator_available() {
 		else
 			return 0
 		fi
+}
+
+function is_real_device() {
+	contains "$1" "’s "
 }
 
 function ensure_simulator_available() {
@@ -113,11 +117,17 @@ function rx() {
 
 	DESTINATION=""
 	if [ "${SIMULATOR}" != "" ]; then
-			ensure_simulator_available "${SIMULATOR}"
-			OS=`echo $SIMULATOR | cut -d '/' -f 3`
-			SIMULATOR_GUID=`xcrun simctl list devices | grep ${SIMULATOR} | cut -d "(" -f 2 | cut -d ")" -f 1`
-			DESTINATION='platform='$OS' Simulator,OS='$OS',id='$SIMULATOR_GUID''
-			echo "Running on ${DESTINATION}"
+			#if it's a real device
+			if is_real_device "${SIMULATOR}"; then
+				DESTINATION='name='${SIMULATOR}
+			#else it's just a simulator
+			else
+				ensure_simulator_available "${SIMULATOR}"
+				OS=`echo $SIMULATOR | cut -d '/' -f 3`
+				SIMULATOR_GUID=`xcrun simctl list devices | grep ${SIMULATOR} | cut -d "(" -f 2 | cut -d ")" -f 1`
+				DESTINATION='platform='$OS' Simulator,OS='$OS',id='$SIMULATOR_GUID''
+				echo "Running on ${DESTINATION}"
+			fi
 	else
 			DESTINATION='platform=OS X,arch=x86_64'
 	fi

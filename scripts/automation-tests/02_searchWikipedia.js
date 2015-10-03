@@ -10,7 +10,7 @@ test("----- searchWikipedia -----", function (check, pass) {
 
   target.delay(2);
 
-  var searchBar = target.frontMostApp().mainWindow().searchBars()[0].searchBars()[0];
+  var searchBar = target.frontMostApp().mainWindow().searchBars()[0];
 
   searchBar.tap()
   target.frontMostApp().keyboard().typeString("banana");
@@ -28,7 +28,7 @@ test("----- searchWikipedia -----", function (check, pass) {
   target.delay(1);
 
   target.tap({x:width - 40, y:43});
-  
+
   target.frontMostApp().navigationBar().leftButton().tap();
 
   pass()
