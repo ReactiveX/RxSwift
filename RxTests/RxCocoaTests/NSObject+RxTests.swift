@@ -22,7 +22,8 @@ extension NSObjectTests {
         
         var fired = false
         
-        a.rx_deallocated
+        _ = a
+            .rx_deallocated
             .map { _ in
                 return 1
             }
@@ -42,7 +43,8 @@ extension NSObjectTests {
         
         var fired = false
         
-        a.rx_deallocated
+        _ = a
+            .rx_deallocated
             .map { _ in
                 return 1
             }
@@ -62,7 +64,8 @@ extension NSObjectTests {
         
         var fired = false
         
-        a.rx_deallocated
+        _ = a
+            .rx_deallocated
             .map { _ in
                 return 1
             }
@@ -87,7 +90,8 @@ extension NSObjectTests {
         
         var fired = false
         
-        a.rx_deallocating
+        _ = a
+            .rx_deallocating
             .map { _ in
                 return 1
             }
@@ -107,7 +111,8 @@ extension NSObjectTests {
         
         var fired = false
         
-        a.rx_deallocating
+        _ = a
+            .rx_deallocating
             .map { _ in
                 return 1
             }
@@ -127,7 +132,8 @@ extension NSObjectTests {
         
         var fired = false
         
-        a.rx_deallocating
+        _ = a
+            .rx_deallocating
             .map { _ in
                 return 1
             }

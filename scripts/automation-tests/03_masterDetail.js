@@ -12,9 +12,11 @@ test("----- masterDetail -----", function (check, pass) {
   UIATarget.localTarget().frontMostApp().mainWindow().dragInsideWithOptions({startOffset:{x:0.93, y:yOffset(300)}, endOffset:{x:0.95, y:yOffset(200)}, duration:1.5});
   UIATarget.localTarget().frontMostApp().mainWindow().dragInsideWithOptions({startOffset:{x:0.93, y:yOffset(300)}, endOffset:{x:0.95, y:yOffset(100)}, duration:1.5});
 
-  UIATarget.localTarget().frontMostApp().mainWindow().tableViews()[0].cells()[1].buttons()[0].tap();
+  var firstCell = UIATarget.localTarget().frontMostApp().mainWindow().tableViews()[0].cells()[1]
 
-  UIATarget.localTarget().frontMostApp().mainWindow().tableViews()[0].cells()[1].buttons()[2].tap();
+  firstCell.buttons()[0].tap();
+
+  firstCell.buttons()["Delete"].tap();
 
   UIATarget.localTarget().delay( 2 );
 
@@ -25,15 +27,3 @@ test("----- masterDetail -----", function (check, pass) {
 
   pass()
 });
-
-
-
-
-
-
-
-
-
-
-
-

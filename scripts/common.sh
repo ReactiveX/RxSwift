@@ -22,13 +22,11 @@ BOLDWHITE="\033[1m\033[37m"
 
 # make sure all tests are passing
 
-DEFAULT_IOS7_SIMULATOR=RxSwiftTest-iPhone4s-iOS_7.1
-DEFAULT_IOS8_SIMULATOR=RxSwiftTest-iPhone6-iOS_8.4
-DEFAULT_IOS9_SIMULATOR=RxSwiftTest-iPhone6-iOS_9.0
-DEFAULT_WATCHOS2_SIMULATOR=RxSwiftTest-AppleWatch-watchOS_2.0
-DEFAULT_TVOS_SIMULATOR=RxSwiftTest-AppleTV-iOS_9.0
-
-DEFAULT_IOS_SIMULATOR_RUNTIME=""
+DEFAULT_IOS7_SIMULATOR=RxSwiftTest/iPhone-4s/iOS/7.1
+DEFAULT_IOS8_SIMULATOR=RxSwiftTest/iPhone-6/iOS/8.4
+DEFAULT_IOS9_SIMULATOR=RxSwiftTest/iPhone-6/iOS/9.0
+DEFAULT_WATCHOS2_SIMULATOR=RxSwiftTest/AppleWatch/watchOS/2.0
+DEFAULT_TVOS_SIMULATOR=RxSwiftTest/Apple-TV-1080p/tvOS/9.0
 
 function runtime_available() {
 	if [ `xcrun simctl list runtimes | grep "${1}" | wc -l` -eq 1 ]; then
@@ -77,23 +75,29 @@ function simulator_available() {
 		fi
 }
 
-if [ "${IS_LOCAL}" == "1" ]; then
-IOS7_SIMULATORS="RxSwiftTest-iPhone4s-iOS_7.1 RxSwiftTest-iPhone5-iOS_7.1 RxSwiftTest-iPhone5s-iOS_7.1"
-IOS8_SIMULATORS="RxSwiftTest-iPhone4s-iOS_8.4 RxSwiftTest-iPhone5-iOS_8.4 RxSwiftTest-iPhone5s-iOS_8.4 RxSwiftTest-iPhone6-iOS_8.4 RxSwiftTest-iPhone6Plus-iOS_8.4"
-else
-IOS7_SIMULATORS="RxSwiftTest-iPhone4s-iOS_7.1"
-IOS8_SIMULATORS="RxSwiftTest-iPhone4s-iOS_8.4"
-fi
+function ensure_simulator_available() {
+	SIMULATOR=$1
 
+	if simulator_available "${SIMULATOR}"; then
+		echo "${SIMULATOR} exists"
+		return
+	fi
+
+	DEVICE=`echo "${SIMULATOR}" | cut -d "/" -f 2`
+	OS=`echo "${SIMULATOR}" | cut -d "/" -f 3`
+	VERSION_SUFFIX=`echo "${SIMULATOR}" | cut -d "/" -f 4 | sed -e "s/\./-/"`
+
+	RUNTIME="com.apple.CoreSimulator.SimRuntime.${OS}-${VERSION_SUFFIX}"
+
+	echo "Creating new simulator"
+	xcrun simctl create "${SIMULATOR}" "com.apple.CoreSimulator.SimDeviceType.${DEVICE}" "com.apple.CoreSimulator.SimRuntime.${OS}-${VERSION_SUFFIX}"
+}
 
 if runtime_available "com.apple.CoreSimulator.SimRuntime.iOS-9-1"; then
-	DEFAULT_IOS9_SIMULATOR="RxSwiftTest-iPhone6-iOS_9.1"
-	DEFAULT_IOS_SIMULATOR_RUNTIME='com.apple.CoreSimulator.SimRuntime.iOS-9-1'
+	DEFAULT_IOS9_SIMULATOR=RxSwiftTest/iPhone-6/iOS/9.1
 else
-	DEFAULT_IOS9_SIMULATOR="RxSwiftTest-iPhone6-iOS_9.0"
-	DEFAULT_IOS_SIMULATOR_RUNTIME='com.apple.CoreSimulator.SimRuntime.iOS-9-0'
+	DEFAULT_IOS9_SIMULATOR=RxSwiftTest/iPhone-6/iOS/9.0
 fi
-
 
 BUILD_DIRECTORY=build
 
@@ -108,15 +112,12 @@ function rx() {
 	echo
 
 	DESTINATION=""
-	if [ "$SIMULATOR" != "" ]; then
-			OS=`echo $SIMULATOR | cut -d'_' -f 2`
-			if contains $SIMULATOR "watchOS"; then
-				DESTINATION='platform=watchOS Simulator,OS='$OS',name='$SIMULATOR''
-			elif contains $SIMULATOR "AppleTV"; then
-				DESTINATION='platform=tvOS Simulator,OS='$OS',name='$SIMULATOR''
-			else
-				DESTINATION='platform=iOS Simulator,OS='$OS',name='$SIMULATOR''
-			fi
+	if [ "${SIMULATOR}" != "" ]; then
+			ensure_simulator_available "${SIMULATOR}"
+			OS=`echo $SIMULATOR | cut -d '/' -f 3`
+			SIMULATOR_GUID=`xcrun simctl list devices | grep ${SIMULATOR} | cut -d "(" -f 2 | cut -d ")" -f 1`
+			DESTINATION='platform='$OS' Simulator,OS='$OS',id='$SIMULATOR_GUID''
+			echo "Running on ${DESTINATION}"
 	else
 			DESTINATION='platform=OS X,arch=x86_64'
 	fi
@@ -133,49 +134,4 @@ function rx() {
 		echo $STATUS
  		exit $STATUS
 	fi
-}
-
-# simulators
-
-# xcrun simctl list devicetypes
-# xcrun simctl list runtimes
-
-function createDevices() {
-	xcrun simctl create RxSwiftTest-iPhone4s-iOS_7.1 'iPhone 4s' 'com.apple.CoreSimulator.SimRuntime.iOS-7-1'
-	xcrun simctl create RxSwiftTest-iPhone5-iOS_7.1 'iPhone 5' 'com.apple.CoreSimulator.SimRuntime.iOS-7-1'
-	xcrun simctl create RxSwiftTest-iPhone5s-iOS_7.1 'iPhone 5s' 'com.apple.CoreSimulator.SimRuntime.iOS-7-1'
-
-	xcrun simctl create RxSwiftTest-iPhone4s-iOS_8.4 'iPhone 4s' 'com.apple.CoreSimulator.SimRuntime.iOS-8-4'
-	xcrun simctl create RxSwiftTest-iPhone5-iOS_8.4 'iPhone 5' 'com.apple.CoreSimulator.SimRuntime.iOS-8-4'
-	xcrun simctl create RxSwiftTest-iPhone5s-iOS_8.4 'iPhone 5s' 'com.apple.CoreSimulator.SimRuntime.iOS-8-4'
-
-	xcrun simctl create RxSwiftTest-iPhone6-iOS_8.4 'iPhone 6' 'com.apple.CoreSimulator.SimRuntime.iOS-8-4'
-	xcrun simctl create RxSwiftTest-iPhone6Plus-iOS_8.4 'iPhone 6 Plus' 'com.apple.CoreSimulator.SimRuntime.iOS-8-4'
-
-	xcrun simctl create RxSwiftTest-iPhone4s-iOS_9.0 'iPhone 4s' 'com.apple.CoreSimulator.SimRuntime.iOS-9-0'
-	xcrun simctl create RxSwiftTest-iPhone5-iOS_9.0 'iPhone 5' 'com.apple.CoreSimulator.SimRuntime.iOS-9-0'
-	xcrun simctl create RxSwiftTest-iPhone5s-iOS_9.0 'iPhone 5s' 'com.apple.CoreSimulator.SimRuntime.iOS-9-0'
-
-	xcrun simctl create RxSwiftTest-iPhone6-iOS_9.0 'iPhone 6' 'com.apple.CoreSimulator.SimRuntime.iOS-9-0'
-	xcrun simctl create RxSwiftTest-iPhone6Plus-iOS_9.0 'iPhone 6 Plus' 'com.apple.CoreSimulator.SimRuntime.iOS-9-0'
-}
-
-function deleteDevices() {
-	xcrun simctl delete RxSwiftTest-iPhone4s-iOS_7.1 || echo "failed"
-	xcrun simctl delete RxSwiftTest-iPhone5-iOS_7.1 || echo "failed"
-	xcrun simctl delete RxSwiftTest-iPhone5s-iOS_7.1 || echo "failed"
-
-	xcrun simctl delete RxSwiftTest-iPhone4s-iOS_8.4 || echo "failed"
-	xcrun simctl delete RxSwiftTest-iPhone5-iOS_8.4 || echo "failed"
-	xcrun simctl delete RxSwiftTest-iPhone5s-iOS_8.4 || echo "failed"
-
-	xcrun simctl delete RxSwiftTest-iPhone6-iOS_8.4 || echo "failed"
-	xcrun simctl delete RxSwiftTest-iPhone6Plus-iOS_8.4 || echo "failed"
-
-	xcrun simctl delete RxSwiftTest-iPhone4s-iOS_9.0 || echo "failed"
-	xcrun simctl delete RxSwiftTest-iPhone5-iOS_9.0 || echo "failed"
-	xcrun simctl delete RxSwiftTest-iPhone5s-iOS_9.0 || echo "failed"
-
-	xcrun simctl delete RxSwiftTest-iPhone6-iOS_9.0 || echo "failed"
-	xcrun simctl delete RxSwiftTest-iPhone6Plus-iOS_9.0 || echo "failed"
 }

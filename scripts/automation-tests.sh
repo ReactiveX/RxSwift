@@ -44,7 +44,7 @@ function runAutomation() {
 
 	echo
 	APP_PATH="${BUILD_DIRECTORY}/Build/Products/${CONFIGURATION}-iphonesimulator/${APP}.app"
-	printf "${GREEN}Installing the app ${BOLDCYAN}'${APP_PATH}'${GREEN} ...${RESET}\n"
+	printf "${GREEN}Installing the app ${BOLDCYAN}'${APP_PATH}'${GREEN} (${CONFIGURATION}) ${RESET}...\n"
 	echo
 
 	xcrun simctl install ${SIMULATOR} "${APP_PATH}"
@@ -69,21 +69,15 @@ function runAutomation() {
 			echo
 			open ./instrumentscli0.trace;
 			exit -1;
+	else
+			printf "${GREEN}Automation says ok on ${BOLDCYAN}${SIMULATOR} - ${CONFIGURATION}${RESET}\n"
 	fi
 	popd
 }
 
-# ios 7
-#for simulator in ${IOS7_SIMULATORS}
-#do
-#			for configuration in ${CONFIGURATIONS}
-#			do
-#					runAutomation "RxExample-iOS" ${configuration} ${simulator}
-#			done
-#done
+AUTOMATION_SIMULATORS=("Krunoslav Zaher’s iPhone" ${DEFAULT_IOS9_SIMULATOR} ${DEFAULT_IOS8_SIMULATOR})
 
-# ios 8
-for simulator in ${IOS8_SIMULATORS}
+for simulator in ${AUTOMATION_SIMULATORS[@]}
 do
 		for configuration in ${CONFIGURATIONS}
 		do

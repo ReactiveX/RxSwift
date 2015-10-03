@@ -621,7 +621,7 @@ extension ObservableMultipleTest {
 extension ObservableMultipleTest {
     func testConcat_DefaultScheduler() {
         var sum = 0
-        [just(1), just(2), just(3)].concat().subscribeNext { (e) -> Void in
+        _ = [just(1), just(2), just(3)].concat().subscribeNext { (e) -> Void in
             sum += e
         }
         
@@ -1217,7 +1217,7 @@ extension ObservableMultipleTest {
             sequenceOf(0, 1, 2)
         ).merge()
         
-        observable.subscribeNext { n in
+        _ = observable.subscribeNext { n in
             nEvents++
         }
         
@@ -1233,7 +1233,7 @@ extension ObservableMultipleTest {
             sequenceOf(0, 1, 2)
         ).merge()
         
-        observable.subscribeError { n in
+        _ = observable.subscribeError { n in
             nEvents++
         }
         
@@ -1247,7 +1247,7 @@ extension ObservableMultipleTest {
             failWith(testError)
         ).merge()
 
-        observable.subscribeError { n in
+        _ = observable.subscribeError { n in
             nEvents++
         }
         
@@ -1258,7 +1258,7 @@ extension ObservableMultipleTest {
         var nEvents = 0
         
         let observable: Observable<Int> = (empty() as Observable<Observable<Int>>).merge()
-        observable.subscribeCompleted {
+        _ = observable.subscribeCompleted {
             nEvents++
         }
         
@@ -1269,7 +1269,7 @@ extension ObservableMultipleTest {
         var nEvents = 0
         
         let observable: Observable<Int> = just(empty()).merge()
-        observable.subscribeCompleted { n in
+        _ = observable.subscribeCompleted { n in
             nEvents++
         }
         
@@ -1285,7 +1285,7 @@ extension ObservableMultipleTest {
             sequenceOf(0, 1, 2)
         ).merge(maxConcurrent: 1)
         
-        observable.subscribeNext { n in
+        _ = observable.subscribeNext { n in
             nEvents++
         }
         
@@ -1301,7 +1301,7 @@ extension ObservableMultipleTest {
             sequenceOf(0, 1, 2)
         ).merge(maxConcurrent: 1)
         
-        observable.subscribeError { n in
+        _ = observable.subscribeError { n in
             nEvents++
         }
         
@@ -1315,7 +1315,7 @@ extension ObservableMultipleTest {
             failWith(testError)
         ).merge(maxConcurrent: 1)
 
-        observable.subscribeError { n in
+        _ = observable.subscribeError { n in
             nEvents++
         }
         
@@ -1327,7 +1327,7 @@ extension ObservableMultipleTest {
         
         let observable: Observable<Int> = (empty() as Observable<Observable<Int>>).merge(maxConcurrent: 1)
 
-        observable.subscribeCompleted {
+        _ = observable.subscribeCompleted {
             nEvents++
         }
         
@@ -1339,7 +1339,7 @@ extension ObservableMultipleTest {
         
         let observable: Observable<Int> = just(empty()).merge(maxConcurrent: 1)
 
-        observable.subscribeCompleted { n in
+        _ = observable.subscribeCompleted { n in
             nEvents++
         }
         
@@ -2160,7 +2160,7 @@ extension ObservableMultipleTest {
         var nEvents = 0
         
         let observable = combineLatest(sequenceOf(0, 1, 2), sequenceOf(0, 1, 2)) { $0 + $1 }
-        observable.subscribeNext { n in
+        _ = observable.subscribeNext { n in
             nEvents++
         }
         
@@ -2175,7 +2175,7 @@ extension ObservableMultipleTest {
             sequenceOf(0, 1, 2)
         ) { $0 + $1 }
 
-        observable.subscribeError { n in
+        _ = observable.subscribeError { n in
             nEvents++
         }
         
@@ -2190,7 +2190,7 @@ extension ObservableMultipleTest {
             sequenceOf(0, 1, 2)
         ) { $0 + $1 }
 
-        observable .subscribeError { n in
+        _ = observable.subscribeError { n in
             nEvents++
         }
         
@@ -2206,7 +2206,7 @@ extension ObservableMultipleTest {
             sequenceOf(0, 1, 2)
             ) { $0 + $1 }
 
-        observable.subscribeCompleted {
+        _ = observable.subscribeCompleted {
             nEvents++
         }
         

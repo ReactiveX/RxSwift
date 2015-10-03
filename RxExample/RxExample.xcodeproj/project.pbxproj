@@ -45,7 +45,6 @@
 		C8297E481B6CF905000589EA /* Differentiator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88C78941B3F20DB0061C5AB /* Differentiator.swift */; };
 		C8297E491B6CF905000589EA /* WikipediaSearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C46DA51B47F7110020D71E /* WikipediaSearchCell.swift */; };
 		C8297E4A1B6CF905000589EA /* GitHubSignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C890A6571AEBD26B00AFF7E6 /* GitHubSignupViewController.swift */; };
-		C8297E4B1B6CF905000589EA /* Random.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C8A57F721B40AF7C00D5570A /* Random.xcdatamodeld */; };
 		C8297E4C1B6CF905000589EA /* APIWrappersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 075F130F1B4E9D5A000D7861 /* APIWrappersViewController.swift */; };
 		C8297E4D1B6CF905000589EA /* RxTableViewSectionedReloadDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88C78651B3EB0A00061C5AB /* RxTableViewSectionedReloadDataSource.swift */; };
 		C8297E4E1B6CF905000589EA /* RxCollectionViewSectionedAnimatedDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C859B9A91B45CB0900D012D7 /* RxCollectionViewSectionedAnimatedDataSource.swift */; };
@@ -277,7 +276,6 @@
 		C8A468F11B8A8C2600BF917B /* RxBlocking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8A468EF1B8A8BD000BF917B /* RxBlocking.framework */; };
 		C8A468F21B8A8C2600BF917B /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8A468ED1B8A8BCC00BF917B /* RxCocoa.framework */; };
 		C8A468F31B8A8C2600BF917B /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8A468EB1B8A8BC900BF917B /* RxSwift.framework */; };
-		C8A57F741B40AF7C00D5570A /* Random.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C8A57F721B40AF7C00D5570A /* Random.xcdatamodeld */; };
 		C8A7501F1B94E77C00D8D046 /* RxDataSourceStarterKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A7501E1B94E77C00D8D046 /* RxDataSourceStarterKit.swift */; };
 		C8A750201B94E78200D8D046 /* RxDataSourceStarterKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A7501E1B94E77C00D8D046 /* RxDataSourceStarterKit.swift */; };
 		C8C46DA81B47F7110020D71E /* CollectionViewImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C46DA31B47F7110020D71E /* CollectionViewImageCell.swift */; };
@@ -547,7 +545,6 @@
 		C8A468EB1B8A8BC900BF917B /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RxSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8A468ED1B8A8BCC00BF917B /* RxCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RxCocoa.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8A468EF1B8A8BD000BF917B /* RxBlocking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RxBlocking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		C8A57F731B40AF7C00D5570A /* Random.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Random.xcdatamodel; sourceTree = "<group>"; };
 		C8A7501E1B94E77C00D8D046 /* RxDataSourceStarterKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxDataSourceStarterKit.swift; sourceTree = "<group>"; };
 		C8AF26F11B49ABD300131C03 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		C8C46DA31B47F7110020D71E /* CollectionViewImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewImageCell.swift; sourceTree = "<group>"; };
@@ -1075,8 +1072,7 @@
 				07E300051B14994500F00100 /* 05 TableView */,
 				07A5C3D91B70B6B8001EFE5C /* 06 Calculator */,
 				C859B9A21B45C5D900D012D7 /* 07 PartialUpdates */,
-				C8A57F711B40AF4E00D5570A /* 08 CoreData */,
-				EC91FB931BBA12E800973245 /* 09 AutoLoading */,
+				EC91FB931BBA12E800973245 /* 08 AutoLoading */,
 			);
 			path = Examples;
 			sourceTree = "<group>";
@@ -1162,15 +1158,6 @@
 			path = DataSources;
 			sourceTree = "<group>";
 		};
-		C8A57F711B40AF4E00D5570A /* 08 CoreData */ = {
-			isa = PBXGroup;
-			children = (
-				C8A57F721B40AF7C00D5570A /* Random.xcdatamodeld */,
-			);
-			name = "08 CoreData";
-			path = CoreData;
-			sourceTree = "<group>";
-		};
 		C8DF92C71B0B2F84009BCF9A /* iOS */ = {
 			isa = PBXGroup;
 			children = (
@@ -1200,12 +1187,12 @@
 			path = Introduction;
 			sourceTree = "<group>";
 		};
-		EC91FB931BBA12E800973245 /* 09 AutoLoading */ = {
+		EC91FB931BBA12E800973245 /* 08 AutoLoading */ = {
 			isa = PBXGroup;
 			children = (
 				EC91FB941BBA144400973245 /* GitHubSearchRepositoriesViewController.swift */,
 			);
-			name = "09 AutoLoading";
+			name = "08 AutoLoading";
 			path = AutoLoading;
 			sourceTree = "<group>";
 		};
@@ -1489,7 +1476,6 @@
 				C864099C1BA5909000D3C4E8 /* DisposeBase.swift in Sources */,
 				C8297E4A1B6CF905000589EA /* GitHubSignupViewController.swift in Sources */,
 				C86409F51BA5909000D3C4E8 /* SchedulerType.swift in Sources */,
-				C8297E4B1B6CF905000589EA /* Random.xcdatamodeld in Sources */,
 				C86409B81BA5909000D3C4E8 /* DelaySubscription.swift in Sources */,
 				C84B3A641BA4345A001B7D88 /* UITextView+Rx.swift in Sources */,
 				C86409AF1BA5909000D3C4E8 /* Catch.swift in Sources */,
@@ -1591,7 +1577,6 @@
 				C88C78951B3F20DB0061C5AB /* Differentiator.swift in Sources */,
 				C8C46DAA1B47F7110020D71E /* WikipediaSearchCell.swift in Sources */,
 				C890A6581AEBD26B00AFF7E6 /* GitHubSignupViewController.swift in Sources */,
-				C8A57F741B40AF7C00D5570A /* Random.xcdatamodeld in Sources */,
 				075F13101B4E9D5A000D7861 /* APIWrappersViewController.swift in Sources */,
 				C83367311AD029AE00C668A7 /* Wireframe.swift in Sources */,
 				07E300071B14995F00F00100 /* TableViewController.swift in Sources */,
@@ -1928,19 +1913,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		C8A57F721B40AF7C00D5570A /* Random.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				C8A57F731B40AF7C00D5570A /* Random.xcdatamodel */,
-			);
-			currentVersion = C8A57F731B40AF7C00D5570A /* Random.xcdatamodel */;
-			path = Random.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = C83366D51AD0293800C668A7 /* Project object */;
 }

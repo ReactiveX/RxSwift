@@ -169,7 +169,7 @@ extension ObservableBindingTest {
         let xs: Observable<Int> = failWith(testError)
         
         let res = xs.publish().refCount()
-        res.subscribe { event in
+        _ = res.subscribe { event in
             switch event {
             case .Next:
                 XCTAssertTrue(false)
@@ -179,7 +179,7 @@ extension ObservableBindingTest {
                 XCTAssertTrue(false)
             }
         }
-        res.subscribe { event in
+        _ = res.subscribe { event in
             switch event {
             case .Next:
                 XCTAssertTrue(false)
@@ -266,7 +266,7 @@ extension ObservableBindingTest {
         var nEvents = 0
         
         let observable = sequenceOf(0, 1, 2).replay(3).refCount()
-        observable.subscribeNext { n in
+        _ = observable.subscribeNext { n in
             nEvents++
         }
         
@@ -277,7 +277,7 @@ extension ObservableBindingTest {
         var nEvents = 0
         
         let observable = [sequenceOf(0, 1, 2), failWith(testError)].concat().replay(3).refCount()
-        observable.subscribeError { n in
+        _ = observable.subscribeError { n in
             nEvents++
         }
         
@@ -288,7 +288,7 @@ extension ObservableBindingTest {
         var nEvents = 0
         
         let observable: Observable<Int> = failWith(testError).replay(3).refCount()
-        observable.subscribeError { n in
+        _ = observable.subscribeError { n in
             nEvents++
         }
         
@@ -299,7 +299,7 @@ extension ObservableBindingTest {
         var nEvents = 0
         
         let observable: Observable<Int> = empty().replay(3).refCount()
-        observable.subscribeCompleted {
+        _ = observable.subscribeCompleted {
             nEvents++
         }
         
@@ -310,7 +310,7 @@ extension ObservableBindingTest {
         var nEvents = 0
         
         let observable = sequenceOf(0, 1, 2).replay(1).refCount()
-        observable.subscribeNext { n in
+        _ = observable.subscribeNext { n in
             nEvents++
         }
         
@@ -321,7 +321,7 @@ extension ObservableBindingTest {
         var nEvents = 0
         
         let observable = [just(0, 1, 2), failWith(testError)].concat().replay(1).refCount()
-        observable.subscribeError { n in
+        _ = observable.subscribeError { n in
             nEvents++
         }
         
@@ -332,7 +332,7 @@ extension ObservableBindingTest {
         var nEvents = 0
         
         let observable: Observable<Int> = failWith(testError).replay(1).refCount()
-        observable.subscribeError { n in
+        _ = observable.subscribeError { n in
             nEvents++
         }
         
@@ -343,7 +343,7 @@ extension ObservableBindingTest {
         var nEvents = 0
         
         let observable: Observable<Int> = empty().replay(1).refCount()
-        observable.subscribeCompleted {
+        _ = observable.subscribeCompleted {
             nEvents++
         }
         

@@ -2,35 +2,34 @@
 
 test("----- searchWikipedia -----", function (check, pass) {
 
-  var width = UIATarget.localTarget().frontMostApp().mainWindow().rect().size.width
+  var target = UIATarget.localTarget()
 
-  UIATarget.localTarget().frontMostApp().mainWindow().tableViews()[0].cells()[3].tap();
+  var width = target.frontMostApp().mainWindow().rect().size.width
 
-  UIATarget.localTarget().frontMostApp().mainWindow().searchBars()[0].searchBars()[0].tap();
-  writeInElement(UIATarget.localTarget().frontMostApp().mainWindow().searchBars()[0].searchBars()[0], "banana")
-  UIATarget.localTarget().delay(2);
+  target.frontMostApp().mainWindow().tableViews()[0].cells()[3].tap();
 
-  UIATarget.localTarget().tap({x:width - 40, y:43});
+  target.delay(2);
 
-  UIATarget.localTarget().frontMostApp().mainWindow().searchBars()[0].searchBars()[0].tap();
-  writeInElement(UIATarget.localTarget().frontMostApp().mainWindow().searchBars()[0].searchBars()[0], "Yosemite")
-  UIATarget.localTarget().delay(2);
+  var searchBar = target.frontMostApp().mainWindow().searchBars()[0].searchBars()[0];
 
+  searchBar.tap()
+  target.frontMostApp().keyboard().typeString("banana");
 
-  UIATarget.localTarget().tap({x:width - 40, y:43});
-  UIATarget.localTarget().frontMostApp().navigationBar().leftButton().tap();
+  target.delay(1);
+
+  target.tap({x:width - 40, y:43});
+
+  target.delay(1);
+
+  searchBar.tap();
+  target.delay(1);
+
+  target.frontMostApp().keyboard().typeString("Yosemite");
+  target.delay(1);
+
+  target.tap({x:width - 40, y:43});
+  
+  target.frontMostApp().navigationBar().leftButton().tap();
 
   pass()
 });
-
-
-
-
-
-
-
-
-
-
-
-

@@ -942,7 +942,7 @@ extension ObservableStandardSequenceOperators {
     }
     
     func testMap_DisposeOnCompleted() {
-        just("A")
+        _ = just("A")
             .map { a in
                 return a
             }
@@ -952,7 +952,7 @@ extension ObservableStandardSequenceOperators {
     }
     
     func testMap1_DisposeOnCompleted() {
-        just("A")
+        _ = just("A")
             .mapWithIndex { (a, i) in
                 return a
             }
@@ -2730,7 +2730,7 @@ extension ObservableStandardSequenceOperators {
     func testTake_DecrementCountsFirst() {
         let k = BehaviorSubject(value: false)
         
-        k.take(1).subscribeNext { n in
+        _ = k.take(1).subscribeNext { n in
             k.on(.Next(!n))
         }
     }

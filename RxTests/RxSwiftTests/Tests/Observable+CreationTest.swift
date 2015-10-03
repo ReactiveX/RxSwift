@@ -86,7 +86,7 @@ extension ObservableCreationTests {
     
         var elements = [Int]()
         
-        generate(0, condition: { _ in true }) { x in
+        _ = generate(0, condition: { _ in true }) { x in
                 count++
                 return x + 1
             }
