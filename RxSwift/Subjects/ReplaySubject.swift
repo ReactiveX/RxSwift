@@ -236,7 +236,7 @@ class ReplaySubscription<Element> : Disposable {
     typealias Subject = ReplaySubject<Element>
     typealias DisposeKey = ReplayBufferBase<Element>.DisposeKey
     
-    var lock = SpinLock()
+    private var _lock = SpinLock()
     
     // state
     var subject: Subject?
@@ -248,7 +248,7 @@ class ReplaySubscription<Element> : Disposable {
     }
     
     func dispose() {
-        let oldState = lock.calculateLocked { () -> (Subject?, DisposeKey?) in
+        let oldState = _lock.calculateLocked { () -> (Subject?, DisposeKey?) in
             let state = (self.subject, self.disposeKey)
             self.subject = nil
             self.disposeKey = nil
