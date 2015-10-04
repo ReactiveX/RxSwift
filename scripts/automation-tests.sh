@@ -89,7 +89,7 @@ AUTOMATION_SIMULATORS=("Krunoslav Zaher’s iPhone" ${DEFAULT_IOS9_SIMULATOR} ${
 IFS=""
 for simulator in ${AUTOMATION_SIMULATORS[@]}
 do
-		for configuration in ${CONFIGURATIONS}
+		for configuration in ${CONFIGURATIONS[@]}
 		do
 				runAutomation "RxExample-iOS" ${configuration} ${simulator}
 		done

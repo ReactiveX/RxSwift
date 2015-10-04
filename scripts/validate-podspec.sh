@@ -29,5 +29,6 @@ pod lib lint RxCocoa.podspec
 pod lib lint RxBlocking.podspec
 
 pushd ~/.cocoapods/repos/master
+git clean -d -f
 git reset master --hard
 popd
