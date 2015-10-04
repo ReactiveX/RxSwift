@@ -454,10 +454,7 @@ Open Rx.xcworkspace, choose `RxExample` and hit run. This method will build ever
 
 ### [CocoaPods](https://guides.cocoapods.org/using/using-cocoapods.html)
 
-**:warning: IMPORTANT! For tvOS support CocoaPods version `0.39.0.beta.5` is needed. :warning:**
-
-
-`[sudo] gem install cocoapods --pre`
+**:warning: IMPORTANT! For tvOS support through CocoaPods use [this hack](https://github.com/orta/cocoapods-expert-difficulty) until `0.39` is released. :warning:**
 
 ```
 # Podfile
