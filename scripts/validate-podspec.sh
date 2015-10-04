@@ -19,12 +19,10 @@ cat RxSwift.podspec |
 sed -E "s/s.source[^\}]+\}/s.source           = { :git => '\/Users\/kzaher\/Projects\/Rx', :branch => \'develop\' }/" > ~/.cocoapods/repos/master/Specs/RxSwift/${VERSION}/RxSwift.podspec
 
 cat RxCocoa.podspec |
-sed -E "s/s.source[^\}]+\}/s.source           = { :git => '\/Users\/kzaher\/Projects\/Rx', :branch => \'develop\' }/" |
-sed -E "s/s.dependency[^\n]+/s.dependency = 'RxSwift'/" > ~/.cocoapods/repos/master/Specs/RxCocoa/${VERSION}/RxCocoa.podspec
+sed -E "s/s.source[^\}]+\}/s.source           = { :git => '\/Users\/kzaher\/Projects\/Rx', :branch => \'develop\' }/" > ~/.cocoapods/repos/master/Specs/RxCocoa/${VERSION}/RxCocoa.podspec
 
 cat RxBlocking.podspec |
-sed -E "s/s.source[^\}]+\}/s.source           = { :git => '\/Users\/kzaher\/Projects\/Rx', :branch => \'develop\' }/" |
-sed -E "s/s.dependency[^\n]+/s.dependency = 'RxSwift'/" > ~/.cocoapods/repos/master/Specs/RxBlocking/${VERSION}/RxBlocking.podspec
+sed -E "s/s.source[^\}]+\}/s.source           = { :git => '\/Users\/kzaher\/Projects\/Rx', :branch => \'develop\' }/" > ~/.cocoapods/repos/master/Specs/RxBlocking/${VERSION}/RxBlocking.podspec
 
 pod lib lint RxSwift.podspec
 pod lib lint RxCocoa.podspec
