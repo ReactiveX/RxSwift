@@ -13,9 +13,6 @@ import RxSwift
 import RxCocoa
 #endif
 
-let okColor = UIColor(red: 138.0 / 255.0, green: 221.0 / 255.0, blue: 109.0 / 255.0, alpha: 1.0)
-let errorColor = UIColor.redColor()
-
 typealias ValidationResult = (valid: Bool?, message: String?)
 typealias ValidationObservable = Observable<ValidationResult>
 
@@ -30,7 +27,7 @@ class ValidationService {
     
     let minPasswordCount = 5
     
-    func validateUsername(username: String) -> Observable<ValidationResult> {
+    func validateUsername(username: String) -> ValidationObservable {
         if username.characters.count == 0 {
             return just((false, nil))
         }
@@ -94,6 +91,9 @@ class GitHubSignupViewController : ViewController {
     @IBOutlet weak var signupOutlet: UIButton!
     @IBOutlet weak var signingUpOulet: UIActivityIndicatorView!
     
+    let okColor = UIColor(red: 138.0 / 255.0, green: 221.0 / 255.0, blue: 109.0 / 255.0, alpha: 1.0)
+    let errorColor = UIColor.redColor()
+    
     var disposeBag = DisposeBag()
     
     let API = GitHubAPI(
@@ -109,8 +109,7 @@ class GitHubSignupViewController : ViewController {
                 
                 if let valid = v.valid {
                     validationColor = valid ? okColor : errorColor
-                }
-                else {
+                } else {
                    validationColor = UIColor.grayColor()
                 }
                 
@@ -128,7 +127,6 @@ class GitHubSignupViewController : ViewController {
         super.viewDidLoad()
         
         let tapBackground = UITapGestureRecognizer(target: self, action: Selector("dismissKeyboard:"))
-        tapBackground.numberOfTouchesRequired = 1
         view.addGestureRecognizer(tapBackground)
         
         self.disposeBag = DisposeBag()
@@ -140,7 +138,7 @@ class GitHubSignupViewController : ViewController {
         let username = usernameOutlet.rx_text
         let password = passwordOutlet.rx_text
         let repeatPassword = repeatedPasswordOutlet.rx_text
-        let signupSampler = self.signupOutlet.rx_tap
+        let signupSampler = signupOutlet.rx_tap
         
         let usernameValidation = username
             .map { username in
@@ -174,8 +172,11 @@ class GitHubSignupViewController : ViewController {
             passwordValidation,
             repeatPasswordValidation,
             signingProcess
-        ) { un, p, pr, signingState in
-            return (un.valid ?? false) && (p.valid ?? false) && (pr.valid ?? false) && signingState != SignupState.SigningUp
+        ) { username, password, repeatPassword, signingState in
+            return (username.valid ?? false) &&
+                   (password.valid ?? false) &&
+                   (repeatPassword.valid ?? false) &&
+                   signingState != SignupState.SigningUp
         }
         
         bindValidationResultToUI(
@@ -224,11 +225,12 @@ class GitHubSignupViewController : ViewController {
    
     // This is one of the reasons why it's a good idea for disposal to be detached from allocations.
     // If resources weren't disposed before view controller is being deallocated, signup alert view
-    // could be presented on top of wrong screen or crash your app if it was being presented while
-    // navigation stack is popping.
+    // could be presented on top of the wrong screen or could crash your app if it was being presented 
+    // while navigation stack is popping.
+    
     // This will work well with UINavigationController, but has an assumption that view controller will
     // never be readded as a child view controller.
-    // It it was readded UI wouldn't be bound anymore.
+    // If it was readded the UI wouldn't be bound anymore.
     override func willMoveToParentViewController(parent: UIViewController?) {
         if let parent = parent {
             assert(parent.isKindOfClass(UINavigationController), "Please read comments")
