@@ -37,7 +37,7 @@ class SkipUntilSinkOther<ElementType, Other, O: ObserverType where O.E == Elemen
         _parent.lock.performLocked {
             switch event {
             case .Next:
-                _parent.__observer = _parent.observer
+                _parent._forwardElements = true
                 _singleAssignmentDisposable.dispose()
             case .Error(let e):
                 _parent._observer?.onError(e)
@@ -61,9 +61,9 @@ class SkipUntilSink<ElementType, Other, O: ObserverType where O.E == ElementType
     typealias E = ElementType
     typealias Parent = SkipUntil<E, Other>
     
-    private let _parent: Parent
     let lock = NSRecursiveLock()
-    var __observer: O? // Nop observer for start. Need better name
+    private let _parent: Parent
+    private var _forwardElements = false
     
     private let _singleAssignmentDisposable = SingleAssignmentDisposable()
     
@@ -84,12 +84,16 @@ class SkipUntilSink<ElementType, Other, O: ObserverType where O.E == ElementType
     func on(event: Event<E>) {
         switch event {
         case .Next:
-            __observer?.on(event)
+            if _forwardElements {
+                _observer?.on(event)
+            }
         case .Error:
             observer?.on(event)
             dispose()
         case .Completed:
-            __observer?.on(event)
+            if _forwardElements {
+                _observer?.on(event)
+            }
             _singleAssignmentDisposable.dispose()
         }
     }
