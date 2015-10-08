@@ -69,8 +69,6 @@ class SkipTimeSink<ElementType, S: SchedulerType, O: ObserverType where O.E == E
 
     let parent: Parent
     
-    let lock = NSRecursiveLock()
-    
     // state
     var open = false
     
@@ -80,19 +78,17 @@ class SkipTimeSink<ElementType, S: SchedulerType, O: ObserverType where O.E == E
     }
     
     func on(event: Event<Element>) {
-        lock.performLocked {
-            switch event {
-            case .Next(let value):
-                if open {
-                    observer?.on(.Next(value))
-                }
-            case .Error:
-                observer?.on(event)
-                self.dispose()
-            case .Completed:
-                observer?.on(event)
-                self.dispose()
+        switch event {
+        case .Next(let value):
+            if open {
+                observer?.on(.Next(value))
             }
+        case .Error:
+            observer?.on(event)
+            self.dispose()
+        case .Completed:
+            observer?.on(event)
+            self.dispose()
         }
     }
     
