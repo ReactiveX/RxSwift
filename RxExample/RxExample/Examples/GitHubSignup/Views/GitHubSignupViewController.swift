@@ -90,9 +90,11 @@ class GitHubSignupViewController : ViewController {
     
     @IBOutlet weak var signupOutlet: UIButton!
     @IBOutlet weak var signingUpOulet: UIActivityIndicatorView!
-    
-    let okColor = UIColor(red: 138.0 / 255.0, green: 221.0 / 255.0, blue: 109.0 / 255.0, alpha: 1.0)
-    let errorColor = UIColor.redColor()
+
+    struct ValidationColors {
+        static let okColor = UIColor(red: 138.0 / 255.0, green: 221.0 / 255.0, blue: 109.0 / 255.0, alpha: 1.0)
+        static let errorColor = UIColor.redColor()
+    }
     
     var disposeBag = DisposeBag()
     
@@ -108,7 +110,7 @@ class GitHubSignupViewController : ViewController {
                 let validationColor: UIColor
                 
                 if let valid = v.valid {
-                    validationColor = valid ? self.okColor : self.errorColor
+                    validationColor = valid ? ValidationColors.okColor : ValidationColors.errorColor
                 } else {
                    validationColor = UIColor.grayColor()
                 }
