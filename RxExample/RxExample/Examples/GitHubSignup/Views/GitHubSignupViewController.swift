@@ -229,8 +229,8 @@ class GitHubSignupViewController : ViewController {
     // while navigation stack is popping.
     
     // This will work well with UINavigationController, but has an assumption that view controller will
-    // never be readded as a child view controller.
-    // If it was readded the UI wouldn't be bound anymore.
+    // never be added as a child view controller. If we didn't recreate the dispose bag here,
+    // then our resources would never be properly released.
     override func willMoveToParentViewController(parent: UIViewController?) {
         if let parent = parent {
             assert(parent.isKindOfClass(UINavigationController), "Please read comments")
