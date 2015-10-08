@@ -957,7 +957,7 @@ extension ObservableTimeTest {
             ])
 
         let res = scheduler.start {
-            xs.take(35, scheduler)
+            xs.take(55, scheduler).take(35, scheduler)
         }
 
         XCTAssertEqual(res.messages, [
@@ -1303,4 +1303,5 @@ extension ObservableTimeTest {
             
         XCTAssertEqual(result!, [4, 5, 6])
     }
+    
 }

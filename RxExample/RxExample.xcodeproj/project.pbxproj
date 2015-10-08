@@ -292,6 +292,7 @@
 		C8DF92EA1B0B38C0009BCF9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C8DF92E91B0B38C0009BCF9A /* Images.xcassets */; };
 		C8DF92EB1B0B38C0009BCF9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C8DF92E91B0B38C0009BCF9A /* Images.xcassets */; };
 		C8DF92F61B0B43A4009BCF9A /* IntroductionExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8DF92F51B0B43A4009BCF9A /* IntroductionExampleViewController.swift */; };
+		D245D9F41BC6CA0900CAB388 /* SkipUntil.swift in Sources */ = {isa = PBXBuildFile; fileRef = D245D9E61BC6C60800CAB388 /* SkipUntil.swift */; };
 		EC91FB951BBA144400973245 /* GitHubSearchRepositoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC91FB941BBA144400973245 /* GitHubSearchRepositoriesViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -650,6 +651,7 @@
 		C8DF92F01B0B3E67009BCF9A /* Info-OSX.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Info-OSX.plist"; sourceTree = "<group>"; };
 		C8DF92F21B0B3E71009BCF9A /* Info-iOS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Info-iOS.plist"; sourceTree = "<group>"; };
 		C8DF92F51B0B43A4009BCF9A /* IntroductionExampleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = IntroductionExampleViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		D245D9E61BC6C60800CAB388 /* SkipUntil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SkipUntil.swift; sourceTree = "<group>"; };
 		EC91FB941BBA144400973245 /* GitHubSearchRepositoriesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GitHubSearchRepositoriesViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -1079,6 +1081,7 @@
 		C864093C1BA5909000D3C4E8 /* Implementations */ = {
 			isa = PBXGroup;
 			children = (
+				D245D9E61BC6C60800CAB388 /* SkipUntil.swift */,
 				C864093D1BA5909000D3C4E8 /* Amb.swift */,
 				C864093E1BA5909000D3C4E8 /* AnonymousObservable.swift */,
 				C864093F1BA5909000D3C4E8 /* AsObservable.swift */,
@@ -1592,6 +1595,7 @@
 				C864099D1BA5909000D3C4E8 /* NAryDisposable.swift in Sources */,
 				C86409C51BA5909000D3C4E8 /* ObserveOn.swift in Sources */,
 				C84B3A331BA4345A001B7D88 /* ControlProperty.swift in Sources */,
+				D245D9F41BC6CA0900CAB388 /* SkipUntil.swift in Sources */,
 				C86409FA1BA5909000D3C4E8 /* Variable.swift in Sources */,
 				C8297E3A1B6CF905000589EA /* WikipediaSearchViewController.swift in Sources */,
 				C84B3A5A1BA4345A001B7D88 /* UIGestureRecognizer+Rx.swift in Sources */,
