@@ -198,3 +198,11 @@ extension ObservableType {
         return BufferTimeCount(source: self.asObservable(), timeSpan: timeSpan, count: count, scheduler: scheduler)
     }
 }
+
+// SkipUntil time
+
+extension ObservableType {
+    public func skipUntil<S: SchedulerType>(startTime: S.TimeInterval, _ scheduler: S) -> Observable<E> {
+        return SkipUntilTime(source: self.asObservable(), startTime: startTime, scheduler: scheduler)
+    }
+}
