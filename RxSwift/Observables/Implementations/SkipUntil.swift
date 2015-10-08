@@ -33,18 +33,19 @@ class SkipUntilSinkOther<ElementType, Other, O: ObserverType where O.E == Elemen
     }
 
     func on(event: Event<E>) {
-        // Do we need lock here?
-        _parent.lock.performLocked {
-            switch event {
-            case .Next:
+        switch event {
+        case .Next:
+            _parent._lock.performLocked {
                 _parent._forwardElements = true
                 _singleAssignmentDisposable.dispose()
-            case .Error(let e):
+            }
+        case .Error(let e):
+            _parent._lock.performLocked {
                 _parent._observer?.onError(e)
                 _parent.dispose()
-            case .Completed:
-                _singleAssignmentDisposable.dispose()
             }
+        case .Completed:
+            _singleAssignmentDisposable.dispose()
         }
     }
     
@@ -61,7 +62,7 @@ class SkipUntilSink<ElementType, Other, O: ObserverType where O.E == ElementType
     typealias E = ElementType
     typealias Parent = SkipUntil<E, Other>
     
-    let lock = NSRecursiveLock()
+    private let _lock = NSRecursiveLock()
     private let _parent: Parent
     private var _forwardElements = false
     
@@ -82,19 +83,21 @@ class SkipUntilSink<ElementType, Other, O: ObserverType where O.E == ElementType
     }
     
     func on(event: Event<E>) {
-        switch event {
-        case .Next:
-            if _forwardElements {
-                _observer?.on(event)
+        _lock.performLocked {
+            switch event {
+            case .Next:
+                if _forwardElements {
+                    _observer?.on(event)
+                }
+            case .Error:
+                observer?.on(event)
+                dispose()
+            case .Completed:
+                if _forwardElements {
+                    _observer?.on(event)
+                }
+                _singleAssignmentDisposable.dispose()
             }
-        case .Error:
-            observer?.on(event)
-            dispose()
-        case .Completed:
-            if _forwardElements {
-                _observer?.on(event)
-            }
-            _singleAssignmentDisposable.dispose()
         }
     }
     
