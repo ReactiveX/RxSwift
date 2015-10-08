@@ -108,7 +108,7 @@ class GitHubSignupViewController : ViewController {
                 let validationColor: UIColor
                 
                 if let valid = v.valid {
-                    validationColor = valid ? okColor : errorColor
+                    validationColor = valid ? self.okColor : self.errorColor
                 } else {
                    validationColor = UIColor.grayColor()
                 }
