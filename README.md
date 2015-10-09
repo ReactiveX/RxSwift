@@ -321,7 +321,7 @@ extension UISearchBar {
         return proxyForObject(self) as RxSearchBarDelegateProxy
     }
 
-    public var rx_searchText: Observable<String> {
+    public var rx_text: Observable<String> {
         return defer { [weak self] in
             let text = self?.text ?? ""
 
@@ -341,7 +341,7 @@ This is how that API can be now used
 
 ```swift
 
-searchBar.rx_searchText
+searchBar.rx_text
     .subscribeNext { searchText in
         print("Current search text '\(searchText)'")
     }
