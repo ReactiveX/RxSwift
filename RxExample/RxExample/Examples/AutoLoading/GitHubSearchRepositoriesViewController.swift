@@ -95,29 +95,31 @@ class GitHubSearchRepositoriesAPI {
     }
 
     private func recursivelySearch(loadedSoFar: [Repository], loadNextURL: NSURL, loadNextPageTrigger: Observable<Void>) -> Observable<SearchRepositoryResponse> {
-        return loadSearchURL(loadNextURL).flatMap { (newPageRepositoriesResponse, nextURL) -> Observable<SearchRepositoryResponse> in
-            // in case access denied, just stop
-            guard case .Repositories(let newPageRepositories) = newPageRepositoriesResponse else {
-                return just(newPageRepositoriesResponse)
+        return loadSearchURL(loadNextURL)
+            .retry(3)
+            .flatMap { (newPageRepositoriesResponse, nextURL) -> Observable<SearchRepositoryResponse> in
+                // in case access denied, just stop
+                guard case .Repositories(let newPageRepositories) = newPageRepositoriesResponse else {
+                    return just(newPageRepositoriesResponse)
+                }
+
+                var loadedRepositories = loadedSoFar
+                loadedRepositories.appendContentsOf(newPageRepositories)
+
+                // if next page can't be loaded, just return what was loaded, and stop
+                guard let nextURL = nextURL else {
+                    return just(.Repositories(loadedRepositories))
+                }
+
+                return [
+                    // return loaded immediately
+                    just(.Repositories(loadedRepositories)),
+                    // wait until next page can be loaded
+                    never().takeUntil(loadNextPageTrigger),
+                    // load next page
+                    self.recursivelySearch(loadedRepositories, loadNextURL: nextURL, loadNextPageTrigger: loadNextPageTrigger)
+                ].concat()
             }
-
-            var loadedRepositories = loadedSoFar
-            loadedRepositories.appendContentsOf(newPageRepositories)
-
-            // if next page can't be loaded, just return what was loaded, and stop
-            guard let nextURL = nextURL else {
-                return just(.Repositories(loadedRepositories))
-            }
-
-            return [
-                // return loaded immediately
-                just(.Repositories(loadedRepositories)),
-                // wait until next page can be loaded
-                never().takeUntil(loadNextPageTrigger),
-                // load next page
-                self.recursivelySearch(loadedRepositories, loadNextURL: nextURL, loadNextPageTrigger: loadNextPageTrigger)
-            ].concat()
-        }
     }
 
     private func loadSearchURL(searchURL: NSURL) -> Observable<(response: SearchRepositoryResponse, nextURL: NSURL?)> {
@@ -230,7 +232,6 @@ class GitHubSearchRepositoriesViewController: ViewController, UITableViewDelegat
                     return just(.Repositories([]))
                 } else {
                     return GitHubSearchRepositoriesAPI.sharedAPI.search(query, loadNextPageTrigger: loadNextPageTrigger)
-                        .retry(3)
                         .catchErrorJustReturn(.Repositories([]))
                 }
             }
