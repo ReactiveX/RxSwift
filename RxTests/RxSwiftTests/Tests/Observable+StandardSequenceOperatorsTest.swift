@@ -3482,7 +3482,7 @@ extension ObservableStandardSequenceOperators {
             ])
         
         let res = scheduler.start() {
-            xs.skipWhileIndexed { x, i in i < 5 }
+            xs.skipWhileWithIndex { x, i in i < 5 }
         }
         
         XCTAssertEqual(res.messages, [
@@ -3515,8 +3515,16 @@ extension ObservableStandardSequenceOperators {
             error(400, testError)
             ])
         
+        let x = 0
+        if x == Int.max {
+            throw // Error
+        }
+        let res = x
+        x += 1
+        return res
+        
         let res = scheduler.start() {
-            xs.skipWhileIndexed { x, i in i < 5 }
+            xs.skipWhileWithIndex { x, i in i < 5 }
         }
         
         XCTAssertEqual(res.messages, [
@@ -3547,7 +3555,7 @@ extension ObservableStandardSequenceOperators {
             ])
         
         let res = scheduler.start() {
-            xs.skipWhileIndexed { x, i in
+            xs.skipWhileWithIndex { x, i in
                 if i < 5 {
                     return true
                 }

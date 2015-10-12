@@ -42,7 +42,7 @@ class SkipWhileSink<ElementType, O: ObserverType where O.E == ElementType> : Sin
     }
 }
 
-class SkipWhileSinkIndexed<ElementType, O: ObserverType where O.E == ElementType> : Sink<O>, ObserverType {
+class SkipWhileSinkWithIndex<ElementType, O: ObserverType where O.E == ElementType> : Sink<O>, ObserverType {
 
     typealias Parent = SkipWhile<ElementType>
     typealias Element = ElementType
@@ -61,7 +61,7 @@ class SkipWhileSinkIndexed<ElementType, O: ObserverType where O.E == ElementType
         case .Next(let value):
             if !_running {
                 do {
-                    _running = try !_parent._predicateIndexed(value, _index)
+                    _running = try !_parent._predicateWithIndex(value, _index)
                     _index += 1
                 } catch let e {
                     _observer?.onError(e)
@@ -82,22 +82,22 @@ class SkipWhileSinkIndexed<ElementType, O: ObserverType where O.E == ElementType
 
 class SkipWhile<Element>: Producer<Element> {
     typealias Predicate = (Element) throws -> Bool
-    typealias PredicateIndexed = (Element, Int) throws -> Bool
+    typealias PredicateWithIndex = (Element, Int) throws -> Bool
 
     private let _source: Observable<Element>
     private let _predicate: Predicate!
-    private let _predicateIndexed: PredicateIndexed!
+    private let _predicateWithIndex: PredicateWithIndex!
 
     init(source: Observable<Element>, predicate: Predicate) {
         _source = source
         _predicate = predicate
-        _predicateIndexed = nil
+        _predicateWithIndex = nil
     }
 
-    init(source: Observable<Element>, predicate: PredicateIndexed) {
+    init(source: Observable<Element>, predicate: PredicateWithIndex) {
         _source = source
         _predicate = nil
-        _predicateIndexed = predicate
+        _predicateWithIndex = predicate
     }
 
     override func run<O : ObserverType where O.E == Element>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
@@ -107,7 +107,7 @@ class SkipWhile<Element>: Producer<Element> {
             return _source.subscribeSafe(sink)
         }
         else {
-            let sink = SkipWhileSinkIndexed(parent: self, observer: observer, cancel: cancel)
+            let sink = SkipWhileSinkWithIndex(parent: self, observer: observer, cancel: cancel)
             setSink(sink)
             return _source.subscribeSafe(sink)
         }

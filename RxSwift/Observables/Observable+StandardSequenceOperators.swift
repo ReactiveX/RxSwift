@@ -98,7 +98,7 @@ extension ObservableType {
         return SkipWhile(source: self.asObservable(), predicate: predicate)
     }
     
-    public func skipWhileIndexed(predicate: (E, Int) throws -> Bool) -> Observable<E> {
+    public func skipWhileWithIndex(predicate: (E, Int) throws -> Bool) -> Observable<E> {
         return SkipWhile(source: self.asObservable(), predicate: predicate)
     }
 }
