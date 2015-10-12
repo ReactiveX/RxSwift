@@ -90,6 +90,19 @@ extension ObservableType {
     }
 }
 
+// SkipWhile
+
+extension ObservableType {
+    
+    public func skipWhile(predicate: (E) throws -> Bool) -> Observable<E> {
+        return SkipWhile(source: self.asObservable(), predicate: predicate)
+    }
+    
+    public func skipWhileIndexed(predicate: (E, Int) throws -> Bool) -> Observable<E> {
+        return SkipWhile(source: self.asObservable(), predicate: predicate)
+    }
+}
+
 // map aka select
 
 extension ObservableType {
