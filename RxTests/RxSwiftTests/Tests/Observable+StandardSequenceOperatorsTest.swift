@@ -3515,14 +3515,6 @@ extension ObservableStandardSequenceOperators {
             error(400, testError)
             ])
         
-        let x = 0
-        if x == Int.max {
-            throw // Error
-        }
-        let res = x
-        x += 1
-        return res
-        
         let res = scheduler.start() {
             xs.skipWhileWithIndex { x, i in i < 5 }
         }
