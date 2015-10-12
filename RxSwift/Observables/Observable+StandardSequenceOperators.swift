@@ -93,11 +93,24 @@ extension ObservableType {
 // SkipWhile
 
 extension ObservableType {
+   
+    /**
+    Bypasses elements in an observable sequence as long as a specified condition is true and then returns the remaining elements.
     
+    - parameter predicate: A function to test each element for a condition.
+    - returns: An observable sequence that contains the elements from the input sequence starting at the first element in the linear series that does not pass the test specified by predicate.
+    */
     public func skipWhile(predicate: (E) throws -> Bool) -> Observable<E> {
         return SkipWhile(source: self.asObservable(), predicate: predicate)
     }
+   
+    /**
+    Bypasses elements in an observable sequence as long as a specified condition is true and then returns the remaining elements.
+    The element's index is used in the logic of the predicate function.
     
+    - parameter predicate: A function to test each element for a condition; the second parameter of the function represents the index of the source element.
+    - returns: An observable sequence that contains the elements from the input sequence starting at the first element in the linear series that does not pass the test specified by predicate.
+    */
     public func skipWhileWithIndex(predicate: (E, Int) throws -> Bool) -> Observable<E> {
         return SkipWhile(source: self.asObservable(), predicate: predicate)
     }
