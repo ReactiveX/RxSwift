@@ -12,25 +12,25 @@ import RxSwift
 let SubscribedToHotObservable = Subscription(0)
 let UnsunscribedFromHotObservable = Subscription(0, 0)
 
-class PrimitiveHotObservable<ElementType : Equatable> : Observable<ElementType>, ObserverType {
+class PrimitiveHotObservable<ElementType : Equatable> : ObservableType {
+    typealias E = ElementType
+
     typealias Events = Recorded<E>
     typealias Observer = ObserverOf<E>
     
     var subscriptions: [Subscription]
     var observers: Bag<ObserverOf<E>>
     
-    override init() {
+    init() {
         self.subscriptions = []
         self.observers = Bag()
-        
-        super.init()
     }
     
     func on(event: Event<E>) {
         observers.forEach { $0.on(event) }
     }
     
-    override func subscribe<O : ObserverType where O.E == E>(observer: O) -> Disposable {
+    func subscribe<O : ObserverType where O.E == E>(observer: O) -> Disposable {
         let key = observers.insert(ObserverOf(observer))
         subscriptions.append(SubscribedToHotObservable)
         

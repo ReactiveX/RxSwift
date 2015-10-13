@@ -52,7 +52,7 @@ class DisposableTest : RxTest {
             ])
         
         let res = scheduler.start(400) { () -> Observable<Int> in
-            return xs
+            return xs.asObservable()
         }
         
         XCTAssertEqual(res.messages, [

@@ -19,7 +19,7 @@ public class Observable<Element> : ObservableType {
     */
     public typealias E = Element
     
-    public init() {
+    init() {
 #if TRACE_RESOURCES
         OSAtomicIncrement32(&resourceCount)
 #endif

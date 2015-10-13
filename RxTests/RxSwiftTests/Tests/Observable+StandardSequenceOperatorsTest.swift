@@ -1604,7 +1604,7 @@ extension ObservableStandardSequenceOperators {
         
         var invoked = 0
         let res = scheduler.start {
-            return xs.flatMap { (x: ColdObservable<Int>) -> Observable<Int> in
+            return xs.flatMap { (x: ColdObservable<Int>) -> ColdObservable<Int> in
                 invoked++
                 if invoked == 3 {
                     throw testError
@@ -2273,7 +2273,7 @@ extension ObservableStandardSequenceOperators {
         
         var invoked = 0
         let res = scheduler.start {
-            return xs.flatMapWithIndex { (x: ColdObservable<Int>, _: Int) -> Observable<Int> in
+            return xs.flatMapWithIndex { (x: ColdObservable<Int>, _: Int) -> ColdObservable<Int> in
                 invoked++
                 if invoked == 3 {
                     throw testError

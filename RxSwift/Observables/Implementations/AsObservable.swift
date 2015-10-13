@@ -24,7 +24,6 @@ class AsObservableSink<O: ObserverType> : Sink<O>, ObserverType {
         default: break
         }
     }
-    
 }
 
 class AsObservable<Element> : Producer<Element> {
@@ -33,14 +32,6 @@ class AsObservable<Element> : Producer<Element> {
     
     init(source: Observable<Element>) {
         self.source = source
-    }
-    
-    func omega() -> Observable<Element> {
-        return self
-    }
-    
-    func eval() -> Observable<Element> {
-        return source
     }
     
     override func run<O: ObserverType where O.E == Element>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {

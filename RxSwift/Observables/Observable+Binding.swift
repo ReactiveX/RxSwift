@@ -126,6 +126,11 @@ extension ObservableType {
     */
     public func shareReplay(bufferSize: Int)
         -> Observable<E> {
-        return self.replay(bufferSize).refCount()
+        if bufferSize == 1 {
+            return ShareReplay1(source: self.asObservable())
+        }
+        else {
+            return self.replay(bufferSize).refCount()
+        }
     }
 }
