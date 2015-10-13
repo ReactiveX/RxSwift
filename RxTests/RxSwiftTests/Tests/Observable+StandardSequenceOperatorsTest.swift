@@ -524,9 +524,7 @@ extension ObservableStandardSequenceOperators {
             ])
         
         let res = scheduler.start { () -> Observable<Int> in
-            return xs.takeWhile { (num: Int, index) -> Bool in
-                return index < 5
-            }
+            return xs.takeWhileWithIndex { num, index in index < 5 }
         }
         
         XCTAssertEqual(res.messages, [
@@ -560,9 +558,7 @@ extension ObservableStandardSequenceOperators {
             ])
         
         let res = scheduler.start { () -> Observable<Int> in
-            return xs.takeWhile { (num: Int, index) -> Bool in
-                return index >= 0
-            }
+            return xs.takeWhileWithIndex { num , index  in return index >= 0 }
         }
         
         XCTAssertEqual(res.messages, [
@@ -598,9 +594,7 @@ extension ObservableStandardSequenceOperators {
             ])
         
         let res = scheduler.start { () -> Observable<Int> in
-            return xs.takeWhile { (num: Int, index) -> Bool in
-                return index >= 0
-            }
+            return xs.takeWhileWithIndex { num, index in index >= 0 }
         }
         
         XCTAssertEqual(res.messages, [

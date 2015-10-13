@@ -8,118 +8,121 @@
 
 import Foundation
 
-class TakeWhileSink1<ElementType, O: ObserverType where O.E == ElementType> : Sink<O>, ObserverType {
+class TakeWhileSink<ElementType, O: ObserverType where O.E == ElementType> : Sink<O>, ObserverType {
     typealias Parent = TakeWhile<ElementType>
     typealias Element = ElementType
 
-    let parent: Parent
+    private let _parent: Parent
 
-    var running = true
+    private var _running = true
 
     init(parent: Parent, observer: O, cancel: Disposable) {
-        self.parent = parent
+        _parent = parent
         super.init(observer: observer, cancel: cancel)
     }
     
     func on(event: Event<Element>) {
-        if !running {
-            return
-        }
         switch event {
         case .Next(let value):
+            if !_running {
+                return
+            }
             
-            running = self.parent.predicate1(value)
-
-            if running  {
-                observer?.on(.Next(value))
+            do {
+                _running = try _parent._predicate(value)
+            } catch let e {
+                _observer?.onError(e)
+                dispose()
+                return
             }
-            else {
-                observer?.on(.Completed)
-                self.dispose()
+            
+            if _running {
+                _observer?.onNext(value)
+            } else {
+                _observer?.onComplete()
+                dispose()
             }
-        case .Error:
-            observer?.on(event)
-            self.dispose()
-        case .Completed:
-            observer?.on(event)
-            self.dispose()
+        case .Error, .Completed:
+            _observer?.on(event)
+            dispose()
         }
     }
     
 }
 
-class TakeWhileSink2<ElementType, O: ObserverType where O.E == ElementType> : Sink<O>, ObserverType {
+class TakeWhileSinkWithIndex<ElementType, O: ObserverType where O.E == ElementType> : Sink<O>, ObserverType {
     typealias Parent = TakeWhile<ElementType>
     typealias Element = ElementType
     
-    let parent: Parent
+    private let _parent: Parent
     
-    var running = true
-    var index = 0
+    private var _running = true
+    private var _index = 0
     
     init(parent: Parent, observer: O, cancel: Disposable) {
-        self.parent = parent
+        _parent = parent
         super.init(observer: observer, cancel: cancel)
     }
     
     func on(event: Event<Element>) {
-        if !running {
-            return
-        }
         switch event {
         case .Next(let value):
-            
-            running = self.parent.predicate2(value, index)
-            self.index = index + 1
-            
-            if running  {
-                observer?.on(.Next(value))
+            if !_running {
+                return
             }
-            else {
-                observer?.on(.Completed)
-                self.dispose()
+            
+            do {
+                _running = try _parent._predicateWithIndex(value, _index)
+                _index += 1
+            } catch let e {
+                _observer?.onError(e)
+                dispose()
+                return
             }
-        case .Error:
-            observer?.on(event)
-            self.dispose()
-        case .Completed:
-            observer?.on(event)
-            self.dispose()
+            
+            if _running {
+                _observer?.onNext(value)
+            } else {
+                _observer?.onComplete()
+                dispose()
+            }
+        case .Error, .Completed:
+            _observer?.on(event)
+            dispose()
         }
     }
     
 }
 
 class TakeWhile<Element>: Producer<Element> {
-    typealias Predicate1 = (Element) -> Bool
-    typealias Predicate2 = (Element, Int) -> Bool
+    typealias Predicate = (Element) throws -> Bool
+    typealias PredicateWithIndex = (Element, Int) throws -> Bool
 
-    let source: Observable<Element>
-    let predicate1: Predicate1!
-    let predicate2: Predicate2!
+    private let _source: Observable<Element>
+    private let _predicate: Predicate!
+    private let _predicateWithIndex: PredicateWithIndex!
 
-    init(source: Observable<Element>, predicate: Predicate1) {
-        self.source = source
-        self.predicate1 = predicate
-        self.predicate2 = nil
+    init(source: Observable<Element>, predicate: Predicate) {
+        _source = source
+        _predicate = predicate
+        _predicateWithIndex = nil
     }
     
-    init(source: Observable<Element>, predicate: Predicate2) {
-        self.source = source
-        self.predicate1 = nil
-        self.predicate2 = predicate
+    init(source: Observable<Element>, predicate: PredicateWithIndex) {
+        _source = source
+        _predicate = nil
+        _predicateWithIndex = predicate
     }
     
     override func run<O : ObserverType where O.E == Element>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
-        if let _ = self.predicate1 {
-            let sink = TakeWhileSink1(parent: self, observer: observer, cancel: cancel)
+        if let _ = _predicate {
+            let sink = TakeWhileSink(parent: self, observer: observer, cancel: cancel)
             setSink(sink)
-            return source.subscribeSafe(sink)
-        }
-        else {
-            let sink = TakeWhileSink2(parent: self, observer: observer, cancel: cancel)
+            return _source.subscribeSafe(sink)
+        } else {
+            let sink = TakeWhileSinkWithIndex(parent: self, observer: observer, cancel: cancel)
             setSink(sink)
-            return source.subscribeSafe(sink)
+            return _source.subscribeSafe(sink)
         }
     }
 }

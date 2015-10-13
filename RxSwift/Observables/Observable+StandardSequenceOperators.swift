@@ -34,9 +34,9 @@ extension ObservableType {
     - parameter predicate: A function to test each element for a condition.
     - returns: An observable sequence that contains the elements from the input sequence that occur before the element at which the test no longer passes.
     */
-    public func takeWhile(predicate: (E) -> Bool)
+    public func takeWhile(predicate: (E) throws -> Bool)
         -> Observable<E> {
-        return TakeWhile(source: self.asObservable(), predicate: predicate)
+        return TakeWhile(source: asObservable(), predicate: predicate)
     }
 
     /**
@@ -47,9 +47,9 @@ extension ObservableType {
     - parameter predicate: A function to test each element for a condition; the second parameter of the function represents the index of the source element.
     - returns: An observable sequence that contains the elements from the input sequence that occur before the element at which the test no longer passes.
     */
-    public func takeWhile(predicate: (E, Int) -> Bool)
+    public func takeWhileWithIndex(predicate: (E, Int) throws -> Bool)
         -> Observable<E> {
-        return TakeWhile(source: self.asObservable(), predicate: predicate)
+        return TakeWhile(source: asObservable(), predicate: predicate)
     }
 }
 
