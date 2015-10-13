@@ -61,6 +61,7 @@ Operators are stateless by default.
 
 #### Conditional and Boolean Operators
   * [`amb`](http://reactivex.io/documentation/operators/amb.html)
+  * [`skipWhile`](http://reactivex.io/documentation/operators/skipwhile.html)
   * [`takeUntil`](http://reactivex.io/documentation/operators/takeuntil.html)
   * [`takeWhile`](http://reactivex.io/documentation/operators/takewhile.html)
 
