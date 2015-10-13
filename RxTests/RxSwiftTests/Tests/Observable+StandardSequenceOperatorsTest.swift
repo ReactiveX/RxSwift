@@ -504,6 +504,51 @@ extension ObservableStandardSequenceOperators {
         XCTAssertEqual(1, invoked)
     }
     
+    func testTakeWhile_Throw() {
+        let scheduler = TestScheduler(initialClock: 0)
+ 
+        let xs = scheduler.createHotObservable([
+            next(90, -1),
+            next(110, -1),
+            next(210, 2),
+            next(260, 5),
+            next(290, 13),
+            next(320, 3),
+            next(350, 7),
+            next(390, 4),
+            next(410, 17),
+            next(450, 8),
+            next(500, 23),
+            completed(600)
+            ])
+        
+        var invoked = 0
+        
+        let res = scheduler.start() { () -> Observable<Int> in
+            return xs.takeWhile { num in
+                invoked++
+                
+                if invoked == 3 {
+                    throw testError
+                }
+                
+                return isPrime(num)
+            }
+        }
+        
+        XCTAssertEqual(res.messages, [
+            next(210, 2),
+            next(260, 5),
+            error(290, testError)
+            ])
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 290)
+            ])
+        
+        XCTAssertEqual(3, invoked)
+    }
+    
     func testTakeWhile_Index1() {
         let scheduler = TestScheduler(initialClock: 0)
         
@@ -612,6 +657,48 @@ extension ObservableStandardSequenceOperators {
             Subscription(200, 400)
             ])
     }
+    
+    
+    func testTakeWhile_Index_SelectorThrows() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createHotObservable([
+            next(90, -1),
+            next(110, -1),
+            next(205, 100),
+            next(210, 2),
+            next(260, 5),
+            next(290, 13),
+            next(320, 3),
+            next(350, 7),
+            next(390, 4),
+            completed(400)
+            ])
+        
+        let res = scheduler.start { () -> Observable<Int> in
+            return xs.takeWhileWithIndex { num, index in
+                if index < 5 {
+                    return true
+                }
+                
+                throw testError
+            }
+        }
+        
+        XCTAssertEqual(res.messages, [
+            next(205, 100),
+            next(210, 2),
+            next(260, 5),
+            next(290, 13),
+            next(320, 3),
+            error(350, testError)
+            ])
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 350)
+            ])
+    }
+    
 }
 
 // map
