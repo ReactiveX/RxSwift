@@ -26,17 +26,17 @@ class SkipWhileSink<ElementType, O: ObserverType where O.E == ElementType> : Sin
                 do {
                     _running = try !_parent._predicate(value)
                 } catch let e {
-                    _observer?.onError(e)
+                    observer?.onError(e)
                     dispose()
                     return
                 }
             }
 
             if _running {
-                _observer?.onNext(value)
+                observer?.onNext(value)
             }
         case .Error, .Completed:
-            _observer?.on(event)
+            observer?.on(event)
             dispose()
         }
     }
@@ -64,17 +64,17 @@ class SkipWhileSinkWithIndex<ElementType, O: ObserverType where O.E == ElementTy
                     _running = try !_parent._predicateWithIndex(value, _index)
                     _index += 1
                 } catch let e {
-                    _observer?.onError(e)
+                    observer?.onError(e)
                     dispose()
                     return
                 }
             }
 
             if _running {
-                _observer?.onNext(value)
+                observer?.onNext(value)
             }
         case .Error, .Completed:
-            _observer?.on(event)
+            observer?.on(event)
             dispose()
         }
     }
