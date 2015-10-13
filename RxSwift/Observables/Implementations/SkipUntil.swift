@@ -41,7 +41,7 @@ class SkipUntilSinkOther<ElementType, Other, O: ObserverType where O.E == Elemen
             }
         case .Error(let e):
             _parent._lock.performLocked {
-                _parent._observer?.onError(e)
+                _parent.observer?.onError(e)
                 _parent.dispose()
             }
         case .Completed:
@@ -87,14 +87,14 @@ class SkipUntilSink<ElementType, Other, O: ObserverType where O.E == ElementType
             switch event {
             case .Next:
                 if _forwardElements {
-                    _observer?.on(event)
+                    observer?.on(event)
                 }
             case .Error:
                 observer?.on(event)
                 dispose()
             case .Completed:
                 if _forwardElements {
-                    _observer?.on(event)
+                    observer?.on(event)
                 }
                 _singleAssignmentDisposable.dispose()
             }
