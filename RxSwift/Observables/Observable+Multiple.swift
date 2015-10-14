@@ -25,7 +25,7 @@ extension CollectionType where Generator.Element : ObservableType {
 
 // zip
 
-extension CollectionType where Generator.Element : ObservableType {
+extension CollectionType where Generator.Element : ObservableConvertibleType {
     
     /**
     Merges the specified observable sequences into one observable sequence by using the selector function whenever all of the observable sequences have produced an element at a corresponding index.

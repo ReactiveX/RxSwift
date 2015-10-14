@@ -290,3 +290,31 @@ extension Driver {
         return Driver<A>(source)
     }
 }
+
+extension SequenceType where Generator.Element : DriverConvertibleType {
+
+    /**
+    Concatenates all observable sequences in the given sequence, as long as the previous observable sequence terminated successfully.
+
+    - returns: An observable sequence that contains the elements of each given sequence, in sequential order.
+    */
+    public func concat()
+        -> Driver<Generator.Element.E> {
+        let source: Observable<Generator.Element.E> = self.lazy.map { $0.asDriver() }.concat()
+        return Driver<Generator.Element.E>(source)
+    }
+}
+
+extension CollectionType where Generator.Element : DriverConvertibleType {
+
+    /**
+    Merges the specified observable sequences into one observable sequence by using the selector function whenever all of the observable sequences have produced an element at a corresponding index.
+
+    - parameter resultSelector: Function to invoke for each series of elements at corresponding indexes in the sources.
+    - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
+    */
+    public func zip<R>(resultSelector: [Generator.Element.E] throws -> R) -> Driver<R> {
+        let source: Observable<R> = self.map { $0.asDriver() }.zip(resultSelector)
+        return Driver<R>(source)
+    }
+}

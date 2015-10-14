@@ -46,6 +46,10 @@ public struct Driver<Element> : DriverConvertibleType {
     init(_ source: Observable<E>) {
         self._source = source.shareReplay(1)
     }
+
+    init(raw: Observable<E>) {
+        self._source = raw
+    }
     
     #if EXPANDABLE_DRIVER
     public static func createUnsafe<O: ObservableType>(source: O) -> Driver<O.E> {
@@ -72,7 +76,7 @@ public struct Drive {
     - returns: An observable sequence with no elements.
     */
     public static func empty<E>() -> Driver<E> {
-        return Driver(RxSwift.empty())
+        return Driver(raw: RxSwift.empty())
     }
     
     /**
@@ -81,7 +85,7 @@ public struct Drive {
     - returns: An observable sequence whose observers will never get called.
     */
     public static func never<E>() -> Driver<E> {
-        return Driver(RxSwift.never())
+        return Driver(raw: RxSwift.never())
     }
     
     /**
@@ -91,7 +95,7 @@ public struct Drive {
     - returns: An observable sequence containing the single specified element.
     */
     public static func just<E>(element: E) -> Driver<E> {
-        return Driver(RxSwift.just(element))
+        return Driver(raw: RxSwift.just(element))
     }
     
 #else
@@ -102,7 +106,7 @@ public struct Drive {
     - returns: An observable sequence with no elements.
     */
     public static func empty<E>() -> Driver<E> {
-        return Driver(_empty())
+        return Driver(raw: _empty())
     }
    
     /**
@@ -111,7 +115,7 @@ public struct Drive {
     - returns: An observable sequence whose observers will never get called.
     */
     public static func never<E>() -> Driver<E> {
-        return Driver(_never())
+        return Driver(raw: _never())
     }
     
     /**
@@ -121,14 +125,14 @@ public struct Drive {
     - returns: An observable sequence containing the single specified element.
     */
     public static func just<E>(element: E) -> Driver<E> {
-        return Driver(_just(element))
+        return Driver(raw: _just(element))
     }
     
 #endif
     
     public static func sequenceOf<E>(elements: E ...) -> Driver<E> {
         let source = elements.asObservable()
-        return Driver(source)
+        return Driver(raw: source)
     }
     
 }
