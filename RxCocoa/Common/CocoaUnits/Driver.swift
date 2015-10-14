@@ -54,7 +54,7 @@ public struct Driver<Element> : DriverConvertibleType {
     #endif
     
     public func asObservable() -> Observable<E> {
-        return _source.subscribeOn(MainScheduler.sharedInstance)
+        return _source
     }
     
     public func asDriver() -> Driver<E> {
