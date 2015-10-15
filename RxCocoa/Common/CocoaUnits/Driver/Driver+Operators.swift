@@ -26,18 +26,6 @@ extension Driver {
     }
     
     /**
-    Projects each element of an observable sequence into a new form by incorporating the element's index.
-    
-    - parameter selector: A transform function to apply to each source element; the second parameter of the function represents the index of the source element.
-    - returns: An observable sequence whose elements are the result of invoking the transform function on each element of source.
-    */
-    public func mapWithIndex<R>(selector: (E, Int) -> R) -> Driver<R> {
-        let source = _source
-            .mapWithIndex(selector)
-        return Driver<R>(source)
-    }
-   
-    /**
     Filters the elements of an observable sequence based on a predicate.
     
     - parameter predicate: A function to test each source element for a condition.
@@ -127,7 +115,7 @@ extension Driver where Element: Equatable {
     public func distinctUntilChanged()
         -> Driver<E> {
         let source = _source
-            .self.distinctUntilChanged({ $0 }, comparer: { ($0 == $1) })
+            .distinctUntilChanged({ $0 }, comparer: { ($0 == $1) })
             
         return Driver(source)
     }
@@ -187,20 +175,6 @@ extension Driver {
             .flatMap(selector)
         
         return Driver<R>(source)
-    }
-    
-    /**
-    Projects each element of an observable sequence to an observable sequence by incorporating the element's index and merges the resulting observable sequences into one observable sequence.
-    
-    - parameter selector: A transform function to apply to each element; the second parameter of the function represents the index of the source element.
-    - returns: An observable sequence whose elements are the result of invoking the one-to-many transform function on each element of the input sequence.
-    */
-    public func flatMapWithIndex<R>(selector: (E, Int) -> Driver<R>)
-        -> Driver<R> {
-        let source = _source
-            .flatMapWithIndex(selector)
-        
-        return Driver<R>(source.asObservable())
     }
 }
 
@@ -315,6 +289,20 @@ extension CollectionType where Generator.Element : DriverConvertibleType {
     */
     public func zip<R>(resultSelector: [Generator.Element.E] throws -> R) -> Driver<R> {
         let source: Observable<R> = self.map { $0.asDriver() }.zip(resultSelector)
+        return Driver<R>(source)
+    }
+}
+
+extension CollectionType where Generator.Element : DriverConvertibleType {
+
+    /**
+    Merges the specified observable sequences into one observable sequence by using the selector function whenever any of the observable sequences produces an element.
+
+    - parameter resultSelector: Function to invoke whenever any of the sources produces an element.
+    - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
+    */
+    public func combineLatest<R>(resultSelector: [Generator.Element.E] throws -> R) -> Driver<R> {
+        let source : Observable<R> = self.map { $0.asDriver() }.combineLatest(resultSelector)
         return Driver<R>(source)
     }
 }

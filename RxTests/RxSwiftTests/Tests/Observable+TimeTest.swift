@@ -16,14 +16,6 @@ class ObservableTimeTest : RxTest {
     override func setUp() {
         super.setUp()
     }
-
-    override func tearDown() {
-    #if TRACE_RESOURCES
-        sleep(0.1) // wait 100 ms for proper scheduler disposal
-    #endif
-
-        super.tearDown()
-    }
 }
 
 // throttle

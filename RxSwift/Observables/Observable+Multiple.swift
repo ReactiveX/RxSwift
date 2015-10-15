@@ -10,7 +10,7 @@ import Foundation
 
 // combineLatest
 
-extension CollectionType where Generator.Element : ObservableType {
+extension CollectionType where Generator.Element : ObservableConvertibleType {
     
     /**
     Merges the specified observable sequences into one observable sequence by using the selector function whenever any of the observable sequences produces an element.
