@@ -56,14 +56,14 @@ let c = combineLatest(a, b) { $0 + $1 }     // combines latest values of variabl
 // To pull values out of rx variable `c`, subscribe to values from  `c`.
 // `subscribeNext` means subscribe to next (fresh) values of variable `c`.
 // That also includes the inital value "3 is positive".
-c.subscribeNext { println($0) }          // prints: "3 is positive"
+c.subscribeNext { print($0) }          // prints: "3 is positive"
 
 // Now let's increase the value of `a`
 // a = 4 is in RxSwift
 a.next(4)                                   // prints: 6 is positive
 // Sum of latest values is now `4 + 2`, `6` is >= 0, map operator
 // produces "6 is positive" and that result is "assigned" to `c`.
-// Since the value of `c` changed, `{ println($0) }` will get called,
+// Since the value of `c` changed, `{ print($0) }` will get called,
 // and "6 is positive" is printed.
 
 // Now let's change the value of `b`
@@ -73,7 +73,7 @@ b.next(-8)                                  // doesn't print anything
 // get executed.
 // That means that `c` still contains "6 is positive" and that's correct.
 // Since `c` hasn't been updated, that means next value hasn't been produced,
-// and `{ println($0) }` won't be called.
+// and `{ print($0) }` won't be called.
 
 // ...
 ```
