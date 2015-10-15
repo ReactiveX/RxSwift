@@ -73,7 +73,7 @@ class TakeWhileSinkWithIndex<ElementType, O: ObserverType where O.E == ElementTy
             
             do {
                 _running = try _parent._predicateWithIndex(value, _index)
-                _index += 1
+                try incrementChecked(&_index)
             } catch let e {
                 observer?.onError(e)
                 dispose()

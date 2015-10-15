@@ -22,6 +22,7 @@ public enum RxErrorCode : Int {
     case Unknown   = 0
     case Cast      = 2
     case Disposed  = 3
+    case Overflow  = 4
 }
 
 /**
@@ -42,5 +43,7 @@ public struct RxError {
     Singleton instance of doing something on a disposed object
     */
     public static let DisposedError = NSError(domain: RxErrorDomain, code: RxErrorCode.Disposed.rawValue, userInfo: nil)
+    
+    public static let OverflowError = NSError(domain: RxErrorDomain, code: RxErrorCode.Overflow.rawValue, userInfo: nil)
 
 }
