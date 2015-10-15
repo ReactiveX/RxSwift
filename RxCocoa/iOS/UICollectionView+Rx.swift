@@ -152,5 +152,69 @@ extension UICollectionView {
         return ControlEvent(source: source)
     }
 }
+#endif
 
+#if os(tvOS)
+
+extension UICollectionView {
+
+    /**
+     Reactive wrapper for `delegate` message `collectionView:didUpdateFocusInContext:withAnimationCoordinator:`.
+     */
+    public var rx_nextFocusedUpdated: ControlEvent<NSIndexPath> {
+        let source = rx_delegate.observe("collectionView:didUpdateFocusInContext:withAnimationCoordinator:")
+            .map { a -> NSIndexPath in
+                let context = a[1] as! UICollectionViewFocusUpdateContext
+                return context.nextFocusedIndexPath! as NSIndexPath
+        }
+        
+        return ControlEvent(source: source)
+    }
+
+    /**
+     Reactive wrapper for `delegate` message `collectionView:didUpdateFocusInContext:withAnimationCoordinator:`.
+     */
+    public var rx_previousFocusedUpdated: ControlEvent<NSIndexPath> {
+        let source = rx_delegate.observe("collectionView:didUpdateFocusInContext:withAnimationCoordinator:")
+            .map { a -> NSIndexPath in
+                let context = a[1] as! UICollectionViewFocusUpdateContext
+                return context.previouslyFocusedIndexPath! as NSIndexPath
+        }
+        
+        return ControlEvent(source: source)
+    }
+    
+    /**
+     Reactive wrapper for `delegate` message `collectionView:didUpdateFocusInContext:withAnimationCoordinator:`
+     that returns the next focused NSIndexPath.
+     
+     It can be only used when one of the `rx_itemsWith*` methods is used to bind observable sequence.
+     */
+    public func rx_modelForNextFocusedUpdated<T>() -> ControlEvent<T> {
+        let source: Observable<T> = rx_nextFocusedUpdated .map { indexPath in
+            let dataSource: RxCollectionViewReactiveArrayDataSource<T> = castOrFatalError(self.rx_dataSource.forwardToDelegate(), message: "This method only works in case one of the `rx_itemsWith*` methods was used.")
+            
+            return dataSource.modelAtIndex(indexPath.item)!
+        }
+        
+        return ControlEvent(source: source)
+    }
+    
+    /**
+     Reactive wrapper for `delegate` message `collectionView:didUpdateFocusInContext:withAnimationCoordinator:`
+     that returns the next focused NSIndexPath.
+     
+     It can be only used when one of the `rx_itemsWith*` methods is used to bind observable sequence.
+     */
+    public func rx_modelForPreviouslyFocusedUpdated<T>() -> ControlEvent<T> {
+        let source: Observable<T> = rx_previousFocusedUpdated .map { indexPath in
+            let dataSource: RxCollectionViewReactiveArrayDataSource<T> = castOrFatalError(self.rx_dataSource.forwardToDelegate(), message: "This method only works in case one of the `rx_itemsWith*` methods was used.")
+            
+            return dataSource.modelAtIndex(indexPath.item)!
+        }
+        
+        return ControlEvent(source: source)
+    }
+}
+    
 #endif
