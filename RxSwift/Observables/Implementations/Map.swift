@@ -62,13 +62,13 @@ class MapSink1<SourceType, O: ObserverType> : MapSink<SourceType, O> {
 class MapSink2<SourceType, O: ObserverType> : MapSink<SourceType, O> {
     typealias ResultType = O.E
     
-    var index = 0
+    private var _index = 0
     
     override init(parent: Map<SourceType, ResultType>, observer: O, cancel: Disposable) {
         super.init(parent: parent, observer: observer, cancel: cancel)
     }
     override func performMap(element: SourceType) throws -> ResultType {
-        return try self.parent.selector2!(element, index++)
+        return try self.parent.selector2!(element, try incrementChecked(&_index))
     }
 }
 

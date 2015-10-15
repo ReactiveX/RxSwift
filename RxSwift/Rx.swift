@@ -30,6 +30,15 @@ func rxFatalError(lastMessage: String) {
     fatalError(lastMessage)
 }
 
+func incrementChecked(inout i: Int) throws -> Int {
+    if i == Int.max {
+        throw RxError.OverflowError
+    }
+    let result = i
+    i += 1
+    return result
+}
+
 extension NSObject {
     func rx_synchronized<T>(@noescape action: () -> T) -> T {
         objc_sync_enter(self)
