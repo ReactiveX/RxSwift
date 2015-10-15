@@ -161,11 +161,11 @@ extension UICollectionView {
     /**
      Reactive wrapper for `delegate` message `collectionView:didUpdateFocusInContext:withAnimationCoordinator:`.
      */
-    public var rx_nextFocusedUpdated: ControlEvent<NSIndexPath> {
+    public var rx_nextFocusedUpdated: ControlEvent<NSIndexPath?> {
         let source = rx_delegate.observe("collectionView:didUpdateFocusInContext:withAnimationCoordinator:")
-            .map { a -> NSIndexPath in
+            .map { a -> NSIndexPath? in
                 let context = a[1] as! UICollectionViewFocusUpdateContext
-                return context.nextFocusedIndexPath! as NSIndexPath
+                return context.nextFocusedIndexPath!
         }
         
         return ControlEvent(source: source)
@@ -174,11 +174,11 @@ extension UICollectionView {
     /**
      Reactive wrapper for `delegate` message `collectionView:didUpdateFocusInContext:withAnimationCoordinator:`.
      */
-    public var rx_previousFocusedUpdated: ControlEvent<NSIndexPath> {
+    public var rx_previousFocusedUpdated: ControlEvent<NSIndexPath?> {
         let source = rx_delegate.observe("collectionView:didUpdateFocusInContext:withAnimationCoordinator:")
-            .map { a -> NSIndexPath in
+            .map { a -> NSIndexPath? in
                 let context = a[1] as! UICollectionViewFocusUpdateContext
-                return context.previouslyFocusedIndexPath! as NSIndexPath
+                return context.previouslyFocusedIndexPath!
         }
         
         return ControlEvent(source: source)
@@ -190,8 +190,13 @@ extension UICollectionView {
      
      It can be only used when one of the `rx_itemsWith*` methods is used to bind observable sequence.
      */
-    public func rx_modelForNextFocusedUpdated<T>() -> ControlEvent<T> {
-        let source: Observable<T> = rx_nextFocusedUpdated .map { indexPath in
+    public func rx_modelForNextFocusedUpdated<T>() -> ControlEvent<T?> {
+        let source: Observable<T?> = rx_nextFocusedUpdated .map { indexPath in
+            
+            guard let indexPath = indexPath else {
+                return nil
+            }
+            
             let dataSource: RxCollectionViewReactiveArrayDataSource<T> = castOrFatalError(self.rx_dataSource.forwardToDelegate(), message: "This method only works in case one of the `rx_itemsWith*` methods was used.")
             
             return dataSource.modelAtIndex(indexPath.item)!
@@ -206,8 +211,13 @@ extension UICollectionView {
      
      It can be only used when one of the `rx_itemsWith*` methods is used to bind observable sequence.
      */
-    public func rx_modelForPreviouslyFocusedUpdated<T>() -> ControlEvent<T> {
-        let source: Observable<T> = rx_previousFocusedUpdated .map { indexPath in
+    public func rx_modelForPreviouslyFocusedUpdated<T>() -> ControlEvent<T?> {
+        let source: Observable<T?> = rx_previousFocusedUpdated .map { indexPath in
+            
+            guard let indexPath = indexPath else {
+                return nil
+            }
+            
             let dataSource: RxCollectionViewReactiveArrayDataSource<T> = castOrFatalError(self.rx_dataSource.forwardToDelegate(), message: "This method only works in case one of the `rx_itemsWith*` methods was used.")
             
             return dataSource.modelAtIndex(indexPath.item)!
