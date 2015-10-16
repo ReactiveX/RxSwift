@@ -51,6 +51,6 @@ extension ObservableType {
     */
     public func subscribeOn(scheduler: ImmediateSchedulerType)
         -> Observable<E> {
-        return SubscribeOn(source: self.asObservable(), scheduler: scheduler)
+        return SubscribeOn(source: self, scheduler: scheduler)
     }
 }

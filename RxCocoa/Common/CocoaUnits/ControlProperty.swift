@@ -41,7 +41,7 @@ public struct ControlProperty<PropertyType> : ControlPropertyType {
     let observer: ObserverOf<PropertyType>
     
     init(source: Observable<PropertyType>, observer: ObserverOf<PropertyType>) {
-        self.source = source
+        self.source = source.subscribeOn(MainScheduler.sharedInstance)
         self.observer = observer
     }
     

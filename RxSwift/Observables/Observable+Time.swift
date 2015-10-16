@@ -34,7 +34,7 @@ extension ObservableType {
     - parameter scheduler: Scheduler to run the throttle timers and send events on.
     - returns: The throttled sequence.
     */
-    public func debounce<S: SchedulerType>(dueTime: S.TimeInterval, scheduler: S)
+    public func debounce<S: SchedulerType>(dueTime: S.TimeInterval, _ scheduler: S)
         -> Observable<E> {
         return Throttle(source: self.asObservable(), dueTime: dueTime, scheduler: scheduler)
     }

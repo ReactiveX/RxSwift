@@ -18,7 +18,7 @@ class SkipUntilSinkOther<ElementType, Other, O: ObserverType where O.E == Elemen
     
     var disposable: Disposable {
         get {
-            return abstractMethod()
+            abstractMethod()
         }
         set {
             _singleAssignmentDisposable.disposable = newValue
@@ -70,7 +70,7 @@ class SkipUntilSink<ElementType, Other, O: ObserverType where O.E == ElementType
     
     var disposable: Disposable {
         get {
-            return abstractMethod()
+            abstractMethod()
         }
         set {
             _singleAssignmentDisposable.disposable = newValue

@@ -8,7 +8,9 @@
 
 import RxSwift
 
-class ColdObservable<Element: Equatable>: Observable<Element> {
+class ColdObservable<Element: Equatable> : ObservableType, ObservableConvertibleType {
+    typealias E = Element
+
     typealias Events = Recorded<Element>
     typealias Observer = ObserverOf<Element>
     
@@ -24,11 +26,9 @@ class ColdObservable<Element: Equatable>: Observable<Element> {
         self.recordedEvents = recordedEvents
         self.subscriptions = []
         self.observers = Bag()
-        
-        super.init()
     }
     
-    override func subscribe<O : ObserverType where O.E == E>(observer: O) -> Disposable {
+    func subscribe<O : ObserverType where O.E == E>(observer: O) -> Disposable {
         let key = observers.insert(ObserverOf(observer))
         subscriptions.append(Subscription(self.testScheduler.now))
         

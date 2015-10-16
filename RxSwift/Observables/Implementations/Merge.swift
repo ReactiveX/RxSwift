@@ -10,7 +10,7 @@ import Foundation
 
 // sequential
 
-class MergeSinkIter<S: ObservableType, O: ObserverType where O.E == S.E> : ObserverType {
+class MergeSinkIter<S: ObservableConvertibleType, O: ObserverType where O.E == S.E> : ObserverType {
     typealias E = O.E
     typealias DisposeKey = Bag<Disposable>.KeyType
     typealias Parent = MergeSink<S, O>
@@ -43,7 +43,7 @@ class MergeSinkIter<S: ObservableType, O: ObserverType where O.E == S.E> : Obser
     }
 }
 
-class MergeSink<S: ObservableType, O: ObserverType where O.E == S.E> : Sink<O>, ObserverType {
+class MergeSink<S: ObservableConvertibleType, O: ObserverType where O.E == S.E> : Sink<O>, ObserverType {
     typealias E = S
     typealias Parent = Merge<S>
     
@@ -80,7 +80,7 @@ class MergeSink<S: ObservableType, O: ObserverType where O.E == S.E> : Sink<O>, 
             
             if let key = maybeKey {
                 let observer = MergeSinkIter(parent: self, disposeKey: key)
-                let disposable = value.subscribeSafe(observer)
+                let disposable = value.asObservable().subscribeSafe(observer)
                 innerSubscription.disposable = disposable
             }
         case .Error(let error):
@@ -106,7 +106,7 @@ class MergeSink<S: ObservableType, O: ObserverType where O.E == S.E> : Sink<O>, 
 
 // concurrent
 
-class MergeConcurrentSinkIter<S: ObservableType, O: ObserverType where S.E == O.E> : ObserverType {
+class MergeConcurrentSinkIter<S: ObservableConvertibleType, O: ObserverType where S.E == O.E> : ObserverType {
     typealias E = O.E
     typealias DisposeKey = Bag<Disposable>.KeyType
     typealias Parent = MergeConcurrentSink<S, O>
@@ -147,7 +147,7 @@ class MergeConcurrentSinkIter<S: ObservableType, O: ObserverType where S.E == O.
     }
 }
 
-class MergeConcurrentSink<S: ObservableType, O: ObserverType where S.E == O.E> : Sink<O>, ObserverType {
+class MergeConcurrentSink<S: ObservableConvertibleType, O: ObserverType where S.E == O.E> : Sink<O>, ObserverType {
     typealias E = S
     typealias Parent = Merge<S>
     typealias QueueType = Queue<S>
@@ -187,7 +187,7 @@ class MergeConcurrentSink<S: ObservableType, O: ObserverType where S.E == O.E> :
         if let key = key {
             let observer = MergeConcurrentSinkIter(parent: self, disposeKey: key)
             
-            let disposable = innerSource.subscribeSafe(observer)
+            let disposable = innerSource.asObservable().subscribeSafe(observer)
             subscription.disposable = disposable
         }
     }
@@ -230,7 +230,7 @@ class MergeConcurrentSink<S: ObservableType, O: ObserverType where S.E == O.E> :
     }
 }
 
-class Merge<S: ObservableType> : Producer<S.E> {
+class Merge<S: ObservableConvertibleType> : Producer<S.E> {
     let sources: Observable<S>
     let maxConcurrent: Int
     

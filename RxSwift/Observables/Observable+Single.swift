@@ -77,21 +77,21 @@ extension ObservableType {
     /**
     Invokes an action for each event in the observable sequence, and propagates all observer messages through the result sequence.
     
-    - parameter next: Action to invoke for each element in the observable sequence.
-    - parameter error: Action to invoke upon errored termination of the observable sequence.
-    - parameter completed: Action to invoke upon graceful termination of the observable sequence.
+    - parameter onNext: Action to invoke for each element in the observable sequence.
+    - parameter onError: Action to invoke upon errored termination of the observable sequence.
+    - parameter onCompleted: Action to invoke upon graceful termination of the observable sequence.
     - returns: The source sequence with the side-effecting behavior applied.
     */
-    public func doOn(next next: (E throws -> Void)? = nil, error: (ErrorType throws -> Void)? = nil, completed: (() throws -> Void)? = nil)
+    public func doOn(onNext onNext: (E throws -> Void)? = nil, onError: (ErrorType throws -> Void)? = nil, onCompleted: (() throws -> Void)? = nil)
         -> Observable<E> {
         return Do(source: self.asObservable()) { e in
             switch e {
             case .Next(let element):
-                try next?(element)
+                try onNext?(element)
             case .Error(let e):
-                try error?(e)
+                try onError?(e)
             case .Completed:
-                try completed?()
+                try onCompleted?()
             }
         }
     }

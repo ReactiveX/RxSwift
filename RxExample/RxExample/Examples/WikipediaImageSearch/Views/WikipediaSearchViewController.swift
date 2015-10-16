@@ -33,17 +33,15 @@ class WikipediaSearchViewController: ViewController {
         
         resultsTableView.rowHeight = 194
         
-        let selectedResult: Observable<SearchResultViewModel> = resultsTableView.rx_modelSelected().asObservable()
-        
         let viewModel = SearchViewModel(
-            searchText: searchBar.rx_text.asObservable(),
-            selectedResult: selectedResult
+            searchText: searchBar.rx_text.asDriver(),
+            selectedResult: resultsTableView.rx_modelSelected().asDriver()
         )
         
         // map table view rows
         // {
         viewModel.rows
-            .bindTo(resultsTableView.rx_itemsWithCellIdentifier("WikipediaSearchCell")) { (_, viewModel, cell: WikipediaSearchCell) in
+            .drive(resultsTableView.rx_itemsWithCellIdentifier("WikipediaSearchCell")) { (_, viewModel, cell: WikipediaSearchCell) in
                 cell.viewModel = viewModel
             }
             .addDisposableTo(disposeBag)
@@ -52,7 +50,8 @@ class WikipediaSearchViewController: ViewController {
         // dismiss keyboard on scroll
         // {
         resultsTableView.rx_contentOffset
-            .subscribeNext { _ in
+            .asDriver()
+            .driveNext { _ in
                 if searchBar.isFirstResponder() {
                     _ = searchBar.resignFirstResponder()
                 }

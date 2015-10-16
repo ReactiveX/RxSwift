@@ -29,6 +29,11 @@ func XCTAssertErrorEqual(lhs: ErrorType, _ rhs: ErrorType) {
     XCTAssertTrue(lhs as NSError === rhs as NSError)
 }
 
+func XCTAssertEqual<T>(lhs: [T], _ rhs: [T], _ comparison: (T, T) -> Bool) {
+    XCTAssertEqual(lhs.count, rhs.count)
+    XCTAssertTrue(zip(lhs, rhs).reduce(true) { (a: Bool, z: (T, T)) in a && comparison(z.0, z.1) })
+}
+
 let testError = NSError(domain: "dummyError", code: -232, userInfo: nil)
 let testError1 = NSError(domain: "dummyError1", code: -233, userInfo: nil)
 let testError2 = NSError(domain: "dummyError2", code: -234, userInfo: nil)
@@ -65,7 +70,7 @@ class RxTest: XCTestCase {
     }
     
     func sleep(time: NSTimeInterval) {
-       NSThread.sleepForTimeInterval(time)
+        NSRunLoop.currentRunLoop().runMode(NSDefaultRunLoopMode, beforeDate: NSDate(timeIntervalSinceNow: time))
     }
     
     private var startResourceCount: Int32 = 0
@@ -100,6 +105,18 @@ class RxTest: XCTestCase {
         super.tearDown()
 
 #if TRACE_RESOURCES
+
+        // give 5 sec to clean up resources
+        for var i = 0; i < 100; ++i {
+            if self.startResourceCount < resourceCount {
+                // main schedulers need to finish work
+                NSRunLoop.currentRunLoop().runMode(NSDefaultRunLoopMode, beforeDate: NSDate(timeIntervalSinceNow: 0.05))
+            }
+            else {
+                break
+            }
+        }
+
         XCTAssertEqual(self.startResourceCount, resourceCount)
         let (endNumberOfAllocatedBytes, endNumberOfAllocations) = getMemoryInfo()
 
