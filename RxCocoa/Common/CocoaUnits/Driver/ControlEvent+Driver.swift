@@ -20,7 +20,7 @@ extension ControlEvent {
     public func asDriver() -> Driver<E> {
         return self.asDriver { (error) -> Driver<E> in
             #if DEBUG
-                rxFatalError("Somehow driver received error from a pipe that was marked as ")
+                rxFatalError("Somehow driver received error from a source that shouldn't fail.")
             #else
                 return Drive.empty()
             #endif
