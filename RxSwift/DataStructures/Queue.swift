@@ -24,11 +24,11 @@ public struct Queue<T>: SequenceType {
     
     let resizeFactor = 2
     
-    private var storage: [T?]
+    private var _storage: [T?]
     private var _count: Int
-    private var pushNextIndex: Int
-    private var initialCapacity: Int
-    private var version: Int
+    private var _pushNextIndex: Int
+    private var _initialCapacity: Int
+    private var _version: Int
     
     /**
     Creates new queue.
@@ -36,24 +36,24 @@ public struct Queue<T>: SequenceType {
     - parameter capacity: Capacity of newly created queue.
     */
     public init(capacity: Int) {
-        initialCapacity = capacity
+        _initialCapacity = capacity
         
-        version = 0
+        _version = 0
         _count = 0
-        pushNextIndex = 0
+        _pushNextIndex = 0
      
         if capacity > 0 {
-            storage = [T?](count: capacity, repeatedValue: nil)
+            _storage = [T?](count: capacity, repeatedValue: nil)
         }
         else {
-            storage = []
+            _storage = []
         }
     }
     
     private var dequeueIndex: Int {
         get {
-           let index = pushNextIndex - count
-            return index < 0 ? index + self.storage.count : index
+           let index = _pushNextIndex - count
+            return index < 0 ? index + _storage.count : index
         }
     }
     
@@ -81,7 +81,7 @@ public struct Queue<T>: SequenceType {
     public func peek() -> T {
         precondition(count > 0)
         
-        return storage[dequeueIndex]!
+        return _storage[dequeueIndex]!
     }
     
     mutating private func resizeTo(size: Int) {
@@ -90,19 +90,19 @@ public struct Queue<T>: SequenceType {
         let count = _count
         
         let dequeueIndex = self.dequeueIndex
-        let spaceToEndOfQueue = self.storage.count - dequeueIndex
+        let spaceToEndOfQueue = _storage.count - dequeueIndex
         
         // first batch is from dequeue index to end of array
         let countElementsInFirstBatch = min(count, spaceToEndOfQueue)
         // second batch is wrapped from start of array to end of queue
         let numberOfElementsInSecondBatch = count - countElementsInFirstBatch
         
-        newStorage[0 ..< countElementsInFirstBatch] = self.storage[dequeueIndex ..< (dequeueIndex + countElementsInFirstBatch)]
-        newStorage[countElementsInFirstBatch ..< (countElementsInFirstBatch + numberOfElementsInSecondBatch)] = self.storage[0 ..< numberOfElementsInSecondBatch]
+        newStorage[0 ..< countElementsInFirstBatch] = _storage[dequeueIndex ..< (dequeueIndex + countElementsInFirstBatch)]
+        newStorage[countElementsInFirstBatch ..< (countElementsInFirstBatch + numberOfElementsInSecondBatch)] = _storage[0 ..< numberOfElementsInSecondBatch]
         
         _count = count
-        pushNextIndex = count
-        storage = newStorage
+        _pushNextIndex = count
+        _storage = newStorage
     }
     
     /**
@@ -111,30 +111,30 @@ public struct Queue<T>: SequenceType {
     - parameter element: Element to enqueue.
     */
     public mutating func enqueue(element: T) {
-        version++
+        _version++
         
-        if count == storage.count {
-            resizeTo(max(storage.count, 1) * resizeFactor)
+        if count == _storage.count {
+            resizeTo(max(_storage.count, 1) * resizeFactor)
         }
         
-        storage[pushNextIndex] = element
-        pushNextIndex++
+        _storage[_pushNextIndex] = element
+        _pushNextIndex++
         _count = _count + 1
         
-        if pushNextIndex >= storage.count {
-            pushNextIndex -= storage.count
+        if _pushNextIndex >= _storage.count {
+            _pushNextIndex -= _storage.count
         }
     }
     
     private mutating func dequeueElementOnly() -> T {
         precondition(count > 0)
         
-        version++
+        _version++
         
         let index = dequeueIndex
-        let value = storage[index]!
+        let value = _storage[index]!
         
-        storage[index] = nil
+        _storage[index] = nil
         
         _count = _count - 1
         
@@ -162,9 +162,9 @@ public struct Queue<T>: SequenceType {
     public mutating func dequeue() -> T {
         let value = dequeueElementOnly()
         
-        let downsizeLimit = storage.count / (resizeFactor * resizeFactor)
-        if _count < downsizeLimit && downsizeLimit >= initialCapacity {
-            resizeTo(storage.count / resizeFactor)
+        let downsizeLimit = _storage.count / (resizeFactor * resizeFactor)
+        if _count < downsizeLimit && downsizeLimit >= _initialCapacity {
+            resizeTo(_storage.count / resizeFactor)
         }
         
         return value
@@ -177,10 +177,10 @@ public struct Queue<T>: SequenceType {
         var i = dequeueIndex
         var count = _count
         
-        let lastVersion = version
+        let lastVersion = _version
         
         return anyGenerator {
-            if lastVersion != self.version {
+            if lastVersion != self._version {
                 rxFatalError("Collection was modified while enumerated")
             }
             
@@ -189,11 +189,11 @@ public struct Queue<T>: SequenceType {
             }
             
             count--
-            if i >= self.storage.count {
-                i -= self.storage.count
+            if i >= self._storage.count {
+                i -= self._storage.count
             }
             
-            return self.storage[i++]
+            return self._storage[i++]
         }
     }
 }

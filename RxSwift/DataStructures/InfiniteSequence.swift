@@ -15,14 +15,14 @@ class InfiniteSequence<E> : SequenceType {
     typealias Element = E
     typealias Generator = AnyGenerator<E>
     
-    let repeatedValue: E
+    private let _repeatedValue: E
     
     init(repeatedValue: E) {
-        self.repeatedValue = repeatedValue
+        _repeatedValue = repeatedValue
     }
     
     func generate() -> Generator {
-        let repeatedValue = self.repeatedValue
+        let repeatedValue = _repeatedValue
         return anyGenerator {
             return repeatedValue
         }

@@ -9,19 +9,19 @@
 import Foundation
 
 class RecursiveScheduler<State, S: SchedulerType>: RecursiveSchedulerOf<State, S.TimeInterval> {
-    let scheduler: S
+    private let _scheduler: S
     
     init(scheduler: S, action: Action) {
-        self.scheduler = scheduler
+        _scheduler = scheduler
         super.init(action: action)
     }
     
     override func scheduleRelativeAdapter(state: State, dueTime: S.TimeInterval, action: State -> Disposable) -> Disposable {
-        return scheduler.scheduleRelative(state, dueTime: dueTime, action: action)
+        return _scheduler.scheduleRelative(state, dueTime: dueTime, action: action)
     }
     
     override func scheduleAdapter(state: State, action: State -> Disposable) -> Disposable {
-        return scheduler.schedule(state, action: action)
+        return _scheduler.schedule(state, action: action)
     }
 }
 
