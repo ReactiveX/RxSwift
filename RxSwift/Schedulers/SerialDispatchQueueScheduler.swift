@@ -30,7 +30,10 @@ public class SerialDispatchQueueScheduler: SchedulerType {
     public typealias Time = NSDate
     
     private let serialQueue : dispatch_queue_t
-    
+
+    /**
+    - returns: Current time.
+    */
     public var now : NSDate {
         get {
             return NSDate()

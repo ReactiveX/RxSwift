@@ -295,6 +295,8 @@
 		C8A468F31B8A8C2600BF917B /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8A468EB1B8A8BC900BF917B /* RxSwift.framework */; };
 		C8A7501F1B94E77C00D8D046 /* RxDataSourceStarterKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A7501E1B94E77C00D8D046 /* RxDataSourceStarterKit.swift */; };
 		C8A750201B94E78200D8D046 /* RxDataSourceStarterKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A7501E1B94E77C00D8D046 /* RxDataSourceStarterKit.swift */; };
+		C8B145141BD2E4D000267DCE /* ConcurrentMainScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B145051BD2E45200267DCE /* ConcurrentMainScheduler.swift */; };
+		C8B145161BD2E4D500267DCE /* ImmediateScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B145041BD2E45200267DCE /* ImmediateScheduler.swift */; };
 		C8C46DA81B47F7110020D71E /* CollectionViewImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C46DA31B47F7110020D71E /* CollectionViewImageCell.swift */; };
 		C8C46DA91B47F7110020D71E /* WikipediaImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C8C46DA41B47F7110020D71E /* WikipediaImageCell.xib */; };
 		C8C46DAA1B47F7110020D71E /* WikipediaSearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C46DA51B47F7110020D71E /* WikipediaSearchCell.swift */; };
@@ -669,6 +671,8 @@
 		C8A468EF1B8A8BD000BF917B /* RxBlocking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RxBlocking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8A7501E1B94E77C00D8D046 /* RxDataSourceStarterKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxDataSourceStarterKit.swift; sourceTree = "<group>"; };
 		C8AF26F11B49ABD300131C03 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		C8B145041BD2E45200267DCE /* ImmediateScheduler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImmediateScheduler.swift; sourceTree = "<group>"; };
+		C8B145051BD2E45200267DCE /* ConcurrentMainScheduler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConcurrentMainScheduler.swift; sourceTree = "<group>"; };
 		C8C46DA31B47F7110020D71E /* CollectionViewImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewImageCell.swift; sourceTree = "<group>"; };
 		C8C46DA41B47F7110020D71E /* WikipediaImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WikipediaImageCell.xib; sourceTree = "<group>"; };
 		C8C46DA51B47F7110020D71E /* WikipediaSearchCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WikipediaSearchCell.swift; sourceTree = "<group>"; };
@@ -1149,8 +1153,10 @@
 			isa = PBXGroup;
 			children = (
 				C894648E1BC6C2B00055219D /* ConcurrentDispatchQueueScheduler.swift */,
+				C8B145051BD2E45200267DCE /* ConcurrentMainScheduler.swift */,
 				C894648F1BC6C2B00055219D /* CurrentThreadScheduler.swift */,
 				C89464901BC6C2B00055219D /* DispatchQueueSchedulerPriority.swift */,
+				C8B145041BD2E45200267DCE /* ImmediateScheduler.swift */,
 				C89464911BC6C2B00055219D /* MainScheduler.swift */,
 				C89464921BC6C2B00055219D /* OperationQueueScheduler.swift */,
 				C89464931BC6C2B00055219D /* RecursiveScheduler.swift */,
@@ -1729,6 +1735,7 @@
 				C8297E451B6CF905000589EA /* SectionedViewType.swift in Sources */,
 				C89464D51BC6C2B00055219D /* ObserveOnSerialDispatchQueue.swift in Sources */,
 				C894658E1BC6C2BC0055219D /* UIAlertView+Rx.swift in Sources */,
+				C8B145161BD2E4D500267DCE /* ImmediateScheduler.swift in Sources */,
 				C8297E461B6CF905000589EA /* Example.swift in Sources */,
 				C89465081BC6C2B00055219D /* PublishSubject.swift in Sources */,
 				C89464FC1BC6C2B00055219D /* RxBox.swift in Sources */,
@@ -1781,6 +1788,7 @@
 				C8297E501B6CF905000589EA /* TableViewController.swift in Sources */,
 				C8297E511B6CF905000589EA /* PartialUpdatesViewController.swift in Sources */,
 				C894649F1BC6C2B00055219D /* AsyncLock.swift in Sources */,
+				C8B145141BD2E4D000267DCE /* ConcurrentMainScheduler.swift in Sources */,
 				C8297E521B6CF905000589EA /* Dependencies.swift in Sources */,
 				C80DDED91BCE9046006A1832 /* ObservableConvertibleType+Driver.swift in Sources */,
 				C89464E11BC6C2B00055219D /* Switch.swift in Sources */,

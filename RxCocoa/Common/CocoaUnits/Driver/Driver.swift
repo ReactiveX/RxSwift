@@ -108,7 +108,7 @@ public struct Drive {
     
     /**
     Returns an empty observable sequence, using the specified scheduler to send out the single `Completed` message.
-    
+
     - returns: An observable sequence with no elements.
     */
     public static func empty<E>() -> Driver<E> {
