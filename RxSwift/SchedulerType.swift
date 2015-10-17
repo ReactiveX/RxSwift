@@ -52,13 +52,22 @@ public protocol SchedulerType: ImmediateSchedulerType {
 }
 
 extension SchedulerType {
+
+    /**
+    Periodic task will be emulated using recursive scheduling.
+
+    - parameter state: Initial state passed to the action upon the first iteration.
+    - parameter startAfter: Period after which initial work should be run.
+    - parameter period: Period for running the work periodically.
+    - returns: The disposable object used to cancel the scheduled recurring action (best effort).
+    */
     public func schedulePeriodic<StateType>(state: StateType, startAfter: TimeInterval, period: TimeInterval, action: (StateType) -> StateType) -> Disposable {
         let schedule = SchedulePeriodicRecursive(scheduler: self, startAfter: startAfter, period: period, action: action, state: state)
             
         return schedule.start()
     }
 
-    func scheduleRecursive<State>(state: State, dueTime: TimeInterval, action: (state: State, scheduler: RecursiveSchedulerOf<State, TimeInterval>) -> Void) -> Disposable {
+    func scheduleRecursive<State>(state: State, dueTime: TimeInterval, action: (state: State, scheduler: AnyRecursiveScheduler<State, TimeInterval>) -> ()) -> Disposable {
         let scheduler = RecursiveScheduler(scheduler: self, action: action)
          
         scheduler.schedule(state, dueTime: dueTime)

@@ -8,7 +8,7 @@
 
 import Foundation
 
-class RecursiveScheduler<State, S: SchedulerType>: RecursiveSchedulerOf<State, S.TimeInterval> {
+class RecursiveScheduler<State, S: SchedulerType>: AnyRecursiveScheduler<State, S.TimeInterval> {
     let scheduler: S
     
     init(scheduler: S, action: Action) {
@@ -28,8 +28,8 @@ class RecursiveScheduler<State, S: SchedulerType>: RecursiveSchedulerOf<State, S
 /**
 Type erased recursive scheduler.
 */
-public class RecursiveSchedulerOf<State, TimeInterval> {
-    typealias Action =  (state: State, scheduler: RecursiveSchedulerOf<State, TimeInterval>) -> Void
+class AnyRecursiveScheduler<State, TimeInterval> {
+    typealias Action =  (state: State, scheduler: AnyRecursiveScheduler<State, TimeInterval>) -> Void
 
     let lock = NSRecursiveLock()
     
@@ -58,7 +58,7 @@ public class RecursiveSchedulerOf<State, TimeInterval> {
     - parameter state: State passed to the action to be executed.
     - parameter dueTime: Relative time after which to execute the recursive action.
     */
-    public func schedule(state: State, dueTime: TimeInterval) {
+    func schedule(state: State, dueTime: TimeInterval) {
 
         var isAdded = false
         var isDone = false
@@ -101,7 +101,7 @@ public class RecursiveSchedulerOf<State, TimeInterval> {
     
     - parameter state: State passed to the action to be executed.
     */
-    public func schedule(state: State) {
+    func schedule(state: State) {
             
         var isAdded = false
         var isDone = false
@@ -150,7 +150,7 @@ public class RecursiveSchedulerOf<State, TimeInterval> {
 /**
 Type erased recursive scheduler.
 */
-public class RecursiveImmediateSchedulerOf<State> {
+class RecursiveImmediateScheduler<State> {
     typealias Action =  (state: State, recurse: State -> Void) -> Void
     
     var lock = SpinLock()
@@ -171,7 +171,7 @@ public class RecursiveImmediateSchedulerOf<State> {
     
     - parameter state: State passed to the action to be executed.
     */
-    public func schedule(state: State) {
+    func schedule(state: State) {
         
         var isAdded = false
         var isDone = false

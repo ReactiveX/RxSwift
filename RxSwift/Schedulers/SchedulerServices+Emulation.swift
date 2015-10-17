@@ -11,13 +11,12 @@ import Foundation
 enum SchedulePeriodicRecursiveCommand {
     case Tick
     case DispatchStart
-    case DispatchEnd
 }
 
 class SchedulePeriodicRecursive<State, S: SchedulerType> {
     typealias RecursiveAction = State -> State
     typealias TimeInterval = S.TimeInterval
-    typealias RecursiveScheduler = RecursiveSchedulerOf<SchedulePeriodicRecursiveCommand, S.TimeInterval>
+    typealias RecursiveScheduler = AnyRecursiveScheduler<SchedulePeriodicRecursiveCommand, S.TimeInterval>
     
     let scheduler: S
     let startAfter: TimeInterval
@@ -40,23 +39,26 @@ class SchedulePeriodicRecursive<State, S: SchedulerType> {
     }
     
     func tick(command: SchedulePeriodicRecursiveCommand, scheduler: RecursiveScheduler) -> Void {
+        // Tries to emulate periodic scheduling as best as possible.
+        // The problem that could arise is if handling periodic ticks take too long, or
+        // tick interval is short.
         switch command {
         case .Tick:
             scheduler.schedule(.Tick, dueTime: self.period)
-            
+
+            // The idea is that if on tick there wasn't any item enqueued, schedule to perform work immediatelly.
+            // Else work will be scheduled after previous enqueued work completes.
             if OSAtomicIncrement32(&pendingTickCount) == 1 {
                 self.tick(.DispatchStart, scheduler: scheduler)
             }
-            break
+
         case .DispatchStart:
             self.state = action(state)
-            scheduler.schedule(SchedulePeriodicRecursiveCommand.DispatchEnd)
-            break
-        case .DispatchEnd:
+            // Start work and schedule check is this last batch of work
             if OSAtomicDecrement32(&pendingTickCount) > 0 {
+                // This gives priority to scheduler emulation, it's not perfect, but helps
                 scheduler.schedule(SchedulePeriodicRecursiveCommand.DispatchStart)
             }
-            break
         }
     }
 }
