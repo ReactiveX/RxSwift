@@ -159,3 +159,7 @@ Generates an observable sequence that repeats the given element infinitely, usin
 public func repeatElement<E>(element: E, _ scheduler: ImmediateSchedulerType) -> Observable<E> {
     return RepeatElement(element: element, scheduler: scheduler)
 }
+
+public func using<S, R: Disposable>(resourceFactory: () throws -> R, observableFactory: R throws -> Observable<S>) -> Observable<S> {
+    return Using(resourceFactory: resourceFactory, observableFactory: observableFactory)
+}
