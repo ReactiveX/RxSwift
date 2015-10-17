@@ -40,7 +40,7 @@ extension UIScrollView {
     public var rx_contentOffset: ControlProperty<CGPoint> {
         let proxy = proxyForObject(self) as RxScrollViewDelegateProxy
         
-        return ControlProperty(source: proxy.contentOffsetSubject, observer: ObserverOf { [weak self] event in
+        return ControlProperty(source: proxy.contentOffsetSubject, observer: AnyObserver { [weak self] event in
             switch event {
             case .Next(let value):
                 self?.contentOffset = value

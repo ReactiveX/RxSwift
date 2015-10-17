@@ -16,10 +16,10 @@ class PrimitiveHotObservable<ElementType : Equatable> : ObservableType {
     typealias E = ElementType
 
     typealias Events = Recorded<E>
-    typealias Observer = ObserverOf<E>
+    typealias Observer = AnyObserver<E>
     
     var subscriptions: [Subscription]
-    var observers: Bag<ObserverOf<E>>
+    var observers: Bag<AnyObserver<E>>
     
     init() {
         self.subscriptions = []
@@ -31,7 +31,7 @@ class PrimitiveHotObservable<ElementType : Equatable> : ObservableType {
     }
     
     func subscribe<O : ObserverType where O.E == E>(observer: O) -> Disposable {
-        let key = observers.insert(ObserverOf(observer))
+        let key = observers.insert(AnyObserver(observer))
         subscriptions.append(SubscribedToHotObservable)
         
         let i = self.subscriptions.count - 1

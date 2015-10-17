@@ -14,7 +14,7 @@ class MySubject<Element where Element : Hashable> : SubjectType, ObserverType {
     typealias SubjectObserverType = MySubject<E>
 
     var _disposeOn: [Element : Disposable] = [:]
-    var _observer: ObserverOf<Element>! = nil
+    var _observer: AnyObserver<Element>! = nil
     var _subscribeCount: Int = 0
     var _disposed: Bool = false
     
@@ -47,10 +47,10 @@ class MySubject<Element where Element : Hashable> : SubjectType, ObserverType {
     
     func subscribe<O : ObserverType where O.E == E>(observer: O) -> Disposable {
         _subscribeCount++
-        _observer = ObserverOf(observer)
+        _observer = AnyObserver(observer)
         
         return AnonymousDisposable {
-            self._observer = ObserverOf { _ -> Void in () }
+            self._observer = AnyObserver { _ -> Void in () }
             self._disposed = true
         }
     }

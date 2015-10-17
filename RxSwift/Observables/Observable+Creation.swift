@@ -16,7 +16,7 @@ Creates an observable sequence from a specified subscribe method implementation.
 - parameter subscribe: Implementation of the resulting observable sequence's `subscribe` method.
 - returns: The observable sequence with the specified implementation for the `subscribe` method.
 */
-public func create<E>(subscribe: (ObserverOf<E>) -> Disposable) -> Observable<E> {
+public func create<E>(subscribe: (AnyObserver<E>) -> Disposable) -> Observable<E> {
     return AnonymousObservable(subscribe)
 }
 

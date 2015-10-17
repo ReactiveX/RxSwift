@@ -19,8 +19,8 @@ extension UIControl {
     /**
     Bindable sink for `enabled` property.
     */
-    public var rx_enabled: ObserverOf<Bool> {
-        return ObserverOf { [weak self] event in
+    public var rx_enabled: AnyObserver<Bool> {
+        return AnyObserver { [weak self] event in
             MainScheduler.ensureExecutingOnScheduler()
             
             switch event {
@@ -71,7 +71,7 @@ extension UIControl {
             }
         }.takeUntil(rx_deallocated)
         
-        return ControlProperty<T>(source: source, observer: ObserverOf { event in
+        return ControlProperty<T>(source: source, observer: AnyObserver { event in
             MainScheduler.ensureExecutingOnScheduler()
             
             switch event {

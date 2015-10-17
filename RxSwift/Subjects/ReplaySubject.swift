@@ -16,7 +16,7 @@ Each notification is broadcasted to all subscribed and future observers, subject
 public class ReplaySubject<Element> : Observable<Element>, SubjectType, ObserverType, Disposable {
     public typealias SubjectObserverType = ReplaySubject<Element>
     
-    typealias DisposeKey = Bag<ObserverOf<Element>>.KeyType
+    typealias DisposeKey = Bag<AnyObserver<Element>>.KeyType
     
     func unsubscribe(key: DisposeKey) {
         abstractMethod()
@@ -66,7 +66,7 @@ class ReplayBufferBase<Element> : ReplaySubject<Element> {
     // state
     var disposed = false
     var stoppedEvent = nil as Event<Element>?
-    var observers = Bag<ObserverOf<Element>>()
+    var observers = Bag<AnyObserver<Element>>()
     
     override init() {
         
@@ -80,7 +80,7 @@ class ReplayBufferBase<Element> : ReplaySubject<Element> {
         abstractMethod()
     }
     
-    func replayBuffer(observer: ObserverOf<Element>) {
+    func replayBuffer(observer: AnyObserver<Element>) {
         abstractMethod()
     }
     
@@ -116,15 +116,15 @@ class ReplayBufferBase<Element> : ReplaySubject<Element> {
                 return NopDisposable.instance
             }
          
-            let observerOf = observer.asObserver()
+            let AnyObserver = observer.asObserver()
             
-            replayBuffer(observerOf)
+            replayBuffer(AnyObserver)
             if let stoppedEvent = self.stoppedEvent {
                 observer.on(stoppedEvent)
                 return NopDisposable.instance
             }
             else {
-                let key = self.observers.insert(observerOf)
+                let key = self.observers.insert(AnyObserver)
                 return ReplaySubscription(subject: self, disposeKey: key)
             }
         }
@@ -170,7 +170,7 @@ class ReplayOne<Element> : ReplayBufferBase<Element> {
         self.value = value
     }
     
-    override func replayBuffer(observer: ObserverOf<Element>) {
+    override func replayBuffer(observer: AnyObserver<Element>) {
         if let value = self.value {
             observer.on(.Next(value))
         }
@@ -194,7 +194,7 @@ class ReplayManyBase<Element> : ReplayBufferBase<Element> {
         queue.enqueue(value)
     }
     
-    override func replayBuffer(observer: ObserverOf<E>) {
+    override func replayBuffer(observer: AnyObserver<E>) {
         for item in queue {
             observer.on(.Next(item))
         }

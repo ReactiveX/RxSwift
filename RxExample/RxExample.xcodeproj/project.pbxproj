@@ -196,7 +196,7 @@
 		C89464F21BC6C2B00055219D /* Observable+StandardSequenceOperators.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89464811BC6C2B00055219D /* Observable+StandardSequenceOperators.swift */; };
 		C89464F31BC6C2B00055219D /* Observable+Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89464821BC6C2B00055219D /* Observable+Time.swift */; };
 		C89464F41BC6C2B00055219D /* ObservableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89464831BC6C2B00055219D /* ObservableType.swift */; };
-		C89464F51BC6C2B00055219D /* ObserverOf.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89464841BC6C2B00055219D /* ObserverOf.swift */; };
+		C89464F51BC6C2B00055219D /* AnyObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89464841BC6C2B00055219D /* AnyObserver.swift */; };
 		C89464F61BC6C2B00055219D /* AnonymousObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89464861BC6C2B00055219D /* AnonymousObserver.swift */; };
 		C89464F71BC6C2B00055219D /* ObserverBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89464871BC6C2B00055219D /* ObserverBase.swift */; };
 		C89464F81BC6C2B00055219D /* TailRecursiveSink.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89464881BC6C2B00055219D /* TailRecursiveSink.swift */; };
@@ -509,13 +509,13 @@
 		C89464451BC6C2B00055219D /* Observable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 		C89464461BC6C2B00055219D /* ObservableConvertibleType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObservableConvertibleType.swift; sourceTree = "<group>"; };
 		C89464491BC6C2B00055219D /* Amb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Amb.swift; sourceTree = "<group>"; };
-		C894644A1BC6C2B00055219D /* AnonymousObservable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnonymousObservable.swift; sourceTree = "<group>"; };
+		C894644A1BC6C2B00055219D /* AnonymousObservable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AnonymousObservable.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		C894644B1BC6C2B00055219D /* AsObservable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AsObservable.swift; sourceTree = "<group>"; };
 		C894644C1BC6C2B00055219D /* Buffer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Buffer.swift; sourceTree = "<group>"; };
 		C894644D1BC6C2B00055219D /* Catch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Catch.swift; sourceTree = "<group>"; };
 		C894644E1BC6C2B00055219D /* CombineLatest+arity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CombineLatest+arity.swift"; sourceTree = "<group>"; };
 		C894644F1BC6C2B00055219D /* CombineLatest+arity.tt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "CombineLatest+arity.tt"; sourceTree = "<group>"; };
-		C89464501BC6C2B00055219D /* CombineLatest+CollectionType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CombineLatest+CollectionType.swift"; sourceTree = "<group>"; };
+		C89464501BC6C2B00055219D /* CombineLatest+CollectionType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = "CombineLatest+CollectionType.swift"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		C89464511BC6C2B00055219D /* CombineLatest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CombineLatest.swift; sourceTree = "<group>"; };
 		C89464521BC6C2B00055219D /* Concat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Concat.swift; sourceTree = "<group>"; };
 		C89464531BC6C2B00055219D /* ConnectableObservable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectableObservable.swift; sourceTree = "<group>"; };
@@ -560,14 +560,14 @@
 		C894647A1BC6C2B00055219D /* Observable+Aggregate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Observable+Aggregate.swift"; sourceTree = "<group>"; };
 		C894647B1BC6C2B00055219D /* Observable+Binding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Observable+Binding.swift"; sourceTree = "<group>"; };
 		C894647C1BC6C2B00055219D /* Observable+Concurrency.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Observable+Concurrency.swift"; sourceTree = "<group>"; };
-		C894647D1BC6C2B00055219D /* Observable+Creation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Observable+Creation.swift"; sourceTree = "<group>"; };
+		C894647D1BC6C2B00055219D /* Observable+Creation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = "Observable+Creation.swift"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		C894647E1BC6C2B00055219D /* Observable+Debug.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Observable+Debug.swift"; sourceTree = "<group>"; };
 		C894647F1BC6C2B00055219D /* Observable+Multiple.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Observable+Multiple.swift"; sourceTree = "<group>"; };
 		C89464801BC6C2B00055219D /* Observable+Single.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Observable+Single.swift"; sourceTree = "<group>"; };
 		C89464811BC6C2B00055219D /* Observable+StandardSequenceOperators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Observable+StandardSequenceOperators.swift"; sourceTree = "<group>"; };
 		C89464821BC6C2B00055219D /* Observable+Time.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Observable+Time.swift"; sourceTree = "<group>"; };
 		C89464831BC6C2B00055219D /* ObservableType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObservableType.swift; sourceTree = "<group>"; };
-		C89464841BC6C2B00055219D /* ObserverOf.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObserverOf.swift; sourceTree = "<group>"; };
+		C89464841BC6C2B00055219D /* AnyObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AnyObserver.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		C89464861BC6C2B00055219D /* AnonymousObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnonymousObserver.swift; sourceTree = "<group>"; };
 		C89464871BC6C2B00055219D /* ObserverBase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObserverBase.swift; sourceTree = "<group>"; };
 		C89464881BC6C2B00055219D /* TailRecursiveSink.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TailRecursiveSink.swift; sourceTree = "<group>"; };
@@ -585,9 +585,9 @@
 		C89464951BC6C2B00055219D /* SchedulerServices+Emulation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SchedulerServices+Emulation.swift"; sourceTree = "<group>"; };
 		C89464961BC6C2B00055219D /* SerialDispatchQueueScheduler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SerialDispatchQueueScheduler.swift; sourceTree = "<group>"; };
 		C89464971BC6C2B00055219D /* SchedulerType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SchedulerType.swift; sourceTree = "<group>"; };
-		C89464991BC6C2B00055219D /* BehaviorSubject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BehaviorSubject.swift; sourceTree = "<group>"; };
-		C894649A1BC6C2B00055219D /* PublishSubject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublishSubject.swift; sourceTree = "<group>"; };
-		C894649B1BC6C2B00055219D /* ReplaySubject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReplaySubject.swift; sourceTree = "<group>"; };
+		C89464991BC6C2B00055219D /* BehaviorSubject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = BehaviorSubject.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		C894649A1BC6C2B00055219D /* PublishSubject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = PublishSubject.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		C894649B1BC6C2B00055219D /* ReplaySubject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ReplaySubject.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		C894649C1BC6C2B00055219D /* SubjectType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubjectType.swift; sourceTree = "<group>"; };
 		C894649D1BC6C2B00055219D /* Variable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Variable.swift; sourceTree = "<group>"; };
 		C894650E1BC6C2BC0055219D /* _RX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _RX.h; sourceTree = "<group>"; };
@@ -600,7 +600,7 @@
 		C89465151BC6C2BC0055219D /* _RXSwizzling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _RXSwizzling.m; sourceTree = "<group>"; };
 		C89465161BC6C2BC0055219D /* CLLocationManager+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CLLocationManager+Rx.swift"; sourceTree = "<group>"; };
 		C89465191BC6C2BC0055219D /* ControlEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ControlEvent.swift; sourceTree = "<group>"; };
-		C894651B1BC6C2BC0055219D /* ControlProperty.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ControlProperty.swift; sourceTree = "<group>"; };
+		C894651B1BC6C2BC0055219D /* ControlProperty.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ControlProperty.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		C89465201BC6C2BC0055219D /* DelegateProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DelegateProxy.swift; sourceTree = "<group>"; };
 		C89465211BC6C2BC0055219D /* DelegateProxyType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DelegateProxyType.swift; sourceTree = "<group>"; };
 		C89465221BC6C2BC0055219D /* Logging.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logging.swift; sourceTree = "<group>"; };
@@ -634,10 +634,10 @@
 		C89465461BC6C2BC0055219D /* RxTextViewDelegateProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxTextViewDelegateProxy.swift; sourceTree = "<group>"; };
 		C89465471BC6C2BC0055219D /* UIActionSheet+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIActionSheet+Rx.swift"; sourceTree = "<group>"; };
 		C89465481BC6C2BC0055219D /* UIAlertView+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIAlertView+Rx.swift"; sourceTree = "<group>"; };
-		C89465491BC6C2BC0055219D /* UIBarButtonItem+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIBarButtonItem+Rx.swift"; sourceTree = "<group>"; };
+		C89465491BC6C2BC0055219D /* UIBarButtonItem+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = "UIBarButtonItem+Rx.swift"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		C894654A1BC6C2BC0055219D /* UIButton+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIButton+Rx.swift"; sourceTree = "<group>"; };
 		C894654B1BC6C2BC0055219D /* UICollectionView+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Rx.swift"; sourceTree = "<group>"; };
-		C894654C1BC6C2BC0055219D /* UIControl+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIControl+Rx.swift"; sourceTree = "<group>"; };
+		C894654C1BC6C2BC0055219D /* UIControl+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = "UIControl+Rx.swift"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		C894654D1BC6C2BC0055219D /* UIDatePicker+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIDatePicker+Rx.swift"; sourceTree = "<group>"; };
 		C894654E1BC6C2BC0055219D /* UIGestureRecognizer+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIGestureRecognizer+Rx.swift"; sourceTree = "<group>"; };
 		C894654F1BC6C2BC0055219D /* UIImageView+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+Rx.swift"; sourceTree = "<group>"; };
@@ -652,7 +652,7 @@
 		C89465581BC6C2BC0055219D /* UITextField+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITextField+Rx.swift"; sourceTree = "<group>"; };
 		C89465591BC6C2BC0055219D /* UITextView+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITextView+Rx.swift"; sourceTree = "<group>"; };
 		C89465601BC6C2BC0055219D /* RxCocoa.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RxCocoa.h; sourceTree = "<group>"; };
-		C89CDB611BCC45DC002063D9 /* ShareReplay1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareReplay1.swift; sourceTree = "<group>"; };
+		C89CDB611BCC45DC002063D9 /* ShareReplay1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ShareReplay1.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		C89CDB621BCC45DC002063D9 /* SkipUntil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SkipUntil.swift; sourceTree = "<group>"; };
 		C8A2A2C71B4049E300F11F09 /* PseudoRandomGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PseudoRandomGenerator.swift; sourceTree = "<group>"; };
 		C8A2A2CA1B404A1200F11F09 /* Randomizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Randomizer.swift; sourceTree = "<group>"; };
@@ -995,7 +995,7 @@
 				C89464461BC6C2B00055219D /* ObservableConvertibleType.swift */,
 				C89464471BC6C2B00055219D /* Observables */,
 				C89464831BC6C2B00055219D /* ObservableType.swift */,
-				C89464841BC6C2B00055219D /* ObserverOf.swift */,
+				C89464841BC6C2B00055219D /* AnyObserver.swift */,
 				C89464851BC6C2B00055219D /* Observers */,
 				C89464891BC6C2B00055219D /* ObserverType+Extensions.swift */,
 				C894648A1BC6C2B00055219D /* ObserverType.swift */,
@@ -1708,7 +1708,7 @@
 				C89465611BC6C2BC0055219D /* _RX.m in Sources */,
 				C80DDED41BCE9046006A1832 /* Driver+Operators+arity.swift in Sources */,
 				C89465841BC6C2BC0055219D /* RxActionSheetDelegateProxy.swift in Sources */,
-				C89464F51BC6C2B00055219D /* ObserverOf.swift in Sources */,
+				C89464F51BC6C2B00055219D /* AnyObserver.swift in Sources */,
 				C89464D71BC6C2B00055219D /* Range.swift in Sources */,
 				C8297E431B6CF905000589EA /* GitHubAPI.swift in Sources */,
 				C89464EB1BC6C2B00055219D /* Observable+Aggregate.swift in Sources */,

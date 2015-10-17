@@ -14,7 +14,7 @@ class ObserverTests: RxTest { }
 extension ObserverTests {
 
     func testConvenienceOn_Next() {
-        var observer: ObserverOf<Int>!
+        var observer: AnyObserver<Int>!
         let a: Observable<Int> = create { o in
             observer = o
             return NopDisposable.instance
@@ -34,7 +34,7 @@ extension ObserverTests {
     }
 
     func testConvenienceOn_Error() {
-        var observer: ObserverOf<Int>!
+        var observer: AnyObserver<Int>!
         let a: Observable<Int> = create { o in
             observer = o
             return NopDisposable.instance
@@ -63,7 +63,7 @@ extension ObserverTests {
     }
 
     func testConvenienceOn_Complete() {
-        var observer: ObserverOf<Int>!
+        var observer: AnyObserver<Int>!
         let a: Observable<Int> = create { o in
             observer = o
             return NopDisposable.instance

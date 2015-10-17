@@ -55,7 +55,7 @@ public class RxCollectionViewSectionedDataSource<S: SectionModelType> : _RxColle
     public typealias CellFactory = (UICollectionView, NSIndexPath, I) -> UICollectionViewCell
     public typealias SupplementaryViewFactory = (UICollectionView, String, NSIndexPath) -> UICollectionReusableView
     
-    public typealias IncrementalUpdateObserver = ObserverOf<Changeset<S>>
+    public typealias IncrementalUpdateObserver = AnyObserver<Changeset<S>>
     
     public typealias IncrementalUpdateDisposeKey = Bag<IncrementalUpdateObserver>.KeyType
     

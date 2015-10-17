@@ -42,7 +42,7 @@ extension NSControl {
             return observer
         }.takeUntil(rx_deallocated)
         
-        return ControlProperty(source: source, observer: ObserverOf { event in
+        return ControlProperty(source: source, observer: AnyObserver { event in
             switch event {
             case .Next(let value):
                 setter(value)
