@@ -12,24 +12,24 @@ class ThrottleSink<O: ObserverType, Scheduler: SchedulerType> : Sink<O>, Observe
     typealias Element = O.E
     typealias ParentType = Throttle<Element, Scheduler>
     
-    let parent: ParentType
+    private let _parent: ParentType
     
-    let lock = NSRecursiveLock()
+    private let _lock = NSRecursiveLock()
     
     // state
-    var id = 0 as UInt64
-    var value: Element? = nil
+    private var _id = 0 as UInt64
+    private var _value: Element? = nil
     
     let cancellable = SerialDisposable()
     
     init(parent: ParentType, observer: O, cancel: Disposable) {
-        self.parent = parent
+        _parent = parent
         
         super.init(observer: observer, cancel: cancel)
     }
     
     func run() -> Disposable {
-        let subscription = parent.source.subscribeSafe(self)
+        let subscription = _parent._source.subscribeSafe(self)
         
         return CompositeDisposable(subscription, cancellable)
     }
@@ -42,40 +42,40 @@ class ThrottleSink<O: ObserverType, Scheduler: SchedulerType> : Sink<O>, Observe
             cancellable.dispose()
         }
        
-        let latestId = self.lock.calculateLocked { () -> UInt64 in
+        let latestId = _lock.calculateLocked { () -> UInt64 in
             let observer = self.observer
             
-            let oldValue = self.value
+            let oldValue = _value
             
-            self.id = self.id &+ 1
+            _id = _id &+ 1
             
             switch event {
             case .Next(let element):
-                self.value = element
+                _value = element
             case .Error:
-                self.value = nil
+                _value = nil
                 observer?.on(event)
-                self.dispose()
+                dispose()
             case .Completed:
-                self.value = nil
+                _value = nil
                 if let value = oldValue {
                     observer?.on(.Next(value))
                 }
                 observer?.on(.Completed)
-                self.dispose()
+                dispose()
             }
             
-            return id
+            return _id
         }
         
         
         switch event {
-        case .Next(_):
+        case .Next:
             let d = SingleAssignmentDisposable()
             self.cancellable.disposable = d
             
-            let scheduler = self.parent.scheduler
-            let dueTime = self.parent.dueTime
+            let scheduler = _parent._scheduler
+            let dueTime = _parent._dueTime
             
             let disposeTimer = scheduler.scheduleRelative(latestId, dueTime: dueTime) { (id) in
                 self.propagate()
@@ -88,9 +88,9 @@ class ThrottleSink<O: ObserverType, Scheduler: SchedulerType> : Sink<O>, Observe
     }
     
     func propagate() {
-        let originalValue: Element? = self.lock.calculateLocked {
-            let originalValue = self.value
-            self.value = nil
+        let originalValue: Element? = _lock.calculateLocked {
+            let originalValue = _value
+            _value = nil
             return originalValue
         }
         
@@ -102,14 +102,14 @@ class ThrottleSink<O: ObserverType, Scheduler: SchedulerType> : Sink<O>, Observe
 
 class Throttle<Element, Scheduler: SchedulerType> : Producer<Element> {
     
-    let source: Observable<Element>
-    let dueTime: Scheduler.TimeInterval
-    let scheduler: Scheduler
+    private let _source: Observable<Element>
+    private let _dueTime: Scheduler.TimeInterval
+    private let _scheduler: Scheduler
     
     init(source: Observable<Element>, dueTime: Scheduler.TimeInterval, scheduler: Scheduler) {
-        self.source = source
-        self.dueTime = dueTime
-        self.scheduler = scheduler
+        _source = source
+        _dueTime = dueTime
+        _scheduler = scheduler
     }
     
     override func run<O: ObserverType where O.E == Element>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
