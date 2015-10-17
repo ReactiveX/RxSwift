@@ -18,7 +18,7 @@ class ConcatSink<S: SequenceType, O: ObserverType where S.Generator.Element : Ob
     
     override func on(event: Event<Element>){
         switch event {
-        case .Next(_):
+        case .Next:
             observer?.on(event)
         case .Error:
             observer?.on(event)
@@ -30,7 +30,7 @@ class ConcatSink<S: SequenceType, O: ObserverType where S.Generator.Element : Ob
     
     override func extract(observable: Observable<E>) -> S.Generator? {
         if let source = observable as? Concat<S> {
-            return source.sources.generate()
+            return source._sources.generate()
         }
         else {
             return nil
@@ -41,10 +41,10 @@ class ConcatSink<S: SequenceType, O: ObserverType where S.Generator.Element : Ob
 class Concat<S: SequenceType where S.Generator.Element : ObservableType> : Producer<S.Generator.Element.E> {
     typealias Element = S.Generator.Element.E
     
-    let sources: S
+    private let _sources: S
     
     init(sources: S) {
-        self.sources = sources
+        _sources = sources
     }
     
     override func run<O: ObserverType where O.E == Element>
@@ -52,6 +52,6 @@ class Concat<S: SequenceType where S.Generator.Element : ObservableType> : Produ
         let sink = ConcatSink<S, O>(observer: observer, cancel: cancel)
         setSink(sink)
         
-        return sink.run(sources.generate())
+        return sink.run(_sources.generate())
     }
 }
