@@ -28,7 +28,7 @@ extension ObservableType {
             
         var ended = false
 
-        self.subscribe { e in
+        _ = self.subscribe { e in
             switch e {
             case .Next(let element):
                 elements.append(element)

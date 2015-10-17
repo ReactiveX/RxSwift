@@ -3,7 +3,31 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [2.0.0-alpha.4](https://github.com/ReactiveX/RxSwift/releases/tag/2.0.0-alpha.4)
+
+#### Updated
+
+* Adds `tvOS` support
+* Adds `watchOS` support
+* Adds auto loading example to example app
+* Restores old `Variable` behavior. Variable doesn't send anything on dealloc.
+* Adds performance tests target.
+* Adds more detailed resource tracing during unit tests (important for further optimizations).
+* Adds `UIStepper` extensions.
+* Adds `UIBarButtonItem` enabled property wrapper.
+* Adds response data to userInfo of error for `rx_response` extensions of `NSURLSession`.
+* Adds `onNext`, `onError` and `onCompleted` convenience methods to `ObserverType`.
+
+#### Fixed
+
+* Fixes problem on some systems with unregistering `CurrentThreadScheduler` from current thread.
+* Fixes retry parameter naming (`maxAttemptCount`).
+* Fixes a lot of unit test warnings.
+* Removes embedding of Swift library with built frameworks.
+
 ## [2.0.0-alpha.3](https://github.com/ReactiveX/RxSwift/releases/tag/2.0.0-alpha.3)
+
+#### Updated
 
 * Renames `ImmediateScheduler` protocol to `ImmediateSchedulerType`
 * Renames `Scheduler` protocol to `SchedulerType`

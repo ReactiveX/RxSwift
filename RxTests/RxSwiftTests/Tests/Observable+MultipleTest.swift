@@ -621,7 +621,7 @@ extension ObservableMultipleTest {
 extension ObservableMultipleTest {
     func testConcat_DefaultScheduler() {
         var sum = 0
-        [just(1), just(2), just(3)].concat().subscribeNext { (e) -> Void in
+        _ = [just(1), just(2), just(3)].concat().subscribeNext { (e) -> Void in
             sum += e
         }
         
@@ -1217,7 +1217,7 @@ extension ObservableMultipleTest {
             sequenceOf(0, 1, 2)
         ).merge()
         
-        observable.subscribeNext { n in
+        _ = observable.subscribeNext { n in
             nEvents++
         }
         
@@ -1233,7 +1233,7 @@ extension ObservableMultipleTest {
             sequenceOf(0, 1, 2)
         ).merge()
         
-        observable.subscribeError { n in
+        _ = observable.subscribeError { n in
             nEvents++
         }
         
@@ -1247,7 +1247,7 @@ extension ObservableMultipleTest {
             failWith(testError)
         ).merge()
 
-        observable.subscribeError { n in
+        _ = observable.subscribeError { n in
             nEvents++
         }
         
@@ -1258,7 +1258,7 @@ extension ObservableMultipleTest {
         var nEvents = 0
         
         let observable: Observable<Int> = (empty() as Observable<Observable<Int>>).merge()
-        observable.subscribeCompleted {
+        _ = observable.subscribeCompleted {
             nEvents++
         }
         
@@ -1269,7 +1269,7 @@ extension ObservableMultipleTest {
         var nEvents = 0
         
         let observable: Observable<Int> = just(empty()).merge()
-        observable.subscribeCompleted { n in
+        _ = observable.subscribeCompleted { n in
             nEvents++
         }
         
@@ -1285,7 +1285,7 @@ extension ObservableMultipleTest {
             sequenceOf(0, 1, 2)
         ).merge(maxConcurrent: 1)
         
-        observable.subscribeNext { n in
+        _ = observable.subscribeNext { n in
             nEvents++
         }
         
@@ -1301,7 +1301,7 @@ extension ObservableMultipleTest {
             sequenceOf(0, 1, 2)
         ).merge(maxConcurrent: 1)
         
-        observable.subscribeError { n in
+        _ = observable.subscribeError { n in
             nEvents++
         }
         
@@ -1315,7 +1315,7 @@ extension ObservableMultipleTest {
             failWith(testError)
         ).merge(maxConcurrent: 1)
 
-        observable.subscribeError { n in
+        _ = observable.subscribeError { n in
             nEvents++
         }
         
@@ -1327,7 +1327,7 @@ extension ObservableMultipleTest {
         
         let observable: Observable<Int> = (empty() as Observable<Observable<Int>>).merge(maxConcurrent: 1)
 
-        observable.subscribeCompleted {
+        _ = observable.subscribeCompleted {
             nEvents++
         }
         
@@ -1339,7 +1339,7 @@ extension ObservableMultipleTest {
         
         let observable: Observable<Int> = just(empty()).merge(maxConcurrent: 1)
 
-        observable.subscribeCompleted { n in
+        _ = observable.subscribeCompleted { n in
             nEvents++
         }
         
@@ -2160,7 +2160,7 @@ extension ObservableMultipleTest {
         var nEvents = 0
         
         let observable = combineLatest(sequenceOf(0, 1, 2), sequenceOf(0, 1, 2)) { $0 + $1 }
-        observable.subscribeNext { n in
+        _ = observable.subscribeNext { n in
             nEvents++
         }
         
@@ -2175,7 +2175,7 @@ extension ObservableMultipleTest {
             sequenceOf(0, 1, 2)
         ) { $0 + $1 }
 
-        observable.subscribeError { n in
+        _ = observable.subscribeError { n in
             nEvents++
         }
         
@@ -2190,7 +2190,7 @@ extension ObservableMultipleTest {
             sequenceOf(0, 1, 2)
         ) { $0 + $1 }
 
-        observable .subscribeError { n in
+        _ = observable.subscribeError { n in
             nEvents++
         }
         
@@ -2206,7 +2206,7 @@ extension ObservableMultipleTest {
             sequenceOf(0, 1, 2)
             ) { $0 + $1 }
 
-        observable.subscribeCompleted {
+        _ = observable.subscribeCompleted {
             nEvents++
         }
         
@@ -3596,5 +3596,356 @@ extension ObservableMultipleTest {
         XCTAssertEqual(e1.subscriptions, [Subscription(200, 230)])
         XCTAssertEqual(e2.subscriptions, [Subscription(200, 230)])
         XCTAssertEqual(e3.subscriptions, [Subscription(200, 230)])
+    }
+}
+
+
+// MARK:  skipUntil
+
+extension ObservableMultipleTest {
+    func testSkipUntil_SomeData_Next() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let l = scheduler.createHotObservable([
+            next(150, 1),
+            next(210, 2),
+            next(220, 3),
+            next(230, 4), //!
+            next(240, 5), //!
+            completed(250)
+        ])
+        
+        let r = scheduler.createHotObservable([
+            next(150, 1),
+            next(225, 99),
+            completed(230)
+        ])
+        
+        let res = scheduler.start {
+            l.skipUntil(r)
+        }
+    
+        XCTAssertEqual(res.messages, [
+            next(230, 4),
+            next(240, 5),
+            completed(250)
+        ])
+        
+        XCTAssertEqual(l.subscriptions, [
+            Subscription(200, 250)
+        ])
+
+        XCTAssertEqual(r.subscriptions, [
+            Subscription(200, 225)
+        ])
+    }
+    
+    func testSkipUntil_SomeData_Error() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let l = scheduler.createHotObservable([
+            next(150, 1),
+            next(210, 2),
+            next(220, 3),
+            next(230, 4),
+            next(240, 5),
+            completed(250)
+        ])
+        
+        let r = scheduler.createHotObservable([
+            next(150, 1),
+            error(225, testError)
+        ])
+        
+        let res = scheduler.start {
+            l.skipUntil(r)
+        }
+    
+        XCTAssertEqual(res.messages, [
+            error(225, testError),
+        ])
+        
+        XCTAssertEqual(l.subscriptions, [
+            Subscription(200, 225)
+        ])
+
+        XCTAssertEqual(r.subscriptions, [
+            Subscription(200, 225)
+        ])
+    }
+    
+    func testSkipUntil_Error_SomeData() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let l = scheduler.createHotObservable([
+            next(150, 1),
+            next(210, 2),
+            error(220, testError)
+ 
+        ])
+        
+        let r = scheduler.createHotObservable([
+            next(150, 1),
+            next(230, 2),
+            completed(250)
+        ])
+        
+        let res = scheduler.start {
+            l.skipUntil(r)
+        }
+        
+        XCTAssertEqual(res.messages, [
+            error(220, testError),
+        ])
+        
+        XCTAssertEqual(l.subscriptions, [
+            Subscription(200, 220)
+        ])
+
+        XCTAssertEqual(r.subscriptions, [
+            Subscription(200, 220)
+        ])
+    }
+    
+    func testSkipUntil_SomeData_Empty() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let l = scheduler.createHotObservable([
+            next(150, 1),
+            next(210, 2),
+            next(220, 3),
+            next(230, 4),
+            next(240, 5),
+            completed(250)
+        ])
+        
+        let r = scheduler.createHotObservable([
+            next(150, 1),
+            completed(225)
+        ])
+        
+        let res = scheduler.start {
+            l.skipUntil(r)
+        }
+        
+        XCTAssertEqual(res.messages, [
+        ])
+        
+        XCTAssertEqual(l.subscriptions, [
+            Subscription(200, 250)
+        ])
+
+        XCTAssertEqual(r.subscriptions, [
+            Subscription(200, 225)
+        ])
+    }
+    
+    func testSkipUntil_Never_Next() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let l = scheduler.createHotObservable([
+            next(150, 1)
+        ])
+        
+        let r = scheduler.createHotObservable([
+            next(150, 1),
+            next(225, 2), //!
+            completed(250)
+        ])
+        
+        let res = scheduler.start {
+            l.skipUntil(r)
+        }
+        
+        XCTAssertEqual(res.messages, [
+        ])
+        
+        XCTAssertEqual(l.subscriptions, [
+            Subscription(200, 1000)
+        ])
+
+        XCTAssertEqual(r.subscriptions, [
+            Subscription(200, 225)
+        ])
+    }
+    
+    func testSkipUntil_Never_Error1() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let l = scheduler.createHotObservable([
+            next(150, 1)
+        ])
+        
+        let r = scheduler.createHotObservable([
+            next(150, 1),
+            error(225, testError)
+        ])
+        
+        let res = scheduler.start {
+            l.skipUntil(r)
+        }
+        
+        XCTAssertEqual(res.messages, [
+            error(225, testError)
+        ])
+        
+        XCTAssertEqual(l.subscriptions, [
+            Subscription(200, 225)
+        ])
+
+        XCTAssertEqual(r.subscriptions, [
+            Subscription(200, 225)
+        ])
+    }
+    
+    func testSkipUntil_SomeData_Error2() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let l = scheduler.createHotObservable([
+            next(150, 1),
+            next(210, 2),
+            next(220, 3),
+            next(230, 4),
+            next(240, 5),
+            completed(250)
+        ])
+        
+        let r = scheduler.createHotObservable([
+            next(150, 1),
+            error(300, testError)
+        ])
+        
+        let res = scheduler.start {
+            l.skipUntil(r)
+        }
+        
+        XCTAssertEqual(res.messages, [
+            error(300, testError)
+        ])
+        
+        XCTAssertEqual(l.subscriptions, [
+            Subscription(200, 250)
+        ])
+
+        XCTAssertEqual(r.subscriptions, [
+            Subscription(200, 300)
+        ])
+    }
+    
+    func testSkipUntil_SomeData_Never() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let l = scheduler.createHotObservable([
+            next(150, 1),
+            next(210, 2),
+            next(220, 3),
+            next(230, 4),
+            next(240, 5),
+            completed(250)
+        ])
+        
+        let r = scheduler.createHotObservable([
+            next(150, 1),
+        ])
+        
+        let res = scheduler.start {
+            l.skipUntil(r)
+        }
+        
+        XCTAssertEqual(res.messages, [
+        ])
+        
+        XCTAssertEqual(l.subscriptions, [
+            Subscription(200, 250)
+        ])
+
+        XCTAssertEqual(r.subscriptions, [
+            Subscription(200, 1000)
+        ])
+    }
+    
+    func testSkipUntil_Never_Empty() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let l = scheduler.createHotObservable([
+            next(150, 1),
+        ])
+        
+        let r = scheduler.createHotObservable([
+            next(150, 1),
+            completed(225)
+        ])
+        
+        let res = scheduler.start {
+            l.skipUntil(r)
+        }
+        
+        XCTAssertEqual(res.messages, [
+        ])
+        
+        XCTAssertEqual(l.subscriptions, [
+            Subscription(200, 1000)
+        ])
+        
+        XCTAssertEqual(r.subscriptions, [
+            Subscription(200, 225)
+        ])
+    }
+    
+    func testSkipUntil_Never_Never() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let l = scheduler.createHotObservable([
+            next(150, 1),
+        ])
+        
+        let r = scheduler.createHotObservable([
+            next(150, 1),
+        ])
+        
+        let res = scheduler.start {
+            l.skipUntil(r)
+        }
+        
+        XCTAssertEqual(res.messages, [
+        ])
+        
+        XCTAssertEqual(l.subscriptions, [
+            Subscription(200, 1000)
+        ])
+
+        XCTAssertEqual(r.subscriptions, [
+            Subscription(200, 1000)
+        ])
+    }
+    
+    func testSkipUntil_HasCompletedCausesDisposal() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        var disposed = false
+        
+        let l = scheduler.createHotObservable([
+            next(150, 1),
+            next(210, 2),
+            next(220, 3),
+            next(230, 4),
+            next(240, 5),
+            completed(250)
+        ])
+        
+        let r: Observable<Int> = create { o in
+            return AnonymousDisposable {
+                disposed = true
+            }
+        }
+        
+        let res = scheduler.start {
+            l.skipUntil(r)
+        }
+        
+        XCTAssertEqual(res.messages, [
+        ])
+        
+        XCTAssert(disposed, "disposed")
     }
 }

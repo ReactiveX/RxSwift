@@ -321,7 +321,7 @@ extension UISearchBar {
         return proxyForObject(self) as RxSearchBarDelegateProxy
     }
 
-    public var rx_searchText: Observable<String> {
+    public var rx_text: Observable<String> {
         return defer { [weak self] in
             let text = self?.text ?? ""
 
@@ -341,7 +341,7 @@ This is how that API can be now used
 
 ```swift
 
-searchBar.rx_searchText
+searchBar.rx_text
     .subscribeNext { searchText in
         print("Current search text '\(searchText)'")
     }
@@ -454,6 +454,8 @@ Open Rx.xcworkspace, choose `RxExample` and hit run. This method will build ever
 
 ### [CocoaPods](https://guides.cocoapods.org/using/using-cocoapods.html)
 
+**:warning: IMPORTANT! For tvOS support through CocoaPods use [this hack](https://github.com/orta/cocoapods-expert-difficulty) until `0.39` is released. :warning:**
+
 ```
 # Podfile
 use_frameworks!
@@ -474,7 +476,7 @@ $ pod install
 Add this to `Cartfile`
 
 ```
-git "git@github.com:ReactiveX/RxSwift.git" "2.0.0-alpha.3"
+git "git@github.com:ReactiveX/RxSwift.git" "2.0.0-alpha.4"
 ```
 
 ```

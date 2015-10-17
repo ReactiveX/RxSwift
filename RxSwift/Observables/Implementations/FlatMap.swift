@@ -144,14 +144,15 @@ class FlatMapSink1<SourceType, S: ObservableType, O : ObserverType where S.E == 
 }
 
 class FlatMapSink2<SourceType, S: ObservableType, O: ObserverType where S.E == O.E> : FlatMapSink<SourceType, S, O> {
-    var index = 0
+    
+    private var _index = 0
     
     override init(parent: Parent, observer: O, cancel: Disposable) {
         super.init(parent: parent, observer: observer, cancel: cancel)
     }
     
     override func performMap(element: SourceType) throws -> S {
-        return try self.parent.selector2!(element, index++)
+        return try parent.selector2!(element, try incrementChecked(&_index))
     }
 }
 

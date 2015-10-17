@@ -23,12 +23,12 @@ function test(testName, callback) {
   callback(check, pass)
 }
 
-function log(string) {
-  UIALogger.logMessage(string)
+function log(element) {
+  UIALogger.logMessage(element.toString())
 }
 
-function debug(string) {
-  UIALogger.logDebug(string)
+function debug(element) {
+  UIALogger.logDebug(element.toString())
 }
 
 function logElement(element) {
@@ -48,10 +48,7 @@ function sleep(time) {
 }
 
 function writeInElement(element, text) {
-  var char
   for (var i = 1; i < text.length + 1; i++) {
     element.setValue(text.substring(0, i));
   }
 }
-
-

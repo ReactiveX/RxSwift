@@ -95,29 +95,31 @@ class GitHubSearchRepositoriesAPI {
     }
 
     private func recursivelySearch(loadedSoFar: [Repository], loadNextURL: NSURL, loadNextPageTrigger: Observable<Void>) -> Observable<SearchRepositoryResponse> {
-        return loadSearchURL(loadNextURL).flatMap { (newPageRepositoriesResponse, nextURL) -> Observable<SearchRepositoryResponse> in
-            // in case access denied, just stop
-            guard case .Repositories(let newPageRepositories) = newPageRepositoriesResponse else {
-                return just(newPageRepositoriesResponse)
+        return loadSearchURL(loadNextURL)
+            .retry(3)
+            .flatMap { (newPageRepositoriesResponse, nextURL) -> Observable<SearchRepositoryResponse> in
+                // in case access denied, just stop
+                guard case .Repositories(let newPageRepositories) = newPageRepositoriesResponse else {
+                    return just(newPageRepositoriesResponse)
+                }
+
+                var loadedRepositories = loadedSoFar
+                loadedRepositories.appendContentsOf(newPageRepositories)
+
+                // if next page can't be loaded, just return what was loaded, and stop
+                guard let nextURL = nextURL else {
+                    return just(.Repositories(loadedRepositories))
+                }
+
+                return [
+                    // return loaded immediately
+                    just(.Repositories(loadedRepositories)),
+                    // wait until next page can be loaded
+                    never().takeUntil(loadNextPageTrigger),
+                    // load next page
+                    self.recursivelySearch(loadedRepositories, loadNextURL: nextURL, loadNextPageTrigger: loadNextPageTrigger)
+                ].concat()
             }
-
-            var loadedRepositories = loadedSoFar
-            loadedRepositories.appendContentsOf(newPageRepositories)
-
-            // if next page can't be loaded, just return what was loaded, and stop
-            guard let nextURL = nextURL else {
-                return just(.Repositories(loadedRepositories))
-            }
-
-            return [
-                // return loaded immediately
-                just(.Repositories(loadedRepositories)),
-                // wait until next page can be loaded
-                never().takeUntil(loadNextPageTrigger),
-                // load next page
-                self.recursivelySearch(loadedRepositories, loadNextURL: nextURL, loadNextPageTrigger: loadNextPageTrigger)
-            ].concat()
-        }
     }
 
     private func loadSearchURL(searchURL: NSURL) -> Observable<(response: SearchRepositoryResponse, nextURL: NSURL?)> {
@@ -191,14 +193,12 @@ class GitHubSearchRepositoriesViewController: ViewController, UITableViewDelegat
         let $: Dependencies = Dependencies.sharedDependencies
 
         let tableView = self.tableView
+        let searchBar = self.searchBar
 
         let allRepositories = repositories
             .map { repositories in
                 return [SectionModel(model: "Repositories", items: repositories)]
             }
-
-        tableView.rx_setDelegate(self)
-            .addDisposableTo(disposeBag)
 
         dataSource.cellFactory = { (tv, ip, repository: Repository) in
             let cell = tv.dequeueReusableCellWithIdentifier("Cell")!
@@ -208,14 +208,15 @@ class GitHubSearchRepositoriesViewController: ViewController, UITableViewDelegat
         }
 
         dataSource.titleForHeaderInSection = { [unowned dataSource] sectionIndex in
-            return dataSource.sectionAtIndex(sectionIndex).model
+            let section = dataSource.sectionAtIndex(sectionIndex)
+            return section.items.count > 0 ? "Repositories (\(section.items.count))" : "No repositories found"
         }
 
         // reactive data source
         allRepositories
             .bindTo(tableView.rx_itemsWithDataSource(dataSource))
             .addDisposableTo(disposeBag)
-        
+
         let loadNextPageTrigger = tableView.rx_contentOffset
             .flatMap { offset in
                 GitHubSearchRepositoriesViewController.isNearTheBottomEdge(offset, tableView)
@@ -231,7 +232,6 @@ class GitHubSearchRepositoriesViewController: ViewController, UITableViewDelegat
                     return just(.Repositories([]))
                 } else {
                     return GitHubSearchRepositoriesAPI.sharedAPI.search(query, loadNextPageTrigger: loadNextPageTrigger)
-                        .retry(3)
                         .catchErrorJustReturn(.Repositories([]))
                 }
             }
@@ -246,28 +246,24 @@ class GitHubSearchRepositoriesViewController: ViewController, UITableViewDelegat
                 }
             }
             .addDisposableTo(disposeBag)
+
+        // dismiss keyboard on scroll
+        tableView.rx_contentOffset
+            .subscribe { _ in
+                if searchBar.isFirstResponder() {
+                    _ = searchBar.resignFirstResponder()
+                }
+            }
+            .addDisposableTo(disposeBag)
+
+        // so normal delegate customization can also be used
+        tableView.rx_setDelegate(self)
+            .addDisposableTo(disposeBag)
     }
 
-    override func setEditing(editing: Bool, animated: Bool) {
-        super.setEditing(editing, animated: animated)
-        tableView.editing = editing
-    }
-    
     // MARK: Table view delegate
     
-    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let title = dataSource.sectionAtIndex(section)
-        
-        let label = UILabel(frame: CGRect.zero)
-        label.text = "  \(title)"
-        label.textColor = UIColor.whiteColor()
-        label.backgroundColor = UIColor.darkGrayColor()
-        label.alpha = 0.9
-        
-        return label
-    }
-    
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 40
+        return 30
     }
 }

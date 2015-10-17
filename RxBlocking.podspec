@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "RxBlocking"
-  s.version          = "2.0.0-alpha.3"
+  s.version          = "2.0.0-alpha.4"
   s.summary          = "RxSwift Blocking operatos"
   s.description      = <<-DESC
                         Set of blocking operators for unit testing
@@ -15,6 +15,7 @@ Pod::Spec.new do |s|
   s.ios.deployment_target = '8.0'
   s.osx.deployment_target = '10.9'
   s.watchos.deployment_target = '2.0'
+  s.tvos.deployment_target = '9.0'
 
   s.source_files          = 'RxBlocking/**/*.swift'
 

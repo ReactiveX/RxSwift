@@ -1,20 +1,17 @@
+. scripts/common.sh
 
-IS_LOCAL=0
-IS_QUICK=1
-if [ "$1" == "l" ]; then
-	echo "Local test"
-	IS_LOCAL=1
-fi
-
-if [ "$1" == "f" ]; then
-	echo "Full"
-	IS_QUICK=0
-else
-	echo "Quick"
-fi
-
-ISLOCAL="${IS_LOCAL}" . scripts/common.sh
 TV_OS=0
+RELEASE_TEST=0
+
+if [ `xcodebuild -showsdks | grep tvOS | wc -l` -ge 4 ]; then
+	printf "${GREEN}tvOS found${RESET}\n"
+	TV_OS=1
+fi
+
+if [ "$1" == "r" ]; then
+	printf "${GREEN}Pre release tests on, hang on tight ...${RESET}"
+	RELEASE_TEST=1
+fi
 
 # ios 7 sim
 #if [ `xcrun simctl list | grep "${DEFAULT_IOS7_SIMULATOR}" | wc -l` == 0 ]; then
@@ -30,43 +27,11 @@ TV_OS=0
 #	echo "${DEFAULT_IOS8_SIMULATOR} exists"
 #fi
 
-if [ "${IS_LOCAL}" -eq 1 ]; then
+if [ "${RELEASE_TEST}" -eq 1 ]; then
 	. scripts/automation-tests.sh
 fi
 
-if [ `xcodebuild -showsdks | grep tvOS | wc -l` -ge 4 ]; then
-	printf "${GREEN}tvOS found${RESET}\n"
-	TV_OS=1
-fi
-
-#ios 9 sim
-if simulator_available "${DEFAULT_IOS9_SIMULATOR}"; then
-	echo "${DEFAULT_IOS9_SIMULATOR} exists"
-else
-		xcrun simctl create "${DEFAULT_IOS9_SIMULATOR}" 'iPhone 6' "${DEFAULT_IOS_SIMULATOR_RUNTIME}"
-fi
-
-#watch os 2 sim
-if simulator_available "${DEFAULT_WATCHOS2_SIMULATOR}"; then
-	echo "${DEFAULT_WATCHOS2_SIMULATOR} exists"
-else
-	xcrun simctl create "${DEFAULT_WATCHOS2_SIMULATOR}" 'Apple Watch - 38mm' 'com.apple.CoreSimulator.SimRuntime.watchOS-2-0'
-fi
-
-#watch os 2 sim
-if [ "${TV_OS}" -eq 1 ]; then
-	if simulator_available "${DEFAULT_TVOS_SIMULATOR}"; then
-		echo "${DEFAULT_TVOS_SIMULATOR} exists"
-	else
-		xcrun simctl create $DEFAULT_TVOS_SIMULATOR 'Apple TV 1080p' 'com.apple.CoreSimulator.SimRuntime.tvOS-9-0'
-	fi
-fi
-
-if [ "${IS_QUICK}" -eq 1 ]; then
-	CONFIGURATIONS=(Release)
-else
-	CONFIGURATIONS=(Debug Release-Tests Release)
-fi
+CONFIGURATIONS=(Release)
 
 # make sure watchos builds
 # temporary solution
@@ -148,7 +113,7 @@ do
 	done
 done
 
-if [ "${IS_LOCAL}" -eq 1 ]; then
+if [ "${RELEASE_TEST}" -eq 1 ]; then
 	mdast -u mdast-slug -u mdast-validate-links ./*.md
 	mdast -u mdast-slug -u mdast-validate-links ./**/*.md
 fi

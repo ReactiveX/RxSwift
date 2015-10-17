@@ -160,7 +160,7 @@ Returns existing proxy for object or installs new instance of delegate proxy.
             return proxyForObject(self) as RxSearchBarDelegateProxy
         }
         
-        public var rx_searchText: ControlProperty<String> {
+        public var rx_text: ControlProperty<String> {
             let source: Observable<String> = self.rx_delegate.observe("searchBar:textDidChange:")
             ...
         }

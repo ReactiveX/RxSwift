@@ -240,7 +240,9 @@ class DelegateProxyTest : RxTest {
             
             let sentArgument = NSIndexPath(index: 0)
             
-            view.rx_proxy.observe("threeDView:didGetXXX:")
+            _ = view
+                .rx_proxy
+                .observe("threeDView:didGetXXX:")
                 .subscribeCompleted {
                     completed.value = true
                 }

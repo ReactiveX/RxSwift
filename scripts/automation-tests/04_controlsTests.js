@@ -1,7 +1,30 @@
 
 
-// UIATarget.localTarget().delay( 15 );
+test("----- UIAlertView tap -----", function (check, pass) {
 
+  UIATarget.localTarget().frontMostApp().mainWindow().tableViews()[0].cells()[4].tap();
+
+  UIATarget.onAlert = function(alert){
+    UIATarget.localTarget().onAlert = null
+    UIATarget.localTarget().frontMostApp().alert().buttons()["Three"].tap();
+    UIATarget.localTarget().delay( 1 );
+
+    check(function () {
+      var textValue = UIATarget.localTarget().frontMostApp().mainWindow().staticTexts()["debugLabel"].value();
+      return textValue === "UIAlertView didDismissWithButtonIndex 3";
+    });
+
+    UIATarget.onAlert = function () {
+      return false;
+    };
+
+    UIATarget.localTarget().frontMostApp().navigationBar().leftButton().tap();
+    return false;
+  }
+
+  UIATarget.localTarget().frontMostApp().mainWindow().buttons()["Open AlertView"].tap();
+  UIATarget.localTarget().delay( 4 );
+});
 
 test("----- UIBarButtonItem tap -----", function (check, pass) {
 
@@ -89,9 +112,9 @@ test("----- UITextField text -----", function (check, pass) {
 
   UIATarget.localTarget().frontMostApp().mainWindow().tableViews()[0].cells()[4].tap();
 
-  UIATarget.localTarget().frontMostApp().mainWindow().textFields()[0].textFields()[0].tap();
+  UIATarget.localTarget().frontMostApp().mainWindow().textFields()[0].tap();
   // UIATarget.localTarget().frontMostApp().keyboard().typeString("t");// fails if software keyboard is disabled
-  UIATarget.localTarget().frontMostApp().mainWindow().textFields()[0].textFields()[0].setValue("t");
+  UIATarget.localTarget().frontMostApp().mainWindow().textFields()[0].setValue("t");
 
   check(function () {
     var textValue = UIATarget.localTarget().frontMostApp().mainWindow().staticTexts()["debugLabel"].value();
@@ -156,31 +179,4 @@ test("----- UIActionSheet tap -----", function (check, pass) {
   });
 
   UIATarget.localTarget().frontMostApp().navigationBar().leftButton().tap();
-});
-
-
-test("----- UIAlertView tap -----", function (check, pass) {
-
-  UIATarget.localTarget().frontMostApp().mainWindow().tableViews()[0].cells()[4].tap();
-
-  UIATarget.localTarget().onAlert = function(alert){
-    UIATarget.localTarget().onAlert = null
-    UIATarget.localTarget().frontMostApp().alert().buttons()["Three"].tap();
-    UIATarget.localTarget().delay( 2 );
-
-    check(function () {
-      var textValue = UIATarget.localTarget().frontMostApp().mainWindow().staticTexts()["debugLabel"].value();
-      return textValue === "UIAlertView didDismissWithButtonIndex 3";
-    });
-
-    UIATarget.localTarget().onAlert = function () {
-      return false;
-    };
-
-    UIATarget.localTarget().frontMostApp().navigationBar().leftButton().tap();
-    return false;
-  }
-
-  UIATarget.localTarget().frontMostApp().mainWindow().buttons()["Open AlertView"].tap();
-  UIATarget.localTarget().delay( 4 );
 });

@@ -48,7 +48,7 @@ extension AnonymousObservableTests {
         
         var elements = [Int]()
         
-        a.subscribeNext { n in
+        _ = a.subscribeNext { n in
             elements.append(n)
         }
 
@@ -71,8 +71,8 @@ extension AnonymousObservableTests {
         } as Observable<Int>
         
         var elements = [Int]()
-        
-        a.subscribeNext { n in
+
+        _ = a.subscribeNext { n in
             elements.append(n)
         }
         

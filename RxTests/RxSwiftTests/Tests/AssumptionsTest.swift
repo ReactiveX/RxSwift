@@ -65,12 +65,12 @@ class AssumptionsTest : RxTest {
     }
     
     func testFunctionReturnValueOverload() {
-        returnSomething()
+        _ = returnSomething()
             .subscribeNext { (n: AnyObject?) in
                 XCTAssertEqual("\(n ?? NSNull())", "a")
             }
 
-        returnSomething()
+        _ = returnSomething()
             .subscribeNext { (n: CGRect?) in
                 XCTAssertEqual(n!, CGRectMake(0, 0, 100, 100))
              }

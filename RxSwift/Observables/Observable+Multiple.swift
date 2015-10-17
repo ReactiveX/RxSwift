@@ -165,6 +165,22 @@ extension ObservableType {
     }
 }
 
+// skipUntil
+
+extension ObservableType {
+    
+    /**
+    Returns the elements from the source observable sequence until the other observable sequence produces an element.
+    
+    - parameter other: Observable sequence that terminates propagation of elements of the source sequence.
+    - returns: An observable sequence containing the elements of the source sequence up to the point the other sequence interrupted further propagation.
+    */
+    public func skipUntil<O: ObservableType>(other: O)
+        -> Observable<E> {
+        return SkipUntil(source: self.asObservable(), other: other.asObservable())
+    }
+}
+
 // amb
 
 extension ObservableType {

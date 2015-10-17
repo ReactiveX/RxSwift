@@ -22,7 +22,7 @@ extension ObserverTests {
         
         var elements = [Int]()
         
-        a.subscribeNext { n in
+        _ = a.subscribeNext { n in
             elements.append(n)
         }
         
@@ -43,7 +43,7 @@ extension ObserverTests {
         var elements = [Int]()
         var errrorNotification: NSError!
         
-        a.subscribe(
+        _ = a.subscribe(
             next: { n in elements.append(n) },
             error: { e in
                 errrorNotification = e as NSError
@@ -71,7 +71,7 @@ extension ObserverTests {
         
         var elements = [Int]()
         
-        a.subscribeNext { n in
+        _ = a.subscribeNext { n in
             elements.append(n)
         }
         
