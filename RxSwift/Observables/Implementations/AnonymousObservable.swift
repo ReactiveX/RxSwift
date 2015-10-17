@@ -36,12 +36,12 @@ class AnonymousObservableSink<O: ObserverType> : Sink<O>, ObserverType {
     }
     
     func run(parent: Parent) -> Disposable {
-        return parent._subscribeHandler(ObserverOf(self))
+        return parent._subscribeHandler(AnyObserver(self))
     }
 }
 
 public class AnonymousObservable<Element> : Producer<Element> {
-    public typealias SubscribeHandler = (ObserverOf<Element>) -> Disposable
+    public typealias SubscribeHandler = (AnyObserver<Element>) -> Disposable
 
     public let _subscribeHandler: SubscribeHandler
     

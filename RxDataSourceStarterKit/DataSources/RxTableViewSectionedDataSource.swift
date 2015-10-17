@@ -64,7 +64,7 @@ public class RxTableViewSectionedDataSource<S: SectionModelType> : _RxTableViewS
     public typealias Section = S
     public typealias CellFactory = (UITableView, NSIndexPath, I) -> UITableViewCell
     
-    public typealias IncrementalUpdateObserver = ObserverOf<Changeset<S>>
+    public typealias IncrementalUpdateObserver = AnyObserver<Changeset<S>>
     
     public typealias IncrementalUpdateDisposeKey = Bag<IncrementalUpdateObserver>.KeyType
     

@@ -38,7 +38,7 @@ extension UITextView {
                 .startWith(text)
             }
         
-        return ControlProperty(source: source, observer: ObserverOf { [weak self] event in
+        return ControlProperty(source: source, observer: AnyObserver { [weak self] event in
             switch event {
             case .Next(let value):
                 self?.text = value

@@ -12,7 +12,7 @@ class ColdObservable<Element: Equatable> : ObservableType, ObservableConvertible
     typealias E = Element
 
     typealias Events = Recorded<Element>
-    typealias Observer = ObserverOf<Element>
+    typealias Observer = AnyObserver<Element>
     
     let testScheduler: TestScheduler
     
@@ -29,7 +29,7 @@ class ColdObservable<Element: Equatable> : ObservableType, ObservableConvertible
     }
     
     func subscribe<O : ObserverType where O.E == E>(observer: O) -> Disposable {
-        let key = observers.insert(ObserverOf(observer))
+        let key = observers.insert(AnyObserver(observer))
         subscriptions.append(Subscription(self.testScheduler.now))
         
         let i = self.subscriptions.count - 1

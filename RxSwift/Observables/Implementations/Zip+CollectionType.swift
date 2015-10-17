@@ -105,7 +105,7 @@ class ZipCollectionTypeSink<C: CollectionType, R, O: ObserverType where C.Genera
         for i in _parent.sources.startIndex ..< _parent.sources.endIndex {
             let index = j
             let source = _parent.sources[i].asObservable()
-            _subscriptions[j].disposable = source.subscribeSafe(ObserverOf { event in
+            _subscriptions[j].disposable = source.subscribeSafe(AnyObserver { event in
                 self.on(event, atIndex: index)
                 })
             j++

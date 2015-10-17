@@ -10,7 +10,7 @@ import Foundation
 
 private class BehaviorSubjectSubscription<Element> : Disposable {
     typealias Parent = BehaviorSubject<Element>
-    typealias DisposeKey = Bag<ObserverOf<Element>>.KeyType
+    typealias DisposeKey = Bag<AnyObserver<Element>>.KeyType
     
     let parent: Parent
     var disposeKey: DisposeKey?
@@ -43,7 +43,7 @@ public final class BehaviorSubject<Element> : Observable<Element>, SubjectType, 
     // state
     private var _disposed = false
     private var _value: Element
-    private var observers = Bag<ObserverOf<Element>>()
+    private var observers = Bag<AnyObserver<Element>>()
     private var stoppedEvent: Event<Element>?
 
     /**

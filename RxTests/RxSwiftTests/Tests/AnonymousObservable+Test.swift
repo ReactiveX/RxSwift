@@ -16,7 +16,7 @@ class AnonymousObservableTests : RxTest {
 
 extension AnonymousObservableTests {
     func testAnonymousObservable_detachesOnDispose() {
-        var observer: ObserverOf<Int>!
+        var observer: AnyObserver<Int>!
         let a = create { o in
             observer = o
             return NopDisposable.instance
@@ -40,7 +40,7 @@ extension AnonymousObservableTests {
     }
     
     func testAnonymousObservable_detachesOnComplete() {
-        var observer: ObserverOf<Int>!
+        var observer: AnyObserver<Int>!
         let a = create { o in
             observer = o
             return NopDisposable.instance
@@ -64,7 +64,7 @@ extension AnonymousObservableTests {
     }
 
     func testAnonymousObservable_detachesOnError() {
-        var observer: ObserverOf<Int>!
+        var observer: AnyObserver<Int>!
         let a = create { o in
             observer = o
             return NopDisposable.instance

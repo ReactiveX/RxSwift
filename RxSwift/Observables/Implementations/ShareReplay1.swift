@@ -17,7 +17,7 @@ class ShareReplay1<Element> : Observable<Element>, ObserverType {
     private var _subscription: Disposable?
     private var _element: Element?
     private var _stopEvent = nil as Event<Element>?
-    private var _observers = Bag<ObserverOf<Element>>()
+    private var _observers = Bag<AnyObserver<Element>>()
 
     init(source: Observable<Element>) {
         self._source = source
@@ -36,7 +36,7 @@ class ShareReplay1<Element> : Observable<Element>, ObserverType {
 
             let initialCount = self._observers.count
 
-            let observerKey = self._observers.insert(ObserverOf(observer))
+            let observerKey = self._observers.insert(AnyObserver(observer))
 
             if initialCount == 0 {
                 self._subscription = self._source.subscribe(self)

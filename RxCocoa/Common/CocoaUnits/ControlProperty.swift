@@ -38,9 +38,9 @@ public struct ControlProperty<PropertyType> : ControlPropertyType {
     public typealias E = PropertyType
     
     let source: Observable<PropertyType>
-    let observer: ObserverOf<PropertyType>
+    let observer: AnyObserver<PropertyType>
     
-    init(source: Observable<PropertyType>, observer: ObserverOf<PropertyType>) {
+    init(source: Observable<PropertyType>, observer: AnyObserver<PropertyType>) {
         self.source = source.subscribeOn(MainScheduler.sharedInstance)
         self.observer = observer
     }
