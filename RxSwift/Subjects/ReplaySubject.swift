@@ -19,7 +19,7 @@ public class ReplaySubject<Element> : Observable<Element>, SubjectType, Observer
     typealias DisposeKey = Bag<ObserverOf<Element>>.KeyType
     
     func unsubscribe(key: DisposeKey) {
-        return abstractMethod()
+        abstractMethod()
     }
     
     /**
@@ -28,7 +28,7 @@ public class ReplaySubject<Element> : Observable<Element>, SubjectType, Observer
     - parameter event: Event to send to the observers.
     */
     public func on(event: Event<E>) {
-        return abstractMethod()
+        abstractMethod()
     }
     
     /**
@@ -73,15 +73,15 @@ class ReplayBufferBase<Element> : ReplaySubject<Element> {
     }
     
     func trim() {
-        return abstractMethod()
+        abstractMethod()
     }
     
     func addValueToBuffer(value: Element) {
-        return abstractMethod()
+        abstractMethod()
     }
     
     func replayBuffer(observer: ObserverOf<Element>) {
-        return abstractMethod()
+        abstractMethod()
     }
     
     override func on(event: Event<Element>) {

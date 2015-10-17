@@ -1,0 +1,80 @@
+//
+//  Driver+Extensions.swift
+//  Rx
+//
+//  Created by Krunoslav Zaher on 9/19/15.
+//  Copyright © 2015 Krunoslav Zaher. All rights reserved.
+//
+
+import Foundation
+#if !RX_NO_MODULE
+import RxSwift
+#endif
+
+extension Driver {
+    /**
+    Creates new subscription and sends elements to observer.
+
+    In this form it's equivalent to `subscribe` method, but it communicates intent better.
+
+    - parameter observer: Observer that receives events.
+    - returns: Disposable object that can be used to unsubscribe the observer from the subject.
+    */
+    public func drive<O: ObserverType where O.E == E>(observer: O) -> Disposable {
+        return self.asObservable().subscribe(observer)
+    }
+
+    /**
+    Subscribes to observable sequence using custom binder function.
+
+    - parameter with: Function used to bind elements from `self`.
+    - returns: Object representing subscription.
+    */
+    public func drive<R>(transformation: Observable<E> -> R) -> R {
+        return transformation(self.asObservable())
+    }
+
+    /**
+    Subscribes to observable sequence using custom binder function and final parameter passed to binder function
+    after `self` is passed.
+
+        public func drive<R1, R2>(with: Self -> R1 -> R2, curriedArgument: R1) -> R2 {
+            return with(self)(curriedArgument)
+        }
+
+    - parameter with: Function used to bind elements from `self`.
+    - parameter curriedArgument: Final argument passed to `binder` to finish binding process.
+    - returns: Object representing subscription.
+    */
+    public func drive<R1, R2>(with: Observable<E> -> R1 -> R2, curriedArgument: R1) -> R2 {
+        return with(self.asObservable())(curriedArgument)
+    }
+    
+    /**
+    Subscribes an element handler, a completion handler and disposed handler to an observable sequence.
+    
+    Error callback is not exposed because `Driver` can't error out.
+    
+    - parameter onNext: Action to invoke for each element in the observable sequence.
+    - parameter onCompleted: Action to invoke upon graceful termination of the observable sequence.
+    gracefully completed, errored, or if the generation is cancelled by disposing subscription)
+    - parameter onDisposed: Action to invoke upon any type of termination of sequence (if the sequence has
+    gracefully completed, errored, or if the generation is cancelled by disposing subscription)
+    - returns: Subscription object used to unsubscribe from the observable sequence.
+    */
+    public func drive(onNext onNext: ((E) -> Void)? = nil, onCompleted: (() -> Void)? = nil, onDisposed: (() -> Void)? = nil) -> Disposable {
+        return self.asObservable().subscribe(onNext: onNext, onCompleted: onCompleted, onDisposed: onDisposed)
+    }
+    
+    /**
+    Subscribes an element handler to an observable sequence.
+    
+    - parameter onNext: Action to invoke for each element in the observable sequence.
+    - returns: Subscription object used to unsubscribe from the observable sequence.
+    */
+    public func driveNext(onNext: E -> Void) -> Disposable {
+        return self.asObservable().subscribeNext(onNext)
+    }
+}
+
+

@@ -22,7 +22,7 @@ extension ObservableType {
     public func toArray() throws -> [E] {
         let condition = NSCondition()
         
-        var elements = [E]()
+        var elements: [E] = Array<E>()
         
         var error: ErrorType?
             

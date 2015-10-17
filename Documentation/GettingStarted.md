@@ -6,7 +6,7 @@ This project tries to be consistent with [ReactiveX.io](http://reactivex.io/). T
 1. [Observables aka Sequences](#observables-aka-sequences)
 1. [Disposing](#disposing)
 1. [Implicit `Observable` guarantees](#implicit-observable-guarantees)
-1. [Creating your first `Observable` (aka sequence producers)](#creating-your-own-observable-aka-sequence-producers)
+1. [Creating your first `Observable` (aka observable sequence)](#creating-your-own-observable-aka-observable-sequence)
 1. [Creating an `Observable` that performs work](#creating-an-observable-that-performs-work)
 1. [Sharing subscription and `shareReplay` operator](#sharing-subscription-and-sharereplay-operator)
 1. [Operators](#operators)
@@ -265,7 +265,7 @@ Event processing ended
 Event processing ended
 ```
 
-## Creating your own `Observable` (aka sequence producers)
+## Creating your own `Observable` (aka observable sequence)
 
 There is one crucial thing to understand about observables.
 

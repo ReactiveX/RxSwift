@@ -45,11 +45,11 @@ public class RecursiveSchedulerOf<State, TimeInterval> {
     // abstract methods
 
     func scheduleRelativeAdapter(state: State, dueTime: TimeInterval, action: State -> Disposable) -> Disposable {
-        return abstractMethod()
+        abstractMethod()
     }
     
     func scheduleAdapter(state: State, action: State -> Disposable) -> Disposable {
-        return abstractMethod()
+        abstractMethod()
     }
     
     /**

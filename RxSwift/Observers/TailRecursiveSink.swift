@@ -9,7 +9,7 @@
 import Foundation
 
 /// This class is usually used with `Generator` version of the operators.
-class TailRecursiveSink<S: SequenceType, O: ObserverType where S.Generator.Element: ObservableType, S.Generator.Element.E == O.E> : Sink<O>, ObserverType {
+class TailRecursiveSink<S: SequenceType, O: ObserverType where S.Generator.Element: ObservableConvertibleType, S.Generator.Element.E == O.E> : Sink<O>, ObserverType {
     typealias E = O.E
     
     var generators: [S.Generator] = []
@@ -54,11 +54,11 @@ class TailRecursiveSink<S: SequenceType, O: ObserverType where S.Generator.Eleme
     }
     
     func extract(observable: Observable<E>) -> S.Generator? {
-        return abstractMethod()
+        abstractMethod()
     }
     
     func on(event: Event<E>) {
-        return abstractMethod()
+        abstractMethod()
     }
     
     // should be done on gate locked

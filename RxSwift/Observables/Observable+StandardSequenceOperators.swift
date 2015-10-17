@@ -153,7 +153,7 @@ extension ObservableType {
     - parameter selector: A transform function to apply to each element.
     - returns: An observable sequence whose elements are the result of invoking the one-to-many transform function on each element of the input sequence.
     */
-    public func flatMap<O: ObservableType>(selector: (E) throws -> O)
+    public func flatMap<O: ObservableConvertibleType>(selector: (E) throws -> O)
         -> Observable<O.E> {
         return FlatMap(source: self.asObservable(), selector: selector)
     }
@@ -164,7 +164,7 @@ extension ObservableType {
     - parameter selector: A transform function to apply to each element; the second parameter of the function represents the index of the source element.
     - returns: An observable sequence whose elements are the result of invoking the one-to-many transform function on each element of the input sequence.
     */
-    public func flatMapWithIndex<O: ObservableType>(selector: (E, Int) throws -> O)
+    public func flatMapWithIndex<O: ObservableConvertibleType>(selector: (E, Int) throws -> O)
         -> Observable<O.E> {
         return FlatMap(source: self.asObservable(), selector: selector)
     }

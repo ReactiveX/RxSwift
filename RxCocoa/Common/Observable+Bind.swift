@@ -1,5 +1,5 @@
 //
-//  Observable+Extensions.swift
+//  Observable+Bind.swift
 //  Rx
 //
 //  Created by Krunoslav Zaher on 8/29/15.
@@ -51,4 +51,14 @@ extension ObservableType {
          return binder(self)(curriedArgument)
     }
     
+    
+    /**
+    Subscribes an element handler to an observable sequence.
+    
+    - parameter onNext: Action to invoke for each element in the observable sequence.
+    - returns: Subscription object used to unsubscribe from the observable sequence.
+    */
+    public func bindNext(onNext: E -> Void) -> Disposable {
+        return subscribeNext(onNext)
+    }
 }

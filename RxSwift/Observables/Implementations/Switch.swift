@@ -8,7 +8,7 @@
 
 import Foundation
 
-class SwitchSink<S: ObservableType, O: ObserverType where S.E == O.E> : Sink<O>, ObserverType {
+class SwitchSink<S: ObservableConvertibleType, O: ObserverType where S.E == O.E> : Sink<O>, ObserverType {
     typealias E = S
     typealias Parent = Switch<S>
 
@@ -48,7 +48,7 @@ class SwitchSink<S: ObservableType, O: ObserverType where S.E == O.E> : Sink<O>,
             innerSubscription.disposable = d
                
             let observer = SwitchSinkIter(parent: self, id: latest, _self: d)
-            let disposable = observable.subscribeSafe(observer)
+            let disposable = observable.asObservable().subscribeSafe(observer)
             d.disposable = disposable
         case .Error(let error):
             self.lock.performLocked {
@@ -70,7 +70,7 @@ class SwitchSink<S: ObservableType, O: ObserverType where S.E == O.E> : Sink<O>,
     }
 }
 
-class SwitchSinkIter<S: ObservableType, O: ObserverType where S.E == O.E> : ObserverType {
+class SwitchSinkIter<S: ObservableConvertibleType, O: ObserverType where S.E == O.E> : ObserverType {
     typealias E = O.E
     typealias Parent = SwitchSink<S, O>
     
@@ -116,7 +116,7 @@ class SwitchSinkIter<S: ObservableType, O: ObserverType where S.E == O.E> : Obse
     }
 }
 
-class Switch<S: ObservableType> : Producer<S.E> {
+class Switch<S: ObservableConvertibleType> : Producer<S.E> {
     let sources: Observable<S>
     
     init(sources: Observable<S>) {

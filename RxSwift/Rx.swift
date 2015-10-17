@@ -19,13 +19,11 @@ public var resourceCount: Int32 = 0
 
 // Swift doesn't have a concept of abstract metods.
 // This function is being used as a runtime check that abstract methods aren't being called.
-func abstractMethod<T>() -> T {
+@noreturn func abstractMethod() -> Void {
     rxFatalError("Abstract method")
-    let dummyValue: T? = nil
-    return dummyValue!
 }
 
-func rxFatalError(lastMessage: String) {
+@noreturn func rxFatalError(lastMessage: String) {
     // The temptation to comment this line is great, but please don't, it's for your own good. The choice is yours.
     fatalError(lastMessage)
 }

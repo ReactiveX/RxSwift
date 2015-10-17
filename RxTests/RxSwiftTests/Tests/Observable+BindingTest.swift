@@ -22,7 +22,7 @@ extension ObservableBindingTest {
         var nEvents = 0
         
         let observable = TestConnectableObservable(o: sequenceOf(0, 1, 2), s: subject)
-        let d = observable .subscribeNext { n in
+        let d = observable.subscribeNext { n in
             nEvents++
         }
 
@@ -105,7 +105,7 @@ extension ObservableBindingTest {
         
         let subject = MySubject<Int>()
         
-        let conn = TestConnectableObservable(o: xs, s: subject)
+        let conn = TestConnectableObservable(o: xs.asObservable(), s: subject)
         
         let res = scheduler.start { conn.refCount() }
         
@@ -262,94 +262,6 @@ extension ObservableBindingTest {
 
 // replay
 extension ObservableBindingTest {
-    func testReplay_DeadlockSimple() {
-        var nEvents = 0
-        
-        let observable = sequenceOf(0, 1, 2).replay(3).refCount()
-        _ = observable.subscribeNext { n in
-            nEvents++
-        }
-        
-        XCTAssertEqual(nEvents, 3)
-    }
-    
-    func testReplay_DeadlockErrorAfterN() {
-        var nEvents = 0
-        
-        let observable = [sequenceOf(0, 1, 2), failWith(testError)].concat().replay(3).refCount()
-        _ = observable.subscribeError { n in
-            nEvents++
-        }
-        
-        XCTAssertEqual(nEvents, 1)
-    }
-    
-    func testReplay_DeadlockErrorImmediatelly() {
-        var nEvents = 0
-        
-        let observable: Observable<Int> = failWith(testError).replay(3).refCount()
-        _ = observable.subscribeError { n in
-            nEvents++
-        }
-        
-        XCTAssertEqual(nEvents, 1)
-    }
-    
-    func testReplay_DeadlockEmpty() {
-        var nEvents = 0
-        
-        let observable: Observable<Int> = empty().replay(3).refCount()
-        _ = observable.subscribeCompleted {
-            nEvents++
-        }
-        
-        XCTAssertEqual(nEvents, 1)
-    }
-    
-    func testReplay1_DeadlockSimple() {
-        var nEvents = 0
-        
-        let observable = sequenceOf(0, 1, 2).replay(1).refCount()
-        _ = observable.subscribeNext { n in
-            nEvents++
-        }
-        
-        XCTAssertEqual(nEvents, 3)
-    }
-    
-    func testReplay1_DeadlockErrorAfterN() {
-        var nEvents = 0
-        
-        let observable = [just(0, 1, 2), failWith(testError)].concat().replay(1).refCount()
-        _ = observable.subscribeError { n in
-            nEvents++
-        }
-        
-        XCTAssertEqual(nEvents, 1)
-    }
-    
-    func testReplay1_DeadlockErrorImmediatelly() {
-        var nEvents = 0
-        
-        let observable: Observable<Int> = failWith(testError).replay(1).refCount()
-        _ = observable.subscribeError { n in
-            nEvents++
-        }
-        
-        XCTAssertEqual(nEvents, 1)
-    }
-    
-    func testReplay1_DeadlockEmpty() {
-        var nEvents = 0
-        
-        let observable: Observable<Int> = empty().replay(1).refCount()
-        _ = observable.subscribeCompleted {
-            nEvents++
-        }
-        
-        XCTAssertEqual(nEvents, 1)
-    }
-    
     func testReplayCount_Basic() {
         let scheduler = TestScheduler(initialClock: 0)
         
@@ -762,5 +674,322 @@ extension ObservableBindingTest {
             Subscription(500, 550),
             Subscription(650, 800),
             ])
+    }
+}
+
+
+// shareReplay(1)
+extension ObservableBindingTest {
+    func _testIdenticalBehaviorOfShareReplayOptimizedAndComposed(action: (transform: (Observable<Int> -> Observable<Int>)) -> Void) {
+        action { $0.shareReplay(1) }
+        action { $0.replay(1).refCount() }
+    }
+
+    func testShareReplay_DeadlockImmediatelly() {
+        _testIdenticalBehaviorOfShareReplayOptimizedAndComposed { transform in
+            var nEvents = 0
+
+            let observable = transform(sequenceOf(0, 1, 2))
+            _ = observable.subscribeNext { n in
+                nEvents++
+            }
+
+            XCTAssertEqual(nEvents, 3)
+        }
+    }
+
+    func testShareReplay_DeadlockEmpty() {
+        _testIdenticalBehaviorOfShareReplayOptimizedAndComposed { transform in
+            var nEvents = 0
+
+            let observable = transform(empty())
+            _ = observable.subscribeCompleted { n in
+                nEvents++
+            }
+
+            XCTAssertEqual(nEvents, 1)
+        }
+    }
+
+    func testShareReplay_DeadlockError() {
+        _testIdenticalBehaviorOfShareReplayOptimizedAndComposed { transform in
+            var nEvents = 0
+
+            let observable = transform(failWith(testError))
+            _ = observable.subscribeError { _ in
+                nEvents++
+            }
+
+            XCTAssertEqual(nEvents, 1)
+        }
+    }
+
+    func testShareReplay1_DeadlockErrorAfterN() {
+        _testIdenticalBehaviorOfShareReplayOptimizedAndComposed { transform in
+            var nEvents = 0
+
+            let observable = transform([sequenceOf(0, 1, 2), failWith(testError)].concat())
+            _ = observable.subscribeError { n in
+                nEvents++
+            }
+            
+            XCTAssertEqual(nEvents, 1)
+        }
+    }
+
+    func testShareReplay1_Basic() {
+        _testIdenticalBehaviorOfShareReplayOptimizedAndComposed { transform in
+            let scheduler = TestScheduler(initialClock: 0)
+
+            let xs = scheduler.createHotObservable([
+                next(110, 7),
+                next(220, 3),
+                next(280, 4),
+                next(290, 1),
+                next(340, 8),
+                next(360, 5),
+                next(370, 6),
+                next(390, 7),
+                next(410, 13),
+                next(430, 2),
+                next(450, 9),
+                next(520, 11),
+                next(560, 20),
+                error(600, testError)
+                ])
+
+            var ys: Observable<Int>! = nil
+
+            var subscription1: Disposable! = nil
+            var subscription2: Disposable! = nil
+
+            let res1: MockObserver<Int> = scheduler.createObserver()
+            let res2: MockObserver<Int> = scheduler.createObserver()
+
+            scheduler.scheduleAt(Defaults.created) { ys = transform(xs.asObservable()) }
+
+            scheduler.scheduleAt(335) { subscription1 = ys.subscribe(res1) }
+            scheduler.scheduleAt(400) { subscription1.dispose() }
+
+            scheduler.scheduleAt(355) { subscription2 = ys.subscribe(res2) }
+            scheduler.scheduleAt(415) { subscription2.dispose() }
+
+            scheduler.scheduleAt(440) { subscription1 = ys.subscribe(res1) }
+            scheduler.scheduleAt(455) { subscription1.dispose() }
+
+            scheduler.start();
+
+            XCTAssertEqual(res1.messages, [
+                // 1rt batch
+                next(340, 8),
+                next(360, 5),
+                next(370, 6),
+                next(390, 7),
+
+                // 2nd batch
+                next(440, 13),
+                next(450, 9)
+                ])
+
+            XCTAssertEqual(res2.messages, [
+                next(355, 8),
+                next(360, 5),
+                next(370, 6),
+                next(390, 7),
+                next(410, 13)
+                ])
+
+            XCTAssertEqual(xs.subscriptions, [
+                Subscription(335, 415),
+                Subscription(440, 455)
+                ])
+        }
+    }
+
+    func testShareReplay1_Error() {
+        _testIdenticalBehaviorOfShareReplayOptimizedAndComposed { transform in
+            let scheduler = TestScheduler(initialClock: 0)
+
+            let xs = scheduler.createHotObservable([
+                next(110, 7),
+                next(220, 3),
+                next(280, 4),
+                next(290, 1),
+                next(340, 8),
+                next(360, 5),
+                error(365, testError),
+                next(370, 6),
+                next(390, 7),
+                next(410, 13),
+                next(430, 2),
+                next(450, 9),
+                next(520, 11),
+                next(560, 20),
+                ])
+
+            var ys: Observable<Int>! = nil
+
+            var subscription1: Disposable! = nil
+            var subscription2: Disposable! = nil
+
+            let res1: MockObserver<Int> = scheduler.createObserver()
+            let res2: MockObserver<Int> = scheduler.createObserver()
+
+            scheduler.scheduleAt(Defaults.created) { ys = transform(xs.asObservable()) }
+
+            scheduler.scheduleAt(335) { subscription1 = ys.subscribe(res1) }
+            scheduler.scheduleAt(400) { subscription1.dispose() }
+
+            scheduler.scheduleAt(355) { subscription2 = ys.subscribe(res2) }
+            scheduler.scheduleAt(415) { subscription2.dispose() }
+
+            scheduler.scheduleAt(440) { subscription1 = ys.subscribe(res1) }
+            scheduler.scheduleAt(455) { subscription1.dispose() }
+
+            scheduler.start();
+
+            XCTAssertEqual(res1.messages, [
+                // 1rt batch
+                next(340, 8),
+                next(360, 5),
+                error(365, testError),
+
+                // 2nd batch
+                next(440, 5),
+                error(440, testError),
+                ])
+
+            XCTAssertEqual(res2.messages, [
+                next(355, 8),
+                next(360, 5),
+                error(365, testError),
+                ])
+
+            // unoptimized version of replay subject will make a subscription and kill it immediatelly
+            XCTAssertEqual(xs.subscriptions[0], Subscription(335, 365))
+            XCTAssertTrue(xs.subscriptions.count <= 2)
+            XCTAssertTrue(xs.subscriptions.count == 1 || xs.subscriptions[1] == Subscription(440, 440))
+        }
+    }
+
+    func testShareReplay1_Completed() {
+        _testIdenticalBehaviorOfShareReplayOptimizedAndComposed { transform in
+            let scheduler = TestScheduler(initialClock: 0)
+
+            let xs = scheduler.createHotObservable([
+                next(110, 7),
+                next(220, 3),
+                next(280, 4),
+                next(290, 1),
+                next(340, 8),
+                next(360, 5),
+                completed(365),
+                next(370, 6),
+                next(390, 7),
+                next(410, 13),
+                next(430, 2),
+                next(450, 9),
+                next(520, 11),
+                next(560, 20),
+                ])
+
+            var ys: Observable<Int>! = nil
+
+            var subscription1: Disposable! = nil
+            var subscription2: Disposable! = nil
+
+            let res1: MockObserver<Int> = scheduler.createObserver()
+            let res2: MockObserver<Int> = scheduler.createObserver()
+
+            scheduler.scheduleAt(Defaults.created) { ys = transform(xs.asObservable()) }
+
+            scheduler.scheduleAt(335) { subscription1 = ys.subscribe(res1) }
+            scheduler.scheduleAt(400) { subscription1.dispose() }
+
+            scheduler.scheduleAt(355) { subscription2 = ys.subscribe(res2) }
+            scheduler.scheduleAt(415) { subscription2.dispose() }
+
+            scheduler.scheduleAt(440) { subscription1 = ys.subscribe(res1) }
+            scheduler.scheduleAt(455) { subscription1.dispose() }
+
+            scheduler.start();
+
+            XCTAssertEqual(res1.messages, [
+                // 1rt batch
+                next(340, 8),
+                next(360, 5),
+                completed(365),
+
+                // 2nd batch
+                next(440, 5),
+                completed(440)
+                ])
+
+            XCTAssertEqual(res2.messages, [
+                next(355, 8),
+                next(360, 5),
+                completed(365)
+                ])
+
+            // unoptimized version of replay subject will make a subscription and kill it immediatelly
+            XCTAssertEqual(xs.subscriptions[0], Subscription(335, 365))
+            XCTAssertTrue(xs.subscriptions.count <= 2)
+            XCTAssertTrue(xs.subscriptions.count == 1 || xs.subscriptions[1] == Subscription(440, 440))
+        }
+    }
+
+    func testShareReplay1_Canceled() {
+        _testIdenticalBehaviorOfShareReplayOptimizedAndComposed { transform in
+            let scheduler = TestScheduler(initialClock: 0)
+
+            let xs = scheduler.createHotObservable([
+                completed(365),
+                next(370, 6),
+                next(390, 7),
+                next(410, 13),
+                next(430, 2),
+                next(450, 9),
+                next(520, 11),
+                next(560, 20),
+                ])
+
+            var ys: Observable<Int>! = nil
+
+            var subscription1: Disposable! = nil
+            var subscription2: Disposable! = nil
+
+            let res1: MockObserver<Int> = scheduler.createObserver()
+            let res2: MockObserver<Int> = scheduler.createObserver()
+
+            scheduler.scheduleAt(Defaults.created) { ys = transform(xs.asObservable()) }
+
+            scheduler.scheduleAt(335) { subscription1 = ys.subscribe(res1) }
+            scheduler.scheduleAt(400) { subscription1.dispose() }
+
+            scheduler.scheduleAt(355) { subscription2 = ys.subscribe(res2) }
+            scheduler.scheduleAt(415) { subscription2.dispose() }
+
+            scheduler.scheduleAt(440) { subscription1 = ys.subscribe(res1) }
+            scheduler.scheduleAt(455) { subscription1.dispose() }
+
+            scheduler.start();
+
+            XCTAssertEqual(res1.messages, [
+                // 1rt batch
+                completed(365),
+
+                // 2nd batch
+                completed(440)
+                ])
+
+            XCTAssertEqual(res2.messages, [
+                completed(365)
+                ])
+
+            // unoptimized version of replay subject will make a subscription and kill it immediatelly
+            XCTAssertEqual(xs.subscriptions[0], Subscription(335, 365))
+            XCTAssertTrue(xs.subscriptions.count <= 2)
+            XCTAssertTrue(xs.subscriptions.count == 1 || xs.subscriptions[1] == Subscription(440, 440))
+        }
     }
 }
