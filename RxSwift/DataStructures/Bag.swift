@@ -53,9 +53,6 @@ public struct Bag<T> : CustomStringConvertible {
     private var uniqueIdentity: Identity?
     private var nextKey: ScopeUniqueTokenType = 0
     
-    var preallocated_0: Entry?
-    var preallocated_1: Entry?
-    
     var pairs = [Entry]()
 
     /**
@@ -92,16 +89,6 @@ public struct Bag<T> : CustomStringConvertible {
         
         let key = BagKey(uniqueIdentity: uniqueIdentity, key: nextKey)
         
-        if preallocated_0 == nil {
-            preallocated_0 = (key: key, value: element)
-            return key
-        }
-        
-        if preallocated_1 == nil {
-            preallocated_1 = (key: key, value: element)
-            return key
-        }
-        
         pairs.append(key: key, value: element)
         
         return key
@@ -111,15 +98,13 @@ public struct Bag<T> : CustomStringConvertible {
     - returns: Number of elements in bag.
     */
     public var count: Int {
-        return pairs.count + (preallocated_0 != nil ? 1 : 0) + (preallocated_1 != nil ? 1 : 0)
+        return pairs.count
     }
     
     /**
     Removes all elements from bag and clears capacity.
     */
     public mutating func removeAll() {
-        preallocated_0 = nil
-        preallocated_1 = nil
         pairs.removeAll(keepCapacity: false)
     }
     
@@ -130,17 +115,6 @@ public struct Bag<T> : CustomStringConvertible {
     - returns: Element that bag contained, or nil in case element was already removed.
     */
     public mutating func removeKey(key: BagKey) -> T? {
-        if preallocated_0?.key == key {
-            let value = preallocated_0!.value
-            preallocated_0 = nil
-            return value
-        }
-        if preallocated_1?.key == key {
-            let value = preallocated_1!.value
-            preallocated_1 = nil
-            return value
-        }
-        
         for i in 0 ..< pairs.count {
             if pairs[i].key == key {
                 let value = pairs[i].value
@@ -160,18 +134,7 @@ extension Bag {
     - parameter action: Enumeration closure.
     */
     public func forEach(@noescape action: (T) -> Void) {
-        let value0 = preallocated_0
-        let value1 = preallocated_1
-        
         let pairs = self.pairs
-        
-        if let value = value0?.value {
-            action(value)
-        }
-        
-        if let value = value1?.value {
-            action(value)
-        }
         
         for i in 0 ..< pairs.count {
             action(pairs[i].value)

@@ -42,7 +42,7 @@ extension ObservableMultipleTest {
         let res = scheduler.start {
             o1.catchError { e in
                 handlerCalled = scheduler.clock
-                return o2
+                return o2.asObservable()
             }
         }
         
@@ -419,7 +419,7 @@ extension ObservableMultipleTest {
             completed(150)
         ])
         
-        let xSequence: [Recorded<Observable<Int>>] = [
+        let xSequence: [Recorded<ColdObservable<Int>>] = [
             next(300, ys1),
             next(400, ys2),
             next(500, ys3),
@@ -502,7 +502,7 @@ extension ObservableMultipleTest {
             completed(150)
             ])
         
-        let xSequence: [Recorded<Observable<Int>>] = [
+        let xSequence: [Recorded<ColdObservable<Int>>] = [
             next(300, ys1),
             next(400, ys2),
             next(500, ys3),
@@ -572,7 +572,7 @@ extension ObservableMultipleTest {
             completed(50)
             ])
         
-        let xSequence: [Recorded<Observable<Int>>] = [
+        let xSequence: [Recorded<ColdObservable<Int>>] = [
             next(300, ys1),
             next(400, ys2),
             error(500, testError)
@@ -1170,7 +1170,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            [xs1, xs2, xs3, xs2].concat()
+            [xs1.asObservable(), xs2.asObservable(), xs3.asObservable(), xs2.asObservable()].concat()
         }
         
         let messages: [Recorded<Int>] = [
@@ -1376,7 +1376,7 @@ extension ObservableMultipleTest {
             completed(150)
         ])
         
-        let xs: Observable<Observable<Int>> = scheduler.createHotObservable([
+        let xs: HotObservable<ColdObservable<Int>> = scheduler.createHotObservable([
             next(300, ys1),
             next(400, ys2),
             next(500, ys3),
@@ -1446,7 +1446,7 @@ extension ObservableMultipleTest {
             completed(50)
             ])
         
-        let xs: HotObservable<Observable<Int>> = scheduler.createHotObservable([
+        let xs: HotObservable<ColdObservable<Int>> = scheduler.createHotObservable([
             next(300, ys1),
             next(400, ys2),
             next(500, ys3),
@@ -1519,7 +1519,7 @@ extension ObservableMultipleTest {
             completed(150)
             ])
         
-        let xs: HotObservable<Observable<Int>> = scheduler.createHotObservable([
+        let xs: HotObservable<ColdObservable<Int>> = scheduler.createHotObservable([
             next(300, ys1),
             next(400, ys2),
             next(500, ys3),
@@ -1581,7 +1581,7 @@ extension ObservableMultipleTest {
             completed(50)
             ])
         
-        let xs: HotObservable<Observable<Int>> = scheduler.createHotObservable([
+        let xs: HotObservable<ColdObservable<Int>> = scheduler.createHotObservable([
             next(300, ys1),
             next(400, ys2),
             error(500, testError1),
@@ -1647,7 +1647,7 @@ extension ObservableMultipleTest {
             completed(300)
             ])
         
-        let xs: HotObservable<Observable<Int>> = scheduler.createHotObservable([
+        let xs: HotObservable<ColdObservable<Int>> = scheduler.createHotObservable([
             next(210, ys1),
             next(260, ys2),
             next(270, ys3),
@@ -1725,7 +1725,7 @@ extension ObservableMultipleTest {
             completed(300)
             ])
         
-        let xs: HotObservable<Observable<Int>> = scheduler.createHotObservable([
+        let xs: HotObservable<ColdObservable<Int>> = scheduler.createHotObservable([
             next(210, ys1),
             next(260, ys2),
             next(270, ys3),
@@ -1803,7 +1803,7 @@ extension ObservableMultipleTest {
             completed(300)
             ])
         
-        let xs: HotObservable<Observable<Int>> = scheduler.createHotObservable([
+        let xs: HotObservable<ColdObservable<Int>> = scheduler.createHotObservable([
             next(210, ys1),
             next(260, ys2),
             next(270, ys3),
@@ -1881,7 +1881,7 @@ extension ObservableMultipleTest {
             completed(300)
             ])
         
-        let xs: HotObservable<Observable<Int>> = scheduler.createHotObservable([
+        let xs: HotObservable<ColdObservable<Int>> = scheduler.createHotObservable([
             next(210, ys1),
             next(260, ys2),
             next(270, ys3),
@@ -1959,7 +1959,7 @@ extension ObservableMultipleTest {
             completed(300)
             ])
         
-        let xs: HotObservable<Observable<Int>> = scheduler.createHotObservable([
+        let xs: HotObservable<ColdObservable<Int>> = scheduler.createHotObservable([
             next(210, ys1),
             next(260, ys2),
             next(270, ys3),
@@ -2032,7 +2032,7 @@ extension ObservableMultipleTest {
             completed(300)
             ])
         
-        let xs: HotObservable<Observable<Int>> = scheduler.createHotObservable([
+        let xs: HotObservable<ColdObservable<Int>> = scheduler.createHotObservable([
             next(210, ys1),
             next(260, ys2),
             next(270, ys3),
@@ -2105,7 +2105,7 @@ extension ObservableMultipleTest {
             completed(300)
             ])
         
-        let xs: HotObservable<Observable<Int>> = scheduler.createHotObservable([
+        let xs: HotObservable<ColdObservable<Int>> = scheduler.createHotObservable([
             next(210, ys1),
             next(260, ys2),
             next(270, ys3),

@@ -9,7 +9,7 @@
 import Foundation
 
 
-class ConcatSink<S: SequenceType, O: ObserverType where S.Generator.Element : ObservableType, S.Generator.Element.E == O.E> : TailRecursiveSink<S, O> {
+class ConcatSink<S: SequenceType, O: ObserverType where S.Generator.Element : ObservableConvertibleType, S.Generator.Element.E == O.E> : TailRecursiveSink<S, O> {
     typealias Element = O.E
     
     override init(observer: O, cancel: Disposable) {
@@ -38,7 +38,7 @@ class ConcatSink<S: SequenceType, O: ObserverType where S.Generator.Element : Ob
     }
 }
 
-class Concat<S: SequenceType where S.Generator.Element : ObservableType> : Producer<S.Generator.Element.E> {
+class Concat<S: SequenceType where S.Generator.Element : ObservableConvertibleType> : Producer<S.Generator.Element.E> {
     typealias Element = S.Generator.Element.E
     
     let sources: S

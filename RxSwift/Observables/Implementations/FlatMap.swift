@@ -11,7 +11,7 @@ import Foundation
 // It's value is one because initial source subscription is always in CompositeDisposable
 let FlatMapNoIterators = 1
 
-class FlatMapSinkIter<SourceType, S: ObservableType, O: ObserverType where O.E == S.E> : ObserverType {
+class FlatMapSinkIter<SourceType, S: ObservableConvertibleType, O: ObserverType where O.E == S.E> : ObserverType {
     typealias Parent = FlatMapSink<SourceType, S, O>
     typealias DisposeKey = CompositeDisposable.DisposeKey
     typealias E = O.E
@@ -52,7 +52,7 @@ class FlatMapSinkIter<SourceType, S: ObservableType, O: ObserverType where O.E =
     }
 }
 
-class FlatMapSink<SourceType, S: ObservableType, O: ObserverType where O.E == S.E> : Sink<O>, ObserverType {
+class FlatMapSink<SourceType, S: ObservableConvertibleType, O: ObserverType where O.E == S.E> : Sink<O>, ObserverType {
     typealias ResultType = O.E
     typealias Element = SourceType
     typealias Parent = FlatMap<SourceType, S>
@@ -73,7 +73,7 @@ class FlatMapSink<SourceType, S: ObservableType, O: ObserverType where O.E == S.
     }
     
     func performMap(element: SourceType) throws -> S {
-        return abstractMethod()
+        abstractMethod()
     }
     
     func on(event: Event<SourceType>) {
@@ -133,7 +133,7 @@ class FlatMapSink<SourceType, S: ObservableType, O: ObserverType where O.E == S.
     }
 }
 
-class FlatMapSink1<SourceType, S: ObservableType, O : ObserverType where S.E == O.E> : FlatMapSink<SourceType, S, O> {
+class FlatMapSink1<SourceType, S: ObservableConvertibleType, O : ObserverType where S.E == O.E> : FlatMapSink<SourceType, S, O> {
     override init(parent: Parent, observer: O, cancel: Disposable) {
         super.init(parent: parent, observer: observer, cancel: cancel)
     }
@@ -143,10 +143,9 @@ class FlatMapSink1<SourceType, S: ObservableType, O : ObserverType where S.E == 
     }
 }
 
-class FlatMapSink2<SourceType, S: ObservableType, O: ObserverType where S.E == O.E> : FlatMapSink<SourceType, S, O> {
-    
+class FlatMapSink2<SourceType, S: ObservableConvertibleType, O: ObserverType where S.E == O.E> : FlatMapSink<SourceType, S, O> {
     private var _index = 0
-    
+
     override init(parent: Parent, observer: O, cancel: Disposable) {
         super.init(parent: parent, observer: observer, cancel: cancel)
     }
@@ -156,7 +155,7 @@ class FlatMapSink2<SourceType, S: ObservableType, O: ObserverType where S.E == O
     }
 }
 
-class FlatMap<SourceType, S: ObservableType>: Producer<S.E> {
+class FlatMap<SourceType, S: ObservableConvertibleType>: Producer<S.E> {
     typealias Selector1 = (SourceType) throws -> S
     typealias Selector2 = (SourceType, Int) throws -> S
     

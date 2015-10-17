@@ -97,7 +97,7 @@ class Catch<Element> : Producer<Element> {
 
 // catch enumerable
 
-class CatchSequenceSink<S: SequenceType, O: ObserverType where S.Generator.Element : ObservableType, S.Generator.Element.E == O.E> : TailRecursiveSink<S, O> {
+class CatchSequenceSink<S: SequenceType, O: ObserverType where S.Generator.Element : ObservableConvertibleType, S.Generator.Element.E == O.E> : TailRecursiveSink<S, O> {
     typealias Element = O.E
     typealias Parent = CatchSequence<S>
     
@@ -141,7 +141,7 @@ class CatchSequenceSink<S: SequenceType, O: ObserverType where S.Generator.Eleme
     }
 }
 
-class CatchSequence<S: SequenceType where S.Generator.Element : ObservableType> : Producer<S.Generator.Element.E> {
+class CatchSequence<S: SequenceType where S.Generator.Element : ObservableConvertibleType> : Producer<S.Generator.Element.E> {
     typealias Element = S.Generator.Element.E
     
     let sources: S

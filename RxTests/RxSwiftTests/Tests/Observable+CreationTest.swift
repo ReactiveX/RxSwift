@@ -91,7 +91,7 @@ extension ObservableCreationTests {
                 return x + 1
             }
             .take(4)
-            .subscribe(next: { x in
+            .subscribe(onNext: { x in
                 elements.append(x)
             })
         

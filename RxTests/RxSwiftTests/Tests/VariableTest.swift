@@ -15,7 +15,7 @@ class VariableTest : RxTest {
         let a = Variable(1)
         let b = Variable(2)
         
-        let c = combineLatest(a, b, +)
+        let c = combineLatest(a, b, resultSelector: +)
         
         var latestValue: Int?
         

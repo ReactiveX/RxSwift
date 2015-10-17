@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ZipCollectionTypeSink<C: CollectionType, R, O: ObserverType where C.Generator.Element : ObservableType, O.E == R> : Sink<O> {
+class ZipCollectionTypeSink<C: CollectionType, R, O: ObserverType where C.Generator.Element : ObservableConvertibleType, O.E == R> : Sink<O> {
     typealias Parent = ZipCollectionType<C, R>
     typealias SourceElement = C.Generator.Element.E
     
@@ -104,7 +104,8 @@ class ZipCollectionTypeSink<C: CollectionType, R, O: ObserverType where C.Genera
         var j = 0
         for i in parent.sources.startIndex ..< parent.sources.endIndex {
             let index = j
-            self.subscriptions[j].disposable = self.parent.sources[i].subscribeSafe(ObserverOf { event in
+            let source = self.parent.sources[i].asObservable()
+            self.subscriptions[j].disposable = source.subscribeSafe(AnyObserver { event in
                 self.on(event, atIndex: index)
                 })
             j++
@@ -114,7 +115,7 @@ class ZipCollectionTypeSink<C: CollectionType, R, O: ObserverType where C.Genera
     }
 }
 
-class ZipCollectionType<C: CollectionType, R where C.Generator.Element : ObservableType> : Producer<R> {
+class ZipCollectionType<C: CollectionType, R where C.Generator.Element : ObservableConvertibleType> : Producer<R> {
     typealias ResultSelector = [C.Generator.Element.E] throws -> R
     
     let sources: C

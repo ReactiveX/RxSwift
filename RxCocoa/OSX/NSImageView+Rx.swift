@@ -17,7 +17,7 @@ extension NSImageView {
     /**
     Bindable sink for `image` property.
     */
-    public var rx_image: ObserverOf<NSImage!> {
+    public var rx_image: AnyObserver<NSImage!> {
         return self.rx_imageAnimated(nil)
     }
     
@@ -26,8 +26,8 @@ extension NSImageView {
     
     - parameter transitionType: Optional transition type while setting the image (kCATransitionFade, kCATransitionMoveIn, ...)
     */
-    public func rx_imageAnimated(transitionType: String?) -> ObserverOf<NSImage!> {
-        return ObserverOf { [weak self] event in
+    public func rx_imageAnimated(transitionType: String?) -> AnyObserver<NSImage!> {
+        return AnyObserver { [weak self] event in
             MainScheduler.ensureExecutingOnScheduler()
             
             switch event {

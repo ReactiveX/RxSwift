@@ -16,14 +16,6 @@ class ObservableTimeTest : RxTest {
     override func setUp() {
         super.setUp()
     }
-
-    override func tearDown() {
-    #if TRACE_RESOURCES
-        sleep(0.1) // wait 100 ms for proper scheduler disposal
-    #endif
-
-        super.tearDown()
-    }
 }
 
 // throttle
@@ -772,9 +764,9 @@ extension ObservableTimeTest {
 
         OSSpinLockLock(&lock)
 
-        let d = interval(0, scheduler).takeWhile { $0 < 10 } .subscribe(next: { t in
+        let d = interval(0, scheduler).takeWhile { $0 < 10 } .subscribe(onNext: { t in
             observer.on(.Next(t))
-        }, completed: {
+        }, onCompleted: {
             OSSpinLockUnlock(&lock)
         })
 

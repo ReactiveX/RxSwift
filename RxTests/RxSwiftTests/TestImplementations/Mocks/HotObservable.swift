@@ -9,16 +9,17 @@
 import Foundation
 import RxSwift
 
-class HotObservable<Element : Equatable> : Observable<Element> {
+class HotObservable<Element : Equatable> : ObservableType, ObservableConvertibleType {
+    typealias E = Element
     
     typealias Events = Recorded<Element>
-    typealias Observer = ObserverOf<Element>
+    typealias Observer = AnyObserver<Element>
     
     let testScheduler: TestScheduler
     
     var subscriptions: [Subscription]
     var recordedEvents: [Events]
-    var observers: Bag<ObserverOf<Element>>
+    var observers: Bag<AnyObserver<Element>>
 
     init(testScheduler: TestScheduler, recordedEvents: [Events]) {
         self.testScheduler = testScheduler
@@ -26,8 +27,6 @@ class HotObservable<Element : Equatable> : Observable<Element> {
         self.recordedEvents = recordedEvents
         self.subscriptions = []
         self.observers = Bag()
-        
-        super.init()
         
         for recordedEvent in recordedEvents {
             testScheduler.schedule((), time: recordedEvent.time) { t in
@@ -37,8 +36,8 @@ class HotObservable<Element : Equatable> : Observable<Element> {
         }
     }
     
-    override func subscribe<O : ObserverType where O.E == E>(observer: O) -> Disposable {
-        let key = observers.insert(ObserverOf(observer))
+    func subscribe<O : ObserverType where O.E == E>(observer: O) -> Disposable {
+        let key = observers.insert(AnyObserver(observer))
         subscriptions.append(Subscription(self.testScheduler.now))
         
         let i = self.subscriptions.count - 1

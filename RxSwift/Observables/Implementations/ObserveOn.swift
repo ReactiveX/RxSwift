@@ -46,6 +46,8 @@ class ObserveOnSink<O: ObserverType> : ObserverBase<O.E> {
     
     var cancel: Disposable
     
+    var lock = SpinLock()
+    
     let scheduler: ImmediateSchedulerType
     var observer: O?
     

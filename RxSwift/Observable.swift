@@ -19,14 +19,14 @@ public class Observable<Element> : ObservableType {
     */
     public typealias E = Element
     
-    public init() {
+    init() {
 #if TRACE_RESOURCES
         OSAtomicIncrement32(&resourceCount)
 #endif
     }
     
     public func subscribe<O: ObserverType where O.E == E>(observer: O) -> Disposable {
-        return abstractMethod()
+        abstractMethod()
     }
     
     public func asObservable() -> Observable<E> {

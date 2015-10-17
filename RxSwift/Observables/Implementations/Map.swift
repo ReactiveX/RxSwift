@@ -21,7 +21,7 @@ class MapSink<SourceType, O : ObserverType> : Sink<O>, ObserverType {
     }
     
     func performMap(element: SourceType) throws -> ResultType {
-        return abstractMethod()
+        abstractMethod()
     }
 
     func on(event: Event<SourceType>) {
