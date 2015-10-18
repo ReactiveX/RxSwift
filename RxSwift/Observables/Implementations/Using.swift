@@ -26,7 +26,7 @@ class UsingSink<SourceType, ResourceType: Disposable, O: ObserverType where O.E 
         do {
             let resource = try _parent._resourceFactory()
             disposable = resource
-            let source = try _parent._observableFactory(resource: resource)
+            let source = try _parent._observableFactory(resource)
             
             return StableCompositeDisposable.create(
                 source.subscribeSafe(self),
@@ -59,7 +59,7 @@ class Using<SourceType, ResourceType: Disposable>: Producer<SourceType> {
     typealias E = SourceType
     
     typealias ResourceFactory = () throws -> ResourceType
-    typealias ObservableFactory = (resource: ResourceType) throws -> Observable<SourceType>
+    typealias ObservableFactory = ResourceType throws -> Observable<SourceType>
     
     private let _resourceFactory: ResourceFactory
     private let _observableFactory: ObservableFactory

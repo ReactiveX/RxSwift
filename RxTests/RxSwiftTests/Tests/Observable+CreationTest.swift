@@ -149,3 +149,247 @@ extension ObservableCreationTests {
         ])
     }
 }
+
+// using
+extension ObservableCreationTests {
+    func testUsing_Null() {
+        let scheduler = TestScheduler(initialClock: 0)
+       
+        var disposeInvoked = 0
+        var createInvoked = 0
+       
+        var xs:ColdObservable<Int> = scheduler.createColdObservable([])
+        var disposable = MockDisposable(scheduler: scheduler)
+
+        var _d = MockDisposable(scheduler: scheduler)
+
+        let res = scheduler.start {
+            using({ () -> MockDisposable in
+                disposeInvoked += 1
+                disposable = MockDisposable(scheduler: scheduler)
+                return disposable
+                }, observableFactory: { d in
+                    _d = d
+                    createInvoked += 1
+                    xs = scheduler.createColdObservable([
+                        next(100, scheduler.clock),
+                        completed(200)
+                        ])
+                    return xs.asObservable()
+            }) as Observable<Int>
+        }
+        
+        XCTAssert(disposable === _d)
+        
+        XCTAssertEqual(res.messages, [
+            next(300, 200),
+            completed(400)
+        ])
+        
+        XCTAssertEqual(1, createInvoked)
+        XCTAssertEqual(1, disposeInvoked)
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 400)
+            ])
+        
+        // TODO: Assert.IsNull(disposable);
+    }
+    
+    func testUsing_Complete() {
+        let scheduler = TestScheduler(initialClock: 0)
+       
+        var disposeInvoked = 0
+        var createInvoked = 0
+       
+        var xs:ColdObservable<Int> = scheduler.createColdObservable([])
+        var disposable = MockDisposable(scheduler: scheduler)
+
+        var _d = MockDisposable(scheduler: scheduler)
+        
+        let res = scheduler.start {
+            using({ () -> MockDisposable in
+                disposeInvoked += 1
+                disposable = MockDisposable(scheduler: scheduler)
+                return disposable
+                }, observableFactory: { d in
+                    _d = d
+                    createInvoked += 1
+                    xs = scheduler.createColdObservable([
+                        next(100, scheduler.clock),
+                        completed(200)
+                        ])
+                    return xs.asObservable()
+            }) as Observable<Int>
+        }
+        
+        XCTAssert(disposable === _d)
+        
+        XCTAssertEqual(res.messages, [
+            next(300, 200),
+            completed(400)
+        ])
+        
+        XCTAssertEqual(1, createInvoked)
+        XCTAssertEqual(1, disposeInvoked)
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 400)
+            ])
+        
+        XCTAssertEqual(disposable.ticks, [
+            200,
+            400
+            ])
+    }
+    
+    func testUsing_Error() {
+        let scheduler = TestScheduler(initialClock: 0)
+       
+        var disposeInvoked = 0
+        var createInvoked = 0
+       
+        var xs:ColdObservable<Int> = scheduler.createColdObservable([])
+        var disposable = MockDisposable(scheduler: scheduler)
+
+        var _d = MockDisposable(scheduler: scheduler)
+        
+        let res = scheduler.start {
+            using({ () -> MockDisposable in
+                disposeInvoked += 1
+                disposable = MockDisposable(scheduler: scheduler)
+                return disposable
+                }, observableFactory: { d in
+                    _d = d
+                    createInvoked += 1
+                    xs = scheduler.createColdObservable([
+                        next(100, scheduler.clock),
+                        error(200, testError)
+                        ])
+                    return xs.asObservable()
+            }) as Observable<Int>
+        }
+        
+        XCTAssert(disposable === _d)
+        
+        XCTAssertEqual(res.messages, [
+            next(300, 200),
+            error(400, testError)
+        ])
+        
+        XCTAssertEqual(1, createInvoked)
+        XCTAssertEqual(1, disposeInvoked)
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 400)
+            ])
+        
+        XCTAssertEqual(disposable.ticks, [
+            200,
+            400
+            ])
+    }
+    
+    func testUsing_Dispose() {
+        let scheduler = TestScheduler(initialClock: 0)
+       
+        var disposeInvoked = 0
+        var createInvoked = 0
+       
+        var xs:ColdObservable<Int> = scheduler.createColdObservable([])
+        var disposable = MockDisposable(scheduler: scheduler)
+
+        var _d = MockDisposable(scheduler: scheduler)
+        
+        let res = scheduler.start {
+            using({ () -> MockDisposable in
+                disposeInvoked += 1
+                disposable = MockDisposable(scheduler: scheduler)
+                return disposable
+                }, observableFactory: { d in
+                    _d = d
+                    createInvoked += 1
+                    xs = scheduler.createColdObservable([
+                        next(100, scheduler.clock),
+                        next(1000, scheduler.clock + 1)
+                        ])
+                    return xs.asObservable()
+            }) as Observable<Int>
+        }
+        
+        XCTAssert(disposable === _d)
+        
+        XCTAssertEqual(res.messages, [
+            next(300, 200),
+        ])
+        
+        XCTAssertEqual(1, createInvoked)
+        XCTAssertEqual(1, disposeInvoked)
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 1000)
+            ])
+        
+        XCTAssertEqual(disposable.ticks, [
+            200,
+            1000
+            ])
+    }
+    
+    func testUsing_ThrowResourceSelector() {
+        let scheduler = TestScheduler(initialClock: 0)
+       
+        var disposeInvoked = 0
+        var createInvoked = 0
+       
+        let res = scheduler.start {
+            using({ () -> MockDisposable in
+                disposeInvoked += 1
+                throw testError
+                }, observableFactory: { d in
+                    createInvoked += 1
+                    return never()
+                    
+            }) as Observable<Int>
+        }
+        
+        XCTAssertEqual(res.messages, [
+            error(200, testError),
+        ])
+        
+        XCTAssertEqual(0, createInvoked)
+        XCTAssertEqual(1, disposeInvoked)
+    }
+    
+    func testUsing_ThrowResourceUsage() {
+        let scheduler = TestScheduler(initialClock: 0)
+       
+        var disposeInvoked = 0
+        var createInvoked = 0
+        var disposable = MockDisposable(scheduler: scheduler)
+       
+        let res = scheduler.start {
+            using({ () -> MockDisposable in
+                disposeInvoked += 1
+                disposable = MockDisposable(scheduler: scheduler)
+                return disposable
+                }, observableFactory: { d in
+                    createInvoked += 1
+                    throw testError
+                    
+            }) as Observable<Int>
+        }
+        
+        XCTAssertEqual(res.messages, [
+            error(200, testError),
+        ])
+        
+        XCTAssertEqual(1, createInvoked)
+        XCTAssertEqual(1, disposeInvoked)
+        
+        XCTAssertEqual(disposable.ticks, [
+            200,
+            200
+            ])
+    }
+}
