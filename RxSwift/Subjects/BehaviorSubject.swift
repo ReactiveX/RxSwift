@@ -12,19 +12,19 @@ private class BehaviorSubjectSubscription<Element> : Disposable {
     typealias Parent = BehaviorSubject<Element>
     typealias DisposeKey = Bag<AnyObserver<Element>>.KeyType
     
-    let parent: Parent
-    var disposeKey: DisposeKey?
+    private let _parent: Parent
+    private var _disposeKey: DisposeKey?
     
     init(parent: BehaviorSubject<Element>, disposeKey: DisposeKey) {
-        self.parent = parent
-        self.disposeKey = disposeKey
+        _parent = parent
+        _disposeKey = disposeKey
     }
     
     func dispose() {
-        self.parent.lock.performLocked {
-            if let disposeKey = disposeKey {
-                self.parent.observers.removeKey(disposeKey)
-                self.disposeKey = nil
+        _parent._lock.performLocked {
+            if let disposeKey = _disposeKey {
+                _parent._observers.removeKey(disposeKey)
+                _disposeKey = nil
             }
         }
     }
@@ -38,19 +38,19 @@ Observers can subscribe to the subject to receive the last (or initial) value an
 public final class BehaviorSubject<Element> : Observable<Element>, SubjectType, ObserverType, Disposable {
     public typealias SubjectObserverType = BehaviorSubject<Element>
     
-    let lock = NSRecursiveLock()
+    private let _lock = NSRecursiveLock()
     
     // state
     private var _disposed = false
     private var _value: Element
-    private var observers = Bag<AnyObserver<Element>>()
-    private var stoppedEvent: Event<Element>?
+    private var _observers = Bag<AnyObserver<Element>>()
+    private var _stoppedEvent: Event<Element>?
 
     /**
     Indicates whether the subject has been disposed.
     */
     public var disposed: Bool {
-        return lock.calculateLocked {
+        return _lock.calculateLocked {
             return _disposed
         }
     }
@@ -70,12 +70,12 @@ public final class BehaviorSubject<Element> : Observable<Element>, SubjectType, 
     - returns: Latest value.
     */
     public func value() throws -> Element {
-        return try lock.calculateLockedOrFail {
+        return try _lock.calculateLockedOrFail {
             if _disposed {
                 throw RxError.DisposedError
             }
             
-            if let error = stoppedEvent?.error {
+            if let error = _stoppedEvent?.error {
                 // intentionally throw exception
                 throw error
             }
@@ -91,21 +91,19 @@ public final class BehaviorSubject<Element> : Observable<Element>, SubjectType, 
     - parameter event: Event to send to the observers.
     */
     public func on(event: Event<E>) {
-        lock.performLocked {
-            if self.stoppedEvent != nil || _disposed {
+        _lock.performLocked {
+            if _stoppedEvent != nil || _disposed {
                 return
             }
             
             switch event {
             case .Next(let value):
-                self._value = value
-            case .Error:
-                self.stoppedEvent = event
-            case .Completed:
-                self.stoppedEvent = event
+                _value = value
+            case .Error, .Completed:
+                _stoppedEvent = event
             }
             
-            self.observers.forEach { $0.on(event) }
+            _observers.forEach { $0.on(event) }
         }
     }
     
@@ -116,18 +114,18 @@ public final class BehaviorSubject<Element> : Observable<Element>, SubjectType, 
     - returns: Disposable object that can be used to unsubscribe the observer from the subject.
     */
     public override func subscribe<O : ObserverType where O.E == Element>(observer: O) -> Disposable {
-        return lock.calculateLocked {
+        return _lock.calculateLocked {
             if _disposed {
                 observer.on(.Error(RxError.DisposedError))
                 return NopDisposable.instance
             }
             
-            if let stoppedEvent = stoppedEvent {
+            if let stoppedEvent = _stoppedEvent {
                 observer.on(stoppedEvent)
                 return NopDisposable.instance
             }
             
-            let key = observers.insert(observer.asObserver())
+            let key = _observers.insert(observer.asObserver())
             observer.on(.Next(_value))
         
             return BehaviorSubjectSubscription(parent: self, disposeKey: key)
@@ -145,10 +143,10 @@ public final class BehaviorSubject<Element> : Observable<Element>, SubjectType, 
     Unsubscribe all observers and release resources.
     */
     public func dispose() {
-        lock.performLocked {
+        _lock.performLocked {
             _disposed = true
-            observers.removeAll()
-            stoppedEvent = nil
+            _observers.removeAll()
+            _stoppedEvent = nil
         }
     }
 }

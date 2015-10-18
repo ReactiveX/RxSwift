@@ -18,13 +18,13 @@ class SchedulePeriodicRecursive<State, S: SchedulerType> {
     typealias TimeInterval = S.TimeInterval
     typealias RecursiveScheduler = AnyRecursiveScheduler<SchedulePeriodicRecursiveCommand, S.TimeInterval>
     
-    let _scheduler: S
-    let _startAfter: TimeInterval
-    let _period: TimeInterval
-    let _action: RecursiveAction
+    private let _scheduler: S
+    private let _startAfter: TimeInterval
+    private let _period: TimeInterval
+    private let _action: RecursiveAction
     
-    var _state: State
-    var _pendingTickCount: Int32 = 0
+    private var _state: State
+    private var _pendingTickCount: Int32 = 0
     
     init(scheduler: S, startAfter: TimeInterval, period: TimeInterval, action: RecursiveAction, state: State) {
         _scheduler = scheduler
