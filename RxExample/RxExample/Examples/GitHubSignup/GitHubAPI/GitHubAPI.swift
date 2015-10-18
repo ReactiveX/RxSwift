@@ -61,8 +61,8 @@ class GitHubAPI {
     func signup(username: String, password: String) -> Observable<SignupState> {
         // this is also just a mock
         let signupResult = SignupState.SignedUp(signedUp: arc4random() % 5 == 0 ? false : true)
-        return [just(signupResult), never()]
-            .concat()
+        return just(signupResult)
+            .concat(never())
             .throttle(2, MainScheduler.sharedInstance)
             .startWith(SignupState.SigningUp)
     }
