@@ -11,7 +11,7 @@ import Foundation
 import RxSwift
 #endif
 
-extension Driver {
+extension DriverConvertibleType {
     
     /**
     Projects each element of an observable sequence into a new form.
@@ -20,7 +20,8 @@ extension Driver {
     - returns: An observable sequence whose elements are the result of invoking the transform function on each element of source.
     */
     public func map<R>(selector: E -> R) -> Driver<R> {
-        let source = _source
+        let source = self
+            .asObservable()
             .map(selector)
         return Driver<R>(source)
     }
@@ -32,13 +33,14 @@ extension Driver {
     - returns: An observable sequence that contains elements from the input sequence that satisfy the condition.
     */
     public func filter(predicate: (E) -> Bool) -> Driver<E> {
-        let source = _source
+        let source = self
+            .asObservable()
             .filter(predicate)
         return Driver(source)
     }
 }
 
-extension Driver where Element : DriverConvertibleType {
+extension DriverConvertibleType where E : DriverConvertibleType {
     
     /**
     Transforms an observable sequence of observable sequences into an observable sequence
@@ -50,14 +52,15 @@ extension Driver where Element : DriverConvertibleType {
     - returns: The observable sequence that at any point in time produces the elements of the most recent inner observable sequence that has been received.
     */
     public func switchLatest() -> Driver<E.E> {
-        let source: Observable<E.E> = _source
+        let source: Observable<E.E> = self
+            .asObservable()
             .map { $0.asDriver() }
             .switchLatest()
         return Driver<E.E>(source)
     }
 }
 
-extension Driver {
+extension DriverConvertibleType {
     
     /**
     Invokes an action for each event in the observable sequence, and propagates all observer messages through the result sequence.
@@ -67,7 +70,7 @@ extension Driver {
     */
     public func doOn(eventHandler: (Event<E>) -> Void)
         -> Driver<E> {
-        let source = _source
+        let source = self.asObservable()
                 .doOn(eventHandler)
         
         return Driver(source)
@@ -83,14 +86,14 @@ extension Driver {
     */
     public func doOn(onNext onNext: (E -> Void)? = nil, onError: (ErrorType -> Void)? = nil, onCompleted: (() -> Void)? = nil)
         -> Driver<E> {
-        let source = _source
+        let source = self.asObservable()
             .doOn(onNext: onNext, onError: onError, onCompleted: onCompleted)
             
         return Driver(source)
     }
 }
 
-extension Driver {
+extension DriverConvertibleType {
     
     /**
     Prints received events for all observers on standard output.
@@ -99,13 +102,13 @@ extension Driver {
     - returns: An observable sequence whose events are printed to standard output.
     */
     public func debug(identifier: String = "\(__FILE__):\(__LINE__)") -> Driver<E> {
-        let source = _source
+        let source = self.asObservable()
             .debug(identifier)
         return Driver(source)
     }
 }
 
-extension Driver where Element: Equatable {
+extension DriverConvertibleType where E: Equatable {
     
     /**
     Returns an observable sequence that contains only distinct contiguous elements according to equality operator.
@@ -114,14 +117,14 @@ extension Driver where Element: Equatable {
     */
     public func distinctUntilChanged()
         -> Driver<E> {
-        let source = _source
+        let source = self.asObservable()
             .distinctUntilChanged({ $0 }, comparer: { ($0 == $1) })
             
         return Driver(source)
     }
 }
 
-extension Driver {
+extension DriverConvertibleType {
     
     /**
     Returns an observable sequence that contains only distinct contiguous elements according to the `keySelector`.
@@ -130,7 +133,7 @@ extension Driver {
     - returns: An observable sequence only containing the distinct contiguous elements, based on a computed key value, from the source sequence.
     */
     public func distinctUntilChanged<K: Equatable>(keySelector: (E) -> K) -> Driver<E> {
-        let source = _source
+        let source = self.asObservable()
             .distinctUntilChanged(keySelector, comparer: { $0 == $1 })
         return Driver(source)
     }
@@ -142,7 +145,7 @@ extension Driver {
     - returns: An observable sequence only containing the distinct contiguous elements, based on `comparer`, from the source sequence.
     */
     public func distinctUntilChanged(comparer: (lhs: E, rhs: E) -> Bool) -> Driver<E> {
-        let source = _source
+        let source = self.asObservable()
             .distinctUntilChanged({ $0 }, comparer: comparer)
         return Driver(source)
     }
@@ -155,14 +158,14 @@ extension Driver {
     - returns: An observable sequence only containing the distinct contiguous elements, based on a computed key value and the comparer, from the source sequence.
     */
     public func distinctUntilChanged<K>(keySelector: (E) -> K, comparer: (lhs: K, rhs: K) -> Bool) -> Driver<E> {
-        let source = _source
+        let source = self.asObservable()
             .distinctUntilChanged(keySelector, comparer: comparer)
         return Driver(source)
     }
 }
 
 
-extension Driver {
+extension DriverConvertibleType {
     
     /**
     Projects each element of an observable sequence to an observable sequence and merges the resulting observable sequences into one observable sequence.
@@ -171,7 +174,7 @@ extension Driver {
     - returns: An observable sequence whose elements are the result of invoking the one-to-many transform function on each element of the input sequence.
     */
     public func flatMap<R>(selector: (E) -> Driver<R>) -> Driver<R> {
-        let source = _source
+        let source = self.asObservable()
             .flatMap(selector)
         
         return Driver<R>(source)
@@ -179,7 +182,7 @@ extension Driver {
 }
 
 // merge
-extension Driver where Element : DriverConvertibleType {
+extension DriverConvertibleType where E : DriverConvertibleType {
     
     /**
     Merges elements from all observable sequences in the given enumerable sequence into a single observable sequence.
@@ -188,7 +191,7 @@ extension Driver where Element : DriverConvertibleType {
     - returns: The observable sequence that merges the elements of the observable sequences.
     */
     public func merge() -> Driver<E.E> {
-        let source = _source
+        let source = self.asObservable()
             .map { $0.asDriver() }
             .merge()
         return Driver<E.E>(source)
@@ -201,7 +204,7 @@ extension Driver where Element : DriverConvertibleType {
     */
     public func merge(maxConcurrent maxConcurrent: Int)
         -> Driver<E.E> {
-        let source = _source
+        let source = self.asObservable()
             .map { $0.asDriver() }
             .merge(maxConcurrent: maxConcurrent)
         return Driver<E.E>(source)
@@ -209,7 +212,7 @@ extension Driver where Element : DriverConvertibleType {
 }
 
 // throttle
-extension Driver {
+extension DriverConvertibleType {
     
     /**
     Ignores elements from an observable sequence which are followed by another element within a specified relative time duration, using the specified scheduler to run throttling timers.
@@ -222,7 +225,7 @@ extension Driver {
     */
     public func throttle<S: SchedulerType>(dueTime: S.TimeInterval, _ scheduler: S)
         -> Driver<E> {
-        let source = _source
+        let source = self.asObservable()
             .throttle(dueTime, scheduler)
 
         return Driver(source)
@@ -239,7 +242,7 @@ extension Driver {
     */
     public func debounce<S: SchedulerType>(dueTime: S.TimeInterval, _ scheduler: S)
         -> Driver<E> {
-        let source = _source
+        let source = self.asObservable()
             .debounce(dueTime, scheduler)
 
         return Driver(source)
@@ -247,7 +250,7 @@ extension Driver {
 }
 
 // scan
-extension Driver {
+extension DriverConvertibleType {
     /**
     Applies an accumulator function over an observable sequence and returns each intermediate result. The specified seed value is used as the initial accumulator value.
     
@@ -259,7 +262,7 @@ extension Driver {
     */
     public func scan<A>(seed: A, accumulator: (A, E) -> A)
         -> Driver<A> {
-        let source = _source
+        let source = self.asObservable()
             .scan(seed, accumulator: accumulator)
         return Driver<A>(source)
     }

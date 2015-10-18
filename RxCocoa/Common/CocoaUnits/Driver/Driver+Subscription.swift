@@ -11,7 +11,7 @@ import Foundation
 import RxSwift
 #endif
 
-extension Driver {
+extension DriverConvertibleType {
     /**
     Creates new subscription and sends elements to observer.
 

@@ -100,12 +100,15 @@ class GitHubSearchRepositoriesViewController: ViewController, UITableViewDelegat
         tableView.rx_setDelegate(self)
             .addDisposableTo(disposeBag)
 
+        // activity indicator in status bar
+        // {
         GitHubSearchRepositoriesAPI.sharedAPI.activityIndicator
-            .asDriver()
+            .distinctUntilChanged()
             .driveNext { active in
                 UIApplication.sharedApplication().networkActivityIndicatorVisible = active
             }
             .addDisposableTo(disposeBag)
+        // }
     }
 
     // MARK: Table view delegate

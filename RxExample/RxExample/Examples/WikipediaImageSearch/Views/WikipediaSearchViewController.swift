@@ -60,5 +60,18 @@ class WikipediaSearchViewController: ViewController {
 
         self.viewModel = viewModel
         // }
+
+        // activity indicator spinner
+        // {
+        combineLatest(
+            DefaultWikipediaAPI.sharedAPI.loadingWikipediaData,
+            DefaultImageService.sharedImageService.loadingImage
+        ) { $0 || $1 }
+            .distinctUntilChanged()
+            .driveNext { active in
+                UIApplication.sharedApplication().networkActivityIndicatorVisible = active
+            }
+            .addDisposableTo(disposeBag)
+        // }
     }
 }

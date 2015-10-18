@@ -14,5 +14,7 @@ public class RootViewController : UITableViewController {
         super.viewDidLoad()
         // force load
         GitHubSearchRepositoriesAPI.sharedAPI.activityIndicator
+        DefaultWikipediaAPI.sharedAPI
+        DefaultImageService.sharedImageService
     }
 }
