@@ -28,8 +28,7 @@ public struct Queue<T>: SequenceType {
     private var _count: Int
     private var pushNextIndex: Int
     private var initialCapacity: Int
-    private var version: Int
-    
+
     /**
     Creates new queue.
     
@@ -38,7 +37,6 @@ public struct Queue<T>: SequenceType {
     public init(capacity: Int) {
         initialCapacity = capacity
         
-        version = 0
         _count = 0
         pushNextIndex = 0
      
@@ -111,8 +109,6 @@ public struct Queue<T>: SequenceType {
     - parameter element: Element to enqueue.
     */
     public mutating func enqueue(element: T) {
-        version++
-        
         if count == storage.count {
             resizeTo(max(storage.count, 1) * resizeFactor)
         }
@@ -128,8 +124,6 @@ public struct Queue<T>: SequenceType {
     
     private mutating func dequeueElementOnly() -> T {
         precondition(count > 0)
-        
-        version++
         
         let index = dequeueIndex
         let value = storage[index]!
@@ -177,13 +171,7 @@ public struct Queue<T>: SequenceType {
         var i = dequeueIndex
         var count = _count
         
-        let lastVersion = version
-        
         return anyGenerator {
-            if lastVersion != self.version {
-                rxFatalError("Collection was modified while enumerated")
-            }
-            
             if count == 0 {
                 return nil
             }
