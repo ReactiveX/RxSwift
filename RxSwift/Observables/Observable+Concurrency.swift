@@ -8,7 +8,7 @@
 
 import Foundation
 
-// observeOn
+// MARK: observeOn
 
 extension ObservableType {
     
@@ -32,7 +32,7 @@ extension ObservableType {
     }
 }
 
-// subscribeOn
+// MARK: subscribeOn
 
 extension ObservableType {
     

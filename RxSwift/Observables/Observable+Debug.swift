@@ -8,7 +8,7 @@
 
 import Foundation
 
-// debug
+// MARK: debug
 
 extension ObservableType {
     

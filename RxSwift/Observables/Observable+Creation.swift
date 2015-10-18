@@ -8,7 +8,7 @@
 
 import Foundation
 
-// create
+// MARK: create
 
 /**
 Creates an observable sequence from a specified subscribe method implementation.
@@ -20,7 +20,7 @@ public func create<E>(subscribe: (AnyObserver<E>) -> Disposable) -> Observable<E
     return AnonymousObservable(subscribe)
 }
 
-// empty
+// MARK: empty
 
 /**
 Returns an empty observable sequence, using the specified scheduler to send out the single `Completed` message.
@@ -31,7 +31,7 @@ public func empty<E>() -> Observable<E> {
     return Empty<E>()
 }
 
-// never
+// MARK: never
 
 /**
 Returns a non-terminating observable sequence, which can be used to denote an infinite duration.
@@ -42,7 +42,7 @@ public func never<E>() -> Observable<E> {
     return Never()
 }
 
-// just
+// MARK: just
 
 /**
 Returns an observable sequence that contains a single element.
@@ -54,7 +54,7 @@ public func just<E>(element: E) -> Observable<E> {
     return Just(element: element)
 }
 
-// of
+// MARK: of
 
 /**
 This method creates a new Observable instance with a variable number of elements.
@@ -91,7 +91,7 @@ extension SequenceType {
     }
 }
 
-// fail
+// MARK: fail
 
 /**
 Returns an observable sequence that terminates with an `error`.
@@ -102,7 +102,7 @@ public func failWith<E>(error: ErrorType) -> Observable<E> {
     return FailWith(error: error)
 }
 
-// defer
+// MARK: defer
 
 /**
 Returns an observable sequence that invokes the specified factory function whenever a new observer subscribes.

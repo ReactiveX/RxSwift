@@ -8,7 +8,7 @@
 
 import Foundation
 
-// combineLatest
+// MARK: combineLatest
 
 extension CollectionType where Generator.Element : ObservableConvertibleType {
     
@@ -23,7 +23,7 @@ extension CollectionType where Generator.Element : ObservableConvertibleType {
     }
 }
 
-// zip
+// MARK: zip
 
 extension CollectionType where Generator.Element : ObservableConvertibleType {
     
@@ -38,7 +38,7 @@ extension CollectionType where Generator.Element : ObservableConvertibleType {
     }
 }
 
-// switch
+// MARK: switch
 
 extension ObservableType where E : ObservableConvertibleType {
     
@@ -56,7 +56,7 @@ extension ObservableType where E : ObservableConvertibleType {
     }
 }
 
-// concat
+// MARK: concat
 
 extension ObservableType {
 
@@ -96,7 +96,7 @@ extension ObservableType where E : ObservableConvertibleType {
     }
 }
 
-// merge
+// MARK: merge
 
 extension ObservableType where E : ObservableConvertibleType {
     
@@ -121,7 +121,7 @@ extension ObservableType where E : ObservableConvertibleType {
     }
 }
 
-// catch
+// MARK: catch
 
 extension ObservableType {
     
@@ -161,7 +161,7 @@ extension SequenceType where Generator.Element : ObservableConvertibleType {
     }
 }
 
-// takeUntil
+// MARK: takeUntil
 
 extension ObservableType {
     
@@ -177,7 +177,7 @@ extension ObservableType {
     }
 }
 
-// skipUntil
+// MARK: skipUntil
 
 extension ObservableType {
     
@@ -193,7 +193,7 @@ extension ObservableType {
     }
 }
 
-// amb
+// MARK: amb
 
 extension ObservableType {
     

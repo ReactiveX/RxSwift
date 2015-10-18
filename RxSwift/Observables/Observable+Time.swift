@@ -8,7 +8,7 @@
 
 import Foundation
 
-// throttle
+// MARK: throttle
 extension ObservableType {
     
     /**
@@ -40,7 +40,7 @@ extension ObservableType {
     }
 }
 
-// sample
+// MARK: sample
 
 extension ObservableType {
    
@@ -75,7 +75,7 @@ extension ObservableType {
     }
 }
 
-// interval
+// MARK: interval
 
 /**
 Returns an observable sequence that produces a value after each period, using the specified scheduler to run timers and to send out observer messages.
@@ -92,7 +92,7 @@ public func interval<S: SchedulerType>(period: S.TimeInterval, _ scheduler: S)
     )
 }
 
-// timer
+// MARK: timer
 
 /**
 Returns an observable sequence that periodically produces a value after the specified initial relative due time has elapsed, using the specified scheduler to run timers.
@@ -127,7 +127,7 @@ public func timer<S: SchedulerType>(dueTime: S.TimeInterval, _ scheduler: S)
     )
 }
 
-// take
+// MARK: take
 
 extension ObservableType {
 
@@ -144,7 +144,7 @@ extension ObservableType {
     }
 }
 
-// skip
+// MARK: skip
 
 extension ObservableType {
     
@@ -162,7 +162,7 @@ extension ObservableType {
 }
 
 
-// delaySubscription
+// MARK: delaySubscription
 
 extension ObservableType {
     
@@ -179,7 +179,7 @@ extension ObservableType {
     }
 }
 
-// buffer 
+// MARK: buffer
 
 extension ObservableType {
 
