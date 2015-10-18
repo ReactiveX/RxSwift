@@ -158,10 +158,9 @@ extension ObservableCreationTests {
         var disposeInvoked = 0
         var createInvoked = 0
        
-        var xs:ColdObservable<Int> = scheduler.createColdObservable([])
-        var disposable = MockDisposable(scheduler: scheduler)
-
-        var _d = MockDisposable(scheduler: scheduler)
+        var xs:ColdObservable<Int>!
+        var disposable:MockDisposable!
+        var _d:MockDisposable!
 
         let res = scheduler.start {
             using({ () -> MockDisposable in
@@ -202,10 +201,9 @@ extension ObservableCreationTests {
         var disposeInvoked = 0
         var createInvoked = 0
        
-        var xs:ColdObservable<Int> = scheduler.createColdObservable([])
-        var disposable = MockDisposable(scheduler: scheduler)
-
-        var _d = MockDisposable(scheduler: scheduler)
+        var xs:ColdObservable<Int>!
+        var disposable:MockDisposable!
+        var _d:MockDisposable!
         
         let res = scheduler.start {
             using({ () -> MockDisposable in
@@ -249,10 +247,9 @@ extension ObservableCreationTests {
         var disposeInvoked = 0
         var createInvoked = 0
        
-        var xs:ColdObservable<Int> = scheduler.createColdObservable([])
-        var disposable = MockDisposable(scheduler: scheduler)
-
-        var _d = MockDisposable(scheduler: scheduler)
+        var xs:ColdObservable<Int>!
+        var disposable:MockDisposable!
+        var _d:MockDisposable!
         
         let res = scheduler.start {
             using({ () -> MockDisposable in
@@ -296,10 +293,9 @@ extension ObservableCreationTests {
         var disposeInvoked = 0
         var createInvoked = 0
        
-        var xs:ColdObservable<Int> = scheduler.createColdObservable([])
-        var disposable = MockDisposable(scheduler: scheduler)
-
-        var _d = MockDisposable(scheduler: scheduler)
+        var xs:ColdObservable<Int>!
+        var disposable:MockDisposable!
+        var _d:MockDisposable!
         
         let res = scheduler.start {
             using({ () -> MockDisposable in
@@ -366,7 +362,7 @@ extension ObservableCreationTests {
        
         var disposeInvoked = 0
         var createInvoked = 0
-        var disposable = MockDisposable(scheduler: scheduler)
+        var disposable:MockDisposable!
        
         let res = scheduler.start {
             using({ () -> MockDisposable in
