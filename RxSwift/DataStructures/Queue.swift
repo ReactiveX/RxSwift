@@ -22,7 +22,7 @@ public struct Queue<T>: SequenceType {
     */
     public typealias Generator = AnyGenerator<T>
     
-    let resizeFactor = 2
+    private let _resizeFactor = 2
     
     private var _storage: [T?]
     private var _count: Int
@@ -110,7 +110,7 @@ public struct Queue<T>: SequenceType {
     */
     public mutating func enqueue(element: T) {
         if count == _storage.count {
-            resizeTo(max(_storage.count, 1) * resizeFactor)
+            resizeTo(max(_storage.count, 1) * _resizeFactor)
         }
         
         _storage[_pushNextIndex] = element
@@ -156,9 +156,9 @@ public struct Queue<T>: SequenceType {
     public mutating func dequeue() -> T {
         let value = dequeueElementOnly()
         
-        let downsizeLimit = _storage.count / (resizeFactor * resizeFactor)
+        let downsizeLimit = _storage.count / (_resizeFactor * _resizeFactor)
         if _count < downsizeLimit && downsizeLimit >= _initialCapacity {
-            resizeTo(_storage.count / resizeFactor)
+            resizeTo(_storage.count / _resizeFactor)
         }
         
         return value

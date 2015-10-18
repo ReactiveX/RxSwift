@@ -17,7 +17,7 @@ class TailRecursiveSink<S: SequenceType, O: ObserverType where S.Generator.Eleme
     private var _subscription = SerialDisposable()
     
     // this is thread safe objec
-    private var _gate: AsyncLock = AsyncLock()
+    private var _gate = AsyncLock()
     
     override init(observer: O, cancel: Disposable) {
         super.init(observer: observer, cancel: cancel)
