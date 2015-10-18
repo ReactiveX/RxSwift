@@ -7,8 +7,10 @@
 //
 
 import Foundation
+#if !RX_NO_MODULE
 import RxSwift
 import RxCocoa
+#endif
 
 struct ActivityToken<E> : ObservableConvertibleType, Disposable {
     private let _source: Observable<E>
