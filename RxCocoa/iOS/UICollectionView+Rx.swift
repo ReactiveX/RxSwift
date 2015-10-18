@@ -151,6 +151,39 @@ extension UICollectionView {
         
         return ControlEvent(source: source)
     }
+    
+    /**
+    Syncronous helper method for retrieving a model at indexPath through a reactive data source
+    */
+    public func rx_modelAtIndexPath<T>(indexPath: NSIndexPath) throws -> T {
+        let dataSource: RxCollectionViewReactiveArrayDataSource<T> = castOrFatalError(self.rx_dataSource.forwardToDelegate(), message: "This method only works in case one of the `rx_itemsWith*` methods was used.")
+        
+        guard let element = dataSource.modelAtIndex(indexPath.item) else {
+            throw rxError(.InvalidOperation, "Items not set yet.")
+        }
+        
+        return element
+    }
 }
+#endif
 
+#if os(tvOS)
+
+extension UICollectionView {
+    
+    /**
+     Reactive wrapper for `delegate` message `collectionView:didUpdateFocusInContext:withAnimationCoordinator:`.
+     */
+    public var rx_didUpdateFocusInContextWithAnimationCoordinator: ControlEvent<(context: UIFocusUpdateContext, animationCoordinator: UIFocusAnimationCoordinator)> {
+        
+        let source = rx_delegate.observe("collectionView:didUpdateFocusInContext:withAnimationCoordinator:")
+            .map { a -> (context: UIFocusUpdateContext, animationCoordinator: UIFocusAnimationCoordinator) in
+                let context = a[1] as! UIFocusUpdateContext
+                let animationCoordinator = a[2] as! UIFocusAnimationCoordinator
+                return (context: context, animationCoordinator: animationCoordinator)
+        }
+
+        return ControlEvent(source: source)
+    }
+}
 #endif
