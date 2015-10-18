@@ -144,28 +144,25 @@ extension UICollectionView {
     */
     public func rx_modelSelected<T>() -> ControlEvent<T> {
         let source: Observable<T> = rx_itemSelected .map { indexPath in
-            return self.rx_modelAtIndexPath(indexPath).asObservable()
-        }.switchLatest()
+            let dataSource: RxCollectionViewReactiveArrayDataSource<T> = castOrFatalError(self.rx_dataSource.forwardToDelegate(), message: "This method only works in case one of the `rx_itemsWith*` methods was used.")
+            
+            return dataSource.modelAtIndex(indexPath.item)!
+        }
         
         return ControlEvent(source: source)
     }
     
-    public func rx_modelAtIndexPath<T>(indexPath: NSIndexPath?) -> ControlEvent<T> {
-        let source: Observable<T> = create { observer in
-            if let indexPath = indexPath {
-                
-                let dataSource: RxCollectionViewReactiveArrayDataSource<T> = castOrFatalError(self.rx_dataSource.forwardToDelegate(), message: "This method only works in case one of the `rx_itemsWith*` methods was used.")
-                
-                if let model = dataSource.modelAtIndex(indexPath.item) {
-                    observer.on(.Next(model))
-                }
-                
-            }
-    
-            return AnonymousDisposable { }
+    /**
+    Syncronous helper method for retrieving a model at indexPath through a reactive data source
+    */
+    public func rx_modelAtIndexPath<T>(indexPath: NSIndexPath) throws -> T {
+        let dataSource: RxCollectionViewReactiveArrayDataSource<T> = castOrFatalError(self.rx_dataSource.forwardToDelegate(), message: "This method only works in case one of the `rx_itemsWith*` methods was used.")
+        
+        guard let element = dataSource.modelAtIndex(indexPath.item) else {
+            throw rxError(.InvalidOperation, "Items not set yet.")
         }
         
-        return ControlEvent(source: source)
+        return element
     }
 }
 #endif
@@ -174,15 +171,13 @@ extension UICollectionView {
 
 extension UICollectionView {
     
-    public typealias ContextAndAnimationCoordinator = (context: UIFocusUpdateContext, animationCoordinator: UIFocusAnimationCoordinator)
-    
     /**
      Reactive wrapper for `delegate` message `collectionView:didUpdateFocusInContext:withAnimationCoordinator:`.
      */
-    public var rx_didUpdateFocusInContextWithAnimationCoordinator: ControlEvent<ContextAndAnimationCoordinator> {
+    public var rx_didUpdateFocusInContextWithAnimationCoordinator: ControlEvent<(context: UIFocusUpdateContext, animationCoordinator: UIFocusAnimationCoordinator)> {
         
         let source = rx_delegate.observe("collectionView:didUpdateFocusInContext:withAnimationCoordinator:")
-            .map { a -> ContextAndAnimationCoordinator in
+            .map { a -> (context: UIFocusUpdateContext, animationCoordinator: UIFocusAnimationCoordinator) in
                 let context = a[1] as! UIFocusUpdateContext
                 let animationCoordinator = a[2] as! UIFocusAnimationCoordinator
                 return (context: context, animationCoordinator: animationCoordinator)
@@ -190,55 +185,5 @@ extension UICollectionView {
 
         return ControlEvent(source: source)
     }
-    
-    /**
-     Reactive wrapper for UICollectionViewFocusUpdateContext's nextFocusedIndexPath
-     */
-    public var rx_nextFocusedUpdated: ControlEvent<NSIndexPath?> {
-        let source = rx_didUpdateFocusInContextWithAnimationCoordinator
-            .map { (c: ContextAndAnimationCoordinator) -> NSIndexPath? in
-                let context = c.context as! UICollectionViewFocusUpdateContext
-                return context.nextFocusedIndexPath
-        }
-        
-        return ControlEvent(source: source)
-    }
-
-    /**
-     Reactive wrapper for UICollectionViewFocusUpdateContext's previouslyFocusedIndexPath
-     */
-    public var rx_previousFocusedUpdated: ControlEvent<NSIndexPath?> {
-        let source = rx_didUpdateFocusInContextWithAnimationCoordinator
-            .map { (c: ContextAndAnimationCoordinator) -> NSIndexPath? in
-                let context = c.context as! UICollectionViewFocusUpdateContext
-                return context.previouslyFocusedIndexPath
-        }
-        
-        return ControlEvent(source: source)
-    }
-    
-    /**
-     Reactive wrapper for the next focused model
-     */
-    public func rx_modelForNextFocusedUpdated<T>() -> ControlEvent<T> {
-        let source: Observable<T> = rx_nextFocusedUpdated.map { indexPath in
-            return self.rx_modelAtIndexPath(indexPath).asObservable()
-            
-        }.switchLatest()
-    
-        return ControlEvent(source: source)
-    }
-    
-    /**
-     Reactive wrapper for the previously focused model
-     */
-    public func rx_modelForPreviouslyFocusedUpdated<T>() -> ControlEvent<T> {
-        let source: Observable<T> = rx_nextFocusedUpdated.map { indexPath in
-            return self.rx_modelAtIndexPath(indexPath).asObservable()
-        }.switchLatest()
-        
-        return ControlEvent(source: source)
-    }
 }
-    
 #endif
