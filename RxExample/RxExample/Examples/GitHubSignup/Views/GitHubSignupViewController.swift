@@ -223,6 +223,7 @@ class GitHubSignupViewController : ViewController {
                 }
             }
             .addDisposableTo(disposeBag)
+
     }
    
     // This is one of the reasons why it's a good idea for disposal to be detached from allocations.

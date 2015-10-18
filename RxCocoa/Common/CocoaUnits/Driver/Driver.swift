@@ -22,6 +22,12 @@ public protocol DriverConvertibleType : ObservableConvertibleType {
     func asDriver() -> Driver<E>
 }
 
+extension DriverConvertibleType {
+    public func asObservable() -> Observable<E> {
+        return asDriver().asObservable()
+    }
+}
+
 /**
     Unit that represents observable sequence with following properties:
 
