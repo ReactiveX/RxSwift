@@ -160,6 +160,13 @@ public func repeatElement<E>(element: E, _ scheduler: ImmediateSchedulerType) ->
     return RepeatElement(element: element, scheduler: scheduler)
 }
 
+/**
+Constructs an observable sequence that depends on a resource object, whose lifetime is tied to the resulting observable sequence's lifetime.
+ 
+- parameter resourceFactory: Factory function to obtain a resource object.
+- parameter observableFactory: Factory function to obtain an observable sequence that depends on the obtained resource.
+- returns: An observable sequence whose lifetime controls the lifetime of the dependent resource object.
+*/
 public func using<S, R: Disposable>(resourceFactory: () throws -> R, observableFactory: R throws -> Observable<S>) -> Observable<S> {
     return Using(resourceFactory: resourceFactory, observableFactory: observableFactory)
 }
