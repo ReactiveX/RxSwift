@@ -187,10 +187,14 @@ extension UITableView {
     
     */
     public func rx_modelSelected<T>() -> ControlEvent<T> {
-        let source: Observable<T> = rx_itemSelected.map { ip in
-            let dataSource: RxTableViewReactiveArrayDataSource<T> = castOrFatalError(self.rx_dataSource.forwardToDelegate(), message: "This method only works in case one of the `rx_subscribeItemsTo` methods was used.")
+        let source: Observable<T> = rx_itemSelected.flatMap { [weak self] ip -> Observable<T> in
+            guard let view = self else {
+                return empty()
+            }
+
+            let dataSource: RxTableViewReactiveArrayDataSource<T> = castOrFatalError(view.rx_dataSource.forwardToDelegate(), message: "This method only works in case one of the `rx_subscribeItemsTo` methods was used.")
             
-            return dataSource.modelAtIndex(ip.item)!
+            return just(dataSource.modelAtIndex(ip.item)!)
         }
         
         return ControlEvent(source: source)

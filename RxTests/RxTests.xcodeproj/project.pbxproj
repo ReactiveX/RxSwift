@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5E5D10BB1B48355200432B25 /* UIControl+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5D10BA1B48355200432B25 /* UIControl+RxTests.swift */; };
+		5E5D10BB1B48355200432B25 /* Control+RxTests+UIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5D10BA1B48355200432B25 /* Control+RxTests+UIKit.swift */; };
 		C69B65001BA88FAC00A7FA73 /* ObserverTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C69B64FF1BA88FAC00A7FA73 /* ObserverTests.swift */; };
 		C69B65011BA8957C00A7FA73 /* ObserverTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C69B64FF1BA88FAC00A7FA73 /* ObserverTests.swift */; };
 		C801EB5A1B97951100C4D8C4 /* Observable+CreationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C801EB591B97951100C4D8C4 /* Observable+CreationTest.swift */; };
@@ -112,6 +112,10 @@
 		C8E3812B1B2083C2008CDC33 /* PrimitiveMockObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E3812A1B2083C2008CDC33 /* PrimitiveMockObserver.swift */; };
 		C8E3812C1B2083C2008CDC33 /* PrimitiveMockObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E3812A1B2083C2008CDC33 /* PrimitiveMockObserver.swift */; };
 		C8E3813A1B21B77E008CDC33 /* Observable+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E381221B2063CC008CDC33 /* Observable+Extensions.swift */; };
+		C8E9D2BD1BD422D80079D0DB /* Control+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E9D2BC1BD422D80079D0DB /* Control+RxTests.swift */; settings = {ASSET_TAGS = (); }; };
+		C8E9D2BE1BD422D80079D0DB /* Control+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E9D2BC1BD422D80079D0DB /* Control+RxTests.swift */; settings = {ASSET_TAGS = (); }; };
+		C8E9D2BF1BD422D80079D0DB /* Control+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E9D2BC1BD422D80079D0DB /* Control+RxTests.swift */; settings = {ASSET_TAGS = (); }; };
+		C8E9D2C41BD452650079D0DB /* Control+RxTests+Cocoa.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E9D2C01BD4525B0079D0DB /* Control+RxTests+Cocoa.swift */; settings = {ASSET_TAGS = (); }; };
 		C8EA2D371BD02E1900FB22AC /* EquatableArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8EA2D361BD02E1900FB22AC /* EquatableArray.swift */; };
 		C8EA2D381BD02E1900FB22AC /* EquatableArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8EA2D361BD02E1900FB22AC /* EquatableArray.swift */; };
 		C8EA2D391BD02E1900FB22AC /* EquatableArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8EA2D361BD02E1900FB22AC /* EquatableArray.swift */; };
@@ -122,7 +126,7 @@
 		D203C4EE1BB9C22800D02D00 /* KVOObservableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8633AE41B0A9FF300375D60 /* KVOObservableTests.swift */; };
 		D203C4EF1BB9C22800D02D00 /* RxCocoaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B5BEA01B4A6A82000D732C /* RxCocoaTests.swift */; };
 		D203C4F01BB9C22800D02D00 /* NSObject+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81CC92A1B513FD400915606 /* NSObject+RxTests.swift */; };
-		D203C5141BB9C54A00D02D00 /* UIControl+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5D10BA1B48355200432B25 /* UIControl+RxTests.swift */; };
+		D203C5141BB9C54A00D02D00 /* Control+RxTests+UIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5D10BA1B48355200432B25 /* Control+RxTests+UIKit.swift */; };
 		D251ED291BB9BF90002D0E36 /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8A468CC1B8A897800BF917B /* RxCocoa.framework */; };
 		D2AF91971BD2EBB900A008C1 /* MockDisposable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2AF91961BD2EBB900A008C1 /* MockDisposable.swift */; };
 		D2AF91991BD3D9C600A008C1 /* MockDisposable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2AF91961BD2EBB900A008C1 /* MockDisposable.swift */; };
@@ -172,7 +176,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		5E5D10BA1B48355200432B25 /* UIControl+RxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIControl+RxTests.swift"; sourceTree = "<group>"; };
+		5E5D10BA1B48355200432B25 /* Control+RxTests+UIKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Control+RxTests+UIKit.swift"; sourceTree = "<group>"; };
 		C69B64FF1BA88FAC00A7FA73 /* ObserverTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObserverTests.swift; sourceTree = "<group>"; };
 		C801EB591B97951100C4D8C4 /* Observable+CreationTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Observable+CreationTest.swift"; sourceTree = "<group>"; };
 		C80DDEDB1BCE9A03006A1832 /* Driver+Test.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Driver+Test.swift"; sourceTree = "<group>"; };
@@ -231,6 +235,8 @@
 		C8E381221B2063CC008CDC33 /* Observable+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Observable+Extensions.swift"; sourceTree = "<group>"; };
 		C8E381271B207D03008CDC33 /* PrimitiveHotObservable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrimitiveHotObservable.swift; sourceTree = "<group>"; };
 		C8E3812A1B2083C2008CDC33 /* PrimitiveMockObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrimitiveMockObserver.swift; sourceTree = "<group>"; };
+		C8E9D2BC1BD422D80079D0DB /* Control+RxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Control+RxTests.swift"; sourceTree = "<group>"; };
+		C8E9D2C01BD4525B0079D0DB /* Control+RxTests+Cocoa.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Control+RxTests+Cocoa.swift"; sourceTree = "<group>"; };
 		C8EA2D361BD02E1900FB22AC /* EquatableArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EquatableArray.swift; sourceTree = "<group>"; };
 		C8FDC5F71B2B5B7E0065F8D9 /* ElementIndexPair.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElementIndexPair.swift; sourceTree = "<group>"; };
 		D2AF91961BD2EBB900A008C1 /* MockDisposable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockDisposable.swift; sourceTree = "<group>"; };
@@ -324,12 +330,14 @@
 		C811082A1AF50E2A001C13E4 /* RxCocoaTests */ = {
 			isa = PBXGroup;
 			children = (
-				C811082B1AF50E2A001C13E4 /* NSNotificationCenterTests.swift */,
-				C814CEA61AF642D600E98087 /* UI+RxTests.swift */,
-				5E5D10BA1B48355200432B25 /* UIControl+RxTests.swift */,
+				C8E9D2BC1BD422D80079D0DB /* Control+RxTests.swift */,
+				5E5D10BA1B48355200432B25 /* Control+RxTests+UIKit.swift */,
+				C8E9D2C01BD4525B0079D0DB /* Control+RxTests+Cocoa.swift */,
 				C8633AE41B0A9FF300375D60 /* KVOObservableTests.swift */,
-				C8B5BEA01B4A6A82000D732C /* RxCocoaTests.swift */,
+				C811082B1AF50E2A001C13E4 /* NSNotificationCenterTests.swift */,
 				C81CC92A1B513FD400915606 /* NSObject+RxTests.swift */,
+				C8B5BEA01B4A6A82000D732C /* RxCocoaTests.swift */,
+				C814CEA61AF642D600E98087 /* UI+RxTests.swift */,
 			);
 			path = RxCocoaTests;
 			sourceTree = SOURCE_ROOT;
@@ -608,10 +616,11 @@
 				C84B8FC21B89D0D500C9CCCF /* BagTest.swift in Sources */,
 				C81108511AF50E2A001C13E4 /* HotObservable.swift in Sources */,
 				C81108541AF50E2A001C13E4 /* Observable.Extensions.swift in Sources */,
+				C8E9D2BD1BD422D80079D0DB /* Control+RxTests.swift in Sources */,
 				C897EC3B1B10E000009C2CB0 /* BehaviorSubjectTest.swift in Sources */,
 				C81108681AF50E2A001C13E4 /* QueueTests.swift in Sources */,
 				C81108651AF50E2A001C13E4 /* Observable+SingleTest.swift in Sources */,
-				5E5D10BB1B48355200432B25 /* UIControl+RxTests.swift in Sources */,
+				5E5D10BB1B48355200432B25 /* Control+RxTests+UIKit.swift in Sources */,
 				C897EC4A1B1123DA009C2CB0 /* Observable+MultipleTest+Zip.swift in Sources */,
 				D2AF91971BD2EBB900A008C1 /* MockDisposable.swift in Sources */,
 				C81108571AF50E2A001C13E4 /* Recorded.swift in Sources */,
@@ -660,6 +669,7 @@
 				C80DDEDD1BCE9A03006A1832 /* Driver+Test.swift in Sources */,
 				C88BB89F1B07E64B0064D411 /* DisposableTest.swift in Sources */,
 				C88BB8A01B07E64B0064D411 /* Observable+StandardSequenceOperatorsTest.swift in Sources */,
+				C8E9D2C41BD452650079D0DB /* Control+RxTests+Cocoa.swift in Sources */,
 				C88BB8A11B07E64B0064D411 /* Observable+MultipleTest.swift in Sources */,
 				C81CC92C1B513FD400915606 /* NSObject+RxTests.swift in Sources */,
 				D2AF91991BD3D9C600A008C1 /* MockDisposable.swift in Sources */,
@@ -683,6 +693,7 @@
 				C88BB8A91B07E64B0064D411 /* Observable+AggregateTest.swift in Sources */,
 				C88BB8AA1B07E64B0064D411 /* MockObserver.swift in Sources */,
 				C80DDEE11BCEE898006A1832 /* MainThreadPrimitiveHotObservable.swift in Sources */,
+				C8E9D2BE1BD422D80079D0DB /* Control+RxTests.swift in Sources */,
 				C8AF26F01B499E5C00131C03 /* DelegateProxyTest.swift in Sources */,
 				C69B65011BA8957C00A7FA73 /* ObserverTests.swift in Sources */,
 				C8633AE61B0AA0ED00375D60 /* KVOObservableTests.swift in Sources */,
@@ -729,8 +740,9 @@
 				D2EBEB5F1BB9B7DB003A27DC /* Subscription.swift in Sources */,
 				D2EBEB691BB9B7EF003A27DC /* DelegateProxyTest.swift in Sources */,
 				D2EBEB701BB9B7EF003A27DC /* Observable+MultipleTest.swift in Sources */,
-				D203C5141BB9C54A00D02D00 /* UIControl+RxTests.swift in Sources */,
+				D203C5141BB9C54A00D02D00 /* Control+RxTests+UIKit.swift in Sources */,
 				D2EBEB581BB9B7CC003A27DC /* TestObservable.swift in Sources */,
+				C8E9D2BF1BD422D80079D0DB /* Control+RxTests.swift in Sources */,
 				D2EBEB661BB9B7EF003A27DC /* BehaviorSubjectTest.swift in Sources */,
 				D2EBEB671BB9B7EF003A27DC /* CompositeObserverTest.swift in Sources */,
 				D2EBEB7A1BB9B804003A27DC /* PerformanceTools.swift in Sources */,

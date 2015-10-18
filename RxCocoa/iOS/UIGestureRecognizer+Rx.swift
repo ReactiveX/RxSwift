@@ -20,7 +20,7 @@ class GestureTarget: RxTarget {
     
     let selector = Selector("eventHandler:")
     
-    unowned let gestureRecognizer: UIGestureRecognizer
+    weak var gestureRecognizer: UIGestureRecognizer?
     var callback: Callback?
     
     init(_ gestureRecognizer: UIGestureRecognizer, callback: Callback) {
@@ -38,15 +38,15 @@ class GestureTarget: RxTarget {
     }
     
     func eventHandler(sender: UIGestureRecognizer!) {
-        if let callback = self.callback {
-            callback(self.gestureRecognizer)
+        if let callback = self.callback, gestureRecognizer = self.gestureRecognizer {
+            callback(gestureRecognizer)
         }
     }
     
     override func dispose() {
         super.dispose()
         
-        self.gestureRecognizer.removeTarget(self, action: self.selector)
+        self.gestureRecognizer?.removeTarget(self, action: self.selector)
         self.callback = nil
     }
 }
@@ -59,10 +59,15 @@ extension UIGestureRecognizer {
     public var rx_event: ControlEvent<UIGestureRecognizer> {
         let source: Observable<UIGestureRecognizer> = AnonymousObservable { [weak self] observer in
             MainScheduler.ensureExecutingOnScheduler()
+
+            guard let control = self else {
+                observer.on(.Completed)
+                return NopDisposable.instance
+            }
             
-            let observer = GestureTarget(self!) {
+            let observer = GestureTarget(control) {
                 control in
-                observer.on(.Next(self!))
+                observer.on(.Next(control))
             }
             
             return observer

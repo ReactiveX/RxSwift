@@ -15,13 +15,12 @@ import RxSwift
 class RxTextFieldDelegate : DelegateProxy
                           , NSTextFieldDelegate
                           , DelegateProxyType {
-    let textField: NSTextField
-    let textSubject = ReplaySubject<String>.create(bufferSize: 1)
+    let textSubject = PublishSubject<String>()
     
     required init(parentObject: AnyObject) {
-        self.textField = parentObject as! NSTextField
+        let textField = parentObject as! NSTextField
         super.init(parentObject: parentObject)
-        self.textSubject.on(.Next(self.textField.stringValue))
+        self.textSubject.on(.Next(textField.stringValue))
     }
     
     override func controlTextDidChange(notification: NSNotification) {
@@ -59,7 +58,9 @@ extension NSTextField {
     public var rx_text: ControlProperty<String> {
         let delegate = proxyForObject(self) as RxTextFieldDelegate
         
-        let source = delegate.textSubject
+        let source = deferred { [weak self] in
+            delegate.textSubject.startWith(self?.stringValue ?? "")
+        }.takeUntil(rx_deallocated)
         
         return ControlProperty(source: source, observer: AnyObserver { [weak self] event in
             MainScheduler.ensureExecutingOnScheduler()

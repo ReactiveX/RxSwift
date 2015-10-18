@@ -143,10 +143,13 @@ extension UICollectionView {
     
     */
     public func rx_modelSelected<T>() -> ControlEvent<T> {
-        let source: Observable<T> = rx_itemSelected .map { indexPath in
-            let dataSource: RxCollectionViewReactiveArrayDataSource<T> = castOrFatalError(self.rx_dataSource.forwardToDelegate(), message: "This method only works in case one of the `rx_itemsWith*` methods was used.")
+        let source: Observable<T> = rx_itemSelected.flatMap { [weak self] indexPath -> Observable<T> in
+            guard let view = self else {
+                return empty()
+            }
+            let dataSource: RxCollectionViewReactiveArrayDataSource<T> = castOrFatalError(view.rx_dataSource.forwardToDelegate(), message: "This method only works in case one of the `rx_itemsWith*` methods was used.")
             
-            return dataSource.modelAtIndex(indexPath.item)!
+            return just(dataSource.modelAtIndex(indexPath.item)!)
         }
         
         return ControlEvent(source: source)
