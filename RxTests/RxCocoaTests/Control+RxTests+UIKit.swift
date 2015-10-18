@@ -42,27 +42,6 @@ extension ControlTests {
 // Don't know why can't use ActionSheet and AlertView inside unit tests
 
 
-// UIActionSheet
-extension ControlTests {
-    func testActionSheet_DelegateEventCompletesOnDealloc() {
-        let createActionSheet: () -> UIActionSheet = { UIActionSheet(title: "", delegate: nil, cancelButtonTitle: "", destructiveButtonTitle: "") }
-        ensureEventDeallocated(createActionSheet) { (view: UIActionSheet) in view.rx_clickedButtonAtIndex }
-        ensureEventDeallocated(createActionSheet) { (view: UIActionSheet) in view.rx_didDismissWithButtonIndex }
-        ensureEventDeallocated(createActionSheet) { (view: UIActionSheet) in view.rx_willDismissWithButtonIndex }
-    }
-}
-
-// UIAlertView
-extension ControlTests {
-    func testAlertView_DelegateEventCompletesOnDealloc() {
-        let createAlertView: () -> UIAlertView = { UIAlertView(title: "", message: "", delegate: nil, cancelButtonTitle: nil) }
-        ensureEventDeallocated(createAlertView) { (view: UIAlertView) in view.rx_clickedButtonAtIndex }
-        ensureEventDeallocated(createAlertView) { (view: UIAlertView) in view.rx_didDismissWithButtonIndex }
-        ensureEventDeallocated(createAlertView) { (view: UIAlertView) in view.rx_willDismissWithButtonIndex }
-    }
-}
-
-
 // UIBarButtonItem
 extension ControlTests {
     func testBarButtonItem_DelegateEventCompletesOnDealloc() {
@@ -101,14 +80,6 @@ extension ControlTests {
     }
 }
 
-// UIDatePicker
-extension ControlTests {
-    func testDatePicker_DelegateEventCompletesOnDealloc() {
-        let createView: () -> UIDatePicker = { UIDatePicker(frame: CGRectMake(0, 0, 1, 1)) }
-        ensurePropertyDeallocated(createView, NSDate()) { (view: UIDatePicker) in view.rx_date }
-    }
-}
-
 // UIGestureRecognizer
 extension ControlTests {
     func testGestureRecognizer_DelegateEventCompletesOnDealloc() {
@@ -125,14 +96,6 @@ extension ControlTests {
     }
 }
 
-// UISearchBar
-extension ControlTests {
-    func testSearchBar_DelegateEventCompletesOnDealloc() {
-        let createView: () -> UISearchBar = { UISearchBar(frame: CGRectMake(0, 0, 1, 1)) }
-        ensurePropertyDeallocated(createView, "a") { (view: UISearchBar) in view.rx_text }
-    }
-}
-
 // UISegmentedControl
 extension ControlTests {
     func testSegmentedControl_DelegateEventCompletesOnDealloc() {
@@ -140,6 +103,46 @@ extension ControlTests {
         ensurePropertyDeallocated(createView, 1) { (view: UISegmentedControl) in view.rx_value }
     }
 }
+
+// UITextView
+extension ControlTests {
+    func testText_DelegateEventCompletesOnDealloc() {
+        let createView: () -> UITextView = { UITextView(frame: CGRectMake(0, 0, 1, 1)) }
+        ensurePropertyDeallocated(createView, "text") { (view: UITextView) in view.rx_text }
+    }
+}
+
+
+#if os(iOS)
+
+// UIActionSheet
+extension ControlTests {
+    func testActionSheet_DelegateEventCompletesOnDealloc() {
+        let createActionSheet: () -> UIActionSheet = { UIActionSheet(title: "", delegate: nil, cancelButtonTitle: "", destructiveButtonTitle: "") }
+        ensureEventDeallocated(createActionSheet) { (view: UIActionSheet) in view.rx_clickedButtonAtIndex }
+        ensureEventDeallocated(createActionSheet) { (view: UIActionSheet) in view.rx_didDismissWithButtonIndex }
+        ensureEventDeallocated(createActionSheet) { (view: UIActionSheet) in view.rx_willDismissWithButtonIndex }
+    }
+}
+
+// UIAlertView
+extension ControlTests {
+    func testAlertView_DelegateEventCompletesOnDealloc() {
+        let createAlertView: () -> UIAlertView = { UIAlertView(title: "", message: "", delegate: nil, cancelButtonTitle: nil) }
+        ensureEventDeallocated(createAlertView) { (view: UIAlertView) in view.rx_clickedButtonAtIndex }
+        ensureEventDeallocated(createAlertView) { (view: UIAlertView) in view.rx_didDismissWithButtonIndex }
+        ensureEventDeallocated(createAlertView) { (view: UIAlertView) in view.rx_willDismissWithButtonIndex }
+    }
+}
+
+// UIDatePicker
+extension ControlTests {
+    func testDatePicker_DelegateEventCompletesOnDealloc() {
+        let createView: () -> UIDatePicker = { UIDatePicker(frame: CGRectMake(0, 0, 1, 1)) }
+        ensurePropertyDeallocated(createView, NSDate()) { (view: UIDatePicker) in view.rx_date }
+    }
+}
+
 
 // UISlider
 extension ControlTests {
@@ -165,10 +168,12 @@ extension ControlTests {
     }
 }
 
-// UITextView
+// UISearchBar
 extension ControlTests {
-    func testText_DelegateEventCompletesOnDealloc() {
-        let createView: () -> UITextView = { UITextView(frame: CGRectMake(0, 0, 1, 1)) }
-        ensurePropertyDeallocated(createView, "text") { (view: UITextView) in view.rx_text }
+    func testSearchBar_DelegateEventCompletesOnDealloc() {
+        let createView: () -> UISearchBar = { UISearchBar(frame: CGRectMake(0, 0, 1, 1)) }
+        ensurePropertyDeallocated(createView, "a") { (view: UISearchBar) in view.rx_text }
     }
 }
+
+#endif
