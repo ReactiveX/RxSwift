@@ -125,6 +125,8 @@
 		D203C5141BB9C54A00D02D00 /* UIControl+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5D10BA1B48355200432B25 /* UIControl+RxTests.swift */; };
 		D251ED291BB9BF90002D0E36 /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8A468CC1B8A897800BF917B /* RxCocoa.framework */; };
 		D2AF91971BD2EBB900A008C1 /* MockDisposable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2AF91961BD2EBB900A008C1 /* MockDisposable.swift */; };
+		D2AF91991BD3D9C600A008C1 /* MockDisposable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2AF91961BD2EBB900A008C1 /* MockDisposable.swift */; };
+		D2AF919A1BD3D9C700A008C1 /* MockDisposable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2AF91961BD2EBB900A008C1 /* MockDisposable.swift */; };
 		D2EBEB521BB9B7CC003A27DC /* ColdObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81108301AF50E2A001C13E4 /* ColdObservable.swift */; };
 		D2EBEB531BB9B7CC003A27DC /* TestConnectableObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81108311AF50E2A001C13E4 /* TestConnectableObservable.swift */; };
 		D2EBEB541BB9B7CC003A27DC /* HotObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81108321AF50E2A001C13E4 /* HotObservable.swift */; };
@@ -660,6 +662,7 @@
 				C88BB8A01B07E64B0064D411 /* Observable+StandardSequenceOperatorsTest.swift in Sources */,
 				C88BB8A11B07E64B0064D411 /* Observable+MultipleTest.swift in Sources */,
 				C81CC92C1B513FD400915606 /* NSObject+RxTests.swift in Sources */,
+				D2AF91991BD3D9C600A008C1 /* MockDisposable.swift in Sources */,
 				C8B605ED1B6260A10044410E /* AnonymousObservable+Test.swift in Sources */,
 				C801EB5B1B97951100C4D8C4 /* Observable+CreationTest.swift in Sources */,
 				C88BB8A21B07E64B0064D411 /* ColdObservable.swift in Sources */,
@@ -733,6 +736,7 @@
 				D2EBEB7A1BB9B804003A27DC /* PerformanceTools.swift in Sources */,
 				D2EBEB651BB9B7EF003A27DC /* BagTest.swift in Sources */,
 				D2EBEB561BB9B7CC003A27DC /* MySubject.swift in Sources */,
+				D2AF919A1BD3D9C700A008C1 /* MockDisposable.swift in Sources */,
 				D2EBEB761BB9B7F9003A27DC /* QueueTests.swift in Sources */,
 				D2EBEB711BB9B7EF003A27DC /* Observable+MultipleTest+CombineLatest.swift in Sources */,
 				D203C4EF1BB9C22800D02D00 /* RxCocoaTests.swift in Sources */,
