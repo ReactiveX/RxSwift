@@ -187,24 +187,22 @@ extension UITableView {
     
     */
     public func rx_modelSelected<T>() -> ControlEvent<T> {
-        let source: Observable<T> = rx_itemSelected.flatMap { [weak self] ip -> Observable<T> in
+        let source: Observable<T> = rx_itemSelected.flatMap { [weak self] indexPath -> Observable<T> in
             guard let view = self else {
                 return empty()
             }
 
-            let dataSource: RxTableViewReactiveArrayDataSource<T> = castOrFatalError(view.rx_dataSource.forwardToDelegate(), message: "This method only works in case one of the `rx_subscribeItemsTo` methods was used.")
-            
-            return just(dataSource.modelAtIndex(ip.item)!)
+            return just(try view.rx_modelAtIndexPath(indexPath))
         }
         
         return ControlEvent(source: source)
     }
     
     /**
-     Syncronous helper method for retrieving a model at indexPath through a reactive data source
+     Synchronous helper method for retrieving a model at indexPath through a reactive data source
      */
     public func rx_modelAtIndexPath<T>(indexPath: NSIndexPath) throws -> T {
-        let dataSource: RxCollectionViewReactiveArrayDataSource<T> = castOrFatalError(self.rx_dataSource.forwardToDelegate(), message: "This method only works in case one of the `rx_subscribeItemsTo*` methods was used.")
+        let dataSource: RxCollectionViewReactiveArrayDataSource<T> = castOrFatalError(self.rx_dataSource.forwardToDelegate(), message: "This method only works in case one of the `rx_items*` methods was used.")
         
         guard let element = dataSource.modelAtIndex(indexPath.item) else {
             throw rxError(.InvalidOperation, "Items not set yet.")
