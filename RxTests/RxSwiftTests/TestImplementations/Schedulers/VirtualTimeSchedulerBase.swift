@@ -104,32 +104,6 @@ class VirtualTimeSchedulerBase : SchedulerType, CustomStringConvertible {
         return compositeDisposable
     }
     
-    func schedulePeriodic<StateType>(state: StateType, startAfter: TimeInterval, period: TimeInterval, action: (StateType) -> StateType) -> Disposable {
-        let compositeDisposable = CompositeDisposable()
-        
-        let scheduleTime: Int
-        if startAfter <= 0 {
-            scheduleTime = self.now + 1
-        }
-        else {
-            scheduleTime = self.now + startAfter
-        }
-        
-        let item = ScheduledItem(action: { [unowned self] state in
-            if compositeDisposable.disposed {
-                return NopDisposable.instance
-            }
-            let nextState = action(state)
-            return self.schedulePeriodic(nextState, startAfter: period, period: period, action: action)
-        }, state: state, time: scheduleTime)
-        
-        schedulerQueue.append(item)
-        
-        compositeDisposable.addDisposable(item)
-        
-        return compositeDisposable
-    }
-    
     func start() {
         if !enabled {
             enabled = true

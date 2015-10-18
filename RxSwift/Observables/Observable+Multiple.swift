@@ -58,6 +58,19 @@ extension ObservableType where E : ObservableConvertibleType {
 
 // concat
 
+extension ObservableType {
+
+    /**
+    Concatenates the second observable sequence to `self` upon successful termination of `self`.
+    
+    - parameter second: Second observable sequence.
+    - returns: An observable sequence that contains the elements of `self`, followed by those of the second sequence.
+    */
+    public func concat<O: ObservableConvertibleType where O.E == E>(second: O) -> Observable<E> {
+        return [self.asObservable(), second.asObservable()].concat()
+    }
+}
+
 extension SequenceType where Generator.Element : ObservableConvertibleType {
     
     /**
