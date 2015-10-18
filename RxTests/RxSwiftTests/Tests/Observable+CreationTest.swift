@@ -152,49 +152,6 @@ extension ObservableCreationTests {
 
 // using
 extension ObservableCreationTests {
-    func testUsing_Null() {
-        let scheduler = TestScheduler(initialClock: 0)
-       
-        var disposeInvoked = 0
-        var createInvoked = 0
-       
-        var xs:ColdObservable<Int>!
-        var disposable:MockDisposable!
-        var _d:MockDisposable!
-
-        let res = scheduler.start {
-            using({ () -> MockDisposable in
-                disposeInvoked += 1
-                disposable = MockDisposable(scheduler: scheduler)
-                return disposable
-                }, observableFactory: { d in
-                    _d = d
-                    createInvoked += 1
-                    xs = scheduler.createColdObservable([
-                        next(100, scheduler.clock),
-                        completed(200)
-                        ])
-                    return xs.asObservable()
-            }) as Observable<Int>
-        }
-        
-        XCTAssert(disposable === _d)
-        
-        XCTAssertEqual(res.messages, [
-            next(300, 200),
-            completed(400)
-        ])
-        
-        XCTAssertEqual(1, createInvoked)
-        XCTAssertEqual(1, disposeInvoked)
-        
-        XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 400)
-            ])
-        
-        // TODO: Assert.IsNull(disposable);
-    }
-    
     func testUsing_Complete() {
         let scheduler = TestScheduler(initialClock: 0)
        
