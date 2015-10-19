@@ -3,7 +3,7 @@
 TV_OS=0
 RELEASE_TEST=0
 
-if [ `xcodebuild -showsdks | grep tvOS | wc -l` -ge 4 ]; then
+if [ `xcodebuild -showsdks | grep tvOS | wc -l` -gt 0 ]; then
 	printf "${GREEN}tvOS found${RESET}\n"
 	TV_OS=1
 fi
