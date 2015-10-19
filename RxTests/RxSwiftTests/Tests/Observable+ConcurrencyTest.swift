@@ -370,7 +370,7 @@ class ObservableConcurrentSchedulerConcurrencyTest: ObservableConcurrencyTestBas
 
         scheduler.schedule((), action: concurrent)
 
-        try! stop.last()
+        try! stop.toBlocking().last()
 
         XCTAssertEqual(events, ["Started", "Started", "Ended", "Ended"])
     }
