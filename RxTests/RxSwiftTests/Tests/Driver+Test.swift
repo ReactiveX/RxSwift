@@ -21,7 +21,7 @@ class DriverTest : RxTest {
 
 // test helpers that make sure that resulting driver operator honors definition
 // * only one subscription is made and shared - shareReplay(1)
-// * subscription is made on main thread - subscribeOn(MainScheduler.sharedInstance)
+// * subscription is made on main thread - subscribeOn(ConcurrentMainScheduler.sharedInstance)
 // * events are observed on main thread - observeOn(MainScheduler.sharedInstance)
 // * it can't error out - it needs to have catch somewhere
 extension DriverTest {
