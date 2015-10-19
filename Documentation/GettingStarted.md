@@ -779,42 +779,6 @@ result1.flatMap { okValue in        // success handling block
 }
 ```
 
-### Error handling and function names
-
-For every group of transforming functions there are versions with and without "OrDie" suffix.
-
-**This will change in 2.0 version and map will have two overloads, with and without `throws`.**
-
-e.g.
-
-```swift
-public func mapOrDie<E, R>
-    (selector: E -> RxResult<R>)
-    -> (Observable<E> -> Observable<R>) {
-    return { source in
-        return selectOrDie(selector)(source)
-    }
-}
-
-public func map<E, R>
-    (selector: E -> R)
-        -> (Observable<E> -> Observable<R>) {
-    return { source in
-        return select(selector)(source)
-    }
-}
-```
-
-Returning an error from a selector will cause entire graph of dependent sequence transformers to "die" and fail with error. Dying implies that it will release all of its resources and never produce another sequence value. This is usually not an obvious effect.
-
-If there is some `UITextField` bound to a observable sequence that fails with error or completes, screen won't be updated ever again.
-
-To make those situations more obvious, RxCocoa debug build will throw an exception in case some sequence that is bound to UI control terminates with an error.
-
-Using functions without "OrDie" suffix is usually a more safe option.
-
-There is also the `catch` operator for easier error handling.
-
 ## Debugging Compile Errors
 
 When writing elegant RxSwift/RxCocoa code, you are probably relying heavily on compiler to deduce types of `Observable`s. This is one of the reasons why Swift is awesome, but it can also be frustrating sometimes.
