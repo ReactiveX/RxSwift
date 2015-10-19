@@ -94,7 +94,7 @@ class ObserveOnSink<O: ObserverType> : ObserverBase<O.E> {
         if let nextEvent = nextEvent {
             observer?.on(nextEvent)
             if nextEvent.isStopEvent {
-                self.dispose()
+                dispose()
             }
         }
         else {

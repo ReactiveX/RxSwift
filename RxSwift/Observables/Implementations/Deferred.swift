@@ -26,7 +26,7 @@ class DeferredSink<O: ObserverType> : Sink<O>, ObserverType {
         }
         catch let e {
             observer?.on(.Error(e))
-            self.dispose()
+            dispose()
             return NopDisposable.instance
         }
     }

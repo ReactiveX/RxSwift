@@ -34,7 +34,7 @@ class MulticastSink<S: SubjectType, O: ObserverType>: Sink<O>, ObserverType {
         }
         catch let e {
             observer?.on(.Error(e))
-            self.dispose()
+            dispose()
             return NopDisposable.instance
         }
     }
@@ -44,7 +44,7 @@ class MulticastSink<S: SubjectType, O: ObserverType>: Sink<O>, ObserverType {
         switch event {
             case .Next: break
             case .Error, .Completed:
-                self.dispose()
+                dispose()
         }
     }
 }

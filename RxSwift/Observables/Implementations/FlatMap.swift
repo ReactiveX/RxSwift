@@ -87,12 +87,12 @@ class FlatMapSink<SourceType, S: ObservableConvertibleType, O: ObserverType wher
             }
             catch let e {
                 observer?.on(.Error(e))
-                self.dispose()
+                dispose()
             }
         case .Error(let error):
             _lock.performLocked {
                 observer?.on(.Error(error))
-                self.dispose()
+                dispose()
             }
         case .Completed:
             _lock.performLocked {

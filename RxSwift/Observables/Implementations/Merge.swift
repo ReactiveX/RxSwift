@@ -218,7 +218,7 @@ class MergeConcurrentSink<S: ObservableConvertibleType, O: ObserverType where S.
             _lock.performLocked {
                 if _activeCount == 0 {
                     observer?.on(.Completed)
-                    self.dispose()
+                    dispose()
                 }
                 else {
                     _sourceSubscription.dispose()
