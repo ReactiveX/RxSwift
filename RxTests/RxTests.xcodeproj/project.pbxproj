@@ -87,6 +87,9 @@
 		C88BB8AC1B07E64B0064D411 /* AssumptionsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81108401AF50E2A001C13E4 /* AssumptionsTest.swift */; };
 		C88BB8AD1B07E64B0064D411 /* TestConnectableObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81108311AF50E2A001C13E4 /* TestConnectableObservable.swift */; };
 		C88BB8AE1B07E64B0064D411 /* VariableTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C814CEA21AF5622600E98087 /* VariableTest.swift */; };
+		C8941BD91BD4F58C00A0E874 /* BackgroundThreadPrimitiveHotObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8941BD81BD4F58C00A0E874 /* BackgroundThreadPrimitiveHotObservable.swift */; };
+		C8941BDA1BD4F58C00A0E874 /* BackgroundThreadPrimitiveHotObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8941BD81BD4F58C00A0E874 /* BackgroundThreadPrimitiveHotObservable.swift */; };
+		C8941BDB1BD4F58C00A0E874 /* BackgroundThreadPrimitiveHotObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8941BD81BD4F58C00A0E874 /* BackgroundThreadPrimitiveHotObservable.swift */; };
 		C897EC3B1B10E000009C2CB0 /* BehaviorSubjectTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C897EC3A1B10E000009C2CB0 /* BehaviorSubjectTest.swift */; };
 		C897EC3C1B10E000009C2CB0 /* BehaviorSubjectTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C897EC3A1B10E000009C2CB0 /* BehaviorSubjectTest.swift */; };
 		C897EC4A1B1123DA009C2CB0 /* Observable+MultipleTest+Zip.swift in Sources */ = {isa = PBXBuildFile; fileRef = C897EC491B1123DA009C2CB0 /* Observable+MultipleTest+Zip.swift */; };
@@ -112,10 +115,10 @@
 		C8E3812B1B2083C2008CDC33 /* PrimitiveMockObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E3812A1B2083C2008CDC33 /* PrimitiveMockObserver.swift */; };
 		C8E3812C1B2083C2008CDC33 /* PrimitiveMockObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E3812A1B2083C2008CDC33 /* PrimitiveMockObserver.swift */; };
 		C8E3813A1B21B77E008CDC33 /* Observable+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E381221B2063CC008CDC33 /* Observable+Extensions.swift */; };
-		C8E9D2BD1BD422D80079D0DB /* Control+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E9D2BC1BD422D80079D0DB /* Control+RxTests.swift */; settings = {ASSET_TAGS = (); }; };
-		C8E9D2BE1BD422D80079D0DB /* Control+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E9D2BC1BD422D80079D0DB /* Control+RxTests.swift */; settings = {ASSET_TAGS = (); }; };
-		C8E9D2BF1BD422D80079D0DB /* Control+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E9D2BC1BD422D80079D0DB /* Control+RxTests.swift */; settings = {ASSET_TAGS = (); }; };
-		C8E9D2C41BD452650079D0DB /* Control+RxTests+Cocoa.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E9D2C01BD4525B0079D0DB /* Control+RxTests+Cocoa.swift */; settings = {ASSET_TAGS = (); }; };
+		C8E9D2BD1BD422D80079D0DB /* Control+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E9D2BC1BD422D80079D0DB /* Control+RxTests.swift */; };
+		C8E9D2BE1BD422D80079D0DB /* Control+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E9D2BC1BD422D80079D0DB /* Control+RxTests.swift */; };
+		C8E9D2BF1BD422D80079D0DB /* Control+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E9D2BC1BD422D80079D0DB /* Control+RxTests.swift */; };
+		C8E9D2C41BD452650079D0DB /* Control+RxTests+Cocoa.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E9D2C01BD4525B0079D0DB /* Control+RxTests+Cocoa.swift */; };
 		C8EA2D371BD02E1900FB22AC /* EquatableArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8EA2D361BD02E1900FB22AC /* EquatableArray.swift */; };
 		C8EA2D381BD02E1900FB22AC /* EquatableArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8EA2D361BD02E1900FB22AC /* EquatableArray.swift */; };
 		C8EA2D391BD02E1900FB22AC /* EquatableArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8EA2D361BD02E1900FB22AC /* EquatableArray.swift */; };
@@ -221,6 +224,7 @@
 		C868D10B1BB950D4003D1474 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		C868D1121BB950D4003D1474 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C88BB8B71B07E64B0064D411 /* RxTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RxTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C8941BD81BD4F58C00A0E874 /* BackgroundThreadPrimitiveHotObservable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackgroundThreadPrimitiveHotObservable.swift; sourceTree = "<group>"; };
 		C897EC3A1B10E000009C2CB0 /* BehaviorSubjectTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BehaviorSubjectTest.swift; sourceTree = "<group>"; };
 		C897EC461B112070009C2CB0 /* Observable+MultipleTest+Zip.tt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Observable+MultipleTest+Zip.tt"; sourceTree = "<group>"; };
 		C897EC491B1123DA009C2CB0 /* Observable+MultipleTest+Zip.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Observable+MultipleTest+Zip.swift"; sourceTree = "<group>"; };
@@ -380,6 +384,7 @@
 				C8E3812A1B2083C2008CDC33 /* PrimitiveMockObserver.swift */,
 				C80DDEDF1BCEE898006A1832 /* MainThreadPrimitiveHotObservable.swift */,
 				D2AF91961BD2EBB900A008C1 /* MockDisposable.swift */,
+				C8941BD81BD4F58C00A0E874 /* BackgroundThreadPrimitiveHotObservable.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -583,6 +588,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C8941BD91BD4F58C00A0E874 /* BackgroundThreadPrimitiveHotObservable.swift in Sources */,
 				C8B787FA1AF55CDE00206D02 /* Observable+ConcurrencyTest.swift in Sources */,
 				C81108691AF50E2A001C13E4 /* RxTest.swift in Sources */,
 				C81108671AF50E2A001C13E4 /* Observable+TimeTest.swift in Sources */,
@@ -663,6 +669,7 @@
 				C88BB8991B07E64B0064D411 /* Observable+BindingTest.swift in Sources */,
 				C88BB89A1B07E64B0064D411 /* NSNotificationCenterTests.swift in Sources */,
 				C88BB89B1B07E64B0064D411 /* Observable+MultipleTest+CombineLatest.swift in Sources */,
+				C8941BDA1BD4F58C00A0E874 /* BackgroundThreadPrimitiveHotObservable.swift in Sources */,
 				C88BB89C1B07E64B0064D411 /* ConcurrencyTest.swift in Sources */,
 				C88BB89D1B07E64B0064D411 /* TestObserver.swift in Sources */,
 				C88BB89E1B07E64B0064D411 /* VirtualTimeSchedulerBase.swift in Sources */,
@@ -709,6 +716,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C8941BDB1BD4F58C00A0E874 /* BackgroundThreadPrimitiveHotObservable.swift in Sources */,
 				D2EBEB5A1BB9B7CC003A27DC /* PrimitiveHotObservable.swift in Sources */,
 				D2EBEB521BB9B7CC003A27DC /* ColdObservable.swift in Sources */,
 				D2EBEB551BB9B7CC003A27DC /* MockObserver.swift in Sources */,

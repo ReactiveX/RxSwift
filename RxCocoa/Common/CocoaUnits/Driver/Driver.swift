@@ -56,10 +56,10 @@ public struct Driver<Element> : DriverConvertibleType {
     init(raw: Observable<E>) {
         self._source = raw
     }
-    
+
     #if EXPANDABLE_DRIVER
     public static func createUnsafe<O: ObservableType>(source: O) -> Driver<O.E> {
-        return Driver<O.E>(source.asObservable())
+        return Driver<O.E>(raw: source.asObservable())
     }
     #endif
     
@@ -82,7 +82,7 @@ public struct Drive {
     - returns: An observable sequence with no elements.
     */
     public static func empty<E>() -> Driver<E> {
-        return Driver(raw: RxSwift.empty())
+        return Driver(raw: RxSwift.empty().subscribeOn(ConcurrentMainScheduler.sharedInstance))
     }
     
     /**
@@ -91,7 +91,7 @@ public struct Drive {
     - returns: An observable sequence whose observers will never get called.
     */
     public static func never<E>() -> Driver<E> {
-        return Driver(raw: RxSwift.never())
+        return Driver(raw: RxSwift.never().subscribeOn(ConcurrentMainScheduler.sharedInstance))
     }
     
     /**
@@ -101,7 +101,7 @@ public struct Drive {
     - returns: An observable sequence containing the single specified element.
     */
     public static func just<E>(element: E) -> Driver<E> {
-        return Driver(raw: RxSwift.just(element))
+        return Driver(raw: RxSwift.just(element).subscribeOn(ConcurrentMainScheduler.sharedInstance))
     }
     
 #else
@@ -112,7 +112,7 @@ public struct Drive {
     - returns: An observable sequence with no elements.
     */
     public static func empty<E>() -> Driver<E> {
-        return Driver(raw: _empty())
+        return Driver(raw: _empty().subscribeOn(ConcurrentMainScheduler.sharedInstance))
     }
    
     /**
@@ -121,7 +121,7 @@ public struct Drive {
     - returns: An observable sequence whose observers will never get called.
     */
     public static func never<E>() -> Driver<E> {
-        return Driver(raw: _never())
+        return Driver(raw: _never().subscribeOn(ConcurrentMainScheduler.sharedInstance))
     }
     
     /**
@@ -131,13 +131,13 @@ public struct Drive {
     - returns: An observable sequence containing the single specified element.
     */
     public static func just<E>(element: E) -> Driver<E> {
-        return Driver(raw: _just(element))
+        return Driver(raw: _just(element).subscribeOn(ConcurrentMainScheduler.sharedInstance))
     }
     
 #endif
     
     public static func sequenceOf<E>(elements: E ...) -> Driver<E> {
-        let source = elements.asObservable()
+        let source = elements.asObservable().subscribeOn(ConcurrentMainScheduler.sharedInstance)
         return Driver(raw: source)
     }
     
