@@ -766,7 +766,84 @@ extension ObservableSingleTest {
             Subscription(200, 450),
             ])
     }
+    
+    func testRetryWhen_Basic() {
+        
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createColdObservable([
+            next(5, 1),
+            next(10, 2),
+            error(20, testError)
+            ])
+        
+        let res = scheduler.start(300) {
+            xs.retryWhen({ (errors: Observable<NSError>) in
+                return errors.delaySubscription(30, scheduler)
+            }).take(6)
+        }
+        
+        let correct: [Recorded<Int>] = [
+            next(205, 1),
+            next(210, 2),
+            next(255, 1),
+            next(260, 2),
+            next(275, 1),
+            next(280, 2),
+            completed(280)
+        ]
+        
+        XCTAssertEqual(res.messages, correct)
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 250),
+            Subscription(250, 270),
+            Subscription(270, 280)
+            ])
+    }
+    
+    func testRetryWhen_Incremental_BackOff() {
+        
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        // just fails
+        let xs = scheduler.createColdObservable([
+            next(5, 1),
+            error(10, testError)
+            ])
+        
+        let res = scheduler.start(800) {
+            xs.retryWhen({ (errors: Observable<NSError>) in
+                return scheduler.createColdObservable([
+                    next(50, 1),    // delay 50
+                    next(150, 2),   // delay 100
+                    next(300, 3),   // delay 150
+                    completed(500)  // delay 200
+                    ])
+            })
+        }
+        
+        let correct: [Recorded<Int>] = [
+            next(205, 1),
+            next(265, 1),
+            next(365, 1),
+            next(515, 1),
+            completed(710)
+        ]
+        
+        XCTAssertEqual(res.messages, correct)
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 260),
+            Subscription(260, 360),
+            Subscription(360, 510),
+            Subscription(510, 710)
+            ])
+    }
+    
 }
+
+
 
 // scan
 

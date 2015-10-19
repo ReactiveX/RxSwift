@@ -523,6 +523,10 @@
 		C8F0C0441BBBFBB9001B112F /* _RXSwizzling.h in Headers */ = {isa = PBXBuildFile; fileRef = C8093E881B8A732E0088E94D /* _RXSwizzling.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C8F0C0451BBBFBB9001B112F /* _RXKVOObserver.h in Headers */ = {isa = PBXBuildFile; fileRef = C8093E861B8A732E0088E94D /* _RXKVOObserver.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C8F0C04F1BBBFBCE001B112F /* Observable+Blocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093F581B8A73A20088E94D /* Observable+Blocking.swift */; };
+		CB255BD71BC46A9C00798A4C /* RetryWhen.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB255BD61BC46A9C00798A4C /* RetryWhen.swift */; settings = {ASSET_TAGS = (); }; };
+		CB255BD81BC46A9C00798A4C /* RetryWhen.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB255BD61BC46A9C00798A4C /* RetryWhen.swift */; settings = {ASSET_TAGS = (); }; };
+		CB255BD91BC46A9C00798A4C /* RetryWhen.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB255BD61BC46A9C00798A4C /* RetryWhen.swift */; settings = {ASSET_TAGS = (); }; };
+		CB255BDA1BC46A9C00798A4C /* RetryWhen.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB255BD61BC46A9C00798A4C /* RetryWhen.swift */; settings = {ASSET_TAGS = (); }; };
 		D203C4F31BB9C4CA00D02D00 /* RxCollectionViewReactiveArrayDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88253F11B8A752B00B02D69 /* RxCollectionViewReactiveArrayDataSource.swift */; };
 		D203C4F41BB9C52400D02D00 /* RxTableViewReactiveArrayDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88253F21B8A752B00B02D69 /* RxTableViewReactiveArrayDataSource.swift */; };
 		D203C4F51BB9C52900D02D00 /* ItemEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88253F41B8A752B00B02D69 /* ItemEvents.swift */; };
@@ -964,6 +968,7 @@
 		C8F0C0021BBBFB8B001B112F /* RxSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8F0C04B1BBBFBB9001B112F /* RxCocoa.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxCocoa.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8F0C0581BBBFBCE001B112F /* RxBlocking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxBlocking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CB255BD61BC46A9C00798A4C /* RetryWhen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RetryWhen.swift; sourceTree = "<group>"; };
 		D2138C751BB9BE9800339B5C /* RxCocoa.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxCocoa.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D22B6D251BC8504A00BCE0AB /* SkipWhile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SkipWhile.swift; sourceTree = "<group>"; };
 		D235B23D1BD003DD007E84DA /* Using.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Using.swift; sourceTree = "<group>"; };
@@ -1184,6 +1189,7 @@
 				C8093C841B8A72BE0088E94D /* Reduce.swift */,
 				C8093C851B8A72BE0088E94D /* RefCount.swift */,
 				C8640A021BA5B12A00D3C4E8 /* Repeat.swift */,
+				CB255BD61BC46A9C00798A4C /* RetryWhen.swift */,
 				C8093C861B8A72BE0088E94D /* Sample.swift */,
 				C8093C871B8A72BE0088E94D /* Scan.swift */,
 				C89CDB351BCB0DD7002063D9 /* ShareReplay1.swift */,
@@ -2087,6 +2093,7 @@
 				C8093D4E1B8A72BE0088E94D /* Zip+arity.swift in Sources */,
 				C8093D4C1B8A72BE0088E94D /* Timer.swift in Sources */,
 				C8C3DA071B9393AC004D233E /* Empty.swift in Sources */,
+				CB255BD81BC46A9C00798A4C /* RetryWhen.swift in Sources */,
 				C8093D881B8A72BE0088E94D /* RxBox.swift in Sources */,
 				C8093D3A1B8A72BE0088E94D /* Sink.swift in Sources */,
 				C8093D461B8A72BE0088E94D /* TakeUntil.swift in Sources */,
@@ -2206,6 +2213,7 @@
 				C8093D4D1B8A72BE0088E94D /* Zip+arity.swift in Sources */,
 				C8093D4B1B8A72BE0088E94D /* Timer.swift in Sources */,
 				C8C3DA061B9393AC004D233E /* Empty.swift in Sources */,
+				CB255BD71BC46A9C00798A4C /* RetryWhen.swift in Sources */,
 				C8093D871B8A72BE0088E94D /* RxBox.swift in Sources */,
 				C8093D391B8A72BE0088E94D /* Sink.swift in Sources */,
 				C8093D451B8A72BE0088E94D /* TakeUntil.swift in Sources */,
@@ -2325,6 +2333,7 @@
 				C8F0BF9D1BBBFB8B001B112F /* Zip+arity.swift in Sources */,
 				C8F0BF9E1BBBFB8B001B112F /* Timer.swift in Sources */,
 				C8F0BF9F1BBBFB8B001B112F /* Empty.swift in Sources */,
+				CB255BDA1BC46A9C00798A4C /* RetryWhen.swift in Sources */,
 				C8F0BFA01BBBFB8B001B112F /* RxBox.swift in Sources */,
 				C8F0BFA11BBBFB8B001B112F /* Sink.swift in Sources */,
 				C8F0BFA21BBBFB8B001B112F /* TakeUntil.swift in Sources */,
@@ -2592,6 +2601,7 @@
 				D2EBEAF81BB9B6B2003A27DC /* ScopedDisposable.swift in Sources */,
 				D2EBEAEA1BB9B697003A27DC /* SchedulerType.swift in Sources */,
 				D2EBEB031BB9B6C1003A27DC /* CombineLatest+CollectionType.swift in Sources */,
+				CB255BD91BC46A9C00798A4C /* RetryWhen.swift in Sources */,
 				D2EBEADC1BB9B697003A27DC /* Cancelable.swift in Sources */,
 				D2EBEAE41BB9B697003A27DC /* ObservableType.swift in Sources */,
 				D2EBEB331BB9B6CA003A27DC /* Observable+Time.swift in Sources */,
