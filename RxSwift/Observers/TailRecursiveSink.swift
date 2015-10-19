@@ -13,11 +13,11 @@ class TailRecursiveSink<S: SequenceType, O: ObserverType where S.Generator.Eleme
     typealias E = O.E
     
     var generators: [S.Generator] = []
-    var disposed: Bool = false
+    var disposed = false
     var subscription = SerialDisposable()
     
     // this is thread safe object
-    var gate: AsyncLock = AsyncLock()
+    var gate = AsyncLock()
     
     override init(observer: O, cancel: Disposable) {
         super.init(observer: observer, cancel: cancel)
@@ -80,7 +80,7 @@ class TailRecursiveSink<S: SequenceType, O: ObserverType where S.Generator.Eleme
             let nextCandidate = e.next()?.asObservable()
             generators.removeLast()
             generators.append(e)
-        
+
             if nextCandidate == nil {
                 generators.removeLast()
                 continue;
