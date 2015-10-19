@@ -318,7 +318,7 @@ class ObservableConcurrentSchedulerConcurrencyTest: ObservableConcurrencyTestBas
         let scheduler = self.createScheduler()
 
         XCTAssert(numberOfSerialDispatchQueueObservables == 0)
-        just(0).observeOn(scheduler)
+        _ = just(0).observeOn(scheduler)
         self.sleep(0.1)
         XCTAssert(numberOfSerialDispatchQueueObservables == 0)
     }

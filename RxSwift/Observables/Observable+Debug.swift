@@ -18,6 +18,7 @@ extension ObservableType {
     - parameter identifier: Identifier that is printed together with event description to standard output.
     - returns: An observable sequence whose events are printed to standard output.
     */
+    @warn_unused_result(message="http://git.io/rxs.uo")
     public func debug(identifier: String = "\(__FILE__):\(__LINE__)")
         -> Observable<E> {
         return Debug(source: self.asObservable(), identifier: identifier)

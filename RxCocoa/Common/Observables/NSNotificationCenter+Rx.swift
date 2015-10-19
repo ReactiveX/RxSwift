@@ -19,6 +19,7 @@ extension NSNotificationCenter {
     - parameter object: Optional object used to filter notifications.
     - returns: Observable sequence of posted notifications.
     */
+    @warn_unused_result(message="http://git.io/rxs.uo")
     public func rx_notification(name: String, object: AnyObject? = nil) -> Observable<NSNotification> {
         return create { observer in
             let nsObserver = self.addObserverForName(name, object: object, queue: nil) { notification in

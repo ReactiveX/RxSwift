@@ -20,6 +20,7 @@ extension ObservableType {
     - parameter scheduler: Scheduler to run the throttle timers and send events on.
     - returns: The throttled sequence.
     */
+    @warn_unused_result(message="http://git.io/rxs.uo")
     public func throttle<S: SchedulerType>(dueTime: S.TimeInterval, _ scheduler: S)
         -> Observable<E> {
         return Throttle(source: self.asObservable(), dueTime: dueTime, scheduler: scheduler)
@@ -34,6 +35,7 @@ extension ObservableType {
     - parameter scheduler: Scheduler to run the throttle timers and send events on.
     - returns: The throttled sequence.
     */
+    @warn_unused_result(message="http://git.io/rxs.uo")
     public func debounce<S: SchedulerType>(dueTime: S.TimeInterval, _ scheduler: S)
         -> Observable<E> {
         return Throttle(source: self.asObservable(), dueTime: dueTime, scheduler: scheduler)
@@ -54,6 +56,7 @@ extension ObservableType {
     - parameter sampler: Sampling tick sequence.
     - returns: Sampled observable sequence.
     */
+    @warn_unused_result(message="http://git.io/rxs.uo")
     public func sample<O: ObservableType>(sampler: O)
         -> Observable<E> {
         return Sample(source: self.asObservable(), sampler: sampler.asObservable(), onlyNew: true)
@@ -69,6 +72,7 @@ extension ObservableType {
     - parameter sampler: Sampling tick sequence.
     - returns: Sampled observable sequence.
     */
+    @warn_unused_result(message="http://git.io/rxs.uo")
     public func sampleLatest<O: ObservableType>(sampler: O)
         -> Observable<E> {
         return Sample(source: self.asObservable(), sampler: sampler.asObservable(), onlyNew: false)
@@ -84,6 +88,7 @@ Returns an observable sequence that produces a value after each period, using th
 - parameter scheduler: Scheduler to run the timer on.
 - returns: An observable sequence that produces a value after each period.
 */
+@warn_unused_result(message="http://git.io/rxs.uo")
 public func interval<S: SchedulerType>(period: S.TimeInterval, _ scheduler: S)
     -> Observable<Int64> {
     return Timer(dueTime: period,
@@ -102,6 +107,7 @@ Returns an observable sequence that periodically produces a value after the spec
 - parameter scheduler: Scheduler to run timers on.
 - returns: An observable sequence that produces a value after due time has elapsed and then each period.
 */
+@warn_unused_result(message="http://git.io/rxs.uo")
 public func timer<S: SchedulerType>(dueTime: S.TimeInterval, _ period: S.TimeInterval, _ scheduler: S)
     -> Observable<Int64> {
     return Timer(
@@ -118,6 +124,7 @@ Returns an observable sequence that produces a single value at the specified abs
 - parameter scheduler: Scheduler to run the timer on.
 - returns: An observable sequence that produces a value at due time.
 */
+@warn_unused_result(message="http://git.io/rxs.uo")
 public func timer<S: SchedulerType>(dueTime: S.TimeInterval, _ scheduler: S)
     -> Observable<Int64> {
     return Timer(
@@ -138,6 +145,7 @@ extension ObservableType {
     - parameter scheduler: Scheduler to run the timer on.
     - returns: An observable sequence with the elements taken during the specified duration from the start of the source sequence.
     */
+    @warn_unused_result(message="http://git.io/rxs.uo")
     public func take<S: SchedulerType>(duration: S.TimeInterval, _ scheduler: S)
         -> Observable<E> {
         return TakeTime(source: self.asObservable(), duration: duration, scheduler: scheduler)
@@ -155,6 +163,7 @@ extension ObservableType {
     - parameter scheduler: Scheduler to run the timer on.
     - returns: An observable sequence with the elements skipped during the specified duration from the start of the source sequence.
     */
+    @warn_unused_result(message="http://git.io/rxs.uo")
     public func skip<S: SchedulerType>(duration: S.TimeInterval, _ scheduler: S)
         -> Observable<E> {
         return SkipTime(source: self.asObservable(), duration: duration, scheduler: scheduler)
@@ -173,6 +182,7 @@ extension ObservableType {
     - parameter scheduler: Scheduler to run the subscription delay timer on.
     - returns: Time-shifted sequence.
     */
+    @warn_unused_result(message="http://git.io/rxs.uo")
     public func delaySubscription<S: SchedulerType>(dueTime: S.TimeInterval, _ scheduler: S)
         -> Observable<E> {
         return DelaySubscription(source: self.asObservable(), dueTime: dueTime, scheduler: scheduler)
@@ -193,6 +203,7 @@ extension ObservableType {
     - parameter scheduler: Scheduler to run buffering timers on.
     - returns: An observable sequence of buffers.
     */
+    @warn_unused_result(message="http://git.io/rxs.uo")
     public func buffer<S: SchedulerType>(timeSpan timeSpan: S.TimeInterval, count: Int, scheduler: S)
         -> Observable<[E]> {
         return BufferTimeCount(source: self.asObservable(), timeSpan: timeSpan, count: count, scheduler: scheduler)

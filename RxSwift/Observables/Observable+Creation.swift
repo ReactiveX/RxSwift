@@ -16,6 +16,7 @@ Creates an observable sequence from a specified subscribe method implementation.
 - parameter subscribe: Implementation of the resulting observable sequence's `subscribe` method.
 - returns: The observable sequence with the specified implementation for the `subscribe` method.
 */
+@warn_unused_result(message="http://git.io/rxs.uo")
 public func create<E>(subscribe: (AnyObserver<E>) -> Disposable) -> Observable<E> {
     return AnonymousObservable(subscribe)
 }
@@ -27,6 +28,7 @@ Returns an empty observable sequence, using the specified scheduler to send out 
 
 - returns: An observable sequence with no elements.
 */
+@warn_unused_result(message="http://git.io/rxs.uo")
 public func empty<E>() -> Observable<E> {
     return Empty<E>()
 }
@@ -38,6 +40,7 @@ Returns a non-terminating observable sequence, which can be used to denote an in
 
 - returns: An observable sequence whose observers will never get called.
 */
+@warn_unused_result(message="http://git.io/rxs.uo")
 public func never<E>() -> Observable<E> {
     return Never()
 }
@@ -50,6 +53,7 @@ Returns an observable sequence that contains a single element.
 - parameter element: Single element in the resulting observable sequence.
 - returns: An observable sequence containing the single specified element.
 */
+@warn_unused_result(message="http://git.io/rxs.uo")
 public func just<E>(element: E) -> Observable<E> {
     return Just(element: element)
 }
@@ -61,6 +65,7 @@ This method creates a new Observable instance with a variable number of elements
 
 - returns: The observable sequence whose elements are pulled from the given arguments.
 */
+@warn_unused_result(message="http://git.io/rxs.uo")
 public func sequenceOf<E>(elements: E ...) -> Observable<E> {
     return AnonymousObservable { observer in
         for element in elements {
@@ -79,6 +84,7 @@ extension SequenceType {
 
     - returns: The observable sequence whose elements are pulled from the given enumerable sequence.
     */
+    @warn_unused_result(message="http://git.io/rxs.uo")
     public func asObservable() -> Observable<Generator.Element> {
         return AnonymousObservable { observer in
             for element in self {
@@ -98,6 +104,7 @@ Returns an observable sequence that terminates with an `error`.
 
 - returns: The observable sequence that terminates with specified error.
 */
+@warn_unused_result(message="http://git.io/rxs.uo")
 public func failWith<E>(error: ErrorType) -> Observable<E> {
     return FailWith(error: error)
 }
@@ -110,6 +117,7 @@ Returns an observable sequence that invokes the specified factory function whene
 - parameter observableFactory: Observable factory function to invoke for each observer that subscribes to the resulting sequence.
 - returns: An observable sequence whose observers trigger an invocation of the given observable factory function.
 */
+@warn_unused_result(message="http://git.io/rxs.uo")
 public func deferred<E>(observableFactory: () throws -> Observable<E>)
     -> Observable<E> {
     return Deferred(observableFactory: observableFactory)
@@ -125,6 +133,7 @@ to run the loop send out observer messages.
 - parameter scheduler: Scheduler on which to run the generator loop.
 - returns: The generated sequence.
 */
+@warn_unused_result(message="http://git.io/rxs.uo")
 public func generate<E>(initialState: E, condition: E throws -> Bool, scheduler: ImmediateSchedulerType = CurrentThreadScheduler.instance, iterate: E throws -> E) -> Observable<E> {
     return Generate(initialState: initialState, condition: condition, iterate: iterate, resultSelector: { $0 }, scheduler: scheduler)
 }
@@ -137,6 +146,7 @@ Generates an observable sequence of integral numbers within a specified range, u
 - parameter scheduler: Scheduler to run the generator loop on.
 - returns: An observable sequence that contains a range of sequential integral numbers.
 */
+@warn_unused_result(message="http://git.io/rxs.uo")
 public func range(start: Int, _ count: Int, _ scheduler: ImmediateSchedulerType = CurrentThreadScheduler.instance) -> Observable<Int> {
     if count < 0 {
         rxFatalError("count can't be negative")
@@ -156,6 +166,7 @@ Generates an observable sequence that repeats the given element infinitely, usin
 - parameter scheduler: Scheduler to run the producer loop on.
 - returns: An observable sequence that repeats the given element infinitely.
 */
+@warn_unused_result(message="http://git.io/rxs.uo")
 public func repeatElement<E>(element: E, _ scheduler: ImmediateSchedulerType) -> Observable<E> {
     return RepeatElement(element: element, scheduler: scheduler)
 }
@@ -167,6 +178,7 @@ Constructs an observable sequence that depends on a resource object, whose lifet
 - parameter observableFactory: Factory function to obtain an observable sequence that depends on the obtained resource.
 - returns: An observable sequence whose lifetime controls the lifetime of the dependent resource object.
 */
+@warn_unused_result(message="http://git.io/rxs.uo")
 public func using<S, R: Disposable>(resourceFactory: () throws -> R, observableFactory: R throws -> Observable<S>) -> Observable<S> {
     return Using(resourceFactory: resourceFactory, observableFactory: observableFactory)
 }

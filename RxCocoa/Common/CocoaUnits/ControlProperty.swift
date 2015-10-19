@@ -58,6 +58,7 @@ public struct ControlProperty<PropertyType> : ControlPropertyType {
     /**
     - returns: `Observable` interface.
     */
+    @warn_unused_result(message="http://git.io/rxs.uo")
     public func asObservable() -> Observable<E> {
         return self.source
     }
@@ -65,6 +66,7 @@ public struct ControlProperty<PropertyType> : ControlPropertyType {
     /**
     - returns: `ControlProperty` interface.
     */
+    @warn_unused_result(message="http://git.io/rxs.uo")
     public func asControlProperty() -> ControlProperty<E> {
         return self
     }
