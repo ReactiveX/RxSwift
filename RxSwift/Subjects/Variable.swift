@@ -16,7 +16,7 @@ Unlike `BehaviorSubject` it can't terminate with error.
 public class Variable<Element> : ObservableType {
     public typealias E = Element
     
-    let subject: BehaviorSubject<Element>
+    private let _subject: BehaviorSubject<Element>
     
     private var _lock = SpinLock()
  
@@ -40,7 +40,7 @@ public class Variable<Element> : ObservableType {
             _lock.performLocked {
                 _value = newValue
             }
-            self.subject.on(.Next(newValue))
+            _subject.on(.Next(newValue))
         }
     }
     
@@ -51,7 +51,7 @@ public class Variable<Element> : ObservableType {
     */
     public init(_ value: Element) {
         _value = value
-        self.subject = BehaviorSubject(value: value)
+        _subject = BehaviorSubject(value: value)
     }
     
     /**
@@ -63,13 +63,13 @@ public class Variable<Element> : ObservableType {
     - returns: Disposable object that can be used to unsubscribe the observer from the variable.
     */
     public func subscribe<O: ObserverType where O.E == E>(observer: O) -> Disposable {
-        return self.subject.subscribe(observer)
+        return _subject.subscribe(observer)
     }
     
     /**
     - returns: Canonical interface for push style sequence
     */
     public func asObservable() -> Observable<E> {
-        return self.subject
+        return _subject
     }
 }

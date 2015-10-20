@@ -61,7 +61,7 @@ public final class BehaviorSubject<Element> : Observable<Element>, SubjectType, 
     - parameter value: Initial value sent to observers when no other value has been received by the subject yet.
     */
     public init(value: Element) {
-        self._value = value
+        _value = value
     }
     
     /**

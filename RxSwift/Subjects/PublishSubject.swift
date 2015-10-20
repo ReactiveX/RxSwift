@@ -14,23 +14,23 @@ class Subscription<Element> : Disposable {
     private var _lock = SpinLock()
 
     // state
-    private var subject: PublishSubject<Element>?
-    private var key: KeyType?
+    private var _subject: PublishSubject<Element>?
+    private var _key: KeyType?
     
     init(subject: PublishSubject<Element>, key: KeyType) {
-        self.key = key
-        self.subject = subject
+        _key = key
+        _subject = subject
     }
     
     func dispose() {
         _lock.performLocked {
-            guard let subject = subject,
-                let key = key else {
+            guard let subject = _subject,
+                let key = _key else {
                     return
             }
             
-            self.subject = nil
-            self.key = nil
+            _subject = nil
+            _key = nil
             
             subject.unsubscribe(key)
         }
@@ -47,19 +47,19 @@ public class PublishSubject<Element> : Observable<Element>, SubjectType, Cancela
     
     typealias DisposeKey = Bag<AnyObserver<Element>>.KeyType
     
-    private let lock = NSRecursiveLock()
+    private let _lock = NSRecursiveLock()
     
     // state
-    var _disposed = false
-    var observers = Bag<AnyObserver<Element>>()
-    var stoppedEvent = nil as Event<Element>?
+    private var _disposed = false
+    private var _observers = Bag<AnyObserver<Element>>()
+    private var _stoppedEvent = nil as Event<Element>?
     
     /**
     Indicates whether the subject has been disposed.
     */
     public var disposed: Bool {
         get {
-            return self.lock.calculateLocked {
+            return _lock.calculateLocked {
                 return _disposed
             }
         }
@@ -78,19 +78,19 @@ public class PublishSubject<Element> : Observable<Element>, SubjectType, Cancela
     - parameter event: Event to send to the observers.
     */
     public func on(event: Event<Element>) {
-        lock.performLocked {
+        _lock.performLocked {
             switch event {
             case .Next(_):
-                if disposed || stoppedEvent != nil {
+                if disposed || _stoppedEvent != nil {
                     return
                 }
                 
-                observers.forEach { $0.on(event) }
+                _observers.forEach { $0.on(event) }
             case .Completed, .Error:
-                if stoppedEvent == nil {
-                    self.stoppedEvent = event
-                    observers.forEach { $0.on(event) }
-                    self.observers.removeAll()
+                if _stoppedEvent == nil {
+                    _stoppedEvent = event
+                    _observers.forEach { $0.on(event) }
+                    _observers.removeAll()
                 }
             }
         }
@@ -103,8 +103,8 @@ public class PublishSubject<Element> : Observable<Element>, SubjectType, Cancela
     - returns: Disposable object that can be used to unsubscribe the observer from the subject.
     */
     public override func subscribe<O : ObserverType where O.E == Element>(observer: O) -> Disposable {
-        return lock.calculateLocked {
-            if let stoppedEvent = stoppedEvent {
+        return _lock.calculateLocked {
+            if let stoppedEvent = _stoppedEvent {
                 observer.on(stoppedEvent)
                 return NopDisposable.instance
             }
@@ -114,14 +114,14 @@ public class PublishSubject<Element> : Observable<Element>, SubjectType, Cancela
                 return NopDisposable.instance
             }
             
-            let key = observers.insert(observer.asObserver())
+            let key = _observers.insert(observer.asObserver())
             return Subscription(subject: self, key: key)
         }
     }
 
     func unsubscribe(key: DisposeKey) {
-        self.lock.performLocked {
-            _ = observers.removeKey(key)
+        _lock.performLocked {
+            _ = _observers.removeKey(key)
         }
     }
     
@@ -136,10 +136,10 @@ public class PublishSubject<Element> : Observable<Element>, SubjectType, Cancela
     Unsubscribe all observers and release resources.
     */
     public func dispose() {
-        self.lock.performLocked {
+        _lock.performLocked {
             _disposed = true
-            self.observers.removeAll()
-            self.stoppedEvent = nil
+            _observers.removeAll()
+            _stoppedEvent = nil
         }
     }
 }
