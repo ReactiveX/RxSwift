@@ -22,6 +22,7 @@ extension ObservableType {
     - parameter subject: Subject to push source elements into.
     - returns: A connectable observable sequence that upon connection causes the source sequence to push results into the specified subject.
     */
+    @warn_unused_result(message="http://git.io/rxs.uo")
     public func multicast<S: SubjectType where S.SubjectObserverType.E == E>(subject: S)
         -> ConnectableObservable<S> {
         return ConnectableObservable(source: self.asObservable(), subject: subject)
@@ -38,6 +39,7 @@ extension ObservableType {
     - parameter selector: Selector function which can use the multicasted source sequence subject to the policies enforced by the created subject.
     - returns: An observable sequence that contains the elements of a sequence produced by multicasting the source sequence within a selector function.
     */
+    @warn_unused_result(message="http://git.io/rxs.uo")
     public func multicast<S: SubjectType, R where S.SubjectObserverType.E == E>(subjectSelector: () throws -> S, selector: (Observable<S.E>) throws -> Observable<R>)
         -> Observable<R> {
         return Multicast(
@@ -59,6 +61,7 @@ extension ObservableType {
     
     - returns: A connectable observable sequence that shares a single subscription to the underlying sequence.
     */
+    @warn_unused_result(message="http://git.io/rxs.uo")
     public func publish() -> ConnectableObservable<PublishSubject<E>> {
         return self.multicast(PublishSubject())
     }
@@ -76,6 +79,7 @@ extension ObservableType {
     - parameter bufferSize: Maximum element count of the replay buffer.
     - returns: A connectable observable sequence that shares a single subscription to the underlying sequence.
     */
+    @warn_unused_result(message="http://git.io/rxs.uo")
     public func replay(bufferSize: Int)
         -> ConnectableObservable<ReplaySubject<E>> {
         return self.multicast(ReplaySubject.create(bufferSize: bufferSize))
@@ -91,6 +95,7 @@ extension ConnectableObservableType {
     
     - returns: An observable sequence that stays connected to the source as long as there is at least one subscription to the observable sequence.
     */
+    @warn_unused_result(message="http://git.io/rxs.uo")
     public func refCount() -> Observable<E> {
         return RefCount(source: self)
     }
@@ -107,6 +112,7 @@ extension ObservableType {
     
     - returns: An observable sequence that contains the elements of a sequence produced by multicasting the source sequence.
     */
+    @warn_unused_result(message="http://git.io/rxs.uo")
     public func share() -> Observable<E> {
         return self.publish().refCount()
     }
@@ -124,6 +130,7 @@ extension ObservableType {
     - parameter bufferSize: Maximum element count of the replay buffer.
     - returns: An observable sequence that contains the elements of a sequence produced by multicasting the source sequence.
     */
+    @warn_unused_result(message="http://git.io/rxs.uo")
     public func shareReplay(bufferSize: Int)
         -> Observable<E> {
         if bufferSize == 1 {

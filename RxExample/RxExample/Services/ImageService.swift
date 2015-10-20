@@ -33,6 +33,8 @@ class DefaultImageService: ImageService {
     
     // 2nd level cache
     let imageDataCache = NSCache()
+
+    let loadingImage = ActivityIndicator()
     
     private init() {
         // cost is approx memory usage
@@ -78,12 +80,14 @@ class DefaultImageService: ImageService {
                             self.imageDataCache.setObject(data, forKey: URL)
                         })
                         .flatMap(self.decodeImage)
+                        .trackActivity(self.loadingImage)
                 }
             }
             
             return decodedImage.doOn(onNext: { image in
                 self.imageCache.setObject(image, forKey: URL)
             })
-        }.observeOn($.mainScheduler)
+        }
+            .observeOn($.mainScheduler)
     }
 }

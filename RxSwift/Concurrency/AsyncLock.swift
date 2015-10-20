@@ -24,6 +24,7 @@ class AsyncLock : Disposable {
     private let _lock = NSRecursiveLock()
     
     private var _queue: Queue<Action> = Queue(capacity: 2)
+
     private var _isAcquired: Bool = false
     private var _hasFaulted: Bool = false
     

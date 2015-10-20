@@ -30,7 +30,7 @@ class ControlTarget: RxTarget {
 
     let selector: Selector = "eventHandler:"
 
-    unowned let control: Control
+    weak var control: Control?
     #if os(iOS) || os(tvOS)
     let controlEvents: UIControlEvents
 #endif
@@ -72,7 +72,7 @@ class ControlTarget: RxTarget {
 #endif
 
     func eventHandler(sender: Control!) {
-        if let callback = self.callback {
+        if let callback = self.callback, control = self.control {
             callback(control)
         }
     }
@@ -80,10 +80,10 @@ class ControlTarget: RxTarget {
     override func dispose() {
         super.dispose()
 #if os(iOS) || os(tvOS)
-        self.control.removeTarget(self, action: self.selector, forControlEvents: self.controlEvents)
+        self.control?.removeTarget(self, action: self.selector, forControlEvents: self.controlEvents)
 #elseif os(OSX)
-        self.control.target = nil
-        self.control.action = nil
+        self.control?.target = nil
+        self.control?.action = nil
 #endif
         self.callback = nil
     }

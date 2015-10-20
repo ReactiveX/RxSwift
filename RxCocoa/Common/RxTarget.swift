@@ -19,11 +19,26 @@ class RxTarget : NSObject
     override init() {
         super.init()
         self.retainSelf = self
+
+#if TRACE_RESOURCES
+        OSAtomicIncrement32(&resourceCount)
+#endif
+
+#if DEBUG
         MainScheduler.ensureExecutingOnScheduler()
+#endif
     }
     
     func dispose() {
+#if DEBUG
         MainScheduler.ensureExecutingOnScheduler()
+#endif
         self.retainSelf = nil
     }
+
+#if TRACE_RESOURCES
+    deinit {
+        OSAtomicDecrement32(&resourceCount)
+    }
+#endif
 }

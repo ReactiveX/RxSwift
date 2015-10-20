@@ -10,4 +10,11 @@ import Foundation
 import UIKit
 
 public class RootViewController : UITableViewController {
+    public override func viewDidLoad() {
+        super.viewDidLoad()
+        // force load
+        GitHubSearchRepositoriesAPI.sharedAPI.activityIndicator
+        DefaultWikipediaAPI.sharedAPI
+        DefaultImageService.sharedImageService
+    }
 }

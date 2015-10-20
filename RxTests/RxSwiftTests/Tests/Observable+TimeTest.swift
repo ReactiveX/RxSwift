@@ -264,6 +264,7 @@ extension ObservableTimeTest {
 
         let a = try! [just(0), never()].asObservable().concat()
             .throttle(2.0, scheduler)
+            .toBlocking()
             .first()
 
         let end = NSDate()
@@ -810,6 +811,7 @@ extension ObservableTimeTest {
 
         let a = try! interval(1, scheduler)
             .take(2)
+            .toBlocking()
             .toArray()
 
         let end = NSDate()
@@ -1291,6 +1293,7 @@ extension ObservableTimeTest {
         let result = try! range(1, 10, backgroundScheduler)
             .buffer(timeSpan: 1000, count: 3, scheduler: backgroundScheduler)
             .skip(1)
+            .toBlocking()
             .first()
             
         XCTAssertEqual(result!, [4, 5, 6])

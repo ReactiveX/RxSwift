@@ -18,6 +18,7 @@ extension ObservableType {
     - parameter predicate: A function to test each source element for a condition.
     - returns: An observable sequence that contains elements from the input sequence that satisfy the condition.
     */
+    @warn_unused_result(message="http://git.io/rxs.uo")
     public func filter(predicate: (E) throws -> Bool)
         -> Observable<E> {
         return Filter(source: self.asObservable(), predicate: predicate)
@@ -34,6 +35,7 @@ extension ObservableType {
     - parameter predicate: A function to test each element for a condition.
     - returns: An observable sequence that contains the elements from the input sequence that occur before the element at which the test no longer passes.
     */
+    @warn_unused_result(message="http://git.io/rxs.uo")
     public func takeWhile(predicate: (E) throws -> Bool)
         -> Observable<E> {
         return TakeWhile(source: asObservable(), predicate: predicate)
@@ -47,6 +49,7 @@ extension ObservableType {
     - parameter predicate: A function to test each element for a condition; the second parameter of the function represents the index of the source element.
     - returns: An observable sequence that contains the elements from the input sequence that occur before the element at which the test no longer passes.
     */
+    @warn_unused_result(message="http://git.io/rxs.uo")
     public func takeWhileWithIndex(predicate: (E, Int) throws -> Bool)
         -> Observable<E> {
         return TakeWhile(source: asObservable(), predicate: predicate)
@@ -63,6 +66,7 @@ extension ObservableType {
     - parameter count: The number of elements to return.
     - returns: An observable sequence that contains the specified number of elements from the start of the input sequence.
     */
+    @warn_unused_result(message="http://git.io/rxs.uo")
     public func take(count: Int)
         -> Observable<E> {
         if count == 0 {
@@ -84,6 +88,7 @@ extension ObservableType {
     - parameter count: The number of elements to skip before returning the remaining elements.
     - returns: An observable sequence that contains the elements that occur after the specified index in the input sequence.
     */
+    @warn_unused_result(message="http://git.io/rxs.uo")
     public func skip(count: Int)
         -> Observable<E> {
         return SkipCount(source: self.asObservable(), count: count)
@@ -100,6 +105,7 @@ extension ObservableType {
     - parameter predicate: A function to test each element for a condition.
     - returns: An observable sequence that contains the elements from the input sequence starting at the first element in the linear series that does not pass the test specified by predicate.
     */
+    @warn_unused_result(message="http://git.io/rxs.uo")
     public func skipWhile(predicate: (E) throws -> Bool) -> Observable<E> {
         return SkipWhile(source: self.asObservable(), predicate: predicate)
     }
@@ -111,6 +117,7 @@ extension ObservableType {
     - parameter predicate: A function to test each element for a condition; the second parameter of the function represents the index of the source element.
     - returns: An observable sequence that contains the elements from the input sequence starting at the first element in the linear series that does not pass the test specified by predicate.
     */
+    @warn_unused_result(message="http://git.io/rxs.uo")
     public func skipWhileWithIndex(predicate: (E, Int) throws -> Bool) -> Observable<E> {
         return SkipWhile(source: self.asObservable(), predicate: predicate)
     }
@@ -126,6 +133,7 @@ extension ObservableType {
     - parameter selector: A transform function to apply to each source element.
     - returns: An observable sequence whose elements are the result of invoking the transform function on each element of source.
     */
+    @warn_unused_result(message="http://git.io/rxs.uo")
     public func map<R>(selector: E throws -> R)
         -> Observable<R> {
         return Map(source: self.asObservable(), selector: selector)
@@ -137,6 +145,7 @@ extension ObservableType {
     - parameter selector: A transform function to apply to each source element; the second parameter of the function represents the index of the source element.
     - returns: An observable sequence whose elements are the result of invoking the transform function on each element of source.
     */
+    @warn_unused_result(message="http://git.io/rxs.uo")
     public func mapWithIndex<R>(selector: (E, Int) throws -> R)
         -> Observable<R> {
         return Map(source: self.asObservable(), selector: selector)
@@ -153,6 +162,7 @@ extension ObservableType {
     - parameter selector: A transform function to apply to each element.
     - returns: An observable sequence whose elements are the result of invoking the one-to-many transform function on each element of the input sequence.
     */
+    @warn_unused_result(message="http://git.io/rxs.uo")
     public func flatMap<O: ObservableConvertibleType>(selector: (E) throws -> O)
         -> Observable<O.E> {
         return FlatMap(source: self.asObservable(), selector: selector)
@@ -164,6 +174,7 @@ extension ObservableType {
     - parameter selector: A transform function to apply to each element; the second parameter of the function represents the index of the source element.
     - returns: An observable sequence whose elements are the result of invoking the one-to-many transform function on each element of the input sequence.
     */
+    @warn_unused_result(message="http://git.io/rxs.uo")
     public func flatMapWithIndex<O: ObservableConvertibleType>(selector: (E, Int) throws -> O)
         -> Observable<O.E> {
         return FlatMap(source: self.asObservable(), selector: selector)

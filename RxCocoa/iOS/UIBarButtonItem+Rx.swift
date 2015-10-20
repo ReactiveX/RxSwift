@@ -38,8 +38,14 @@ extension UIBarButtonItem {
     Reactive wrapper for target action pattern on `self`.
     */
     public var rx_tap: ControlEvent<Void> {
-        let source: Observable<Void> = AnonymousObservable { observer in
-            let target = BarButtonItemTarget(barButtonItem: self) {
+        let source: Observable<Void> = AnonymousObservable { [weak self] observer in
+
+            guard let control = self else {
+                observer.on(.Completed)
+                return NopDisposable.instance
+            }
+
+            let target = BarButtonItemTarget(barButtonItem: control) {
                 observer.on(.Next())
             }
             return target
@@ -52,7 +58,7 @@ extension UIBarButtonItem {
 
 
 @objc
-class BarButtonItemTarget: NSObject, Disposable {
+class BarButtonItemTarget: RxTarget {
     typealias Callback = () -> Void
     
     weak var barButtonItem: UIBarButtonItem?
@@ -66,12 +72,11 @@ class BarButtonItemTarget: NSObject, Disposable {
         barButtonItem.action = Selector("action:")
     }
     
-    deinit {
-        dispose()
-    }
-    
-    func dispose() {
+    override func dispose() {
+        super.dispose()
+#if DEBUG
         MainScheduler.ensureExecutingOnScheduler()
+#endif
         
         barButtonItem?.target = nil
         barButtonItem?.action = nil

@@ -12,12 +12,12 @@ import Foundation
 class TailRecursiveSink<S: SequenceType, O: ObserverType where S.Generator.Element: ObservableConvertibleType, S.Generator.Element.E == O.E> : Sink<O>, ObserverType {
     typealias E = O.E
     
-    private var _generators: [S.Generator] = []
-    private var _disposed: Bool = false
-    private var _subscription = SerialDisposable()
+    var _generators:[S.Generator] = []
+    var _disposed = false
+    var _subscription = SerialDisposable()
     
-    // this is thread safe objec
-    private var _gate = AsyncLock()
+    // this is thread safe object
+    var _gate = AsyncLock()
     
     override init(observer: O, cancel: Disposable) {
         super.init(observer: observer, cancel: cancel)
@@ -64,7 +64,7 @@ class TailRecursiveSink<S: SequenceType, O: ObserverType where S.Generator.Eleme
     // should be done on gate locked
 
     private func moveNext() {
-        var next: Observable<E>? = nil;
+        var next: Observable<E>? = nil
         
         repeat {
             if _generators.count == 0 {
@@ -80,7 +80,7 @@ class TailRecursiveSink<S: SequenceType, O: ObserverType where S.Generator.Eleme
             let nextCandidate = e.next()?.asObservable()
             _generators.removeLast()
             _generators.append(e)
-        
+
             if nextCandidate == nil {
                 _generators.removeLast()
                 continue;

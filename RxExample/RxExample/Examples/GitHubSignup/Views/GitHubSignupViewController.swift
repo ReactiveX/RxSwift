@@ -16,6 +16,27 @@ import RxCocoa
 typealias ValidationResult = (valid: Bool?, message: String?)
 typealias ValidationObservable = Observable<ValidationResult>
 
+// Two way binding operator between control property and variable, that's all it takes {
+
+infix operator <-> {
+}
+
+func <-> <T>(property: ControlProperty<T>, variable: Variable<T>) -> Disposable {
+    let bindToUIDisposable = variable
+        .bindTo(property)
+    let bindToVariable = property
+        .subscribe(onNext: { n in
+            variable.value = n
+        }, onCompleted:  {
+            bindToUIDisposable.dispose()
+        })
+
+    return StableCompositeDisposable.create(bindToUIDisposable, bindToVariable)
+}
+
+// }
+
+
 class ValidationService {
     let API: GitHubAPI
     
@@ -91,6 +112,10 @@ class GitHubSignupViewController : ViewController {
     @IBOutlet weak var signupOutlet: UIButton!
     @IBOutlet weak var signingUpOulet: UIActivityIndicatorView!
 
+    let username = Variable("")
+    let password = Variable("")
+    let repeatedPassword = Variable("")
+
     struct ValidationColors {
         static let okColor = UIColor(red: 138.0 / 255.0, green: 221.0 / 255.0, blue: 109.0 / 255.0, alpha: 1.0)
         static let errorColor = UIColor.redColor()
@@ -136,10 +161,13 @@ class GitHubSignupViewController : ViewController {
         let API = self.API
         
         let validationService = ValidationService(API: API)
-     
-        let username = usernameOutlet.rx_text
-        let password = passwordOutlet.rx_text
-        let repeatPassword = repeatedPasswordOutlet.rx_text
+
+        // bind UI values to variables {
+        usernameOutlet.rx_text <-> username
+        passwordOutlet.rx_text <-> password
+        repeatedPasswordOutlet.rx_text <-> repeatedPassword
+        // }
+
         let signupSampler = signupOutlet.rx_tap
         
         let usernameValidation = username
@@ -148,14 +176,14 @@ class GitHubSignupViewController : ViewController {
             }
             .switchLatest()
             .shareReplay(1)
-        
+
         let passwordValidation = password
             .map { password in
                 return validationService.validatePassword(password)
             }
             .shareReplay(1)
-        
-        let repeatPasswordValidation = combineLatest(password, repeatPassword) { (password, repeatedPassword) in
+
+        let repeatPasswordValidation = combineLatest(password, repeatedPassword) { (password, repeatedPassword) in
                 validationService.validateRepeatedPassword(password, repeatedPassword: repeatedPassword)
             }
             .shareReplay(1)
@@ -223,6 +251,7 @@ class GitHubSignupViewController : ViewController {
                 }
             }
             .addDisposableTo(disposeBag)
+
     }
    
     // This is one of the reasons why it's a good idea for disposal to be detached from allocations.

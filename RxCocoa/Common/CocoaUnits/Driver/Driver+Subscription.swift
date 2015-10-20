@@ -11,7 +11,7 @@ import Foundation
 import RxSwift
 #endif
 
-extension Driver {
+extension DriverConvertibleType {
     /**
     Creates new subscription and sends elements to observer.
 
@@ -20,6 +20,7 @@ extension Driver {
     - parameter observer: Observer that receives events.
     - returns: Disposable object that can be used to unsubscribe the observer from the subject.
     */
+    @warn_unused_result(message="http://git.io/rxs.ud")
     public func drive<O: ObserverType where O.E == E>(observer: O) -> Disposable {
         return self.asObservable().subscribe(observer)
     }
@@ -30,6 +31,7 @@ extension Driver {
     - parameter with: Function used to bind elements from `self`.
     - returns: Object representing subscription.
     */
+    @warn_unused_result(message="http://git.io/rxs.ud")
     public func drive<R>(transformation: Observable<E> -> R) -> R {
         return transformation(self.asObservable())
     }
@@ -46,6 +48,7 @@ extension Driver {
     - parameter curriedArgument: Final argument passed to `binder` to finish binding process.
     - returns: Object representing subscription.
     */
+    @warn_unused_result(message="http://git.io/rxs.ud")
     public func drive<R1, R2>(with: Observable<E> -> R1 -> R2, curriedArgument: R1) -> R2 {
         return with(self.asObservable())(curriedArgument)
     }
@@ -62,6 +65,7 @@ extension Driver {
     gracefully completed, errored, or if the generation is cancelled by disposing subscription)
     - returns: Subscription object used to unsubscribe from the observable sequence.
     */
+    @warn_unused_result(message="http://git.io/rxs.ud")
     public func drive(onNext onNext: ((E) -> Void)? = nil, onCompleted: (() -> Void)? = nil, onDisposed: (() -> Void)? = nil) -> Disposable {
         return self.asObservable().subscribe(onNext: onNext, onCompleted: onCompleted, onDisposed: onDisposed)
     }
@@ -72,6 +76,7 @@ extension Driver {
     - parameter onNext: Action to invoke for each element in the observable sequence.
     - returns: Subscription object used to unsubscribe from the observable sequence.
     */
+    @warn_unused_result(message="http://git.io/rxs.ud")
     public func driveNext(onNext: E -> Void) -> Disposable {
         return self.asObservable().subscribeNext(onNext)
     }

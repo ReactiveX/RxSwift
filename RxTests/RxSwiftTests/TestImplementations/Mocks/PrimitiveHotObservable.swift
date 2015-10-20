@@ -20,6 +20,8 @@ class PrimitiveHotObservable<ElementType : Equatable> : ObservableType {
     
     var subscriptions: [Subscription]
     var observers: Bag<AnyObserver<E>>
+
+    let lock = NSRecursiveLock()
     
     init() {
         self.subscriptions = []
@@ -31,12 +33,18 @@ class PrimitiveHotObservable<ElementType : Equatable> : ObservableType {
     }
     
     func subscribe<O : ObserverType where O.E == E>(observer: O) -> Disposable {
+        lock.lock()
+        defer { lock.unlock() }
+
         let key = observers.insert(AnyObserver(observer))
         subscriptions.append(SubscribedToHotObservable)
         
         let i = self.subscriptions.count - 1
         
         return AnonymousDisposable {
+            self.lock.lock()
+            defer { self.lock.unlock() }
+            
             let removed = self.observers.removeKey(key)
             assert(removed != nil)
             

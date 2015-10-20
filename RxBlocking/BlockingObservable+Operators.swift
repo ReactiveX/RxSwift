@@ -1,17 +1,17 @@
 //
-//  Observable+Blocking.swift
-//  RxBlocking
+//  BlockingObservable+Operators.swift
+//  Rx
 //
-//  Created by Krunoslav Zaher on 7/12/15.
-//  Copyright (c) 2015 Krunoslav Zaher. All rights reserved.
+//  Created by Krunoslav Zaher on 10/19/15.
+//  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
 import Foundation
 #if !RX_NO_MODULE
-import RxSwift
+    import RxSwift
 #endif
 
-extension ObservableType {
+extension BlockingObservable {
     /**
     Blocks current thread until sequence terminates.
     
@@ -28,7 +28,7 @@ extension ObservableType {
             
         var ended = false
 
-        _ = self.subscribe { e in
+        _ = self.source.subscribe { e in
             switch e {
             case .Next(let element):
                 elements.append(element)
@@ -59,7 +59,7 @@ extension ObservableType {
     }
 }
 
-extension ObservableType {
+extension BlockingObservable {
     /**
     Blocks current thread until sequence produces first element.
     
@@ -78,7 +78,7 @@ extension ObservableType {
         
         let d = SingleAssignmentDisposable()
         
-        d.disposable = self.subscribe { e in
+        d.disposable = self.source.subscribe { e in
             switch e {
             case .Next(let e):
                 if element == nil {
@@ -112,7 +112,7 @@ extension ObservableType {
     }
 }
 
-extension ObservableType {
+extension BlockingObservable {
     /**
     Blocks current thread until sequence terminates.
     
@@ -131,7 +131,7 @@ extension ObservableType {
         
         let d = SingleAssignmentDisposable()
         
-        d.disposable = self.subscribe { e in
+        d.disposable = self.source.subscribe { e in
             switch e {
             case .Next(let e):
                 element = e

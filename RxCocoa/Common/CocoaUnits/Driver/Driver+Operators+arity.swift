@@ -23,6 +23,7 @@ Merges the specified observable sequences into one observable sequence by using 
 - parameter resultSelector: Function to invoke for each series of elements at corresponding indexes in the sources.
 - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
 */
+@warn_unused_result(message="http://git.io/rxs.uo")
 public func zip<O1: DriverConvertibleType, O2: DriverConvertibleType, R>
     (source1: O1, _ source2: O2, resultSelector: (O1.E, O2.E) throws -> R)
     -> Driver<R> {
@@ -40,6 +41,7 @@ Merges the specified observable sequences into one observable sequence by using 
 - parameter resultSelector: Function to invoke whenever any of the sources produces an element.
 - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
 */
+@warn_unused_result(message="http://git.io/rxs.uo")
 public func combineLatest<O1: DriverConvertibleType, O2: DriverConvertibleType, R>
     (source1: O1, _ source2: O2, resultSelector: (O1.E, O2.E) throws -> R)
     -> Driver<R> {
@@ -61,6 +63,7 @@ Merges the specified observable sequences into one observable sequence by using 
 - parameter resultSelector: Function to invoke for each series of elements at corresponding indexes in the sources.
 - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
 */
+@warn_unused_result(message="http://git.io/rxs.uo")
 public func zip<O1: DriverConvertibleType, O2: DriverConvertibleType, O3: DriverConvertibleType, R>
     (source1: O1, _ source2: O2, _ source3: O3, resultSelector: (O1.E, O2.E, O3.E) throws -> R)
     -> Driver<R> {
@@ -78,6 +81,7 @@ Merges the specified observable sequences into one observable sequence by using 
 - parameter resultSelector: Function to invoke whenever any of the sources produces an element.
 - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
 */
+@warn_unused_result(message="http://git.io/rxs.uo")
 public func combineLatest<O1: DriverConvertibleType, O2: DriverConvertibleType, O3: DriverConvertibleType, R>
     (source1: O1, _ source2: O2, _ source3: O3, resultSelector: (O1.E, O2.E, O3.E) throws -> R)
     -> Driver<R> {
@@ -99,6 +103,7 @@ Merges the specified observable sequences into one observable sequence by using 
 - parameter resultSelector: Function to invoke for each series of elements at corresponding indexes in the sources.
 - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
 */
+@warn_unused_result(message="http://git.io/rxs.uo")
 public func zip<O1: DriverConvertibleType, O2: DriverConvertibleType, O3: DriverConvertibleType, O4: DriverConvertibleType, R>
     (source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, resultSelector: (O1.E, O2.E, O3.E, O4.E) throws -> R)
     -> Driver<R> {
@@ -116,6 +121,7 @@ Merges the specified observable sequences into one observable sequence by using 
 - parameter resultSelector: Function to invoke whenever any of the sources produces an element.
 - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
 */
+@warn_unused_result(message="http://git.io/rxs.uo")
 public func combineLatest<O1: DriverConvertibleType, O2: DriverConvertibleType, O3: DriverConvertibleType, O4: DriverConvertibleType, R>
     (source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, resultSelector: (O1.E, O2.E, O3.E, O4.E) throws -> R)
     -> Driver<R> {
@@ -137,6 +143,7 @@ Merges the specified observable sequences into one observable sequence by using 
 - parameter resultSelector: Function to invoke for each series of elements at corresponding indexes in the sources.
 - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
 */
+@warn_unused_result(message="http://git.io/rxs.uo")
 public func zip<O1: DriverConvertibleType, O2: DriverConvertibleType, O3: DriverConvertibleType, O4: DriverConvertibleType, O5: DriverConvertibleType, R>
     (source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, resultSelector: (O1.E, O2.E, O3.E, O4.E, O5.E) throws -> R)
     -> Driver<R> {
@@ -154,6 +161,7 @@ Merges the specified observable sequences into one observable sequence by using 
 - parameter resultSelector: Function to invoke whenever any of the sources produces an element.
 - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
 */
+@warn_unused_result(message="http://git.io/rxs.uo")
 public func combineLatest<O1: DriverConvertibleType, O2: DriverConvertibleType, O3: DriverConvertibleType, O4: DriverConvertibleType, O5: DriverConvertibleType, R>
     (source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, resultSelector: (O1.E, O2.E, O3.E, O4.E, O5.E) throws -> R)
     -> Driver<R> {
@@ -175,6 +183,7 @@ Merges the specified observable sequences into one observable sequence by using 
 - parameter resultSelector: Function to invoke for each series of elements at corresponding indexes in the sources.
 - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
 */
+@warn_unused_result(message="http://git.io/rxs.uo")
 public func zip<O1: DriverConvertibleType, O2: DriverConvertibleType, O3: DriverConvertibleType, O4: DriverConvertibleType, O5: DriverConvertibleType, O6: DriverConvertibleType, R>
     (source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6, resultSelector: (O1.E, O2.E, O3.E, O4.E, O5.E, O6.E) throws -> R)
     -> Driver<R> {
@@ -192,6 +201,7 @@ Merges the specified observable sequences into one observable sequence by using 
 - parameter resultSelector: Function to invoke whenever any of the sources produces an element.
 - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
 */
+@warn_unused_result(message="http://git.io/rxs.uo")
 public func combineLatest<O1: DriverConvertibleType, O2: DriverConvertibleType, O3: DriverConvertibleType, O4: DriverConvertibleType, O5: DriverConvertibleType, O6: DriverConvertibleType, R>
     (source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6, resultSelector: (O1.E, O2.E, O3.E, O4.E, O5.E, O6.E) throws -> R)
     -> Driver<R> {
@@ -213,6 +223,7 @@ Merges the specified observable sequences into one observable sequence by using 
 - parameter resultSelector: Function to invoke for each series of elements at corresponding indexes in the sources.
 - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
 */
+@warn_unused_result(message="http://git.io/rxs.uo")
 public func zip<O1: DriverConvertibleType, O2: DriverConvertibleType, O3: DriverConvertibleType, O4: DriverConvertibleType, O5: DriverConvertibleType, O6: DriverConvertibleType, O7: DriverConvertibleType, R>
     (source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6, _ source7: O7, resultSelector: (O1.E, O2.E, O3.E, O4.E, O5.E, O6.E, O7.E) throws -> R)
     -> Driver<R> {
@@ -230,6 +241,7 @@ Merges the specified observable sequences into one observable sequence by using 
 - parameter resultSelector: Function to invoke whenever any of the sources produces an element.
 - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
 */
+@warn_unused_result(message="http://git.io/rxs.uo")
 public func combineLatest<O1: DriverConvertibleType, O2: DriverConvertibleType, O3: DriverConvertibleType, O4: DriverConvertibleType, O5: DriverConvertibleType, O6: DriverConvertibleType, O7: DriverConvertibleType, R>
     (source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6, _ source7: O7, resultSelector: (O1.E, O2.E, O3.E, O4.E, O5.E, O6.E, O7.E) throws -> R)
     -> Driver<R> {
@@ -251,6 +263,7 @@ Merges the specified observable sequences into one observable sequence by using 
 - parameter resultSelector: Function to invoke for each series of elements at corresponding indexes in the sources.
 - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
 */
+@warn_unused_result(message="http://git.io/rxs.uo")
 public func zip<O1: DriverConvertibleType, O2: DriverConvertibleType, O3: DriverConvertibleType, O4: DriverConvertibleType, O5: DriverConvertibleType, O6: DriverConvertibleType, O7: DriverConvertibleType, O8: DriverConvertibleType, R>
     (source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6, _ source7: O7, _ source8: O8, resultSelector: (O1.E, O2.E, O3.E, O4.E, O5.E, O6.E, O7.E, O8.E) throws -> R)
     -> Driver<R> {
@@ -268,6 +281,7 @@ Merges the specified observable sequences into one observable sequence by using 
 - parameter resultSelector: Function to invoke whenever any of the sources produces an element.
 - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
 */
+@warn_unused_result(message="http://git.io/rxs.uo")
 public func combineLatest<O1: DriverConvertibleType, O2: DriverConvertibleType, O3: DriverConvertibleType, O4: DriverConvertibleType, O5: DriverConvertibleType, O6: DriverConvertibleType, O7: DriverConvertibleType, O8: DriverConvertibleType, R>
     (source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6, _ source7: O7, _ source8: O8, resultSelector: (O1.E, O2.E, O3.E, O4.E, O5.E, O6.E, O7.E, O8.E) throws -> R)
     -> Driver<R> {

@@ -19,7 +19,15 @@ public protocol DriverConvertibleType : ObservableConvertibleType {
     /**
     Converts self to `Driver`.
     */
+    @warn_unused_result(message="http://git.io/rxs.uo")
     func asDriver() -> Driver<E>
+}
+
+extension DriverConvertibleType {
+    @warn_unused_result(message="http://git.io/rxs.uo")
+    public func asObservable() -> Observable<E> {
+        return asDriver().asObservable()
+    }
 }
 
 /**
@@ -50,17 +58,25 @@ public struct Driver<Element> : DriverConvertibleType {
     init(raw: Observable<E>) {
         self._source = raw
     }
-    
+
     #if EXPANDABLE_DRIVER
     public static func createUnsafe<O: ObservableType>(source: O) -> Driver<O.E> {
-        return Driver<O.E>(source.asObservable())
+        return Driver<O.E>(raw: source.asObservable())
     }
     #endif
-    
+
+    /**
+    - returns: Built observable sequence.
+    */
+    @warn_unused_result(message="http://git.io/rxs.uo")
     public func asObservable() -> Observable<E> {
         return _source
     }
-    
+
+    /**
+    - returns: `self`
+    */
+    @warn_unused_result(message="http://git.io/rxs.uo")
     public func asDriver() -> Driver<E> {
         return self
     }
@@ -75,8 +91,9 @@ public struct Drive {
     
     - returns: An observable sequence with no elements.
     */
+    @warn_unused_result(message="http://git.io/rxs.uo")
     public static func empty<E>() -> Driver<E> {
-        return Driver(raw: RxSwift.empty())
+        return Driver(raw: RxSwift.empty().subscribeOn(ConcurrentMainScheduler.sharedInstance))
     }
     
     /**
@@ -84,8 +101,9 @@ public struct Drive {
     
     - returns: An observable sequence whose observers will never get called.
     */
+    @warn_unused_result(message="http://git.io/rxs.uo")
     public static func never<E>() -> Driver<E> {
-        return Driver(raw: RxSwift.never())
+        return Driver(raw: RxSwift.never().subscribeOn(ConcurrentMainScheduler.sharedInstance))
     }
     
     /**
@@ -94,19 +112,21 @@ public struct Drive {
     - parameter element: Single element in the resulting observable sequence.
     - returns: An observable sequence containing the single specified element.
     */
+    @warn_unused_result(message="http://git.io/rxs.uo")
     public static func just<E>(element: E) -> Driver<E> {
-        return Driver(raw: RxSwift.just(element))
+        return Driver(raw: RxSwift.just(element).subscribeOn(ConcurrentMainScheduler.sharedInstance))
     }
     
 #else
     
     /**
     Returns an empty observable sequence, using the specified scheduler to send out the single `Completed` message.
-    
+
     - returns: An observable sequence with no elements.
     */
+    @warn_unused_result(message="http://git.io/rxs.uo")
     public static func empty<E>() -> Driver<E> {
-        return Driver(raw: _empty())
+        return Driver(raw: _empty().subscribeOn(ConcurrentMainScheduler.sharedInstance))
     }
    
     /**
@@ -114,8 +134,9 @@ public struct Drive {
     
     - returns: An observable sequence whose observers will never get called.
     */
+    @warn_unused_result(message="http://git.io/rxs.uo")
     public static func never<E>() -> Driver<E> {
-        return Driver(raw: _never())
+        return Driver(raw: _never().subscribeOn(ConcurrentMainScheduler.sharedInstance))
     }
     
     /**
@@ -124,14 +145,16 @@ public struct Drive {
     - parameter element: Single element in the resulting observable sequence.
     - returns: An observable sequence containing the single specified element.
     */
+    @warn_unused_result(message="http://git.io/rxs.uo")
     public static func just<E>(element: E) -> Driver<E> {
-        return Driver(raw: _just(element))
+        return Driver(raw: _just(element).subscribeOn(ConcurrentMainScheduler.sharedInstance))
     }
     
 #endif
-    
+
+    @warn_unused_result(message="http://git.io/rxs.uo")
     public static func sequenceOf<E>(elements: E ...) -> Driver<E> {
-        let source = elements.asObservable()
+        let source = elements.asObservable().subscribeOn(ConcurrentMainScheduler.sharedInstance)
         return Driver(raw: source)
     }
     

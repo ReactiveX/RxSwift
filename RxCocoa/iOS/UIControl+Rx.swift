@@ -41,10 +41,15 @@ extension UIControl {
     - parameter controlEvents: Filter for observed event types.
     */
     public func rx_controlEvents(controlEvents: UIControlEvents) -> ControlEvent<Void> {
-        let source: Observable<Void> = AnonymousObservable { observer in
+        let source: Observable<Void> = AnonymousObservable { [weak self] observer in
             MainScheduler.ensureExecutingOnScheduler()
-            
-            let controlTarget = ControlTarget(control: self, controlEvents: controlEvents) {
+
+            guard let control = self else {
+                observer.on(.Completed)
+                return NopDisposable.instance
+            }
+
+            let controlTarget = ControlTarget(control: control, controlEvents: controlEvents) {
                 control in
                 observer.on(.Next())
             }
@@ -58,11 +63,15 @@ extension UIControl {
     }
     
     func rx_value<T>(getter getter: () -> T, setter: T -> Void) -> ControlProperty<T> {
-        let source: Observable<T> = AnonymousObservable { observer in
-            
+        let source: Observable<T> = AnonymousObservable { [weak self] observer in
+            guard let control = self else {
+                observer.on(.Completed)
+                return NopDisposable.instance
+            }
+
             observer.on(.Next(getter()))
-            
-            let controlTarget = ControlTarget(control: self, controlEvents: [.EditingChanged, .ValueChanged]) { control in
+
+            let controlTarget = ControlTarget(control: control, controlEvents: [.EditingChanged, .ValueChanged]) { control in
                 observer.on(.Next(getter()))
             }
             
@@ -73,7 +82,7 @@ extension UIControl {
         
         return ControlProperty<T>(source: source, observer: AnyObserver { event in
             MainScheduler.ensureExecutingOnScheduler()
-            
+
             switch event {
             case .Next(let value):
                 setter(value)
