@@ -5,7 +5,7 @@
 
 Xcode 7 beta 6 (7A192o) / Swift 2.0 required
 
-**This README.md describes alpha version of RxSwift 2.0.**
+**This README.md describes beta version of RxSwift 2.0.**
 
 **You can find RxSwift 1.9 for Swift 1.2 [here](https://github.com/ReactiveX/RxSwift/tree/rxswift-1.0).**
 
@@ -462,9 +462,9 @@ Open Rx.xcworkspace, choose `RxExample` and hit run. This method will build ever
 # Podfile
 use_frameworks!
 
-pod 'RxSwift', '~> 2.0.0-alpha'
-pod 'RxCocoa', '~> 2.0.0-alpha'
-pod 'RxBlocking', '~> 2.0.0-alpha'
+pod 'RxSwift', '~> 2.0.0-beta'
+pod 'RxCocoa', '~> 2.0.0-beta'
+pod 'RxBlocking', '~> 2.0.0-beta'
 ```
 
 type in `Podfile` directory
@@ -478,7 +478,7 @@ $ pod install
 Add this to `Cartfile`
 
 ```
-git "git@github.com:ReactiveX/RxSwift.git" "2.0.0-alpha.4"
+git "git@github.com:ReactiveX/RxSwift.git" "2.0.0-beta.1"
 ```
 
 ```
