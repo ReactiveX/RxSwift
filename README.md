@@ -456,7 +456,7 @@ Open Rx.xcworkspace, choose `RxExample` and hit run. This method will build ever
 
 ### [CocoaPods](https://guides.cocoapods.org/using/using-cocoapods.html)
 
-**:warning: IMPORTANT! For tvOS support through CocoaPods use [this hack](https://github.com/orta/cocoapods-expert-difficulty) until `0.39` is released. :warning:**
+**:warning: IMPORTANT! For tvOS support CocoaPods `0.39` is required. :warning:**
 
 ```
 # Podfile
@@ -475,10 +475,24 @@ $ pod install
 
 ### [Carthage](https://github.com/Carthage/Carthage)
 
+**For Xcode 7.0**
+
 Add this to `Cartfile`
 
 ```
 git "git@github.com:ReactiveX/RxSwift.git" "2.0.0-beta.1"
+```
+
+```
+$ carthage update
+```
+
+**For Xcode 7.1 and tvOS support**
+
+Add this to `Cartfile`
+
+```
+git "git@github.com:ReactiveX/RxSwift.git" "master-7.1"
 ```
 
 ```
