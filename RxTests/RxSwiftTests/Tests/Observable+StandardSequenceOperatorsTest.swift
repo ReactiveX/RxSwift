@@ -36,8 +36,7 @@ func isPrime(i: Int) -> Bool {
     return true
 }
 
-// where
-
+// MARK: where
 extension ObservableStandardSequenceOperators  {
     func test_filterComplete() {
         let scheduler = TestScheduler(initialClock: 0)
@@ -210,7 +209,7 @@ extension ObservableStandardSequenceOperators  {
     }
 }
 
-// takeWhile
+// MARK: takeWhile
 extension ObservableStandardSequenceOperators {
     func testTakeWhile_Complete_Before() {
         let scheduler = TestScheduler(initialClock: 0)
@@ -701,7 +700,7 @@ extension ObservableStandardSequenceOperators {
     
 }
 
-// map
+// MARK: map
 // these test are not port from Rx
 extension ObservableStandardSequenceOperators {
     func testMap_Never() {
@@ -1043,7 +1042,7 @@ extension ObservableStandardSequenceOperators {
     }
 }
 
-// flatMap
+// MARK: flatMap
 extension ObservableStandardSequenceOperators {
     
     func testFlatMap_Complete() {
@@ -2353,7 +2352,7 @@ extension ObservableStandardSequenceOperators {
     
 }
 
-// take
+// MARK: take
 
 extension ObservableStandardSequenceOperators {
     func testTake_Complete_After() {
@@ -2817,7 +2816,7 @@ extension ObservableStandardSequenceOperators {
     }
 }
 
-// skip
+// MARK: skip
 extension ObservableStandardSequenceOperators {
     func testSkip_Complete_After() {
         let scheduler = TestScheduler(initialClock: 0)
@@ -3642,6 +3641,253 @@ extension ObservableStandardSequenceOperators {
         
         XCTAssertEqual(xs.subscriptions, [
             Subscription(200, 350)
+            ])
+    }
+}
+
+// MARK: elementAt
+extension ObservableStandardSequenceOperators {
+    
+    func testElementAt_Complete_After() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createHotObservable([
+            next(70, 6),
+            next(150, 4),
+            next(210, 9),
+            next(230, 13),
+            next(270, 7),
+            next(280, 1),
+            next(300, -1),
+            next(310, 3),
+            next(340, 8),
+            next(370, 11),
+            next(410, 15),
+            next(415, 16),
+            next(460, 72),
+            next(510, 76),
+            next(560, 32),
+            next(570, -100),
+            next(580, -3),
+            next(590, 5),
+            next(630, 10),
+            completed(690)
+            ])
+        
+        let res = scheduler.start {
+            xs.elementAt(10)
+        }
+        
+        XCTAssertEqual(res.messages, [
+            next(460, 72),
+            completed(460)
+            ])
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 460)
+            ])
+    }
+    
+    
+    func testElementAt_Complete_Before() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createHotObservable([
+            next(70, 6),
+            next(150, 4),
+            next(210, 9),
+            next(230, 13),
+            next(270, 7),
+            next(280, 1),
+            next(300, -1),
+            completed(320)
+            ])
+        
+        let res = scheduler.start {
+            xs.elementAt(10)
+        }
+        
+        XCTAssertEqual(res.messages, [
+            completed(320)
+            ])
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 320)
+            ])
+    }
+    
+    func testElementAt_Error_After() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createHotObservable([
+            next(70, 6),
+            next(150, 4),
+            next(210, 9),
+            next(230, 13),
+            next(270, 7),
+            next(280, 1),
+            next(300, -1),
+            next(310, 3),
+            next(340, 8),
+            next(370, 11),
+            next(410, 15),
+            next(415, 16),
+            next(460, 72),
+            next(510, 76),
+            next(560, 32),
+            next(570, -100),
+            next(580, -3),
+            next(590, 5),
+            next(630, 10),
+            error(690, testError)
+            ])
+        
+        let res = scheduler.start {
+            xs.elementAt(10)
+        }
+        
+        XCTAssertEqual(res.messages, [
+            next(460, 72),
+            completed(460)
+            ])
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 460)
+            ])
+    }
+    
+    func testElementAt_Error_Before() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createHotObservable([
+            next(70, 6),
+            next(150, 4),
+            next(210, 9),
+            next(230, 13),
+            next(270, 7),
+            next(280, 1),
+            next(300, -1),
+            error(310, testError)
+            ])
+        
+        let res = scheduler.start {
+            xs.elementAt(10)
+        }
+        
+        XCTAssertEqual(res.messages, [
+            error(310, testError)
+            ])
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 310)
+            ])
+    }
+    
+    func testElementAt_Dispose_Before() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createHotObservable([
+            next(70, 6),
+            next(150, 4),
+            next(210, 9),
+            next(230, 13),
+            next(270, 7),
+            next(280, 1),
+            next(300, -1),
+            next(310, 3),
+            next(340, 8),
+            next(370, 11),
+            next(410, 15),
+            next(415, 16),
+            next(460, 72),
+            next(510, 76),
+            next(560, 32),
+            next(570, -100),
+            next(580, -3),
+            next(590, 5),
+            next(630, 10),
+            error(690, testError)
+            ])
+        
+        let res = scheduler.start(250) {
+            xs.elementAt(3)
+        }
+        
+        XCTAssertEqual(res.messages, [])
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 250)
+            ])
+    }
+    
+    func testElementAt_Dispose_After() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createHotObservable([
+            next(70, 6),
+            next(150, 4),
+            next(210, 9),
+            next(230, 13),
+            next(270, 7),
+            next(280, 1),
+            next(300, -1),
+            next(310, 3),
+            next(340, 8),
+            next(370, 11),
+            next(410, 15),
+            next(415, 16),
+            next(460, 72),
+            next(510, 76),
+            next(560, 32),
+            next(570, -100),
+            next(580, -3),
+            next(590, 5),
+            next(630, 10),
+            error(690, testError)
+            ])
+        
+        let res = scheduler.start(400) {
+            xs.elementAt(3)
+        }
+        
+        XCTAssertEqual(res.messages, [
+            next(280, 1),
+            completed(280)
+            ])
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 280)
+            ])
+    }
+    
+    func testElementAt_First() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createHotObservable([
+            next(70, 6),
+            next(150, 4),
+            next(210, 9),
+            next(230, 13),
+            next(270, 7),
+            next(280, 1),
+            next(300, -1),
+            next(310, 3),
+            next(340, 8),
+            next(370, 11),
+            completed(400)
+            ])
+        
+        let res = scheduler.start {
+            xs.elementAt(0)
+        }
+        
+        XCTAssertEqual(res.messages, [
+            next(210, 9),
+            completed(210)
+            ])
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 210)
             ])
     }
 }

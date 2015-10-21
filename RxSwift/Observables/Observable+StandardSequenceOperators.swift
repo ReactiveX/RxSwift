@@ -180,3 +180,20 @@ extension ObservableType {
         return FlatMap(source: self.asObservable(), selector: selector)
     }
 }
+
+// elementAt
+
+extension ObservableType {
+    
+    /**
+    Returns a sequence emitting only item _n_ emitted by an Observable
+    
+    - parameter index: The index of the required item (starting from 0).
+    - returns: An observable sequence that emits the desired item as its own sole emission.
+    */
+    @warn_unused_result(message="http://git.io/rxs.uo")
+    public func elementAt(index: Int)
+        -> Observable<E> {
+            return ElementAt(source: self.asObservable(), index: index, throwOnEmpty: false)
+    }
+}
