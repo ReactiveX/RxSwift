@@ -3980,7 +3980,7 @@ extension ObservableMultipleTest {
         ])
         
         let res = scheduler.start {
-            xs.withLatestFrom(ys, resultSelector: { x, y in  "\(x)\(y)"} )
+            xs.withLatestFrom(ys) { x, y in "\(x)\(y)" }
         }
         
         XCTAssertEqual(res.messages, [
@@ -4025,7 +4025,7 @@ extension ObservableMultipleTest {
         ])
         
         let res = scheduler.start {
-            xs.withLatestFrom(ys, resultSelector: { x, y in  "\(x)\(y)"} )
+            xs.withLatestFrom(ys) { x, y in "\(x)\(y)" }
         }
         
         XCTAssertEqual(res.messages, [
@@ -4066,7 +4066,7 @@ extension ObservableMultipleTest {
         ])
         
         let res = scheduler.start {
-            xs.withLatestFrom(ys, resultSelector: { x, y in  "\(x)\(y)"} )
+            xs.withLatestFrom(ys) { x, y in "\(x)\(y)" }
         }
         
         XCTAssertEqual(res.messages, [
@@ -4111,7 +4111,7 @@ extension ObservableMultipleTest {
         ])
         
         let res = scheduler.start {
-            xs.withLatestFrom(ys, resultSelector: { x, y in  "\(x)\(y)"} )
+            xs.withLatestFrom(ys) { x, y in "\(x)\(y)" }
         }
         
         XCTAssertEqual(res.messages, [
@@ -4155,7 +4155,7 @@ extension ObservableMultipleTest {
         ])
         
         let res = scheduler.start {
-            xs.withLatestFrom(ys, resultSelector: { x, y in  "\(x)\(y)"} )
+            xs.withLatestFrom(ys) { x, y in "\(x)\(y)" }
         }
         
         XCTAssertEqual(res.messages, [
