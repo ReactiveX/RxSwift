@@ -531,6 +531,10 @@
 		C8F0C0441BBBFBB9001B112F /* _RXSwizzling.h in Headers */ = {isa = PBXBuildFile; fileRef = C8093E881B8A732E0088E94D /* _RXSwizzling.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C8F0C0451BBBFBB9001B112F /* _RXKVOObserver.h in Headers */ = {isa = PBXBuildFile; fileRef = C8093E861B8A732E0088E94D /* _RXKVOObserver.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C8F0C04F1BBBFBCE001B112F /* ObservableConvertibleType+Blocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093F581B8A73A20088E94D /* ObservableConvertibleType+Blocking.swift */; };
+		CBEE77321BD7B76C00AD584C /* ElementAt.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBEE77311BD7B76C00AD584C /* ElementAt.swift */; settings = {ASSET_TAGS = (); }; };
+		CBEE77331BD7B76C00AD584C /* ElementAt.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBEE77311BD7B76C00AD584C /* ElementAt.swift */; settings = {ASSET_TAGS = (); }; };
+		CBEE77341BD7B76C00AD584C /* ElementAt.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBEE77311BD7B76C00AD584C /* ElementAt.swift */; settings = {ASSET_TAGS = (); }; };
+		CBEE77351BD7B76C00AD584C /* ElementAt.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBEE77311BD7B76C00AD584C /* ElementAt.swift */; settings = {ASSET_TAGS = (); }; };
 		D203C4F31BB9C4CA00D02D00 /* RxCollectionViewReactiveArrayDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88253F11B8A752B00B02D69 /* RxCollectionViewReactiveArrayDataSource.swift */; };
 		D203C4F41BB9C52400D02D00 /* RxTableViewReactiveArrayDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88253F21B8A752B00B02D69 /* RxTableViewReactiveArrayDataSource.swift */; };
 		D203C4F51BB9C52900D02D00 /* ItemEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88253F41B8A752B00B02D69 /* ItemEvents.swift */; };
@@ -978,6 +982,7 @@
 		C8F0C0021BBBFB8B001B112F /* RxSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8F0C04B1BBBFBB9001B112F /* RxCocoa.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxCocoa.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8F0C0581BBBFBCE001B112F /* RxBlocking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxBlocking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CBEE77311BD7B76C00AD584C /* ElementAt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElementAt.swift; sourceTree = "<group>"; };
 		D2138C751BB9BE9800339B5C /* RxCocoa.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxCocoa.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2245A1A1BD5657300E7146F /* WithLatestFrom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WithLatestFrom.swift; sourceTree = "<group>"; };
 		D22B6D251BC8504A00BCE0AB /* SkipWhile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SkipWhile.swift; sourceTree = "<group>"; };
@@ -1183,6 +1188,7 @@
 				C8093C771B8A72BE0088E94D /* DelaySubscription.swift */,
 				C8093C781B8A72BE0088E94D /* DistinctUntilChanged.swift */,
 				C8093C791B8A72BE0088E94D /* Do.swift */,
+				CBEE77311BD7B76C00AD584C /* ElementAt.swift */,
 				C8C3DA051B9393AC004D233E /* Empty.swift */,
 				C8C3DA081B93941E004D233E /* FailWith.swift */,
 				C8093C7A1B8A72BE0088E94D /* Filter.swift */,
@@ -2170,6 +2176,7 @@
 				C86409FD1BA593F500D3C4E8 /* Range.swift in Sources */,
 				C8093D221B8A72BE0088E94D /* Map.swift in Sources */,
 				C8093CD01B8A72BE0088E94D /* InfiniteSequence.swift in Sources */,
+				CBEE77331BD7B76C00AD584C /* ElementAt.swift in Sources */,
 				D235B23F1BD003DD007E84DA /* Using.swift in Sources */,
 				C8093D661B8A72BE0088E94D /* ObservableType.swift in Sources */,
 				C8093D541B8A72BE0088E94D /* Observable+Aggregate.swift in Sources */,
@@ -2290,6 +2297,7 @@
 				C86409FC1BA593F500D3C4E8 /* Range.swift in Sources */,
 				C8093D211B8A72BE0088E94D /* Map.swift in Sources */,
 				C8093CCF1B8A72BE0088E94D /* InfiniteSequence.swift in Sources */,
+				CBEE77321BD7B76C00AD584C /* ElementAt.swift in Sources */,
 				D235B23E1BD003DD007E84DA /* Using.swift in Sources */,
 				C8093D651B8A72BE0088E94D /* ObservableType.swift in Sources */,
 				C8093D531B8A72BE0088E94D /* Observable+Aggregate.swift in Sources */,
@@ -2410,6 +2418,7 @@
 				C8F0BFD51BBBFB8B001B112F /* Range.swift in Sources */,
 				C8F0BFD61BBBFB8B001B112F /* Map.swift in Sources */,
 				C8F0BFD71BBBFB8B001B112F /* InfiniteSequence.swift in Sources */,
+				CBEE77351BD7B76C00AD584C /* ElementAt.swift in Sources */,
 				D235B2411BD003DD007E84DA /* Using.swift in Sources */,
 				C8F0BFD81BBBFB8B001B112F /* ObservableType.swift in Sources */,
 				C8F0BFD91BBBFB8B001B112F /* Observable+Aggregate.swift in Sources */,
@@ -2680,6 +2689,7 @@
 				D2EBEB0C1BB9B6C1003A27DC /* FailWith.swift in Sources */,
 				D2EBEB361BB9B6D2003A27DC /* TailRecursiveSink.swift in Sources */,
 				D2EBEB311BB9B6CA003A27DC /* Observable+Single.swift in Sources */,
+				CBEE77341BD7B76C00AD584C /* ElementAt.swift in Sources */,
 				D235B2401BD003DD007E84DA /* Using.swift in Sources */,
 				D2EBEAE91BB9B697003A27DC /* RxBox.swift in Sources */,
 				D2EBEAFC1BB9B6BA003A27DC /* Amb.swift in Sources */,
