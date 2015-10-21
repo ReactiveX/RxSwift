@@ -48,28 +48,22 @@ class WithLatestFromFirst<FirstO: ObservableType, SecondO: ObservableType, Resul
     }
 
     func on(event: Event<E>) {
-        switch event {
-        case let .Next(value):
-            guard let latest = _parent._latest else { return }
-            do {
-                let res = try _parent._parent._resultSelector(value, latest)
-                
-                _parent._lock.performLocked {
+        _parent._lock.performLocked {
+            switch event {
+            case let .Next(value):
+                guard let latest = _parent._latest else { return }
+                do {
+                    let res = try _parent._parent._resultSelector(value, latest)
+                    
                     _parent.observer?.onNext(res)
-                }
-            } catch let e {
-                _parent._lock.performLocked {
+                } catch let e {
                     _parent.observer?.onError(e)
                     _parent.dispose()
                 }
-            }
-        case .Completed:
-            _parent._lock.performLocked {
+            case .Completed:
                 _parent.observer?.onComplete()
                 _parent.dispose()
-            }
-        case let .Error(error):
-            _parent._lock.performLocked {
+            case let .Error(error):
                 _parent.observer?.onError(error)
                 _parent.dispose()
             }
