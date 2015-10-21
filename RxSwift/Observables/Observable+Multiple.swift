@@ -230,11 +230,11 @@ extension SequenceType where Generator.Element : ObservableConvertibleType {
 extension ObservableType {
     
     /**
-    Merges two observable sequences into one observable sequence by combining each element from the first source with the latest element from the second source, if any.
+    Merges two observable sequences into one observable sequence by combining each element from self with the latest element from the second source, if any.
      
     - parameter second: Second observable source.
-    - parameter resultSelector: Function to invoke for each element from the self source combined with the latest element from the second source, if any.
-    - returns: An observable sequence containing the result of combining each element of the self source with the latest element from the second source, if any, using the specified result selector function.
+    - parameter resultSelector: Function to invoke for each element from the self combined with the latest element from the second source, if any.
+    - returns: An observable sequence containing the result of combining each element of the self  with the latest element from the second source, if any, using the specified result selector function.
     */
     public func withLatestFrom<SecondO: ObservableType, ResultType>(second: SecondO, resultSelector: (E, SecondO.E) throws -> ResultType) -> Observable<ResultType> {
         return WithLatestFrom(first: self, second: second, resultSelector: resultSelector)
