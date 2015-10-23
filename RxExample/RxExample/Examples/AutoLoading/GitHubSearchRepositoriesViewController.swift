@@ -35,6 +35,15 @@ class GitHubSearchRepositoriesViewController: ViewController, UITableViewDelegat
         let tableView = self.tableView
         let searchBar = self.searchBar
 
+        // init reachability to check internet connection
+        let reachability:Reachability?
+        do{
+            reachability = try Reachability.reachabilityForInternetConnection()
+        }catch let error{
+            print("cannot create reachability - \(error)")
+            reachability = nil
+        }
+
         let allRepositories = repositories
             .map { repositories in
                 return [SectionModel(model: "Repositories", items: repositories)]
@@ -51,6 +60,7 @@ class GitHubSearchRepositoriesViewController: ViewController, UITableViewDelegat
             let section = dataSource.sectionAtIndex(sectionIndex)
             return section.items.count > 0 ? "Repositories (\(section.items.count))" : "No repositories found"
         }
+
 
         // reactive data source
         allRepositories
@@ -72,7 +82,15 @@ class GitHubSearchRepositoriesViewController: ViewController, UITableViewDelegat
                     return just(.Repositories([]))
                 } else {
                     return GitHubSearchRepositoriesAPI.sharedAPI.search(query, loadNextPageTrigger: loadNextPageTrigger)
-                        .catchErrorJustReturn(.Repositories([]))
+                        .retry(3)
+                        .catchError{ (e) -> Observable<SearchRepositoryResponse> in
+                            reachability?
+                                .rx_reachable
+                                .skipWhile { $0 != .Reachable }
+                                .flatMap { _ in failWith(e)}
+                            ?? failWith(e)
+                        }
+                        .retry()
                 }
             }
             .switchLatest()
