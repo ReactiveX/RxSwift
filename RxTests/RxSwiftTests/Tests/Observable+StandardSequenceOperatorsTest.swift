@@ -3708,7 +3708,7 @@ extension ObservableStandardSequenceOperators {
         }
         
         XCTAssertEqual(res.messages, [
-            completed(320)
+            error(320, RxError.ArgumentOutOfRange)
             ])
         
         XCTAssertEqual(xs.subscriptions, [

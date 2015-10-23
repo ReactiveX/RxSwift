@@ -194,6 +194,6 @@ extension ObservableType {
     @warn_unused_result(message="http://git.io/rxs.uo")
     public func elementAt(index: Int)
         -> Observable<E> {
-            return ElementAt(source: self.asObservable(), index: index, throwOnEmpty: false)
+            return ElementAt(source: self.asObservable(), index: index, throwOnEmpty: true)
     }
 }

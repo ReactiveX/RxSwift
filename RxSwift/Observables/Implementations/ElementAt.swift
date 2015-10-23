@@ -26,13 +26,24 @@ class ElementAtSink<SourceType, O: ObserverType where O.E == SourceType> : Sink<
         switch event {
         case .Next(_):
 
+            if i < 0 {
+                rxFatalError("index can't be negative")
+            }
+
             if (i == 0) {
                 observer?.on(event)
                 observer?.on(.Completed)
                 self.dispose()
             }
-
-            i--
+            
+            do {
+                try decrementChecked(&i)
+            } catch(let e) {
+                observer?.onError(e)
+                dispose()
+                return
+            }
+            
         case .Error(let e):
             observer?.on(.Error(e))
             self.dispose()
