@@ -14,6 +14,14 @@ class RangeProducer<_CompilerWorkaround> : Producer<Int> {
     private let _scheduler: ImmediateSchedulerType
     
     init(start: Int, count: Int, scheduler: ImmediateSchedulerType) {
+        if count < 0 {
+            rxFatalError("count can't be negative")
+        }
+
+        if start &+ (count - 1) < start {
+            rxFatalError("overflow of count")
+        }
+
         _start = start
         _count = count
         _scheduler = scheduler
