@@ -41,11 +41,12 @@ public class WikipediaSearchCell: UITableViewCell {
 
             viewModel.imageURLs
                 .drive(self.imagesOutlet.rx_itemsWithCellIdentifier("ImageCell")) { [unowned self] (_, URL, cell: CollectionViewImageCell) in
-                        let loadingPlaceholder: UIImage? = nil
+                        let loadingPlaceholder:UIImage? = nil
+                        let loadingPlaceholderOnError:UIImage? = self.loadingPlaceholderWithFrame(cell.bounds)
 
                         cell.image = self.imageService.imageFromURL(URL)
                             .map { $0 as UIImage? }
-                            .catchErrorJustReturn(nil)
+                            .retryOnBecomesReachable(loadingPlaceholderOnError, reachabilityService: ReachabilityService.sharedReachabilityService)
                             .startWith(loadingPlaceholder)
                     }
                 .addDisposableTo(disposeBag)
@@ -60,6 +61,33 @@ public class WikipediaSearchCell: UITableViewCell {
         self.disposeBag = nil
     }
 
+    private func loadingPlaceholderWithFrame(frame:CGRect)->UIImage{
+        UIGraphicsBeginImageContextWithOptions(frame.size, false, 0)
+
+        //// General Declarations
+        let context = UIGraphicsGetCurrentContext()
+
+        //// Text Drawing
+        let textRect = CGRectMake(frame.minX + floor((frame.width - 100) / 2 + 0.5), frame.minY + floor((frame.height - 21) * 0.49367 + 0.5), 100, 21)
+        let textTextContent = NSString(string: "Loading")
+        let textStyle = NSParagraphStyle.defaultParagraphStyle().mutableCopy() as! NSMutableParagraphStyle
+        textStyle.alignment = .Center
+
+        let textFontAttributes = [NSFontAttributeName: UIFont.systemFontOfSize(UIFont.smallSystemFontSize()), NSForegroundColorAttributeName: UIColor.blackColor(), NSParagraphStyleAttributeName: textStyle]
+
+        let textTextHeight: CGFloat = textTextContent.boundingRectWithSize(CGSizeMake(textRect.width, CGFloat.infinity), options: NSStringDrawingOptions.UsesLineFragmentOrigin, attributes: textFontAttributes, context: nil).size.height
+        CGContextSaveGState(context)
+        CGContextClipToRect(context, textRect);
+        textTextContent.drawInRect(CGRectMake(textRect.minX, textRect.minY + (textRect.height - textTextHeight) / 2, textRect.width, textTextHeight), withAttributes: textFontAttributes)
+        CGContextRestoreGState(context)
+        let imageOfCanvas1 = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+
+        return imageOfCanvas1
+        
+    }
+
     deinit {
     }
+
 }
