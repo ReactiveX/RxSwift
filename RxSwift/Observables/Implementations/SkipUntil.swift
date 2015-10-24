@@ -102,9 +102,9 @@ class SkipUntilSink<ElementType, Other, O: ObserverType where O.E == ElementType
     }
     
     func run() -> Disposable {
-        let sourceSubscription = _parent._source.subscribeSafe(self)
+        let sourceSubscription = _parent._source.subscribe(self)
         let otherObserver = SkipUntilSinkOther(parent: self)
-        let otherSubscription = _parent._other.subscribeSafe(otherObserver)
+        let otherSubscription = _parent._other.subscribe(otherObserver)
         disposable = sourceSubscription
         otherObserver.disposable = otherSubscription
         

@@ -98,8 +98,8 @@ class AmbSink<ElementType, O: ObserverType where O.E == ElementType> : Sink<O> {
             decide(o, e, .Right, subscription1)
         }
         
-        subscription1.disposable = _parent._left.subscribeSafe(sink1)
-        subscription2.disposable = _parent._right.subscribeSafe(sink2)
+        subscription1.disposable = _parent._left.subscribe(sink1)
+        subscription2.disposable = _parent._right.subscribe(sink2)
         
         return disposeAll
     }

@@ -29,7 +29,7 @@ class ThrottleSink<O: ObserverType, Scheduler: SchedulerType> : Sink<O>, Observe
     }
     
     func run() -> Disposable {
-        let subscription = _parent._source.subscribeSafe(self)
+        let subscription = _parent._source.subscribe(self)
         
         return CompositeDisposable(subscription, cancellable)
     }

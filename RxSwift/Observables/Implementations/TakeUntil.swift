@@ -97,9 +97,9 @@ class TakeUntilSink<ElementType, Other, O: ObserverType where O.E == ElementType
     
     func run() -> Disposable {
         let otherObserver = TakeUntilSinkOther(parent: self)
-        let otherSubscription = _parent._other.subscribeSafe(otherObserver)
+        let otherSubscription = _parent._other.subscribe(otherObserver)
         otherObserver.disposable = otherSubscription
-        let sourceSubscription = _parent._source.subscribeSafe(self)
+        let sourceSubscription = _parent._source.subscribe(self)
         
         return CompositeDisposable(sourceSubscription, otherSubscription)
     }

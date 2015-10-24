@@ -118,7 +118,7 @@ class FlatMapSink<SourceType, S: ObservableConvertibleType, O: ObserverType wher
         let iterDisposable = SingleAssignmentDisposable()
         if let disposeKey = _group.addDisposable(iterDisposable) {
             let iter = FlatMapSinkIter(parent: self, disposeKey: disposeKey)
-            let subscription = source.subscribeSafe(iter)
+            let subscription = source.subscribe(iter)
             iterDisposable.disposable = subscription
         }
     }
@@ -126,7 +126,7 @@ class FlatMapSink<SourceType, S: ObservableConvertibleType, O: ObserverType wher
     func run() -> Disposable {
         _group.addDisposable(_sourceSubscription)
 
-        let subscription = _parent._source.subscribeSafe(self)
+        let subscription = _parent._source.subscribe(self)
         _sourceSubscription.disposable = subscription
         
         return _group

@@ -45,7 +45,7 @@ class DelaySubscription<Element, S: SchedulerType>: Producer<Element> {
         let sink = DelaySubscriptionSink(parent: self, observer: observer, cancel: cancel)
         setSink(sink)
         return _scheduler.scheduleRelative((), dueTime: _dueTime) { _ in
-            return self._source.subscribeSafe(sink)
+            return self._source.subscribe(sink)
         }
     }
 }

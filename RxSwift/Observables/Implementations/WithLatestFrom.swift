@@ -30,8 +30,8 @@ class WithLatestFromSink<FirstO: ObservableType, SecondO: ObservableType, Result
         let sndSubscription = SingleAssignmentDisposable()
         let sndO = WithLatestFromSecond(parent: self, disposable: sndSubscription)
         
-        let fstSubscription = _parent._first.subscribeSafe(self)
-        sndSubscription.disposable = _parent._second.subscribeSafe(sndO)
+        let fstSubscription = _parent._first.subscribe(self)
+        sndSubscription.disposable = _parent._second.subscribe(sndO)
         
         return StableCompositeDisposable.create(fstSubscription, sndSubscription)
     }

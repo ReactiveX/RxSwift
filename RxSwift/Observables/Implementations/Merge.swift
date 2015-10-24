@@ -66,9 +66,9 @@ class MergeSink<S: ObservableConvertibleType, O: ObserverType where O.E == S.E> 
     func run() -> Disposable {
         _group.addDisposable(_sourceSubscription)
         
-        let disposable = _parent._sources.subscribeSafe(self)
+        let disposable = _parent._sources.subscribe(self)
         _sourceSubscription.disposable = disposable
-        
+
         return _group
     }
     
@@ -80,7 +80,7 @@ class MergeSink<S: ObservableConvertibleType, O: ObserverType where O.E == S.E> 
             
             if let key = maybeKey {
                 let observer = MergeSinkIter(parent: self, disposeKey: key)
-                let disposable = value.asObservable().subscribeSafe(observer)
+                let disposable = value.asObservable().subscribe(observer)
                 innerSubscription.disposable = disposable
             }
         case .Error(let error):
@@ -174,7 +174,7 @@ class MergeConcurrentSink<S: ObservableConvertibleType, O: ObserverType where S.
     func run() -> Disposable {
         _group.addDisposable(_sourceSubscription)
         
-        let disposable = _parent._sources.subscribeSafe(self)
+        let disposable = _parent._sources.subscribe(self)
         _sourceSubscription.disposable = disposable
         return _group
     }
@@ -187,7 +187,7 @@ class MergeConcurrentSink<S: ObservableConvertibleType, O: ObserverType where S.
         if let key = key {
             let observer = MergeConcurrentSinkIter(parent: self, disposeKey: key)
             
-            let disposable = innerSource.asObservable().subscribeSafe(observer)
+            let disposable = innerSource.asObservable().subscribe(observer)
             subscription.disposable = disposable
         }
     }

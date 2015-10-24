@@ -19,7 +19,7 @@ Merges the specified observable sequences into one observable sequence by using 
 - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
 */
 @warn_unused_result(message="http://git.io/rxs.uo")
-public func zip<<%= (Array(1...i).map { "O\($0): ObservableType" }).joinWithSeparator(", ") %>, R>
+public func zip<<%= (Array(1...i).map { "O\($0): ObservableConvertibleType" }).joinWithSeparator(", ") %>, R>
     (<%= (Array(1...i).map { "source\($0): O\($0)" }).joinWithSeparator(", _ ") %>, resultSelector: (<%= (Array(1...i).map { "O\($0).E" }).joinWithSeparator(", ") %>) throws -> R)
     -> Observable<R> {
     return Zip<%= i %>(
@@ -32,21 +32,21 @@ class ZipSink<%= i %>_<<%= (Array(1...i).map { "E\($0)" }).joinWithSeparator(", 
     typealias R = O.E
     typealias Parent = Zip<%= i %><<%= (Array(1...i).map { "E\($0)" }).joinWithSeparator(", ") %>, R>
 
-    let parent: Parent
+    let _parent: Parent
 
 <%= (Array(1...i).map {
-"    var values\($0): Queue<E\($0)> = Queue(capacity: 2)"
+"    var _values\($0): Queue<E\($0)> = Queue(capacity: 2)"
 }).joinWithSeparator("\n") %>
 
     init(parent: Parent, observer: O, cancel: Disposable) {
-        self.parent = parent
+        _parent = parent
         super.init(arity: <%= i %>, observer: observer, cancel: cancel)
     }
 
     override func hasElements(index: Int) -> Bool {
         switch (index) {
 <%= (Array(0..<i).map {
-"        case \($0): return values\($0 + 1).count > 0\n"
+"        case \($0): return _values\($0 + 1).count > 0\n"
 }).joinWithSeparator("") %>
         default:
             rxFatalError("Unhandled case \(index)")
@@ -61,11 +61,11 @@ class ZipSink<%= i %>_<<%= (Array(1...i).map { "E\($0)" }).joinWithSeparator(", 
 }).joinWithSeparator("\n") %>
 
 <%= (Array(1...i).map {
-"        let observer\($0) = ZipObserver(lock: lock, parent: self, index: \($0 - 1), setNextValue: { self.values\($0).enqueue($0) }, this: subscription\($0))"
+"        let observer\($0) = ZipObserver(lock: lock, parent: self, index: \($0 - 1), setNextValue: { self._values\($0).enqueue($0) }, this: subscription\($0))"
 }).joinWithSeparator("\n") %>
 
 <%= (Array(1...i).map {
-"        subscription\($0).disposable = parent.source\($0).subscribeSafe(observer\($0))" }).joinWithSeparator("\n")
+"        subscription\($0).disposable = _parent.source\($0).subscribe(observer\($0))" }).joinWithSeparator("\n")
 %>
 
         return CompositeDisposable(disposables: [
@@ -74,7 +74,7 @@ class ZipSink<%= i %>_<<%= (Array(1...i).map { "E\($0)" }).joinWithSeparator(", 
     }
 
     override func getResult() throws -> R {
-        return try self.parent.resultSelector(<%= (Array(1...i).map { "values\($0).dequeue()" }).joinWithSeparator(", ") %>)
+        return try _parent._resultSelector(<%= (Array(1...i).map { "_values\($0).dequeue()" }).joinWithSeparator(", ") %>)
     }
 }
 
@@ -83,14 +83,14 @@ class Zip<%= i %><<%= (Array(1...i).map { "E\($0)" }).joinWithSeparator(", ") %>
 
 <%= (Array(1...i).map { "    let source\($0): Observable<E\($0)>" }).joinWithSeparator("\n") %>
 
-    let resultSelector: ResultSelector
+    let _resultSelector: ResultSelector
 
     init(<%= (Array(1...i).map { "source\($0): Observable<E\($0)>" }).joinWithSeparator(", ") %>, resultSelector: ResultSelector) {
 <%= (Array(1...i).map {
 "        self.source\($0) = source\($0)" }).joinWithSeparator("\n")
 %>
 
-        self.resultSelector = resultSelector
+        _resultSelector = resultSelector
     }
 
     override func run<O: ObserverType where O.E == R>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {

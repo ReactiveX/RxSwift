@@ -101,7 +101,7 @@ class TailRecursiveSink<S: SequenceType, O: ObserverType where S.Generator.Eleme
             return
         }
         
-        let subscription2 = next!.subscribeSafe(self)
+        let subscription2 = next!.subscribe(self)
         _subscription.disposable = subscription2
     }
     

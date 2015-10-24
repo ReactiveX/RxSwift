@@ -72,8 +72,8 @@ class SampleSequenceSink<O: ObserverType, SampleType> : Sink<O>, ObserverType {
     }
     
     func run() -> Disposable {
-        _sourceSubscription.disposable = _parent._source.subscribeSafe(self)
-        let samplerSubscription = _parent._sampler.subscribeSafe(SamplerSink(parent: self))
+        _sourceSubscription.disposable = _parent._source.subscribe(self)
+        let samplerSubscription = _parent._sampler.subscribe(SamplerSink(parent: self))
         
         return CompositeDisposable(_sourceSubscription, samplerSubscription)
     }

@@ -23,6 +23,6 @@ class StartWith<Element>: Producer<Element> {
             observer.on(.Next(e))
         }
 
-        return source.subscribeSafe(observer)
+        return source.subscribe(observer)
     }
 }

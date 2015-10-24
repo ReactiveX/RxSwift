@@ -97,12 +97,12 @@ class Map<SourceType, ResultType>: Producer<ResultType> {
         if let _ = _selector1 {
             let sink = MapSink1(parent: self, observer: observer, cancel: cancel)
             setSink(sink)
-            return _source.subscribeSafe(sink)
+            return _source.subscribe(sink)
         }
         else {
             let sink = MapSink2(parent: self, observer: observer, cancel: cancel)
             setSink(sink)
-            return _source.subscribeSafe(sink)
+            return _source.subscribe(sink)
         }
         
     }

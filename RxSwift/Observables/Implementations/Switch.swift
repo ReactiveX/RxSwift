@@ -30,7 +30,7 @@ class SwitchSink<S: ObservableConvertibleType, O: ObserverType where S.E == O.E>
     }
     
     func run() -> Disposable {
-        let subscription = _parent._sources.subscribeSafe(self)
+        let subscription = _parent._sources.subscribe(self)
         _subscriptions.disposable = subscription
         return CompositeDisposable(_subscriptions, _innerSubscription)
     }
@@ -48,7 +48,7 @@ class SwitchSink<S: ObservableConvertibleType, O: ObserverType where S.E == O.E>
             _innerSubscription.disposable = d
                
             let observer = SwitchSinkIter(parent: self, id: latest, _self: d)
-            let disposable = observable.asObservable().subscribeSafe(observer)
+            let disposable = observable.asObservable().subscribe(observer)
             d.disposable = disposable
         case .Error(let error):
             _lock.performLocked {

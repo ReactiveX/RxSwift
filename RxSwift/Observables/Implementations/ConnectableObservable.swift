@@ -50,7 +50,7 @@ public class ConnectableObservable<S: SubjectType> : Observable<S.E>, Connectabl
     private var _connection: ConnectionType?
     
     public init(source: Observable<S.SubjectObserverType.E>, subject: S) {
-        _source = AsObservable(source: source)
+        _source = source
         _subject = subject
         _connection = nil
     }
@@ -61,7 +61,7 @@ public class ConnectableObservable<S: SubjectType> : Observable<S.E>, Connectabl
                 return connection
             }
             
-            let disposable = _source.subscribeSafe(_subject.asObserver())
+            let disposable = _source.subscribe(_subject.asObserver())
             let connection = Connection(parent: self, subscription: disposable)
             _connection = connection
             return connection
@@ -69,6 +69,6 @@ public class ConnectableObservable<S: SubjectType> : Observable<S.E>, Connectabl
     }
     
     public override func subscribe<O : ObserverType where O.E == S.E>(observer: O) -> Disposable {
-        return _subject.subscribeSafe(observer)
+        return _subject.subscribe(observer)
     }
 }

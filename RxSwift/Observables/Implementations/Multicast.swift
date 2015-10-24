@@ -27,7 +27,7 @@ class MulticastSink<S: SubjectType, O: ObserverType>: Sink<O>, ObserverType {
             
             let observable = try _parent._selector(connectable)
             
-            let subscription = observable.subscribeSafe(self)
+            let subscription = observable.subscribe(self)
             let connection = connectable.connect()
                 
             return BinaryDisposable(subscription, connection)

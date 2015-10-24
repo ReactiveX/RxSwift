@@ -47,8 +47,8 @@ class CatchSink<O: ObserverType> : Sink<O>, ObserverType {
     func run() -> Disposable {
         let d1 = SingleAssignmentDisposable()
         _subscription.disposable = d1
-        d1.disposable = _parent._source.subscribeSafe(self)
-        
+        d1.disposable = _parent._source.subscribe(self)
+
         return _subscription
     }
     
@@ -65,7 +65,7 @@ class CatchSink<O: ObserverType> : Sink<O>, ObserverType {
 
                 let observer = CatchSinkProxy(parent: self)
                 
-                _subscription.disposable = catchSequence.subscribeSafe(observer)
+                _subscription.disposable = catchSequence.subscribe(observer)
             }
             catch let e {
                 observer?.on(.Error(e))

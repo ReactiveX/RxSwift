@@ -22,7 +22,7 @@ class DeferredSink<O: ObserverType> : Sink<O>, ObserverType {
     func run() -> Disposable {
         do {
             let result = try _parent.eval()
-            return result.subscribeSafe(self)
+            return result.subscribe(self)
         }
         catch let e {
             observer?.on(.Error(e))

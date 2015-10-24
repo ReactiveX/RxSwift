@@ -49,6 +49,6 @@ class Debug<Element> : Producer<Element> {
         print("[\(_identifier)] subscribed")
         let sink = Debug_(parent: self, observer: observer, cancel: cancel)
         setSink(sink)
-        return _source.subscribeSafe(sink)
+        return _source.subscribe(sink)
     }
 }

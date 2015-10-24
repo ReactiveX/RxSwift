@@ -57,7 +57,7 @@ class SkipCount<Element>: Producer<Element> {
     override func run<O : ObserverType where O.E == Element>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
         let sink = SkipCountSink(parent: self, observer: observer, cancel: cancel)
         setSink(sink)
-        return source.subscribeSafe(sink)
+        return source.subscribe(sink)
     }
 }
 
@@ -102,7 +102,7 @@ class SkipTimeSink<ElementType, S: SchedulerType, O: ObserverType where O.E == E
             return NopDisposable.instance
         }
         
-        let disposeSubscription = parent.source.subscribeSafe(self)
+        let disposeSubscription = parent.source.subscribe(self)
         
         return BinaryDisposable(disposeTimer, disposeSubscription)
     }
