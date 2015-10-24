@@ -26,10 +26,6 @@ class ElementAtSink<SourceType, O: ObserverType where O.E == SourceType> : Sink<
         switch event {
         case .Next(_):
 
-            if i < 0 {
-                rxFatalError("index can't be negative")
-            }
-
             if (i == 0) {
                 observer?.on(event)
                 observer?.on(.Completed)
@@ -66,6 +62,10 @@ class ElementAt<SourceType> : Producer<SourceType> {
     let index: Int
     
     init(source: Observable<SourceType>, index: Int, throwOnEmpty: Bool) {
+        if index < 0 {
+            rxFatalError("index can't be negative")
+        }
+
         self.source = source
         self.index = index
         self.throwOnEmpty = throwOnEmpty

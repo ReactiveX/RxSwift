@@ -148,14 +148,6 @@ Generates an observable sequence of integral numbers within a specified range, u
 */
 @warn_unused_result(message="http://git.io/rxs.uo")
 public func range(start: Int, _ count: Int, _ scheduler: ImmediateSchedulerType = CurrentThreadScheduler.instance) -> Observable<Int> {
-    if count < 0 {
-        rxFatalError("count can't be negative")
-    }
-
-    if start &+ (count - 1) < start {
-        rxFatalError("overflow of count")
-    }
-    
     return RangeProducer<Int>(start: start, count: count, scheduler: scheduler)
 }
 
