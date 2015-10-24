@@ -34,6 +34,7 @@ class SearchViewModel {
             .map { query in
                 API.getSearchResults(query)
                     .retry(3)
+                    .retryOnBecomesReachable([], reachabilityService: ReachabilityService.sharedReachabilityService)
                     .startWith([]) // clears results on new search term
                     .asDriver(onErrorJustReturn: [])
             }
