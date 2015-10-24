@@ -12,38 +12,38 @@ class TakeUntilSinkOther<ElementType, Other, O: ObserverType where O.E == Elemen
     typealias Parent = TakeUntilSink<ElementType, Other, O>
     typealias E = Other
     
-    let parent: Parent
+    private let _parent: Parent
     
-    let singleAssignmentDisposable = SingleAssignmentDisposable()
+    private let _singleAssignmentDisposable = SingleAssignmentDisposable()
     
     var disposable: Disposable {
         get {
             abstractMethod()
         }
         set(value) {
-            singleAssignmentDisposable.disposable = value
+            _singleAssignmentDisposable.disposable = value
         }
     }
     
     init(parent: Parent) {
-        self.parent = parent
+        _parent = parent
 #if TRACE_RESOURCES
         OSAtomicIncrement32(&resourceCount)
 #endif
     }
     
     func on(event: Event<E>) {
-        parent.lock.performLocked {
+        _parent._lock.performLocked {
             switch event {
             case .Next:
-                parent.observer?.on(.Completed)
-                parent.dispose()
+                _parent.observer?.on(.Completed)
+                _parent.dispose()
             case .Error(let e):
-                parent.observer?.on(.Error(e))
-                parent.dispose()
+                _parent.observer?.on(.Error(e))
+                _parent.dispose()
             case .Completed:
-                parent.open = true
-                singleAssignmentDisposable.dispose()
+                _parent._open = true
+                _singleAssignmentDisposable.dispose()
             }
         }
     }
@@ -59,50 +59,47 @@ class TakeUntilSink<ElementType, Other, O: ObserverType where O.E == ElementType
     typealias E = ElementType
     typealias Parent = TakeUntil<E, Other>
     
-    let parent: Parent
+    private let _parent: Parent
  
-    let lock = NSRecursiveLock()
+    private let _lock = NSRecursiveLock()
     
     // state
-    var open = false
+    private var _open = false
     
     init(parent: Parent, observer: O, cancel: Disposable) {
-        self.parent = parent
+        _parent = parent
         super.init(observer: observer, cancel: cancel)
     }
     
     func on(event: Event<E>) {
         switch event {
         case .Next:
-            if open {
+            if _open {
                 observer?.on(event)
             }
             else {
-                lock.performLocked {
+                _lock.performLocked {
                     observer?.on(event)
                 }
             }
-            break
         case .Error:
-            lock.performLocked {
+            _lock.performLocked {
                 observer?.on(event)
-                self.dispose()
+                dispose()
             }
-            break
         case .Completed:
-            lock.performLocked {
+            _lock.performLocked {
                 observer?.on(event)
-                self.dispose()
+                dispose()
             }
-            break
         }
     }
     
     func run() -> Disposable {
         let otherObserver = TakeUntilSinkOther(parent: self)
-        let otherSubscription = parent.other.subscribeSafe(otherObserver)
+        let otherSubscription = _parent._other.subscribeSafe(otherObserver)
         otherObserver.disposable = otherSubscription
-        let sourceSubscription = parent.source.subscribeSafe(self)
+        let sourceSubscription = _parent._source.subscribeSafe(self)
         
         return CompositeDisposable(sourceSubscription, otherSubscription)
     }
@@ -110,12 +107,12 @@ class TakeUntilSink<ElementType, Other, O: ObserverType where O.E == ElementType
 
 class TakeUntil<Element, Other>: Producer<Element> {
     
-    let source: Observable<Element>
-    let other: Observable<Other>
+    private let _source: Observable<Element>
+    private let _other: Observable<Other>
     
     init(source: Observable<Element>, other: Observable<Other>) {
-        self.source = source
-        self.other = other
+        _source = source
+        _other = other
     }
     
     override func run<O : ObserverType where O.E == Element>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {

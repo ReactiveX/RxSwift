@@ -8,7 +8,7 @@
 
 import Foundation
 
-// distinct until changed
+// MARK: distinct until changed
 
 extension ObservableType where E: Equatable {
     
@@ -63,7 +63,7 @@ extension ObservableType {
     }
 }
 
-// do
+// MARK: do
 
 extension ObservableType {
     
@@ -103,7 +103,7 @@ extension ObservableType {
     }
 }
 
-// startWith
+// MARK: startWith
 
 extension ObservableType {
     
@@ -120,7 +120,7 @@ extension ObservableType {
     }
 }
 
-// retry
+// MARK: retry
 
 extension ObservableType {
     
@@ -151,7 +151,7 @@ extension ObservableType {
     }
 }
 
-// scan
+// MARK: scan
 
 extension ObservableType {
     

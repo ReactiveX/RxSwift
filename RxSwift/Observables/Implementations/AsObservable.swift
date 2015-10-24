@@ -20,7 +20,7 @@ class AsObservableSink<O: ObserverType> : Sink<O>, ObserverType {
         
         switch event {
         case .Error, .Completed:
-            self.dispose()
+            dispose()
         default: break
         }
     }
@@ -28,15 +28,15 @@ class AsObservableSink<O: ObserverType> : Sink<O>, ObserverType {
 
 class AsObservable<Element> : Producer<Element> {
  
-    let source: Observable<Element>
+    private let _source: Observable<Element>
     
     init(source: Observable<Element>) {
-        self.source = source
+        _source = source
     }
     
     override func run<O: ObserverType where O.E == Element>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
         let sink = AsObservableSink(observer: observer, cancel: cancel)
         setSink(sink)
-        return source.subscribeSafe(sink)
+        return _source.subscribeSafe(sink)
     }
 }

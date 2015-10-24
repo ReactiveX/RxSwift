@@ -12,19 +12,19 @@ import Foundation
 class TailRecursiveSink<S: SequenceType, O: ObserverType where S.Generator.Element: ObservableConvertibleType, S.Generator.Element.E == O.E> : Sink<O>, ObserverType {
     typealias E = O.E
     
-    var generators: [S.Generator] = []
-    var disposed = false
-    var subscription = SerialDisposable()
+    var _generators:[S.Generator] = []
+    var _disposed = false
+    var _subscription = SerialDisposable()
     
     // this is thread safe object
-    var gate = AsyncLock()
+    var _gate = AsyncLock()
     
     override init(observer: O, cancel: Disposable) {
         super.init(observer: observer, cancel: cancel)
     }
     
     func run(sources: S.Generator) -> Disposable {
-        self.generators.append(sources)
+        _generators.append(sources)
         
         scheduleMoveNext()
         
@@ -34,7 +34,7 @@ class TailRecursiveSink<S: SequenceType, O: ObserverType where S.Generator.Eleme
             }
         }
         
-        return StableCompositeDisposable.create(self.subscription, disposeSinkStack)
+        return StableCompositeDisposable.create(_subscription, disposeSinkStack)
     }
     
     func scheduleMoveNext() {
@@ -45,12 +45,12 @@ class TailRecursiveSink<S: SequenceType, O: ObserverType where S.Generator.Eleme
     
     // simple implementation for now
     func schedule(action: () -> Void) {
-        self.gate.wait(action)
+        _gate.wait(action)
     }
 
     func done() {
         observer?.on(.Completed)
-        self.dispose()
+        dispose()
     }
     
     func extract(observable: Observable<E>) -> S.Generator? {
@@ -64,32 +64,32 @@ class TailRecursiveSink<S: SequenceType, O: ObserverType where S.Generator.Eleme
     // should be done on gate locked
 
     private func moveNext() {
-        var next: Observable<E>? = nil;
+        var next: Observable<E>? = nil
         
         repeat {
-            if self.generators.count == 0 {
+            if _generators.count == 0 {
                 break
             }
             
-            if disposed {
+            if _disposed {
                 return
             }
             
-            var e = generators.last!
+            var e = _generators.last!
             
             let nextCandidate = e.next()?.asObservable()
-            generators.removeLast()
-            generators.append(e)
+            _generators.removeLast()
+            _generators.append(e)
 
             if nextCandidate == nil {
-                generators.removeLast()
+                _generators.removeLast()
                 continue;
             }
        
             let nextGenerator = extract(nextCandidate!)
         
             if let nextGenerator = nextGenerator {
-                self.generators.append(nextGenerator)
+                self._generators.append(nextGenerator)
             }
             else {
                 next = nextCandidate
@@ -102,12 +102,12 @@ class TailRecursiveSink<S: SequenceType, O: ObserverType where S.Generator.Eleme
         }
         
         let subscription2 = next!.subscribeSafe(self)
-        subscription.disposable = subscription2
+        _subscription.disposable = subscription2
     }
     
     private func disposePrivate() {
-        disposed = true
-        generators.removeAll(keepCapacity: false)
+        _disposed = true
+        _generators.removeAll(keepCapacity: false)
     }
     
 }

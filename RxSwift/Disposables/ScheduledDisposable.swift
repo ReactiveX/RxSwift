@@ -36,7 +36,7 @@ public class ScheduledDisposable : Cancelable {
     */
     init(scheduler: ImmediateSchedulerType, disposable: Disposable) {
         self.scheduler = scheduler
-        self._disposable = disposable
+        _disposable = disposable
     }
     
     /**

@@ -14,7 +14,7 @@ Represents a disposable resource which only allows a single assignment of its un
 If an underlying disposable resource has already been set, future attempts to set the underlying disposable resource will throw an exception.
 */
 public class SingleAssignmentDisposable : DisposeBase, Disposable, Cancelable {
-    private var lock = SpinLock()
+    private var _lock = SpinLock()
     
     // state
     private var _disposed = false
@@ -26,7 +26,7 @@ public class SingleAssignmentDisposable : DisposeBase, Disposable, Cancelable {
     */
     public var disposed: Bool {
         get {
-            return lock.calculateLocked {
+            return _lock.calculateLocked {
                 return _disposed
             }
         }
@@ -46,12 +46,12 @@ public class SingleAssignmentDisposable : DisposeBase, Disposable, Cancelable {
     */
     public var disposable: Disposable {
         get {
-            return lock.calculateLocked {
+            return _lock.calculateLocked {
                 return _disposable ?? NopDisposable.instance
             }
         }
         set {
-            let disposable: Disposable? = lock.calculateLocked {
+            let disposable: Disposable? = _lock.calculateLocked {
                 if _disposableSet {
                     rxFatalError("oldState.disposable != nil")
                 }
@@ -77,7 +77,7 @@ public class SingleAssignmentDisposable : DisposeBase, Disposable, Cancelable {
     Disposes the underlying disposable.
     */
     public func dispose() {
-        let disposable: Disposable? = lock.calculateLocked {
+        let disposable: Disposable? = _lock.calculateLocked {
             _disposed = true
             let dispose = _disposable
             _disposable = nil

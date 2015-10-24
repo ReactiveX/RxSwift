@@ -8,7 +8,7 @@
 
 import Foundation
 
-// filter aka where
+// MARK: filter aka where
 
 extension ObservableType {
     
@@ -25,7 +25,7 @@ extension ObservableType {
     }
 }
 
-// takeWhile
+// MARK: takeWhile
 
 extension ObservableType {
     
@@ -56,7 +56,7 @@ extension ObservableType {
     }
 }
 
-// take
+// MARK: take
 
 extension ObservableType {
     
@@ -78,7 +78,7 @@ extension ObservableType {
     }
 }
     
-// skip
+// MARK: skip
 
 extension ObservableType {
     
@@ -95,7 +95,7 @@ extension ObservableType {
     }
 }
 
-// SkipWhile
+// MARK: SkipWhile
 
 extension ObservableType {
    
@@ -123,7 +123,7 @@ extension ObservableType {
     }
 }
 
-// map aka select
+// MARK: map aka select
 
 extension ObservableType {
     
@@ -152,7 +152,7 @@ extension ObservableType {
     }
 }
     
-// flatMap
+// MARK: flatMap
 
 extension ObservableType {
 

@@ -8,7 +8,7 @@
 
 import Foundation
 
-// multicast
+// MARK: multicast
 
 extension ObservableType {
     
@@ -50,7 +50,7 @@ extension ObservableType {
     }
 }
 
-// publish
+// MARK: publish
 
 extension ObservableType {
     
@@ -67,7 +67,7 @@ extension ObservableType {
     }
 }
 
-// replay
+// MARK: replay
 
 extension ObservableType {
     
@@ -86,7 +86,7 @@ extension ObservableType {
     }
 }
 
-// refcount
+// MARK: refcount
 
 extension ConnectableObservableType {
     
@@ -101,7 +101,7 @@ extension ConnectableObservableType {
     }
 }
 
-// share 
+// MARK: share
 
 extension ObservableType {
     
@@ -118,7 +118,7 @@ extension ObservableType {
     }
 }
 
-// shareReplay
+// MARK: shareReplay
 
 extension ObservableType {
     

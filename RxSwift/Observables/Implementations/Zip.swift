@@ -23,10 +23,10 @@ class ZipSink<O: ObserverType> : Sink<O>, ZipSinkProtocol {
     let lock = NSRecursiveLock()
     
     // state
-    var isDone: [Bool]
+    private var _isDone: [Bool]
     
     init(arity: Int, observer: O, cancel: Disposable) {
-        self.isDone = [Bool](count: arity, repeatedValue: false)
+        _isDone = [Bool](count: arity, repeatedValue: false)
         self.arity = arity
         
         super.init(observer: observer, cancel: cancel)
@@ -63,9 +63,9 @@ class ZipSink<O: ObserverType> : Sink<O>, ZipSinkProtocol {
         else {
             var allOthersDone = true
             
-            let arity = self.isDone.count
+            let arity = _isDone.count
             for var i = 0; i < arity; ++i {
-                if i != index && !isDone[i] {
+                if i != index && !_isDone[i] {
                     allOthersDone = false
                     break
                 }
@@ -84,11 +84,11 @@ class ZipSink<O: ObserverType> : Sink<O>, ZipSinkProtocol {
     }
     
     func done(index: Int) {
-        isDone[index] = true
+        _isDone[index] = true
         
         var allDone = true
         
-        for done in self.isDone {
+        for done in _isDone {
             if !done {
                 allDone = false
                 break
@@ -106,46 +106,46 @@ class ZipObserver<ElementType> : ObserverType {
     typealias E = ElementType
     typealias ValueSetter = (ElementType) -> ()
 
-    var parent: ZipSinkProtocol?
+    private var _parent: ZipSinkProtocol?
     
-    let lock: NSRecursiveLock
+    private let _lock: NSRecursiveLock
     
     // state
-    let index: Int
-    let this: Disposable
-    let setNextValue: ValueSetter
+    private let _index: Int
+    private let _this: Disposable
+    private let _setNextValue: ValueSetter
     
     init(lock: NSRecursiveLock, parent: ZipSinkProtocol, index: Int, setNextValue: ValueSetter, this: Disposable) {
-        self.lock = lock
-        self.parent = parent
-        self.index = index
-        self.this = this
-        self.setNextValue = setNextValue
+        _lock = lock
+        _parent = parent
+        _index = index
+        _this = this
+        _setNextValue = setNextValue
     }
     
     func on(event: Event<E>) {
        
-        if let _ = parent {
+        if let _ = _parent {
             switch event {
             case .Next(_):
                 break
             case .Error(_):
-                this.dispose()
+                _this.dispose()
             case .Completed:
-                this.dispose()
+                _this.dispose()
             }
         }
         
-        lock.performLocked {
-            if let parent = parent {
+        _lock.performLocked {
+            if let parent = _parent {
                 switch event {
                 case .Next(let value):
-                    setNextValue(value)
-                    parent.next(index)
+                    _setNextValue(value)
+                    parent.next(_index)
                 case .Error(let error):
                     parent.fail(error)
                 case .Completed:
-                    parent.done(index)
+                    parent.done(_index)
                 }
             }
         }

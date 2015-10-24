@@ -13,10 +13,10 @@ class FilterSink<O : ObserverType>: Sink<O>, ObserverType {
     
     typealias Parent = Filter<Element>
     
-    let parent: Parent
+    private let _parent: Parent
     
     init(parent: Parent, observer: O, cancel: Disposable) {
-        self.parent = parent
+        _parent = parent
         super.init(observer: observer, cancel: cancel)
     }
     
@@ -24,18 +24,18 @@ class FilterSink<O : ObserverType>: Sink<O>, ObserverType {
         switch event {
             case .Next(let value):
                 do {
-                    let satisfies = try self.parent.predicate(value)
+                    let satisfies = try _parent._predicate(value)
                     if satisfies {
                         observer?.on(.Next(value))
                     }
                 }
                 catch let e {
                     observer?.on(.Error(e))
-                    self.dispose()
+                    dispose()
                 }
             case .Completed, .Error:
                 observer?.on(event)
-                self.dispose()
+                dispose()
         }
     }
 }
@@ -43,17 +43,17 @@ class FilterSink<O : ObserverType>: Sink<O>, ObserverType {
 class Filter<Element> : Producer<Element> {
     typealias Predicate = (Element) throws -> Bool
     
-    let source: Observable<Element>
-    let predicate: Predicate
+    private let _source: Observable<Element>
+    private let _predicate: Predicate
     
     init(source: Observable<Element>, predicate: Predicate) {
-        self.source = source
-        self.predicate = predicate
+        _source = source
+        _predicate = predicate
     }
     
     override func run<O: ObserverType where O.E == Element>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
         let sink = FilterSink(parent: self, observer: observer, cancel: cancel)
         setSink(sink)
-        return source.subscribeSafe(sink)
+        return _source.subscribeSafe(sink)
     }
 }

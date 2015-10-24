@@ -33,7 +33,7 @@ extension Disposable {
 This returns ARC (RAII) like resource management to `RxSwift`.
 */
 public class ScopedDisposable : DisposeBase {
-    private var disposable: Disposable?
+    private var _disposable: Disposable?
     
     /**
     Initializes new instance with a single disposable.
@@ -41,17 +41,17 @@ public class ScopedDisposable : DisposeBase {
     - parameter disposable: `Disposable` that will be disposed on scope exit.
     */
     public init(disposable: Disposable) {
-        self.disposable = disposable
+        _disposable = disposable
     }
     
     /**
     This is intentionally private.
     */
     func dispose() {
-        self.disposable?.dispose()
+        _disposable?.dispose()
     }
     
     deinit {
-        self.dispose()
+        dispose()
     }
 }

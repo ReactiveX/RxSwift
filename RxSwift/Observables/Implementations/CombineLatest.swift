@@ -19,16 +19,16 @@ class CombineLatestSink<O: ObserverType> : Sink<O>, CombineLatestProtocol {
    
     let lock = NSRecursiveLock()
 
-    let arity: Int
-    var numberOfValues = 0
-    var numberOfDone = 0
-    var hasValue: [Bool]
-    var isDone: [Bool]
+    private let _arity: Int
+    private var _numberOfValues = 0
+    private var _numberOfDone = 0
+    private var _hasValue: [Bool]
+    private var _isDone: [Bool]
    
     init(arity: Int, observer: O, cancel: Disposable) {
-        self.arity = arity
-        self.hasValue = [Bool](count: arity, repeatedValue: false)
-        self.isDone = [Bool](count: arity, repeatedValue: false)
+        _arity = arity
+        _hasValue = [Bool](count: arity, repeatedValue: false)
+        _isDone = [Bool](count: arity, repeatedValue: false)
         
         super.init(observer: observer, cancel: cancel)
     }
@@ -38,26 +38,26 @@ class CombineLatestSink<O: ObserverType> : Sink<O>, CombineLatestProtocol {
     }
     
     func next(index: Int) {
-        if !hasValue[index] {
-            hasValue[index] = true
-            numberOfValues++
+        if !_hasValue[index] {
+            _hasValue[index] = true
+            _numberOfValues++
         }
 
-        if numberOfValues == arity {
+        if _numberOfValues == _arity {
             do {
                 let result = try getResult()
                 observer?.on(.Next(result))
             }
             catch let e {
                 observer?.on(.Error(e))
-                self.dispose()
+                dispose()
             }
         }
         else {
             var allOthersDone = true
 
-            for var i = 0; i < arity; ++i {
-                if i != index && !isDone[i] {
+            for var i = 0; i < _arity; ++i {
+                if i != index && !_isDone[i] {
                     allOthersDone = false
                     break
                 }
@@ -65,7 +65,7 @@ class CombineLatestSink<O: ObserverType> : Sink<O>, CombineLatestProtocol {
             
             if allOthersDone {
                 observer?.on(.Completed)
-                self.dispose()
+                dispose()
             }
         }
     }
@@ -76,21 +76,17 @@ class CombineLatestSink<O: ObserverType> : Sink<O>, CombineLatestProtocol {
     }
     
     func done(index: Int) {
-        if isDone[index] {
+        if _isDone[index] {
             return
         }
 
-        isDone[index] = true
-        numberOfDone++
+        _isDone[index] = true
+        _numberOfDone++
 
-        if numberOfDone == self.arity {
+        if _numberOfDone == _arity {
             observer?.on(.Completed)
             dispose()
         }
-    }
-    
-    deinit {
-        
     }
 }
 
@@ -98,33 +94,33 @@ class CombineLatestObserver<ElementType> : ObserverType {
     typealias Element = ElementType
     typealias ValueSetter = (Element) -> Void
     
-    let parent: CombineLatestProtocol
+    private let _parent: CombineLatestProtocol
     
-    let lock: NSRecursiveLock
-    let index: Int
-    let this: Disposable
-    let setLatestValue: ValueSetter
+    private let _lock: NSRecursiveLock
+    private let _index: Int
+    private let _this: Disposable
+    private let _setLatestValue: ValueSetter
     
     init(lock: NSRecursiveLock, parent: CombineLatestProtocol, index: Int, setLatestValue: ValueSetter, this: Disposable) {
-        self.lock = lock
-        self.parent = parent
-        self.index = index
-        self.this = this
-        self.setLatestValue = setLatestValue
+        _lock = lock
+        _parent = parent
+        _index = index
+        _this = this
+        _setLatestValue = setLatestValue
     }
     
     func on(event: Event<Element>) {
-        lock.performLocked {
+        _lock.performLocked {
             switch event {
             case .Next(let value):
-                setLatestValue(value)
-                parent.next(index)
+                _setLatestValue(value)
+                _parent.next(_index)
             case .Error(let error):
-                this.dispose()
-                parent.fail(error)
+                _this.dispose()
+                _parent.fail(error)
             case .Completed:
-                this.dispose()
-                parent.done(index)
+                _this.dispose()
+                _parent.done(_index)
             }
         }
     }
