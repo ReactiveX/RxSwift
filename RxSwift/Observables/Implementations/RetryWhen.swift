@@ -23,6 +23,8 @@ class RetryTriggerSink<S: SequenceType, O: ObserverType, RetryTriggerType, Error
             switch event {
             case .Next:
                 parent.lock.performLocked() {
+                    parent.handlerSubscription.dispose()
+                    parent.lastError = nil
                     parent.scheduleMoveNext()
                 }
             case .Error(_):
@@ -47,33 +49,33 @@ class RetryWhenSequenceSink<S: SequenceType, O: ObserverType, RetryTriggerType, 
     let parent: Parent
     
     var lastError: ErrorType?
-    var errorSubject: BehaviorSubject<Error>?
-    
-    let handlerSubscription = SingleAssignmentDisposable()
+    let errorSubject = PublishSubject<Error>()
+    let handler: Observable<RetryTriggerType>
+    let handlerSubscription = SerialDisposable()
     
     init(parent: Parent, observer: O, cancel: Disposable) {
         self.parent = parent
+        self.handler = parent.notificationHandler(errorSubject.asObservable())
         super.init(observer: observer, cancel: cancel)
     }
     
-    override func on(event: Event<Element>) {
+    override func on(event: Event<E>) {
+        guard lastError == nil else {
+            return
+        }
+        
         switch event {
         case .Next:
             observer?.on(event)
         case .Error(let error):
             lock.performLocked() {
-                if errorSubject == nil {
-                    errorSubject = BehaviorSubject(value: error as! Error)
-                    let notifier = parent.notificationHandler(errorSubject!.asObservable())
-                    handlerSubscription.disposable = notifier.subscribeSafe(RetryTriggerSink(parent: self))
-                } else {
-                    errorSubject?.on(.Next(error as! Error))
-                }
-                
                 self.lastError = error
+                handlerSubscription.disposable = handler.subscribeSafe(RetryTriggerSink(parent: self))
+                errorSubject.on(.Next(error as! Error))
             }
         case .Completed:
             observer?.on(event)
+            handlerSubscription.dispose()
             dispose()
         }
     }
@@ -81,6 +83,7 @@ class RetryWhenSequenceSink<S: SequenceType, O: ObserverType, RetryTriggerType, 
     override func done() {
         if let lastError = self.lastError {
             observer?.on(.Error(lastError))
+            self.lastError = nil
         }
         else {
             observer?.on(.Completed)
@@ -89,17 +92,25 @@ class RetryWhenSequenceSink<S: SequenceType, O: ObserverType, RetryTriggerType, 
     }
     
     override func dispose() {
-        handlerSubscription.dispose()
+        
         super.dispose()
     }
     
-    override func extract(observable: Observable<Element>) -> S.Generator? {
+    override func extract(observable: Observable<E>) -> S.Generator? {
         if let onError = observable as? RetryWhenSequence<S, RetryTriggerType, Error> {
             return onError.sources.generate()
         }
         else {
             return nil
         }
+    }
+    
+    override func run(sources: S.Generator) -> Disposable {
+        _generators.append(sources)
+        
+        scheduleMoveNext()
+        
+        return handlerSubscription
     }
 }
 

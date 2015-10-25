@@ -767,41 +767,295 @@ extension ObservableSingleTest {
             ])
     }
     
-    func testRetryWhen_Basic() {
+    
+    func testRetryWhen_Never() {
         
         let scheduler = TestScheduler(initialClock: 0)
         
-        let xs = scheduler.createColdObservable([
-            next(5, 1),
-            next(10, 2),
-            error(20, testError)
+        let xs = scheduler.createHotObservable([
+            next(150, 1),
+            completed(250)
+            ])
+        
+        let empty = scheduler.createHotObservable([
+            next(150, 1),
+            completed(210)
             ])
         
         let res = scheduler.start(300) {
             xs.retryWhen({ (errors: Observable<NSError>) in
-                return errors.delaySubscription(30, scheduler)
-            }).take(6)
+                return empty.asObservable()
+            })
         }
         
         let correct: [Recorded<Int>] = [
-            next(205, 1),
-            next(210, 2),
-            next(255, 1),
-            next(260, 2),
-            next(275, 1),
-            next(280, 2),
-            completed(280)
+            completed(250)
         ]
         
         XCTAssertEqual(res.messages, correct)
         
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 250),
-            Subscription(250, 270),
-            Subscription(270, 280)
+            Subscription(200, 250)
             ])
     }
     
+    func testRetryWhen_ObservableNever() {
+        
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createHotObservable([
+            next(150, 1),
+            next(210, 2),
+            next(220, 3),
+            next(230, 4),
+            next(240, 5),
+            error(250, testError)
+            ])
+        
+        let never = scheduler.createHotObservable([
+            next(150, 1)
+            ])
+        
+        let res = scheduler.start() {
+            xs.retryWhen({ (errors: Observable<NSError>) in
+                return never.asObservable()
+            })
+        }
+        
+        let correct: [Recorded<Int>] = [
+            next(210, 2),
+            next(220, 3),
+            next(230, 4),
+            next(240, 5)
+        ]
+        
+        XCTAssertEqual(res.messages, correct)
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 1000)
+            ])
+    }
+    
+    func testRetryWhen_ObservableNeverComplete() {
+        
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createHotObservable([
+            next(150, 1),
+            next(210, 2),
+            next(220, 3),
+            next(230, 4),
+            next(240, 5),
+            completed(250)
+            ])
+        
+        let never = scheduler.createHotObservable([
+            next(150, 1)
+            ])
+        
+        let res = scheduler.start() {
+            xs.retryWhen({ (errors: Observable<NSError>) in
+                return never.asObservable()
+            })
+        }
+        
+        let correct: [Recorded<Int>] = [
+            next(210, 2),
+            next(220, 3),
+            next(230, 4),
+            next(240, 5),
+            completed(250)
+        ]
+        
+        XCTAssertEqual(res.messages, correct)
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 250)
+            ])
+    }
+    
+    func testRetryWhen_ObservableEmpty() {
+        
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createColdObservable([
+            next(100, 1),
+            next(150, 2),
+            next(200, 3),
+            completed(250)
+            ])
+        
+        let empty = scheduler.createHotObservable([
+            next(150, 0),
+            completed(0)
+            ])
+        
+        let res = scheduler.start() {
+            xs.retryWhen({ (errors: Observable<NSError>) in
+                return empty.asObservable()
+            })
+        }
+        
+        let correct: [Recorded<Int>] = [
+            next(300, 1),
+            next(350, 2),
+            next(400, 3),
+            completed(450)
+        ]
+        
+        XCTAssertEqual(res.messages, correct)
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 450)
+            ])
+    }
+    
+    
+    func testRetryWhen_ObservableNextError() {
+        
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createColdObservable([
+            next(10, 1),
+            next(20, 2),
+            error(30, testError),
+            completed(40)
+            ])
+        
+        let res = scheduler.start(300) {
+            xs.retryWhen({ (errors: Observable<NSError>) in
+                return errors.scan(0) { (var a, e) in
+                    if ++a == 2 {
+                        throw testError
+                    }
+                    return a
+                }
+            })
+        }
+        
+        let correct: [Recorded<Int>] = [
+            next(210, 1),
+            next(220, 2),
+            next(240, 1),
+            next(250, 2),
+            error(260, testError)
+        ]
+        
+        XCTAssertEqual(res.messages, correct)
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 230),
+            Subscription(230, 260)
+            ])
+    }
+    
+    
+    func testRetryWhen_ObservableComplete() {
+        
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createColdObservable([
+            next(10, 1),
+            next(20, 2),
+            error(30, testError),
+            completed(40)
+            ])
+        
+        let empty = scheduler.createHotObservable([
+            next(150, 1),
+            completed(230)
+            ])
+        
+        let res = scheduler.start() {
+            xs.retryWhen({ (errors: Observable<NSError>) in
+                return empty.asObservable()
+            })
+        }
+        
+        let correct: [Recorded<Int>] = [
+            next(210, 1),
+            next(220, 2),
+            completed(230)
+        ]
+        
+        XCTAssertEqual(res.messages, correct)
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 230)
+            ])
+    }
+
+    func testRetryWhen_ObservableNextComplete() {
+        
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createColdObservable([
+            next(10, 1),
+            next(20, 2),
+            error(30, testError),
+            completed(40)
+            ])
+        
+        let res = scheduler.start(300) {
+            xs.retryWhen({ (errors: Observable<NSError>) in
+                return errors.scan(0) { (a, e) in
+                    return a + 1
+                }.takeWhile { (num: Int) -> Bool in
+                    return num < 2
+                }
+            })
+        }
+        
+        let correct: [Recorded<Int>] = [
+            next(210, 1),
+            next(220, 2),
+            next(240, 1),
+            next(250, 2),
+            completed(260)
+        ]
+        
+        XCTAssertEqual(res.messages, correct)
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 230),
+            Subscription(230, 260)
+            ])
+    }
+    
+    func testRetryWhen_ObservableInfinite() {
+        
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createColdObservable([
+            next(10, 1),
+            next(20, 2),
+            error(30, testError),
+            completed(40)
+            ])
+        
+        let never = scheduler.createHotObservable([
+            next(150, 1)
+            ])
+        
+        let res = scheduler.start() {
+            xs.retryWhen({ (errors: Observable<NSError>) in
+                return never.asObservable()
+            })
+        }
+        
+        let correct: [Recorded<Int>] = [
+            next(210, 1),
+            next(220, 2)
+        ]
+        
+        XCTAssertEqual(res.messages, correct)
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 1000)
+            ])
+    }
+    
+    /*
     func testRetryWhen_Incremental_BackOff() {
         
         let scheduler = TestScheduler(initialClock: 0)
@@ -840,6 +1094,7 @@ extension ObservableSingleTest {
             Subscription(510, 710)
             ])
     }
+    */
     
 }
 
