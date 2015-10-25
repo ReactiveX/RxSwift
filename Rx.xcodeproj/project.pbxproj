@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		07BF318A1BB42F150026AA66 /* CoreMotion+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07BF31891BB42F150026AA66 /* CoreMotion+Rx.swift */; settings = {ASSET_TAGS = (); }; };
 		C8093CC51B8A72BE0088E94D /* Cancelable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C491B8A72BE0088E94D /* Cancelable.swift */; };
 		C8093CC61B8A72BE0088E94D /* Cancelable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C491B8A72BE0088E94D /* Cancelable.swift */; };
 		C8093CC71B8A72BE0088E94D /* AsyncLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C4B1B8A72BE0088E94D /* AsyncLock.swift */; };
@@ -781,6 +782,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		07BF31891BB42F150026AA66 /* CoreMotion+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CoreMotion+Rx.swift"; sourceTree = "<group>"; };
 		A111CE961B91C97C00D0DCEE /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C809396D1B8A71760088E94D /* RxCocoa.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxCocoa.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C80939E71B8A71840088E94D /* RxCocoa.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxCocoa.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1414,6 +1416,7 @@
 				C88254121B8A752B00B02D69 /* UITableView+Rx.swift */,
 				C88254131B8A752B00B02D69 /* UITextField+Rx.swift */,
 				C88254141B8A752B00B02D69 /* UITextView+Rx.swift */,
+				07BF31891BB42F150026AA66 /* CoreMotion+Rx.swift */,
 			);
 			path = iOS;
 			sourceTree = "<group>";
@@ -1980,6 +1983,7 @@
 				C80DDE931BCE69BA006A1832 /* ControlEvent+Driver.swift in Sources */,
 				C8093ED11B8A732E0088E94D /* _RX.m in Sources */,
 				C8093EFB1B8A732E0088E94D /* RxCocoa.swift in Sources */,
+				07BF318A1BB42F150026AA66 /* CoreMotion+Rx.swift in Sources */,
 				C88254231B8A752B00B02D69 /* RxTableViewDelegateProxy.swift in Sources */,
 				F31F35B01BB4FED800961002 /* UIStepper+Rx.swift in Sources */,
 				C882542D1B8A752B00B02D69 /* UIImageView+Rx.swift in Sources */,
