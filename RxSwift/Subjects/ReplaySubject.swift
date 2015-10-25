@@ -61,12 +61,13 @@ public class ReplaySubject<Element> : Observable<Element>, SubjectType, Observer
 }
 
 class ReplayBufferBase<Element> : ReplaySubject<Element> {
-    let lock = NSRecursiveLock()
+    
+    private let _lock = NSRecursiveLock()
     
     // state
-    var disposed = false
-    var stoppedEvent = nil as Event<Element>?
-    var observers = Bag<AnyObserver<Element>>()
+    private var _disposed = false
+    private var _stoppedEvent = nil as Event<Element>?
+    private var _observers = Bag<AnyObserver<Element>>()
     
     override init() {
         
@@ -85,12 +86,12 @@ class ReplayBufferBase<Element> : ReplaySubject<Element> {
     }
     
     override func on(event: Event<Element>) {
-        lock.performLocked {
-            if self.disposed {
+        _lock.performLocked {
+            if _disposed {
                 return
             }
             
-            if self.stoppedEvent != nil {
+            if _stoppedEvent != nil {
                 return
             }
             
@@ -98,20 +99,20 @@ class ReplayBufferBase<Element> : ReplaySubject<Element> {
             case .Next(let value):
                 addValueToBuffer(value)
                 trim()
-                self.observers.forEach { $0.on(event) }
+                _observers.forEach { $0.on(event) }
             case .Error, .Completed:
-                stoppedEvent = event
+                _stoppedEvent = event
                 trim()
-                self.observers.forEach { $0.on(event) }
-                observers.removeAll()
+                _observers.forEach { $0.on(event) }
+                _observers.removeAll()
             }
             
         }
     }
     
     override func subscribe<O : ObserverType where O.E == Element>(observer: O) -> Disposable {
-        return lock.calculateLocked {
-            if self.disposed {
+        return _lock.calculateLocked {
+            if _disposed {
                 observer.on(.Error(RxError.DisposedError))
                 return NopDisposable.instance
             }
@@ -119,44 +120,44 @@ class ReplayBufferBase<Element> : ReplaySubject<Element> {
             let AnyObserver = observer.asObserver()
             
             replayBuffer(AnyObserver)
-            if let stoppedEvent = self.stoppedEvent {
+            if let stoppedEvent = _stoppedEvent {
                 observer.on(stoppedEvent)
                 return NopDisposable.instance
             }
             else {
-                let key = self.observers.insert(AnyObserver)
+                let key = _observers.insert(AnyObserver)
                 return ReplaySubscription(subject: self, disposeKey: key)
             }
         }
     }
     
     override func unsubscribe(key: DisposeKey) {
-        lock.performLocked {
-            if self.disposed {
+        _lock.performLocked {
+            if _disposed {
                 return
             }
             
-            _ = self.observers.removeKey(key)
+            _ = _observers.removeKey(key)
         }
     }
 
     func lockedDispose() {
-        disposed = true
-        stoppedEvent = nil
-        observers.removeAll()
+        _disposed = true
+        _stoppedEvent = nil
+        _observers.removeAll()
     }
     
     override func dispose() {
         super.dispose()
         
-        lock.performLocked {
-            self.lockedDispose()
+        _lock.performLocked {
+            lockedDispose()
         }
     }
 }
 
 class ReplayOne<Element> : ReplayBufferBase<Element> {
-    var value: Element?
+    private var _value: Element?
     
     override init() {
         super.init()
@@ -167,11 +168,11 @@ class ReplayOne<Element> : ReplayBufferBase<Element> {
     }
     
     override func addValueToBuffer(value: Element) {
-        self.value = value
+        _value = value
     }
     
     override func replayBuffer(observer: AnyObserver<Element>) {
-        if let value = self.value {
+        if let value = _value {
             observer.on(.Next(value))
         }
     }
@@ -179,45 +180,45 @@ class ReplayOne<Element> : ReplayBufferBase<Element> {
     override func lockedDispose() {
         super.lockedDispose()
         
-        value = nil
+        _value = nil
     }
 }
 
 class ReplayManyBase<Element> : ReplayBufferBase<Element> {
-    var queue: Queue<Element>
+    private var _queue: Queue<Element>
     
     init(queueSize: Int) {
-        queue = Queue(capacity: queueSize + 1)
+        _queue = Queue(capacity: queueSize + 1)
     }
     
     override func addValueToBuffer(value: Element) {
-        queue.enqueue(value)
+        _queue.enqueue(value)
     }
     
     override func replayBuffer(observer: AnyObserver<E>) {
-        for item in queue {
+        for item in _queue {
             observer.on(.Next(item))
         }
     }
     
     override func lockedDispose() {
         super.lockedDispose()
-        self.queue = Queue(capacity: 0)
+        _queue = Queue(capacity: 0)
     }
 }
 
 class ReplayMany<Element> : ReplayManyBase<Element> {
-    let bufferSize: Int
+    private let _bufferSize: Int
     
     init(bufferSize: Int) {
-        self.bufferSize = bufferSize
+        _bufferSize = bufferSize
         
         super.init(queueSize: bufferSize)
     }
     
     override func trim() {
-        while queue.count > bufferSize {
-            queue.dequeue()
+        while _queue.count > _bufferSize {
+            _queue.dequeue()
         }
     }
 }
@@ -236,22 +237,22 @@ class ReplaySubscription<Element> : Disposable {
     typealias Subject = ReplaySubject<Element>
     typealias DisposeKey = ReplayBufferBase<Element>.DisposeKey
     
-    var lock = SpinLock()
+    private var _lock = SpinLock()
     
     // state
-    var subject: Subject?
-    var disposeKey: DisposeKey?
+    private var _subject: Subject?
+    private var _disposeKey: DisposeKey?
     
     init(subject: Subject, disposeKey: DisposeKey) {
-        self.subject = subject
-        self.disposeKey = disposeKey
+        _subject = subject
+        _disposeKey = disposeKey
     }
     
     func dispose() {
-        let oldState = lock.calculateLocked { () -> (Subject?, DisposeKey?) in
-            let state = (self.subject, self.disposeKey)
-            self.subject = nil
-            self.disposeKey = nil
+        let oldState = _lock.calculateLocked { () -> (Subject?, DisposeKey?) in
+            let state = (self._subject, self._disposeKey)
+            self._subject = nil
+            self._disposeKey = nil
             
             return state
         }

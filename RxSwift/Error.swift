@@ -31,6 +31,10 @@ public enum RxErrorCode : Int {
     Aritmetic overflow error.
     */
     case Overflow  = 4
+    /**
+    Argument out of range error.
+    */
+    case ArgumentOutOfRange  = 5
 }
 
 /**
@@ -56,5 +60,10 @@ public struct RxError {
     Singleton instance of aritmetic overflow error.
     */
     public static let OverflowError = NSError(domain: RxErrorDomain, code: RxErrorCode.Overflow.rawValue, userInfo: nil)
+    
+    /**
+    Singleton instance of argument out of range error.
+    */
+    public static let ArgumentOutOfRange = NSError(domain: RxErrorDomain, code: RxErrorCode.ArgumentOutOfRange.rawValue, userInfo: nil)
 
 }

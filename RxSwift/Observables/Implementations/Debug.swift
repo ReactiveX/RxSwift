@@ -12,10 +12,10 @@ class Debug_<O: ObserverType> : Sink<O>, ObserverType {
     typealias Element = O.E
     typealias Parent = Debug<Element>
     
-    let parent: Parent
+    private let _parent: Parent
     
     init(parent: Parent, observer: O, cancel: Disposable) {
-        self.parent = parent
+        _parent = parent
         super.init(observer: observer, cancel: cancel)
     }
     
@@ -25,30 +25,30 @@ class Debug_<O: ObserverType> : Sink<O>, ObserverType {
         let eventNormalized = eventText.characters.count > maxEventTextLength
             ? String(eventText.characters.prefix(maxEventTextLength / 2)) + "..." + String(eventText.characters.suffix(maxEventTextLength / 2))
             : eventText
-        print("[\(parent.identifier)] -> Event \(eventNormalized)")
+        print("[\(_parent._identifier)] -> Event \(eventNormalized)")
         observer?.on(event)
     }
     
     override func dispose() {
-        print("[\(parent.identifier)] dispose")
+        print("[\(_parent._identifier)] dispose")
         super.dispose()
     }
 }
 
 class Debug<Element> : Producer<Element> {
-    let identifier: String
+    private let _identifier: String
     
-    let source: Observable<Element>
+    private let _source: Observable<Element>
     
     init(source: Observable<Element>, identifier: String) {
-        self.identifier = identifier
-        self.source = source
+        _identifier = identifier
+        _source = source
     }
     
     override func run<O: ObserverType where O.E == Element>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
-        print("[\(identifier)] subscribed")
+        print("[\(_identifier)] subscribed")
         let sink = Debug_(parent: self, observer: observer, cancel: cancel)
         setSink(sink)
-        return self.source.subscribeSafe(sink)
+        return _source.subscribe(sink)
     }
 }

@@ -14,15 +14,15 @@ Represents a group of disposable resources that are disposed together.
 public class CompositeDisposable : DisposeBase, Disposable, Cancelable {
     public typealias DisposeKey = Bag<Disposable>.KeyType
     
-    private var lock = SpinLock()
+    private var _lock = SpinLock()
     
     // state
-    private var disposables: Bag<Disposable>? = Bag()
+    private var _disposables: Bag<Disposable>? = Bag()
 
     public var disposed: Bool {
         get {
-            return self.lock.calculateLocked {
-                return disposables == nil
+            return _lock.calculateLocked {
+                return _disposables == nil
             }
         }
     }
@@ -34,17 +34,17 @@ public class CompositeDisposable : DisposeBase, Disposable, Cancelable {
      Initializes a new instance of composite disposable with the specified number of disposables.
     */
     public init(_ disposable1: Disposable, _ disposable2: Disposable) {
-        self.disposables!.insert(disposable1)
-        self.disposables!.insert(disposable2)
+        _disposables!.insert(disposable1)
+        _disposables!.insert(disposable2)
     }
     
     /**
      Initializes a new instance of composite disposable with the specified number of disposables.
     */
     public init(_ disposable1: Disposable, _ disposable2: Disposable, _ disposable3: Disposable) {
-        disposables!.insert(disposable1)
-        disposables!.insert(disposable2)
-        disposables!.insert(disposable3)
+        _disposables!.insert(disposable1)
+        _disposables!.insert(disposable2)
+        _disposables!.insert(disposable3)
     }
     
     /**
@@ -52,7 +52,7 @@ public class CompositeDisposable : DisposeBase, Disposable, Cancelable {
     */
     public init(disposables: [Disposable]) {
         for disposable in disposables {
-            self.disposables!.insert(disposable)
+            _disposables!.insert(disposable)
         }
     }
     
@@ -66,8 +66,8 @@ public class CompositeDisposable : DisposeBase, Disposable, Cancelable {
     public func addDisposable(disposable: Disposable) -> DisposeKey? {
         // this should be let
         // bucause of compiler bug it's var
-        let key  = self.lock.calculateLocked { () -> DisposeKey? in
-            return disposables?.insert(disposable)
+        let key  = _lock.calculateLocked { () -> DisposeKey? in
+            return _disposables?.insert(disposable)
         }
         
         if key == nil {
@@ -82,8 +82,8 @@ public class CompositeDisposable : DisposeBase, Disposable, Cancelable {
     */
     public var count: Int {
         get {
-            return self.lock.calculateLocked {
-                return disposables?.count ?? 0
+            return _lock.calculateLocked {
+                return _disposables?.count ?? 0
             }
         }
     }
@@ -94,8 +94,8 @@ public class CompositeDisposable : DisposeBase, Disposable, Cancelable {
     - parameter disposeKey: Key used to identify disposable to be removed.
     */
     public func removeDisposable(disposeKey: DisposeKey) {
-        let disposable = self.lock.calculateLocked { () -> Disposable? in
-            return disposables?.removeKey(disposeKey)
+        let disposable = _lock.calculateLocked { () -> Disposable? in
+            return _disposables?.removeKey(disposeKey)
         }
         
         if let disposable = disposable {
@@ -107,9 +107,9 @@ public class CompositeDisposable : DisposeBase, Disposable, Cancelable {
     Disposes all disposables in the group and removes them from the group.
     */
     public func dispose() {
-        let oldDisposables = self.lock.calculateLocked { () -> Bag<Disposable>? in
-            let disposeBag = disposables
-            self.disposables = nil
+        let oldDisposables = _lock.calculateLocked { () -> Bag<Disposable>? in
+            let disposeBag = _disposables
+            _disposables = nil
             
             return disposeBag
         }

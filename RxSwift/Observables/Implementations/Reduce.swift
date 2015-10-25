@@ -12,13 +12,12 @@ class ReduceSink<SourceType, AccumulateType, O: ObserverType> : Sink<O>, Observe
     typealias ResultType = O.E
     typealias Parent = Reduce<SourceType, AccumulateType, ResultType>
     
-    let parent: Parent
-    var accumulation: AccumulateType
+    private let _parent: Parent
+    private var _accumulation: AccumulateType
     
     init(parent: Parent, observer: O, cancel: Disposable) {
-        self.parent = parent
-        
-        self.accumulation = parent.seed
+        _parent = parent
+        _accumulation = parent._seed
         
         super.init(observer: observer, cancel: cancel)
     }
@@ -27,25 +26,25 @@ class ReduceSink<SourceType, AccumulateType, O: ObserverType> : Sink<O>, Observe
         switch event {
         case .Next(let value):
             do {
-                self.accumulation = try parent.accumulator(accumulation, value)
+                _accumulation = try _parent._accumulator(_accumulation, value)
             }
             catch let e {
                 observer?.on(.Error(e))
-                self.dispose()
+                dispose()
             }
         case .Error(let e):
             observer?.on(.Error(e))
-            self.dispose()
+            dispose()
         case .Completed:
             do {
-                let result = try parent.mapResult(self.accumulation)
+                let result = try _parent._mapResult(_accumulation)
                 observer?.on(.Next(result))
                 observer?.on(.Completed)
-                self.dispose()
+                dispose()
             }
             catch let e {
                 observer?.on(.Error(e))
-                self.dispose()
+                dispose()
             }
         }
     }
@@ -55,21 +54,21 @@ class Reduce<SourceType, AccumulateType, ResultType> : Producer<ResultType> {
     typealias AccumulatorType = (AccumulateType, SourceType) throws -> AccumulateType
     typealias ResultSelectorType = (AccumulateType) throws -> ResultType
     
-    let source: Observable<SourceType>
-    let seed: AccumulateType
-    let accumulator: AccumulatorType
-    let mapResult: ResultSelectorType
+    private let _source: Observable<SourceType>
+    private let _seed: AccumulateType
+    private let _accumulator: AccumulatorType
+    private let _mapResult: ResultSelectorType
     
     init(source: Observable<SourceType>, seed: AccumulateType, accumulator: AccumulatorType, mapResult: ResultSelectorType) {
-        self.source = source
-        self.seed = seed
-        self.accumulator = accumulator
-        self.mapResult = mapResult
+        _source = source
+        _seed = seed
+        _accumulator = accumulator
+        _mapResult = mapResult
     }
     
     override func run<O: ObserverType where O.E == ResultType>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
         let sink = ReduceSink(parent: self, observer: observer, cancel: cancel)
         setSink(sink)
-        return source.subscribeSafe(sink)
+        return _source.subscribe(sink)
     }
 }

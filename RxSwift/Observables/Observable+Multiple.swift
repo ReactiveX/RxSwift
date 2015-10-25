@@ -8,7 +8,7 @@
 
 import Foundation
 
-// combineLatest
+// MARK: combineLatest
 
 extension CollectionType where Generator.Element : ObservableConvertibleType {
     
@@ -18,12 +18,13 @@ extension CollectionType where Generator.Element : ObservableConvertibleType {
     - parameter resultSelector: Function to invoke whenever any of the sources produces an element.
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
+    @warn_unused_result(message="http://git.io/rxs.uo")
     public func combineLatest<R>(resultSelector: [Generator.Element.E] throws -> R) -> Observable<R> {
         return CombineLatestCollectionType(sources: self, resultSelector: resultSelector)
     }
 }
 
-// zip
+// MARK: zip
 
 extension CollectionType where Generator.Element : ObservableConvertibleType {
     
@@ -33,12 +34,13 @@ extension CollectionType where Generator.Element : ObservableConvertibleType {
     - parameter resultSelector: Function to invoke for each series of elements at corresponding indexes in the sources.
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
+    @warn_unused_result(message="http://git.io/rxs.uo")
     public func zip<R>(resultSelector: [Generator.Element.E] throws -> R) -> Observable<R> {
         return ZipCollectionType(sources: self, resultSelector: resultSelector)
     }
 }
 
-// switch
+// MARK: switch
 
 extension ObservableType where E : ObservableConvertibleType {
     
@@ -51,12 +53,13 @@ extension ObservableType where E : ObservableConvertibleType {
     
     - returns: The observable sequence that at any point in time produces the elements of the most recent inner observable sequence that has been received.
     */
+    @warn_unused_result(message="http://git.io/rxs.uo")
     public func switchLatest() -> Observable<E.E> {
         return Switch(sources: self.asObservable())
     }
 }
 
-// concat
+// MARK: concat
 
 extension ObservableType {
 
@@ -66,6 +69,7 @@ extension ObservableType {
     - parameter second: Second observable sequence.
     - returns: An observable sequence that contains the elements of `self`, followed by those of the second sequence.
     */
+    @warn_unused_result(message="http://git.io/rxs.uo")
     public func concat<O: ObservableConvertibleType where O.E == E>(second: O) -> Observable<E> {
         return [self.asObservable(), second.asObservable()].concat()
     }
@@ -78,6 +82,7 @@ extension SequenceType where Generator.Element : ObservableConvertibleType {
     
     - returns: An observable sequence that contains the elements of each given sequence, in sequential order.
     */
+    @warn_unused_result(message="http://git.io/rxs.uo")
     public func concat()
         -> Observable<Generator.Element.E> {
         return Concat(sources: self)
@@ -91,12 +96,13 @@ extension ObservableType where E : ObservableConvertibleType {
     
     - returns: An observable sequence that contains the elements of each observed inner sequence, in sequential order.
     */
+    @warn_unused_result(message="http://git.io/rxs.uo")
     public func concat() -> Observable<E.E> {
         return self.merge(maxConcurrent: 1)
     }
 }
 
-// merge
+// MARK: merge
 
 extension ObservableType where E : ObservableConvertibleType {
     
@@ -106,6 +112,7 @@ extension ObservableType where E : ObservableConvertibleType {
     - parameter maxConcurrent: Maximum number of inner observable sequences being subscribed to concurrently.
     - returns: The observable sequence that merges the elements of the observable sequences.
     */
+    @warn_unused_result(message="http://git.io/rxs.uo")
     public func merge() -> Observable<E.E> {
         return Merge(sources: self.asObservable(), maxConcurrent: 0)
     }
@@ -115,13 +122,14 @@ extension ObservableType where E : ObservableConvertibleType {
     
     - returns: The observable sequence that merges the elements of the inner sequences.
     */
+    @warn_unused_result(message="http://git.io/rxs.uo")
     public func merge(maxConcurrent maxConcurrent: Int)
         -> Observable<E.E> {
         return Merge(sources: self.asObservable(), maxConcurrent: maxConcurrent)
     }
 }
 
-// catch
+// MARK: catch
 
 extension ObservableType {
     
@@ -131,6 +139,7 @@ extension ObservableType {
     - parameter handler: Error handler function, producing another observable sequence.
     - returns: An observable sequence containing the source sequence's elements, followed by the elements produced by the handler's resulting observable sequence in case an error occurred.
     */
+    @warn_unused_result(message="http://git.io/rxs.uo")
     public func catchError(handler: (ErrorType) throws -> Observable<E>)
         -> Observable<E> {
         return Catch(source: self.asObservable(), handler: handler)
@@ -142,6 +151,7 @@ extension ObservableType {
     - parameter element: Last element in an observable sequence in case error occurs.
     - returns: An observable sequence containing the source sequence's elements, followed by the `element` in case an error occurred.
     */
+    @warn_unused_result(message="http://git.io/rxs.uo")
     public func catchErrorJustReturn(element: E)
         -> Observable<E> {
         return Catch(source: self.asObservable(), handler: { _ in just(element) })
@@ -155,13 +165,14 @@ extension SequenceType where Generator.Element : ObservableConvertibleType {
     
     - returns: An observable sequence containing elements from consecutive source sequences until a source sequence terminates successfully.
     */
+    @warn_unused_result(message="http://git.io/rxs.uo")
     public func catchError()
         -> Observable<Generator.Element.E> {
         return CatchSequence(sources: self)
     }
 }
 
-// takeUntil
+// MARK: takeUntil
 
 extension ObservableType {
     
@@ -171,13 +182,14 @@ extension ObservableType {
     - parameter other: Observable sequence that terminates propagation of elements of the source sequence.
     - returns: An observable sequence containing the elements of the source sequence up to the point the other sequence interrupted further propagation.
     */
+    @warn_unused_result(message="http://git.io/rxs.uo")
     public func takeUntil<O: ObservableType>(other: O)
         -> Observable<E> {
         return TakeUntil(source: self.asObservable(), other: other.asObservable())
     }
 }
 
-// skipUntil
+// MARK: skipUntil
 
 extension ObservableType {
     
@@ -187,13 +199,14 @@ extension ObservableType {
     - parameter other: Observable sequence that terminates propagation of elements of the source sequence.
     - returns: An observable sequence containing the elements of the source sequence up to the point the other sequence interrupted further propagation.
     */
+    @warn_unused_result(message="http://git.io/rxs.uo")
     public func skipUntil<O: ObservableType>(other: O)
         -> Observable<E> {
         return SkipUntil(source: self.asObservable(), other: other.asObservable())
     }
 }
 
-// amb
+// MARK: amb
 
 extension ObservableType {
     
@@ -203,6 +216,7 @@ extension ObservableType {
     - parameter right: Second observable sequence.
     - returns: An observable sequence that surfaces either of the given sequences, whichever reacted first.
     */
+    @warn_unused_result(message="http://git.io/rxs.uo")
     public func amb<O2: ObservableType where O2.E == E>
         (right: O2)
         -> Observable<E> {
@@ -217,10 +231,27 @@ extension SequenceType where Generator.Element : ObservableConvertibleType {
     
     - returns: An observable sequence that surfaces any of the given sequences, whichever reacted first.
     */
+    @warn_unused_result(message="http://git.io/rxs.uo")
     public func amb()
         -> Observable<Generator.Element.E> {
         return self.reduce(never()) { a, o in
             return a.amb(o.asObservable())
         }
+    }
+}
+
+// withLatestFrom
+
+extension ObservableType {
+    
+    /**
+    Merges two observable sequences into one observable sequence by combining each element from self with the latest element from the second source, if any.
+     
+    - parameter second: Second observable source.
+    - parameter resultSelector: Function to invoke for each element from the self combined with the latest element from the second source, if any.
+    - returns: An observable sequence containing the result of combining each element of the self  with the latest element from the second source, if any, using the specified result selector function.
+    */
+    public func withLatestFrom<SecondO: ObservableType, ResultType>(second: SecondO, resultSelector: (E, SecondO.E) throws -> ResultType) -> Observable<ResultType> {
+        return WithLatestFrom(first: self, second: second, resultSelector: resultSelector)
     }
 }

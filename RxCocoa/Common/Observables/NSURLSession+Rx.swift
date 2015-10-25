@@ -74,6 +74,7 @@ extension NSURLSession {
     - parameter request: URL request.
     - returns: Observable sequence of URL responses.
     */
+    @warn_unused_result(message="http://git.io/rxs.uo")
     public func rx_response(request: NSURLRequest) -> Observable<(NSData!, NSURLResponse!)> {
         return create { observer in
 
@@ -126,6 +127,7 @@ extension NSURLSession {
     - parameter request: URL request.
     - returns: Observable sequence of response data.
     */
+    @warn_unused_result(message="http://git.io/rxs.uo")
     public func rx_data(request: NSURLRequest) -> Observable<NSData> {
         return rx_response(request).map { (data, response) -> NSData in
             guard let response = response as? NSHTTPURLResponse else {
@@ -161,6 +163,7 @@ extension NSURLSession {
     - parameter request: URL request.
     - returns: Observable sequence of response JSON.
     */
+    @warn_unused_result(message="http://git.io/rxs.uo")
     public func rx_JSON(request: NSURLRequest) -> Observable<AnyObject!> {
         return rx_data(request).map { (data) -> AnyObject! in
             return try NSJSONSerialization.JSONObjectWithData(data ?? NSData(), options: [])
@@ -184,6 +187,7 @@ extension NSURLSession {
     - parameter URL: URL of `NSURLRequest` request.
     - returns: Observable sequence of response JSON.
     */
+    @warn_unused_result(message="http://git.io/rxs.uo")
     public func rx_JSON(URL: NSURL) -> Observable<AnyObject!> {
         return rx_JSON(NSURLRequest(URL: URL))
     }

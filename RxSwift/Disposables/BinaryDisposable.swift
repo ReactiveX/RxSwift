@@ -16,8 +16,8 @@ public final class BinaryDisposable : DisposeBase, Cancelable {
     private var _disposed: Int32 = 0
 
     // state
-    private var disposable1: Disposable?
-    private var disposable2: Disposable?
+    private var _disposable1: Disposable?
+    private var _disposable2: Disposable?
     
     /**
     - returns: Was resource disposed.
@@ -35,8 +35,8 @@ public final class BinaryDisposable : DisposeBase, Cancelable {
     - parameter disposable2: Second disposable
     */
     init(_ disposable1: Disposable, _ disposable2: Disposable) {
-        self.disposable1 = disposable1
-        self.disposable2 = disposable2
+        _disposable1 = disposable1
+        _disposable2 = disposable2
         super.init()
     }
     
@@ -47,10 +47,10 @@ public final class BinaryDisposable : DisposeBase, Cancelable {
     */
     public func dispose() {
         if OSAtomicCompareAndSwap32(0, 1, &_disposed) {
-            disposable1?.dispose()
-            disposable2?.dispose()
-            disposable1 = nil
-            disposable2 = nil
+            _disposable1?.dispose()
+            _disposable2?.dispose()
+            _disposable1 = nil
+            _disposable2 = nil
         }
     }
 }
