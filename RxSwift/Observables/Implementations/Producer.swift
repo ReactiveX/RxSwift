@@ -8,18 +8,12 @@
 
 import Foundation
 
-public class _Producer<Element> : Producer<Element> {
-    public override init() {
-        super.init()
-    }
-}
-
-public class Producer<Element> : Observable<Element> {
+class Producer<Element> : Observable<Element> {
     override init() {
         super.init()
     }
     
-    public override func subscribe<O : ObserverType where O.E == Element>(observer: O) -> Disposable {
+    override func subscribe<O : ObserverType where O.E == Element>(observer: O) -> Disposable {
         let sink = SingleAssignmentDisposable()
         let subscription = SingleAssignmentDisposable()
         
@@ -43,7 +37,7 @@ public class Producer<Element> : Observable<Element> {
         return d
     }
     
-    public func run<O : ObserverType where O.E == Element>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
+    func run<O : ObserverType where O.E == Element>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
         abstractMethod()
     }
 }
