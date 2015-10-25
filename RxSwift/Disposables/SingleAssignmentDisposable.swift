@@ -26,9 +26,7 @@ public class SingleAssignmentDisposable : DisposeBase, Disposable, Cancelable {
     */
     public var disposed: Bool {
         get {
-            return _lock.calculateLocked {
-                return _disposed
-            }
+            return _disposed
         }
     }
 
@@ -46,47 +44,44 @@ public class SingleAssignmentDisposable : DisposeBase, Disposable, Cancelable {
     */
     public var disposable: Disposable {
         get {
-            return _lock.calculateLocked {
-                return _disposable ?? NopDisposable.instance
-            }
+            _lock.lock(); defer { _lock.unlock() }
+            return _disposable ?? NopDisposable.instance
         }
         set {
-            let disposable: Disposable? = _lock.calculateLocked {
-                if _disposableSet {
-                    rxFatalError("oldState.disposable != nil")
-                }
-
-                _disposableSet = true
-
-                if _disposed {
-                    return newValue
-                }
-
-                _disposable = newValue
-
-                return nil
-            }
-
-            if let disposable = disposable {
-                disposable.dispose()
-            }
+            _setDisposable(newValue)?.dispose()
         }
+    }
+
+    private func _setDisposable(newValue: Disposable) -> Disposable? {
+        if _disposableSet {
+            rxFatalError("oldState.disposable != nil")
+        }
+
+        _disposableSet = true
+
+        if _disposed {
+            return newValue
+        }
+
+        _disposable = newValue
+
+        return nil
     }
 
     /**
     Disposes the underlying disposable.
     */
     public func dispose() {
-        let disposable: Disposable? = _lock.calculateLocked {
-            _disposed = true
-            let dispose = _disposable
-            _disposable = nil
+        _dispose()?.dispose()
+    }
 
-            return dispose
-        }
+    private func _dispose() -> Disposable? {
+        _lock.lock(); defer { _lock.unlock() }
 
-        if let disposable = disposable {
-            disposable.dispose()
-        }
+        _disposed = true
+        let disposable = _disposable
+        _disposable = nil
+
+        return disposable
     }
 }

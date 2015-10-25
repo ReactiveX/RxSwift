@@ -21,9 +21,8 @@ public class CompositeDisposable : DisposeBase, Disposable, Cancelable {
 
     public var disposed: Bool {
         get {
-            return _lock.calculateLocked {
-                return _disposables == nil
-            }
+            _lock.lock(); defer { _lock.unlock() }
+            return _disposables == nil
         }
     }
     
@@ -55,7 +54,7 @@ public class CompositeDisposable : DisposeBase, Disposable, Cancelable {
             _disposables!.insert(disposable)
         }
     }
-    
+
     /**
     Adds a disposable to the CompositeDisposable or disposes the disposable if the CompositeDisposable is disposed.
     
@@ -64,17 +63,19 @@ public class CompositeDisposable : DisposeBase, Disposable, Cancelable {
         disposed `nil` will be returned.
     */
     public func addDisposable(disposable: Disposable) -> DisposeKey? {
-        // this should be let
-        // bucause of compiler bug it's var
-        let key  = _lock.calculateLocked { () -> DisposeKey? in
-            return _disposables?.insert(disposable)
-        }
-        
+        let key = _addDisposable(disposable)
+
         if key == nil {
             disposable.dispose()
         }
         
         return key
+    }
+
+    private func _addDisposable(disposable: Disposable) -> DisposeKey? {
+        _lock.lock(); defer { _lock.unlock() }
+
+        return _disposables?.insert(disposable)
     }
     
     /**
@@ -82,9 +83,8 @@ public class CompositeDisposable : DisposeBase, Disposable, Cancelable {
     */
     public var count: Int {
         get {
-            return _lock.calculateLocked {
-                return _disposables?.count ?? 0
-            }
+            _lock.lock(); defer { _lock.unlock() }
+            return _disposables?.count ?? 0
         }
     }
     
@@ -94,30 +94,29 @@ public class CompositeDisposable : DisposeBase, Disposable, Cancelable {
     - parameter disposeKey: Key used to identify disposable to be removed.
     */
     public func removeDisposable(disposeKey: DisposeKey) {
-        let disposable = _lock.calculateLocked { () -> Disposable? in
-            return _disposables?.removeKey(disposeKey)
-        }
-        
-        if let disposable = disposable {
-            disposable.dispose()
-        }
+        _removeDisposable(disposeKey)?.dispose()
+    }
+
+    private func _removeDisposable(disposeKey: DisposeKey) -> Disposable? {
+        _lock.lock(); defer { _lock.unlock() }
+        return _disposables?.removeKey(disposeKey)
     }
     
     /**
     Disposes all disposables in the group and removes them from the group.
     */
     public func dispose() {
-        let oldDisposables = _lock.calculateLocked { () -> Bag<Disposable>? in
-            let disposeBag = _disposables
-            _disposables = nil
-            
-            return disposeBag
+        if let disposables = _dispose() {
+            disposeFromBag(disposables)
         }
-        
-        if let oldDisposables = oldDisposables {
-            oldDisposables.forEach { d in
-                d.dispose()
-            }
-        }
+    }
+
+    private func _dispose() -> Bag<Disposable>? {
+        _lock.lock(); defer { _lock.unlock() }
+
+        let disposeBag = _disposables
+        _disposables = nil
+
+        return disposeBag
     }
 }

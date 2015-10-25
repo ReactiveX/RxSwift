@@ -17,6 +17,14 @@ struct SpinLock {
     init() {
         
     }
+
+    mutating func lock() {
+        OSSpinLockLock(&_lock)
+    }
+
+    mutating func unlock() {
+        OSSpinLockUnlock(&_lock)
+    }
     
     mutating func performLocked(@noescape action: () -> Void) {
         OSSpinLockLock(&_lock)

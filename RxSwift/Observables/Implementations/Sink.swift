@@ -18,13 +18,15 @@ class Sink<O : ObserverType> : Disposable {
     
     var observer: O? {
         get {
-            return _lock.calculateLocked { _observer }
+            _lock.lock(); defer { _lock.unlock() }
+            return _observer
         }
     }
     
     var cancel: Disposable {
         get {
-            return _lock.calculateLocked { _cancel }
+            _lock.lock(); defer { _lock.unlock() }
+            return _cancel
         }
     }
     
@@ -35,25 +37,25 @@ class Sink<O : ObserverType> : Disposable {
         _observer = observer
         _cancel = cancel
     }
-    
-    func dispose() {
-        let cancel: Disposable? = _lock.calculateLocked {
-            if _disposed {
-                return nil
-            }
-            
-            let cancel = _cancel
-            
-            _disposed = true
-            _observer = nil
-            _cancel = NopDisposable.instance
-            
-            return cancel
+
+    func _disposeInternal() -> Disposable? {
+        _lock.lock(); defer { _lock.unlock() }
+
+        if _disposed {
+            return nil
         }
         
-        if let cancel = cancel {
-            cancel.dispose()
-        }
+        let cancel = _cancel
+        
+        _disposed = true
+        _observer = nil
+        _cancel = NopDisposable.instance
+        
+        return cancel
+    }
+    
+    func dispose() {
+        _disposeInternal()?.dispose()
     }
     
     deinit {

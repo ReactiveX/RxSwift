@@ -53,7 +53,7 @@ public struct Bag<T> : CustomStringConvertible {
     private var _uniqueIdentity: Identity?
     private var _nextKey: ScopeUniqueTokenType = 0
     
-    var pairs = [Entry]()
+    private var _pairs = [Entry]()
 
     /**
     Creates new empty `Bag`.
@@ -89,7 +89,7 @@ public struct Bag<T> : CustomStringConvertible {
         
         let key = BagKey(uniqueIdentity: _uniqueIdentity, key: _nextKey)
         
-        pairs.append(key: key, value: element)
+        _pairs.append(key: key, value: element)
         
         return key
     }
@@ -98,14 +98,14 @@ public struct Bag<T> : CustomStringConvertible {
     - returns: Number of elements in bag.
     */
     public var count: Int {
-        return pairs.count
+        return _pairs.count
     }
     
     /**
     Removes all elements from bag and clears capacity.
     */
     public mutating func removeAll() {
-        pairs.removeAll(keepCapacity: false)
+        _pairs.removeAll(keepCapacity: false)
     }
     
     /**
@@ -115,10 +115,10 @@ public struct Bag<T> : CustomStringConvertible {
     - returns: Element that bag contained, or nil in case element was already removed.
     */
     public mutating func removeKey(key: BagKey) -> T? {
-        for i in 0 ..< pairs.count {
-            if pairs[i].key == key {
-                let value = pairs[i].value
-                pairs.removeAtIndex(i)
+        for i in 0 ..< _pairs.count {
+            if _pairs[i].key == key {
+                let value = _pairs[i].value
+                _pairs.removeAtIndex(i)
                 return value
             }
         }
@@ -127,6 +127,8 @@ public struct Bag<T> : CustomStringConvertible {
     }
 }
 
+// MARK: forEach
+
 extension Bag {
     /**
     Enumerates elements inside the bag.
@@ -134,10 +136,36 @@ extension Bag {
     - parameter action: Enumeration closure.
     */
     public func forEach(@noescape action: (T) -> Void) {
-        let pairs = self.pairs
+        let pairs = self._pairs
         
         for i in 0 ..< pairs.count {
             action(pairs[i].value)
         }
+    }
+}
+
+extension Bag where T: ObserverType {
+    /**
+     Dispatches `event` to app observers contained inside bag.
+
+     - parameter action: Enumeration closure.
+     */
+    public func on(event: Event<T.E>) {
+        let pairs = self._pairs
+
+        for i in 0 ..< pairs.count {
+            pairs[i].value.on(event)
+        }
+    }
+}
+
+/**
+Dispatches `dispose` to all disposables contained inside bag.
+*/
+func disposeFromBag(bag: Bag<Disposable>) {
+    let pairs = bag._pairs
+
+    for i in 0 ..< pairs.count {
+        pairs[i].value.dispose()
     }
 }
