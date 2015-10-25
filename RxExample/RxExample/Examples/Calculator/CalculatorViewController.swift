@@ -67,7 +67,7 @@ class CalculatorViewController: ViewController {
     
     let CLEAR_STATE = CalState(previousNumber: nil, action: .Clear, currentNumber: "0", inScreen: "0", replace: true)
     
-    let diposeBag = DisposeBag()
+    let disposeBag = DisposeBag()
     
     override func viewDidLoad() {
         let commands:[Observable<Action>] = [
@@ -122,7 +122,7 @@ class CalculatorViewController: ViewController {
                     self?.lastSignLabel.text = ""
                 }
             }
-            .addDisposableTo(diposeBag)
+            .addDisposableTo(disposeBag)
     }
     
     func tranformState(a: CalState, _ x: Action) -> CalState {
