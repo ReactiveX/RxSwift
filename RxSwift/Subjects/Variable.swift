@@ -32,14 +32,14 @@ public class Variable<Element> : ObservableType {
     */
     public var value: E {
         get {
-            return _lock.calculateLocked {
-                return _value
-            }
+            _lock.lock(); defer { _lock.unlock() }
+            return _value
         }
         set(newValue) {
-            _lock.performLocked {
-                _value = newValue
-            }
+            _lock.lock()
+            _value = newValue
+            _lock.unlock()
+
             _subject.on(.Next(newValue))
         }
     }

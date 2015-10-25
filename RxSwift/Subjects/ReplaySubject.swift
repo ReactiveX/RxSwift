@@ -99,11 +99,11 @@ class ReplayBufferBase<Element> : ReplaySubject<Element> {
             case .Next(let value):
                 addValueToBuffer(value)
                 trim()
-                _observers.forEach { $0.on(event) }
+                _observers.on(event)
             case .Error, .Completed:
                 _stoppedEvent = event
                 trim()
-                _observers.forEach { $0.on(event) }
+                _observers.on(event)
                 _observers.removeAll()
             }
             

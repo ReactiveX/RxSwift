@@ -9,6 +9,7 @@
 import Foundation
 
 let CurrentThreadSchedulerKeyInstance = CurrentThreadSchedulerKey()
+let CurrentThreadSchedulerQueueKeyInstance = CurrentThreadSchedulerQueueKey()
 
 class CurrentThreadSchedulerKey : NSObject, NSCopying {
     override func isEqual(object: AnyObject?) -> Bool {
@@ -23,6 +24,22 @@ class CurrentThreadSchedulerKey : NSObject, NSCopying {
     
     func copyWithZone(zone: NSZone) -> AnyObject {
         return CurrentThreadSchedulerKeyInstance
+    }
+}
+
+class CurrentThreadSchedulerQueueKey : NSObject, NSCopying {
+    override func isEqual(object: AnyObject?) -> Bool {
+        return object === CurrentThreadSchedulerQueueKeyInstance
+    }
+    
+    override var hashValue: Int { return -904739207 }
+    
+    override func copy() -> AnyObject {
+        return CurrentThreadSchedulerQueueKeyInstance
+    }
+    
+    func copyWithZone(zone: NSZone) -> AnyObject {
+        return CurrentThreadSchedulerQueueKeyInstance
     }
 }
 
@@ -43,15 +60,15 @@ public class CurrentThreadScheduler : ImmediateSchedulerType {
     
     static var queue : ScheduleQueue? {
         get {
-            return NSThread.currentThread().threadDictionary[CurrentThreadSchedulerKeyInstance] as? ScheduleQueue
+            return NSThread.currentThread().threadDictionary[CurrentThreadSchedulerQueueKeyInstance] as? ScheduleQueue
         }
         set {
             let threadDictionary = NSThread.currentThread().threadDictionary
             if let newValue = newValue {
-                threadDictionary[CurrentThreadSchedulerKeyInstance] = newValue
+                threadDictionary[CurrentThreadSchedulerQueueKeyInstance] = newValue
             }
             else {
-                threadDictionary.removeObjectForKey(CurrentThreadSchedulerKeyInstance)
+                threadDictionary.removeObjectForKey(CurrentThreadSchedulerQueueKeyInstance)
             }
         }
     }
@@ -59,8 +76,18 @@ public class CurrentThreadScheduler : ImmediateSchedulerType {
     /**
     Gets a value that indicates whether the caller must call a `schedule` method.
     */
-    public static var isScheduleRequired: Bool {
-        return NSThread.currentThread().threadDictionary[CurrentThreadSchedulerKeyInstance] == nil
+    public static private(set) var isScheduleRequired: Bool {
+        get {
+            return NSThread.currentThread().threadDictionary[CurrentThreadSchedulerKeyInstance] == nil
+        }
+        set(value) {
+            if value {
+                NSThread.currentThread().threadDictionary.removeObjectForKey(CurrentThreadSchedulerKeyInstance)
+            }
+            else {
+                NSThread.currentThread().threadDictionary[CurrentThreadSchedulerKeyInstance] = CurrentThreadSchedulerKeyInstance
+            }
+        }
     }
     
     /**
@@ -74,28 +101,43 @@ public class CurrentThreadScheduler : ImmediateSchedulerType {
     - returns: The disposable object used to cancel the scheduled action (best effort).
     */
     public func schedule<StateType>(state: StateType, action: (StateType) -> Disposable) -> Disposable {
-        let queue = CurrentThreadScheduler.queue
-        
-        if let queue = queue {
-            let scheduledItem = ScheduledItem(action: action, state: state, time: 0)
-            queue.value.enqueue(scheduledItem)
-            return scheduledItem
-        }
-        
-        let newQueue = RxMutableBox(Queue<ScheduledItemType>(capacity: 0))
-        CurrentThreadScheduler.queue = newQueue
-        
-        action(state)
-        
-        while let latest = newQueue.value.tryDequeue() {
-            if latest.disposed {
-                continue
+        if CurrentThreadScheduler.isScheduleRequired {
+            CurrentThreadScheduler.isScheduleRequired = false
+
+            action(state)
+
+            defer {
+                CurrentThreadScheduler.isScheduleRequired = true
+                CurrentThreadScheduler.queue = nil
             }
-            latest.invoke()
+
+            guard let queue = CurrentThreadScheduler.queue else {
+                return NopDisposable.instance
+            }
+
+            while let latest = queue.value.tryDequeue() {
+                if latest.disposed {
+                    continue
+                }
+                latest.invoke()
+            }
+
+            return NopDisposable.instance
         }
-        
-        CurrentThreadScheduler.queue = nil
-        
-        return NopDisposable.instance
+
+        let existingQueue = CurrentThreadScheduler.queue
+
+        let queue: RxMutableBox<Queue<ScheduledItemType>>
+        if let existingQueue = existingQueue {
+            queue = existingQueue
+        }
+        else {
+            queue = RxMutableBox(Queue<ScheduledItemType>(capacity: 1))
+            CurrentThreadScheduler.queue = queue
+        }
+
+        let scheduledItem = ScheduledItem(action: action, state: state, time: 0)
+        queue.value.enqueue(scheduledItem)
+        return scheduledItem
     }
 }

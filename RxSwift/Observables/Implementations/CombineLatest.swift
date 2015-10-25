@@ -90,13 +90,16 @@ class CombineLatestSink<O: ObserverType> : Sink<O>, CombineLatestProtocol {
     }
 }
 
-class CombineLatestObserver<ElementType> : ObserverType {
+class CombineLatestObserver<ElementType>
+    : ObserverType
+    , LockOwnerType
+    , SynchronizedOnType {
     typealias Element = ElementType
     typealias ValueSetter = (Element) -> Void
     
     private let _parent: CombineLatestProtocol
     
-    private let _lock: NSRecursiveLock
+    let _lock: NSRecursiveLock
     private let _index: Int
     private let _this: Disposable
     private let _setLatestValue: ValueSetter
@@ -110,18 +113,20 @@ class CombineLatestObserver<ElementType> : ObserverType {
     }
     
     func on(event: Event<Element>) {
-        _lock.performLocked {
-            switch event {
-            case .Next(let value):
-                _setLatestValue(value)
-                _parent.next(_index)
-            case .Error(let error):
-                _this.dispose()
-                _parent.fail(error)
-            case .Completed:
-                _this.dispose()
-                _parent.done(_index)
-            }
+        synchronizedOn(event)
+    }
+
+    func _synchronized_on(event: Event<Element>) {
+        switch event {
+        case .Next(let value):
+            _setLatestValue(value)
+            _parent.next(_index)
+        case .Error(let error):
+            _this.dispose()
+            _parent.fail(error)
+        case .Completed:
+            _this.dispose()
+            _parent.done(_index)
         }
     }
 }

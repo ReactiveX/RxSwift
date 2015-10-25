@@ -53,7 +53,7 @@ public struct Bag<T> : CustomStringConvertible {
     private var _uniqueIdentity: Identity?
     private var _nextKey: ScopeUniqueTokenType = 0
     
-    private var _pairs = [Entry]()
+    var _pairs = ContiguousArray<Entry>()
 
     /**
     Creates new empty `Bag`.

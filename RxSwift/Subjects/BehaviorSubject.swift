@@ -103,7 +103,7 @@ public final class BehaviorSubject<Element> : Observable<Element>, SubjectType, 
                 _stoppedEvent = event
             }
             
-            _observers.forEach { $0.on(event) }
+            _observers.on(event)
         }
     }
     
