@@ -77,7 +77,30 @@ extension ObservableType {
         }
     }
 }
+
+// MARK: takeLast
+
+extension ObservableType {
     
+    /**
+    Returns a specified number of the last elements before the observable sequence completed.
+     
+     - parameter count: The number of elements to return.
+     - returns: An observable sequence that contains the specified number of elements from the end of the input sequence.
+     */
+    @warn_unused_result(message="http://git.io/rxs.uo")
+    public func takeLast(count: Int)
+        -> Observable<E> {
+        if count == 0 {
+            return empty()
+        }
+        else {
+            return TakeLast(source: self.asObservable(), count: count)
+        }
+    }
+}
+
+
 // MARK: skip
 
 extension ObservableType {
