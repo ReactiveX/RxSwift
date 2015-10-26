@@ -7,6 +7,9 @@
 //
 
 import Foundation
+import Swift
+
+let conciseArrayMaxSize = 30
 
 /**
 Class that enables using memory allocations as a means to uniquely identify objects.
@@ -16,12 +19,31 @@ class Identity {
     var _forceAllocation: Int32 = 0
 }
 
+func hash(_x: Int) -> Int {
+    var x = _x
+    x = ((x >> 16) ^ x) &* 0x45d9f3b;
+    x = ((x >> 16) ^ x) &* 0x45d9f3b;
+    x = ((x >> 16) ^ x);
+    return x;
+}
+
 /**
 Unique identifier for object added to `Bag`.
 */
-public struct BagKey : Equatable {
+public struct BagKey : Hashable {
     let uniqueIdentity: Identity?
     let key: Int
+
+    public var hashValue: Int {
+        get {
+            if let uniqueIdentity = uniqueIdentity {
+                return hash(key) ^ (unsafeAddressOf(uniqueIdentity).hashValue)
+            }
+            else {
+                return hash(key)
+            }
+        }
+    }
 }
 
 /**
@@ -52,8 +74,21 @@ public struct Bag<T> : CustomStringConvertible {
  
     private var _uniqueIdentity: Identity?
     private var _nextKey: ScopeUniqueTokenType = 0
-    
-    var _pairs = ContiguousArray<Entry>()
+
+    // data
+
+    // first fill inline variables
+    private var _key0: BagKey? = nil
+    private var _value0: T? = nil
+
+    private var _key1: BagKey? = nil
+    private var _value1: T? = nil
+
+    // then fill "array dictionary"
+    private var _pairs = ContiguousArray<Entry>()
+
+    // last is sparse dictionary
+    private var _dictionary: [BagKey : T]? = nil
 
     /**
     Creates new empty `Bag`.
@@ -69,7 +104,7 @@ public struct Bag<T> : CustomStringConvertible {
             return "\(self.count) elements in Bag"
         }
     }
-    
+
     /**
     Inserts `value` into bag.
     
@@ -86,10 +121,36 @@ public struct Bag<T> : CustomStringConvertible {
         if _nextKey == 0 {
             _uniqueIdentity = Identity()
         }
-        
+
         let key = BagKey(uniqueIdentity: _uniqueIdentity, key: _nextKey)
-        
-        _pairs.append(key: key, value: element)
+
+        if _key0 == nil {
+            _key0 = key
+            _value0 = element
+            return key
+        }
+
+        if _key1 == nil {
+            _key1 = key
+            _value1 = element
+            return key
+        }
+
+        if _dictionary != nil {
+            _dictionary![key] = element
+            return key
+        }
+
+        if _pairs.count < conciseArrayMaxSize {
+            _pairs.append(key: key, value: element)
+            return key
+        }
+
+        if _dictionary == nil {
+            _dictionary = [:]
+        }
+
+        _dictionary![key] = element
         
         return key
     }
@@ -98,14 +159,20 @@ public struct Bag<T> : CustomStringConvertible {
     - returns: Number of elements in bag.
     */
     public var count: Int {
-        return _pairs.count
+        return _pairs.count + (_value0 != nil ? 1 : 0) + (_value1 != nil ? 1 : 0) + (_dictionary?.count ?? 0)
     }
     
     /**
     Removes all elements from bag and clears capacity.
     */
     public mutating func removeAll() {
+        _key0 = nil
+        _value0 = nil
+        _key1 = nil
+        _value1 = nil
+
         _pairs.removeAll(keepCapacity: false)
+        _dictionary?.removeAll(keepCapacity: false)
     }
     
     /**
@@ -115,6 +182,24 @@ public struct Bag<T> : CustomStringConvertible {
     - returns: Element that bag contained, or nil in case element was already removed.
     */
     public mutating func removeKey(key: BagKey) -> T? {
+        if _key0 == key {
+            _key0 = nil
+            let value = _value0!
+            _value0 = nil
+            return value
+        }
+
+        if _key1 == key {
+            _key1 = nil
+            let value = _value1!
+            _value1 = nil
+            return value
+        }
+
+        if let existingObject = _dictionary?.removeValueForKey(key) {
+            return existingObject
+        }
+
         for i in 0 ..< _pairs.count {
             if _pairs[i].key == key {
                 let value = _pairs[i].value
@@ -122,7 +207,7 @@ public struct Bag<T> : CustomStringConvertible {
                 return value
             }
         }
-    
+
         return nil
     }
 }
@@ -136,10 +221,27 @@ extension Bag {
     - parameter action: Enumeration closure.
     */
     public func forEach(@noescape action: (T) -> Void) {
-        let pairs = self._pairs
-        
+        let pairs = _pairs
+        let value0 = _value0
+        let value1 = _value1
+        let dictionary = _dictionary
+
+        if let value0 = value0 {
+            action(value0)
+        }
+
+        if let value1 = value1 {
+            action(value1)
+        }
+
         for i in 0 ..< pairs.count {
             action(pairs[i].value)
+        }
+
+        if dictionary?.count ?? 0 > 0 {
+            for element in dictionary!.values {
+                action(element)
+            }
         }
     }
 }
@@ -152,9 +254,26 @@ extension Bag where T: ObserverType {
      */
     public func on(event: Event<T.E>) {
         let pairs = self._pairs
+        let value0 = _value0
+        let value1 = _value1
+        let dictionary = _dictionary
+
+        if let value0 = value0 {
+            value0.on(event)
+        }
+
+        if let value1 = value1 {
+            value1.on(event)
+        }
 
         for i in 0 ..< pairs.count {
             pairs[i].value.on(event)
+        }
+
+        if dictionary?.count ?? 0 > 0 {
+            for element in dictionary!.values {
+                element.on(event)
+            }
         }
     }
 }
@@ -162,10 +281,27 @@ extension Bag where T: ObserverType {
 /**
 Dispatches `dispose` to all disposables contained inside bag.
 */
-func disposeFromBag(bag: Bag<Disposable>) {
+public func disposeAllIn(bag: Bag<Disposable>) {
     let pairs = bag._pairs
+    let value0 = bag._value0
+    let value1 = bag._value1
+    let dictionary = bag._dictionary
+
+    if let value0 = value0 {
+        value0.dispose()
+    }
+
+    if let value1 = value1 {
+        value1.dispose()
+    }
 
     for i in 0 ..< pairs.count {
         pairs[i].value.dispose()
+    }
+
+    if dictionary?.count ?? 0 > 0 {
+        for element in dictionary!.values {
+            element.dispose()
+        }
     }
 }
