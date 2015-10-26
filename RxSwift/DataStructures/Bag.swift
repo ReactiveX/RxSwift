@@ -9,7 +9,7 @@
 import Foundation
 import Swift
 
-let conciseArrayMaxSize = 30
+let arrayDictionaryMaxSize = 30
 
 /**
 Class that enables using memory allocations as a means to uniquely identify objects.
@@ -141,7 +141,7 @@ public struct Bag<T> : CustomStringConvertible {
             return key
         }
 
-        if _pairs.count < conciseArrayMaxSize {
+        if _pairs.count < arrayDictionaryMaxSize {
             _pairs.append(key: key, value: element)
             return key
         }
