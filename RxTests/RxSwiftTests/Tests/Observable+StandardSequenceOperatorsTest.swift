@@ -3015,10 +3015,10 @@ extension ObservableStandardSequenceOperators {
         }
         
         XCTAssertEqual(res.messages, [
-            completed(200)
             ])
         
         XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 1000)
             ])
     }
     

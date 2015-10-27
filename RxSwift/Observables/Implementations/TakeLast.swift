@@ -15,28 +15,27 @@ class TakeLastSink<ElementType, O: ObserverType where O.E == ElementType> : Sink
     
     private let _parent: Parent
     
-    private var _elements = [ElementType]()
+    private var _elements: Queue<ElementType>
     
     init(parent: Parent, observer: O, cancel: Disposable) {
         _parent = parent
+        _elements = Queue<ElementType>(capacity: parent._count)
         super.init(observer: observer, cancel: cancel)
     }
     
     func on(event: Event<E>) {
         switch event {
         case .Next(let value):
-            _elements.append(value)
+            _elements.enqueue(value)
             if _elements.count > self._parent._count {
-                _elements.removeFirst()
+                _elements.dequeue()
             }
         case .Error:
             observer?.on(event)
             dispose()
         case .Completed:
-            if self._elements.count > 0 {
-            self._elements.forEach { element in
-                observer?.on(.Next(element))
-                }
+            for e in _elements {
+                observer?.on(.Next(e))
             }
             observer?.on(.Completed)
             dispose()
@@ -49,6 +48,9 @@ class TakeLast<Element>: Producer<Element> {
     private let _count: Int
     
     init(source: Observable<Element>, count: Int) {
+        if count < 0 {
+            rxFatalError("count can't be negative")
+        }
         _source = source
         _count = count
     }
