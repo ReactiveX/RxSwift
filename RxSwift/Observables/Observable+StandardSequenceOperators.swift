@@ -77,7 +77,27 @@ extension ObservableType {
         }
     }
 }
+
+// MARK: takeLast
+
+extension ObservableType {
     
+    /**
+    Returns a specified number of contiguous elements from the end of an observable sequence.
+     
+     This operator accumulates a buffer with a length enough to store elements count elements. Upon completion of the source sequence, this buffer is drained on the result sequence. This causes the elements to be delayed.
+     
+     - parameter count: Number of elements to take from the end of the source sequence.
+     - returns: An observable sequence containing the specified number of elements from the end of the source sequence.
+     */
+    @warn_unused_result(message="http://git.io/rxs.uo")
+    public func takeLast(count: Int)
+        -> Observable<E> {
+        return TakeLast(source: self.asObservable(), count: count)
+    }
+}
+
+
 // MARK: skip
 
 extension ObservableType {
