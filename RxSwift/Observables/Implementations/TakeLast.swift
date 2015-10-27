@@ -19,7 +19,7 @@ class TakeLastSink<ElementType, O: ObserverType where O.E == ElementType> : Sink
     
     init(parent: Parent, observer: O, cancel: Disposable) {
         _parent = parent
-        _elements = Queue<ElementType>(capacity: parent._count)
+        _elements = Queue<ElementType>(capacity: parent._count + 1)
         super.init(observer: observer, cancel: cancel)
     }
     
