@@ -14,3 +14,18 @@ public func delay(delay:Double, closure:()->()) {
         ),
         dispatch_get_main_queue(), closure)
 }
+
+#if NOT_IN_PLAYGROUND
+
+public func playgroundShouldContinueIndefinitely() {
+}
+
+#else
+
+import XCPlayground
+
+public func playgroundShouldContinueIndefinitely() {
+    XCPSetExecutionShouldContinueIndefinitely(true)
+}
+
+#endif

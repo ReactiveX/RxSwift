@@ -1,7 +1,6 @@
 //: [<< Previous](@previous) - [Index](Index)
 
 import RxSwift
-import XCPlayground
 
 /*:
 ## Connectable Observable Operators
@@ -200,6 +199,6 @@ func sampleWithPublish() {
 
 // sampleWithPublish()
 
-XCPSetExecutionShouldContinueIndefinitely(true)
+playgroundShouldContinueIndefinitely()
 
 //: [Index](Index)
