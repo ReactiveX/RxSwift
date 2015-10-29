@@ -34,7 +34,7 @@ Operators are stateless by default.
 #### Filtering Observables
   * [`debounce` / `throttle`](http://reactivex.io/documentation/operators/debounce.html)
   * [`distinctUntilChanged`](http://reactivex.io/documentation/operators/distinct.html)
-  * [`ElementAt`](http://reactivex.io/documentation/operators/elementat.html)
+  * [`elementAt`](http://reactivex.io/documentation/operators/elementat.html)
   * [`filter` / `where`](http://reactivex.io/documentation/operators/filter.html)
   * [`sample`](http://reactivex.io/documentation/operators/sample.html)
   * [`skip`](http://reactivex.io/documentation/operators/skip.html)
@@ -441,6 +441,6 @@ extension NSTextField {
     public var rx_delegate: DelegateProxy {}
 
     public var rx_text: ControlProperty<String> {}
-      
+
 }
 ```
