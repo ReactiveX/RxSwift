@@ -65,7 +65,7 @@ This function will perform a function on each element in the sequence until it i
 
 */
 example("reduce") {
-    sequenceOf(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
+    _ = sequenceOf(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
         .reduce(0, +)
         .subscribe {
             print($0)

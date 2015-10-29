@@ -14,13 +14,13 @@ func sampleWithoutConnectableOperators() {
 
     let int1 = interval(1, MainScheduler.sharedInstance)
 
-    int1
+    _ = int1
         .subscribe {
             print("first subscription \($0)")
         }
 
     delay(5) {
-        int1
+        _ = int1
             .subscribe {
                 print("second subscription \($0)")
             }
@@ -43,7 +43,7 @@ func sampleWithMulticast() {
 
     let subject1 = PublishSubject<Int64>()
 
-    subject1
+    _ = subject1
         .subscribe {
             print("Subject \($0)")
         }
@@ -51,7 +51,7 @@ func sampleWithMulticast() {
     let int1 = interval(1, MainScheduler.sharedInstance)
         .multicast(subject1)
 
-    int1
+    _ = int1
         .subscribe {
             print("first subscription \($0)")
         }
@@ -61,14 +61,14 @@ func sampleWithMulticast() {
     }
 
     delay(4) {
-        int1
+        _ = int1
             .subscribe {
                 print("second subscription \($0)")
             }
     }
 
     delay(6) {
-        int1
+        _ = int1
             .subscribe {
                 print("third subscription \($0)")
             }
@@ -94,7 +94,7 @@ func sampleWithReplayBuffer0() {
     let int1 = interval(1, MainScheduler.sharedInstance)
         .replay(0)
 
-    int1
+    _ = int1
         .subscribe {
             print("first subscription \($0)")
         }
@@ -104,14 +104,14 @@ func sampleWithReplayBuffer0() {
     }
 
     delay(4) {
-        int1
+        _ = int1
             .subscribe {
                 print("second subscription \($0)")
             }
     }
 
     delay(6) {
-        int1
+        _ = int1
             .subscribe {
                 print("third subscription \($0)")
             }
@@ -129,7 +129,7 @@ func sampleWithReplayBuffer2() {
     let int1 = interval(1, MainScheduler.sharedInstance)
         .replay(2)
 
-    int1
+    _ = int1
         .subscribe {
             print("first subscription \($0)")
         }
@@ -139,14 +139,14 @@ func sampleWithReplayBuffer2() {
     }
 
     delay(4) {
-        int1
+        _ = int1
             .subscribe {
                 print("second subscription \($0)")
             }
     }
 
     delay(6) {
-        int1
+        _ = int1
             .subscribe {
                 print("third subscription \($0)")
             }
@@ -172,7 +172,7 @@ func sampleWithPublish() {
     let int1 = interval(1, MainScheduler.sharedInstance)
         .publish()
 
-    int1
+    _ = int1
         .subscribe {
             print("first subscription \($0)")
         }
@@ -182,14 +182,14 @@ func sampleWithPublish() {
     }
 
     delay(4) {
-        int1
+        _ = int1
             .subscribe {
                 print("second subscription \($0)")
             }
     }
 
     delay(6) {
-        int1
+        _ = int1
             .subscribe {
                 print("third subscription \($0)")
             }
