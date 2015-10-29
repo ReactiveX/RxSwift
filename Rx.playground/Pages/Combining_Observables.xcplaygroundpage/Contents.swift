@@ -67,7 +67,7 @@ example("combineLatest 1") {
 example("combineLatest 2") {
     let intOb1 = just(2)
     let intOb2 = sequenceOf(0, 1, 2, 3, 4)
-
+    build should failed
     combineLatest(intOb1, intOb2) {
             $0 * $1
         }
