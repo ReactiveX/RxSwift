@@ -23,7 +23,7 @@ example("takeUntil") {
     let originalSequence = PublishSubject<Int>()
     let whenThisSendsNextWorldStops = PublishSubject<Int>()
 
-    originalSequence
+    _ = originalSequence
         .takeUntil(whenThisSendsNextWorldStops)
         .subscribe {
             print($0)
@@ -53,7 +53,7 @@ example("takeWhile") {
 
     let sequence = PublishSubject<Int>()
 
-    sequence
+    _ = sequence
         .takeWhile { int in
             int < 4
         }

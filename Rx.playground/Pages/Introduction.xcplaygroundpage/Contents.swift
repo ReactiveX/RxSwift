@@ -149,12 +149,12 @@ example("deferred") {
         }
     }
 
-    deferredSequence
+    _ = deferredSequence
         .subscribe { event in
             print(event)
     }
 
-    deferredSequence
+    _ = deferredSequence
         .subscribe { event in
             print(event)
         }
