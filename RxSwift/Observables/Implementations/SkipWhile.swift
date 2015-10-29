@@ -104,12 +104,12 @@ class SkipWhile<Element>: Producer<Element> {
         if let _ = _predicate {
             let sink = SkipWhileSink(parent: self, observer: observer, cancel: cancel)
             setSink(sink)
-            return _source.subscribeSafe(sink)
+            return _source.subscribe(sink)
         }
         else {
             let sink = SkipWhileSinkWithIndex(parent: self, observer: observer, cancel: cancel)
             setSink(sink)
-            return _source.subscribeSafe(sink)
+            return _source.subscribe(sink)
         }
     }
 }

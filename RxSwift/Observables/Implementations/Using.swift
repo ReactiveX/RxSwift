@@ -29,12 +29,12 @@ class UsingSink<SourceType, ResourceType: Disposable, O: ObserverType where O.E 
             let source = try _parent._observableFactory(resource)
             
             return StableCompositeDisposable.create(
-                source.subscribeSafe(self),
+                source.subscribe(self),
                 disposable
             )
         } catch let error {
             return StableCompositeDisposable.create(
-                failWith(error).subscribeSafe(self),
+                failWith(error).subscribe(self),
                 disposable
             )
         }

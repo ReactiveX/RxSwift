@@ -32,14 +32,14 @@ class CombineLatestSink<%= i %>_<<%= (Array(1...i).map { "E\($0)" }).joinWithSep
     typealias R = O.E
     typealias Parent = CombineLatest<%= i %><<%= (Array(1...i).map { "E\($0)" }).joinWithSeparator(", ") %>, R>
 
-    let parent: Parent
+    let _parent: Parent
 
 <%= (Array(1...i).map {
-"    var latestElement\($0): E\($0)! = nil"
+"    var _latestElement\($0): E\($0)! = nil"
 }).joinWithSeparator("\n") %>
 
     init(parent: Parent, observer: O, cancel: Disposable) {
-        self.parent = parent
+        _parent = parent
         super.init(arity: <%= i %>, observer: observer, cancel: cancel)
     }
 
@@ -49,11 +49,11 @@ class CombineLatestSink<%= i %>_<<%= (Array(1...i).map { "E\($0)" }).joinWithSep
 }).joinWithSeparator("\n") %>
 
 <%= (Array(1...i).map {
-"        let observer\($0) = CombineLatestObserver(lock: lock, parent: self, index: \($0 - 1), setLatestValue: { (e: E\($0)) -> Void in self.latestElement\($0) = e }, this: subscription\($0))"
+"        let observer\($0) = CombineLatestObserver(lock: lock, parent: self, index: \($0 - 1), setLatestValue: { (e: E\($0)) -> Void in self._latestElement\($0) = e }, this: subscription\($0))"
 }).joinWithSeparator("\n") %>
 
 <%= (Array(1...i).map {
-"         subscription\($0).disposable = parent.source\($0).subscribeSafe(observer\($0))"
+"         subscription\($0).disposable = _parent._source\($0).subscribe(observer\($0))"
 }).joinWithSeparator("\n") %>
 
         return CompositeDisposable(disposables: [
@@ -62,7 +62,7 @@ class CombineLatestSink<%= i %>_<<%= (Array(1...i).map { "E\($0)" }).joinWithSep
     }
 
     override func getResult() throws -> R {
-        return try self.parent.resultSelector(<%= (Array(1...i).map { "latestElement\($0)" }).joinWithSeparator(", ") %>)
+        return try _parent._resultSelector(<%= (Array(1...i).map { "_latestElement\($0)" }).joinWithSeparator(", ") %>)
     }
 }
 
@@ -70,17 +70,17 @@ class CombineLatest<%= i %><<%= (Array(1...i).map { "E\($0)" }).joinWithSeparato
     typealias ResultSelector = (<%= (Array(1...i).map { "E\($0)" }).joinWithSeparator(", ") %>) throws -> R
 
 <%= (Array(1...i).map {
-"    let source\($0): Observable<E\($0)>"
+"    let _source\($0): Observable<E\($0)>"
 }).joinWithSeparator("\n") %>
 
-    let resultSelector: ResultSelector
+    let _resultSelector: ResultSelector
 
     init(<%= (Array(1...i).map { "source\($0): Observable<E\($0)>" }).joinWithSeparator(", ") %>, resultSelector: ResultSelector) {
 <%= (Array(1...i).map {
-"        self.source\($0) = source\($0)"
+"        _source\($0) = source\($0)"
 }).joinWithSeparator("\n")  %>
 
-        self.resultSelector = resultSelector
+        _resultSelector = resultSelector
     }
 
     override func run<O: ObserverType where O.E == R>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {

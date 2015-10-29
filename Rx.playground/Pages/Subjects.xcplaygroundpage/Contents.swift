@@ -8,7 +8,7 @@ A Subject is a sort of bridge or proxy that is available in some implementations
 */
 
 func writeSequenceToConsole<O: ObservableType>(name: String, sequence: O) {
-    sequence
+    _ = sequence
         .subscribe { e in
             print("Subscription: \(name), event: \(e)")
         }

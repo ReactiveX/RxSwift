@@ -18,7 +18,7 @@ A toolbox of useful Operators for working with Observables.
 example("subscribe") {
     let sequenceOfInts = PublishSubject<Int>()
 
-    sequenceOfInts
+    _ = sequenceOfInts
         .subscribe {
             print($0)
         }
@@ -40,7 +40,7 @@ There are several variants of the `subscribe` operator.
 example("subscribeNext") {
     let sequenceOfInts = PublishSubject<Int>()
 
-    sequenceOfInts
+    _ = sequenceOfInts
         .subscribeNext {
             print($0)
         }
@@ -58,7 +58,7 @@ example("subscribeNext") {
 example("subscribeCompleted") {
     let sequenceOfInts = PublishSubject<Int>()
 
-    sequenceOfInts
+    _ = sequenceOfInts
         .subscribeCompleted {
             print("It's completed")
         }
@@ -76,7 +76,7 @@ example("subscribeCompleted") {
 example("subscribeError") {
     let sequenceOfInts = PublishSubject<Int>()
 
-    sequenceOfInts
+    _ = sequenceOfInts
         .subscribeError { error in
             print(error)
         }
@@ -98,7 +98,7 @@ register an action to take upon a variety of Observable lifecycle events
 example("doOn") {
     let sequenceOfInts = PublishSubject<Int>()
 
-    sequenceOfInts
+    _ = sequenceOfInts
         .doOn {
             print("Intercepted event \($0)")
         }

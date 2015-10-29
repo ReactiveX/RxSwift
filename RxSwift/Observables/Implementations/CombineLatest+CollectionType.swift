@@ -50,24 +50,24 @@ class CombineLatestCollectionTypeSink<C: CollectionType, R, O: ObserverType wher
                 if numberOfValues < parent.count {
                     let numberOfOthersThatAreDone = self.numberOfDone - (isDone[atIndex] ? 1 : 0)
                     if numberOfOthersThatAreDone == self.parent.count - 1 {
-                        self.observer?.on(.Completed)
-                        self.dispose()
+                        observer?.on(.Completed)
+                        dispose()
                     }
                     return
                 }
                 
                 do {
                     let result = try parent.resultSelector(values.map { $0! })
-                    self.observer?.on(.Next(result))
+                    observer?.on(.Next(result))
                 }
                 catch let error {
-                    self.observer?.on(.Error(error))
-                    self.dispose()
+                    observer?.on(.Error(error))
+                    dispose()
                 }
                 
             case .Error(let error):
-                self.observer?.on(.Error(error))
-                self.dispose()
+                observer?.on(.Error(error))
+                dispose()
             case .Completed:
                 if isDone[atIndex] {
                     return
@@ -77,11 +77,11 @@ class CombineLatestCollectionTypeSink<C: CollectionType, R, O: ObserverType wher
                 numberOfDone++
                 
                 if numberOfDone == self.parent.count {
-                    self.observer?.on(.Completed)
-                    self.dispose()
+                    observer?.on(.Completed)
+                    dispose()
                 }
                 else {
-                    self.subscriptions[atIndex].dispose()
+                    subscriptions[atIndex].dispose()
                 }
             }
         }
@@ -92,7 +92,7 @@ class CombineLatestCollectionTypeSink<C: CollectionType, R, O: ObserverType wher
         for i in parent.sources.startIndex ..< parent.sources.endIndex {
             let index = j
             let source = self.parent.sources[i].asObservable()
-            self.subscriptions[j].disposable = source.subscribeSafe(AnyObserver { event in
+            self.subscriptions[j].disposable = source.subscribe(AnyObserver { event in
                 self.on(event, atIndex: index)
             })
             

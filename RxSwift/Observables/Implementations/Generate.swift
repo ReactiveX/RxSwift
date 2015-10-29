@@ -11,25 +11,25 @@ import Foundation
 class GenerateSink<S, O: ObserverType> : Sink<O> {
     typealias Parent = Generate<S, O.E>
     
-    let parent: Parent
+    private let _parent: Parent
     
-    var state: S
+    private var _state: S
     
     init(parent: Parent, observer: O, cancel: Disposable) {
-        self.parent = parent
-        self.state = parent.initialState
+        _parent = parent
+        _state = parent._initialState
         super.init(observer: observer, cancel: cancel)
     }
     
     func run() -> Disposable {
-        return parent.scheduler.scheduleRecursive(true) { (isFirst, recurse) -> Void in
+        return _parent._scheduler.scheduleRecursive(true) { (isFirst, recurse) -> Void in
             do {
                 if !isFirst {
-                    self.state = try self.parent.iterate(self.state)
+                    self._state = try self._parent._iterate(self._state)
                 }
                 
-                if try self.parent.condition(self.state) {
-                    let result = try self.parent.resultSelector(self.state)
+                if try self._parent._condition(self._state) {
+                    let result = try self._parent._resultSelector(self._state)
                     self.observer?.on(.Next(result))
                     
                     recurse(false)
@@ -48,18 +48,18 @@ class GenerateSink<S, O: ObserverType> : Sink<O> {
 }
 
 class Generate<S, E> : Producer<E> {
-    let initialState: S
-    let condition: S throws -> Bool
-    let iterate: S throws -> S
-    let resultSelector: S throws -> E
-    let scheduler: ImmediateSchedulerType
+    private let _initialState: S
+    private let _condition: S throws -> Bool
+    private let _iterate: S throws -> S
+    private let _resultSelector: S throws -> E
+    private let _scheduler: ImmediateSchedulerType
     
     init(initialState: S, condition: S throws -> Bool, iterate: S throws -> S, resultSelector: S throws -> E, scheduler: ImmediateSchedulerType) {
-        self.initialState = initialState
-        self.condition = condition
-        self.iterate = iterate
-        self.resultSelector = resultSelector
-        self.scheduler = scheduler
+        _initialState = initialState
+        _condition = condition
+        _iterate = iterate
+        _resultSelector = resultSelector
+        _scheduler = scheduler
         super.init()
     }
     

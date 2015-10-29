@@ -50,8 +50,8 @@ public struct Bag<T> : CustomStringConvertible {
     
     typealias Entry = (key: BagKey, value: T)
  
-    private var uniqueIdentity: Identity?
-    private var nextKey: ScopeUniqueTokenType = 0
+    private var _uniqueIdentity: Identity?
+    private var _nextKey: ScopeUniqueTokenType = 0
     
     var pairs = [Entry]()
 
@@ -77,17 +77,17 @@ public struct Bag<T> : CustomStringConvertible {
     - returns: Key that can be used to remove element from bag.
     */
     public mutating func insert(element: T) -> BagKey {
-        nextKey = nextKey &+ 1
+        _nextKey = _nextKey &+ 1
 
 #if DEBUG
-        nextKey = nextKey % 20
+        _nextKey = _nextKey % 20
 #endif
         
-        if nextKey == 0 {
-            uniqueIdentity = Identity()
+        if _nextKey == 0 {
+            _uniqueIdentity = Identity()
         }
         
-        let key = BagKey(uniqueIdentity: uniqueIdentity, key: nextKey)
+        let key = BagKey(uniqueIdentity: _uniqueIdentity, key: _nextKey)
         
         pairs.append(key: key, value: element)
         

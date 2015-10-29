@@ -8,7 +8,7 @@
 
 import Foundation
 
-// reduce
+// MARK: reduce
 
 extension ObservableType {
     
@@ -41,5 +41,18 @@ extension ObservableType {
     public func reduce<A>(seed: A, _ accumulator: (A, E) throws -> A)
         -> Observable<A> {
         return Reduce(source: self.asObservable(), seed: seed, accumulator: accumulator, mapResult: { $0 })
+    }
+    
+    /**
+    Converts an Observable into another Observable that emits the whole sequence as a single array and then terminates.
+    
+    For aggregation behavior see `reduce`.
+    
+    - returns: An observable sequence containing all the emitted elements as array.
+    */
+    @warn_unused_result(message="http://git.io/rxs.uo")
+    public func toArray()
+        -> Observable<[E]> {
+            return ToArray(source: self.asObservable())
     }
 }

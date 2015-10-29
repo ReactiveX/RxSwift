@@ -21,6 +21,8 @@ Operators are stateless by default.
  * [`never`](http://reactivex.io/documentation/operators/empty-never-throw.html)
  * [`returnElement` / `just`](http://reactivex.io/documentation/operators/just.html)
  * [`returnElements`](http://reactivex.io/documentation/operators/from.html)
+ * [`range`](http://reactivex.io/documentation/operators/range.html)
+ * [`repeatElement`](http://reactivex.io/documentation/operators/repeat.html)
  * [`timer`](http://reactivex.io/documentation/operators/timer.html)
 
 #### Transforming Observables
@@ -32,10 +34,12 @@ Operators are stateless by default.
 #### Filtering Observables
   * [`debounce` / `throttle`](http://reactivex.io/documentation/operators/debounce.html)
   * [`distinctUntilChanged`](http://reactivex.io/documentation/operators/distinct.html)
+  * [`elementAt`](http://reactivex.io/documentation/operators/elementat.html)
   * [`filter` / `where`](http://reactivex.io/documentation/operators/filter.html)
   * [`sample`](http://reactivex.io/documentation/operators/sample.html)
   * [`skip`](http://reactivex.io/documentation/operators/skip.html)
   * [`take`](http://reactivex.io/documentation/operators/take.html)
+  * [`takeLast`](http://reactivex.io/documentation/operators/takelast.html)
 
 #### Combining Observables
 
@@ -57,11 +61,13 @@ Operators are stateless by default.
   * [`observeOn` / `observeSingleOn`](http://reactivex.io/documentation/operators/observeon.html)
   * [`subscribe`](http://reactivex.io/documentation/operators/subscribe.html)
   * [`subscribeOn`](http://reactivex.io/documentation/operators/subscribeon.html)
+  * [`using`](http://reactivex.io/documentation/operators/using.html)
   * debug
 
 #### Conditional and Boolean Operators
   * [`amb`](http://reactivex.io/documentation/operators/amb.html)
   * [`skipWhile`](http://reactivex.io/documentation/operators/skipwhile.html)
+  * [`skipUntil`](http://reactivex.io/documentation/operators/skipuntil.html)
   * [`takeUntil`](http://reactivex.io/documentation/operators/takeuntil.html)
   * [`takeWhile`](http://reactivex.io/documentation/operators/takewhile.html)
 
@@ -69,6 +75,7 @@ Operators are stateless by default.
 
   * [`concat`](http://reactivex.io/documentation/operators/concat.html)
   * [`reduce` / `aggregate`](http://reactivex.io/documentation/operators/reduce.html)
+  * [`toArray`](http://reactivex.io/documentation/operators/to.html)
 
 #### Connectable Observable Operators
 
@@ -434,6 +441,6 @@ extension NSTextField {
     public var rx_delegate: DelegateProxy {}
 
     public var rx_text: ControlProperty<String> {}
-      
+
 }
 ```

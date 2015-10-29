@@ -12,36 +12,36 @@ class RefCountSink<CO: ConnectableObservableType, O: ObserverType where CO.E == 
     typealias Element = O.E
     typealias Parent = RefCount<CO>
     
-    let parent: Parent
+    private let _parent: Parent
     
     init(parent: Parent, observer: O, cancel: Disposable) {
-        self.parent = parent
+        _parent = parent
         super.init(observer: observer, cancel: cancel)
     }
     
     func run() -> Disposable {
-        let subscription = self.parent.source.subscribeSafe(self)
+        let subscription = _parent._source.subscribeSafe(self)
         
-        self.parent.lock.performLocked {
-            if parent.count == 0 {
-                parent.count = 1
-                parent.connectableSubscription = self.parent.source.connect()
+        _parent._lock.performLocked {
+            if _parent._count == 0 {
+                _parent._count = 1
+                _parent._connectableSubscription = _parent._source.connect()
             }
             else {
-                parent.count = parent.count + 1
+                _parent._count = _parent._count + 1
             }
         }
         
         return AnonymousDisposable {
             subscription.dispose()
-            self.parent.lock.performLocked {
-                if self.parent.count == 1 {
-                    self.parent.connectableSubscription!.dispose()
-                    self.parent.count = 0
-                    self.parent.connectableSubscription = nil
+            self._parent._lock.performLocked {
+                if self._parent._count == 1 {
+                    self._parent._connectableSubscription!.dispose()
+                    self._parent._count = 0
+                    self._parent._connectableSubscription = nil
                 }
-                else if self.parent.count > 1 {
-                    self.parent.count = self.parent.count - 1
+                else if self._parent._count > 1 {
+                    self._parent._count = self._parent._count - 1
                 }
                 else {
                     rxFatalError("Something went wrong with RefCount disposing mechanism")
@@ -56,22 +56,22 @@ class RefCountSink<CO: ConnectableObservableType, O: ObserverType where CO.E == 
             observer?.on(event)
         case .Error, .Completed:
             observer?.on(event)
-            self.dispose()
+            dispose()
         }
     }
 }
 
 class RefCount<CO: ConnectableObservableType>: Producer<CO.E> {
-    let lock = NSRecursiveLock()
+    private let _lock = NSRecursiveLock()
     
     // state
-    var count = 0
-    var connectableSubscription = nil as Disposable?
+    private var _count = 0
+    private var _connectableSubscription = nil as Disposable?
     
-    let source: CO
+    private let _source: CO
     
     init(source: CO) {
-        self.source = source
+        _source = source
     }
     
     override func run<O: ObserverType where O.E == CO.E>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {

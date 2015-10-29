@@ -21,7 +21,7 @@ example("catchError 1") {
     let sequenceThatFails = PublishSubject<Int>()
     let recoverySequence = sequenceOf(100, 200, 300, 400)
 
-    sequenceThatFails
+    _ = sequenceThatFails
         .catchError { error in
             return recoverySequence
         }
@@ -40,7 +40,7 @@ example("catchError 1") {
 example("catchError 2") {
     let sequenceThatFails = PublishSubject<Int>()
 
-    sequenceThatFails
+    _ = sequenceThatFails
         .catchErrorJustReturn(100)
         .subscribe {
             print($0)
@@ -83,7 +83,7 @@ example("retry") {
         return NopDisposable.instance
     }
 
-    funnyLookingSequence
+    _ = funnyLookingSequence
         .retry()
         .subscribe {
             print($0)

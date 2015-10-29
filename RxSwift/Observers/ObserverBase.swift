@@ -11,20 +11,17 @@ import Foundation
 class ObserverBase<ElementType> : Disposable, ObserverType {
     typealias E = ElementType
     
-    var isStopped: Int32 = 0
-    
-    init() {
-    }
+    private var _isStopped: Int32 = 0
     
     func on(event: Event<E>) {
         switch event {
         case .Next:
-            if isStopped == 0 {
+            if _isStopped == 0 {
                 onCore(event)
             }
         case .Error, .Completed:
            
-            if !OSAtomicCompareAndSwap32(0, 1, &isStopped) {
+            if !OSAtomicCompareAndSwap32(0, 1, &_isStopped) {
                 return
             }
             
@@ -37,6 +34,6 @@ class ObserverBase<ElementType> : Disposable, ObserverType {
     }
     
     func dispose() {
-        isStopped = 1
+        _isStopped = 1
     }
 }

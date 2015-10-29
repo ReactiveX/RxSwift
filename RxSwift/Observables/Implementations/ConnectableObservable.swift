@@ -11,27 +11,27 @@ import Foundation
 class Connection<S: SubjectType> : Disposable {
     
     // state
-    weak var parent: ConnectableObservable<S>?
-    var subscription : Disposable?
+    private weak var _parent: ConnectableObservable<S>?
+    private var _subscription : Disposable?
     
     init(parent: ConnectableObservable<S>, subscription: Disposable) {
-        self.parent = parent
-        self.subscription = subscription
+        _parent = parent
+        _subscription = subscription
     }
     
     func dispose() {
-        guard let parent = self.parent else { return }
+        guard let parent = _parent else { return }
         
-        parent.lock.performLocked {
-            guard let oldSubscription = self.subscription else {
+        parent._lock.performLocked {
+            guard let oldSubscription = _subscription else {
                 return
             }
             
-            self.subscription = nil
-            if self.parent?.connection === self {
-                parent.connection = nil
+            _subscription = nil
+            if _parent?._connection === self {
+                parent._connection = nil
             }
-            self.parent = nil
+            _parent = nil
             
             oldSubscription.dispose()
         }
@@ -41,34 +41,34 @@ class Connection<S: SubjectType> : Disposable {
 public class ConnectableObservable<S: SubjectType> : Observable<S.E>, ConnectableObservableType {
     typealias ConnectionType = Connection<S>
     
-    let subject: S
-    let source: Observable<S.SubjectObserverType.E>
+    private let _subject: S
+    private let _source: Observable<S.SubjectObserverType.E>
     
-    let lock = NSRecursiveLock()
+    private let _lock = NSRecursiveLock()
     
     // state
-    var connection: ConnectionType?
+    private var _connection: ConnectionType?
     
     public init(source: Observable<S.SubjectObserverType.E>, subject: S) {
-        self.source = AsObservable(source: source)
-        self.subject = subject
-        self.connection = nil
+        _source = source
+        _subject = subject
+        _connection = nil
     }
     
     public func connect() -> Disposable {
-        return self.lock.calculateLocked {
-            if let connection = self.connection {
+        return _lock.calculateLocked {
+            if let connection = _connection {
                 return connection
             }
             
-            let disposable = self.source.subscribeSafe(self.subject.asObserver())
+            let disposable = _source.subscribe(_subject.asObserver())
             let connection = Connection(parent: self, subscription: disposable)
-            self.connection = connection
+            _connection = connection
             return connection
         }
     }
     
     public override func subscribe<O : ObserverType where O.E == S.E>(observer: O) -> Disposable {
-        return subject.subscribeSafe(observer)
+        return _subject.subscribe(observer)
     }
 }

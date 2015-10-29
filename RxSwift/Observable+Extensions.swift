@@ -123,6 +123,6 @@ public extension ObservableType {
     */
     @warn_unused_result(message="http://git.io/rxs.ud")
     func subscribeSafe<O: ObserverType where O.E == E>(observer: O) -> Disposable {
-        return self.subscribe(observer)
+        return self.asObservable().subscribe(observer)
     }
 }

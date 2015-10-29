@@ -118,11 +118,11 @@ class TakeWhile<Element>: Producer<Element> {
         if let _ = _predicate {
             let sink = TakeWhileSink(parent: self, observer: observer, cancel: cancel)
             setSink(sink)
-            return _source.subscribeSafe(sink)
+            return _source.subscribe(sink)
         } else {
             let sink = TakeWhileSinkWithIndex(parent: self, observer: observer, cancel: cancel)
             setSink(sink)
-            return _source.subscribeSafe(sink)
+            return _source.subscribe(sink)
         }
     }
 }

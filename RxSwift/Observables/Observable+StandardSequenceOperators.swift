@@ -8,7 +8,7 @@
 
 import Foundation
 
-// filter aka where
+// MARK: filter aka where
 
 extension ObservableType {
     
@@ -25,7 +25,7 @@ extension ObservableType {
     }
 }
 
-// takeWhile
+// MARK: takeWhile
 
 extension ObservableType {
     
@@ -56,7 +56,7 @@ extension ObservableType {
     }
 }
 
-// take
+// MARK: take
 
 extension ObservableType {
     
@@ -77,8 +77,28 @@ extension ObservableType {
         }
     }
 }
+
+// MARK: takeLast
+
+extension ObservableType {
     
-// skip
+    /**
+    Returns a specified number of contiguous elements from the end of an observable sequence.
+     
+     This operator accumulates a buffer with a length enough to store elements count elements. Upon completion of the source sequence, this buffer is drained on the result sequence. This causes the elements to be delayed.
+     
+     - parameter count: Number of elements to take from the end of the source sequence.
+     - returns: An observable sequence containing the specified number of elements from the end of the source sequence.
+     */
+    @warn_unused_result(message="http://git.io/rxs.uo")
+    public func takeLast(count: Int)
+        -> Observable<E> {
+        return TakeLast(source: self.asObservable(), count: count)
+    }
+}
+
+
+// MARK: skip
 
 extension ObservableType {
     
@@ -95,7 +115,7 @@ extension ObservableType {
     }
 }
 
-// SkipWhile
+// MARK: SkipWhile
 
 extension ObservableType {
    
@@ -123,7 +143,7 @@ extension ObservableType {
     }
 }
 
-// map aka select
+// MARK: map aka select
 
 extension ObservableType {
     
@@ -152,7 +172,7 @@ extension ObservableType {
     }
 }
     
-// flatMap
+// MARK: flatMap
 
 extension ObservableType {
 
@@ -178,5 +198,22 @@ extension ObservableType {
     public func flatMapWithIndex<O: ObservableConvertibleType>(selector: (E, Int) throws -> O)
         -> Observable<O.E> {
         return FlatMap(source: self.asObservable(), selector: selector)
+    }
+}
+
+// elementAt
+
+extension ObservableType {
+    
+    /**
+    Returns a sequence emitting only item _n_ emitted by an Observable
+    
+    - parameter index: The index of the required item (starting from 0).
+    - returns: An observable sequence that emits the desired item as its own sole emission.
+    */
+    @warn_unused_result(message="http://git.io/rxs.uo")
+    public func elementAt(index: Int)
+        -> Observable<E> {
+            return ElementAt(source: self.asObservable(), index: index, throwOnEmpty: true)
     }
 }

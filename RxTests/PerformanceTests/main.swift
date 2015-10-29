@@ -9,6 +9,8 @@
 import Foundation
 import RxSwift
 import RxCocoa
+import AppKit
+import CoreLocation
 
 let NumberOfIterations = 1000
 
@@ -45,13 +47,24 @@ func measureMemoryUsage(@noescape work: () -> ()) -> (bytesAllocated: UInt64, al
     return (approxValuePerIteration(bytesAfter - bytes), approxValuePerIteration(allocationsAfter - allocations))
 }
 
+let bechmarkTime = true
+
 func compareTwoImplementations(@noescape first first: () -> (), @noescape second: () -> ()) {
     // first warm up to keep it fair
     first()
     second()
 
-    let time1 = measureTime(first)
-    let time2 = measureTime(second)
+    let time1: UInt64
+    let time2: UInt64
+
+    if bechmarkTime {
+        time1 = measureTime(first)
+        time2 = measureTime(second)
+    }
+    else {
+        time1 = 0
+        time2 = 0
+    }
 
     registerMallocHooks()
 
@@ -72,6 +85,18 @@ func compareTwoImplementations(@noescape first first: () -> (), @noescape second
 }
 
 compareTwoImplementations(first: {
+    let publishSubject = PublishSubject<Int>()
+
+    publishSubject
+        .shareReplay(1)
+        .subscribeNext { _ in
+            
+        }
+
+
+    for i in 0..<100 {
+        publishSubject.on(.Next(i))
+    }
 
 }, second: {
     

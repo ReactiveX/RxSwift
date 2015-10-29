@@ -9,14 +9,14 @@
 import Foundation
 
 class FailWith<Element> : Producer<Element> {
-    let error: ErrorType
+    private let _error: ErrorType
     
     init(error: ErrorType) {
-        self.error = error
+        _error = error
     }
     
     override func run<O : ObserverType where O.E == Element>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
-        observer.on(.Error(error))
+        observer.on(.Error(_error))
         return NopDisposable.instance
     }
 }
