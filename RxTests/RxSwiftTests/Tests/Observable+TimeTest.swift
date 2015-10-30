@@ -18,8 +18,7 @@ class ObservableTimeTest : RxTest {
     }
 }
 
-// throttle
-
+// MARK: Throttle
 extension ObservableTimeTest {
     func test_ThrottleTimeSpan_AllPass() {
         let scheduler = TestScheduler(initialClock: 0)
@@ -274,8 +273,7 @@ extension ObservableTimeTest {
     }
 }
 
-// sample
-
+// MARK: Sample
 extension ObservableTimeTest {
     func testSample_Sampler_SamplerThrows() {
         let scheduler = TestScheduler(initialClock: 0)
@@ -710,8 +708,7 @@ extension ObservableTimeTest {
     }
 }
 
-// interval
-
+// MARK: Interval
 extension ObservableTimeTest {
 
     func testInterval_TimeSpan_Basic() {
@@ -821,8 +818,7 @@ extension ObservableTimeTest {
     }
 }
 
-// take
-
+// MARK: Take
 extension ObservableTimeTest {
 
     func testTake_TakeZero() {
@@ -997,8 +993,7 @@ extension ObservableTimeTest {
 
 }
 
-// take
-
+// MARK: Delay Subscription
 extension ObservableTimeTest {
 
     func testDelaySubscription_TimeSpan_Simple() {
@@ -1073,7 +1068,7 @@ extension ObservableTimeTest {
     }
 }
 
-// skip
+// MARK: Skip
 extension ObservableTimeTest {
     func testSkip_Zero() {
         let scheduler = TestScheduler(initialClock: 0)
@@ -1183,9 +1178,9 @@ extension ObservableTimeTest {
     }
 }
 
-//
+// MARK: Buffer
 extension ObservableTimeTest {
-    func bufferWithTimeOrCount_Basic() {
+    func testBufferWithTimeOrCount_Basic() {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs = scheduler.createHotObservable([
@@ -1221,7 +1216,7 @@ extension ObservableTimeTest {
             ])
     }
     
-    func bufferWithTimeOrCount_Error() {
+    func testBufferWithTimeOrCount_Error() {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs = scheduler.createHotObservable([
@@ -1256,7 +1251,7 @@ extension ObservableTimeTest {
             ])
     }
     
-    func bufferWithTimeOrCount_Disposed() {
+    func testBufferWithTimeOrCount_Disposed() {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs = scheduler.createHotObservable([
@@ -1287,7 +1282,7 @@ extension ObservableTimeTest {
             ])
     }
 
-    func bufferWithTimeOrCount_Default() {
+    func testBufferWithTimeOrCount_Default() {
         let backgroundScheduler = SerialDispatchQueueScheduler(globalConcurrentQueuePriority: .Default)
         
         let result = try! range(1, 10, backgroundScheduler)
@@ -1297,6 +1292,212 @@ extension ObservableTimeTest {
             .first()
             
         XCTAssertEqual(result!, [4, 5, 6])
+    }
+    
+}
+
+// MARK: Window
+extension ObservableTimeTest {
+    func testWindowWithTimeOrCount_Basic() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createHotObservable([
+            next(205, 1),
+            next(210, 2),
+            next(240, 3),
+            next(280, 4),
+            next(320, 5),
+            next(350, 6),
+            next(370, 7),
+            next(420, 8),
+            next(470, 9),
+            completed(600)
+            ])
+        
+        let res = scheduler.start { () -> Observable<String> in
+            let window: Observable<Observable<Int>> = xs.window(timeSpan: 70, count: 3, scheduler: scheduler)
+            let mappedWithIndex = window.mapWithIndex { (o: Observable<Int>, i: Int) -> Observable<String> in
+                return o.map { (e: Int) -> String in
+                    return "\(i) \(e)"
+                }
+            }
+            let result = mappedWithIndex.merge()
+            return result
+        }
+        
+        XCTAssertEqual(res.messages, [
+            next(205, "0 1"),
+            next(210, "0 2"),
+            next(240, "0 3"),
+            next(280, "1 4"),
+            next(320, "2 5"),
+            next(350, "2 6"),
+            next(370, "2 7"),
+            next(420, "3 8"),
+            next(470, "4 9"),
+            completed(600)
+            ])
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 600)
+            ])
+    }
+    
+    func testWindowWithTimeOrCount_Error() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createHotObservable([
+            next(205, 1),
+            next(210, 2),
+            next(240, 3),
+            next(280, 4),
+            next(320, 5),
+            next(350, 6),
+            next(370, 7),
+            next(420, 8),
+            next(470, 9),
+            error(600, testError)
+            ])
+        
+        let res = scheduler.start { () -> Observable<String> in
+            let window: Observable<Observable<Int>> = xs.window(timeSpan: 70, count: 3, scheduler: scheduler)
+            let mappedWithIndex = window.mapWithIndex { (o: Observable<Int>, i: Int) -> Observable<String> in
+                return o.map { (e: Int) -> String in
+                    return "\(i) \(e)"
+                    }
+            }
+            let result = mappedWithIndex.merge()
+            return result
+        }
+        
+        XCTAssertEqual(res.messages, [
+            next(205, "0 1"),
+            next(210, "0 2"),
+            next(240, "0 3"),
+            next(280, "1 4"),
+            next(320, "2 5"),
+            next(350, "2 6"),
+            next(370, "2 7"),
+            next(420, "3 8"),
+            next(470, "4 9"),
+            error(600, testError)
+            ])
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 600)
+            ])
+    }
+    
+    func testWindowWithTimeOrCount_Disposed() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createHotObservable([
+            next(105, 0),
+            next(205, 1),
+            next(210, 2),
+            next(240, 3),
+            next(280, 4),
+            next(320, 5),
+            next(350, 6),
+            next(370, 7),
+            next(420, 8),
+            next(470, 9),
+            completed(600)
+            ])
+        
+        let res = scheduler.start(370) { () -> Observable<String> in
+            let window: Observable<Observable<Int>> = xs.window(timeSpan: 70, count: 3, scheduler: scheduler)
+            let mappedWithIndex = window.mapWithIndex { (o: Observable<Int>, i: Int) -> Observable<String> in
+                return o.map { (e: Int) -> String in
+                    return "\(i) \(e)"
+                }
+            }
+            let result = mappedWithIndex.merge()
+            return result
+        }
+        
+        XCTAssertEqual(res.messages, [
+            next(205, "0 1"),
+            next(210, "0 2"),
+            next(240, "0 3"),
+            next(280, "1 4"),
+            next(320, "2 5"),
+            next(350, "2 6"),
+            next(370, "2 7")
+            ])
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 370)
+            ])
+    }
+    
+    /*
+    func testWindowWithTimeOrCount_BasicPeriod() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createHotObservable([
+            next(150, 1),
+            next(210, 2),
+            next(240, 3),
+            next(270, 4),
+            next(320, 5),
+            next(360, 6),
+            next(390, 7),
+            next(410, 8),
+            next(460, 9),
+            next(470, 10),
+            completed(490)
+            ])
+        
+        let res = scheduler.start { () -> Observable<String> in
+            let window: Observable<Observable<Int>> = xs.window(timeSpan: 100, count: 3, scheduler: scheduler)
+            let mappedWithIndex = window.mapWithIndex { (o: Observable<Int>, i: Int) -> Observable<String> in
+                return o.map { (e: Int) -> String in
+                    return "\(i) \(e)"
+                    }.concat(just("\(i) end"))
+            }
+            let result = mappedWithIndex.merge()
+            return result
+        }
+        
+        XCTAssertEqual(res.messages, [
+            next(210, "0 2"),
+            next(240, "0 3"),
+            next(270, "0 4"),
+            next(300, "0 end"),
+            next(320, "1 5"),
+            next(360, "1 6"),
+            next(390, "1 7"),
+            next(400, "1 end"),
+            next(410, "2 8"),
+            next(460, "2 9"),
+            next(470, "2 10"),
+            next(490, "2 end"),
+            completed(490)
+            ])
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 490)
+            ])
+        
+    }*/
+    
+    func windowWithTimeOrCount_Default() {
+        let backgroundScheduler = SerialDispatchQueueScheduler(globalConcurrentQueuePriority: .Default)
+        
+        let result = try! range(1, 10, backgroundScheduler)
+            .window(timeSpan: 1000, count: 3, scheduler: backgroundScheduler)
+            .mapWithIndex { (o: Observable<Int>, i: Int) -> Observable<String> in
+                return o.map { (e: Int) -> String in
+                    return "\(i) \(e)"
+                    }
+            }
+            .merge()
+            .skip(4)
+            .toBlocking()
+            .first()
+    
+        XCTAssertEqual(result!, "1 5")
     }
     
 }
