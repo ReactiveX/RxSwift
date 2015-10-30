@@ -23,7 +23,7 @@ public class DelegateProxy : _RXDelegateProxy {
     
     private var subjectsForSelector = [Selector: PublishSubject<[AnyObject]>]()
 
-    unowned let parentObject: AnyObject
+    weak var parentObject: AnyObject?
     
     /**
     Initializes new instance.

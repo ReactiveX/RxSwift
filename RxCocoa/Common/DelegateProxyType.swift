@@ -224,25 +224,28 @@ extension ObservableType {
         let proxy: P = proxyForObject(object)
         let disposable = installDelegate(proxy, delegate: dataSource, retainDelegate: retainDataSource, onProxyForObject: object)
         
-        // we should never let the subscriber to complete because it should retain data source
-        let source = sequenceOf(self.asObservable(), never()) as Observable<Observable<E>>
-        let subscription = source.concat().subscribe { (event: Event<E>) in
-            MainScheduler.ensureExecutingOnScheduler()
-            
-            assert(proxy === P.currentDelegateFor(object), "Proxy changed from the time it was first set.\nOriginal: \(proxy)\nExisting: \(P.currentDelegateFor(object))")
-            
-            binding(proxy, event)
-            
-            switch event {
-            case .Error(let error):
-                bindingErrorToInterface(error)
-                disposable.dispose()
-            case .Completed:
-                disposable.dispose()
-            default:
-                break
+        let subscription = self.asObservable()
+            // source can't ever end, otherwise it will release the subscriber
+            .concat(never())
+            .subscribe { [weak object] (event: Event<E>) in
+                MainScheduler.ensureExecutingOnScheduler()
+
+                if let object = object {
+                    assert(proxy === P.currentDelegateFor(object), "Proxy changed from the time it was first set.\nOriginal: \(proxy)\nExisting: \(P.currentDelegateFor(object))")
+                }
+                
+                binding(proxy, event)
+                
+                switch event {
+                case .Error(let error):
+                    bindingErrorToInterface(error)
+                    disposable.dispose()
+                case .Completed:
+                    disposable.dispose()
+                default:
+                    break
+                }
             }
-        }
             
         return StableCompositeDisposable.create(subscription, disposable)
     }

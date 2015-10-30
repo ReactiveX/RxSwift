@@ -20,19 +20,20 @@ class RxScrollViewDelegateProxy : DelegateProxy
                                 , DelegateProxyType {
     private var _contentOffsetSubject: ReplaySubject<CGPoint>?
 
-    unowned let scrollView: UIScrollView
+    weak var scrollView: UIScrollView?
     
     var contentOffsetSubject: Observable<CGPoint> {
         if _contentOffsetSubject == nil {
-            _contentOffsetSubject = ReplaySubject.create(bufferSize: 1)
-            _contentOffsetSubject!.on(.Next(self.scrollView.contentOffset))
+            let replaySubject = ReplaySubject<CGPoint>.create(bufferSize: 1)
+            _contentOffsetSubject = replaySubject
+            replaySubject.on(.Next(self.scrollView?.contentOffset ?? CGPointZero))
         }
         
         return _contentOffsetSubject!
     }
     
     required init(parentObject: AnyObject) {
-        self.scrollView = parentObject as! UIScrollView
+        self.scrollView = (parentObject as! UIScrollView)
         super.init(parentObject: parentObject)
     }
     
@@ -40,7 +41,7 @@ class RxScrollViewDelegateProxy : DelegateProxy
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
         if let contentOffset = _contentOffsetSubject {
-            contentOffset.on(.Next(self.scrollView.contentOffset))
+            contentOffset.on(.Next(scrollView.contentOffset))
         }
         self._forwardToDelegate?.scrollViewDidScroll?(scrollView)
     }
@@ -48,7 +49,7 @@ class RxScrollViewDelegateProxy : DelegateProxy
     // delegate proxy
     
     override class func createProxyForObject(object: AnyObject) -> AnyObject {
-        let scrollView = object as! UIScrollView
+        let scrollView = (object as! UIScrollView)
         
         return castOrFatalError(scrollView.rx_createDelegateProxy())
     }

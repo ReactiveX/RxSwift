@@ -49,11 +49,15 @@ class ControlTests : RxTest {
     }
 
     func ensureEventDeallocated<C, T where C: NSObject>(createControl: () -> C, _ eventSelector: C -> ControlEvent<T>) {
+        return ensureEventDeallocated({ () -> (C, Disposable) in (createControl(), NopDisposable.instance) }, eventSelector)
+    }
+
+    func ensureEventDeallocated<C, T where C: NSObject>(createControl: () -> (C, Disposable), _ eventSelector: C -> ControlEvent<T>) {
         var completed = false
         var deallocated = false
 
         autoreleasepool {
-            var control: C! = createControl()
+            let (control, disposable) = createControl()
             let eventObservable = eventSelector(control)
 
             _ = eventObservable.subscribe(onNext: { n in
@@ -66,7 +70,7 @@ class ControlTests : RxTest {
                 deallocated = true
             }
 
-            control = nil
+            disposable.dispose()
         }
 
 

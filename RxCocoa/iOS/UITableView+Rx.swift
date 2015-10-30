@@ -54,7 +54,7 @@ extension UITableView {
             return cell
         }
         
-            return self.rx_itemsWithDataSource(dataSource)(source: source)
+        return self.rx_itemsWithDataSource(dataSource)(source: source)
     }
     
     /**
@@ -202,7 +202,7 @@ extension UITableView {
      Synchronous helper method for retrieving a model at indexPath through a reactive data source
      */
     public func rx_modelAtIndexPath<T>(indexPath: NSIndexPath) throws -> T {
-        let dataSource: RxCollectionViewReactiveArrayDataSource<T> = castOrFatalError(self.rx_dataSource.forwardToDelegate(), message: "This method only works in case one of the `rx_items*` methods was used.")
+        let dataSource: RxTableViewReactiveArrayDataSource<T> = castOrFatalError(self.rx_dataSource.forwardToDelegate(), message: "This method only works in case one of the `rx_items*` methods was used.")
         
         guard let element = dataSource.modelAtIndex(indexPath.item) else {
             throw rxError(.InvalidOperation, "Items not set yet.")

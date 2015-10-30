@@ -89,6 +89,9 @@ compareTwoImplementations(first: {
 
     publishSubject
         .shareReplay(1)
+        //.map { $0 }
+        //.filter { _ in true }// ){ x, _ in x }
+        //.map { $0 }
         .subscribeNext { _ in
             
         }
