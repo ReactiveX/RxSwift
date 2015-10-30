@@ -564,6 +564,18 @@
 		C8F0C0441BBBFBB9001B112F /* _RXSwizzling.h in Headers */ = {isa = PBXBuildFile; fileRef = C8093E881B8A732E0088E94D /* _RXSwizzling.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C8F0C0451BBBFBB9001B112F /* _RXKVOObserver.h in Headers */ = {isa = PBXBuildFile; fileRef = C8093E861B8A732E0088E94D /* _RXKVOObserver.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C8F0C04F1BBBFBCE001B112F /* ObservableConvertibleType+Blocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093F581B8A73A20088E94D /* ObservableConvertibleType+Blocking.swift */; };
+		CB883B3B1BE24355000AC2EE /* Window.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB883B3A1BE24355000AC2EE /* Window.swift */; };
+		CB883B3C1BE24355000AC2EE /* Window.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB883B3A1BE24355000AC2EE /* Window.swift */; };
+		CB883B3D1BE24355000AC2EE /* Window.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB883B3A1BE24355000AC2EE /* Window.swift */; };
+		CB883B3E1BE24355000AC2EE /* Window.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB883B3A1BE24355000AC2EE /* Window.swift */; };
+		CB883B401BE24C15000AC2EE /* RefCountDisposable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB883B3F1BE24C15000AC2EE /* RefCountDisposable.swift */; };
+		CB883B411BE24C15000AC2EE /* RefCountDisposable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB883B3F1BE24C15000AC2EE /* RefCountDisposable.swift */; };
+		CB883B421BE24C15000AC2EE /* RefCountDisposable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB883B3F1BE24C15000AC2EE /* RefCountDisposable.swift */; };
+		CB883B431BE24C15000AC2EE /* RefCountDisposable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB883B3F1BE24C15000AC2EE /* RefCountDisposable.swift */; };
+		CB883B451BE256D4000AC2EE /* BooleanDisposable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB883B441BE256D4000AC2EE /* BooleanDisposable.swift */; };
+		CB883B461BE256D4000AC2EE /* BooleanDisposable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB883B441BE256D4000AC2EE /* BooleanDisposable.swift */; };
+		CB883B471BE256D4000AC2EE /* BooleanDisposable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB883B441BE256D4000AC2EE /* BooleanDisposable.swift */; };
+		CB883B481BE256D4000AC2EE /* BooleanDisposable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB883B441BE256D4000AC2EE /* BooleanDisposable.swift */; };
 		CBEE771F1BD649A000AD584C /* ToArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBEE771E1BD649A000AD584C /* ToArray.swift */; };
 		CBEE77201BD649A000AD584C /* ToArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBEE771E1BD649A000AD584C /* ToArray.swift */; };
 		CBEE77211BD649A000AD584C /* ToArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBEE771E1BD649A000AD584C /* ToArray.swift */; };
@@ -1022,6 +1034,9 @@
 		C8F0C0021BBBFB8B001B112F /* RxSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8F0C04B1BBBFBB9001B112F /* RxCocoa.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxCocoa.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8F0C0581BBBFBCE001B112F /* RxBlocking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxBlocking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CB883B3A1BE24355000AC2EE /* Window.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Window.swift; sourceTree = "<group>"; };
+		CB883B3F1BE24C15000AC2EE /* RefCountDisposable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RefCountDisposable.swift; sourceTree = "<group>"; };
+		CB883B441BE256D4000AC2EE /* BooleanDisposable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BooleanDisposable.swift; sourceTree = "<group>"; };
 		CBEE771E1BD649A000AD584C /* ToArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToArray.swift; sourceTree = "<group>"; };
 		D2138C751BB9BE9800339B5C /* RxCocoa.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxCocoa.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2245A1A1BD5657300E7146F /* WithLatestFrom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WithLatestFrom.swift; sourceTree = "<group>"; };
@@ -1181,6 +1196,7 @@
 			children = (
 				C8093C541B8A72BE0088E94D /* AnonymousDisposable.swift */,
 				C8093C551B8A72BE0088E94D /* BinaryDisposable.swift */,
+				CB883B441BE256D4000AC2EE /* BooleanDisposable.swift */,
 				C8093C571B8A72BE0088E94D /* CompositeDisposable.swift */,
 				C8093C581B8A72BE0088E94D /* DisposeBag.swift */,
 				C8093C591B8A72BE0088E94D /* DisposeBase.swift */,
@@ -1188,6 +1204,7 @@
 				C8093C5A1B8A72BE0088E94D /* NAryDisposable.swift */,
 				C8093C5B1B8A72BE0088E94D /* NAryDisposable.tt */,
 				C8093C5C1B8A72BE0088E94D /* NopDisposable.swift */,
+				CB883B3F1BE24C15000AC2EE /* RefCountDisposable.swift */,
 				C8093C5D1B8A72BE0088E94D /* ScheduledDisposable.swift */,
 				C8093C5E1B8A72BE0088E94D /* ScopedDisposable.swift */,
 				C8093C5F1B8A72BE0088E94D /* SerialDisposable.swift */,
@@ -1217,8 +1234,6 @@
 		C8093C6A1B8A72BE0088E94D /* Implementations */ = {
 			isa = PBXGroup;
 			children = (
-				C84CC53F1BDC3B3700E06A64 /* ElementAt.swift */,
-				D2245A1A1BD5657300E7146F /* WithLatestFrom.swift */,
 				C8093C6B1B8A72BE0088E94D /* Amb.swift */,
 				C8C3DA111B93A3EA004D233E /* AnonymousObservable.swift */,
 				C821DBA11BA4DCAB008F3809 /* Buffer.swift */,
@@ -1234,6 +1249,7 @@
 				C8093C771B8A72BE0088E94D /* DelaySubscription.swift */,
 				C8093C781B8A72BE0088E94D /* DistinctUntilChanged.swift */,
 				C8093C791B8A72BE0088E94D /* Do.swift */,
+				C84CC53F1BDC3B3700E06A64 /* ElementAt.swift */,
 				C8C3DA051B9393AC004D233E /* Empty.swift */,
 				C8C3DA081B93941E004D233E /* FailWith.swift */,
 				C8093C7A1B8A72BE0088E94D /* Filter.swift */,
@@ -1257,6 +1273,7 @@
 				C8093C881B8A72BE0088E94D /* Sink.swift */,
 				C8093C891B8A72BE0088E94D /* Skip.swift */,
 				D285BAC31BC0231000B3F602 /* SkipUntil.swift */,
+				D22B6D251BC8504A00BCE0AB /* SkipWhile.swift */,
 				C8093C8A1B8A72BE0088E94D /* StartWith.swift */,
 				C8093C8B1B8A72BE0088E94D /* SubscribeOn.swift */,
 				C8093C8C1B8A72BE0088E94D /* Switch.swift */,
@@ -1267,12 +1284,13 @@
 				C8093C901B8A72BE0088E94D /* Throttle.swift */,
 				C8093C911B8A72BE0088E94D /* Timer.swift */,
 				CBEE771E1BD649A000AD584C /* ToArray.swift */,
+				D235B23D1BD003DD007E84DA /* Using.swift */,
+				CB883B3A1BE24355000AC2EE /* Window.swift */,
+				D2245A1A1BD5657300E7146F /* WithLatestFrom.swift */,
 				C8093C941B8A72BE0088E94D /* Zip.swift */,
 				C8093C921B8A72BE0088E94D /* Zip+arity.swift */,
 				C8093C931B8A72BE0088E94D /* Zip+arity.tt */,
 				C8C3D9FD1B935EDF004D233E /* Zip+CollectionType.swift */,
-				D22B6D251BC8504A00BCE0AB /* SkipWhile.swift */,
-				D235B23D1BD003DD007E84DA /* Using.swift */,
 			);
 			path = Implementations;
 			sourceTree = "<group>";
@@ -2164,12 +2182,14 @@
 				C8093CF01B8A72BE0088E94D /* StableCompositeDisposable.swift in Sources */,
 				D2245A1C1BD63C4600E7146F /* WithLatestFrom.swift in Sources */,
 				C8093D4E1B8A72BE0088E94D /* Zip+arity.swift in Sources */,
+				CB883B3C1BE24355000AC2EE /* Window.swift in Sources */,
 				C8093D4C1B8A72BE0088E94D /* Timer.swift in Sources */,
 				C8C3DA071B9393AC004D233E /* Empty.swift in Sources */,
 				C8093D881B8A72BE0088E94D /* RxBox.swift in Sources */,
 				C8093D3A1B8A72BE0088E94D /* Sink.swift in Sources */,
 				C8093D461B8A72BE0088E94D /* TakeUntil.swift in Sources */,
 				C8093D941B8A72BE0088E94D /* MainScheduler.swift in Sources */,
+				CB883B461BE256D4000AC2EE /* BooleanDisposable.swift in Sources */,
 				C84B38EF1BA433CD001B7D88 /* Generate.swift in Sources */,
 				C8093D161B8A72BE0088E94D /* Deferred.swift in Sources */,
 				C8093DA41B8A72BE0088E94D /* ReplaySubject.swift in Sources */,
@@ -2193,6 +2213,7 @@
 				C8093CD81B8A72BE0088E94D /* BinaryDisposable.swift in Sources */,
 				C89CDB371BCB0DD7002063D9 /* ShareReplay1.swift in Sources */,
 				C8093D2A1B8A72BE0088E94D /* ObserveOn.swift in Sources */,
+				CB883B411BE24C15000AC2EE /* RefCountDisposable.swift in Sources */,
 				C8093D361B8A72BE0088E94D /* Sample.swift in Sources */,
 				C84CC54F1BDCF48200E06A64 /* LockOwnerType.swift in Sources */,
 				D2752D621BC5551A0070C418 /* SkipUntil.swift in Sources */,
@@ -2292,12 +2313,14 @@
 				C8093CEF1B8A72BE0088E94D /* StableCompositeDisposable.swift in Sources */,
 				D2245A1B1BD5657300E7146F /* WithLatestFrom.swift in Sources */,
 				C8093D4D1B8A72BE0088E94D /* Zip+arity.swift in Sources */,
+				CB883B3B1BE24355000AC2EE /* Window.swift in Sources */,
 				C8093D4B1B8A72BE0088E94D /* Timer.swift in Sources */,
 				C8C3DA061B9393AC004D233E /* Empty.swift in Sources */,
 				C8093D871B8A72BE0088E94D /* RxBox.swift in Sources */,
 				C8093D391B8A72BE0088E94D /* Sink.swift in Sources */,
 				C8093D451B8A72BE0088E94D /* TakeUntil.swift in Sources */,
 				C8093D931B8A72BE0088E94D /* MainScheduler.swift in Sources */,
+				CB883B451BE256D4000AC2EE /* BooleanDisposable.swift in Sources */,
 				C84B38EE1BA433CD001B7D88 /* Generate.swift in Sources */,
 				C8093D151B8A72BE0088E94D /* Deferred.swift in Sources */,
 				C8093DA31B8A72BE0088E94D /* ReplaySubject.swift in Sources */,
@@ -2321,6 +2344,7 @@
 				C8093CD71B8A72BE0088E94D /* BinaryDisposable.swift in Sources */,
 				C89CDB361BCB0DD7002063D9 /* ShareReplay1.swift in Sources */,
 				C8093D291B8A72BE0088E94D /* ObserveOn.swift in Sources */,
+				CB883B401BE24C15000AC2EE /* RefCountDisposable.swift in Sources */,
 				C8093D351B8A72BE0088E94D /* Sample.swift in Sources */,
 				C84CC54E1BDCF48200E06A64 /* LockOwnerType.swift in Sources */,
 				D285BAC41BC0231000B3F602 /* SkipUntil.swift in Sources */,
@@ -2420,12 +2444,14 @@
 				C8F0BF9C1BBBFB8B001B112F /* StableCompositeDisposable.swift in Sources */,
 				D2245A1E1BD63C4A00E7146F /* WithLatestFrom.swift in Sources */,
 				C8F0BF9D1BBBFB8B001B112F /* Zip+arity.swift in Sources */,
+				CB883B3E1BE24355000AC2EE /* Window.swift in Sources */,
 				C8F0BF9E1BBBFB8B001B112F /* Timer.swift in Sources */,
 				C8F0BF9F1BBBFB8B001B112F /* Empty.swift in Sources */,
 				C8F0BFA01BBBFB8B001B112F /* RxBox.swift in Sources */,
 				C8F0BFA11BBBFB8B001B112F /* Sink.swift in Sources */,
 				C8F0BFA21BBBFB8B001B112F /* TakeUntil.swift in Sources */,
 				C8F0BFA31BBBFB8B001B112F /* MainScheduler.swift in Sources */,
+				CB883B481BE256D4000AC2EE /* BooleanDisposable.swift in Sources */,
 				C8F0BFA41BBBFB8B001B112F /* Generate.swift in Sources */,
 				C8F0BFA51BBBFB8B001B112F /* Deferred.swift in Sources */,
 				C8F0BFA61BBBFB8B001B112F /* ReplaySubject.swift in Sources */,
@@ -2449,6 +2475,7 @@
 				C8F0BFB61BBBFB8B001B112F /* BinaryDisposable.swift in Sources */,
 				C89CDB391BCB0DD7002063D9 /* ShareReplay1.swift in Sources */,
 				C8F0BFB71BBBFB8B001B112F /* ObserveOn.swift in Sources */,
+				CB883B431BE24C15000AC2EE /* RefCountDisposable.swift in Sources */,
 				C8F0BFB81BBBFB8B001B112F /* Sample.swift in Sources */,
 				C84CC5511BDCF48200E06A64 /* LockOwnerType.swift in Sources */,
 				D21C29311BC6A1C300448E70 /* SkipUntil.swift in Sources */,
@@ -2699,12 +2726,14 @@
 				D2EBEB1B1BB9B6C1003A27DC /* Repeat.swift in Sources */,
 				D2245A1D1BD63C4700E7146F /* WithLatestFrom.swift in Sources */,
 				D2EBEAF81BB9B6B2003A27DC /* ScopedDisposable.swift in Sources */,
+				CB883B3D1BE24355000AC2EE /* Window.swift in Sources */,
 				D2EBEAEA1BB9B697003A27DC /* SchedulerType.swift in Sources */,
 				D2EBEB031BB9B6C1003A27DC /* CombineLatest+CollectionType.swift in Sources */,
 				D2EBEADC1BB9B697003A27DC /* Cancelable.swift in Sources */,
 				D2EBEAE41BB9B697003A27DC /* ObservableType.swift in Sources */,
 				D2EBEB331BB9B6CA003A27DC /* Observable+Time.swift in Sources */,
 				D2EBEB191BB9B6C1003A27DC /* Reduce.swift in Sources */,
+				CB883B471BE256D4000AC2EE /* BooleanDisposable.swift in Sources */,
 				D2EBEB001BB9B6BA003A27DC /* Catch.swift in Sources */,
 				D2EBEB161BB9B6C1003A27DC /* ObserveOnSerialDispatchQueue.swift in Sources */,
 				D2EBEB061BB9B6C1003A27DC /* Debug.swift in Sources */,
@@ -2728,6 +2757,7 @@
 				D2EBEB091BB9B6C1003A27DC /* DistinctUntilChanged.swift in Sources */,
 				D2EBEB2A1BB9B6C5003A27DC /* Zip+CollectionType.swift in Sources */,
 				C89CDB381BCB0DD7002063D9 /* ShareReplay1.swift in Sources */,
+				CB883B421BE24C15000AC2EE /* RefCountDisposable.swift in Sources */,
 				D2EBEB401BB9B6DE003A27DC /* BehaviorSubject.swift in Sources */,
 				C84CC5501BDCF48200E06A64 /* LockOwnerType.swift in Sources */,
 				D2EBEB271BB9B6C1003A27DC /* Timer.swift in Sources */,
