@@ -54,6 +54,9 @@ class TakeCount<Element>: Producer<Element> {
     private let _count: Int
     
     init(source: Observable<Element>, count: Int) {
+        if count < 0 {
+            rxFatalError("count can't be negative")
+        }
         _source = source
         _count = count
     }

@@ -304,7 +304,7 @@ Let's create a function which creates a sequence that returns one element upon s
 func myJust<E>(element: E) -> Observable<E> {
     return create { observer in
         observer.on(.Next(element))
-        obsever.on(.Completed)
+        observer.on(.Completed)
         return NopDisposable.instance
     }
 }

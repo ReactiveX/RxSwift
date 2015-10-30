@@ -21,7 +21,7 @@ Transform the items emitted by an Observable by applying a function to each item
 example("map") {
     let originalSequence = sequenceOf(Character("A"), Character("B"), Character("C"))
 
-    originalSequence
+    _ = originalSequence
         .map { char in
             char.hashValue
         }
@@ -43,7 +43,7 @@ example("flatMap") {
 
     let sequenceString = sequenceOf("A", "B", "C", "D", "E", "F", "--")
 
-    sequenceInt
+    _ = sequenceInt
         .flatMap { int in
             sequenceString
         }
@@ -65,7 +65,7 @@ Apply a function to each item emitted by an Observable, sequentially, and emit e
 example("scan") {
     let sequenceToSum = sequenceOf(0, 1, 2, 3, 4, 5)
 
-    sequenceToSum
+    _ = sequenceToSum
         .scan(0) { acum, elem in
             acum + elem
         }
