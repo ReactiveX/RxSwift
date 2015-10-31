@@ -27,14 +27,14 @@ class FlatMapSinkIter<SourceType, S: ObservableConvertibleType, O: ObserverType 
     func on(event: Event<E>) {
         switch event {
         case .Next(let value):
-            _parent._lock.performLocked {
+            _parent._lock.lock(); defer { _parent._lock.unlock() } // lock {
                 _parent.observer?.on(.Next(value))
-            }
+            // }
         case .Error(let error):
-            _parent._lock.performLocked {
+            _parent._lock.lock(); defer { _parent._lock.unlock() } // lock {
                 _parent.observer?.on(.Error(error))
                 _parent.dispose()
-            }
+            // }
         case .Completed:
             _parent._group.removeDisposable(_disposeKey)
             // If this has returned true that means that `Completed` should be sent.
@@ -43,10 +43,10 @@ class FlatMapSinkIter<SourceType, S: ObservableConvertibleType, O: ObserverType 
             // it will set observer to nil, and thus prevent further complete messages
             // to be sent, and thus preserving the sequence grammar.
             if _parent._stopped && _parent._group.count == FlatMapNoIterators {
-                _parent._lock.performLocked {
+                _parent._lock.lock(); defer { _parent._lock.unlock() } // lock {
                     _parent.observer?.on(.Completed)
                     _parent.dispose()
-                }
+                // }
             }
         }
     }
@@ -90,27 +90,21 @@ class FlatMapSink<SourceType, S: ObservableConvertibleType, O: ObserverType wher
                 dispose()
             }
         case .Error(let error):
-            _lock.performLocked {
+            _lock.lock(); defer { _lock.unlock() } // lock {
                 observer?.on(.Error(error))
                 dispose()
-            }
+            // }
         case .Completed:
-            _lock.performLocked {
-                final()
-            }
-        }
-    }
-    
-    func final() {
-        _stopped = true
-        if _group.count == FlatMapNoIterators {
-            _lock.performLocked {
-                observer?.on(.Completed)
-                dispose()
-            }
-        }
-        else {
-            _sourceSubscription.dispose()
+            _lock.lock(); defer { _lock.unlock() } // lock {
+                _stopped = true
+                if _group.count == FlatMapNoIterators {
+                    observer?.on(.Completed)
+                    dispose()
+                }
+                else {
+                    _sourceSubscription.dispose()
+                }
+            //}
         }
     }
     
@@ -187,6 +181,5 @@ class FlatMap<SourceType, S: ObservableConvertibleType>: Producer<S.E> {
             setSink(sink)
             return sink.run()
         }
-        
     }
 }

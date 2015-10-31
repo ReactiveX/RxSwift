@@ -9,7 +9,7 @@
 import Foundation
 
 class Never<Element> : Producer<Element> {
-    override func run<O : ObserverType where O.E == Element>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
+    override func subscribe<O : ObserverType where O.E == Element>(observer: O) -> Disposable {
         return NopDisposable.instance
     }
 }

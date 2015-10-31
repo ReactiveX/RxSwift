@@ -21,14 +21,15 @@ func allocation() {
 compareTwoImplementations(benchmarkTime: true, first: {
     let publishSubject = PublishSubject<Int>()
 
-    let a = just(1)
+    //let a = just(1)
 
     //combineLatest(a,
         publishSubject
-        .shareReplay(1)
+        //.shareReplay(1)
         //.map { $0 }
         //.filter { _ in true }// ){ x, _ in x }
         //.map { $0 }
+        .flatMap { just($0) }
         .subscribeNext { _ in
             
         }
