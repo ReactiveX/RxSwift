@@ -10,7 +10,7 @@ import Foundation
 
 class Sink<O : ObserverType> : Disposable {
     private var _lock = SpinLock()
-    
+
     // state
     private var _observer: O?
     private var _cancel: Disposable
@@ -23,13 +23,6 @@ class Sink<O : ObserverType> : Disposable {
         }
     }
     
-    var cancel: Disposable {
-        get {
-            _lock.lock(); defer { _lock.unlock() }
-            return _cancel
-        }
-    }
-    
     init(observer: O, cancel: Disposable) {
 #if TRACE_RESOURCES
         OSAtomicIncrement32(&resourceCount)
@@ -38,7 +31,7 @@ class Sink<O : ObserverType> : Disposable {
         _cancel = cancel
     }
 
-    func _disposeInternal() -> Disposable? {
+    private func _disposeInternal() -> Disposable? {
         _lock.lock(); defer { _lock.unlock() }
 
         if _disposed {
