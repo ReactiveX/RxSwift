@@ -10,7 +10,7 @@ import Foundation
 
 // MARK: observeOn
 
-extension ObservableType {
+extension ObservableConvertibleType {
     
     /**
     Wraps the source sequence in order to run its observer callbacks on the specified scheduler.

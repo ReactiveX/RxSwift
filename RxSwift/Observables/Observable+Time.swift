@@ -9,7 +9,7 @@
 import Foundation
 
 // MARK: throttle
-extension ObservableType {
+extension ObservableConvertibleType {
     
     /**
     Ignores elements from an observable sequence which are followed by another element within a specified relative time duration, using the specified scheduler to run throttling timers.
@@ -44,7 +44,7 @@ extension ObservableType {
 
 // MARK: sample
 
-extension ObservableType {
+extension ObservableConvertibleType {
    
     /**
     Samples the source observable sequence using a samper observable sequence producing sampling ticks.
@@ -136,7 +136,7 @@ public func timer<S: SchedulerType>(dueTime: S.TimeInterval, _ scheduler: S)
 
 // MARK: take
 
-extension ObservableType {
+extension ObservableConvertibleType {
 
     /**
     Takes elements for the specified duration from the start of the observable source sequence, using the specified scheduler to run timers.
@@ -154,7 +154,7 @@ extension ObservableType {
 
 // MARK: skip
 
-extension ObservableType {
+extension ObservableConvertibleType {
     
     /**
     Skips elements for the specified duration from the start of the observable source sequence, using the specified scheduler to run timers.
@@ -173,7 +173,7 @@ extension ObservableType {
 
 // MARK: delaySubscription
 
-extension ObservableType {
+extension ObservableConvertibleType {
     
     /**
     Time shifts the observable sequence by delaying the subscription with the specified relative time duration, using the specified scheduler to run timers.
@@ -191,7 +191,7 @@ extension ObservableType {
 
 // MARK: buffer
 
-extension ObservableType {
+extension ObservableConvertibleType {
 
     /**
     Projects each element of an observable sequence into a buffer that's sent out when either it's full or a given amount of time has elapsed, using the specified scheduler to run timers.

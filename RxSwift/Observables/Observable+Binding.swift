@@ -10,7 +10,7 @@ import Foundation
 
 // MARK: multicast
 
-extension ObservableType {
+extension ObservableConvertibleType {
     
     /**
     Multicasts the source sequence notifications through the specified subject to the resulting connectable observable. 
@@ -52,7 +52,7 @@ extension ObservableType {
 
 // MARK: publish
 
-extension ObservableType {
+extension ObservableConvertibleType {
     
     /**
     Returns a connectable observable sequence that shares a single subscription to the underlying sequence. 
@@ -69,7 +69,7 @@ extension ObservableType {
 
 // MARK: replay
 
-extension ObservableType {
+extension ObservableConvertibleType {
     
     /**
     Returns a connectable observable sequence that shares a single subscription to the underlying sequence replaying bufferSize elements.
@@ -103,7 +103,7 @@ extension ConnectableObservableType {
 
 // MARK: share
 
-extension ObservableType {
+extension ObservableConvertibleType {
     
     /**
     Returns an observable sequence that shares a single subscription to the underlying sequence.
@@ -120,7 +120,7 @@ extension ObservableType {
 
 // MARK: shareReplay
 
-extension ObservableType {
+extension ObservableConvertibleType {
     
     /**
     Returns an observable sequence that shares a single subscription to the underlying sequence replaying notifications subject to a maximum time length for the replay buffer.

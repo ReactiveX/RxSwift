@@ -42,7 +42,7 @@ extension CollectionType where Generator.Element : ObservableConvertibleType {
 
 // MARK: switch
 
-extension ObservableType where E : ObservableConvertibleType {
+extension ObservableConvertibleType where E : ObservableConvertibleType {
     
     /**
     Transforms an observable sequence of observable sequences into an observable sequence
@@ -61,7 +61,7 @@ extension ObservableType where E : ObservableConvertibleType {
 
 // MARK: concat
 
-extension ObservableType {
+extension ObservableConvertibleType {
 
     /**
     Concatenates the second observable sequence to `self` upon successful termination of `self`.
@@ -89,7 +89,7 @@ extension SequenceType where Generator.Element : ObservableConvertibleType {
     }
 }
 
-extension ObservableType where E : ObservableConvertibleType {
+extension ObservableConvertibleType where E : ObservableConvertibleType {
     
     /**
     Concatenates all inner observable sequences, as long as the previous observable sequence terminated successfully.
@@ -104,7 +104,7 @@ extension ObservableType where E : ObservableConvertibleType {
 
 // MARK: merge
 
-extension ObservableType where E : ObservableConvertibleType {
+extension ObservableConvertibleType where E : ObservableConvertibleType {
     
     /**
     Merges elements from all observable sequences in the given enumerable sequence into a single observable sequence.
@@ -131,7 +131,7 @@ extension ObservableType where E : ObservableConvertibleType {
 
 // MARK: catch
 
-extension ObservableType {
+extension ObservableConvertibleType {
     
     /**
     Continues an observable sequence that is terminated by an error with the observable sequence produced by the handler.
@@ -174,7 +174,7 @@ extension SequenceType where Generator.Element : ObservableConvertibleType {
 
 // MARK: takeUntil
 
-extension ObservableType {
+extension ObservableConvertibleType {
     
     /**
     Returns the elements from the source observable sequence until the other observable sequence produces an element.
@@ -191,7 +191,7 @@ extension ObservableType {
 
 // MARK: skipUntil
 
-extension ObservableType {
+extension ObservableConvertibleType {
     
     /**
     Returns the elements from the source observable sequence until the other observable sequence produces an element.
@@ -208,7 +208,7 @@ extension ObservableType {
 
 // MARK: amb
 
-extension ObservableType {
+extension ObservableConvertibleType {
     
     /**
     Propagates the observable sequence that reacts first.
@@ -242,7 +242,7 @@ extension SequenceType where Generator.Element : ObservableConvertibleType {
 
 // withLatestFrom
 
-extension ObservableType {
+extension ObservableConvertibleType {
     
     /**
     Merges two observable sequences into one observable sequence by combining each element from self with the latest element from the second source, if any.
@@ -252,6 +252,6 @@ extension ObservableType {
     - returns: An observable sequence containing the result of combining each element of the self  with the latest element from the second source, if any, using the specified result selector function.
     */
     public func withLatestFrom<SecondO: ObservableType, ResultType>(second: SecondO, resultSelector: (E, SecondO.E) throws -> ResultType) -> Observable<ResultType> {
-        return WithLatestFrom(first: self, second: second, resultSelector: resultSelector)
+        return WithLatestFrom(first: self.asObservable(), second: second.asObservable(), resultSelector: resultSelector)
     }
 }

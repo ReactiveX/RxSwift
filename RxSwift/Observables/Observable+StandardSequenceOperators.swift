@@ -10,7 +10,7 @@ import Foundation
 
 // MARK: filter aka where
 
-extension ObservableType {
+extension ObservableConvertibleType {
     
     /**
     Filters the elements of an observable sequence based on a predicate.
@@ -27,7 +27,7 @@ extension ObservableType {
 
 // MARK: takeWhile
 
-extension ObservableType {
+extension ObservableConvertibleType {
     
     /**
     Returns elements from an observable sequence as long as a specified condition is true.
@@ -58,7 +58,7 @@ extension ObservableType {
 
 // MARK: take
 
-extension ObservableType {
+extension ObservableConvertibleType {
     
     /**
     Returns a specified number of contiguous elements from the start of an observable sequence.
@@ -80,7 +80,7 @@ extension ObservableType {
 
 // MARK: takeLast
 
-extension ObservableType {
+extension ObservableConvertibleType {
     
     /**
     Returns a specified number of contiguous elements from the end of an observable sequence.
@@ -100,7 +100,7 @@ extension ObservableType {
 
 // MARK: skip
 
-extension ObservableType {
+extension ObservableConvertibleType {
     
     /**
     Bypasses a specified number of elements in an observable sequence and then returns the remaining elements.
@@ -117,7 +117,7 @@ extension ObservableType {
 
 // MARK: SkipWhile
 
-extension ObservableType {
+extension ObservableConvertibleType {
    
     /**
     Bypasses elements in an observable sequence as long as a specified condition is true and then returns the remaining elements.
@@ -145,7 +145,7 @@ extension ObservableType {
 
 // MARK: map aka select
 
-extension ObservableType {
+extension ObservableConvertibleType {
     
     /**
     Projects each element of an observable sequence into a new form.
@@ -174,7 +174,7 @@ extension ObservableType {
     
 // MARK: flatMap
 
-extension ObservableType {
+extension ObservableConvertibleType {
 
     /**
     Projects each element of an observable sequence to an observable sequence and merges the resulting observable sequences into one observable sequence.
@@ -203,7 +203,7 @@ extension ObservableType {
 
 // elementAt
 
-extension ObservableType {
+extension ObservableConvertibleType {
     
     /**
     Returns a sequence emitting only item _n_ emitted by an Observable
