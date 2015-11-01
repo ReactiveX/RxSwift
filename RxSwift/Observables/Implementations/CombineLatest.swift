@@ -48,10 +48,10 @@ class CombineLatestSink<O: ObserverType>
         if _numberOfValues == _arity {
             do {
                 let result = try getResult()
-                observer?.on(.Next(result))
+                forwardOn(.Next(result))
             }
             catch let e {
-                observer?.on(.Error(e))
+                forwardOn(.Error(e))
                 dispose()
             }
         }
@@ -66,14 +66,14 @@ class CombineLatestSink<O: ObserverType>
             }
             
             if allOthersDone {
-                observer?.on(.Completed)
+                forwardOn(.Completed)
                 dispose()
             }
         }
     }
     
     func fail(error: ErrorType) {
-        observer?.on(.Error(error))
+        forwardOn(.Error(error))
         dispose()
     }
     
@@ -86,7 +86,7 @@ class CombineLatestSink<O: ObserverType>
         _numberOfDone++
 
         if _numberOfDone == _arity {
-            observer?.on(.Completed)
+            forwardOn(.Completed)
             dispose()
         }
     }

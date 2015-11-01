@@ -30,17 +30,17 @@ class GenerateSink<S, O: ObserverType> : Sink<O> {
                 
                 if try self._parent._condition(self._state) {
                     let result = try self._parent._resultSelector(self._state)
-                    self.observer?.on(.Next(result))
+                    self.forwardOn(.Next(result))
                     
                     recurse(false)
                 }
                 else {
-                    self.observer?.on(.Completed)
+                    self.forwardOn(.Completed)
                     self.dispose()
                 }
             }
             catch let error {
-                self.observer?.on(.Error(error))
+                self.forwardOn(.Error(error))
                 self.dispose()
             }
         }

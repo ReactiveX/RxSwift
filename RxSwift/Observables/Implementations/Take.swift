@@ -31,18 +31,18 @@ class TakeCountSink<ElementType, O: ObserverType where O.E == ElementType> : Sin
             if _remaining > 0 {
                 _remaining--
                 
-                observer?.on(.Next(value))
+                forwardOn(.Next(value))
             
                 if _remaining == 0 {
-                    observer?.on(.Completed)
+                    forwardOn(.Completed)
                     dispose()
                 }
             }
         case .Error:
-            observer?.on(event)
+            forwardOn(event)
             dispose()
         case .Completed:
-            observer?.on(event)
+            forwardOn(event)
             dispose()
         }
     }
@@ -94,12 +94,12 @@ class TakeTimeSink<ElementType, S: SchedulerType, O: ObserverType where O.E == E
     func _synchronized_on(event: Event<E>) {
         switch event {
         case .Next(let value):
-            observer?.on(.Next(value))
+            forwardOn(.Next(value))
         case .Error:
-            observer?.on(event)
+            forwardOn(event)
             dispose()
         case .Completed:
-            observer?.on(event)
+            forwardOn(event)
             dispose()
         }
     }
@@ -107,7 +107,7 @@ class TakeTimeSink<ElementType, S: SchedulerType, O: ObserverType where O.E == E
     func tick() {
         _lock.lock(); defer { _lock.unlock() }
 
-        observer?.on(.Completed)
+        forwardOn(.Completed)
         dispose()
     }
     

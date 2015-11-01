@@ -51,7 +51,7 @@ class CombineLatestCollectionTypeSink<C: CollectionType, R, O: ObserverType wher
                 if _numberOfValues < _parent._count {
                     let numberOfOthersThatAreDone = self._numberOfDone - (_isDone[atIndex] ? 1 : 0)
                     if numberOfOthersThatAreDone == self._parent._count - 1 {
-                        observer?.on(.Completed)
+                        forwardOn(.Completed)
                         dispose()
                     }
                     return
@@ -59,15 +59,15 @@ class CombineLatestCollectionTypeSink<C: CollectionType, R, O: ObserverType wher
                 
                 do {
                     let result = try _parent._resultSelector(_values.map { $0! })
-                    observer?.on(.Next(result))
+                    forwardOn(.Next(result))
                 }
                 catch let error {
-                    observer?.on(.Error(error))
+                    forwardOn(.Error(error))
                     dispose()
                 }
                 
             case .Error(let error):
-                observer?.on(.Error(error))
+                forwardOn(.Error(error))
                 dispose()
             case .Completed:
                 if _isDone[atIndex] {
@@ -78,7 +78,7 @@ class CombineLatestCollectionTypeSink<C: CollectionType, R, O: ObserverType wher
                 _numberOfDone++
                 
                 if _numberOfDone == self._parent._count {
-                    observer?.on(.Completed)
+                    forwardOn(.Completed)
                     dispose()
                 }
                 else {

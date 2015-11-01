@@ -37,15 +37,15 @@ class MergeSinkIter<S: ObservableConvertibleType, O: ObserverType where O.E == S
     func _synchronized_on(event: Event<E>) {
         switch event {
         case .Next:
-            _parent.observer?.on(event)
+            _parent.forwardOn(event)
         case .Error:
-            _parent.observer?.on(event)
+            _parent.forwardOn(event)
             _parent.dispose()
         case .Completed:
             _parent._group.removeDisposable(_disposeKey)
             
             if _parent._stopped && _parent._group.count == 1 {
-                _parent.observer?.on(.Completed)
+                _parent.forwardOn(.Completed)
                 _parent.dispose()
             }
         }
@@ -107,13 +107,13 @@ class MergeSink<S: ObservableConvertibleType, O: ObserverType where O.E == S.E>
         case .Next:
             rxFatalError("Next should have been handled")
         case .Error(let error):
-            observer?.on(.Error(error))
+            forwardOn(.Error(error))
             dispose()
         case .Completed:
             _stopped = true
             
             if _group.count == 1 {
-                observer?.on(.Completed)
+                forwardOn(.Completed)
                 dispose()
             }
             else {
@@ -152,9 +152,9 @@ class MergeConcurrentSinkIter<S: ObservableConvertibleType, O: ObserverType wher
     func _synchronized_on(event: Event<E>) {
         switch event {
         case .Next:
-            _parent.observer?.on(event)
+            _parent.forwardOn(event)
         case .Error:
-            _parent.observer?.on(event)
+            _parent.forwardOn(event)
             _parent.dispose()
         case .Completed:
             _parent._group.removeDisposable(_disposeKey)
@@ -167,7 +167,7 @@ class MergeConcurrentSinkIter<S: ObservableConvertibleType, O: ObserverType wher
                 _parent._activeCount = _parent._activeCount - 1
                 
                 if _parent._stopped && _parent._activeCount == 0 {
-                    _parent.observer?.on(.Completed)
+                    _parent.forwardOn(.Completed)
                     _parent.dispose()
                 }
             }
@@ -245,11 +245,11 @@ class MergeConcurrentSink<S: ObservableConvertibleType, O: ObserverType where S.
                 self.subscribe(value, group: _group)
             }
         case .Error(let error):
-            observer?.on(.Error(error))
+            forwardOn(.Error(error))
             dispose()
         case .Completed:
             if _activeCount == 0 {
-                observer?.on(.Completed)
+                forwardOn(.Completed)
                 dispose()
             }
             else {

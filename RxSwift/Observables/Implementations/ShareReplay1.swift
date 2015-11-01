@@ -23,7 +23,7 @@ class ShareReplay1<Element>
 
     let _lock = NSRecursiveLock()
 
-    private var _subscription: Disposable?
+    private var _connection: SingleAssignmentDisposable?
     private var _element: Element?
     private var _stopEvent = nil as Event<Element>?
     private var _observers = Bag<AnyObserver<Element>>()
@@ -31,7 +31,6 @@ class ShareReplay1<Element>
     init(source: Observable<Element>) {
         self._source = source
     }
-
 
     override func subscribe<O : ObserverType where O.E == E>(observer: O) -> Disposable {
         return synchronizedSubscribe(observer)
@@ -52,7 +51,10 @@ class ShareReplay1<Element>
         let disposeKey = self._observers.insert(AnyObserver(observer))
 
         if initialCount == 0 {
-            self._subscription = self._source.subscribe(self)
+            let connection = SingleAssignmentDisposable()
+            _connection = connection
+
+            connection.disposable = self._source.subscribe(self)
         }
 
         return SubscriptionDisposable(owner: self, key: disposeKey)
@@ -64,9 +66,9 @@ class ShareReplay1<Element>
             return
         }
 
-        if self._observers.count == 0 {
-            self._subscription?.dispose()
-            self._subscription = nil
+        if _observers.count == 0 {
+            _connection?.dispose()
+            _connection = nil
         }
     }
 
@@ -75,16 +77,18 @@ class ShareReplay1<Element>
     }
 
     func _synchronized_on(event: Event<E>) {
-        if self._stopEvent != nil {
+        if _stopEvent != nil {
             return
         }
 
         if case .Next(let element) = event {
-            self._element = element
+            _element = element
         }
 
         if event.isStopEvent {
-            self._stopEvent = event
+            _stopEvent = event
+            _connection?.dispose()
+            _connection = nil
         }
 
         _observers.on(event)

@@ -21,16 +21,7 @@ class SkipUntilSinkOther<ElementType, Other, O: ObserverType where O.E == Elemen
         return _parent._lock
     }
     
-    private let _subscription = SingleAssignmentDisposable()
-
-    var subscription: Disposable {
-        get {
-            abstractMethod()
-        }
-        set {
-            _subscription.disposable = newValue
-        }
-    }
+    let _subscription = SingleAssignmentDisposable()
 
     init(parent: Parent) {
         _parent = parent
@@ -49,7 +40,7 @@ class SkipUntilSinkOther<ElementType, Other, O: ObserverType where O.E == Elemen
             _parent._forwardElements = true
             _subscription.dispose()
         case .Error(let e):
-            _parent.observer?.onError(e)
+            _parent.forwardOn(.Error(e))
             _parent.dispose()
         case .Completed:
             _subscription.dispose()
@@ -92,14 +83,14 @@ class SkipUntilSink<ElementType, Other, O: ObserverType where O.E == ElementType
         switch event {
         case .Next:
             if _forwardElements {
-                observer?.on(event)
+                forwardOn(event)
             }
         case .Error:
-            observer?.on(event)
+            forwardOn(event)
             dispose()
         case .Completed:
             if _forwardElements {
-                observer?.on(event)
+                forwardOn(event)
             }
             _sourceSubscription.dispose()
         }
@@ -110,9 +101,9 @@ class SkipUntilSink<ElementType, Other, O: ObserverType where O.E == ElementType
         let otherObserver = SkipUntilSinkOther(parent: self)
         let otherSubscription = _parent._other.subscribe(otherObserver)
         _sourceSubscription.disposable = sourceSubscription
-        otherObserver.subscription = otherSubscription
+        otherObserver._subscription.disposable = otherSubscription
         
-        return StableCompositeDisposable.create(sourceSubscription, otherSubscription)
+        return StableCompositeDisposable.create(_sourceSubscription, otherObserver._subscription)
     }
 }
 

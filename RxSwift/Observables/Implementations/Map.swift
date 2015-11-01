@@ -31,17 +31,17 @@ class MapSink<SourceType, O : ObserverType> : Sink<O>, ObserverType {
         case .Next(let element):
             do {
                 let mappedElement = try performMap(element)
-                observer?.on(.Next(mappedElement))
+                forwardOn(.Next(mappedElement))
             }
             catch let e {
-                observer?.on(.Error(e))
+                forwardOn(.Error(e))
                 dispose()
             }
         case .Error(let error):
-            observer?.on(.Error(error))
+            forwardOn(.Error(error))
             dispose()
         case .Completed:
-            observer?.on(.Completed)
+            forwardOn(.Completed)
             dispose()
         }
     }

@@ -31,13 +31,13 @@ class TakeLastSink<ElementType, O: ObserverType where O.E == ElementType> : Sink
                 _elements.dequeue()
             }
         case .Error:
-            observer?.on(event)
+            forwardOn(event)
             dispose()
         case .Completed:
             for e in _elements {
-                observer?.on(.Next(e))
+                forwardOn(.Next(e))
             }
-            observer?.on(.Completed)
+            forwardOn(.Completed)
             dispose()
         }
     }

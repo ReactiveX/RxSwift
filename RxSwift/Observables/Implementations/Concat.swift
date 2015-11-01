@@ -19,9 +19,9 @@ class ConcatSink<S: SequenceType, O: ObserverType where S.Generator.Element : Ob
     override func on(event: Event<Element>){
         switch event {
         case .Next:
-            observer?.on(event)
+            forwardOn(event)
         case .Error:
-            observer?.on(event)
+            forwardOn(event)
             dispose()
         case .Completed:
             scheduleMoveNext()

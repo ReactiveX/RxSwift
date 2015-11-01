@@ -26,7 +26,7 @@ class Debug_<O: ObserverType> : Sink<O>, ObserverType {
             ? String(eventText.characters.prefix(maxEventTextLength / 2)) + "..." + String(eventText.characters.suffix(maxEventTextLength / 2))
             : eventText
         print("[\(_parent._identifier)] -> Event \(eventNormalized)")
-        observer?.on(event)
+        forwardOn(event)
     }
     
     override func dispose() {

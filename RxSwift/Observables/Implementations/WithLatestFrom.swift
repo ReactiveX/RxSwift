@@ -49,16 +49,16 @@ class WithLatestFromSink<FirstType, SecondType, ResultType, O: ObserverType wher
             do {
                 let res = try _parent._resultSelector(value, latest)
                 
-                observer?.onNext(res)
+                forwardOn(.Next(res))
             } catch let e {
-                observer?.onError(e)
+                forwardOn(.Error(e))
                 dispose()
             }
         case .Completed:
-            observer?.onComplete()
+            forwardOn(.Completed)
             dispose()
         case let .Error(error):
-            observer?.onError(error)
+            forwardOn(.Error(error))
             dispose()
         }
     }
@@ -97,7 +97,7 @@ class WithLatestFromSecond<FirstType, SecondType, ResultType, O: ObserverType wh
         case .Completed:
             _disposable.dispose()
         case let .Error(error):
-            _parent.observer?.onError(error)
+            _parent.forwardOn(.Error(error))
             _parent.dispose()
         }
     }

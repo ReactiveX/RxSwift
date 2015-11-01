@@ -53,10 +53,10 @@ class ZipSink<O: ObserverType> : Sink<O>, ZipSinkProtocol {
         if hasValueAll {
             do {
                 let result = try getResult()
-                self.observer?.on(.Next(result))
+                self.forwardOn(.Next(result))
             }
             catch let e {
-                self.observer?.on(.Error(e))
+                self.forwardOn(.Error(e))
                 dispose()
             }
         }
@@ -72,14 +72,14 @@ class ZipSink<O: ObserverType> : Sink<O>, ZipSinkProtocol {
             }
             
             if allOthersDone {
-                observer?.on(.Completed)
+                forwardOn(.Completed)
                 self.dispose()
             }
         }
     }
     
     func fail(error: ErrorType) {
-        observer?.on(.Error(error))
+        forwardOn(.Error(error))
         dispose()
     }
     
@@ -96,7 +96,7 @@ class ZipSink<O: ObserverType> : Sink<O>, ZipSinkProtocol {
         }
         
         if allDone {
-            observer?.on(.Completed)
+            forwardOn(.Completed)
             dispose()
         }
     }

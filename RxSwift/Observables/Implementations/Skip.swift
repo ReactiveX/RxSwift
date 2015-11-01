@@ -29,16 +29,16 @@ class SkipCountSink<ElementType, O: ObserverType where O.E == ElementType> : Sin
         case .Next(let value):
             
             if remaining <= 0 {
-                observer?.on(.Next(value))
+                forwardOn(.Next(value))
             }
             else {
                 remaining--
             }
         case .Error:
-            observer?.on(event)
+            forwardOn(event)
             self.dispose()
         case .Completed:
-            observer?.on(event)
+            forwardOn(event)
             self.dispose()
         }
     }
@@ -82,13 +82,13 @@ class SkipTimeSink<ElementType, S: SchedulerType, O: ObserverType where O.E == E
         switch event {
         case .Next(let value):
             if open {
-                observer?.on(.Next(value))
+                forwardOn(.Next(value))
             }
         case .Error:
-            observer?.on(event)
+            forwardOn(event)
             self.dispose()
         case .Completed:
-            observer?.on(event)
+            forwardOn(event)
             self.dispose()
         }
     }

@@ -33,14 +33,14 @@ class MulticastSink<S: SubjectType, O: ObserverType>: Sink<O>, ObserverType {
             return BinaryDisposable(subscription, connection)
         }
         catch let e {
-            observer?.on(.Error(e))
+            forwardOn(.Error(e))
             dispose()
             return NopDisposable.instance
         }
     }
     
     func on(event: Event<ResultType>) {
-        observer?.on(event)
+        forwardOn(event)
         switch event {
             case .Next: break
             case .Error, .Completed:

@@ -22,13 +22,13 @@ class DoSink<O: ObserverType> : Sink<O>, ObserverType {
     func on(event: Event<Element>) {
         do {
             try _parent._eventHandler(event)
-            observer?.on(event)
+            forwardOn(event)
             if event.isStopEvent {
                 dispose()
             }
         }
         catch let error {
-            observer?.on(.Error(error))
+            forwardOn(.Error(error))
             dispose()
         }
     }

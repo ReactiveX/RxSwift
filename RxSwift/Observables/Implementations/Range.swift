@@ -47,11 +47,11 @@ class RangeSink<_CompilerWorkaround, O: ObserverType where O.E == Int> : Sink<O>
     func run() -> Disposable {
         return _parent._scheduler.scheduleRecursive(0) { i, recurse in
             if i < self._parent._count {
-                self.observer?.on(.Next(self._parent._start + i))
+                self.forwardOn(.Next(self._parent._start + i))
                 recurse(i + 1)
             }
             else {
-                self.observer?.on(.Completed)
+                self.forwardOn(.Completed)
                 self.dispose()
             }
         }

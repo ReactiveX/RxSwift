@@ -22,7 +22,7 @@ class DelaySubscriptionSink<ElementType, O: ObserverType, S: SchedulerType where
     }
     
     func on(event: Event<E>) {
-        observer?.on(event)
+        forwardOn(event)
         if event.isStopEvent {
             dispose()
         }

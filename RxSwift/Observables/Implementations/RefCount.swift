@@ -55,9 +55,9 @@ class RefCountSink<CO: ConnectableObservableType, O: ObserverType where CO.E == 
     func on(event: Event<Element>) {
         switch event {
         case .Next:
-            observer?.on(event)
+            forwardOn(event)
         case .Error, .Completed:
-            observer?.on(event)
+            forwardOn(event)
             dispose()
         }
     }

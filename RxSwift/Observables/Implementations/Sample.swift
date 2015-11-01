@@ -38,23 +38,23 @@ class SamplerSink<O: ObserverType, ElementType, SampleType where O.E == ElementT
                     _parent._element = nil
                 }
                 
-                _parent.observer?.on(.Next(element))
+                _parent.forwardOn(.Next(element))
             }
 
             if _parent._atEnd {
-                _parent.observer?.on(.Completed)
+                _parent.forwardOn(.Completed)
                 _parent.dispose()
             }
         case .Error(let e):
-            _parent.observer?.on(.Error(e))
+            _parent.forwardOn(.Error(e))
             _parent.dispose()
         case .Completed:
             if let element = _parent._element {
                 _parent._element = nil
-                _parent.observer?.on(.Next(element))
+                _parent.forwardOn(.Next(element))
             }
             if _parent._atEnd {
-                _parent.observer?.on(.Completed)
+                _parent.forwardOn(.Completed)
                 _parent.dispose()
             }
         }
@@ -100,7 +100,7 @@ class SampleSequenceSink<O: ObserverType, SampleType>
         case .Next(let element):
             _element = element
         case .Error:
-            observer?.on(event)
+            forwardOn(event)
             dispose()
         case .Completed:
             _atEnd = true

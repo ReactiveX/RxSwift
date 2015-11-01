@@ -33,19 +33,19 @@ class TakeWhileSink<ElementType, O: ObserverType where O.E == ElementType>
             do {
                 _running = try _parent._predicate(value)
             } catch let e {
-                observer?.onError(e)
+                forwardOn(.Error(e))
                 dispose()
                 return
             }
             
             if _running {
-                observer?.onNext(value)
+                forwardOn(.Next(value))
             } else {
-                observer?.onComplete()
+                forwardOn(.Completed)
                 dispose()
             }
         case .Error, .Completed:
-            observer?.on(event)
+            forwardOn(event)
             dispose()
         }
     }
@@ -79,19 +79,19 @@ class TakeWhileSinkWithIndex<ElementType, O: ObserverType where O.E == ElementTy
                 _running = try _parent._predicateWithIndex(value, _index)
                 try incrementChecked(&_index)
             } catch let e {
-                observer?.onError(e)
+                forwardOn(.Error(e))
                 dispose()
                 return
             }
             
             if _running {
-                observer?.onNext(value)
+                forwardOn(.Next(value))
             } else {
-                observer?.onComplete()
+                forwardOn(.Completed)
                 dispose()
             }
         case .Error, .Completed:
-            observer?.on(event)
+            forwardOn(event)
             dispose()
         }
     }

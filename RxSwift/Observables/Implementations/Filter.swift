@@ -26,15 +26,15 @@ class FilterSink<O : ObserverType>: Sink<O>, ObserverType {
                 do {
                     let satisfies = try _parent._predicate(value)
                     if satisfies {
-                        observer?.on(.Next(value))
+                        forwardOn(.Next(value))
                     }
                 }
                 catch let e {
-                    observer?.on(.Error(e))
+                    forwardOn(.Error(e))
                     dispose()
                 }
             case .Completed, .Error:
-                observer?.on(event)
+                forwardOn(event)
                 dispose()
         }
     }

@@ -43,12 +43,12 @@ class UsingSink<SourceType, ResourceType: Disposable, O: ObserverType where O.E 
     func on(event: Event<E>) {
         switch event {
         case let .Next(value):
-            observer?.onNext(value)
+            forwardOn(.Next(value))
         case let .Error(error):
-            observer?.onError(error)
+            forwardOn(.Error(error))
             dispose()
         case .Completed:
-            observer?.onComplete()
+            forwardOn(.Completed)
             dispose()
         }
     }

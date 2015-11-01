@@ -27,27 +27,27 @@ class ElementAtSink<SourceType, O: ObserverType where O.E == SourceType> : Sink<
         case .Next(_):
 
             if (_i == 0) {
-                observer?.on(event)
-                observer?.on(.Completed)
+                forwardOn(event)
+                forwardOn(.Completed)
                 self.dispose()
             }
             
             do {
                 try decrementChecked(&_i)
             } catch(let e) {
-                observer?.onError(e)
+                forwardOn(.Error(e))
                 dispose()
                 return
             }
             
         case .Error(let e):
-            observer?.on(.Error(e))
+            forwardOn(.Error(e))
             self.dispose()
         case .Completed:
             if (_parent._throwOnEmpty) {
-                observer?.onError(RxError.ArgumentOutOfRange)
+                forwardOn(.Error(RxError.ArgumentOutOfRange))
             } else {
-                observer?.on(.Completed)
+                forwardOn(.Completed)
             }
             
             self.dispose()

@@ -21,16 +21,7 @@ class TakeUntilSinkOther<ElementType, Other, O: ObserverType where O.E == Elemen
         return _parent._lock
     }
     
-    private let _singleAssignmentDisposable = SingleAssignmentDisposable()
-    
-    var disposable: Disposable {
-        get {
-            abstractMethod()
-        }
-        set(value) {
-            _singleAssignmentDisposable.disposable = value
-        }
-    }
+    private let _subscription = SingleAssignmentDisposable()
     
     init(parent: Parent) {
         _parent = parent
@@ -46,14 +37,14 @@ class TakeUntilSinkOther<ElementType, Other, O: ObserverType where O.E == Elemen
     func _synchronized_on(event: Event<E>) {
         switch event {
         case .Next:
-            _parent.observer?.on(.Completed)
+            _parent.forwardOn(.Completed)
             _parent.dispose()
         case .Error(let e):
-            _parent.observer?.on(.Error(e))
+            _parent.forwardOn(.Error(e))
             _parent.dispose()
         case .Completed:
             _parent._open = true
-            _singleAssignmentDisposable.dispose()
+            _subscription.dispose()
         }
     }
     
@@ -91,12 +82,12 @@ class TakeUntilSink<ElementType, Other, O: ObserverType where O.E == ElementType
     func _synchronized_on(event: Event<E>) {
         switch event {
         case .Next:
-            observer?.on(event)
+            forwardOn(event)
         case .Error:
-            observer?.on(event)
+            forwardOn(event)
             dispose()
         case .Completed:
-            observer?.on(event)
+            forwardOn(event)
             dispose()
         }
     }
@@ -104,10 +95,10 @@ class TakeUntilSink<ElementType, Other, O: ObserverType where O.E == ElementType
     func run() -> Disposable {
         let otherObserver = TakeUntilSinkOther(parent: self)
         let otherSubscription = _parent._other.subscribe(otherObserver)
-        otherObserver.disposable = otherSubscription
+        otherObserver._subscription.disposable = otherSubscription
         let sourceSubscription = _parent._source.subscribe(self)
         
-        return StableCompositeDisposable.create(sourceSubscription, otherSubscription)
+        return StableCompositeDisposable.create(sourceSubscription, otherObserver._subscription)
     }
 }
 

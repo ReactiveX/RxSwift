@@ -28,11 +28,11 @@ class FlatMapSinkIter<SourceType, S: ObservableConvertibleType, O: ObserverType 
         switch event {
         case .Next(let value):
             _parent._lock.lock(); defer { _parent._lock.unlock() } // lock {
-                _parent.observer?.on(.Next(value))
+                _parent.forwardOn(.Next(value))
             // }
         case .Error(let error):
             _parent._lock.lock(); defer { _parent._lock.unlock() } // lock {
-                _parent.observer?.on(.Error(error))
+                _parent.forwardOn(.Error(error))
                 _parent.dispose()
             // }
         case .Completed:
@@ -44,7 +44,7 @@ class FlatMapSinkIter<SourceType, S: ObservableConvertibleType, O: ObserverType 
             // to be sent, and thus preserving the sequence grammar.
             if _parent._stopped && _parent._group.count == FlatMapNoIterators {
                 _parent._lock.lock(); defer { _parent._lock.unlock() } // lock {
-                    _parent.observer?.on(.Completed)
+                    _parent.forwardOn(.Completed)
                     _parent.dispose()
                 // }
             }
@@ -86,19 +86,19 @@ class FlatMapSink<SourceType, S: ObservableConvertibleType, O: ObserverType wher
                 subscribeInner(value.asObservable())
             }
             catch let e {
-                observer?.on(.Error(e))
+                forwardOn(.Error(e))
                 dispose()
             }
         case .Error(let error):
             _lock.lock(); defer { _lock.unlock() } // lock {
-                observer?.on(.Error(error))
+                forwardOn(.Error(error))
                 dispose()
             // }
         case .Completed:
             _lock.lock(); defer { _lock.unlock() } // lock {
                 _stopped = true
                 if _group.count == FlatMapNoIterators {
-                    observer?.on(.Completed)
+                    forwardOn(.Completed)
                     dispose()
                 }
                 else {

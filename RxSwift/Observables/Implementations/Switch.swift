@@ -57,7 +57,7 @@ class SwitchSink<S: ObservableConvertibleType, O: ObserverType where S.E == O.E>
             let disposable = observable.asObservable().subscribe(observer)
             d.disposable = disposable
         case .Error(let error):
-            observer?.on(.Error(error))
+            forwardOn(.Error(error))
             dispose()
         case .Completed:
             _stopped = true
@@ -65,7 +65,7 @@ class SwitchSink<S: ObservableConvertibleType, O: ObserverType where S.E == O.E>
             _subscriptions.dispose()
             
             if !_hasLatest {
-                observer?.on(.Completed)
+                forwardOn(.Completed)
                 dispose()
             }
         }
@@ -108,18 +108,16 @@ class SwitchSinkIter<S: ObservableConvertibleType, O: ObserverType where S.E == 
             return
         }
        
-        let observer = _parent.observer
-        
         switch event {
         case .Next:
-            observer?.on(event)
+            _parent.forwardOn(event)
         case .Error:
-            observer?.on(event)
+            _parent.forwardOn(event)
             _parent.dispose()
         case .Completed:
             _parent._hasLatest = false
             if _parent._stopped {
-                observer?.on(event)
+                _parent.forwardOn(event)
                 _parent.dispose()
             }
         }

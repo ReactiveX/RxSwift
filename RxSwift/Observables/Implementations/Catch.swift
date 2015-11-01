@@ -21,7 +21,7 @@ class CatchSinkProxy<O: ObserverType> : ObserverType {
     }
     
     func on(event: Event<E>) {
-        _parent.observer?.on(event)
+        _parent.forwardOn(event)
         
         switch event {
         case .Next:
@@ -55,9 +55,9 @@ class CatchSink<O: ObserverType> : Sink<O>, ObserverType {
     func on(event: Event<E>) {
         switch event {
         case .Next:
-            observer?.on(event)
+            forwardOn(event)
         case .Completed:
-            observer?.on(event)
+            forwardOn(event)
             dispose()
         case .Error(let error):
             do {
@@ -68,7 +68,7 @@ class CatchSink<O: ObserverType> : Sink<O>, ObserverType {
                 _subscription.disposable = catchSequence.subscribe(observer)
             }
             catch let e {
-                observer?.on(.Error(e))
+                forwardOn(.Error(e))
                 dispose()
             }
         }
@@ -108,22 +108,22 @@ class CatchSequenceSink<S: SequenceType, O: ObserverType where S.Generator.Eleme
     override func on(event: Event<Element>) {
         switch event {
         case .Next:
-            observer?.on(event)
+            forwardOn(event)
         case .Error(let error):
             _lastError = error
             scheduleMoveNext()
         case .Completed:
-            observer?.on(event)
+            forwardOn(event)
             dispose()
         }
     }
     
     override func done() {
         if let lastError = _lastError {
-            observer?.on(.Error(lastError))
+            forwardOn(.Error(lastError))
         }
         else {
-            observer?.on(.Completed)
+            forwardOn(.Completed)
         }
         
         self.dispose()

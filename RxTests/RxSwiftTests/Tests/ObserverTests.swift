@@ -80,7 +80,7 @@ extension ObserverTests {
         observer.onNext(0)
         XCTAssertEqual(elements, [0])
 
-        observer.onComplete()
+        observer.onCompleted()
 
         observer.onNext(1)
         XCTAssertEqual(elements, [0])

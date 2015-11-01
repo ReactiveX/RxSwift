@@ -26,10 +26,10 @@ class AnonymousObservableSink<O: ObserverType> : Sink<O>, ObserverType {
             if _isStopped == 1 {
                 return
             }
-            observer?.on(event)
+            forwardOn(event)
         case .Error, .Completed:
             if OSAtomicCompareAndSwap32(0, 1, &_isStopped) {
-                self.observer?.on(event)
+                self.forwardOn(event)
                 self.dispose()
             }
         }

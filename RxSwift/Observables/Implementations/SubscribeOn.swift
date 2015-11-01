@@ -20,7 +20,7 @@ class SubscribeOnSink<Ob: ObservableType, O: ObserverType where Ob.E == O.E> : S
     }
     
     func on(event: Event<Element>) {
-        observer?.on(event)
+        forwardOn(event)
         
         if event.isStopEvent {
             self.dispose()

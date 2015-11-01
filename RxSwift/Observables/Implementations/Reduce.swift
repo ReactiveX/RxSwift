@@ -29,21 +29,21 @@ class ReduceSink<SourceType, AccumulateType, O: ObserverType> : Sink<O>, Observe
                 _accumulation = try _parent._accumulator(_accumulation, value)
             }
             catch let e {
-                observer?.on(.Error(e))
+                forwardOn(.Error(e))
                 dispose()
             }
         case .Error(let e):
-            observer?.on(.Error(e))
+            forwardOn(.Error(e))
             dispose()
         case .Completed:
             do {
                 let result = try _parent._mapResult(_accumulation)
-                observer?.on(.Next(result))
-                observer?.on(.Completed)
+                forwardOn(.Next(result))
+                forwardOn(.Completed)
                 dispose()
             }
             catch let e {
-                observer?.on(.Error(e))
+                forwardOn(.Error(e))
                 dispose()
             }
         }

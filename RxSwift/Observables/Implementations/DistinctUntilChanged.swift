@@ -37,14 +37,14 @@ class DistinctUntilChangedSink<O: ObserverType, Key>: Sink<O>, ObserverType {
                 
                 _currentKey = key
                 
-                observer?.on(event)
+                forwardOn(event)
             }
             catch let error {
-                observer?.on(.Error(error))
+                forwardOn(.Error(error))
                 dispose()
             }
         case .Error, .Completed:
-            observer?.on(event)
+            forwardOn(event)
             dispose()
         }
     }

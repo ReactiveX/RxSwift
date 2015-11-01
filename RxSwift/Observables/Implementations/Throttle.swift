@@ -58,14 +58,14 @@ class ThrottleSink<O: ObserverType, Scheduler: SchedulerType>
             d.disposable = scheduler.scheduleRelative(currentId, dueTime: dueTime, action: self.propagate)
         case .Error:
             _value = nil
-            observer?.on(event)
+            forwardOn(event)
             dispose()
         case .Completed:
             if let value = _value {
                 _value = nil
-                observer?.on(.Next(value))
+                forwardOn(.Next(value))
             }
-            observer?.on(.Completed)
+            forwardOn(.Completed)
             dispose()
         }
     }
@@ -76,7 +76,7 @@ class ThrottleSink<O: ObserverType, Scheduler: SchedulerType>
 
             if let value = originalValue where _id == currentId {
                 _value = nil
-                observer?.on(.Next(value))
+                forwardOn(.Next(value))
             }
         // }
         return NopDisposable.instance

@@ -49,7 +49,7 @@ class TailRecursiveSink<S: SequenceType, O: ObserverType where S.Generator.Eleme
     }
 
     func done() {
-        observer?.on(.Completed)
+        forwardOn(.Completed)
         dispose()
     }
     

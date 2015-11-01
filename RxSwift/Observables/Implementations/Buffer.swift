@@ -62,7 +62,7 @@ class BufferTimeCountSink<S: SchedulerType, Element, O: ObserverType where O.E =
         
         let buffer = _buffer
         _buffer = []
-        observer?.on(.Next(buffer))
+        forwardOn(.Next(buffer))
         
         createTimer(windowID)
     }
@@ -82,11 +82,11 @@ class BufferTimeCountSink<S: SchedulerType, Element, O: ObserverType where O.E =
             
         case .Error(let error):
             _buffer = []
-            observer?.on(.Error(error))
+            forwardOn(.Error(error))
             dispose()
         case .Completed:
-            observer?.on(.Next(_buffer))
-            observer?.on(.Completed)
+            forwardOn(.Next(_buffer))
+            forwardOn(.Completed)
             dispose()
         }
     }

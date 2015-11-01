@@ -25,14 +25,14 @@ class DeferredSink<O: ObserverType> : Sink<O>, ObserverType {
             return result.subscribe(self)
         }
         catch let e {
-            observer?.on(.Error(e))
+            forwardOn(.Error(e))
             dispose()
             return NopDisposable.instance
         }
     }
     
     func on(event: Event<E>) {
-        observer?.on(event)
+        forwardOn(event)
         
         switch event {
         case .Next:

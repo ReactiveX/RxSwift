@@ -51,7 +51,7 @@ class ZipCollectionTypeSink<C: CollectionType, R, O: ObserverType where C.Genera
                 if _numberOfValues < _parent.count {
                     let numberOfOthersThatAreDone = _numberOfDone - (_isDone[atIndex] ? 1 : 0)
                     if numberOfOthersThatAreDone == _parent.count - 1 {
-                        self.observer?.on(.Completed)
+                        self.forwardOn(.Completed)
                         self.dispose()
                     }
                     return
@@ -72,15 +72,15 @@ class ZipCollectionTypeSink<C: CollectionType, R, O: ObserverType where C.Genera
                     }
                     
                     let result = try _parent.resultSelector(arguments)
-                    self.observer?.on(.Next(result))
+                    self.forwardOn(.Next(result))
                 }
                 catch let error {
-                    self.observer?.on(.Error(error))
+                    self.forwardOn(.Error(error))
                     self.dispose()
                 }
                 
             case .Error(let error):
-                self.observer?.on(.Error(error))
+                self.forwardOn(.Error(error))
                 self.dispose()
             case .Completed:
                 if _isDone[atIndex] {
@@ -91,7 +91,7 @@ class ZipCollectionTypeSink<C: CollectionType, R, O: ObserverType where C.Genera
                 _numberOfDone++
                 
                 if _numberOfDone == _parent.count {
-                    self.observer?.on(.Completed)
+                    self.forwardOn(.Completed)
                     self.dispose()
                 }
                 else {

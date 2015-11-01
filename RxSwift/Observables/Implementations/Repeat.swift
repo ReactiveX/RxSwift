@@ -37,7 +37,7 @@ class RepeatElementSink<O: ObserverType> : Sink<O> {
     
     func run() -> Disposable {
         return _parent._scheduler.scheduleRecursive(_parent._element) { e, recurse in
-            self.observer?.on(.Next(e))
+            self.forwardOn(.Next(e))
             recurse(e)
         }
     }
