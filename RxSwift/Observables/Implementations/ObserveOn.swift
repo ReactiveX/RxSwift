@@ -127,6 +127,7 @@ class ObserveOnSink<O: ObserverType> : ObserverBase<O.E> {
 
         _lock.lock(); defer { _lock.unlock() } // {
             _observer = nil
+        
         // }
     }
 }

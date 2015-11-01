@@ -18,28 +18,31 @@ public var numberOfSerialDispatchQueueObservables: Int32 = 0
 #endif
 
 class ObserveOnSerialDispatchQueueSink<O: ObserverType> : ObserverBase<O.E> {
-    
     let scheduler: SerialDispatchQueueScheduler
     let observer: O
     
     let subscription = SingleAssignmentDisposable()
-    
+
+    var cachedScheduleLambda: ((ObserveOnSerialDispatchQueueSink<O>, Event<E>) -> Disposable)!
+
     init(scheduler: SerialDispatchQueueScheduler, observer: O) {
         self.scheduler = scheduler
         self.observer = observer
         super.init()
+
+        cachedScheduleLambda = { sink, event in
+            sink.observer.on(event)
+
+            if event.isStopEvent {
+                sink.dispose()
+            }
+
+            return NopDisposable.instance
+        }
     }
 
     override func onCore(event: Event<E>) {
-        self.scheduler.schedule(()) { (_) -> Disposable in
-            self.observer.on(event)
-            
-            if event.isStopEvent {
-                self.dispose()
-            }
-            
-            return NopDisposable.instance
-        }
+        self.scheduler.schedule((self, event), action: cachedScheduleLambda)
     }
    
     override func dispose() {
