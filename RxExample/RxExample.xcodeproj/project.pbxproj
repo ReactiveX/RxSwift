@@ -39,6 +39,16 @@
 		C809E97E1BE697100058D948 /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C809E97C1BE697100058D948 /* UIImage+Extensions.swift */; };
 		C809E97F1BE69B660058D948 /* Wireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = C809E9791BE6841C0058D948 /* Wireframe.swift */; };
 		C809E9801BE69BA30058D948 /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C809E97C1BE697100058D948 /* UIImage+Extensions.swift */; };
+		C809E9811BE69C310058D948 /* ControlEvent+Driver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80DDEC21BCE9041006A1832 /* ControlEvent+Driver.swift */; };
+		C809E9821BE69C310058D948 /* ControlProperty+Driver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80DDEC31BCE9041006A1832 /* ControlProperty+Driver.swift */; };
+		C809E9831BE69C310058D948 /* Driver+Operators+arity.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80DDEC41BCE9041006A1832 /* Driver+Operators+arity.swift */; };
+		C809E9841BE69C350058D948 /* Driver+Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80DDEC61BCE9041006A1832 /* Driver+Operators.swift */; };
+		C809E9851BE69C350058D948 /* Driver+Subscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80DDEC71BCE9041006A1832 /* Driver+Subscription.swift */; };
+		C809E9861BE69C350058D948 /* Driver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80DDEC81BCE9041006A1832 /* Driver.swift */; };
+		C809E9871BE69C350058D948 /* ObservableConvertibleType+Driver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80DDEC91BCE9041006A1832 /* ObservableConvertibleType+Driver.swift */; };
+		C809E9881BE69C3F0058D948 /* ControlEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89465191BC6C2BC0055219D /* ControlEvent.swift */; };
+		C809E9891BE69C3F0058D948 /* ControlProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = C894651B1BC6C2BC0055219D /* ControlProperty.swift */; };
+		C809E98A1BE69C530058D948 /* RxCocoa.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89465311BC6C2BC0055219D /* RxCocoa.swift */; };
 		C80DDE881BCDAA0F006A1832 /* SkipWhile.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80DDE7A1BCDA952006A1832 /* SkipWhile.swift */; };
 		C80DDED21BCE9046006A1832 /* ControlEvent+Driver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80DDEC21BCE9041006A1832 /* ControlEvent+Driver.swift */; };
 		C80DDED31BCE9046006A1832 /* ControlProperty+Driver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80DDEC31BCE9041006A1832 /* ControlProperty+Driver.swift */; };
@@ -1928,22 +1938,32 @@
 			buildActionMask = 2147483647;
 			files = (
 				C809E97F1BE69B660058D948 /* Wireframe.swift in Sources */,
+				C809E9841BE69C350058D948 /* Driver+Operators.swift in Sources */,
 				C8DF92DF1B0B328B009BCF9A /* AppDelegate.swift in Sources */,
+				C809E9861BE69C350058D948 /* Driver.swift in Sources */,
 				C88BB8BB1B07E6C90064D411 /* SearchResultViewModel.swift in Sources */,
 				C88BB8BC1B07E6C90064D411 /* HtmlParsing.swift in Sources */,
 				C88BB8BD1B07E6C90064D411 /* SearchViewModel.swift in Sources */,
+				C809E98A1BE69C530058D948 /* RxCocoa.swift in Sources */,
 				C8E9D2AF1BD3FD960079D0DB /* ActivityIndicator.swift in Sources */,
+				C809E9881BE69C3F0058D948 /* ControlEvent.swift in Sources */,
 				C88BB8BE1B07E6C90064D411 /* ImageService.swift in Sources */,
 				B1604CC31BE5B8BD002E1279 /* ReachabilityService.swift in Sources */,
+				C809E9821BE69C310058D948 /* ControlProperty+Driver.swift in Sources */,
+				C809E9811BE69C310058D948 /* ControlEvent+Driver.swift in Sources */,
+				C809E9831BE69C310058D948 /* Driver+Operators+arity.swift in Sources */,
 				C88BB8BF1B07E6C90064D411 /* WikipediaSearchResult.swift in Sources */,
 				C8DF92F61B0B43A4009BCF9A /* IntroductionExampleViewController.swift in Sources */,
 				B18F3BBF1BD93DFF000AAC79 /* Reachability.swift in Sources */,
 				C88BB8C31B07E6C90064D411 /* Example.swift in Sources */,
 				C88BB8C41B07E6C90064D411 /* ViewController.swift in Sources */,
 				C88BB8C71B07E6C90064D411 /* Dependencies.swift in Sources */,
+				C809E9871BE69C350058D948 /* ObservableConvertibleType+Driver.swift in Sources */,
 				C88BB8CA1B07E6C90064D411 /* WikipediaAPI.swift in Sources */,
 				C809E9801BE69BA30058D948 /* UIImage+Extensions.swift in Sources */,
+				C809E9891BE69C3F0058D948 /* ControlProperty.swift in Sources */,
 				B1604CCA1BE5BC18002E1279 /* DownloadableImage.swift in Sources */,
+				C809E9851BE69C350058D948 /* Driver+Subscription.swift in Sources */,
 				C88BB8CC1B07E6C90064D411 /* WikipediaPage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
