@@ -10,7 +10,7 @@ import Foundation
 
 // MARK: debug
 
-extension ObservableConvertibleType {
+extension ObservableType {
     
     /**
     Prints received events for all observers on standard output.
