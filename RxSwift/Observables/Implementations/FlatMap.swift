@@ -77,8 +77,6 @@ class FlatMapSink<SourceType, S: ObservableConvertibleType, O: ObserverType wher
     }
     
     func on(event: Event<SourceType>) {
-        let observer = super.observer
-        
         switch event {
         case .Next(let element):
             do {

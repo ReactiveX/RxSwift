@@ -25,8 +25,6 @@ class MapSink<SourceType, O : ObserverType> : Sink<O>, ObserverType {
     }
 
     func on(event: Event<SourceType>) {
-        let observer = super.observer
-        
         switch event {
         case .Next(let element):
             do {

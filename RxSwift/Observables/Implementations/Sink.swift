@@ -9,20 +9,20 @@
 import Foundation
 
 class Sink<O : ObserverType> : SingleAssignmentDisposable {
-    let observer: O
+    private let _observer: O
 
     func forwardOn(event: Event<O.E>) {
         if disposed {
             return
         }
-        observer.on(event)
+        _observer.on(event)
     }
 
     init(observer: O) {
 #if TRACE_RESOURCES
         OSAtomicIncrement32(&resourceCount)
 #endif
-        self.observer = observer
+        _observer = observer
     }
 
     deinit {

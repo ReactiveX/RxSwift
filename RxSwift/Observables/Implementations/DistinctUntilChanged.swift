@@ -20,8 +20,6 @@ class DistinctUntilChangedSink<O: ObserverType, Key>: Sink<O>, ObserverType {
     }
     
     func on(event: Event<E>) {
-        let observer = super.observer
-        
         switch event {
         case .Next(let value):
             do {
