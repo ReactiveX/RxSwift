@@ -24,14 +24,14 @@ compareTwoImplementations(benchmarkTime: true, first: {
     //let a = just(1)
 
     //combineLatest(a,
-        publishSubject
+        publishSubject//.asDriver(onErrorJustReturn: -1)
         .shareReplay(1)
         .map { $0 }
-        .filter { _ in true }// ){ x, _ in x }
-        //.map { $0 }
-        //.flatMap { just($0) }
+        .filter { _ in true }//){ x, _ in x }
+        .map { $0 }
+        .flatMap { just($0) }
         .subscribeNext { _ in
-            
+
         }
 
 
