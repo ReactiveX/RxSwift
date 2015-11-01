@@ -37,7 +37,7 @@ extension UIImageView{
                     let label = UILabel(frame: self!.frame)
                     label.textAlignment = .Center
                     label.font = UIFont.systemFontOfSize(35)
-                    label.text = "⚠️📶"
+                    label.text = "⚠️"
                     self?.addSubview(label)
                 }
             case .Error(let error):
