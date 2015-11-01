@@ -18,6 +18,12 @@
 		07E300091B149A2A00F00100 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E300081B149A2A00F00100 /* User.swift */; };
 		07E3C2331B03605B0010338D /* Dependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E3C2321B03605B0010338D /* Dependencies.swift */; };
 		B1604CB51BE49F8D002E1279 /* DownloadableImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1604CB41BE49F8D002E1279 /* DownloadableImage.swift */; };
+		B1604CC21BE5B895002E1279 /* ReachabilityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18F3BE11BDB2E8F000AAC79 /* ReachabilityService.swift */; };
+		B1604CC31BE5B8BD002E1279 /* ReachabilityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18F3BE11BDB2E8F000AAC79 /* ReachabilityService.swift */; };
+		B1604CC41BE5B8CE002E1279 /* DownloadableImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1604CB41BE49F8D002E1279 /* DownloadableImage.swift */; };
+		B1604CC91BE5BBFA002E1279 /* UIImageView+DownloadableImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1604CC81BE5BBFA002E1279 /* UIImageView+DownloadableImage.swift */; };
+		B1604CCA1BE5BC18002E1279 /* DownloadableImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1604CB41BE49F8D002E1279 /* DownloadableImage.swift */; };
+		B1604CCB1BE5BC45002E1279 /* UIImageView+DownloadableImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1604CC81BE5BBFA002E1279 /* UIImageView+DownloadableImage.swift */; };
 		B18F3BBC1BD92EC8000AAC79 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18F3BBB1BD92EC8000AAC79 /* Reachability.swift */; };
 		B18F3BBF1BD93DFF000AAC79 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18F3BBB1BD92EC8000AAC79 /* Reachability.swift */; };
 		B18F3BC11BD93E00000AAC79 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18F3BBB1BD92EC8000AAC79 /* Reachability.swift */; };
@@ -458,6 +464,7 @@
 		07E300081B149A2A00F00100 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		07E3C2321B03605B0010338D /* Dependencies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Dependencies.swift; path = Examples/Dependencies.swift; sourceTree = "<group>"; };
 		B1604CB41BE49F8D002E1279 /* DownloadableImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadableImage.swift; sourceTree = "<group>"; };
+		B1604CC81BE5BBFA002E1279 /* UIImageView+DownloadableImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+DownloadableImage.swift"; sourceTree = "<group>"; };
 		B18F3BBB1BD92EC8000AAC79 /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		B18F3BE11BDB2E8F000AAC79 /* ReachabilityService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReachabilityService.swift; sourceTree = "<group>"; };
 		B1B7C3CF1BE006870076934E /* TakeLast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TakeLast.swift; sourceTree = "<group>"; };
@@ -888,6 +895,7 @@
 				B18F3BBB1BD92EC8000AAC79 /* Reachability.swift */,
 				B18F3BE11BDB2E8F000AAC79 /* ReachabilityService.swift */,
 				B1604CB41BE49F8D002E1279 /* DownloadableImage.swift */,
+				B1604CC81BE5BBFA002E1279 /* UIImageView+DownloadableImage.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -1662,6 +1670,7 @@
 				C89465751BC6C2BC0055219D /* KVOObservable.swift in Sources */,
 				C89464CB1BC6C2B00055219D /* FailWith.swift in Sources */,
 				C8297E341B6CF905000589EA /* UIImageView+Extensions.swift in Sources */,
+				B1604CC41BE5B8CE002E1279 /* DownloadableImage.swift in Sources */,
 				C80DDED61BCE9046006A1832 /* Driver+Operators.swift in Sources */,
 				C89465051BC6C2B00055219D /* SerialDispatchQueueScheduler.swift in Sources */,
 				C89464B81BC6C2B00055219D /* Observable.swift in Sources */,
@@ -1716,6 +1725,7 @@
 				C89465891BC6C2BC0055219D /* RxSearchBarDelegateProxy.swift in Sources */,
 				C89464C21BC6C2B00055219D /* CombineLatest.swift in Sources */,
 				C89464E71BC6C2B00055219D /* Zip+arity.swift in Sources */,
+				B1604CC21BE5B895002E1279 /* ReachabilityService.swift in Sources */,
 				C89464DE1BC6C2B00055219D /* Skip.swift in Sources */,
 				C89464DB1BC6C2B00055219D /* Sample.swift in Sources */,
 				C89465011BC6C2B00055219D /* OperationQueueScheduler.swift in Sources */,
@@ -1773,6 +1783,7 @@
 				C89464FE1BC6C2B00055219D /* CurrentThreadScheduler.swift in Sources */,
 				C89464BE1BC6C2B00055219D /* Catch.swift in Sources */,
 				C89CDB721BCC45EE002063D9 /* SkipUntil.swift in Sources */,
+				B1604CCB1BE5BC45002E1279 /* UIImageView+DownloadableImage.swift in Sources */,
 				C8297E471B6CF905000589EA /* ViewController.swift in Sources */,
 				C89464E41BC6C2B00055219D /* TakeWhile.swift in Sources */,
 				C89464F71BC6C2B00055219D /* ObserverBase.swift in Sources */,
@@ -1852,6 +1863,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B1604CC91BE5BBFA002E1279 /* UIImageView+DownloadableImage.swift in Sources */,
 				0706E19F1B17703E00BA2D3A /* RandomUserAPI.swift in Sources */,
 				C86E2F3E1AE5A0CA00C31024 /* SearchResultViewModel.swift in Sources */,
 				C83367241AD029AE00C668A7 /* HtmlParsing.swift in Sources */,
@@ -1914,6 +1926,7 @@
 				C88BB8BD1B07E6C90064D411 /* SearchViewModel.swift in Sources */,
 				C8E9D2AF1BD3FD960079D0DB /* ActivityIndicator.swift in Sources */,
 				C88BB8BE1B07E6C90064D411 /* ImageService.swift in Sources */,
+				B1604CC31BE5B8BD002E1279 /* ReachabilityService.swift in Sources */,
 				C88BB8BF1B07E6C90064D411 /* WikipediaSearchResult.swift in Sources */,
 				C8DF92F61B0B43A4009BCF9A /* IntroductionExampleViewController.swift in Sources */,
 				B18F3BBF1BD93DFF000AAC79 /* Reachability.swift in Sources */,
@@ -1922,6 +1935,7 @@
 				C88BB8C61B07E6C90064D411 /* Wireframe.swift in Sources */,
 				C88BB8C71B07E6C90064D411 /* Dependencies.swift in Sources */,
 				C88BB8CA1B07E6C90064D411 /* WikipediaAPI.swift in Sources */,
+				B1604CCA1BE5BC18002E1279 /* DownloadableImage.swift in Sources */,
 				C88BB8CC1B07E6C90064D411 /* WikipediaPage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

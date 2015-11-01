@@ -96,7 +96,7 @@ class DefaultImageService: ImageService {
             self.imageFromURL(URL)
                 .map { DownloadableImage.Content(image: $0) }
                 .retryOnBecomesReachable( DownloadableImage.OfflinePlaceholder, reachabilityService: ReachabilityService.sharedReachabilityService)
-                .startWith(.Content(image: UIImage()))
+                .startWith(.Content(image: Image()))
         }
             .observeOn($.mainScheduler)
     }
