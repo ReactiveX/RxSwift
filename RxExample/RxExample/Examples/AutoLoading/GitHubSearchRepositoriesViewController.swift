@@ -52,6 +52,7 @@ class GitHubSearchRepositoriesViewController: ViewController, UITableViewDelegat
             return section.items.count > 0 ? "Repositories (\(section.items.count))" : "No repositories found"
         }
 
+
         // reactive data source
         allRepositories
             .bindTo(tableView.rx_itemsWithDataSource(dataSource))
@@ -72,7 +73,8 @@ class GitHubSearchRepositoriesViewController: ViewController, UITableViewDelegat
                     return just(.Repositories([]))
                 } else {
                     return GitHubSearchRepositoriesAPI.sharedAPI.search(query, loadNextPageTrigger: loadNextPageTrigger)
-                        .catchErrorJustReturn(.Repositories([]))
+                        .retry(3)
+                        .retryOnBecomesReachable(.Repositories([]), reachabilityService: ReachabilityService.sharedReachabilityService)
                 }
             }
             .switchLatest()

@@ -41,12 +41,8 @@ public class WikipediaSearchCell: UITableViewCell {
 
             viewModel.imageURLs
                 .drive(self.imagesOutlet.rx_itemsWithCellIdentifier("ImageCell")) { [unowned self] (_, URL, cell: CollectionViewImageCell) in
-                        let loadingPlaceholder: UIImage? = nil
 
-                        cell.image = self.imageService.imageFromURL(URL)
-                            .map { $0 as UIImage? }
-                            .catchErrorJustReturn(nil)
-                            .startWith(loadingPlaceholder)
+                    cell.downloadableImage = self.imageService.downloadableImageFromURLWithRetryIfUnreachable(URL)
                     }
                 .addDisposableTo(disposeBag)
 
@@ -62,4 +58,5 @@ public class WikipediaSearchCell: UITableViewCell {
 
     deinit {
     }
+
 }

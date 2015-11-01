@@ -20,7 +20,7 @@ import RxCocoa
 
 protocol ImageService {
     func imageFromURL(URL: NSURL) -> Observable<Image>
-}
+    func downloadableImageFromURLWithRetryIfUnreachable(URL: NSURL) -> Observable<DownloadableImage>}
 
 class DefaultImageService: ImageService {
 	
@@ -87,6 +87,16 @@ class DefaultImageService: ImageService {
             return decodedImage.doOn(onNext: { image in
                 self.imageCache.setObject(image, forKey: URL)
             })
+        }
+            .observeOn($.mainScheduler)
+    }
+
+    func downloadableImageFromURLWithRetryIfUnreachable(URL: NSURL) -> Observable<DownloadableImage> {
+        return deferred{
+            self.imageFromURL(URL)
+                .map { DownloadableImage.Content(image: $0) }
+                .retryOnBecomesReachable( DownloadableImage.OfflinePlaceholder, reachabilityService: ReachabilityService.sharedReachabilityService)
+                .startWith(.Content(image: Image()))
         }
             .observeOn($.mainScheduler)
     }

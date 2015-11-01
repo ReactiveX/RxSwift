@@ -17,15 +17,15 @@ public class CollectionViewImageCell: UICollectionViewCell {
     @IBOutlet var imageOutlet: UIImageView!
     
     var disposeBag: DisposeBag!
-    
-    var image: Observable<UIImage!>! {
-        didSet {
+
+    var downloadableImage: Observable<DownloadableImage>?{
+        didSet{
             let disposeBag = DisposeBag()
-            
-            self.image
-                .subscribe(imageOutlet.rx_imageAnimated(kCATransitionFade))
+
+            self.downloadableImage?
+                .bindTo(imageOutlet.rxex_downloadableImageAnimated(kCATransitionFade))
                 .addDisposableTo(disposeBag)
-            
+
             self.disposeBag = disposeBag
         }
     }
