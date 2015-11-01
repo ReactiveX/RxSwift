@@ -18,18 +18,18 @@ protocol ZipSinkProtocol : class
 class ZipSink<O: ObserverType> : Sink<O>, ZipSinkProtocol {
     typealias Element = O.E
     
-    let arity: Int
-    
-    let lock = NSRecursiveLock()
-    
+    let _arity: Int
+
+    let _lock = NSRecursiveLock()
+
     // state
     private var _isDone: [Bool]
     
-    init(arity: Int, observer: O, cancel: Disposable) {
+    init(arity: Int, observer: O) {
         _isDone = [Bool](count: arity, repeatedValue: false)
-        self.arity = arity
+        _arity = arity
         
-        super.init(observer: observer, cancel: cancel)
+        super.init(observer: observer)
     }
 
     func getResult() throws -> Element {
@@ -43,7 +43,7 @@ class ZipSink<O: ObserverType> : Sink<O>, ZipSinkProtocol {
     func next(index: Int) {
         var hasValueAll = true
         
-        for i in 0 ..< arity {
+        for i in 0 ..< _arity {
             if !hasElements(i) {
                 hasValueAll = false;
                 break;
@@ -102,13 +102,16 @@ class ZipSink<O: ObserverType> : Sink<O>, ZipSinkProtocol {
     }
 }
 
-class ZipObserver<ElementType> : ObserverType {
+class ZipObserver<ElementType>
+    : ObserverType
+    , LockOwnerType
+    , SynchronizedOnType {
     typealias E = ElementType
     typealias ValueSetter = (ElementType) -> ()
 
     private var _parent: ZipSinkProtocol?
     
-    private let _lock: NSRecursiveLock
+    let _lock: NSRecursiveLock
     
     // state
     private let _index: Int
@@ -124,7 +127,10 @@ class ZipObserver<ElementType> : ObserverType {
     }
     
     func on(event: Event<E>) {
-       
+        synchronizedOn(event)
+    }
+
+    func _synchronized_on(event: Event<E>) {
         if let _ = _parent {
             switch event {
             case .Next(_):
@@ -136,17 +142,15 @@ class ZipObserver<ElementType> : ObserverType {
             }
         }
         
-        _lock.performLocked {
-            if let parent = _parent {
-                switch event {
-                case .Next(let value):
-                    _setNextValue(value)
-                    parent.next(_index)
-                case .Error(let error):
-                    parent.fail(error)
-                case .Completed:
-                    parent.done(_index)
-                }
+        if let parent = _parent {
+            switch event {
+            case .Next(let value):
+                _setNextValue(value)
+                parent.next(_index)
+            case .Error(let error):
+                parent.fail(error)
+            case .Completed:
+                parent.done(_index)
             }
         }
     }

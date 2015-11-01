@@ -8,7 +8,8 @@
 
 import Foundation
 
-class ZipCollectionTypeSink<C: CollectionType, R, O: ObserverType where C.Generator.Element : ObservableConvertibleType, O.E == R> : Sink<O> {
+class ZipCollectionTypeSink<C: CollectionType, R, O: ObserverType where C.Generator.Element : ObservableConvertibleType, O.E == R>
+    : Sink<O> {
     typealias Parent = ZipCollectionType<C, R>
     typealias SourceElement = C.Generator.Element.E
     
@@ -23,7 +24,7 @@ class ZipCollectionTypeSink<C: CollectionType, R, O: ObserverType where C.Genera
     private var _numberOfDone = 0
     private var _subscriptions: [SingleAssignmentDisposable]
     
-    init(parent: Parent, observer: O, cancel: Disposable) {
+    init(parent: Parent, observer: O) {
         _parent = parent
         _values = [Queue<SourceElement>](count: parent.count, repeatedValue: Queue(capacity: 4))
         _isDone = [Bool](count: parent.count, repeatedValue: false)
@@ -34,11 +35,11 @@ class ZipCollectionTypeSink<C: CollectionType, R, O: ObserverType where C.Genera
             _subscriptions.append(SingleAssignmentDisposable())
         }
         
-        super.init(observer: observer, cancel: cancel)
+        super.init(observer: observer)
     }
     
     func on(event: Event<SourceElement>, atIndex: Int) {
-        _lock.performLocked {
+        _lock.lock(); defer { _lock.unlock() } // {
             switch event {
             case .Next(let element):
                 _values[atIndex].enqueue(element)
@@ -97,7 +98,7 @@ class ZipCollectionTypeSink<C: CollectionType, R, O: ObserverType where C.Genera
                     _subscriptions[atIndex].dispose()
                 }
             }
-        }
+        // }
     }
     
     func run() -> Disposable {
@@ -128,9 +129,9 @@ class ZipCollectionType<C: CollectionType, R where C.Generator.Element : Observa
         self.count = Int(self.sources.count.toIntMax())
     }
     
-    override func run<O : ObserverType where O.E == R>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
-        let sink = ZipCollectionTypeSink(parent: self, observer: observer, cancel: cancel)
-        setSink(sink)
-        return sink.run()
+    override func run<O : ObserverType where O.E == R>(observer: O) -> Disposable {
+        let sink = ZipCollectionTypeSink(parent: self, observer: observer)
+        sink.disposable = sink.run()
+        return sink
     }
 }

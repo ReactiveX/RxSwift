@@ -25,17 +25,17 @@ compareTwoImplementations(benchmarkTime: true, first: {
 
     //combineLatest(a,
         publishSubject
-        //.shareReplay(1)
+        .shareReplay(1)
+        .map { $0 }
+        .filter { _ in true }// ){ x, _ in x }
         //.map { $0 }
-        //.filter { _ in true }// ){ x, _ in x }
-        //.map { $0 }
-        .flatMap { just($0) }
+        //.flatMap { just($0) }
         .subscribeNext { _ in
             
         }
 
 
-    for i in 0..<100 {
+    for i in 0..<1000 {
         publishSubject.on(.Next(i))
     }
 

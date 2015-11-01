@@ -104,7 +104,7 @@ public class CurrentThreadScheduler : ImmediateSchedulerType {
         if CurrentThreadScheduler.isScheduleRequired {
             CurrentThreadScheduler.isScheduleRequired = false
 
-            action(state)
+            let disposable = action(state)
 
             defer {
                 CurrentThreadScheduler.isScheduleRequired = true
@@ -112,7 +112,7 @@ public class CurrentThreadScheduler : ImmediateSchedulerType {
             }
 
             guard let queue = CurrentThreadScheduler.queue else {
-                return NopDisposable.instance
+                return disposable
             }
 
             while let latest = queue.value.tryDequeue() {
@@ -122,7 +122,7 @@ public class CurrentThreadScheduler : ImmediateSchedulerType {
                 latest.invoke()
             }
 
-            return NopDisposable.instance
+            return disposable
         }
 
         let existingQueue = CurrentThreadScheduler.queue

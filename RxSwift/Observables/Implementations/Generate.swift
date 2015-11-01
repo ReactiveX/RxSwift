@@ -15,10 +15,10 @@ class GenerateSink<S, O: ObserverType> : Sink<O> {
     
     private var _state: S
     
-    init(parent: Parent, observer: O, cancel: Disposable) {
+    init(parent: Parent, observer: O) {
         _parent = parent
         _state = parent._initialState
-        super.init(observer: observer, cancel: cancel)
+        super.init(observer: observer)
     }
     
     func run() -> Disposable {
@@ -63,9 +63,9 @@ class Generate<S, E> : Producer<E> {
         super.init()
     }
     
-    override func run<O : ObserverType where O.E == E>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
-        let sink = GenerateSink(parent: self, observer: observer, cancel: cancel)
-        setSink(sink)
-        return sink.run()
+    override func run<O : ObserverType where O.E == E>(observer: O) -> Disposable {
+        let sink = GenerateSink(parent: self, observer: observer)
+        sink.disposable = sink.run()
+        return sink
     }
 }

@@ -14,10 +14,12 @@ protocol CombineLatestProtocol : class {
     func done(index: Int)
 }
 
-class CombineLatestSink<O: ObserverType> : Sink<O>, CombineLatestProtocol {
+class CombineLatestSink<O: ObserverType>
+    : Sink<O>
+    , CombineLatestProtocol {
     typealias Element = O.E
    
-    let lock = NSRecursiveLock()
+    let _lock = NSRecursiveLock()
 
     private let _arity: Int
     private var _numberOfValues = 0
@@ -25,12 +27,12 @@ class CombineLatestSink<O: ObserverType> : Sink<O>, CombineLatestProtocol {
     private var _hasValue: [Bool]
     private var _isDone: [Bool]
    
-    init(arity: Int, observer: O, cancel: Disposable) {
+    init(arity: Int, observer: O) {
         _arity = arity
         _hasValue = [Bool](count: arity, repeatedValue: false)
         _isDone = [Bool](count: arity, repeatedValue: false)
         
-        super.init(observer: observer, cancel: cancel)
+        super.init(observer: observer)
     }
     
     func getResult() throws -> Element {

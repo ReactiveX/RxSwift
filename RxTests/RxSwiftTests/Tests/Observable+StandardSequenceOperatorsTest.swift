@@ -3057,12 +3057,16 @@ extension ObservableStandardSequenceOperatorsTest {
     
     func testTakeLast_DecrementCountsFirst() {
         let k = BehaviorSubject(value: false)
-        
+
+        var elements = [Bool]()
         _ = k.takeLast(1).subscribeNext { n in
+            elements.append(n)
             k.on(.Next(!n))
         }
 
         k.on(.Completed)
+
+        XCTAssertEqual(elements, [false])
     }
 }
 

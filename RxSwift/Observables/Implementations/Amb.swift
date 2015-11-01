@@ -58,9 +58,9 @@ class AmbSink<ElementType, O: ObserverType where O.E == ElementType> : Sink<O> {
     // state
     private var _choice = AmbState.Neither
     
-    init(parent: Parent, observer: O, cancel: Disposable) {
+    init(parent: Parent, observer: O) {
         _parent = parent
-        super.init(observer: observer, cancel: cancel)
+        super.init(observer: observer)
     }
     
     func run() -> Disposable {
@@ -114,9 +114,9 @@ class Amb<Element>: Producer<Element> {
         _right = right
     }
     
-    override func run<O : ObserverType where O.E == Element>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
-        let sink = AmbSink(parent: self, observer: observer, cancel: cancel)
-        setSink(sink)
-        return sink.run()
+    override func run<O : ObserverType where O.E == Element>(observer: O) -> Disposable {
+        let sink = AmbSink(parent: self, observer: observer)
+        sink.disposable = sink.run()
+        return sink
     }
 }

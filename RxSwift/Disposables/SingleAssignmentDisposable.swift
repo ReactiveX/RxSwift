@@ -72,6 +72,9 @@ public class SingleAssignmentDisposable : DisposeBase, Disposable, Cancelable {
     Disposes the underlying disposable.
     */
     public func dispose() {
+        if _disposed {
+            return
+        }
         _dispose()?.dispose()
     }
 

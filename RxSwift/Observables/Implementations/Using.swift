@@ -15,9 +15,9 @@ class UsingSink<SourceType, ResourceType: Disposable, O: ObserverType where O.E 
 
     private let _parent: Parent
     
-    init(parent: Parent, observer: O, cancel: Disposable) {
+    init(parent: Parent, observer: O) {
         _parent = parent
-        super.init(observer: observer, cancel: cancel)
+        super.init(observer: observer)
     }
     
     func run() -> Disposable {
@@ -70,9 +70,9 @@ class Using<SourceType, ResourceType: Disposable>: Producer<SourceType> {
         _observableFactory = observableFactory
     }
     
-    override func run<O : ObserverType where O.E == E>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
-        let sink = UsingSink(parent: self, observer: observer, cancel: cancel)
-        setSink(sink)
-        return sink.run()
+    override func run<O : ObserverType where O.E == E>(observer: O) -> Disposable {
+        let sink = UsingSink(parent: self, observer: observer)
+        sink.disposable = sink.run()
+        return sink
     }
 }

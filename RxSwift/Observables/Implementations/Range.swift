@@ -27,10 +27,10 @@ class RangeProducer<_CompilerWorkaround> : Producer<Int> {
         _scheduler = scheduler
     }
     
-    override func run<O : ObserverType where O.E == Int>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
-        let sink = RangeSink(parent: self, observer: observer, cancel: cancel)
-        setSink(sink)
-        return sink.run()
+    override func run<O : ObserverType where O.E == Int>(observer: O) -> Disposable {
+        let sink = RangeSink(parent: self, observer: observer)
+        sink.disposable = sink.run()
+        return sink
     }
 }
 
@@ -39,9 +39,9 @@ class RangeSink<_CompilerWorkaround, O: ObserverType where O.E == Int> : Sink<O>
     
     private let _parent: Parent
     
-    init(parent: Parent, observer: O, cancel: Disposable) {
+    init(parent: Parent, observer: O) {
         _parent = parent
-        super.init(observer: observer, cancel: cancel)
+        super.init(observer: observer)
     }
     
     func run() -> Disposable {

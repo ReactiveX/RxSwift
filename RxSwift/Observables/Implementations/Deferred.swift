@@ -14,9 +14,9 @@ class DeferredSink<O: ObserverType> : Sink<O>, ObserverType {
     
     private let _parent: Parent
     
-    init(parent: Parent, observer: O, cancel: Disposable) {
+    init(parent: Parent, observer: O) {
         _parent = parent
-        super.init(observer: observer, cancel: cancel)
+        super.init(observer: observer)
     }
     
     func run() -> Disposable {
@@ -54,10 +54,10 @@ class Deferred<Element> : Producer<Element> {
         _observableFactory = observableFactory
     }
     
-    override func run<O: ObserverType where O.E == Element>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
-        let sink = DeferredSink(parent: self, observer: observer, cancel: cancel)
-        setSink(sink)
-        return sink.run()
+    override func run<O: ObserverType where O.E == Element>(observer: O) -> Disposable {
+        let sink = DeferredSink(parent: self, observer: observer)
+        sink.disposable = sink.run()
+        return sink
     }
     
     func eval() throws -> Observable<Element> {

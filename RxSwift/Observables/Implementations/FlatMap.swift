@@ -67,9 +67,9 @@ class FlatMapSink<SourceType, S: ObservableConvertibleType, O: ObserverType wher
 
     private var _stopped = false
     
-    init(parent: Parent, observer: O, cancel: Disposable) {
+    init(parent: Parent, observer: O) {
         _parent = parent
-        super.init(observer: observer, cancel: cancel)
+        super.init(observer: observer)
     }
     
     func performMap(element: SourceType) throws -> S {
@@ -128,8 +128,8 @@ class FlatMapSink<SourceType, S: ObservableConvertibleType, O: ObserverType wher
 }
 
 class FlatMapSink1<SourceType, S: ObservableConvertibleType, O : ObserverType where S.E == O.E> : FlatMapSink<SourceType, S, O> {
-    override init(parent: Parent, observer: O, cancel: Disposable) {
-        super.init(parent: parent, observer: observer, cancel: cancel)
+    override init(parent: Parent, observer: O) {
+        super.init(parent: parent, observer: observer)
     }
     
     override func performMap(element: SourceType) throws -> S {
@@ -140,8 +140,8 @@ class FlatMapSink1<SourceType, S: ObservableConvertibleType, O : ObserverType wh
 class FlatMapSink2<SourceType, S: ObservableConvertibleType, O: ObserverType where S.E == O.E> : FlatMapSink<SourceType, S, O> {
     private var _index = 0
 
-    override init(parent: Parent, observer: O, cancel: Disposable) {
-        super.init(parent: parent, observer: observer, cancel: cancel)
+    override init(parent: Parent, observer: O) {
+        super.init(parent: parent, observer: observer)
     }
     
     override func performMap(element: SourceType) throws -> S {
@@ -170,16 +170,18 @@ class FlatMap<SourceType, S: ObservableConvertibleType>: Producer<S.E> {
         _selector1 = nil
     }
     
-    override func run<O: ObserverType where O.E == S.E>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
+    override func run<O: ObserverType where O.E == S.E>(observer: O) -> Disposable {
+        let sink: FlatMapSink<SourceType, S, O>
         if let _ = _selector1 {
-            let sink = FlatMapSink1(parent: self, observer: observer, cancel: cancel)
-            setSink(sink)
-            return sink.run()
+            sink = FlatMapSink1(parent: self, observer: observer)
         }
         else {
-            let sink = FlatMapSink2(parent: self, observer: observer, cancel: cancel)
-            setSink(sink)
-            return sink.run()
+            sink = FlatMapSink2(parent: self, observer: observer)
         }
+
+        let subscription = sink.run()
+        sink.disposable = subscription
+
+        return sink
     }
 }
