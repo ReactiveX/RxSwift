@@ -251,7 +251,17 @@ extension ObservableConvertibleType {
     - parameter resultSelector: Function to invoke for each element from the self combined with the latest element from the second source, if any.
     - returns: An observable sequence containing the result of combining each element of the self  with the latest element from the second source, if any, using the specified result selector function.
     */
-    public func withLatestFrom<SecondO: ObservableType, ResultType>(second: SecondO, resultSelector: (E, SecondO.E) throws -> ResultType) -> Observable<ResultType> {
+    public func withLatestFrom<SecondO: ObservableConvertibleType, ResultType>(second: SecondO, resultSelector: (E, SecondO.E) throws -> ResultType) -> Observable<ResultType> {
         return WithLatestFrom(first: self.asObservable(), second: second.asObservable(), resultSelector: resultSelector)
+    }
+
+    /**
+    Merges two observable sequences into one observable sequence by using latest element from the second sequence every time when `self` emitts an element.
+     
+    - parameter second: Second observable source.
+    - returns: An observable sequence containing the result of combining each element of the self  with the latest element from the second source, if any, using the specified result selector function.
+    */
+    public func withLatestFrom<SecondO: ObservableConvertibleType>(second: SecondO) -> Observable<SecondO.E> {
+        return WithLatestFrom(first: self.asObservable(), second: second.asObservable(), resultSelector: { $1 })
     }
 }

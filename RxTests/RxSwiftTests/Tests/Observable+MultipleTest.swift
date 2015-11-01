@@ -4217,4 +4217,52 @@ extension ObservableMultipleTest {
             Subscription(200, 310)
         ])
     }
+
+    func testWithLatestFrom_MakeSureDefaultOverloadTakesSecondSequenceValues() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let xs = scheduler.createHotObservable([
+            next(90, 1),
+            next(180, 2),
+            next(250, 3),
+            next(260, 4),
+            next(310, 5),
+            next(340, 6),
+            next(410, 7),
+            next(420, 8),
+            next(470, 9),
+            next(550, 10),
+            completed(590)
+            ])
+
+        let ys = scheduler.createHotObservable([
+            next(255, "bar"),
+            next(330, "foo"),
+            next(350, "qux"),
+            completed(400)
+            ])
+
+        let res = scheduler.start {
+            xs.withLatestFrom(ys)
+        }
+
+        XCTAssertEqual(res.messages, [
+            next(260, "bar"),
+            next(310, "bar"),
+            next(340, "foo"),
+            next(410, "qux"),
+            next(420, "qux"),
+            next(470, "qux"),
+            next(550, "qux"),
+            completed(590)
+            ])
+
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 590)
+            ])
+
+        XCTAssertEqual(ys.subscriptions, [
+            Subscription(200, 400)
+            ])
+    }
 }

@@ -328,3 +328,33 @@ extension CollectionType where Generator.Element : DriverConvertibleType {
         return Driver<R>(source)
     }
 }
+
+extension DriverConvertibleType {
+
+    /**
+    Merges two observable sequences into one observable sequence by combining each element from self with the latest element from the second source, if any.
+
+    - parameter second: Second observable source.
+    - parameter resultSelector: Function to invoke for each element from the self combined with the latest element from the second source, if any.
+    - returns: An observable sequence containing the result of combining each element of the self  with the latest element from the second source, if any, using the specified result selector function.
+    */
+    public func withLatestFrom<SecondO: DriverConvertibleType, ResultType>(second: SecondO, resultSelector: (E, SecondO.E) -> ResultType) -> Driver<ResultType> {
+        let source = self.asObservable()
+            .withLatestFrom(second.asDriver(), resultSelector: resultSelector)
+
+        return Driver<ResultType>(source)
+    }
+
+    /**
+    Merges two observable sequences into one observable sequence by using latest element from the second sequence every time when `self` emitts an element.
+
+    - parameter second: Second observable source.
+    - returns: An observable sequence containing the result of combining each element of the self  with the latest element from the second source, if any, using the specified result selector function.
+    */
+    public func withLatestFrom<SecondO: DriverConvertibleType>(second: SecondO) -> Driver<SecondO.E> {
+        let source = self.asObservable()
+            .withLatestFrom(second.asDriver())
+
+        return Driver<SecondO.E>(source)
+    }
+}

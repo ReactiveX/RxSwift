@@ -607,3 +607,59 @@ extension DriverTest {
         XCTAssertEqual(results, [5, 7, -3])
     }
 }
+
+// withLatestFrom
+extension DriverTest {
+    func testAsDriver_withLatestFrom() {
+        let hotObservable1 = BackgroundThreadPrimitiveHotObservable<Int>()
+        let hotObservable2 = BackgroundThreadPrimitiveHotObservable<Int>()
+
+        let driver = hotObservable1.asDriver(onErrorJustReturn: -1).withLatestFrom(hotObservable2.asDriver(onErrorJustReturn: -2)) { f, s in "\(f)\(s)" }
+
+        let results = subscribeTwiceOnBackgroundSchedulerAndOnlyOneSubscription(driver) {
+            XCTAssertTrue(hotObservable1.subscriptions == [SubscribedToHotObservable])
+            XCTAssertTrue(hotObservable2.subscriptions == [SubscribedToHotObservable])
+
+            hotObservable1.on(.Next(1))
+            hotObservable2.on(.Next(4))
+
+            hotObservable1.on(.Next(2))
+            hotObservable2.on(.Next(5))
+
+            hotObservable1.on(.Error(testError))
+            hotObservable2.on(.Error(testError))
+
+            XCTAssertTrue(hotObservable1.subscriptions == [UnsunscribedFromHotObservable])
+            XCTAssertTrue(hotObservable2.subscriptions == [UnsunscribedFromHotObservable])
+        }
+
+        XCTAssertEqual(results, ["24", "-15"])
+    }
+
+    func testAsDriver_withLatestFromDefaultOverload() {
+        let hotObservable1 = BackgroundThreadPrimitiveHotObservable<Int>()
+        let hotObservable2 = BackgroundThreadPrimitiveHotObservable<Int>()
+
+        let driver = hotObservable1.asDriver(onErrorJustReturn: -1).withLatestFrom(hotObservable2.asDriver(onErrorJustReturn: -2))
+
+        let results = subscribeTwiceOnBackgroundSchedulerAndOnlyOneSubscription(driver) {
+            XCTAssertTrue(hotObservable1.subscriptions == [SubscribedToHotObservable])
+            XCTAssertTrue(hotObservable2.subscriptions == [SubscribedToHotObservable])
+
+            hotObservable1.on(.Next(1))
+            hotObservable2.on(.Next(4))
+
+            hotObservable1.on(.Next(2))
+            hotObservable2.on(.Next(5))
+
+            hotObservable1.on(.Error(testError))
+            hotObservable2.on(.Error(testError))
+
+            XCTAssertTrue(hotObservable1.subscriptions == [UnsunscribedFromHotObservable])
+            XCTAssertTrue(hotObservable2.subscriptions == [UnsunscribedFromHotObservable])
+        }
+        
+        XCTAssertEqual(results, [4, 5])
+
+    }
+}
