@@ -12,6 +12,33 @@ import RxSwift
 import RxCocoa
 #endif
 
+struct Colors {
+    static let OfflineColor = UIColor(red: 1.0, green: 0.6, blue: 0.6, alpha: 1.0)
+    static let OnlineColor = nil as UIColor?
+}
+
+extension UINavigationController {
+    var rx_serviceState: AnyObserver<ServiceState?> {
+        return AnyObserver { event in
+            switch event {
+            case .Next(let maybeServiceState):
+                // if nil is being bound, then don't change color, it's not perfect, but :)
+                if let serviceState = maybeServiceState {
+                    let isOffline = serviceState ?? .Online == .Offline
+
+                    self.navigationBar.backgroundColor = isOffline
+                        ? Colors.OfflineColor
+                        : Colors.OnlineColor
+                }
+            case .Error(let error):
+                bindingErrorToInterface(error)
+            case .Completed:
+                break
+            }
+        }
+    }
+}
+
 class GitHubSearchRepositoriesViewController: ViewController, UITableViewDelegate {
     static let startLoadingOffset: CGFloat = 20.0
 
@@ -19,12 +46,10 @@ class GitHubSearchRepositoriesViewController: ViewController, UITableViewDelegat
         return contentOffset.y + tableView.frame.size.height + startLoadingOffset > tableView.contentSize.height
     }
 
-    
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
 
     var disposeBag = DisposeBag()
-    let repositories = Variable([Repository]())
     let dataSource = RxTableViewSectionedReloadDataSource<SectionModel<String, Repository>>()
 
     override func viewDidLoad() {
@@ -34,11 +59,6 @@ class GitHubSearchRepositoriesViewController: ViewController, UITableViewDelegat
 
         let tableView = self.tableView
         let searchBar = self.searchBar
-
-        let allRepositories = repositories
-            .map { repositories in
-                return [SectionModel(model: "Repositories", items: repositories)]
-            }
 
         dataSource.cellFactory = { (tv, ip, repository: Repository) in
             let cell = tv.dequeueReusableCellWithIdentifier("Cell")!
@@ -53,11 +73,6 @@ class GitHubSearchRepositoriesViewController: ViewController, UITableViewDelegat
         }
 
 
-        // reactive data source
-        allRepositories
-            .bindTo(tableView.rx_itemsWithDataSource(dataSource))
-            .addDisposableTo(disposeBag)
-
         let loadNextPageTrigger = tableView.rx_contentOffset
             .flatMap { offset in
                 GitHubSearchRepositoriesViewController.isNearTheBottomEdge(offset, tableView)
@@ -65,27 +80,33 @@ class GitHubSearchRepositoriesViewController: ViewController, UITableViewDelegat
                     : empty()
             }
 
-        searchBar.rx_text
+        let searchResult = searchBar.rx_text.asDriver()
             .throttle(0.3, $.mainScheduler)
             .distinctUntilChanged()
-            .map { query -> Observable<SearchRepositoryResponse> in
+            .map { query -> Driver<RepositoriesState> in
                 if query.isEmpty {
-                    return just(.Repositories([]))
+                    return Drive.just(RepositoriesState.empty)
                 } else {
                     return GitHubSearchRepositoriesAPI.sharedAPI.search(query, loadNextPageTrigger: loadNextPageTrigger)
-                        .retry(3)
-                        .retryOnBecomesReachable(.Repositories([]), reachabilityService: ReachabilityService.sharedReachabilityService)
+                        .asDriver(onErrorJustReturn: RepositoriesState.empty)
                 }
             }
             .switchLatest()
-            .subscribeNext { [unowned self] result in
-                switch result {
-                case .Repositories(let repositories):
-                    self.repositories.value = repositories
-                case .LimitExceeded:
-                    self.repositories.value = []
-                    showAlert("Exceeded limit of 10 non authenticated requests per minute for GitHub API. Please wait a minute. :(\nhttps://developer.github.com/v3/#rate-limiting")
-                }
+
+        searchResult
+            .map { $0.serviceState }
+            .drive(navigationController!.rx_serviceState)
+            .addDisposableTo(disposeBag)
+
+        searchResult
+            .map { [SectionModel(model: "Repositories", items: $0.repositories)] }
+            .drive(tableView.rx_itemsWithDataSource(dataSource))
+            .addDisposableTo(disposeBag)
+
+        searchResult
+            .flatMap { $0.limitExceeded ? Drive.just() : Drive.empty() }
+            .driveNext { n in
+                showAlert("Exceeded limit of 10 non authenticated requests per minute for GitHub API. Please wait a minute. :(\nhttps://developer.github.com/v3/#rate-limiting") 
             }
             .addDisposableTo(disposeBag)
 
@@ -117,5 +138,10 @@ class GitHubSearchRepositoriesViewController: ViewController, UITableViewDelegat
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 30
+    }
+
+    deinit {
+        // I know, I know, this isn't a good place of truth, but it's no
+        self.navigationController?.navigationBar.backgroundColor = nil
     }
 }

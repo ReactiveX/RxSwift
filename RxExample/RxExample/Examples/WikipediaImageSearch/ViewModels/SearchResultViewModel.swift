@@ -51,7 +51,7 @@ class SearchResultViewModel {
                     return "\(searchResult.title) loading ..."
                 }
             }
-            .retryOnBecomesReachable("loading...", reachabilityService: ReachabilityService.sharedReachabilityService)
+            .retryOnBecomesReachable("⚠️ Service offline ⚠️", reachabilityService: ReachabilityService.sharedReachabilityService)
     }
 
     func configureImageURLs() -> Observable<[NSURL]> {

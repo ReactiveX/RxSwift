@@ -23,7 +23,8 @@ public class CollectionViewImageCell: UICollectionViewCell {
             let disposeBag = DisposeBag()
 
             self.downloadableImage?
-                .bindTo(imageOutlet.rxex_downloadableImageAnimated(kCATransitionFade))
+                .asDriver(onErrorJustReturn: DownloadableImage.OfflinePlaceholder)
+                .drive(imageOutlet.rxex_downloadableImageAnimated(kCATransitionFade))
                 .addDisposableTo(disposeBag)
 
             self.disposeBag = disposeBag

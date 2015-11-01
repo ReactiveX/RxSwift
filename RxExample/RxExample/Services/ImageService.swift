@@ -19,8 +19,8 @@ import RxCocoa
 #endif 
 
 protocol ImageService {
-    func imageFromURL(URL: NSURL) -> Observable<Image>
-    func downloadableImageFromURLWithRetryIfUnreachable(URL: NSURL) -> Observable<DownloadableImage>}
+    func imageFromURL(URL: NSURL) -> Observable<DownloadableImage>
+}
 
 class DefaultImageService: ImageService {
 	
@@ -29,21 +29,21 @@ class DefaultImageService: ImageService {
 	let $: Dependencies = Dependencies.sharedDependencies
 	
     // 1st level cache
-    let imageCache = NSCache()
-    
+    private let _imageCache = NSCache()
+
     // 2nd level cache
-    let imageDataCache = NSCache()
+    private let _imageDataCache = NSCache()
 
     let loadingImage = ActivityIndicator()
     
     private init() {
         // cost is approx memory usage
-        self.imageDataCache.totalCostLimit = 10 * MB
+        _imageDataCache.totalCostLimit = 10 * MB
         
-        self.imageCache.countLimit = 20
+        _imageCache.countLimit = 20
     }
     
-    func decodeImage(imageData: NSData) -> Observable<Image> {
+    private func decodeImage(imageData: NSData) -> Observable<Image> {
         return just(imageData)
             .observeOn($.backgroundWorkScheduler)
             .map { data in
@@ -51,53 +51,56 @@ class DefaultImageService: ImageService {
                     // some error
                     throw apiError("Decoding image error")
                 }
-                return image
+                return image.forceLazyImageDecompression()
             }
-            .observeOn($.mainScheduler)
     }
     
-    func imageFromURL(URL: NSURL) -> Observable<Image> {
+    private func _imageFromURL(URL: NSURL) -> Observable<Image> {
         return deferred {
-            let maybeImage = self.imageCache.objectForKey(URL) as? Image
-            
-            let decodedImage: Observable<Image>
-            
-            // best case scenario, it's already decoded an in memory
-            if let image = maybeImage {
-                decodedImage = just(image)
-            }
-            else {
-                let cachedData = self.imageDataCache.objectForKey(URL) as? NSData
+                let maybeImage = self._imageCache.objectForKey(URL) as? Image
+
+                let decodedImage: Observable<Image>
                 
-                // does image data cache contain anything
-                if let cachedData = cachedData {
-                    decodedImage = self.decodeImage(cachedData)
+                // best case scenario, it's already decoded an in memory
+                if let image = maybeImage {
+                    decodedImage = just(image)
                 }
                 else {
-                    // fetch from network
-                    decodedImage = self.$.URLSession.rx_data(NSURLRequest(URL: URL))
-                        .doOn(onNext: { data in
-                            self.imageDataCache.setObject(data, forKey: URL)
-                        })
-                        .flatMap(self.decodeImage)
-                        .trackActivity(self.loadingImage)
+                    let cachedData = self._imageDataCache.objectForKey(URL) as? NSData
+                    
+                    // does image data cache contain anything
+                    if let cachedData = cachedData {
+                        decodedImage = self.decodeImage(cachedData)
+                    }
+                    else {
+                        // fetch from network
+                        decodedImage = self.$.URLSession.rx_data(NSURLRequest(URL: URL))
+                            .doOn(onNext: { data in
+                                self._imageDataCache.setObject(data, forKey: URL)
+                            })
+                            .flatMap(self.decodeImage)
+                            .trackActivity(self.loadingImage)
+                    }
                 }
+                
+                return decodedImage.doOn(onNext: { image in
+                    self._imageCache.setObject(image, forKey: URL)
+                })
             }
-            
-            return decodedImage.doOn(onNext: { image in
-                self.imageCache.setObject(image, forKey: URL)
-            })
-        }
-            .observeOn($.mainScheduler)
     }
 
-    func downloadableImageFromURLWithRetryIfUnreachable(URL: NSURL) -> Observable<DownloadableImage> {
-        return deferred{
-            self.imageFromURL(URL)
+    /**
+    Service that tries to download image from URL.
+     
+    In case there were some problems with network connectivity and image wasn't downloaded, automatic retry will be fired when networks becomes
+    available.
+     
+    After image is sucessfully downloaded, sequence is completed.
+    */
+    func imageFromURL(URL: NSURL) -> Observable<DownloadableImage> {
+        return _imageFromURL(URL)
                 .map { DownloadableImage.Content(image: $0) }
-                .retryOnBecomesReachable( DownloadableImage.OfflinePlaceholder, reachabilityService: ReachabilityService.sharedReachabilityService)
+                .retryOnBecomesReachable(DownloadableImage.OfflinePlaceholder, reachabilityService: ReachabilityService.sharedReachabilityService)
                 .startWith(.Content(image: Image()))
-        }
-            .observeOn($.mainScheduler)
     }
 }
