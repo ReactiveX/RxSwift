@@ -23,22 +23,24 @@ extension UIImageView{
     func rxex_downloadableImageAnimated(transitionType:String?) -> AnyObserver<DownloadableImage> {
 
         return AnyObserver { [weak self] event in
+
+            guard let strongSelf = self else { return }
             MainScheduler.ensureExecutingOnScheduler()
 
             switch event{
             case .Next(let value):
-                for subview in self?.subviews ?? [] {
+                for subview in strongSelf.subviews {
                     subview.removeFromSuperview()
                 }
                 switch value{
                 case .Content(let image):
-                    self?.rx_image.onNext(image)
+                    strongSelf.rx_image.onNext(image)
                 case .OfflinePlaceholder:
-                    let label = UILabel(frame: self!.frame)
+                    let label = UILabel(frame: strongSelf.bounds)
                     label.textAlignment = .Center
                     label.font = UIFont.systemFontOfSize(35)
                     label.text = "⚠️"
-                    self?.addSubview(label)
+                    strongSelf.addSubview(label)
                 }
             case .Error(let error):
                 bindingErrorToInterface(error)
