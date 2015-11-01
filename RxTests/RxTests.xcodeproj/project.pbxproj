@@ -1075,6 +1075,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "Krunoslav-Zaher.PerformanceTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Release;
 		};
@@ -1119,6 +1120,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "Krunoslav-Zaher.PerformanceTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = "Release-Tests";
 		};

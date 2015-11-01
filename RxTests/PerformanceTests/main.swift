@@ -35,7 +35,7 @@ compareTwoImplementations(benchmarkTime: true, first: {
         }
 
 
-    for i in 0..<1000 {
+    for i in 0..<100 {
         publishSubject.on(.Next(i))
     }
 
