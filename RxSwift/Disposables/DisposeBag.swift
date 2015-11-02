@@ -52,37 +52,40 @@ public class DisposeBag: DisposeBase {
     - parameter disposable: Disposable to add.
     */
     public func addDisposable(disposable: Disposable) {
-        let dispose = _lock.calculateLocked { () -> Bool in
-            if _disposed {
-                return true
-            }
-            
-            _disposables.append(disposable)
-            
-            return false
+        _addDisposable(disposable)?.dispose()
+    }
+
+    private func _addDisposable(disposable: Disposable) -> Disposable? {
+        _lock.lock(); defer { _lock.unlock() }
+        if _disposed {
+            return disposable
         }
-        
-        if dispose {
-            disposable.dispose()
-        }
+
+        _disposables.append(disposable)
+
+        return nil
     }
 
     /**
     This is internal on purpose, take a look at `CompositeDisposable` instead.
     */
-    func dispose() {
-        let oldDisposables = _lock.calculateLocked { () -> [Disposable] in
-            let disposables = _disposables
-            
-            _disposables.removeAll(keepCapacity: false)
-            _disposed = true
-            
-            return disposables
-        }
-        
+    private func dispose() {
+        let oldDisposables = _dispose()
+
         for disposable in oldDisposables {
             disposable.dispose()
         }
+    }
+
+    private func _dispose() -> [Disposable] {
+        _lock.lock(); defer { _lock.unlock() }
+
+        let disposables = _disposables
+        
+        _disposables.removeAll(keepCapacity: false)
+        _disposed = true
+        
+        return disposables
     }
     
     deinit {

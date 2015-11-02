@@ -58,9 +58,9 @@ class AmbSink<ElementType, O: ObserverType where O.E == ElementType> : Sink<O> {
     // state
     private var _choice = AmbState.Neither
     
-    init(parent: Parent, observer: O, cancel: Disposable) {
+    init(parent: Parent, observer: O) {
         _parent = parent
-        super.init(observer: observer, cancel: cancel)
+        super.init(observer: observer)
     }
     
     func run() -> Disposable {
@@ -69,7 +69,7 @@ class AmbSink<ElementType, O: ObserverType where O.E == ElementType> : Sink<O> {
         let disposeAll = StableCompositeDisposable.create(subscription1, subscription2)
         
         let forwardEvent = { (o: AmbObserverType, event: Event<ElementType>) -> Void in
-            self.observer?.on(event)
+            self.forwardOn(event)
         }
         
         let decide = { (o: AmbObserverType, event: Event<ElementType>, me: AmbState, otherSubscription: Disposable) in
@@ -82,7 +82,7 @@ class AmbSink<ElementType, O: ObserverType where O.E == ElementType> : Sink<O> {
                 }
                 
                 if self._choice == me {
-                    self.observer?.on(event)
+                    self.forwardOn(event)
                     if event.isStopEvent {
                         self.dispose()
                     }
@@ -114,9 +114,9 @@ class Amb<Element>: Producer<Element> {
         _right = right
     }
     
-    override func run<O : ObserverType where O.E == Element>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
-        let sink = AmbSink(parent: self, observer: observer, cancel: cancel)
-        setSink(sink)
-        return sink.run()
+    override func run<O : ObserverType where O.E == Element>(observer: O) -> Disposable {
+        let sink = AmbSink(parent: self, observer: observer)
+        sink.disposable = sink.run()
+        return sink
     }
 }

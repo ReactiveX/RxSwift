@@ -38,9 +38,9 @@ class ZipSink<%= i %>_<<%= (Array(1...i).map { "E\($0)" }).joinWithSeparator(", 
 "    var _values\($0): Queue<E\($0)> = Queue(capacity: 2)"
 }).joinWithSeparator("\n") %>
 
-    init(parent: Parent, observer: O, cancel: Disposable) {
+    init(parent: Parent, observer: O) {
         _parent = parent
-        super.init(arity: <%= i %>, observer: observer, cancel: cancel)
+        super.init(arity: <%= i %>, observer: observer)
     }
 
     override func hasElements(index: Int) -> Bool {
@@ -61,7 +61,7 @@ class ZipSink<%= i %>_<<%= (Array(1...i).map { "E\($0)" }).joinWithSeparator(", 
 }).joinWithSeparator("\n") %>
 
 <%= (Array(1...i).map {
-"        let observer\($0) = ZipObserver(lock: lock, parent: self, index: \($0 - 1), setNextValue: { self._values\($0).enqueue($0) }, this: subscription\($0))"
+"        let observer\($0) = ZipObserver(lock: _lock, parent: self, index: \($0 - 1), setNextValue: { self._values\($0).enqueue($0) }, this: subscription\($0))"
 }).joinWithSeparator("\n") %>
 
 <%= (Array(1...i).map {
@@ -93,10 +93,10 @@ class Zip<%= i %><<%= (Array(1...i).map { "E\($0)" }).joinWithSeparator(", ") %>
         _resultSelector = resultSelector
     }
 
-    override func run<O: ObserverType where O.E == R>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
-        let sink = ZipSink<%= i %>_(parent: self, observer: observer, cancel: cancel)
-        setSink(sink)
-        return sink.run()
+    override func run<O: ObserverType where O.E == R>(observer: O) -> Disposable {
+        let sink = ZipSink<%= i %>_(parent: self, observer: observer)
+        sink.disposable = sink.run()
+        return sink
     }
 }
 

@@ -8,54 +8,23 @@
 
 import Foundation
 
-class Sink<O : ObserverType> : Disposable {
-    private var _lock = SpinLock()
-    
-    // state
-    private var _observer: O?
-    private var _cancel: Disposable
-    private var _disposed: Bool = false
-    
-    var observer: O? {
-        get {
-            return _lock.calculateLocked { _observer }
+class Sink<O : ObserverType> : SingleAssignmentDisposable {
+    private let _observer: O
+
+    func forwardOn(event: Event<O.E>) {
+        if disposed {
+            return
         }
+        _observer.on(event)
     }
-    
-    var cancel: Disposable {
-        get {
-            return _lock.calculateLocked { _cancel }
-        }
-    }
-    
-    init(observer: O, cancel: Disposable) {
+
+    init(observer: O) {
 #if TRACE_RESOURCES
         OSAtomicIncrement32(&resourceCount)
 #endif
         _observer = observer
-        _cancel = cancel
     }
-    
-    func dispose() {
-        let cancel: Disposable? = _lock.calculateLocked {
-            if _disposed {
-                return nil
-            }
-            
-            let cancel = _cancel
-            
-            _disposed = true
-            _observer = nil
-            _cancel = NopDisposable.instance
-            
-            return cancel
-        }
-        
-        if let cancel = cancel {
-            cancel.dispose()
-        }
-    }
-    
+
     deinit {
 #if TRACE_RESOURCES
         OSAtomicDecrement32(&resourceCount)

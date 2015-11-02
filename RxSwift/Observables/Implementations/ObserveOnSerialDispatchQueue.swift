@@ -18,43 +18,37 @@ public var numberOfSerialDispatchQueueObservables: Int32 = 0
 #endif
 
 class ObserveOnSerialDispatchQueueSink<O: ObserverType> : ObserverBase<O.E> {
-    
     let scheduler: SerialDispatchQueueScheduler
     let observer: O
     
-    var disposeLock = SpinLock()
-    
-    var cancel: Disposable
-    
-    init(scheduler: SerialDispatchQueueScheduler, observer: O, cancel: Disposable) {
-        self.cancel = cancel
+    let subscription = SingleAssignmentDisposable()
+
+    var cachedScheduleLambda: ((ObserveOnSerialDispatchQueueSink<O>, Event<E>) -> Disposable)!
+
+    init(scheduler: SerialDispatchQueueScheduler, observer: O) {
         self.scheduler = scheduler
         self.observer = observer
         super.init()
+
+        cachedScheduleLambda = { sink, event in
+            sink.observer.on(event)
+
+            if event.isStopEvent {
+                sink.dispose()
+            }
+
+            return NopDisposable.instance
+        }
     }
 
     override func onCore(event: Event<E>) {
-        self.scheduler.schedule(()) { (_) -> Disposable in
-            self.observer.on(event)
-            
-            if event.isStopEvent {
-                self.dispose()
-            }
-            
-            return NopDisposable.instance
-        }
+        self.scheduler.schedule((self, event), action: cachedScheduleLambda)
     }
    
     override func dispose() {
         super.dispose()
-        
-        let toDispose = disposeLock.calculateLocked { () -> Disposable in
-            let originalCancel = self.cancel
-            self.cancel = NopDisposable.instance
-            return originalCancel
-        }
-        
-        toDispose.dispose()
+
+        subscription.dispose()
     }
 }
     
@@ -72,10 +66,10 @@ class ObserveOnSerialDispatchQueue<E> : Producer<E> {
 #endif
     }
     
-    override func run<O : ObserverType where O.E == E>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
-        let sink = ObserveOnSerialDispatchQueueSink(scheduler: scheduler, observer: observer, cancel: cancel)
-        setSink(sink)
-        return source.subscribe(sink)
+    override func run<O : ObserverType where O.E == E>(observer: O) -> Disposable {
+        let sink = ObserveOnSerialDispatchQueueSink(scheduler: scheduler, observer: observer)
+        sink.subscription.disposable = source.subscribe(sink)
+        return sink
     }
     
 #if TRACE_RESOURCES

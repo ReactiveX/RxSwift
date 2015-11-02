@@ -10,7 +10,7 @@ import Foundation
 
 // MARK: reduce
 
-extension ObservableConvertibleType {
+extension ObservableType {
     
     /**
     Applies an `accumulator` function over an observable sequence, returning the result of the aggregation as a single element in the result sequence. The specified `seed` value is used as the initial accumulator value.

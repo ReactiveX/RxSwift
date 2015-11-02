@@ -113,6 +113,13 @@
 		C84B913C1B8A282000C9CCCF /* RxCollectionViewSectionedDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C859B9A71B45C83700D012D7 /* RxCollectionViewSectionedDataSource.swift */; };
 		C84B913D1B8A282000C9CCCF /* RxCollectionViewSectionedAnimatedDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C859B9A91B45CB0900D012D7 /* RxCollectionViewSectionedAnimatedDataSource.swift */; };
 		C84CC52E1BDC344100E06A64 /* ElementAt.swift in Sources */ = {isa = PBXBuildFile; fileRef = C84CC52D1BDC344100E06A64 /* ElementAt.swift */; };
+		C84CC58B1BDD486300E06A64 /* LockOwnerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C84CC56B1BDD08F500E06A64 /* LockOwnerType.swift */; };
+		C84CC58C1BDD486300E06A64 /* SynchronizedDisposeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C84CC56C1BDD08F500E06A64 /* SynchronizedDisposeType.swift */; };
+		C84CC58D1BDD486300E06A64 /* SynchronizedOnType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C84CC56D1BDD08F500E06A64 /* SynchronizedOnType.swift */; };
+		C84CC58E1BDD486300E06A64 /* SynchronizedSubscribeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C84CC56E1BDD08F500E06A64 /* SynchronizedSubscribeType.swift */; };
+		C84CC58F1BDD486300E06A64 /* SynchronizedUnsubscribeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C84CC56F1BDD08F500E06A64 /* SynchronizedUnsubscribeType.swift */; };
+		C84CC5901BDD486300E06A64 /* AsyncLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C894642A1BC6C2B00055219D /* AsyncLock.swift */; };
+		C84CC5911BDD48B800E06A64 /* SubscriptionDisposable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C84CC5831BDD484400E06A64 /* SubscriptionDisposable.swift */; };
 		C859B9A41B45C5D900D012D7 /* PartialUpdatesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C859B9A31B45C5D900D012D7 /* PartialUpdatesViewController.swift */; };
 		C859B9AC1B45CF9100D012D7 /* NumberCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C859B9AB1B45CF9100D012D7 /* NumberCell.swift */; };
 		C859B9AE1B45CFAB00D012D7 /* NumberSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C859B9AD1B45CFAB00D012D7 /* NumberSectionView.swift */; };
@@ -140,7 +147,6 @@
 		C890A65A1AEBD28A00AFF7E6 /* GitHubAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C890A6591AEBD28A00AFF7E6 /* GitHubAPI.swift */; };
 		C890A65D1AEC084100AFF7E6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C890A65C1AEC084100AFF7E6 /* ViewController.swift */; };
 		C894649E1BC6C2B00055219D /* Cancelable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89464281BC6C2B00055219D /* Cancelable.swift */; };
-		C894649F1BC6C2B00055219D /* AsyncLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C894642A1BC6C2B00055219D /* AsyncLock.swift */; };
 		C89464A01BC6C2B00055219D /* Lock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C894642B1BC6C2B00055219D /* Lock.swift */; };
 		C89464A11BC6C2B00055219D /* ConnectableObservableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C894642C1BC6C2B00055219D /* ConnectableObservableType.swift */; };
 		C89464A21BC6C2B00055219D /* Bag.swift in Sources */ = {isa = PBXBuildFile; fileRef = C894642E1BC6C2B00055219D /* Bag.swift */; };
@@ -501,6 +507,12 @@
 		C83367111AD029AE00C668A7 /* HtmlParsing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HtmlParsing.swift; sourceTree = "<group>"; };
 		C83367121AD029AE00C668A7 /* ImageService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageService.swift; sourceTree = "<group>"; };
 		C84CC52D1BDC344100E06A64 /* ElementAt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElementAt.swift; sourceTree = "<group>"; };
+		C84CC56B1BDD08F500E06A64 /* LockOwnerType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LockOwnerType.swift; sourceTree = "<group>"; };
+		C84CC56C1BDD08F500E06A64 /* SynchronizedDisposeType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SynchronizedDisposeType.swift; sourceTree = "<group>"; };
+		C84CC56D1BDD08F500E06A64 /* SynchronizedOnType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SynchronizedOnType.swift; sourceTree = "<group>"; };
+		C84CC56E1BDD08F500E06A64 /* SynchronizedSubscribeType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SynchronizedSubscribeType.swift; sourceTree = "<group>"; };
+		C84CC56F1BDD08F500E06A64 /* SynchronizedUnsubscribeType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SynchronizedUnsubscribeType.swift; sourceTree = "<group>"; };
+		C84CC5831BDD484400E06A64 /* SubscriptionDisposable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionDisposable.swift; sourceTree = "<group>"; };
 		C859B9A31B45C5D900D012D7 /* PartialUpdatesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PartialUpdatesViewController.swift; sourceTree = "<group>"; };
 		C859B9A51B45C80700D012D7 /* RxCollectionViewSectionedReloadDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxCollectionViewSectionedReloadDataSource.swift; sourceTree = "<group>"; };
 		C859B9A71B45C83700D012D7 /* RxCollectionViewSectionedDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxCollectionViewSectionedDataSource.swift; sourceTree = "<group>"; };
@@ -1066,6 +1078,11 @@
 		C89464291BC6C2B00055219D /* Concurrency */ = {
 			isa = PBXGroup;
 			children = (
+				C84CC56B1BDD08F500E06A64 /* LockOwnerType.swift */,
+				C84CC56C1BDD08F500E06A64 /* SynchronizedDisposeType.swift */,
+				C84CC56D1BDD08F500E06A64 /* SynchronizedOnType.swift */,
+				C84CC56E1BDD08F500E06A64 /* SynchronizedSubscribeType.swift */,
+				C84CC56F1BDD08F500E06A64 /* SynchronizedUnsubscribeType.swift */,
 				C894642A1BC6C2B00055219D /* AsyncLock.swift */,
 				C894642B1BC6C2B00055219D /* Lock.swift */,
 			);
@@ -1085,6 +1102,7 @@
 		C89464321BC6C2B00055219D /* Disposables */ = {
 			isa = PBXGroup;
 			children = (
+				C84CC5831BDD484400E06A64 /* SubscriptionDisposable.swift */,
 				C89464331BC6C2B00055219D /* AnonymousDisposable.swift */,
 				C89464341BC6C2B00055219D /* BinaryDisposable.swift */,
 				C89464351BC6C2B00055219D /* CompositeDisposable.swift */,
@@ -1644,6 +1662,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C84CC58B1BDD486300E06A64 /* LockOwnerType.swift in Sources */,
 				C89465971BC6C2BC0055219D /* UIScrollView+Rx.swift in Sources */,
 				C8297E2F1B6CF905000589EA /* RxTableViewSectionedAnimatedDataSource.swift in Sources */,
 				C89464FF1BC6C2B00055219D /* DispatchQueueSchedulerPriority.swift in Sources */,
@@ -1661,6 +1680,7 @@
 				C89465731BC6C2BC0055219D /* Deallocating.swift in Sources */,
 				C89464A51BC6C2B00055219D /* Disposable.swift in Sources */,
 				C89464F91BC6C2B00055219D /* ObserverType+Extensions.swift in Sources */,
+				C84CC58D1BDD486300E06A64 /* SynchronizedOnType.swift in Sources */,
 				C89464DC1BC6C2B00055219D /* Scan.swift in Sources */,
 				C89464B21BC6C2B00055219D /* StableCompositeDisposable.swift in Sources */,
 				C89464AE1BC6C2B00055219D /* ScheduledDisposable.swift in Sources */,
@@ -1681,6 +1701,7 @@
 				C89465961BC6C2BC0055219D /* UILabel+Rx.swift in Sources */,
 				C894659C1BC6C2BC0055219D /* UISwitch+Rx.swift in Sources */,
 				C89464F81BC6C2B00055219D /* TailRecursiveSink.swift in Sources */,
+				C84CC58C1BDD486300E06A64 /* SynchronizedDisposeType.swift in Sources */,
 				C89464BF1BC6C2B00055219D /* CombineLatest+arity.swift in Sources */,
 				C89465751BC6C2BC0055219D /* KVOObservable.swift in Sources */,
 				C89464CB1BC6C2B00055219D /* FailWith.swift in Sources */,
@@ -1761,10 +1782,12 @@
 				C8297E3F1B6CF905000589EA /* SectionModelType.swift in Sources */,
 				C8297E401B6CF905000589EA /* ImageService.swift in Sources */,
 				C89464AD1BC6C2B00055219D /* NopDisposable.swift in Sources */,
+				C84CC5901BDD486300E06A64 /* AsyncLock.swift in Sources */,
 				CBEE77541BD8C7B700AD584C /* ToArray.swift in Sources */,
 				C89465771BC6C2BC0055219D /* NSNotificationCenter+Rx.swift in Sources */,
 				C89465091BC6C2B00055219D /* ReplaySubject.swift in Sources */,
 				C8297E411B6CF905000589EA /* RxCollectionViewSectionedReloadDataSource.swift in Sources */,
+				C84CC58E1BDD486300E06A64 /* SynchronizedSubscribeType.swift in Sources */,
 				C89464A81BC6C2B00055219D /* CompositeDisposable.swift in Sources */,
 				C89464D21BC6C2B00055219D /* Multicast.swift in Sources */,
 				C89465821BC6C2BC0055219D /* RxCollectionViewDataSourceType.swift in Sources */,
@@ -1808,6 +1831,7 @@
 				C89464E31BC6C2B00055219D /* TakeUntil.swift in Sources */,
 				C89464FB1BC6C2B00055219D /* Rx.swift in Sources */,
 				C89464FD1BC6C2B00055219D /* ConcurrentDispatchQueueScheduler.swift in Sources */,
+				C84CC5911BDD48B800E06A64 /* SubscriptionDisposable.swift in Sources */,
 				C89464C71BC6C2B00055219D /* DelaySubscription.swift in Sources */,
 				C8297E481B6CF905000589EA /* Differentiator.swift in Sources */,
 				C8297E491B6CF905000589EA /* WikipediaSearchCell.swift in Sources */,
@@ -1820,6 +1844,7 @@
 				C89464D31BC6C2B00055219D /* Never.swift in Sources */,
 				C8297E4D1B6CF905000589EA /* RxTableViewSectionedReloadDataSource.swift in Sources */,
 				C89465931BC6C2BC0055219D /* UIDatePicker+Rx.swift in Sources */,
+				C84CC58F1BDD486300E06A64 /* SynchronizedUnsubscribeType.swift in Sources */,
 				C8297E4E1B6CF905000589EA /* RxCollectionViewSectionedAnimatedDataSource.swift in Sources */,
 				C89CDB711BCC45E5002063D9 /* ShareReplay1.swift in Sources */,
 				C89464BD1BC6C2B00055219D /* Buffer.swift in Sources */,
@@ -1838,7 +1863,6 @@
 				D2AF91981BD3D95900A008C1 /* Using.swift in Sources */,
 				C8297E501B6CF905000589EA /* TableViewController.swift in Sources */,
 				C8297E511B6CF905000589EA /* PartialUpdatesViewController.swift in Sources */,
-				C894649F1BC6C2B00055219D /* AsyncLock.swift in Sources */,
 				C8B145141BD2E4D000267DCE /* ConcurrentMainScheduler.swift in Sources */,
 				C8297E521B6CF905000589EA /* Dependencies.swift in Sources */,
 				C80DDED91BCE9046006A1832 /* ObservableConvertibleType+Driver.swift in Sources */,

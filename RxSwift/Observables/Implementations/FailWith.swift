@@ -15,7 +15,7 @@ class FailWith<Element> : Producer<Element> {
         _error = error
     }
     
-    override func run<O : ObserverType where O.E == Element>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
+    override func subscribe<O : ObserverType where O.E == Element>(observer: O) -> Disposable {
         observer.on(.Error(_error))
         return NopDisposable.instance
     }

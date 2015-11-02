@@ -69,18 +69,19 @@ public class SerialDisposable : DisposeBase, Cancelable {
     Disposes the underlying disposable as well as all future replacements.
     */
     public func dispose() {
-        let disposable: Disposable? = _lock.calculateLocked {
-            if _disposed {
-                return nil
-            }
-            else {
-                _disposed = true
-                return _current
-            }
+        _dispose()?.dispose()
+    }
+
+    private func _dispose() -> Disposable? {
+        _lock.lock(); defer { _lock.unlock() }
+        if _disposed {
+            return nil
         }
-        
-        if let disposable = disposable {
-            disposable.dispose()
+        else {
+            _disposed = true
+            let current = _current
+            _current = nil
+            return current
         }
     }
 }

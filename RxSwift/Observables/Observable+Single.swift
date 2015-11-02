@@ -10,7 +10,7 @@ import Foundation
 
 // MARK: distinct until changed
 
-extension ObservableConvertibleType where E: Equatable {
+extension ObservableType where E: Equatable {
     
     /**
     Returns an observable sequence that contains only distinct contiguous elements according to equality operator.
@@ -24,7 +24,7 @@ extension ObservableConvertibleType where E: Equatable {
     }
 }
 
-extension ObservableConvertibleType {
+extension ObservableType {
     /**
     Returns an observable sequence that contains only distinct contiguous elements according to the `keySelector`.
     
@@ -65,7 +65,7 @@ extension ObservableConvertibleType {
 
 // MARK: do
 
-extension ObservableConvertibleType {
+extension ObservableType {
     
     /**
     Invokes an action for each event in the observable sequence, and propagates all observer messages through the result sequence.
@@ -105,7 +105,7 @@ extension ObservableConvertibleType {
 
 // MARK: startWith
 
-extension ObservableConvertibleType {
+extension ObservableType {
     
     /**
     Prepends a sequence of values to an observable sequence.
@@ -122,7 +122,7 @@ extension ObservableConvertibleType {
 
 // MARK: retry
 
-extension ObservableConvertibleType {
+extension ObservableType {
     
     /**
     Repeats the source observable sequence until it successfully terminates.
@@ -153,7 +153,7 @@ extension ObservableConvertibleType {
 
 // MARK: scan
 
-extension ObservableConvertibleType {
+extension ObservableType {
     
     /**
     Applies an accumulator function over an observable sequence and returns each intermediate result. The specified seed value is used as the initial accumulator value.

@@ -19,8 +19,8 @@ class TailRecursiveSink<S: SequenceType, O: ObserverType where S.Generator.Eleme
     // this is thread safe object
     var _gate = AsyncLock()
     
-    override init(observer: O, cancel: Disposable) {
-        super.init(observer: observer, cancel: cancel)
+    override init(observer: O) {
+        super.init(observer: observer)
     }
     
     func run(sources: S.Generator) -> Disposable {
@@ -49,7 +49,7 @@ class TailRecursiveSink<S: SequenceType, O: ObserverType where S.Generator.Eleme
     }
 
     func done() {
-        observer?.on(.Completed)
+        forwardOn(.Completed)
         dispose()
     }
     

@@ -8,22 +8,20 @@
 
 import Foundation
 
-class SkipUntilSinkOther<ElementType, Other, O: ObserverType where O.E == ElementType> : ObserverType {
+class SkipUntilSinkOther<ElementType, Other, O: ObserverType where O.E == ElementType>
+    : ObserverType
+    , LockOwnerType
+    , SynchronizedOnType {
     typealias Parent = SkipUntilSink<ElementType, Other, O>
     typealias E = Other
     
     private let _parent: Parent
-    
-    private let _singleAssignmentDisposable = SingleAssignmentDisposable()
-    
-    var disposable: Disposable {
-        get {
-            abstractMethod()
-        }
-        set {
-            _singleAssignmentDisposable.disposable = newValue
-        }
+
+    var _lock: NSRecursiveLock {
+        return _parent._lock
     }
+    
+    let _subscription = SingleAssignmentDisposable()
 
     init(parent: Parent) {
         _parent = parent
@@ -33,19 +31,19 @@ class SkipUntilSinkOther<ElementType, Other, O: ObserverType where O.E == Elemen
     }
 
     func on(event: Event<E>) {
+        synchronizedOn(event)
+    }
+
+    func _synchronized_on(event: Event<E>) {
         switch event {
         case .Next:
-            _parent._lock.performLocked {
-                _parent._forwardElements = true
-                _singleAssignmentDisposable.dispose()
-            }
+            _parent._forwardElements = true
+            _subscription.dispose()
         case .Error(let e):
-            _parent._lock.performLocked {
-                _parent.observer?.onError(e)
-                _parent.dispose()
-            }
+            _parent.forwardOn(.Error(e))
+            _parent.dispose()
         case .Completed:
-            _singleAssignmentDisposable.dispose()
+            _subscription.dispose()
         }
     }
     
@@ -58,46 +56,43 @@ class SkipUntilSinkOther<ElementType, Other, O: ObserverType where O.E == Elemen
 }
 
 
-class SkipUntilSink<ElementType, Other, O: ObserverType where O.E == ElementType> : Sink<O>, ObserverType {
+class SkipUntilSink<ElementType, Other, O: ObserverType where O.E == ElementType>
+    : Sink<O>
+    , ObserverType
+    , LockOwnerType
+    , SynchronizedOnType {
     typealias E = ElementType
     typealias Parent = SkipUntil<E, Other>
     
-    private let _lock = NSRecursiveLock()
+    let _lock = NSRecursiveLock()
     private let _parent: Parent
     private var _forwardElements = false
     
-    private let _singleAssignmentDisposable = SingleAssignmentDisposable()
-    
-    var disposable: Disposable {
-        get {
-            abstractMethod()
-        }
-        set {
-            _singleAssignmentDisposable.disposable = newValue
-        }
-    }
-    
-    init(parent: Parent, observer: O, cancel: Disposable) {
+    private let _sourceSubscription = SingleAssignmentDisposable()
+
+    init(parent: Parent, observer: O) {
         _parent = parent
-        super.init(observer: observer, cancel: cancel)
+        super.init(observer: observer)
     }
     
     func on(event: Event<E>) {
-        _lock.performLocked {
-            switch event {
-            case .Next:
-                if _forwardElements {
-                    observer?.on(event)
-                }
-            case .Error:
-                observer?.on(event)
-                dispose()
-            case .Completed:
-                if _forwardElements {
-                    observer?.on(event)
-                }
-                _singleAssignmentDisposable.dispose()
+        synchronizedOn(event)
+    }
+
+    func _synchronized_on(event: Event<E>) {
+        switch event {
+        case .Next:
+            if _forwardElements {
+                forwardOn(event)
             }
+        case .Error:
+            forwardOn(event)
+            dispose()
+        case .Completed:
+            if _forwardElements {
+                forwardOn(event)
+            }
+            _sourceSubscription.dispose()
         }
     }
     
@@ -105,10 +100,10 @@ class SkipUntilSink<ElementType, Other, O: ObserverType where O.E == ElementType
         let sourceSubscription = _parent._source.subscribe(self)
         let otherObserver = SkipUntilSinkOther(parent: self)
         let otherSubscription = _parent._other.subscribe(otherObserver)
-        disposable = sourceSubscription
-        otherObserver.disposable = otherSubscription
+        _sourceSubscription.disposable = sourceSubscription
+        otherObserver._subscription.disposable = otherSubscription
         
-        return BinaryDisposable(sourceSubscription, otherSubscription)
+        return StableCompositeDisposable.create(_sourceSubscription, otherObserver._subscription)
     }
 }
 
@@ -122,9 +117,9 @@ class SkipUntil<Element, Other>: Producer<Element> {
         _other = other
     }
     
-    override func run<O : ObserverType where O.E == Element>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
-        let sink = SkipUntilSink(parent: self, observer: observer, cancel: cancel)
-        setSink(sink)
-        return sink.run()
+    override func run<O : ObserverType where O.E == Element>(observer: O) -> Disposable {
+        let sink = SkipUntilSink(parent: self, observer: observer)
+        sink.disposable = sink.run()
+        return sink
     }
 }

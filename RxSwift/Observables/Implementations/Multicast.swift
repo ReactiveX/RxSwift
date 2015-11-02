@@ -15,9 +15,9 @@ class MulticastSink<S: SubjectType, O: ObserverType>: Sink<O>, ObserverType {
     
     private let _parent: MutlicastType
     
-    init(parent: MutlicastType, observer: O, cancel: Disposable) {
+    init(parent: MutlicastType, observer: O) {
         _parent = parent
-        super.init(observer: observer, cancel: cancel)
+        super.init(observer: observer)
     }
     
     func run() -> Disposable {
@@ -33,14 +33,14 @@ class MulticastSink<S: SubjectType, O: ObserverType>: Sink<O>, ObserverType {
             return BinaryDisposable(subscription, connection)
         }
         catch let e {
-            observer?.on(.Error(e))
+            forwardOn(.Error(e))
             dispose()
             return NopDisposable.instance
         }
     }
     
     func on(event: Event<ResultType>) {
-        observer?.on(event)
+        forwardOn(event)
         switch event {
             case .Next: break
             case .Error, .Completed:
@@ -63,9 +63,9 @@ class Multicast<S: SubjectType, R>: Producer<R> {
         _selector = selector
     }
     
-    override func run<O: ObserverType where O.E == R>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
-        let sink = MulticastSink(parent: self, observer: observer, cancel: cancel)
-        setSink(sink)
-        return sink.run()
+    override func run<O: ObserverType where O.E == R>(observer: O) -> Disposable {
+        let sink = MulticastSink(parent: self, observer: observer)
+        sink.disposable = sink.run()
+        return sink
     }
 }

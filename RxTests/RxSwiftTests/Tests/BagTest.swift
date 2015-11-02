@@ -20,92 +20,202 @@ extension BagTest {
     typealias DoSomething = () -> Void
     typealias KeyType = Bag<DoSomething>.KeyType
     
-    func numberOfActionsAfter(nInsertions: Int, deletionsFromStart: Int) {
-        var increment = 0
-        
-        var bag = Bag<DoSomething>()
+    func numberOfActionsAfter<T>(nInsertions: Int, deletionsFromStart: Int, createNew: () -> T, bagAction: (RxMutableBox<Bag<T>>) -> ()) {
+        let bag = RxMutableBox(Bag<T>())
         
         var keys = [KeyType]()
         
         for _ in 0 ..< nInsertions {
-            keys.append(bag.insert({
-                increment++
-            }))
+            keys.append(bag.value.insert(createNew()))
         }
         
         for i in 0 ..< deletionsFromStart {
             let key = keys[i]
-            bag.removeKey(key)
+            XCTAssertTrue(bag.value.removeKey(key) != nil)
         }
-        
-        bag.forEach { $0() }
-        
-        XCTAssertTrue(increment == nInsertions - deletionsFromStart)
+
+        bagAction(bag)
     }
     
     func testBag_deletionsFromStart() {
         for i in 0 ..< 50 {
             for j in 0 ... i {
-                numberOfActionsAfter(i, deletionsFromStart: j)
+                var numberForEachActions = 0
+                var numberObservers = 0
+                var numberDisposables = 0
+
+                numberOfActionsAfter(i,
+                    deletionsFromStart: j,
+                    createNew: { () -> DoSomething in { () -> () in numberForEachActions++ } },
+                    bagAction: { (bag: RxMutableBox<Bag<DoSomething>>) in bag.value.forEach { $0() }; XCTAssertTrue(bag.value.count == i - j) }
+                )
+                numberOfActionsAfter(i,
+                    deletionsFromStart: j,
+                    createNew: { () -> AnyObserver<Int> in AnyObserver { _ in numberObservers++ } },
+                    bagAction: { (bag: RxMutableBox<Bag<AnyObserver<Int>>>) in bag.value.on(.Next(1)); XCTAssertTrue(bag.value.count == i - j) }
+                )
+                numberOfActionsAfter(i,
+                    deletionsFromStart: j,
+                    createNew: { () -> Disposable in AnonymousDisposable { numberDisposables++ } },
+                    bagAction: { (bag: RxMutableBox<Bag<Disposable>>) in disposeAllIn(bag.value); XCTAssertTrue(bag.value.count == i - j) }
+                )
+
+                XCTAssertTrue(numberForEachActions == i - j)
+                XCTAssertTrue(numberObservers == i - j)
+                XCTAssertTrue(numberDisposables == i - j)
             }
         }
     }
 
-    func numberOfActionsAfter(nInsertions: Int, deletionsFromEnd: Int) {
-        var increment = 0
-        
-        var bag = Bag<DoSomething>()
+    func numberOfActionsAfter<T>(nInsertions: Int, deletionsFromEnd: Int, createNew: () -> T, bagAction: (RxMutableBox<Bag<T>>) -> ()) {
+        let bag = RxMutableBox(Bag<T>())
         
         var keys = [KeyType]()
         
         for _ in 0 ..< nInsertions {
-            keys.append(bag.insert({
-                increment++
-            }))
+            keys.append(bag.value.insert(createNew()))
         }
         
         for i in 0 ..< deletionsFromEnd {
             let key = keys[keys.count - 1 - i]
-            bag.removeKey(key)
+            XCTAssertTrue(bag.value.removeKey(key) != nil)
         }
-        
-        bag.forEach { $0() }
-        
-        XCTAssertTrue(increment == nInsertions - deletionsFromEnd)
+
+        bagAction(bag)
     }
 
     func testBag_deletionsFromEnd() {
         for i in 0 ..< 50 {
             for j in 0 ... i {
-                numberOfActionsAfter(i, deletionsFromEnd: j)
+                var numberForEachActions = 0
+                var numberObservers = 0
+                var numberDisposables = 0
+
+                numberOfActionsAfter(i,
+                    deletionsFromStart: j,
+                    createNew: { () -> DoSomething in { () -> () in numberForEachActions++ } },
+                    bagAction: { (bag: RxMutableBox<Bag<DoSomething>>) in bag.value.forEach { $0() }; XCTAssertTrue(bag.value.count == i - j) }
+                )
+                numberOfActionsAfter(i,
+                    deletionsFromStart: j,
+                    createNew: { () -> AnyObserver<Int> in AnyObserver { _ in numberObservers++ } },
+                    bagAction: { (bag: RxMutableBox<Bag<AnyObserver<Int>>>) in bag.value.on(.Next(1)); XCTAssertTrue(bag.value.count == i - j) }
+                )
+                numberOfActionsAfter(i,
+                    deletionsFromStart: j,
+                    createNew: { () -> Disposable in AnonymousDisposable { numberDisposables++ } },
+                    bagAction: { (bag: RxMutableBox<Bag<Disposable>>) in disposeAllIn(bag.value); XCTAssertTrue(bag.value.count == i - j) }
+                )
+
+                XCTAssertTrue(numberForEachActions == i - j)
+                XCTAssertTrue(numberObservers == i - j)
+                XCTAssertTrue(numberDisposables == i - j)
             }
         }
     }
     
     func testBag_immutableForeach() {
-        var increment = 0
-        
-        var bag = Bag<DoSomething>()
-        
-        var keys = [KeyType]()
-        
-        for _ in 0 ..< 10 {
-            keys.append(bag.insert({
-                increment++
-            }))
-        }
-        
-        for _ in 0 ..< 2 {
-            var j = 0
-            bag.forEach { c in
-                j++
-                if j == 5 {
-                    bag.removeAll()
-                }
-                c()
+        for breakAt in 0 ..< 50 {
+            var increment1 = 0
+            var increment2 = 0
+            var increment3 = 0
+
+            let bag1 = RxMutableBox(Bag<DoSomething>())
+            let bag2 = RxMutableBox(Bag<AnyObserver<Int>>())
+            let bag3 = RxMutableBox(Bag<Disposable>())
+
+            for _ in 0 ..< 50 {
+                bag1.value.insert({
+                    if increment1 == breakAt {
+                        bag1.value.removeAll()
+                    }
+                    increment1++
+                })
+                bag2.value.insert(AnyObserver { _ in
+                    if increment2 == breakAt {
+                        bag2.value.removeAll()
+                    }
+                    increment2++
+                })
+                bag3.value.insert(AnonymousDisposable { _ in
+                    if increment3 == breakAt {
+                        bag3.value.removeAll()
+                    }
+                    increment3++
+                })
             }
+            
+            for _ in 0 ..< 2 {
+                bag1.value.forEach { c in
+                    c()
+                }
+
+                bag2.value.on(.Next(1))
+
+                disposeAllIn(bag3.value)
+            }
+            
+            XCTAssertEqual(increment1, 50)
         }
-        
-        XCTAssertTrue(increment == 10)
+    }
+
+    func testBag_removeAll() {
+        var numberForEachActions = 0
+        var numberObservers = 0
+        var numberDisposables = 0
+
+        numberOfActionsAfter(100,
+            deletionsFromStart: 0,
+            createNew: { () -> DoSomething in { () -> () in numberForEachActions++ } },
+            bagAction: { (bag: RxMutableBox<Bag<DoSomething>>) in bag.value.removeAll(); bag.value.forEach { $0() } }
+        )
+        numberOfActionsAfter(100,
+            deletionsFromStart: 0,
+            createNew: { () -> AnyObserver<Int> in AnyObserver { _ in numberObservers++ } },
+            bagAction: { (bag: RxMutableBox<Bag<AnyObserver<Int>>>) in bag.value.removeAll(); bag.value.on(.Next(1)); }
+        )
+        numberOfActionsAfter(100,
+            deletionsFromStart: 0,
+            createNew: { () -> Disposable in AnonymousDisposable { numberDisposables++ } },
+            bagAction: { (bag: RxMutableBox<Bag<Disposable>>) in bag.value.removeAll(); disposeAllIn(bag.value); }
+        )
+
+        XCTAssertTrue(numberForEachActions == 0)
+        XCTAssertTrue(numberObservers == 0)
+        XCTAssertTrue(numberDisposables == 0)
+    }
+
+    func testBag_complexityTestFromFront() {
+        var bag = Bag<Disposable>()
+
+        let limit = 100000
+
+        var increment = 0
+
+        var keys: [Bag<Disposable>.KeyType] = []
+        for _ in 0..<limit {
+            keys.append(bag.insert(AnonymousDisposable { increment++ }))
+        }
+
+        for i in 0..<limit {
+            bag.removeKey(keys[i])
+        }
+    }
+
+    func testBag_complexityTestFromEnd() {
+        var bag = Bag<Disposable>()
+
+        let limit = 100000
+
+        var increment = 0
+
+        var keys: [Bag<Disposable>.KeyType] = []
+        for _ in 0..<limit {
+            keys.append(bag.insert(AnonymousDisposable { increment++ }))
+        }
+
+        for i in 0..<limit {
+            bag.removeKey(keys[limit - 1 - i])
+        }
     }
 }

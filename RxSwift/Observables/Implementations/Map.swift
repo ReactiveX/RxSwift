@@ -15,9 +15,9 @@ class MapSink<SourceType, O : ObserverType> : Sink<O>, ObserverType {
     
     private let _parent: Parent
     
-    init(parent: Parent, observer: O, cancel: Disposable) {
+    init(parent: Parent, observer: O) {
         _parent = parent
-        super.init(observer: observer, cancel: cancel)
+        super.init(observer: observer)
     }
     
     func performMap(element: SourceType) throws -> ResultType {
@@ -25,23 +25,21 @@ class MapSink<SourceType, O : ObserverType> : Sink<O>, ObserverType {
     }
 
     func on(event: Event<SourceType>) {
-        let observer = super.observer
-        
         switch event {
         case .Next(let element):
             do {
                 let mappedElement = try performMap(element)
-                observer?.on(.Next(mappedElement))
+                forwardOn(.Next(mappedElement))
             }
             catch let e {
-                observer?.on(.Error(e))
+                forwardOn(.Error(e))
                 dispose()
             }
         case .Error(let error):
-            observer?.on(.Error(error))
+            forwardOn(.Error(error))
             dispose()
         case .Completed:
-            observer?.on(.Completed)
+            forwardOn(.Completed)
             dispose()
         }
     }
@@ -50,8 +48,8 @@ class MapSink<SourceType, O : ObserverType> : Sink<O>, ObserverType {
 class MapSink1<SourceType, O: ObserverType> : MapSink<SourceType, O> {
     typealias ResultType = O.E
     
-    override init(parent: Map<SourceType, ResultType>, observer: O, cancel: Disposable) {
-        super.init(parent: parent, observer: observer, cancel: cancel)
+    override init(parent: Map<SourceType, ResultType>, observer: O) {
+        super.init(parent: parent, observer: observer)
     }
     
     override func performMap(element: SourceType) throws -> ResultType {
@@ -64,8 +62,8 @@ class MapSink2<SourceType, O: ObserverType> : MapSink<SourceType, O> {
     
     private var _index = 0
     
-    override init(parent: Map<SourceType, ResultType>, observer: O, cancel: Disposable) {
-        super.init(parent: parent, observer: observer, cancel: cancel)
+    override init(parent: Map<SourceType, ResultType>, observer: O) {
+        super.init(parent: parent, observer: observer)
     }
     override func performMap(element: SourceType) throws -> ResultType {
         return try _parent._selector2!(element, try incrementChecked(&_index))
@@ -93,16 +91,16 @@ class Map<SourceType, ResultType>: Producer<ResultType> {
         _selector1 = nil
     }
     
-    override func run<O: ObserverType where O.E == ResultType>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
+    override func run<O: ObserverType where O.E == ResultType>(observer: O) -> Disposable {
         if let _ = _selector1 {
-            let sink = MapSink1(parent: self, observer: observer, cancel: cancel)
-            setSink(sink)
-            return _source.subscribe(sink)
+            let sink = MapSink1(parent: self, observer: observer)
+            sink.disposable = _source.subscribe(sink)
+            return sink
         }
         else {
-            let sink = MapSink2(parent: self, observer: observer, cancel: cancel)
-            setSink(sink)
-            return _source.subscribe(sink)
+            let sink = MapSink2(parent: self, observer: observer)
+            sink.disposable = _source.subscribe(sink)
+            return sink
         }
         
     }

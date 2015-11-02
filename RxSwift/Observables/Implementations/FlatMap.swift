@@ -27,14 +27,14 @@ class FlatMapSinkIter<SourceType, S: ObservableConvertibleType, O: ObserverType 
     func on(event: Event<E>) {
         switch event {
         case .Next(let value):
-            _parent._lock.performLocked {
-                _parent.observer?.on(.Next(value))
-            }
+            _parent._lock.lock(); defer { _parent._lock.unlock() } // lock {
+                _parent.forwardOn(.Next(value))
+            // }
         case .Error(let error):
-            _parent._lock.performLocked {
-                _parent.observer?.on(.Error(error))
+            _parent._lock.lock(); defer { _parent._lock.unlock() } // lock {
+                _parent.forwardOn(.Error(error))
                 _parent.dispose()
-            }
+            // }
         case .Completed:
             _parent._group.removeDisposable(_disposeKey)
             // If this has returned true that means that `Completed` should be sent.
@@ -43,10 +43,10 @@ class FlatMapSinkIter<SourceType, S: ObservableConvertibleType, O: ObserverType 
             // it will set observer to nil, and thus prevent further complete messages
             // to be sent, and thus preserving the sequence grammar.
             if _parent._stopped && _parent._group.count == FlatMapNoIterators {
-                _parent._lock.performLocked {
-                    _parent.observer?.on(.Completed)
+                _parent._lock.lock(); defer { _parent._lock.unlock() } // lock {
+                    _parent.forwardOn(.Completed)
                     _parent.dispose()
-                }
+                // }
             }
         }
     }
@@ -67,9 +67,9 @@ class FlatMapSink<SourceType, S: ObservableConvertibleType, O: ObserverType wher
 
     private var _stopped = false
     
-    init(parent: Parent, observer: O, cancel: Disposable) {
+    init(parent: Parent, observer: O) {
         _parent = parent
-        super.init(observer: observer, cancel: cancel)
+        super.init(observer: observer)
     }
     
     func performMap(element: SourceType) throws -> S {
@@ -77,8 +77,6 @@ class FlatMapSink<SourceType, S: ObservableConvertibleType, O: ObserverType wher
     }
     
     func on(event: Event<SourceType>) {
-        let observer = super.observer
-        
         switch event {
         case .Next(let element):
             do {
@@ -86,31 +84,25 @@ class FlatMapSink<SourceType, S: ObservableConvertibleType, O: ObserverType wher
                 subscribeInner(value.asObservable())
             }
             catch let e {
-                observer?.on(.Error(e))
+                forwardOn(.Error(e))
                 dispose()
             }
         case .Error(let error):
-            _lock.performLocked {
-                observer?.on(.Error(error))
+            _lock.lock(); defer { _lock.unlock() } // lock {
+                forwardOn(.Error(error))
                 dispose()
-            }
+            // }
         case .Completed:
-            _lock.performLocked {
-                final()
-            }
-        }
-    }
-    
-    func final() {
-        _stopped = true
-        if _group.count == FlatMapNoIterators {
-            _lock.performLocked {
-                observer?.on(.Completed)
-                dispose()
-            }
-        }
-        else {
-            _sourceSubscription.dispose()
+            _lock.lock(); defer { _lock.unlock() } // lock {
+                _stopped = true
+                if _group.count == FlatMapNoIterators {
+                    forwardOn(.Completed)
+                    dispose()
+                }
+                else {
+                    _sourceSubscription.dispose()
+                }
+            //}
         }
     }
     
@@ -134,8 +126,8 @@ class FlatMapSink<SourceType, S: ObservableConvertibleType, O: ObserverType wher
 }
 
 class FlatMapSink1<SourceType, S: ObservableConvertibleType, O : ObserverType where S.E == O.E> : FlatMapSink<SourceType, S, O> {
-    override init(parent: Parent, observer: O, cancel: Disposable) {
-        super.init(parent: parent, observer: observer, cancel: cancel)
+    override init(parent: Parent, observer: O) {
+        super.init(parent: parent, observer: observer)
     }
     
     override func performMap(element: SourceType) throws -> S {
@@ -146,8 +138,8 @@ class FlatMapSink1<SourceType, S: ObservableConvertibleType, O : ObserverType wh
 class FlatMapSink2<SourceType, S: ObservableConvertibleType, O: ObserverType where S.E == O.E> : FlatMapSink<SourceType, S, O> {
     private var _index = 0
 
-    override init(parent: Parent, observer: O, cancel: Disposable) {
-        super.init(parent: parent, observer: observer, cancel: cancel)
+    override init(parent: Parent, observer: O) {
+        super.init(parent: parent, observer: observer)
     }
     
     override func performMap(element: SourceType) throws -> S {
@@ -176,17 +168,18 @@ class FlatMap<SourceType, S: ObservableConvertibleType>: Producer<S.E> {
         _selector1 = nil
     }
     
-    override func run<O: ObserverType where O.E == S.E>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
+    override func run<O: ObserverType where O.E == S.E>(observer: O) -> Disposable {
+        let sink: FlatMapSink<SourceType, S, O>
         if let _ = _selector1 {
-            let sink = FlatMapSink1(parent: self, observer: observer, cancel: cancel)
-            setSink(sink)
-            return sink.run()
+            sink = FlatMapSink1(parent: self, observer: observer)
         }
         else {
-            let sink = FlatMapSink2(parent: self, observer: observer, cancel: cancel)
-            setSink(sink)
-            return sink.run()
+            sink = FlatMapSink2(parent: self, observer: observer)
         }
-        
+
+        let subscription = sink.run()
+        sink.disposable = subscription
+
+        return sink
     }
 }

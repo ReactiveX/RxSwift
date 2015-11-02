@@ -10,7 +10,7 @@ import Foundation
 
 // MARK: filter aka where
 
-extension ObservableConvertibleType {
+extension ObservableType {
     
     /**
     Filters the elements of an observable sequence based on a predicate.
@@ -27,7 +27,7 @@ extension ObservableConvertibleType {
 
 // MARK: takeWhile
 
-extension ObservableConvertibleType {
+extension ObservableType {
     
     /**
     Returns elements from an observable sequence as long as a specified condition is true.
@@ -58,7 +58,7 @@ extension ObservableConvertibleType {
 
 // MARK: take
 
-extension ObservableConvertibleType {
+extension ObservableType {
     
     /**
     Returns a specified number of contiguous elements from the start of an observable sequence.
@@ -80,7 +80,7 @@ extension ObservableConvertibleType {
 
 // MARK: takeLast
 
-extension ObservableConvertibleType {
+extension ObservableType {
     
     /**
     Returns a specified number of contiguous elements from the end of an observable sequence.
@@ -100,7 +100,7 @@ extension ObservableConvertibleType {
 
 // MARK: skip
 
-extension ObservableConvertibleType {
+extension ObservableType {
     
     /**
     Bypasses a specified number of elements in an observable sequence and then returns the remaining elements.
@@ -117,7 +117,7 @@ extension ObservableConvertibleType {
 
 // MARK: SkipWhile
 
-extension ObservableConvertibleType {
+extension ObservableType {
    
     /**
     Bypasses elements in an observable sequence as long as a specified condition is true and then returns the remaining elements.
@@ -145,7 +145,7 @@ extension ObservableConvertibleType {
 
 // MARK: map aka select
 
-extension ObservableConvertibleType {
+extension ObservableType {
     
     /**
     Projects each element of an observable sequence into a new form.
@@ -174,7 +174,7 @@ extension ObservableConvertibleType {
     
 // MARK: flatMap
 
-extension ObservableConvertibleType {
+extension ObservableType {
 
     /**
     Projects each element of an observable sequence to an observable sequence and merges the resulting observable sequences into one observable sequence.
@@ -203,7 +203,7 @@ extension ObservableConvertibleType {
 
 // elementAt
 
-extension ObservableConvertibleType {
+extension ObservableType {
     
     /**
     Returns a sequence emitting only item _n_ emitted by an Observable

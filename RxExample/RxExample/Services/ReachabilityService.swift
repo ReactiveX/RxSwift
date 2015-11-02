@@ -48,7 +48,7 @@ extension ObservableConvertibleType {
     }
 
     func retryOnBecomesReachable(valueOnFailure:E, reachabilityService:ReachabilityService, orExternalTrigger: Observable<Void>) -> Observable<E>{
-        return self
+        return self.asObservable()
             .catchError { (e) -> Observable<E> in
                 let retryBecauseOfNeworkAvailability = reachabilityService.reachabilityChanged
                     .flatMap { event -> Observable<Void> in
