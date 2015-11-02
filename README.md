@@ -475,24 +475,12 @@ $ pod install
 
 ### [Carthage](https://github.com/Carthage/Carthage)
 
-**For Xcode 7.0**
+**Xcode 7.1 required**
 
 Add this to `Cartfile`
 
 ```
-git "git@github.com:ReactiveX/RxSwift.git" "2.0.0-beta.1"
-```
-
-```
-$ carthage update
-```
-
-**For Xcode 7.1 and tvOS support**
-
-Add this to `Cartfile`
-
-```
-git "git@github.com:ReactiveX/RxSwift.git" "master-7.1"
+git "git@github.com:ReactiveX/RxSwift.git" "2.0.0-beta.2"
 ```
 
 ```
