@@ -10,11 +10,11 @@
 import RxSwift
 #endif
 
-public enum ReachabilityStatus{
+public enum ReachabilityStatus {
     case Reachable, Unreachable
 }
 
-class ReachabilityService{
+class ReachabilityService {
 
     private let reachabilityRef = try! Reachability.reachabilityForInternetConnection()
 
@@ -43,24 +43,11 @@ class ReachabilityService{
 }
 
 extension ObservableConvertibleType {
-    func retryOnBecomesReachable(valueOnFailure:E, reachabilityService: ReachabilityService) -> Observable<E>{
-        return retryOnBecomesReachable(valueOnFailure, reachabilityService: reachabilityService, orExternalTrigger: empty())
-    }
-
-    func retryOnBecomesReachable(valueOnFailure:E, reachabilityService:ReachabilityService, orExternalTrigger: Observable<Void>) -> Observable<E>{
+    func retryOnBecomesReachable(valueOnFailure:E, reachabilityService: ReachabilityService) -> Observable<E> {
         return self.asObservable()
             .catchError { (e) -> Observable<E> in
-                let retryBecauseOfNeworkAvailability = reachabilityService.reachabilityChanged
-                    .flatMap { event -> Observable<Void> in
-                        if event == .Reachable {
-                            return just()
-                        } else {
-                            return empty()
-                        }
-                    }
-
-                return sequenceOf(retryBecauseOfNeworkAvailability, orExternalTrigger)
-                    .merge()
+                reachabilityService.reachabilityChanged
+                    .filter { $0 == .Reachable }
                     .flatMap { _ in failWith(e) }
                     .startWith(valueOnFailure)
             }
