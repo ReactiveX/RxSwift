@@ -40,16 +40,16 @@ class AnonymousObservableSink<O: ObserverType> : Sink<O>, ObserverType {
     }
 }
 
-public class AnonymousObservable<Element> : Producer<Element> {
-    public typealias SubscribeHandler = (AnyObserver<Element>) -> Disposable
+class AnonymousObservable<Element> : Producer<Element> {
+    typealias SubscribeHandler = (AnyObserver<Element>) -> Disposable
 
-    public let _subscribeHandler: SubscribeHandler
-    
-    public init(_ subscribeHandler: SubscribeHandler) {
+    let _subscribeHandler: SubscribeHandler
+
+    init(_ subscribeHandler: SubscribeHandler) {
         _subscribeHandler = subscribeHandler
     }
     
-    public override func run<O : ObserverType where O.E == Element>(observer: O) -> Disposable {
+    override func run<O : ObserverType where O.E == Element>(observer: O) -> Disposable {
         let sink = AnonymousObservableSink(observer: observer)
         sink.disposable = sink.run(self)
         return sink

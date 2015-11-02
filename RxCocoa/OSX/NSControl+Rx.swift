@@ -24,7 +24,7 @@ extension NSControl {
         MainScheduler.ensureExecutingOnScheduler()
 
         let source = rx_lazyInstanceObservable(&rx_control_events_key) { () -> Observable<Void> in
-            AnonymousObservable { [weak self] observer in
+            create { [weak self] observer in
                 MainScheduler.ensureExecutingOnScheduler()
 
                 guard let control = self else {
@@ -63,7 +63,7 @@ extension NSControl {
         MainScheduler.ensureExecutingOnScheduler()
 
         let source = rx_lazyInstanceObservable(&rx_value_key) { () -> Observable<T> in
-            return AnonymousObservable { [weak self] observer in
+            return create { [weak self] observer in
                 guard let control = self else {
                     observer.on(.Completed)
                     return NopDisposable.instance

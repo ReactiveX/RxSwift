@@ -41,7 +41,7 @@ extension UIControl {
     - parameter controlEvents: Filter for observed event types.
     */
     public func rx_controlEvents(controlEvents: UIControlEvents) -> ControlEvent<Void> {
-        let source: Observable<Void> = AnonymousObservable { [weak self] observer in
+        let source: Observable<Void> = create { [weak self] observer in
             MainScheduler.ensureExecutingOnScheduler()
 
             guard let control = self else {
@@ -63,7 +63,7 @@ extension UIControl {
     }
     
     func rx_value<T>(getter getter: () -> T, setter: T -> Void) -> ControlProperty<T> {
-        let source: Observable<T> = AnonymousObservable { [weak self] observer in
+        let source: Observable<T> = create { [weak self] observer in
             guard let control = self else {
                 observer.on(.Completed)
                 return NopDisposable.instance
