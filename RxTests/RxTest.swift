@@ -107,7 +107,7 @@ class RxTest: XCTestCase {
 #if TRACE_RESOURCES
 
         // give 5 sec to clean up resources
-        for var i = 0; i < 100; ++i {
+        for var i = 0; i < 10; ++i {
             if self.startResourceCount < resourceCount {
                 // main schedulers need to finish work
                 NSRunLoop.currentRunLoop().runMode(NSDefaultRunLoopMode, beforeDate: NSDate(timeIntervalSinceNow: 0.05))

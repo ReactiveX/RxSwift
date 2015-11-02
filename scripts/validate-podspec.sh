@@ -3,6 +3,15 @@
 
 set -e
 
+function cleanup {
+  pushd ~/.cocoapods/repos/master
+  git clean -d -f
+  git reset master --hard
+  popd
+}
+
+trap cleanup EXIT
+
 VERSION=`cat RxSwift.podspec | grep -E "s.version\s+=" | cut -d '"' -f 2`
 
 pushd ~/.cocoapods/repos/master
@@ -27,8 +36,3 @@ sed -E "s/s.source[^\}]+\}/s.source           = { :git => '\/Users\/kzaher\/Proj
 pod lib lint RxSwift.podspec
 pod lib lint RxCocoa.podspec
 pod lib lint RxBlocking.podspec
-
-pushd ~/.cocoapods/repos/master
-git clean -d -f
-git reset master --hard
-popd

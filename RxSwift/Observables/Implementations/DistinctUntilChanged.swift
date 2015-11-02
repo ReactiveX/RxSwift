@@ -14,14 +14,12 @@ class DistinctUntilChangedSink<O: ObserverType, Key>: Sink<O>, ObserverType {
     private let _parent: DistinctUntilChanged<E, Key>
     private var _currentKey: Key? = nil
     
-    init(parent: DistinctUntilChanged<E, Key>, observer: O, cancel: Disposable) {
+    init(parent: DistinctUntilChanged<E, Key>, observer: O) {
         _parent = parent
-        super.init(observer: observer, cancel: cancel)
+        super.init(observer: observer)
     }
     
     func on(event: Event<E>) {
-        let observer = super.observer
-        
         switch event {
         case .Next(let value):
             do {
@@ -37,14 +35,14 @@ class DistinctUntilChangedSink<O: ObserverType, Key>: Sink<O>, ObserverType {
                 
                 _currentKey = key
                 
-                observer?.on(event)
+                forwardOn(event)
             }
             catch let error {
-                observer?.on(.Error(error))
+                forwardOn(.Error(error))
                 dispose()
             }
         case .Error, .Completed:
-            observer?.on(event)
+            forwardOn(event)
             dispose()
         }
     }
@@ -64,9 +62,9 @@ class DistinctUntilChanged<Element, Key>: Producer<Element> {
         _comparer = comparer
     }
     
-    override func run<O: ObserverType where O.E == Element>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
-        let sink = DistinctUntilChangedSink(parent: self, observer: observer, cancel: cancel)
-        setSink(sink)
-        return _source.subscribe(sink)
+    override func run<O: ObserverType where O.E == Element>(observer: O) -> Disposable {
+        let sink = DistinctUntilChangedSink(parent: self, observer: observer)
+        sink.disposable = _source.subscribe(sink)
+        return sink
     }
 }

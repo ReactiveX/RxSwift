@@ -8,6 +8,11 @@
 
 import Foundation
 
+private let disposeScheduledDisposable: ScheduledDisposable -> Disposable = { sd in
+    sd.disposeInner()
+    return NopDisposable.instance
+}
+
 /**
 Represents a disposable resource whose disposal invocation will be scheduled on the specified scheduler.
 */
@@ -43,10 +48,7 @@ public class ScheduledDisposable : Cancelable {
     Disposes the wrapped disposable on the provided scheduler.
     */
     public func dispose() {
-        scheduler.schedule(()) {
-            self.disposeInner()
-            return NopDisposable.instance
-        }
+        scheduler.schedule(self, action: disposeScheduledDisposable)
     }
     
     func disposeInner() {

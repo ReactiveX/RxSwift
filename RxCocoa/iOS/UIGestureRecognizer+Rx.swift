@@ -57,7 +57,7 @@ extension UIGestureRecognizer {
     Reactive wrapper for gesture recognizer events.
     */
     public var rx_event: ControlEvent<UIGestureRecognizer> {
-        let source: Observable<UIGestureRecognizer> = AnonymousObservable { [weak self] observer in
+        let source: Observable<UIGestureRecognizer> = create { [weak self] observer in
             MainScheduler.ensureExecutingOnScheduler()
 
             guard let control = self else {

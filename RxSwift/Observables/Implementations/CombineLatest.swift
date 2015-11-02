@@ -14,10 +14,12 @@ protocol CombineLatestProtocol : class {
     func done(index: Int)
 }
 
-class CombineLatestSink<O: ObserverType> : Sink<O>, CombineLatestProtocol {
+class CombineLatestSink<O: ObserverType>
+    : Sink<O>
+    , CombineLatestProtocol {
     typealias Element = O.E
    
-    let lock = NSRecursiveLock()
+    let _lock = NSRecursiveLock()
 
     private let _arity: Int
     private var _numberOfValues = 0
@@ -25,12 +27,12 @@ class CombineLatestSink<O: ObserverType> : Sink<O>, CombineLatestProtocol {
     private var _hasValue: [Bool]
     private var _isDone: [Bool]
    
-    init(arity: Int, observer: O, cancel: Disposable) {
+    init(arity: Int, observer: O) {
         _arity = arity
         _hasValue = [Bool](count: arity, repeatedValue: false)
         _isDone = [Bool](count: arity, repeatedValue: false)
         
-        super.init(observer: observer, cancel: cancel)
+        super.init(observer: observer)
     }
     
     func getResult() throws -> Element {
@@ -46,10 +48,10 @@ class CombineLatestSink<O: ObserverType> : Sink<O>, CombineLatestProtocol {
         if _numberOfValues == _arity {
             do {
                 let result = try getResult()
-                observer?.on(.Next(result))
+                forwardOn(.Next(result))
             }
             catch let e {
-                observer?.on(.Error(e))
+                forwardOn(.Error(e))
                 dispose()
             }
         }
@@ -64,14 +66,14 @@ class CombineLatestSink<O: ObserverType> : Sink<O>, CombineLatestProtocol {
             }
             
             if allOthersDone {
-                observer?.on(.Completed)
+                forwardOn(.Completed)
                 dispose()
             }
         }
     }
     
     func fail(error: ErrorType) {
-        observer?.on(.Error(error))
+        forwardOn(.Error(error))
         dispose()
     }
     
@@ -84,19 +86,22 @@ class CombineLatestSink<O: ObserverType> : Sink<O>, CombineLatestProtocol {
         _numberOfDone++
 
         if _numberOfDone == _arity {
-            observer?.on(.Completed)
+            forwardOn(.Completed)
             dispose()
         }
     }
 }
 
-class CombineLatestObserver<ElementType> : ObserverType {
+class CombineLatestObserver<ElementType>
+    : ObserverType
+    , LockOwnerType
+    , SynchronizedOnType {
     typealias Element = ElementType
     typealias ValueSetter = (Element) -> Void
     
     private let _parent: CombineLatestProtocol
     
-    private let _lock: NSRecursiveLock
+    let _lock: NSRecursiveLock
     private let _index: Int
     private let _this: Disposable
     private let _setLatestValue: ValueSetter
@@ -110,18 +115,20 @@ class CombineLatestObserver<ElementType> : ObserverType {
     }
     
     func on(event: Event<Element>) {
-        _lock.performLocked {
-            switch event {
-            case .Next(let value):
-                _setLatestValue(value)
-                _parent.next(_index)
-            case .Error(let error):
-                _this.dispose()
-                _parent.fail(error)
-            case .Completed:
-                _this.dispose()
-                _parent.done(_index)
-            }
+        synchronizedOn(event)
+    }
+
+    func _synchronized_on(event: Event<Element>) {
+        switch event {
+        case .Next(let value):
+            _setLatestValue(value)
+            _parent.next(_index)
+        case .Error(let error):
+            _this.dispose()
+            _parent.fail(error)
+        case .Completed:
+            _this.dispose()
+            _parent.done(_index)
         }
     }
 }

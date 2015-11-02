@@ -59,7 +59,7 @@ extension NSObject {
     - returns: Observable sequence of objects on `keyPath`.
     */
     public func rx_observe<Element>(keyPath: String, options: NSKeyValueObservingOptions = [.New, .Initial], retainSelf: Bool = true) -> Observable<Element?> {
-        return KVOObservable(object: self, keyPath: keyPath, options: options, retainTarget: retainSelf)
+        return KVOObservable(object: self, keyPath: keyPath, options: options, retainTarget: retainSelf).asObservable()
     }
 
 }

@@ -15,11 +15,11 @@ class ElementAtSink<SourceType, O: ObserverType where O.E == SourceType> : Sink<
     let _parent: Parent
     var _i: Int
     
-    init(parent: Parent, observer: O, cancel: Disposable) {
+    init(parent: Parent, observer: O) {
         _parent = parent
         _i = parent._index
         
-        super.init(observer: observer, cancel: cancel)
+        super.init(observer: observer)
     }
     
     func on(event: Event<SourceType>) {
@@ -27,27 +27,27 @@ class ElementAtSink<SourceType, O: ObserverType where O.E == SourceType> : Sink<
         case .Next(_):
 
             if (_i == 0) {
-                observer?.on(event)
-                observer?.on(.Completed)
+                forwardOn(event)
+                forwardOn(.Completed)
                 self.dispose()
             }
             
             do {
                 try decrementChecked(&_i)
             } catch(let e) {
-                observer?.onError(e)
+                forwardOn(.Error(e))
                 dispose()
                 return
             }
             
         case .Error(let e):
-            observer?.on(.Error(e))
+            forwardOn(.Error(e))
             self.dispose()
         case .Completed:
             if (_parent._throwOnEmpty) {
-                observer?.onError(RxError.ArgumentOutOfRange)
+                forwardOn(.Error(RxError.ArgumentOutOfRange))
             } else {
-                observer?.on(.Completed)
+                forwardOn(.Completed)
             }
             
             self.dispose()
@@ -71,9 +71,9 @@ class ElementAt<SourceType> : Producer<SourceType> {
         self._throwOnEmpty = throwOnEmpty
     }
     
-    override func run<O: ObserverType where O.E == SourceType>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
-        let sink = ElementAtSink(parent: self, observer: observer, cancel: cancel)
-        setSink(sink)
-        return _source.subscribeSafe(sink)
+    override func run<O: ObserverType where O.E == SourceType>(observer: O) -> Disposable {
+        let sink = ElementAtSink(parent: self, observer: observer)
+        sink.disposable = _source.subscribeSafe(sink)
+        return sink
     }
 }

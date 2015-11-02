@@ -42,7 +42,7 @@ public extension ObserverType {
     /**
     Convienence method equivalent to `on(.Completed)`
     */
-    final func onComplete() {
+    final func onCompleted() {
         on(.Completed)
     }
     

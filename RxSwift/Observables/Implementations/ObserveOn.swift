@@ -21,10 +21,10 @@ class ObserveOn<E> : Producer<E> {
 #endif
     }
     
-    override func run<O : ObserverType where O.E == E>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
-        let sink = ObserveOnSink(scheduler: scheduler, observer: observer, cancel: cancel)
-        setSink(sink)
-        return source.subscribe(sink)
+    override func run<O : ObserverType where O.E == E>(observer: O) -> Disposable {
+        let sink = ObserveOnSink(scheduler: scheduler, observer: observer)
+        sink._subscription.disposable = source.subscribe(sink)
+        return sink
     }
     
 #if TRACE_RESOURCES
@@ -44,31 +44,30 @@ enum ObserveOnState : Int32 {
 class ObserveOnSink<O: ObserverType> : ObserverBase<O.E> {
     typealias E = O.E
     
-    var cancel: Disposable
-    
-    var lock = SpinLock()
-    
-    let scheduler: ImmediateSchedulerType
-    var observer: O?
-    
-    var state = ObserveOnState.Stopped
-    
-    var queue = Queue<Event<E>>(capacity: 10)
-    let scheduleDisposable = SerialDisposable()
-    
-    init(scheduler: ImmediateSchedulerType, observer: O, cancel: Disposable) {
-        self.cancel = cancel
-        self.scheduler = scheduler
-        self.observer = observer
+    let _scheduler: ImmediateSchedulerType
+
+    var _lock = SpinLock()
+
+    // state
+    var _state = ObserveOnState.Stopped
+    var _observer: O?
+    var _queue = Queue<Event<E>>(capacity: 10)
+
+    let _scheduleDisposable = SerialDisposable()
+    let _subscription = SingleAssignmentDisposable()
+
+    init(scheduler: ImmediateSchedulerType, observer: O) {
+        _scheduler = scheduler
+        _observer = observer
     }
 
     override func onCore(event: Event<E>) {
-        let shouldStart = lock.calculateLocked { () -> Bool in
-            self.queue.enqueue(event)
+        let shouldStart = _lock.calculateLocked { () -> Bool in
+            self._queue.enqueue(event)
             
-            switch self.state {
+            switch self._state {
             case .Stopped:
-                self.state = .Running
+                self._state = .Running
                 return true
             case .Running:
                 return false
@@ -76,18 +75,18 @@ class ObserveOnSink<O: ObserverType> : ObserverBase<O.E> {
         }
         
         if shouldStart {
-            scheduleDisposable.disposable = self.scheduler.scheduleRecursive((), action: self.run)
+            _scheduleDisposable.disposable = self._scheduler.scheduleRecursive((), action: self.run)
         }
     }
     
     func run(state: Void, recurse: Void -> Void) {
-        let (nextEvent, observer) = self.lock.calculateLocked { () -> (Event<E>?, O?) in
-            if self.queue.count > 0 {
-                return (self.queue.dequeue(), self.observer)
+        let (nextEvent, observer) = self._lock.calculateLocked { () -> (Event<E>?, O?) in
+            if self._queue.count > 0 {
+                return (self._queue.dequeue(), self._observer)
             }
             else {
-                self.state = .Stopped
-                return (nil, self.observer)
+                self._state = .Stopped
+                return (nil, self._observer)
             }
         }
         
@@ -101,32 +100,34 @@ class ObserveOnSink<O: ObserverType> : ObserverBase<O.E> {
             return
         }
         
-        let shouldContinue = self.lock.calculateLocked { () -> Bool in
-            if self.queue.count > 0 {
-                return true
-            }
-            else {
-                self.state = .Stopped
-                return false
-            }
-        }
+        let shouldContinue = _shouldContinue_synchronized()
         
         if shouldContinue {
             recurse()
         }
     }
+
+    func _shouldContinue_synchronized() -> Bool {
+        _lock.lock(); defer { _lock.unlock() } // {
+            if self._queue.count > 0 {
+                return true
+            }
+            else {
+                self._state = .Stopped
+                return false
+            }
+        // }
+    }
     
     override func dispose() {
         super.dispose()
+
+        _subscription.dispose()
+        _scheduleDisposable.dispose()
+
+        _lock.lock(); defer { _lock.unlock() } // {
+            _observer = nil
         
-        let toDispose = lock.calculateLocked { () -> Disposable in
-            let originalCancel = self.cancel
-            self.cancel = NopDisposable.instance
-            self.scheduleDisposable.dispose()
-            self.observer = nil
-            return originalCancel
-        }
-        
-        toDispose.dispose()
+        // }
     }
 }

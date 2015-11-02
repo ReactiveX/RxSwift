@@ -29,7 +29,7 @@ class PrimitiveHotObservable<ElementType : Equatable> : ObservableType {
     }
     
     func on(event: Event<E>) {
-        observers.forEach { $0.on(event) }
+        observers.on(event)
     }
     
     func subscribe<O : ObserverType where O.E == E>(observer: O) -> Disposable {

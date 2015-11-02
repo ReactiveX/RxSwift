@@ -14,13 +14,13 @@ class SubscribeOnSink<Ob: ObservableType, O: ObserverType where Ob.E == O.E> : S
     
     let parent: Parent
     
-    init(parent: Parent, observer: O, cancel: Disposable) {
+    init(parent: Parent, observer: O) {
         self.parent = parent
-        super.init(observer: observer, cancel: cancel)
+        super.init(observer: observer)
     }
     
     func on(event: Event<Element>) {
-        observer?.on(event)
+        forwardOn(event)
         
         if event.isStopEvent {
             self.dispose()
@@ -52,9 +52,9 @@ class SubscribeOn<Ob: ObservableType> : Producer<Ob.E> {
         self.scheduler = scheduler
     }
     
-    override func run<O : ObserverType where O.E == Ob.E>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
-        let sink = SubscribeOnSink(parent: self, observer: observer, cancel: cancel)
-        setSink(sink)
-        return sink.run()
+    override func run<O : ObserverType where O.E == Ob.E>(observer: O) -> Disposable {
+        let sink = SubscribeOnSink(parent: self, observer: observer)
+        sink.disposable = sink.run()
+        return sink
     }
 }

@@ -11,6 +11,9 @@ import Foundation
 import RxSwift
 #endif
 
+/**
+ Parsed GitHub respository.
+*/
 struct Repository: CustomStringConvertible {
     var name: String
     var url: String
@@ -25,19 +28,76 @@ struct Repository: CustomStringConvertible {
     }
 }
 
+/**
+ServiceState state.
+*/
+enum ServiceState {
+    case Online
+    case Offline
+}
+
+/**
+ Raw response from GitHub API
+*/
 enum SearchRepositoryResponse {
-    case Repositories([Repository])
+    /**
+     New repositories just fetched
+    */
+    case Repositories(repositories: [Repository], nextURL: NSURL?)
+
+    /**
+     In case there was some problem fetching data from service, this will be returned.
+     It really doesn't matter if that is a failure in network layer, parsing error or something else.
+     In case data can't be read and parsed properly, something is wrong with server response.
+    */
+    case ServiceOffline
+
+    /**
+     This example uses unauthenticated GitHub API. That API does have throttling policy and you won't
+     be able to make more then 10 requests per minute.
+     
+     That is actually an awesome scenario to demonstrate complex retries using alert views and combination of timers.
+     
+     Just search like mad, and everything will be handled right.
+    */
     case LimitExceeded
+}
+
+/**
+ This is the final result of loading. Crème de la crème.
+*/
+struct RepositoriesState {
+    /**
+     List of parsed repositories ready to be shown in the UI.
+    */
+    let repositories: [Repository]
+
+    /**
+     Current network state.
+    */
+    let serviceState: ServiceState?
+
+    /**
+     Limit exceeded
+    */
+    let limitExceeded: Bool
+
+    static let empty = RepositoriesState(repositories: [], serviceState: nil, limitExceeded: false)
 }
 
 
 class GitHubSearchRepositoriesAPI {
 
-    static let sharedAPI = GitHubSearchRepositoriesAPI()
+    static let sharedAPI = GitHubSearchRepositoriesAPI(wireframe: DefaultWireframe())
 
     let activityIndicator = ActivityIndicator()
 
-    private init() {
+    // Why would network service have wireframe service? It's here to abstract promting user
+    // Do we really want to make this example project factory/fascade/service competition? :)
+    private let _wireframe: Wireframe
+
+    private init(wireframe: Wireframe) {
+        _wireframe = wireframe
     }
 
     private static let parseLinksPattern = "\\s*,?\\s*<([^\\>]*)>\\s*;\\s*rel=\"([^\"]*)\""
@@ -90,53 +150,82 @@ class GitHubSearchRepositoriesAPI {
     /**
     Public fascade for search.
     */
-    func search(query: String, loadNextPageTrigger: Observable<Void>) -> Observable<SearchRepositoryResponse> {
+    func search(query: String, loadNextPageTrigger: Observable<Void>) -> Observable<RepositoriesState> {
         let escapedQuery = URLEscape(query)
         let url = NSURL(string: "https://api.github.com/search/repositories?q=\(escapedQuery)")!
         return recursivelySearch([], loadNextURL: url, loadNextPageTrigger: loadNextPageTrigger)
-            .startWith(.Repositories([]))
+            // Here we go again
+            .startWith(RepositoriesState.empty)
     }
 
-    private func recursivelySearch(loadedSoFar: [Repository], loadNextURL: NSURL, loadNextPageTrigger: Observable<Void>) -> Observable<SearchRepositoryResponse> {
-        return loadSearchURL(loadNextURL)
-            .retry(3)
-            .flatMap { (newPageRepositoriesResponse, nextURL) -> Observable<SearchRepositoryResponse> in
-                // in case access denied, just stop
-                guard case .Repositories(let newPageRepositories) = newPageRepositoriesResponse else {
-                    return just(newPageRepositoriesResponse)
-                }
-
-                var loadedRepositories = loadedSoFar
-                loadedRepositories.appendContentsOf(newPageRepositories)
-
-                // if next page can't be loaded, just return what was loaded, and stop
-                guard let nextURL = nextURL else {
-                    return just(.Repositories(loadedRepositories))
-                }
-
-                return [
-                    // return loaded immediately
-                    just(.Repositories(loadedRepositories)),
-                    // wait until next page can be loaded
-                    never().takeUntil(loadNextPageTrigger),
-                    // load next page
-                    self.recursivelySearch(loadedRepositories, loadNextURL: nextURL, loadNextPageTrigger: loadNextPageTrigger)
-                ].concat()
+    private func recursivelySearch(loadedSoFar: [Repository], loadNextURL: NSURL, loadNextPageTrigger: Observable<Void>) -> Observable<RepositoriesState> {
+        return loadSearchURL(loadNextURL).flatMap { searchResponse -> Observable<RepositoriesState> in
+            switch searchResponse {
+            /**
+                If service is offline, that's ok, that means that this isn't the last thing we've heard from that API.
+                It will retry until either battery drains, you become angry and close the app or evil machine comes back
+                from the future, steals your device and Googles Sarah Connor's address.
+            */
+            case .ServiceOffline:
+                return just(RepositoriesState(repositories: loadedSoFar, serviceState: .Offline, limitExceeded: false))
+            case .LimitExceeded:
+                return just(RepositoriesState(repositories: loadedSoFar, serviceState: .Online, limitExceeded: true))
+            case .Repositories:
+                break
             }
+
+            // Repositories without next url? The party is done.
+            guard case .Repositories(let newPageRepositories, let maybeNextURL) = searchResponse else {
+                fatalError("Some fourth case?")
+            }
+
+            var loadedRepositories = loadedSoFar
+            loadedRepositories.appendContentsOf(newPageRepositories)
+
+            let appenedRepositories = RepositoriesState(repositories: loadedRepositories, serviceState: .Online, limitExceeded: false)
+
+            // if next page can't be loaded, just return what was loaded, and stop
+            guard let nextURL = maybeNextURL else {
+                return just(appenedRepositories)
+            }
+
+            return [
+                // return loaded immediately
+                just(appenedRepositories),
+                // wait until next page can be loaded
+                never().takeUntil(loadNextPageTrigger),
+                // load next page
+                self.recursivelySearch(loadedRepositories, loadNextURL: nextURL, loadNextPageTrigger: loadNextPageTrigger)
+            ].concat()
+        }
     }
 
-    private func loadSearchURL(searchURL: NSURL) -> Observable<(response: SearchRepositoryResponse, nextURL: NSURL?)> {
+    /**
+     Displays UI that prompts the user when to retry.
+    */
+    private func buildRetryPrompt() -> Observable<Void> {
+        return _wireframe.promptFor(
+                "Exceeded limit of 10 non authenticated requests per minute for GitHub API. Please wait a minute. :(\nhttps://developer.github.com/v3/#rate-limiting",
+                cancelAction: RetryResult.Cancel,
+                actions: [RetryResult.Retry]
+            )
+            .filter { (x: RetryResult) in x == .Retry }
+            .map { _ in () }
+    }
+
+    private func loadSearchURL(searchURL: NSURL) -> Observable<SearchRepositoryResponse> {
         return NSURLSession.sharedSession()
             .rx_response(NSURLRequest(URL: searchURL))
+            .retry(3)
             .trackActivity(self.activityIndicator)
             .observeOn(Dependencies.sharedDependencies.backgroundWorkScheduler)
-            .map { data, response in
+            .map { data, response -> SearchRepositoryResponse in
                 guard let httpResponse = response as? NSHTTPURLResponse else {
                     throw exampleError("not getting http response")
                 }
 
                 if httpResponse.statusCode == 403 {
-                    return (response: .LimitExceeded, nextURL: nil)
+                    return .LimitExceeded
                 }
 
                 let jsonRoot = try GitHubSearchRepositoriesAPI.parseJSON(httpResponse, data: data)
@@ -149,9 +238,9 @@ class GitHubSearchRepositoriesAPI {
 
                 let nextURL = try GitHubSearchRepositoriesAPI.parseNextURL(httpResponse)
 
-                return (response: .Repositories(repositories), nextURL: nextURL)
+                return .Repositories(repositories: repositories, nextURL: nextURL)
             }
-            .observeOn(Dependencies.sharedDependencies.mainScheduler)
+            .retryOnBecomesReachable(.ServiceOffline, reachabilityService: ReachabilityService.sharedReachabilityService)
     }
 
     private static func parseJSON(httpResponse: NSHTTPURLResponse, data: NSData) throws -> AnyObject {

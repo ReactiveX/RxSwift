@@ -3,6 +3,24 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [2.0.0-beta.2](https://github.com/ReactiveX/RxSwift/releases/tag/2.0.0-beta.2)
+
+#### Updated
+
+* Optimizations. System now performs significantly fewer allocations and is several times faster then 2.0.0-beta.1
+* Makes `AnonymousObservable` private in favor of `create` method.
+* Adds `toArray` operator (non blocking version).
+* Adds `withLatestFrom` operator, and also extends `Driver` with that operation.
+* Adds `elementAt` operator (non blocking version).
+* Adds `takeLast` operator.
+* Improves `RxExample` app. Adds retries example when network becomes available again.
+* Adds composite extensions to `Bag` (`on`, `disposeAllIn`).
+* Renames mistyped extension on `ObserverType` from `onComplete` to `onCompleted`.
+
+#### Fixed
+
+* Fixes minimal platform version in OSX version of library to 10.9
+
 ## [2.0.0-beta.1](https://github.com/ReactiveX/RxSwift/releases/tag/2.0.0-beta.1)
 
 #### Updated

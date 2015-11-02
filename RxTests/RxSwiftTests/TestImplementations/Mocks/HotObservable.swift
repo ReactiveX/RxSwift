@@ -30,7 +30,7 @@ class HotObservable<Element : Equatable> : ObservableType, ObservableConvertible
         
         for recordedEvent in recordedEvents {
             testScheduler.schedule((), time: recordedEvent.time) { t in
-                self.observers.forEach { $0.on(recordedEvent.event) }
+                self.observers.on(recordedEvent.event)
                 return NopDisposable.instance
             }
         }

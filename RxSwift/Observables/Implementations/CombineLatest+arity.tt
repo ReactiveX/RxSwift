@@ -38,9 +38,9 @@ class CombineLatestSink<%= i %>_<<%= (Array(1...i).map { "E\($0)" }).joinWithSep
 "    var _latestElement\($0): E\($0)! = nil"
 }).joinWithSeparator("\n") %>
 
-    init(parent: Parent, observer: O, cancel: Disposable) {
+    init(parent: Parent, observer: O) {
         _parent = parent
-        super.init(arity: <%= i %>, observer: observer, cancel: cancel)
+        super.init(arity: <%= i %>, observer: observer)
     }
 
     func run() -> Disposable {
@@ -49,7 +49,7 @@ class CombineLatestSink<%= i %>_<<%= (Array(1...i).map { "E\($0)" }).joinWithSep
 }).joinWithSeparator("\n") %>
 
 <%= (Array(1...i).map {
-"        let observer\($0) = CombineLatestObserver(lock: lock, parent: self, index: \($0 - 1), setLatestValue: { (e: E\($0)) -> Void in self._latestElement\($0) = e }, this: subscription\($0))"
+"        let observer\($0) = CombineLatestObserver(lock: _lock, parent: self, index: \($0 - 1), setLatestValue: { (e: E\($0)) -> Void in self._latestElement\($0) = e }, this: subscription\($0))"
 }).joinWithSeparator("\n") %>
 
 <%= (Array(1...i).map {
@@ -83,10 +83,10 @@ class CombineLatest<%= i %><<%= (Array(1...i).map { "E\($0)" }).joinWithSeparato
         _resultSelector = resultSelector
     }
 
-    override func run<O: ObserverType where O.E == R>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
-        let sink = CombineLatestSink<%= i %>_(parent: self, observer: observer, cancel: cancel)
-        setSink(sink)
-        return sink.run()
+    override func run<O: ObserverType where O.E == R>(observer: O) -> Disposable {
+        let sink = CombineLatestSink<%= i %>_(parent: self, observer: observer)
+        sink.disposable = sink.run()
+        return sink
     }
 }
 

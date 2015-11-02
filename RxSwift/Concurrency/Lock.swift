@@ -8,6 +8,11 @@
 
 import Foundation
 
+protocol Lock {
+    func lock()
+    func unlock()
+}
+
 /**
 Simple wrapper for spin lock.
 */
@@ -16,6 +21,14 @@ struct SpinLock {
     
     init() {
         
+    }
+
+    mutating func lock() {
+        OSSpinLockLock(&_lock)
+    }
+
+    mutating func unlock() {
+        OSSpinLockUnlock(&_lock)
     }
     
     mutating func performLocked(@noescape action: () -> Void) {
@@ -41,7 +54,7 @@ struct SpinLock {
     }
 }
 
-extension NSRecursiveLock {
+extension NSRecursiveLock : Lock {
     func performLocked(@noescape action: () -> Void) {
         self.lock()
         action()

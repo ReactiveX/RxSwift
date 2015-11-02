@@ -11,7 +11,7 @@ import XCTest
 import RxSwift
 
 
-class ObservableStandardSequenceOperators : RxTest {
+class ObservableStandardSequenceOperatorsTest : RxTest {
     override func setUp() {
         super.setUp()
     }
@@ -37,7 +37,7 @@ func isPrime(i: Int) -> Bool {
 }
 
 // MARK: where
-extension ObservableStandardSequenceOperators  {
+extension ObservableStandardSequenceOperatorsTest  {
     func test_filterComplete() {
         let scheduler = TestScheduler(initialClock: 0)
         
@@ -210,7 +210,7 @@ extension ObservableStandardSequenceOperators  {
 }
 
 // MARK: takeWhile
-extension ObservableStandardSequenceOperators {
+extension ObservableStandardSequenceOperatorsTest {
     func testTakeWhile_Complete_Before() {
         let scheduler = TestScheduler(initialClock: 0)
         
@@ -702,7 +702,7 @@ extension ObservableStandardSequenceOperators {
 
 // MARK: map
 // these test are not port from Rx
-extension ObservableStandardSequenceOperators {
+extension ObservableStandardSequenceOperatorsTest {
     func testMap_Never() {
         let scheduler = TestScheduler(initialClock: 0)
         
@@ -1043,7 +1043,7 @@ extension ObservableStandardSequenceOperators {
 }
 
 // MARK: flatMap
-extension ObservableStandardSequenceOperators {
+extension ObservableStandardSequenceOperatorsTest {
     
     func testFlatMap_Complete() {
         let scheduler = TestScheduler(initialClock: 0)
@@ -2354,7 +2354,7 @@ extension ObservableStandardSequenceOperators {
 
 // MARK: take
 
-extension ObservableStandardSequenceOperators {
+extension ObservableStandardSequenceOperatorsTest {
     func testTake_Complete_After() {
         let scheduler = TestScheduler(initialClock: 0)
         
@@ -2818,7 +2818,7 @@ extension ObservableStandardSequenceOperators {
 
 // MARK: takeLast
 
-extension ObservableStandardSequenceOperators {
+extension ObservableStandardSequenceOperatorsTest {
     func testTakeLast_Complete_Less() {
         let scheduler = TestScheduler(initialClock: 0)
         
@@ -3057,15 +3057,21 @@ extension ObservableStandardSequenceOperators {
     
     func testTakeLast_DecrementCountsFirst() {
         let k = BehaviorSubject(value: false)
-        
+
+        var elements = [Bool]()
         _ = k.takeLast(1).subscribeNext { n in
+            elements.append(n)
             k.on(.Next(!n))
         }
+
+        k.on(.Completed)
+
+        XCTAssertEqual(elements, [false])
     }
 }
 
 // MARK: skip
-extension ObservableStandardSequenceOperators {
+extension ObservableStandardSequenceOperatorsTest {
     func testSkip_Complete_After() {
         let scheduler = TestScheduler(initialClock: 0)
         
@@ -3459,7 +3465,7 @@ extension ObservableStandardSequenceOperators {
 }
 
 // MARK: SkipWhile
-extension ObservableStandardSequenceOperators {
+extension ObservableStandardSequenceOperatorsTest {
 
     func testSkipWhile_Complete_Before() {
         let scheduler = TestScheduler(initialClock: 0)
@@ -3894,7 +3900,7 @@ extension ObservableStandardSequenceOperators {
 }
 
 // MARK: elementAt
-extension ObservableStandardSequenceOperators {
+extension ObservableStandardSequenceOperatorsTest {
     
     func testElementAt_Complete_After() {
         let scheduler = TestScheduler(initialClock: 0)

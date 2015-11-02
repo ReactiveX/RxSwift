@@ -24,7 +24,7 @@ public struct Queue<T>: SequenceType {
     
     private let _resizeFactor = 2
     
-    private var _storage: [T?]
+    private var _storage: ContiguousArray<T?>
     private var _count: Int
     private var _pushNextIndex: Int
     private var _initialCapacity: Int
@@ -41,10 +41,10 @@ public struct Queue<T>: SequenceType {
         _pushNextIndex = 0
      
         if capacity > 0 {
-            _storage = [T?](count: capacity, repeatedValue: nil)
+            _storage = ContiguousArray<T?>(count: capacity, repeatedValue: nil)
         }
         else {
-            _storage = []
+            _storage = ContiguousArray<T?>()
         }
     }
     
@@ -83,7 +83,7 @@ public struct Queue<T>: SequenceType {
     }
     
     mutating private func resizeTo(size: Int) {
-        var newStorage = [T?](count: size, repeatedValue: nil)
+        var newStorage = ContiguousArray<T?>(count: size, repeatedValue: nil)
         
         let count = _count
         

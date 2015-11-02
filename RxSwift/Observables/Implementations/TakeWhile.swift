@@ -8,7 +8,9 @@
 
 import Foundation
 
-class TakeWhileSink<ElementType, O: ObserverType where O.E == ElementType> : Sink<O>, ObserverType {
+class TakeWhileSink<ElementType, O: ObserverType where O.E == ElementType>
+    : Sink<O>
+    , ObserverType {
     typealias Parent = TakeWhile<ElementType>
     typealias Element = ElementType
 
@@ -16,9 +18,9 @@ class TakeWhileSink<ElementType, O: ObserverType where O.E == ElementType> : Sin
 
     private var _running = true
 
-    init(parent: Parent, observer: O, cancel: Disposable) {
+    init(parent: Parent, observer: O) {
         _parent = parent
-        super.init(observer: observer, cancel: cancel)
+        super.init(observer: observer)
     }
     
     func on(event: Event<Element>) {
@@ -31,26 +33,28 @@ class TakeWhileSink<ElementType, O: ObserverType where O.E == ElementType> : Sin
             do {
                 _running = try _parent._predicate(value)
             } catch let e {
-                observer?.onError(e)
+                forwardOn(.Error(e))
                 dispose()
                 return
             }
             
             if _running {
-                observer?.onNext(value)
+                forwardOn(.Next(value))
             } else {
-                observer?.onComplete()
+                forwardOn(.Completed)
                 dispose()
             }
         case .Error, .Completed:
-            observer?.on(event)
+            forwardOn(event)
             dispose()
         }
     }
     
 }
 
-class TakeWhileSinkWithIndex<ElementType, O: ObserverType where O.E == ElementType> : Sink<O>, ObserverType {
+class TakeWhileSinkWithIndex<ElementType, O: ObserverType where O.E == ElementType>
+    : Sink<O>
+    , ObserverType {
     typealias Parent = TakeWhile<ElementType>
     typealias Element = ElementType
     
@@ -59,9 +63,9 @@ class TakeWhileSinkWithIndex<ElementType, O: ObserverType where O.E == ElementTy
     private var _running = true
     private var _index = 0
     
-    init(parent: Parent, observer: O, cancel: Disposable) {
+    init(parent: Parent, observer: O) {
         _parent = parent
-        super.init(observer: observer, cancel: cancel)
+        super.init(observer: observer)
     }
     
     func on(event: Event<Element>) {
@@ -75,19 +79,19 @@ class TakeWhileSinkWithIndex<ElementType, O: ObserverType where O.E == ElementTy
                 _running = try _parent._predicateWithIndex(value, _index)
                 try incrementChecked(&_index)
             } catch let e {
-                observer?.onError(e)
+                forwardOn(.Error(e))
                 dispose()
                 return
             }
             
             if _running {
-                observer?.onNext(value)
+                forwardOn(.Next(value))
             } else {
-                observer?.onComplete()
+                forwardOn(.Completed)
                 dispose()
             }
         case .Error, .Completed:
-            observer?.on(event)
+            forwardOn(event)
             dispose()
         }
     }
@@ -114,15 +118,15 @@ class TakeWhile<Element>: Producer<Element> {
         _predicateWithIndex = predicate
     }
     
-    override func run<O : ObserverType where O.E == Element>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
+    override func run<O : ObserverType where O.E == Element>(observer: O) -> Disposable {
         if let _ = _predicate {
-            let sink = TakeWhileSink(parent: self, observer: observer, cancel: cancel)
-            setSink(sink)
-            return _source.subscribe(sink)
+            let sink = TakeWhileSink(parent: self, observer: observer)
+            sink.disposable = _source.subscribe(sink)
+            return sink
         } else {
-            let sink = TakeWhileSinkWithIndex(parent: self, observer: observer, cancel: cancel)
-            setSink(sink)
-            return _source.subscribe(sink)
+            let sink = TakeWhileSinkWithIndex(parent: self, observer: observer)
+            sink.disposable = _source.subscribe(sink)
+            return sink
         }
     }
 }

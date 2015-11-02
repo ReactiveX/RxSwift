@@ -11,8 +11,11 @@ import Foundation
 import RxSwift
 #endif
 
-class KVOObservable<Element> : _Producer<Element?>
-                             , KVOObservableProtocol {
+class KVOObservable<Element>
+    : ObservableType
+    , KVOObservableProtocol {
+    typealias E = Element?
+
     unowned var target: AnyObject
     var strongTarget: AnyObject?
     
@@ -30,7 +33,7 @@ class KVOObservable<Element> : _Producer<Element?>
         }
     }
     
-    override func run<O : ObserverType where O.E == Element?>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
+    func subscribe<O : ObserverType where O.E == Element?>(observer: O) -> Disposable {
         let observer = KVOObserver(parent: self) { (value) in
             if value as? NSNull != nil {
                 observer.on(.Next(nil))
