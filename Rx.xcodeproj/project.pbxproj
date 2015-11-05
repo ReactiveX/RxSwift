@@ -358,6 +358,10 @@
 		C88254341B8A752B00B02D69 /* UITableView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88254121B8A752B00B02D69 /* UITableView+Rx.swift */; };
 		C88254351B8A752B00B02D69 /* UITextField+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88254131B8A752B00B02D69 /* UITextField+Rx.swift */; };
 		C88254361B8A752B00B02D69 /* UITextView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88254141B8A752B00B02D69 /* UITextView+Rx.swift */; };
+		C88E296B1BEB712E001CCB92 /* RunLoopLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88E296A1BEB712E001CCB92 /* RunLoopLock.swift */; };
+		C88E296C1BEB712E001CCB92 /* RunLoopLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88E296A1BEB712E001CCB92 /* RunLoopLock.swift */; };
+		C88E296D1BEB712E001CCB92 /* RunLoopLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88E296A1BEB712E001CCB92 /* RunLoopLock.swift */; };
+		C88E296E1BEB712E001CCB92 /* RunLoopLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88E296A1BEB712E001CCB92 /* RunLoopLock.swift */; };
 		C8941BDF1BD5695C00A0E874 /* BlockingObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8941BDE1BD5695C00A0E874 /* BlockingObservable.swift */; };
 		C8941BE01BD5695C00A0E874 /* BlockingObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8941BDE1BD5695C00A0E874 /* BlockingObservable.swift */; };
 		C8941BE11BD5695C00A0E874 /* BlockingObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8941BDE1BD5695C00A0E874 /* BlockingObservable.swift */; };
@@ -1001,6 +1005,7 @@
 		C88254131B8A752B00B02D69 /* UITextField+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITextField+Rx.swift"; sourceTree = "<group>"; };
 		C88254141B8A752B00B02D69 /* UITextView+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITextView+Rx.swift"; sourceTree = "<group>"; };
 		C88BB8711B07E5ED0064D411 /* RxSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C88E296A1BEB712E001CCB92 /* RunLoopLock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RunLoopLock.swift; sourceTree = "<group>"; };
 		C8941BDE1BD5695C00A0E874 /* BlockingObservable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockingObservable.swift; sourceTree = "<group>"; };
 		C8941BE31BD56B0700A0E874 /* BlockingObservable+Operators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "BlockingObservable+Operators.swift"; sourceTree = "<group>"; };
 		C89CDB351BCB0DD7002063D9 /* ShareReplay1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ShareReplay1.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -1400,6 +1405,7 @@
 				C8093F581B8A73A20088E94D /* ObservableConvertibleType+Blocking.swift */,
 				C8941BDE1BD5695C00A0E874 /* BlockingObservable.swift */,
 				C8941BE31BD56B0700A0E874 /* BlockingObservable+Operators.swift */,
+				C88E296A1BEB712E001CCB92 /* RunLoopLock.swift */,
 				C8093F591B8A73A20088E94D /* README.md */,
 			);
 			path = RxBlocking;
@@ -2121,6 +2127,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C88E296B1BEB712E001CCB92 /* RunLoopLock.swift in Sources */,
 				C8941BDF1BD5695C00A0E874 /* BlockingObservable.swift in Sources */,
 				C8941BE41BD56B0700A0E874 /* BlockingObservable+Operators.swift in Sources */,
 				C8093F5E1B8A73A20088E94D /* ObservableConvertibleType+Blocking.swift in Sources */,
@@ -2131,6 +2138,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C88E296C1BEB712E001CCB92 /* RunLoopLock.swift in Sources */,
 				C8941BE01BD5695C00A0E874 /* BlockingObservable.swift in Sources */,
 				C8941BE51BD56B0700A0E874 /* BlockingObservable+Operators.swift in Sources */,
 				C8093F5F1B8A73A20088E94D /* ObservableConvertibleType+Blocking.swift in Sources */,
@@ -2595,6 +2603,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C88E296E1BEB712E001CCB92 /* RunLoopLock.swift in Sources */,
 				C8941BE21BD5695C00A0E874 /* BlockingObservable.swift in Sources */,
 				C8941BE71BD56B0700A0E874 /* BlockingObservable+Operators.swift in Sources */,
 				C8F0C04F1BBBFBCE001B112F /* ObservableConvertibleType+Blocking.swift in Sources */,
@@ -2803,6 +2812,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C88E296D1BEB712E001CCB92 /* RunLoopLock.swift in Sources */,
 				C8941BE11BD5695C00A0E874 /* BlockingObservable.swift in Sources */,
 				C8941BE61BD56B0700A0E874 /* BlockingObservable+Operators.swift in Sources */,
 				D2EBEB8A1BB9B9EE003A27DC /* ObservableConvertibleType+Blocking.swift in Sources */,
