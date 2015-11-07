@@ -30,8 +30,8 @@ extension ObservableBlockingTest {
             try (failWith(testError) as Observable<Int>).toBlocking().toArray()
             XCTFail("It should fail")
         }
-        catch {
-            
+        catch let e {
+            XCTAssertTrue(e as NSError === testError)
         }
     }
     
@@ -67,8 +67,8 @@ extension ObservableBlockingTest {
             try (failWith(testError) as Observable<Int>).toBlocking().first()
             XCTFail()
         }
-        catch {
-            
+        catch let e {
+            XCTAssertTrue(e as NSError === testError)
         }
     }
     
@@ -104,8 +104,8 @@ extension ObservableBlockingTest {
             try (failWith(testError) as Observable<Int>).toBlocking().last()
             XCTFail()
         }
-        catch {
-            
+        catch let e {
+            XCTAssertTrue(e as NSError === testError)
         }
     }
     

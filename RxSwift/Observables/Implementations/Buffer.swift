@@ -99,8 +99,12 @@ class BufferTimeCountSink<S: SchedulerType, Element, O: ObserverType where O.E =
         if _windowID != windowID {
             return
         }
+
+        let nextTimer = SingleAssignmentDisposable()
         
-        _timerD.disposable = _parent._scheduler.scheduleRelative(windowID, dueTime: _parent._timeSpan) { previousWindowID in
+        _timerD.disposable = nextTimer
+
+        nextTimer.disposable = _parent._scheduler.scheduleRelative(windowID, dueTime: _parent._timeSpan) { previousWindowID in
             self._lock.performLocked {
                 if previousWindowID != self._windowID {
                     return
