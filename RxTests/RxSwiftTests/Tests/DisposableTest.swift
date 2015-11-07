@@ -130,8 +130,8 @@ class DisposableTest : RxTest {
         
         XCTAssertEqual(r.disposed, false)
         
-        let d1 = r.disposable;
-        let d2 = r.disposable;
+        let d1 = r.retain()
+        let d2 = r.retain()
         
         XCTAssertEqual(d.disposed, false)
         
@@ -144,7 +144,7 @@ class DisposableTest : RxTest {
         r.dispose()
         XCTAssertEqual(d.disposed, true)
         
-        let d3 = r.disposable;
+        let d3 = r.retain();
         d3.dispose()
     }
     
@@ -154,8 +154,8 @@ class DisposableTest : RxTest {
         
         XCTAssertEqual(r.disposed, false)
         
-        let d1 = r.disposable;
-        let d2 = r.disposable;
+        let d1 = r.retain()
+        let d2 = r.retain()
         
         XCTAssertEqual(d.disposed, false)
         
