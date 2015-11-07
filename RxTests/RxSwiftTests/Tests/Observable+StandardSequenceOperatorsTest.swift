@@ -1042,6 +1042,238 @@ extension ObservableStandardSequenceOperatorsTest {
     }
 }
 
+// MARK: flatMapFirst
+extension ObservableStandardSequenceOperatorsTest {
+    
+    func testFlatMapFirst_Complete() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createHotObservable([
+            next(5, scheduler.createColdObservable([
+                error(1, testError)
+            ])),
+            next(105, scheduler.createColdObservable([
+                error(1, testError)
+            ])),
+            next(300, scheduler.createColdObservable([
+                next(10, 102),
+                next(90, 103),
+                next(110, 104),
+                next(190, 105),
+                next(440, 106),
+                completed(460)
+            ])),
+            next(400, scheduler.createColdObservable([
+                next(180, 202),
+                next(190, 203),
+                completed(205)
+            ])),
+            next(550, scheduler.createColdObservable([
+                next(10, 301),
+                next(50, 302),
+                next(70, 303),
+                next(260, 304),
+                next(310, 305),
+                completed(410)
+            ])),
+            next(750, scheduler.createColdObservable([
+                completed(40)
+            ])),
+            next(850, scheduler.createColdObservable([
+                next(80, 401),
+                next(90, 402),
+                completed(100)
+            ])),
+            completed(900)
+        ])
+        
+        let res = scheduler.start {
+            xs.flatMapFirst { $0 }
+        }
+        
+        XCTAssertEqual(res.messages, [
+            next(310, 102),
+            next(390, 103),
+            next(410, 104),
+            next(490, 105),
+            next(740, 106),
+            next(930, 401),
+            next(940, 402),
+            completed(950)
+        ])
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 900)
+        ])
+
+        XCTAssertEqual(xs.recordedEvents[2].value.subscriptions, [
+            Subscription(300, 760)
+        ])
+
+        XCTAssertEqual(xs.recordedEvents[3].value.subscriptions, [])
+
+        XCTAssertEqual(xs.recordedEvents[4].value.subscriptions, [])
+        
+        XCTAssertEqual(xs.recordedEvents[5].value.subscriptions, [])
+
+        XCTAssertEqual(xs.recordedEvents[6].value.subscriptions, [
+            Subscription(850, 950)
+        ])
+    }
+
+    
+    func testFlatMapFirst_Complete_InnerNotComplete() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createHotObservable([
+            next(5, scheduler.createColdObservable([
+                error(1, testError)
+                ])),
+            next(105, scheduler.createColdObservable([
+                error(1, testError)
+                ])),
+            next(300, scheduler.createColdObservable([
+                next(10, 102),
+                next(90, 103),
+                next(110, 104),
+                next(190, 105),
+                next(440, 106),
+                completed(460)
+                ])),
+            next(400, scheduler.createColdObservable([
+                next(180, 202),
+                next(190, 203),
+                completed(205)
+                ])),
+            next(550, scheduler.createColdObservable([
+                next(10, 301),
+                next(50, 302),
+                next(70, 303),
+                next(260, 304),
+                next(310, 305),
+                completed(410)
+                ])),
+            next(750, scheduler.createColdObservable([
+                completed(40)
+                ])),
+            next(850, scheduler.createColdObservable([
+                next(80, 401),
+                next(90, 402),
+                completed(100)
+                ])),
+            ])
+        
+        let res = scheduler.start {
+            xs.flatMapFirst { $0 }
+        }
+        
+        XCTAssertEqual(res.messages, [
+            next(310, 102),
+            next(390, 103),
+            next(410, 104),
+            next(490, 105),
+            next(740, 106),
+            next(930, 401),
+            next(940, 402),
+            ])
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 1000)
+            ])
+        
+        XCTAssertEqual(xs.recordedEvents[2].value.subscriptions, [
+            Subscription(300, 760)
+            ])
+        
+        XCTAssertEqual(xs.recordedEvents[3].value.subscriptions, [])
+        
+        XCTAssertEqual(xs.recordedEvents[4].value.subscriptions, [])
+        
+        XCTAssertEqual(xs.recordedEvents[5].value.subscriptions, [])
+        
+        XCTAssertEqual(xs.recordedEvents[6].value.subscriptions, [
+            Subscription(850, 950)
+            ])
+    }
+    
+    func testFlatMapFirst_Complete_OuterNotComplete() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createHotObservable([
+            next(5, scheduler.createColdObservable([
+                error(1, testError)
+                ])),
+            next(105, scheduler.createColdObservable([
+                error(1, testError)
+                ])),
+            next(300, scheduler.createColdObservable([
+                next(10, 102),
+                next(90, 103),
+                next(110, 104),
+                next(190, 105),
+                next(440, 106),
+                completed(460)
+                ])),
+            next(400, scheduler.createColdObservable([
+                next(180, 202),
+                next(190, 203),
+                ])),
+            next(550, scheduler.createColdObservable([
+                next(10, 301),
+                next(50, 302),
+                next(70, 303),
+                next(260, 304),
+                next(310, 305),
+                completed(410)
+                ])),
+            next(750, scheduler.createColdObservable([
+                completed(40)
+                ])),
+            next(850, scheduler.createColdObservable([
+                next(80, 401),
+                next(90, 402),
+                completed(100)
+                ])),
+            completed(900)
+            ])
+        
+        let res = scheduler.start {
+            xs.flatMapFirst { $0 }
+        }
+        
+        XCTAssertEqual(res.messages, [
+            next(310, 102),
+            next(390, 103),
+            next(410, 104),
+            next(490, 105),
+            next(740, 106),
+            next(930, 401),
+            next(940, 402),
+            completed(950),
+            ])
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 900)
+            ])
+        
+        XCTAssertEqual(xs.recordedEvents[2].value.subscriptions, [
+            Subscription(300, 760)
+            ])
+        
+        XCTAssertEqual(xs.recordedEvents[3].value.subscriptions, [])
+        
+        XCTAssertEqual(xs.recordedEvents[4].value.subscriptions, [])
+        
+        XCTAssertEqual(xs.recordedEvents[5].value.subscriptions, [])
+        
+        XCTAssertEqual(xs.recordedEvents[6].value.subscriptions, [
+            Subscription(850, 950)
+            ])
+    }
+
+
+}
+
 // MARK: flatMap
 extension ObservableStandardSequenceOperatorsTest {
     
@@ -1113,6 +1345,7 @@ extension ObservableStandardSequenceOperatorsTest {
             Subscription(200, 900)
         ])
 
+    
         XCTAssertEqual(xs.recordedEvents[2].value.subscriptions, [
             Subscription(300, 760)
         ])
