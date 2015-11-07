@@ -156,8 +156,6 @@ class GitHubSignupViewController : ViewController {
         let tapBackground = UITapGestureRecognizer(target: self, action: Selector("dismissKeyboard:"))
         view.addGestureRecognizer(tapBackground)
         
-        self.disposeBag = DisposeBag()
-        
         let API = self.API
         
         let validationService = ValidationService(API: API)
