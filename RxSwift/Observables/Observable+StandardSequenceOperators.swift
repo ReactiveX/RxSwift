@@ -201,6 +201,23 @@ extension ObservableType {
     }
 }
 
+// MARK: flatMapFirst
+
+extension ObservableType {
+
+    /**
+    Projects each element of an observable sequence to an observable sequence and merges the resulting observable sequences into one observable sequence.
+    
+    - parameter selector: A transform function to apply to each element.
+    - returns: An observable sequence whose elements are the result of invoking the one-to-many transform function on each element of the input sequence.
+    */
+    @warn_unused_result(message="http://git.io/rxs.uo")
+    public func flatMapFirst<O: ObservableConvertibleType>(selector: (E) throws -> O)
+        -> Observable<O.E> {
+        return FlatMap(source: asObservable(), selector: selector, onlyFirst: true)
+    }
+}
+
 // elementAt
 
 extension ObservableType {
