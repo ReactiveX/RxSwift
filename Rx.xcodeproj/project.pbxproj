@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9D71C4D21BF08191006E8F59 /* UIButton+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88254061B8A752B00B02D69 /* UIButton+Rx.swift */; };
 		B1B7C3BD1BDD39DB0076934E /* TakeLast.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B7C3BC1BDD39DB0076934E /* TakeLast.swift */; };
 		B1B7C3BE1BDD39DB0076934E /* TakeLast.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B7C3BC1BDD39DB0076934E /* TakeLast.swift */; };
 		B1B7C3BF1BDD39DB0076934E /* TakeLast.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B7C3BC1BDD39DB0076934E /* TakeLast.swift */; };
@@ -581,7 +582,6 @@
 		D203C5011BB9C53E00D02D00 /* UIActionSheet+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88254031B8A752B00B02D69 /* UIActionSheet+Rx.swift */; };
 		D203C5021BB9C53E00D02D00 /* UIAlertView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88254041B8A752B00B02D69 /* UIAlertView+Rx.swift */; };
 		D203C5031BB9C53E00D02D00 /* UIBarButtonItem+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88254051B8A752B00B02D69 /* UIBarButtonItem+Rx.swift */; };
-		D203C5041BB9C53E00D02D00 /* UIButton+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88254061B8A752B00B02D69 /* UIButton+Rx.swift */; };
 		D203C5051BB9C53E00D02D00 /* UICollectionView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88254071B8A752B00B02D69 /* UICollectionView+Rx.swift */; };
 		D203C5061BB9C53E00D02D00 /* UIControl+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88254081B8A752B00B02D69 /* UIControl+Rx.swift */; };
 		D203C5071BB9C53E00D02D00 /* UIDatePicker+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88254091B8A752B00B02D69 /* UIDatePicker+Rx.swift */; };
@@ -2632,7 +2632,6 @@
 				D203C5031BB9C53E00D02D00 /* UIBarButtonItem+Rx.swift in Sources */,
 				D203C4FC1BB9C53700D02D00 /* RxScrollViewDelegateProxy.swift in Sources */,
 				D2138C8E1BB9BED600339B5C /* ControlTarget.swift in Sources */,
-				D203C5041BB9C53E00D02D00 /* UIButton+Rx.swift in Sources */,
 				C80DDEA91BCE69BA006A1832 /* ObservableConvertibleType+Driver.swift in Sources */,
 				C80DDEA11BCE69BA006A1832 /* Driver+Subscription.swift in Sources */,
 				D2138C891BB9BEBE00339B5C /* DelegateProxyType.swift in Sources */,
@@ -2663,6 +2662,7 @@
 				D2138C871BB9BEBE00339B5C /* CLLocationManager+Rx.swift in Sources */,
 				D203C4FF1BB9C53700D02D00 /* RxTableViewDelegateProxy.swift in Sources */,
 				D2138C811BB9BEBE00339B5C /* _RXDelegateProxy.m in Sources */,
+				9D71C4D21BF08191006E8F59 /* UIButton+Rx.swift in Sources */,
 				D203C4FD1BB9C53700D02D00 /* RxSearchBarDelegateProxy.swift in Sources */,
 				D2138C8A1BB9BEBE00339B5C /* Logging.swift in Sources */,
 				D2138C851BB9BEBE00339B5C /* _RXSwizzling.m in Sources */,
