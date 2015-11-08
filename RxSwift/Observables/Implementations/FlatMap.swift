@@ -79,6 +79,9 @@ class FlatMapSink<SourceType, S: ObservableConvertibleType, O: ObserverType wher
     func on(event: Event<SourceType>) {
         switch event {
         case .Next(let element):
+            if _parent._onlyFirst && _group.count > FlatMapNoIterators {
+                return
+            }
             do {
                 let value = try performMap(element)
                 subscribeInner(value.asObservable())
@@ -156,15 +159,19 @@ class FlatMap<SourceType, S: ObservableConvertibleType>: Producer<S.E> {
     private let _selector1: Selector1?
     private let _selector2: Selector2?
     
-    init(source: Observable<SourceType>, selector: Selector1) {
+    private let _onlyFirst: Bool
+    
+    init(source: Observable<SourceType>, selector: Selector1, onlyFirst:Bool = false) {
         _source = source
         _selector1 = selector
+        _onlyFirst = onlyFirst
         _selector2 = nil
     }
     
     init(source: Observable<SourceType>, selector: Selector2) {
         _source = source
         _selector2 = selector
+        _onlyFirst = false
         _selector1 = nil
     }
     
