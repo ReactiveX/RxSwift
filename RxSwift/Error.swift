@@ -14,56 +14,41 @@ let RxCompositeFailures = "RxCompositeFailures"
 /**
 Generic Rx error codes.
 */
-public enum RxErrorCode : Int {
+public enum RxError
+    : ErrorType
+    , CustomDebugStringConvertible {
     /**
-    Unknown error occured
+    Unknown error occured.
     */
-    case Unknown   = 0
+    case Unknown
     /**
-    Casting error
+    Performing an action on disposed object.
     */
-    case Cast      = 2
-    /**
-    Performing an action on disposed object
-    */
-    case Disposed  = 3
+    case Disposed(object: AnyObject)
     /**
     Aritmetic overflow error.
     */
-    case Overflow  = 4
+    case Overflow
     /**
     Argument out of range error.
     */
-    case ArgumentOutOfRange  = 5
+    case ArgumentOutOfRange
 }
 
-/**
-Singleton instances of RxErrors
-*/
-public struct RxError {
+public extension RxError {
     /**
-    Singleton instance of unknown Error
+     A textual representation of `self`, suitable for debugging.
     */
-    public static let UnknownError  = NSError(domain: RxErrorDomain, code: RxErrorCode.Unknown.rawValue, userInfo: nil)
-
-    /**
-    Singleton instance of error during casting.
-    */
-    public static let CastError     = NSError(domain: RxErrorDomain, code: RxErrorCode.Cast.rawValue, userInfo: nil)
-
-    /**
-    Singleton instance of doing something on a disposed object error.
-    */
-    public static let DisposedError = NSError(domain: RxErrorDomain, code: RxErrorCode.Disposed.rawValue, userInfo: nil)
-
-    /**
-    Singleton instance of aritmetic overflow error.
-    */
-    public static let OverflowError = NSError(domain: RxErrorDomain, code: RxErrorCode.Overflow.rawValue, userInfo: nil)
-    
-    /**
-    Singleton instance of argument out of range error.
-    */
-    public static let ArgumentOutOfRange = NSError(domain: RxErrorDomain, code: RxErrorCode.ArgumentOutOfRange.rawValue, userInfo: nil)
-
+    public var debugDescription: String {
+        switch self {
+        case .Unknown:
+            return "Unknown error occured"
+        case .Disposed(let object):
+            return "Object `\(object)` was already disposed"
+        case .Overflow:
+            return "Arithmetic overflow occured"
+        case .ArgumentOutOfRange:
+            return "Argument out of range"
+        }
+    }
 }

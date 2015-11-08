@@ -93,7 +93,7 @@ final public class PublishSubject<Element>
         }
         
         if _disposed {
-            observer.on(.Error(RxError.DisposedError))
+            observer.on(.Error(RxError.Disposed(object: self)))
             return NopDisposable.instance
         }
         

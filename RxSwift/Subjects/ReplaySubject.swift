@@ -121,7 +121,7 @@ class ReplayBufferBase<Element>
 
     func _synchronized_subscribe<O : ObserverType where O.E == E>(observer: O) -> Disposable {
         if _disposed {
-            observer.on(.Error(RxError.DisposedError))
+            observer.on(.Error(RxError.Disposed(object: self)))
             return NopDisposable.instance
         }
      

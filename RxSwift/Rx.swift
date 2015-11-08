@@ -30,7 +30,7 @@ public var resourceCount: Int32 = 0
 
 func incrementChecked(inout i: Int) throws -> Int {
     if i == Int.max {
-        throw RxError.OverflowError
+        throw RxError.Overflow
     }
     let result = i
     i += 1
@@ -39,7 +39,7 @@ func incrementChecked(inout i: Int) throws -> Int {
 
 func decrementChecked(inout i: Int) throws -> Int {
     if i == Int.min {
-        throw RxError.OverflowError
+        throw RxError.Overflow
     }
     let result = i
     i -= 1

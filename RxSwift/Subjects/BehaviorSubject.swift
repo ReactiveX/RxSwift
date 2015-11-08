@@ -54,7 +54,7 @@ public final class BehaviorSubject<Element>
     public func value() throws -> Element {
         _lock.lock(); defer { _lock.unlock() } // {
             if _disposed {
-                throw RxError.DisposedError
+                throw RxError.Disposed(object: self)
             }
             
             if let error = _stoppedEvent?.error {
@@ -105,7 +105,7 @@ public final class BehaviorSubject<Element>
 
     func _synchronized_subscribe<O : ObserverType where O.E == E>(observer: O) -> Disposable {
         if _disposed {
-            observer.on(.Error(RxError.DisposedError))
+            observer.on(.Error(RxError.Disposed(object: self)))
             return NopDisposable.instance
         }
         

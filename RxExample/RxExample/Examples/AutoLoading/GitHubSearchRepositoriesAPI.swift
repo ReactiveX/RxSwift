@@ -219,11 +219,7 @@ class GitHubSearchRepositoriesAPI {
             .retry(3)
             .trackActivity(self.activityIndicator)
             .observeOn(Dependencies.sharedDependencies.backgroundWorkScheduler)
-            .map { data, response -> SearchRepositoryResponse in
-                guard let httpResponse = response as? NSHTTPURLResponse else {
-                    throw exampleError("not getting http response")
-                }
-
+            .map { data, httpResponse -> SearchRepositoryResponse in
                 if httpResponse.statusCode == 403 {
                     return .LimitExceeded
                 }
