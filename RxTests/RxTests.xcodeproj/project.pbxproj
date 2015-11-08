@@ -124,6 +124,9 @@
 		C8EA2D371BD02E1900FB22AC /* EquatableArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8EA2D361BD02E1900FB22AC /* EquatableArray.swift */; };
 		C8EA2D381BD02E1900FB22AC /* EquatableArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8EA2D361BD02E1900FB22AC /* EquatableArray.swift */; };
 		C8EA2D391BD02E1900FB22AC /* EquatableArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8EA2D361BD02E1900FB22AC /* EquatableArray.swift */; };
+		C8F6A1411BEFE04F007DF367 /* SubjectConcurrencyTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8F6A1401BEFE04F007DF367 /* SubjectConcurrencyTest.swift */; };
+		C8F6A1421BEFE04F007DF367 /* SubjectConcurrencyTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8F6A1401BEFE04F007DF367 /* SubjectConcurrencyTest.swift */; };
+		C8F6A1431BEFE04F007DF367 /* SubjectConcurrencyTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8F6A1401BEFE04F007DF367 /* SubjectConcurrencyTest.swift */; };
 		C8FDC5F81B2B5B7E0065F8D9 /* ElementIndexPair.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8FDC5F71B2B5B7E0065F8D9 /* ElementIndexPair.swift */; };
 		C8FDC5F91B2B5B7E0065F8D9 /* ElementIndexPair.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8FDC5F71B2B5B7E0065F8D9 /* ElementIndexPair.swift */; };
 		D203C4EB1BB9C22800D02D00 /* NSNotificationCenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C811082B1AF50E2A001C13E4 /* NSNotificationCenterTests.swift */; };
@@ -246,6 +249,7 @@
 		C8E9D2BC1BD422D80079D0DB /* Control+RxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Control+RxTests.swift"; sourceTree = "<group>"; };
 		C8E9D2C01BD4525B0079D0DB /* Control+RxTests+Cocoa.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Control+RxTests+Cocoa.swift"; sourceTree = "<group>"; };
 		C8EA2D361BD02E1900FB22AC /* EquatableArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EquatableArray.swift; sourceTree = "<group>"; };
+		C8F6A1401BEFE04F007DF367 /* SubjectConcurrencyTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubjectConcurrencyTest.swift; sourceTree = "<group>"; };
 		C8FDC5F71B2B5B7E0065F8D9 /* ElementIndexPair.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElementIndexPair.swift; sourceTree = "<group>"; };
 		D2AF91961BD2EBB900A008C1 /* MockDisposable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockDisposable.swift; sourceTree = "<group>"; };
 		D2EBEB491BB9B7AE003A27DC /* RxTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RxTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -435,6 +439,7 @@
 				C69B64FF1BA88FAC00A7FA73 /* ObserverTests.swift */,
 				C89CDB951BCDA1F1002063D9 /* Observable+SubscriptionTest.swift */,
 				C80DDEDB1BCE9A03006A1832 /* Driver+Test.swift */,
+				C8F6A1401BEFE04F007DF367 /* SubjectConcurrencyTest.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -622,6 +627,7 @@
 				C8AF26EF1B499E5C00131C03 /* DelegateProxyTest.swift in Sources */,
 				C8E381281B207D03008CDC33 /* PrimitiveHotObservable.swift in Sources */,
 				C81108661AF50E2A001C13E4 /* Observable+StandardSequenceOperatorsTest.swift in Sources */,
+				C8F6A1411BEFE04F007DF367 /* SubjectConcurrencyTest.swift in Sources */,
 				C80DDEE01BCEE898006A1832 /* MainThreadPrimitiveHotObservable.swift in Sources */,
 				C81108641AF50E2A001C13E4 /* Observable+MultipleTest.swift in Sources */,
 				C811084F1AF50E2A001C13E4 /* ColdObservable.swift in Sources */,
@@ -713,6 +719,7 @@
 				C69B65011BA8957C00A7FA73 /* ObserverTests.swift in Sources */,
 				C8633AE61B0AA0ED00375D60 /* KVOObservableTests.swift in Sources */,
 				C8EA2D381BD02E1900FB22AC /* EquatableArray.swift in Sources */,
+				C8F6A1421BEFE04F007DF367 /* SubjectConcurrencyTest.swift in Sources */,
 				C88BB8AC1B07E64B0064D411 /* AssumptionsTest.swift in Sources */,
 				C88BB8AD1B07E64B0064D411 /* TestConnectableObservable.swift in Sources */,
 				C8E3813A1B21B77E008CDC33 /* Observable+Extensions.swift in Sources */,
@@ -750,6 +757,7 @@
 				D2EBEB681BB9B7EF003A27DC /* ConcurrencyTest.swift in Sources */,
 				D2EBEB721BB9B7F6003A27DC /* Observable+MultipleTest+Zip.swift in Sources */,
 				D2EBEB731BB9B7F9003A27DC /* Observable+SingleTest.swift in Sources */,
+				C8F6A1431BEFE04F007DF367 /* SubjectConcurrencyTest.swift in Sources */,
 				C80DDEE21BCEE898006A1832 /* MainThreadPrimitiveHotObservable.swift in Sources */,
 				D2EBEB6C1BB9B7EF003A27DC /* Observable+BindingTest.swift in Sources */,
 				D2EBEB621BB9B7E5003A27DC /* ElementIndexPair.swift in Sources */,

@@ -8,15 +8,8 @@
 
 import Foundation
 
-protocol SynchronizedUnsubscribeType : class, Lock {
+protocol SynchronizedUnsubscribeType : class {
     typealias DisposeKey
 
-    func _synchronized_unsubscribe(disposeKey: DisposeKey)
-}
-
-extension SynchronizedUnsubscribeType {
-    func synchronizedUnsubscribe(disposeKey: DisposeKey) {
-        lock(); defer { unlock() }
-        _synchronized_unsubscribe(disposeKey)
-    }
+    func synchronizedUnsubscribe(disposeKey: DisposeKey)
 }

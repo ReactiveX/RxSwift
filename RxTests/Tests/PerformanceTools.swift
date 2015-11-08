@@ -157,10 +157,15 @@ func measureMemoryUsage(@noescape work: () -> ()) -> (bytesAllocated: UInt64, al
     return (approxValuePerIteration(bytesAfter - bytes), approxValuePerIteration(allocationsAfter - allocations))
 }
 
-func compareTwoImplementations(benchmarkTime benchmarkTime: Bool, @noescape first: () -> (), @noescape second: () -> ()) {
-    print("Fragmenting memory ...")
-    fragmentMemory()
-    print("Benchmarking ...")
+var fragmentedMemory = false
+
+func compareTwoImplementations(benchmarkTime benchmarkTime: Bool, benchmarkMemory: Bool, @noescape first: () -> (), @noescape second: () -> ()) {
+    if !fragmentedMemory {
+        print("Fragmenting memory ...")
+        fragmentMemory()
+        print("Benchmarking ...")
+        fragmentedMemory = true
+    }
 
     // first warm up to keep it fair
 
@@ -179,14 +184,22 @@ func compareTwoImplementations(benchmarkTime benchmarkTime: Bool, @noescape firs
         time2 = 0
     }
 
-    registerMallocHooks()
+    let memory1: (bytesAllocated: UInt64, allocations: UInt64)
+    let memory2: (bytesAllocated: UInt64, allocations: UInt64)
+    if benchmarkMemory {
 
-    first()
-    second()
+        registerMallocHooks()
 
-    let memory1 = measureMemoryUsage(first)
-    let memory2 = measureMemoryUsage(second)
+        first()
+        second()
 
+        memory1 = measureMemoryUsage(first)
+        memory2 = measureMemoryUsage(second)
+    }
+    else {
+        memory1 = (0, 0)
+        memory2 = (0, 0)
+    }
     // this is good enough
     print(String(format: "#1 implementation %8d bytes %4d allocations %5d useconds", arguments: [
         memory1.bytesAllocated,

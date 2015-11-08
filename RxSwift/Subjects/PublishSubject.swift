@@ -13,25 +13,22 @@ Represents an object that is both an observable sequence as well as an observer.
 
 Each notification is broadcasted to all subscribed observers.
 */
-public class PublishSubject<Element>
+final public class PublishSubject<Element>
     : Observable<Element>
     , SubjectType
     , Cancelable
     , ObserverType
-    , LockOwnerType
-    , SynchronizedOnType
-    , SynchronizedSubscribeType
-    , SynchronizedUnsubscribeType
-    , SynchronizedDisposeType {
+    , SynchronizedUnsubscribeType {
     public typealias SubjectObserverType = PublishSubject<Element>
     
     typealias DisposeKey = Bag<AnyObserver<Element>>.KeyType
     
-    let _lock = NSRecursiveLock()
+    private var _lock = RECURSIVE_MUTEX
     
     // state
     private var _disposed = false
     private var _observers = Bag<AnyObserver<Element>>()
+    private var _stopped = false
     private var _stoppedEvent = nil as Event<Element>?
     
     /**
@@ -56,13 +53,14 @@ public class PublishSubject<Element>
     - parameter event: Event to send to the observers.
     */
     public func on(event: Event<Element>) {
-        synchronizedOn(event)
+        _lock.lock(); defer { _lock.unlock() }
+        _synchronized_on(event)
     }
 
     func _synchronized_on(event: Event<E>) {
         switch event {
         case .Next(_):
-            if _disposed || _stoppedEvent != nil {
+            if _disposed || _stopped {
                 return
             }
             
@@ -70,6 +68,7 @@ public class PublishSubject<Element>
         case .Completed, .Error:
             if _stoppedEvent == nil {
                 _stoppedEvent = event
+                _stopped = true
                 _observers.on(event)
                 _observers.removeAll()
             }
@@ -83,7 +82,8 @@ public class PublishSubject<Element>
     - returns: Disposable object that can be used to unsubscribe the observer from the subject.
     */
     public override func subscribe<O : ObserverType where O.E == Element>(observer: O) -> Disposable {
-        return synchronizedSubscribe(observer)
+        _lock.lock(); defer { _lock.unlock() }
+        return _synchronized_subscribe(observer)
     }
 
     func _synchronized_subscribe<O : ObserverType where O.E == E>(observer: O) -> Disposable {
@@ -101,6 +101,10 @@ public class PublishSubject<Element>
         return SubscriptionDisposable(owner: self, key: key)
     }
 
+    func synchronizedUnsubscribe(disposeKey: DisposeKey) {
+        _lock.lock(); defer { _lock.unlock() }
+        _synchronized_unsubscribe(disposeKey)
+    }
 
     func _synchronized_unsubscribe(disposeKey: DisposeKey) {
         _ = _observers.removeKey(disposeKey)
@@ -117,10 +121,11 @@ public class PublishSubject<Element>
     Unsubscribe all observers and release resources.
     */
     public func dispose() {
-        synchronizedDispose()
+        _lock.lock(); defer { _lock.unlock() }
+        _synchronized_dispose()
     }
 
-    func _synchronized_dispose() {
+    final func _synchronized_dispose() {
         _disposed = true
         _observers.removeAll()
         _stoppedEvent = nil
