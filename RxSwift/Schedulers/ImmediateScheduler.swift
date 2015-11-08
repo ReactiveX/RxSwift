@@ -13,7 +13,7 @@ Represents an object that schedules units of work to run immediately on the curr
 */
 private class ImmediateScheduler : ImmediateSchedulerType {
 
-    private let _asyncLock = AsyncLock()
+    private let _asyncLock = AsyncLock<AnonymousInvocable>()
 
     /**
     Schedules an action to be executed immediatelly.
@@ -27,12 +27,12 @@ private class ImmediateScheduler : ImmediateSchedulerType {
     */
     func schedule<StateType>(state: StateType, action: (StateType) -> Disposable) -> Disposable {
         let disposable = SingleAssignmentDisposable()
-        _asyncLock.wait {
+        _asyncLock.invoke(AnonymousInvocable {
             if disposable.disposed {
                 return
             }
             disposable.disposable = action(state)
-        }
+        })
 
         return disposable
     }

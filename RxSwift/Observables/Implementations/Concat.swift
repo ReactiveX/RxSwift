@@ -9,14 +9,16 @@
 import Foundation
 
 
-class ConcatSink<S: SequenceType, O: ObserverType where S.Generator.Element : ObservableConvertibleType, S.Generator.Element.E == O.E> : TailRecursiveSink<S, O> {
+class ConcatSink<S: SequenceType, O: ObserverType where S.Generator.Element : ObservableConvertibleType, S.Generator.Element.E == O.E>
+    : TailRecursiveSink<S, O>
+    , ObserverType {
     typealias Element = O.E
     
     override init(observer: O) {
         super.init(observer: observer)
     }
     
-    override func on(event: Event<Element>){
+    func on(event: Event<Element>){
         switch event {
         case .Next:
             forwardOn(event)
@@ -24,8 +26,12 @@ class ConcatSink<S: SequenceType, O: ObserverType where S.Generator.Element : Ob
             forwardOn(event)
             dispose()
         case .Completed:
-            scheduleMoveNext()
+            schedule(.MoveNext)
         }
+    }
+
+    override func subscribeToNext(source: Observable<E>) -> Disposable {
+        return source.subscribe(self)
     }
     
     override func extract(observable: Observable<E>) -> S.Generator? {

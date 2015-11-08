@@ -766,8 +766,39 @@ extension ObservableSingleTest {
             Subscription(200, 450),
             ])
     }
-    
-    
+
+    func testRetry_tailRecursiveOptimizationsTest() {
+        var count = 1
+        let sequenceSendingImmediateError: Observable<Int> = create { observer in
+            observer.on(.Next(0))
+            observer.on(.Next(1))
+            observer.on(.Next(2))
+            if count < 2 {
+                observer.on(.Error(testError))
+                count++
+            }
+            observer.on(.Next(3))
+            observer.on(.Next(4))
+            observer.on(.Next(5))
+            observer.on(.Completed)
+
+            return NopDisposable.instance
+        }
+
+        _ = sequenceSendingImmediateError
+            .retry()
+            .subscribe { _ in
+            }
+    }
+}
+
+struct CustomErrorType : ErrorType {
+
+}
+
+// retryWhen
+extension ObservableSingleTest {
+
     func testRetryWhen_Never() {
         
         let scheduler = TestScheduler(initialClock: 0)
@@ -783,9 +814,9 @@ extension ObservableSingleTest {
             ])
         
         let res = scheduler.start(300) {
-            xs.retryWhen({ (errors: Observable<NSError>) in
-                return empty.asObservable()
-            })
+            xs.retryWhen { (errors: Observable<NSError>) in
+                return empty
+            }
         }
         
         let correct: [Recorded<Int>] = [
@@ -817,9 +848,9 @@ extension ObservableSingleTest {
             ])
         
         let res = scheduler.start() {
-            xs.retryWhen({ (errors: Observable<NSError>) in
-                return never.asObservable()
-            })
+            xs.retryWhen { (errors: Observable<NSError>) in
+                return never
+            }
         }
         
         let correct: [Recorded<Int>] = [
@@ -832,7 +863,7 @@ extension ObservableSingleTest {
         XCTAssertEqual(res.messages, correct)
         
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 1000)
+            Subscription(200, 250)
             ])
     }
     
@@ -854,9 +885,9 @@ extension ObservableSingleTest {
             ])
         
         let res = scheduler.start() {
-            xs.retryWhen({ (errors: Observable<NSError>) in
-                return never.asObservable()
-            })
+            xs.retryWhen { (errors: Observable<NSError>) in
+                return never
+            }
         }
         
         let correct: [Recorded<Int>] = [
@@ -891,9 +922,9 @@ extension ObservableSingleTest {
             ])
         
         let res = scheduler.start() {
-            xs.retryWhen({ (errors: Observable<NSError>) in
-                return empty.asObservable()
-            })
+            xs.retryWhen { (errors: Observable<NSError>) in
+                return empty
+            }
         }
         
         let correct: [Recorded<Int>] = [
@@ -923,14 +954,14 @@ extension ObservableSingleTest {
             ])
         
         let res = scheduler.start(300) {
-            xs.retryWhen({ (errors: Observable<NSError>) in
+            xs.retryWhen { (errors: Observable<NSError>) in
                 return errors.scan(0) { (var a, e) in
                     if ++a == 2 {
-                        throw testError
+                        throw testError1
                     }
                     return a
                 }
-            })
+            }
         }
         
         let correct: [Recorded<Int>] = [
@@ -938,7 +969,7 @@ extension ObservableSingleTest {
             next(220, 2),
             next(240, 1),
             next(250, 2),
-            error(260, testError)
+            error(260, testError1)
         ]
         
         XCTAssertEqual(res.messages, correct)
@@ -997,13 +1028,13 @@ extension ObservableSingleTest {
             ])
         
         let res = scheduler.start(300) {
-            xs.retryWhen({ (errors: Observable<NSError>) in
+            xs.retryWhen { (errors: Observable<NSError>) in
                 return errors.scan(0) { (a, e) in
                     return a + 1
                 }.takeWhile { (num: Int) -> Bool in
                     return num < 2
                 }
-            })
+            }
         }
         
         let correct: [Recorded<Int>] = [
@@ -1038,9 +1069,9 @@ extension ObservableSingleTest {
             ])
         
         let res = scheduler.start() {
-            xs.retryWhen({ (errors: Observable<NSError>) in
-                return never.asObservable()
-            })
+            xs.retryWhen { (errors: Observable<NSError>) in
+                return never
+            }
         }
         
         let correct: [Recorded<Int>] = [
@@ -1051,11 +1082,11 @@ extension ObservableSingleTest {
         XCTAssertEqual(res.messages, correct)
         
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 1000)
+            Subscription(200, 230)
             ])
     }
     
-    /*
+
     func testRetryWhen_Incremental_BackOff() {
         
         let scheduler = TestScheduler(initialClock: 0)
@@ -1067,35 +1098,91 @@ extension ObservableSingleTest {
             ])
         
         let res = scheduler.start(800) {
-            xs.retryWhen({ (errors: Observable<NSError>) in
-                return scheduler.createColdObservable([
-                    next(50, 1),    // delay 50
-                    next(150, 2),   // delay 100
-                    next(300, 3),   // delay 150
-                    completed(500)  // delay 200
-                    ])
-            })
+            xs.retryWhen { (errors: Observable<NSError>) in
+                errors.scan((0, nil)) { (a: (Int, NSError!), e) in
+                    (a.0 + 1, e)
+                }
+                .flatMap { (a, e) -> Observable<Int64> in
+                    if a >= 4 {
+                        return failWith(e)
+                    }
+
+                    return timer(a * 50, scheduler)
+                }
+            }
         }
         
         let correct: [Recorded<Int>] = [
             next(205, 1),
             next(265, 1),
-            next(365, 1),
-            next(515, 1),
-            completed(710)
+            next(375, 1),
+            next(535, 1),
+            error(540, testError)
         ]
         
         XCTAssertEqual(res.messages, correct)
         
         XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 260),
-            Subscription(260, 360),
-            Subscription(360, 510),
-            Subscription(510, 710)
+            Subscription(200, 210),
+            Subscription(260, 270),
+            Subscription(370, 380),
+            Subscription(530, 540)
             ])
     }
-    */
-    
+
+    func testRetryWhen_IgnoresDifferentErrorTypes() {
+
+        let scheduler = TestScheduler(initialClock: 0)
+
+        // just fails
+        let xs = scheduler.createColdObservable([
+            next(5, 1),
+            error(10, testError)
+            ])
+
+        let res = scheduler.start(800) {
+            xs.retryWhen { (errors: Observable<CustomErrorType>) in
+                errors
+            }
+        }
+
+        let correct: [Recorded<Int>] = [
+            next(205, 1),
+            error(210, testError)
+        ]
+
+        XCTAssertEqual(res.messages, correct)
+
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 210)
+            ])
+    }
+
+    func testRetryWhen_tailRecursiveOptimizationsTest() {
+        var count = 1
+        let sequenceSendingImmediateError: Observable<Int> = create { observer in
+            observer.on(.Next(0))
+            observer.on(.Next(1))
+            observer.on(.Next(2))
+            if count < 2 {
+                observer.on(.Error(testError))
+                count++
+            }
+            observer.on(.Next(3))
+            observer.on(.Next(4))
+            observer.on(.Next(5))
+            observer.on(.Completed)
+
+            return NopDisposable.instance
+        }
+
+        _ = sequenceSendingImmediateError
+            .retryWhen { errors in
+                return errors
+            }
+            .subscribe { _ in
+        }
+    }
 }
 
 

@@ -8,8 +8,16 @@
 
 import Foundation
 
+enum TailRecursiveSinkCommand {
+    case MoveNext
+    case Dispose
+}
+
 /// This class is usually used with `Generator` version of the operators.
-class TailRecursiveSink<S: SequenceType, O: ObserverType where S.Generator.Element: ObservableConvertibleType, S.Generator.Element.E == O.E> : Sink<O>, ObserverType {
+class TailRecursiveSink<S: SequenceType, O: ObserverType where S.Generator.Element: ObservableConvertibleType, S.Generator.Element.E == O.E>
+    : Sink<O>
+    , InvocableWithValueType {
+    typealias Value = TailRecursiveSinkCommand
     typealias E = O.E
     
     var _generators:[S.Generator] = []
@@ -17,7 +25,7 @@ class TailRecursiveSink<S: SequenceType, O: ObserverType where S.Generator.Eleme
     var _subscription = SerialDisposable()
     
     // this is thread safe object
-    var _gate = AsyncLock()
+    var _gate = AsyncLock<InvocableScheduledItem<TailRecursiveSink<S, O>>>()
     
     override init(observer: O) {
         super.init(observer: observer)
@@ -25,27 +33,24 @@ class TailRecursiveSink<S: SequenceType, O: ObserverType where S.Generator.Eleme
     
     func run(sources: S.Generator) -> Disposable {
         _generators.append(sources)
+
+        schedule(.MoveNext)
         
-        scheduleMoveNext()
-        
-        let disposeSinkStack = AnonymousDisposable {
-            self.schedule {
-                self.disposePrivate()
-            }
-        }
-        
-        return StableCompositeDisposable.create(_subscription, disposeSinkStack)
+        return _subscription
     }
-    
-    func scheduleMoveNext() {
-        return schedule {
-            self.moveNext()
+
+    func invoke(command: TailRecursiveSinkCommand) {
+        switch command {
+            case .Dispose:
+                disposeCommand()
+            case .MoveNext:
+                moveNextCommand()
         }
     }
     
     // simple implementation for now
-    func schedule(action: () -> Void) {
-        _gate.wait(action)
+    func schedule(command: TailRecursiveSinkCommand) {
+        _gate.invoke(InvocableScheduledItem(invocable: self, state: command))
     }
 
     func done() {
@@ -57,13 +62,9 @@ class TailRecursiveSink<S: SequenceType, O: ObserverType where S.Generator.Eleme
         abstractMethod()
     }
     
-    func on(event: Event<E>) {
-        abstractMethod()
-    }
-    
     // should be done on gate locked
 
-    private func moveNext() {
+    private func moveNextCommand() {
         var next: Observable<E>? = nil
         
         repeat {
@@ -101,13 +102,24 @@ class TailRecursiveSink<S: SequenceType, O: ObserverType where S.Generator.Eleme
             return
         }
         
-        let subscription2 = next!.subscribe(self)
+        let subscription2 = subscribeToNext(next!)
         _subscription.disposable = subscription2
     }
-    
-    private func disposePrivate() {
+
+    func subscribeToNext(source: Observable<E>) -> Disposable {
+        abstractMethod()
+    }
+
+    func disposeCommand() {
         _disposed = true
         _generators.removeAll(keepCapacity: false)
     }
-    
+
+    override func dispose() {
+        super.dispose()
+
+        _subscription.dispose()
+
+        schedule(.Dispose)
+    }
 }

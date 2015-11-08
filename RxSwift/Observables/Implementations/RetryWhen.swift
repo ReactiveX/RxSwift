@@ -8,126 +8,145 @@
 
 import Foundation
 
-class RetryTriggerSink<S: SequenceType, O: ObserverType, RetryTriggerType, Error: ErrorType where S.Generator.Element : ObservableType, S.Generator.Element.E == O.E> : ObserverType {
-    typealias E = RetryTriggerType
+class RetryTriggerSink<S: SequenceType, O: ObserverType, TriggerObservable: ObservableType, Error where S.Generator.Element : ObservableType, S.Generator.Element.E == O.E>
+    : ObserverType {
+    typealias E = TriggerObservable.E
     
-    typealias Parent = RetryWhenSequenceSink<S, O, RetryTriggerType, Error>
+    typealias Parent = RetryWhenSequenceSinkIter<S, O, TriggerObservable, Error>
     
-    let parent: Parent
-    
+    private let _parent: Parent
+
     init(parent: Parent) {
-        self.parent = parent
+        _parent = parent
     }
-    
+
     func on(event: Event<E>) {
-            switch event {
-            case .Next:
-                parent.lock.performLocked() {
-                    parent.handlerSubscription.dispose()
-                    parent.lastError = nil
-                    parent.scheduleMoveNext()
-                }
-            case .Error(_):
-                parent.lock.performLocked() {
-                    parent.done()
-                }
-            case .Completed:
-                parent.lock.performLocked() {
-                    parent.lastError = nil
-                    parent.done()
-                }
-            }
+        switch event {
+        case .Next:
+            _parent._parent._lastError = nil
+            _parent._parent.schedule(.MoveNext)
+        case .Error(let e):
+            _parent._parent.forwardOn(.Error(e))
+            _parent._parent.dispose()
+        case .Completed:
+            _parent._parent.forwardOn(.Completed)
+            _parent._parent.dispose()
+        }
     }
 }
 
-class RetryWhenSequenceSink<S: SequenceType, O: ObserverType, RetryTriggerType, Error: ErrorType where S.Generator.Element : ObservableType, S.Generator.Element.E == O.E> : TailRecursiveSink<S, O> {
-    typealias Element = O.E
-    typealias Parent = RetryWhenSequence<S, RetryTriggerType, Error>
-    
-    let lock = NSRecursiveLock()
-    
-    let parent: Parent
-    
-    var lastError: ErrorType?
-    let errorSubject = PublishSubject<Error>()
-    let handler: Observable<RetryTriggerType>
-    let handlerSubscription = SerialDisposable()
-    
-    init(parent: Parent, observer: O, cancel: Disposable) {
-        self.parent = parent
-        self.handler = parent.notificationHandler(errorSubject.asObservable())
-        super.init(observer: observer, cancel: cancel)
+class RetryWhenSequenceSinkIter<S: SequenceType, O: ObserverType, TriggerObservable: ObservableType, Error where S.Generator.Element : ObservableType, S.Generator.Element.E == O.E>
+    : SingleAssignmentDisposable
+    , ObserverType {
+    typealias E = O.E
+    typealias Parent = RetryWhenSequenceSink<S, O, TriggerObservable, Error>
+
+    private let _parent: Parent
+    private let _errorHandlerSubscription = SingleAssignmentDisposable()
+
+    init(parent: Parent) {
+        _parent = parent
     }
-    
-    override func on(event: Event<E>) {
-        guard lastError == nil else {
-            return
-        }
-        
+
+    func on(event: Event<E>) {
         switch event {
         case .Next:
-            observer?.on(event)
+            _parent.forwardOn(event)
         case .Error(let error):
-            lock.performLocked() {
-                self.lastError = error
-                handlerSubscription.disposable = handler.subscribeSafe(RetryTriggerSink(parent: self))
-                errorSubject.on(.Next(error as! Error))
+            _parent._lastError = error
+
+            if let failedWith = error as? Error {
+                // dispose current subscription
+                super.dispose()
+
+                let errorHandlerSubscription = _parent._notifier.subscribe(RetryTriggerSink(parent: self))
+                _errorHandlerSubscription.disposable = errorHandlerSubscription
+                _parent._errorSubject.on(.Next(failedWith))
+            }
+            else {
+                _parent.forwardOn(.Error(error))
+                _parent.dispose()
             }
         case .Completed:
-            observer?.on(event)
-            handlerSubscription.dispose()
-            dispose()
+            _parent.forwardOn(event)
+            _parent.dispose()
         }
+    }
+
+    override func dispose() {
+        super.dispose()
+        _errorHandlerSubscription.dispose()
+    }
+}
+
+class RetryWhenSequenceSink<S: SequenceType, O: ObserverType, TriggerObservable: ObservableType, Error where S.Generator.Element : ObservableType, S.Generator.Element.E == O.E>
+    : TailRecursiveSink<S, O> {
+    typealias Element = O.E
+    typealias Parent = RetryWhenSequence<S, TriggerObservable, Error>
+    
+    let _lock = NSRecursiveLock()
+    
+    private let _parent: Parent
+    
+    private var _lastError: ErrorType?
+    private let _errorSubject = PublishSubject<Error>()
+    private let _handler: Observable<TriggerObservable.E>
+    private let _notifier = PublishSubject<TriggerObservable.E>()
+
+    init(parent: Parent, observer: O) {
+        _parent = parent
+        _handler = parent._notificationHandler(_errorSubject).asObservable()
+        super.init(observer: observer)
     }
     
     override func done() {
-        if let lastError = self.lastError {
-            observer?.on(.Error(lastError))
-            self.lastError = nil
+        if let lastError = _lastError {
+            forwardOn(.Error(lastError))
+            _lastError = nil
         }
         else {
-            observer?.on(.Completed)
+            forwardOn(.Completed)
         }
-        self.dispose()
-    }
-    
-    override func dispose() {
-        
-        super.dispose()
+
+        dispose()
     }
     
     override func extract(observable: Observable<E>) -> S.Generator? {
-        if let onError = observable as? RetryWhenSequence<S, RetryTriggerType, Error> {
-            return onError.sources.generate()
+        if let onError = observable as? RetryWhenSequence<S, TriggerObservable, Error> {
+            return onError._sources.generate()
         }
         else {
             return nil
         }
     }
-    
+
+    override func subscribeToNext(source: Observable<E>) -> Disposable {
+        let iter = RetryWhenSequenceSinkIter(parent: self)
+        iter.disposable = source.subscribe(iter)
+        return iter
+    }
+
     override func run(sources: S.Generator) -> Disposable {
-        _generators.append(sources)
-        
-        scheduleMoveNext()
-        
-        return handlerSubscription
+        let triggerSubscription = _handler.subscribe(_notifier.asObserver())
+        let superSubscription = super.run(sources)
+        return StableCompositeDisposable.create(superSubscription, triggerSubscription)
     }
 }
 
-class RetryWhenSequence<S: SequenceType, RetryTriggerType, Error: ErrorType where S.Generator.Element : ObservableType> : Producer<S.Generator.Element.E> {
+class RetryWhenSequence<S: SequenceType, TriggerObservable: ObservableType, Error where S.Generator.Element : ObservableType> : Producer<S.Generator.Element.E> {
     typealias Element = S.Generator.Element.E
     
-    let sources: S
-    let notificationHandler: Observable<Error> -> Observable<RetryTriggerType>
+    private let _sources: S
+    private let _notificationHandler: Observable<Error> -> TriggerObservable
     
-    init(sources: S, notificationHandler: Observable<Error> -> Observable<RetryTriggerType>) {
-        self.sources = sources
-        self.notificationHandler = notificationHandler
+    init(sources: S, notificationHandler: Observable<Error> -> TriggerObservable) {
+        _sources = sources
+        _notificationHandler = notificationHandler
     }
     
-    override func run<O : ObserverType where O.E == Element>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
-        let sink = RetryWhenSequenceSink<S, O, RetryTriggerType, Error>(parent: self, observer: observer, cancel: cancel)
-        setSink(sink)
-        return sink.run(self.sources.generate())
+    override func run<O : ObserverType where O.E == Element>(observer: O) -> Disposable {
+        let sink = RetryWhenSequenceSink<S, O, TriggerObservable, Error>(parent: self, observer: observer)
+        sink.disposable = sink.run(self._sources.generate())
+        return sink
     }
 }
