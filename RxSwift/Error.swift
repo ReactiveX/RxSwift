@@ -33,6 +33,14 @@ public enum RxError
     Argument out of range error.
     */
     case ArgumentOutOfRange
+    /**
+     No elements sent to a sequence requiring at least one.
+     */
+    case NoElements
+    /**
+     More elements sent to a sequence expecting only one.
+     */
+    case MoreThanOneElement
 }
 
 public extension RxError {
@@ -49,6 +57,10 @@ public extension RxError {
             return "Arithmetic overflow occured"
         case .ArgumentOutOfRange:
             return "Argument out of range"
+        case .NoElements:
+            return "No element sent to a sequence requiring at least one"
+        case .MoreThanOneElement:
+            return "More elements sent to a sequence expecting only one"
         }
     }
 }
