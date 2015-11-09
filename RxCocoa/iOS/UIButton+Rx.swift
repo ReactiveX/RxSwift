@@ -40,7 +40,7 @@ extension UIButton {
     /**
      Reactive wrapper for `PrimaryActionTriggered` control event.
      */
-    public var rx_tap: ControlEvent<Void> {
+    public var rx_primaryAction: ControlEvent<Void> {
         return rx_controlEvents(.PrimaryActionTriggered)
     }
 }
