@@ -218,7 +218,7 @@ extension ObservableType {
     }
 }
 
-// elementAt
+// MARK: elementAt
 
 extension ObservableType {
     
@@ -233,4 +233,35 @@ extension ObservableType {
         -> Observable<E> {
             return ElementAt(source: self.asObservable(), index: index, throwOnEmpty: true)
     }
+}
+
+// MARK: single
+
+extension ObservableType {
+    
+    /**
+    The single operator is similar to first, but throws a `RxError.NoElements` or `RxError.MoreThanOneElement`
+    if the source Observable does not emit exactly one item before successfully completing.
+    
+    - returns: An observable sequence that emits a single item or throws an exception if more (or none) of them are emitted.
+    */
+    @warn_unused_result(message="http://git.io/rxs.uo")
+    public func single()
+        -> Observable<E> {
+            return SingleAsync(source: self.asObservable())
+    }
+    
+    /**
+    The single operator is similar to first, but throws a `RxError.NoElements` or `RxError.MoreThanOneElement`
+    if the source Observable does not emit exactly one item before successfully completing.
+    
+    - parameter predicate: A function to test each source element for a condition.
+    - returns: An observable sequence that emits a single item or throws an exception if more (or none) of them are emitted.
+    */
+    @warn_unused_result(message="http://git.io/rxs.uo")
+    public func single(predicate: (E) throws -> Bool)
+        -> Observable<E> {
+            return SingleAsync(source: self.asObservable(), predicate: predicate)
+    }
+
 }
