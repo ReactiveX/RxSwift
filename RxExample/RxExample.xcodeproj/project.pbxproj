@@ -348,6 +348,7 @@
 		C8F6A1341BEF9DA3007DF367 /* SchedulerServices+Emulation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89464951BC6C2B00055219D /* SchedulerServices+Emulation.swift */; };
 		C8F6A1351BEF9DA3007DF367 /* SerialDispatchQueueScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89464961BC6C2B00055219D /* SerialDispatchQueueScheduler.swift */; };
 		C8F6A1381BEF9DF6007DF367 /* RetryWhen.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8F6A1361BEF9DD4007DF367 /* RetryWhen.swift */; };
+		CB30D9EE1BF106260084C1C0 /* SingleAsync.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB30D9ED1BF106260084C1C0 /* SingleAsync.swift */; };
 		CB883B501BE3AC54000AC2EE /* BooleanDisposable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB883B4E1BE3AC54000AC2EE /* BooleanDisposable.swift */; };
 		CB883B511BE3AC54000AC2EE /* RefCountDisposable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB883B4F1BE3AC54000AC2EE /* RefCountDisposable.swift */; };
 		CB883B601BE3AC72000AC2EE /* Window.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB883B5E1BE3AC72000AC2EE /* Window.swift */; };
@@ -747,6 +748,7 @@
 		C8F6A1061BEF9D83007DF367 /* InvocableType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InvocableType.swift; sourceTree = "<group>"; };
 		C8F6A1071BEF9D83007DF367 /* ScheduledItemType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduledItemType.swift; sourceTree = "<group>"; };
 		C8F6A1361BEF9DD4007DF367 /* RetryWhen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RetryWhen.swift; sourceTree = "<group>"; };
+		CB30D9ED1BF106260084C1C0 /* SingleAsync.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleAsync.swift; sourceTree = "<group>"; };
 		CB883B4E1BE3AC54000AC2EE /* BooleanDisposable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BooleanDisposable.swift; sourceTree = "<group>"; };
 		CB883B4F1BE3AC54000AC2EE /* RefCountDisposable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RefCountDisposable.swift; sourceTree = "<group>"; };
 		CB883B5E1BE3AC72000AC2EE /* Window.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Window.swift; sourceTree = "<group>"; };
@@ -1198,6 +1200,7 @@
 				C894646A1BC6C2B00055219D /* Sample.swift */,
 				C894646B1BC6C2B00055219D /* Scan.swift */,
 				C89CDB611BCC45DC002063D9 /* ShareReplay1.swift */,
+				CB30D9ED1BF106260084C1C0 /* SingleAsync.swift */,
 				C894646C1BC6C2B00055219D /* Sink.swift */,
 				C894646D1BC6C2B00055219D /* Skip.swift */,
 				C89CDB621BCC45DC002063D9 /* SkipUntil.swift */,
@@ -1825,6 +1828,7 @@
 				C89465701BC6C2BC0055219D /* Logging.swift in Sources */,
 				C89464A31BC6C2B00055219D /* InfiniteSequence.swift in Sources */,
 				C89465611BC6C2BC0055219D /* _RX.m in Sources */,
+				CB30D9EE1BF106260084C1C0 /* SingleAsync.swift in Sources */,
 				C80DDED41BCE9046006A1832 /* Driver+Operators+arity.swift in Sources */,
 				C89465841BC6C2BC0055219D /* RxActionSheetDelegateProxy.swift in Sources */,
 				C89464F51BC6C2B00055219D /* AnyObserver.swift in Sources */,
