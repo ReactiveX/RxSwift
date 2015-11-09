@@ -62,7 +62,7 @@ Time and space complexity of insertion an deletion is O(n).
 
 It is suitable for storing small number of elements.
 */
-public struct Bag<T> : CustomStringConvertible {
+public struct Bag<T> : CustomDebugStringConvertible {
     /**
     Type of identifier for inserted elements.
     */
@@ -98,15 +98,6 @@ public struct Bag<T> : CustomStringConvertible {
     public init() {
     }
     
-    /**
-    - returns: Bag description.
-    */
-    public var description : String {
-        get {
-            return "\(self.count) elements in Bag"
-        }
-    }
-
     /**
     Inserts `value` into bag.
     
@@ -215,6 +206,18 @@ public struct Bag<T> : CustomStringConvertible {
         return nil
     }
 }
+
+extension Bag {
+    /**
+    A textual representation of `self`, suitable for debugging.
+    */
+    public var debugDescription : String {
+        get {
+            return "\(self.count) elements in Bag"
+        }
+    }
+}
+
 
 // MARK: forEach
 

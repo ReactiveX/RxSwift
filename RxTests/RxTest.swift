@@ -58,7 +58,7 @@ func completed<T>(time: Time) -> Recorded<T> {
     return Recorded(time: time, event: .Completed)
 }
 
-func error<T>(time: Time, _ error: NSError) -> Recorded<T> {
+func error<T>(time: Time, _ error: ErrorType) -> Recorded<T> {
     return Recorded(time: time, event: .Error(error))
 }
 

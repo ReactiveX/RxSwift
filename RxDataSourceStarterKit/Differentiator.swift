@@ -8,14 +8,16 @@
 
 import Foundation
 
-enum EditEvent : CustomStringConvertible {
+enum EditEvent : CustomDebugStringConvertible {
     case Inserted           // can't be found in old sections
     case Deleted            // Was in old, not in new, in it's place is something "not new" :(, otherwise it's Updated
     case Moved              // same item, but was on different index, and needs explicit move
     case MovedAutomatically // don't need to specify any changes for those rows
     case Untouched
-    
-    var description: String {
+}
+
+extension EditEvent {
+    var debugDescription: String {
         get {
             switch self {
             case .Inserted:
@@ -33,22 +35,26 @@ enum EditEvent : CustomStringConvertible {
     }
 }
 
-struct SectionAdditionalInfo : CustomStringConvertible {
+struct SectionAdditionalInfo : CustomDebugStringConvertible {
     var event: EditEvent
     var indexAfterDelete: Int?
-    
-    var description: String {
+}
+
+extension SectionAdditionalInfo {
+    var debugDescription: String {
         get {
             return "\(event), \(indexAfterDelete)"
         }
     }
 }
 
-struct ItemAdditionalInfo : CustomStringConvertible {
+struct ItemAdditionalInfo : CustomDebugStringConvertible {
     var event: EditEvent
     var indexAfterDelete: Int?
-    
-    var description: String {
+}
+
+extension ItemAdditionalInfo {
+    var debugDescription: String {
         get {
             return "\(event) \(indexAfterDelete)"
         }

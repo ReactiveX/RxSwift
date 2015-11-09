@@ -960,7 +960,8 @@ extension KVOObservableTests {
             }
         
         XCTAssertTrue(lastError != nil)
-        
+        lastError = nil
+
         var rootDeallocated = false
         
         _ = root

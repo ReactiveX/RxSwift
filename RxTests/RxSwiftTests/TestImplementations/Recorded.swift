@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 import Swift
 
-struct Recorded<Element : Equatable> : CustomStringConvertible, Equatable {
+struct Recorded<Element : Equatable> : CustomDebugStringConvertible, Equatable {
     let time: Time
     let event: Event<Element>
     
@@ -31,8 +31,10 @@ struct Recorded<Element : Equatable> : CustomStringConvertible, Equatable {
             }
         }
     }
-    
-    var description: String {
+}
+
+extension Recorded {
+    var debugDescription: String {
         get {
             return "\(event) @ \(time)"
         }

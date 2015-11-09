@@ -11,7 +11,7 @@ import Foundation
 import RxSwift
 #endif
 
-struct WikipediaSearchResult: CustomStringConvertible {
+struct WikipediaSearchResult: CustomDebugStringConvertible {
     let title: String
     let description: String
     let URL: NSURL
@@ -50,5 +50,11 @@ struct WikipediaSearchResult: CustomStringConvertible {
         })
 
         return searchResults
+    }
+}
+
+extension WikipediaSearchResult {
+    var debugDescription: String {
+        return "[\(title)](\(URL))"
     }
 }

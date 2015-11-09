@@ -13,18 +13,18 @@ import RxSwift
 import RxCocoa
 #endif
 
-struct ItemPath : CustomStringConvertible {
+struct ItemPath : CustomDebugStringConvertible {
     let sectionIndex: Int
     let itemIndex: Int
 
-    var description : String {
+    var debugDescription : String {
         get {
             return "(\(sectionIndex), \(itemIndex))"
         }
     }
 }
 
-public struct Changeset<S: SectionModelType> : CustomStringConvertible {
+public struct Changeset<S: SectionModelType> : CustomDebugStringConvertible {
     typealias I = S.Item
 
     var finalSections: [S] = []
@@ -46,7 +46,7 @@ public struct Changeset<S: SectionModelType> : CustomStringConvertible {
         return initialValue
     }
 
-    public var description : String {
+    public var debugDescription : String {
         get {
             let serializedSections = "[\n" + finalSections.map { "\($0)" }.joinWithSeparator(",\n") + "\n]\n"
             return " >> Final sections"
