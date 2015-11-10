@@ -197,4 +197,64 @@ extension BlockingObservable {
 
         return element
     }
+
+    /**
+     Blocks current thread until sequence terminates.
+     
+     If sequence terminates with error before producing first element, terminating error will be thrown.
+     
+     - parameter predicate: A function to test each source element for a condition.
+     - returns: Returns the only element of an sequence that satisfies the condition in the predicate, and reports an error if there is not exactly one element in the sequence.
+     */
+    public func single(predicate: (E) throws -> Bool) throws -> E? {
+        var element: E?
+        
+        var error: ErrorType?
+        
+        let d = SingleAssignmentDisposable()
+        
+        let lock = RunLoopLock()
+        
+        lock.dispatch {
+            d.disposable = self.source.subscribe { e in
+                switch e {
+                case .Next(let e):
+                    do {
+                        if try error == nil && predicate(e) {
+                            if element == nil {
+                                element = e
+                            } else {
+                                error = RxError.MoreThanOneElement
+                            }
+                        }
+                    } catch (let err) {
+                        error = err
+                    }
+                    return
+                case .Error(let e):
+                    error = e
+                    lock.stop()
+                case .Completed:
+                    if error != nil {
+                        break
+                    } else if element == nil {
+                        error = RxError.NoElements
+                    }
+                    break
+                }
+
+                lock.stop()
+            }
+        }
+        
+        lock.run()
+        
+        d.dispose()
+        
+        if let error = error {
+            throw error
+        }
+        
+        return element
+    }
 }

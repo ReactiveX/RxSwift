@@ -183,4 +183,101 @@ extension ObservableBlockingTest {
         
         XCTAssert(array == 0)
     }
+
+    
+    func testSingle_predicate_empty() {
+        do {
+            try (empty() as Observable<Int>).toBlocking().single { _ in true }
+            XCTFail()
+        }
+        catch let e {
+            XCTAssertTrue((e as! RxError)._code == RxError.NoElements._code)
+        }
+    }
+    
+    func testSingle_predicate_return() {
+        XCTAssert(try! just(42).toBlocking().single( { _ in true } ) == 42)
+    }
+    
+    func testSingle_predicate_someData_one_match() {
+        var predicateVals = [Int]()
+        do {
+            try (sequenceOf(42, 43, 44, 45) as Observable<Int>).toBlocking().single( { e in
+                predicateVals.append(e)
+                return e == 44
+            } )
+        }
+        catch _ {
+            XCTFail()
+        }
+        XCTAssertEqual(predicateVals, [42, 43, 44, 45])
+    }
+
+    func testSingle_predicate_someData_two_match() {
+        var predicateVals = [Int]()
+        do {
+            try (sequenceOf(42, 43, 44, 45) as Observable<Int>).toBlocking().single( { e in
+                predicateVals.append(e)
+                return e >= 43
+            } )
+            XCTFail()
+        }
+        catch let e {
+            XCTAssertTrue((e as! RxError)._code == RxError.MoreThanOneElement._code)
+        }
+        XCTAssertEqual(predicateVals, [42, 43, 44])
+    }
+
+    
+    func testSingle_predicate_none() {
+        var predicateVals = [Int]()
+        do {
+            try (sequenceOf(42, 43, 44, 45) as Observable<Int>).toBlocking().single( { e in
+                predicateVals.append(e)
+                return e > 50
+            } )
+            XCTFail()
+        }
+        catch let e {
+            XCTAssertTrue((e as! RxError)._code == RxError.NoElements._code)
+        }
+        XCTAssertEqual(predicateVals, [42, 43, 44, 45])
+    }
+
+    func testSingle_predicate_throws() {
+        var predicateVals = [Int]()
+        do {
+            try (sequenceOf(42, 43, 44, 45) as Observable<Int>).toBlocking().single( { e in
+                predicateVals.append(e)
+                if e < 43 { return false }
+                throw testError
+            } )
+            XCTFail()
+        }
+        catch let e {
+            XCTAssertTrue(e as NSError === testError)
+        }
+        XCTAssertEqual(predicateVals, [42, 43])
+    }
+    
+    func testSingle_predicate_fail() {
+        do {
+            try (failWith(testError) as Observable<Int>).toBlocking().single( { _ in true } )
+            XCTFail()
+        }
+        catch let e {
+            XCTAssertTrue(e as NSError === testError)
+        }
+    }
+    
+    func testSingle_predicate_withRealScheduler() {
+        let scheduler = ConcurrentDispatchQueueScheduler(globalConcurrentQueuePriority: .Default)
+        
+        let array = try! interval(0.001, scheduler)
+            .take(4)
+            .toBlocking()
+            .single( { $0 == 3 } )
+        
+        XCTAssert(array == 3)
+    }
 }
