@@ -145,3 +145,56 @@ extension BlockingObservable {
         return element
     }
 }
+
+extension BlockingObservable {
+    /**
+     Blocks current thread until sequence terminates.
+     
+     If sequence terminates with error before producing first element, terminating error will be thrown.
+     
+     - returns: Returns the only element of an sequence, and reports an exception if there is not exactly one element in the observable sequence.
+     */
+    public func single() throws -> E? {
+        var element: E?
+        
+        var error: ErrorType?
+        
+        let d = SingleAssignmentDisposable()
+        
+        let lock = RunLoopLock()
+        
+        lock.dispatch {
+            d.disposable = self.source.subscribe { e in
+                switch e {
+                case .Next(let e):
+                    if element == nil {
+                        element = e
+                    } else {
+                        error = RxError.MoreThanOneElement
+                    }
+                    return
+                case .Error(let e):
+                    error = e
+                    break
+                case .Completed:
+                    if element == nil {
+                        error = RxError.NoElements
+                    }
+                    break
+                }
+                
+                lock.stop()
+            }
+        }
+        
+        lock.run()
+        
+        d.dispose()
+        
+        if let error = error {
+            throw error
+        }
+
+        return element
+    }
+}

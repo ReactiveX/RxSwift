@@ -126,3 +126,61 @@ extension ObservableBlockingTest {
 }
 
 
+// single
+
+extension ObservableBlockingTest {
+    func testSingle_empty() {
+        do {
+            try (empty() as Observable<Int>).toBlocking().single()
+            XCTFail()
+        }
+        catch let e {
+            XCTAssertTrue((e as! RxError)._code == RxError.NoElements._code)
+        }
+    }
+    
+    func testSingle_return() {
+        XCTAssert(try! just(42).toBlocking().single() == 42)
+    }
+
+    func testSingle_two() {
+        do {
+            try (sequenceOf(42, 43) as Observable<Int>).toBlocking().single()
+            XCTFail()
+        }
+        catch let e {
+            XCTAssertTrue((e as! RxError)._code == RxError.MoreThanOneElement._code)
+        }
+    }
+
+    func testSingle_someData() {
+        do {
+            try (sequenceOf(42, 43, 44, 45) as Observable<Int>).toBlocking().single()
+            XCTFail()
+        }
+        catch let e {
+            XCTAssertTrue((e as! RxError)._code == RxError.MoreThanOneElement._code)
+        }
+    }
+    
+    func testSingle_fail() {
+        do {
+            try (failWith(testError) as Observable<Int>).toBlocking().single()
+            XCTFail()
+        }
+        catch let e {
+            XCTAssertTrue(e as NSError === testError)
+        }
+    }
+    
+    func testSingle_withRealScheduler() {
+        let scheduler = ConcurrentDispatchQueueScheduler(globalConcurrentQueuePriority: .Default)
+        
+        let array = try! interval(0.001, scheduler)
+            .take(1)
+            .toBlocking()
+            .single()
+        
+        XCTAssert(array == 0)
+    }
+}
