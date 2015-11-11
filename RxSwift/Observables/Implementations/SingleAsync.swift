@@ -26,7 +26,6 @@ class SingleAsyncSink<ElementType, O: ObserverType where O.E == ElementType> : S
             
             if let predicate = _parent._predicate {
                 do {
-                    print("val: \(value)")
                     let forward = try predicate(value)
                     if forward && _seenValue == false {
                         forwardOn(.Next(value))
