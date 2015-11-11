@@ -23,22 +23,19 @@ class SingleAsyncSink<ElementType, O: ObserverType where O.E == ElementType> : S
     func on(event: Event<E>) {
         switch event {
         case .Next(let value):
-            
-            if let predicate = _parent._predicate {
-                do {
-                    let forward = try predicate(value)
-                    if forward && _seenValue == false {
-                        forwardOn(.Next(value))
-                        _seenValue = true
-                    } else if forward && _seenValue {
-                        forwardOn(.Error(RxError.MoreThanOneElement))
-                        dispose()
-                    }
-                } catch (let error) {
-                    forwardOn(.Error(error as ErrorType))
-                    dispose()
+            do {
+                let forward = try _parent._predicate?(value) ?? true
+                if !forward {
+                    return
                 }
-            } else if _seenValue == false {
+            }
+            catch let error {
+                forwardOn(.Error(error as ErrorType))
+                dispose()
+                return
+            }
+
+            if _seenValue == false {
                 forwardOn(.Next(value))
                 _seenValue = true
             } else {
