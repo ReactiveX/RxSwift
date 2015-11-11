@@ -34,6 +34,22 @@ extension UILabel {
             }
         }
     }
+
+    public var rx_attributedText: AnyObserver<NSAttributedString> {
+        return AnyObserver { [weak self] event in
+            MainScheduler.ensureExecutingOnScheduler()
+
+            switch event {
+            case .Next(let value):
+                self?.attributedText = value
+            case .Error(let error):
+                bindingErrorToInterface(error)
+                break
+            case .Completed:
+                break
+            }
+        }
+    }
     
 }
 
