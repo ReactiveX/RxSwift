@@ -152,7 +152,7 @@ extension BlockingObservable {
      
      If sequence terminates with error before producing first element, terminating error will be thrown.
      
-     - returns: Returns the only element of an sequence, and reports an exception if there is not exactly one element in the observable sequence.
+     - returns: Returns the only element of an sequence, and reports an error if there is not exactly one element in the observable sequence.
      */
     public func single() throws -> E? {
         var element: E?

@@ -34,11 +34,11 @@ public enum RxError
     */
     case ArgumentOutOfRange
     /**
-    No elements sent to a sequence requiring at least one.
+    Sequence doesn't contain any element.
     */
     case NoElements
     /**
-    More elements sent to a sequence expecting only one.
+    Sequence contains more then one element.
     */
     case MoreThanOneElement
 }
@@ -50,17 +50,17 @@ public extension RxError {
     public var debugDescription: String {
         switch self {
         case .Unknown:
-            return "Unknown error occured"
+            return "Unknown error occured."
         case .Disposed(let object):
-            return "Object `\(object)` was already disposed"
+            return "Object `\(object)` was already disposed."
         case .Overflow:
-            return "Arithmetic overflow occured"
+            return "Arithmetic overflow occured."
         case .ArgumentOutOfRange:
-            return "Argument out of range"
+            return "Argument out of range."
         case .NoElements:
-            return "No element sent to a sequence requiring at least one"
+            return "Sequence doesn't contain any element."
         case .MoreThanOneElement:
-            return "More elements sent to a sequence expecting only one"
+            return "Sequence contains more then one element."
         }
     }
 }
