@@ -180,24 +180,25 @@ extension BlockingObservable {
                 switch e {
                 case .Next(let e):
                     do {
-                        if try error == nil && predicate(e) {
-                            if element == nil {
-                                element = e
-                            } else {
-                                error = RxError.MoreThanOneElement
-                            }
+                        if try !predicate(e) {
+                            return
+                        }
+                        if element == nil {
+                            element = e
+                        } else {
+                            throw RxError.MoreThanOneElement
                         }
                     } catch (let err) {
                         error = err
+                        d.dispose()
+                        lock.stop()
                     }
                     return
                 case .Error(let e):
                     error = e
                     lock.stop()
                 case .Completed:
-                    if error != nil {
-                        break
-                    } else if element == nil {
+                    if error == nil && element == nil {
                         error = RxError.NoElements
                     }
                     break
