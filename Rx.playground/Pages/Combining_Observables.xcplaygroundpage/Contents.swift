@@ -78,20 +78,54 @@ example("combineLatest 2") {
 
 
 
-//: Combine latest has versions with more than 2 arguments.
+//: Combinelatest has versions with more than 2 arguments.
 
 example("combineLatest 3") {
     let intOb1 = just(2)
     let intOb2 = sequenceOf(0, 1, 2, 3)
     let intOb3 = sequenceOf(0, 1, 2, 3, 4)
-
+    
     _ = combineLatest(intOb1, intOb2, intOb3) {
         ($0 + $1) * $2
         }
         .subscribe {
             print($0)
+    }
+}
+
+
+
+//: Combinelatest allow combine sequences of several types.
+
+example("combineLatest 4") {
+    let intOb = just(2)
+    let stringOb = just("a")
+    
+    _ = combineLatest(intOb, stringOb) {
+        "\($0) " + $1
+        }
+        .subscribe {
+            print($0)
+    }
+}
+
+
+//: There are a `combineLatest` extension method for Array of ObservableConvertibleType conformed types
+//: The array must be formed by `Observables` of the same type
+
+example("combineLatest 5") {
+    let intOb1 = just(2)
+    let intOb2 = sequenceOf(0, 1, 2, 3)
+    let intOb3 = sequenceOf(0, 1, 2, 3, 4)
+    
+    _ = [intOb1, intOb2, intOb3].combineLatest {
+            ($0[0] + $0[1]) * $0[2]
+        }
+        .subscribe {
+            print($0)
         }
 }
+
 
 
 
