@@ -155,6 +155,18 @@ extension BlockingObservable {
      - returns: Returns the only element of an sequence, and reports an error if there is not exactly one element in the observable sequence.
      */
     public func single() throws -> E? {
+        return try single { _ in true }
+    }
+
+    /**
+     Blocks current thread until sequence terminates.
+     
+     If sequence terminates with error before producing first element, terminating error will be thrown.
+     
+     - parameter predicate: A function to test each source element for a condition.
+     - returns: Returns the only element of an sequence that satisfies the condition in the predicate, and reports an error if there is not exactly one element in the sequence.
+     */
+    public func single(predicate: (E) throws -> Bool) throws -> E? {
         var element: E?
         
         var error: ErrorType?
@@ -167,22 +179,31 @@ extension BlockingObservable {
             d.disposable = self.source.subscribe { e in
                 switch e {
                 case .Next(let e):
-                    if element == nil {
-                        element = e
-                    } else {
-                        error = RxError.MoreThanOneElement
+                    do {
+                        if try !predicate(e) {
+                            return
+                        }
+                        if element == nil {
+                            element = e
+                        } else {
+                            throw RxError.MoreThanOneElement
+                        }
+                    } catch (let err) {
+                        error = err
+                        d.dispose()
+                        lock.stop()
                     }
                     return
                 case .Error(let e):
                     error = e
-                    break
+                    lock.stop()
                 case .Completed:
-                    if element == nil {
+                    if error == nil && element == nil {
                         error = RxError.NoElements
                     }
                     break
                 }
-                
+
                 lock.stop()
             }
         }
@@ -194,7 +215,7 @@ extension BlockingObservable {
         if let error = error {
             throw error
         }
-
+        
         return element
     }
 }
