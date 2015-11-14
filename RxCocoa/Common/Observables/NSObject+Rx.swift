@@ -59,9 +59,10 @@ extension NSObject {
      - returns: Observable sequence of objects on `keyPath`.
      */
     @warn_unused_result(message="http://git.io/rxs.uo")
-    public func rx_observe<Element>(type: Element.Type, _ keyPath: String, options: NSKeyValueObservingOptions = [.New, .Initial], retainSelf: Bool = true) -> Observable<Element?> {
+    public func rx_observe<E>(type: E.Type, _ keyPath: String, options: NSKeyValueObservingOptions = [.New, .Initial], retainSelf: Bool = true) -> Observable<E?> {
         return KVOObservable(object: self, keyPath: keyPath, options: options, retainTarget: retainSelf).asObservable()
     }
+
 
     /**
     Observes values on `keyPath` starting from `self` with `options` and retains `self` if `retainSelf` is set.
@@ -106,11 +107,11 @@ extension NSObject {
      - returns: Observable sequence of objects on `keyPath`.
      */
     @warn_unused_result(message="http://git.io/rxs.uo")
-    public func rx_observeWeakly<Element>(type: Element.Type, _ keyPath: String, options: NSKeyValueObservingOptions = [.New, .Initial]) -> Observable<Element?> {
+    public func rx_observeWeakly<E>(type: E.Type, _ keyPath: String, options: NSKeyValueObservingOptions = [.New, .Initial]) -> Observable<E?> {
         return observeWeaklyKeyPathFor(self, keyPath: keyPath, options: options)
             .map { n in
-                return n as? Element
-        }
+                return n as? E
+            }
     }
 
     /**

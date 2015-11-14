@@ -399,6 +399,22 @@
 		C8C3DA101B939767004D233E /* CurrentThreadScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C3DA0E1B939767004D233E /* CurrentThreadScheduler.swift */; };
 		C8C3DA121B93A3EA004D233E /* AnonymousObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C3DA111B93A3EA004D233E /* AnonymousObservable.swift */; };
 		C8C3DA131B93A3EA004D233E /* AnonymousObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C3DA111B93A3EA004D233E /* AnonymousObservable.swift */; };
+		C8DB967E1BF7496C0084BD53 /* KVORepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8DB967D1BF7496C0084BD53 /* KVORepresentable.swift */; };
+		C8DB967F1BF7496C0084BD53 /* KVORepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8DB967D1BF7496C0084BD53 /* KVORepresentable.swift */; };
+		C8DB96801BF7496C0084BD53 /* KVORepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8DB967D1BF7496C0084BD53 /* KVORepresentable.swift */; };
+		C8DB96811BF7496C0084BD53 /* KVORepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8DB967D1BF7496C0084BD53 /* KVORepresentable.swift */; };
+		C8DB96831BF754C80084BD53 /* NSObject+Rx+KVORepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8DB96821BF754C80084BD53 /* NSObject+Rx+KVORepresentable.swift */; };
+		C8DB96841BF754C80084BD53 /* NSObject+Rx+KVORepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8DB96821BF754C80084BD53 /* NSObject+Rx+KVORepresentable.swift */; };
+		C8DB96851BF754C80084BD53 /* NSObject+Rx+KVORepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8DB96821BF754C80084BD53 /* NSObject+Rx+KVORepresentable.swift */; };
+		C8DB96861BF754C80084BD53 /* NSObject+Rx+KVORepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8DB96821BF754C80084BD53 /* NSObject+Rx+KVORepresentable.swift */; };
+		C8DB96881BF756F40084BD53 /* KVORepresentable+CoreGraphics.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8DB96871BF756F40084BD53 /* KVORepresentable+CoreGraphics.swift */; };
+		C8DB96891BF756F40084BD53 /* KVORepresentable+CoreGraphics.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8DB96871BF756F40084BD53 /* KVORepresentable+CoreGraphics.swift */; };
+		C8DB968A1BF756F40084BD53 /* KVORepresentable+CoreGraphics.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8DB96871BF756F40084BD53 /* KVORepresentable+CoreGraphics.swift */; };
+		C8DB968B1BF756F40084BD53 /* KVORepresentable+CoreGraphics.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8DB96871BF756F40084BD53 /* KVORepresentable+CoreGraphics.swift */; };
+		C8DB968D1BF7595D0084BD53 /* KVORepresentable+Swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8DB968C1BF7595D0084BD53 /* KVORepresentable+Swift.swift */; };
+		C8DB968E1BF7595D0084BD53 /* KVORepresentable+Swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8DB968C1BF7595D0084BD53 /* KVORepresentable+Swift.swift */; };
+		C8DB968F1BF7595D0084BD53 /* KVORepresentable+Swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8DB968C1BF7595D0084BD53 /* KVORepresentable+Swift.swift */; };
+		C8DB96901BF7595D0084BD53 /* KVORepresentable+Swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8DB968C1BF7595D0084BD53 /* KVORepresentable+Swift.swift */; };
 		C8F0BF921BBBFB8B001B112F /* Observable+Creation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C981B8A72BE0088E94D /* Observable+Creation.swift */; };
 		C8F0BF931BBBFB8B001B112F /* ConnectableObservableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C4D1B8A72BE0088E94D /* ConnectableObservableType.swift */; };
 		C8F0BF941BBBFB8B001B112F /* Just.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C3DA021B9390C4004D233E /* Just.swift */; };
@@ -581,6 +597,10 @@
 		C8F6A0FF1BEE42DD007DF367 /* AnonymousInvocable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8F6A0FD1BEE42DD007DF367 /* AnonymousInvocable.swift */; };
 		C8F6A1001BEE42DD007DF367 /* AnonymousInvocable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8F6A0FD1BEE42DD007DF367 /* AnonymousInvocable.swift */; };
 		C8F6A1011BEE42DD007DF367 /* AnonymousInvocable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8F6A0FD1BEE42DD007DF367 /* AnonymousInvocable.swift */; };
+		C8F6A1451BF0B9B1007DF367 /* NSObject+Rx+RawRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8F6A1441BF0B9B1007DF367 /* NSObject+Rx+RawRepresentable.swift */; };
+		C8F6A1461BF0B9B2007DF367 /* NSObject+Rx+RawRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8F6A1441BF0B9B1007DF367 /* NSObject+Rx+RawRepresentable.swift */; };
+		C8F6A1471BF0B9B2007DF367 /* NSObject+Rx+RawRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8F6A1441BF0B9B1007DF367 /* NSObject+Rx+RawRepresentable.swift */; };
+		C8F6A1481BF0B9B2007DF367 /* NSObject+Rx+RawRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8F6A1441BF0B9B1007DF367 /* NSObject+Rx+RawRepresentable.swift */; };
 		CB255BD71BC46A9C00798A4C /* RetryWhen.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB255BD61BC46A9C00798A4C /* RetryWhen.swift */; };
 		CB255BD81BC46A9C00798A4C /* RetryWhen.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB255BD61BC46A9C00798A4C /* RetryWhen.swift */; };
 		CB255BD91BC46A9C00798A4C /* RetryWhen.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB255BD61BC46A9C00798A4C /* RetryWhen.swift */; };
@@ -1059,6 +1079,10 @@
 		C8C3DA0B1B93959F004D233E /* Never.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Never.swift; sourceTree = "<group>"; };
 		C8C3DA0E1B939767004D233E /* CurrentThreadScheduler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentThreadScheduler.swift; sourceTree = "<group>"; };
 		C8C3DA111B93A3EA004D233E /* AnonymousObservable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AnonymousObservable.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		C8DB967D1BF7496C0084BD53 /* KVORepresentable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KVORepresentable.swift; sourceTree = "<group>"; };
+		C8DB96821BF754C80084BD53 /* NSObject+Rx+KVORepresentable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSObject+Rx+KVORepresentable.swift"; sourceTree = "<group>"; };
+		C8DB96871BF756F40084BD53 /* KVORepresentable+CoreGraphics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "KVORepresentable+CoreGraphics.swift"; sourceTree = "<group>"; };
+		C8DB968C1BF7595D0084BD53 /* KVORepresentable+Swift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "KVORepresentable+Swift.swift"; sourceTree = "<group>"; };
 		C8F0C0021BBBFB8B001B112F /* RxSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8F0C04B1BBBFBB9001B112F /* RxCocoa.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxCocoa.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8F0C0581BBBFBCE001B112F /* RxBlocking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxBlocking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1066,6 +1090,7 @@
 		C8F6A0F31BEE3395007DF367 /* InvocableType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InvocableType.swift; sourceTree = "<group>"; };
 		C8F6A0F81BEE33C1007DF367 /* InvocableScheduledItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InvocableScheduledItem.swift; sourceTree = "<group>"; };
 		C8F6A0FD1BEE42DD007DF367 /* AnonymousInvocable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnonymousInvocable.swift; sourceTree = "<group>"; };
+		C8F6A1441BF0B9B1007DF367 /* NSObject+Rx+RawRepresentable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSObject+Rx+RawRepresentable.swift"; sourceTree = "<group>"; };
 		CB255BD61BC46A9C00798A4C /* RetryWhen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RetryWhen.swift; sourceTree = "<group>"; };
 		CB30D9E81BF0E3500084C1C0 /* SingleAsync.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleAsync.swift; sourceTree = "<group>"; };
 		CB883B3A1BE24355000AC2EE /* Window.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Window.swift; sourceTree = "<group>"; };
@@ -1410,6 +1435,9 @@
 				C8093E991B8A732E0088E94D /* Proxies */,
 				C8093E9B1B8A732E0088E94D /* RxCocoa.swift */,
 				C8093E9C1B8A732E0088E94D /* RxTarget.swift */,
+				C8DB967D1BF7496C0084BD53 /* KVORepresentable.swift */,
+				C8DB96871BF756F40084BD53 /* KVORepresentable+CoreGraphics.swift */,
+				C8DB968C1BF7595D0084BD53 /* KVORepresentable+Swift.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -1421,6 +1449,8 @@
 				C8093E951B8A732E0088E94D /* NSNotificationCenter+Rx.swift */,
 				C8093E961B8A732E0088E94D /* NSObject+Rx+CoreGraphics.swift */,
 				C8093E971B8A732E0088E94D /* NSObject+Rx.swift */,
+				C8F6A1441BF0B9B1007DF367 /* NSObject+Rx+RawRepresentable.swift */,
+				C8DB96821BF754C80084BD53 /* NSObject+Rx+KVORepresentable.swift */,
 				C8093E981B8A732E0088E94D /* NSURLSession+Rx.swift */,
 			);
 			path = Observables;
@@ -2094,6 +2124,8 @@
 				C80D33981B922FB00014629D /* ControlEvent.swift in Sources */,
 				C8093EF31B8A732E0088E94D /* NSObject+Rx+CoreGraphics.swift in Sources */,
 				C882542A1B8A752B00B02D69 /* UIControl+Rx.swift in Sources */,
+				C8F6A1451BF0B9B1007DF367 /* NSObject+Rx+RawRepresentable.swift in Sources */,
+				C8DB967E1BF7496C0084BD53 /* KVORepresentable.swift in Sources */,
 				C88254341B8A752B00B02D69 /* UITableView+Rx.swift in Sources */,
 				C88254161B8A752B00B02D69 /* RxCollectionViewReactiveArrayDataSource.swift in Sources */,
 				C8093EEF1B8A732E0088E94D /* KVOObserver.swift in Sources */,
@@ -2108,6 +2140,7 @@
 				C80D338F1B91EF9E0014629D /* Observable+Bind.swift in Sources */,
 				C88254311B8A752B00B02D69 /* UISegmentedControl+Rx.swift in Sources */,
 				C8093EED1B8A732E0088E94D /* KVOObservable.swift in Sources */,
+				C8DB968D1BF7595D0084BD53 /* KVORepresentable+Swift.swift in Sources */,
 				C80DDEB11BCE8CA3006A1832 /* Driver+Operators+arity.swift in Sources */,
 				C88254281B8A752B00B02D69 /* UIButton+Rx.swift in Sources */,
 				C8093EDF1B8A732E0088E94D /* CLLocationManager+Rx.swift in Sources */,
@@ -2128,6 +2161,7 @@
 				C8093EE11B8A732E0088E94D /* DelegateProxy.swift in Sources */,
 				C8093EF91B8A732E0088E94D /* RxCLLocationManagerDelegateProxy.swift in Sources */,
 				C88254331B8A752B00B02D69 /* UISwitch+Rx.swift in Sources */,
+				C8DB96831BF754C80084BD53 /* NSObject+Rx+KVORepresentable.swift in Sources */,
 				C8093EE51B8A732E0088E94D /* Logging.swift in Sources */,
 				C88254291B8A752B00B02D69 /* UICollectionView+Rx.swift in Sources */,
 				C882541A1B8A752B00B02D69 /* RxCollectionViewDataSourceType.swift in Sources */,
@@ -2137,6 +2171,7 @@
 				C8093EE71B8A732E0088E94D /* ControlTarget.swift in Sources */,
 				C88254301B8A752B00B02D69 /* UISearchBar+Rx.swift in Sources */,
 				C88254181B8A752B00B02D69 /* ItemEvents.swift in Sources */,
+				C8DB96881BF756F40084BD53 /* KVORepresentable+CoreGraphics.swift in Sources */,
 				C882541B1B8A752B00B02D69 /* RxTableViewDataSourceType.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2147,21 +2182,26 @@
 			files = (
 				C80DDEA41BCE69BA006A1832 /* Driver.swift in Sources */,
 				C8093F4A1B8A732E0088E94D /* NSImageView+Rx.swift in Sources */,
+				C8DB96891BF756F40084BD53 /* KVORepresentable+CoreGraphics.swift in Sources */,
 				C8093EDA1B8A732E0088E94D /* _RXKVOObserver.m in Sources */,
 				C8093EE41B8A732E0088E94D /* DelegateProxyType.swift in Sources */,
 				C8093F481B8A732E0088E94D /* NSControl+Rx.swift in Sources */,
 				C8093F4E1B8A732E0088E94D /* NSTextField+Rx.swift in Sources */,
+				C8DB967F1BF7496C0084BD53 /* KVORepresentable.swift in Sources */,
 				C8093EFE1B8A732E0088E94D /* RxTarget.swift in Sources */,
 				C8093ED21B8A732E0088E94D /* _RX.m in Sources */,
 				C8093EFC1B8A732E0088E94D /* RxCocoa.swift in Sources */,
+				C8DB968E1BF7595D0084BD53 /* KVORepresentable+Swift.swift in Sources */,
 				C80D33991B922FB00014629D /* ControlEvent.swift in Sources */,
 				C80DDEA81BCE69BA006A1832 /* ObservableConvertibleType+Driver.swift in Sources */,
 				C80D339B1B922FB00014629D /* ControlProperty.swift in Sources */,
 				C8093EF41B8A732E0088E94D /* NSObject+Rx+CoreGraphics.swift in Sources */,
 				C8093EF01B8A732E0088E94D /* KVOObserver.swift in Sources */,
 				C8093EEE1B8A732E0088E94D /* KVOObservable.swift in Sources */,
+				C8F6A1461BF0B9B2007DF367 /* NSObject+Rx+RawRepresentable.swift in Sources */,
 				C8093EE01B8A732E0088E94D /* CLLocationManager+Rx.swift in Sources */,
 				C8093EEC1B8A732E0088E94D /* DeinitAction.swift in Sources */,
+				C8DB96841BF754C80084BD53 /* NSObject+Rx+KVORepresentable.swift in Sources */,
 				C8093F461B8A732E0088E94D /* NSButton+Rx.swift in Sources */,
 				C80DDEA01BCE69BA006A1832 /* Driver+Subscription.swift in Sources */,
 				C8093ED61B8A732E0088E94D /* _RXDelegateProxy.m in Sources */,
@@ -2642,6 +2682,8 @@
 				C8F0C0131BBBFBB9001B112F /* ControlEvent.swift in Sources */,
 				C8F0C0141BBBFBB9001B112F /* NSObject+Rx+CoreGraphics.swift in Sources */,
 				C8F0C0151BBBFBB9001B112F /* UIControl+Rx.swift in Sources */,
+				C8F6A1481BF0B9B2007DF367 /* NSObject+Rx+RawRepresentable.swift in Sources */,
+				C8DB96811BF7496C0084BD53 /* KVORepresentable.swift in Sources */,
 				C8F0C0161BBBFBB9001B112F /* UITableView+Rx.swift in Sources */,
 				C8F0C0171BBBFBB9001B112F /* RxCollectionViewReactiveArrayDataSource.swift in Sources */,
 				C8F0C0181BBBFBB9001B112F /* KVOObserver.swift in Sources */,
@@ -2656,6 +2698,7 @@
 				C8F0C01F1BBBFBB9001B112F /* Observable+Bind.swift in Sources */,
 				C8F0C0201BBBFBB9001B112F /* UISegmentedControl+Rx.swift in Sources */,
 				C8F0C0211BBBFBB9001B112F /* KVOObservable.swift in Sources */,
+				C8DB96901BF7595D0084BD53 /* KVORepresentable+Swift.swift in Sources */,
 				C80DDEB41BCE8CA3006A1832 /* Driver+Operators+arity.swift in Sources */,
 				C8F0C0221BBBFBB9001B112F /* UIButton+Rx.swift in Sources */,
 				C8F0C0231BBBFBB9001B112F /* CLLocationManager+Rx.swift in Sources */,
@@ -2676,6 +2719,7 @@
 				C8F0C0311BBBFBB9001B112F /* DelegateProxy.swift in Sources */,
 				C8F0C0321BBBFBB9001B112F /* RxCLLocationManagerDelegateProxy.swift in Sources */,
 				C8F0C0331BBBFBB9001B112F /* UISwitch+Rx.swift in Sources */,
+				C8DB96861BF754C80084BD53 /* NSObject+Rx+KVORepresentable.swift in Sources */,
 				C8F0C0341BBBFBB9001B112F /* Logging.swift in Sources */,
 				C8F0C0351BBBFBB9001B112F /* UICollectionView+Rx.swift in Sources */,
 				C8F0C0361BBBFBB9001B112F /* RxCollectionViewDataSourceType.swift in Sources */,
@@ -2685,6 +2729,7 @@
 				C8F0C03A1BBBFBB9001B112F /* ControlTarget.swift in Sources */,
 				C8F0C03B1BBBFBB9001B112F /* UISearchBar+Rx.swift in Sources */,
 				C8F0C03C1BBBFBB9001B112F /* ItemEvents.swift in Sources */,
+				C8DB968B1BF756F40084BD53 /* KVORepresentable+CoreGraphics.swift in Sources */,
 				C8F0C03D1BBBFBB9001B112F /* RxTableViewDataSourceType.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2723,6 +2768,8 @@
 				D203C5101BB9C53E00D02D00 /* UISwitch+Rx.swift in Sources */,
 				D203C5121BB9C53E00D02D00 /* UITextField+Rx.swift in Sources */,
 				D203C4F91BB9C53700D02D00 /* RxAlertViewDelegateProxy.swift in Sources */,
+				C8F6A1471BF0B9B2007DF367 /* NSObject+Rx+RawRepresentable.swift in Sources */,
+				C8DB96801BF7496C0084BD53 /* KVORepresentable.swift in Sources */,
 				D203C4F31BB9C4CA00D02D00 /* RxCollectionViewReactiveArrayDataSource.swift in Sources */,
 				D203C50B1BB9C53E00D02D00 /* UIScrollView+Rx.swift in Sources */,
 				D203C50C1BB9C53E00D02D00 /* UISearchBar+Rx.swift in Sources */,
@@ -2737,6 +2784,7 @@
 				D2138C921BB9BED600339B5C /* KVOObserver.swift in Sources */,
 				D2138C831BB9BEBE00339B5C /* _RXKVOObserver.m in Sources */,
 				C80DDEB31BCE8CA3006A1832 /* Driver+Operators+arity.swift in Sources */,
+				C8DB968F1BF7595D0084BD53 /* KVORepresentable+Swift.swift in Sources */,
 				D203C5061BB9C53E00D02D00 /* UIControl+Rx.swift in Sources */,
 				D203C5111BB9C53E00D02D00 /* UITableView+Rx.swift in Sources */,
 				C80DDEA51BCE69BA006A1832 /* Driver.swift in Sources */,
@@ -2757,6 +2805,7 @@
 				D2138C7F1BB9BEBE00339B5C /* _RX.m in Sources */,
 				D203C4FE1BB9C53700D02D00 /* RxTableViewDataSourceProxy.swift in Sources */,
 				D203C5001BB9C53700D02D00 /* RxTextViewDelegateProxy.swift in Sources */,
+				C8DB96851BF754C80084BD53 /* NSObject+Rx+KVORepresentable.swift in Sources */,
 				D203C5091BB9C53E00D02D00 /* UIImageView+Rx.swift in Sources */,
 				D2138C871BB9BEBE00339B5C /* CLLocationManager+Rx.swift in Sources */,
 				D203C4FF1BB9C53700D02D00 /* RxTableViewDelegateProxy.swift in Sources */,
@@ -2766,6 +2815,7 @@
 				D2138C8A1BB9BEBE00339B5C /* Logging.swift in Sources */,
 				D2138C851BB9BEBE00339B5C /* _RXSwizzling.m in Sources */,
 				D203C5011BB9C53E00D02D00 /* UIActionSheet+Rx.swift in Sources */,
+				C8DB968A1BF756F40084BD53 /* KVORepresentable+CoreGraphics.swift in Sources */,
 				D203C50F1BB9C53E00D02D00 /* UIStepper+Rx.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
