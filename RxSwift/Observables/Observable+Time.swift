@@ -209,3 +209,22 @@ extension ObservableType {
         return BufferTimeCount(source: self.asObservable(), timeSpan: timeSpan, count: count, scheduler: scheduler)
     }
 }
+
+// MARK: window
+
+extension ObservableType {
+    
+    /**
+     Projects each element of an observable sequence into a window that is completed when either it’s full or a given amount of time has elapsed.
+          
+     - parameter timeSpan: Maximum time length of a window.
+     - parameter count: Maximum element count of a window.
+     - parameter scheduler: Scheduler to run windowing timers on.
+     - returns: An observable sequence of windows (instances of `Observable`).
+     */
+    @warn_unused_result(message="http://git.io/rxs.uo")
+    public func window<S: SchedulerType>(timeSpan timeSpan: S.TimeInterval, count: Int, scheduler: S)
+        -> Observable<Observable<E>> {
+            return WindowTimeCount(source: self.asObservable(), timeSpan: timeSpan, count: count, scheduler: scheduler)
+    }
+}

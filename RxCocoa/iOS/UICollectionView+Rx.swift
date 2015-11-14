@@ -161,7 +161,7 @@ extension UICollectionView {
         let dataSource: RxCollectionViewReactiveArrayDataSource<T> = castOrFatalError(self.rx_dataSource.forwardToDelegate(), message: "This method only works in case one of the `rx_itemsWith*` methods was used.")
         
         guard let element = dataSource.modelAtIndex(indexPath.item) else {
-            throw rxError(.InvalidOperation, "Items not set yet.")
+            throw RxCocoaError.ItemsNotYetBound(object: self)
         }
         
         return element

@@ -149,6 +149,32 @@ extension ObservableType {
         -> Observable<E> {
         return CatchSequence(sources: Repeat(count: maxAttemptCount, repeatedValue: self.asObservable()))
     }
+    
+    /**
+    Repeats the source observable sequence on error when the notifier emits a next value.
+    If the source observable errors and the notifier completes, it will complete the source sequence.
+    
+    - parameter notificationHandler: A handler that is passed an observable sequence of errors raised by the source observable and returns and observable that either continues, completes or errors. This behavior is then applied to the source observable.
+    - returns: An observable sequence producing the elements of the given sequence repeatedly until it terminates successfully or is notified to error or complete.
+    */
+    @warn_unused_result(message="http://git.io/rxs.uo")
+    public func retryWhen<TriggerObservable: ObservableType, Error: ErrorType>(notificationHandler: Observable<Error> -> TriggerObservable)
+        -> Observable<E> {
+            return RetryWhenSequence(sources: InfiniteSequence(repeatedValue: self.asObservable()), notificationHandler: notificationHandler)
+    }
+
+    /**
+    Repeats the source observable sequence on error when the notifier emits a next value.
+    If the source observable errors and the notifier completes, it will complete the source sequence.
+    
+    - parameter notificationHandler: A handler that is passed an observable sequence of errors raised by the source observable and returns and observable that either continues, completes or errors. This behavior is then applied to the source observable.
+    - returns: An observable sequence producing the elements of the given sequence repeatedly until it terminates successfully or is notified to error or complete.
+    */
+    @warn_unused_result(message="http://git.io/rxs.uo")
+    public func retryWhen<TriggerObservable: ObservableType>(notificationHandler: Observable<ErrorType> -> TriggerObservable)
+        -> Observable<E> {
+            return RetryWhenSequence(sources: InfiniteSequence(repeatedValue: self.asObservable()), notificationHandler: notificationHandler)
+    }
 }
 
 // MARK: scan

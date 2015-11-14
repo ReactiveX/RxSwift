@@ -29,8 +29,8 @@ class AnonymousObservableSink<O: ObserverType> : Sink<O>, ObserverType {
             forwardOn(event)
         case .Error, .Completed:
             if OSAtomicCompareAndSwap32(0, 1, &_isStopped) {
-                self.forwardOn(event)
-                self.dispose()
+                forwardOn(event)
+                dispose()
             }
         }
     }

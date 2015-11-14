@@ -14,7 +14,7 @@ import RxSwift
 /**
  Parsed GitHub respository.
 */
-struct Repository: CustomStringConvertible {
+struct Repository: CustomDebugStringConvertible {
     var name: String
     var url: String
 
@@ -22,8 +22,10 @@ struct Repository: CustomStringConvertible {
         self.name = name
         self.url = url
     }
-    
-    var description: String {
+}
+
+extension Repository {
+    var debugDescription: String {
         return "\(name) | \(url)"
     }
 }
@@ -219,11 +221,7 @@ class GitHubSearchRepositoriesAPI {
             .retry(3)
             .trackActivity(self.activityIndicator)
             .observeOn(Dependencies.sharedDependencies.backgroundWorkScheduler)
-            .map { data, response -> SearchRepositoryResponse in
-                guard let httpResponse = response as? NSHTTPURLResponse else {
-                    throw exampleError("not getting http response")
-                }
-
+            .map { data, httpResponse -> SearchRepositoryResponse in
                 if httpResponse.statusCode == 403 {
                     return .LimitExceeded
                 }

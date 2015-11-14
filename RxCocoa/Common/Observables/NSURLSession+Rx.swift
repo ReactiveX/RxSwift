@@ -11,6 +11,48 @@ import Foundation
 import RxSwift
 #endif
 
+/**
+RxCocoa URL errors.
+*/
+public enum RxCocoaURLError
+    : ErrorType
+    , CustomDebugStringConvertible {
+    /**
+    Unknown error occurred.
+    */
+    case Unknown
+    /**
+    Response is not NSHTTPURLResponse
+    */
+    case NonHTTPResponse(response: NSURLResponse)
+    /**
+    Response is not successful. (not in `200 ..< 300` range)
+    */
+    case HTTPRequestFailed(response: NSHTTPURLResponse, data: NSData?)
+    /**
+    Deserialization error.
+    */
+    case DeserializationError(error: ErrorType)
+}
+
+public extension RxCocoaURLError {
+    /**
+    A textual representation of `self`, suitable for debugging.
+    */
+    public var debugDescription: String {
+        switch self {
+        case .Unknown:
+            return "Unknown error has occurred."
+        case let .NonHTTPResponse(response):
+            return "Response is not NSHTTPURLResponse `\(response)`."
+        case let .HTTPRequestFailed(response, _):
+            return "HTTP request failed with `\(response.statusCode)`."
+        case let .DeserializationError(error):
+            return "Error during deserialization of the response: \(error)"
+        }
+    }
+}
+
 func escapeTerminalString(value: String) -> String {
     return value.stringByReplacingOccurrencesOfString("\"", withString: "\\\"", options:[], range: nil)
 }
@@ -75,7 +117,7 @@ extension NSURLSession {
     - returns: Observable sequence of URL responses.
     */
     @warn_unused_result(message="http://git.io/rxs.uo")
-    public func rx_response(request: NSURLRequest) -> Observable<(NSData!, NSURLResponse!)> {
+    public func rx_response(request: NSURLRequest) -> Observable<(NSData!, NSHTTPURLResponse)> {
         return create { observer in
 
             // smart compiler should be able to optimize this out
@@ -93,13 +135,18 @@ extension NSURLSession {
                     print(convertResponseToString(data, response, error, interval))
                 }
 
-                if data == nil || response == nil {
-                    observer.on(.Error(error ?? RxError.UnknownError))
+                guard let response = response, data = data else {
+                    observer.on(.Error(error ?? RxCocoaURLError.Unknown))
+                    return
                 }
-                else {
-                    observer.on(.Next(data as NSData!, response as NSURLResponse!))
-                    observer.on(.Completed)
+
+                guard let httpResponse = response as? NSHTTPURLResponse else {
+                    observer.on(.Error(RxCocoaURLError.NonHTTPResponse(response: response)))
+                    return
                 }
+
+                observer.on(.Next(data as NSData!, httpResponse))
+                observer.on(.Completed)
             }
 
 
@@ -130,18 +177,11 @@ extension NSURLSession {
     @warn_unused_result(message="http://git.io/rxs.uo")
     public func rx_data(request: NSURLRequest) -> Observable<NSData> {
         return rx_response(request).map { (data, response) -> NSData in
-            guard let response = response as? NSHTTPURLResponse else {
-                throw RxError.UnknownError
-            }
-            
             if 200 ..< 300 ~= response.statusCode {
                 return data ?? NSData()
             }
             else {
-                throw rxError(.NetworkError, message: "Server returned failure", userInfo: [
-                    RxCocoaErrorHTTPResponseKey: response,
-                    RxCocoaErrorHTTPResponseDataKey: data ?? NSData()
-                ])
+                throw RxCocoaURLError.HTTPRequestFailed(response: response, data: data)
             }
         }
     }
@@ -166,7 +206,11 @@ extension NSURLSession {
     @warn_unused_result(message="http://git.io/rxs.uo")
     public func rx_JSON(request: NSURLRequest) -> Observable<AnyObject!> {
         return rx_data(request).map { (data) -> AnyObject! in
-            return try NSJSONSerialization.JSONObjectWithData(data ?? NSData(), options: [])
+            do {
+                return try NSJSONSerialization.JSONObjectWithData(data ?? NSData(), options: [])
+            } catch let error {
+                throw RxCocoaURLError.DeserializationError(error: error)
+            }
         }
     }
 

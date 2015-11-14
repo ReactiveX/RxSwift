@@ -18,18 +18,37 @@ func allocation() {
     
 }
 
-compareTwoImplementations(benchmarkTime: true, first: {
+repeat {
+compareTwoImplementations(benchmarkTime: true, benchmarkMemory: false, first: {
     let publishSubject = PublishSubject<Int>()
 
     //let a = just(1)
 
     //combineLatest(a,
-        publishSubject//.asDriver(onErrorJustReturn: -1)
+        publishSubject //.asDriver(onErrorJustReturn: -1)
+    /*create { (o: AnyObserver<Int>) in
+            for i in 0..<100 {
+                o.on(.Next(i))
+            }
+            return NopDisposable.instance
+        }*/
+        //.retryWhen { $0 }
         .shareReplay(1)
+        .shareReplay(1)
+        .shareReplay(1)
+        .shareReplay(1)
+        .shareReplay(1)
+        .shareReplay(1)
+        .shareReplay(1)
+        .shareReplay(1)
+        //.map { $0 }
+        /*.map { $0 }
         .map { $0 }
-        .filter { _ in true }//){ x, _ in x }
         .map { $0 }
-        .flatMap { just($0) }
+        .map { $0 }*/
+        /*.filter { _ in true }//){ x, _ in x }
+        .map { $0 }
+        .flatMap { just($0) }*/
         .subscribeNext { _ in
 
         }
@@ -42,3 +61,4 @@ compareTwoImplementations(benchmarkTime: true, first: {
 }, second: {
     
 })
+} while true

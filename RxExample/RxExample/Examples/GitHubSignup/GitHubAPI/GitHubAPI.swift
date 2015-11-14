@@ -46,13 +46,8 @@ class GitHubAPI {
         let URL = NSURL(string: "https://github.com/\(URLEscape(username))")!
         let request = NSURLRequest(URL: URL)
         return self.URLSession.rx_response(request)
-            .map { (maybeData, maybeResponse) in
-                if let response = maybeResponse as? NSHTTPURLResponse {
-                    return response.statusCode == 404
-                }
-                else {
-                    return false
-                }
+            .map { (maybeData, response) in
+                return response.statusCode == 404
             }
             .observeOn(self.dataScheduler)
             .catchErrorJustReturn(false)

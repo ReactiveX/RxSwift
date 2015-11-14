@@ -11,7 +11,7 @@ import Foundation
 /**
 Creates immutable reference wrapper for any type.
 */
-public class RxBox<T> : CustomStringConvertible {
+public class RxBox<T> : CustomDebugStringConvertible {
     /**
     Wrapped value
     */
@@ -25,11 +25,13 @@ public class RxBox<T> : CustomStringConvertible {
     public init (_ value: T) {
         self.value = value
     }
-    
+}
+
+extension RxBox {
     /**
     - returns: Box description.
     */
-    public var description: String {
+    public var debugDescription: String {
         get {
             return "Box(\(self.value))"
         }
@@ -39,7 +41,7 @@ public class RxBox<T> : CustomStringConvertible {
 /**
 Creates mutable reference wrapper for any type.
 */
-public class RxMutableBox<T> : CustomStringConvertible {
+public class RxMutableBox<T> : CustomDebugStringConvertible {
     /**
     Wrapped value
     */
@@ -53,11 +55,13 @@ public class RxMutableBox<T> : CustomStringConvertible {
     public init (_ value: T) {
         self.value = value
     }
-    
+}
+
+extension RxMutableBox {
     /**
     - returns: Box description.
     */
-    public var description: String {
+    public var debugDescription: String {
         get {
             return "MutatingBox(\(self.value))"
         }

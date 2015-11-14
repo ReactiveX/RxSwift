@@ -8,7 +8,11 @@
 
 import Foundation
 
-struct Subscription : Equatable, Hashable, CustomStringConvertible {
+struct Subscription
+    : Equatable
+    , Hashable
+    , CustomDebugStringConvertible {
+
     let subscribe : Time
     let unsubscribe : Time
     
@@ -27,8 +31,10 @@ struct Subscription : Equatable, Hashable, CustomStringConvertible {
             return subscribe.hashValue ^ unsubscribe.hashValue
         }
     }
-    
-    var description : String {
+}
+
+extension Subscription {
+    var debugDescription : String {
         get {
             let infiniteText = "Infinity"
             return "(\(subscribe) : \(unsubscribe != Time.max ? String(unsubscribe) : infiniteText))"

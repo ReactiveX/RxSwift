@@ -14,45 +14,52 @@ import RxSwift
     import UIKit
 #endif
 
-public enum RxCocoaError : Int {
-    case Unknown = 0
-    case NetworkError = 1
-    case InvalidOperation = 2
-    case KeyPathInvalid = 3
+/**
+RxCocoa errors.
+*/
+public enum RxCocoaError
+    : ErrorType
+    , CustomDebugStringConvertible {
+    /**
+    Unknown error has occurred.
+    */
+    case Unknown
+    /**
+    Invalid operation was attempted.
+    */
+    case InvalidOperation(object: AnyObject)
+    /**
+    Items are not yet bound to user interface but have been requested.
+    */
+    case ItemsNotYetBound(object: AnyObject)
+    /**
+    Invalid KVO Path.
+    */
+    case InvalidPropertyName(object: AnyObject, propertyName: String)
+    /**
+    Invalid object on key path.
+    */
+    case InvalidObjectOnKeyPath(object: AnyObject, sourceObject: AnyObject, propertyName: String)
 }
 
-/**
-Error domain for internal RxCocoa errors.
-*/
-public let RxCocoaErrorDomain = "RxCocoaError"
-
-/**
-`userInfo` key for `NSURLResponse` object when `RxCocoaError.NetworkError` happens.
-*/
-public let RxCocoaErrorHTTPResponseKey = "RxCocoaErrorHTTPResponseKey"
-
-/**
-`userInfo` key for `NSData` object when `RxCocoaError.NetworkError` happens.
-*/
-public let RxCocoaErrorHTTPResponseDataKey = "RxCocoaErrorHTTPResponseDataKey"
-
-func rxError(errorCode: RxCocoaError, _ message: String) -> NSError {
-    return NSError(domain: RxCocoaErrorDomain, code: errorCode.rawValue, userInfo: [NSLocalizedDescriptionKey: message])
-}
-
-#if !RELEASE
-public func _rxError(errorCode: RxCocoaError, message: String, userInfo: NSDictionary) -> NSError {
-    return rxError(errorCode, message: message, userInfo: userInfo)
-}
-#endif
-
-func rxError(errorCode: RxCocoaError, message: String, userInfo: NSDictionary) -> NSError {
-    var resultInfo: [NSObject: AnyObject] = [:]
-    resultInfo[NSLocalizedDescriptionKey] = message
-    for k in userInfo.allKeys {
-        resultInfo[k as! NSObject] = userInfo[k as! NSCopying]
+public extension RxCocoaError {
+    /**
+     A textual representation of `self`, suitable for debugging.
+     */
+    public var debugDescription: String {
+        switch self {
+        case .Unknown:
+            return "Unknown error occurred"
+        case let .InvalidOperation(object):
+            return "Invalid operation was attempted on `\(object)`"
+        case let .ItemsNotYetBound(object):
+            return "Data source is set, but items are not yet bound to user interface for `\(object)`"
+        case let .InvalidPropertyName(object, propertyName):
+            return "Object `\(object)` dosn't have a property named `\(propertyName)`"
+        case let .InvalidObjectOnKeyPath(object, sourceObject, propertyName):
+            return "Unobservable object `\(object)` was observed as `\(propertyName)` of `\(sourceObject)`"
+        }
     }
-    return NSError(domain: RxCocoaErrorDomain, code: Int(errorCode.rawValue), userInfo: resultInfo)
 }
 
 func bindingErrorToInterface(error: ErrorType) {

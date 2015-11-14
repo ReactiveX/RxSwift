@@ -102,7 +102,7 @@ func observeWeaklyKeyPathFor(
     
     let property = class_getProperty(object_getClass(target), propertyName);
     if property == nil {
-        return failWith(rxError(.KeyPathInvalid, "Object \(target) doesn't have property named `\(propertyName)`"))
+        return failWith(RxCocoaError.InvalidPropertyName(object: target, propertyName: propertyName))
     }
     let propertyAttributes = property_getAttributes(property);
     
@@ -121,7 +121,7 @@ func observeWeaklyKeyPathFor(
             let strongTarget: AnyObject? = weakTarget
             
             if nextObject == nil {
-                return failWith(rxError(.KeyPathInvalid, "Observed \(nextTarget) as property `\(propertyName)` on `\(strongTarget)` which is not `NSObject`."))
+                return failWith(RxCocoaError.InvalidObjectOnKeyPath(object: nextTarget!, sourceObject: strongTarget ?? NSNull(), propertyName: propertyName))
             }
 
             // if target is alive, then send change

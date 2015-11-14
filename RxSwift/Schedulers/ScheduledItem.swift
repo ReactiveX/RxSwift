@@ -8,40 +8,32 @@
 
 import Foundation
 
-protocol ScheduledItemType : Cancelable {
-    var time: Int {
-        get
-    }
-    
-    func invoke()
-}
-
-class ScheduledItem<T> : ScheduledItemType {
+struct ScheduledItem<T>
+    : ScheduledItemType
+    , InvocableType {
     typealias Action = T -> Disposable
     
-    let action: Action
-    let state: T
-    let time: Int
-    
+    private let _action: Action
+    private let _state: T
+
+    private let _disposable = SingleAssignmentDisposable()
+
     var disposed: Bool {
         get {
-            return disposable.disposed
+            return _disposable.disposed
         }
     }
     
-    var disposable = SingleAssignmentDisposable()
-    
-    init(action: Action, state: T, time: Int) {
-        self.action = action
-        self.state = state
-        self.time = time
+    init(action: Action, state: T) {
+        _action = action
+        _state = state
     }
     
     func invoke() {
-         self.disposable.disposable = action(state)
+         _disposable.disposable = _action(_state)
     }
     
     func dispose() {
-        self.disposable.dispose()
+        _disposable.dispose()
     }
 }

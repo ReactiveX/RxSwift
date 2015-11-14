@@ -9,22 +9,20 @@
 import Foundation
 
 // optimized version of share replay for most common case
-class ShareReplay1<Element>
+final class ShareReplay1<Element>
     : Observable<Element>
     , ObserverType
-    , LockOwnerType
-    , SynchronizedOnType
-    , SynchronizedSubscribeType
     , SynchronizedUnsubscribeType {
 
     typealias DisposeKey = Bag<AnyObserver<Element>>.KeyType
 
     private let _source: Observable<Element>
 
-    let _lock = NSRecursiveLock()
+    private var _lock = RECURSIVE_MUTEX
 
     private var _connection: SingleAssignmentDisposable?
     private var _element: Element?
+    private var _stopped = false
     private var _stopEvent = nil as Event<Element>?
     private var _observers = Bag<AnyObserver<Element>>()
 
@@ -33,7 +31,8 @@ class ShareReplay1<Element>
     }
 
     override func subscribe<O : ObserverType where O.E == E>(observer: O) -> Disposable {
-        return synchronizedSubscribe(observer)
+        _lock.lock(); defer { _lock.unlock() }
+        return _synchronized_subscribe(observer)
     }
 
     func _synchronized_subscribe<O : ObserverType where O.E == E>(observer: O) -> Disposable {
@@ -60,6 +59,11 @@ class ShareReplay1<Element>
         return SubscriptionDisposable(owner: self, key: disposeKey)
     }
 
+    func synchronizedUnsubscribe(disposeKey: DisposeKey) {
+        _lock.lock(); defer { _lock.unlock() }
+        _synchronized_unsubscribe(disposeKey)
+    }
+
     func _synchronized_unsubscribe(disposeKey: DisposeKey) {
         // if already unsubscribed, just return
         if self._observers.removeKey(disposeKey) == nil {
@@ -73,20 +77,21 @@ class ShareReplay1<Element>
     }
 
     func on(event: Event<E>) {
-        synchronizedOn(event)
+        _lock.lock(); defer { _lock.unlock() }
+        _synchronized_on(event)
     }
 
     func _synchronized_on(event: Event<E>) {
-        if _stopEvent != nil {
+        if _stopped {
             return
         }
 
-        if case .Next(let element) = event {
+        switch event {
+        case .Next(let element):
             _element = element
-        }
-
-        if event.isStopEvent {
+        case .Error, .Completed:
             _stopEvent = event
+            _stopped = true
             _connection?.dispose()
             _connection = nil
         }

@@ -201,7 +201,24 @@ extension ObservableType {
     }
 }
 
-// elementAt
+// MARK: flatMapFirst
+
+extension ObservableType {
+
+    /**
+    Projects each element of an observable sequence to an observable sequence and merges the resulting observable sequences into one observable sequence.
+    
+    - parameter selector: A transform function to apply to each element.
+    - returns: An observable sequence whose elements are the result of invoking the one-to-many transform function on each element of the input sequence.
+    */
+    @warn_unused_result(message="http://git.io/rxs.uo")
+    public func flatMapFirst<O: ObservableConvertibleType>(selector: (E) throws -> O)
+        -> Observable<O.E> {
+        return FlatMap(source: asObservable(), selector: selector, onlyFirst: true)
+    }
+}
+
+// MARK: elementAt
 
 extension ObservableType {
     
@@ -216,4 +233,35 @@ extension ObservableType {
         -> Observable<E> {
             return ElementAt(source: self.asObservable(), index: index, throwOnEmpty: true)
     }
+}
+
+// MARK: single
+
+extension ObservableType {
+    
+    /**
+    The single operator is similar to first, but throws a `RxError.NoElements` or `RxError.MoreThanOneElement`
+    if the source Observable does not emit exactly one item before successfully completing.
+    
+    - returns: An observable sequence that emits a single item or throws an exception if more (or none) of them are emitted.
+    */
+    @warn_unused_result(message="http://git.io/rxs.uo")
+    public func single()
+        -> Observable<E> {
+            return SingleAsync(source: self.asObservable())
+    }
+    
+    /**
+    The single operator is similar to first, but throws a `RxError.NoElements` or `RxError.MoreThanOneElement`
+    if the source Observable does not emit exactly one item before successfully completing.
+    
+    - parameter predicate: A function to test each source element for a condition.
+    - returns: An observable sequence that emits a single item or throws an exception if more (or none) of them are emitted.
+    */
+    @warn_unused_result(message="http://git.io/rxs.uo")
+    public func single(predicate: (E) throws -> Bool)
+        -> Observable<E> {
+            return SingleAsync(source: self.asObservable(), predicate: predicate)
+    }
+
 }

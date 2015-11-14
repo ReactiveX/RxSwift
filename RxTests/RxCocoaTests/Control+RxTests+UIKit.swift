@@ -361,4 +361,23 @@ extension ControlTests {
     }
 }
 
+
+// UIButton
+extension ControlTests {
+    func testButton_tapDeallocates() {
+        let createView: () -> UIButton = { UIButton(frame: CGRectMake(0, 0, 1, 1)) }
+        ensureEventDeallocated(createView) { (view: UIButton) in view.rx_tap }
+    }
+}
+
+#elseif os(tvOS)
+
+// UIButton
+extension ControlTests {
+    func testButton_tapDeallocates() {
+        let createView: () -> UIButton = { UIButton(frame: CGRectMake(0, 0, 1, 1)) }
+        ensureEventDeallocated(createView) { (view: UIButton) in view.rx_primaryAction }
+    }
+}
+
 #endif

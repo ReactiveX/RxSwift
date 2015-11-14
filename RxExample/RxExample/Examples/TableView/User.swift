@@ -1,7 +1,7 @@
 
 import Foundation
 
-struct User: Equatable, CustomStringConvertible {
+struct User: Equatable, CustomDebugStringConvertible {
     
     var firstName: String
     var lastName: String
@@ -12,8 +12,10 @@ struct User: Equatable, CustomStringConvertible {
         self.lastName = lastName
         self.imageURL = imageURL
     }
-    
-    var description: String {
+}
+
+extension User {
+    var debugDescription: String {
         get {
             return firstName + " " + lastName
         }

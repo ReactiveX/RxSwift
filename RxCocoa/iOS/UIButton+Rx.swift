@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Krunoslav Zaher. All rights reserved.
 //
 
-#if os(iOS) || os(tvOS)
+#if os(iOS)
 
 import Foundation
 #if !RX_NO_MODULE
@@ -23,6 +23,26 @@ extension UIButton {
 		return rx_controlEvents(.TouchUpInside)
     }
     
+}
+
+#endif
+
+#if os(tvOS)
+
+import Foundation
+#if !RX_NO_MODULE
+    import RxSwift
+#endif
+import UIKit
+
+extension UIButton {
+
+    /**
+     Reactive wrapper for `PrimaryActionTriggered` control event.
+     */
+    public var rx_primaryAction: ControlEvent<Void> {
+        return rx_controlEvents(.PrimaryActionTriggered)
+    }
 }
 
 #endif

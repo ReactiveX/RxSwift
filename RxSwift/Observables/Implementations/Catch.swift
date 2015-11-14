@@ -95,7 +95,9 @@ class Catch<Element> : Producer<Element> {
 
 // catch enumerable
 
-class CatchSequenceSink<S: SequenceType, O: ObserverType where S.Generator.Element : ObservableConvertibleType, S.Generator.Element.E == O.E> : TailRecursiveSink<S, O> {
+class CatchSequenceSink<S: SequenceType, O: ObserverType where S.Generator.Element : ObservableConvertibleType, S.Generator.Element.E == O.E>
+    : TailRecursiveSink<S, O>
+    , ObserverType {
     typealias Element = O.E
     typealias Parent = CatchSequence<S>
     
@@ -105,17 +107,21 @@ class CatchSequenceSink<S: SequenceType, O: ObserverType where S.Generator.Eleme
         super.init(observer: observer)
     }
     
-    override func on(event: Event<Element>) {
+    func on(event: Event<Element>) {
         switch event {
         case .Next:
             forwardOn(event)
         case .Error(let error):
             _lastError = error
-            scheduleMoveNext()
+            schedule(.MoveNext)
         case .Completed:
             forwardOn(event)
             dispose()
         }
+    }
+
+    override func subscribeToNext(source: Observable<E>) -> Disposable {
+        return source.subscribe(self)
     }
     
     override func done() {

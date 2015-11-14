@@ -17,9 +17,6 @@ public final class BehaviorSubject<Element>
     : Observable<Element>
     , SubjectType
     , ObserverType
-    , LockOwnerType
-    , SynchronizedOnType
-    , SynchronizedSubscribeType
     , SynchronizedUnsubscribeType
     , Disposable {
     public typealias SubjectObserverType = BehaviorSubject<Element>
@@ -57,7 +54,7 @@ public final class BehaviorSubject<Element>
     public func value() throws -> Element {
         _lock.lock(); defer { _lock.unlock() } // {
             if _disposed {
-                throw RxError.DisposedError
+                throw RxError.Disposed(object: self)
             }
             
             if let error = _stoppedEvent?.error {
@@ -76,7 +73,8 @@ public final class BehaviorSubject<Element>
     - parameter event: Event to send to the observers.
     */
     public func on(event: Event<E>) {
-        synchronizedOn(event)
+        _lock.lock(); defer { _lock.unlock() }
+        _synchronized_on(event)
     }
 
     func _synchronized_on(event: Event<E>) {
@@ -101,12 +99,13 @@ public final class BehaviorSubject<Element>
     - returns: Disposable object that can be used to unsubscribe the observer from the subject.
     */
     public override func subscribe<O : ObserverType where O.E == Element>(observer: O) -> Disposable {
-        return synchronizedSubscribe(observer)
+        _lock.lock(); defer { _lock.unlock() }
+        return _synchronized_subscribe(observer)
     }
 
     func _synchronized_subscribe<O : ObserverType where O.E == E>(observer: O) -> Disposable {
         if _disposed {
-            observer.on(.Error(RxError.DisposedError))
+            observer.on(.Error(RxError.Disposed(object: self)))
             return NopDisposable.instance
         }
         
@@ -119,6 +118,11 @@ public final class BehaviorSubject<Element>
         observer.on(.Next(_value))
     
         return SubscriptionDisposable(owner: self, key: key)
+    }
+
+    func synchronizedUnsubscribe(disposeKey: DisposeKey) {
+        _lock.lock(); defer { _lock.unlock() }
+        _synchronized_unsubscribe(disposeKey)
     }
 
     func _synchronized_unsubscribe(disposeKey: DisposeKey) {

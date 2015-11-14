@@ -62,7 +62,7 @@ Time and space complexity of insertion an deletion is O(n).
 
 It is suitable for storing small number of elements.
 */
-public struct Bag<T> : CustomStringConvertible {
+public struct Bag<T> : CustomDebugStringConvertible {
     /**
     Type of identifier for inserted elements.
     */
@@ -90,21 +90,14 @@ public struct Bag<T> : CustomStringConvertible {
     // last is sparse dictionary
     private var _dictionary: [BagKey : T]? = nil
 
+    private var _onlyFastPath = true
+
     /**
     Creates new empty `Bag`.
     */
     public init() {
     }
     
-    /**
-    - returns: Bag description.
-    */
-    public var description : String {
-        get {
-            return "\(self.count) elements in Bag"
-        }
-    }
-
     /**
     Inserts `value` into bag.
     
@@ -129,6 +122,8 @@ public struct Bag<T> : CustomStringConvertible {
             _value0 = element
             return key
         }
+
+        _onlyFastPath = false
 
         if _key1 == nil {
             _key1 = key
@@ -212,6 +207,18 @@ public struct Bag<T> : CustomStringConvertible {
     }
 }
 
+extension Bag {
+    /**
+    A textual representation of `self`, suitable for debugging.
+    */
+    public var debugDescription : String {
+        get {
+            return "\(self.count) elements in Bag"
+        }
+    }
+}
+
+
 // MARK: forEach
 
 extension Bag {
@@ -221,6 +228,13 @@ extension Bag {
     - parameter action: Enumeration closure.
     */
     public func forEach(@noescape action: (T) -> Void) {
+        if _onlyFastPath {
+            if let value0 = _value0 {
+                action(value0)
+            }
+            return
+        }
+
         let pairs = _pairs
         let value0 = _value0
         let value1 = _value1
@@ -253,7 +267,12 @@ extension Bag where T: ObserverType {
      - parameter action: Enumeration closure.
      */
     public func on(event: Event<T.E>) {
-        let pairs = self._pairs
+        if _onlyFastPath {
+            _value0?.on(event)
+            return
+        }
+
+        let pairs = _pairs
         let value0 = _value0
         let value1 = _value1
         let dictionary = _dictionary
@@ -282,6 +301,11 @@ extension Bag where T: ObserverType {
 Dispatches `dispose` to all disposables contained inside bag.
 */
 public func disposeAllIn(bag: Bag<Disposable>) {
+    if bag._onlyFastPath {
+        bag._value0?.dispose()
+        return
+    }
+
     let pairs = bag._pairs
     let value0 = bag._value0
     let value1 = bag._value1

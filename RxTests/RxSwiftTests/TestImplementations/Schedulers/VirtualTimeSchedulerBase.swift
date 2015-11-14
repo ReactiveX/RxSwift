@@ -48,7 +48,10 @@ class ScheduledItem<T> : ScheduledItemProtocol {
 }
 
 
-class VirtualTimeSchedulerBase : SchedulerType, CustomStringConvertible {
+class VirtualTimeSchedulerBase
+    : SchedulerType
+    , CustomDebugStringConvertible {
+
     typealias TimeInterval = Int
     typealias Time = Int
     
@@ -58,12 +61,6 @@ class VirtualTimeSchedulerBase : SchedulerType, CustomStringConvertible {
     var now: Time {
         get {
             return self.clock
-        }
-    }
-    
-    var description: String {
-        get {
-            return self.schedulerQueue.description
         }
     }
     
@@ -148,5 +145,13 @@ class VirtualTimeSchedulerBase : SchedulerType, CustomStringConvertible {
         }
         
         return minElement
+    }
+}
+
+extension VirtualTimeSchedulerBase {
+    var debugDescription: String {
+        get {
+            return self.schedulerQueue.description
+        }
     }
 }

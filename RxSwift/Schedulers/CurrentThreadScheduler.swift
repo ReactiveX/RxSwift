@@ -136,7 +136,7 @@ public class CurrentThreadScheduler : ImmediateSchedulerType {
             CurrentThreadScheduler.queue = queue
         }
 
-        let scheduledItem = ScheduledItem(action: action, state: state, time: 0)
+        let scheduledItem = ScheduledItem(action: action, state: state)
         queue.value.enqueue(scheduledItem)
         return scheduledItem
     }
