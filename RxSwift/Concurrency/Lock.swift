@@ -78,6 +78,7 @@ extension NSRecursiveLock : Lock {
     }
 }
 
+/*
 let RECURSIVE_MUTEX = _initializeRecursiveMutex()
 
 func _initializeRecursiveMutex() -> pthread_mutex_t {
@@ -101,3 +102,4 @@ extension pthread_mutex_t {
         pthread_mutex_unlock(&self)
     }
 }
+*/

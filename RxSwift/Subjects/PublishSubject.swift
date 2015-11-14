@@ -23,7 +23,7 @@ final public class PublishSubject<Element>
     
     typealias DisposeKey = Bag<AnyObserver<Element>>.KeyType
     
-    private var _lock = RECURSIVE_MUTEX
+    private var _lock = NSRecursiveLock()
     
     // state
     private var _disposed = false
