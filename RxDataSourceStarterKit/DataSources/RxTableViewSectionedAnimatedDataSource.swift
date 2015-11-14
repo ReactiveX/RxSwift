@@ -23,7 +23,12 @@ class RxTableViewSectionedAnimatedDataSource<S: SectionModelType> : RxTableViewS
             for c in element {
                 //print("Animating ==============================\n\(c)\n===============================\n")
                 setSections(c.finalSections)
-                tableView.performBatchUpdates(c)
+                if c.reloadData {
+                    tableView.reloadData()
+                }
+                else {
+                    tableView.performBatchUpdates(c)
+                }
             }
         case .Error(let error):
             bindingErrorToInterface(error)

@@ -128,6 +128,10 @@
 		C86E2F451AE5A0CA00C31024 /* WikipediaAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86E2F3B1AE5A0CA00C31024 /* WikipediaAPI.swift */; };
 		C86E2F461AE5A0CA00C31024 /* WikipediaPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86E2F3C1AE5A0CA00C31024 /* WikipediaPage.swift */; };
 		C86E2F471AE5A0CA00C31024 /* WikipediaSearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86E2F3D1AE5A0CA00C31024 /* WikipediaSearchResult.swift */; };
+		C87335671BF79BE000E536E6 /* UISectionedViewType+RxAnimatedDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C87335661BF79BE000E536E6 /* UISectionedViewType+RxAnimatedDataSource.swift */; };
+		C87335681BF79BE000E536E6 /* UISectionedViewType+RxAnimatedDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C87335661BF79BE000E536E6 /* UISectionedViewType+RxAnimatedDataSource.swift */; };
+		C87335771BF7CC0B00E536E6 /* ObservableConvertibleType+Differentiator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C87335761BF7CC0B00E536E6 /* ObservableConvertibleType+Differentiator.swift */; };
+		C87335781BF7CC0C00E536E6 /* ObservableConvertibleType+Differentiator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C87335761BF7CC0B00E536E6 /* ObservableConvertibleType+Differentiator.swift */; };
 		C88BB8BB1B07E6C90064D411 /* SearchResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86E2F321AE5A0CA00C31024 /* SearchResultViewModel.swift */; };
 		C88BB8BC1B07E6C90064D411 /* HtmlParsing.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83367111AD029AE00C668A7 /* HtmlParsing.swift */; };
 		C88BB8BD1B07E6C90064D411 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86E2F331AE5A0CA00C31024 /* SearchViewModel.swift */; };
@@ -534,6 +538,8 @@
 		C86E2F3B1AE5A0CA00C31024 /* WikipediaAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WikipediaAPI.swift; sourceTree = "<group>"; };
 		C86E2F3C1AE5A0CA00C31024 /* WikipediaPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = WikipediaPage.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		C86E2F3D1AE5A0CA00C31024 /* WikipediaSearchResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = WikipediaSearchResult.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		C87335661BF79BE000E536E6 /* UISectionedViewType+RxAnimatedDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UISectionedViewType+RxAnimatedDataSource.swift"; sourceTree = "<group>"; };
+		C87335761BF7CC0B00E536E6 /* ObservableConvertibleType+Differentiator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ObservableConvertibleType+Differentiator.swift"; sourceTree = "<group>"; };
 		C88BB8DC1B07E6C90064D411 /* RxExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RxExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C88C78631B3EB0A00061C5AB /* RxTableViewSectionedAnimatedDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxTableViewSectionedAnimatedDataSource.swift; sourceTree = "<group>"; };
 		C88C78641B3EB0A00061C5AB /* RxTableViewSectionedDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxTableViewSectionedDataSource.swift; sourceTree = "<group>"; };
@@ -1038,13 +1044,15 @@
 			isa = PBXGroup;
 			children = (
 				C8AF26F11B49ABD300131C03 /* README.md */,
-				C88C78621B3EB0A00061C5AB /* DataSources */,
-				C8A7501E1B94E77C00D8D046 /* RxDataSourceStarterKit.swift */,
 				C88C788E1B3F14FD0061C5AB /* Changeset.swift */,
-				C88C78691B3EB0A00061C5AB /* SectionedViewType.swift */,
-				C88C78981B4012A90061C5AB /* SectionModelType.swift */,
-				C88C786A1B3EB0A00061C5AB /* SectionModel.swift */,
+				C88C78621B3EB0A00061C5AB /* DataSources */,
 				C88C78941B3F20DB0061C5AB /* Differentiator.swift */,
+				C8A7501E1B94E77C00D8D046 /* RxDataSourceStarterKit.swift */,
+				C88C78691B3EB0A00061C5AB /* SectionedViewType.swift */,
+				C88C786A1B3EB0A00061C5AB /* SectionModel.swift */,
+				C88C78981B4012A90061C5AB /* SectionModelType.swift */,
+				C87335661BF79BE000E536E6 /* UISectionedViewType+RxAnimatedDataSource.swift */,
+				C87335761BF7CC0B00E536E6 /* ObservableConvertibleType+Differentiator.swift */,
 			);
 			name = RxDataSourceStarterKit;
 			path = ../RxDataSourceStarterKit;
@@ -1750,6 +1758,7 @@
 				C8297E361B6CF905000589EA /* RootViewController.swift in Sources */,
 				C89464BB1BC6C2B00055219D /* AnonymousObservable.swift in Sources */,
 				C89465991BC6C2BC0055219D /* UISegmentedControl+Rx.swift in Sources */,
+				C87335781BF7CC0C00E536E6 /* ObservableConvertibleType+Differentiator.swift in Sources */,
 				C8297E371B6CF905000589EA /* RxCollectionViewSectionedDataSource.swift in Sources */,
 				B1B7C3D01BE006870076934E /* TakeLast.swift in Sources */,
 				C89464CD1BC6C2B00055219D /* FlatMap.swift in Sources */,
@@ -1839,6 +1848,7 @@
 				C8F6A1331BEF9DA3007DF367 /* ScheduledItem.swift in Sources */,
 				C89464EB1BC6C2B00055219D /* Observable+Aggregate.swift in Sources */,
 				C8297E441B6CF905000589EA /* PseudoRandomGenerator.swift in Sources */,
+				C87335681BF79BE000E536E6 /* UISectionedViewType+RxAnimatedDataSource.swift in Sources */,
 				C8297E451B6CF905000589EA /* SectionedViewType.swift in Sources */,
 				C89464D51BC6C2B00055219D /* ObserveOnSerialDispatchQueue.swift in Sources */,
 				C894658E1BC6C2BC0055219D /* UIAlertView+Rx.swift in Sources */,
@@ -1948,6 +1958,7 @@
 				C86E2F3E1AE5A0CA00C31024 /* SearchResultViewModel.swift in Sources */,
 				C83367241AD029AE00C668A7 /* HtmlParsing.swift in Sources */,
 				C859B9AC1B45CF9100D012D7 /* NumberCell.swift in Sources */,
+				C87335671BF79BE000E536E6 /* UISectionedViewType+RxAnimatedDataSource.swift in Sources */,
 				C84B913C1B8A282000C9CCCF /* RxCollectionViewSectionedDataSource.swift in Sources */,
 				0706E19B1B17361100BA2D3A /* UIImageView+Extensions.swift in Sources */,
 				C859B9AE1B45CFAB00D012D7 /* NumberSectionView.swift in Sources */,
@@ -1985,6 +1996,7 @@
 				07E300071B14995F00F00100 /* TableViewController.swift in Sources */,
 				B18F3BE21BDB2E8F000AAC79 /* ReachabilityService.swift in Sources */,
 				B18F3BBC1BD92EC8000AAC79 /* Reachability.swift in Sources */,
+				C87335771BF7CC0B00E536E6 /* ObservableConvertibleType+Differentiator.swift in Sources */,
 				C859B9A41B45C5D900D012D7 /* PartialUpdatesViewController.swift in Sources */,
 				07E3C2331B03605B0010338D /* Dependencies.swift in Sources */,
 				C84B913A1B8A282000C9CCCF /* RxTableViewSectionedReloadDataSource.swift in Sources */,

@@ -116,19 +116,9 @@ class PartialUpdatesViewController : ViewController {
 
         skinTableViewDataSource(tvAnimatedDataSource)
         skinTableViewDataSource(reloadDataSource)
-        let newSections = self.sections .skip(1)
 
-        let initialState = [Changeset.initialValue(self.sections.value)]
-
-        // reactive data sources
-
-        let updates = zip(self.sections, newSections) { (old, new) in
-                return differentiate(old, finalSections: new)
-            }
-            .startWith(initialState)
-
-        updates
-            .bindTo(partialUpdatesTableViewOutlet.rx_itemsWithDataSource(tvAnimatedDataSource))
+        self.sections
+            .bindTo(partialUpdatesTableViewOutlet.rx_itemsAnimatedWithDataSource(tvAnimatedDataSource))
             .addDisposableTo(disposeBag)
 
         self.sections

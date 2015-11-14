@@ -27,6 +27,8 @@ struct ItemPath : CustomDebugStringConvertible {
 public struct Changeset<S: SectionModelType> : CustomDebugStringConvertible {
     typealias I = S.Item
 
+    var reloadData: Bool = false
+
     var finalSections: [S] = []
 
     var insertedSections: [Int] = []
@@ -43,6 +45,8 @@ public struct Changeset<S: SectionModelType> : CustomDebugStringConvertible {
         var initialValue = Changeset<S>()
         initialValue.insertedSections = Array(0 ..< sections.count)
         initialValue.finalSections = sections
+        initialValue.reloadData = true
+        
         return initialValue
     }
 

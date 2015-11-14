@@ -8,6 +8,21 @@
 
 import Foundation
 
+public enum DifferentiatorError
+    : ErrorType
+    , CustomDebugStringConvertible {
+    case DuplicateItem(item: Any)
+}
+
+extension DifferentiatorError {
+    public var debugDescription: String {
+        switch self {
+        case let .DuplicateItem(item):
+            return "Duplicate item \(item)"
+        }
+    }
+}
+
 enum EditEvent : CustomDebugStringConvertible {
     case Inserted           // can't be found in old sections
     case Deleted            // Was in old, not in new, in it's place is something "not new" :(, otherwise it's Updated
@@ -61,17 +76,22 @@ extension ItemAdditionalInfo {
     }
 }
 
-func indexSections<S: SectionModelType where S: Hashable, S.Item: Hashable>(sections: [S]) -> [S : Int] {
+func indexSections<S: SectionModelType where S: Hashable, S.Item: Hashable>(sections: [S]) throws -> [S : Int] {
     var indexedSections: [S : Int] = [:]
     for (i, section) in sections.enumerate() {
-        precondition(indexedSections[section] == nil, "Section \(section) has already been indexed at \(indexedSections[section]!)")
+        guard indexedSections[section] == nil else {
+            #if DEBUG
+            precondition(indexedSections[section] == nil, "Section \(section) has already been indexed at \(indexedSections[section]!)")
+            #endif
+            throw DifferentiatorError.DuplicateItem(item: section)
+        }
         indexedSections[section] = i
     }
     
     return indexedSections
 }
 
-func indexSectionItems<S: SectionModelType where S: Hashable, S.Item: Hashable>(sections: [S]) -> [S.Item : (Int, Int)] {
+func indexSectionItems<S: SectionModelType where S: Hashable, S.Item: Hashable>(sections: [S]) throws -> [S.Item : (Int, Int)] {
     var totalItems = 0
     for i in 0 ..< sections.count {
         totalItems += sections[i].items.count
@@ -82,7 +102,12 @@ func indexSectionItems<S: SectionModelType where S: Hashable, S.Item: Hashable>(
     
     for i in 0 ..< sections.count {
         for (j, item) in sections[i].items.enumerate() {
-            precondition(indexedItems[item] == nil, "Item \(item) has already been indexed at \(indexedItems[item]!)" )
+            guard indexedItems[item] == nil else {
+                #if DEBUG
+                precondition(indexedItems[item] == nil, "Item \(item) has already been indexed at \(indexedItems[item]!)" )
+                #endif
+                throw DifferentiatorError.DuplicateItem(item: item)
+            }
             indexedItems[item] = (i, j)
         }
     }
@@ -191,7 +216,6 @@ to = [
 ]
 */
 
-
 // Generates differential changes suitable for sectioned view consumption.
 // It will not only detect changes between two states, but it will also try to compress those changes into
 // almost minimal set of changes.
@@ -215,11 +239,11 @@ to = [
 //
 // There maybe exists a better division, but time will tell.
 //
-func differentiate<S: SectionModelType where S: Hashable, S.Item: Hashable>(
+func differencesForSectionedView<S: SectionModelType where S: Hashable, S.Item: Hashable>(
         initialSections: [S],
         finalSections: [S]
     )
-    -> [Changeset<S>] {
+    throws -> [Changeset<S>] {
         
     typealias I = S.Item
 
@@ -242,11 +266,11 @@ func differentiate<S: SectionModelType where S: Hashable, S.Item: Hashable>(
         return [ItemAdditionalInfo](count: s.items.count, repeatedValue: defaultItemInfo)
     }
     
-    initialSectionIndexes = indexSections(initialSections)
-    finalSectionIndexes = indexSections(finalSections)
+    initialSectionIndexes = try indexSections(initialSections)
+    finalSectionIndexes = try indexSections(finalSections)
     
-    var initialItemIndexes: [I: (Int, Int)] = indexSectionItems(initialSections)
-    var finalItemIndexes: [I: (Int, Int)] = indexSectionItems(finalSections)
+    var initialItemIndexes: [I: (Int, Int)] = try indexSectionItems(initialSections)
+    var finalItemIndexes: [I: (Int, Int)] = try indexSectionItems(finalSections)
 
     // mark deleted sections {
     // 1rst stage
