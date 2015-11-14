@@ -14,6 +14,174 @@ class ObservableCreationTests : RxTest {
     
 }
 
+// MARK: just
+extension ObservableCreationTests {
+    func testJust_Immediate() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let res = scheduler.start {
+            return just(42)
+        }
+
+        XCTAssertEqual(res.messages, [
+            next(200, 42),
+            completed(200)
+            ])
+    }
+
+    func testJust_Basic() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let res = scheduler.start {
+            return just(42, scheduler: scheduler)
+        }
+
+        XCTAssertEqual(res.messages, [
+            next(201, 42),
+            completed(202)
+            ])
+    }
+
+    func testJust_Disposed() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let res = scheduler.start(200) {
+            return just(42, scheduler: scheduler)
+        }
+
+        XCTAssertEqual(res.messages, [
+            ])
+    }
+
+    func testJust_DisposeAfterNext() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let d = SingleAssignmentDisposable()
+
+        let res = createObserver(scheduler) as MockObserver<Int>
+
+        scheduler.scheduleAt(100) {
+            d.disposable = just(42, scheduler: scheduler).subscribe { e in
+                res.on(e)
+
+                switch e {
+                case .Next:
+                    d.dispose()
+                default:
+                    break
+                }
+            }
+        }
+
+        scheduler.start()
+
+        XCTAssertEqual(res.messages, [
+            next(101, 42)
+            ])
+    }
+
+    func testJust_DefaultScheduler() {
+        let res = try! just(42, scheduler: MainScheduler.sharedInstance)
+            .toBlocking()
+            .toArray()
+
+        XCTAssertEqual(res, [
+            42
+            ])
+    }
+}
+
+// MARK: toObservable
+extension ObservableCreationTests {
+    func testToObservable_complete_immediate() {
+        let scheduler = TestScheduler(initialClock: 0)
+        let res = scheduler.start {
+            [3, 1, 2, 4].toObservable()
+        }
+
+        XCTAssertEqual(res.messages, [
+            next(200, 3),
+            next(200, 1),
+            next(200, 2),
+            next(200, 4),
+            completed(200)
+            ])
+    }
+
+    func testToObservable_complete() {
+        let scheduler = TestScheduler(initialClock: 0)
+        let res = scheduler.start {
+            [3, 1, 2, 4].toObservable(scheduler)
+        }
+
+        XCTAssertEqual(res.messages, [
+            next(201, 3),
+            next(202, 1),
+            next(203, 2),
+            next(204, 4),
+            completed(205)
+            ])
+    }
+
+    func testToObservable_dispose() {
+        let scheduler = TestScheduler(initialClock: 0)
+        let res = scheduler.start(203) {
+            [3, 1, 2, 4].toObservable(scheduler)
+        }
+
+        XCTAssertEqual(res.messages, [
+            next(201, 3),
+            next(202, 1),
+            ])
+    }
+}
+
+// MARK: sequenceOf
+extension ObservableCreationTests {
+    func testSequenceOf_complete_immediate() {
+        let scheduler = TestScheduler(initialClock: 0)
+        let res = scheduler.start {
+            sequenceOf(3, 1, 2, 4)
+        }
+
+        XCTAssertEqual(res.messages, [
+            next(200, 3),
+            next(200, 1),
+            next(200, 2),
+            next(200, 4),
+            completed(200)
+            ])
+    }
+
+    func testSequenceOf_complete() {
+        let scheduler = TestScheduler(initialClock: 0)
+        let res = scheduler.start {
+            sequenceOf(3, 1, 2, 4, scheduler: scheduler)
+        }
+
+        XCTAssertEqual(res.messages, [
+            next(201, 3),
+            next(202, 1),
+            next(203, 2),
+            next(204, 4),
+            completed(205)
+            ])
+    }
+
+    func testSequenceOf_dispose() {
+        let scheduler = TestScheduler(initialClock: 0)
+        let res = scheduler.start(203) {
+            sequenceOf(3, 1, 2, 4, scheduler: scheduler)
+        }
+
+        XCTAssertEqual(res.messages, [
+            next(201, 3),
+            next(202, 1),
+            ])
+    }
+}
+
+// MARK: generate
 extension ObservableCreationTests {
     func testGenerate_Finite() {
         let scheduler = TestScheduler(initialClock: 0)
@@ -100,7 +268,7 @@ extension ObservableCreationTests {
     }
 }
 
-// range
+// MARK: range
 extension ObservableCreationTests {
     func testRange_Boundaries() {
         let scheduler = TestScheduler(initialClock: 0)
@@ -130,7 +298,7 @@ extension ObservableCreationTests {
     }
 }
 
-// repeatElement
+// MARK: repeatElement
 extension ObservableCreationTests {
     func testRepeat_Element() {
         let scheduler = TestScheduler(initialClock: 0)
@@ -150,7 +318,7 @@ extension ObservableCreationTests {
     }
 }
 
-// using
+// MARK: using
 extension ObservableCreationTests {
     func testUsing_Complete() {
         let scheduler = TestScheduler(initialClock: 0)

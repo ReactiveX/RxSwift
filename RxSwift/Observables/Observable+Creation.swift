@@ -58,23 +58,30 @@ public func just<E>(element: E) -> Observable<E> {
     return Just(element: element)
 }
 
+/**
+Returns an observable sequence that contains a single element.
+
+- parameter element: Single element in the resulting observable sequence.
+- parameter: Scheduler to send the single element on.
+- returns: An observable sequence containing the single specified element.
+*/
+@warn_unused_result(message="http://git.io/rxs.uo")
+public func just<E>(element: E, scheduler: ImmediateSchedulerType) -> Observable<E> {
+    return JustScheduled(element: element, scheduler: scheduler)
+}
+
 // MARK: of
 
 /**
 This method creates a new Observable instance with a variable number of elements.
 
+- parameter elements: Elements to generate.
+- parameter scheduler: Scheduler to send elements on. If `nil`, elements are sent immediatelly on subscription.
 - returns: The observable sequence whose elements are pulled from the given arguments.
 */
 @warn_unused_result(message="http://git.io/rxs.uo")
-public func sequenceOf<E>(elements: E ...) -> Observable<E> {
-    return AnonymousObservable { observer in
-        for element in elements {
-            observer.on(.Next(element))
-        }
-        
-        observer.on(.Completed)
-        return NopDisposable.instance
-    }
+public func sequenceOf<E>(elements: E ..., scheduler: ImmediateSchedulerType? = nil) -> Observable<E> {
+    return Sequence(elements: elements, scheduler: scheduler)
 }
 
 
@@ -85,15 +92,31 @@ extension SequenceType {
     - returns: The observable sequence whose elements are pulled from the given enumerable sequence.
     */
     @warn_unused_result(message="http://git.io/rxs.uo")
+    @available(*, deprecated=2.0.0, message="Please use toObservable extension.")
     public func asObservable() -> Observable<Generator.Element> {
-        return AnonymousObservable { observer in
-            for element in self {
-                observer.on(.Next(element))
-            }
-            
-            observer.on(.Completed)
-            return NopDisposable.instance
-        }
+        return Sequence(elements: Array(self), scheduler: nil)
+    }
+
+    /**
+    Converts a sequence to an observable sequence.
+
+    - returns: The observable sequence whose elements are pulled from the given enumerable sequence.
+    */
+    @warn_unused_result(message="http://git.io/rxs.uo")
+    public func toObservable(scheduler: ImmediateSchedulerType? = nil) -> Observable<Generator.Element> {
+        return Sequence(elements: Array(self), scheduler: scheduler)
+    }
+}
+
+extension Array {
+    /**
+    Converts a sequence to an observable sequence.
+
+    - returns: The observable sequence whose elements are pulled from the given enumerable sequence.
+    */
+    @warn_unused_result(message="http://git.io/rxs.uo")
+    public func toObservable(scheduler: ImmediateSchedulerType? = nil) -> Observable<Generator.Element> {
+        return Sequence(elements: self, scheduler: scheduler)
     }
 }
 

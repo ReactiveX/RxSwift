@@ -103,6 +103,7 @@
 		C8297E5F1B6CF905000589EA /* WikipediaImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C8C46DA41B47F7110020D71E /* WikipediaImageCell.xib */; };
 		C8297E601B6CF905000589EA /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C8DF92E91B0B38C0009BCF9A /* Images.xcassets */; };
 		C8297E611B6CF905000589EA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C8DF92E11B0B32DA009BCF9A /* Main.storyboard */; };
+		C83100691BF7F4CA00AAE3CD /* Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83100681BF7F4CA00AAE3CD /* Sequence.swift */; };
 		C83367231AD029AE00C668A7 /* Example.swift in Sources */ = {isa = PBXBuildFile; fileRef = C833670F1AD029AE00C668A7 /* Example.swift */; };
 		C83367241AD029AE00C668A7 /* HtmlParsing.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83367111AD029AE00C668A7 /* HtmlParsing.swift */; };
 		C83367251AD029AE00C668A7 /* ImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83367121AD029AE00C668A7 /* ImageService.swift */; };
@@ -516,6 +517,7 @@
 		C80DDEC91BCE9041006A1832 /* ObservableConvertibleType+Driver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ObservableConvertibleType+Driver.swift"; sourceTree = "<group>"; };
 		C81B39F11BC1C28400EF5A9F /* Rx.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Rx.xcodeproj; path = ../Rx.xcodeproj; sourceTree = "<group>"; };
 		C8297E691B6CF905000589EA /* RxExample-iOS-no-module.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "RxExample-iOS-no-module.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C83100681BF7F4CA00AAE3CD /* Sequence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sequence.swift; sourceTree = "<group>"; };
 		C83366DD1AD0293800C668A7 /* RxExample-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "RxExample-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C833670F1AD029AE00C668A7 /* Example.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Example.swift; sourceTree = "<group>"; };
 		C83367111AD029AE00C668A7 /* HtmlParsing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HtmlParsing.swift; sourceTree = "<group>"; };
@@ -1170,7 +1172,6 @@
 		C89464481BC6C2B00055219D /* Implementations */ = {
 			isa = PBXGroup;
 			children = (
-				C8F6A1361BEF9DD4007DF367 /* RetryWhen.swift */,
 				CB883B5F1BE3AC72000AC2EE /* AddRef.swift */,
 				C89464491BC6C2B00055219D /* Amb.swift */,
 				C894644A1BC6C2B00055219D /* AnonymousObservable.swift */,
@@ -1205,8 +1206,10 @@
 				C89464671BC6C2B00055219D /* Reduce.swift */,
 				C89464681BC6C2B00055219D /* RefCount.swift */,
 				C89464691BC6C2B00055219D /* Repeat.swift */,
+				C8F6A1361BEF9DD4007DF367 /* RetryWhen.swift */,
 				C894646A1BC6C2B00055219D /* Sample.swift */,
 				C894646B1BC6C2B00055219D /* Scan.swift */,
+				C83100681BF7F4CA00AAE3CD /* Sequence.swift */,
 				C89CDB611BCC45DC002063D9 /* ShareReplay1.swift */,
 				CB30D9ED1BF106260084C1C0 /* SingleAsync.swift */,
 				C894646C1BC6C2B00055219D /* Sink.swift */,
@@ -1849,6 +1852,7 @@
 				C89464EB1BC6C2B00055219D /* Observable+Aggregate.swift in Sources */,
 				C8297E441B6CF905000589EA /* PseudoRandomGenerator.swift in Sources */,
 				C87335681BF79BE000E536E6 /* UISectionedViewType+RxAnimatedDataSource.swift in Sources */,
+				C83100691BF7F4CA00AAE3CD /* Sequence.swift in Sources */,
 				C8297E451B6CF905000589EA /* SectionedViewType.swift in Sources */,
 				C89464D51BC6C2B00055219D /* ObserveOnSerialDispatchQueue.swift in Sources */,
 				C894658E1BC6C2BC0055219D /* UIAlertView+Rx.swift in Sources */,
