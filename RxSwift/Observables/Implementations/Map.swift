@@ -9,14 +9,15 @@
 import Foundation
 
 class MapSink<SourceType, O : ObserverType> : Sink<O>, ObserverType {
+    typealias Selector = (SourceType) throws -> ResultType
+
     typealias ResultType = O.E
     typealias Element = SourceType
-    typealias Parent = Map<SourceType, ResultType>
+
+    private let _selector: Selector
     
-    private let _parent: Parent
-    
-    init(parent: Parent, observer: O) {
-        _parent = parent
+    init(selector: Selector, observer: O) {
+        _selector = selector
         super.init(observer: observer)
     }
 
@@ -24,7 +25,7 @@ class MapSink<SourceType, O : ObserverType> : Sink<O>, ObserverType {
         switch event {
         case .Next(let element):
             do {
-                let mappedElement = try _parent._selector(element)
+                let mappedElement = try _selector(element)
                 forwardOn(.Next(mappedElement))
             }
             catch let e {
@@ -42,16 +43,18 @@ class MapSink<SourceType, O : ObserverType> : Sink<O>, ObserverType {
 }
 
 class MapWithIndexSink<SourceType, O : ObserverType> : Sink<O>, ObserverType {
+    typealias Selector = (SourceType, Int) throws -> ResultType
+
     typealias ResultType = O.E
     typealias Element = SourceType
     typealias Parent = MapWithIndex<SourceType, ResultType>
     
-    private let _parent: Parent
+    private let _selector: Selector
 
     private var _index = 0
 
-    init(parent: Parent, observer: O) {
-        _parent = parent
+    init(selector: Selector, observer: O) {
+        _selector = selector
         super.init(observer: observer)
     }
 
@@ -59,7 +62,7 @@ class MapWithIndexSink<SourceType, O : ObserverType> : Sink<O>, ObserverType {
         switch event {
         case .Next(let element):
             do {
-                let mappedElement = try _parent._selector(element, try incrementChecked(&_index))
+                let mappedElement = try _selector(element, try incrementChecked(&_index))
                 forwardOn(.Next(mappedElement))
             }
             catch let e {
@@ -89,7 +92,7 @@ class MapWithIndex<SourceType, ResultType> : Producer<ResultType> {
     }
 
     override func run<O: ObserverType where O.E == ResultType>(observer: O) -> Disposable {
-        let sink = MapWithIndexSink(parent: self, observer: observer)
+        let sink = MapWithIndexSink(selector: _selector, observer: observer)
         sink.disposable = _source.subscribe(sink)
         return sink
     }
@@ -124,7 +127,7 @@ class Map<SourceType, ResultType>: Producer<ResultType> {
     }
     
     override func run<O: ObserverType where O.E == ResultType>(observer: O) -> Disposable {
-        let sink = MapSink(parent: self, observer: observer)
+        let sink = MapSink(selector: _selector, observer: observer)
         sink.disposable = _source.subscribe(sink)
         return sink
     }
