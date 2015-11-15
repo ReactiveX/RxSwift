@@ -112,7 +112,7 @@ func observeWeaklyKeyPathFor(
     
     // KVO recursion for value changes
     return propertyObservable
-        .map { (nextTarget: AnyObject?) -> Observable<AnyObject?> in
+        .flatMapLatest { (nextTarget: AnyObject?) -> Observable<AnyObject?> in
             if nextTarget == nil {
                return just(nil)
             }
@@ -142,7 +142,6 @@ func observeWeaklyKeyPathFor(
                 return nextElementsObservable
             }
         }
-        .switchLatest()
 }
 #endif
 

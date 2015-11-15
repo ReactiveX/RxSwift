@@ -89,7 +89,7 @@ extension DriverTest {
     }
 }
 
-// conversions
+// MARK: conversions
 extension DriverTest {
     func testAsDriver_onErrorJustReturn() {
         let hotObservable = BackgroundThreadPrimitiveHotObservable<Int>()
@@ -145,7 +145,7 @@ extension DriverTest {
     }
 }
 
-// map
+// MARK: map
 extension DriverTest {
     func testAsDriver_map() {
         let hotObservable = BackgroundThreadPrimitiveHotObservable<Int>()
@@ -169,7 +169,7 @@ extension DriverTest {
 
 }
 
-// filter
+// MARK: filter
 extension DriverTest {
     func testAsDriver_filter() {
         let hotObservable = BackgroundThreadPrimitiveHotObservable<Int>()
@@ -193,7 +193,7 @@ extension DriverTest {
 }
 
 
-// switch latest
+// MARK: switch latest
 extension DriverTest {
     func testAsDriver_switchLatest() {
         let hotObservable = BackgroundThreadPrimitiveHotObservable<Driver<Int>>()
@@ -232,7 +232,53 @@ extension DriverTest {
     }
 }
 
-// doOn
+// MARK: flatMapLatest
+extension DriverTest {
+    func testAsDriver_flatMapLatest() {
+        let hotObservable = BackgroundThreadPrimitiveHotObservable<Int>()
+        let hotObservable1 = MainThreadPrimitiveHotObservable<Int>()
+        let hotObservable2 = MainThreadPrimitiveHotObservable<Int>()
+        let errorHotObservable = MainThreadPrimitiveHotObservable<Int>()
+
+        let drivers: [Driver<Int>] = [
+            hotObservable1.asDriver(onErrorJustReturn: -2),
+            hotObservable2.asDriver(onErrorJustReturn: -3),
+            errorHotObservable.asDriver(onErrorJustReturn: -4),
+        ]
+
+        let driver = hotObservable.asDriver(onErrorJustReturn: 2).flatMapLatest { drivers[$0] }
+
+        let results = subscribeTwiceOnBackgroundSchedulerAndOnlyOneSubscription(driver) {
+            XCTAssertTrue(hotObservable.subscriptions == [SubscribedToHotObservable])
+
+            hotObservable.on(.Next(0))
+
+            hotObservable1.on(.Next(1))
+            hotObservable1.on(.Next(2))
+            hotObservable1.on(.Error(testError))
+
+            hotObservable.on(.Next(1))
+
+            hotObservable2.on(.Next(10))
+            hotObservable2.on(.Next(11))
+            hotObservable2.on(.Error(testError))
+
+            hotObservable.on(.Error(testError))
+
+            errorHotObservable.on(.Completed)
+            hotObservable.on(.Completed)
+
+            XCTAssertTrue(hotObservable.subscriptions == [UnsunscribedFromHotObservable])
+        }
+
+        XCTAssertEqual(results, [
+            1, 2, -2,
+            10, 11, -3
+            ])
+    }
+}
+
+// MARK: doOn
 extension DriverTest {
     func testAsDriver_doOn() {
         let hotObservable = BackgroundThreadPrimitiveHotObservable<Int>()
@@ -261,7 +307,7 @@ extension DriverTest {
     }
 }
 
-// distinct until change
+// MARK: distinct until change
 extension DriverTest {
     func testAsDriver_distinctUntilChanged1() {
         let hotObservable = BackgroundThreadPrimitiveHotObservable<Int>()
@@ -342,7 +388,7 @@ extension DriverTest {
 
 }
 
-// flat map
+// MARK: flat map
 extension DriverTest {
     func testAsDriver_flatMap() {
         let hotObservable = BackgroundThreadPrimitiveHotObservable<Int>()
@@ -366,7 +412,7 @@ extension DriverTest {
     
 }
 
-// merge
+// MARK: merge
 extension DriverTest {
     func testAsDriver_merge() {
         let hotObservable = BackgroundThreadPrimitiveHotObservable<Int>()
@@ -409,7 +455,7 @@ extension DriverTest {
     }
 }
 
-// debounce
+// MARK: debounce
 extension DriverTest {
     func testAsDriver_debounce() {
         let hotObservable = BackgroundThreadPrimitiveHotObservable<Int>()
@@ -445,7 +491,7 @@ extension DriverTest {
 
 }
 
-// scan
+// MARK: scan
 extension DriverTest {
     func testAsDriver_scan() {
         let hotObservable = BackgroundThreadPrimitiveHotObservable<Int>()
@@ -469,7 +515,7 @@ extension DriverTest {
     
 }
 
-// concat
+// MARK: concat
 extension DriverTest {
     func testAsDriver_concat() {
         let hotObservable1 = BackgroundThreadPrimitiveHotObservable<Int>()
@@ -498,7 +544,7 @@ extension DriverTest {
     }
 }
 
-// combine latest
+// MARK: combine latest
 extension DriverTest {
     func testAsDriver_combineLatest_array() {
         let hotObservable1 = BackgroundThreadPrimitiveHotObservable<Int>()
@@ -553,7 +599,7 @@ extension DriverTest {
     }
 }
 
-// zip
+// MARK: zip
 extension DriverTest {
     func testAsDriver_zip_array() {
         let hotObservable1 = BackgroundThreadPrimitiveHotObservable<Int>()
@@ -608,7 +654,7 @@ extension DriverTest {
     }
 }
 
-// withLatestFrom
+// MARK: withLatestFrom
 extension DriverTest {
     func testAsDriver_withLatestFrom() {
         let hotObservable1 = BackgroundThreadPrimitiveHotObservable<Int>()

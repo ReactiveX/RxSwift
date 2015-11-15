@@ -64,6 +64,27 @@ extension DriverConvertibleType where E : DriverConvertibleType {
 }
 
 extension DriverConvertibleType {
+    /**
+     Projects each element of an observable sequence into a new sequence of observable sequences and then
+     transforms an observable sequence of observable sequences into an observable sequence producing values only from the most recent observable sequence.
+
+     It is a combination of `map` + `switchLatest` operator
+
+     - parameter selector: A transform function to apply to each element.
+     - returns: An observable sequence whose elements are the result of invoking the transform function on each element of source producing an
+     Observable of Observable sequences and that at any point in time produces the elements of the most recent inner observable sequence that has been received.
+     */
+    @warn_unused_result(message="http://git.io/rxs.uo")
+    public func flatMapLatest<R>(selector: (E) -> Driver<R>)
+        -> Driver<R> {
+        let source: Observable<R> = self
+            .asObservable()
+            .flatMapLatest(selector)
+        return Driver<R>(source)
+    }
+}
+
+extension DriverConvertibleType {
     
     /**
     Invokes an action for each event in the observable sequence, and propagates all observer messages through the result sequence.

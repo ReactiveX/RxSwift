@@ -31,14 +31,13 @@ class SearchViewModel {
         self.rows = searchText
             .throttle(0.3, $.mainScheduler)
             .distinctUntilChanged()
-            .map { query in
+            .flatMapLatest { query in
                 API.getSearchResults(query)
                     .retry(3)
                     .retryOnBecomesReachable([], reachabilityService: ReachabilityService.sharedReachabilityService)
                     .startWith([]) // clears results on new search term
                     .asDriver(onErrorJustReturn: [])
             }
-            .switchLatest()
             .map { results in
                 results.map {
                     SearchResultViewModel(

@@ -169,10 +169,9 @@ class GitHubSignupViewController : ViewController {
         let signupSampler = signupOutlet.rx_tap
         
         let usernameValidation = username
-            .map { username in
+            .flatMapLatest { username in
                 return validationService.validateUsername(username)
             }
-            .switchLatest()
             .shareReplay(1)
 
         let passwordValidation = password
@@ -188,10 +187,9 @@ class GitHubSignupViewController : ViewController {
         
         let signingProcess = combineLatest(username, password) { ($0, $1) }
             .sampleLatest(signupSampler)
-            .map { (username, password) in
+            .flatMapLatest { (username, password) in
                 return API.signup(username, password: password)
             }
-            .switchLatest()
             .startWith(SignupState.InitialState)
             .shareReplay(1)
         
