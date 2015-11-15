@@ -13,7 +13,7 @@ Represents a disposable that does nothing on disposal.
 
 Nop = No Operation
 */
-public class NopDisposable : Disposable {
+public struct NopDisposable : Disposable {
  
     /**
     Singleton instance of `NopDisposable`.
