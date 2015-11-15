@@ -153,7 +153,7 @@ public struct Drive {
 
     @warn_unused_result(message="http://git.io/rxs.uo")
     public static func sequenceOf<E>(elements: E ...) -> Driver<E> {
-        let source = elements.asObservable().subscribeOn(ConcurrentMainScheduler.sharedInstance)
+        let source = elements.toObservable().subscribeOn(ConcurrentMainScheduler.sharedInstance)
         return Driver(raw: source)
     }
     

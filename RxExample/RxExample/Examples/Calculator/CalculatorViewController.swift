@@ -98,7 +98,7 @@ class CalculatorViewController: ViewController {
         ]
         
         commands
-            .asObservable()
+            .toObservable()
             .merge()
             .scan(CLEAR_STATE) { [unowned self] a, x in
                 return self.tranformState(a, x)
