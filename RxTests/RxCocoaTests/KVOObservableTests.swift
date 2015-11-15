@@ -28,7 +28,7 @@ class Parent : NSObject {
     var disposeBag: DisposeBag! = DisposeBag()
 
     dynamic var val: String = ""
-    
+
     init(callback: String? -> Void) {
         super.init()
         
@@ -68,13 +68,51 @@ class ParentWithChild : NSObject {
     }
 }
 
+@objc enum IntEnum: Int {
+    typealias RawValue = Int
+    case One
+    case Two
+}
+
+@objc enum UIntEnum: UInt {
+    case One
+    case Two
+}
+
+@objc enum Int32Enum: Int32 {
+    case One
+    case Two
+}
+
+@objc enum UInt32Enum: UInt32 {
+    case One
+    case Two
+}
+
+@objc enum Int64Enum: Int64 {
+    case One
+    case Two
+}
+
+@objc enum UInt64Enum: UInt64 {
+    case One
+    case Two
+}
+
 class HasStrongProperty : NSObject {
     dynamic var property: NSObject? = nil
     dynamic var frame: CGRect
     dynamic var point: CGPoint
     dynamic var size: CGSize
+    dynamic var intEnum: IntEnum = .One
+    dynamic var uintEnum: UIntEnum = .One
+    dynamic var int32Enum: Int32Enum = .One
+    dynamic var uint32Enum: UInt32Enum = .One
+    dynamic var int64Enum: Int64Enum = .One
+    dynamic var uint64Enum: UInt64Enum = .One
 
     dynamic var integer: Int
+    dynamic var uinteger: UInt
     
     override init() {
         self.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
@@ -82,6 +120,7 @@ class HasStrongProperty : NSObject {
         self.size = CGSizeMake(1, 2)
         
         self.integer = 1
+        self.uinteger = 1
         super.init()
     }
 }
@@ -647,8 +686,8 @@ extension KVOObservableTests {
         
         XCTAssertTrue(latest.value == nil)
         
-        let disposable = root.rx_observe("frame")
-            .subscribeNext { (n: NSRect?) in
+        let disposable = root.rx_observe(NSRect.self, "frame")
+            .subscribeNext { n in
                 latest.value = n
             }
         XCTAssertTrue(latest.value == root.frame)
@@ -948,7 +987,7 @@ extension KVOObservableTests {
         XCTAssertTrue(latest.value == nil)
         XCTAssertTrue(rootDeallocated)
     }
-    
+
     func testObserveWeak_PropertyDoesntExist() {
         var root: HasStrongProperty! = HasStrongProperty()
         
@@ -1001,6 +1040,755 @@ extension KVOObservableTests {
         
         root = nil
         
+        XCTAssertTrue(rootDeallocated)
+    }
+}
+#endif
+
+// MARK: KVORepresentable
+
+extension KVOObservableTests {
+    func testObserve_ObserveIntegerRepresentable() {
+        var root: HasStrongProperty! = HasStrongProperty()
+
+        var latest: Int?
+
+        XCTAssertTrue(latest == nil)
+
+        let disposable = root.rx_observe(Int.self, "integer")
+            .subscribeNext { n in
+                latest = n
+            }
+        XCTAssertTrue(latest == 1)
+
+        root.integer = 2
+
+        XCTAssertTrue(latest == 2)
+
+        var rootDeallocated = false
+
+        _ = root
+            .rx_deallocated
+            .subscribeCompleted {
+                rootDeallocated = true
+            }
+
+        root = nil
+
+        XCTAssertTrue(latest == 2)
+        XCTAssertTrue(!rootDeallocated)
+
+        disposable.dispose()
+    }
+
+    func testObserve_ObserveUIntegerRepresentable() {
+        var root: HasStrongProperty! = HasStrongProperty()
+
+        var latest: UInt?
+
+        XCTAssertTrue(latest == nil)
+
+        let disposable = root.rx_observe(UInt.self, "uinteger")
+            .subscribeNext { n in
+                latest = n
+        }
+        XCTAssertTrue(latest == 1)
+
+        root.uinteger = 2
+
+        XCTAssertTrue(latest == 2)
+
+        var rootDeallocated = false
+
+        _ = root
+            .rx_deallocated
+            .subscribeCompleted {
+                rootDeallocated = true
+        }
+
+        root = nil
+
+        XCTAssertTrue(latest == 2)
+        XCTAssertTrue(!rootDeallocated)
+        
+        disposable.dispose()
+    }
+}
+
+#if !DISABLE_SWIZZLING
+    extension KVOObservableTests {
+        func testObserveWeak_ObserveIntegerRepresentable() {
+            var root: HasStrongProperty! = HasStrongProperty()
+
+            var latest: Int?
+
+            XCTAssertTrue(latest == nil)
+
+            _ = root
+                .rx_observeWeakly(Int.self, "integer")
+                .subscribeNext { n in
+                    latest = n
+                }
+
+            XCTAssertTrue(latest == 1)
+
+            root.integer = 2
+
+            XCTAssertTrue(latest == 2)
+
+            var rootDeallocated = false
+
+            _ = root
+                .rx_deallocated
+                .subscribeCompleted {
+                    rootDeallocated = true
+            }
+            
+            root = nil
+            
+            XCTAssertTrue(latest == nil)
+            XCTAssertTrue(rootDeallocated)
+        }
+
+        func testObserveWeak_ObserveUIntegerRepresentable() {
+            var root: HasStrongProperty! = HasStrongProperty()
+
+            var latest: UInt?
+
+            XCTAssertTrue(latest == nil)
+
+            _ = root
+                .rx_observeWeakly(UInt.self, "uinteger")
+                .subscribeNext { n in
+                    latest = n
+            }
+
+            XCTAssertTrue(latest == 1)
+
+            root.uinteger = 2
+
+            XCTAssertTrue(latest == 2)
+
+            var rootDeallocated = false
+
+            _ = root
+                .rx_deallocated
+                .subscribeCompleted {
+                    rootDeallocated = true
+            }
+
+            root = nil
+
+            XCTAssertTrue(latest == nil)
+            XCTAssertTrue(rootDeallocated)
+        }
+    }
+#endif
+
+// MARK: RawRepresentable
+extension KVOObservableTests {
+    func testObserve_ObserveIntEnum() {
+        var root: HasStrongProperty! = HasStrongProperty()
+
+        var latest: IntEnum?
+
+        XCTAssertTrue(latest == nil)
+
+        let disposable = root.rx_observe(IntEnum.self, "intEnum")
+            .subscribeNext { n in
+                latest = n
+            }
+        XCTAssertTrue(latest == .One)
+
+        root.intEnum = .Two
+
+        XCTAssertTrue(latest == .Two)
+
+        var rootDeallocated = false
+
+        _ = root
+            .rx_deallocated
+            .subscribeCompleted {
+                rootDeallocated = true
+            }
+
+        root = nil
+
+        XCTAssertTrue(latest == .Two)
+        XCTAssertTrue(!rootDeallocated)
+
+        disposable.dispose()
+    }
+
+    func testObserve_ObserveInt32Enum() {
+        var root: HasStrongProperty! = HasStrongProperty()
+
+        var latest: Int32Enum?
+
+        XCTAssertTrue(latest == nil)
+
+        let disposable = root.rx_observe(Int32Enum.self, "int32Enum")
+            .subscribeNext { n in
+                latest = n
+        }
+        XCTAssertTrue(latest == .One)
+
+        root.int32Enum = .Two
+
+        XCTAssertTrue(latest == .Two)
+
+        var rootDeallocated = false
+
+        _ = root
+            .rx_deallocated
+            .subscribeCompleted {
+                rootDeallocated = true
+        }
+
+        root = nil
+
+        XCTAssertTrue(latest == .Two)
+        XCTAssertTrue(!rootDeallocated)
+        
+        disposable.dispose()
+    }
+
+    func testObserve_ObserveInt64Enum() {
+        var root: HasStrongProperty! = HasStrongProperty()
+
+        var latest: Int64Enum?
+
+        XCTAssertTrue(latest == nil)
+
+        let disposable = root.rx_observe(Int64Enum.self, "int64Enum")
+            .subscribeNext { n in
+                latest = n
+        }
+        XCTAssertTrue(latest == .One)
+
+        root.int64Enum = .Two
+
+        XCTAssertTrue(latest == .Two)
+
+        var rootDeallocated = false
+
+        _ = root
+            .rx_deallocated
+            .subscribeCompleted {
+                rootDeallocated = true
+        }
+
+        root = nil
+
+        XCTAssertTrue(latest == .Two)
+        XCTAssertTrue(!rootDeallocated)
+        
+        disposable.dispose()
+    }
+
+
+    func testObserve_ObserveUIntEnum() {
+        var root: HasStrongProperty! = HasStrongProperty()
+
+        var latest: UIntEnum?
+
+        XCTAssertTrue(latest == nil)
+
+        let disposable = root.rx_observe(UIntEnum.self, "uintEnum")
+            .subscribeNext { n in
+                latest = n
+            }
+        XCTAssertTrue(latest == .One)
+
+        root.uintEnum = .Two
+
+        XCTAssertTrue(latest == .Two)
+
+        var rootDeallocated = false
+
+        _ = root
+            .rx_deallocated
+            .subscribeCompleted {
+                rootDeallocated = true
+            }
+
+        root = nil
+
+        XCTAssertTrue(latest == .Two)
+        XCTAssertTrue(!rootDeallocated)
+
+        disposable.dispose()
+    }
+
+    func testObserve_ObserveUInt32Enum() {
+        var root: HasStrongProperty! = HasStrongProperty()
+
+        var latest: UInt32Enum?
+
+        XCTAssertTrue(latest == nil)
+
+        let disposable = root.rx_observe(UInt32Enum.self, "uint32Enum")
+            .subscribeNext { n in
+                latest = n
+        }
+        XCTAssertTrue(latest == .One)
+
+        root.uint32Enum = .Two
+
+        XCTAssertTrue(latest == .Two)
+
+        var rootDeallocated = false
+
+        _ = root
+            .rx_deallocated
+            .subscribeCompleted {
+                rootDeallocated = true
+        }
+
+        root = nil
+
+        XCTAssertTrue(latest == .Two)
+        XCTAssertTrue(!rootDeallocated)
+        
+        disposable.dispose()
+    }
+
+    func testObserve_ObserveUInt64Enum() {
+        var root: HasStrongProperty! = HasStrongProperty()
+
+        var latest: UInt64Enum?
+
+        XCTAssertTrue(latest == nil)
+
+        let disposable = root.rx_observe(UInt64Enum.self, "uint64Enum")
+            .subscribeNext { n in
+                latest = n
+        }
+        XCTAssertTrue(latest == .One)
+
+        root.uint64Enum = .Two
+
+        XCTAssertTrue(latest == .Two)
+
+        var rootDeallocated = false
+
+        _ = root
+            .rx_deallocated
+            .subscribeCompleted {
+                rootDeallocated = true
+        }
+
+        root = nil
+
+        XCTAssertTrue(latest == .Two)
+        XCTAssertTrue(!rootDeallocated)
+        
+        disposable.dispose()
+    }
+}
+
+#if !DISABLE_SWIZZLING
+extension KVOObservableTests {
+    func testObserveWeak_ObserveIntEnum() {
+        var root: HasStrongProperty! = HasStrongProperty()
+
+        var latest: IntEnum?
+
+        XCTAssertTrue(latest == nil)
+
+        _ = root
+            .rx_observeWeakly(IntEnum.self, "intEnum")
+            .subscribeNext { n in
+                latest = n
+            }
+        XCTAssertTrue(latest == .One)
+
+        root.intEnum = .Two
+
+        XCTAssertTrue(latest == .Two)
+
+        var rootDeallocated = false
+
+        _ = root
+            .rx_deallocated
+            .subscribeCompleted {
+                rootDeallocated = true
+            }
+
+        root = nil
+
+        XCTAssertTrue(latest == nil)
+        XCTAssertTrue(rootDeallocated)
+    }
+
+    func testObserveWeak_ObserveInt32Enum() {
+        var root: HasStrongProperty! = HasStrongProperty()
+
+        var latest: Int32Enum?
+
+        XCTAssertTrue(latest == nil)
+
+        _ = root
+            .rx_observeWeakly(Int32Enum.self, "int32Enum")
+            .subscribeNext { n in
+                latest = n
+        }
+        XCTAssertTrue(latest == .One)
+
+        root.int32Enum = .Two
+
+        XCTAssertTrue(latest == .Two)
+
+        var rootDeallocated = false
+
+        _ = root
+            .rx_deallocated
+            .subscribeCompleted {
+                rootDeallocated = true
+        }
+
+        root = nil
+
+        XCTAssertTrue(latest == nil)
+        XCTAssertTrue(rootDeallocated)
+    }
+
+    func testObserveWeak_ObserveInt64Enum() {
+        var root: HasStrongProperty! = HasStrongProperty()
+
+        var latest: Int64Enum?
+
+        XCTAssertTrue(latest == nil)
+
+        _ = root
+            .rx_observeWeakly(Int64Enum.self, "int64Enum")
+            .subscribeNext { n in
+                latest = n
+        }
+        XCTAssertTrue(latest == .One)
+
+        root.int64Enum = .Two
+
+        XCTAssertTrue(latest == .Two)
+
+        var rootDeallocated = false
+
+        _ = root
+            .rx_deallocated
+            .subscribeCompleted {
+                rootDeallocated = true
+        }
+
+        root = nil
+
+        XCTAssertTrue(latest == nil)
+        XCTAssertTrue(rootDeallocated)
+    }
+
+    func testObserveWeak_ObserveUIntEnum() {
+        var root: HasStrongProperty! = HasStrongProperty()
+
+        var latest: UIntEnum?
+
+        XCTAssertTrue(latest == nil)
+
+        _ = root
+            .rx_observeWeakly(UIntEnum.self, "uintEnum")
+            .subscribeNext { n in
+                latest = n
+            }
+        XCTAssertTrue(latest == .One)
+
+        root.uintEnum = .Two
+
+        XCTAssertTrue(latest == .Two)
+
+        var rootDeallocated = false
+
+        _ = root
+            .rx_deallocated
+            .subscribeCompleted {
+                rootDeallocated = true
+            }
+
+        root = nil
+
+        XCTAssertTrue(latest == nil)
+        XCTAssertTrue(rootDeallocated)
+    }
+
+    func testObserveWeak_ObserveUInt32Enum() {
+        var root: HasStrongProperty! = HasStrongProperty()
+
+        var latest: UInt32Enum?
+
+        XCTAssertTrue(latest == nil)
+
+        _ = root
+            .rx_observeWeakly(UInt32Enum.self, "uint32Enum")
+            .subscribeNext { n in
+                latest = n
+        }
+        XCTAssertTrue(latest == .One)
+
+        root.uint32Enum = .Two
+
+        XCTAssertTrue(latest == .Two)
+
+        var rootDeallocated = false
+
+        _ = root
+            .rx_deallocated
+            .subscribeCompleted {
+                rootDeallocated = true
+        }
+
+        root = nil
+
+        XCTAssertTrue(latest == nil)
+        XCTAssertTrue(rootDeallocated)
+    }
+
+    func testObserveWeak_ObserveUInt64Enum() {
+        var root: HasStrongProperty! = HasStrongProperty()
+
+        var latest: UInt32Enum?
+
+        XCTAssertTrue(latest == nil)
+
+        _ = root
+            .rx_observeWeakly(UInt32Enum.self, "uint64Enum")
+            .subscribeNext { n in
+                latest = n
+        }
+        XCTAssertTrue(latest == .One)
+
+        root.uint64Enum = .Two
+
+        XCTAssertTrue(latest == .Two)
+
+        var rootDeallocated = false
+
+        _ = root
+            .rx_deallocated
+            .subscribeCompleted {
+                rootDeallocated = true
+        }
+
+        root = nil
+
+        XCTAssertTrue(latest == nil)
+        XCTAssertTrue(rootDeallocated)
+    }
+}
+#endif
+
+// MARK: Deprecated
+extension KVOObservableTests {
+    func testObserve_deprecated_ObserveCGRect() {
+        var root: HasStrongProperty! = HasStrongProperty()
+
+        let latest = RxMutableBox<CGRect?>(nil)
+
+        XCTAssertTrue(latest.value == nil)
+
+        let d = root.rx_observe("frame")
+            .subscribeNext { (n: CGRect?) in
+                latest.value = n
+        }
+
+        defer {
+            d.dispose()
+        }
+
+        XCTAssertTrue(latest.value == root.frame)
+
+        root.frame = CGRectMake(-2, 0, 0, 1)
+
+        XCTAssertTrue(latest.value == CGRectMake(-2, 0, 0, 1))
+
+        var rootDeallocated = false
+
+        _ = root
+            .rx_deallocated
+            .subscribeCompleted {
+                rootDeallocated = true
+        }
+
+        root = nil
+
+        XCTAssertTrue(latest.value == CGRectMake(-2, 0, 0, 1))
+        XCTAssertTrue(!rootDeallocated)
+    }
+
+    func testObserve_deprecated_ObserveCGSize() {
+        var root: HasStrongProperty! = HasStrongProperty()
+
+        let latest = RxMutableBox<CGSize?>(nil)
+
+        XCTAssertTrue(latest.value == nil)
+
+        let d = root.rx_observe("size")
+            .subscribeNext { (n: CGSize?) in
+                latest.value = n
+        }
+
+        defer {
+            d.dispose()
+        }
+
+        XCTAssertTrue(latest.value == root.size)
+
+        root.size = CGSizeMake(56, 1)
+
+        XCTAssertTrue(latest.value == CGSizeMake(56, 1))
+
+        var rootDeallocated = false
+
+        _ = root
+            .rx_deallocated
+            .subscribeCompleted {
+                rootDeallocated = true
+        }
+
+        root = nil
+
+        XCTAssertTrue(latest.value == CGSizeMake(56, 1))
+        XCTAssertTrue(!rootDeallocated)
+    }
+
+    func testObserve_deprecated_ObserveCGPoint() {
+        var root: HasStrongProperty! = HasStrongProperty()
+
+        let latest = RxMutableBox<CGPoint?>(nil)
+
+        XCTAssertTrue(latest.value == nil)
+
+        let d = root.rx_observe("point")
+            .subscribeNext { (n: CGPoint?) in
+                latest.value = n
+        }
+        defer {
+            d.dispose()
+        }
+
+        XCTAssertTrue(latest.value == root.point)
+
+        root.point = CGPoint(x: -100, y: 1)
+
+        XCTAssertTrue(latest.value == CGPoint(x: -100, y: 1))
+
+        var rootDeallocated = false
+
+        _ = root
+            .rx_deallocated
+            .subscribeCompleted {
+                rootDeallocated = true
+        }
+
+        root = nil
+
+        XCTAssertTrue(latest.value == CGPoint(x: -100, y: 1))
+        XCTAssertTrue(!rootDeallocated)
+    }
+}
+
+#if !DISABLE_SWIZZLING
+extension KVOObservableTests {
+    func testObserveWeak_deprecated_ObserveCGRect() {
+        var root: HasStrongProperty! = HasStrongProperty()
+
+        let latest = RxMutableBox<CGRect?>(nil)
+
+        XCTAssertTrue(latest.value == nil)
+
+        _ = root
+            .rx_observeWeakly("frame")
+            .subscribeNext { (n: CGRect?) in
+                latest.value = n
+        }
+        XCTAssertTrue(latest.value == root.frame)
+
+        root.frame = CGRectMake(-2, 0, 0, 1)
+
+        XCTAssertTrue(latest.value == CGRectMake(-2, 0, 0, 1))
+
+        var rootDeallocated = false
+
+        _ = root
+            .rx_deallocated
+            .subscribeCompleted {
+                rootDeallocated = true
+        }
+
+        root = nil
+
+        XCTAssertTrue(latest.value == nil)
+        XCTAssertTrue(rootDeallocated)
+    }
+
+    func testObserveWeak_deprecated_ObserveCGSize() {
+        var root: HasStrongProperty! = HasStrongProperty()
+
+        let latest = RxMutableBox<CGSize?>(nil)
+
+        XCTAssertTrue(latest.value == nil)
+
+        _ = root
+            .rx_observeWeakly("size")
+            .subscribeNext { (n: CGSize?) in
+                latest.value = n
+        }
+        XCTAssertTrue(latest.value == root.size)
+
+        root.size = CGSizeMake(56, 1)
+
+        XCTAssertTrue(latest.value == CGSizeMake(56, 1))
+
+        var rootDeallocated = false
+
+        _ = root
+            .rx_deallocated
+            .subscribeCompleted {
+                rootDeallocated = true
+        }
+
+        root = nil
+
+        XCTAssertTrue(latest.value == nil)
+        XCTAssertTrue(rootDeallocated)
+    }
+
+    func testObserveWeak_deprecated_ObserveCGPoint() {
+        var root: HasStrongProperty! = HasStrongProperty()
+
+        let latest = RxMutableBox<CGPoint?>(nil)
+
+        XCTAssertTrue(latest.value == nil)
+
+        _ = root
+            .rx_observeWeakly("point")
+            .subscribeNext { (n: CGPoint?) in
+                latest.value = n
+        }
+
+        XCTAssertTrue(latest.value == root.point)
+
+        root.point = CGPoint(x: -100, y: 1)
+
+        XCTAssertTrue(latest.value == CGPoint(x: -100, y: 1))
+
+        var rootDeallocated = false
+
+        _ = root
+            .rx_deallocated
+            .subscribeCompleted {
+                rootDeallocated = true
+        }
+
+        root = nil
+
+        XCTAssertTrue(latest.value == nil)
         XCTAssertTrue(rootDeallocated)
     }
 }

@@ -107,6 +107,11 @@
 		C83367231AD029AE00C668A7 /* Example.swift in Sources */ = {isa = PBXBuildFile; fileRef = C833670F1AD029AE00C668A7 /* Example.swift */; };
 		C83367241AD029AE00C668A7 /* HtmlParsing.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83367111AD029AE00C668A7 /* HtmlParsing.swift */; };
 		C83367251AD029AE00C668A7 /* ImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83367121AD029AE00C668A7 /* ImageService.swift */; };
+		C83974121BF77406004F02CC /* KVORepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C839740F1BF77406004F02CC /* KVORepresentable.swift */; };
+		C83974131BF77406004F02CC /* KVORepresentable+CoreGraphics.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83974101BF77406004F02CC /* KVORepresentable+CoreGraphics.swift */; };
+		C83974141BF77406004F02CC /* KVORepresentable+Swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83974111BF77406004F02CC /* KVORepresentable+Swift.swift */; };
+		C83974231BF77413004F02CC /* NSObject+Rx+KVORepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83974211BF77413004F02CC /* NSObject+Rx+KVORepresentable.swift */; };
+		C83974241BF77413004F02CC /* NSObject+Rx+RawRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83974221BF77413004F02CC /* NSObject+Rx+RawRepresentable.swift */; };
 		C84B91381B8A282000C9CCCF /* RxTableViewSectionedAnimatedDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88C78631B3EB0A00061C5AB /* RxTableViewSectionedAnimatedDataSource.swift */; };
 		C84B91391B8A282000C9CCCF /* RxTableViewSectionedDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88C78641B3EB0A00061C5AB /* RxTableViewSectionedDataSource.swift */; };
 		C84B913A1B8A282000C9CCCF /* RxTableViewSectionedReloadDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88C78651B3EB0A00061C5AB /* RxTableViewSectionedReloadDataSource.swift */; };
@@ -521,6 +526,11 @@
 		C833670F1AD029AE00C668A7 /* Example.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Example.swift; sourceTree = "<group>"; };
 		C83367111AD029AE00C668A7 /* HtmlParsing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HtmlParsing.swift; sourceTree = "<group>"; };
 		C83367121AD029AE00C668A7 /* ImageService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageService.swift; sourceTree = "<group>"; };
+		C839740F1BF77406004F02CC /* KVORepresentable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KVORepresentable.swift; sourceTree = "<group>"; };
+		C83974101BF77406004F02CC /* KVORepresentable+CoreGraphics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "KVORepresentable+CoreGraphics.swift"; sourceTree = "<group>"; };
+		C83974111BF77406004F02CC /* KVORepresentable+Swift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "KVORepresentable+Swift.swift"; sourceTree = "<group>"; };
+		C83974211BF77413004F02CC /* NSObject+Rx+KVORepresentable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSObject+Rx+KVORepresentable.swift"; sourceTree = "<group>"; };
+		C83974221BF77413004F02CC /* NSObject+Rx+RawRepresentable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSObject+Rx+RawRepresentable.swift"; sourceTree = "<group>"; };
 		C84CC52D1BDC344100E06A64 /* ElementAt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElementAt.swift; sourceTree = "<group>"; };
 		C84CC56B1BDD08F500E06A64 /* LockOwnerType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LockOwnerType.swift; sourceTree = "<group>"; };
 		C84CC56C1BDD08F500E06A64 /* SynchronizedDisposeType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SynchronizedDisposeType.swift; sourceTree = "<group>"; };
@@ -1293,6 +1303,9 @@
 		C894650D1BC6C2BC0055219D /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				C839740F1BF77406004F02CC /* KVORepresentable.swift */,
+				C83974101BF77406004F02CC /* KVORepresentable+CoreGraphics.swift */,
+				C83974111BF77406004F02CC /* KVORepresentable+Swift.swift */,
 				C894650E1BC6C2BC0055219D /* _RX.h */,
 				C894650F1BC6C2BC0055219D /* _RX.m */,
 				C89465101BC6C2BC0055219D /* _RXDelegateProxy.h */,
@@ -1328,6 +1341,8 @@
 		C89465241BC6C2BC0055219D /* Observables */ = {
 			isa = PBXGroup;
 			children = (
+				C83974211BF77413004F02CC /* NSObject+Rx+KVORepresentable.swift */,
+				C83974221BF77413004F02CC /* NSObject+Rx+RawRepresentable.swift */,
 				C89465251BC6C2BC0055219D /* Implementations */,
 				C894652B1BC6C2BC0055219D /* NSNotificationCenter+Rx.swift */,
 				C894652C1BC6C2BC0055219D /* NSObject+Rx+CoreGraphics.swift */,
@@ -1721,6 +1736,7 @@
 				C89464A51BC6C2B00055219D /* Disposable.swift in Sources */,
 				C89464F91BC6C2B00055219D /* ObserverType+Extensions.swift in Sources */,
 				C84CC58D1BDD486300E06A64 /* SynchronizedOnType.swift in Sources */,
+				C83974121BF77406004F02CC /* KVORepresentable.swift in Sources */,
 				C89464DC1BC6C2B00055219D /* Scan.swift in Sources */,
 				C89464B21BC6C2B00055219D /* StableCompositeDisposable.swift in Sources */,
 				C89464AE1BC6C2B00055219D /* ScheduledDisposable.swift in Sources */,
@@ -1730,6 +1746,7 @@
 				C894658D1BC6C2BC0055219D /* UIActionSheet+Rx.swift in Sources */,
 				C89464EA1BC6C2B00055219D /* Zip.swift in Sources */,
 				C89464E51BC6C2B00055219D /* Throttle.swift in Sources */,
+				C83974241BF77413004F02CC /* NSObject+Rx+RawRepresentable.swift in Sources */,
 				C89465831BC6C2BC0055219D /* RxTableViewDataSourceType.swift in Sources */,
 				C80DDE881BCDAA0F006A1832 /* SkipWhile.swift in Sources */,
 				C89464ED1BC6C2B00055219D /* Observable+Concurrency.swift in Sources */,
@@ -1774,6 +1791,7 @@
 				C89464B71BC6C2B00055219D /* Observable+Extensions.swift in Sources */,
 				C89464A01BC6C2B00055219D /* Lock.swift in Sources */,
 				CB883B601BE3AC72000AC2EE /* Window.swift in Sources */,
+				C83974141BF77406004F02CC /* KVORepresentable+Swift.swift in Sources */,
 				C89464C91BC6C2B00055219D /* Do.swift in Sources */,
 				C89464A41BC6C2B00055219D /* Queue.swift in Sources */,
 				C89464B91BC6C2B00055219D /* ObservableConvertibleType.swift in Sources */,
@@ -1817,6 +1835,7 @@
 				C809E97E1BE697100058D948 /* UIImage+Extensions.swift in Sources */,
 				C89464E61BC6C2B00055219D /* Timer.swift in Sources */,
 				C8297E3E1B6CF905000589EA /* DetailViewController.swift in Sources */,
+				C83974131BF77406004F02CC /* KVORepresentable+CoreGraphics.swift in Sources */,
 				C8297E3F1B6CF905000589EA /* SectionModelType.swift in Sources */,
 				C8297E401B6CF905000589EA /* ImageService.swift in Sources */,
 				C89464AD1BC6C2B00055219D /* NopDisposable.swift in Sources */,
@@ -1852,6 +1871,7 @@
 				C8297E451B6CF905000589EA /* SectionedViewType.swift in Sources */,
 				C89464D51BC6C2B00055219D /* ObserveOnSerialDispatchQueue.swift in Sources */,
 				C894658E1BC6C2BC0055219D /* UIAlertView+Rx.swift in Sources */,
+				C83974231BF77413004F02CC /* NSObject+Rx+KVORepresentable.swift in Sources */,
 				C8297E461B6CF905000589EA /* Example.swift in Sources */,
 				C89465081BC6C2B00055219D /* PublishSubject.swift in Sources */,
 				C89464FC1BC6C2B00055219D /* RxBox.swift in Sources */,
