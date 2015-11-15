@@ -3,6 +3,41 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [2.0.0-beta.3](https://github.com/ReactiveX/RxSwift/releases/tag/2.0.0-beta.3)
+
+### Updated
+
+* Improves KVO mechanism.
+  * Type of observed object is now argument `view.rx_observe(CGRect.self, "frame")`
+  * Support for observing ObjC bridged enums and `RawRepresentable` protocol
+  * Support for easier extending of KVO using `KVORepresentable` protocol
+  * Deprecates KVO extensions that don't accept type as first argument in favor of ones that do.
+* Adds `flatMapLatest` (also added to `Driver` unit).
+* Adds `flatMapFirst` operator (also added to `Driver` unit).
+* Adds `retryWhen` operator.
+* Adds `window` operator.
+* Adds `single` operator.
+* Adds `single` (blocking version) operator.
+* Adds `rx_primaryAction` on `UIButton` for `tvOS`.
+* Transforms error types in `RxSwift`/`RxCocoa` projects from `NSError`s to Swift enum types.
+  * `RxError`
+  * `RxCocoaError`
+  * `RxCocoaURLError`
+  * ...
+* Optimizes consecutive map operators. For example `map(validate1).map(validate2).map(parse)` is now internally optimized to one `map` operator.
+* Adds scheduler overloads for `just`, `sequenceOf`, `toObservable`.
+* Deprecates `asObservable` on `SequenceType` in favor of `toObservable`.
+* Adds special overload of `toObservable` for `Array`.
+* Improves table view animated data source example.
+* Polishes `RxDataSourceStarterKit`, adds `differentiateForSectionedView` operator, `rx_itemsAnimatedWithDataSource` extension.
+* Makes blocking operators run current thread runloop while blocking and thus disabling deadlocks.
+
+### Fixed
+
+* Fixes example with `Variable` in playgrounds so it less confusing regarding memory management.
+* Fixes `UIImageView` extensions to use `UIImage?` instead of `UIImage!`.
+* Changes improper usage of `CustomStringConvertible` with `CustomDebugStringConvertible`.
+
 ## [2.0.0-beta.2](https://github.com/ReactiveX/RxSwift/releases/tag/2.0.0-beta.2)
 
 #### Updated

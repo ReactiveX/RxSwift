@@ -26,20 +26,24 @@ Operators are stateless by default.
  * [`timer`](http://reactivex.io/documentation/operators/timer.html)
 
 #### Transforming Observables
-  * [`flatMap`](http://reactivex.io/documentation/operators/flatmap.html)
-  * [`map` / `select`](http://reactivex.io/documentation/operators/map.html)
-  * [`scan`](http://reactivex.io/documentation/operators/scan.html)
   * [`buffer`](http://reactivex.io/documentation/operators/buffer.html)
+  * [`flatMap`](http://reactivex.io/documentation/operators/flatmap.html)
+  * [`flatMapFirst`](http://reactivex.io/documentation/operators/flatmap.html)
+  * [`flatMapLatest`](http://reactivex.io/documentation/operators/flatmap.html)
+  * [`map`](http://reactivex.io/documentation/operators/map.html)
+  * [`scan`](http://reactivex.io/documentation/operators/scan.html)
+  * [`window`](http://reactivex.io/documentation/operators/window.html)
 
 #### Filtering Observables
   * [`debounce` / `throttle`](http://reactivex.io/documentation/operators/debounce.html)
   * [`distinctUntilChanged`](http://reactivex.io/documentation/operators/distinct.html)
   * [`elementAt`](http://reactivex.io/documentation/operators/elementat.html)
-  * [`filter` / `where`](http://reactivex.io/documentation/operators/filter.html)
+  * [`filter`](http://reactivex.io/documentation/operators/filter.html)
   * [`sample`](http://reactivex.io/documentation/operators/sample.html)
   * [`skip`](http://reactivex.io/documentation/operators/skip.html)
   * [`take`](http://reactivex.io/documentation/operators/take.html)
   * [`takeLast`](http://reactivex.io/documentation/operators/takelast.html)
+  * [`single`](http://reactivex.io/documentation/operators/first.html)
 
 #### Combining Observables
 
@@ -53,6 +57,7 @@ Operators are stateless by default.
 
  * [`catch`](http://reactivex.io/documentation/operators/catch.html)
  * [`retry`](http://reactivex.io/documentation/operators/retry.html)
+ * [`retryWhen`](http://reactivex.io/documentation/operators/retry.html)
 
 #### Observable Utility Operators
 
