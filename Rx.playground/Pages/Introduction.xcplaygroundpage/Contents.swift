@@ -81,8 +81,8 @@ example("sequenceOf") {
 `from` creates a sequence from `SequenceType`
 */
 
-example("from") {
-    let sequenceFromArray = [1, 2, 3, 4, 5].asObservable()
+example("toObservable") {
+    let sequenceFromArray = [1, 2, 3, 4, 5].toObservable()
 
     let subscription = sequenceFromArray
         .subscribe { event in

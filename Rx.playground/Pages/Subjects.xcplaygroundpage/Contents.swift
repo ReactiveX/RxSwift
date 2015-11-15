@@ -7,8 +7,8 @@ import RxSwift
 A Subject is a sort of bridge or proxy that is available in some implementations of ReactiveX that acts both as an observer and as an Observable. Because it is an observer, it can subscribe to one or more Observables, and because it is an Observable, it can pass through the items it observes by reemitting them, and it can also emit new items.
 */
 
-func writeSequenceToConsole<O: ObservableType>(name: String, sequence: O) {
-    _ = sequence
+func writeSequenceToConsole<O: ObservableType>(name: String, sequence: O) -> Disposable {
+    return sequence
         .subscribe { e in
             print("Subscription: \(name), event: \(e)")
         }
@@ -27,11 +27,13 @@ func writeSequenceToConsole<O: ObservableType>(name: String, sequence: O) {
 
 */
 example("PublishSubject") {
+    let disposeBag = DisposeBag()
+
     let subject = PublishSubject<String>()
-    writeSequenceToConsole("1", sequence: subject)
+    writeSequenceToConsole("1", sequence: subject).addDisposableTo(disposeBag)
     subject.on(.Next("a"))
     subject.on(.Next("b"))
-    writeSequenceToConsole("2", sequence: subject)
+    writeSequenceToConsole("2", sequence: subject).addDisposableTo(disposeBag)
     subject.on(.Next("c"))
     subject.on(.Next("d"))
 }
@@ -46,12 +48,13 @@ example("PublishSubject") {
 ![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/replaysubject.png)
 */
 example("ReplaySubject") {
+    let disposeBag = DisposeBag()
     let subject = ReplaySubject<String>.create(bufferSize: 1)
 
-    writeSequenceToConsole("1", sequence: subject)
+    writeSequenceToConsole("1", sequence: subject).addDisposableTo(disposeBag)
     subject.on(.Next("a"))
     subject.on(.Next("b"))
-    writeSequenceToConsole("2", sequence: subject)
+    writeSequenceToConsole("2", sequence: subject).addDisposableTo(disposeBag)
     subject.on(.Next("c"))
     subject.on(.Next("d"))
 }
@@ -68,11 +71,13 @@ When an observer subscribes to a `BehaviorSubject`, it begins by emitting the it
 ![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/behaviorsubject_error.png)
 */
 example("BehaviorSubject") {
+    let disposeBag = DisposeBag()
+
     let subject = BehaviorSubject(value: "z")
-    writeSequenceToConsole("1", sequence: subject)
+    writeSequenceToConsole("1", sequence: subject).addDisposableTo(disposeBag)
     subject.on(.Next("a"))
     subject.on(.Next("b"))
-    writeSequenceToConsole("2", sequence: subject)
+    writeSequenceToConsole("2", sequence: subject).addDisposableTo(disposeBag)
     subject.on(.Next("c"))
     subject.on(.Next("d"))
     subject.on(.Completed)
@@ -86,11 +91,12 @@ example("BehaviorSubject") {
 
 */
 example("Variable") {
+    let disposeBag = DisposeBag()
     let variable = Variable("z")
-    writeSequenceToConsole("1", sequence: variable)
+    writeSequenceToConsole("1", sequence: variable).addDisposableTo(disposeBag)
     variable.value = "a"
     variable.value = "b"
-    writeSequenceToConsole("2", sequence: variable)
+    writeSequenceToConsole("2", sequence: variable).addDisposableTo(disposeBag)
     variable.value = "c"
     variable.value = "d"
 }
