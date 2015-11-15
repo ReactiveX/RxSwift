@@ -156,7 +156,7 @@ extension ObservableType {
     @warn_unused_result(message="http://git.io/rxs.uo")
     public func map<R>(selector: E throws -> R)
         -> Observable<R> {
-        return Map(source: self.asObservable(), selector: selector)
+        return self.asObservable().composeMap(selector)
     }
 
     /**
@@ -168,7 +168,7 @@ extension ObservableType {
     @warn_unused_result(message="http://git.io/rxs.uo")
     public func mapWithIndex<R>(selector: (E, Int) throws -> R)
         -> Observable<R> {
-        return Map(source: self.asObservable(), selector: selector)
+        return MapWithIndex(source: self.asObservable(), selector: selector)
     }
 }
     

@@ -38,4 +38,14 @@ public class Observable<Element> : ObservableType {
         OSAtomicDecrement32(&resourceCount)
 #endif
     }
+
+    // this is kind of ugly I know :(
+    // Swift compiler reports "Not supported yet" when trying to override protocol extensions, so ¯\_(ツ)_/¯
+
+    /**
+    Optimizations for map operator
+    */
+    internal func composeMap<R>(selector: Element throws -> R) -> Observable<R> {
+        return Map(source: self, selector: selector)
+    }
 }

@@ -19,16 +19,12 @@ class MapSink<SourceType, O : ObserverType> : Sink<O>, ObserverType {
         _parent = parent
         super.init(observer: observer)
     }
-    
-    func performMap(element: SourceType) throws -> ResultType {
-        abstractMethod()
-    }
 
     func on(event: Event<SourceType>) {
         switch event {
         case .Next(let element):
             do {
-                let mappedElement = try performMap(element)
+                let mappedElement = try _parent._selector(element)
                 forwardOn(.Next(mappedElement))
             }
             catch let e {
@@ -45,63 +41,97 @@ class MapSink<SourceType, O : ObserverType> : Sink<O>, ObserverType {
     }
 }
 
-class MapSink1<SourceType, O: ObserverType> : MapSink<SourceType, O> {
+class MapWithIndexSink<SourceType, O : ObserverType> : Sink<O>, ObserverType {
     typealias ResultType = O.E
+    typealias Element = SourceType
+    typealias Parent = MapWithIndex<SourceType, ResultType>
     
-    override init(parent: Map<SourceType, ResultType>, observer: O) {
-        super.init(parent: parent, observer: observer)
+    private let _parent: Parent
+
+    private var _index = 0
+
+    init(parent: Parent, observer: O) {
+        _parent = parent
+        super.init(observer: observer)
     }
-    
-    override func performMap(element: SourceType) throws -> ResultType {
-        return try _parent._selector1!(element)
+
+    func on(event: Event<SourceType>) {
+        switch event {
+        case .Next(let element):
+            do {
+                let mappedElement = try _parent._selector(element, try incrementChecked(&_index))
+                forwardOn(.Next(mappedElement))
+            }
+            catch let e {
+                forwardOn(.Error(e))
+                dispose()
+            }
+        case .Error(let error):
+            forwardOn(.Error(error))
+            dispose()
+        case .Completed:
+            forwardOn(.Completed)
+            dispose()
+        }
     }
 }
 
-class MapSink2<SourceType, O: ObserverType> : MapSink<SourceType, O> {
-    typealias ResultType = O.E
-    
-    private var _index = 0
-    
-    override init(parent: Map<SourceType, ResultType>, observer: O) {
-        super.init(parent: parent, observer: observer)
+class MapWithIndex<SourceType, ResultType> : Producer<ResultType> {
+    typealias Selector = (SourceType, Int) throws -> ResultType
+
+    private let _source: Observable<SourceType>
+
+    private let _selector: Selector
+
+    init(source: Observable<SourceType>, selector: Selector) {
+        _source = source
+        _selector = selector
     }
-    override func performMap(element: SourceType) throws -> ResultType {
-        return try _parent._selector2!(element, try incrementChecked(&_index))
+
+    override func run<O: ObserverType where O.E == ResultType>(observer: O) -> Disposable {
+        let sink = MapWithIndexSink(parent: self, observer: observer)
+        sink.disposable = _source.subscribe(sink)
+        return sink
     }
 }
+
+#if TRACE_RESOURCES
+public var numberOfMapOperators: Int32 = 0
+#endif
 
 class Map<SourceType, ResultType>: Producer<ResultType> {
-    typealias Selector1 = (SourceType) throws -> ResultType
-    typealias Selector2 = (SourceType, Int) throws -> ResultType
-    
+    typealias Selector = (SourceType) throws -> ResultType
+
     private let _source: Observable<SourceType>
-    
-    private let _selector1: Selector1?
-    private let _selector2: Selector2?
-    
-    init(source: Observable<SourceType>, selector: Selector1) {
+
+    private let _selector: Selector
+
+    init(source: Observable<SourceType>, selector: Selector) {
         _source = source
-        _selector1 = selector
-        _selector2 = nil
+        _selector = selector
+
+#if TRACE_RESOURCES
+        OSAtomicIncrement32(&numberOfMapOperators)
+#endif
     }
-    
-    init(source: Observable<SourceType>, selector: Selector2) {
-        _source = source
-        _selector2 = selector
-        _selector1 = nil
+
+    override func composeMap<R>(selector: ResultType throws -> R) -> Observable<R> {
+        let originalSelector = _selector
+        return Map<SourceType, R>(source: _source, selector: { (s: SourceType) throws -> R in
+            let r: ResultType = try originalSelector(s)
+            return try selector(r)
+        })
     }
     
     override func run<O: ObserverType where O.E == ResultType>(observer: O) -> Disposable {
-        if let _ = _selector1 {
-            let sink = MapSink1(parent: self, observer: observer)
-            sink.disposable = _source.subscribe(sink)
-            return sink
-        }
-        else {
-            let sink = MapSink2(parent: self, observer: observer)
-            sink.disposable = _source.subscribe(sink)
-            return sink
-        }
-        
+        let sink = MapSink(parent: self, observer: observer)
+        sink.disposable = _source.subscribe(sink)
+        return sink
     }
+
+    #if TRACE_RESOURCES
+    deinit {
+        OSAtomicDecrement32(&numberOfMapOperators)
+    }
+    #endif
 }

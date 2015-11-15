@@ -701,7 +701,6 @@ extension ObservableStandardSequenceOperatorsTest {
 }
 
 // MARK: map
-// these test are not port from Rx
 extension ObservableStandardSequenceOperatorsTest {
     func testMap_Never() {
         let scheduler = TestScheduler(initialClock: 0)
@@ -1040,6 +1039,271 @@ extension ObservableStandardSequenceOperatorsTest {
                 
             }
     }
+}
+
+// MARK: map compose
+extension ObservableStandardSequenceOperatorsTest {
+    func testMapCompose_Never() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let xs = scheduler.createHotObservable([
+            next(150, 1),
+            ])
+
+        let res = scheduler.start { xs.map { $0 * 10 }.map { $0 + 1 } }
+
+        let correctMessages: [Recorded<Int>] = [
+        ]
+
+        let correctSubscriptions = [
+            Subscription(200, 1000)
+        ]
+
+        XCTAssertEqual(res.messages, correctMessages)
+        XCTAssertEqual(xs.subscriptions, correctSubscriptions)
+    }
+
+    func testMapCompose_Empty() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let xs = scheduler.createHotObservable([
+            next(150, 1),
+            completed(300)
+            ])
+
+        let res = scheduler.start { xs.map { $0 * 10 }.map { $0 + 1 } }
+
+        let correctMessages: [Recorded<Int>] = [
+            completed(300)
+        ]
+
+        let correctSubscriptions = [
+            Subscription(200, 300)
+        ]
+
+        XCTAssertEqual(res.messages, correctMessages)
+        XCTAssertEqual(xs.subscriptions, correctSubscriptions)
+    }
+
+    func testMapCompose_Range() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let xs = scheduler.createHotObservable([
+            next(150, 1),
+            next(210, 0),
+            next(220, 1),
+            next(230, 2),
+            next(240, 4),
+            completed(300)
+            ])
+
+        let res = scheduler.start { xs.map { $0 * 10 }.map { $0 + 1 } }
+
+        let correctMessages: [Recorded<Int>] = [
+            next(210, 0 * 10 + 1),
+            next(220, 1 * 10 + 1),
+            next(230, 2 * 10 + 1),
+            next(240, 4 * 10 + 1),
+            completed(300)
+        ]
+
+        let correctSubscriptions = [
+            Subscription(200, 300)
+        ]
+
+        XCTAssertEqual(res.messages, correctMessages)
+        XCTAssertEqual(xs.subscriptions, correctSubscriptions)
+    }
+
+    func testMapCompose_Error() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let xs = scheduler.createHotObservable([
+            next(150, 1),
+            next(210, 0),
+            next(220, 1),
+            next(230, 2),
+            next(240, 4),
+            error(300, testError)
+            ])
+
+        let res = scheduler.start { xs.map { $0 * 10 }.map { $0 + 1 } }
+
+        let correctMessages: [Recorded<Int>] = [
+            next(210, 0 * 10 + 1),
+            next(220, 1 * 10 + 1),
+            next(230, 2 * 10 + 1),
+            next(240, 4 * 10 + 1),
+            error(300, testError)
+        ]
+
+        let correctSubscriptions = [
+            Subscription(200, 300)
+        ]
+
+        XCTAssertEqual(res.messages, correctMessages)
+        XCTAssertEqual(xs.subscriptions, correctSubscriptions)
+    }
+
+    func testMapCompose_Dispose() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let xs = scheduler.createHotObservable([
+            next(150, 1),
+            next(210, 0),
+            next(220, 1),
+            next(230, 2),
+            next(240, 4),
+            error(300, testError)
+            ])
+
+        let res = scheduler.start(290) { xs.map { $0 * 10 }.map { $0 + 1 } }
+
+        let correctMessages: [Recorded<Int>] = [
+            next(210, 0 * 10 + 1),
+            next(220, 1 * 10 + 1),
+            next(230, 2 * 10 + 1),
+            next(240, 4 * 10 + 1),
+        ]
+
+        let correctSubscriptions = [
+            Subscription(200, 290)
+        ]
+
+        XCTAssertEqual(res.messages, correctMessages)
+        XCTAssertEqual(xs.subscriptions, correctSubscriptions)
+    }
+
+    func testMapCompose_Selector1Throws() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let xs = scheduler.createHotObservable([
+            next(150, 1),
+            next(210, 0),
+            next(220, 1),
+            next(230, 2),
+            next(240, 4),
+            error(300, testError)
+            ])
+
+        let res = scheduler.start {
+            xs
+            .map { x throws -> Int in if x < 2 { return x * 10 } else { throw testError } }
+            .map { $0 + 1 }
+        }
+
+        let correctMessages: [Recorded<Int>] = [
+            next(210, 0 * 10 + 1),
+            next(220, 1 * 10 + 1),
+            error(230, testError)
+        ]
+
+        let correctSubscriptions = [
+            Subscription(200, 230)
+        ]
+
+        XCTAssertEqual(res.messages, correctMessages)
+        XCTAssertEqual(xs.subscriptions, correctSubscriptions)
+    }
+
+    func testMapCompose_Selector2Throws() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let xs = scheduler.createHotObservable([
+            next(150, 1),
+            next(210, 0),
+            next(220, 1),
+            next(230, 2),
+            next(240, 4),
+            error(300, testError)
+            ])
+
+        let res = scheduler.start {
+            xs
+                .map { $0 * 10 }
+                .map { x throws -> Int in if x < 20 { return x + 1 } else { throw testError } }
+        }
+
+        let correctMessages: [Recorded<Int>] = [
+            next(210, 0 * 10 + 1),
+            next(220, 1 * 10 + 1),
+            error(230, testError)
+        ]
+
+        let correctSubscriptions = [
+            Subscription(200, 230)
+        ]
+
+        XCTAssertEqual(res.messages, correctMessages)
+        XCTAssertEqual(xs.subscriptions, correctSubscriptions)
+    }
+
+    #if TRACE_RESOURCES
+    func testMapCompose_OptimizationIsPerformed() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        var checked = false
+        let xs = scheduler.createHotObservable([
+            next(150, 1),
+            next(210, 0),
+            ])
+
+        let res = scheduler.start {
+            xs
+                .map { $0 * 10 }
+                .map { x -> Int in
+                    checked = true
+                    XCTAssertTrue(numberOfMapOperators == 1)
+                    return x + 1
+                }
+        }
+
+        let correctMessages: [Recorded<Int>] = [
+            next(210, 0 * 10 + 1),
+        ]
+
+        let correctSubscriptions = [
+            Subscription(200, 1000)
+        ]
+
+        XCTAssertTrue(checked)
+        XCTAssertEqual(res.messages, correctMessages)
+        XCTAssertEqual(xs.subscriptions, correctSubscriptions)
+    }
+
+    func testMapCompose_OptimizationIsNotPerformed() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        var checked = false
+        let xs = scheduler.createHotObservable([
+            next(150, 1),
+            next(210, 0),
+            ])
+
+        let res = scheduler.start {
+            xs
+                .map { $0 * 10 }
+                .filter { _ in true }
+                .map { x -> Int in
+                    checked = true
+                    XCTAssertTrue(numberOfMapOperators == 2)
+                    return x + 1
+            }
+        }
+
+        let correctMessages: [Recorded<Int>] = [
+            next(210, 0 * 10 + 1),
+        ]
+
+        let correctSubscriptions = [
+            Subscription(200, 1000)
+        ]
+
+        XCTAssertTrue(checked)
+        XCTAssertEqual(res.messages, correctMessages)
+        XCTAssertEqual(xs.subscriptions, correctSubscriptions)
+    }
+    #endif
 }
 
 // MARK: flatMapFirst
