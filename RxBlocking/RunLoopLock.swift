@@ -7,6 +7,9 @@
 //
 
 import Foundation
+#if !RX_NO_MODULE
+    import RxSwift
+#endif
 
 class RunLoopLock : NSObject {
     let currentRunLoop: CFRunLoopRef
@@ -16,7 +19,17 @@ class RunLoopLock : NSObject {
     }
 
     func dispatch(action: () -> ()) {
-        CFRunLoopPerformBlock(currentRunLoop, kCFRunLoopDefaultMode, action)
+        CFRunLoopPerformBlock(currentRunLoop, kCFRunLoopDefaultMode) {
+            if CurrentThreadScheduler.isScheduleRequired {
+                CurrentThreadScheduler.instance.schedule(()) { _ in
+                    action()
+                    return NopDisposable.instance
+                }
+            }
+            else {
+                action()
+            }
+        }
         CFRunLoopWakeUp(currentRunLoop)
     }
 

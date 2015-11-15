@@ -177,6 +177,9 @@ extension BlockingObservable {
         
         lock.dispatch {
             d.disposable = self.source.subscribe { e in
+                if d.disposed {
+                    return
+                }
                 switch e {
                 case .Next(let e):
                     do {
@@ -196,12 +199,10 @@ extension BlockingObservable {
                     return
                 case .Error(let e):
                     error = e
-                    lock.stop()
                 case .Completed:
-                    if error == nil && element == nil {
+                    if element == nil {
                         error = RxError.NoElements
                     }
-                    break
                 }
 
                 lock.stop()
@@ -209,7 +210,6 @@ extension BlockingObservable {
         }
         
         lock.run()
-        
         d.dispose()
         
         if let error = error {

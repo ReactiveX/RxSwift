@@ -225,7 +225,7 @@ extension ObservableBlockingTest {
         catch let e {
             XCTAssertTrue((e as! RxError)._code == RxError.MoreThanOneElement._code)
         }
-        XCTAssertEqual(predicateVals, [42, 43, 44, 45])
+        XCTAssertEqual(predicateVals, [42, 43, 44])
     }
 
     
@@ -247,7 +247,7 @@ extension ObservableBlockingTest {
     func testSingle_predicate_throws() {
         var predicateVals = [Int]()
         do {
-            try (sequenceOf(42, 43, 44, 45) as Observable<Int>).toBlocking().single( { e in
+            try (sequenceOf(42, 43, 44, 45, scheduler: CurrentThreadScheduler.instance) as Observable<Int>).toBlocking().single( { e in
                 predicateVals.append(e)
                 if e < 43 { return false }
                 throw testError
@@ -257,7 +257,7 @@ extension ObservableBlockingTest {
         catch let e {
             XCTAssertTrue(e as NSError === testError)
         }
-        XCTAssertEqual(predicateVals, [42, 43, 44, 45])
+        XCTAssertEqual(predicateVals, [42, 43])
     }
     
     func testSingle_predicate_fail() {
