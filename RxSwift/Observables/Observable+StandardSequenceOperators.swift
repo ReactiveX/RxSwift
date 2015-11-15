@@ -21,7 +21,7 @@ extension ObservableType {
     @warn_unused_result(message="http://git.io/rxs.uo")
     public func filter(predicate: (E) throws -> Bool)
         -> Observable<E> {
-        return Filter(source: self.asObservable(), predicate: predicate)
+        return Filter(source: asObservable(), predicate: predicate)
     }
 }
 
@@ -73,7 +73,7 @@ extension ObservableType {
             return empty()
         }
         else {
-            return TakeCount(source: self.asObservable(), count: count)
+            return TakeCount(source: asObservable(), count: count)
         }
     }
 }
@@ -93,7 +93,7 @@ extension ObservableType {
     @warn_unused_result(message="http://git.io/rxs.uo")
     public func takeLast(count: Int)
         -> Observable<E> {
-        return TakeLast(source: self.asObservable(), count: count)
+        return TakeLast(source: asObservable(), count: count)
     }
 }
 
@@ -111,7 +111,7 @@ extension ObservableType {
     @warn_unused_result(message="http://git.io/rxs.uo")
     public func skip(count: Int)
         -> Observable<E> {
-        return SkipCount(source: self.asObservable(), count: count)
+        return SkipCount(source: asObservable(), count: count)
     }
 }
 
@@ -127,7 +127,7 @@ extension ObservableType {
     */
     @warn_unused_result(message="http://git.io/rxs.uo")
     public func skipWhile(predicate: (E) throws -> Bool) -> Observable<E> {
-        return SkipWhile(source: self.asObservable(), predicate: predicate)
+        return SkipWhile(source: asObservable(), predicate: predicate)
     }
    
     /**
@@ -139,7 +139,7 @@ extension ObservableType {
     */
     @warn_unused_result(message="http://git.io/rxs.uo")
     public func skipWhileWithIndex(predicate: (E, Int) throws -> Bool) -> Observable<E> {
-        return SkipWhile(source: self.asObservable(), predicate: predicate)
+        return SkipWhile(source: asObservable(), predicate: predicate)
     }
 }
 
@@ -168,7 +168,7 @@ extension ObservableType {
     @warn_unused_result(message="http://git.io/rxs.uo")
     public func mapWithIndex<R>(selector: (E, Int) throws -> R)
         -> Observable<R> {
-        return MapWithIndex(source: self.asObservable(), selector: selector)
+        return MapWithIndex(source: asObservable(), selector: selector)
     }
 }
     
@@ -185,7 +185,7 @@ extension ObservableType {
     @warn_unused_result(message="http://git.io/rxs.uo")
     public func flatMap<O: ObservableConvertibleType>(selector: (E) throws -> O)
         -> Observable<O.E> {
-        return FlatMap(source: self.asObservable(), selector: selector)
+        return FlatMap(source: asObservable(), selector: selector)
     }
 
     /**
@@ -197,7 +197,7 @@ extension ObservableType {
     @warn_unused_result(message="http://git.io/rxs.uo")
     public func flatMapWithIndex<O: ObservableConvertibleType>(selector: (E, Int) throws -> O)
         -> Observable<O.E> {
-        return FlatMap(source: self.asObservable(), selector: selector)
+        return FlatMapWithIndex(source: asObservable(), selector: selector)
     }
 }
 
@@ -214,7 +214,7 @@ extension ObservableType {
     @warn_unused_result(message="http://git.io/rxs.uo")
     public func flatMapFirst<O: ObservableConvertibleType>(selector: (E) throws -> O)
         -> Observable<O.E> {
-        return FlatMap(source: asObservable(), selector: selector, onlyFirst: true)
+        return FlatMapFirst(source: asObservable(), selector: selector)
     }
 }
 
@@ -231,7 +231,7 @@ extension ObservableType {
     @warn_unused_result(message="http://git.io/rxs.uo")
     public func elementAt(index: Int)
         -> Observable<E> {
-            return ElementAt(source: self.asObservable(), index: index, throwOnEmpty: true)
+        return ElementAt(source: asObservable(), index: index, throwOnEmpty: true)
     }
 }
 
@@ -248,7 +248,7 @@ extension ObservableType {
     @warn_unused_result(message="http://git.io/rxs.uo")
     public func single()
         -> Observable<E> {
-            return SingleAsync(source: self.asObservable())
+        return SingleAsync(source: asObservable())
     }
     
     /**
@@ -261,7 +261,7 @@ extension ObservableType {
     @warn_unused_result(message="http://git.io/rxs.uo")
     public func single(predicate: (E) throws -> Bool)
         -> Observable<E> {
-            return SingleAsync(source: self.asObservable(), predicate: predicate)
+        return SingleAsync(source: asObservable(), predicate: predicate)
     }
 
 }

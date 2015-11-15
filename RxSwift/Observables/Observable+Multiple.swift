@@ -113,7 +113,7 @@ extension ObservableType where E : ObservableConvertibleType {
     */
     @warn_unused_result(message="http://git.io/rxs.uo")
     public func merge() -> Observable<E.E> {
-        return Merge(sources: self.asObservable(), maxConcurrent: 0)
+        return Merge(source: self.asObservable())
     }
 
     /**
@@ -125,7 +125,7 @@ extension ObservableType where E : ObservableConvertibleType {
     @warn_unused_result(message="http://git.io/rxs.uo")
     public func merge(maxConcurrent maxConcurrent: Int)
         -> Observable<E.E> {
-        return Merge(sources: self.asObservable(), maxConcurrent: maxConcurrent)
+        return MergeLimited(source: self.asObservable(), maxConcurrent: maxConcurrent)
     }
 }
 

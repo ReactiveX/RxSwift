@@ -86,8 +86,6 @@
 		C8093D1C1B8A72BE0088E94D /* Do.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C791B8A72BE0088E94D /* Do.swift */; };
 		C8093D1D1B8A72BE0088E94D /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C7A1B8A72BE0088E94D /* Filter.swift */; };
 		C8093D1E1B8A72BE0088E94D /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C7A1B8A72BE0088E94D /* Filter.swift */; };
-		C8093D1F1B8A72BE0088E94D /* FlatMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C7B1B8A72BE0088E94D /* FlatMap.swift */; };
-		C8093D201B8A72BE0088E94D /* FlatMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C7B1B8A72BE0088E94D /* FlatMap.swift */; };
 		C8093D211B8A72BE0088E94D /* Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C7C1B8A72BE0088E94D /* Map.swift */; };
 		C8093D221B8A72BE0088E94D /* Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C7C1B8A72BE0088E94D /* Map.swift */; };
 		C8093D231B8A72BE0088E94D /* Merge.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C7D1B8A72BE0088E94D /* Merge.swift */; };
@@ -462,7 +460,6 @@
 		C8F0BFCB1BBBFB8B001B112F /* Scan.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C871B8A72BE0088E94D /* Scan.swift */; };
 		C8F0BFCC1BBBFB8B001B112F /* Queue.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C511B8A72BE0088E94D /* Queue.swift */; };
 		C8F0BFCD1BBBFB8B001B112F /* AnonymousObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C3DA111B93A3EA004D233E /* AnonymousObservable.swift */; };
-		C8F0BFCE1BBBFB8B001B112F /* FlatMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C7B1B8A72BE0088E94D /* FlatMap.swift */; };
 		C8F0BFCF1BBBFB8B001B112F /* DisposeBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C591B8A72BE0088E94D /* DisposeBase.swift */; };
 		C8F0BFD01BBBFB8B001B112F /* AnonymousDisposable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C541B8A72BE0088E94D /* AnonymousDisposable.swift */; };
 		C8F0BFD11BBBFB8B001B112F /* ConcurrentDispatchQueueScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093CB51B8A72BE0088E94D /* ConcurrentDispatchQueueScheduler.swift */; };
@@ -735,7 +732,6 @@
 		D2EBEB0B1BB9B6C1003A27DC /* Empty.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C3DA051B9393AC004D233E /* Empty.swift */; };
 		D2EBEB0C1BB9B6C1003A27DC /* FailWith.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C3DA081B93941E004D233E /* FailWith.swift */; };
 		D2EBEB0D1BB9B6C1003A27DC /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C7A1B8A72BE0088E94D /* Filter.swift */; };
-		D2EBEB0E1BB9B6C1003A27DC /* FlatMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C7B1B8A72BE0088E94D /* FlatMap.swift */; };
 		D2EBEB0F1BB9B6C1003A27DC /* Generate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C84B38ED1BA433CD001B7D88 /* Generate.swift */; };
 		D2EBEB101BB9B6C1003A27DC /* Just.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C3DA021B9390C4004D233E /* Just.swift */; };
 		D2EBEB111BB9B6C1003A27DC /* Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C7C1B8A72BE0088E94D /* Map.swift */; };
@@ -903,7 +899,6 @@
 		C8093C781B8A72BE0088E94D /* DistinctUntilChanged.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DistinctUntilChanged.swift; sourceTree = "<group>"; };
 		C8093C791B8A72BE0088E94D /* Do.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Do.swift; sourceTree = "<group>"; };
 		C8093C7A1B8A72BE0088E94D /* Filter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
-		C8093C7B1B8A72BE0088E94D /* FlatMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlatMap.swift; sourceTree = "<group>"; };
 		C8093C7C1B8A72BE0088E94D /* Map.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Map.swift; sourceTree = "<group>"; };
 		C8093C7D1B8A72BE0088E94D /* Merge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Merge.swift; sourceTree = "<group>"; };
 		C8093C7E1B8A72BE0088E94D /* Multicast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Multicast.swift; sourceTree = "<group>"; };
@@ -1294,7 +1289,6 @@
 				C8C3DA051B9393AC004D233E /* Empty.swift */,
 				C8C3DA081B93941E004D233E /* FailWith.swift */,
 				C8093C7A1B8A72BE0088E94D /* Filter.swift */,
-				C8093C7B1B8A72BE0088E94D /* FlatMap.swift */,
 				C84B38ED1BA433CD001B7D88 /* Generate.swift */,
 				C8C3DA021B9390C4004D233E /* Just.swift */,
 				C8093C7C1B8A72BE0088E94D /* Map.swift */,
@@ -2295,7 +2289,6 @@
 				CB30D9EA1BF0E3500084C1C0 /* SingleAsync.swift in Sources */,
 				C8093CD21B8A72BE0088E94D /* Queue.swift in Sources */,
 				C8C3DA131B93A3EA004D233E /* AnonymousObservable.swift in Sources */,
-				C8093D201B8A72BE0088E94D /* FlatMap.swift in Sources */,
 				C8093CE01B8A72BE0088E94D /* DisposeBase.swift in Sources */,
 				C8093CD61B8A72BE0088E94D /* AnonymousDisposable.swift in Sources */,
 				C8093D901B8A72BE0088E94D /* ConcurrentDispatchQueueScheduler.swift in Sources */,
@@ -2434,7 +2427,6 @@
 				CB30D9E91BF0E3500084C1C0 /* SingleAsync.swift in Sources */,
 				C8093CD11B8A72BE0088E94D /* Queue.swift in Sources */,
 				C8C3DA121B93A3EA004D233E /* AnonymousObservable.swift in Sources */,
-				C8093D1F1B8A72BE0088E94D /* FlatMap.swift in Sources */,
 				C8093CDF1B8A72BE0088E94D /* DisposeBase.swift in Sources */,
 				C8093CD51B8A72BE0088E94D /* AnonymousDisposable.swift in Sources */,
 				C8093D8F1B8A72BE0088E94D /* ConcurrentDispatchQueueScheduler.swift in Sources */,
@@ -2573,7 +2565,6 @@
 				CB30D9EC1BF0E3500084C1C0 /* SingleAsync.swift in Sources */,
 				C8F0BFCC1BBBFB8B001B112F /* Queue.swift in Sources */,
 				C8F0BFCD1BBBFB8B001B112F /* AnonymousObservable.swift in Sources */,
-				C8F0BFCE1BBBFB8B001B112F /* FlatMap.swift in Sources */,
 				C8F0BFCF1BBBFB8B001B112F /* DisposeBase.swift in Sources */,
 				C8F0BFD01BBBFB8B001B112F /* AnonymousDisposable.swift in Sources */,
 				C8F0BFD11BBBFB8B001B112F /* ConcurrentDispatchQueueScheduler.swift in Sources */,
@@ -2909,7 +2900,6 @@
 				D2EBEB3F1BB9B6D8003A27DC /* CurrentThreadScheduler.swift in Sources */,
 				C84CC55F1BDD010800E06A64 /* SynchronizedUnsubscribeType.swift in Sources */,
 				D2EBEAF21BB9B6AE003A27DC /* CompositeDisposable.swift in Sources */,
-				D2EBEB0E1BB9B6C1003A27DC /* FlatMap.swift in Sources */,
 				D2EBEB171BB9B6C1003A27DC /* Producer.swift in Sources */,
 				D2EBEAF91BB9B6B2003A27DC /* SerialDisposable.swift in Sources */,
 				C84CC5691BDD08A500E06A64 /* SubscriptionDisposable.swift in Sources */,
