@@ -9,7 +9,7 @@
 import Foundation
 
 /**
-Abstracts the work that needs to be peformed on a specific `dispatch_queue_t`. You can also pass a serial dispatch queue, it shouldn't cause any problems.
+Abstracts the work that needs to be performed on a specific `dispatch_queue_t`. You can also pass a serial dispatch queue, it shouldn't cause any problems.
 
 This scheduler is suitable when some work needs to be performed in background.
 */

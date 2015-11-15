@@ -94,6 +94,17 @@ Rx can use all types of schedulers, but it can also perform some additional opti
 
 These are currently supported schedulers
 
+## CurrentThreadScheduler (Serial scheduler)
+
+Schedules units of work on the current thread.
+This is the default scheduler for operators that generate elements.
+
+This scheduler is also sometimes called `trampoline scheduler`.
+
+If `CurrentThreadScheduler.instance.schedule(state) { }` is called for first time on some thread, scheduled action will be executed immediately and hidden queue will be created where all recursively scheduled actions will be temporarily enqueued.
+
+If some parent frame on call stack is already running `CurrentThreadScheduler.instance.schedule(state) { }`, scheduled action will be enqueued and executed when currently running action and all previously enqueued actions have finished executing.
+
 ## MainScheduler (Serial scheduler)
 
 Abstracts work that needs to be performed on `MainThread`. In case `schedule` methods are called from main thread, it will perform action immediately without scheduling.
@@ -110,12 +121,12 @@ Main scheduler is an instance of `SerialDispatchQueueScheduler`.
 
 ## ConcurrentDispatchQueueScheduler (Concurrent scheduler)
 
-Abstracts the work that needs to be peformed on a specific `dispatch_queue_t`. You can also pass a serial dispatch queue, it shouldn't cause any problems.
+Abstracts the work that needs to be performed on a specific `dispatch_queue_t`. You can also pass a serial dispatch queue, it shouldn't cause any problems.
 
 This scheduler is suitable when some work needs to be performed in background.
 
 ## OperationQueueScheduler (Concurrent scheduler)
 
-Abstracts the work that needs to be peformed on a specific `NSOperationQueue`.
+Abstracts the work that needs to be performed on a specific `NSOperationQueue`.
 
 This scheduler is suitable for cases when there is some bigger chunk of work that needs to be performed in background and you want to fine tune concurrent processing using `maxConcurrentOperationCount`.
