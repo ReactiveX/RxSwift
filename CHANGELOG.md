@@ -8,7 +8,7 @@ All notable changes to this project will be documented in this file.
 ### Updated
 
 * Improves KVO mechanism.
-  * Type of observed object is now argument `view.rx_observe(CGRect.self, "frame")`
+  * Type of observed object is now first argument `view.rx_observe(CGRect.self, "frame")`
   * Support for observing ObjC bridged enums and `RawRepresentable` protocol
   * Support for easier extending of KVO using `KVORepresentable` protocol
   * Deprecates KVO extensions that don't accept type as first argument in favor of ones that do.
@@ -25,18 +25,20 @@ All notable changes to this project will be documented in this file.
   * `RxCocoaURLError`
   * ...
 * Optimizes consecutive map operators. For example `map(validate1).map(validate2).map(parse)` is now internally optimized to one `map` operator.
-* Adds scheduler overloads for `just`, `sequenceOf`, `toObservable`.
-* Deprecates `asObservable` on `SequenceType` in favor of `toObservable`.
-* Adds special overload of `toObservable` for `Array`.
+* Adds overloads for `just`, `sequenceOf`, `toObservable` that accept scheduler.
+* Deprecates `asObservable` extension of `SequenceType` in favor of `toObservable`.
+* Adds `toObservable` extension to `Array`.
 * Improves table view animated data source example.
-* Polishes `RxDataSourceStarterKit`, adds `differentiateForSectionedView` operator, `rx_itemsAnimatedWithDataSource` extension.
-* Makes blocking operators run current thread runloop while blocking and thus disabling deadlocks.
+* Polishing of `RxDataSourceStarterKit`
+  * `differentiateForSectionedView` operator
+  * `rx_itemsAnimatedWithDataSource` extension
+* Makes blocking operators run current thread's runloop while blocking and thus disabling deadlocks.
 
 ### Fixed
 
 * Fixes example with `Variable` in playgrounds so it less confusing regarding memory management.
 * Fixes `UIImageView` extensions to use `UIImage?` instead of `UIImage!`.
-* Changes improper usage of `CustomStringConvertible` with `CustomDebugStringConvertible`.
+* Fixes improper usage of `CustomStringConvertible` and replaces it with `CustomDebugStringConvertible`.
 
 ## [2.0.0-beta.2](https://github.com/ReactiveX/RxSwift/releases/tag/2.0.0-beta.2)
 
