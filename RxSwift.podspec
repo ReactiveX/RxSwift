@@ -1,9 +1,9 @@
 Pod::Spec.new do |s|
   s.name             = "RxSwift"
-  s.version          = "2.0.0-beta.2"
+  s.version          = "2.0.0-beta.3"
   s.summary          = "Microsoft Reactive Extensions (Rx) for Swift and iOS/OSX platform"
   s.description      = <<-DESC
-			This is a Swift port of ReactiveX. [https://github.com/ReactiveX](https://github.com/ReactiveX)
+			This is a Swift port of [ReactiveX.io](https://github.com/ReactiveX)
 
 			Like the original [Rx](https://github.com/Reactive-extensions/Rx.Net), its intention is to enable easy composition of asynchronous operations and event streams.
 
