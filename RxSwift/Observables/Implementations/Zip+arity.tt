@@ -19,7 +19,7 @@ Merges the specified observable sequences into one observable sequence by using 
 - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
 */
 @warn_unused_result(message="http://git.io/rxs.uo")
-public func zip<<%= (Array(1...i).map { "O\($0): ObservableConvertibleType" }).joinWithSeparator(", ") %>, R>
+public func zip<<%= (Array(1...i).map { "O\($0): ObservableType" }).joinWithSeparator(", ") %>, R>
     (<%= (Array(1...i).map { "source\($0): O\($0)" }).joinWithSeparator(", _ ") %>, resultSelector: (<%= (Array(1...i).map { "O\($0).E" }).joinWithSeparator(", ") %>) throws -> R)
     -> Observable<R> {
     return Zip<%= i %>(

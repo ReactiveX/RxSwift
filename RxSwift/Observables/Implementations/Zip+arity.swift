@@ -21,7 +21,7 @@ Merges the specified observable sequences into one observable sequence by using 
 - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
 */
 @warn_unused_result(message="http://git.io/rxs.uo")
-public func zip<O1: ObservableConvertibleType, O2: ObservableConvertibleType, R>
+public func zip<O1: ObservableType, O2: ObservableType, R>
     (source1: O1, _ source2: O2, resultSelector: (O1.E, O2.E) throws -> R)
     -> Observable<R> {
     return Zip2(
@@ -110,7 +110,7 @@ Merges the specified observable sequences into one observable sequence by using 
 - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
 */
 @warn_unused_result(message="http://git.io/rxs.uo")
-public func zip<O1: ObservableConvertibleType, O2: ObservableConvertibleType, O3: ObservableConvertibleType, R>
+public func zip<O1: ObservableType, O2: ObservableType, O3: ObservableType, R>
     (source1: O1, _ source2: O2, _ source3: O3, resultSelector: (O1.E, O2.E, O3.E) throws -> R)
     -> Observable<R> {
     return Zip3(
@@ -207,7 +207,7 @@ Merges the specified observable sequences into one observable sequence by using 
 - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
 */
 @warn_unused_result(message="http://git.io/rxs.uo")
-public func zip<O1: ObservableConvertibleType, O2: ObservableConvertibleType, O3: ObservableConvertibleType, O4: ObservableConvertibleType, R>
+public func zip<O1: ObservableType, O2: ObservableType, O3: ObservableType, O4: ObservableType, R>
     (source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, resultSelector: (O1.E, O2.E, O3.E, O4.E) throws -> R)
     -> Observable<R> {
     return Zip4(
@@ -312,7 +312,7 @@ Merges the specified observable sequences into one observable sequence by using 
 - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
 */
 @warn_unused_result(message="http://git.io/rxs.uo")
-public func zip<O1: ObservableConvertibleType, O2: ObservableConvertibleType, O3: ObservableConvertibleType, O4: ObservableConvertibleType, O5: ObservableConvertibleType, R>
+public func zip<O1: ObservableType, O2: ObservableType, O3: ObservableType, O4: ObservableType, O5: ObservableType, R>
     (source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, resultSelector: (O1.E, O2.E, O3.E, O4.E, O5.E) throws -> R)
     -> Observable<R> {
     return Zip5(
@@ -425,7 +425,7 @@ Merges the specified observable sequences into one observable sequence by using 
 - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
 */
 @warn_unused_result(message="http://git.io/rxs.uo")
-public func zip<O1: ObservableConvertibleType, O2: ObservableConvertibleType, O3: ObservableConvertibleType, O4: ObservableConvertibleType, O5: ObservableConvertibleType, O6: ObservableConvertibleType, R>
+public func zip<O1: ObservableType, O2: ObservableType, O3: ObservableType, O4: ObservableType, O5: ObservableType, O6: ObservableType, R>
     (source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6, resultSelector: (O1.E, O2.E, O3.E, O4.E, O5.E, O6.E) throws -> R)
     -> Observable<R> {
     return Zip6(
@@ -546,7 +546,7 @@ Merges the specified observable sequences into one observable sequence by using 
 - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
 */
 @warn_unused_result(message="http://git.io/rxs.uo")
-public func zip<O1: ObservableConvertibleType, O2: ObservableConvertibleType, O3: ObservableConvertibleType, O4: ObservableConvertibleType, O5: ObservableConvertibleType, O6: ObservableConvertibleType, O7: ObservableConvertibleType, R>
+public func zip<O1: ObservableType, O2: ObservableType, O3: ObservableType, O4: ObservableType, O5: ObservableType, O6: ObservableType, O7: ObservableType, R>
     (source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6, _ source7: O7, resultSelector: (O1.E, O2.E, O3.E, O4.E, O5.E, O6.E, O7.E) throws -> R)
     -> Observable<R> {
     return Zip7(
@@ -675,7 +675,7 @@ Merges the specified observable sequences into one observable sequence by using 
 - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
 */
 @warn_unused_result(message="http://git.io/rxs.uo")
-public func zip<O1: ObservableConvertibleType, O2: ObservableConvertibleType, O3: ObservableConvertibleType, O4: ObservableConvertibleType, O5: ObservableConvertibleType, O6: ObservableConvertibleType, O7: ObservableConvertibleType, O8: ObservableConvertibleType, R>
+public func zip<O1: ObservableType, O2: ObservableType, O3: ObservableType, O4: ObservableType, O5: ObservableType, O6: ObservableType, O7: ObservableType, O8: ObservableType, R>
     (source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6, _ source7: O7, _ source8: O8, resultSelector: (O1.E, O2.E, O3.E, O4.E, O5.E, O6.E, O7.E, O8.E) throws -> R)
     -> Observable<R> {
     return Zip8(
