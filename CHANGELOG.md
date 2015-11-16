@@ -24,6 +24,7 @@ All notable changes to this project will be documented in this file.
   * `RxCocoaError`
   * `RxCocoaURLError`
   * ...
+* `NSURLSession` extensions now return `Observable<(NSData!, NSHTTPURLResponse)>` instead of `Observable<(NSData!, NSURLResponse!)>`.
 * Optimizes consecutive map operators. For example `map(validate1).map(validate2).map(parse)` is now internally optimized to one `map` operator.
 * Adds overloads for `just`, `sequenceOf`, `toObservable` that accept scheduler.
 * Deprecates `asObservable` extension of `SequenceType` in favor of `toObservable`.
