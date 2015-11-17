@@ -34,3 +34,4 @@ timeline.xctimeline
 # Carthage/Checkouts
 
 Carthage/Build
+.DS_Store
