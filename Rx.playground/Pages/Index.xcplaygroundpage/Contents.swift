@@ -1,17 +1,19 @@
 
 /*:
-> # IMPORTANT: To use `RxSamples`, please:
+> ## IMPORTANT: To use `RxSamples`, please:
 
 1. Open `Rx.xcworkspace`
 2. Build `RxSwift-OSX` scheme
 3. And then open `Rx` playground in `Rx.xcworkspace` tree view.
 4. Choose `View > Show Debug Area`
-*/
 
-/*:
+
+
+
 ## Index:
 
 1. [Introduction](Introduction)
+1. [Creating observables](Creating_Observables)
 1. [Subjects](Subjects)
 1. [Transforming Observables](Transforming_Observables)
 1. [Filtering Observables](Filtering_Observables)

@@ -110,4 +110,18 @@ example("doOn") {
     sequenceOfInts.on(.Completed)
 }
 
+
+/*:
+### `using`
+
+create a disposable resource that has the same lifespan as the Observable
+
+![](hhttps://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/using.png)
+
+[More info in reactive.io website]( http://reactivex.io/documentation/operators/using.html )
+*/
+example("using") {
+    // TODO:
+}
+
 //: [Index](Index) - [Next >>](@next)
