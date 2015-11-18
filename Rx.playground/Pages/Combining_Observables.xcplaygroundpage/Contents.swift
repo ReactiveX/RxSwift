@@ -95,7 +95,7 @@ example("combineLatest 3") {
 
 
 
-//: Combinelatest allow combine sequences of several types.
+//: Combinelatest version that allows combining sequences with different types.
 
 example("combineLatest 4") {
     let intOb = just(2)
@@ -110,8 +110,8 @@ example("combineLatest 4") {
 }
 
 
-//: There are a `combineLatest` extension method for Array of ObservableConvertibleType conformed types
-//: The array must be formed by `Observables` of the same type
+//: `combineLatest` extension method for Array of `ObservableType` conformable types
+//: The array must be formed by `Observables` of the same type.
 
 example("combineLatest 5") {
     let intOb1 = just(2)
