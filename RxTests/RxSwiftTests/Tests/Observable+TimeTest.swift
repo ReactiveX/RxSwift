@@ -1501,3 +1501,185 @@ extension ObservableTimeTest {
     }
     
 }
+
+
+// MARK: Timeout
+
+extension ObservableTimeTest {
+    func testTimeout_Empty() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createHotObservable([
+            next(150, 0),
+            completed(300)
+            ])
+        
+        let res = scheduler.start {
+            xs.timeout(200, scheduler)
+        }
+        
+        XCTAssertEqual(res.messages, [
+            completed(300)
+            ])
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 300)
+            ])
+    }
+    
+    func testTimeout_Error() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createHotObservable([
+            next(150, 0),
+            error(300, testError)
+            ])
+        
+        let res = scheduler.start {
+            xs.timeout(200, scheduler)
+        }
+        
+        XCTAssertEqual(res.messages, [
+            error(300, testError)
+            ])
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 300)
+            ])
+    }
+    
+    func testTimeout_Never() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createHotObservable([
+            next(150, 0),
+            ])
+        
+        let res = scheduler.start {
+            xs.timeout(1000, scheduler)
+        }
+        
+        XCTAssertEqual(res.messages, [])
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 1000)
+            ])
+    }
+    
+    func testTimeout_Duetime_Simple() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createColdObservable([
+            next(10, 42),
+            next(25, 43),
+            next(40, 44),
+            next(50, 45),
+            completed(60)
+            ])
+        
+        let res = scheduler.start {
+            xs.timeout(30, scheduler)
+        }
+        
+        XCTAssertEqual(res.messages, [
+            next(210, 42),
+            next(225, 43),
+            next(240, 44),
+            next(250, 45),
+            completed(260)
+            ])
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 260)
+            ])
+    }
+    
+    func testTimeout_Duetime_Timeout_Error() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createColdObservable([
+            next(10, 42),
+            next(20, 43),
+            next(55, 44),
+            next(60, 45),
+            completed(70)
+            ])
+        
+        let res = scheduler.start {
+            xs.timeout(30, scheduler)
+        }
+        
+        XCTAssertEqual(res.messages, [
+            next(210, 42),
+            next(220, 43),
+            error(250, RxError.Timeout)
+            ])
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 250)
+            ])
+    }
+    
+    func testTimeout_Duetime_Timeout_Exact() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createColdObservable([
+            next(10, 42),
+            next(20, 43),
+            next(50, 44),
+            next(60, 45),
+            completed(70)
+            ])
+        
+        let res = scheduler.start {
+            xs.timeout(30, scheduler)
+        }
+        
+        XCTAssertEqual(res.messages, [
+            next(210, 42),
+            next(220, 43),
+            next(250, 44),
+            next(260, 45),
+            completed(270)
+            ])
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 270)
+            ])
+    }
+    
+    func testTimeout_Duetime_Disposed() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createHotObservable([
+            next(205, 1),
+            next(210, 2),
+            next(240, 3),
+            next(280, 4),
+            next(320, 5),
+            next(350, 6),
+            next(370, 7),
+            next(420, 8),
+            next(470, 9),
+            completed(600)
+            ])
+        
+        let res = scheduler.start(370) {
+            xs.timeout(40, scheduler)
+        }
+        
+        XCTAssertEqual(res.messages, [
+            next(205, 1),
+            next(210, 2),
+            next(240, 3),
+            next(280, 4),
+            next(320, 5),
+            next(350, 6),
+            next(370, 7)
+            ])
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 370)
+            ])
+    }
+}
