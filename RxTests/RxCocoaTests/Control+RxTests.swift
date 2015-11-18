@@ -55,6 +55,7 @@ class ControlTests : RxTest {
     func ensureEventDeallocated<C, T where C: NSObject>(createControl: () -> (C, Disposable), _ eventSelector: C -> ControlEvent<T>) {
         var completed = false
         var deallocated = false
+        let outerDisposable = SingleAssignmentDisposable()
 
         autoreleasepool {
             let (control, disposable) = createControl()
@@ -70,10 +71,10 @@ class ControlTests : RxTest {
                 deallocated = true
             }
 
-            disposable.dispose()
+            outerDisposable.disposable = disposable
         }
 
-
+        outerDisposable.dispose()
         XCTAssertTrue(deallocated)
         XCTAssertTrue(completed)
     }
