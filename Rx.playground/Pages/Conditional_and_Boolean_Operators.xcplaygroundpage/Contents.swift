@@ -69,5 +69,73 @@ example("takeWhile") {
 }
 
 
+/*:
+### `skipWhile`
+
+Discard items emitted by an Observable until a specified condition becomes false
+
+![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/skipWhile.png)
+
+[More info in reactive.io website]( http://reactivex.io/documentation/operators/skipwhile.html )
+*/
+example("skipWhile") {
+    let subscription = sequenceOf(1, 2, 3, 4, 5, 6)
+        .skipWhile { integer -> Bool in
+            integer < 4
+        }
+        .subscribe {
+            print($0)
+    }
+}
+
+
+/*:
+### `skipUntil`
+
+Discard items emitted by an Observable until a second Observable emits an item
+
+![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/skipuntil.png)
+
+[More info in reactive.io website]( http://reactivex.io/documentation/operators/skipuntil.html )
+*/
+example("skipUntil") {
+    let ob1: Observable<Int> = create { observer -> Disposable in
+        observer.on(.Next(0))
+        delay(1) {
+            observer.on(.Next(1))
+        }
+        delay(2) {
+            observer.on(.Next(2))
+        }
+        delay(3) {
+            observer.on(.Next(3))
+        }
+        delay(4) {
+            observer.on(.Next(4))
+        }
+        delay(5) {
+            observer.on(.Completed)
+        }
+        return NopDisposable.instance
+    }
+    let ob2: Observable<String> = create { observer -> Disposable in
+        delay(2) {
+            observer.on(.Next("beginTakeItems"))
+        }
+        delay(6) {
+            observer.on(.Completed)
+        }
+        return NopDisposable.instance
+    }
+    let subscription = ob1
+        .skipUntil(ob2)
+        .subscribe {
+            print($0)
+    }
+}
+
+playgroundShouldContinueIndefinitely()
+
+
 
 //: [Index](Index) - [Next >>](@next)

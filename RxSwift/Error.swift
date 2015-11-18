@@ -38,7 +38,7 @@ public enum RxError
     */
     case NoElements
     /**
-    Sequence contains more then one element.
+    Sequence contains more than one element.
     */
     case MoreThanOneElement
 }
@@ -60,7 +60,7 @@ public extension RxError {
         case .NoElements:
             return "Sequence doesn't contain any element."
         case .MoreThanOneElement:
-            return "Sequence contains more then one element."
+            return "Sequence contains more than one element."
         }
     }
 }

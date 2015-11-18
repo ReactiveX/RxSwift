@@ -44,26 +44,123 @@ example("distinctUntilChanged") {
         .subscribe {
             print($0)
         }
+    
+}
+
+
+
+/*:
+### `elementAt`
+
+Emit only item n emitted by an Observable
+
+![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/elementat.png)
+
+[More info in reactive.io website]( http://reactivex.io/documentation/operators/elementat.html )
+*/
+
+example("elementAt") {
+    let subscription = sequenceOf(1, 2, 3, 4, 5, 6)
+        .elementAt(0)
+        .subscribe {
+            print($0)
+    }
+}
+
+
+
+/*:
+### `elementAt`
+
+Emit only item n emitted by an Observable
+
+![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/elementat.png)
+
+[More info in reactive.io website]( http://reactivex.io/documentation/operators/elementat.html )
+*/
+
+example("elementAt") {
+    let subscription = sequenceOf(1, 2, 3, 4, 5, 6)
+        .elementAt(0)
+        .subscribe {
+            print($0)
+    }
 }
 
 
 /*:
-### `take`
+### `single` (a.k.a first)
 
-Emit only the first n items emitted by an Observable
+Emit only the first item (or the first item that meets some condition) emitted by an Observable
 
-![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/take.png)
+![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/first.png)
 
-[More info in reactive.io website]( http://reactivex.io/documentation/operators/take.html )
+[More info in reactive.io website]( http://reactivex.io/documentation/operators/first.html )
 */
-example("take") {
+example("single") {
     let subscription = sequenceOf(1, 2, 3, 4, 5, 6)
-        .take(3)
+        .single()
         .subscribe {
             print($0)
         }
 }
 
+example("single with predicate") {
+    let subscription = sequenceOf(1, 2, 3, 4, 5, 6)
+        .single {
+            $0 > 2
+        }
+        .subscribe {
+            print($0)
+        }
+}
+
+
+/*:
+### `takeLast`
+
+Emit only the final n items emitted by an Observable
+
+![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/takelast.png)
+
+[More info in reactive.io website]( http://reactivex.io/documentation/operators/takelast.html )
+*/
+example("takeLast") {
+    let subscription = sequenceOf(1, 2, 3, 4, 5, 6)
+        .takeLast(2)
+        .subscribe {
+            print($0)
+    }
+}
+
+
+/*:
+### `skip`
+
+Suppress the first n items emitted by an Observable
+
+![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/skip.png)
+
+[More info in reactive.io website]( http://reactivex.io/documentation/operators/skip.html )
+*/
+example("skip") {
+    let subscription = sequenceOf(1, 2, 3, 4, 5, 6)
+        .skip(2)
+        .subscribe {
+            print($0)
+    }
+}
+
+
+example("skipWhileWithIndex") {
+    let subscription = sequenceOf("🔴","🔴","🔴","🔵","🔵","🔵")
+        .skipWhileWithIndex { str, idx -> Bool in
+            return idx < 3
+        }
+        .subscribe {
+            print($0)
+    }
+}
 
 
 //: [Index](Index) - [Next >>](@next)
