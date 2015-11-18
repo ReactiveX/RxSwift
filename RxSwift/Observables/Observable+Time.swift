@@ -170,6 +170,23 @@ extension ObservableType {
     }
 }
 
+// MARK: ignoreElements
+
+extension ObservableType {
+
+    /**
+     Skips elements and completes (or errors) when the receiver completes (or errors). Equivalent to filter that always returns false.
+
+     - returns: An observable sequence that skips all elements of the source sequence.
+     */
+    @warn_unused_result(message="http://git.io/rxs.uo")
+    public func ignoreElements()
+        -> Observable<E> {
+            return filter { _ -> Bool in
+                return false
+            }
+    }
+}
 
 // MARK: delaySubscription
 

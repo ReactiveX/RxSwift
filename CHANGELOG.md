@@ -1,6 +1,9 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+* Adds `ignoreElements` operator.
+* Adds `rx_attributedText` to `UILabel`.
+
 ---
 
 ## [2.0.0-beta.3](https://github.com/ReactiveX/RxSwift/releases/tag/2.0.0-beta.3)

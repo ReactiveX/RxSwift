@@ -86,10 +86,43 @@ example("combineLatest 3") {
     let intOb3 = sequenceOf(0, 1, 2, 3, 4)
 
     _ = combineLatest(intOb1, intOb2, intOb3) {
-        ($0 + $1) * $2
+            ($0 + $1) * $2
         }
         .subscribe {
             print($0)
+        }
+}
+
+
+
+//: Combinelatest version that allows combining sequences with different types.
+
+example("combineLatest 4") {
+    let intOb = just(2)
+    let stringOb = just("a")
+    
+    _ = combineLatest(intOb, stringOb) {
+            "\($0) " + $1
+        }
+        .subscribe {
+            print($0)
+    }
+}
+
+
+//: `combineLatest` extension method for Array of `ObservableType` conformable types
+//: The array must be formed by `Observables` of the same type.
+
+example("combineLatest 5") {
+    let intOb1 = just(2)
+    let intOb2 = sequenceOf(0, 1, 2, 3)
+    let intOb3 = sequenceOf(0, 1, 2, 3, 4)
+    
+    _ = [intOb1, intOb2, intOb3].combineLatest { intArray -> Int in
+            Int((intArray[0] + intArray[1]) * intArray[2])
+        }
+        .subscribe { (event: Event<Int>) -> Void in
+            print(event)
         }
 }
 
