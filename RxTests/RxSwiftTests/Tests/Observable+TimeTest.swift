@@ -1178,6 +1178,32 @@ extension ObservableTimeTest {
     }
 }
 
+// MARK: IgnoreElements
+
+extension ObservableTimeTest {
+    func testIgnoreElements_DoesNotSendValues() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let xs = scheduler.createHotObservable([
+            next(210, 1),
+            next(220, 2),
+            completed(230)
+            ])
+
+        let res = scheduler.start {
+            xs.ignoreElements()
+        }
+
+        XCTAssertEqual(res.messages, [
+            completed(230)
+            ])
+
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 230)
+            ])
+    }
+}
+
 // MARK: Buffer
 extension ObservableTimeTest {
     func testBufferWithTimeOrCount_Basic() {
