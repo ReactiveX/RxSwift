@@ -78,4 +78,24 @@ class ControlTests : RxTest {
         XCTAssertTrue(deallocated)
         XCTAssertTrue(completed)
     }
+
+    func ensureControlObserverHasWeakReference<C, T where C: NSObject>(@autoclosure createControl: () -> (C), _ observerSelector: C -> AnyObserver<T>, _ observableSelector: () -> (Observable<T>)) {
+        var deallocated = false
+
+        let disposeBag = DisposeBag()
+
+        autoreleasepool {
+            let control = createControl()
+            let propertyObserver = observerSelector(control)
+            let observable = observableSelector()
+
+            observable.bindTo(propertyObserver).addDisposableTo(disposeBag)
+
+            _ = control.rx_deallocated.subscribeNext { _ in
+                deallocated = true
+            }
+        }
+
+        XCTAssertTrue(deallocated)
+    }
 }

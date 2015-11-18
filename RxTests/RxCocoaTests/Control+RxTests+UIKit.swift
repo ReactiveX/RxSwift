@@ -154,6 +154,22 @@ extension ControlTests {
     }
 }
 
+// UILabel
+extension ControlTests {
+    func testLabel_HasWeakReference() {
+        ensureControlObserverHasWeakReference(UILabel(), { (label: UILabel) -> AnyObserver<NSAttributedString?> in label.rx_attributedText }, { Variable<NSAttributedString?>(nil).asObservable() })
+    }
+
+    func testLabel_NextElementsSetsValue() {
+        let subject = UILabel()
+        let attributedTextSequence = Variable<NSAttributedString?>(nil)
+
+        attributedTextSequence.subscribe(subject.rx_attributedText)
+
+        attributedTextSequence.value = NSAttributedString(string: "Hello!")
+        XCTAssert(subject.attributedText == attributedTextSequence.value, "Expected attributedText to have been set")
+    }
+}
 
 // UITableView
 extension ControlTests {
