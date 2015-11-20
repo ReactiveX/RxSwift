@@ -51,16 +51,18 @@ public class ReplaySubject<Element>
     /**
     Creates new instance of `ReplaySubject` that replays at most `bufferSize` last elements of sequence.
     
-    - parameter bufferSize: Maximal number of elements to replay to observer after subscription.
+    - parameter bufferSize: Maximal number of elements to replay to observer after subscription. Use `0` or `Int.max` for unlimited storage.
     - returns: New instance of replay subject.
     */
     public static func create(bufferSize bufferSize: Int) -> ReplaySubject<Element> {
-        if bufferSize == 1 {
-            return ReplayOne()
-        }
-        else {
-            return ReplayMany(bufferSize: bufferSize)
-        }
+		switch bufferSize {
+		case 0, Int.max:
+			return ReplayAll()
+		case 1:
+			return ReplayOne()
+		default:
+			return ReplayMany(bufferSize: bufferSize)
+		}
     }
 }
 
