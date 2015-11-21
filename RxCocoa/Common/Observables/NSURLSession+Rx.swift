@@ -117,7 +117,7 @@ extension NSURLSession {
     - returns: Observable sequence of URL responses.
     */
     @warn_unused_result(message="http://git.io/rxs.uo")
-    public func rx_response(request: NSURLRequest) -> Observable<(NSData!, NSHTTPURLResponse)> {
+    public func rx_response(request: NSURLRequest) -> Observable<(NSData, NSHTTPURLResponse)> {
         return create { observer in
 
             // smart compiler should be able to optimize this out
@@ -134,6 +134,8 @@ extension NSURLSession {
                     print(convertURLRequestToCurlCommand(request))
                     print(convertResponseToString(data, response, error, interval))
                 }
+                
+                
 
                 guard let response = response, data = data else {
                     observer.on(.Error(error ?? RxCocoaURLError.Unknown))
@@ -145,7 +147,7 @@ extension NSURLSession {
                     return
                 }
 
-                observer.on(.Next(data as NSData!, httpResponse))
+                observer.on(.Next(data, httpResponse))
                 observer.on(.Completed)
             }
 
