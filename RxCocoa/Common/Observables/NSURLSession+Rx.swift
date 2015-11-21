@@ -135,8 +135,6 @@ extension NSURLSession {
                     print(convertResponseToString(data, response, error, interval))
                 }
                 
-                
-
                 guard let response = response, data = data else {
                     observer.on(.Error(error ?? RxCocoaURLError.Unknown))
                     return
