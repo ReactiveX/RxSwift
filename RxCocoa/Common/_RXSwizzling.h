@@ -10,14 +10,15 @@
 
 #if !DISABLE_SWIZZLING
 
-extern void * const RXDeallocatingAssociatedAction;
+SEL _Nonnull RX_selector(SEL _Nonnull selector);
+void * __nonnull RX_reference_from_selector(SEL __nonnull selector);
 
-@protocol RXDeallocating
+@protocol RXMessageSentObserver
 
--(void)deallocating;
+-(void)messageSentWithParameters:(NSArray* __nonnull)parameters;
 
 @end
 
-void RX_ensure_deallocating_swizzled(Class targetClass);
+void RX_ensure_swizzled(Class __nonnull targetClass, SEL __nonnull selector);
 
 #endif

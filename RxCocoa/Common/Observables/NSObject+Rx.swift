@@ -139,6 +139,18 @@ extension NSObject {
 }
 #endif
 
+class DeallocObservable {
+    let _subject = ReplaySubject<Void>.create(bufferSize: 1)
+
+    init() {
+    }
+
+    deinit {
+        _subject.on(.Next(()))
+        _subject.on(.Completed)
+    }
+}
+
 // Dealloc
 extension NSObject {
     
@@ -151,24 +163,44 @@ extension NSObject {
     */
     public var rx_deallocated: Observable<Void> {
         return rx_synchronized {
-            if let subject = objc_getAssociatedObject(self, &deallocatedSubjectContext) as? ReplaySubject<Void> {
-                return subject
+            if let deallocObservable = objc_getAssociatedObject(self, &deallocatedSubjectContext) as? DeallocObservable {
+                return deallocObservable._subject
             }
-            else {
-                let subject = ReplaySubject<Void>.create(bufferSize: 1)
-                let deinitAction = DeinitAction {
-                    subject.on(.Next())
-                    subject.on(.Completed)
-                }
-                objc_setAssociatedObject(self, &deallocatedSubjectContext, subject, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
-                objc_setAssociatedObject(self, &deallocatedSubjectTriggerContext, deinitAction, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
-                return subject
-            }
+
+            let deallocObservable = DeallocObservable()
+
+            objc_setAssociatedObject(self, &deallocatedSubjectContext, deallocObservable, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            return deallocObservable._subject
         }
     }
 
 #if !DISABLE_SWIZZLING
-    
+
+    public func rx_observeMessage(selector: Selector) -> Observable<[AnyObject]> {
+        return rx_observeMessage(selector, replay: false)
+    }
+
+    private func rx_observeMessage(selector: Selector, replay: Bool) -> Observable<[AnyObject]> {
+        return rx_synchronized {
+            let rxSelector = RX_selector(selector)
+            let selectorReference = RX_reference_from_selector(rxSelector)
+            if let subject = objc_getAssociatedObject(self, selectorReference) as? MessageSentObservable {
+                return subject.asObservable()
+            }
+
+            let subject = MessageSentObservable.createObserver(replay)
+            objc_setAssociatedObject(
+                self,
+                selectorReference,
+                subject,
+                .OBJC_ASSOCIATION_RETAIN_NONATOMIC
+            )
+
+            RX_ensure_swizzled(self.dynamicType, selector)
+            return subject.asObservable()
+        }
+    }
+
     /**
     Observable sequence of object deallocating events.
     
@@ -178,42 +210,7 @@ extension NSObject {
     - returns: Observable sequence of object deallocating events.
     */
     public var rx_deallocating: Observable<Void> {
-        return rx_synchronized {
-            if let subject = objc_getAssociatedObject(self, &deallocatingSubjectContext) as? ReplaySubject<Void> {
-                return subject
-            }
-            else {
-                let subject = ReplaySubject<Void>.create(bufferSize: 1)
-                objc_setAssociatedObject(
-                    self,
-                    &deallocatingSubjectContext,
-                    subject,
-                    .OBJC_ASSOCIATION_RETAIN_NONATOMIC
-                )
-
-                let proxy = Deallocating {
-                    subject.on(.Next())
-                }
-
-                let deinitAction = DeinitAction {
-                    subject.on(.Completed)
-                }
-
-                objc_setAssociatedObject(self,
-                    RXDeallocatingAssociatedAction,
-                    proxy,
-                    .OBJC_ASSOCIATION_RETAIN_NONATOMIC
-                )
-                objc_setAssociatedObject(self,
-                    &deallocatingSubjectTriggerContext,
-                    deinitAction,
-                    .OBJC_ASSOCIATION_RETAIN_NONATOMIC
-                )
-
-                RX_ensure_deallocating_swizzled(self.dynamicType)
-                return subject
-            }
-        }
+        return rx_observeMessage("dealloc", replay: true).map { _ in () }
     }
 #endif
 }

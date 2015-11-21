@@ -16,18 +16,46 @@
 
 #if !DISABLE_SWIZZLING
 
+SEL _Nonnull RX_selector(SEL __nonnull selector) {
+    NSString *selectorString = NSStringFromSelector(selector);
+    return NSSelectorFromString([@"_RX_" stringByAppendingString:selectorString]);
+}
+
+void * __nonnull RX_reference_from_selector(SEL __nonnull selector) {
+    return selector;
+}
+
+/*static Method RX_methodImplementation(Class __nonnull class, SEL __nonnull selector) {
+    NSCAssert(class != nil, @"Target class is nil");
+    NSCAssert(selector != nil, @"Selector is nil");
+
+    unsigned int methodCount = 0;
+
+    Method *methods = class_copyMethodList(class, &methodCount);
+    NSCAssert(methods != nil, @"Methods are nil");
+
+    @try {
+        for (unsigned int i = 0; i < methodCount; ++i) {
+            Method method = methods[i];
+            if (method_getName(method) == selector) {
+                return method;
+            }
+        }
+    }
+    @finally {
+        free(methods);
+    }
+}*/
+
 // inspired by
 // https://github.com/mikeash/MAZeroingWeakRef/blob/master/Source/MAZeroingWeakRef.m
 // https://github.com/ReactiveCocoa/ReactiveCocoa/blob/swift-development/ReactiveCocoa/Objective-C/NSObject%2BRACDeallocating.m
-
-int RXDeallocatingAssociatedActionTag = 0;
-void * const RXDeallocatingAssociatedAction = &RXDeallocatingAssociatedActionTag;
 
 @interface RXSwizzling: NSObject
 
 @property (nonatomic, assign) pthread_mutex_t lock;
 
-@property (nonatomic, strong) NSMutableSet *swizzledDeallocClasses;
+@property (nonatomic, strong) NSMutableDictionary<NSValue *, NSMutableSet<NSValue*>*> *swizzledSelectorsByClass;
 
 @end
 
@@ -48,8 +76,8 @@ static RXSwizzling *_instance = nil;
     self = [super init];
     if (!self) return nil;
     
-    self.swizzledDeallocClasses = [NSMutableSet set];
-    
+    self.swizzledSelectorsByClass = [NSMutableDictionary dictionary];
+
     pthread_mutexattr_t lock_attr;
     pthread_mutexattr_init(&lock_attr);
     pthread_mutexattr_settype(&lock_attr, PTHREAD_MUTEX_RECURSIVE);
@@ -65,54 +93,87 @@ static RXSwizzling *_instance = nil;
     pthread_mutex_unlock(&_lock);
 }
 
--(void)ensureSwizzledDealloc:(Class)targetClass {
-    if ([self.swizzledDeallocClasses containsObject:targetClass]) {
+-(void)ensureSwizzledSelector:(SEL __nonnull)selector ofClass:(Class __nonnull)targetClass {
+    NSValue * __nonnull classValue = CLASS_VALUE(targetClass);
+    NSValue * __nonnull selectorValue = SEL_VALUE(selector);
+
+    NSMutableSet *swizzledSelectorsForClass = self.swizzledSelectorsByClass[classValue];
+
+    if ([swizzledSelectorsForClass containsObject:selectorValue]) {
         return;
     }
     
     DLOG(@"Rx is swizzling dealloc for: %@", targetClass);
-    [self.swizzledDeallocClasses addObject:targetClass];
-    NSAssert([self.swizzledDeallocClasses containsObject:targetClass], @"Class should have been swizzled");
-    
-    __block void (*originalDealloc)(__unsafe_unretained id, SEL) = NULL;
-    
-    SEL deallocSelector = sel_registerName("dealloc");
-    
-    id swizzledDealloc = ^(__unsafe_unretained id self) {
-        id<RXDeallocating> action = objc_getAssociatedObject(self, RXDeallocatingAssociatedAction);
+
+    if (swizzledSelectorsForClass == nil) {
+        swizzledSelectorsForClass = [NSMutableSet set];
+        [self.swizzledSelectorsByClass setObject:swizzledSelectorsForClass forKey:classValue];
+    }
+
+    [swizzledSelectorsForClass addObject:selectorValue];
+
+    NSAssert([[self.swizzledSelectorsByClass objectForKey:classValue] containsObject:selectorValue], @"Class should have been swizzled");
+
+    SEL rxSelector = RX_selector(selector);
+
+    void (^basicImplementation)() = ^(__unsafe_unretained id self) {
+        id<RXMessageSentObserver> action = objc_getAssociatedObject(self, rxSelector);
         
         if (action != nil) {
-            [action deallocating];
-        }
-        
-        if (originalDealloc == NULL) {
-            struct objc_super superInfo = {
-                .receiver = self,
-                .super_class = class_getSuperclass(targetClass)
-            };
-            
-            void (*msgSend)(struct objc_super *, SEL) = (__typeof__(msgSend))objc_msgSendSuper;
-            msgSend(&superInfo, deallocSelector);
-        } else {
-            originalDealloc(self, deallocSelector);
+            [action messageSentWithParameters:@[]];
         }
     };
-    
-    IMP swizzledDeallocIMP = imp_implementationWithBlock(swizzledDealloc);
-    
-    if (!class_addMethod(targetClass, deallocSelector, swizzledDeallocIMP, "v@:")) {
-        Method deallocMethod = class_getInstanceMethod(targetClass, deallocSelector);
-        
-        originalDealloc = (__typeof__(originalDealloc))method_getImplementation(deallocMethod);
-        originalDealloc = (__typeof__(originalDealloc))method_setImplementation(deallocMethod, swizzledDeallocIMP);
+
+    id newImplementation = ^(__unsafe_unretained id self) {
+        basicImplementation(self);
+        struct objc_super superInfo = {
+            .receiver = self,
+            .super_class = class_getSuperclass(targetClass)
+        };
+
+        void (*msgSend)(struct objc_super *, SEL) = (__typeof__(msgSend))objc_msgSendSuper;
+        msgSend(&superInfo, selector);
+    };
+
+    IMP newImplementationIMP = imp_implementationWithBlock(newImplementation);
+
+    Method existingMethod = class_getInstanceMethod(targetClass, selector);
+
+    NSAssert(existingMethod != nil, @"Method for selector `%@` doesn't exist on `%@`.", NSStringFromSelector(selector), NSStringFromClass(targetClass));
+
+    const char *encoding = method_getTypeEncoding(existingMethod);
+    if (class_addMethod(targetClass, selector, newImplementationIMP, encoding)) {
+        // new dealloc method added, job done
+        return;
     }
+
+    // if add fails, that means that method already exists on targetClass
+    Method existingMethodOnTargetClass = existingMethod;
+
+    // implementation needs to be replaced
+    __block void (*originalImplementation)(__unsafe_unretained id, SEL) = NULL;
+
+    id implementationReplacement = ^(__unsafe_unretained id self, SEL selector) {
+        basicImplementation(self, selector);
+
+        originalImplementation(self, selector);
+    };
+
+    IMP implementationReplacementIMP = imp_implementationWithBlock(implementationReplacement);
+
+    originalImplementation = (__typeof__(originalImplementation))method_getImplementation(existingMethodOnTargetClass);
+    NSAssert(originalImplementation != nil, @"Method must exist.");
+    originalImplementation = (__typeof__(originalImplementation))method_setImplementation(existingMethodOnTargetClass, implementationReplacementIMP);
+    NSAssert(originalImplementation != nil, @"Method must exist.");
 }
 
 @end
 
-void RX_ensure_deallocating_swizzled(Class targetClass) {
+void RX_ensure_swizzled(Class __nonnull targetClass, SEL __nonnull selector) {
+    NSCAssert(targetClass != nil, @"Target class is nil");
+    NSCAssert(selector != nil, @"Selector is nil");
     [[RXSwizzling instance] performLocked:^{
-        [[RXSwizzling instance] ensureSwizzledDealloc:targetClass];
+        [[RXSwizzling instance] ensureSwizzledSelector:selector ofClass:targetClass];
     }];
 }
 
