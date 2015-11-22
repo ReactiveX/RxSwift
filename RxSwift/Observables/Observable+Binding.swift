@@ -73,7 +73,7 @@ extension ObservableType {
     
     /**
     Returns a connectable observable sequence that shares a single subscription to the underlying sequence replaying bufferSize elements.
-    
+    /Volumes/Work/Projects/opensource/RxSwift-fpillet/Rx.xcodeproj
     This operator is a specialization of `multicast` using a `ReplaySubject`.
     
     - parameter bufferSize: Maximum element count of the replay buffer.
@@ -84,6 +84,19 @@ extension ObservableType {
         -> ConnectableObservable<ReplaySubject<E>> {
         return self.multicast(ReplaySubject.create(bufferSize: bufferSize))
     }
+	
+	/**
+	Returns a connectable observable sequence that shares a single subscription to the underlying sequence replaying all elements.
+	
+	This operator is a specialization of `multicast` using a `ReplaySubject`.
+	
+	- returns: A connectable observable sequence that shares a single subscription to the underlying sequence.
+	*/
+	@warn_unused_result(message="http://git.io/rxs.uo")
+	public func replayAll()
+		-> ConnectableObservable<ReplaySubject<E>> {
+			return self.multicast(ReplaySubject.createUnbounded())
+	}
 }
 
 // MARK: refcount
