@@ -73,7 +73,7 @@ extension ObservableType {
     
     /**
     Returns a connectable observable sequence that shares a single subscription to the underlying sequence replaying bufferSize elements.
-    /Volumes/Work/Projects/opensource/RxSwift-fpillet/Rx.xcodeproj
+
     This operator is a specialization of `multicast` using a `ReplaySubject`.
     
     - parameter bufferSize: Maximum element count of the replay buffer.
