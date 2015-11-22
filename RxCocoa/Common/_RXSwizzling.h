@@ -19,6 +19,6 @@ void * __nonnull RX_reference_from_selector(SEL __nonnull selector);
 
 @end
 
-void RX_ensure_swizzled(Class __nonnull targetClass, SEL __nonnull selector);
+void RX_ensure_observing(id __nonnull target, SEL __nonnull selector);
 
 #endif

@@ -61,8 +61,8 @@ id __nonnull RX_extract_argument_at_index(NSInvocation * __nonnull invocation, N
     }
 }
 
-BOOL RX_is_method_void(NSInvocation * __nonnull invocation) {
-    const char *methodReturnType = invocation.methodSignature.methodReturnType;
+BOOL RX_is_method_signature_void(NSMethodSignature * __nonnull methodSignature) {
+    const char *methodReturnType = methodSignature.methodReturnType;
     return strcmp(methodReturnType, @encode(void)) == 0;
 }
 
@@ -75,7 +75,7 @@ NSArray *RX_extract_arguments(NSInvocation *invocation) {
     NSUInteger numberOfVisibleArguments = numberOfArguments - HIDDEN_ARGUMENT_COUNT;
     
     NSCParameterAssert(numberOfVisibleArguments >= 0);
-    NSCParameterAssert(RX_is_method_void(invocation));
+    NSCParameterAssert(RX_is_method_signature_void(invocation.methodSignature));
     
     NSMutableArray *arguments = [NSMutableArray arrayWithCapacity:numberOfVisibleArguments];
     

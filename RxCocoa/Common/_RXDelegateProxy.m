@@ -25,8 +25,6 @@ static NSMutableDictionary *forwardableSelectorsPerClass = nil;
             forwardableSelectorsPerClass = [[NSMutableDictionary alloc] init];
         }
 
-        // NSLog(@"Class: %@", NSStringFromClass(self));
-        
         NSMutableSet *allowedSelectors = [NSMutableSet set];
      
         unsigned int count;
@@ -41,7 +39,6 @@ static NSMutableDictionary *forwardableSelectorsPerClass = nil;
             for (unsigned int j = 0; j < protocolMethodCount; ++j) {
                 struct objc_method_description method = methods[j];
                 if (RX_is_method_with_description_void(method)) {
-                    // NSLog(@"Allowed selector: %@", NSStringFromSelector(method.name));
                     [allowedSelectors addObject:SEL_VALUE(method.name)];
                 }
             }
@@ -88,12 +85,11 @@ static NSMutableDictionary *forwardableSelectorsPerClass = nil;
 }
 
 -(void)forwardInvocation:(NSInvocation *)anInvocation {
-    if (RX_is_method_void(anInvocation)) {
+    if (RX_is_method_signature_void(anInvocation.methodSignature)) {
         NSArray *arguments = RX_extract_arguments(anInvocation);
         [self interceptedSelector:anInvocation.selector withArguments:arguments];
     }
     
-    //NSLog(@"Sent selector %@", NSStringFromSelector(anInvocation.selector));
     if (self._forwardToDelegate && [self._forwardToDelegate respondsToSelector:anInvocation.selector]) {
         [anInvocation invokeWithTarget:self._forwardToDelegate];
     }

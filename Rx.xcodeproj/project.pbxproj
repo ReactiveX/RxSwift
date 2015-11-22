@@ -196,8 +196,6 @@
 		C8093DA61B8A72BE0088E94D /* SubjectType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093CC11B8A72BE0088E94D /* SubjectType.swift */; };
 		C8093DA71B8A72BE0088E94D /* Variable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093CC21B8A72BE0088E94D /* Variable.swift */; };
 		C8093DA81B8A72BE0088E94D /* Variable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093CC21B8A72BE0088E94D /* Variable.swift */; };
-		C8093ECF1B8A732E0088E94D /* _RX.h in Headers */ = {isa = PBXBuildFile; fileRef = C8093E821B8A732E0088E94D /* _RX.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C8093ED01B8A732E0088E94D /* _RX.h in Headers */ = {isa = PBXBuildFile; fileRef = C8093E821B8A732E0088E94D /* _RX.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C8093ED11B8A732E0088E94D /* _RX.m in Sources */ = {isa = PBXBuildFile; fileRef = C8093E831B8A732E0088E94D /* _RX.m */; };
 		C8093ED21B8A732E0088E94D /* _RX.m in Sources */ = {isa = PBXBuildFile; fileRef = C8093E831B8A732E0088E94D /* _RX.m */; };
 		C8093ED31B8A732E0088E94D /* _RXDelegateProxy.h in Headers */ = {isa = PBXBuildFile; fileRef = C8093E841B8A732E0088E94D /* _RXDelegateProxy.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -208,8 +206,6 @@
 		C8093ED81B8A732E0088E94D /* _RXKVOObserver.h in Headers */ = {isa = PBXBuildFile; fileRef = C8093E861B8A732E0088E94D /* _RXKVOObserver.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C8093ED91B8A732E0088E94D /* _RXKVOObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = C8093E871B8A732E0088E94D /* _RXKVOObserver.m */; };
 		C8093EDA1B8A732E0088E94D /* _RXKVOObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = C8093E871B8A732E0088E94D /* _RXKVOObserver.m */; };
-		C8093EDB1B8A732E0088E94D /* _RXSwizzling.h in Headers */ = {isa = PBXBuildFile; fileRef = C8093E881B8A732E0088E94D /* _RXSwizzling.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C8093EDC1B8A732E0088E94D /* _RXSwizzling.h in Headers */ = {isa = PBXBuildFile; fileRef = C8093E881B8A732E0088E94D /* _RXSwizzling.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C8093EDD1B8A732E0088E94D /* _RXSwizzling.m in Sources */ = {isa = PBXBuildFile; fileRef = C8093E891B8A732E0088E94D /* _RXSwizzling.m */; };
 		C8093EDE1B8A732E0088E94D /* _RXSwizzling.m in Sources */ = {isa = PBXBuildFile; fileRef = C8093E891B8A732E0088E94D /* _RXSwizzling.m */; };
 		C8093EDF1B8A732E0088E94D /* CLLocationManager+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093E8A1B8A732E0088E94D /* CLLocationManager+Rx.swift */; };
@@ -389,6 +385,10 @@
 		C8B145011BD2D80100267DCE /* ImmediateScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B144FF1BD2D80100267DCE /* ImmediateScheduler.swift */; };
 		C8B145021BD2D80100267DCE /* ImmediateScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B144FF1BD2D80100267DCE /* ImmediateScheduler.swift */; };
 		C8B145031BD2D80100267DCE /* ImmediateScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B144FF1BD2D80100267DCE /* ImmediateScheduler.swift */; };
+		C8B763161C010765007E8C19 /* _RXSwizzling.h in Headers */ = {isa = PBXBuildFile; fileRef = C8093E881B8A732E0088E94D /* _RXSwizzling.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C8B763171C010766007E8C19 /* _RXSwizzling.h in Headers */ = {isa = PBXBuildFile; fileRef = C8093E881B8A732E0088E94D /* _RXSwizzling.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C8B763181C010766007E8C19 /* _RXSwizzling.h in Headers */ = {isa = PBXBuildFile; fileRef = C8093E881B8A732E0088E94D /* _RXSwizzling.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C8B763191C010768007E8C19 /* _RXSwizzling.h in Headers */ = {isa = PBXBuildFile; fileRef = C8093E881B8A732E0088E94D /* _RXSwizzling.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C8C3D9FE1B935EDF004D233E /* Zip+CollectionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C3D9FD1B935EDF004D233E /* Zip+CollectionType.swift */; };
 		C8C3D9FF1B935EDF004D233E /* Zip+CollectionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C3D9FD1B935EDF004D233E /* Zip+CollectionType.swift */; };
 		C8C3DA031B9390C4004D233E /* Just.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C3DA021B9390C4004D233E /* Just.swift */; };
@@ -579,8 +579,6 @@
 		C8F0C03D1BBBFBB9001B112F /* RxTableViewDataSourceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88253F81B8A752B00B02D69 /* RxTableViewDataSourceType.swift */; };
 		C8F0C0411BBBFBB9001B112F /* RxCocoa.h in Headers */ = {isa = PBXBuildFile; fileRef = C8093ECB1B8A732E0088E94D /* RxCocoa.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C8F0C0421BBBFBB9001B112F /* _RXDelegateProxy.h in Headers */ = {isa = PBXBuildFile; fileRef = C8093E841B8A732E0088E94D /* _RXDelegateProxy.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C8F0C0431BBBFBB9001B112F /* _RX.h in Headers */ = {isa = PBXBuildFile; fileRef = C8093E821B8A732E0088E94D /* _RX.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C8F0C0441BBBFBB9001B112F /* _RXSwizzling.h in Headers */ = {isa = PBXBuildFile; fileRef = C8093E881B8A732E0088E94D /* _RXSwizzling.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C8F0C0451BBBFBB9001B112F /* _RXKVOObserver.h in Headers */ = {isa = PBXBuildFile; fileRef = C8093E861B8A732E0088E94D /* _RXKVOObserver.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C8F0C04F1BBBFBCE001B112F /* ObservableConvertibleType+Blocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093F581B8A73A20088E94D /* ObservableConvertibleType+Blocking.swift */; };
 		C8F6A0EF1BEE2CB6007DF367 /* ScheduledItemType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8F6A0EE1BEE2CB6007DF367 /* ScheduledItemType.swift */; };
@@ -663,13 +661,11 @@
 		D203C5111BB9C53E00D02D00 /* UITableView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88254121B8A752B00B02D69 /* UITableView+Rx.swift */; };
 		D203C5121BB9C53E00D02D00 /* UITextField+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88254131B8A752B00B02D69 /* UITextField+Rx.swift */; };
 		D203C5131BB9C53E00D02D00 /* UITextView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88254141B8A752B00B02D69 /* UITextView+Rx.swift */; };
-		D2138C7E1BB9BEBE00339B5C /* _RX.h in Headers */ = {isa = PBXBuildFile; fileRef = C8093E821B8A732E0088E94D /* _RX.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D2138C7F1BB9BEBE00339B5C /* _RX.m in Sources */ = {isa = PBXBuildFile; fileRef = C8093E831B8A732E0088E94D /* _RX.m */; };
 		D2138C801BB9BEBE00339B5C /* _RXDelegateProxy.h in Headers */ = {isa = PBXBuildFile; fileRef = C8093E841B8A732E0088E94D /* _RXDelegateProxy.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D2138C811BB9BEBE00339B5C /* _RXDelegateProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = C8093E851B8A732E0088E94D /* _RXDelegateProxy.m */; };
 		D2138C821BB9BEBE00339B5C /* _RXKVOObserver.h in Headers */ = {isa = PBXBuildFile; fileRef = C8093E861B8A732E0088E94D /* _RXKVOObserver.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D2138C831BB9BEBE00339B5C /* _RXKVOObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = C8093E871B8A732E0088E94D /* _RXKVOObserver.m */; };
-		D2138C841BB9BEBE00339B5C /* _RXSwizzling.h in Headers */ = {isa = PBXBuildFile; fileRef = C8093E881B8A732E0088E94D /* _RXSwizzling.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D2138C851BB9BEBE00339B5C /* _RXSwizzling.m in Sources */ = {isa = PBXBuildFile; fileRef = C8093E891B8A732E0088E94D /* _RXSwizzling.m */; };
 		D2138C861BB9BEBE00339B5C /* Observable+Bind.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80D338E1B91EF9E0014629D /* Observable+Bind.swift */; };
 		D2138C871BB9BEBE00339B5C /* CLLocationManager+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093E8A1B8A732E0088E94D /* CLLocationManager+Rx.swift */; };
@@ -1636,8 +1632,7 @@
 			files = (
 				C8093F4F1B8A732E0088E94D /* RxCocoa.h in Headers */,
 				C8093ED31B8A732E0088E94D /* _RXDelegateProxy.h in Headers */,
-				C8093ECF1B8A732E0088E94D /* _RX.h in Headers */,
-				C8093EDB1B8A732E0088E94D /* _RXSwizzling.h in Headers */,
+				C8B763161C010765007E8C19 /* _RXSwizzling.h in Headers */,
 				C8093ED71B8A732E0088E94D /* _RXKVOObserver.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1648,8 +1643,7 @@
 			files = (
 				C8093F501B8A732E0088E94D /* RxCocoa.h in Headers */,
 				C8093ED41B8A732E0088E94D /* _RXDelegateProxy.h in Headers */,
-				C8093ED01B8A732E0088E94D /* _RX.h in Headers */,
-				C8093EDC1B8A732E0088E94D /* _RXSwizzling.h in Headers */,
+				C8B763171C010766007E8C19 /* _RXSwizzling.h in Headers */,
 				C8093ED81B8A732E0088E94D /* _RXKVOObserver.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1695,8 +1689,7 @@
 			files = (
 				C8F0C0411BBBFBB9001B112F /* RxCocoa.h in Headers */,
 				C8F0C0421BBBFBB9001B112F /* _RXDelegateProxy.h in Headers */,
-				C8F0C0431BBBFBB9001B112F /* _RX.h in Headers */,
-				C8F0C0441BBBFBB9001B112F /* _RXSwizzling.h in Headers */,
+				C8B763191C010768007E8C19 /* _RXSwizzling.h in Headers */,
 				C8F0C0451BBBFBB9001B112F /* _RXKVOObserver.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1714,8 +1707,7 @@
 			files = (
 				D2138C8B1BB9BEC300339B5C /* RxCocoa.h in Headers */,
 				D2138C801BB9BEBE00339B5C /* _RXDelegateProxy.h in Headers */,
-				D2138C7E1BB9BEBE00339B5C /* _RX.h in Headers */,
-				D2138C841BB9BEBE00339B5C /* _RXSwizzling.h in Headers */,
+				C8B763181C010766007E8C19 /* _RXSwizzling.h in Headers */,
 				D2138C821BB9BEBE00339B5C /* _RXKVOObserver.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

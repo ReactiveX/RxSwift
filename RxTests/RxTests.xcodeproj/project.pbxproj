@@ -10,6 +10,9 @@
 		5E5D10BB1B48355200432B25 /* Control+RxTests+UIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5D10BA1B48355200432B25 /* Control+RxTests+UIKit.swift */; };
 		C69B65001BA88FAC00A7FA73 /* ObserverTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C69B64FF1BA88FAC00A7FA73 /* ObserverTests.swift */; };
 		C69B65011BA8957C00A7FA73 /* ObserverTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C69B64FF1BA88FAC00A7FA73 /* ObserverTests.swift */; };
+		C80103261C009F00009B2AE3 /* ObserveSentMessagesTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80103251C009F00009B2AE3 /* ObserveSentMessagesTest.swift */; };
+		C80103271C009F00009B2AE3 /* ObserveSentMessagesTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80103251C009F00009B2AE3 /* ObserveSentMessagesTest.swift */; };
+		C80103281C009F00009B2AE3 /* ObserveSentMessagesTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80103251C009F00009B2AE3 /* ObserveSentMessagesTest.swift */; };
 		C801EB5A1B97951100C4D8C4 /* Observable+CreationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C801EB591B97951100C4D8C4 /* Observable+CreationTest.swift */; };
 		C801EB5B1B97951100C4D8C4 /* Observable+CreationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C801EB591B97951100C4D8C4 /* Observable+CreationTest.swift */; };
 		C80DDEDC1BCE9A03006A1832 /* Driver+Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80DDEDB1BCE9A03006A1832 /* Driver+Test.swift */; };
@@ -186,6 +189,7 @@
 /* Begin PBXFileReference section */
 		5E5D10BA1B48355200432B25 /* Control+RxTests+UIKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Control+RxTests+UIKit.swift"; sourceTree = "<group>"; };
 		C69B64FF1BA88FAC00A7FA73 /* ObserverTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObserverTests.swift; sourceTree = "<group>"; };
+		C80103251C009F00009B2AE3 /* ObserveSentMessagesTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObserveSentMessagesTest.swift; sourceTree = "<group>"; };
 		C801EB591B97951100C4D8C4 /* Observable+CreationTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Observable+CreationTest.swift"; sourceTree = "<group>"; };
 		C80DDEDB1BCE9A03006A1832 /* Driver+Test.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Driver+Test.swift"; sourceTree = "<group>"; };
 		C80DDEDF1BCEE898006A1832 /* MainThreadPrimitiveHotObservable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainThreadPrimitiveHotObservable.swift; sourceTree = "<group>"; };
@@ -440,6 +444,7 @@
 				C89CDB951BCDA1F1002063D9 /* Observable+SubscriptionTest.swift */,
 				C80DDEDB1BCE9A03006A1832 /* Driver+Test.swift */,
 				C8F6A1401BEFE04F007DF367 /* SubjectConcurrencyTest.swift */,
+				C80103251C009F00009B2AE3 /* ObserveSentMessagesTest.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -635,6 +640,7 @@
 				C8E381231B2063CC008CDC33 /* Observable+Extensions.swift in Sources */,
 				C84B8FC21B89D0D500C9CCCF /* BagTest.swift in Sources */,
 				C81108511AF50E2A001C13E4 /* HotObservable.swift in Sources */,
+				C80103261C009F00009B2AE3 /* ObserveSentMessagesTest.swift in Sources */,
 				C81108541AF50E2A001C13E4 /* Observable.Extensions.swift in Sources */,
 				C8E9D2BD1BD422D80079D0DB /* Control+RxTests.swift in Sources */,
 				C897EC3B1B10E000009C2CB0 /* BehaviorSubjectTest.swift in Sources */,
@@ -679,6 +685,7 @@
 				C8E381291B207D03008CDC33 /* PrimitiveHotObservable.swift in Sources */,
 				C868D0FA1BB76A29003D1474 /* PerformanceTools.swift in Sources */,
 				C88BB8971B07E64B0064D411 /* MySubject.swift in Sources */,
+				C80103271C009F00009B2AE3 /* ObserveSentMessagesTest.swift in Sources */,
 				C88BB8981B07E64B0064D411 /* UI+RxTests.swift in Sources */,
 				C88BB8991B07E64B0064D411 /* Observable+BindingTest.swift in Sources */,
 				C88BB89A1B07E64B0064D411 /* NSNotificationCenterTests.swift in Sources */,
@@ -765,6 +772,7 @@
 				D2EBEB691BB9B7EF003A27DC /* DelegateProxyTest.swift in Sources */,
 				D2EBEB701BB9B7EF003A27DC /* Observable+MultipleTest.swift in Sources */,
 				D203C5141BB9C54A00D02D00 /* Control+RxTests+UIKit.swift in Sources */,
+				C80103281C009F00009B2AE3 /* ObserveSentMessagesTest.swift in Sources */,
 				D2EBEB581BB9B7CC003A27DC /* TestObservable.swift in Sources */,
 				C8E9D2BF1BD422D80079D0DB /* Control+RxTests.swift in Sources */,
 				D2EBEB661BB9B7EF003A27DC /* BehaviorSubjectTest.swift in Sources */,

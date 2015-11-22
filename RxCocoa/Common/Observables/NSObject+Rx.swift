@@ -176,11 +176,11 @@ extension NSObject {
 
 #if !DISABLE_SWIZZLING
 
-    public func rx_observeMessage(selector: Selector) -> Observable<[AnyObject]> {
-        return rx_observeMessage(selector, replay: false)
+    public func rx_sentMessage(selector: Selector) -> Observable<[AnyObject]> {
+        return rx_sentMessage(selector, replay: false)
     }
 
-    private func rx_observeMessage(selector: Selector, replay: Bool) -> Observable<[AnyObject]> {
+    private func rx_sentMessage(selector: Selector, replay: Bool) -> Observable<[AnyObject]> {
         return rx_synchronized {
             let rxSelector = RX_selector(selector)
             let selectorReference = RX_reference_from_selector(rxSelector)
@@ -196,7 +196,7 @@ extension NSObject {
                 .OBJC_ASSOCIATION_RETAIN_NONATOMIC
             )
 
-            RX_ensure_swizzled(self.dynamicType, selector)
+            RX_ensure_observing(self.dynamicType, selector)
             return subject.asObservable()
         }
     }
@@ -210,7 +210,7 @@ extension NSObject {
     - returns: Observable sequence of object deallocating events.
     */
     public var rx_deallocating: Observable<Void> {
-        return rx_observeMessage("dealloc", replay: true).map { _ in () }
+        return rx_sentMessage("dealloc", replay: true).map { _ in () }
     }
 #endif
 }
