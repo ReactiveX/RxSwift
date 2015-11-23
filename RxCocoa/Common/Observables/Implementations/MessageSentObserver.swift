@@ -30,6 +30,14 @@ import Foundation
             _observer.on(.Next(parameters))
         }
 
+        @objc func methodForSelectorDoesntExist() {
+            _observer.on(.Error(RxCocoaError.ObjectDoesntRespondToMessage))
+        }
+
+        @objc func errorDuringSwizzling() {
+            _observer.on(.Error(RxCocoaError.ErrorDuringSwizzling))
+        }
+
         func asObservable() -> Observable<[AnyObject]> {
             return _observable
         }

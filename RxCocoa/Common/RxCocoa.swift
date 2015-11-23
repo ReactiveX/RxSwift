@@ -40,6 +40,14 @@ public enum RxCocoaError
     Invalid object on key path.
     */
     case InvalidObjectOnKeyPath(object: AnyObject, sourceObject: AnyObject, propertyName: String)
+    /**
+    Error during swizzling.
+    */
+    case ErrorDuringSwizzling
+    /**
+    Object doesn't respond to message.
+    */
+    case ObjectDoesntRespondToMessage
 }
 
 public extension RxCocoaError {
@@ -49,15 +57,19 @@ public extension RxCocoaError {
     public var debugDescription: String {
         switch self {
         case .Unknown:
-            return "Unknown error occurred"
+            return "Unknown error occurred."
         case let .InvalidOperation(object):
-            return "Invalid operation was attempted on `\(object)`"
+            return "Invalid operation was attempted on `\(object)`."
         case let .ItemsNotYetBound(object):
-            return "Data source is set, but items are not yet bound to user interface for `\(object)`"
+            return "Data source is set, but items are not yet bound to user interface for `\(object)`."
         case let .InvalidPropertyName(object, propertyName):
-            return "Object `\(object)` dosn't have a property named `\(propertyName)`"
+            return "Object `\(object)` dosn't have a property named `\(propertyName)`."
         case let .InvalidObjectOnKeyPath(object, sourceObject, propertyName):
-            return "Unobservable object `\(object)` was observed as `\(propertyName)` of `\(sourceObject)`"
+            return "Unobservable object `\(object)` was observed as `\(propertyName)` of `\(sourceObject)`."
+        case .ErrorDuringSwizzling:
+            return "Error during swizzling."
+        case .ObjectDoesntRespondToMessage:
+            return "Object doesn't respond to message."
         }
     }
 }

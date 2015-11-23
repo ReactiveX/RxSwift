@@ -15,6 +15,8 @@ void * __nonnull RX_reference_from_selector(SEL __nonnull selector);
 
 @protocol RXMessageSentObserver
 
+-(void)methodForSelectorDoesntExist;
+-(void)errorDuringSwizzling;
 -(void)messageSentWithParameters:(NSArray* __nonnull)parameters;
 
 @end

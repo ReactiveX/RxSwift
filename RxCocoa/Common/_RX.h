@@ -9,10 +9,12 @@
 #import <Foundation/Foundation.h>
 #import <objc/runtime.h>
 
-#if DEBUG
-#   define DLOG(...)  NSLog(__VA_ARGS__)
+#if        DEBUG
+#   define DLOG(...)         NSLog(__VA_ARGS__)
+#   define CRASH_IN_DEBUG    abort();
 #else
 #   define DLOG(...)
+#   define CRASH_IN_DEBUG
 #endif
 
 

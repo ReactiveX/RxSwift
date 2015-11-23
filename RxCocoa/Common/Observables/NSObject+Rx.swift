@@ -196,7 +196,7 @@ extension NSObject {
                 .OBJC_ASSOCIATION_RETAIN_NONATOMIC
             )
 
-            RX_ensure_observing(self.dynamicType, selector)
+            RX_ensure_observing(self, selector)
             return subject.asObservable()
         }
     }

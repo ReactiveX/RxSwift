@@ -14,19 +14,22 @@
 #import "_RX.h"
 #import "_RXSwizzling.h"
 
+#if !DISABLE_SWIZZLING
+
 typedef NSInvocation * NSInvocationRef;
 typedef NSMethodSignature * NSMethodSignatureRef;
 typedef unsigned int rx_uint;
 typedef unsigned long rx_ulong;
 typedef id (^rx_block)(id);
 
-#if !DISABLE_SWIZZLING
+#define THREADING_HAZZARD(class) \
+    NSLog(@"There was a problem swizzling on `%@`.\nYou have probably two libraries performing swizzling in runtime.\nWe didn't want to crash your program, but this is not good ...\nYou an solve this problem by either not using swizzling in this library, removing one of those other libraries, or making sure that swizzling parts are synchronized (only perform them on main thread).\nAnd yes, this message will self destruct when you clear the console, and since it's non deterministric, the problem could still exist and it will be hard for you to reproduce it.", NSStringFromClass(class)); CRASH_IN_DEBUG
 
 #define ALWAYS(condition, message) if (!(condition)) { [NSException raise:@"RX Invalid Operator" format:@"%@", message]; }
 #define ALWAYS_WITH_INFO(condition, message) NSAssert((condition), @"%@ [%@] > %@", NSStringFromClass(class), NSStringFromSelector(selector), (message))
 #define C_ALWAYS(condition, message) NSCAssert((condition), @"%@ [%@] > %@", NSStringFromClass(class), NSStringFromSelector(selector), (message))
 
-#define RX_PREFIX @"_RX_"
+#define RX_PREFIX @"_RX_namespace_"
 
 static int RxSwizzledClassKey = 0;
 
@@ -48,7 +51,7 @@ void * __nonnull RX_reference_from_selector(SEL __nonnull selector) {
     return selector;
 }
 
-void RX_ensure_can_swizzle(Class __nonnull class, SEL __nonnull selector) {
+/*static void RX_ensure_can_swizzle(Class __nonnull class, SEL __nonnull selector) {
     Method existingMethod = class_getInstanceMethod(class, selector);
 
     C_ALWAYS(existingMethod != nil, @"Method is nil");
@@ -62,32 +65,46 @@ void RX_ensure_can_swizzle(Class __nonnull class, SEL __nonnull selector) {
         [signature getArgumentTypeAtIndex:i];
     }
     C_ALWAYS(strcmp(signature.methodReturnType, @encode(void)) == 0, @"Method is not void");
-}
+}*/
 
-void RX_ForwardInvocation(id __nonnull self, NSInvocation *invocation) {
+static BOOL RX_forward_invocation(id __nonnull __unsafe_unretained self, NSInvocation *invocation) {
+    SEL originalSelector = RX_selector(invocation.selector);
 
-}
+    id<RXMessageSentObserver> messageSentObserver = objc_getAssociatedObject(self, originalSelector);
 
-BOOL RX_RespondsToSelector(id __nonnull self, SEL selector) {
+    if (messageSentObserver != nil) {
+        NSArray *arguments = RX_extract_arguments(invocation);
+        [messageSentObserver messageSentWithParameters:arguments];
+    }
+
+    if ([self respondsToSelector:originalSelector]) {
+        invocation.selector = originalSelector;
+        [invocation invokeWithTarget:self];
+        return YES;
+    }
+
     return NO;
 }
 
-NSMethodSignatureRef RX_MethodSignature(id __nonnull self, SEL selector) {
+static BOOL RX_responds_to_selector(id __nonnull __unsafe_unretained self, SEL selector) {
     Class class = object_getClass(self);
-    if (class == nil) {
-        return nil;
-    }
+    if (class == nil) { return NO; }
+
+    Method m = class_getInstanceMethod(class, selector);
+    if (m != nil) { return YES; }
+
+    return NO;
+}
+
+static NSMethodSignatureRef RX_method_signature(id __nonnull __unsafe_unretained self, SEL selector) {
+    Class class = object_getClass(self);
+    if (class == nil) { return nil; }
 
     Method method = class_getInstanceMethod(class, selector);
-    if (method == nil) {
-        return nil;
-    }
+    if (method == nil) { return nil; }
 
     const char *encoding = method_getTypeEncoding(method);
-
-    if (encoding == nil) {
-        return nil;
-    }
+    if (encoding == nil) { return nil; }
 
     return [NSMethodSignature signatureWithObjCTypes:encoding];
 }
@@ -145,15 +162,48 @@ static RXSwizzling *_instance = nil;
 -(void)ensureSwizzled:(id __nonnull)target forObserving:(SEL __nonnull)selector  {
     __unused Class swizzlingImplementorClass = [self ensurePreparedForSwizzling:target];
 
-    /*
-    Method instanceMethod = class_getInstanceMethod(class, selector);
-    const char* methodEncoding = method_getTypeEncoding(instanceMethod);
-    NSMethodSignature *methodSignature = [NSMethodSignature signatureWithObjCTypes:methodEncoding];
+    if ([self swizzledSelector:selector forClass:swizzlingImplementorClass]) {
+        return;
+    }
 
-    // if method signature is not void
-    if (!RX_is_method_signature_void(methodSignature)) {
-        
-    }*/
+    SEL rxSelector = RX_selector(selector);
+    id<RXMessageSentObserver> messageSentObserver = objc_getAssociatedObject(target, rxSelector);
+    ALWAYS(messageSentObserver != nil, @"Message sent observer not set");
+
+    Method instanceMethod = class_getInstanceMethod(swizzlingImplementorClass, selector);
+    if (instanceMethod == nil) {
+        [messageSentObserver methodForSelectorDoesntExist];
+        return;
+    }
+
+    const char* methodEncoding = method_getTypeEncoding(instanceMethod);
+    ALWAYS(methodEncoding != nil, @"Method encoding is nil.");
+    NSMethodSignature *methodSignature = [NSMethodSignature signatureWithObjCTypes:methodEncoding];
+    ALWAYS(methodSignature != nil, @"Method signature is invalid.");
+
+    IMP implementation = method_getImplementation(instanceMethod);
+
+    if (implementation == nil) {
+        [messageSentObserver errorDuringSwizzling];
+        return;
+    }
+
+    if (!class_addMethod(swizzlingImplementorClass, rxSelector, implementation, methodEncoding)) {
+        [messageSentObserver errorDuringSwizzling];
+        return;
+    }
+
+    if (!class_addMethod(swizzlingImplementorClass, selector, _objc_msgForward, methodEncoding)) {
+        if (implementation != method_setImplementation(instanceMethod, _objc_msgForward)) {
+            [messageSentObserver errorDuringSwizzling];
+            THREADING_HAZZARD(swizzlingImplementorClass);
+            return;
+        }
+    }
+
+    DLOG(@"Rx uses forwarding to observe `%@` for `%@`.", NSStringFromSelector(selector), [target class]);
+
+    [self swizzledSelector:selector forClass:swizzlingImplementorClass];
 }
 
 -(Class)ensurePreparedForSwizzling:(id __nonnull)target {
@@ -166,12 +216,18 @@ static RXSwizzling *_instance = nil;
     // if possibly, only limit effect to one instance
     if ([target class] == object_getClass(target)) {
         Class dynamicFakeSubclass = [self ensureDynamicFakeSubclass:wannaBeClass];
-        object_setClass(target, dynamicFakeSubclass);
+        Class previousClass = object_setClass(target, dynamicFakeSubclass);
+        if (previousClass != wannaBeClass) {
+            THREADING_HAZZARD(wannaBeClass);
+        }
         objc_setAssociatedObject(target, &RxSwizzledClassKey, dynamicFakeSubclass, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
         return dynamicFakeSubclass;
     }
 
     // biggest performance penalty, swizzling all instances of original class
+
+    [self ensureForwardingMethodsAreHandled:wannaBeClass toActAs:wannaBeClass];
+
     objc_setAssociatedObject(target, &RxSwizzledClassKey, wannaBeClass, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     return wannaBeClass;
 }
@@ -194,7 +250,9 @@ static RXSwizzling *_instance = nil;
     }
 
     NSString *dynamicFakeSublassName = [RX_PREFIX stringByAppendingString:NSStringFromClass(class)];
-    dynamicFakeSubclass = objc_allocateClassPair(class, dynamicFakeSublassName.UTF8String, 0);
+    const char *dynamicFakeSublassNameRaw = dynamicFakeSublassName.UTF8String;
+    __unused Class _ = objc_getClass(dynamicFakeSublassNameRaw);
+    dynamicFakeSubclass = objc_allocateClassPair(class, dynamicFakeSublassNameRaw, 0);
     ALWAYS(dynamicFakeSubclass != nil, @"Class not generated");
 
     [self ensureForwardingMethodsAreHandled:dynamicFakeSubclass toActAs:class];
@@ -212,16 +270,18 @@ static RXSwizzling *_instance = nil;
     [self swizzleForwardInvocation:class];
     [self swizzleMethodSignatureForSelector:class];
     [self swizzleRespondsToSelector:class];
-    [self swizzleClass:class toActAs:toActAs];
+    if (class != toActAs) {
+        [self swizzleClass:class toActAs:toActAs];
+    }
 
     [self.classesThatSupportObservingByForwarding addObject:classValue];
 }
 
-#define FORWARD_BODY(invocation)                        RX_ForwardInvocation(self, NAME_CAT(_, 0, invocation));
-#define RESPONDS_TO_SELECTOR_BODY(selector)             if (RX_RespondsToSelector(self, NAME_CAT(_, 0, selector))) return YES;
+#define FORWARD_BODY(invocation)                        if (RX_forward_invocation(self, NAME_CAT(_, 0, invocation))) { return; }
+#define RESPONDS_TO_SELECTOR_BODY(selector)             if (RX_responds_to_selector(self, NAME_CAT(_, 0, selector))) return YES;
 #define CLASS_BODY(...)                                 return class;
 #define METHOD_SIGNATURE_FOR_SELECTOR_BODY(selector)                                           \
-    NSMethodSignatureRef methodSignature = RX_MethodSignature(self, NAME_CAT(_, 0, selector)); \
+    NSMethodSignatureRef methodSignature = RX_method_signature(self, NAME_CAT(_, 0, selector)); \
     if (methodSignature != nil) {                                                              \
         return methodSignature;                                                                \
     }
@@ -288,7 +348,7 @@ method_prototype                                                                
         return imp_implementationWithBlock(implementationReplacement);                                                   \
     };                                                                                                                   \
                                                                                                                          \
-    [self _ensureSwizzledSelector:selector                                                                               \
+    [self ensureSwizzledSelector:selector                                                                                \
                           ofClass:class                                                                                  \
        newImplementationGenerator:newImplementationGenerator                                                             \
 replacementImplementationGenerator:replacementImplementationGenerator];                                                  \
@@ -299,21 +359,11 @@ SWIZZLE_INFRASTRUCTURE_METHOD(BOOL, swizzleRespondsToSelector, , respondsToSelec
 SWIZZLE_INFRASTRUCTURE_METHOD(Class __nonnull, swizzleClass, toActAs:(Class)actAsClass, class, CLASS_BODY)
 SWIZZLE_INFRASTRUCTURE_METHOD(NSMethodSignatureRef, swizzleMethodSignatureForSelector, , methodSignatureForSelector:, METHOD_SIGNATURE_FOR_SELECTOR_BODY, SEL)
 
--(void)_ensureSwizzledSelector:(SEL __nonnull)selector
-                      ofClass:(Class __nonnull)class
-   newImplementationGenerator:(IMP(^)())newImplementationGenerator
-replacementImplementationGenerator:(IMP (^)(IMP originalImplemenation))replacementImplementationGenerator {
-
+-(void)registerSwizzledSelector:(SEL)selector forClass:(Class)class {
     NSValue * __nonnull classValue = CLASS_VALUE(class);
     NSValue * __nonnull selectorValue = SEL_VALUE(selector);
 
     NSMutableSet *swizzledSelectorsForClass = self.swizzledSelectorsByClass[classValue];
-
-    if ([swizzledSelectorsForClass containsObject:selectorValue]) {
-        return;
-    }
-    
-    DLOG(@"Rx is swizzling `%@` for `%@`", NSStringFromSelector(selector), class);
 
     if (swizzledSelectorsForClass == nil) {
         swizzledSelectorsForClass = [NSMutableSet set];
@@ -323,6 +373,28 @@ replacementImplementationGenerator:(IMP (^)(IMP originalImplemenation))replaceme
     [swizzledSelectorsForClass addObject:selectorValue];
 
     ALWAYS([[self.swizzledSelectorsByClass objectForKey:classValue] containsObject:selectorValue], @"Class should have been swizzled");
+}
+
+-(BOOL)swizzledSelector:(SEL)selector forClass:(Class)class {
+    NSValue * __nonnull classValue = CLASS_VALUE(class);
+    NSValue * __nonnull selectorValue = SEL_VALUE(selector);
+
+    NSMutableSet *swizzledSelectorsForClass = self.swizzledSelectorsByClass[classValue];
+
+    return [swizzledSelectorsForClass containsObject:selectorValue];
+}
+
+-(void)ensureSwizzledSelector:(SEL __nonnull)selector
+                      ofClass:(Class __nonnull)class
+   newImplementationGenerator:(IMP(^)())newImplementationGenerator
+replacementImplementationGenerator:(IMP (^)(IMP originalImplemenation))replacementImplementationGenerator {
+    if ([self swizzledSelector:selector forClass:class]) {
+        return;
+    }
+    
+    DLOG(@"Rx is swizzling `%@` for `%@`", NSStringFromSelector(selector), class);
+
+    [self registerSwizzledSelector:selector forClass:class];
 
     Method existingMethod = class_getInstanceMethod(class, selector);
 
@@ -351,7 +423,7 @@ replacementImplementationGenerator:(IMP (^)(IMP originalImplemenation))replaceme
 
     // ¯\_(ツ)_/¯
     if (originalImplementationAfterChange != originalImplementation) {
-        NSLog(@"There was a problem swizzling `%@` on `%@`.\nYou have probably two libraries performing swizzling in runtime.\nWe didn't want to crash your program, but this is not good ...\nYou an solve this problem by either not using swizzling in this library, removing one of those other libraries, or making sure that swizzling parts are synchronized (only perform them on main thread).\nAnd yes, this message will self destruct when you clear the console, and since it's non deterministric, the problem could still exist and it will be hard for you to reproduce it.", NSStringFromSelector(selector), NSStringFromClass(class));
+        THREADING_HAZZARD(class);
     }
 }
 
