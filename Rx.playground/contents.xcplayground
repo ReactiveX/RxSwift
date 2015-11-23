@@ -3,6 +3,7 @@
     <pages>
         <page name='Index'/>
         <page name='Introduction'/>
+        <page name='Creating_Observables'/>
         <page name='Subjects'/>
         <page name='Transforming_Observables'/>
         <page name='Filtering_Observables'/>

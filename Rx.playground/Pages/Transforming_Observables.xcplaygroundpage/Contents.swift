@@ -64,13 +64,76 @@ Apply a function to each item emitted by an Observable, sequentially, and emit e
 */
 example("scan") {
     let sequenceToSum = sequenceOf(0, 1, 2, 3, 4, 5)
-
+    
     _ = sequenceToSum
         .scan(0) { acum, elem in
             acum + elem
         }
         .subscribe {
             print($0)
+    }
+}
+
+
+/*:
+### `buffer`
+
+Periodically gather items emitted by an Observable into bundles and emit these bundles rather than emitting the items one at a time
+
+![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/buffer.png)
+
+[More info in reactive.io website]( http://reactivex.io/documentation/operators/buffer.html )
+*/
+example("buffer") {
+    let sequenceInt = sequenceOf(0, 1, 2, 3, 4, 5)
+    
+    _ = sequenceInt
+        .buffer(timeSpan: 0, count: 3, scheduler: MainScheduler.sharedInstance)
+        .subscribe {
+            print($0)
+    }
+}
+
+
+/*:
+### `toArray`
+
+Convert an Observable into a array
+
+![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/toarray.png)
+
+[More info in reactive.io website]( http://reactivex.io/documentation/operators/to.html )
+*/
+example("toArray") {
+    let sequenceInt = sequenceOf(0, 1, 2, 3, 4, 5)
+    
+    _ = sequenceInt
+        .toArray()
+        .subscribe {
+            print($0)
+        }
+}
+
+
+/*:
+### `window`
+
+Convert an Observable into a array
+
+![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/window.png)
+
+[More info in reactive.io website]( http://reactivex.io/documentation/operators/window.html )
+*/
+example("window") {
+    let sequenceInt = sequenceOf(0, 1, 2, 3, 4, 5)
+    
+    _ = sequenceInt
+        .window(timeSpan: 0, count: 3, scheduler: MainScheduler.sharedInstance)
+        .subscribeNext { eventValue in
+            _ = eventValue
+                .subscribe {
+                    print($0)
+                }
         }
 }
 
