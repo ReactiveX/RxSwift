@@ -1620,32 +1620,6 @@ extension ObservableTimeTest {
             ])
     }
     
-    func testTimeout_Duetime_Timeout_Error() {
-        let scheduler = TestScheduler(initialClock: 0)
-        
-        let xs = scheduler.createColdObservable([
-            next(10, 42),
-            next(20, 43),
-            next(55, 44),
-            next(60, 45),
-            completed(70)
-            ])
-        
-        let res = scheduler.start {
-            xs.timeout(30, scheduler)
-        }
-        
-        XCTAssertEqual(res.messages, [
-            next(210, 42),
-            next(220, 43),
-            error(250, RxError.Timeout)
-            ])
-        
-        XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 250)
-            ])
-    }
-    
     func testTimeout_Duetime_Timeout_Exact() {
         let scheduler = TestScheduler(initialClock: 0)
         
@@ -1706,6 +1680,265 @@ extension ObservableTimeTest {
         
         XCTAssertEqual(xs.subscriptions, [
             Subscription(200, 370)
+            ])
+    }
+    
+    func testTimeout_TimeoutOccurs_1() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createHotObservable([
+            next(70, 1),
+            next(130, 2),
+            next(310, 3),
+            next(400, 4),
+            completed(500)
+            ])
+
+        let ys = scheduler.createColdObservable([
+            next(50, -1),
+            next(200, -2),
+            next(310, -3),
+            completed(320)
+            ])
+        
+        let res = scheduler.start {
+            xs.timeout(100, other: ys.asObservable(), scheduler)
+        }
+        
+        XCTAssertEqual(res.messages, [
+            next(350, -1),
+            next(500, -2),
+            next(610, -3),
+            completed(620)
+            ])
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 300)
+            ])
+        
+        XCTAssertEqual(ys.subscriptions, [
+            Subscription(300, 620)
+            ])
+    }
+    
+    func testTimeout_TimeoutOccurs_2() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createHotObservable([
+            next(70, 1),
+            next(130, 2),
+            next(240, 3),
+            next(310, 4),
+            next(430, 5),
+            completed(500)
+            ])
+        
+        let ys = scheduler.createColdObservable([
+            next(50, -1),
+            next(200, -2),
+            next(310, -3),
+            completed(320)
+            ])
+        
+        let res = scheduler.start {
+            xs.timeout(100, other: ys.asObservable(), scheduler)
+        }
+        
+        XCTAssertEqual(res.messages, [
+            next(240, 3),
+            next(310, 4),
+            next(460, -1),
+            next(610, -2),
+            next(720, -3),
+            completed(730)
+            ])
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 410)
+            ])
+        
+        XCTAssertEqual(ys.subscriptions, [
+            Subscription(410, 730)
+            ])
+    }
+    
+    func testTimeout_TimeoutOccurs_Never() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createHotObservable([
+            next(70, 1),
+            next(130, 2),
+            next(240, 3),
+            next(310, 4),
+            next(430, 5),
+            completed(500)
+            ])
+        
+        let ys = scheduler.createHotObservable([
+            next(70, 1)
+            ])
+        
+        let res = scheduler.start {
+            xs.timeout(100, other: ys.asObservable(), scheduler)
+        }
+        
+        XCTAssertEqual(res.messages, [
+            next(240, 3),
+            next(310, 4)
+            ])
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 410)
+            ])
+        
+        XCTAssertEqual(ys.subscriptions, [
+            Subscription(410, 1000)
+            ])
+    }
+    
+    func testTimeout_TimeoutOccurs_Completed() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs: HotObservable<Int> = scheduler.createHotObservable([
+            completed(500)
+            ])
+        
+        let ys = scheduler.createColdObservable([
+            next(100, -1)
+            ])
+        
+        let res = scheduler.start {
+            xs.timeout(100, other: ys.asObservable(), scheduler)
+        }
+        
+        XCTAssertEqual(res.messages, [
+            next(400, -1),
+            ])
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 300)
+            ])
+        
+        XCTAssertEqual(ys.subscriptions, [
+            Subscription(300, 1000)
+            ])
+    }
+    
+    func testTimeout_TimeoutOccurs_NextIsError() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs: HotObservable<Int> = scheduler.createHotObservable([
+            next(500, 42)
+            ])
+        
+        let ys: ColdObservable<Int> = scheduler.createColdObservable([
+            error(100, testError)
+            ])
+        
+        let res = scheduler.start {
+            xs.timeout(100, other: ys.asObservable(), scheduler)
+        }
+        
+        XCTAssertEqual(res.messages, [
+            error(400, testError)
+            ])
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 300)
+            ])
+        
+        XCTAssertEqual(ys.subscriptions, [
+            Subscription(300, 400)
+            ])
+    }
+    
+    func testTimeout_TimeoutNotOccurs_Completed() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs: HotObservable<Int> = scheduler.createHotObservable([
+            completed(250)
+            ])
+        
+        let ys: ColdObservable<Int> = scheduler.createColdObservable([
+            next(100, -1)
+            ])
+        
+        let res = scheduler.start {
+            xs.timeout(100, other: ys.asObservable(), scheduler)
+        }
+        
+        XCTAssertEqual(res.messages, [
+            completed(250)
+            ])
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 250)
+            ])
+        
+        XCTAssertEqual(ys.subscriptions, [])
+    }
+    
+    func testTimeout_TimeoutNotOccurs_Error() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs: HotObservable<Int> = scheduler.createHotObservable([
+            error(250, testError)
+            ])
+        
+        let ys: ColdObservable<Int> = scheduler.createColdObservable([
+            next(100, -1)
+            ])
+        
+        let res = scheduler.start {
+            xs.timeout(100, other: ys.asObservable(), scheduler)
+        }
+        
+        XCTAssertEqual(res.messages, [
+            error(250, testError)
+            ])
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 250)
+            ])
+        
+        XCTAssertEqual(ys.subscriptions, [])
+    }
+    
+    func testTimeout_TimeoutNotOccurs() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createHotObservable([
+            next(70, 1),
+            next(130, 2),
+            next(240, 3),
+            next(320, 4),
+            next(410, 5),
+            completed(500)
+            ])
+        
+        let ys = scheduler.createColdObservable([
+            next(50, -1),
+            next(200, -2),
+            next(310, -3),
+            completed(320)
+            ])
+        
+        let res = scheduler.start {
+            xs.timeout(100, other: ys.asObservable(), scheduler)
+        }
+        
+        XCTAssertEqual(res.messages, [
+            next(240, 3),
+            next(320, 4),
+            next(410, 5),
+            completed(500)
+            ])
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 500)
+            ])
+        
+        XCTAssertEqual(ys.subscriptions, [
             ])
     }
 }
