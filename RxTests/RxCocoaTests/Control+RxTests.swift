@@ -55,6 +55,7 @@ class ControlTests : RxTest {
     func ensureEventDeallocated<C, T where C: NSObject>(createControl: () -> (C, Disposable), _ eventSelector: C -> ControlEvent<T>) {
         var completed = false
         var deallocated = false
+        let outerDisposable = SingleAssignmentDisposable()
 
         autoreleasepool {
             let (control, disposable) = createControl()
@@ -70,11 +71,31 @@ class ControlTests : RxTest {
                 deallocated = true
             }
 
-            disposable.dispose()
+            outerDisposable.disposable = disposable
         }
 
-
+        outerDisposable.dispose()
         XCTAssertTrue(deallocated)
         XCTAssertTrue(completed)
+    }
+
+    func ensureControlObserverHasWeakReference<C, T where C: NSObject>(@autoclosure createControl: () -> (C), _ observerSelector: C -> AnyObserver<T>, _ observableSelector: () -> (Observable<T>)) {
+        var deallocated = false
+
+        let disposeBag = DisposeBag()
+
+        autoreleasepool {
+            let control = createControl()
+            let propertyObserver = observerSelector(control)
+            let observable = observableSelector()
+
+            observable.bindTo(propertyObserver).addDisposableTo(disposeBag)
+
+            _ = control.rx_deallocated.subscribeNext { _ in
+                deallocated = true
+            }
+        }
+
+        XCTAssertTrue(deallocated)
     }
 }

@@ -111,7 +111,7 @@ Here is an example with `interval` operator.
 ```swift
 let subscription = interval(0.3, scheduler)
     .subscribe { (e: Event<Int64>) in
-        println(e)
+        print(e)
     }
 
 NSThread.sleepForTimeInterval(2)
@@ -156,7 +156,7 @@ In case you have something like:
 let subscription = interval(0.3, scheduler)
             .observeOn(MainScheduler.sharedInstance)
             .subscribe { (e: Event<Int64>) in
-                println(e)
+                print(e)
             }
 
 // ....
@@ -173,7 +173,7 @@ Also in this case:
 let subscription = interval(0.3, scheduler)
             .observeOn(serialScheduler)
             .subscribe { (e: Event<Int64>) in
-                println(e)
+                print(e)
             }
 
 // ...
@@ -239,9 +239,9 @@ In short, consider this example:
 ```swift
 someObservable
   .subscribe { (e: Event<Element>) in
-      println("Event processing started")
+      print("Event processing started")
       // processing
-      println("Event processing ended")
+      print("Event processing ended")
   }
 ```
 
@@ -289,7 +289,7 @@ let searchForMe = searchWikipedia("me")
 let cancel = searchForMe
   // sequence generation starts now, URL requests are fired
   .subscribeNext { results in
-      println(results)
+      print(results)
   }
 
 ```
@@ -351,23 +351,23 @@ func myFrom<E>(sequence: [E]) -> Observable<E> {
 
 let stringCounter = myFrom(["first", "second"])
 
-println("Started ----")
+print("Started ----")
 
 // first time
 stringCounter
     .subscribeNext { n in
-        println(n)
+        print(n)
     }
 
-println("----")
+print("----")
 
 // again
 stringCounter
     .subscribeNext { n in
-        println(n)
+        print(n)
     }
 
-println("Ended ----")
+print("Ended ----")
 ```
 
 This will print:
@@ -391,7 +391,7 @@ Ok, now something more interesting. Let's create that `interval` operator that w
 ```swift
 func myInterval(interval: NSTimeInterval) -> Observable<Int> {
     return create { observer in
-        println("Subscribed")
+        print("Subscribed")
         let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
         let timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, queue)
 
@@ -399,7 +399,7 @@ func myInterval(interval: NSTimeInterval) -> Observable<Int> {
 
         dispatch_source_set_timer(timer, 0, UInt64(interval * Double(NSEC_PER_SEC)), 0)
         let cancel = AnonymousDisposable {
-            println("Disposed")
+            print("Disposed")
             dispatch_source_cancel(timer)
         }
         dispatch_source_set_event_handler(timer, {
@@ -418,18 +418,18 @@ func myInterval(interval: NSTimeInterval) -> Observable<Int> {
 ```swift
 let counter = myInterval(0.1)
 
-println("Started ----")
+print("Started ----")
 
 let subscription = counter
     .subscribeNext { n in
-       println(n)
+       print(n)
     }
 
 NSThread.sleepForTimeInterval(0.5)
 
 subscription.dispose()
 
-println("Ended ----")
+print("Ended ----")
 ```
 
 This will print
@@ -450,15 +450,15 @@ What if you would write
 ```swift
 let counter = myInterval(0.1)
 
-println("Started ----")
+print("Started ----")
 
 let subscription1 = counter
     .subscribeNext { n in
-       println("First \(n)")
+       print("First \(n)")
     }
 let subscription2 = counter
     .subscribeNext { n in
-       println("Second \(n)")
+       print("Second \(n)")
     }
 
 NSThread.sleepForTimeInterval(0.5)
@@ -469,7 +469,7 @@ NSThread.sleepForTimeInterval(0.5)
 
 subscription2.dispose()
 
-println("Ended ----")
+print("Ended ----")
 ```
 
 this would print:
@@ -515,15 +515,15 @@ The usual choice is a combination of `replay(1).refCount()` aka `shareReplay()`.
 let counter = myInterval(0.1)
     .shareReplay(1)
 
-println("Started ----")
+print("Started ----")
 
 let subscription1 = counter
     .subscribeNext { n in
-       println("First \(n)")
+       print("First \(n)")
     }
 let subscription2 = counter
     .subscribeNext { n in
-       println("Second \(n)")
+       print("Second \(n)")
     }
 
 NSThread.sleepForTimeInterval(0.5)
@@ -534,7 +534,7 @@ NSThread.sleepForTimeInterval(0.5)
 
 subscription2.dispose()
 
-println("Ended ----")
+print("Ended ----")
 ```
 
 this will print
@@ -647,7 +647,7 @@ let subscription = myInterval(0.1)
         return "This is simply \(e)"
     }
     .subscribeNext { n in
-        println(n)
+        print(n)
     }
 ```
 
@@ -811,7 +811,7 @@ let subscription = myInterval(0.1)
         return "This is simply \(e)"
     }
     .subscribeNext { n in
-        println(n)
+        print(n)
     }
 
 NSThread.sleepForTimeInterval(0.5)
@@ -846,7 +846,7 @@ NSURLSession.sharedSession().rx_JSON(request)
        return parse()
    }
    .subscribe { n in      // this subscribes on all events including error and completed
-       println(n)
+       print(n)
    }
 ```
 
@@ -856,7 +856,7 @@ In debug mode Rx tracks all allocated resources in a global variable `resourceCo
 
 **Printing `Rx.resourceCount` after pushing a view controller onto navigation stack, using it, and then popping back is usually the best way to detect and debug resource leaks.**
 
-As a sanity check, you can just do a `println` in your view controller `deinit` method.
+As a sanity check, you can just do a `print` in your view controller `deinit` method.
 
 The code would look something like this.
 
@@ -869,18 +869,18 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
       super.viewDidLoad()
 #if TRACE_RESOURCES
-        println("Number of start resources = \(resourceCount)")
+        print("Number of start resources = \(resourceCount)")
 #endif
     }
 
     deinit {
 #if TRACE_RESOURCES
-        println("View controller disposed with \(resourceCount) resources")
+        print("View controller disposed with \(resourceCount) resources")
 
         var numberOfResourcesThatShouldRemain = startResourceCount
         let time = dispatch_time(DISPATCH_TIME_NOW, Int64(0.1 * Double(NSEC_PER_SEC)))
         dispatch_after(time, dispatch_get_main_queue(), { () -> Void in
-            println("Resource count after dealloc \(RxSwift.resourceCount), difference \(RxSwift.resourceCount - numberOfResourcesThatShouldRemain)")
+            print("Resource count after dealloc \(RxSwift.resourceCount), difference \(RxSwift.resourceCount - numberOfResourcesThatShouldRemain)")
         })
 #endif
     }
@@ -900,27 +900,27 @@ It will also broadcast it's current value immediately on subscription.
 ```swift
 let variable = Variable(0)
 
-println("Before first subscription ---")
+print("Before first subscription ---")
 
 variable
     .subscribeNext { n in
-        println("First \(n)")
+        print("First \(n)")
     }
 
-println("Before send 1")
+print("Before send 1")
 
 variable.value = 1
 
-println("Before second subscription ---")
+print("Before second subscription ---")
 
 variable
     .subscribeNext { n in
-        println("Second \(n)")
+        print("Second \(n)")
     }
 
 variable.value = 2
 
-println("End ---")
+print("End ---")
 ```
 
 will print
@@ -1090,7 +1090,7 @@ let responseJSON = NSURLSession.sharedSession().rx_JSON(request)
 let cancelRequest = responseJSON
     // this will fire the request
     .subscribeNext { json in
-        println(json)
+        print(json)
     }
 
 NSThread.sleepForTimeInterval(3)
@@ -1122,7 +1122,7 @@ NSURLSession.sharedSession().rx_response(myNSURLRequest)
         }
     }
     .subscribe { event in
-        println(event) // if error happened, this will also print out error to console
+        print(event) // if error happened, this will also print out error to console
     }
 ```
 ### Logging HTTP traffic

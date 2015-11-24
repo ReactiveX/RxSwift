@@ -4293,6 +4293,24 @@ extension ObservableMultipleTest {
         ])
     }
     
+    func testWithLatestFrom_TwoObservablesWithImmediateValues() {
+        let xs = BehaviorSubject<Int>(value: 3)
+        let ys = BehaviorSubject<Int>(value: 5)
+        
+        let scheduler = TestScheduler(initialClock: 0)
+
+        
+        let res = scheduler.start {
+            xs.withLatestFrom(ys) { x, y in "\(x)\(y)" }
+                .take(1)
+        }
+        
+        XCTAssertEqual(res.messages, [
+            next(200, "35"),
+            completed(200)
+        ])
+    }
+    
     func testWithLatestFrom_Simple2() {
         let scheduler = TestScheduler(initialClock: 0)
         
