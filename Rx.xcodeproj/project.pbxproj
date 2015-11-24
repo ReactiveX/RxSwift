@@ -12,6 +12,10 @@
 		B1B7C3BE1BDD39DB0076934E /* TakeLast.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B7C3BC1BDD39DB0076934E /* TakeLast.swift */; };
 		B1B7C3BF1BDD39DB0076934E /* TakeLast.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B7C3BC1BDD39DB0076934E /* TakeLast.swift */; };
 		B1B7C3C01BDD39DB0076934E /* TakeLast.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B7C3BC1BDD39DB0076934E /* TakeLast.swift */; };
+		B1D8998F1BF653410027B05C /* Timeout.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D8998E1BF653410027B05C /* Timeout.swift */; };
+		B1D899901BF653410027B05C /* Timeout.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D8998E1BF653410027B05C /* Timeout.swift */; };
+		B1D899911BF653410027B05C /* Timeout.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D8998E1BF653410027B05C /* Timeout.swift */; };
+		B1D899921BF653410027B05C /* Timeout.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D8998E1BF653410027B05C /* Timeout.swift */; };
 		C8093CC51B8A72BE0088E94D /* Cancelable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C491B8A72BE0088E94D /* Cancelable.swift */; };
 		C8093CC61B8A72BE0088E94D /* Cancelable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C491B8A72BE0088E94D /* Cancelable.swift */; };
 		C8093CC71B8A72BE0088E94D /* AsyncLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C4B1B8A72BE0088E94D /* AsyncLock.swift */; };
@@ -875,6 +879,7 @@
 /* Begin PBXFileReference section */
 		A111CE961B91C97C00D0DCEE /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B1B7C3BC1BDD39DB0076934E /* TakeLast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TakeLast.swift; sourceTree = "<group>"; };
+		B1D8998E1BF653410027B05C /* Timeout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Timeout.swift; sourceTree = "<group>"; };
 		C809396D1B8A71760088E94D /* RxCocoa.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxCocoa.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C80939E71B8A71840088E94D /* RxCocoa.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxCocoa.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8093BC71B8A71F00088E94D /* RxBlocking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxBlocking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1345,6 +1350,7 @@
 				C8093C8E1B8A72BE0088E94D /* TakeUntil.swift */,
 				C8093C8F1B8A72BE0088E94D /* TakeWhile.swift */,
 				C8093C901B8A72BE0088E94D /* Throttle.swift */,
+				B1D8998E1BF653410027B05C /* Timeout.swift */,
 				C8093C911B8A72BE0088E94D /* Timer.swift */,
 				CBEE771E1BD649A000AD584C /* ToArray.swift */,
 				D235B23D1BD003DD007E84DA /* Using.swift */,
@@ -2344,6 +2350,7 @@
 				C8093D2C1B8A72BE0088E94D /* ObserveOnSerialDispatchQueue.swift in Sources */,
 				C8093D3E1B8A72BE0088E94D /* StartWith.swift in Sources */,
 				C821DBA31BA4DCAB008F3809 /* Buffer.swift in Sources */,
+				B1D899901BF653410027B05C /* Timeout.swift in Sources */,
 				C8093D481B8A72BE0088E94D /* TakeWhile.swift in Sources */,
 				C8093D001B8A72BE0088E94D /* Amb.swift in Sources */,
 				C8093D1C1B8A72BE0088E94D /* Do.swift in Sources */,
@@ -2482,6 +2489,7 @@
 				C8093D2B1B8A72BE0088E94D /* ObserveOnSerialDispatchQueue.swift in Sources */,
 				C8093D3D1B8A72BE0088E94D /* StartWith.swift in Sources */,
 				C821DBA21BA4DCAB008F3809 /* Buffer.swift in Sources */,
+				B1D8998F1BF653410027B05C /* Timeout.swift in Sources */,
 				C8093D471B8A72BE0088E94D /* TakeWhile.swift in Sources */,
 				C8093CFF1B8A72BE0088E94D /* Amb.swift in Sources */,
 				C8093D1B1B8A72BE0088E94D /* Do.swift in Sources */,
@@ -2620,6 +2628,7 @@
 				C8F0BFDA1BBBFB8B001B112F /* ObserveOnSerialDispatchQueue.swift in Sources */,
 				C8F0BFDB1BBBFB8B001B112F /* StartWith.swift in Sources */,
 				C8F0BFDC1BBBFB8B001B112F /* Buffer.swift in Sources */,
+				B1D899921BF653410027B05C /* Timeout.swift in Sources */,
 				C8F0BFDD1BBBFB8B001B112F /* TakeWhile.swift in Sources */,
 				C8F0BFDE1BBBFB8B001B112F /* Amb.swift in Sources */,
 				C8F0BFDF1BBBFB8B001B112F /* Do.swift in Sources */,
@@ -2920,6 +2929,7 @@
 				D2EBEAFC1BB9B6BA003A27DC /* Amb.swift in Sources */,
 				D2EBEB231BB9B6C1003A27DC /* Take.swift in Sources */,
 				D2EBEAE31BB9B697003A27DC /* Observable+Extensions.swift in Sources */,
+				B1D899911BF653410027B05C /* Timeout.swift in Sources */,
 				D2EBEB371BB9B6D8003A27DC /* ScheduledItem.swift in Sources */,
 				D2EBEB121BB9B6C1003A27DC /* Merge.swift in Sources */,
 				D2EBEAEF1BB9B6A4003A27DC /* Queue.swift in Sources */,
