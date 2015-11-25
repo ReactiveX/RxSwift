@@ -8,6 +8,7 @@
 
 #import "_RXDelegateProxy.h"
 #import "_RX.h"
+#import "_RXObjCRuntime.h"
 
 @interface _RXDelegateProxy ()
 

@@ -18,10 +18,6 @@
 #endif
 
 
-NSArray * __nonnull RX_extract_arguments(NSInvocation * __nonnull invocation);
-BOOL RX_is_method_with_description_void(struct objc_method_description method);
-BOOL RX_is_method_signature_void(NSMethodSignature * __nonnull methodSignature);
-
 #define SEL_VALUE(x)    [NSValue valueWithPointer:(x)]
 #define CLASS_VALUE(x)  [NSValue valueWithNonretainedObject:(x)]
 

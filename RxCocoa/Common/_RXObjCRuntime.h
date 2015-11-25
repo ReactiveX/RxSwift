@@ -1,5 +1,5 @@
 //
-//  _RXSwizzling.h
+//  RXObjCRuntime.h
 //  RxCocoa
 //
 //  Created by Krunoslav Zaher on 7/11/15.
@@ -10,17 +10,39 @@
 
 #if !DISABLE_SWIZZLING
 
+/**
+ This file is part of RX private API
+ */
+
 SEL _Nonnull RX_selector(SEL _Nonnull selector);
+
 void * __nonnull RX_reference_from_selector(SEL __nonnull selector);
 
-@protocol RXMessageSentObserver
+@protocol RXSwizzlingObserver
 
 -(void)methodForSelectorDoesntExist;
 -(void)errorDuringSwizzling;
+
+@end
+
+@protocol RXMessageSentObserver <RXSwizzlingObserver>
+
 -(void)messageSentWithParameters:(NSArray* __nonnull)parameters;
 
 @end
 
+@protocol RXDeallocatingObserver <RXSwizzlingObserver>
+
+-(void)deallocating;
+
+@end
+
 void RX_ensure_observing(id __nonnull target, SEL __nonnull selector);
+
+NSArray * __nonnull RX_extract_arguments(NSInvocation * __nonnull invocation);
+
+BOOL RX_is_method_with_description_void(struct objc_method_description method);
+
+BOOL RX_is_method_signature_void(NSMethodSignature * __nonnull methodSignature);
 
 #endif

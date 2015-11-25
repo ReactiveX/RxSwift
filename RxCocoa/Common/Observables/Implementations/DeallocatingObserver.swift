@@ -1,9 +1,9 @@
 //
-//  MessageSentObserver.swift
-//  RxCocoa
+//  DeallocatingObserver.swift
+//  Rx
 //
-//  Created by Krunoslav Zaher on 7/12/15.
-//  Copyright (c) 2015 Krunoslav Zaher. All rights reserved.
+//  Created by Krunoslav Zaher on 11/23/15.
+//  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
 import Foundation
@@ -13,18 +13,18 @@ import Foundation
 
 #if !DISABLE_SWIZZLING
 
-    class MessageSentObservable
+    class DeallocatingObserver
         : ObservableConvertibleType
-        , RXMessageSentObserver {
-        typealias E = [AnyObject]
+        , RXDeallocatingObserver {
+        typealias E = ()
 
-        private let _subject = PublishSubject<[AnyObject]>()
+        private let _subject = ReplaySubject<()>.create(bufferSize: 1)
 
         init() {
         }
 
-        @objc func messageSentWithParameters(parameters: [AnyObject]) -> Void {
-            _subject.on(.Next(parameters))
+        @objc func deallocating() {
+            _subject.on(.Next(()))
         }
 
         @objc func methodForSelectorDoesntExist() {
@@ -35,7 +35,7 @@ import Foundation
             _subject.on(.Error(RxCocoaError.ErrorDuringSwizzling))
         }
 
-        func asObservable() -> Observable<[AnyObject]> {
+        func asObservable() -> Observable<()> {
             return _subject
         }
 
