@@ -46,7 +46,7 @@ class TimeoutSink<ElementType, Scheduler: SchedulerType, O: ObserverType where O
             _lock.performLocked() {
                 onNextWins = !self._switched
                 if onNextWins {
-                    self._id++
+                    self._id = self._id &+ 1
                 }
             }
             
@@ -60,7 +60,7 @@ class TimeoutSink<ElementType, Scheduler: SchedulerType, O: ObserverType where O
             _lock.performLocked() {
                 onEventWins = !self._switched
                 if onEventWins {
-                    self._id++
+                    self._id = self._id &+ 1
                 }
             }
             
