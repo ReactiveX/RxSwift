@@ -17,7 +17,6 @@
 		07E300071B14995F00F00100 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E300061B14995F00F00100 /* TableViewController.swift */; };
 		07E300091B149A2A00F00100 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E300081B149A2A00F00100 /* User.swift */; };
 		07E3C2331B03605B0010338D /* Dependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E3C2321B03605B0010338D /* Dependencies.swift */; };
-		A27C59051BFC794E00A70332 /* Timeout.swift in Sources */ = {isa = PBXBuildFile; fileRef = A27C59041BFC794E00A70332 /* Timeout.swift */; };
 		B1604CB51BE49F8D002E1279 /* DownloadableImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1604CB41BE49F8D002E1279 /* DownloadableImage.swift */; };
 		B1604CC21BE5B895002E1279 /* ReachabilityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18F3BE11BDB2E8F000AAC79 /* ReachabilityService.swift */; };
 		B1604CC31BE5B8BD002E1279 /* ReachabilityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18F3BE11BDB2E8F000AAC79 /* ReachabilityService.swift */; };
@@ -157,6 +156,7 @@
 		C890A6581AEBD26B00AFF7E6 /* GitHubSignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C890A6571AEBD26B00AFF7E6 /* GitHubSignupViewController.swift */; };
 		C890A65A1AEBD28A00AFF7E6 /* GitHubAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C890A6591AEBD28A00AFF7E6 /* GitHubAPI.swift */; };
 		C890A65D1AEC084100AFF7E6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C890A65C1AEC084100AFF7E6 /* ViewController.swift */; };
+		C891A2C91C07160C00DDD09D /* Timeout.swift in Sources */ = {isa = PBXBuildFile; fileRef = C891A2C81C07160C00DDD09D /* Timeout.swift */; };
 		C894649E1BC6C2B00055219D /* Cancelable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89464281BC6C2B00055219D /* Cancelable.swift */; };
 		C89464A01BC6C2B00055219D /* Lock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C894642B1BC6C2B00055219D /* Lock.swift */; };
 		C89464A11BC6C2B00055219D /* ConnectableObservableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C894642C1BC6C2B00055219D /* ConnectableObservableType.swift */; };
@@ -502,7 +502,6 @@
 		07E300061B14995F00F00100 /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		07E300081B149A2A00F00100 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		07E3C2321B03605B0010338D /* Dependencies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Dependencies.swift; path = Examples/Dependencies.swift; sourceTree = "<group>"; };
-		A27C59041BFC794E00A70332 /* Timeout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Timeout.swift; path = ../RxSwift/Observables/Implementations/Timeout.swift; sourceTree = "<group>"; };
 		B1604CB41BE49F8D002E1279 /* DownloadableImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadableImage.swift; sourceTree = "<group>"; };
 		B1604CC81BE5BBFA002E1279 /* UIImageView+DownloadableImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+DownloadableImage.swift"; sourceTree = "<group>"; };
 		B18F3BBB1BD92EC8000AAC79 /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
@@ -565,6 +564,7 @@
 		C890A6571AEBD26B00AFF7E6 /* GitHubSignupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = GitHubSignupViewController.swift; path = Views/GitHubSignupViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		C890A6591AEBD28A00AFF7E6 /* GitHubAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = GitHubAPI.swift; path = GitHubAPI/GitHubAPI.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		C890A65C1AEC084100AFF7E6 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		C891A2C81C07160C00DDD09D /* Timeout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Timeout.swift; sourceTree = "<group>"; };
 		C89464281BC6C2B00055219D /* Cancelable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cancelable.swift; sourceTree = "<group>"; };
 		C894642A1BC6C2B00055219D /* AsyncLock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AsyncLock.swift; sourceTree = "<group>"; };
 		C894642B1BC6C2B00055219D /* Lock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lock.swift; sourceTree = "<group>"; };
@@ -901,7 +901,6 @@
 		C83366D41AD0293800C668A7 = {
 			isa = PBXGroup;
 			children = (
-				A27C59041BFC794E00A70332 /* Timeout.swift */,
 				C81B39F11BC1C28400EF5A9F /* Rx.xcodeproj */,
 				C8A468EF1B8A8BD000BF917B /* RxBlocking.framework */,
 				C8A468ED1B8A8BCC00BF917B /* RxCocoa.framework */,
@@ -1234,6 +1233,7 @@
 				C89464721BC6C2B00055219D /* TakeUntil.swift */,
 				C89464731BC6C2B00055219D /* TakeWhile.swift */,
 				C89464741BC6C2B00055219D /* Throttle.swift */,
+				C891A2C81C07160C00DDD09D /* Timeout.swift */,
 				C89464751BC6C2B00055219D /* Timer.swift */,
 				CBEE77531BD8C7B700AD584C /* ToArray.swift */,
 				D2AF91881BD2C51900A008C1 /* Using.swift */,
@@ -1718,7 +1718,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A27C59051BFC794E00A70332 /* Timeout.swift in Sources */,
 				C84CC58B1BDD486300E06A64 /* LockOwnerType.swift in Sources */,
 				C89465971BC6C2BC0055219D /* UIScrollView+Rx.swift in Sources */,
 				C8297E2F1B6CF905000589EA /* RxTableViewSectionedAnimatedDataSource.swift in Sources */,
@@ -1790,6 +1789,7 @@
 				C89464AF1BC6C2B00055219D /* ScopedDisposable.swift in Sources */,
 				C89464FA1BC6C2B00055219D /* ObserverType.swift in Sources */,
 				C89464F01BC6C2B00055219D /* Observable+Multiple.swift in Sources */,
+				C891A2C91C07160C00DDD09D /* Timeout.swift in Sources */,
 				C89464DF1BC6C2B00055219D /* StartWith.swift in Sources */,
 				C89465881BC6C2BC0055219D /* RxScrollViewDelegateProxy.swift in Sources */,
 				C89464B71BC6C2B00055219D /* Observable+Extensions.swift in Sources */,
