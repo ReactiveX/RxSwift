@@ -66,6 +66,7 @@ Operators are stateless by default.
   * [`observeOn` / `observeSingleOn`](http://reactivex.io/documentation/operators/observeon.html)
   * [`subscribe`](http://reactivex.io/documentation/operators/subscribe.html)
   * [`subscribeOn`](http://reactivex.io/documentation/operators/subscribeon.html)
+  * [`timeout`](http://reactivex.io/documentation/operators/timeout.html)
   * [`using`](http://reactivex.io/documentation/operators/using.html)
   * debug
 
