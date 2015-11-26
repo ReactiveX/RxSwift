@@ -39,7 +39,7 @@ class Sink<O : ObserverType> : SingleAssignmentDisposable {
 class SinkForward<O: ObserverType>: ObserverType {
     typealias E = O.E
     
-    let _forward: Sink<O>
+    private let _forward: Sink<O>
     
     init(forward: Sink<O>) {
         _forward = forward

@@ -272,7 +272,7 @@ extension ObservableType {
      - returns: The source sequence switching to the other sequence in case of a timeout.
      */
     @warn_unused_result(message="http://git.io/rxs.uo")
-    public func timeout<S: SchedulerType>(dueTime: S.TimeInterval, other: Observable<E>, _ scheduler: S)
+    public func timeout<S: SchedulerType, O: ObservableConvertibleType where E == O.E>(dueTime: S.TimeInterval, other: O, _ scheduler: S)
         -> Observable<E> {
             return Timeout(source: self.asObservable(), dueTime: dueTime, other: other.asObservable(), scheduler: scheduler)
     }
