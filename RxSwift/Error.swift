@@ -41,6 +41,10 @@ public enum RxError
     Sequence contains more then one element.
     */
     case MoreThanOneElement
+    /**
+     Timeout error.
+     */
+    case Timeout
 }
 
 public extension RxError {
@@ -61,6 +65,8 @@ public extension RxError {
             return "Sequence doesn't contain any element."
         case .MoreThanOneElement:
             return "Sequence contains more then one element."
+        case .Timeout:
+            return "Sequence timeout"
         }
     }
 }

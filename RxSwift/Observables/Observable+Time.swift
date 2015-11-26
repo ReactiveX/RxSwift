@@ -245,3 +245,35 @@ extension ObservableType {
             return WindowTimeCount(source: self.asObservable(), timeSpan: timeSpan, count: count, scheduler: scheduler)
     }
 }
+
+// MARK: timeout
+
+extension ObservableType {
+    
+    /**
+     Applies a timeout policy for each element in the observable sequence. If the next element isn't received within the specified timeout duration starting from its predecessor, a TimeoutError is propagated to the observer.
+     
+     - parameter dueTime: Maximum duration between values before a timeout occurs.
+     - parameter scheduler: Scheduler to run the timeout timer on.
+     - returns: An observable sequence with a TimeoutError in case of a timeout.
+     */
+    @warn_unused_result(message="http://git.io/rxs.uo")
+    public func timeout<S: SchedulerType>(dueTime: S.TimeInterval, _ scheduler: S)
+        -> Observable<E> {
+            return Timeout(source: self.asObservable(), dueTime: dueTime, other: nil, scheduler: scheduler)
+    }
+    
+    /**
+     Applies a timeout policy for each element in the observable sequence, using the specified scheduler to run timeout timers. If the next element isn't received within the specified timeout duration starting from its predecessor, the other observable sequence is used to produce future messages from that point on.
+     
+     - parameter dueTime: Maximum duration between values before a timeout occurs.
+     - parameter other: Sequence to return in case of a timeout.
+     - parameter scheduler: Scheduler to run the timeout timer on.
+     - returns: The source sequence switching to the other sequence in case of a timeout.
+     */
+    @warn_unused_result(message="http://git.io/rxs.uo")
+    public func timeout<S: SchedulerType>(dueTime: S.TimeInterval, other: Observable<E>, _ scheduler: S)
+        -> Observable<E> {
+            return Timeout(source: self.asObservable(), dueTime: dueTime, other: other.asObservable(), scheduler: scheduler)
+    }
+}
