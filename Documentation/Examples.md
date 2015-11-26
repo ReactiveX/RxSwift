@@ -1,8 +1,6 @@
 Examples
 ========
 
-[Definition of `>-` operator is here](DesignRationale.md#pipe-operator)
-
 1. [Calculated variable](#calculated-variable)
 1. [Simple UI bindings](#simple-ui-bindings)
 1. [Autocomplete](#autocomplete)
@@ -49,8 +47,8 @@ let b /*: Observable<Int>*/ = Variable(2)   // b = 2
 //      c = "\(a + b) is positive"
 // }
 let c = combineLatest(a, b) { $0 + $1 }     // combines latest values of variables `a` and `b` using `+`
-	>- filter { $0 >= 0 }               // if `a + b >= 0` is true, `a + b` is passed to map operator
-	>- map { "\($0) is positive" }      // maps `a + b` to "\(a + b) is positive"
+	  .filter { $0 >= 0 }               // if `a + b >= 0` is true, `a + b` is passed to map operator
+  	.map { "\($0) is positive" }      // maps `a + b` to "\(a + b) is positive"
 
 // Since initial values are a = 1, b = 2
 // 1 + 2 = 3 which is >= 0, `c` is intially equal to "3 is positive"
@@ -58,11 +56,11 @@ let c = combineLatest(a, b) { $0 + $1 }     // combines latest values of variabl
 // To pull values out of rx variable `c`, subscribe to values from  `c`.
 // `subscribeNext` means subscribe to next (fresh) values of variable `c`.
 // That also includes the inital value "3 is positive".
-c >- subscribeNext { println($0) }          // prints: "3 is positive"
+c.subscribeNext { println($0) }          // prints: "3 is positive"
 
 // Now let's increase the value of `a`
 // a = 4 is in RxSwift
-a.next(4)                                   // prints: 6 is positive
+a.value = 4                                 // prints: 6 is positive
 // Sum of latest values is now `4 + 2`, `6` is >= 0, map operator
 // produces "6 is positive" and that result is "assigned" to `c`.
 // Since the value of `c` changed, `{ println($0) }` will get called,
@@ -70,7 +68,7 @@ a.next(4)                                   // prints: 6 is positive
 
 // Now let's change the value of `b`
 // b = -8 is in RxSwift
-b.next(-8)                                  // doesn't print anything
+b.value = -8                                  // doesn't print anything
 // Sum of latest values is `4 + (-8)`, `-4` is not >= 0, map doesn't
 // get executed.
 // That means that `c` still contains "6 is positive" and that's correct.
@@ -85,14 +83,14 @@ b.next(-8)                                  // doesn't print anything
 * instead of binding to variables, let's bind to text field values (rx_text)
 * next, parse that into an int and calculate if the number is prime using an async API (map)
 * if text field value is changed before async call completes, new async call will be enqueued (concat)
-* bind results to label (resultLabel.rx_subscribeTextTo)
+* bind results to label (bindTo(resultLabel.rx_text))
 
 ```swift
 let subscription/*: Disposable */ = primeTextField.rx_text      // type is Observable<String>
-            >- map { WolframAlphaIsPrime($0.toInt() ?? 0) }     // type is Observable<Observable<Prime>>
-            >- concat                                           // type is Observable<Prime>
-            >- map { "number \($0.n) is prime? \($0.isPrime)" } // type is Observable<String>
-            >- resultLabel.rx_subscribeTextTo                   // return Disposable that can be used to unbind everything
+              .map { WolframAlphaIsPrime($0.toInt() ?? 0) }     // type is Observable<Observable<Prime>>
+              .concat                                           // type is Observable<Prime>
+              .map { "number \($0.n) is prime? \($0.isPrime)" } // type is Observable<String>
+              .bindTo(resultLabel.rx_text)                      // return Disposable that can be used to unbind everything
 
 // This will set resultLabel.text to "number 43 is prime? true" after
 // server call completes.
@@ -118,14 +116,14 @@ Let's give it a shot.
 ```swift
 // bind UI control values directly
 // use username from `usernameOutlet` as username values source
-self.usernameOutlet.rx_text >- map { username in
+self.usernameOutlet.rx_text.map { username in
 
     // synchronous validation, nothing special here
     if count(username) == 0 {
         // Convenience for constructing synchronous result.
         // In case there is mixed synchronous and asychronous code inside the same
         // method, this will construct an async result that is resolved immediatelly.
-        return returnElement((valid: false, message: "Username can't be empty."))
+        return just((valid: false, message: "Username can't be empty."))
     }
 
     ...
@@ -141,7 +139,7 @@ self.usernameOutlet.rx_text >- map { username in
 
     // This will fire a server call to check if the username already exists.
     // Guess what, its type is `Observable<ValidationResult>`
-    return API.usernameAvailable(username) >- map { available in
+    return API.usernameAvailable(username).map { available in
         if available {
             return (true, "Username available")
         }
@@ -150,7 +148,7 @@ self.usernameOutlet.rx_text >- map { username in
         }
     }
     // use `loadingValue` until server responds
-        >- startWith(loadingValue)
+          .startWith(loadingValue)
 }
 // Since we now have `Observable<Observable<ValidationResult>>`
 // we somehow need to return to normal `Observable` world.
@@ -158,19 +156,19 @@ self.usernameOutlet.rx_text >- map { username in
 // want to cancel pending asynchronous operation if new username is
 // provided.
 // That's what `switchLatest` does
-    >- switchLatest
+      .switchLatest
 // Now we need to bind that to the user interface somehow.
 // Good old `subscribeNext` can do that
 // That's the end of `Observable` chain.
 // This will produce a `Disposable` object that can unbind everything and cancel
 // pending async operations.
-    >- subscribeNext { valid in
+      .subscribeNext { valid in
         errorLabel.textColor = validationColor(valid)
         errorLabel.text = valid.message
     }
 // Why would we do it manually, that's tedious,
 // let's dispose everything automagically on view controller dealloc.
-    >- disposeBag.addDisposable
+    .addDisposable(disposeBag)
 ```
 
 Can't get any simpler than this. There are [more examples](../RxExample) in the repository, so feel free to check them out.
