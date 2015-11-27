@@ -60,7 +60,7 @@ c.subscribeNext { print($0) }          // prints: "3 is positive"
 
 // Now let's increase the value of `a`
 // a = 4 is in RxSwift
-a.next(4)                                   // prints: 6 is positive
+a.value = 4                                   // prints: 6 is positive
 // Sum of latest values is now `4 + 2`, `6` is >= 0, map operator
 // produces "6 is positive" and that result is "assigned" to `c`.
 // Since the value of `c` changed, `{ print($0) }` will get called,
@@ -68,7 +68,7 @@ a.next(4)                                   // prints: 6 is positive
 
 // Now let's change the value of `b`
 // b = -8 is in RxSwift
-b.next(-8)                                  // doesn't print anything
+b.value = -8                                 // doesn't print anything
 // Sum of latest values is `4 + (-8)`, `-4` is not >= 0, map doesn't
 // get executed.
 // That means that `c` still contains "6 is positive" and that's correct.
@@ -83,7 +83,7 @@ b.next(-8)                                  // doesn't print anything
 * instead of binding to variables, let's bind to text field values (rx_text)
 * next, parse that into an int and calculate if the number is prime using an async API (map)
 * if text field value is changed before async call completes, new async call will be enqueued (concat)
-* bind results to label (resultLabel.rx_subscribeTextTo)
+* bind results to label (bindTo(resultLabel.rx_text))
 
 ```swift
 let subscription/*: Disposable */ = primeTextField.rx_text      // type is Observable<String>
@@ -124,7 +124,7 @@ self.usernameOutlet.rx_text
             // Convenience for constructing synchronous result.
             // In case there is mixed synchronous and asychronous code inside the same
             // method, this will construct an async result that is resolved immediatelly.
-            return returnElement((valid: false, message: "Username can't be empty."))
+            return just((valid: false, message: "Username can't be empty."))
         }
 
         ...
