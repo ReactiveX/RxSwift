@@ -56,7 +56,7 @@ extension ControlTests {
         let createView: () -> UICollectionView = { UICollectionView(frame: CGRectMake(0, 0, 1, 1), collectionViewLayout: layout) }
 
         ensureEventDeallocated(createView) { (view: UICollectionView) in view.rx_itemSelected }
-        ensureEventDeallocated(createView) { (view: UICollectionView) in view.rx_modelSelected() as ControlEvent<Int> }
+        ensureEventDeallocated(createView) { (view: UICollectionView) in view.rx_modelSelected(Int.self) }
     }
 
     func testCollectionView_DelegateEventCompletesOnDealloc1() {
@@ -71,7 +71,7 @@ extension ControlTests {
 
             return (collectionView, s)
         }
-        ensureEventDeallocated(createView) { (view: UICollectionView) in view.rx_modelSelected() as ControlEvent<Int> }
+        ensureEventDeallocated(createView) { (view: UICollectionView) in view.rx_modelSelected(Int.self) }
     }
 
     func testCollectionView_DelegateEventCompletesOnDealloc2() {
@@ -88,7 +88,7 @@ extension ControlTests {
 
             return (collectionView, s)
         }
-        ensureEventDeallocated(createView) { (view: UICollectionView) in view.rx_modelSelected() as ControlEvent<Int> }
+        ensureEventDeallocated(createView) { (view: UICollectionView) in view.rx_modelSelected(Int.self) }
     }
 
     func testCollectionView_ModelSelected1() {
@@ -109,7 +109,7 @@ extension ControlTests {
 
         var selectedItem: Int? = nil
 
-        let s = collectionView.rx_modelSelected()
+        let s = collectionView.rx_modelSelected(Int.self)
             .subscribeNext { (item: Int) in
                 selectedItem = item
             }
@@ -140,8 +140,8 @@ extension ControlTests {
 
         var selectedItem: Int? = nil
 
-        let s = collectionView.rx_modelSelected()
-            .subscribeNext { (item: Int) in
+        let s = collectionView.rx_modelSelected(Int.self)
+            .subscribeNext { item in
                 selectedItem = item
             }
 
@@ -177,11 +177,11 @@ extension ControlTests {
         let createView: () -> UITableView = { UITableView(frame: CGRectMake(0, 0, 1, 1)) }
 
         ensureEventDeallocated(createView) { (view: UITableView) in view.rx_itemSelected }
-        ensureEventDeallocated(createView) { (view: UITableView) in view.rx_modelSelected() as ControlEvent<Int> }
+        ensureEventDeallocated(createView) { (view: UITableView) in view.rx_modelSelected(Int.self) }
         ensureEventDeallocated(createView) { (view: UITableView) in view.rx_itemDeleted }
         ensureEventDeallocated(createView) { (view: UITableView) in view.rx_itemMoved }
         ensureEventDeallocated(createView) { (view: UITableView) in view.rx_itemInserted }
-        ensureEventDeallocated(createView) { (view: UITableView) in view.rx_modelSelected() as ControlEvent<Int> }
+        ensureEventDeallocated(createView) { (view: UITableView) in view.rx_modelSelected(Int.self) }
     }
 
     func testTableView_DelegateEventCompletesOnDealloc1() {
@@ -195,7 +195,7 @@ extension ControlTests {
 
             return (tableView, dataSourceSubscription)
         }
-        ensureEventDeallocated(createView) { (view: UITableView) in view.rx_modelSelected() as ControlEvent<Int> }
+        ensureEventDeallocated(createView) { (view: UITableView) in view.rx_modelSelected(Int.self) }
     }
 
     func testTableView_DelegateEventCompletesOnDealloc2() {
@@ -210,7 +210,7 @@ extension ControlTests {
 
             return (tableView, dataSourceSubscription)
         }
-        ensureEventDeallocated(createView) { (view: UITableView) in view.rx_modelSelected() as ControlEvent<Int> }
+        ensureEventDeallocated(createView) { (view: UITableView) in view.rx_modelSelected(Int.self) }
     }
 
     func testTableView_ModelSelected1() {
@@ -229,8 +229,8 @@ extension ControlTests {
 
         var selectedItem: Int? = nil
         
-        let s = tableView.rx_modelSelected()
-            .subscribeNext { (item: Int) in
+        let s = tableView.rx_modelSelected(Int.self)
+            .subscribeNext { item in
                 selectedItem = item
             }
 
@@ -259,8 +259,8 @@ extension ControlTests {
 
         var selectedItem: Int? = nil
 
-        let s = tableView.rx_modelSelected()
-            .subscribeNext { (item: Int) in
+        let s = tableView.rx_modelSelected(Int.self)
+            .subscribeNext { item in
                 selectedItem = item
         }
 

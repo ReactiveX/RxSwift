@@ -129,6 +129,9 @@ extension UICollectionView {
     
     It can be only used when one of the `rx_itemsWith*` methods is used to bind observable sequence.
     
+         collectionView.rx_modelSelected(MyModel.self)
+            .map { ...
+
     If custom data source is being bound, new `rx_modelSelected` wrapper needs to be written also.
     
         public func rx_myModelSelected<T>() -> ControlEvent<T> {
@@ -142,7 +145,7 @@ extension UICollectionView {
         }
     
     */
-    public func rx_modelSelected<T>() -> ControlEvent<T> {
+    public func rx_modelSelected<T>(modelType: T.Type) -> ControlEvent<T> {
         let source: Observable<T> = rx_itemSelected.flatMap { [weak self] indexPath -> Observable<T> in
             guard let view = self else {
                 return empty()
