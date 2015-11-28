@@ -10,6 +10,7 @@
 #import <Foundation/Foundation.h>
 #import <objc/runtime.h>
 #import <objc/message.h>
+#import <libkern/OSAtomic.h>
 
 #import "_RX.h"
 #import "_RXObjcRuntime.h"
@@ -29,6 +30,7 @@ static CFTypeID  defaultTypeID;
 static SEL       deallocSelector;
 
 static int RxSwizzledClassKey = 0;
+static int32_t numberOfSwizzledMethods = 0;
 
 #define THREADING_HAZZARD(class) \
     NSLog(@"There was a problem swizzling on `%@`.\nYou have probably two libraries performing swizzling in runtime.\nWe didn't want to crash your program, but this is not good ...\nYou an solve this problem by either not using swizzling in this library, removing one of those other libraries, or making sure that swizzling parts are synchronized (only perform them on main thread).\nAnd yes, this message will self destruct when you clear the console, and since it's non deterministric, the problem could still exist and it will be hard for you to reproduce it.", NSStringFromClass(class)); CRASH_IN_DEBUG
@@ -48,29 +50,49 @@ static int RxSwizzledClassKey = 0;
 #define RX_ARG_rx_ulong(value)    [NSNumber numberWithUnsignedLong:value]
 #define RX_ARG_rx_block(value)    ((id)(value) ?: [NSNull null])
 
-static NSSet *supportedTypes;
+typedef struct supported_type {
+    const char *encoding;
+} supported_type_t;
+
+static supported_type_t supported_types[] = {
+    { .encoding = @encode(id)},
+    { .encoding = @encode(Class)},
+    { .encoding = @encode(void (^)())},
+    { .encoding = @encode(char)},
+    { .encoding = @encode(short)},
+    { .encoding = @encode(int)},
+    { .encoding = @encode(long)},
+    { .encoding = @encode(long long)},
+    { .encoding = @encode(unsigned char)},
+    { .encoding = @encode(unsigned short)},
+    { .encoding = @encode(unsigned int)},
+    { .encoding = @encode(unsigned long)},
+    { .encoding = @encode(unsigned long long)},
+    { .encoding = @encode(float)},
+    { .encoding = @encode(double)},
+    { .encoding = @encode(BOOL)},
+    { .encoding = @encode(const char*)},
+};
 
 __attribute__((constructor))
 static void RX_initialize_objc_runtime() {
-    supportedTypes = [NSMutableSet setWithArray:@[
-        [NSString stringWithCString:@encode(id) encoding:NSUTF8StringEncoding],
-        [NSString stringWithCString:@encode(Class) encoding:NSUTF8StringEncoding],
-        [NSString stringWithCString:@encode(void (^)()) encoding:NSUTF8StringEncoding],
-        [NSString stringWithCString:@encode(char) encoding:NSUTF8StringEncoding],
-        [NSString stringWithCString:@encode(short) encoding:NSUTF8StringEncoding],
-        [NSString stringWithCString:@encode(int) encoding:NSUTF8StringEncoding],
-        [NSString stringWithCString:@encode(long) encoding:NSUTF8StringEncoding],
-        [NSString stringWithCString:@encode(long long) encoding:NSUTF8StringEncoding],
-        [NSString stringWithCString:@encode(unsigned char) encoding:NSUTF8StringEncoding],
-        [NSString stringWithCString:@encode(unsigned short) encoding:NSUTF8StringEncoding],
-        [NSString stringWithCString:@encode(unsigned int) encoding:NSUTF8StringEncoding],
-        [NSString stringWithCString:@encode(unsigned long) encoding:NSUTF8StringEncoding],
-        [NSString stringWithCString:@encode(unsigned long long) encoding:NSUTF8StringEncoding],
-        [NSString stringWithCString:@encode(float) encoding:NSUTF8StringEncoding],
-        [NSString stringWithCString:@encode(double) encoding:NSUTF8StringEncoding],
-        [NSString stringWithCString:@encode(BOOL) encoding:NSUTF8StringEncoding],
-        [NSString stringWithCString:@encode(const char*) encoding:NSUTF8StringEncoding],
-    ]];
+}
+
+BOOL RX_is_supported_type(const char *type) {
+    if (type == nil) {
+        return NO;
+    }
+
+    for (int i = 0; i < sizeof(supported_types) / sizeof(supported_type_t); ++i) {
+        if (supported_types[i].encoding[0] != type[0]) {
+            continue;
+        }
+        if (strcmp(supported_types[i].encoding, type) == 0) {
+            return YES;
+        }
+    }
+
+    return NO;
 }
 
 SEL __nonnull RX_selector(SEL __nonnull selector) {
@@ -142,7 +164,6 @@ NSArray *RX_extract_arguments(NSInvocation *invocation) {
     NSUInteger numberOfVisibleArguments = numberOfArguments - HIDDEN_ARGUMENT_COUNT;
     
     NSCParameterAssert(numberOfVisibleArguments >= 0);
-    NSCParameterAssert(RX_is_method_signature_void(invocation.methodSignature));
     
     NSMutableArray *arguments = [NSMutableArray arrayWithCapacity:numberOfVisibleArguments];
     
@@ -219,7 +240,7 @@ static NSMethodSignatureRef RX_method_signature(id __nonnull __unsafe_unretained
 // https://github.com/mikeash/MAZeroingWeakRef/blob/master/Source/MAZeroingWeakRef.m
 // https://github.com/ReactiveCocoa/ReactiveCocoa/blob/swift-development/ReactiveCocoa/Objective-C/NSObject%2BRACDeallocating.m
 
-@interface RXSwizzling: NSObject
+@interface RXObjCRuntime: NSObject
 
 @property (nonatomic, assign) pthread_mutex_t lock;
 
@@ -227,30 +248,30 @@ static NSMethodSignatureRef RX_method_signature(id __nonnull __unsafe_unretained
 @property (nonatomic, strong) NSMutableDictionary<NSValue *, Class> *dynamicSublassByRealClass;
 @property (nonatomic, strong) NSMutableDictionary<NSValue *, NSMutableSet<NSValue*>*> *swizzledSelectorsByClass;
 
-+(RXSwizzling*)instance;
++(RXObjCRuntime*)instance;
 
--(void)performLocked:(void (^)())action;
+-(void)performLocked:(void (^)(RXObjCRuntime* __nonnull))action;
 -(void)ensurePrepared:(id __nonnull)target forObserving:(SEL __nonnull)selector;
 
 @end
 
 void RX_ensure_observing(id __nonnull target, SEL __nonnull selector) {
-    [[RXSwizzling instance] performLocked:^{
-        [[RXSwizzling instance] ensurePrepared:target forObserving:selector];
+    [[RXObjCRuntime instance] performLocked:^(RXObjCRuntime * __nonnull self) {
+        [self ensurePrepared:target forObserving:selector];
     }];
 }
 
-@implementation RXSwizzling
+@implementation RXObjCRuntime
 
-static RXSwizzling *_instance = nil;
+static RXObjCRuntime *_instance = nil;
 
-+(RXSwizzling*)instance {
++(RXObjCRuntime*)instance {
     return _instance;
 }
 
 +(void)initialize {
-    _instance = [[RXSwizzling alloc] init];
-    defaultTypeID = CFGetTypeID((CFTypeRef)RXSwizzling.class);
+    _instance = [[RXObjCRuntime alloc] init];
+    defaultTypeID = CFGetTypeID((CFTypeRef)RXObjCRuntime.class); // just need a reference of some object not from CF
     deallocSelector = NSSelectorFromString(@"dealloc");
     NSAssert(_instance != nil, @"Failed to initialize swizzling");
 }
@@ -272,9 +293,9 @@ static RXSwizzling *_instance = nil;
     return self;
 }
 
--(void)performLocked:(void (^)())action {
+-(void)performLocked:(void (^)(RXObjCRuntime* __nonnull))action {
     pthread_mutex_lock(&_lock);
-    action();
+    action(self);
     pthread_mutex_unlock(&_lock);
 }
 
@@ -300,7 +321,7 @@ static RXSwizzling *_instance = nil;
 -(void)observeByForwardingMessages:(Class __nonnull)swizzlingImplementorClass
                           selector:(SEL)selector
                             target:(id __nonnull)target {
-    [self ensureForwardingMethodsAreSwizzled:swizzlingImplementorClass toActAs:swizzlingImplementorClass];
+    [self ensureForwardingMethodsAreSwizzled:swizzlingImplementorClass];
 
     SEL rxSelector = RX_selector(selector);
     id<RXSwizzlingObserver> messageSentObserver = objc_getAssociatedObject(target, rxSelector);
@@ -387,7 +408,8 @@ static RXSwizzling *_instance = nil;
     dynamicFakeSubclass = objc_allocateClassPair(class, dynamicFakeSublassNameRaw, 0);
     ALWAYS(dynamicFakeSubclass != nil, @"Class not generated");
 
-    [self ensureForwardingMethodsAreSwizzled:dynamicFakeSubclass toActAs:class];
+    [self swizzleClass:dynamicFakeSubclass toActAs:class];
+    [self ensureForwardingMethodsAreSwizzled:dynamicFakeSubclass];
 
     objc_registerClassPair(dynamicFakeSubclass);
 
@@ -397,7 +419,7 @@ static RXSwizzling *_instance = nil;
     return dynamicFakeSubclass;
 }
 
--(void)ensureForwardingMethodsAreSwizzled:(Class __nonnull)class toActAs:(Class __nonnull)toActAs {
+-(void)ensureForwardingMethodsAreSwizzled:(Class __nonnull)class {
     NSValue *classValue = CLASS_VALUE(class);
     if ([self.classesThatSupportObservingByForwarding containsObject:classValue]) {
         return;
@@ -406,9 +428,6 @@ static RXSwizzling *_instance = nil;
     [self swizzleForwardInvocation:class];
     [self swizzleMethodSignatureForSelector:class];
     [self swizzleRespondsToSelector:class];
-    if (class != toActAs) {
-        [self swizzleClass:class toActAs:toActAs];
-    }
 
     [self.classesThatSupportObservingByForwarding addObject:classValue];
 }
@@ -445,6 +464,8 @@ replacementImplementationGenerator:(IMP (^)(IMP originalImplemenation))replaceme
     if ([self swizzledSelector:selector forClass:class]) {
         return;
     }
+
+    OSAtomicIncrement32(&numberOfSwizzledMethods);
     
     DLOG(@"Rx is swizzling `%@` for `%@`", NSStringFromSelector(selector), class);
 
@@ -470,8 +491,9 @@ replacementImplementationGenerator:(IMP (^)(IMP originalImplemenation))replaceme
     Method existingMethodOnTargetClass = existingMethod;
 
     IMP originalImplementation = method_getImplementation(existingMethodOnTargetClass);
-    IMP implementationReplacementIMP = replacementImplementationGenerator(originalImplementation);
     ALWAYS(originalImplementation != nil, @"Method must exist.");
+    IMP implementationReplacementIMP = replacementImplementationGenerator(originalImplementation);
+    ALWAYS(implementationReplacementIMP != nil, @"Method must exist.");
     IMP originalImplementationAfterChange = method_setImplementation(existingMethodOnTargetClass, implementationReplacementIMP);
     ALWAYS(originalImplementation != nil, @"Method must exist.");
 
@@ -636,5 +658,40 @@ SWIZZLE_OBSERVE_METHOD(void, id, rx_uint)
 SWIZZLE_OBSERVE_METHOD(void, id, rx_ulong)
 SWIZZLE_OBSERVE_METHOD(void, id, rx_block)
 @end
+
+#if DEBUG
+
+NSInteger RX_number_of_dynamic_subclasses() {
+    __block NSInteger count = 0;
+    [[RXObjCRuntime instance] performLocked:^(RXObjCRuntime * __nonnull self) {
+        count = self.dynamicSublassByRealClass.count;
+    }];
+
+    return count;
+}
+
+NSInteger RX_number_of_forwarding_enabled_classes() {
+    __block NSInteger count = 0;
+    [[RXObjCRuntime instance] performLocked:^(RXObjCRuntime * __nonnull self) {
+        count = self.classesThatSupportObservingByForwarding.count;
+    }];
+
+    return count;
+}
+
+NSInteger RX_number_of_swizzled_classes() {
+    __block NSInteger count = 0;
+    [[RXObjCRuntime instance] performLocked:^(RXObjCRuntime * __nonnull self) {
+        count = self.swizzledSelectorsByClass.count;
+    }];
+
+    return count;
+}
+
+NSInteger RX_number_of_swizzled_methods() {
+    return numberOfSwizzledMethods;
+}
+
+#endif
 
 #endif

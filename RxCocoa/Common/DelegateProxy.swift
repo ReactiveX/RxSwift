@@ -113,9 +113,7 @@ public class DelegateProxy : _RXDelegateProxy {
     - parameter proxy: Delegate proxy object to assign to `object`.
     */
     public class func assignProxy(proxy: AnyObject, toObject object: AnyObject) {
-        if (proxy.classForCoder != self.classForCoder()) {
-            rxFatalError("Proxy has wrong type `\(proxy.dynamicType)` instead of `\(self.classForCoder())`");
-        }
+        precondition(proxy.isKindOfClass(self.classForCoder()))
        
         objc_setAssociatedObject(object, self.delegateAssociatedObjectTag(), proxy, .OBJC_ASSOCIATION_RETAIN)
     }

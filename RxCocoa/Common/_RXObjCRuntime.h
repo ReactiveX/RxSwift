@@ -45,4 +45,11 @@ BOOL RX_is_method_with_description_void(struct objc_method_description method);
 
 BOOL RX_is_method_signature_void(NSMethodSignature * __nonnull methodSignature);
 
+#if DEBUG
+NSInteger RX_number_of_dynamic_subclasses();
+NSInteger RX_number_of_forwarding_enabled_classes();
+NSInteger RX_number_of_swizzled_classes();
+NSInteger RX_number_of_swizzled_methods();
+#endif
+
 #endif
