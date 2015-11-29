@@ -13,8 +13,9 @@ class ObjectRuntimeState {
     let actingAs: ClassRuntimeState
 
     init(target: AnyObject) {
+        assert(object_getClass(target) == target.dynamicType)
         real = ClassRuntimeState(object_getClass(target))
-        actingAs = ClassRuntimeState(target.dynamicType)
+        actingAs = ClassRuntimeState(RXObjCTestRuntime.objCClass(target))
     }
 
     /*func isForwardingSelector(selector: Selector) -> Bool {
@@ -32,7 +33,12 @@ class ObjectRuntimeState {
             for (selector, implementation) in to.implementations {
                 if let originalImplementation = from.implementations[selector] {
                     if originalImplementation != implementation {
-                        changes.append(.ImplementationChanged(forSelector: selector))
+                        if RXObjCTestRuntime.isForwardingIMP(implementation) {
+                            changes.append(.ImplementationChangedToForwarding(forSelector: selector))
+                        }
+                        else {
+                            changes.append(.ImplementationChanged(forSelector: selector))
+                        }
                     }
                 }
                 else {
@@ -72,6 +78,7 @@ enum ObjectRuntimeChange : Hashable {
 
     case ClassChanged(from: String, to: String, andImplementsTheseSelectors: [Selector])
     case ImplementationChanged(forSelector: Selector)
+    case ImplementationChangedToForwarding(forSelector: Selector)
     case ImplementationAdded(forSelector: Selector)
     case ImplementationDeleted(forSelector: Selector)
     case ForwardImplementationAdded(forSelector: Selector)
@@ -89,6 +96,8 @@ func ==(lhs: ObjectRuntimeChange, rhs: ObjectRuntimeChange) -> Bool {
     case let (.ClassChanged(lFrom, lTo, lImplementations), .ClassChanged(rFrom, rTo, rImplementations)):
         return (lFrom == rFrom && lTo == rTo) && Set(lImplementations) == Set(rImplementations)
     case let (.ImplementationChanged(lSelector), .ImplementationChanged(rSelector)):
+        return lSelector == rSelector
+    case let (.ImplementationChangedToForwarding(lSelector), .ImplementationChangedToForwarding(rSelector)):
         return lSelector == rSelector
     case let (.ImplementationAdded(lSelector), .ImplementationAdded(rSelector)):
         return lSelector == rSelector
@@ -129,7 +138,7 @@ struct ClassRuntimeState {
         var result = [Selector: IMP]()
         for i in 0 ..< count {
             let method: Method = methods.advancedBy(Int(i)).memory
-            result[method_getName(method)] = method
+            result[method_getName(method)] = method_getImplementation(method)
         }
 
         return result

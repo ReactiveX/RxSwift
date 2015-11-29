@@ -29,8 +29,9 @@ typedef id (^rx_block)(id);
 static CFTypeID  defaultTypeID;
 static SEL       deallocSelector;
 
-static int RxSwizzledClassKey = 0;
+static int RxSwizzlingTargetClassKey = 0;
 static int32_t numberOfSwizzledMethods = 0;
+static int32_t numberOfForwardedMethods = 0;
 
 #define THREADING_HAZZARD(class) \
     NSLog(@"There was a problem swizzling on `%@`.\nYou have probably two libraries performing swizzling in runtime.\nWe didn't want to crash your program, but this is not good ...\nYou an solve this problem by either not using swizzling in this library, removing one of those other libraries, or making sure that swizzling parts are synchronized (only perform them on main thread).\nAnd yes, this message will self destruct when you clear the console, and since it's non deterministric, the problem could still exist and it will be hard for you to reproduce it.", NSStringFromClass(class)); CRASH_IN_DEBUG
@@ -239,14 +240,14 @@ static NSMethodSignatureRef RX_method_signature(id __nonnull __unsafe_unretained
 // inspired by
 // https://github.com/mikeash/MAZeroingWeakRef/blob/master/Source/MAZeroingWeakRef.m
 // https://github.com/ReactiveCocoa/ReactiveCocoa/blob/swift-development/ReactiveCocoa/Objective-C/NSObject%2BRACDeallocating.m
-
+// https://github.com/steipete/Aspects
 @interface RXObjCRuntime: NSObject
 
 @property (nonatomic, assign) pthread_mutex_t lock;
 
 @property (nonatomic, strong) NSMutableSet<NSValue *> *classesThatSupportObservingByForwarding;
 @property (nonatomic, strong) NSMutableDictionary<NSValue *, Class> *dynamicSublassByRealClass;
-@property (nonatomic, strong) NSMutableDictionary<NSValue *, NSMutableSet<NSValue*>*> *swizzledSelectorsByClass;
+@property (nonatomic, strong) NSMutableDictionary<NSValue *, NSMutableSet<NSValue*>*> *interceptedSelectorsByClass;
 
 +(RXObjCRuntime*)instance;
 
@@ -282,7 +283,7 @@ static RXObjCRuntime *_instance = nil;
 
     self.classesThatSupportObservingByForwarding = [NSMutableSet set];
     self.dynamicSublassByRealClass = [NSMutableDictionary dictionary];
-    self.swizzledSelectorsByClass = [NSMutableDictionary dictionary];
+    self.interceptedSelectorsByClass = [NSMutableDictionary dictionary];
 
     pthread_mutexattr_t lock_attr;
     pthread_mutexattr_init(&lock_attr);
@@ -300,28 +301,21 @@ static RXObjCRuntime *_instance = nil;
 }
 
 -(void)ensurePrepared:(id __nonnull)target forObserving:(SEL __nonnull)selector  {
-    __unused Class swizzlingImplementorClass = [self prepareTargetClassForObserving:target];
 
-    if ([self swizzledSelector:selector forClass:swizzlingImplementorClass]) {
+    Class swizzlingImplementorClass = [self prepareTargetClassForObserving:target];
+
+    if ([self interceptedSelectorSelector:selector forClass:swizzlingImplementorClass]) {
         return;
     }
-
-    if (selector == deallocSelector) {
-        [self swizzleDeallocating:swizzlingImplementorClass];
+    
+    Class actingAs = [target class];
+    if (actingAs != swizzlingImplementorClass) {
+        // if the work was already being done for original class, then it's already done for dynamic subclass
+        if ([self interceptedSelectorSelector:selector forClass:actingAs]) {
+            [self registerInterceptedSelector:selector forClass:swizzlingImplementorClass];
+            return;
+        }
     }
-    else {
-        [self observeByForwardingMessages:swizzlingImplementorClass
-                                 selector:selector
-                                   target:target];
-    }
-
-    [self swizzledSelector:selector forClass:swizzlingImplementorClass];
-}
-
--(void)observeByForwardingMessages:(Class __nonnull)swizzlingImplementorClass
-                          selector:(SEL)selector
-                            target:(id __nonnull)target {
-    [self ensureForwardingMethodsAreSwizzled:swizzlingImplementorClass];
 
     SEL rxSelector = RX_selector(selector);
     id<RXSwizzlingObserver> messageSentObserver = objc_getAssociatedObject(target, rxSelector);
@@ -332,6 +326,33 @@ static RXObjCRuntime *_instance = nil;
         [messageSentObserver methodForSelectorDoesntExist];
         return;
     }
+
+    if (selector == deallocSelector) {
+        [self swizzleDeallocating:swizzlingImplementorClass];
+    }
+    else {
+        [self observeByForwardingMessages:swizzlingImplementorClass
+                                 selector:selector
+                                   target:target
+                                 observer:messageSentObserver];
+    }
+
+    [self registerInterceptedSelector:selector forClass:swizzlingImplementorClass];
+}
+
+-(void)observeByForwardingMessages:(Class __nonnull)swizzlingImplementorClass
+                          selector:(SEL)selector
+                            target:(id __nonnull)target
+                          observer:(id<RXSwizzlingObserver>)messageSentObserver {
+    [self ensureForwardingMethodsAreSwizzled:swizzlingImplementorClass];
+
+#if DEBUG
+    OSAtomicIncrement32(&numberOfForwardedMethods);
+#endif
+    SEL rxSelector = RX_selector(selector);
+
+    Method instanceMethod = class_getInstanceMethod(swizzlingImplementorClass, selector);
+    ALWAYS(instanceMethod != nil, @"Instance method is nil");
 
     const char* methodEncoding = method_getTypeEncoding(instanceMethod);
     ALWAYS(methodEncoding != nil, @"Method encoding is nil.");
@@ -362,7 +383,7 @@ static RXObjCRuntime *_instance = nil;
 }
 
 -(Class)prepareTargetClassForObserving:(id __nonnull)target {
-    Class swizzlingClass = objc_getAssociatedObject(target, &RxSwizzledClassKey);
+    Class swizzlingClass = objc_getAssociatedObject(target, &RxSwizzlingTargetClassKey);
     if (swizzlingClass != nil) {
         return swizzlingClass;
     }
@@ -376,12 +397,12 @@ static RXObjCRuntime *_instance = nil;
         if (previousClass != wannaBeClass) {
             THREADING_HAZZARD(wannaBeClass);
         }
-        objc_setAssociatedObject(target, &RxSwizzledClassKey, dynamicFakeSubclass, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        objc_setAssociatedObject(target, &RxSwizzlingTargetClassKey, dynamicFakeSubclass, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
         return dynamicFakeSubclass;
     }
 
     // biggest performance penalty, swizzling all instances of original class
-    objc_setAssociatedObject(target, &RxSwizzledClassKey, wannaBeClass, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(target, &RxSwizzlingTargetClassKey, wannaBeClass, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 
     return wannaBeClass;
 }
@@ -409,7 +430,7 @@ static RXObjCRuntime *_instance = nil;
     ALWAYS(dynamicFakeSubclass != nil, @"Class not generated");
 
     [self swizzleClass:dynamicFakeSubclass toActAs:class];
-    [self ensureForwardingMethodsAreSwizzled:dynamicFakeSubclass];
+    //[self ensureForwardingMethodsAreSwizzled:dynamicFakeSubclass];
 
     objc_registerClassPair(dynamicFakeSubclass);
 
@@ -432,27 +453,27 @@ static RXObjCRuntime *_instance = nil;
     [self.classesThatSupportObservingByForwarding addObject:classValue];
 }
 
--(void)registerSwizzledSelector:(SEL)selector forClass:(Class)class {
+-(void)registerInterceptedSelector:(SEL)selector forClass:(Class)class {
     NSValue * __nonnull classValue = CLASS_VALUE(class);
     NSValue * __nonnull selectorValue = SEL_VALUE(selector);
 
-    NSMutableSet *swizzledSelectorsForClass = self.swizzledSelectorsByClass[classValue];
+    NSMutableSet *swizzledSelectorsForClass = self.interceptedSelectorsByClass[classValue];
 
     if (swizzledSelectorsForClass == nil) {
         swizzledSelectorsForClass = [NSMutableSet set];
-        [self.swizzledSelectorsByClass setObject:swizzledSelectorsForClass forKey:classValue];
+        [self.interceptedSelectorsByClass setObject:swizzledSelectorsForClass forKey:classValue];
     }
 
     [swizzledSelectorsForClass addObject:selectorValue];
 
-    ALWAYS([[self.swizzledSelectorsByClass objectForKey:classValue] containsObject:selectorValue], @"Class should have been swizzled");
+    ALWAYS([self interceptedSelectorSelector:selector forClass:class], @"Class should have been swizzled");
 }
 
--(BOOL)swizzledSelector:(SEL)selector forClass:(Class)class {
+-(BOOL)interceptedSelectorSelector:(SEL)selector forClass:(Class)class {
     NSValue * __nonnull classValue = CLASS_VALUE(class);
     NSValue * __nonnull selectorValue = SEL_VALUE(selector);
 
-    NSMutableSet *swizzledSelectorsForClass = self.swizzledSelectorsByClass[classValue];
+    NSMutableSet *swizzledSelectorsForClass = self.interceptedSelectorsByClass[classValue];
 
     return [swizzledSelectorsForClass containsObject:selectorValue];
 }
@@ -461,18 +482,19 @@ static RXObjCRuntime *_instance = nil;
                       ofClass:(Class __nonnull)class
    newImplementationGenerator:(IMP(^)())newImplementationGenerator
 replacementImplementationGenerator:(IMP (^)(IMP originalImplemenation))replacementImplementationGenerator {
-    if ([self swizzledSelector:selector forClass:class]) {
+    if ([self interceptedSelectorSelector:selector forClass:class]) {
         return;
     }
 
+#if DEBUG
     OSAtomicIncrement32(&numberOfSwizzledMethods);
+#endif
     
     DLOG(@"Rx is swizzling `%@` for `%@`", NSStringFromSelector(selector), class);
 
-    [self registerSwizzledSelector:selector forClass:class];
+    [self registerInterceptedSelector:selector forClass:class];
 
     Method existingMethod = class_getInstanceMethod(class, selector);
-
     ALWAYS(existingMethod != nil, @"Method doesn't exist");
 
     const char *encoding = method_getTypeEncoding(existingMethod);
@@ -509,7 +531,7 @@ replacementImplementationGenerator:(IMP (^)(IMP originalImplemenation))replaceme
 
 #define RESPONDS_TO_SELECTOR_BODY(selector)             if (RX_responds_to_selector(self, NAME_CAT(_, 0, selector))) return YES;
 
-#define CLASS_BODY(...)                                 return class;
+#define CLASS_BODY(...)                                 return actAsClass;
 
 #define METHOD_SIGNATURE_FOR_SELECTOR_BODY(selector)                                            \
     NSMethodSignatureRef methodSignature = RX_method_signature(self, NAME_CAT(_, 0, selector)); \
@@ -679,13 +701,17 @@ NSInteger RX_number_of_forwarding_enabled_classes() {
     return count;
 }
 
-NSInteger RX_number_of_swizzled_classes() {
+NSInteger RX_number_of_intercepting_classes() {
     __block NSInteger count = 0;
     [[RXObjCRuntime instance] performLocked:^(RXObjCRuntime * __nonnull self) {
-        count = self.swizzledSelectorsByClass.count;
+        count = self.interceptedSelectorsByClass.count;
     }];
 
     return count;
+}
+
+NSInteger RX_number_of_forwarded_methods() {
+    return numberOfForwardedMethods;
 }
 
 NSInteger RX_number_of_swizzled_methods() {

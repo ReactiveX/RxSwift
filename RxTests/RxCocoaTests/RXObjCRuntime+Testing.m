@@ -20,6 +20,10 @@
     return implementation == _objc_msgForward;
 }
 
++(Class __nonnull)objCClass:(id __nonnull)target {
+    return [target class];
+}
+
 @end
 
 @implementation _TestSendMessage
@@ -45,7 +49,7 @@
 @interface A : NSObject @property(nonatomic, strong) NSString *a; -(void)ante; @end @implementation A -(void)ante { printf(""); } @end
 
 #define IMPLEMENT_OBSERVING_CLASS_PAIR_FOR_TEST(testName)                                                                                          \
-@implementation SendMessageTestBase_ ## testName                                                                                                   \
+@implementation SentMessageTestBase_ ## testName                                                                                                   \
                                                                                                                                                    \
 -(instancetype)init {                                                                                                                              \
     self = [super init];                                                                                                                           \
@@ -258,7 +262,7 @@
                                                                                                                                                    \
 @end                                                                                                                                               \
                                                                                                                                                    \
-@implementation SendMessageTest_ ## testName                                                                                                       \
+@implementation SentMessageTest_ ## testName                                                                                                       \
                                                                                                                                                    \
 -(instancetype)init {                                                                                                                              \
     self = [super init];                                                                                                                           \
@@ -486,7 +490,8 @@
 @end
 
 
-IMPLEMENT_OBSERVING_CLASS_PAIR_FOR_TEST(acting_forwarding)
+IMPLEMENT_OBSERVING_CLASS_PAIR_FOR_TEST(intercept_forwarding_dyn_first)
+IMPLEMENT_OBSERVING_CLASS_PAIR_FOR_TEST(intercept_forwarding_normal_first)
 
 IMPLEMENT_OBSERVING_CLASS_PAIR_FOR_TEST(forwarding_basic)
 IMPLEMENT_OBSERVING_CLASS_PAIR_FOR_TEST(generating_dynamic_class)

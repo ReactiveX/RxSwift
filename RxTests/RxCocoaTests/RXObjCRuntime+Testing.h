@@ -20,6 +20,7 @@
 
 +(id __nonnull)castClosure:(int (^ __nonnull)(int))closure;
 +(BOOL)isForwardingIMP:(IMP __nullable)implementation;
++(Class __nonnull)objCClass:(id __nonnull)target;
 
 @end
 
@@ -34,7 +35,7 @@ typedef struct some_insanely_large_struct {
 } some_insanely_large_struct_t;
 
 #define DECLARE_OBSERVING_CLASS_PAIR_FOR_TEST(testName)                                                              \
-@interface SendMessageTestBase_ ## testName : NSObject { }                                                           \
+@interface SentMessageTestBase_ ## testName : NSObject { }                                                           \
                                                                                                                      \
 @property (nonatomic, copy) NSArray<NSArray * > * __nonnull baseMessages;                                            \
                                                                                                                      \
@@ -129,14 +130,15 @@ typedef struct some_insanely_large_struct {
                                                                                                                      \
 @end                                                                                                                 \
                                                                                                                      \
-@interface SendMessageTest_ ## testName : SendMessageTestBase_ ## testName<SentMessageTestClassCreationProtocol> { } \
+@interface SentMessageTest_ ## testName : SentMessageTestBase_ ## testName<SentMessageTestClassCreationProtocol> { } \
                                                                                                                      \
 @property (nonatomic, copy) NSArray<NSArray * > * __nonnull messages;                                                \
                                                                                                                      \
 @end
 
 
-DECLARE_OBSERVING_CLASS_PAIR_FOR_TEST(acting_forwarding)
+DECLARE_OBSERVING_CLASS_PAIR_FOR_TEST(intercept_forwarding_dyn_first)
+DECLARE_OBSERVING_CLASS_PAIR_FOR_TEST(intercept_forwarding_normal_first)
 
 DECLARE_OBSERVING_CLASS_PAIR_FOR_TEST(forwarding_basic)
 DECLARE_OBSERVING_CLASS_PAIR_FOR_TEST(generating_dynamic_class)

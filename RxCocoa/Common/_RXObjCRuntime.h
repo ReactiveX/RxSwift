@@ -48,7 +48,8 @@ BOOL RX_is_method_signature_void(NSMethodSignature * __nonnull methodSignature);
 #if DEBUG
 NSInteger RX_number_of_dynamic_subclasses();
 NSInteger RX_number_of_forwarding_enabled_classes();
-NSInteger RX_number_of_swizzled_classes();
+NSInteger RX_number_of_intercepting_classes();
+NSInteger RX_number_of_forwarded_methods();
 NSInteger RX_number_of_swizzled_methods();
 #endif
 

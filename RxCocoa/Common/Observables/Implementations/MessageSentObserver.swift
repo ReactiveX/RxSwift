@@ -21,6 +21,7 @@ import Foundation
         private let _subject = PublishSubject<[AnyObject]>()
 
         init() {
+            
         }
 
         @objc func messageSentWithParameters(parameters: [AnyObject]) -> Void {

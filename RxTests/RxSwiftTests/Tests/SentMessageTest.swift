@@ -50,41 +50,177 @@ class SentMessageTest : RxTest {
     }
 }
 
-// MARK: Dynamic class generation
+// MARK: Observing doesn't interfere in the same level
 
 extension SentMessageTest {
 
-    func testActing_forwarding() {
+    func testActing_forwarding_first_dynamic() {
+        // first forwarding with dynamic sublass
         experimentWith(
-            createKVODynamicSublassed(SendMessageTest_acting_forwarding.self),
+            createKVODynamicSubclassed(SentMessageTest_intercept_forwarding_dyn_first.self),
             observeIt: { target in
                 return [target.rx_sentMessage("justCalledToSayObject:")]
             },
-            objectActingClassChange: [ObjectRuntimeChange.ForwardImplementationAdded(forSelector: "justCalledToSayObject:")],
+            objectActingClassChange: [
+                .ImplementationChangedToForwarding(forSelector: "justCalledToSayObject:"),
+                .ImplementationAdded(forSelector: "respondsToSelector:"),
+                .ImplementationAdded(forSelector: "methodSignatureForSelector:"),
+                .ImplementationAdded(forSelector: "forwardInvocation:"),
+                .ImplementationAdded(forSelector: "_RX_namespace_justCalledToSayObject:"),
+            ],
             objectRealClassChange: [],
-            runtimeChange: RxObjCRuntimeChange.generatedNewClassWith(swizzledMethods: 1, hasSwizzledForward: false)) { target in
+            runtimeChange: RxObjCRuntimeChange.forwardedMethods(1, swizzledForwardClasses: 1, interceptedClasses: 1)
+            ) { target in
                 let o = NSObject()
                 target.justCalledToSayObject(o)
                 return [[[o]]]
         }
 
-        // after that normal
+        // forwarding with normal class
         experimentWith(
-            createNormalInstance(SendMessageTest_acting_forwarding.self),
+            createNormalInstance(SentMessageTest_intercept_forwarding_dyn_first.self),
             observeIt: { target in
                 return [target.rx_sentMessage("justCalledToSayObject:")]
             },
             objectActingClassChange: [],
-            objectRealClassChange: [ObjectRuntimeChange.ClassChangedToDynamic("SendMessageTest_acting_forwarding", andImplementsTheseSelectors: ["justCalledToSayObject:"])],
-            runtimeChange: RxObjCRuntimeChange.generatedNewClassWith(swizzledMethods: 1, hasSwizzledForward: false)) { target in
+            objectRealClassChange: [
+                ObjectRuntimeChange.ClassChangedToDynamic("SentMessageTest_intercept_forwarding_dyn_first", andImplementsTheseSelectors: ["class"])
+            ],
+            runtimeChange: RxObjCRuntimeChange.generatedNewClassWith(swizzledMethods: 1, forwardedMethods: 0, hasSwizzledForward: false)
+            ) { target in
+                let o = NSObject()
+                target.justCalledToSayObject(o)
+                return [[[o]]]
+        }
+
+        // then again with dynamic
+        experimentWith(
+            createKVODynamicSubclassed(SentMessageTest_intercept_forwarding_dyn_first.self),
+            observeIt: { target in
+                return [target.rx_sentMessage("justCalledToSayObject:")]
+            },
+            objectActingClassChange: [
+            ],
+            objectRealClassChange: [],
+            runtimeChange: RxObjCRuntimeChange.noChange
+            ) { target in
+                let o = NSObject()
+                target.justCalledToSayObject(o)
+                return [[[o]]]
+        }
+
+        // then again with normal
+        experimentWith(
+            createNormalInstance(SentMessageTest_intercept_forwarding_dyn_first.self),
+            observeIt: { target in
+                return [target.rx_sentMessage("justCalledToSayObject:")]
+            },
+            objectActingClassChange: [],
+            objectRealClassChange: [
+                ObjectRuntimeChange.ClassChangedToDynamic("SentMessageTest_intercept_forwarding_dyn_first", andImplementsTheseSelectors: ["class"])
+            ],
+            runtimeChange: RxObjCRuntimeChange.noChange
+            ) { target in
                 let o = NSObject()
                 target.justCalledToSayObject(o)
                 return [[[o]]]
         }
     }
+
+    func testActing_forwarding_first_normal() {
+        // first forwarding with normal first
+        experimentWith(
+            createNormalInstance(SentMessageTest_intercept_forwarding_normal_first.self),
+            observeIt: { target in
+                return [target.rx_sentMessage("justCalledToSayObject:")]
+            },
+            objectActingClassChange: [
+            ],
+            objectRealClassChange: [
+                ObjectRuntimeChange.ClassChangedToDynamic("SentMessageTest_intercept_forwarding_normal_first", andImplementsTheseSelectors: [
+                    "class",
+                    "respondsToSelector:",
+                    "methodSignatureForSelector:",
+                    "forwardInvocation:",
+                    "justCalledToSayObject:",
+                    "_RX_namespace_justCalledToSayObject:",
+                ])
+            ],
+            runtimeChange: RxObjCRuntimeChange.generatedNewClassWith(swizzledMethods: 1, forwardedMethods: 1, hasSwizzledForward: true)
+            ) { target in
+                let o = NSObject()
+                target.justCalledToSayObject(o)
+                return [[[o]]]
+        }
+
+        // then dynamic
+        experimentWith(
+            createKVODynamicSubclassed(SentMessageTest_intercept_forwarding_normal_first.self),
+            observeIt: { target in
+                return [target.rx_sentMessage("justCalledToSayObject:")]
+            },
+            objectActingClassChange: [
+                .ImplementationChangedToForwarding(forSelector: "justCalledToSayObject:"),
+                .ImplementationAdded(forSelector: "respondsToSelector:"),
+                .ImplementationAdded(forSelector: "methodSignatureForSelector:"),
+                .ImplementationAdded(forSelector: "forwardInvocation:"),
+                .ImplementationAdded(forSelector: "_RX_namespace_justCalledToSayObject:")
+            ],
+            objectRealClassChange: [
+            ],
+            runtimeChange: RxObjCRuntimeChange.forwardedMethods(1, swizzledForwardClasses: 1, interceptedClasses: 1)
+            ) { target in
+                let o = NSObject()
+                target.justCalledToSayObject(o)
+                return [[[o]]]
+        }
+
+        // then normal again
+        experimentWith(
+            createNormalInstance(SentMessageTest_intercept_forwarding_normal_first.self),
+            observeIt: { target in
+                return [target.rx_sentMessage("justCalledToSayObject:")]
+            },
+            objectActingClassChange: [
+            ],
+            objectRealClassChange: [
+                ObjectRuntimeChange.ClassChangedToDynamic("SentMessageTest_intercept_forwarding_normal_first", andImplementsTheseSelectors: [
+                    "class",
+                    "respondsToSelector:",
+                    "methodSignatureForSelector:",
+                    "forwardInvocation:",
+                    "justCalledToSayObject:",
+                    "_RX_namespace_justCalledToSayObject:",
+                    ])
+            ],
+            runtimeChange: RxObjCRuntimeChange.noChange
+            ) { target in
+                let o = NSObject()
+                target.justCalledToSayObject(o)
+                return [[[o]]]
+        }
+
+        // then dynamic again
+        experimentWith(
+            createKVODynamicSubclassed(SentMessageTest_intercept_forwarding_normal_first.self),
+            observeIt: { target in
+                return [target.rx_sentMessage("justCalledToSayObject:")]
+            },
+            objectActingClassChange: [
+            ],
+            objectRealClassChange: [
+            ],
+            runtimeChange: RxObjCRuntimeChange.noChange
+            ) { target in
+                let o = NSObject()
+                target.justCalledToSayObject(o)
+                return [[[o]]]
+        }
+    }
+
 }
 
-// MARK: Forwarding
+// MARK: Forwarding doesn't interfere between subclasses
 
 extension SentMessageTest {
 
@@ -93,7 +229,7 @@ extension SentMessageTest {
 
     /*
     func testBasicForwardingCase() {
-        performTestFirstOnNormalClassAndThenOnClassThatsActing(ObjcSendMessageTest_forwarding_basic()) { target, isActing in
+        performTestFirstOnNormalClassAndThenOnClassThatsActing(ObjcSentMessageTest_forwarding_basic()) { target, isActing in
             var messages = [[AnyObject]]()
 
             let initialState = ObjectRuntimeState(target: target)
@@ -120,7 +256,7 @@ extension SentMessageTest {
         }
     }
 
-    func _testMessageRecordedAndAllCallsAreMade<Result: Equatable>(selector: Selector, sendMessage: ObjcSendMessageTest_forwarding_basic -> Result, expectedResult: Result) {
+    func _testMessageRecordedAndAllCallsAreMade<Result: Equatable>(selector: Selector, sendMessage: ObjcSentMessageTest_forwarding_basic -> Result, expectedResult: Result) {
         var observedMessages = [[AnyObject]]()
         var receivedDerivedClassMessage = [[AnyObject]]()
         var receivedBaseClassMessage = [[AnyObject]]()
@@ -129,7 +265,7 @@ extension SentMessageTest {
         var result: Result! = nil
 
         let action: () -> Disposable = { () -> Disposable in
-            let target = ObjcSendMessageTest_forwarding_basic()
+            let target = ObjcSentMessageTest_forwarding_basic()
 
             let d = target.rx_sentMessage(selector).subscribe(onNext: { n in
                     observedMessages.append(n)
@@ -157,7 +293,7 @@ extension SentMessageTest {
     }
 
     func testObservingByForwardingForAll() {
-        let object = ObjcSendMessageTest_forwarding_basic()
+        let object = ObjcSentMessageTest_forwarding_basic()
 
         let closure: () -> () = {  }
 
@@ -238,15 +374,21 @@ public func ==(lhs: some_insanely_large_struct, rhs: some_insanely_large_struct)
 typealias MethodParameters = [AnyObject]
 
 extension SentMessageTest {
-    func createKVODynamicSublassed<T: protocol<SentMessageTestClassCreationProtocol, NSObjectProtocol>>(type: T.Type) -> () -> (T, [Disposable]) {
+
+    override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
+
+    }
+
+    func createKVODynamicSubclassed<T: protocol<SentMessageTestClassCreationProtocol, NSObjectProtocol>>(type: T.Type) -> () -> (T, [Disposable]) {
         return {
             let t = T()
-            let disposable = (t as! NSObject).rx_observe(NSArray.self, "messages").publish().connect()
-            return (t, [disposable])
+            //let disposable = (t as! NSObject).rx_observe(NSArray.self, "messages").publish().connect()
+            (t as! NSObject).addObserver(self, forKeyPath: "messages", options: [], context: nil)
+            return (t, [AnonymousDisposable { (t as! NSObject).removeObserver(self, forKeyPath: "messages") }])
         }
     }
 
-    func createNormalInstance<T: SentMessageTestClassCreationProtocol>(type: T.Type) -> () -> (T, [Disposable]) {
+    func createNormalInstance<T: protocol<SentMessageTestClassCreationProtocol, NSObjectProtocol>>(type: T.Type) -> () -> (T, [Disposable]) {
         return {
             return (T(), [])
         }
@@ -263,49 +405,76 @@ extension SentMessageTest {
 
         let originalRuntimeState = RxObjCRuntimeState()
 
-        var (createdObject, disposables) = createIt()
-        let afterCreateState = RxObjCRuntimeState()
-        afterCreateState.assertAfterThisMoment(originalRuntimeState, changed:  RxObjCRuntimeChange.noChange)
+        var createdObject: T = T()
+        var disposables = [Disposable]()
+
+        var nCompleted = 0
+        var recordedParameters = [[MethodParameters]]()
+        var observables: [Observable<MethodParameters>] = []
+
+        autoreleasepool {
+            (createdObject, disposables) = createIt()
+            let afterCreateState = RxObjCRuntimeState()
+            afterCreateState.assertAfterThisMoment(originalRuntimeState, changed:  RxObjCRuntimeChange.noChange)
+        }
 
         let originalObjectRuntimeState = ObjectRuntimeState(target: createdObject)
 
-        let observables = observeIt(createdObject)
+        autoreleasepool {
+            observables = observeIt(createdObject)
+        }
 
         let afterObserveObjectRuntimeState = ObjectRuntimeState(target: createdObject)
         let afterObserveRuntimeState = RxObjCRuntimeState()
 
         let changesInRuntime = afterObserveObjectRuntimeState.changesFrom(originalObjectRuntimeState)
         XCTAssertEqual(Set(changesInRuntime.real), Set(objectRealClassChange))
-        XCTAssertEqual(Set(changesInRuntime.actingAs), Set(objectRealClassChange))
+        if (Set(changesInRuntime.real) != Set(objectRealClassChange)) {
+            print("Actual changes in real runtime:\n\(changesInRuntime.real)\n\nExpected changes in real runtime:\n\(objectRealClassChange)\n\n")
+        }
+        XCTAssertEqual(Set(changesInRuntime.actingAs), Set(objectActingClassChange))
+        if (Set(changesInRuntime.actingAs) != Set(objectActingClassChange)) {
+            print("Actual changes in acting runtime:\n\(changesInRuntime.actingAs)\n\nExpected changes in acting runtime:\n\(objectActingClassChange)\n\n")
+        }
         afterObserveRuntimeState.assertAfterThisMoment(originalRuntimeState, changed: runtimeChange)
 
-        var nCompleted = 0
+        autoreleasepool {
+            var i = 0
 
-        var recordedParameters = [[MethodParameters]]()
-
-        var i = 0
-        for o in observables {
-            let index = i++
-            recordedParameters.append([])
-            _ = o.subscribe(onNext: { n in
-                    recordedParameters[index].append(n)
-                }, onError: { e in
-                    XCTFail("Error happene \(e)")
-                }, onCompleted: { () -> Void in
-                    nCompleted++
-                })
+            for o in observables {
+                let index = i++
+                recordedParameters.append([])
+                _ = o.subscribe(onNext: { n in
+                        recordedParameters[index].append(n)
+                    }, onError: { e in
+                        XCTFail("Error happened \(e)")
+                    }, onCompleted: { () -> Void in
+                        nCompleted++
+                    })
+            }
         }
 
         let expectedParameters = useIt(createdObject)
 
-        for d in disposables {
-            d.dispose()
-        }
+        let finalObjectRuntimeState = ObjectRuntimeState(target: createdObject)
 
-        // dealloc old object
-        (createdObject, disposables) = createIt()
-        for d in disposables {
-            d.dispose()
+        let finalChangesInRuntime = finalObjectRuntimeState.changesFrom(afterObserveObjectRuntimeState)
+        XCTAssertTrue(finalChangesInRuntime.actingAs.count == 0)
+        XCTAssertTrue(finalChangesInRuntime.real.count == 0)
+
+        autoreleasepool {
+            for d in disposables {
+                d.dispose()
+            }
+            disposables = []
+
+            /*let d1 = (createdObject as! NSObject).rx_deallocated.subscribeNext { n in
+                print("a")
+            }
+            */
+
+            // tiny second test to make sure runtime stayed intact
+            createdObject = T()
         }
 
         // ensure all observables are completed on object dispose
@@ -343,7 +512,7 @@ extension SentMessageTest {
         // If second experiment causes some change in runtime, that means there is a bug.
         _experimentWith(createIt,
             observeIt: observeIt,
-            objectActingClassChange: objectActingClassChange,
+            objectActingClassChange: [],
             objectRealClassChange: objectRealClassChange,
             runtimeChange: RxObjCRuntimeChange.noChange,
             useIt: useIt
