@@ -20,6 +20,8 @@ void * __nonnull RX_reference_from_selector(SEL __nonnull selector);
 
 @protocol RXSwizzlingObserver
 
+@property (nonatomic, assign, readonly) IMP __nonnull targetImplementation;
+
 -(void)methodForSelectorDoesntExist;
 -(void)errorDuringSwizzling;
 
@@ -37,13 +39,15 @@ void * __nonnull RX_reference_from_selector(SEL __nonnull selector);
 
 @end
 
-void RX_ensure_observing(id __nonnull target, SEL __nonnull selector);
+IMP __nonnull RX_ensure_observing(id __nonnull target, SEL __nonnull selector);
 
 NSArray * __nonnull RX_extract_arguments(NSInvocation * __nonnull invocation);
 
 BOOL RX_is_method_with_description_void(struct objc_method_description method);
 
 BOOL RX_is_method_signature_void(NSMethodSignature * __nonnull methodSignature);
+
+IMP __nonnull RX_default_target_implementation();
 
 #if DEBUG
 NSInteger RX_number_of_dynamic_subclasses();

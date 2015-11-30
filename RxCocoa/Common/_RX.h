@@ -18,8 +18,9 @@
 #endif
 
 
-#define SEL_VALUE(x)    [NSValue valueWithPointer:(x)]
-#define CLASS_VALUE(x)  [NSValue valueWithNonretainedObject:(x)]
+#define SEL_VALUE(x)      [NSValue valueWithPointer:(x)]
+#define CLASS_VALUE(x)    [NSValue valueWithNonretainedObject:(x)]
+#define IMP_VALUE(x)      [NSValue valueWithPointer:(x)]
 
 // Inspired by http://p99.gforge.inria.fr
 

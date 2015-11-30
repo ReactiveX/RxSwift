@@ -20,6 +20,8 @@ import Foundation
 
         private let _subject = ReplaySubject<()>.create(bufferSize: 1)
 
+        @objc var targetImplementation: IMP = RX_default_target_implementation()
+
         init() {
         }
 

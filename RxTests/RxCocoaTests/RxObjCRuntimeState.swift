@@ -44,6 +44,16 @@ struct RxObjCRuntimeChange {
             methodsForwarded: forwardedMethods
         )
     }
+
+    static func swizzledMethod(methodsSwizzled: Int, interceptedClasses: Int) -> RxObjCRuntimeChange {
+        return RxObjCRuntimeChange(
+            dynamicSublasses: 0,
+            swizzledForwardClasses: 0,
+            interceptedClasses: interceptedClasses,
+            methodsSwizzled: methodsSwizzled,
+            methodsForwarded: 0
+        )
+    }
 }
 
 class RxObjCRuntimeState {

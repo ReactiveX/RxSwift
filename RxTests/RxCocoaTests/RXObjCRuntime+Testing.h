@@ -11,14 +11,11 @@
 @protocol SentMessageTestClassCreationProtocol<NSObject>
 -(instancetype __nonnull)init;
 
-@property (nonatomic, copy) NSArray<NSArray * > * __nonnull messages;
-@property (nonatomic, copy) NSArray<NSArray * > * __nonnull baseMessages;
-
 @end
 
 @interface RXObjCTestRuntime : NSObject
 
-+(id __nonnull)castClosure:(int (^ __nonnull)(int))closure;
++(id __nonnull)castClosure:(void (^ __nonnull)(void))closure;
 +(BOOL)isForwardingIMP:(IMP __nullable)implementation;
 +(Class __nonnull)objCClass:(id __nonnull)target;
 
@@ -35,13 +32,17 @@ typedef struct some_insanely_large_struct {
 } some_insanely_large_struct_t;
 
 #define DECLARE_OBSERVING_CLASS_PAIR_FOR_TEST(testName)                                                              \
-@interface SentMessageTestBase_ ## testName : NSObject { }                                                           \
+@interface SentMessageTestBase_ ## testName : NSObject<SentMessageTestClassCreationProtocol> { }                     \
                                                                                                                      \
 @property (nonatomic, copy) NSArray<NSArray * > * __nonnull baseMessages;                                            \
+                                                                                                                     \
+-(void)voidJustCalledToSayVoid;                                                                                      \
                                                                                                                      \
 -(id __nonnull)justCalledToSayObject:(id __nonnull)value;                                                            \
                                                                                                                      \
 -(void)voidJustCalledToSayObject:(id __nonnull)value;                                                                \
+                                                                                                                     \
+-(void)voidJustCalledToSayObject:(id __nonnull)value object:(id __nonnull)value1;                                                                \
                                                                                                                      \
 -(Class __nonnull)justCalledToSayClass:(Class __nonnull)value;                                                       \
                                                                                                                      \
@@ -139,6 +140,19 @@ typedef struct some_insanely_large_struct {
 
 DECLARE_OBSERVING_CLASS_PAIR_FOR_TEST(intercept_forwarding_dyn_first)
 DECLARE_OBSERVING_CLASS_PAIR_FOR_TEST(intercept_forwarding_normal_first)
+
+DECLARE_OBSERVING_CLASS_PAIR_FOR_TEST(class_subclass)
+
+DECLARE_OBSERVING_CLASS_PAIR_FOR_TEST(all_intercept_forwarding_types)
+DECLARE_OBSERVING_CLASS_PAIR_FOR_TEST(all_intercept_swizzling_types)
+
+DECLARE_OBSERVING_CLASS_PAIR_FOR_TEST(optimized_void)
+DECLARE_OBSERVING_CLASS_PAIR_FOR_TEST(optimized_id)
+DECLARE_OBSERVING_CLASS_PAIR_FOR_TEST(optimized_closure)
+DECLARE_OBSERVING_CLASS_PAIR_FOR_TEST(optimized_int)
+DECLARE_OBSERVING_CLASS_PAIR_FOR_TEST(optimized_long)
+DECLARE_OBSERVING_CLASS_PAIR_FOR_TEST(optimized_BOOL)
+DECLARE_OBSERVING_CLASS_PAIR_FOR_TEST(optimized_id_id)
 
 DECLARE_OBSERVING_CLASS_PAIR_FOR_TEST(forwarding_basic)
 DECLARE_OBSERVING_CLASS_PAIR_FOR_TEST(generating_dynamic_class)

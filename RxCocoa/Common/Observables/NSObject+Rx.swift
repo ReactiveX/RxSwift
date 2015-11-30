@@ -192,7 +192,9 @@ extension NSObject {
                 .OBJC_ASSOCIATION_RETAIN_NONATOMIC
             )
 
-            RX_ensure_observing(self, selector)
+            let targetImplementation = RX_ensure_observing(self, selector)
+            subject.targetImplementation = targetImplementation
+
             return subject.asObservable()
         }
     }
@@ -222,7 +224,8 @@ extension NSObject {
                 .OBJC_ASSOCIATION_RETAIN_NONATOMIC
             )
 
-            RX_ensure_observing(self, selector)
+            let targetImplementation = RX_ensure_observing(self, selector)
+            subject.targetImplementation = targetImplementation
             return subject.asObservable()
         }
     }

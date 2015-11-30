@@ -45,12 +45,14 @@ These things needs to be tested
 
 */
 class SentMessageTest : RxTest {
+    var testClosure: () -> () = { }
+
     func dynamicClassName(baseClassName: String) -> String {
         return "_RX_namespace_" + baseClassName
     }
 }
 
-// MARK: Observing doesn't interfere in the same level
+// MARK: Observing by forwarding doesn't interfere in the same level
 
 extension SentMessageTest {
 
@@ -218,21 +220,175 @@ extension SentMessageTest {
         }
     }
 
+
+}
+
+// MARK: Optimized versions
+
+extension SentMessageTest {
+    /**
+     All optimized versions
+     SWIZZLE_OBSERVE_METHOD(void)
+
+     SWIZZLE_OBSERVE_METHOD(void, id)
+     SWIZZLE_OBSERVE_METHOD(void, int)
+     SWIZZLE_OBSERVE_METHOD(void, long)
+     SWIZZLE_OBSERVE_METHOD(void, BOOL)
+     SWIZZLE_OBSERVE_METHOD(void, SEL)
+     SWIZZLE_OBSERVE_METHOD(void, rx_uint)
+     SWIZZLE_OBSERVE_METHOD(void, rx_ulong)
+     SWIZZLE_OBSERVE_METHOD(void, rx_block)
+
+     SWIZZLE_OBSERVE_METHOD(void, id, id)
+     SWIZZLE_OBSERVE_METHOD(void, id, int)
+     SWIZZLE_OBSERVE_METHOD(void, id, long)
+     SWIZZLE_OBSERVE_METHOD(void, id, BOOL)
+     SWIZZLE_OBSERVE_METHOD(void, id, SEL)
+     SWIZZLE_OBSERVE_METHOD(void, id, rx_uint)
+     SWIZZLE_OBSERVE_METHOD(void, id, rx_ulong)
+     SWIZZLE_OBSERVE_METHOD(void, id, rx_block)
+     */
+
+    func testBaseClass_subClass_dont_interact_for_optimized_version_void() {
+        _baseClass_subClass_dont_interact_for_optimized_version(
+            SentMessageTestBase_optimized_void.self,
+            SentMessageTest_optimized_void.self,
+            "voidJustCalledToSayVoid") { target in
+            target.voidJustCalledToSayVoid()
+            return [[[]]]
+        }
+    }
+
+    func testBaseClass_subClass_dont_interact_for_optimized_version_id() {
+        _baseClass_subClass_dont_interact_for_optimized_version(
+            SentMessageTestBase_optimized_id.self,
+            SentMessageTest_optimized_id.self,
+            "voidJustCalledToSayObject:") { target in
+            let o = NSObject()
+            target.voidJustCalledToSayObject(o)
+            return [[[o]]]
+        }
+    }
+
+    /*func testBaseClass_subClass_dont_interact_for_optimized_version_closure() {
+        _baseClass_subClass_dont_interact_for_optimized_version(
+            SentMessageTestBase_optimized_closure.self,
+            SentMessageTest_optimized_closure.self,
+            "voidJustCalledToSayClosure:") { target in
+            target.voidJustCalledToSayClosure(self.testClosure)
+            return [[[RXObjCTestRuntime.castClosure(self.testClosure)]]]
+        }
+    }*/
+
+    func testBaseClass_subClass_dont_interact_for_optimized_version_int() {
+        _baseClass_subClass_dont_interact_for_optimized_version(
+            SentMessageTestBase_optimized_int.self,
+            SentMessageTest_optimized_int.self,
+            "voidJustCalledToSayInt:") { target in
+            target.voidJustCalledToSayInt(3)
+            return [[[NSNumber(integer: 3)]]]
+        }
+    }
+
+    func testBaseClass_subClass_dont_interact_for_optimized_version_long() {
+        _baseClass_subClass_dont_interact_for_optimized_version(
+            SentMessageTestBase_optimized_long.self,
+            SentMessageTest_optimized_long.self,
+            "voidJustCalledToSayLong:") { target in
+            target.voidJustCalledToSayLong(3)
+            return [[[NSNumber(long: 3)]]]
+        }
+    }
+
+    func testBaseClass_subClass_dont_interact_for_optimized_version_BOOL() {
+        _baseClass_subClass_dont_interact_for_optimized_version(
+            SentMessageTestBase_optimized_BOOL.self,
+            SentMessageTest_optimized_BOOL.self,
+            "voidJustCalledToSayBool:") { target in
+            target.voidJustCalledToSayBool(true)
+            return [[[NSNumber(bool: true)]]]
+        }
+    }
+
+    func testBaseClass_subClass_dont_interact_for_optimized_version_id_id() {
+        _baseClass_subClass_dont_interact_for_optimized_version(
+            SentMessageTestBase_optimized_id_id.self,
+            SentMessageTest_optimized_id_id.self,
+            "voidJustCalledToSayObject:object:") { target in
+            let o = NSObject()
+            let o1 = NSObject()
+            target.voidJustCalledToSayObject(o, object: o1)
+            return [[[o, o1]]]
+        }
+    }
+
+    func _baseClass_subClass_dont_interact_for_optimized_version
+    <
+        BaseClass: protocol<SentMessageTestClassCreationProtocol, NSObjectProtocol>,
+        TargetClass: protocol<SentMessageTestClassCreationProtocol, NSObjectProtocol>
+    >(baseClass: BaseClass.Type, _ targetClass: TargetClass.Type, _ method: Selector, _ invoke: BaseClass -> [[MethodParameters]]) {
+        // first force base class forwarding
+
+        experimentWith(
+            createKVODynamicSubclassed(),
+            observeIt: { (target: BaseClass) in
+                return [(target as! NSObject).rx_sentMessage(method)]
+            },
+            objectActingClassChange: [
+                .ImplementationChanged(forSelector: method),
+            ],
+            objectRealClassChange: [],
+            runtimeChange: RxObjCRuntimeChange.swizzledMethod(1, interceptedClasses: 1),
+            useIt: invoke)
+
+        
+        // now force forwarding mechanism for normal class
+        experimentWith(
+            createKVODynamicSubclassed(),
+            observeIt: { target in
+                return [(target as! NSObject).rx_sentMessage(method)]
+            },
+            objectActingClassChange: [
+                .ImplementationChanged(forSelector: method),
+            ],
+            objectRealClassChange: [],
+            runtimeChange: RxObjCRuntimeChange.swizzledMethod(1, interceptedClasses: 1)) { (target: TargetClass) in
+                return invoke(target as! BaseClass)
+        }
+
+        // first force base class forwarding
+        experimentWith(
+            createKVODynamicSubclassed(),
+            observeIt: { target in
+                return [(target as! NSObject).rx_sentMessage(method)]
+            },
+            objectActingClassChange: [
+            ],
+            objectRealClassChange: [],
+            runtimeChange: RxObjCRuntimeChange.noChange,
+            useIt: invoke)
+
+        // now force forwarding mechanism for normal class
+        experimentWith(
+            createKVODynamicSubclassed(),
+            observeIt: { target in
+                return [(target as! NSObject).rx_sentMessage(method)]
+            },
+            objectActingClassChange: [
+            ],
+            objectRealClassChange: [],
+            runtimeChange: RxObjCRuntimeChange.noChange) { (target: TargetClass) in
+                return invoke(target as! BaseClass)
+        }
+    }
 }
 
 // MARK: Forwarding doesn't interfere between subclasses
 
 extension SentMessageTest {
-
-    func testNormal_forwarding() {
-    }
-
-    /*
     func testBasicForwardingCase() {
-        performTestFirstOnNormalClassAndThenOnClassThatsActing(ObjcSentMessageTest_forwarding_basic()) { target, isActing in
+        performTestFirstOnNormalClassAndThenOnClassThatsActing(SentMessageTest_forwarding_basic()) { target, isActing in
             var messages = [[AnyObject]]()
-
-            let initialState = ObjectRuntimeState(target: target)
 
             let d = target.rx_sentMessage("message_allSupportedParameters:p2:p3:p4:p5:p6:p7:p8:p9:p10:p11:p12:p13:p14:p15:p16:").subscribe(onNext: { n in
                     messages.append(n)
@@ -240,14 +396,13 @@ extension SentMessageTest {
                     XCTFail("Errors out \(e)")
                 })
 
-            let finalState = ObjectRuntimeState(target: target)
-
+            let objectParam = NSObject()
             let str: UnsafePointer<Int8> = ("123" as NSString).UTF8String
             let unsafeStr: UnsafeMutablePointer<Int8> = UnsafeMutablePointer.init(str)
 
             let largeStruct = some_insanely_large_struct(a: (0, 1, 2, 3, 4, 5, 6, 7), some_large_text: nil, next: nil)
 
-            target.message_allSupportedParameters(target, p2: target.dynamicType, p3: { x in x}, p4: -2, p5: -3, p6: -4, p7: -5,
+            target.message_allSupportedParameters(objectParam, p2: target.dynamicType, p3: { x in x}, p4: -2, p5: -3, p6: -4, p7: -5,
                 p8: 1, p9: 2, p10: 3, p11: 4, p12: 1.0, p13: 2.0, p14: str, p15: unsafeStr, p16: largeStruct)
 
             d.dispose()
@@ -256,7 +411,7 @@ extension SentMessageTest {
         }
     }
 
-    func _testMessageRecordedAndAllCallsAreMade<Result: Equatable>(selector: Selector, sendMessage: ObjcSentMessageTest_forwarding_basic -> Result, expectedResult: Result) {
+    func _testMessageRecordedAndAllCallsAreMade<Result: Equatable>(selector: Selector, sendMessage: SentMessageTest_forwarding_basic -> Result, expectedResult: Result) {
         var observedMessages = [[AnyObject]]()
         var receivedDerivedClassMessage = [[AnyObject]]()
         var receivedBaseClassMessage = [[AnyObject]]()
@@ -265,7 +420,7 @@ extension SentMessageTest {
         var result: Result! = nil
 
         let action: () -> Disposable = { () -> Disposable in
-            let target = ObjcSentMessageTest_forwarding_basic()
+            let target = SentMessageTest_forwarding_basic()
 
             let d = target.rx_sentMessage(selector).subscribe(onNext: { n in
                     observedMessages.append(n)
@@ -293,7 +448,7 @@ extension SentMessageTest {
     }
 
     func testObservingByForwardingForAll() {
-        let object = ObjcSentMessageTest_forwarding_basic()
+        let object = SentMessageTest_forwarding_basic()
 
         let closure: () -> () = {  }
 
@@ -320,7 +475,35 @@ extension SentMessageTest {
         _testMessageRecordedAndAllCallsAreMade("justCalledToSayConstChar:", sendMessage: { x in x.justCalledToSayConstChar(constChar) }, expectedResult: constChar)
         _testMessageRecordedAndAllCallsAreMade("justCalledToSayLarge:", sendMessage: { x in x.justCalledToSayLarge(largeStruct) }, expectedResult: 28)
     }
-    */
+
+    func testObservingBySwizzlingForAll() {
+        let object = SentMessageTest_forwarding_basic()
+
+        let closure: () -> () = {  }
+
+        let constChar = ("you better be listening" as NSString).UTF8String
+
+        let largeStruct = some_insanely_large_struct(a: (0, 1, 2, 3, 4, 5, 6, 7), some_large_text: nil, next: nil)
+
+        _testMessageRecordedAndAllCallsAreMade("voidJustCalledToSayObject:", sendMessage: { x in x.voidJustCalledToSayObject(object); return NSValue(nonretainedObject: object)  }, expectedResult: NSValue(nonretainedObject: object))
+        _testMessageRecordedAndAllCallsAreMade("voidJustCalledToSayClass:", sendMessage: { x in x.voidJustCalledToSayClass(object.dynamicType); return NSValue(nonretainedObject: object.dynamicType) }, expectedResult: NSValue(nonretainedObject: object.dynamicType))
+        _testMessageRecordedAndAllCallsAreMade("voidJustCalledToSayClosure:", sendMessage: { x in x.voidJustCalledToSayClosure(closure); return "\(closure)" }, expectedResult: "\(closure)")
+        _testMessageRecordedAndAllCallsAreMade("voidJustCalledToSayChar:", sendMessage: { x in x.voidJustCalledToSayChar(3); return 3 }, expectedResult: 3)
+        _testMessageRecordedAndAllCallsAreMade("voidJustCalledToSayShort:", sendMessage: { x in x.voidJustCalledToSayShort(4); return 4 }, expectedResult: 4)
+        _testMessageRecordedAndAllCallsAreMade("voidJustCalledToSayInt:", sendMessage: { x in x.voidJustCalledToSayInt(5); return 5 }, expectedResult: 5)
+        _testMessageRecordedAndAllCallsAreMade("voidJustCalledToSayLong:", sendMessage: { x in x.voidJustCalledToSayLong(6); return 6 }, expectedResult: 6)
+        _testMessageRecordedAndAllCallsAreMade("voidJustCalledToSayLongLong:", sendMessage: { x in x.voidJustCalledToSayLongLong(7); return 7 }, expectedResult: 7)
+        _testMessageRecordedAndAllCallsAreMade("voidJustCalledToSayUnsignedChar:", sendMessage: { x in x.voidJustCalledToSayUnsignedChar(8); return 8 }, expectedResult: 8)
+        _testMessageRecordedAndAllCallsAreMade("voidJustCalledToSayUnsignedShort:", sendMessage: { x in x.voidJustCalledToSayUnsignedShort(9); return 9 }, expectedResult: 9)
+        _testMessageRecordedAndAllCallsAreMade("voidJustCalledToSayUnsignedInt:", sendMessage: { x in x.voidJustCalledToSayUnsignedInt(10); return 10 }, expectedResult: 10)
+        _testMessageRecordedAndAllCallsAreMade("voidJustCalledToSayUnsignedLong:", sendMessage: { x in x.voidJustCalledToSayUnsignedLong(11); return 11 }, expectedResult: 11)
+        _testMessageRecordedAndAllCallsAreMade("voidJustCalledToSayUnsignedLongLong:", sendMessage: { x in x.voidJustCalledToSayUnsignedLongLong(12); return 12 }, expectedResult: 12)
+        _testMessageRecordedAndAllCallsAreMade("voidJustCalledToSayFloat:", sendMessage: { x in x.voidJustCalledToSayFloat(13); return 13 }, expectedResult: 13)
+        _testMessageRecordedAndAllCallsAreMade("voidJustCalledToSayDouble:", sendMessage: { x in x.voidJustCalledToSayDouble(13); return 13 }, expectedResult: 13)
+        _testMessageRecordedAndAllCallsAreMade("voidJustCalledToSayBool:", sendMessage: { x in x.voidJustCalledToSayBool(true); return true }, expectedResult: true)
+        _testMessageRecordedAndAllCallsAreMade("voidJustCalledToSayConstChar:", sendMessage: { x in x.voidJustCalledToSayConstChar(constChar); return constChar }, expectedResult: constChar)
+        _testMessageRecordedAndAllCallsAreMade("voidJustCalledToSayLarge:", sendMessage: { x in x.voidJustCalledToSayLarge(largeStruct); return largeStruct }, expectedResult: largeStruct)
+    }
 }
 
 extension SentMessageTest {
@@ -345,7 +528,7 @@ extension SentMessageTest {
 
         XCTAssert(afterKVO.changesFrom(state).real.classChanged)
 
-        action(firstTarget, true)
+        action(secondTarget, true)
 
         d.dispose()
     }
@@ -379,7 +562,7 @@ extension SentMessageTest {
 
     }
 
-    func createKVODynamicSubclassed<T: protocol<SentMessageTestClassCreationProtocol, NSObjectProtocol>>(type: T.Type) -> () -> (T, [Disposable]) {
+    func createKVODynamicSubclassed<T: protocol<SentMessageTestClassCreationProtocol, NSObjectProtocol>>(type: T.Type = T.self) -> () -> (T, [Disposable]) {
         return {
             let t = T()
             //let disposable = (t as! NSObject).rx_observe(NSArray.self, "messages").publish().connect()
@@ -467,11 +650,6 @@ extension SentMessageTest {
                 d.dispose()
             }
             disposables = []
-
-            /*let d1 = (createdObject as! NSObject).rx_deallocated.subscribeNext { n in
-                print("a")
-            }
-            */
 
             // tiny second test to make sure runtime stayed intact
             createdObject = T()
