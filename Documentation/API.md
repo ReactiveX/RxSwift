@@ -405,6 +405,14 @@ extension UISwitch {
 }
 ```
 
+```swift
+extension UIActivityIndicatorView {
+
+    public var rx_animating: AnyObserver<Bool> {}
+
+}
+```
+
 **OSX**
 
 ```swift

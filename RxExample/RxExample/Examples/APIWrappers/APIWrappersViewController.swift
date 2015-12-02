@@ -39,6 +39,8 @@ class APIWrappersViewController: ViewController {
 
     @IBOutlet weak var switcher: UISwitch!
 
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+
     @IBOutlet weak var button: UIButton!
 
     @IBOutlet weak var slider: UISlider!
@@ -143,6 +145,12 @@ class APIWrappersViewController: ViewController {
             .subscribeNext { [weak self] x in
                 self?.debug("UISwitch value \(x)")
             }
+            .addDisposableTo(disposeBag)
+
+        // MARK: UIActivityIndicatorView
+
+        switcher.rx_value
+            .bindTo(activityIndicator.rx_animating)
             .addDisposableTo(disposeBag)
 
 
