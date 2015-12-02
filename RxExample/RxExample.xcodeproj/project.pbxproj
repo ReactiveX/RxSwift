@@ -59,6 +59,8 @@
 		C80DDED71BCE9046006A1832 /* Driver+Subscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80DDEC71BCE9041006A1832 /* Driver+Subscription.swift */; };
 		C80DDED81BCE9046006A1832 /* Driver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80DDEC81BCE9041006A1832 /* Driver.swift */; };
 		C80DDED91BCE9046006A1832 /* ObservableConvertibleType+Driver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80DDEC91BCE9041006A1832 /* ObservableConvertibleType+Driver.swift */; };
+		C819D2451C0CF4AA00429F3C /* _RXObjCRuntime.m in Sources */ = {isa = PBXBuildFile; fileRef = C819D2431C0CF4AA00429F3C /* _RXObjCRuntime.m */; };
+		C819D2471C0CF4B400429F3C /* DeallocatingObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C819D2461C0CF4B400429F3C /* DeallocatingObserver.swift */; };
 		C8297E2F1B6CF905000589EA /* RxTableViewSectionedAnimatedDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88C78631B3EB0A00061C5AB /* RxTableViewSectionedAnimatedDataSource.swift */; };
 		C8297E301B6CF905000589EA /* RandomUserAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0706E19E1B17703E00BA2D3A /* RandomUserAPI.swift */; };
 		C8297E311B6CF905000589EA /* SearchResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86E2F321AE5A0CA00C31024 /* SearchResultViewModel.swift */; };
@@ -259,7 +261,6 @@
 		C89465611BC6C2BC0055219D /* _RX.m in Sources */ = {isa = PBXBuildFile; fileRef = C894650F1BC6C2BC0055219D /* _RX.m */; };
 		C89465621BC6C2BC0055219D /* _RXDelegateProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = C89465111BC6C2BC0055219D /* _RXDelegateProxy.m */; };
 		C89465631BC6C2BC0055219D /* _RXKVOObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = C89465131BC6C2BC0055219D /* _RXKVOObserver.m */; };
-		C89465641BC6C2BC0055219D /* _RXSwizzling.m in Sources */ = {isa = PBXBuildFile; fileRef = C89465151BC6C2BC0055219D /* _RXSwizzling.m */; };
 		C89465651BC6C2BC0055219D /* CLLocationManager+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89465161BC6C2BC0055219D /* CLLocationManager+Rx.swift */; };
 		C89465671BC6C2BC0055219D /* ControlEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89465191BC6C2BC0055219D /* ControlEvent.swift */; };
 		C89465691BC6C2BC0055219D /* ControlProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = C894651B1BC6C2BC0055219D /* ControlProperty.swift */; };
@@ -520,6 +521,9 @@
 		C80DDEC71BCE9041006A1832 /* Driver+Subscription.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Driver+Subscription.swift"; sourceTree = "<group>"; };
 		C80DDEC81BCE9041006A1832 /* Driver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Driver.swift; sourceTree = "<group>"; };
 		C80DDEC91BCE9041006A1832 /* ObservableConvertibleType+Driver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ObservableConvertibleType+Driver.swift"; sourceTree = "<group>"; };
+		C819D2431C0CF4AA00429F3C /* _RXObjCRuntime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _RXObjCRuntime.m; sourceTree = "<group>"; };
+		C819D2441C0CF4AA00429F3C /* _RXObjCRuntime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _RXObjCRuntime.h; sourceTree = "<group>"; };
+		C819D2461C0CF4B400429F3C /* DeallocatingObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DeallocatingObserver.swift; path = Implementations/DeallocatingObserver.swift; sourceTree = "<group>"; };
 		C81B39F11BC1C28400EF5A9F /* Rx.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Rx.xcodeproj; path = ../Rx.xcodeproj; sourceTree = "<group>"; };
 		C8297E691B6CF905000589EA /* RxExample-iOS-no-module.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "RxExample-iOS-no-module.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C83100681BF7F4CA00AAE3CD /* Sequence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sequence.swift; sourceTree = "<group>"; };
@@ -679,8 +683,6 @@
 		C89465111BC6C2BC0055219D /* _RXDelegateProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _RXDelegateProxy.m; sourceTree = "<group>"; };
 		C89465121BC6C2BC0055219D /* _RXKVOObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _RXKVOObserver.h; sourceTree = "<group>"; };
 		C89465131BC6C2BC0055219D /* _RXKVOObserver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _RXKVOObserver.m; sourceTree = "<group>"; };
-		C89465141BC6C2BC0055219D /* _RXSwizzling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _RXSwizzling.h; sourceTree = "<group>"; };
-		C89465151BC6C2BC0055219D /* _RXSwizzling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _RXSwizzling.m; sourceTree = "<group>"; };
 		C89465161BC6C2BC0055219D /* CLLocationManager+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CLLocationManager+Rx.swift"; sourceTree = "<group>"; };
 		C89465191BC6C2BC0055219D /* ControlEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ControlEvent.swift; sourceTree = "<group>"; };
 		C894651B1BC6C2BC0055219D /* ControlProperty.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ControlProperty.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -1304,6 +1306,8 @@
 		C894650D1BC6C2BC0055219D /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				C819D2431C0CF4AA00429F3C /* _RXObjCRuntime.m */,
+				C819D2441C0CF4AA00429F3C /* _RXObjCRuntime.h */,
 				C80103231C0098FC009B2AE3 /* MessageSentObserver.swift */,
 				C839740F1BF77406004F02CC /* KVORepresentable.swift */,
 				C83974101BF77406004F02CC /* KVORepresentable+CoreGraphics.swift */,
@@ -1314,8 +1318,6 @@
 				C89465111BC6C2BC0055219D /* _RXDelegateProxy.m */,
 				C89465121BC6C2BC0055219D /* _RXKVOObserver.h */,
 				C89465131BC6C2BC0055219D /* _RXKVOObserver.m */,
-				C89465141BC6C2BC0055219D /* _RXSwizzling.h */,
-				C89465151BC6C2BC0055219D /* _RXSwizzling.m */,
 				C89465161BC6C2BC0055219D /* CLLocationManager+Rx.swift */,
 				C89465171BC6C2BC0055219D /* CocoaUnits */,
 				C89465201BC6C2BC0055219D /* DelegateProxy.swift */,
@@ -1343,6 +1345,7 @@
 		C89465241BC6C2BC0055219D /* Observables */ = {
 			isa = PBXGroup;
 			children = (
+				C819D2461C0CF4B400429F3C /* DeallocatingObserver.swift */,
 				C83974211BF77413004F02CC /* NSObject+Rx+KVORepresentable.swift */,
 				C83974221BF77413004F02CC /* NSObject+Rx+RawRepresentable.swift */,
 				C89465251BC6C2BC0055219D /* Implementations */,
@@ -1813,6 +1816,7 @@
 				C894657D1BC6C2BC0055219D /* RxTarget.swift in Sources */,
 				C80DDED21BCE9046006A1832 /* ControlEvent+Driver.swift in Sources */,
 				C89464EE1BC6C2B00055219D /* Observable+Creation.swift in Sources */,
+				C819D2471C0CF4B400429F3C /* DeallocatingObserver.swift in Sources */,
 				C894659A1BC6C2BC0055219D /* UISlider+Rx.swift in Sources */,
 				C89465891BC6C2BC0055219D /* RxSearchBarDelegateProxy.swift in Sources */,
 				C89464C21BC6C2B00055219D /* CombineLatest.swift in Sources */,
@@ -1886,6 +1890,7 @@
 				C89464BE1BC6C2B00055219D /* Catch.swift in Sources */,
 				C89CDB721BCC45EE002063D9 /* SkipUntil.swift in Sources */,
 				B1604CCB1BE5BC45002E1279 /* UIImageView+DownloadableImage.swift in Sources */,
+				C819D2451C0CF4AA00429F3C /* _RXObjCRuntime.m in Sources */,
 				C8297E471B6CF905000589EA /* ViewController.swift in Sources */,
 				C89464E41BC6C2B00055219D /* TakeWhile.swift in Sources */,
 				C89464F71BC6C2B00055219D /* ObserverBase.swift in Sources */,
@@ -1923,7 +1928,6 @@
 				C89464E91BC6C2B00055219D /* Zip+CollectionType.swift in Sources */,
 				CB883B511BE3AC54000AC2EE /* RefCountDisposable.swift in Sources */,
 				C89465761BC6C2BC0055219D /* KVOObserver.swift in Sources */,
-				C89465641BC6C2BC0055219D /* _RXSwizzling.m in Sources */,
 				C89464CA1BC6C2B00055219D /* Empty.swift in Sources */,
 				C803973B1BD3E17D009D8B26 /* ActivityIndicator.swift in Sources */,
 				C89464C61BC6C2B00055219D /* Deferred.swift in Sources */,

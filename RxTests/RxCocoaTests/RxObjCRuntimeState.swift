@@ -69,11 +69,19 @@ class RxObjCRuntimeState {
     let methodsForwarded: Int
 
     init() {
+        #if DEBUG
         dynamicSublasses = RX_number_of_dynamic_subclasses()
         swizzledForwardClasses = RX_number_of_forwarding_enabled_classes()
         interceptingClasses = RX_number_of_intercepting_classes()
         methodsSwizzled = RX_number_of_swizzled_methods()
         methodsForwarded = RX_number_of_forwarded_methods()
+        #else
+        dynamicSublasses = 0
+        swizzledForwardClasses = 0
+        interceptingClasses = 0
+        methodsSwizzled = 0
+        methodsForwarded = 0
+        #endif
     }
 
     func assertAfterThisMoment(previous: RxObjCRuntimeState, changed: RxObjCRuntimeChange) {

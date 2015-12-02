@@ -586,7 +586,9 @@ extension SentMessageTest {
         useIt: T -> [[MethodParameters]]
         ) {
 
+        #if DEBUG
         let originalRuntimeState = RxObjCRuntimeState()
+        #endif
 
         var createdObject: T = T()
         var disposables = [Disposable]()
@@ -597,8 +599,10 @@ extension SentMessageTest {
 
         autoreleasepool {
             (createdObject, disposables) = createIt()
+            #if DEBUG
             let afterCreateState = RxObjCRuntimeState()
             afterCreateState.assertAfterThisMoment(originalRuntimeState, changed:  RxObjCRuntimeChange.noChange)
+            #endif
         }
 
         let originalObjectRuntimeState = ObjectRuntimeState(target: createdObject)
@@ -608,7 +612,9 @@ extension SentMessageTest {
         }
 
         let afterObserveObjectRuntimeState = ObjectRuntimeState(target: createdObject)
+        #if DEBUG
         let afterObserveRuntimeState = RxObjCRuntimeState()
+        #endif
 
         let changesInRuntime = afterObserveObjectRuntimeState.changesFrom(originalObjectRuntimeState)
         XCTAssertEqual(Set(changesInRuntime.real), Set(objectRealClassChange))
@@ -619,7 +625,9 @@ extension SentMessageTest {
         if (Set(changesInRuntime.actingAs) != Set(objectActingClassChange)) {
             print("Actual changes in acting runtime:\n\(changesInRuntime.actingAs)\n\nExpected changes in acting runtime:\n\(objectActingClassChange)\n\n")
         }
+        #if DEBUG
         afterObserveRuntimeState.assertAfterThisMoment(originalRuntimeState, changed: runtimeChange)
+        #endif
 
         autoreleasepool {
             var i = 0
@@ -664,8 +672,10 @@ extension SentMessageTest {
         }
 
         // nothing is changed after requesting the observables
+        #if DEBUG
         let endRuntimeState = RxObjCRuntimeState()
         endRuntimeState.assertAfterThisMoment(afterObserveRuntimeState, changed: RxObjCRuntimeChange.noChange)
+        #endif
     }
 
     func experimentWith<T: protocol<SentMessageTestClassCreationProtocol, NSObjectProtocol>>(
