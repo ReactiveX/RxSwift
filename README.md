@@ -270,7 +270,7 @@ extension NSURLSession {
 
 Lets assume that there is a scenario where you want to display blurred images in a table view. The images should be first fetched from URL, then decoded and then blurred.
 
-It would also be nice if that entire process could be cancelled if cell exits visible table view area because bandwidth and processor time for blurring are expensive.
+It would also be nice if that entire process could be cancelled if a cell exits the visible table view area because bandwidth and processor time for blurring are expensive.
 
 It would also be nice if we didn't just immediately start to fetch image once the cell enters visible area because if user swipes really fast there could be a lot of requests fired and cancelled.
 
