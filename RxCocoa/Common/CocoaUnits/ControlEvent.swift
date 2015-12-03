@@ -38,7 +38,7 @@ public struct ControlEvent<PropertyType> : ControlEventType {
     
     let source: Observable<PropertyType>
     
-    init(source: Observable<PropertyType>) {
+    public init(source: Observable<PropertyType>) {
         self.source = source.subscribeOn(ConcurrentMainScheduler.sharedInstance)
     }
     
