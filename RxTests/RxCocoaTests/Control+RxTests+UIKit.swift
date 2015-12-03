@@ -313,6 +313,26 @@ extension ControlTests {
     }
 }
 
+// UIActivityIndicatorView
+extension ControlTests {
+    func testActivityIndicator_HasWeakReference() {
+        ensureControlObserverHasWeakReference(UIActivityIndicatorView(), { (view: UIActivityIndicatorView) -> AnyObserver<Bool> in view.rx_animating }, { Variable<Bool>(true).asObservable() })
+    }
+
+    func testActivityIndicator_NextElementsSetsValue() {
+        let subject = UIActivityIndicatorView()
+        let boolSequence = Variable<Bool>(false)
+
+        boolSequence.subscribe(subject.rx_animating)
+
+        boolSequence.value = true
+        XCTAssertTrue(subject.isAnimating(), "Expected animation to be started")
+
+        boolSequence.value = false
+        XCTAssertFalse(subject.isAnimating(), "Expected animation to be stopped")
+    }
+}
+
 
 #if os(iOS)
 

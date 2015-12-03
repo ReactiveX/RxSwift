@@ -3,6 +3,7 @@ All notable changes to this project will be documented in this file.
 
 * Adds `ignoreElements` operator.
 * Adds `rx_attributedText` to `UILabel`.
+* Adds `rx_animating` to `UIActivityIndicatorView`.
 
 ---
 
