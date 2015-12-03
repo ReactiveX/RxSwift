@@ -15,7 +15,8 @@ extension ControlTests {
     func testSubscribeEnabledToTrue() {
         let subject = UIControl()
         let enabledSequence = Variable<Bool>(false)
-        enabledSequence.subscribe(subject.rx_enabled)
+        let disposable = enabledSequence.subscribe(subject.rx_enabled)
+        defer { disposable.dispose() }
 
         enabledSequence.value = true
         XCTAssert(subject.enabled == true, "Expected enabled set to true")
@@ -24,7 +25,8 @@ extension ControlTests {
     func testSubscribeEnabledToFalse() {
         let subject = UIControl()
         let enabledSequence = Variable<Bool>(true)
-        enabledSequence.subscribe(subject.rx_enabled)
+        let disposable = enabledSequence.subscribe(subject.rx_enabled)
+        defer { disposable.dispose() }
 
         enabledSequence.value = false
         XCTAssert(subject.enabled == false, "Expected enabled set to false")
@@ -163,8 +165,8 @@ extension ControlTests {
     func testLabel_NextElementsSetsValue() {
         let subject = UILabel()
         let attributedTextSequence = Variable<NSAttributedString?>(nil)
-
-        attributedTextSequence.subscribe(subject.rx_attributedText)
+        let disposable = attributedTextSequence.subscribe(subject.rx_attributedText)
+        defer { disposable.dispose() }
 
         attributedTextSequence.value = NSAttributedString(string: "Hello!")
         XCTAssert(subject.attributedText == attributedTextSequence.value, "Expected attributedText to have been set")
@@ -323,7 +325,8 @@ extension ControlTests {
         let subject = UIActivityIndicatorView()
         let boolSequence = Variable<Bool>(false)
 
-        boolSequence.subscribe(subject.rx_animating)
+        let disposable = boolSequence.subscribe(subject.rx_animating)
+        defer { disposable.dispose() }
 
         boolSequence.value = true
         XCTAssertTrue(subject.isAnimating(), "Expected animation to be started")
