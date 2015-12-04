@@ -278,6 +278,50 @@ extension DriverTest {
     }
 }
 
+// MARK: flatMapFirst
+extension DriverTest {
+    func testAsDriver_flatMapFirst() {
+        let hotObservable = BackgroundThreadPrimitiveHotObservable<Int>()
+        let hotObservable1 = MainThreadPrimitiveHotObservable<Int>()
+        let hotObservable2 = MainThreadPrimitiveHotObservable<Int>()
+        let errorHotObservable = MainThreadPrimitiveHotObservable<Int>()
+
+        let drivers: [Driver<Int>] = [
+            hotObservable1.asDriver(onErrorJustReturn: -2),
+            hotObservable2.asDriver(onErrorJustReturn: -3),
+            errorHotObservable.asDriver(onErrorJustReturn: -4),
+        ]
+
+        let driver = hotObservable.asDriver(onErrorJustReturn: 2).flatMapFirst { drivers[$0] }
+
+        let results = subscribeTwiceOnBackgroundSchedulerAndOnlyOneSubscription(driver) {
+            XCTAssertTrue(hotObservable.subscriptions == [SubscribedToHotObservable])
+
+            hotObservable.on(.Next(0))
+            hotObservable.on(.Next(1))
+
+            hotObservable1.on(.Next(1))
+            hotObservable1.on(.Next(2))
+            hotObservable1.on(.Error(testError))
+
+            hotObservable2.on(.Next(10))
+            hotObservable2.on(.Next(11))
+            hotObservable2.on(.Error(testError))
+
+            hotObservable.on(.Error(testError))
+
+            errorHotObservable.on(.Completed)
+            hotObservable.on(.Completed)
+
+            XCTAssertTrue(hotObservable.subscriptions == [UnsunscribedFromHotObservable])
+        }
+
+        XCTAssertEqual(results, [
+            1, 2, -2,
+            ])
+    }
+}
+
 // MARK: doOn
 extension DriverTest {
     func testAsDriver_doOn() {
