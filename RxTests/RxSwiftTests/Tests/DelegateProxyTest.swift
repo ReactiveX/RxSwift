@@ -255,9 +255,12 @@ class DelegateProxyTest : RxTest {
     }
 }
 
+#if os(iOS)
 extension DelegateProxyTest {
     func test_DelegateProxyHierarchyWorks() {
         let tableView = UITableView()
         _ = tableView.rx_delegate.observe("scrollViewWillBeginDragging:")
     }
 }
+#endif
+
