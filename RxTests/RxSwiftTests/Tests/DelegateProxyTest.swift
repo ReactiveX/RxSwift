@@ -254,3 +254,10 @@ class DelegateProxyTest : RxTest {
         XCTAssertTrue(completed.value)
     }
 }
+
+extension DelegateProxyTest {
+    func test_DelegateProxyHierarchyWorks() {
+        let tableView = UITableView()
+        _ = tableView.rx_delegate.observe("scrollViewWillBeginDragging:")
+    }
+}

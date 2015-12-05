@@ -106,31 +106,46 @@ static NSMutableDictionary *forwardableSelectorsPerClass = nil;
             forwardableSelectorsPerClass = [[NSMutableDictionary alloc] init];
         }
 
-        // NSLog(@"Class: %@", NSStringFromClass(self));
-        
         NSMutableSet *allowedSelectors = [NSMutableSet set];
-     
-        unsigned int count;
-        Protocol *__unsafe_unretained *pProtocols = class_copyProtocolList(self, &count);
-        
-        for (unsigned int i = 0; i < count; i++) {
+
+
+#define CLASS_HIERARCHY_MAX_DEPTH 100
+
+        NSInteger  classHierarchyDepth = 0;
+        Class      targetClass         = self;
+
+        for (classHierarchyDepth = 0, targetClass = self;
+             classHierarchyDepth < CLASS_HIERARCHY_MAX_DEPTH && targetClass != nil;
+             ++classHierarchyDepth, targetClass = class_getSuperclass(targetClass)
+        ) {
+            unsigned int count;
+            Protocol *__unsafe_unretained *pProtocols = class_copyProtocolList(targetClass, &count);
             
-            unsigned int protocolMethodCount = 0;
-            Protocol *protocol = pProtocols[i];
-            struct objc_method_description *methods = protocol_copyMethodDescriptionList(protocol, NO, YES, &protocolMethodCount);
-            
-            for (unsigned int j = 0; j < protocolMethodCount; ++j) {
-                struct objc_method_description method = methods[j];
-                if (RX_is_method_with_description_void(method)) {
-                    // NSLog(@"Allowed selector: %@", NSStringFromSelector(method.name));
-                    [allowedSelectors addObject:SEL_VALUE(method.name)];
+            for (unsigned int i = 0; i < count; i++) {
+                
+                unsigned int protocolMethodCount = 0;
+                Protocol *protocol = pProtocols[i];
+                struct objc_method_description *methods = protocol_copyMethodDescriptionList(protocol, NO, YES, &protocolMethodCount);
+                
+                for (unsigned int j = 0; j < protocolMethodCount; ++j) {
+                    struct objc_method_description method = methods[j];
+                    if (RX_is_method_with_description_void(method)) {
+                        [allowedSelectors addObject:SEL_VALUE(method.name)];
+                    }
                 }
+                
+                free(methods);
             }
             
-            free(methods);
+            free(pProtocols);
         }
-        
-        free(pProtocols);
+
+        if (classHierarchyDepth == CLASS_HIERARCHY_MAX_DEPTH) {
+            NSLog(@"Detected weird class hierarchy with depth over %d. Starting with this class -> %@", CLASS_HIERARCHY_MAX_DEPTH, self);
+#if DEBUG
+            abort();
+#endif
+        }
         
         forwardableSelectorsPerClass[CLASS_VALUE(self)] = allowedSelectors;
     }
@@ -174,7 +189,6 @@ static NSMutableDictionary *forwardableSelectorsPerClass = nil;
         [self interceptedSelector:anInvocation.selector withArguments:arguments];
     }
     
-    //NSLog(@"Sent selector %@", NSStringFromSelector(anInvocation.selector));
     if (self._forwardToDelegate && [self._forwardToDelegate respondsToSelector:anInvocation.selector]) {
         [anInvocation invokeWithTarget:self._forwardToDelegate];
     }
