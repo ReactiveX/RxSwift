@@ -38,6 +38,19 @@ import XCTest
     optional func testEventHappened(value: Int)
 }
 
+@objc protocol UIScrollViewDelegateSubclass
+    : UIScrollViewDelegate
+    , TestDelegateProtocol {
+    optional func testEventHappened(value: Int)
+}
+
+@objc protocol UITextViewDelegateSubclass
+    : UITextViewDelegate
+    , TestDelegateProtocol {
+    optional func testEventHappened(value: Int)
+}
+
+
 // MARK: Tests
 
 // MARK: UITableView
@@ -65,7 +78,22 @@ extension DelegateProxyTest {
         let layout = UICollectionViewFlowLayout()
         performDelegateTest(UICollectionViewSubclass2(frame: CGRect.zero, collectionViewLayout: layout))
     }
+}
 
+// MARK: UIScrollView
+
+extension DelegateProxyTest {
+    func test_UIScrollViewDelegateExtension() {
+        performDelegateTest(UIScrollViewSubclass(frame: CGRect.zero))
+    }
+}
+
+// MARK: UITextView
+
+extension DelegateProxyTest {
+    func test_UITextViewDelegateExtension() {
+        performDelegateTest(UITextViewSubclass(frame: CGRect.zero))
+    }
 }
 
 // MARK: Mocks
@@ -186,3 +214,60 @@ class UICollectionViewSubclass2
     }
 }
 
+class ExtendScrollViewDelegateProxy
+    : RxScrollViewDelegateProxy
+    , UIScrollViewDelegateSubclass {
+    weak private(set) var control: UIScrollViewSubclass?
+
+    required init(parentObject: AnyObject) {
+        self.control = (parentObject as! UIScrollViewSubclass)
+        super.init(parentObject: parentObject)
+    }
+}
+
+class UIScrollViewSubclass
+    : UIScrollView
+    , TestDelegateControl {
+    override func rx_createDelegateProxy() -> RxScrollViewDelegateProxy {
+        return ExtendScrollViewDelegateProxy(parentObject: self)
+    }
+
+    func doThatTest(value: Int) {
+        (delegate as! TestDelegateProtocol).testEventHappened?(value)
+    }
+
+    var test: Observable<Int> {
+        return rx_delegate
+            .observe("testEventHappened:")
+            .map { a in (a[0] as! NSNumber).integerValue }
+    }
+}
+
+class ExtendTextViewDelegateProxy
+    : RxTextViewDelegateProxy
+    , UITextViewDelegateSubclass {
+    weak private(set) var control: UITextViewSubclass?
+
+    required init(parentObject: AnyObject) {
+        self.control = (parentObject as! UITextViewSubclass)
+        super.init(parentObject: parentObject)
+    }
+}
+
+class UITextViewSubclass
+    : UITextView
+    , TestDelegateControl {
+    override func rx_createDelegateProxy() -> RxScrollViewDelegateProxy {
+        return ExtendTextViewDelegateProxy(parentObject: self)
+    }
+
+    func doThatTest(value: Int) {
+        (delegate as! TestDelegateProtocol).testEventHappened?(value)
+    }
+
+    var test: Observable<Int> {
+        return rx_delegate
+            .observe("testEventHappened:")
+            .map { a in (a[0] as! NSNumber).integerValue }
+    }
+}
