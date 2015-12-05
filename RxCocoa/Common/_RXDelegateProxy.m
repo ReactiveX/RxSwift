@@ -100,6 +100,31 @@ static NSMutableDictionary *forwardableSelectorsPerClass = nil;
 
 @implementation _RXDelegateProxy
 
++(NSSet*)collectSelectorsForProtocol:(Protocol *)protocol {
+    NSMutableSet *selectors = [NSMutableSet set];
+
+    unsigned int protocolMethodCount = 0;
+    struct objc_method_description *pMethods = protocol_copyMethodDescriptionList(protocol, NO, YES, &protocolMethodCount);
+
+    for (unsigned int i = 0; i < protocolMethodCount; ++i) {
+        struct objc_method_description method = pMethods[i];
+        if (RX_is_method_with_description_void(method)) {
+            [selectors addObject:SEL_VALUE(method.name)];
+        }
+    }
+            
+    free(pMethods);
+
+    unsigned int numberOfBaseProtocols = 0;
+    Protocol * __unsafe_unretained * pSubprotocols = protocol_copyProtocolList(protocol, &numberOfBaseProtocols);
+
+    for (unsigned int i = 0; i < numberOfBaseProtocols; ++i) {
+        [selectors unionSet:[self collectSelectorsForProtocol:pSubprotocols[i]]];
+    }
+
+    return selectors;
+}
+
 +(void)initialize {
     @synchronized (_RXDelegateProxy.class) {
         if (forwardableSelectorsPerClass == nil) {
@@ -107,7 +132,6 @@ static NSMutableDictionary *forwardableSelectorsPerClass = nil;
         }
 
         NSMutableSet *allowedSelectors = [NSMutableSet set];
-
 
 #define CLASS_HIERARCHY_MAX_DEPTH 100
 
@@ -122,19 +146,8 @@ static NSMutableDictionary *forwardableSelectorsPerClass = nil;
             Protocol *__unsafe_unretained *pProtocols = class_copyProtocolList(targetClass, &count);
             
             for (unsigned int i = 0; i < count; i++) {
-                
-                unsigned int protocolMethodCount = 0;
-                Protocol *protocol = pProtocols[i];
-                struct objc_method_description *methods = protocol_copyMethodDescriptionList(protocol, NO, YES, &protocolMethodCount);
-                
-                for (unsigned int j = 0; j < protocolMethodCount; ++j) {
-                    struct objc_method_description method = methods[j];
-                    if (RX_is_method_with_description_void(method)) {
-                        [allowedSelectors addObject:SEL_VALUE(method.name)];
-                    }
-                }
-                
-                free(methods);
+                NSSet *selectorsForProtocol = [self collectSelectorsForProtocol:pProtocols[i]];
+                [allowedSelectors unionSet:selectorsForProtocol];
             }
             
             free(pProtocols);

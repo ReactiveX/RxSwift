@@ -21,7 +21,7 @@ extension UITextView {
     
     - returns: Instance of delegate proxy that wraps `delegate`.
     */
-    override func rx_createDelegateProxy() -> RxScrollViewDelegateProxy {
+    public override func rx_createDelegateProxy() -> RxScrollViewDelegateProxy {
         return RxTextViewDelegateProxy(parentObject: self)
     }
     

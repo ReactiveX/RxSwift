@@ -319,7 +319,7 @@ It uses delegate as a notification mechanism to create an `Observable<String>` t
 extension UISearchBar {
 
     public var rx_delegate: DelegateProxy {
-        return proxyForObject(self) as RxSearchBarDelegateProxy
+        return proxyForObject(RxSearchBarDelegateProxy.self, self)
     }
 
     public var rx_text: Observable<String> {

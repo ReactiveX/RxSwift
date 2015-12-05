@@ -157,7 +157,7 @@ Returns existing proxy for object or installs new instance of delegate proxy.
     extension UISearchBar {
 
         public var rx_delegate: DelegateProxy {
-            return proxyForObject(self) as RxSearchBarDelegateProxy
+            return proxyForObject(RxSearchBarDelegateProxy.self, self)
         }
         
         public var rx_text: ControlProperty<String> {
@@ -166,7 +166,7 @@ Returns existing proxy for object or installs new instance of delegate proxy.
         }
     }
 */
-public func proxyForObject<P: DelegateProxyType>(object: AnyObject) -> P {
+public func proxyForObject<P: DelegateProxyType>(type: P.Type, _ object: AnyObject) -> P {
     MainScheduler.ensureExecutingOnScheduler()
     
     let maybeProxy = P.assignedProxyFor(object) as? P
@@ -191,6 +191,11 @@ public func proxyForObject<P: DelegateProxyType>(object: AnyObject) -> P {
     }
         
     return proxy
+}
+
+@available(*, deprecated=2.0.0, message="Please use version that takes type as first argument.")
+public func proxyForObject<P: DelegateProxyType>(object: AnyObject) -> P {
+    return proxyForObject(P.self, object)
 }
 
 func installDelegate<P: DelegateProxyType>(proxy: P, delegate: AnyObject, retainDelegate: Bool, onProxyForObject object: AnyObject) -> Disposable {
@@ -221,7 +226,7 @@ func installDelegate<P: DelegateProxyType>(proxy: P, delegate: AnyObject, retain
 extension ObservableType {
     func subscribeProxyDataSourceForObject<P: DelegateProxyType>(object: AnyObject, dataSource: AnyObject, retainDataSource: Bool, binding: (P, Event<E>) -> Void)
         -> Disposable {
-        let proxy: P = proxyForObject(object)
+        let proxy = proxyForObject(P.self, object)
         let disposable = installDelegate(proxy, delegate: dataSource, retainDelegate: retainDataSource, onProxyForObject: object)
         
         let subscription = self.asObservable()

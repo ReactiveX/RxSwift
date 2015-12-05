@@ -84,8 +84,17 @@ extension UITableView {
     
     - returns: Instance of delegate proxy that wraps `delegate`.
     */
-    override func rx_createDelegateProxy() -> RxScrollViewDelegateProxy {
+    public override func rx_createDelegateProxy() -> RxScrollViewDelegateProxy {
         return RxTableViewDelegateProxy(parentObject: self)
+    }
+
+    /**
+    Factory method that enables subclasses to implement their own `rx_dataSource`.
+    
+    - returns: Instance of delegate proxy that wraps `dataSource`.
+    */
+    public func rx_createDataSourceProxy() -> RxTableViewDataSourceProxy {
+        return RxTableViewDataSourceProxy(parentObject: self)
     }
     
     /**
@@ -94,7 +103,7 @@ extension UITableView {
     For more information take a look at `DelegateProxyType` protocol documentation.
     */
     public var rx_dataSource: DelegateProxy {
-        return proxyForObject(self) as RxTableViewDataSourceProxy
+        return proxyForObject(RxTableViewDataSourceProxy.self, self)
     }
    
     /**
@@ -107,7 +116,7 @@ extension UITableView {
     */
     public func rx_setDataSource(dataSource: UITableViewDataSource)
         -> Disposable {
-        let proxy: RxTableViewDataSourceProxy = proxyForObject(self)
+        let proxy = proxyForObject(RxTableViewDataSourceProxy.self, self)
             
         return installDelegate(proxy, delegate: dataSource, retainDelegate: false, onProxyForObject: self)
     }
@@ -199,6 +208,12 @@ extension UITableView {
         }
         
         return ControlEvent(source: source)
+    }
+
+
+    @available(*, deprecated=2.0.0, message="Please use version that takes type as first argument.")
+    public func rx_modelSelected<T>() -> ControlEvent<T> {
+        return rx_modelSelected(T.self)
     }
     
     /**

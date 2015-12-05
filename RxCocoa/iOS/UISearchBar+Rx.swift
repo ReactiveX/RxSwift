@@ -24,7 +24,7 @@ extension UISearchBar {
     For more information take a look at `DelegateProxyType` protocol documentation.
     */
     public var rx_delegate: DelegateProxy {
-        return proxyForObject(self) as RxSearchBarDelegateProxy
+        return proxyForObject(RxSearchBarDelegateProxy.self, self)
     }
     
     /**

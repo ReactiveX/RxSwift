@@ -83,8 +83,17 @@ extension UICollectionView {
     
     - returns: Instance of delegate proxy that wraps `delegate`.
     */
-    override func rx_createDelegateProxy() -> RxScrollViewDelegateProxy {
+    public override func rx_createDelegateProxy() -> RxScrollViewDelegateProxy {
         return RxCollectionViewDelegateProxy(parentObject: self)
+    }
+
+    /**
+    Factory method that enables subclasses to implement their own `rx_dataSource`.
+    
+    - returns: Instance of delegate proxy that wraps `dataSource`.
+    */
+    public func rx_createDataSourceProxy() -> RxCollectionViewDataSourceProxy {
+        return RxCollectionViewDataSourceProxy(parentObject: self)
     }
     
     /**
@@ -94,7 +103,7 @@ extension UICollectionView {
     */
     public var rx_dataSource: DelegateProxy {
         get {
-            return proxyForObject(self) as RxCollectionViewDataSourceProxy
+            return proxyForObject(RxCollectionViewDataSourceProxy.self, self)
         }
     }
     
@@ -108,7 +117,7 @@ extension UICollectionView {
     */
     public func rx_setDataSource(dataSource: UICollectionViewDataSource)
         -> Disposable {
-        let proxy: RxCollectionViewDataSourceProxy = proxyForObject(self)
+        let proxy = proxyForObject(RxCollectionViewDataSourceProxy.self, self)
         return installDelegate(proxy, delegate: dataSource, retainDelegate: false, onProxyForObject: self)
     }
    
@@ -155,6 +164,11 @@ extension UICollectionView {
         }
         
         return ControlEvent(source: source)
+    }
+
+    @available(*, deprecated=2.0.0, message="Please use version that takes type as first argument.")
+    public func rx_modelSelected<T>() -> ControlEvent<T> {
+        return rx_modelSelected(T.self)
     }
     
     /**

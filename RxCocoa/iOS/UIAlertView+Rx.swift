@@ -21,7 +21,7 @@ extension UIAlertView {
     For more information take a look at `DelegateProxyType` protocol documentation.
     */
     public var rx_delegate: DelegateProxy {
-        return proxyForObject(self) as RxAlertViewDelegateProxy
+        return proxyForObject(RxAlertViewDelegateProxy.self, self)
     }
     
     /**
