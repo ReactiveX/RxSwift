@@ -128,7 +128,7 @@ class GitHubSignupViewController : ViewController {
         URLSession: NSURLSession.sharedSession()
     )
     
-    func bindValidationResultToUI(source: Observable<(valid: Bool?, message: String?)>,
+    func bindValidationResultToUI(source: ValidationObservable,
         validationErrorLabel: UILabel) {
         source
             .subscribeNext { v in
