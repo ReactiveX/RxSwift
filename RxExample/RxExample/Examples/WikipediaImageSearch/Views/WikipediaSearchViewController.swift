@@ -57,11 +57,7 @@ class WikipediaSearchViewController: ViewController {
                     .asDriver(onErrorJustReturn: [])
             }
             .map { results in
-                results.map {
-                    SearchResultViewModel(
-                        searchResult: $0
-                    )
-                }
+                results.map(SearchResultViewModel.init)
             }
             .drive(resultsTableView.rx_itemsWithCellIdentifier("WikipediaSearchCell")) { (_, viewModel, cell: WikipediaSearchCell) in
                 cell.viewModel = viewModel
