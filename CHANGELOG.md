@@ -38,7 +38,7 @@ All notable changes to this project will be documented in this file.
   * Divides examples into sections
   * Adds really simple examples of how to do simple calculated bindings with vanilla Rx.
   * Adds really simple examples of table view extensions (sectioned and non sectioned version).
-  * Refactoring of GitHub sign in example to use MVVM paradigm.
+  * Refactoring of `GitHub sign in example` to use MVVM paradigm.
 
 #### Fixed
 
