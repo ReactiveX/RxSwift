@@ -325,6 +325,7 @@
 		C8A468F31B8A8C2600BF917B /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8A468EB1B8A8BC900BF917B /* RxSwift.framework */; };
 		C8A7501F1B94E77C00D8D046 /* RxDataSourceStarterKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A7501E1B94E77C00D8D046 /* RxDataSourceStarterKit.swift */; };
 		C8A750201B94E78200D8D046 /* RxDataSourceStarterKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A7501E1B94E77C00D8D046 /* RxDataSourceStarterKit.swift */; };
+		C8BCD3CE1C14756F005F1280 /* ShareReplay1WhileConnected.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8BCD3CD1C14756F005F1280 /* ShareReplay1WhileConnected.swift */; };
 		C8C46DA81B47F7110020D71E /* CollectionViewImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C46DA31B47F7110020D71E /* CollectionViewImageCell.swift */; };
 		C8C46DA91B47F7110020D71E /* WikipediaImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C8C46DA41B47F7110020D71E /* WikipediaImageCell.xib */; };
 		C8C46DAA1B47F7110020D71E /* WikipediaSearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C46DA51B47F7110020D71E /* WikipediaSearchCell.swift */; };
@@ -744,6 +745,7 @@
 		C8AF26F11B49ABD300131C03 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		C8B145041BD2E45200267DCE /* ImmediateScheduler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImmediateScheduler.swift; sourceTree = "<group>"; };
 		C8B145051BD2E45200267DCE /* ConcurrentMainScheduler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConcurrentMainScheduler.swift; sourceTree = "<group>"; };
+		C8BCD3CD1C14756F005F1280 /* ShareReplay1WhileConnected.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareReplay1WhileConnected.swift; sourceTree = "<group>"; };
 		C8C46DA31B47F7110020D71E /* CollectionViewImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewImageCell.swift; sourceTree = "<group>"; };
 		C8C46DA41B47F7110020D71E /* WikipediaImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WikipediaImageCell.xib; sourceTree = "<group>"; };
 		C8C46DA51B47F7110020D71E /* WikipediaSearchCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WikipediaSearchCell.swift; sourceTree = "<group>"; };
@@ -1179,6 +1181,7 @@
 		C89464481BC6C2B00055219D /* Implementations */ = {
 			isa = PBXGroup;
 			children = (
+				C8BCD3CD1C14756F005F1280 /* ShareReplay1WhileConnected.swift */,
 				CB883B5F1BE3AC72000AC2EE /* AddRef.swift */,
 				C89464491BC6C2B00055219D /* Amb.swift */,
 				C894644A1BC6C2B00055219D /* AnonymousObservable.swift */,
@@ -1759,6 +1762,7 @@
 				C8F6A1321BEF9DA3007DF367 /* RecursiveScheduler.swift in Sources */,
 				07A5C3DC1B70B703001EFE5C /* CalculatorViewController.swift in Sources */,
 				C89465961BC6C2BC0055219D /* UILabel+Rx.swift in Sources */,
+				C8BCD3CE1C14756F005F1280 /* ShareReplay1WhileConnected.swift in Sources */,
 				C894659C1BC6C2BC0055219D /* UISwitch+Rx.swift in Sources */,
 				C89464F81BC6C2B00055219D /* TailRecursiveSink.swift in Sources */,
 				C84CC58C1BDD486300E06A64 /* SynchronizedDisposeType.swift in Sources */,
