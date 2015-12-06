@@ -210,22 +210,22 @@ extension ObservableBindingTest {
         let res = xs.publish().refCount()
         
         var d1: Disposable!
-        let o1: MockObserver<Int> = scheduler.createObserver()
+        let o1 = scheduler.createObserver(Int)
         scheduler.scheduleAt(215) { d1 = res.subscribe(o1) }
         scheduler.scheduleAt(235) { d1.dispose() }
         
         var d2: Disposable!
-        let o2: MockObserver<Int> = scheduler.createObserver()
+        let o2 = scheduler.createObserver(Int)
         scheduler.scheduleAt(225) { d2 = res.subscribe(o2) }
         scheduler.scheduleAt(275) { d2.dispose() }
         
         var d3: Disposable!
-        let o3: MockObserver<Int> = scheduler.createObserver()
+        let o3 = scheduler.createObserver(Int)
         scheduler.scheduleAt(255) { d3 = res.subscribe(o3) }
         scheduler.scheduleAt(265) { d3.dispose() }
         
         var d4: Disposable!
-        let o4: MockObserver<Int> = scheduler.createObserver()
+        let o4 = scheduler.createObserver(Int)
         scheduler.scheduleAt(285) { d4 = res.subscribe(o4) }
         scheduler.scheduleAt(320) { d4.dispose() }
         
@@ -285,7 +285,7 @@ extension ObservableBindingTest {
         var ys: ConnectableObservable<ReplaySubject<Int>>! = nil
         var subscription: Disposable! = nil
         var connection: Disposable! = nil
-        let res: MockObserver<Int> = scheduler.createObserver()
+        let res = scheduler.createObserver(Int)
         
         scheduler.scheduleAt(Defaults.created) { ys = xs.replay(3) }
         scheduler.scheduleAt(450, action: { subscription = ys.subscribe(res) })
@@ -339,7 +339,7 @@ extension ObservableBindingTest {
         var ys: ConnectableObservable<ReplaySubject<Int>>! = nil
         var subscription: Disposable! = nil
         var connection: Disposable! = nil
-        let res: MockObserver<Int> = scheduler.createObserver()
+        let res = scheduler.createObserver(Int)
         
         scheduler.scheduleAt(Defaults.created) { ys = xs.replay(3) }
         scheduler.scheduleAt(450, action: { subscription = ys.subscribe(res) })
@@ -391,7 +391,7 @@ extension ObservableBindingTest {
         var ys: ConnectableObservable<ReplaySubject<Int>>! = nil
         var subscription: Disposable! = nil
         var connection: Disposable! = nil
-        let res: MockObserver<Int> = scheduler.createObserver()
+        let res = scheduler.createObserver(Int)
         
         scheduler.scheduleAt(Defaults.created) { ys = xs.replay(3) }
         scheduler.scheduleAt(450, action: { subscription = ys.subscribe(res) })
@@ -443,7 +443,7 @@ extension ObservableBindingTest {
         var ys: ConnectableObservable<ReplaySubject<Int>>! = nil
         var subscription: Disposable! = nil
         var connection: Disposable! = nil
-        let res: MockObserver<Int> = scheduler.createObserver()
+        let res = scheduler.createObserver(Int)
         
         scheduler.scheduleAt(Defaults.created) { ys = xs.replay(3) }
         scheduler.scheduleAt(450, action: { subscription = ys.subscribe(res) })
@@ -496,7 +496,7 @@ extension ObservableBindingTest {
         var ys: ConnectableObservable<ReplaySubject<Int>>! = nil
         var subscription: Disposable! = nil
         var connection: Disposable! = nil
-        let res: MockObserver<Int> = scheduler.createObserver()
+        let res = scheduler.createObserver(Int)
         
         scheduler.scheduleAt(Defaults.created) { ys = xs.replay(1) }
         scheduler.scheduleAt(450, action: { subscription = ys.subscribe(res) })
@@ -548,7 +548,7 @@ extension ObservableBindingTest {
         var ys: ConnectableObservable<ReplaySubject<Int>>! = nil
         var subscription: Disposable! = nil
         var connection: Disposable! = nil
-        let res: MockObserver<Int> = scheduler.createObserver()
+        let res = scheduler.createObserver(Int)
         
         scheduler.scheduleAt(Defaults.created) { ys = xs.replay(1) }
         scheduler.scheduleAt(450, action: { subscription = ys.subscribe(res) })
@@ -598,7 +598,7 @@ extension ObservableBindingTest {
         var ys: ConnectableObservable<ReplaySubject<Int>>! = nil
         var subscription: Disposable! = nil
         var connection: Disposable! = nil
-        let res: MockObserver<Int> = scheduler.createObserver()
+        let res = scheduler.createObserver(Int)
         
         scheduler.scheduleAt(Defaults.created) { ys = xs.replay(1) }
         scheduler.scheduleAt(450, action: { subscription = ys.subscribe(res) })
@@ -648,7 +648,7 @@ extension ObservableBindingTest {
         var ys: ConnectableObservable<ReplaySubject<Int>>! = nil
         var subscription: Disposable! = nil
         var connection: Disposable! = nil
-        let res: MockObserver<Int> = scheduler.createObserver()
+        let res = scheduler.createObserver(Int)
         
         scheduler.scheduleAt(Defaults.created) { ys = xs.replay(1) }
         scheduler.scheduleAt(450, action: { subscription = ys.subscribe(res) })
@@ -699,7 +699,7 @@ extension ObservableBindingTest {
 		var ys: ConnectableObservable<ReplaySubject<Int>>! = nil
 		var subscription: Disposable! = nil
 		var connection: Disposable! = nil
-		let res: MockObserver<Int> = scheduler.createObserver()
+		let res = scheduler.createObserver(Int)
 		
 		scheduler.scheduleAt(Defaults.created) { ys = xs.replayAll() }
 		scheduler.scheduleAt(450, action: { subscription = ys.subscribe(res) })
@@ -758,7 +758,7 @@ extension ObservableBindingTest {
 		var ys: ConnectableObservable<ReplaySubject<Int>>! = nil
 		var subscription: Disposable! = nil
 		var connection: Disposable! = nil
-		let res: MockObserver<Int> = scheduler.createObserver()
+		let res = scheduler.createObserver(Int)
 		
 		scheduler.scheduleAt(Defaults.created) { ys = xs.replayAll() }
 		scheduler.scheduleAt(450, action: { subscription = ys.subscribe(res) })
@@ -811,7 +811,7 @@ extension ObservableBindingTest {
 		var ys: ConnectableObservable<ReplaySubject<Int>>! = nil
 		var subscription: Disposable! = nil
 		var connection: Disposable! = nil
-		let res: MockObserver<Int> = scheduler.createObserver()
+		let res = scheduler.createObserver(Int)
 		
 		scheduler.scheduleAt(Defaults.created) { ys = xs.replayAll() }
 		scheduler.scheduleAt(450, action: { subscription = ys.subscribe(res) })
@@ -864,7 +864,7 @@ extension ObservableBindingTest {
 		var ys: ConnectableObservable<ReplaySubject<Int>>! = nil
 		var subscription: Disposable! = nil
 		var connection: Disposable! = nil
-		let res: MockObserver<Int> = scheduler.createObserver()
+		let res = scheduler.createObserver(Int)
 		
 		scheduler.scheduleAt(Defaults.created) { ys = xs.replayAll() }
 		scheduler.scheduleAt(450, action: { subscription = ys.subscribe(res) })
@@ -984,8 +984,8 @@ extension ObservableBindingTest {
             var subscription1: Disposable! = nil
             var subscription2: Disposable! = nil
 
-            let res1: MockObserver<Int> = scheduler.createObserver()
-            let res2: MockObserver<Int> = scheduler.createObserver()
+            let res1 = scheduler.createObserver(Int)
+            let res2 = scheduler.createObserver(Int)
 
             scheduler.scheduleAt(Defaults.created) { ys = transform(xs.asObservable()) }
 
@@ -1053,8 +1053,8 @@ extension ObservableBindingTest {
             var subscription1: Disposable! = nil
             var subscription2: Disposable! = nil
 
-            let res1: MockObserver<Int> = scheduler.createObserver()
-            let res2: MockObserver<Int> = scheduler.createObserver()
+            let res1 = scheduler.createObserver(Int)
+            let res2 = scheduler.createObserver(Int)
 
             scheduler.scheduleAt(Defaults.created) { ys = transform(xs.asObservable()) }
 
@@ -1119,8 +1119,8 @@ extension ObservableBindingTest {
             var subscription1: Disposable! = nil
             var subscription2: Disposable! = nil
 
-            let res1: MockObserver<Int> = scheduler.createObserver()
-            let res2: MockObserver<Int> = scheduler.createObserver()
+            let res1 = scheduler.createObserver(Int)
+            let res2 = scheduler.createObserver(Int)
 
             scheduler.scheduleAt(Defaults.created) { ys = transform(xs.asObservable()) }
 
@@ -1179,8 +1179,8 @@ extension ObservableBindingTest {
             var subscription1: Disposable! = nil
             var subscription2: Disposable! = nil
 
-            let res1: MockObserver<Int> = scheduler.createObserver()
-            let res2: MockObserver<Int> = scheduler.createObserver()
+            let res1 = scheduler.createObserver(Int)
+            let res2 = scheduler.createObserver(Int)
 
             scheduler.scheduleAt(Defaults.created) { ys = transform(xs.asObservable()) }
 
@@ -1211,6 +1211,247 @@ extension ObservableBindingTest {
             XCTAssertEqual(xs.subscriptions[0], Subscription(335, 365))
             XCTAssertTrue(xs.subscriptions.count <= 2)
             XCTAssertTrue(xs.subscriptions.count == 1 || xs.subscriptions[1] == Subscription(440, 440))
+        }
+    }
+}
+
+// shareReplay(1)
+extension ObservableBindingTest {
+    func testShareReplayLatestWhileConnected_DeadlockImmediatelly() {
+        var nEvents = 0
+
+        let observable = sequenceOf(0, 1, 2).shareReplayLatestWhileConnected()
+        _ = observable.subscribeNext { n in
+            nEvents++
+        }
+
+        XCTAssertEqual(nEvents, 3)
+    }
+
+    func testShareReplayLatestWhileConnected_DeadlockEmpty() {
+        var nEvents = 0
+
+        let observable = empty(Int).shareReplayLatestWhileConnected()
+        _ = observable.subscribeCompleted { n in
+            nEvents++
+        }
+
+        XCTAssertEqual(nEvents, 1)
+    }
+
+    func testShareReplayLatestWhileConnected_DeadlockError() {
+        var nEvents = 0
+
+        let observable = failWith(testError, Int.self).shareReplayLatestWhileConnected()
+        _ = observable.subscribeError { _ in
+            nEvents++
+        }
+
+        XCTAssertEqual(nEvents, 1)
+    }
+
+    func testShareReplayLatestWhileConnected_DeadlockErrorAfterN() {
+        var nEvents = 0
+
+        let observable = [sequenceOf(0, 1, 2), failWith(testError)].concat().shareReplayLatestWhileConnected()
+        _ = observable.subscribeError { n in
+            nEvents++
+        }
+
+        XCTAssertEqual(nEvents, 1)
+    }
+
+    func testShareReplayLatestWhileConnected_Basic() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let xs = scheduler.createHotObservable([
+            next(110, 7),
+            next(220, 3),
+            next(280, 4),
+            next(290, 1),
+            next(340, 8),
+            next(360, 5),
+            next(370, 6),
+            next(390, 7),
+            next(410, 13),
+            next(430, 2),
+            next(450, 9),
+            next(520, 11),
+            next(560, 20),
+            error(600, testError)
+            ])
+
+        var ys: Observable<Int>! = nil
+
+        var subscription1: Disposable! = nil
+        var subscription2: Disposable! = nil
+
+        let res1 = scheduler.createObserver(Int)
+        let res2 = scheduler.createObserver(Int)
+
+        scheduler.scheduleAt(Defaults.created) { ys = xs.shareReplayLatestWhileConnected() }
+
+        scheduler.scheduleAt(335) { subscription1 = ys.subscribe(res1) }
+        scheduler.scheduleAt(400) { subscription1.dispose() }
+
+        scheduler.scheduleAt(355) { subscription2 = ys.subscribe(res2) }
+        scheduler.scheduleAt(415) { subscription2.dispose() }
+
+        scheduler.scheduleAt(440) { subscription1 = ys.subscribe(res1) }
+        scheduler.scheduleAt(455) { subscription1.dispose() }
+
+        scheduler.start();
+
+        XCTAssertEqual(res1.messages, [
+            // 1rt batch
+            next(340, 8),
+            next(360, 5),
+            next(370, 6),
+            next(390, 7),
+
+            // 2nd batch
+            next(450, 9)
+            ])
+
+        XCTAssertEqual(res2.messages, [
+            next(355, 8),
+            next(360, 5),
+            next(370, 6),
+            next(390, 7),
+            next(410, 13)
+            ])
+
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(335, 415),
+            Subscription(440, 455)
+            ])
+    }
+
+    func testShareReplayLatestWhileConnected_Error() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let xs = scheduler.createHotObservable([
+            next(110, 7),
+            next(220, 3),
+            next(280, 4),
+            next(290, 1),
+            next(340, 8),
+            next(360, 5),
+            error(365, testError),
+            next(370, 6),
+            next(390, 7),
+            next(410, 13),
+            next(430, 2),
+            next(450, 9),
+            next(520, 11),
+            next(560, 20),
+            ])
+
+        var ys: Observable<Int>! = nil
+
+        var subscription1: Disposable! = nil
+        var subscription2: Disposable! = nil
+
+        let res1 = scheduler.createObserver(Int)
+        let res2 = scheduler.createObserver(Int)
+
+        scheduler.scheduleAt(Defaults.created) { ys = xs.shareReplayLatestWhileConnected() }
+
+        scheduler.scheduleAt(335) { subscription1 = ys.subscribe(res1) }
+        scheduler.scheduleAt(400) { subscription1.dispose() }
+
+        scheduler.scheduleAt(355) { subscription2 = ys.subscribe(res2) }
+        scheduler.scheduleAt(415) { subscription2.dispose() }
+
+        scheduler.scheduleAt(440) { subscription1 = ys.subscribe(res1) }
+        scheduler.scheduleAt(455) { subscription1.dispose() }
+
+        scheduler.start();
+
+        XCTAssertEqual(res1.messages, [
+            // 1rt batch
+            next(340, 8),
+            next(360, 5),
+            error(365, testError),
+
+            // 2nd batch
+            next(450, 9),
+            ])
+
+        XCTAssertEqual(res2.messages, [
+            next(355, 8),
+            next(360, 5),
+            error(365, testError),
+            ])
+
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(335, 365),
+            Subscription(440, 455)
+        ])
+    }
+
+    func testShareReplayLatestWhileConnected_Completed() {
+        _testIdenticalBehaviorOfShareReplayOptimizedAndComposed { transform in
+            let scheduler = TestScheduler(initialClock: 0)
+
+            let xs = scheduler.createHotObservable([
+                next(110, 7),
+                next(220, 3),
+                next(280, 4),
+                next(290, 1),
+                next(340, 8),
+                next(360, 5),
+                completed(365),
+                next(370, 6),
+                next(390, 7),
+                next(410, 13),
+                next(430, 2),
+                next(450, 9),
+                next(520, 11),
+                next(560, 20),
+                ])
+
+            var ys: Observable<Int>! = nil
+
+            var subscription1: Disposable! = nil
+            var subscription2: Disposable! = nil
+
+            let res1 = scheduler.createObserver(Int)
+            let res2 = scheduler.createObserver(Int)
+
+            scheduler.scheduleAt(Defaults.created) { ys = xs.shareReplayLatestWhileConnected() }
+
+            scheduler.scheduleAt(335) { subscription1 = ys.subscribe(res1) }
+            scheduler.scheduleAt(400) { subscription1.dispose() }
+
+            scheduler.scheduleAt(355) { subscription2 = ys.subscribe(res2) }
+            scheduler.scheduleAt(415) { subscription2.dispose() }
+
+            scheduler.scheduleAt(440) { subscription1 = ys.subscribe(res1) }
+            scheduler.scheduleAt(455) { subscription1.dispose() }
+
+            scheduler.start();
+
+            XCTAssertEqual(res1.messages, [
+                // 1rt batch
+                next(340, 8),
+                next(360, 5),
+                completed(365),
+
+                // 2nd batch
+                next(450, 9),
+                ])
+
+            XCTAssertEqual(res2.messages, [
+                next(355, 8),
+                next(360, 5),
+                completed(365)
+                ])
+
+            XCTAssertEqual(xs.subscriptions, [
+                Subscription(335, 365),
+                Subscription(440, 455)
+            ])
         }
     }
 }

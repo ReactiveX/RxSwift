@@ -89,6 +89,154 @@ extension DriverTest {
     }
 }
 
+// MARK: properties
+extension DriverTest {
+    func testDriverSharing_WhenErroring() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let observer1 = scheduler.createObserver(Int)
+        let observer2 = scheduler.createObserver(Int)
+        let observer3 = scheduler.createObserver(Int)
+        var disposable1: Disposable!
+        var disposable2: Disposable!
+        var disposable3: Disposable!
+
+        let coldObservable = scheduler.createColdObservable([
+            next(10, 0),
+            next(20, 1),
+            next(30, 2),
+            next(40, 3),
+            error(50, testError)
+            ])
+        let driver = coldObservable.asDriver(onErrorJustReturn: -1)
+
+        scheduler.scheduleAt(200) {
+            disposable1 = driver.asObservable().subscribe(observer1)
+        }
+
+        scheduler.scheduleAt(225) {
+            disposable2 = driver.asObservable().subscribe(observer2)
+        }
+
+        scheduler.scheduleAt(235) {
+            disposable1.dispose()
+        }
+
+        scheduler.scheduleAt(260) {
+            disposable2.dispose()
+        }
+
+        // resubscription
+
+        scheduler.scheduleAt(260) {
+            disposable3 = driver.asObservable().subscribe(observer3)
+        }
+
+        scheduler.scheduleAt(285) {
+            disposable3.dispose()
+        }
+
+        scheduler.start()
+
+        XCTAssertEqual(observer1.messages, [
+            next(210, 0),
+            next(220, 1),
+            next(230, 2)
+        ])
+
+        XCTAssertEqual(observer2.messages, [
+            next(225, 1),
+            next(230, 2),
+            next(240, 3),
+            next(250, -1),
+            completed(250)
+        ])
+
+        XCTAssertEqual(observer3.messages, [
+            next(270, 0),
+            next(280, 1),
+        ])
+
+        XCTAssertEqual(coldObservable.subscriptions, [
+           Subscription(200, 250),
+           Subscription(260, 285),
+        ])
+    }
+
+    func testDriverSharing_WhenCompleted() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let observer1 = scheduler.createObserver(Int)
+        let observer2 = scheduler.createObserver(Int)
+        let observer3 = scheduler.createObserver(Int)
+        var disposable1: Disposable!
+        var disposable2: Disposable!
+        var disposable3: Disposable!
+
+        let coldObservable = scheduler.createColdObservable([
+            next(10, 0),
+            next(20, 1),
+            next(30, 2),
+            next(40, 3),
+            error(50, testError)
+            ])
+        let driver = coldObservable.asDriver(onErrorJustReturn: -1)
+
+
+        scheduler.scheduleAt(200) {
+            disposable1 = driver.asObservable().subscribe(observer1)
+        }
+
+        scheduler.scheduleAt(225) {
+            disposable2 = driver.asObservable().subscribe(observer2)
+        }
+
+        scheduler.scheduleAt(235) {
+            disposable1.dispose()
+        }
+
+        scheduler.scheduleAt(260) {
+            disposable2.dispose()
+        }
+
+        // resubscription
+
+        scheduler.scheduleAt(260) {
+            disposable3 = driver.asObservable().subscribe(observer3)
+        }
+
+        scheduler.scheduleAt(285) {
+            disposable3.dispose()
+        }
+
+        scheduler.start()
+
+        XCTAssertEqual(observer1.messages, [
+            next(210, 0),
+            next(220, 1),
+            next(230, 2)
+        ])
+
+        XCTAssertEqual(observer2.messages, [
+            next(225, 1),
+            next(230, 2),
+            next(240, 3),
+            next(250, -1),
+            completed(250)
+        ])
+
+        XCTAssertEqual(observer3.messages, [
+            next(270, 0),
+            next(280, 1),
+        ])
+
+        XCTAssertEqual(coldObservable.subscriptions, [
+            Subscription(200, 250),
+            Subscription(260, 285),
+            ])
+    }
+}
+
 // MARK: conversions
 extension DriverTest {
     func testAsDriver_onErrorJustReturn() {

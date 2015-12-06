@@ -58,7 +58,7 @@ extension ObservableCreationTests {
 
         let d = SingleAssignmentDisposable()
 
-        let res = createObserver(scheduler) as MockObserver<Int>
+        let res = scheduler.createObserver(Int)
 
         scheduler.scheduleAt(100) {
             d.disposable = just(42, scheduler: scheduler).subscribe { e in
