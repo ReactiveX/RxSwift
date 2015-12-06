@@ -33,7 +33,7 @@ extension UIAlertView {
                 return a[1] as! Int
             }
 
-        return ControlEvent(source: source)
+        return ControlEvent(events: source)
     }
     
     /**
@@ -45,7 +45,7 @@ extension UIAlertView {
                 return a[1] as! Int
             }
         
-        return ControlEvent(source: source)
+        return ControlEvent(events: source)
     }
     
     /**
@@ -57,7 +57,7 @@ extension UIAlertView {
                 return a[1] as! Int
             }
         
-        return ControlEvent(source: source)
+        return ControlEvent(events: source)
     }
 }
 

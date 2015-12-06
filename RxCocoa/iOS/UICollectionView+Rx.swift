@@ -130,7 +130,7 @@ extension UICollectionView {
                 return a[1] as! NSIndexPath
             }
         
-        return ControlEvent(source: source)
+        return ControlEvent(events: source)
     }
     
     /**
@@ -163,7 +163,7 @@ extension UICollectionView {
             return just(try view.rx_modelAtIndexPath(indexPath))
         }
         
-        return ControlEvent(source: source)
+        return ControlEvent(events: source)
     }
 
     @available(*, deprecated=2.0.0, message="Please use version that takes type as first argument.")
@@ -202,7 +202,7 @@ extension UICollectionView {
                 return (context: context, animationCoordinator: animationCoordinator)
         }
 
-        return ControlEvent(source: source)
+        return ControlEvent(events: source)
     }
 }
 #endif

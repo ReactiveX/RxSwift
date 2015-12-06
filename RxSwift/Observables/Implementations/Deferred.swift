@@ -8,20 +8,19 @@
 
 import Foundation
 
-class DeferredSink<O: ObserverType> : Sink<O>, ObserverType {
+class DeferredSink<S: ObservableType, O: ObserverType where S.E == O.E> : Sink<O>, ObserverType {
     typealias E = O.E
-    typealias Parent = Deferred<E>
-    
-    private let _parent: Parent
-    
-    init(parent: Parent, observer: O) {
-        _parent = parent
+
+    private let _observableFactory: () throws -> S
+
+    init(observableFactory: () throws -> S, observer: O) {
+        _observableFactory = observableFactory
         super.init(observer: observer)
     }
     
     func run() -> Disposable {
         do {
-            let result = try _parent.eval()
+            let result = try _observableFactory()
             return result.subscribe(self)
         }
         catch let e {
@@ -45,8 +44,8 @@ class DeferredSink<O: ObserverType> : Sink<O>, ObserverType {
     }
 }
 
-class Deferred<Element> : Producer<Element> {
-    typealias Factory = () throws -> Observable<Element>
+class Deferred<S: ObservableType> : Producer<S.E> {
+    typealias Factory = () throws -> S
     
     private let _observableFactory : Factory
     
@@ -54,13 +53,9 @@ class Deferred<Element> : Producer<Element> {
         _observableFactory = observableFactory
     }
     
-    override func run<O: ObserverType where O.E == Element>(observer: O) -> Disposable {
-        let sink = DeferredSink(parent: self, observer: observer)
+    override func run<O: ObserverType where O.E == S.E>(observer: O) -> Disposable {
+        let sink = DeferredSink(observableFactory: _observableFactory, observer: observer)
         sink.disposable = sink.run()
         return sink
-    }
-    
-    func eval() throws -> Observable<Element> {
-        return try _observableFactory()
     }
 }

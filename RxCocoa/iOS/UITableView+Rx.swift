@@ -132,7 +132,7 @@ extension UITableView {
                 return a[1] as! NSIndexPath
             }
 
-        return ControlEvent(source: source)
+        return ControlEvent(events: source)
     }
  
     /**
@@ -147,7 +147,7 @@ extension UITableView {
                 return (a[2] as! NSIndexPath)
         }
         
-        return ControlEvent(source: source)
+        return ControlEvent(events: source)
     }
     
     /**
@@ -162,7 +162,7 @@ extension UITableView {
                 return (a[2] as! NSIndexPath)
             }
         
-        return ControlEvent(source: source)
+        return ControlEvent(events: source)
     }
     
     /**
@@ -174,7 +174,7 @@ extension UITableView {
                 return ((a[1] as! NSIndexPath), (a[2] as! NSIndexPath))
             }
         
-        return ControlEvent(source: source)
+        return ControlEvent(events: source)
     }
     
     /**
@@ -207,7 +207,7 @@ extension UITableView {
             return just(try view.rx_modelAtIndexPath(indexPath))
         }
         
-        return ControlEvent(source: source)
+        return ControlEvent(events: source)
     }
 
 
@@ -248,7 +248,7 @@ extension UITableView {
                     return (context: context, animationCoordinator: animationCoordinator)
             }
             
-            return ControlEvent(source: source)
+            return ControlEvent(events: source)
         }
     }
 #endif

@@ -31,7 +31,7 @@ extension UISearchBar {
     Reactive wrapper for `text` property.
     */
     public var rx_text: ControlProperty<String> {
-        let source: Observable<String> = deferred { [weak self] in
+        let source: Observable<String> = deferred { [weak self] () -> Observable<String> in
             let text = self?.text ?? ""
             
             return (self?.rx_delegate.observe("searchBar:textDidChange:") ?? empty())
@@ -41,7 +41,7 @@ extension UISearchBar {
                     .startWith(text)
         }
         
-        return ControlProperty(source: source, observer: AnyObserver { [weak self] event in
+        return ControlProperty(values: source, valueSink: AnyObserver { [weak self] event in
             switch event {
             case .Next(let value):
                 self?.text = value

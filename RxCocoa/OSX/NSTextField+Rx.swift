@@ -106,7 +106,7 @@ extension NSTextField {
             delegate.textSubject.startWith(self?.stringValue ?? "")
         }.takeUntil(rx_deallocated)
         
-        return ControlProperty(source: source, observer: AnyObserver { [weak self] event in
+        return ControlProperty(values: source, valueSink: AnyObserver { [weak self] event in
             MainScheduler.ensureExecutingOnScheduler()
             
             switch event {

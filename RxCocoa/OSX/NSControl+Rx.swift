@@ -40,7 +40,7 @@ extension NSControl {
             }.takeUntil(self.rx_deallocated)
         }
         
-        return ControlEvent(source: source)
+        return ControlEvent(events: source)
     }
 
     /**
@@ -80,7 +80,7 @@ extension NSControl {
         }
 
 
-        return ControlProperty(source: source, observer: AnyObserver { event in
+        return ControlProperty(values: source, valueSink: AnyObserver { event in
             switch event {
             case .Next(let value):
                 setter(value)
