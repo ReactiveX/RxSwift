@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		5E5D10BB1B48355200432B25 /* Control+RxTests+UIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5D10BA1B48355200432B25 /* Control+RxTests+UIKit.swift */; };
+		877E44141C14F6C1007EF123 /* UIView+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877E44131C14F6C1007EF123 /* UIView+RxTests.swift */; };
+		877E44151C14F6C1007EF123 /* UIView+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877E44131C14F6C1007EF123 /* UIView+RxTests.swift */; };
 		C69B65001BA88FAC00A7FA73 /* ObserverTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C69B64FF1BA88FAC00A7FA73 /* ObserverTests.swift */; };
 		C69B65011BA8957C00A7FA73 /* ObserverTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C69B64FF1BA88FAC00A7FA73 /* ObserverTests.swift */; };
 		C801EB5A1B97951100C4D8C4 /* Observable+CreationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C801EB591B97951100C4D8C4 /* Observable+CreationTest.swift */; };
@@ -194,6 +196,7 @@
 
 /* Begin PBXFileReference section */
 		5E5D10BA1B48355200432B25 /* Control+RxTests+UIKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Control+RxTests+UIKit.swift"; sourceTree = "<group>"; };
+		877E44131C14F6C1007EF123 /* UIView+RxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+RxTests.swift"; sourceTree = "<group>"; };
 		C69B64FF1BA88FAC00A7FA73 /* ObserverTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObserverTests.swift; sourceTree = "<group>"; };
 		C801EB591B97951100C4D8C4 /* Observable+CreationTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Observable+CreationTest.swift"; sourceTree = "<group>"; };
 		C80DDEDB1BCE9A03006A1832 /* Driver+Test.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Driver+Test.swift"; sourceTree = "<group>"; };
@@ -372,6 +375,7 @@
 				C814CEA61AF642D600E98087 /* UI+RxTests.swift */,
 				C87BB6B61C13A64000C66DF9 /* ControlPropertyTests.swift */,
 				C87BB6BA1C13A75600C66DF9 /* ControlEventTests.swift */,
+				877E44131C14F6C1007EF123 /* UIView+RxTests.swift */,
 			);
 			path = RxCocoaTests;
 			sourceTree = SOURCE_ROOT;
@@ -624,6 +628,7 @@
 				C81108691AF50E2A001C13E4 /* RxTest.swift in Sources */,
 				C81108671AF50E2A001C13E4 /* Observable+TimeTest.swift in Sources */,
 				C89CDB961BCDA1F1002063D9 /* Observable+SubscriptionTest.swift in Sources */,
+				877E44141C14F6C1007EF123 /* UIView+RxTests.swift in Sources */,
 				C87BB6B71C13A64000C66DF9 /* ControlPropertyTests.swift in Sources */,
 				C868D0F91BB76A29003D1474 /* PerformanceTools.swift in Sources */,
 				C81108551AF50E2A001C13E4 /* TestObservable.swift in Sources */,
@@ -760,6 +765,7 @@
 				D2EBEB521BB9B7CC003A27DC /* ColdObservable.swift in Sources */,
 				D2EBEB551BB9B7CC003A27DC /* MockObserver.swift in Sources */,
 				C89CDB981BCDA1F1002063D9 /* Observable+SubscriptionTest.swift in Sources */,
+				877E44151C14F6C1007EF123 /* UIView+RxTests.swift in Sources */,
 				C87BB6B91C13A64000C66DF9 /* ControlPropertyTests.swift in Sources */,
 				D2EBEB6F1BB9B7EF003A27DC /* Observable+CreationTest.swift in Sources */,
 				D203C4EC1BB9C22800D02D00 /* UI+RxTests.swift in Sources */,
