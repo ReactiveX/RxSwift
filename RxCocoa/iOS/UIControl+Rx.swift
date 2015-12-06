@@ -34,7 +34,7 @@ extension UIControl {
             }
         }
     }
-    
+
     /**
     Reactive wrapper for target action pattern.
     
