@@ -51,8 +51,6 @@ class APIWrappersViewController: ViewController {
 
     @IBOutlet weak var mypan: UIPanGestureRecognizer!
 
-    let disposeBag = DisposeBag()
-
     let manager = CLLocationManager()
 
     override func viewDidLoad() {

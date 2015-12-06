@@ -14,8 +14,6 @@ import RxCocoa
 
 class WikipediaSearchViewController: ViewController {
     
-    private var disposeBag = DisposeBag()
-
     private var resultsTableView: UITableView {
         return self.searchDisplayController!.searchResultsTableView
     }

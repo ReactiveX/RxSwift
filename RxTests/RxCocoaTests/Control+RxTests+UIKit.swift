@@ -14,21 +14,17 @@ import XCTest
 extension ControlTests {
     func testSubscribeEnabledToTrue() {
         let subject = UIControl()
-        let enabledSequence = Variable<Bool>(false)
-        let disposable = enabledSequence.subscribe(subject.rx_enabled)
+        let disposable = just(true).subscribe(subject.rx_enabled)
         defer { disposable.dispose() }
 
-        enabledSequence.value = true
         XCTAssert(subject.enabled == true, "Expected enabled set to true")
     }
 
     func testSubscribeEnabledToFalse() {
         let subject = UIControl()
-        let enabledSequence = Variable<Bool>(true)
-        let disposable = enabledSequence.subscribe(subject.rx_enabled)
+        let disposable = just(false).subscribe(subject.rx_enabled)
         defer { disposable.dispose() }
 
-        enabledSequence.value = false
         XCTAssert(subject.enabled == false, "Expected enabled set to false")
     }
 }

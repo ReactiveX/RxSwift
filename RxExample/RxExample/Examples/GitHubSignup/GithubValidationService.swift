@@ -7,7 +7,11 @@
 //
 
 import Foundation
+#if !RX_NO_MODULE
 import RxSwift
+#endif
+
+typealias ValidationObservable = Observable<ValidationResult>
 
 class ValidationService {
     let API: GitHubAPI

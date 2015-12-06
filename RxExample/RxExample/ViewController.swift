@@ -27,7 +27,9 @@ class ViewController: OSViewController {
     private let startResourceCount = resourceCount
     #endif
 #endif
-    
+
+    var disposeBag = DisposeBag()
+
     override func viewDidLoad() {
 #if TRACE_RESOURCES
         print("Number of start resources = \(resourceCount)")

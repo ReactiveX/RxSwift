@@ -398,6 +398,14 @@
 		C8BCD3C81C1468D4005F1280 /* ShareReplay1WhileConnected.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8BCD3C61C1468D4005F1280 /* ShareReplay1WhileConnected.swift */; };
 		C8BCD3C91C1468D4005F1280 /* ShareReplay1WhileConnected.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8BCD3C61C1468D4005F1280 /* ShareReplay1WhileConnected.swift */; };
 		C8BCD3CA1C1468D4005F1280 /* ShareReplay1WhileConnected.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8BCD3C61C1468D4005F1280 /* ShareReplay1WhileConnected.swift */; };
+		C8BCD3ED1C14B5FB005F1280 /* UIView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8BCD3EC1C14B5FB005F1280 /* UIView+Rx.swift */; };
+		C8BCD3EF1C14B5FB005F1280 /* UIView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8BCD3EC1C14B5FB005F1280 /* UIView+Rx.swift */; };
+		C8BCD3F01C14B5FB005F1280 /* UIView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8BCD3EC1C14B5FB005F1280 /* UIView+Rx.swift */; };
+		C8BCD3F21C14B62B005F1280 /* NSView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8BCD3F11C14B62B005F1280 /* NSView+Rx.swift */; };
+		C8BCD3F41C14B6D1005F1280 /* NSLayoutConstraint+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8BCD3F31C14B6D1005F1280 /* NSLayoutConstraint+Rx.swift */; };
+		C8BCD3F51C14B6D1005F1280 /* NSLayoutConstraint+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8BCD3F31C14B6D1005F1280 /* NSLayoutConstraint+Rx.swift */; };
+		C8BCD3F61C14B6D1005F1280 /* NSLayoutConstraint+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8BCD3F31C14B6D1005F1280 /* NSLayoutConstraint+Rx.swift */; };
+		C8BCD3F71C14B6D1005F1280 /* NSLayoutConstraint+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8BCD3F31C14B6D1005F1280 /* NSLayoutConstraint+Rx.swift */; };
 		C8C3D9FE1B935EDF004D233E /* Zip+CollectionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C3D9FD1B935EDF004D233E /* Zip+CollectionType.swift */; };
 		C8C3D9FF1B935EDF004D233E /* Zip+CollectionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C3D9FD1B935EDF004D233E /* Zip+CollectionType.swift */; };
 		C8C3DA031B9390C4004D233E /* Just.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C3DA021B9390C4004D233E /* Just.swift */; };
@@ -1086,6 +1094,9 @@
 		C8B144FA1BD2D44500267DCE /* ConcurrentMainScheduler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConcurrentMainScheduler.swift; sourceTree = "<group>"; };
 		C8B144FF1BD2D80100267DCE /* ImmediateScheduler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImmediateScheduler.swift; sourceTree = "<group>"; };
 		C8BCD3C61C1468D4005F1280 /* ShareReplay1WhileConnected.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareReplay1WhileConnected.swift; sourceTree = "<group>"; };
+		C8BCD3EC1C14B5FB005F1280 /* UIView+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Rx.swift"; sourceTree = "<group>"; };
+		C8BCD3F11C14B62B005F1280 /* NSView+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSView+Rx.swift"; sourceTree = "<group>"; };
+		C8BCD3F31C14B6D1005F1280 /* NSLayoutConstraint+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSLayoutConstraint+Rx.swift"; sourceTree = "<group>"; };
 		C8C3D9FD1B935EDF004D233E /* Zip+CollectionType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Zip+CollectionType.swift"; sourceTree = "<group>"; };
 		C8C3DA021B9390C4004D233E /* Just.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Just.swift; sourceTree = "<group>"; };
 		C8C3DA051B9393AC004D233E /* Empty.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Empty.swift; sourceTree = "<group>"; };
@@ -1454,6 +1465,7 @@
 				C8DB967D1BF7496C0084BD53 /* KVORepresentable.swift */,
 				C8DB96871BF756F40084BD53 /* KVORepresentable+CoreGraphics.swift */,
 				C8DB968C1BF7595D0084BD53 /* KVORepresentable+Swift.swift */,
+				C8BCD3F31C14B6D1005F1280 /* NSLayoutConstraint+Rx.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -1500,6 +1512,7 @@
 				C8093EC81B8A732E0088E94D /* NSImageView+Rx.swift */,
 				C8093EC91B8A732E0088E94D /* NSSlider+Rx.swift */,
 				C8093ECA1B8A732E0088E94D /* NSTextField+Rx.swift */,
+				C8BCD3F11C14B62B005F1280 /* NSView+Rx.swift */,
 			);
 			path = OSX;
 			sourceTree = "<group>";
@@ -1569,6 +1582,7 @@
 				C88254131B8A752B00B02D69 /* UITextField+Rx.swift */,
 				C88254141B8A752B00B02D69 /* UITextView+Rx.swift */,
 				9BA1CBD11C0F7C0A0044B50A /* UIActivityIndicatorView+Rx.swift */,
+				C8BCD3EC1C14B5FB005F1280 /* UIView+Rx.swift */,
 			);
 			path = iOS;
 			sourceTree = "<group>";
@@ -2154,6 +2168,7 @@
 				C882541D1B8A752B00B02D69 /* RxAlertViewDelegateProxy.swift in Sources */,
 				C80DDEA71BCE69BA006A1832 /* ObservableConvertibleType+Driver.swift in Sources */,
 				C80DDE9F1BCE69BA006A1832 /* Driver+Subscription.swift in Sources */,
+				C8BCD3ED1C14B5FB005F1280 /* UIView+Rx.swift in Sources */,
 				C80D338F1B91EF9E0014629D /* Observable+Bind.swift in Sources */,
 				C88254311B8A752B00B02D69 /* UISegmentedControl+Rx.swift in Sources */,
 				C8093EED1B8A732E0088E94D /* KVOObservable.swift in Sources */,
@@ -2174,6 +2189,7 @@
 				C882542B1B8A752B00B02D69 /* UIDatePicker+Rx.swift in Sources */,
 				C88254221B8A752B00B02D69 /* RxTableViewDataSourceProxy.swift in Sources */,
 				C8093EDD1B8A732E0088E94D /* _RXSwizzling.m in Sources */,
+				C8BCD3F41C14B6D1005F1280 /* NSLayoutConstraint+Rx.swift in Sources */,
 				C8093EE91B8A732E0088E94D /* Deallocating.swift in Sources */,
 				C882542C1B8A752B00B02D69 /* UIGestureRecognizer+Rx.swift in Sources */,
 				C8093EE11B8A732E0088E94D /* DelegateProxy.swift in Sources */,
@@ -2213,6 +2229,7 @@
 				C80D33991B922FB00014629D /* ControlEvent.swift in Sources */,
 				C80DDEA81BCE69BA006A1832 /* ObservableConvertibleType+Driver.swift in Sources */,
 				C80D339B1B922FB00014629D /* ControlProperty.swift in Sources */,
+				C8BCD3F51C14B6D1005F1280 /* NSLayoutConstraint+Rx.swift in Sources */,
 				C8093EF41B8A732E0088E94D /* NSObject+Rx+CoreGraphics.swift in Sources */,
 				C8093EF01B8A732E0088E94D /* KVOObserver.swift in Sources */,
 				C8093EEE1B8A732E0088E94D /* KVOObservable.swift in Sources */,
@@ -2228,6 +2245,7 @@
 				C8093EDE1B8A732E0088E94D /* _RXSwizzling.m in Sources */,
 				C80DDE941BCE69BA006A1832 /* ControlEvent+Driver.swift in Sources */,
 				C80DDEB21BCE8CA3006A1832 /* Driver+Operators+arity.swift in Sources */,
+				C8BCD3F21C14B62B005F1280 /* NSView+Rx.swift in Sources */,
 				C8093EEA1B8A732E0088E94D /* Deallocating.swift in Sources */,
 				C8093EE21B8A732E0088E94D /* DelegateProxy.swift in Sources */,
 				C8093EFA1B8A732E0088E94D /* RxCLLocationManagerDelegateProxy.swift in Sources */,
@@ -2719,6 +2737,7 @@
 				C8F0C01E1BBBFBB9001B112F /* RxAlertViewDelegateProxy.swift in Sources */,
 				C80DDEAA1BCE69BA006A1832 /* ObservableConvertibleType+Driver.swift in Sources */,
 				C80DDEA21BCE69BA006A1832 /* Driver+Subscription.swift in Sources */,
+				C8BCD3F01C14B5FB005F1280 /* UIView+Rx.swift in Sources */,
 				C8F0C01F1BBBFBB9001B112F /* Observable+Bind.swift in Sources */,
 				C8F0C0201BBBFBB9001B112F /* UISegmentedControl+Rx.swift in Sources */,
 				C8F0C0211BBBFBB9001B112F /* KVOObservable.swift in Sources */,
@@ -2739,6 +2758,7 @@
 				C8F0C02C1BBBFBB9001B112F /* UIDatePicker+Rx.swift in Sources */,
 				C8F0C02D1BBBFBB9001B112F /* RxTableViewDataSourceProxy.swift in Sources */,
 				C8F0C02E1BBBFBB9001B112F /* _RXSwizzling.m in Sources */,
+				C8BCD3F71C14B6D1005F1280 /* NSLayoutConstraint+Rx.swift in Sources */,
 				C8F0C02F1BBBFBB9001B112F /* Deallocating.swift in Sources */,
 				C8F0C0301BBBFBB9001B112F /* UIGestureRecognizer+Rx.swift in Sources */,
 				C8F0C0311BBBFBB9001B112F /* DelegateProxy.swift in Sources */,
@@ -2806,6 +2826,7 @@
 				C80DDEA91BCE69BA006A1832 /* ObservableConvertibleType+Driver.swift in Sources */,
 				C80DDEA11BCE69BA006A1832 /* Driver+Subscription.swift in Sources */,
 				D2138C891BB9BEBE00339B5C /* DelegateProxyType.swift in Sources */,
+				C8BCD3EF1C14B5FB005F1280 /* UIView+Rx.swift in Sources */,
 				D2138C921BB9BED600339B5C /* KVOObserver.swift in Sources */,
 				D2138C831BB9BEBE00339B5C /* _RXKVOObserver.m in Sources */,
 				C80DDEB31BCE8CA3006A1832 /* Driver+Operators+arity.swift in Sources */,
@@ -2826,6 +2847,7 @@
 				D203C50A1BB9C53E00D02D00 /* UILabel+Rx.swift in Sources */,
 				D2138C901BB9BED600339B5C /* DeinitAction.swift in Sources */,
 				D203C4F51BB9C52900D02D00 /* ItemEvents.swift in Sources */,
+				C8BCD3F61C14B6D1005F1280 /* NSLayoutConstraint+Rx.swift in Sources */,
 				D2138C911BB9BED600339B5C /* KVOObservable.swift in Sources */,
 				D203C4FA1BB9C53700D02D00 /* RxCollectionViewDataSourceProxy.swift in Sources */,
 				D2138C7F1BB9BEBE00339B5C /* _RX.m in Sources */,

@@ -18,8 +18,6 @@ class DetailViewController: ViewController {
     
     let $ = Dependencies.sharedDependencies
     
-    var disposeBag = DisposeBag()
-    
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var label: UILabel!
 

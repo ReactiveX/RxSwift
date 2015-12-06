@@ -67,8 +67,6 @@ class CalculatorViewController: ViewController {
     
     let CLEAR_STATE = CalState(previousNumber: nil, action: .Clear, currentNumber: "0", inScreen: "0", replace: true)
     
-    let disposeBag = DisposeBag()
-    
     override func viewDidLoad() {
         let commands:[Observable<Action>] = [
             allClearButton.rx_tap.map { _ in .Clear },
