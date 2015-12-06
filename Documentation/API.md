@@ -413,6 +413,14 @@ extension UIActivityIndicatorView {
 }
 ```
 
+```swift
+extension UIView {
+
+    public var rx_hidden: AnyObserver<Bool> {}
+
+}
+```
+
 **OSX**
 
 ```swift
