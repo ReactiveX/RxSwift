@@ -15,7 +15,7 @@ import RxSwift
 
 extension UIActivityIndicatorView {
 
-    /*
+    /**
     Bindable sink for `startAnimating()`, `stopAnimating()` methods.
     */
     public var rx_animating: AnyObserver<Bool> {
