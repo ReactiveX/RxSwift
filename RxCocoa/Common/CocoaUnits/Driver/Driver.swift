@@ -35,7 +35,7 @@ extension DriverConvertibleType {
 
     - it never fails
     - it delivers events on `MainScheduler.sharedInstance`
-    - `shareReplay(1)` behavior
+    - `shareReplayLatestWhileConnected()` behavior
         - all observers share sequence computation resources
         - it's stateful, upon subscription (calling subscribe) last element is immediatelly replayed if it was produced
         - computation of elements is reference counted with respect to the number of observers
@@ -51,7 +51,7 @@ public struct Driver<Element> : DriverConvertibleType {
     let _source: Observable<E>
     
     init(_ source: Observable<E>) {
-        self._source = source.shareReplay(1)
+        self._source = source.shareReplayLatestWhileConnected()
     }
 
     init(raw: Observable<E>) {
