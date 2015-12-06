@@ -64,10 +64,6 @@ public class RxTableViewSectionedDataSource<S: SectionModelType> : _RxTableViewS
     public typealias Section = S
     public typealias CellFactory = (UITableView, NSIndexPath, I) -> UITableViewCell
     
-    public typealias IncrementalUpdateObserver = AnyObserver<Changeset<S>>
-    
-    public typealias IncrementalUpdateDisposeKey = Bag<IncrementalUpdateObserver>.KeyType
-    
     // This structure exists because model can be mutable
     // In that case current state value should be preserved.
     // The state that needs to be preserved is ordering of items in section
@@ -76,20 +72,18 @@ public class RxTableViewSectionedDataSource<S: SectionModelType> : _RxTableViewS
     // properly.
     public typealias SectionModelSnapshot = SectionModel<S, I>
     
-    var sectionModels: [SectionModelSnapshot] = []
+    private var _sectionModels: [SectionModelSnapshot] = []
 
     public func sectionAtIndex(section: Int) -> S {
-        return self.sectionModels[section].model
+        return self._sectionModels[section].model
     }
 
     public func itemAtIndexPath(indexPath: NSIndexPath) -> I {
-        return self.sectionModels[indexPath.section].items[indexPath.item]
+        return self._sectionModels[indexPath.section].items[indexPath.item]
     }
 
-    var incrementalUpdateObservers: Bag<IncrementalUpdateObserver> = Bag()
-    
     public func setSections(sections: [S]) {
-        self.sectionModels = sections.map { SectionModelSnapshot(model: $0, items: $0.items) }
+        self._sectionModels = sections.map { SectionModelSnapshot(model: $0, items: $0.items) }
     }
     
     public var cellFactory: CellFactory! = nil
@@ -110,29 +104,18 @@ public class RxTableViewSectionedDataSource<S: SectionModelType> : _RxTableViewS
         }
     }
     
-    // observers
-    
-    public func addIncrementalUpdatesObserver(observer: IncrementalUpdateObserver) -> IncrementalUpdateDisposeKey {
-        return incrementalUpdateObservers.insert(observer)
-    }
-    
-    public func removeIncrementalUpdatesObserver(key: IncrementalUpdateDisposeKey) {
-        let element = incrementalUpdateObservers.removeKey(key)
-        precondition(element != nil, "Element removal failed")
-    }
-    
     // UITableViewDataSource
     
     override func _numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return sectionModels.count
+        return _sectionModels.count
     }
     
     override func _tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return sectionModels[section].items.count
+        return _sectionModels[section].items.count
     }
     
     override func _tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        precondition(indexPath.item < sectionModels[indexPath.section].items.count)
+        precondition(indexPath.item < _sectionModels[indexPath.section].items.count)
         
         return cellFactory(tableView, indexPath, itemAtIndexPath(indexPath))
     }

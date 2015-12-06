@@ -25,6 +25,7 @@ enum RetryResult {
 protocol Wireframe {
     func openURL(URL: NSURL)
     func promptFor<Action: CustomStringConvertible>(message: String, cancelAction: Action, actions: [Action]) -> Observable<Action>
+    static func presentAlert(message: String)
 }
 
 
@@ -36,6 +37,19 @@ class DefaultWireframe: Wireframe {
             UIApplication.sharedApplication().openURL(URL)
         #elseif os(OSX)
             NSWorkspace.sharedWorkspace().openURL(URL)
+        #endif
+    }
+
+    static func presentAlert(message: String) {
+        #if os(iOS)
+            let alertView = UIAlertView(
+                title: "RxExample",
+                message: message,
+                delegate: nil,
+                cancelButtonTitle: "OK"
+            )
+
+            alertView.show()
         #endif
     }
 

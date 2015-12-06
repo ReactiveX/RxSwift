@@ -67,6 +67,10 @@
 		C822B1DD1C14CD1C0088A01A /* DefaultImplementations.swift in Sources */ = {isa = PBXBuildFile; fileRef = C822B1DB1C14CD1C0088A01A /* DefaultImplementations.swift */; };
 		C822B1DF1C14CEAA0088A01A /* BindingExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C822B1DE1C14CEAA0088A01A /* BindingExtensions.swift */; };
 		C822B1E01C14CEAA0088A01A /* BindingExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C822B1DE1C14CEAA0088A01A /* BindingExtensions.swift */; };
+		C822B1E31C14E4810088A01A /* SimpleTableViewExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C822B1E21C14E4810088A01A /* SimpleTableViewExampleViewController.swift */; };
+		C822B1E41C14E4810088A01A /* SimpleTableViewExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C822B1E21C14E4810088A01A /* SimpleTableViewExampleViewController.swift */; };
+		C822B1E71C14E7250088A01A /* SimpleTableViewExampleSectionedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C822B1E61C14E7250088A01A /* SimpleTableViewExampleSectionedViewController.swift */; };
+		C822B1E81C14E7250088A01A /* SimpleTableViewExampleSectionedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C822B1E61C14E7250088A01A /* SimpleTableViewExampleSectionedViewController.swift */; };
 		C8297E2F1B6CF905000589EA /* RxTableViewSectionedAnimatedDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88C78631B3EB0A00061C5AB /* RxTableViewSectionedAnimatedDataSource.swift */; };
 		C8297E301B6CF905000589EA /* RandomUserAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0706E19E1B17703E00BA2D3A /* RandomUserAPI.swift */; };
 		C8297E311B6CF905000589EA /* SearchResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86E2F321AE5A0CA00C31024 /* SearchResultViewModel.swift */; };
@@ -539,6 +543,8 @@
 		C822B1D81C14CBEA0088A01A /* Protocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
 		C822B1DB1C14CD1C0088A01A /* DefaultImplementations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultImplementations.swift; sourceTree = "<group>"; };
 		C822B1DE1C14CEAA0088A01A /* BindingExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BindingExtensions.swift; sourceTree = "<group>"; };
+		C822B1E21C14E4810088A01A /* SimpleTableViewExampleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleTableViewExampleViewController.swift; sourceTree = "<group>"; };
+		C822B1E61C14E7250088A01A /* SimpleTableViewExampleSectionedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleTableViewExampleSectionedViewController.swift; sourceTree = "<group>"; };
 		C8297E691B6CF905000589EA /* RxExample-iOS-no-module.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "RxExample-iOS-no-module.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C83100681BF7F4CA00AAE3CD /* Sequence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sequence.swift; sourceTree = "<group>"; };
 		C83366DD1AD0293800C668A7 /* RxExample-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "RxExample-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -917,6 +923,22 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		C822B1E11C14E37B0088A01A /* SimpleTableViewExample */ = {
+			isa = PBXGroup;
+			children = (
+				C822B1E21C14E4810088A01A /* SimpleTableViewExampleViewController.swift */,
+			);
+			path = SimpleTableViewExample;
+			sourceTree = "<group>";
+		};
+		C822B1E51C14E7120088A01A /* SimpleTableViewExampleSectioned */ = {
+			isa = PBXGroup;
+			children = (
+				C822B1E61C14E7250088A01A /* SimpleTableViewExampleSectionedViewController.swift */,
+			);
+			path = SimpleTableViewExampleSectioned;
+			sourceTree = "<group>";
+		};
 		C83366D41AD0293800C668A7 = {
 			isa = PBXGroup;
 			children = (
@@ -1009,14 +1031,16 @@
 			children = (
 				C8BCD3E41C14A950005F1280 /* Numbers */,
 				C8BCD3E81C14B015005F1280 /* SimpleValidation */,
-				C8BCD3E11C14820B005F1280 /* OSX simple example */,
 				C86E2F4C1AE5A10900C31024 /* GitHubSignup */,
+				C822B1E11C14E37B0088A01A /* SimpleTableViewExample */,
+				C822B1E51C14E7120088A01A /* SimpleTableViewExampleSectioned */,
 				C86E2F301AE5A0CA00C31024 /* WikipediaImageSearch */,
 				075F130E1B4E9D10000D7861 /* APIWrappers */,
 				07E300051B14994500F00100 /* TableView */,
 				07A5C3D91B70B6B8001EFE5C /* Calculator */,
 				C859B9A21B45C5D900D012D7 /* PartialUpdates */,
 				EC91FB931BBA12E800973245 /* AutoLoading */,
+				C8BCD3E11C14820B005F1280 /* OSX simple example */,
 			);
 			path = Examples;
 			sourceTree = "<group>";
@@ -1848,6 +1872,7 @@
 				C894658F1BC6C2BC0055219D /* UIBarButtonItem+Rx.swift in Sources */,
 				C89464D61BC6C2B00055219D /* Producer.swift in Sources */,
 				C8BCD4041C14BFCA005F1280 /* UIView+Rx.swift in Sources */,
+				C822B1E81C14E7250088A01A /* SimpleTableViewExampleSectionedViewController.swift in Sources */,
 				C894658A1BC6C2BC0055219D /* RxTableViewDataSourceProxy.swift in Sources */,
 				C894656F1BC6C2BC0055219D /* DelegateProxyType.swift in Sources */,
 				C89465721BC6C2BC0055219D /* ControlTarget.swift in Sources */,
@@ -1884,6 +1909,7 @@
 				C809E97E1BE697100058D948 /* UIImage+Extensions.swift in Sources */,
 				C89464E61BC6C2B00055219D /* Timer.swift in Sources */,
 				C8297E3E1B6CF905000589EA /* DetailViewController.swift in Sources */,
+				C822B1E41C14E4810088A01A /* SimpleTableViewExampleViewController.swift in Sources */,
 				C83974131BF77406004F02CC /* KVORepresentable+CoreGraphics.swift in Sources */,
 				C8297E3F1B6CF905000589EA /* SectionModelType.swift in Sources */,
 				C8297E401B6CF905000589EA /* ImageService.swift in Sources */,
@@ -2039,6 +2065,7 @@
 				C88C788F1B3F14FD0061C5AB /* Changeset.swift in Sources */,
 				C8C46DA81B47F7110020D71E /* CollectionViewImageCell.swift in Sources */,
 				C822B1CA1C14CB2B0088A01A /* GithubSignupViewModel.swift in Sources */,
+				C822B1E31C14E4810088A01A /* SimpleTableViewExampleViewController.swift in Sources */,
 				C8C46DAC1B47F7110020D71E /* WikipediaSearchViewController.swift in Sources */,
 				07A5C3DB1B70B703001EFE5C /* CalculatorViewController.swift in Sources */,
 				0706E19D1B176EE200BA2D3A /* String+extensions.swift in Sources */,
@@ -2053,6 +2080,7 @@
 				C8BCD3E61C14A95E005F1280 /* NumbersViewController.swift in Sources */,
 				C809E97A1BE6841C0058D948 /* Wireframe.swift in Sources */,
 				0706E1961B14AF5100BA2D3A /* DetailViewController.swift in Sources */,
+				C822B1E71C14E7250088A01A /* SimpleTableViewExampleSectionedViewController.swift in Sources */,
 				C88C78991B4012A90061C5AB /* SectionModelType.swift in Sources */,
 				C83367251AD029AE00C668A7 /* ImageService.swift in Sources */,
 				C86E2F471AE5A0CA00C31024 /* WikipediaSearchResult.swift in Sources */,
