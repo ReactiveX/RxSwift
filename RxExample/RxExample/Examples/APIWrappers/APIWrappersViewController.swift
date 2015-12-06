@@ -51,6 +51,8 @@ class APIWrappersViewController: ViewController {
 
     @IBOutlet weak var mypan: UIPanGestureRecognizer!
 
+    @IBOutlet weak var hideLabel: UILabel!
+
     let disposeBag = DisposeBag()
 
     let manager = CLLocationManager()
@@ -153,6 +155,13 @@ class APIWrappersViewController: ViewController {
             .bindTo(activityIndicator.rx_animating)
             .addDisposableTo(disposeBag)
 
+
+        // MARK: UIView
+
+        switcher.rx_value
+            .map { value in return !value }
+            .bindTo(hideLabel.rx_hidden)
+            .addDisposableTo(disposeBag)
 
         // MARK: UIButton
 
