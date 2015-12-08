@@ -44,5 +44,3 @@ extension Recorded {
 func == <T: Equatable>(lhs: Recorded<T>, rhs: Recorded<T>) -> Bool {
     return lhs.time == rhs.time && lhs.event == rhs.event
 }
-
-

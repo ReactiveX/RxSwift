@@ -21,8 +21,6 @@ class IntroductionExampleViewController : ViewController {
     
     @IBOutlet var disposeButton: NSButton!
     
-    var disposeBag = DisposeBag()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 

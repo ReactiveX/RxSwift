@@ -26,10 +26,11 @@ public func create<E>(subscribe: (AnyObserver<E>) -> Disposable) -> Observable<E
 /**
 Returns an empty observable sequence, using the specified scheduler to send out the single `Completed` message.
 
+- parameter type: Optional type hint.
 - returns: An observable sequence with no elements.
 */
 @warn_unused_result(message="http://git.io/rxs.uo")
-public func empty<E>() -> Observable<E> {
+public func empty<E>(type: E.Type = E.self) -> Observable<E> {
     return Empty<E>()
 }
 
@@ -38,10 +39,11 @@ public func empty<E>() -> Observable<E> {
 /**
 Returns a non-terminating observable sequence, which can be used to denote an infinite duration.
 
+- parameter type: Optional type hint.
 - returns: An observable sequence whose observers will never get called.
 */
 @warn_unused_result(message="http://git.io/rxs.uo")
-public func never<E>() -> Observable<E> {
+public func never<E>(type: E.Type = E.self) -> Observable<E> {
     return Never()
 }
 
@@ -125,10 +127,11 @@ extension Array {
 /**
 Returns an observable sequence that terminates with an `error`.
 
+- parameter type: Optional type hint.
 - returns: The observable sequence that terminates with specified error.
 */
 @warn_unused_result(message="http://git.io/rxs.uo")
-public func failWith<E>(error: ErrorType) -> Observable<E> {
+public func failWith<E>(error: ErrorType, _ type: E.Type = E.self) -> Observable<E> {
     return FailWith(error: error)
 }
 

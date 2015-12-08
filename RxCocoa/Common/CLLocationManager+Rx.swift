@@ -20,7 +20,7 @@ extension CLLocationManager {
     For more information take a look at `DelegateProxyType` protocol documentation.
     */
     public var rx_delegate: DelegateProxy {
-        return proxyForObject(self) as RxCLLocationManagerDelegateProxy
+        return proxyForObject(RxCLLocationManagerDelegateProxy.self, self)
     }
 
     // MARK: Responding to Location Events

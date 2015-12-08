@@ -22,7 +22,7 @@ extension UIActionSheet {
     For more information take a look at `DelegateProxyType` protocol documentation.
     */
     public var rx_delegate: DelegateProxy {
-        return proxyForObject(self) as RxActionSheetDelegateProxy
+        return proxyForObject(RxActionSheetDelegateProxy.self, self)
     }
     
     /**
@@ -34,7 +34,7 @@ extension UIActionSheet {
                 return a[1] as! Int
             }
         
-        return ControlEvent(source: source)
+        return ControlEvent(events: source)
     }
     
     /**
@@ -46,7 +46,7 @@ extension UIActionSheet {
                 return a[1] as! Int
             }
         
-        return ControlEvent(source: source)
+        return ControlEvent(events: source)
     }
     
     /**
@@ -58,7 +58,7 @@ extension UIActionSheet {
                 return a[1] as! Int
             }
         
-        return ControlEvent(source: source)
+        return ControlEvent(events: source)
     }
 }
 

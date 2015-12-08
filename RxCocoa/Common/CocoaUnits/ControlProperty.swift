@@ -33,16 +33,35 @@ public protocol ControlPropertyType : ObservableType, ObserverType {
     - it will `Complete` sequence on control being deallocated
     - it never errors out
     - it delivers events on `MainScheduler.sharedInstance`
+ 
+    **The implementation of `ControlProperty` will ensure that sequence of values is being subscribed on main scheduler
+    (`subscribeOn(ConcurrentMainScheduler.sharedInstance)` behavior).**
+ 
+    **It is implementor's responsibility to make sure that that all other properties enumerated above are satisfied.**
+    
+    **If they aren't, then using this unit communicates wrong properties and could potentially break someone's code.**
+ 
+    **In case `values` observable sequence that is being passed into initializer doesn't satisfy all enumerated
+    properties, please don't use this unit.**
 */
 public struct ControlProperty<PropertyType> : ControlPropertyType {
     public typealias E = PropertyType
     
-    let source: Observable<PropertyType>
-    let observer: AnyObserver<PropertyType>
-    
-    init(source: Observable<PropertyType>, observer: AnyObserver<PropertyType>) {
-        self.source = source.subscribeOn(ConcurrentMainScheduler.sharedInstance)
-        self.observer = observer
+    let _values: Observable<PropertyType>
+    let _valueSink: AnyObserver<PropertyType>
+
+    /**
+     Initializes control property with a observable sequence that represents property values and observer that enables
+     binding values to property.
+     
+     - parameter values: Observable sequence that represents property values.
+     - parameter valueSink: Observer that enables binding values to control property.
+     - returns: Control property created with a observable sequence of values and an observer that enables binding values
+     to property.
+    */
+    public init<V: ObservableType, S: ObserverType where E == V.E, E == S.E>(values: V, valueSink: S) {
+        _values = values.subscribeOn(ConcurrentMainScheduler.sharedInstance)
+        _valueSink = valueSink.asObserver()
     }
     
     /**
@@ -52,7 +71,7 @@ public struct ControlProperty<PropertyType> : ControlPropertyType {
     - returns: Disposable object that can be used to unsubscribe the observer from receiving control property values.
     */
     public func subscribe<O : ObserverType where O.E == E>(observer: O) -> Disposable {
-        return self.source.subscribe(observer)
+        return _values.subscribe(observer)
     }
     
     /**
@@ -60,7 +79,7 @@ public struct ControlProperty<PropertyType> : ControlPropertyType {
     */
     @warn_unused_result(message="http://git.io/rxs.uo")
     public func asObservable() -> Observable<E> {
-        return self.source
+        return _values
     }
     
     /**
@@ -83,9 +102,9 @@ public struct ControlProperty<PropertyType> : ControlPropertyType {
         case .Error(let error):
             bindingErrorToInterface(error)
         case .Next:
-            self.observer.on(event)
+            _valueSink.on(event)
         case .Completed:
-            self.observer.on(event)
+            _valueSink.on(event)
         }
     }
 }

@@ -206,10 +206,11 @@ extension ObservableType {
 extension ObservableType {
 
     /**
-    Projects each element of an observable sequence to an observable sequence and merges the resulting observable sequences into one observable sequence.
-    
-    - parameter selector: A transform function to apply to each element.
-    - returns: An observable sequence whose elements are the result of invoking the one-to-many transform function on each element of the input sequence.
+     Projects each element of an observable sequence to an observable sequence and merges the resulting observable sequences into one observable sequence.
+     If element is received while there is some projected observable sequence being merged it will simply be ignored.
+
+    - parameter selector: A transform function to apply to element that was observed while no observable is executing in parallel.
+    - returns: An observable sequence whose elements are the result of invoking the one-to-many transform function on each element of the input sequence that was received while no other sequence was being calculated.
     */
     @warn_unused_result(message="http://git.io/rxs.uo")
     public func flatMapFirst<O: ObservableConvertibleType>(selector: (E) throws -> O)

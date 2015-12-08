@@ -21,7 +21,7 @@ extension UITextView {
     
     - returns: Instance of delegate proxy that wraps `delegate`.
     */
-    override func rx_createDelegateProxy() -> RxScrollViewDelegateProxy {
+    public override func rx_createDelegateProxy() -> RxScrollViewDelegateProxy {
         return RxTextViewDelegateProxy(parentObject: self)
     }
     
@@ -29,7 +29,7 @@ extension UITextView {
     Reactive wrapper for `text` property.
     */
     public var rx_text: ControlProperty<String> {
-        let source: Observable<String> = deferred { [weak self] in
+        let source: Observable<String> = deferred { [weak self] () -> Observable<String> in
             let text = self?.text ?? ""
             return (self?.rx_delegate.observe("textViewDidChange:") ?? empty())
                 .map { a in
@@ -38,7 +38,7 @@ extension UITextView {
                 .startWith(text)
             }
         
-        return ControlProperty(source: source, observer: AnyObserver { [weak self] event in
+        return ControlProperty(values: source, valueSink: AnyObserver { [weak self] event in
             switch event {
             case .Next(let value):
                 self?.text = value

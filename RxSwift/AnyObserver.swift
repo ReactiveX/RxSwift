@@ -58,7 +58,7 @@ public struct AnyObserver<Element> : ObserverType {
 
      - returns: type erased observer.
      */
-    func asObserver() -> AnyObserver<E> {
+    public func asObserver() -> AnyObserver<E> {
         return self
     }
 }
@@ -69,7 +69,7 @@ extension ObserverType {
     
     - returns: type erased observer.
     */
-    func asObserver() -> AnyObserver<E> {
+    public func asObserver() -> AnyObserver<E> {
         return AnyObserver(self)
     }
 }

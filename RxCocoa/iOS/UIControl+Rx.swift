@@ -34,7 +34,7 @@ extension UIControl {
             }
         }
     }
-    
+
     /**
     Reactive wrapper for target action pattern.
     
@@ -59,7 +59,7 @@ extension UIControl {
             }
         }.takeUntil(rx_deallocated)
         
-        return ControlEvent(source: source)
+        return ControlEvent(events: source)
     }
     
     func rx_value<T>(getter getter: () -> T, setter: T -> Void) -> ControlProperty<T> {
@@ -80,7 +80,7 @@ extension UIControl {
             }
         }.takeUntil(rx_deallocated)
         
-        return ControlProperty<T>(source: source, observer: AnyObserver { event in
+        return ControlProperty<T>(values: source, valueSink: AnyObserver { event in
             MainScheduler.ensureExecutingOnScheduler()
 
             switch event {

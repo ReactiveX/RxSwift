@@ -62,6 +62,7 @@ public class Variable<Element> : ObservableType {
     - parameter observer: Observer to subscribe to variable values.
     - returns: Disposable object that can be used to unsubscribe the observer from the variable.
     */
+    @warn_unused_result(message="http://git.io/rxs.ud")
     public func subscribe<O: ObserverType where O.E == E>(observer: O) -> Disposable {
         return _subject.subscribe(observer)
     }

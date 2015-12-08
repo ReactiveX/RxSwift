@@ -67,20 +67,18 @@ public class RxCollectionViewSectionedDataSource<S: SectionModelType> : _RxColle
     // properly.
     public typealias SectionModelSnapshot = SectionModel<S, I>
     
-    var sectionModels: [SectionModelSnapshot] = []
+    private var _sectionModels: [SectionModelSnapshot] = []
     
     public func sectionAtIndex(section: Int) -> S {
-        return self.sectionModels[section].model
+        return self._sectionModels[section].model
     }
 
     public func itemAtIndexPath(indexPath: NSIndexPath) -> I {
-        return self.sectionModels[indexPath.section].items[indexPath.item]
+        return self._sectionModels[indexPath.section].items[indexPath.item]
     }
     
-    var incrementalUpdateObservers: Bag<IncrementalUpdateObserver> = Bag()
-    
     public func setSections(sections: [S]) {
-        self.sectionModels = sections.map { SectionModelSnapshot(model: $0, items: $0.items) }
+        self._sectionModels = sections.map { SectionModelSnapshot(model: $0, items: $0.items) }
     }
     
     public var cellFactory: CellFactory! = nil
@@ -104,29 +102,18 @@ public class RxCollectionViewSectionedDataSource<S: SectionModelType> : _RxColle
         }
     }
     
-    // observers
-    
-    public func addIncrementalUpdatesObserver(observer: IncrementalUpdateObserver) -> IncrementalUpdateDisposeKey {
-        return incrementalUpdateObservers.insert(observer)
-    }
-    
-    public func removeIncrementalUpdatesObserver(key: IncrementalUpdateDisposeKey) {
-        let element = incrementalUpdateObservers.removeKey(key)
-        precondition(element != nil, "Element removal failed")
-    }
-    
     // UITableViewDataSource
     
     override func _numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-        return sectionModels.count
+        return _sectionModels.count
     }
     
     override func _collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return sectionModels[section].items.count
+        return _sectionModels[section].items.count
     }
     
     override func _collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        precondition(indexPath.item < sectionModels[indexPath.section].items.count)
+        precondition(indexPath.item < _sectionModels[indexPath.section].items.count)
         
         return cellFactory(collectionView, indexPath, itemAtIndexPath(indexPath))
     }

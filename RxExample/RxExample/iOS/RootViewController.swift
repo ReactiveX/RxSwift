@@ -8,6 +8,10 @@
 
 import Foundation
 import UIKit
+#if !RX_NO_MODULE
+    import RxSwift
+    import RxCocoa
+#endif
 
 public class RootViewController : UITableViewController {
     public override func viewDidLoad() {
@@ -16,5 +20,8 @@ public class RootViewController : UITableViewController {
         GitHubSearchRepositoriesAPI.sharedAPI.activityIndicator
         DefaultWikipediaAPI.sharedAPI
         DefaultImageService.sharedImageService
+        DefaultWireframe.sharedInstance
+        MainScheduler.sharedInstance
+        ReachabilityService.sharedReachabilityService
     }
 }

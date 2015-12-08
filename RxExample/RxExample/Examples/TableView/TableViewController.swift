@@ -17,8 +17,6 @@ class TableViewController: ViewController, UITableViewDelegate {
 
     @IBOutlet weak var tableView: UITableView!
 
-    var disposeBag = DisposeBag()
-
     let users = Variable([User]())
     let favoriteUsers = Variable([User]())
 

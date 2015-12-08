@@ -23,12 +23,15 @@ public class DelegateProxy : _RXDelegateProxy {
     
     private var subjectsForSelector = [Selector: PublishSubject<[AnyObject]>]()
 
-    weak var parentObject: AnyObject?
+    /**
+    Parent object associated with delegate proxy.
+    */
+    weak private(set) var parentObject: AnyObject?
     
     /**
     Initializes new instance.
     
-    - parameter parentObject: Parent object that owns `DelegateProxy` as associated object.
+    - parameter parentObject: Optional parent object that owns `DelegateProxy` as associated object.
     */
     public required init(parentObject: AnyObject) {
         self.parentObject = parentObject
@@ -71,10 +74,6 @@ public class DelegateProxy : _RXDelegateProxy {
     
     public override func interceptedSelector(selector: Selector, withArguments arguments: [AnyObject]!) {
         subjectsForSelector[selector]?.on(.Next(arguments))
-    }
-    
-    class func _pointer(p: UnsafePointer<Void>) -> UnsafePointer<Void> {
-        return p
     }
     
     /**
@@ -146,5 +145,11 @@ public class DelegateProxy : _RXDelegateProxy {
 #if TRACE_RESOURCES
         OSAtomicDecrement32(&resourceCount)
 #endif
+    }
+
+    // MARK: Pointer
+
+    class func _pointer(p: UnsafePointer<Void>) -> UnsafePointer<Void> {
+        return p
     }
 }

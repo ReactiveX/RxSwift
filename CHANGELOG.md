@@ -1,14 +1,53 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-* Adds `ignoreElements` operator.
-* Adds `rx_attributedText` to `UILabel`.
-
 ---
+
+## [2.0.0-beta.4](https://github.com/ReactiveX/RxSwift/releases/tag/2.0.0-beta.4)
+
+#### Updated
+
+* Adds `ignoreElements` operator.
+* Adds `timeout` operator (2 overloads).
+* Adds `shareReplayLatestWhileConnected` operator.
+* Changes `Driver` to internally use `shareReplayLatestWhileConnected` for subscription sharing instead of `shareReplay(1)`.
+* Adds `flatMapFirst` to `Driver` unit.
+* Adds `replayAll` operator.
+* Adds `createUnbounded` factory method to `ReplaySubject`.
+* Adds optional type hints to `empty`, `failWith` and `never` (`empty(Int)` now works and means empty observable sequence of `Int`s).
+* Adds `rx_hidden` to `UIView`.
+* Adds `rx_alpha` to `UIView`.
+* Adds `rx_attributedText` to `UILabel`.
+* Adds `rx_animating` to `UIActivityIndicatorView`.
+* Adds `rx_constant` to `NSLayoutConstraint`.
+* Removes implicitly unwrapped optional from `NSURLSession.rx_response`.
+* Exposes `rx_createDataSourceProxy`, `rx_createDelegateProxy` on `UITableView`/`UICollectionView`.
+* Exposes `rx_createDelegateProxy` on `UITextView`.
+* Exposes `rx_createDelegateProxy` on `UIScrollView`.
+* Exposes `RxCollectionViewDataSourceProxy`.
+* Exposes `RxCollectionViewDelegateProxy`.
+* Exposes `RxScrollViewDelegateProxy`.
+* Exposes `RxTableViewDataSourceProxy`.
+* Exposes `RxTableViewDelegateProxy`.
+* Deprecates `proxyForObject` in favor of `proxyForObject<P : DelegateProxyType>(type: P.Type, _ object: AnyObject) -> P`.
+* Deprecates `rx_modelSelected<T>()` in favor of `rx_modelSelected<T>(modelType: T.Type)`.
+* Adds `func bindTo(variable: Variable<E>) -> Disposable` extension to `ObservableType`.
+* Exposes `ControlEvent` init.
+* Exposes `ControlProperty` init.
+* Refactoring of example app
+  * Divides examples into sections
+  * Adds really simple examples of how to do simple calculated bindings with vanilla Rx.
+  * Adds really simple examples of table view extensions (sectioned and non sectioned version).
+  * Refactoring of `GitHub sign in example` to use MVVM paradigm.
+
+#### Fixed
+
+* Fixes documentation for `flatMapFirst`
+* Fixes problem with delegate proxies not detecting all delegate methods in delegate proxy hierarchy.
 
 ## [2.0.0-beta.3](https://github.com/ReactiveX/RxSwift/releases/tag/2.0.0-beta.3)
 
-### Updated
+#### Updated
 
 * Improves KVO mechanism.
   * Type of observed object is now first argument `view.rx_observe(CGRect.self, "frame")`
@@ -38,7 +77,7 @@ All notable changes to this project will be documented in this file.
   * `rx_itemsAnimatedWithDataSource` extension
 * Makes blocking operators run current thread's runloop while blocking and thus disabling deadlocks.
 
-### Fixed
+#### Fixed
 
 * Fixes example with `Variable` in playgrounds so it less confusing regarding memory management.
 * Fixes `UIImageView` extensions to use `UIImage?` instead of `UIImage!`.

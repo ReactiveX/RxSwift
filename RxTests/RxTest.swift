@@ -98,6 +98,14 @@ func error<T>(time: Time, _ error: ErrorType) -> Recorded<T> {
     return Recorded(time: time, event: .Error(error))
 }
 
+func doOnBackgroundThread(action: () -> ()) {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), action)
+}
+
+func doOnMainThread(action: () -> ()) {
+    dispatch_async(dispatch_get_main_queue(), action)
+}
+
 class RxTest: XCTestCase {
     struct Defaults {
         static let created = 100
@@ -169,5 +177,5 @@ class RxTest: XCTestCase {
     func on<T>(time: Time, _ event: Event<T>) -> Recorded<T> {
         return Recorded(time: time, event: event)
     }
-    
+
 }

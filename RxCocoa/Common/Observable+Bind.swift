@@ -19,11 +19,34 @@ extension ObservableType {
     In this form it's equivalent to `subscribe` method, but it communicates intent better.
     
     - parameter observer: Observer that receives events.
-    - returns: Disposable object that can be used to unsubscribe the observer from the subject.
+    - returns: Disposable object that can be used to unsubscribe the observer.
     */
     @warn_unused_result(message="http://git.io/rxs.ud")
     public func bindTo<O: ObserverType where O.E == E>(observer: O) -> Disposable {
         return self.subscribe(observer)
+    }
+
+    /**
+    Creates new subscription and sends elements to variable.
+
+    In release mode error will be logged in case attempting to bind an error to variable.
+    In debug mode exception will be thrown in case attempting to bind error to variable.
+
+    - parameter variable: Target variable for sequence elements.
+    - returns: Disposable object that can be used to unsubscribe the observer.
+    */
+    @warn_unused_result(message="http://git.io/rxs.ud")
+    public func bindTo(variable: Variable<E>) -> Disposable {
+        return subscribe { e in
+            switch e {
+            case let .Next(element):
+                variable.value = element
+            case let .Error(error):
+                bindingErrorToVariable(error)
+            case .Completed:
+                break
+            }
+        }
     }
     
     /**

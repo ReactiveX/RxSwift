@@ -32,14 +32,30 @@ public protocol ControlEventType : ObservableType {
     - it will `Complete` sequence on control being deallocated
     - it never errors out
     - it delivers events on `MainScheduler.sharedInstance`
+ 
+    **The implementation of `ControlEvent` will ensure that sequence of events is being subscribed on main scheduler
+     (`subscribeOn(ConcurrentMainScheduler.sharedInstance)` behavior).**
+
+    **It is implementor's responsibility to make sure that that all other properties enumerated above are satisfied.**
+
+    **If they aren't, then using this unit communicates wrong properties and could potentially break someone's code.**
+
+    **In case `events` observable sequence that is being passed into initializer doesn't satisfy all enumerated
+     properties, please don't use this unit.**
 */
 public struct ControlEvent<PropertyType> : ControlEventType {
     public typealias E = PropertyType
-    
-    let source: Observable<PropertyType>
-    
-    init(source: Observable<PropertyType>) {
-        self.source = source.subscribeOn(ConcurrentMainScheduler.sharedInstance)
+
+    let _events: Observable<PropertyType>
+
+    /**
+     Initializes control event with a observable sequence that represents events.
+
+     - parameter events: Observable sequence that represents events.
+     - returns: Control event created with a observable sequence of events.
+     */
+    public init<Ev: ObservableType where Ev.E == E>(events: Ev) {
+        _events = events.subscribeOn(ConcurrentMainScheduler.sharedInstance)
     }
     
     /**
@@ -49,7 +65,7 @@ public struct ControlEvent<PropertyType> : ControlEventType {
     - returns: Disposable object that can be used to unsubscribe the observer from receiving control events.
     */
     public func subscribe<O : ObserverType where O.E == E>(observer: O) -> Disposable {
-        return self.source.subscribe(observer)
+        return _events.subscribe(observer)
     }
     
     /**
@@ -57,7 +73,7 @@ public struct ControlEvent<PropertyType> : ControlEventType {
     */
     @warn_unused_result(message="http://git.io/rxs.uo")
     public func asObservable() -> Observable<E> {
-        return self.source
+        return _events
     }
     
     /**

@@ -9,18 +9,6 @@
 import Foundation
 import RxSwift
 
-func createHotObservable<Element>(scheduler: TestScheduler, events: [Recorded<Element>]) -> HotObservable<Element> {
-    return HotObservable(testScheduler: scheduler, recordedEvents: events)
-}
-
-func createColdObservable<Element>(scheduler: TestScheduler, events: [Recorded<Element>]) -> ColdObservable<Element> {
-    return ColdObservable(testScheduler: scheduler, recordedEvents: events)
-}
-
-func createObserver<E>(scheduler: TestScheduler) -> MockObserver<E> {
-    return MockObserver(scheduler: scheduler)
-}
-
 class TestScheduler : VirtualTimeSchedulerBase {
     
     override init(initialClock: Time) {
@@ -34,8 +22,8 @@ class TestScheduler : VirtualTimeSchedulerBase {
     func createColdObservable<Element>(events: [Recorded<Element>]) -> ColdObservable<Element> {
         return ColdObservable(testScheduler: self as AnyObject as! TestScheduler, recordedEvents: events)
     }
-    
-    func createObserver<E>() -> MockObserver<E> {
+
+    func createObserver<E>(type: E.Type) -> MockObserver<E> {
         return MockObserver(scheduler: self as AnyObject as! TestScheduler)
     }
     
@@ -49,7 +37,7 @@ class TestScheduler : VirtualTimeSchedulerBase {
     func start<Element : Equatable>(created: Time, subscribed: Time, disposed: Time, create: () -> Observable<Element>) -> MockObserver<Element> {
         var source : Observable<Element>? = nil
         var subscription : Disposable? = nil
-        let observer: MockObserver<Element> = createObserver()
+        let observer: MockObserver<Element> = createObserver(Element)
         
         let state : Void = ()
         

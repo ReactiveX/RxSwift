@@ -14,9 +14,14 @@ import RxCocoa
 
 class WikipediaSearchViewController: ViewController {
     
-    private var disposeBag = DisposeBag()
-    private var viewModel: SearchViewModel? = nil
-    
+    private var resultsTableView: UITableView {
+        return self.searchDisplayController!.searchResultsTableView
+    }
+
+    private var searchBar: UISearchBar {
+        return self.searchDisplayController!.searchBar
+    }
+
     override func awakeFromNib() {
         super.awakeFromNib()
     }
@@ -26,29 +31,43 @@ class WikipediaSearchViewController: ViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let resultsTableView = self.searchDisplayController!.searchResultsTableView
-        let searchBar = self.searchDisplayController!.searchBar
-        
+        configureTableDataSource()
+        configureKeyboardDismissesOnScroll()
+        configureNavigateOnRowClick()
+        configureActivityIndicatorsShow()
+    }
+
+    func configureTableDataSource() {
         resultsTableView.registerNib(UINib(nibName: "WikipediaSearchCell", bundle: nil), forCellReuseIdentifier: "WikipediaSearchCell")
         
         resultsTableView.rowHeight = 194
-        
-        let viewModel = SearchViewModel(
-            searchText: searchBar.rx_text.asDriver(),
-            selectedResult: resultsTableView.rx_modelSelected().asDriver()
-        )
-        
-        // map table view rows
-        // {
-        viewModel.rows
+
+        let API = DefaultWikipediaAPI.sharedAPI
+        let scheduler = MainScheduler.sharedInstance
+
+        searchBar.rx_text
+            .asDriver()
+            .throttle(0.3, scheduler)
+            .distinctUntilChanged()
+            .flatMapLatest { query in
+                API.getSearchResults(query)
+                    .retry(3)
+                    .retryOnBecomesReachable([], reachabilityService: ReachabilityService.sharedReachabilityService)
+                    .startWith([]) // clears results on new search term
+                    .asDriver(onErrorJustReturn: [])
+            }
+            .map { results in
+                results.map(SearchResultViewModel.init)
+            }
             .drive(resultsTableView.rx_itemsWithCellIdentifier("WikipediaSearchCell")) { (_, viewModel, cell: WikipediaSearchCell) in
                 cell.viewModel = viewModel
             }
             .addDisposableTo(disposeBag)
-        // }
+    }
 
-        // dismiss keyboard on scroll
-        // {
+    func configureKeyboardDismissesOnScroll() {
+        let searchBar = self.searchBar
+
         resultsTableView.rx_contentOffset
             .asDriver()
             .driveNext { _ in
@@ -57,12 +76,20 @@ class WikipediaSearchViewController: ViewController {
                 }
             }
             .addDisposableTo(disposeBag)
+    }
 
-        self.viewModel = viewModel
-        // }
+    func configureNavigateOnRowClick() {
+        let wireframe = DefaultWireframe.sharedInstance
 
-        // activity indicator spinner
-        // {
+        resultsTableView.rx_modelSelected(SearchResultViewModel.self)
+            .asDriver()
+            .driveNext { searchResult in
+                wireframe.openURL(searchResult.searchResult.URL)
+            }
+            .addDisposableTo(disposeBag)
+    }
+
+    func configureActivityIndicatorsShow() {
         combineLatest(
             DefaultWikipediaAPI.sharedAPI.loadingWikipediaData,
             DefaultImageService.sharedImageService.loadingImage
@@ -72,6 +99,5 @@ class WikipediaSearchViewController: ViewController {
                 UIApplication.sharedApplication().networkActivityIndicatorVisible = active
             }
             .addDisposableTo(disposeBag)
-        // }
     }
 }

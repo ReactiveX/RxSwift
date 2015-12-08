@@ -49,8 +49,6 @@ class PartialUpdatesViewController : ViewController {
 
     var sections = Variable([NumberSection]())
 
-    let disposeBag = DisposeBag()
-
     func skinTableViewDataSource(dataSource: RxTableViewSectionedDataSource<NumberSection>) {
         dataSource.cellFactory = { (tv, ip, i) in
             let cell = tv.dequeueReusableCellWithIdentifier("Cell")

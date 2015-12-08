@@ -51,7 +51,7 @@ extension UIBarButtonItem {
             return target
         }.takeUntil(rx_deallocated)
         
-        return ControlEvent(source: source)
+        return ControlEvent(events: source)
     }
     
 }

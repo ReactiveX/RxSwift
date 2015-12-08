@@ -49,7 +49,6 @@ class GitHubSearchRepositoriesViewController: ViewController, UITableViewDelegat
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
 
-    var disposeBag = DisposeBag()
     let dataSource = RxTableViewSectionedReloadDataSource<SectionModel<String, Repository>>()
 
     override func viewDidLoad() {

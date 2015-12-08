@@ -29,6 +29,8 @@ class PrimitiveHotObservable<ElementType : Equatable> : ObservableType {
     }
     
     func on(event: Event<E>) {
+        lock.lock()
+        defer { lock.unlock() }
         observers.on(event)
     }
     

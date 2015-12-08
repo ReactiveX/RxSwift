@@ -16,8 +16,9 @@ import RxSwift
 
 let tableViewDataSourceNotSet = TableViewDataSourceNotSet()
 
-class TableViewDataSourceNotSet : NSObject
-                                , UITableViewDataSource {
+class TableViewDataSourceNotSet
+    : NSObject
+    , UITableViewDataSource {
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return rxAbstractMethodWithMessage(dataSourceNotSet)
     }
@@ -31,53 +32,94 @@ class TableViewDataSourceNotSet : NSObject
     }
 }
 
-// Please take a look at `DelegateProxyType.swift`
-class RxTableViewDataSourceProxy : DelegateProxy
-                                 , UITableViewDataSource
-                                 , DelegateProxyType {
+/**
+     For more information take a look at `DelegateProxyType`.
+ */
+public class RxTableViewDataSourceProxy
+    : DelegateProxy
+    , UITableViewDataSource
+    , DelegateProxyType {
+
+    /**
+     Typed parent object.
+     */
+    public weak private(set) var tableView: UITableView?
     
-    unowned let tableView: UITableView
-    
-    unowned var dataSource: UITableViewDataSource = tableViewDataSourceNotSet
-    
-    required init(parentObject: AnyObject) {
-        self.tableView = parentObject as! UITableView
+    private weak var _requiredMethodsDataSource: UITableViewDataSource? = tableViewDataSourceNotSet
+
+    /**
+     Initializes `RxTableViewDelegateProxy`
+
+     - parameter parentObject: Parent object for delegate proxy.
+     */
+    public required init(parentObject: AnyObject) {
+        self.tableView = (parentObject as! UITableView)
         super.init(parentObject: parentObject)
     }
 
-    // data source delegate
-    
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return self.dataSource.numberOfSectionsInTableView?(tableView) ?? 1
+    // MARK: delegate
+
+    /**
+    Required delegate method implementation.
+    */
+    public func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return (_requiredMethodsDataSource ?? tableViewDataSourceNotSet).numberOfSectionsInTableView?(tableView) ?? 1
+    }
+
+    /**
+    Required delegate method implementation.
+    */
+    public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return (_requiredMethodsDataSource ?? tableViewDataSourceNotSet).tableView(tableView, numberOfRowsInSection: section)
+    }
+
+    /**
+    Required delegate method implementation.
+    */
+    public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        return (_requiredMethodsDataSource ?? tableViewDataSourceNotSet).tableView(tableView, cellForRowAtIndexPath: indexPath)
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.dataSource.tableView(tableView, numberOfRowsInSection: section)
+    // MARK: proxy
+
+    /**
+    For more information take a look at `DelegateProxyType`.
+    */
+    public override class func createProxyForObject(object: AnyObject) -> AnyObject {
+        let tableView = (object as! UITableView)
+
+        return castOrFatalError(tableView.rx_createDataSourceProxy())
     }
-    
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        return self.dataSource.tableView(tableView, cellForRowAtIndexPath: indexPath)
-    }
-    
-    // proxy
-    
-    override class func delegateAssociatedObjectTag() -> UnsafePointer<Void> {
+
+    /**
+     For more information take a look at `DelegateProxyType`.
+     */
+    public override class func delegateAssociatedObjectTag() -> UnsafePointer<Void> {
         return _pointer(&dataSourceAssociatedTag)
     }
-    
-    class func setCurrentDelegate(delegate: AnyObject?, toObject object: AnyObject) {
+
+    /**
+     For more information take a look at `DelegateProxyType`.
+     */
+    public class func setCurrentDelegate(delegate: AnyObject?, toObject object: AnyObject) {
         let collectionView: UITableView = castOrFatalError(object)
         collectionView.dataSource = castOptionalOrFatalError(delegate)
     }
-    
-    class func currentDelegateFor(object: AnyObject) -> AnyObject? {
+
+    /**
+     For more information take a look at `DelegateProxyType`.
+     */
+    public class func currentDelegateFor(object: AnyObject) -> AnyObject? {
         let collectionView: UITableView = castOrFatalError(object)
         return collectionView.dataSource
     }
-    
-    override func setForwardToDelegate(forwardToDelegate: AnyObject?, retainDelegate: Bool) {
-        let dataSource: UITableViewDataSource? = castOptionalOrFatalError(forwardToDelegate)
-        self.dataSource = dataSource ?? tableViewDataSourceNotSet
+
+    /**
+     For more information take a look at `DelegateProxyType`.
+     */
+    public override func setForwardToDelegate(forwardToDelegate: AnyObject?, retainDelegate: Bool) {
+        let requiredMethodsDataSource: UITableViewDataSource? = castOptionalOrFatalError(forwardToDelegate)
+        _requiredMethodsDataSource = requiredMethodsDataSource ?? tableViewDataSourceNotSet
         super.setForwardToDelegate(forwardToDelegate, retainDelegate: retainDelegate)
     }
 }
