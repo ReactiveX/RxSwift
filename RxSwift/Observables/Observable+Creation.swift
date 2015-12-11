@@ -83,9 +83,13 @@ This method creates a new Observable instance with a variable number of elements
 */
 @warn_unused_result(message="http://git.io/rxs.uo")
 public func sequenceOf<E>(elements: E ..., scheduler: ImmediateSchedulerType? = nil) -> Observable<E> {
-    return Sequence(elements: elements, scheduler: scheduler)
+    return sequenceOfElements(elements, scheduler: scheduler)
 }
 
+@warn_unused_result(message="http://git.io/rxs.uo")
+public func sequenceOfElements<E>(elements: [E], scheduler: ImmediateSchedulerType? = nil) -> Observable<E> {
+    return Sequence(elements: elements, scheduler: scheduler)
+}
 
 extension SequenceType {
     /**
