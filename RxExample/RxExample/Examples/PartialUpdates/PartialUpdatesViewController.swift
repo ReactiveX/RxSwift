@@ -8,7 +8,6 @@
 
 import Foundation
 import UIKit
-import CoreData
 #if !RX_NO_MODULE
 import RxSwift
 import RxCocoa
@@ -23,9 +22,6 @@ class PartialUpdatesViewController : ViewController {
     @IBOutlet weak var reloadTableViewOutlet: UITableView!
     @IBOutlet weak var partialUpdatesTableViewOutlet: UITableView!
     @IBOutlet weak var partialUpdatesCollectionViewOutlet: UICollectionView!
-
-    var moc: NSManagedObjectContext!
-    var child: NSManagedObjectContext!
 
     var timer: NSTimer? = nil
 
