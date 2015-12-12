@@ -39,12 +39,57 @@ class ViewController: OSViewController {
     deinit {
 #if TRACE_RESOURCES
         print("View controller disposed with \(resourceCount) resources")
+
+        /*
+        !!! This cleanup logic is adapted for example app use case. !!!
+
+        It is being used to detect memory leaks during pre release tests.
     
+        !!! In case you want to have some resource leak detection logic, the simplest
+        method is just printing out `RxSwift.resourceCount` periodically to output. !!!
+    
+    
+            /* add somewhere in
+                func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool
+            */
+            _ = interval(1, MainScheduler.sharedInstance)
+                .subscribeNext { _ in
+                    print("Resource count \(RxSwift.resourceCount)")
+                }
+
+        Most efficient way to test for memory leaks is:
+        * navigate to your screen and use it
+        * navigate back
+        * observe initial resource count
+        * navigate second time to your screen and use it
+        * navigate back
+        * observe final resource count
+
+        In case there is a difference in resource count between initial and final resource counts, there might be a memory
+        leak somewhere.
+
+        The reason why 2 navigations are suggested is because first navigation forces loading of lazy resources.
+        */
+
         let numberOfResourcesThatShouldRemain = startResourceCount
-        let time = dispatch_time(DISPATCH_TIME_NOW, Int64(0.1 * Double(NSEC_PER_SEC)))
-        dispatch_after(time, dispatch_get_main_queue(), { () -> Void in
-            assert(resourceCount <= numberOfResourcesThatShouldRemain, "Resources weren't cleaned properly")
-        })
+        let mainQueue = dispatch_get_main_queue()
+        /*
+        This first `dispatch_async` is here to compensate for CoreAnimation delay after
+        changing view controller hierarchy. This time is usually ~100ms on simulator and less on device.
+        
+        If somebody knows more about why this delay happens, you can make a PR with explanation here.
+        */
+        dispatch_async(mainQueue) {
+
+            /*
+            Some small additional period to clean things up. In case there were async operations fired,
+            they can't be cleaned up momentarily.
+            */
+            let time = dispatch_time(DISPATCH_TIME_NOW, Int64(0.05 * Double(NSEC_PER_SEC)))
+            dispatch_after(time, mainQueue) {
+                assert(resourceCount <= numberOfResourcesThatShouldRemain, "Resources weren't cleaned properly")
+            }
+        }
 #endif
     }
 }
