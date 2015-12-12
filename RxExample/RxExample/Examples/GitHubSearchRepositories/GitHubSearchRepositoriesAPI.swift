@@ -128,35 +128,31 @@ extension GitHubSearchRepositoriesAPI {
             */
             case .ServiceOffline:
                 return just(RepositoriesState(repositories: loadedSoFar, serviceState: .Offline, limitExceeded: false))
+                
             case .LimitExceeded:
                 return just(RepositoriesState(repositories: loadedSoFar, serviceState: .Online, limitExceeded: true))
-            case .Repositories:
-                break
+
+            case let .Repositories(newPageRepositories, maybeNextURL):
+
+                var loadedRepositories = loadedSoFar
+                loadedRepositories.appendContentsOf(newPageRepositories)
+
+                let appenedRepositories = RepositoriesState(repositories: loadedRepositories, serviceState: .Online, limitExceeded: false)
+
+                // if next page can't be loaded, just return what was loaded, and stop
+                guard let nextURL = maybeNextURL else {
+                    return just(appenedRepositories)
+                }
+
+                return [
+                    // return loaded immediately
+                    just(appenedRepositories),
+                    // wait until next page can be loaded
+                    never().takeUntil(loadNextPageTrigger),
+                    // load next page
+                    self.recursivelySearch(loadedRepositories, loadNextURL: nextURL, loadNextPageTrigger: loadNextPageTrigger)
+                ].concat()
             }
-
-            // Repositories without next url? The party is done.
-            guard case .Repositories(let newPageRepositories, let maybeNextURL) = searchResponse else {
-                fatalError("Some fourth case?")
-            }
-
-            var loadedRepositories = loadedSoFar
-            loadedRepositories.appendContentsOf(newPageRepositories)
-
-            let appenedRepositories = RepositoriesState(repositories: loadedRepositories, serviceState: .Online, limitExceeded: false)
-
-            // if next page can't be loaded, just return what was loaded, and stop
-            guard let nextURL = maybeNextURL else {
-                return just(appenedRepositories)
-            }
-
-            return [
-                // return loaded immediately
-                just(appenedRepositories),
-                // wait until next page can be loaded
-                never().takeUntil(loadNextPageTrigger),
-                // load next page
-                self.recursivelySearch(loadedRepositories, loadNextURL: nextURL, loadNextPageTrigger: loadNextPageTrigger)
-            ].concat()
         }
     }
 
@@ -236,19 +232,6 @@ extension GitHubSearchRepositoriesAPI {
         }
 
         return nextUrl
-    }
-
-    /**
-     Displays UI that prompts the user when to retry.
-    */
-    private func buildRetryPrompt() -> Observable<Void> {
-        return _wireframe.promptFor(
-                "Exceeded limit of 10 non authenticated requests per minute for GitHub API. Please wait a minute. :(\nhttps://developer.github.com/v3/#rate-limiting",
-                cancelAction: RetryResult.Cancel,
-                actions: [RetryResult.Retry]
-            )
-            .filter { (x: RetryResult) in x == .Retry }
-            .map { _ in () }
     }
 
     private static func parseJSON(httpResponse: NSHTTPURLResponse, data: NSData) throws -> AnyObject {

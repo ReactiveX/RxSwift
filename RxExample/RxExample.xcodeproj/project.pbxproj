@@ -125,6 +125,8 @@
 		C843A08F1C1CE39900CBA4BD /* GitHubSearchRepositoriesAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C843A08C1C1CE39900CBA4BD /* GitHubSearchRepositoriesAPI.swift */; };
 		C843A0901C1CE39900CBA4BD /* GitHubSearchRepositoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C843A08D1C1CE39900CBA4BD /* GitHubSearchRepositoriesViewController.swift */; };
 		C843A0911C1CE39900CBA4BD /* GitHubSearchRepositoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C843A08D1C1CE39900CBA4BD /* GitHubSearchRepositoriesViewController.swift */; };
+		C843A0931C1CE58700CBA4BD /* UINavigationController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C843A0921C1CE58700CBA4BD /* UINavigationController+Extensions.swift */; };
+		C843A0941C1CE58700CBA4BD /* UINavigationController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C843A0921C1CE58700CBA4BD /* UINavigationController+Extensions.swift */; };
 		C84B91381B8A282000C9CCCF /* RxTableViewSectionedAnimatedDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88C78631B3EB0A00061C5AB /* RxTableViewSectionedAnimatedDataSource.swift */; };
 		C84B91391B8A282000C9CCCF /* RxTableViewSectionedDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88C78641B3EB0A00061C5AB /* RxTableViewSectionedDataSource.swift */; };
 		C84B913A1B8A282000C9CCCF /* RxTableViewSectionedReloadDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88C78651B3EB0A00061C5AB /* RxTableViewSectionedReloadDataSource.swift */; };
@@ -558,6 +560,7 @@
 		C83974221BF77413004F02CC /* NSObject+Rx+RawRepresentable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSObject+Rx+RawRepresentable.swift"; sourceTree = "<group>"; };
 		C843A08C1C1CE39900CBA4BD /* GitHubSearchRepositoriesAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GitHubSearchRepositoriesAPI.swift; sourceTree = "<group>"; };
 		C843A08D1C1CE39900CBA4BD /* GitHubSearchRepositoriesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GitHubSearchRepositoriesViewController.swift; sourceTree = "<group>"; };
+		C843A0921C1CE58700CBA4BD /* UINavigationController+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Extensions.swift"; sourceTree = "<group>"; };
 		C84CC52D1BDC344100E06A64 /* ElementAt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElementAt.swift; sourceTree = "<group>"; };
 		C84CC56B1BDD08F500E06A64 /* LockOwnerType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LockOwnerType.swift; sourceTree = "<group>"; };
 		C84CC56C1BDD08F500E06A64 /* SynchronizedDisposeType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SynchronizedDisposeType.swift; sourceTree = "<group>"; };
@@ -1022,6 +1025,7 @@
 			children = (
 				C843A08C1C1CE39900CBA4BD /* GitHubSearchRepositoriesAPI.swift */,
 				C843A08D1C1CE39900CBA4BD /* GitHubSearchRepositoriesViewController.swift */,
+				C843A0921C1CE58700CBA4BD /* UINavigationController+Extensions.swift */,
 			);
 			path = GitHubSearchRepositories;
 			sourceTree = "<group>";
@@ -1840,6 +1844,7 @@
 				C8297E341B6CF905000589EA /* UIImageView+Extensions.swift in Sources */,
 				B1604CC41BE5B8CE002E1279 /* DownloadableImage.swift in Sources */,
 				C80DDED61BCE9046006A1832 /* Driver+Operators.swift in Sources */,
+				C843A0941C1CE58700CBA4BD /* UINavigationController+Extensions.swift in Sources */,
 				C89464B81BC6C2B00055219D /* Observable.swift in Sources */,
 				C8297E351B6CF905000589EA /* NumberSectionView.swift in Sources */,
 				C894659E1BC6C2BC0055219D /* UITextField+Rx.swift in Sources */,
@@ -2084,6 +2089,7 @@
 				C8BCD3E61C14A95E005F1280 /* NumbersViewController.swift in Sources */,
 				C809E97A1BE6841C0058D948 /* Wireframe.swift in Sources */,
 				0706E1961B14AF5100BA2D3A /* DetailViewController.swift in Sources */,
+				C843A0931C1CE58700CBA4BD /* UINavigationController+Extensions.swift in Sources */,
 				C822B1E71C14E7250088A01A /* SimpleTableViewExampleSectionedViewController.swift in Sources */,
 				C88C78991B4012A90061C5AB /* SectionModelType.swift in Sources */,
 				C83367251AD029AE00C668A7 /* ImageService.swift in Sources */,

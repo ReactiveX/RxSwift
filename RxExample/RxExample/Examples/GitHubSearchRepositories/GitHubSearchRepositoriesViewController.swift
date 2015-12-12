@@ -12,33 +12,6 @@ import RxSwift
 import RxCocoa
 #endif
 
-struct Colors {
-    static let OfflineColor = UIColor(red: 1.0, green: 0.6, blue: 0.6, alpha: 1.0)
-    static let OnlineColor = nil as UIColor?
-}
-
-extension UINavigationController {
-    var rx_serviceState: AnyObserver<ServiceState?> {
-        return AnyObserver { event in
-            switch event {
-            case .Next(let maybeServiceState):
-                // if nil is being bound, then don't change color, it's not perfect, but :)
-                if let serviceState = maybeServiceState {
-                    let isOffline = serviceState ?? .Online == .Offline
-
-                    self.navigationBar.backgroundColor = isOffline
-                        ? Colors.OfflineColor
-                        : Colors.OnlineColor
-                }
-            case .Error(let error):
-                bindingErrorToInterface(error)
-            case .Completed:
-                break
-            }
-        }
-    }
-}
-
 class GitHubSearchRepositoriesViewController: ViewController, UITableViewDelegate {
     static let startLoadingOffset: CGFloat = 20.0
 
@@ -102,7 +75,7 @@ class GitHubSearchRepositoriesViewController: ViewController, UITableViewDelegat
             .addDisposableTo(disposeBag)
 
         searchResult
-            .flatMap { $0.limitExceeded ? Drive.just() : Drive.empty() }
+            .filter { $0.limitExceeded }
             .driveNext { n in
                 showAlert("Exceeded limit of 10 non authenticated requests per minute for GitHub API. Please wait a minute. :(\nhttps://developer.github.com/v3/#rate-limiting") 
             }
