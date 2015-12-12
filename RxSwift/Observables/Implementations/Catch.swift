@@ -135,9 +135,9 @@ class CatchSequenceSink<S: SequenceType, O: ObserverType where S.Generator.Eleme
         self.dispose()
     }
     
-    override func extract(observable: Observable<Element>) -> S.Generator? {
+    override func extract(observable: Observable<Element>) -> SequenceGenerator? {
         if let onError = observable as? CatchSequence<S> {
-            return onError.sources.generate()
+            return (onError.sources.generate(), nil)
         }
         else {
             return nil
@@ -156,7 +156,7 @@ class CatchSequence<S: SequenceType where S.Generator.Element : ObservableConver
     
     override func run<O : ObserverType where O.E == Element>(observer: O) -> Disposable {
         let sink = CatchSequenceSink<S, O>(observer: observer)
-        sink.disposable = sink.run(self.sources.generate())
+        sink.disposable = sink.run((self.sources.generate(), nil))
         return sink
     }
 }

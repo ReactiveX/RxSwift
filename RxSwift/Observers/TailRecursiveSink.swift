@@ -13,14 +13,19 @@ enum TailRecursiveSinkCommand {
     case Dispose
 }
 
+#if DEBUG || TRACE_RESOURCES
+public var maxTailRecursiveSinkStackSize = 0
+#endif
+
 /// This class is usually used with `Generator` version of the operators.
 class TailRecursiveSink<S: SequenceType, O: ObserverType where S.Generator.Element: ObservableConvertibleType, S.Generator.Element.E == O.E>
     : Sink<O>
     , InvocableWithValueType {
     typealias Value = TailRecursiveSinkCommand
     typealias E = O.E
+    typealias SequenceGenerator = (generator: S.Generator, remaining: IntMax?)
     
-    var _generators:[S.Generator] = []
+    var _generators: [SequenceGenerator] = []
     var _disposed = false
     var _subscription = SerialDisposable()
     
@@ -31,7 +36,7 @@ class TailRecursiveSink<S: SequenceType, O: ObserverType where S.Generator.Eleme
         super.init(observer: observer)
     }
     
-    func run(sources: S.Generator) -> Disposable {
+    func run(sources: SequenceGenerator) -> Disposable {
         _generators.append(sources)
 
         schedule(.MoveNext)
@@ -58,7 +63,7 @@ class TailRecursiveSink<S: SequenceType, O: ObserverType where S.Generator.Eleme
         dispose()
     }
     
-    func extract(observable: Observable<E>) -> S.Generator? {
+    func extract(observable: Observable<E>) -> SequenceGenerator? {
         abstractMethod()
     }
     
@@ -76,11 +81,26 @@ class TailRecursiveSink<S: SequenceType, O: ObserverType where S.Generator.Eleme
                 return
             }
             
-            var e = _generators.last!
-            
+            var (e, left) = _generators.last!
+
             let nextCandidate = e.next()?.asObservable()
             _generators.removeLast()
-            _generators.append(e)
+
+            // `left` is a hint of how many elements are left in generator.
+            // In case this is the last element, then there is no need to push
+            // that generator on stack.
+            //
+            // This is an optimization used to make sure in tail recursive case
+            // there is no memory leak in case this operator is used to generate non terminating
+            // sequence.
+
+            if let knownLeft = left {
+                left = knownLeft - 1
+            }
+
+            if left ?? 1 > 0 {
+                _generators.append((e, left))
+            }
 
             if nextCandidate == nil {
                 _generators.removeLast()
@@ -90,7 +110,12 @@ class TailRecursiveSink<S: SequenceType, O: ObserverType where S.Generator.Eleme
             let nextGenerator = extract(nextCandidate!)
         
             if let nextGenerator = nextGenerator {
-                self._generators.append(nextGenerator)
+                _generators.append(nextGenerator)
+#if DEBUG || TRACE_RESOURCES
+                if maxTailRecursiveSinkStackSize < _generators.count {
+                    maxTailRecursiveSinkStackSize = _generators.count
+                }
+#endif
             }
             else {
                 next = nextCandidate
