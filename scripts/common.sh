@@ -24,9 +24,9 @@ BOLDWHITE="\033[1m\033[37m"
 
 DEFAULT_IOS7_SIMULATOR=RxSwiftTest/iPhone-4s/iOS/7.1
 DEFAULT_IOS8_SIMULATOR=RxSwiftTest/iPhone-6/iOS/8.4
-DEFAULT_IOS9_SIMULATOR=RxSwiftTest/iPhone-6/iOS/9.0
-DEFAULT_WATCHOS2_SIMULATOR=RxSwiftTest/AppleWatch/watchOS/2.0
-DEFAULT_TVOS_SIMULATOR=RxSwiftTest/Apple-TV-1080p/tvOS/9.0
+DEFAULT_IOS9_SIMULATOR=RxSwiftTest/iPhone-6/iOS/9.2
+DEFAULT_WATCHOS2_SIMULATOR=RxSwiftTest/AppleWatch/watchOS/2.1
+DEFAULT_TVOS_SIMULATOR=RxSwiftTest/Apple-TV-1080p/tvOS/9.1
 
 function runtime_available() {
 	if [ `xcrun simctl list runtimes | grep "${1}" | wc -l` -eq 1 ]; then
@@ -97,11 +97,7 @@ function ensure_simulator_available() {
 	xcrun simctl create "${SIMULATOR}" "com.apple.CoreSimulator.SimDeviceType.${DEVICE}" "com.apple.CoreSimulator.SimRuntime.${OS}-${VERSION_SUFFIX}"
 }
 
-if runtime_available "com.apple.CoreSimulator.SimRuntime.iOS-9-1"; then
-	DEFAULT_IOS9_SIMULATOR=RxSwiftTest/iPhone-6/iOS/9.1
-else
-	DEFAULT_IOS9_SIMULATOR=RxSwiftTest/iPhone-6/iOS/9.0
-fi
+DEFAULT_IOS9_SIMULATOR=RxSwiftTest/iPhone-6/iOS/9.2
 
 BUILD_DIRECTORY=build
 
