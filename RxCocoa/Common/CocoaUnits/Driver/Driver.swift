@@ -115,7 +115,19 @@ public struct Drive {
     public static func just<E>(element: E) -> Driver<E> {
         return Driver(raw: RxSwift.just(element).subscribeOn(ConcurrentMainScheduler.sharedInstance))
     }
-    
+
+    /**
+     Returns an observable sequence that invokes the specified factory function whenever a new observer subscribes.
+
+     - parameter observableFactory: Observable factory function to invoke for each observer that subscribes to the resulting sequence.
+     - returns: An observable sequence whose observers trigger an invocation of the given observable factory function.
+     */
+    @warn_unused_result(message="http://git.io/rxs.uo")
+    public static func deferred<E>(observableFactory: () -> Driver<E>)
+        -> Driver<E> {
+        return Driver(RxSwift.deferred { observableFactory().asObservable() })
+    }
+
 #else
     
     /**
@@ -148,7 +160,19 @@ public struct Drive {
     public static func just<E>(element: E) -> Driver<E> {
         return Driver(raw: _just(element).subscribeOn(ConcurrentMainScheduler.sharedInstance))
     }
-    
+
+    /**
+    Returns an observable sequence that invokes the specified factory function whenever a new observer subscribes.
+
+    - parameter observableFactory: Observable factory function to invoke for each observer that subscribes to the resulting sequence.
+    - returns: An observable sequence whose observers trigger an invocation of the given observable factory function.
+    */
+    @warn_unused_result(message="http://git.io/rxs.uo")
+    public static func deferred<E>(observableFactory: () -> Driver<E>)
+        -> Driver<E> {
+        return Driver(_deferred { observableFactory().asObservable() })
+    }
+
 #endif
 
     @warn_unused_result(message="http://git.io/rxs.uo")
@@ -173,6 +197,11 @@ func _never<E>() -> Observable<E> {
 
 func _just<E>(element: E) -> Observable<E> {
     return just(element)
+}
+
+func _deferred<E>(observableFactory: () -> Observable<E>)
+    -> Observable<E> {
+    return deferred(observableFactory)
 }
     
 #endif

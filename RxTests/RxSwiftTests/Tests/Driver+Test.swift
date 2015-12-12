@@ -293,6 +293,26 @@ extension DriverTest {
     }
 }
 
+// MARK: deferred
+extension DriverTest {
+    func testAsDriver_deferred() {
+        let hotObservable = BackgroundThreadPrimitiveHotObservable<Int>()
+        let driver = Drive.deferred { hotObservable.asDriver(onErrorJustReturn: -1) }
+
+        let results = subscribeTwiceOnBackgroundSchedulerAndOnlyOneSubscription(driver) {
+            XCTAssertTrue(hotObservable.subscriptions == [SubscribedToHotObservable])
+
+            hotObservable.on(.Next(1))
+            hotObservable.on(.Next(2))
+            hotObservable.on(.Error(testError))
+
+            XCTAssertTrue(hotObservable.subscriptions == [UnsunscribedFromHotObservable])
+        }
+
+        XCTAssertEqual(results, [1, 2, -1])
+    }
+}
+
 // MARK: map
 extension DriverTest {
     func testAsDriver_map() {
@@ -314,7 +334,6 @@ extension DriverTest {
 
         XCTAssertEqual(results, [2, 3, 0])
     }
-
 }
 
 // MARK: filter
