@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9060"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9531"/>
     </dependencies>
     <scenes>
         <!--Application-->
@@ -52,7 +52,6 @@
                                     <constraint firstAttribute="height" constant="22" id="HFj-1Z-bR9"/>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="96" id="scr-4K-4db"/>
                                 </constraints>
-                                <animations/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="1" drawsBackground="YES" id="z2u-0q-QId">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -67,7 +66,6 @@
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="22" id="UfF-4i-Nhp"/>
                                     <constraint firstAttribute="height" constant="22" id="zCg-TT-kMP"/>
                                 </constraints>
-                                <animations/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="2" drawsBackground="YES" id="1Ip-nW-mf1">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -76,7 +74,6 @@
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="zEm-ia-8D5">
                                 <rect key="frame" x="194" y="320" width="13" height="17"/>
-                                <animations/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="+" id="67K-Sn-nua">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -85,7 +82,6 @@
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Thn-ge-MNK">
                                 <rect key="frame" x="387" y="320" width="13" height="17"/>
-                                <animations/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="=" id="Ms6-O6-Cle">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -97,7 +93,6 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="17" id="ep0-fb-x50"/>
                                 </constraints>
-                                <animations/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Result" id="QmF-1C-UxZ">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -106,7 +101,6 @@
                             </textField>
                             <button verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GIP-PK-nj4">
                                 <rect key="frame" x="221" y="252" width="153" height="32"/>
-                                <animations/>
                                 <buttonCell key="cell" type="push" title="Unbind everything" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="OfL-Xk-Jww">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -118,7 +112,6 @@
                                     <constraint firstAttribute="height" constant="34" id="OBy-a6-uQN"/>
                                     <constraint firstAttribute="width" constant="462" id="WmX-9v-Ofs"/>
                                 </constraints>
-                                <animations/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" id="J8l-kR-821">
                                     <font key="font" metaFont="system"/>
                                     <string key="title">Change values and see what happens.
@@ -129,7 +122,6 @@
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="uvp-P6-I33">
                                 <rect key="frame" x="94" y="228" width="407" height="17"/>
-                                <animations/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Everything is unbound when `Unbind everything` button is clicked" id="oNm-CU-Uq7">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -138,7 +130,6 @@
                             </textField>
                             <slider verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Wbs-Vv-RvG">
                                 <rect key="frame" x="54" y="156" width="502" height="20"/>
-                                <animations/>
                                 <sliderCell key="cell" continuous="YES" state="on" alignment="left" maxValue="100" doubleValue="50" tickMarkPosition="above" sliderType="linear" id="0FL-dG-a0V"/>
                             </slider>
                             <textField verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="35N-M1-mEj">
@@ -147,7 +138,6 @@
                                     <constraint firstAttribute="width" constant="96" id="UjJ-QN-7sX"/>
                                     <constraint firstAttribute="height" constant="22" id="p0d-PC-IYH"/>
                                 </constraints>
-                                <animations/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="1" drawsBackground="YES" id="Gej-gH-W9B">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -156,7 +146,6 @@
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uJU-xc-Cnn">
                                 <rect key="frame" x="56" y="125" width="136" height="17"/>
-                                <animations/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Slider Value (0 - 100):" id="Pbz-ZR-CzF">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -189,7 +178,6 @@
                             <constraint firstItem="uvp-P6-I33" firstAttribute="centerX" secondItem="GIP-PK-nj4" secondAttribute="centerX" id="y3H-7u-VYu"/>
                             <constraint firstItem="zhP-9C-de5" firstAttribute="leading" secondItem="zEm-ia-8D5" secondAttribute="trailing" constant="44" id="zH7-w8-JmD"/>
                         </constraints>
-                        <animations/>
                     </view>
                     <connections>
                         <outlet property="a" destination="6lb-zc-c5S" id="I6G-my-Rr2"/>
