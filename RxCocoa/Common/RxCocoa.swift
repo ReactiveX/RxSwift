@@ -80,11 +80,11 @@ func bindingErrorToVariable(error: ErrorType) {
 #endif
 }
 
-func rxAbstractMethodWithMessage<T>(message: String) -> T {
+@noreturn  func rxAbstractMethodWithMessage<T>(message: String) -> T {
     rxFatalError(message)
 }
 
-func rxAbstractMethod<T>() -> T {
+@noreturn func rxAbstractMethod<T>() -> T {
     rxFatalError("Abstract method")
 }
 
