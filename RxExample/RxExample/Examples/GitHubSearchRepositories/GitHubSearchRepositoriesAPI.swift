@@ -102,53 +102,11 @@ class GitHubSearchRepositoriesAPI {
         _wireframe = wireframe
     }
 
-    private static let parseLinksPattern = "\\s*,?\\s*<([^\\>]*)>\\s*;\\s*rel=\"([^\"]*)\""
-    private static let linksRegex = try! NSRegularExpression(pattern: parseLinksPattern, options: [.AllowCommentsAndWhitespace])
+}
 
-    private static func parseLinks(links: String) throws -> [String: String] {
+// MARK: Pagination
 
-        let length = (links as NSString).length
-        let matches = GitHubSearchRepositoriesAPI.linksRegex.matchesInString(links, options: NSMatchingOptions(), range: NSRange(location: 0, length: length))
-
-        var result: [String: String] = [:]
-
-        for m in matches {
-            let matches = (1 ..< m.numberOfRanges).map { rangeIndex -> String in
-                let range = m.rangeAtIndex(rangeIndex)
-                let startIndex = links.startIndex.advancedBy(range.location)
-                let endIndex = startIndex.advancedBy(range.length)
-                let stringRange = Range(start: startIndex, end: endIndex)
-                return links.substringWithRange(stringRange)
-            }
-
-            if matches.count != 2 {
-                throw exampleError("Error parsing links")
-            }
-
-            result[matches[1]] = matches[0]
-        }
-        
-        return result
-    }
-
-    private static func parseNextURL(httpResponse: NSHTTPURLResponse) throws -> NSURL? {
-        guard let serializedLinks = httpResponse.allHeaderFields["Link"] as? String else {
-            return nil
-        }
-
-        let links = try GitHubSearchRepositoriesAPI.parseLinks(serializedLinks)
-
-        guard let nextPageURL = links["next"] else {
-            return nil
-        }
-
-        guard let nextUrl = NSURL(string: nextPageURL) else {
-            throw exampleError("Error parsing next url `\(nextPageURL)`")
-        }
-
-        return nextUrl
-    }
-
+extension GitHubSearchRepositoriesAPI {
     /**
     Public fascade for search.
     */
@@ -202,19 +160,6 @@ class GitHubSearchRepositoriesAPI {
         }
     }
 
-    /**
-     Displays UI that prompts the user when to retry.
-    */
-    private func buildRetryPrompt() -> Observable<Void> {
-        return _wireframe.promptFor(
-                "Exceeded limit of 10 non authenticated requests per minute for GitHub API. Please wait a minute. :(\nhttps://developer.github.com/v3/#rate-limiting",
-                cancelAction: RetryResult.Cancel,
-                actions: [RetryResult.Retry]
-            )
-            .filter { (x: RetryResult) in x == .Retry }
-            .map { _ in () }
-    }
-
     private func loadSearchURL(searchURL: NSURL) -> Observable<SearchRepositoryResponse> {
         return NSURLSession.sharedSession()
             .rx_response(NSURLRequest(URL: searchURL))
@@ -239,6 +184,71 @@ class GitHubSearchRepositoriesAPI {
                 return .Repositories(repositories: repositories, nextURL: nextURL)
             }
             .retryOnBecomesReachable(.ServiceOffline, reachabilityService: ReachabilityService.sharedReachabilityService)
+    }
+}
+
+// MARK: Parsing the response
+
+extension GitHubSearchRepositoriesAPI {
+
+    private static let parseLinksPattern = "\\s*,?\\s*<([^\\>]*)>\\s*;\\s*rel=\"([^\"]*)\""
+    private static let linksRegex = try! NSRegularExpression(pattern: parseLinksPattern, options: [.AllowCommentsAndWhitespace])
+
+    private static func parseLinks(links: String) throws -> [String: String] {
+
+        let length = (links as NSString).length
+        let matches = GitHubSearchRepositoriesAPI.linksRegex.matchesInString(links, options: NSMatchingOptions(), range: NSRange(location: 0, length: length))
+
+        var result: [String: String] = [:]
+
+        for m in matches {
+            let matches = (1 ..< m.numberOfRanges).map { rangeIndex -> String in
+                let range = m.rangeAtIndex(rangeIndex)
+                let startIndex = links.startIndex.advancedBy(range.location)
+                let endIndex = startIndex.advancedBy(range.length)
+                let stringRange = Range(start: startIndex, end: endIndex)
+                return links.substringWithRange(stringRange)
+            }
+
+            if matches.count != 2 {
+                throw exampleError("Error parsing links")
+            }
+
+            result[matches[1]] = matches[0]
+        }
+        
+        return result
+    }
+
+    private static func parseNextURL(httpResponse: NSHTTPURLResponse) throws -> NSURL? {
+        guard let serializedLinks = httpResponse.allHeaderFields["Link"] as? String else {
+            return nil
+        }
+
+        let links = try GitHubSearchRepositoriesAPI.parseLinks(serializedLinks)
+
+        guard let nextPageURL = links["next"] else {
+            return nil
+        }
+
+        guard let nextUrl = NSURL(string: nextPageURL) else {
+            throw exampleError("Error parsing next url `\(nextPageURL)`")
+        }
+
+        return nextUrl
+    }
+
+    /**
+     Displays UI that prompts the user when to retry.
+    */
+    private func buildRetryPrompt() -> Observable<Void> {
+        return _wireframe.promptFor(
+                "Exceeded limit of 10 non authenticated requests per minute for GitHub API. Please wait a minute. :(\nhttps://developer.github.com/v3/#rate-limiting",
+                cancelAction: RetryResult.Cancel,
+                actions: [RetryResult.Retry]
+            )
+            .filter { (x: RetryResult) in x == .Retry }
+            .map { _ in () }
     }
 
     private static func parseJSON(httpResponse: NSHTTPURLResponse, data: NSData) throws -> AnyObject {
