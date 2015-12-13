@@ -25,7 +25,10 @@ class Debug_<O: ObserverType> : Sink<O>, ObserverType {
         let eventNormalized = eventText.characters.count > maxEventTextLength
             ? String(eventText.characters.prefix(maxEventTextLength / 2)) + "..." + String(eventText.characters.suffix(maxEventTextLength / 2))
             : eventText
-        print("[\(_parent._identifier)] -> Event \(eventNormalized)")
+
+        let format = NSDateFormatter()
+        format.dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"
+        print("\(format.stringFromDate(NSDate())): [\(_parent._identifier)] -> Event \(eventNormalized)")
         forwardOn(event)
     }
     
