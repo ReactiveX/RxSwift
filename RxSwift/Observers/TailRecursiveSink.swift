@@ -14,7 +14,7 @@ enum TailRecursiveSinkCommand {
 }
 
 #if DEBUG || TRACE_RESOURCES
-public var maxTailRecursiveSinkStackSize = 0
+    public var maxTailRecursiveSinkStackSize = 0
 #endif
 
 /// This class is usually used with `Generator` version of the operators.
@@ -24,35 +24,35 @@ class TailRecursiveSink<S: SequenceType, O: ObserverType where S.Generator.Eleme
     typealias Value = TailRecursiveSinkCommand
     typealias E = O.E
     typealias SequenceGenerator = (generator: S.Generator, remaining: IntMax?)
-    
+
     var _generators: [SequenceGenerator] = []
     var _disposed = false
     var _subscription = SerialDisposable()
-    
+
     // this is thread safe object
     var _gate = AsyncLock<InvocableScheduledItem<TailRecursiveSink<S, O>>>()
-    
+
     override init(observer: O) {
         super.init(observer: observer)
     }
-    
+
     func run(sources: SequenceGenerator) -> Disposable {
         _generators.append(sources)
 
         schedule(.MoveNext)
-        
+
         return _subscription
     }
 
     func invoke(command: TailRecursiveSinkCommand) {
         switch command {
-            case .Dispose:
-                disposeCommand()
-            case .MoveNext:
-                moveNextCommand()
+        case .Dispose:
+            disposeCommand()
+        case .MoveNext:
+            moveNextCommand()
         }
     }
-    
+
     // simple implementation for now
     func schedule(command: TailRecursiveSinkCommand) {
         _gate.invoke(InvocableScheduledItem(invocable: self, state: command))
@@ -62,29 +62,32 @@ class TailRecursiveSink<S: SequenceType, O: ObserverType where S.Generator.Eleme
         forwardOn(.Completed)
         dispose()
     }
-    
+
     func extract(observable: Observable<E>) -> SequenceGenerator? {
         abstractMethod()
     }
-    
+
     // should be done on gate locked
 
     private func moveNextCommand() {
         var next: Observable<E>? = nil
-        
+
         repeat {
             if _generators.count == 0 {
                 break
             }
-            
+
             if _disposed {
                 return
             }
-            
+
             var (e, left) = _generators.last!
 
-            let nextCandidate = e.next()?.asObservable()
             _generators.removeLast()
+
+            guard let nextCandidate = e.next()?.asObservable() else {
+                continue
+            }
 
             // `left` is a hint of how many elements are left in generator.
             // In case this is the last element, then there is no need to push
@@ -94,39 +97,36 @@ class TailRecursiveSink<S: SequenceType, O: ObserverType where S.Generator.Eleme
             // there is no memory leak in case this operator is used to generate non terminating
             // sequence.
 
-            if let knownLeft = left {
-                left = knownLeft - 1
+            if let knownOriginalLeft = left {
+                // `- 1` because generator.next() has just been called
+                if knownOriginalLeft - 1 >= 1 {
+                    _generators.append((e, knownOriginalLeft - 1))
+                }
+            }
+            else {
+                _generators.append((e, nil))
             }
 
-            if left ?? 1 > 0 {
-                _generators.append((e, left))
-            }
+            let nextGenerator = extract(nextCandidate)
 
-            if nextCandidate == nil {
-                _generators.removeLast()
-                continue;
-            }
-       
-            let nextGenerator = extract(nextCandidate!)
-        
             if let nextGenerator = nextGenerator {
                 _generators.append(nextGenerator)
-#if DEBUG || TRACE_RESOURCES
-                if maxTailRecursiveSinkStackSize < _generators.count {
-                    maxTailRecursiveSinkStackSize = _generators.count
-                }
-#endif
+                #if DEBUG || TRACE_RESOURCES
+                    if maxTailRecursiveSinkStackSize < _generators.count {
+                        maxTailRecursiveSinkStackSize = _generators.count
+                    }
+                #endif
             }
             else {
                 next = nextCandidate
             }
         } while next == nil
-        
+
         if next == nil  {
             done()
             return
         }
-        
+
         let subscription2 = subscribeToNext(next!)
         _subscription.disposable = subscription2
     }
@@ -142,9 +142,10 @@ class TailRecursiveSink<S: SequenceType, O: ObserverType where S.Generator.Eleme
 
     override func dispose() {
         super.dispose()
-
+        
         _subscription.dispose()
-
+        
         schedule(.Dispose)
     }
 }
+
