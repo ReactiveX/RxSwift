@@ -124,6 +124,9 @@
 		C8BCD4001C14BCAD005F1280 /* NSLayoutConstraint+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8BCD3FD1C14BCAD005F1280 /* NSLayoutConstraint+RxTests.swift */; };
 		C8CDD7D41B52BEC40043F0C5 /* Observable+BlockingTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8CDD7D31B52BEC40043F0C5 /* Observable+BlockingTest.swift */; };
 		C8CDD7D51B52BEC40043F0C5 /* Observable+BlockingTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8CDD7D31B52BEC40043F0C5 /* Observable+BlockingTest.swift */; };
+		C8CF47661C1DA04700C3FA6E /* CLLocationManager+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8CF47651C1DA04700C3FA6E /* CLLocationManager+RxTests.swift */; };
+		C8CF47671C1DA04700C3FA6E /* CLLocationManager+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8CF47651C1DA04700C3FA6E /* CLLocationManager+RxTests.swift */; };
+		C8CF47681C1DA04700C3FA6E /* CLLocationManager+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8CF47651C1DA04700C3FA6E /* CLLocationManager+RxTests.swift */; };
 		C8E381231B2063CC008CDC33 /* Observable+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E381221B2063CC008CDC33 /* Observable+Extensions.swift */; };
 		C8E381281B207D03008CDC33 /* PrimitiveHotObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E381271B207D03008CDC33 /* PrimitiveHotObservable.swift */; };
 		C8E381291B207D03008CDC33 /* PrimitiveHotObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E381271B207D03008CDC33 /* PrimitiveHotObservable.swift */; };
@@ -258,6 +261,7 @@
 		C8BCD3FB1C14B914005F1280 /* NSView+RxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSView+RxTests.swift"; sourceTree = "<group>"; };
 		C8BCD3FD1C14BCAD005F1280 /* NSLayoutConstraint+RxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSLayoutConstraint+RxTests.swift"; sourceTree = "<group>"; };
 		C8CDD7D31B52BEC40043F0C5 /* Observable+BlockingTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = "Observable+BlockingTest.swift"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		C8CF47651C1DA04700C3FA6E /* CLLocationManager+RxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CLLocationManager+RxTests.swift"; sourceTree = "<group>"; };
 		C8E381221B2063CC008CDC33 /* Observable+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Observable+Extensions.swift"; sourceTree = "<group>"; };
 		C8E381271B207D03008CDC33 /* PrimitiveHotObservable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrimitiveHotObservable.swift; sourceTree = "<group>"; };
 		C8E3812A1B2083C2008CDC33 /* PrimitiveMockObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrimitiveMockObserver.swift; sourceTree = "<group>"; };
@@ -375,6 +379,7 @@
 				C8BCD3F81C14B901005F1280 /* UIView+RxTests.swift */,
 				C8BCD3FB1C14B914005F1280 /* NSView+RxTests.swift */,
 				C8BCD3FD1C14BCAD005F1280 /* NSLayoutConstraint+RxTests.swift */,
+				C8CF47651C1DA04700C3FA6E /* CLLocationManager+RxTests.swift */,
 			);
 			path = RxCocoaTests;
 			sourceTree = SOURCE_ROOT;
@@ -634,6 +639,7 @@
 				C811085B1AF50E2A001C13E4 /* Subscription.swift in Sources */,
 				C80DDEDC1BCE9A03006A1832 /* Driver+Test.swift in Sources */,
 				C81108531AF50E2A001C13E4 /* MySubject.swift in Sources */,
+				C8CF47661C1DA04700C3FA6E /* CLLocationManager+RxTests.swift in Sources */,
 				C81108611AF50E2A001C13E4 /* Observable+BindingTest.swift in Sources */,
 				C69B65001BA88FAC00A7FA73 /* ObserverTests.swift in Sources */,
 				C85F4E431B7F70EA00A866C7 /* CompositeObserverTest.swift in Sources */,
@@ -707,6 +713,7 @@
 				C88BB89A1B07E64B0064D411 /* NSNotificationCenterTests.swift in Sources */,
 				C88BB89B1B07E64B0064D411 /* Observable+MultipleTest+CombineLatest.swift in Sources */,
 				C8941BDA1BD4F58C00A0E874 /* BackgroundThreadPrimitiveHotObservable.swift in Sources */,
+				C8CF47671C1DA04700C3FA6E /* CLLocationManager+RxTests.swift in Sources */,
 				C88BB89C1B07E64B0064D411 /* ConcurrencyTest.swift in Sources */,
 				C88BB89D1B07E64B0064D411 /* TestObserver.swift in Sources */,
 				C87EC3001C131A940060B19B /* DelegateProxyTest+Cocoa.swift in Sources */,
@@ -771,6 +778,7 @@
 				C80DDEDE1BCE9A03006A1832 /* Driver+Test.swift in Sources */,
 				D2EBEB641BB9B7EF003A27DC /* AssumptionsTest.swift in Sources */,
 				D2EBEB6A1BB9B7EF003A27DC /* DisposableTest.swift in Sources */,
+				C8CF47681C1DA04700C3FA6E /* CLLocationManager+RxTests.swift in Sources */,
 				D2EBEB791BB9B7FD003A27DC /* RxTest.swift in Sources */,
 				D2EBEB6E1BB9B7EF003A27DC /* Observable+ConcurrencyTest.swift in Sources */,
 				D2EBEB541BB9B7CC003A27DC /* HotObservable.swift in Sources */,
