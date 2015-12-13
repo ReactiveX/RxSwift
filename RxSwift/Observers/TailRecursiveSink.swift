@@ -127,8 +127,9 @@ class TailRecursiveSink<S: SequenceType, O: ObserverType where S.Generator.Eleme
             return
         }
 
-        let subscription2 = subscribeToNext(next!)
-        _subscription.disposable = subscription2
+        let disposable = SingleAssignmentDisposable()
+        _subscription.disposable = disposable
+        disposable.disposable = subscribeToNext(next!)
     }
 
     func subscribeToNext(source: Observable<E>) -> Disposable {
