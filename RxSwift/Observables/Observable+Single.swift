@@ -118,6 +118,12 @@ extension ObservableType {
         -> Observable<E> {
         return StartWith(source: self.asObservable(), elements: elements)
     }
+
+    @warn_unused_result(message="http://git.io/rxs.uo")
+    public func startWith(elements: [E])
+        -> Observable<E> {
+            return StartWith(source: self.asObservable(), elements: elements)
+    }
 }
 
 // MARK: retry

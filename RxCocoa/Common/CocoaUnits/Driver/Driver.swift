@@ -156,7 +156,13 @@ public struct Drive {
         let source = elements.toObservable().subscribeOn(ConcurrentMainScheduler.sharedInstance)
         return Driver(raw: source)
     }
-    
+
+    @warn_unused_result(message="http://git.io/rxs.uo")
+    public static func sequenceOf<E>(elements: [E]) -> Driver<E> {
+        let source = elements.toObservable().subscribeOn(ConcurrentMainScheduler.sharedInstance)
+        return Driver(raw: source)
+    }
+
 }
 
 // name clashes :(

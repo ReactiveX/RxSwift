@@ -84,6 +84,11 @@ public func sequenceOf<E>(elements: E ..., scheduler: ImmediateSchedulerType? = 
     return Sequence(elements: elements, scheduler: scheduler)
 }
 
+@warn_unused_result(message="http://git.io/rxs.uo")
+public func sequenceOf<E>(elements: [E], scheduler: ImmediateSchedulerType? = nil) -> Observable<E> {
+    return Sequence(elements: elements, scheduler: scheduler)
+}
+
 
 extension SequenceType {
     /**
