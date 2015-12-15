@@ -65,7 +65,7 @@ These diagrams are called marble diagrams.
 
 If we were to specify sequence grammar as regular expression it would look something like this
 
-**Next* (Error | Completed)**
+**Next* (Error | Completed)?**
 
 This describes the following:
 
