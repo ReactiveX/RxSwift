@@ -137,13 +137,13 @@ extension NSObject {
 ```swift
 extension NSURLSession {
 
-    public func rx_response(request: NSURLRequest) -> Observable<(NSData!, NSURLResponse!)> {}
+    public func rx_response(request: NSURLRequest) -> Observable<(NSData, NSURLResponse)> {}
 
     public func rx_data(request: NSURLRequest) -> Observable<NSData> {}
 
-    public func rx_JSON(request: NSURLRequest) -> Observable<AnyObject!> {}
+    public func rx_JSON(request: NSURLRequest) -> Observable<AnyObject> {}
 
-    public func rx_JSON(URL: NSURL) -> Observable<AnyObject!> {}
+    public func rx_JSON(URL: NSURL) -> Observable<AnyObject> {}
 
 }
 ```
