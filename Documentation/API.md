@@ -169,33 +169,33 @@ extension CLLocationManager {
 
     public var rx_delegate: DelegateProxy {}
 
-    public var rx_didUpdateLocations: Observable<[CLLocation]!> {}
+    public var rx_didUpdateLocations: Observable<[CLLocation]> {}
 
-    public var rx_didFailWithError: Observable<NSError!> {}
+    public var rx_didFailWithError: Observable<NSError> {}
 
-    public var rx_didFinishDeferredUpdatesWithError: Observable<NSError!> {}
+    public var rx_didFinishDeferredUpdatesWithError: Observable<NSError> {}
 
     public var rx_didPauseLocationUpdates: Observable<Void> {}
 
     public var rx_didResumeLocationUpdates: Observable<Void> {}
 
-    public var rx_didUpdateHeading: Observable<CLHeading!> {}
+    public var rx_didUpdateHeading: Observable<CLHeading> {}
 
-    public var rx_didEnterRegion: Observable<CLRegion!> {}
+    public var rx_didEnterRegion: Observable<CLRegion> {}
 
-    public var rx_didExitRegion: Observable<CLRegion!> {}
+    public var rx_didExitRegion: Observable<CLRegion> {}
 
-    public var rx_didDetermineStateForRegion: Observable<(state: CLRegionState, region: CLRegion!)> {}
+    public var rx_didDetermineStateForRegion: Observable<(state: CLRegionState, region: CLRegion)> {}
 
-    public var rx_monitoringDidFailForRegionWithError: Observable<(region: CLRegion!, error: NSError!)> {}
+    public var rx_monitoringDidFailForRegionWithError: Observable<(region: CLRegion?, error: NSError)> {}
 
-    public var rx_didStartMonitoringForRegion: Observable<CLRegion!> {}
+    public var rx_didStartMonitoringForRegion: Observable<CLRegion> {}
 
-    public var rx_didRangeBeaconsInRegion: Observable<(beacons: [CLBeacon]!, region: CLBeaconRegion!)> {}
+    public var rx_didRangeBeaconsInRegion: Observable<(beacons: [CLBeacon], region: CLBeaconRegion)> {}
 
-    public var rx_rangingBeaconsDidFailForRegionWithError: Observable<(region: CLBeaconRegion!, error: NSError!)> {}
+    public var rx_rangingBeaconsDidFailForRegionWithError: Observable<(region: CLBeaconRegion, error: NSError)> {}
 
-    public var rx_didVisit: Observable<CLVisit!> {}
+    public var rx_didVisit: Observable<CLVisit> {}
 
     public var rx_didChangeAuthorizationStatus: Observable<CLAuthorizationStatus> {}
 
