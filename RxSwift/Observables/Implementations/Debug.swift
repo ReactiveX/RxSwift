@@ -13,9 +13,11 @@ class Debug_<O: ObserverType> : Sink<O>, ObserverType {
     typealias Parent = Debug<Element>
     
     private let _parent: Parent
+    private let _timestampFormatter = NSDateFormatter()
     
     init(parent: Parent, observer: O) {
         _parent = parent
+        _timestampFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"
         super.init(observer: observer)
     }
     
@@ -25,12 +27,13 @@ class Debug_<O: ObserverType> : Sink<O>, ObserverType {
         let eventNormalized = eventText.characters.count > maxEventTextLength
             ? String(eventText.characters.prefix(maxEventTextLength / 2)) + "..." + String(eventText.characters.suffix(maxEventTextLength / 2))
             : eventText
-        print("[\(_parent._identifier)] -> Event \(eventNormalized)")
+
+        print("\(_timestampFormatter.stringFromDate(NSDate())): [\(_parent._identifier)] -> Event \(eventNormalized)")
         forwardOn(event)
     }
     
     override func dispose() {
-        print("[\(_parent._identifier)] dispose")
+        print("\(_timestampFormatter.stringFromDate(NSDate())): [\(_parent._identifier)] dispose")
         super.dispose()
     }
 }

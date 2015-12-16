@@ -111,13 +111,11 @@ class RetryWhenSequenceSink<S: SequenceType, O: ObserverType, TriggerObservable:
         dispose()
     }
     
-    override func extract(observable: Observable<E>) -> S.Generator? {
-        if let onError = observable as? RetryWhenSequence<S, TriggerObservable, Error> {
-            return onError._sources.generate()
-        }
-        else {
-            return nil
-        }
+    override func extract(observable: Observable<E>) -> SequenceGenerator? {
+        // It is important to always return `nil` here because there are sideffects in the `run` method
+        // that are dependant on particular `retryWhen` operator so single operator stack can't be reused in this
+        // case.
+        return nil
     }
 
     override func subscribeToNext(source: Observable<E>) -> Disposable {
@@ -126,7 +124,7 @@ class RetryWhenSequenceSink<S: SequenceType, O: ObserverType, TriggerObservable:
         return iter
     }
 
-    override func run(sources: S.Generator) -> Disposable {
+    override func run(sources: SequenceGenerator) -> Disposable {
         let triggerSubscription = _handler.subscribe(_notifier.asObserver())
         let superSubscription = super.run(sources)
         return StableCompositeDisposable.create(superSubscription, triggerSubscription)
@@ -146,7 +144,7 @@ class RetryWhenSequence<S: SequenceType, TriggerObservable: ObservableType, Erro
     
     override func run<O : ObserverType where O.E == Element>(observer: O) -> Disposable {
         let sink = RetryWhenSequenceSink<S, O, TriggerObservable, Error>(parent: self, observer: observer)
-        sink.disposable = sink.run(self._sources.generate())
+        sink.disposable = sink.run((self._sources.generate(), nil))
         return sink
     }
 }

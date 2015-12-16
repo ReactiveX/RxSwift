@@ -20,15 +20,15 @@ class TableViewDataSourceNotSet
     : NSObject
     , UITableViewDataSource {
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return rxAbstractMethodWithMessage(dataSourceNotSet)
+        rxAbstractMethodWithMessage(dataSourceNotSet)
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return rxAbstractMethodWithMessage(dataSourceNotSet)
+        rxAbstractMethodWithMessage(dataSourceNotSet)
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        return rxAbstractMethodWithMessage(dataSourceNotSet)
+        rxAbstractMethodWithMessage(dataSourceNotSet)
     }
 }
 

@@ -30,7 +30,7 @@ class _RxCollectionViewReactiveArrayDataSource: NSObject, UICollectionViewDataSo
     }
 
     func _collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        return rxAbstractMethod()
+        rxAbstractMethod()
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {

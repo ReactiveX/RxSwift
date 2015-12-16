@@ -27,6 +27,11 @@ public class RxTextViewDelegateProxy
     public weak private(set) var textView: UITextView?
 
     /**
+     Internal event that captures all text changing events.
+    */
+    internal let textChanging = PublishSubject<Void>()
+
+    /**
      Initializes `RxTextViewDelegateProxy`
 
      - parameter parentObject: Parent object for delegate proxy.
@@ -34,6 +39,19 @@ public class RxTextViewDelegateProxy
     public required init(parentObject: AnyObject) {
         self.textView = (parentObject as! UITextView)
         super.init(parentObject: parentObject)
+    }
+
+    // MARK: delegate methods
+
+    /**
+    For more information take a look at `DelegateProxyType`.
+    */
+    @objc public func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+        let forwardToDelegate = self.forwardToDelegate() as? UITextViewDelegate
+        textChanging.onNext()
+        return forwardToDelegate?.textView?(textView,
+            shouldChangeTextInRange: range,
+            replacementText: text) ?? true
     }
 }
 

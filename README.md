@@ -129,7 +129,7 @@ Languages that allow mutation make it easy to access global state and mutate it.
 
 But on the other hand, when used in smart way, imperative languages can enable writing more efficient code closer to hardware.
 
-The usual way to battle combinatorial explosion is to keep state as simple as possible, and use [unidirectional data flows](https://developer.apple.com/videos/wwdc/2014/#229) to model derived data.
+The usual way to battle combinatorial explosion is to keep state as simple as possible, and use [unidirectional data flows](https://developer.apple.com/videos/play/wwdc2014-229) to model derived data.
 
 This is what Rx really shines at.
 
@@ -139,7 +139,7 @@ So what are some of the practical examples?
 
 ### Bindings
 
-When writing embedded UI applications you would ideally want your program interface to be just a [pure function](https://en.wikipedia.org/wiki/Pure_function) of the [truth of the system](https://developer.apple.com/videos/wwdc/2014/#229). In that way user interface could be optimally redrawn only when truth changes, and there wouldn't be any inconsistencies.
+When writing embedded UI applications you would ideally want your program interface to be just a [pure function](https://en.wikipedia.org/wiki/Pure_function) of the [truth of the system](https://developer.apple.com/videos/play/wwdc2014-229). In that way user interface could be optimally redrawn only when truth changes, and there wouldn't be any inconsistencies.
 
 These are so called bindings and Rx can help you model your system that way.
 

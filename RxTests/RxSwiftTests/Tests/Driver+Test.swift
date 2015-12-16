@@ -293,6 +293,26 @@ extension DriverTest {
     }
 }
 
+// MARK: deferred
+extension DriverTest {
+    func testAsDriver_deferred() {
+        let hotObservable = BackgroundThreadPrimitiveHotObservable<Int>()
+        let driver = Drive.deferred { hotObservable.asDriver(onErrorJustReturn: -1) }
+
+        let results = subscribeTwiceOnBackgroundSchedulerAndOnlyOneSubscription(driver) {
+            XCTAssertTrue(hotObservable.subscriptions == [SubscribedToHotObservable])
+
+            hotObservable.on(.Next(1))
+            hotObservable.on(.Next(2))
+            hotObservable.on(.Error(testError))
+
+            XCTAssertTrue(hotObservable.subscriptions == [UnsunscribedFromHotObservable])
+        }
+
+        XCTAssertEqual(results, [1, 2, -1])
+    }
+}
+
 // MARK: map
 extension DriverTest {
     func testAsDriver_map() {
@@ -314,7 +334,6 @@ extension DriverTest {
 
         XCTAssertEqual(results, [2, 3, 0])
     }
-
 }
 
 // MARK: filter
@@ -709,6 +728,32 @@ extension DriverTest {
 
 // MARK: concat
 extension DriverTest {
+    func testAsDriver_concat_sequenceType() {
+        let hotObservable1 = BackgroundThreadPrimitiveHotObservable<Int>()
+        let hotObservable2 = MainThreadPrimitiveHotObservable<Int>()
+
+        let driver = AnySequence([hotObservable1.asDriver(onErrorJustReturn: -1), hotObservable2.asDriver(onErrorJustReturn: -2)]).concat()
+
+        let results = subscribeTwiceOnBackgroundSchedulerAndOnlyOneSubscription(driver) {
+            XCTAssertTrue(hotObservable1.subscriptions == [SubscribedToHotObservable])
+
+            hotObservable1.on(.Next(1))
+            hotObservable1.on(.Next(2))
+            hotObservable1.on(.Error(testError))
+
+            XCTAssertTrue(hotObservable1.subscriptions == [UnsunscribedFromHotObservable])
+            XCTAssertTrue(hotObservable2.subscriptions == [SubscribedToHotObservable])
+
+            hotObservable2.on(.Next(4))
+            hotObservable2.on(.Next(5))
+            hotObservable2.on(.Error(testError))
+
+            XCTAssertTrue(hotObservable2.subscriptions == [UnsunscribedFromHotObservable])
+        }
+
+        XCTAssertEqual(results, [1, 2, -1, 4, 5, -2])
+    }
+
     func testAsDriver_concat() {
         let hotObservable1 = BackgroundThreadPrimitiveHotObservable<Int>()
         let hotObservable2 = MainThreadPrimitiveHotObservable<Int>()

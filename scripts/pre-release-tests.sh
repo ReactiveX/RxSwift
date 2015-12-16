@@ -31,7 +31,11 @@ if [ "${RELEASE_TEST}" -eq 1 ]; then
 	. scripts/automation-tests.sh
 fi
 
-CONFIGURATIONS=(Release)
+CONFIGURATIONS=(Release-Tests)
+
+if [ "${RELEASE_TEST}" -eq 1 ]; then
+	CONFIGURATIONS=(Release Release-Tests Debug)
+fi
 
 # make sure watchos builds
 # temporary solution

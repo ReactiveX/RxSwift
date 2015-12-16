@@ -40,6 +40,10 @@ public enum RxCocoaError
     Invalid object on key path.
     */
     case InvalidObjectOnKeyPath(object: AnyObject, sourceObject: AnyObject, propertyName: String)
+    /**
+     Casting error.
+     */
+    case CastingError(object: AnyObject, targetType: Any.Type)
 }
 
 public extension RxCocoaError {
@@ -58,6 +62,8 @@ public extension RxCocoaError {
             return "Object `\(object)` dosn't have a property named `\(propertyName)`"
         case let .InvalidObjectOnKeyPath(object, sourceObject, propertyName):
             return "Unobservable object `\(object)` was observed as `\(propertyName)` of `\(sourceObject)`"
+        case .CastingError(let object, let targetType):
+            return "Error casting `\(object)` to `\(targetType)`"
         }
     }
 }
@@ -80,11 +86,11 @@ func bindingErrorToVariable(error: ErrorType) {
 #endif
 }
 
-func rxAbstractMethodWithMessage<T>(message: String) -> T {
+@noreturn func rxAbstractMethodWithMessage(message: String) {
     rxFatalError(message)
 }
 
-func rxAbstractMethod<T>() -> T {
+@noreturn func rxAbstractMethod() {
     rxFatalError("Abstract method")
 }
 
@@ -95,6 +101,26 @@ func castOptionalOrFatalError<T>(value: AnyObject?) -> T? {
     }
     let v: T = castOrFatalError(value)
     return v
+}
+
+func castOrThrow<T>(resultType: T.Type, _ object: AnyObject) throws -> T {
+    guard let returnValue = object as? T else {
+        throw RxCocoaError.CastingError(object: object, targetType: resultType)
+    }
+
+    return returnValue
+}
+
+func castOptionalOrThrow<T>(resultType: T.Type, _ object: AnyObject) throws -> T? {
+    if NSNull().isEqual(object) {
+        return nil
+    }
+
+    guard let returnValue = object as? T else {
+        throw RxCocoaError.CastingError(object: object, targetType: resultType)
+    }
+
+    return returnValue
 }
 
 func castOrFatalError<T>(value: AnyObject!, message: String) -> T {

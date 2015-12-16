@@ -102,6 +102,91 @@ class GitHubSearchRepositoriesAPI {
         _wireframe = wireframe
     }
 
+}
+
+// MARK: Pagination
+
+extension GitHubSearchRepositoriesAPI {
+    /**
+    Public fascade for search.
+    */
+    func search(query: String, loadNextPageTrigger: Observable<Void>) -> Observable<RepositoriesState> {
+        let escapedQuery = URLEscape(query)
+        let url = NSURL(string: "https://api.github.com/search/repositories?q=\(escapedQuery)")!
+        return recursivelySearch([], loadNextURL: url, loadNextPageTrigger: loadNextPageTrigger)
+            // Here we go again
+            .startWith(RepositoriesState.empty)
+    }
+
+    private func recursivelySearch(loadedSoFar: [Repository], loadNextURL: NSURL, loadNextPageTrigger: Observable<Void>) -> Observable<RepositoriesState> {
+        return loadSearchURL(loadNextURL).flatMap { searchResponse -> Observable<RepositoriesState> in
+            switch searchResponse {
+            /**
+                If service is offline, that's ok, that means that this isn't the last thing we've heard from that API.
+                It will retry until either battery drains, you become angry and close the app or evil machine comes back
+                from the future, steals your device and Googles Sarah Connor's address.
+            */
+            case .ServiceOffline:
+                return just(RepositoriesState(repositories: loadedSoFar, serviceState: .Offline, limitExceeded: false))
+                
+            case .LimitExceeded:
+                return just(RepositoriesState(repositories: loadedSoFar, serviceState: .Online, limitExceeded: true))
+
+            case let .Repositories(newPageRepositories, maybeNextURL):
+
+                var loadedRepositories = loadedSoFar
+                loadedRepositories.appendContentsOf(newPageRepositories)
+
+                let appenedRepositories = RepositoriesState(repositories: loadedRepositories, serviceState: .Online, limitExceeded: false)
+
+                // if next page can't be loaded, just return what was loaded, and stop
+                guard let nextURL = maybeNextURL else {
+                    return just(appenedRepositories)
+                }
+
+                return [
+                    // return loaded immediately
+                    just(appenedRepositories),
+                    // wait until next page can be loaded
+                    never().takeUntil(loadNextPageTrigger),
+                    // load next page
+                    self.recursivelySearch(loadedRepositories, loadNextURL: nextURL, loadNextPageTrigger: loadNextPageTrigger)
+                ].concat()
+            }
+        }
+    }
+
+    private func loadSearchURL(searchURL: NSURL) -> Observable<SearchRepositoryResponse> {
+        return NSURLSession.sharedSession()
+            .rx_response(NSURLRequest(URL: searchURL))
+            .retry(3)
+            .trackActivity(self.activityIndicator)
+            .observeOn(Dependencies.sharedDependencies.backgroundWorkScheduler)
+            .map { data, httpResponse -> SearchRepositoryResponse in
+                if httpResponse.statusCode == 403 {
+                    return .LimitExceeded
+                }
+
+                let jsonRoot = try GitHubSearchRepositoriesAPI.parseJSON(httpResponse, data: data)
+
+                guard let json = jsonRoot as? [String: AnyObject] else {
+                    throw exampleError("Casting to dictionary failed")
+                }
+
+                let repositories = try GitHubSearchRepositoriesAPI.parseRepositories(json)
+
+                let nextURL = try GitHubSearchRepositoriesAPI.parseNextURL(httpResponse)
+
+                return .Repositories(repositories: repositories, nextURL: nextURL)
+            }
+            .retryOnBecomesReachable(.ServiceOffline, reachabilityService: ReachabilityService.sharedReachabilityService)
+    }
+}
+
+// MARK: Parsing the response
+
+extension GitHubSearchRepositoriesAPI {
+
     private static let parseLinksPattern = "\\s*,?\\s*<([^\\>]*)>\\s*;\\s*rel=\"([^\"]*)\""
     private static let linksRegex = try! NSRegularExpression(pattern: parseLinksPattern, options: [.AllowCommentsAndWhitespace])
 
@@ -147,98 +232,6 @@ class GitHubSearchRepositoriesAPI {
         }
 
         return nextUrl
-    }
-
-    /**
-    Public fascade for search.
-    */
-    func search(query: String, loadNextPageTrigger: Observable<Void>) -> Observable<RepositoriesState> {
-        let escapedQuery = URLEscape(query)
-        let url = NSURL(string: "https://api.github.com/search/repositories?q=\(escapedQuery)")!
-        return recursivelySearch([], loadNextURL: url, loadNextPageTrigger: loadNextPageTrigger)
-            // Here we go again
-            .startWith(RepositoriesState.empty)
-    }
-
-    private func recursivelySearch(loadedSoFar: [Repository], loadNextURL: NSURL, loadNextPageTrigger: Observable<Void>) -> Observable<RepositoriesState> {
-        return loadSearchURL(loadNextURL).flatMap { searchResponse -> Observable<RepositoriesState> in
-            switch searchResponse {
-            /**
-                If service is offline, that's ok, that means that this isn't the last thing we've heard from that API.
-                It will retry until either battery drains, you become angry and close the app or evil machine comes back
-                from the future, steals your device and Googles Sarah Connor's address.
-            */
-            case .ServiceOffline:
-                return just(RepositoriesState(repositories: loadedSoFar, serviceState: .Offline, limitExceeded: false))
-            case .LimitExceeded:
-                return just(RepositoriesState(repositories: loadedSoFar, serviceState: .Online, limitExceeded: true))
-            case .Repositories:
-                break
-            }
-
-            // Repositories without next url? The party is done.
-            guard case .Repositories(let newPageRepositories, let maybeNextURL) = searchResponse else {
-                fatalError("Some fourth case?")
-            }
-
-            var loadedRepositories = loadedSoFar
-            loadedRepositories.appendContentsOf(newPageRepositories)
-
-            let appenedRepositories = RepositoriesState(repositories: loadedRepositories, serviceState: .Online, limitExceeded: false)
-
-            // if next page can't be loaded, just return what was loaded, and stop
-            guard let nextURL = maybeNextURL else {
-                return just(appenedRepositories)
-            }
-
-            return [
-                // return loaded immediately
-                just(appenedRepositories),
-                // wait until next page can be loaded
-                never().takeUntil(loadNextPageTrigger),
-                // load next page
-                self.recursivelySearch(loadedRepositories, loadNextURL: nextURL, loadNextPageTrigger: loadNextPageTrigger)
-            ].concat()
-        }
-    }
-
-    /**
-     Displays UI that prompts the user when to retry.
-    */
-    private func buildRetryPrompt() -> Observable<Void> {
-        return _wireframe.promptFor(
-                "Exceeded limit of 10 non authenticated requests per minute for GitHub API. Please wait a minute. :(\nhttps://developer.github.com/v3/#rate-limiting",
-                cancelAction: RetryResult.Cancel,
-                actions: [RetryResult.Retry]
-            )
-            .filter { (x: RetryResult) in x == .Retry }
-            .map { _ in () }
-    }
-
-    private func loadSearchURL(searchURL: NSURL) -> Observable<SearchRepositoryResponse> {
-        return NSURLSession.sharedSession()
-            .rx_response(NSURLRequest(URL: searchURL))
-            .retry(3)
-            .trackActivity(self.activityIndicator)
-            .observeOn(Dependencies.sharedDependencies.backgroundWorkScheduler)
-            .map { data, httpResponse -> SearchRepositoryResponse in
-                if httpResponse.statusCode == 403 {
-                    return .LimitExceeded
-                }
-
-                let jsonRoot = try GitHubSearchRepositoriesAPI.parseJSON(httpResponse, data: data)
-
-                guard let json = jsonRoot as? [String: AnyObject] else {
-                    throw exampleError("Casting to dictionary failed")
-                }
-
-                let repositories = try GitHubSearchRepositoriesAPI.parseRepositories(json)
-
-                let nextURL = try GitHubSearchRepositoriesAPI.parseNextURL(httpResponse)
-
-                return .Repositories(repositories: repositories, nextURL: nextURL)
-            }
-            .retryOnBecomesReachable(.ServiceOffline, reachabilityService: ReachabilityService.sharedReachabilityService)
     }
 
     private static func parseJSON(httpResponse: NSHTTPURLResponse, data: NSData) throws -> AnyObject {
