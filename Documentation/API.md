@@ -272,7 +272,7 @@ extension UIImageView {
 
     public var rx_image: ObserverOf<UIImage!> {}
 
-    public func rx_imageAnimated(animated: Bool) -> ObserverOf<UIImage!> {}
+    public func rx_imageAnimated(transitionType: String?) -> AnyObserver<UIImage?>
 
 }
 ```
