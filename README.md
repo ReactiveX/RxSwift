@@ -403,7 +403,7 @@ RxCocoa provides a really convenient observable sequence that solves those issue
 This is how they can be used:
 
 ```swift
-view.rx_observe("frame")
+view.rx_observe(CGRect.self, "frame")
     .subscribeNext { (frame: CGRect?) in
         print("Got new frame \(frame)")
     }
@@ -412,7 +412,7 @@ view.rx_observe("frame")
 or
 
 ```swift
-someSuspiciousViewController.rx_observeWeakly("behavingOk")
+someSuspiciousViewController.rx_observeWeakly(Bool.self, "behavingOk")
     .subscribeNext { (behavingOk: Bool?) in
         print("Cats can purr? \(behavingOk)")
     }
