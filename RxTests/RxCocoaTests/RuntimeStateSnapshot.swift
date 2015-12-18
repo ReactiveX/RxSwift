@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import XCTest
 
 class ObjectRuntimeState {
     let real: ClassRuntimeState
@@ -17,15 +18,6 @@ class ObjectRuntimeState {
         real = ClassRuntimeState(object_getClass(target))
         actingAs = ClassRuntimeState(RXObjCTestRuntime.objCClass(target))
     }
-
-    /*func isForwardingSelector(selector: Selector) -> Bool {
-        if let implementation = real.implementations[selector] {
-            return RXObjCTestRuntime.isForwardingIMP(implementation)
-        }
-        else {
-            return false
-        }
-    }*/
 
     private static func changesFrom(from: ClassRuntimeState, to: ClassRuntimeState) -> [ObjectRuntimeChange] {
         if from.targetClass == to.targetClass {
@@ -69,6 +61,18 @@ class ObjectRuntimeState {
             actingAs: ObjectRuntimeState.changesFrom(initialState.actingAs, to: self.actingAs)
         )
     }
+
+    func assertChangesFrom(initialState: ObjectRuntimeState, expectedActingClassChanges: [ObjectRuntimeChange], expectedRealClassChanges: [ObjectRuntimeChange]) {
+        let changes = self.changesFrom(initialState)
+        XCTAssertEqual(Set(changes.actingAs), Set(expectedActingClassChanges))
+        if (Set(changes.actingAs) != Set(expectedActingClassChanges)) {
+            print("Changes in actingAs class\nreal:\n\(changes.actingAs)\nexpected:\n\(expectedActingClassChanges)\n\n")
+        }
+        XCTAssertEqual(Set(changes.real), Set(expectedRealClassChanges))
+        if (Set(changes.real) != Set(expectedRealClassChanges)) {
+            print("Changes in actual class\nreal:\n\(changes.real)\nexpected:\n\(expectedRealClassChanges)\n\n")
+        }
+    }
 }
 
 enum ObjectRuntimeChange : Hashable {
@@ -88,6 +92,14 @@ extension ObjectRuntimeChange {
     var hashValue: Int {
         // who cares, this is not performance critical
         return 0
+    }
+
+    var isClassChange: Bool {
+        if case .ClassChanged = self {
+            return true
+        }
+
+        return false
     }
 }
 

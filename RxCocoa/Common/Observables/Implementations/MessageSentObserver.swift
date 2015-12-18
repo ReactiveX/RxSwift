@@ -13,6 +13,35 @@ import Foundation
 
 #if !DISABLE_SWIZZLING
 
+    class DeallocatingObservable
+        : ObservableConvertibleType
+        , RXMessageSentObserver {
+        typealias E = ()
+
+        private let _subject = ReplaySubject<()>.create(bufferSize: 1)
+
+        @objc var targetImplementation: IMP = RX_default_target_implementation()
+
+        var isActive: Bool {
+            return targetImplementation != RX_default_target_implementation()
+        }
+
+        init() {
+        }
+
+        @objc func messageSentWithParameters(parameters: [AnyObject]) -> Void {
+            _subject.on(.Next())
+        }
+
+        func asObservable() -> Observable<()> {
+            return _subject
+        }
+
+        deinit {
+            _subject.on(.Completed)
+        }
+    }
+
     class MessageSentObservable
         : ObservableConvertibleType
         , RXMessageSentObserver {
@@ -22,20 +51,15 @@ import Foundation
 
         @objc var targetImplementation: IMP = RX_default_target_implementation()
 
+        var isActive: Bool {
+            return targetImplementation != RX_default_target_implementation()
+        }
+
         init() {
-            
         }
 
         @objc func messageSentWithParameters(parameters: [AnyObject]) -> Void {
             _subject.on(.Next(parameters))
-        }
-
-        @objc func methodForSelectorDoesntExist() {
-            _subject.on(.Error(RxCocoaError.ObjectDoesntRespondToMessage))
-        }
-
-        @objc func errorDuringSwizzling() {
-            _subject.on(.Error(RxCocoaError.ErrorDuringSwizzling))
         }
 
         func asObservable() -> Observable<[AnyObject]> {

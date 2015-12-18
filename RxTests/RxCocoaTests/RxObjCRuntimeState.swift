@@ -16,42 +16,16 @@ struct RxObjCRuntimeChange {
     let methodsSwizzled: Int
     let methodsForwarded: Int
 
-    static var noChange: RxObjCRuntimeChange {
+    /**
+     Takes into account default methods that were swizzled while creating dynamic subclasses.
+    */
+    static func changes(dynamicSubclasses dynamicSubclasses: Int = 0, swizzledForwardClasses: Int = 0, interceptedClasses: Int = 0, methodsSwizzled: Int = 0, methodsForwarded: Int = 0) -> RxObjCRuntimeChange {
         return RxObjCRuntimeChange(
-            dynamicSublasses: 0,
-            swizzledForwardClasses: 0,
-            interceptedClasses: 0,
-            methodsSwizzled: 0,
-            methodsForwarded: 0
-        )
-    }
-
-    static func generatedNewClassWith(swizzledMethods swizzledMethods: Int, forwardedMethods: Int, hasSwizzledForward: Bool) -> RxObjCRuntimeChange {
-        return RxObjCRuntimeChange(
-            dynamicSublasses: 1,
-            swizzledForwardClasses: hasSwizzledForward ? 1 : 0,
-            interceptedClasses: 1,
-            methodsSwizzled: swizzledMethods + (hasSwizzledForward ? 3 : 0),
-            methodsForwarded: forwardedMethods)
-    }
-
-    static func forwardedMethods(forwardedMethods: Int, swizzledForwardClasses: Int, interceptedClasses: Int) -> RxObjCRuntimeChange {
-        return RxObjCRuntimeChange(
-            dynamicSublasses: 0,
+            dynamicSublasses: dynamicSubclasses,
             swizzledForwardClasses: swizzledForwardClasses,
-            interceptedClasses: interceptedClasses,
-            methodsSwizzled: swizzledForwardClasses * 3,
-            methodsForwarded: forwardedMethods
-        )
-    }
-
-    static func swizzledMethod(methodsSwizzled: Int, interceptedClasses: Int) -> RxObjCRuntimeChange {
-        return RxObjCRuntimeChange(
-            dynamicSublasses: 0,
-            swizzledForwardClasses: 0,
-            interceptedClasses: interceptedClasses,
-            methodsSwizzled: methodsSwizzled,
-            methodsForwarded: 0
+            interceptedClasses: dynamicSubclasses + interceptedClasses,
+            methodsSwizzled: methodsSwizzled + 1/*class*/ * dynamicSubclasses + 3/*forwardInvocation, respondsToSelector, methodSignatureForSelector*/ * swizzledForwardClasses,
+            methodsForwarded: methodsForwarded
         )
     }
 }
@@ -85,10 +59,30 @@ class RxObjCRuntimeState {
     }
 
     func assertAfterThisMoment(previous: RxObjCRuntimeState, changed: RxObjCRuntimeChange) {
-        XCTAssertEqual(dynamicSublasses - previous.dynamicSublasses, changed.dynamicSublasses)
-        XCTAssertEqual(swizzledForwardClasses - previous.swizzledForwardClasses, changed.swizzledForwardClasses)
-        XCTAssertEqual(interceptingClasses - previous.interceptingClasses, changed.interceptedClasses)
-        XCTAssertEqual(methodsSwizzled - previous.methodsSwizzled, changed.methodsSwizzled)
-        XCTAssertEqual(methodsForwarded - previous.methodsForwarded, changed.methodsForwarded)
+        let realChangeOfDynamicSubclasses = dynamicSublasses - previous.dynamicSublasses
+        XCTAssertEqual(realChangeOfDynamicSubclasses, changed.dynamicSublasses)
+        if (realChangeOfDynamicSubclasses != changed.dynamicSublasses) {
+            print("dynamic subclasses: real = \(realChangeOfDynamicSubclasses) != expected = \(changed.dynamicSublasses)")
+        }
+        let realSwizzledForwardClasses = swizzledForwardClasses - previous.swizzledForwardClasses
+        XCTAssertEqual(realSwizzledForwardClasses, changed.swizzledForwardClasses)
+        if (realSwizzledForwardClasses != changed.swizzledForwardClasses) {
+            print("forward classes: real = \(realSwizzledForwardClasses) != expected = \(changed.swizzledForwardClasses)")
+        }
+        let realInterceptingClasses = interceptingClasses - previous.interceptingClasses
+        XCTAssertEqual(realInterceptingClasses, changed.interceptedClasses)
+        if (realInterceptingClasses != changed.interceptedClasses) {
+            print("intercepting classes: real = \(realInterceptingClasses) != expected = \(changed.interceptedClasses)")
+        }
+        let realMethodsSwizzled = methodsSwizzled - previous.methodsSwizzled
+        XCTAssertEqual(realMethodsSwizzled, changed.methodsSwizzled)
+        if (realMethodsSwizzled != changed.methodsSwizzled) {
+            print("swizzled methods: real = \(realMethodsSwizzled) != expected = \(changed.methodsSwizzled)")
+        }
+        let realMethodsForwarded = methodsForwarded - previous.methodsForwarded
+        XCTAssertEqual(realMethodsForwarded, changed.methodsForwarded)
+        if (realMethodsForwarded != changed.methodsForwarded) {
+            print("forwarded methods: real = \(realMethodsForwarded) != expected = \(changed.methodsForwarded)")
+        }
     }
 }

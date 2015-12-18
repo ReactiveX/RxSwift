@@ -176,25 +176,50 @@ extension NSObject {
 
 #if !DISABLE_SWIZZLING
 
+    /**
+     Observable sequence of message arguments that completes when object is deallocated.
+
+     In case some an error occurs sequence will fail with `RxCocoaObjCRuntimeError`.
+     
+     In case some argument is `nil`, instance of `NSNull()` will be sent.
+
+     - returns: Observable sequence of object deallocating events.
+     */
     public func rx_sentMessage(selector: Selector) -> Observable<[AnyObject]> {
         return rx_synchronized {
+            // in case of dealloc selector replay subject behavior needs to be used
+            if selector == deallocSelector {
+                return rx_deallocating.map { _ in [] }
+            }
+
             let rxSelector = RX_selector(selector)
             let selectorReference = RX_reference_from_selector(rxSelector)
-            if let subject = objc_getAssociatedObject(self, selectorReference) as? MessageSentObservable {
+
+            let subject: MessageSentObservable
+            if let existingSubject = objc_getAssociatedObject(self, selectorReference) as? MessageSentObservable {
+                subject = existingSubject
+            }
+            else {
+                subject = MessageSentObservable()
+                objc_setAssociatedObject(
+                    self,
+                    selectorReference,
+                    subject,
+                    .OBJC_ASSOCIATION_RETAIN_NONATOMIC
+                )
+            }
+
+            if subject.isActive {
                 return subject.asObservable()
             }
 
-            let subject = MessageSentObservable()
-            objc_setAssociatedObject(
-                self,
-                selectorReference,
-                subject,
-                .OBJC_ASSOCIATION_RETAIN_NONATOMIC
-            )
+            var error: NSError?
+            let targetImplementation = RX_ensure_observing(self, selector, &error)
+            if targetImplementation == nil {
+                return failWith(error?.rxCocoaErrorForTarget(self) ?? RxCocoaError.Unknown)
+            }
 
-            let targetImplementation = RX_ensure_observing(self, selector)
             subject.targetImplementation = targetImplementation
-
             return subject.asObservable()
         }
     }
@@ -204,30 +229,45 @@ extension NSObject {
     
     When `dealloc` message is sent to `self` one `()` element will be produced and after object is deallocated sequence
     will immediately complete.
+     
+    In case some an error occurs sequence will fail with `RxCocoaObjCRuntimeError`.
     
     - returns: Observable sequence of object deallocating events.
     */
     public var rx_deallocating: Observable<()> {
         return rx_synchronized {
-            let selector: Selector = "dealloc"
-            let rxSelector = RX_selector(selector)
-            let selectorReference = RX_reference_from_selector(rxSelector)
-            if let subject = objc_getAssociatedObject(self, selectorReference) as? DeallocatingObserver {
+
+            let subject: DeallocatingObservable
+            if let existingSubject = objc_getAssociatedObject(self, rxDeallocatingSelectorReference) as? DeallocatingObservable {
+                subject = existingSubject
+            }
+            else {
+                subject = DeallocatingObservable()
+                objc_setAssociatedObject(
+                    self,
+                    rxDeallocatingSelectorReference,
+                    subject,
+                    .OBJC_ASSOCIATION_RETAIN_NONATOMIC
+                )
+            }
+
+            if subject.isActive {
                 return subject.asObservable()
             }
 
-            let subject = DeallocatingObserver()
-            objc_setAssociatedObject(
-                self,
-                selectorReference,
-                subject,
-                .OBJC_ASSOCIATION_RETAIN_NONATOMIC
-            )
+            var error: NSError?
+            let targetImplementation = RX_ensure_observing(self, deallocSelector, &error)
+            if targetImplementation == nil {
+                return failWith(error?.rxCocoaErrorForTarget(self) ?? RxCocoaError.Unknown)
+            }
 
-            let targetImplementation = RX_ensure_observing(self, selector)
             subject.targetImplementation = targetImplementation
             return subject.asObservable()
         }
     }
 #endif
 }
+
+let deallocSelector = "dealloc" as Selector
+let rxDeallocatingSelector = RX_selector("dealloc")
+let rxDeallocatingSelectorReference = RX_reference_from_selector(rxDeallocatingSelector)

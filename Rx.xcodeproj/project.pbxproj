@@ -424,10 +424,6 @@
 		C8C4B4C31C17727000828BD5 /* MessageSentObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C4B4C01C17727000828BD5 /* MessageSentObserver.swift */; };
 		C8C4B4C41C17727000828BD5 /* MessageSentObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C4B4C01C17727000828BD5 /* MessageSentObserver.swift */; };
 		C8C4B4C51C17727000828BD5 /* MessageSentObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C4B4C01C17727000828BD5 /* MessageSentObserver.swift */; };
-		C8C4B4C61C17727000828BD5 /* DeallocatingObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C4B4C11C17727000828BD5 /* DeallocatingObserver.swift */; };
-		C8C4B4C71C17727000828BD5 /* DeallocatingObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C4B4C11C17727000828BD5 /* DeallocatingObserver.swift */; };
-		C8C4B4C81C17727000828BD5 /* DeallocatingObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C4B4C11C17727000828BD5 /* DeallocatingObserver.swift */; };
-		C8C4B4C91C17727000828BD5 /* DeallocatingObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C4B4C11C17727000828BD5 /* DeallocatingObserver.swift */; };
 		C8DB967E1BF7496C0084BD53 /* KVORepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8DB967D1BF7496C0084BD53 /* KVORepresentable.swift */; };
 		C8DB967F1BF7496C0084BD53 /* KVORepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8DB967D1BF7496C0084BD53 /* KVORepresentable.swift */; };
 		C8DB96801BF7496C0084BD53 /* KVORepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8DB967D1BF7496C0084BD53 /* KVORepresentable.swift */; };
@@ -1103,7 +1099,6 @@
 		C8C4B4A71C17722400828BD5 /* _RXObjCRuntime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _RXObjCRuntime.m; sourceTree = "<group>"; };
 		C8C4B4A81C17722400828BD5 /* _RXObjCRuntime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _RXObjCRuntime.h; sourceTree = "<group>"; };
 		C8C4B4C01C17727000828BD5 /* MessageSentObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageSentObserver.swift; sourceTree = "<group>"; };
-		C8C4B4C11C17727000828BD5 /* DeallocatingObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeallocatingObserver.swift; sourceTree = "<group>"; };
 		C8DB967D1BF7496C0084BD53 /* KVORepresentable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KVORepresentable.swift; sourceTree = "<group>"; };
 		C8DB96821BF754C80084BD53 /* NSObject+Rx+KVORepresentable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSObject+Rx+KVORepresentable.swift"; sourceTree = "<group>"; };
 		C8DB96871BF756F40084BD53 /* KVORepresentable+CoreGraphics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "KVORepresentable+CoreGraphics.swift"; sourceTree = "<group>"; };
@@ -1488,7 +1483,6 @@
 			isa = PBXGroup;
 			children = (
 				C8C4B4C01C17727000828BD5 /* MessageSentObserver.swift */,
-				C8C4B4C11C17727000828BD5 /* DeallocatingObserver.swift */,
 				C8093E901B8A732E0088E94D /* ControlTarget.swift */,
 				C8093E931B8A732E0088E94D /* KVOObservable.swift */,
 				C8093E941B8A732E0088E94D /* KVOObserver.swift */,
@@ -2176,7 +2170,6 @@
 				C8DB968D1BF7595D0084BD53 /* KVORepresentable+Swift.swift in Sources */,
 				C80DDEB11BCE8CA3006A1832 /* Driver+Operators+arity.swift in Sources */,
 				C88254281B8A752B00B02D69 /* UIButton+Rx.swift in Sources */,
-				C8C4B4C61C17727000828BD5 /* DeallocatingObserver.swift in Sources */,
 				C8093EDF1B8A732E0088E94D /* CLLocationManager+Rx.swift in Sources */,
 				C80DDEA31BCE69BA006A1832 /* Driver.swift in Sources */,
 				C882541C1B8A752B00B02D69 /* RxActionSheetDelegateProxy.swift in Sources */,
@@ -2236,7 +2229,6 @@
 				C8F6A1461BF0B9B2007DF367 /* NSObject+Rx+RawRepresentable.swift in Sources */,
 				C8093EE01B8A732E0088E94D /* CLLocationManager+Rx.swift in Sources */,
 				C8DB96841BF754C80084BD53 /* NSObject+Rx+KVORepresentable.swift in Sources */,
-				C8C4B4C71C17727000828BD5 /* DeallocatingObserver.swift in Sources */,
 				C8C4B4C31C17727000828BD5 /* MessageSentObserver.swift in Sources */,
 				C8093F461B8A732E0088E94D /* NSButton+Rx.swift in Sources */,
 				C80DDEA01BCE69BA006A1832 /* Driver+Subscription.swift in Sources */,
@@ -2745,7 +2737,6 @@
 				C8DB96901BF7595D0084BD53 /* KVORepresentable+Swift.swift in Sources */,
 				C80DDEB41BCE8CA3006A1832 /* Driver+Operators+arity.swift in Sources */,
 				C8F0C0221BBBFBB9001B112F /* UIButton+Rx.swift in Sources */,
-				C8C4B4C91C17727000828BD5 /* DeallocatingObserver.swift in Sources */,
 				C8F0C0231BBBFBB9001B112F /* CLLocationManager+Rx.swift in Sources */,
 				C80DDEA61BCE69BA006A1832 /* Driver.swift in Sources */,
 				C8F0C0251BBBFBB9001B112F /* RxActionSheetDelegateProxy.swift in Sources */,
@@ -2834,7 +2825,6 @@
 				C8DB968F1BF7595D0084BD53 /* KVORepresentable+Swift.swift in Sources */,
 				D203C5061BB9C53E00D02D00 /* UIControl+Rx.swift in Sources */,
 				D203C5111BB9C53E00D02D00 /* UITableView+Rx.swift in Sources */,
-				C8C4B4C81C17727000828BD5 /* DeallocatingObserver.swift in Sources */,
 				C80DDEA51BCE69BA006A1832 /* Driver.swift in Sources */,
 				D203C4F81BB9C53700D02D00 /* RxActionSheetDelegateProxy.swift in Sources */,
 				D2138C961BB9BEDA00339B5C /* NSURLSession+Rx.swift in Sources */,

@@ -50,6 +50,105 @@ public enum RxCocoaError
     case ObjectDoesntRespondToMessage
 }
 
+/**
+RxCocoa ObjC runtime interception mechanism.
+ */
+public enum RxCocoaInterceptionMechanism {
+    case Unknown
+    case KVO
+}
+
+/**
+RxCocoa ObjC runtime changing errors.
+ */
+public enum RxCocoaObjCRuntimeError
+    : ErrorType
+    , CustomDebugStringConvertible {
+    /**
+    Unknown error has occurred.
+    */
+    case Unknown(target: AnyObject)
+
+    /**
+    If the object is reporting a different class then what it's real class, that means that there is probably
+    already some interception mechanism in place or something weird is happening.
+
+    Most common case when this would happen is when using KVO (`rx_observe`) and `rx_sentMessage`.
+
+    This error is easily resolved by just using `rx_sentMessage` observing before `rx_observe`.
+
+    The reason why other way around could create issues is because KVO will unregister it's interceptor
+    class and restore original class. Unfortunately that will happen no matter was there another interceptor
+    subclass registered in hierarchy or not.
+
+    Failure scenario:
+    * KVO sets class to be `__KVO__OriginalClass` (subclass of `OriginalClass`)
+    * `rx_sentMessage` sets object class to be `_RX_namespace___KVO__OriginalClass` (subclass of `__KVO__OriginalClass`)
+    * then unobserving with KVO will restore class to be `OriginalClass` -> failure point (possibly a bug in KVO)
+
+    The reason why changing order of observing works is because any interception method on unregistration 
+    should return object's original real class (if that doesn't happen then it's really easy to argue that's a bug
+    in that interception mechanism).
+
+    This library won't remove registered interceptor even if there aren't any observers left because
+    it's highly unlikely it would have any benefit in real world use cases, and it's even more
+    dangerous.
+    */
+    case ObjectMessagesAlreadyBeingIntercepted(target: AnyObject, interceptionMechanism: RxCocoaInterceptionMechanism)
+
+    /**
+    Trying to observe messages for selector that isn't implemented.
+    */
+    case SelectorNotImplemented(target: AnyObject)
+
+    /**
+    Core Foundation classes are usually toll free bridged. Those classes crash the program in case
+    `object_setClass` is performed on them.
+
+    There is a possibility to just swizzle methods on original object, but since those won't be usual use
+    cases for this library, then an error will just be reported for now.
+    */
+    case CantInterceptCoreFoundationTollFreeBridgedObjects(target: AnyObject)
+
+    /**
+    Two libraries have simultaneously tried to modify ObjC runtime and that was detected. This can only
+    happen in scenarios where multiple interception libraries are used.
+     
+    To synchronize other libraries intercepting messages for an object, use `synchronized` on target object and
+    it's meta-class.
+    */
+    case ThreadingCollisionWithOtherInterceptionMechanism(target: AnyObject)
+
+    /**
+    For some reason saving original method implementation under RX namespace failed.
+    */
+    case SavingOriginalForwardingMethodFailed(target: AnyObject)
+
+    /**
+    Intercepting a sent message by replacing a method implementation with `_objc_msgForward` failed for some reason.
+    */
+    case ReplacingMethodWithForwardingImplementation(target: AnyObject)
+
+    /**
+    Attempt to intercept one of the performance sensitive methods:
+        * class
+        * respondsToSelector:
+        * methodSignatureForSelector:
+        * forwardingTargetForSelector:
+    */
+    case ObservingPerformanceSensitiveMessages(target: AnyObject)
+
+    /**
+    Message implementation has unsupported return type (for example large struct). The reason why this is a error
+    is because in some cases intercepting sent messages requires replacing with `_objc_msgForward_stret` instead of `_objc_msgForward`.
+
+    The unsupported cases should be fairly uncommon.
+    */
+    case ObservingMessagesWithUnsupportedReturnType(target: AnyObject)
+}
+
+// MARK: Debug descriptions
+
 public extension RxCocoaError {
     /**
      A textual representation of `self`, suitable for debugging.
@@ -74,6 +173,37 @@ public extension RxCocoaError {
     }
 }
 
+public extension RxCocoaObjCRuntimeError {
+    /**
+     A textual representation of `self`, suitable for debugging.
+     */
+    public var debugDescription: String {
+        switch self {
+        case let .Unknown(target):
+            return "Unknown error occurred.\nTarget: `\(target)`"
+        case let ObjectMessagesAlreadyBeingIntercepted(target, interceptionMechanism):
+            return "Collision between RxCocoa interception mechanism and \(interceptionMechanism == .KVO ? "KVO" : "other interception mechanism")."
+            + " To resolve this conflict please use this interception mechanism first.\nTarget: \(target)"
+        case let SelectorNotImplemented(target):
+            return "Trying to observe messages for selector that isn't implemented.\nTarget: \(target)"
+        case let CantInterceptCoreFoundationTollFreeBridgedObjects(target):
+            return "Interception of messages sent to Core Foundation isn't supported.\nTarget: \(target)"
+        case let ThreadingCollisionWithOtherInterceptionMechanism(target):
+            return "Detected a conflict while modifying ObjC runtime.\nTarget: \(target)"
+        case let SavingOriginalForwardingMethodFailed(target):
+            return "Saving original method implementation failed.\nTarget: \(target)"
+        case let ReplacingMethodWithForwardingImplementation(target):
+            return "Intercepting a sent message by replacing a method implementation with `_objc_msgForward` failed for some reason.\nTarget: \(target)"
+        case let ObservingPerformanceSensitiveMessages(target):
+            return "Attempt to intercept one of the performance sensitive methods. \nTarget: \(target)"
+        case let ObservingMessagesWithUnsupportedReturnType(target):
+            return "Attempt to intercept a method with unsupported return type. \nTarget: \(target)"
+        }
+    }
+}
+
+// MARK: Error binding policies
+
 func bindingErrorToInterface(error: ErrorType) {
     let error = "Binding error to UI: \(error)"
 #if DEBUG
@@ -92,6 +222,8 @@ func bindingErrorToVariable(error: ErrorType) {
 #endif
 }
 
+// MARK: Abstract methods
+
 func rxAbstractMethodWithMessage<T>(message: String) -> T {
     rxFatalError(message)
 }
@@ -99,6 +231,8 @@ func rxAbstractMethodWithMessage<T>(message: String) -> T {
 func rxAbstractMethod<T>() -> T {
     rxFatalError("Abstract method")
 }
+
+// MARK: casts or fatal error
 
 // workaround for Swift compiler bug, cheers compiler team :)
 func castOptionalOrFatalError<T>(value: AnyObject?) -> T? {
@@ -127,13 +261,46 @@ func castOrFatalError<T>(value: AnyObject!) -> T {
     return result
 }
 
-// Error messages {
+// MARK: Error messages
 
 let dataSourceNotSet = "DataSource not set"
 let delegateNotSet = "Delegate not set"
 
-// }
+// MARK: Conversions `NSError` > `RxCocoaObjCRuntimeError`
 
+extension NSError {
+    func rxCocoaErrorForTarget(target: AnyObject) -> RxCocoaObjCRuntimeError {
+        if domain == RXObjCRuntimeErrorDomain {
+            let errorCode = RXObjCRuntimeError(rawValue: self.code) ?? .Unknown
+
+            switch errorCode {
+            case .Unknown:
+                return .Unknown(target: target)
+            case .ObjectMessagesAlreadyBeingIntercepted:
+                let isKVO = (self.userInfo[RXObjCRuntimeErrorIsKVOKey] as? NSNumber)?.boolValue ?? false
+                return .ObjectMessagesAlreadyBeingIntercepted(target: target, interceptionMechanism: isKVO ? .KVO : .Unknown)
+            case .SelectorNotImplemented:
+                return .SelectorNotImplemented(target: target)
+            case .CantInterceptCoreFoundationTollFreeBridgedObjects:
+                return .CantInterceptCoreFoundationTollFreeBridgedObjects(target: target)
+            case .ThreadingCollisionWithOtherInterceptionMechanism:
+                return .ThreadingCollisionWithOtherInterceptionMechanism(target: target)
+            case .SavingOriginalForwardingMethodFailed:
+                return .SavingOriginalForwardingMethodFailed(target: target)
+            case .ReplacingMethodWithForwardingImplementation:
+                return .ReplacingMethodWithForwardingImplementation(target: target)
+            case .ObservingPerformanceSensitiveMessages:
+                return .ObservingPerformanceSensitiveMessages(target: target)
+            case .ObservingMessagesWithUnsupportedReturnType:
+                return .ObservingMessagesWithUnsupportedReturnType(target: target)
+            }
+        }
+
+        return RxCocoaObjCRuntimeError.Unknown(target: target)
+    }
+}
+
+// MARK: Shared with RxSwift
 
 #if !RX_NO_MODULE
 

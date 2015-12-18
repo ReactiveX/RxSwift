@@ -150,8 +150,11 @@ extension ObservableType {
     /**
     Projects each element of an observable sequence into a new form.
     
+    [reactivex.io](http://reactivex.io/documentation/operators/map.html)
+
     - parameter selector: A transform function to apply to each source element.
     - returns: An observable sequence whose elements are the result of invoking the transform function on each element of source.
+     
     */
     @warn_unused_result(message="http://git.io/rxs.uo")
     public func map<R>(selector: E throws -> R)

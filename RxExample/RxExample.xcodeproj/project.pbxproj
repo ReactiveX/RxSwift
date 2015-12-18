@@ -349,7 +349,6 @@
 		C8C46DAC1B47F7110020D71E /* WikipediaSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C46DA71B47F7110020D71E /* WikipediaSearchViewController.swift */; };
 		C8C4B4BF1C17724A00828BD5 /* _RXObjCRuntime.m in Sources */ = {isa = PBXBuildFile; fileRef = C8C4B4BD1C17724A00828BD5 /* _RXObjCRuntime.m */; };
 		C8C4B4CC1C17728200828BD5 /* MessageSentObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C4B4CA1C17728200828BD5 /* MessageSentObserver.swift */; };
-		C8C4B4CD1C17728200828BD5 /* DeallocatingObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C4B4CB1C17728200828BD5 /* DeallocatingObserver.swift */; };
 		C8DF92CD1B0B2F84009BCF9A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8DF92C81B0B2F84009BCF9A /* AppDelegate.swift */; };
 		C8DF92DF1B0B328B009BCF9A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8DF92DE1B0B328B009BCF9A /* AppDelegate.swift */; };
 		C8DF92E31B0B32DA009BCF9A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = C8DF92E01B0B32DA009BCF9A /* LaunchScreen.xib */; };
@@ -779,7 +778,6 @@
 		C8C4B4BD1C17724A00828BD5 /* _RXObjCRuntime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _RXObjCRuntime.m; sourceTree = "<group>"; };
 		C8C4B4BE1C17724A00828BD5 /* _RXObjCRuntime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _RXObjCRuntime.h; sourceTree = "<group>"; };
 		C8C4B4CA1C17728200828BD5 /* MessageSentObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageSentObserver.swift; sourceTree = "<group>"; };
-		C8C4B4CB1C17728200828BD5 /* DeallocatingObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeallocatingObserver.swift; sourceTree = "<group>"; };
 		C8DF92C81B0B2F84009BCF9A /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C8DF92DE1B0B328B009BCF9A /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C8DF92E01B0B32DA009BCF9A /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
@@ -1406,7 +1404,6 @@
 			isa = PBXGroup;
 			children = (
 				C8C4B4CA1C17728200828BD5 /* MessageSentObserver.swift */,
-				C8C4B4CB1C17728200828BD5 /* DeallocatingObserver.swift */,
 				C89465261BC6C2BC0055219D /* ControlTarget.swift */,
 				C89465291BC6C2BC0055219D /* KVOObservable.swift */,
 				C894652A1BC6C2BC0055219D /* KVOObserver.swift */,
@@ -1915,7 +1912,6 @@
 				C89464AD1BC6C2B00055219D /* NopDisposable.swift in Sources */,
 				C84CC5901BDD486300E06A64 /* AsyncLock.swift in Sources */,
 				C8F6A1311BEF9DA3007DF367 /* OperationQueueScheduler.swift in Sources */,
-				C8C4B4CD1C17728200828BD5 /* DeallocatingObserver.swift in Sources */,
 				CBEE77541BD8C7B700AD584C /* ToArray.swift in Sources */,
 				C89465771BC6C2BC0055219D /* NSNotificationCenter+Rx.swift in Sources */,
 				C89465091BC6C2B00055219D /* ReplaySubject.swift in Sources */,
