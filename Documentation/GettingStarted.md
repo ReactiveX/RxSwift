@@ -573,13 +573,18 @@ extension NSURLSession {
     public func rx_response(request: NSURLRequest) -> Observable<(NSData!, NSURLResponse!)> {
         return create { observer in
             let task = self.dataTaskWithRequest(request) { (data, response, error) in
-                if data == nil || response == nil {
-                    observer.on(.Error(error ?? UnknownError))
+                guard let response = response, data = data else {
+                    observer.on(.Error(error ?? RxCocoaURLError.Unknown))
+                    return
                 }
-                else {
-                    observer.on(.Next(data, response))
-                    observer.on(.Completed)
+
+                guard let httpResponse = response as? NSHTTPURLResponse else {
+                    observer.on(.Error(RxCocoaURLError.NonHTTPResponse(response: response)))
+                    return
                 }
+
+                observer.on(.Next(data, httpResponse))
+                observer.on(.Completed)
             }
 
             task.resume()
