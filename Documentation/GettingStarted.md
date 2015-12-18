@@ -764,7 +764,7 @@ When writing elegant RxSwift/RxCocoa code, you are probably relying heavily on c
 
 ```swift
 images = word
-    .filter { $0.rangeOfString("important") != nil }
+    .filter { $0.containsString("important") }
     .flatMap { word in
         return self.api.loadFlickrFeed("karate")
             .catchError { error in
@@ -777,7 +777,7 @@ If compiler reports that there is an error somewhere in this expression, I would
 
 ```swift
 images = word
-    .filter { s -> Bool in s.rangeOfString("important") != nil }
+    .filter { s -> Bool in s.containsString("important") }
     .flatMap { word -> Observable<JSON> in
         return self.api.loadFlickrFeed("karate")
             .catchError { error -> Observable<JSON> in
@@ -790,7 +790,7 @@ If that doesn't work, you can continue adding more type annotations until you've
 
 ```swift
 images = word
-    .filter { (s: String) -> Bool in s.rangeOfString("important") != nil }
+    .filter { (s: String) -> Bool in s.containsString("important") }
     .flatMap { (word: String) -> Observable<JSON> in
         return self.api.loadFlickrFeed("karate")
             .catchError { (error: NSError) -> Observable<JSON> in
