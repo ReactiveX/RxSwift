@@ -120,7 +120,7 @@ self.usernameOutlet.rx_text
     .map { username in
 
         // synchronous validation, nothing special here
-        if count(username) == 0 {
+        if username.isEmpty {
             // Convenience for constructing synchronous result.
             // In case there is mixed synchronous and asychronous code inside the same
             // method, this will construct an async result that is resolved immediatelly.
