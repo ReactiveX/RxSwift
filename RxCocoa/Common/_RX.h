@@ -9,6 +9,12 @@
 #import <Foundation/Foundation.h>
 #import <objc/runtime.h>
 
+/**
+ ################################################################################
+ This file is part of RX private API
+ ################################################################################
+ */
+
 #if        DEBUG
 #   define DLOG(...)         NSLog(__VA_ARGS__)
 #   define ABORT_IN_DEBUG    abort();

@@ -139,18 +139,6 @@ extension NSObject {
 }
 #endif
 
-class DeallocObservable {
-    let _subject = ReplaySubject<Void>.create(bufferSize: 1)
-
-    init() {
-    }
-
-    deinit {
-        _subject.on(.Next(()))
-        _subject.on(.Completed)
-    }
-}
-
 // Dealloc
 extension NSObject {
     
@@ -179,7 +167,7 @@ extension NSObject {
     /**
      Observable sequence of message arguments that completes when object is deallocated.
 
-     In case some an error occurs sequence will fail with `RxCocoaObjCRuntimeError`.
+     In case an error occurs sequence will fail with `RxCocoaObjCRuntimeError`.
      
      In case some argument is `nil`, instance of `NSNull()` will be sent.
 
@@ -230,7 +218,7 @@ extension NSObject {
     When `dealloc` message is sent to `self` one `()` element will be produced and after object is deallocated sequence
     will immediately complete.
      
-    In case some an error occurs sequence will fail with `RxCocoaObjCRuntimeError`.
+    In case an error occurs sequence will fail with `RxCocoaObjCRuntimeError`.
     
     - returns: Observable sequence of object deallocating events.
     */

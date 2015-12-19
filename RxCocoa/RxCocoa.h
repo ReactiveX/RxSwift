@@ -16,7 +16,3 @@ FOUNDATION_EXPORT double RxCocoaVersionNumber;
 
 //! Project version string for RxCocoa.
 FOUNDATION_EXPORT const unsigned char RxCocoaVersionString[];
-
-// In this header, you should import all the public headers of your framework using statements like #import <RxCocoa/PublicHeader.h>
-
-

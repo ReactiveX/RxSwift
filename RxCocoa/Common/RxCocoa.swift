@@ -50,16 +50,23 @@ public enum RxCocoaError
     case CastingError(object: AnyObject, targetType: Any.Type)
 }
 
+#if !DISABLE_SWIZZLING
 /**
 RxCocoa ObjC runtime interception mechanism.
  */
 public enum RxCocoaInterceptionMechanism {
+    /**
+     Unknown message interception mechanism.
+    */
     case Unknown
+    /**
+     Key value observing interception mechanism.
+    */
     case KVO
 }
 
 /**
-RxCocoa ObjC runtime changing errors.
+RxCocoa ObjC runtime modification errors.
  */
 public enum RxCocoaObjCRuntimeError
     : ErrorType
@@ -70,14 +77,14 @@ public enum RxCocoaObjCRuntimeError
     case Unknown(target: AnyObject)
 
     /**
-    If the object is reporting a different class then what it's real class, that means that there is probably
+    If the object is reporting a different class then it's real class, that means that there is probably
     already some interception mechanism in place or something weird is happening.
 
-    Most common case when this would happen is when using KVO (`rx_observe`) and `rx_sentMessage`.
+    The most common case when this would happen is when using a combination of KVO (`rx_observe`) and `rx_sentMessage`.
 
     This error is easily resolved by just using `rx_sentMessage` observing before `rx_observe`.
 
-    The reason why other way around could create issues is because KVO will unregister it's interceptor
+    The reason why the other way around could create issues is because KVO will unregister it's interceptor
     class and restore original class. Unfortunately that will happen no matter was there another interceptor
     subclass registered in hierarchy or not.
 
@@ -140,12 +147,15 @@ public enum RxCocoaObjCRuntimeError
 
     /**
     Message implementation has unsupported return type (for example large struct). The reason why this is a error
-    is because in some cases intercepting sent messages requires replacing with `_objc_msgForward_stret` instead of `_objc_msgForward`.
+    is because in some cases intercepting sent messages requires replacing implementation with `_objc_msgForward_stret` 
+    instead of `_objc_msgForward`.
 
     The unsupported cases should be fairly uncommon.
     */
     case ObservingMessagesWithUnsupportedReturnType(target: AnyObject)
 }
+
+#endif
 
 // MARK: Debug descriptions
 
@@ -172,6 +182,8 @@ public extension RxCocoaError {
         }
     }
 }
+
+#if !DISABLE_SWIZZLING
 
 public extension RxCocoaObjCRuntimeError {
     /**
@@ -201,6 +213,8 @@ public extension RxCocoaObjCRuntimeError {
         }
     }
 }
+
+#endif
 
 // MARK: Error binding policies
 
@@ -286,6 +300,8 @@ func castOrFatalError<T>(value: AnyObject!) -> T {
 let dataSourceNotSet = "DataSource not set"
 let delegateNotSet = "Delegate not set"
 
+#if !DISABLE_SWIZZLING
+
 // MARK: Conversions `NSError` > `RxCocoaObjCRuntimeError`
 
 extension NSError {
@@ -319,6 +335,8 @@ extension NSError {
         return RxCocoaObjCRuntimeError.Unknown(target: target)
     }
 }
+
+#endif
 
 // MARK: Shared with RxSwift
 

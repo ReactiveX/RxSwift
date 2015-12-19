@@ -8,6 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
+/**
+ ################################################################################
+ This file is part of RX private API
+ ################################################################################
+ */
+
 typedef void (^KVOCallback)(id);
 
 // Exists because if written in Swift, reading unowned is disabled during dealloc process
