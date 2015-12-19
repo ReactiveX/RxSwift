@@ -274,7 +274,7 @@ extension ObservableCreationTests {
         let scheduler = TestScheduler(initialClock: 0)
         
         let res = scheduler.start {
-            range(Int.max, 1, scheduler)
+            range(Int.max, count: 1, scheduler: scheduler)
         }
         
         XCTAssertEqual(res.messages, [
@@ -287,7 +287,7 @@ extension ObservableCreationTests {
         let scheduler = TestScheduler(initialClock: 0)
         
         let res = scheduler.start(204) {
-            range(-10, 5, scheduler)
+            range(-10, count: 5, scheduler: scheduler)
         }
         
         XCTAssertEqual(res.messages, [
@@ -304,7 +304,7 @@ extension ObservableCreationTests {
         let scheduler = TestScheduler(initialClock: 0)
         
         let res = scheduler.start(207) {
-            repeatElement(42, scheduler)
+            repeatElement(42, scheduler: scheduler)
         }
         
         XCTAssertEqual(res.messages, [

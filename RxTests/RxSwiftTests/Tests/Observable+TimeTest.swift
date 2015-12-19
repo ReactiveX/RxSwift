@@ -33,7 +33,7 @@ extension ObservableTimeTest {
             ])
 
         let res = scheduler.start {
-            xs.throttle(20, scheduler)
+            xs.throttle(20, scheduler: scheduler)
         }
 
         let correct = [
@@ -66,7 +66,7 @@ extension ObservableTimeTest {
             ])
 
         let res = scheduler.start {
-            xs.throttle(20, scheduler)
+            xs.throttle(20, scheduler: scheduler)
         }
 
         let correct = [
@@ -102,7 +102,7 @@ extension ObservableTimeTest {
             ])
 
         let res = scheduler.start {
-            xs.throttle(40, scheduler)
+            xs.throttle(40, scheduler: scheduler)
         }
 
         let correct = [
@@ -135,7 +135,7 @@ extension ObservableTimeTest {
             ])
 
         let res = scheduler.start {
-            xs.throttle(40, scheduler)
+            xs.throttle(40, scheduler: scheduler)
         }
 
         let correct: [Recorded<Int>] = [
@@ -160,7 +160,7 @@ extension ObservableTimeTest {
             ])
 
         let res = scheduler.start {
-            xs.throttle(10, scheduler)
+            xs.throttle(10, scheduler: scheduler)
         }
 
         let correct: [Recorded<Int>] = [
@@ -185,7 +185,7 @@ extension ObservableTimeTest {
             ])
 
         let res = scheduler.start {
-            xs.throttle(10, scheduler)
+            xs.throttle(10, scheduler: scheduler)
         }
 
         let correct: [Recorded<Int>] = [
@@ -209,7 +209,7 @@ extension ObservableTimeTest {
             ])
 
         let res = scheduler.start {
-            xs.throttle(10, scheduler)
+            xs.throttle(10, scheduler: scheduler)
         }
 
         let correct: [Recorded<Int>] = [
@@ -237,7 +237,7 @@ extension ObservableTimeTest {
             ])
 
         let res = scheduler.start {
-            xs.throttle(20, scheduler)
+            xs.throttle(20, scheduler: scheduler)
         }
 
         let correct: [Recorded<Int>] = [
@@ -262,7 +262,7 @@ extension ObservableTimeTest {
         let start = NSDate()
 
         let a = try! [just(0), never()].toObservable().concat()
-            .throttle(2.0, scheduler)
+            .throttle(2.0, scheduler: scheduler)
             .toBlocking()
             .first()
 
@@ -715,7 +715,7 @@ extension ObservableTimeTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let res = scheduler.start {
-            interval(100, scheduler)
+            interval(100, scheduler: scheduler)
         }
 
         let correct: [Recorded<Int64>] = [
@@ -735,7 +735,7 @@ extension ObservableTimeTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let res = scheduler.start(210) {
-            interval(0, scheduler)
+            interval(0, scheduler: scheduler)
         }
 
         let correct: [Recorded<Int64>] = [
@@ -762,7 +762,7 @@ extension ObservableTimeTest {
 
         OSSpinLockLock(&lock)
 
-        let d = interval(0, scheduler).takeWhile { $0 < 10 } .subscribe(onNext: { t in
+        let d = interval(0, scheduler: scheduler).takeWhile { $0 < 10 } .subscribe(onNext: { t in
             observer.on(.Next(t))
         }, onCompleted: {
             OSSpinLockUnlock(&lock)
@@ -790,7 +790,7 @@ extension ObservableTimeTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let res = scheduler.start {
-            interval(1000, scheduler)
+            interval(1000, scheduler: scheduler)
         }
 
         let correct: [Recorded<Int64>] = [
@@ -806,7 +806,7 @@ extension ObservableTimeTest {
 
         let start = NSDate()
 
-        let a = try! interval(1, scheduler)
+        let a = try! interval(1, scheduler: scheduler)
             .take(2)
             .toBlocking()
             .toArray()
@@ -831,7 +831,7 @@ extension ObservableTimeTest {
         ])
 
         let res = scheduler.start {
-            xs.take(0, scheduler)
+            xs.take(0, scheduler: scheduler)
         }
 
         XCTAssertEqual(res.messages, [
@@ -854,7 +854,7 @@ extension ObservableTimeTest {
             ])
 
         let res = scheduler.start {
-            xs.take(25, scheduler)
+            xs.take(25, scheduler: scheduler)
         }
 
         XCTAssertEqual(res.messages, [
@@ -878,7 +878,7 @@ extension ObservableTimeTest {
             ])
 
         let res = scheduler.start {
-            xs.take(50, scheduler)
+            xs.take(50, scheduler: scheduler)
         }
 
         XCTAssertEqual(res.messages, [
@@ -901,7 +901,7 @@ extension ObservableTimeTest {
             ])
 
         let res = scheduler.start {
-            xs.take(50, scheduler)
+            xs.take(50, scheduler: scheduler)
         }
 
         XCTAssertEqual(res.messages, [
@@ -921,7 +921,7 @@ extension ObservableTimeTest {
             ])
 
         let res = scheduler.start {
-            xs.take(50, scheduler)
+            xs.take(50, scheduler: scheduler)
         }
 
         XCTAssertEqual(res.messages, [
@@ -947,7 +947,7 @@ extension ObservableTimeTest {
             ])
 
         let res = scheduler.start {
-            xs.take(55, scheduler).take(35, scheduler)
+            xs.take(55, scheduler: scheduler).take(35, scheduler: scheduler)
         }
 
         XCTAssertEqual(res.messages, [
@@ -976,7 +976,7 @@ extension ObservableTimeTest {
             ])
 
         let res = scheduler.start {
-            xs.take(35, scheduler)
+            xs.take(35, scheduler: scheduler)
         }
 
         XCTAssertEqual(res.messages, [
@@ -1006,7 +1006,7 @@ extension ObservableTimeTest {
             ])
 
         let res = scheduler.start {
-            xs.delaySubscription(30, scheduler)
+            xs.delaySubscription(30, scheduler: scheduler)
         }
 
         XCTAssertEqual(res.messages, [
@@ -1030,7 +1030,7 @@ extension ObservableTimeTest {
             ])
 
         let res = scheduler.start {
-            xs.delaySubscription(30, scheduler)
+            xs.delaySubscription(30, scheduler: scheduler)
         }
 
         XCTAssertEqual(res.messages, [
@@ -1054,7 +1054,7 @@ extension ObservableTimeTest {
             ])
 
         let res = scheduler.start(291) {
-            xs.delaySubscription(30, scheduler)
+            xs.delaySubscription(30, scheduler: scheduler)
         }
 
         XCTAssertEqual(res.messages, [
@@ -1080,7 +1080,7 @@ extension ObservableTimeTest {
         ])
 
         let res = scheduler.start {
-            xs.skip(0, scheduler)
+            xs.skip(0, scheduler: scheduler)
         }
 
         XCTAssertEqual(res.messages, [
@@ -1104,7 +1104,7 @@ extension ObservableTimeTest {
             ])
 
         let res = scheduler.start {
-            xs.skip(15, scheduler)
+            xs.skip(15, scheduler: scheduler)
         }
 
         XCTAssertEqual(res.messages, [
@@ -1127,7 +1127,7 @@ extension ObservableTimeTest {
             ])
 
         let res = scheduler.start {
-            xs.skip(50, scheduler)
+            xs.skip(50, scheduler: scheduler)
         }
 
         XCTAssertEqual(res.messages, [
@@ -1147,7 +1147,7 @@ extension ObservableTimeTest {
             ])
 
         let res = scheduler.start {
-            xs.skip(50, scheduler)
+            xs.skip(50, scheduler: scheduler)
         }
 
         XCTAssertEqual(res.messages, [
@@ -1166,7 +1166,7 @@ extension ObservableTimeTest {
             ])
 
         let res = scheduler.start {
-            xs.skip(50, scheduler)
+            xs.skip(50, scheduler: scheduler)
         }
 
         XCTAssertEqual(res.messages, [
@@ -1311,7 +1311,7 @@ extension ObservableTimeTest {
     func testBufferWithTimeOrCount_Default() {
         let backgroundScheduler = SerialDispatchQueueScheduler(globalConcurrentQueuePriority: .Default)
         
-        let result = try! range(1, 10, backgroundScheduler)
+        let result = try! range(1, count: 10, scheduler: backgroundScheduler)
             .buffer(timeSpan: 1000, count: 3, scheduler: backgroundScheduler)
             .skip(1)
             .toBlocking()
@@ -1511,7 +1511,7 @@ extension ObservableTimeTest {
     func windowWithTimeOrCount_Default() {
         let backgroundScheduler = SerialDispatchQueueScheduler(globalConcurrentQueuePriority: .Default)
         
-        let result = try! range(1, 10, backgroundScheduler)
+        let result = try! range(1, count: 10, scheduler: backgroundScheduler)
             .window(timeSpan: 1000, count: 3, scheduler: backgroundScheduler)
             .mapWithIndex { (o: Observable<Int>, i: Int) -> Observable<String> in
                 return o.map { (e: Int) -> String in
@@ -1541,7 +1541,7 @@ extension ObservableTimeTest {
             ])
         
         let res = scheduler.start {
-            xs.timeout(200, scheduler)
+            xs.timeout(200, scheduler: scheduler)
         }
         
         XCTAssertEqual(res.messages, [
@@ -1562,7 +1562,7 @@ extension ObservableTimeTest {
             ])
         
         let res = scheduler.start {
-            xs.timeout(200, scheduler)
+            xs.timeout(200, scheduler: scheduler)
         }
         
         XCTAssertEqual(res.messages, [
@@ -1582,7 +1582,7 @@ extension ObservableTimeTest {
             ])
         
         let res = scheduler.start {
-            xs.timeout(1000, scheduler)
+            xs.timeout(1000, scheduler: scheduler)
         }
         
         XCTAssertEqual(res.messages, [])
@@ -1604,7 +1604,7 @@ extension ObservableTimeTest {
             ])
         
         let res = scheduler.start {
-            xs.timeout(30, scheduler)
+            xs.timeout(30, scheduler: scheduler)
         }
         
         XCTAssertEqual(res.messages, [
@@ -1632,7 +1632,7 @@ extension ObservableTimeTest {
             ])
         
         let res = scheduler.start {
-            xs.timeout(30, scheduler)
+            xs.timeout(30, scheduler: scheduler)
         }
         
         XCTAssertEqual(res.messages, [
@@ -1665,7 +1665,7 @@ extension ObservableTimeTest {
             ])
         
         let res = scheduler.start(370) {
-            xs.timeout(40, scheduler)
+            xs.timeout(40, scheduler: scheduler)
         }
         
         XCTAssertEqual(res.messages, [
@@ -1702,7 +1702,7 @@ extension ObservableTimeTest {
             ])
         
         let res = scheduler.start {
-            xs.timeout(100, other: ys, scheduler)
+            xs.timeout(100, other: ys, scheduler: scheduler)
         }
         
         XCTAssertEqual(res.messages, [
@@ -1741,7 +1741,7 @@ extension ObservableTimeTest {
             ])
         
         let res = scheduler.start {
-            xs.timeout(100, other: ys, scheduler)
+            xs.timeout(100, other: ys, scheduler: scheduler)
         }
         
         XCTAssertEqual(res.messages, [
@@ -1778,7 +1778,7 @@ extension ObservableTimeTest {
             ])
         
         let res = scheduler.start {
-            xs.timeout(100, other: ys, scheduler)
+            xs.timeout(100, other: ys, scheduler: scheduler)
         }
         
         XCTAssertEqual(res.messages, [
@@ -1807,7 +1807,7 @@ extension ObservableTimeTest {
             ])
         
         let res = scheduler.start {
-            xs.timeout(100, other: ys, scheduler)
+            xs.timeout(100, other: ys, scheduler: scheduler)
         }
         
         XCTAssertEqual(res.messages, [
@@ -1835,7 +1835,7 @@ extension ObservableTimeTest {
             ])
 
         let res = scheduler.start {
-            xs.timeout(100, other: ys, scheduler)
+            xs.timeout(100, other: ys, scheduler: scheduler)
         }
 
         XCTAssertEqual(res.messages, [
@@ -1863,7 +1863,7 @@ extension ObservableTimeTest {
             ])
         
         let res = scheduler.start {
-            xs.timeout(100, other: ys, scheduler)
+            xs.timeout(100, other: ys, scheduler: scheduler)
         }
         
         XCTAssertEqual(res.messages, [
@@ -1891,7 +1891,7 @@ extension ObservableTimeTest {
             ])
         
         let res = scheduler.start {
-            xs.timeout(100, other: ys, scheduler)
+            xs.timeout(100, other: ys, scheduler: scheduler)
         }
         
         XCTAssertEqual(res.messages, [
@@ -1917,7 +1917,7 @@ extension ObservableTimeTest {
             ])
         
         let res = scheduler.start {
-            xs.timeout(100, other: ys, scheduler)
+            xs.timeout(100, other: ys, scheduler: scheduler)
         }
         
         XCTAssertEqual(res.messages, [
@@ -1951,7 +1951,7 @@ extension ObservableTimeTest {
             ])
         
         let res = scheduler.start {
-            xs.timeout(100, other: ys, scheduler)
+            xs.timeout(100, other: ys, scheduler: scheduler)
         }
         
         XCTAssertEqual(res.messages, [

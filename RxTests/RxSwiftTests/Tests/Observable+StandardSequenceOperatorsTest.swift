@@ -1844,7 +1844,7 @@ extension ObservableStandardSequenceOperatorsTest {
 
         let res = scheduler.start {
             xs.flatMapFirst { (x) in
-                return interval(10, scheduler).map { _ in x } .take(x)
+                return interval(10, scheduler: scheduler).map { _ in x } .take(x)
             }
         }
 
@@ -2477,7 +2477,7 @@ extension ObservableStandardSequenceOperatorsTest {
         
         let res = scheduler.start {
             xs.flatMap { (x) in
-                return interval(10, scheduler).map { _ in x } .take(x)
+                return interval(10, scheduler: scheduler).map { _ in x } .take(x)
             }
         }
         
@@ -3146,7 +3146,7 @@ extension ObservableStandardSequenceOperatorsTest {
         
         let res = scheduler.start {
             xs.flatMapWithIndex { (x, _) in
-                return interval(10, scheduler).map { _ in x } .take(x)
+                return interval(10, scheduler: scheduler).map { _ in x } .take(x)
             }
         }
         

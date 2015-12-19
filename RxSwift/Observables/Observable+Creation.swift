@@ -173,6 +173,11 @@ Generates an observable sequence of integral numbers within a specified range, u
 - returns: An observable sequence that contains a range of sequential integral numbers.
 */
 @warn_unused_result(message="http://git.io/rxs.uo")
+public func range(start: Int, count: Int, scheduler: ImmediateSchedulerType = CurrentThreadScheduler.instance) -> Observable<Int> {
+    return RangeProducer<Int>(start: start, count: count, scheduler: scheduler)
+}
+
+@available(*, deprecated=2.0.0, message="Please use version with named count, scheduler parameters.")
 public func range(start: Int, _ count: Int, _ scheduler: ImmediateSchedulerType = CurrentThreadScheduler.instance) -> Observable<Int> {
     return RangeProducer<Int>(start: start, count: count, scheduler: scheduler)
 }
@@ -185,6 +190,11 @@ Generates an observable sequence that repeats the given element infinitely, usin
 - returns: An observable sequence that repeats the given element infinitely.
 */
 @warn_unused_result(message="http://git.io/rxs.uo")
+public func repeatElement<E>(element: E, scheduler: ImmediateSchedulerType) -> Observable<E> {
+    return RepeatElement(element: element, scheduler: scheduler)
+}
+
+@available(*, deprecated=2.0.0, message="Please use version with named scheduler parameter.")
 public func repeatElement<E>(element: E, _ scheduler: ImmediateSchedulerType) -> Observable<E> {
     return RepeatElement(element: element, scheduler: scheduler)
 }

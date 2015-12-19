@@ -670,7 +670,7 @@ extension DriverTest {
 extension DriverTest {
     func testAsDriver_debounce() {
         let hotObservable = BackgroundThreadPrimitiveHotObservable<Int>()
-        let driver = hotObservable.asDriver(onErrorJustReturn: -1).debounce(0.0, MainScheduler.sharedInstance)
+        let driver = hotObservable.asDriver(onErrorJustReturn: -1).debounce(0.0, scheduler: MainScheduler.sharedInstance)
 
         let results = subscribeTwiceOnBackgroundSchedulerAndOnlyOneSubscription(driver) {
             XCTAssertTrue(hotObservable.subscriptions == [SubscribedToHotObservable])
@@ -685,7 +685,7 @@ extension DriverTest {
 
     func testAsDriver_throttle() {
         let hotObservable = BackgroundThreadPrimitiveHotObservable<Int>()
-        let driver = hotObservable.asDriver(onErrorJustReturn: -1).throttle(0.0, MainScheduler.sharedInstance)
+        let driver = hotObservable.asDriver(onErrorJustReturn: -1).throttle(0.0, scheduler: MainScheduler.sharedInstance)
 
         let results = subscribeTwiceOnBackgroundSchedulerAndOnlyOneSubscription(driver) {
             XCTAssertTrue(hotObservable.subscriptions == [SubscribedToHotObservable])

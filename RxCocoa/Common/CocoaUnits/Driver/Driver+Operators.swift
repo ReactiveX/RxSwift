@@ -277,14 +277,23 @@ extension DriverConvertibleType {
     - returns: The throttled sequence.
     */
     @warn_unused_result(message="http://git.io/rxs.uo")
-    public func throttle<S: SchedulerType>(dueTime: S.TimeInterval, _ scheduler: S)
+    public func throttle<S: SchedulerType>(dueTime: S.TimeInterval, scheduler: S)
         -> Driver<E> {
         let source = self.asObservable()
-            .throttle(dueTime, scheduler)
+            .throttle(dueTime, scheduler: scheduler)
 
         return Driver(source)
     }
-    
+
+    @available(*, deprecated=2.0.0, message="Please use version with named scheduler parameter.")
+    public func throttle<S: SchedulerType>(dueTime: S.TimeInterval, _ scheduler: S)
+        -> Driver<E> {
+        let source = self.asObservable()
+            .throttle(dueTime, scheduler: scheduler)
+
+        return Driver(source)
+    }
+
     /**
     Ignores elements from an observable sequence which are followed by another element within a specified relative time duration, using the specified scheduler to run throttling timers.
     
@@ -295,10 +304,19 @@ extension DriverConvertibleType {
     - returns: The throttled sequence.
     */
     @warn_unused_result(message="http://git.io/rxs.uo")
+    public func debounce<S: SchedulerType>(dueTime: S.TimeInterval, scheduler: S)
+        -> Driver<E> {
+        let source = self.asObservable()
+            .debounce(dueTime, scheduler: scheduler)
+
+        return Driver(source)
+    }
+
+    @available(*, deprecated=2.0.0, message="Please use version with named scheduler parameter.")
     public func debounce<S: SchedulerType>(dueTime: S.TimeInterval, _ scheduler: S)
         -> Driver<E> {
         let source = self.asObservable()
-            .debounce(dueTime, scheduler)
+            .debounce(dueTime, scheduler: scheduler)
 
         return Driver(source)
     }

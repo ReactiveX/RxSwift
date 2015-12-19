@@ -47,7 +47,7 @@ class WikipediaSearchViewController: ViewController {
 
         searchBar.rx_text
             .asDriver()
-            .throttle(0.3, scheduler)
+            .throttle(0.3, scheduler: scheduler)
             .distinctUntilChanged()
             .flatMapLatest { query in
                 API.getSearchResults(query)

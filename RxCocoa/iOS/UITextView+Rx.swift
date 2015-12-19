@@ -43,7 +43,7 @@ extension UITextView {
             // Event needs to happen after text is changed. This is kind of a hacky way, but
             // don't know any other way for now.
             let throttledAnyOtherEvent = anyOtherEvent
-                .throttle(0, MainScheduler.sharedInstance)
+                .throttle(0, scheduler: MainScheduler.sharedInstance)
                 .takeUntil(self?.rx_deallocated ?? just())
 
             return sequenceOf(textChangedEvent.map { _ in () }, throttledAnyOtherEvent)

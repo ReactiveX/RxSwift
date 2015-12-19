@@ -106,7 +106,7 @@ class GitHubDefaultAPI : GitHubAPI {
         let signupResult = arc4random() % 5 == 0 ? false : true
         return just(signupResult)
             .concat(never())
-            .throttle(2, MainScheduler.sharedInstance)
+            .throttle(2, scheduler: MainScheduler.sharedInstance)
             .take(1)
     }
 }

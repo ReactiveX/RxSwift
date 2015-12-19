@@ -1107,7 +1107,7 @@ extension ObservableSingleTest {
                         return failWith(e)
                     }
 
-                    return timer(a * 50, scheduler)
+                    return timer(a * 50, scheduler: scheduler)
                 }
             }
         }
