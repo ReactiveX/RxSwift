@@ -23,6 +23,12 @@ extension ObservableType {
     - returns: An observable sequence containing a single element with the final accumulator value.
     */
     @warn_unused_result(message="http://git.io/rxs.uo")
+    public func reduce<A, R>(seed: A, accumulator: (A, E) throws -> A, mapResult: (A) throws -> R)
+        -> Observable<R> {
+        return Reduce(source: self.asObservable(), seed: seed, accumulator: accumulator, mapResult: mapResult)
+    }
+
+    @available(*, deprecated=2.0.0, message="Please use version with named accumulator parameter.")
     public func reduce<A, R>(seed: A, _ accumulator: (A, E) throws -> A, mapResult: (A) throws -> R)
         -> Observable<R> {
         return Reduce(source: self.asObservable(), seed: seed, accumulator: accumulator, mapResult: mapResult)
@@ -38,11 +44,11 @@ extension ObservableType {
     - returns: An observable sequence containing a single element with the final accumulator value.
     */
     @warn_unused_result(message="http://git.io/rxs.uo")
-    public func reduce<A>(seed: A, _ accumulator: (A, E) throws -> A)
+    public func reduce<A>(seed: A, accumulator: (A, E) throws -> A)
         -> Observable<A> {
         return Reduce(source: self.asObservable(), seed: seed, accumulator: accumulator, mapResult: { $0 })
     }
-    
+
     /**
     Converts an Observable into another Observable that emits the whole sequence as a single array and then terminates.
     
