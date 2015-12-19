@@ -108,7 +108,7 @@ public protocol DelegateProxyType : AnyObject {
     /**
     Returns designated delegate property for object.
     
-    Objects can have mutltiple delegate properties.
+    Objects can have multiple delegate properties.
     
     Each delegate property needs to have it's own type implementing `DelegateProxyType`.
     
@@ -120,7 +120,7 @@ public protocol DelegateProxyType : AnyObject {
     /**
     Sets designated delegate property for object.
     
-    Objects can have mutltiple delegate properties.
+    Objects can have multiple delegate properties.
     
     Each delegate property needs to have it's own type implementing `DelegateProxyType`.
     
