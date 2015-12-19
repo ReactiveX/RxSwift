@@ -64,14 +64,14 @@ done
 #make sure all iOS tests pass
 for configuration in ${CONFIGURATIONS[@]}
 do
-	rx "RxTests-iOS" ${configuration} $DEFAULT_IOS9_SIMULATOR test
+	rx "AllRxTests-iOS" ${configuration} $DEFAULT_IOS9_SIMULATOR test
 done
 
 #make sure all tvOS tests pass
 if [ $TV_OS -eq 1 ]; then
 	for configuration in ${CONFIGURATIONS[@]}
 	do
-		rx "RxTests-tvOS" ${configuration} $DEFAULT_TVOS_SIMULATOR test
+		rx "AllTests-tvOS" ${configuration} $DEFAULT_TVOS_SIMULATOR test
 	done
 fi
 
@@ -85,7 +85,7 @@ fi
 #make sure all OSX tests pass
 for configuration in ${CONFIGURATIONS[@]}
 do
-	rx "RxTests-OSX" ${configuration} "" test
+	rx "AllTests-OSX" ${configuration} "" test
 done
 
 # make sure no module can be built

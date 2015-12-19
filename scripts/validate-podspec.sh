@@ -20,6 +20,7 @@ pushd Specs
 mkdir -p RxSwift/${VERSION}
 mkdir -p RxCocoa/${VERSION}
 mkdir -p RxBlocking/${VERSION}
+mkdir -p RxTests/${VERSION}
 
 popd
 popd
@@ -33,6 +34,10 @@ sed -E "s/s.source[^\}]+\}/s.source           = { :git => '\/Users\/kzaher\/Proj
 cat RxBlocking.podspec |
 sed -E "s/s.source[^\}]+\}/s.source           = { :git => '\/Users\/kzaher\/Projects\/Rx', :branch => \'develop\' }/" > ~/.cocoapods/repos/master/Specs/RxBlocking/${VERSION}/RxBlocking.podspec
 
+cat RxTests.podspec |
+sed -E "s/s.source[^\}]+\}/s.source           = { :git => '\/Users\/kzaher\/Projects\/Rx', :branch => \'develop\' }/" > ~/.cocoapods/repos/master/Specs/RxTests/${VERSION}/RxTests.podspec
+
 pod lib lint RxSwift.podspec
 pod lib lint RxCocoa.podspec
 pod lib lint RxBlocking.podspec
+pod lib lint RxTests.podspec

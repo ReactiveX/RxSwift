@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "C88FA5301C25C4CC00CCFEA4"
-               BuildableName = "RxTests-watchOS.framework"
+               BuildableName = "RxTests.framework"
                BlueprintName = "RxTests-watchOS"
                ReferencedContainer = "container:Rx.xcodeproj">
             </BuildableReference>
@@ -46,7 +46,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C88FA5301C25C4CC00CCFEA4"
-            BuildableName = "RxTests-watchOS.framework"
+            BuildableName = "RxTests.framework"
             BlueprintName = "RxTests-watchOS"
             ReferencedContainer = "container:Rx.xcodeproj">
          </BuildableReference>
@@ -64,7 +64,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C88FA5301C25C4CC00CCFEA4"
-            BuildableName = "RxTests-watchOS.framework"
+            BuildableName = "RxTests.framework"
             BlueprintName = "RxTests-watchOS"
             ReferencedContainer = "container:Rx.xcodeproj">
          </BuildableReference>

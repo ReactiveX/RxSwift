@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "C88FA50E1C25C4B500CCFEA4"
-               BuildableName = "RxTests-OSX.framework"
+               BuildableName = "RxTests.framework"
                BlueprintName = "RxTests-OSX"
                ReferencedContainer = "container:Rx.xcodeproj">
             </BuildableReference>
@@ -46,7 +46,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C88FA50E1C25C4B500CCFEA4"
-            BuildableName = "RxTests-OSX.framework"
+            BuildableName = "RxTests.framework"
             BlueprintName = "RxTests-OSX"
             ReferencedContainer = "container:Rx.xcodeproj">
          </BuildableReference>
@@ -64,7 +64,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C88FA50E1C25C4B500CCFEA4"
-            BuildableName = "RxTests-OSX.framework"
+            BuildableName = "RxTests.framework"
             BlueprintName = "RxTests-OSX"
             ReferencedContainer = "container:Rx.xcodeproj">
          </BuildableReference>

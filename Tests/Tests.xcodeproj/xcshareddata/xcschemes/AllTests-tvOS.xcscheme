@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0710"
+   LastUpgradeVersion = "0720"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -11,19 +11,19 @@
             buildForRunning = "YES"
             buildForProfiling = "NO"
             buildForArchiving = "NO"
-            buildForAnalyzing = "YES">
+            buildForAnalyzing = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "C88BB88F1B07E64B0064D411"
+               BlueprintIdentifier = "D2EBEB481BB9B7AE003A27DC"
                BuildableName = "RxTests.xctest"
-               BlueprintName = "RxAllTests-OSX"
-               ReferencedContainer = "container:RxTests.xcodeproj">
+               BlueprintName = "AllTests-tvOS"
+               ReferencedContainer = "container:Tests.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
-      buildConfiguration = "Release"
+      buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
@@ -32,22 +32,13 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "C88BB88F1B07E64B0064D411"
+               BlueprintIdentifier = "D2EBEB481BB9B7AE003A27DC"
                BuildableName = "RxTests.xctest"
-               BlueprintName = "RxAllTests-OSX"
-               ReferencedContainer = "container:RxTests.xcodeproj">
+               BlueprintName = "AllTests-tvOS"
+               ReferencedContainer = "container:Tests.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "C88BB88F1B07E64B0064D411"
-            BuildableName = "RxTests.xctest"
-            BlueprintName = "RxAllTests-OSX"
-            ReferencedContainer = "container:RxTests.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>
@@ -64,10 +55,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "C88BB88F1B07E64B0064D411"
+            BlueprintIdentifier = "D2EBEB481BB9B7AE003A27DC"
             BuildableName = "RxTests.xctest"
-            BlueprintName = "RxAllTests-OSX"
-            ReferencedContainer = "container:RxTests.xcodeproj">
+            BlueprintName = "AllTests-tvOS"
+            ReferencedContainer = "container:Tests.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -82,10 +73,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "C88BB88F1B07E64B0064D411"
+            BlueprintIdentifier = "D2EBEB481BB9B7AE003A27DC"
             BuildableName = "RxTests.xctest"
-            BlueprintName = "RxAllTests-OSX"
-            ReferencedContainer = "container:RxTests.xcodeproj">
+            BlueprintName = "AllTests-tvOS"
+            ReferencedContainer = "container:Tests.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>
