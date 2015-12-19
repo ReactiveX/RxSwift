@@ -8,6 +8,12 @@
 
 import Foundation
 
+let dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"
+
+func logEvent(idenfifier: String, dateFormat: NSDateFormatter, content: String) {
+    print("\(dateFormat.stringFromDate(NSDate())): [\(idenfifier)] -> \(content)")
+}
+
 class Debug_<O: ObserverType> : Sink<O>, ObserverType {
     typealias Element = O.E
     typealias Parent = Debug<Element>
@@ -17,7 +23,10 @@ class Debug_<O: ObserverType> : Sink<O>, ObserverType {
     
     init(parent: Parent, observer: O) {
         _parent = parent
-        _timestampFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"
+        _timestampFormatter.dateFormat = dateFormat
+
+        logEvent(_parent._identifier, dateFormat: _timestampFormatter, content: "subscribed")
+
         super.init(observer: observer)
     }
     
@@ -28,12 +37,12 @@ class Debug_<O: ObserverType> : Sink<O>, ObserverType {
             ? String(eventText.characters.prefix(maxEventTextLength / 2)) + "..." + String(eventText.characters.suffix(maxEventTextLength / 2))
             : eventText
 
-        print("\(_timestampFormatter.stringFromDate(NSDate())): [\(_parent._identifier)] -> Event \(eventNormalized)")
+        logEvent(_parent._identifier, dateFormat: _timestampFormatter, content: "Event \(eventNormalized)")
         forwardOn(event)
     }
     
     override func dispose() {
-        print("\(_timestampFormatter.stringFromDate(NSDate())): [\(_parent._identifier)] dispose")
+        logEvent(_parent._identifier, dateFormat: _timestampFormatter, content: "disposed")
         super.dispose()
     }
 }
@@ -42,14 +51,18 @@ class Debug<Element> : Producer<Element> {
     private let _identifier: String
     
     private let _source: Observable<Element>
-    
-    init(source: Observable<Element>, identifier: String) {
-        _identifier = identifier
+
+    init(source: Observable<Element>, identifier: String?, file: String, line: Int, function: String) {
+        if let identifier = identifier {
+            _identifier = identifier
+        }
+        else {
+            _identifier = "\(file):\(line) (\(function))"
+        }
         _source = source
     }
     
     override func run<O: ObserverType where O.E == Element>(observer: O) -> Disposable {
-        print("[\(_identifier)] subscribed")
         let sink = Debug_(parent: self, observer: observer)
         sink.disposable = _source.subscribe(sink)
         return sink
