@@ -11,7 +11,7 @@ import Foundation
 let dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"
 
 func logEvent(idenfifier: String, dateFormat: NSDateFormatter, content: String) {
-    print("\(dateFormat.stringFromDate(NSDate())): [\(idenfifier)] -> \(content)")
+    print("\(dateFormat.stringFromDate(NSDate())): \(idenfifier) -> \(content)")
 }
 
 class Debug_<O: ObserverType> : Sink<O>, ObserverType {
@@ -57,7 +57,14 @@ class Debug<Element> : Producer<Element> {
             _identifier = identifier
         }
         else {
-            _identifier = "\(file):\(line) (\(function))"
+            let trimmedFile: String
+            if let lastIndex = file.rangeOfString("/", options: .BackwardsSearch) {
+                trimmedFile = file.substringFromIndex(lastIndex.endIndex)
+            }
+            else {
+                trimmedFile = file
+            }
+            _identifier = "\(trimmedFile):\(line) (\(function))"
         }
         _source = source
     }
