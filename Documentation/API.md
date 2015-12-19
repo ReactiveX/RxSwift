@@ -137,13 +137,13 @@ extension NSObject {
 ```swift
 extension NSURLSession {
 
-    public func rx_response(request: NSURLRequest) -> Observable<(NSData!, NSURLResponse!)> {}
+    public func rx_response(request: NSURLRequest) -> Observable<(NSData, NSURLResponse)> {}
 
     public func rx_data(request: NSURLRequest) -> Observable<NSData> {}
 
-    public func rx_JSON(request: NSURLRequest) -> Observable<AnyObject!> {}
+    public func rx_JSON(request: NSURLRequest) -> Observable<AnyObject> {}
 
-    public func rx_JSON(URL: NSURL) -> Observable<AnyObject!> {}
+    public func rx_JSON(URL: NSURL) -> Observable<AnyObject> {}
 
 }
 ```
@@ -169,33 +169,33 @@ extension CLLocationManager {
 
     public var rx_delegate: DelegateProxy {}
 
-    public var rx_didUpdateLocations: Observable<[CLLocation]!> {}
+    public var rx_didUpdateLocations: Observable<[CLLocation]> {}
 
-    public var rx_didFailWithError: Observable<NSError!> {}
+    public var rx_didFailWithError: Observable<NSError> {}
 
-    public var rx_didFinishDeferredUpdatesWithError: Observable<NSError!> {}
+    public var rx_didFinishDeferredUpdatesWithError: Observable<NSError> {}
 
     public var rx_didPauseLocationUpdates: Observable<Void> {}
 
     public var rx_didResumeLocationUpdates: Observable<Void> {}
 
-    public var rx_didUpdateHeading: Observable<CLHeading!> {}
+    public var rx_didUpdateHeading: Observable<CLHeading> {}
 
-    public var rx_didEnterRegion: Observable<CLRegion!> {}
+    public var rx_didEnterRegion: Observable<CLRegion> {}
 
-    public var rx_didExitRegion: Observable<CLRegion!> {}
+    public var rx_didExitRegion: Observable<CLRegion> {}
 
-    public var rx_didDetermineStateForRegion: Observable<(state: CLRegionState, region: CLRegion!)> {}
+    public var rx_didDetermineStateForRegion: Observable<(state: CLRegionState, region: CLRegion)> {}
 
-    public var rx_monitoringDidFailForRegionWithError: Observable<(region: CLRegion!, error: NSError!)> {}
+    public var rx_monitoringDidFailForRegionWithError: Observable<(region: CLRegion?, error: NSError)> {}
 
-    public var rx_didStartMonitoringForRegion: Observable<CLRegion!> {}
+    public var rx_didStartMonitoringForRegion: Observable<CLRegion> {}
 
-    public var rx_didRangeBeaconsInRegion: Observable<(beacons: [CLBeacon]!, region: CLBeaconRegion!)> {}
+    public var rx_didRangeBeaconsInRegion: Observable<(beacons: [CLBeacon], region: CLBeaconRegion)> {}
 
-    public var rx_rangingBeaconsDidFailForRegionWithError: Observable<(region: CLBeaconRegion!, error: NSError!)> {}
+    public var rx_rangingBeaconsDidFailForRegionWithError: Observable<(region: CLBeaconRegion, error: NSError)> {}
 
-    public var rx_didVisit: Observable<CLVisit!> {}
+    public var rx_didVisit: Observable<CLVisit> {}
 
     public var rx_didChangeAuthorizationStatus: Observable<CLAuthorizationStatus> {}
 
@@ -272,7 +272,7 @@ extension UIImageView {
 
     public var rx_image: ObserverOf<UIImage!> {}
 
-    public func rx_imageAnimated(animated: Bool) -> ObserverOf<UIImage!> {}
+    public func rx_imageAnimated(transitionType: String?) -> AnyObserver<UIImage?>
 
 }
 ```
@@ -443,9 +443,9 @@ extension NSButton {
 ```swift
 extension NSImageView {
 
-    public var rx_image: ObserverOf<NSImage!> {}
+    public var rx_image: ObserverOf<NSImage?> {}
 
-    public func rx_imageAnimated(animated: Bool) -> ObserverOf<NSImage!> {}
+    public func rx_imageAnimated(transitionType: String?) -> AnyObserver<NSImage?>
 }
 ```
 

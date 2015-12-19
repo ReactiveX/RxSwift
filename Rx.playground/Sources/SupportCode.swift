@@ -25,7 +25,7 @@ public func playgroundShouldContinueIndefinitely() {
 import XCPlayground
 
 public func playgroundShouldContinueIndefinitely() {
-    XCPSetExecutionShouldContinueIndefinitely(true)
+    XCPlaygroundPage.currentPage.needsIndefiniteExecution = true
 }
 
 #endif

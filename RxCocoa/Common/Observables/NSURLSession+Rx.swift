@@ -74,7 +74,7 @@ func convertURLRequestToCurlCommand(request: NSURLRequest) -> String {
         returnValue += "-H \"\(escapedKey): \(escapedValue)\" "
     }
 
-    let URLString = request.URL?.absoluteString ?? "<unkown url>"
+    let URLString = request.URL?.absoluteString ?? "<unknown url>"
 
     returnValue += "\"\(escapeTerminalString(URLString))\""
 
@@ -204,8 +204,8 @@ extension NSURLSession {
     - returns: Observable sequence of response JSON.
     */
     @warn_unused_result(message="http://git.io/rxs.uo")
-    public func rx_JSON(request: NSURLRequest) -> Observable<AnyObject!> {
-        return rx_data(request).map { (data) -> AnyObject! in
+    public func rx_JSON(request: NSURLRequest) -> Observable<AnyObject> {
+        return rx_data(request).map { (data) -> AnyObject in
             do {
                 return try NSJSONSerialization.JSONObjectWithData(data ?? NSData(), options: [])
             } catch let error {
@@ -232,7 +232,7 @@ extension NSURLSession {
     - returns: Observable sequence of response JSON.
     */
     @warn_unused_result(message="http://git.io/rxs.uo")
-    public func rx_JSON(URL: NSURL) -> Observable<AnyObject!> {
+    public func rx_JSON(URL: NSURL) -> Observable<AnyObject> {
         return rx_JSON(NSURLRequest(URL: URL))
     }
 }
