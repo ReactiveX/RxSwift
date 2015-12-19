@@ -44,10 +44,10 @@ public enum RxCocoaError
     Error during swizzling.
     */
     case ErrorDuringSwizzling
-    /**
-    Object doesn't respond to message.
-    */
-    case ObjectDoesntRespondToMessage
+    /*
+     Casting error.
+     */
+    case CastingError(object: AnyObject, targetType: Any.Type)
 }
 
 /**
@@ -167,8 +167,8 @@ public extension RxCocoaError {
             return "Unobservable object `\(object)` was observed as `\(propertyName)` of `\(sourceObject)`."
         case .ErrorDuringSwizzling:
             return "Error during swizzling."
-        case .ObjectDoesntRespondToMessage:
-            return "Object doesn't respond to message."
+        case .CastingError(let object, let targetType):
+            return "Error casting `\(object)` to `\(targetType)`"
         }
     }
 }
@@ -224,11 +224,11 @@ func bindingErrorToVariable(error: ErrorType) {
 
 // MARK: Abstract methods
 
-func rxAbstractMethodWithMessage<T>(message: String) -> T {
+@noreturn func rxAbstractMethodWithMessage(message: String) {
     rxFatalError(message)
 }
 
-func rxAbstractMethod<T>() -> T {
+@noreturn func rxAbstractMethod() {
     rxFatalError("Abstract method")
 }
 
@@ -241,6 +241,26 @@ func castOptionalOrFatalError<T>(value: AnyObject?) -> T? {
     }
     let v: T = castOrFatalError(value)
     return v
+}
+
+func castOrThrow<T>(resultType: T.Type, _ object: AnyObject) throws -> T {
+    guard let returnValue = object as? T else {
+        throw RxCocoaError.CastingError(object: object, targetType: resultType)
+    }
+
+    return returnValue
+}
+
+func castOptionalOrThrow<T>(resultType: T.Type, _ object: AnyObject) throws -> T? {
+    if NSNull().isEqual(object) {
+        return nil
+    }
+
+    guard let returnValue = object as? T else {
+        throw RxCocoaError.CastingError(object: object, targetType: resultType)
+    }
+
+    return returnValue
 }
 
 func castOrFatalError<T>(value: AnyObject!, message: String) -> T {

@@ -915,6 +915,25 @@ extension ObservableMultipleTest {
     }
 }
 
+// this generates
+// [generator(0), [generator(1), [generator(2), ..].concat()].concat()].concat()
+func generateCollection<T>(startIndex: Int, _ generator: Int -> Observable<T>) -> Observable<T> {
+    let all = [0, 1].lazy.map { i in
+        return i == 0 ? generator(startIndex) : generateCollection(startIndex + 1, generator)
+    }
+    return all.concat()
+}
+
+// this generates
+// [generator(0), [generator(1), [generator(2), ..].concat()].concat()].concat()
+// This should
+func generateSequence<T>(startIndex: Int, _ generator: Int -> Observable<T>) -> Observable<T> {
+    let all = AnySequence([0, 1].lazy.map { i in
+        return i == 0 ? generator(startIndex) : generateSequence(startIndex + 1, generator)
+    })
+    return all.concat()
+}
+
 // MARK: concat
 extension ObservableMultipleTest {
     func testConcat_DefaultScheduler() {
@@ -1501,6 +1520,34 @@ extension ObservableMultipleTest {
             ])
         
     }
+
+#if DEBUG || TRACE_RESOURCES
+    func testConcat_TailRecursionCollection() {
+        maxTailRecursiveSinkStackSize = 0
+        let elements = try! generateCollection(0) { i in
+                just(i, scheduler: CurrentThreadScheduler.instance)
+            }
+            .take(10000)
+            .toBlocking()
+            .toArray()
+
+        XCTAssertEqual(elements, Array(0 ..< 10000))
+        XCTAssertEqual(maxTailRecursiveSinkStackSize, 1)
+    }
+
+    func testConcat_TailRecursionSequence() {
+        maxTailRecursiveSinkStackSize = 0
+        let elements = try! generateSequence(0) { i in
+                just(i, scheduler: CurrentThreadScheduler.instance)
+            }
+            .take(10000)
+            .toBlocking()
+            .toArray()
+
+        XCTAssertEqual(elements, Array(0 ..< 10000))
+        XCTAssertTrue(maxTailRecursiveSinkStackSize > 1000)
+    }
+#endif
 }
 
 // MARK: merge

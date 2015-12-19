@@ -282,7 +282,7 @@ extension ObservableBindingTest {
             error(600, testError)
             ])
         
-        var ys: ConnectableObservable<ReplaySubject<Int>>! = nil
+        var ys: ConnectableObservable<Int>! = nil
         var subscription: Disposable! = nil
         var connection: Disposable! = nil
         let res = scheduler.createObserver(Int)
@@ -336,7 +336,7 @@ extension ObservableBindingTest {
             error(600, testError)
             ])
         
-        var ys: ConnectableObservable<ReplaySubject<Int>>! = nil
+        var ys: ConnectableObservable<Int>! = nil
         var subscription: Disposable! = nil
         var connection: Disposable! = nil
         let res = scheduler.createObserver(Int)
@@ -388,7 +388,7 @@ extension ObservableBindingTest {
             completed(600)
             ])
         
-        var ys: ConnectableObservable<ReplaySubject<Int>>! = nil
+        var ys: ConnectableObservable<Int>! = nil
         var subscription: Disposable! = nil
         var connection: Disposable! = nil
         let res = scheduler.createObserver(Int)
@@ -440,7 +440,7 @@ extension ObservableBindingTest {
             completed(600)
             ])
         
-        var ys: ConnectableObservable<ReplaySubject<Int>>! = nil
+        var ys: ConnectableObservable<Int>! = nil
         var subscription: Disposable! = nil
         var connection: Disposable! = nil
         let res = scheduler.createObserver(Int)
@@ -493,7 +493,7 @@ extension ObservableBindingTest {
             error(600, testError)
             ])
         
-        var ys: ConnectableObservable<ReplaySubject<Int>>! = nil
+        var ys: ConnectableObservable<Int>! = nil
         var subscription: Disposable! = nil
         var connection: Disposable! = nil
         let res = scheduler.createObserver(Int)
@@ -545,7 +545,7 @@ extension ObservableBindingTest {
             error(600, testError)
             ])
         
-        var ys: ConnectableObservable<ReplaySubject<Int>>! = nil
+        var ys: ConnectableObservable<Int>! = nil
         var subscription: Disposable! = nil
         var connection: Disposable! = nil
         let res = scheduler.createObserver(Int)
@@ -595,7 +595,7 @@ extension ObservableBindingTest {
             completed(600)
             ])
         
-        var ys: ConnectableObservable<ReplaySubject<Int>>! = nil
+        var ys: ConnectableObservable<Int>! = nil
         var subscription: Disposable! = nil
         var connection: Disposable! = nil
         let res = scheduler.createObserver(Int)
@@ -645,7 +645,7 @@ extension ObservableBindingTest {
             completed(600)
             ])
         
-        var ys: ConnectableObservable<ReplaySubject<Int>>! = nil
+        var ys: ConnectableObservable<Int>! = nil
         var subscription: Disposable! = nil
         var connection: Disposable! = nil
         let res = scheduler.createObserver(Int)
@@ -696,7 +696,7 @@ extension ObservableBindingTest {
 			error(600, testError)
 			])
 		
-		var ys: ConnectableObservable<ReplaySubject<Int>>! = nil
+		var ys: ConnectableObservable<Int>! = nil
 		var subscription: Disposable! = nil
 		var connection: Disposable! = nil
 		let res = scheduler.createObserver(Int)
@@ -755,7 +755,7 @@ extension ObservableBindingTest {
 			error(600, testError)
 			])
 		
-		var ys: ConnectableObservable<ReplaySubject<Int>>! = nil
+		var ys: ConnectableObservable<Int>! = nil
 		var subscription: Disposable! = nil
 		var connection: Disposable! = nil
 		let res = scheduler.createObserver(Int)
@@ -808,7 +808,7 @@ extension ObservableBindingTest {
 			completed(600)
 			])
 		
-		var ys: ConnectableObservable<ReplaySubject<Int>>! = nil
+		var ys: ConnectableObservable<Int>! = nil
 		var subscription: Disposable! = nil
 		var connection: Disposable! = nil
 		let res = scheduler.createObserver(Int)
@@ -861,7 +861,7 @@ extension ObservableBindingTest {
 			completed(600)
 			])
 		
-		var ys: ConnectableObservable<ReplaySubject<Int>>! = nil
+		var ys: ConnectableObservable<Int>! = nil
 		var subscription: Disposable! = nil
 		var connection: Disposable! = nil
 		let res = scheduler.createObserver(Int)

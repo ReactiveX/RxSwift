@@ -24,8 +24,8 @@ extension ObservableType {
     */
     @warn_unused_result(message="http://git.io/rxs.uo")
     public func multicast<S: SubjectType where S.SubjectObserverType.E == E>(subject: S)
-        -> ConnectableObservable<S> {
-        return ConnectableObservable(source: self.asObservable(), subject: subject)
+        -> ConnectableObservable<S.E> {
+        return ConnectableObservableAdapter(source: self.asObservable(), subject: subject)
     }
 
     /**
@@ -62,7 +62,7 @@ extension ObservableType {
     - returns: A connectable observable sequence that shares a single subscription to the underlying sequence.
     */
     @warn_unused_result(message="http://git.io/rxs.uo")
-    public func publish() -> ConnectableObservable<PublishSubject<E>> {
+    public func publish() -> ConnectableObservable<E> {
         return self.multicast(PublishSubject())
     }
 }
@@ -81,7 +81,7 @@ extension ObservableType {
     */
     @warn_unused_result(message="http://git.io/rxs.uo")
     public func replay(bufferSize: Int)
-        -> ConnectableObservable<ReplaySubject<E>> {
+        -> ConnectableObservable<E> {
         return self.multicast(ReplaySubject.create(bufferSize: bufferSize))
     }
 	
@@ -94,8 +94,8 @@ extension ObservableType {
 	*/
 	@warn_unused_result(message="http://git.io/rxs.uo")
 	public func replayAll()
-		-> ConnectableObservable<ReplaySubject<E>> {
-			return self.multicast(ReplaySubject.createUnbounded())
+		-> ConnectableObservable<E> {
+        return self.multicast(ReplaySubject.createUnbounded())
 	}
 }
 

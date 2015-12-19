@@ -30,7 +30,7 @@ class _RxTableViewReactiveArrayDataSource: NSObject, UITableViewDataSource {
     }
 
     func _tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        return rxAbstractMethod()
+        rxAbstractMethod()
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {

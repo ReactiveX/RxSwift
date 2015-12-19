@@ -80,12 +80,39 @@ extension SequenceType where Generator.Element : ObservableConvertibleType {
     /**
     Concatenates all observable sequences in the given sequence, as long as the previous observable sequence terminated successfully.
     
+    This operator has tail recursive optimizations that will prevent stack overflow.
+     
+    Optimizations will be performed in cases equivalent to following:
+     
+        [1, [2, [3, .....].concat()].concat].concat()
+
     - returns: An observable sequence that contains the elements of each given sequence, in sequential order.
     */
     @warn_unused_result(message="http://git.io/rxs.uo")
     public func concat()
         -> Observable<Generator.Element.E> {
-        return Concat(sources: self)
+        return Concat(sources: self, count: nil)
+    }
+}
+
+extension CollectionType where Generator.Element : ObservableConvertibleType {
+    
+    /**
+    Concatenates all observable sequences in the given sequence, as long as the previous observable sequence terminated successfully.
+
+    This operator has tail recursive optimizations that will prevent stack overflow and enable generating
+     infinite observable sequences while using limited amount of memory during generation.
+
+    Optimizations will be performed in cases equivalent to following:
+     
+        [1, [2, [3, .....].concat()].concat].concat()
+    
+    - returns: An observable sequence that contains the elements of each given sequence, in sequential order.
+    */
+    @warn_unused_result(message="http://git.io/rxs.uo")
+    public func concat()
+        -> Observable<Generator.Element.E> {
+        return Concat(sources: self, count: self.count.toIntMax())
     }
 }
 

@@ -38,7 +38,7 @@ static SEL       deallocSelector;
 
 static int RxSwizzlingTargetClassKey = 0;
 
-#if DEBUG
+#if TRACE_RESOURCES
 static int32_t numberOInterceptedMethods = 0;
 static int32_t numberOfForwardedMethods = 0;
 #endif
@@ -802,7 +802,7 @@ static NSMutableDictionary<NSString *, RXInterceptWithOptimizedObserver> *optimi
 
     ALWAYS(![self forwardingSelector:selector forClass:swizzlingImplementorClass], @"Already observing selector for class");
 
-#if DEBUG
+#if TRACE_RESOURCES
     OSAtomicIncrement32(&numberOfForwardedMethods);
 #endif
     SEL rxSelector = RX_selector(selector);
@@ -933,7 +933,7 @@ replacementImplementationGenerator:(IMP (^)(IMP originalImplemenation))replaceme
         return YES;
     }
 
-#if DEBUG
+#if TRACE_RESOURCES
     OSAtomicIncrement32(&numberOInterceptedMethods);
 #endif
     
@@ -981,7 +981,7 @@ replacementImplementationGenerator:(IMP (^)(IMP originalImplemenation))replaceme
 
 @end
 
-#if DEBUG
+#if TRACE_RESOURCES
 
 NSInteger RX_number_of_dynamic_subclasses() {
     __block NSInteger count = 0;

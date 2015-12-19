@@ -51,6 +51,8 @@ class APIWrappersViewController: ViewController {
 
     @IBOutlet weak var mypan: UIPanGestureRecognizer!
 
+    @IBOutlet weak var textView: UITextView!
+
     let manager = CLLocationManager()
 
     override func viewDidLoad() {
@@ -197,6 +199,14 @@ class APIWrappersViewController: ViewController {
             }
             .addDisposableTo(disposeBag)
 
+
+        // MARK: UITextView
+
+        textView.rx_text
+            .subscribeNext { [weak self] x in
+                self?.debug("UITextView event \(x)")
+            }
+            .addDisposableTo(disposeBag)
 
         // MARK: CLLocationManager
 

@@ -829,6 +829,7 @@ extension SentMessageTest {
         let endRuntimeState = RxObjCRuntimeState()
 
         endRuntimeState.assertAfterThisMoment(middleRuntimeState, changed: RxObjCRuntimeChange.changes(methodsSwizzled: 13))
+
     }
 
     func _testMessageRecordedAndAllCallsAreMade<Result: Equatable>(selector: Selector, sendMessage: SentMessageTest_all_supported_types -> Result, expectedResult: Result) {
@@ -914,9 +915,7 @@ extension SentMessageTest {
         useIt: T -> [[MethodParameters]]
         ) {
 
-        #if DEBUG
         let originalRuntimeState = RxObjCRuntimeState()
-        #endif
 
         var createdObject: T = T()
         var disposables = [Disposable]()
@@ -927,10 +926,8 @@ extension SentMessageTest {
 
         autoreleasepool {
             (createdObject, disposables) = createIt()
-            #if DEBUG
             let afterCreateState = RxObjCRuntimeState()
             afterCreateState.assertAfterThisMoment(originalRuntimeState, changed:  RxObjCRuntimeChange.changes())
-            #endif
         }
 
         let originalObjectRuntimeState = ObjectRuntimeState(target: createdObject)
@@ -940,17 +937,13 @@ extension SentMessageTest {
         }
 
         let afterObserveObjectRuntimeState = ObjectRuntimeState(target: createdObject)
-        #if DEBUG
         let afterObserveRuntimeState = RxObjCRuntimeState()
-        #endif
 
         afterObserveObjectRuntimeState.assertChangesFrom(originalObjectRuntimeState,
             expectedActingClassChanges: expectedActingClassChanges,
             expectedRealClassChanges: expectedRealClassChanges
         )
-        #if DEBUG
         afterObserveRuntimeState.assertAfterThisMoment(originalRuntimeState, changed: runtimeChange)
-        #endif
 
         autoreleasepool {
             var i = 0
@@ -996,10 +989,8 @@ extension SentMessageTest {
         }
 
         // nothing is changed after requesting the observables
-        #if DEBUG
         let endRuntimeState = RxObjCRuntimeState()
         endRuntimeState.assertAfterThisMoment(afterObserveRuntimeState, changed: RxObjCRuntimeChange.changes())
-        #endif
     }
 
 }

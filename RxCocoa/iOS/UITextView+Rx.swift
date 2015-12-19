@@ -31,11 +31,28 @@ extension UITextView {
     public var rx_text: ControlProperty<String> {
         let source: Observable<String> = deferred { [weak self] () -> Observable<String> in
             let text = self?.text ?? ""
-            return (self?.rx_delegate.observe("textViewDidChange:") ?? empty())
+            // basic event
+            let textChangedEvent = self?.rx_delegate.observe("textViewDidChange:") ?? empty()
+
+            // Monitor all other events because text could change without user intervention and without
+            // `textViewDidChange:` firing.
+            // For example, autocorrecting spell checker.
+            let anyOtherEvent = (self?.rx_delegate as? RxTextViewDelegateProxy)?.textChanging ?? empty()
+
+            // Throttle is here because textChanging will fire when text is about to change.
+            // Event needs to happen after text is changed. This is kind of a hacky way, but
+            // don't know any other way for now.
+            let throttledAnyOtherEvent = anyOtherEvent
+                .throttle(0, MainScheduler.sharedInstance)
+                .takeUntil(self?.rx_deallocated ?? just())
+
+            return sequenceOf(textChangedEvent.map { _ in () }, throttledAnyOtherEvent)
+                .merge()
                 .map { a in
-                    return (a[0] as? UITextView)?.text ?? ""
+                    return self?.text ?? ""
                 }
                 .startWith(text)
+                .distinctUntilChanged()
             }
         
         return ControlProperty(values: source, valueSink: AnyObserver { [weak self] event in

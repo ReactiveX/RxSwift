@@ -32,8 +32,6 @@
 		B1B7C3D01BE006870076934E /* TakeLast.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B7C3CF1BE006870076934E /* TakeLast.swift */; };
 		C803973A1BD3E17D009D8B26 /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80397391BD3E17D009D8B26 /* ActivityIndicator.swift */; };
 		C803973B1BD3E17D009D8B26 /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80397391BD3E17D009D8B26 /* ActivityIndicator.swift */; };
-		C80397491BD3E9A6009D8B26 /* GitHubSearchRepositoriesAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80397481BD3E9A6009D8B26 /* GitHubSearchRepositoriesAPI.swift */; };
-		C803974A1BD3E9A6009D8B26 /* GitHubSearchRepositoriesAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80397481BD3E9A6009D8B26 /* GitHubSearchRepositoriesAPI.swift */; };
 		C809E97A1BE6841C0058D948 /* Wireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = C809E9791BE6841C0058D948 /* Wireframe.swift */; };
 		C809E97B1BE6841C0058D948 /* Wireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = C809E9791BE6841C0058D948 /* Wireframe.swift */; };
 		C809E97D1BE697100058D948 /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C809E97C1BE697100058D948 /* UIImage+Extensions.swift */; };
@@ -123,6 +121,17 @@
 		C83974141BF77406004F02CC /* KVORepresentable+Swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83974111BF77406004F02CC /* KVORepresentable+Swift.swift */; };
 		C83974231BF77413004F02CC /* NSObject+Rx+KVORepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83974211BF77413004F02CC /* NSObject+Rx+KVORepresentable.swift */; };
 		C83974241BF77413004F02CC /* NSObject+Rx+RawRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83974221BF77413004F02CC /* NSObject+Rx+RawRepresentable.swift */; };
+		C83D73DE1C1DBC2A003DC470 /* AnonymousInvocable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83D73D91C1DBC2A003DC470 /* AnonymousInvocable.swift */; };
+		C83D73DF1C1DBC2A003DC470 /* InvocableScheduledItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83D73DA1C1DBC2A003DC470 /* InvocableScheduledItem.swift */; };
+		C83D73E01C1DBC2A003DC470 /* InvocableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83D73DB1C1DBC2A003DC470 /* InvocableType.swift */; };
+		C83D73E11C1DBC2A003DC470 /* ScheduledItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83D73DC1C1DBC2A003DC470 /* ScheduledItem.swift */; };
+		C83D73E21C1DBC2A003DC470 /* ScheduledItemType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83D73DD1C1DBC2A003DC470 /* ScheduledItemType.swift */; };
+		C843A08E1C1CE39900CBA4BD /* GitHubSearchRepositoriesAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C843A08C1C1CE39900CBA4BD /* GitHubSearchRepositoriesAPI.swift */; };
+		C843A08F1C1CE39900CBA4BD /* GitHubSearchRepositoriesAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C843A08C1C1CE39900CBA4BD /* GitHubSearchRepositoriesAPI.swift */; };
+		C843A0901C1CE39900CBA4BD /* GitHubSearchRepositoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C843A08D1C1CE39900CBA4BD /* GitHubSearchRepositoriesViewController.swift */; };
+		C843A0911C1CE39900CBA4BD /* GitHubSearchRepositoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C843A08D1C1CE39900CBA4BD /* GitHubSearchRepositoriesViewController.swift */; };
+		C843A0931C1CE58700CBA4BD /* UINavigationController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C843A0921C1CE58700CBA4BD /* UINavigationController+Extensions.swift */; };
+		C843A0941C1CE58700CBA4BD /* UINavigationController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C843A0921C1CE58700CBA4BD /* UINavigationController+Extensions.swift */; };
 		C84B91381B8A282000C9CCCF /* RxTableViewSectionedAnimatedDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88C78631B3EB0A00061C5AB /* RxTableViewSectionedAnimatedDataSource.swift */; };
 		C84B91391B8A282000C9CCCF /* RxTableViewSectionedDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88C78641B3EB0A00061C5AB /* RxTableViewSectionedDataSource.swift */; };
 		C84B913A1B8A282000C9CCCF /* RxTableViewSectionedReloadDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88C78651B3EB0A00061C5AB /* RxTableViewSectionedReloadDataSource.swift */; };
@@ -358,10 +367,6 @@
 		C8DF92EA1B0B38C0009BCF9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C8DF92E91B0B38C0009BCF9A /* Images.xcassets */; };
 		C8DF92EB1B0B38C0009BCF9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C8DF92E91B0B38C0009BCF9A /* Images.xcassets */; };
 		C8E9D2AF1BD3FD960079D0DB /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80397391BD3E17D009D8B26 /* ActivityIndicator.swift */; };
-		C8F6A1271BEF9DA3007DF367 /* AnonymousInvocable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8F6A1041BEF9D83007DF367 /* AnonymousInvocable.swift */; };
-		C8F6A1281BEF9DA3007DF367 /* InvocableScheduledItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8F6A1051BEF9D83007DF367 /* InvocableScheduledItem.swift */; };
-		C8F6A1291BEF9DA3007DF367 /* InvocableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8F6A1061BEF9D83007DF367 /* InvocableType.swift */; };
-		C8F6A12A1BEF9DA3007DF367 /* ScheduledItemType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8F6A1071BEF9D83007DF367 /* ScheduledItemType.swift */; };
 		C8F6A12B1BEF9DA3007DF367 /* ConcurrentDispatchQueueScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C894648E1BC6C2B00055219D /* ConcurrentDispatchQueueScheduler.swift */; };
 		C8F6A12C1BEF9DA3007DF367 /* ConcurrentMainScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B145051BD2E45200267DCE /* ConcurrentMainScheduler.swift */; };
 		C8F6A12D1BEF9DA3007DF367 /* CurrentThreadScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C894648F1BC6C2B00055219D /* CurrentThreadScheduler.swift */; };
@@ -370,7 +375,6 @@
 		C8F6A1301BEF9DA3007DF367 /* MainScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89464911BC6C2B00055219D /* MainScheduler.swift */; };
 		C8F6A1311BEF9DA3007DF367 /* OperationQueueScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89464921BC6C2B00055219D /* OperationQueueScheduler.swift */; };
 		C8F6A1321BEF9DA3007DF367 /* RecursiveScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89464931BC6C2B00055219D /* RecursiveScheduler.swift */; };
-		C8F6A1331BEF9DA3007DF367 /* ScheduledItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89464941BC6C2B00055219D /* ScheduledItem.swift */; };
 		C8F6A1341BEF9DA3007DF367 /* SchedulerServices+Emulation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89464951BC6C2B00055219D /* SchedulerServices+Emulation.swift */; };
 		C8F6A1351BEF9DA3007DF367 /* SerialDispatchQueueScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89464961BC6C2B00055219D /* SerialDispatchQueueScheduler.swift */; };
 		C8F6A1381BEF9DF6007DF367 /* RetryWhen.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8F6A1361BEF9DD4007DF367 /* RetryWhen.swift */; };
@@ -382,7 +386,6 @@
 		CBEE77541BD8C7B700AD584C /* ToArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBEE77531BD8C7B700AD584C /* ToArray.swift */; };
 		D2245A191BD5654C00E7146F /* WithLatestFrom.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2245A0B1BD564A700E7146F /* WithLatestFrom.swift */; };
 		D2AF91981BD3D95900A008C1 /* Using.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2AF91881BD2C51900A008C1 /* Using.swift */; };
-		EC91FB951BBA144400973245 /* GitHubSearchRepositoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC91FB941BBA144400973245 /* GitHubSearchRepositoriesViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -525,7 +528,6 @@
 		B18F3BE11BDB2E8F000AAC79 /* ReachabilityService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReachabilityService.swift; sourceTree = "<group>"; };
 		B1B7C3CF1BE006870076934E /* TakeLast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TakeLast.swift; sourceTree = "<group>"; };
 		C80397391BD3E17D009D8B26 /* ActivityIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
-		C80397481BD3E9A6009D8B26 /* GitHubSearchRepositoriesAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GitHubSearchRepositoriesAPI.swift; sourceTree = "<group>"; };
 		C809E9791BE6841C0058D948 /* Wireframe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Wireframe.swift; sourceTree = "<group>"; };
 		C809E97C1BE697100058D948 /* UIImage+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
 		C80DDE7A1BCDA952006A1832 /* SkipWhile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SkipWhile.swift; sourceTree = "<group>"; };
@@ -555,6 +557,14 @@
 		C83974111BF77406004F02CC /* KVORepresentable+Swift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "KVORepresentable+Swift.swift"; sourceTree = "<group>"; };
 		C83974211BF77413004F02CC /* NSObject+Rx+KVORepresentable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSObject+Rx+KVORepresentable.swift"; sourceTree = "<group>"; };
 		C83974221BF77413004F02CC /* NSObject+Rx+RawRepresentable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSObject+Rx+RawRepresentable.swift"; sourceTree = "<group>"; };
+		C83D73D91C1DBC2A003DC470 /* AnonymousInvocable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnonymousInvocable.swift; sourceTree = "<group>"; };
+		C83D73DA1C1DBC2A003DC470 /* InvocableScheduledItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InvocableScheduledItem.swift; sourceTree = "<group>"; };
+		C83D73DB1C1DBC2A003DC470 /* InvocableType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InvocableType.swift; sourceTree = "<group>"; };
+		C83D73DC1C1DBC2A003DC470 /* ScheduledItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduledItem.swift; sourceTree = "<group>"; };
+		C83D73DD1C1DBC2A003DC470 /* ScheduledItemType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduledItemType.swift; sourceTree = "<group>"; };
+		C843A08C1C1CE39900CBA4BD /* GitHubSearchRepositoriesAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GitHubSearchRepositoriesAPI.swift; sourceTree = "<group>"; };
+		C843A08D1C1CE39900CBA4BD /* GitHubSearchRepositoriesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GitHubSearchRepositoriesViewController.swift; sourceTree = "<group>"; };
+		C843A0921C1CE58700CBA4BD /* UINavigationController+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Extensions.swift"; sourceTree = "<group>"; };
 		C84CC52D1BDC344100E06A64 /* ElementAt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElementAt.swift; sourceTree = "<group>"; };
 		C84CC56B1BDD08F500E06A64 /* LockOwnerType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LockOwnerType.swift; sourceTree = "<group>"; };
 		C84CC56C1BDD08F500E06A64 /* SynchronizedDisposeType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SynchronizedDisposeType.swift; sourceTree = "<group>"; };
@@ -685,7 +695,6 @@
 		C89464911BC6C2B00055219D /* MainScheduler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainScheduler.swift; sourceTree = "<group>"; };
 		C89464921BC6C2B00055219D /* OperationQueueScheduler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OperationQueueScheduler.swift; sourceTree = "<group>"; };
 		C89464931BC6C2B00055219D /* RecursiveScheduler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecursiveScheduler.swift; sourceTree = "<group>"; };
-		C89464941BC6C2B00055219D /* ScheduledItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduledItem.swift; sourceTree = "<group>"; };
 		C89464951BC6C2B00055219D /* SchedulerServices+Emulation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SchedulerServices+Emulation.swift"; sourceTree = "<group>"; };
 		C89464961BC6C2B00055219D /* SerialDispatchQueueScheduler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SerialDispatchQueueScheduler.swift; sourceTree = "<group>"; };
 		C89464971BC6C2B00055219D /* SchedulerType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SchedulerType.swift; sourceTree = "<group>"; };
@@ -787,10 +796,6 @@
 		C8DF92E91B0B38C0009BCF9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		C8DF92F01B0B3E67009BCF9A /* Info-OSX.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Info-OSX.plist"; sourceTree = "<group>"; };
 		C8DF92F21B0B3E71009BCF9A /* Info-iOS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Info-iOS.plist"; sourceTree = "<group>"; };
-		C8F6A1041BEF9D83007DF367 /* AnonymousInvocable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnonymousInvocable.swift; sourceTree = "<group>"; };
-		C8F6A1051BEF9D83007DF367 /* InvocableScheduledItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InvocableScheduledItem.swift; sourceTree = "<group>"; };
-		C8F6A1061BEF9D83007DF367 /* InvocableType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InvocableType.swift; sourceTree = "<group>"; };
-		C8F6A1071BEF9D83007DF367 /* ScheduledItemType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduledItemType.swift; sourceTree = "<group>"; };
 		C8F6A1361BEF9DD4007DF367 /* RetryWhen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RetryWhen.swift; sourceTree = "<group>"; };
 		CB30D9ED1BF106260084C1C0 /* SingleAsync.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleAsync.swift; sourceTree = "<group>"; };
 		CB883B4E1BE3AC54000AC2EE /* BooleanDisposable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BooleanDisposable.swift; sourceTree = "<group>"; };
@@ -800,7 +805,6 @@
 		CBEE77531BD8C7B700AD584C /* ToArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToArray.swift; sourceTree = "<group>"; };
 		D2245A0B1BD564A700E7146F /* WithLatestFrom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WithLatestFrom.swift; sourceTree = "<group>"; };
 		D2AF91881BD2C51900A008C1 /* Using.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Using.swift; sourceTree = "<group>"; };
-		EC91FB941BBA144400973245 /* GitHubSearchRepositoriesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GitHubSearchRepositoriesViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1014,6 +1018,28 @@
 			name = NoModule;
 			sourceTree = "<group>";
 		};
+		C83D73D81C1DBC2A003DC470 /* Internal */ = {
+			isa = PBXGroup;
+			children = (
+				C83D73D91C1DBC2A003DC470 /* AnonymousInvocable.swift */,
+				C83D73DA1C1DBC2A003DC470 /* InvocableScheduledItem.swift */,
+				C83D73DB1C1DBC2A003DC470 /* InvocableType.swift */,
+				C83D73DC1C1DBC2A003DC470 /* ScheduledItem.swift */,
+				C83D73DD1C1DBC2A003DC470 /* ScheduledItemType.swift */,
+			);
+			path = Internal;
+			sourceTree = "<group>";
+		};
+		C843A08B1C1CE39900CBA4BD /* GitHubSearchRepositories */ = {
+			isa = PBXGroup;
+			children = (
+				C843A08C1C1CE39900CBA4BD /* GitHubSearchRepositoriesAPI.swift */,
+				C843A08D1C1CE39900CBA4BD /* GitHubSearchRepositoriesViewController.swift */,
+				C843A0921C1CE58700CBA4BD /* UINavigationController+Extensions.swift */,
+			);
+			path = GitHubSearchRepositories;
+			sourceTree = "<group>";
+		};
 		C859B9A21B45C5D900D012D7 /* PartialUpdates */ = {
 			isa = PBXGroup;
 			children = (
@@ -1037,8 +1063,8 @@
 				07E300051B14994500F00100 /* TableView */,
 				07A5C3D91B70B6B8001EFE5C /* Calculator */,
 				C859B9A21B45C5D900D012D7 /* PartialUpdates */,
-				EC91FB931BBA12E800973245 /* AutoLoading */,
 				C8BCD3E11C14820B005F1280 /* OSX simple example */,
+				C843A08B1C1CE39900CBA4BD /* GitHubSearchRepositories */,
 			);
 			path = Examples;
 			sourceTree = "<group>";
@@ -1304,10 +1330,7 @@
 		C894648D1BC6C2B00055219D /* Schedulers */ = {
 			isa = PBXGroup;
 			children = (
-				C8F6A1041BEF9D83007DF367 /* AnonymousInvocable.swift */,
-				C8F6A1051BEF9D83007DF367 /* InvocableScheduledItem.swift */,
-				C8F6A1061BEF9D83007DF367 /* InvocableType.swift */,
-				C8F6A1071BEF9D83007DF367 /* ScheduledItemType.swift */,
+				C83D73D81C1DBC2A003DC470 /* Internal */,
 				C894648E1BC6C2B00055219D /* ConcurrentDispatchQueueScheduler.swift */,
 				C8B145051BD2E45200267DCE /* ConcurrentMainScheduler.swift */,
 				C894648F1BC6C2B00055219D /* CurrentThreadScheduler.swift */,
@@ -1316,7 +1339,6 @@
 				C89464911BC6C2B00055219D /* MainScheduler.swift */,
 				C89464921BC6C2B00055219D /* OperationQueueScheduler.swift */,
 				C89464931BC6C2B00055219D /* RecursiveScheduler.swift */,
-				C89464941BC6C2B00055219D /* ScheduledItem.swift */,
 				C89464951BC6C2B00055219D /* SchedulerServices+Emulation.swift */,
 				C89464961BC6C2B00055219D /* SerialDispatchQueueScheduler.swift */,
 			);
@@ -1535,15 +1557,6 @@
 				C8DF92E61B0B32F2009BCF9A /* Main.storyboard */,
 			);
 			path = OSX;
-			sourceTree = "<group>";
-		};
-		EC91FB931BBA12E800973245 /* AutoLoading */ = {
-			isa = PBXGroup;
-			children = (
-				EC91FB941BBA144400973245 /* GitHubSearchRepositoriesViewController.swift */,
-				C80397481BD3E9A6009D8B26 /* GitHubSearchRepositoriesAPI.swift */,
-			);
-			path = AutoLoading;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1778,6 +1791,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C83D73DE1C1DBC2A003DC470 /* AnonymousInvocable.swift in Sources */,
 				C84CC58B1BDD486300E06A64 /* LockOwnerType.swift in Sources */,
 				C89465971BC6C2BC0055219D /* UIScrollView+Rx.swift in Sources */,
 				9B4612951C106CF100BBBB4E /* UIActivityIndicatorView+Rx.swift in Sources */,
@@ -1793,6 +1807,7 @@
 				C8297E301B6CF905000589EA /* RandomUserAPI.swift in Sources */,
 				C89465921BC6C2BC0055219D /* UIControl+Rx.swift in Sources */,
 				C894650B1BC6C2B00055219D /* Variable.swift in Sources */,
+				C83D73E21C1DBC2A003DC470 /* ScheduledItemType.swift in Sources */,
 				C8297E311B6CF905000589EA /* SearchResultViewModel.swift in Sources */,
 				C8F6A12D1BEF9DA3007DF367 /* CurrentThreadScheduler.swift in Sources */,
 				C8BCD3EB1C14B02A005F1280 /* SimpleValidationViewController.swift in Sources */,
@@ -1800,6 +1815,7 @@
 				C8BCD3E71C14A95E005F1280 /* NumbersViewController.swift in Sources */,
 				C8F6A1271BEF9DA3007DF367 /* AnonymousInvocable.swift in Sources */,
 				C89464A51BC6C2B00055219D /* Disposable.swift in Sources */,
+				C843A0911C1CE39900CBA4BD /* GitHubSearchRepositoriesViewController.swift in Sources */,
 				C89464F91BC6C2B00055219D /* ObserverType+Extensions.swift in Sources */,
 				C84CC58D1BDD486300E06A64 /* SynchronizedOnType.swift in Sources */,
 				C83974121BF77406004F02CC /* KVORepresentable.swift in Sources */,
@@ -1834,6 +1850,7 @@
 				C8297E341B6CF905000589EA /* UIImageView+Extensions.swift in Sources */,
 				B1604CC41BE5B8CE002E1279 /* DownloadableImage.swift in Sources */,
 				C80DDED61BCE9046006A1832 /* Driver+Operators.swift in Sources */,
+				C843A0941C1CE58700CBA4BD /* UINavigationController+Extensions.swift in Sources */,
 				C89464B81BC6C2B00055219D /* Observable.swift in Sources */,
 				C8297E351B6CF905000589EA /* NumberSectionView.swift in Sources */,
 				C894659E1BC6C2BC0055219D /* UITextField+Rx.swift in Sources */,
@@ -1873,6 +1890,7 @@
 				C894656F1BC6C2BC0055219D /* DelegateProxyType.swift in Sources */,
 				C89465721BC6C2BC0055219D /* ControlTarget.swift in Sources */,
 				C89464EC1BC6C2B00055219D /* Observable+Binding.swift in Sources */,
+				C83D73E01C1DBC2A003DC470 /* InvocableType.swift in Sources */,
 				C8297E3A1B6CF905000589EA /* WikipediaSearchViewController.swift in Sources */,
 				C89464F21BC6C2B00055219D /* Observable+StandardSequenceOperators.swift in Sources */,
 				C89464CC1BC6C2B00055219D /* Filter.swift in Sources */,
@@ -1905,6 +1923,7 @@
 				C809E97E1BE697100058D948 /* UIImage+Extensions.swift in Sources */,
 				C89464E61BC6C2B00055219D /* Timer.swift in Sources */,
 				C8297E3E1B6CF905000589EA /* DetailViewController.swift in Sources */,
+				C83D73DF1C1DBC2A003DC470 /* InvocableScheduledItem.swift in Sources */,
 				C822B1E41C14E4810088A01A /* SimpleTableViewExampleViewController.swift in Sources */,
 				C83974131BF77406004F02CC /* KVORepresentable+CoreGraphics.swift in Sources */,
 				C8297E3F1B6CF905000589EA /* SectionModelType.swift in Sources */,
@@ -1916,7 +1935,6 @@
 				C89465771BC6C2BC0055219D /* NSNotificationCenter+Rx.swift in Sources */,
 				C89465091BC6C2B00055219D /* ReplaySubject.swift in Sources */,
 				C8BCD3E01C1480E9005F1280 /* Operators.swift in Sources */,
-				C8F6A1281BEF9DA3007DF367 /* InvocableScheduledItem.swift in Sources */,
 				C8297E411B6CF905000589EA /* RxCollectionViewSectionedReloadDataSource.swift in Sources */,
 				C84CC58E1BDD486300E06A64 /* SynchronizedSubscribeType.swift in Sources */,
 				C8F6A12F1BEF9DA3007DF367 /* ImmediateScheduler.swift in Sources */,
@@ -1932,9 +1950,7 @@
 				C89465841BC6C2BC0055219D /* RxActionSheetDelegateProxy.swift in Sources */,
 				C89464F51BC6C2B00055219D /* AnyObserver.swift in Sources */,
 				C89464D71BC6C2B00055219D /* Range.swift in Sources */,
-				C803974A1BD3E9A6009D8B26 /* GitHubSearchRepositoriesAPI.swift in Sources */,
 				C84CC52E1BDC344100E06A64 /* ElementAt.swift in Sources */,
-				C8F6A1331BEF9DA3007DF367 /* ScheduledItem.swift in Sources */,
 				C89464EB1BC6C2B00055219D /* Observable+Aggregate.swift in Sources */,
 				C8297E441B6CF905000589EA /* PseudoRandomGenerator.swift in Sources */,
 				C87335681BF79BE000E536E6 /* UISectionedViewType+RxAnimatedDataSource.swift in Sources */,
@@ -1942,6 +1958,7 @@
 				C8297E451B6CF905000589EA /* SectionedViewType.swift in Sources */,
 				C822B1DD1C14CD1C0088A01A /* DefaultImplementations.swift in Sources */,
 				C89464D51BC6C2B00055219D /* ObserveOnSerialDispatchQueue.swift in Sources */,
+				C843A08F1C1CE39900CBA4BD /* GitHubSearchRepositoriesAPI.swift in Sources */,
 				C894658E1BC6C2BC0055219D /* UIAlertView+Rx.swift in Sources */,
 				C83974231BF77413004F02CC /* NSObject+Rx+KVORepresentable.swift in Sources */,
 				C8297E461B6CF905000589EA /* Example.swift in Sources */,
@@ -1976,7 +1993,6 @@
 				C8297E4C1B6CF905000589EA /* APIWrappersViewController.swift in Sources */,
 				C89465621BC6C2BC0055219D /* _RXDelegateProxy.m in Sources */,
 				C89464D31BC6C2B00055219D /* Never.swift in Sources */,
-				C8F6A12A1BEF9DA3007DF367 /* ScheduledItemType.swift in Sources */,
 				C8F6A1351BEF9DA3007DF367 /* SerialDispatchQueueScheduler.swift in Sources */,
 				C8297E4D1B6CF905000589EA /* RxTableViewSectionedReloadDataSource.swift in Sources */,
 				C89465931BC6C2BC0055219D /* UIDatePicker+Rx.swift in Sources */,
@@ -2012,7 +2028,6 @@
 				C894658B1BC6C2BC0055219D /* RxTableViewDelegateProxy.swift in Sources */,
 				C8297E531B6CF905000589EA /* WikipediaAPI.swift in Sources */,
 				C89465071BC6C2B00055219D /* BehaviorSubject.swift in Sources */,
-				C8F6A1291BEF9DA3007DF367 /* InvocableType.swift in Sources */,
 				C89465911BC6C2BC0055219D /* UICollectionView+Rx.swift in Sources */,
 				C89465781BC6C2BC0055219D /* NSObject+Rx+CoreGraphics.swift in Sources */,
 				C89464D01BC6C2B00055219D /* Map.swift in Sources */,
@@ -2039,6 +2054,7 @@
 				C89465061BC6C2B00055219D /* SchedulerType.swift in Sources */,
 				C8C4B4BF1C17724A00828BD5 /* _RXObjCRuntime.m in Sources */,
 				C894659F1BC6C2BC0055219D /* UITextView+Rx.swift in Sources */,
+				C83D73E11C1DBC2A003DC470 /* ScheduledItem.swift in Sources */,
 				C894658C1BC6C2BC0055219D /* RxTextViewDelegateProxy.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2055,6 +2071,7 @@
 				C87335671BF79BE000E536E6 /* UISectionedViewType+RxAnimatedDataSource.swift in Sources */,
 				C84B913C1B8A282000C9CCCF /* RxCollectionViewSectionedDataSource.swift in Sources */,
 				0706E19B1B17361100BA2D3A /* UIImageView+Extensions.swift in Sources */,
+				C843A08E1C1CE39900CBA4BD /* GitHubSearchRepositoriesAPI.swift in Sources */,
 				C859B9AE1B45CFAB00D012D7 /* NumberSectionView.swift in Sources */,
 				C8DF92E51B0B32DA009BCF9A /* RootViewController.swift in Sources */,
 				C822B1DC1C14CD1C0088A01A /* DefaultImplementations.swift in Sources */,
@@ -2069,6 +2086,7 @@
 				C84B913B1B8A282000C9CCCF /* RxCollectionViewSectionedReloadDataSource.swift in Sources */,
 				C88C78731B3EB0A00061C5AB /* SectionModel.swift in Sources */,
 				C8BCD3DF1C1480E9005F1280 /* Operators.swift in Sources */,
+				C843A0901C1CE39900CBA4BD /* GitHubSearchRepositoriesViewController.swift in Sources */,
 				C803973A1BD3E17D009D8B26 /* ActivityIndicator.swift in Sources */,
 				C84B913D1B8A282000C9CCCF /* RxCollectionViewSectionedAnimatedDataSource.swift in Sources */,
 				C822B1D91C14CBEA0088A01A /* Protocols.swift in Sources */,
@@ -2076,12 +2094,11 @@
 				C8BCD3E61C14A95E005F1280 /* NumbersViewController.swift in Sources */,
 				C809E97A1BE6841C0058D948 /* Wireframe.swift in Sources */,
 				0706E1961B14AF5100BA2D3A /* DetailViewController.swift in Sources */,
+				C843A0931C1CE58700CBA4BD /* UINavigationController+Extensions.swift in Sources */,
 				C822B1E71C14E7250088A01A /* SimpleTableViewExampleSectionedViewController.swift in Sources */,
 				C88C78991B4012A90061C5AB /* SectionModelType.swift in Sources */,
 				C83367251AD029AE00C668A7 /* ImageService.swift in Sources */,
 				C86E2F471AE5A0CA00C31024 /* WikipediaSearchResult.swift in Sources */,
-				C80397491BD3E9A6009D8B26 /* GitHubSearchRepositoriesAPI.swift in Sources */,
-				EC91FB951BBA144400973245 /* GitHubSearchRepositoriesViewController.swift in Sources */,
 				C8A2A2C81B4049E300F11F09 /* PseudoRandomGenerator.swift in Sources */,
 				C84B91381B8A282000C9CCCF /* RxTableViewSectionedAnimatedDataSource.swift in Sources */,
 				C88C78721B3EB0A00061C5AB /* SectionedViewType.swift in Sources */,

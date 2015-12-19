@@ -43,7 +43,7 @@ class RxObjCRuntimeState {
     let methodsForwarded: Int
 
     init() {
-        #if DEBUG
+        #if TRACE_RESOURCES
         dynamicSublasses = RX_number_of_dynamic_subclasses()
         swizzledForwardClasses = RX_number_of_forwarding_enabled_classes()
         interceptingClasses = RX_number_of_intercepting_classes()
@@ -59,6 +59,7 @@ class RxObjCRuntimeState {
     }
 
     func assertAfterThisMoment(previous: RxObjCRuntimeState, changed: RxObjCRuntimeChange) {
+        #if TRACE_RESOURCES
         let realChangeOfDynamicSubclasses = dynamicSublasses - previous.dynamicSublasses
         XCTAssertEqual(realChangeOfDynamicSubclasses, changed.dynamicSublasses)
         if (realChangeOfDynamicSubclasses != changed.dynamicSublasses) {
@@ -84,5 +85,6 @@ class RxObjCRuntimeState {
         if (realMethodsForwarded != changed.methodsForwarded) {
             print("forwarded methods: real = \(realMethodsForwarded) != expected = \(changed.methodsForwarded)")
         }
+        #endif
     }
 }

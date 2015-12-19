@@ -8,6 +8,14 @@
 
 #import <RxCocoa/RxCocoa.h>
 
+#if TRACE_RESOURCES
+NSInteger RX_number_of_dynamic_subclasses();
+NSInteger RX_number_of_forwarding_enabled_classes();
+NSInteger RX_number_of_intercepting_classes();
+NSInteger RX_number_of_forwarded_methods();
+NSInteger RX_number_of_swizzled_methods();
+#endif
+
 @protocol SentMessageTestClassCreationProtocol<NSObject>
 -(instancetype __nonnull)init;
 
