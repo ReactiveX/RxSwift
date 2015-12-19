@@ -194,7 +194,8 @@ public extension RxCocoaObjCRuntimeError {
         case let .Unknown(target):
             return "Unknown error occurred.\nTarget: `\(target)`"
         case let ObjectMessagesAlreadyBeingIntercepted(target, interceptionMechanism):
-            return "Collision between RxCocoa interception mechanism and \(interceptionMechanism == .KVO ? "KVO" : "other interception mechanism")."
+            let interceptionMechanismDescription = interceptionMechanism == .KVO ? "KVO" : "other interception mechanism"
+            return "Collision between RxCocoa interception mechanism and \(interceptionMechanismDescription)."
             + " To resolve this conflict please use this interception mechanism first.\nTarget: \(target)"
         case let SelectorNotImplemented(target):
             return "Trying to observe messages for selector that isn't implemented.\nTarget: \(target)"
