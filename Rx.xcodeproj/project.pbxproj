@@ -171,8 +171,8 @@
 		C8093D7E1B8A72BE0088E94D /* ObserverType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093CAB1B8A72BE0088E94D /* ObserverType.swift */; };
 		C8093D851B8A72BE0088E94D /* Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093CAF1B8A72BE0088E94D /* Rx.swift */; };
 		C8093D861B8A72BE0088E94D /* Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093CAF1B8A72BE0088E94D /* Rx.swift */; };
-		C8093D871B8A72BE0088E94D /* RxBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093CB01B8A72BE0088E94D /* RxBox.swift */; };
-		C8093D881B8A72BE0088E94D /* RxBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093CB01B8A72BE0088E94D /* RxBox.swift */; };
+		C8093D871B8A72BE0088E94D /* RxMutableBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093CB01B8A72BE0088E94D /* RxMutableBox.swift */; };
+		C8093D881B8A72BE0088E94D /* RxMutableBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093CB01B8A72BE0088E94D /* RxMutableBox.swift */; };
 		C8093D8D1B8A72BE0088E94D /* SchedulerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093CB31B8A72BE0088E94D /* SchedulerType.swift */; };
 		C8093D8E1B8A72BE0088E94D /* SchedulerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093CB31B8A72BE0088E94D /* SchedulerType.swift */; };
 		C8093D8F1B8A72BE0088E94D /* ConcurrentDispatchQueueScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093CB51B8A72BE0088E94D /* ConcurrentDispatchQueueScheduler.swift */; };
@@ -476,7 +476,7 @@
 		C8F0BF9D1BBBFB8B001B112F /* Zip+arity.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C921B8A72BE0088E94D /* Zip+arity.swift */; };
 		C8F0BF9E1BBBFB8B001B112F /* Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C911B8A72BE0088E94D /* Timer.swift */; };
 		C8F0BF9F1BBBFB8B001B112F /* Empty.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C3DA051B9393AC004D233E /* Empty.swift */; };
-		C8F0BFA01BBBFB8B001B112F /* RxBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093CB01B8A72BE0088E94D /* RxBox.swift */; };
+		C8F0BFA01BBBFB8B001B112F /* RxMutableBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093CB01B8A72BE0088E94D /* RxMutableBox.swift */; };
 		C8F0BFA11BBBFB8B001B112F /* Sink.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C881B8A72BE0088E94D /* Sink.swift */; };
 		C8F0BFA21BBBFB8B001B112F /* TakeUntil.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C8E1B8A72BE0088E94D /* TakeUntil.swift */; };
 		C8F0BFA31BBBFB8B001B112F /* MainScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093CB71B8A72BE0088E94D /* MainScheduler.swift */; };
@@ -736,7 +736,7 @@
 		D2EBEAE61BB9B697003A27DC /* ObserverType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093CAB1B8A72BE0088E94D /* ObserverType.swift */; };
 		D2EBEAE71BB9B697003A27DC /* ObserverType+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093CAA1B8A72BE0088E94D /* ObserverType+Extensions.swift */; };
 		D2EBEAE81BB9B697003A27DC /* Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093CAF1B8A72BE0088E94D /* Rx.swift */; };
-		D2EBEAE91BB9B697003A27DC /* RxBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093CB01B8A72BE0088E94D /* RxBox.swift */; };
+		D2EBEAE91BB9B697003A27DC /* RxMutableBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093CB01B8A72BE0088E94D /* RxMutableBox.swift */; };
 		D2EBEAEA1BB9B697003A27DC /* SchedulerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093CB31B8A72BE0088E94D /* SchedulerType.swift */; };
 		D2EBEAEB1BB9B69E003A27DC /* AsyncLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C4B1B8A72BE0088E94D /* AsyncLock.swift */; };
 		D2EBEAEC1BB9B69E003A27DC /* Lock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C4C1B8A72BE0088E94D /* Lock.swift */; };
@@ -980,7 +980,7 @@
 		C8093CAA1B8A72BE0088E94D /* ObserverType+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ObserverType+Extensions.swift"; sourceTree = "<group>"; };
 		C8093CAB1B8A72BE0088E94D /* ObserverType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObserverType.swift; sourceTree = "<group>"; };
 		C8093CAF1B8A72BE0088E94D /* Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Rx.swift; sourceTree = "<group>"; };
-		C8093CB01B8A72BE0088E94D /* RxBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxBox.swift; sourceTree = "<group>"; };
+		C8093CB01B8A72BE0088E94D /* RxMutableBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxMutableBox.swift; sourceTree = "<group>"; };
 		C8093CB31B8A72BE0088E94D /* SchedulerType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SchedulerType.swift; sourceTree = "<group>"; };
 		C8093CB51B8A72BE0088E94D /* ConcurrentDispatchQueueScheduler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConcurrentDispatchQueueScheduler.swift; sourceTree = "<group>"; };
 		C8093CB61B8A72BE0088E94D /* DispatchQueueSchedulerPriority.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DispatchQueueSchedulerPriority.swift; sourceTree = "<group>"; };
@@ -1239,7 +1239,7 @@
 				C8093CAB1B8A72BE0088E94D /* ObserverType.swift */,
 				C8093CAA1B8A72BE0088E94D /* ObserverType+Extensions.swift */,
 				C8093CAF1B8A72BE0088E94D /* Rx.swift */,
-				C8093CB01B8A72BE0088E94D /* RxBox.swift */,
+				C8093CB01B8A72BE0088E94D /* RxMutableBox.swift */,
 				C8093CB31B8A72BE0088E94D /* SchedulerType.swift */,
 				C8093C4A1B8A72BE0088E94D /* Concurrency */,
 				C8093C4E1B8A72BE0088E94D /* DataStructures */,
@@ -2313,7 +2313,7 @@
 				C8093D4C1B8A72BE0088E94D /* Timer.swift in Sources */,
 				C8C3DA071B9393AC004D233E /* Empty.swift in Sources */,
 				CB255BD81BC46A9C00798A4C /* RetryWhen.swift in Sources */,
-				C8093D881B8A72BE0088E94D /* RxBox.swift in Sources */,
+				C8093D881B8A72BE0088E94D /* RxMutableBox.swift in Sources */,
 				C8093D3A1B8A72BE0088E94D /* Sink.swift in Sources */,
 				C8093D461B8A72BE0088E94D /* TakeUntil.swift in Sources */,
 				C8093D941B8A72BE0088E94D /* MainScheduler.swift in Sources */,
@@ -2453,7 +2453,7 @@
 				C8093D4B1B8A72BE0088E94D /* Timer.swift in Sources */,
 				C8C3DA061B9393AC004D233E /* Empty.swift in Sources */,
 				CB255BD71BC46A9C00798A4C /* RetryWhen.swift in Sources */,
-				C8093D871B8A72BE0088E94D /* RxBox.swift in Sources */,
+				C8093D871B8A72BE0088E94D /* RxMutableBox.swift in Sources */,
 				C8093D391B8A72BE0088E94D /* Sink.swift in Sources */,
 				C8093D451B8A72BE0088E94D /* TakeUntil.swift in Sources */,
 				C8093D931B8A72BE0088E94D /* MainScheduler.swift in Sources */,
@@ -2593,7 +2593,7 @@
 				C8F0BF9E1BBBFB8B001B112F /* Timer.swift in Sources */,
 				C8F0BF9F1BBBFB8B001B112F /* Empty.swift in Sources */,
 				CB255BDA1BC46A9C00798A4C /* RetryWhen.swift in Sources */,
-				C8F0BFA01BBBFB8B001B112F /* RxBox.swift in Sources */,
+				C8F0BFA01BBBFB8B001B112F /* RxMutableBox.swift in Sources */,
 				C8F0BFA11BBBFB8B001B112F /* Sink.swift in Sources */,
 				C8F0BFA21BBBFB8B001B112F /* TakeUntil.swift in Sources */,
 				C8F0BFA31BBBFB8B001B112F /* MainScheduler.swift in Sources */,
@@ -2974,7 +2974,7 @@
 				D2EBEB361BB9B6D2003A27DC /* TailRecursiveSink.swift in Sources */,
 				D2EBEB311BB9B6CA003A27DC /* Observable+Single.swift in Sources */,
 				D235B2401BD003DD007E84DA /* Using.swift in Sources */,
-				D2EBEAE91BB9B697003A27DC /* RxBox.swift in Sources */,
+				D2EBEAE91BB9B697003A27DC /* RxMutableBox.swift in Sources */,
 				D2EBEAFC1BB9B6BA003A27DC /* Amb.swift in Sources */,
 				D2EBEB231BB9B6C1003A27DC /* Take.swift in Sources */,
 				D2EBEAE31BB9B697003A27DC /* Observable+Extensions.swift in Sources */,

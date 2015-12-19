@@ -262,7 +262,7 @@
 		C89464F91BC6C2B00055219D /* ObserverType+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89464891BC6C2B00055219D /* ObserverType+Extensions.swift */; };
 		C89464FA1BC6C2B00055219D /* ObserverType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C894648A1BC6C2B00055219D /* ObserverType.swift */; };
 		C89464FB1BC6C2B00055219D /* Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C894648B1BC6C2B00055219D /* Rx.swift */; };
-		C89464FC1BC6C2B00055219D /* RxBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = C894648C1BC6C2B00055219D /* RxBox.swift */; };
+		C89464FC1BC6C2B00055219D /* RxMutableBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = C894648C1BC6C2B00055219D /* RxMutableBox.swift */; };
 		C89465061BC6C2B00055219D /* SchedulerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89464971BC6C2B00055219D /* SchedulerType.swift */; };
 		C89465071BC6C2B00055219D /* BehaviorSubject.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89464991BC6C2B00055219D /* BehaviorSubject.swift */; };
 		C89465081BC6C2B00055219D /* PublishSubject.swift in Sources */ = {isa = PBXBuildFile; fileRef = C894649A1BC6C2B00055219D /* PublishSubject.swift */; };
@@ -686,7 +686,7 @@
 		C89464891BC6C2B00055219D /* ObserverType+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ObserverType+Extensions.swift"; sourceTree = "<group>"; };
 		C894648A1BC6C2B00055219D /* ObserverType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObserverType.swift; sourceTree = "<group>"; };
 		C894648B1BC6C2B00055219D /* Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Rx.swift; sourceTree = "<group>"; };
-		C894648C1BC6C2B00055219D /* RxBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxBox.swift; sourceTree = "<group>"; };
+		C894648C1BC6C2B00055219D /* RxMutableBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxMutableBox.swift; sourceTree = "<group>"; };
 		C894648E1BC6C2B00055219D /* ConcurrentDispatchQueueScheduler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConcurrentDispatchQueueScheduler.swift; sourceTree = "<group>"; };
 		C894648F1BC6C2B00055219D /* CurrentThreadScheduler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentThreadScheduler.swift; sourceTree = "<group>"; };
 		C89464901BC6C2B00055219D /* DispatchQueueSchedulerPriority.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DispatchQueueSchedulerPriority.swift; sourceTree = "<group>"; };
@@ -1173,7 +1173,7 @@
 				C89464891BC6C2B00055219D /* ObserverType+Extensions.swift */,
 				C894648A1BC6C2B00055219D /* ObserverType.swift */,
 				C894648B1BC6C2B00055219D /* Rx.swift */,
-				C894648C1BC6C2B00055219D /* RxBox.swift */,
+				C894648C1BC6C2B00055219D /* RxMutableBox.swift */,
 				C894648D1BC6C2B00055219D /* Schedulers */,
 				C89464971BC6C2B00055219D /* SchedulerType.swift */,
 				C89464981BC6C2B00055219D /* Subjects */,
@@ -1962,7 +1962,7 @@
 				C83974231BF77413004F02CC /* NSObject+Rx+KVORepresentable.swift in Sources */,
 				C8297E461B6CF905000589EA /* Example.swift in Sources */,
 				C89465081BC6C2B00055219D /* PublishSubject.swift in Sources */,
-				C89464FC1BC6C2B00055219D /* RxBox.swift in Sources */,
+				C89464FC1BC6C2B00055219D /* RxMutableBox.swift in Sources */,
 				C809E97B1BE6841C0058D948 /* Wireframe.swift in Sources */,
 				C89465811BC6C2BC0055219D /* ItemEvents.swift in Sources */,
 				C89465861BC6C2BC0055219D /* RxCollectionViewDataSourceProxy.swift in Sources */,

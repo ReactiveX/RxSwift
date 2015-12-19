@@ -37,7 +37,7 @@ extension SubjectConcurrencyTest {
     func testSubjectIsSynchronized() {
         let (observable, _observer) = createSubject()
 
-        let o = RxBox(_observer)
+        let o = RxMutableBox(_observer)
 
         var allDone = false
 
@@ -90,7 +90,7 @@ extension SubjectConcurrencyTest {
 
         var state = 0
 
-        let o = RxBox(_observer)
+        let o = RxMutableBox(_observer)
 
         var ranAll = false
 
@@ -121,7 +121,7 @@ extension SubjectConcurrencyTest {
 
         var state = 0
 
-        let o = RxBox(_observer)
+        let o = RxMutableBox(_observer)
 
         var ranAll = false
 
