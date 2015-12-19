@@ -228,15 +228,6 @@ func bindingErrorToInterface(error: ErrorType) {
 #endif
 }
 
-func bindingErrorToVariable(error: ErrorType) {
-    let error = "Binding error to variable: \(error)"
-#if DEBUG
-    rxFatalError(error)
-#else
-    print(error)
-#endif
-}
-
 // MARK: Abstract methods
 
 @noreturn func rxAbstractMethodWithMessage(message: String) {
