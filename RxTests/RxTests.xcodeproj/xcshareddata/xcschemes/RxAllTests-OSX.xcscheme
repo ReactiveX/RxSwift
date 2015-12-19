@@ -14,16 +14,16 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "D2EBEB481BB9B7AE003A27DC"
+               BlueprintIdentifier = "C88BB88F1B07E64B0064D411"
                BuildableName = "RxTests.xctest"
-               BlueprintName = "RxTests-tvOS"
+               BlueprintName = "RxAllTests-OSX"
                ReferencedContainer = "container:RxTests.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
-      buildConfiguration = "Debug"
+      buildConfiguration = "Release"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
@@ -32,18 +32,27 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "D2EBEB481BB9B7AE003A27DC"
+               BlueprintIdentifier = "C88BB88F1B07E64B0064D411"
                BuildableName = "RxTests.xctest"
-               BlueprintName = "RxTests-tvOS"
+               BlueprintName = "RxAllTests-OSX"
                ReferencedContainer = "container:RxTests.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "C88BB88F1B07E64B0064D411"
+            BuildableName = "RxTests.xctest"
+            BlueprintName = "RxAllTests-OSX"
+            ReferencedContainer = "container:RxTests.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>
    <LaunchAction
-      buildConfiguration = "Release"
+      buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       launchStyle = "0"
@@ -55,9 +64,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D2EBEB481BB9B7AE003A27DC"
+            BlueprintIdentifier = "C88BB88F1B07E64B0064D411"
             BuildableName = "RxTests.xctest"
-            BlueprintName = "RxTests-tvOS"
+            BlueprintName = "RxAllTests-OSX"
             ReferencedContainer = "container:RxTests.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -73,9 +82,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D2EBEB481BB9B7AE003A27DC"
+            BlueprintIdentifier = "C88BB88F1B07E64B0064D411"
             BuildableName = "RxTests.xctest"
-            BlueprintName = "RxTests-tvOS"
+            BlueprintName = "RxAllTests-OSX"
             ReferencedContainer = "container:RxTests.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

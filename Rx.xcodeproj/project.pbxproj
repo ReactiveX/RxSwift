@@ -889,6 +889,34 @@
 			remoteGlobalIDString = C8F0BF901BBBFB8B001B112F;
 			remoteInfo = "RxSwift-watchOS";
 		};
+		C88FA4FF1C25C44800CCFEA4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C8A56ACE1AD7424700B4673B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C8A56AD61AD7424700B4673B;
+			remoteInfo = "RxSwift-iOS";
+		};
+		C88FA5101C25C4B500CCFEA4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C8A56ACE1AD7424700B4673B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C88BB81A1B07E5ED0064D411;
+			remoteInfo = "RxSwift-OSX";
+		};
+		C88FA5211C25C4C000CCFEA4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C8A56ACE1AD7424700B4673B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D2EA280B1BB9B5A200880ED3;
+			remoteInfo = "RxSwift-tvOS";
+		};
+		C88FA5321C25C4CC00CCFEA4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C8A56ACE1AD7424700B4673B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C8F0BF901BBBFB8B001B112F;
+			remoteInfo = "RxSwift-watchOS";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -1088,6 +1116,10 @@
 		C88254141B8A752B00B02D69 /* UITextView+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITextView+Rx.swift"; sourceTree = "<group>"; };
 		C88BB8711B07E5ED0064D411 /* RxSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C88E296A1BEB712E001CCB92 /* RunLoopLock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RunLoopLock.swift; sourceTree = "<group>"; };
+		C88FA50C1C25C44800CCFEA4 /* RxTests-iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = "RxTests-iOS.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C88FA51D1C25C4B500CCFEA4 /* RxTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C88FA52E1C25C4C000CCFEA4 /* RxTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C88FA53F1C25C4CC00CCFEA4 /* RxTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8941BDE1BD5695C00A0E874 /* BlockingObservable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockingObservable.swift; sourceTree = "<group>"; };
 		C8941BE31BD56B0700A0E874 /* BlockingObservable+Operators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "BlockingObservable+Operators.swift"; sourceTree = "<group>"; };
 		C89CDB351BCB0DD7002063D9 /* ShareReplay1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ShareReplay1.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -1163,6 +1195,34 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C88BB8681B07E5ED0064D411 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C88FA5051C25C44800CCFEA4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C88FA5161C25C4B500CCFEA4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C88FA5271C25C4C000CCFEA4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C88FA5381C25C4CC00CCFEA4 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1662,6 +1722,10 @@
 				C8F0C0021BBBFB8B001B112F /* RxSwift.framework */,
 				C8F0C04B1BBBFBB9001B112F /* RxCocoa.framework */,
 				C8F0C0581BBBFBCE001B112F /* RxBlocking.framework */,
+				C88FA50C1C25C44800CCFEA4 /* RxTests-iOS.framework */,
+				C88FA51D1C25C4B500CCFEA4 /* RxTests.framework */,
+				C88FA52E1C25C4C000CCFEA4 /* RxTests.framework */,
+				C88FA53F1C25C4CC00CCFEA4 /* RxTests.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1708,6 +1772,34 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C88BB8691B07E5ED0064D411 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C88FA5061C25C44800CCFEA4 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C88FA5171C25C4B500CCFEA4 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C88FA5281C25C4C000CCFEA4 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C88FA5391C25C4CC00CCFEA4 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1868,6 +1960,82 @@
 			name = "RxSwift-OSX";
 			productName = RxSwift;
 			productReference = C88BB8711B07E5ED0064D411 /* RxSwift.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		C88FA4FD1C25C44800CCFEA4 /* RxTests-iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C88FA5081C25C44800CCFEA4 /* Build configuration list for PBXNativeTarget "RxTests-iOS" */;
+			buildPhases = (
+				C88FA5001C25C44800CCFEA4 /* Sources */,
+				C88FA5051C25C44800CCFEA4 /* Frameworks */,
+				C88FA5061C25C44800CCFEA4 /* Headers */,
+				C88FA5071C25C44800CCFEA4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C88FA4FE1C25C44800CCFEA4 /* PBXTargetDependency */,
+			);
+			name = "RxTests-iOS";
+			productName = RxSwift;
+			productReference = C88FA50C1C25C44800CCFEA4 /* RxTests-iOS.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		C88FA50E1C25C4B500CCFEA4 /* RxTests-OSX */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C88FA5191C25C4B500CCFEA4 /* Build configuration list for PBXNativeTarget "RxTests-OSX" */;
+			buildPhases = (
+				C88FA5111C25C4B500CCFEA4 /* Sources */,
+				C88FA5161C25C4B500CCFEA4 /* Frameworks */,
+				C88FA5171C25C4B500CCFEA4 /* Headers */,
+				C88FA5181C25C4B500CCFEA4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C88FA50F1C25C4B500CCFEA4 /* PBXTargetDependency */,
+			);
+			name = "RxTests-OSX";
+			productName = RxSwift;
+			productReference = C88FA51D1C25C4B500CCFEA4 /* RxTests.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		C88FA51F1C25C4C000CCFEA4 /* RxTests-tvOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C88FA52A1C25C4C000CCFEA4 /* Build configuration list for PBXNativeTarget "RxTests-tvOS" */;
+			buildPhases = (
+				C88FA5221C25C4C000CCFEA4 /* Sources */,
+				C88FA5271C25C4C000CCFEA4 /* Frameworks */,
+				C88FA5281C25C4C000CCFEA4 /* Headers */,
+				C88FA5291C25C4C000CCFEA4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C88FA5201C25C4C000CCFEA4 /* PBXTargetDependency */,
+			);
+			name = "RxTests-tvOS";
+			productName = "RxBlocking-tvOS";
+			productReference = C88FA52E1C25C4C000CCFEA4 /* RxTests.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		C88FA5301C25C4CC00CCFEA4 /* RxTests-watchOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C88FA53B1C25C4CC00CCFEA4 /* Build configuration list for PBXNativeTarget "RxTests-watchOS" */;
+			buildPhases = (
+				C88FA5331C25C4CC00CCFEA4 /* Sources */,
+				C88FA5381C25C4CC00CCFEA4 /* Frameworks */,
+				C88FA5391C25C4CC00CCFEA4 /* Headers */,
+				C88FA53A1C25C4CC00CCFEA4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C88FA5311C25C4CC00CCFEA4 /* PBXTargetDependency */,
+			);
+			name = "RxTests-watchOS";
+			productName = RxSwift;
+			productReference = C88FA53F1C25C4CC00CCFEA4 /* RxTests.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		C8A56AD61AD7424700B4673B /* RxSwift-iOS */ = {
@@ -2048,6 +2216,10 @@
 				C8093BC91B8A71FC0088E94D /* RxBlocking-OSX */,
 				D2EBEB801BB9B99D003A27DC /* RxBlocking-tvOS */,
 				C8F0C04D1BBBFBCE001B112F /* RxBlocking-watchOS */,
+				C88FA4FD1C25C44800CCFEA4 /* RxTests-iOS */,
+				C88FA50E1C25C4B500CCFEA4 /* RxTests-OSX */,
+				C88FA51F1C25C4C000CCFEA4 /* RxTests-tvOS */,
+				C88FA5301C25C4CC00CCFEA4 /* RxTests-watchOS */,
 			);
 		};
 /* End PBXProject section */
@@ -2082,6 +2254,34 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C88BB86D1B07E5ED0064D411 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C88FA5071C25C44800CCFEA4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C88FA5181C25C4B500CCFEA4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C88FA5291C25C4C000CCFEA4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C88FA53A1C25C4CC00CCFEA4 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -2426,6 +2626,34 @@
 				C8093CF61B8A72BE0088E94D /* Event.swift in Sources */,
 				C83D73C51C1DBAEE003DC470 /* ScheduledItem.swift in Sources */,
 				C8093D521B8A72BE0088E94D /* Zip.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C88FA5001C25C44800CCFEA4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C88FA5111C25C4B500CCFEA4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C88FA5221C25C4C000CCFEA4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C88FA5331C25C4CC00CCFEA4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3070,6 +3298,26 @@
 			target = C8F0BF901BBBFB8B001B112F /* RxSwift-watchOS */;
 			targetProxy = C872BD291BC052C200D7175E /* PBXContainerItemProxy */;
 		};
+		C88FA4FE1C25C44800CCFEA4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C8A56AD61AD7424700B4673B /* RxSwift-iOS */;
+			targetProxy = C88FA4FF1C25C44800CCFEA4 /* PBXContainerItemProxy */;
+		};
+		C88FA50F1C25C4B500CCFEA4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C88BB81A1B07E5ED0064D411 /* RxSwift-OSX */;
+			targetProxy = C88FA5101C25C4B500CCFEA4 /* PBXContainerItemProxy */;
+		};
+		C88FA5201C25C4C000CCFEA4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D2EA280B1BB9B5A200880ED3 /* RxSwift-tvOS */;
+			targetProxy = C88FA5211C25C4C000CCFEA4 /* PBXContainerItemProxy */;
+		};
+		C88FA5311C25C4CC00CCFEA4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C8F0BF901BBBFB8B001B112F /* RxSwift-watchOS */;
+			targetProxy = C88FA5321C25C4CC00CCFEA4 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
@@ -3413,6 +3661,225 @@
 				SKIP_INSTALL = YES;
 			};
 			name = Release;
+		};
+		C88FA5091C25C44800CCFEA4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = RxTests/RxTests/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "Krunoslav-Zaher.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_NAME = RxTests;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		C88FA50A1C25C44800CCFEA4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = RxTests/RxTests/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "Krunoslav-Zaher.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_NAME = RxTests;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		C88FA50B1C25C44800CCFEA4 /* Release-Tests */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = RxTests/RxTests/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "Krunoslav-Zaher.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_NAME = RxTests;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = "Release-Tests";
+		};
+		C88FA51A1C25C4B500CCFEA4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_BITCODE = NO;
+				INFOPLIST_FILE = "RxBlocking-OSX copy-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "Krunoslav-Zaher.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_NAME = RxTests;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		C88FA51B1C25C4B500CCFEA4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_BITCODE = NO;
+				INFOPLIST_FILE = "RxBlocking-OSX copy-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "Krunoslav-Zaher.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_NAME = RxTests;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		C88FA51C1C25C4B500CCFEA4 /* Release-Tests */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_BITCODE = NO;
+				INFOPLIST_FILE = "RxBlocking-OSX copy-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "Krunoslav-Zaher.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_NAME = RxTests;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+			};
+			name = "Release-Tests";
+		};
+		C88FA52B1C25C4C000CCFEA4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "RxBlocking-tvOS copy-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "Krunoslav-Zaher.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_NAME = RxTests;
+				SDKROOT = appletvos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 3;
+			};
+			name = Debug;
+		};
+		C88FA52C1C25C4C000CCFEA4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "RxBlocking-tvOS copy-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "Krunoslav-Zaher.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_NAME = RxTests;
+				SDKROOT = appletvos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 3;
+			};
+			name = Release;
+		};
+		C88FA52D1C25C4C000CCFEA4 /* Release-Tests */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "RxBlocking-tvOS copy-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "Krunoslav-Zaher.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_NAME = RxTests;
+				SDKROOT = appletvos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 3;
+			};
+			name = "Release-Tests";
+		};
+		C88FA53C1C25C4CC00CCFEA4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "RxBlocking-watchOS copy-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "Krunoslav-Zaher.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_NAME = RxTests;
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,4";
+			};
+			name = Debug;
+		};
+		C88FA53D1C25C4CC00CCFEA4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "RxBlocking-watchOS copy-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "Krunoslav-Zaher.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_NAME = RxTests;
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,4";
+			};
+			name = Release;
+		};
+		C88FA53E1C25C4CC00CCFEA4 /* Release-Tests */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "RxBlocking-watchOS copy-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "Krunoslav-Zaher.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_NAME = RxTests;
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,4";
+			};
+			name = "Release-Tests";
 		};
 		C8A56AEB1AD7424700B4673B /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -3935,6 +4402,46 @@
 				C88BB86F1B07E5ED0064D411 /* Debug */,
 				C88BB8701B07E5ED0064D411 /* Release */,
 				C8633A961B08FA5500375D60 /* Release-Tests */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C88FA5081C25C44800CCFEA4 /* Build configuration list for PBXNativeTarget "RxTests-iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C88FA5091C25C44800CCFEA4 /* Debug */,
+				C88FA50A1C25C44800CCFEA4 /* Release */,
+				C88FA50B1C25C44800CCFEA4 /* Release-Tests */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C88FA5191C25C4B500CCFEA4 /* Build configuration list for PBXNativeTarget "RxTests-OSX" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C88FA51A1C25C4B500CCFEA4 /* Debug */,
+				C88FA51B1C25C4B500CCFEA4 /* Release */,
+				C88FA51C1C25C4B500CCFEA4 /* Release-Tests */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C88FA52A1C25C4C000CCFEA4 /* Build configuration list for PBXNativeTarget "RxTests-tvOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C88FA52B1C25C4C000CCFEA4 /* Debug */,
+				C88FA52C1C25C4C000CCFEA4 /* Release */,
+				C88FA52D1C25C4C000CCFEA4 /* Release-Tests */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C88FA53B1C25C4CC00CCFEA4 /* Build configuration list for PBXNativeTarget "RxTests-watchOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C88FA53C1C25C4CC00CCFEA4 /* Debug */,
+				C88FA53D1C25C4CC00CCFEA4 /* Release */,
+				C88FA53E1C25C4CC00CCFEA4 /* Release-Tests */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

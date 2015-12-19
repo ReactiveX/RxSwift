@@ -507,9 +507,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		C811081F1AF50E11001C13E4 /* RxTests-iOS */ = {
+		C811081F1AF50E11001C13E4 /* RxAllTests-iOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C81108291AF50E11001C13E4 /* Build configuration list for PBXNativeTarget "RxTests-iOS" */;
+			buildConfigurationList = C81108291AF50E11001C13E4 /* Build configuration list for PBXNativeTarget "RxAllTests-iOS" */;
 			buildPhases = (
 				C811081C1AF50E11001C13E4 /* Sources */,
 				C811081D1AF50E11001C13E4 /* Frameworks */,
@@ -519,7 +519,7 @@
 			);
 			dependencies = (
 			);
-			name = "RxTests-iOS";
+			name = "RxAllTests-iOS";
 			productName = Tests;
 			productReference = C81108201AF50E11001C13E4 /* RxTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -541,9 +541,9 @@
 			productReference = C868D1091BB950D3003D1474 /* PerformanceTests.app */;
 			productType = "com.apple.product-type.application";
 		};
-		C88BB88F1B07E64B0064D411 /* RxTests-OSX */ = {
+		C88BB88F1B07E64B0064D411 /* RxAllTests-OSX */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C88BB8B41B07E64B0064D411 /* Build configuration list for PBXNativeTarget "RxTests-OSX" */;
+			buildConfigurationList = C88BB8B41B07E64B0064D411 /* Build configuration list for PBXNativeTarget "RxAllTests-OSX" */;
 			buildPhases = (
 				C88BB8901B07E64B0064D411 /* Sources */,
 				C88BB8AF1B07E64B0064D411 /* Frameworks */,
@@ -553,14 +553,14 @@
 			);
 			dependencies = (
 			);
-			name = "RxTests-OSX";
+			name = "RxAllTests-OSX";
 			productName = Tests;
 			productReference = C88BB8B71B07E64B0064D411 /* RxTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		D2EBEB481BB9B7AE003A27DC /* RxTests-tvOS */ = {
+		D2EBEB481BB9B7AE003A27DC /* RxAllTests-tvOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D2EBEB511BB9B7AE003A27DC /* Build configuration list for PBXNativeTarget "RxTests-tvOS" */;
+			buildConfigurationList = D2EBEB511BB9B7AE003A27DC /* Build configuration list for PBXNativeTarget "RxAllTests-tvOS" */;
 			buildPhases = (
 				D2EBEB451BB9B7AE003A27DC /* Sources */,
 				D2EBEB461BB9B7AE003A27DC /* Frameworks */,
@@ -570,7 +570,7 @@
 			);
 			dependencies = (
 			);
-			name = "RxTests-tvOS";
+			name = "RxAllTests-tvOS";
 			productName = "RxTests-tvOS";
 			productReference = D2EBEB491BB9B7AE003A27DC /* RxTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -608,9 +608,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				C811081F1AF50E11001C13E4 /* RxTests-iOS */,
-				C88BB88F1B07E64B0064D411 /* RxTests-OSX */,
-				D2EBEB481BB9B7AE003A27DC /* RxTests-tvOS */,
+				C811081F1AF50E11001C13E4 /* RxAllTests-iOS */,
+				C88BB88F1B07E64B0064D411 /* RxAllTests-OSX */,
+				D2EBEB481BB9B7AE003A27DC /* RxAllTests-tvOS */,
 				C868D1081BB950D3003D1474 /* PerformanceTests */,
 			);
 		};
@@ -1432,7 +1432,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C81108291AF50E11001C13E4 /* Build configuration list for PBXNativeTarget "RxTests-iOS" */ = {
+		C81108291AF50E11001C13E4 /* Build configuration list for PBXNativeTarget "RxAllTests-iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C81108271AF50E11001C13E4 /* Debug */,
@@ -1452,7 +1452,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C88BB8B41B07E64B0064D411 /* Build configuration list for PBXNativeTarget "RxTests-OSX" */ = {
+		C88BB8B41B07E64B0064D411 /* Build configuration list for PBXNativeTarget "RxAllTests-OSX" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C88BB8B51B07E64B0064D411 /* Debug */,
@@ -1462,7 +1462,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D2EBEB511BB9B7AE003A27DC /* Build configuration list for PBXNativeTarget "RxTests-tvOS" */ = {
+		D2EBEB511BB9B7AE003A27DC /* Build configuration list for PBXNativeTarget "RxAllTests-tvOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D2EBEB4E1BB9B7AE003A27DC /* Debug */,
