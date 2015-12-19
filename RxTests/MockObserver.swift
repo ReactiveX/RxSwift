@@ -9,18 +9,19 @@
 import Foundation
 import RxSwift
 
-class MockObserver<ElementType : Equatable> : ObserverType {
-    typealias Element = ElementType
+public class MockObserver<ElementType>
+    : ObserverType {
+    public typealias Element = ElementType
     
-    let scheduler: TestScheduler
-    var messages: [Recorded<Element>]
+    public let scheduler: TestScheduler
+    public private(set) var messages: [Recorded<Element>]
     
     init(scheduler: TestScheduler) {
         self.scheduler = scheduler
         self.messages = []
     }
     
-    func on(event: Event<Element>) {
+    public func on(event: Event<Element>) {
         messages.append(Recorded(time: scheduler.now, event: event))
     }
 }

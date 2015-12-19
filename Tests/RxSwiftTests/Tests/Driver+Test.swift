@@ -10,6 +10,7 @@ import Foundation
 import RxSwift
 import RxCocoa
 import XCTest
+import RxTests
 
 class DriverTest : RxTest {
     var backgroundScheduler = SerialDispatchQueueScheduler(globalConcurrentQueuePriority: .Default)

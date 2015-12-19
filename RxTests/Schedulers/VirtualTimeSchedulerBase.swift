@@ -9,56 +9,18 @@
 import Foundation
 import RxSwift
 
-protocol ScheduledItemProtocol : Cancelable {
-    var time: Int {
-        get
-    }
-    
-    func invoke()
-}
 
-class ScheduledItem<T> : ScheduledItemProtocol {
-    typealias Action = T -> Disposable
-    
-    let action: Action
-    let state: T
-    let time: Int
-    
-    var disposed: Bool {
-        get {
-            return disposable.disposed
-        }
-    }
-    
-    var disposable = SingleAssignmentDisposable()
-    
-    init(action: Action, state: T, time: Int) {
-        self.action = action
-        self.state = state
-        self.time = time
-    }
-    
-    func invoke() {
-         self.disposable.disposable = action(state)
-    }
-    
-    func dispose() {
-        self.disposable.dispose()
-    }
-}
-
-
-class VirtualTimeSchedulerBase
+public class VirtualTimeSchedulerBase
     : SchedulerType
     , CustomDebugStringConvertible {
 
-    typealias TimeInterval = Int
-    typealias Time = Int
+    public typealias TimeInterval = Time
+    public typealias Time = RxTests.Time
     
-    var clock : Time
-    var enabled : Bool
+    private var clock : Time
+    private var enabled : Bool
     
-    var now: Time {
+    public var now: Time {
         get {
             return self.clock
         }
@@ -66,25 +28,25 @@ class VirtualTimeSchedulerBase
     
     private var schedulerQueue : [ScheduledItemProtocol] = []
     
-    init(initialClock: Time) {
+    public init(initialClock: Time) {
         self.clock = initialClock
         self.enabled = false
     }
     
-    func schedule<StateType>(state: StateType, action: StateType -> Disposable) -> Disposable {
+    public func schedule<StateType>(state: StateType, action: StateType -> Disposable) -> Disposable {
         return self.scheduleRelative(state, dueTime: 0) { a in
             return action(a)
         }
     }
     
-    func scheduleRelative<StateType>(state: StateType, dueTime: Int, action: StateType -> Disposable) -> Disposable {
+    public func scheduleRelative<StateType>(state: StateType, dueTime: Time, action: StateType -> Disposable) -> Disposable {
         return schedule(state, time: now + dueTime, action: action)
     }
     
-    func schedule<StateType>(state: StateType, time: Int, action: StateType -> Disposable) -> Disposable {
+    func schedule<StateType>(state: StateType, time: Time, action: StateType -> Disposable) -> Disposable {
         let compositeDisposable = CompositeDisposable()
         
-        let scheduleTime: Int
+        let scheduleTime: Time
         if time <= self.now {
             scheduleTime = self.now + 1
         }
@@ -101,7 +63,7 @@ class VirtualTimeSchedulerBase
         return compositeDisposable
     }
     
-    func start() {
+    public func start() {
         if !enabled {
             enabled = true
             repeat {
@@ -148,10 +110,50 @@ class VirtualTimeSchedulerBase
     }
 }
 
+// MARK: description
+
 extension VirtualTimeSchedulerBase {
-    var debugDescription: String {
+    public var debugDescription: String {
         get {
             return self.schedulerQueue.description
         }
+    }
+}
+
+protocol ScheduledItemProtocol : Cancelable {
+    var time: Time {
+        get
+    }
+    
+    func invoke()
+}
+
+class ScheduledItem<T> : ScheduledItemProtocol {
+    typealias Action = T -> Disposable
+    
+    let action: Action
+    let state: T
+    let time: Time
+    
+    var disposed: Bool {
+        get {
+            return disposable.disposed
+        }
+    }
+    
+    var disposable = SingleAssignmentDisposable()
+    
+    init(action: Action, state: T, time: Time) {
+        self.action = action
+        self.state = state
+        self.time = time
+    }
+    
+    func invoke() {
+         self.disposable.disposable = action(state)
+    }
+    
+    func dispose() {
+        self.disposable.dispose()
     }
 }

@@ -11,6 +11,7 @@ import Foundation
 import RxSwift
 import RxBlocking
 import XCTest
+import RxTests
 
 class ObservableTimeTest : RxTest {
     override func setUp() {

@@ -10,6 +10,7 @@ import Foundation
 import XCTest
 import RxSwift
 import RxBlocking
+import RxTests
 
 class ObservableConcurrencyTestBase : RxTest {
     var lock = OS_SPINLOCK_INIT
@@ -195,7 +196,7 @@ extension ObservableConcurrencyTest {
                     next(0),
                     next(1),
                     next(2),
-                    completed(0)
+                    completed()
                     ])
                 XCTAssert(xs.subscriptions == [UnsunscribedFromHotObservable])
                 return NopDisposable.instance
@@ -424,7 +425,7 @@ class ObservableConcurrentSchedulerConcurrencyTest: ObservableConcurrencyTestBas
             next(0),
             next(1),
             next(2),
-            completed(0)
+            completed()
             ])
         XCTAssert(xs.subscriptions == [UnsunscribedFromHotObservable])
 
@@ -577,9 +578,9 @@ extension ObservableConcurrencyTest {
         var disposed = 0
 
         let xs: Observable<Int> = create { observer in
-            scheduled = scheduler.clock
+            scheduled = scheduler.now
             return AnonymousDisposable {
-                disposed = scheduler.clock
+                disposed = scheduler.now
             }
         }
 

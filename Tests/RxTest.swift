@@ -9,6 +9,7 @@
 import XCTest
 import RxSwift
 import CoreLocation
+import RxTests
 
 #if TRACE_RESOURCES
 #elseif RELEASE
@@ -82,20 +83,8 @@ func completed<T>() -> Recorded<T> {
     return Recorded(time: 0, event: .Completed)
 }
 
-func error<T>(error: NSError) -> Recorded<T> {
+func error<T>(error: ErrorType) -> Recorded<T> {
     return Recorded(time: 0, event: .Error(error))
-}
-
-func next<T>(time: Time, _ value: T) -> Recorded<T> {
-    return Recorded(time: time, event: .Next(value))
-}
-
-func completed<T>(time: Time) -> Recorded<T> {
-    return Recorded(time: time, event: .Completed)
-}
-
-func error<T>(time: Time, _ error: ErrorType) -> Recorded<T> {
-    return Recorded(time: time, event: .Error(error))
 }
 
 func doOnBackgroundThread(action: () -> ()) {

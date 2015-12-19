@@ -9,6 +9,7 @@
 import Foundation
 import XCTest
 import RxSwift
+import RxTests
 
 class ObservableMultipleTest : RxTest {
     override func setUp() {
@@ -41,7 +42,7 @@ extension ObservableMultipleTest {
         
         let res = scheduler.start {
             o1.catchError { e in
-                handlerCalled = scheduler.clock
+                handlerCalled = scheduler.now
                 return o2.asObservable()
             }
         }
@@ -78,7 +79,7 @@ extension ObservableMultipleTest {
         
         let res = scheduler.start {
             o1.catchError { e in
-                handlerCalled = scheduler.clock
+                handlerCalled = scheduler.now
                 throw testError1
             }
         }
@@ -3438,7 +3439,7 @@ extension ObservableMultipleTest {
             [e0, e1].combineLatest { $0.reduce(0, combine:+) }
         }
         
-        XCTAssertTrue(res.messages == [
+        XCTAssertEqual(res.messages, [
             error(220, testError2)
             ])
         
@@ -3464,7 +3465,7 @@ extension ObservableMultipleTest {
             [e0, e1].combineLatest { $0.reduce(0, combine:+) }
         }
         
-        XCTAssertTrue(res.messages == [
+        XCTAssertEqual(res.messages, [
             error(230, testError2)
             ])
         

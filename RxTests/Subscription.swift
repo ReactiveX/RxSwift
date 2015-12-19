@@ -8,25 +8,25 @@
 
 import Foundation
 
-struct Subscription
+public struct Subscription
     : Equatable
     , Hashable
     , CustomDebugStringConvertible {
 
-    let subscribe : Time
-    let unsubscribe : Time
+    public let subscribe : Int
+    public let unsubscribe : Int
     
-    init(_ subscribe: Time) {
+    public init(_ subscribe: Int) {
         self.subscribe = subscribe
         self.unsubscribe = Int.max
     }
     
-    init(_ subscribe: Time, _ unsubscribe: Time) {
+    public init(_ subscribe: Int, _ unsubscribe: Int) {
         self.subscribe = subscribe
         self.unsubscribe = unsubscribe
     }
     
-    var hashValue : Int {
+    public var hashValue : Int {
         get {
             return subscribe.hashValue ^ unsubscribe.hashValue
         }
@@ -34,14 +34,14 @@ struct Subscription
 }
 
 extension Subscription {
-    var debugDescription : String {
+    public var debugDescription : String {
         get {
             let infiniteText = "Infinity"
-            return "(\(subscribe) : \(unsubscribe != Time.max ? String(unsubscribe) : infiniteText))"
+            return "(\(subscribe) : \(unsubscribe != Int.max ? String(unsubscribe) : infiniteText))"
         }
     }
 }
 
-func == (lhs: Subscription, rhs: Subscription) -> Bool {
+public func == (lhs: Subscription, rhs: Subscription) -> Bool {
     return lhs.subscribe == rhs.subscribe && lhs.unsubscribe == rhs.unsubscribe
 }

@@ -8,6 +8,7 @@
 
 import Foundation
 import RxSwift
+import RxTests
 
 let SubscribedToHotObservable = Subscription(0)
 let UnsunscribedFromHotObservable = Subscription(0, 0)

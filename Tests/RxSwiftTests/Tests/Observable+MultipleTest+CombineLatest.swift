@@ -11,6 +11,7 @@
 import Foundation
 import XCTest
 import RxSwift
+import RxTests
 
 // combine latest
 extension ObservableMultipleTest {

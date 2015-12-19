@@ -9,6 +9,7 @@
 import Foundation
 import XCTest
 import RxSwift
+import RxTests
 
 class ObservableAggregateTest : RxTest {
     override func setUp() {

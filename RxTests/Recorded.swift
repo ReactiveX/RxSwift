@@ -10,31 +10,28 @@ import Foundation
 import RxSwift
 import Swift
 
-struct Recorded<Element : Equatable> : CustomDebugStringConvertible, Equatable {
-    let time: Time
-    let event: Event<Element>
+public struct Recorded<Element> : CustomDebugStringConvertible {
+    public let time: Time
+    public let event: Event<Element>
     
-    init(time: Time, event: Event<Element>) {
+    public init(time: Time, event: Event<Element>) {
         self.time = time
         self.event = event
     }
     
-    var value: Element {
+    public var value: Element {
         get {
-            switch self.event {
-            case .Next(let value):
-                return value
-            default:
-                assert(false)
-                let element: Element! = nil
-                return element!
+            guard case .Next(let element) = event else {
+                fatalError("Requesting value for non event")
             }
+
+            return element
         }
     }
 }
 
 extension Recorded {
-    var debugDescription: String {
+    public var debugDescription: String {
         get {
             return "\(event) @ \(time)"
         }

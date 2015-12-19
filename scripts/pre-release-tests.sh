@@ -64,7 +64,7 @@ done
 #make sure all iOS tests pass
 for configuration in ${CONFIGURATIONS[@]}
 do
-	rx "AllRxTests-iOS" ${configuration} $DEFAULT_IOS9_SIMULATOR test
+	rx "AllTests-iOS" ${configuration} $DEFAULT_IOS9_SIMULATOR test
 done
 
 #make sure all tvOS tests pass

@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "C88BB88F1B07E64B0064D411"
-               BuildableName = "RxTests.xctest"
+               BuildableName = "AllTests.xctest"
                BlueprintName = "AllTests-OSX"
                ReferencedContainer = "container:Tests.xcodeproj">
             </BuildableReference>
@@ -33,7 +33,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "C88BB88F1B07E64B0064D411"
-               BuildableName = "RxTests.xctest"
+               BuildableName = "AllTests.xctest"
                BlueprintName = "AllTests-OSX"
                ReferencedContainer = "container:Tests.xcodeproj">
             </BuildableReference>
@@ -56,7 +56,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C88BB88F1B07E64B0064D411"
-            BuildableName = "RxTests.xctest"
+            BuildableName = "AllTests.xctest"
             BlueprintName = "AllTests-OSX"
             ReferencedContainer = "container:Tests.xcodeproj">
          </BuildableReference>
@@ -74,7 +74,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C88BB88F1B07E64B0064D411"
-            BuildableName = "RxTests.xctest"
+            BuildableName = "AllTests.xctest"
             BlueprintName = "AllTests-OSX"
             ReferencedContainer = "container:Tests.xcodeproj">
          </BuildableReference>

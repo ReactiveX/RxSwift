@@ -462,6 +462,50 @@
 		C8DB968E1BF7595D0084BD53 /* KVORepresentable+Swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8DB968C1BF7595D0084BD53 /* KVORepresentable+Swift.swift */; };
 		C8DB968F1BF7595D0084BD53 /* KVORepresentable+Swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8DB968C1BF7595D0084BD53 /* KVORepresentable+Swift.swift */; };
 		C8DB96901BF7595D0084BD53 /* KVORepresentable+Swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8DB968C1BF7595D0084BD53 /* KVORepresentable+Swift.swift */; };
+		C8E3A7051C25CE7B00643FE6 /* TestScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E3A7031C25CE7B00643FE6 /* TestScheduler.swift */; };
+		C8E3A7061C25CE7B00643FE6 /* TestScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E3A7031C25CE7B00643FE6 /* TestScheduler.swift */; };
+		C8E3A7071C25CE7B00643FE6 /* TestScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E3A7031C25CE7B00643FE6 /* TestScheduler.swift */; };
+		C8E3A7081C25CE7B00643FE6 /* TestScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E3A7031C25CE7B00643FE6 /* TestScheduler.swift */; };
+		C8E3A7091C25CE7B00643FE6 /* VirtualTimeSchedulerBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E3A7041C25CE7B00643FE6 /* VirtualTimeSchedulerBase.swift */; };
+		C8E3A70A1C25CE7B00643FE6 /* VirtualTimeSchedulerBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E3A7041C25CE7B00643FE6 /* VirtualTimeSchedulerBase.swift */; };
+		C8E3A70B1C25CE7B00643FE6 /* VirtualTimeSchedulerBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E3A7041C25CE7B00643FE6 /* VirtualTimeSchedulerBase.swift */; };
+		C8E3A70C1C25CE7B00643FE6 /* VirtualTimeSchedulerBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E3A7041C25CE7B00643FE6 /* VirtualTimeSchedulerBase.swift */; };
+		C8E3A7101C25CEF100643FE6 /* ColdObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E3A70D1C25CEF100643FE6 /* ColdObservable.swift */; };
+		C8E3A7111C25CEF100643FE6 /* ColdObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E3A70D1C25CEF100643FE6 /* ColdObservable.swift */; };
+		C8E3A7121C25CEF100643FE6 /* ColdObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E3A70D1C25CEF100643FE6 /* ColdObservable.swift */; };
+		C8E3A7131C25CEF100643FE6 /* ColdObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E3A70D1C25CEF100643FE6 /* ColdObservable.swift */; };
+		C8E3A7141C25CEF100643FE6 /* HotObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E3A70E1C25CEF100643FE6 /* HotObservable.swift */; };
+		C8E3A7151C25CEF100643FE6 /* HotObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E3A70E1C25CEF100643FE6 /* HotObservable.swift */; };
+		C8E3A7161C25CEF100643FE6 /* HotObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E3A70E1C25CEF100643FE6 /* HotObservable.swift */; };
+		C8E3A7171C25CEF100643FE6 /* HotObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E3A70E1C25CEF100643FE6 /* HotObservable.swift */; };
+		C8E3A7181C25CEF100643FE6 /* MockObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E3A70F1C25CEF100643FE6 /* MockObserver.swift */; };
+		C8E3A7191C25CEF100643FE6 /* MockObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E3A70F1C25CEF100643FE6 /* MockObserver.swift */; };
+		C8E3A71A1C25CEF100643FE6 /* MockObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E3A70F1C25CEF100643FE6 /* MockObserver.swift */; };
+		C8E3A71B1C25CEF100643FE6 /* MockObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E3A70F1C25CEF100643FE6 /* MockObserver.swift */; };
+		C8E3A71E1C25CF1000643FE6 /* Recorded.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E3A71C1C25CF1000643FE6 /* Recorded.swift */; };
+		C8E3A71F1C25CF1000643FE6 /* Recorded.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E3A71C1C25CF1000643FE6 /* Recorded.swift */; };
+		C8E3A7201C25CF1000643FE6 /* Recorded.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E3A71C1C25CF1000643FE6 /* Recorded.swift */; };
+		C8E3A7211C25CF1000643FE6 /* Recorded.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E3A71C1C25CF1000643FE6 /* Recorded.swift */; };
+		C8E3A7221C25CF1000643FE6 /* Subscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E3A71D1C25CF1000643FE6 /* Subscription.swift */; };
+		C8E3A7231C25CF1000643FE6 /* Subscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E3A71D1C25CF1000643FE6 /* Subscription.swift */; };
+		C8E3A7241C25CF1000643FE6 /* Subscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E3A71D1C25CF1000643FE6 /* Subscription.swift */; };
+		C8E3A7251C25CF1000643FE6 /* Subscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E3A71D1C25CF1000643FE6 /* Subscription.swift */; };
+		C8E3A7271C25CF8C00643FE6 /* RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E3A7261C25CF8C00643FE6 /* RxTests.swift */; };
+		C8E3A7281C25CF8C00643FE6 /* RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E3A7261C25CF8C00643FE6 /* RxTests.swift */; };
+		C8E3A7291C25CF8C00643FE6 /* RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E3A7261C25CF8C00643FE6 /* RxTests.swift */; };
+		C8E3A72A1C25CF8C00643FE6 /* RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E3A7261C25CF8C00643FE6 /* RxTests.swift */; };
+		C8E3A72C1C25D14700643FE6 /* XCTest+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E3A72B1C25D14700643FE6 /* XCTest+Rx.swift */; };
+		C8E3A72D1C25D14700643FE6 /* XCTest+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E3A72B1C25D14700643FE6 /* XCTest+Rx.swift */; };
+		C8E3A72E1C25D14700643FE6 /* XCTest+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E3A72B1C25D14700643FE6 /* XCTest+Rx.swift */; };
+		C8E3A72F1C25D14700643FE6 /* XCTest+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E3A72B1C25D14700643FE6 /* XCTest+Rx.swift */; };
+		C8E3A7311C2606A900643FE6 /* Event+Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E3A7301C2606A900643FE6 /* Event+Equatable.swift */; };
+		C8E3A7321C2606A900643FE6 /* Event+Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E3A7301C2606A900643FE6 /* Event+Equatable.swift */; };
+		C8E3A7331C2606A900643FE6 /* Event+Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E3A7301C2606A900643FE6 /* Event+Equatable.swift */; };
+		C8E3A7341C2606A900643FE6 /* Event+Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E3A7301C2606A900643FE6 /* Event+Equatable.swift */; };
+		C8E3A7361C26088C00643FE6 /* Any+Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E3A7351C26088C00643FE6 /* Any+Equatable.swift */; };
+		C8E3A7371C26088C00643FE6 /* Any+Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E3A7351C26088C00643FE6 /* Any+Equatable.swift */; };
+		C8E3A7381C26088C00643FE6 /* Any+Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E3A7351C26088C00643FE6 /* Any+Equatable.swift */; };
+		C8E3A7391C26088C00643FE6 /* Any+Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E3A7351C26088C00643FE6 /* Any+Equatable.swift */; };
 		C8F0BF921BBBFB8B001B112F /* Observable+Creation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C981B8A72BE0088E94D /* Observable+Creation.swift */; };
 		C8F0BF931BBBFB8B001B112F /* ConnectableObservableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C4D1B8A72BE0088E94D /* ConnectableObservableType.swift */; };
 		C8F0BF941BBBFB8B001B112F /* Just.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C3DA021B9390C4004D233E /* Just.swift */; };
@@ -1144,6 +1188,18 @@
 		C8DB96821BF754C80084BD53 /* NSObject+Rx+KVORepresentable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSObject+Rx+KVORepresentable.swift"; sourceTree = "<group>"; };
 		C8DB96871BF756F40084BD53 /* KVORepresentable+CoreGraphics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "KVORepresentable+CoreGraphics.swift"; sourceTree = "<group>"; };
 		C8DB968C1BF7595D0084BD53 /* KVORepresentable+Swift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "KVORepresentable+Swift.swift"; sourceTree = "<group>"; };
+		C8E3A6FD1C25CE2200643FE6 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C8E3A7031C25CE7B00643FE6 /* TestScheduler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestScheduler.swift; sourceTree = "<group>"; };
+		C8E3A7041C25CE7B00643FE6 /* VirtualTimeSchedulerBase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VirtualTimeSchedulerBase.swift; sourceTree = "<group>"; };
+		C8E3A70D1C25CEF100643FE6 /* ColdObservable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColdObservable.swift; sourceTree = "<group>"; };
+		C8E3A70E1C25CEF100643FE6 /* HotObservable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HotObservable.swift; sourceTree = "<group>"; };
+		C8E3A70F1C25CEF100643FE6 /* MockObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockObserver.swift; sourceTree = "<group>"; };
+		C8E3A71C1C25CF1000643FE6 /* Recorded.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Recorded.swift; sourceTree = "<group>"; };
+		C8E3A71D1C25CF1000643FE6 /* Subscription.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Subscription.swift; sourceTree = "<group>"; };
+		C8E3A7261C25CF8C00643FE6 /* RxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxTests.swift; sourceTree = "<group>"; };
+		C8E3A72B1C25D14700643FE6 /* XCTest+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "XCTest+Rx.swift"; sourceTree = "<group>"; };
+		C8E3A7301C2606A900643FE6 /* Event+Equatable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Event+Equatable.swift"; sourceTree = "<group>"; };
+		C8E3A7351C26088C00643FE6 /* Any+Equatable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Any+Equatable.swift"; sourceTree = "<group>"; };
 		C8F0C0021BBBFB8B001B112F /* RxSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8F0C04B1BBBFBB9001B112F /* RxCocoa.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxCocoa.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8F0C0581BBBFBCE001B112F /* RxBlocking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxBlocking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1703,6 +1759,7 @@
 				C8093C471B8A72BE0088E94D /* RxSwift */,
 				C8093F571B8A73A20088E94D /* RxBlocking */,
 				C8093E801B8A732E0088E94D /* RxCocoa */,
+				C8E3A6FC1C25CE2200643FE6 /* RxTests */,
 				C8A56AD81AD7424700B4673B /* Products */,
 			);
 			sourceTree = "<group>";
@@ -1728,6 +1785,33 @@
 				C88FA53F1C25C4CC00CCFEA4 /* RxTests.framework */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		C8E3A6FC1C25CE2200643FE6 /* RxTests */ = {
+			isa = PBXGroup;
+			children = (
+				C8E3A71C1C25CF1000643FE6 /* Recorded.swift */,
+				C8E3A71D1C25CF1000643FE6 /* Subscription.swift */,
+				C8E3A70D1C25CEF100643FE6 /* ColdObservable.swift */,
+				C8E3A70E1C25CEF100643FE6 /* HotObservable.swift */,
+				C8E3A70F1C25CEF100643FE6 /* MockObserver.swift */,
+				C8E3A7021C25CE7B00643FE6 /* Schedulers */,
+				C8E3A6FD1C25CE2200643FE6 /* Info.plist */,
+				C8E3A7261C25CF8C00643FE6 /* RxTests.swift */,
+				C8E3A72B1C25D14700643FE6 /* XCTest+Rx.swift */,
+				C8E3A7301C2606A900643FE6 /* Event+Equatable.swift */,
+				C8E3A7351C26088C00643FE6 /* Any+Equatable.swift */,
+			);
+			path = RxTests;
+			sourceTree = "<group>";
+		};
+		C8E3A7021C25CE7B00643FE6 /* Schedulers */ = {
+			isa = PBXGroup;
+			children = (
+				C8E3A7031C25CE7B00643FE6 /* TestScheduler.swift */,
+				C8E3A7041C25CE7B00643FE6 /* VirtualTimeSchedulerBase.swift */,
+			);
+			path = Schedulers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -2633,6 +2717,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C8E3A7051C25CE7B00643FE6 /* TestScheduler.swift in Sources */,
+				C8E3A7311C2606A900643FE6 /* Event+Equatable.swift in Sources */,
+				C8E3A7181C25CEF100643FE6 /* MockObserver.swift in Sources */,
+				C8E3A72C1C25D14700643FE6 /* XCTest+Rx.swift in Sources */,
+				C8E3A7091C25CE7B00643FE6 /* VirtualTimeSchedulerBase.swift in Sources */,
+				C8E3A71E1C25CF1000643FE6 /* Recorded.swift in Sources */,
+				C8E3A7221C25CF1000643FE6 /* Subscription.swift in Sources */,
+				C8E3A7271C25CF8C00643FE6 /* RxTests.swift in Sources */,
+				C8E3A7141C25CEF100643FE6 /* HotObservable.swift in Sources */,
+				C8E3A7361C26088C00643FE6 /* Any+Equatable.swift in Sources */,
+				C8E3A7101C25CEF100643FE6 /* ColdObservable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2640,6 +2735,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C8E3A7061C25CE7B00643FE6 /* TestScheduler.swift in Sources */,
+				C8E3A7321C2606A900643FE6 /* Event+Equatable.swift in Sources */,
+				C8E3A7191C25CEF100643FE6 /* MockObserver.swift in Sources */,
+				C8E3A72D1C25D14700643FE6 /* XCTest+Rx.swift in Sources */,
+				C8E3A70A1C25CE7B00643FE6 /* VirtualTimeSchedulerBase.swift in Sources */,
+				C8E3A71F1C25CF1000643FE6 /* Recorded.swift in Sources */,
+				C8E3A7231C25CF1000643FE6 /* Subscription.swift in Sources */,
+				C8E3A7281C25CF8C00643FE6 /* RxTests.swift in Sources */,
+				C8E3A7151C25CEF100643FE6 /* HotObservable.swift in Sources */,
+				C8E3A7371C26088C00643FE6 /* Any+Equatable.swift in Sources */,
+				C8E3A7111C25CEF100643FE6 /* ColdObservable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2647,6 +2753,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C8E3A7071C25CE7B00643FE6 /* TestScheduler.swift in Sources */,
+				C8E3A7331C2606A900643FE6 /* Event+Equatable.swift in Sources */,
+				C8E3A71A1C25CEF100643FE6 /* MockObserver.swift in Sources */,
+				C8E3A72E1C25D14700643FE6 /* XCTest+Rx.swift in Sources */,
+				C8E3A70B1C25CE7B00643FE6 /* VirtualTimeSchedulerBase.swift in Sources */,
+				C8E3A7201C25CF1000643FE6 /* Recorded.swift in Sources */,
+				C8E3A7241C25CF1000643FE6 /* Subscription.swift in Sources */,
+				C8E3A7291C25CF8C00643FE6 /* RxTests.swift in Sources */,
+				C8E3A7161C25CEF100643FE6 /* HotObservable.swift in Sources */,
+				C8E3A7381C26088C00643FE6 /* Any+Equatable.swift in Sources */,
+				C8E3A7121C25CEF100643FE6 /* ColdObservable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2654,6 +2771,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C8E3A7081C25CE7B00643FE6 /* TestScheduler.swift in Sources */,
+				C8E3A7341C2606A900643FE6 /* Event+Equatable.swift in Sources */,
+				C8E3A71B1C25CEF100643FE6 /* MockObserver.swift in Sources */,
+				C8E3A72F1C25D14700643FE6 /* XCTest+Rx.swift in Sources */,
+				C8E3A70C1C25CE7B00643FE6 /* VirtualTimeSchedulerBase.swift in Sources */,
+				C8E3A7211C25CF1000643FE6 /* Recorded.swift in Sources */,
+				C8E3A7251C25CF1000643FE6 /* Subscription.swift in Sources */,
+				C8E3A72A1C25CF8C00643FE6 /* RxTests.swift in Sources */,
+				C8E3A7171C25CEF100643FE6 /* HotObservable.swift in Sources */,
+				C8E3A7391C26088C00643FE6 /* Any+Equatable.swift in Sources */,
+				C8E3A7131C25CEF100643FE6 /* ColdObservable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3669,9 +3797,14 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = "$(PLATFORM_DIR)/Developer/Library/Frameworks";
 				INFOPLIST_FILE = RxTests/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"-framework",
+					XCTest,
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "Krunoslav-Zaher.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = RxTests;
 				SDKROOT = iphoneos;
@@ -3686,9 +3819,14 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = "$(PLATFORM_DIR)/Developer/Library/Frameworks";
 				INFOPLIST_FILE = RxTests/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"-framework",
+					XCTest,
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "Krunoslav-Zaher.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = RxTests;
 				SDKROOT = iphoneos;
@@ -3703,9 +3841,14 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = "$(PLATFORM_DIR)/Developer/Library/Frameworks";
 				INFOPLIST_FILE = RxTests/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"-framework",
+					XCTest,
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "Krunoslav-Zaher.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = RxTests;
 				SDKROOT = iphoneos;
@@ -3722,6 +3865,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = "$(PLATFORM_DIR)/Developer/Library/Frameworks";
 				INFOPLIST_FILE = RxTests/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -3741,6 +3885,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = "$(PLATFORM_DIR)/Developer/Library/Frameworks";
 				INFOPLIST_FILE = RxTests/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -3760,6 +3905,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = "$(PLATFORM_DIR)/Developer/Library/Frameworks";
 				INFOPLIST_FILE = RxTests/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -3777,6 +3923,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = "$(PLATFORM_DIR)/Developer/Library/Frameworks";
 				INFOPLIST_FILE = RxTests/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -3795,6 +3942,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = "$(PLATFORM_DIR)/Developer/Library/Frameworks";
 				INFOPLIST_FILE = RxTests/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -3813,6 +3961,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = "$(PLATFORM_DIR)/Developer/Library/Frameworks";
 				INFOPLIST_FILE = RxTests/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";

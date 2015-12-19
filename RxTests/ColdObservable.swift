@@ -8,16 +8,17 @@
 
 import RxSwift
 
-class ColdObservable<Element: Equatable> : ObservableType, ObservableConvertibleType {
-    typealias E = Element
+public class ColdObservable<Element: Equatable>
+    : ObservableType
+    , ObservableConvertibleType {
+    public typealias E = Element
 
-    typealias Events = Recorded<Element>
-    typealias Observer = AnyObserver<Element>
+    public typealias Events = Recorded<Element>
     
-    let testScheduler: TestScheduler
+    public let testScheduler: TestScheduler
     
-    var subscriptions: [Subscription]
-    var recordedEvents: [Events]
+    public private(set) var subscriptions: [Subscription]
+    public private(set) var recordedEvents: [Events]
 
     init(testScheduler: TestScheduler, recordedEvents: [Events]) {
         self.testScheduler = testScheduler
@@ -26,7 +27,7 @@ class ColdObservable<Element: Equatable> : ObservableType, ObservableConvertible
         self.subscriptions = []
     }
     
-    func subscribe<O : ObserverType where O.E == E>(observer: O) -> Disposable {
+    public func subscribe<O : ObserverType where O.E == E>(observer: O) -> Disposable {
         subscriptions.append(Subscription(self.testScheduler.now))
         
         let i = self.subscriptions.count - 1

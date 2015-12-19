@@ -9,7 +9,7 @@
 import Foundation
 import XCTest
 import RxSwift
-
+import RxTests
 
 class ObservableStandardSequenceOperatorsTest : RxTest {
     override func setUp() {

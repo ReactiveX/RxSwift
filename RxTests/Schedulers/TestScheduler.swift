@@ -9,32 +9,38 @@
 import Foundation
 import RxSwift
 
-class TestScheduler : VirtualTimeSchedulerBase {
-    
-    override init(initialClock: Time) {
+public class TestScheduler : VirtualTimeSchedulerBase {
+
+    public struct Defaults {
+        public static let created = 100
+        public static let subscribed = 200
+        public static let disposed = 1000
+    }
+
+    public override init(initialClock: Time) {
         super.init(initialClock: initialClock)
     }
     
-    func createHotObservable<Element>(events: [Recorded<Element>]) -> HotObservable<Element> {
+    public func createHotObservable<Element>(events: [Recorded<Element>]) -> HotObservable<Element> {
         return HotObservable(testScheduler: self as AnyObject as! TestScheduler, recordedEvents: events)
     }
     
-    func createColdObservable<Element>(events: [Recorded<Element>]) -> ColdObservable<Element> {
+    public func createColdObservable<Element>(events: [Recorded<Element>]) -> ColdObservable<Element> {
         return ColdObservable(testScheduler: self as AnyObject as! TestScheduler, recordedEvents: events)
     }
 
-    func createObserver<E>(type: E.Type) -> MockObserver<E> {
+    public func createObserver<E>(type: E.Type) -> MockObserver<E> {
         return MockObserver(scheduler: self as AnyObject as! TestScheduler)
     }
     
-    func scheduleAt(time: Time, action: () -> Void) {
+    public func scheduleAt(time: Time, action: () -> Void) {
         self.schedule((), time: time) { _ in
             action()
             return NopDisposable.instance
         }
     }
     
-    func start<Element : Equatable>(created: Time, subscribed: Time, disposed: Time, create: () -> Observable<Element>) -> MockObserver<Element> {
+    public func start<Element : Equatable>(created: Time, subscribed: Time, disposed: Time, create: () -> Observable<Element>) -> MockObserver<Element> {
         var source : Observable<Element>? = nil
         var subscription : Disposable? = nil
         let observer: MockObserver<Element> = createObserver(Element)
@@ -61,11 +67,11 @@ class TestScheduler : VirtualTimeSchedulerBase {
         return observer
     }
     
-    func start<Element : Equatable>(disposed: Time, create: () -> Observable<Element>) -> MockObserver<Element> {
-        return start(RxTest.Defaults.created, subscribed: RxTest.Defaults.subscribed, disposed: disposed, create: create)
+    public func start<Element : Equatable>(disposed: Time, create: () -> Observable<Element>) -> MockObserver<Element> {
+        return start(Defaults.created, subscribed: Defaults.subscribed, disposed: disposed, create: create)
     }
 
-    func start<Element : Equatable>(create: () -> Observable<Element>) -> MockObserver<Element> {
-        return start(RxTest.Defaults.created, subscribed: RxTest.Defaults.subscribed, disposed: RxTest.Defaults.disposed, create: create)
+    public func start<Element : Equatable>(create: () -> Observable<Element>) -> MockObserver<Element> {
+        return start(Defaults.created, subscribed: Defaults.subscribed, disposed: Defaults.disposed, create: create)
     }
 }

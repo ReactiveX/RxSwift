@@ -7,8 +7,8 @@
 //
 
 import Foundation
-
 import RxSwift
+import RxTests
 
 class PrimitiveMockObserver<ElementType : Equatable> : ObserverType {
     typealias Element = ElementType

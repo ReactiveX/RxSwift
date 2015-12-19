@@ -8,6 +8,7 @@
 
 import Foundation
 import RxSwift
+import RxTests
 
 class MockDisposable : Disposable
 {
