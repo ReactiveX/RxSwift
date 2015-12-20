@@ -25,7 +25,7 @@ BOLDWHITE="\033[1m\033[37m"
 DEFAULT_IOS7_SIMULATOR=RxSwiftTest/iPhone-4s/iOS/7.1
 DEFAULT_IOS8_SIMULATOR=RxSwiftTest/iPhone-6/iOS/8.4
 DEFAULT_IOS9_SIMULATOR=RxSwiftTest/iPhone-6/iOS/9.2
-DEFAULT_WATCHOS2_SIMULATOR=RxSwiftTest/AppleWatch/watchOS/2.1
+DEFAULT_WATCHOS2_SIMULATOR=RxSwiftTest/Apple-Watch-38mm/watchOS/2.1
 DEFAULT_TVOS_SIMULATOR=RxSwiftTest/Apple-TV-1080p/tvOS/9.1
 
 function runtime_available() {
@@ -48,28 +48,22 @@ function contains() {
     fi
 }
 
+function simulator_ids() {
+	SIMULATOR=$1
+	xcrun simctl list | grep "${SIMULATOR}" | cut -d "(" -f 2 | cut -d ")" -f 1 | sort | uniq
+}
+
 function simulator_available() {
 		SIMULATOR=$1
-		if [ `xcrun simctl list | grep "${SIMULATOR}" | wc -l` -eq 0 ]; then
+		if [ `simulator_ids "${SIMULATOR}" | wc -l` -eq 0 ]; then
 			return -1
-		elif [ `xcrun simctl list | grep "${SIMULATOR}" | wc -l` -gt 1 ]; then
+		elif [ `simulator_ids "${SIMULATOR}" | wc -l` -gt 1 ]; then
 			echo "Multiple simulators ${SIMULATOR} found"
-			xcrun simctl list | \
-			grep "${SIMULATOR}" | \
-			cut -d "(" -f 2 | \
-			cut -d ")" -f 1 | \
-			xargs xcrun simctl delete;
+			xcrun simctl list | grep "${SIMULATOR}"
 			exit -1
-			return -1
-		elif [ `xcrun simctl list | grep "${SIMULATOR}" | grep "unavailable" | wc -l` -eq 1 ]; then
-			# delete unavailable simulator
-			xcrun simctl list |
-			grep "${SIMULATOR}" |
-			grep "unavailable" |
-			cut -d "(" -f 2 |
-			cut -d ")" -f 1 |
-			xargs xcrun simctl delete
-			return -1
+		elif [ `xcrun simctl list | grep "${SIMULATOR}" | grep "unavailable" | wc -l` -gt 0 ]; then
+			xcrun simctl list | grep "${SIMULATOR}" | grep "unavailable"
+			exit -1
 		else
 			return 0
 		fi
@@ -93,8 +87,8 @@ function ensure_simulator_available() {
 
 	RUNTIME="com.apple.CoreSimulator.SimRuntime.${OS}-${VERSION_SUFFIX}"
 
-	echo "Creating new simulator"
-	xcrun simctl create "${SIMULATOR}" "com.apple.CoreSimulator.SimDeviceType.${DEVICE}" "com.apple.CoreSimulator.SimRuntime.${OS}-${VERSION_SUFFIX}"
+	echo "Creating new simulator with runtime=${RUNTIME}"
+	xcrun simctl create "${SIMULATOR}" "com.apple.CoreSimulator.SimDeviceType.${DEVICE}" "${RUNTIME}"
 }
 
 if runtime_available "com.apple.CoreSimulator.SimRuntime.iOS-9-2"; then
@@ -108,10 +102,15 @@ fi
 BUILD_DIRECTORY=build
 
 function rx() {
-	SCHEME=$1
-	CONFIGURATION=$2
-	SIMULATOR=$3
-	ACTION=$4
+	action Rx.xcworkspace "$1" "$2" "$3" "$4"
+}
+
+function action() {
+	WORKSPACE=$1
+	SCHEME=$2
+	CONFIGURATION=$3
+	SIMULATOR=$4
+	ACTION=$5
 
 	echo
 	printf "${GREEN}${ACTION} ${BOLDCYAN}$SCHEME - $CONFIGURATION ($SIMULATOR)${RESET}\n"
@@ -126,7 +125,7 @@ function rx() {
 			else
 				ensure_simulator_available "${SIMULATOR}"
 				OS=`echo $SIMULATOR | cut -d '/' -f 3`
-				SIMULATOR_GUID=`xcrun simctl list devices | grep ${SIMULATOR} | cut -d "(" -f 2 | cut -d ")" -f 1`
+				SIMULATOR_GUID=`simulator_ids "${SIMULATOR}"`
 				DESTINATION='platform='$OS' Simulator,OS='$OS',id='$SIMULATOR_GUID''
 				echo "Running on ${DESTINATION}"
 			fi
@@ -135,12 +134,12 @@ function rx() {
 	fi
 
 	STATUS=""
-	xcodebuild -workspace Rx.xcworkspace \
-				-scheme $SCHEME \
-				-configuration $CONFIGURATION \
+	xcodebuild -workspace "${WORKSPACE}" \
+				-scheme "${SCHEME}" \
+				-configuration "${CONFIGURATION}" \
 				-derivedDataPath "${BUILD_DIRECTORY}" \
 				-destination "$DESTINATION" \
-				$ACTION | xcpretty -c; STATUS=${PIPESTATUS[0]}
+				$ACTION CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO | xcpretty -c; STATUS=${PIPESTATUS[0]}
 
 	if [ $STATUS -ne 0 ]; then
 		echo $STATUS

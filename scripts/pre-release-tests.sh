@@ -44,34 +44,21 @@ for scheme in ${WATCH_OS_BUILD_TARGETS[@]}
 do
 	for configuration in ${CONFIGURATIONS[@]}
 	do
-		echo
-		printf "${GREEN}${build} ${BOLDCYAN}${scheme} - ${configuration}${RESET}\n"
-		echo
-		xcodebuild -workspace Rx.xcworkspace \
-					-scheme ${scheme} \
-					-configuration ${configuration} \
-					-sdk watchos \
-					-derivedDataPath "${BUILD_DIRECTORY}" \
-					build CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO | xcpretty -c; STATUS=${PIPESTATUS[0]}
-
-		if [ $STATUS -ne 0 ]; then
-			echo $STATUS
-	 		exit $STATUS
-		fi
+		rx "${scheme}" "${configuration}" "${DEFAULT_WATCHOS2_SIMULATOR}" build
 	done
 done
 
 #make sure all iOS tests pass
 for configuration in ${CONFIGURATIONS[@]}
 do
-	rx "RxTests-iOS" ${configuration} $DEFAULT_IOS9_SIMULATOR test
+	rx "AllTests-iOS" ${configuration} $DEFAULT_IOS9_SIMULATOR test
 done
 
 #make sure all tvOS tests pass
 if [ $TV_OS -eq 1 ]; then
 	for configuration in ${CONFIGURATIONS[@]}
 	do
-		rx "RxTests-tvOS" ${configuration} $DEFAULT_TVOS_SIMULATOR test
+		rx "AllTests-tvOS" ${configuration} $DEFAULT_TVOS_SIMULATOR test
 	done
 fi
 
@@ -85,7 +72,7 @@ fi
 #make sure all OSX tests pass
 for configuration in ${CONFIGURATIONS[@]}
 do
-	rx "RxTests-OSX" ${configuration} "" test
+	rx "AllTests-OSX" ${configuration} "" test
 done
 
 # make sure no module can be built
@@ -93,8 +80,6 @@ for scheme in "RxExample-iOS-no-module"
 do
 	for configuration in ${CONFIGURATIONS[@]}
 	do
-		#rx ${scheme} ${configuration} $DEFAULT_IOS7_SIMULATOR build
-		#rx ${scheme} ${configuration} $DEFAULT_IOS8_SIMULATOR build
 		rx ${scheme} ${configuration} $DEFAULT_IOS9_SIMULATOR build
 	done
 done
@@ -104,7 +89,7 @@ for scheme in "RxExample-iOS"
 do
 	for configuration in ${CONFIGURATIONS[@]}
 	do
-	rx ${scheme} ${configuration} $DEFAULT_IOS9_SIMULATOR build
+		rx ${scheme} ${configuration} $DEFAULT_IOS9_SIMULATOR build
 	done
 done
 
@@ -122,6 +107,8 @@ done
 . scripts/playgrounds.sh
 
 if [ "${RELEASE_TEST}" -eq 1 ]; then
+	scripts/validate-podspec.sh
+
 	mdast -u mdast-slug -u mdast-validate-links ./*.md
 	mdast -u mdast-slug -u mdast-validate-links ./**/*.md
 fi
