@@ -44,20 +44,7 @@ for scheme in ${WATCH_OS_BUILD_TARGETS[@]}
 do
 	for configuration in ${CONFIGURATIONS[@]}
 	do
-		echo
-		printf "${GREEN}${build} ${BOLDCYAN}${scheme} - ${configuration}${RESET}\n"
-		echo
-		xcodebuild -workspace Rx.xcworkspace \
-					-scheme ${scheme} \
-					-configuration ${configuration} \
-					-sdk watchos \
-					-derivedDataPath "${BUILD_DIRECTORY}" \
-					build CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO | xcpretty -c; STATUS=${PIPESTATUS[0]}
-
-		if [ $STATUS -ne 0 ]; then
-			echo $STATUS
-	 		exit $STATUS
-		fi
+		rx "${scheme}" "${configuration}" "${DEFAULT_WATCHOS2_SIMULATOR}" build
 	done
 done
 
@@ -93,8 +80,6 @@ for scheme in "RxExample-iOS-no-module"
 do
 	for configuration in ${CONFIGURATIONS[@]}
 	do
-		#rx ${scheme} ${configuration} $DEFAULT_IOS7_SIMULATOR build
-		#rx ${scheme} ${configuration} $DEFAULT_IOS8_SIMULATOR build
 		rx ${scheme} ${configuration} $DEFAULT_IOS9_SIMULATOR build
 	done
 done
@@ -104,7 +89,7 @@ for scheme in "RxExample-iOS"
 do
 	for configuration in ${CONFIGURATIONS[@]}
 	do
-	rx ${scheme} ${configuration} $DEFAULT_IOS9_SIMULATOR build
+		rx ${scheme} ${configuration} $DEFAULT_IOS9_SIMULATOR build
 	done
 done
 
