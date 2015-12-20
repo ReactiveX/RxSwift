@@ -24,7 +24,7 @@ extension ObservableCreationTests {
             return just(42)
         }
 
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(200, 42),
             completed(200)
             ])
@@ -37,7 +37,7 @@ extension ObservableCreationTests {
             return just(42, scheduler: scheduler)
         }
 
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(201, 42),
             completed(202)
             ])
@@ -50,7 +50,7 @@ extension ObservableCreationTests {
             return just(42, scheduler: scheduler)
         }
 
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             ])
     }
 
@@ -76,7 +76,7 @@ extension ObservableCreationTests {
 
         scheduler.start()
 
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(101, 42)
             ])
     }
@@ -100,7 +100,7 @@ extension ObservableCreationTests {
             [3, 1, 2, 4].toObservable()
         }
 
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(200, 3),
             next(200, 1),
             next(200, 2),
@@ -115,7 +115,7 @@ extension ObservableCreationTests {
             [3, 1, 2, 4].toObservable(scheduler)
         }
 
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(201, 3),
             next(202, 1),
             next(203, 2),
@@ -130,7 +130,7 @@ extension ObservableCreationTests {
             [3, 1, 2, 4].toObservable(scheduler)
         }
 
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(201, 3),
             next(202, 1),
             ])
@@ -145,7 +145,7 @@ extension ObservableCreationTests {
             sequenceOf(3, 1, 2, 4)
         }
 
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(200, 3),
             next(200, 1),
             next(200, 2),
@@ -160,7 +160,7 @@ extension ObservableCreationTests {
             sequenceOf(3, 1, 2, 4, scheduler: scheduler)
         }
 
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(201, 3),
             next(202, 1),
             next(203, 2),
@@ -175,7 +175,7 @@ extension ObservableCreationTests {
             sequenceOf(3, 1, 2, 4, scheduler: scheduler)
         }
 
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(201, 3),
             next(202, 1),
             ])
@@ -193,7 +193,7 @@ extension ObservableCreationTests {
             }
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(201, 0),
             next(202, 1),
             next(203, 2),
@@ -212,7 +212,7 @@ extension ObservableCreationTests {
             }
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             error(201, testError)
             ])
         
@@ -227,7 +227,7 @@ extension ObservableCreationTests {
             }
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(201, 0),
             error(202, testError)
             ])
@@ -243,7 +243,7 @@ extension ObservableCreationTests {
             }
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(201, 0),
             next(202, 1)
             ])
@@ -278,7 +278,7 @@ extension ObservableCreationTests {
             range(Int.max, count: 1, scheduler: scheduler)
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(201, Int.max),
             completed(202)
             ])
@@ -291,7 +291,7 @@ extension ObservableCreationTests {
             range(-10, count: 5, scheduler: scheduler)
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(201, -10),
             next(202, -9),
             next(203, -8)
@@ -308,7 +308,7 @@ extension ObservableCreationTests {
             repeatElement(42, scheduler: scheduler)
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(201, 42),
             next(202, 42),
             next(203, 42),
@@ -349,7 +349,7 @@ extension ObservableCreationTests {
         
         XCTAssert(disposable === _d)
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(300, 200),
             completed(400)
         ])
@@ -395,7 +395,7 @@ extension ObservableCreationTests {
         
         XCTAssert(disposable === _d)
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(300, 200),
             error(400, testError)
         ])
@@ -441,7 +441,7 @@ extension ObservableCreationTests {
         
         XCTAssert(disposable === _d)
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(300, 200),
         ])
         
@@ -475,7 +475,7 @@ extension ObservableCreationTests {
             }) as Observable<Int>
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             error(200, testError),
         ])
         
@@ -502,7 +502,7 @@ extension ObservableCreationTests {
             }) as Observable<Int>
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             error(200, testError),
         ])
         

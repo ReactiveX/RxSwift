@@ -68,7 +68,7 @@ extension ObservableStandardSequenceOperatorsTest  {
             }
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(230, 3),
             next(340, 5),
             next(390, 7),
@@ -110,7 +110,7 @@ extension ObservableStandardSequenceOperatorsTest  {
             }
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(230, 3),
             next(270, 4),
             next(340, 5),
@@ -157,7 +157,7 @@ extension ObservableStandardSequenceOperatorsTest  {
             }
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             completed(600)
             ])
         
@@ -195,7 +195,7 @@ extension ObservableStandardSequenceOperatorsTest  {
             }
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(230, 3),
             next(340, 5),
             next(390, 7)
@@ -239,7 +239,7 @@ extension ObservableStandardSequenceOperatorsTest {
             }
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(210, 2),
             next(260, 5),
             next(290, 13),
@@ -281,7 +281,7 @@ extension ObservableStandardSequenceOperatorsTest {
             }
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(210, 2),
             next(260, 5),
             next(290, 13),
@@ -325,7 +325,7 @@ extension ObservableStandardSequenceOperatorsTest {
             }
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(210, 2),
             next(260, 5),
             error(270, testError)
@@ -365,7 +365,7 @@ extension ObservableStandardSequenceOperatorsTest {
             }
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(210, 2),
             next(260, 5),
             next(290, 13),
@@ -408,7 +408,7 @@ extension ObservableStandardSequenceOperatorsTest {
             }
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(210, 2),
             next(260, 5),
             next(290, 13)
@@ -448,7 +448,7 @@ extension ObservableStandardSequenceOperatorsTest {
             }
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(210, 2),
             next(260, 5),
             next(290, 13),
@@ -492,7 +492,7 @@ extension ObservableStandardSequenceOperatorsTest {
             }
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             completed(205)
             ])
         
@@ -535,7 +535,7 @@ extension ObservableStandardSequenceOperatorsTest {
             }
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(210, 2),
             next(260, 5),
             error(290, testError)
@@ -571,7 +571,7 @@ extension ObservableStandardSequenceOperatorsTest {
             return xs.takeWhileWithIndex { num, index in index < 5 }
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(205, 100),
             next(210, 2),
             next(260, 5),
@@ -605,7 +605,7 @@ extension ObservableStandardSequenceOperatorsTest {
             return xs.takeWhileWithIndex { num , index  in return index >= 0 }
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(205, 100),
             next(210, 2),
             next(260, 5),
@@ -641,7 +641,7 @@ extension ObservableStandardSequenceOperatorsTest {
             return xs.takeWhileWithIndex { num, index in index >= 0 }
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(205, 100),
             next(210, 2),
             next(260, 5),
@@ -684,7 +684,7 @@ extension ObservableStandardSequenceOperatorsTest {
             }
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(205, 100),
             next(210, 2),
             next(260, 5),
@@ -718,7 +718,7 @@ extension ObservableStandardSequenceOperatorsTest {
             Subscription(200, 1000)
         ]
         
-        XCTAssertEqual(res.messages, correctMessages)
+        XCTAssertEqual(res.events, correctMessages)
         XCTAssertEqual(xs.subscriptions, correctSubscriptions)
     }
     
@@ -740,7 +740,7 @@ extension ObservableStandardSequenceOperatorsTest {
             Subscription(200, 300)
         ]
         
-        XCTAssertEqual(res.messages, correctMessages)
+        XCTAssertEqual(res.events, correctMessages)
         XCTAssertEqual(xs.subscriptions, correctSubscriptions)
     }
     
@@ -770,7 +770,7 @@ extension ObservableStandardSequenceOperatorsTest {
             Subscription(200, 300)
         ]
         
-        XCTAssertEqual(res.messages, correctMessages)
+        XCTAssertEqual(res.events, correctMessages)
         XCTAssertEqual(xs.subscriptions, correctSubscriptions)
     }
     
@@ -800,7 +800,7 @@ extension ObservableStandardSequenceOperatorsTest {
             Subscription(200, 300)
         ]
         
-        XCTAssertEqual(res.messages, correctMessages)
+        XCTAssertEqual(res.events, correctMessages)
         XCTAssertEqual(xs.subscriptions, correctSubscriptions)
     }
     
@@ -829,7 +829,7 @@ extension ObservableStandardSequenceOperatorsTest {
             Subscription(200, 290)
         ]
         
-        XCTAssertEqual(res.messages, correctMessages)
+        XCTAssertEqual(res.events, correctMessages)
         XCTAssertEqual(xs.subscriptions, correctSubscriptions)
     }
     
@@ -857,7 +857,7 @@ extension ObservableStandardSequenceOperatorsTest {
             Subscription(200, 230)
         ]
         
-        XCTAssertEqual(res.messages, correctMessages)
+        XCTAssertEqual(res.events, correctMessages)
         XCTAssertEqual(xs.subscriptions, correctSubscriptions)
     }
     
@@ -877,7 +877,7 @@ extension ObservableStandardSequenceOperatorsTest {
             Subscription(200, 1000)
         ]
         
-        XCTAssertEqual(res.messages, correctMessages)
+        XCTAssertEqual(res.events, correctMessages)
         XCTAssertEqual(xs.subscriptions, correctSubscriptions)
     }
     
@@ -899,7 +899,7 @@ extension ObservableStandardSequenceOperatorsTest {
             Subscription(200, 300)
         ]
         
-        XCTAssertEqual(res.messages, correctMessages)
+        XCTAssertEqual(res.events, correctMessages)
         XCTAssertEqual(xs.subscriptions, correctSubscriptions)
     }
     
@@ -929,7 +929,7 @@ extension ObservableStandardSequenceOperatorsTest {
             Subscription(200, 300)
         ]
         
-        XCTAssertEqual(res.messages, correctMessages)
+        XCTAssertEqual(res.events, correctMessages)
         XCTAssertEqual(xs.subscriptions, correctSubscriptions)
     }
     
@@ -959,7 +959,7 @@ extension ObservableStandardSequenceOperatorsTest {
             Subscription(200, 300)
         ]
         
-        XCTAssertEqual(res.messages, correctMessages)
+        XCTAssertEqual(res.events, correctMessages)
         XCTAssertEqual(xs.subscriptions, correctSubscriptions)
     }
     
@@ -988,7 +988,7 @@ extension ObservableStandardSequenceOperatorsTest {
             Subscription(200, 290)
         ]
         
-        XCTAssertEqual(res.messages, correctMessages)
+        XCTAssertEqual(res.events, correctMessages)
         XCTAssertEqual(xs.subscriptions, correctSubscriptions)
     }
     
@@ -1016,7 +1016,7 @@ extension ObservableStandardSequenceOperatorsTest {
             Subscription(200, 230)
         ]
         
-        XCTAssertEqual(res.messages, correctMessages)
+        XCTAssertEqual(res.events, correctMessages)
         XCTAssertEqual(xs.subscriptions, correctSubscriptions)
     }
     
@@ -1059,7 +1059,7 @@ extension ObservableStandardSequenceOperatorsTest {
             Subscription(200, 1000)
         ]
 
-        XCTAssertEqual(res.messages, correctMessages)
+        XCTAssertEqual(res.events, correctMessages)
         XCTAssertEqual(xs.subscriptions, correctSubscriptions)
     }
 
@@ -1081,7 +1081,7 @@ extension ObservableStandardSequenceOperatorsTest {
             Subscription(200, 300)
         ]
 
-        XCTAssertEqual(res.messages, correctMessages)
+        XCTAssertEqual(res.events, correctMessages)
         XCTAssertEqual(xs.subscriptions, correctSubscriptions)
     }
 
@@ -1111,7 +1111,7 @@ extension ObservableStandardSequenceOperatorsTest {
             Subscription(200, 300)
         ]
 
-        XCTAssertEqual(res.messages, correctMessages)
+        XCTAssertEqual(res.events, correctMessages)
         XCTAssertEqual(xs.subscriptions, correctSubscriptions)
     }
 
@@ -1141,7 +1141,7 @@ extension ObservableStandardSequenceOperatorsTest {
             Subscription(200, 300)
         ]
 
-        XCTAssertEqual(res.messages, correctMessages)
+        XCTAssertEqual(res.events, correctMessages)
         XCTAssertEqual(xs.subscriptions, correctSubscriptions)
     }
 
@@ -1170,7 +1170,7 @@ extension ObservableStandardSequenceOperatorsTest {
             Subscription(200, 290)
         ]
 
-        XCTAssertEqual(res.messages, correctMessages)
+        XCTAssertEqual(res.events, correctMessages)
         XCTAssertEqual(xs.subscriptions, correctSubscriptions)
     }
 
@@ -1202,7 +1202,7 @@ extension ObservableStandardSequenceOperatorsTest {
             Subscription(200, 230)
         ]
 
-        XCTAssertEqual(res.messages, correctMessages)
+        XCTAssertEqual(res.events, correctMessages)
         XCTAssertEqual(xs.subscriptions, correctSubscriptions)
     }
 
@@ -1234,7 +1234,7 @@ extension ObservableStandardSequenceOperatorsTest {
             Subscription(200, 230)
         ]
 
-        XCTAssertEqual(res.messages, correctMessages)
+        XCTAssertEqual(res.events, correctMessages)
         XCTAssertEqual(xs.subscriptions, correctSubscriptions)
     }
 
@@ -1267,7 +1267,7 @@ extension ObservableStandardSequenceOperatorsTest {
         ]
 
         XCTAssertTrue(checked)
-        XCTAssertEqual(res.messages, correctMessages)
+        XCTAssertEqual(res.events, correctMessages)
         XCTAssertEqual(xs.subscriptions, correctSubscriptions)
     }
 
@@ -1300,7 +1300,7 @@ extension ObservableStandardSequenceOperatorsTest {
         ]
 
         XCTAssertTrue(checked)
-        XCTAssertEqual(res.messages, correctMessages)
+        XCTAssertEqual(res.events, correctMessages)
         XCTAssertEqual(xs.subscriptions, correctSubscriptions)
     }
     #endif
@@ -1355,7 +1355,7 @@ extension ObservableStandardSequenceOperatorsTest {
             xs.flatMapFirst { $0 }
         }
 
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(310, 102),
             next(390, 103),
             next(410, 104),
@@ -1431,7 +1431,7 @@ extension ObservableStandardSequenceOperatorsTest {
             xs.flatMapFirst { $0 }
         }
 
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(310, 102),
             next(390, 103),
             next(410, 104),
@@ -1505,7 +1505,7 @@ extension ObservableStandardSequenceOperatorsTest {
             xs.flatMapFirst { $0 }
         }
 
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(310, 102),
             next(390, 103),
             next(410, 104),
@@ -1581,7 +1581,7 @@ extension ObservableStandardSequenceOperatorsTest {
             xs.flatMapFirst { $0 }
         }
 
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(310, 102),
             next(390, 103),
             next(410, 104),
@@ -1655,7 +1655,7 @@ extension ObservableStandardSequenceOperatorsTest {
             xs.flatMapFirst { $0 }
         }
 
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(310, 102),
             next(390, 103),
             next(410, 104),
@@ -1728,7 +1728,7 @@ extension ObservableStandardSequenceOperatorsTest {
             xs.flatMapFirst { $0 }
         }
 
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(310, 102),
             next(390, 103),
             next(410, 104),
@@ -1805,7 +1805,7 @@ extension ObservableStandardSequenceOperatorsTest {
             }
         }
 
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(310, 102),
             next(390, 103),
             next(410, 104),
@@ -1848,7 +1848,7 @@ extension ObservableStandardSequenceOperatorsTest {
             }
         }
 
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(220, 4),
             next(230, 4),
             next(240, 4),
@@ -1912,7 +1912,7 @@ extension ObservableStandardSequenceOperatorsTest {
             xs.flatMap { $0 }
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(310, 102),
             next(390, 103),
             next(410, 104),
@@ -2001,7 +2001,7 @@ extension ObservableStandardSequenceOperatorsTest {
             xs.flatMap { $0 }
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(310, 102),
             next(390, 103),
             next(410, 104),
@@ -2088,7 +2088,7 @@ extension ObservableStandardSequenceOperatorsTest {
             xs.flatMap { $0 }
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(310, 102),
             next(390, 103),
             next(410, 104),
@@ -2175,7 +2175,7 @@ extension ObservableStandardSequenceOperatorsTest {
             xs.flatMap { $0 }
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(310, 102),
             next(390, 103),
             next(410, 104),
@@ -2262,7 +2262,7 @@ extension ObservableStandardSequenceOperatorsTest {
             xs.flatMap { $0 }
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(310, 102),
             next(390, 103),
             next(410, 104),
@@ -2346,7 +2346,7 @@ extension ObservableStandardSequenceOperatorsTest {
             xs.flatMap { $0 }
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(310, 102),
             next(390, 103),
             next(410, 104),
@@ -2434,7 +2434,7 @@ extension ObservableStandardSequenceOperatorsTest {
             }
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(310, 102),
             next(390, 103),
             next(410, 104),
@@ -2481,7 +2481,7 @@ extension ObservableStandardSequenceOperatorsTest {
             }
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(220, 4),
             next(230, 3),
             next(230, 4),
@@ -2520,7 +2520,7 @@ extension ObservableStandardSequenceOperatorsTest {
             }
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(210, ElementIndexPair(4, 0)),
             next(220, ElementIndexPair(3, 1)),
             next(250, ElementIndexPair(5, 2)),
@@ -2580,7 +2580,7 @@ extension ObservableStandardSequenceOperatorsTest {
             xs.flatMapWithIndex { x, _ in x }
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(310, 102),
             next(390, 103),
             next(410, 104),
@@ -2668,7 +2668,7 @@ extension ObservableStandardSequenceOperatorsTest {
             xs.flatMapWithIndex { x, _ in x }
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(310, 102),
             next(390, 103),
             next(410, 104),
@@ -2756,7 +2756,7 @@ extension ObservableStandardSequenceOperatorsTest {
             xs.flatMapWithIndex { x, _ in x }
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(310, 102),
             next(390, 103),
             next(410, 104),
@@ -2844,7 +2844,7 @@ extension ObservableStandardSequenceOperatorsTest {
             xs.flatMapWithIndex { x, _ in x }
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(310, 102),
             next(390, 103),
             next(410, 104),
@@ -2931,7 +2931,7 @@ extension ObservableStandardSequenceOperatorsTest {
             xs.flatMapWithIndex { x, _ in x }
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(310, 102),
             next(390, 103),
             next(410, 104),
@@ -3015,7 +3015,7 @@ extension ObservableStandardSequenceOperatorsTest {
             xs.flatMapWithIndex { x, _ in x }
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(310, 102),
             next(390, 103),
             next(410, 104),
@@ -3103,7 +3103,7 @@ extension ObservableStandardSequenceOperatorsTest {
             }
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(310, 102),
             next(390, 103),
             next(410, 104),
@@ -3150,7 +3150,7 @@ extension ObservableStandardSequenceOperatorsTest {
             }
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(220, 4),
             next(230, 3),
             next(230, 4),
@@ -3207,7 +3207,7 @@ extension ObservableStandardSequenceOperatorsTest {
             xs.take(20)
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(210, 9),
             next(230, 13),
             next(270, 7),
@@ -3263,7 +3263,7 @@ extension ObservableStandardSequenceOperatorsTest {
             xs.take(17)
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(210, 9),
             next(230, 13),
             next(270, 7),
@@ -3319,7 +3319,7 @@ extension ObservableStandardSequenceOperatorsTest {
             xs.take(10)
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(210, 9),
             next(230, 13),
             next(270, 7),
@@ -3368,7 +3368,7 @@ extension ObservableStandardSequenceOperatorsTest {
             xs.take(20)
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(210, 9),
             next(230, 13),
             next(270, 7),
@@ -3424,7 +3424,7 @@ extension ObservableStandardSequenceOperatorsTest {
             xs.take(17)
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(210, 9),
             next(230, 13),
             next(270, 7),
@@ -3480,7 +3480,7 @@ extension ObservableStandardSequenceOperatorsTest {
             xs.take(3)
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(210, 9),
             next(230, 13),
             next(270, 7),
@@ -3522,7 +3522,7 @@ extension ObservableStandardSequenceOperatorsTest {
             xs.take(3)
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(210, 9),
             next(230, 13),
             ])
@@ -3562,7 +3562,7 @@ extension ObservableStandardSequenceOperatorsTest {
             xs.take(3)
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(210, 9),
             next(230, 13),
             next(270, 7),
@@ -3588,7 +3588,7 @@ extension ObservableStandardSequenceOperatorsTest {
             xs.take(0)
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             completed(200)
         ])
         
@@ -3617,7 +3617,7 @@ extension ObservableStandardSequenceOperatorsTest {
             xs.take(3)
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(210, 9),
             next(230, 13),
             next(270, 7),
@@ -3659,7 +3659,7 @@ extension ObservableStandardSequenceOperatorsTest {
             xs.takeLast(7)
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(300, 9),
             next(300, 13),
             next(300, 7),
@@ -3691,7 +3691,7 @@ extension ObservableStandardSequenceOperatorsTest {
             xs.takeLast(5)
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(310, 9),
             next(310, 13),
             next(310, 7),
@@ -3725,7 +3725,7 @@ extension ObservableStandardSequenceOperatorsTest {
             xs.takeLast(5)
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(350, 7),
             next(350, 1),
             next(350, -1),
@@ -3757,7 +3757,7 @@ extension ObservableStandardSequenceOperatorsTest {
             xs.takeLast(7)
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             error(300, testError)
             ])
         
@@ -3784,7 +3784,7 @@ extension ObservableStandardSequenceOperatorsTest {
             xs.takeLast(5)
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             error(310, testError)
             ])
         
@@ -3813,7 +3813,7 @@ extension ObservableStandardSequenceOperatorsTest {
             xs.takeLast(5)
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             error(360, testError)
             ])
         
@@ -3836,7 +3836,7 @@ extension ObservableStandardSequenceOperatorsTest {
             xs.takeLast(0)
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             ])
         
         XCTAssertEqual(xs.subscriptions, [
@@ -3865,7 +3865,7 @@ extension ObservableStandardSequenceOperatorsTest {
             xs.takeLast(3)
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(400, 3),
             next(400, 8),
             next(400, 11),
@@ -3924,7 +3924,7 @@ extension ObservableStandardSequenceOperatorsTest {
             xs.skip(20)
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             completed(690)
         ])
         
@@ -3964,7 +3964,7 @@ extension ObservableStandardSequenceOperatorsTest {
             xs.skip(17)
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             completed(690)
             ])
         
@@ -4003,7 +4003,7 @@ extension ObservableStandardSequenceOperatorsTest {
             xs.skip(10)
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(460, 72),
             next(510, 76),
             next(560, 32),
@@ -4049,7 +4049,7 @@ extension ObservableStandardSequenceOperatorsTest {
             xs.skip(0)
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(210, 9),
             next(230, 13),
             next(270, 7),
@@ -4105,7 +4105,7 @@ extension ObservableStandardSequenceOperatorsTest {
             xs.skip(20)
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             error(690, testError)
             ])
         
@@ -4144,7 +4144,7 @@ extension ObservableStandardSequenceOperatorsTest {
             xs.skip(17)
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             error(690, testError)
             ])
         
@@ -4183,7 +4183,7 @@ extension ObservableStandardSequenceOperatorsTest {
             xs.skip(3)
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(280, 1),
             next(300, -1),
             next(310, 3),
@@ -4235,7 +4235,7 @@ extension ObservableStandardSequenceOperatorsTest {
             xs.skip(3)
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             ])
         
         XCTAssertEqual(xs.subscriptions, [
@@ -4272,7 +4272,7 @@ extension ObservableStandardSequenceOperatorsTest {
             xs.skip(3)
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(280, 1),
             next(300, -1),
             next(310, 3),
@@ -4317,7 +4317,7 @@ extension ObservableStandardSequenceOperatorsTest {
             }
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             completed(330)
             ])
         
@@ -4355,7 +4355,7 @@ extension ObservableStandardSequenceOperatorsTest {
             }
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(390, 4),
             next(410, 17),
             next(450, 8),
@@ -4399,7 +4399,7 @@ extension ObservableStandardSequenceOperatorsTest {
         
         
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             error(270, testError)
             ])
         
@@ -4437,7 +4437,7 @@ extension ObservableStandardSequenceOperatorsTest {
             }
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(390, 4),
             next(410, 17),
             next(450, 8),
@@ -4479,7 +4479,7 @@ extension ObservableStandardSequenceOperatorsTest {
             }
         }
         
-        XCTAssertEqual(res.messages, [])
+        XCTAssertEqual(res.events, [])
         
         XCTAssertEqual(xs.subscriptions, [
             Subscription(200, 300)
@@ -4515,7 +4515,7 @@ extension ObservableStandardSequenceOperatorsTest {
             }
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(390, 4),
             next(410, 17),
             next(450, 8)
@@ -4556,7 +4556,7 @@ extension ObservableStandardSequenceOperatorsTest {
             }
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(205, 100),
             next(210, 2),
             next(260, 5),
@@ -4607,7 +4607,7 @@ extension ObservableStandardSequenceOperatorsTest {
             }
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             error(290, testError)
             ])
         
@@ -4641,7 +4641,7 @@ extension ObservableStandardSequenceOperatorsTest {
             xs.skipWhileWithIndex { x, i in i < 5 }
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(350, 7),
             next(390, 4),
             next(410, 17),
@@ -4675,7 +4675,7 @@ extension ObservableStandardSequenceOperatorsTest {
             xs.skipWhileWithIndex { x, i in i < 5 }
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(350, 7),
             next(390, 4),
             error(400, testError)
@@ -4711,7 +4711,7 @@ extension ObservableStandardSequenceOperatorsTest {
             }
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             error(350, testError)
             ])
         
@@ -4754,7 +4754,7 @@ extension ObservableStandardSequenceOperatorsTest {
             xs.elementAt(10)
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(460, 72),
             completed(460)
             ])
@@ -4783,7 +4783,7 @@ extension ObservableStandardSequenceOperatorsTest {
             xs.elementAt(10)
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             error(320, RxError.ArgumentOutOfRange)
             ])
         
@@ -4822,7 +4822,7 @@ extension ObservableStandardSequenceOperatorsTest {
             xs.elementAt(10)
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(460, 72),
             completed(460)
             ])
@@ -4850,7 +4850,7 @@ extension ObservableStandardSequenceOperatorsTest {
             xs.elementAt(10)
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             error(310, testError)
             ])
         
@@ -4889,7 +4889,7 @@ extension ObservableStandardSequenceOperatorsTest {
             xs.elementAt(3)
         }
         
-        XCTAssertEqual(res.messages, [])
+        XCTAssertEqual(res.events, [])
         
         XCTAssertEqual(xs.subscriptions, [
             Subscription(200, 250)
@@ -4926,7 +4926,7 @@ extension ObservableStandardSequenceOperatorsTest {
             xs.elementAt(3)
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(280, 1),
             completed(280)
             ])
@@ -4957,7 +4957,7 @@ extension ObservableStandardSequenceOperatorsTest {
             xs.elementAt(0)
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(210, 9),
             completed(210)
             ])
@@ -4984,7 +4984,7 @@ extension ObservableStandardSequenceOperatorsTest {
             xs.single()
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             error(250, RxError.NoElements)
             ])
         
@@ -5006,7 +5006,7 @@ extension ObservableStandardSequenceOperatorsTest {
             xs.single()
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(210, 2),
             completed(250)
             ])
@@ -5030,7 +5030,7 @@ extension ObservableStandardSequenceOperatorsTest {
             xs.single()
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(210, 2),
             error(220, RxError.MoreThanOneElement)
             ])
@@ -5052,7 +5052,7 @@ extension ObservableStandardSequenceOperatorsTest {
             xs.single()
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             error(210, testError)
             ])
         
@@ -5075,7 +5075,7 @@ extension ObservableStandardSequenceOperatorsTest {
             }
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             error(250, RxError.NoElements)
             ])
         
@@ -5102,7 +5102,7 @@ extension ObservableStandardSequenceOperatorsTest {
             }
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(230, 4),
             completed(250)
             ])
@@ -5130,7 +5130,7 @@ extension ObservableStandardSequenceOperatorsTest {
             }
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(220, 3),
             error(240, RxError.MoreThanOneElement)
             ])
@@ -5154,7 +5154,7 @@ extension ObservableStandardSequenceOperatorsTest {
             }
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             error(210, testError)
             ])
         
@@ -5184,7 +5184,7 @@ extension ObservableStandardSequenceOperatorsTest {
             }
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             error(230, testError)
             ])
         

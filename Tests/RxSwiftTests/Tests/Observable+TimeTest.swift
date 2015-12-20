@@ -45,7 +45,7 @@ extension ObservableTimeTest {
             completed(400)
         ]
 
-        XCTAssertEqual(res.messages, correct)
+        XCTAssertEqual(res.events, correct)
 
         let subscriptions = [
             Subscription(200, 400)
@@ -78,7 +78,7 @@ extension ObservableTimeTest {
             error(400, testError)
         ]
 
-        XCTAssertEqual(res.messages, correct)
+        XCTAssertEqual(res.events, correct)
 
         let subscriptions = [
             Subscription(200, 400)
@@ -111,7 +111,7 @@ extension ObservableTimeTest {
             completed(400)
         ]
 
-        XCTAssertEqual(res.messages, correct)
+        XCTAssertEqual(res.events, correct)
 
         let subscriptions = [
             Subscription(200, 400)
@@ -143,7 +143,7 @@ extension ObservableTimeTest {
             error(400, testError)
         ]
 
-        XCTAssertEqual(res.messages, correct)
+        XCTAssertEqual(res.events, correct)
 
         let subscriptions = [
             Subscription(200, 400)
@@ -168,7 +168,7 @@ extension ObservableTimeTest {
             completed(300)
         ]
 
-        XCTAssertEqual(res.messages, correct)
+        XCTAssertEqual(res.events, correct)
 
         let subscriptions = [
             Subscription(200, 300)
@@ -193,7 +193,7 @@ extension ObservableTimeTest {
             error(300, testError)
         ]
 
-        XCTAssertEqual(res.messages, correct)
+        XCTAssertEqual(res.events, correct)
 
         let subscriptions = [
             Subscription(200, 300)
@@ -216,7 +216,7 @@ extension ObservableTimeTest {
         let correct: [Recorded<Event<Int>>] = [
         ]
 
-        XCTAssertEqual(res.messages, correct)
+        XCTAssertEqual(res.events, correct)
 
         let subscriptions = [
             Subscription(200, 1000)
@@ -248,7 +248,7 @@ extension ObservableTimeTest {
             completed(300)
         ]
 
-        XCTAssertEqual(res.messages, correct)
+        XCTAssertEqual(res.events, correct)
 
         let subscriptions = [
             Subscription(200, 300)
@@ -306,7 +306,7 @@ extension ObservableTimeTest {
             error(320, testError)
         ]
 
-        XCTAssertEqual(res.messages, correct)
+        XCTAssertEqual(res.events, correct)
 
         XCTAssertEqual(xs.subscriptions, [
             Subscription(200, 320)
@@ -349,7 +349,7 @@ extension ObservableTimeTest {
             completed(500)
         ]
 
-        XCTAssertEqual(res.messages, correct)
+        XCTAssertEqual(res.events, correct)
 
         XCTAssertEqual(xs.subscriptions, [
             Subscription(200, 400)
@@ -394,7 +394,7 @@ extension ObservableTimeTest {
             completed(500)
         ]
 
-        XCTAssertEqual(res.messages, correct)
+        XCTAssertEqual(res.events, correct)
 
         XCTAssertEqual(xs.subscriptions, [
             Subscription(200, 400)
@@ -435,7 +435,7 @@ extension ObservableTimeTest {
             completed(320)
         ]
 
-        XCTAssertEqual(res.messages, correct)
+        XCTAssertEqual(res.events, correct)
 
         XCTAssertEqual(xs.subscriptions, [
             Subscription(200, 300)
@@ -478,7 +478,7 @@ extension ObservableTimeTest {
             error(320, testError)
         ]
 
-        XCTAssertEqual(res.messages, correct)
+        XCTAssertEqual(res.events, correct)
 
         XCTAssertEqual(xs.subscriptions, [
             Subscription(200, 320)
@@ -520,7 +520,7 @@ extension ObservableTimeTest {
             error(320, testError)
         ]
 
-        XCTAssertEqual(res.messages, correct)
+        XCTAssertEqual(res.events, correct)
 
         XCTAssertEqual(xs.subscriptions, [
             Subscription(200, 320)
@@ -565,7 +565,7 @@ extension ObservableTimeTest {
             completed(500)
         ]
 
-        XCTAssertEqual(res.messages, correct)
+        XCTAssertEqual(res.events, correct)
 
         XCTAssertEqual(xs.subscriptions, [
             Subscription(200, 400)
@@ -611,7 +611,7 @@ extension ObservableTimeTest {
             completed(500)
         ]
 
-        XCTAssertEqual(res.messages, correct)
+        XCTAssertEqual(res.events, correct)
 
         XCTAssertEqual(xs.subscriptions, [
             Subscription(200, 400)
@@ -653,7 +653,7 @@ extension ObservableTimeTest {
             completed(320)
         ]
 
-        XCTAssertEqual(res.messages, correct)
+        XCTAssertEqual(res.events, correct)
 
         XCTAssertEqual(xs.subscriptions, [
             Subscription(200, 300)
@@ -697,7 +697,7 @@ extension ObservableTimeTest {
             error(320, testError)
         ]
 
-        XCTAssertEqual(res.messages, correct)
+        XCTAssertEqual(res.events, correct)
 
         XCTAssertEqual(xs.subscriptions, [
             Subscription(200, 320)
@@ -729,7 +729,7 @@ extension ObservableTimeTest {
             next(900, 6)
         ]
 
-        XCTAssertEqual(res.messages, correct)
+        XCTAssertEqual(res.events, correct)
     }
 
     func testInterval_TimeSpan_Zero() {
@@ -751,7 +751,7 @@ extension ObservableTimeTest {
             next(209, 8),
         ]
 
-        XCTAssertEqual(res.messages, correct)
+        XCTAssertEqual(res.events, correct)
     }
 
     func testInterval_TimeSpan_Zero_DefaultScheduler() {
@@ -784,7 +784,7 @@ extension ObservableTimeTest {
         // wait until dispatch queue cleans it's resources
         OSSpinLockLock(&lock)
 
-        XCTAssertTrue(observer.messages.count == 10)
+        XCTAssertTrue(observer.events.count == 10)
     }
 
     func testInterval_TimeSpan_Disposed() {
@@ -798,7 +798,7 @@ extension ObservableTimeTest {
 
         ]
 
-        XCTAssertEqual(res.messages, correct)
+        XCTAssertEqual(res.events, correct)
 
     }
 
@@ -835,7 +835,7 @@ extension ObservableTimeTest {
             xs.take(0, scheduler: scheduler)
         }
 
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             completed(201)
             ])
 
@@ -858,7 +858,7 @@ extension ObservableTimeTest {
             xs.take(25, scheduler: scheduler)
         }
 
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(210, 1),
             next(220, 2),
             completed(225)
@@ -882,7 +882,7 @@ extension ObservableTimeTest {
             xs.take(50, scheduler: scheduler)
         }
 
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(210, 1),
             next(220, 2),
             completed(230)
@@ -905,7 +905,7 @@ extension ObservableTimeTest {
             xs.take(50, scheduler: scheduler)
         }
 
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             error(210, testError),
             ])
 
@@ -925,7 +925,7 @@ extension ObservableTimeTest {
             xs.take(50, scheduler: scheduler)
         }
 
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             completed(250)
             ])
 
@@ -951,7 +951,7 @@ extension ObservableTimeTest {
             xs.take(55, scheduler: scheduler).take(35, scheduler: scheduler)
         }
 
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(210, 1),
             next(220, 2),
             next(230, 3),
@@ -980,7 +980,7 @@ extension ObservableTimeTest {
             xs.take(35, scheduler: scheduler)
         }
 
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(210, 1),
             next(220, 2),
             next(230, 3),
@@ -1010,7 +1010,7 @@ extension ObservableTimeTest {
             xs.delaySubscription(30, scheduler: scheduler)
         }
 
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(280, 42),
             next(290, 43),
             completed(300)
@@ -1034,7 +1034,7 @@ extension ObservableTimeTest {
             xs.delaySubscription(30, scheduler: scheduler)
         }
 
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(280, 42),
             next(290, 43),
             error(300, testError)
@@ -1058,7 +1058,7 @@ extension ObservableTimeTest {
             xs.delaySubscription(30, scheduler: scheduler)
         }
 
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(280, 42),
             next(290, 43),
             ])
@@ -1084,7 +1084,7 @@ extension ObservableTimeTest {
             xs.skip(0, scheduler: scheduler)
         }
 
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(210, 1),
             next(220, 2),
             completed(230)
@@ -1108,7 +1108,7 @@ extension ObservableTimeTest {
             xs.skip(15, scheduler: scheduler)
         }
 
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(220, 2),
             completed(230)
             ])
@@ -1131,7 +1131,7 @@ extension ObservableTimeTest {
             xs.skip(50, scheduler: scheduler)
         }
 
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             completed(230)
             ])
 
@@ -1151,7 +1151,7 @@ extension ObservableTimeTest {
             xs.skip(50, scheduler: scheduler)
         }
 
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             error(210, testError)
             ])
 
@@ -1170,7 +1170,7 @@ extension ObservableTimeTest {
             xs.skip(50, scheduler: scheduler)
         }
 
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             ])
 
         XCTAssertEqual(xs.subscriptions, [
@@ -1195,7 +1195,7 @@ extension ObservableTimeTest {
             xs.ignoreElements()
         }
 
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             completed(230)
             ])
 
@@ -1227,7 +1227,7 @@ extension ObservableTimeTest {
             xs.buffer(timeSpan: 70, count: 3, scheduler: scheduler).map { EquatableArray($0) }
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(240, EquatableArray([1, 2, 3])),
             next(310, EquatableArray([4])),
             next(370, EquatableArray([5, 6, 7])),
@@ -1263,7 +1263,7 @@ extension ObservableTimeTest {
             xs.buffer(timeSpan: 70, count: 3, scheduler: scheduler).map { EquatableArray($0) }
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(240, EquatableArray([1, 2, 3])),
             next(310, EquatableArray([4])),
             next(370, EquatableArray([5, 6, 7])),
@@ -1298,7 +1298,7 @@ extension ObservableTimeTest {
             xs.buffer(timeSpan: 70, count: 3, scheduler: scheduler).map { EquatableArray($0) }
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(240, EquatableArray([1, 2, 3])),
             next(310, EquatableArray([4])),
             next(370, EquatableArray([5, 6, 7]))
@@ -1352,7 +1352,7 @@ extension ObservableTimeTest {
             return result
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(205, "0 1"),
             next(210, "0 2"),
             next(240, "0 3"),
@@ -1397,7 +1397,7 @@ extension ObservableTimeTest {
             return result
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(205, "0 1"),
             next(210, "0 2"),
             next(240, "0 3"),
@@ -1443,7 +1443,7 @@ extension ObservableTimeTest {
             return result
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(205, "0 1"),
             next(210, "0 2"),
             next(240, "0 3"),
@@ -1487,7 +1487,7 @@ extension ObservableTimeTest {
             return result
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(210, "0 2"),
             next(240, "0 3"),
             next(270, "0 4"),
@@ -1545,7 +1545,7 @@ extension ObservableTimeTest {
             xs.timeout(200, scheduler: scheduler)
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             completed(300)
             ])
         
@@ -1566,7 +1566,7 @@ extension ObservableTimeTest {
             xs.timeout(200, scheduler: scheduler)
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             error(300, testError)
             ])
         
@@ -1586,7 +1586,7 @@ extension ObservableTimeTest {
             xs.timeout(1000, scheduler: scheduler)
         }
         
-        XCTAssertEqual(res.messages, [])
+        XCTAssertEqual(res.events, [])
         
         XCTAssertEqual(xs.subscriptions, [
             Subscription(200, 1000)
@@ -1608,7 +1608,7 @@ extension ObservableTimeTest {
             xs.timeout(30, scheduler: scheduler)
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(210, 42),
             next(225, 43),
             next(240, 44),
@@ -1636,7 +1636,7 @@ extension ObservableTimeTest {
             xs.timeout(30, scheduler: scheduler)
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(210, 42),
             next(220, 43),
             next(250, 44),
@@ -1669,7 +1669,7 @@ extension ObservableTimeTest {
             xs.timeout(40, scheduler: scheduler)
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(205, 1),
             next(210, 2),
             next(240, 3),
@@ -1706,7 +1706,7 @@ extension ObservableTimeTest {
             xs.timeout(100, other: ys, scheduler: scheduler)
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(350, -1),
             next(500, -2),
             next(610, -3),
@@ -1745,7 +1745,7 @@ extension ObservableTimeTest {
             xs.timeout(100, other: ys, scheduler: scheduler)
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(240, 3),
             next(310, 4),
             next(460, -1),
@@ -1782,7 +1782,7 @@ extension ObservableTimeTest {
             xs.timeout(100, other: ys, scheduler: scheduler)
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(240, 3),
             next(310, 4)
             ])
@@ -1811,7 +1811,7 @@ extension ObservableTimeTest {
             xs.timeout(100, other: ys, scheduler: scheduler)
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(400, -1),
             ])
         
@@ -1839,7 +1839,7 @@ extension ObservableTimeTest {
             xs.timeout(100, other: ys, scheduler: scheduler)
         }
 
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(400, -1),
             ])
 
@@ -1867,7 +1867,7 @@ extension ObservableTimeTest {
             xs.timeout(100, other: ys, scheduler: scheduler)
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             error(400, testError)
             ])
         
@@ -1895,7 +1895,7 @@ extension ObservableTimeTest {
             xs.timeout(100, other: ys, scheduler: scheduler)
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             completed(250)
             ])
         
@@ -1921,7 +1921,7 @@ extension ObservableTimeTest {
             xs.timeout(100, other: ys, scheduler: scheduler)
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             error(250, testError)
             ])
         
@@ -1955,7 +1955,7 @@ extension ObservableTimeTest {
             xs.timeout(100, other: ys, scheduler: scheduler)
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(240, 3),
             next(320, 4),
             next(410, 5),

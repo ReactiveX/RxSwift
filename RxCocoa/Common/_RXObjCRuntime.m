@@ -517,7 +517,6 @@ SWIZZLE_OBSERVE_METHOD(void, rx_ulong)
 SWIZZLE_OBSERVE_METHOD(void, rx_block)
 SWIZZLE_OBSERVE_METHOD(void, float)
 SWIZZLE_OBSERVE_METHOD(void, double)
-SWIZZLE_OBSERVE_METHOD(void, BOOL)
 SWIZZLE_OBSERVE_METHOD(void, SEL)
 
 SWIZZLE_OBSERVE_METHOD(void, id, id)
@@ -532,7 +531,6 @@ SWIZZLE_OBSERVE_METHOD(void, id, rx_ulong)
 SWIZZLE_OBSERVE_METHOD(void, id, rx_block)
 SWIZZLE_OBSERVE_METHOD(void, id, float)
 SWIZZLE_OBSERVE_METHOD(void, id, double)
-SWIZZLE_OBSERVE_METHOD(void, id, BOOL)
 SWIZZLE_OBSERVE_METHOD(void, id, SEL)
 
 // MARK: RXObjCRuntime
@@ -588,8 +586,9 @@ static NSMutableDictionary<NSString *, RXInterceptWithOptimizedObserver> *optimi
         optimizedObserversByMethodEncoding = [NSMutableDictionary dictionary];
     }
 
-    optimizedObserversByMethodEncoding[methodEncoding] = registration;
     DLOG(@"Added optimized method: %@ (%@)", methodEncoding, NSStringFromSelector(selector));
+    ALWAYS(optimizedObserversByMethodEncoding[methodEncoding] == nil, @"Optimized observer already registered")
+    optimizedObserversByMethodEncoding[methodEncoding] = registration;
 }
 
 /**

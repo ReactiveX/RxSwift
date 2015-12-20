@@ -56,7 +56,7 @@ class DisposableTest : RxTest {
             return xs.asObservable()
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(230, 3),
             next(270, 4),
             next(340, 5),

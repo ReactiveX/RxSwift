@@ -174,7 +174,7 @@ extension ObservableConcurrencyTest {
                 return subscription
             },
             { scheduler in
-                XCTAssertEqual(observer.messages, [
+                XCTAssertEqual(observer.events, [
                     next(0)
                     ])
                 xs.on(.Next(1))
@@ -182,7 +182,7 @@ extension ObservableConcurrencyTest {
                 return NopDisposable.instance
             },
             { scheduler in
-                XCTAssertEqual(observer.messages, [
+                XCTAssertEqual(observer.events, [
                     next(0),
                     next(1),
                     next(2)
@@ -192,7 +192,7 @@ extension ObservableConcurrencyTest {
                 return NopDisposable.instance
             },
             { scheduler in
-                XCTAssertEqual(observer.messages, [
+                XCTAssertEqual(observer.events, [
                     next(0),
                     next(1),
                     next(2),
@@ -216,7 +216,7 @@ extension ObservableConcurrencyTest {
                 return subscription
             },
             { scheduler in
-                XCTAssertEqual(observer.messages, [
+                XCTAssertEqual(observer.events, [
                     completed()
                 ])
                 XCTAssert(xs.subscriptions == [UnsunscribedFromHotObservable])
@@ -238,7 +238,7 @@ extension ObservableConcurrencyTest {
                 return subscription
             },
             { scheduler in
-                XCTAssertEqual(observer.messages, [
+                XCTAssertEqual(observer.events, [
                     next(0)
                     ])
                 xs.on(.Next(1))
@@ -246,7 +246,7 @@ extension ObservableConcurrencyTest {
                 return NopDisposable.instance
             },
             { scheduler in
-                XCTAssertEqual(observer.messages, [
+                XCTAssertEqual(observer.events, [
                     next(0),
                     next(1),
                     next(2)
@@ -256,7 +256,7 @@ extension ObservableConcurrencyTest {
                 return NopDisposable.instance
             },
             { scheduler in
-                XCTAssertEqual(observer.messages, [
+                XCTAssertEqual(observer.events, [
                     next(0),
                     next(1),
                     next(2),
@@ -282,7 +282,7 @@ extension ObservableConcurrencyTest {
                 return subscription
             },
             { scheduler in
-                XCTAssertEqual(observer.messages, [
+                XCTAssertEqual(observer.events, [
                     next(0)
                     ])
 
@@ -295,7 +295,7 @@ extension ObservableConcurrencyTest {
                 return NopDisposable.instance
             },
             { scheduler in
-                XCTAssertEqual(observer.messages, [
+                XCTAssertEqual(observer.events, [
                     next(0),
                     ])
                 XCTAssert(xs.subscriptions == [UnsunscribedFromHotObservable])
@@ -403,7 +403,7 @@ class ObservableConcurrentSchedulerConcurrencyTest: ObservableConcurrencyTestBas
 
         sleep(0.1)
 
-        XCTAssertEqual(observer.messages, [
+        XCTAssertEqual(observer.events, [
             next(0)
             ])
         xs.on(.Next(1))
@@ -411,7 +411,7 @@ class ObservableConcurrentSchedulerConcurrencyTest: ObservableConcurrencyTestBas
 
         sleep(0.1)
 
-        XCTAssertEqual(observer.messages, [
+        XCTAssertEqual(observer.events, [
             next(0),
             next(1),
             next(2)
@@ -421,7 +421,7 @@ class ObservableConcurrentSchedulerConcurrencyTest: ObservableConcurrencyTestBas
 
         sleep(0.1)
 
-        XCTAssertEqual(observer.messages, [
+        XCTAssertEqual(observer.events, [
             next(0),
             next(1),
             next(2),
@@ -447,7 +447,7 @@ class ObservableConcurrentSchedulerConcurrencyTest: ObservableConcurrencyTestBas
 
         sleep(0.1)
 
-        XCTAssertEqual(observer.messages, [
+        XCTAssertEqual(observer.events, [
             completed()
             ])
         XCTAssert(xs.subscriptions == [UnsunscribedFromHotObservable])
@@ -479,7 +479,7 @@ class ObservableConcurrentSchedulerConcurrencyTest: ObservableConcurrencyTestBas
 
         sleep(0.3)
 
-        XCTAssertEqual(observer.messages, [
+        XCTAssertEqual(observer.events, [
             next(0, 0),
             next(0, 1),
             completed()
@@ -504,7 +504,7 @@ class ObservableConcurrentSchedulerConcurrencyTest: ObservableConcurrencyTestBas
 
         sleep(0.1)
 
-        XCTAssertEqual(observer.messages, [
+        XCTAssertEqual(observer.events, [
             next(0)
             ])
         xs.on(.Next(1))
@@ -512,7 +512,7 @@ class ObservableConcurrentSchedulerConcurrencyTest: ObservableConcurrencyTestBas
 
         sleep(0.1)
 
-        XCTAssertEqual(observer.messages, [
+        XCTAssertEqual(observer.events, [
             next(0),
             next(1),
             next(2)
@@ -522,7 +522,7 @@ class ObservableConcurrentSchedulerConcurrencyTest: ObservableConcurrencyTestBas
 
         sleep(0.1)
 
-        XCTAssertEqual(observer.messages, [
+        XCTAssertEqual(observer.events, [
             next(0),
             next(1),
             next(2),
@@ -543,7 +543,7 @@ class ObservableConcurrentSchedulerConcurrencyTest: ObservableConcurrencyTestBas
 
         sleep(0.1)
 
-        XCTAssertEqual(observer.messages, [
+        XCTAssertEqual(observer.events, [
             next(0)
             ])
 
@@ -555,7 +555,7 @@ class ObservableConcurrentSchedulerConcurrencyTest: ObservableConcurrencyTestBas
 
         sleep(0.1)
 
-        XCTAssertEqual(observer.messages, [
+        XCTAssertEqual(observer.events, [
             next(0),
             ])
         XCTAssert(xs.subscriptions == [UnsunscribedFromHotObservable])
@@ -588,7 +588,7 @@ extension ObservableConcurrencyTest {
             xs.subscribeOn(scheduler)
         }
 
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
 
             ])
 
@@ -607,7 +607,7 @@ extension ObservableConcurrencyTest {
             xs.subscribeOn(scheduler)
         }
 
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             completed(300)
             ])
 
@@ -627,7 +627,7 @@ extension ObservableConcurrencyTest {
             xs.subscribeOn(scheduler)
         }
 
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             error(300, testError)
             ])
 
@@ -648,7 +648,7 @@ extension ObservableConcurrencyTest {
             xs.subscribeOn(scheduler)
         }
 
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(210, 2),
             ])
 

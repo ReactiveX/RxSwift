@@ -22,7 +22,7 @@ func testMap() {
 
     let res = scheduler.start { xs.map { $0 * 2 } }
 
-    let correctMessages = [
+    let correctEvents = [
         next(210, 0 * 2),
         next(220, 1 * 2),
         next(230, 2 * 2),
@@ -34,7 +34,7 @@ func testMap() {
         Subscription(200, 300)
     ]
 
-    XCTAssertEqual(res.messages, correctMessages)
+    XCTAssertEqual(res.events, correctEvents)
     XCTAssertEqual(xs.subscriptions, correctSubscriptions)
 }
 ```

@@ -40,7 +40,7 @@ extension ObservableMultipleTest {
             return result
         }
         
-        XCTAssertEqual(res.messages, [])
+        XCTAssertEqual(res.events, [])
         
         let subscriptions = [Subscription(200, 1000)]
         
@@ -72,7 +72,7 @@ extension ObservableMultipleTest {
             return result
         }
 
-        XCTAssertEqual(res.messages, [completed(220)])
+        XCTAssertEqual(res.events, [completed(220)])
 
 
         XCTAssertEqual(e0.subscriptions, [Subscription(200, 210)])
@@ -106,7 +106,7 @@ extension ObservableMultipleTest {
             return result
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             error(220, testError)
         ])
 
@@ -140,7 +140,7 @@ extension ObservableMultipleTest {
             return result
         }
 
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             completed(500)
         ])
 
@@ -176,7 +176,7 @@ extension ObservableMultipleTest {
             return result
         }
 
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             
             next(220, 3),
 
@@ -222,7 +222,7 @@ extension ObservableMultipleTest {
             return result
         }
         
-        XCTAssertEqual(res.messages, [])
+        XCTAssertEqual(res.events, [])
         
         let subscriptions = [Subscription(200, 1000)]
         
@@ -260,7 +260,7 @@ extension ObservableMultipleTest {
             return result
         }
 
-        XCTAssertEqual(res.messages, [completed(230)])
+        XCTAssertEqual(res.events, [completed(230)])
 
 
         XCTAssertEqual(e0.subscriptions, [Subscription(200, 210)])
@@ -302,7 +302,7 @@ extension ObservableMultipleTest {
             return result
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             error(230, testError)
         ])
 
@@ -343,7 +343,7 @@ extension ObservableMultipleTest {
             return result
         }
 
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             completed(500)
         ])
 
@@ -388,7 +388,7 @@ extension ObservableMultipleTest {
             return result
         }
 
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             
             next(230, 6),
 
@@ -441,7 +441,7 @@ extension ObservableMultipleTest {
             return result
         }
         
-        XCTAssertEqual(res.messages, [])
+        XCTAssertEqual(res.events, [])
         
         let subscriptions = [Subscription(200, 1000)]
         
@@ -485,7 +485,7 @@ extension ObservableMultipleTest {
             return result
         }
 
-        XCTAssertEqual(res.messages, [completed(240)])
+        XCTAssertEqual(res.events, [completed(240)])
 
 
         XCTAssertEqual(e0.subscriptions, [Subscription(200, 210)])
@@ -535,7 +535,7 @@ extension ObservableMultipleTest {
             return result
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             error(240, testError)
         ])
 
@@ -583,7 +583,7 @@ extension ObservableMultipleTest {
             return result
         }
 
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             completed(500)
         ])
 
@@ -637,7 +637,7 @@ extension ObservableMultipleTest {
             return result
         }
 
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             
             next(240, 10),
 
@@ -697,7 +697,7 @@ extension ObservableMultipleTest {
             return result
         }
         
-        XCTAssertEqual(res.messages, [])
+        XCTAssertEqual(res.events, [])
         
         let subscriptions = [Subscription(200, 1000)]
         
@@ -747,7 +747,7 @@ extension ObservableMultipleTest {
             return result
         }
 
-        XCTAssertEqual(res.messages, [completed(250)])
+        XCTAssertEqual(res.events, [completed(250)])
 
 
         XCTAssertEqual(e0.subscriptions, [Subscription(200, 210)])
@@ -805,7 +805,7 @@ extension ObservableMultipleTest {
             return result
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             error(250, testError)
         ])
 
@@ -860,7 +860,7 @@ extension ObservableMultipleTest {
             return result
         }
 
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             completed(500)
         ])
 
@@ -923,7 +923,7 @@ extension ObservableMultipleTest {
             return result
         }
 
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             
             next(250, 15),
 
@@ -990,7 +990,7 @@ extension ObservableMultipleTest {
             return result
         }
         
-        XCTAssertEqual(res.messages, [])
+        XCTAssertEqual(res.events, [])
         
         let subscriptions = [Subscription(200, 1000)]
         
@@ -1046,7 +1046,7 @@ extension ObservableMultipleTest {
             return result
         }
 
-        XCTAssertEqual(res.messages, [completed(260)])
+        XCTAssertEqual(res.events, [completed(260)])
 
 
         XCTAssertEqual(e0.subscriptions, [Subscription(200, 210)])
@@ -1112,7 +1112,7 @@ extension ObservableMultipleTest {
             return result
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             error(260, testError)
         ])
 
@@ -1174,7 +1174,7 @@ extension ObservableMultipleTest {
             return result
         }
 
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             completed(500)
         ])
 
@@ -1246,7 +1246,7 @@ extension ObservableMultipleTest {
             return result
         }
 
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             
             next(260, 21),
 
@@ -1320,7 +1320,7 @@ extension ObservableMultipleTest {
             return result
         }
         
-        XCTAssertEqual(res.messages, [])
+        XCTAssertEqual(res.events, [])
         
         let subscriptions = [Subscription(200, 1000)]
         
@@ -1382,7 +1382,7 @@ extension ObservableMultipleTest {
             return result
         }
 
-        XCTAssertEqual(res.messages, [completed(270)])
+        XCTAssertEqual(res.events, [completed(270)])
 
 
         XCTAssertEqual(e0.subscriptions, [Subscription(200, 210)])
@@ -1456,7 +1456,7 @@ extension ObservableMultipleTest {
             return result
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             error(270, testError)
         ])
 
@@ -1525,7 +1525,7 @@ extension ObservableMultipleTest {
             return result
         }
 
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             completed(500)
         ])
 
@@ -1606,7 +1606,7 @@ extension ObservableMultipleTest {
             return result
         }
 
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             
             next(270, 28),
 
@@ -1687,7 +1687,7 @@ extension ObservableMultipleTest {
             return result
         }
         
-        XCTAssertEqual(res.messages, [])
+        XCTAssertEqual(res.events, [])
         
         let subscriptions = [Subscription(200, 1000)]
         
@@ -1755,7 +1755,7 @@ extension ObservableMultipleTest {
             return result
         }
 
-        XCTAssertEqual(res.messages, [completed(280)])
+        XCTAssertEqual(res.events, [completed(280)])
 
 
         XCTAssertEqual(e0.subscriptions, [Subscription(200, 210)])
@@ -1837,7 +1837,7 @@ extension ObservableMultipleTest {
             return result
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             error(280, testError)
         ])
 
@@ -1913,7 +1913,7 @@ extension ObservableMultipleTest {
             return result
         }
 
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             completed(500)
         ])
 
@@ -2003,7 +2003,7 @@ extension ObservableMultipleTest {
             return result
         }
 
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             
             next(280, 36),
 
@@ -2058,7 +2058,7 @@ extension ObservableMultipleTest {
             }
         }
 
-        XCTAssertEqual(res.messages, [])
+        XCTAssertEqual(res.events, [])
         
         XCTAssertEqual(e0.subscriptions, [Subscription(200, 1000)])
         XCTAssertEqual(e1.subscriptions, [Subscription(200, 210)])
@@ -2082,7 +2082,7 @@ extension ObservableMultipleTest {
             }
         }
         
-        XCTAssertEqual(res.messages, [])
+        XCTAssertEqual(res.events, [])
         
         XCTAssertEqual(e0.subscriptions, [Subscription(200, 210)])
         XCTAssertEqual(e1.subscriptions, [Subscription(200, 1000)])
@@ -2109,7 +2109,7 @@ extension ObservableMultipleTest {
             }
         }
         
-        XCTAssertEqual(res.messages, [completed(215)])
+        XCTAssertEqual(res.events, [completed(215)])
         
         XCTAssertEqual(e0.subscriptions, [Subscription(200, 210)])
         XCTAssertEqual(e1.subscriptions, [Subscription(200, 215)])
@@ -2135,7 +2135,7 @@ extension ObservableMultipleTest {
             }
         }
         
-        XCTAssertEqual(res.messages, [completed(215)])
+        XCTAssertEqual(res.events, [completed(215)])
         
         XCTAssertEqual(e0.subscriptions, [Subscription(200, 215)])
         XCTAssertEqual(e1.subscriptions, [Subscription(200, 210)])
@@ -2160,7 +2160,7 @@ extension ObservableMultipleTest {
             }
         }
         
-        XCTAssertEqual(res.messages, [])
+        XCTAssertEqual(res.events, [])
         
         XCTAssertEqual(e0.subscriptions, [Subscription(200, 220)])
         XCTAssertEqual(e1.subscriptions, [Subscription(200, 1000)])
@@ -2185,7 +2185,7 @@ extension ObservableMultipleTest {
             }
         }
         
-        XCTAssertEqual(res.messages, [])
+        XCTAssertEqual(res.events, [])
         
         XCTAssertEqual(e0.subscriptions, [Subscription(200, 1000)])
         XCTAssertEqual(e1.subscriptions, [Subscription(200, 220)])
@@ -2212,7 +2212,7 @@ extension ObservableMultipleTest {
             }
         }
         
-        XCTAssertEqual(res.messages, [next(220, (2 + 3)), completed(240)])
+        XCTAssertEqual(res.events, [next(220, (2 + 3)), completed(240)])
         
         XCTAssertEqual(e0.subscriptions, [Subscription(200, 230)])
         XCTAssertEqual(e1.subscriptions, [Subscription(200, 240)])
@@ -2239,7 +2239,7 @@ extension ObservableMultipleTest {
             }
         }
         
-        XCTAssertEqual(res.messages, [next(220, (2 + 3)), completed(240)])
+        XCTAssertEqual(res.events, [next(220, (2 + 3)), completed(240)])
         
         XCTAssertEqual(e0.subscriptions, [Subscription(200, 240)])
         XCTAssertEqual(e1.subscriptions, [Subscription(200, 230)])
@@ -2264,7 +2264,7 @@ extension ObservableMultipleTest {
             }
         }
         
-        XCTAssertEqual(res.messages, [error(220, testError)])
+        XCTAssertEqual(res.events, [error(220, testError)])
         
         XCTAssertEqual(e0.subscriptions, [Subscription(200, 220)])
         XCTAssertEqual(e1.subscriptions, [Subscription(200, 220)])
@@ -2289,7 +2289,7 @@ extension ObservableMultipleTest {
             }
         }
         
-        XCTAssertEqual(res.messages, [error(220, testError)])
+        XCTAssertEqual(res.events, [error(220, testError)])
         
         XCTAssertEqual(e0.subscriptions, [Subscription(200, 220)])
         XCTAssertEqual(e1.subscriptions, [Subscription(200, 220)])
@@ -2315,7 +2315,7 @@ extension ObservableMultipleTest {
             }
         }
         
-        XCTAssertEqual(res.messages, [error(220, testError)])
+        XCTAssertEqual(res.events, [error(220, testError)])
         
         XCTAssertEqual(e0.subscriptions, [Subscription(200, 220)])
         XCTAssertEqual(e1.subscriptions, [Subscription(200, 220)])
@@ -2341,7 +2341,7 @@ extension ObservableMultipleTest {
             }
         }
         
-        XCTAssertEqual(res.messages, [error(220, testError)])
+        XCTAssertEqual(res.events, [error(220, testError)])
         
         XCTAssertEqual(e0.subscriptions, [Subscription(200, 220)])
         XCTAssertEqual(e1.subscriptions, [Subscription(200, 220)])
@@ -2366,7 +2366,7 @@ extension ObservableMultipleTest {
             }
         }
         
-        XCTAssertEqual(res.messages, [error(220, testError1)])
+        XCTAssertEqual(res.events, [error(220, testError1)])
         
         XCTAssertEqual(e0.subscriptions, [Subscription(200, 220)])
         XCTAssertEqual(e1.subscriptions, [Subscription(200, 220)])
@@ -2391,7 +2391,7 @@ extension ObservableMultipleTest {
             }
         }
         
-        XCTAssertEqual(res.messages, [error(220, testError2)])
+        XCTAssertEqual(res.events, [error(220, testError2)])
         
         XCTAssertEqual(e0.subscriptions, [Subscription(200, 220)])
         XCTAssertEqual(e1.subscriptions, [Subscription(200, 220)])
@@ -2417,7 +2417,7 @@ extension ObservableMultipleTest {
             }
         }
         
-        XCTAssertEqual(res.messages, [error(220, testError1)])
+        XCTAssertEqual(res.events, [error(220, testError1)])
         
         XCTAssertEqual(e0.subscriptions, [Subscription(200, 220)])
         XCTAssertEqual(e1.subscriptions, [Subscription(200, 220)])
@@ -2443,7 +2443,7 @@ extension ObservableMultipleTest {
             }
         }
         
-        XCTAssertEqual(res.messages, [error(220, testError1)])
+        XCTAssertEqual(res.events, [error(220, testError1)])
         
         XCTAssertEqual(e0.subscriptions, [Subscription(200, 220)])
         XCTAssertEqual(e1.subscriptions, [Subscription(200, 220)])
@@ -2469,7 +2469,7 @@ extension ObservableMultipleTest {
             }
         }
         
-        XCTAssertEqual(res.messages, [error(220, testError)])
+        XCTAssertEqual(res.events, [error(220, testError)])
         
         XCTAssertEqual(e0.subscriptions, [Subscription(200, 220)])
         XCTAssertEqual(e1.subscriptions, [Subscription(200, 220)])
@@ -2495,7 +2495,7 @@ extension ObservableMultipleTest {
             }
         }
         
-        XCTAssertEqual(res.messages, [error(220, testError)])
+        XCTAssertEqual(res.events, [error(220, testError)])
         
         XCTAssertEqual(e0.subscriptions, [Subscription(200, 220)])
         XCTAssertEqual(e1.subscriptions, [Subscription(200, 220)])
@@ -2521,7 +2521,7 @@ extension ObservableMultipleTest {
             }
         }
         
-        XCTAssertEqual(res.messages, [error(230, testError)])
+        XCTAssertEqual(res.events, [error(230, testError)])
         
         XCTAssertEqual(e0.subscriptions, [Subscription(200, 220)])
         XCTAssertEqual(e1.subscriptions, [Subscription(200, 230)])
@@ -2547,7 +2547,7 @@ extension ObservableMultipleTest {
             }
         }
         
-        XCTAssertEqual(res.messages, [error(230, testError)])
+        XCTAssertEqual(res.events, [error(230, testError)])
         
         XCTAssertEqual(e0.subscriptions, [Subscription(200, 230)])
         XCTAssertEqual(e1.subscriptions, [Subscription(200, 220)])
@@ -2587,7 +2587,7 @@ extension ObservableMultipleTest {
             completed(250)
         ]
         
-        XCTAssertEqual(res.messages, messages)
+        XCTAssertEqual(res.events, messages)
         
         XCTAssertEqual(e0.subscriptions, [Subscription(200, 230)])
         XCTAssertEqual(e1.subscriptions, [Subscription(200, 250)])
@@ -2622,7 +2622,7 @@ extension ObservableMultipleTest {
             completed(250)
         ]
         
-        XCTAssertEqual(res.messages, messages)
+        XCTAssertEqual(res.events, messages)
         
         XCTAssertEqual(e0.subscriptions, [Subscription(200, 230)])
         XCTAssertEqual(e1.subscriptions, [Subscription(200, 250)])
@@ -2651,7 +2651,7 @@ extension ObservableMultipleTest {
             }
         }
         
-        XCTAssertEqual(res.messages, [error(230, testError)])
+        XCTAssertEqual(res.events, [error(230, testError)])
         
         XCTAssertEqual(e0.subscriptions, [Subscription(200, 230)])
         XCTAssertEqual(e1.subscriptions, [Subscription(200, 230)])
@@ -2680,7 +2680,7 @@ extension ObservableMultipleTest {
             }
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(235, 4 + 6),
             next(240, 4 + 7),
             error(245, testError)

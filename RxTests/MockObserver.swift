@@ -21,7 +21,7 @@ public class MockObserver<ElementType>
     /**
     Recorded events.
     */
-    public private(set) var messages = [Recorded<Event<Element>>]()
+    public private(set) var events = [Recorded<Event<Element>>]()
     
     init(scheduler: TestScheduler) {
         _scheduler = scheduler
@@ -33,6 +33,6 @@ public class MockObserver<ElementType>
     - parameter event: Event that occured.
     */
     public func on(event: Event<Element>) {
-        messages.append(Recorded(time: _scheduler.now, event: event))
+        events.append(Recorded(time: _scheduler.now, event: event))
     }
 }

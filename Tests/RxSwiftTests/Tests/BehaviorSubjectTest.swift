@@ -58,21 +58,21 @@ class BehaviorSubjectTest : RxTest {
         
         scheduler.start()
         
-        XCTAssertEqual(results1.messages, [
+        XCTAssertEqual(results1.events, [
             next(300, 4),
             next(340, 5),
             next(410, 6),
             next(520, 7)
         ])
         
-        XCTAssertEqual(results2.messages, [
+        XCTAssertEqual(results2.events, [
             next(400, 5),
             next(410, 6),
             next(520, 7),
             next(630, 8)
         ])
         
-        XCTAssertEqual(results3.messages, [
+        XCTAssertEqual(results3.events, [
             next(900, 10),
             next(940, 11)
         ])
@@ -122,21 +122,21 @@ class BehaviorSubjectTest : RxTest {
         
         scheduler.start()
         
-        XCTAssertEqual(results1.messages, [
+        XCTAssertEqual(results1.events, [
             next(300, 4),
             next(340, 5),
             next(410, 6),
             next(520, 7)
             ])
         
-        XCTAssertEqual(results2.messages, [
+        XCTAssertEqual(results2.events, [
             next(400, 5),
             next(410, 6),
             next(520, 7),
             completed(630)
             ])
         
-        XCTAssertEqual(results3.messages, [
+        XCTAssertEqual(results3.events, [
             completed(900)
             ])
     }
@@ -185,21 +185,21 @@ class BehaviorSubjectTest : RxTest {
         
         scheduler.start()
         
-        XCTAssertEqual(results1.messages, [
+        XCTAssertEqual(results1.events, [
             next(300, 4),
             next(340, 5),
             next(410, 6),
             next(520, 7)
             ])
         
-        XCTAssertEqual(results2.messages, [
+        XCTAssertEqual(results2.events, [
             next(400, 5),
             next(410, 6),
             next(520, 7),
             error(630, testError)
             ])
         
-        XCTAssertEqual(results3.messages, [
+        XCTAssertEqual(results3.events, [
             error(900, testError)
             ])
     }
@@ -241,16 +241,16 @@ class BehaviorSubjectTest : RxTest {
         
         scheduler.start()
         
-        XCTAssertEqual(results1.messages, [
+        XCTAssertEqual(results1.events, [
             next(300, 100),
         ])
         
-        XCTAssertEqual(results2.messages, [
+        XCTAssertEqual(results2.events, [
             next(400, 100),
             completed(630)
         ])
         
-        XCTAssertEqual(results3.messages, [
+        XCTAssertEqual(results3.events, [
             completed(900)
         ])
     }

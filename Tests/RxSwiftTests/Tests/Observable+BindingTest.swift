@@ -110,7 +110,7 @@ extension ObservableBindingTest {
         
         let res = scheduler.start { conn.refCount() }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(210, 1),
             next(220, 2),
             next(230, 3),
@@ -232,12 +232,12 @@ extension ObservableBindingTest {
         
         scheduler.start()
         
-        XCTAssertEqual(o1.messages, [
+        XCTAssertEqual(o1.events, [
             next(220, 2),
             next(230, 3)
         ])
         
-        XCTAssertEqual(o2.messages, [
+        XCTAssertEqual(o2.events, [
             next(230, 3),
             next(240, 4),
             next(250, 5),
@@ -245,11 +245,11 @@ extension ObservableBindingTest {
             next(270, 7)
         ])
         
-        XCTAssertEqual(o3.messages, [
+        XCTAssertEqual(o3.events, [
             next(260, 6)
         ])
         
-        XCTAssertEqual(o4.messages, [
+        XCTAssertEqual(o4.events, [
             next(290, 9),
             completed(300)
         ])
@@ -303,7 +303,7 @@ extension ObservableBindingTest {
         
         scheduler.start();
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(450, 5),
             next(450, 6),
             next(450, 7),
@@ -354,7 +354,7 @@ extension ObservableBindingTest {
         
         scheduler.start();
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(450, 5),
             next(450, 6),
             next(450, 7),
@@ -406,7 +406,7 @@ extension ObservableBindingTest {
         
         scheduler.start();
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(450, 5),
             next(450, 6),
             next(450, 7),
@@ -461,7 +461,7 @@ extension ObservableBindingTest {
         
         scheduler.start();
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(450, 5),
             next(450, 6),
             next(450, 7),
@@ -514,7 +514,7 @@ extension ObservableBindingTest {
         
         scheduler.start();
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(450, 7),
             next(520, 11),
             ])
@@ -563,7 +563,7 @@ extension ObservableBindingTest {
         
         scheduler.start();
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(450, 7),
             next(520, 11),
             next(560, 20),
@@ -613,7 +613,7 @@ extension ObservableBindingTest {
         
         scheduler.start();
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(450, 7),
             next(520, 11),
             next(560, 20),
@@ -666,7 +666,7 @@ extension ObservableBindingTest {
         
         scheduler.start();
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(450, 7),
             ])
         
@@ -717,7 +717,7 @@ extension ObservableBindingTest {
 		
 		scheduler.start();
 		
-		XCTAssertEqual(res.messages, [
+		XCTAssertEqual(res.events, [
 			next(450, 3),
 			next(450, 4),
 			next(450, 1),
@@ -773,7 +773,7 @@ extension ObservableBindingTest {
 		
 		scheduler.start();
 		
-		XCTAssertEqual(res.messages, [
+		XCTAssertEqual(res.events, [
 			next(450, 8),
 			next(450, 5),
 			next(450, 6),
@@ -826,7 +826,7 @@ extension ObservableBindingTest {
 		
 		scheduler.start();
 		
-		XCTAssertEqual(res.messages, [
+		XCTAssertEqual(res.events, [
 			next(450, 8),
 			next(450, 5),
 			next(450, 6),
@@ -882,7 +882,7 @@ extension ObservableBindingTest {
 		
 		scheduler.start();
 		
-		XCTAssertEqual(res.messages, [
+		XCTAssertEqual(res.events, [
 			next(450, 4),
 			next(450, 1),
 			next(450, 8),
@@ -1001,7 +1001,7 @@ extension ObservableBindingTest {
 
             scheduler.start();
 
-            XCTAssertEqual(res1.messages, [
+            XCTAssertEqual(res1.events, [
                 // 1rt batch
                 next(340, 8),
                 next(360, 5),
@@ -1013,7 +1013,7 @@ extension ObservableBindingTest {
                 next(450, 9)
                 ])
 
-            XCTAssertEqual(res2.messages, [
+            XCTAssertEqual(res2.events, [
                 next(355, 8),
                 next(360, 5),
                 next(370, 6),
@@ -1070,7 +1070,7 @@ extension ObservableBindingTest {
 
             scheduler.start();
 
-            XCTAssertEqual(res1.messages, [
+            XCTAssertEqual(res1.events, [
                 // 1rt batch
                 next(340, 8),
                 next(360, 5),
@@ -1081,7 +1081,7 @@ extension ObservableBindingTest {
                 error(440, testError),
                 ])
 
-            XCTAssertEqual(res2.messages, [
+            XCTAssertEqual(res2.events, [
                 next(355, 8),
                 next(360, 5),
                 error(365, testError),
@@ -1136,7 +1136,7 @@ extension ObservableBindingTest {
 
             scheduler.start();
 
-            XCTAssertEqual(res1.messages, [
+            XCTAssertEqual(res1.events, [
                 // 1rt batch
                 next(340, 8),
                 next(360, 5),
@@ -1147,7 +1147,7 @@ extension ObservableBindingTest {
                 completed(440)
                 ])
 
-            XCTAssertEqual(res2.messages, [
+            XCTAssertEqual(res2.events, [
                 next(355, 8),
                 next(360, 5),
                 completed(365)
@@ -1196,7 +1196,7 @@ extension ObservableBindingTest {
 
             scheduler.start();
 
-            XCTAssertEqual(res1.messages, [
+            XCTAssertEqual(res1.events, [
                 // 1rt batch
                 completed(365),
 
@@ -1204,7 +1204,7 @@ extension ObservableBindingTest {
                 completed(440)
                 ])
 
-            XCTAssertEqual(res2.messages, [
+            XCTAssertEqual(res2.events, [
                 completed(365)
                 ])
 
@@ -1303,7 +1303,7 @@ extension ObservableBindingTest {
 
         scheduler.start();
 
-        XCTAssertEqual(res1.messages, [
+        XCTAssertEqual(res1.events, [
             // 1rt batch
             next(340, 8),
             next(360, 5),
@@ -1314,7 +1314,7 @@ extension ObservableBindingTest {
             next(450, 9)
             ])
 
-        XCTAssertEqual(res2.messages, [
+        XCTAssertEqual(res2.events, [
             next(355, 8),
             next(360, 5),
             next(370, 6),
@@ -1369,7 +1369,7 @@ extension ObservableBindingTest {
 
         scheduler.start();
 
-        XCTAssertEqual(res1.messages, [
+        XCTAssertEqual(res1.events, [
             // 1rt batch
             next(340, 8),
             next(360, 5),
@@ -1379,7 +1379,7 @@ extension ObservableBindingTest {
             next(450, 9),
             ])
 
-        XCTAssertEqual(res2.messages, [
+        XCTAssertEqual(res2.events, [
             next(355, 8),
             next(360, 5),
             error(365, testError),
@@ -1433,7 +1433,7 @@ extension ObservableBindingTest {
 
             scheduler.start();
 
-            XCTAssertEqual(res1.messages, [
+            XCTAssertEqual(res1.events, [
                 // 1rt batch
                 next(340, 8),
                 next(360, 5),
@@ -1443,7 +1443,7 @@ extension ObservableBindingTest {
                 next(450, 9),
                 ])
 
-            XCTAssertEqual(res2.messages, [
+            XCTAssertEqual(res2.events, [
                 next(355, 8),
                 next(360, 5),
                 completed(365)

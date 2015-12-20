@@ -42,7 +42,7 @@ extension ObservableAggregateTest {
             Subscription(200, 250)
         ]
         
-        XCTAssertEqual(res.messages, correctMessages)
+        XCTAssertEqual(res.events, correctMessages)
         XCTAssertEqual(xs.subscriptions, correctSubscriptions)
     }
     
@@ -66,7 +66,7 @@ extension ObservableAggregateTest {
             Subscription(200, 250)
         ]
         
-        XCTAssertEqual(res.messages, correctMessages)
+        XCTAssertEqual(res.events, correctMessages)
         XCTAssertEqual(xs.subscriptions, correctSubscriptions)
     }
 
@@ -88,7 +88,7 @@ extension ObservableAggregateTest {
             Subscription(200, 210)
         ]
         
-        XCTAssertEqual(res.messages, correctMessages)
+        XCTAssertEqual(res.events, correctMessages)
         XCTAssertEqual(xs.subscriptions, correctSubscriptions)
     }
     
@@ -108,7 +108,7 @@ extension ObservableAggregateTest {
             Subscription(200, 1000)
         ]
         
-        XCTAssertEqual(res.messages, correctMessages)
+        XCTAssertEqual(res.events, correctMessages)
         XCTAssertEqual(xs.subscriptions, correctSubscriptions)
     }
     
@@ -136,7 +136,7 @@ extension ObservableAggregateTest {
             Subscription(200, 260)
         ]
         
-        XCTAssertEqual(res.messages, correctMessages)
+        XCTAssertEqual(res.events, correctMessages)
         XCTAssertEqual(xs.subscriptions, correctSubscriptions)
     }
     
@@ -172,7 +172,7 @@ extension ObservableAggregateTest {
             Subscription(200, 240)
         ]
         
-        XCTAssertEqual(res.messages, correctMessages)
+        XCTAssertEqual(res.events, correctMessages)
         XCTAssertEqual(xs.subscriptions, correctSubscriptions)
     }
     
@@ -195,7 +195,7 @@ extension ObservableAggregateTest {
             Subscription(200, 250)
         ]
         
-        XCTAssertEqual(res.messages, correctMessages)
+        XCTAssertEqual(res.events, correctMessages)
         XCTAssertEqual(xs.subscriptions, correctSubscriptions)
     }
     
@@ -219,7 +219,7 @@ extension ObservableAggregateTest {
             Subscription(200, 250)
         ]
         
-        XCTAssertEqual(res.messages, correctMessages)
+        XCTAssertEqual(res.events, correctMessages)
         XCTAssertEqual(xs.subscriptions, correctSubscriptions)
     }
     
@@ -241,7 +241,7 @@ extension ObservableAggregateTest {
             Subscription(200, 210)
         ]
         
-        XCTAssertEqual(res.messages, correctMessages)
+        XCTAssertEqual(res.events, correctMessages)
         XCTAssertEqual(xs.subscriptions, correctSubscriptions)
     }
    
@@ -261,7 +261,7 @@ extension ObservableAggregateTest {
             Subscription(200, 1000)
         ]
         
-        XCTAssertEqual(res.messages, correctMessages)
+        XCTAssertEqual(res.events, correctMessages)
         XCTAssertEqual(xs.subscriptions, correctSubscriptions)
     }
     
@@ -289,7 +289,7 @@ extension ObservableAggregateTest {
             Subscription(200, 260)
         ]
         
-        XCTAssertEqual(res.messages, correctMessages)
+        XCTAssertEqual(res.events, correctMessages)
         XCTAssertEqual(xs.subscriptions, correctSubscriptions)
     }
     
@@ -316,7 +316,7 @@ extension ObservableAggregateTest {
             Subscription(200, 240)
         ]
         
-        XCTAssertEqual(res.messages, correctMessages)
+        XCTAssertEqual(res.events, correctMessages)
         XCTAssertEqual(xs.subscriptions, correctSubscriptions)
     }
     
@@ -343,7 +343,7 @@ extension ObservableAggregateTest {
             Subscription(200, 260)
         ]
         
-        XCTAssertEqual(res.messages, correctMessages)
+        XCTAssertEqual(res.events, correctMessages)
         XCTAssertEqual(xs.subscriptions, correctSubscriptions)
     }
 }
@@ -373,7 +373,7 @@ extension ObservableAggregateTest {
             Subscription(200, 220)
         ]
         
-        XCTAssertEqual(res.messages, correctMessages)
+        XCTAssertEqual(res.events, correctMessages)
         XCTAssertEqual(xs.subscriptions, correctSubscriptions)
     }
     
@@ -401,7 +401,7 @@ extension ObservableAggregateTest {
             Subscription(200, 250)
         ]
         
-        XCTAssertEqual(res.messages, correctMessages)
+        XCTAssertEqual(res.events, correctMessages)
         XCTAssertEqual(xs.subscriptions, correctSubscriptions)
     }
     
@@ -425,7 +425,7 @@ extension ObservableAggregateTest {
             Subscription(200, 250)
         ]
         
-        XCTAssertEqual(res.messages, correctMessages)
+        XCTAssertEqual(res.events, correctMessages)
         XCTAssertEqual(xs.subscriptions, correctSubscriptions)
     }
     
@@ -447,7 +447,7 @@ extension ObservableAggregateTest {
             Subscription(200, 1000)
         ]
         
-        XCTAssertEqual(res.messages, correctMessages)
+        XCTAssertEqual(res.events, correctMessages)
         XCTAssertEqual(xs.subscriptions, correctSubscriptions)
     }
     
@@ -470,7 +470,7 @@ extension ObservableAggregateTest {
             Subscription(200, 210)
         ]
         
-        XCTAssertEqual(res.messages, correctMessages)
+        XCTAssertEqual(res.events, correctMessages)
         XCTAssertEqual(xs.subscriptions, correctSubscriptions)
     }
     
@@ -497,7 +497,7 @@ extension ObservableAggregateTest {
             Subscription(200, 250)
         ]
         
-        XCTAssertEqual(res.messages, correctMessages)
+        XCTAssertEqual(res.events, correctMessages)
         XCTAssertEqual(xs.subscriptions, correctSubscriptions)
     }
 }

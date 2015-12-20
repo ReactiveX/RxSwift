@@ -45,7 +45,7 @@ extension ObservableSingleTest {
             completed(250)
         ]
  
-        XCTAssertEqual(res.messages, correct)
+        XCTAssertEqual(res.events, correct)
     }
     
     
@@ -66,7 +66,7 @@ extension ObservableSingleTest {
      
         let correct: [Recorded<Int>] = []
         
-        XCTAssertEqual(res.messages, correct)
+        XCTAssertEqual(res.events, correct)
     }
     
     // ...
@@ -101,7 +101,7 @@ extension ObservableSingleTest {
             Subscription(200, 250)
         ]
         
-        XCTAssertEqual(res.messages, correctMessages)
+        XCTAssertEqual(res.events, correctMessages)
         XCTAssertEqual(xs.subscriptions, correctSubscriptions)
     }
     
@@ -136,7 +136,7 @@ extension ObservableSingleTest {
             Subscription(200, 250)
         ]
         
-        XCTAssertEqual(res.messages, correctMessages)
+        XCTAssertEqual(res.events, correctMessages)
         XCTAssertEqual(xs.subscriptions, correctSubscriptions)
     }
     
@@ -163,7 +163,7 @@ extension ObservableSingleTest {
             Subscription(200, 250)
         ]
         
-        XCTAssertEqual(res.messages, correctMessages)
+        XCTAssertEqual(res.events, correctMessages)
         XCTAssertEqual(xs.subscriptions, correctSubscriptions)
     }
     
@@ -193,7 +193,7 @@ extension ObservableSingleTest {
             Subscription(200, 250)
         ]
         
-        XCTAssertEqual(res.messages, correctMessages)
+        XCTAssertEqual(res.events, correctMessages)
         XCTAssertEqual(xs.subscriptions, correctSubscriptions)
     }
     
@@ -221,7 +221,7 @@ extension ObservableSingleTest {
             Subscription(200, 250)
         ]
         
-        XCTAssertEqual(res.messages, correctMessages)
+        XCTAssertEqual(res.events, correctMessages)
         XCTAssertEqual(xs.subscriptions, correctSubscriptions)
     }
     
@@ -246,7 +246,7 @@ extension ObservableSingleTest {
             Subscription(200, 220)
         ]
         
-        XCTAssertEqual(res.messages, correctMessages)
+        XCTAssertEqual(res.events, correctMessages)
         XCTAssertEqual(xs.subscriptions, correctSubscriptions)
     }
     
@@ -271,7 +271,7 @@ extension ObservableSingleTest {
             Subscription(200, 220)
         ]
         
-        XCTAssertEqual(res.messages, correctMessages)
+        XCTAssertEqual(res.events, correctMessages)
         XCTAssertEqual(xs.subscriptions, correctSubscriptions)
     }
 }
@@ -318,7 +318,7 @@ extension ObservableSingleTest {
             Subscription(200, 250)
         ]
         
-        XCTAssertEqual(res.messages, correctMessages)
+        XCTAssertEqual(res.events, correctMessages)
         XCTAssertEqual(xs.subscriptions, correctSubscriptions)
     }
 
@@ -358,7 +358,7 @@ extension ObservableSingleTest {
             Subscription(200, 250)
         ]
         
-        XCTAssertEqual(res.messages, correctMessages)
+        XCTAssertEqual(res.events, correctMessages)
         XCTAssertEqual(xs.subscriptions, correctSubscriptions)
     }
     
@@ -405,7 +405,7 @@ extension ObservableSingleTest {
             Subscription(200, 250)
         ]
         
-        XCTAssertEqual(res.messages, correctMessages)
+        XCTAssertEqual(res.events, correctMessages)
         XCTAssertEqual(xs.subscriptions, correctSubscriptions)
     }
     
@@ -440,7 +440,7 @@ extension ObservableSingleTest {
             Subscription(200, 1000)
         ]
         
-        XCTAssertEqual(res.messages, correctMessages)
+        XCTAssertEqual(res.events, correctMessages)
         XCTAssertEqual(xs.subscriptions, correctSubscriptions)
     }
     
@@ -487,7 +487,7 @@ extension ObservableSingleTest {
             Subscription(200, 250)
         ]
         
-        XCTAssertEqual(res.messages, correctMessages)
+        XCTAssertEqual(res.events, correctMessages)
         XCTAssertEqual(xs.subscriptions, correctSubscriptions)
     }
     
@@ -534,7 +534,7 @@ extension ObservableSingleTest {
             Subscription(200, 250)
         ]
         
-        XCTAssertEqual(res.messages, correctMessages)
+        XCTAssertEqual(res.events, correctMessages)
         XCTAssertEqual(xs.subscriptions, correctSubscriptions)
     }
     
@@ -560,7 +560,7 @@ extension ObservableSingleTest {
             Subscription(200, 210)
         ]
         
-        XCTAssertEqual(res.messages, correctMessages)
+        XCTAssertEqual(res.events, correctMessages)
         XCTAssertEqual(xs.subscriptions, correctSubscriptions)
     }
 }
@@ -581,7 +581,7 @@ extension ObservableSingleTest {
             xs.retry()
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(300, 1),
             next(350, 2),
             next(400, 3),
@@ -606,7 +606,7 @@ extension ObservableSingleTest {
             xs.retry()
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(300, 1),
             next(350, 2),
             next(400, 3),
@@ -631,7 +631,7 @@ extension ObservableSingleTest {
             xs.retry()
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(300, 1),
             next(350, 2),
             next(400, 3),
@@ -666,7 +666,7 @@ extension ObservableSingleTest {
             xs.retry(3)
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(205, 1),
             next(210, 2),
             next(215, 3),
@@ -700,7 +700,7 @@ extension ObservableSingleTest {
             xs.retry(3)
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(205, 1),
             next(210, 2),
             next(215, 3),
@@ -728,7 +728,7 @@ extension ObservableSingleTest {
             xs.retry(3)
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(205, 1),
             next(210, 2),
             next(215, 3),
@@ -756,7 +756,7 @@ extension ObservableSingleTest {
             xs.retry(3)
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(300, 1),
             next(350, 2),
             next(400, 3),
@@ -824,7 +824,7 @@ extension ObservableSingleTest {
             completed(250, Int.self)
         ]
         
-        XCTAssertEqual(res.messages, correct)
+        XCTAssertEqual(res.events, correct)
         
         XCTAssertEqual(xs.subscriptions, [
             Subscription(200, 250)
@@ -861,7 +861,7 @@ extension ObservableSingleTest {
             next(240, 5)
         ]
         
-        XCTAssertEqual(res.messages, correct)
+        XCTAssertEqual(res.events, correct)
         
         XCTAssertEqual(xs.subscriptions, [
             Subscription(200, 250)
@@ -899,7 +899,7 @@ extension ObservableSingleTest {
             completed(250)
         ]
         
-        XCTAssertEqual(res.messages, correct)
+        XCTAssertEqual(res.events, correct)
         
         XCTAssertEqual(xs.subscriptions, [
             Subscription(200, 250)
@@ -935,7 +935,7 @@ extension ObservableSingleTest {
             completed(450)
         ]
         
-        XCTAssertEqual(res.messages, correct)
+        XCTAssertEqual(res.events, correct)
         
         XCTAssertEqual(xs.subscriptions, [
             Subscription(200, 450)
@@ -973,7 +973,7 @@ extension ObservableSingleTest {
             error(260, testError1)
         ]
         
-        XCTAssertEqual(res.messages, correct)
+        XCTAssertEqual(res.events, correct)
         
         XCTAssertEqual(xs.subscriptions, [
             Subscription(200, 230),
@@ -1010,7 +1010,7 @@ extension ObservableSingleTest {
             completed(230)
         ]
         
-        XCTAssertEqual(res.messages, correct)
+        XCTAssertEqual(res.events, correct)
         
         XCTAssertEqual(xs.subscriptions, [
             Subscription(200, 230)
@@ -1046,7 +1046,7 @@ extension ObservableSingleTest {
             completed(260)
         ]
         
-        XCTAssertEqual(res.messages, correct)
+        XCTAssertEqual(res.events, correct)
         
         XCTAssertEqual(xs.subscriptions, [
             Subscription(200, 230),
@@ -1080,7 +1080,7 @@ extension ObservableSingleTest {
             next(220, 2)
         ]
         
-        XCTAssertEqual(res.messages, correct)
+        XCTAssertEqual(res.events, correct)
         
         XCTAssertEqual(xs.subscriptions, [
             Subscription(200, 230)
@@ -1121,7 +1121,7 @@ extension ObservableSingleTest {
             error(540, testError)
         ]
         
-        XCTAssertEqual(res.messages, correct)
+        XCTAssertEqual(res.events, correct)
         
         XCTAssertEqual(xs.subscriptions, [
             Subscription(200, 210),
@@ -1152,7 +1152,7 @@ extension ObservableSingleTest {
             error(210, testError)
         ]
 
-        XCTAssertEqual(res.messages, correct)
+        XCTAssertEqual(res.events, correct)
 
         XCTAssertEqual(xs.subscriptions, [
             Subscription(200, 210)
@@ -1204,7 +1204,7 @@ extension ObservableSingleTest {
             xs.scan(seed) { $0 + $1 }
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             ])
         
         XCTAssertEqual(xs.subscriptions, [
@@ -1226,7 +1226,7 @@ extension ObservableSingleTest {
             xs.scan(seed) { $0 + $1 }
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             completed(250)
             ])
         
@@ -1250,7 +1250,7 @@ extension ObservableSingleTest {
             xs.scan(seed) { $0 + $1 }
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(220, seed + 2),
             completed(250)
             ])
@@ -1274,7 +1274,7 @@ extension ObservableSingleTest {
             xs.scan(seed) { $0 + $1 }
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             error(250, testError)
             ])
         
@@ -1309,7 +1309,7 @@ extension ObservableSingleTest {
             completed(250)
         ]
         
-        XCTAssertEqual(res.messages, messages)
+        XCTAssertEqual(res.events, messages)
         
         XCTAssertEqual(xs.subscriptions, [
             Subscription(200, 250)
@@ -1340,7 +1340,7 @@ extension ObservableSingleTest {
             }
         }
         
-        XCTAssertEqual(res.messages, [
+        XCTAssertEqual(res.events, [
             next(210, seed + 2),
             next(220, seed + 2 + 3),
             error(230, testError)

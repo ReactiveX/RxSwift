@@ -13,13 +13,13 @@ import RxTests
 class PrimitiveMockObserver<ElementType> : ObserverType {
     typealias Element = ElementType
     
-    var messages: [Recorded<Event<Element>>]
+    var events: [Recorded<Event<Element>>]
     
     init() {
-        self.messages = []
+        self.events = []
     }
     
     func on(event: Event<Element>) {
-        messages.append(Recorded(time: 0, event: event))
+        events.append(Recorded(time: 0, event: event))
     }
 }
