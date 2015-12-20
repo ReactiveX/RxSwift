@@ -17,19 +17,14 @@ public class VirtualTimeSchedulerBase
     public typealias TimeInterval = Time
     public typealias Time = RxTests.Time
     
-    private var clock : Time
     private var enabled : Bool
     
-    public var now: Time {
-        get {
-            return self.clock
-        }
-    }
-    
+    public private(set) var now: Time
+
     private var schedulerQueue : [ScheduledItemProtocol] = []
     
     public init(initialClock: Time) {
-        self.clock = initialClock
+        self.now = initialClock
         self.enabled = false
     }
     
@@ -73,7 +68,7 @@ public class VirtualTimeSchedulerBase
                     }
                     
                     if next.time > self.now {
-                        self.clock = next.time
+                        self.now = next.time
                     }
 
                     next.invoke()

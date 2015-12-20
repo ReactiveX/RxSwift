@@ -64,7 +64,7 @@ public func XCTAssertEqual<T: Equatable>(lhs: [Event<T>], _ rhs: [Event<T>], fil
     XCTAssertEqual(leftEquatable, rightEquatable)
 }
 
-/*
+/**
 Asserts two lists of Recorded events are equal.
 
 Recorded events are equal if times are equal and recoreded events are equal.

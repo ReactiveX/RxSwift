@@ -8,32 +8,54 @@
 
 import RxSwift
 
+/**
+A representation of cold observable sequence.
+
+Recorded events are replayed after subscription once per subscriber.
+
+Event times represent relative offset to subscription time.
+*/
 public class ColdObservable<Element: Equatable>
     : ObservableType
     , ObservableConvertibleType {
     public typealias E = Element
 
-    public typealias Events = Recorded<Event<Element>>
-    
-    public let testScheduler: TestScheduler
-    
-    public private(set) var subscriptions: [Subscription]
-    public private(set) var recordedEvents: [Events]
+    public typealias RecordedEvent = Recorded<Event<Element>>
 
-    init(testScheduler: TestScheduler, recordedEvents: [Events]) {
-        self.testScheduler = testScheduler
+    /**
+     Parent test scheduler.
+    */
+    let _testScheduler: TestScheduler
+
+    /**
+     Subscriptions recorded during cold observable lifetime.
+    */
+    public private(set) var subscriptions: [Subscription]
+
+    /**
+     List of events to replay for each of the subscriber.
+
+     Event times represent relative offset to subscription time.
+    */
+    public private(set) var recordedEvents: [RecordedEvent]
+
+    init(testScheduler: TestScheduler, recordedEvents: [RecordedEvent]) {
+        _testScheduler = testScheduler
         
         self.recordedEvents = recordedEvents
         self.subscriptions = []
     }
-    
+
+    /**
+    Subscribes `observer` to receive events for this sequence.
+    */
     public func subscribe<O : ObserverType where O.E == E>(observer: O) -> Disposable {
-        subscriptions.append(Subscription(self.testScheduler.now))
+        subscriptions.append(Subscription(self._testScheduler.now))
         
         let i = self.subscriptions.count - 1
 
         for recordedEvent in recordedEvents {
-            testScheduler.scheduleRelative((), dueTime: recordedEvent.time, action: { (_) in
+            _testScheduler.scheduleRelative((), dueTime: recordedEvent.time, action: { (_) in
                 observer.on(recordedEvent.value)
                 return NopDisposable.instance
             })
@@ -41,7 +63,7 @@ public class ColdObservable<Element: Equatable>
         
         return AnonymousDisposable {
             let existing = self.subscriptions[i]
-            self.subscriptions[i] = Subscription(existing.subscribe, self.testScheduler.now)
+            self.subscriptions[i] = Subscription(existing.subscribe, self._testScheduler.now)
         }
     }
 }

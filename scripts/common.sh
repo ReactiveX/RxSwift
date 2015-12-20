@@ -48,28 +48,22 @@ function contains() {
     fi
 }
 
+function simulator_ids() {
+	SIMULATOR=$1
+	xcrun simctl list | grep "${SIMULATOR}" | cut -d "(" -f 2 | cut -d ")" -f 1 | sort | uniq
+}
+
 function simulator_available() {
 		SIMULATOR=$1
-		if [ `xcrun simctl list | grep "${SIMULATOR}" | wc -l` -eq 0 ]; then
+		if [ `simulator_ids "${SIMULATOR}" | wc -l` -eq 0 ]; then
 			return -1
-		elif [ `xcrun simctl list | grep "${SIMULATOR}" | wc -l` -gt 1 ]; then
+		elif [ `simulator_ids "${SIMULATOR}" | wc -l` -gt 1 ]; then
 			echo "Multiple simulators ${SIMULATOR} found"
-			xcrun simctl list | \
-			grep "${SIMULATOR}" | \
-			cut -d "(" -f 2 | \
-			cut -d ")" -f 1 | \
-			xargs xcrun simctl delete;
+			xcrun simctl list | grep "${SIMULATOR}"
 			exit -1
-			return -1
-		elif [ `xcrun simctl list | grep "${SIMULATOR}" | grep "unavailable" | wc -l` -eq 1 ]; then
-			# delete unavailable simulator
-			xcrun simctl list |
-			grep "${SIMULATOR}" |
-			grep "unavailable" |
-			cut -d "(" -f 2 |
-			cut -d ")" -f 1 |
-			xargs xcrun simctl delete
-			return -1
+		elif [ `xcrun simctl list | grep "${SIMULATOR}" | grep "unavailable" | wc -l` -gt 0 ]; then
+			xcrun simctl list | grep "${SIMULATOR}" | grep "unavailable"
+			exit -1
 		else
 			return 0
 		fi
@@ -131,7 +125,7 @@ function action() {
 			else
 				ensure_simulator_available "${SIMULATOR}"
 				OS=`echo $SIMULATOR | cut -d '/' -f 3`
-				SIMULATOR_GUID=`xcrun simctl list devices | grep ${SIMULATOR} | cut -d "(" -f 2 | cut -d ")" -f 1`
+				SIMULATOR_GUID=`simulator_ids "${SIMULATOR}"`
 				DESTINATION='platform='$OS' Simulator,OS='$OS',id='$SIMULATOR_GUID''
 				echo "Running on ${DESTINATION}"
 			fi

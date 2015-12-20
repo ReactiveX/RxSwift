@@ -9,19 +9,30 @@
 import Foundation
 import RxSwift
 
+/**
+ Observer that records events together with virtual time when they were received.
+*/
 public class MockObserver<ElementType>
     : ObserverType {
     public typealias Element = ElementType
     
-    public let scheduler: TestScheduler
-    public private(set) var messages: [Recorded<Event<Element>>]
+    private let _scheduler: TestScheduler
+
+    /**
+    Recorded events.
+    */
+    public private(set) var messages = [Recorded<Event<Element>>]()
     
     init(scheduler: TestScheduler) {
-        self.scheduler = scheduler
-        self.messages = []
+        _scheduler = scheduler
     }
-    
+
+    /**
+    Notify observer about sequence event.
+
+    - parameter event: Event that occured.
+    */
     public func on(event: Event<Element>) {
-        messages.append(Recorded(time: scheduler.now, event: event))
+        messages.append(Recorded(time: _scheduler.now, event: event))
     }
 }
