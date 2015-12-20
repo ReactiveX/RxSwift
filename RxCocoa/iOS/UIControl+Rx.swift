@@ -40,7 +40,7 @@ extension UIControl {
     
     - parameter controlEvents: Filter for observed event types.
     */
-    public func rx_controlEvents(controlEvents: UIControlEvents) -> ControlEvent<Void> {
+    public func rx_controlEvent(controlEvents: UIControlEvents) -> ControlEvent<Void> {
         let source: Observable<Void> = create { [weak self] observer in
             MainScheduler.ensureExecutingOnScheduler()
 
@@ -60,6 +60,11 @@ extension UIControl {
         }.takeUntil(rx_deallocated)
         
         return ControlEvent(events: source)
+    }
+
+    @available(*, deprecated=2.0.0, message="Please use rx_controlEvent.")
+    public func rx_controlEvents(controlEvents: UIControlEvents) -> ControlEvent<Void> {
+        return rx_controlEvent(controlEvents)
     }
     
     func rx_value<T>(getter getter: () -> T, setter: T -> Void) -> ControlProperty<T> {
