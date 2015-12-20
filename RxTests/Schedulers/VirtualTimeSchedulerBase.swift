@@ -9,7 +9,9 @@
 import Foundation
 import RxSwift
 
-
+/**
+Base class for virtual time schedulers using a priority queue for scheduled items.
+*/
 public class VirtualTimeSchedulerBase
     : SchedulerType
     , CustomDebugStringConvertible {
@@ -22,22 +24,50 @@ public class VirtualTimeSchedulerBase
     public private(set) var now: Time
 
     private var schedulerQueue : [ScheduledItemProtocol] = []
-    
+
+    /**
+     Creates a new virtual time scheduler.
+     
+     - parameter initialClock: Initial value for the clock.
+    */
     public init(initialClock: Time) {
         self.now = initialClock
         self.enabled = false
     }
-    
+
+    /**
+    Schedules an action to be executed immediatelly.
+
+    - parameter state: State passed to the action to be executed.
+    - parameter action: Action to be executed.
+    - returns: The disposable object used to cancel the scheduled action (best effort).
+    */
     public func schedule<StateType>(state: StateType, action: StateType -> Disposable) -> Disposable {
         return self.scheduleRelative(state, dueTime: 0) { a in
             return action(a)
         }
     }
-    
+
+    /**
+     Schedules an action to be executed.
+
+     - parameter state: State passed to the action to be executed.
+     - parameter dueTime: Relative time after which to execute the action.
+     - parameter action: Action to be executed.
+     - returns: The disposable object used to cancel the scheduled action (best effort).
+     */
     public func scheduleRelative<StateType>(state: StateType, dueTime: Time, action: StateType -> Disposable) -> Disposable {
         return schedule(state, time: now + dueTime, action: action)
     }
-    
+
+    /**
+     Schedules an action to be executed at exact absolute time.
+
+     - parameter state: State passed to the action to be executed.
+     - parameter time: Absolute time when to execute the action. If this is less or equal then `now`, `now + 1`  will be used.
+     - parameter action: Action to be executed.
+     - returns: The disposable object used to cancel the scheduled action (best effort).
+     */
     func schedule<StateType>(state: StateType, time: Time, action: StateType -> Disposable) -> Disposable {
         let compositeDisposable = CompositeDisposable()
         
@@ -57,7 +87,10 @@ public class VirtualTimeSchedulerBase
         
         return compositeDisposable
     }
-    
+
+    /**
+    Starts the virtual time scheduler.
+    */
     public func start() {
         if !enabled {
             enabled = true
@@ -79,6 +112,13 @@ public class VirtualTimeSchedulerBase
             
             } while enabled
         }
+    }
+
+    /**
+    Stops the virtual time scheduler.
+    */
+    public func stop() {
+        enabled = false
     }
     
     func getNext() -> ScheduledItemProtocol? {
@@ -108,6 +148,9 @@ public class VirtualTimeSchedulerBase
 // MARK: description
 
 extension VirtualTimeSchedulerBase {
+    /**
+    A textual representation of `self`, suitable for debugging.
+    */
     public var debugDescription: String {
         get {
             return self.schedulerQueue.description
