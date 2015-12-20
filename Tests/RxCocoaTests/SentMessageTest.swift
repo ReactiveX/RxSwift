@@ -337,13 +337,13 @@ extension SentMessageTest {
         }
     }
 
-    func testBaseClass_subClass_dont_interact_for_optimized_version_BOOL() {
+    func testBaseClass_subClass_dont_interact_for_optimized_version_char() {
         _baseClass_subClass_dont_interact_for_optimized_version(
-            SentMessageTestBase_optimized_BOOL.self,
-            SentMessageTest_optimized_BOOL.self,
-            "voidJustCalledToSayBool:") { target in
-            target.voidJustCalledToSayBool(true)
-            return [[[NSNumber(bool: true)]]]
+            SentMessageTestBase_optimized_char.self,
+            SentMessageTest_optimized_char.self,
+            "voidJustCalledToSayChar:") { target in
+            target.voidJustCalledToSayChar(3)
+            return [[[NSNumber(char: 3)]]]
         }
     }
 
@@ -824,11 +824,10 @@ extension SentMessageTest {
         _testMessageRecordedAndAllCallsAreMade("voidJustCalledToSayUnsignedLong:", sendMessage: { x in x.voidJustCalledToSayUnsignedLong(11); return 11 }, expectedResult: 11)
         _testMessageRecordedAndAllCallsAreMade("voidJustCalledToSayFloat:", sendMessage: { x in x.voidJustCalledToSayFloat(13); return 13 }, expectedResult: 13)
         _testMessageRecordedAndAllCallsAreMade("voidJustCalledToSayDouble:", sendMessage: { x in x.voidJustCalledToSayDouble(13); return 13 }, expectedResult: 13)
-        _testMessageRecordedAndAllCallsAreMade("voidJustCalledToSayBool:", sendMessage: { x in x.voidJustCalledToSayBool(true); return true }, expectedResult: true)
 
         let endRuntimeState = RxObjCRuntimeState()
 
-        endRuntimeState.assertAfterThisMoment(middleRuntimeState, changed: RxObjCRuntimeChange.changes(methodsSwizzled: 13))
+        endRuntimeState.assertAfterThisMoment(middleRuntimeState, changed: RxObjCRuntimeChange.changes(methodsSwizzled: 12))
 
     }
 
