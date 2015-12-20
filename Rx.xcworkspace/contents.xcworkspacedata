@@ -70,6 +70,43 @@
          location = "group:validate-podspec.sh">
       </FileRef>
    </Group>
+   <Group
+      location = "group:Documentation"
+      name = "Documentation">
+      <FileRef
+         location = "group:API.md">
+      </FileRef>
+      <FileRef
+         location = "group:DesignRationale.md">
+      </FileRef>
+      <FileRef
+         location = "group:Examples.md">
+      </FileRef>
+      <FileRef
+         location = "group:GettingStarted.md">
+      </FileRef>
+      <FileRef
+         location = "group:HotAndColdObservables.md">
+      </FileRef>
+      <FileRef
+         location = "group:MathBehindRx.md">
+      </FileRef>
+      <FileRef
+         location = "group:Migration.md">
+      </FileRef>
+      <FileRef
+         location = "group:Schedulers.md">
+      </FileRef>
+      <FileRef
+         location = "group:Subjects.md">
+      </FileRef>
+      <FileRef
+         location = "group:Units.md">
+      </FileRef>
+      <FileRef
+         location = "group:Warnings.md">
+      </FileRef>
+   </Group>
    <FileRef
       location = "group:Rx.playground">
    </FileRef>
