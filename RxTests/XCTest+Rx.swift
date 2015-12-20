@@ -8,7 +8,6 @@
 
 import Foundation
 import RxSwift
-import XCTest
 
 /**
 These methods are conceptually extensions of `XCTestCase` but because referencing them in closures would
@@ -47,6 +46,7 @@ require specifying `self.*`, they are made global.
     }
 //}
 
+import XCTest
 /**
 Asserts two lists of events are equal. 
 
