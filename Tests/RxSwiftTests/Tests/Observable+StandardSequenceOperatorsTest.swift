@@ -711,7 +711,7 @@ extension ObservableStandardSequenceOperatorsTest {
         
         let res = scheduler.start { xs.map { $0 * 2 } }
         
-        let correctMessages: [Recorded<Int>] = [
+        let correctMessages: [Recorded<Event<Int>>] = [
         ]
         
         let correctSubscriptions = [
@@ -732,8 +732,8 @@ extension ObservableStandardSequenceOperatorsTest {
         
         let res = scheduler.start { xs.map { $0 * 2 } }
         
-        let correctMessages: [Recorded<Int>] = [
-            completed(300)
+        let correctMessages = [
+            completed(300, Int.self)
         ]
         
         let correctSubscriptions = [
@@ -758,7 +758,7 @@ extension ObservableStandardSequenceOperatorsTest {
         
         let res = scheduler.start { xs.map { $0 * 2 } }
         
-        let correctMessages: [Recorded<Int>] = [
+        let correctMessages = [
             next(210, 0 * 2),
             next(220, 1 * 2),
             next(230, 2 * 2),
@@ -788,7 +788,7 @@ extension ObservableStandardSequenceOperatorsTest {
         
         let res = scheduler.start { xs.map { $0 * 2 } }
         
-        let correctMessages: [Recorded<Int>] = [
+        let correctMessages = [
             next(210, 0 * 2),
             next(220, 1 * 2),
             next(230, 2 * 2),
@@ -818,7 +818,7 @@ extension ObservableStandardSequenceOperatorsTest {
         
         let res = scheduler.start(290) { xs.map { $0 * 2 } }
         
-        let correctMessages: [Recorded<Int>] = [
+        let correctMessages = [
             next(210, 0 * 2),
             next(220, 1 * 2),
             next(230, 2 * 2),
@@ -847,7 +847,7 @@ extension ObservableStandardSequenceOperatorsTest {
         
         let res = scheduler.start { xs.map { x throws -> Int in if x < 2 { return x * 2 } else { throw testError } } }
         
-        let correctMessages: [Recorded<Int>] = [
+        let correctMessages = [
             next(210, 0 * 2),
             next(220, 1 * 2),
             error(230, testError)
@@ -870,7 +870,7 @@ extension ObservableStandardSequenceOperatorsTest {
         
         let res = scheduler.start { xs.mapWithIndex { ($0 + $1) * 2 } }
         
-        let correctMessages: [Recorded<Int>] = [
+        let correctMessages: [Recorded<Event<Int>>] = [
         ]
         
         let correctSubscriptions = [
@@ -891,8 +891,8 @@ extension ObservableStandardSequenceOperatorsTest {
         
         let res = scheduler.start { xs.mapWithIndex { ($0 + $1) * 2 } }
         
-        let correctMessages: [Recorded<Int>] = [
-            completed(300)
+        let correctMessages = [
+            completed(300, Int.self)
         ]
         
         let correctSubscriptions = [
@@ -917,7 +917,7 @@ extension ObservableStandardSequenceOperatorsTest {
         
         let res = scheduler.start { xs.mapWithIndex { ($0 + $1) * 2 } }
         
-        let correctMessages: [Recorded<Int>] = [
+        let correctMessages = [
             next(210, (5 + 0) * 2),
             next(220, (6 + 1) * 2),
             next(230, (7 + 2) * 2),
@@ -947,7 +947,7 @@ extension ObservableStandardSequenceOperatorsTest {
         
         let res = scheduler.start { xs.mapWithIndex { ($0 + $1) * 2 }  }
         
-        let correctMessages: [Recorded<Int>] = [
+        let correctMessages = [
             next(210, (5 + 0) * 2),
             next(220, (6 + 1) * 2),
             next(230, (7 + 2) * 2),
@@ -977,7 +977,7 @@ extension ObservableStandardSequenceOperatorsTest {
         
         let res = scheduler.start(290) { xs.mapWithIndex { ($0 + $1) * 2 } }
         
-        let correctMessages: [Recorded<Int>] = [
+        let correctMessages = [
             next(210, (5 + 0) * 2),
             next(220, (6 + 1) * 2),
             next(230, (7 + 2) * 2),
@@ -1006,7 +1006,7 @@ extension ObservableStandardSequenceOperatorsTest {
         
         let res = scheduler.start { xs.mapWithIndex { x, i throws -> Int in if x < 7 { return ((x + i) * 2) } else { throw testError } } }
         
-        let correctMessages: [Recorded<Int>] = [
+        let correctMessages = [
             next(210, (5 + 0) * 2),
             next(220, (6 + 1) * 2),
             error(230, testError)
@@ -1052,7 +1052,7 @@ extension ObservableStandardSequenceOperatorsTest {
 
         let res = scheduler.start { xs.map { $0 * 10 }.map { $0 + 1 } }
 
-        let correctMessages: [Recorded<Int>] = [
+        let correctMessages: [Recorded<Event<Int>>] = [
         ]
 
         let correctSubscriptions = [
@@ -1073,8 +1073,8 @@ extension ObservableStandardSequenceOperatorsTest {
 
         let res = scheduler.start { xs.map { $0 * 10 }.map { $0 + 1 } }
 
-        let correctMessages: [Recorded<Int>] = [
-            completed(300)
+        let correctMessages = [
+            completed(300, Int.self)
         ]
 
         let correctSubscriptions = [
@@ -1099,7 +1099,7 @@ extension ObservableStandardSequenceOperatorsTest {
 
         let res = scheduler.start { xs.map { $0 * 10 }.map { $0 + 1 } }
 
-        let correctMessages: [Recorded<Int>] = [
+        let correctMessages = [
             next(210, 0 * 10 + 1),
             next(220, 1 * 10 + 1),
             next(230, 2 * 10 + 1),
@@ -1129,7 +1129,7 @@ extension ObservableStandardSequenceOperatorsTest {
 
         let res = scheduler.start { xs.map { $0 * 10 }.map { $0 + 1 } }
 
-        let correctMessages: [Recorded<Int>] = [
+        let correctMessages = [
             next(210, 0 * 10 + 1),
             next(220, 1 * 10 + 1),
             next(230, 2 * 10 + 1),
@@ -1159,7 +1159,7 @@ extension ObservableStandardSequenceOperatorsTest {
 
         let res = scheduler.start(290) { xs.map { $0 * 10 }.map { $0 + 1 } }
 
-        let correctMessages: [Recorded<Int>] = [
+        let correctMessages = [
             next(210, 0 * 10 + 1),
             next(220, 1 * 10 + 1),
             next(230, 2 * 10 + 1),
@@ -1192,7 +1192,7 @@ extension ObservableStandardSequenceOperatorsTest {
             .map { $0 + 1 }
         }
 
-        let correctMessages: [Recorded<Int>] = [
+        let correctMessages = [
             next(210, 0 * 10 + 1),
             next(220, 1 * 10 + 1),
             error(230, testError)
@@ -1224,7 +1224,7 @@ extension ObservableStandardSequenceOperatorsTest {
                 .map { x throws -> Int in if x < 20 { return x + 1 } else { throw testError } }
         }
 
-        let correctMessages: [Recorded<Int>] = [
+        let correctMessages = [
             next(210, 0 * 10 + 1),
             next(220, 1 * 10 + 1),
             error(230, testError)
@@ -1258,7 +1258,7 @@ extension ObservableStandardSequenceOperatorsTest {
                 }
         }
 
-        let correctMessages: [Recorded<Int>] = [
+        let correctMessages = [
             next(210, 0 * 10 + 1),
         ]
 
@@ -1291,7 +1291,7 @@ extension ObservableStandardSequenceOperatorsTest {
             }
         }
 
-        let correctMessages: [Recorded<Int>] = [
+        let correctMessages = [
             next(210, 0 * 10 + 1),
         ]
 
@@ -1370,17 +1370,17 @@ extension ObservableStandardSequenceOperatorsTest {
             Subscription(200, 900)
         ])
 
-        XCTAssertEqual(xs.recordedEvents[2].value.subscriptions, [
+        XCTAssertEqual(xs.recordedEvents[2].value.element!.subscriptions, [
             Subscription(300, 760)
         ])
 
-        XCTAssertEqual(xs.recordedEvents[3].value.subscriptions, [])
+        XCTAssertEqual(xs.recordedEvents[3].value.element!.subscriptions, [])
 
-        XCTAssertEqual(xs.recordedEvents[4].value.subscriptions, [])
+        XCTAssertEqual(xs.recordedEvents[4].value.element!.subscriptions, [])
 
-        XCTAssertEqual(xs.recordedEvents[5].value.subscriptions, [])
+        XCTAssertEqual(xs.recordedEvents[5].value.element!.subscriptions, [])
 
-        XCTAssertEqual(xs.recordedEvents[6].value.subscriptions, [
+        XCTAssertEqual(xs.recordedEvents[6].value.element!.subscriptions, [
             Subscription(850, 950)
         ])
     }
@@ -1445,17 +1445,17 @@ extension ObservableStandardSequenceOperatorsTest {
             Subscription(200, 1000)
             ])
 
-        XCTAssertEqual(xs.recordedEvents[2].value.subscriptions, [
+        XCTAssertEqual(xs.recordedEvents[2].value.element!.subscriptions, [
             Subscription(300, 760)
             ])
 
-        XCTAssertEqual(xs.recordedEvents[3].value.subscriptions, [])
+        XCTAssertEqual(xs.recordedEvents[3].value.element!.subscriptions, [])
 
-        XCTAssertEqual(xs.recordedEvents[4].value.subscriptions, [])
+        XCTAssertEqual(xs.recordedEvents[4].value.element!.subscriptions, [])
 
-        XCTAssertEqual(xs.recordedEvents[5].value.subscriptions, [])
+        XCTAssertEqual(xs.recordedEvents[5].value.element!.subscriptions, [])
 
-        XCTAssertEqual(xs.recordedEvents[6].value.subscriptions, [
+        XCTAssertEqual(xs.recordedEvents[6].value.element!.subscriptions, [
             Subscription(850, 950)
             ])
     }
@@ -1520,17 +1520,17 @@ extension ObservableStandardSequenceOperatorsTest {
             Subscription(200, 900)
             ])
 
-        XCTAssertEqual(xs.recordedEvents[2].value.subscriptions, [
+        XCTAssertEqual(xs.recordedEvents[2].value.element!.subscriptions, [
             Subscription(300, 760)
             ])
 
-        XCTAssertEqual(xs.recordedEvents[3].value.subscriptions, [])
+        XCTAssertEqual(xs.recordedEvents[3].value.element!.subscriptions, [])
 
-        XCTAssertEqual(xs.recordedEvents[4].value.subscriptions, [])
+        XCTAssertEqual(xs.recordedEvents[4].value.element!.subscriptions, [])
 
-        XCTAssertEqual(xs.recordedEvents[5].value.subscriptions, [])
+        XCTAssertEqual(xs.recordedEvents[5].value.element!.subscriptions, [])
 
-        XCTAssertEqual(xs.recordedEvents[6].value.subscriptions, [
+        XCTAssertEqual(xs.recordedEvents[6].value.element!.subscriptions, [
             Subscription(850, 950)
             ])
     }
@@ -1594,17 +1594,17 @@ extension ObservableStandardSequenceOperatorsTest {
             Subscription(200, 900)
             ])
 
-        XCTAssertEqual(xs.recordedEvents[2].value.subscriptions, [
+        XCTAssertEqual(xs.recordedEvents[2].value.element!.subscriptions, [
             Subscription(300, 760)
             ])
 
-        XCTAssertEqual(xs.recordedEvents[3].value.subscriptions, [])
+        XCTAssertEqual(xs.recordedEvents[3].value.element!.subscriptions, [])
 
-        XCTAssertEqual(xs.recordedEvents[4].value.subscriptions, [])
+        XCTAssertEqual(xs.recordedEvents[4].value.element!.subscriptions, [])
 
-        XCTAssertEqual(xs.recordedEvents[5].value.subscriptions, [])
+        XCTAssertEqual(xs.recordedEvents[5].value.element!.subscriptions, [])
 
-        XCTAssertEqual(xs.recordedEvents[6].value.subscriptions, [
+        XCTAssertEqual(xs.recordedEvents[6].value.element!.subscriptions, [
             Subscription(850, 900)
             ])
     }
@@ -1668,17 +1668,17 @@ extension ObservableStandardSequenceOperatorsTest {
             Subscription(200, 760)
             ])
 
-        XCTAssertEqual(xs.recordedEvents[2].value.subscriptions, [
+        XCTAssertEqual(xs.recordedEvents[2].value.element!.subscriptions, [
             Subscription(300, 760)
             ])
 
-        XCTAssertEqual(xs.recordedEvents[3].value.subscriptions, [])
+        XCTAssertEqual(xs.recordedEvents[3].value.element!.subscriptions, [])
 
-        XCTAssertEqual(xs.recordedEvents[4].value.subscriptions, [])
+        XCTAssertEqual(xs.recordedEvents[4].value.element!.subscriptions, [])
 
-        XCTAssertEqual(xs.recordedEvents[5].value.subscriptions, [])
+        XCTAssertEqual(xs.recordedEvents[5].value.element!.subscriptions, [])
 
-        XCTAssertEqual(xs.recordedEvents[6].value.subscriptions, [
+        XCTAssertEqual(xs.recordedEvents[6].value.element!.subscriptions, [
             ])
     }
 
@@ -1739,17 +1739,17 @@ extension ObservableStandardSequenceOperatorsTest {
             Subscription(200, 700)
             ])
 
-        XCTAssertEqual(xs.recordedEvents[2].value.subscriptions, [
+        XCTAssertEqual(xs.recordedEvents[2].value.element!.subscriptions, [
             Subscription(300, 700)
             ])
 
-        XCTAssertEqual(xs.recordedEvents[3].value.subscriptions, [])
+        XCTAssertEqual(xs.recordedEvents[3].value.element!.subscriptions, [])
 
-        XCTAssertEqual(xs.recordedEvents[4].value.subscriptions, [])
+        XCTAssertEqual(xs.recordedEvents[4].value.element!.subscriptions, [])
 
-        XCTAssertEqual(xs.recordedEvents[5].value.subscriptions, [])
+        XCTAssertEqual(xs.recordedEvents[5].value.element!.subscriptions, [])
 
-        XCTAssertEqual(xs.recordedEvents[6].value.subscriptions, [])
+        XCTAssertEqual(xs.recordedEvents[6].value.element!.subscriptions, [])
     }
 
     func testFlatMapFirst_SelectorThrows() {
@@ -1818,17 +1818,17 @@ extension ObservableStandardSequenceOperatorsTest {
             Subscription(200, 850)
             ])
 
-        XCTAssertEqual(xs.recordedEvents[2].value.subscriptions, [
+        XCTAssertEqual(xs.recordedEvents[2].value.element!.subscriptions, [
             Subscription(300, 760)
             ])
 
-        XCTAssertEqual(xs.recordedEvents[3].value.subscriptions, [])
+        XCTAssertEqual(xs.recordedEvents[3].value.element!.subscriptions, [])
 
-        XCTAssertEqual(xs.recordedEvents[4].value.subscriptions, [])
+        XCTAssertEqual(xs.recordedEvents[4].value.element!.subscriptions, [])
 
-        XCTAssertEqual(xs.recordedEvents[5].value.subscriptions, [])
+        XCTAssertEqual(xs.recordedEvents[5].value.element!.subscriptions, [])
 
-        XCTAssertEqual(xs.recordedEvents[6].value.subscriptions, [])
+        XCTAssertEqual(xs.recordedEvents[6].value.element!.subscriptions, [])
     }
 
     func testFlatMapFirst_UseFunction() {
@@ -1935,23 +1935,23 @@ extension ObservableStandardSequenceOperatorsTest {
         ])
 
     
-        XCTAssertEqual(xs.recordedEvents[2].value.subscriptions, [
+        XCTAssertEqual(xs.recordedEvents[2].value.element!.subscriptions, [
             Subscription(300, 760)
         ])
 
-        XCTAssertEqual(xs.recordedEvents[3].value.subscriptions, [
+        XCTAssertEqual(xs.recordedEvents[3].value.element!.subscriptions, [
             Subscription(400, 605)
         ])
 
-        XCTAssertEqual(xs.recordedEvents[4].value.subscriptions, [
+        XCTAssertEqual(xs.recordedEvents[4].value.element!.subscriptions, [
             Subscription(550, 960)
         ])
         
-        XCTAssertEqual(xs.recordedEvents[5].value.subscriptions, [
+        XCTAssertEqual(xs.recordedEvents[5].value.element!.subscriptions, [
             Subscription(750, 790)
         ])
 
-        XCTAssertEqual(xs.recordedEvents[6].value.subscriptions, [
+        XCTAssertEqual(xs.recordedEvents[6].value.element!.subscriptions, [
             Subscription(850, 950)
         ])
     }
@@ -2022,23 +2022,23 @@ extension ObservableStandardSequenceOperatorsTest {
             Subscription(200, 1000)
             ])
         
-        XCTAssertEqual(xs.recordedEvents[2].value.subscriptions, [
+        XCTAssertEqual(xs.recordedEvents[2].value.element!.subscriptions, [
             Subscription(300, 760)
             ])
         
-        XCTAssertEqual(xs.recordedEvents[3].value.subscriptions, [
+        XCTAssertEqual(xs.recordedEvents[3].value.element!.subscriptions, [
             Subscription(400, 605)
             ])
         
-        XCTAssertEqual(xs.recordedEvents[4].value.subscriptions, [
+        XCTAssertEqual(xs.recordedEvents[4].value.element!.subscriptions, [
             Subscription(550, 960)
             ])
         
-        XCTAssertEqual(xs.recordedEvents[5].value.subscriptions, [
+        XCTAssertEqual(xs.recordedEvents[5].value.element!.subscriptions, [
             Subscription(750, 790)
             ])
         
-        XCTAssertEqual(xs.recordedEvents[6].value.subscriptions, [
+        XCTAssertEqual(xs.recordedEvents[6].value.element!.subscriptions, [
             Subscription(850, 950)
             ])
     }
@@ -2109,23 +2109,23 @@ extension ObservableStandardSequenceOperatorsTest {
             Subscription(200, 900)
             ])
         
-        XCTAssertEqual(xs.recordedEvents[2].value.subscriptions, [
+        XCTAssertEqual(xs.recordedEvents[2].value.element!.subscriptions, [
             Subscription(300, 760)
             ])
         
-        XCTAssertEqual(xs.recordedEvents[3].value.subscriptions, [
+        XCTAssertEqual(xs.recordedEvents[3].value.element!.subscriptions, [
             Subscription(400, 1000)
             ])
         
-        XCTAssertEqual(xs.recordedEvents[4].value.subscriptions, [
+        XCTAssertEqual(xs.recordedEvents[4].value.element!.subscriptions, [
             Subscription(550, 960)
             ])
         
-        XCTAssertEqual(xs.recordedEvents[5].value.subscriptions, [
+        XCTAssertEqual(xs.recordedEvents[5].value.element!.subscriptions, [
             Subscription(750, 790)
             ])
         
-        XCTAssertEqual(xs.recordedEvents[6].value.subscriptions, [
+        XCTAssertEqual(xs.recordedEvents[6].value.element!.subscriptions, [
             Subscription(850, 950)
             ])
     }
@@ -2195,23 +2195,23 @@ extension ObservableStandardSequenceOperatorsTest {
             Subscription(200, 900)
             ])
         
-        XCTAssertEqual(xs.recordedEvents[2].value.subscriptions, [
+        XCTAssertEqual(xs.recordedEvents[2].value.element!.subscriptions, [
             Subscription(300, 760)
             ])
         
-        XCTAssertEqual(xs.recordedEvents[3].value.subscriptions, [
+        XCTAssertEqual(xs.recordedEvents[3].value.element!.subscriptions, [
             Subscription(400, 900)
             ])
         
-        XCTAssertEqual(xs.recordedEvents[4].value.subscriptions, [
+        XCTAssertEqual(xs.recordedEvents[4].value.element!.subscriptions, [
             Subscription(550, 900)
             ])
         
-        XCTAssertEqual(xs.recordedEvents[5].value.subscriptions, [
+        XCTAssertEqual(xs.recordedEvents[5].value.element!.subscriptions, [
             Subscription(750, 790)
             ])
         
-        XCTAssertEqual(xs.recordedEvents[6].value.subscriptions, [
+        XCTAssertEqual(xs.recordedEvents[6].value.element!.subscriptions, [
             Subscription(850, 900)
             ])
     }
@@ -2280,23 +2280,23 @@ extension ObservableStandardSequenceOperatorsTest {
             Subscription(200, 760)
             ])
         
-        XCTAssertEqual(xs.recordedEvents[2].value.subscriptions, [
+        XCTAssertEqual(xs.recordedEvents[2].value.element!.subscriptions, [
             Subscription(300, 760)
             ])
         
-        XCTAssertEqual(xs.recordedEvents[3].value.subscriptions, [
+        XCTAssertEqual(xs.recordedEvents[3].value.element!.subscriptions, [
             Subscription(400, 605)
             ])
         
-        XCTAssertEqual(xs.recordedEvents[4].value.subscriptions, [
+        XCTAssertEqual(xs.recordedEvents[4].value.element!.subscriptions, [
             Subscription(550, 760)
             ])
         
-        XCTAssertEqual(xs.recordedEvents[5].value.subscriptions, [
+        XCTAssertEqual(xs.recordedEvents[5].value.element!.subscriptions, [
             Subscription(750, 760)
             ])
         
-        XCTAssertEqual(xs.recordedEvents[6].value.subscriptions, [
+        XCTAssertEqual(xs.recordedEvents[6].value.element!.subscriptions, [
             ])
     }
     
@@ -2362,22 +2362,22 @@ extension ObservableStandardSequenceOperatorsTest {
             Subscription(200, 700)
             ])
         
-        XCTAssertEqual(xs.recordedEvents[2].value.subscriptions, [
+        XCTAssertEqual(xs.recordedEvents[2].value.element!.subscriptions, [
             Subscription(300, 700)
             ])
         
-        XCTAssertEqual(xs.recordedEvents[3].value.subscriptions, [
+        XCTAssertEqual(xs.recordedEvents[3].value.element!.subscriptions, [
             Subscription(400, 605)
             ])
         
-        XCTAssertEqual(xs.recordedEvents[4].value.subscriptions, [
+        XCTAssertEqual(xs.recordedEvents[4].value.element!.subscriptions, [
             Subscription(550, 700)
             ])
         
-        XCTAssertEqual(xs.recordedEvents[5].value.subscriptions, [
+        XCTAssertEqual(xs.recordedEvents[5].value.element!.subscriptions, [
             ])
         
-        XCTAssertEqual(xs.recordedEvents[6].value.subscriptions, [
+        XCTAssertEqual(xs.recordedEvents[6].value.element!.subscriptions, [
             ])
     }
    
@@ -2446,21 +2446,21 @@ extension ObservableStandardSequenceOperatorsTest {
             Subscription(200, 550)
             ])
         
-        XCTAssertEqual(xs.recordedEvents[2].value.subscriptions, [
+        XCTAssertEqual(xs.recordedEvents[2].value.element!.subscriptions, [
             Subscription(300, 550)
             ])
         
-        XCTAssertEqual(xs.recordedEvents[3].value.subscriptions, [
+        XCTAssertEqual(xs.recordedEvents[3].value.element!.subscriptions, [
             Subscription(400, 550)
             ])
         
-        XCTAssertEqual(xs.recordedEvents[4].value.subscriptions, [
+        XCTAssertEqual(xs.recordedEvents[4].value.element!.subscriptions, [
             ])
         
-        XCTAssertEqual(xs.recordedEvents[5].value.subscriptions, [
+        XCTAssertEqual(xs.recordedEvents[5].value.element!.subscriptions, [
             ])
         
-        XCTAssertEqual(xs.recordedEvents[6].value.subscriptions, [
+        XCTAssertEqual(xs.recordedEvents[6].value.element!.subscriptions, [
             ])
     }
     
@@ -2602,23 +2602,23 @@ extension ObservableStandardSequenceOperatorsTest {
             Subscription(200, 900)
             ])
         
-        XCTAssertEqual(xs.recordedEvents[2].value.subscriptions, [
+        XCTAssertEqual(xs.recordedEvents[2].value.element!.subscriptions, [
             Subscription(300, 760)
             ])
         
-        XCTAssertEqual(xs.recordedEvents[3].value.subscriptions, [
+        XCTAssertEqual(xs.recordedEvents[3].value.element!.subscriptions, [
             Subscription(400, 605)
             ])
         
-        XCTAssertEqual(xs.recordedEvents[4].value.subscriptions, [
+        XCTAssertEqual(xs.recordedEvents[4].value.element!.subscriptions, [
             Subscription(550, 960)
             ])
         
-        XCTAssertEqual(xs.recordedEvents[5].value.subscriptions, [
+        XCTAssertEqual(xs.recordedEvents[5].value.element!.subscriptions, [
             Subscription(750, 790)
             ])
         
-        XCTAssertEqual(xs.recordedEvents[6].value.subscriptions, [
+        XCTAssertEqual(xs.recordedEvents[6].value.element!.subscriptions, [
             Subscription(850, 950)
             ])
     }
@@ -2689,23 +2689,23 @@ extension ObservableStandardSequenceOperatorsTest {
             Subscription(200, 1000)
             ])
         
-        XCTAssertEqual(xs.recordedEvents[2].value.subscriptions, [
+        XCTAssertEqual(xs.recordedEvents[2].value.element!.subscriptions, [
             Subscription(300, 760)
             ])
         
-        XCTAssertEqual(xs.recordedEvents[3].value.subscriptions, [
+        XCTAssertEqual(xs.recordedEvents[3].value.element!.subscriptions, [
             Subscription(400, 605)
             ])
         
-        XCTAssertEqual(xs.recordedEvents[4].value.subscriptions, [
+        XCTAssertEqual(xs.recordedEvents[4].value.element!.subscriptions, [
             Subscription(550, 960)
             ])
         
-        XCTAssertEqual(xs.recordedEvents[5].value.subscriptions, [
+        XCTAssertEqual(xs.recordedEvents[5].value.element!.subscriptions, [
             Subscription(750, 790)
             ])
         
-        XCTAssertEqual(xs.recordedEvents[6].value.subscriptions, [
+        XCTAssertEqual(xs.recordedEvents[6].value.element!.subscriptions, [
             Subscription(850, 950)
             ])
     }
@@ -2777,23 +2777,23 @@ extension ObservableStandardSequenceOperatorsTest {
             Subscription(200, 900)
             ])
         
-        XCTAssertEqual(xs.recordedEvents[2].value.subscriptions, [
+        XCTAssertEqual(xs.recordedEvents[2].value.element!.subscriptions, [
             Subscription(300, 760)
             ])
         
-        XCTAssertEqual(xs.recordedEvents[3].value.subscriptions, [
+        XCTAssertEqual(xs.recordedEvents[3].value.element!.subscriptions, [
             Subscription(400, 1000)
             ])
         
-        XCTAssertEqual(xs.recordedEvents[4].value.subscriptions, [
+        XCTAssertEqual(xs.recordedEvents[4].value.element!.subscriptions, [
             Subscription(550, 960)
             ])
         
-        XCTAssertEqual(xs.recordedEvents[5].value.subscriptions, [
+        XCTAssertEqual(xs.recordedEvents[5].value.element!.subscriptions, [
             Subscription(750, 790)
             ])
         
-        XCTAssertEqual(xs.recordedEvents[6].value.subscriptions, [
+        XCTAssertEqual(xs.recordedEvents[6].value.element!.subscriptions, [
             Subscription(850, 950)
             ])
     }
@@ -2864,23 +2864,23 @@ extension ObservableStandardSequenceOperatorsTest {
             Subscription(200, 900)
             ])
         
-        XCTAssertEqual(xs.recordedEvents[2].value.subscriptions, [
+        XCTAssertEqual(xs.recordedEvents[2].value.element!.subscriptions, [
             Subscription(300, 760)
             ])
         
-        XCTAssertEqual(xs.recordedEvents[3].value.subscriptions, [
+        XCTAssertEqual(xs.recordedEvents[3].value.element!.subscriptions, [
             Subscription(400, 900)
             ])
         
-        XCTAssertEqual(xs.recordedEvents[4].value.subscriptions, [
+        XCTAssertEqual(xs.recordedEvents[4].value.element!.subscriptions, [
             Subscription(550, 900)
             ])
         
-        XCTAssertEqual(xs.recordedEvents[5].value.subscriptions, [
+        XCTAssertEqual(xs.recordedEvents[5].value.element!.subscriptions, [
             Subscription(750, 790)
             ])
         
-        XCTAssertEqual(xs.recordedEvents[6].value.subscriptions, [
+        XCTAssertEqual(xs.recordedEvents[6].value.element!.subscriptions, [
             Subscription(850, 900)
             ])
     }
@@ -2949,23 +2949,23 @@ extension ObservableStandardSequenceOperatorsTest {
             Subscription(200, 760)
             ])
         
-        XCTAssertEqual(xs.recordedEvents[2].value.subscriptions, [
+        XCTAssertEqual(xs.recordedEvents[2].value.element!.subscriptions, [
             Subscription(300, 760)
             ])
         
-        XCTAssertEqual(xs.recordedEvents[3].value.subscriptions, [
+        XCTAssertEqual(xs.recordedEvents[3].value.element!.subscriptions, [
             Subscription(400, 605)
             ])
         
-        XCTAssertEqual(xs.recordedEvents[4].value.subscriptions, [
+        XCTAssertEqual(xs.recordedEvents[4].value.element!.subscriptions, [
             Subscription(550, 760)
             ])
         
-        XCTAssertEqual(xs.recordedEvents[5].value.subscriptions, [
+        XCTAssertEqual(xs.recordedEvents[5].value.element!.subscriptions, [
             Subscription(750, 760)
             ])
         
-        XCTAssertEqual(xs.recordedEvents[6].value.subscriptions, [
+        XCTAssertEqual(xs.recordedEvents[6].value.element!.subscriptions, [
             ])
     }
     
@@ -3031,22 +3031,22 @@ extension ObservableStandardSequenceOperatorsTest {
             Subscription(200, 700)
             ])
         
-        XCTAssertEqual(xs.recordedEvents[2].value.subscriptions, [
+        XCTAssertEqual(xs.recordedEvents[2].value.element!.subscriptions, [
             Subscription(300, 700)
             ])
         
-        XCTAssertEqual(xs.recordedEvents[3].value.subscriptions, [
+        XCTAssertEqual(xs.recordedEvents[3].value.element!.subscriptions, [
             Subscription(400, 605)
             ])
         
-        XCTAssertEqual(xs.recordedEvents[4].value.subscriptions, [
+        XCTAssertEqual(xs.recordedEvents[4].value.element!.subscriptions, [
             Subscription(550, 700)
             ])
         
-        XCTAssertEqual(xs.recordedEvents[5].value.subscriptions, [
+        XCTAssertEqual(xs.recordedEvents[5].value.element!.subscriptions, [
             ])
         
-        XCTAssertEqual(xs.recordedEvents[6].value.subscriptions, [
+        XCTAssertEqual(xs.recordedEvents[6].value.element!.subscriptions, [
             ])
     }
     
@@ -3115,21 +3115,21 @@ extension ObservableStandardSequenceOperatorsTest {
             Subscription(200, 550)
             ])
         
-        XCTAssertEqual(xs.recordedEvents[2].value.subscriptions, [
+        XCTAssertEqual(xs.recordedEvents[2].value.element!.subscriptions, [
             Subscription(300, 550)
             ])
         
-        XCTAssertEqual(xs.recordedEvents[3].value.subscriptions, [
+        XCTAssertEqual(xs.recordedEvents[3].value.element!.subscriptions, [
             Subscription(400, 550)
             ])
         
-        XCTAssertEqual(xs.recordedEvents[4].value.subscriptions, [
+        XCTAssertEqual(xs.recordedEvents[4].value.element!.subscriptions, [
             ])
         
-        XCTAssertEqual(xs.recordedEvents[5].value.subscriptions, [
+        XCTAssertEqual(xs.recordedEvents[5].value.element!.subscriptions, [
             ])
         
-        XCTAssertEqual(xs.recordedEvents[6].value.subscriptions, [
+        XCTAssertEqual(xs.recordedEvents[6].value.element!.subscriptions, [
             ])
     }
     

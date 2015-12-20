@@ -80,8 +80,8 @@ extension ObservableAggregateTest {
         
         let res = scheduler.start { xs.reduce(42, accumulator: +) }
         
-        let correctMessages: [Recorded<Int>] = [
-            error(210, testError)
+        let correctMessages = [
+            error(210, testError, Int.self)
         ]
         
         let correctSubscriptions = [
@@ -101,7 +101,7 @@ extension ObservableAggregateTest {
         
         let res = scheduler.start { xs.reduce(42, accumulator: +) }
         
-        let correctMessages: [Recorded<Int>] = [
+        let correctMessages: [Recorded<Event<Int>>] = [
         ]
         
         let correctSubscriptions = [
@@ -127,7 +127,7 @@ extension ObservableAggregateTest {
         
         let res = scheduler.start { xs.reduce(42, accumulator: +) }
         
-        let correctMessages: [Recorded<Int>] = [
+        let correctMessages = [
             next(260, 42 + 0 + 1 + 2 + 3 + 4),
             completed(260)
         ]
@@ -164,8 +164,8 @@ extension ObservableAggregateTest {
             }
         }
         
-        let correctMessages: [Recorded<Int>] = [
-            error(240, testError)
+        let correctMessages = [
+            error(240, testError, Int.self)
         ]
         
         let correctSubscriptions = [
@@ -233,8 +233,8 @@ extension ObservableAggregateTest {
         
         let res = scheduler.start { xs.reduce(42, accumulator: +, mapResult: { $0 * 5 }) }
         
-        let correctMessages: [Recorded<Int>] = [
-            error(210, testError)
+        let correctMessages: [Recorded<Event<Int>>] = [
+            error(210, testError, Int.self)
         ]
         
         let correctSubscriptions = [
@@ -254,7 +254,7 @@ extension ObservableAggregateTest {
         
         let res = scheduler.start { xs.reduce(42, accumulator: +, mapResult: { $0 * 5 }) }
         
-        let correctMessages: [Recorded<Int>] = [
+        let correctMessages: [Recorded<Event<Int>>] = [
         ]
         
         let correctSubscriptions = [
@@ -280,7 +280,7 @@ extension ObservableAggregateTest {
         
         let res = scheduler.start { xs.reduce(42, accumulator: +, mapResult: { $0 * 5 }) }
         
-        let correctMessages: [Recorded<Int>] = [
+        let correctMessages = [
             next(260, (42 + 0 + 1 + 2 + 3 + 4) * 5),
             completed(260)
         ]
@@ -308,8 +308,8 @@ extension ObservableAggregateTest {
         
         let res = scheduler.start { xs.reduce(42, accumulator: { a, x in if x < 3 { return a + x } else { throw testError } }, mapResult: { $0 * 5 }) }
         
-        let correctMessages: [Recorded<Int>] = [
-            error(240, testError)
+        let correctMessages = [
+            error(240, testError, Int.self)
         ]
         
         let correctSubscriptions = [
@@ -335,8 +335,8 @@ extension ObservableAggregateTest {
         
         let res = scheduler.start { xs.reduce(42, accumulator: +, mapResult: { (_: Int) throws -> Int in throw testError }) }
         
-        let correctMessages: [Recorded<Int>] = [
-            error(260, testError)
+        let correctMessages = [
+            error(260, testError, Int.self)
         ]
         
         let correctSubscriptions = [
@@ -416,8 +416,8 @@ extension ObservableAggregateTest {
             return xs.toArray().map { EquatableArray($0) }
         }
         
-        let correctMessages: [Recorded<EquatableArray<Int>>] = [
-            next(250, EquatableArray([])),
+        let correctMessages = [
+            next(250, EquatableArray([Int]())),
             completed(250)
         ]
         
@@ -440,7 +440,7 @@ extension ObservableAggregateTest {
             return xs.toArray().map { EquatableArray($0) }
         }
         
-        let correctMessages: [Recorded<EquatableArray<Int>>] = [
+        let correctMessages: [Recorded<Event<EquatableArray<Int>>>] = [
         ]
         
         let correctSubscriptions = [
@@ -462,8 +462,8 @@ extension ObservableAggregateTest {
             return xs.toArray().map { EquatableArray($0) }
         }
         
-        let correctMessages: [Recorded<EquatableArray<Int>>] = [
-            error(210, testError)
+        let correctMessages = [
+            error(210, testError, EquatableArray<Int>.self)
         ]
         
         let correctSubscriptions = [
@@ -489,8 +489,8 @@ extension ObservableAggregateTest {
             return xs.toArray().map { EquatableArray($0) }
         }
         
-        let correctMessages: [Recorded<EquatableArray<Int>>] = [
-            error(250, testError)
+        let correctMessages = [
+            error(250, testError, EquatableArray<Int>.self)
         ]
         
         let correctSubscriptions = [

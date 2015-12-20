@@ -14,7 +14,7 @@ public class MockObserver<ElementType>
     public typealias Element = ElementType
     
     public let scheduler: TestScheduler
-    public private(set) var messages: [Recorded<Element>]
+    public private(set) var messages: [Recorded<Event<Element>>]
     
     init(scheduler: TestScheduler) {
         self.scheduler = scheduler

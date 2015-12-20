@@ -75,15 +75,15 @@ let testError = NSError(domain: "dummyError", code: -232, userInfo: nil)
 let testError1 = NSError(domain: "dummyError1", code: -233, userInfo: nil)
 let testError2 = NSError(domain: "dummyError2", code: -234, userInfo: nil)
 
-func next<T>(value: T) -> Recorded<T> {
+func next<T>(value: T) -> Recorded<Event<T>> {
     return Recorded(time: 0, event: .Next(value))
 }
 
-func completed<T>() -> Recorded<T> {
+func completed<T>() -> Recorded<Event<T>> {
     return Recorded(time: 0, event: .Completed)
 }
 
-func error<T>(error: ErrorType) -> Recorded<T> {
+func error<T>(error: ErrorType) -> Recorded<Event<T>> {
     return Recorded(time: 0, event: .Error(error))
 }
 
@@ -163,7 +163,7 @@ class RxTest: XCTestCase {
 #endif
     }
     
-    func on<T>(time: Time, _ event: Event<T>) -> Recorded<T> {
+    func on<T>(time: Time, _ event: Event<T>) -> Recorded<Event<T>> {
         return Recorded(time: time, event: event)
     }
 

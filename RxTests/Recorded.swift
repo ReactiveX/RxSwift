@@ -24,21 +24,11 @@ public struct Recorded<Element>
     /**
     Gets the recorded value.
     */
-    public let event: Event<Element>
+    public let value: Element
     
-    public init(time: Time, event: Event<Element>) {
+    public init(time: Time, event: Element) {
         self.time = time
-        self.event = event
-    }
-    
-    public var value: Element {
-        get {
-            guard case .Next(let element) = event else {
-                fatalError("Requesting value for non event")
-            }
-
-            return element
-        }
+        self.value = event
     }
 }
 
@@ -48,11 +38,15 @@ extension Recorded {
     */
     public var debugDescription: String {
         get {
-            return "\(event) @ \(time)"
+            return "\(value) @ \(time)"
         }
     }
 }
 
 func == <T: Equatable>(lhs: Recorded<T>, rhs: Recorded<T>) -> Bool {
-    return lhs.time == rhs.time && lhs.event == rhs.event
+    return lhs.time == rhs.time && lhs.value == rhs.value
+}
+
+func == <T: Equatable>(lhs: Recorded<Event<T>>, rhs: Recorded<Event<T>>) -> Bool {
+    return lhs.time == rhs.time && lhs.value == rhs.value
 }

@@ -21,11 +21,11 @@ public class TestScheduler : VirtualTimeSchedulerBase {
         super.init(initialClock: initialClock)
     }
     
-    public func createHotObservable<Element>(events: [Recorded<Element>]) -> HotObservable<Element> {
+    public func createHotObservable<Element>(events: [Recorded<Event<Element>>]) -> HotObservable<Element> {
         return HotObservable(testScheduler: self as AnyObject as! TestScheduler, recordedEvents: events)
     }
     
-    public func createColdObservable<Element>(events: [Recorded<Element>]) -> ColdObservable<Element> {
+    public func createColdObservable<Element>(events: [Recorded<Event<Element>>]) -> ColdObservable<Element> {
         return ColdObservable(testScheduler: self as AnyObject as! TestScheduler, recordedEvents: events)
     }
 
@@ -40,7 +40,7 @@ public class TestScheduler : VirtualTimeSchedulerBase {
         }
     }
     
-    public func start<Element : Equatable>(created: Time, subscribed: Time, disposed: Time, create: () -> Observable<Element>) -> MockObserver<Element> {
+    public func start<Element>(created: Time, subscribed: Time, disposed: Time, create: () -> Observable<Element>) -> MockObserver<Element> {
         var source : Observable<Element>? = nil
         var subscription : Disposable? = nil
         let observer: MockObserver<Element> = createObserver(Element)
@@ -67,11 +67,11 @@ public class TestScheduler : VirtualTimeSchedulerBase {
         return observer
     }
     
-    public func start<Element : Equatable>(disposed: Time, create: () -> Observable<Element>) -> MockObserver<Element> {
+    public func start<Element>(disposed: Time, create: () -> Observable<Element>) -> MockObserver<Element> {
         return start(Defaults.created, subscribed: Defaults.subscribed, disposed: disposed, create: create)
     }
 
-    public func start<Element : Equatable>(create: () -> Observable<Element>) -> MockObserver<Element> {
+    public func start<Element>(create: () -> Observable<Element>) -> MockObserver<Element> {
         return start(Defaults.created, subscribed: Defaults.subscribed, disposed: Defaults.disposed, create: create)
     }
 }

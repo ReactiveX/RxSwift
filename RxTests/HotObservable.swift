@@ -14,7 +14,7 @@ public class HotObservable<Element : Equatable>
     , ObservableConvertibleType {
     public typealias E = Element
     
-    public typealias Events = Recorded<Element>
+    public typealias Events = Recorded<Event<Element>>
     typealias Observer = AnyObserver<Element>
     
     let testScheduler: TestScheduler
@@ -32,7 +32,7 @@ public class HotObservable<Element : Equatable>
         
         for recordedEvent in recordedEvents {
             testScheduler.schedule((), time: recordedEvent.time) { t in
-                self.observers.on(recordedEvent.event)
+                self.observers.on(recordedEvent.value)
                 return NopDisposable.instance
             }
         }

@@ -13,7 +13,7 @@ import RxTests
 let SubscribedToHotObservable = Subscription(0)
 let UnsunscribedFromHotObservable = Subscription(0, 0)
 
-class PrimitiveHotObservable<ElementType : Equatable> : ObservableType {
+class PrimitiveHotObservable<ElementType> : ObservableType {
     typealias E = ElementType
 
     typealias Events = Recorded<E>

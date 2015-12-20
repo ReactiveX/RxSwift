@@ -10,10 +10,10 @@ import Foundation
 import RxSwift
 import RxTests
 
-class PrimitiveMockObserver<ElementType : Equatable> : ObserverType {
+class PrimitiveMockObserver<ElementType> : ObserverType {
     typealias Element = ElementType
     
-    var messages: [Recorded<Element>]
+    var messages: [Recorded<Event<Element>>]
     
     init() {
         self.messages = []

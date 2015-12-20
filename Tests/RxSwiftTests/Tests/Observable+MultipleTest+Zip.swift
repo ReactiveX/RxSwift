@@ -1777,7 +1777,9 @@ extension ObservableMultipleTest {
             zip(e, o) { $0 + $1 }
         }
    
-        let messages: [Recorded<Int>] = [completed(215)]
+        let messages = [
+            completed(215, Int.self)
+        ]
         XCTAssertEqual(res.messages, messages)
 
         XCTAssertEqual(e.subscriptions, [
@@ -1807,7 +1809,7 @@ extension ObservableMultipleTest {
             zip(o, e) { $0 + $1 }
         }
    
-        let messages: [Recorded<Int>] = [completed(215)]
+        let messages = [completed(215, Int.self)]
         XCTAssertEqual(res.messages, messages)
 
         XCTAssertEqual(e.subscriptions, [
@@ -1836,7 +1838,7 @@ extension ObservableMultipleTest {
             zip(n, o) { $0 + $1 }
         }
    
-        let messages: [Recorded<Int>] = []
+        let messages: [Recorded<Event<Int>>] = []
         XCTAssertEqual(res.messages, messages)
 
         XCTAssertEqual(o.subscriptions, [
@@ -1865,7 +1867,7 @@ extension ObservableMultipleTest {
             zip(o, n) { $0 + $1 }
         }
    
-        let messages: [Recorded<Int>] = []
+        let messages: [Recorded<Event<Int>>] = []
         XCTAssertEqual(res.messages, messages)
 
         XCTAssertEqual(o.subscriptions, [
@@ -1896,7 +1898,7 @@ extension ObservableMultipleTest {
             zip(o1, o2) { $0 + $1 }
         }
    
-        let messages: [Recorded<Int>] = [
+        let messages = [
             next(220, 2 + 3),
             completed(240)
         ]
@@ -1929,8 +1931,8 @@ extension ObservableMultipleTest {
             zip(o1, o2) { $0 + $1 }
         }
    
-        let messages: [Recorded<Int>] = [
-            error(220, testError)
+        let messages = [
+            error(220, testError, Int.self)
         ]
 
         XCTAssertEqual(res.messages, messages)
@@ -1961,8 +1963,8 @@ extension ObservableMultipleTest {
             zip(o2, o1) { $0 + $1 }
         }
    
-        let messages: [Recorded<Int>] = [
-            error(220, testError)
+        let messages = [
+            error(220, testError, Int.self)
         ]
 
         XCTAssertEqual(res.messages, messages)
@@ -1992,8 +1994,8 @@ extension ObservableMultipleTest {
             zip(o1, o2) { $0 + $1 }
         }
    
-        let messages: [Recorded<Int>] = [
-            error(220, testError)
+        let messages = [
+            error(220, testError, Int.self)
         ]
 
         XCTAssertEqual(res.messages, messages)
@@ -2023,8 +2025,8 @@ extension ObservableMultipleTest {
             zip(o2, o1) { $0 + $1 }
         }
    
-        let messages: [Recorded<Int>] = [
-            error(220, testError)
+        let messages = [
+            error(220, testError, Int.self)
         ]
 
         XCTAssertEqual(res.messages, messages)
@@ -2055,8 +2057,8 @@ extension ObservableMultipleTest {
             zip(o2, o1) { $0 + $1 }
         }
    
-        let messages: [Recorded<Int>] = [
-            error(220, testError2)
+        let messages = [
+            error(220, testError2, Int.self)
         ]
 
         XCTAssertEqual(res.messages, messages)
@@ -2088,8 +2090,8 @@ extension ObservableMultipleTest {
             zip(o1, o2) { $0 + $1 }
         }
    
-        let messages: [Recorded<Int>] = [
-            error(220, testError1)
+        let messages = [
+            error(220, testError1, Int.self)
         ]
 
         XCTAssertEqual(res.messages, messages)
@@ -2121,8 +2123,8 @@ extension ObservableMultipleTest {
             zip(o2, o1) { $0 + $1 }
         }
    
-        let messages: [Recorded<Int>] = [
-            error(220, testError1)
+        let messages = [
+            error(220, testError1, Int.self)
         ]
 
         XCTAssertEqual(res.messages, messages)
@@ -2155,7 +2157,7 @@ extension ObservableMultipleTest {
             zip(o1, o2) { $0 + $1 }
         }
    
-        let messages: [Recorded<Int>] = [
+        let messages = [
             next(215, 2 + 4),
             completed(225)
         ]
@@ -2190,7 +2192,7 @@ extension ObservableMultipleTest {
             zip(o2, o1) { $0 + $1 }
         }
    
-        let messages: [Recorded<Int>] = [
+        let messages = [
             next(215, 2 + 4),
             completed(225)
         ]
@@ -2224,8 +2226,8 @@ extension ObservableMultipleTest {
             zip(o1, o2) { (_, _) throws -> Int in throw testError }
         }
    
-        let messages: [Recorded<Int>] = [
-            error(220, testError)
+        let messages = [
+            error(220, testError, Int.self)
         ]
 
         XCTAssertEqual(res.messages, messages)
@@ -2257,8 +2259,8 @@ extension ObservableMultipleTest {
             zip(o2, o1) { (_, _) throws -> Int in throw testError }
         }
    
-        let messages: [Recorded<Int>] = [
-            error(220, testError)
+        let messages = [
+            error(220, testError, Int.self)
         ]
 
         XCTAssertEqual(res.messages, messages)

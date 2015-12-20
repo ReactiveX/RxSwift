@@ -412,7 +412,7 @@ extension ObservableSingleTest {
     func testDo_completedNever() {
         let scheduler = TestScheduler(initialClock: 0)
         
-        let recordedEvents: [Recorded<Int>] = [
+        let recordedEvents: [Recorded<Event<Int>>] = [
         ]
         
         let xs = scheduler.createHotObservable(recordedEvents)
@@ -433,7 +433,7 @@ extension ObservableSingleTest {
         XCTAssertEqual(i, 0)
         XCTAssertEqual(completedEvaluation, false)
         
-        let correctMessages: [Recorded<Int>] = [
+        let correctMessages: [Recorded<Event<Int>>] = [
         ]
         
         let correctSubscriptions = [
@@ -553,7 +553,7 @@ extension ObservableSingleTest {
         }
         
         let correctMessages = [
-            error(210, testError) as Recorded<Int>
+            error(210, testError, Int.self)
         ]
         
         let correctSubscriptions = [
@@ -820,8 +820,8 @@ extension ObservableSingleTest {
             }
         }
         
-        let correct: [Recorded<Int>] = [
-            completed(250)
+        let correct = [
+            completed(250, Int.self)
         ]
         
         XCTAssertEqual(res.messages, correct)
@@ -854,7 +854,7 @@ extension ObservableSingleTest {
             }
         }
         
-        let correct: [Recorded<Int>] = [
+        let correct = [
             next(210, 2),
             next(220, 3),
             next(230, 4),
@@ -891,7 +891,7 @@ extension ObservableSingleTest {
             }
         }
         
-        let correct: [Recorded<Int>] = [
+        let correct = [
             next(210, 2),
             next(220, 3),
             next(230, 4),
@@ -928,7 +928,7 @@ extension ObservableSingleTest {
             }
         }
         
-        let correct: [Recorded<Int>] = [
+        let correct = [
             next(300, 1),
             next(350, 2),
             next(400, 3),
@@ -965,7 +965,7 @@ extension ObservableSingleTest {
             }
         }
         
-        let correct: [Recorded<Int>] = [
+        let correct = [
             next(210, 1),
             next(220, 2),
             next(240, 1),
@@ -1004,7 +1004,7 @@ extension ObservableSingleTest {
             })
         }
         
-        let correct: [Recorded<Int>] = [
+        let correct = [
             next(210, 1),
             next(220, 2),
             completed(230)
@@ -1038,7 +1038,7 @@ extension ObservableSingleTest {
             }
         }
         
-        let correct: [Recorded<Int>] = [
+        let correct = [
             next(210, 1),
             next(220, 2),
             next(240, 1),
@@ -1075,7 +1075,7 @@ extension ObservableSingleTest {
             }
         }
         
-        let correct: [Recorded<Int>] = [
+        let correct = [
             next(210, 1),
             next(220, 2)
         ]
@@ -1113,7 +1113,7 @@ extension ObservableSingleTest {
             }
         }
         
-        let correct: [Recorded<Int>] = [
+        let correct = [
             next(205, 1),
             next(265, 1),
             next(375, 1),
@@ -1147,7 +1147,7 @@ extension ObservableSingleTest {
             }
         }
 
-        let correct: [Recorded<Int>] = [
+        let correct = [
             next(205, 1),
             error(210, testError)
         ]
@@ -1301,7 +1301,7 @@ extension ObservableSingleTest {
             xs.scan(seed) { $0 + $1 }
         }
         
-        let messages: [Recorded<Int>] = [
+        let messages = [
             next(210, seed + 2),
             next(220, seed + 2 + 3),
             next(230, seed + 2 + 3 + 4),

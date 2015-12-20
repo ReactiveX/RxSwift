@@ -13,7 +13,7 @@ public class ColdObservable<Element: Equatable>
     , ObservableConvertibleType {
     public typealias E = Element
 
-    public typealias Events = Recorded<Element>
+    public typealias Events = Recorded<Event<Element>>
     
     public let testScheduler: TestScheduler
     
@@ -34,7 +34,7 @@ public class ColdObservable<Element: Equatable>
 
         for recordedEvent in recordedEvents {
             testScheduler.scheduleRelative((), dueTime: recordedEvent.time, action: { (_) in
-                observer.on(recordedEvent.event)
+                observer.on(recordedEvent.value)
                 return NopDisposable.instance
             })
         }

@@ -139,7 +139,7 @@ extension ObservableTimeTest {
             xs.throttle(40, scheduler: scheduler)
         }
 
-        let correct: [Recorded<Int>] = [
+        let correct: [Recorded<Event<Int>>] = [
             error(400, testError)
         ]
 
@@ -164,7 +164,7 @@ extension ObservableTimeTest {
             xs.throttle(10, scheduler: scheduler)
         }
 
-        let correct: [Recorded<Int>] = [
+        let correct: [Recorded<Event<Int>>] = [
             completed(300)
         ]
 
@@ -189,7 +189,7 @@ extension ObservableTimeTest {
             xs.throttle(10, scheduler: scheduler)
         }
 
-        let correct: [Recorded<Int>] = [
+        let correct: [Recorded<Event<Int>>] = [
             error(300, testError)
         ]
 
@@ -213,7 +213,7 @@ extension ObservableTimeTest {
             xs.throttle(10, scheduler: scheduler)
         }
 
-        let correct: [Recorded<Int>] = [
+        let correct: [Recorded<Event<Int>>] = [
         ]
 
         XCTAssertEqual(res.messages, correct)
@@ -241,7 +241,7 @@ extension ObservableTimeTest {
             xs.throttle(20, scheduler: scheduler)
         }
 
-        let correct: [Recorded<Int>] = [
+        let correct = [
             next(230, 1),
             next(270, 3),
             next(300, 4),
@@ -301,7 +301,7 @@ extension ObservableTimeTest {
             xs.sample(ys)
         }
 
-        let correct: [Recorded<Int>] = [
+        let correct = [
             next(250, 3),
             error(320, testError)
         ]
@@ -343,7 +343,7 @@ extension ObservableTimeTest {
             xs.sample(ys)
         }
 
-        let correct: [Recorded<Int>] = [
+        let correct = [
             next(250, 3),
             next(320, 6),
             completed(500)
@@ -387,7 +387,7 @@ extension ObservableTimeTest {
             xs.sample(ys)
         }
 
-        let correct: [Recorded<Int>] = [
+        let correct = [
             next(250, 3),
             next(320, 6),
             next(500, 7),
@@ -429,7 +429,7 @@ extension ObservableTimeTest {
             xs.sample(ys)
         }
 
-        let correct: [Recorded<Int>] = [
+        let correct = [
             next(250, 3),
             next(320, 4),
             completed(320)
@@ -472,7 +472,7 @@ extension ObservableTimeTest {
             xs.sample(ys)
         }
 
-        let correct: [Recorded<Int>] = [
+        let correct = [
             next(250, 3),
             next(300, 5),
             error(320, testError)
@@ -514,7 +514,7 @@ extension ObservableTimeTest {
             xs.sampleLatest(ys)
         }
 
-        let correct: [Recorded<Int>] = [
+        let correct = [
             next(250, 3),
             next(260, 3),
             error(320, testError)
@@ -557,7 +557,7 @@ extension ObservableTimeTest {
             xs.sampleLatest(ys)
         }
 
-        let correct: [Recorded<Int>] = [
+        let correct = [
             next(250, 3),
             next(260, 3),
             next(320, 6),
@@ -603,7 +603,7 @@ extension ObservableTimeTest {
             xs.sampleLatest(ys)
         }
 
-        let correct: [Recorded<Int>] = [
+        let correct = [
             next(250, 3),
             next(260, 3),
             next(320, 6),
@@ -646,7 +646,7 @@ extension ObservableTimeTest {
             xs.sampleLatest(ys)
         }
 
-        let correct: [Recorded<Int>] = [
+        let correct = [
             next(250, 3),
             next(260, 3),
             next(320, 4),
@@ -690,7 +690,7 @@ extension ObservableTimeTest {
             xs.sampleLatest(ys)
         }
 
-        let correct: [Recorded<Int>] = [
+        let correct = [
             next(250, 3),
             next(260, 3),
             next(300, 5),
@@ -719,8 +719,8 @@ extension ObservableTimeTest {
             interval(100, scheduler: scheduler)
         }
 
-        let correct: [Recorded<Int64>] = [
-            next(300, 0),
+        let correct = [
+            next(300, 0 as Int64),
             next(400, 1),
             next(500, 2),
             next(600, 3),
@@ -739,8 +739,8 @@ extension ObservableTimeTest {
             interval(0, scheduler: scheduler)
         }
 
-        let correct: [Recorded<Int64>] = [
-            next(201, 0),
+        let correct = [
+            next(201, 0 as Int64),
             next(202, 1),
             next(203, 2),
             next(204, 3),
@@ -794,7 +794,7 @@ extension ObservableTimeTest {
             interval(1000, scheduler: scheduler)
         }
 
-        let correct: [Recorded<Int64>] = [
+        let correct: [Recorded<Event<Int64>>] = [
 
         ]
 

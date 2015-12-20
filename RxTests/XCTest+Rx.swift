@@ -22,7 +22,7 @@ require specifying `self.*`, they are made global.
      - parameter element: Next sequence element.
      - returns: Recorded event in time.
     */
-    public func next<T>(time: Time, _ element: T) -> Recorded<T> {
+    public func next<T>(time: Time, _ element: T) -> Recorded<Event<T>> {
         return Recorded(time: time, event: .Next(element))
     }
 
@@ -33,7 +33,7 @@ require specifying `self.*`, they are made global.
      - parameter type: Sequence elements type.
      - returns: Recorded event in time.
     */
-    public func completed<T>(time: Time, _ type: T.Type = T.self) -> Recorded<T> {
+    public func completed<T>(time: Time, _ type: T.Type = T.self) -> Recorded<Event<T>> {
         return Recorded(time: time, event: .Completed)
     }
 
@@ -42,7 +42,7 @@ require specifying `self.*`, they are made global.
      
      - parameter time: Recorded virtual time the `.Completed` event occurs.
     */
-    public func error<T>(time: Time, _ error: ErrorType, _ type: T.Type = T.self) -> Recorded<T> {
+    public func error<T>(time: Time, _ error: ErrorType, _ type: T.Type = T.self) -> Recorded<Event<T>> {
         return Recorded(time: time, event: .Error(error))
     }
 //}
@@ -77,7 +77,7 @@ Event is considered equal if:
 - parameter lhs: first set of events.
 - parameter lhs: second set of events.
 */
-public func XCTAssertEqual<T: Equatable>(lhs: [Recorded<T>], _ rhs: [Recorded<T>], file: String = __FILE__, line: Int = __LINE__) {
+public func XCTAssertEqual<T: Equatable>(lhs: [Recorded<Event<T>>], _ rhs: [Recorded<Event<T>>], file: String = __FILE__, line: Int = __LINE__) {
     let leftEquatable = lhs.map { AnyEquatable(target: $0, comparer: ==) }
     let rightEquatable = rhs.map { AnyEquatable(target: $0, comparer: ==) }
     XCTAssertEqual(leftEquatable, rightEquatable)

@@ -420,7 +420,7 @@ extension ObservableMultipleTest {
             completed(150)
         ])
         
-        let xSequence: [Recorded<ColdObservable<Int>>] = [
+        let xSequence = [
             next(300, ys1),
             next(400, ys2),
             next(500, ys3),
@@ -503,7 +503,7 @@ extension ObservableMultipleTest {
             completed(150)
             ])
         
-        let xSequence: [Recorded<ColdObservable<Int>>] = [
+        let xSequence = [
             next(300, ys1),
             next(400, ys2),
             next(500, ys3),
@@ -573,7 +573,7 @@ extension ObservableMultipleTest {
             completed(50)
             ])
         
-        let xSequence: [Recorded<ColdObservable<Int>>] = [
+        let xSequence = [
             next(300, ys1),
             next(400, ys2),
             error(500, testError)
@@ -651,7 +651,7 @@ extension ObservableMultipleTest {
 
         let observables = [ys1, ys2, ys3]
         
-        let xSequence: [Recorded<Int>] = [
+        let xSequence = [
             next(300, 0),
             next(400, 1),
             next(500, 2),
@@ -736,7 +736,7 @@ extension ObservableMultipleTest {
 
         let observables = [ys1, ys2, ys3]
         
-        let xSequence: [Recorded<Int>] = [
+        let xSequence = [
             next(300, 0),
             next(400, 1),
             next(500, 2),
@@ -808,7 +808,7 @@ extension ObservableMultipleTest {
 
         let observables = [ys1, ys2]
         
-        let xSequence: [Recorded<Int>] = [
+        let xSequence = [
             next(300, 0),
             next(400, 1),
             error(500, testError)
@@ -874,7 +874,7 @@ extension ObservableMultipleTest {
 
         let observables = [ys1, ys2]
 
-        let xSequence: [Recorded<Int>] = [
+        let xSequence = [
             next(300, 0),
             next(400, 1)
         ]
@@ -1019,8 +1019,8 @@ extension ObservableMultipleTest {
             [xs1, xs2].concat()
         }
         
-        let messages: [Recorded<Int>] = [
-            completed(250)
+        let messages = [
+            completed(250, Int.self)
         ]
 
         XCTAssertEqual(res.messages, messages)
@@ -1050,7 +1050,7 @@ extension ObservableMultipleTest {
             [xs1, xs2].concat()
         }
         
-        let messages: [Recorded<Int>] = [
+        let messages: [Recorded<Event<Int>>] = [
         ]
 
         XCTAssertEqual(res.messages, messages)
@@ -1079,7 +1079,7 @@ extension ObservableMultipleTest {
             [xs1, xs2].concat()
         }
         
-        let messages: [Recorded<Int>] = [
+        let messages: [Recorded<Event<Int>>] = [
         ]
 
         XCTAssertEqual(res.messages, messages)
@@ -1109,8 +1109,8 @@ extension ObservableMultipleTest {
             [xs1, xs2].concat()
         }
         
-        let messages: [Recorded<Int>] = [
-            error(250, testError)
+        let messages = [
+            error(250, testError, Int.self)
         ]
 
         XCTAssertEqual(res.messages, messages)
@@ -1141,8 +1141,8 @@ extension ObservableMultipleTest {
             [xs1, xs2].concat()
         }
         
-        let messages: [Recorded<Int>] = [
-            error(230, testError)
+        let messages = [
+            error(230, testError, Int.self)
         ]
 
         XCTAssertEqual(res.messages, messages)
@@ -1172,8 +1172,8 @@ extension ObservableMultipleTest {
             [xs1, xs2].concat()
         }
         
-        let messages: [Recorded<Int>] = [
-            error(230, testError1)
+        let messages = [
+            error(230, testError1, Int.self)
         ]
 
         XCTAssertEqual(res.messages, messages)
@@ -1204,7 +1204,7 @@ extension ObservableMultipleTest {
             [xs1, xs2].concat()
         }
         
-        let messages: [Recorded<Int>] = [
+        let messages = [
             next(210, 2),
             completed(250)
         ]
@@ -1238,7 +1238,7 @@ extension ObservableMultipleTest {
             [xs1, xs2].concat()
         }
         
-        let messages: [Recorded<Int>] = [
+        let messages = [
             next(240, 2),
             completed(250)
         ]
@@ -1271,7 +1271,7 @@ extension ObservableMultipleTest {
             [xs1, xs2].concat()
         }
         
-        let messages: [Recorded<Int>] = [
+        let messages = [
             next(210, 2),
         ]
 
@@ -1303,7 +1303,7 @@ extension ObservableMultipleTest {
             [xs1, xs2].concat()
         }
         
-        let messages: [Recorded<Int>] = [
+        let messages: [Recorded<Event<Int>>] = [
         ]
 
         XCTAssertEqual(res.messages, messages)
@@ -1335,7 +1335,7 @@ extension ObservableMultipleTest {
             [xs1, xs2].concat()
         }
         
-        let messages: [Recorded<Int>] = [
+        let messages: [Recorded<Event<Int>>] = [
             next(220, 2),
             next(240, 3),
             completed(250)
@@ -1370,8 +1370,8 @@ extension ObservableMultipleTest {
             [xs1, xs2].concat()
         }
         
-        let messages: [Recorded<Int>] = [
-            error(230, testError1)
+        let messages = [
+            error(230, testError1, Int.self)
         ]
 
         XCTAssertEqual(res.messages, messages)
@@ -1402,7 +1402,7 @@ extension ObservableMultipleTest {
             [xs1, xs2].concat()
         }
         
-        let messages: [Recorded<Int>] = [
+        let messages = [
             next(220, 2),
             error(250, testError2)
         ]
@@ -1439,7 +1439,7 @@ extension ObservableMultipleTest {
             [xs1, xs2].concat()
         }
         
-        let messages: [Recorded<Int>] = [
+        let messages = [
             next(210, 2),
             next(220, 3),
             next(230, 4),
@@ -1491,7 +1491,7 @@ extension ObservableMultipleTest {
             [xs1.asObservable(), xs2.asObservable(), xs3.asObservable(), xs2.asObservable()].concat()
         }
         
-        let messages: [Recorded<Int>] = [
+        let messages = [
             next(210, 2),
             next(220, 3),
             next(280, 4),
@@ -3503,7 +3503,7 @@ extension ObservableMultipleTest {
             next(235, 4 + 6),
             next(240, 4 + 7),
             completed(250)
-            ] as [Recorded<Int>])
+            ] as [Recorded<Event<Int>>])
         
         XCTAssertEqual(e0.subscriptions, [Subscription(200, 230)])
         XCTAssertEqual(e1.subscriptions, [Subscription(200, 250)])
