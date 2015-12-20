@@ -11,6 +11,22 @@
       location = "group:CHANGELOG.md">
    </FileRef>
    <Group
+      location = "container:"
+      name = "Podspecs">
+      <FileRef
+         location = "group:RxBlocking.podspec">
+      </FileRef>
+      <FileRef
+         location = "group:RxCocoa.podspec">
+      </FileRef>
+      <FileRef
+         location = "group:RxSwift.podspec">
+      </FileRef>
+      <FileRef
+         location = "group:RxTests.podspec">
+      </FileRef>
+   </Group>
+   <Group
       location = "group:scripts"
       name = "scripts">
       <Group

@@ -25,19 +25,28 @@ mkdir -p RxTests/${VERSION}
 popd
 popd
 
+#BRANCH=develop
+BRANCH=feature\\/RxTests
+
 cat RxSwift.podspec |
-sed -E "s/s.source[^\}]+\}/s.source           = { :git => '\/Users\/kzaher\/Projects\/Rx', :branch => \'develop\' }/" > ~/.cocoapods/repos/master/Specs/RxSwift/${VERSION}/RxSwift.podspec
+sed -E "s/s.source[^\}]+\}/s.source           = { :git => '\/Users\/kzaher\/Projects\/Rx', :branch => \'${BRANCH}\' }/" > ~/.cocoapods/repos/master/Specs/RxSwift/${VERSION}/RxSwift.podspec
 
 cat RxCocoa.podspec |
-sed -E "s/s.source[^\}]+\}/s.source           = { :git => '\/Users\/kzaher\/Projects\/Rx', :branch => \'develop\' }/" > ~/.cocoapods/repos/master/Specs/RxCocoa/${VERSION}/RxCocoa.podspec
+sed -E "s/s.source[^\}]+\}/s.source           = { :git => '\/Users\/kzaher\/Projects\/Rx', :branch => \'${BRANCH}\' }/" > ~/.cocoapods/repos/master/Specs/RxCocoa/${VERSION}/RxCocoa.podspec
 
 cat RxBlocking.podspec |
-sed -E "s/s.source[^\}]+\}/s.source           = { :git => '\/Users\/kzaher\/Projects\/Rx', :branch => \'develop\' }/" > ~/.cocoapods/repos/master/Specs/RxBlocking/${VERSION}/RxBlocking.podspec
+sed -E "s/s.source[^\}]+\}/s.source           = { :git => '\/Users\/kzaher\/Projects\/Rx', :branch => \'${BRANCH}\' }/" > ~/.cocoapods/repos/master/Specs/RxBlocking/${VERSION}/RxBlocking.podspec
 
 cat RxTests.podspec |
-sed -E "s/s.source[^\}]+\}/s.source           = { :git => '\/Users\/kzaher\/Projects\/Rx', :branch => \'develop\' }/" > ~/.cocoapods/repos/master/Specs/RxTests/${VERSION}/RxTests.podspec
+sed -E "s/s.source[^\}]+\}/s.source           = { :git => '\/Users\/kzaher\/Projects\/Rx', :branch => \'${BRANCH}\' }/" > ~/.cocoapods/repos/master/Specs/RxTests/${VERSION}/RxTests.podspec
 
-pod lib lint RxSwift.podspec
-pod lib lint RxCocoa.podspec
-pod lib lint RxBlocking.podspec
-pod lib lint RxTests.podspec
+function validate() {
+    local PODSPEC=$1
+
+    pod lib lint $PODSPEC --verbose --no-clean
+}
+
+validate RxTests.podspec
+validate RxCocoa.podspec
+validate RxBlocking.podspec
+validate RxSwift.podspec

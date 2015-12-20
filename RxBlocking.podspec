@@ -3,7 +3,12 @@ Pod::Spec.new do |s|
   s.version          = "2.0.0-beta.4"
   s.summary          = "RxSwift Blocking operatos"
   s.description      = <<-DESC
-                        Set of blocking operators for RxSwift.
+Set of blocking operators for RxSwift. These operators are mostly intended for unit/integration tests
+with a couple of other special scenarios where they could be useful.
+
+E.g.
+
+Waiting for observable sequence to complete before exiting command line application.
                         DESC
   s.homepage         = "https://github.com/ReactiveX/RxSwift"
   s.license          = 'MIT'

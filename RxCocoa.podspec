@@ -3,9 +3,9 @@ Pod::Spec.new do |s|
   s.version          = "2.0.0-beta.4"
   s.summary          = "RxSwift Cocoa extensions"
   s.description      = <<-DESC
-			* UI extensions
-			* NSURL extensions
-			* KVO extensions
+* UI extensions
+* NSURL extensions
+* KVO extensions
                         DESC
   s.homepage         = "https://github.com/ReactiveX/RxSwift"
   s.license          = 'MIT'
