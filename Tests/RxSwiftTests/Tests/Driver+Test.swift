@@ -514,8 +514,8 @@ extension DriverTest {
         }
 
         XCTAssertEqual(results, [1, 2, -1])
-        let expectedEvents = [Event.Next(1), Event.Next(2), Event.Next(-1), Event.Completed] as [Event<Int>]
-        XCTAssertEqual(events, expectedEvents, ==)
+        let expectedEvents = [.Next(1), .Next(2), .Next(-1), .Completed] as [Event<Int>]
+        XCTAssertEqual(events, expectedEvents)
     }
 }
 

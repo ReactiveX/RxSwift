@@ -10,8 +10,20 @@ import Foundation
 import RxSwift
 import Swift
 
-public struct Recorded<Element> : CustomDebugStringConvertible {
+/**
+Record of a value including the virtual time it was produced on.
+*/
+public struct Recorded<Element>
+    : CustomDebugStringConvertible {
+
+    /**
+    Gets the virtual time the value was produced on.
+    */
     public let time: Time
+
+    /**
+    Gets the recorded value.
+    */
     public let event: Event<Element>
     
     public init(time: Time, event: Event<Element>) {
@@ -31,6 +43,9 @@ public struct Recorded<Element> : CustomDebugStringConvertible {
 }
 
 extension Recorded {
+    /**
+    A textual representation of `self`, suitable for debugging.
+    */
     public var debugDescription: String {
         get {
             return "\(event) @ \(time)"

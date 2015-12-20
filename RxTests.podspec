@@ -9,34 +9,34 @@ that should make unit testing your operators easy as unit testing RxSwift built-
 This library contains everything you need to write unit tests in the following way:
 ```swift
 func testMap() {
-        let scheduler = TestScheduler(initialClock: 0)
+    let scheduler = TestScheduler(initialClock: 0)
 
-        let xs = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 0),
-            next(220, 1),
-            next(230, 2),
-            next(240, 4),
-            completed(300)
-            ])
+    let xs = scheduler.createHotObservable([
+        next(150, 1),
+        next(210, 0),
+        next(220, 1),
+        next(230, 2),
+        next(240, 4),
+        completed(300)
+        ])
 
-        let res = scheduler.start { xs.map { $0 * 2 } }
+    let res = scheduler.start { xs.map { $0 * 2 } }
 
-        let correctMessages = [
-            next(210, 0 * 2),
-            next(220, 1 * 2),
-            next(230, 2 * 2),
-            next(240, 4 * 2),
-            completed(300)
-        ]
+    let correctMessages = [
+        next(210, 0 * 2),
+        next(220, 1 * 2),
+        next(230, 2 * 2),
+        next(240, 4 * 2),
+        completed(300)
+    ]
 
-        let correctSubscriptions = [
-            Subscription(200, 300)
-        ]
+    let correctSubscriptions = [
+        Subscription(200, 300)
+    ]
 
-        XCTAssertEqual(res.messages, correctMessages)
-        XCTAssertEqual(xs.subscriptions, correctSubscriptions)
-    }
+    XCTAssertEqual(res.messages, correctMessages)
+    XCTAssertEqual(xs.subscriptions, correctSubscriptions)
+}
 ```
 
                         DESC

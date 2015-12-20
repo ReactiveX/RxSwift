@@ -9,7 +9,13 @@
 import Foundation
 import RxSwift
 
-public func == <Element: Equatable>(lhs: Event<Element>, rhs: Event<Element>) -> Bool {
+/**
+Compares two events. They are equal if they are both the same member of `Event` enumeration.
+
+In case `Error` events are being compared, they are equal in case their `NSError` representations are equal (domain and code)
+and their string representations are equal.
+*/
+func == <Element: Equatable>(lhs: Event<Element>, rhs: Event<Element>) -> Bool {
     switch (lhs, rhs) {
     case (.Completed, .Completed): return true
     case (.Error(let e1), .Error(let e2)):
@@ -23,16 +29,3 @@ public func == <Element: Equatable>(lhs: Event<Element>, rhs: Event<Element>) ->
     default: return false
     }
 }
-
-/**
-Compares two events. They are equal if they are both the same member of `Event` enumeration.
-
-In case `Error` events are being compared, they are equal in case their `NSError` representations are equal (domain and code)
-and their string representations are equal.
-*/
-extension Event where Element: Equatable {
-    static func areEqual(lhs: Event<Element>, rhs: Event<Element>) -> Bool {
-        return lhs == rhs
-    }
-}
-
