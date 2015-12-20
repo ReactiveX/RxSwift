@@ -13,40 +13,37 @@ function cleanup {
 trap cleanup EXIT
 
 VERSION=`cat RxSwift.podspec | grep -E "s.version\s+=" | cut -d '"' -f 2`
+TARGETS=(RxTests RxCocoa RxBlocking RxSwift)
 
-pushd ~/.cocoapods/repos/master
-pushd Specs
-
-mkdir -p RxSwift/${VERSION}
-mkdir -p RxCocoa/${VERSION}
-mkdir -p RxBlocking/${VERSION}
-mkdir -p RxTests/${VERSION}
-
-popd
+pushd ~/.cocoapods/repos/master/Specs
+for TARGET in ${TARGETS[@]}
+do
+  mkdir -p ${TARGET}/${VERSION}
+done
 popd
 
 #BRANCH=develop
 BRANCH=feature\\/RxTests
 
-cat RxSwift.podspec |
-sed -E "s/s.source[^\}]+\}/s.source           = { :git => '\/Users\/kzaher\/Projects\/Rx', :branch => \'${BRANCH}\' }/" > ~/.cocoapods/repos/master/Specs/RxSwift/${VERSION}/RxSwift.podspec
+for TARGET in ${TARGETS[@]}
+do
 
-cat RxCocoa.podspec |
-sed -E "s/s.source[^\}]+\}/s.source           = { :git => '\/Users\/kzaher\/Projects\/Rx', :branch => \'${BRANCH}\' }/" > ~/.cocoapods/repos/master/Specs/RxCocoa/${VERSION}/RxCocoa.podspec
+  mkdir -p ~/.cocoapods/repos/master/Specs/${TARGET}/${VERSION}
+  rm       ~/.cocoapods/repos/master/Specs/${TARGET}/${VERSION}/* || echo
 
-cat RxBlocking.podspec |
-sed -E "s/s.source[^\}]+\}/s.source           = { :git => '\/Users\/kzaher\/Projects\/Rx', :branch => \'${BRANCH}\' }/" > ~/.cocoapods/repos/master/Specs/RxBlocking/${VERSION}/RxBlocking.podspec
-
-cat RxTests.podspec |
-sed -E "s/s.source[^\}]+\}/s.source           = { :git => '\/Users\/kzaher\/Projects\/Rx', :branch => \'${BRANCH}\' }/" > ~/.cocoapods/repos/master/Specs/RxTests/${VERSION}/RxTests.podspec
+  cat $TARGET.podspec |
+  sed -E "s/s.source[^\}]+\}/s.source           = { :git => '\/Users\/kzaher\/Projects\/Rx', :branch => \'${BRANCH}\' }/" > ~/.cocoapods/repos/master/Specs/${TARGET}/${VERSION}/${TARGET}.podspec
+done
 
 function validate() {
     local PODSPEC=$1
 
-    pod lib lint $PODSPEC --verbose --no-clean
+    pod lib lint $PODSPEC #--verbose --no-clean
 }
 
-validate RxTests.podspec
-validate RxCocoa.podspec
-validate RxBlocking.podspec
-validate RxSwift.podspec
+for TARGET in ${TARGETS[@]}
+do
+
+validate ${TARGET}.podspec
+
+done
