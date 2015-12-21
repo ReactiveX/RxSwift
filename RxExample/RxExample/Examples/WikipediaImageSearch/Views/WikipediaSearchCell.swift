@@ -40,8 +40,8 @@ public class WikipediaSearchCell: UITableViewCell {
             self.URLOutlet.text = viewModel.searchResult.URL.absoluteString ?? ""
 
             viewModel.imageURLs
-                .drive(self.imagesOutlet.rx_itemsWithCellIdentifier("ImageCell")) { [unowned self] (_, URL, cell: CollectionViewImageCell) in
-                    cell.downloadableImage = self.imageService.imageFromURL(URL)
+                .drive(self.imagesOutlet.rx_itemsWithCellIdentifier("ImageCell", cellType: CollectionViewImageCell.self)) { [weak self] (_, URL, cell) in
+                    cell.downloadableImage = self?.imageService.imageFromURL(URL) ?? empty()
                 }
                 .addDisposableTo(disposeBag)
 

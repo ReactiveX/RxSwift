@@ -39,10 +39,11 @@ extension UICollectionView {
     - parameter cellIdentifier: Identifier used to dequeue cells.
     - parameter source: Observable sequence of items.
     - parameter configureCell: Transform between sequence elements and view cells.
+    - parameter cellType: Type of table view cell.
     - returns: Disposable object that can be used to unbind.
     */
     public func rx_itemsWithCellIdentifier<S: SequenceType, Cell: UICollectionViewCell, O : ObservableType where O.E == S>
-        (cellIdentifier: String)
+        (cellIdentifier: String, cellType: Cell.Type = Cell.self)
         (source: O)
         (configureCell: (Int, S.Generator.Element, Cell) -> Void)
         -> Disposable {
