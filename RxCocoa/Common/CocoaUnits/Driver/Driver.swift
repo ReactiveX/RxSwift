@@ -81,7 +81,8 @@ public struct Driver<Element> : DriverConvertibleType {
     }
 }
 
-public struct Drive {
+
+extension Driver {
     
     /**
     Returns an empty observable sequence, using the specified scheduler to send out the single `Completed` message.
@@ -89,7 +90,7 @@ public struct Drive {
     - returns: An observable sequence with no elements.
     */
     @warn_unused_result(message="http://git.io/rxs.uo")
-    public static func empty<E>() -> Driver<E> {
+    public static func empty() -> Driver<E> {
         return Driver(raw: Observable.empty().subscribeOn(ConcurrentMainScheduler.sharedInstance))
     }
     
@@ -99,7 +100,7 @@ public struct Drive {
     - returns: An observable sequence whose observers will never get called.
     */
     @warn_unused_result(message="http://git.io/rxs.uo")
-    public static func never<E>() -> Driver<E> {
+    public static func never() -> Driver<E> {
         return Driver(raw: Observable.never().subscribeOn(ConcurrentMainScheduler.sharedInstance))
     }
     
@@ -110,7 +111,7 @@ public struct Drive {
     - returns: An observable sequence containing the single specified element.
     */
     @warn_unused_result(message="http://git.io/rxs.uo")
-    public static func just<E>(element: E) -> Driver<E> {
+    public static func just(element: E) -> Driver<E> {
         return Driver(raw: Observable.just(element).subscribeOn(ConcurrentMainScheduler.sharedInstance))
     }
 
@@ -121,12 +122,43 @@ public struct Drive {
      - returns: An observable sequence whose observers trigger an invocation of the given observable factory function.
      */
     @warn_unused_result(message="http://git.io/rxs.uo")
-    public static func deferred<E>(observableFactory: () -> Driver<E>)
+    public static func deferred(observableFactory: () -> Driver<E>)
         -> Driver<E> {
         return Driver(Observable.deferred { observableFactory().asObservable() })
     }
 
     @warn_unused_result(message="http://git.io/rxs.uo")
+    public static func of(elements: E ...) -> Driver<E> {
+        let source = elements.toObservable().subscribeOn(ConcurrentMainScheduler.sharedInstance)
+        return Driver(raw: source)
+    }
+    
+}
+
+public struct Drive {
+
+    @available(*, deprecated=2.0.0, message="Please use `Driver.empty` (`r` at the end).")
+    public static func empty<E>() -> Driver<E> {
+        return Driver(raw: Observable.empty().subscribeOn(ConcurrentMainScheduler.sharedInstance))
+    }
+
+    @available(*, deprecated=2.0.0, message="Please use `Driver.never` (`r` at the end).")
+    public static func never<E>() -> Driver<E> {
+        return Driver(raw: Observable.never().subscribeOn(ConcurrentMainScheduler.sharedInstance))
+    }
+
+    @available(*, deprecated=2.0.0, message="Please use `Driver.just` (`r` at the end).")
+    public static func just<E>(element: E) -> Driver<E> {
+        return Driver(raw: Observable.just(element).subscribeOn(ConcurrentMainScheduler.sharedInstance))
+    }
+
+    @available(*, deprecated=2.0.0, message="Please use `Driver.deferred` (`r` at the end).")
+    public static func deferred<E>(observableFactory: () -> Driver<E>)
+        -> Driver<E> {
+        return Driver(Observable.deferred { observableFactory().asObservable() })
+    }
+
+    @available(*, deprecated=2.0.0, message="Please use `Driver.of` (`r` at the end).")
     public static func sequenceOf<E>(elements: E ...) -> Driver<E> {
         let source = elements.toObservable().subscribeOn(ConcurrentMainScheduler.sharedInstance)
         return Driver(raw: source)
