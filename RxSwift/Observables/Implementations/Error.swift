@@ -1,5 +1,5 @@
 //
-//  FailWith.swift
+//  Error.swift
 //  Rx
 //
 //  Created by Krunoslav Zaher on 8/30/15.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class FailWith<Element> : Producer<Element> {
+class Error<Element> : Producer<Element> {
     private let _error: ErrorType
     
     init(error: ErrorType) {

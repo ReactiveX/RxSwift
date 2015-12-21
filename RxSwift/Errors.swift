@@ -1,5 +1,5 @@
 //
-//  Error.swift
+//  Errors.swift
 //  Rx
 //
 //  Created by Krunoslav Zaher on 3/28/15.

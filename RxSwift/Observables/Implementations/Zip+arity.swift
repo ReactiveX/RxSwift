@@ -14,22 +14,34 @@ import Foundation
 
 // 2
 
-/**
-Merges the specified observable sequences into one observable sequence by using the selector function whenever all of the observable sequences have produced an element at a corresponding index.
-
-- seealso: [zip operator on reactivex.io](http://reactivex.io/documentation/operators/zip.html)
-
-- parameter resultSelector: Function to invoke for each series of elements at corresponding indexes in the sources.
-- returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
-*/
-@warn_unused_result(message="http://git.io/rxs.uo")
+@available(*, deprecated=2.0.0, message="Please use `Observable.zip`")
 public func zip<O1: ObservableType, O2: ObservableType, R>
-    (source1: O1, _ source2: O2, resultSelector: (O1.E, O2.E) throws -> R)
+(source1: O1, _ source2: O2, resultSelector: (O1.E, O2.E) throws -> R)
     -> Observable<R> {
-    return Zip2(
-        source1: source1.asObservable(), source2: source2.asObservable(),
+    return Observable.zip(
+        source1, source2,
         resultSelector: resultSelector
     )
+}
+
+extension Observable {
+    /**
+    Merges the specified observable sequences into one observable sequence by using the selector function whenever all of the observable sequences have produced an element at a corresponding index.
+
+    - seealso: [zip operator on reactivex.io](http://reactivex.io/documentation/operators/zip.html)
+
+    - parameter resultSelector: Function to invoke for each series of elements at corresponding indexes in the sources.
+    - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
+    */
+    @warn_unused_result(message="http://git.io/rxs.uo")
+    public static func zip<O1: ObservableType, O2: ObservableType>
+        (source1: O1, _ source2: O2, resultSelector: (O1.E, O2.E) throws -> E)
+        -> Observable<E> {
+        return Zip2(
+            source1: source1.asObservable(), source2: source2.asObservable(),
+            resultSelector: resultSelector
+        )
+    }
 }
 
 class ZipSink2_<E1, E2, O: ObserverType> : ZipSink<O> {
@@ -105,22 +117,34 @@ class Zip2<E1, E2, R> : Producer<R> {
 
 // 3
 
-/**
-Merges the specified observable sequences into one observable sequence by using the selector function whenever all of the observable sequences have produced an element at a corresponding index.
-
-- seealso: [zip operator on reactivex.io](http://reactivex.io/documentation/operators/zip.html)
-
-- parameter resultSelector: Function to invoke for each series of elements at corresponding indexes in the sources.
-- returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
-*/
-@warn_unused_result(message="http://git.io/rxs.uo")
+@available(*, deprecated=2.0.0, message="Please use `Observable.zip`")
 public func zip<O1: ObservableType, O2: ObservableType, O3: ObservableType, R>
-    (source1: O1, _ source2: O2, _ source3: O3, resultSelector: (O1.E, O2.E, O3.E) throws -> R)
+(source1: O1, _ source2: O2, _ source3: O3, resultSelector: (O1.E, O2.E, O3.E) throws -> R)
     -> Observable<R> {
-    return Zip3(
-        source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(),
+    return Observable.zip(
+        source1, source2, source3,
         resultSelector: resultSelector
     )
+}
+
+extension Observable {
+    /**
+    Merges the specified observable sequences into one observable sequence by using the selector function whenever all of the observable sequences have produced an element at a corresponding index.
+
+    - seealso: [zip operator on reactivex.io](http://reactivex.io/documentation/operators/zip.html)
+
+    - parameter resultSelector: Function to invoke for each series of elements at corresponding indexes in the sources.
+    - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
+    */
+    @warn_unused_result(message="http://git.io/rxs.uo")
+    public static func zip<O1: ObservableType, O2: ObservableType, O3: ObservableType>
+        (source1: O1, _ source2: O2, _ source3: O3, resultSelector: (O1.E, O2.E, O3.E) throws -> E)
+        -> Observable<E> {
+        return Zip3(
+            source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(),
+            resultSelector: resultSelector
+        )
+    }
 }
 
 class ZipSink3_<E1, E2, E3, O: ObserverType> : ZipSink<O> {
@@ -204,22 +228,34 @@ class Zip3<E1, E2, E3, R> : Producer<R> {
 
 // 4
 
-/**
-Merges the specified observable sequences into one observable sequence by using the selector function whenever all of the observable sequences have produced an element at a corresponding index.
-
-- seealso: [zip operator on reactivex.io](http://reactivex.io/documentation/operators/zip.html)
-
-- parameter resultSelector: Function to invoke for each series of elements at corresponding indexes in the sources.
-- returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
-*/
-@warn_unused_result(message="http://git.io/rxs.uo")
+@available(*, deprecated=2.0.0, message="Please use `Observable.zip`")
 public func zip<O1: ObservableType, O2: ObservableType, O3: ObservableType, O4: ObservableType, R>
-    (source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, resultSelector: (O1.E, O2.E, O3.E, O4.E) throws -> R)
+(source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, resultSelector: (O1.E, O2.E, O3.E, O4.E) throws -> R)
     -> Observable<R> {
-    return Zip4(
-        source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(), source4: source4.asObservable(),
+    return Observable.zip(
+        source1, source2, source3, source4,
         resultSelector: resultSelector
     )
+}
+
+extension Observable {
+    /**
+    Merges the specified observable sequences into one observable sequence by using the selector function whenever all of the observable sequences have produced an element at a corresponding index.
+
+    - seealso: [zip operator on reactivex.io](http://reactivex.io/documentation/operators/zip.html)
+
+    - parameter resultSelector: Function to invoke for each series of elements at corresponding indexes in the sources.
+    - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
+    */
+    @warn_unused_result(message="http://git.io/rxs.uo")
+    public static func zip<O1: ObservableType, O2: ObservableType, O3: ObservableType, O4: ObservableType>
+        (source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, resultSelector: (O1.E, O2.E, O3.E, O4.E) throws -> E)
+        -> Observable<E> {
+        return Zip4(
+            source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(), source4: source4.asObservable(),
+            resultSelector: resultSelector
+        )
+    }
 }
 
 class ZipSink4_<E1, E2, E3, E4, O: ObserverType> : ZipSink<O> {
@@ -311,22 +347,34 @@ class Zip4<E1, E2, E3, E4, R> : Producer<R> {
 
 // 5
 
-/**
-Merges the specified observable sequences into one observable sequence by using the selector function whenever all of the observable sequences have produced an element at a corresponding index.
-
-- seealso: [zip operator on reactivex.io](http://reactivex.io/documentation/operators/zip.html)
-
-- parameter resultSelector: Function to invoke for each series of elements at corresponding indexes in the sources.
-- returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
-*/
-@warn_unused_result(message="http://git.io/rxs.uo")
+@available(*, deprecated=2.0.0, message="Please use `Observable.zip`")
 public func zip<O1: ObservableType, O2: ObservableType, O3: ObservableType, O4: ObservableType, O5: ObservableType, R>
-    (source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, resultSelector: (O1.E, O2.E, O3.E, O4.E, O5.E) throws -> R)
+(source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, resultSelector: (O1.E, O2.E, O3.E, O4.E, O5.E) throws -> R)
     -> Observable<R> {
-    return Zip5(
-        source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(), source4: source4.asObservable(), source5: source5.asObservable(),
+    return Observable.zip(
+        source1, source2, source3, source4, source5,
         resultSelector: resultSelector
     )
+}
+
+extension Observable {
+    /**
+    Merges the specified observable sequences into one observable sequence by using the selector function whenever all of the observable sequences have produced an element at a corresponding index.
+
+    - seealso: [zip operator on reactivex.io](http://reactivex.io/documentation/operators/zip.html)
+
+    - parameter resultSelector: Function to invoke for each series of elements at corresponding indexes in the sources.
+    - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
+    */
+    @warn_unused_result(message="http://git.io/rxs.uo")
+    public static func zip<O1: ObservableType, O2: ObservableType, O3: ObservableType, O4: ObservableType, O5: ObservableType>
+        (source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, resultSelector: (O1.E, O2.E, O3.E, O4.E, O5.E) throws -> E)
+        -> Observable<E> {
+        return Zip5(
+            source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(), source4: source4.asObservable(), source5: source5.asObservable(),
+            resultSelector: resultSelector
+        )
+    }
 }
 
 class ZipSink5_<E1, E2, E3, E4, E5, O: ObserverType> : ZipSink<O> {
@@ -426,22 +474,34 @@ class Zip5<E1, E2, E3, E4, E5, R> : Producer<R> {
 
 // 6
 
-/**
-Merges the specified observable sequences into one observable sequence by using the selector function whenever all of the observable sequences have produced an element at a corresponding index.
-
-- seealso: [zip operator on reactivex.io](http://reactivex.io/documentation/operators/zip.html)
-
-- parameter resultSelector: Function to invoke for each series of elements at corresponding indexes in the sources.
-- returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
-*/
-@warn_unused_result(message="http://git.io/rxs.uo")
+@available(*, deprecated=2.0.0, message="Please use `Observable.zip`")
 public func zip<O1: ObservableType, O2: ObservableType, O3: ObservableType, O4: ObservableType, O5: ObservableType, O6: ObservableType, R>
-    (source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6, resultSelector: (O1.E, O2.E, O3.E, O4.E, O5.E, O6.E) throws -> R)
+(source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6, resultSelector: (O1.E, O2.E, O3.E, O4.E, O5.E, O6.E) throws -> R)
     -> Observable<R> {
-    return Zip6(
-        source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(), source4: source4.asObservable(), source5: source5.asObservable(), source6: source6.asObservable(),
+    return Observable.zip(
+        source1, source2, source3, source4, source5, source6,
         resultSelector: resultSelector
     )
+}
+
+extension Observable {
+    /**
+    Merges the specified observable sequences into one observable sequence by using the selector function whenever all of the observable sequences have produced an element at a corresponding index.
+
+    - seealso: [zip operator on reactivex.io](http://reactivex.io/documentation/operators/zip.html)
+
+    - parameter resultSelector: Function to invoke for each series of elements at corresponding indexes in the sources.
+    - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
+    */
+    @warn_unused_result(message="http://git.io/rxs.uo")
+    public static func zip<O1: ObservableType, O2: ObservableType, O3: ObservableType, O4: ObservableType, O5: ObservableType, O6: ObservableType>
+        (source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6, resultSelector: (O1.E, O2.E, O3.E, O4.E, O5.E, O6.E) throws -> E)
+        -> Observable<E> {
+        return Zip6(
+            source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(), source4: source4.asObservable(), source5: source5.asObservable(), source6: source6.asObservable(),
+            resultSelector: resultSelector
+        )
+    }
 }
 
 class ZipSink6_<E1, E2, E3, E4, E5, E6, O: ObserverType> : ZipSink<O> {
@@ -549,22 +609,34 @@ class Zip6<E1, E2, E3, E4, E5, E6, R> : Producer<R> {
 
 // 7
 
-/**
-Merges the specified observable sequences into one observable sequence by using the selector function whenever all of the observable sequences have produced an element at a corresponding index.
-
-- seealso: [zip operator on reactivex.io](http://reactivex.io/documentation/operators/zip.html)
-
-- parameter resultSelector: Function to invoke for each series of elements at corresponding indexes in the sources.
-- returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
-*/
-@warn_unused_result(message="http://git.io/rxs.uo")
+@available(*, deprecated=2.0.0, message="Please use `Observable.zip`")
 public func zip<O1: ObservableType, O2: ObservableType, O3: ObservableType, O4: ObservableType, O5: ObservableType, O6: ObservableType, O7: ObservableType, R>
-    (source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6, _ source7: O7, resultSelector: (O1.E, O2.E, O3.E, O4.E, O5.E, O6.E, O7.E) throws -> R)
+(source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6, _ source7: O7, resultSelector: (O1.E, O2.E, O3.E, O4.E, O5.E, O6.E, O7.E) throws -> R)
     -> Observable<R> {
-    return Zip7(
-        source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(), source4: source4.asObservable(), source5: source5.asObservable(), source6: source6.asObservable(), source7: source7.asObservable(),
+    return Observable.zip(
+        source1, source2, source3, source4, source5, source6, source7,
         resultSelector: resultSelector
     )
+}
+
+extension Observable {
+    /**
+    Merges the specified observable sequences into one observable sequence by using the selector function whenever all of the observable sequences have produced an element at a corresponding index.
+
+    - seealso: [zip operator on reactivex.io](http://reactivex.io/documentation/operators/zip.html)
+
+    - parameter resultSelector: Function to invoke for each series of elements at corresponding indexes in the sources.
+    - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
+    */
+    @warn_unused_result(message="http://git.io/rxs.uo")
+    public static func zip<O1: ObservableType, O2: ObservableType, O3: ObservableType, O4: ObservableType, O5: ObservableType, O6: ObservableType, O7: ObservableType>
+        (source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6, _ source7: O7, resultSelector: (O1.E, O2.E, O3.E, O4.E, O5.E, O6.E, O7.E) throws -> E)
+        -> Observable<E> {
+        return Zip7(
+            source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(), source4: source4.asObservable(), source5: source5.asObservable(), source6: source6.asObservable(), source7: source7.asObservable(),
+            resultSelector: resultSelector
+        )
+    }
 }
 
 class ZipSink7_<E1, E2, E3, E4, E5, E6, E7, O: ObserverType> : ZipSink<O> {
@@ -680,22 +752,34 @@ class Zip7<E1, E2, E3, E4, E5, E6, E7, R> : Producer<R> {
 
 // 8
 
-/**
-Merges the specified observable sequences into one observable sequence by using the selector function whenever all of the observable sequences have produced an element at a corresponding index.
-
-- seealso: [zip operator on reactivex.io](http://reactivex.io/documentation/operators/zip.html)
-
-- parameter resultSelector: Function to invoke for each series of elements at corresponding indexes in the sources.
-- returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
-*/
-@warn_unused_result(message="http://git.io/rxs.uo")
+@available(*, deprecated=2.0.0, message="Please use `Observable.zip`")
 public func zip<O1: ObservableType, O2: ObservableType, O3: ObservableType, O4: ObservableType, O5: ObservableType, O6: ObservableType, O7: ObservableType, O8: ObservableType, R>
-    (source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6, _ source7: O7, _ source8: O8, resultSelector: (O1.E, O2.E, O3.E, O4.E, O5.E, O6.E, O7.E, O8.E) throws -> R)
+(source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6, _ source7: O7, _ source8: O8, resultSelector: (O1.E, O2.E, O3.E, O4.E, O5.E, O6.E, O7.E, O8.E) throws -> R)
     -> Observable<R> {
-    return Zip8(
-        source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(), source4: source4.asObservable(), source5: source5.asObservable(), source6: source6.asObservable(), source7: source7.asObservable(), source8: source8.asObservable(),
+    return Observable.zip(
+        source1, source2, source3, source4, source5, source6, source7, source8,
         resultSelector: resultSelector
     )
+}
+
+extension Observable {
+    /**
+    Merges the specified observable sequences into one observable sequence by using the selector function whenever all of the observable sequences have produced an element at a corresponding index.
+
+    - seealso: [zip operator on reactivex.io](http://reactivex.io/documentation/operators/zip.html)
+
+    - parameter resultSelector: Function to invoke for each series of elements at corresponding indexes in the sources.
+    - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
+    */
+    @warn_unused_result(message="http://git.io/rxs.uo")
+    public static func zip<O1: ObservableType, O2: ObservableType, O3: ObservableType, O4: ObservableType, O5: ObservableType, O6: ObservableType, O7: ObservableType, O8: ObservableType>
+        (source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6, _ source7: O7, _ source8: O8, resultSelector: (O1.E, O2.E, O3.E, O4.E, O5.E, O6.E, O7.E, O8.E) throws -> E)
+        -> Observable<E> {
+        return Zip8(
+            source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(), source4: source4.asObservable(), source5: source5.asObservable(), source6: source6.asObservable(), source7: source7.asObservable(), source8: source8.asObservable(),
+            resultSelector: resultSelector
+        )
+    }
 }
 
 class ZipSink8_<E1, E2, E3, E4, E5, E6, E7, E8, O: ObserverType> : ZipSink<O> {

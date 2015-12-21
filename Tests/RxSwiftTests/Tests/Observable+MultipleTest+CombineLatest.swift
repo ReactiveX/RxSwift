@@ -33,7 +33,7 @@ extension ObservableMultipleTest {
 
 
         let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = combineLatest(e0, e1) { (_, _) -> Int in
+            let result: Observable<Int> = Observable.combineLatest(e0, e1) { (_, _) -> Int in
                 return (42)
             }
 
@@ -65,7 +65,7 @@ extension ObservableMultipleTest {
 
 
         let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = combineLatest(e0, e1) { (_, _) -> Int in
+            let result: Observable<Int> = Observable.combineLatest(e0, e1) { (_, _) -> Int in
                 return (42)
             }
 
@@ -99,7 +99,7 @@ extension ObservableMultipleTest {
 
 
         let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = combineLatest(e0, e1) { (_, _) throws -> Int in
+            let result: Observable<Int> = Observable.combineLatest(e0, e1) { (_, _) throws -> Int in
                 throw testError
             }
 
@@ -133,7 +133,7 @@ extension ObservableMultipleTest {
         ])
 
         let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = combineLatest(e0, e1) { (_, _) -> Int in
+            let result: Observable<Int> = Observable.combineLatest(e0, e1) { (_, _) -> Int in
                 return (42)
             }
 
@@ -169,7 +169,7 @@ extension ObservableMultipleTest {
         ])
 
         let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = combineLatest(e0, e1) {
+            let result: Observable<Int> = Observable.combineLatest(e0, e1) {
                 return ($0 + $1)
             }
 
@@ -215,7 +215,7 @@ extension ObservableMultipleTest {
 
 
         let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = combineLatest(e0, e1, e2) { (_, _, _) -> Int in
+            let result: Observable<Int> = Observable.combineLatest(e0, e1, e2) { (_, _, _) -> Int in
                 return (42)
             }
 
@@ -253,7 +253,7 @@ extension ObservableMultipleTest {
 
 
         let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = combineLatest(e0, e1, e2) { (_, _, _) -> Int in
+            let result: Observable<Int> = Observable.combineLatest(e0, e1, e2) { (_, _, _) -> Int in
                 return (42)
             }
 
@@ -295,7 +295,7 @@ extension ObservableMultipleTest {
 
 
         let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = combineLatest(e0, e1, e2) { (_, _, _) throws -> Int in
+            let result: Observable<Int> = Observable.combineLatest(e0, e1, e2) { (_, _, _) throws -> Int in
                 throw testError
             }
 
@@ -336,7 +336,7 @@ extension ObservableMultipleTest {
         ])
 
         let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = combineLatest(e0, e1, e2) { (_, _, _) -> Int in
+            let result: Observable<Int> = Observable.combineLatest(e0, e1, e2) { (_, _, _) -> Int in
                 return (42)
             }
 
@@ -381,7 +381,7 @@ extension ObservableMultipleTest {
         ])
 
         let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = combineLatest(e0, e1, e2) {
+            let result: Observable<Int> = Observable.combineLatest(e0, e1, e2) {
                 return ($0 + $1 + $2)
             }
 
@@ -434,7 +434,7 @@ extension ObservableMultipleTest {
 
 
         let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = combineLatest(e0, e1, e2, e3) { (_, _, _, _) -> Int in
+            let result: Observable<Int> = Observable.combineLatest(e0, e1, e2, e3) { (_, _, _, _) -> Int in
                 return (42)
             }
 
@@ -478,7 +478,7 @@ extension ObservableMultipleTest {
 
 
         let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = combineLatest(e0, e1, e2, e3) { (_, _, _, _) -> Int in
+            let result: Observable<Int> = Observable.combineLatest(e0, e1, e2, e3) { (_, _, _, _) -> Int in
                 return (42)
             }
 
@@ -528,7 +528,7 @@ extension ObservableMultipleTest {
 
 
         let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = combineLatest(e0, e1, e2, e3) { (_, _, _, _) throws -> Int in
+            let result: Observable<Int> = Observable.combineLatest(e0, e1, e2, e3) { (_, _, _, _) throws -> Int in
                 throw testError
             }
 
@@ -576,7 +576,7 @@ extension ObservableMultipleTest {
         ])
 
         let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = combineLatest(e0, e1, e2, e3) { (_, _, _, _) -> Int in
+            let result: Observable<Int> = Observable.combineLatest(e0, e1, e2, e3) { (_, _, _, _) -> Int in
                 return (42)
             }
 
@@ -630,7 +630,7 @@ extension ObservableMultipleTest {
         ])
 
         let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = combineLatest(e0, e1, e2, e3) {
+            let result: Observable<Int> = Observable.combineLatest(e0, e1, e2, e3) {
                 return ($0 + $1 + $2 + $3)
             }
 
@@ -690,7 +690,7 @@ extension ObservableMultipleTest {
 
 
         let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = combineLatest(e0, e1, e2, e3, e4) { (_, _, _, _, _) -> Int in
+            let result: Observable<Int> = Observable.combineLatest(e0, e1, e2, e3, e4) { (_, _, _, _, _) -> Int in
                 return (42)
             }
 
@@ -740,7 +740,7 @@ extension ObservableMultipleTest {
 
 
         let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = combineLatest(e0, e1, e2, e3, e4) { (_, _, _, _, _) -> Int in
+            let result: Observable<Int> = Observable.combineLatest(e0, e1, e2, e3, e4) { (_, _, _, _, _) -> Int in
                 return (42)
             }
 
@@ -798,7 +798,7 @@ extension ObservableMultipleTest {
 
 
         let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = combineLatest(e0, e1, e2, e3, e4) { (_, _, _, _, _) throws -> Int in
+            let result: Observable<Int> = Observable.combineLatest(e0, e1, e2, e3, e4) { (_, _, _, _, _) throws -> Int in
                 throw testError
             }
 
@@ -853,7 +853,7 @@ extension ObservableMultipleTest {
         ])
 
         let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = combineLatest(e0, e1, e2, e3, e4) { (_, _, _, _, _) -> Int in
+            let result: Observable<Int> = Observable.combineLatest(e0, e1, e2, e3, e4) { (_, _, _, _, _) -> Int in
                 return (42)
             }
 
@@ -916,7 +916,7 @@ extension ObservableMultipleTest {
         ])
 
         let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = combineLatest(e0, e1, e2, e3, e4) {
+            let result: Observable<Int> = Observable.combineLatest(e0, e1, e2, e3, e4) {
                 return ($0 + $1 + $2 + $3 + $4)
             }
 
@@ -983,7 +983,7 @@ extension ObservableMultipleTest {
 
 
         let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = combineLatest(e0, e1, e2, e3, e4, e5) { (_, _, _, _, _, _) -> Int in
+            let result: Observable<Int> = Observable.combineLatest(e0, e1, e2, e3, e4, e5) { (_, _, _, _, _, _) -> Int in
                 return (42)
             }
 
@@ -1039,7 +1039,7 @@ extension ObservableMultipleTest {
 
 
         let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = combineLatest(e0, e1, e2, e3, e4, e5) { (_, _, _, _, _, _) -> Int in
+            let result: Observable<Int> = Observable.combineLatest(e0, e1, e2, e3, e4, e5) { (_, _, _, _, _, _) -> Int in
                 return (42)
             }
 
@@ -1105,7 +1105,7 @@ extension ObservableMultipleTest {
 
 
         let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = combineLatest(e0, e1, e2, e3, e4, e5) { (_, _, _, _, _, _) throws -> Int in
+            let result: Observable<Int> = Observable.combineLatest(e0, e1, e2, e3, e4, e5) { (_, _, _, _, _, _) throws -> Int in
                 throw testError
             }
 
@@ -1167,7 +1167,7 @@ extension ObservableMultipleTest {
         ])
 
         let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = combineLatest(e0, e1, e2, e3, e4, e5) { (_, _, _, _, _, _) -> Int in
+            let result: Observable<Int> = Observable.combineLatest(e0, e1, e2, e3, e4, e5) { (_, _, _, _, _, _) -> Int in
                 return (42)
             }
 
@@ -1239,7 +1239,7 @@ extension ObservableMultipleTest {
         ])
 
         let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = combineLatest(e0, e1, e2, e3, e4, e5) {
+            let result: Observable<Int> = Observable.combineLatest(e0, e1, e2, e3, e4, e5) {
                 return ($0 + $1 + $2 + $3 + $4 + $5)
             }
 
@@ -1313,7 +1313,7 @@ extension ObservableMultipleTest {
 
 
         let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = combineLatest(e0, e1, e2, e3, e4, e5, e6) { (_, _, _, _, _, _, _) -> Int in
+            let result: Observable<Int> = Observable.combineLatest(e0, e1, e2, e3, e4, e5, e6) { (_, _, _, _, _, _, _) -> Int in
                 return (42)
             }
 
@@ -1375,7 +1375,7 @@ extension ObservableMultipleTest {
 
 
         let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = combineLatest(e0, e1, e2, e3, e4, e5, e6) { (_, _, _, _, _, _, _) -> Int in
+            let result: Observable<Int> = Observable.combineLatest(e0, e1, e2, e3, e4, e5, e6) { (_, _, _, _, _, _, _) -> Int in
                 return (42)
             }
 
@@ -1449,7 +1449,7 @@ extension ObservableMultipleTest {
 
 
         let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = combineLatest(e0, e1, e2, e3, e4, e5, e6) { (_, _, _, _, _, _, _) throws -> Int in
+            let result: Observable<Int> = Observable.combineLatest(e0, e1, e2, e3, e4, e5, e6) { (_, _, _, _, _, _, _) throws -> Int in
                 throw testError
             }
 
@@ -1518,7 +1518,7 @@ extension ObservableMultipleTest {
         ])
 
         let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = combineLatest(e0, e1, e2, e3, e4, e5, e6) { (_, _, _, _, _, _, _) -> Int in
+            let result: Observable<Int> = Observable.combineLatest(e0, e1, e2, e3, e4, e5, e6) { (_, _, _, _, _, _, _) -> Int in
                 return (42)
             }
 
@@ -1599,7 +1599,7 @@ extension ObservableMultipleTest {
         ])
 
         let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = combineLatest(e0, e1, e2, e3, e4, e5, e6) {
+            let result: Observable<Int> = Observable.combineLatest(e0, e1, e2, e3, e4, e5, e6) {
                 return ($0 + $1 + $2 + $3 + $4 + $5 + $6)
             }
 
@@ -1680,7 +1680,7 @@ extension ObservableMultipleTest {
 
 
         let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = combineLatest(e0, e1, e2, e3, e4, e5, e6, e7) { (_, _, _, _, _, _, _, _) -> Int in
+            let result: Observable<Int> = Observable.combineLatest(e0, e1, e2, e3, e4, e5, e6, e7) { (_, _, _, _, _, _, _, _) -> Int in
                 return (42)
             }
 
@@ -1748,7 +1748,7 @@ extension ObservableMultipleTest {
 
 
         let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = combineLatest(e0, e1, e2, e3, e4, e5, e6, e7) { (_, _, _, _, _, _, _, _) -> Int in
+            let result: Observable<Int> = Observable.combineLatest(e0, e1, e2, e3, e4, e5, e6, e7) { (_, _, _, _, _, _, _, _) -> Int in
                 return (42)
             }
 
@@ -1830,7 +1830,7 @@ extension ObservableMultipleTest {
 
 
         let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = combineLatest(e0, e1, e2, e3, e4, e5, e6, e7) { (_, _, _, _, _, _, _, _) throws -> Int in
+            let result: Observable<Int> = Observable.combineLatest(e0, e1, e2, e3, e4, e5, e6, e7) { (_, _, _, _, _, _, _, _) throws -> Int in
                 throw testError
             }
 
@@ -1906,7 +1906,7 @@ extension ObservableMultipleTest {
         ])
 
         let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = combineLatest(e0, e1, e2, e3, e4, e5, e6, e7) { (_, _, _, _, _, _, _, _) -> Int in
+            let result: Observable<Int> = Observable.combineLatest(e0, e1, e2, e3, e4, e5, e6, e7) { (_, _, _, _, _, _, _, _) -> Int in
                 return (42)
             }
 
@@ -1996,7 +1996,7 @@ extension ObservableMultipleTest {
         ])
 
         let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = combineLatest(e0, e1, e2, e3, e4, e5, e6, e7) {
+            let result: Observable<Int> = Observable.combineLatest(e0, e1, e2, e3, e4, e5, e6, e7) {
                 return ($0 + $1 + $2 + $3 + $4 + $5 + $6 + $7)
             }
 
@@ -2053,7 +2053,7 @@ extension ObservableMultipleTest {
         ])
         
         let res = scheduler.start {
-            combineLatest(e0, e1) { (x1, x2) -> Int in
+            Observable.combineLatest(e0, e1) { (x1, x2) -> Int in
                 return (x1 + x2)
             }
         }
@@ -2077,7 +2077,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            combineLatest(e0, e1) { (x1, x2) -> Int in
+            Observable.combineLatest(e0, e1) { (x1, x2) -> Int in
                 return (x1 + x2)
             }
         }
@@ -2104,7 +2104,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            combineLatest(e0, e1) { (x1, x2) -> Int in
+            Observable.combineLatest(e0, e1) { (x1, x2) -> Int in
                 return (x1 + x2)
             }
         }
@@ -2130,7 +2130,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            combineLatest(e0, e1) { (x1, x2) -> Int in
+            Observable.combineLatest(e0, e1) { (x1, x2) -> Int in
                 return (x1 + x2)
             }
         }
@@ -2155,7 +2155,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            combineLatest(e0, e1) { (x1, x2) -> Int in
+            Observable.combineLatest(e0, e1) { (x1, x2) -> Int in
                 return (x1 + x2)
             }
         }
@@ -2180,7 +2180,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            combineLatest(e0, e1) { (x1, x2) -> Int in
+            Observable.combineLatest(e0, e1) { (x1, x2) -> Int in
                 return (x1 + x2)
             }
         }
@@ -2207,7 +2207,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            combineLatest(e0, e1) { (x1, x2) -> Int in
+            Observable.combineLatest(e0, e1) { (x1, x2) -> Int in
                 return (x1 + x2)
             }
         }
@@ -2234,7 +2234,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            combineLatest(e0, e1) { (x1, x2) -> Int in
+            Observable.combineLatest(e0, e1) { (x1, x2) -> Int in
                 return (x1 + x2)
             }
         }
@@ -2259,7 +2259,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            combineLatest(e0, e1) { (x1, x2) -> Int in
+            Observable.combineLatest(e0, e1) { (x1, x2) -> Int in
                 return (x1 + x2)
             }
         }
@@ -2284,7 +2284,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            combineLatest(e0, e1) { (x1, x2) -> Int in
+            Observable.combineLatest(e0, e1) { (x1, x2) -> Int in
                 return (x1 + x2)
             }
         }
@@ -2310,7 +2310,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            combineLatest(e0, e1) { (x1, x2) -> Int in
+            Observable.combineLatest(e0, e1) { (x1, x2) -> Int in
                 return (x1 + x2)
             }
         }
@@ -2336,7 +2336,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            combineLatest(e0, e1) { (x1, x2) -> Int in
+            Observable.combineLatest(e0, e1) { (x1, x2) -> Int in
                 return (x1 + x2)
             }
         }
@@ -2361,7 +2361,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            combineLatest(e0, e1) { (x1, x2) -> Int in
+            Observable.combineLatest(e0, e1) { (x1, x2) -> Int in
                 return (x1 + x2)
             }
         }
@@ -2386,7 +2386,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            combineLatest(e0, e1) { (x1, x2) -> Int in
+            Observable.combineLatest(e0, e1) { (x1, x2) -> Int in
                 return (x1 + x2)
             }
         }
@@ -2412,7 +2412,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            combineLatest(e0, e1) { (x1, x2) -> Int in
+            Observable.combineLatest(e0, e1) { (x1, x2) -> Int in
                 return (x1 + x2)
             }
         }
@@ -2438,7 +2438,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            combineLatest(e0, e1) { (x1, x2) -> Int in
+            Observable.combineLatest(e0, e1) { (x1, x2) -> Int in
                 return (x1 + x2)
             }
         }
@@ -2464,7 +2464,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            combineLatest(e0, e1) { (x1, x2) -> Int in
+            Observable.combineLatest(e0, e1) { (x1, x2) -> Int in
                 return (x1 + x2)
             }
         }
@@ -2490,7 +2490,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            combineLatest(e0, e1) { (x1, x2) -> Int in
+            Observable.combineLatest(e0, e1) { (x1, x2) -> Int in
                 return (x1 + x2)
             }
         }
@@ -2516,7 +2516,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            combineLatest(e0, e1) { (x1, x2) -> Int in
+            Observable.combineLatest(e0, e1) { (x1, x2) -> Int in
                 return (x1 + x2)
             }
         }
@@ -2542,7 +2542,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            combineLatest(e0, e1) { (x1, x2) -> Int in
+            Observable.combineLatest(e0, e1) { (x1, x2) -> Int in
                 return (x1 + x2)
             }
         }
@@ -2573,7 +2573,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            combineLatest(e0, e1) { (x1, x2) -> Int in
+            Observable.combineLatest(e0, e1) { (x1, x2) -> Int in
                 return (x1 + x2)
             }
         }
@@ -2611,7 +2611,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            combineLatest(e0, e1) { (x1, x2) -> Int in
+            Observable.combineLatest(e0, e1) { (x1, x2) -> Int in
                 return (x1 + x2)
             }
         }
@@ -2646,7 +2646,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            combineLatest(e0, e1) { (x1, x2) -> Int in
+            Observable.combineLatest(e0, e1) { (x1, x2) -> Int in
                 return (x1 + x2)
             }
         }
@@ -2675,7 +2675,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            combineLatest(e0, e1) { (x1, x2) -> Int in
+            Observable.combineLatest(e0, e1) { (x1, x2) -> Int in
                 return (x1 + x2)
             }
         }

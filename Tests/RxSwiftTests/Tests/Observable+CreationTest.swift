@@ -222,7 +222,7 @@ extension ObservableCreationTests {
         let scheduler = TestScheduler(initialClock: 0)
         
         let res = scheduler.start {
-            generate(0, condition: { _ in true }, scheduler: scheduler) { (_: Int) -> Int in
+            Observable.generate(0, condition: { _ in true }, scheduler: scheduler) { (_: Int) -> Int in
                 throw testError
             }
         }
@@ -238,7 +238,7 @@ extension ObservableCreationTests {
         let scheduler = TestScheduler(initialClock: 0)
         
         let res = scheduler.start(203) {
-            generate(0, condition: { _ in true }, scheduler: scheduler) { x in
+            Observable.generate(0, condition: { _ in true }, scheduler: scheduler) { x in
                 x + 1
             }
         }
@@ -255,7 +255,7 @@ extension ObservableCreationTests {
     
         var elements = [Int]()
         
-        _ = generate(0, condition: { _ in true }) { x in
+        _ = Observable.generate(0, condition: { _ in true }) { x in
                 count++
                 return x + 1
             }
@@ -275,7 +275,7 @@ extension ObservableCreationTests {
         let scheduler = TestScheduler(initialClock: 0)
         
         let res = scheduler.start {
-            range(Int.max, count: 1, scheduler: scheduler)
+            Observable.range(Int.max, count: 1, scheduler: scheduler)
         }
         
         XCTAssertEqual(res.events, [
@@ -288,7 +288,7 @@ extension ObservableCreationTests {
         let scheduler = TestScheduler(initialClock: 0)
         
         let res = scheduler.start(204) {
-            range(-10, count: 5, scheduler: scheduler)
+            Observable.range(-10, count: 5, scheduler: scheduler)
         }
         
         XCTAssertEqual(res.events, [
@@ -305,7 +305,7 @@ extension ObservableCreationTests {
         let scheduler = TestScheduler(initialClock: 0)
         
         let res = scheduler.start(207) {
-            repeatElement(42, scheduler: scheduler)
+            Observable.repeatElement(42, scheduler: scheduler)
         }
         
         XCTAssertEqual(res.events, [
@@ -332,7 +332,7 @@ extension ObservableCreationTests {
         var _d:MockDisposable!
         
         let res = scheduler.start {
-            using({ () -> MockDisposable in
+            Observable.using({ () -> MockDisposable in
                 disposeInvoked += 1
                 disposable = MockDisposable(scheduler: scheduler)
                 return disposable

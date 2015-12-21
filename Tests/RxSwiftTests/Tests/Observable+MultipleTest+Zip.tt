@@ -23,7 +23,7 @@ extension ObservableMultipleTest {
 
         var result: Int! = nil
 
-        let _ = zip(<%= (Array(0..<i).map { "v\($0)" }).joinWithSeparator(", ") %>) { (<%= (Array(0..<i).map { "a\($0): Int" }).joinWithSeparator(", ") %>) -> Int in <%= (Array(0..<i).map { "a\($0)" }).joinWithSeparator(" + ") %> }
+        let _ = Observable.zip(<%= (Array(0..<i).map { "v\($0)" }).joinWithSeparator(", ") %>) { (<%= (Array(0..<i).map { "a\($0): Int" }).joinWithSeparator(", ") %>) -> Int in <%= (Array(0..<i).map { "a\($0)" }).joinWithSeparator(" + ") %> }
             .subscribeNext { (x: Int) -> Void in result = x }
 
         XCTAssertEqual(result, <%= (i + 1) * i / 2 %>)
@@ -39,7 +39,7 @@ extension ObservableMultipleTest {
         <% } %>
 
         let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = zip(<%= (Array(0..<i).map { "e\($0)" }).joinWithSeparator(", ") %>) { (<%= (Array(0..<i).map { _ in "_" }).joinWithSeparator(", ") %>) -> Int in
+            let result: Observable<Int> = Observable.zip(<%= (Array(0..<i).map { "e\($0)" }).joinWithSeparator(", ") %>) { (<%= (Array(0..<i).map { _ in "_" }).joinWithSeparator(", ") %>) -> Int in
                 return (42)
             }
 
@@ -64,7 +64,7 @@ extension ObservableMultipleTest {
         <% } %>
 
         let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = zip(<%= (Array(0..<i).map { "e\($0)" }).joinWithSeparator(", ") %>) { (<%= (Array(0..<i).map { _ in "_" }).joinWithSeparator(", ") %>) -> Int in
+            let result: Observable<Int> = Observable.zip(<%= (Array(0..<i).map { "e\($0)" }).joinWithSeparator(", ") %>) { (<%= (Array(0..<i).map { _ in "_" }).joinWithSeparator(", ") %>) -> Int in
                 return (42)
             }
 
@@ -91,7 +91,7 @@ extension ObservableMultipleTest {
         <% } %>
 
         let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = zip(<%= (Array(0..<i).map { "e\($0)" }).joinWithSeparator(", ") %>) { (<%= (Array(0..<i).map { "_\($0)" }).joinWithSeparator(", ") %>) -> Int in
+            let result: Observable<Int> = Observable.zip(<%= (Array(0..<i).map { "e\($0)" }).joinWithSeparator(", ") %>) { (<%= (Array(0..<i).map { "_\($0)" }).joinWithSeparator(", ") %>) -> Int in
                 return (<%= (Array(0..<i).map { "_\($0)" }).joinWithSeparator(" + ") %>)
             }
 
@@ -120,7 +120,7 @@ extension ObservableMultipleTest {
         <% } %>
 
         let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = zip(<%= (Array(0..<i).map { "e\($0)" }).joinWithSeparator(", ") %>) { (<%= (Array(0..<i).map { "_\($0)" }).joinWithSeparator(", ") %>) -> Int in
+            let result: Observable<Int> = Observable.zip(<%= (Array(0..<i).map { "e\($0)" }).joinWithSeparator(", ") %>) { (<%= (Array(0..<i).map { "_\($0)" }).joinWithSeparator(", ") %>) -> Int in
                 return (<%= (Array(0..<i).map { "_\($0)" }).joinWithSeparator(" + ") %>)
             }
 
@@ -155,7 +155,7 @@ extension ObservableMultipleTest {
         ])
 
         let res = scheduler.start {
-            zip(n, e) { $0 + $1 }
+            Observable.zip(n, e) { $0 + $1 }
         }
 
         XCTAssertEqual(res.events, [])
@@ -182,7 +182,7 @@ extension ObservableMultipleTest {
         ])
 
         let res = scheduler.start {
-            zip(e, n) { $0 + $1 }
+            Observable.zip(e, n) { $0 + $1 }
         }
 
         XCTAssertEqual(res.events, [])
@@ -211,7 +211,7 @@ extension ObservableMultipleTest {
         ])
 
         let res = scheduler.start {
-            zip(e, o) { $0 + $1 }
+            Observable.zip(e, o) { $0 + $1 }
         }
    
         let messages = [
@@ -243,7 +243,7 @@ extension ObservableMultipleTest {
         ])
 
         let res = scheduler.start {
-            zip(o, e) { $0 + $1 }
+            Observable.zip(o, e) { $0 + $1 }
         }
    
         let messages = [
@@ -274,7 +274,7 @@ extension ObservableMultipleTest {
         ])
 
         let res = scheduler.start {
-            zip(n, o) { $0 + $1 }
+            Observable.zip(n, o) { $0 + $1 }
         }
    
         let messages: [Recorded<Event<Int>>] = []
@@ -303,7 +303,7 @@ extension ObservableMultipleTest {
         ])
 
         let res = scheduler.start {
-            zip(o, n) { $0 + $1 }
+            Observable.zip(o, n) { $0 + $1 }
         }
    
         let messages: [Recorded<Event<Int>>] = []
@@ -334,7 +334,7 @@ extension ObservableMultipleTest {
         ])
 
         let res = scheduler.start {
-            zip(o1, o2) { $0 + $1 }
+            Observable.zip(o1, o2) { $0 + $1 }
         }
    
         let messages = [
@@ -367,7 +367,7 @@ extension ObservableMultipleTest {
         ])
 
         let res = scheduler.start {
-            zip(o1, o2) { $0 + $1 }
+            Observable.zip(o1, o2) { $0 + $1 }
         }
    
         let messages = [
@@ -399,7 +399,7 @@ extension ObservableMultipleTest {
         ])
 
         let res = scheduler.start {
-            zip(o2, o1) { $0 + $1 }
+            Observable.zip(o2, o1) { $0 + $1 }
         }
    
         let messages = [
@@ -430,7 +430,7 @@ extension ObservableMultipleTest {
         ])
 
         let res = scheduler.start {
-            zip(o1, o2) { $0 + $1 }
+            Observable.zip(o1, o2) { $0 + $1 }
         }
    
         let messages = [
@@ -461,7 +461,7 @@ extension ObservableMultipleTest {
         ])
 
         let res = scheduler.start {
-            zip(o2, o1) { $0 + $1 }
+            Observable.zip(o2, o1) { $0 + $1 }
         }
    
         let messages = [
@@ -493,7 +493,7 @@ extension ObservableMultipleTest {
         ])
 
         let res = scheduler.start {
-            zip(o2, o1) { $0 + $1 }
+            Observable.zip(o2, o1) { $0 + $1 }
         }
    
         let messages = [
@@ -526,7 +526,7 @@ extension ObservableMultipleTest {
         ])
 
         let res = scheduler.start {
-            zip(o1, o2) { $0 + $1 }
+            Observable.zip(o1, o2) { $0 + $1 }
         }
    
         let messages = [
@@ -559,7 +559,7 @@ extension ObservableMultipleTest {
         ])
 
         let res = scheduler.start {
-            zip(o2, o1) { $0 + $1 }
+            Observable.zip(o2, o1) { $0 + $1 }
         }
    
         let messages = [
@@ -593,7 +593,7 @@ extension ObservableMultipleTest {
         ])
 
         let res = scheduler.start {
-            zip(o1, o2) { $0 + $1 }
+            Observable.zip(o1, o2) { $0 + $1 }
         }
    
         let messages = [
@@ -628,7 +628,7 @@ extension ObservableMultipleTest {
         ])
 
         let res = scheduler.start {
-            zip(o2, o1) { $0 + $1 }
+            Observable.zip(o2, o1) { $0 + $1 }
         }
    
         let messages = [
@@ -662,7 +662,7 @@ extension ObservableMultipleTest {
         ])
 
         let res = scheduler.start {
-            zip(o1, o2) { (_, _) throws -> Int in throw testError }
+            Observable.zip(o1, o2) { (_, _) throws -> Int in throw testError }
         }
    
         let messages = [
@@ -695,7 +695,7 @@ extension ObservableMultipleTest {
         ])
 
         let res = scheduler.start {
-            zip(o2, o1) { (_, _) throws -> Int in throw testError }
+            Observable.zip(o2, o1) { (_, _) throws -> Int in throw testError }
         }
    
         let messages = [
