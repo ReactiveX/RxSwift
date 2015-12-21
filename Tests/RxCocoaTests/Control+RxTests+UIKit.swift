@@ -89,6 +89,23 @@ extension ControlTests {
         ensureEventDeallocated(createView) { (view: UICollectionView) in view.rx_modelSelected(Int.self) }
     }
 
+    func testCollectionView_DelegateEventCompletesOnDealloc2_cellType() {
+        let items: Observable<[Int]> = just([1, 2, 3])
+
+        let layout = UICollectionViewFlowLayout()
+
+        let createView: () -> (UICollectionView, Disposable) = {
+            let collectionView = UICollectionView(frame: CGRectMake(0, 0, 1, 1), collectionViewLayout: layout)
+            collectionView.registerClass(NSClassFromString("UICollectionViewCell"), forCellWithReuseIdentifier: "a")
+            let s = items.bindTo(collectionView.rx_itemsWithCellIdentifier("a", cellType: UICollectionViewCell.self)) { (index: Int, item: Int, cell) in
+
+            }
+
+            return (collectionView, s)
+        }
+        ensureEventDeallocated(createView) { (view: UICollectionView) in view.rx_modelSelected(Int.self) }
+    }
+
     func testCollectionView_ModelSelected1() {
         let items: Observable<[Int]> = just([1, 2, 3])
 
@@ -203,6 +220,21 @@ extension ControlTests {
             let tableView = UITableView(frame: CGRectMake(0, 0, 1, 1))
             tableView.registerClass(NSClassFromString("UITableViewCell"), forCellReuseIdentifier: "a")
             let dataSourceSubscription = items.bindTo(tableView.rx_itemsWithCellIdentifier("a")) { (index: Int, item: Int, cell) in
+
+            }
+
+            return (tableView, dataSourceSubscription)
+        }
+        ensureEventDeallocated(createView) { (view: UITableView) in view.rx_modelSelected(Int.self) }
+    }
+
+    func testTableView_DelegateEventCompletesOnDealloc2_cellType() {
+        let items: Observable<[Int]> = just([1, 2, 3])
+
+        let createView: () -> (UITableView, Disposable) = {
+            let tableView = UITableView(frame: CGRectMake(0, 0, 1, 1))
+            tableView.registerClass(NSClassFromString("UITableViewCell"), forCellReuseIdentifier: "a")
+            let dataSourceSubscription = items.bindTo(tableView.rx_itemsWithCellIdentifier("a", cellType: UITableViewCell.self)) { (index: Int, item: Int, cell) in
 
             }
 
