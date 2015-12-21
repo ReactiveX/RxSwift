@@ -50,7 +50,7 @@ extension ObservableSingleTest {
     
     
     func testAsObservable_hides() {
-        let xs : Observable<Int> = empty()
+        let xs : Observable<Int> = Observable.empty()
         
         let res = xs.asObservable()
         
@@ -770,7 +770,7 @@ extension ObservableSingleTest {
 
     func testRetry_tailRecursiveOptimizationsTest() {
         var count = 1
-        let sequenceSendingImmediateError: Observable<Int> = create { observer in
+        let sequenceSendingImmediateError: Observable<Int> = Observable.create { observer in
             observer.on(.Next(0))
             observer.on(.Next(1))
             observer.on(.Next(2))
@@ -1105,7 +1105,7 @@ extension ObservableSingleTest {
                 }
                 .flatMap { (a, e) -> Observable<Int64> in
                     if a >= 4 {
-                        return failWith(e)
+                        return Observable.error(e)
                     }
 
                     return timer(a * 50, scheduler: scheduler)
@@ -1161,7 +1161,7 @@ extension ObservableSingleTest {
 
     func testRetryWhen_tailRecursiveOptimizationsTest() {
         var count = 1
-        let sequenceSendingImmediateError: Observable<Int> = create { observer in
+        let sequenceSendingImmediateError: Observable<Int> = Observable.create { observer in
             observer.on(.Next(0))
             observer.on(.Next(1))
             observer.on(.Next(2))

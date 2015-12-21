@@ -19,7 +19,7 @@ extension ObservableMultipleTest {
 
     func testZip_ImmediateSchedule<%= i %>() {
         <% for j in 0..<i { %>
-        let v<%= j %>: Observable<Int> = just(<%= j + 1 %>)<% } %>
+        let v<%= j %>: Observable<Int> = Observable.just(<%= j + 1 %>)<% } %>
 
         var result: Int! = nil
 

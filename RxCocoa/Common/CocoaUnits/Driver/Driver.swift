@@ -83,8 +83,6 @@ public struct Driver<Element> : DriverConvertibleType {
 
 public struct Drive {
     
-#if !RX_NO_MODULE
-    
     /**
     Returns an empty observable sequence, using the specified scheduler to send out the single `Completed` message.
     
@@ -92,7 +90,7 @@ public struct Drive {
     */
     @warn_unused_result(message="http://git.io/rxs.uo")
     public static func empty<E>() -> Driver<E> {
-        return Driver(raw: RxSwift.empty().subscribeOn(ConcurrentMainScheduler.sharedInstance))
+        return Driver(raw: Observable.empty().subscribeOn(ConcurrentMainScheduler.sharedInstance))
     }
     
     /**
@@ -102,7 +100,7 @@ public struct Drive {
     */
     @warn_unused_result(message="http://git.io/rxs.uo")
     public static func never<E>() -> Driver<E> {
-        return Driver(raw: RxSwift.never().subscribeOn(ConcurrentMainScheduler.sharedInstance))
+        return Driver(raw: Observable.never().subscribeOn(ConcurrentMainScheduler.sharedInstance))
     }
     
     /**
@@ -113,7 +111,7 @@ public struct Drive {
     */
     @warn_unused_result(message="http://git.io/rxs.uo")
     public static func just<E>(element: E) -> Driver<E> {
-        return Driver(raw: RxSwift.just(element).subscribeOn(ConcurrentMainScheduler.sharedInstance))
+        return Driver(raw: Observable.just(element).subscribeOn(ConcurrentMainScheduler.sharedInstance))
     }
 
     /**
@@ -125,55 +123,8 @@ public struct Drive {
     @warn_unused_result(message="http://git.io/rxs.uo")
     public static func deferred<E>(observableFactory: () -> Driver<E>)
         -> Driver<E> {
-        return Driver(RxSwift.deferred { observableFactory().asObservable() })
+        return Driver(Observable.deferred { observableFactory().asObservable() })
     }
-
-#else
-    
-    /**
-    Returns an empty observable sequence, using the specified scheduler to send out the single `Completed` message.
-
-    - returns: An observable sequence with no elements.
-    */
-    @warn_unused_result(message="http://git.io/rxs.uo")
-    public static func empty<E>() -> Driver<E> {
-        return Driver(raw: _empty().subscribeOn(ConcurrentMainScheduler.sharedInstance))
-    }
-   
-    /**
-    Returns a non-terminating observable sequence, which can be used to denote an infinite duration.
-    
-    - returns: An observable sequence whose observers will never get called.
-    */
-    @warn_unused_result(message="http://git.io/rxs.uo")
-    public static func never<E>() -> Driver<E> {
-        return Driver(raw: _never().subscribeOn(ConcurrentMainScheduler.sharedInstance))
-    }
-    
-    /**
-    Returns an observable sequence that contains a single element.
-    
-    - parameter element: Single element in the resulting observable sequence.
-    - returns: An observable sequence containing the single specified element.
-    */
-    @warn_unused_result(message="http://git.io/rxs.uo")
-    public static func just<E>(element: E) -> Driver<E> {
-        return Driver(raw: _just(element).subscribeOn(ConcurrentMainScheduler.sharedInstance))
-    }
-
-    /**
-    Returns an observable sequence that invokes the specified factory function whenever a new observer subscribes.
-
-    - parameter observableFactory: Observable factory function to invoke for each observer that subscribes to the resulting sequence.
-    - returns: An observable sequence whose observers trigger an invocation of the given observable factory function.
-    */
-    @warn_unused_result(message="http://git.io/rxs.uo")
-    public static func deferred<E>(observableFactory: () -> Driver<E>)
-        -> Driver<E> {
-        return Driver(_deferred { observableFactory().asObservable() })
-    }
-
-#endif
 
     @warn_unused_result(message="http://git.io/rxs.uo")
     public static func sequenceOf<E>(elements: E ...) -> Driver<E> {
@@ -182,26 +133,3 @@ public struct Drive {
     }
     
 }
-
-// name clashes :(
-    
-#if RX_NO_MODULE
-
-func _empty<E>() -> Observable<E> {
-    return empty()
-}
-
-func _never<E>() -> Observable<E> {
-    return never()
-}
-
-func _just<E>(element: E) -> Observable<E> {
-    return just(element)
-}
-
-func _deferred<E>(observableFactory: () -> Observable<E>)
-    -> Observable<E> {
-    return deferred(observableFactory)
-}
-    
-#endif

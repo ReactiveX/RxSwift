@@ -262,7 +262,7 @@ extension ObservableTimeTest {
 
         let start = NSDate()
 
-        let a = try! [just(0), never()].toObservable().concat()
+        let a = try! [Observable.just(0), Observable.never()].toObservable().concat()
             .throttle(2.0, scheduler: scheduler)
             .toBlocking()
             .first()

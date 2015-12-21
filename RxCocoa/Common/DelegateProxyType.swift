@@ -231,7 +231,7 @@ extension ObservableType {
         
         let subscription = self.asObservable()
             // source can't ever end, otherwise it will release the subscriber
-            .concat(never())
+            .concat(Observable.never())
             .subscribe { [weak object] (event: Event<E>) in
                 MainScheduler.ensureExecutingOnScheduler()
 

@@ -204,7 +204,7 @@ extension NSObject {
             var error: NSError?
             let targetImplementation = RX_ensure_observing(self, selector, &error)
             if targetImplementation == nil {
-                return failWith(error?.rxCocoaErrorForTarget(self) ?? RxCocoaError.Unknown)
+                return Observable.error(error?.rxCocoaErrorForTarget(self) ?? RxCocoaError.Unknown)
             }
 
             subject.targetImplementation = targetImplementation
@@ -246,7 +246,7 @@ extension NSObject {
             var error: NSError?
             let targetImplementation = RX_ensure_observing(self, deallocSelector, &error)
             if targetImplementation == nil {
-                return failWith(error?.rxCocoaErrorForTarget(self) ?? RxCocoaError.Unknown)
+                return Observable.error(error?.rxCocoaErrorForTarget(self) ?? RxCocoaError.Unknown)
             }
 
             subject.targetImplementation = targetImplementation

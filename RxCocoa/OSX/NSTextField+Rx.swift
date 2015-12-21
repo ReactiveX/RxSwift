@@ -102,7 +102,7 @@ extension NSTextField {
     public var rx_text: ControlProperty<String> {
         let delegate = proxyForObject(RxTextFieldDelegateProxy.self, self)
         
-        let source = deferred { [weak self] in
+        let source = Observable.deferred { [weak self] in
             delegate.textSubject.startWith(self?.stringValue ?? "")
         }.takeUntil(rx_deallocated)
         

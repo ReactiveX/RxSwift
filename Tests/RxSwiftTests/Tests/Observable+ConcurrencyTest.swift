@@ -74,7 +74,7 @@ extension ObservableConcurrencyTest {
         var didExecute = false
 
         runDispatchQueueSchedulerTests { scheduler in
-            let observable = just(0)
+            let observable = Observable.just(0)
                 .observeOn(scheduler)
             return observable .subscribeNext { n in
                 didExecute = true
@@ -91,7 +91,7 @@ extension ObservableConcurrencyTest {
     func testObserveOnDispatchQueue_EnsureCorrectImplementationIsChosen() {
         runDispatchQueueSchedulerTests { scheduler in
             XCTAssert(numberOfSerialDispatchQueueObservables == 0)
-            let a = just(0)
+            let a = Observable.just(0)
                 .observeOn(scheduler)
             XCTAssertTrue(a == a) // shut up swift compiler :(, we only need to keep this in memory
             XCTAssert(numberOfSerialDispatchQueueObservables == 1)
@@ -127,7 +127,7 @@ extension ObservableConcurrencyTest {
         var nEvents = 0
 
         runDispatchQueueSchedulerTests { scheduler in
-            let observable: Observable<Int> = failWith(testError).observeOn(scheduler)
+            let observable: Observable<Int> = Observable.error(testError).observeOn(scheduler)
             return observable .subscribeError { n in
                 nEvents++
             }
@@ -140,7 +140,7 @@ extension ObservableConcurrencyTest {
         var nEvents = 0
 
         runDispatchQueueSchedulerTests { scheduler in
-            let observable: Observable<Int> = empty().observeOn(scheduler)
+            let observable: Observable<Int> = Observable.empty().observeOn(scheduler)
 
             return observable.subscribeCompleted {
                 nEvents++
@@ -152,7 +152,7 @@ extension ObservableConcurrencyTest {
 
     func testObserveOnDispatchQueue_Never() {
         runDispatchQueueSchedulerTests { scheduler in
-            let xs: Observable<Int> = never()
+            let xs: Observable<Int> = Observable.never()
             return xs
                 .observeOn(scheduler)
                 .subscribeNext { n in
@@ -319,7 +319,7 @@ class ObservableConcurrentSchedulerConcurrencyTest: ObservableConcurrencyTestBas
         let scheduler = self.createScheduler()
 
         XCTAssert(numberOfSerialDispatchQueueObservables == 0)
-        _ = just(0).observeOn(scheduler)
+        _ = Observable.just(0).observeOn(scheduler)
         self.sleep(0.1)
         XCTAssert(numberOfSerialDispatchQueueObservables == 0)
     }
@@ -379,7 +379,7 @@ class ObservableConcurrentSchedulerConcurrencyTest: ObservableConcurrencyTestBas
     func testObserveOn_Never() {
         let scheduler = createScheduler()
 
-        let xs: Observable<Int> = never()
+        let xs: Observable<Int> = Observable.never()
         let subscription = xs
             .observeOn(scheduler)
             .subscribeNext { n in
@@ -577,7 +577,7 @@ extension ObservableConcurrencyTest {
         var scheduled = 0
         var disposed = 0
 
-        let xs: Observable<Int> = create { observer in
+        let xs: Observable<Int> = Observable.create { observer in
             scheduled = scheduler.now
             return AnonymousDisposable {
                 disposed = scheduler.now

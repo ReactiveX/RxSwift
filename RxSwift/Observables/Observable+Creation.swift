@@ -91,11 +91,10 @@ extension Observable {
 
     - seealso: [empty operator on reactivex.io](http://reactivex.io/documentation/operators/empty-never-throw.html)
 
-    - parameter type: Optional type hint.
     - returns: An observable sequence with no elements.
     */
     @warn_unused_result(message="http://git.io/rxs.uo")
-    public static func empty(type: E.Type = E.self) -> Observable<E> {
+    public static func empty() -> Observable<E> {
         return Empty<E>()
     }
 
@@ -106,11 +105,10 @@ extension Observable {
 
     - seealso: [never operator on reactivex.io](http://reactivex.io/documentation/operators/empty-never-throw.html)
 
-    - parameter type: Optional type hint.
     - returns: An observable sequence whose observers will never get called.
     */
     @warn_unused_result(message="http://git.io/rxs.uo")
-    public static func never(type: E.Type = E.self) -> Observable<E> {
+    public static func never() -> Observable<E> {
         return Never()
     }
 
@@ -150,11 +148,10 @@ extension Observable {
 
     - seealso: [throw operator on reactivex.io](http://reactivex.io/documentation/operators/empty-never-throw.html)
 
-    - parameter type: Optional type hint.
     - returns: The observable sequence that terminates with specified error.
     */
     @warn_unused_result(message="http://git.io/rxs.uo")
-    public static func error(error: ErrorType, _ type: E.Type = E.self) -> Observable<E> {
+    public static func error(error: ErrorType) -> Observable<E> {
         return Error(error: error)
     }
 

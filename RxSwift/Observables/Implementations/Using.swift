@@ -34,7 +34,7 @@ class UsingSink<SourceType, ResourceType: Disposable, O: ObserverType where O.E 
             )
         } catch let error {
             return StableCompositeDisposable.create(
-                failWith(error).subscribe(self),
+                Observable.error(error).subscribe(self),
                 disposable
             )
         }

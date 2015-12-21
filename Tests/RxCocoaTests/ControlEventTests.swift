@@ -19,7 +19,7 @@ class ControlEventTests : RxTest {
 
         let expectSubscribeOffMainThread = expectationWithDescription("Did subscribe off main thread")
 
-        let controlProperty = ControlEvent(events: deferred { () -> Observable<Int> in
+        let controlProperty = ControlEvent(events: Observable.deferred { () -> Observable<Int> in
             XCTAssertTrue(NSThread.isMainThread())
             observedOnMainThread = true
             return hotObservable.asObservable()

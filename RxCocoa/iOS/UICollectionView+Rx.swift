@@ -158,10 +158,10 @@ extension UICollectionView {
     public func rx_modelSelected<T>(modelType: T.Type) -> ControlEvent<T> {
         let source: Observable<T> = rx_itemSelected.flatMap { [weak self] indexPath -> Observable<T> in
             guard let view = self else {
-                return empty()
+                return Observable.empty()
             }
 
-            return just(try view.rx_modelAtIndexPath(indexPath))
+            return Observable.just(try view.rx_modelAtIndexPath(indexPath))
         }
         
         return ControlEvent(events: source)

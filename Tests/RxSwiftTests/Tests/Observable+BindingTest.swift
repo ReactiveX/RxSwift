@@ -22,7 +22,7 @@ extension ObservableBindingTest {
         
         var nEvents = 0
         
-        let observable = TestConnectableObservable(o: sequenceOf(0, 1, 2), s: subject)
+        let observable = TestConnectableObservable(o: Observable.of(0, 1, 2), s: subject)
         let d = observable.subscribeNext { n in
             nEvents++
         }
@@ -41,7 +41,7 @@ extension ObservableBindingTest {
         
         var nEvents = 0
         
-        let observable = TestConnectableObservable(o: [sequenceOf(0, 1, 2), failWith(testError)].concat(), s: subject)
+        let observable = TestConnectableObservable(o: [Observable.of(0, 1, 2), Observable.error(testError)].concat(), s: subject)
         let d = observable.subscribeError { n in
             nEvents++
         }
@@ -60,7 +60,7 @@ extension ObservableBindingTest {
         
         var nEvents = 0
         
-        let observable = TestConnectableObservable(o: failWith(testError), s: subject)
+        let observable = TestConnectableObservable(o: Observable.error(testError), s: subject)
         let d = observable.subscribeError { n in
             nEvents++
         }
@@ -79,7 +79,7 @@ extension ObservableBindingTest {
         
         var nEvents = 0
         
-        let observable = TestConnectableObservable(o: empty(), s: subject)
+        let observable = TestConnectableObservable(o: Observable.empty(), s: subject)
         let d = observable.subscribeCompleted {
             nEvents++
         }
@@ -127,9 +127,9 @@ extension ObservableBindingTest {
         var disconnected = false
         var count = 0
         
-        let xs: Observable<Int> = deferred {
+        let xs: Observable<Int> = Observable.deferred {
             count++
-            return create { obs in
+            return Observable.create { obs in
                 return AnonymousDisposable {
                     disconnected = true
                 }
@@ -167,7 +167,7 @@ extension ObservableBindingTest {
     }
     
     func testRefCount_Error() {
-        let xs: Observable<Int> = failWith(testError)
+        let xs: Observable<Int> = Observable.error(testError)
         
         let res = xs.publish().refCount()
         _ = res.subscribe { event in
@@ -911,7 +911,7 @@ extension ObservableBindingTest {
         _testIdenticalBehaviorOfShareReplayOptimizedAndComposed { transform in
             var nEvents = 0
 
-            let observable = transform(sequenceOf(0, 1, 2))
+            let observable = transform(Observable.of(0, 1, 2))
             _ = observable.subscribeNext { n in
                 nEvents++
             }
@@ -924,7 +924,7 @@ extension ObservableBindingTest {
         _testIdenticalBehaviorOfShareReplayOptimizedAndComposed { transform in
             var nEvents = 0
 
-            let observable = transform(empty())
+            let observable = transform(Observable.empty())
             _ = observable.subscribeCompleted { n in
                 nEvents++
             }
@@ -937,7 +937,7 @@ extension ObservableBindingTest {
         _testIdenticalBehaviorOfShareReplayOptimizedAndComposed { transform in
             var nEvents = 0
 
-            let observable = transform(failWith(testError))
+            let observable = transform(Observable.error(testError))
             _ = observable.subscribeError { _ in
                 nEvents++
             }
@@ -950,7 +950,7 @@ extension ObservableBindingTest {
         _testIdenticalBehaviorOfShareReplayOptimizedAndComposed { transform in
             var nEvents = 0
 
-            let observable = transform([sequenceOf(0, 1, 2), failWith(testError)].concat())
+            let observable = transform([Observable.of(0, 1, 2), Observable.error(testError)].concat())
             _ = observable.subscribeError { n in
                 nEvents++
             }
@@ -1221,7 +1221,7 @@ extension ObservableBindingTest {
     func testShareReplayLatestWhileConnected_DeadlockImmediatelly() {
         var nEvents = 0
 
-        let observable = sequenceOf(0, 1, 2).shareReplayLatestWhileConnected()
+        let observable = Observable.of(0, 1, 2).shareReplayLatestWhileConnected()
         _ = observable.subscribeNext { n in
             nEvents++
         }
@@ -1232,7 +1232,7 @@ extension ObservableBindingTest {
     func testShareReplayLatestWhileConnected_DeadlockEmpty() {
         var nEvents = 0
 
-        let observable = empty(Int).shareReplayLatestWhileConnected()
+        let observable = Observable<Int>.empty().shareReplayLatestWhileConnected()
         _ = observable.subscribeCompleted { n in
             nEvents++
         }
@@ -1243,7 +1243,7 @@ extension ObservableBindingTest {
     func testShareReplayLatestWhileConnected_DeadlockError() {
         var nEvents = 0
 
-        let observable = failWith(testError, Int.self).shareReplayLatestWhileConnected()
+        let observable = Observable<Int>.error(testError).shareReplayLatestWhileConnected()
         _ = observable.subscribeError { _ in
             nEvents++
         }
@@ -1254,7 +1254,7 @@ extension ObservableBindingTest {
     func testShareReplayLatestWhileConnected_DeadlockErrorAfterN() {
         var nEvents = 0
 
-        let observable = [sequenceOf(0, 1, 2), failWith(testError)].concat().shareReplayLatestWhileConnected()
+        let observable = [Observable.of(0, 1, 2), Observable.error(testError)].concat().shareReplayLatestWhileConnected()
         _ = observable.subscribeError { n in
             nEvents++
         }

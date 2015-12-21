@@ -78,7 +78,7 @@ extension ObservableType {
     public func take(count: Int)
         -> Observable<E> {
         if count == 0 {
-            return empty()
+            return Observable.empty()
         }
         else {
             return TakeCount(source: asObservable(), count: count)

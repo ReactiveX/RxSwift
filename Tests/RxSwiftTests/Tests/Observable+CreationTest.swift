@@ -21,7 +21,7 @@ extension ObservableCreationTests {
         let scheduler = TestScheduler(initialClock: 0)
 
         let res = scheduler.start {
-            return just(42)
+            return Observable.just(42)
         }
 
         XCTAssertEqual(res.events, [
@@ -34,7 +34,7 @@ extension ObservableCreationTests {
         let scheduler = TestScheduler(initialClock: 0)
 
         let res = scheduler.start {
-            return just(42, scheduler: scheduler)
+            return Observable.just(42, scheduler: scheduler)
         }
 
         XCTAssertEqual(res.events, [
@@ -47,7 +47,7 @@ extension ObservableCreationTests {
         let scheduler = TestScheduler(initialClock: 0)
 
         let res = scheduler.start(200) {
-            return just(42, scheduler: scheduler)
+            return Observable.just(42, scheduler: scheduler)
         }
 
         XCTAssertEqual(res.events, [
@@ -62,7 +62,7 @@ extension ObservableCreationTests {
         let res = scheduler.createObserver(Int)
 
         scheduler.scheduleAt(100) {
-            d.disposable = just(42, scheduler: scheduler).subscribe { e in
+            d.disposable = Observable.just(42, scheduler: scheduler).subscribe { e in
                 res.on(e)
 
                 switch e {
@@ -82,7 +82,7 @@ extension ObservableCreationTests {
     }
 
     func testJust_DefaultScheduler() {
-        let res = try! just(42, scheduler: MainScheduler.sharedInstance)
+        let res = try! Observable.just(42, scheduler: MainScheduler.sharedInstance)
             .toBlocking()
             .toArray()
 
@@ -142,7 +142,7 @@ extension ObservableCreationTests {
     func testSequenceOf_complete_immediate() {
         let scheduler = TestScheduler(initialClock: 0)
         let res = scheduler.start {
-            sequenceOf(3, 1, 2, 4)
+            Observable.of(3, 1, 2, 4)
         }
 
         XCTAssertEqual(res.events, [
@@ -157,7 +157,7 @@ extension ObservableCreationTests {
     func testSequenceOf_complete() {
         let scheduler = TestScheduler(initialClock: 0)
         let res = scheduler.start {
-            sequenceOf(3, 1, 2, 4, scheduler: scheduler)
+            Observable.of(3, 1, 2, 4, scheduler: scheduler)
         }
 
         XCTAssertEqual(res.events, [
@@ -172,7 +172,7 @@ extension ObservableCreationTests {
     func testSequenceOf_dispose() {
         let scheduler = TestScheduler(initialClock: 0)
         let res = scheduler.start(203) {
-            sequenceOf(3, 1, 2, 4, scheduler: scheduler)
+            Observable.of(3, 1, 2, 4, scheduler: scheduler)
         }
 
         XCTAssertEqual(res.events, [
@@ -188,7 +188,7 @@ extension ObservableCreationTests {
         let scheduler = TestScheduler(initialClock: 0)
         
         let res = scheduler.start {
-            generate(0, condition: { x in x <= 3 }, scheduler: scheduler) { x in
+            Observable.generate(0, condition: { x in x <= 3 }, scheduler: scheduler) { x in
                 x + 1
             }
         }
@@ -207,7 +207,7 @@ extension ObservableCreationTests {
         let scheduler = TestScheduler(initialClock: 0)
         
         let res = scheduler.start {
-            generate(0, condition: { _ in throw testError }, scheduler: scheduler) { x in
+            Observable.generate(0, condition: { _ in throw testError }, scheduler: scheduler) { x in
                 x + 1
             }
         }
@@ -378,7 +378,7 @@ extension ObservableCreationTests {
         var _d:MockDisposable!
         
         let res = scheduler.start {
-            using({ () -> MockDisposable in
+            Observable.using({ () -> MockDisposable in
                 disposeInvoked += 1
                 disposable = MockDisposable(scheduler: scheduler)
                 return disposable
@@ -424,7 +424,7 @@ extension ObservableCreationTests {
         var _d:MockDisposable!
         
         let res = scheduler.start {
-            using({ () -> MockDisposable in
+            Observable.using({ () -> MockDisposable in
                 disposeInvoked += 1
                 disposable = MockDisposable(scheduler: scheduler)
                 return disposable
@@ -465,12 +465,12 @@ extension ObservableCreationTests {
         var createInvoked = 0
        
         let res = scheduler.start {
-            using({ () -> MockDisposable in
+            Observable.using({ () -> MockDisposable in
                 disposeInvoked += 1
                 throw testError
                 }, observableFactory: { d in
                     createInvoked += 1
-                    return never()
+                    return Observable.never()
                     
             }) as Observable<Int>
         }
@@ -491,7 +491,7 @@ extension ObservableCreationTests {
         var disposable:MockDisposable!
        
         let res = scheduler.start {
-            using({ () -> MockDisposable in
+            Observable.using({ () -> MockDisposable in
                 disposeInvoked += 1
                 disposable = MockDisposable(scheduler: scheduler)
                 return disposable

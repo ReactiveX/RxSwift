@@ -118,7 +118,7 @@ extension NSURLSession {
     */
     @warn_unused_result(message="http://git.io/rxs.uo")
     public func rx_response(request: NSURLRequest) -> Observable<(NSData, NSHTTPURLResponse)> {
-        return create { observer in
+        return Observable.create { observer in
 
             // smart compiler should be able to optimize this out
             var d: NSDate?

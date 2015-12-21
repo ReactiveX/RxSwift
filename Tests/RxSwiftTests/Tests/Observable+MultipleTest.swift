@@ -939,7 +939,7 @@ func generateSequence<T>(startIndex: Int, _ generator: Int -> Observable<T>) -> 
 extension ObservableMultipleTest {
     func testConcat_DefaultScheduler() {
         var sum = 0
-        _ = [just(1), just(2), just(3)].concat().subscribeNext { (e) -> Void in
+        _ = [Observable.just(1), Observable.just(2), Observable.just(3)].concat().subscribeNext { (e) -> Void in
             sum += e
         }
         
@@ -1526,7 +1526,7 @@ extension ObservableMultipleTest {
     func testConcat_TailRecursionCollection() {
         maxTailRecursiveSinkStackSize = 0
         let elements = try! generateCollection(0) { i in
-                just(i, scheduler: CurrentThreadScheduler.instance)
+                Observable.just(i, scheduler: CurrentThreadScheduler.instance)
             }
             .take(10000)
             .toBlocking()
@@ -1539,7 +1539,7 @@ extension ObservableMultipleTest {
     func testConcat_TailRecursionSequence() {
         maxTailRecursiveSinkStackSize = 0
         let elements = try! generateSequence(0) { i in
-                just(i, scheduler: CurrentThreadScheduler.instance)
+                Observable.just(i, scheduler: CurrentThreadScheduler.instance)
             }
             .take(10000)
             .toBlocking()
@@ -1556,10 +1556,10 @@ extension ObservableMultipleTest {
     func testMerge_DeadlockSimple() {
         var nEvents = 0
         
-        let observable = sequenceOf(
-            sequenceOf(0, 1, 2),
-            sequenceOf(0, 1, 2),
-            sequenceOf(0, 1, 2)
+        let observable = Observable.of(
+            Observable.of(0, 1, 2),
+            Observable.of(0, 1, 2),
+            Observable.of(0, 1, 2)
         ).merge()
         
         _ = observable.subscribeNext { n in
@@ -1572,10 +1572,10 @@ extension ObservableMultipleTest {
     func testMerge_DeadlockErrorAfterN() {
         var nEvents = 0
         
-        let observable = sequenceOf(
-            sequenceOf(0, 1, 2),
-            [sequenceOf(0, 1), failWith(testError)].concat(),
-            sequenceOf(0, 1, 2)
+        let observable = Observable.of(
+            Observable.of(0, 1, 2),
+            [Observable.of(0, 1), Observable.error(testError)].concat(),
+            Observable.of(0, 1, 2)
         ).merge()
         
         _ = observable.subscribeError { n in
@@ -1588,8 +1588,8 @@ extension ObservableMultipleTest {
     func testMerge_DeadlockErrorImmediatelly() {
         var nEvents = 0
         
-        let observable: Observable<Observable<Int>> = just(
-            failWith(testError)
+        let observable: Observable<Observable<Int>> = Observable.just(
+            Observable.error(testError)
         ).merge()
 
         _ = observable.subscribeError { n in
@@ -1602,7 +1602,7 @@ extension ObservableMultipleTest {
     func testMerge_DeadlockEmpty() {
         var nEvents = 0
         
-        let observable: Observable<Int> = (empty() as Observable<Observable<Int>>).merge()
+        let observable: Observable<Int> = Observable<Observable<Int>>.empty().merge()
         _ = observable.subscribeCompleted {
             nEvents++
         }
@@ -1613,7 +1613,7 @@ extension ObservableMultipleTest {
     func testMerge_DeadlockFirstEmpty() {
         var nEvents = 0
         
-        let observable: Observable<Int> = just(empty()).merge()
+        let observable: Observable<Int> = Observable.just(Observable.empty()).merge()
         _ = observable.subscribeCompleted { n in
             nEvents++
         }
@@ -1624,10 +1624,10 @@ extension ObservableMultipleTest {
     func testMergeConcurrent_DeadlockSimple() {
         var nEvents = 0
         
-        let observable = sequenceOf(
-            sequenceOf(0, 1, 2),
-            sequenceOf(0, 1, 2),
-            sequenceOf(0, 1, 2)
+        let observable = Observable.of(
+            Observable.of(0, 1, 2),
+            Observable.of(0, 1, 2),
+            Observable.of(0, 1, 2)
         ).merge(maxConcurrent: 1)
         
         _ = observable.subscribeNext { n in
@@ -1640,10 +1640,10 @@ extension ObservableMultipleTest {
     func testMergeConcurrent_DeadlockErrorAfterN() {
         var nEvents = 0
         
-        let observable = sequenceOf(
-            sequenceOf(0, 1, 2),
-            [sequenceOf(0, 1), failWith(testError)].concat(),
-            sequenceOf(0, 1, 2)
+        let observable = Observable.of(
+            Observable.of(0, 1, 2),
+            [Observable.of(0, 1), Observable.error(testError)].concat(),
+            Observable.of(0, 1, 2)
         ).merge(maxConcurrent: 1)
         
         _ = observable.subscribeError { n in
@@ -1656,8 +1656,8 @@ extension ObservableMultipleTest {
     func testMergeConcurrent_DeadlockErrorImmediatelly() {
         var nEvents = 0
         
-        let observable: Observable<Observable<Int>> = just(
-            failWith(testError)
+        let observable: Observable<Observable<Int>> = Observable.just(
+            Observable.error(testError)
         ).merge(maxConcurrent: 1)
 
         _ = observable.subscribeError { n in
@@ -1670,7 +1670,7 @@ extension ObservableMultipleTest {
     func testMergeConcurrent_DeadlockEmpty() {
         var nEvents = 0
         
-        let observable: Observable<Int> = (empty() as Observable<Observable<Int>>).merge(maxConcurrent: 1)
+        let observable: Observable<Int> = Observable<Observable<Int>>.empty().merge(maxConcurrent: 1)
 
         _ = observable.subscribeCompleted {
             nEvents++
@@ -1682,7 +1682,7 @@ extension ObservableMultipleTest {
     func testMergeConcurrent_DeadlockFirstEmpty() {
         var nEvents = 0
         
-        let observable: Observable<Int> = just(empty()).merge(maxConcurrent: 1)
+        let observable: Observable<Int> = Observable.just(Observable.empty()).merge(maxConcurrent: 1)
 
         _ = observable.subscribeCompleted { n in
             nEvents++
@@ -2503,7 +2503,7 @@ extension ObservableMultipleTest {
     func testCombineLatest_DeadlockSimple() {
         var nEvents = 0
         
-        let observable = combineLatest(sequenceOf(0, 1, 2), sequenceOf(0, 1, 2)) { $0 + $1 }
+        let observable = Observable.combineLatest(Observable.of(0, 1, 2), Observable.of(0, 1, 2)) { $0 + $1 }
         _ = observable.subscribeNext { n in
             nEvents++
         }
@@ -2514,9 +2514,9 @@ extension ObservableMultipleTest {
     func testCombineLatest_DeadlockErrorAfterN() {
         var nEvents = 0
         
-        let observable = combineLatest(
-            [sequenceOf(0, 1, 2), failWith(testError)].concat(),
-            sequenceOf(0, 1, 2)
+        let observable = Observable.combineLatest(
+            [Observable.of(0, 1, 2), Observable.error(testError)].concat(),
+            Observable.of(0, 1, 2)
         ) { $0 + $1 }
 
         _ = observable.subscribeError { n in
@@ -2529,9 +2529,9 @@ extension ObservableMultipleTest {
     func testCombineLatest_DeadlockErrorImmediatelly() {
         var nEvents = 0
         
-        let observable = combineLatest(
-            failWith(testError),
-            sequenceOf(0, 1, 2)
+        let observable = Observable.combineLatest(
+            Observable.error(testError),
+            Observable.of(0, 1, 2)
         ) { $0 + $1 }
 
         _ = observable.subscribeError { n in
@@ -2545,9 +2545,9 @@ extension ObservableMultipleTest {
         var nEvents = 0
         
         
-        let observable = combineLatest(
-            empty(),
-            sequenceOf(0, 1, 2)
+        let observable = Observable.combineLatest(
+            Observable.empty(),
+            Observable.of(0, 1, 2)
             ) { $0 + $1 }
 
         _ = observable.subscribeCompleted {
@@ -4272,7 +4272,7 @@ extension ObservableMultipleTest {
             completed(250)
         ])
         
-        let r: Observable<Int> = create { o in
+        let r: Observable<Int> = Observable.create { o in
             return AnonymousDisposable {
                 disposed = true
             }

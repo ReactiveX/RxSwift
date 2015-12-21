@@ -1021,7 +1021,7 @@ extension ObservableStandardSequenceOperatorsTest {
     }
     
     func testMap_DisposeOnCompleted() {
-        _ = just("A")
+        _ = Observable.just("A")
             .map { a in
                 return a
             }
@@ -1031,7 +1031,7 @@ extension ObservableStandardSequenceOperatorsTest {
     }
     
     func testMap1_DisposeOnCompleted() {
-        _ = just("A")
+        _ = Observable.just("A")
             .mapWithIndex { (a, i) in
                 return a
             }
@@ -2516,7 +2516,7 @@ extension ObservableStandardSequenceOperatorsTest {
         
         let res = scheduler.start {
             xs.flatMapWithIndex { (x, i) in
-                return just(ElementIndexPair(x, i))
+                return Observable.just(ElementIndexPair(x, i))
             }
         }
         

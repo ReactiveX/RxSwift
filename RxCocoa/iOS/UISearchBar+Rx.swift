@@ -31,10 +31,10 @@ extension UISearchBar {
     Reactive wrapper for `text` property.
     */
     public var rx_text: ControlProperty<String> {
-        let source: Observable<String> = deferred { [weak self] () -> Observable<String> in
+        let source: Observable<String> = Observable.deferred { [weak self] () -> Observable<String> in
             let text = self?.text ?? ""
             
-            return (self?.rx_delegate.observe("searchBar:textDidChange:") ?? empty())
+            return (self?.rx_delegate.observe("searchBar:textDidChange:") ?? Observable.empty())
                     .map { a in
                         return a[1] as? String ?? ""
                     }

@@ -27,7 +27,7 @@ extension NSLayoutConstraintTest {
         let subject = View(frame: CGRect.zero)
         let subject2 = View(frame: CGRect.zero)
         let constraint = NSLayoutConstraint(item: subject, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: subject2, attribute: NSLayoutAttribute.Top, multiplier: 0.5, constant: 0.5)
-        just(0).subscribe(constraint.rx_constant).dispose()
+        Observable.just(0).subscribe(constraint.rx_constant).dispose()
 
         XCTAssertTrue(constraint.constant == 0.0)
     }
@@ -36,7 +36,7 @@ extension NSLayoutConstraintTest {
         let subject = View(frame: CGRect.zero)
         let subject2 = View(frame: CGRect.zero)
         let constraint = NSLayoutConstraint(item: subject, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: subject2, attribute: NSLayoutAttribute.Top, multiplier: 0.5, constant: 0.5)
-        just(1.0).subscribe(constraint.rx_constant).dispose()
+        Observable.just(1.0).subscribe(constraint.rx_constant).dispose()
 
         XCTAssertTrue(constraint.constant == 1.0)
     }

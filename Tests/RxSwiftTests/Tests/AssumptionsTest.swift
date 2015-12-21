@@ -19,11 +19,11 @@ func clearRealTest() {
 }
 
 func returnSomething() -> Observable<AnyObject?> {
-    return just("a")
+    return Observable.just("a")
 }
 
 func returnSomething() -> Observable<CGRect?> {
-    return just(CGRectMake(0, 0, 100, 100))
+    return Observable.just(CGRectMake(0, 0, 100, 100))
 }
 
 class AssumptionsTest : RxTest {
@@ -94,7 +94,7 @@ class AssumptionsTest : RxTest {
 #if TRACE_RESOURCES
         let startResourceCount = resourceCount
     
-        var observable: Observable<Int>! = just(1)
+        var observable: Observable<Int>! = Observable.just(1)
 
         XCTAssertTrue(observable != nil)
         XCTAssertEqual(resourceCount, startResourceCount + 1)

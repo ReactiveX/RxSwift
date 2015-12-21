@@ -14,7 +14,7 @@ import XCTest
 extension ControlTests {
     func testSubscribeEnabledToTrue() {
         let subject = UIControl()
-        let disposable = just(true).subscribe(subject.rx_enabled)
+        let disposable = Observable.just(true).subscribe(subject.rx_enabled)
         defer { disposable.dispose() }
 
         XCTAssert(subject.enabled == true, "Expected enabled set to true")
@@ -22,7 +22,7 @@ extension ControlTests {
 
     func testSubscribeEnabledToFalse() {
         let subject = UIControl()
-        let disposable = just(false).subscribe(subject.rx_enabled)
+        let disposable = Observable.just(false).subscribe(subject.rx_enabled)
         defer { disposable.dispose() }
 
         XCTAssert(subject.enabled == false, "Expected enabled set to false")
@@ -58,7 +58,7 @@ extension ControlTests {
     }
 
     func testCollectionView_DelegateEventCompletesOnDealloc1() {
-        let items: Observable<[Int]> = just([1, 2, 3])
+        let items: Observable<[Int]> = Observable.just([1, 2, 3])
 
         let layout = UICollectionViewFlowLayout()
         let createView: () -> (UICollectionView, Disposable) = {
@@ -73,7 +73,7 @@ extension ControlTests {
     }
 
     func testCollectionView_DelegateEventCompletesOnDealloc2() {
-        let items: Observable<[Int]> = just([1, 2, 3])
+        let items: Observable<[Int]> = Observable.just([1, 2, 3])
 
         let layout = UICollectionViewFlowLayout()
 
@@ -90,7 +90,7 @@ extension ControlTests {
     }
 
     func testCollectionView_DelegateEventCompletesOnDealloc2_cellType() {
-        let items: Observable<[Int]> = just([1, 2, 3])
+        let items: Observable<[Int]> = Observable.just([1, 2, 3])
 
         let layout = UICollectionViewFlowLayout()
 
@@ -107,7 +107,7 @@ extension ControlTests {
     }
 
     func testCollectionView_ModelSelected1() {
-        let items: Observable<[Int]> = just([1, 2, 3])
+        let items: Observable<[Int]> = Observable.just([1, 2, 3])
 
         let layout = UICollectionViewFlowLayout()
 
@@ -138,7 +138,7 @@ extension ControlTests {
     }
 
     func testCollectionView_ModelSelected2() {
-        let items: Observable<[Int]> = just([1, 2, 3])
+        let items: Observable<[Int]> = Observable.just([1, 2, 3])
 
         let layout = UICollectionViewFlowLayout()
         let createView: () -> (UICollectionView, Disposable) = {
@@ -200,7 +200,7 @@ extension ControlTests {
     }
 
     func testTableView_DelegateEventCompletesOnDealloc1() {
-        let items: Observable<[Int]> = just([1, 2, 3])
+        let items: Observable<[Int]> = Observable.just([1, 2, 3])
 
         let createView: () -> (UITableView, Disposable) = {
             let tableView = UITableView(frame: CGRectMake(0, 0, 1, 1))
@@ -214,7 +214,7 @@ extension ControlTests {
     }
 
     func testTableView_DelegateEventCompletesOnDealloc2() {
-        let items: Observable<[Int]> = just([1, 2, 3])
+        let items: Observable<[Int]> = Observable.just([1, 2, 3])
 
         let createView: () -> (UITableView, Disposable) = {
             let tableView = UITableView(frame: CGRectMake(0, 0, 1, 1))
@@ -229,7 +229,7 @@ extension ControlTests {
     }
 
     func testTableView_DelegateEventCompletesOnDealloc2_cellType() {
-        let items: Observable<[Int]> = just([1, 2, 3])
+        let items: Observable<[Int]> = Observable.just([1, 2, 3])
 
         let createView: () -> (UITableView, Disposable) = {
             let tableView = UITableView(frame: CGRectMake(0, 0, 1, 1))
@@ -244,7 +244,7 @@ extension ControlTests {
     }
 
     func testTableView_ModelSelected1() {
-        let items: Observable<[Int]> = just([1, 2, 3])
+        let items: Observable<[Int]> = Observable.just([1, 2, 3])
 
         let createView: () -> (UITableView, Disposable) = {
             let tableView = UITableView(frame: CGRectMake(0, 0, 1, 1))
@@ -273,7 +273,7 @@ extension ControlTests {
     }
 
     func testTableView_ModelSelected2() {
-        let items: Observable<[Int]> = just([1, 2, 3])
+        let items: Observable<[Int]> = Observable.just([1, 2, 3])
 
         let createView: () -> (UITableView, Disposable) = {
             let tableView = UITableView(frame: CGRectMake(0, 0, 1, 1))
@@ -307,7 +307,7 @@ extension ControlTests {
 extension ControlTests {
     func testControl_DelegateEventCompletesOnDealloc() {
         let createView: () -> UIControl = { UIControl(frame: CGRectMake(0, 0, 1, 1)) }
-        ensureEventDeallocated(createView) { (view: UIControl) in view.rx_controlEvents(.AllEditingEvents) }
+        ensureEventDeallocated(createView) { (view: UIControl) in view.rx_controlEvent(.AllEditingEvents) }
     }
 }
 

@@ -15,7 +15,7 @@ class VariableTest : RxTest {
         let a = Variable(1)
         let b = Variable(2)
         
-        let c = combineLatest(a, b, resultSelector: +)
+        let c = Observable.combineLatest(a, b, resultSelector: +)
         
         var latestValue: Int?
         
@@ -49,7 +49,7 @@ class VariableTest : RxTest {
         let b /*: Observable<Int>*/ = Variable(2)
         
         // Computed third variable (or sequence)
-        let c /*: Observable<Int>*/ = combineLatest(a, b) { $0 + $1 }
+        let c /*: Observable<Int>*/ = Observable.combineLatest(a, b) { $0 + $1 }
         
         // Reading elements from c.
         // This is just a demo example.

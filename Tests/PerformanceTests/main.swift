@@ -22,7 +22,7 @@ repeat {
 compareTwoImplementations(benchmarkTime: true, benchmarkMemory: false, first: {
     let publishSubject = PublishSubject<Int>()
 
-    //let a = just(1)
+    //let a = Observable.just(1)
 
     //combineLatest(a,
         publishSubject //.asDriver(onErrorJustReturn: -1)
@@ -48,7 +48,7 @@ compareTwoImplementations(benchmarkTime: true, benchmarkMemory: false, first: {
         .map { $0 }*/
         /*.filter { _ in true }//){ x, _ in x }
         .map { $0 }
-        .flatMap { just($0) }*/
+        .flatMap { Observable.just($0) }*/
         .subscribeNext { _ in
 
         }

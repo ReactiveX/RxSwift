@@ -21,8 +21,8 @@ extension ObservableMultipleTest {
 
     func testZip_ImmediateSchedule2() {
         
-        let v0: Observable<Int> = just(1)
-        let v1: Observable<Int> = just(2)
+        let v0: Observable<Int> = Observable.just(1)
+        let v1: Observable<Int> = Observable.just(2)
 
         var result: Int! = nil
 
@@ -173,9 +173,9 @@ extension ObservableMultipleTest {
 
     func testZip_ImmediateSchedule3() {
         
-        let v0: Observable<Int> = just(1)
-        let v1: Observable<Int> = just(2)
-        let v2: Observable<Int> = just(3)
+        let v0: Observable<Int> = Observable.just(1)
+        let v1: Observable<Int> = Observable.just(2)
+        let v2: Observable<Int> = Observable.just(3)
 
         var result: Int! = nil
 
@@ -353,10 +353,10 @@ extension ObservableMultipleTest {
 
     func testZip_ImmediateSchedule4() {
         
-        let v0: Observable<Int> = just(1)
-        let v1: Observable<Int> = just(2)
-        let v2: Observable<Int> = just(3)
-        let v3: Observable<Int> = just(4)
+        let v0: Observable<Int> = Observable.just(1)
+        let v1: Observable<Int> = Observable.just(2)
+        let v2: Observable<Int> = Observable.just(3)
+        let v3: Observable<Int> = Observable.just(4)
 
         var result: Int! = nil
 
@@ -562,11 +562,11 @@ extension ObservableMultipleTest {
 
     func testZip_ImmediateSchedule5() {
         
-        let v0: Observable<Int> = just(1)
-        let v1: Observable<Int> = just(2)
-        let v2: Observable<Int> = just(3)
-        let v3: Observable<Int> = just(4)
-        let v4: Observable<Int> = just(5)
+        let v0: Observable<Int> = Observable.just(1)
+        let v1: Observable<Int> = Observable.just(2)
+        let v2: Observable<Int> = Observable.just(3)
+        let v3: Observable<Int> = Observable.just(4)
+        let v4: Observable<Int> = Observable.just(5)
 
         var result: Int! = nil
 
@@ -801,12 +801,12 @@ extension ObservableMultipleTest {
 
     func testZip_ImmediateSchedule6() {
         
-        let v0: Observable<Int> = just(1)
-        let v1: Observable<Int> = just(2)
-        let v2: Observable<Int> = just(3)
-        let v3: Observable<Int> = just(4)
-        let v4: Observable<Int> = just(5)
-        let v5: Observable<Int> = just(6)
+        let v0: Observable<Int> = Observable.just(1)
+        let v1: Observable<Int> = Observable.just(2)
+        let v2: Observable<Int> = Observable.just(3)
+        let v3: Observable<Int> = Observable.just(4)
+        let v4: Observable<Int> = Observable.just(5)
+        let v5: Observable<Int> = Observable.just(6)
 
         var result: Int! = nil
 
@@ -1071,13 +1071,13 @@ extension ObservableMultipleTest {
 
     func testZip_ImmediateSchedule7() {
         
-        let v0: Observable<Int> = just(1)
-        let v1: Observable<Int> = just(2)
-        let v2: Observable<Int> = just(3)
-        let v3: Observable<Int> = just(4)
-        let v4: Observable<Int> = just(5)
-        let v5: Observable<Int> = just(6)
-        let v6: Observable<Int> = just(7)
+        let v0: Observable<Int> = Observable.just(1)
+        let v1: Observable<Int> = Observable.just(2)
+        let v2: Observable<Int> = Observable.just(3)
+        let v3: Observable<Int> = Observable.just(4)
+        let v4: Observable<Int> = Observable.just(5)
+        let v5: Observable<Int> = Observable.just(6)
+        let v6: Observable<Int> = Observable.just(7)
 
         var result: Int! = nil
 
@@ -1373,14 +1373,14 @@ extension ObservableMultipleTest {
 
     func testZip_ImmediateSchedule8() {
         
-        let v0: Observable<Int> = just(1)
-        let v1: Observable<Int> = just(2)
-        let v2: Observable<Int> = just(3)
-        let v3: Observable<Int> = just(4)
-        let v4: Observable<Int> = just(5)
-        let v5: Observable<Int> = just(6)
-        let v6: Observable<Int> = just(7)
-        let v7: Observable<Int> = just(8)
+        let v0: Observable<Int> = Observable.just(1)
+        let v1: Observable<Int> = Observable.just(2)
+        let v2: Observable<Int> = Observable.just(3)
+        let v3: Observable<Int> = Observable.just(4)
+        let v4: Observable<Int> = Observable.just(5)
+        let v5: Observable<Int> = Observable.just(6)
+        let v6: Observable<Int> = Observable.just(7)
+        let v7: Observable<Int> = Observable.just(8)
 
         var result: Int! = nil
 
