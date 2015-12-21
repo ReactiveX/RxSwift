@@ -20,7 +20,7 @@ extension UIButton {
     Reactive wrapper for `TouchUpInside` control event.
     */
     public var rx_tap: ControlEvent<Void> {
-		return rx_controlEvents(.TouchUpInside)
+		return rx_controlEvent(.TouchUpInside)
     }
     
 }
@@ -41,7 +41,7 @@ extension UIButton {
      Reactive wrapper for `PrimaryActionTriggered` control event.
      */
     public var rx_primaryAction: ControlEvent<Void> {
-        return rx_controlEvents(.PrimaryActionTriggered)
+        return rx_controlEvent(.PrimaryActionTriggered)
     }
 }
 
