@@ -3,6 +3,78 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [2.0.0-rc.0](https://github.com/ReactiveX/RxSwift/releases/tag/2.0.0-rc.0)
+
+#### Updated
+
+* Adds generic `public func rx_sentMessage(selector: Selector) -> Observable<[AnyObject]>` that enables observing of messages
+ sent to any object. (This is enabled if DISABLE_SWIZZLING isn't set).
+* Adds new `RxTests` library to enable testing of custom rx operators.
+This library contains everything needed to write unit tests in the following way:
+```swift
+func testMap() {
+    let scheduler = TestScheduler(initialClock: 0)
+
+    let xs = scheduler.createHotObservable([
+        next(150, 1),
+        next(210, 0),
+        next(220, 1),
+        next(230, 2),
+        next(240, 4),
+        completed(300)
+        ])
+
+    let res = scheduler.start { xs.map { $0 * 2 } }
+
+    let correctEvents = [
+        next(210, 0 * 2),
+        next(220, 1 * 2),
+        next(230, 2 * 2),
+        next(240, 4 * 2),
+        completed(300)
+    ]
+
+    let correctSubscriptions = [
+        Subscription(200, 300)
+    ]
+
+    XCTAssertEqual(res.events, correctEvents)
+    XCTAssertEqual(xs.subscriptions, correctSubscriptions)
+}
+```
+* Changes `ConnectableObservable`, generic argument is now type of elements in observable sequence and not type of underlying subject. (BREAKING CHANGE)
+* Removes `RxBox` and `RxMutable` box from public interface. (BREAKING CHANGE)
+* Deprecates versions of operators with hidden external parameters (scheduler, count) in favor of ones with explicit parameter names.
+    E.g.
+
+    `.debounce(0.2, scheduler: MainScheduler.sharedInstance)` instead of
+
+    `.debounce(0.2, MainScheduler.sharedInstance)`
+
+    `range(0, count: 10)` instead of `range(0, 10)`
+
+    `interval(1, scheduler: MainScheduler.sharedInstance)` instead of
+
+    `interval(1, MainScheduler.sharedInstance)`
+
+    ...
+* Deprecates `rx_controlEvents` in favor of `rx_controlEvent`. (consistency)
+* Adds `deferred` to `Driver` unit.
+* Removes implicitly unwrapped optionals from `CLLocationManager` extensions.
+* Polishes the `debug` operator format.
+* Documents idea behind units in `Units.md`.
+* Adds optional `cellType` parameter to Table/Collection view `rx_itemsWithCellIdentifier` method.
+* Polish for calculator example in `RxExample` app.
+* Documents and adds unit tests for tail recursive optimizations of `concat` operator.
+* Moves `Event` equality operator to `RxTests` project.
+* Adds `seealso` references to `reactivex.io`.
+
+#### Fixed
+
+* Improves and documents resource leak code in `RxExample`.
+* Replaces `unowned` reference with `weak` references in `RxCocoa` project.
+* Fixes `debug` operator not using `__FILE__` and `__LINE__` properly.
+
 ## [2.0.0-beta.4](https://github.com/ReactiveX/RxSwift/releases/tag/2.0.0-beta.4)
 
 #### Updated
