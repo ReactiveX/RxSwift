@@ -314,7 +314,7 @@ extension UITableView {
 
     public func rx_itemsWithCellFactory(source: O)(cellFactory: (UITableView, Int, S.Generator.Element) -> UITableViewCell) -> Disposable {}
 
-    public func rx_itemsWithCellIdentifier(cellIdentifier: String)(source: O)(configureCell: (Int, S.Generator.Element, Cell) -> Void) -> Disposable {}
+    public func rx_itemsWithCellIdentifier(cellIdentifier: String, cellType: Cell.Type = Cell.self)(source: O)(configureCell: (Int, S.Generator.Element, Cell) -> Void) -> Disposable {}
 
     public func rx_itemsWithDataSource(dataSource: DataSource)(source: O) -> Disposable {}
 
@@ -341,7 +341,7 @@ extension UICollectionView {
 
     public func rx_itemsWithCellFactory(source: O)(cellFactory: (UICollectionView, Int, S.Generator.Element) -> UICollectionViewCell) -> Disposable {}
 
-    public func rx_itemsWithCellIdentifier(cellIdentifier: String)(source: O)(configureCell: (Int, S.Generator.Element, Cell) -> Void) -> Disposable {}
+    public func rx_itemsWithCellIdentifier(cellIdentifier: String, cellType: Cell.Type = Cell.self)(source: O)(configureCell: (Int, S.Generator.Element, Cell) -> Void) -> Disposable {}
 
     public func rx_itemsWithDataSource(dataSource: DataSource)(source: O) -> Disposable {}
 
