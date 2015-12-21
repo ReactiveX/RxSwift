@@ -6,7 +6,7 @@ Pod::Spec.new do |s|
 Unit testing extensions for RxSwift. This library contains mock schedulers, observables, and observers
 that should make unit testing your operators easy as unit testing RxSwift built-in operators.
 
-This library contains everything you need to write unit tests in the following way:
+This library contains everything you needed to write unit tests in the following way:
 ```swift
 func testMap() {
     let scheduler = TestScheduler(initialClock: 0)
