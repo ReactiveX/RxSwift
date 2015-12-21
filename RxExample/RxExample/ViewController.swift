@@ -85,7 +85,7 @@ class ViewController: OSViewController {
             Some small additional period to clean things up. In case there were async operations fired,
             they can't be cleaned up momentarily.
             */
-            let time = dispatch_time(DISPATCH_TIME_NOW, Int64(0.05 * Double(NSEC_PER_SEC)))
+            let time = dispatch_time(DISPATCH_TIME_NOW, Int64(0.2 * Double(NSEC_PER_SEC)))
             dispatch_after(time, mainQueue) {
                 assert(resourceCount <= numberOfResourcesThatShouldRemain, "Resources weren't cleaned properly")
             }
