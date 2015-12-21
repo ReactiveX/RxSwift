@@ -19,7 +19,7 @@ class SimpleTableViewExampleViewController : ViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let items = just([
+        let items = Observable.just([
             "First Item",
             "Second Item",
             "Third Item"

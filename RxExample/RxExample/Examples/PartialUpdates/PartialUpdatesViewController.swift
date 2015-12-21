@@ -154,7 +154,7 @@ class PartialUpdatesViewController : ViewController {
             }
             .addDisposableTo(disposeBag)
 
-        sequenceOf(partialUpdatesTableViewOutlet.rx_itemSelected, reloadTableViewOutlet.rx_itemSelected)
+        Observable.of(partialUpdatesTableViewOutlet.rx_itemSelected, reloadTableViewOutlet.rx_itemSelected)
             .merge()
             .subscribeNext { [weak self] i in
                 print("I have a feeling it's .... \(self?.generator.sections[i.section].items[i.item])?")

@@ -40,7 +40,7 @@ class SimpleValidationViewController : ViewController {
             .map { $0.characters.count >= minimalPasswordLength }
             .shareReplay(1)
 
-        let everythingValid = combineLatest(usernameValid, passwordValid) { $0 && $1 }
+        let everythingValid = Observable.combineLatest(usernameValid, passwordValid) { $0 && $1 }
             .shareReplay(1)
 
         usernameValid

@@ -24,8 +24,8 @@ class SearchResultViewModel {
     init(searchResult: WikipediaSearchResult) {
         self.searchResult = searchResult
 
-        self.title = Drive.never()
-        self.imageURLs = Drive.never()
+        self.title = Driver.never()
+        self.imageURLs = Driver.never()
 
         let URLs = configureImageURLs()
 

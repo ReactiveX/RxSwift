@@ -27,7 +27,7 @@ extension ObservableConvertibleType where E: SequenceType, E.Generator.Element :
                 .take(1)
                 .map { [Changeset.initialValue(Array($0))] }
 
-            let differences = zip(sharedSource, newValues) { oldSections, newSections -> [Changeset<Section>] in
+            let differences = Observable.zip(sharedSource, newValues) { oldSections, newSections -> [Changeset<Section>] in
                 do {
                     return try differencesForSectionedView(Array(oldSections), finalSections: Array(newSections))
                 }
@@ -38,7 +38,7 @@ extension ObservableConvertibleType where E: SequenceType, E.Generator.Element :
                 }
             }
 
-            return sequenceOf(initialValueSequence, differences).merge()
+            return Observable.of(initialValueSequence, differences).merge()
         }
     }
 }

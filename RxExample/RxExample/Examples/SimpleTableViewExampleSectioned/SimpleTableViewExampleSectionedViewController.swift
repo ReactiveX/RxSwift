@@ -25,7 +25,7 @@ class SimpleTableViewExampleSectionedViewController
 
         let dataSource = self.dataSource
 
-        let items = just([
+        let items = Observable.just([
             SectionModel(model: "First section", items: [
                     1.0,
                     2.0,

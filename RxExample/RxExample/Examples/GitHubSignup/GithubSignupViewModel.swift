@@ -65,13 +65,13 @@ class GithubSignupViewModel {
             }
             .shareReplay(1)
 
-        validatedPasswordRepeated = combineLatest(password, repeatedPassword, resultSelector: validationService.validateRepeatedPassword)
+        validatedPasswordRepeated = Observable.combineLatest(password, repeatedPassword, resultSelector: validationService.validateRepeatedPassword)
             .shareReplay(1)
 
         let signingIn = ActivityIndicator()
         self.signingIn = signingIn.asObservable()
 
-        let usernameAndPassword = combineLatest(username, password) { ($0, $1) }
+        let usernameAndPassword = Observable.combineLatest(username, password) { ($0, $1) }
 
         signedIn = loginTaps.withLatestFrom(usernameAndPassword)
             .flatMapLatest { (username, password) in
@@ -90,7 +90,7 @@ class GithubSignupViewModel {
             }
             .shareReplay(1)
         
-        signupEnabled = combineLatest(
+        signupEnabled = Observable.combineLatest(
             validatedUsername,
             validatedPassword,
             validatedPasswordRepeated,

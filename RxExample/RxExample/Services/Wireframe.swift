@@ -55,7 +55,7 @@ class DefaultWireframe: Wireframe {
 
     func promptFor<Action : CustomStringConvertible>(message: String, cancelAction: Action, actions: [Action]) -> Observable<Action> {
         #if os(iOS)
-        return create { observer in
+        return Observable.create { observer in
             let alertView = UIAlertView(
                 title: "RxExample",
                 message: message,
@@ -77,18 +77,18 @@ class DefaultWireframe: Wireframe {
         }.flatMap { (alertView: UIAlertView) -> Observable<Action> in
             return alertView.rx_didDismissWithButtonIndex.flatMap { index -> Observable<Action> in
                 if index < 0 {
-                    return empty()
+                    return Observable.empty()
                 }
 
                 if index == 0 {
-                    return just(cancelAction)
+                    return Observable.just(cancelAction)
                 }
 
-                return just(actions[index - 1])
+                return Observable.just(actions[index - 1])
             }
         }
         #elseif os(OSX)
-            return failWith(NSError(domain: "Unimplemented", code: -1, userInfo: nil))
+            return Observable.error(NSError(domain: "Unimplemented", code: -1, userInfo: nil))
         #endif
     }
 }

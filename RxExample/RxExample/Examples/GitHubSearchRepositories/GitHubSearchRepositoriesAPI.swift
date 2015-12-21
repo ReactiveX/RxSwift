@@ -127,10 +127,10 @@ extension GitHubSearchRepositoriesAPI {
                 from the future, steals your device and Googles Sarah Connor's address.
             */
             case .ServiceOffline:
-                return just(RepositoriesState(repositories: loadedSoFar, serviceState: .Offline, limitExceeded: false))
+                return Observable.just(RepositoriesState(repositories: loadedSoFar, serviceState: .Offline, limitExceeded: false))
                 
             case .LimitExceeded:
-                return just(RepositoriesState(repositories: loadedSoFar, serviceState: .Online, limitExceeded: true))
+                return Observable.just(RepositoriesState(repositories: loadedSoFar, serviceState: .Online, limitExceeded: true))
 
             case let .Repositories(newPageRepositories, maybeNextURL):
 
@@ -141,14 +141,14 @@ extension GitHubSearchRepositoriesAPI {
 
                 // if next page can't be loaded, just return what was loaded, and stop
                 guard let nextURL = maybeNextURL else {
-                    return just(appenedRepositories)
+                    return Observable.just(appenedRepositories)
                 }
 
                 return [
                     // return loaded immediately
-                    just(appenedRepositories),
+                    Observable.just(appenedRepositories),
                     // wait until next page can be loaded
-                    never().takeUntil(loadNextPageTrigger),
+                    Observable.never().takeUntil(loadNextPageTrigger),
                     // load next page
                     self.recursivelySearch(loadedRepositories, loadNextURL: nextURL, loadNextPageTrigger: loadNextPageTrigger)
                 ].concat()

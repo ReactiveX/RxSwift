@@ -48,7 +48,7 @@ extension ObservableConvertibleType {
             .catchError { (e) -> Observable<E> in
                 reachabilityService.reachabilityChanged
                     .filter { $0 == .Reachable }
-                    .flatMap { _ in failWith(e) }
+                    .flatMap { _ in Observable.error(e) }
                     .startWith(valueOnFailure)
             }
             .retry()

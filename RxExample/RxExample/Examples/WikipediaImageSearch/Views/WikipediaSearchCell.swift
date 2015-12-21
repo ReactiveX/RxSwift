@@ -33,7 +33,7 @@ public class WikipediaSearchCell: UITableViewCell {
         didSet {
             let disposeBag = DisposeBag()
 
-            (viewModel?.title ?? Drive.just(""))
+            (viewModel?.title ?? Driver.just(""))
                 .drive(self.titleOutlet.rx_text)
                 .addDisposableTo(disposeBag)
 
@@ -41,7 +41,7 @@ public class WikipediaSearchCell: UITableViewCell {
 
             viewModel.imageURLs
                 .drive(self.imagesOutlet.rx_itemsWithCellIdentifier("ImageCell", cellType: CollectionViewImageCell.self)) { [weak self] (_, URL, cell) in
-                    cell.downloadableImage = self?.imageService.imageFromURL(URL) ?? empty()
+                    cell.downloadableImage = self?.imageService.imageFromURL(URL) ?? Observable.empty()
                 }
                 .addDisposableTo(disposeBag)
 

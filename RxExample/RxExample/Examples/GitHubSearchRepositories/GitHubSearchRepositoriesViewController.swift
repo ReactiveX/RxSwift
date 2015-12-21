@@ -48,8 +48,8 @@ class GitHubSearchRepositoriesViewController: ViewController, UITableViewDelegat
         let loadNextPageTrigger = tableView.rx_contentOffset
             .flatMap { offset in
                 GitHubSearchRepositoriesViewController.isNearTheBottomEdge(offset, tableView)
-                    ? just()
-                    : empty()
+                    ? Observable.just()
+                    : Observable.empty()
             }
 
         let searchResult = searchBar.rx_text.asDriver()
@@ -57,7 +57,7 @@ class GitHubSearchRepositoriesViewController: ViewController, UITableViewDelegat
             .distinctUntilChanged()
             .flatMapLatest { query -> Driver<RepositoriesState> in
                 if query.isEmpty {
-                    return Drive.just(RepositoriesState.empty)
+                    return Driver.just(RepositoriesState.empty)
                 } else {
                     return GitHubSearchRepositoriesAPI.sharedAPI.search(query, loadNextPageTrigger: loadNextPageTrigger)
                         .asDriver(onErrorJustReturn: RepositoriesState.empty)

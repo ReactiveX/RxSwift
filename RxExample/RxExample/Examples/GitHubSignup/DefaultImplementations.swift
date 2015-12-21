@@ -27,12 +27,12 @@ class GitHubDefaultValidationService: GitHubValidationService {
     
     func validateUsername(username: String) -> Observable<ValidationResult> {
         if username.characters.count == 0 {
-            return just(.Empty)
+            return Observable.just(.Empty)
         }
         
         // this obviously won't be
         if username.rangeOfCharacterFromSet(NSCharacterSet.alphanumericCharacterSet().invertedSet) != nil {
-            return just(.Failed(message: "Username can only contain numbers or digits"))
+            return Observable.just(.Failed(message: "Username can only contain numbers or digits"))
         }
         
         let loadingValue = ValidationResult.Validating
@@ -104,8 +104,8 @@ class GitHubDefaultAPI : GitHubAPI {
     func signup(username: String, password: String) -> Observable<Bool> {
         // this is also just a mock
         let signupResult = arc4random() % 5 == 0 ? false : true
-        return just(signupResult)
-            .concat(never())
+        return Observable.just(signupResult)
+            .concat(Observable.never())
             .throttle(2, scheduler: MainScheduler.sharedInstance)
             .take(1)
     }

@@ -44,7 +44,7 @@ class DefaultImageService: ImageService {
     }
     
     private func decodeImage(imageData: NSData) -> Observable<Image> {
-        return just(imageData)
+        return Observable.just(imageData)
             .observeOn($.backgroundWorkScheduler)
             .map { data in
                 guard let image = Image(data: data) else {
@@ -56,14 +56,14 @@ class DefaultImageService: ImageService {
     }
     
     private func _imageFromURL(URL: NSURL) -> Observable<Image> {
-        return deferred {
+        return Observable.deferred {
                 let maybeImage = self._imageCache.objectForKey(URL) as? Image
 
                 let decodedImage: Observable<Image>
                 
                 // best case scenario, it's already decoded an in memory
                 if let image = maybeImage {
-                    decodedImage = just(image)
+                    decodedImage = Observable.just(image)
                 }
                 else {
                     let cachedData = self._imageDataCache.objectForKey(URL) as? NSData

@@ -90,7 +90,7 @@ class WikipediaSearchViewController: ViewController {
     }
 
     func configureActivityIndicatorsShow() {
-        combineLatest(
+        Driver.combineLatest(
             DefaultWikipediaAPI.sharedAPI.loadingWikipediaData,
             DefaultImageService.sharedImageService.loadingImage
         ) { $0 || $1 }

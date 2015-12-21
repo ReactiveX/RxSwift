@@ -29,7 +29,7 @@ class TableViewController: ViewController, UITableViewDelegate {
 
         self.navigationItem.rightBarButtonItem = self.editButtonItem()
 
-        let allUsers = combineLatest(favoriteUsers, users) { favoriteUsers, users in
+        let allUsers = Observable.combineLatest(favoriteUsers, users) { favoriteUsers, users in
             return [
                 SectionModel(model: "Favorite Users", items: favoriteUsers),
                 SectionModel(model: "Normal Users", items: users)

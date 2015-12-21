@@ -65,7 +65,7 @@ class DefaultWikipediaAPI: WikipediaAPI {
     func articleContent(searchResult: WikipediaSearchResult) -> Observable<WikipediaPage> {
         let escapedPage = URLEscape(searchResult.title)
         guard let url = NSURL(string: "http://en.wikipedia.org/w/api.php?action=parse&page=\(escapedPage)&format=json") else {
-            return failWith(apiError("Can't create url"))
+            return Observable.error(apiError("Can't create url"))
         }
         
         return rx_JSON(url)
