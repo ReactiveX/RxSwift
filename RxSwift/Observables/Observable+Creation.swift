@@ -13,6 +13,8 @@ import Foundation
 /**
 Creates an observable sequence from a specified subscribe method implementation.
 
+- seealso: [create operator on reactivex.io](http://reactivex.io/documentation/operators/create.html)
+
 - parameter subscribe: Implementation of the resulting observable sequence's `subscribe` method.
 - returns: The observable sequence with the specified implementation for the `subscribe` method.
 */
@@ -25,6 +27,8 @@ public func create<E>(subscribe: (AnyObserver<E>) -> Disposable) -> Observable<E
 
 /**
 Returns an empty observable sequence, using the specified scheduler to send out the single `Completed` message.
+
+- seealso: [empty operator on reactivex.io](http://reactivex.io/documentation/operators/empty-never-throw.html)
 
 - parameter type: Optional type hint.
 - returns: An observable sequence with no elements.
@@ -39,6 +43,8 @@ public func empty<E>(type: E.Type = E.self) -> Observable<E> {
 /**
 Returns a non-terminating observable sequence, which can be used to denote an infinite duration.
 
+- seealso: [never operator on reactivex.io](http://reactivex.io/documentation/operators/empty-never-throw.html)
+
 - parameter type: Optional type hint.
 - returns: An observable sequence whose observers will never get called.
 */
@@ -52,6 +58,8 @@ public func never<E>(type: E.Type = E.self) -> Observable<E> {
 /**
 Returns an observable sequence that contains a single element.
 
+- seealso: [just operator on reactivex.io](http://reactivex.io/documentation/operators/just.html)
+
 - parameter element: Single element in the resulting observable sequence.
 - returns: An observable sequence containing the single specified element.
 */
@@ -62,6 +70,8 @@ public func just<E>(element: E) -> Observable<E> {
 
 /**
 Returns an observable sequence that contains a single element.
+
+- seealso: [just operator on reactivex.io](http://reactivex.io/documentation/operators/just.html)
 
 - parameter element: Single element in the resulting observable sequence.
 - parameter: Scheduler to send the single element on.
@@ -77,6 +87,8 @@ public func just<E>(element: E, scheduler: ImmediateSchedulerType) -> Observable
 /**
 This method creates a new Observable instance with a variable number of elements.
 
+- seealso: [from operator on reactivex.io](http://reactivex.io/documentation/operators/from.html)
+
 - parameter elements: Elements to generate.
 - parameter scheduler: Scheduler to send elements on. If `nil`, elements are sent immediatelly on subscription.
 - returns: The observable sequence whose elements are pulled from the given arguments.
@@ -91,6 +103,8 @@ extension SequenceType {
     /**
     Converts a sequence to an observable sequence.
 
+    - seealso: [from operator on reactivex.io](http://reactivex.io/documentation/operators/from.html)
+
     - returns: The observable sequence whose elements are pulled from the given enumerable sequence.
     */
     @warn_unused_result(message="http://git.io/rxs.uo")
@@ -101,6 +115,8 @@ extension SequenceType {
 
     /**
     Converts a sequence to an observable sequence.
+
+    - seealso: [from operator on reactivex.io](http://reactivex.io/documentation/operators/from.html)
 
     - returns: The observable sequence whose elements are pulled from the given enumerable sequence.
     */
@@ -113,6 +129,8 @@ extension SequenceType {
 extension Array {
     /**
     Converts a sequence to an observable sequence.
+
+    - seealso: [from operator on reactivex.io](http://reactivex.io/documentation/operators/from.html)
 
     - returns: The observable sequence whose elements are pulled from the given enumerable sequence.
     */
@@ -127,6 +145,8 @@ extension Array {
 /**
 Returns an observable sequence that terminates with an `error`.
 
+- seealso: [throw operator on reactivex.io](http://reactivex.io/documentation/operators/empty-never-throw.html)
+
 - parameter type: Optional type hint.
 - returns: The observable sequence that terminates with specified error.
 */
@@ -139,6 +159,8 @@ public func failWith<E>(error: ErrorType, _ type: E.Type = E.self) -> Observable
 
 /**
 Returns an observable sequence that invokes the specified factory function whenever a new observer subscribes.
+
+- seealso: [defer operator on reactivex.io](http://reactivex.io/documentation/operators/defer.html)
 
 - parameter observableFactory: Observable factory function to invoke for each observer that subscribes to the resulting sequence.
 - returns: An observable sequence whose observers trigger an invocation of the given observable factory function.
@@ -153,6 +175,8 @@ public func deferred<E>(observableFactory: () throws -> Observable<E>)
 Generates an observable sequence by running a state-driven loop producing the sequence's elements, using the specified scheduler 
 to run the loop send out observer messages.
 
+- seealso: [create operator on reactivex.io](http://reactivex.io/documentation/operators/create.html)
+
 - parameter initialState: Initial state.
 - parameter condition: Condition to terminate generation (upon returning `false`).
 - parameter iterate: Iteration step function.
@@ -166,6 +190,8 @@ public func generate<E>(initialState: E, condition: E throws -> Bool, scheduler:
 
 /**
 Generates an observable sequence of integral numbers within a specified range, using the specified scheduler to generate and send out observer messages.
+
+- seealso: [range operator on reactivex.io](http://reactivex.io/documentation/operators/range.html)
 
 - parameter start: The value of the first integer in the sequence.
 - parameter count: The number of sequential integers to generate.
@@ -185,6 +211,8 @@ public func range(start: Int, _ count: Int, _ scheduler: ImmediateSchedulerType 
 /**
 Generates an observable sequence that repeats the given element infinitely, using the specified scheduler to send out observer messages.
 
+- seealso: [repeat operator on reactivex.io](http://reactivex.io/documentation/operators/repeat.html)
+
 - parameter element: Element to repeat.
 - parameter scheduler: Scheduler to run the producer loop on.
 - returns: An observable sequence that repeats the given element infinitely.
@@ -201,6 +229,8 @@ public func repeatElement<E>(element: E, _ scheduler: ImmediateSchedulerType) ->
 
 /**
 Constructs an observable sequence that depends on a resource object, whose lifetime is tied to the resulting observable sequence's lifetime.
+
+- seealso: [using operator on reactivex.io](http://reactivex.io/documentation/operators/using.html)
  
 - parameter resourceFactory: Factory function to obtain a resource object.
 - parameter observableFactory: Factory function to obtain an observable sequence that depends on the obtained resource.

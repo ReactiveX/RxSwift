@@ -17,6 +17,8 @@ import Foundation
 /**
 Merges the specified observable sequences into one observable sequence by using the selector function whenever any of the observable sequences produces an element.
 
+- seealso: [combineLatest operator on reactivex.io](http://reactivex.io/documentation/operators/combinelatest.html)
+
 - parameter resultSelector: Function to invoke whenever any of the sources produces an element.
 - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
 */
@@ -93,6 +95,8 @@ class CombineLatest2<E1, E2, R> : Producer<R> {
 
 /**
 Merges the specified observable sequences into one observable sequence by using the selector function whenever any of the observable sequences produces an element.
+
+- seealso: [combineLatest operator on reactivex.io](http://reactivex.io/documentation/operators/combinelatest.html)
 
 - parameter resultSelector: Function to invoke whenever any of the sources produces an element.
 - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
@@ -177,6 +181,8 @@ class CombineLatest3<E1, E2, E3, R> : Producer<R> {
 
 /**
 Merges the specified observable sequences into one observable sequence by using the selector function whenever any of the observable sequences produces an element.
+
+- seealso: [combineLatest operator on reactivex.io](http://reactivex.io/documentation/operators/combinelatest.html)
 
 - parameter resultSelector: Function to invoke whenever any of the sources produces an element.
 - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
@@ -268,6 +274,8 @@ class CombineLatest4<E1, E2, E3, E4, R> : Producer<R> {
 
 /**
 Merges the specified observable sequences into one observable sequence by using the selector function whenever any of the observable sequences produces an element.
+
+- seealso: [combineLatest operator on reactivex.io](http://reactivex.io/documentation/operators/combinelatest.html)
 
 - parameter resultSelector: Function to invoke whenever any of the sources produces an element.
 - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
@@ -366,6 +374,8 @@ class CombineLatest5<E1, E2, E3, E4, E5, R> : Producer<R> {
 
 /**
 Merges the specified observable sequences into one observable sequence by using the selector function whenever any of the observable sequences produces an element.
+
+- seealso: [combineLatest operator on reactivex.io](http://reactivex.io/documentation/operators/combinelatest.html)
 
 - parameter resultSelector: Function to invoke whenever any of the sources produces an element.
 - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
@@ -471,6 +481,8 @@ class CombineLatest6<E1, E2, E3, E4, E5, E6, R> : Producer<R> {
 
 /**
 Merges the specified observable sequences into one observable sequence by using the selector function whenever any of the observable sequences produces an element.
+
+- seealso: [combineLatest operator on reactivex.io](http://reactivex.io/documentation/operators/combinelatest.html)
 
 - parameter resultSelector: Function to invoke whenever any of the sources produces an element.
 - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
@@ -583,6 +595,8 @@ class CombineLatest7<E1, E2, E3, E4, E5, E6, E7, R> : Producer<R> {
 
 /**
 Merges the specified observable sequences into one observable sequence by using the selector function whenever any of the observable sequences produces an element.
+
+- seealso: [combineLatest operator on reactivex.io](http://reactivex.io/documentation/operators/combinelatest.html)
 
 - parameter resultSelector: Function to invoke whenever any of the sources produces an element.
 - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.

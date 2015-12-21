@@ -14,6 +14,8 @@ extension ObservableType {
     
     /**
     Prints received events for all observers on standard output.
+
+    - seealso: [do operator on reactivex.io](http://reactivex.io/documentation/operators/do.html)
     
     - parameter identifier: Identifier that is printed together with event description to standard output.
     - returns: An observable sequence whose events are printed to standard output.

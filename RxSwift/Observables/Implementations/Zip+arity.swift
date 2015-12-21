@@ -17,6 +17,8 @@ import Foundation
 /**
 Merges the specified observable sequences into one observable sequence by using the selector function whenever all of the observable sequences have produced an element at a corresponding index.
 
+- seealso: [zip operator on reactivex.io](http://reactivex.io/documentation/operators/zip.html)
+
 - parameter resultSelector: Function to invoke for each series of elements at corresponding indexes in the sources.
 - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
 */
@@ -105,6 +107,8 @@ class Zip2<E1, E2, R> : Producer<R> {
 
 /**
 Merges the specified observable sequences into one observable sequence by using the selector function whenever all of the observable sequences have produced an element at a corresponding index.
+
+- seealso: [zip operator on reactivex.io](http://reactivex.io/documentation/operators/zip.html)
 
 - parameter resultSelector: Function to invoke for each series of elements at corresponding indexes in the sources.
 - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
@@ -202,6 +206,8 @@ class Zip3<E1, E2, E3, R> : Producer<R> {
 
 /**
 Merges the specified observable sequences into one observable sequence by using the selector function whenever all of the observable sequences have produced an element at a corresponding index.
+
+- seealso: [zip operator on reactivex.io](http://reactivex.io/documentation/operators/zip.html)
 
 - parameter resultSelector: Function to invoke for each series of elements at corresponding indexes in the sources.
 - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
@@ -307,6 +313,8 @@ class Zip4<E1, E2, E3, E4, R> : Producer<R> {
 
 /**
 Merges the specified observable sequences into one observable sequence by using the selector function whenever all of the observable sequences have produced an element at a corresponding index.
+
+- seealso: [zip operator on reactivex.io](http://reactivex.io/documentation/operators/zip.html)
 
 - parameter resultSelector: Function to invoke for each series of elements at corresponding indexes in the sources.
 - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
@@ -420,6 +428,8 @@ class Zip5<E1, E2, E3, E4, E5, R> : Producer<R> {
 
 /**
 Merges the specified observable sequences into one observable sequence by using the selector function whenever all of the observable sequences have produced an element at a corresponding index.
+
+- seealso: [zip operator on reactivex.io](http://reactivex.io/documentation/operators/zip.html)
 
 - parameter resultSelector: Function to invoke for each series of elements at corresponding indexes in the sources.
 - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
@@ -541,6 +551,8 @@ class Zip6<E1, E2, E3, E4, E5, E6, R> : Producer<R> {
 
 /**
 Merges the specified observable sequences into one observable sequence by using the selector function whenever all of the observable sequences have produced an element at a corresponding index.
+
+- seealso: [zip operator on reactivex.io](http://reactivex.io/documentation/operators/zip.html)
 
 - parameter resultSelector: Function to invoke for each series of elements at corresponding indexes in the sources.
 - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
@@ -670,6 +682,8 @@ class Zip7<E1, E2, E3, E4, E5, E6, E7, R> : Producer<R> {
 
 /**
 Merges the specified observable sequences into one observable sequence by using the selector function whenever all of the observable sequences have produced an element at a corresponding index.
+
+- seealso: [zip operator on reactivex.io](http://reactivex.io/documentation/operators/zip.html)
 
 - parameter resultSelector: Function to invoke for each series of elements at corresponding indexes in the sources.
 - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
