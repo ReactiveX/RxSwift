@@ -64,8 +64,10 @@ class APIWrappersViewController: ViewController {
         let av = UIAlertView(title: "Title", message: "The message", delegate: nil, cancelButtonTitle: "Cancel", otherButtonTitles: "OK", "Two", "Three", "Four", "Five")
 
         openActionSheet.rx_tap
-            .subscribeNext { [unowned self] x in
-                ash.showInView(self.view)
+            .subscribeNext { [weak self] x in
+                if let view = self?.view {
+                    ash.showInView(view)
+                }
             }
             .addDisposableTo(disposeBag)
 

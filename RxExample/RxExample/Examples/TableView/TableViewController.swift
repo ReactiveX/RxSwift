@@ -57,20 +57,20 @@ class TableViewController: ViewController, UITableViewDelegate {
             .addDisposableTo(disposeBag)
 
         tableView.rx_itemSelected
-            .subscribeNext { [unowned self] indexPath in
-                self.showDetailsForUserAtIndexPath(indexPath)
+            .subscribeNext { [weak self] indexPath in
+                self?.showDetailsForUserAtIndexPath(indexPath)
             }
             .addDisposableTo(disposeBag)
 
         tableView.rx_itemDeleted
-            .subscribeNext { [unowned self] indexPath in
-                self.removeUser(indexPath)
+            .subscribeNext { [weak self] indexPath in
+                self?.removeUser(indexPath)
             }
             .addDisposableTo(disposeBag)
 
         tableView.rx_itemMoved
-            .subscribeNext { [unowned self] (s, d) in
-                self.moveUserFrom(s, to: d)
+            .subscribeNext { [weak self] (s, d) in
+                self?.moveUserFrom(s, to: d)
             }
             .addDisposableTo(disposeBag)
 
@@ -81,8 +81,8 @@ class TableViewController: ViewController, UITableViewDelegate {
             }
 
         RandomUserAPI.sharedAPI.getExampleUserResultSet()
-            .subscribeNext { [unowned self] array in
-                self.users.value = array
+            .subscribeNext { [weak self] array in
+                self?.users.value = array
             }
             .addDisposableTo(disposeBag)
 

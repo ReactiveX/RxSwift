@@ -375,6 +375,12 @@
 		C8F6A1341BEF9DA3007DF367 /* SchedulerServices+Emulation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89464951BC6C2B00055219D /* SchedulerServices+Emulation.swift */; };
 		C8F6A1351BEF9DA3007DF367 /* SerialDispatchQueueScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89464961BC6C2B00055219D /* SerialDispatchQueueScheduler.swift */; };
 		C8F6A1381BEF9DF6007DF367 /* RetryWhen.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8F6A1361BEF9DD4007DF367 /* RetryWhen.swift */; };
+		C8F8C48A1C277F460047640B /* CalculatorState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8F8C4891C277F460047640B /* CalculatorState.swift */; };
+		C8F8C48B1C277F460047640B /* CalculatorState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8F8C4891C277F460047640B /* CalculatorState.swift */; };
+		C8F8C49D1C277F4F0047640B /* CalculatorAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8F8C49C1C277F4F0047640B /* CalculatorAction.swift */; };
+		C8F8C49E1C277F4F0047640B /* CalculatorAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8F8C49C1C277F4F0047640B /* CalculatorAction.swift */; };
+		C8F8C4A01C277F5A0047640B /* Operation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8F8C49F1C277F5A0047640B /* Operation.swift */; };
+		C8F8C4A11C277F5A0047640B /* Operation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8F8C49F1C277F5A0047640B /* Operation.swift */; };
 		CB30D9EE1BF106260084C1C0 /* SingleAsync.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB30D9ED1BF106260084C1C0 /* SingleAsync.swift */; };
 		CB883B501BE3AC54000AC2EE /* BooleanDisposable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB883B4E1BE3AC54000AC2EE /* BooleanDisposable.swift */; };
 		CB883B511BE3AC54000AC2EE /* RefCountDisposable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB883B4F1BE3AC54000AC2EE /* RefCountDisposable.swift */; };
@@ -823,6 +829,9 @@
 		C8DF92F01B0B3E67009BCF9A /* Info-OSX.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Info-OSX.plist"; sourceTree = "<group>"; };
 		C8DF92F21B0B3E71009BCF9A /* Info-iOS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Info-iOS.plist"; sourceTree = "<group>"; };
 		C8F6A1361BEF9DD4007DF367 /* RetryWhen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RetryWhen.swift; sourceTree = "<group>"; };
+		C8F8C4891C277F460047640B /* CalculatorState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalculatorState.swift; sourceTree = "<group>"; };
+		C8F8C49C1C277F4F0047640B /* CalculatorAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalculatorAction.swift; sourceTree = "<group>"; };
+		C8F8C49F1C277F5A0047640B /* Operation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Operation.swift; sourceTree = "<group>"; };
 		CB30D9ED1BF106260084C1C0 /* SingleAsync.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleAsync.swift; sourceTree = "<group>"; };
 		CB883B4E1BE3AC54000AC2EE /* BooleanDisposable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BooleanDisposable.swift; sourceTree = "<group>"; };
 		CB883B4F1BE3AC54000AC2EE /* RefCountDisposable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RefCountDisposable.swift; sourceTree = "<group>"; };
@@ -903,6 +912,9 @@
 			isa = PBXGroup;
 			children = (
 				07A5C3DA1B70B703001EFE5C /* CalculatorViewController.swift */,
+				C8F8C4891C277F460047640B /* CalculatorState.swift */,
+				C8F8C49C1C277F4F0047640B /* CalculatorAction.swift */,
+				C8F8C49F1C277F5A0047640B /* Operation.swift */,
 			);
 			path = Calculator;
 			sourceTree = "<group>";
@@ -1933,6 +1945,7 @@
 				C89464DF1BC6C2B00055219D /* StartWith.swift in Sources */,
 				C89465881BC6C2BC0055219D /* RxScrollViewDelegateProxy.swift in Sources */,
 				C89464B71BC6C2B00055219D /* Observable+Extensions.swift in Sources */,
+				C8F8C4A11C277F5A0047640B /* Operation.swift in Sources */,
 				C89464A01BC6C2B00055219D /* Lock.swift in Sources */,
 				CB883B601BE3AC72000AC2EE /* Window.swift in Sources */,
 				C83974141BF77406004F02CC /* KVORepresentable+Swift.swift in Sources */,
@@ -2002,6 +2015,7 @@
 				C89465821BC6C2BC0055219D /* RxCollectionViewDataSourceType.swift in Sources */,
 				C8297E421B6CF905000589EA /* WikipediaSearchResult.swift in Sources */,
 				C89465701BC6C2BC0055219D /* Logging.swift in Sources */,
+				C8F8C49E1C277F4F0047640B /* CalculatorAction.swift in Sources */,
 				C89464A31BC6C2B00055219D /* InfiniteSequence.swift in Sources */,
 				C89465611BC6C2BC0055219D /* _RX.m in Sources */,
 				CB30D9EE1BF106260084C1C0 /* SingleAsync.swift in Sources */,
@@ -2093,6 +2107,7 @@
 				C8297E541B6CF905000589EA /* AppDelegate.swift in Sources */,
 				C894659D1BC6C2BC0055219D /* UITableView+Rx.swift in Sources */,
 				C8F6A12C1BEF9DA3007DF367 /* ConcurrentMainScheduler.swift in Sources */,
+				C8F8C48B1C277F460047640B /* CalculatorState.swift in Sources */,
 				C894657F1BC6C2BC0055219D /* RxCollectionViewReactiveArrayDataSource.swift in Sources */,
 				C8297E551B6CF905000589EA /* RxTableViewSectionedDataSource.swift in Sources */,
 				C8297E561B6CF905000589EA /* WikipediaPage.swift in Sources */,
@@ -2129,6 +2144,7 @@
 				C859B9AC1B45CF9100D012D7 /* NumberCell.swift in Sources */,
 				C87335671BF79BE000E536E6 /* UISectionedViewType+RxAnimatedDataSource.swift in Sources */,
 				C84B913C1B8A282000C9CCCF /* RxCollectionViewSectionedDataSource.swift in Sources */,
+				C8F8C48A1C277F460047640B /* CalculatorState.swift in Sources */,
 				0706E19B1B17361100BA2D3A /* UIImageView+Extensions.swift in Sources */,
 				C843A08E1C1CE39900CBA4BD /* GitHubSearchRepositoriesAPI.swift in Sources */,
 				C859B9AE1B45CFAB00D012D7 /* NumberSectionView.swift in Sources */,
@@ -2141,12 +2157,14 @@
 				C8C46DAC1B47F7110020D71E /* WikipediaSearchViewController.swift in Sources */,
 				07A5C3DB1B70B703001EFE5C /* CalculatorViewController.swift in Sources */,
 				0706E19D1B176EE200BA2D3A /* String+extensions.swift in Sources */,
+				C8F8C49D1C277F4F0047640B /* CalculatorAction.swift in Sources */,
 				C822B1DF1C14CEAA0088A01A /* BindingExtensions.swift in Sources */,
 				C84B913B1B8A282000C9CCCF /* RxCollectionViewSectionedReloadDataSource.swift in Sources */,
 				C88C78731B3EB0A00061C5AB /* SectionModel.swift in Sources */,
 				C8BCD3DF1C1480E9005F1280 /* Operators.swift in Sources */,
 				C843A0901C1CE39900CBA4BD /* GitHubSearchRepositoriesViewController.swift in Sources */,
 				C803973A1BD3E17D009D8B26 /* ActivityIndicator.swift in Sources */,
+				C8F8C4A01C277F5A0047640B /* Operation.swift in Sources */,
 				C84B913D1B8A282000C9CCCF /* RxCollectionViewSectionedAnimatedDataSource.swift in Sources */,
 				C822B1D91C14CBEA0088A01A /* Protocols.swift in Sources */,
 				C8A750201B94E78200D8D046 /* RxDataSourceStarterKit.swift in Sources */,

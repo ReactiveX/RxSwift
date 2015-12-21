@@ -149,15 +149,15 @@ class PartialUpdatesViewController : ViewController {
         // touches
 
         partialUpdatesCollectionViewOutlet.rx_itemSelected
-            .subscribeNext { [unowned self] i in
-                print("Let me guess, it's .... It's \(self.generator.sections[i.section].items[i.item]), isn't it? Yeah, I've got it.")
+            .subscribeNext { [weak self] i in
+                print("Let me guess, it's .... It's \(self?.generator.sections[i.section].items[i.item]), isn't it? Yeah, I've got it.")
             }
             .addDisposableTo(disposeBag)
 
         sequenceOf(partialUpdatesTableViewOutlet.rx_itemSelected, reloadTableViewOutlet.rx_itemSelected)
             .merge()
-            .subscribeNext { [unowned self] i in
-                print("I have a feeling it's .... \(self.generator.sections[i.section].items[i.item])?")
+            .subscribeNext { [weak self] i in
+                print("I have a feeling it's .... \(self?.generator.sections[i.section].items[i.item])?")
             }
             .addDisposableTo(disposeBag)
     }

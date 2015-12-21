@@ -71,8 +71,8 @@ class IntroductionExampleViewController : ViewController {
             .addDisposableTo(disposeBag)
         
         disposeButton.rx_tap
-            .subscribeNext { [unowned self] _ in
-                print("Unbound everything")
+            .subscribeNext { [weak self] _ in
+                print("Unbind everything")
                 self.disposeBag = DisposeBag()
             }
             .addDisposableTo(disposeBag)
