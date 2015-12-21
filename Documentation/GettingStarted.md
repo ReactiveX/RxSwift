@@ -110,7 +110,7 @@ There is one additional way an observed sequence can terminate. When you are don
 Here is an example with `interval` operator.
 
 ```swift
-let subscription = interval(0.3, scheduler)
+let subscription = Observable.interval(0.3, scheduler)
     .subscribe { (e: Event<Int64>) in
         print(e)
     }
@@ -154,7 +154,7 @@ A few more examples just to be sure (`observeOn` is explained [here](Schedulers.
 In case you have something like:
 
 ```swift
-let subscription = interval(0.3, scheduler)
+let subscription = Observable.interval(0.3, scheduler)
             .observeOn(MainScheduler.sharedInstance)
             .subscribe { (e: Event<Int64>) in
                 print(e)
@@ -171,7 +171,7 @@ subscription.dispose() // called from main thread
 Also in this case:
 
 ```swift
-let subscription = interval(0.3, scheduler)
+let subscription = Observable.interval(0.3, scheduler)
             .observeOn(serialScheduler)
             .subscribe { (e: Event<Int64>) in
                 print(e)
@@ -303,7 +303,7 @@ Let's create a function which creates a sequence that returns one element upon s
 
 ```swift
 func myJust<E>(element: E) -> Observable<E> {
-    return create { observer in
+    return Observable.create { observer in
         observer.on(.Next(element))
         observer.on(.Completed)
         return NopDisposable.instance
@@ -324,11 +324,7 @@ this will print:
 
 Not bad. So what is the `create` function?
 
-It's just a convenience method that enables you to easily implement `subscribe` method using Swift lambda function. Like `subscribe` method it takes one argument, `observer`, and returns disposable.
-
-So what is the `gg` function?
-
-It's just a convenient way of calling `observer.on(.Next(RxBox(element)))`. The same is valid for `sendCompleted(observer)`.
+It's just a convenience method that enables you to easily implement `subscribe` method using Swift closures. Like `subscribe` method it takes one argument, `observer`, and returns disposable.
 
 Sequence implemented this way is actually synchronous. It will generate elements and terminate before `subscribe` call returns disposable representing subscription. Because of that it doesn't really matter what disposable it returns, process of generating elements can't be interrupted.
 
@@ -340,7 +336,7 @@ Lets now create an observable that returns elements from an array.
 
 ```swift
 func myFrom<E>(sequence: [E]) -> Observable<E> {
-    return create { observer in
+    return Observable.create { observer in
         for element in sequence {
             observer.on(.Next(element))
         }
@@ -391,7 +387,7 @@ Ok, now something more interesting. Let's create that `interval` operator that w
 
 ```swift
 func myInterval(interval: NSTimeInterval) -> Observable<Int> {
-    return create { observer in
+    return Observable.create { observer in
         print("Subscribed")
         let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
         let timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, queue)
@@ -571,8 +567,8 @@ This is how HTTP requests are wrapped in Rx. It's pretty much the same pattern l
 
 ```swift
 extension NSURLSession {
-    public func rx_response(request: NSURLRequest) -> Observable<(NSData!, NSURLResponse!)> {
-        return create { observer in
+    public func rx_response(request: NSURLRequest) -> Observable<(NSData, NSURLResponse)> {
+        return Observable.create { observer in
             let task = self.dataTaskWithRequest(request) { (data, response, error) in
                 guard let response = response, data = data else {
                     observer.on(.Error(error ?? RxCocoaURLError.Unknown))
@@ -625,22 +621,23 @@ Fortunately there is an easier way to create operators. Creating new operators i
 Lets see how an unoptimized map operator can be implemented.
 
 ```swift
-func myMap<E, R>(transform: E -> R)(source: Observable<E>) -> Observable<R> {
-    return create { observer in
-
-        let subscription = source.subscribe { e in
-                switch e {
-                case .Next(let value):
-                    let result = transform(value)
-                    observer.on(.Next(result))
-                case .Error(let error):
-                    observer.on(.Error(error))
-                case .Completed:
-                    observer.on(.Completed)
+extension ObservableType {
+    func myMap<R>(transform: E -> R) -> Observable<R> {
+        return Observable.create { observer in
+            let subscription = self.subscribe { e in
+                    switch e {
+                    case .Next(let value):
+                        let result = transform(value)
+                        observer.on(.Next(result))
+                    case .Error(let error):
+                        observer.on(.Error(error))
+                    case .Completed:
+                        observer.on(.Completed)
+                    }
                 }
-            }
 
-        return subscription
+            return subscription
+        }
     }
 }
 ```
@@ -672,24 +669,6 @@ This is simply 7
 This is simply 8
 ...
 ```
-
-#### Harder, more performant way
-
-You can perform the same optimizations like we have made and create more performant operators. That usually isn't necessary, but it of course can be done.
-
-Disclaimer: when taking this approach you are also taking a lot more responsibility when creating operators. You will need to make sure that sequence grammar is correct and be responsible of disposing subscriptions.
-
-There are plenty of examples in RxSwift project how to do this. I would suggest talking a look at `map` or `filter` first.
-
-Creating your own custom operators is tricky because you have to manually handle all of the chaos of error handling, asynchronous execution and disposal, but it's not rocket science either.
-
-Every operator in Rx is just a factory for an observable. Returned observable usually contains information about source `Observable` and parameters that are needed to transform it.
-
-In RxSwift code, almost all optimized `Observable`s have a common parent called `Producer`. Returned observable serves as a proxy between subscribers and source observable. It usually performs these things:
-
-* on new subscription creates a sink that performs transformations
-* registers that sink as observer to source observable
-* on received events proxies transformed events to original observer
 
 ### Life happens
 
@@ -860,40 +839,30 @@ NSURLSession.sharedSession().rx_JSON(request)
 
 In debug mode Rx tracks all allocated resources in a global variable `resourceCount`.
 
-**Printing `Rx.resourceCount` after pushing a view controller onto navigation stack, using it, and then popping back is usually the best way to detect and debug resource leaks.**
-
-As a sanity check, you can just do a `print` in your view controller `deinit` method.
-
-The code would look something like this.
+In case you want to have some resource leak detection logic, the simplest method is just printing out `RxSwift.resourceCount` periodically to output.
 
 ```swift
-class ViewController: UIViewController {
-#if TRACE_RESOURCES
-    private let startResourceCount = RxSwift.resourceCount
-#endif
-
-    override func viewDidLoad() {
-      super.viewDidLoad()
-#if TRACE_RESOURCES
-        print("Number of start resources = \(resourceCount)")
-#endif
+    /* add somewhere in
+    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool
+    */
+    _ = Observable.interval(1, MainScheduler.sharedInstance)
+        .subscribeNext { _ in
+        print("Resource count \(RxSwift.resourceCount)")
     }
-
-    deinit {
-#if TRACE_RESOURCES
-        print("View controller disposed with \(resourceCount) resources")
-
-        var numberOfResourcesThatShouldRemain = startResourceCount
-        let time = dispatch_time(DISPATCH_TIME_NOW, Int64(0.1 * Double(NSEC_PER_SEC)))
-        dispatch_after(time, dispatch_get_main_queue(), { () -> Void in
-            print("Resource count after dealloc \(RxSwift.resourceCount), difference \(RxSwift.resourceCount - numberOfResourcesThatShouldRemain)")
-        })
-#endif
-    }
-}
 ```
 
-The reason why you should use a small delay is because sometimes it takes a small amount of time for scheduled entities to release their memory.
+Most efficient way to test for memory leaks is:
+* navigate to your screen and use it
+* navigate back
+* observe initial resource count
+* navigate second time to your screen and use it
+* navigate back
+* observe final resource count
+
+In case there is a difference in resource count between initial and final resource counts, there might be a memory
+leak somewhere.
+
+The reason why 2 navigations are suggested is because first navigation forces loading of lazy resources.
 
 ## Variables
 
