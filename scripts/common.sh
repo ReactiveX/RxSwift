@@ -139,7 +139,7 @@ function action() {
 				-configuration "${CONFIGURATION}" \
 				-derivedDataPath "${BUILD_DIRECTORY}" \
 				-destination "$DESTINATION" \
-				$ACTION CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO | xcpretty -c; STATUS=${PIPESTATUS[0]}
+				$ACTION | xcpretty -c; STATUS=${PIPESTATUS[0]}
 
 	if [ $STATUS -ne 0 ]; then
 		echo $STATUS

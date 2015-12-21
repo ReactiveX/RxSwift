@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-NUM_OF_TESTS=14
+NUM_OF_TESTS=4
 CURRENT_DIR="$( dirname "${BASH_SOURCE[0]}" )"
 BUILD_DIRECTORY=build
 APP=RxExample
@@ -22,9 +22,6 @@ function runAutomation() {
 	APP="${SCHEME}"
 
 	echo
-	echo
-	echo
-	echo
 	printf "${GREEN}Building example for automation ${BOLDCYAN}${SIMULATOR} - ${CONFIGURATION}${RESET}"
 	echo
 
@@ -36,11 +33,15 @@ function runAutomation() {
 
 	osascript -e 'quit app "iOS Simulator.app"' > /dev/null
 
-	echo
-	printf "${GREEN}Firing up simulator ${BOLDCYAN}${SIMULATOR}${GREEN}...${RESET}\n"
-	echo
-
-	xcrun instruments -w ${SIMULATOR} > /dev/null 2>&1 || echo
+	if is_real_device "${SIMULATOR}"; then
+        SIMULATOR_ID="${SIMULATOR}"
+	else
+        SIMULATOR_ID=`simulator_ids "${SIMULATOR}"`
+    	echo
+    	printf "${GREEN}Firing up simulator ${BOLDCYAN}${SIMULATOR}${GREEN}...${RESET}\n"
+    	echo
+        xcrun instruments -w ${SIMULATOR_ID} > /dev/null 2>&1 || echo
+	fi
 
 	echo
 	if is_real_device "${SIMULATOR}"; then
@@ -55,7 +56,7 @@ function runAutomation() {
 	if is_real_device "${SIMULATOR}"; then
 		/Users/kzaher/Projects/ios-deploy/ios-deploy --bundle "${APP_PATH}"
 	else
-		xcrun simctl install ${SIMULATOR} "${APP_PATH}"
+		xcrun simctl install ${SIMULATOR_ID} "${APP_PATH}"
 	fi
 
 	pushd $TMPDIR
@@ -65,7 +66,7 @@ function runAutomation() {
 	echo
 
 	OUTPUT="${TMPDIR}/output.txt"
-	instruments -w "${SIMULATOR}" -t Automation "${APP_PATH}" -e UIASCRIPT "${ROOT}/scripts/automation-tests/main.js" | tee "${OUTPUT}" #| grep "Pass" #|| (open instrumentscli0.trace; exit -1;)
+	instruments -w "${SIMULATOR_ID}" -t Automation "${APP_PATH}" -e UIASCRIPT "${ROOT}/scripts/automation-tests/main.js" | tee "${OUTPUT}" #| grep "Pass" #|| (open instrumentscli0.trace; exit -1;)
 	COUNT=`grep Pass: "$TMPDIR/output.txt" | wc -l`
 
 	if [ "$COUNT" -lt "$NUM_OF_TESTS" ]; then

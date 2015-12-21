@@ -19,7 +19,7 @@ test("----- masterDetail -----", function (check, pass) {
 
   firstCell.buttons()["Delete"].tap();
 
-  target.delay( 2 );
+  target.delay( 3 );
 
   target.frontMostApp().navigationBar().rightButton().tap();
   target.frontMostApp().mainWindow().tableViews()[0].cells()[1].tap();
