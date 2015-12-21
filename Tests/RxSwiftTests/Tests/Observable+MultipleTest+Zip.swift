@@ -1809,7 +1809,9 @@ extension ObservableMultipleTest {
             zip(o, e) { $0 + $1 }
         }
    
-        let messages = [completed(215, Int.self)]
+        let messages = [
+            completed(215, Int.self)
+        ]
         XCTAssertEqual(res.events, messages)
 
         XCTAssertEqual(e.subscriptions, [
