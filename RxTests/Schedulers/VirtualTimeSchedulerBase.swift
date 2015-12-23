@@ -12,27 +12,33 @@ import RxSwift
 /**
 Base class for virtual time schedulers using a priority queue for scheduled items.
 */
-public class VirtualTimeSchedulerBase
+public class VirtualTimeSchedulerBase<C: VirtualTimeConverterType>
     : SchedulerType
     , CustomDebugStringConvertible {
 
-    public typealias TimeInterval = Time
-    public typealias Time = RxTests.Time
-    
-    private var enabled : Bool
-    
-    public private(set) var now: Time
+    public typealias Time = C.VirtualTimeUnit
+    public typealias TimeInterval = C.VirtualTimeIntervalUnit
 
-    private var schedulerQueue : [ScheduledItemProtocol] = []
+    private var enabled : Bool
+
+    public private(set) var clock: Time
+
+    private var _schedulerQueue : [ScheduledItem<Time>] = []
+    private var _converter: C
+
+    public var now: RxTime {
+        return _converter.convertFromVirtualTime(clock)
+    }
 
     /**
      Creates a new virtual time scheduler.
      
      - parameter initialClock: Initial value for the clock.
     */
-    public init(initialClock: Time) {
-        self.now = initialClock
+    public init(initialClock: Time, converter: C) {
+        self.clock = initialClock
         self.enabled = false
+        _converter = converter
     }
 
     /**
@@ -43,7 +49,7 @@ public class VirtualTimeSchedulerBase
     - returns: The disposable object used to cancel the scheduled action (best effort).
     */
     public func schedule<StateType>(state: StateType, action: StateType -> Disposable) -> Disposable {
-        return self.scheduleRelative(state, dueTime: 0) { a in
+        return self.scheduleRelative(state, dueTime: 0.0) { a in
             return action(a)
         }
     }
@@ -56,32 +62,47 @@ public class VirtualTimeSchedulerBase
      - parameter action: Action to be executed.
      - returns: The disposable object used to cancel the scheduled action (best effort).
      */
-    public func scheduleRelative<StateType>(state: StateType, dueTime: Time, action: StateType -> Disposable) -> Disposable {
-        return schedule(state, time: now + dueTime, action: action)
+    public func scheduleRelative<StateType>(state: StateType, dueTime: RxTimeInterval, action: StateType -> Disposable) -> Disposable {
+        let time = self.now.dateByAddingTimeInterval(dueTime)
+        let absoluteTime = _converter.convertToVirtualTime(time)
+        return scheduleAbsoluteVirtual(state, time: absoluteTime, action: action)
     }
 
     /**
-     Schedules an action to be executed at exact absolute time.
+     Schedules an action to be executed after relative time has passed.
 
      - parameter state: State passed to the action to be executed.
      - parameter time: Absolute time when to execute the action. If this is less or equal then `now`, `now + 1`  will be used.
      - parameter action: Action to be executed.
      - returns: The disposable object used to cancel the scheduled action (best effort).
      */
-    func schedule<StateType>(state: StateType, time: Time, action: StateType -> Disposable) -> Disposable {
+    func scheduleRelativeVirtual<StateType>(state: StateType, dueTime: TimeInterval, action: StateType -> Disposable) -> Disposable {
+        let time = _converter.addVirtualTimeAndTimeInterval(time: self.clock, timeInterval: dueTime)
+        return scheduleAbsoluteVirtual(state, time: time, action: action)
+    }
+
+    /**
+     Schedules an action to be executed at absolute virtual time.
+
+     - parameter state: State passed to the action to be executed.
+     - parameter time: Absolute time when to execute the action. If this is less or equal then `now`, `now + 1`  will be used.
+     - parameter action: Action to be executed.
+     - returns: The disposable object used to cancel the scheduled action (best effort).
+     */
+    func scheduleAbsoluteVirtual<StateType>(state: StateType, time: Time, action: StateType -> Disposable) -> Disposable {
         let compositeDisposable = CompositeDisposable()
         
-        let scheduleTime: Time
-        if time <= self.now {
-            scheduleTime = self.now + 1
+        let scheduleTime: C.VirtualTimeUnit
+        if time <= self.clock {
+            scheduleTime = _converter.nearFuture(self.clock)
         }
         else {
             scheduleTime = time
         }
         
-        let item = ScheduledItem(action: action, state: state, time: scheduleTime)
+        let item = ScheduledItem(action: { action(state) }, time: scheduleTime)
         
-        schedulerQueue.append(item)
+        _schedulerQueue.append(item)
         
         compositeDisposable.addDisposable(item)
         
@@ -100,8 +121,8 @@ public class VirtualTimeSchedulerBase
                         continue
                     }
                     
-                    if next.time > self.now {
-                        self.now = next.time
+                    if next.time > self.clock {
+                        self.clock = next.time
                     }
 
                     next.invoke()
@@ -121,14 +142,14 @@ public class VirtualTimeSchedulerBase
         enabled = false
     }
     
-    func getNext() -> ScheduledItemProtocol? {
-        var minDate = Time.max
-        var minElement : ScheduledItemProtocol? = nil
+    func getNext() -> ScheduledItem<Time>? {
+        var minDate: C.VirtualTimeUnit? = nil
+        var minElement : ScheduledItem<Time>? = nil
         var minIndex = -1
         var index = 0
         
-        for item in self.schedulerQueue {
-            if item.time < minDate {
+        for item in self._schedulerQueue {
+            if minDate == nil || item.time < minDate {
                 minDate = item.time
                 minElement = item
                 minIndex = index
@@ -138,7 +159,7 @@ public class VirtualTimeSchedulerBase
         }
         
         if minElement != nil {
-            self.schedulerQueue.removeAtIndex(minIndex)
+            self._schedulerQueue.removeAtIndex(minIndex)
         }
         
         return minElement
@@ -153,24 +174,16 @@ extension VirtualTimeSchedulerBase {
     */
     public var debugDescription: String {
         get {
-            return self.schedulerQueue.description
+            return self._schedulerQueue.description
         }
     }
 }
 
-protocol ScheduledItemProtocol : Cancelable {
-    var time: Time {
-        get
-    }
-    
-    func invoke()
-}
-
-class ScheduledItem<T> : ScheduledItemProtocol {
-    typealias Action = T -> Disposable
+class ScheduledItem<Time>
+    : Disposable {
+    typealias Action = () -> Disposable
     
     let action: Action
-    let state: T
     let time: Time
     
     var disposed: Bool {
@@ -181,14 +194,13 @@ class ScheduledItem<T> : ScheduledItemProtocol {
     
     var disposable = SingleAssignmentDisposable()
     
-    init(action: Action, state: T, time: Time) {
+    init(action: Action, time: Time) {
         self.action = action
-        self.state = state
         self.time = time
     }
     
     func invoke() {
-         self.disposable.disposable = action(state)
+         self.disposable.disposable = action()
     }
     
     func dispose() {

@@ -1108,7 +1108,7 @@ extension ObservableSingleTest {
                         return Observable.error(e)
                     }
 
-                    return timer(a * 50, scheduler: scheduler)
+                    return Observable<Int>.timer(RxTimeInterval(a * 50), scheduler: scheduler)
                 }
             }
         }

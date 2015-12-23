@@ -13,20 +13,19 @@ enum SchedulePeriodicRecursiveCommand {
     case DispatchStart
 }
 
-class SchedulePeriodicRecursive<State, S: SchedulerType> {
+class SchedulePeriodicRecursive<State> {
     typealias RecursiveAction = State -> State
-    typealias TimeInterval = S.TimeInterval
-    typealias RecursiveScheduler = AnyRecursiveScheduler<SchedulePeriodicRecursiveCommand, S.TimeInterval>
+    typealias RecursiveScheduler = AnyRecursiveScheduler<SchedulePeriodicRecursiveCommand>
     
-    private let _scheduler: S
-    private let _startAfter: TimeInterval
-    private let _period: TimeInterval
+    private let _scheduler: SchedulerType
+    private let _startAfter: RxTimeInterval
+    private let _period: RxTimeInterval
     private let _action: RecursiveAction
     
     private var _state: State
     private var _pendingTickCount: Int32 = 0
     
-    init(scheduler: S, startAfter: TimeInterval, period: TimeInterval, action: RecursiveAction, state: State) {
+    init(scheduler: SchedulerType, startAfter: RxTimeInterval, period: RxTimeInterval, action: RecursiveAction, state: State) {
         _scheduler = scheduler
         _startAfter = startAfter
         _period = period

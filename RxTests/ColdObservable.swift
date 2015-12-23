@@ -50,12 +50,12 @@ public class ColdObservable<Element: Equatable>
     Subscribes `observer` to receive events for this sequence.
     */
     public func subscribe<O : ObserverType where O.E == E>(observer: O) -> Disposable {
-        subscriptions.append(Subscription(self._testScheduler.now))
+        subscriptions.append(Subscription(self._testScheduler.clock))
         
         let i = self.subscriptions.count - 1
 
         for recordedEvent in recordedEvents {
-            _testScheduler.scheduleRelative((), dueTime: recordedEvent.time, action: { (_) in
+            _testScheduler.scheduleRelativeVirtual((), dueTime: recordedEvent.time, action: { (_) in
                 observer.on(recordedEvent.value)
                 return NopDisposable.instance
             })
@@ -63,7 +63,7 @@ public class ColdObservable<Element: Equatable>
         
         return AnonymousDisposable {
             let existing = self.subscriptions[i]
-            self.subscriptions[i] = Subscription(existing.subscribe, self._testScheduler.now)
+            self.subscriptions[i] = Subscription(existing.subscribe, self._testScheduler.clock)
         }
     }
 }

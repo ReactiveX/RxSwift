@@ -9,23 +9,24 @@
 import Foundation
 
 /**
+Type that represents time interval in the context of this scheduler.
+*/
+public typealias RxTimeInterval = NSTimeInterval
+
+/**
+Type that represents absolute time in the context of this scheduler.
+*/
+public typealias RxTime = NSDate
+
+/**
 Represents an object that schedules units of work.
 */
 public protocol SchedulerType: ImmediateSchedulerType {
-    /**
-    Type that represents time interval in the context of this scheduler.
-    */
-    typealias TimeInterval
-    
-    /**
-    Type that represents absolute time in the context of this scheduler.
-    */
-    typealias Time
-    
+
     /**
     - returns: Current time.
     */
-    var now : Time {
+    var now : RxTime {
         get
     }
 
@@ -37,7 +38,7 @@ public protocol SchedulerType: ImmediateSchedulerType {
     - parameter action: Action to be executed.
     - returns: The disposable object used to cancel the scheduled action (best effort).
     */
-    func scheduleRelative<StateType>(state: StateType, dueTime: TimeInterval, action: (StateType) -> Disposable) -> Disposable
+    func scheduleRelative<StateType>(state: StateType, dueTime: RxTimeInterval, action: (StateType) -> Disposable) -> Disposable
  
     /**
     Schedules a periodic piece of work.
@@ -48,7 +49,7 @@ public protocol SchedulerType: ImmediateSchedulerType {
     - parameter action: Action to be executed.
     - returns: The disposable object used to cancel the scheduled action (best effort).
     */
-    func schedulePeriodic<StateType>(state: StateType, startAfter: TimeInterval, period: TimeInterval, action: (StateType) -> StateType) -> Disposable
+    func schedulePeriodic<StateType>(state: StateType, startAfter: RxTimeInterval, period: RxTimeInterval, action: (StateType) -> StateType) -> Disposable
 }
 
 extension SchedulerType {
@@ -61,14 +62,14 @@ extension SchedulerType {
     - parameter period: Period for running the work periodically.
     - returns: The disposable object used to cancel the scheduled recurring action (best effort).
     */
-    public func schedulePeriodic<StateType>(state: StateType, startAfter: TimeInterval, period: TimeInterval, action: (StateType) -> StateType) -> Disposable {
+    public func schedulePeriodic<StateType>(state: StateType, startAfter: RxTimeInterval, period: RxTimeInterval, action: (StateType) -> StateType) -> Disposable {
         let schedule = SchedulePeriodicRecursive(scheduler: self, startAfter: startAfter, period: period, action: action, state: state)
             
         return schedule.start()
     }
 
-    func scheduleRecursive<State>(state: State, dueTime: TimeInterval, action: (state: State, scheduler: AnyRecursiveScheduler<State, TimeInterval>) -> ()) -> Disposable {
-        let scheduler = RecursiveScheduler(scheduler: self, action: action)
+    func scheduleRecursive<State>(state: State, dueTime: RxTimeInterval, action: (state: State, scheduler: AnyRecursiveScheduler<State>) -> ()) -> Disposable {
+        let scheduler = AnyRecursiveScheduler(scheduler: self, action: action)
          
         scheduler.schedule(state, dueTime: dueTime)
             

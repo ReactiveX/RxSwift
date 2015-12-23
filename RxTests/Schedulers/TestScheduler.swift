@@ -12,7 +12,9 @@ import RxSwift
 /**
 Virtual time scheduler used for testing applications and libraries built using RxSwift.
 */
-public class TestScheduler : VirtualTimeSchedulerBase {
+public class TestScheduler : VirtualTimeSchedulerBase<TestSchedulerVirtualTimeConverter> {
+    public typealias TimeInterval = Int
+    public typealias Time = Int
 
     /**
      Default values of scheduler times.
@@ -37,8 +39,8 @@ public class TestScheduler : VirtualTimeSchedulerBase {
      
      - parameter initialClock: Initial value for the clock.
     */
-    public override init(initialClock: Time) {
-        super.init(initialClock: initialClock)
+    public init(initialClock: Time) {
+        super.init(initialClock: initialClock, converter: TestSchedulerVirtualTimeConverter())
     }
 
     /**
@@ -73,14 +75,14 @@ public class TestScheduler : VirtualTimeSchedulerBase {
 
     /**
      Schedules an action to be executed at the specified virtual time.
-     
+
      - parameter time: Absolute virtual time at which to execute the action.
-    */
+     */
     public func scheduleAt(time: Time, action: () -> Void) {
-        self.schedule((), time: time) { _ in
+        self.scheduleAbsoluteVirtual((), time: time, action: { () -> Disposable in
             action()
             return NopDisposable.instance
-        }
+        })
     }
 
     /**
@@ -97,19 +99,17 @@ public class TestScheduler : VirtualTimeSchedulerBase {
         var subscription : Disposable? = nil
         let observer: MockObserver<Element> = createObserver(Element)
         
-        let state : Void = ()
-        
-        self.schedule(state, time: created) { (state) in
+        self.scheduleAbsoluteVirtual((), time: created) {
             source = create()
             return NopDisposable.instance
         }
         
-        self.schedule(state, time: subscribed) { (state) in
+        self.scheduleAbsoluteVirtual((), time: subscribed) {
             subscription = source!.subscribe(observer)
             return NopDisposable.instance
         }
         
-        self.schedule(state, time: disposed) { (state) in
+        self.scheduleAbsoluteVirtual((), time: disposed) {
             subscription!.dispose()
             return NopDisposable.instance
         }

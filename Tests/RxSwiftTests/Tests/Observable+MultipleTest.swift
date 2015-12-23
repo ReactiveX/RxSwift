@@ -42,7 +42,7 @@ extension ObservableMultipleTest {
         
         let res = scheduler.start {
             o1.catchError { e in
-                handlerCalled = scheduler.now
+                handlerCalled = scheduler.clock
                 return o2.asObservable()
             }
         }
@@ -79,7 +79,7 @@ extension ObservableMultipleTest {
         
         let res = scheduler.start {
             o1.catchError { e in
-                handlerCalled = scheduler.now
+                handlerCalled = scheduler.clock
                 throw testError1
             }
         }

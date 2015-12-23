@@ -340,7 +340,7 @@ extension ObservableCreationTests {
                     _d = d
                     createInvoked += 1
                     xs = scheduler.createColdObservable([
-                        next(100, scheduler.now),
+                        next(100, scheduler.clock),
                         completed(200)
                         ])
                     return xs.asObservable()
@@ -386,7 +386,7 @@ extension ObservableCreationTests {
                     _d = d
                     createInvoked += 1
                     xs = scheduler.createColdObservable([
-                        next(100, scheduler.now),
+                        next(100, scheduler.clock),
                         error(200, testError)
                         ])
                     return xs.asObservable()
@@ -432,8 +432,8 @@ extension ObservableCreationTests {
                     _d = d
                     createInvoked += 1
                     xs = scheduler.createColdObservable([
-                        next(100, scheduler.now),
-                        next(1000, scheduler.now + 1)
+                        next(100, scheduler.clock),
+                        next(1000, scheduler.clock + 1)
                         ])
                     return xs.asObservable()
             }) as Observable<Int>

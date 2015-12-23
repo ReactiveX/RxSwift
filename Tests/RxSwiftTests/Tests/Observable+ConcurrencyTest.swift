@@ -578,9 +578,9 @@ extension ObservableConcurrencyTest {
         var disposed = 0
 
         let xs: Observable<Int> = Observable.create { observer in
-            scheduled = scheduler.now
+            scheduled = scheduler.clock
             return AnonymousDisposable {
-                disposed = scheduler.now
+                disposed = scheduler.clock
             }
         }
 

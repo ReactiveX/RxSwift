@@ -17,10 +17,10 @@ class MockDisposable : Disposable
     
     init(scheduler: TestScheduler) {
         _scheduler = scheduler
-        ticks.append(_scheduler.now)
+        ticks.append(_scheduler.clock)
     }
     
     func dispose() {
-        ticks.append(_scheduler.now)
+        ticks.append(_scheduler.clock)
     }
 }

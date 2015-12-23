@@ -70,12 +70,12 @@ class TakeCount<Element>: Producer<Element> {
 
 // time version
 
-class TakeTimeSink<ElementType, S: SchedulerType, O: ObserverType where O.E == ElementType>
+class TakeTimeSink<ElementType, O: ObserverType where O.E == ElementType>
     : Sink<O>
     , LockOwnerType
     , ObserverType
     , SynchronizedOnType {
-    typealias Parent = TakeTime<ElementType, S>
+    typealias Parent = TakeTime<ElementType>
     typealias E = ElementType
 
     private let _parent: Parent
@@ -123,14 +123,14 @@ class TakeTimeSink<ElementType, S: SchedulerType, O: ObserverType where O.E == E
     }
 }
 
-class TakeTime<Element, S: SchedulerType>: Producer<Element> {
-    typealias TimeInterval = S.TimeInterval
+class TakeTime<Element> : Producer<Element> {
+    typealias TimeInterval = RxTimeInterval
     
     private let _source: Observable<Element>
     private let _duration: TimeInterval
-    private let _scheduler: S
+    private let _scheduler: SchedulerType
     
-    init(source: Observable<Element>, duration: TimeInterval, scheduler: S) {
+    init(source: Observable<Element>, duration: TimeInterval, scheduler: SchedulerType) {
         _source = source
         _scheduler = scheduler
         _duration = duration

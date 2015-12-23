@@ -23,13 +23,13 @@ extension ObservableType {
     - returns: The throttled sequence.
     */
     @warn_unused_result(message="http://git.io/rxs.uo")
-    public func throttle<S: SchedulerType>(dueTime: S.TimeInterval, scheduler: S)
+    public func throttle(dueTime: RxTimeInterval, scheduler: SchedulerType)
         -> Observable<E> {
         return Throttle(source: self.asObservable(), dueTime: dueTime, scheduler: scheduler)
     }
 
     @available(*, deprecated=2.0.0, message="Please use version with named scheduler parameter.")
-    public func throttle<S: SchedulerType>(dueTime: S.TimeInterval, _ scheduler: S)
+    public func throttle(dueTime: RxTimeInterval, _ scheduler: SchedulerType)
         -> Observable<E> {
         return Throttle(source: self.asObservable(), dueTime: dueTime, scheduler: scheduler)
     }
@@ -47,13 +47,13 @@ extension ObservableType {
     - returns: The throttled sequence.
     */
     @warn_unused_result(message="http://git.io/rxs.uo")
-    public func debounce<S: SchedulerType>(dueTime: S.TimeInterval, scheduler: S)
+    public func debounce(dueTime: RxTimeInterval, scheduler: SchedulerType)
         -> Observable<E> {
         return Throttle(source: self.asObservable(), dueTime: dueTime, scheduler: scheduler)
     }
 
     @available(*, deprecated=2.0.0, message="Please use version with named scheduler parameter.")
-    public func debounce<S: SchedulerType>(dueTime: S.TimeInterval, _ scheduler: S)
+    public func debounce(dueTime: RxTimeInterval, _ scheduler: SchedulerType)
         -> Observable<E> {
         return Throttle(source: self.asObservable(), dueTime: dueTime, scheduler: scheduler)
     }
@@ -103,7 +103,7 @@ extension ObservableType {
 // MARK: interval
 
 @available(*, deprecated=2.0.0, message="Please use version `Observable<Int64>.interval`.")
-public func interval<S: SchedulerType>(period: S.TimeInterval, _ scheduler: S)
+public func interval(period: RxTimeInterval, _ scheduler: SchedulerType)
     -> Observable<Int64> {
     return Timer(dueTime: period,
         period: period,
@@ -122,7 +122,7 @@ extension Observable where Element : SignedIntegerType {
     - returns: An observable sequence that produces a value after each period.
     */
     @warn_unused_result(message="http://git.io/rxs.uo")
-    public static func interval<S: SchedulerType>(period: S.TimeInterval, scheduler: S)
+    public static func interval(period: RxTimeInterval, scheduler: SchedulerType)
         -> Observable<E> {
         return Timer(dueTime: period,
             period: period,
@@ -134,7 +134,7 @@ extension Observable where Element : SignedIntegerType {
 // MARK: timer
 
 @available(*, deprecated=2.0.0, message="Please use version `Observable<Int64>.timer`.")
-public func timer<S: SchedulerType>(dueTime: S.TimeInterval, _ period: S.TimeInterval, _ scheduler: S)
+public func timer(dueTime: RxTimeInterval, _ period: RxTimeInterval, _ scheduler: SchedulerType)
     -> Observable<Int64> {
     return Timer(
         dueTime: dueTime,
@@ -155,7 +155,7 @@ extension Observable where Element: SignedIntegerType {
     - returns: An observable sequence that produces a value after due time has elapsed and then each period.
     */
     @warn_unused_result(message="http://git.io/rxs.uo")
-    public static func timer<S: SchedulerType>(dueTime: S.TimeInterval, period: S.TimeInterval, scheduler: S)
+    public static func timer(dueTime: RxTimeInterval, period: RxTimeInterval, scheduler: SchedulerType)
         -> Observable<E> {
         return Timer(
             dueTime: dueTime,
@@ -165,17 +165,8 @@ extension Observable where Element: SignedIntegerType {
     }
 }
 
-/**
-Returns an observable sequence that produces a single value at the specified absolute due time, using the specified scheduler to run the timer.
-
-- seealso: [timer operator on reactivex.io](http://reactivex.io/documentation/operators/timer.html)
-
-- parameter dueTime: Time interval after which to produce the value.
-- parameter scheduler: Scheduler to run the timer on.
-- returns: An observable sequence that produces a value at due time.
-*/
-@warn_unused_result(message="http://git.io/rxs.uo")
-public func timer<S: SchedulerType>(dueTime: S.TimeInterval, scheduler: S)
+@available(*, deprecated=2.0.0, message="Please use version with named scheduler parameter.")
+public func timer(dueTime: RxTimeInterval, _ scheduler: SchedulerType)
     -> Observable<Int64> {
     return Timer(
         dueTime: dueTime,
@@ -184,14 +175,25 @@ public func timer<S: SchedulerType>(dueTime: S.TimeInterval, scheduler: S)
     )
 }
 
-@available(*, deprecated=2.0.0, message="Please use version with named scheduler parameter.")
-public func timer<S: SchedulerType>(dueTime: S.TimeInterval, _ scheduler: S)
-    -> Observable<Int64> {
-    return Timer(
-        dueTime: dueTime,
-        period: nil,
-        scheduler: scheduler
-    )
+extension Observable where Element: SignedIntegerType {
+    /**
+    Returns an observable sequence that produces a single value at the specified absolute due time, using the specified scheduler to run the timer.
+
+    - seealso: [timer operator on reactivex.io](http://reactivex.io/documentation/operators/timer.html)
+
+    - parameter dueTime: Time interval after which to produce the value.
+    - parameter scheduler: Scheduler to run the timer on.
+    - returns: An observable sequence that produces a value at due time.
+    */
+    @warn_unused_result(message="http://git.io/rxs.uo")
+    public static func timer(dueTime: RxTimeInterval, scheduler: SchedulerType)
+        -> Observable<Int64> {
+        return Timer(
+            dueTime: dueTime,
+            period: nil,
+            scheduler: scheduler
+        )
+    }
 }
 
 // MARK: take
@@ -208,13 +210,13 @@ extension ObservableType {
     - returns: An observable sequence with the elements taken during the specified duration from the start of the source sequence.
     */
     @warn_unused_result(message="http://git.io/rxs.uo")
-    public func take<S: SchedulerType>(duration: S.TimeInterval, scheduler: S)
+    public func take(duration: RxTimeInterval, scheduler: SchedulerType)
         -> Observable<E> {
         return TakeTime(source: self.asObservable(), duration: duration, scheduler: scheduler)
     }
 
     @available(*, deprecated=2.0.0, message="Please use version with named scheduler parameter.")
-    public func take<S: SchedulerType>(duration: S.TimeInterval, _ scheduler: S)
+    public func take(duration: RxTimeInterval, _ scheduler: SchedulerType)
         -> Observable<E> {
         return TakeTime(source: self.asObservable(), duration: duration, scheduler: scheduler)
     }
@@ -234,13 +236,13 @@ extension ObservableType {
     - returns: An observable sequence with the elements skipped during the specified duration from the start of the source sequence.
     */
     @warn_unused_result(message="http://git.io/rxs.uo")
-    public func skip<S: SchedulerType>(duration: S.TimeInterval, scheduler: S)
+    public func skip(duration: RxTimeInterval, scheduler: SchedulerType)
         -> Observable<E> {
         return SkipTime(source: self.asObservable(), duration: duration, scheduler: scheduler)
     }
 
     @available(*, deprecated=2.0.0, message="Please use version with named scheduler parameter.")
-    public func skip<S: SchedulerType>(duration: S.TimeInterval, _ scheduler: S)
+    public func skip(duration: RxTimeInterval, _ scheduler: SchedulerType)
         -> Observable<E> {
         return SkipTime(source: self.asObservable(), duration: duration, scheduler: scheduler)
     }
@@ -280,13 +282,13 @@ extension ObservableType {
     - returns: Time-shifted sequence.
     */
     @warn_unused_result(message="http://git.io/rxs.uo")
-    public func delaySubscription<S: SchedulerType>(dueTime: S.TimeInterval, scheduler: S)
+    public func delaySubscription(dueTime: RxTimeInterval, scheduler: SchedulerType)
         -> Observable<E> {
         return DelaySubscription(source: self.asObservable(), dueTime: dueTime, scheduler: scheduler)
     }
 
     @available(*, deprecated=2.0.0, message="Please use version with named scheduler parameter.")
-    public func delaySubscription<S: SchedulerType>(dueTime: S.TimeInterval, _ scheduler: S)
+    public func delaySubscription(dueTime: RxTimeInterval, _ scheduler: SchedulerType)
         -> Observable<E> {
         return DelaySubscription(source: self.asObservable(), dueTime: dueTime, scheduler: scheduler)
     }
@@ -309,7 +311,7 @@ extension ObservableType {
     - returns: An observable sequence of buffers.
     */
     @warn_unused_result(message="http://git.io/rxs.uo")
-    public func buffer<S: SchedulerType>(timeSpan timeSpan: S.TimeInterval, count: Int, scheduler: S)
+    public func buffer(timeSpan timeSpan: RxTimeInterval, count: Int, scheduler: SchedulerType)
         -> Observable<[E]> {
         return BufferTimeCount(source: self.asObservable(), timeSpan: timeSpan, count: count, scheduler: scheduler)
     }
@@ -330,7 +332,7 @@ extension ObservableType {
      - returns: An observable sequence of windows (instances of `Observable`).
      */
     @warn_unused_result(message="http://git.io/rxs.uo")
-    public func window<S: SchedulerType>(timeSpan timeSpan: S.TimeInterval, count: Int, scheduler: S)
+    public func window(timeSpan timeSpan: RxTimeInterval, count: Int, scheduler: SchedulerType)
         -> Observable<Observable<E>> {
             return WindowTimeCount(source: self.asObservable(), timeSpan: timeSpan, count: count, scheduler: scheduler)
     }
@@ -350,13 +352,13 @@ extension ObservableType {
      - returns: An observable sequence with a TimeoutError in case of a timeout.
      */
     @warn_unused_result(message="http://git.io/rxs.uo")
-    public func timeout<S: SchedulerType>(dueTime: S.TimeInterval, scheduler: S)
+    public func timeout(dueTime: RxTimeInterval, scheduler: SchedulerType)
         -> Observable<E> {
             return Timeout(source: self.asObservable(), dueTime: dueTime, other: nil, scheduler: scheduler)
     }
 
     @available(*, deprecated=2.0.0, message="Please use version with named scheduler parameter.")
-    public func timeout<S: SchedulerType>(dueTime: S.TimeInterval, _ scheduler: S)
+    public func timeout(dueTime: RxTimeInterval, _ scheduler: SchedulerType)
         -> Observable<E> {
             return Timeout(source: self.asObservable(), dueTime: dueTime, other: nil, scheduler: scheduler)
     }
@@ -372,13 +374,13 @@ extension ObservableType {
      - returns: The source sequence switching to the other sequence in case of a timeout.
      */
     @warn_unused_result(message="http://git.io/rxs.uo")
-    public func timeout<S: SchedulerType, O: ObservableConvertibleType where E == O.E>(dueTime: S.TimeInterval, other: O, scheduler: S)
+    public func timeout<O: ObservableConvertibleType where E == O.E>(dueTime: RxTimeInterval, other: O, scheduler: SchedulerType)
         -> Observable<E> {
             return Timeout(source: self.asObservable(), dueTime: dueTime, other: other.asObservable(), scheduler: scheduler)
     }
 
     @available(*, deprecated=2.0.0, message="Please use version with named scheduler parameter.")
-    public func timeout<S: SchedulerType, O: ObservableConvertibleType where E == O.E>(dueTime: S.TimeInterval, other: O, _ scheduler: S)
+    public func timeout<O: ObservableConvertibleType where E == O.E>(dueTime: RxTimeInterval, other: O, _ scheduler: SchedulerType)
         -> Observable<E> {
             return Timeout(source: self.asObservable(), dueTime: dueTime, other: other.asObservable(), scheduler: scheduler)
     }

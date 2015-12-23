@@ -54,9 +54,8 @@ public class HotObservable<Element : Equatable>
         self.subscriptions = []
 
         for recordedEvent in recordedEvents {
-            testScheduler.schedule((), time: recordedEvent.time) { t in
+            testScheduler.scheduleAt(recordedEvent.time) { t in
                 self._observers.on(recordedEvent.value)
-                return NopDisposable.instance
             }
         }
     }
@@ -66,7 +65,7 @@ public class HotObservable<Element : Equatable>
      */
     public func subscribe<O : ObserverType where O.E == E>(observer: O) -> Disposable {
         let key = _observers.insert(AnyObserver(observer))
-        subscriptions.append(Subscription(self._testScheduler.now))
+        subscriptions.append(Subscription(self._testScheduler.clock))
         
         let i = self.subscriptions.count - 1
         
@@ -75,7 +74,7 @@ public class HotObservable<Element : Equatable>
             assert(removed != nil)
             
             let existing = self.subscriptions[i]
-            self.subscriptions[i] = Subscription(existing.subscribe, self._testScheduler.now)
+            self.subscriptions[i] = Subscription(existing.subscribe, self._testScheduler.clock)
         }
     }
 }

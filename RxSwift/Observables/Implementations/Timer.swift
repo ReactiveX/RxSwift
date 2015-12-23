@@ -8,8 +8,8 @@
 
 import Foundation
 
-class TimerSink<S: SchedulerType, O: ObserverType where O.E : SignedIntegerType > : Sink<O> {
-    typealias Parent = Timer<S, O.E>
+class TimerSink<O: ObserverType where O.E : SignedIntegerType > : Sink<O> {
+    typealias Parent = Timer<O.E>
     
     private let _parent: Parent
     
@@ -26,8 +26,8 @@ class TimerSink<S: SchedulerType, O: ObserverType where O.E : SignedIntegerType 
     }
 }
 
-class TimerOneOffSink<S: SchedulerType, O: ObserverType where O.E : SignedIntegerType> : Sink<O> {
-    typealias Parent = Timer<S, O.E>
+class TimerOneOffSink<O: ObserverType where O.E : SignedIntegerType> : Sink<O> {
+    typealias Parent = Timer<O.E>
     
     private let _parent: Parent
     
@@ -46,14 +46,12 @@ class TimerOneOffSink<S: SchedulerType, O: ObserverType where O.E : SignedIntege
     }
 }
 
-class Timer<S: SchedulerType, E: SignedIntegerType>: Producer<E> {
-    typealias TimeInterval = S.TimeInterval
+class Timer<E: SignedIntegerType>: Producer<E> {
+    private let _scheduler: SchedulerType
+    private let _dueTime: RxTimeInterval
+    private let _period: RxTimeInterval?
     
-    private let _scheduler: S
-    private let _dueTime: TimeInterval
-    private let _period: TimeInterval?
-    
-    init(dueTime: TimeInterval, period: TimeInterval?, scheduler: S) {
+    init(dueTime: RxTimeInterval, period: RxTimeInterval?, scheduler: SchedulerType) {
         _scheduler = scheduler
         _dueTime = dueTime
         _period = period

@@ -33,6 +33,6 @@ public class MockObserver<ElementType>
     - parameter event: Event that occured.
     */
     public func on(event: Event<Element>) {
-        events.append(Recorded(time: _scheduler.now, event: event))
+        events.append(Recorded(time: _scheduler.clock, event: event))
     }
 }

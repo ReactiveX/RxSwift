@@ -19,6 +19,14 @@
 		B1D899901BF653410027B05C /* Timeout.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D8998E1BF653410027B05C /* Timeout.swift */; };
 		B1D899911BF653410027B05C /* Timeout.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D8998E1BF653410027B05C /* Timeout.swift */; };
 		B1D899921BF653410027B05C /* Timeout.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D8998E1BF653410027B05C /* Timeout.swift */; };
+		C807F35D1C2AB8D800017910 /* VirtualTimeConverterType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C807F35C1C2AB8D800017910 /* VirtualTimeConverterType.swift */; };
+		C807F35E1C2AB8D800017910 /* VirtualTimeConverterType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C807F35C1C2AB8D800017910 /* VirtualTimeConverterType.swift */; };
+		C807F35F1C2AB8D800017910 /* VirtualTimeConverterType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C807F35C1C2AB8D800017910 /* VirtualTimeConverterType.swift */; };
+		C807F3601C2AB8D800017910 /* VirtualTimeConverterType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C807F35C1C2AB8D800017910 /* VirtualTimeConverterType.swift */; };
+		C807F3621C2ACED300017910 /* TestSchedulerVirtualTimeConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C807F3611C2ACED300017910 /* TestSchedulerVirtualTimeConverter.swift */; };
+		C807F3631C2ACED300017910 /* TestSchedulerVirtualTimeConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C807F3611C2ACED300017910 /* TestSchedulerVirtualTimeConverter.swift */; };
+		C807F3641C2ACED300017910 /* TestSchedulerVirtualTimeConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C807F3611C2ACED300017910 /* TestSchedulerVirtualTimeConverter.swift */; };
+		C807F3651C2ACED300017910 /* TestSchedulerVirtualTimeConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C807F3611C2ACED300017910 /* TestSchedulerVirtualTimeConverter.swift */; };
 		C8093CC51B8A72BE0088E94D /* Cancelable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C491B8A72BE0088E94D /* Cancelable.swift */; };
 		C8093CC61B8A72BE0088E94D /* Cancelable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C491B8A72BE0088E94D /* Cancelable.swift */; };
 		C8093CC71B8A72BE0088E94D /* AsyncLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C4B1B8A72BE0088E94D /* AsyncLock.swift */; };
@@ -968,6 +976,8 @@
 		A111CE961B91C97C00D0DCEE /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B1B7C3BC1BDD39DB0076934E /* TakeLast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TakeLast.swift; sourceTree = "<group>"; };
 		B1D8998E1BF653410027B05C /* Timeout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Timeout.swift; sourceTree = "<group>"; };
+		C807F35C1C2AB8D800017910 /* VirtualTimeConverterType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VirtualTimeConverterType.swift; sourceTree = "<group>"; };
+		C807F3611C2ACED300017910 /* TestSchedulerVirtualTimeConverter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestSchedulerVirtualTimeConverter.swift; sourceTree = "<group>"; };
 		C809396D1B8A71760088E94D /* RxCocoa.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxCocoa.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C80939E71B8A71840088E94D /* RxCocoa.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxCocoa.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8093BC71B8A71F00088E94D /* RxBlocking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxBlocking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1810,6 +1820,8 @@
 			children = (
 				C8E3A7031C25CE7B00643FE6 /* TestScheduler.swift */,
 				C8E3A7041C25CE7B00643FE6 /* VirtualTimeSchedulerBase.swift */,
+				C807F35C1C2AB8D800017910 /* VirtualTimeConverterType.swift */,
+				C807F3611C2ACED300017910 /* TestSchedulerVirtualTimeConverter.swift */,
 			);
 			path = Schedulers;
 			sourceTree = "<group>";
@@ -2720,8 +2732,10 @@
 				C8E3A7051C25CE7B00643FE6 /* TestScheduler.swift in Sources */,
 				C8E3A7311C2606A900643FE6 /* Event+Equatable.swift in Sources */,
 				C8E3A7181C25CEF100643FE6 /* MockObserver.swift in Sources */,
+				C807F3621C2ACED300017910 /* TestSchedulerVirtualTimeConverter.swift in Sources */,
 				C8E3A72C1C25D14700643FE6 /* XCTest+Rx.swift in Sources */,
 				C8E3A7091C25CE7B00643FE6 /* VirtualTimeSchedulerBase.swift in Sources */,
+				C807F35D1C2AB8D800017910 /* VirtualTimeConverterType.swift in Sources */,
 				C8E3A71E1C25CF1000643FE6 /* Recorded.swift in Sources */,
 				C8E3A7221C25CF1000643FE6 /* Subscription.swift in Sources */,
 				C8E3A7271C25CF8C00643FE6 /* RxTests.swift in Sources */,
@@ -2738,8 +2752,10 @@
 				C8E3A7061C25CE7B00643FE6 /* TestScheduler.swift in Sources */,
 				C8E3A7321C2606A900643FE6 /* Event+Equatable.swift in Sources */,
 				C8E3A7191C25CEF100643FE6 /* MockObserver.swift in Sources */,
+				C807F3631C2ACED300017910 /* TestSchedulerVirtualTimeConverter.swift in Sources */,
 				C8E3A72D1C25D14700643FE6 /* XCTest+Rx.swift in Sources */,
 				C8E3A70A1C25CE7B00643FE6 /* VirtualTimeSchedulerBase.swift in Sources */,
+				C807F35E1C2AB8D800017910 /* VirtualTimeConverterType.swift in Sources */,
 				C8E3A71F1C25CF1000643FE6 /* Recorded.swift in Sources */,
 				C8E3A7231C25CF1000643FE6 /* Subscription.swift in Sources */,
 				C8E3A7281C25CF8C00643FE6 /* RxTests.swift in Sources */,
@@ -2756,8 +2772,10 @@
 				C8E3A7071C25CE7B00643FE6 /* TestScheduler.swift in Sources */,
 				C8E3A7331C2606A900643FE6 /* Event+Equatable.swift in Sources */,
 				C8E3A71A1C25CEF100643FE6 /* MockObserver.swift in Sources */,
+				C807F3641C2ACED300017910 /* TestSchedulerVirtualTimeConverter.swift in Sources */,
 				C8E3A72E1C25D14700643FE6 /* XCTest+Rx.swift in Sources */,
 				C8E3A70B1C25CE7B00643FE6 /* VirtualTimeSchedulerBase.swift in Sources */,
+				C807F35F1C2AB8D800017910 /* VirtualTimeConverterType.swift in Sources */,
 				C8E3A7201C25CF1000643FE6 /* Recorded.swift in Sources */,
 				C8E3A7241C25CF1000643FE6 /* Subscription.swift in Sources */,
 				C8E3A7291C25CF8C00643FE6 /* RxTests.swift in Sources */,
@@ -2774,8 +2792,10 @@
 				C8E3A7081C25CE7B00643FE6 /* TestScheduler.swift in Sources */,
 				C8E3A7341C2606A900643FE6 /* Event+Equatable.swift in Sources */,
 				C8E3A71B1C25CEF100643FE6 /* MockObserver.swift in Sources */,
+				C807F3651C2ACED300017910 /* TestSchedulerVirtualTimeConverter.swift in Sources */,
 				C8E3A72F1C25D14700643FE6 /* XCTest+Rx.swift in Sources */,
 				C8E3A70C1C25CE7B00643FE6 /* VirtualTimeSchedulerBase.swift in Sources */,
+				C807F3601C2AB8D800017910 /* VirtualTimeConverterType.swift in Sources */,
 				C8E3A7211C25CF1000643FE6 /* Recorded.swift in Sources */,
 				C8E3A7251C25CF1000643FE6 /* Subscription.swift in Sources */,
 				C8E3A72A1C25CF8C00643FE6 /* RxTests.swift in Sources */,
