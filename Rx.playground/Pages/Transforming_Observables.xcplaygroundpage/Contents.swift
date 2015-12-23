@@ -19,7 +19,7 @@ Transform the items emitted by an Observable by applying a function to each item
 */
 
 example("map") {
-    let originalSequence = sequenceOf(Character("A"), Character("B"), Character("C"))
+    let originalSequence = Observable.of(Character("A"), Character("B"), Character("C"))
 
     _ = originalSequence
         .map { char in
@@ -39,9 +39,9 @@ Transform the items emitted by an Observable into Observables, then flatten the 
 [More info in reactive.io website]( http://reactivex.io/documentation/operators/flatmap.html )
 */
 example("flatMap") {
-    let sequenceInt = sequenceOf(1, 2, 3)
+    let sequenceInt = Observable.of(1, 2, 3)
 
-    let sequenceString = sequenceOf("A", "B", "C", "D", "E", "F", "--")
+    let sequenceString = Observable.of("A", "B", "C", "D", "E", "F", "--")
 
     _ = sequenceInt
         .flatMap { int in
@@ -63,7 +63,7 @@ Apply a function to each item emitted by an Observable, sequentially, and emit e
 [More info in reactive.io website]( http://reactivex.io/documentation/operators/scan.html )
 */
 example("scan") {
-    let sequenceToSum = sequenceOf(0, 1, 2, 3, 4, 5)
+    let sequenceToSum = Observable.of(0, 1, 2, 3, 4, 5)
 
     _ = sequenceToSum
         .scan(0) { acum, elem in
