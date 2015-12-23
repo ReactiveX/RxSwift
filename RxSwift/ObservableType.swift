@@ -22,7 +22,7 @@ public protocol ObservableType : ObservableConvertibleType {
     
     ### Grammar
     
-    **Next\* (Error | Completed)**
+    **Next\* (Error | Completed)?**
     
     * sequences can produce zero or more elements so zero or more `Next` events can be sent to `observer`
     * once an `Error` or `Completed` event is sent, the sequence terminates and can't produce any other element
