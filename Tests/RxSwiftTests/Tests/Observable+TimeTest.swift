@@ -716,7 +716,7 @@ extension ObservableTimeTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let res = scheduler.start {
-            interval(100, scheduler: scheduler)
+            Observable<Int64>.interval(100, scheduler: scheduler)
         }
 
         let correct = [
@@ -736,7 +736,7 @@ extension ObservableTimeTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let res = scheduler.start(210) {
-            interval(0, scheduler: scheduler)
+            Observable<Int64>.interval(0, scheduler: scheduler)
         }
 
         let correct = [
@@ -763,7 +763,7 @@ extension ObservableTimeTest {
 
         OSSpinLockLock(&lock)
 
-        let d = interval(0, scheduler: scheduler).takeWhile { $0 < 10 } .subscribe(onNext: { t in
+        let d = Observable<Int64>.interval(0, scheduler: scheduler).takeWhile { $0 < 10 } .subscribe(onNext: { t in
             observer.on(.Next(t))
         }, onCompleted: {
             OSSpinLockUnlock(&lock)
@@ -791,7 +791,7 @@ extension ObservableTimeTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let res = scheduler.start {
-            interval(1000, scheduler: scheduler)
+            Observable<Int64>.interval(1000, scheduler: scheduler)
         }
 
         let correct: [Recorded<Event<Int64>>] = [
@@ -807,7 +807,7 @@ extension ObservableTimeTest {
 
         let start = NSDate()
 
-        let a = try! interval(1, scheduler: scheduler)
+        let a = try! Observable<Int64>.interval(1, scheduler: scheduler)
             .take(2)
             .toBlocking()
             .toArray()

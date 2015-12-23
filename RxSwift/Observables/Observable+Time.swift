@@ -102,25 +102,7 @@ extension ObservableType {
 
 // MARK: interval
 
-/**
-Returns an observable sequence that produces a value after each period, using the specified scheduler to run timers and to send out observer messages.
-
-- seealso: [interval operator on reactivex.io](http://reactivex.io/documentation/operators/interval.html)
-
-- parameter period: Period for producing the values in the resulting sequence.
-- parameter scheduler: Scheduler to run the timer on.
-- returns: An observable sequence that produces a value after each period.
-*/
-@warn_unused_result(message="http://git.io/rxs.uo")
-public func interval<S: SchedulerType>(period: S.TimeInterval, scheduler: S)
-    -> Observable<Int64> {
-    return Timer(dueTime: period,
-        period: period,
-        scheduler: scheduler
-    )
-}
-
-@available(*, deprecated=2.0.0, message="Please use version with named scheduler parameter.")
+@available(*, deprecated=2.0.0, message="Please use version `Observable<Int64>.interval`.")
 public func interval<S: SchedulerType>(period: S.TimeInterval, _ scheduler: S)
     -> Observable<Int64> {
     return Timer(dueTime: period,
@@ -129,20 +111,30 @@ public func interval<S: SchedulerType>(period: S.TimeInterval, _ scheduler: S)
     )
 }
 
+extension Observable where Element : SignedIntegerType {
+    /**
+    Returns an observable sequence that produces a value after each period, using the specified scheduler to run timers and to send out observer messages.
+
+    - seealso: [interval operator on reactivex.io](http://reactivex.io/documentation/operators/interval.html)
+
+    - parameter period: Period for producing the values in the resulting sequence.
+    - parameter scheduler: Scheduler to run the timer on.
+    - returns: An observable sequence that produces a value after each period.
+    */
+    @warn_unused_result(message="http://git.io/rxs.uo")
+    public static func interval<S: SchedulerType>(period: S.TimeInterval, scheduler: S)
+        -> Observable<E> {
+        return Timer(dueTime: period,
+            period: period,
+            scheduler: scheduler
+        )
+    }
+}
+
 // MARK: timer
 
-/**
-Returns an observable sequence that periodically produces a value after the specified initial relative due time has elapsed, using the specified scheduler to run timers.
-
-- seealso: [timer operator on reactivex.io](http://reactivex.io/documentation/operators/timer.html)
-
-- parameter dueTime: Relative time at which to produce the first value.
-- parameter period: Period to produce subsequent values.
-- parameter scheduler: Scheduler to run timers on.
-- returns: An observable sequence that produces a value after due time has elapsed and then each period.
-*/
-@warn_unused_result(message="http://git.io/rxs.uo")
-public func timer<S: SchedulerType>(dueTime: S.TimeInterval, period: S.TimeInterval, scheduler: S)
+@available(*, deprecated=2.0.0, message="Please use version `Observable<Int64>.timer`.")
+public func timer<S: SchedulerType>(dueTime: S.TimeInterval, _ period: S.TimeInterval, _ scheduler: S)
     -> Observable<Int64> {
     return Timer(
         dueTime: dueTime,
@@ -151,14 +143,26 @@ public func timer<S: SchedulerType>(dueTime: S.TimeInterval, period: S.TimeInter
     )
 }
 
-@available(*, deprecated=2.0.0, message="Please use version with named period and scheduler parameters.")
-public func timer<S: SchedulerType>(dueTime: S.TimeInterval, _ period: S.TimeInterval, _ scheduler: S)
-    -> Observable<Int64> {
-    return Timer(
-        dueTime: dueTime,
-        period: period,
-        scheduler: scheduler
-    )
+extension Observable where Element: SignedIntegerType {
+    /**
+    Returns an observable sequence that periodically produces a value after the specified initial relative due time has elapsed, using the specified scheduler to run timers.
+
+    - seealso: [timer operator on reactivex.io](http://reactivex.io/documentation/operators/timer.html)
+
+    - parameter dueTime: Relative time at which to produce the first value.
+    - parameter period: Period to produce subsequent values.
+    - parameter scheduler: Scheduler to run timers on.
+    - returns: An observable sequence that produces a value after due time has elapsed and then each period.
+    */
+    @warn_unused_result(message="http://git.io/rxs.uo")
+    public static func timer<S: SchedulerType>(dueTime: S.TimeInterval, period: S.TimeInterval, scheduler: S)
+        -> Observable<E> {
+        return Timer(
+            dueTime: dueTime,
+            period: period,
+            scheduler: scheduler
+        )
+    }
 }
 
 /**

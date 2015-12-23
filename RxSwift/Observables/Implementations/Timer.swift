@@ -8,8 +8,8 @@
 
 import Foundation
 
-class TimerSink<S: SchedulerType, O: ObserverType where O.E == Int64> : Sink<O> {
-    typealias Parent = Timer<S>
+class TimerSink<S: SchedulerType, O: ObserverType where O.E : SignedIntegerType > : Sink<O> {
+    typealias Parent = Timer<S, O.E>
     
     private let _parent: Parent
     
@@ -19,15 +19,15 @@ class TimerSink<S: SchedulerType, O: ObserverType where O.E == Int64> : Sink<O> 
     }
     
     func run() -> Disposable {
-        return _parent._scheduler.schedulePeriodic(0 as Int64, startAfter: _parent._dueTime, period: _parent._period!) { state in
+        return _parent._scheduler.schedulePeriodic(0 as O.E, startAfter: _parent._dueTime, period: _parent._period!) { state in
             self.forwardOn(.Next(state))
             return state &+ 1
         }
     }
 }
 
-class TimerOneOffSink<S: SchedulerType, O: ObserverType where O.E == Int64> : Sink<O> {
-    typealias Parent = Timer<S>
+class TimerOneOffSink<S: SchedulerType, O: ObserverType where O.E : SignedIntegerType> : Sink<O> {
+    typealias Parent = Timer<S, O.E>
     
     private let _parent: Parent
     
@@ -46,7 +46,7 @@ class TimerOneOffSink<S: SchedulerType, O: ObserverType where O.E == Int64> : Si
     }
 }
 
-class Timer<S: SchedulerType>: Producer<Int64> {
+class Timer<S: SchedulerType, E: SignedIntegerType>: Producer<E> {
     typealias TimeInterval = S.TimeInterval
     
     private let _scheduler: S
@@ -59,7 +59,7 @@ class Timer<S: SchedulerType>: Producer<Int64> {
         _period = period
     }
     
-    override func run<O : ObserverType where O.E == Int64>(observer: O) -> Disposable {
+    override func run<O : ObserverType where O.E == E>(observer: O) -> Disposable {
         if let _ = _period {
             let sink = TimerSink(parent: self, observer: observer)
             sink.disposable = sink.run()
