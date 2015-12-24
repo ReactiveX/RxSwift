@@ -188,7 +188,6 @@ class APIWrappersViewController: ViewController {
         textField.rx_text
             .subscribeNext { [weak self] x in
                 self?.debug("UITextField text \(x)")
-                self?.textField.resignFirstResponder()
             }
             .addDisposableTo(disposeBag)
 
