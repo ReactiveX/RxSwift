@@ -64,7 +64,7 @@ class ZipSink<O: ObserverType> : Sink<O>, ZipSinkProtocol {
             var allOthersDone = true
             
             let arity = _isDone.count
-            for var i = 0; i < arity; i += 1 {
+            for i in 0 ..< arity {
                 if i != index && !_isDone[i] {
                     allOthersDone = false
                     break

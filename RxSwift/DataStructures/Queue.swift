@@ -168,22 +168,33 @@ public struct Queue<T>: SequenceType {
     - returns: Generator of contained elements.
     */
     public func generate() -> Generator {
-        var i = dequeueIndex
-        var count = _count
-        
-        return anyGenerator {
-            if count == 0 {
-                return nil
-            }
-            
-            count -= 1
-            if i >= self._storage.count {
-                i -= self._storage.count
-            }
-            
-            let element = self._storage[i]
-            i += 1
-            return element
+        return QueueGenerator(queue: self)
+    }
+}
+
+class QueueGenerator<Element> : AnyGenerator<Element> {
+    let _queue: Queue<Element>
+    var _i: Int
+    var _remaining: Int
+
+    init(queue: Queue<Element>) {
+        _queue = queue
+        _i = queue.dequeueIndex
+        _remaining = queue.count
+    }
+
+    override func next() -> Element? {
+        if _remaining == 0 {
+            return nil
         }
+        
+        _remaining -= 1
+        if _i >= _queue._storage.count {
+            _i -= _queue._storage.count
+        }
+        
+        let element = _queue._storage[_i]
+        _i += 1
+        return element
     }
 }
