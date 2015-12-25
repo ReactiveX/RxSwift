@@ -58,8 +58,8 @@ class Debug<Element> : Producer<Element> {
         }
         else {
             let trimmedFile: String
-            if let lastIndex = file.rangeOfString("/", options: .BackwardsSearch) {
-                trimmedFile = file.substringFromIndex(lastIndex.endIndex)
+            if let lastIndex = file.lastIndexOf("/") {
+                trimmedFile = file[lastIndex.successor() ..< file.endIndex]
             }
             else {
                 trimmedFile = file
