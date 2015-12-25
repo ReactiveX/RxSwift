@@ -15,12 +15,17 @@ Compares two events. They are equal if they are both the same member of `Event` 
 In case `Error` events are being compared, they are equal in case their `NSError` representations are equal (domain and code)
 and their string representations are equal.
 */
-func == <Element: Equatable>(lhs: Event<Element>, rhs: Event<Element>) -> Bool {
+public func == <Element: Equatable>(lhs: Event<Element>, rhs: Event<Element>) -> Bool {
     switch (lhs, rhs) {
     case (.Completed, .Completed): return true
     case (.Error(let e1), .Error(let e2)):
         let error1 = e1 as NSError
         let error2 = e2 as NSError
+
+        // if the references are equal, then it's the same object
+        if let lhsObject = lhs as? AnyObject, rhsObject = rhs as? AnyObject where lhsObject === rhsObject {
+            return true
+        }
         
         return error1.domain == error2.domain
             && error1.code == error2.code

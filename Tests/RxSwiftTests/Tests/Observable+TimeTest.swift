@@ -759,30 +759,32 @@ extension ObservableTimeTest {
 
         let observer = PrimitiveMockObserver<Int64>()
 
-        var lock = OS_SPINLOCK_INIT
-
-        OSSpinLockLock(&lock)
+        let expectCompleted = expectationWithDescription("It will complete")
 
         let d = Observable<Int64>.interval(0, scheduler: scheduler).takeWhile { $0 < 10 } .subscribe(onNext: { t in
             observer.on(.Next(t))
         }, onCompleted: {
-            OSSpinLockUnlock(&lock)
+            expectCompleted.fulfill()
         })
 
         defer {
             d.dispose()
         }
 
-        OSSpinLockLock(&lock)
-        OSSpinLockUnlock(&lock)
+        waitForExpectationsWithTimeout(1.0) { e in
+            XCTAssert(e == nil, "Did not complete")
+        }
+
+        let cleanResources = expectationWithDescription("Clean resources")
 
         scheduler.schedule(()) { _ in
-            OSSpinLockUnlock(&lock)
+            cleanResources.fulfill()
             return NopDisposable.instance
         }
 
-        // wait until dispatch queue cleans it's resources
-        OSSpinLockLock(&lock)
+        waitForExpectationsWithTimeout(1.0) { e in
+            XCTAssert(e == nil, "Did not clean up")
+        }
 
         XCTAssertTrue(observer.events.count == 10)
     }

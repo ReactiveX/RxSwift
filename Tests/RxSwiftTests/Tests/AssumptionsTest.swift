@@ -18,11 +18,11 @@ func clearRealTest() {
 }
 
 func returnSomething() -> Observable<AnyObject?> {
-    return Observable.just("a")
+    return Observable.just(NSNull())
 }
 
-func returnSomething() -> Observable<CGRect?> {
-    return Observable.just(CGRectMake(0, 0, 100, 100))
+func returnSomething() -> Observable<Int?> {
+    return Observable.just(3)
 }
 
 class AssumptionsTest : RxTest {
@@ -66,12 +66,12 @@ class AssumptionsTest : RxTest {
     func testFunctionReturnValueOverload() {
         _ = returnSomething()
             .subscribeNext { (n: AnyObject?) in
-                XCTAssertEqual("\(n ?? NSNull())", "a")
+                XCTAssertEqual(n as? NSNull, NSNull())
             }
 
         _ = returnSomething()
-            .subscribeNext { (n: CGRect?) in
-                XCTAssertEqual(n!, CGRectMake(0, 0, 100, 100))
+            .subscribeNext { (n: Int?) in
+                XCTAssertEqual(n!, 3)
              }
     }
     

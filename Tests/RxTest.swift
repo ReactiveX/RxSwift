@@ -26,7 +26,10 @@ import RxTests
 typealias Time = Int
 
 func XCTAssertErrorEqual(lhs: ErrorType, _ rhs: ErrorType) {
-    XCTAssertTrue(lhs as NSError === rhs as NSError)
+    let event1: Event<Int> = .Error(lhs)
+    let event2: Event<Int> = .Error(rhs)
+    
+    XCTAssertTrue(event1 == event2)
 }
 
 func XCTAssertEqualNSValues(lhs: AnyObject, rhs: AnyObject) {

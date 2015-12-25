@@ -27,7 +27,11 @@ func isPrime(i: Int) -> Bool {
     }
     
     let max = Int(sqrt(Float(i)))
-    for (var j = 2; j <= max; ++j) {
+    if max <= 1 {
+        return true
+    }
+
+    for j in 2 ... max {
         if i % j == 0 {
             return false
         }
