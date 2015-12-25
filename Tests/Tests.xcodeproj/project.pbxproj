@@ -12,9 +12,6 @@
 		C69B65011BA8957C00A7FA73 /* ObserverTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C69B64FF1BA88FAC00A7FA73 /* ObserverTests.swift */; };
 		C801EB5A1B97951100C4D8C4 /* Observable+CreationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C801EB591B97951100C4D8C4 /* Observable+CreationTest.swift */; };
 		C801EB5B1B97951100C4D8C4 /* Observable+CreationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C801EB591B97951100C4D8C4 /* Observable+CreationTest.swift */; };
-		C80DDEDC1BCE9A03006A1832 /* Driver+Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80DDEDB1BCE9A03006A1832 /* Driver+Test.swift */; };
-		C80DDEDD1BCE9A03006A1832 /* Driver+Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80DDEDB1BCE9A03006A1832 /* Driver+Test.swift */; };
-		C80DDEDE1BCE9A03006A1832 /* Driver+Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80DDEDB1BCE9A03006A1832 /* Driver+Test.swift */; };
 		C80DDEE01BCEE898006A1832 /* MainThreadPrimitiveHotObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80DDEDF1BCEE898006A1832 /* MainThreadPrimitiveHotObservable.swift */; };
 		C80DDEE11BCEE898006A1832 /* MainThreadPrimitiveHotObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80DDEDF1BCEE898006A1832 /* MainThreadPrimitiveHotObservable.swift */; };
 		C80DDEE21BCEE898006A1832 /* MainThreadPrimitiveHotObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80DDEDF1BCEE898006A1832 /* MainThreadPrimitiveHotObservable.swift */; };
@@ -118,6 +115,9 @@
 		C8C4B4DF1C17772500828BD5 /* SentMessageTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C4B4DE1C17772500828BD5 /* SentMessageTest.swift */; };
 		C8C4B4E01C17772500828BD5 /* SentMessageTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C4B4DE1C17772500828BD5 /* SentMessageTest.swift */; };
 		C8C4B4E11C17772500828BD5 /* SentMessageTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C4B4DE1C17772500828BD5 /* SentMessageTest.swift */; };
+		C8CCB8E71C2DB52B000EDACC /* Driver+Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8CCB8E61C2DB52B000EDACC /* Driver+Test.swift */; };
+		C8CCB8E81C2DB52B000EDACC /* Driver+Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8CCB8E61C2DB52B000EDACC /* Driver+Test.swift */; };
+		C8CCB8E91C2DB52B000EDACC /* Driver+Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8CCB8E61C2DB52B000EDACC /* Driver+Test.swift */; };
 		C8CDD7D41B52BEC40043F0C5 /* Observable+BlockingTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8CDD7D31B52BEC40043F0C5 /* Observable+BlockingTest.swift */; };
 		C8CDD7D51B52BEC40043F0C5 /* Observable+BlockingTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8CDD7D31B52BEC40043F0C5 /* Observable+BlockingTest.swift */; };
 		C8CF47661C1DA04700C3FA6E /* CLLocationManager+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8CF47651C1DA04700C3FA6E /* CLLocationManager+RxTests.swift */; };
@@ -187,7 +187,6 @@
 		5E5D10BA1B48355200432B25 /* Control+RxTests+UIKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = "Control+RxTests+UIKit.swift"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		C69B64FF1BA88FAC00A7FA73 /* ObserverTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObserverTests.swift; sourceTree = "<group>"; };
 		C801EB591B97951100C4D8C4 /* Observable+CreationTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = "Observable+CreationTest.swift"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		C80DDEDB1BCE9A03006A1832 /* Driver+Test.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Driver+Test.swift"; sourceTree = "<group>"; };
 		C80DDEDF1BCEE898006A1832 /* MainThreadPrimitiveHotObservable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainThreadPrimitiveHotObservable.swift; sourceTree = "<group>"; };
 		C81108201AF50E11001C13E4 /* AllTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AllTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C81108241AF50E11001C13E4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -244,6 +243,7 @@
 		C8C4B4D31C1772D700828BD5 /* RXObjCRuntime+Testing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "RXObjCRuntime+Testing.m"; sourceTree = "<group>"; };
 		C8C4B4D41C1772D700828BD5 /* RxObjCRuntimeState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxObjCRuntimeState.swift; sourceTree = "<group>"; };
 		C8C4B4DE1C17772500828BD5 /* SentMessageTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SentMessageTest.swift; sourceTree = "<group>"; };
+		C8CCB8E61C2DB52B000EDACC /* Driver+Test.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Driver+Test.swift"; sourceTree = "<group>"; };
 		C8CDD7D31B52BEC40043F0C5 /* Observable+BlockingTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = "Observable+BlockingTest.swift"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		C8CF47651C1DA04700C3FA6E /* CLLocationManager+RxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CLLocationManager+RxTests.swift"; sourceTree = "<group>"; };
 		C8E381221B2063CC008CDC33 /* Observable+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Observable+Extensions.swift"; sourceTree = "<group>"; };
@@ -352,6 +352,7 @@
 		C811082A1AF50E2A001C13E4 /* RxCocoaTests */ = {
 			isa = PBXGroup;
 			children = (
+				C8CCB8E61C2DB52B000EDACC /* Driver+Test.swift */,
 				C8E9D2BC1BD422D80079D0DB /* Control+RxTests.swift */,
 				C8E9D2C01BD4525B0079D0DB /* Control+RxTests+Cocoa.swift */,
 				5E5D10BA1B48355200432B25 /* Control+RxTests+UIKit.swift */,
@@ -440,7 +441,6 @@
 				C814CEA21AF5622600E98087 /* VariableTest.swift */,
 				C69B64FF1BA88FAC00A7FA73 /* ObserverTests.swift */,
 				C89CDB951BCDA1F1002063D9 /* Observable+SubscriptionTest.swift */,
-				C80DDEDB1BCE9A03006A1832 /* Driver+Test.swift */,
 				C8F6A1401BEFE04F007DF367 /* SubjectConcurrencyTest.swift */,
 			);
 			path = Tests;
@@ -612,6 +612,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C8941BD91BD4F58C00A0E874 /* BackgroundThreadPrimitiveHotObservable.swift in Sources */,
+				C8CCB8E71C2DB52B000EDACC /* Driver+Test.swift in Sources */,
 				C87EC2F91C131A4E0060B19B /* DelegateProxyTest.swift in Sources */,
 				C8B787FA1AF55CDE00206D02 /* Observable+ConcurrencyTest.swift in Sources */,
 				C81108691AF50E2A001C13E4 /* RxTest.swift in Sources */,
@@ -621,7 +622,6 @@
 				C87BB6B71C13A64000C66DF9 /* ControlPropertyTests.swift in Sources */,
 				C868D0F91BB76A29003D1474 /* PerformanceTools.swift in Sources */,
 				C8E3812B1B2083C2008CDC33 /* PrimitiveMockObserver.swift in Sources */,
-				C80DDEDC1BCE9A03006A1832 /* Driver+Test.swift in Sources */,
 				C81108531AF50E2A001C13E4 /* MySubject.swift in Sources */,
 				C8CF47661C1DA04700C3FA6E /* CLLocationManager+RxTests.swift in Sources */,
 				C81108611AF50E2A001C13E4 /* Observable+BindingTest.swift in Sources */,
@@ -681,6 +681,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C88BB8911B07E64B0064D411 /* Observable+ConcurrencyTest.swift in Sources */,
+				C8CCB8E81C2DB52B000EDACC /* Driver+Test.swift in Sources */,
 				C88BB8941B07E64B0064D411 /* Observable+TimeTest.swift in Sources */,
 				C8CDD7D51B52BEC40043F0C5 /* Observable+BlockingTest.swift in Sources */,
 				C8E381291B207D03008CDC33 /* PrimitiveHotObservable.swift in Sources */,
@@ -695,7 +696,6 @@
 				C8CF47671C1DA04700C3FA6E /* CLLocationManager+RxTests.swift in Sources */,
 				C88BB89C1B07E64B0064D411 /* ConcurrencyTest.swift in Sources */,
 				C87EC3001C131A940060B19B /* DelegateProxyTest+Cocoa.swift in Sources */,
-				C80DDEDD1BCE9A03006A1832 /* Driver+Test.swift in Sources */,
 				C8C4B4D91C1772D700828BD5 /* RXObjCRuntime+Testing.m in Sources */,
 				C88BB89F1B07E64B0064D411 /* DisposableTest.swift in Sources */,
 				C88BB8A01B07E64B0064D411 /* Observable+StandardSequenceOperatorsTest.swift in Sources */,
@@ -741,13 +741,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				C8941BDB1BD4F58C00A0E874 /* BackgroundThreadPrimitiveHotObservable.swift in Sources */,
+				C8CCB8E91C2DB52B000EDACC /* Driver+Test.swift in Sources */,
 				C87EC2FB1C131A4E0060B19B /* DelegateProxyTest.swift in Sources */,
 				D2EBEB5A1BB9B7CC003A27DC /* PrimitiveHotObservable.swift in Sources */,
 				C8C4B4E11C17772500828BD5 /* SentMessageTest.swift in Sources */,
 				C89CDB981BCDA1F1002063D9 /* Observable+SubscriptionTest.swift in Sources */,
 				C87BB6B91C13A64000C66DF9 /* ControlPropertyTests.swift in Sources */,
 				D2EBEB6F1BB9B7EF003A27DC /* Observable+CreationTest.swift in Sources */,
-				C80DDEDE1BCE9A03006A1832 /* Driver+Test.swift in Sources */,
 				D2EBEB641BB9B7EF003A27DC /* AssumptionsTest.swift in Sources */,
 				D2EBEB6A1BB9B7EF003A27DC /* DisposableTest.swift in Sources */,
 				C8CF47681C1DA04700C3FA6E /* CLLocationManager+RxTests.swift in Sources */,
