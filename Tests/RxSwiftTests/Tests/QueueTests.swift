@@ -27,7 +27,7 @@ extension QueueTest {
         
         XCTAssertEqual(queue.count, 0)
         
-        for var i = 100; i < 200; i += 1 {
+        for i in 100 ..< 200 {
             queue.enqueue(i)
             
             let allElements = Array(queue)
@@ -38,7 +38,7 @@ extension QueueTest {
             XCTAssertEqual(queue.count, i - 100 + 1)
         }
         
-        for var i = 100; i < 200; i += 1 {
+        for i in 100 ..< 200 {
             let allElements2 = Array(queue)
             let correct2 = Array(i ... 199)
             
@@ -53,7 +53,7 @@ extension QueueTest {
         
         XCTAssertEqual(queue.count, 0)
         
-        for var i = 0; i < 200000; i += 1 {
+        for i in 0 ..< 200000 {
             queue.enqueue(i)
         }
         
