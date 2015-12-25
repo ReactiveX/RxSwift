@@ -100,11 +100,11 @@ func observeWeaklyKeyPathFor(
     let propertyName = keyPathSections[0]
     let remainingPaths = Array(keyPathSections[1..<keyPathSections.count])
     
-    let property = class_getProperty(object_getClass(target), propertyName);
+    let property = class_getProperty(object_getClass(target), propertyName)
     if property == nil {
         return Observable.error(RxCocoaError.InvalidPropertyName(object: target, propertyName: propertyName))
     }
-    let propertyAttributes = property_getAttributes(property);
+    let propertyAttributes = property_getAttributes(property)
     
     // should dealloc hook be in place if week property, or just create strong reference because it doesn't matter
     let isWeak = isWeakProperty(String.fromCString(propertyAttributes) ?? "")

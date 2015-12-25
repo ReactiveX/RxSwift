@@ -32,7 +32,7 @@ class SkipCountSink<ElementType, O: ObserverType where O.E == ElementType> : Sin
                 forwardOn(.Next(value))
             }
             else {
-                remaining--
+                remaining -= 1
             }
         case .Error:
             forwardOn(event)

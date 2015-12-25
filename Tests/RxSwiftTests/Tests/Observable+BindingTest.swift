@@ -24,7 +24,7 @@ extension ObservableBindingTest {
         
         let observable = TestConnectableObservable(o: Observable.of(0, 1, 2), s: subject)
         let d = observable.subscribeNext { n in
-            nEvents++
+            nEvents += 1
         }
 
         defer {
@@ -43,7 +43,7 @@ extension ObservableBindingTest {
         
         let observable = TestConnectableObservable(o: [Observable.of(0, 1, 2), Observable.error(testError)].concat(), s: subject)
         let d = observable.subscribeError { n in
-            nEvents++
+            nEvents += 1
         }
 
         defer {
@@ -62,7 +62,7 @@ extension ObservableBindingTest {
         
         let observable = TestConnectableObservable(o: Observable.error(testError), s: subject)
         let d = observable.subscribeError { n in
-            nEvents++
+            nEvents += 1
         }
 
         defer {
@@ -81,7 +81,7 @@ extension ObservableBindingTest {
         
         let observable = TestConnectableObservable(o: Observable.empty(), s: subject)
         let d = observable.subscribeCompleted {
-            nEvents++
+            nEvents += 1
         }
 
         defer {
@@ -128,7 +128,7 @@ extension ObservableBindingTest {
         var count = 0
         
         let xs: Observable<Int> = Observable.deferred {
-            count++
+            count += 1
             return Observable.create { obs in
                 return AnonymousDisposable {
                     disconnected = true
@@ -163,7 +163,7 @@ extension ObservableBindingTest {
         XCTAssertFalse(disconnected)
         
         dis3.dispose()
-        XCTAssertTrue(disconnected);
+        XCTAssertTrue(disconnected)
     }
     
     func testRefCount_Error() {
@@ -301,7 +301,7 @@ extension ObservableBindingTest {
         scheduler.scheduleAt(650) { connection = ys.connect() }
         scheduler.scheduleAt(800) { connection.dispose() }
         
-        scheduler.start();
+        scheduler.start()
         
         XCTAssertEqual(res.events, [
             next(450, 5),
@@ -352,7 +352,7 @@ extension ObservableBindingTest {
         scheduler.scheduleAt(500) { connection = ys.connect() }
         scheduler.scheduleAt(800) { connection.dispose() }
         
-        scheduler.start();
+        scheduler.start()
         
         XCTAssertEqual(res.events, [
             next(450, 5),
@@ -404,7 +404,7 @@ extension ObservableBindingTest {
         scheduler.scheduleAt(500) { connection = ys.connect() }
         scheduler.scheduleAt(800) { connection.dispose() }
         
-        scheduler.start();
+        scheduler.start()
         
         XCTAssertEqual(res.events, [
             next(450, 5),
@@ -459,7 +459,7 @@ extension ObservableBindingTest {
         scheduler.scheduleAt(650) { connection = ys.connect() }
         scheduler.scheduleAt(800) { connection.dispose() }
         
-        scheduler.start();
+        scheduler.start()
         
         XCTAssertEqual(res.events, [
             next(450, 5),
@@ -512,7 +512,7 @@ extension ObservableBindingTest {
         scheduler.scheduleAt(650) { connection = ys.connect() }
         scheduler.scheduleAt(800) { connection.dispose() }
         
-        scheduler.start();
+        scheduler.start()
         
         XCTAssertEqual(res.events, [
             next(450, 7),
@@ -561,7 +561,7 @@ extension ObservableBindingTest {
         scheduler.scheduleAt(500) { connection = ys.connect() }
         scheduler.scheduleAt(800) { connection.dispose() }
         
-        scheduler.start();
+        scheduler.start()
         
         XCTAssertEqual(res.events, [
             next(450, 7),
@@ -611,7 +611,7 @@ extension ObservableBindingTest {
         scheduler.scheduleAt(500) { connection = ys.connect() }
         scheduler.scheduleAt(800) { connection.dispose() }
         
-        scheduler.start();
+        scheduler.start()
         
         XCTAssertEqual(res.events, [
             next(450, 7),
@@ -664,7 +664,7 @@ extension ObservableBindingTest {
         scheduler.scheduleAt(650) { connection = ys.connect() }
         scheduler.scheduleAt(800) { connection.dispose() }
         
-        scheduler.start();
+        scheduler.start()
         
         XCTAssertEqual(res.events, [
             next(450, 7),
@@ -715,7 +715,7 @@ extension ObservableBindingTest {
 		scheduler.scheduleAt(650) { connection = ys.connect() }
 		scheduler.scheduleAt(800) { connection.dispose() }
 		
-		scheduler.start();
+		scheduler.start()
 		
 		XCTAssertEqual(res.events, [
 			next(450, 3),
@@ -771,7 +771,7 @@ extension ObservableBindingTest {
 		scheduler.scheduleAt(500) { connection = ys.connect() }
 		scheduler.scheduleAt(800) { connection.dispose() }
 		
-		scheduler.start();
+		scheduler.start()
 		
 		XCTAssertEqual(res.events, [
 			next(450, 8),
@@ -824,7 +824,7 @@ extension ObservableBindingTest {
 		scheduler.scheduleAt(500) { connection = ys.connect() }
 		scheduler.scheduleAt(800) { connection.dispose() }
 		
-		scheduler.start();
+		scheduler.start()
 		
 		XCTAssertEqual(res.events, [
 			next(450, 8),
@@ -880,7 +880,7 @@ extension ObservableBindingTest {
 		scheduler.scheduleAt(650) { connection = ys.connect() }
 		scheduler.scheduleAt(800) { connection.dispose() }
 		
-		scheduler.start();
+		scheduler.start()
 		
 		XCTAssertEqual(res.events, [
 			next(450, 4),
@@ -913,7 +913,7 @@ extension ObservableBindingTest {
 
             let observable = transform(Observable.of(0, 1, 2))
             _ = observable.subscribeNext { n in
-                nEvents++
+                nEvents += 1
             }
 
             XCTAssertEqual(nEvents, 3)
@@ -926,7 +926,7 @@ extension ObservableBindingTest {
 
             let observable = transform(Observable.empty())
             _ = observable.subscribeCompleted { n in
-                nEvents++
+                nEvents += 1
             }
 
             XCTAssertEqual(nEvents, 1)
@@ -939,7 +939,7 @@ extension ObservableBindingTest {
 
             let observable = transform(Observable.error(testError))
             _ = observable.subscribeError { _ in
-                nEvents++
+                nEvents += 1
             }
 
             XCTAssertEqual(nEvents, 1)
@@ -952,7 +952,7 @@ extension ObservableBindingTest {
 
             let observable = transform([Observable.of(0, 1, 2), Observable.error(testError)].concat())
             _ = observable.subscribeError { n in
-                nEvents++
+                nEvents += 1
             }
             
             XCTAssertEqual(nEvents, 1)
@@ -999,7 +999,7 @@ extension ObservableBindingTest {
             scheduler.scheduleAt(440) { subscription1 = ys.subscribe(res1) }
             scheduler.scheduleAt(455) { subscription1.dispose() }
 
-            scheduler.start();
+            scheduler.start()
 
             XCTAssertEqual(res1.events, [
                 // 1rt batch
@@ -1068,7 +1068,7 @@ extension ObservableBindingTest {
             scheduler.scheduleAt(440) { subscription1 = ys.subscribe(res1) }
             scheduler.scheduleAt(455) { subscription1.dispose() }
 
-            scheduler.start();
+            scheduler.start()
 
             XCTAssertEqual(res1.events, [
                 // 1rt batch
@@ -1134,7 +1134,7 @@ extension ObservableBindingTest {
             scheduler.scheduleAt(440) { subscription1 = ys.subscribe(res1) }
             scheduler.scheduleAt(455) { subscription1.dispose() }
 
-            scheduler.start();
+            scheduler.start()
 
             XCTAssertEqual(res1.events, [
                 // 1rt batch
@@ -1194,7 +1194,7 @@ extension ObservableBindingTest {
             scheduler.scheduleAt(440) { subscription1 = ys.subscribe(res1) }
             scheduler.scheduleAt(455) { subscription1.dispose() }
 
-            scheduler.start();
+            scheduler.start()
 
             XCTAssertEqual(res1.events, [
                 // 1rt batch
@@ -1223,7 +1223,7 @@ extension ObservableBindingTest {
 
         let observable = Observable.of(0, 1, 2).shareReplayLatestWhileConnected()
         _ = observable.subscribeNext { n in
-            nEvents++
+            nEvents += 1
         }
 
         XCTAssertEqual(nEvents, 3)
@@ -1234,7 +1234,7 @@ extension ObservableBindingTest {
 
         let observable = Observable<Int>.empty().shareReplayLatestWhileConnected()
         _ = observable.subscribeCompleted { n in
-            nEvents++
+            nEvents += 1
         }
 
         XCTAssertEqual(nEvents, 1)
@@ -1245,7 +1245,7 @@ extension ObservableBindingTest {
 
         let observable = Observable<Int>.error(testError).shareReplayLatestWhileConnected()
         _ = observable.subscribeError { _ in
-            nEvents++
+            nEvents += 1
         }
 
         XCTAssertEqual(nEvents, 1)
@@ -1256,7 +1256,7 @@ extension ObservableBindingTest {
 
         let observable = [Observable.of(0, 1, 2), Observable.error(testError)].concat().shareReplayLatestWhileConnected()
         _ = observable.subscribeError { n in
-            nEvents++
+            nEvents += 1
         }
 
         XCTAssertEqual(nEvents, 1)
@@ -1301,7 +1301,7 @@ extension ObservableBindingTest {
         scheduler.scheduleAt(440) { subscription1 = ys.subscribe(res1) }
         scheduler.scheduleAt(455) { subscription1.dispose() }
 
-        scheduler.start();
+        scheduler.start()
 
         XCTAssertEqual(res1.events, [
             // 1rt batch
@@ -1367,7 +1367,7 @@ extension ObservableBindingTest {
         scheduler.scheduleAt(440) { subscription1 = ys.subscribe(res1) }
         scheduler.scheduleAt(455) { subscription1.dispose() }
 
-        scheduler.start();
+        scheduler.start()
 
         XCTAssertEqual(res1.events, [
             // 1rt batch
@@ -1431,7 +1431,7 @@ extension ObservableBindingTest {
             scheduler.scheduleAt(440) { subscription1 = ys.subscribe(res1) }
             scheduler.scheduleAt(455) { subscription1.dispose() }
 
-            scheduler.start();
+            scheduler.start()
 
             XCTAssertEqual(res1.events, [
                 // 1rt batch

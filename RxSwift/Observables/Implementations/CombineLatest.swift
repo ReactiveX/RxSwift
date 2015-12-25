@@ -42,7 +42,7 @@ class CombineLatestSink<O: ObserverType>
     func next(index: Int) {
         if !_hasValue[index] {
             _hasValue[index] = true
-            _numberOfValues++
+            _numberOfValues += 1
         }
 
         if _numberOfValues == _arity {
@@ -58,7 +58,7 @@ class CombineLatestSink<O: ObserverType>
         else {
             var allOthersDone = true
 
-            for var i = 0; i < _arity; ++i {
+            for var i = 0; i < _arity; i += 1 {
                 if i != index && !_isDone[i] {
                     allOthersDone = false
                     break
@@ -83,7 +83,7 @@ class CombineLatestSink<O: ObserverType>
         }
 
         _isDone[index] = true
-        _numberOfDone++
+        _numberOfDone += 1
 
         if _numberOfDone == _arity {
             forwardOn(.Completed)

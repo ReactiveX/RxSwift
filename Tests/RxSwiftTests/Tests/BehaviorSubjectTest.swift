@@ -14,7 +14,7 @@ import RxTests
 class BehaviorSubjectTest : RxTest {
     
     func test_Infinite() {
-        let scheduler = TestScheduler(initialClock: 0);
+        let scheduler = TestScheduler(initialClock: 0)
         
         let xs = scheduler.createHotObservable([
             next(70, 1),
@@ -79,7 +79,7 @@ class BehaviorSubjectTest : RxTest {
     }
     
     func test_Finite() {
-        let scheduler = TestScheduler(initialClock: 0);
+        let scheduler = TestScheduler(initialClock: 0)
         
         let xs = scheduler.createHotObservable([
             next(70, 1),
@@ -142,7 +142,7 @@ class BehaviorSubjectTest : RxTest {
     }
     
     func test_Error() {
-        let scheduler = TestScheduler(initialClock: 0);
+        let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
             next(70, 1),
@@ -205,7 +205,7 @@ class BehaviorSubjectTest : RxTest {
     }
     
     func test_Canceled() {
-        let scheduler = TestScheduler(initialClock: 0);
+        let scheduler = TestScheduler(initialClock: 0)
         
         let xs = scheduler.createHotObservable([
             completed(630),

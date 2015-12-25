@@ -282,7 +282,7 @@ func differencesForSectionedView<S: SectionModelType where S: Hashable, S.Item: 
         }
         else {
             initialSectionInfos[i].indexAfterDelete = sectionIndexAfterDelete
-            sectionIndexAfterDelete++
+            sectionIndexAfterDelete += 1
         }
     }
     
@@ -355,7 +355,7 @@ func differencesForSectionedView<S: SectionModelType where S: Hashable, S.Item: 
                 }
             
                 initialItemInfos[i][j].indexAfterDelete = indexAfterDelete
-                indexAfterDelete++
+                indexAfterDelete += 1
             }
             else {
                 initialItemInfos[i][j].event = .Deleted

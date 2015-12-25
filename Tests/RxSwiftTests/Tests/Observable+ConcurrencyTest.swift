@@ -129,7 +129,7 @@ extension ObservableConcurrencyTest {
         runDispatchQueueSchedulerTests { scheduler in
             let observable: Observable<Int> = Observable.error(testError).observeOn(scheduler)
             return observable .subscribeError { n in
-                nEvents++
+                nEvents += 1
             }
         }
 
@@ -143,7 +143,7 @@ extension ObservableConcurrencyTest {
             let observable: Observable<Int> = Observable.empty().observeOn(scheduler)
 
             return observable.subscribeCompleted {
-                nEvents++
+                nEvents += 1
             }
         }
 
@@ -343,7 +343,7 @@ class ObservableConcurrentSchedulerConcurrencyTest: ObservableConcurrencyTestBas
             }
 
             condition.lock()
-            writtenStarted++
+            writtenStarted += 1
             condition.signal()
             while writtenStarted < 2 {
                 condition.wait()
@@ -355,7 +355,7 @@ class ObservableConcurrentSchedulerConcurrencyTest: ObservableConcurrencyTestBas
             }
 
             condition.lock()
-            writtenEnded++
+            writtenEnded += 1
             condition.signal()
             while writtenEnded < 2 {
                 condition.wait()

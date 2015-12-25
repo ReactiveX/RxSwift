@@ -1563,7 +1563,7 @@ extension ObservableMultipleTest {
         ).merge()
         
         _ = observable.subscribeNext { n in
-            nEvents++
+            nEvents += 1
         }
         
         XCTAssertEqual(nEvents, 9)
@@ -1579,7 +1579,7 @@ extension ObservableMultipleTest {
         ).merge()
         
         _ = observable.subscribeError { n in
-            nEvents++
+            nEvents += 1
         }
         
         XCTAssertEqual(nEvents, 1)
@@ -1593,7 +1593,7 @@ extension ObservableMultipleTest {
         ).merge()
 
         _ = observable.subscribeError { n in
-            nEvents++
+            nEvents += 1
         }
         
         XCTAssertEqual(nEvents, 1)
@@ -1604,7 +1604,7 @@ extension ObservableMultipleTest {
         
         let observable: Observable<Int> = Observable<Observable<Int>>.empty().merge()
         _ = observable.subscribeCompleted {
-            nEvents++
+            nEvents += 1
         }
         
         XCTAssertEqual(nEvents, 1)
@@ -1615,7 +1615,7 @@ extension ObservableMultipleTest {
         
         let observable: Observable<Int> = Observable.just(Observable.empty()).merge()
         _ = observable.subscribeCompleted { n in
-            nEvents++
+            nEvents += 1
         }
         
         XCTAssertEqual(nEvents, 1)
@@ -1631,7 +1631,7 @@ extension ObservableMultipleTest {
         ).merge(maxConcurrent: 1)
         
         _ = observable.subscribeNext { n in
-            nEvents++
+            nEvents += 1
         }
         
         XCTAssertEqual(nEvents, 9)
@@ -1647,7 +1647,7 @@ extension ObservableMultipleTest {
         ).merge(maxConcurrent: 1)
         
         _ = observable.subscribeError { n in
-            nEvents++
+            nEvents += 1
         }
         
         XCTAssertEqual(nEvents, 1)
@@ -1661,7 +1661,7 @@ extension ObservableMultipleTest {
         ).merge(maxConcurrent: 1)
 
         _ = observable.subscribeError { n in
-            nEvents++
+            nEvents += 1
         }
         
         XCTAssertEqual(nEvents, 1)
@@ -1673,7 +1673,7 @@ extension ObservableMultipleTest {
         let observable: Observable<Int> = Observable<Observable<Int>>.empty().merge(maxConcurrent: 1)
 
         _ = observable.subscribeCompleted {
-            nEvents++
+            nEvents += 1
         }
         
         XCTAssertEqual(nEvents, 1)
@@ -1685,7 +1685,7 @@ extension ObservableMultipleTest {
         let observable: Observable<Int> = Observable.just(Observable.empty()).merge(maxConcurrent: 1)
 
         _ = observable.subscribeCompleted { n in
-            nEvents++
+            nEvents += 1
         }
         
         XCTAssertEqual(nEvents, 1)
@@ -2505,7 +2505,7 @@ extension ObservableMultipleTest {
         
         let observable = Observable.combineLatest(Observable.of(0, 1, 2), Observable.of(0, 1, 2)) { $0 + $1 }
         _ = observable.subscribeNext { n in
-            nEvents++
+            nEvents += 1
         }
         
         XCTAssertEqual(nEvents, 3)
@@ -2520,7 +2520,7 @@ extension ObservableMultipleTest {
         ) { $0 + $1 }
 
         _ = observable.subscribeError { n in
-            nEvents++
+            nEvents += 1
         }
         
         XCTAssertEqual(nEvents, 1)
@@ -2535,7 +2535,7 @@ extension ObservableMultipleTest {
         ) { $0 + $1 }
 
         _ = observable.subscribeError { n in
-            nEvents++
+            nEvents += 1
         }
         
         XCTAssertEqual(nEvents, 1)
@@ -2551,7 +2551,7 @@ extension ObservableMultipleTest {
             ) { $0 + $1 }
 
         _ = observable.subscribeCompleted {
-            nEvents++
+            nEvents += 1
         }
         
         XCTAssertEqual(nEvents, 1)

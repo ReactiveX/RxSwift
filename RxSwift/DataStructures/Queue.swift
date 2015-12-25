@@ -114,7 +114,7 @@ public struct Queue<T>: SequenceType {
         }
         
         _storage[_pushNextIndex] = element
-        _pushNextIndex++
+        _pushNextIndex += 1
         _count = _count + 1
         
         if _pushNextIndex >= _storage.count {
@@ -176,12 +176,14 @@ public struct Queue<T>: SequenceType {
                 return nil
             }
             
-            count--
+            count -= 1
             if i >= self._storage.count {
                 i -= self._storage.count
             }
             
-            return self._storage[i++]
+            let element = self._storage[i]
+            i += 1
+            return element
         }
     }
 }

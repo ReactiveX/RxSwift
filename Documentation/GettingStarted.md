@@ -403,7 +403,8 @@ func myInterval(interval: NSTimeInterval) -> Observable<Int> {
             if cancel.disposed {
                 return
             }
-            observer.on(.Next(next++))
+            observer.on(.Next(next))
+            next += 1
         })
         dispatch_resume(timer)
 

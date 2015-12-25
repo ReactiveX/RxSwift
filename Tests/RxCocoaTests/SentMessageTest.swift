@@ -948,14 +948,15 @@ extension SentMessageTest {
             var i = 0
 
             for o in observables {
-                let index = i++
+                let index = i
+                i += 1
                 recordedParameters.append([])
                 _ = o.subscribe(onNext: { n in
                         recordedParameters[index].append(n)
                     }, onError: { e in
                         XCTFail("Error happened \(e)")
                     }, onCompleted: { () -> Void in
-                        nCompleted++
+                        nCompleted += 1
                     })
             }
         }

@@ -256,7 +256,7 @@ extension ObservableCreationTests {
         var elements = [Int]()
         
         _ = Observable.generate(0, condition: { _ in true }) { x in
-                count++
+                count += 1
                 return x + 1
             }
             .take(4)

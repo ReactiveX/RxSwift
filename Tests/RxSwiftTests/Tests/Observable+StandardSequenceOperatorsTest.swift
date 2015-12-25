@@ -63,7 +63,7 @@ extension ObservableStandardSequenceOperatorsTest  {
         
         let res = scheduler.start { () -> Observable<Int> in
             return xs.filter { (num: Int) -> Bool in
-                invoked++;
+                invoked += 1
                 return isPrime(num);
             }
         }
@@ -105,7 +105,7 @@ extension ObservableStandardSequenceOperatorsTest  {
         
         let res = scheduler.start { () -> Observable<Int> in
             return xs.filter { (num: Int) -> Bool in
-                invoked++
+                invoked += 1
                 return true
             }
         }
@@ -152,7 +152,7 @@ extension ObservableStandardSequenceOperatorsTest  {
         
         let res = scheduler.start { () -> Observable<Int> in
             return xs.filter { (num: Int) -> Bool in
-                invoked++
+                invoked += 1
                 return false
             }
         }
@@ -190,7 +190,7 @@ extension ObservableStandardSequenceOperatorsTest  {
         
         let res = scheduler.start(400) { () -> Observable<Int> in
             return xs.filter { (num: Int) -> Bool in
-                invoked++;
+                invoked += 1
                 return isPrime(num)
             }
         }
@@ -234,7 +234,7 @@ extension ObservableStandardSequenceOperatorsTest {
         
         let res = scheduler.start { () -> Observable<Int> in
             return xs.takeWhile { (num: Int) -> Bool in
-                invoked++;
+                invoked += 1
                 return isPrime(num)
             }
         }
@@ -276,7 +276,7 @@ extension ObservableStandardSequenceOperatorsTest {
         
         let res = scheduler.start { () -> Observable<Int> in
             return xs.takeWhile { (num: Int) -> Bool in
-                invoked++;
+                invoked += 1
                 return isPrime(num)
             }
         }
@@ -320,7 +320,7 @@ extension ObservableStandardSequenceOperatorsTest {
         
         let res = scheduler.start { () -> Observable<Int> in
             return xs.takeWhile { (num: Int) -> Bool in
-                invoked++;
+                invoked += 1
                 return isPrime(num)
             }
         }
@@ -360,7 +360,7 @@ extension ObservableStandardSequenceOperatorsTest {
         
         let res = scheduler.start { () -> Observable<Int> in
             return xs.takeWhile { (num: Int) -> Bool in
-                invoked++;
+                invoked += 1
                 return isPrime(num)
             }
         }
@@ -403,7 +403,7 @@ extension ObservableStandardSequenceOperatorsTest {
         
         let res = scheduler.start(300) { () -> Observable<Int> in
             return xs.takeWhile { (num: Int) -> Bool in
-                invoked++;
+                invoked += 1
                 return isPrime(num)
             }
         }
@@ -443,7 +443,7 @@ extension ObservableStandardSequenceOperatorsTest {
         
         let res = scheduler.start(400) { () -> Observable<Int> in
             return xs.takeWhile { (num: Int) -> Bool in
-                invoked++;
+                invoked += 1
                 return isPrime(num)
             }
         }
@@ -487,7 +487,7 @@ extension ObservableStandardSequenceOperatorsTest {
         
         let res = scheduler.start(300) { () -> Observable<Int> in
             return xs.takeWhile { (num: Int) -> Bool in
-                invoked++;
+                invoked += 1
                 return isPrime(num)
             }
         }
@@ -525,7 +525,7 @@ extension ObservableStandardSequenceOperatorsTest {
         
         let res = scheduler.start() { () -> Observable<Int> in
             return xs.takeWhile { num in
-                invoked++
+                invoked += 1
                 
                 if invoked == 3 {
                     throw testError
@@ -1797,7 +1797,7 @@ extension ObservableStandardSequenceOperatorsTest {
         var invoked = 0
         let res = scheduler.start {
             return xs.flatMapFirst { (x: ColdObservable<Int>) -> ColdObservable<Int> in
-                invoked++
+                invoked += 1
                 if invoked == 2 {
                     throw testError
                 }
@@ -2426,7 +2426,7 @@ extension ObservableStandardSequenceOperatorsTest {
         var invoked = 0
         let res = scheduler.start {
             return xs.flatMap { (x: ColdObservable<Int>) -> ColdObservable<Int> in
-                invoked++
+                invoked += 1
                 if invoked == 3 {
                     throw testError
                 }
@@ -3095,7 +3095,7 @@ extension ObservableStandardSequenceOperatorsTest {
         var invoked = 0
         let res = scheduler.start {
             return xs.flatMapWithIndex { (x: ColdObservable<Int>, _: Int) -> ColdObservable<Int> in
-                invoked++
+                invoked += 1
                 if invoked == 3 {
                     throw testError
                 }

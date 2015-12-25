@@ -43,7 +43,7 @@ class CombineLatestCollectionTypeSink<C: CollectionType, R, O: ObserverType wher
             switch event {
             case .Next(let element):
                 if _values[atIndex] == nil {
-                   _numberOfValues++
+                   _numberOfValues += 1
                 }
                 
                 _values[atIndex] = element
@@ -75,7 +75,7 @@ class CombineLatestCollectionTypeSink<C: CollectionType, R, O: ObserverType wher
                 }
                 
                 _isDone[atIndex] = true
-                _numberOfDone++
+                _numberOfDone += 1
                 
                 if _numberOfDone == self._parent._count {
                     forwardOn(.Completed)
@@ -97,7 +97,7 @@ class CombineLatestCollectionTypeSink<C: CollectionType, R, O: ObserverType wher
                 self.on(event, atIndex: index)
             })
             
-            j++
+            j += 1
         }
         
         return CompositeDisposable(disposables: _subscriptions.map { $0 })

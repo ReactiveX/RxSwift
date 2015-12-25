@@ -73,7 +73,7 @@ example("retry") {
         observer.on(.Next(2))
         if count < 2 {
             observer.on(.Error(error))
-            count++
+            count += 1
         }
         observer.on(.Next(3))
         observer.on(.Next(4))

@@ -46,17 +46,17 @@ extension BagTest {
 
                 numberOfActionsAfter(i,
                     deletionsFromStart: j,
-                    createNew: { () -> DoSomething in { () -> () in numberForEachActions++ } },
+                    createNew: { () -> DoSomething in { () -> () in numberForEachActions += 1 } },
                     bagAction: { (bag: RxMutableBox<Bag<DoSomething>>) in bag.value.forEach { $0() }; XCTAssertTrue(bag.value.count == i - j) }
                 )
                 numberOfActionsAfter(i,
                     deletionsFromStart: j,
-                    createNew: { () -> AnyObserver<Int> in AnyObserver { _ in numberObservers++ } },
+                    createNew: { () -> AnyObserver<Int> in AnyObserver { _ in numberObservers += 1 } },
                     bagAction: { (bag: RxMutableBox<Bag<AnyObserver<Int>>>) in bag.value.on(.Next(1)); XCTAssertTrue(bag.value.count == i - j) }
                 )
                 numberOfActionsAfter(i,
                     deletionsFromStart: j,
-                    createNew: { () -> Disposable in AnonymousDisposable { numberDisposables++ } },
+                    createNew: { () -> Disposable in AnonymousDisposable { numberDisposables += 1 } },
                     bagAction: { (bag: RxMutableBox<Bag<Disposable>>) in disposeAllIn(bag.value); XCTAssertTrue(bag.value.count == i - j) }
                 )
 
@@ -93,17 +93,17 @@ extension BagTest {
 
                 numberOfActionsAfter(i,
                     deletionsFromStart: j,
-                    createNew: { () -> DoSomething in { () -> () in numberForEachActions++ } },
+                    createNew: { () -> DoSomething in { () -> () in numberForEachActions += 1 } },
                     bagAction: { (bag: RxMutableBox<Bag<DoSomething>>) in bag.value.forEach { $0() }; XCTAssertTrue(bag.value.count == i - j) }
                 )
                 numberOfActionsAfter(i,
                     deletionsFromStart: j,
-                    createNew: { () -> AnyObserver<Int> in AnyObserver { _ in numberObservers++ } },
+                    createNew: { () -> AnyObserver<Int> in AnyObserver { _ in numberObservers += 1 } },
                     bagAction: { (bag: RxMutableBox<Bag<AnyObserver<Int>>>) in bag.value.on(.Next(1)); XCTAssertTrue(bag.value.count == i - j) }
                 )
                 numberOfActionsAfter(i,
                     deletionsFromStart: j,
-                    createNew: { () -> Disposable in AnonymousDisposable { numberDisposables++ } },
+                    createNew: { () -> Disposable in AnonymousDisposable { numberDisposables += 1 } },
                     bagAction: { (bag: RxMutableBox<Bag<Disposable>>) in disposeAllIn(bag.value); XCTAssertTrue(bag.value.count == i - j) }
                 )
 
@@ -129,19 +129,19 @@ extension BagTest {
                     if increment1 == breakAt {
                         bag1.value.removeAll()
                     }
-                    increment1++
+                    increment1 += 1
                 })
                 bag2.value.insert(AnyObserver { _ in
                     if increment2 == breakAt {
                         bag2.value.removeAll()
                     }
-                    increment2++
+                    increment2 += 1
                 })
                 bag3.value.insert(AnonymousDisposable { _ in
                     if increment3 == breakAt {
                         bag3.value.removeAll()
                     }
-                    increment3++
+                    increment3 += 1
                 })
             }
             
@@ -166,17 +166,17 @@ extension BagTest {
 
         numberOfActionsAfter(100,
             deletionsFromStart: 0,
-            createNew: { () -> DoSomething in { () -> () in numberForEachActions++ } },
+            createNew: { () -> DoSomething in { () -> () in numberForEachActions += 1 } },
             bagAction: { (bag: RxMutableBox<Bag<DoSomething>>) in bag.value.removeAll(); bag.value.forEach { $0() } }
         )
         numberOfActionsAfter(100,
             deletionsFromStart: 0,
-            createNew: { () -> AnyObserver<Int> in AnyObserver { _ in numberObservers++ } },
+            createNew: { () -> AnyObserver<Int> in AnyObserver { _ in numberObservers += 1 } },
             bagAction: { (bag: RxMutableBox<Bag<AnyObserver<Int>>>) in bag.value.removeAll(); bag.value.on(.Next(1)); }
         )
         numberOfActionsAfter(100,
             deletionsFromStart: 0,
-            createNew: { () -> Disposable in AnonymousDisposable { numberDisposables++ } },
+            createNew: { () -> Disposable in AnonymousDisposable { numberDisposables += 1 } },
             bagAction: { (bag: RxMutableBox<Bag<Disposable>>) in bag.value.removeAll(); disposeAllIn(bag.value); }
         )
 
@@ -194,7 +194,7 @@ extension BagTest {
 
         var keys: [Bag<Disposable>.KeyType] = []
         for _ in 0..<limit {
-            keys.append(bag.insert(AnonymousDisposable { increment++ }))
+            keys.append(bag.insert(AnonymousDisposable { increment += 1 }))
         }
 
         for i in 0..<limit {
@@ -211,7 +211,7 @@ extension BagTest {
 
         var keys: [Bag<Disposable>.KeyType] = []
         for _ in 0..<limit {
-            keys.append(bag.insert(AnonymousDisposable { increment++ }))
+            keys.append(bag.insert(AnonymousDisposable { increment += 1 }))
         }
 
         for i in 0..<limit {

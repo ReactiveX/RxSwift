@@ -75,7 +75,8 @@ class WindowTimeCountSink<Element, O: ObserverType where O.E == Observable<Eleme
             if (_count == _parent._count) {
                 newWindow = true
                 _count = 0
-                newId = ++_windowId
+                _windowId += 1
+                newId = _windowId
                 self.startNewWindowAndCompleteCurrentOne()
             }
             

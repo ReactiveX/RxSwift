@@ -21,9 +21,9 @@ class Identity {
 
 func hash(_x: Int) -> Int {
     var x = _x
-    x = ((x >> 16) ^ x) &* 0x45d9f3b;
-    x = ((x >> 16) ^ x) &* 0x45d9f3b;
-    x = ((x >> 16) ^ x);
+    x = ((x >> 16) ^ x) &* 0x45d9f3b
+    x = ((x >> 16) ^ x) &* 0x45d9f3b
+    x = ((x >> 16) ^ x)
     return x;
 }
 

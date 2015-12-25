@@ -84,7 +84,7 @@ class AssumptionsTest : RxTest {
         var count = 0
         for _ in b {
             a.removeAll()
-            count++
+            count += 1
         }
         
         XCTAssertTrue(count == 4)

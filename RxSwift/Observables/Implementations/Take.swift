@@ -29,7 +29,7 @@ class TakeCountSink<ElementType, O: ObserverType where O.E == ElementType> : Sin
         case .Next(let value):
             
             if _remaining > 0 {
-                _remaining--
+                _remaining -= 1
                 
                 forwardOn(.Next(value))
             

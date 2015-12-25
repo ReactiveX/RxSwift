@@ -87,7 +87,7 @@ class DelegateProxyTest : RxTest {
         
         let d = view.rx_proxy.observe("threeDView:didLearnSomething:")
             .subscribeNext { n in
-                nMessages++
+                nMessages += 1
             }
         
         XCTAssertTrue(nMessages == 0)

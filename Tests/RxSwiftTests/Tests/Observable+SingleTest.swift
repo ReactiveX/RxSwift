@@ -295,7 +295,7 @@ extension ObservableSingleTest {
         let res = scheduler.start { xs.doOn { e in
                 switch e {
                 case .Next:
-                    i++
+                    i += 1
                     sum -= e.element ?? 0
                     
                 default: break
@@ -338,7 +338,7 @@ extension ObservableSingleTest {
         let res = scheduler.start { xs.doOn { e in
             switch e {
             case .Next(_):
-                i++
+                i += 1
             default: break
             }
             }
@@ -380,7 +380,7 @@ extension ObservableSingleTest {
         let res = scheduler.start { xs.doOn { e in
             switch e {
             case .Next(let value):
-                i++
+                i += 1
                 sum -= value
             case .Completed:
                 completedEvaluation = true
@@ -422,7 +422,7 @@ extension ObservableSingleTest {
         let res = scheduler.start { xs.doOn { e in
             switch e {
             case .Next(_):
-                i++
+                i += 1
             case .Completed:
                 completedEvaluation = true
             default: break
@@ -462,7 +462,7 @@ extension ObservableSingleTest {
         let res = scheduler.start { xs.doOn { e in
             switch e {
             case .Next(let value):
-                i++
+                i += 1
                 sum -= value
             case .Error:
                 sawError = true
@@ -509,7 +509,7 @@ extension ObservableSingleTest {
         let res = scheduler.start { xs.doOn { e in
             switch e {
             case .Next(let value):
-                i++
+                i += 1
                 sum -= value
             case .Error:
                 sawError = true
@@ -776,7 +776,7 @@ extension ObservableSingleTest {
             observer.on(.Next(2))
             if count < 2 {
                 observer.on(.Error(testError))
-                count++
+                count += 1
             }
             observer.on(.Next(3))
             observer.on(.Next(4))
@@ -957,7 +957,8 @@ extension ObservableSingleTest {
         let res = scheduler.start(300) {
             xs.retryWhen { (errors: Observable<NSError>) in
                 return errors.scan(0) { (var a, e) in
-                    if ++a == 2 {
+                    a += 1
+                    if a == 2 {
                         throw testError1
                     }
                     return a
@@ -1167,7 +1168,7 @@ extension ObservableSingleTest {
             observer.on(.Next(2))
             if count < 2 {
                 observer.on(.Error(testError))
-                count++
+                count += 1
             }
             observer.on(.Next(3))
             observer.on(.Next(4))

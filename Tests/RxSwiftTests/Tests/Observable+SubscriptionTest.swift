@@ -24,14 +24,14 @@ class ObservableSubscriptionTests : RxTest {
 
         let subscription = publishSubject.subscribe(onNext: { n in
                 lastElement = n
-                onNextCalled++
+                onNextCalled += 1
             }, onError: { e in
                 lastError = e
-                onErrorCalled++
+                onErrorCalled += 1
             }, onCompleted: {
-                onCompletedCalled++
+                onCompletedCalled += 1
             }, onDisposed: {
-                onDisposedCalled++
+                onDisposedCalled += 1
             })
 
         XCTAssertTrue(lastElement == nil)
@@ -74,14 +74,14 @@ class ObservableSubscriptionTests : RxTest {
 
         let subscription = publishSubject.subscribe(onNext: { n in
                 lastElement = n
-                onNextCalled++
+                onNextCalled += 1
             }, onError: { e in
                 lastError = e
-                onErrorCalled++
+                onErrorCalled += 1
             }, onCompleted: {
-                onCompletedCalled++
+                onCompletedCalled += 1
             }, onDisposed: {
-                onDisposedCalled++
+                onDisposedCalled += 1
             })
 
         XCTAssertTrue(lastElement == nil)
@@ -125,14 +125,14 @@ class ObservableSubscriptionTests : RxTest {
 
         let subscription = publishSubject.subscribe(onNext: { n in
             lastElement = n
-            onNextCalled++
+            onNextCalled += 1
             }, onError: { e in
                 lastError = e
-                onErrorCalled++
+                onErrorCalled += 1
             }, onCompleted: {
-                onCompletedCalled++
+                onCompletedCalled += 1
             }, onDisposed: {
-                onDisposedCalled++
+                onDisposedCalled += 1
         })
 
         XCTAssertTrue(lastElement == nil)
@@ -176,14 +176,14 @@ class ObservableSubscriptionTests : RxTest {
 
         let subscription = publishSubject.subscribe(onNext: { n in
             lastElement = n
-            onNextCalled++
+            onNextCalled += 1
             }, onError: { e in
                 lastError = e
-                onErrorCalled++
+                onErrorCalled += 1
             }, onCompleted: {
-                onCompletedCalled++
+                onCompletedCalled += 1
             }, onDisposed: {
-                onDisposedCalled++
+                onDisposedCalled += 1
         })
 
         XCTAssertTrue(lastElement == nil)

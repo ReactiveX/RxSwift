@@ -74,11 +74,11 @@ class DisposableTest : RxTest {
         let compositeDisposable = CompositeDisposable()
         
         let result1 = compositeDisposable.addDisposable(AnonymousDisposable {
-            numberDisposed++
+            numberDisposed += 1
         })
         
         compositeDisposable.addDisposable(AnonymousDisposable {
-            numberDisposed++
+            numberDisposed += 1
         })
         
         XCTAssertEqual(numberDisposed, 0)
@@ -90,7 +90,7 @@ class DisposableTest : RxTest {
         XCTAssertEqual(compositeDisposable.count, 0)
         
         let result = compositeDisposable.addDisposable(AnonymousDisposable {
-            numberDisposed++
+            numberDisposed += 1
         })
 
         XCTAssertEqual(numberDisposed, 3)
@@ -103,11 +103,11 @@ class DisposableTest : RxTest {
         let compositeDisposable = CompositeDisposable()
         
         let result1 = compositeDisposable.addDisposable(AnonymousDisposable {
-            numberDisposed++
+            numberDisposed += 1
             })
         
         let result2 = compositeDisposable.addDisposable(AnonymousDisposable {
-            numberDisposed++
+            numberDisposed += 1
             })
         
         XCTAssertEqual(numberDisposed, 0)
@@ -145,7 +145,7 @@ class DisposableTest : RxTest {
         r.dispose()
         XCTAssertEqual(d.disposed, true)
         
-        let d3 = r.retain();
+        let d3 = r.retain()
         d3.dispose()
     }
     

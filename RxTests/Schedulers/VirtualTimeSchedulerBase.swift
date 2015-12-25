@@ -155,7 +155,7 @@ public class VirtualTimeSchedulerBase<C: VirtualTimeConverterType>
                 minIndex = index
             }
             
-            index++
+            index += 1
         }
         
         if minElement != nil {

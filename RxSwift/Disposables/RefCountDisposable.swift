@@ -64,7 +64,7 @@ public class RefCountDisposable : DisposeBase, Cancelable {
         let oldDisposable: Disposable? = _lock.calculateLocked {
             if let oldDisposable = _disposable where !_primaryDisposed
             {
-                _primaryDisposed = true;
+                _primaryDisposed = true
                 
                 if (_count == 0)
                 {
@@ -116,7 +116,7 @@ internal final class RefCountInnerDisposable: DisposeBase, Disposable
     
     init(_ parent: RefCountDisposable)
     {
-        _parent = parent;
+        _parent = parent
         super.init()
     }
     

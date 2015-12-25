@@ -46,7 +46,7 @@ class MySubject<Element where Element : Hashable> : SubjectType, ObserverType {
     }
     
     func subscribe<O : ObserverType where O.E == E>(observer: O) -> Disposable {
-        _subscribeCount++
+        _subscribeCount += 1
         _observer = AnyObserver(observer)
         
         return AnonymousDisposable {
