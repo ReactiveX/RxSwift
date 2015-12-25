@@ -23,6 +23,8 @@
 		84C225A81C3402E5008724EC /* UITextView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89465591BC6C2BC0055219D /* UITextView+Rx.swift */; };
 		84C225AB1C340474008724EC /* RxTextStorageDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C225AA1C340474008724EC /* RxTextStorageDelegateProxy.swift */; };
 		9B4612951C106CF100BBBB4E /* UIActivityIndicatorView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B4612941C106CF100BBBB4E /* UIActivityIndicatorView+Rx.swift */; };
+		B12CBC671C2DD8130014C95B /* GroupBy.swift in Sources */ = {isa = PBXBuildFile; fileRef = B12CBC661C2DD8130014C95B /* GroupBy.swift */; };
+		B12CBC791C2DDA020014C95B /* GroupedObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B12CBC781C2DDA020014C95B /* GroupedObservable.swift */; };
 		B1604CB51BE49F8D002E1279 /* DownloadableImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1604CB41BE49F8D002E1279 /* DownloadableImage.swift */; };
 		B1604CC21BE5B895002E1279 /* ReachabilityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18F3BE11BDB2E8F000AAC79 /* ReachabilityService.swift */; };
 		B1604CC31BE5B8BD002E1279 /* ReachabilityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18F3BE11BDB2E8F000AAC79 /* ReachabilityService.swift */; };
@@ -627,6 +629,8 @@
 		8479BC701C3BCB9800FB8B54 /* ImagePickerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePickerController.swift; sourceTree = "<group>"; };
 		84C225AA1C340474008724EC /* RxTextStorageDelegateProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxTextStorageDelegateProxy.swift; sourceTree = "<group>"; };
 		9B4612941C106CF100BBBB4E /* UIActivityIndicatorView+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIActivityIndicatorView+Rx.swift"; sourceTree = "<group>"; };
+		B12CBC661C2DD8130014C95B /* GroupBy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupBy.swift; sourceTree = "<group>"; };
+		B12CBC781C2DDA020014C95B /* GroupedObservable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupedObservable.swift; sourceTree = "<group>"; };
 		B1604CB41BE49F8D002E1279 /* DownloadableImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadableImage.swift; sourceTree = "<group>"; };
 		B1604CC81BE5BBFA002E1279 /* UIImageView+DownloadableImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+DownloadableImage.swift"; sourceTree = "<group>"; };
 		B18F3BBB1BD92EC8000AAC79 /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
@@ -1305,6 +1309,7 @@
 				C89464321BC6C2B00055219D /* Disposables */,
 				C89464401BC6C2B00055219D /* Errors.swift */,
 				C89464411BC6C2B00055219D /* Event.swift */,
+				B12CBC781C2DDA020014C95B /* GroupedObservable.swift */,
 				C89464421BC6C2B00055219D /* ImmediateSchedulerType.swift */,
 				C89464431BC6C2B00055219D /* Info.plist */,
 				C89464441BC6C2B00055219D /* Observable+Extensions.swift */,
@@ -1414,6 +1419,7 @@
 				C894645A1BC6C2B00055219D /* Error.swift */,
 				C894645B1BC6C2B00055219D /* Filter.swift */,
 				C894645D1BC6C2B00055219D /* Generate.swift */,
+				B12CBC661C2DD8130014C95B /* GroupBy.swift */,
 				C894645E1BC6C2B00055219D /* Just.swift */,
 				C894645F1BC6C2B00055219D /* Map.swift */,
 				C89464601BC6C2B00055219D /* Merge.swift */,
@@ -2093,6 +2099,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				0744CDD51C4DB5F000720FD2 /* GeolocationService.swift in Sources */,
+				B12CBC791C2DDA020014C95B /* GroupedObservable.swift in Sources */,
+				B12CBC671C2DD8130014C95B /* GroupBy.swift in Sources */,
 				C83D73DE1C1DBC2A003DC470 /* AnonymousInvocable.swift in Sources */,
 				C84015751C34353D009D2E77 /* DispatchQueueSchedulerQOS.swift in Sources */,
 				C84CC58B1BDD486300E06A64 /* LockOwnerType.swift in Sources */,

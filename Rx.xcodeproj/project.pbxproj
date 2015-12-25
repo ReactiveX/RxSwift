@@ -47,6 +47,14 @@
 		C807F3631C2ACED300017910 /* TestSchedulerVirtualTimeConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C807F3611C2ACED300017910 /* TestSchedulerVirtualTimeConverter.swift */; };
 		C807F3641C2ACED300017910 /* TestSchedulerVirtualTimeConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C807F3611C2ACED300017910 /* TestSchedulerVirtualTimeConverter.swift */; };
 		C807F3651C2ACED300017910 /* TestSchedulerVirtualTimeConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C807F3611C2ACED300017910 /* TestSchedulerVirtualTimeConverter.swift */; };
+		B1D54C441BBC625C001000BE /* GroupedObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D54C431BBC625C001000BE /* GroupedObservable.swift */; settings = {ASSET_TAGS = (); }; };
+		B1D54C461BBC63D7001000BE /* GroupBy.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D54C451BBC63D7001000BE /* GroupBy.swift */; settings = {ASSET_TAGS = (); }; };
+		B1D54C471BBC65C7001000BE /* GroupedObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D54C431BBC625C001000BE /* GroupedObservable.swift */; };
+		B1D54C481BBC65D3001000BE /* GroupBy.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D54C451BBC63D7001000BE /* GroupBy.swift */; };
+		B1D54C491BBC65E7001000BE /* GroupedObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D54C431BBC625C001000BE /* GroupedObservable.swift */; };
+		B1D54C4A1BBC65ED001000BE /* GroupBy.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D54C451BBC63D7001000BE /* GroupBy.swift */; };
+		B1D54C4B1BBC65F6001000BE /* GroupedObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D54C431BBC625C001000BE /* GroupedObservable.swift */; };
+		B1D54C4C1BBC65FE001000BE /* GroupBy.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D54C451BBC63D7001000BE /* GroupBy.swift */; };
 		C8093CC51B8A72BE0088E94D /* Cancelable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C491B8A72BE0088E94D /* Cancelable.swift */; };
 		C8093CC61B8A72BE0088E94D /* Cancelable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C491B8A72BE0088E94D /* Cancelable.swift */; };
 		C8093CC71B8A72BE0088E94D /* AsyncLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C4B1B8A72BE0088E94D /* AsyncLock.swift */; };
@@ -1323,6 +1331,8 @@
 		B1B7C3BC1BDD39DB0076934E /* TakeLast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TakeLast.swift; sourceTree = "<group>"; };
 		B1D8998E1BF653410027B05C /* Timeout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Timeout.swift; sourceTree = "<group>"; };
 		C807F3611C2ACED300017910 /* TestSchedulerVirtualTimeConverter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestSchedulerVirtualTimeConverter.swift; sourceTree = "<group>"; };
+		B1D54C431BBC625C001000BE /* GroupedObservable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupedObservable.swift; sourceTree = "<group>"; };
+		B1D54C451BBC63D7001000BE /* GroupBy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupBy.swift; sourceTree = "<group>"; };
 		C809396D1B8A71760088E94D /* RxCocoa.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxCocoa.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C80939E71B8A71840088E94D /* RxCocoa.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxCocoa.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8093BC71B8A71F00088E94D /* RxBlocking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxBlocking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1812,6 +1822,8 @@
 				C8093C521B8A72BE0088E94D /* Disposable.swift */,
 				C8093C631B8A72BE0088E94D /* Errors.swift */,
 				C8093C641B8A72BE0088E94D /* Event.swift */,
+				B1D54C431BBC625C001000BE /* GroupedObservable.swift */,
+				C8093CB31B8A72BE0088E94D /* SchedulerType.swift */,
 				C8093C651B8A72BE0088E94D /* ImmediateSchedulerType.swift */,
 				C8093C681B8A72BE0088E94D /* Observable.swift */,
 				C8093C671B8A72BE0088E94D /* Observable+Extensions.swift */,
@@ -1923,6 +1935,7 @@
 				C8C3DA081B93941E004D233E /* Error.swift */,
 				C8093C7A1B8A72BE0088E94D /* Filter.swift */,
 				C84B38ED1BA433CD001B7D88 /* Generate.swift */,
+				B1D54C451BBC63D7001000BE /* GroupBy.swift */,
 				C8C3DA021B9390C4004D233E /* Just.swift */,
 				C8093C7C1B8A72BE0088E94D /* Map.swift */,
 				C8093C7D1B8A72BE0088E94D /* Merge.swift */,
@@ -3576,6 +3589,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B1D54C481BBC65D3001000BE /* GroupBy.swift in Sources */,
+				B1D54C471BBC65C7001000BE /* GroupedObservable.swift in Sources */,
 				C8093D5A1B8A72BE0088E94D /* Observable+Creation.swift in Sources */,
 				C8093CCC1B8A72BE0088E94D /* ConnectableObservableType.swift in Sources */,
 				C83D73BD1C1DBAEE003DC470 /* InvocableScheduledItem.swift in Sources */,
@@ -3820,6 +3835,7 @@
 				C8C3DA061B9393AC004D233E /* Empty.swift in Sources */,
 				CB255BD71BC46A9C00798A4C /* RetryWhen.swift in Sources */,
 				C8093D871B8A72BE0088E94D /* RxMutableBox.swift in Sources */,
+				B1D54C461BBC63D7001000BE /* GroupBy.swift in Sources */,
 				C8093D391B8A72BE0088E94D /* Sink.swift in Sources */,
 				C8093D451B8A72BE0088E94D /* TakeUntil.swift in Sources */,
 				C8093D931B8A72BE0088E94D /* MainScheduler.swift in Sources */,
@@ -3880,6 +3896,7 @@
 				C8093D071B8A72BE0088E94D /* CombineLatest+arity.swift in Sources */,
 				C8093CDD1B8A72BE0088E94D /* DisposeBag.swift in Sources */,
 				C8093D971B8A72BE0088E94D /* RecursiveScheduler.swift in Sources */,
+				B1D54C441BBC625C001000BE /* GroupedObservable.swift in Sources */,
 				C8093D371B8A72BE0088E94D /* Scan.swift in Sources */,
 				CB30D9E91BF0E3500084C1C0 /* SingleAsync.swift in Sources */,
 				C8093CD11B8A72BE0088E94D /* Queue.swift in Sources */,
@@ -3944,6 +3961,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B1D54C4C1BBC65FE001000BE /* GroupBy.swift in Sources */,
+				B1D54C4B1BBC65F6001000BE /* GroupedObservable.swift in Sources */,
 				C8F0BF921BBBFB8B001B112F /* Observable+Creation.swift in Sources */,
 				C8F0BF931BBBFB8B001B112F /* ConnectableObservableType.swift in Sources */,
 				C83D73BF1C1DBAEE003DC470 /* InvocableScheduledItem.swift in Sources */,
@@ -4262,6 +4281,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				D2EBEADF1BB9B697003A27DC /* Errors.swift in Sources */,
+				B1D54C4A1BBC65ED001000BE /* GroupBy.swift in Sources */,
+				B1D54C491BBC65E7001000BE /* GroupedObservable.swift in Sources */,
 				D2EBEB0D1BB9B6C1003A27DC /* Filter.swift in Sources */,
 				C83D73BE1C1DBAEE003DC470 /* InvocableScheduledItem.swift in Sources */,
 				D2EBEAF01BB9B6AE003A27DC /* AnonymousDisposable.swift in Sources */,
