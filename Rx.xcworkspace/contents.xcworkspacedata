@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:Package.swift">
+   </FileRef>
+   <FileRef
       location = "group:LICENSE.md">
    </FileRef>
    <FileRef
