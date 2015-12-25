@@ -956,7 +956,8 @@ extension ObservableSingleTest {
         
         let res = scheduler.start(300) {
             xs.retryWhen { (errors: Observable<NSError>) in
-                return errors.scan(0) { (var a, e) in
+                return errors.scan(0) { (_a, e) in
+                    var a = _a
                     a += 1
                     if a == 2 {
                         throw testError1

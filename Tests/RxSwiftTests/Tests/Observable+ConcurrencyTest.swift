@@ -39,17 +39,17 @@ extension ObservableConcurrencyTest {
 
     func runDispatchQueueSchedulerTests(scheduler: SerialDispatchQueueScheduler, tests: (scheduler: SerialDispatchQueueScheduler) -> Disposable) -> Disposable {
         // simplest possible solution, even though it has horrible efficiency in this case probably
-        var wait = OS_SPINLOCK_INIT
-        OSSpinLockLock(&wait)
-
         let disposable = tests(scheduler: scheduler)
+        let expectation = self.expectationWithDescription("Wait for all tests to complete")
 
         scheduler.schedule(()) { s in
-            OSSpinLockUnlock(&wait)
+            expectation.fulfill()
             return NopDisposable.instance
         }
 
-        OSSpinLockLock(&wait)
+        waitForExpectationsWithTimeout(1.0) { e in
+            XCTAssertTrue(e == nil, "Everything not completed in 1.0 sec.")
+        }
 
         return disposable
     }
