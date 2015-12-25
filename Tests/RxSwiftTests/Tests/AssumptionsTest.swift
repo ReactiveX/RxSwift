@@ -9,7 +9,6 @@
 import Foundation
 import XCTest
 import RxSwift
-import CoreGraphics
 
 var deallocated = false
 var realTest: Anything? = nil

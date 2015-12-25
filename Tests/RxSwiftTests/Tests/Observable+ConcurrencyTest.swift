@@ -13,12 +13,12 @@ import RxBlocking
 import RxTests
 
 class ObservableConcurrencyTestBase : RxTest {
-    var lock = OS_SPINLOCK_INIT
+    var lock = NSLock()
 
     func performLocked(action: () -> Void) {
-        OSSpinLockLock(&lock)
+        lock.lock()
         action()
-        OSSpinLockUnlock(&lock)
+        lock.unlock()
     }
 
     override func tearDown() {

@@ -8,7 +8,6 @@
 
 import Foundation
 import RxSwift
-import RxCocoa
 import RxTests
 
 public func == <T>(lhs: Observable<T>, rhs: Observable<T>) -> Bool {
@@ -31,10 +30,3 @@ public func == <T>(lhs: ColdObservable<T>, rhs: ColdObservable<T>) -> Bool {
     return lhs === rhs
 }
 
-extension Driver : Equatable {
-
-}
-
-public func == <T>(lhs: Driver<T>, rhs: Driver<T>) -> Bool {
-    return lhs.asObservable() === rhs.asObservable()
-}

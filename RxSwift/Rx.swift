@@ -45,12 +45,3 @@ func decrementChecked(inout i: Int) throws -> Int {
     i -= 1
     return result
 }
-
-extension NSObject {
-    func rx_synchronized<T>(@noescape action: () -> T) -> T {
-        objc_sync_enter(self)
-        let result = action()
-        objc_sync_exit(self)
-        return result
-    }
-}

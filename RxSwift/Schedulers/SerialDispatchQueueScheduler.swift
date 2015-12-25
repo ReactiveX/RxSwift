@@ -50,23 +50,14 @@ public class SerialDispatchQueueScheduler: SchedulerType {
     /**
     Constructs new `SerialDispatchQueueScheduler` with internal serial queue named `internalSerialQueueName`.
     
-    - parameter internalSerialQueueName: Name of internal serial dispatch queue.
-    */
-    public convenience init(internalSerialQueueName: String) {
-        self.init(internalSerialQueueName: internalSerialQueueName, serialQueueConfiguration: { _ -> Void in })
-    }
-    
-    /**
-    Constructs new `SerialDispatchQueueScheduler` with internal serial queue named `internalSerialQueueName`.
-    
     Additional dispatch queue properties can be set after dispatch queue is created using `serialQueueConfiguration`.
     
     - parameter internalSerialQueueName: Name of internal serial dispatch queue.
     - parameter serialQueueConfiguration: Additional configuration of internal serial dispatch queue.
     */
-    public convenience init(internalSerialQueueName: String, serialQueueConfiguration: (dispatch_queue_t) -> Void) {
+    public convenience init(internalSerialQueueName: String, serialQueueConfiguration: ((dispatch_queue_t) -> Void)? = nil) {
         let queue = dispatch_queue_create(internalSerialQueueName, DISPATCH_QUEUE_SERIAL)
-        serialQueueConfiguration(queue)
+        serialQueueConfiguration?(queue)
         self.init(serialQueue: queue)
     }
     
@@ -81,15 +72,6 @@ public class SerialDispatchQueueScheduler: SchedulerType {
         dispatch_set_target_queue(serialQueue, queue)
         self.init(serialQueue: serialQueue)
     }
-    
-    /**
-    Constructs new `SerialDispatchQueueScheduler` that wraps on of the global concurrent dispatch queues.
-    
-    - parameter globalConcurrentQueuePriority: Identifier for global dispatch queue with specified priority.
-    */
-    public convenience init(globalConcurrentQueuePriority: DispatchQueueSchedulerPriority) {
-        self.init(globalConcurrentQueuePriority: globalConcurrentQueuePriority, internalSerialQueueName: "rx.global_dispatch_queue.serial.\(globalConcurrentQueuePriority)")
-    }
 
     /**
     Constructs new `SerialDispatchQueueScheduler` that wraps on of the global concurrent dispatch queues.
@@ -97,7 +79,7 @@ public class SerialDispatchQueueScheduler: SchedulerType {
     - parameter globalConcurrentQueuePriority: Identifier for global dispatch queue with specified priority.
     - parameter internalSerialQueueName: Custom name for internal serial dispatch queue proxy.
     */
-    public convenience init(globalConcurrentQueuePriority: DispatchQueueSchedulerPriority, internalSerialQueueName: String) {
+    public convenience init(globalConcurrentQueuePriority: DispatchQueueSchedulerPriority, internalSerialQueueName: String = "rx.global_dispatch_queue.serial") {
         var priority: Int = 0
         switch globalConcurrentQueuePriority {
         case .High:
