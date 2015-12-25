@@ -25,6 +25,10 @@
 		C810EED11C2DE85C000033CE /* PerformanceTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = C810EECF1C2DE85C000033CE /* PerformanceTools.swift */; };
 		C810EED21C2DE85C000033CE /* PerformanceTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = C810EECF1C2DE85C000033CE /* PerformanceTools.swift */; };
 		C810EED31C2DE85C000033CE /* PerformanceTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = C810EECF1C2DE85C000033CE /* PerformanceTools.swift */; };
+		C810EED51C2DEBD1000033CE /* Foundation+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C810EED41C2DEBD1000033CE /* Foundation+Extensions.swift */; };
+		C810EED61C2DEBD1000033CE /* Foundation+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C810EED41C2DEBD1000033CE /* Foundation+Extensions.swift */; };
+		C810EED71C2DEBD1000033CE /* Foundation+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C810EED41C2DEBD1000033CE /* Foundation+Extensions.swift */; };
+		C810EED81C2DEBD1000033CE /* Foundation+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C810EED41C2DEBD1000033CE /* Foundation+Extensions.swift */; };
 		C811084D1AF50E2A001C13E4 /* NSNotificationCenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C811082B1AF50E2A001C13E4 /* NSNotificationCenterTests.swift */; };
 		C81108501AF50E2A001C13E4 /* TestConnectableObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81108311AF50E2A001C13E4 /* TestConnectableObservable.swift */; };
 		C81108531AF50E2A001C13E4 /* MySubject.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81108341AF50E2A001C13E4 /* MySubject.swift */; };
@@ -203,6 +207,7 @@
 		C80DDEDF1BCEE898006A1832 /* MainThreadPrimitiveHotObservable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainThreadPrimitiveHotObservable.swift; sourceTree = "<group>"; };
 		C810EEC71C2DE7CF000033CE /* TestErrors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestErrors.swift; sourceTree = "<group>"; };
 		C810EECF1C2DE85C000033CE /* PerformanceTools.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PerformanceTools.swift; sourceTree = "<group>"; };
+		C810EED41C2DEBD1000033CE /* Foundation+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Foundation+Extensions.swift"; sourceTree = "<group>"; };
 		C81108201AF50E11001C13E4 /* AllTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AllTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C81108241AF50E11001C13E4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C811082B1AF50E2A001C13E4 /* NSNotificationCenterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSNotificationCenterTests.swift; sourceTree = "<group>"; };
@@ -355,6 +360,7 @@
 				C88FA4F81C25BF6A00CCFEA4 /* RxMutableBox.swift */,
 				C8A32CF61C2DE7A5008FE809 /* Recorded+Timeless.swift */,
 				C810EEC71C2DE7CF000033CE /* TestErrors.swift */,
+				C810EED41C2DEBD1000033CE /* Foundation+Extensions.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -655,6 +661,7 @@
 				C87BB6BB1C13A75600C66DF9 /* ControlEventTests.swift in Sources */,
 				C8BCD3FE1C14BCAD005F1280 /* NSLayoutConstraint+RxTests.swift in Sources */,
 				C81108641AF50E2A001C13E4 /* Observable+MultipleTest.swift in Sources */,
+				C810EED51C2DEBD1000033CE /* Foundation+Extensions.swift in Sources */,
 				C8FDC5F81B2B5B7E0065F8D9 /* ElementIndexPair.swift in Sources */,
 				C8E381231B2063CC008CDC33 /* Observable+Extensions.swift in Sources */,
 				C84B8FC21B89D0D500C9CCCF /* BagTest.swift in Sources */,
@@ -689,6 +696,7 @@
 			files = (
 				C810EED31C2DE85C000033CE /* PerformanceTools.swift in Sources */,
 				C868D10C1BB950D4003D1474 /* main.swift in Sources */,
+				C810EED81C2DEBD1000033CE /* Foundation+Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -728,6 +736,7 @@
 				C88BB8A41B07E64B0064D411 /* Observable.Extensions.swift in Sources */,
 				C868D0F71BB75EAE003D1474 /* RxTest.swift in Sources */,
 				C84B8FC31B89D0D500C9CCCF /* BagTest.swift in Sources */,
+				C810EED61C2DEBD1000033CE /* Foundation+Extensions.swift in Sources */,
 				C87BB6B81C13A64000C66DF9 /* ControlPropertyTests.swift in Sources */,
 				C8BCD3FC1C14B914005F1280 /* NSView+RxTests.swift in Sources */,
 				C897EC3C1B10E000009C2CB0 /* BehaviorSubjectTest.swift in Sources */,
@@ -792,6 +801,7 @@
 				C87BB6BD1C13A75600C66DF9 /* ControlEventTests.swift in Sources */,
 				C8BCD4001C14BCAD005F1280 /* NSLayoutConstraint+RxTests.swift in Sources */,
 				C80DDEE21BCEE898006A1832 /* MainThreadPrimitiveHotObservable.swift in Sources */,
+				C810EED71C2DEBD1000033CE /* Foundation+Extensions.swift in Sources */,
 				D2EBEB6C1BB9B7EF003A27DC /* Observable+BindingTest.swift in Sources */,
 				D2EBEB621BB9B7E5003A27DC /* ElementIndexPair.swift in Sources */,
 				D2EBEB701BB9B7EF003A27DC /* Observable+MultipleTest.swift in Sources */,

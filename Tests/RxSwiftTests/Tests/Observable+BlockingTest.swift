@@ -31,7 +31,7 @@ extension ObservableBlockingTest {
             XCTFail("It should fail")
         }
         catch let e {
-            XCTAssertTrue(e as NSError === testError)
+            XCTAssertErrorEqual(e, testError)
         }
     }
     
@@ -68,7 +68,7 @@ extension ObservableBlockingTest {
             XCTFail()
         }
         catch let e {
-            XCTAssertTrue(e as NSError === testError)
+            XCTAssertErrorEqual(e, testError)
         }
     }
     
@@ -105,7 +105,7 @@ extension ObservableBlockingTest {
             XCTFail()
         }
         catch let e {
-            XCTAssertTrue(e as NSError === testError)
+            XCTAssertErrorEqual(e, testError)
         }
     }
     
@@ -169,7 +169,7 @@ extension ObservableBlockingTest {
             XCTFail()
         }
         catch let e {
-            XCTAssertTrue(e as NSError === testError)
+            XCTAssertErrorEqual(e, testError)
         }
     }
     
@@ -255,7 +255,7 @@ extension ObservableBlockingTest {
             XCTFail()
         }
         catch let e {
-            XCTAssertTrue(e as NSError === testError)
+            XCTAssertErrorEqual(e, testError)
         }
         XCTAssertEqual(predicateVals, [42, 43])
     }
@@ -266,7 +266,7 @@ extension ObservableBlockingTest {
             XCTFail()
         }
         catch let e {
-            XCTAssertTrue(e as NSError === testError)
+            XCTAssertErrorEqual(e, testError)
         }
     }
     

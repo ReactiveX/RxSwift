@@ -37,12 +37,14 @@ func XCTAssertEqualAnyObjectArrayOfArrays(lhs: [[AnyObject]], _ rhs: [[AnyObject
 
         return zip(lhs, rhs).reduce(true) { acc, n in
             let pointerValuesAreEqual: Bool
-            if let firstPointer = (n.0 as? NSValue)?.pointerValue, secondPointer = (n.1 as? NSValue)?.pointerValue {
-                pointerValuesAreEqual = firstPointer == secondPointer
-            }
-            else {
-                pointerValuesAreEqual = false
-            }
+            #if !os(Linux)
+                if let firstPointer = (n.0 as? NSValue)?.pointerValue, secondPointer = (n.1 as? NSValue)?.pointerValue {
+                    pointerValuesAreEqual = firstPointer == secondPointer
+                }
+                else {
+                    pointerValuesAreEqual = false
+                }
+            #endif
             let res = n.0.isEqual(n.1) || pointerValuesAreEqual
             return acc && res
         }

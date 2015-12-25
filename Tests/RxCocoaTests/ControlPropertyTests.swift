@@ -20,7 +20,7 @@ class ControlPropertyTests : RxTest {
         let expectSubscribeOffMainThread = expectationWithDescription("Did subscribe off main thread")
 
         let controlProperty = ControlProperty(values: Observable.deferred { () -> Observable<Int> in
-            XCTAssertTrue(NSThread.isMainThread())
+            XCTAssertTrue(isMainThread())
             observedOnMainThread = true
             return hotObservable.asObservable()
         }, valueSink: AnyObserver { n in

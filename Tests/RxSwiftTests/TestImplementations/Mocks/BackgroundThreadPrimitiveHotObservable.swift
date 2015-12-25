@@ -12,7 +12,7 @@ import XCTest
 
 class BackgroundThreadPrimitiveHotObservable<ElementType: Equatable> : PrimitiveHotObservable<ElementType> {
     override func subscribe<O : ObserverType where O.E == E>(observer: O) -> Disposable {
-        XCTAssertTrue(!NSThread.isMainThread())
+        XCTAssertTrue(!isMainThread())
         return super.subscribe(observer)
     }
 }

@@ -63,11 +63,11 @@ extension SubjectConcurrencyTest {
                 }
             }
             else if state == 1 {
-                XCTAssertTrue(!NSThread.currentThread().isMainThread)
+                XCTAssertTrue(!isMainThread())
                 state = 2
             }
             else if state == 2 {
-                XCTAssertTrue(NSThread.currentThread().isMainThread)
+                XCTAssertTrue(isMainThread())
                 allDone = true
             }
         }
