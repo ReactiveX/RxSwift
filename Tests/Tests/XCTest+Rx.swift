@@ -18,10 +18,21 @@ func XCTAssertErrorEqual(lhs: ErrorType, _ rhs: ErrorType) {
     XCTAssertTrue(event1 == event2)
 }
 
-func XCTAssertEqualNSValues(lhs: AnyObject, rhs: AnyObject) {
-    let pointerValuesAreEqual = (lhs as? NSValue)?.pointerValue == (rhs as? NSValue)?.pointerValue
-    let areEqual = lhs.isEqual(rhs) || pointerValuesAreEqual
+func NSValuesAreEqual(lhs: AnyObject, _ rhs: AnyObject) -> Bool {
+    if let lhsValue = lhs as? NSValue, rhsValue = rhs as? NSValue {
+        #if os(Linux)
+            return lhsValue.isEqual(rhsValue)
+        #else
+            return lhsValue.isEqual(rhsValue)
+                || lhs.pointerValue == rhs.pointerValue
+        #endif
+    }
+    
+    return false
+}
 
+func XCTAssertEqualNSValues(lhs: AnyObject, rhs: AnyObject) {
+    let areEqual = NSValuesAreEqual(lhs, rhs)
     XCTAssertTrue(areEqual)
     if !areEqual {
         print(lhs)
@@ -36,16 +47,7 @@ func XCTAssertEqualAnyObjectArrayOfArrays(lhs: [[AnyObject]], _ rhs: [[AnyObject
         }
 
         return zip(lhs, rhs).reduce(true) { acc, n in
-            let pointerValuesAreEqual: Bool
-            #if !os(Linux)
-                if let firstPointer = (n.0 as? NSValue)?.pointerValue, secondPointer = (n.1 as? NSValue)?.pointerValue {
-                    pointerValuesAreEqual = firstPointer == secondPointer
-                }
-                else {
-                    pointerValuesAreEqual = false
-                }
-            #endif
-            let res = n.0.isEqual(n.1) || pointerValuesAreEqual
+            let res = (n.0 as! NSObject).isEqual(n.1) || NSValuesAreEqual(n.0, n.1)
             return acc && res
         }
     }

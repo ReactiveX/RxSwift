@@ -6,6 +6,7 @@
 //
 //
 
+import Foundation
 import XCTest
 import RxSwift
 
@@ -41,12 +42,12 @@ extension ObserverTests {
         }
 
         var elements = [Int]()
-        var errrorNotification: NSError!
+        var errorNotification: ErrorType!
 
         _ = a.subscribe(
             onNext: { n in elements.append(n) },
             onError: { e in
-                errrorNotification = e as NSError
+                errorNotification = e
             }
         )
 
@@ -59,7 +60,7 @@ extension ObserverTests {
 
         observer.onNext(1)
         XCTAssertEqual(elements, [0])
-        XCTAssertEqual(errrorNotification, testError)
+        XCTAssertErrorEqual(errorNotification, testError)
     }
 
     func testConvenienceOn_Complete() {

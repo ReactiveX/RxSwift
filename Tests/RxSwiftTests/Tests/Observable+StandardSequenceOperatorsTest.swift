@@ -10,6 +10,9 @@ import Foundation
 import XCTest
 import RxSwift
 import RxTests
+#if os(Linux)
+import Glibc
+#endif
 
 class ObservableStandardSequenceOperatorsTest : RxTest {
     override func setUp() {
@@ -26,7 +29,7 @@ func isPrime(i: Int) -> Bool {
         return false
     }
     
-    let max = Int(sqrt(Float(i)))
+    let max = Int(sqrt(Double(i)))
     if max <= 1 {
         return true
     }
