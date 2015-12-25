@@ -124,49 +124,59 @@ class RxTest: XCTestCase {
     var startNumberOfAllocatedBytes: Int64 = 0
 #endif
 
-    override func setUp() {
-        super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-        
-#if TRACE_RESOURCES
-        self.startResourceCount = resourceCount
-        registerMallocHooks()
-        (startNumberOfAllocatedBytes, startNumberOfAllocations) = getMemoryInfo()
-#endif
+    func setUpActions(){
+        #if TRACE_RESOURCES
+            self.startResourceCount = resourceCount
+            registerMallocHooks()
+            (startNumberOfAllocatedBytes, startNumberOfAllocations) = getMemoryInfo()
+        #endif
     }
-    
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-        super.tearDown()
 
-#if TRACE_RESOURCES
-
-        // give 5 sec to clean up resources
-        for var i = 0; i < 10; ++i {
-            if self.startResourceCount < resourceCount {
-                // main schedulers need to finish work
-                NSRunLoop.currentRunLoop().runMode(NSDefaultRunLoopMode, beforeDate: NSDate(timeIntervalSinceNow: 0.05))
-            }
-            else {
-                break
-            }
+    #if os(Linux)
+        func setUp() {
+        setUpActions()
         }
-
-        XCTAssertEqual(self.startResourceCount, resourceCount)
-        let (endNumberOfAllocatedBytes, endNumberOfAllocations) = getMemoryInfo()
-
-        let (newBytes, newAllocations) = (endNumberOfAllocatedBytes - startNumberOfAllocatedBytes, endNumberOfAllocations - startNumberOfAllocations)
-
-        if accumulateStatistics {
-            RxTest.totalNumberOfAllocations += newAllocations
-            RxTest.totalNumberOfAllocatedBytes += newBytes
+    #else
+        override func setUp() {
+            setUpActions()
         }
-        print("allocatedBytes = \(newBytes), allocations = \(newAllocations) (totalBytes = \(RxTest.totalNumberOfAllocatedBytes), totalAllocations = \(RxTest.totalNumberOfAllocations))")
-#endif
-    }
-    
-    func on<T>(time: Time, _ event: Event<T>) -> Recorded<Event<T>> {
-        return Recorded(time: time, event: event)
+    #endif
+
+    func tearDownActions() {
+        #if TRACE_RESOURCES
+            // give 5 sec to clean up resources
+            for var i = 0; i < 10; ++i {
+                if self.startResourceCount < resourceCount {
+                    // main schedulers need to finish work
+                    NSRunLoop.currentRunLoop().runMode(NSDefaultRunLoopMode, beforeDate: NSDate(timeIntervalSinceNow: 0.05))
+                }
+                else {
+                    break
+                }
+            }
+
+            XCTAssertEqual(self.startResourceCount, resourceCount)
+            let (endNumberOfAllocatedBytes, endNumberOfAllocations) = getMemoryInfo()
+
+            let (newBytes, newAllocations) = (endNumberOfAllocatedBytes - startNumberOfAllocatedBytes, endNumberOfAllocations - startNumberOfAllocations)
+
+            if accumulateStatistics {
+                RxTest.totalNumberOfAllocations += newAllocations
+                RxTest.totalNumberOfAllocatedBytes += newBytes
+            }
+            print("allocatedBytes = \(newBytes), allocations = \(newAllocations) (totalBytes = \(RxTest.totalNumberOfAllocatedBytes), totalAllocations = \(RxTest.totalNumberOfAllocations))")
+        #endif
     }
 
+    #if os(Linux)
+        func tearDown() {
+            tearDownActions()
+        }
+    #else   
+        override func tearDown() {
+            // Put teardown code here. This method is called after the invocation of each test method in the class.
+            super.tearDown()
+            tearDownActions()
+        }
+    #endif
 }
