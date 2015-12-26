@@ -67,4 +67,4 @@ try packageRelativePath(["RxCocoa/Common", "RxCocoa/OSX", "RxCocoa/RxCocoa.h"], 
 try packageRelativePath(["RxBlocking"], targetDirName: "RxBlocking")
 try packageRelativePath(["RxTests"], targetDirName: "RxTests")
 // It doesn't work under `Tests` subpath ¯\_(ツ)_/¯
-try packageRelativePath(["Tests"], targetDirName: "AllTests")
+try packageRelativePath(["Tests/RxTest.swift", "Tests/Tests", "Tests/RxSwiftTests"], targetDirName: "AllTests")

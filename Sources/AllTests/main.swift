@@ -1,1 +1,0 @@
-../../Tests/PerformanceTests/main.swift
