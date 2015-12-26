@@ -1,0 +1,1 @@
+../../RxSwift/Disposables/SingleAssignmentDisposable.swift

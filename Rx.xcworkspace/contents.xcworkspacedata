@@ -72,6 +72,9 @@
       <FileRef
          location = "group:validate-podspec.sh">
       </FileRef>
+      <FileRef
+         location = "group:package-swift-manager.swift">
+      </FileRef>
    </Group>
    <Group
       location = "group:Documentation"
