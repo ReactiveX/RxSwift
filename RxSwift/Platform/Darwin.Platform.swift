@@ -1,31 +1,33 @@
 #if os(OSX) || os(iOS) || os(tvOS) || os(watchOS)
-import Darwin
 
-let AtomicInt = Int32
+    import Darwin
+    import Foundation
 
-let AtomicCompareAndSwap = OSAtomicCompareAndSwap32
-let AtomicIncrement = OSAtomicIncrement32
-let AtomicDecrement = OSAtomicDecrement32
+    typealias AtomicInt = Int32
 
-extension NSThread {
-    static func setThreadLocalStorageValue<T: AnyObject>(value: T?, forKey key: AnyObject) {
-        let currentThread = NSThread.currentThread()
-        var threadDictionary = currentThread.threadDictionary
+    let AtomicCompareAndSwap = OSAtomicCompareAndSwap32
+    let AtomicIncrement = OSAtomicIncrement32
+    let AtomicDecrement = OSAtomicDecrement32
 
-        if let newValue = value {
-            threadDictionary[key] = newValue
+    extension NSThread {
+        static func setThreadLocalStorageValue<T: AnyObject>(value: T?, forKey key: protocol<AnyObject, NSCopying>) {
+            let currentThread = NSThread.currentThread()
+            let threadDictionary = currentThread.threadDictionary
+
+            if let newValue = value {
+                threadDictionary.setObject(newValue, forKey: key)
+            }
+            else {
+                threadDictionary.removeObjectForKey(key)
+            }
+
         }
-        else {
-            threadDictionary.removeObjectForKey(key)
+        static func getThreadLocalStorageValueForKey<T>(key: protocol<AnyObject, NSCopying>) -> T? {
+            let currentThread = NSThread.currentThread()
+            let threadDictionary = currentThread.threadDictionary
+            
+            return threadDictionary[key] as? T
         }
-
     }
-    static func getThreadLocalStorageValueForKey<T>(key: String) -> T? {
-        let currentThread = NSThread.currentThread()
-        let threadDictionary = currentThread.threadDictionary
-
-        return threadDictionary[key] as? T
-    }
-}
-
+    
 #endif

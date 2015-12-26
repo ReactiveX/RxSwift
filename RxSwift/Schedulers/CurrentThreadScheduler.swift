@@ -77,7 +77,7 @@ public class CurrentThreadScheduler : ImmediateSchedulerType {
     */
     public static private(set) var isScheduleRequired: Bool {
         get {
-            let value = NSThread.getThreadLocalStorageValueForKey(CurrentThreadSchedulerKeyInstance) as String?
+            let value = NSThread.getThreadLocalStorageValueForKey(CurrentThreadSchedulerKeyInstance) as CurrentThreadSchedulerKey?
             return value == nil
         }
         set(isScheduleRequired) {
