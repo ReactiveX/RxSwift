@@ -30,7 +30,6 @@ let package = Package(
             dependencies: [
                 .Target(name: "RxSwift"),
                 .Target(name: "RxBlocking"),
-                .Target(name: "RxCocoa"),
                 .Target(name: "RxTests")
             ]
         )

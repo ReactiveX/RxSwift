@@ -10,9 +10,9 @@ import Foundation
 
 class ObserverBase<ElementType> : Disposable, ObserverType {
     typealias E = ElementType
-    
-    private var _isStopped: Int32 = 0
-    
+
+    private var _isStopped: AtomicInt = 0
+
     func on(event: Event<E>) {
         switch event {
         case .Next:
@@ -20,19 +20,19 @@ class ObserverBase<ElementType> : Disposable, ObserverType {
                 onCore(event)
             }
         case .Error, .Completed:
-           
-            if !OSAtomicCompareAndSwap32(0, 1, &_isStopped) {
+
+            if !AtomicCompareAndSwap(0, 1, &_isStopped) {
                 return
             }
-            
+
             onCore(event)
         }
     }
-    
+
     func onCore(event: Event<E>) {
         abstractMethod()
     }
-    
+
     func dispose() {
         _isStopped = 1
     }

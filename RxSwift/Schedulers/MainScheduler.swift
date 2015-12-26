@@ -22,7 +22,7 @@ public final class MainScheduler : SerialDispatchQueueScheduler {
 
     private let _mainQueue: dispatch_queue_t
 
-    var numberEnqueued: Int32 = 0
+    var numberEnqueued: AtomicInt = 0
 
     private init() {
         _mainQueue = dispatch_get_main_queue()
@@ -42,13 +42,13 @@ public final class MainScheduler : SerialDispatchQueueScheduler {
             rxFatalError("Executing on backgound thread. Please use `MainScheduler.sharedInstance.schedule` to schedule work on main thread.")
         }
     }
-    
+
     override func scheduleInternal<StateType>(state: StateType, action: StateType -> Disposable) -> Disposable {
-        let currentNumberEnqueued = OSAtomicIncrement32(&numberEnqueued)
+        let currentNumberEnqueued = AtomicIncrement(&numberEnqueued)
 
         if NSThread.currentThread().isMainThread && currentNumberEnqueued == 1 {
             let disposable = action(state)
-            OSAtomicDecrement32(&numberEnqueued)
+            AtomicDecrement(&numberEnqueued)
             return disposable
         }
 
@@ -59,10 +59,9 @@ public final class MainScheduler : SerialDispatchQueueScheduler {
                 action(state)
             }
 
-            OSAtomicDecrement32(&self.numberEnqueued)
+            AtomicDecrement(&self.numberEnqueued)
         }
 
         return cancel
     }
 }
-
