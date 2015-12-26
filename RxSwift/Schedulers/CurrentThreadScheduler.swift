@@ -11,9 +11,15 @@ import Foundation
 #if os(Linux)
   let CurrentThreadSchedulerKeyInstance       = "RxSwift.CurrentThreadScheduler.SchedulerKey"
   let CurrentThreadSchedulerQueueKeyInstance  = "RxSwift.CurrentThreadScheduler.Queue"
+
+  typealias CurrentThreadSchedulerValue       = NSString
+  let CurrentThreadSchedulerValueInstance     = "RxSwift.CurrentThreadScheduler.SchedulerKey" as NSString
 #else
-  let CurrentThreadSchedulerKeyInstance = CurrentThreadSchedulerKey()
-  let CurrentThreadSchedulerQueueKeyInstance = CurrentThreadSchedulerQueueKey()
+  let CurrentThreadSchedulerKeyInstance       = CurrentThreadSchedulerKey()
+  let CurrentThreadSchedulerQueueKeyInstance  = CurrentThreadSchedulerQueueKey()
+
+  typealias CurrentThreadSchedulerValue       = CurrentThreadSchedulerKey
+  let CurrentThreadSchedulerValueInstance     = CurrentThreadSchedulerKeyInstance
 
   class CurrentThreadSchedulerKey : NSObject, NSCopying {
       override func isEqual(object: AnyObject?) -> Bool {
@@ -77,11 +83,11 @@ public class CurrentThreadScheduler : ImmediateSchedulerType {
     */
     public static private(set) var isScheduleRequired: Bool {
         get {
-            let value = NSThread.getThreadLocalStorageValueForKey(CurrentThreadSchedulerKeyInstance) as CurrentThreadSchedulerKey?
+            let value: CurrentThreadSchedulerValue? = NSThread.getThreadLocalStorageValueForKey(CurrentThreadSchedulerKeyInstance)
             return value == nil
         }
         set(isScheduleRequired) {
-            NSThread.setThreadLocalStorageValue(isScheduleRequired ? nil : CurrentThreadSchedulerKeyInstance, forKey: CurrentThreadSchedulerKeyInstance)
+            NSThread.setThreadLocalStorageValue(isScheduleRequired ? nil : CurrentThreadSchedulerValueInstance, forKey: CurrentThreadSchedulerKeyInstance)
         }
     }
 

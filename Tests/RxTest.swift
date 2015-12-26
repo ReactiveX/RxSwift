@@ -9,6 +9,7 @@
 import XCTest
 import RxSwift
 import RxTests
+import Foundation
 
 #if TRACE_RESOURCES
 #elseif RELEASE
@@ -28,11 +29,11 @@ class RxTest: XCTestCase {
         static let subscribed = 200
         static let disposed = 1000
     }
-    
+
     func sleep(time: NSTimeInterval) {
         NSRunLoop.currentRunLoop().runMode(NSDefaultRunLoopMode, beforeDate: NSDate(timeIntervalSinceNow: time))
     }
-    
+
     private var startResourceCount: Int32 = 0
 
     var accumulateStatistics: Bool {
@@ -97,7 +98,7 @@ class RxTest: XCTestCase {
         func tearDown() {
             tearDownActions()
         }
-    #else   
+    #else
         override func tearDown() {
             // Put teardown code here. This method is called after the invocation of each test method in the class.
             super.tearDown()
