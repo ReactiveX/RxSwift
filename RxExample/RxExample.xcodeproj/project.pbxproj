@@ -348,6 +348,8 @@
 		C8BCD3EB1C14B02A005F1280 /* SimpleValidationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8BCD3E91C14B02A005F1280 /* SimpleValidationViewController.swift */; };
 		C8BCD4021C14BFB7005F1280 /* NSLayoutConstraint+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8BCD4011C14BFB7005F1280 /* NSLayoutConstraint+Rx.swift */; };
 		C8BCD4041C14BFCA005F1280 /* UIView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8BCD4031C14BFCA005F1280 /* UIView+Rx.swift */; };
+		C8BF34D61C2E4A2F00416CAE /* Darwin.Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8BF34D41C2E4A2F00416CAE /* Darwin.Platform.swift */; };
+		C8BF34D71C2E4A2F00416CAE /* Linux.Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8BF34D51C2E4A2F00416CAE /* Linux.Platform.swift */; };
 		C8C46DA81B47F7110020D71E /* CollectionViewImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C46DA31B47F7110020D71E /* CollectionViewImageCell.swift */; };
 		C8C46DA91B47F7110020D71E /* WikipediaImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C8C46DA41B47F7110020D71E /* WikipediaImageCell.xib */; };
 		C8C46DAA1B47F7110020D71E /* WikipediaSearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C46DA51B47F7110020D71E /* WikipediaSearchCell.swift */; };
@@ -812,6 +814,8 @@
 		C8BCD3E91C14B02A005F1280 /* SimpleValidationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleValidationViewController.swift; sourceTree = "<group>"; };
 		C8BCD4011C14BFB7005F1280 /* NSLayoutConstraint+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSLayoutConstraint+Rx.swift"; sourceTree = "<group>"; };
 		C8BCD4031C14BFCA005F1280 /* UIView+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Rx.swift"; sourceTree = "<group>"; };
+		C8BF34D41C2E4A2F00416CAE /* Darwin.Platform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Darwin.Platform.swift; sourceTree = "<group>"; };
+		C8BF34D51C2E4A2F00416CAE /* Linux.Platform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Linux.Platform.swift; sourceTree = "<group>"; };
 		C8C46DA31B47F7110020D71E /* CollectionViewImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewImageCell.swift; sourceTree = "<group>"; };
 		C8C46DA41B47F7110020D71E /* WikipediaImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WikipediaImageCell.xib; sourceTree = "<group>"; };
 		C8C46DA51B47F7110020D71E /* WikipediaSearchCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WikipediaSearchCell.swift; sourceTree = "<group>"; };
@@ -1199,6 +1203,7 @@
 		C89464271BC6C2B00055219D /* RxSwift */ = {
 			isa = PBXGroup;
 			children = (
+				C8BF34D31C2E4A2F00416CAE /* Platform */,
 				C8CCB8D21C2D5FBA000EDACC /* Extensions */,
 				C89464281BC6C2B00055219D /* Cancelable.swift */,
 				C89464291BC6C2B00055219D /* Concurrency */,
@@ -1583,6 +1588,15 @@
 				C8BCD3E91C14B02A005F1280 /* SimpleValidationViewController.swift */,
 			);
 			path = SimpleValidation;
+			sourceTree = "<group>";
+		};
+		C8BF34D31C2E4A2F00416CAE /* Platform */ = {
+			isa = PBXGroup;
+			children = (
+				C8BF34D41C2E4A2F00416CAE /* Darwin.Platform.swift */,
+				C8BF34D51C2E4A2F00416CAE /* Linux.Platform.swift */,
+			);
+			path = Platform;
 			sourceTree = "<group>";
 		};
 		C8CCB8D21C2D5FBA000EDACC /* Extensions */ = {
@@ -1987,8 +2001,10 @@
 				C89464EE1BC6C2B00055219D /* Observable+Creation.swift in Sources */,
 				C894659A1BC6C2BC0055219D /* UISlider+Rx.swift in Sources */,
 				C89465891BC6C2BC0055219D /* RxSearchBarDelegateProxy.swift in Sources */,
+				C8BF34D71C2E4A2F00416CAE /* Linux.Platform.swift in Sources */,
 				C89464C21BC6C2B00055219D /* CombineLatest.swift in Sources */,
 				C89464E71BC6C2B00055219D /* Zip+arity.swift in Sources */,
+				C8BF34D61C2E4A2F00416CAE /* Darwin.Platform.swift in Sources */,
 				B1604CC21BE5B895002E1279 /* ReachabilityService.swift in Sources */,
 				C89464DE1BC6C2B00055219D /* Skip.swift in Sources */,
 				C89464DB1BC6C2B00055219D /* Sample.swift in Sources */,
