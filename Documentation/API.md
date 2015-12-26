@@ -30,6 +30,7 @@ Operators are stateless by default.
   * [`flatMap`](http://reactivex.io/documentation/operators/flatmap.html)
   * [`flatMapFirst`](http://reactivex.io/documentation/operators/flatmap.html)
   * [`flatMapLatest`](http://reactivex.io/documentation/operators/flatmap.html)
+  * [`groupBy`](http://reactivex.io/documentation/operators/groupby.html)
   * [`map`](http://reactivex.io/documentation/operators/map.html)
   * [`scan`](http://reactivex.io/documentation/operators/scan.html)
   * [`window`](http://reactivex.io/documentation/operators/window.html)
