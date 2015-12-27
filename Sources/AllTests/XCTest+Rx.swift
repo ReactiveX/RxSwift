@@ -1,1 +1,1 @@
-../../Tests/Tests/XCTest+Rx.swift
+../../RxTests/XCTest+Rx.swift

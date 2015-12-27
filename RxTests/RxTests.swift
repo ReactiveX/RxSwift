@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import XCTest
 
 /**
 Virtual time type.
