@@ -32,7 +32,13 @@ public final class MainScheduler : SerialDispatchQueueScheduler {
     /**
     Singleton instance of `MainScheduler`
     */
+    @available(*, deprecated=2.0.0, message="Please use `MainScheduler.instance`")
     public static let sharedInstance = MainScheduler()
+
+    /**
+    Singleton instance of `MainScheduler`
+    */
+    public static let instance = MainScheduler()
 
     /**
     In case this method is called on a background thread it will throw an exception.

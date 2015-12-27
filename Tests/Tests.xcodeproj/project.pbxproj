@@ -155,6 +155,12 @@
 		C8F6A1411BEFE04F007DF367 /* SubjectConcurrencyTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8F6A1401BEFE04F007DF367 /* SubjectConcurrencyTest.swift */; };
 		C8F6A1421BEFE04F007DF367 /* SubjectConcurrencyTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8F6A1401BEFE04F007DF367 /* SubjectConcurrencyTest.swift */; };
 		C8F6A1431BEFE04F007DF367 /* SubjectConcurrencyTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8F6A1401BEFE04F007DF367 /* SubjectConcurrencyTest.swift */; };
+		C8FA890B1C302C5000CD3A17 /* CurrentThreadSchedulerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8FA890A1C302C5000CD3A17 /* CurrentThreadSchedulerTest.swift */; };
+		C8FA890C1C302C5000CD3A17 /* CurrentThreadSchedulerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8FA890A1C302C5000CD3A17 /* CurrentThreadSchedulerTest.swift */; };
+		C8FA890D1C302C5000CD3A17 /* CurrentThreadSchedulerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8FA890A1C302C5000CD3A17 /* CurrentThreadSchedulerTest.swift */; };
+		C8FA890F1C302F0F00CD3A17 /* MainSchedulerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8FA890E1C302F0F00CD3A17 /* MainSchedulerTests.swift */; };
+		C8FA89101C302F0F00CD3A17 /* MainSchedulerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8FA890E1C302F0F00CD3A17 /* MainSchedulerTests.swift */; };
+		C8FA89111C302F0F00CD3A17 /* MainSchedulerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8FA890E1C302F0F00CD3A17 /* MainSchedulerTests.swift */; };
 		C8FDC5F81B2B5B7E0065F8D9 /* ElementIndexPair.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8FDC5F71B2B5B7E0065F8D9 /* ElementIndexPair.swift */; };
 		C8FDC5F91B2B5B7E0065F8D9 /* ElementIndexPair.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8FDC5F71B2B5B7E0065F8D9 /* ElementIndexPair.swift */; };
 		D203C4EB1BB9C22800D02D00 /* NSNotificationCenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C811082B1AF50E2A001C13E4 /* NSNotificationCenterTests.swift */; };
@@ -271,6 +277,8 @@
 		C8E9D2C01BD4525B0079D0DB /* Control+RxTests+Cocoa.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Control+RxTests+Cocoa.swift"; sourceTree = "<group>"; };
 		C8EA2D361BD02E1900FB22AC /* EquatableArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EquatableArray.swift; sourceTree = "<group>"; };
 		C8F6A1401BEFE04F007DF367 /* SubjectConcurrencyTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubjectConcurrencyTest.swift; sourceTree = "<group>"; };
+		C8FA890A1C302C5000CD3A17 /* CurrentThreadSchedulerTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentThreadSchedulerTest.swift; sourceTree = "<group>"; };
+		C8FA890E1C302F0F00CD3A17 /* MainSchedulerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainSchedulerTests.swift; sourceTree = "<group>"; };
 		C8FDC5F71B2B5B7E0065F8D9 /* ElementIndexPair.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElementIndexPair.swift; sourceTree = "<group>"; };
 		D2AF91961BD2EBB900A008C1 /* MockDisposable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockDisposable.swift; sourceTree = "<group>"; };
 		D2EBEB491BB9B7AE003A27DC /* AllTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AllTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -462,6 +470,8 @@
 				C69B64FF1BA88FAC00A7FA73 /* ObserverTests.swift */,
 				C89CDB951BCDA1F1002063D9 /* Observable+SubscriptionTest.swift */,
 				C8F6A1401BEFE04F007DF367 /* SubjectConcurrencyTest.swift */,
+				C8FA890A1C302C5000CD3A17 /* CurrentThreadSchedulerTest.swift */,
+				C8FA890E1C302F0F00CD3A17 /* MainSchedulerTests.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -676,7 +686,9 @@
 				C8B605EC1B6260A10044410E /* AnonymousObservable+Test.swift in Sources */,
 				C88FA4F91C25BF6A00CCFEA4 /* RxMutableBox.swift in Sources */,
 				C8EA2D371BD02E1900FB22AC /* EquatableArray.swift in Sources */,
+				C8FA890B1C302C5000CD3A17 /* CurrentThreadSchedulerTest.swift in Sources */,
 				C811085D1AF50E2A001C13E4 /* AssumptionsTest.swift in Sources */,
+				C8FA890F1C302F0F00CD3A17 /* MainSchedulerTests.swift in Sources */,
 				C810EEC81C2DE7CF000033CE /* TestErrors.swift in Sources */,
 				C81108501AF50E2A001C13E4 /* TestConnectableObservable.swift in Sources */,
 				C8C4B4D51C1772D700828BD5 /* RuntimeStateSnapshot.swift in Sources */,
@@ -750,7 +762,9 @@
 				C8F6A1421BEFE04F007DF367 /* SubjectConcurrencyTest.swift in Sources */,
 				C88FA4FA1C25BF6A00CCFEA4 /* RxMutableBox.swift in Sources */,
 				C88BB8AC1B07E64B0064D411 /* AssumptionsTest.swift in Sources */,
+				C8FA890C1C302C5000CD3A17 /* CurrentThreadSchedulerTest.swift in Sources */,
 				C88BB8AD1B07E64B0064D411 /* TestConnectableObservable.swift in Sources */,
+				C8FA89101C302F0F00CD3A17 /* MainSchedulerTests.swift in Sources */,
 				C810EEC91C2DE7CF000033CE /* TestErrors.swift in Sources */,
 				C8E3813A1B21B77E008CDC33 /* Observable+Extensions.swift in Sources */,
 				C8C4B4D61C1772D700828BD5 /* RuntimeStateSnapshot.swift in Sources */,
@@ -814,7 +828,9 @@
 				C8EA2D391BD02E1900FB22AC /* EquatableArray.swift in Sources */,
 				C88FA4FB1C25BF6A00CCFEA4 /* RxMutableBox.swift in Sources */,
 				D2EBEB531BB9B7CC003A27DC /* TestConnectableObservable.swift in Sources */,
+				C8FA890D1C302C5000CD3A17 /* CurrentThreadSchedulerTest.swift in Sources */,
 				D2EBEB571BB9B7CC003A27DC /* Observable.Extensions.swift in Sources */,
+				C8FA89111C302F0F00CD3A17 /* MainSchedulerTests.swift in Sources */,
 				C810EECA1C2DE7CF000033CE /* TestErrors.swift in Sources */,
 				D2EBEB741BB9B7F9003A27DC /* Observable+StandardSequenceOperatorsTest.swift in Sources */,
 				C8C4B4D71C1772D700828BD5 /* RuntimeStateSnapshot.swift in Sources */,

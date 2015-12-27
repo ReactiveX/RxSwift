@@ -63,7 +63,7 @@ extension DriverTest {
             // Subscription should be made on main scheduler
             // so this will make sure execution is continued after 
             // subscription because of serial nature of main scheduler.
-            MainScheduler.sharedInstance.schedule(()) { _ in
+            MainScheduler.instance.schedule(()) { _ in
                 subscribeFinished.fulfill()
                 return NopDisposable.instance
             }
@@ -671,7 +671,7 @@ extension DriverTest {
 extension DriverTest {
     func testAsDriver_debounce() {
         let hotObservable = BackgroundThreadPrimitiveHotObservable<Int>()
-        let driver = hotObservable.asDriver(onErrorJustReturn: -1).debounce(0.0, scheduler: MainScheduler.sharedInstance)
+        let driver = hotObservable.asDriver(onErrorJustReturn: -1).debounce(0.0, scheduler: MainScheduler.instance)
 
         let results = subscribeTwiceOnBackgroundSchedulerAndOnlyOneSubscription(driver) {
             XCTAssertTrue(hotObservable.subscriptions == [SubscribedToHotObservable])
@@ -686,7 +686,7 @@ extension DriverTest {
 
     func testAsDriver_throttle() {
         let hotObservable = BackgroundThreadPrimitiveHotObservable<Int>()
-        let driver = hotObservable.asDriver(onErrorJustReturn: -1).throttle(0.0, scheduler: MainScheduler.sharedInstance)
+        let driver = hotObservable.asDriver(onErrorJustReturn: -1).throttle(0.0, scheduler: MainScheduler.instance)
 
         let results = subscribeTwiceOnBackgroundSchedulerAndOnlyOneSubscription(driver) {
             XCTAssertTrue(hotObservable.subscriptions == [SubscribedToHotObservable])

@@ -82,7 +82,7 @@ extension ObservableCreationTests {
     }
 
     func testJust_DefaultScheduler() {
-        let res = try! Observable.just(42, scheduler: MainScheduler.sharedInstance)
+        let res = try! Observable.just(42, scheduler: MainScheduler.instance)
             .toBlocking()
             .toArray()
 
