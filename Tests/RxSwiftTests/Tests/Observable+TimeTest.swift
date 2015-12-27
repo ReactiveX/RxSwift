@@ -1314,7 +1314,7 @@ extension ObservableTimeTest {
     func testBufferWithTimeOrCount_Default() {
         let backgroundScheduler = SerialDispatchQueueScheduler(globalConcurrentQueuePriority: .Default)
         
-        let result = try! Observable.range(1, count: 10, scheduler: backgroundScheduler)
+        let result = try! Observable.range(start: 1, count: 10, scheduler: backgroundScheduler)
             .buffer(timeSpan: 1000, count: 3, scheduler: backgroundScheduler)
             .skip(1)
             .toBlocking()
@@ -1514,7 +1514,7 @@ extension ObservableTimeTest {
     func windowWithTimeOrCount_Default() {
         let backgroundScheduler = SerialDispatchQueueScheduler(globalConcurrentQueuePriority: .Default)
         
-        let result = try! Observable.range(1, count: 10, scheduler: backgroundScheduler)
+        let result = try! Observable.range(start: 1, count: 10, scheduler: backgroundScheduler)
             .window(timeSpan: 1000, count: 3, scheduler: backgroundScheduler)
             .mapWithIndex { (o: Observable<Int>, i: Int) -> Observable<String> in
                 return o.map { (e: Int) -> String in

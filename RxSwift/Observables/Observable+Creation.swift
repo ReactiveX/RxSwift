@@ -48,14 +48,14 @@ public func deferred<E>(observableFactory: () throws -> Observable<E>) -> Observ
     return Observable.deferred(observableFactory)
 }
 
-@available(*, deprecated=2.0.0, message="Please use `Observable.generate`")
+@available(*, deprecated=2.0.0, message="Please use `Observable.generate` with named initialState parameter.")
 public func generate<E>(initialState: E, condition: E throws -> Bool, scheduler: ImmediateSchedulerType = CurrentThreadScheduler.instance, iterate: E throws -> E) -> Observable<E> {
-    return Observable.generate(initialState, condition: condition, scheduler: scheduler, iterate: iterate)
+    return Observable.generate(initialState: initialState, condition: condition, scheduler: scheduler, iterate: iterate)
 }
 
-@available(*, deprecated=2.0.0, message="Please use `Observable.range` with named count, scheduler parameters.")
+@available(*, deprecated=2.0.0, message="Please use `Observable.range` with named start, count, scheduler parameters.")
 public func range(start: Int, _ count: Int, _ scheduler: ImmediateSchedulerType = CurrentThreadScheduler.instance) -> Observable<Int> {
-    return Observable.range(start, count: count, scheduler: scheduler)
+    return Observable.range(start: start, count: count, scheduler: scheduler)
 }
 
 @available(*, deprecated=2.0.0, message="Please use `Observable.repeatElement` with named scheduler parameter.")
@@ -200,7 +200,7 @@ extension Observable {
     - returns: The generated sequence.
     */
     @warn_unused_result(message="http://git.io/rxs.uo")
-    public static func generate(initialState: E, condition: E throws -> Bool, scheduler: ImmediateSchedulerType = CurrentThreadScheduler.instance, iterate: E throws -> E) -> Observable<E> {
+    public static func generate(initialState initialState: E, condition: E throws -> Bool, scheduler: ImmediateSchedulerType = CurrentThreadScheduler.instance, iterate: E throws -> E) -> Observable<E> {
         return Generate(initialState: initialState, condition: condition, iterate: iterate, resultSelector: { $0 }, scheduler: scheduler)
     }
 
@@ -245,7 +245,7 @@ extension Observable where Element : SignedIntegerType {
     - returns: An observable sequence that contains a range of sequential integral numbers.
     */
     @warn_unused_result(message="http://git.io/rxs.uo")
-    public static func range(start: E, count: E, scheduler: ImmediateSchedulerType = CurrentThreadScheduler.instance) -> Observable<E> {
+    public static func range(start start: E, count: E, scheduler: ImmediateSchedulerType = CurrentThreadScheduler.instance) -> Observable<E> {
         return RangeProducer<E>(start: start, count: count, scheduler: scheduler)
     }
 }
