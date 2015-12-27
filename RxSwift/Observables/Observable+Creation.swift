@@ -214,7 +214,7 @@ extension Observable {
     - returns: An observable sequence that repeats the given element infinitely.
     */
     @warn_unused_result(message="http://git.io/rxs.uo")
-    public static func repeatElement(element: E, scheduler: ImmediateSchedulerType) -> Observable<E> {
+    public static func repeatElement(element: E, scheduler: ImmediateSchedulerType = CurrentThreadScheduler.instance) -> Observable<E> {
         return RepeatElement(element: element, scheduler: scheduler)
     }
 
