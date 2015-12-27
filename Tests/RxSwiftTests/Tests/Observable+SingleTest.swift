@@ -22,8 +22,6 @@ class ObservableSingleTest : RxTest {
 }
 
 // Creation
-// this is now part of interface 
-/*
 extension ObservableSingleTest {
     func testAsObservable_asObservable() {
         let scheduler = TestScheduler(initialClock: 0)
@@ -47,10 +45,9 @@ extension ObservableSingleTest {
  
         XCTAssertEqual(res.events, correct)
     }
-    
-    
+
     func testAsObservable_hides() {
-        let xs : Observable<Int> = Observable.empty()
+        let xs = PrimitiveHotObservable<Int>()
         
         let res = xs.asObservable()
         
@@ -60,18 +57,16 @@ extension ObservableSingleTest {
     func testAsObservable_never() {
         let scheduler = TestScheduler(initialClock: 0)
         
-        let xs : Observable<Int> = never()
+        let xs : Observable<Int> = Observable.never()
         
         let res = scheduler.start { xs }
      
-        let correct: [Recorded<Int>] = []
+        let correct: [Recorded<Event<Int>>] = []
         
         XCTAssertEqual(res.events, correct)
     }
     
-    // ...
 }
-*/
 
 // Distinct
 extension ObservableSingleTest {

@@ -38,7 +38,8 @@
     }
 
     public func CFRunLoopRun() {
-        let currentValueOfCounter = runLoopCounter + 1
+        runLoopCounter += 1
+        let currentValueOfCounter = runLoopCounter
         while let front = queue.tryDequeue() {
             front()
             if runLoopCounter < currentValueOfCounter - 1 {

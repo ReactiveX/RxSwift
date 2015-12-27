@@ -1522,7 +1522,7 @@ extension ObservableMultipleTest {
         
     }
 
-#if DEBUG || TRACE_RESOURCES
+#if TRACE_RESOURCES
     func testConcat_TailRecursionCollection() {
         maxTailRecursiveSinkStackSize = 0
         let elements = try! generateCollection(0) { i in
