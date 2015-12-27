@@ -188,8 +188,8 @@ try packageRelativePath(["RxSwift"], targetDirName: "RxSwift")
 //try packageRelativePath(["RxCocoa/Common", "RxCocoa/OSX", "RxCocoa/RxCocoa.h"], targetDirName: "RxCocoa")
 try packageRelativePath(["RxCocoa/RxCocoa.h"], targetDirName: "RxCocoa")
 try packageRelativePath(["RxBlocking"], targetDirName: "RxBlocking")
-try packageRelativePath(["RxTests"], targetDirName: "RxTests", excluded: ["XCTest+Rx.swift"])
+try packageRelativePath(["RxTests"], targetDirName: "RxTests")
 // It doesn't work under `Tests` subpath ¯\_(ツ)_/¯
-try packageRelativePath(["RxSwift/RxMutableBox.swift", "Tests/RxTest.swift", "Tests/Tests", "Tests/RxSwiftTests", "RxTests/XCTest+Rx.swift"], targetDirName: "AllTests")
+try packageRelativePath(["RxSwift/RxMutableBox.swift", "Tests/RxTest.swift", "Tests/Tests", "Tests/RxSwiftTests"], targetDirName: "AllTests")
 
 try buildAllTestsTarget("Sources/AllTests")
