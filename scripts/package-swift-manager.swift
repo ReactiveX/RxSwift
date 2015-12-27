@@ -41,7 +41,8 @@ let throwingWordsInTests = [
     "error",
     "fail",
     "throw",
-    "retrycount"
+    "retrycount",
+    "retrywhen",
 ]
 
 func isExtensionAllowed(path: String) -> Bool {
