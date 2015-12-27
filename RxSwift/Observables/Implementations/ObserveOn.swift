@@ -17,7 +17,7 @@ class ObserveOn<E> : Producer<E> {
         self.source = source
         
 #if TRACE_RESOURCES
-        OSAtomicIncrement32(&resourceCount)
+        AtomicIncrement(&resourceCount)
 #endif
     }
     
@@ -29,7 +29,7 @@ class ObserveOn<E> : Producer<E> {
     
 #if TRACE_RESOURCES
     deinit {
-        OSAtomicDecrement32(&resourceCount)
+        AtomicDecrement(&resourceCount)
     }
 #endif
 }

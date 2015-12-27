@@ -13,7 +13,7 @@ class Sink<O : ObserverType> : SingleAssignmentDisposable {
 
     init(observer: O) {
 #if TRACE_RESOURCES
-        OSAtomicIncrement32(&resourceCount)
+        AtomicIncrement(&resourceCount)
 #endif
         _observer = observer
     }
@@ -31,7 +31,7 @@ class Sink<O : ObserverType> : SingleAssignmentDisposable {
 
     deinit {
 #if TRACE_RESOURCES
-        OSAtomicDecrement32(&resourceCount)
+        AtomicDecrement(&resourceCount)
 #endif
     }
 }

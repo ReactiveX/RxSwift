@@ -65,7 +65,7 @@ class ZipCollectionTypeSink<C: CollectionType, R, O: ObserverType where C.Genera
                     _numberOfValues = 0
                     
                     for i in 0 ..< _values.count {
-                        arguments.append(_values[i].dequeue())
+                        arguments.append(_values[i].dequeue()!)
                         if _values[i].count > 0 {
                             _numberOfValues += 1
                         }

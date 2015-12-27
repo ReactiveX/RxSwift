@@ -87,7 +87,7 @@ class ZipSink2_<E1, E2, O: ObserverType> : ZipSink<O> {
     }
 
     override func getResult() throws -> R {
-        return try _parent._resultSelector(_values1.dequeue(), _values2.dequeue())
+        return try _parent._resultSelector(_values1.dequeue()!, _values2.dequeue()!)
     }
 }
 
@@ -196,7 +196,7 @@ class ZipSink3_<E1, E2, E3, O: ObserverType> : ZipSink<O> {
     }
 
     override func getResult() throws -> R {
-        return try _parent._resultSelector(_values1.dequeue(), _values2.dequeue(), _values3.dequeue())
+        return try _parent._resultSelector(_values1.dequeue()!, _values2.dequeue()!, _values3.dequeue()!)
     }
 }
 
@@ -313,7 +313,7 @@ class ZipSink4_<E1, E2, E3, E4, O: ObserverType> : ZipSink<O> {
     }
 
     override func getResult() throws -> R {
-        return try _parent._resultSelector(_values1.dequeue(), _values2.dequeue(), _values3.dequeue(), _values4.dequeue())
+        return try _parent._resultSelector(_values1.dequeue()!, _values2.dequeue()!, _values3.dequeue()!, _values4.dequeue()!)
     }
 }
 
@@ -438,7 +438,7 @@ class ZipSink5_<E1, E2, E3, E4, E5, O: ObserverType> : ZipSink<O> {
     }
 
     override func getResult() throws -> R {
-        return try _parent._resultSelector(_values1.dequeue(), _values2.dequeue(), _values3.dequeue(), _values4.dequeue(), _values5.dequeue())
+        return try _parent._resultSelector(_values1.dequeue()!, _values2.dequeue()!, _values3.dequeue()!, _values4.dequeue()!, _values5.dequeue()!)
     }
 }
 
@@ -571,7 +571,7 @@ class ZipSink6_<E1, E2, E3, E4, E5, E6, O: ObserverType> : ZipSink<O> {
     }
 
     override func getResult() throws -> R {
-        return try _parent._resultSelector(_values1.dequeue(), _values2.dequeue(), _values3.dequeue(), _values4.dequeue(), _values5.dequeue(), _values6.dequeue())
+        return try _parent._resultSelector(_values1.dequeue()!, _values2.dequeue()!, _values3.dequeue()!, _values4.dequeue()!, _values5.dequeue()!, _values6.dequeue()!)
     }
 }
 
@@ -712,7 +712,7 @@ class ZipSink7_<E1, E2, E3, E4, E5, E6, E7, O: ObserverType> : ZipSink<O> {
     }
 
     override func getResult() throws -> R {
-        return try _parent._resultSelector(_values1.dequeue(), _values2.dequeue(), _values3.dequeue(), _values4.dequeue(), _values5.dequeue(), _values6.dequeue(), _values7.dequeue())
+        return try _parent._resultSelector(_values1.dequeue()!, _values2.dequeue()!, _values3.dequeue()!, _values4.dequeue()!, _values5.dequeue()!, _values6.dequeue()!, _values7.dequeue()!)
     }
 }
 
@@ -861,7 +861,7 @@ class ZipSink8_<E1, E2, E3, E4, E5, E6, E7, E8, O: ObserverType> : ZipSink<O> {
     }
 
     override func getResult() throws -> R {
-        return try _parent._resultSelector(_values1.dequeue(), _values2.dequeue(), _values3.dequeue(), _values4.dequeue(), _values5.dequeue(), _values6.dequeue(), _values7.dequeue(), _values8.dequeue())
+        return try _parent._resultSelector(_values1.dequeue()!, _values2.dequeue()!, _values3.dequeue()!, _values4.dequeue()!, _values5.dequeue()!, _values6.dequeue()!, _values7.dequeue()!, _values8.dequeue()!)
     }
 }
 

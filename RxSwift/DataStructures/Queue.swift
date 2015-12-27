@@ -58,7 +58,7 @@ public struct Queue<T>: SequenceType {
     /**
     - returns: Is queue empty.
     */
-    public var empty: Bool {
+    public var isEmpty: Bool {
         get {
             return count == 0
         }
@@ -134,26 +134,17 @@ public struct Queue<T>: SequenceType {
         
         return value
     }
-    
-    /**
-    Dequeues element and returns it, or returns `nil` in case queue is empty.
-    
-    - returns: Dequeued element.
-    */
-    public mutating func tryDequeue() -> T? {
-        if self.count == 0 {
-            return nil
-        }
-        
-        return dequeue()
-    }
-    
+
     /**
     Dequeues element or throws an exception in case queue is empty.
     
     - returns: Dequeued element.
     */
-    public mutating func dequeue() -> T {
+    public mutating func dequeue() -> T? {
+        if self.count == 0 {
+            return nil
+        }
+
         let value = dequeueElementOnly()
         
         let downsizeLimit = _storage.count / (_resizeFactor * _resizeFactor)

@@ -114,7 +114,7 @@ class Map<SourceType, ResultType>: Producer<ResultType> {
         _selector = selector
 
 #if TRACE_RESOURCES
-        OSAtomicIncrement32(&numberOfMapOperators)
+        AtomicIncrement(&numberOfMapOperators)
 #endif
     }
 
@@ -134,7 +134,7 @@ class Map<SourceType, ResultType>: Producer<ResultType> {
 
     #if TRACE_RESOURCES
     deinit {
-        OSAtomicDecrement32(&numberOfMapOperators)
+        AtomicDecrement(&numberOfMapOperators)
     }
     #endif
 }
