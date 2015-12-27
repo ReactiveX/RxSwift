@@ -6,13 +6,6 @@ let package = Package(
         Target(
             name: "RxSwift"
         ),
-
-        Target(
-            name: "RxCocoa",
-            dependencies: [
-                .Target(name: "RxSwift")
-            ]
-        ),
         Target(
             name: "RxTests",
             dependencies: [
