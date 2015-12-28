@@ -1650,6 +1650,32 @@ extension ObservableTimeTest {
             Subscription(200, 270)
             ])
     }
+
+    func testTimeout_Duetime_Timeout() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let xs = scheduler.createColdObservable([
+            next(10, 42),
+            next(20, 43),
+            next(50, 44),
+            next(60, 45),
+            completed(70)
+            ])
+
+        let res = scheduler.start {
+            xs.timeout(25, scheduler: scheduler)
+        }
+
+        XCTAssertEqual(res.events, [
+            next(210, 42),
+            next(220, 43),
+            error(245, RxError.Timeout)
+            ])
+
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 245)
+            ])
+    }
     
     func testTimeout_Duetime_Disposed() {
         let scheduler = TestScheduler(initialClock: 0)

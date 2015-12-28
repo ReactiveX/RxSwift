@@ -89,9 +89,7 @@ class TimeoutSink<ElementType, O: ObserverType where O.E == ElementType>: Sink<O
             }
             
             if timerWins {
-                if let other = self._parent._other {
-                    self._subscription.disposable = other.subscribeSafe(self.forwarder())
-                }
+                self._subscription.disposable = self._parent._other.subscribeSafe(self.forwarder())
             }
             
             return NopDisposable.instance
@@ -104,10 +102,10 @@ class Timeout<Element> : Producer<Element> {
     
     private let _source: Observable<Element>
     private let _dueTime: RxTimeInterval
-    private let _other: Observable<Element>?
+    private let _other: Observable<Element>
     private let _scheduler: SchedulerType
     
-    init(source: Observable<Element>, dueTime: RxTimeInterval, other: Observable<Element>?, scheduler: SchedulerType) {
+    init(source: Observable<Element>, dueTime: RxTimeInterval, other: Observable<Element>, scheduler: SchedulerType) {
         _source = source
         _dueTime = dueTime
         _other = other

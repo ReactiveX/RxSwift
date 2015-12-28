@@ -354,13 +354,13 @@ extension ObservableType {
     @warn_unused_result(message="http://git.io/rxs.uo")
     public func timeout(dueTime: RxTimeInterval, scheduler: SchedulerType)
         -> Observable<E> {
-            return Timeout(source: self.asObservable(), dueTime: dueTime, other: nil, scheduler: scheduler)
+            return Timeout(source: self.asObservable(), dueTime: dueTime, other: Observable.error(RxError.Timeout), scheduler: scheduler)
     }
 
     @available(*, deprecated=2.0.0, message="Please use version with named scheduler parameter.")
     public func timeout(dueTime: RxTimeInterval, _ scheduler: SchedulerType)
         -> Observable<E> {
-            return Timeout(source: self.asObservable(), dueTime: dueTime, other: nil, scheduler: scheduler)
+            return Timeout(source: self.asObservable(), dueTime: dueTime, other: Observable.error(RxError.Timeout), scheduler: scheduler)
     }
     
     /**
