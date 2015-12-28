@@ -153,4 +153,81 @@ extension VirtualSchedulerTest {
             1,
         ])
     }
+
+    func testVirtualScheduler_stop() {
+        let scheduler = TestVirtualScheduler()
+
+        var times: [Int] = []
+
+        scheduler.scheduleRelative((), dueTime: 10.0) { [weak scheduler] _ in
+            times.append(scheduler!.clock)
+            scheduler!.scheduleRelative((), dueTime: 20.0) { _ in
+                times.append(scheduler!.clock)
+                return NopDisposable.instance
+            }
+            scheduler!.schedule(()) { _ in
+                times.append(scheduler!.clock)
+                return NopDisposable.instance
+            }
+
+            scheduler!.stop()
+
+            return NopDisposable.instance
+        }
+
+        scheduler.start()
+
+        XCTAssertEqual(times, [
+            1,
+            ])
+    }
+
+    func testVirtualScheduler_sleep() {
+        let scheduler = TestVirtualScheduler()
+
+        var times: [Int] = []
+
+        scheduler.scheduleRelative((), dueTime: 10.0) { [weak scheduler] _ in
+            times.append(scheduler!.clock)
+            scheduler!.sleep(10)
+            scheduler!.scheduleRelative((), dueTime: 20.0) { _ in
+                times.append(scheduler!.clock)
+                return NopDisposable.instance
+            }
+            scheduler!.schedule(()) { _ in
+                times.append(scheduler!.clock)
+                return NopDisposable.instance
+            }
+
+            return NopDisposable.instance
+        }
+
+        scheduler.start()
+
+        XCTAssertEqual(times, [
+            1,
+            11,
+            13
+            ])
+    }
+
+    func testVirtualScheduler_stress() {
+        let scheduler = TestVirtualScheduler()
+
+        var times = [Int]()
+        var ticks = [Int]()
+        for _ in 0 ..< 20000 {
+            let random = Int(rand() % 10000)
+            times.append(random)
+            scheduler.scheduleRelative((), dueTime: RxTimeInterval(10 * random)) { [weak scheduler] _ in
+                ticks.append(scheduler!.clock)
+                return NopDisposable.instance
+            }
+        }
+
+        scheduler.start()
+
+        times = times.sort()
+        XCTAssertEqual(times, ticks)
+    }
 }
