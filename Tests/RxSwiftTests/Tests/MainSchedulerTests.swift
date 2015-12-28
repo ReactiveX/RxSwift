@@ -18,15 +18,13 @@ class MainSchedulerTest : RxTest {
 extension MainSchedulerTest {
     func runRunLoop() {
         for _ in 0 ..< 10 {
-            let currentRunLoop = NSRunLoop.currentRunLoop().getCFRunLoop()
-
+            let currentRunLoop = CFRunLoopGetCurrent()
             dispatch_async(dispatch_get_main_queue()) {
                 CFRunLoopStop(currentRunLoop)
             }
 
             CFRunLoopWakeUp(currentRunLoop)
-            CFRunLoopRunInMode(NSDefaultRunLoopMode, 1, false)
-            XCTAssertTrue(currentRunLoop === CFRunLoopGetCurrent())
+            CFRunLoopRun()
         }
     }
 }
