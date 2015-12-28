@@ -14,19 +14,11 @@ public func == <T>(lhs: Observable<T>, rhs: Observable<T>) -> Bool {
     return lhs === rhs
 }
 
-extension HotObservable : Equatable {
+extension TestableObservable : Equatable {
 
 }
 
-extension ColdObservable : Equatable {
-    
-}
-
-public func == <T>(lhs: HotObservable<T>, rhs: HotObservable<T>) -> Bool {
-    return lhs === rhs
-}
-
-public func == <T>(lhs: ColdObservable<T>, rhs: ColdObservable<T>) -> Bool {
+public func == <T>(lhs: TestableObservable<T>, rhs: TestableObservable<T>) -> Bool {
     return lhs === rhs
 }
 

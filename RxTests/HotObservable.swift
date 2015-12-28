@@ -16,42 +16,19 @@ import RxSwift
 
  Event times represent absolute `TestScheduler` time.
  */
-public class HotObservable<Element : Equatable>
-    : ObservableType
-    , ObservableConvertibleType {
-    public typealias E = Element
-    public typealias Events = Recorded<Event<Element>>
-
+class HotObservable<Element>
+    : TestableObservable<Element> {
     typealias Observer = AnyObserver<Element>
-
-    /**
-     Parent test scheduler.
-     */
-    private let _testScheduler: TestScheduler
 
     /**
      Current subscribed observers.
     */
     private var _observers: Bag<AnyObserver<Element>>
 
-    /**
-     Subscriptions recorded during hot observable lifetime.
-    */
-    public private(set) var subscriptions: [Subscription]
-
-    /**
-     List of events to replay for all subscribers.
-     
-     Event times represent absolute `TestScheduler` time.
-    */
-    public private(set) var recordedEvents: [Events]
-
-    init(testScheduler: TestScheduler, recordedEvents: [Events]) {
-        _testScheduler = testScheduler
+    override init(testScheduler: TestScheduler, recordedEvents: [Recorded<Event<Element>>]) {
         _observers = Bag()
         
-        self.recordedEvents = recordedEvents
-        self.subscriptions = []
+        super.init(testScheduler: testScheduler, recordedEvents: recordedEvents)
 
         for recordedEvent in recordedEvents {
             testScheduler.scheduleAt(recordedEvent.time) { t in
@@ -63,9 +40,9 @@ public class HotObservable<Element : Equatable>
     /**
      Subscribes `observer` to receive events for this sequence.
      */
-    public func subscribe<O : ObserverType where O.E == E>(observer: O) -> Disposable {
+    override func subscribe<O : ObserverType where O.E == Element>(observer: O) -> Disposable {
         let key = _observers.insert(AnyObserver(observer))
-        subscriptions.append(Subscription(self._testScheduler.clock))
+        subscriptions.append(Subscription(self.testScheduler.clock))
         
         let i = self.subscriptions.count - 1
         
@@ -74,7 +51,7 @@ public class HotObservable<Element : Equatable>
             assert(removed != nil)
             
             let existing = self.subscriptions[i]
-            self.subscriptions[i] = Subscription(existing.subscribe, self._testScheduler.clock)
+            self.subscriptions[i] = Subscription(existing.subscribe, self.testScheduler.clock)
         }
     }
 }

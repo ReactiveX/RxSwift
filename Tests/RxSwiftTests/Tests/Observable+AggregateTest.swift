@@ -355,7 +355,7 @@ extension ObservableAggregateTest {
     func test_ToArrayWithSingleItem_Return() {
         let scheduler = TestScheduler(initialClock: 0)
         
-        let xs: ColdObservable<Int> = scheduler.createColdObservable([
+        let xs: TestableObservable<Int> = scheduler.createColdObservable([
             next(10, 1),
             completed(20)
             ])
@@ -380,7 +380,7 @@ extension ObservableAggregateTest {
     func test_ToArrayWithMultipleItems_Return() {
         let scheduler = TestScheduler(initialClock: 0)
         
-        let xs: ColdObservable<Int> = scheduler.createColdObservable([
+        let xs: TestableObservable<Int> = scheduler.createColdObservable([
             next(10, 1),
             next(20, 2),
             next(30, 3),
@@ -408,7 +408,7 @@ extension ObservableAggregateTest {
     func test_ToArrayWithNoItems_Empty() {
         let scheduler = TestScheduler(initialClock: 0)
         
-        let xs: ColdObservable<Int> = scheduler.createColdObservable([
+        let xs: TestableObservable<Int> = scheduler.createColdObservable([
             completed(50)
             ])
         
@@ -454,7 +454,7 @@ extension ObservableAggregateTest {
     func test_ToArrayWithImmediateError_Throw() {
         let scheduler = TestScheduler(initialClock: 0)
         
-        let xs: ColdObservable<Int> = scheduler.createColdObservable([
+        let xs: TestableObservable<Int> = scheduler.createColdObservable([
             error(10, testError)
             ])
         
@@ -477,7 +477,7 @@ extension ObservableAggregateTest {
     func test_ToArrayWithMultipleItems_Throw() {
         let scheduler = TestScheduler(initialClock: 0)
         
-        let xs: ColdObservable<Int> = scheduler.createColdObservable([
+        let xs: TestableObservable<Int> = scheduler.createColdObservable([
             next(10, 1),
             next(20, 2),
             next(30, 3),

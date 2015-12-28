@@ -327,7 +327,7 @@ extension ObservableCreationTests {
         var disposeInvoked = 0
         var createInvoked = 0
        
-        var xs:ColdObservable<Int>!
+        var xs:TestableObservable<Int>!
         var disposable:MockDisposable!
         var _d:MockDisposable!
         
@@ -373,7 +373,7 @@ extension ObservableCreationTests {
         var disposeInvoked = 0
         var createInvoked = 0
        
-        var xs:ColdObservable<Int>!
+        var xs:TestableObservable<Int>!
         var disposable:MockDisposable!
         var _d:MockDisposable!
         
@@ -419,7 +419,7 @@ extension ObservableCreationTests {
         var disposeInvoked = 0
         var createInvoked = 0
        
-        var xs:ColdObservable<Int>!
+        var xs:TestableObservable<Int>!
         var disposable:MockDisposable!
         var _d:MockDisposable!
         

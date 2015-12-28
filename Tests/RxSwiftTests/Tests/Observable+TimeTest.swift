@@ -1145,7 +1145,7 @@ extension ObservableTimeTest {
     func testSkip_Error() {
         let scheduler = TestScheduler(initialClock: 0)
 
-        let xs: HotObservable<Int> = scheduler.createHotObservable([
+        let xs: TestableObservable<Int> = scheduler.createHotObservable([
             error(210, testError)
             ])
 
@@ -1165,7 +1165,7 @@ extension ObservableTimeTest {
     func testSkip_Never() {
         let scheduler = TestScheduler(initialClock: 0)
 
-        let xs: HotObservable<Int> = scheduler.createHotObservable([
+        let xs: TestableObservable<Int> = scheduler.createHotObservable([
             ])
 
         let res = scheduler.start {
@@ -1777,7 +1777,7 @@ extension ObservableTimeTest {
             completed(500)
             ])
         
-        let ys: ColdObservable<Int> = scheduler.createColdObservable([
+        let ys: TestableObservable<Int> = scheduler.createColdObservable([
             ])
         
         let res = scheduler.start {
@@ -1801,7 +1801,7 @@ extension ObservableTimeTest {
     func testTimeout_TimeoutOccurs_Completed() {
         let scheduler = TestScheduler(initialClock: 0)
         
-        let xs: HotObservable<Int> = scheduler.createHotObservable([
+        let xs: TestableObservable<Int> = scheduler.createHotObservable([
             completed(500)
             ])
         
@@ -1829,7 +1829,7 @@ extension ObservableTimeTest {
     func testTimeout_TimeoutOccurs_Error() {
         let scheduler = TestScheduler(initialClock: 0)
 
-        let xs: HotObservable<Int> = scheduler.createHotObservable([
+        let xs: TestableObservable<Int> = scheduler.createHotObservable([
             error(500, testError)
             ])
 
@@ -1857,11 +1857,11 @@ extension ObservableTimeTest {
     func testTimeout_TimeoutOccurs_NextIsError() {
         let scheduler = TestScheduler(initialClock: 0)
         
-        let xs: HotObservable<Int> = scheduler.createHotObservable([
+        let xs: TestableObservable<Int> = scheduler.createHotObservable([
             next(500, 42)
             ])
         
-        let ys: ColdObservable<Int> = scheduler.createColdObservable([
+        let ys: TestableObservable<Int> = scheduler.createColdObservable([
             error(100, testError)
             ])
         
@@ -1885,11 +1885,11 @@ extension ObservableTimeTest {
     func testTimeout_TimeoutNotOccurs_Completed() {
         let scheduler = TestScheduler(initialClock: 0)
         
-        let xs: HotObservable<Int> = scheduler.createHotObservable([
+        let xs: TestableObservable<Int> = scheduler.createHotObservable([
             completed(250)
             ])
         
-        let ys: ColdObservable<Int> = scheduler.createColdObservable([
+        let ys: TestableObservable<Int> = scheduler.createColdObservable([
             next(100, -1)
             ])
         
@@ -1911,11 +1911,11 @@ extension ObservableTimeTest {
     func testTimeout_TimeoutNotOccurs_Error() {
         let scheduler = TestScheduler(initialClock: 0)
         
-        let xs: HotObservable<Int> = scheduler.createHotObservable([
+        let xs: TestableObservable<Int> = scheduler.createHotObservable([
             error(250, testError)
             ])
         
-        let ys: ColdObservable<Int> = scheduler.createColdObservable([
+        let ys: TestableObservable<Int> = scheduler.createColdObservable([
             next(100, -1)
             ])
         

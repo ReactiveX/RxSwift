@@ -46,7 +46,7 @@ public class TestScheduler : VirtualTimeScheduler<TestSchedulerVirtualTimeConver
     - parameter events: Events to surface through the created sequence at their specified absolute virtual times.
     - returns: Hot observable sequence that can be used to assert the timing of subscriptions and events.
     */
-    public func createHotObservable<Element>(events: [Recorded<Event<Element>>]) -> HotObservable<Element> {
+    public func createHotObservable<Element>(events: [Recorded<Event<Element>>]) -> TestableObservable<Element> {
         return HotObservable(testScheduler: self as AnyObject as! TestScheduler, recordedEvents: events)
     }
 
@@ -56,7 +56,7 @@ public class TestScheduler : VirtualTimeScheduler<TestSchedulerVirtualTimeConver
      - parameter events: Events to surface through the created sequence at their specified virtual time offsets from the sequence subscription time.
      - returns: Cold observable sequence that can be used to assert the timing of subscriptions and events.
     */
-    public func createColdObservable<Element>(events: [Recorded<Event<Element>>]) -> ColdObservable<Element> {
+    public func createColdObservable<Element>(events: [Recorded<Event<Element>>]) -> TestableObservable<Element> {
         return ColdObservable(testScheduler: self as AnyObject as! TestScheduler, recordedEvents: events)
     }
 
@@ -66,8 +66,8 @@ public class TestScheduler : VirtualTimeScheduler<TestSchedulerVirtualTimeConver
      - parameter type: Optional type hint of the observed sequence elements.
      - returns: Observer that can be used to assert the timing of events.
     */
-    public func createObserver<E>(type: E.Type) -> MockObserver<E> {
-        return MockObserver(scheduler: self as AnyObject as! TestScheduler)
+    public func createObserver<E>(type: E.Type) -> TestableObserver<E> {
+        return TestableObserver(scheduler: self as AnyObject as! TestScheduler)
     }
 
     /**
@@ -98,10 +98,10 @@ public class TestScheduler : VirtualTimeScheduler<TestSchedulerVirtualTimeConver
     - parameter disposed: Virtual time at which to dispose the subscription.
     - returns: Observer with timestamped recordings of events that were received during the virtual time window when the subscription to the source sequence was active.
     */
-    public func start<Element>(created: Time, subscribed: Time, disposed: Time, create: () -> Observable<Element>) -> MockObserver<Element> {
+    public func start<Element>(created: Time, subscribed: Time, disposed: Time, create: () -> Observable<Element>) -> TestableObserver<Element> {
         var source : Observable<Element>? = nil
         var subscription : Disposable? = nil
-        let observer: MockObserver<Element> = createObserver(Element)
+        let observer = createObserver(Element)
         
         self.scheduleAbsoluteVirtual((), time: created) {
             source = create()
@@ -134,7 +134,7 @@ public class TestScheduler : VirtualTimeScheduler<TestSchedulerVirtualTimeConver
      - parameter disposed: Virtual time at which to dispose the subscription.
      - returns: Observer with timestamped recordings of events that were received during the virtual time window when the subscription to the source sequence was active.
      */
-    public func start<Element>(disposed: Time, create: () -> Observable<Element>) -> MockObserver<Element> {
+    public func start<Element>(disposed: Time, create: () -> Observable<Element>) -> TestableObserver<Element> {
         return start(Defaults.created, subscribed: Defaults.subscribed, disposed: disposed, create: create)
     }
 
@@ -149,7 +149,7 @@ public class TestScheduler : VirtualTimeScheduler<TestSchedulerVirtualTimeConver
      - parameter create: Factory method to create an observable sequence.
      - returns: Observer with timestamped recordings of events that were received during the virtual time window when the subscription to the source sequence was active.
      */
-    public func start<Element>(create: () -> Observable<Element>) -> MockObserver<Element> {
+    public func start<Element>(create: () -> Observable<Element>) -> TestableObserver<Element> {
         return start(Defaults.created, subscribed: Defaults.subscribed, disposed: Defaults.disposed, create: create)
     }
 }

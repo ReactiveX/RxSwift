@@ -1,5 +1,5 @@
 //
-//  MockObserver.swift
+//  TestableObserver.swift
 //  Rx
 //
 //  Created by Krunoslav Zaher on 2/15/15.
@@ -12,7 +12,7 @@ import RxSwift
 /**
  Observer that records events together with virtual time when they were received.
 */
-public class MockObserver<ElementType>
+public class TestableObserver<ElementType>
     : ObserverType {
     public typealias Element = ElementType
     

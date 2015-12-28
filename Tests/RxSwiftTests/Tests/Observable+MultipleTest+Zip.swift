@@ -66,11 +66,11 @@ extension ObservableMultipleTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         
-        let e0: HotObservable<Int> = scheduler.createHotObservable([
+        let e0: TestableObservable<Int> = scheduler.createHotObservable([
             completed(210)
         ])
         
-        let e1: HotObservable<Int> = scheduler.createHotObservable([
+        let e1: TestableObservable<Int> = scheduler.createHotObservable([
             completed(220)
         ])
         
@@ -96,13 +96,13 @@ extension ObservableMultipleTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         
-        let e0: HotObservable<Int> = scheduler.createHotObservable([
+        let e0: TestableObservable<Int> = scheduler.createHotObservable([
             next(150, 1),
             next(210, 1),
             completed(400)
         ])
         
-        let e1: HotObservable<Int> = scheduler.createHotObservable([
+        let e1: TestableObservable<Int> = scheduler.createHotObservable([
             next(150, 1),
             next(220, 2),
             completed(400)
@@ -131,14 +131,14 @@ extension ObservableMultipleTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         
-        let e0: HotObservable<Int> = scheduler.createHotObservable([
+        let e0: TestableObservable<Int> = scheduler.createHotObservable([
             next(150, 1),
  
             next(210, 5),
             completed(220)
         ])
         
-        let e1: HotObservable<Int> = scheduler.createHotObservable([
+        let e1: TestableObservable<Int> = scheduler.createHotObservable([
             next(150, 1),
  
             next(210, 5), 
@@ -224,15 +224,15 @@ extension ObservableMultipleTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         
-        let e0: HotObservable<Int> = scheduler.createHotObservable([
+        let e0: TestableObservable<Int> = scheduler.createHotObservable([
             completed(210)
         ])
         
-        let e1: HotObservable<Int> = scheduler.createHotObservable([
+        let e1: TestableObservable<Int> = scheduler.createHotObservable([
             completed(220)
         ])
         
-        let e2: HotObservable<Int> = scheduler.createHotObservable([
+        let e2: TestableObservable<Int> = scheduler.createHotObservable([
             completed(230)
         ])
         
@@ -259,19 +259,19 @@ extension ObservableMultipleTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         
-        let e0: HotObservable<Int> = scheduler.createHotObservable([
+        let e0: TestableObservable<Int> = scheduler.createHotObservable([
             next(150, 1),
             next(210, 1),
             completed(400)
         ])
         
-        let e1: HotObservable<Int> = scheduler.createHotObservable([
+        let e1: TestableObservable<Int> = scheduler.createHotObservable([
             next(150, 1),
             next(220, 2),
             completed(400)
         ])
         
-        let e2: HotObservable<Int> = scheduler.createHotObservable([
+        let e2: TestableObservable<Int> = scheduler.createHotObservable([
             next(150, 1),
             next(230, 3),
             completed(400)
@@ -301,14 +301,14 @@ extension ObservableMultipleTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         
-        let e0: HotObservable<Int> = scheduler.createHotObservable([
+        let e0: TestableObservable<Int> = scheduler.createHotObservable([
             next(150, 1),
  
             next(210, 5),
             completed(220)
         ])
         
-        let e1: HotObservable<Int> = scheduler.createHotObservable([
+        let e1: TestableObservable<Int> = scheduler.createHotObservable([
             next(150, 1),
  
             next(210, 5), 
@@ -316,7 +316,7 @@ extension ObservableMultipleTest {
             completed(230)
         ])
         
-        let e2: HotObservable<Int> = scheduler.createHotObservable([
+        let e2: TestableObservable<Int> = scheduler.createHotObservable([
             next(150, 1),
  
             next(210, 5), 
@@ -410,19 +410,19 @@ extension ObservableMultipleTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         
-        let e0: HotObservable<Int> = scheduler.createHotObservable([
+        let e0: TestableObservable<Int> = scheduler.createHotObservable([
             completed(210)
         ])
         
-        let e1: HotObservable<Int> = scheduler.createHotObservable([
+        let e1: TestableObservable<Int> = scheduler.createHotObservable([
             completed(220)
         ])
         
-        let e2: HotObservable<Int> = scheduler.createHotObservable([
+        let e2: TestableObservable<Int> = scheduler.createHotObservable([
             completed(230)
         ])
         
-        let e3: HotObservable<Int> = scheduler.createHotObservable([
+        let e3: TestableObservable<Int> = scheduler.createHotObservable([
             completed(240)
         ])
         
@@ -450,25 +450,25 @@ extension ObservableMultipleTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         
-        let e0: HotObservable<Int> = scheduler.createHotObservable([
+        let e0: TestableObservable<Int> = scheduler.createHotObservable([
             next(150, 1),
             next(210, 1),
             completed(400)
         ])
         
-        let e1: HotObservable<Int> = scheduler.createHotObservable([
+        let e1: TestableObservable<Int> = scheduler.createHotObservable([
             next(150, 1),
             next(220, 2),
             completed(400)
         ])
         
-        let e2: HotObservable<Int> = scheduler.createHotObservable([
+        let e2: TestableObservable<Int> = scheduler.createHotObservable([
             next(150, 1),
             next(230, 3),
             completed(400)
         ])
         
-        let e3: HotObservable<Int> = scheduler.createHotObservable([
+        let e3: TestableObservable<Int> = scheduler.createHotObservable([
             next(150, 1),
             next(240, 4),
             completed(400)
@@ -499,14 +499,14 @@ extension ObservableMultipleTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         
-        let e0: HotObservable<Int> = scheduler.createHotObservable([
+        let e0: TestableObservable<Int> = scheduler.createHotObservable([
             next(150, 1),
  
             next(210, 5),
             completed(220)
         ])
         
-        let e1: HotObservable<Int> = scheduler.createHotObservable([
+        let e1: TestableObservable<Int> = scheduler.createHotObservable([
             next(150, 1),
  
             next(210, 5), 
@@ -514,7 +514,7 @@ extension ObservableMultipleTest {
             completed(230)
         ])
         
-        let e2: HotObservable<Int> = scheduler.createHotObservable([
+        let e2: TestableObservable<Int> = scheduler.createHotObservable([
             next(150, 1),
  
             next(210, 5), 
@@ -523,7 +523,7 @@ extension ObservableMultipleTest {
             completed(240)
         ])
         
-        let e3: HotObservable<Int> = scheduler.createHotObservable([
+        let e3: TestableObservable<Int> = scheduler.createHotObservable([
             next(150, 1),
  
             next(210, 5), 
@@ -625,23 +625,23 @@ extension ObservableMultipleTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         
-        let e0: HotObservable<Int> = scheduler.createHotObservable([
+        let e0: TestableObservable<Int> = scheduler.createHotObservable([
             completed(210)
         ])
         
-        let e1: HotObservable<Int> = scheduler.createHotObservable([
+        let e1: TestableObservable<Int> = scheduler.createHotObservable([
             completed(220)
         ])
         
-        let e2: HotObservable<Int> = scheduler.createHotObservable([
+        let e2: TestableObservable<Int> = scheduler.createHotObservable([
             completed(230)
         ])
         
-        let e3: HotObservable<Int> = scheduler.createHotObservable([
+        let e3: TestableObservable<Int> = scheduler.createHotObservable([
             completed(240)
         ])
         
-        let e4: HotObservable<Int> = scheduler.createHotObservable([
+        let e4: TestableObservable<Int> = scheduler.createHotObservable([
             completed(250)
         ])
         
@@ -670,31 +670,31 @@ extension ObservableMultipleTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         
-        let e0: HotObservable<Int> = scheduler.createHotObservable([
+        let e0: TestableObservable<Int> = scheduler.createHotObservable([
             next(150, 1),
             next(210, 1),
             completed(400)
         ])
         
-        let e1: HotObservable<Int> = scheduler.createHotObservable([
+        let e1: TestableObservable<Int> = scheduler.createHotObservable([
             next(150, 1),
             next(220, 2),
             completed(400)
         ])
         
-        let e2: HotObservable<Int> = scheduler.createHotObservable([
+        let e2: TestableObservable<Int> = scheduler.createHotObservable([
             next(150, 1),
             next(230, 3),
             completed(400)
         ])
         
-        let e3: HotObservable<Int> = scheduler.createHotObservable([
+        let e3: TestableObservable<Int> = scheduler.createHotObservable([
             next(150, 1),
             next(240, 4),
             completed(400)
         ])
         
-        let e4: HotObservable<Int> = scheduler.createHotObservable([
+        let e4: TestableObservable<Int> = scheduler.createHotObservable([
             next(150, 1),
             next(250, 5),
             completed(400)
@@ -726,14 +726,14 @@ extension ObservableMultipleTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         
-        let e0: HotObservable<Int> = scheduler.createHotObservable([
+        let e0: TestableObservable<Int> = scheduler.createHotObservable([
             next(150, 1),
  
             next(210, 5),
             completed(220)
         ])
         
-        let e1: HotObservable<Int> = scheduler.createHotObservable([
+        let e1: TestableObservable<Int> = scheduler.createHotObservable([
             next(150, 1),
  
             next(210, 5), 
@@ -741,7 +741,7 @@ extension ObservableMultipleTest {
             completed(230)
         ])
         
-        let e2: HotObservable<Int> = scheduler.createHotObservable([
+        let e2: TestableObservable<Int> = scheduler.createHotObservable([
             next(150, 1),
  
             next(210, 5), 
@@ -750,7 +750,7 @@ extension ObservableMultipleTest {
             completed(240)
         ])
         
-        let e3: HotObservable<Int> = scheduler.createHotObservable([
+        let e3: TestableObservable<Int> = scheduler.createHotObservable([
             next(150, 1),
  
             next(210, 5), 
@@ -760,7 +760,7 @@ extension ObservableMultipleTest {
             completed(250)
         ])
         
-        let e4: HotObservable<Int> = scheduler.createHotObservable([
+        let e4: TestableObservable<Int> = scheduler.createHotObservable([
             next(150, 1),
  
             next(210, 5), 
@@ -870,27 +870,27 @@ extension ObservableMultipleTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         
-        let e0: HotObservable<Int> = scheduler.createHotObservable([
+        let e0: TestableObservable<Int> = scheduler.createHotObservable([
             completed(210)
         ])
         
-        let e1: HotObservable<Int> = scheduler.createHotObservable([
+        let e1: TestableObservable<Int> = scheduler.createHotObservable([
             completed(220)
         ])
         
-        let e2: HotObservable<Int> = scheduler.createHotObservable([
+        let e2: TestableObservable<Int> = scheduler.createHotObservable([
             completed(230)
         ])
         
-        let e3: HotObservable<Int> = scheduler.createHotObservable([
+        let e3: TestableObservable<Int> = scheduler.createHotObservable([
             completed(240)
         ])
         
-        let e4: HotObservable<Int> = scheduler.createHotObservable([
+        let e4: TestableObservable<Int> = scheduler.createHotObservable([
             completed(250)
         ])
         
-        let e5: HotObservable<Int> = scheduler.createHotObservable([
+        let e5: TestableObservable<Int> = scheduler.createHotObservable([
             completed(260)
         ])
         
@@ -920,37 +920,37 @@ extension ObservableMultipleTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         
-        let e0: HotObservable<Int> = scheduler.createHotObservable([
+        let e0: TestableObservable<Int> = scheduler.createHotObservable([
             next(150, 1),
             next(210, 1),
             completed(400)
         ])
         
-        let e1: HotObservable<Int> = scheduler.createHotObservable([
+        let e1: TestableObservable<Int> = scheduler.createHotObservable([
             next(150, 1),
             next(220, 2),
             completed(400)
         ])
         
-        let e2: HotObservable<Int> = scheduler.createHotObservable([
+        let e2: TestableObservable<Int> = scheduler.createHotObservable([
             next(150, 1),
             next(230, 3),
             completed(400)
         ])
         
-        let e3: HotObservable<Int> = scheduler.createHotObservable([
+        let e3: TestableObservable<Int> = scheduler.createHotObservable([
             next(150, 1),
             next(240, 4),
             completed(400)
         ])
         
-        let e4: HotObservable<Int> = scheduler.createHotObservable([
+        let e4: TestableObservable<Int> = scheduler.createHotObservable([
             next(150, 1),
             next(250, 5),
             completed(400)
         ])
         
-        let e5: HotObservable<Int> = scheduler.createHotObservable([
+        let e5: TestableObservable<Int> = scheduler.createHotObservable([
             next(150, 1),
             next(260, 6),
             completed(400)
@@ -983,14 +983,14 @@ extension ObservableMultipleTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         
-        let e0: HotObservable<Int> = scheduler.createHotObservable([
+        let e0: TestableObservable<Int> = scheduler.createHotObservable([
             next(150, 1),
  
             next(210, 5),
             completed(220)
         ])
         
-        let e1: HotObservable<Int> = scheduler.createHotObservable([
+        let e1: TestableObservable<Int> = scheduler.createHotObservable([
             next(150, 1),
  
             next(210, 5), 
@@ -998,7 +998,7 @@ extension ObservableMultipleTest {
             completed(230)
         ])
         
-        let e2: HotObservable<Int> = scheduler.createHotObservable([
+        let e2: TestableObservable<Int> = scheduler.createHotObservable([
             next(150, 1),
  
             next(210, 5), 
@@ -1007,7 +1007,7 @@ extension ObservableMultipleTest {
             completed(240)
         ])
         
-        let e3: HotObservable<Int> = scheduler.createHotObservable([
+        let e3: TestableObservable<Int> = scheduler.createHotObservable([
             next(150, 1),
  
             next(210, 5), 
@@ -1017,7 +1017,7 @@ extension ObservableMultipleTest {
             completed(250)
         ])
         
-        let e4: HotObservable<Int> = scheduler.createHotObservable([
+        let e4: TestableObservable<Int> = scheduler.createHotObservable([
             next(150, 1),
  
             next(210, 5), 
@@ -1028,7 +1028,7 @@ extension ObservableMultipleTest {
             completed(260)
         ])
         
-        let e5: HotObservable<Int> = scheduler.createHotObservable([
+        let e5: TestableObservable<Int> = scheduler.createHotObservable([
             next(150, 1),
  
             next(210, 5), 
@@ -1146,31 +1146,31 @@ extension ObservableMultipleTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         
-        let e0: HotObservable<Int> = scheduler.createHotObservable([
+        let e0: TestableObservable<Int> = scheduler.createHotObservable([
             completed(210)
         ])
         
-        let e1: HotObservable<Int> = scheduler.createHotObservable([
+        let e1: TestableObservable<Int> = scheduler.createHotObservable([
             completed(220)
         ])
         
-        let e2: HotObservable<Int> = scheduler.createHotObservable([
+        let e2: TestableObservable<Int> = scheduler.createHotObservable([
             completed(230)
         ])
         
-        let e3: HotObservable<Int> = scheduler.createHotObservable([
+        let e3: TestableObservable<Int> = scheduler.createHotObservable([
             completed(240)
         ])
         
-        let e4: HotObservable<Int> = scheduler.createHotObservable([
+        let e4: TestableObservable<Int> = scheduler.createHotObservable([
             completed(250)
         ])
         
-        let e5: HotObservable<Int> = scheduler.createHotObservable([
+        let e5: TestableObservable<Int> = scheduler.createHotObservable([
             completed(260)
         ])
         
-        let e6: HotObservable<Int> = scheduler.createHotObservable([
+        let e6: TestableObservable<Int> = scheduler.createHotObservable([
             completed(270)
         ])
         
@@ -1201,43 +1201,43 @@ extension ObservableMultipleTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         
-        let e0: HotObservable<Int> = scheduler.createHotObservable([
+        let e0: TestableObservable<Int> = scheduler.createHotObservable([
             next(150, 1),
             next(210, 1),
             completed(400)
         ])
         
-        let e1: HotObservable<Int> = scheduler.createHotObservable([
+        let e1: TestableObservable<Int> = scheduler.createHotObservable([
             next(150, 1),
             next(220, 2),
             completed(400)
         ])
         
-        let e2: HotObservable<Int> = scheduler.createHotObservable([
+        let e2: TestableObservable<Int> = scheduler.createHotObservable([
             next(150, 1),
             next(230, 3),
             completed(400)
         ])
         
-        let e3: HotObservable<Int> = scheduler.createHotObservable([
+        let e3: TestableObservable<Int> = scheduler.createHotObservable([
             next(150, 1),
             next(240, 4),
             completed(400)
         ])
         
-        let e4: HotObservable<Int> = scheduler.createHotObservable([
+        let e4: TestableObservable<Int> = scheduler.createHotObservable([
             next(150, 1),
             next(250, 5),
             completed(400)
         ])
         
-        let e5: HotObservable<Int> = scheduler.createHotObservable([
+        let e5: TestableObservable<Int> = scheduler.createHotObservable([
             next(150, 1),
             next(260, 6),
             completed(400)
         ])
         
-        let e6: HotObservable<Int> = scheduler.createHotObservable([
+        let e6: TestableObservable<Int> = scheduler.createHotObservable([
             next(150, 1),
             next(270, 7),
             completed(400)
@@ -1271,14 +1271,14 @@ extension ObservableMultipleTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         
-        let e0: HotObservable<Int> = scheduler.createHotObservable([
+        let e0: TestableObservable<Int> = scheduler.createHotObservable([
             next(150, 1),
  
             next(210, 5),
             completed(220)
         ])
         
-        let e1: HotObservable<Int> = scheduler.createHotObservable([
+        let e1: TestableObservable<Int> = scheduler.createHotObservable([
             next(150, 1),
  
             next(210, 5), 
@@ -1286,7 +1286,7 @@ extension ObservableMultipleTest {
             completed(230)
         ])
         
-        let e2: HotObservable<Int> = scheduler.createHotObservable([
+        let e2: TestableObservable<Int> = scheduler.createHotObservable([
             next(150, 1),
  
             next(210, 5), 
@@ -1295,7 +1295,7 @@ extension ObservableMultipleTest {
             completed(240)
         ])
         
-        let e3: HotObservable<Int> = scheduler.createHotObservable([
+        let e3: TestableObservable<Int> = scheduler.createHotObservable([
             next(150, 1),
  
             next(210, 5), 
@@ -1305,7 +1305,7 @@ extension ObservableMultipleTest {
             completed(250)
         ])
         
-        let e4: HotObservable<Int> = scheduler.createHotObservable([
+        let e4: TestableObservable<Int> = scheduler.createHotObservable([
             next(150, 1),
  
             next(210, 5), 
@@ -1316,7 +1316,7 @@ extension ObservableMultipleTest {
             completed(260)
         ])
         
-        let e5: HotObservable<Int> = scheduler.createHotObservable([
+        let e5: TestableObservable<Int> = scheduler.createHotObservable([
             next(150, 1),
  
             next(210, 5), 
@@ -1328,7 +1328,7 @@ extension ObservableMultipleTest {
             completed(270)
         ])
         
-        let e6: HotObservable<Int> = scheduler.createHotObservable([
+        let e6: TestableObservable<Int> = scheduler.createHotObservable([
             next(150, 1),
  
             next(210, 5), 
@@ -1454,35 +1454,35 @@ extension ObservableMultipleTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         
-        let e0: HotObservable<Int> = scheduler.createHotObservable([
+        let e0: TestableObservable<Int> = scheduler.createHotObservable([
             completed(210)
         ])
         
-        let e1: HotObservable<Int> = scheduler.createHotObservable([
+        let e1: TestableObservable<Int> = scheduler.createHotObservable([
             completed(220)
         ])
         
-        let e2: HotObservable<Int> = scheduler.createHotObservable([
+        let e2: TestableObservable<Int> = scheduler.createHotObservable([
             completed(230)
         ])
         
-        let e3: HotObservable<Int> = scheduler.createHotObservable([
+        let e3: TestableObservable<Int> = scheduler.createHotObservable([
             completed(240)
         ])
         
-        let e4: HotObservable<Int> = scheduler.createHotObservable([
+        let e4: TestableObservable<Int> = scheduler.createHotObservable([
             completed(250)
         ])
         
-        let e5: HotObservable<Int> = scheduler.createHotObservable([
+        let e5: TestableObservable<Int> = scheduler.createHotObservable([
             completed(260)
         ])
         
-        let e6: HotObservable<Int> = scheduler.createHotObservable([
+        let e6: TestableObservable<Int> = scheduler.createHotObservable([
             completed(270)
         ])
         
-        let e7: HotObservable<Int> = scheduler.createHotObservable([
+        let e7: TestableObservable<Int> = scheduler.createHotObservable([
             completed(280)
         ])
         
@@ -1514,49 +1514,49 @@ extension ObservableMultipleTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         
-        let e0: HotObservable<Int> = scheduler.createHotObservable([
+        let e0: TestableObservable<Int> = scheduler.createHotObservable([
             next(150, 1),
             next(210, 1),
             completed(400)
         ])
         
-        let e1: HotObservable<Int> = scheduler.createHotObservable([
+        let e1: TestableObservable<Int> = scheduler.createHotObservable([
             next(150, 1),
             next(220, 2),
             completed(400)
         ])
         
-        let e2: HotObservable<Int> = scheduler.createHotObservable([
+        let e2: TestableObservable<Int> = scheduler.createHotObservable([
             next(150, 1),
             next(230, 3),
             completed(400)
         ])
         
-        let e3: HotObservable<Int> = scheduler.createHotObservable([
+        let e3: TestableObservable<Int> = scheduler.createHotObservable([
             next(150, 1),
             next(240, 4),
             completed(400)
         ])
         
-        let e4: HotObservable<Int> = scheduler.createHotObservable([
+        let e4: TestableObservable<Int> = scheduler.createHotObservable([
             next(150, 1),
             next(250, 5),
             completed(400)
         ])
         
-        let e5: HotObservable<Int> = scheduler.createHotObservable([
+        let e5: TestableObservable<Int> = scheduler.createHotObservable([
             next(150, 1),
             next(260, 6),
             completed(400)
         ])
         
-        let e6: HotObservable<Int> = scheduler.createHotObservable([
+        let e6: TestableObservable<Int> = scheduler.createHotObservable([
             next(150, 1),
             next(270, 7),
             completed(400)
         ])
         
-        let e7: HotObservable<Int> = scheduler.createHotObservable([
+        let e7: TestableObservable<Int> = scheduler.createHotObservable([
             next(150, 1),
             next(280, 8),
             completed(400)
@@ -1591,14 +1591,14 @@ extension ObservableMultipleTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         
-        let e0: HotObservable<Int> = scheduler.createHotObservable([
+        let e0: TestableObservable<Int> = scheduler.createHotObservable([
             next(150, 1),
  
             next(210, 5),
             completed(220)
         ])
         
-        let e1: HotObservable<Int> = scheduler.createHotObservable([
+        let e1: TestableObservable<Int> = scheduler.createHotObservable([
             next(150, 1),
  
             next(210, 5), 
@@ -1606,7 +1606,7 @@ extension ObservableMultipleTest {
             completed(230)
         ])
         
-        let e2: HotObservable<Int> = scheduler.createHotObservable([
+        let e2: TestableObservable<Int> = scheduler.createHotObservable([
             next(150, 1),
  
             next(210, 5), 
@@ -1615,7 +1615,7 @@ extension ObservableMultipleTest {
             completed(240)
         ])
         
-        let e3: HotObservable<Int> = scheduler.createHotObservable([
+        let e3: TestableObservable<Int> = scheduler.createHotObservable([
             next(150, 1),
  
             next(210, 5), 
@@ -1625,7 +1625,7 @@ extension ObservableMultipleTest {
             completed(250)
         ])
         
-        let e4: HotObservable<Int> = scheduler.createHotObservable([
+        let e4: TestableObservable<Int> = scheduler.createHotObservable([
             next(150, 1),
  
             next(210, 5), 
@@ -1636,7 +1636,7 @@ extension ObservableMultipleTest {
             completed(260)
         ])
         
-        let e5: HotObservable<Int> = scheduler.createHotObservable([
+        let e5: TestableObservable<Int> = scheduler.createHotObservable([
             next(150, 1),
  
             next(210, 5), 
@@ -1648,7 +1648,7 @@ extension ObservableMultipleTest {
             completed(270)
         ])
         
-        let e6: HotObservable<Int> = scheduler.createHotObservable([
+        let e6: TestableObservable<Int> = scheduler.createHotObservable([
             next(150, 1),
  
             next(210, 5), 
@@ -1661,7 +1661,7 @@ extension ObservableMultipleTest {
             completed(280)
         ])
         
-        let e7: HotObservable<Int> = scheduler.createHotObservable([
+        let e7: TestableObservable<Int> = scheduler.createHotObservable([
             next(150, 1),
  
             next(210, 5), 

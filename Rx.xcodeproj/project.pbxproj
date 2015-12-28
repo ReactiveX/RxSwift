@@ -497,10 +497,10 @@
 		C8E3A7151C25CEF100643FE6 /* HotObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E3A70E1C25CEF100643FE6 /* HotObservable.swift */; };
 		C8E3A7161C25CEF100643FE6 /* HotObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E3A70E1C25CEF100643FE6 /* HotObservable.swift */; };
 		C8E3A7171C25CEF100643FE6 /* HotObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E3A70E1C25CEF100643FE6 /* HotObservable.swift */; };
-		C8E3A7181C25CEF100643FE6 /* MockObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E3A70F1C25CEF100643FE6 /* MockObserver.swift */; };
-		C8E3A7191C25CEF100643FE6 /* MockObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E3A70F1C25CEF100643FE6 /* MockObserver.swift */; };
-		C8E3A71A1C25CEF100643FE6 /* MockObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E3A70F1C25CEF100643FE6 /* MockObserver.swift */; };
-		C8E3A71B1C25CEF100643FE6 /* MockObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E3A70F1C25CEF100643FE6 /* MockObserver.swift */; };
+		C8E3A7181C25CEF100643FE6 /* TestableObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E3A70F1C25CEF100643FE6 /* TestableObserver.swift */; };
+		C8E3A7191C25CEF100643FE6 /* TestableObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E3A70F1C25CEF100643FE6 /* TestableObserver.swift */; };
+		C8E3A71A1C25CEF100643FE6 /* TestableObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E3A70F1C25CEF100643FE6 /* TestableObserver.swift */; };
+		C8E3A71B1C25CEF100643FE6 /* TestableObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E3A70F1C25CEF100643FE6 /* TestableObserver.swift */; };
 		C8E3A71E1C25CF1000643FE6 /* Recorded.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E3A71C1C25CF1000643FE6 /* Recorded.swift */; };
 		C8E3A71F1C25CF1000643FE6 /* Recorded.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E3A71C1C25CF1000643FE6 /* Recorded.swift */; };
 		C8E3A7201C25CF1000643FE6 /* Recorded.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E3A71C1C25CF1000643FE6 /* Recorded.swift */; };
@@ -525,6 +525,10 @@
 		C8E3A7371C26088C00643FE6 /* Any+Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E3A7351C26088C00643FE6 /* Any+Equatable.swift */; };
 		C8E3A7381C26088C00643FE6 /* Any+Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E3A7351C26088C00643FE6 /* Any+Equatable.swift */; };
 		C8E3A7391C26088C00643FE6 /* Any+Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E3A7351C26088C00643FE6 /* Any+Equatable.swift */; };
+		C8E7B3691C30C6B800B34368 /* TestableObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E7B3681C30C6B800B34368 /* TestableObservable.swift */; };
+		C8E7B36A1C30C6B800B34368 /* TestableObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E7B3681C30C6B800B34368 /* TestableObservable.swift */; };
+		C8E7B36B1C30C6B800B34368 /* TestableObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E7B3681C30C6B800B34368 /* TestableObservable.swift */; };
+		C8E7B36C1C30C6B800B34368 /* TestableObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E7B3681C30C6B800B34368 /* TestableObservable.swift */; };
 		C8F0BF921BBBFB8B001B112F /* Observable+Creation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C981B8A72BE0088E94D /* Observable+Creation.swift */; };
 		C8F0BF931BBBFB8B001B112F /* ConnectableObservableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C4D1B8A72BE0088E94D /* ConnectableObservableType.swift */; };
 		C8F0BF941BBBFB8B001B112F /* Just.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C3DA021B9390C4004D233E /* Just.swift */; };
@@ -1229,13 +1233,14 @@
 		C8E3A7031C25CE7B00643FE6 /* TestScheduler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestScheduler.swift; sourceTree = "<group>"; };
 		C8E3A70D1C25CEF100643FE6 /* ColdObservable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColdObservable.swift; sourceTree = "<group>"; };
 		C8E3A70E1C25CEF100643FE6 /* HotObservable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HotObservable.swift; sourceTree = "<group>"; };
-		C8E3A70F1C25CEF100643FE6 /* MockObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockObserver.swift; sourceTree = "<group>"; };
+		C8E3A70F1C25CEF100643FE6 /* TestableObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestableObserver.swift; sourceTree = "<group>"; };
 		C8E3A71C1C25CF1000643FE6 /* Recorded.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Recorded.swift; sourceTree = "<group>"; };
 		C8E3A71D1C25CF1000643FE6 /* Subscription.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Subscription.swift; sourceTree = "<group>"; };
 		C8E3A7261C25CF8C00643FE6 /* RxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxTests.swift; sourceTree = "<group>"; };
 		C8E3A72B1C25D14700643FE6 /* XCTest+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "XCTest+Rx.swift"; sourceTree = "<group>"; };
 		C8E3A7301C2606A900643FE6 /* Event+Equatable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Event+Equatable.swift"; sourceTree = "<group>"; };
 		C8E3A7351C26088C00643FE6 /* Any+Equatable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Any+Equatable.swift"; sourceTree = "<group>"; };
+		C8E7B3681C30C6B800B34368 /* TestableObservable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestableObservable.swift; sourceTree = "<group>"; };
 		C8F0C0021BBBFB8B001B112F /* RxSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8F0C04B1BBBFBB9001B112F /* RxCocoa.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxCocoa.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8F0C0581BBBFBCE001B112F /* RxBlocking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxBlocking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1858,13 +1863,14 @@
 				C8E3A71D1C25CF1000643FE6 /* Subscription.swift */,
 				C8E3A70D1C25CEF100643FE6 /* ColdObservable.swift */,
 				C8E3A70E1C25CEF100643FE6 /* HotObservable.swift */,
-				C8E3A70F1C25CEF100643FE6 /* MockObserver.swift */,
+				C8E3A70F1C25CEF100643FE6 /* TestableObserver.swift */,
 				C8E3A7021C25CE7B00643FE6 /* Schedulers */,
 				C8E3A6FD1C25CE2200643FE6 /* Info.plist */,
 				C8E3A7261C25CF8C00643FE6 /* RxTests.swift */,
 				C8E3A72B1C25D14700643FE6 /* XCTest+Rx.swift */,
 				C8E3A7301C2606A900643FE6 /* Event+Equatable.swift */,
 				C8E3A7351C26088C00643FE6 /* Any+Equatable.swift */,
+				C8E7B3681C30C6B800B34368 /* TestableObservable.swift */,
 			);
 			path = RxTests;
 			sourceTree = "<group>";
@@ -2789,9 +2795,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C8E7B3691C30C6B800B34368 /* TestableObservable.swift in Sources */,
 				C8E3A7051C25CE7B00643FE6 /* TestScheduler.swift in Sources */,
 				C8E3A7311C2606A900643FE6 /* Event+Equatable.swift in Sources */,
-				C8E3A7181C25CEF100643FE6 /* MockObserver.swift in Sources */,
+				C8E3A7181C25CEF100643FE6 /* TestableObserver.swift in Sources */,
 				C807F3621C2ACED300017910 /* TestSchedulerVirtualTimeConverter.swift in Sources */,
 				C8E3A72C1C25D14700643FE6 /* XCTest+Rx.swift in Sources */,
 				C8E3A71E1C25CF1000643FE6 /* Recorded.swift in Sources */,
@@ -2807,9 +2814,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C8E7B36A1C30C6B800B34368 /* TestableObservable.swift in Sources */,
 				C8E3A7061C25CE7B00643FE6 /* TestScheduler.swift in Sources */,
 				C8E3A7321C2606A900643FE6 /* Event+Equatable.swift in Sources */,
-				C8E3A7191C25CEF100643FE6 /* MockObserver.swift in Sources */,
+				C8E3A7191C25CEF100643FE6 /* TestableObserver.swift in Sources */,
 				C807F3631C2ACED300017910 /* TestSchedulerVirtualTimeConverter.swift in Sources */,
 				C8E3A72D1C25D14700643FE6 /* XCTest+Rx.swift in Sources */,
 				C8E3A71F1C25CF1000643FE6 /* Recorded.swift in Sources */,
@@ -2825,9 +2833,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C8E7B36B1C30C6B800B34368 /* TestableObservable.swift in Sources */,
 				C8E3A7071C25CE7B00643FE6 /* TestScheduler.swift in Sources */,
 				C8E3A7331C2606A900643FE6 /* Event+Equatable.swift in Sources */,
-				C8E3A71A1C25CEF100643FE6 /* MockObserver.swift in Sources */,
+				C8E3A71A1C25CEF100643FE6 /* TestableObserver.swift in Sources */,
 				C807F3641C2ACED300017910 /* TestSchedulerVirtualTimeConverter.swift in Sources */,
 				C8E3A72E1C25D14700643FE6 /* XCTest+Rx.swift in Sources */,
 				C8E3A7201C25CF1000643FE6 /* Recorded.swift in Sources */,
@@ -2843,9 +2852,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C8E7B36C1C30C6B800B34368 /* TestableObservable.swift in Sources */,
 				C8E3A7081C25CE7B00643FE6 /* TestScheduler.swift in Sources */,
 				C8E3A7341C2606A900643FE6 /* Event+Equatable.swift in Sources */,
-				C8E3A71B1C25CEF100643FE6 /* MockObserver.swift in Sources */,
+				C8E3A71B1C25CEF100643FE6 /* TestableObserver.swift in Sources */,
 				C807F3651C2ACED300017910 /* TestSchedulerVirtualTimeConverter.swift in Sources */,
 				C8E3A72F1C25D14700643FE6 /* XCTest+Rx.swift in Sources */,
 				C8E3A7211C25CF1000643FE6 /* Recorded.swift in Sources */,

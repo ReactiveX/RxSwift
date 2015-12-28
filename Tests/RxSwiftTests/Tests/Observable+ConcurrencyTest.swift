@@ -599,7 +599,7 @@ extension ObservableConcurrencyTest {
     func testSubscribeOn_SchedulerCompleted() {
         let scheduler = TestScheduler(initialClock: 0)
 
-        let xs: HotObservable<Int> = scheduler.createHotObservable([
+        let xs: TestableObservable<Int> = scheduler.createHotObservable([
             completed(300)
             ])
 
@@ -619,7 +619,7 @@ extension ObservableConcurrencyTest {
     func testSubscribeOn_SchedulerError() {
         let scheduler = TestScheduler(initialClock: 0)
 
-        let xs: HotObservable<Int> = scheduler.createHotObservable([
+        let xs: TestableObservable<Int> = scheduler.createHotObservable([
             error(300, testError)
             ])
 
