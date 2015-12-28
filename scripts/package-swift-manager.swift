@@ -34,7 +34,9 @@ let excludedTests = [
 
 let excludedTestClasses = [
     "ObservableConcurrentSchedulerConcurrencyTest",
-    "SubjectConcurrencyTest"
+    "SubjectConcurrencyTest",
+    "VirtualSchedulerTest",
+    "HistoricalSchedulerTest"
 ]
 
 let throwingWordsInTests = [
@@ -190,6 +192,16 @@ try packageRelativePath(["RxCocoa/RxCocoa.h"], targetDirName: "RxCocoa")
 try packageRelativePath(["RxBlocking"], targetDirName: "RxBlocking")
 try packageRelativePath(["RxTests"], targetDirName: "RxTests")
 // It doesn't work under `Tests` subpath ¯\_(ツ)_/¯
-try packageRelativePath(["RxSwift/RxMutableBox.swift", "Tests/RxTest.swift", "Tests/Tests", "Tests/RxSwiftTests"], targetDirName: "AllTests")
+try packageRelativePath([
+        "RxSwift/RxMutableBox.swift",
+        "Tests/RxTest.swift",
+        "Tests/Tests",
+        "Tests/RxSwiftTests"
+    ],
+    targetDirName: "AllTests",
+    excluded: [
+        "Tests/VirtualSchedulerTest.swift",
+        "Tests/HistoricalSchedulerTest.swift"
+    ])
 
 try buildAllTestsTarget("Sources/AllTests")
