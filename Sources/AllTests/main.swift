@@ -79,6 +79,20 @@ _ObservableBlockingTest.allTests = [
 ]
 
 
+let _VirtualSchedulerTest = VirtualSchedulerTest()
+_VirtualSchedulerTest.allTests = [
+    ("testVirtualScheduler_initialClock", { _VirtualSchedulerTest.setUp(); _VirtualSchedulerTest.testVirtualScheduler_initialClock(); _VirtualSchedulerTest.tearDown(); }),
+    ("testVirtualScheduler_start", { _VirtualSchedulerTest.setUp(); _VirtualSchedulerTest.testVirtualScheduler_start(); _VirtualSchedulerTest.tearDown(); }),
+    ("testVirtualScheduler_disposeStart", { _VirtualSchedulerTest.setUp(); _VirtualSchedulerTest.testVirtualScheduler_disposeStart(); _VirtualSchedulerTest.tearDown(); }),
+    ("testVirtualScheduler_advanceToAfter", { _VirtualSchedulerTest.setUp(); _VirtualSchedulerTest.testVirtualScheduler_advanceToAfter(); _VirtualSchedulerTest.tearDown(); }),
+    ("testVirtualScheduler_advanceToBefore", { _VirtualSchedulerTest.setUp(); _VirtualSchedulerTest.testVirtualScheduler_advanceToBefore(); _VirtualSchedulerTest.tearDown(); }),
+    ("testVirtualScheduler_disposeAdvanceTo", { _VirtualSchedulerTest.setUp(); _VirtualSchedulerTest.testVirtualScheduler_disposeAdvanceTo(); _VirtualSchedulerTest.tearDown(); }),
+    ("testVirtualScheduler_stop", { _VirtualSchedulerTest.setUp(); _VirtualSchedulerTest.testVirtualScheduler_stop(); _VirtualSchedulerTest.tearDown(); }),
+    ("testVirtualScheduler_sleep", { _VirtualSchedulerTest.setUp(); _VirtualSchedulerTest.testVirtualScheduler_sleep(); _VirtualSchedulerTest.tearDown(); }),
+    ("testVirtualScheduler_stress", { _VirtualSchedulerTest.setUp(); _VirtualSchedulerTest.testVirtualScheduler_stress(); _VirtualSchedulerTest.tearDown(); }),
+]
+
+
 let _ObserverTests = ObserverTests()
 _ObserverTests.allTests = [
     ("testConvenienceOn_Next", { _ObserverTests.setUp(); _ObserverTests.testConvenienceOn_Next(); _ObserverTests.tearDown(); }),
@@ -323,6 +337,28 @@ _ObservableMultipleTest.allTests = [
     //("testWithLatestFrom_Error2", { _ObservableMultipleTest.setUp(); _ObservableMultipleTest.testWithLatestFrom_Error2(); _ObservableMultipleTest.tearDown(); }),
     //("testWithLatestFrom_Error3", { _ObservableMultipleTest.setUp(); _ObservableMultipleTest.testWithLatestFrom_Error3(); _ObservableMultipleTest.tearDown(); }),
     ("testWithLatestFrom_MakeSureDefaultOverloadTakesSecondSequenceValues", { _ObservableMultipleTest.setUp(); _ObservableMultipleTest.testWithLatestFrom_MakeSureDefaultOverloadTakesSecondSequenceValues(); _ObservableMultipleTest.tearDown(); }),
+]
+
+
+let _HistoricalSchedulerTest = HistoricalSchedulerTest()
+_HistoricalSchedulerTest.allTests = [
+    ("testHistoricalScheduler_initialClock", { _HistoricalSchedulerTest.setUp(); _HistoricalSchedulerTest.testHistoricalScheduler_initialClock(); _HistoricalSchedulerTest.tearDown(); }),
+    ("testHistoricalScheduler_start", { _HistoricalSchedulerTest.setUp(); _HistoricalSchedulerTest.testHistoricalScheduler_start(); _HistoricalSchedulerTest.tearDown(); }),
+    ("testHistoricalScheduler_disposeStart", { _HistoricalSchedulerTest.setUp(); _HistoricalSchedulerTest.testHistoricalScheduler_disposeStart(); _HistoricalSchedulerTest.tearDown(); }),
+    ("testHistoricalScheduler_advanceToAfter", { _HistoricalSchedulerTest.setUp(); _HistoricalSchedulerTest.testHistoricalScheduler_advanceToAfter(); _HistoricalSchedulerTest.tearDown(); }),
+    ("testHistoricalScheduler_advanceToBefore", { _HistoricalSchedulerTest.setUp(); _HistoricalSchedulerTest.testHistoricalScheduler_advanceToBefore(); _HistoricalSchedulerTest.tearDown(); }),
+    ("testHistoricalScheduler_disposeAdvanceTo", { _HistoricalSchedulerTest.setUp(); _HistoricalSchedulerTest.testHistoricalScheduler_disposeAdvanceTo(); _HistoricalSchedulerTest.tearDown(); }),
+    ("testHistoricalScheduler_stop", { _HistoricalSchedulerTest.setUp(); _HistoricalSchedulerTest.testHistoricalScheduler_stop(); _HistoricalSchedulerTest.tearDown(); }),
+    ("testHistoricalScheduler_sleep", { _HistoricalSchedulerTest.setUp(); _HistoricalSchedulerTest.testHistoricalScheduler_sleep(); _HistoricalSchedulerTest.tearDown(); }),
+]
+
+
+let _CurrentThreadSchedulerTest = CurrentThreadSchedulerTest()
+_CurrentThreadSchedulerTest.allTests = [
+    ("testCurrentThreadScheduler_scheduleRequired", { _CurrentThreadSchedulerTest.setUp(); _CurrentThreadSchedulerTest.testCurrentThreadScheduler_scheduleRequired(); _CurrentThreadSchedulerTest.tearDown(); }),
+    ("testCurrentThreadScheduler_basicScenario", { _CurrentThreadSchedulerTest.setUp(); _CurrentThreadSchedulerTest.testCurrentThreadScheduler_basicScenario(); _CurrentThreadSchedulerTest.tearDown(); }),
+    ("testCurrentThreadScheduler_disposing1", { _CurrentThreadSchedulerTest.setUp(); _CurrentThreadSchedulerTest.testCurrentThreadScheduler_disposing1(); _CurrentThreadSchedulerTest.tearDown(); }),
+    ("testCurrentThreadScheduler_disposing2", { _CurrentThreadSchedulerTest.setUp(); _CurrentThreadSchedulerTest.testCurrentThreadScheduler_disposing2(); _CurrentThreadSchedulerTest.tearDown(); }),
 ]
 
 
@@ -588,12 +624,11 @@ _BehaviorSubjectTest.allTests = [
 ]
 
 
-let _ObservableSubscriptionTests = ObservableSubscriptionTests()
-_ObservableSubscriptionTests.allTests = [
-    ("testSubscribeOnNext", { _ObservableSubscriptionTests.setUp(); _ObservableSubscriptionTests.testSubscribeOnNext(); _ObservableSubscriptionTests.tearDown(); }),
-    //("testSubscribeOnError", { _ObservableSubscriptionTests.setUp(); _ObservableSubscriptionTests.testSubscribeOnError(); _ObservableSubscriptionTests.tearDown(); }),
-    ("testSubscribeOnCompleted", { _ObservableSubscriptionTests.setUp(); _ObservableSubscriptionTests.testSubscribeOnCompleted(); _ObservableSubscriptionTests.tearDown(); }),
-    ("testDisposed", { _ObservableSubscriptionTests.setUp(); _ObservableSubscriptionTests.testDisposed(); _ObservableSubscriptionTests.tearDown(); }),
+let _MainSchedulerTest = MainSchedulerTest()
+_MainSchedulerTest.allTests = [
+    ("testMainScheduler_basicScenario", { _MainSchedulerTest.setUp(); _MainSchedulerTest.testMainScheduler_basicScenario(); _MainSchedulerTest.tearDown(); }),
+    ("testMainScheduler_disposing1", { _MainSchedulerTest.setUp(); _MainSchedulerTest.testMainScheduler_disposing1(); _MainSchedulerTest.tearDown(); }),
+    ("testMainScheduler_disposing2", { _MainSchedulerTest.setUp(); _MainSchedulerTest.testMainScheduler_disposing2(); _MainSchedulerTest.tearDown(); }),
 ]
 
 
@@ -611,6 +646,15 @@ _ObservableConcurrencyTest.allTests = [
     ("testSubscribeOn_SchedulerCompleted", { _ObservableConcurrencyTest.setUp(); _ObservableConcurrencyTest.testSubscribeOn_SchedulerCompleted(); _ObservableConcurrencyTest.tearDown(); }),
     //("testSubscribeOn_SchedulerError", { _ObservableConcurrencyTest.setUp(); _ObservableConcurrencyTest.testSubscribeOn_SchedulerError(); _ObservableConcurrencyTest.tearDown(); }),
     ("testSubscribeOn_SchedulerDispose", { _ObservableConcurrencyTest.setUp(); _ObservableConcurrencyTest.testSubscribeOn_SchedulerDispose(); _ObservableConcurrencyTest.tearDown(); }),
+]
+
+
+let _ObservableSubscriptionTests = ObservableSubscriptionTests()
+_ObservableSubscriptionTests.allTests = [
+    ("testSubscribeOnNext", { _ObservableSubscriptionTests.setUp(); _ObservableSubscriptionTests.testSubscribeOnNext(); _ObservableSubscriptionTests.tearDown(); }),
+    //("testSubscribeOnError", { _ObservableSubscriptionTests.setUp(); _ObservableSubscriptionTests.testSubscribeOnError(); _ObservableSubscriptionTests.tearDown(); }),
+    ("testSubscribeOnCompleted", { _ObservableSubscriptionTests.setUp(); _ObservableSubscriptionTests.testSubscribeOnCompleted(); _ObservableSubscriptionTests.tearDown(); }),
+    ("testDisposed", { _ObservableSubscriptionTests.setUp(); _ObservableSubscriptionTests.testDisposed(); _ObservableSubscriptionTests.tearDown(); }),
 ]
 
 
@@ -706,8 +750,11 @@ CurrentThreadScheduler.instance.schedule(()) { _ in
         _QueueTest,
         _VariableTest,
         _ObservableBlockingTest,
+        _VirtualSchedulerTest,
         _ObserverTests,
         _ObservableMultipleTest,
+        _HistoricalSchedulerTest,
+        _CurrentThreadSchedulerTest,
         _DisposableTest,
         _ObservableStandardSequenceOperatorsTest,
         _ObservableBindingTest,
@@ -715,8 +762,9 @@ CurrentThreadScheduler.instance.schedule(()) { _ in
         _ObservableSingleTest,
         _ObservableAggregateTest,
         _BehaviorSubjectTest,
-        _ObservableSubscriptionTests,
+        _MainSchedulerTest,
         _ObservableConcurrencyTest,
+        _ObservableSubscriptionTests,
         _ObservableTimeTest,
         _BagTest,
         _AssumptionsTest,
