@@ -5,6 +5,8 @@
 
     #if TRACE_RESOURCES
     public typealias AtomicInt = Int32
+    #else
+    typealias AtomicInt = Int32
     #endif
 
     let AtomicCompareAndSwap = OSAtomicCompareAndSwap32

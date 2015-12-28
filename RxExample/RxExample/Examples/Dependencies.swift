@@ -30,7 +30,7 @@ class Dependencies {
         #endif
         backgroundWorkScheduler = OperationQueueScheduler(operationQueue: operationQueue)
         
-        mainScheduler = MainScheduler.sharedInstance
+        mainScheduler = MainScheduler.instance
     }
     
 }

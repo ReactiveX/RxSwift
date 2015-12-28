@@ -60,6 +60,8 @@
 
     #if TRACE_RESOURCES
     public typealias AtomicInt = Int64
+    #else
+    typealias AtomicInt = Int64
     #endif
 
     func AtomicIncrement(increment: UnsafeMutablePointer<AtomicInt>) -> AtomicInt {

@@ -21,7 +21,7 @@ public class RootViewController : UITableViewController {
         DefaultWikipediaAPI.sharedAPI
         DefaultImageService.sharedImageService
         DefaultWireframe.sharedInstance
-        MainScheduler.sharedInstance
+        MainScheduler.instance
         ReachabilityService.sharedReachabilityService
     }
 }
