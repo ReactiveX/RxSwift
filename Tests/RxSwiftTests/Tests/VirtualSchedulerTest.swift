@@ -9,6 +9,9 @@
 import Foundation
 import RxSwift
 import XCTest
+#if os(Linux)
+    import Glibc
+#endif
 
 class VirtualSchedulerTest : RxTest {
 

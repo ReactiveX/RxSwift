@@ -40,7 +40,7 @@
     public func CFRunLoopRun() {
         runLoopCounter += 1
         let currentValueOfCounter = runLoopCounter
-        while let front = queue.tryDequeue() {
+        while let front = queue.dequeue() {
             front()
             if runLoopCounter < currentValueOfCounter - 1 {
                 fatalError("called stop twice")
@@ -199,9 +199,9 @@
         public func expectationWithDescription(description: String) -> Expectation {
             return Expectation()
         }
-        
+
         public func waitForExpectationsWithTimeout(time: NSTimeInterval, action: ErrorType? -> Void) {
         }
     }
-    
+
 #endif
