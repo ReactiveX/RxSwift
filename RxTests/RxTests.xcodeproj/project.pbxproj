@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4F0BF6861C30C51100C08F25 /* NSControl+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0BF6851C30C51100C08F25 /* NSControl+RxTests.swift */; };
 		5E5D10BB1B48355200432B25 /* Control+RxTests+UIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5D10BA1B48355200432B25 /* Control+RxTests+UIKit.swift */; };
 		C69B65001BA88FAC00A7FA73 /* ObserverTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C69B64FF1BA88FAC00A7FA73 /* ObserverTests.swift */; };
 		C69B65011BA8957C00A7FA73 /* ObserverTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C69B64FF1BA88FAC00A7FA73 /* ObserverTests.swift */; };
@@ -194,6 +195,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4F0BF6851C30C51100C08F25 /* NSControl+RxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSControl+RxTests.swift"; sourceTree = "<group>"; };
 		5E5D10BA1B48355200432B25 /* Control+RxTests+UIKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Control+RxTests+UIKit.swift"; sourceTree = "<group>"; };
 		C69B64FF1BA88FAC00A7FA73 /* ObserverTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObserverTests.swift; sourceTree = "<group>"; };
 		C801EB591B97951100C4D8C4 /* Observable+CreationTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Observable+CreationTest.swift"; sourceTree = "<group>"; };
@@ -361,6 +363,7 @@
 		C811082A1AF50E2A001C13E4 /* RxCocoaTests */ = {
 			isa = PBXGroup;
 			children = (
+				4F0BF6851C30C51100C08F25 /* NSControl+RxTests.swift */,
 				C8E9D2BC1BD422D80079D0DB /* Control+RxTests.swift */,
 				C8E9D2C01BD4525B0079D0DB /* Control+RxTests+Cocoa.swift */,
 				5E5D10BA1B48355200432B25 /* Control+RxTests+UIKit.swift */,
@@ -645,6 +648,7 @@
 				C81108561AF50E2A001C13E4 /* TestObserver.swift in Sources */,
 				C811085A1AF50E2A001C13E4 /* VirtualTimeSchedulerBase.swift in Sources */,
 				C8CDD7D41B52BEC40043F0C5 /* Observable+BlockingTest.swift in Sources */,
+				4F0BF6861C30C51100C08F25 /* NSControl+RxTests.swift in Sources */,
 				C81CC92B1B513FD400915606 /* NSObject+RxTests.swift in Sources */,
 				C811085F1AF50E2A001C13E4 /* DisposableTest.swift in Sources */,
 				C8E381281B207D03008CDC33 /* PrimitiveHotObservable.swift in Sources */,
