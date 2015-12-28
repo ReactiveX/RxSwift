@@ -55,7 +55,7 @@ public struct ControlEvent<PropertyType> : ControlEventType {
      - returns: Control event created with a observable sequence of events.
      */
     public init<Ev: ObservableType where Ev.E == E>(events: Ev) {
-        _events = events.subscribeOn(ConcurrentMainScheduler.sharedInstance)
+        _events = events.subscribeOn(ConcurrentMainScheduler.instance)
     }
     
     /**

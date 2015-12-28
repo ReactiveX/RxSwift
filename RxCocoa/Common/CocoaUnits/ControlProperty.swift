@@ -60,7 +60,7 @@ public struct ControlProperty<PropertyType> : ControlPropertyType {
      to property.
     */
     public init<V: ObservableType, S: ObserverType where E == V.E, E == S.E>(values: V, valueSink: S) {
-        _values = values.subscribeOn(ConcurrentMainScheduler.sharedInstance)
+        _values = values.subscribeOn(ConcurrentMainScheduler.instance)
         _valueSink = valueSink.asObserver()
     }
     

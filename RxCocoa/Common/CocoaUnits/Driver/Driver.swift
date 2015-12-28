@@ -91,7 +91,7 @@ extension Driver {
     */
     @warn_unused_result(message="http://git.io/rxs.uo")
     public static func empty() -> Driver<E> {
-        return Driver(raw: Observable.empty().subscribeOn(ConcurrentMainScheduler.sharedInstance))
+        return Driver(raw: Observable.empty().subscribeOn(driverSubscribeOnScheduler))
     }
     
     /**
@@ -101,7 +101,7 @@ extension Driver {
     */
     @warn_unused_result(message="http://git.io/rxs.uo")
     public static func never() -> Driver<E> {
-        return Driver(raw: Observable.never().subscribeOn(ConcurrentMainScheduler.sharedInstance))
+        return Driver(raw: Observable.never().subscribeOn(driverSubscribeOnScheduler))
     }
     
     /**
@@ -112,7 +112,7 @@ extension Driver {
     */
     @warn_unused_result(message="http://git.io/rxs.uo")
     public static func just(element: E) -> Driver<E> {
-        return Driver(raw: Observable.just(element).subscribeOn(ConcurrentMainScheduler.sharedInstance))
+        return Driver(raw: Observable.just(element).subscribeOn(driverSubscribeOnScheduler))
     }
 
     /**
@@ -129,7 +129,7 @@ extension Driver {
 
     @warn_unused_result(message="http://git.io/rxs.uo")
     public static func of(elements: E ...) -> Driver<E> {
-        let source = elements.toObservable().subscribeOn(ConcurrentMainScheduler.sharedInstance)
+        let source = elements.toObservable().subscribeOn(driverSubscribeOnScheduler)
         return Driver(raw: source)
     }
     
@@ -139,17 +139,17 @@ public struct Drive {
 
     @available(*, deprecated=2.0.0, message="Please use `Driver.empty` (`r` at the end).")
     public static func empty<E>() -> Driver<E> {
-        return Driver(raw: Observable.empty().subscribeOn(ConcurrentMainScheduler.sharedInstance))
+        return Driver(raw: Observable.empty().subscribeOn(driverSubscribeOnScheduler))
     }
 
     @available(*, deprecated=2.0.0, message="Please use `Driver.never` (`r` at the end).")
     public static func never<E>() -> Driver<E> {
-        return Driver(raw: Observable.never().subscribeOn(ConcurrentMainScheduler.sharedInstance))
+        return Driver(raw: Observable.never().subscribeOn(driverSubscribeOnScheduler))
     }
 
     @available(*, deprecated=2.0.0, message="Please use `Driver.just` (`r` at the end).")
     public static func just<E>(element: E) -> Driver<E> {
-        return Driver(raw: Observable.just(element).subscribeOn(ConcurrentMainScheduler.sharedInstance))
+        return Driver(raw: Observable.just(element).subscribeOn(driverSubscribeOnScheduler))
     }
 
     @available(*, deprecated=2.0.0, message="Please use `Driver.deferred` (`r` at the end).")
@@ -160,8 +160,11 @@ public struct Drive {
 
     @available(*, deprecated=2.0.0, message="Please use `Driver.of` (`r` at the end).")
     public static func sequenceOf<E>(elements: E ...) -> Driver<E> {
-        let source = elements.toObservable().subscribeOn(ConcurrentMainScheduler.sharedInstance)
+        let source = elements.toObservable().subscribeOn(driverSubscribeOnScheduler)
         return Driver(raw: source)
     }
     
 }
+
+var driverObserveOnScheduler: SchedulerType = MainScheduler.instance
+var driverSubscribeOnScheduler: SchedulerType = ConcurrentMainScheduler.instance
