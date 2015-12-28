@@ -3,7 +3,9 @@
     import Darwin
     import Foundation
 
-    typealias AtomicInt = Int32
+    #if TRACE_RESOURCES
+    public typealias AtomicInt = Int32
+    #endif
 
     let AtomicCompareAndSwap = OSAtomicCompareAndSwap32
     let AtomicIncrement = OSAtomicIncrement32

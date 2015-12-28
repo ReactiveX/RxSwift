@@ -14,7 +14,7 @@ Counts internal Rx resources (Observables, Observers, Disposables ...).
 
 It provides a really simple way to detect leaks early during development.
 */
-public var resourceCount: Int32 = 0
+public var resourceCount: AtomicInt = 0
 #endif
 
 // Swift doesn't have a concept of abstract metods.

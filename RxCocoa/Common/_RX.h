@@ -15,7 +15,7 @@
  ################################################################################
  */
 
-#if        DEBUG
+#if        TRACE_RESOURCES
 #   define DLOG(...)         NSLog(__VA_ARGS__)
 #   define ABORT_IN_DEBUG    abort();
 #else

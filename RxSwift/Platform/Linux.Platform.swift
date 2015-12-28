@@ -58,7 +58,9 @@
 
     // MARK: Atomic, just something that works for single thread case
 
-    typealias AtomicInt = Int64
+    #if TRACE_RESOURCES
+    public typealias AtomicInt = Int64
+    #endif
 
     func AtomicIncrement(increment: UnsafeMutablePointer<AtomicInt>) -> AtomicInt {
         increment.memory = increment.memory + 1

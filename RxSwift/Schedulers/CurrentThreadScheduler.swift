@@ -116,7 +116,7 @@ public class CurrentThreadScheduler : ImmediateSchedulerType {
                 return disposable
             }
 
-            while let latest = queue.value.tryDequeue() {
+            while let latest = queue.value.dequeue() {
                 if latest.disposed {
                     continue
                 }
