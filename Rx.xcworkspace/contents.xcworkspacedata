@@ -67,7 +67,7 @@
          location = "group:common.sh">
       </FileRef>
       <FileRef
-         location = "group:playgrounds.sh">
+         location = "group:/Users/kzaher/Projects/RxSwift/scripts/validate-playgrounds.sh">
       </FileRef>
       <FileRef
          location = "group:pre-release-tests.sh">
