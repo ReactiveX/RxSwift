@@ -11,7 +11,7 @@ import Foundation
 /**
 Sequence that repeats `repeatedValue` infinite number of times.
 */
-class InfiniteSequence<E> : SequenceType {
+struct InfiniteSequence<E> : SequenceType {
     typealias Element = E
     typealias Generator = AnyGenerator<E>
     
