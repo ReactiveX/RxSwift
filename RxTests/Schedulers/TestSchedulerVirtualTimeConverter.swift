@@ -9,7 +9,7 @@
 import Foundation
 import RxSwift
 
-public class TestSchedulerVirtualTimeConverter : VirtualTimeConverterType {
+public struct TestSchedulerVirtualTimeConverter : VirtualTimeConverterType {
     public typealias VirtualTimeUnit = Int
     public typealias VirtualTimeIntervalUnit = Int
 
@@ -21,19 +21,27 @@ public class TestSchedulerVirtualTimeConverter : VirtualTimeConverterType {
         return VirtualTimeIntervalUnit(time.timeIntervalSince1970)
     }
 
-    public func convertFromTimeInterval(virtualTimeInterval: VirtualTimeIntervalUnit) -> RxTimeInterval {
+    public func convertFromVirtualTimeInterval(virtualTimeInterval: VirtualTimeIntervalUnit) -> RxTimeInterval {
         return RxTimeInterval(virtualTimeInterval)
     }
 
-    public func convertToTimeInterval(virtualTimeInterval: VirtualTimeIntervalUnit) -> RxTimeInterval {
-        return RxTimeInterval(virtualTimeInterval)
+    public func convertToVirtualTimeInterval(timeInterval: RxTimeInterval) -> VirtualTimeIntervalUnit {
+        return VirtualTimeIntervalUnit(timeInterval)
     }
 
     public func addVirtualTimeAndTimeInterval(time time: VirtualTimeUnit, timeInterval: VirtualTimeIntervalUnit) -> VirtualTimeUnit {
         return time + timeInterval
     }
 
-    public func nearFuture(time: VirtualTimeUnit) -> VirtualTimeUnit {
-        return time + 1
+    public func compareVirtualTime(lhs: VirtualTimeUnit, _ rhs: VirtualTimeUnit) -> VirtualTimeComparison {
+        if lhs < rhs {
+            return .LessThan
+        }
+        else if lhs > rhs {
+            return .GreaterThan
+        }
+        else {
+            return .Equal
+        }
     }
 }

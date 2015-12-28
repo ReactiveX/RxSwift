@@ -12,10 +12,7 @@ import RxSwift
 /**
 Virtual time scheduler used for testing applications and libraries built using RxSwift.
 */
-public class TestScheduler : VirtualTimeSchedulerBase<TestSchedulerVirtualTimeConverter> {
-    public typealias TimeInterval = Int
-    public typealias Time = Int
-
+public class TestScheduler : VirtualTimeScheduler<TestSchedulerVirtualTimeConverter> {
     /**
      Default values of scheduler times.
     */
@@ -83,6 +80,13 @@ public class TestScheduler : VirtualTimeSchedulerBase<TestSchedulerVirtualTimeCo
             action()
             return NopDisposable.instance
         })
+    }
+
+    /**
+    Adjusts time of scheduling before adding item to schedule queue. If scheduled time is `<= clock`, then it is scheduled at `clock + 1`
+    */
+    override public func adjustScheduledTime(time: VirtualTime) -> VirtualTime {
+        return time <= clock ? clock + 1 : time
     }
 
     /**
