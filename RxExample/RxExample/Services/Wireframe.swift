@@ -25,7 +25,6 @@ enum RetryResult {
 protocol Wireframe {
     func openURL(URL: NSURL)
     func promptFor<Action: CustomStringConvertible>(message: String, cancelAction: Action, actions: [Action]) -> Observable<Action>
-    static func presentAlert(message: String)
 }
 
 

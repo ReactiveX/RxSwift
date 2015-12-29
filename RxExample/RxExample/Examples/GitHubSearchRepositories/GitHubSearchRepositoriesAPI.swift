@@ -111,7 +111,7 @@ extension GitHubSearchRepositoriesAPI {
     Public fascade for search.
     */
     func search(query: String, loadNextPageTrigger: Observable<Void>) -> Observable<RepositoriesState> {
-        let escapedQuery = URLEscape(query)
+        let escapedQuery = query.URLEscaped
         let url = NSURL(string: "https://api.github.com/search/repositories?q=\(escapedQuery)")!
         return recursivelySearch([], loadNextURL: url, loadNextPageTrigger: loadNextPageTrigger)
             // Here we go again

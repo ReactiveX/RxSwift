@@ -12,25 +12,9 @@ import RxSwift
 import RxCocoa
 #endif
 
-class GithubSignupViewModel {
-
-    private let API: GitHubAPI
-    private let validationService: GitHubValidationService
-    private let wireframe: Wireframe
-
-    // inputs {
-
-    let username = Variable("")
-    let password = Variable("")
-    let repeatedPassword = Variable("")
-
-    let loginTaps = PublishSubject<Void>()
-
-    // }
-
+class GithubSignupViewModel1 {
     // outputs {
 
-    //
     let validatedUsername: Observable<ValidationResult>
     let validatedPassword: Observable<ValidationResult>
     let validatedPasswordRepeated: Observable<ValidationResult>
@@ -46,12 +30,30 @@ class GithubSignupViewModel {
 
     // }
 
-    init(API: GitHubAPI, validationService: GitHubValidationService, wireframe: Wireframe) {
-        self.API = API
-        self.validationService = validationService
-        self.wireframe = wireframe
+    init(input: (
+            username: Observable<String>,
+            password: Observable<String>,
+            repeatedPassword: Observable<String>,
+            loginTaps: Observable<Void>
+        ),
+        dependency: (
+            API: GitHubAPI,
+            validationService: GitHubValidationService,
+            wireframe: Wireframe
+        )
+    ) {
+        let API = dependency.API
+        let validationService = dependency.validationService
+        let wireframe = dependency.wireframe
 
-        validatedUsername = username
+        /**
+         Notice how no subscribe call is being made. 
+         Everything is just a definition.
+
+         Pure transformation of input sequences to output sequences.
+        */
+
+        validatedUsername = input.username
             .flatMapLatest { username in
                 return validationService.validateUsername(username)
                     .observeOn(MainScheduler.instance)
@@ -59,21 +61,21 @@ class GithubSignupViewModel {
             }
             .shareReplay(1)
 
-        validatedPassword = password
+        validatedPassword = input.password
             .map { password in
                 return validationService.validatePassword(password)
             }
             .shareReplay(1)
 
-        validatedPasswordRepeated = Observable.combineLatest(password, repeatedPassword, resultSelector: validationService.validateRepeatedPassword)
+        validatedPasswordRepeated = Observable.combineLatest(input.password, input.repeatedPassword, resultSelector: validationService.validateRepeatedPassword)
             .shareReplay(1)
 
         let signingIn = ActivityIndicator()
         self.signingIn = signingIn.asObservable()
 
-        let usernameAndPassword = Observable.combineLatest(username, password) { ($0, $1) }
+        let usernameAndPassword = Observable.combineLatest(input.username, input.password) { ($0, $1) }
 
-        signedIn = loginTaps.withLatestFrom(usernameAndPassword)
+        signedIn = input.loginTaps.withLatestFrom(usernameAndPassword)
             .flatMapLatest { (username, password) in
                 return API.signup(username, password: password)
                     .observeOn(MainScheduler.instance)
@@ -101,6 +103,7 @@ class GithubSignupViewModel {
                 repeatPassword.isValid &&
                 !signingIn
             }
+            .distinctUntilChanged()
             .shareReplay(1)
     }
 }

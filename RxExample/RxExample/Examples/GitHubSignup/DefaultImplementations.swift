@@ -92,7 +92,7 @@ class GitHubDefaultAPI : GitHubAPI {
     func usernameAvailable(username: String) -> Observable<Bool> {
         // this is ofc just mock, but good enough
         
-        let URL = NSURL(string: "https://github.com/\(URLEscape(username))")!
+        let URL = NSURL(string: "https://github.com/\(username.URLEscaped)")!
         let request = NSURLRequest(URL: URL)
         return self.URLSession.rx_response(request)
             .map { (maybeData, response) in

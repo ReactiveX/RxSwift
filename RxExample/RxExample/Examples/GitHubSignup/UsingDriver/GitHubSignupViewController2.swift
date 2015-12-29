@@ -3,7 +3,7 @@
 //  RxExample
 //
 //  Created by Krunoslav Zaher on 4/25/15.
-//  Copyright © 2015 Krunoslav Zaher. All rights reserved.
+//  Copyright (c) 2015 Krunoslav Zaher. All rights reserved.
 //
 
 import Foundation
@@ -13,7 +13,7 @@ import RxSwift
 import RxCocoa
 #endif
 
-class GitHubSignupViewController : ViewController {
+class GitHubSignupViewController2 : ViewController {
     @IBOutlet weak var usernameOutlet: UITextField!
     @IBOutlet weak var usernameValidationOutlet: UILabel!
     
@@ -26,60 +26,49 @@ class GitHubSignupViewController : ViewController {
     @IBOutlet weak var signupOutlet: UIButton!
     @IBOutlet weak var signingUpOulet: UIActivityIndicatorView!
 
-    let viewModel = GithubSignupViewModel(
-        API: GitHubDefaultAPI.sharedAPI,
-        validationService: GitHubDefaultValidationService.sharedValidationService,
-        wireframe: DefaultWireframe.sharedInstance
-    )
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // bind UI values to view model {
-        usernameOutlet.rx_text
-            .bindTo(viewModel.username)
-            .addDisposableTo(disposeBag)
-
-        passwordOutlet.rx_text
-            .bindTo(viewModel.password)
-            .addDisposableTo(disposeBag)
-
-        repeatedPasswordOutlet.rx_text
-            .bindTo(viewModel.repeatedPassword)
-            .addDisposableTo(disposeBag)
-
-        signupOutlet.rx_tap
-            .bindTo(viewModel.loginTaps)
-            .addDisposableTo(disposeBag)
-        // }
-
+        let viewModel = GithubSignupViewModel2(
+            input: (
+                username: usernameOutlet.rx_text.asDriver(),
+                password: passwordOutlet.rx_text.asDriver(),
+                repeatedPassword: repeatedPasswordOutlet.rx_text.asDriver(),
+                loginTaps: signupOutlet.rx_tap.asDriver()
+            ),
+            dependency: (
+                API: GitHubDefaultAPI.sharedAPI,
+                validationService: GitHubDefaultValidationService.sharedValidationService,
+                wireframe: DefaultWireframe.sharedInstance
+            )
+        )
 
         // bind results to  {
         viewModel.signupEnabled
-            .subscribeNext { [weak self] valid  in
+            .driveNext { [weak self] valid  in
                 self?.signupOutlet.enabled = valid
                 self?.signupOutlet.alpha = valid ? 1.0 : 0.5
             }
             .addDisposableTo(disposeBag)
 
         viewModel.validatedUsername
-            .bindTo(usernameValidationOutlet.ex_validationResult)
+            .drive(usernameValidationOutlet.ex_validationResult)
             .addDisposableTo(disposeBag)
 
         viewModel.validatedPassword
-            .bindTo(passwordValidationOutlet.ex_validationResult)
+            .drive(passwordValidationOutlet.ex_validationResult)
             .addDisposableTo(disposeBag)
 
         viewModel.validatedPasswordRepeated
-            .bindTo(repeatedPasswordValidationOutlet.ex_validationResult)
+            .drive(repeatedPasswordValidationOutlet.ex_validationResult)
             .addDisposableTo(disposeBag)
 
         viewModel.signingIn
-            .bindTo(signingUpOulet.rx_animating)
+            .drive(signingUpOulet.rx_animating)
             .addDisposableTo(disposeBag)
 
         viewModel.signedIn
-            .subscribeNext { signedIn in
+            .driveNext { signedIn in
                 print("User signed in \(signedIn)")
             }
             .addDisposableTo(disposeBag)

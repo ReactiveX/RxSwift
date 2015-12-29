@@ -59,8 +59,6 @@
 		C80DDED81BCE9046006A1832 /* Driver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80DDEC81BCE9041006A1832 /* Driver.swift */; };
 		C80DDED91BCE9046006A1832 /* ObservableConvertibleType+Driver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80DDEC91BCE9041006A1832 /* ObservableConvertibleType+Driver.swift */; };
 		C811C8A21C24D82600A2DDD4 /* DeallocObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C811C8A11C24D82600A2DDD4 /* DeallocObservable.swift */; };
-		C822B1CA1C14CB2B0088A01A /* GithubSignupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C822B1C91C14CB2B0088A01A /* GithubSignupViewModel.swift */; };
-		C822B1CB1C14CB2B0088A01A /* GithubSignupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C822B1C91C14CB2B0088A01A /* GithubSignupViewModel.swift */; };
 		C822B1D91C14CBEA0088A01A /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = C822B1D81C14CBEA0088A01A /* Protocols.swift */; };
 		C822B1DA1C14CBEA0088A01A /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = C822B1D81C14CBEA0088A01A /* Protocols.swift */; };
 		C822B1DC1C14CD1C0088A01A /* DefaultImplementations.swift in Sources */ = {isa = PBXBuildFile; fileRef = C822B1DB1C14CD1C0088A01A /* DefaultImplementations.swift */; };
@@ -96,7 +94,6 @@
 		C8297E471B6CF905000589EA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C890A65C1AEC084100AFF7E6 /* ViewController.swift */; };
 		C8297E481B6CF905000589EA /* Differentiator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88C78941B3F20DB0061C5AB /* Differentiator.swift */; };
 		C8297E491B6CF905000589EA /* WikipediaSearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C46DA51B47F7110020D71E /* WikipediaSearchCell.swift */; };
-		C8297E4A1B6CF905000589EA /* GitHubSignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C890A6571AEBD26B00AFF7E6 /* GitHubSignupViewController.swift */; };
 		C8297E4C1B6CF905000589EA /* APIWrappersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 075F130F1B4E9D5A000D7861 /* APIWrappersViewController.swift */; };
 		C8297E4D1B6CF905000589EA /* RxTableViewSectionedReloadDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88C78651B3EB0A00061C5AB /* RxTableViewSectionedReloadDataSource.swift */; };
 		C8297E4E1B6CF905000589EA /* RxCollectionViewSectionedAnimatedDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C859B9A91B45CB0900D012D7 /* RxCollectionViewSectionedAnimatedDataSource.swift */; };
@@ -134,6 +131,28 @@
 		C843A0911C1CE39900CBA4BD /* GitHubSearchRepositoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C843A08D1C1CE39900CBA4BD /* GitHubSearchRepositoriesViewController.swift */; };
 		C843A0931C1CE58700CBA4BD /* UINavigationController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C843A0921C1CE58700CBA4BD /* UINavigationController+Extensions.swift */; };
 		C843A0941C1CE58700CBA4BD /* UINavigationController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C843A0921C1CE58700CBA4BD /* UINavigationController+Extensions.swift */; };
+		C849EF641C3190360048AC4A /* RxExample_iOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C849EF631C3190360048AC4A /* RxExample_iOSTests.swift */; };
+		C849EF801C3193B10048AC4A /* GitHubSignupViewController1.swift in Sources */ = {isa = PBXBuildFile; fileRef = C849EF7E1C3193B10048AC4A /* GitHubSignupViewController1.swift */; };
+		C849EF811C3193B10048AC4A /* GitHubSignupViewController1.swift in Sources */ = {isa = PBXBuildFile; fileRef = C849EF7E1C3193B10048AC4A /* GitHubSignupViewController1.swift */; };
+		C849EF821C3193B10048AC4A /* GithubSignupViewModel1.swift in Sources */ = {isa = PBXBuildFile; fileRef = C849EF7F1C3193B10048AC4A /* GithubSignupViewModel1.swift */; };
+		C849EF831C3193B10048AC4A /* GithubSignupViewModel1.swift in Sources */ = {isa = PBXBuildFile; fileRef = C849EF7F1C3193B10048AC4A /* GithubSignupViewModel1.swift */; };
+		C849EF861C3195180048AC4A /* GitHubSignupViewController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = C849EF841C3195180048AC4A /* GitHubSignupViewController2.swift */; };
+		C849EF871C3195180048AC4A /* GitHubSignupViewController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = C849EF841C3195180048AC4A /* GitHubSignupViewController2.swift */; };
+		C849EF881C3195180048AC4A /* GithubSignupViewModel2.swift in Sources */ = {isa = PBXBuildFile; fileRef = C849EF851C3195180048AC4A /* GithubSignupViewModel2.swift */; };
+		C849EF891C3195180048AC4A /* GithubSignupViewModel2.swift in Sources */ = {isa = PBXBuildFile; fileRef = C849EF851C3195180048AC4A /* GithubSignupViewModel2.swift */; };
+		C849EF901C319E9A0048AC4A /* GithubSignupViewModel1.swift in Sources */ = {isa = PBXBuildFile; fileRef = C849EF7F1C3193B10048AC4A /* GithubSignupViewModel1.swift */; };
+		C849EF911C319E9A0048AC4A /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = C822B1D81C14CBEA0088A01A /* Protocols.swift */; };
+		C849EF921C319E9A0048AC4A /* DefaultImplementations.swift in Sources */ = {isa = PBXBuildFile; fileRef = C822B1DB1C14CD1C0088A01A /* DefaultImplementations.swift */; };
+		C849EF951C319E9D0048AC4A /* GithubSignupViewModel2.swift in Sources */ = {isa = PBXBuildFile; fileRef = C849EF851C3195180048AC4A /* GithubSignupViewModel2.swift */; };
+		C849EF961C31A3240048AC4A /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8A468EB1B8A8BC900BF917B /* RxSwift.framework */; };
+		C849EF971C31A3270048AC4A /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8A468ED1B8A8BCC00BF917B /* RxCocoa.framework */; };
+		C849EF981C31A3340048AC4A /* RxTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8864C5A1C275A200073016D /* RxTests.framework */; };
+		C849EF991C31A63C0048AC4A /* Wireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = C809E9791BE6841C0058D948 /* Wireframe.swift */; };
+		C849EF9A1C31A7680048AC4A /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80397391BD3E17D009D8B26 /* ActivityIndicator.swift */; };
+		C849EF9C1C31A8750048AC4A /* String+URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = C849EF9B1C31A8750048AC4A /* String+URL.swift */; };
+		C849EF9D1C31A8750048AC4A /* String+URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = C849EF9B1C31A8750048AC4A /* String+URL.swift */; };
+		C849EF9E1C31A8750048AC4A /* String+URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = C849EF9B1C31A8750048AC4A /* String+URL.swift */; };
+		C849EF9F1C31A8750048AC4A /* String+URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = C849EF9B1C31A8750048AC4A /* String+URL.swift */; };
 		C84B91381B8A282000C9CCCF /* RxTableViewSectionedAnimatedDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88C78631B3EB0A00061C5AB /* RxTableViewSectionedAnimatedDataSource.swift */; };
 		C84B91391B8A282000C9CCCF /* RxTableViewSectionedDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88C78641B3EB0A00061C5AB /* RxTableViewSectionedDataSource.swift */; };
 		C84B913A1B8A282000C9CCCF /* RxTableViewSectionedReloadDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88C78651B3EB0A00061C5AB /* RxTableViewSectionedReloadDataSource.swift */; };
@@ -173,7 +192,6 @@
 		C88C788F1B3F14FD0061C5AB /* Changeset.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88C788E1B3F14FD0061C5AB /* Changeset.swift */; };
 		C88C78951B3F20DB0061C5AB /* Differentiator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88C78941B3F20DB0061C5AB /* Differentiator.swift */; };
 		C88C78991B4012A90061C5AB /* SectionModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88C78981B4012A90061C5AB /* SectionModelType.swift */; };
-		C890A6581AEBD26B00AFF7E6 /* GitHubSignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C890A6571AEBD26B00AFF7E6 /* GitHubSignupViewController.swift */; };
 		C890A65D1AEC084100AFF7E6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C890A65C1AEC084100AFF7E6 /* ViewController.swift */; };
 		C891A2C91C07160C00DDD09D /* Timeout.swift in Sources */ = {isa = PBXBuildFile; fileRef = C891A2C81C07160C00DDD09D /* Timeout.swift */; };
 		C894649E1BC6C2B00055219D /* Cancelable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89464281BC6C2B00055219D /* Cancelable.swift */; };
@@ -331,6 +349,11 @@
 		C89634081B95BE50002AE38C /* RxBlocking.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C8A468EF1B8A8BD000BF917B /* RxBlocking.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C89634091B95BE50002AE38C /* RxCocoa.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C8A468ED1B8A8BCC00BF917B /* RxCocoa.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C896340A1B95BE51002AE38C /* RxSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C8A468EB1B8A8BC900BF917B /* RxSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		C89C2BD61C321DA200EBC99C /* TestScheduler+MarbleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89C2BD51C321DA200EBC99C /* TestScheduler+MarbleTests.swift */; };
+		C89C2BDC1C32231A00EBC99C /* MockGitHubAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89C2BD81C32231A00EBC99C /* MockGitHubAPI.swift */; };
+		C89C2BDD1C32231A00EBC99C /* MockWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89C2BD91C32231A00EBC99C /* MockWireframe.swift */; };
+		C89C2BDE1C32231A00EBC99C /* NotImplementedStubs.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89C2BDA1C32231A00EBC99C /* NotImplementedStubs.swift */; };
+		C89C2BDF1C32231A00EBC99C /* ValidationResult+Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89C2BDB1C32231A00EBC99C /* ValidationResult+Equatable.swift */; };
 		C89CDB711BCC45E5002063D9 /* ShareReplay1.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89CDB611BCC45DC002063D9 /* ShareReplay1.swift */; };
 		C89CDB721BCC45EE002063D9 /* SkipUntil.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89CDB621BCC45DC002063D9 /* SkipUntil.swift */; };
 		C8A2A2C81B4049E300F11F09 /* PseudoRandomGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A2A2C71B4049E300F11F09 /* PseudoRandomGenerator.swift */; };
@@ -484,6 +507,13 @@
 			remoteGlobalIDString = C8F0C0581BBBFBCE001B112F;
 			remoteInfo = "RxBlocking-watchOS";
 		};
+		C849EF661C3190360048AC4A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C83366D51AD0293800C668A7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C83366DC1AD0293800C668A7;
+			remoteInfo = "RxExample-iOS";
+		};
 		C8864C591C275A200073016D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = C81B39F11BC1C28400EF5A9F /* Rx.xcodeproj */;
@@ -585,7 +615,6 @@
 		C80DDEC91BCE9041006A1832 /* ObservableConvertibleType+Driver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ObservableConvertibleType+Driver.swift"; sourceTree = "<group>"; };
 		C811C8A11C24D82600A2DDD4 /* DeallocObservable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeallocObservable.swift; sourceTree = "<group>"; };
 		C81B39F11BC1C28400EF5A9F /* Rx.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Rx.xcodeproj; path = ../Rx.xcodeproj; sourceTree = "<group>"; };
-		C822B1C91C14CB2B0088A01A /* GithubSignupViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GithubSignupViewModel.swift; sourceTree = "<group>"; };
 		C822B1D81C14CBEA0088A01A /* Protocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
 		C822B1DB1C14CD1C0088A01A /* DefaultImplementations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultImplementations.swift; sourceTree = "<group>"; };
 		C822B1DE1C14CEAA0088A01A /* BindingExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BindingExtensions.swift; sourceTree = "<group>"; };
@@ -610,6 +639,14 @@
 		C843A08C1C1CE39900CBA4BD /* GitHubSearchRepositoriesAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GitHubSearchRepositoriesAPI.swift; sourceTree = "<group>"; };
 		C843A08D1C1CE39900CBA4BD /* GitHubSearchRepositoriesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GitHubSearchRepositoriesViewController.swift; sourceTree = "<group>"; };
 		C843A0921C1CE58700CBA4BD /* UINavigationController+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Extensions.swift"; sourceTree = "<group>"; };
+		C849EF611C3190360048AC4A /* RxExample-iOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "RxExample-iOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C849EF631C3190360048AC4A /* RxExample_iOSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxExample_iOSTests.swift; sourceTree = "<group>"; };
+		C849EF651C3190360048AC4A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C849EF7E1C3193B10048AC4A /* GitHubSignupViewController1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GitHubSignupViewController1.swift; sourceTree = "<group>"; };
+		C849EF7F1C3193B10048AC4A /* GithubSignupViewModel1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GithubSignupViewModel1.swift; sourceTree = "<group>"; };
+		C849EF841C3195180048AC4A /* GitHubSignupViewController2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GitHubSignupViewController2.swift; sourceTree = "<group>"; };
+		C849EF851C3195180048AC4A /* GithubSignupViewModel2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GithubSignupViewModel2.swift; sourceTree = "<group>"; };
+		C849EF9B1C31A8750048AC4A /* String+URL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+URL.swift"; sourceTree = "<group>"; };
 		C84CC52D1BDC344100E06A64 /* ElementAt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElementAt.swift; sourceTree = "<group>"; };
 		C84CC56B1BDD08F500E06A64 /* LockOwnerType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LockOwnerType.swift; sourceTree = "<group>"; };
 		C84CC56C1BDD08F500E06A64 /* SynchronizedDisposeType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SynchronizedDisposeType.swift; sourceTree = "<group>"; };
@@ -638,7 +675,6 @@
 		C88C788E1B3F14FD0061C5AB /* Changeset.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Changeset.swift; sourceTree = "<group>"; };
 		C88C78941B3F20DB0061C5AB /* Differentiator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Differentiator.swift; sourceTree = "<group>"; };
 		C88C78981B4012A90061C5AB /* SectionModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionModelType.swift; sourceTree = "<group>"; };
-		C890A6571AEBD26B00AFF7E6 /* GitHubSignupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = GitHubSignupViewController.swift; path = Views/GitHubSignupViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		C890A65C1AEC084100AFF7E6 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		C891A2C81C07160C00DDD09D /* Timeout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Timeout.swift; sourceTree = "<group>"; };
 		C89464281BC6C2B00055219D /* Cancelable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cancelable.swift; sourceTree = "<group>"; };
@@ -806,6 +842,11 @@
 		C89465581BC6C2BC0055219D /* UITextField+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITextField+Rx.swift"; sourceTree = "<group>"; };
 		C89465591BC6C2BC0055219D /* UITextView+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITextView+Rx.swift"; sourceTree = "<group>"; };
 		C89465601BC6C2BC0055219D /* RxCocoa.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RxCocoa.h; sourceTree = "<group>"; };
+		C89C2BD51C321DA200EBC99C /* TestScheduler+MarbleTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TestScheduler+MarbleTests.swift"; sourceTree = "<group>"; };
+		C89C2BD81C32231A00EBC99C /* MockGitHubAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockGitHubAPI.swift; sourceTree = "<group>"; };
+		C89C2BD91C32231A00EBC99C /* MockWireframe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockWireframe.swift; sourceTree = "<group>"; };
+		C89C2BDA1C32231A00EBC99C /* NotImplementedStubs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotImplementedStubs.swift; sourceTree = "<group>"; };
+		C89C2BDB1C32231A00EBC99C /* ValidationResult+Equatable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ValidationResult+Equatable.swift"; sourceTree = "<group>"; };
 		C89CDB611BCC45DC002063D9 /* ShareReplay1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ShareReplay1.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		C89CDB621BCC45DC002063D9 /* SkipUntil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SkipUntil.swift; sourceTree = "<group>"; };
 		C8A2A2C71B4049E300F11F09 /* PseudoRandomGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PseudoRandomGenerator.swift; sourceTree = "<group>"; };
@@ -873,6 +914,16 @@
 				C8A468F21B8A8C2600BF917B /* RxCocoa.framework in Frameworks */,
 				C8A468F11B8A8C2600BF917B /* RxBlocking.framework in Frameworks */,
 				C8A468F31B8A8C2600BF917B /* RxSwift.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C849EF5E1C3190360048AC4A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C849EF981C31A3340048AC4A /* RxTests.framework in Frameworks */,
+				C849EF971C31A3270048AC4A /* RxCocoa.framework in Frameworks */,
+				C849EF961C31A3240048AC4A /* RxSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1009,6 +1060,7 @@
 				C836EB911B8A7A3700AB941D /* NoModule */,
 				C88C78611B3EB0A00061C5AB /* RxDataSourceStarterKit */,
 				C83366DF1AD0293800C668A7 /* RxExample */,
+				C849EF621C3190360048AC4A /* RxExample-iOSTests */,
 				C83366DE1AD0293800C668A7 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -1019,6 +1071,7 @@
 				C83366DD1AD0293800C668A7 /* RxExample-iOS.app */,
 				C88BB8DC1B07E6C90064D411 /* RxExample.app */,
 				C8297E691B6CF905000589EA /* RxExample-iOS-no-module.app */,
+				C849EF611C3190360048AC4A /* RxExample-iOSTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1033,6 +1086,7 @@
 				07E3C2321B03605B0010338D /* Dependencies.swift */,
 				C890A65C1AEC084100AFF7E6 /* ViewController.swift */,
 				C833670F1AD029AE00C668A7 /* Example.swift */,
+				C849EF9B1C31A8750048AC4A /* String+URL.swift */,
 				C8DF92D11B0B2F8C009BCF9A /* OSX */,
 				C8DF92C71B0B2F84009BCF9A /* iOS */,
 				C83366E01AD0293800C668A7 /* Supporting Files */,
@@ -1096,6 +1150,37 @@
 				C843A0921C1CE58700CBA4BD /* UINavigationController+Extensions.swift */,
 			);
 			path = GitHubSearchRepositories;
+			sourceTree = "<group>";
+		};
+		C849EF621C3190360048AC4A /* RxExample-iOSTests */ = {
+			isa = PBXGroup;
+			children = (
+				C89C2BD71C32231A00EBC99C /* Mocks */,
+				C849EF631C3190360048AC4A /* RxExample_iOSTests.swift */,
+				C89C2BD51C321DA200EBC99C /* TestScheduler+MarbleTests.swift */,
+				C849EF651C3190360048AC4A /* Info.plist */,
+			);
+			path = "RxExample-iOSTests";
+			sourceTree = "<group>";
+		};
+		C849EF7C1C3193B10048AC4A /* UsingDriver > 2 */ = {
+			isa = PBXGroup;
+			children = (
+				C849EF841C3195180048AC4A /* GitHubSignupViewController2.swift */,
+				C849EF851C3195180048AC4A /* GithubSignupViewModel2.swift */,
+			);
+			name = "UsingDriver > 2";
+			path = UsingDriver;
+			sourceTree = "<group>";
+		};
+		C849EF7D1C3193B10048AC4A /* UsingVanillaObservables > 1 */ = {
+			isa = PBXGroup;
+			children = (
+				C849EF7E1C3193B10048AC4A /* GitHubSignupViewController1.swift */,
+				C849EF7F1C3193B10048AC4A /* GithubSignupViewModel1.swift */,
+			);
+			name = "UsingVanillaObservables > 1";
+			path = UsingVanillaObservables;
 			sourceTree = "<group>";
 		};
 		C859B9A21B45C5D900D012D7 /* PartialUpdates */ = {
@@ -1170,9 +1255,9 @@
 		C86E2F4C1AE5A10900C31024 /* GitHubSignup */ = {
 			isa = PBXGroup;
 			children = (
-				C822B1C91C14CB2B0088A01A /* GithubSignupViewModel.swift */,
+				C849EF7C1C3193B10048AC4A /* UsingDriver > 2 */,
+				C849EF7D1C3193B10048AC4A /* UsingVanillaObservables > 1 */,
 				C822B1D81C14CBEA0088A01A /* Protocols.swift */,
-				C890A6571AEBD26B00AFF7E6 /* GitHubSignupViewController.swift */,
 				C822B1DB1C14CD1C0088A01A /* DefaultImplementations.swift */,
 				C822B1DE1C14CEAA0088A01A /* BindingExtensions.swift */,
 			);
@@ -1581,6 +1666,17 @@
 			path = Proxies;
 			sourceTree = "<group>";
 		};
+		C89C2BD71C32231A00EBC99C /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				C89C2BD81C32231A00EBC99C /* MockGitHubAPI.swift */,
+				C89C2BD91C32231A00EBC99C /* MockWireframe.swift */,
+				C89C2BDA1C32231A00EBC99C /* NotImplementedStubs.swift */,
+				C89C2BDB1C32231A00EBC99C /* ValidationResult+Equatable.swift */,
+			);
+			path = Mocks;
+			sourceTree = "<group>";
+		};
 		C8BCD3E11C14820B005F1280 /* OSX simple example */ = {
 			isa = PBXGroup;
 			children = (
@@ -1681,6 +1777,24 @@
 			productReference = C83366DD1AD0293800C668A7 /* RxExample-iOS.app */;
 			productType = "com.apple.product-type.application";
 		};
+		C849EF601C3190360048AC4A /* RxExample-iOSTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C849EF7B1C3190360048AC4A /* Build configuration list for PBXNativeTarget "RxExample-iOSTests" */;
+			buildPhases = (
+				C849EF5D1C3190360048AC4A /* Sources */,
+				C849EF5E1C3190360048AC4A /* Frameworks */,
+				C849EF5F1C3190360048AC4A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C849EF671C3190360048AC4A /* PBXTargetDependency */,
+			);
+			name = "RxExample-iOSTests";
+			productName = "RxExample-iOSTests";
+			productReference = C849EF611C3190360048AC4A /* RxExample-iOSTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		C88BB8B91B07E6C90064D411 /* RxExample-OSX */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = C88BB8D91B07E6C90064D411 /* Build configuration list for PBXNativeTarget "RxExample-OSX" */;
@@ -1705,12 +1819,16 @@
 		C83366D51AD0293800C668A7 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0700;
+				LastSwiftUpdateCheck = 0720;
 				LastUpgradeCheck = 0710;
 				ORGANIZATIONNAME = "Krunoslav Zaher";
 				TargetAttributes = {
 					C83366DC1AD0293800C668A7 = {
 						CreatedOnToolsVersion = 6.2;
+					};
+					C849EF601C3190360048AC4A = {
+						CreatedOnToolsVersion = 7.2;
+						TestTargetID = C83366DC1AD0293800C668A7;
 					};
 				};
 			};
@@ -1736,6 +1854,7 @@
 				C83366DC1AD0293800C668A7 /* RxExample-iOS */,
 				C88BB8B91B07E6C90064D411 /* RxExample-OSX */,
 				C8297E2D1B6CF905000589EA /* RxExample-iOS-no-module */,
+				C849EF601C3190360048AC4A /* RxExample-iOSTests */,
 			);
 		};
 /* End PBXProject section */
@@ -1886,6 +2005,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		C849EF5F1C3190360048AC4A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C88BB8D01B07E6C90064D411 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1910,7 +2036,6 @@
 				C89464D41BC6C2B00055219D /* ObserveOn.swift in Sources */,
 				C894659B1BC6C2BC0055219D /* UIStepper+Rx.swift in Sources */,
 				C8A7501F1B94E77C00D8D046 /* RxDataSourceStarterKit.swift in Sources */,
-				C822B1CB1C14CB2B0088A01A /* GithubSignupViewModel.swift in Sources */,
 				C89464F61BC6C2B00055219D /* AnonymousObserver.swift in Sources */,
 				C89464C81BC6C2B00055219D /* DistinctUntilChanged.swift in Sources */,
 				C89464CF1BC6C2B00055219D /* Just.swift in Sources */,
@@ -1966,6 +2091,7 @@
 				C8297E351B6CF905000589EA /* NumberSectionView.swift in Sources */,
 				C894659E1BC6C2BC0055219D /* UITextField+Rx.swift in Sources */,
 				C89464D11BC6C2B00055219D /* Merge.swift in Sources */,
+				C849EF811C3193B10048AC4A /* GitHubSignupViewController1.swift in Sources */,
 				C89464A71BC6C2B00055219D /* BinaryDisposable.swift in Sources */,
 				C8297E361B6CF905000589EA /* RootViewController.swift in Sources */,
 				C89464BB1BC6C2B00055219D /* AnonymousObservable.swift in Sources */,
@@ -1973,6 +2099,7 @@
 				C87335781BF7CC0C00E536E6 /* ObservableConvertibleType+Differentiator.swift in Sources */,
 				C8297E371B6CF905000589EA /* RxCollectionViewSectionedDataSource.swift in Sources */,
 				B1B7C3D01BE006870076934E /* TakeLast.swift in Sources */,
+				C849EF9E1C31A8750048AC4A /* String+URL.swift in Sources */,
 				C8C4B4CC1C17728200828BD5 /* MessageSentObserver.swift in Sources */,
 				C8297E381B6CF905000589EA /* Changeset.swift in Sources */,
 				C8297E391B6CF905000589EA /* CollectionViewImageCell.swift in Sources */,
@@ -2026,6 +2153,7 @@
 				C89464DB1BC6C2B00055219D /* Sample.swift in Sources */,
 				C80DA3411C30B23600C588B9 /* HistoricalSchedulerTimeConverter.swift in Sources */,
 				C89465791BC6C2BC0055219D /* NSObject+Rx.swift in Sources */,
+				C849EF891C3195180048AC4A /* GithubSignupViewModel2.swift in Sources */,
 				C89464F31BC6C2B00055219D /* Observable+Time.swift in Sources */,
 				C811C8A21C24D82600A2DDD4 /* DeallocObservable.swift in Sources */,
 				C80DA3431C30B23600C588B9 /* VirtualTimeScheduler.swift in Sources */,
@@ -2107,7 +2235,6 @@
 				C8297E481B6CF905000589EA /* Differentiator.swift in Sources */,
 				C8297E491B6CF905000589EA /* WikipediaSearchCell.swift in Sources */,
 				C89464D81BC6C2B00055219D /* Reduce.swift in Sources */,
-				C8297E4A1B6CF905000589EA /* GitHubSignupViewController.swift in Sources */,
 				C89465941BC6C2BC0055219D /* UIGestureRecognizer+Rx.swift in Sources */,
 				C89464A91BC6C2B00055219D /* DisposeBag.swift in Sources */,
 				C8297E4C1B6CF905000589EA /* APIWrappersViewController.swift in Sources */,
@@ -2158,6 +2285,7 @@
 				C8F8C48B1C277F460047640B /* CalculatorState.swift in Sources */,
 				C894657F1BC6C2BC0055219D /* RxCollectionViewReactiveArrayDataSource.swift in Sources */,
 				C8297E551B6CF905000589EA /* RxTableViewSectionedDataSource.swift in Sources */,
+				C849EF831C3193B10048AC4A /* GithubSignupViewModel1.swift in Sources */,
 				C8297E561B6CF905000589EA /* WikipediaPage.swift in Sources */,
 				C8297E571B6CF905000589EA /* Randomizer.swift in Sources */,
 				C89464C31BC6C2B00055219D /* Concat.swift in Sources */,
@@ -2177,6 +2305,7 @@
 				C8C4B4BF1C17724A00828BD5 /* _RXObjCRuntime.m in Sources */,
 				C894659F1BC6C2BC0055219D /* UITextView+Rx.swift in Sources */,
 				C83D73E11C1DBC2A003DC470 /* ScheduledItem.swift in Sources */,
+				C849EF871C3195180048AC4A /* GitHubSignupViewController2.swift in Sources */,
 				C894658C1BC6C2BC0055219D /* RxTextViewDelegateProxy.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2196,14 +2325,15 @@
 				0706E19B1B17361100BA2D3A /* UIImageView+Extensions.swift in Sources */,
 				C843A08E1C1CE39900CBA4BD /* GitHubSearchRepositoriesAPI.swift in Sources */,
 				C859B9AE1B45CFAB00D012D7 /* NumberSectionView.swift in Sources */,
+				C849EF801C3193B10048AC4A /* GitHubSignupViewController1.swift in Sources */,
 				C8DF92E51B0B32DA009BCF9A /* RootViewController.swift in Sources */,
 				C822B1DC1C14CD1C0088A01A /* DefaultImplementations.swift in Sources */,
 				C88C788F1B3F14FD0061C5AB /* Changeset.swift in Sources */,
 				C8C46DA81B47F7110020D71E /* CollectionViewImageCell.swift in Sources */,
-				C822B1CA1C14CB2B0088A01A /* GithubSignupViewModel.swift in Sources */,
 				C822B1E31C14E4810088A01A /* SimpleTableViewExampleViewController.swift in Sources */,
 				C8C46DAC1B47F7110020D71E /* WikipediaSearchViewController.swift in Sources */,
 				07A5C3DB1B70B703001EFE5C /* CalculatorViewController.swift in Sources */,
+				C849EF861C3195180048AC4A /* GitHubSignupViewController2.swift in Sources */,
 				0706E19D1B176EE200BA2D3A /* String+extensions.swift in Sources */,
 				C8F8C49D1C277F4F0047640B /* CalculatorAction.swift in Sources */,
 				C822B1DF1C14CEAA0088A01A /* BindingExtensions.swift in Sources */,
@@ -2212,11 +2342,13 @@
 				C8BCD3DF1C1480E9005F1280 /* Operators.swift in Sources */,
 				C843A0901C1CE39900CBA4BD /* GitHubSearchRepositoriesViewController.swift in Sources */,
 				C803973A1BD3E17D009D8B26 /* ActivityIndicator.swift in Sources */,
+				C849EF821C3193B10048AC4A /* GithubSignupViewModel1.swift in Sources */,
 				C8F8C4A01C277F5A0047640B /* Operation.swift in Sources */,
 				C84B913D1B8A282000C9CCCF /* RxCollectionViewSectionedAnimatedDataSource.swift in Sources */,
 				C822B1D91C14CBEA0088A01A /* Protocols.swift in Sources */,
 				C8A750201B94E78200D8D046 /* RxDataSourceStarterKit.swift in Sources */,
 				C8BCD3E61C14A95E005F1280 /* NumbersViewController.swift in Sources */,
+				C849EF881C3195180048AC4A /* GithubSignupViewModel2.swift in Sources */,
 				C809E97A1BE6841C0058D948 /* Wireframe.swift in Sources */,
 				0706E1961B14AF5100BA2D3A /* DetailViewController.swift in Sources */,
 				C843A0931C1CE58700CBA4BD /* UINavigationController+Extensions.swift in Sources */,
@@ -2232,7 +2364,6 @@
 				C890A65D1AEC084100AFF7E6 /* ViewController.swift in Sources */,
 				C88C78951B3F20DB0061C5AB /* Differentiator.swift in Sources */,
 				C8C46DAA1B47F7110020D71E /* WikipediaSearchCell.swift in Sources */,
-				C890A6581AEBD26B00AFF7E6 /* GitHubSignupViewController.swift in Sources */,
 				B1604CB51BE49F8D002E1279 /* DownloadableImage.swift in Sources */,
 				075F13101B4E9D5A000D7861 /* APIWrappersViewController.swift in Sources */,
 				07E300071B14995F00F00100 /* TableViewController.swift in Sources */,
@@ -2241,6 +2372,7 @@
 				C87335771BF7CC0B00E536E6 /* ObservableConvertibleType+Differentiator.swift in Sources */,
 				C859B9A41B45C5D900D012D7 /* PartialUpdatesViewController.swift in Sources */,
 				07E3C2331B03605B0010338D /* Dependencies.swift in Sources */,
+				C849EF9C1C31A8750048AC4A /* String+URL.swift in Sources */,
 				C84B913A1B8A282000C9CCCF /* RxTableViewSectionedReloadDataSource.swift in Sources */,
 				C86E2F451AE5A0CA00C31024 /* WikipediaAPI.swift in Sources */,
 				C8DF92CD1B0B2F84009BCF9A /* AppDelegate.swift in Sources */,
@@ -2249,6 +2381,26 @@
 				C8A2A2CB1B404A1200F11F09 /* Randomizer.swift in Sources */,
 				C8BCD3EA1C14B02A005F1280 /* SimpleValidationViewController.swift in Sources */,
 				07E300091B149A2A00F00100 /* User.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C849EF5D1C3190360048AC4A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C89C2BD61C321DA200EBC99C /* TestScheduler+MarbleTests.swift in Sources */,
+				C849EF901C319E9A0048AC4A /* GithubSignupViewModel1.swift in Sources */,
+				C849EF641C3190360048AC4A /* RxExample_iOSTests.swift in Sources */,
+				C849EF921C319E9A0048AC4A /* DefaultImplementations.swift in Sources */,
+				C849EF991C31A63C0048AC4A /* Wireframe.swift in Sources */,
+				C89C2BDC1C32231A00EBC99C /* MockGitHubAPI.swift in Sources */,
+				C89C2BDE1C32231A00EBC99C /* NotImplementedStubs.swift in Sources */,
+				C849EF9A1C31A7680048AC4A /* ActivityIndicator.swift in Sources */,
+				C849EF951C319E9D0048AC4A /* GithubSignupViewModel2.swift in Sources */,
+				C89C2BDD1C32231A00EBC99C /* MockWireframe.swift in Sources */,
+				C89C2BDF1C32231A00EBC99C /* ValidationResult+Equatable.swift in Sources */,
+				C849EF911C319E9A0048AC4A /* Protocols.swift in Sources */,
+				C849EF9F1C31A8750048AC4A /* String+URL.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2264,6 +2416,7 @@
 				C88BB8BB1B07E6C90064D411 /* SearchResultViewModel.swift in Sources */,
 				C88BB8BC1B07E6C90064D411 /* HtmlParsing.swift in Sources */,
 				C8E9D2AF1BD3FD960079D0DB /* ActivityIndicator.swift in Sources */,
+				C849EF9D1C31A8750048AC4A /* String+URL.swift in Sources */,
 				C809E9881BE69C3F0058D948 /* ControlEvent.swift in Sources */,
 				C88BB8BE1B07E6C90064D411 /* ImageService.swift in Sources */,
 				B1604CC31BE5B8BD002E1279 /* ReachabilityService.swift in Sources */,
@@ -2283,6 +2436,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		C849EF671C3190360048AC4A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C83366DC1AD0293800C668A7 /* RxExample-iOS */;
+			targetProxy = C849EF661C3190360048AC4A /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		C8297E661B6CF905000589EA /* Debug */ = {
@@ -2448,6 +2609,54 @@
 			};
 			name = Release;
 		};
+		C849EF681C3190360048AC4A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "RxExample-iOSTests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "kzaher.RxExample-iOSTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RxExample-iOS.app/RxExample-iOS";
+			};
+			name = Debug;
+		};
+		C849EF691C3190360048AC4A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "RxExample-iOSTests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "kzaher.RxExample-iOSTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RxExample-iOS.app/RxExample-iOS";
+			};
+			name = Release;
+		};
+		C849EF6A1C3190360048AC4A /* Release-Tests */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "RxExample-iOSTests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "kzaher.RxExample-iOSTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RxExample-iOS.app/RxExample-iOS";
+			};
+			name = "Release-Tests";
+		};
 		C88BB8DA1B07E6C90064D411 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2572,6 +2781,16 @@
 				C83367001AD0293900C668A7 /* Debug */,
 				C83367011AD0293900C668A7 /* Release */,
 				C8DF92EE1B0B3DFA009BCF9A /* Release-Tests */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C849EF7B1C3190360048AC4A /* Build configuration list for PBXNativeTarget "RxExample-iOSTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C849EF681C3190360048AC4A /* Debug */,
+				C849EF691C3190360048AC4A /* Release */,
+				C849EF6A1C3190360048AC4A /* Release-Tests */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
