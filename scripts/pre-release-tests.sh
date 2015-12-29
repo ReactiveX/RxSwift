@@ -104,7 +104,7 @@ done
 
 # compile and run playgrounds
 
-. scripts/playgrounds.sh
+. scripts/validate-playgrounds.sh
 
 if [ "${RELEASE_TEST}" -eq 1 ]; then
 	mdast -u mdast-slug -u mdast-validate-links ./*.md
