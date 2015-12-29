@@ -178,11 +178,9 @@ public struct Drive {
  This method can be used in unit tests to ensure that driver is using mock schedulers instead of 
  maind schedulers.
  
- To be able to use it, please import RxCocoa using testable attribute
- 
-    @testable import RxCocoa
+ **This shouldn't be used in normal release builds.**
 */
-func driveOnScheduler(scheduler: SchedulerType, action: () -> ()) {
+public func driveOnScheduler(scheduler: SchedulerType, action: () -> ()) {
     let originalObserveOnScheduler = driverObserveOnScheduler
     let originalSubscribeOnScheduler = driverSubscribeOnScheduler
 

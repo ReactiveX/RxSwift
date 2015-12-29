@@ -10,7 +10,7 @@ import XCTest
 
 import RxSwift
 import RxTests
-@testable import RxCocoa
+import RxCocoa
 
 let resolution: NSTimeInterval = 0.2 // seconds
 
