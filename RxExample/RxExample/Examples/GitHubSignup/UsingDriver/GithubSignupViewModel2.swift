@@ -12,6 +12,18 @@ import RxSwift
 import RxCocoa
 #endif
 
+/**
+This is example where view model is mutable. Some consider this to be MVVM, some consider this to be Presenter,
+ or some other name.
+ In the end, it doesn't matter.
+ 
+ If you want to take a look at example using "immutable VMs", take a look at `TableViewWithEditingCommands` example.
+ 
+ This uses Driver builder for sequences.
+ 
+ Please note that there is no explicit state, outputs are defined using inputs and dependencies.
+ Please note that there is no dispose bag, because no subscription is being made.
+*/
 class GithubSignupViewModel2 {
     // outputs {
 

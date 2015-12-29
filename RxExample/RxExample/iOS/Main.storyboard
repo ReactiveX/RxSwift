@@ -224,10 +224,10 @@
             </objects>
             <point key="canvasLocation" x="-2066" y="429"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Table View With Editing Commands View Controller-->
         <scene sceneID="Mhm-lU-Uhj">
             <objects>
-                <viewController id="bZo-ey-Nha" customClass="TableViewController" customModule="RxExample_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="bZo-ey-Nha" customClass="TableViewWithEditingCommandsViewController" customModule="RxExample_iOS" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="uYL-wL-0i2"/>
                         <viewControllerLayoutGuide type="bottom" id="LL7-L6-PAN"/>
@@ -393,7 +393,7 @@
 
 To do this automatically, check out the corresponding `Driver` example.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -795,15 +795,15 @@ To do this automatically, check out the corresponding `Driver` example.</string>
                                             <rect key="frame" x="0.0" y="0.0" width="287" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Master Detail &amp; reactive DataSource" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="x4u-zK-muO">
-                                                    <rect key="frame" x="15" y="6" width="262.5" height="19.5"/>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="TableView with editing" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="x4u-zK-muO">
+                                                    <rect key="frame" x="15" y="6" width="162" height="19.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Table View Master Detail Example" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="nuf-1K-ITV">
-                                                    <rect key="frame" x="15" y="25.5" width="177" height="13.5"/>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Model editing using observable sequences, master/detail" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="nuf-1K-ITV">
+                                                    <rect key="frame" x="15" y="25.5" width="270" height="13.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -1721,7 +1721,7 @@ This is only showcase app, not intended for production purposes.</string>
 
 Check out the same example using vanilla observable sequences.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>

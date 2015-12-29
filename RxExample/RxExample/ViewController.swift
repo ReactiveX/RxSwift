@@ -87,6 +87,11 @@ class ViewController: OSViewController {
             */
             let time = dispatch_time(DISPATCH_TIME_NOW, Int64(0.2 * Double(NSEC_PER_SEC)))
             dispatch_after(time, mainQueue) {
+                // If this fails for you while testing, and you've been clicking fast, it's ok, just click slower,
+                // this is a debug build with resource tracing turned on.
+                //
+                // If this crashes when you've been clicking slowly, then it would be interesting to find out why.
+                // ¯\_(ツ)_/¯
                 assert(resourceCount <= numberOfResourcesThatShouldRemain, "Resources weren't cleaned properly")
             }
         }

@@ -13,7 +13,6 @@ import RxSwift
 
 class DetailViewController: ViewController {
     
-    weak var masterVC: TableViewController!
     var user: User!
     
     let $ = Dependencies.sharedDependencies
