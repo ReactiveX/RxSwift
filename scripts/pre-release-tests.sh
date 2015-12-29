@@ -13,6 +13,8 @@ if [ "$1" == "r" ]; then
 	RELEASE_TEST=1
 fi
 
+./scripts/validate-headers.swift
+
 # ios 7 sim
 #if [ `xcrun simctl list | grep "${DEFAULT_IOS7_SIMULATOR}" | wc -l` == 0 ]; then
 #	xcrun simctl create $DEFAULT_IOS7_SIMULATOR 'iPhone 4s' 'com.apple.CoreSimulator.SimRuntime.iOS-7-1'

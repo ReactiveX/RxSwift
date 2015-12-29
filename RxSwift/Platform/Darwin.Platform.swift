@@ -1,3 +1,11 @@
+//
+//  Darwin.Platform.swift
+//  Benchmark
+//
+//  Created by Krunoslav Zaher on 12/29/15.
+//  Copyright © 2015 Krunoslav Zaher. All rights reserved.
+//
+
 #if os(OSX) || os(iOS) || os(tvOS) || os(watchOS)
 
     import Darwin

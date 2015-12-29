@@ -61,22 +61,25 @@
          location = "group:automation-tests.sh">
       </FileRef>
       <FileRef
-         location = "group:test-linux.sh">
-      </FileRef>
-      <FileRef
          location = "group:common.sh">
       </FileRef>
       <FileRef
-         location = "group:/Users/kzaher/Projects/RxSwift/scripts/validate-playgrounds.sh">
+         location = "group:package-swift-manager.swift">
       </FileRef>
       <FileRef
          location = "group:pre-release-tests.sh">
       </FileRef>
       <FileRef
-         location = "group:validate-podspec.sh">
+         location = "group:test-linux.sh">
       </FileRef>
       <FileRef
-         location = "group:package-swift-manager.swift">
+         location = "group:validate-headers.swift">
+      </FileRef>
+      <FileRef
+         location = "group:validate-playgrounds.sh">
+      </FileRef>
+      <FileRef
+         location = "group:validate-podspec.sh">
       </FileRef>
    </Group>
    <Group

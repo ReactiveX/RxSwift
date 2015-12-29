@@ -1,9 +1,9 @@
 //
-//  Observable+Blocking.swift
+//  ObservableConvertibleType+Blocking.swift
 //  RxBlocking
 //
 //  Created by Krunoslav Zaher on 7/12/15.
-//  Copyright (c) 2015 Krunoslav Zaher. All rights reserved.
+//  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
 import Foundation

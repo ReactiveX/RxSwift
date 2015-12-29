@@ -1,10 +1,10 @@
 #!/usr/bin/swift
 //
 //  package-swift-manager.swift
-//  
+//  scripts
 //
 //  Created by Krunoslav Zaher on 12/26/15.
-//
+//  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
 import Foundation

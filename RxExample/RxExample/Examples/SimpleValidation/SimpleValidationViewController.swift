@@ -1,5 +1,5 @@
 //
-//  SimpleValidation.swift
+//  SimpleValidationViewController.swift
 //  RxExample
 //
 //  Created by Krunoslav Zaher on 12/6/15.

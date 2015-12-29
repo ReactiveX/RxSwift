@@ -1,5 +1,5 @@
 //
-//  Buffer.swift
+//  Window.swift
 //  Rx
 //
 //  Created by Junior B. on 29/10/15.

@@ -2,7 +2,7 @@
 //  DownloadableImage.swift
 //  RxExample
 //
-//  Created by Vodovozov Gleb on 31.10.2015.
+//  Created by Vodovozov Gleb on 10/31/15.
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 

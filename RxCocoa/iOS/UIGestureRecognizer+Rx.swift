@@ -3,7 +3,7 @@
 //  Touches
 //
 //  Created by Carlos García on 10/6/15.
-//  Copyright (c) 2015 Krunoslav Zaher. All rights reserved.
+//  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
 #if os(iOS) || os(tvOS)

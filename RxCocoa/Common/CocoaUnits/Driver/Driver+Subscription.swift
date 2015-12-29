@@ -1,5 +1,5 @@
 //
-//  Driver+Extensions.swift
+//  Driver+Subscription.swift
 //  Rx
 //
 //  Created by Krunoslav Zaher on 9/19/15.
