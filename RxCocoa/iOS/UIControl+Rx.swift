@@ -67,7 +67,7 @@ extension UIControl {
         return rx_controlEvent(controlEvents)
     }
     
-    func rx_value<T>(getter getter: () -> T, setter: T -> Void) -> ControlProperty<T> {
+    func rx_value<T: Equatable>(getter getter: () -> T, setter: T -> Void) -> ControlProperty<T> {
         let source: Observable<T> = Observable.create { [weak self] observer in
             guard let control = self else {
                 observer.on(.Completed)
@@ -83,7 +83,9 @@ extension UIControl {
             return AnonymousDisposable {
                 controlTarget.dispose()
             }
-        }.takeUntil(rx_deallocated)
+        }
+            .distinctUntilChanged()
+            .takeUntil(rx_deallocated)
         
         return ControlProperty<T>(values: source, valueSink: AnyObserver { event in
             MainScheduler.ensureExecutingOnScheduler()
