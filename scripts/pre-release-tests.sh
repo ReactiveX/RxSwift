@@ -97,7 +97,7 @@ done
 
 for scheme in "RxExample-iOS"
 do
-    for configuration in ${CONFIGURATIONS[@]}
+    for configuration in "Debug"
     do
         rx ${scheme} ${configuration} $DEFAULT_IOS9_SIMULATOR test
     done
