@@ -1,5 +1,5 @@
 //
-//  Mocks.swift
+//  NotImplementedStubs.swift
 //  RxExample
 //
 //  Created by Krunoslav Zaher on 12/29/15.

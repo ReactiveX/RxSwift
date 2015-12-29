@@ -1,5 +1,5 @@
 //
-//  GitHubSignupViewController.swift
+//  GitHubSignupViewController1.swift
 //  RxExample
 //
 //  Created by Krunoslav Zaher on 4/25/15.
