@@ -208,7 +208,7 @@ extension CLLocationManager {
 
 extension UIControl {
 
-    public func rx_controlEvents(controlEvents: UIControlEvents) -> ControlEvent<Void> {}
+    public func rx_controlEvent(controlEvents: UIControlEvents) -> ControlEvent<Void> {}
 
     public var rx_enabled: ObserverOf<Bool> {}
 }
@@ -418,7 +418,7 @@ extension UIActivityIndicatorView {
 ```swift
 extension NSControl {
 
-    public var rx_controlEvents: ControlEvent<()> {}
+    public var rx_controlEvent: ControlEvent<()> {}
 
 }
 ```
