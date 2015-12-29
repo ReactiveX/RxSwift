@@ -42,7 +42,7 @@ extension TestScheduler {
 
     */
     func parseEventsAndTimes<T>(timeline: String, values: [String: T], errors: [String: ErrorType] = [:]) -> [[Recorded<Event<T>>]] {
-        print("parsing: \(timeline)")
+        //print("parsing: \(timeline)")
         typealias RecordedEvent = Recorded<Event<T>>
         let timelines = timeline.componentsSeparatedByString("|")
 
@@ -82,7 +82,7 @@ extension TestScheduler {
                     return (state.time + tickIncrement, state.events + [nextEvent])
                 }
 
-                print("parsed: \(events)")
+                //print("parsed: \(events)")
                 return events
             }
     }
