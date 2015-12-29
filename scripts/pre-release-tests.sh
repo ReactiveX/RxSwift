@@ -95,6 +95,14 @@ do
 	done
 done
 
+for scheme in "RxExample-iOS"
+do
+    for configuration in ${CONFIGURATIONS[@]}
+    do
+        rx ${scheme} ${configuration} $DEFAULT_IOS9_SIMULATOR test
+    done
+done
+
 # make sure osx builds
 for scheme in "RxExample-OSX"
 do
