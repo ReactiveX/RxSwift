@@ -23,7 +23,7 @@ extension ControlTests {
 extension ControlTests {
     func testControl_DelegateEventCompletesOnDealloc() {
         let createView: () -> NSControl = { NSControl(frame: CGRectMake(0, 0, 1, 1)) }
-        ensureEventDeallocated(createView) { (view: NSControl) in view.rx_controlEvents }
+        ensureEventDeallocated(createView) { (view: NSControl) in view.rx_controlEvent }
     }
 }
 
