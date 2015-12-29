@@ -163,8 +163,8 @@ extension ObservableTimeTest {
             xs.throttle(10, scheduler: scheduler)
         }
 
-        let correct: [Recorded<Event<Int>>] = [
-            completed(300)
+        let correct = [
+            completed(300, Int.self)
         ]
 
         XCTAssertEqual(res.events, correct)
@@ -188,8 +188,8 @@ extension ObservableTimeTest {
             xs.throttle(10, scheduler: scheduler)
         }
 
-        let correct: [Recorded<Event<Int>>] = [
-            error(300, testError)
+        let correct = [
+            error(300, testError, Int.self)
         ]
 
         XCTAssertEqual(res.events, correct)

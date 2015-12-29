@@ -1335,7 +1335,7 @@ extension ObservableMultipleTest {
             [xs1, xs2].concat()
         }
         
-        let messages: [Recorded<Event<Int>>] = [
+        let messages = [
             next(220, 2),
             next(240, 3),
             completed(250)
