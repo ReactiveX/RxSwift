@@ -11,5 +11,5 @@ import Foundation
 /**
 Virtual time type.
 */
-public typealias Time = Int
+public typealias TestTime = Int
 

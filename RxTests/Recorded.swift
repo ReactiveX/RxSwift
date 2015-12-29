@@ -19,14 +19,14 @@ public struct Recorded<Element>
     /**
     Gets the virtual time the value was produced on.
     */
-    public let time: Time
+    public let time: TestTime
 
     /**
     Gets the recorded value.
     */
     public let value: Element
     
-    public init(time: Time, event: Element) {
+    public init(time: TestTime, event: Element) {
         self.time = time
         self.value = event
     }

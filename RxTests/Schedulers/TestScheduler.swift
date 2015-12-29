@@ -31,13 +31,19 @@ public class TestScheduler : VirtualTimeScheduler<TestSchedulerVirtualTimeConver
         public static let disposed = 1000
     }
 
+    private let _simulateProcessingDelay: Bool
+
     /**
      Creates a new test scheduler.
      
      - parameter initialClock: Initial value for the clock.
+     - parameter resolution: Real time [NSTimeInterval] = ticks * resolution 
+     - parameter simulateProcessingDelay: When true, if something is scheduled right `now`, 
+        it will be scheduled to `now + 1` in virtual time.
     */
-    public init(initialClock: Time) {
-        super.init(initialClock: initialClock, converter: TestSchedulerVirtualTimeConverter())
+    public init(initialClock: TestTime, resolution: Double = 1.0, simulateProcessingDelay: Bool = true) {
+        _simulateProcessingDelay = simulateProcessingDelay
+        super.init(initialClock: initialClock, converter: TestSchedulerVirtualTimeConverter(resolution: resolution))
     }
 
     /**
@@ -75,7 +81,7 @@ public class TestScheduler : VirtualTimeScheduler<TestSchedulerVirtualTimeConver
 
      - parameter time: Absolute virtual time at which to execute the action.
      */
-    public func scheduleAt(time: Time, action: () -> Void) {
+    public func scheduleAt(time: TestTime, action: () -> Void) {
         self.scheduleAbsoluteVirtual((), time: time, action: { () -> Disposable in
             action()
             return NopDisposable.instance
@@ -86,7 +92,7 @@ public class TestScheduler : VirtualTimeScheduler<TestSchedulerVirtualTimeConver
     Adjusts time of scheduling before adding item to schedule queue. If scheduled time is `<= clock`, then it is scheduled at `clock + 1`
     */
     override public func adjustScheduledTime(time: VirtualTime) -> VirtualTime {
-        return time <= clock ? clock + 1 : time
+        return time <= clock ? clock + (_simulateProcessingDelay ? 1 : 0) : time
     }
 
     /**
@@ -98,7 +104,7 @@ public class TestScheduler : VirtualTimeScheduler<TestSchedulerVirtualTimeConver
     - parameter disposed: Virtual time at which to dispose the subscription.
     - returns: Observer with timestamped recordings of events that were received during the virtual time window when the subscription to the source sequence was active.
     */
-    public func start<Element>(created: Time, subscribed: Time, disposed: Time, create: () -> Observable<Element>) -> TestableObserver<Element> {
+    public func start<Element>(created: TestTime, subscribed: TestTime, disposed: TestTime, create: () -> Observable<Element>) -> TestableObserver<Element> {
         var source : Observable<Element>? = nil
         var subscription : Disposable? = nil
         let observer = createObserver(Element)
@@ -134,7 +140,7 @@ public class TestScheduler : VirtualTimeScheduler<TestSchedulerVirtualTimeConver
      - parameter disposed: Virtual time at which to dispose the subscription.
      - returns: Observer with timestamped recordings of events that were received during the virtual time window when the subscription to the source sequence was active.
      */
-    public func start<Element>(disposed: Time, create: () -> Observable<Element>) -> TestableObserver<Element> {
+    public func start<Element>(disposed: TestTime, create: () -> Observable<Element>) -> TestableObserver<Element> {
         return start(Defaults.created, subscribed: Defaults.subscribed, disposed: disposed, create: create)
     }
 
