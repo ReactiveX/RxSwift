@@ -1,7 +1,7 @@
 Units
 =====
 
-This document will try to describe what are units, why are they a useful concept, how to use them and how to create them.
+This document will try to describe what units are, why they are a useful concept, how to use and create them.
 
 * [Why](#why)
 * [How do they work](#how-do-they-work)
@@ -13,9 +13,9 @@ This document will try to describe what are units, why are they a useful concept
 
 ## Why
 
-Swift has a powerful type system that can be used to improve correctness and stability of applications and make using Rx more intuitive and straightforward experience.
+Swift has a powerful type system that can be used to improve correctness and stability of applications and make using Rx a more intuitive and straightforward experience.
 
-**Units are so far specific only to RxCocoa project, but the same principles could be implemented easily in other Rx implementations if necessary. There is no special private API magic needed.**
+**Units are so far specific only to the (RxCocoa)[https://github.com/ReactiveX/RxSwift/tree/master/RxCocoa] project, but the same principles could be implemented easily in other Rx implementations if necessary. There is no private API magic needed.**
 
 **Units are totally optional, you can use raw observable sequences everywhere in your program and all RxCocoa APIs work with observable sequences.**
 
@@ -30,9 +30,9 @@ Here are some of the properties that are important when writing Cocoa/UIKit appl
 
 ## How do they work
 
-In it's core it's just a struct with a reference to observable sequence.
+In its core it's just a struct with a reference to observable sequence.
 
-You can think of them as a kind of builder pattern for observable sequences. When sequence is built, calling `.asObservable()` will transform unit into vanilla observable sequence.
+You can think of them as a kind of builder pattern for observable sequences. When sequence is built, calling `.asObservable()` will transform a unit into a vanilla observable sequence.
 
 ## Why are they named Units
 
@@ -48,8 +48,8 @@ Analogies:
 Physical unit is a pair of a number and a corresponding dimensional unit.<br/>
 Rx unit is a pair of an observable sequence and a corresponding struct that describes observable sequence properties.
 
-Numbers are a basic composition glue when working with physical units. Usually real or complex numbers.<br/>
-Observable sequences are basic composition glue when working with rx units.
+Numbers are the basic composition glue when working with physical units: usually real or complex numbers.<br/>
+Observable sequences are the basic composition glue when working with rx units.
 
 Physical units and [dimensional analysis](https://en.wikipedia.org/wiki/Dimensional_analysis#Checking_equations_that_involve_dimensions) can alleviate certain class of errors during complex calculations.<br/>
 Type checking rx units can alleviate certain class of logic errors when writing reactive programs.
@@ -68,7 +68,7 @@ Physics units define operations by using corresponding number operations. E.g.
 
 Rx units define operations by using corresponding observable sequence operations (this is how operators work internally). E.g.
 
-`map` operation on `Driver` is defined using `map` operation on observable sequence.
+The `map` operation on `Driver` is defined using the `map` operation on its observable sequence.
 
 ```swift
 let d: Driver<Int> = Drive.just(11)
@@ -151,7 +151,7 @@ This is the most elaborate unit. It's intention is to provide an intuitive way t
 It's intended use case was to model sequences that drive your application.
 
 E.g.
-* Drive UI from CoreDate model
+* Drive UI from CoreData model
 * Drive UI using values from other UI elements (bindings)
 ...
 
@@ -193,12 +193,12 @@ The intended behavior of this code was to:
 * contact server and fetch a list of user results (once per query)
 * then bind the results to two UI elements, results table view and a label that displays number of results
 
-So what are problems with this code:
-* in case `fetchAutoCompleteItems` observable sequence errors out (connection failed, or parsing error), this error would unbind everything and UI wouldn't respond any more to new queries.
+So what are the problems with this code:
+* in case the `fetchAutoCompleteItems` observable sequence errors out (connection failed, or parsing error), this error would unbind everything and UI wouldn't respond any more to new queries.
 * in case `fetchAutoCompleteItems` returns results on some background thread, results would be bound to UI elements from a background thread and that could cause non deterministic crashes.
-* results are bound to two UI elements, and that means that for each user query two HTTP requests would be made, one for each UI element, which is not intended behavior.
+* results are bound to two UI elements, which means that for each user query two HTTP requests would be made, one for each UI element, which is not intended behavior.
 
-The correct code actually looks something like this.
+A more appropriate version of the code would look like this:
 
 ```swift
 let results = query.rx_text
@@ -255,7 +255,7 @@ This first `asDriver` method converts `ControlProperty` unit to `Driver` unit.
 query.rx_text.asDriver()
 ```
 
-Notice that there wasn't anything special that needed to be done. `ControlProperty` has all of the properties of `Driver` unit has plus some more. Underlying observable sequence is just wrapped as `Driver` unit, and that's it.
+Notice that there wasn't anything special that needed to be done. `Driver` has all of the properties of the `ControlProperty` unit plus some more. The underlying observable sequence is just wrapped as `Driver` unit, and that's it.
 
 The second change is
 
@@ -280,6 +280,6 @@ return Driver(raw: safeSequence)           // wrap it up
 
 The final piece is `drive` instead of using `bindTo`.
 
-`drive` is defined only on `Driver` unit. That means that if you see `drive` somewhere in code, observable sequence that can never error out and observes elements on main thread is being bound to UI element. Which is exactly what is wanted.
+`drive` is defined only on `Driver` unit. It means that if you see `drive` somewhere in code, observable sequence that can never error out and observes elements on main thread is being bound to UI element. Which is exactly what is wanted.
 
-Theoretically, somebody could define `drive` method to work on `ObservableType` or some other interface, so creating a temporary definition with `let results: Driver<[Results]> = ...` before binding to UI elements would be necessary for complete proof, but we'll leave it up for reader to decide is that a realistic scenario or not.
+Theoretically, somebody could define `drive` method to work on `ObservableType` or some other interface, so creating a temporary definition with `let results: Driver<[Results]> = ...` before binding to UI elements would be necessary for complete proof, but we'll leave it up for reader to decide whether that is a realistic scenario.
