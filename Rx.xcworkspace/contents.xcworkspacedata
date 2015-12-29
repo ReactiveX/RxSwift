@@ -118,6 +118,9 @@
       <FileRef
          location = "group:Warnings.md">
       </FileRef>
+      <FileRef
+         location = "group:Linux.md">
+      </FileRef>
    </Group>
    <FileRef
       location = "group:Rx.playground">
