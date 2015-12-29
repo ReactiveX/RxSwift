@@ -172,7 +172,8 @@ extension ControlTests {
 // UILabel
 extension ControlTests {
     func testLabel_HasWeakReference() {
-        ensureControlObserverHasWeakReference(UILabel(), { (label: UILabel) -> AnyObserver<NSAttributedString?> in label.rx_attributedText }, { Variable<NSAttributedString?>(nil).asObservable() })
+        let variable = Variable<NSAttributedString?>(nil)
+        ensureControlObserverHasWeakReference(UILabel(), { (label: UILabel) -> AnyObserver<NSAttributedString?> in label.rx_attributedText }, { variable.asObservable() })
     }
 
     func testLabel_NextElementsSetsValue() {

@@ -26,7 +26,7 @@ class ControlTests : RxTest {
 
             let property = propertySelector(control)
 
-            let disposable = variable.bindTo(property)
+            let disposable = variable.asObservable().bindTo(property)
 
             _ = property.subscribe(onNext: { n in
                 lastReturnedPropertyValue = n

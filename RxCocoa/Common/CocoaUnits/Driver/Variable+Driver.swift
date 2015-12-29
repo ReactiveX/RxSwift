@@ -19,7 +19,7 @@ extension Variable {
      */
     @warn_unused_result(message="http://git.io/rxs.uo")
     public func asDriver() -> Driver<E> {
-        let source = self
+        let source = self.asObservable()
             .observeOn(driverObserveOnScheduler)
         return Driver(source)
     }

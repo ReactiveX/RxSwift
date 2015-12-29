@@ -15,7 +15,7 @@ class VariableTest : RxTest {
         let a = Variable(1)
         let b = Variable(2)
         
-        let c = Observable.combineLatest(a, b, resultSelector: +)
+        let c = Observable.combineLatest(a.asObservable(), b.asObservable(), resultSelector: +)
         
         var latestValue: Int?
         
@@ -41,6 +41,26 @@ class VariableTest : RxTest {
         XCTAssertEqual(latestValue!, 14)
     }
 
+    func testVariable_sendsCompletedOnDealloc() {
+        var a = Variable(1)
+
+        var latest = 0
+        var completed = false
+        a.asObservable().subscribe(onNext: { n in
+            latest = n
+        }, onCompleted: {
+            completed = true
+        })
+
+        XCTAssertEqual(latest, 1)
+        XCTAssertFalse(completed)
+
+        a = Variable(2)
+
+        XCTAssertEqual(latest, 1)
+        XCTAssertTrue(completed)
+    }
+
     func testVariable_READMEExample() {
         
         // Two simple Rx variables
@@ -49,7 +69,7 @@ class VariableTest : RxTest {
         let b /*: Observable<Int>*/ = Variable(2)
         
         // Computed third variable (or sequence)
-        let c /*: Observable<Int>*/ = Observable.combineLatest(a, b) { $0 + $1 }
+        let c /*: Observable<Int>*/ = Observable.combineLatest(a.asObservable(), b.asObservable()) { $0 + $1 }
         
         // Reading elements from c.
         // This is just a demo example.

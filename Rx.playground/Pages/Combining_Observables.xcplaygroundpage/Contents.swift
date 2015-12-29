@@ -255,9 +255,10 @@ example("switchLatest") {
     let var2 = Variable(200)
 
     // var3 is like an Observable<Observable<Int>>
-    let var3 = Variable(var1)
+    let var3 = Variable(var1.asObservable())
 
     let d = var3
+        .asObservable()
         .switchLatest()
         .subscribe {
             print($0)
@@ -268,7 +269,7 @@ example("switchLatest") {
     var1.value = 3
     var1.value = 4
 
-    var3.value = var2
+    var3.value = var2.asObservable()
 
     var2.value = 201
 

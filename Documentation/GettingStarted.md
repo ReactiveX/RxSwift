@@ -700,7 +700,7 @@ This isn't something that should be practiced often, and is a bad code smell, bu
 
   let kittens = Variable(firstKitten) // again back in Rx monad
 
-  kittens
+  kittens.asObservable()
     .map { kitten in
       return kitten.purr()
     }
@@ -873,12 +873,14 @@ Variable wraps a [`Subject`](http://reactivex.io/documentation/subject.html). Mo
 
 It will also broadcast it's current value immediately on subscription.
 
+After variable is deallocated, it will complete the observable sequence returned from `.asObservable()`.
+
 ```swift
 let variable = Variable(0)
 
 print("Before first subscription ---")
 
-variable
+variable.asObservable()
     .subscribeNext { n in
         print("First \(n)")
     }
