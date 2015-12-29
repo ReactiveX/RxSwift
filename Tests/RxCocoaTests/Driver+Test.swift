@@ -48,8 +48,12 @@ extension DriverTest {
                     expectation1.fulfill()
                 }
             }
+
+            var subscribing = true
             _ = driver.asDriver().asObservable().subscribe { e in
-                XCTAssertTrue(isMainThread())
+                if !subscribing {
+                    XCTAssertTrue(isMainThread())
+                }
                 switch e {
                 case .Next(let element):
                     secondElements.append(element)
@@ -59,6 +63,8 @@ extension DriverTest {
                     expectation2.fulfill()
                 }
             }
+
+            subscribing = false
 
             // Subscription should be made on main scheduler
             // so this will make sure execution is continued after 
@@ -240,6 +246,20 @@ extension DriverTest {
 
 // MARK: conversions
 extension DriverTest {
+    func testVariableAsDriver() {
+        let hotObservable = Variable(1)
+        let driver = Driver.zip(hotObservable.asDriver(), Driver.of(0, 0)) { all in
+            return all.0
+        }
+
+        let results = subscribeTwiceOnBackgroundSchedulerAndOnlyOneSubscription(driver) {
+            hotObservable.value = 1
+            hotObservable.value = 2
+        }
+
+        XCTAssertEqual(results, [1, 1])
+    }
+
     func testAsDriver_onErrorJustReturn() {
         let hotObservable = BackgroundThreadPrimitiveHotObservable<Int>()
         let driver = hotObservable.asDriver(onErrorJustReturn: -1)

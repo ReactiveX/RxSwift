@@ -42,8 +42,16 @@ extension DriverConvertibleType {
         - if there are no subscribers, it will release sequence computation resources
 
     `Driver<Element>` can be considered a builder pattern for observable sequences that drive the application.
+ 
+    If observable sequence has produced at least one element, after new subscription is made last produced element will be
+    immediately replayed on the same thread on which the subscription was made. 
+ 
+    When using `drive*`, `subscribe*` and `bind*` family of methods, they should always be called from main thread.
+ 
+    If `drive*`, `subscribe*` and `bind*` are called from background thread, it is possible that initial replay 
+    will happen on background thread, and subsequent events will arrive on main thread.
 
-    To find out more about units and how to use them, please go to `Documentation/Units.md`.
+    To find out more about units and how to use them, please visit `Documentation/Units.md`.
 */
 public struct Driver<Element> : DriverConvertibleType {
     public typealias E = Element
