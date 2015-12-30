@@ -64,7 +64,7 @@
          location = "group:common.sh">
       </FileRef>
       <FileRef
-         location = "group:package-swift-manager.swift">
+         location = "group:/Users/kzaher/Projects/RxSwift/scripts/package-spm.swift">
       </FileRef>
       <FileRef
          location = "group:pre-release-tests.sh">

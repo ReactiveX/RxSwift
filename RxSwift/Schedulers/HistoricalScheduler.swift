@@ -8,10 +8,17 @@
 
 import Foundation
 
+/**
+  Provides a virtual time scheduler that uses `NSDate` for absolute time and `NSTimeInterval` for relative time.
+*/
 public class HistoricalScheduler : VirtualTimeScheduler<HistoricalSchedulerTimeConverter> {
 
+    /**
+      Creates a new historical scheduler with initial clock value.
+     
+     - parameter initialClock: Initial value for virtual clock.
+    */
     public init(initialClock: RxTime = NSDate(timeIntervalSince1970: 0)) {
-        //print(initialClock)
         super.init(initialClock: initialClock, converter: HistoricalSchedulerTimeConverter())
     }
     
