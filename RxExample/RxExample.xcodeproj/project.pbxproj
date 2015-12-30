@@ -17,6 +17,9 @@
 		07E300071B14995F00F00100 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E300061B14995F00F00100 /* TableViewController.swift */; };
 		07E300091B149A2A00F00100 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E300081B149A2A00F00100 /* User.swift */; };
 		07E3C2331B03605B0010338D /* Dependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E3C2321B03605B0010338D /* Dependencies.swift */; };
+		84C225A81C3402E5008724EC /* UITextView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89465591BC6C2BC0055219D /* UITextView+Rx.swift */; };
+		84C225AB1C340474008724EC /* RxTextStorageDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C225AA1C340474008724EC /* RxTextStorageDelegateProxy.swift */; };
+		84C225AD1C34048E008724EC /* NSTextStorage+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C225AC1C34048E008724EC /* NSTextStorage+Rx.swift */; };
 		9B4612951C106CF100BBBB4E /* UIActivityIndicatorView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B4612941C106CF100BBBB4E /* UIActivityIndicatorView+Rx.swift */; };
 		B1604CB51BE49F8D002E1279 /* DownloadableImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1604CB41BE49F8D002E1279 /* DownloadableImage.swift */; };
 		B1604CC21BE5B895002E1279 /* ReachabilityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18F3BE11BDB2E8F000AAC79 /* ReachabilityService.swift */; };
@@ -322,7 +325,6 @@
 		C894659C1BC6C2BC0055219D /* UISwitch+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89465561BC6C2BC0055219D /* UISwitch+Rx.swift */; };
 		C894659D1BC6C2BC0055219D /* UITableView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89465571BC6C2BC0055219D /* UITableView+Rx.swift */; };
 		C894659E1BC6C2BC0055219D /* UITextField+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89465581BC6C2BC0055219D /* UITextField+Rx.swift */; };
-		C894659F1BC6C2BC0055219D /* UITextView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89465591BC6C2BC0055219D /* UITextView+Rx.swift */; };
 		C89634081B95BE50002AE38C /* RxBlocking.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C8A468EF1B8A8BD000BF917B /* RxBlocking.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C89634091B95BE50002AE38C /* RxCocoa.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C8A468ED1B8A8BCC00BF917B /* RxCocoa.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C896340A1B95BE51002AE38C /* RxSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C8A468EB1B8A8BC900BF917B /* RxSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -553,6 +555,8 @@
 		07E300061B14995F00F00100 /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		07E300081B149A2A00F00100 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		07E3C2321B03605B0010338D /* Dependencies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Dependencies.swift; path = Examples/Dependencies.swift; sourceTree = "<group>"; };
+		84C225AA1C340474008724EC /* RxTextStorageDelegateProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxTextStorageDelegateProxy.swift; sourceTree = "<group>"; };
+		84C225AC1C34048E008724EC /* NSTextStorage+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSTextStorage+Rx.swift"; sourceTree = "<group>"; };
 		9B4612941C106CF100BBBB4E /* UIActivityIndicatorView+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIActivityIndicatorView+Rx.swift"; sourceTree = "<group>"; };
 		B1604CB41BE49F8D002E1279 /* DownloadableImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadableImage.swift; sourceTree = "<group>"; };
 		B1604CC81BE5BBFA002E1279 /* UIImageView+DownloadableImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+DownloadableImage.swift"; sourceTree = "<group>"; };
@@ -1514,6 +1518,7 @@
 				C89465571BC6C2BC0055219D /* UITableView+Rx.swift */,
 				C89465581BC6C2BC0055219D /* UITextField+Rx.swift */,
 				C89465591BC6C2BC0055219D /* UITextView+Rx.swift */,
+				84C225AC1C34048E008724EC /* NSTextStorage+Rx.swift */,
 				9B4612941C106CF100BBBB4E /* UIActivityIndicatorView+Rx.swift */,
 			);
 			path = iOS;
@@ -1548,6 +1553,7 @@
 		C894653D1BC6C2BC0055219D /* Proxies */ = {
 			isa = PBXGroup;
 			children = (
+				84C225AA1C340474008724EC /* RxTextStorageDelegateProxy.swift */,
 				C894653E1BC6C2BC0055219D /* RxActionSheetDelegateProxy.swift */,
 				C894653F1BC6C2BC0055219D /* RxAlertViewDelegateProxy.swift */,
 				C89465401BC6C2BC0055219D /* RxCollectionViewDataSourceProxy.swift */,
@@ -2046,6 +2052,7 @@
 				C894658E1BC6C2BC0055219D /* UIAlertView+Rx.swift in Sources */,
 				C83974231BF77413004F02CC /* NSObject+Rx+KVORepresentable.swift in Sources */,
 				C8297E461B6CF905000589EA /* Example.swift in Sources */,
+				84C225AD1C34048E008724EC /* NSTextStorage+Rx.swift in Sources */,
 				C89465081BC6C2B00055219D /* PublishSubject.swift in Sources */,
 				C89464FC1BC6C2B00055219D /* RxMutableBox.swift in Sources */,
 				C809E97B1BE6841C0058D948 /* Wireframe.swift in Sources */,
@@ -2085,6 +2092,7 @@
 				C8297E4E1B6CF905000589EA /* RxCollectionViewSectionedAnimatedDataSource.swift in Sources */,
 				C89CDB711BCC45E5002063D9 /* ShareReplay1.swift in Sources */,
 				C89464BD1BC6C2B00055219D /* Buffer.swift in Sources */,
+				84C225AB1C340474008724EC /* RxTextStorageDelegateProxy.swift in Sources */,
 				C89464B31BC6C2B00055219D /* Errors.swift in Sources */,
 				C8F6A1301BEF9DA3007DF367 /* MainScheduler.swift in Sources */,
 				C89464C51BC6C2B00055219D /* Debug.swift in Sources */,
@@ -2121,6 +2129,7 @@
 				C8F6A12C1BEF9DA3007DF367 /* ConcurrentMainScheduler.swift in Sources */,
 				C8F8C48B1C277F460047640B /* CalculatorState.swift in Sources */,
 				C894657F1BC6C2BC0055219D /* RxCollectionViewReactiveArrayDataSource.swift in Sources */,
+				84C225A81C3402E5008724EC /* UITextView+Rx.swift in Sources */,
 				C8297E551B6CF905000589EA /* RxTableViewSectionedDataSource.swift in Sources */,
 				C8297E561B6CF905000589EA /* WikipediaPage.swift in Sources */,
 				C8297E571B6CF905000589EA /* Randomizer.swift in Sources */,
@@ -2139,7 +2148,6 @@
 				C89465691BC6C2BC0055219D /* ControlProperty.swift in Sources */,
 				C89465061BC6C2B00055219D /* SchedulerType.swift in Sources */,
 				C8C4B4BF1C17724A00828BD5 /* _RXObjCRuntime.m in Sources */,
-				C894659F1BC6C2BC0055219D /* UITextView+Rx.swift in Sources */,
 				C83D73E11C1DBC2A003DC470 /* ScheduledItem.swift in Sources */,
 				C894658C1BC6C2BC0055219D /* RxTextViewDelegateProxy.swift in Sources */,
 			);
