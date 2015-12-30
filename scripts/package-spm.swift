@@ -18,7 +18,7 @@ let allowedExtensions = [
     ".h",
     ".m",
 ]
-// Those tests are dependant on conditional compilation logic and it's hard to handle them automatically
+// Those tests are dependent on conditional compilation logic and it's hard to handle them automatically
 // They usually test some internal state, so it should be ok to exclude them for now.
 let excludedTests = [
     "testConcat_TailRecursionCollection",
