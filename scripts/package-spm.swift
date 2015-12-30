@@ -1,6 +1,6 @@
 #!/usr/bin/swift
 //
-//  package-swift-manager.swift
+//  package-spm.swift
 //  scripts
 //
 //  Created by Krunoslav Zaher on 12/26/15.
@@ -8,6 +8,17 @@
 //
 
 import Foundation
+
+/**
+This script packages normal Rx* structure into `Sources` directory.
+
+    * creates and updates links to normal project structure
+    * builds unit tests `main.swift`
+
+Unfortunately, Swift support for Linux, libdispatch and package manager are still quite unstable,
+so certain class of unit tests is excluded for now.
+
+*/
 
 // It is kind of ironic that we need to additionally package for package manager :/
 
