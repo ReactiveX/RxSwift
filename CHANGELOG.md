@@ -126,6 +126,10 @@ let (
     ...
 
     If you want to continue using free functions form, you can define your free function aliases for `Observable` factory methods (basically copy deprecated methods).
+* Deprecates `UIAlertView` extensions.
+  * These extensions could be stored locally if needed.
+* Deprecates `UIActionSheet` extensions.
+  * These extensions could be stored locally if needed.
 * Deprecates `rx_controlEvents` in favor of `rx_controlEvent`.
 * Deprecates `MainScheduler.sharedInstance` in favor of `MainScheduler.instance`
 * Deprecates `ConcurrentMainScheduler.sharedInstance` in favor of `ConcurrentMainScheduler.instance`

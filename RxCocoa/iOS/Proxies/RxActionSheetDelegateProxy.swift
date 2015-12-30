@@ -13,6 +13,7 @@ import UIKit
 import RxSwift
 #endif
 
+@available(*, deprecated=2.0.0, message="This class is deprecated by Apple. Removing official support.")
 class RxActionSheetDelegateProxy : DelegateProxy
                                  , UIActionSheetDelegate
                                  , DelegateProxyType {
