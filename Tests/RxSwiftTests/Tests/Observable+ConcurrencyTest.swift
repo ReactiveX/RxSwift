@@ -34,7 +34,7 @@ extension ObservableConcurrencyTest {
 
     func runDispatchQueueSchedulerTests(tests: (scheduler: SerialDispatchQueueScheduler) -> Disposable) {
         let scheduler = SerialDispatchQueueScheduler(internalSerialQueueName: "testQueue1")
-        let _ = runDispatchQueueSchedulerTests(scheduler, tests: tests).scopedDispose
+        runDispatchQueueSchedulerTests(scheduler, tests: tests).dispose()
     }
 
     func runDispatchQueueSchedulerTests(scheduler: SerialDispatchQueueScheduler, tests: (scheduler: SerialDispatchQueueScheduler) -> Disposable) -> Disposable {

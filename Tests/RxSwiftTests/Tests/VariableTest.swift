@@ -46,11 +46,11 @@ class VariableTest : RxTest {
 
         var latest = 0
         var completed = false
-        a.asObservable().subscribe(onNext: { n in
-            latest = n
-        }, onCompleted: {
-            completed = true
-        })
+        _ = a.asObservable().subscribe(onNext: { n in
+                latest = n
+            }, onCompleted: {
+                completed = true
+            })
 
         XCTAssertEqual(latest, 1)
         XCTAssertFalse(completed)

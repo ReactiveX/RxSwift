@@ -135,6 +135,7 @@ let (
 * Deprecates `ConcurrentMainScheduler.sharedInstance` in favor of `ConcurrentMainScheduler.instance`
 * Deprecates factory methods from `Drive` in favor of `Driver` factory methods.
 * Deprecates `sampleLatest` in favor of `withLatestFrom`.
+* Deprecates `ScopedDisposable` and `scopedDispose()` in favor of `DisposeBag`.
 
 #### Fixed
 
