@@ -85,7 +85,7 @@ extension BagTest {
     }
 
     func testBag_deletionsFromEnd() {
-        for i in 0 ..< 50 {
+        for i in 0 ..< 30 {
             for j in 0 ... i {
                 var numberForEachActions = 0
                 var numberObservers = 0
@@ -188,7 +188,7 @@ extension BagTest {
     func testBag_complexityTestFromFront() {
         var bag = Bag<Disposable>()
 
-        let limit = 100000
+        let limit = 10000
 
         var increment = 0
 
@@ -205,7 +205,7 @@ extension BagTest {
     func testBag_complexityTestFromEnd() {
         var bag = Bag<Disposable>()
 
-        let limit = 100000
+        let limit = 10000
 
         var increment = 0
 

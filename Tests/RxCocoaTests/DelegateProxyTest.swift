@@ -145,7 +145,7 @@ class DelegateProxyTest : RxTest {
         
         view.delegate = mock
         
-        let completed = RxMutableBox(false)
+        var completed = false
         
         autoreleasepool {
             XCTAssertTrue(!mock.respondsToSelector("threeDView(threeDView:didGetXXX:"))
@@ -156,14 +156,14 @@ class DelegateProxyTest : RxTest {
                 .rx_proxy
                 .observe("threeDView:didGetXXX:")
                 .subscribeCompleted {
-                    completed.value = true
+                    completed = true
                 }
             
             view.delegate?.threeDView?(view, didGetXXX: sentArgument)
         }
-        XCTAssertTrue(!completed.value)
+        XCTAssertTrue(!completed)
         view = nil
-        XCTAssertTrue(completed.value)
+        XCTAssertTrue(completed)
     }
 }
 
