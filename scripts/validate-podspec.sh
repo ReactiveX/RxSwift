@@ -22,8 +22,7 @@ do
 done
 popd
 
-#BRANCH=develop
-BRANCH=feature\\/RxTests
+BRANCH=develop
 
 for TARGET in ${TARGETS[@]}
 do
@@ -32,13 +31,13 @@ do
   rm       ~/.cocoapods/repos/master/Specs/${TARGET}/${VERSION}/* || echo
 
   cat $TARGET.podspec |
-  sed -E "s/s.source[^\}]+\}/s.source           = { :git => '\/Users\/kzaher\/Projects\/Rx', :branch => \'${BRANCH}\' }/" > ~/.cocoapods/repos/master/Specs/${TARGET}/${VERSION}/${TARGET}.podspec
+  sed -E "s/s.source[^\}]+\}/s.source           = { :git => '\/Users\/kzaher\/Projects\/RxSwift', :branch => \'${BRANCH}\' }/" > ~/.cocoapods/repos/master/Specs/${TARGET}/${VERSION}/${TARGET}.podspec
 done
 
 function validate() {
     local PODSPEC=$1
 
-    pod lib lint $PODSPEC #--verbose --no-clean
+    pod lib lint $PODSPEC --verbose --no-clean
 }
 
 for TARGET in ${TARGETS[@]}
