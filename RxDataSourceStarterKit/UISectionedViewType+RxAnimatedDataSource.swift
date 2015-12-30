@@ -1,5 +1,5 @@
 //
-//  UISectionedView+RxAnimatedDataSource.swift
+//  UISectionedViewType+RxAnimatedDataSource.swift
 //  RxExample
 //
 //  Created by Krunoslav Zaher on 11/14/15.

@@ -3,7 +3,7 @@
 //  RxSwift
 //
 //  Created by Krunoslav Zaher on 6/25/15.
-//  Copyright (c) 2015 Krunoslav Zaher. All rights reserved.
+//  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
 import Foundation
@@ -32,7 +32,7 @@ class SkipCountSink<ElementType, O: ObserverType where O.E == ElementType> : Sin
                 forwardOn(.Next(value))
             }
             else {
-                remaining--
+                remaining -= 1
             }
         case .Error:
             forwardOn(event)
@@ -64,8 +64,8 @@ class SkipCount<Element>: Producer<Element> {
 
 // time version
 
-class SkipTimeSink<ElementType, S: SchedulerType, O: ObserverType where O.E == ElementType> : Sink<O>, ObserverType {
-    typealias Parent = SkipTime<ElementType, S>
+class SkipTimeSink<ElementType, O: ObserverType where O.E == ElementType> : Sink<O>, ObserverType {
+    typealias Parent = SkipTime<ElementType>
     typealias Element = ElementType
 
     let parent: Parent
@@ -109,14 +109,12 @@ class SkipTimeSink<ElementType, S: SchedulerType, O: ObserverType where O.E == E
     }
 }
 
-class SkipTime<Element, S: SchedulerType>: Producer<Element> {
-    typealias TimeInterval = S.TimeInterval
-    
+class SkipTime<Element>: Producer<Element> {
     let source: Observable<Element>
-    let duration: TimeInterval
-    let scheduler: S
+    let duration: RxTimeInterval
+    let scheduler: SchedulerType
     
-    init(source: Observable<Element>, duration: TimeInterval, scheduler: S) {
+    init(source: Observable<Element>, duration: RxTimeInterval, scheduler: SchedulerType) {
         self.source = source
         self.scheduler = scheduler
         self.duration = duration

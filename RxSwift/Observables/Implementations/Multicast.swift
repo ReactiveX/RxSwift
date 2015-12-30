@@ -3,7 +3,7 @@
 //  Rx
 //
 //  Created by Krunoslav Zaher on 2/27/15.
-//  Copyright (c) 2015 Krunoslav Zaher. All rights reserved.
+//  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
 import Foundation
@@ -23,7 +23,7 @@ class MulticastSink<S: SubjectType, O: ObserverType>: Sink<O>, ObserverType {
     func run() -> Disposable {
         do {
             let subject = try _parent._subjectSelector()
-            let connectable = ConnectableObservable(source: _parent._source, subject: subject)
+            let connectable = ConnectableObservableAdapter(source: _parent._source, subject: subject)
             
             let observable = try _parent._selector(connectable)
             

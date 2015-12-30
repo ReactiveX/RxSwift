@@ -15,7 +15,7 @@ import RxSwift
 Protocol that enables extension of `ControlEvent`.
 */
 public protocol ControlEventType : ObservableType {
-    
+
     /**
     - returns: `ControlEvent` interface
     */
@@ -31,10 +31,10 @@ public protocol ControlEventType : ObservableType {
     - it won't send any initial value on subscription
     - it will `Complete` sequence on control being deallocated
     - it never errors out
-    - it delivers events on `MainScheduler.sharedInstance`
- 
+    - it delivers events on `MainScheduler.instance`
+
     **The implementation of `ControlEvent` will ensure that sequence of events is being subscribed on main scheduler
-     (`subscribeOn(ConcurrentMainScheduler.sharedInstance)` behavior).**
+     (`subscribeOn(ConcurrentMainScheduler.instance)` behavior).**
 
     **It is implementor's responsibility to make sure that that all other properties enumerated above are satisfied.**
 
@@ -55,19 +55,19 @@ public struct ControlEvent<PropertyType> : ControlEventType {
      - returns: Control event created with a observable sequence of events.
      */
     public init<Ev: ObservableType where Ev.E == E>(events: Ev) {
-        _events = events.subscribeOn(ConcurrentMainScheduler.sharedInstance)
+        _events = events.subscribeOn(ConcurrentMainScheduler.instance)
     }
-    
+
     /**
     Subscribes an observer to control events.
-    
+
     - parameter observer: Observer to subscribe to events.
     - returns: Disposable object that can be used to unsubscribe the observer from receiving control events.
     */
     public func subscribe<O : ObserverType where O.E == E>(observer: O) -> Disposable {
         return _events.subscribe(observer)
     }
-    
+
     /**
     - returns: `Observable` interface.
     */
@@ -75,7 +75,7 @@ public struct ControlEvent<PropertyType> : ControlEventType {
     public func asObservable() -> Observable<E> {
         return _events
     }
-    
+
     /**
     - returns: `ControlEvent` interface.
     */

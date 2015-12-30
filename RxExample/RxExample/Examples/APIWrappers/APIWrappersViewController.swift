@@ -3,7 +3,7 @@
 //  RxExample
 //
 //  Created by Carlos García on 8/7/15.
-//  Copyright (c) 2015 Krunoslav Zaher. All rights reserved.
+//  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
 import UIKit
@@ -51,6 +51,8 @@ class APIWrappersViewController: ViewController {
 
     @IBOutlet weak var mypan: UIPanGestureRecognizer!
 
+    @IBOutlet weak var textView: UITextView!
+
     let manager = CLLocationManager()
 
     override func viewDidLoad() {
@@ -62,8 +64,10 @@ class APIWrappersViewController: ViewController {
         let av = UIAlertView(title: "Title", message: "The message", delegate: nil, cancelButtonTitle: "Cancel", otherButtonTitles: "OK", "Two", "Three", "Four", "Five")
 
         openActionSheet.rx_tap
-            .subscribeNext { [unowned self] x in
-                ash.showInView(self.view)
+            .subscribeNext { [weak self] x in
+                if let view = self?.view {
+                    ash.showInView(view)
+                }
             }
             .addDisposableTo(disposeBag)
 
@@ -184,7 +188,6 @@ class APIWrappersViewController: ViewController {
         textField.rx_text
             .subscribeNext { [weak self] x in
                 self?.debug("UITextField text \(x)")
-                self?.textField.resignFirstResponder()
             }
             .addDisposableTo(disposeBag)
 
@@ -197,6 +200,14 @@ class APIWrappersViewController: ViewController {
             }
             .addDisposableTo(disposeBag)
 
+
+        // MARK: UITextView
+
+        textView.rx_text
+            .subscribeNext { [weak self] x in
+                self?.debug("UITextView event \(x)")
+            }
+            .addDisposableTo(disposeBag)
 
         // MARK: CLLocationManager
 

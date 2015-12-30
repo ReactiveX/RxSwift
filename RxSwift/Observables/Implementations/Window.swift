@@ -1,5 +1,5 @@
 //
-//  Buffer.swift
+//  Window.swift
 //  Rx
 //
 //  Created by Junior B. on 29/10/15.
@@ -8,12 +8,12 @@
 
 import Foundation
 
-class WindowTimeCountSink<S: SchedulerType, Element, O: ObserverType where O.E == Observable<Element>>
+class WindowTimeCountSink<Element, O: ObserverType where O.E == Observable<Element>>
     : Sink<O>
     , ObserverType
     , LockOwnerType
     , SynchronizedOnType {
-    typealias Parent = WindowTimeCount<Element, S>
+    typealias Parent = WindowTimeCount<Element>
     typealias E = Element
     
     private let _parent: Parent
@@ -75,7 +75,8 @@ class WindowTimeCountSink<S: SchedulerType, Element, O: ObserverType where O.E =
             if (_count == _parent._count) {
                 newWindow = true
                 _count = 0
-                newId = ++_windowId
+                _windowId += 1
+                newId = _windowId
                 self.startNewWindowAndCompleteCurrentOne()
             }
             
@@ -129,14 +130,14 @@ class WindowTimeCountSink<S: SchedulerType, Element, O: ObserverType where O.E =
     }
 }
 
-class WindowTimeCount<Element, S: SchedulerType> : Producer<Observable<Element>> {
+class WindowTimeCount<Element> : Producer<Observable<Element>> {
     
-    private let _timeSpan: S.TimeInterval
+    private let _timeSpan: RxTimeInterval
     private let _count: Int
-    private let _scheduler: S
+    private let _scheduler: SchedulerType
     private let _source: Observable<Element>
     
-    init(source: Observable<Element>, timeSpan: S.TimeInterval, count: Int, scheduler: S) {
+    init(source: Observable<Element>, timeSpan: RxTimeInterval, count: Int, scheduler: SchedulerType) {
         _source = source
         _timeSpan = timeSpan
         _count = count

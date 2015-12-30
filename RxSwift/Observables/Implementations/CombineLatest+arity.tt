@@ -1,9 +1,9 @@
 //
-//  CombineLatest.tt.swift
+//  CombineLatest+arity.swift
 //  RxSwift
 //
 //  Created by Krunoslav Zaher on 4/22/15.
-//  Copyright (c) 2015 Krunoslav Zaher. All rights reserved.
+//  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
 import Foundation
@@ -12,20 +12,34 @@ import Foundation
 
 // <%= i %>
 
-/**
-Merges the specified observable sequences into one observable sequence by using the selector function whenever any of the observable sequences produces an element.
-
-- parameter resultSelector: Function to invoke whenever any of the sources produces an element.
-- returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
-*/
-@warn_unused_result(message="http://git.io/rxs.uo")
+@available(*, deprecated=2.0.0, message="Please use `Observable.combineLatest`")
 public func combineLatest<<%= (Array(1...i).map { "O\($0): ObservableType" }).joinWithSeparator(", ") %>, R>
     (<%= (Array(1...i).map { "source\($0): O\($0)" }).joinWithSeparator(", _ ") %>, resultSelector: (<%= (Array(1...i).map { "O\($0).E" }).joinWithSeparator(", ") %>) throws -> R)
         -> Observable<R> {
-    return CombineLatest<%= i %>(
-        <%= (Array(1...i).map { "source\($0): source\($0).asObservable()" }).joinWithSeparator(", ") %>,
+    return Observable.combineLatest(
+        <%= (Array(1...i).map { "source\($0)" }).joinWithSeparator(", ") %>,
         resultSelector: resultSelector
     )
+}
+
+extension Observable {
+    /**
+    Merges the specified observable sequences into one observable sequence by using the selector function whenever any of the observable sequences produces an element.
+
+    - seealso: [combineLatest operator on reactivex.io](http://reactivex.io/documentation/operators/combinelatest.html)
+
+    - parameter resultSelector: Function to invoke whenever any of the sources produces an element.
+    - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
+    */
+    @warn_unused_result(message="http://git.io/rxs.uo")
+    public static func combineLatest<<%= (Array(1...i).map { "O\($0): ObservableType" }).joinWithSeparator(", ") %>>
+        (<%= (Array(1...i).map { "source\($0): O\($0)" }).joinWithSeparator(", _ ") %>, resultSelector: (<%= (Array(1...i).map { "O\($0).E" }).joinWithSeparator(", ") %>) throws -> E)
+            -> Observable<E> {
+        return CombineLatest<%= i %>(
+            <%= (Array(1...i).map { "source\($0): source\($0).asObservable()" }).joinWithSeparator(", ") %>,
+            resultSelector: resultSelector
+        )
+    }
 }
 
 class CombineLatestSink<%= i %>_<<%= (Array(1...i).map { "E\($0)" }).joinWithSeparator(", ") %>, O: ObserverType> : CombineLatestSink<O> {

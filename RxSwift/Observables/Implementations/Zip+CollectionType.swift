@@ -45,7 +45,7 @@ class ZipCollectionTypeSink<C: CollectionType, R, O: ObserverType where C.Genera
                 _values[atIndex].enqueue(element)
                 
                 if _values[atIndex].count == 1 {
-                    _numberOfValues++
+                    _numberOfValues += 1
                 }
                 
                 if _numberOfValues < _parent.count {
@@ -65,9 +65,9 @@ class ZipCollectionTypeSink<C: CollectionType, R, O: ObserverType where C.Genera
                     _numberOfValues = 0
                     
                     for i in 0 ..< _values.count {
-                        arguments.append(_values[i].dequeue())
+                        arguments.append(_values[i].dequeue()!)
                         if _values[i].count > 0 {
-                            _numberOfValues++
+                            _numberOfValues += 1
                         }
                     }
                     
@@ -88,7 +88,7 @@ class ZipCollectionTypeSink<C: CollectionType, R, O: ObserverType where C.Genera
                 }
                 
                 _isDone[atIndex] = true
-                _numberOfDone++
+                _numberOfDone += 1
                 
                 if _numberOfDone == _parent.count {
                     self.forwardOn(.Completed)
@@ -109,7 +109,7 @@ class ZipCollectionTypeSink<C: CollectionType, R, O: ObserverType where C.Genera
             _subscriptions[j].disposable = source.subscribe(AnyObserver { event in
                 self.on(event, atIndex: index)
                 })
-            j++
+            j += 1
         }
         
         return CompositeDisposable(disposables: _subscriptions.map { $0 })

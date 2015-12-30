@@ -3,7 +3,7 @@
 //  Rx
 //
 //  Created by Krunoslav Zaher on 2/28/15.
-//  Copyright (c) 2015 Krunoslav Zaher. All rights reserved.
+//  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
 import Foundation
@@ -21,9 +21,9 @@ class Identity {
 
 func hash(_x: Int) -> Int {
     var x = _x
-    x = ((x >> 16) ^ x) &* 0x45d9f3b;
-    x = ((x >> 16) ^ x) &* 0x45d9f3b;
-    x = ((x >> 16) ^ x);
+    x = ((x >> 16) ^ x) &* 0x45d9f3b
+    x = ((x >> 16) ^ x) &* 0x45d9f3b
+    x = ((x >> 16) ^ x)
     return x;
 }
 

@@ -3,7 +3,7 @@
 //  RxCocoa
 //
 //  Created by Daniel Tartaglia on 5/23/15.
-//  Copyright (c) 2015 Krunoslav Zaher. All rights reserved.
+//  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
 #if os(iOS) || os(tvOS)
@@ -40,8 +40,8 @@ extension UIControl {
     
     - parameter controlEvents: Filter for observed event types.
     */
-    public func rx_controlEvents(controlEvents: UIControlEvents) -> ControlEvent<Void> {
-        let source: Observable<Void> = create { [weak self] observer in
+    public func rx_controlEvent(controlEvents: UIControlEvents) -> ControlEvent<Void> {
+        let source: Observable<Void> = Observable.create { [weak self] observer in
             MainScheduler.ensureExecutingOnScheduler()
 
             guard let control = self else {
@@ -61,9 +61,14 @@ extension UIControl {
         
         return ControlEvent(events: source)
     }
+
+    @available(*, deprecated=2.0.0, message="Please use rx_controlEvent.")
+    public func rx_controlEvents(controlEvents: UIControlEvents) -> ControlEvent<Void> {
+        return rx_controlEvent(controlEvents)
+    }
     
-    func rx_value<T>(getter getter: () -> T, setter: T -> Void) -> ControlProperty<T> {
-        let source: Observable<T> = create { [weak self] observer in
+    func rx_value<T: Equatable>(getter getter: () -> T, setter: T -> Void) -> ControlProperty<T> {
+        let source: Observable<T> = Observable.create { [weak self] observer in
             guard let control = self else {
                 observer.on(.Completed)
                 return NopDisposable.instance
@@ -71,14 +76,16 @@ extension UIControl {
 
             observer.on(.Next(getter()))
 
-            let controlTarget = ControlTarget(control: control, controlEvents: [.EditingChanged, .ValueChanged]) { control in
+            let controlTarget = ControlTarget(control: control, controlEvents: [.AllEditingEvents, .ValueChanged]) { control in
                 observer.on(.Next(getter()))
             }
             
             return AnonymousDisposable {
                 controlTarget.dispose()
             }
-        }.takeUntil(rx_deallocated)
+        }
+            .distinctUntilChanged()
+            .takeUntil(rx_deallocated)
         
         return ControlProperty<T>(values: source, valueSink: AnyObserver { event in
             MainScheduler.ensureExecutingOnScheduler()

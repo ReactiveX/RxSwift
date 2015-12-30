@@ -8,9 +8,9 @@
 
 import Foundation
 
-class TimeoutSink<ElementType, Scheduler: SchedulerType, O: ObserverType where O.E == ElementType>: Sink<O>, LockOwnerType, ObserverType {
+class TimeoutSink<ElementType, O: ObserverType where O.E == ElementType>: Sink<O>, LockOwnerType, ObserverType {
     typealias E = ElementType
-    typealias Parent = Timeout<E, Scheduler>
+    typealias Parent = Timeout<E>
     
     private let _parent: Parent
     
@@ -89,9 +89,7 @@ class TimeoutSink<ElementType, Scheduler: SchedulerType, O: ObserverType where O
             }
             
             if timerWins {
-                if let other = self._parent._other {
-                    self._subscription.disposable = other.subscribeSafe(self.forwarder())
-                }
+                self._subscription.disposable = self._parent._other.subscribeSafe(self.forwarder())
             }
             
             return NopDisposable.instance
@@ -100,14 +98,14 @@ class TimeoutSink<ElementType, Scheduler: SchedulerType, O: ObserverType where O
 }
 
 
-class Timeout<Element, Scheduler: SchedulerType> : Producer<Element> {
+class Timeout<Element> : Producer<Element> {
     
     private let _source: Observable<Element>
-    private let _dueTime: Scheduler.TimeInterval
-    private let _other: Observable<Element>?
-    private let _scheduler: Scheduler
+    private let _dueTime: RxTimeInterval
+    private let _other: Observable<Element>
+    private let _scheduler: SchedulerType
     
-    init(source: Observable<Element>, dueTime: Scheduler.TimeInterval, other: Observable<Element>?, scheduler: Scheduler) {
+    init(source: Observable<Element>, dueTime: RxTimeInterval, other: Observable<Element>, scheduler: SchedulerType) {
         _source = source
         _dueTime = dueTime
         _other = other

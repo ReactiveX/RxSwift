@@ -3,7 +3,7 @@
 //  RxCocoa
 //
 //  Created by Krunoslav Zaher on 5/17/15.
-//  Copyright (c) 2015 Krunoslav Zaher. All rights reserved.
+//  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
 import Foundation
@@ -17,7 +17,7 @@ extension NSImageView {
     /**
     Bindable sink for `image` property.
     */
-    public var rx_image: AnyObserver<NSImage!> {
+    public var rx_image: AnyObserver<NSImage?> {
         return self.rx_imageAnimated(nil)
     }
     
@@ -26,7 +26,7 @@ extension NSImageView {
     
     - parameter transitionType: Optional transition type while setting the image (kCATransitionFade, kCATransitionMoveIn, ...)
     */
-    public func rx_imageAnimated(transitionType: String?) -> AnyObserver<NSImage!> {
+    public func rx_imageAnimated(transitionType: String?) -> AnyObserver<NSImage?> {
         return AnyObserver { [weak self] event in
             MainScheduler.ensureExecutingOnScheduler()
             

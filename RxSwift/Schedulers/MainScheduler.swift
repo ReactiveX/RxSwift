@@ -3,7 +3,7 @@
 //  Rx
 //
 //  Created by Krunoslav Zaher on 2/8/15.
-//  Copyright (c) 2015 Krunoslav Zaher. All rights reserved.
+//  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
 import Foundation
@@ -22,7 +22,7 @@ public final class MainScheduler : SerialDispatchQueueScheduler {
 
     private let _mainQueue: dispatch_queue_t
 
-    var numberEnqueued: Int32 = 0
+    var numberEnqueued: AtomicInt = 0
 
     private init() {
         _mainQueue = dispatch_get_main_queue()
@@ -32,23 +32,29 @@ public final class MainScheduler : SerialDispatchQueueScheduler {
     /**
     Singleton instance of `MainScheduler`
     */
+    @available(*, deprecated=2.0.0, message="Please use `MainScheduler.instance`")
     public static let sharedInstance = MainScheduler()
+
+    /**
+    Singleton instance of `MainScheduler`
+    */
+    public static let instance = MainScheduler()
 
     /**
     In case this method is called on a background thread it will throw an exception.
     */
     public class func ensureExecutingOnScheduler() {
         if !NSThread.currentThread().isMainThread {
-            rxFatalError("Executing on backgound thread. Please use `MainScheduler.sharedInstance.schedule` to schedule work on main thread.")
+            rxFatalError("Executing on backgound thread. Please use `MainScheduler.instance.schedule` to schedule work on main thread.")
         }
     }
-    
+
     override func scheduleInternal<StateType>(state: StateType, action: StateType -> Disposable) -> Disposable {
-        let currentNumberEnqueued = OSAtomicIncrement32(&numberEnqueued)
+        let currentNumberEnqueued = AtomicIncrement(&numberEnqueued)
 
         if NSThread.currentThread().isMainThread && currentNumberEnqueued == 1 {
             let disposable = action(state)
-            OSAtomicDecrement32(&numberEnqueued)
+            AtomicDecrement(&numberEnqueued)
             return disposable
         }
 
@@ -59,10 +65,9 @@ public final class MainScheduler : SerialDispatchQueueScheduler {
                 action(state)
             }
 
-            OSAtomicDecrement32(&self.numberEnqueued)
+            AtomicDecrement(&self.numberEnqueued)
         }
 
         return cancel
     }
 }
-

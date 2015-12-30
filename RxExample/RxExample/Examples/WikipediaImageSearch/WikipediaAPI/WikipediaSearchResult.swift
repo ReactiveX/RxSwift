@@ -3,7 +3,7 @@
 //  Example
 //
 //  Created by Krunoslav Zaher on 3/28/15.
-//  Copyright (c) 2015 Krunoslav Zaher. All rights reserved.
+//  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
 import Foundation
@@ -32,8 +32,8 @@ struct WikipediaSearchResult: CustomDebugStringConvertible {
             throw WikipediaParseError
         }
 
-        let titleAndDescription = Array(Swift.zip(rootArrayTyped[0], rootArrayTyped[1]))
-        let titleDescriptionAndUrl: [((AnyObject, AnyObject), AnyObject)] = Array(Swift.zip(titleAndDescription, rootArrayTyped[2]))
+        let titleAndDescription = Array(zip(rootArrayTyped[0], rootArrayTyped[1]))
+        let titleDescriptionAndUrl: [((AnyObject, AnyObject), AnyObject)] = Array(zip(titleAndDescription, rootArrayTyped[2]))
         
         let searchResults: [WikipediaSearchResult] = try titleDescriptionAndUrl.map ( { result -> WikipediaSearchResult in
             let (first, url) = result

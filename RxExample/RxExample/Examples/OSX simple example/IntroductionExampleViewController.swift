@@ -3,7 +3,7 @@
 //  RxExample
 //
 //  Created by Krunoslav Zaher on 5/19/15.
-//  Copyright (c) 2015 Krunoslav Zaher. All rights reserved.
+//  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
 import Foundation
@@ -27,7 +27,7 @@ class IntroductionExampleViewController : ViewController {
         showAlert("After you close this, prepare for a loud sound ...")
 
         // c = a + b
-        let sum = combineLatest(a.rx_text, b.rx_text) { (a: String, b: String) -> (Int, Int) in
+        let sum = Observable.combineLatest(a.rx_text, b.rx_text) { (a: String, b: String) -> (Int, Int) in
             return (Int(a) ?? 0, Int(b) ?? 0)
         }
         
@@ -71,9 +71,9 @@ class IntroductionExampleViewController : ViewController {
             .addDisposableTo(disposeBag)
         
         disposeButton.rx_tap
-            .subscribeNext { [unowned self] _ in
-                print("Unbound everything")
-                self.disposeBag = DisposeBag()
+            .subscribeNext { [weak self] _ in
+                print("Unbind everything")
+                self?.disposeBag = DisposeBag()
             }
             .addDisposableTo(disposeBag)
     }

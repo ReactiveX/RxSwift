@@ -35,10 +35,13 @@ public final class ConcurrentMainScheduler : SchedulerType {
         _mainScheduler = mainScheduler
     }
 
+    @available(*, deprecated=2.0.0, message="Please use `ConcurrentMainScheduler.instance`")
+    public static let sharedInstance = ConcurrentMainScheduler(mainScheduler: MainScheduler.instance)
+
     /**
     Singleton instance of `ConcurrentMainScheduler`
     */
-    public static let sharedInstance = ConcurrentMainScheduler(mainScheduler: MainScheduler.sharedInstance)
+    public static let instance = ConcurrentMainScheduler(mainScheduler: MainScheduler.instance)
 
     /**
     Schedules an action to be executed immediatelly.

@@ -3,7 +3,7 @@
 //  RxCocoa
 //
 //  Created by Krunoslav Zaher on 3/23/15.
-//  Copyright (c) 2015 Krunoslav Zaher. All rights reserved.
+//  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
 import Foundation
@@ -74,7 +74,7 @@ func convertURLRequestToCurlCommand(request: NSURLRequest) -> String {
         returnValue += "-H \"\(escapedKey): \(escapedValue)\" "
     }
 
-    let URLString = request.URL?.absoluteString ?? "<unkown url>"
+    let URLString = request.URL?.absoluteString ?? "<unknown url>"
 
     returnValue += "\"\(escapeTerminalString(URLString))\""
 
@@ -118,7 +118,7 @@ extension NSURLSession {
     */
     @warn_unused_result(message="http://git.io/rxs.uo")
     public func rx_response(request: NSURLRequest) -> Observable<(NSData, NSHTTPURLResponse)> {
-        return create { observer in
+        return Observable.create { observer in
 
             // smart compiler should be able to optimize this out
             var d: NSDate?
@@ -204,8 +204,8 @@ extension NSURLSession {
     - returns: Observable sequence of response JSON.
     */
     @warn_unused_result(message="http://git.io/rxs.uo")
-    public func rx_JSON(request: NSURLRequest) -> Observable<AnyObject!> {
-        return rx_data(request).map { (data) -> AnyObject! in
+    public func rx_JSON(request: NSURLRequest) -> Observable<AnyObject> {
+        return rx_data(request).map { (data) -> AnyObject in
             do {
                 return try NSJSONSerialization.JSONObjectWithData(data ?? NSData(), options: [])
             } catch let error {
@@ -232,7 +232,7 @@ extension NSURLSession {
     - returns: Observable sequence of response JSON.
     */
     @warn_unused_result(message="http://git.io/rxs.uo")
-    public func rx_JSON(URL: NSURL) -> Observable<AnyObject!> {
+    public func rx_JSON(URL: NSURL) -> Observable<AnyObject> {
         return rx_JSON(NSURLRequest(URL: URL))
     }
 }

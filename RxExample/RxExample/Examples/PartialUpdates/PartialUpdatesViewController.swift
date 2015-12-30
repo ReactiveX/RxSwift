@@ -3,12 +3,11 @@
 //  RxExample
 //
 //  Created by Krunoslav Zaher on 6/8/15.
-//  Copyright (c) 2015 Krunoslav Zaher. All rights reserved.
+//  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
 import Foundation
 import UIKit
-import CoreData
 #if !RX_NO_MODULE
 import RxSwift
 import RxCocoa
@@ -23,9 +22,6 @@ class PartialUpdatesViewController : ViewController {
     @IBOutlet weak var reloadTableViewOutlet: UITableView!
     @IBOutlet weak var partialUpdatesTableViewOutlet: UITableView!
     @IBOutlet weak var partialUpdatesCollectionViewOutlet: UICollectionView!
-
-    var moc: NSManagedObjectContext!
-    var child: NSManagedObjectContext!
 
     var timer: NSTimer? = nil
 
@@ -48,39 +44,6 @@ class PartialUpdatesViewController : ViewController {
     var generator = Randomizer(rng: PseudoRandomGenerator(4, 3), sections: initialValue)
 
     var sections = Variable([NumberSection]())
-
-    func skinTableViewDataSource(dataSource: RxTableViewSectionedDataSource<NumberSection>) {
-        dataSource.cellFactory = { (tv, ip, i) in
-            let cell = tv.dequeueReusableCellWithIdentifier("Cell")
-                ?? UITableViewCell(style:.Default, reuseIdentifier: "Cell")
-
-            cell.textLabel!.text = "\(i)"
-
-            return cell
-        }
-
-        dataSource.titleForHeaderInSection = { [unowned dataSource] (section: Int) -> String in
-            return dataSource.sectionAtIndex(section).model
-        }
-    }
-
-    func skinCollectionViewDataSource(dataSource: RxCollectionViewSectionedDataSource<NumberSection>) {
-        dataSource.cellFactory = { (cv, ip, i) in
-            let cell = cv.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: ip) as! NumberCell
-
-            cell.value!.text = "\(i)"
-
-            return cell
-        }
-
-        dataSource.supplementaryViewFactory = { [unowned dataSource] (cv, kind, ip) in
-            let section = cv.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: "Section", forIndexPath: ip) as! NumberSectionView
-
-            section.value!.text = "\(dataSource.sectionAtIndex(ip.section).model)"
-
-            return section
-        }
-    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -153,17 +116,50 @@ class PartialUpdatesViewController : ViewController {
         // touches
 
         partialUpdatesCollectionViewOutlet.rx_itemSelected
-            .subscribeNext { [unowned self] i in
-                print("Let me guess, it's .... It's \(self.generator.sections[i.section].items[i.item]), isn't it? Yeah, I've got it.")
+            .subscribeNext { [weak self] i in
+                print("Let me guess, it's .... It's \(self?.generator.sections[i.section].items[i.item]), isn't it? Yeah, I've got it.")
             }
             .addDisposableTo(disposeBag)
 
-        sequenceOf(partialUpdatesTableViewOutlet.rx_itemSelected, reloadTableViewOutlet.rx_itemSelected)
+        Observable.of(partialUpdatesTableViewOutlet.rx_itemSelected, reloadTableViewOutlet.rx_itemSelected)
             .merge()
-            .subscribeNext { [unowned self] i in
-                print("I have a feeling it's .... \(self.generator.sections[i.section].items[i.item])?")
+            .subscribeNext { [weak self] i in
+                print("I have a feeling it's .... \(self?.generator.sections[i.section].items[i.item])?")
             }
             .addDisposableTo(disposeBag)
+    }
+
+    func skinTableViewDataSource(dataSource: RxTableViewSectionedDataSource<NumberSection>) {
+        dataSource.cellFactory = { (tv, ip, i) in
+            let cell = tv.dequeueReusableCellWithIdentifier("Cell")
+                ?? UITableViewCell(style:.Default, reuseIdentifier: "Cell")
+
+            cell.textLabel!.text = "\(i)"
+
+            return cell
+        }
+
+        dataSource.titleForHeaderInSection = { [unowned dataSource] (section: Int) -> String in
+            return dataSource.sectionAtIndex(section).model
+        }
+    }
+
+    func skinCollectionViewDataSource(dataSource: RxCollectionViewSectionedDataSource<NumberSection>) {
+        dataSource.cellFactory = { (cv, ip, i) in
+            let cell = cv.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: ip) as! NumberCell
+
+            cell.value!.text = "\(i)"
+
+            return cell
+        }
+
+        dataSource.supplementaryViewFactory = { [unowned dataSource] (cv, kind, ip) in
+            let section = cv.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: "Section", forIndexPath: ip) as! NumberSectionView
+
+            section.value!.text = "\(dataSource.sectionAtIndex(ip.section).model)"
+
+            return section
+        }
     }
 
     override func viewWillDisappear(animated: Bool) {

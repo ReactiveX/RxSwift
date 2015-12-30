@@ -147,9 +147,9 @@ extension DriverConvertibleType {
     - returns: An observable sequence whose events are printed to standard output.
     */
     @warn_unused_result(message="http://git.io/rxs.uo")
-    public func debug(identifier: String = "\(__FILE__):\(__LINE__)") -> Driver<E> {
+    public func debug(identifier: String? = nil, file: String = __FILE__, line: UInt = __LINE__, function: String = __FUNCTION__) -> Driver<E> {
         let source = self.asObservable()
-            .debug(identifier)
+            .debug(identifier, file: file, line: line, function: function)
         return Driver(source)
     }
 }
@@ -273,32 +273,48 @@ extension DriverConvertibleType {
     `throttle` and `debounce` are synonyms.
     
     - parameter dueTime: Throttling duration for each element.
-    - parameter scheduler: Scheduler to run the throttle timers and send events on.
     - returns: The throttled sequence.
     */
     @warn_unused_result(message="http://git.io/rxs.uo")
-    public func throttle<S: SchedulerType>(dueTime: S.TimeInterval, _ scheduler: S)
+    public func throttle(dueTime: RxTimeInterval)
         -> Driver<E> {
         let source = self.asObservable()
-            .throttle(dueTime, scheduler)
+            .throttle(dueTime, scheduler: driverObserveOnScheduler)
 
         return Driver(source)
     }
-    
+
+    @available(*, deprecated=2.0.0, message="Please use version without scheduler parameter.")
+    public func throttle(dueTime: RxTimeInterval, _ scheduler: SchedulerType)
+        -> Driver<E> {
+        let source = self.asObservable()
+            .throttle(dueTime, scheduler: scheduler)
+
+        return Driver(source)
+    }
+
     /**
     Ignores elements from an observable sequence which are followed by another element within a specified relative time duration, using the specified scheduler to run throttling timers.
     
     `throttle` and `debounce` are synonyms.
     
     - parameter dueTime: Throttling duration for each element.
-    - parameter scheduler: Scheduler to run the throttle timers and send events on.
     - returns: The throttled sequence.
     */
     @warn_unused_result(message="http://git.io/rxs.uo")
-    public func debounce<S: SchedulerType>(dueTime: S.TimeInterval, _ scheduler: S)
+    public func debounce(dueTime: RxTimeInterval)
         -> Driver<E> {
         let source = self.asObservable()
-            .debounce(dueTime, scheduler)
+            .debounce(dueTime, scheduler: driverObserveOnScheduler)
+
+        return Driver(source)
+    }
+
+    @available(*, deprecated=2.0.0, message="Please use version without scheduler parameter.")
+    public func debounce(dueTime: RxTimeInterval, _ scheduler: SchedulerType)
+        -> Driver<E> {
+        let source = self.asObservable()
+            .debounce(dueTime, scheduler: scheduler)
 
         return Driver(source)
     }
@@ -335,6 +351,21 @@ extension SequenceType where Generator.Element : DriverConvertibleType {
     public func concat()
         -> Driver<Generator.Element.E> {
         let source: Observable<Generator.Element.E> = self.lazy.map { $0.asDriver() }.concat()
+        return Driver<Generator.Element.E>(source)
+    }
+}
+
+extension CollectionType where Generator.Element : DriverConvertibleType {
+
+    /**
+     Concatenates all observable sequences in the given sequence, as long as the previous observable sequence terminated successfully.
+
+     - returns: An observable sequence that contains the elements of each given sequence, in sequential order.
+     */
+    @warn_unused_result(message="http://git.io/rxs.uo")
+    public func concat()
+        -> Driver<Generator.Element.E> {
+        let source: Observable<Generator.Element.E> = self.map { $0.asDriver() }.concat()
         return Driver<Generator.Element.E>(source)
     }
 }

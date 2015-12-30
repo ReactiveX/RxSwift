@@ -24,6 +24,9 @@ public protocol KVORepresentable {
 }
 
 extension KVORepresentable {
+    /**
+    Initializes `KVORepresentable` with optional value.
+    */
     init?(KVOValue: KVOType?) {
         guard let KVOValue = KVOValue else {
             return nil

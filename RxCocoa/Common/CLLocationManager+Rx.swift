@@ -3,7 +3,7 @@
 //  RxCocoa
 //
 //  Created by Carlos García on 8/7/15.
-//  Copyright (c) 2015 Krunoslav Zaher. All rights reserved.
+//  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
 import CoreLocation
@@ -28,32 +28,36 @@ extension CLLocationManager {
     /**
     Reactive wrapper for `delegate` message.
     */
-    public var rx_didUpdateLocations: Observable<[CLLocation]!> {
+    public var rx_didUpdateLocations: Observable<[CLLocation]> {
         return rx_delegate.observe("locationManager:didUpdateLocations:")
             .map { a in
-                return a[1] as? [CLLocation]
+                return try castOrThrow([CLLocation].self, a[1])
             }
     }
 
     /**
     Reactive wrapper for `delegate` message.
     */
-    public var rx_didFailWithError: Observable<NSError!> {
+    public var rx_didFailWithError: Observable<NSError> {
         return rx_delegate.observe("locationManager:didFailWithError:")
             .map { a in
-                return a[1] as? NSError
+                return try castOrThrow(NSError.self, a[1])
             }
     }
 
+    #if os(iOS) || os(watchOS) || os(OSX)
     /**
     Reactive wrapper for `delegate` message.
     */
-    public var rx_didFinishDeferredUpdatesWithError: Observable<NSError!> {
+    public var rx_didFinishDeferredUpdatesWithError: Observable<NSError> {
         return rx_delegate.observe("locationManager:didFinishDeferredUpdatesWithError:")
             .map { a in
-                return a[1] as? NSError
+                return try castOrThrow(NSError.self, a[1])
             }
     }
+    #endif
+
+    #if os(iOS)
 
     // MARK: Pausing Location Updates
 
@@ -82,92 +86,102 @@ extension CLLocationManager {
     /**
     Reactive wrapper for `delegate` message.
     */
-    #if os(iOS) || os(OSX)
-    public var rx_didUpdateHeading: Observable<CLHeading!> {
+    public var rx_didUpdateHeading: Observable<CLHeading> {
         return rx_delegate.observe("locationManager:didUpdateHeading:")
             .map { a in
-                return a[1] as? CLHeading
+                return try castOrThrow(CLHeading.self, a[1])
             }
     }
-    #endif
 
     // MARK: Responding to Region Events
 
     /**
     Reactive wrapper for `delegate` message.
     */
-    public var rx_didEnterRegion: Observable<CLRegion!> {
+    public var rx_didEnterRegion: Observable<CLRegion> {
         return rx_delegate.observe("locationManager:didEnterRegion:")
             .map { a in
-                return a[1] as? CLRegion
+                return try castOrThrow(CLRegion.self, a[1])
             }
     }
 
     /**
     Reactive wrapper for `delegate` message.
     */
-    public var rx_didExitRegion: Observable<CLRegion!> {
+    public var rx_didExitRegion: Observable<CLRegion> {
         return rx_delegate.observe("locationManager:didExitRegion:")
             .map { a in
-                return a[1] as? CLRegion
+                return try castOrThrow(CLRegion.self, a[1])
             }
     }
 
-    /**
-    Reactive wrapper for `delegate` message.
-    */
-    #if os(iOS) || os(OSX)
-    @available(OSX 10.10, *)
-    public var rx_didDetermineStateForRegion: Observable<(state: CLRegionState, region: CLRegion!)> {
-        return rx_delegate.observe("locationManager:didDetermineState:forRegion:")
-            .map { a in
-                let stateNumber = a[1] as! NSNumber
-                return (state: CLRegionState(rawValue: stateNumber.integerValue) ?? CLRegionState.Unknown, region: a[2] as? CLRegion)
-            }
-    }
     #endif
 
+    #if os(iOS) || os(OSX)
+    
     /**
     Reactive wrapper for `delegate` message.
     */
-    public var rx_monitoringDidFailForRegionWithError: Observable<(region: CLRegion!, error: NSError!)> {
-        return rx_delegate.observe("locationManager:monitoringDidFailForRegion:withError:")
+    @available(OSX 10.10, *)
+    public var rx_didDetermineStateForRegion: Observable<(state: CLRegionState, region: CLRegion)> {
+        return rx_delegate.observe("locationManager:didDetermineState:forRegion:")
             .map { a in
-                return (region: a[1] as? CLRegion, error: a[2] as? NSError)
+                let stateNumber = try castOrThrow(NSNumber.self, a[1])
+                let state = CLRegionState(rawValue: stateNumber.integerValue) ?? CLRegionState.Unknown
+                let region = try castOrThrow(CLRegion.self, a[2])
+                return (state: state, region: region)
             }
     }
 
     /**
     Reactive wrapper for `delegate` message.
     */
-    public var rx_didStartMonitoringForRegion: Observable<CLRegion!> {
-        return rx_delegate.observe("locationManager:didStartMonitoringForRegion:")
+    public var rx_monitoringDidFailForRegionWithError: Observable<(region: CLRegion?, error: NSError)> {
+        return rx_delegate.observe("locationManager:monitoringDidFailForRegion:withError:")
             .map { a in
-                return a[1] as? CLRegion
+                let region = try castOptionalOrThrow(CLRegion.self, a[1])
+                let error = try castOrThrow(NSError.self, a[2])
+                return (region: region, error: error)
             }
     }
+
+    /**
+    Reactive wrapper for `delegate` message.
+    */
+    public var rx_didStartMonitoringForRegion: Observable<CLRegion> {
+        return rx_delegate.observe("locationManager:didStartMonitoringForRegion:")
+            .map { a in
+                return try castOrThrow(CLRegion.self, a[1])
+            }
+    }
+
+    #endif
+
+    #if os(iOS)
 
     // MARK: Responding to Ranging Events
 
-#if os(iOS)
-
     /**
     Reactive wrapper for `delegate` message.
     */
-    public var rx_didRangeBeaconsInRegion: Observable<(beacons: [CLBeacon]!, region: CLBeaconRegion!)> {
+    public var rx_didRangeBeaconsInRegion: Observable<(beacons: [CLBeacon], region: CLBeaconRegion)> {
         return rx_delegate.observe("locationManager:didRangeBeacons:inRegion:")
             .map { a in
-                return (beacons: a[1] as? [CLBeacon], region: a[2] as? CLBeaconRegion)
+                let beacons = try castOrThrow([CLBeacon].self, a[1])
+                let region = try castOrThrow(CLBeaconRegion.self, a[2])
+                return (beacons: beacons, region: region)
             }
     }
 
     /**
     Reactive wrapper for `delegate` message.
     */
-    public var rx_rangingBeaconsDidFailForRegionWithError: Observable<(region: CLBeaconRegion!, error: NSError!)> {
+    public var rx_rangingBeaconsDidFailForRegionWithError: Observable<(region: CLBeaconRegion, error: NSError)> {
         return rx_delegate.observe("locationManager:rangingBeaconsDidFailForRegion:withError:")
             .map { a in
-                return (region: a[1] as? CLBeaconRegion, error: a[2] as? NSError)
+                let region = try castOrThrow(CLBeaconRegion.self, a[1])
+                let error = try castOrThrow(NSError.self, a[2])
+                return (region: region, error: error)
             }
     }
 
@@ -177,25 +191,25 @@ extension CLLocationManager {
     Reactive wrapper for `delegate` message.
     */
     @available(iOS 8.0, *)
-    public var rx_didVisit: Observable<CLVisit!> {
+    public var rx_didVisit: Observable<CLVisit> {
         return rx_delegate.observe("locationManager:didVisit:")
             .map { a in
-                return a[1] as? CLVisit
+                return try castOrThrow(CLVisit.self, a[1])
             }
     }
 
-#endif
+    #endif
 
     // MARK: Responding to Authorization Changes
 
     /**
     Reactive wrapper for `delegate` message.
     */
-    public var rx_didChangeAuthorizationStatus: Observable<CLAuthorizationStatus?> {
+    public var rx_didChangeAuthorizationStatus: Observable<CLAuthorizationStatus> {
         return rx_delegate.observe("locationManager:didChangeAuthorizationStatus:")
             .map { a in
-                let number = a[1] as! NSNumber
-                return CLAuthorizationStatus(rawValue: Int32(number.integerValue))
+                let number = try castOrThrow(NSNumber.self, a[1])
+                return CLAuthorizationStatus(rawValue: Int32(number.integerValue)) ?? .NotDetermined
             }
     }
 

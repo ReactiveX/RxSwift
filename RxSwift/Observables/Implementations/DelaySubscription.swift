@@ -3,15 +3,15 @@
 //  RxSwift
 //
 //  Created by Krunoslav Zaher on 6/14/15.
-//  Copyright (c) 2015 Krunoslav Zaher. All rights reserved.
+//  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
 import Foundation
 
-class DelaySubscriptionSink<ElementType, O: ObserverType, S: SchedulerType where O.E == ElementType>
+class DelaySubscriptionSink<ElementType, O: ObserverType where O.E == ElementType>
     : Sink<O>
     , ObserverType {
-    typealias Parent = DelaySubscription<ElementType, S>
+    typealias Parent = DelaySubscription<ElementType>
     typealias E = O.E
     
     private let _parent: Parent
@@ -30,14 +30,12 @@ class DelaySubscriptionSink<ElementType, O: ObserverType, S: SchedulerType where
     
 }
 
-class DelaySubscription<Element, S: SchedulerType>: Producer<Element> {
-    typealias TimeInterval = S.TimeInterval
-    
+class DelaySubscription<Element>: Producer<Element> {
     private let _source: Observable<Element>
-    private let _dueTime: TimeInterval
-    private let _scheduler: S
+    private let _dueTime: RxTimeInterval
+    private let _scheduler: SchedulerType
     
-    init(source: Observable<Element>, dueTime: TimeInterval, scheduler: S) {
+    init(source: Observable<Element>, dueTime: RxTimeInterval, scheduler: SchedulerType) {
         _source = source
         _dueTime = dueTime
         _scheduler = scheduler

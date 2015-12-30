@@ -1,9 +1,9 @@
 //
-//  ViewController.swift
+//  WikipediaSearchViewController.swift
 //  Example
 //
 //  Created by Krunoslav Zaher on 2/21/15.
-//  Copyright (c) 2015 Krunoslav Zaher. All rights reserved.
+//  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
 import UIKit
@@ -43,11 +43,11 @@ class WikipediaSearchViewController: ViewController {
         resultsTableView.rowHeight = 194
 
         let API = DefaultWikipediaAPI.sharedAPI
-        let scheduler = MainScheduler.sharedInstance
+        let scheduler = MainScheduler.instance
 
         searchBar.rx_text
             .asDriver()
-            .throttle(0.3, scheduler)
+            .throttle(0.3)
             .distinctUntilChanged()
             .flatMapLatest { query in
                 API.getSearchResults(query)
@@ -59,7 +59,7 @@ class WikipediaSearchViewController: ViewController {
             .map { results in
                 results.map(SearchResultViewModel.init)
             }
-            .drive(resultsTableView.rx_itemsWithCellIdentifier("WikipediaSearchCell")) { (_, viewModel, cell: WikipediaSearchCell) in
+            .drive(resultsTableView.rx_itemsWithCellIdentifier("WikipediaSearchCell", cellType: WikipediaSearchCell.self)) { (_, viewModel, cell) in
                 cell.viewModel = viewModel
             }
             .addDisposableTo(disposeBag)
@@ -90,7 +90,7 @@ class WikipediaSearchViewController: ViewController {
     }
 
     func configureActivityIndicatorsShow() {
-        combineLatest(
+        Driver.combineLatest(
             DefaultWikipediaAPI.sharedAPI.loadingWikipediaData,
             DefaultImageService.sharedImageService.loadingImage
         ) { $0 || $1 }

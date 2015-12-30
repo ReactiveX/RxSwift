@@ -23,7 +23,7 @@ extension ControlEvent {
             #if DEBUG
                 rxFatalError("Somehow driver received error from a source that shouldn't fail.")
             #else
-                return Drive.empty()
+                return Driver.empty()
             #endif
         }
     }

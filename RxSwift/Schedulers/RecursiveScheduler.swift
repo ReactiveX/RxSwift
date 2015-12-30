@@ -3,68 +3,43 @@
 //  RxSwift
 //
 //  Created by Krunoslav Zaher on 6/7/15.
-//  Copyright (c) 2015 Krunoslav Zaher. All rights reserved.
+//  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
 import Foundation
 
-class RecursiveScheduler<State, S: SchedulerType>: AnyRecursiveScheduler<State, S.TimeInterval> {
-    private let _scheduler: S
-    
-    init(scheduler: S, action: Action) {
-        _scheduler = scheduler
-        super.init(action: action)
-    }
-    
-    override func scheduleRelativeAdapter(state: State, dueTime: S.TimeInterval, action: State -> Disposable) -> Disposable {
-        return _scheduler.scheduleRelative(state, dueTime: dueTime, action: action)
-    }
-    
-    override func scheduleAdapter(state: State, action: State -> Disposable) -> Disposable {
-        return _scheduler.schedule(state, action: action)
-    }
-}
-
 /**
 Type erased recursive scheduler.
 */
-class AnyRecursiveScheduler<State, TimeInterval> {
-    typealias Action =  (state: State, scheduler: AnyRecursiveScheduler<State, TimeInterval>) -> Void
+class AnyRecursiveScheduler<State> {
+    typealias Action =  (state: State, scheduler: AnyRecursiveScheduler<State>) -> Void
 
     private let _lock = NSRecursiveLock()
     
     // state
     private let _group = CompositeDisposable()
-    
+
+    private var _scheduler: SchedulerType
     private var _action: Action?
     
-    init(action: Action) {
+    init(scheduler: SchedulerType, action: Action) {
         _action = action
+        _scheduler = scheduler
     }
 
-    // abstract methods
-
-    func scheduleRelativeAdapter(state: State, dueTime: TimeInterval, action: State -> Disposable) -> Disposable {
-        abstractMethod()
-    }
-    
-    func scheduleAdapter(state: State, action: State -> Disposable) -> Disposable {
-        abstractMethod()
-    }
-    
     /**
     Schedules an action to be executed recursively.
     
     - parameter state: State passed to the action to be executed.
     - parameter dueTime: Relative time after which to execute the recursive action.
     */
-    func schedule(state: State, dueTime: TimeInterval) {
+    func schedule(state: State, dueTime: RxTimeInterval) {
 
         var isAdded = false
         var isDone = false
         
         var removeKey: CompositeDisposable.DisposeKey? = nil
-        let d = scheduleRelativeAdapter(state, dueTime: dueTime) { (state) -> Disposable in
+        let d = _scheduler.scheduleRelative(state, dueTime: dueTime) { (state) -> Disposable in
             // best effort
             if self._group.disposed {
                 return NopDisposable.instance
@@ -107,7 +82,7 @@ class AnyRecursiveScheduler<State, TimeInterval> {
         var isDone = false
         
         var removeKey: CompositeDisposable.DisposeKey? = nil
-        let d = scheduleAdapter(state) { (state) -> Disposable in
+        let d = _scheduler.schedule(state) { (state) -> Disposable in
             // best effort
             if self._group.disposed {
                 return NopDisposable.instance

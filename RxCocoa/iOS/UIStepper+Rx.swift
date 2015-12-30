@@ -3,7 +3,7 @@
 //  RxCocoa
 //
 //  Created by Yuta ToKoRo on 9/1/15.
-//  Copyright (c) 2015 Krunoslav Zaher. All rights reserved.
+//  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
 #if os(iOS)
@@ -20,8 +20,8 @@ extension UIStepper {
     Reactive wrapper for `value` property.
     */
     public var rx_value: ControlProperty<Double> {
-        return rx_value(getter: { [unowned self] in
-            self.value
+        return rx_value(getter: { [weak self] in
+            self?.value ?? 0
         }, setter: { [weak self] value in
             self?.value = value
         })

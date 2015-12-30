@@ -3,7 +3,7 @@
 //  RxExample
 //
 //  Created by Carlos García on 4/8/15.
-//  Copyright (c) 2015 Krunoslav Zaher. All rights reserved.
+//  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
 import UIKit
@@ -12,33 +12,9 @@ import RxSwift
 import RxCocoa
 #endif
 
+
 class CalculatorViewController: ViewController {
-    
-    enum Operator {
-        case Addition
-        case Subtraction
-        case Multiplication
-        case Division
-    }
-    
-    enum Action {
-        case Clear
-        case ChangeSign
-        case Percent
-        case Operation(Operator)
-        case Equal
-        case AddNumber(Character)
-        case AddDot
-    }
-    
-    struct CalState {
-        let previousNumber: String!
-        let action: Action
-        let currentNumber: String!
-        let inScreen: String
-        let replace: Bool
-    }
-    
+
     @IBOutlet weak var lastSignLabel: UILabel!
     @IBOutlet weak var resultLabel: UILabel!
     
@@ -64,8 +40,6 @@ class CalculatorViewController: ViewController {
     @IBOutlet weak var sevenButton: UIButton!
     @IBOutlet weak var eightButton: UIButton!
     @IBOutlet weak var nineButton: UIButton!
-    
-    let CLEAR_STATE = CalState(previousNumber: nil, action: .Clear, currentNumber: "0", inScreen: "0", replace: true)
     
     override func viewDidLoad() {
         let commands:[Observable<Action>] = [
@@ -98,8 +72,8 @@ class CalculatorViewController: ViewController {
         commands
             .toObservable()
             .merge()
-            .scan(CLEAR_STATE) { [unowned self] a, x in
-                return self.tranformState(a, x)
+            .scan(CalculatorState.CLEAR_STATE) { a, x in
+                return a.tranformState(x)
             }
             .debug("debugging")
             .subscribeNext { [weak self] calState in
@@ -123,97 +97,7 @@ class CalculatorViewController: ViewController {
             .addDisposableTo(disposeBag)
     }
     
-    func tranformState(a: CalState, _ x: Action) -> CalState {
-        switch x {
-        case .Clear:
-            return CLEAR_STATE
-        case .AddNumber(let c):
-            return addNumber(a, c)
-        case .AddDot:
-            return addDot(a)
-        case .ChangeSign:
-            let d = "\(-Double(a.inScreen)!)"
-            return CalState(previousNumber: a.previousNumber, action: a.action, currentNumber: d, inScreen: d, replace: true)
-        case .Percent:
-            let d = "\(Double(a.inScreen)!/100)"
-            return CalState(previousNumber: a.previousNumber, action: a.action, currentNumber: d, inScreen: d, replace: true)
-        case .Operation(let o):
-            return performOperation(a, o)
-        case .Equal:
-            return performEqual(a)
-        }
-    }
-    
-    func addNumber(a: CalState, _ char: Character) -> CalState {
-        let cn = a.currentNumber == nil || a.replace ? String(char) : a.inScreen + String(char)
-        return CalState(previousNumber: a.previousNumber, action: a.action, currentNumber: cn, inScreen: cn, replace: false)
-    }
-    
-    func addDot(a: CalState) -> CalState {
-        let cn = a.inScreen.rangeOfString(".") == nil ? a.currentNumber + "." : a.currentNumber
-        return CalState(previousNumber: a.previousNumber, action: a.action, currentNumber: cn, inScreen: cn, replace: false)
-    }
-    
-    func performOperation(a: CalState, _ o: Operator) -> CalState {
-        
-        if a.previousNumber == nil {
-            return CalState(previousNumber: a.currentNumber, action: .Operation(o), currentNumber: nil, inScreen: a.currentNumber, replace: true)
-        }
-        else {
-            let previous = Double(a.previousNumber)!
-            let current = Double(a.inScreen)!
-            
-            switch a.action {
-            case .Operation(let op):
-                switch op {
-                case .Addition:
-                    let result = "\(previous + current)"
-                    return CalState(previousNumber: result, action: .Operation(o), currentNumber: nil, inScreen: result, replace: true)
-                case .Subtraction:
-                    let result = "\(previous - current)"
-                    return CalState(previousNumber: result, action: .Operation(o), currentNumber: nil, inScreen: result, replace: true)
-                case .Multiplication:
-                    let result = "\(previous * current)"
-                    return CalState(previousNumber: result, action: .Operation(o), currentNumber: nil, inScreen: result, replace: true)
-                case .Division:
-                    let result = "\(previous / current)"
-                    return CalState(previousNumber: result, action: .Operation(o), currentNumber: nil, inScreen: result, replace: true)
-                }
-            default:
-                return CalState(previousNumber: nil, action: .Operation(o), currentNumber: a.currentNumber, inScreen: a.inScreen, replace: true)
-            }
-            
-        }
-        
-    }
-    
-    func performEqual(a: CalState) -> CalState {
-        let previous = Double(a.previousNumber ?? "0")
-        let current = Double(a.inScreen)!
-        
-        switch a.action {
-        case .Operation(let op):
-            switch op {
-            case .Addition:
-                let result = "\(previous! + current)"
-                return CalState(previousNumber: nil, action: .Clear, currentNumber: result, inScreen: result, replace: true)
-            case .Subtraction:
-                let result = "\(previous! - current)"
-                return CalState(previousNumber: nil, action: .Clear, currentNumber: result, inScreen: result, replace: true)
-            case .Multiplication:
-                let result = "\(previous! * current)"
-                return CalState(previousNumber: nil, action: .Clear, currentNumber: result, inScreen: result, replace: true)
-            case .Division:
-                let result = previous! / current
-                let resultText = result == Double.infinity ? "0" : "\(result)"
-                return CalState(previousNumber: nil, action: .Clear, currentNumber: resultText, inScreen: resultText, replace: true)
-            }
-        default:
-            return CalState(previousNumber: nil, action: .Clear, currentNumber: a.currentNumber, inScreen: a.inScreen, replace: true)
-        }
-    }
-    
-    
+
     func prettyFormat(str: String) -> String {
         if str.hasSuffix(".0") {
             return str.substringToIndex(str.endIndex.predecessor().predecessor())

@@ -19,14 +19,14 @@ class SimpleTableViewExampleViewController : ViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let items = just([
+        let items = Observable.just([
             "First Item",
             "Second Item",
             "Third Item"
         ])
 
         items
-            .bindTo(tableView.rx_itemsWithCellIdentifier("Cell")) { (row, element, cell) in
+            .bindTo(tableView.rx_itemsWithCellIdentifier("Cell", cellType: UITableViewCell.self)) { (row, element, cell) in
                 cell.textLabel?.text = "\(element) @ row \(row)"
             }
             .addDisposableTo(disposeBag)

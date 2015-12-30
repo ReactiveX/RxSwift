@@ -3,7 +3,7 @@
 //  Rx
 //
 //  Created by Krunoslav Zaher on 2/14/15.
-//  Copyright (c) 2015 Krunoslav Zaher. All rights reserved.
+//  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
 import Foundation
@@ -14,7 +14,7 @@ Counts internal Rx resources (Observables, Observers, Disposables ...).
 
 It provides a really simple way to detect leaks early during development.
 */
-public var resourceCount: Int32 = 0
+public var resourceCount: AtomicInt = 0
 #endif
 
 // Swift doesn't have a concept of abstract metods.
@@ -44,13 +44,4 @@ func decrementChecked(inout i: Int) throws -> Int {
     let result = i
     i -= 1
     return result
-}
-
-extension NSObject {
-    func rx_synchronized<T>(@noescape action: () -> T) -> T {
-        objc_sync_enter(self)
-        let result = action()
-        objc_sync_exit(self)
-        return result
-    }
 }

@@ -3,7 +3,7 @@
 //  Rx
 //
 //  Created by Krunoslav Zaher on 3/21/15.
-//  Copyright (c) 2015 Krunoslav Zaher. All rights reserved.
+//  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
 import Foundation
@@ -34,9 +34,9 @@ class ConcatSink<S: SequenceType, O: ObserverType where S.Generator.Element : Ob
         return source.subscribe(self)
     }
     
-    override func extract(observable: Observable<E>) -> S.Generator? {
+    override func extract(observable: Observable<E>) -> SequenceGenerator? {
         if let source = observable as? Concat<S> {
-            return source._sources.generate()
+            return (source._sources.generate(), source._count)
         }
         else {
             return nil
@@ -48,14 +48,16 @@ class Concat<S: SequenceType where S.Generator.Element : ObservableConvertibleTy
     typealias Element = S.Generator.Element.E
     
     private let _sources: S
-    
-    init(sources: S) {
+    private let _count: IntMax?
+
+    init(sources: S, count: IntMax?) {
         _sources = sources
+        _count = count
     }
     
     override func run<O: ObserverType where O.E == Element>(observer: O) -> Disposable {
         let sink = ConcatSink<S, O>(observer: observer)
-        sink.disposable = sink.run(_sources.generate())
+        sink.disposable = sink.run((_sources.generate(), _count))
         return sink
     }
 }

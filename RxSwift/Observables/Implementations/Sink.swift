@@ -3,7 +3,7 @@
 //  Rx
 //
 //  Created by Krunoslav Zaher on 2/19/15.
-//  Copyright (c) 2015 Krunoslav Zaher. All rights reserved.
+//  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
 import Foundation
@@ -13,7 +13,7 @@ class Sink<O : ObserverType> : SingleAssignmentDisposable {
 
     init(observer: O) {
 #if TRACE_RESOURCES
-        OSAtomicIncrement32(&resourceCount)
+        AtomicIncrement(&resourceCount)
 #endif
         _observer = observer
     }
@@ -31,7 +31,7 @@ class Sink<O : ObserverType> : SingleAssignmentDisposable {
 
     deinit {
 #if TRACE_RESOURCES
-        OSAtomicDecrement32(&resourceCount)
+        AtomicDecrement(&resourceCount)
 #endif
     }
 }

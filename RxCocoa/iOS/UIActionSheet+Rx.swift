@@ -3,7 +3,7 @@
 //  RxCocoa
 //
 //  Created by Carlos García on 8/7/15.
-//  Copyright (c) 2015 Krunoslav Zaher. All rights reserved.
+//  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
 #if os(iOS)
@@ -21,6 +21,7 @@ extension UIActionSheet {
     
     For more information take a look at `DelegateProxyType` protocol documentation.
     */
+    @available(*, deprecated=2.0.0, message="This class is deprecated by Apple. Removing official support.")
     public var rx_delegate: DelegateProxy {
         return proxyForObject(RxActionSheetDelegateProxy.self, self)
     }
@@ -28,6 +29,7 @@ extension UIActionSheet {
     /**
     Reactive wrapper for `delegate` message.
     */
+    @available(*, deprecated=2.0.0, message="This class is deprecated by Apple. Removing official support.")
     public var rx_clickedButtonAtIndex: ControlEvent<Int> {
         let source = rx_delegate.observe("actionSheet:clickedButtonAtIndex:")
             .map { a in
@@ -40,6 +42,7 @@ extension UIActionSheet {
     /**
     Reactive wrapper for `delegate` message.
     */
+    @available(*, deprecated=2.0.0, message="This class is deprecated by Apple. Removing official support.")
     public var rx_willDismissWithButtonIndex: ControlEvent<Int> {
         let source = rx_delegate.observe("actionSheet:willDismissWithButtonIndex:")
             .map { a in
@@ -52,6 +55,7 @@ extension UIActionSheet {
     /**
     Reactive wrapper for `delegate` message.
     */
+    @available(*, deprecated=2.0.0, message="This class is deprecated by Apple. Removing official support.")
     public var rx_didDismissWithButtonIndex: ControlEvent<Int> {
         let source = rx_delegate.observe("actionSheet:didDismissWithButtonIndex:")
             .map { a in

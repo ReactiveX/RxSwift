@@ -3,7 +3,7 @@
 //  RxCocoa
 //
 //  Created by Krunoslav Zaher on 6/15/15.
-//  Copyright (c) 2015 Krunoslav Zaher. All rights reserved.
+//  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
 import Foundation
@@ -108,7 +108,7 @@ public protocol DelegateProxyType : AnyObject {
     /**
     Returns designated delegate property for object.
     
-    Objects can have mutltiple delegate properties.
+    Objects can have multiple delegate properties.
     
     Each delegate property needs to have it's own type implementing `DelegateProxyType`.
     
@@ -120,7 +120,7 @@ public protocol DelegateProxyType : AnyObject {
     /**
     Sets designated delegate property for object.
     
-    Objects can have mutltiple delegate properties.
+    Objects can have multiple delegate properties.
     
     Each delegate property needs to have it's own type implementing `DelegateProxyType`.
     
@@ -231,7 +231,7 @@ extension ObservableType {
         
         let subscription = self.asObservable()
             // source can't ever end, otherwise it will release the subscriber
-            .concat(never())
+            .concat(Observable.never())
             .subscribe { [weak object] (event: Event<E>) in
                 MainScheduler.ensureExecutingOnScheduler()
 

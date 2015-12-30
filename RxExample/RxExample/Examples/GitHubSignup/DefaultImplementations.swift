@@ -27,12 +27,12 @@ class GitHubDefaultValidationService: GitHubValidationService {
     
     func validateUsername(username: String) -> Observable<ValidationResult> {
         if username.characters.count == 0 {
-            return just(.Empty)
+            return Observable.just(.Empty)
         }
         
         // this obviously won't be
         if username.rangeOfCharacterFromSet(NSCharacterSet.alphanumericCharacterSet().invertedSet) != nil {
-            return just(.Failed(message: "Username can only contain numbers or digits"))
+            return Observable.just(.Failed(message: "Username can only contain numbers or digits"))
         }
         
         let loadingValue = ValidationResult.Validating
@@ -92,7 +92,7 @@ class GitHubDefaultAPI : GitHubAPI {
     func usernameAvailable(username: String) -> Observable<Bool> {
         // this is ofc just mock, but good enough
         
-        let URL = NSURL(string: "https://github.com/\(URLEscape(username))")!
+        let URL = NSURL(string: "https://github.com/\(username.URLEscaped)")!
         let request = NSURLRequest(URL: URL)
         return self.URLSession.rx_response(request)
             .map { (maybeData, response) in
@@ -104,9 +104,9 @@ class GitHubDefaultAPI : GitHubAPI {
     func signup(username: String, password: String) -> Observable<Bool> {
         // this is also just a mock
         let signupResult = arc4random() % 5 == 0 ? false : true
-        return just(signupResult)
-            .concat(never())
-            .throttle(2, MainScheduler.sharedInstance)
+        return Observable.just(signupResult)
+            .concat(Observable.never())
+            .throttle(2, scheduler: MainScheduler.instance)
             .take(1)
     }
 }

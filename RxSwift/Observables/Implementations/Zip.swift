@@ -3,7 +3,7 @@
 //  RxSwift
 //
 //  Created by Krunoslav Zaher on 5/23/15.
-//  Copyright (c) 2015 Krunoslav Zaher. All rights reserved.
+//  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
 import Foundation
@@ -45,8 +45,8 @@ class ZipSink<O: ObserverType> : Sink<O>, ZipSinkProtocol {
         
         for i in 0 ..< _arity {
             if !hasElements(i) {
-                hasValueAll = false;
-                break;
+                hasValueAll = false
+                break
             }
         }
         
@@ -64,7 +64,7 @@ class ZipSink<O: ObserverType> : Sink<O>, ZipSinkProtocol {
             var allOthersDone = true
             
             let arity = _isDone.count
-            for var i = 0; i < arity; ++i {
+            for i in 0 ..< arity {
                 if i != index && !_isDone[i] {
                     allOthersDone = false
                     break

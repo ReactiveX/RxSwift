@@ -19,7 +19,7 @@ Recover from an `Error` notification by continuing the sequence without error
 */
 example("catchError 1") {
     let sequenceThatFails = PublishSubject<Int>()
-    let recoverySequence = sequenceOf(100, 200, 300, 400)
+    let recoverySequence = Observable.of(100, 200, 300, 400)
 
     _ = sequenceThatFails
         .catchError { error in
@@ -66,14 +66,14 @@ If a source Observable emits an error, resubscribe to it in the hopes that it wi
 */
 example("retry") {
     var count = 1 // bad practice, only for example purposes
-    let funnyLookingSequence: Observable<Int> = create { observer in
+    let funnyLookingSequence = Observable<Int>.create { observer in
         let error = NSError(domain: "Test", code: 0, userInfo: nil)
         observer.on(.Next(0))
         observer.on(.Next(1))
         observer.on(.Next(2))
         if count < 2 {
             observer.on(.Error(error))
-            count++
+            count += 1
         }
         observer.on(.Next(3))
         observer.on(.Next(4))

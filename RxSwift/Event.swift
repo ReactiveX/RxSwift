@@ -3,7 +3,7 @@
 //  Rx
 //
 //  Created by Krunoslav Zaher on 2/8/15.
-//  Copyright (c) 2015 Krunoslav Zaher. All rights reserved.
+//  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
 import Foundation
@@ -47,25 +47,6 @@ extension Event {
                 return "Completed"
             }
         }
-    }
-}
-
-/**
-Compares two events. They are equal if they are both the same member of `Event` enumeration.
-
-In case `Error` events are being compared, they are equal in case their `NSError` representations are equal (domain and code).
-*/
-public func == <T: Equatable>(lhs: Event<T>, rhs: Event<T>) -> Bool {
-    switch (lhs, rhs) {
-    case (.Completed, .Completed): return true
-    case (.Error(let e1), .Error(let e2)):
-        let error1 = e1 as NSError
-        let error2 = e2 as NSError
-        
-        return error1.domain == error2.domain
-            && error1.code == error2.code
-    case (.Next(let v1), .Next(let v2)): return v1 == v2
-    default: return false
     }
 }
 

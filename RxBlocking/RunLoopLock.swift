@@ -11,10 +11,10 @@ import Foundation
     import RxSwift
 #endif
 
-class RunLoopLock : NSObject {
+class RunLoopLock {
     let currentRunLoop: CFRunLoopRef
 
-    override init() {
+    init() {
         currentRunLoop = CFRunLoopGetCurrent()
     }
 

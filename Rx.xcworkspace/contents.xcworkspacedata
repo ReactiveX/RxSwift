@@ -10,6 +10,103 @@
    <FileRef
       location = "group:CHANGELOG.md">
    </FileRef>
+   <Group
+      location = "container:"
+      name = "Podspecs">
+      <FileRef
+         location = "group:RxBlocking.podspec">
+      </FileRef>
+      <FileRef
+         location = "group:RxCocoa.podspec">
+      </FileRef>
+      <FileRef
+         location = "group:RxSwift.podspec">
+      </FileRef>
+      <FileRef
+         location = "group:RxTests.podspec">
+      </FileRef>
+   </Group>
+   <Group
+      location = "group:scripts"
+      name = "scripts">
+      <Group
+         location = "group:automation-tests"
+         name = "automation-tests">
+         <FileRef
+            location = "group:01_githubSignUp.js">
+         </FileRef>
+         <FileRef
+            location = "group:02_searchWikipedia.js">
+         </FileRef>
+         <FileRef
+            location = "group:03_masterDetail.js">
+         </FileRef>
+         <FileRef
+            location = "group:04_controlsTests.js">
+         </FileRef>
+         <FileRef
+            location = "group:05_reactivePartialUpdates.js">
+         </FileRef>
+         <FileRef
+            location = "group:common.js">
+         </FileRef>
+         <FileRef
+            location = "group:main.js">
+         </FileRef>
+      </Group>
+      <FileRef
+         location = "group:automation-tests.sh">
+      </FileRef>
+      <FileRef
+         location = "group:common.sh">
+      </FileRef>
+      <FileRef
+         location = "group:playgrounds.sh">
+      </FileRef>
+      <FileRef
+         location = "group:pre-release-tests.sh">
+      </FileRef>
+      <FileRef
+         location = "group:validate-podspec.sh">
+      </FileRef>
+   </Group>
+   <Group
+      location = "group:Documentation"
+      name = "Documentation">
+      <FileRef
+         location = "group:API.md">
+      </FileRef>
+      <FileRef
+         location = "group:DesignRationale.md">
+      </FileRef>
+      <FileRef
+         location = "group:Examples.md">
+      </FileRef>
+      <FileRef
+         location = "group:GettingStarted.md">
+      </FileRef>
+      <FileRef
+         location = "group:HotAndColdObservables.md">
+      </FileRef>
+      <FileRef
+         location = "group:MathBehindRx.md">
+      </FileRef>
+      <FileRef
+         location = "group:Migration.md">
+      </FileRef>
+      <FileRef
+         location = "group:Schedulers.md">
+      </FileRef>
+      <FileRef
+         location = "group:Subjects.md">
+      </FileRef>
+      <FileRef
+         location = "group:Units.md">
+      </FileRef>
+      <FileRef
+         location = "group:Warnings.md">
+      </FileRef>
+   </Group>
    <FileRef
       location = "group:Rx.playground">
    </FileRef>
@@ -17,7 +114,7 @@
       location = "group:Rx.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:RxTests/RxTests.xcodeproj">
+      location = "group:Tests/Tests.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Preprocessor/Preprocessor.xcodeproj">

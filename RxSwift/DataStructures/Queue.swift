@@ -3,7 +3,7 @@
 //  Rx
 //
 //  Created by Krunoslav Zaher on 3/21/15.
-//  Copyright (c) 2015 Krunoslav Zaher. All rights reserved.
+//  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
 import Foundation
@@ -58,7 +58,7 @@ public struct Queue<T>: SequenceType {
     /**
     - returns: Is queue empty.
     */
-    public var empty: Bool {
+    public var isEmpty: Bool {
         get {
             return count == 0
         }
@@ -114,7 +114,7 @@ public struct Queue<T>: SequenceType {
         }
         
         _storage[_pushNextIndex] = element
-        _pushNextIndex++
+        _pushNextIndex += 1
         _count = _count + 1
         
         if _pushNextIndex >= _storage.count {
@@ -134,26 +134,17 @@ public struct Queue<T>: SequenceType {
         
         return value
     }
-    
-    /**
-    Dequeues element and returns it, or returns `nil` in case queue is empty.
-    
-    - returns: Dequeued element.
-    */
-    public mutating func tryDequeue() -> T? {
-        if self.count == 0 {
-            return nil
-        }
-        
-        return dequeue()
-    }
-    
+
     /**
     Dequeues element or throws an exception in case queue is empty.
     
     - returns: Dequeued element.
     */
-    public mutating func dequeue() -> T {
+    public mutating func dequeue() -> T? {
+        if self.count == 0 {
+            return nil
+        }
+
         let value = dequeueElementOnly()
         
         let downsizeLimit = _storage.count / (_resizeFactor * _resizeFactor)
@@ -170,18 +161,20 @@ public struct Queue<T>: SequenceType {
     public func generate() -> Generator {
         var i = dequeueIndex
         var count = _count
-        
+
         return anyGenerator {
             if count == 0 {
                 return nil
             }
-            
-            count--
+
+            count -= 1
             if i >= self._storage.count {
                 i -= self._storage.count
             }
-            
-            return self._storage[i++]
+
+            let element = self._storage[i]
+            i += 1
+            return element
         }
     }
 }

@@ -8,14 +8,14 @@
 
 import Foundation
 
-class BufferTimeCount<Element, S: SchedulerType> : Producer<[Element]> {
+class BufferTimeCount<Element> : Producer<[Element]> {
     
-    private let _timeSpan: S.TimeInterval
+    private let _timeSpan: RxTimeInterval
     private let _count: Int
-    private let _scheduler: S
+    private let _scheduler: SchedulerType
     private let _source: Observable<Element>
     
-    init(source: Observable<Element>, timeSpan: S.TimeInterval, count: Int, scheduler: S) {
+    init(source: Observable<Element>, timeSpan: RxTimeInterval, count: Int, scheduler: SchedulerType) {
         _source = source
         _timeSpan = timeSpan
         _count = count
@@ -29,12 +29,12 @@ class BufferTimeCount<Element, S: SchedulerType> : Producer<[Element]> {
     }
 }
 
-class BufferTimeCountSink<S: SchedulerType, Element, O: ObserverType where O.E == [Element]>
+class BufferTimeCountSink<Element, O: ObserverType where O.E == [Element]>
     : Sink<O>
     , LockOwnerType
     , ObserverType
     , SynchronizedOnType {
-    typealias Parent = BufferTimeCount<Element, S>
+    typealias Parent = BufferTimeCount<Element>
     typealias E = Element
     
     private let _parent: Parent

@@ -3,7 +3,7 @@
 //  Touches
 //
 //  Created by Carlos García on 10/6/15.
-//  Copyright (c) 2015 Krunoslav Zaher. All rights reserved.
+//  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
 #if os(iOS) || os(tvOS)
@@ -57,7 +57,7 @@ extension UIGestureRecognizer {
     Reactive wrapper for gesture recognizer events.
     */
     public var rx_event: ControlEvent<UIGestureRecognizer> {
-        let source: Observable<UIGestureRecognizer> = create { [weak self] observer in
+        let source: Observable<UIGestureRecognizer> = Observable.create { [weak self] observer in
             MainScheduler.ensureExecutingOnScheduler()
 
             guard let control = self else {

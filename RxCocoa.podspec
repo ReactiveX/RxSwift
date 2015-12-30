@@ -1,11 +1,11 @@
 Pod::Spec.new do |s|
   s.name             = "RxCocoa"
-  s.version          = "2.0.0-beta.4"
+  s.version          = "2.0.0-rc.0"
   s.summary          = "RxSwift Cocoa extensions"
   s.description      = <<-DESC
-			* UI extensions
-			* NSURL extensions
-			* KVO extensions
+* UI extensions
+* NSURL extensions
+* KVO extensions
                         DESC
   s.homepage         = "https://github.com/ReactiveX/RxSwift"
   s.license          = 'MIT'
@@ -25,5 +25,5 @@ Pod::Spec.new do |s|
   s.watchos.source_files  = 'RxCocoa/iOS/**/*.swift'
   s.tvos.source_files     = 'RxCocoa/iOS/**/*.swift'
 
-  s.dependency 'RxSwift', '~> 2.0.0-beta'
+  s.dependency 'RxSwift', '~> 2.0.0-rc'
 end

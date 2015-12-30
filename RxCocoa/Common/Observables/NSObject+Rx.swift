@@ -3,7 +3,7 @@
 //  RxCocoa
 //
 //  Created by Krunoslav Zaher on 2/21/15.
-//  Copyright (c) 2015 Krunoslav Zaher. All rights reserved.
+//  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
 import Foundation
@@ -151,69 +151,120 @@ extension NSObject {
     */
     public var rx_deallocated: Observable<Void> {
         return rx_synchronized {
-            if let subject = objc_getAssociatedObject(self, &deallocatedSubjectContext) as? ReplaySubject<Void> {
-                return subject
+            if let deallocObservable = objc_getAssociatedObject(self, &deallocatedSubjectContext) as? DeallocObservable {
+                return deallocObservable._subject
             }
-            else {
-                let subject = ReplaySubject<Void>.create(bufferSize: 1)
-                let deinitAction = DeinitAction {
-                    subject.on(.Next())
-                    subject.on(.Completed)
-                }
-                objc_setAssociatedObject(self, &deallocatedSubjectContext, subject, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
-                objc_setAssociatedObject(self, &deallocatedSubjectTriggerContext, deinitAction, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
-                return subject
-            }
+
+            let deallocObservable = DeallocObservable()
+
+            objc_setAssociatedObject(self, &deallocatedSubjectContext, deallocObservable, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            return deallocObservable._subject
         }
     }
 
 #if !DISABLE_SWIZZLING
-    
+
+    /**
+     Observable sequence of message arguments that completes when object is deallocated.
+
+     In case an error occurs sequence will fail with `RxCocoaObjCRuntimeError`.
+     
+     In case some argument is `nil`, instance of `NSNull()` will be sent.
+
+     - returns: Observable sequence of object deallocating events.
+     */
+    public func rx_sentMessage(selector: Selector) -> Observable<[AnyObject]> {
+        return rx_synchronized {
+            // in case of dealloc selector replay subject behavior needs to be used
+            if selector == deallocSelector {
+                return rx_deallocating.map { _ in [] }
+            }
+
+            let rxSelector = RX_selector(selector)
+            let selectorReference = RX_reference_from_selector(rxSelector)
+
+            let subject: MessageSentObservable
+            if let existingSubject = objc_getAssociatedObject(self, selectorReference) as? MessageSentObservable {
+                subject = existingSubject
+            }
+            else {
+                subject = MessageSentObservable()
+                objc_setAssociatedObject(
+                    self,
+                    selectorReference,
+                    subject,
+                    .OBJC_ASSOCIATION_RETAIN_NONATOMIC
+                )
+            }
+
+            if subject.isActive {
+                return subject.asObservable()
+            }
+
+            var error: NSError?
+            let targetImplementation = RX_ensure_observing(self, selector, &error)
+            if targetImplementation == nil {
+                return Observable.error(error?.rxCocoaErrorForTarget(self) ?? RxCocoaError.Unknown)
+            }
+
+            subject.targetImplementation = targetImplementation
+            return subject.asObservable()
+        }
+    }
+
     /**
     Observable sequence of object deallocating events.
     
     When `dealloc` message is sent to `self` one `()` element will be produced and after object is deallocated sequence
     will immediately complete.
+     
+    In case an error occurs sequence will fail with `RxCocoaObjCRuntimeError`.
     
     - returns: Observable sequence of object deallocating events.
     */
-    public var rx_deallocating: Observable<Void> {
+    public var rx_deallocating: Observable<()> {
         return rx_synchronized {
-            if let subject = objc_getAssociatedObject(self, &deallocatingSubjectContext) as? ReplaySubject<Void> {
-                return subject
+
+            let subject: DeallocatingObservable
+            if let existingSubject = objc_getAssociatedObject(self, rxDeallocatingSelectorReference) as? DeallocatingObservable {
+                subject = existingSubject
             }
             else {
-                let subject = ReplaySubject<Void>.create(bufferSize: 1)
+                subject = DeallocatingObservable()
                 objc_setAssociatedObject(
                     self,
-                    &deallocatingSubjectContext,
+                    rxDeallocatingSelectorReference,
                     subject,
                     .OBJC_ASSOCIATION_RETAIN_NONATOMIC
                 )
-
-                let proxy = Deallocating {
-                    subject.on(.Next())
-                }
-
-                let deinitAction = DeinitAction {
-                    subject.on(.Completed)
-                }
-
-                objc_setAssociatedObject(self,
-                    RXDeallocatingAssociatedAction,
-                    proxy,
-                    .OBJC_ASSOCIATION_RETAIN_NONATOMIC
-                )
-                objc_setAssociatedObject(self,
-                    &deallocatingSubjectTriggerContext,
-                    deinitAction,
-                    .OBJC_ASSOCIATION_RETAIN_NONATOMIC
-                )
-
-                RX_ensure_deallocating_swizzled(self.dynamicType)
-                return subject
             }
+
+            if subject.isActive {
+                return subject.asObservable()
+            }
+
+            var error: NSError?
+            let targetImplementation = RX_ensure_observing(self, deallocSelector, &error)
+            if targetImplementation == nil {
+                return Observable.error(error?.rxCocoaErrorForTarget(self) ?? RxCocoaError.Unknown)
+            }
+
+            subject.targetImplementation = targetImplementation
+            return subject.asObservable()
         }
     }
 #endif
+}
+
+let deallocSelector = "dealloc" as Selector
+let rxDeallocatingSelector = RX_selector("dealloc")
+let rxDeallocatingSelectorReference = RX_reference_from_selector(rxDeallocatingSelector)
+
+extension NSObject {
+    func rx_synchronized<T>(@noescape action: () -> T) -> T {
+        objc_sync_enter(self)
+        let result = action()
+        objc_sync_exit(self)
+        return result
+    }
 }

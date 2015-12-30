@@ -3,7 +3,7 @@
 //  Rx
 //
 //  Created by Krunoslav Zaher on 3/31/15.
-//  Copyright (c) 2015 Krunoslav Zaher. All rights reserved.
+//  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
 import Foundation
@@ -13,46 +13,97 @@ protocol Lock {
     func unlock()
 }
 
-/**
-Simple wrapper for spin lock.
-*/
-struct SpinLock {
-    private var _lock = OS_SPINLOCK_INIT
-    
-    init() {
-        
-    }
+#if os(Linux)
+  import Glibc
 
-    mutating func lock() {
-        OSSpinLockLock(&_lock)
-    }
+  /**
+  Simple wrapper for spin lock.
+  */
+  class SpinLock {
+      private var _lock: pthread_spinlock_t = 0
 
-    mutating func unlock() {
-        OSSpinLockUnlock(&_lock)
-    }
-    
-    mutating func performLocked(@noescape action: () -> Void) {
-        OSSpinLockLock(&_lock)
-        action()
-        OSSpinLockUnlock(&_lock)
-    }
-    
-    mutating func calculateLocked<T>(@noescape action: () -> T) -> T {
-        OSSpinLockLock(&_lock)
-        let result = action()
-        OSSpinLockUnlock(&_lock)
-        return result
-    }
+      init() {
+          if (pthread_spin_init(&_lock, 0) != 0) {
+              fatalError("Spin lock initialization failed")
+          }
+      }
 
-    mutating func calculateLockedOrFail<T>(@noescape action: () throws -> T) throws -> T {
-        OSSpinLockLock(&_lock)
-        defer {
-            OSSpinLockUnlock(&_lock)
-        }
-        let result = try action()
-        return result
-    }
-}
+      func lock() {
+          pthread_spin_lock(&_lock)
+      }
+
+      func unlock() {
+          pthread_spin_unlock(&_lock)
+      }
+
+      func performLocked(@noescape action: () -> Void) {
+          pthread_spin_lock(&_lock)
+          action()
+          pthread_spin_unlock(&_lock)
+      }
+
+      func calculateLocked<T>(@noescape action: () -> T) -> T {
+          pthread_spin_lock(&_lock)
+          let result = action()
+          pthread_spin_unlock(&_lock)
+          return result
+      }
+
+      func calculateLockedOrFail<T>(@noescape action: () throws -> T) throws -> T {
+          pthread_spin_lock(&_lock)
+          defer {
+              pthread_spin_unlock(&_lock)
+          }
+          let result = try action()
+          return result
+      }
+
+      deinit {
+          pthread_spin_destroy(&_lock)
+      }
+  }
+#else
+  /**
+  Simple wrapper for spin lock.
+  */
+  struct SpinLock {
+      private var _lock = OS_SPINLOCK_INIT
+
+      init() {
+
+      }
+
+      mutating func lock() {
+          OSSpinLockLock(&_lock)
+      }
+
+      mutating func unlock() {
+          OSSpinLockUnlock(&_lock)
+      }
+
+      mutating func performLocked(@noescape action: () -> Void) {
+          OSSpinLockLock(&_lock)
+          action()
+          OSSpinLockUnlock(&_lock)
+      }
+
+      mutating func calculateLocked<T>(@noescape action: () -> T) -> T {
+          OSSpinLockLock(&_lock)
+          let result = action()
+          OSSpinLockUnlock(&_lock)
+          return result
+      }
+
+      mutating func calculateLockedOrFail<T>(@noescape action: () throws -> T) throws -> T {
+          OSSpinLockLock(&_lock)
+          defer {
+              OSSpinLockUnlock(&_lock)
+          }
+          let result = try action()
+          return result
+      }
+  }
+#endif
 
 extension NSRecursiveLock : Lock {
     func performLocked(@noescape action: () -> Void) {
@@ -60,14 +111,14 @@ extension NSRecursiveLock : Lock {
         action()
         self.unlock()
     }
-    
+
     func calculateLocked<T>(@noescape action: () -> T) -> T {
         self.lock()
         let result = action()
         self.unlock()
         return result
     }
-    
+
     func calculateLockedOrFail<T>(@noescape action: () throws -> T) throws -> T {
         self.lock()
         defer {

@@ -15,40 +15,64 @@ import RxSwift
 
 // <%= i %>
 
-/**
-Merges the specified observable sequences into one observable sequence by using the selector function whenever all of the observable sequences have produced an element at a corresponding index.
-
-- parameter resultSelector: Function to invoke for each series of elements at corresponding indexes in the sources.
-- returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
-*/
-@warn_unused_result(message="http://git.io/rxs.uo")
+@available(*, deprecated=2.0.0, message="Please use `Driver.zip`")
 public func zip<<%= (Array(1...i).map { "O\($0): DriverConvertibleType" }).joinWithSeparator(", ") %>, R>
-    (<%= (Array(1...i).map { "source\($0): O\($0)" }).joinWithSeparator(", _ ") %>, resultSelector: (<%= (Array(1...i).map { "O\($0).E" }).joinWithSeparator(", ") %>) throws -> R)
+(<%= (Array(1...i).map { "source\($0): O\($0)" }).joinWithSeparator(", _ ") %>, resultSelector: (<%= (Array(1...i).map { "O\($0).E" }).joinWithSeparator(", ") %>) throws -> R)
     -> Driver<R> {
-    let source = zip(
-        <%= (Array(1...i).map { "source\($0).asDriver().asObservable()" }).joinWithSeparator(", ") %>,
+    return Driver.zip(
+        <%= (Array(1...i).map { "source\($0)" }).joinWithSeparator(", ") %>,
         resultSelector: resultSelector
     )
-
-    return Driver(source)
 }
 
-/**
-Merges the specified observable sequences into one observable sequence by using the selector function whenever any of the observable sequences produces an element.
+extension Driver {
+    /**
+    Merges the specified observable sequences into one observable sequence by using the selector function whenever all of the observable sequences have produced an element at a corresponding index.
 
-- parameter resultSelector: Function to invoke whenever any of the sources produces an element.
-- returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
-*/
-@warn_unused_result(message="http://git.io/rxs.uo")
-public func combineLatest<<%= (Array(1...i).map { "O\($0): DriverConvertibleType" }).joinWithSeparator(", ") %>, R>
-    (<%= (Array(1...i).map { "source\($0): O\($0)" }).joinWithSeparator(", _ ") %>, resultSelector: (<%= (Array(1...i).map { "O\($0).E" }).joinWithSeparator(", ") %>) throws -> R)
-    -> Driver<R> {
-    let source = combineLatest(
+    - parameter resultSelector: Function to invoke for each series of elements at corresponding indexes in the sources.
+    - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
+    */
+    @warn_unused_result(message="http://git.io/rxs.uo")
+    public static func zip<<%= (Array(1...i).map { "O\($0): DriverConvertibleType" }).joinWithSeparator(", ") %>>
+        (<%= (Array(1...i).map { "source\($0): O\($0)" }).joinWithSeparator(", _ ") %>, resultSelector: (<%= (Array(1...i).map { "O\($0).E" }).joinWithSeparator(", ") %>) throws -> E)
+        -> Driver<E> {
+        let source = Observable.zip(
             <%= (Array(1...i).map { "source\($0).asDriver().asObservable()" }).joinWithSeparator(", ") %>,
             resultSelector: resultSelector
         )
 
-    return Driver(source)
+        return Driver(source)
+    }
+}
+
+@available(*, deprecated=2.0.0, message="Please use `Driver.combineLatest`")
+public func combineLatest<<%= (Array(1...i).map { "O\($0): DriverConvertibleType" }).joinWithSeparator(", ") %>, R>
+(<%= (Array(1...i).map { "source\($0): O\($0)" }).joinWithSeparator(", _ ") %>, resultSelector: (<%= (Array(1...i).map { "O\($0).E" }).joinWithSeparator(", ") %>) throws -> R)
+    -> Driver<R> {
+    return Driver.combineLatest(
+        <%= (Array(1...i).map { "source\($0)" }).joinWithSeparator(", ") %>,
+        resultSelector: resultSelector
+    )
+}
+
+extension Driver {
+    /**
+    Merges the specified observable sequences into one observable sequence by using the selector function whenever any of the observable sequences produces an element.
+
+    - parameter resultSelector: Function to invoke whenever any of the sources produces an element.
+    - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
+    */
+    @warn_unused_result(message="http://git.io/rxs.uo")
+    public static func combineLatest<<%= (Array(1...i).map { "O\($0): DriverConvertibleType" }).joinWithSeparator(", ") %>>
+        (<%= (Array(1...i).map { "source\($0): O\($0)" }).joinWithSeparator(", _ ") %>, resultSelector: (<%= (Array(1...i).map { "O\($0).E" }).joinWithSeparator(", ") %>) throws -> E)
+        -> Driver<E> {
+        let source = Observable.combineLatest(
+                <%= (Array(1...i).map { "source\($0).asDriver().asObservable()" }).joinWithSeparator(", ") %>,
+                resultSelector: resultSelector
+            )
+
+        return Driver(source)
+    }
 }
 
 <% } %>

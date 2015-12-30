@@ -1,24 +1,24 @@
 Pod::Spec.new do |s|
   s.name             = "RxSwift"
-  s.version          = "2.0.0-beta.4"
+  s.version          = "2.0.0-rc.0"
   s.summary          = "Microsoft Reactive Extensions (Rx) for Swift and iOS/OSX platform"
   s.description      = <<-DESC
-			This is a Swift port of [ReactiveX.io](https://github.com/ReactiveX)
+This is a Swift port of [ReactiveX.io](https://github.com/ReactiveX)
 
-			Like the original [Rx](https://github.com/Reactive-extensions/Rx.Net), its intention is to enable easy composition of asynchronous operations and event streams.
+Like the original [Rx](https://github.com/Reactive-extensions/Rx.Net), its intention is to enable easy composition of asynchronous operations and event streams.
 
-			It tries to port as many concepts from the original Rx as possible, but some concepts were adapted for more pleasant and performant integration with iOS/OSX environment.
+It tries to port as many concepts from the original Rx as possible, but some concepts were adapted for more pleasant and performant integration with iOS/OSX environment.
 
-			Probably the best analogy for those who have never heard of Rx would be:
+Probably the best analogy for those who have never heard of Rx would be:
 
-			```
-			git diff | grep bug | less          #  linux pipes - programs communicate by sending
-							    #  sequences of bytes, words, lines, '\0' terminated strings...
-			```
-			would become if written in RxSwift
-			```
-			gitDiff().grep("bug").less          // sequences of swift objects
-			```
+```
+git diff | grep bug | less          #  linux pipes - programs communicate by sending
+				    #  sequences of bytes, words, lines, '\0' terminated strings...
+```
+would become if written in RxSwift
+```
+gitDiff().grep("bug").less          // sequences of swift objects
+```
                         DESC
   s.homepage         = "https://github.com/ReactiveX/RxSwift"
   s.license          = 'MIT'

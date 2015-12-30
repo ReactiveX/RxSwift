@@ -3,7 +3,7 @@
 //  RxCocoa
 //
 //  Created by Krunoslav Zaher on 5/31/15.
-//  Copyright (c) 2015 Krunoslav Zaher. All rights reserved.
+//  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
 import Foundation
@@ -16,15 +16,20 @@ var rx_value_key: UInt8 = 0
 var rx_control_events_key: UInt8 = 0
 
 extension NSControl {
-    
+
+    @available(*, deprecated=2.0.0, message="Please use rx_controlEvent.")
+    public var rx_controlEvents: ControlEvent<Void> {
+        return rx_controlEvent
+    }
+
     /**
     Reactive wrapper for control event.
     */
-    public var rx_controlEvents: ControlEvent<Void> {
+    public var rx_controlEvent: ControlEvent<Void> {
         MainScheduler.ensureExecutingOnScheduler()
 
         let source = rx_lazyInstanceObservable(&rx_control_events_key) { () -> Observable<Void> in
-            create { [weak self] observer in
+            Observable.create { [weak self] observer in
                 MainScheduler.ensureExecutingOnScheduler()
 
                 guard let control = self else {
@@ -59,11 +64,11 @@ extension NSControl {
         return observable
     }
 
-    func rx_value<T>(getter getter: () -> T, setter: T -> Void) -> ControlProperty<T> {
+    func rx_value<T: Equatable>(getter getter: () -> T, setter: T -> Void) -> ControlProperty<T> {
         MainScheduler.ensureExecutingOnScheduler()
 
         let source = rx_lazyInstanceObservable(&rx_value_key) { () -> Observable<T> in
-            return create { [weak self] observer in
+            return Observable.create { [weak self] observer in
                 guard let control = self else {
                     observer.on(.Completed)
                     return NopDisposable.instance
@@ -76,7 +81,9 @@ extension NSControl {
                 }
                 
                 return observer
-            }.takeUntil(self.rx_deallocated)
+            }
+                .distinctUntilChanged()
+                .takeUntil(self.rx_deallocated)
         }
 
 

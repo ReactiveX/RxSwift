@@ -3,7 +3,7 @@
 //  RxCocoa
 //
 //  Created by Krunoslav Zaher on 4/2/15.
-//  Copyright (c) 2015 Krunoslav Zaher. All rights reserved.
+//  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
 #if os(iOS) || os(tvOS)
@@ -39,10 +39,11 @@ extension UICollectionView {
     - parameter cellIdentifier: Identifier used to dequeue cells.
     - parameter source: Observable sequence of items.
     - parameter configureCell: Transform between sequence elements and view cells.
+    - parameter cellType: Type of table view cell.
     - returns: Disposable object that can be used to unbind.
     */
     public func rx_itemsWithCellIdentifier<S: SequenceType, Cell: UICollectionViewCell, O : ObservableType where O.E == S>
-        (cellIdentifier: String)
+        (cellIdentifier: String, cellType: Cell.Type = Cell.self)
         (source: O)
         (configureCell: (Int, S.Generator.Element, Cell) -> Void)
         -> Disposable {
@@ -157,10 +158,10 @@ extension UICollectionView {
     public func rx_modelSelected<T>(modelType: T.Type) -> ControlEvent<T> {
         let source: Observable<T> = rx_itemSelected.flatMap { [weak self] indexPath -> Observable<T> in
             guard let view = self else {
-                return empty()
+                return Observable.empty()
             }
 
-            return just(try view.rx_modelAtIndexPath(indexPath))
+            return Observable.just(try view.rx_modelAtIndexPath(indexPath))
         }
         
         return ControlEvent(events: source)

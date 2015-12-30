@@ -3,18 +3,18 @@
 //  Rx
 //
 //  Created by Krunoslav Zaher on 3/22/15.
-//  Copyright (c) 2015 Krunoslav Zaher. All rights reserved.
+//  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
 import Foundation
 
-class ThrottleSink<O: ObserverType, Scheduler: SchedulerType>
+class ThrottleSink<O: ObserverType>
     : Sink<O>
     , ObserverType
     , LockOwnerType
     , SynchronizedOnType {
     typealias Element = O.E
-    typealias ParentType = Throttle<Element, Scheduler>
+    typealias ParentType = Throttle<Element>
     
     private let _parent: ParentType
     
@@ -83,13 +83,13 @@ class ThrottleSink<O: ObserverType, Scheduler: SchedulerType>
     }
 }
 
-class Throttle<Element, Scheduler: SchedulerType> : Producer<Element> {
+class Throttle<Element> : Producer<Element> {
     
     private let _source: Observable<Element>
-    private let _dueTime: Scheduler.TimeInterval
-    private let _scheduler: Scheduler
+    private let _dueTime: RxTimeInterval
+    private let _scheduler: SchedulerType
     
-    init(source: Observable<Element>, dueTime: Scheduler.TimeInterval, scheduler: Scheduler) {
+    init(source: Observable<Element>, dueTime: RxTimeInterval, scheduler: SchedulerType) {
         _source = source
         _dueTime = dueTime
         _scheduler = scheduler

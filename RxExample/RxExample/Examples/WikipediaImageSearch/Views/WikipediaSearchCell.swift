@@ -3,7 +3,7 @@
 //  Example
 //
 //  Created by Krunoslav Zaher on 3/28/15.
-//  Copyright (c) 2015 Krunoslav Zaher. All rights reserved.
+//  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
 import Foundation
@@ -33,15 +33,15 @@ public class WikipediaSearchCell: UITableViewCell {
         didSet {
             let disposeBag = DisposeBag()
 
-            (viewModel?.title ?? Drive.just(""))
+            (viewModel?.title ?? Driver.just(""))
                 .drive(self.titleOutlet.rx_text)
                 .addDisposableTo(disposeBag)
 
             self.URLOutlet.text = viewModel.searchResult.URL.absoluteString ?? ""
 
             viewModel.imageURLs
-                .drive(self.imagesOutlet.rx_itemsWithCellIdentifier("ImageCell")) { [unowned self] (_, URL, cell: CollectionViewImageCell) in
-                    cell.downloadableImage = self.imageService.imageFromURL(URL)
+                .drive(self.imagesOutlet.rx_itemsWithCellIdentifier("ImageCell", cellType: CollectionViewImageCell.self)) { [weak self] (_, URL, cell) in
+                    cell.downloadableImage = self?.imageService.imageFromURL(URL) ?? Observable.empty()
                 }
                 .addDisposableTo(disposeBag)
 

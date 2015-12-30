@@ -1,9 +1,9 @@
 //
-//  UIBarButtonItem.swift
+//  UIBarButtonItem+Rx.swift
 //  RxCocoa
 //
 //  Created by Daniel Tartaglia on 5/31/15.
-//  Copyright (c) 2015 Krunoslav Zaher. All rights reserved.
+//  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
 #if os(iOS) || os(tvOS)
@@ -38,7 +38,7 @@ extension UIBarButtonItem {
     Reactive wrapper for target action pattern on `self`.
     */
     public var rx_tap: ControlEvent<Void> {
-        let source: Observable<Void> = create { [weak self] observer in
+        let source: Observable<Void> = Observable.create { [weak self] observer in
 
             guard let control = self else {
                 observer.on(.Completed)
