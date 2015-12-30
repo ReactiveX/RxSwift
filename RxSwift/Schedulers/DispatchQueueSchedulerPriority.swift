@@ -11,6 +11,7 @@ import Foundation
 /**
 Identifies one of the global concurrent dispatch queues with specified priority.
 */
+@available(*, deprecated=2.0.0, message="Use DispatchQueueSchedulerQOS instead.")
 public enum DispatchQueueSchedulerPriority {
     
     /**

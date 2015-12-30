@@ -42,6 +42,7 @@ public class ConcurrentDispatchQueueScheduler: SchedulerType {
     
     - parameter globalConcurrentQueuePriority: Target global dispatch queue.
     */
+    @available(*, deprecated=2.0.0, message="Use init(globalConcurrentQueueQOS:) instead.")
     public convenience init(globalConcurrentQueuePriority: DispatchQueueSchedulerPriority) {
         var priority: Int = 0
         switch globalConcurrentQueuePriority {
@@ -54,6 +55,29 @@ public class ConcurrentDispatchQueueScheduler: SchedulerType {
         }
         self.init(queue: dispatch_get_global_queue(priority, UInt(0)))
     }
+    
+    /**
+     Convenience init for scheduler that wraps one of the global concurrent dispatch queues.
+     
+     - parameter globalConcurrentQueueQOS: Target global dispatch queue, by quality of service class.
+     */
+    public convenience init(globalConcurrentQueueQOS: DispatchQueueSchedulerQOS) {
+        let priority: qos_class_t
+        switch globalConcurrentQueueQOS {
+        case .UserInteractive:
+            priority = QOS_CLASS_USER_INTERACTIVE
+        case .UserInitiated:
+            priority = QOS_CLASS_USER_INITIATED
+        case .Default:
+            priority = QOS_CLASS_DEFAULT
+        case .Utility:
+            priority = QOS_CLASS_UTILITY
+        case .Background:
+            priority = QOS_CLASS_BACKGROUND
+        }
+        self.init(queue: dispatch_get_global_queue(priority, UInt(0)))
+    }
+
     
     class func convertTimeIntervalToDispatchInterval(timeInterval: NSTimeInterval) -> Int64 {
         return Int64(timeInterval * Double(NSEC_PER_SEC))
