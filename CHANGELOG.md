@@ -16,6 +16,7 @@ All notable changes to this project will be documented in this file.
   * works on `Linux` (`RxSwift`, `RxBlocking`, `RxTests`)
   * doesn't work on OSX because it can't compile `RxCocoa` and `RxTests` (because of inclusion of `XCTest` extensions), but OSX has two other package managers and manual method.
   * Project content is linked to `Sources` automagically using custom tool
+  * more info in [Documentation/Linux.md](https://github.com/ReactiveX/RxSwift/blob/master/Documentation/Linux.md)
 * Adds `VirtualTimeScheduler` to `RxSwift`
 * Adds `HistoricalScheduler` to `RxSwift`
 * Improves performance of virtual schedulers using priority queue.
