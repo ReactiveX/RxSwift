@@ -41,6 +41,7 @@ _QueueTest.allTests = [
 let _VariableTest = VariableTest()
 _VariableTest.allTests = [
     ("testVariable_initialValues", { _VariableTest.setUp(); _VariableTest.testVariable_initialValues(); _VariableTest.tearDown(); }),
+    ("testVariable_sendsCompletedOnDealloc", { _VariableTest.setUp(); _VariableTest.testVariable_sendsCompletedOnDealloc(); _VariableTest.tearDown(); }),
     ("testVariable_READMEExample", { _VariableTest.setUp(); _VariableTest.testVariable_READMEExample(); _VariableTest.tearDown(); }),
 ]
 
@@ -647,11 +648,6 @@ _ObservableTimeTest.allTests = [
     ("testSample_Sampler_Simple2", { _ObservableTimeTest.setUp(); _ObservableTimeTest.testSample_Sampler_Simple2(); _ObservableTimeTest.tearDown(); }),
     ("testSample_Sampler_Simple3", { _ObservableTimeTest.setUp(); _ObservableTimeTest.testSample_Sampler_Simple3(); _ObservableTimeTest.tearDown(); }),
     //("testSample_Sampler_SourceThrows", { _ObservableTimeTest.setUp(); _ObservableTimeTest.testSample_Sampler_SourceThrows(); _ObservableTimeTest.tearDown(); }),
-    //("testSampleLatest_Sampler_SamplerThrows", { _ObservableTimeTest.setUp(); _ObservableTimeTest.testSampleLatest_Sampler_SamplerThrows(); _ObservableTimeTest.tearDown(); }),
-    ("testSampleLatest_Sampler_Simple1", { _ObservableTimeTest.setUp(); _ObservableTimeTest.testSampleLatest_Sampler_Simple1(); _ObservableTimeTest.tearDown(); }),
-    ("testSampleLatest_Sampler_Simple2", { _ObservableTimeTest.setUp(); _ObservableTimeTest.testSampleLatest_Sampler_Simple2(); _ObservableTimeTest.tearDown(); }),
-    ("testSampleLatest_Sampler_Simple3", { _ObservableTimeTest.setUp(); _ObservableTimeTest.testSampleLatest_Sampler_Simple3(); _ObservableTimeTest.tearDown(); }),
-    //("testSampleLatest_Sampler_SourceThrows", { _ObservableTimeTest.setUp(); _ObservableTimeTest.testSampleLatest_Sampler_SourceThrows(); _ObservableTimeTest.tearDown(); }),
     ("testInterval_TimeSpan_Basic", { _ObservableTimeTest.setUp(); _ObservableTimeTest.testInterval_TimeSpan_Basic(); _ObservableTimeTest.tearDown(); }),
     ("testInterval_TimeSpan_Zero", { _ObservableTimeTest.setUp(); _ObservableTimeTest.testInterval_TimeSpan_Zero(); _ObservableTimeTest.tearDown(); }),
     ("testInterval_TimeSpan_Zero_DefaultScheduler", { _ObservableTimeTest.setUp(); _ObservableTimeTest.testInterval_TimeSpan_Zero_DefaultScheduler(); _ObservableTimeTest.tearDown(); }),
@@ -685,6 +681,7 @@ _ObservableTimeTest.allTests = [
     ("testTimeout_Never", { _ObservableTimeTest.setUp(); _ObservableTimeTest.testTimeout_Never(); _ObservableTimeTest.tearDown(); }),
     ("testTimeout_Duetime_Simple", { _ObservableTimeTest.setUp(); _ObservableTimeTest.testTimeout_Duetime_Simple(); _ObservableTimeTest.tearDown(); }),
     ("testTimeout_Duetime_Timeout_Exact", { _ObservableTimeTest.setUp(); _ObservableTimeTest.testTimeout_Duetime_Timeout_Exact(); _ObservableTimeTest.tearDown(); }),
+    ("testTimeout_Duetime_Timeout", { _ObservableTimeTest.setUp(); _ObservableTimeTest.testTimeout_Duetime_Timeout(); _ObservableTimeTest.tearDown(); }),
     ("testTimeout_Duetime_Disposed", { _ObservableTimeTest.setUp(); _ObservableTimeTest.testTimeout_Duetime_Disposed(); _ObservableTimeTest.tearDown(); }),
     ("testTimeout_TimeoutOccurs_1", { _ObservableTimeTest.setUp(); _ObservableTimeTest.testTimeout_TimeoutOccurs_1(); _ObservableTimeTest.tearDown(); }),
     ("testTimeout_TimeoutOccurs_2", { _ObservableTimeTest.setUp(); _ObservableTimeTest.testTimeout_TimeoutOccurs_2(); _ObservableTimeTest.tearDown(); }),
