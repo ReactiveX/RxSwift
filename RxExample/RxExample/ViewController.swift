@@ -52,7 +52,7 @@ class ViewController: OSViewController {
             /* add somewhere in
                 func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool
             */
-            _ = Observable.interval(1, MainScheduler.sharedInstance)
+            _ = Observable<Int>.interval(1, scheduler: MainScheduler.instance)
                 .subscribeNext { _ in
                     print("Resource count \(RxSwift.resourceCount)")
                 }

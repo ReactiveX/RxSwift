@@ -3,9 +3,9 @@
 
 [![Travis CI](https://travis-ci.org/ReactiveX/RxSwift.svg?branch=master)](https://travis-ci.org/ReactiveX/RxSwift)
 
-Xcode 7 beta 6 (7A192o) / Swift 2.0 required
+Xcode 7 Swift 2.1 required
 
-**This README.md describes beta version of RxSwift 2.0.**
+**This README.md describes RxSwift 2.0.0 RC.**
 
 **You can find RxSwift 1.9 for Swift 1.2 [here](https://github.com/ReactiveX/RxSwift/tree/rxswift-1.0).**
 
@@ -38,7 +38,7 @@ You can now just write
 * RxCocoa introduces `bindTo` extensions
 
 ```swift
-    combineLatest(firstName.rx_text, lastName.rx_text) { $0 + " " + $1 }
+    Observable.combineLatest(firstName.rx_text, lastName.rx_text) { $0 + " " + $1 }
             .map { "Greeting \($0)" }
             .bindTo(greetingLabel.rx_text)
 ```
@@ -145,7 +145,7 @@ When writing embedded UI applications you would ideally want your program interf
 These are so called bindings and Rx can help you model your system that way.
 
 ```swift
-combineLatest(firstName.rx_text, lastName.rx_text) { $0 + " " + $1 }
+Observable.combineLatest(firstName.rx_text, lastName.rx_text) { $0 + " " + $1 }
             .map { "Greeting \($0)" }
             .bindTo(greetingLabel.rx_text)
 ```
@@ -189,7 +189,7 @@ Writing all of this and properly testing it would be tedious. This is that same 
 
 ```swift
   searchTextField.rx_text
-    .throttle(0.3, MainScheduler.sharedInstance)
+    .throttle(0.3, scheduler: MainScheduler.instance)
     .distinctUntilChanged()
     .flatMapLatest { query in
         API.getSearchResults(query)
@@ -214,7 +214,7 @@ Well, there is of course `zip` operator
   let userRequest: Observable<User> = API.getUser("me")
   let friendsRequest: Observable<Friends> = API.getFriends("me")
 
-  zip(userRequest, friendsRequest) { user, friends in
+  Observable.zip(userRequest, friendsRequest) { user, friends in
       return (user, friends)
     }
     .subscribeNext { user, friends in
@@ -228,10 +228,10 @@ So what if those APIs return results on a background thread, and binding has to 
   let userRequest: Observable<User> = API.getUser("me")
   let friendsRequest: Observable<[Friend]> = API.getFriends("me")
 
-  zip(userRequest, friendsRequest) { user, friends in
+  Observable.zip(userRequest, friendsRequest) { user, friends in
       return (user, friends)
     }
-    .observeOn(MainScheduler.sharedInstance)
+    .observeOn(MainScheduler.instance)
     .subscribeNext { user, friends in
         // bind them to user interface
     }
@@ -246,7 +246,7 @@ And what if you need to create your own observable? It's pretty easy. This code 
 ```swift
 extension NSURLSession {
     public func rx_response(request: NSURLRequest) -> Observable<(NSData, NSURLResponse)> {
-        return create { observer in
+        return Observable.create { observer in
             let task = self.dataTaskWithRequest(request) { (data, response, error) in
                 guard let response = response, data = data else {
                     observer.on(.Error(error ?? RxCocoaURLError.Unknown))
@@ -285,17 +285,17 @@ It would be also nice if we could limit the number of concurrent image operation
 This is how we can do it using Rx.
 
 ```swift
-
-let imageSubscripton = imageURLs
-    .throttle(0.2, MainScheduler.sharedInstance)
-    .flatMap { imageURL in
+// this is conceptual solution
+let imageSubscription = imageURLs
+    .throttle(0.2, scheduler: MainScheduler.instance)
+    .flatMapLatest { imageURL in
         API.fetchImage(imageURL)
     }
     .observeOn(operationScheduler)
     .map { imageData in
         return decodeAndBlurImage(imageData)
     }
-    .observeOn(MainScheduler.sharedInstance)
+    .observeOn(MainScheduler.instance)
     .subscribeNext { blurredImage in
         imageView.image = blurredImage
     }

@@ -22,8 +22,8 @@ class DriverTest : RxTest {
 
 // test helpers that make sure that resulting driver operator honors definition
 // * only one subscription is made and shared - shareReplay(1)
-// * subscription is made on main thread - subscribeOn(ConcurrentMainScheduler.sharedInstance)
-// * events are observed on main thread - observeOn(MainScheduler.sharedInstance)
+// * subscription is made on main thread - subscribeOn(ConcurrentMainScheduler.instance)
+// * events are observed on main thread - observeOn(MainScheduler.instance)
 // * it can't error out - it needs to have catch somewhere
 extension DriverTest {
 
@@ -67,7 +67,7 @@ extension DriverTest {
             subscribing = false
 
             // Subscription should be made on main scheduler
-            // so this will make sure execution is continued after 
+            // so this will make sure execution is continued after
             // subscription because of serial nature of main scheduler.
             MainScheduler.instance.schedule(()) { _ in
                 subscribeFinished.fulfill()
@@ -641,7 +641,7 @@ extension DriverTest {
 
         XCTAssertEqual(results, [2, 3, 0])
     }
-    
+
 }
 
 // MARK: merge
@@ -744,7 +744,7 @@ extension DriverTest {
 
         XCTAssertEqual(results, [1, 3, 2])
     }
-    
+
 }
 
 // MARK: concat
@@ -826,7 +826,7 @@ extension DriverTest {
             XCTAssertTrue(hotObservable1.subscriptions == [UnsunscribedFromHotObservable])
             XCTAssertTrue(hotObservable2.subscriptions == [UnsunscribedFromHotObservable])
         }
-        
+
         XCTAssertEqual(results, [5, 6, 7, 4, -3])
     }
 
@@ -852,7 +852,7 @@ extension DriverTest {
             XCTAssertTrue(hotObservable1.subscriptions == [UnsunscribedFromHotObservable])
             XCTAssertTrue(hotObservable2.subscriptions == [UnsunscribedFromHotObservable])
         }
-        
+
         XCTAssertEqual(results, [5, 6, 7, 4, -3])
     }
 }
@@ -907,7 +907,7 @@ extension DriverTest {
             XCTAssertTrue(hotObservable1.subscriptions == [UnsunscribedFromHotObservable])
             XCTAssertTrue(hotObservable2.subscriptions == [UnsunscribedFromHotObservable])
         }
-        
+
         XCTAssertEqual(results, [5, 7, -3])
     }
 }
@@ -962,7 +962,7 @@ extension DriverTest {
             XCTAssertTrue(hotObservable1.subscriptions == [UnsunscribedFromHotObservable])
             XCTAssertTrue(hotObservable2.subscriptions == [UnsunscribedFromHotObservable])
         }
-        
+
         XCTAssertEqual(results, [4, 5])
 
     }

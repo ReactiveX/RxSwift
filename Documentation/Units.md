@@ -116,8 +116,8 @@ E.g.
 
 ```
 can't error out = catchError
-observe on main scheduler = observeOn(MainScheduler.sharedInstance)
-subscribe on main scheduler = subscribeOn(MainScheduler.sharedInstance)
+observe on main scheduler = observeOn(MainScheduler.instance)
+subscribe on main scheduler = subscribeOn(MainScheduler.instance)
 sharing side effects = share* (one of the `share` operators)
 ```
 
@@ -171,7 +171,7 @@ This is an typical beginner example.
 
 ```swift
 let results = query.rx_text
-    .throttle(0.3, scheduler: MainScheduler.sharedInstance)
+    .throttle(0.3, scheduler: MainScheduler.instance)
     .flatMapLatest { query in
         fetchAutoCompleteItems(query)
     }
@@ -202,10 +202,10 @@ A more appropriate version of the code would look like this:
 
 ```swift
 let results = query.rx_text
-    .throttle(0.3, scheduler: MainScheduler.sharedInstance)
+    .throttle(0.3, scheduler: MainScheduler.instance)
     .flatMapLatest { query in
         fetchAutoCompleteItems(query)
-            .observeOn(MainScheduler.sharedInstance) // results are returned on MainScheduler
+            .observeOn(MainScheduler.instance) // results are returned on MainScheduler
             .catchErrorJustReturn([])                // in worst case, errors are handled
     }
     .shareReplay(1)                                  // HTTP requests are shared and results replayed
@@ -229,7 +229,7 @@ The following code looks almost the same:
 
 ```swift
 let results = query.rx_text.asDriver()        // This converts normal sequence into `Driver` sequence.
-    .throttle(0.3, scheduler: MainScheduler.sharedInstance)
+    .throttle(0.3, scheduler: MainScheduler.instance)
     .flatMapLatest { query in
         fetchAutoCompleteItems(query)
             .asDriver(onErrorJustReturn: [])  // Builder just needs info what to return in case of error.
@@ -272,7 +272,7 @@ So how to make sure those properties are satisfied? Just use normal Rx operators
 
 ```
 let safeSequence = xs
-  .observeOn(MainScheduler.sharedInstance) // observe events on main scheduler
+  .observeOn(MainScheduler.instance) // observe events on main scheduler
   .catchErrorJustReturn(onErrorJustReturn) // can't error out
   .shareReplayLatestWhileConnected         // side effects sharing
 return Driver(raw: safeSequence)           // wrap it up

@@ -15,7 +15,7 @@ import RxSwift
 A type that can be converted to `Driver`.
 */
 public protocol DriverConvertibleType : ObservableConvertibleType {
-    
+
     /**
     Converts self to `Driver`.
     */
@@ -34,7 +34,7 @@ extension DriverConvertibleType {
     Unit that represents observable sequence with following properties:
 
     - it never fails
-    - it delivers events on `MainScheduler.sharedInstance`
+    - it delivers events on `MainScheduler.instance`
     - `shareReplayLatestWhileConnected()` behavior
         - all observers share sequence computation resources
         - it's stateful, upon subscription (calling subscribe) last element is immediatelly replayed if it was produced
@@ -42,22 +42,22 @@ extension DriverConvertibleType {
         - if there are no subscribers, it will release sequence computation resources
 
     `Driver<Element>` can be considered a builder pattern for observable sequences that drive the application.
- 
+
     If observable sequence has produced at least one element, after new subscription is made last produced element will be
-    immediately replayed on the same thread on which the subscription was made. 
- 
+    immediately replayed on the same thread on which the subscription was made.
+
     When using `drive*`, `subscribe*` and `bind*` family of methods, they should always be called from main thread.
- 
-    If `drive*`, `subscribe*` and `bind*` are called from background thread, it is possible that initial replay 
+
+    If `drive*`, `subscribe*` and `bind*` are called from background thread, it is possible that initial replay
     will happen on background thread, and subsequent events will arrive on main thread.
 
     To find out more about units and how to use them, please visit `Documentation/Units.md`.
 */
 public struct Driver<Element> : DriverConvertibleType {
     public typealias E = Element
-    
+
     let _source: Observable<E>
-    
+
     init(_ source: Observable<E>) {
         self._source = source.shareReplayLatestWhileConnected()
     }
@@ -91,30 +91,30 @@ public struct Driver<Element> : DriverConvertibleType {
 
 
 extension Driver {
-    
+
     /**
     Returns an empty observable sequence, using the specified scheduler to send out the single `Completed` message.
-    
+
     - returns: An observable sequence with no elements.
     */
     @warn_unused_result(message="http://git.io/rxs.uo")
     public static func empty() -> Driver<E> {
         return Driver(raw: Observable.empty().subscribeOn(driverSubscribeOnScheduler))
     }
-    
+
     /**
     Returns a non-terminating observable sequence, which can be used to denote an infinite duration.
-    
+
     - returns: An observable sequence whose observers will never get called.
     */
     @warn_unused_result(message="http://git.io/rxs.uo")
     public static func never() -> Driver<E> {
         return Driver(raw: Observable.never().subscribeOn(driverSubscribeOnScheduler))
     }
-    
+
     /**
     Returns an observable sequence that contains a single element.
-    
+
     - parameter element: Single element in the resulting observable sequence.
     - returns: An observable sequence containing the single specified element.
     */
@@ -140,7 +140,7 @@ extension Driver {
         let source = elements.toObservable().subscribeOn(driverSubscribeOnScheduler)
         return Driver(raw: source)
     }
-    
+
 }
 
 public struct Drive {
@@ -171,13 +171,13 @@ public struct Drive {
         let source = elements.toObservable().subscribeOn(driverSubscribeOnScheduler)
         return Driver(raw: source)
     }
-    
+
 }
 
 /**
- This method can be used in unit tests to ensure that driver is using mock schedulers instead of 
+ This method can be used in unit tests to ensure that driver is using mock schedulers instead of
  maind schedulers.
- 
+
  **This shouldn't be used in normal release builds.**
 */
 public func driveOnScheduler(scheduler: SchedulerType, action: () -> ()) {

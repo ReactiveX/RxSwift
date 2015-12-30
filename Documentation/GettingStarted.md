@@ -97,9 +97,9 @@ protocol ObserverType {
 
 If a sequence terminates in finite time, not calling `dispose` or not using `addDisposableTo(disposeBag)` won't cause any permanent resource leaks, but those resources will be used until sequence completes in some way (finishes producing elements or error happens).
 
-If a sequence doesn't terminate in some way, resources will be allocated permanently unless `dispose` is being called manually, automatically inside of a `disposeBag`, `scopedDispose`, `takeUntil` or some other way.
+If a sequence doesn't terminate in some way, resources will be allocated permanently unless `dispose` is being called manually, automatically inside of a `disposeBag`, `takeUntil` or some other way.
 
-**Using dispose bags, scoped dispose or `takeUntil` operator are all robust ways of making sure resources are cleaned up and we recommend using them in production even though sequence will terminate in finite time.**
+**Using dispose bags or `takeUntil` operator is a robust way of making sure resources are cleaned up and we recommend using them in production even though sequence will terminate in finite time.**
 
 In case you are curious why `ErrorType` isn't generic, you can find explanation [here](DesignRationale.md#why-error-type-isnt-generic).
 
@@ -110,9 +110,9 @@ There is one additional way an observed sequence can terminate. When you are don
 Here is an example with `interval` operator.
 
 ```swift
-let subscription = Observable.interval(0.3, scheduler)
-    .subscribe { (e: Event<Int64>) in
-        print(e)
+let subscription = Observable<Int>.interval(0.3, scheduler: scheduler)
+    .subscribe { event in
+        print(event)
     }
 
 NSThread.sleepForTimeInterval(2)
@@ -132,7 +132,7 @@ This will print:
 5
 ```
 
-One thing to note here is that you usually don't want to manually call `dispose` and this is only educational example. Calling dispose manually is usually bad code smell, and there are better ways to dispose subscriptions. You can either use `DisposeBag`, `ScopedDisposable`, `takeUntil` operator or some other mechanism.
+One thing to note here is that you usually don't want to manually call `dispose` and this is only educational example. Calling dispose manually is usually bad code smell, and there are better ways to dispose subscriptions. You can either use `DisposeBag`, `takeUntil` operator or some other mechanism.
 
 So can this code print something after `dispose` call executed? The answer is, it depends.
 
@@ -154,10 +154,10 @@ A few more examples just to be sure (`observeOn` is explained [here](Schedulers.
 In case you have something like:
 
 ```swift
-let subscription = Observable.interval(0.3, scheduler)
-            .observeOn(MainScheduler.sharedInstance)
-            .subscribe { (e: Event<Int64>) in
-                print(e)
+let subscription = Observable<Int>.interval(0.3, scheduler: scheduler)
+            .observeOn(MainScheduler.instance)
+            .subscribe { event in
+                print(event)
             }
 
 // ....
@@ -171,10 +171,10 @@ subscription.dispose() // called from main thread
 Also in this case:
 
 ```swift
-let subscription = Observable.interval(0.3, scheduler)
+let subscription = Observable<Int>.interval(0.3, scheduler: scheduler)
             .observeOn(serialScheduler)
-            .subscribe { (e: Event<Int64>) in
-                print(e)
+            .subscribe { event in
+                print(event)
             }
 
 // ...
@@ -200,20 +200,6 @@ It doesn't have a `dispose` method and it doesn't allow calling explicit dispose
 That should clear references to old one and cause disposal of resources.
 
 If that explicit manual disposal is still wanted, use `CompositeDisposable`. **It has the wanted behavior but once that `dispose` method is called, it will immediately dispose any newly added disposable.**
-
-### Scoped Dispose
-
-In case disposal is wanted immediately after leaving scope of execution, there is `scopedDispose()`.
-
-```swift
-let autoDispose = sequence
-    .subscribe {
-        print($0)
-    }
-    .scopedDispose()
-```
-
-This will dispose the subscription when execution leaves current scope.
 
 ### Take until
 
@@ -846,7 +832,7 @@ In case you want to have some resource leak detection logic, the simplest method
     /* add somewhere in
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool
     */
-    _ = Observable.interval(1, MainScheduler.sharedInstance)
+    _ = Observable<Int>.interval(1, scheduler: MainScheduler.instance)
         .subscribeNext { _ in
         print("Resource count \(RxSwift.resourceCount)")
     }
@@ -880,10 +866,12 @@ let variable = Variable(0)
 
 print("Before first subscription ---")
 
-variable.asObservable()
-    .subscribeNext { n in
+_ = variable.asObservable()
+    .subscribe(onNext: { n in
         print("First \(n)")
-    }
+    }, onCompleted: {
+        print("Completed 1")
+    })
 
 print("Before send 1")
 
@@ -891,10 +879,12 @@ variable.value = 1
 
 print("Before second subscription ---")
 
-variable
-    .subscribeNext { n in
+_ = variable.asObservable()
+    .subscribe(onNext: { n in
         print("Second \(n)")
-    }
+    }, onCompleted: {
+        print("Completed 2")
+    })
 
 variable.value = 2
 
@@ -913,6 +903,8 @@ Second 1
 First 2
 Second 2
 End ---
+Completed 1
+Completed 2
 ```
 
 ## KVO
@@ -1006,7 +998,7 @@ There are certain things that your `Observable`s need to satisfy in the UI layer
 
 It is usually a good idea for you APIs to return results on `MainScheduler`. In case you try to bind something to UI from background thread, in **Debug** build RxCocoa will usually throw an exception to inform you of that.
 
-To fix this you need to add `observeOn(MainScheduler.sharedInstance)`.
+To fix this you need to add `observeOn(MainScheduler.instance)`.
 
 **NSURLSession extensions don't return result on `MainScheduler` by default.**
 
