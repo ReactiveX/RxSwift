@@ -564,7 +564,7 @@ class ObservableConcurrentSchedulerConcurrencyTest: ObservableConcurrencyTestBas
 
 class ObservableConcurrentSchedulerConcurrencyTest2 : ObservableConcurrentSchedulerConcurrencyTest {
     override func createScheduler() -> ImmediateSchedulerType {
-        return ConcurrentDispatchQueueScheduler(globalConcurrentQueuePriority: .Default)
+        return ConcurrentDispatchQueueScheduler(globalConcurrentQueueQOS: .Default)
     }
 }
 

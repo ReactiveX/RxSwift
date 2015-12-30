@@ -257,7 +257,7 @@ extension ObservableTimeTest {
     }
 
     func test_ThrottleWithRealScheduler() {
-        let scheduler = ConcurrentDispatchQueueScheduler(globalConcurrentQueuePriority: .Default)
+        let scheduler = ConcurrentDispatchQueueScheduler(globalConcurrentQueueQOS: .Default)
 
         let start = NSDate()
 
@@ -536,7 +536,7 @@ extension ObservableTimeTest {
     }
 
     func testInterval_TimeSpan_Zero_DefaultScheduler() {
-        let scheduler = SerialDispatchQueueScheduler(globalConcurrentQueuePriority: .Default)
+        let scheduler = SerialDispatchQueueScheduler(globalConcurrentQueueQOS: .Default)
 
         let observer = PrimitiveMockObserver<Int64>()
 
@@ -586,7 +586,7 @@ extension ObservableTimeTest {
     }
 
     func test_IntervalWithRealScheduler() {
-        let scheduler = ConcurrentDispatchQueueScheduler(globalConcurrentQueuePriority: .Default)
+        let scheduler = ConcurrentDispatchQueueScheduler(globalConcurrentQueueQOS: .Default)
 
         let start = NSDate()
 
@@ -1093,7 +1093,7 @@ extension ObservableTimeTest {
     }
 
     func testBufferWithTimeOrCount_Default() {
-        let backgroundScheduler = SerialDispatchQueueScheduler(globalConcurrentQueuePriority: .Default)
+        let backgroundScheduler = SerialDispatchQueueScheduler(globalConcurrentQueueQOS: .Default)
         
         let result = try! Observable.range(start: 1, count: 10, scheduler: backgroundScheduler)
             .buffer(timeSpan: 1000, count: 3, scheduler: backgroundScheduler)
@@ -1293,7 +1293,7 @@ extension ObservableTimeTest {
     }*/
     
     func windowWithTimeOrCount_Default() {
-        let backgroundScheduler = SerialDispatchQueueScheduler(globalConcurrentQueuePriority: .Default)
+        let backgroundScheduler = SerialDispatchQueueScheduler(globalConcurrentQueueQOS: .Default)
         
         let result = try! Observable.range(start: 1, count: 10, scheduler: backgroundScheduler)
             .window(timeSpan: 1000, count: 3, scheduler: backgroundScheduler)

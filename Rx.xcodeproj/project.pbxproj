@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		79E9DE891C3417FD009970AF /* DispatchQueueSchedulerQOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79E9DE881C3417FD009970AF /* DispatchQueueSchedulerQOS.swift */; };
+		79E9DE8A1C3417FD009970AF /* DispatchQueueSchedulerQOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79E9DE881C3417FD009970AF /* DispatchQueueSchedulerQOS.swift */; };
+		79E9DE8B1C3417FD009970AF /* DispatchQueueSchedulerQOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79E9DE881C3417FD009970AF /* DispatchQueueSchedulerQOS.swift */; };
+		79E9DE8C1C3417FD009970AF /* DispatchQueueSchedulerQOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79E9DE881C3417FD009970AF /* DispatchQueueSchedulerQOS.swift */; };
 		9BA1CBD31C0F7D550044B50A /* UIActivityIndicatorView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA1CBD11C0F7C0A0044B50A /* UIActivityIndicatorView+Rx.swift */; };
 		9BA1CBFD1C0F84A10044B50A /* UIActivityIndicatorView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA1CBD11C0F7C0A0044B50A /* UIActivityIndicatorView+Rx.swift */; };
 		9BA1CBFE1C0F84C40044B50A /* UIActivityIndicatorView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA1CBD11C0F7C0A0044B50A /* UIActivityIndicatorView+Rx.swift */; };
@@ -1004,6 +1008,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		79E9DE881C3417FD009970AF /* DispatchQueueSchedulerQOS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DispatchQueueSchedulerQOS.swift; sourceTree = "<group>"; };
 		9BA1CBD11C0F7C0A0044B50A /* UIActivityIndicatorView+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIActivityIndicatorView+Rx.swift"; sourceTree = "<group>"; };
 		A111CE961B91C97C00D0DCEE /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B1B7C3BC1BDD39DB0076934E /* TakeLast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TakeLast.swift; sourceTree = "<group>"; };
@@ -1572,6 +1577,7 @@
 				C8B144FA1BD2D44500267DCE /* ConcurrentMainScheduler.swift */,
 				C8C3DA0E1B939767004D233E /* CurrentThreadScheduler.swift */,
 				C8093CB61B8A72BE0088E94D /* DispatchQueueSchedulerPriority.swift */,
+				79E9DE881C3417FD009970AF /* DispatchQueueSchedulerQOS.swift */,
 				C8B144FF1BD2D80100267DCE /* ImmediateScheduler.swift */,
 				C8093CB71B8A72BE0088E94D /* MainScheduler.swift */,
 				C8093CB81B8A72BE0088E94D /* OperationQueueScheduler.swift */,
@@ -2770,6 +2776,7 @@
 				C84CC5591BDCF51200E06A64 /* SynchronizedSubscribeType.swift in Sources */,
 				C8093D321B8A72BE0088E94D /* Reduce.swift in Sources */,
 				C8640A041BA5B12A00D3C4E8 /* Repeat.swift in Sources */,
+				79E9DE8A1C3417FD009970AF /* DispatchQueueSchedulerQOS.swift in Sources */,
 				C8093CF41B8A72BE0088E94D /* Errors.swift in Sources */,
 				C8093D141B8A72BE0088E94D /* Debug.swift in Sources */,
 				CB883B4B1BE369AA000AC2EE /* AddRef.swift in Sources */,
@@ -2994,6 +3001,7 @@
 				C84CC5581BDCF51200E06A64 /* SynchronizedSubscribeType.swift in Sources */,
 				C8093D311B8A72BE0088E94D /* Reduce.swift in Sources */,
 				C8640A031BA5B12A00D3C4E8 /* Repeat.swift in Sources */,
+				79E9DE891C3417FD009970AF /* DispatchQueueSchedulerQOS.swift in Sources */,
 				C8093CF31B8A72BE0088E94D /* Errors.swift in Sources */,
 				C8093D131B8A72BE0088E94D /* Debug.swift in Sources */,
 				CB883B4A1BE369AA000AC2EE /* AddRef.swift in Sources */,
@@ -3142,6 +3150,7 @@
 				C84CC55B1BDCF51200E06A64 /* SynchronizedSubscribeType.swift in Sources */,
 				C8F0BFE51BBBFB8B001B112F /* Reduce.swift in Sources */,
 				C8F0BFE71BBBFB8B001B112F /* Repeat.swift in Sources */,
+				79E9DE8C1C3417FD009970AF /* DispatchQueueSchedulerQOS.swift in Sources */,
 				C8F0BFE81BBBFB8B001B112F /* Errors.swift in Sources */,
 				C8F0BFE91BBBFB8B001B112F /* Debug.swift in Sources */,
 				CB883B4D1BE369AA000AC2EE /* AddRef.swift in Sources */,
@@ -3459,6 +3468,7 @@
 				C84CC55A1BDCF51200E06A64 /* SynchronizedSubscribeType.swift in Sources */,
 				D2EBEB3B1BB9B6D8003A27DC /* OperationQueueScheduler.swift in Sources */,
 				D2EBEAE51BB9B697003A27DC /* AnyObserver.swift in Sources */,
+				79E9DE8B1C3417FD009970AF /* DispatchQueueSchedulerQOS.swift in Sources */,
 				D2EBEB3D1BB9B6D8003A27DC /* SchedulerServices+Emulation.swift in Sources */,
 				D2EBEB1C1BB9B6C1003A27DC /* Sample.swift in Sources */,
 				D2EBEAFD1BB9B6BA003A27DC /* AnonymousObservable.swift in Sources */,

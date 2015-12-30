@@ -13,7 +13,7 @@ import XCTest
 import RxTests
 
 class DriverTest : RxTest {
-    var backgroundScheduler = SerialDispatchQueueScheduler(globalConcurrentQueuePriority: .Default)
+    var backgroundScheduler = SerialDispatchQueueScheduler(globalConcurrentQueueQOS: .Default)
 
     override func tearDown() {
         super.tearDown()
