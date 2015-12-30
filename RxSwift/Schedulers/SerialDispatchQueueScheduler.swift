@@ -99,6 +99,7 @@ public class SerialDispatchQueueScheduler: SchedulerType {
      - parameter globalConcurrentQueueQOS: Identifier for global dispatch queue with specified quality of service class.
      - parameter internalSerialQueueName: Custom name for internal serial dispatch queue proxy.
      */
+    @available(iOS 8, OSX 10.10, *)
     public convenience init(globalConcurrentQueueQOS: DispatchQueueSchedulerQOS, internalSerialQueueName: String = "rx.global_dispatch_queue.serial") {
         let priority: qos_class_t
         switch globalConcurrentQueueQOS {

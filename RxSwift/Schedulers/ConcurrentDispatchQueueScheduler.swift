@@ -61,6 +61,7 @@ public class ConcurrentDispatchQueueScheduler: SchedulerType {
      
      - parameter globalConcurrentQueueQOS: Target global dispatch queue, by quality of service class.
      */
+    @available(iOS 8, OSX 10.10, *)
     public convenience init(globalConcurrentQueueQOS: DispatchQueueSchedulerQOS) {
         let priority: qos_class_t
         switch globalConcurrentQueueQOS {
