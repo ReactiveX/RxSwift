@@ -350,7 +350,7 @@ extension SequenceType where Generator.Element : DriverConvertibleType {
     @warn_unused_result(message="http://git.io/rxs.uo")
     public func concat()
         -> Driver<Generator.Element.E> {
-        let source: Observable<Generator.Element.E> = self.lazy.map { $0.asDriver() }.concat()
+        let source = self.lazy.map { $0.asDriver().asObservable() }.concat()
         return Driver<Generator.Element.E>(source)
     }
 }
@@ -365,7 +365,7 @@ extension CollectionType where Generator.Element : DriverConvertibleType {
     @warn_unused_result(message="http://git.io/rxs.uo")
     public func concat()
         -> Driver<Generator.Element.E> {
-        let source: Observable<Generator.Element.E> = self.map { $0.asDriver() }.concat()
+        let source = self.map { $0.asDriver().asObservable() }.concat()
         return Driver<Generator.Element.E>(source)
     }
 }
@@ -380,7 +380,7 @@ extension CollectionType where Generator.Element : DriverConvertibleType {
     */
     @warn_unused_result(message="http://git.io/rxs.uo")
     public func zip<R>(resultSelector: [Generator.Element.E] throws -> R) -> Driver<R> {
-        let source: Observable<R> = self.map { $0.asDriver() }.zip(resultSelector)
+        let source = self.map { $0.asDriver().asObservable() }.zip(resultSelector)
         return Driver<R>(source)
     }
 }
@@ -395,7 +395,7 @@ extension CollectionType where Generator.Element : DriverConvertibleType {
     */
     @warn_unused_result(message="http://git.io/rxs.uo")
     public func combineLatest<R>(resultSelector: [Generator.Element.E] throws -> R) -> Driver<R> {
-        let source : Observable<R> = self.map { $0.asDriver() }.combineLatest(resultSelector)
+        let source = self.map { $0.asDriver().asObservable() }.combineLatest(resultSelector)
         return Driver<R>(source)
     }
 }

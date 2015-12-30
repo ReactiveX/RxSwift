@@ -10,7 +10,7 @@ import Foundation
 
 // MARK: combineLatest
 
-extension CollectionType where Generator.Element : ObservableConvertibleType {
+extension CollectionType where Generator.Element : ObservableType {
     
     /**
     Merges the specified observable sequences into one observable sequence by using the selector function whenever any of the observable sequences produces an element.
@@ -28,7 +28,7 @@ extension CollectionType where Generator.Element : ObservableConvertibleType {
 
 // MARK: zip
 
-extension CollectionType where Generator.Element : ObservableConvertibleType {
+extension CollectionType where Generator.Element : ObservableType {
     
     /**
     Merges the specified observable sequences into one observable sequence by using the selector function whenever all of the observable sequences have produced an element at a corresponding index.
@@ -83,7 +83,7 @@ extension ObservableType {
     }
 }
 
-extension SequenceType where Generator.Element : ObservableConvertibleType {
+extension SequenceType where Generator.Element : ObservableType {
     
     /**
     Concatenates all observable sequences in the given sequence, as long as the previous observable sequence terminated successfully.
@@ -105,7 +105,7 @@ extension SequenceType where Generator.Element : ObservableConvertibleType {
     }
 }
 
-extension CollectionType where Generator.Element : ObservableConvertibleType {
+extension CollectionType where Generator.Element : ObservableType {
     
     /**
     Concatenates all observable sequences in the given sequence, as long as the previous observable sequence terminated successfully.
@@ -208,7 +208,7 @@ extension ObservableType {
     
 }
 
-extension SequenceType where Generator.Element : ObservableConvertibleType {
+extension SequenceType where Generator.Element : ObservableType {
     /**
     Continues an observable sequence that is terminated by an error with the next observable sequence.
 
@@ -281,7 +281,7 @@ extension ObservableType {
     }
 }
 
-extension SequenceType where Generator.Element : ObservableConvertibleType {
+extension SequenceType where Generator.Element : ObservableType {
     
     /**
     Propagates the observable sequence that reacts first.
