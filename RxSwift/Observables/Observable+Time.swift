@@ -3,7 +3,7 @@
 //  Rx
 //
 //  Created by Krunoslav Zaher on 3/22/15.
-//  Copyright (c) 2015 Krunoslav Zaher. All rights reserved.
+//  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
 import Foundation
@@ -81,19 +81,7 @@ extension ObservableType {
         return Sample(source: self.asObservable(), sampler: sampler.asObservable(), onlyNew: true)
     }
 
-    /**
-    Samples the source observable sequence using a samper observable sequence producing sampling ticks.
-    
-    Upon each sampling tick, the latest element (if any) in the source sequence during the last sampling interval is sent to the resulting sequence.
-    
-    **In case there were no new elements between sampler ticks, last produced element is always sent to the resulting sequence.**
-
-    - seealso: [sample operator on reactivex.io](http://reactivex.io/documentation/operators/sample.html)
-    
-    - parameter sampler: Sampling tick sequence.
-    - returns: Sampled observable sequence.
-    */
-    @warn_unused_result(message="http://git.io/rxs.uo")
+    @available(*, deprecated=2.0.0, message="Please use `withLatestFrom`.")
     public func sampleLatest<O: ObservableType>(sampler: O)
         -> Observable<E> {
         return Sample(source: self.asObservable(), sampler: sampler.asObservable(), onlyNew: false)
@@ -354,13 +342,13 @@ extension ObservableType {
     @warn_unused_result(message="http://git.io/rxs.uo")
     public func timeout(dueTime: RxTimeInterval, scheduler: SchedulerType)
         -> Observable<E> {
-            return Timeout(source: self.asObservable(), dueTime: dueTime, other: nil, scheduler: scheduler)
+            return Timeout(source: self.asObservable(), dueTime: dueTime, other: Observable.error(RxError.Timeout), scheduler: scheduler)
     }
 
     @available(*, deprecated=2.0.0, message="Please use version with named scheduler parameter.")
     public func timeout(dueTime: RxTimeInterval, _ scheduler: SchedulerType)
         -> Observable<E> {
-            return Timeout(source: self.asObservable(), dueTime: dueTime, other: nil, scheduler: scheduler)
+            return Timeout(source: self.asObservable(), dueTime: dueTime, other: Observable.error(RxError.Timeout), scheduler: scheduler)
     }
     
     /**

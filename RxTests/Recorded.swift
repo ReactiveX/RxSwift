@@ -3,7 +3,7 @@
 //  Rx
 //
 //  Created by Krunoslav Zaher on 2/14/15.
-//  Copyright (c) 2015 Krunoslav Zaher. All rights reserved.
+//  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
 import Foundation
@@ -19,14 +19,14 @@ public struct Recorded<Element>
     /**
     Gets the virtual time the value was produced on.
     */
-    public let time: Time
+    public let time: TestTime
 
     /**
     Gets the recorded value.
     */
     public let value: Element
     
-    public init(time: Time, event: Element) {
+    public init(time: TestTime, event: Element) {
         self.time = time
         self.value = event
     }

@@ -3,7 +3,7 @@
 //  Rx
 //
 //  Created by Krunoslav Zaher on 2/14/15.
-//  Copyright (c) 2015 Krunoslav Zaher. All rights reserved.
+//  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
 import Foundation
@@ -14,7 +14,7 @@ Counts internal Rx resources (Observables, Observers, Disposables ...).
 
 It provides a really simple way to detect leaks early during development.
 */
-public var resourceCount: Int32 = 0
+public var resourceCount: AtomicInt = 0
 #endif
 
 // Swift doesn't have a concept of abstract metods.

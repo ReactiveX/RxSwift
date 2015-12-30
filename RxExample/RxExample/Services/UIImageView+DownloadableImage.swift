@@ -2,7 +2,7 @@
 //  UIImageView+DownloadableImage.swift
 //  RxExample
 //
-//  Created by Vodovozov Gleb on 01.11.2015.
+//  Created by Vodovozov Gleb on 11/1/15.
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 

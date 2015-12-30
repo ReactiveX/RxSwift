@@ -3,7 +3,7 @@
 //  RxSwift
 //
 //  Created by Krunoslav Zaher on 6/13/15.
-//  Copyright (c) 2015 Krunoslav Zaher. All rights reserved.
+//  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
 import Foundation
@@ -11,7 +11,7 @@ import Foundation
 /**
 Sequence that repeats `repeatedValue` infinite number of times.
 */
-class InfiniteSequence<E> : SequenceType {
+struct InfiniteSequence<E> : SequenceType {
     typealias Element = E
     typealias Generator = AnyGenerator<E>
     

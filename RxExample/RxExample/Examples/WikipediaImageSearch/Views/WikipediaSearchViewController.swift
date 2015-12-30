@@ -1,9 +1,9 @@
 //
-//  ViewController.swift
+//  WikipediaSearchViewController.swift
 //  Example
 //
 //  Created by Krunoslav Zaher on 2/21/15.
-//  Copyright (c) 2015 Krunoslav Zaher. All rights reserved.
+//  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
 import UIKit
@@ -43,11 +43,11 @@ class WikipediaSearchViewController: ViewController {
         resultsTableView.rowHeight = 194
 
         let API = DefaultWikipediaAPI.sharedAPI
-        let scheduler = MainScheduler.sharedInstance
+        let scheduler = MainScheduler.instance
 
         searchBar.rx_text
             .asDriver()
-            .throttle(0.3, scheduler: scheduler)
+            .throttle(0.3)
             .distinctUntilChanged()
             .flatMapLatest { query in
                 API.getSearchResults(query)

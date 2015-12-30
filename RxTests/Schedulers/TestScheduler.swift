@@ -3,7 +3,7 @@
 //  Rx
 //
 //  Created by Krunoslav Zaher on 2/8/15.
-//  Copyright (c) 2015 Krunoslav Zaher. All rights reserved.
+//  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
 import Foundation
@@ -12,10 +12,7 @@ import RxSwift
 /**
 Virtual time scheduler used for testing applications and libraries built using RxSwift.
 */
-public class TestScheduler : VirtualTimeSchedulerBase<TestSchedulerVirtualTimeConverter> {
-    public typealias TimeInterval = Int
-    public typealias Time = Int
-
+public class TestScheduler : VirtualTimeScheduler<TestSchedulerVirtualTimeConverter> {
     /**
      Default values of scheduler times.
     */
@@ -34,13 +31,19 @@ public class TestScheduler : VirtualTimeSchedulerBase<TestSchedulerVirtualTimeCo
         public static let disposed = 1000
     }
 
+    private let _simulateProcessingDelay: Bool
+
     /**
      Creates a new test scheduler.
      
      - parameter initialClock: Initial value for the clock.
+     - parameter resolution: Real time [NSTimeInterval] = ticks * resolution 
+     - parameter simulateProcessingDelay: When true, if something is scheduled right `now`, 
+        it will be scheduled to `now + 1` in virtual time.
     */
-    public init(initialClock: Time) {
-        super.init(initialClock: initialClock, converter: TestSchedulerVirtualTimeConverter())
+    public init(initialClock: TestTime, resolution: Double = 1.0, simulateProcessingDelay: Bool = true) {
+        _simulateProcessingDelay = simulateProcessingDelay
+        super.init(initialClock: initialClock, converter: TestSchedulerVirtualTimeConverter(resolution: resolution))
     }
 
     /**
@@ -49,7 +52,7 @@ public class TestScheduler : VirtualTimeSchedulerBase<TestSchedulerVirtualTimeCo
     - parameter events: Events to surface through the created sequence at their specified absolute virtual times.
     - returns: Hot observable sequence that can be used to assert the timing of subscriptions and events.
     */
-    public func createHotObservable<Element>(events: [Recorded<Event<Element>>]) -> HotObservable<Element> {
+    public func createHotObservable<Element>(events: [Recorded<Event<Element>>]) -> TestableObservable<Element> {
         return HotObservable(testScheduler: self as AnyObject as! TestScheduler, recordedEvents: events)
     }
 
@@ -59,7 +62,7 @@ public class TestScheduler : VirtualTimeSchedulerBase<TestSchedulerVirtualTimeCo
      - parameter events: Events to surface through the created sequence at their specified virtual time offsets from the sequence subscription time.
      - returns: Cold observable sequence that can be used to assert the timing of subscriptions and events.
     */
-    public func createColdObservable<Element>(events: [Recorded<Event<Element>>]) -> ColdObservable<Element> {
+    public func createColdObservable<Element>(events: [Recorded<Event<Element>>]) -> TestableObservable<Element> {
         return ColdObservable(testScheduler: self as AnyObject as! TestScheduler, recordedEvents: events)
     }
 
@@ -69,8 +72,8 @@ public class TestScheduler : VirtualTimeSchedulerBase<TestSchedulerVirtualTimeCo
      - parameter type: Optional type hint of the observed sequence elements.
      - returns: Observer that can be used to assert the timing of events.
     */
-    public func createObserver<E>(type: E.Type) -> MockObserver<E> {
-        return MockObserver(scheduler: self as AnyObject as! TestScheduler)
+    public func createObserver<E>(type: E.Type) -> TestableObserver<E> {
+        return TestableObserver(scheduler: self as AnyObject as! TestScheduler)
     }
 
     /**
@@ -78,11 +81,18 @@ public class TestScheduler : VirtualTimeSchedulerBase<TestSchedulerVirtualTimeCo
 
      - parameter time: Absolute virtual time at which to execute the action.
      */
-    public func scheduleAt(time: Time, action: () -> Void) {
+    public func scheduleAt(time: TestTime, action: () -> Void) {
         self.scheduleAbsoluteVirtual((), time: time, action: { () -> Disposable in
             action()
             return NopDisposable.instance
         })
+    }
+
+    /**
+    Adjusts time of scheduling before adding item to schedule queue. If scheduled time is `<= clock`, then it is scheduled at `clock + 1`
+    */
+    override public func adjustScheduledTime(time: VirtualTime) -> VirtualTime {
+        return time <= clock ? clock + (_simulateProcessingDelay ? 1 : 0) : time
     }
 
     /**
@@ -94,10 +104,10 @@ public class TestScheduler : VirtualTimeSchedulerBase<TestSchedulerVirtualTimeCo
     - parameter disposed: Virtual time at which to dispose the subscription.
     - returns: Observer with timestamped recordings of events that were received during the virtual time window when the subscription to the source sequence was active.
     */
-    public func start<Element>(created: Time, subscribed: Time, disposed: Time, create: () -> Observable<Element>) -> MockObserver<Element> {
+    public func start<Element>(created: TestTime, subscribed: TestTime, disposed: TestTime, create: () -> Observable<Element>) -> TestableObserver<Element> {
         var source : Observable<Element>? = nil
         var subscription : Disposable? = nil
-        let observer: MockObserver<Element> = createObserver(Element)
+        let observer = createObserver(Element)
         
         self.scheduleAbsoluteVirtual((), time: created) {
             source = create()
@@ -130,7 +140,7 @@ public class TestScheduler : VirtualTimeSchedulerBase<TestSchedulerVirtualTimeCo
      - parameter disposed: Virtual time at which to dispose the subscription.
      - returns: Observer with timestamped recordings of events that were received during the virtual time window when the subscription to the source sequence was active.
      */
-    public func start<Element>(disposed: Time, create: () -> Observable<Element>) -> MockObserver<Element> {
+    public func start<Element>(disposed: TestTime, create: () -> Observable<Element>) -> TestableObserver<Element> {
         return start(Defaults.created, subscribed: Defaults.subscribed, disposed: disposed, create: create)
     }
 
@@ -145,7 +155,7 @@ public class TestScheduler : VirtualTimeSchedulerBase<TestSchedulerVirtualTimeCo
      - parameter create: Factory method to create an observable sequence.
      - returns: Observer with timestamped recordings of events that were received during the virtual time window when the subscription to the source sequence was active.
      */
-    public func start<Element>(create: () -> Observable<Element>) -> MockObserver<Element> {
+    public func start<Element>(create: () -> Observable<Element>) -> TestableObserver<Element> {
         return start(Defaults.created, subscribed: Defaults.subscribed, disposed: Defaults.disposed, create: create)
     }
 }

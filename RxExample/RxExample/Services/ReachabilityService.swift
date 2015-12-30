@@ -2,7 +2,7 @@
 //  ReachabilityService.swift
 //  RxExample
 //
-//  Created by Vodovozov Gleb on 22.10.2015.
+//  Created by Vodovozov Gleb on 10/22/15.
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 

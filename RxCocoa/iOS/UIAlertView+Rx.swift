@@ -3,7 +3,7 @@
 //  RxCocoa
 //
 //  Created by Carlos García on 8/7/15.
-//  Copyright (c) 2015 Krunoslav Zaher. All rights reserved.
+//  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
 #if os(iOS)
@@ -20,6 +20,7 @@ extension UIAlertView {
     
     For more information take a look at `DelegateProxyType` protocol documentation.
     */
+    @available(*, deprecated=2.0.0, message="This class is deprecated by Apple. Removing official support.")
     public var rx_delegate: DelegateProxy {
         return proxyForObject(RxAlertViewDelegateProxy.self, self)
     }
@@ -27,6 +28,7 @@ extension UIAlertView {
     /**
     Reactive wrapper for `delegate` message.
     */
+    @available(*, deprecated=2.0.0, message="This class is deprecated by Apple. Removing official support.")
     public var rx_clickedButtonAtIndex: ControlEvent<Int> {
         let source = rx_delegate.observe("alertView:clickedButtonAtIndex:")
             .map { a in
@@ -39,6 +41,7 @@ extension UIAlertView {
     /**
     Reactive wrapper for `delegate` message.
     */
+    @available(*, deprecated=2.0.0, message="This class is deprecated by Apple. Removing official support.")
     public var rx_willDismissWithButtonIndex: ControlEvent<Int> {
         let source = rx_delegate.observe("alertView:willDismissWithButtonIndex:")
             .map { a in
@@ -51,6 +54,7 @@ extension UIAlertView {
     /**
     Reactive wrapper for `delegate` message.
     */
+    @available(*, deprecated=2.0.0, message="This class is deprecated by Apple. Removing official support.")
     public var rx_didDismissWithButtonIndex: ControlEvent<Int> {
         let source = rx_delegate.observe("alertView:didDismissWithButtonIndex:")
             .map { a in

@@ -3,7 +3,7 @@
 //  Rx
 //
 //  Created by Krunoslav Zaher on 2/8/15.
-//  Copyright (c) 2015 Krunoslav Zaher. All rights reserved.
+//  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
 import Foundation
@@ -17,7 +17,7 @@ class AnonymousObserver<ElementType> : ObserverBase<ElementType> {
     
     init(_ eventHandler: EventHandler) {
 #if TRACE_RESOURCES
-        OSAtomicIncrement32(&resourceCount)
+        AtomicIncrement(&resourceCount)
 #endif
         _eventHandler = eventHandler
     }
@@ -28,7 +28,7 @@ class AnonymousObserver<ElementType> : ObserverBase<ElementType> {
     
 #if TRACE_RESOURCES
     deinit {
-        OSAtomicDecrement32(&resourceCount)
+        AtomicDecrement(&resourceCount)
     }
 #endif
 }

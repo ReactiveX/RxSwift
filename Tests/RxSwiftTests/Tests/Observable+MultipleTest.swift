@@ -3,7 +3,7 @@
 //  Rx
 //
 //  Created by Krunoslav Zaher on 2/15/15.
-//  Copyright (c) 2015 Krunoslav Zaher. All rights reserved.
+//  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
 import Foundation
@@ -882,7 +882,7 @@ extension ObservableMultipleTest {
         let xs = scheduler.createHotObservable(xSequence)
 
         let res = scheduler.start {
-            xs.flatMapLatest { x throws -> ColdObservable<Int> in
+            xs.flatMapLatest { x throws -> TestableObservable<Int> in
                 if x < 1 {
                     return observables[x]
                 }
@@ -1335,7 +1335,7 @@ extension ObservableMultipleTest {
             [xs1, xs2].concat()
         }
         
-        let messages: [Recorded<Event<Int>>] = [
+        let messages = [
             next(220, 2),
             next(240, 3),
             completed(250)
@@ -1522,7 +1522,7 @@ extension ObservableMultipleTest {
         
     }
 
-#if DEBUG || TRACE_RESOURCES
+#if TRACE_RESOURCES
     func testConcat_TailRecursionCollection() {
         maxTailRecursiveSinkStackSize = 0
         let elements = try! generateCollection(0) { i in
@@ -1721,7 +1721,7 @@ extension ObservableMultipleTest {
             completed(150)
         ])
         
-        let xs: HotObservable<ColdObservable<Int>> = scheduler.createHotObservable([
+        let xs: TestableObservable<TestableObservable<Int>> = scheduler.createHotObservable([
             next(300, ys1),
             next(400, ys2),
             next(500, ys3),
@@ -1791,7 +1791,7 @@ extension ObservableMultipleTest {
             completed(50)
             ])
         
-        let xs: HotObservable<ColdObservable<Int>> = scheduler.createHotObservable([
+        let xs: TestableObservable<TestableObservable<Int>> = scheduler.createHotObservable([
             next(300, ys1),
             next(400, ys2),
             next(500, ys3),
@@ -1864,7 +1864,7 @@ extension ObservableMultipleTest {
             completed(150)
             ])
         
-        let xs: HotObservable<ColdObservable<Int>> = scheduler.createHotObservable([
+        let xs: TestableObservable<TestableObservable<Int>> = scheduler.createHotObservable([
             next(300, ys1),
             next(400, ys2),
             next(500, ys3),
@@ -1926,7 +1926,7 @@ extension ObservableMultipleTest {
             completed(50)
             ])
         
-        let xs: HotObservable<ColdObservable<Int>> = scheduler.createHotObservable([
+        let xs: TestableObservable<TestableObservable<Int>> = scheduler.createHotObservable([
             next(300, ys1),
             next(400, ys2),
             error(500, testError1),
@@ -1992,7 +1992,7 @@ extension ObservableMultipleTest {
             completed(300)
             ])
         
-        let xs: HotObservable<ColdObservable<Int>> = scheduler.createHotObservable([
+        let xs: TestableObservable<TestableObservable<Int>> = scheduler.createHotObservable([
             next(210, ys1),
             next(260, ys2),
             next(270, ys3),
@@ -2070,7 +2070,7 @@ extension ObservableMultipleTest {
             completed(300)
             ])
         
-        let xs: HotObservable<ColdObservable<Int>> = scheduler.createHotObservable([
+        let xs: TestableObservable<TestableObservable<Int>> = scheduler.createHotObservable([
             next(210, ys1),
             next(260, ys2),
             next(270, ys3),
@@ -2148,7 +2148,7 @@ extension ObservableMultipleTest {
             completed(300)
             ])
         
-        let xs: HotObservable<ColdObservable<Int>> = scheduler.createHotObservable([
+        let xs: TestableObservable<TestableObservable<Int>> = scheduler.createHotObservable([
             next(210, ys1),
             next(260, ys2),
             next(270, ys3),
@@ -2226,7 +2226,7 @@ extension ObservableMultipleTest {
             completed(300)
             ])
         
-        let xs: HotObservable<ColdObservable<Int>> = scheduler.createHotObservable([
+        let xs: TestableObservable<TestableObservable<Int>> = scheduler.createHotObservable([
             next(210, ys1),
             next(260, ys2),
             next(270, ys3),
@@ -2304,7 +2304,7 @@ extension ObservableMultipleTest {
             completed(300)
             ])
         
-        let xs: HotObservable<ColdObservable<Int>> = scheduler.createHotObservable([
+        let xs: TestableObservable<TestableObservable<Int>> = scheduler.createHotObservable([
             next(210, ys1),
             next(260, ys2),
             next(270, ys3),
@@ -2377,7 +2377,7 @@ extension ObservableMultipleTest {
             completed(300)
             ])
         
-        let xs: HotObservable<ColdObservable<Int>> = scheduler.createHotObservable([
+        let xs: TestableObservable<TestableObservable<Int>> = scheduler.createHotObservable([
             next(210, ys1),
             next(260, ys2),
             next(270, ys3),
@@ -2450,7 +2450,7 @@ extension ObservableMultipleTest {
             completed(300)
             ])
         
-        let xs: HotObservable<ColdObservable<Int>> = scheduler.createHotObservable([
+        let xs: TestableObservable<TestableObservable<Int>> = scheduler.createHotObservable([
             next(210, ys1),
             next(260, ys2),
             next(270, ys3),
@@ -3282,7 +3282,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            ([e0, e1] as [HotObservable<Int>]).combineLatest { $0.reduce(0, combine:+) }
+            ([e0, e1] as [TestableObservable<Int>]).combineLatest { $0.reduce(0, combine:+) }
         }
         
         XCTAssertEqual(res.events, [

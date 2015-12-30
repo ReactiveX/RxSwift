@@ -3,7 +3,7 @@
 //  Rx
 //
 //  Created by Krunoslav Zaher on 3/28/15.
-//  Copyright (c) 2015 Krunoslav Zaher. All rights reserved.
+//  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
 import Foundation
@@ -11,9 +11,13 @@ import Foundation
 /**
 Variable is a wrapper for `BehaviorSubject`.
 
-Unlike `BehaviorSubject` it can't terminate with error.
+Unlike `BehaviorSubject` it can't terminate with error, and when variable is deallocated
+ it will complete it's observable sequence (`asObservable`).
 */
-public class Variable<Element> : ObservableType {
+@available(*, deprecated=2.0.0, message="Variable will remain in the 2.0.0 API, but just use `variable.asObservable()` because it won't be `ObservableType` (no way to warn about deprecated interface implementation). Just do, `variable.asObservable().map { _ in ...}` and ignore this warning.")
+public class Variable<Element>
+    :  ObservableType { // << -- this part and subscribe method will be deprecated
+
     public typealias E = Element
     
     private let _subject: BehaviorSubject<Element>
@@ -72,5 +76,9 @@ public class Variable<Element> : ObservableType {
     */
     public func asObservable() -> Observable<E> {
         return _subject
+    }
+
+    deinit {
+        _subject.on(.Completed)
     }
 }

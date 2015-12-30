@@ -3,7 +3,7 @@
 //  RxTests
 //
 //  Created by Krunoslav Zaher on 7/11/15.
-//
+//  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
 import Foundation
@@ -63,7 +63,7 @@ extension NSObjectTests {
         var a = NSObject()
         
         var fired = false
-        
+
         _ = a
             .rx_deallocated
             .map { _ in
@@ -72,8 +72,8 @@ extension NSObjectTests {
             .subscribeNext { _ in
                 fired = true
             }
-            .scopedDispose()
-        
+            .dispose()
+
         XCTAssertFalse(fired)
         
         a = NSObject()
@@ -131,7 +131,7 @@ extension NSObjectTests {
         var a = NSObject()
         
         var fired = false
-        
+
         _ = a
             .rx_deallocating
             .map { _ in
@@ -140,7 +140,7 @@ extension NSObjectTests {
             .subscribeNext { _ in
                 fired = true
             }
-            .scopedDispose()
+            .dispose()
         
         XCTAssertFalse(fired)
         

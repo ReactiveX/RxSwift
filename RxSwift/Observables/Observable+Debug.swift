@@ -3,7 +3,7 @@
 //  RxSwift
 //
 //  Created by Krunoslav Zaher on 5/2/15.
-//  Copyright (c) 2015 Krunoslav Zaher. All rights reserved.
+//  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
 import Foundation
@@ -21,7 +21,7 @@ extension ObservableType {
     - returns: An observable sequence whose events are printed to standard output.
     */
     @warn_unused_result(message="http://git.io/rxs.uo")
-    public func debug(identifier: String? = nil, file: String = __FILE__, line: Int = __LINE__, function: String = __FUNCTION__)
+    public func debug(identifier: String? = nil, file: String = __FILE__, line: UInt = __LINE__, function: String = __FUNCTION__)
         -> Observable<E> {
         return Debug(source: self.asObservable(), identifier: identifier, file: file, line: line, function: function)
     }

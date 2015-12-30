@@ -3,7 +3,7 @@
 //  RxSwift
 //
 //  Created by Krunoslav Zaher on 6/14/15.
-//  Copyright (c) 2015 Krunoslav Zaher. All rights reserved.
+//  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
 import Foundation
@@ -26,7 +26,7 @@ class AmbObserver<ElementType, O: ObserverType where O.E == ElementType> : Obser
     
     init(parent: Parent, cancel: Disposable, sink: Sink) {
 #if TRACE_RESOURCES
-        OSAtomicIncrement32(&resourceCount)
+        AtomicIncrement(&resourceCount)
 #endif
         
         _parent = parent
@@ -43,7 +43,7 @@ class AmbObserver<ElementType, O: ObserverType where O.E == ElementType> : Obser
     
     deinit {
 #if TRACE_RESOURCES
-        OSAtomicDecrement32(&resourceCount)
+        AtomicDecrement(&resourceCount)
 #endif
     }
 }

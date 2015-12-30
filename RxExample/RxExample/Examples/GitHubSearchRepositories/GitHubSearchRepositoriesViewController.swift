@@ -3,7 +3,7 @@
 //  RxExample
 //
 //  Created by Yoshinori Sano on 9/29/15.
-//  Copyright (c) 2015 Krunoslav Zaher. All rights reserved.
+//  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
 import UIKit
@@ -53,7 +53,7 @@ class GitHubSearchRepositoriesViewController: ViewController, UITableViewDelegat
             }
 
         let searchResult = searchBar.rx_text.asDriver()
-            .throttle(0.3, scheduler: $.mainScheduler)
+            .throttle(0.3)
             .distinctUntilChanged()
             .flatMapLatest { query -> Driver<RepositoriesState> in
                 if query.isEmpty {

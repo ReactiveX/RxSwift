@@ -3,17 +3,19 @@
 //  RxTests
 //
 //  Created by Krunoslav Zaher on 2/8/15.
-//  Copyright (c) 2015 Krunoslav Zaher. All rights reserved.
+//  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
 import XCTest
 import RxSwift
 import RxTests
+import Foundation
 
 #if TRACE_RESOURCES
 #elseif RELEASE
+#elseif os(Linux)
 #else
-//let a = unknown
+let failure = unhandled_case()
 #endif
 
 // because otherwise OSX unit tests won't run
@@ -22,17 +24,15 @@ import RxTests
 #elseif os(OSX)
     import AppKit
 #endif
-class RxTest: XCTestCase {
-    struct Defaults {
-        static let created = 100
-        static let subscribed = 200
-        static let disposed = 1000
-    }
-    
-    func sleep(time: NSTimeInterval) {
-        NSRunLoop.currentRunLoop().runMode(NSDefaultRunLoopMode, beforeDate: NSDate(timeIntervalSinceNow: time))
-    }
-    
+
+
+class RxTest
+    : XCTestCase {
+
+    #if os(Linux)
+        var allTests : [(String, () -> Void)] = []
+    #endif
+
     private var startResourceCount: Int32 = 0
 
     var accumulateStatistics: Bool {
@@ -41,13 +41,46 @@ class RxTest: XCTestCase {
         }
     }
 
-#if TRACE_RESOURCES
-    static var totalNumberOfAllocations: Int64 = 0
-    static var totalNumberOfAllocatedBytes: Int64 = 0
+    #if TRACE_RESOURCES
+        static var totalNumberOfAllocations: Int64 = 0
+        static var totalNumberOfAllocatedBytes: Int64 = 0
 
-    var startNumberOfAllocations: Int64 = 0
-    var startNumberOfAllocatedBytes: Int64 = 0
-#endif
+        var startNumberOfAllocations: Int64 = 0
+        var startNumberOfAllocatedBytes: Int64 = 0
+    #endif
+
+    #if os(Linux)
+        func setUp() {
+            setUpActions()
+        }
+
+        func tearDown() {
+            tearDownActions()
+        }
+    #else
+        override func setUp() {
+            super.setUp()
+            setUpActions()
+        }
+
+        override func tearDown() {
+            // Put teardown code here. This method is called after the invocation of each test method in the class.
+            super.tearDown()
+            tearDownActions()
+        }
+    #endif
+}
+
+extension RxTest {
+    struct Defaults {
+        static let created = 100
+        static let subscribed = 200
+        static let disposed = 1000
+    }
+
+    func sleep(time: NSTimeInterval) {
+        NSRunLoop.currentRunLoop().runMode(NSDefaultRunLoopMode, beforeDate: NSDate(timeIntervalSinceNow: time))
+    }
 
     func setUpActions(){
         #if TRACE_RESOURCES
@@ -56,16 +89,6 @@ class RxTest: XCTestCase {
             (startNumberOfAllocatedBytes, startNumberOfAllocations) = getMemoryInfo()
         #endif
     }
-
-    #if os(Linux)
-        func setUp() {
-        setUpActions()
-        }
-    #else
-        override func setUp() {
-            setUpActions()
-        }
-    #endif
 
     func tearDownActions() {
         #if TRACE_RESOURCES
@@ -93,15 +116,4 @@ class RxTest: XCTestCase {
         #endif
     }
 
-    #if os(Linux)
-        func tearDown() {
-            tearDownActions()
-        }
-    #else   
-        override func tearDown() {
-            // Put teardown code here. This method is called after the invocation of each test method in the class.
-            super.tearDown()
-            tearDownActions()
-        }
-    #endif
 }

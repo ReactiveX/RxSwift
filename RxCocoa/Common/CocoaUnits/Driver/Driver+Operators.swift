@@ -147,7 +147,7 @@ extension DriverConvertibleType {
     - returns: An observable sequence whose events are printed to standard output.
     */
     @warn_unused_result(message="http://git.io/rxs.uo")
-    public func debug(identifier: String? = nil, file: String = __FILE__, line: Int = __LINE__, function: String = __FUNCTION__) -> Driver<E> {
+    public func debug(identifier: String? = nil, file: String = __FILE__, line: UInt = __LINE__, function: String = __FUNCTION__) -> Driver<E> {
         let source = self.asObservable()
             .debug(identifier, file: file, line: line, function: function)
         return Driver(source)
@@ -273,19 +273,18 @@ extension DriverConvertibleType {
     `throttle` and `debounce` are synonyms.
     
     - parameter dueTime: Throttling duration for each element.
-    - parameter scheduler: Scheduler to run the throttle timers and send events on.
     - returns: The throttled sequence.
     */
     @warn_unused_result(message="http://git.io/rxs.uo")
-    public func throttle(dueTime: RxTimeInterval, scheduler: SchedulerType)
+    public func throttle(dueTime: RxTimeInterval)
         -> Driver<E> {
         let source = self.asObservable()
-            .throttle(dueTime, scheduler: scheduler)
+            .throttle(dueTime, scheduler: driverObserveOnScheduler)
 
         return Driver(source)
     }
 
-    @available(*, deprecated=2.0.0, message="Please use version with named scheduler parameter.")
+    @available(*, deprecated=2.0.0, message="Please use version without scheduler parameter.")
     public func throttle(dueTime: RxTimeInterval, _ scheduler: SchedulerType)
         -> Driver<E> {
         let source = self.asObservable()
@@ -300,19 +299,18 @@ extension DriverConvertibleType {
     `throttle` and `debounce` are synonyms.
     
     - parameter dueTime: Throttling duration for each element.
-    - parameter scheduler: Scheduler to run the throttle timers and send events on.
     - returns: The throttled sequence.
     */
     @warn_unused_result(message="http://git.io/rxs.uo")
-    public func debounce(dueTime: RxTimeInterval, scheduler: SchedulerType)
+    public func debounce(dueTime: RxTimeInterval)
         -> Driver<E> {
         let source = self.asObservable()
-            .debounce(dueTime, scheduler: scheduler)
+            .debounce(dueTime, scheduler: driverObserveOnScheduler)
 
         return Driver(source)
     }
 
-    @available(*, deprecated=2.0.0, message="Please use version with named scheduler parameter.")
+    @available(*, deprecated=2.0.0, message="Please use version without scheduler parameter.")
     public func debounce(dueTime: RxTimeInterval, _ scheduler: SchedulerType)
         -> Driver<E> {
         let source = self.asObservable()

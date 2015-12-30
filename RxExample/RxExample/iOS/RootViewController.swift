@@ -3,7 +3,7 @@
 //  RxExample
 //
 //  Created by Krunoslav Zaher on 4/6/15.
-//  Copyright (c) 2015 Krunoslav Zaher. All rights reserved.
+//  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
 import Foundation
@@ -21,7 +21,7 @@ public class RootViewController : UITableViewController {
         DefaultWikipediaAPI.sharedAPI
         DefaultImageService.sharedImageService
         DefaultWireframe.sharedInstance
-        MainScheduler.sharedInstance
+        MainScheduler.instance
         ReachabilityService.sharedReachabilityService
     }
 }

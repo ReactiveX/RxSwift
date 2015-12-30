@@ -3,7 +3,7 @@
 //  Example
 //
 //  Created by Krunoslav Zaher on 3/25/15.
-//  Copyright (c) 2015 Krunoslav Zaher. All rights reserved.
+//  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
 import Foundation
@@ -21,10 +21,6 @@ public let WikipediaParseError = apiError("Error during parsing")
 protocol WikipediaAPI {
     func getSearchResults(query: String) -> Observable<[WikipediaSearchResult]>
     func articleContent(searchResult: WikipediaSearchResult) -> Observable<WikipediaPage>
-}
-
-func URLEscape(pathSegment: String) -> String {
-   return pathSegment.stringByAddingPercentEncodingWithAllowedCharacters(.URLHostAllowedCharacterSet())!
 }
 
 class DefaultWikipediaAPI: WikipediaAPI {
@@ -45,7 +41,7 @@ class DefaultWikipediaAPI: WikipediaAPI {
 
     // Example wikipedia response http://en.wikipedia.org/w/api.php?action=opensearch&search=Rx
     func getSearchResults(query: String) -> Observable<[WikipediaSearchResult]> {
-        let escapedQuery = URLEscape(query)
+        let escapedQuery = query.URLEscaped
         let urlContent = "http://en.wikipedia.org/w/api.php?action=opensearch&search=\(escapedQuery)"
         let url = NSURL(string: urlContent)!
             
@@ -63,7 +59,7 @@ class DefaultWikipediaAPI: WikipediaAPI {
     
     // http://en.wikipedia.org/w/api.php?action=parse&page=rx&format=json
     func articleContent(searchResult: WikipediaSearchResult) -> Observable<WikipediaPage> {
-        let escapedPage = URLEscape(searchResult.title)
+        let escapedPage = searchResult.title.URLEscaped
         guard let url = NSURL(string: "http://en.wikipedia.org/w/api.php?action=parse&page=\(escapedPage)&format=json") else {
             return Observable.error(apiError("Can't create url"))
         }

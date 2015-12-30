@@ -3,7 +3,7 @@
 //  RxCocoa
 //
 //  Created by Daniel Tartaglia on 5/23/15.
-//  Copyright (c) 2015 Krunoslav Zaher. All rights reserved.
+//  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
 #if os(iOS) || os(tvOS)
@@ -67,7 +67,7 @@ extension UIControl {
         return rx_controlEvent(controlEvents)
     }
     
-    func rx_value<T>(getter getter: () -> T, setter: T -> Void) -> ControlProperty<T> {
+    func rx_value<T: Equatable>(getter getter: () -> T, setter: T -> Void) -> ControlProperty<T> {
         let source: Observable<T> = Observable.create { [weak self] observer in
             guard let control = self else {
                 observer.on(.Completed)
@@ -83,7 +83,9 @@ extension UIControl {
             return AnonymousDisposable {
                 controlTarget.dispose()
             }
-        }.takeUntil(rx_deallocated)
+        }
+            .distinctUntilChanged()
+            .takeUntil(rx_deallocated)
         
         return ControlProperty<T>(values: source, valueSink: AnyObserver { event in
             MainScheduler.ensureExecutingOnScheduler()

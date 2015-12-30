@@ -3,7 +3,7 @@
 //  RxCocoa
 //
 //  Created by Krunoslav Zaher on 7/12/15.
-//  Copyright (c) 2015 Krunoslav Zaher. All rights reserved.
+//  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -15,7 +15,7 @@
  ################################################################################
  */
 
-#if        DEBUG
+#if        TRACE_RESOURCES
 #   define DLOG(...)         NSLog(__VA_ARGS__)
 #   define ABORT_IN_DEBUG    abort();
 #else

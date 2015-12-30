@@ -25,7 +25,7 @@ sequence1
   .map { n in
       print("This is performed on background scheduler")
   }
-  .observeOn(MainScheduler.sharedInstance)
+  .observeOn(MainScheduler.instance)
   .map { n in
       print("This is performed on main scheduler")
   }

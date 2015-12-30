@@ -1,0 +1,1 @@
+../../Tests/RxSwiftTests/TestImplementations/Mocks/MainThreadPrimitiveHotObservable.swift

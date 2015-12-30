@@ -3,7 +3,7 @@
 //  RxExample
 //
 //  Created by Krunoslav Zaher on 6/8/15.
-//  Copyright (c) 2015 Krunoslav Zaher. All rights reserved.
+//  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
 import Foundation
@@ -44,39 +44,6 @@ class PartialUpdatesViewController : ViewController {
     var generator = Randomizer(rng: PseudoRandomGenerator(4, 3), sections: initialValue)
 
     var sections = Variable([NumberSection]())
-
-    func skinTableViewDataSource(dataSource: RxTableViewSectionedDataSource<NumberSection>) {
-        dataSource.cellFactory = { (tv, ip, i) in
-            let cell = tv.dequeueReusableCellWithIdentifier("Cell")
-                ?? UITableViewCell(style:.Default, reuseIdentifier: "Cell")
-
-            cell.textLabel!.text = "\(i)"
-
-            return cell
-        }
-
-        dataSource.titleForHeaderInSection = { [unowned dataSource] (section: Int) -> String in
-            return dataSource.sectionAtIndex(section).model
-        }
-    }
-
-    func skinCollectionViewDataSource(dataSource: RxCollectionViewSectionedDataSource<NumberSection>) {
-        dataSource.cellFactory = { (cv, ip, i) in
-            let cell = cv.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: ip) as! NumberCell
-
-            cell.value!.text = "\(i)"
-
-            return cell
-        }
-
-        dataSource.supplementaryViewFactory = { [unowned dataSource] (cv, kind, ip) in
-            let section = cv.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: "Section", forIndexPath: ip) as! NumberSectionView
-
-            section.value!.text = "\(dataSource.sectionAtIndex(ip.section).model)"
-
-            return section
-        }
-    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -160,6 +127,39 @@ class PartialUpdatesViewController : ViewController {
                 print("I have a feeling it's .... \(self?.generator.sections[i.section].items[i.item])?")
             }
             .addDisposableTo(disposeBag)
+    }
+
+    func skinTableViewDataSource(dataSource: RxTableViewSectionedDataSource<NumberSection>) {
+        dataSource.cellFactory = { (tv, ip, i) in
+            let cell = tv.dequeueReusableCellWithIdentifier("Cell")
+                ?? UITableViewCell(style:.Default, reuseIdentifier: "Cell")
+
+            cell.textLabel!.text = "\(i)"
+
+            return cell
+        }
+
+        dataSource.titleForHeaderInSection = { [unowned dataSource] (section: Int) -> String in
+            return dataSource.sectionAtIndex(section).model
+        }
+    }
+
+    func skinCollectionViewDataSource(dataSource: RxCollectionViewSectionedDataSource<NumberSection>) {
+        dataSource.cellFactory = { (cv, ip, i) in
+            let cell = cv.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: ip) as! NumberCell
+
+            cell.value!.text = "\(i)"
+
+            return cell
+        }
+
+        dataSource.supplementaryViewFactory = { [unowned dataSource] (cv, kind, ip) in
+            let section = cv.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: "Section", forIndexPath: ip) as! NumberSectionView
+
+            section.value!.text = "\(dataSource.sectionAtIndex(ip.section).model)"
+
+            return section
+        }
     }
 
     override func viewWillDisappear(animated: Bool) {

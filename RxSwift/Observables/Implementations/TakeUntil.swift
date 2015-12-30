@@ -3,7 +3,7 @@
 //  RxSwift
 //
 //  Created by Krunoslav Zaher on 6/7/15.
-//  Copyright (c) 2015 Krunoslav Zaher. All rights reserved.
+//  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
 import Foundation
@@ -26,7 +26,7 @@ class TakeUntilSinkOther<ElementType, Other, O: ObserverType where O.E == Elemen
     init(parent: Parent) {
         _parent = parent
 #if TRACE_RESOURCES
-        OSAtomicIncrement32(&resourceCount)
+        AtomicIncrement(&resourceCount)
 #endif
     }
     
@@ -50,7 +50,7 @@ class TakeUntilSinkOther<ElementType, Other, O: ObserverType where O.E == Elemen
     
 #if TRACE_RESOURCES
     deinit {
-        OSAtomicDecrement32(&resourceCount)
+        AtomicDecrement(&resourceCount)
     }
 #endif
 }

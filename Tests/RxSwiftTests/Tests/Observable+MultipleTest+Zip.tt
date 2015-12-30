@@ -1,9 +1,9 @@
 //
-//  Observable+MultipleTest+Zip.tt
+//  Observable+MultipleTest+Zip.swift
 //  RxTests
 //
 //  Created by Krunoslav Zaher on 5/23/15.
-//
+//  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
 import Foundation
@@ -58,7 +58,7 @@ extension ObservableMultipleTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         <% for j in 0..<i { %>
-        let e<%= j %>: HotObservable<Int> = scheduler.createHotObservable([
+        let e<%= j %>: TestableObservable<Int> = scheduler.createHotObservable([
             completed(<%= 200 + (j + 1) * 10 %>)
         ])
         <% } %>
@@ -83,7 +83,7 @@ extension ObservableMultipleTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         <% for j in 0..<i { %>
-        let e<%= j %>: HotObservable<Int> = scheduler.createHotObservable([
+        let e<%= j %>: TestableObservable<Int> = scheduler.createHotObservable([
             next(150, 1),
             next(<%= 200 + (j + 1) * 10 %>, <%= j + 1 %>),
             completed(400)
@@ -111,7 +111,7 @@ extension ObservableMultipleTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         <% for j in 0..<i { %>
-        let e<%= j %>: HotObservable<Int> = scheduler.createHotObservable([
+        let e<%= j %>: TestableObservable<Int> = scheduler.createHotObservable([
             next(150, 1),
 <% for k in 0...j { %> 
             next(<%= 200 + (k + 1) * 10 %>, <%= 5 + k %>),<% } %>

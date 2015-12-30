@@ -2,8 +2,8 @@
 //  Control+RxTests+UIKit.swift
 //  RxTests
 //
-//  Created by Ash Furrow on 2015-07-04.
-//
+//  Created by Ash Furrow on 4/7/15.
+//  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
 import UIKit
@@ -172,7 +172,8 @@ extension ControlTests {
 // UILabel
 extension ControlTests {
     func testLabel_HasWeakReference() {
-        ensureControlObserverHasWeakReference(UILabel(), { (label: UILabel) -> AnyObserver<NSAttributedString?> in label.rx_attributedText }, { Variable<NSAttributedString?>(nil).asObservable() })
+        let variable = Variable<NSAttributedString?>(nil)
+        ensureControlObserverHasWeakReference(UILabel(), { (label: UILabel) -> AnyObserver<NSAttributedString?> in label.rx_attributedText }, { variable.asObservable() })
     }
 
     func testLabel_NextElementsSetsValue() {

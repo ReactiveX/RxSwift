@@ -9,31 +9,45 @@
 import Foundation
 import RxSwift
 
-public class TestSchedulerVirtualTimeConverter : VirtualTimeConverterType {
+public struct TestSchedulerVirtualTimeConverter : VirtualTimeConverterType {
     public typealias VirtualTimeUnit = Int
     public typealias VirtualTimeIntervalUnit = Int
 
+    private let _resolution: Double
+
+    init(resolution: Double) {
+        _resolution = resolution
+    }
+
     public func convertFromVirtualTime(virtualTime: VirtualTimeUnit) -> RxTime {
-        return NSDate(timeIntervalSince1970: RxTimeInterval(virtualTime))
+        return NSDate(timeIntervalSince1970: RxTimeInterval(virtualTime) * _resolution)
     }
 
     public func convertToVirtualTime(time: RxTime) -> VirtualTimeUnit {
-        return VirtualTimeIntervalUnit(time.timeIntervalSince1970)
+        return VirtualTimeIntervalUnit(time.timeIntervalSince1970 / _resolution + 0.5)
     }
 
-    public func convertFromTimeInterval(virtualTimeInterval: VirtualTimeIntervalUnit) -> RxTimeInterval {
-        return RxTimeInterval(virtualTimeInterval)
+    public func convertFromVirtualTimeInterval(virtualTimeInterval: VirtualTimeIntervalUnit) -> RxTimeInterval {
+        return RxTimeInterval(virtualTimeInterval) * _resolution
     }
 
-    public func convertToTimeInterval(virtualTimeInterval: VirtualTimeIntervalUnit) -> RxTimeInterval {
-        return RxTimeInterval(virtualTimeInterval)
+    public func convertToVirtualTimeInterval(timeInterval: RxTimeInterval) -> VirtualTimeIntervalUnit {
+        return VirtualTimeIntervalUnit(timeInterval / _resolution + 0.5)
     }
 
     public func addVirtualTimeAndTimeInterval(time time: VirtualTimeUnit, timeInterval: VirtualTimeIntervalUnit) -> VirtualTimeUnit {
         return time + timeInterval
     }
 
-    public func nearFuture(time: VirtualTimeUnit) -> VirtualTimeUnit {
-        return time + 1
+    public func compareVirtualTime(lhs: VirtualTimeUnit, _ rhs: VirtualTimeUnit) -> VirtualTimeComparison {
+        if lhs < rhs {
+            return .LessThan
+        }
+        else if lhs > rhs {
+            return .GreaterThan
+        }
+        else {
+            return .Equal
+        }
     }
 }

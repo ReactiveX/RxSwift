@@ -1,9 +1,9 @@
 //
-//  UIDatePicker.swift
+//  UIDatePicker+Rx.swift
 //  RxCocoa
 //
 //  Created by Daniel Tartaglia on 5/31/15.
-//  Copyright (c) 2015 Krunoslav Zaher. All rights reserved.
+//  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
 #if os(iOS)

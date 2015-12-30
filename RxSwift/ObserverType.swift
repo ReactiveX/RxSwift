@@ -3,7 +3,7 @@
 //  Rx
 //
 //  Created by Krunoslav Zaher on 2/8/15.
-//  Copyright (c) 2015 Krunoslav Zaher. All rights reserved.
+//  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
 import Foundation
@@ -26,12 +26,12 @@ public protocol ObserverType {
 }
 
 /**
-Convienence API extensions to provide alternate next, error, completed events
+Convenience API extensions to provide alternate next, error, completed events
 */
 public extension ObserverType {
     
     /**
-    Convienence method equivalent to `on(.Next(element: E))`
+    Convenience method equivalent to `on(.Next(element: E))`
     
     - parameter element: Next element to send to observer(s)
     */
@@ -40,14 +40,14 @@ public extension ObserverType {
     }
     
     /**
-    Convienence method equivalent to `on(.Completed)`
+    Convenience method equivalent to `on(.Completed)`
     */
     final func onCompleted() {
         on(.Completed)
     }
     
     /**
-    Convienence method equivalent to `on(.Error(error: ErrorType))`
+    Convenience method equivalent to `on(.Error(error: ErrorType))`
     - parameter error: ErrorType to send to observer(s)
     */
     final func onError(error: ErrorType) {

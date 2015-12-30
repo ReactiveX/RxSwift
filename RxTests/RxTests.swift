@@ -7,10 +7,9 @@
 //
 
 import Foundation
-import XCTest
 
 /**
 Virtual time type.
 */
-public typealias Time = Int
+public typealias TestTime = Int
 

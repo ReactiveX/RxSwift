@@ -3,7 +3,7 @@
 //  WikipediaImageSearch
 //
 //  Created by carlos on 13/5/15.
-//  Copyright (c) 2015 Carlos García. All rights reserved.
+//  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
 import Foundation
@@ -30,7 +30,7 @@ class Dependencies {
         #endif
         backgroundWorkScheduler = OperationQueueScheduler(operationQueue: operationQueue)
         
-        mainScheduler = MainScheduler.sharedInstance
+        mainScheduler = MainScheduler.instance
     }
     
 }

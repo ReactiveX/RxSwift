@@ -3,7 +3,7 @@
 //  RxExample
 //
 //  Created by Krunoslav Zaher on 4/25/15.
-//  Copyright (c) 2015 Krunoslav Zaher. All rights reserved.
+//  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
 import Foundation
@@ -52,7 +52,7 @@ class ViewController: OSViewController {
             /* add somewhere in
                 func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool
             */
-            _ = Observable.interval(1, MainScheduler.sharedInstance)
+            _ = Observable<Int>.interval(1, scheduler: MainScheduler.instance)
                 .subscribeNext { _ in
                     print("Resource count \(RxSwift.resourceCount)")
                 }
@@ -87,6 +87,11 @@ class ViewController: OSViewController {
             */
             let time = dispatch_time(DISPATCH_TIME_NOW, Int64(0.2 * Double(NSEC_PER_SEC)))
             dispatch_after(time, mainQueue) {
+                // If this fails for you while testing, and you've been clicking fast, it's ok, just click slower,
+                // this is a debug build with resource tracing turned on.
+                //
+                // If this crashes when you've been clicking slowly, then it would be interesting to find out why.
+                // ¯\_(ツ)_/¯
                 assert(resourceCount <= numberOfResourcesThatShouldRemain, "Resources weren't cleaned properly")
             }
         }

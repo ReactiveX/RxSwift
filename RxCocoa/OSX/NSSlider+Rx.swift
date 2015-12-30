@@ -1,9 +1,9 @@
 //
-//  NSControl+Rx.swift
+//  NSSlider+Rx.swift
 //  RxCocoa
 //
 //  Created by Junior B. on 24/05/15.
-//  Copyright (c) 2015 Krunoslav Zaher. All rights reserved.
+//  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
 import Foundation

@@ -3,7 +3,7 @@
 //  Rx
 //
 //  Created by Krunoslav Zaher on 2/17/15.
-//  Copyright (c) 2015 Krunoslav Zaher. All rights reserved.
+//  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
 import Foundation
@@ -1803,7 +1803,7 @@ extension ObservableStandardSequenceOperatorsTest {
 
         var invoked = 0
         let res = scheduler.start {
-            return xs.flatMapFirst { (x: ColdObservable<Int>) -> ColdObservable<Int> in
+            return xs.flatMapFirst { (x: TestableObservable<Int>) -> TestableObservable<Int> in
                 invoked += 1
                 if invoked == 2 {
                     throw testError
@@ -2432,7 +2432,7 @@ extension ObservableStandardSequenceOperatorsTest {
         
         var invoked = 0
         let res = scheduler.start {
-            return xs.flatMap { (x: ColdObservable<Int>) -> ColdObservable<Int> in
+            return xs.flatMap { (x: TestableObservable<Int>) -> TestableObservable<Int> in
                 invoked += 1
                 if invoked == 3 {
                     throw testError
@@ -3101,7 +3101,7 @@ extension ObservableStandardSequenceOperatorsTest {
         
         var invoked = 0
         let res = scheduler.start {
-            return xs.flatMapWithIndex { (x: ColdObservable<Int>, _: Int) -> ColdObservable<Int> in
+            return xs.flatMapWithIndex { (x: TestableObservable<Int>, _: Int) -> TestableObservable<Int> in
                 invoked += 1
                 if invoked == 3 {
                     throw testError

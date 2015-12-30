@@ -3,7 +3,7 @@
 //  Rx
 //
 //  Created by Krunoslav Zaher on 3/28/15.
-//  Copyright (c) 2015 Krunoslav Zaher. All rights reserved.
+//  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
 import Foundation
@@ -43,10 +43,8 @@ class MergeLimitedSinkIter<S: ObservableConvertibleType, O: ObserverType where S
             _parent.dispose()
         case .Completed:
             _parent._group.removeDisposable(_disposeKey)
-            let queue = _parent._queue
-            if queue.value.count > 0 {
-                let s = queue.value.dequeue()
-                _parent.subscribe(s, group: _parent._group)
+            if let next = _parent._queue.dequeue() {
+                _parent.subscribe(next, group: _parent._group)
             }
             else {
                 _parent._activeCount = _parent._activeCount - 1
@@ -75,7 +73,7 @@ class MergeLimitedSink<S: ObservableConvertibleType, O: ObserverType where S.E =
     // state
     private var _stopped = false
     private var _activeCount = 0
-    private var _queue = RxMutableBox(QueueType(capacity: 2))
+    private var _queue = QueueType(capacity: 2)
     
     private let _sourceSubscription = SingleAssignmentDisposable()
     private let _group = CompositeDisposable()
@@ -121,7 +119,7 @@ class MergeLimitedSink<S: ObservableConvertibleType, O: ObserverType where S.E =
                 subscribe = true
             }
             else {
-                _queue.value.enqueue(value)
+                _queue.enqueue(value)
                 subscribe = false
             }
 

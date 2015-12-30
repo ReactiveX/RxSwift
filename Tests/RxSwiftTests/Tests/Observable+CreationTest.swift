@@ -3,7 +3,7 @@
 //  RxTests
 //
 //  Created by Krunoslav Zaher on 9/2/15.
-//
+//  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
 import Foundation
@@ -82,7 +82,7 @@ extension ObservableCreationTests {
     }
 
     func testJust_DefaultScheduler() {
-        let res = try! Observable.just(42, scheduler: MainScheduler.sharedInstance)
+        let res = try! Observable.just(42, scheduler: MainScheduler.instance)
             .toBlocking()
             .toArray()
 
@@ -188,7 +188,7 @@ extension ObservableCreationTests {
         let scheduler = TestScheduler(initialClock: 0)
         
         let res = scheduler.start {
-            Observable.generate(0, condition: { x in x <= 3 }, scheduler: scheduler) { x in
+            Observable.generate(initialState: 0, condition: { x in x <= 3 }, scheduler: scheduler) { x in
                 x + 1
             }
         }
@@ -207,7 +207,7 @@ extension ObservableCreationTests {
         let scheduler = TestScheduler(initialClock: 0)
         
         let res = scheduler.start {
-            Observable.generate(0, condition: { _ in throw testError }, scheduler: scheduler) { x in
+            Observable.generate(initialState: 0, condition: { _ in throw testError }, scheduler: scheduler) { x in
                 x + 1
             }
         }
@@ -222,7 +222,7 @@ extension ObservableCreationTests {
         let scheduler = TestScheduler(initialClock: 0)
         
         let res = scheduler.start {
-            Observable.generate(0, condition: { _ in true }, scheduler: scheduler) { (_: Int) -> Int in
+            Observable.generate(initialState: 0, condition: { _ in true }, scheduler: scheduler) { (_: Int) -> Int in
                 throw testError
             }
         }
@@ -238,7 +238,7 @@ extension ObservableCreationTests {
         let scheduler = TestScheduler(initialClock: 0)
         
         let res = scheduler.start(203) {
-            Observable.generate(0, condition: { _ in true }, scheduler: scheduler) { x in
+            Observable.generate(initialState: 0, condition: { _ in true }, scheduler: scheduler) { x in
                 x + 1
             }
         }
@@ -255,7 +255,7 @@ extension ObservableCreationTests {
     
         var elements = [Int]()
         
-        _ = Observable.generate(0, condition: { _ in true }) { x in
+        _ = Observable.generate(initialState: 0, condition: { _ in true }) { x in
                 count += 1
                 return x + 1
             }
@@ -275,7 +275,7 @@ extension ObservableCreationTests {
         let scheduler = TestScheduler(initialClock: 0)
         
         let res = scheduler.start {
-            Observable.range(Int.max, count: 1, scheduler: scheduler)
+            Observable.range(start: Int.max, count: 1, scheduler: scheduler)
         }
         
         XCTAssertEqual(res.events, [
@@ -288,7 +288,7 @@ extension ObservableCreationTests {
         let scheduler = TestScheduler(initialClock: 0)
         
         let res = scheduler.start(204) {
-            Observable.range(-10, count: 5, scheduler: scheduler)
+            Observable.range(start: -10, count: 5, scheduler: scheduler)
         }
         
         XCTAssertEqual(res.events, [
@@ -327,7 +327,7 @@ extension ObservableCreationTests {
         var disposeInvoked = 0
         var createInvoked = 0
        
-        var xs:ColdObservable<Int>!
+        var xs:TestableObservable<Int>!
         var disposable:MockDisposable!
         var _d:MockDisposable!
         
@@ -373,7 +373,7 @@ extension ObservableCreationTests {
         var disposeInvoked = 0
         var createInvoked = 0
        
-        var xs:ColdObservable<Int>!
+        var xs:TestableObservable<Int>!
         var disposable:MockDisposable!
         var _d:MockDisposable!
         
@@ -419,7 +419,7 @@ extension ObservableCreationTests {
         var disposeInvoked = 0
         var createInvoked = 0
        
-        var xs:ColdObservable<Int>!
+        var xs:TestableObservable<Int>!
         var disposable:MockDisposable!
         var _d:MockDisposable!
         

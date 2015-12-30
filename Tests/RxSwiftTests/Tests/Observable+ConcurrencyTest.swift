@@ -3,7 +3,7 @@
 //  RxTests
 //
 //  Created by Krunoslav Zaher on 5/2/15.
-//
+//  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
 import Foundation
@@ -34,7 +34,7 @@ extension ObservableConcurrencyTest {
 
     func runDispatchQueueSchedulerTests(tests: (scheduler: SerialDispatchQueueScheduler) -> Disposable) {
         let scheduler = SerialDispatchQueueScheduler(internalSerialQueueName: "testQueue1")
-        let _ = runDispatchQueueSchedulerTests(scheduler, tests: tests).scopedDispose
+        runDispatchQueueSchedulerTests(scheduler, tests: tests).dispose()
     }
 
     func runDispatchQueueSchedulerTests(scheduler: SerialDispatchQueueScheduler, tests: (scheduler: SerialDispatchQueueScheduler) -> Disposable) -> Disposable {
@@ -599,7 +599,7 @@ extension ObservableConcurrencyTest {
     func testSubscribeOn_SchedulerCompleted() {
         let scheduler = TestScheduler(initialClock: 0)
 
-        let xs: HotObservable<Int> = scheduler.createHotObservable([
+        let xs: TestableObservable<Int> = scheduler.createHotObservable([
             completed(300)
             ])
 
@@ -619,7 +619,7 @@ extension ObservableConcurrencyTest {
     func testSubscribeOn_SchedulerError() {
         let scheduler = TestScheduler(initialClock: 0)
 
-        let xs: HotObservable<Int> = scheduler.createHotObservable([
+        let xs: TestableObservable<Int> = scheduler.createHotObservable([
             error(300, testError)
             ])
 

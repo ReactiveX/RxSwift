@@ -3,7 +3,7 @@
 //  RxSwift
 //
 //  Created by Krunoslav Zaher on 5/31/15.
-//  Copyright (c) 2015 Krunoslav Zaher. All rights reserved.
+//  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
 import Foundation
@@ -14,7 +14,7 @@ Counts number of `SerialDispatchQueueObservables`.
 
 Purposed for unit tests.
 */
-public var numberOfSerialDispatchQueueObservables: Int32 = 0
+public var numberOfSerialDispatchQueueObservables: AtomicInt = 0
 #endif
 
 class ObserveOnSerialDispatchQueueSink<O: ObserverType> : ObserverBase<O.E> {
@@ -61,8 +61,8 @@ class ObserveOnSerialDispatchQueue<E> : Producer<E> {
         self.source = source
         
 #if TRACE_RESOURCES
-        OSAtomicIncrement32(&resourceCount)
-        OSAtomicIncrement32(&numberOfSerialDispatchQueueObservables)
+        AtomicIncrement(&resourceCount)
+        AtomicIncrement(&numberOfSerialDispatchQueueObservables)
 #endif
     }
     
@@ -74,8 +74,8 @@ class ObserveOnSerialDispatchQueue<E> : Producer<E> {
     
 #if TRACE_RESOURCES
     deinit {
-        OSAtomicDecrement32(&resourceCount)
-        OSAtomicDecrement32(&numberOfSerialDispatchQueueObservables)
+        AtomicDecrement(&resourceCount)
+        AtomicDecrement(&numberOfSerialDispatchQueueObservables)
     }
 #endif
 }
