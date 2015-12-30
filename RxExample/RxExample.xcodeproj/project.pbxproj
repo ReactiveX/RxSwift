@@ -113,6 +113,9 @@
 		C83D73E01C1DBC2A003DC470 /* InvocableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83D73DB1C1DBC2A003DC470 /* InvocableType.swift */; };
 		C83D73E11C1DBC2A003DC470 /* ScheduledItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83D73DC1C1DBC2A003DC470 /* ScheduledItem.swift */; };
 		C83D73E21C1DBC2A003DC470 /* ScheduledItemType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83D73DD1C1DBC2A003DC470 /* ScheduledItemType.swift */; };
+		C84015751C34353D009D2E77 /* DispatchQueueSchedulerQOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = C84015741C34353D009D2E77 /* DispatchQueueSchedulerQOS.swift */; };
+		C84015881C343595009D2E77 /* Platform.Darwin.swift in Sources */ = {isa = PBXBuildFile; fileRef = C84015861C343595009D2E77 /* Platform.Darwin.swift */; };
+		C84015891C343595009D2E77 /* Platform.Linux.swift in Sources */ = {isa = PBXBuildFile; fileRef = C84015871C343595009D2E77 /* Platform.Linux.swift */; };
 		C843A08E1C1CE39900CBA4BD /* GitHubSearchRepositoriesAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C843A08C1C1CE39900CBA4BD /* GitHubSearchRepositoriesAPI.swift */; };
 		C843A08F1C1CE39900CBA4BD /* GitHubSearchRepositoriesAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C843A08C1C1CE39900CBA4BD /* GitHubSearchRepositoriesAPI.swift */; };
 		C843A0901C1CE39900CBA4BD /* GitHubSearchRepositoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C843A08D1C1CE39900CBA4BD /* GitHubSearchRepositoriesViewController.swift */; };
@@ -376,8 +379,6 @@
 		C8BCD3EB1C14B02A005F1280 /* SimpleValidationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8BCD3E91C14B02A005F1280 /* SimpleValidationViewController.swift */; };
 		C8BCD4021C14BFB7005F1280 /* NSLayoutConstraint+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8BCD4011C14BFB7005F1280 /* NSLayoutConstraint+Rx.swift */; };
 		C8BCD4041C14BFCA005F1280 /* UIView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8BCD4031C14BFCA005F1280 /* UIView+Rx.swift */; };
-		C8BF34D61C2E4A2F00416CAE /* Darwin.Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8BF34D41C2E4A2F00416CAE /* Darwin.Platform.swift */; };
-		C8BF34D71C2E4A2F00416CAE /* Linux.Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8BF34D51C2E4A2F00416CAE /* Linux.Platform.swift */; };
 		C8C46DA81B47F7110020D71E /* CollectionViewImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C46DA31B47F7110020D71E /* CollectionViewImageCell.swift */; };
 		C8C46DA91B47F7110020D71E /* WikipediaImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C8C46DA41B47F7110020D71E /* WikipediaImageCell.xib */; };
 		C8C46DAA1B47F7110020D71E /* WikipediaSearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C46DA51B47F7110020D71E /* WikipediaSearchCell.swift */; };
@@ -630,6 +631,9 @@
 		C83D73DB1C1DBC2A003DC470 /* InvocableType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InvocableType.swift; sourceTree = "<group>"; };
 		C83D73DC1C1DBC2A003DC470 /* ScheduledItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduledItem.swift; sourceTree = "<group>"; };
 		C83D73DD1C1DBC2A003DC470 /* ScheduledItemType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduledItemType.swift; sourceTree = "<group>"; };
+		C84015741C34353D009D2E77 /* DispatchQueueSchedulerQOS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DispatchQueueSchedulerQOS.swift; sourceTree = "<group>"; };
+		C84015861C343595009D2E77 /* Platform.Darwin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Platform.Darwin.swift; sourceTree = "<group>"; };
+		C84015871C343595009D2E77 /* Platform.Linux.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Platform.Linux.swift; sourceTree = "<group>"; };
 		C843A08C1C1CE39900CBA4BD /* GitHubSearchRepositoriesAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GitHubSearchRepositoriesAPI.swift; sourceTree = "<group>"; };
 		C843A08D1C1CE39900CBA4BD /* GitHubSearchRepositoriesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GitHubSearchRepositoriesViewController.swift; sourceTree = "<group>"; };
 		C843A0921C1CE58700CBA4BD /* UINavigationController+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Extensions.swift"; sourceTree = "<group>"; };
@@ -865,8 +869,6 @@
 		C8BCD3E91C14B02A005F1280 /* SimpleValidationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleValidationViewController.swift; sourceTree = "<group>"; };
 		C8BCD4011C14BFB7005F1280 /* NSLayoutConstraint+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSLayoutConstraint+Rx.swift"; sourceTree = "<group>"; };
 		C8BCD4031C14BFCA005F1280 /* UIView+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Rx.swift"; sourceTree = "<group>"; };
-		C8BF34D41C2E4A2F00416CAE /* Darwin.Platform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Darwin.Platform.swift; sourceTree = "<group>"; };
-		C8BF34D51C2E4A2F00416CAE /* Linux.Platform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Linux.Platform.swift; sourceTree = "<group>"; };
 		C8C46DA31B47F7110020D71E /* CollectionViewImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewImageCell.swift; sourceTree = "<group>"; };
 		C8C46DA41B47F7110020D71E /* WikipediaImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WikipediaImageCell.xib; sourceTree = "<group>"; };
 		C8C46DA51B47F7110020D71E /* WikipediaSearchCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WikipediaSearchCell.swift; sourceTree = "<group>"; };
@@ -1452,6 +1454,7 @@
 		C894648D1BC6C2B00055219D /* Schedulers */ = {
 			isa = PBXGroup;
 			children = (
+				C84015741C34353D009D2E77 /* DispatchQueueSchedulerQOS.swift */,
 				C80DA33C1C30B23600C588B9 /* HistoricalScheduler.swift */,
 				C80DA33D1C30B23600C588B9 /* HistoricalSchedulerTimeConverter.swift */,
 				C80DA33E1C30B23600C588B9 /* VirtualTimeConverterType.swift */,
@@ -1680,8 +1683,8 @@
 		C8BF34D31C2E4A2F00416CAE /* Platform */ = {
 			isa = PBXGroup;
 			children = (
-				C8BF34D41C2E4A2F00416CAE /* Darwin.Platform.swift */,
-				C8BF34D51C2E4A2F00416CAE /* Linux.Platform.swift */,
+				C84015861C343595009D2E77 /* Platform.Darwin.swift */,
+				C84015871C343595009D2E77 /* Platform.Linux.swift */,
 			);
 			path = Platform;
 			sourceTree = "<group>";
@@ -2005,6 +2008,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C83D73DE1C1DBC2A003DC470 /* AnonymousInvocable.swift in Sources */,
+				C84015751C34353D009D2E77 /* DispatchQueueSchedulerQOS.swift in Sources */,
 				C84CC58B1BDD486300E06A64 /* LockOwnerType.swift in Sources */,
 				C89465971BC6C2BC0055219D /* UIScrollView+Rx.swift in Sources */,
 				9B4612951C106CF100BBBB4E /* UIActivityIndicatorView+Rx.swift in Sources */,
@@ -2047,6 +2051,7 @@
 				C89464DA1BC6C2B00055219D /* Repeat.swift in Sources */,
 				C89465651BC6C2BC0055219D /* CLLocationManager+Rx.swift in Sources */,
 				C80DDED81BCE9046006A1832 /* Driver.swift in Sources */,
+				C84015881C343595009D2E77 /* Platform.Darwin.swift in Sources */,
 				C80DDED71BCE9046006A1832 /* Driver+Subscription.swift in Sources */,
 				C8F6A1321BEF9DA3007DF367 /* RecursiveScheduler.swift in Sources */,
 				07A5C3DC1B70B703001EFE5C /* CalculatorViewController.swift in Sources */,
@@ -2121,10 +2126,8 @@
 				C89464EE1BC6C2B00055219D /* Observable+Creation.swift in Sources */,
 				C894659A1BC6C2BC0055219D /* UISlider+Rx.swift in Sources */,
 				C89465891BC6C2BC0055219D /* RxSearchBarDelegateProxy.swift in Sources */,
-				C8BF34D71C2E4A2F00416CAE /* Linux.Platform.swift in Sources */,
 				C89464C21BC6C2B00055219D /* CombineLatest.swift in Sources */,
 				C89464E71BC6C2B00055219D /* Zip+arity.swift in Sources */,
-				C8BF34D61C2E4A2F00416CAE /* Darwin.Platform.swift in Sources */,
 				B1604CC21BE5B895002E1279 /* ReachabilityService.swift in Sources */,
 				C89464DE1BC6C2B00055219D /* Skip.swift in Sources */,
 				C89464DB1BC6C2B00055219D /* Sample.swift in Sources */,
@@ -2278,6 +2281,7 @@
 				C89464B41BC6C2B00055219D /* Event.swift in Sources */,
 				C89465691BC6C2BC0055219D /* ControlProperty.swift in Sources */,
 				C89465061BC6C2B00055219D /* SchedulerType.swift in Sources */,
+				C84015891C343595009D2E77 /* Platform.Linux.swift in Sources */,
 				C8C4B4BF1C17724A00828BD5 /* _RXObjCRuntime.m in Sources */,
 				C894659F1BC6C2BC0055219D /* UITextView+Rx.swift in Sources */,
 				C83D73E11C1DBC2A003DC470 /* ScheduledItem.swift in Sources */,

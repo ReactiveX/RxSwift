@@ -1,6 +1,6 @@
 //
-//  Linux.Platform.swift
-//  Benchmark
+//  Platform.Linux.swift
+//  Rx
 //
 //  Created by Krunoslav Zaher on 12/29/15.
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
