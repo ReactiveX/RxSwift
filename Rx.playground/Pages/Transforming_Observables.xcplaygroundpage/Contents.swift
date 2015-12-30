@@ -44,8 +44,9 @@ example("flatMap") {
     let sequenceString = Observable.of("A", "B", "C", "D", "E", "F", "--")
 
     _ = sequenceInt
-        .flatMap { int in
-            sequenceString
+        .flatMap { (x:Int) -> Observable<String> in
+            print("from sequenceInt \(x)")
+            return sequenceString
         }
         .subscribe {
             print($0)
