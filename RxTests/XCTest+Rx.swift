@@ -16,7 +16,7 @@ require specifying `self.*`, they are made global.
 //extension XCTestCase {
     /**
     Factory method for an `.Next` event recorded at a given time with a given value.
-     
+
      - parameter time: Recorded virtual time the `.Next` event occurs.
      - parameter element: Next sequence element.
      - returns: Recorded event in time.
@@ -27,7 +27,7 @@ require specifying `self.*`, they are made global.
 
     /**
     Factory method for an `.Completed` event recorded at a given time.
-     
+
      - parameter time: Recorded virtual time the `.Completed` event occurs.
      - parameter type: Sequence elements type.
      - returns: Recorded event in time.
@@ -38,7 +38,7 @@ require specifying `self.*`, they are made global.
 
     /**
     Factory method for an `.Error` event recorded at a given time with a given error.
-     
+
      - parameter time: Recorded virtual time the `.Completed` event occurs.
     */
     public func error<T>(time: TestTime, _ error: ErrorType, _ type: T.Type = T.self) -> Recorded<Event<T>> {
@@ -48,7 +48,7 @@ require specifying `self.*`, they are made global.
 
 import XCTest
 /**
-Asserts two lists of events are equal. 
+Asserts two lists of events are equal.
 
 Event is considered equal if:
 * `Next` events are equal if they have equal corresponding elements.
@@ -61,7 +61,11 @@ Event is considered equal if:
 public func XCTAssertEqual<T: Equatable>(lhs: [Event<T>], _ rhs: [Event<T>], file: String = __FILE__, line: UInt = __LINE__) {
     let leftEquatable = lhs.map { AnyEquatable(target: $0, comparer: ==) }
     let rightEquatable = rhs.map { AnyEquatable(target: $0, comparer: ==) }
-    XCTAssertEqual(leftEquatable, rightEquatable, file: file, line: line)
+    #if os(Linux)
+      XCTAssertEqual(leftEquatable, rightEquatable)
+    #else
+      XCTAssertEqual(leftEquatable, rightEquatable, file: file, line: line)
+    #endif
     if leftEquatable == rightEquatable {
         return
     }
@@ -85,7 +89,11 @@ Event is considered equal if:
 public func XCTAssertEqual<T: Equatable>(lhs: [Recorded<Event<T>>], _ rhs: [Recorded<Event<T>>], file: String = __FILE__, line: UInt = __LINE__) {
     let leftEquatable = lhs.map { AnyEquatable(target: $0, comparer: ==) }
     let rightEquatable = rhs.map { AnyEquatable(target: $0, comparer: ==) }
-    XCTAssertEqual(leftEquatable, rightEquatable, file: file, line: line)
+    #if os(Linux)
+      XCTAssertEqual(leftEquatable, rightEquatable)
+    #else
+      XCTAssertEqual(leftEquatable, rightEquatable, file: file, line: line)
+    #endif
 
     if leftEquatable == rightEquatable {
         return
