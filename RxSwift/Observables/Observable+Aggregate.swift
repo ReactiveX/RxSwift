@@ -30,12 +30,6 @@ extension ObservableType {
         return Reduce(source: self.asObservable(), seed: seed, accumulator: accumulator, mapResult: mapResult)
     }
 
-    @available(*, deprecated=2.0.0, message="Please use version with named accumulator parameter.")
-    public func reduce<A, R>(seed: A, _ accumulator: (A, E) throws -> A, mapResult: (A) throws -> R)
-        -> Observable<R> {
-        return Reduce(source: self.asObservable(), seed: seed, accumulator: accumulator, mapResult: mapResult)
-    }
-    
     /**
     Applies an `accumulator` function over an observable sequence, returning the result of the aggregation as a single element in the result sequence. The specified `seed` value is used as the initial accumulator value.
     

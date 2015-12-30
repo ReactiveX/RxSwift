@@ -27,8 +27,6 @@ class GitHubSearchRepositoriesViewController: ViewController, UITableViewDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let $: Dependencies = Dependencies.sharedDependencies
-
         let tableView = self.tableView
         let searchBar = self.searchBar
 

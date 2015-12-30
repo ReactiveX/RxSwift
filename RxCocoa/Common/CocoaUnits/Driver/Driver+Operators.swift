@@ -284,15 +284,6 @@ extension DriverConvertibleType {
         return Driver(source)
     }
 
-    @available(*, deprecated=2.0.0, message="Please use version without scheduler parameter.")
-    public func throttle(dueTime: RxTimeInterval, _ scheduler: SchedulerType)
-        -> Driver<E> {
-        let source = self.asObservable()
-            .throttle(dueTime, scheduler: scheduler)
-
-        return Driver(source)
-    }
-
     /**
     Ignores elements from an observable sequence which are followed by another element within a specified relative time duration, using the specified scheduler to run throttling timers.
     
@@ -306,15 +297,6 @@ extension DriverConvertibleType {
         -> Driver<E> {
         let source = self.asObservable()
             .debounce(dueTime, scheduler: driverObserveOnScheduler)
-
-        return Driver(source)
-    }
-
-    @available(*, deprecated=2.0.0, message="Please use version without scheduler parameter.")
-    public func debounce(dueTime: RxTimeInterval, _ scheduler: SchedulerType)
-        -> Driver<E> {
-        let source = self.asObservable()
-            .debounce(dueTime, scheduler: scheduler)
 
         return Driver(source)
     }

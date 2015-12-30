@@ -179,7 +179,7 @@ extension ControlTests {
     func testLabel_NextElementsSetsValue() {
         let subject = UILabel()
         let attributedTextSequence = Variable<NSAttributedString?>(nil)
-        let disposable = attributedTextSequence.subscribe(subject.rx_attributedText)
+        let disposable = attributedTextSequence.asObservable().bindTo(subject.rx_attributedText)
         defer { disposable.dispose() }
 
         attributedTextSequence.value = NSAttributedString(string: "Hello!")
@@ -354,7 +354,7 @@ extension ControlTests {
         let subject = UIActivityIndicatorView()
         let boolSequence = Variable<Bool>(false)
 
-        let disposable = boolSequence.subscribe(subject.rx_animating)
+        let disposable = boolSequence.asObservable().bindTo(subject.rx_animating)
         defer { disposable.dispose() }
 
         boolSequence.value = true
@@ -367,26 +367,6 @@ extension ControlTests {
 
 
 #if os(iOS)
-
-// UIActionSheet
-extension ControlTests {
-    func testActionSheet_DelegateEventCompletesOnDealloc() {
-        let createActionSheet: () -> UIActionSheet = { UIActionSheet(title: "", delegate: nil, cancelButtonTitle: "", destructiveButtonTitle: "") }
-        ensureEventDeallocated(createActionSheet) { (view: UIActionSheet) in view.rx_clickedButtonAtIndex }
-        ensureEventDeallocated(createActionSheet) { (view: UIActionSheet) in view.rx_didDismissWithButtonIndex }
-        ensureEventDeallocated(createActionSheet) { (view: UIActionSheet) in view.rx_willDismissWithButtonIndex }
-    }
-}
-
-// UIAlertView
-extension ControlTests {
-    func testAlertView_DelegateEventCompletesOnDealloc() {
-        let createAlertView: () -> UIAlertView = { UIAlertView(title: "", message: "", delegate: nil, cancelButtonTitle: nil) }
-        ensureEventDeallocated(createAlertView) { (view: UIAlertView) in view.rx_clickedButtonAtIndex }
-        ensureEventDeallocated(createAlertView) { (view: UIAlertView) in view.rx_didDismissWithButtonIndex }
-        ensureEventDeallocated(createAlertView) { (view: UIAlertView) in view.rx_willDismissWithButtonIndex }
-    }
-}
 
 // UIDatePicker
 extension ControlTests {

@@ -193,11 +193,6 @@ public func proxyForObject<P: DelegateProxyType>(type: P.Type, _ object: AnyObje
     return proxy
 }
 
-@available(*, deprecated=2.0.0, message="Please use version that takes type as first argument.")
-public func proxyForObject<P: DelegateProxyType>(object: AnyObject) -> P {
-    return proxyForObject(P.self, object)
-}
-
 func installDelegate<P: DelegateProxyType>(proxy: P, delegate: AnyObject, retainDelegate: Bool, onProxyForObject object: AnyObject) -> Disposable {
     weak var weakDelegate: AnyObject? = delegate
     

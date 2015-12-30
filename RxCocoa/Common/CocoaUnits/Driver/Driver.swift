@@ -143,37 +143,6 @@ extension Driver {
 
 }
 
-public struct Drive {
-
-    @available(*, deprecated=2.0.0, message="Please use `Driver.empty` (`r` at the end).")
-    public static func empty<E>() -> Driver<E> {
-        return Driver(raw: Observable.empty().subscribeOn(driverSubscribeOnScheduler))
-    }
-
-    @available(*, deprecated=2.0.0, message="Please use `Driver.never` (`r` at the end).")
-    public static func never<E>() -> Driver<E> {
-        return Driver(raw: Observable.never().subscribeOn(driverSubscribeOnScheduler))
-    }
-
-    @available(*, deprecated=2.0.0, message="Please use `Driver.just` (`r` at the end).")
-    public static func just<E>(element: E) -> Driver<E> {
-        return Driver(raw: Observable.just(element).subscribeOn(driverSubscribeOnScheduler))
-    }
-
-    @available(*, deprecated=2.0.0, message="Please use `Driver.deferred` (`r` at the end).")
-    public static func deferred<E>(observableFactory: () -> Driver<E>)
-        -> Driver<E> {
-        return Driver(Observable.deferred { observableFactory().asObservable() })
-    }
-
-    @available(*, deprecated=2.0.0, message="Please use `Driver.of` (`r` at the end).")
-    public static func sequenceOf<E>(elements: E ...) -> Driver<E> {
-        let source = elements.toObservable().subscribeOn(driverSubscribeOnScheduler)
-        return Driver(raw: source)
-    }
-
-}
-
 /**
  This method can be used in unit tests to ensure that driver is using mock schedulers instead of
  maind schedulers.

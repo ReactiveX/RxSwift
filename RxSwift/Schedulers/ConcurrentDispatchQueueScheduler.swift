@@ -38,25 +38,6 @@ public class ConcurrentDispatchQueueScheduler: SchedulerType {
     }
     
     /**
-    Convenience init for scheduler that wraps one of the global concurrent dispatch queues.
-    
-    - parameter globalConcurrentQueuePriority: Target global dispatch queue.
-    */
-    @available(*, deprecated=2.0.0, message="Use init(globalConcurrentQueueQOS:) instead.")
-    public convenience init(globalConcurrentQueuePriority: DispatchQueueSchedulerPriority) {
-        var priority: Int = 0
-        switch globalConcurrentQueuePriority {
-        case .High:
-            priority = DISPATCH_QUEUE_PRIORITY_HIGH
-        case .Default:
-            priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
-        case .Low:
-            priority = DISPATCH_QUEUE_PRIORITY_LOW
-        }
-        self.init(queue: dispatch_get_global_queue(priority, UInt(0)))
-    }
-    
-    /**
      Convenience init for scheduler that wraps one of the global concurrent dispatch queues.
      
      - parameter globalConcurrentQueueQOS: Target global dispatch queue, by quality of service class.

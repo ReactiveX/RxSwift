@@ -78,11 +78,11 @@ class PartialUpdatesViewController : ViewController {
         skinTableViewDataSource(tvAnimatedDataSource)
         skinTableViewDataSource(reloadDataSource)
 
-        self.sections
+        self.sections.asObservable()
             .bindTo(partialUpdatesTableViewOutlet.rx_itemsAnimatedWithDataSource(tvAnimatedDataSource))
             .addDisposableTo(disposeBag)
 
-        self.sections
+        self.sections.asObservable()
             .bindTo(reloadTableViewOutlet.rx_itemsWithDataSource(reloadDataSource))
             .addDisposableTo(disposeBag)
 
@@ -108,7 +108,7 @@ class PartialUpdatesViewController : ViewController {
         #else
             let cvReloadDataSource = RxCollectionViewSectionedReloadDataSource<NumberSection>()
             skinCollectionViewDataSource(cvReloadDataSource)
-            self.sections
+            self.sections.asObservable()
                 .bindTo(partialUpdatesCollectionViewOutlet.rx_itemsWithDataSource(cvReloadDataSource))
                 .addDisposableTo(disposeBag)
         #endif
