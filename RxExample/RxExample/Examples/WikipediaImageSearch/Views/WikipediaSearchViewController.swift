@@ -43,7 +43,6 @@ class WikipediaSearchViewController: ViewController {
         resultsTableView.rowHeight = 194
 
         let API = DefaultWikipediaAPI.sharedAPI
-        let scheduler = MainScheduler.instance
 
         searchBar.rx_text
             .asDriver()
