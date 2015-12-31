@@ -17,11 +17,6 @@ var rx_control_events_key: UInt8 = 0
 
 extension NSControl {
 
-    @available(*, deprecated=2.0.0, message="Please use rx_controlEvent.")
-    public var rx_controlEvents: ControlEvent<Void> {
-        return rx_controlEvent
-    }
-
     /**
     Reactive wrapper for control event.
     */

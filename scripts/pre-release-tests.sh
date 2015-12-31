@@ -14,6 +14,12 @@ if [ "$1" == "r" ]; then
 fi
 
 ./scripts/validate-headers.swift
+./scripts/package-spm.swift > /dev/null
+
+if [ `git ls-files -o -d --exclude-standard | wc -l` -gt 0 ]; then
+	echo "Package for Swift package manager isn't updated, please run ./scripts/package-spm.swift and commit the changes"
+	exit -1
+fi
 
 # ios 7 sim
 #if [ `xcrun simctl list | grep "${DEFAULT_IOS7_SIMULATOR}" | wc -l` == 0 ]; then
@@ -117,8 +123,6 @@ done
 . scripts/validate-playgrounds.sh
 
 if [ "${RELEASE_TEST}" -eq 1 ]; then
-	mdast -u mdast-slug -u mdast-validate-links ./*.md
-	mdast -u mdast-slug -u mdast-validate-links ./**/*.md
-
+    scripts/validate-markdown.sh
 	scripts/validate-podspec.sh
 fi

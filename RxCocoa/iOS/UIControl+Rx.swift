@@ -62,11 +62,6 @@ extension UIControl {
         return ControlEvent(events: source)
     }
 
-    @available(*, deprecated=2.0.0, message="Please use rx_controlEvent.")
-    public func rx_controlEvents(controlEvents: UIControlEvents) -> ControlEvent<Void> {
-        return rx_controlEvent(controlEvents)
-    }
-    
     func rx_value<T: Equatable>(getter getter: () -> T, setter: T -> Void) -> ControlProperty<T> {
         let source: Observable<T> = Observable.create { [weak self] observer in
             guard let control = self else {

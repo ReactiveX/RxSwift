@@ -39,51 +39,40 @@ class DefaultWireframe: Wireframe {
         #endif
     }
 
+    #if os(iOS)
+    private static func rootViewController() -> UIViewController {
+        // cheating, I know
+        return UIApplication.sharedApplication().keyWindow!.rootViewController!
+    }
+    #endif
+
     static func presentAlert(message: String) {
         #if os(iOS)
-            let alertView = UIAlertView(
-                title: "RxExample",
-                message: message,
-                delegate: nil,
-                cancelButtonTitle: "OK"
-            )
-
-            alertView.show()
+            let alertView = UIAlertController(title: "RxExample", message: message, preferredStyle: .Alert)
+            alertView.addAction(UIAlertAction(title: "OK", style: .Cancel) { _ in
+            })
+            rootViewController().presentViewController(alertView, animated: true, completion: nil)
         #endif
     }
 
     func promptFor<Action : CustomStringConvertible>(message: String, cancelAction: Action, actions: [Action]) -> Observable<Action> {
         #if os(iOS)
         return Observable.create { observer in
-            let alertView = UIAlertView(
-                title: "RxExample",
-                message: message,
-                delegate: nil,
-                cancelButtonTitle: cancelAction.description
-            )
+            let alertView = UIAlertController(title: "RxExample", message: message, preferredStyle: .Alert)
+            alertView.addAction(UIAlertAction(title: cancelAction.description, style: .Cancel) { _ in
+                observer.on(.Next(cancelAction))
+            })
 
             for action in actions {
-                alertView.addButtonWithTitle(action.description)
+                alertView.addAction(UIAlertAction(title: action.description, style: .Default) { _ in
+                    observer.on(.Next(action))
+                })
             }
 
-            alertView.show()
-
-            observer.on(.Next(alertView))
+            DefaultWireframe.rootViewController().presentViewController(alertView, animated: true, completion: nil)
 
             return AnonymousDisposable {
-                alertView.dismissWithClickedButtonIndex(-1, animated: true)
-            }
-        }.flatMap { (alertView: UIAlertView) -> Observable<Action> in
-            return alertView.rx_didDismissWithButtonIndex.flatMap { index -> Observable<Action> in
-                if index < 0 {
-                    return Observable.empty()
-                }
-
-                if index == 0 {
-                    return Observable.just(cancelAction)
-                }
-
-                return Observable.just(actions[index - 1])
+                alertView.dismissViewControllerAnimated(false, completion: nil)
             }
         }
         #elseif os(OSX)

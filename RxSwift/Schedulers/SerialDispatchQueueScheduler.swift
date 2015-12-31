@@ -74,24 +74,29 @@ public class SerialDispatchQueueScheduler: SchedulerType {
     }
 
     /**
-    Constructs new `SerialDispatchQueueScheduler` that wraps on of the global concurrent dispatch queues.
-    
-    - parameter globalConcurrentQueuePriority: Identifier for global dispatch queue with specified priority.
-    - parameter internalSerialQueueName: Custom name for internal serial dispatch queue proxy.
-    */
-    public convenience init(globalConcurrentQueuePriority: DispatchQueueSchedulerPriority, internalSerialQueueName: String = "rx.global_dispatch_queue.serial") {
-        var priority: Int = 0
-        switch globalConcurrentQueuePriority {
-        case .High:
-            priority = DISPATCH_QUEUE_PRIORITY_HIGH
+     Constructs new `SerialDispatchQueueScheduler` that wraps on of the global concurrent dispatch queues.
+     
+     - parameter globalConcurrentQueueQOS: Identifier for global dispatch queue with specified quality of service class.
+     - parameter internalSerialQueueName: Custom name for internal serial dispatch queue proxy.
+     */
+    @available(iOS 8, OSX 10.10, *)
+    public convenience init(globalConcurrentQueueQOS: DispatchQueueSchedulerQOS, internalSerialQueueName: String = "rx.global_dispatch_queue.serial") {
+        let priority: qos_class_t
+        switch globalConcurrentQueueQOS {
+        case .UserInteractive:
+            priority = QOS_CLASS_USER_INTERACTIVE
+        case .UserInitiated:
+            priority = QOS_CLASS_USER_INITIATED
         case .Default:
-            priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
-        case .Low:
-            priority = DISPATCH_QUEUE_PRIORITY_LOW
+            priority = QOS_CLASS_DEFAULT
+        case .Utility:
+            priority = QOS_CLASS_UTILITY
+        case .Background:
+            priority = QOS_CLASS_BACKGROUND
         }
         self.init(queue: dispatch_get_global_queue(priority, UInt(0)), internalSerialQueueName: internalSerialQueueName)
     }
-    
+
     class func convertTimeIntervalToDispatchInterval(timeInterval: NSTimeInterval) -> Int64 {
         return Int64(timeInterval * Double(NSEC_PER_SEC))
     }

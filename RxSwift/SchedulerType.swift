@@ -9,12 +9,12 @@
 import Foundation
 
 /**
-Type that represents time interval in the context of this scheduler.
+Type that represents time interval in the context of RxSwift.
 */
 public typealias RxTimeInterval = NSTimeInterval
 
 /**
-Type that represents absolute time in the context of this scheduler.
+Type that represents absolute time in the context of RxSwift.
 */
 public typealias RxTime = NSDate
 

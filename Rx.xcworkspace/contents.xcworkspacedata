@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:Package.swift">
+   </FileRef>
+   <FileRef
       location = "group:LICENSE.md">
    </FileRef>
    <FileRef
@@ -61,13 +64,25 @@
          location = "group:common.sh">
       </FileRef>
       <FileRef
-         location = "group:playgrounds.sh">
+         location = "group:/Users/kzaher/Projects/RxSwift/scripts/package-spm.swift">
       </FileRef>
       <FileRef
          location = "group:pre-release-tests.sh">
       </FileRef>
       <FileRef
+         location = "group:test-linux.sh">
+      </FileRef>
+      <FileRef
+         location = "group:validate-headers.swift">
+      </FileRef>
+      <FileRef
+         location = "group:validate-playgrounds.sh">
+      </FileRef>
+      <FileRef
          location = "group:validate-podspec.sh">
+      </FileRef>
+      <FileRef
+         location = "group:validate-markdown.sh">
       </FileRef>
    </Group>
    <Group
@@ -105,6 +120,9 @@
       </FileRef>
       <FileRef
          location = "group:Warnings.md">
+      </FileRef>
+      <FileRef
+         location = "group:Linux.md">
       </FileRef>
    </Group>
    <FileRef

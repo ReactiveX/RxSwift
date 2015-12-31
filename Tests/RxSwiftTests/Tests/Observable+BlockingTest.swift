@@ -40,7 +40,7 @@ extension ObservableBlockingTest {
     }
     
     func testToArray_withRealScheduler() {
-        let scheduler = ConcurrentDispatchQueueScheduler(globalConcurrentQueuePriority: .Default)
+        let scheduler = ConcurrentDispatchQueueScheduler(globalConcurrentQueueQOS: .Default)
         
         let array = try! Observable<Int64>.interval(0.001, scheduler: scheduler)
             .take(10)
@@ -77,7 +77,7 @@ extension ObservableBlockingTest {
     }
     
     func testFirst_withRealScheduler() {
-        let scheduler = ConcurrentDispatchQueueScheduler(globalConcurrentQueuePriority: .Default)
+        let scheduler = ConcurrentDispatchQueueScheduler(globalConcurrentQueueQOS: .Default)
         
         let array = try! Observable<Int64>.interval(0.001, scheduler: scheduler)
             .take(10)
@@ -114,7 +114,7 @@ extension ObservableBlockingTest {
     }
     
     func testLast_withRealScheduler() {
-        let scheduler = ConcurrentDispatchQueueScheduler(globalConcurrentQueuePriority: .Default)
+        let scheduler = ConcurrentDispatchQueueScheduler(globalConcurrentQueueQOS: .Default)
         
         let array = try! Observable<Int64>.interval(0.001, scheduler: scheduler)
             .take(10)
@@ -174,7 +174,7 @@ extension ObservableBlockingTest {
     }
     
     func testSingle_withRealScheduler() {
-        let scheduler = ConcurrentDispatchQueueScheduler(globalConcurrentQueuePriority: .Default)
+        let scheduler = ConcurrentDispatchQueueScheduler(globalConcurrentQueueQOS: .Default)
         
         let array = try! Observable<Int64>.interval(0.001, scheduler: scheduler)
             .take(1)
@@ -271,7 +271,7 @@ extension ObservableBlockingTest {
     }
     
     func testSingle_predicate_withRealScheduler() {
-        let scheduler = ConcurrentDispatchQueueScheduler(globalConcurrentQueuePriority: .Default)
+        let scheduler = ConcurrentDispatchQueueScheduler(globalConcurrentQueueQOS: .Default)
         
         let array = try! Observable<Int64>.interval(0.001, scheduler: scheduler)
             .take(4)

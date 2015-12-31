@@ -15,16 +15,6 @@ import RxSwift
 
 // <%= i %>
 
-@available(*, deprecated=2.0.0, message="Please use `Driver.zip`")
-public func zip<<%= (Array(1...i).map { "O\($0): DriverConvertibleType" }).joinWithSeparator(", ") %>, R>
-(<%= (Array(1...i).map { "source\($0): O\($0)" }).joinWithSeparator(", _ ") %>, resultSelector: (<%= (Array(1...i).map { "O\($0).E" }).joinWithSeparator(", ") %>) throws -> R)
-    -> Driver<R> {
-    return Driver.zip(
-        <%= (Array(1...i).map { "source\($0)" }).joinWithSeparator(", ") %>,
-        resultSelector: resultSelector
-    )
-}
-
 extension Driver {
     /**
     Merges the specified observable sequences into one observable sequence by using the selector function whenever all of the observable sequences have produced an element at a corresponding index.
@@ -43,16 +33,6 @@ extension Driver {
 
         return Driver(source)
     }
-}
-
-@available(*, deprecated=2.0.0, message="Please use `Driver.combineLatest`")
-public func combineLatest<<%= (Array(1...i).map { "O\($0): DriverConvertibleType" }).joinWithSeparator(", ") %>, R>
-(<%= (Array(1...i).map { "source\($0): O\($0)" }).joinWithSeparator(", _ ") %>, resultSelector: (<%= (Array(1...i).map { "O\($0).E" }).joinWithSeparator(", ") %>) throws -> R)
-    -> Driver<R> {
-    return Driver.combineLatest(
-        <%= (Array(1...i).map { "source\($0)" }).joinWithSeparator(", ") %>,
-        resultSelector: resultSelector
-    )
 }
 
 extension Driver {

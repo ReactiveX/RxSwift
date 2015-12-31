@@ -9,7 +9,19 @@
 
 import Foundation
 
-// It is kind of ironic that we need to additionally package for package manager :/
+/**
+Validates that all headers are in this standard form
+ 
+//
+//  {file}.swift
+//  Project
+//
+//  Created by {Author} on 2/14/15.
+//  Copyright (c) 2015 Krunoslav Zaher. All rights reserved.
+//
+
+Only Project is not checked yet, but it will be soon.
+*/
 
 let fileManager = NSFileManager.defaultManager()
 
@@ -36,19 +48,6 @@ func isExtensionIncluded(path: String) -> Bool {
 }
 
 let whitespace = NSCharacterSet.whitespaceAndNewlineCharacterSet()
-
-/**
-Validates header in this form
- 
-//
-//  {file}.swift
-//  Project
-//
-//  Created by {Author} on 2/14/15.
-//  Copyright (c) 2015 Krunoslav Zaher. All rights reserved.
-//
-
-*/
 
 let identifier = "(?:\\w|\\+|\\_|\\.|-)+"
 

@@ -18,6 +18,6 @@ extension NSButton {
     Reactive wrapper for control event.
     */
     public var rx_tap: ControlEvent<Void> {
-        return rx_controlEvents
+        return rx_controlEvent
     }
 }

@@ -1,6 +1,6 @@
 //
-//  Linux.Platform.swift
-//  Benchmark
+//  Platform.Linux.swift
+//  Rx
 //
 //  Created by Krunoslav Zaher on 12/29/15.
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
@@ -136,12 +136,19 @@
     public typealias dispatch_object_t = Int
     public typealias dispatch_block_t = () -> ()
     public typealias dispatch_queue_attr_t = Int
+    public typealias qos_class_t = Int
 
     public let DISPATCH_QUEUE_SERIAL = 0
 
     public let DISPATCH_QUEUE_PRIORITY_HIGH = 1
     public let DISPATCH_QUEUE_PRIORITY_DEFAULT = 2
     public let DISPATCH_QUEUE_PRIORITY_LOW = 3
+
+    public let QOS_CLASS_USER_INTERACTIVE = 0
+    public let QOS_CLASS_USER_INITIATED = 1
+    public let QOS_CLASS_DEFAULT = 2
+    public let QOS_CLASS_UTILITY = 3
+    public let QOS_CLASS_BACKGROUND = 4
 
     public let DISPATCH_SOURCE_TYPE_TIMER = 0
     public let DISPATCH_TIME_FOREVER = 1 as UInt64

@@ -102,7 +102,7 @@ public class VirtualTimeScheduler<Converter: VirtualTimeConverterType>
      - returns: The disposable object used to cancel the scheduled action (best effort).
      */
     public func scheduleRelativeVirtual<StateType>(state: StateType, dueTime: VirtualTimeInterval, action: StateType -> Disposable) -> Disposable {
-        let time = _converter.addVirtualTimeAndTimeInterval(time: self.clock, timeInterval: dueTime)
+        let time = _converter.offsetVirtualTime(time: self.clock, offset: dueTime)
         return scheduleAbsoluteVirtual(state, time: time, action: action)
     }
 
@@ -220,7 +220,7 @@ public class VirtualTimeScheduler<Converter: VirtualTimeConverterType>
     public func sleep(virtualInterval: VirtualTimeInterval) {
         MainScheduler.ensureExecutingOnScheduler()
 
-        let sleepTo = _converter.addVirtualTimeAndTimeInterval(time: clock, timeInterval: virtualInterval)
+        let sleepTo = _converter.offsetVirtualTime(time: clock, offset: virtualInterval)
         if _converter.compareVirtualTime(sleepTo, clock).lessThen {
             fatalError("Can't sleep to past.")
         }

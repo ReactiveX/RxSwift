@@ -8,66 +8,6 @@
 
 import Foundation
 
-@available(*, deprecated=2.0.0, message="Please use `Observable.create`")
-public func create<E>(subscribe: (AnyObserver<E>) -> Disposable) -> Observable<E> {
-    return Observable.create(subscribe)
-}
-
-@available(*, deprecated=2.0.0, message="Please use `Observable.empty`")
-public func empty<E>(type: E.Type = E.self) -> Observable<E> {
-    return Observable.empty()
-}
-
-@available(*, deprecated=2.0.0, message="Please use `Observable.never`")
-public func never<E>(type: E.Type = E.self) -> Observable<E> {
-    return Observable.never()
-}
-
-@available(*, deprecated=2.0.0, message="Please use `Observable.just`")
-public func just<E>(element: E) -> Observable<E> {
-    return Observable.just(element)
-}
-
-@available(*, deprecated=2.0.0, message="Please use `Observable.just`")
-public func just<E>(element: E, scheduler: ImmediateSchedulerType) -> Observable<E> {
-    return Observable.just(element, scheduler: scheduler)
-}
-
-@available(*, deprecated=2.0.0, message="Please use `Observable.error`")
-public func failWith<E>(error: ErrorType, _ type: E.Type = E.self) -> Observable<E> {
-    return Observable.error(error)
-}
-
-@available(*, deprecated=2.0.0, message="Please use `Observable.of`")
-public func sequenceOf<E>(elements: E ..., scheduler: ImmediateSchedulerType? = nil) -> Observable<E> {
-    return Sequence(elements: elements, scheduler: scheduler)
-}
-
-@available(*, deprecated=2.0.0, message="Please use `Observable.deferred`")
-public func deferred<E>(observableFactory: () throws -> Observable<E>) -> Observable<E> {
-    return Observable.deferred(observableFactory)
-}
-
-@available(*, deprecated=2.0.0, message="Please use `Observable.generate` with named initialState parameter.")
-public func generate<E>(initialState: E, condition: E throws -> Bool, scheduler: ImmediateSchedulerType = CurrentThreadScheduler.instance, iterate: E throws -> E) -> Observable<E> {
-    return Observable.generate(initialState: initialState, condition: condition, scheduler: scheduler, iterate: iterate)
-}
-
-@available(*, deprecated=2.0.0, message="Please use `Observable.range` with named start, count, scheduler parameters.")
-public func range(start: Int, _ count: Int, _ scheduler: ImmediateSchedulerType = CurrentThreadScheduler.instance) -> Observable<Int> {
-    return Observable.range(start: start, count: count, scheduler: scheduler)
-}
-
-@available(*, deprecated=2.0.0, message="Please use `Observable.repeatElement` with named scheduler parameter.")
-public func repeatElement<E>(element: E, _ scheduler: ImmediateSchedulerType) -> Observable<E> {
-    return Observable.repeatElement(element, scheduler: scheduler)
-}
-
-@available(*, deprecated=2.0.0, message="Please use `Observable.using`.")
-public func using<S, R: Disposable>(resourceFactory: () throws -> R, observableFactory: R throws -> Observable<S>) -> Observable<S> {
-    return Observable.using(resourceFactory, observableFactory: observableFactory)
-}
-
 extension Observable {
     // MARK: create
 
@@ -251,19 +191,6 @@ extension Observable where Element : SignedIntegerType {
 }
 
 extension SequenceType {
-    /**
-    Converts a sequence to an observable sequence.
-
-    - seealso: [from operator on reactivex.io](http://reactivex.io/documentation/operators/from.html)
-
-    - returns: The observable sequence whose elements are pulled from the given enumerable sequence.
-    */
-    @warn_unused_result(message="http://git.io/rxs.uo")
-    @available(*, deprecated=2.0.0, message="Please use toObservable extension.")
-    public func asObservable() -> Observable<Generator.Element> {
-        return Sequence(elements: Array(self), scheduler: nil)
-    }
-
     /**
     Converts a sequence to an observable sequence.
 

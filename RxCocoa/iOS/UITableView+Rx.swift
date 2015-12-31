@@ -212,11 +212,6 @@ extension UITableView {
     }
 
 
-    @available(*, deprecated=2.0.0, message="Please use version that takes type as first argument.")
-    public func rx_modelSelected<T>() -> ControlEvent<T> {
-        return rx_modelSelected(T.self)
-    }
-    
     /**
      Synchronous helper method for retrieving a model at indexPath through a reactive data source
      */

@@ -16,16 +16,6 @@ import RxSwift
 
 // 2
 
-@available(*, deprecated=2.0.0, message="Please use `Driver.zip`")
-public func zip<O1: DriverConvertibleType, O2: DriverConvertibleType, R>
-(source1: O1, _ source2: O2, resultSelector: (O1.E, O2.E) throws -> R)
-    -> Driver<R> {
-    return Driver.zip(
-        source1, source2,
-        resultSelector: resultSelector
-    )
-}
-
 extension Driver {
     /**
     Merges the specified observable sequences into one observable sequence by using the selector function whenever all of the observable sequences have produced an element at a corresponding index.
@@ -44,16 +34,6 @@ extension Driver {
 
         return Driver(source)
     }
-}
-
-@available(*, deprecated=2.0.0, message="Please use `Driver.combineLatest`")
-public func combineLatest<O1: DriverConvertibleType, O2: DriverConvertibleType, R>
-(source1: O1, _ source2: O2, resultSelector: (O1.E, O2.E) throws -> R)
-    -> Driver<R> {
-    return Driver.combineLatest(
-        source1, source2,
-        resultSelector: resultSelector
-    )
 }
 
 extension Driver {
@@ -80,16 +60,6 @@ extension Driver {
 
 // 3
 
-@available(*, deprecated=2.0.0, message="Please use `Driver.zip`")
-public func zip<O1: DriverConvertibleType, O2: DriverConvertibleType, O3: DriverConvertibleType, R>
-(source1: O1, _ source2: O2, _ source3: O3, resultSelector: (O1.E, O2.E, O3.E) throws -> R)
-    -> Driver<R> {
-    return Driver.zip(
-        source1, source2, source3,
-        resultSelector: resultSelector
-    )
-}
-
 extension Driver {
     /**
     Merges the specified observable sequences into one observable sequence by using the selector function whenever all of the observable sequences have produced an element at a corresponding index.
@@ -108,16 +78,6 @@ extension Driver {
 
         return Driver(source)
     }
-}
-
-@available(*, deprecated=2.0.0, message="Please use `Driver.combineLatest`")
-public func combineLatest<O1: DriverConvertibleType, O2: DriverConvertibleType, O3: DriverConvertibleType, R>
-(source1: O1, _ source2: O2, _ source3: O3, resultSelector: (O1.E, O2.E, O3.E) throws -> R)
-    -> Driver<R> {
-    return Driver.combineLatest(
-        source1, source2, source3,
-        resultSelector: resultSelector
-    )
 }
 
 extension Driver {
@@ -144,16 +104,6 @@ extension Driver {
 
 // 4
 
-@available(*, deprecated=2.0.0, message="Please use `Driver.zip`")
-public func zip<O1: DriverConvertibleType, O2: DriverConvertibleType, O3: DriverConvertibleType, O4: DriverConvertibleType, R>
-(source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, resultSelector: (O1.E, O2.E, O3.E, O4.E) throws -> R)
-    -> Driver<R> {
-    return Driver.zip(
-        source1, source2, source3, source4,
-        resultSelector: resultSelector
-    )
-}
-
 extension Driver {
     /**
     Merges the specified observable sequences into one observable sequence by using the selector function whenever all of the observable sequences have produced an element at a corresponding index.
@@ -172,16 +122,6 @@ extension Driver {
 
         return Driver(source)
     }
-}
-
-@available(*, deprecated=2.0.0, message="Please use `Driver.combineLatest`")
-public func combineLatest<O1: DriverConvertibleType, O2: DriverConvertibleType, O3: DriverConvertibleType, O4: DriverConvertibleType, R>
-(source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, resultSelector: (O1.E, O2.E, O3.E, O4.E) throws -> R)
-    -> Driver<R> {
-    return Driver.combineLatest(
-        source1, source2, source3, source4,
-        resultSelector: resultSelector
-    )
 }
 
 extension Driver {
@@ -208,16 +148,6 @@ extension Driver {
 
 // 5
 
-@available(*, deprecated=2.0.0, message="Please use `Driver.zip`")
-public func zip<O1: DriverConvertibleType, O2: DriverConvertibleType, O3: DriverConvertibleType, O4: DriverConvertibleType, O5: DriverConvertibleType, R>
-(source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, resultSelector: (O1.E, O2.E, O3.E, O4.E, O5.E) throws -> R)
-    -> Driver<R> {
-    return Driver.zip(
-        source1, source2, source3, source4, source5,
-        resultSelector: resultSelector
-    )
-}
-
 extension Driver {
     /**
     Merges the specified observable sequences into one observable sequence by using the selector function whenever all of the observable sequences have produced an element at a corresponding index.
@@ -236,16 +166,6 @@ extension Driver {
 
         return Driver(source)
     }
-}
-
-@available(*, deprecated=2.0.0, message="Please use `Driver.combineLatest`")
-public func combineLatest<O1: DriverConvertibleType, O2: DriverConvertibleType, O3: DriverConvertibleType, O4: DriverConvertibleType, O5: DriverConvertibleType, R>
-(source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, resultSelector: (O1.E, O2.E, O3.E, O4.E, O5.E) throws -> R)
-    -> Driver<R> {
-    return Driver.combineLatest(
-        source1, source2, source3, source4, source5,
-        resultSelector: resultSelector
-    )
 }
 
 extension Driver {
@@ -272,16 +192,6 @@ extension Driver {
 
 // 6
 
-@available(*, deprecated=2.0.0, message="Please use `Driver.zip`")
-public func zip<O1: DriverConvertibleType, O2: DriverConvertibleType, O3: DriverConvertibleType, O4: DriverConvertibleType, O5: DriverConvertibleType, O6: DriverConvertibleType, R>
-(source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6, resultSelector: (O1.E, O2.E, O3.E, O4.E, O5.E, O6.E) throws -> R)
-    -> Driver<R> {
-    return Driver.zip(
-        source1, source2, source3, source4, source5, source6,
-        resultSelector: resultSelector
-    )
-}
-
 extension Driver {
     /**
     Merges the specified observable sequences into one observable sequence by using the selector function whenever all of the observable sequences have produced an element at a corresponding index.
@@ -300,16 +210,6 @@ extension Driver {
 
         return Driver(source)
     }
-}
-
-@available(*, deprecated=2.0.0, message="Please use `Driver.combineLatest`")
-public func combineLatest<O1: DriverConvertibleType, O2: DriverConvertibleType, O3: DriverConvertibleType, O4: DriverConvertibleType, O5: DriverConvertibleType, O6: DriverConvertibleType, R>
-(source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6, resultSelector: (O1.E, O2.E, O3.E, O4.E, O5.E, O6.E) throws -> R)
-    -> Driver<R> {
-    return Driver.combineLatest(
-        source1, source2, source3, source4, source5, source6,
-        resultSelector: resultSelector
-    )
 }
 
 extension Driver {
@@ -336,16 +236,6 @@ extension Driver {
 
 // 7
 
-@available(*, deprecated=2.0.0, message="Please use `Driver.zip`")
-public func zip<O1: DriverConvertibleType, O2: DriverConvertibleType, O3: DriverConvertibleType, O4: DriverConvertibleType, O5: DriverConvertibleType, O6: DriverConvertibleType, O7: DriverConvertibleType, R>
-(source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6, _ source7: O7, resultSelector: (O1.E, O2.E, O3.E, O4.E, O5.E, O6.E, O7.E) throws -> R)
-    -> Driver<R> {
-    return Driver.zip(
-        source1, source2, source3, source4, source5, source6, source7,
-        resultSelector: resultSelector
-    )
-}
-
 extension Driver {
     /**
     Merges the specified observable sequences into one observable sequence by using the selector function whenever all of the observable sequences have produced an element at a corresponding index.
@@ -364,16 +254,6 @@ extension Driver {
 
         return Driver(source)
     }
-}
-
-@available(*, deprecated=2.0.0, message="Please use `Driver.combineLatest`")
-public func combineLatest<O1: DriverConvertibleType, O2: DriverConvertibleType, O3: DriverConvertibleType, O4: DriverConvertibleType, O5: DriverConvertibleType, O6: DriverConvertibleType, O7: DriverConvertibleType, R>
-(source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6, _ source7: O7, resultSelector: (O1.E, O2.E, O3.E, O4.E, O5.E, O6.E, O7.E) throws -> R)
-    -> Driver<R> {
-    return Driver.combineLatest(
-        source1, source2, source3, source4, source5, source6, source7,
-        resultSelector: resultSelector
-    )
 }
 
 extension Driver {
@@ -400,16 +280,6 @@ extension Driver {
 
 // 8
 
-@available(*, deprecated=2.0.0, message="Please use `Driver.zip`")
-public func zip<O1: DriverConvertibleType, O2: DriverConvertibleType, O3: DriverConvertibleType, O4: DriverConvertibleType, O5: DriverConvertibleType, O6: DriverConvertibleType, O7: DriverConvertibleType, O8: DriverConvertibleType, R>
-(source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6, _ source7: O7, _ source8: O8, resultSelector: (O1.E, O2.E, O3.E, O4.E, O5.E, O6.E, O7.E, O8.E) throws -> R)
-    -> Driver<R> {
-    return Driver.zip(
-        source1, source2, source3, source4, source5, source6, source7, source8,
-        resultSelector: resultSelector
-    )
-}
-
 extension Driver {
     /**
     Merges the specified observable sequences into one observable sequence by using the selector function whenever all of the observable sequences have produced an element at a corresponding index.
@@ -428,16 +298,6 @@ extension Driver {
 
         return Driver(source)
     }
-}
-
-@available(*, deprecated=2.0.0, message="Please use `Driver.combineLatest`")
-public func combineLatest<O1: DriverConvertibleType, O2: DriverConvertibleType, O3: DriverConvertibleType, O4: DriverConvertibleType, O5: DriverConvertibleType, O6: DriverConvertibleType, O7: DriverConvertibleType, O8: DriverConvertibleType, R>
-(source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6, _ source7: O7, _ source8: O8, resultSelector: (O1.E, O2.E, O3.E, O4.E, O5.E, O6.E, O7.E, O8.E) throws -> R)
-    -> Driver<R> {
-    return Driver.combineLatest(
-        source1, source2, source3, source4, source5, source6, source7, source8,
-        resultSelector: resultSelector
-    )
 }
 
 extension Driver {

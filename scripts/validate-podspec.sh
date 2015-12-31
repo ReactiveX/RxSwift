@@ -3,6 +3,9 @@
 
 set -e
 
+BRANCH=$(git rev-parse --abbrev-ref HEAD)
+ESCAPED_SOURCE=$(pwd | sed -E "s/\//\\\\\//g")
+
 function cleanup {
   pushd ~/.cocoapods/repos/master
   git clean -d -f
@@ -22,8 +25,6 @@ do
 done
 popd
 
-BRANCH=develop
-
 for TARGET in ${TARGETS[@]}
 do
 
@@ -31,13 +32,13 @@ do
   rm       ~/.cocoapods/repos/master/Specs/${TARGET}/${VERSION}/* || echo
 
   cat $TARGET.podspec |
-  sed -E "s/s.source[^\}]+\}/s.source           = { :git => '\/Users\/kzaher\/Projects\/RxSwift', :branch => \'${BRANCH}\' }/" > ~/.cocoapods/repos/master/Specs/${TARGET}/${VERSION}/${TARGET}.podspec
+  sed -E "s/s.source[^\}]+\}/s.source           = { :git => '${ESCAPED_SOURCE}', :branch => \'${BRANCH}\' }/" > ~/.cocoapods/repos/master/Specs/${TARGET}/${VERSION}/${TARGET}.podspec
 done
 
 function validate() {
     local PODSPEC=$1
 
-    pod lib lint $PODSPEC --verbose --no-clean
+    pod lib lint $PODSPEC --verbose --no-clean --allow-warnings # temporary allow warning because of deprecated API in rc
 }
 
 for TARGET in ${TARGETS[@]}

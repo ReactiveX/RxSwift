@@ -28,13 +28,6 @@ extension ObservableType {
         return Throttle(source: self.asObservable(), dueTime: dueTime, scheduler: scheduler)
     }
 
-    @available(*, deprecated=2.0.0, message="Please use version with named scheduler parameter.")
-    public func throttle(dueTime: RxTimeInterval, _ scheduler: SchedulerType)
-        -> Observable<E> {
-        return Throttle(source: self.asObservable(), dueTime: dueTime, scheduler: scheduler)
-    }
-
-
     /**
     Ignores elements from an observable sequence which are followed by another element within a specified relative time duration, using the specified scheduler to run throttling timers.
     
@@ -48,12 +41,6 @@ extension ObservableType {
     */
     @warn_unused_result(message="http://git.io/rxs.uo")
     public func debounce(dueTime: RxTimeInterval, scheduler: SchedulerType)
-        -> Observable<E> {
-        return Throttle(source: self.asObservable(), dueTime: dueTime, scheduler: scheduler)
-    }
-
-    @available(*, deprecated=2.0.0, message="Please use version with named scheduler parameter.")
-    public func debounce(dueTime: RxTimeInterval, _ scheduler: SchedulerType)
         -> Observable<E> {
         return Throttle(source: self.asObservable(), dueTime: dueTime, scheduler: scheduler)
     }
@@ -80,23 +67,6 @@ extension ObservableType {
         -> Observable<E> {
         return Sample(source: self.asObservable(), sampler: sampler.asObservable(), onlyNew: true)
     }
-
-    @available(*, deprecated=2.0.0, message="Please use `withLatestFrom`.")
-    public func sampleLatest<O: ObservableType>(sampler: O)
-        -> Observable<E> {
-        return Sample(source: self.asObservable(), sampler: sampler.asObservable(), onlyNew: false)
-    }
-}
-
-// MARK: interval
-
-@available(*, deprecated=2.0.0, message="Please use version `Observable<Int64>.interval`.")
-public func interval(period: RxTimeInterval, _ scheduler: SchedulerType)
-    -> Observable<Int64> {
-    return Timer(dueTime: period,
-        period: period,
-        scheduler: scheduler
-    )
 }
 
 extension Observable where Element : SignedIntegerType {
@@ -121,16 +91,6 @@ extension Observable where Element : SignedIntegerType {
 
 // MARK: timer
 
-@available(*, deprecated=2.0.0, message="Please use version `Observable<Int64>.timer`.")
-public func timer(dueTime: RxTimeInterval, _ period: RxTimeInterval, _ scheduler: SchedulerType)
-    -> Observable<Int64> {
-    return Timer(
-        dueTime: dueTime,
-        period: period,
-        scheduler: scheduler
-    )
-}
-
 extension Observable where Element: SignedIntegerType {
     /**
     Returns an observable sequence that periodically produces a value after the specified initial relative due time has elapsed, using the specified scheduler to run timers.
@@ -151,16 +111,6 @@ extension Observable where Element: SignedIntegerType {
             scheduler: scheduler
         )
     }
-}
-
-@available(*, deprecated=2.0.0, message="Please use version with named scheduler parameter.")
-public func timer(dueTime: RxTimeInterval, _ scheduler: SchedulerType)
-    -> Observable<Int64> {
-    return Timer(
-        dueTime: dueTime,
-        period: nil,
-        scheduler: scheduler
-    )
 }
 
 extension Observable where Element: SignedIntegerType {
@@ -202,12 +152,6 @@ extension ObservableType {
         -> Observable<E> {
         return TakeTime(source: self.asObservable(), duration: duration, scheduler: scheduler)
     }
-
-    @available(*, deprecated=2.0.0, message="Please use version with named scheduler parameter.")
-    public func take(duration: RxTimeInterval, _ scheduler: SchedulerType)
-        -> Observable<E> {
-        return TakeTime(source: self.asObservable(), duration: duration, scheduler: scheduler)
-    }
 }
 
 // MARK: skip
@@ -225,12 +169,6 @@ extension ObservableType {
     */
     @warn_unused_result(message="http://git.io/rxs.uo")
     public func skip(duration: RxTimeInterval, scheduler: SchedulerType)
-        -> Observable<E> {
-        return SkipTime(source: self.asObservable(), duration: duration, scheduler: scheduler)
-    }
-
-    @available(*, deprecated=2.0.0, message="Please use version with named scheduler parameter.")
-    public func skip(duration: RxTimeInterval, _ scheduler: SchedulerType)
         -> Observable<E> {
         return SkipTime(source: self.asObservable(), duration: duration, scheduler: scheduler)
     }
@@ -271,12 +209,6 @@ extension ObservableType {
     */
     @warn_unused_result(message="http://git.io/rxs.uo")
     public func delaySubscription(dueTime: RxTimeInterval, scheduler: SchedulerType)
-        -> Observable<E> {
-        return DelaySubscription(source: self.asObservable(), dueTime: dueTime, scheduler: scheduler)
-    }
-
-    @available(*, deprecated=2.0.0, message="Please use version with named scheduler parameter.")
-    public func delaySubscription(dueTime: RxTimeInterval, _ scheduler: SchedulerType)
         -> Observable<E> {
         return DelaySubscription(source: self.asObservable(), dueTime: dueTime, scheduler: scheduler)
     }
@@ -345,12 +277,6 @@ extension ObservableType {
             return Timeout(source: self.asObservable(), dueTime: dueTime, other: Observable.error(RxError.Timeout), scheduler: scheduler)
     }
 
-    @available(*, deprecated=2.0.0, message="Please use version with named scheduler parameter.")
-    public func timeout(dueTime: RxTimeInterval, _ scheduler: SchedulerType)
-        -> Observable<E> {
-            return Timeout(source: self.asObservable(), dueTime: dueTime, other: Observable.error(RxError.Timeout), scheduler: scheduler)
-    }
-    
     /**
      Applies a timeout policy for each element in the observable sequence, using the specified scheduler to run timeout timers. If the next element isn't received within the specified timeout duration starting from its predecessor, the other observable sequence is used to produce future messages from that point on.
 
@@ -363,12 +289,6 @@ extension ObservableType {
      */
     @warn_unused_result(message="http://git.io/rxs.uo")
     public func timeout<O: ObservableConvertibleType where E == O.E>(dueTime: RxTimeInterval, other: O, scheduler: SchedulerType)
-        -> Observable<E> {
-            return Timeout(source: self.asObservable(), dueTime: dueTime, other: other.asObservable(), scheduler: scheduler)
-    }
-
-    @available(*, deprecated=2.0.0, message="Please use version with named scheduler parameter.")
-    public func timeout<O: ObservableConvertibleType where E == O.E>(dueTime: RxTimeInterval, other: O, _ scheduler: SchedulerType)
         -> Observable<E> {
             return Timeout(source: self.asObservable(), dueTime: dueTime, other: other.asObservable(), scheduler: scheduler)
     }

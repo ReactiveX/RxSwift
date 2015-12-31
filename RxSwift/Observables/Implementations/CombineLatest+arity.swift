@@ -13,16 +13,6 @@ import Foundation
 
 // 2
 
-@available(*, deprecated=2.0.0, message="Please use `Observable.combineLatest`")
-public func combineLatest<O1: ObservableType, O2: ObservableType, R>
-    (source1: O1, _ source2: O2, resultSelector: (O1.E, O2.E) throws -> R)
-        -> Observable<R> {
-    return Observable.combineLatest(
-        source1, source2,
-        resultSelector: resultSelector
-    )
-}
-
 extension Observable {
     /**
     Merges the specified observable sequences into one observable sequence by using the selector function whenever any of the observable sequences produces an element.
@@ -103,16 +93,6 @@ class CombineLatest2<E1, E2, R> : Producer<R> {
 
 
 // 3
-
-@available(*, deprecated=2.0.0, message="Please use `Observable.combineLatest`")
-public func combineLatest<O1: ObservableType, O2: ObservableType, O3: ObservableType, R>
-    (source1: O1, _ source2: O2, _ source3: O3, resultSelector: (O1.E, O2.E, O3.E) throws -> R)
-        -> Observable<R> {
-    return Observable.combineLatest(
-        source1, source2, source3,
-        resultSelector: resultSelector
-    )
-}
 
 extension Observable {
     /**
@@ -201,16 +181,6 @@ class CombineLatest3<E1, E2, E3, R> : Producer<R> {
 
 
 // 4
-
-@available(*, deprecated=2.0.0, message="Please use `Observable.combineLatest`")
-public func combineLatest<O1: ObservableType, O2: ObservableType, O3: ObservableType, O4: ObservableType, R>
-    (source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, resultSelector: (O1.E, O2.E, O3.E, O4.E) throws -> R)
-        -> Observable<R> {
-    return Observable.combineLatest(
-        source1, source2, source3, source4,
-        resultSelector: resultSelector
-    )
-}
 
 extension Observable {
     /**
@@ -306,16 +276,6 @@ class CombineLatest4<E1, E2, E3, E4, R> : Producer<R> {
 
 
 // 5
-
-@available(*, deprecated=2.0.0, message="Please use `Observable.combineLatest`")
-public func combineLatest<O1: ObservableType, O2: ObservableType, O3: ObservableType, O4: ObservableType, O5: ObservableType, R>
-    (source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, resultSelector: (O1.E, O2.E, O3.E, O4.E, O5.E) throws -> R)
-        -> Observable<R> {
-    return Observable.combineLatest(
-        source1, source2, source3, source4, source5,
-        resultSelector: resultSelector
-    )
-}
 
 extension Observable {
     /**
@@ -418,16 +378,6 @@ class CombineLatest5<E1, E2, E3, E4, E5, R> : Producer<R> {
 
 
 // 6
-
-@available(*, deprecated=2.0.0, message="Please use `Observable.combineLatest`")
-public func combineLatest<O1: ObservableType, O2: ObservableType, O3: ObservableType, O4: ObservableType, O5: ObservableType, O6: ObservableType, R>
-    (source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6, resultSelector: (O1.E, O2.E, O3.E, O4.E, O5.E, O6.E) throws -> R)
-        -> Observable<R> {
-    return Observable.combineLatest(
-        source1, source2, source3, source4, source5, source6,
-        resultSelector: resultSelector
-    )
-}
 
 extension Observable {
     /**
@@ -537,16 +487,6 @@ class CombineLatest6<E1, E2, E3, E4, E5, E6, R> : Producer<R> {
 
 
 // 7
-
-@available(*, deprecated=2.0.0, message="Please use `Observable.combineLatest`")
-public func combineLatest<O1: ObservableType, O2: ObservableType, O3: ObservableType, O4: ObservableType, O5: ObservableType, O6: ObservableType, O7: ObservableType, R>
-    (source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6, _ source7: O7, resultSelector: (O1.E, O2.E, O3.E, O4.E, O5.E, O6.E, O7.E) throws -> R)
-        -> Observable<R> {
-    return Observable.combineLatest(
-        source1, source2, source3, source4, source5, source6, source7,
-        resultSelector: resultSelector
-    )
-}
 
 extension Observable {
     /**
@@ -663,16 +603,6 @@ class CombineLatest7<E1, E2, E3, E4, E5, E6, E7, R> : Producer<R> {
 
 
 // 8
-
-@available(*, deprecated=2.0.0, message="Please use `Observable.combineLatest`")
-public func combineLatest<O1: ObservableType, O2: ObservableType, O3: ObservableType, O4: ObservableType, O5: ObservableType, O6: ObservableType, O7: ObservableType, O8: ObservableType, R>
-    (source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6, _ source7: O7, _ source8: O8, resultSelector: (O1.E, O2.E, O3.E, O4.E, O5.E, O6.E, O7.E, O8.E) throws -> R)
-        -> Observable<R> {
-    return Observable.combineLatest(
-        source1, source2, source3, source4, source5, source6, source7, source8,
-        resultSelector: resultSelector
-    )
-}
 
 extension Observable {
     /**
