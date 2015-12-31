@@ -123,8 +123,6 @@ done
 . scripts/validate-playgrounds.sh
 
 if [ "${RELEASE_TEST}" -eq 1 ]; then
-	mdast -u mdast-slug -u mdast-validate-links ./*.md
-	mdast -u mdast-slug -u mdast-validate-links ./**/*.md
-
+    scripts/validate-markdown.sh
 	scripts/validate-podspec.sh
 fi

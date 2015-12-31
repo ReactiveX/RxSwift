@@ -81,6 +81,9 @@
       <FileRef
          location = "group:validate-podspec.sh">
       </FileRef>
+      <FileRef
+         location = "group:validate-markdown.sh">
+      </FileRef>
    </Group>
    <Group
       location = "group:Documentation"
