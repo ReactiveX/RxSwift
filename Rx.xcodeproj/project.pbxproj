@@ -7,12 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		842A5A2C1C357F92003568D5 /* NSTextStorage+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842A5A281C357F7D003568D5 /* NSTextStorage+Rx.swift */; };
+		842A5A2D1C357F93003568D5 /* NSTextStorage+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842A5A281C357F7D003568D5 /* NSTextStorage+Rx.swift */; };
+		842A5A2E1C357F94003568D5 /* NSTextStorage+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842A5A281C357F7D003568D5 /* NSTextStorage+Rx.swift */; };
 		84C225A31C33F00B008724EC /* RxTextStorageDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C225A21C33F00B008724EC /* RxTextStorageDelegateProxy.swift */; };
 		84C225A41C33F00B008724EC /* RxTextStorageDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C225A21C33F00B008724EC /* RxTextStorageDelegateProxy.swift */; };
 		84C225A51C33F00B008724EC /* RxTextStorageDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C225A21C33F00B008724EC /* RxTextStorageDelegateProxy.swift */; };
-		84C225AF1C3404F4008724EC /* NSTextStorage+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C225AE1C3404F4008724EC /* NSTextStorage+Rx.swift */; };
-		84C225B01C3404F4008724EC /* NSTextStorage+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C225AE1C3404F4008724EC /* NSTextStorage+Rx.swift */; };
-		84C225B11C3404F4008724EC /* NSTextStorage+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C225AE1C3404F4008724EC /* NSTextStorage+Rx.swift */; };
 		9BA1CBD31C0F7D550044B50A /* UIActivityIndicatorView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA1CBD11C0F7C0A0044B50A /* UIActivityIndicatorView+Rx.swift */; };
 		9BA1CBFD1C0F84A10044B50A /* UIActivityIndicatorView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA1CBD11C0F7C0A0044B50A /* UIActivityIndicatorView+Rx.swift */; };
 		9BA1CBFE1C0F84C40044B50A /* UIActivityIndicatorView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA1CBD11C0F7C0A0044B50A /* UIActivityIndicatorView+Rx.swift */; };
@@ -1010,8 +1010,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		842A5A281C357F7D003568D5 /* NSTextStorage+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSTextStorage+Rx.swift"; sourceTree = "<group>"; };
 		84C225A21C33F00B008724EC /* RxTextStorageDelegateProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxTextStorageDelegateProxy.swift; sourceTree = "<group>"; };
-		84C225AE1C3404F4008724EC /* NSTextStorage+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSTextStorage+Rx.swift"; sourceTree = "<group>"; };
 		9BA1CBD11C0F7C0A0044B50A /* UIActivityIndicatorView+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIActivityIndicatorView+Rx.swift"; sourceTree = "<group>"; };
 		A111CE961B91C97C00D0DCEE /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B1B7C3BC1BDD39DB0076934E /* TakeLast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TakeLast.swift; sourceTree = "<group>"; };
@@ -1779,7 +1779,7 @@
 				C88254121B8A752B00B02D69 /* UITableView+Rx.swift */,
 				C88254131B8A752B00B02D69 /* UITextField+Rx.swift */,
 				C88254141B8A752B00B02D69 /* UITextView+Rx.swift */,
-				84C225AE1C3404F4008724EC /* NSTextStorage+Rx.swift */,
+				842A5A281C357F7D003568D5 /* NSTextStorage+Rx.swift */,
 				9BA1CBD11C0F7C0A0044B50A /* UIActivityIndicatorView+Rx.swift */,
 				C8BCD3EC1C14B5FB005F1280 /* UIView+Rx.swift */,
 			);
@@ -2522,7 +2522,6 @@
 				C8093EFD1B8A732E0088E94D /* RxTarget.swift in Sources */,
 				C88254361B8A752B00B02D69 /* UITextView+Rx.swift in Sources */,
 				C88254171B8A752B00B02D69 /* RxTableViewReactiveArrayDataSource.swift in Sources */,
-				84C225AF1C3404F4008724EC /* NSTextStorage+Rx.swift in Sources */,
 				C882541E1B8A752B00B02D69 /* RxCollectionViewDataSourceProxy.swift in Sources */,
 				C80DDE971BCE69BA006A1832 /* ControlProperty+Driver.swift in Sources */,
 				C80DDE931BCE69BA006A1832 /* ControlEvent+Driver.swift in Sources */,
@@ -2564,6 +2563,7 @@
 				C8093ED51B8A732E0088E94D /* _RXDelegateProxy.m in Sources */,
 				C8093EF51B8A732E0088E94D /* NSObject+Rx.swift in Sources */,
 				9BA1CBD31C0F7D550044B50A /* UIActivityIndicatorView+Rx.swift in Sources */,
+				842A5A2C1C357F92003568D5 /* NSTextStorage+Rx.swift in Sources */,
 				C88254241B8A752B00B02D69 /* RxTextViewDelegateProxy.swift in Sources */,
 				C88254271B8A752B00B02D69 /* UIBarButtonItem+Rx.swift in Sources */,
 				C88254251B8A752B00B02D69 /* UIActionSheet+Rx.swift in Sources */,
@@ -3195,7 +3195,6 @@
 				C8F0C00A1BBBFBB9001B112F /* RxTarget.swift in Sources */,
 				C8F0C00B1BBBFBB9001B112F /* UITextView+Rx.swift in Sources */,
 				C8F0C00C1BBBFBB9001B112F /* RxTableViewReactiveArrayDataSource.swift in Sources */,
-				84C225B11C3404F4008724EC /* NSTextStorage+Rx.swift in Sources */,
 				C8F0C00D1BBBFBB9001B112F /* RxCollectionViewDataSourceProxy.swift in Sources */,
 				C80DDE9A1BCE69BA006A1832 /* ControlProperty+Driver.swift in Sources */,
 				C80DDE961BCE69BA006A1832 /* ControlEvent+Driver.swift in Sources */,
@@ -3237,6 +3236,7 @@
 				C8F0C0261BBBFBB9001B112F /* _RXDelegateProxy.m in Sources */,
 				C8F0C0271BBBFBB9001B112F /* NSObject+Rx.swift in Sources */,
 				9BA1CBFE1C0F84C40044B50A /* UIActivityIndicatorView+Rx.swift in Sources */,
+				842A5A2E1C357F94003568D5 /* NSTextStorage+Rx.swift in Sources */,
 				C8F0C0281BBBFBB9001B112F /* RxTextViewDelegateProxy.swift in Sources */,
 				C8F0C0291BBBFBB9001B112F /* UIBarButtonItem+Rx.swift in Sources */,
 				C8F0C02A1BBBFBB9001B112F /* UIActionSheet+Rx.swift in Sources */,
@@ -3287,7 +3287,6 @@
 				D2138C981BB9BEEE00339B5C /* RxCocoa.swift in Sources */,
 				D2138C991BB9BEEE00339B5C /* RxTarget.swift in Sources */,
 				D203C5081BB9C53E00D02D00 /* UIGestureRecognizer+Rx.swift in Sources */,
-				84C225B01C3404F4008724EC /* NSTextStorage+Rx.swift in Sources */,
 				D2138C931BB9BEDA00339B5C /* NSNotificationCenter+Rx.swift in Sources */,
 				C80DDE991BCE69BA006A1832 /* ControlProperty+Driver.swift in Sources */,
 				C80DDE951BCE69BA006A1832 /* ControlEvent+Driver.swift in Sources */,
@@ -3329,6 +3328,7 @@
 				D203C5051BB9C53E00D02D00 /* UICollectionView+Rx.swift in Sources */,
 				D2138C8D1BB9BECD00339B5C /* ControlProperty.swift in Sources */,
 				9BA1CBFD1C0F84A10044B50A /* UIActivityIndicatorView+Rx.swift in Sources */,
+				842A5A2D1C357F93003568D5 /* NSTextStorage+Rx.swift in Sources */,
 				D203C5071BB9C53E00D02D00 /* UIDatePicker+Rx.swift in Sources */,
 				D2138C941BB9BEDA00339B5C /* NSObject+Rx+CoreGraphics.swift in Sources */,
 				D203C50D1BB9C53E00D02D00 /* UISegmentedControl+Rx.swift in Sources */,

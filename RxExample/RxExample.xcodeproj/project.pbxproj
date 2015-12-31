@@ -11,9 +11,9 @@
 		07A5C3DB1B70B703001EFE5C /* CalculatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07A5C3DA1B70B703001EFE5C /* CalculatorViewController.swift */; };
 		07A5C3DC1B70B703001EFE5C /* CalculatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07A5C3DA1B70B703001EFE5C /* CalculatorViewController.swift */; };
 		07E3C2331B03605B0010338D /* Dependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E3C2321B03605B0010338D /* Dependencies.swift */; };
+		842A5A271C357F63003568D5 /* NSTextStorage+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842A5A251C357F21003568D5 /* NSTextStorage+Rx.swift */; };
 		84C225A81C3402E5008724EC /* UITextView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89465591BC6C2BC0055219D /* UITextView+Rx.swift */; };
 		84C225AB1C340474008724EC /* RxTextStorageDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C225AA1C340474008724EC /* RxTextStorageDelegateProxy.swift */; };
-		84C225AD1C34048E008724EC /* NSTextStorage+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C225AC1C34048E008724EC /* NSTextStorage+Rx.swift */; };
 		9B4612951C106CF100BBBB4E /* UIActivityIndicatorView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B4612941C106CF100BBBB4E /* UIActivityIndicatorView+Rx.swift */; };
 		B1604CB51BE49F8D002E1279 /* DownloadableImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1604CB41BE49F8D002E1279 /* DownloadableImage.swift */; };
 		B1604CC21BE5B895002E1279 /* ReachabilityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18F3BE11BDB2E8F000AAC79 /* ReachabilityService.swift */; };
@@ -586,8 +586,8 @@
 		075F130F1B4E9D5A000D7861 /* APIWrappersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIWrappersViewController.swift; sourceTree = "<group>"; };
 		07A5C3DA1B70B703001EFE5C /* CalculatorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalculatorViewController.swift; sourceTree = "<group>"; };
 		07E3C2321B03605B0010338D /* Dependencies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Dependencies.swift; path = Examples/Dependencies.swift; sourceTree = "<group>"; };
+		842A5A251C357F21003568D5 /* NSTextStorage+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSTextStorage+Rx.swift"; sourceTree = "<group>"; };
 		84C225AA1C340474008724EC /* RxTextStorageDelegateProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxTextStorageDelegateProxy.swift; sourceTree = "<group>"; };
-		84C225AC1C34048E008724EC /* NSTextStorage+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSTextStorage+Rx.swift"; sourceTree = "<group>"; };
 		9B4612941C106CF100BBBB4E /* UIActivityIndicatorView+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIActivityIndicatorView+Rx.swift"; sourceTree = "<group>"; };
 		B1604CB41BE49F8D002E1279 /* DownloadableImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadableImage.swift; sourceTree = "<group>"; };
 		B1604CC81BE5BBFA002E1279 /* UIImageView+DownloadableImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+DownloadableImage.swift"; sourceTree = "<group>"; };
@@ -1599,7 +1599,7 @@
 				C89465571BC6C2BC0055219D /* UITableView+Rx.swift */,
 				C89465581BC6C2BC0055219D /* UITextField+Rx.swift */,
 				C89465591BC6C2BC0055219D /* UITextView+Rx.swift */,
-				84C225AC1C34048E008724EC /* NSTextStorage+Rx.swift */,
+				842A5A251C357F21003568D5 /* NSTextStorage+Rx.swift */,
 				9B4612941C106CF100BBBB4E /* UIActivityIndicatorView+Rx.swift */,
 			);
 			path = iOS;
@@ -2186,11 +2186,11 @@
 				C8297E451B6CF905000589EA /* SectionedViewType.swift in Sources */,
 				C822B1DD1C14CD1C0088A01A /* DefaultImplementations.swift in Sources */,
 				C89464D51BC6C2B00055219D /* ObserveOnSerialDispatchQueue.swift in Sources */,
+				842A5A271C357F63003568D5 /* NSTextStorage+Rx.swift in Sources */,
 				C843A08F1C1CE39900CBA4BD /* GitHubSearchRepositoriesAPI.swift in Sources */,
 				C894658E1BC6C2BC0055219D /* UIAlertView+Rx.swift in Sources */,
 				C83974231BF77413004F02CC /* NSObject+Rx+KVORepresentable.swift in Sources */,
 				C8297E461B6CF905000589EA /* Example.swift in Sources */,
-				84C225AD1C34048E008724EC /* NSTextStorage+Rx.swift in Sources */,
 				C89465081BC6C2B00055219D /* PublishSubject.swift in Sources */,
 				C89464FC1BC6C2B00055219D /* RxMutableBox.swift in Sources */,
 				C809E97B1BE6841C0058D948 /* Wireframe.swift in Sources */,
