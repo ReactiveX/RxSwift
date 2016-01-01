@@ -17,6 +17,9 @@ let generateCustomSize = true
 let runAutomatically = false
 let useAnimatedUpdateForCollectionView = false
 
+/**
+Code for reactive data sources is packed in [RxDataSources](https://github.com/RxSwiftCommunity/RxDataSources) project.
+*/
 class PartialUpdatesViewController : ViewController {
 
     @IBOutlet weak var reloadTableViewOutlet: UITableView!
@@ -45,6 +48,9 @@ class PartialUpdatesViewController : ViewController {
 
     var sections = Variable([NumberSection]())
 
+    /**
+     Code for reactive data sources is packed in [RxDataSources](https://github.com/RxSwiftCommunity/RxDataSources) project.
+     */
     override func viewDidLoad() {
         super.viewDidLoad()
 

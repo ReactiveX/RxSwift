@@ -13,6 +13,9 @@ import RxSwift
 import RxCocoa
 #endif
 
+/**
+ Code for reactive data sources is packed in [RxDataSources](https://github.com/RxSwiftCommunity/RxDataSources) project.
+ */
 class RxTableViewSectionedAnimatedDataSource<S: SectionModelType> : RxTableViewSectionedDataSource<S>
                                                                   , RxTableViewDataSourceType {
     typealias Element = [Changeset<S>]

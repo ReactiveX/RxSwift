@@ -5,6 +5,8 @@ This directory contains example implementations of reactive data sources.
 
 Reactive data sources are normal data sources + one additional method
 
+**This code has been packed in [RxDataSources](https://github.com/RxSwiftCommunity/RxDataSources) project.**
+
 ```swift
 
 func view(view: UIXXXView, observedEvent: Event<Element>) {}
