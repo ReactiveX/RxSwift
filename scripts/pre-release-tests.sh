@@ -9,7 +9,7 @@ if [ `xcodebuild -showsdks | grep tvOS | wc -l` -gt 0 ]; then
 fi
 
 if [ "$1" == "r" ]; then
-	printf "${GREEN}Pre release tests on, hang on tight ...${RESET}"
+	printf "${GREEN}Pre release tests on, hang on tight ...${RESET}\n"
 	RELEASE_TEST=1
 fi
 
