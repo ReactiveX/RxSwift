@@ -29,7 +29,7 @@ test("----- searchWikipedia -----", function (check, pass) {
 
   target.tap({x:width - 40, y:43});
 
-  target.frontMostApp().navigationBar().leftButton().tap();
+  goBack();
 
-  pass()
+  pass();
 });

@@ -23,8 +23,8 @@ test("----- masterDetail -----", function (check, pass) {
 
   target.frontMostApp().navigationBar().rightButton().tap();
   target.frontMostApp().mainWindow().tableViews()[0].cells()[1].tap();
-  target.frontMostApp().navigationBar().leftButton().tap();
-  target.frontMostApp().navigationBar().leftButton().tap();
+  goBack();
+  goBack();
 
   pass()
 });

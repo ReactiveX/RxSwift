@@ -1,3 +1,10 @@
+var goBack = function() {
+   UIATarget.localTarget().frontMostApp().navigationBar().leftButton().tap()
+}
+
+var typeString = function(value) {
+    UIATarget.localTarget().frontMostApp().keyboard().typeString(value)
+}
 
 function test(testName, callback) {
 

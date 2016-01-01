@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-NUM_OF_TESTS=4
+NUM_OF_TESTS=13
 CURRENT_DIR="$( dirname "${BASH_SOURCE[0]}" )"
 BUILD_DIRECTORY=build
 APP=RxExample
@@ -85,7 +85,7 @@ function runAutomation() {
 	popd
 }
 
-AUTOMATION_SIMULATORS=("Krunoslav Zaher’s iPhone" ${DEFAULT_IOS9_SIMULATOR} ${DEFAULT_IOS8_SIMULATOR})
+AUTOMATION_SIMULATORS=("Krunoslav Zaher’s iPhone" ${DEFAULT_IOS9_SIMULATOR})
 
 IFS=""
 for simulator in ${AUTOMATION_SIMULATORS[@]}

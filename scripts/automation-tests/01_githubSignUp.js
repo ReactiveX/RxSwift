@@ -8,7 +8,7 @@ test("----- githubSignUp -----", function (check, pass) {
     var okButton = UIATarget.localTarget().frontMostApp().alert().cancelButton().tap();
 
      sleep(1)
-    UIATarget.localTarget().frontMostApp().navigationBar().leftButton().tap();
+     goBack()
 
     pass()
     return false;
@@ -18,7 +18,6 @@ test("----- githubSignUp -----", function (check, pass) {
 
   target.frontMostApp().mainWindow().textFields()[0].tap();
   target.frontMostApp().keyboard().typeString("rxrevolution")
-
 
   target.frontMostApp().mainWindow().secureTextFields()[0].tap();
   target.frontMostApp().keyboard().typeString("mypassword")
