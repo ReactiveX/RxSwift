@@ -5,8 +5,6 @@ We've made a proof of concept for Linux.
 
 To test it, create `Package.swift` in your test directory with the following content:
 
-**This will start to work once we release 2.0.0 because it looks like spm has some issues dealing with prerelease versions. Running `swift build` inside RxSwift repository will work on Linux.**
-
 ```
 import PackageDescription
 

@@ -5,13 +5,9 @@
 
 Xcode 7 Swift 2.1 required
 
-**This README.md describes RxSwift 2.0.0 RC.**
+**This README.md describes RxSwift 2.0.0**
 
 **You can find RxSwift 1.9 for Swift 1.2 [here](https://github.com/ReactiveX/RxSwift/tree/rxswift-1.0).**
-
-**Don't worry, we will be applying critical hotfixes to 1.9 version, but since the entire ecosystem is migrating towards Swift 2.0, we will be focusing on adding new features only to RxSwift 2.0 version.**
-
-**We will support all environments where Swift 2.0 will run.**
 
 ### Change Log (from 1.9 version)
 
@@ -467,10 +463,10 @@ Open Rx.xcworkspace, choose `RxExample` and hit run. This method will build ever
 # Podfile
 use_frameworks!
 
-pod 'RxSwift',    '~> 2.0.0-rc'
-pod 'RxCocoa',    '~> 2.0.0-rc'
-pod 'RxBlocking', '~> 2.0.0-rc'
-pod 'RxTests',    '~> 2.0.0-rc'
+pod 'RxSwift',    '~> 2.0'
+pod 'RxCocoa',    '~> 2.0'
+pod 'RxBlocking', '~> 2.0'
+pod 'RxTests',    '~> 2.0'
 ```
 
 type in `Podfile` directory
@@ -486,7 +482,7 @@ $ pod install
 Add this to `Cartfile`
 
 ```
-github "ReactiveX/RxSwift" "2.0.0-rc.0"
+github "ReactiveX/RxSwift" ~> 2.0 
 ```
 
 ```
