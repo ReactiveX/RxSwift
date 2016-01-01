@@ -15,21 +15,29 @@ import Foundation
     import UIKit
 
 extension NSTextStorage {
-    
+
+    /**
+     Reactive wrapper for `delegate`.
+
+     For more information take a look at `DelegateProxyType` protocol documentation.
+     */
     public var rx_delegate:DelegateProxy {
         return proxyForObject(RxTextStorageDelegateProxy.self, self)
     }
-    
+
+    /**
+     Reactive wrapper for `delegate` message.
+     */
     public var rx_didProcessEditingRangeChangeInLength: Observable<(editedMask:NSTextStorageEditActions, editedRange:NSRange, delta:Int)> {
         return rx_delegate
             .observe("textStorage:didProcessEditing:range:changeInLength:")
-            .map({ (a) in
-                let editedMask:NSTextStorageEditActions = NSTextStorageEditActions(rawValue: castOrFatalError(a[1]) as UInt)
-                let editedRange:NSRange = (castOrFatalError(a[2]) as NSValue).rangeValue
-                let delta:Int = castOrFatalError(a[3])
+            .map { a in
+                let editedMask = NSTextStorageEditActions(rawValue: try castOrThrow(UInt.self, a[1]) )
+                let editedRange = try castOrThrow(NSValue.self, a[2]).rangeValue
+                let delta = try castOrThrow(Int.self, a[3])
                 
                 return (editedMask, editedRange, delta)
-            })
+            }
     }
 }
 #endif

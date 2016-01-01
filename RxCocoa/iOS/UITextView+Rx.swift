@@ -31,20 +31,20 @@ extension UITextView {
     Reactive wrapper for `text` property.
     */
     public var rx_text: ControlProperty<String> {
-        let source: Observable<String> = Observable.deferred({ [weak self] () -> Observable<String> in
+        let source: Observable<String> = Observable.deferred { [weak self] in
             let text = self?.text ?? ""
             
             let textChanged = self?.textStorage
                 .rx_didProcessEditingRangeChangeInLength
-                .map({[weak self] (_, _, _)  in
+                .map { _ in
                     return self?.textStorage.string ?? ""
-                })
+                }
                 ?? Observable.empty()
             
             return textChanged
                 .startWith(text)
                 .distinctUntilChanged()
-        })
+        }
         
         return ControlProperty(values: source, valueSink: AnyObserver { [weak self] event in
             switch event {

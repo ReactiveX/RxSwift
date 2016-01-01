@@ -27,11 +27,6 @@ public class RxTextViewDelegateProxy
     public weak private(set) var textView: UITextView?
 
     /**
-     Internal event that captures all text changing events.
-    */
-    internal let textChanging = PublishSubject<Void>()
-
-    /**
      Initializes `RxTextViewDelegateProxy`
 
      - parameter parentObject: Parent object for delegate proxy.
@@ -47,8 +42,11 @@ public class RxTextViewDelegateProxy
     For more information take a look at `DelegateProxyType`.
     */
     @objc public func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+        /**
+         We've had some issues with observing text changes. This is here just in case we need the same hack in future and that 
+         we wouldn't need to change the public interface.
+        */
         let forwardToDelegate = self.forwardToDelegate() as? UITextViewDelegate
-        textChanging.onNext()
         return forwardToDelegate?.textView?(textView,
             shouldChangeTextInRange: range,
             replacementText: text) ?? true
