@@ -3,7 +3,7 @@
 //  Tests
 //
 //  Created by mrahmiao on 1/1/16.
-//
+//  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
 import Foundation
