@@ -3,6 +3,18 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [2.0.0](https://github.com/ReactiveX/RxSwift/releases/tag/2.0.0)
+
+#### Features
+
+* Changes package names to `io.rx.[library]`
+* Packages data sources from `RxDataSourceStarterKit` into it's own repository [RxDataSources](https://github.com/RxSwiftCommunity/RxDataSources) under `RxSwiftCommunity`.
+* Removes deprecated APIs.
+
+#### Anomalies
+
+* Replaces hacky code that solved anomaly caused by interaction between autocorrect and text controls notification mechanism with proper solution. #333
+
 ## [2.0.0-rc.0](https://github.com/ReactiveX/RxSwift/releases/tag/2.0.0-rc.0)
 
 #### Features
