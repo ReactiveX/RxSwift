@@ -20,4 +20,15 @@ extension NSButton {
     public var rx_tap: ControlEvent<Void> {
         return rx_controlEvent
     }
+
+    /**
+     Reactive wrapper for `state` property.
+     */
+    public var rx_state: ControlProperty<Int> {
+        return rx_value(getter: { [weak self] in
+            return self?.state ?? 0
+        }, setter: { [weak self] value in
+            self?.state = value
+        })
+    }
 }
