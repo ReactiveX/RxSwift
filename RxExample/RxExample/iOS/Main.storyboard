@@ -1027,7 +1027,7 @@ This is only showcase app, not intended for production purposes.</string>
                                                 <rect key="frame" x="12" y="361" width="292" height="116"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Test Pan gesture in this view" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fQw-v9-hRf">
-                                                        <rect key="frame" x="38" y="48" width="217" height="21"/>
+                                                        <rect key="frame" x="38" y="48.5" width="217.5" height="20.5"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
@@ -1044,13 +1044,6 @@ This is only showcase app, not intended for production purposes.</string>
                                                     <outletCollection property="gestureRecognizers" destination="Shn-qP-Kjy" appends="YES" id="3n5-2m-td7"/>
                                                 </connections>
                                             </view>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FAz-sk-QmU">
-                                                <rect key="frame" x="13" y="4" width="0.0" height="0.0"/>
-                                                <accessibility key="accessibilityConfiguration" label="debugLabel"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VeZ-e0-mdh">
                                                 <rect key="frame" x="12" y="8" width="125" height="30"/>
                                                 <state key="normal" title="Open ActionSheet">
@@ -1077,6 +1070,16 @@ This is only showcase app, not intended for production purposes.</string>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences" autocorrectionType="yes" spellCheckingType="yes"/>
                                             </textView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FAz-sk-QmU">
+                                                <rect key="frame" x="8" y="559" width="304" height="30"/>
+                                                <accessibility key="accessibilityConfiguration" label="debugLabel"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="30" id="ISq-on-qGZ"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
@@ -1087,6 +1090,7 @@ This is only showcase app, not intended for production purposes.</string>
                                             <constraint firstItem="VeZ-e0-mdh" firstAttribute="leading" secondItem="TwL-m1-d82" secondAttribute="leading" constant="12" id="6Q9-bg-lXN"/>
                                             <constraint firstItem="gjR-nX-oAX" firstAttribute="top" secondItem="JEV-nj-tQA" secondAttribute="bottom" constant="8.5" id="AGd-Wg-Je1"/>
                                             <constraint firstAttribute="trailing" secondItem="gjR-nX-oAX" secondAttribute="trailing" constant="16" id="B8M-NZ-RNo"/>
+                                            <constraint firstItem="FAz-sk-QmU" firstAttribute="leading" secondItem="TwL-m1-d82" secondAttribute="leading" constant="8" id="CyL-OH-20T"/>
                                             <constraint firstItem="dBZ-FL-vel" firstAttribute="top" secondItem="TwL-m1-d82" secondAttribute="top" constant="14" id="EEg-gU-8OZ"/>
                                             <constraint firstItem="Eas-vY-Wds" firstAttribute="leading" secondItem="0br-EX-AUP" secondAttribute="trailing" constant="8" id="H3B-w5-kQN"/>
                                             <constraint firstAttribute="width" constant="320" id="JJv-Sv-OtJ"/>
@@ -1101,6 +1105,8 @@ This is only showcase app, not intended for production purposes.</string>
                                             <constraint firstItem="Eas-vY-Wds" firstAttribute="top" secondItem="gVF-My-cWk" secondAttribute="bottom" constant="8" id="dWz-yy-Nzj"/>
                                             <constraint firstItem="gjR-nX-oAX" firstAttribute="leading" secondItem="TwL-m1-d82" secondAttribute="leading" constant="12" id="eLR-Qe-7qJ"/>
                                             <constraint firstItem="dBZ-FL-vel" firstAttribute="leading" secondItem="VeZ-e0-mdh" secondAttribute="trailing" constant="20" id="hFU-q9-gvU"/>
+                                            <constraint firstAttribute="trailing" secondItem="FAz-sk-QmU" secondAttribute="trailing" constant="8" id="kMI-rz-c5q"/>
+                                            <constraint firstItem="fAU-yD-Sq3" firstAttribute="bottom" secondItem="FAz-sk-QmU" secondAttribute="top" constant="-8" id="ocH-YX-qnv"/>
                                             <constraint firstItem="fAU-yD-Sq3" firstAttribute="leading" secondItem="TwL-m1-d82" secondAttribute="leading" constant="16" id="q2k-lc-1a4"/>
                                             <constraint firstItem="gVF-My-cWk" firstAttribute="top" secondItem="TwL-m1-d82" secondAttribute="top" constant="9" id="qTj-cm-7xs"/>
                                             <constraint firstAttribute="trailing" secondItem="WB2-p2-bYm" secondAttribute="trailing" constant="16" id="uzz-Mr-pyH"/>
@@ -1133,6 +1139,8 @@ This is only showcase app, not intended for production purposes.</string>
                     <navigationItem key="navigationItem" id="jLb-0R-htG">
                         <barButtonItem key="rightBarButtonItem" title="TapMe" id="PtG-IX-ax4"/>
                     </navigationItem>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="320" height="568"/>
                     <connections>
                         <outlet property="activityIndicator" destination="dBZ-FL-vel" id="ka4-oB-47r"/>
                         <outlet property="bbitem" destination="PtG-IX-ax4" id="Sl6-M4-8r0"/>
