@@ -104,57 +104,62 @@ func validateHeader(path: String) throws -> Bool {
     }
 
     if lines[0] != "//" {
-        print("ERROR: First line should be `//`")
+        print("ERROR: Line[1] First line should be `//`")
         return false
     }
 
     let (parsedFileLine, isValidFilename) = validateRegexMatches(fileLine, content: lines[1])
 
     if !isValidFilename {
+        print("ERROR: Line[2] Filename line should match `\(fileLine.pattern)`")
         return false
     }
 
     let fileNameInFile = parsedFileLine.first ?? ""
     if fileNameInFile != (path as NSString).lastPathComponent {
-        print("ERROR: invalid file name `\(fileNameInFile)`, correct content is `\((path as NSString).lastPathComponent)`")
+        print("ERROR: Line[2] invalid file name `\(fileNameInFile)`, correct content is `\((path as NSString).lastPathComponent)`")
         return false
     }
 
     let (_, isValidProject) = validateRegexMatches(projectLine, content: lines[2])
 
     if !isValidProject {
+        print("ERROR: Line[3] Line not maching \(projectLine.pattern)")
         return false
     }
 
     if lines[3] != "//" {
-        print("ERROR: Fourth line should be `//`")
+        print("ERROR: Line[4] Line should be `//`")
         return false
     }
 
     let (_, isValidCreatedBy) = validateRegexMatches(createdBy, content: lines[4])
 
     if !isValidCreatedBy {
+        print("ERROR: Line[5] Line not matching \(createdBy.pattern)")
         return false
     }
 
     let (year, isValidCopyright) = validateRegexMatches(copyrightLine, content: lines[5])
 
     if !isValidCopyright {
+        print("ERROR: Line[6] Line not matching \(copyrightLine.pattern)")
         return false
     }
 
     if year.first == nil || !(2015...2016).contains(Int(year.first!) ?? 0) {
-        print("ERROR: Wrong copyright year \(year.first ?? "?") instead of 2015...2016")
+        print("ERROR: Line[6] Wrong copyright year \(year.first ?? "?") instead of 2015...2016")
         return false
     }
 
     if lines[6] != "//" {
-        print("ERROR: Seventh line should be `//`")
+        print("ERROR: Line[7] Line not matching \(copyrightLine.pattern)")
         return false
     }
 
     if lines[7] != "" {
-        print("ERROR: Eight line should be blank")
+        print("ERROR: Line[8] Should be blank and not `\(lines[7])`")
+        return false
     }
 
     return true
