@@ -68,8 +68,6 @@
 		C822B1E81C14E7250088A01A /* SimpleTableViewExampleSectionedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C822B1E61C14E7250088A01A /* SimpleTableViewExampleSectionedViewController.swift */; };
 		C8297E311B6CF905000589EA /* SearchResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86E2F321AE5A0CA00C31024 /* SearchResultViewModel.swift */; };
 		C8297E321B6CF905000589EA /* HtmlParsing.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83367111AD029AE00C668A7 /* HtmlParsing.swift */; };
-		C8297E331B6CF905000589EA /* NumberCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C859B9AB1B45CF9100D012D7 /* NumberCell.swift */; };
-		C8297E351B6CF905000589EA /* NumberSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C859B9AD1B45CFAB00D012D7 /* NumberSectionView.swift */; };
 		C8297E361B6CF905000589EA /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8DF92E21B0B32DA009BCF9A /* RootViewController.swift */; };
 		C8297E391B6CF905000589EA /* CollectionViewImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C46DA31B47F7110020D71E /* CollectionViewImageCell.swift */; };
 		C8297E3A1B6CF905000589EA /* WikipediaSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C46DA71B47F7110020D71E /* WikipediaSearchViewController.swift */; };
@@ -80,7 +78,6 @@
 		C8297E471B6CF905000589EA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C890A65C1AEC084100AFF7E6 /* ViewController.swift */; };
 		C8297E491B6CF905000589EA /* WikipediaSearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C46DA51B47F7110020D71E /* WikipediaSearchCell.swift */; };
 		C8297E4C1B6CF905000589EA /* APIWrappersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 075F130F1B4E9D5A000D7861 /* APIWrappersViewController.swift */; };
-		C8297E511B6CF905000589EA /* PartialUpdatesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C859B9A31B45C5D900D012D7 /* PartialUpdatesViewController.swift */; };
 		C8297E521B6CF905000589EA /* Dependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E3C2321B03605B0010338D /* Dependencies.swift */; };
 		C8297E531B6CF905000589EA /* WikipediaAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86E2F3B1AE5A0CA00C31024 /* WikipediaAPI.swift */; };
 		C8297E541B6CF905000589EA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8DF92C81B0B2F84009BCF9A /* AppDelegate.swift */; };
@@ -144,9 +141,6 @@
 		C84CC58F1BDD486300E06A64 /* SynchronizedUnsubscribeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C84CC56F1BDD08F500E06A64 /* SynchronizedUnsubscribeType.swift */; };
 		C84CC5901BDD486300E06A64 /* AsyncLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C894642A1BC6C2B00055219D /* AsyncLock.swift */; };
 		C84CC5911BDD48B800E06A64 /* SubscriptionDisposable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C84CC5831BDD484400E06A64 /* SubscriptionDisposable.swift */; };
-		C859B9A41B45C5D900D012D7 /* PartialUpdatesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C859B9A31B45C5D900D012D7 /* PartialUpdatesViewController.swift */; };
-		C859B9AC1B45CF9100D012D7 /* NumberCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C859B9AB1B45CF9100D012D7 /* NumberCell.swift */; };
-		C859B9AE1B45CFAB00D012D7 /* NumberSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C859B9AD1B45CFAB00D012D7 /* NumberSectionView.swift */; };
 		C864BAD71C3332F10083833C /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C864BAD11C3332F10083833C /* DetailViewController.swift */; };
 		C864BAD81C3332F10083833C /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C864BAD11C3332F10083833C /* DetailViewController.swift */; };
 		C864BAD91C3332F10083833C /* RandomUserAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C864BAD21C3332F10083833C /* RandomUserAPI.swift */; };
@@ -339,8 +333,6 @@
 		C8984C401C36A579001E4272 /* Differentiator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8984C291C36A579001E4272 /* Differentiator.swift */; };
 		C8984C411C36A579001E4272 /* ObservableConvertibleType+Differentiator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8984C2A1C36A579001E4272 /* ObservableConvertibleType+Differentiator.swift */; };
 		C8984C421C36A579001E4272 /* ObservableConvertibleType+Differentiator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8984C2A1C36A579001E4272 /* ObservableConvertibleType+Differentiator.swift */; };
-		C8984C431C36A579001E4272 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = C8984C2B1C36A579001E4272 /* README.md */; };
-		C8984C441C36A579001E4272 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = C8984C2B1C36A579001E4272 /* README.md */; };
 		C8984C451C36A579001E4272 /* RxDataSourceStarterKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8984C2C1C36A579001E4272 /* RxDataSourceStarterKit.swift */; };
 		C8984C461C36A579001E4272 /* RxDataSourceStarterKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8984C2C1C36A579001E4272 /* RxDataSourceStarterKit.swift */; };
 		C8984C471C36A579001E4272 /* SectionedViewType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8984C2D1C36A579001E4272 /* SectionedViewType.swift */; };
@@ -351,6 +343,12 @@
 		C8984C4C1C36A579001E4272 /* SectionModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8984C2F1C36A579001E4272 /* SectionModelType.swift */; };
 		C8984C4D1C36A579001E4272 /* UISectionedViewType+RxAnimatedDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8984C301C36A579001E4272 /* UISectionedViewType+RxAnimatedDataSource.swift */; };
 		C8984C4E1C36A579001E4272 /* UISectionedViewType+RxAnimatedDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8984C301C36A579001E4272 /* UISectionedViewType+RxAnimatedDataSource.swift */; };
+		C8984CD11C36BC3E001E4272 /* NumberCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8984CCE1C36BC3E001E4272 /* NumberCell.swift */; };
+		C8984CD21C36BC3E001E4272 /* NumberCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8984CCE1C36BC3E001E4272 /* NumberCell.swift */; };
+		C8984CD31C36BC3E001E4272 /* NumberSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8984CCF1C36BC3E001E4272 /* NumberSectionView.swift */; };
+		C8984CD41C36BC3E001E4272 /* NumberSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8984CCF1C36BC3E001E4272 /* NumberSectionView.swift */; };
+		C8984CD51C36BC3E001E4272 /* PartialUpdatesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8984CD01C36BC3E001E4272 /* PartialUpdatesViewController.swift */; };
+		C8984CD61C36BC3E001E4272 /* PartialUpdatesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8984CD01C36BC3E001E4272 /* PartialUpdatesViewController.swift */; };
 		C89C2BD61C321DA200EBC99C /* TestScheduler+MarbleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89C2BD51C321DA200EBC99C /* TestScheduler+MarbleTests.swift */; };
 		C89C2BDC1C32231A00EBC99C /* MockGitHubAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89C2BD81C32231A00EBC99C /* MockGitHubAPI.swift */; };
 		C89C2BDD1C32231A00EBC99C /* MockWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89C2BD91C32231A00EBC99C /* MockWireframe.swift */; };
@@ -650,9 +648,6 @@
 		C84CC56E1BDD08F500E06A64 /* SynchronizedSubscribeType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SynchronizedSubscribeType.swift; sourceTree = "<group>"; };
 		C84CC56F1BDD08F500E06A64 /* SynchronizedUnsubscribeType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SynchronizedUnsubscribeType.swift; sourceTree = "<group>"; };
 		C84CC5831BDD484400E06A64 /* SubscriptionDisposable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionDisposable.swift; sourceTree = "<group>"; };
-		C859B9A31B45C5D900D012D7 /* PartialUpdatesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PartialUpdatesViewController.swift; sourceTree = "<group>"; };
-		C859B9AB1B45CF9100D012D7 /* NumberCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NumberCell.swift; sourceTree = "<group>"; };
-		C859B9AD1B45CFAB00D012D7 /* NumberSectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NumberSectionView.swift; sourceTree = "<group>"; };
 		C864BAD11C3332F10083833C /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		C864BAD21C3332F10083833C /* RandomUserAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomUserAPI.swift; sourceTree = "<group>"; };
 		C864BAD31C3332F10083833C /* String+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+extensions.swift"; sourceTree = "<group>"; };
@@ -838,6 +833,9 @@
 		C8984C2E1C36A579001E4272 /* SectionModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionModel.swift; sourceTree = "<group>"; };
 		C8984C2F1C36A579001E4272 /* SectionModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionModelType.swift; sourceTree = "<group>"; };
 		C8984C301C36A579001E4272 /* UISectionedViewType+RxAnimatedDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UISectionedViewType+RxAnimatedDataSource.swift"; sourceTree = "<group>"; };
+		C8984CCE1C36BC3E001E4272 /* NumberCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NumberCell.swift; sourceTree = "<group>"; };
+		C8984CCF1C36BC3E001E4272 /* NumberSectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NumberSectionView.swift; sourceTree = "<group>"; };
+		C8984CD01C36BC3E001E4272 /* PartialUpdatesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PartialUpdatesViewController.swift; sourceTree = "<group>"; };
 		C89C2BD51C321DA200EBC99C /* TestScheduler+MarbleTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TestScheduler+MarbleTests.swift"; sourceTree = "<group>"; };
 		C89C2BD81C32231A00EBC99C /* MockGitHubAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockGitHubAPI.swift; sourceTree = "<group>"; };
 		C89C2BD91C32231A00EBC99C /* MockWireframe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockWireframe.swift; sourceTree = "<group>"; };
@@ -1138,16 +1136,6 @@
 			path = UsingVanillaObservables;
 			sourceTree = "<group>";
 		};
-		C859B9A21B45C5D900D012D7 /* PartialUpdates */ = {
-			isa = PBXGroup;
-			children = (
-				C859B9A31B45C5D900D012D7 /* PartialUpdatesViewController.swift */,
-				C859B9AB1B45CF9100D012D7 /* NumberCell.swift */,
-				C859B9AD1B45CFAB00D012D7 /* NumberSectionView.swift */,
-			);
-			path = PartialUpdates;
-			sourceTree = "<group>";
-		};
 		C864BAD01C3332F10083833C /* TableViewWithEditingCommands */ = {
 			isa = PBXGroup;
 			children = (
@@ -1170,10 +1158,10 @@
 				C822B1E11C14E37B0088A01A /* SimpleTableViewExample */,
 				C822B1E51C14E7120088A01A /* SimpleTableViewExampleSectioned */,
 				C864BAD01C3332F10083833C /* TableViewWithEditingCommands */,
+				C8984CCD1C36BC3E001E4272 /* TableViewPartialUpdates */,
 				C86E2F301AE5A0CA00C31024 /* WikipediaImageSearch */,
 				075F130E1B4E9D10000D7861 /* APIWrappers */,
 				07A5C3D91B70B6B8001EFE5C /* Calculator */,
-				C859B9A21B45C5D900D012D7 /* PartialUpdates */,
 				C8BCD3E11C14820B005F1280 /* OSX simple example */,
 				C843A08B1C1CE39900CBA4BD /* GitHubSearchRepositories */,
 			);
@@ -1628,6 +1616,16 @@
 			path = DataSources;
 			sourceTree = "<group>";
 		};
+		C8984CCD1C36BC3E001E4272 /* TableViewPartialUpdates */ = {
+			isa = PBXGroup;
+			children = (
+				C8984CCE1C36BC3E001E4272 /* NumberCell.swift */,
+				C8984CCF1C36BC3E001E4272 /* NumberSectionView.swift */,
+				C8984CD01C36BC3E001E4272 /* PartialUpdatesViewController.swift */,
+			);
+			path = TableViewPartialUpdates;
+			sourceTree = "<group>";
+		};
 		C89C2BD71C32231A00EBC99C /* Mocks */ = {
 			isa = PBXGroup;
 			children = (
@@ -1783,7 +1781,7 @@
 			attributes = {
 				LastSwiftUpdateCheck = 0720;
 				LastUpgradeCheck = 0710;
-				ORGANIZATIONNAME = "ReactiveX";
+				ORGANIZATIONNAME = ReactiveX;
 				TargetAttributes = {
 					C83366DC1AD0293800C668A7 = {
 						CreatedOnToolsVersion = 6.2;
@@ -2021,7 +2019,6 @@
 				C89464AE1BC6C2B00055219D /* ScheduledDisposable.swift in Sources */,
 				C89464B51BC6C2B00055219D /* ImmediateSchedulerType.swift in Sources */,
 				C8297E321B6CF905000589EA /* HtmlParsing.swift in Sources */,
-				C8297E331B6CF905000589EA /* NumberCell.swift in Sources */,
 				C89464EA1BC6C2B00055219D /* Zip.swift in Sources */,
 				C89464E51BC6C2B00055219D /* Throttle.swift in Sources */,
 				C83974241BF77413004F02CC /* NSObject+Rx+RawRepresentable.swift in Sources */,
@@ -2032,7 +2029,6 @@
 				C89465651BC6C2BC0055219D /* CLLocationManager+Rx.swift in Sources */,
 				C80DDED81BCE9046006A1832 /* Driver.swift in Sources */,
 				C8984C401C36A579001E4272 /* Differentiator.swift in Sources */,
-				C8984C441C36A579001E4272 /* README.md in Sources */,
 				C84015881C343595009D2E77 /* Platform.Darwin.swift in Sources */,
 				C80DDED71BCE9046006A1832 /* Driver+Subscription.swift in Sources */,
 				C8F6A1321BEF9DA3007DF367 /* RecursiveScheduler.swift in Sources */,
@@ -2054,7 +2050,6 @@
 				C8984C361C36A579001E4272 /* RxCollectionViewSectionedDataSource.swift in Sources */,
 				C843A0941C1CE58700CBA4BD /* UINavigationController+Extensions.swift in Sources */,
 				C89464B81BC6C2B00055219D /* Observable.swift in Sources */,
-				C8297E351B6CF905000589EA /* NumberSectionView.swift in Sources */,
 				C894659E1BC6C2BC0055219D /* UITextField+Rx.swift in Sources */,
 				C89464D11BC6C2B00055219D /* Merge.swift in Sources */,
 				C849EF811C3193B10048AC4A /* GitHubSignupViewController1.swift in Sources */,
@@ -2075,6 +2070,7 @@
 				C891A2C91C07160C00DDD09D /* Timeout.swift in Sources */,
 				C89464DF1BC6C2B00055219D /* StartWith.swift in Sources */,
 				C89465881BC6C2BC0055219D /* RxScrollViewDelegateProxy.swift in Sources */,
+				C8984CD21C36BC3E001E4272 /* NumberCell.swift in Sources */,
 				C89464B71BC6C2B00055219D /* Observable+Extensions.swift in Sources */,
 				C8F8C4A11C277F5A0047640B /* Operation.swift in Sources */,
 				C89464A01BC6C2B00055219D /* Lock.swift in Sources */,
@@ -2189,6 +2185,7 @@
 				C84CC5911BDD48B800E06A64 /* SubscriptionDisposable.swift in Sources */,
 				C8F6A1341BEF9DA3007DF367 /* SchedulerServices+Emulation.swift in Sources */,
 				C89464C71BC6C2B00055219D /* DelaySubscription.swift in Sources */,
+				C8984CD61C36BC3E001E4272 /* PartialUpdatesViewController.swift in Sources */,
 				C80DA3401C30B23600C588B9 /* HistoricalScheduler.swift in Sources */,
 				C8297E491B6CF905000589EA /* WikipediaSearchCell.swift in Sources */,
 				C89464D81BC6C2B00055219D /* Reduce.swift in Sources */,
@@ -2220,11 +2217,11 @@
 				C89464CA1BC6C2B00055219D /* Empty.swift in Sources */,
 				C803973B1BD3E17D009D8B26 /* ActivityIndicator.swift in Sources */,
 				C89464C61BC6C2B00055219D /* Deferred.swift in Sources */,
+				C8984CD41C36BC3E001E4272 /* NumberSectionView.swift in Sources */,
 				CB883B611BE3AC72000AC2EE /* AddRef.swift in Sources */,
 				C8984C4E1C36A579001E4272 /* UISectionedViewType+RxAnimatedDataSource.swift in Sources */,
 				C8BCD4021C14BFB7005F1280 /* NSLayoutConstraint+Rx.swift in Sources */,
 				D2AF91981BD3D95900A008C1 /* Using.swift in Sources */,
-				C8297E511B6CF905000589EA /* PartialUpdatesViewController.swift in Sources */,
 				C8297E521B6CF905000589EA /* Dependencies.swift in Sources */,
 				C80DDED91BCE9046006A1832 /* ObservableConvertibleType+Driver.swift in Sources */,
 				C89464E11BC6C2B00055219D /* Switch.swift in Sources */,
@@ -2276,18 +2273,17 @@
 				C86E2F3E1AE5A0CA00C31024 /* SearchResultViewModel.swift in Sources */,
 				C83367241AD029AE00C668A7 /* HtmlParsing.swift in Sources */,
 				C8984C3F1C36A579001E4272 /* Differentiator.swift in Sources */,
-				C859B9AC1B45CF9100D012D7 /* NumberCell.swift in Sources */,
 				C8984C4D1C36A579001E4272 /* UISectionedViewType+RxAnimatedDataSource.swift in Sources */,
 				C8F8C48A1C277F460047640B /* CalculatorState.swift in Sources */,
 				C8984C411C36A579001E4272 /* ObservableConvertibleType+Differentiator.swift in Sources */,
 				C843A08E1C1CE39900CBA4BD /* GitHubSearchRepositoriesAPI.swift in Sources */,
-				C859B9AE1B45CFAB00D012D7 /* NumberSectionView.swift in Sources */,
 				C849EF801C3193B10048AC4A /* GitHubSignupViewController1.swift in Sources */,
 				C8DF92E51B0B32DA009BCF9A /* RootViewController.swift in Sources */,
 				C8984C371C36A579001E4272 /* RxCollectionViewSectionedReloadDataSource.swift in Sources */,
 				C8984C4B1C36A579001E4272 /* SectionModelType.swift in Sources */,
 				C822B1DC1C14CD1C0088A01A /* DefaultImplementations.swift in Sources */,
 				C8C46DA81B47F7110020D71E /* CollectionViewImageCell.swift in Sources */,
+				C8984CD31C36BC3E001E4272 /* NumberSectionView.swift in Sources */,
 				C822B1E31C14E4810088A01A /* SimpleTableViewExampleViewController.swift in Sources */,
 				C8C46DAC1B47F7110020D71E /* WikipediaSearchViewController.swift in Sources */,
 				07A5C3DB1B70B703001EFE5C /* CalculatorViewController.swift in Sources */,
@@ -2298,7 +2294,6 @@
 				C864BAD91C3332F10083833C /* RandomUserAPI.swift in Sources */,
 				C864BADF1C3332F10083833C /* UIImageView+Extensions.swift in Sources */,
 				C8BCD3DF1C1480E9005F1280 /* Operators.swift in Sources */,
-				C8984C431C36A579001E4272 /* README.md in Sources */,
 				C843A0901C1CE39900CBA4BD /* GitHubSearchRepositoriesViewController.swift in Sources */,
 				C803973A1BD3E17D009D8B26 /* ActivityIndicator.swift in Sources */,
 				C849EF821C3193B10048AC4A /* GithubSignupViewModel1.swift in Sources */,
@@ -2318,7 +2313,9 @@
 				C8984C491C36A579001E4272 /* SectionModel.swift in Sources */,
 				C83367251AD029AE00C668A7 /* ImageService.swift in Sources */,
 				C86E2F471AE5A0CA00C31024 /* WikipediaSearchResult.swift in Sources */,
+				C8984CD11C36BC3E001E4272 /* NumberCell.swift in Sources */,
 				C8A2A2C81B4049E300F11F09 /* PseudoRandomGenerator.swift in Sources */,
+				C8984CD51C36BC3E001E4272 /* PartialUpdatesViewController.swift in Sources */,
 				C864BAE11C3332F10083833C /* User.swift in Sources */,
 				C8984C331C36A579001E4272 /* RxCollectionViewSectionedAnimatedDataSource.swift in Sources */,
 				C83367231AD029AE00C668A7 /* Example.swift in Sources */,
@@ -2329,7 +2326,6 @@
 				B18F3BE21BDB2E8F000AAC79 /* ReachabilityService.swift in Sources */,
 				B18F3BBC1BD92EC8000AAC79 /* Reachability.swift in Sources */,
 				C8984C311C36A579001E4272 /* Changeset.swift in Sources */,
-				C859B9A41B45C5D900D012D7 /* PartialUpdatesViewController.swift in Sources */,
 				07E3C2331B03605B0010338D /* Dependencies.swift in Sources */,
 				C849EF9C1C31A8750048AC4A /* String+URL.swift in Sources */,
 				C86E2F451AE5A0CA00C31024 /* WikipediaAPI.swift in Sources */,
