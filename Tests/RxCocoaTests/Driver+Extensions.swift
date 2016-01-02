@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import RxCocoa
 
 extension Driver : Equatable {
 

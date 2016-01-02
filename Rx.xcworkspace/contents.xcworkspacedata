@@ -132,9 +132,6 @@
       location = "group:Rx.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:Tests/Tests.xcodeproj">
-   </FileRef>
-   <FileRef
       location = "group:Preprocessor/Preprocessor.xcodeproj">
    </FileRef>
    <FileRef
