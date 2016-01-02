@@ -41,4 +41,9 @@ extension ControlTests {
         let createView: () -> NSButton = { NSButton(frame: CGRectMake(0, 0, 1, 1)) }
         ensureEventDeallocated(createView) { (view: NSButton) in view.rx_tap }
     }
+
+    func testButton_StateCompletesOnDealloc() {
+        let createView: () -> NSButton = { NSButton(frame: CGRectMake(0, 0, 1, 1)) }
+        ensurePropertyDeallocated(createView, 0) { (view: NSButton) in view.rx_state }
+    }
 }
