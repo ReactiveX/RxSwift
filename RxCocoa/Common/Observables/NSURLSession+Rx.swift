@@ -64,7 +64,7 @@ func convertURLRequestToCurlCommand(request: NSURLRequest) -> String {
     if  request.HTTPMethod == "POST" && request.HTTPBody != nil {
         let maybeBody = NSString(data: request.HTTPBody!, encoding: NSUTF8StringEncoding) as? String
         if let body = maybeBody {
-            returnValue += "-d \"\(body)\""
+            returnValue += "-d \"\(escapeTerminalString(body))\" "
         }
     }
 
