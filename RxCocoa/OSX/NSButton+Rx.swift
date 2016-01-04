@@ -31,4 +31,23 @@ extension NSButton {
             self?.state = state
         })
     }
+	
+    
+    /**
+     Reactive wrapper for `title` property.
+     */
+    public var rx_title: AnyObserver<String> {
+        return AnyObserver { [weak self] event in
+            MainScheduler.ensureExecutingOnScheduler()
+            
+            switch event {
+            case .Next(let value):
+                self?.title = value
+            case .Error(let error):
+                bindingErrorToInterface(error)
+            case .Completed:
+                break
+            }
+        }
+    }
 }

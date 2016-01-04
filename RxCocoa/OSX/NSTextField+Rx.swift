@@ -121,4 +121,21 @@ extension NSTextField {
         })
     }
     
+    /**
+    Reactive wrapper for `textColor` property.
+     */
+    public var rx_textColor: AnyObserver<NSColor!> {
+        return AnyObserver { [weak self] event in
+            MainScheduler.ensureExecutingOnScheduler()
+            
+            switch event {
+            case .Next(let value):
+                self?.textColor = value
+            case .Error(let error):
+                bindingErrorToInterface(error)
+            case .Completed:
+                break
+            }
+        }
+    }
 }
