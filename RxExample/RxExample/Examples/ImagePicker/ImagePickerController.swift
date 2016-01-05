@@ -3,7 +3,7 @@
 //  RxExample
 //
 //  Created by Segii Shulga on 1/5/16.
-//  Copyright © 2016 ReactiveX. All rights reserved.
+//  Copyright © 2016 Krunoslav Zaher. All rights reserved.
 //
 
 import Foundation
