@@ -182,6 +182,39 @@ extension ObservableCreationTests {
     }
 }
 
+// MARK: toObservable 
+extension ObservableCreationTests {
+    func testToObservableAnySequence_basic_immediate() {
+        let scheduler = TestScheduler(initialClock: 0)
+        let res = scheduler.start {
+            AnySequence([3, 1, 2, 4]).toObservable()
+        }
+
+        XCTAssertEqual(res.events, [
+            next(200, 3),
+            next(200, 1),
+            next(200, 2),
+            next(200, 4),
+            completed(200)
+            ])
+    }
+
+    func testToObservableAnySequence_basic_testScheduler() {
+        let scheduler = TestScheduler(initialClock: 0)
+        let res = scheduler.start {
+            AnySequence([3, 1, 2, 4]).toObservable(scheduler)
+        }
+
+        XCTAssertEqual(res.events, [
+            next(201, 3),
+            next(202, 1),
+            next(203, 2),
+            next(204, 4),
+            completed(205)
+            ])
+    }
+}
+
 // MARK: generate
 extension ObservableCreationTests {
     func testGenerate_Finite() {

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="E5v-jn-n2n">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="E5v-jn-n2n">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
@@ -244,7 +244,7 @@
                                         <rect key="frame" x="0.0" y="86" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Pbx-dk-7Jc" id="gCd-uh-Y2z">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                         <accessibility key="accessibilityConfiguration">
@@ -388,7 +388,7 @@
                                 <rect key="frame" x="36" y="308" width="20" height="20"/>
                             </activityIndicatorView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JaL-lO-u4e">
-                                <rect key="frame" x="24" y="358" width="272" height="161.5"/>
+                                <rect key="frame" x="24" y="358" width="272" height="162"/>
                                 <string key="text">Proving that observable sequences have wanted properties (UIThread, errors handled, sharing of side effects) is done manually. (but has some performance gain that shouldn't be noticable in practice)
 
 To do this automatically, check out the corresponding `Driver` example.</string>
@@ -474,7 +474,7 @@ To do this automatically, check out the corresponding `Driver` example.</string>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Cell" id="aNq-h7-r3z" customClass="NumberCell" customModule="RxExample_iOS" customModuleProvider="target">
-                                        <rect key="frame" x="25.5" y="25" width="55" height="35"/>
+                                        <rect key="frame" x="26" y="25" width="55" height="35"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="55" height="35"/>
@@ -569,7 +569,7 @@ To do this automatically, check out the corresponding `Driver` example.</string>
                             <tableViewSection headerTitle="iPhone Examples" id="QC3-bK-dI7" userLabel="Simple iPhone Examples">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="XlM-5z-et7" detailTextLabel="qzf-wg-hsM" style="IBUITableViewCellStyleSubtitle" id="zvA-oc-vHk">
-                                        <rect key="frame" x="0.0" y="197.5" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="198" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zvA-oc-vHk" id="JoK-c2-Jg5">
                                             <rect key="frame" x="0.0" y="0.0" width="287" height="43.5"/>
@@ -596,7 +596,7 @@ To do this automatically, check out the corresponding `Driver` example.</string>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="XEn-YS-GnU" detailTextLabel="zBe-n6-i5V" style="IBUITableViewCellStyleSubtitle" id="BQL-5R-fty">
-                                        <rect key="frame" x="0.0" y="241.5" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="242" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="BQL-5R-fty" id="nj7-Ko-iPj">
                                             <rect key="frame" x="0.0" y="0.0" width="287" height="43.5"/>
@@ -623,7 +623,7 @@ To do this automatically, check out the corresponding `Driver` example.</string>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="LN4-l3-ara" detailTextLabel="BaB-5r-hmY" style="IBUITableViewCellStyleSubtitle" id="Hab-23-dUs">
-                                        <rect key="frame" x="0.0" y="285.5" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="286" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Hab-23-dUs" id="5ox-J8-FhR">
                                             <rect key="frame" x="0.0" y="0.0" width="287" height="43.5"/>
@@ -650,7 +650,7 @@ To do this automatically, check out the corresponding `Driver` example.</string>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="xR6-uz-2HS" detailTextLabel="kFo-00-iCj" style="IBUITableViewCellStyleSubtitle" id="bd6-tg-GeQ">
-                                        <rect key="frame" x="0.0" y="329.5" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="330" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="bd6-tg-GeQ" id="5Rg-v9-4ee">
                                             <rect key="frame" x="0.0" y="0.0" width="287" height="43.5"/>
@@ -677,7 +677,7 @@ To do this automatically, check out the corresponding `Driver` example.</string>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="siT-mr-b8A" detailTextLabel="BSH-sG-bpY" style="IBUITableViewCellStyleSubtitle" id="VBq-7j-4vQ">
-                                        <rect key="frame" x="0.0" y="373.5" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="374" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="VBq-7j-4vQ" id="m7h-NW-UnD">
                                             <rect key="frame" x="0.0" y="0.0" width="287" height="43.5"/>
@@ -704,7 +704,7 @@ To do this automatically, check out the corresponding `Driver` example.</string>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="ufL-YX-dKF" detailTextLabel="efq-eT-ETM" style="IBUITableViewCellStyleSubtitle" id="Egb-OL-S5e">
-                                        <rect key="frame" x="0.0" y="417.5" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="418" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Egb-OL-S5e" id="Y1z-Y7-dLh">
                                             <rect key="frame" x="0.0" y="0.0" width="287" height="43.5"/>
@@ -730,12 +730,39 @@ To do this automatically, check out the corresponding `Driver` example.</string>
                                             <segue destination="ErT-E8-uY3" kind="push" id="3is-Gn-lDH"/>
                                         </connections>
                                     </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="Bxx-sK-jOc" detailTextLabel="DjH-cD-3C4" style="IBUITableViewCellStyleSubtitle" id="692-oJ-jzR">
+                                        <rect key="frame" x="0.0" y="462" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="692-oJ-jzR" id="Mv8-yU-G0e">
+                                            <rect key="frame" x="0.0" y="0.0" width="287" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="ImagePicker" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Bxx-sK-jOc">
+                                                    <rect key="frame" x="15" y="6" width="89.5" height="19.5"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="UIImagePickerController example" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="DjH-cD-3C4">
+                                                    <rect key="frame" x="15" y="25.5" width="174.5" height="13.5"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="ssL-fu-AwB" kind="push" id="I1X-2J-ol0"/>
+                                        </connections>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                             <tableViewSection headerTitle="Table/Collection view examples" id="guj-4N-WZg" userLabel="TableView/CollectionView example">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="kRJ-td-Wjf" detailTextLabel="ctN-th-VB8" style="IBUITableViewCellStyleSubtitle" id="YE3-Dn-DSf">
-                                        <rect key="frame" x="0.0" y="503.5" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="548" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="YE3-Dn-DSf" id="SOl-vI-kLK">
                                             <rect key="frame" x="0.0" y="0.0" width="287" height="43.5"/>
@@ -762,7 +789,7 @@ To do this automatically, check out the corresponding `Driver` example.</string>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="MxU-oS-7a8" detailTextLabel="wQk-uP-pgO" style="IBUITableViewCellStyleSubtitle" id="1YT-MH-mkD">
-                                        <rect key="frame" x="0.0" y="547.5" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="592" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1YT-MH-mkD" id="O4c-r4-rcr">
                                             <rect key="frame" x="0.0" y="0.0" width="287" height="43.5"/>
@@ -789,7 +816,7 @@ To do this automatically, check out the corresponding `Driver` example.</string>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="x4u-zK-muO" detailTextLabel="nuf-1K-ITV" style="IBUITableViewCellStyleSubtitle" id="HTx-Ei-Vlj">
-                                        <rect key="frame" x="0.0" y="591.5" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="636" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="HTx-Ei-Vlj" id="kc9-g3-Zfl">
                                             <rect key="frame" x="0.0" y="0.0" width="287" height="43.5"/>
@@ -816,7 +843,7 @@ To do this automatically, check out the corresponding `Driver` example.</string>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="1M3-wJ-NDW" detailTextLabel="To0-TG-0Fv" style="IBUITableViewCellStyleSubtitle" id="kbO-Dk-wEU">
-                                        <rect key="frame" x="0.0" y="635.5" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="680" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="kbO-Dk-wEU" id="55g-Qh-WS3">
                                             <rect key="frame" x="0.0" y="0.0" width="287" height="43.5"/>
@@ -847,7 +874,7 @@ To do this automatically, check out the corresponding `Driver` example.</string>
                             <tableViewSection headerTitle="Complex examples" id="lxd-sR-NIF" userLabel="Complex examples">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="pxT-4B-gDc" detailTextLabel="xZJ-Xt-MqD" style="IBUITableViewCellStyleSubtitle" id="yAf-eB-mRo">
-                                        <rect key="frame" x="0.0" y="721.5" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="766" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="yAf-eB-mRo" id="M3Y-AJ-f8i">
                                             <rect key="frame" x="0.0" y="0.0" width="287" height="43.5"/>
@@ -874,7 +901,7 @@ To do this automatically, check out the corresponding `Driver` example.</string>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="8FC-s3-ejV" detailTextLabel="ECT-7x-66c" style="IBUITableViewCellStyleSubtitle" id="0Xj-JL-bdb">
-                                        <rect key="frame" x="0.0" y="765.5" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="810" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="0Xj-JL-bdb" id="buE-3J-RLs">
                                             <rect key="frame" x="0.0" y="0.0" width="287" height="43.5"/>
@@ -1026,8 +1053,8 @@ This is only showcase app, not intended for production purposes.</string>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gjR-nX-oAX">
                                                 <rect key="frame" x="12" y="361" width="292" height="116"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Test Pan gesture in this view" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fQw-v9-hRf">
-                                                        <rect key="frame" x="38" y="48.5" width="217.5" height="20.5"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Test Pan gesture in this view" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fQw-v9-hRf">
+                                                        <rect key="frame" x="38" y="49" width="218" height="21"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
@@ -1605,7 +1632,63 @@ This is only showcase app, not intended for production purposes.</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Hlb-0U-7wp" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="206" y="355"/>
+            <point key="canvasLocation" x="0.0" y="348"/>
+        </scene>
+        <!--ImagePicker-->
+        <scene sceneID="we6-Co-dda">
+            <objects>
+                <viewController id="ssL-fu-AwB" customClass="ImagePickerController" customModule="RxExample_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="zDg-h3-qEt"/>
+                        <viewControllerLayoutGuide type="bottom" id="APO-XR-l42"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="4hS-1Y-xe2">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="a7O-JO-jIP">
+                                <rect key="frame" x="20" y="84" width="280" height="250"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="250" id="KWN-se-00h"/>
+                                </constraints>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1zz-pV-dN1">
+                                <rect key="frame" x="133" y="350" width="54" height="30"/>
+                                <state key="normal" title="Camera"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3IS-Nj-7iN">
+                                <rect key="frame" x="136" y="397" width="48" height="30"/>
+                                <state key="normal" title="Gallery"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qLf-Yr-91r">
+                                <rect key="frame" x="143" y="443" width="34" height="30"/>
+                                <state key="normal" title="Crop"/>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="3IS-Nj-7iN" firstAttribute="top" secondItem="1zz-pV-dN1" secondAttribute="bottom" constant="17" id="H6z-6l-duK"/>
+                            <constraint firstItem="a7O-JO-jIP" firstAttribute="top" secondItem="zDg-h3-qEt" secondAttribute="bottom" constant="20" id="Nuf-at-aCg"/>
+                            <constraint firstItem="3IS-Nj-7iN" firstAttribute="centerX" secondItem="1zz-pV-dN1" secondAttribute="centerX" id="PQW-tC-M90"/>
+                            <constraint firstItem="qLf-Yr-91r" firstAttribute="centerX" secondItem="3IS-Nj-7iN" secondAttribute="centerX" id="RSu-hk-Tup"/>
+                            <constraint firstItem="1zz-pV-dN1" firstAttribute="top" secondItem="a7O-JO-jIP" secondAttribute="bottom" constant="16" id="Wfe-Hs-Vhu"/>
+                            <constraint firstItem="1zz-pV-dN1" firstAttribute="centerX" secondItem="a7O-JO-jIP" secondAttribute="centerX" id="Ymn-iY-Xt6"/>
+                            <constraint firstItem="a7O-JO-jIP" firstAttribute="leading" secondItem="4hS-1Y-xe2" secondAttribute="leading" constant="20" id="d7V-Wv-0cP"/>
+                            <constraint firstItem="qLf-Yr-91r" firstAttribute="top" secondItem="3IS-Nj-7iN" secondAttribute="bottom" constant="16" id="n0B-c8-JyM"/>
+                            <constraint firstAttribute="trailing" secondItem="a7O-JO-jIP" secondAttribute="trailing" constant="20" id="r4e-zI-HPP"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="ImagePicker" id="eQ5-4a-Sfk"/>
+                    <connections>
+                        <outlet property="cameraButton" destination="1zz-pV-dN1" id="Chc-hg-NX8"/>
+                        <outlet property="cropButton" destination="qLf-Yr-91r" id="R7T-R3-Gkh"/>
+                        <outlet property="galleryButton" destination="3IS-Nj-7iN" id="GNh-Fq-Q61"/>
+                        <outlet property="imageView" destination="a7O-JO-jIP" id="rhg-2H-FVb"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2wW-GB-V45" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="392" y="339"/>
         </scene>
         <!--Simple table view-->
         <scene sceneID="sDd-Z1-24L">
@@ -1720,7 +1803,7 @@ This is only showcase app, not intended for production purposes.</string>
                                 <rect key="frame" x="36" y="308" width="20" height="20"/>
                             </activityIndicatorView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hIR-9t-sq4">
-                                <rect key="frame" x="24" y="358" width="272" height="179.5"/>
+                                <rect key="frame" x="24" y="358" width="272" height="180"/>
                                 <string key="text">Proving that observable sequences have wanted properties (UIThread, errors handled, sharing of side effects) is done automatically by `Driver`. (it is little slower then vanilla observables, but that shouldn't be noticable in practice)
 
 Check out the same example using vanilla observable sequences.</string>
