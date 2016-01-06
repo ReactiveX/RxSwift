@@ -44,19 +44,7 @@ public class ConcurrentDispatchQueueScheduler: SchedulerType {
      */
     @available(iOS 8, OSX 10.10, *)
     public convenience init(globalConcurrentQueueQOS: DispatchQueueSchedulerQOS) {
-        let priority: qos_class_t
-        switch globalConcurrentQueueQOS {
-        case .UserInteractive:
-            priority = QOS_CLASS_USER_INTERACTIVE
-        case .UserInitiated:
-            priority = QOS_CLASS_USER_INITIATED
-        case .Default:
-            priority = QOS_CLASS_DEFAULT
-        case .Utility:
-            priority = QOS_CLASS_UTILITY
-        case .Background:
-            priority = QOS_CLASS_BACKGROUND
-        }
+        let priority = globalConcurrentQueueQOS.QOSClass
         self.init(queue: dispatch_get_global_queue(priority, UInt(0)))
     }
 
