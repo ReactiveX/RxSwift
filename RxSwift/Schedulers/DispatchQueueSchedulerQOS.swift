@@ -38,3 +38,17 @@ public enum DispatchQueueSchedulerQOS {
      */
     case Background
 }
+
+
+@available(iOS 8, OSX 10.10, *)
+extension DispatchQueueSchedulerQOS {
+    var QOSClass: qos_class_t {
+        switch self {
+        case .UserInteractive: return QOS_CLASS_USER_INTERACTIVE
+        case .UserInitiated:   return QOS_CLASS_USER_INITIATED
+        case .Default:         return QOS_CLASS_DEFAULT
+        case .Utility:         return QOS_CLASS_UTILITY
+        case .Background:      return QOS_CLASS_BACKGROUND
+        }
+    }
+}
