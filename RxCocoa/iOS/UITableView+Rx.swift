@@ -135,7 +135,19 @@ extension UITableView {
 
         return ControlEvent(events: source)
     }
- 
+
+    /**
+     Reactive wrapper for `delegate` message `tableView:didDeselectRowAtIndexPath:`.
+     */
+    public var rx_itemDeselected: ControlEvent<NSIndexPath> {
+        let source = rx_delegate.observe("tableView:didDeselectRowAtIndexPath:")
+            .map { a in
+                return a[1] as! NSIndexPath
+            }
+
+        return ControlEvent(events: source)
+    }
+
     /**
     Reactive wrapper for `delegate` message `tableView:commitEditingStyle:forRowAtIndexPath:`.
     */
@@ -197,7 +209,6 @@ extension UITableView {
             
             return ControlEvent(source: source)
         }
-    
     */
     public func rx_modelSelected<T>(modelType: T.Type) -> ControlEvent<T> {
         let source: Observable<T> = rx_itemSelected.flatMap { [weak self] indexPath -> Observable<T> in
@@ -211,6 +222,37 @@ extension UITableView {
         return ControlEvent(events: source)
     }
 
+    /**
+     Reactive wrapper for `delegate` message `tableView:didDeselectRowAtIndexPath:`.
+
+     It can be only used when one of the `rx_itemsWith*` methods is used to bind observable sequence.
+
+       tableView.rx_modelSelected(MyModel.self)
+       .map { ...
+
+     If custom data source is being bound, new `rx_modelSelected` wrapper needs to be written also.
+
+       public func rx_myModelDeselected<T>() -> ControlEvent<T> {
+         let source: Observable<T> = rx_itemDeselected.map { indexPath in
+           let dataSource: MyDataSource = self.rx_dataSource.forwardToDelegate() as! MyDataSource
+
+           return dataSource.modelAtIndex(indexPath.item)!
+          }
+
+         return ControlEvent(source: source)
+       }
+     */
+    public func rx_modelDeselected<T>(modelType: T.Type) -> ControlEvent<T> {
+         let source: Observable<T> = rx_itemDeselected.flatMap { [weak self] indexPath -> Observable<T> in
+             guard let view = self else {
+                 return Observable.empty()
+             }
+
+           return Observable.just(try view.rx_modelAtIndexPath(indexPath))
+        }
+
+        return ControlEvent(events: source)
+    }
 
     /**
      Synchronous helper method for retrieving a model at indexPath through a reactive data source
