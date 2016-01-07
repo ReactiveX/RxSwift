@@ -34,7 +34,7 @@ a = 4           // c will still be equal "3 is positive" which is not good
 
 This is not the wanted behavior.
 
-To integrate RxSwift framework into your project just include framework in your project and write `import RxSwit`.
+To integrate RxSwift framework into your project just include framework in your project and write `import RxSwift`.
 
 This is the same logic using RxSwift.
 
