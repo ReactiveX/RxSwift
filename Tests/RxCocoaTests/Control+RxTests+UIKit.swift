@@ -193,11 +193,13 @@ extension ControlTests {
         let createView: () -> UITableView = { UITableView(frame: CGRectMake(0, 0, 1, 1)) }
 
         ensureEventDeallocated(createView) { (view: UITableView) in view.rx_itemSelected }
+        ensureEventDeallocated(createView) { (view: UITableView) in view.rx_itemDeselected }
         ensureEventDeallocated(createView) { (view: UITableView) in view.rx_modelSelected(Int.self) }
         ensureEventDeallocated(createView) { (view: UITableView) in view.rx_itemDeleted }
         ensureEventDeallocated(createView) { (view: UITableView) in view.rx_itemMoved }
         ensureEventDeallocated(createView) { (view: UITableView) in view.rx_itemInserted }
         ensureEventDeallocated(createView) { (view: UITableView) in view.rx_modelSelected(Int.self) }
+        ensureEventDeallocated(createView) { (view: UITableView) in view.rx_modelDeselected(Int.self) }
     }
 
     func testTableView_DelegateEventCompletesOnDealloc1() {
