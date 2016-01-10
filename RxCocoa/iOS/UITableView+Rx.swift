@@ -193,22 +193,13 @@ extension UITableView {
     /**
     Reactive wrapper for `delegate` message `tableView:didSelectRowAtIndexPath:`.
     
-    It can be only used when one of the `rx_itemsWith*` methods is used to bind observable sequence.
+    It can be only used when one of the `rx_itemsWith*` methods is used to bind observable sequence,
+    or any other data source conforming to `SectionedViewDataSourceType` protocol.
     
+     ```
         tableView.rx_modelSelected(MyModel.self)
             .map { ...
-
-    If custom data source is being bound, new `rx_modelSelected` wrapper needs to be written also.
-    
-        public func rx_myModelSelected<T>() -> ControlEvent<T> {
-            let source: Observable<T> = rx_itemSelected.map { indexPath in
-                let dataSource: MyDataSource = self.rx_dataSource.forwardToDelegate() as! MyDataSource
-    
-                return dataSource.modelAtIndex(indexPath.item)!
-            }
-            
-            return ControlEvent(source: source)
-        }
+     ```
     */
     public func rx_modelSelected<T>(modelType: T.Type) -> ControlEvent<T> {
         let source: Observable<T> = rx_itemSelected.flatMap { [weak self] indexPath -> Observable<T> in
@@ -225,22 +216,13 @@ extension UITableView {
     /**
      Reactive wrapper for `delegate` message `tableView:didDeselectRowAtIndexPath:`.
 
-     It can be only used when one of the `rx_itemsWith*` methods is used to bind observable sequence.
+     It can be only used when one of the `rx_itemsWith*` methods is used to bind observable sequence,
+     or any other data source conforming to `SectionedViewDataSourceType` protocol.
 
-       tableView.rx_modelSelected(MyModel.self)
-       .map { ...
-
-     If custom data source is being bound, new `rx_modelSelected` wrapper needs to be written also.
-
-       public func rx_myModelDeselected<T>() -> ControlEvent<T> {
-         let source: Observable<T> = rx_itemDeselected.map { indexPath in
-           let dataSource: MyDataSource = self.rx_dataSource.forwardToDelegate() as! MyDataSource
-
-           return dataSource.modelAtIndex(indexPath.item)!
-          }
-
-         return ControlEvent(source: source)
-       }
+     ```
+        tableView.rx_modelDeselected(MyModel.self)
+            .map { ...
+     ```
      */
     public func rx_modelDeselected<T>(modelType: T.Type) -> ControlEvent<T> {
          let source: Observable<T> = rx_itemDeselected.flatMap { [weak self] indexPath -> Observable<T> in
@@ -255,16 +237,14 @@ extension UITableView {
     }
 
     /**
-     Synchronous helper method for retrieving a model at indexPath through a reactive data source
+     Synchronous helper method for retrieving a model at indexPath through a reactive data source.
      */
     public func rx_modelAtIndexPath<T>(indexPath: NSIndexPath) throws -> T {
-        let dataSource: RxTableViewReactiveArrayDataSource<T> = castOrFatalError(self.rx_dataSource.forwardToDelegate(), message: "This method only works in case one of the `rx_items*` methods was used.")
+        let dataSource: SectionedViewDataSourceType = castOrFatalError(self.rx_dataSource.forwardToDelegate(), message: "This method only works in case one of the `rx_items*` methods was used.")
         
-        guard let element = dataSource.modelAtIndex(indexPath.item) else {
-            throw RxCocoaError.ItemsNotYetBound(object: self)
-        }
-        
-        return element
+        let element = try dataSource.modelAtIndexPath(indexPath)
+
+        return element as! T
     }
 }
 

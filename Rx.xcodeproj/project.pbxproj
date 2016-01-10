@@ -373,7 +373,6 @@
 		C83509651C38706E0027C24C /* VirtualSchedulerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C835091C1C38706D0027C24C /* VirtualSchedulerTest.swift */; };
 		C83509661C38706E0027C24C /* RxTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C835091D1C38706D0027C24C /* RxTest.swift */; };
 		C83509671C38706E0027C24C /* Foundation+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C835091F1C38706E0027C24C /* Foundation+Extensions.swift */; };
-		C83509681C38706E0027C24C /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C83509201C38706E0027C24C /* Info.plist */; };
 		C83509691C38706E0027C24C /* Recorded+Timeless.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83509211C38706E0027C24C /* Recorded+Timeless.swift */; };
 		C835096A1C38706E0027C24C /* TestErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83509221C38706E0027C24C /* TestErrors.swift */; };
 		C835096B1C38706E0027C24C /* XCTest+AllTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83509231C38706E0027C24C /* XCTest+AllTests.swift */; };
@@ -570,6 +569,8 @@
 		C8554E2D1C3051620052E67D /* PriorityQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8554E291C3051620052E67D /* PriorityQueue.swift */; };
 		C85BA0591C3878850075D68E /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83508D61C38706D0027C24C /* main.swift */; };
 		C85BA05A1C3878870075D68E /* PerformanceTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83508D71C38706D0027C24C /* PerformanceTools.swift */; };
+		C860EC951C42E25E00A664B3 /* SectionedViewDataSourceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D132521C42DA7F00B59FFF /* SectionedViewDataSourceMock.swift */; };
+		C860EC961C42E26100A664B3 /* SectionedViewDataSourceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D132521C42DA7F00B59FFF /* SectionedViewDataSourceMock.swift */; };
 		C86409FC1BA593F500D3C4E8 /* Range.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86409FB1BA593F500D3C4E8 /* Range.swift */; };
 		C86409FD1BA593F500D3C4E8 /* Range.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86409FB1BA593F500D3C4E8 /* Range.swift */; };
 		C8640A031BA5B12A00D3C4E8 /* Repeat.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8640A021BA5B12A00D3C4E8 /* Repeat.swift */; };
@@ -673,6 +674,10 @@
 		C8C4B4C31C17727000828BD5 /* MessageSentObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C4B4C01C17727000828BD5 /* MessageSentObserver.swift */; };
 		C8C4B4C41C17727000828BD5 /* MessageSentObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C4B4C01C17727000828BD5 /* MessageSentObserver.swift */; };
 		C8C4B4C51C17727000828BD5 /* MessageSentObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C4B4C01C17727000828BD5 /* MessageSentObserver.swift */; };
+		C8D132441C42D15E00B59FFF /* SectionedViewDataSourceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D132431C42D15E00B59FFF /* SectionedViewDataSourceType.swift */; };
+		C8D132451C42D15E00B59FFF /* SectionedViewDataSourceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D132431C42D15E00B59FFF /* SectionedViewDataSourceType.swift */; };
+		C8D132461C42D15E00B59FFF /* SectionedViewDataSourceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D132431C42D15E00B59FFF /* SectionedViewDataSourceType.swift */; };
+		C8D132471C42D15E00B59FFF /* SectionedViewDataSourceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D132431C42D15E00B59FFF /* SectionedViewDataSourceType.swift */; };
 		C8DB967E1BF7496C0084BD53 /* KVORepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8DB967D1BF7496C0084BD53 /* KVORepresentable.swift */; };
 		C8DB967F1BF7496C0084BD53 /* KVORepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8DB967D1BF7496C0084BD53 /* KVORepresentable.swift */; };
 		C8DB96801BF7496C0084BD53 /* KVORepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8DB967D1BF7496C0084BD53 /* KVORepresentable.swift */; };
@@ -1601,6 +1606,8 @@
 		C8C4B4A71C17722400828BD5 /* _RXObjCRuntime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _RXObjCRuntime.m; sourceTree = "<group>"; };
 		C8C4B4A81C17722400828BD5 /* _RXObjCRuntime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _RXObjCRuntime.h; sourceTree = "<group>"; };
 		C8C4B4C01C17727000828BD5 /* MessageSentObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageSentObserver.swift; sourceTree = "<group>"; };
+		C8D132431C42D15E00B59FFF /* SectionedViewDataSourceType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionedViewDataSourceType.swift; sourceTree = "<group>"; };
+		C8D132521C42DA7F00B59FFF /* SectionedViewDataSourceMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionedViewDataSourceMock.swift; sourceTree = "<group>"; };
 		C8DB967D1BF7496C0084BD53 /* KVORepresentable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KVORepresentable.swift; sourceTree = "<group>"; };
 		C8DB96821BF754C80084BD53 /* NSObject+Rx+KVORepresentable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSObject+Rx+KVORepresentable.swift"; sourceTree = "<group>"; };
 		C8DB96871BF756F40084BD53 /* KVORepresentable+CoreGraphics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "KVORepresentable+CoreGraphics.swift"; sourceTree = "<group>"; };
@@ -2035,6 +2042,7 @@
 				C8DB96871BF756F40084BD53 /* KVORepresentable+CoreGraphics.swift */,
 				C8DB968C1BF7595D0084BD53 /* KVORepresentable+Swift.swift */,
 				C8BCD3F31C14B6D1005F1280 /* NSLayoutConstraint+Rx.swift */,
+				C8D132431C42D15E00B59FFF /* SectionedViewDataSourceType.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -2149,6 +2157,7 @@
 		C83508D81C38706D0027C24C /* RxCocoaTests */ = {
 			isa = PBXGroup;
 			children = (
+				C8D132511C42DA7F00B59FFF /* TestImplementations */,
 				C83508D91C38706D0027C24C /* CLLocationManager+RxTests.swift */,
 				8476A01F1C3D5D580040BA22 /* UIImagePickerController+RxTests.swift */,
 				C83508DA1C38706D0027C24C /* Control+RxTests+Cocoa.swift */,
@@ -2401,6 +2410,14 @@
 				C8BF34CA1C2E426800416CAE /* Platform.Linux.swift */,
 			);
 			path = Platform;
+			sourceTree = "<group>";
+		};
+		C8D132511C42DA7F00B59FFF /* TestImplementations */ = {
+			isa = PBXGroup;
+			children = (
+				C8D132521C42DA7F00B59FFF /* SectionedViewDataSourceMock.swift */,
+			);
+			path = TestImplementations;
 			sourceTree = "<group>";
 		};
 		C8E3A6FC1C25CE2200643FE6 /* RxTests */ = {
@@ -2960,7 +2977,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0720;
-				LastUpgradeCheck = 0710;
+				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = "Krunoslav Zaher";
 				TargetAttributes = {
 					C83508C21C386F6F0027C24C = {
@@ -3059,7 +3076,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C83509681C38706E0027C24C /* Info.plist in Resources */,
 				C83509271C38706E0027C24C /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3198,6 +3214,7 @@
 				C882542A1B8A752B00B02D69 /* UIControl+Rx.swift in Sources */,
 				C8F6A1451BF0B9B1007DF367 /* NSObject+Rx+RawRepresentable.swift in Sources */,
 				C8DB967E1BF7496C0084BD53 /* KVORepresentable.swift in Sources */,
+				C8D132441C42D15E00B59FFF /* SectionedViewDataSourceType.swift in Sources */,
 				C849EF8B1C3195950048AC4A /* Variable+Driver.swift in Sources */,
 				C88254341B8A752B00B02D69 /* UITableView+Rx.swift in Sources */,
 				C88254161B8A752B00B02D69 /* RxCollectionViewReactiveArrayDataSource.swift in Sources */,
@@ -3294,6 +3311,7 @@
 				C8093EF81B8A732E0088E94D /* NSURLSession+Rx.swift in Sources */,
 				C80DDE9C1BCE69BA006A1832 /* Driver+Operators.swift in Sources */,
 				C8093F4C1B8A732E0088E94D /* NSSlider+Rx.swift in Sources */,
+				C8D132451C42D15E00B59FFF /* SectionedViewDataSourceType.swift in Sources */,
 				C8093EE81B8A732E0088E94D /* ControlTarget.swift in Sources */,
 				C80D33901B91EF9E0014629D /* Observable+Bind.swift in Sources */,
 			);
@@ -3387,6 +3405,7 @@
 				C835092C1C38706E0027C24C /* Control+RxTests+UIKit.swift in Sources */,
 				C83509571C38706E0027C24C /* Observable+CreationTest.swift in Sources */,
 				C83509321C38706E0027C24C /* DelegateProxyTest.swift in Sources */,
+				C860EC951C42E25E00A664B3 /* SectionedViewDataSourceMock.swift in Sources */,
 				C83509431C38706E0027C24C /* MockDisposable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3457,6 +3476,7 @@
 				C83509D01C38752E0027C24C /* RuntimeStateSnapshot.swift in Sources */,
 				C83509AF1C3874DC0027C24C /* RxTest.swift in Sources */,
 				C83509F41C38755D0027C24C /* BagTest.swift in Sources */,
+				C860EC961C42E26100A664B3 /* SectionedViewDataSourceMock.swift in Sources */,
 				C8350A0F1C3875630027C24C /* Observable+MultipleTest+Zip.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -4080,6 +4100,7 @@
 				C8F0C0151BBBFBB9001B112F /* UIControl+Rx.swift in Sources */,
 				C8F6A1481BF0B9B2007DF367 /* NSObject+Rx+RawRepresentable.swift in Sources */,
 				C8DB96811BF7496C0084BD53 /* KVORepresentable.swift in Sources */,
+				C8D132471C42D15E00B59FFF /* SectionedViewDataSourceType.swift in Sources */,
 				C849EF8E1C3195950048AC4A /* Variable+Driver.swift in Sources */,
 				C8F0C0161BBBFBB9001B112F /* UITableView+Rx.swift in Sources */,
 				C8F0C0171BBBFBB9001B112F /* RxCollectionViewReactiveArrayDataSource.swift in Sources */,
@@ -4169,6 +4190,7 @@
 				C8F6A1471BF0B9B2007DF367 /* NSObject+Rx+RawRepresentable.swift in Sources */,
 				C8DB96801BF7496C0084BD53 /* KVORepresentable.swift in Sources */,
 				C849EF8D1C3195950048AC4A /* Variable+Driver.swift in Sources */,
+				C8D132461C42D15E00B59FFF /* SectionedViewDataSourceType.swift in Sources */,
 				D203C4F31BB9C4CA00D02D00 /* RxCollectionViewReactiveArrayDataSource.swift in Sources */,
 				D203C50B1BB9C53E00D02D00 /* UIScrollView+Rx.swift in Sources */,
 				C8C4B4AB1C17722400828BD5 /* _RXObjCRuntime.m in Sources */,
