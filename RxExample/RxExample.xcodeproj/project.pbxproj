@@ -386,6 +386,8 @@
 		C8C4B4BF1C17724A00828BD5 /* _RXObjCRuntime.m in Sources */ = {isa = PBXBuildFile; fileRef = C8C4B4BD1C17724A00828BD5 /* _RXObjCRuntime.m */; };
 		C8C4B4CC1C17728200828BD5 /* MessageSentObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C4B4CA1C17728200828BD5 /* MessageSentObserver.swift */; };
 		C8CCB8D41C2D5FBA000EDACC /* String+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8CCB8D31C2D5FBA000EDACC /* String+Rx.swift */; };
+		C8D132151C42B54B00B59FFF /* UIImagePickerController+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D132141C42B54B00B59FFF /* UIImagePickerController+Rx.swift */; };
+		C8D132161C42B54B00B59FFF /* UIImagePickerController+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D132141C42B54B00B59FFF /* UIImagePickerController+Rx.swift */; };
 		C8DF92CD1B0B2F84009BCF9A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8DF92C81B0B2F84009BCF9A /* AppDelegate.swift */; };
 		C8DF92DF1B0B328B009BCF9A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8DF92DE1B0B328B009BCF9A /* AppDelegate.swift */; };
 		C8DF92E31B0B32DA009BCF9A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = C8DF92E01B0B32DA009BCF9A /* LaunchScreen.xib */; };
@@ -901,6 +903,7 @@
 		C8C4B4BE1C17724A00828BD5 /* _RXObjCRuntime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _RXObjCRuntime.h; sourceTree = "<group>"; };
 		C8C4B4CA1C17728200828BD5 /* MessageSentObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageSentObserver.swift; sourceTree = "<group>"; };
 		C8CCB8D31C2D5FBA000EDACC /* String+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Rx.swift"; sourceTree = "<group>"; };
+		C8D132141C42B54B00B59FFF /* UIImagePickerController+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImagePickerController+Rx.swift"; sourceTree = "<group>"; };
 		C8DF92C81B0B2F84009BCF9A /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C8DF92DE1B0B328B009BCF9A /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C8DF92E01B0B32DA009BCF9A /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
@@ -988,6 +991,7 @@
 			isa = PBXGroup;
 			children = (
 				8479BC701C3BCB9800FB8B54 /* ImagePickerController.swift */,
+				C8D132141C42B54B00B59FFF /* UIImagePickerController+Rx.swift */,
 			);
 			path = ImagePicker;
 			sourceTree = "<group>";
@@ -1831,7 +1835,7 @@
 			attributes = {
 				LastSwiftUpdateCheck = 0720;
 				LastUpgradeCheck = 0710;
-				ORGANIZATIONNAME = ReactiveX;
+				ORGANIZATIONNAME = "Krunoslav Zaher";
 				TargetAttributes = {
 					C83366DC1AD0293800C668A7 = {
 						CreatedOnToolsVersion = 6.2;
@@ -2293,6 +2297,7 @@
 				C89464EF1BC6C2B00055219D /* Observable+Debug.swift in Sources */,
 				C89464E91BC6C2B00055219D /* Zip+CollectionType.swift in Sources */,
 				CB883B511BE3AC54000AC2EE /* RefCountDisposable.swift in Sources */,
+				C8D132161C42B54B00B59FFF /* UIImagePickerController+Rx.swift in Sources */,
 				C89465761BC6C2BC0055219D /* KVOObserver.swift in Sources */,
 				C89464CA1BC6C2B00055219D /* Empty.swift in Sources */,
 				C803973B1BD3E17D009D8B26 /* ActivityIndicator.swift in Sources */,
@@ -2396,6 +2401,7 @@
 				C86E2F471AE5A0CA00C31024 /* WikipediaSearchResult.swift in Sources */,
 				C8984CD11C36BC3E001E4272 /* NumberCell.swift in Sources */,
 				C8A2A2C81B4049E300F11F09 /* PseudoRandomGenerator.swift in Sources */,
+				C8D132151C42B54B00B59FFF /* UIImagePickerController+Rx.swift in Sources */,
 				C8984CD51C36BC3E001E4272 /* PartialUpdatesViewController.swift in Sources */,
 				8479BC721C3BDAD400FB8B54 /* ImagePickerController.swift in Sources */,
 				C864BAE11C3332F10083833C /* User.swift in Sources */,

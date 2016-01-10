@@ -90,7 +90,7 @@
 			attributes = {
 				LastSwiftUpdateCheck = 0700;
 				LastUpgradeCheck = 0630;
-				ORGANIZATIONNAME = "ReactiveX";
+				ORGANIZATIONNAME = "Krunoslav Zaher";
 				TargetAttributes = {
 					C81108761AF5114D001C13E4 = {
 						CreatedOnToolsVersion = 6.3;
