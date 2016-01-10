@@ -3,6 +3,26 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [2.1.0](https://github.com/ReactiveX/RxSwift/releases/tag/2.1.0)
+
+#### Features
+
+* Adds `UIImagePickerController` delegate wrappers.
+* Adds `SectionedViewDataSourceType` that enables third party data sources to use existing `rx_modelSelected`/`rx_modelDeselected` wrappers.
+* Adds `rx_modelDeselected` to `UITableView`
+* Adds `rx_itemDeselected` to `UITableView`
+* Adds `rx_modelDeselected` to `UICollectionView`
+* Adds `rx_itemDeselected` to `UICollectionView`
+* Adds `rx_state` to `NSButton`
+* Adds `rx_enabled` to `NSControl`
+* Adds `UIImagePickerController` usage example to Example app.
+
+#### Anomalies
+
+* Removes usage of `OSSpinLock`s from all `Darwin` platforms because of problems with inversion of priority on iOS. [Original thread on swift mailing list is here](https://lists.swift.org/pipermail/swift-dev/Week-of-Mon-20151214/000321.html)
+* Reduces verbose output from `RxCocoa` project in debug mode. `TRACE_RESOURCES` is now also treated as a verbosity level setting. It is possible to get old output by using `TRACE_RESOURCES` with verbosity level `>= 2`. [#397](https://github.com/ReactiveX/RxSwift/issues/397) 
+* Fixes anomaly with logging of HTTP body of requests in `RxCocoa` project.
+
 ## [2.0.0](https://github.com/ReactiveX/RxSwift/releases/tag/2.0.0)
 
 #### Features

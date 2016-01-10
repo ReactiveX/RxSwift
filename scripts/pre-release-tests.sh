@@ -45,6 +45,14 @@ if [ "${RELEASE_TEST}" -eq 1 ]; then
 	CONFIGURATIONS=(Release Release-Tests Debug)
 fi
 
+#make sure all tvOS tests pass
+if [ $TV_OS -eq 1 ]; then
+	for configuration in ${CONFIGURATIONS[@]}
+	do
+		rx "RxSwift-tvOS" ${configuration} $DEFAULT_TVOS_SIMULATOR test
+	done
+fi
+
 # make sure watchos builds
 # temporary solution
 WATCH_OS_BUILD_TARGETS=(RxSwift-watchOS RxCocoa-watchOS RxBlocking-watchOS)
@@ -61,14 +69,6 @@ for configuration in ${CONFIGURATIONS[@]}
 do
 	rx "RxSwift-iOS" ${configuration} $DEFAULT_IOS9_SIMULATOR test
 done
-
-#make sure all tvOS tests pass
-if [ $TV_OS -eq 1 ]; then
-	for configuration in ${CONFIGURATIONS[@]}
-	do
-		rx "RxSwift-tvOS" ${configuration} $DEFAULT_TVOS_SIMULATOR test
-	done
-fi
 
 #make sure all watchOS tests pass
 #tests for Watch OS are not available rdar://21760513

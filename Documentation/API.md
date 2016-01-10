@@ -13,14 +13,14 @@ Operators are stateless by default.
 
  * [`asObservable`](http://reactivex.io/documentation/operators/from.html)
  * [`create`](http://reactivex.io/documentation/operators/create.html)
- * [`defer`](http://reactivex.io/documentation/operators/defer.html)
+ * [`deferred`](http://reactivex.io/documentation/operators/defer.html)
  * [`empty`](http://reactivex.io/documentation/operators/empty-never-throw.html)
- * [`failWith`](http://reactivex.io/documentation/operators/empty-never-throw.html)
- * [`from` (array)](http://reactivex.io/documentation/operators/from.html)
+ * [`error`](http://reactivex.io/documentation/operators/empty-never-throw.html)
+ * [`toObservable` (array)](http://reactivex.io/documentation/operators/from.html)
  * [`interval`](http://reactivex.io/documentation/operators/interval.html)
  * [`never`](http://reactivex.io/documentation/operators/empty-never-throw.html)
- * [`returnElement` / `just`](http://reactivex.io/documentation/operators/just.html)
- * [`returnElements`](http://reactivex.io/documentation/operators/from.html)
+ * [`just`](http://reactivex.io/documentation/operators/just.html)
+ * [`of`](http://reactivex.io/documentation/operators/from.html)
  * [`range`](http://reactivex.io/documentation/operators/range.html)
  * [`repeatElement`](http://reactivex.io/documentation/operators/repeat.html)
  * [`timer`](http://reactivex.io/documentation/operators/timer.html)
@@ -118,7 +118,8 @@ extension NSObject {
 extension NSObject {
 
     public func rx_observe<Element>(
-        keyPath: String,
+        type: E.Type,
+        _ keyPath: String,
         options: NSKeyValueObservingOptions = .New | .Initial,
         retainSelf: Bool = true
     )  -> Observable<Element?> {}
@@ -126,7 +127,8 @@ extension NSObject {
 #if !DISABLE_SWIZZLING
 
     public func rx_observeWeakly<Element>(
-        keyPath: String,
+        type: E.Type,
+        _ keyPath: String,
         options: NSKeyValueObservingOptions = .New | .Initial
     ) -> Observable<Element?> {}
 
@@ -320,14 +322,19 @@ extension UITableView {
 
     public var rx_itemSelected: ControlEvent<NSIndexPath> {}
 
+    public var rx_itemDeselected: ControlEvent<NSIndexPath> {}
+
     public var rx_itemInserted: ControlEvent<NSIndexPath> {}
 
     public var rx_itemDeleted: ControlEvent<NSIndexPath> {}
 
     public var rx_itemMoved: ControlEvent<ItemMovedEvent> {}
 
-    // This method only works in case one of the `rx_itemsWith*` methods was used.
-    public func rx_modelSelected<T>() -> ControlEvent<T> {}
+    // This method only works in case one of the `rx_itemsWith*` methods was used, or data source implements `SectionedViewDataSourceType`
+    public func rx_modelSelected<T>(modelType: T.Type) -> ControlEvent<T> {}
+
+    // This method only works in case one of the `rx_itemsWith*` methods was used, or data source implements `SectionedViewDataSourceType`
+    public func rx_modelDeselected<T>(modelType: T.Type) -> ControlEvent<T> {}
 
 }
 ```
@@ -347,8 +354,13 @@ extension UICollectionView {
 
     public var rx_itemSelected: ControlEvent<NSIndexPath> {}
 
-    // This method only works in case one of the `rx_itemsWith*` methods was used.
-    public func rx_modelSelected<T>() -> ControlEvent<T> {}
+    public var rx_itemDeselected: ControlEvent<NSIndexPath> {}
+
+    // This method only works in case one of the `rx_itemsWith*` methods was used, or data source implements `SectionedViewDataSourceType`
+    public func rx_modelSelected<T>(modelType: T.Type) -> ControlEvent<T> {}
+
+    // This method only works in case one of the `rx_itemsWith*` methods was used, or data source implements `SectionedViewDataSourceType`
+    public func rx_modelSelected<T>(modelType: T.Type) -> ControlEvent<T> {}
 }
 ```
 
@@ -361,30 +373,11 @@ extension UIGestureRecognizer {
 ```
 
 ```swift
-extension UIActionSheet {
+extension UIImagePickerController {
 
-    public var rx_delegate: DelegateProxy {}
+    public var rx_didFinishPickingMediaWithInfo: Observable<[String : AnyObject]> {}
 
-    public var rx_clickedButtonAtIndex: ControlEvent<Int> {}
-
-    public var rx_willDismissWithButtonIndex: ControlEvent<Int> {}
-
-    public var rx_didDismissWithButtonIndex: ControlEvent<Int> {}
-
-}
-```
-
-
-```swift
-extension UIAlertView {
-
-    public var rx_delegate: DelegateProxy {}
-
-    public var rx_clickedButtonAtIndex: ControlEvent<Int> {}
-
-    public var rx_willDismissWithButtonIndex: ControlEvent<Int> {}
-
-    public var rx_didDismissWithButtonIndex: ControlEvent<Int> {}
+    public var rx_didCancel: Observable<()> {}
 
 }
 ```
@@ -420,6 +413,8 @@ extension NSControl {
 
     public var rx_controlEvent: ControlEvent<()> {}
 
+    public var rx_enabled: AnyObserver<Bool> {}
+
 }
 ```
 
@@ -436,6 +431,8 @@ extension NSSlider {
 extension NSButton {
 
     public var rx_tap: ControlEvent<Void> {}
+
+    public var rx_state: ControlProperty<Int> {}
 
 }
 ```
