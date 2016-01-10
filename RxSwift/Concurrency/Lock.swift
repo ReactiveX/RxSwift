@@ -63,46 +63,9 @@ protocol Lock {
       }
   }
 #else
-  /**
-  Simple wrapper for spin lock.
-  */
-  struct SpinLock {
-      private var _lock = OS_SPINLOCK_INIT
 
-      init() {
-
-      }
-
-      mutating func lock() {
-          OSSpinLockLock(&_lock)
-      }
-
-      mutating func unlock() {
-          OSSpinLockUnlock(&_lock)
-      }
-
-      mutating func performLocked(@noescape action: () -> Void) {
-          OSSpinLockLock(&_lock)
-          action()
-          OSSpinLockUnlock(&_lock)
-      }
-
-      mutating func calculateLocked<T>(@noescape action: () -> T) -> T {
-          OSSpinLockLock(&_lock)
-          let result = action()
-          OSSpinLockUnlock(&_lock)
-          return result
-      }
-
-      mutating func calculateLockedOrFail<T>(@noescape action: () throws -> T) throws -> T {
-          OSSpinLockLock(&_lock)
-          defer {
-              OSSpinLockUnlock(&_lock)
-          }
-          let result = try action()
-          return result
-      }
-  }
+    // https://lists.swift.org/pipermail/swift-dev/Week-of-Mon-20151214/000321.html
+    typealias SpinLock = NSRecursiveLock
 #endif
 
 extension NSRecursiveLock : Lock {
