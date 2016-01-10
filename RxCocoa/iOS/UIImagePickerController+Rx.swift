@@ -10,32 +10,43 @@ import Foundation
 
 #if os(iOS)
     import Foundation
-    
+
 #if !RX_NO_MODULE
     import RxSwift
 #endif
     import UIKit
-    
-extension UIImagePickerController {
-    
-    public var rx_delegate: DelegateProxy {
-        return proxyForObject(RxImagePickerDelegateProxy.self, self)
+
+    extension UIImagePickerController {
+
+        /**
+         Reactive wrapper for `delegate`.
+
+         For more information take a look at `DelegateProxyType` protocol documentation.
+         */
+        public var rx_delegate: DelegateProxy {
+            return proxyForObject(RxImagePickerDelegateProxy.self, self)
+        }
+
+        /**
+         Reactive wrapper for `delegate` message.
+         */
+        public var rx_didFinishPickingMediaWithInfo: Observable<[String : AnyObject]> {
+            return rx_delegate
+                .observe("imagePickerController:didFinishPickingMediaWithInfo:")
+                .map({ (a) in
+                    return try castOrThrow(Dictionary<String, AnyObject>.self, a[1])
+                })
+        }
+
+        /**
+         Reactive wrapper for `delegate` message.
+         */
+        public var rx_didCancel: Observable<()> {
+            return rx_delegate
+                .observe("imagePickerControllerDidCancel:")
+                .map {_ in () }
+        }
+        
     }
-    
-    public var rx_didFinishPickingMediaWithInfo: Observable<[String : AnyObject]> {
-        return rx_delegate
-            .observe("imagePickerController:didFinishPickingMediaWithInfo:")
-            .map({ (a) in
-                return try castOrThrow(Dictionary<String, AnyObject>.self, a[1])
-            })
-    }
-   
-   public var rx_didCancel: Observable<Void> {
-      return rx_delegate
-         .observe("imagePickerControllerDidCancel:")
-         .map({_ in ()})
-   }
-    
-}
     
 #endif
