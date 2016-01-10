@@ -9,7 +9,7 @@ Examples
 
 ## Calculated variable
 
-Let's first start with some imperative swift code.
+Let's first start with some imperative swift code.Sw
 The purpose of example is to bind identifier `c` to a value calculated from `a` and `b` if some condition is satisfied.
 
 Here is the imperative swift code that calculates the value of `c`:
@@ -34,7 +34,7 @@ a = 4           // c will still be equal "3 is positive" which is not good
 
 This is not the wanted behavior.
 
-To integrate RxSwift framework into your project just include framework in your project and write `import RxSwit`.
+To integrate RxSwift framework into your project just include framework in your project and write `import RxSwift`.
 
 This is the same logic using RxSwift.
 
