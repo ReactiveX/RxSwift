@@ -40,7 +40,9 @@
 }
 
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    self.callback(change[NSKeyValueChangeNewKey]);
+    @synchronized(self) {
+        self.callback(change[NSKeyValueChangeNewKey]);
+    }
 }
 
 -(void)dispose {

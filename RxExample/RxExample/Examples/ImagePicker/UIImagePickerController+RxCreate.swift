@@ -1,5 +1,5 @@
 //
-//  UIImagePickerController+Rx.swift
+//  UIImagePickerController+RxCreate.swift
 //  RxExample
 //
 //  Created by Krunoslav Zaher on 1/10/16.
