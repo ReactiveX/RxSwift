@@ -15,11 +15,15 @@
  ################################################################################
  */
 
-#if        TRACE_RESOURCES
+#if        TRACE_RESOURCES >= 2
 #   define DLOG(...)         NSLog(__VA_ARGS__)
-#   define ABORT_IN_DEBUG    abort();
 #else
 #   define DLOG(...)
+#endif
+
+#if        DEBUG
+#   define ABORT_IN_DEBUG    abort();
+#else
 #   define ABORT_IN_DEBUG
 #endif
 
