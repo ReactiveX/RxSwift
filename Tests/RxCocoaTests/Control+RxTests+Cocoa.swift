@@ -25,6 +25,22 @@ extension ControlTests {
         let createView: () -> NSControl = { NSControl(frame: CGRectMake(0, 0, 1, 1)) }
         ensureEventDeallocated(createView) { (view: NSControl) in view.rx_controlEvent }
     }
+
+    func testControl_enabled_true() {
+        let control = NSControl(frame: CGRectMake(0, 0, 1, 1))
+
+        _ = Observable.just(true).bindTo(control.rx_enabled)
+
+        XCTAssertEqual(true, control.enabled)
+    }
+
+    func testControl_enabled_false() {
+        let control = NSControl(frame: CGRectMake(0, 0, 1, 1))
+
+        _ = Observable.just(false).bindTo(control.rx_enabled)
+
+        XCTAssertEqual(false, control.enabled)
+    }
 }
 
 // NSSlider
@@ -45,5 +61,19 @@ extension ControlTests {
     func testButton_StateCompletesOnDealloc() {
         let createView: () -> NSButton = { NSButton(frame: CGRectMake(0, 0, 1, 1)) }
         ensurePropertyDeallocated(createView, 0) { (view: NSButton) in view.rx_state }
+    }
+
+    func testButton_state_observer_on() {
+        let button = NSButton(frame: CGRectMake(0, 0, 1, 1))
+        _ = Observable.just(NSOnState).bindTo(button.rx_state)
+
+        XCTAssertEqual(button.state, NSOnState)
+    }
+
+    func testButton_state_observer_off() {
+        let button = NSButton(frame: CGRectMake(0, 0, 1, 1))
+        _ = Observable.just(NSOffState).bindTo(button.rx_state)
+
+        XCTAssertEqual(button.state, NSOffState)
     }
 }

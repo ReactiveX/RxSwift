@@ -16,6 +16,8 @@ _ObservableCreationTests.allTests = [
     ("testSequenceOf_complete_immediate", { _ObservableCreationTests.setUp(); _ObservableCreationTests.testSequenceOf_complete_immediate(); _ObservableCreationTests.tearDown(); }),
     ("testSequenceOf_complete", { _ObservableCreationTests.setUp(); _ObservableCreationTests.testSequenceOf_complete(); _ObservableCreationTests.tearDown(); }),
     ("testSequenceOf_dispose", { _ObservableCreationTests.setUp(); _ObservableCreationTests.testSequenceOf_dispose(); _ObservableCreationTests.tearDown(); }),
+    ("testToObservableAnySequence_basic_immediate", { _ObservableCreationTests.setUp(); _ObservableCreationTests.testToObservableAnySequence_basic_immediate(); _ObservableCreationTests.tearDown(); }),
+    ("testToObservableAnySequence_basic_testScheduler", { _ObservableCreationTests.setUp(); _ObservableCreationTests.testToObservableAnySequence_basic_testScheduler(); _ObservableCreationTests.tearDown(); }),
     ("testGenerate_Finite", { _ObservableCreationTests.setUp(); _ObservableCreationTests.testGenerate_Finite(); _ObservableCreationTests.tearDown(); }),
     //("testGenerate_ThrowCondition", { _ObservableCreationTests.setUp(); _ObservableCreationTests.testGenerate_ThrowCondition(); _ObservableCreationTests.tearDown(); }),
     //("testGenerate_ThrowIterate", { _ObservableCreationTests.setUp(); _ObservableCreationTests.testGenerate_ThrowIterate(); _ObservableCreationTests.tearDown(); }),
