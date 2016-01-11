@@ -48,7 +48,7 @@ public class RxTableViewDataSourceProxy
     private weak var _requiredMethodsDataSource: UITableViewDataSource? = tableViewDataSourceNotSet
 
     /**
-     Initializes `RxTableViewDelegateProxy`
+     Initializes `RxTableViewDataSourceProxy`
 
      - parameter parentObject: Parent object for delegate proxy.
      */
