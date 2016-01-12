@@ -267,6 +267,24 @@ extension ObservableType {
             return FlatMapLatest(source: asObservable(), selector: selector)
     }
 }
+// MARK: concatMap
+
+extension ObservableType {
+    
+    /**
+     Projects each element of an observable sequence to an observable sequence in order.
+     
+     - seealso: [concatMap operator on reactivex.io](http://reactivex.io/documentation/operators/flatmap.html)
+     
+     - parameter selector: A transform function to apply to each element.
+     - returns: An observable sequence whose elements are the result of invoking the one-to-many transform function on each element of the input sequence.
+     */
+    @warn_unused_result(message="http://git.io/rxs.uo")
+    public func concatMap<O: ObservableConvertibleType>(selector: (E) throws -> O)
+        -> Observable<O.E> {
+            return ConcatMap<E, O>(source: asObservable(), selector: selector)
+    }
+}
 
 // MARK: elementAt
 

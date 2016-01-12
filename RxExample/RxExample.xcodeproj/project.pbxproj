@@ -422,6 +422,7 @@
 		CBEE77541BD8C7B700AD584C /* ToArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBEE77531BD8C7B700AD584C /* ToArray.swift */; };
 		D2245A191BD5654C00E7146F /* WithLatestFrom.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2245A0B1BD564A700E7146F /* WithLatestFrom.swift */; };
 		D2AF91981BD3D95900A008C1 /* Using.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2AF91881BD2C51900A008C1 /* Using.swift */; };
+		F6966EF11C45DD2800ADD298 /* ConcatMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6F0FEBB1C45DB9B00D166BC /* ConcatMap.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -927,6 +928,7 @@
 		CBEE77531BD8C7B700AD584C /* ToArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToArray.swift; sourceTree = "<group>"; };
 		D2245A0B1BD564A700E7146F /* WithLatestFrom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WithLatestFrom.swift; sourceTree = "<group>"; };
 		D2AF91881BD2C51900A008C1 /* Using.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Using.swift; sourceTree = "<group>"; };
+		F6F0FEBB1C45DB9B00D166BC /* ConcatMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConcatMap.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1385,6 +1387,7 @@
 				C894644F1BC6C2B00055219D /* CombineLatest+arity.tt */,
 				C89464501BC6C2B00055219D /* CombineLatest+CollectionType.swift */,
 				C89464521BC6C2B00055219D /* Concat.swift */,
+				F6F0FEBB1C45DB9B00D166BC /* ConcatMap.swift */,
 				C89464531BC6C2B00055219D /* ConnectableObservable.swift */,
 				C89464541BC6C2B00055219D /* Debug.swift */,
 				C89464551BC6C2B00055219D /* Deferred.swift */,
@@ -2089,6 +2092,7 @@
 				C860ECAC1C42EACD00A664B3 /* SectionedViewDataSourceType.swift in Sources */,
 				C89464CF1BC6C2B00055219D /* Just.swift in Sources */,
 				C8F6A1381BEF9DF6007DF367 /* RetryWhen.swift in Sources */,
+				F6966EF11C45DD2800ADD298 /* ConcatMap.swift in Sources */,
 				C89465921BC6C2BC0055219D /* UIControl+Rx.swift in Sources */,
 				C894650B1BC6C2B00055219D /* Variable.swift in Sources */,
 				C83D73E21C1DBC2A003DC470 /* ScheduledItemType.swift in Sources */,
