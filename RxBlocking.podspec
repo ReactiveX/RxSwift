@@ -24,5 +24,5 @@ Waiting for observable sequence to complete before exiting command line applicat
 
   s.source_files          = 'RxBlocking/**/*.swift'
 
-  s.dependency 'RxSwift', '~> 2.0'
+  s.dependency 'RxSwift', '~> 2.1'
 end
