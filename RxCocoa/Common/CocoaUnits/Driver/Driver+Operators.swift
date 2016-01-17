@@ -136,6 +136,30 @@ extension DriverConvertibleType {
             
         return Driver(source)
     }
+
+    /**
+     Invokes an action for each Next event in the observable sequence, and propagates all observer messages through the result sequence.
+
+     - parameter onNext: Action to invoke for each element in the observable sequence.
+     - returns: The source sequence with the side-effecting behavior applied.
+     */
+    @warn_unused_result(message="http://git.io/rxs.uo")
+    public func doOnNext(onNext: (E -> Void))
+        -> Driver<E> {
+        return self.doOn(onNext: onNext)
+    }
+
+    /**
+     Invokes an action for the Completed event in the observable sequence, and propagates all observer messages through the result sequence.
+
+     - parameter onCompleted: Action to invoke upon graceful termination of the observable sequence.
+     - returns: The source sequence with the side-effecting behavior applied.
+     */
+    @warn_unused_result(message="http://git.io/rxs.uo")
+    public func doOnComplete(onCompleted: (() -> Void))
+        -> Driver<E> {
+        return self.doOn(onCompleted: onCompleted)
+    }
 }
 
 extension DriverConvertibleType {
