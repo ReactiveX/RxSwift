@@ -31,6 +31,12 @@ extension UIImagePickerController {
     static func rx_createWithParent(parent: UIViewController?, animated: Bool = true, configureImagePicker: (UIImagePickerController) throws -> () = { x in }) -> Observable<UIImagePickerController> {
         return Observable.create { [weak parent] observer in
             let imagePicker = UIImagePickerController()
+            let dismissDisposable = imagePicker
+                .rx_didCancel
+                .subscribeNext({ [unowned imagePicker] in
+                    dismissViewController(imagePicker, animated: true)
+                })
+            
             do {
                 try configureImagePicker(imagePicker)
             }
@@ -46,10 +52,10 @@ extension UIImagePickerController {
 
             parent.presentViewController(imagePicker, animated: animated, completion: nil)
             observer.on(.Next(imagePicker))
-
-            return AnonymousDisposable {
-                dismissViewController(imagePicker, animated: animated)
-            }
+            
+            return CompositeDisposable(dismissDisposable, AnonymousDisposable {
+                    dismissViewController(imagePicker, animated: animated)
+                })
         }
     }
 }
