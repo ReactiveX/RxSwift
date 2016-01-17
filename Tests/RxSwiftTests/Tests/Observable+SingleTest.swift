@@ -271,9 +271,9 @@ extension ObservableSingleTest {
     }
 }
 
-// Do 
+// doOn
 extension ObservableSingleTest {
-    func testDo_shouldSeeAllValues() {
+    func testDoOn_shouldSeeAllValues() {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs = scheduler.createHotObservable([
@@ -317,7 +317,7 @@ extension ObservableSingleTest {
         XCTAssertEqual(xs.subscriptions, correctSubscriptions)
     }
 
-    func testDo_plainAction() {
+    func testDoOn_plainAction() {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs = scheduler.createHotObservable([
@@ -356,8 +356,8 @@ extension ObservableSingleTest {
         XCTAssertEqual(res.events, correctMessages)
         XCTAssertEqual(xs.subscriptions, correctSubscriptions)
     }
-    
-    func testDo_nextCompleted() {
+
+    func testDoOn_nextCompleted() {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs = scheduler.createHotObservable([
@@ -404,7 +404,7 @@ extension ObservableSingleTest {
         XCTAssertEqual(xs.subscriptions, correctSubscriptions)
     }
     
-    func testDo_completedNever() {
+    func testDoOn_completedNever() {
         let scheduler = TestScheduler(initialClock: 0)
         
         let recordedEvents: [Recorded<Event<Int>>] = [
@@ -439,7 +439,7 @@ extension ObservableSingleTest {
         XCTAssertEqual(xs.subscriptions, correctSubscriptions)
     }
     
-    func testDo_nextError() {
+    func testDoOn_nextError() {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs = scheduler.createHotObservable([
@@ -486,7 +486,7 @@ extension ObservableSingleTest {
         XCTAssertEqual(xs.subscriptions, correctSubscriptions)
     }
     
-    func testDo_nextErrorNot() {
+    func testDoOn_nextErrorNot() {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs = scheduler.createHotObservable([
@@ -533,7 +533,7 @@ extension ObservableSingleTest {
         XCTAssertEqual(xs.subscriptions, correctSubscriptions)
     }
     
-    func testDo_Throws() {
+    func testDoOn_Throws() {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs = scheduler.createHotObservable([

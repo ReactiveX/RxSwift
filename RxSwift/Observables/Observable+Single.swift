@@ -71,7 +71,7 @@ extension ObservableType {
     }
 }
 
-// MARK: do
+// MARK: doOn
 
 extension ObservableType {
     
