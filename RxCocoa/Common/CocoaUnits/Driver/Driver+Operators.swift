@@ -129,10 +129,10 @@ extension DriverConvertibleType {
     - returns: The source sequence with the side-effecting behavior applied.
     */
     @warn_unused_result(message="http://git.io/rxs.uo")
-    public func doOn(onNext onNext: (E -> Void)? = nil, onError: (ErrorType -> Void)? = nil, onCompleted: (() -> Void)? = nil)
+    public func doOn(onNext onNext: (E -> Void)? = nil, onCompleted: (() -> Void)? = nil)
         -> Driver<E> {
         let source = self.asObservable()
-            .doOn(onNext: onNext, onError: onError, onCompleted: onCompleted)
+            .doOn(onNext: onNext, onCompleted: onCompleted)
             
         return Driver(source)
     }
