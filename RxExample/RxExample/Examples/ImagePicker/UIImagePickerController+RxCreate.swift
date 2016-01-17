@@ -33,8 +33,11 @@ extension UIImagePickerController {
             let imagePicker = UIImagePickerController()
             let dismissDisposable = imagePicker
                 .rx_didCancel
-                .subscribeNext({ [unowned imagePicker] in
-                    dismissViewController(imagePicker, animated: true)
+                .subscribeNext({ [weak imagePicker] in
+                    guard let imagePicker = imagePicker else {
+                        return
+                    }
+                    dismissViewController(imagePicker, animated: animated)
                 })
             
             do {
