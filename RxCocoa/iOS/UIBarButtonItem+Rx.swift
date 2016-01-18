@@ -38,22 +38,11 @@ extension UIBarButtonItem {
     Reactive wrapper for target action pattern on `self`.
     */
     public var rx_tap: ControlEvent<Void> {
-        let source: Observable<Void> = Observable.create { [weak self] observer in
-
-            guard let control = self else {
-                observer.on(.Completed)
-                return NopDisposable.instance
-            }
-
-            let target = BarButtonItemTarget(barButtonItem: control) {
-                observer.on(.Next())
-            }
-            return target
-        }.takeUntil(rx_deallocated)
-        
-        return ControlEvent(events: source)
+        if let target = self.target as? BarButtonItemTarget {
+            return target.event
+        }
+        return BarButtonItemTarget(barButtonItem: self).event
     }
-    
 }
 
 
@@ -64,30 +53,44 @@ class BarButtonItemTarget: RxTarget {
     weak var barButtonItem: UIBarButtonItem?
     var callback: Callback!
     
-    init(barButtonItem: UIBarButtonItem, callback: () -> Void) {
+    var event: ControlEvent<Void>!
+    
+    init(barButtonItem: UIBarButtonItem) {
         self.barButtonItem = barButtonItem
-        self.callback = callback
         super.init()
         barButtonItem.target = self
         barButtonItem.action = Selector("action:")
+        
+        self.event = ControlEvent(events:
+            Observable.create { [weak self] observer in
+                guard let target = self else {
+                    observer.on(.Completed)
+                    return NopDisposable.instance
+                }
+                target.callback = {
+                    observer.on(.Next())
+                }
+                return target
+            }.takeUntil(barButtonItem.rx_deallocated).share()
+        )
     }
-    
+
     override func dispose() {
         super.dispose()
 #if DEBUG
         MainScheduler.ensureExecutingOnScheduler()
 #endif
-        
+
         barButtonItem?.target = nil
         barButtonItem?.action = nil
         
         callback = nil
+        event = nil
     }
     
     func action(sender: AnyObject) {
         callback()
     }
-    
 }
 
 #endif
