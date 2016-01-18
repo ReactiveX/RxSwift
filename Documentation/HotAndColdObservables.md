@@ -15,4 +15,30 @@ This is a definition from ReactiveX.io
 | Usually contains ~ N elements                                                                           | Usually contains ~ 1 element                                                  |
 | Sequence elements are produced no matter if there is any observer subscribed.                           | Sequence elements are produced only if there is a subscribed observer.        |
 | Sequence computation resources are usually shared between all of the subscribed observers.              | Sequence computation resources are usually allocated per subscribed observer. |
-| Usually stateful                                                                                        | Usually stateless                                                             |
+| Usually stateful                                                                                        | Usually stateless															  |
+
+
+##### Hot Example
+```
+NSURLSession
+  .sharedSession()
+  .rx_data(NSURLRequest(URL: NSURL(string: "http://www.timeapi.org/utc/now")!)
+  .map { String(data: $0, encoding: NSUTF8StringEncoding) }
+  .asObservable()
+```
+
+##### Cold Example
+```
+Observable.create { observer in
+  let counter = myInterval(0.1) // myInterval taken from https://github.com/ReactiveX/RxSwift/blob/master/Documentation/GettingStarted.md#creating-an-observable-that-performs-work
+
+  let subscription = counter
+    .subscribeNext { n in
+      observer.onNext(n)
+    }
+
+  return Disposable {
+    subscription.dispose()
+  }
+}
+```
