@@ -37,7 +37,7 @@ Observable.create { observer in
       observer.onNext(n)
     }
 
-  return Disposable {
+  return AnonymousDisposable {
     subscription.dispose()
   }
 }
