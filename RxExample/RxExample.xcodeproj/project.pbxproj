@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0744CDD41C4DB5F000720FD2 /* GeolocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0744CDD31C4DB5F000720FD2 /* GeolocationService.swift */; };
+		0744CDD51C4DB5F000720FD2 /* GeolocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0744CDD31C4DB5F000720FD2 /* GeolocationService.swift */; };
+		0744CDED1C4DB78600720FD2 /* GeolocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0744CDEC1C4DB78600720FD2 /* GeolocationViewController.swift */; };
+		0744CDEE1C4DB78600720FD2 /* GeolocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0744CDEC1C4DB78600720FD2 /* GeolocationViewController.swift */; };
 		075F13101B4E9D5A000D7861 /* APIWrappersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 075F130F1B4E9D5A000D7861 /* APIWrappersViewController.swift */; };
 		07A5C3DB1B70B703001EFE5C /* CalculatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07A5C3DA1B70B703001EFE5C /* CalculatorViewController.swift */; };
 		07A5C3DC1B70B703001EFE5C /* CalculatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07A5C3DA1B70B703001EFE5C /* CalculatorViewController.swift */; };
@@ -611,6 +615,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0744CDD31C4DB5F000720FD2 /* GeolocationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeolocationService.swift; sourceTree = "<group>"; };
+		0744CDEC1C4DB78600720FD2 /* GeolocationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeolocationViewController.swift; sourceTree = "<group>"; };
 		075F130F1B4E9D5A000D7861 /* APIWrappersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIWrappersViewController.swift; sourceTree = "<group>"; };
 		07A5C3DA1B70B703001EFE5C /* CalculatorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalculatorViewController.swift; sourceTree = "<group>"; };
 		07E3C2321B03605B0010338D /* Dependencies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Dependencies.swift; path = Examples/Dependencies.swift; sourceTree = "<group>"; };
@@ -970,6 +976,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0744CDEB1C4DB71300720FD2 /* GeolocationExample */ = {
+			isa = PBXGroup;
+			children = (
+				0744CDEC1C4DB78600720FD2 /* GeolocationViewController.swift */,
+			);
+			path = GeolocationExample;
+			sourceTree = "<group>";
+		};
 		075F130E1B4E9D10000D7861 /* APIWrappers */ = {
 			isa = PBXGroup;
 			children = (
@@ -1123,6 +1137,7 @@
 				B1604CB41BE49F8D002E1279 /* DownloadableImage.swift */,
 				B1604CC81BE5BBFA002E1279 /* UIImageView+DownloadableImage.swift */,
 				C809E97C1BE697100058D948 /* UIImage+Extensions.swift */,
+				0744CDD31C4DB5F000720FD2 /* GeolocationService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -1218,6 +1233,7 @@
 				07A5C3D91B70B6B8001EFE5C /* Calculator */,
 				C8BCD3E11C14820B005F1280 /* OSX simple example */,
 				C843A08B1C1CE39900CBA4BD /* GitHubSearchRepositories */,
+				0744CDEB1C4DB71300720FD2 /* GeolocationExample */,
 			);
 			path = Examples;
 			sourceTree = "<group>";
@@ -2073,6 +2089,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0744CDD51C4DB5F000720FD2 /* GeolocationService.swift in Sources */,
 				C83D73DE1C1DBC2A003DC470 /* AnonymousInvocable.swift in Sources */,
 				C84015751C34353D009D2E77 /* DispatchQueueSchedulerQOS.swift in Sources */,
 				C84CC58B1BDD486300E06A64 /* LockOwnerType.swift in Sources */,
@@ -2225,6 +2242,7 @@
 				C89465091BC6C2B00055219D /* ReplaySubject.swift in Sources */,
 				C8BCD3E01C1480E9005F1280 /* Operators.swift in Sources */,
 				C84CC58E1BDD486300E06A64 /* SynchronizedSubscribeType.swift in Sources */,
+				0744CDEE1C4DB78600720FD2 /* GeolocationViewController.swift in Sources */,
 				8479BC6E1C3BC99C00FB8B54 /* UIImagePickerController+Rx.swift in Sources */,
 				C8F6A12F1BEF9DA3007DF367 /* ImmediateScheduler.swift in Sources */,
 				C89464A81BC6C2B00055219D /* CompositeDisposable.swift in Sources */,
@@ -2359,6 +2377,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0744CDD41C4DB5F000720FD2 /* GeolocationService.swift in Sources */,
 				B1604CC91BE5BBFA002E1279 /* UIImageView+DownloadableImage.swift in Sources */,
 				C86E2F3E1AE5A0CA00C31024 /* SearchResultViewModel.swift in Sources */,
 				C83367241AD029AE00C668A7 /* HtmlParsing.swift in Sources */,
@@ -2409,6 +2428,7 @@
 				C8984CD51C36BC3E001E4272 /* PartialUpdatesViewController.swift in Sources */,
 				8479BC721C3BDAD400FB8B54 /* ImagePickerController.swift in Sources */,
 				C864BAE11C3332F10083833C /* User.swift in Sources */,
+				0744CDED1C4DB78600720FD2 /* GeolocationViewController.swift in Sources */,
 				C8984C331C36A579001E4272 /* RxCollectionViewSectionedAnimatedDataSource.swift in Sources */,
 				C83367231AD029AE00C668A7 /* Example.swift in Sources */,
 				C890A65D1AEC084100AFF7E6 /* ViewController.swift in Sources */,
