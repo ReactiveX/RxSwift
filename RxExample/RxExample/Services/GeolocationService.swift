@@ -13,12 +13,6 @@ import CoreLocation
     import RxCocoa
 #endif
 
-
-
-enum GeolocationError: ErrorType {
-    case NoLocation
-}
-
 enum GeolocationStatus {
     case Enabled
     case Disabled
