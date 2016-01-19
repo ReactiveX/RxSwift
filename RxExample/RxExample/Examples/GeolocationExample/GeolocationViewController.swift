@@ -13,15 +13,13 @@ import CoreLocation
     import RxCocoa
 #endif
 
-class GeolocationViewController: UIViewController {
+class GeolocationViewController: ViewController {
     
     @IBOutlet weak private var noGeolocationView: UIView!
     @IBOutlet weak private var button: UIButton!
     @IBOutlet weak private var button2: UIButton!
     @IBOutlet weak private var latLabel: UILabel!
     @IBOutlet weak private var lonLabel: UILabel!
-    
-    private let disposeBag = DisposeBag()
 
     override func viewDidLoad() {
         super.viewDidLoad()
