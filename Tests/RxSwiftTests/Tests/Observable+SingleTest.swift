@@ -696,7 +696,7 @@ extension ObservableSingleTest {
         XCTAssertEqual(xs.subscriptions, correctSubscriptions)
     }
 
-    func testDoOnComplete_normal() {
+    func testDoOnCompleted_normal() {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
@@ -710,7 +710,7 @@ extension ObservableSingleTest {
 
         var didComplete = false
 
-        let res = scheduler.start { xs.doOnComplete { error in
+        let res = scheduler.start { xs.doOnCompleted { error in
                 didComplete = true
             }
         }
@@ -733,7 +733,7 @@ extension ObservableSingleTest {
         XCTAssertEqual(didComplete, true)
     }
 
-    func testDoOnComplete_throws() {
+    func testDoOnCompleted_throws() {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
@@ -745,7 +745,7 @@ extension ObservableSingleTest {
             completed(250)
             ])
 
-        let res = scheduler.start { xs.doOnComplete { error in
+        let res = scheduler.start { xs.doOnCompleted { error in
                 throw testError
             }
         }

@@ -564,11 +564,11 @@ extension DriverTest {
         XCTAssertEqual(events, expectedEvents)
     }
 
-    func testAsDriver_doOnComplete() {
+    func testAsDriver_doOnCompleted() {
         let hotObservable = BackgroundThreadPrimitiveHotObservable<Int>()
 
         var completed = false
-        let driver = hotObservable.asDriver(onErrorJustReturn: -1).doOnComplete { e in
+        let driver = hotObservable.asDriver(onErrorJustReturn: -1).doOnCompleted { e in
             XCTAssertTrue(isMainThread())
             completed = true
         }

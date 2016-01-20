@@ -145,7 +145,7 @@ extension ObservableType {
      - returns: The source sequence with the side-effecting behavior applied.
      */
     @warn_unused_result(message="http://git.io/rxs.uo")
-    public func doOnComplete(onCompleted: (() throws -> Void))
+    public func doOnCompleted(onCompleted: (() throws -> Void))
         -> Observable<E> {
         return self.doOn(onCompleted: onCompleted)
     }
