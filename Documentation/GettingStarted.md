@@ -1118,7 +1118,7 @@ public struct Logging {
 
 ... is a set of classes that implement fully functional reactive data sources for `UITableView`s and `UICollectionView`s.
 
-Source code, more information and rationale why these classes are separated into their directory can be found [here](../RxDataSourceStarterKit).
+Source code, more information and rationale why these classes are separated into their directory can be found [here](../RxExample/RxDataSourceStarterKit).
 
 Using them should come down to just importing all of the files into your project.
 
