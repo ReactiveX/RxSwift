@@ -679,13 +679,13 @@ extension ObservableSingleTest {
             ])
 
         let res = scheduler.start { xs.doOnError { _ in
-                throw testError
+                throw testError1
             }
         }
 
         let correctMessages = [
             next(210, 2),
-            error(250, testError)
+            error(250, testError1)
         ]
 
         let correctSubscriptions = [
