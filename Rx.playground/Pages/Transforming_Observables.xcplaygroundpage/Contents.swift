@@ -19,11 +19,11 @@ Transform the items emitted by an Observable by applying a function to each item
 */
 
 example("map") {
-    let originalSequence = Observable.of(Character("A"), Character("B"), Character("C"))
+    let originalSequence = Observable.of(1, 2, 3)
 
     _ = originalSequence
-        .map { char in
-            char.hashValue
+        .map { number in
+            number * 2
         }
         .subscribe { print($0) }
 }
