@@ -236,6 +236,28 @@ example("merge 2") {
     subject1.on(.Next(80))
     subject1.on(.Next(100))
     subject2.on(.Next(1))
+
+}
+
+example("forwardIf") {
+    let subject1 = PublishSubject<Int>()
+    let subject2 = PublishSubject<Bool>()
+
+    _ = subject1
+        .forwardIf(subject2)
+        .subscribe {
+            print($0)
+        }
+
+    subject1.on(.Next(20))
+    subject1.on(.Next(40))
+    subject2.on(.Next(true))
+    subject1.on(.Next(60))
+    subject1.on(.Next(80))
+    subject2.on(.Next(false))
+    subject1.on(.Next(100))
+    subject2.on(.Next(true))
+    subject1.on(.Next(120))
 }
 
 
