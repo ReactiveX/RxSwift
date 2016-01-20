@@ -328,3 +328,20 @@ extension ObservableType {
         return WithLatestFrom(first: asObservable(), second: second.asObservable(), resultSelector: { $1 })
     }
 }
+
+// MARK: forwardIf
+
+extension ObservableType {
+
+    /**
+     Propagates the source observable sequence while the condition observable sequence last value is true.
+     
+     - parameter source: Source observable sequence to propagate
+     - parameter condition: Boolean observable sequence that dictates if the source propagates.
+     - returns: An observable sequence that subscribes and emits the values of the source observable as long as the last emitted value of the condition observable is true.
+     */
+    public func forwardIf<ConditionO: ObservableConvertibleType where ConditionO.E == Bool>(condition: ConditionO) -> Observable<E> {
+        return ForwardIf(source: self, condition: condition.asObservable())
+    }
+}
+

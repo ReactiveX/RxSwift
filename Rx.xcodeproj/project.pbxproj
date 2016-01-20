@@ -1102,6 +1102,10 @@
 		D2FC15B31BCB95E5007361FF /* SkipWhile.swift in Sources */ = {isa = PBXBuildFile; fileRef = D22B6D251BC8504A00BCE0AB /* SkipWhile.swift */; };
 		D2FC15B41BCB95E7007361FF /* SkipWhile.swift in Sources */ = {isa = PBXBuildFile; fileRef = D22B6D251BC8504A00BCE0AB /* SkipWhile.swift */; };
 		D2FC15B51BCB95E8007361FF /* SkipWhile.swift in Sources */ = {isa = PBXBuildFile; fileRef = D22B6D251BC8504A00BCE0AB /* SkipWhile.swift */; };
+		E126CB4E1C4F082100647DCC /* ForwardIf.swift in Sources */ = {isa = PBXBuildFile; fileRef = E126CB4D1C4F082100647DCC /* ForwardIf.swift */; };
+		E126CB4F1C4F164E00647DCC /* ForwardIf.swift in Sources */ = {isa = PBXBuildFile; fileRef = E126CB4D1C4F082100647DCC /* ForwardIf.swift */; };
+		E126CB501C4F165700647DCC /* ForwardIf.swift in Sources */ = {isa = PBXBuildFile; fileRef = E126CB4D1C4F082100647DCC /* ForwardIf.swift */; };
+		E126CB511C4F165800647DCC /* ForwardIf.swift in Sources */ = {isa = PBXBuildFile; fileRef = E126CB4D1C4F082100647DCC /* ForwardIf.swift */; };
 		F31F35B01BB4FED800961002 /* UIStepper+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = F31F35AF1BB4FED800961002 /* UIStepper+Rx.swift */; };
 /* End PBXBuildFile section */
 
@@ -1646,6 +1650,7 @@
 		D285BAC31BC0231000B3F602 /* SkipUntil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SkipUntil.swift; sourceTree = "<group>"; };
 		D2EA280C1BB9B5A200880ED3 /* RxSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2EBEB811BB9B99D003A27DC /* RxBlocking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxBlocking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E126CB4D1C4F082100647DCC /* ForwardIf.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForwardIf.swift; sourceTree = "<group>"; };
 		F31F35AF1BB4FED800961002 /* UIStepper+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIStepper+Rx.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -1915,6 +1920,7 @@
 				C8C3DA051B9393AC004D233E /* Empty.swift */,
 				C8C3DA081B93941E004D233E /* Error.swift */,
 				C8093C7A1B8A72BE0088E94D /* Filter.swift */,
+				E126CB4D1C4F082100647DCC /* ForwardIf.swift */,
 				C84B38ED1BA433CD001B7D88 /* Generate.swift */,
 				C8C3DA021B9390C4004D233E /* Just.swift */,
 				C8093C7C1B8A72BE0088E94D /* Map.swift */,
@@ -3606,6 +3612,7 @@
 				C8093D5E1B8A72BE0088E94D /* Observable+Multiple.swift in Sources */,
 				C83D73C11C1DBAEE003DC470 /* InvocableType.swift in Sources */,
 				C8093D741B8A72BE0088E94D /* ObserverBase.swift in Sources */,
+				E126CB4F1C4F164E00647DCC /* ForwardIf.swift in Sources */,
 				C85106891C2D550E0075150C /* String+Rx.swift in Sources */,
 				C8093D121B8A72BE0088E94D /* ConnectableObservable.swift in Sources */,
 				C8BF34D01C2E426800416CAE /* Platform.Linux.swift in Sources */,
@@ -3828,6 +3835,7 @@
 				C83D73C01C1DBAEE003DC470 /* InvocableType.swift in Sources */,
 				C8093D731B8A72BE0088E94D /* ObserverBase.swift in Sources */,
 				C85106881C2D550E0075150C /* String+Rx.swift in Sources */,
+				E126CB4E1C4F082100647DCC /* ForwardIf.swift in Sources */,
 				C8093D111B8A72BE0088E94D /* ConnectableObservable.swift in Sources */,
 				C8BF34CF1C2E426800416CAE /* Platform.Linux.swift in Sources */,
 				C8093D611B8A72BE0088E94D /* Observable+StandardSequenceOperators.swift in Sources */,
@@ -3974,6 +3982,7 @@
 				C8F0BFAE1BBBFB8B001B112F /* Observable+Multiple.swift in Sources */,
 				C83D73C31C1DBAEE003DC470 /* InvocableType.swift in Sources */,
 				C8F0BFAF1BBBFB8B001B112F /* ObserverBase.swift in Sources */,
+				E126CB511C4F165800647DCC /* ForwardIf.swift in Sources */,
 				C851068B1C2D550E0075150C /* String+Rx.swift in Sources */,
 				C8F0BFB01BBBFB8B001B112F /* ConnectableObservable.swift in Sources */,
 				C8BF34D21C2E426800416CAE /* Platform.Linux.swift in Sources */,
@@ -4289,6 +4298,7 @@
 				C83D73C21C1DBAEE003DC470 /* InvocableType.swift in Sources */,
 				D2EBEB071BB9B6C1003A27DC /* Deferred.swift in Sources */,
 				C851068A1C2D550E0075150C /* String+Rx.swift in Sources */,
+				E126CB501C4F165700647DCC /* ForwardIf.swift in Sources */,
 				D2EBEB2C1BB9B6CA003A27DC /* Observable+Binding.swift in Sources */,
 				C8BF34D11C2E426800416CAE /* Platform.Linux.swift in Sources */,
 				D2EBEB041BB9B6C1003A27DC /* Concat.swift in Sources */,
