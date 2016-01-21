@@ -13,6 +13,8 @@ import UIKit
 import RxSwift
 #endif
 
+var rx_tap_key: UInt8 = 0
+
 extension UIBarButtonItem {
     
 	/**
@@ -38,10 +40,22 @@ extension UIBarButtonItem {
     Reactive wrapper for target action pattern on `self`.
     */
     public var rx_tap: ControlEvent<Void> {
-        if let target = self.target as? BarButtonItemTarget {
-            return target.event
+        let source = rx_lazyInstanceObservable(&rx_tap_key) { () -> Observable<Void> in
+            Observable.create { [weak self] observer in
+                guard let control = self else {
+                    observer.on(.Completed)
+                    return NopDisposable.instance
+                }
+                let target = BarButtonItemTarget(barButtonItem: control) {
+                    observer.on(.Next())
+                }
+                return target
+            }
+            .takeUntil(self.rx_deallocated)
+            .share()
         }
-        return BarButtonItemTarget(barButtonItem: self).event
+        
+        return ControlEvent(events: source)
     }
 }
 
@@ -53,44 +67,30 @@ class BarButtonItemTarget: RxTarget {
     weak var barButtonItem: UIBarButtonItem?
     var callback: Callback!
     
-    var event: ControlEvent<Void>!
-    
-    init(barButtonItem: UIBarButtonItem) {
+    init(barButtonItem: UIBarButtonItem, callback: () -> Void) {
         self.barButtonItem = barButtonItem
+        self.callback = callback
         super.init()
         barButtonItem.target = self
         barButtonItem.action = Selector("action:")
-        
-        self.event = ControlEvent(events:
-            Observable.create { [weak self] observer in
-                guard let target = self else {
-                    observer.on(.Completed)
-                    return NopDisposable.instance
-                }
-                target.callback = {
-                    observer.on(.Next())
-                }
-                return target
-            }.takeUntil(barButtonItem.rx_deallocated).share()
-        )
     }
-
+    
     override func dispose() {
         super.dispose()
 #if DEBUG
         MainScheduler.ensureExecutingOnScheduler()
 #endif
-
+        
         barButtonItem?.target = nil
         barButtonItem?.action = nil
         
         callback = nil
-        event = nil
     }
     
     func action(sender: AnyObject) {
         callback()
     }
+    
 }
 
 #endif
