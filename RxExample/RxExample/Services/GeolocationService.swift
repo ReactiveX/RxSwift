@@ -32,7 +32,7 @@ class GeolocationService {
                 guard let strongLocationManager = weakLocationManager else {
                     return Observable.just(status)
                 }
-                strongLocationManager
+                return strongLocationManager
                     .rx_didChangeAuthorizationStatus
                     .startWith(status)
             }
