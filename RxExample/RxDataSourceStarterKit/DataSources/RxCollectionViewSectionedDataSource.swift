@@ -47,6 +47,22 @@ public class _RxCollectionViewSectionedDataSource : NSObject
     public func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
         return _collectionView(collectionView, viewForSupplementaryElementOfKind: kind, atIndexPath: indexPath)
     }
+    
+    func _collectionView(collectionView: UICollectionView, canMoveItemAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return false
+    }
+    
+    public func collectionView(collectionView: UICollectionView, canMoveItemAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return _collectionView(collectionView, canMoveItemAtIndexPath: indexPath)
+    }
+    
+    func _collectionView(collectionView: UICollectionView, moveItemAtIndexPath sourceIndexPath: NSIndexPath, toIndexPath destinationIndexPath: NSIndexPath) {
+        
+    }
+    public func collectionView(collectionView: UICollectionView, moveItemAtIndexPath sourceIndexPath: NSIndexPath, toIndexPath destinationIndexPath: NSIndexPath) {
+        _collectionView(collectionView, moveItemAtIndexPath: sourceIndexPath, toIndexPath: destinationIndexPath)
+    }
+    
 }
 
 public class RxCollectionViewSectionedDataSource<S: SectionModelType> : _RxCollectionViewSectionedDataSource {
@@ -83,6 +99,9 @@ public class RxCollectionViewSectionedDataSource<S: SectionModelType> : _RxColle
     
     public var cellFactory: CellFactory! = nil
     public var supplementaryViewFactory: SupplementaryViewFactory
+    
+    public var canMoveItemAtIndexPath: ((indexPath:NSIndexPath) -> Bool)?
+    public var moveItem: ((sourceIndexPath:NSIndexPath, destinationIndexPath:NSIndexPath) -> Void)?
     
     public override init() {
         self.cellFactory = { _, _, _ in return (nil as UICollectionViewCell?)! }
@@ -121,4 +140,15 @@ public class RxCollectionViewSectionedDataSource<S: SectionModelType> : _RxColle
     override func _collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
         return supplementaryViewFactory(collectionView, kind, indexPath)
     }
+    
+    override func _collectionView(collectionView: UICollectionView, canMoveItemAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return canMoveItemAtIndexPath?(indexPath: indexPath) ??
+            super._collectionView(collectionView, canMoveItemAtIndexPath: indexPath)
+    }
+    
+    override func _collectionView(collectionView: UICollectionView, moveItemAtIndexPath sourceIndexPath: NSIndexPath, toIndexPath destinationIndexPath: NSIndexPath) {
+        return moveItem?(sourceIndexPath:sourceIndexPath, destinationIndexPath: destinationIndexPath) ??
+            super._collectionView(collectionView, moveItemAtIndexPath: sourceIndexPath, toIndexPath: destinationIndexPath)
+    }
+    
 }
