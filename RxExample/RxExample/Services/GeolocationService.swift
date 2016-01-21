@@ -22,14 +22,19 @@ class GeolocationService {
     private let locationManager = CLLocationManager()
     
     private init() {
-        let locationManager = self.locationManager
+        
         locationManager.distanceFilter = kCLDistanceFilterNone;
         locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation;
         
+        weak var weakLocationManager = self.locationManager
         autorized = Observable.deferred {
-                locationManager
+                let status = CLLocationManager.authorizationStatus()
+                guard let strongLocationManager = weakLocationManager else {
+                    return Observable.just(status)
+                }
+                strongLocationManager
                     .rx_didChangeAuthorizationStatus
-                    .startWith(CLLocationManager.authorizationStatus())
+                    .startWith(status)
             }
             .asDriver(onErrorJustReturn: CLAuthorizationStatus.NotDetermined)
             .map {
