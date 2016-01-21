@@ -422,6 +422,7 @@
 		CBEE77541BD8C7B700AD584C /* ToArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBEE77531BD8C7B700AD584C /* ToArray.swift */; };
 		D2245A191BD5654C00E7146F /* WithLatestFrom.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2245A0B1BD564A700E7146F /* WithLatestFrom.swift */; };
 		D2AF91981BD3D95900A008C1 /* Using.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2AF91881BD2C51900A008C1 /* Using.swift */; };
+		E1AFE5C71C50CC560015087B /* ForwardIf.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1AFE5B11C50CC200015087B /* ForwardIf.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -927,6 +928,7 @@
 		CBEE77531BD8C7B700AD584C /* ToArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToArray.swift; sourceTree = "<group>"; };
 		D2245A0B1BD564A700E7146F /* WithLatestFrom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WithLatestFrom.swift; sourceTree = "<group>"; };
 		D2AF91881BD2C51900A008C1 /* Using.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Using.swift; sourceTree = "<group>"; };
+		E1AFE5B11C50CC200015087B /* ForwardIf.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForwardIf.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1395,6 +1397,7 @@
 				C89464591BC6C2B00055219D /* Empty.swift */,
 				C894645A1BC6C2B00055219D /* Error.swift */,
 				C894645B1BC6C2B00055219D /* Filter.swift */,
+				E1AFE5B11C50CC200015087B /* ForwardIf.swift */,
 				C894645D1BC6C2B00055219D /* Generate.swift */,
 				C894645E1BC6C2B00055219D /* Just.swift */,
 				C894645F1BC6C2B00055219D /* Map.swift */,
@@ -2255,6 +2258,7 @@
 				C89465811BC6C2BC0055219D /* ItemEvents.swift in Sources */,
 				C89465861BC6C2BC0055219D /* RxCollectionViewDataSourceProxy.swift in Sources */,
 				C89465981BC6C2BC0055219D /* UISearchBar+Rx.swift in Sources */,
+				E1AFE5C71C50CC560015087B /* ForwardIf.swift in Sources */,
 				C89464E21BC6C2B00055219D /* Take.swift in Sources */,
 				C80DA3551C30B48300C588B9 /* PriorityQueue.swift in Sources */,
 				B18F3BC11BD93E00000AAC79 /* Reachability.swift in Sources */,
