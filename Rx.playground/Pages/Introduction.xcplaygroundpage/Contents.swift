@@ -112,6 +112,25 @@ example("create") {
 }
 
 /*:
+### generate
+`generate` creates sequence that generates its values and determines when to terminate based on its previous values.
+*/
+
+example("generate") {
+    let generated = Observable.generate(
+        initialState: 0,
+        condition: { $0 < 3 },
+        iterate: { $0 + 1 }
+    )
+
+    let subscription = generated
+        .subscribe { event in
+            print(event)
+        }
+
+}
+
+/*:
 ### failWith
 create an Observable that emits no items and terminates with an error
 */
