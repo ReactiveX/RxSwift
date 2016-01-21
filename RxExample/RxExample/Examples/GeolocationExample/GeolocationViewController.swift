@@ -26,20 +26,22 @@ class GeolocationViewController: ViewController {
         
         let geolocationService = GeolocationService.instance
         
+        unowned let _self = self
+        
         geolocationService.autorized
-            .driveNext(driveAutorization)
+            .driveNext(_self.driveAutorization)
             .addDisposableTo(disposeBag)
         
         geolocationService.location
-            .driveNext(driveCoordinates)
+            .driveNext(_self.driveCoordinates)
             .addDisposableTo(disposeBag)
         
         button.rx_tap
-            .bindNext(openAppPreferences)
+            .bindNext(_self.openAppPreferences)
             .addDisposableTo(disposeBag)
         
         button2.rx_tap
-            .bindNext(openAppPreferences)
+            .bindNext(_self.openAppPreferences)
             .addDisposableTo(disposeBag)
         
     }

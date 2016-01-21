@@ -9,6 +9,7 @@
 import Foundation
 import CoreLocation
 #if !RX_NO_MODULE
+    import RxSwift
     import RxCocoa
 #endif
 
@@ -21,11 +22,15 @@ class GeolocationService {
     private let locationManager = CLLocationManager()
     
     private init() {
+        let locationManager = self.locationManager
         locationManager.distanceFilter = kCLDistanceFilterNone;
         locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation;
         
-        autorized = locationManager.rx_didChangeAuthorizationStatus
-            .startWith(CLLocationManager.authorizationStatus())
+        autorized = Observable.deferred {
+                locationManager
+                    .rx_didChangeAuthorizationStatus
+                    .startWith(CLLocationManager.authorizationStatus())
+            }
             .asDriver(onErrorJustReturn: CLAuthorizationStatus.NotDetermined)
             .map {
                 switch $0 {
