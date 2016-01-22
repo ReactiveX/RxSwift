@@ -11,6 +11,12 @@ import XCTest
 import RxSwift
 import RxTests
 
+extension String {
+    func trimWhitespace() -> String {
+        return self.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+    }
+}
+
 class ObservableSingleTest : RxTest {
     override func setUp() {
         super.setUp()
@@ -1559,79 +1565,6 @@ extension ObservableSingleTest {
 // groupBy
 
 extension ObservableSingleTest {
-    func testGroupBy_Error() {
-        let scheduler = TestScheduler(initialClock: 0)
-        
-        let xs = scheduler.createHotObservable([
-            next(50, 1),
-            error(205, testError)
-            ])
-        
-        let res = scheduler.start { () -> Observable<String> in
-            let group: Observable<GroupedObservable<Bool, Int>> = xs.groupBy { _ in true }
-            let mappedWithIndex = group.mapWithIndex { (go: GroupedObservable<Bool, Int>, i: Int) -> Observable<String> in
-                return go.map { (e: Int) -> String in
-                    return "\(i) \(e)"
-                }
-            }
-            let result = mappedWithIndex.merge()
-            return result
-        }
-        
-        XCTAssertEqual(res.events, [
-            error(205, testError)
-            ])
-        
-        XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 205)
-            ])
-    }
-    
-    func testGroupBy_OneGroup() {
-        let scheduler = TestScheduler(initialClock: 0)
-        
-        let xs = scheduler.createHotObservable([
-            next(205, 1),
-            next(210, 2),
-            next(240, 3),
-            next(280, 4),
-            next(320, 5),
-            next(350, 6),
-            next(370, 7),
-            next(420, 8),
-            next(470, 9),
-            completed(600)
-            ])
-        
-        let res = scheduler.start { () -> Observable<String> in
-            let group: Observable<GroupedObservable<Bool, Int>> = xs.groupBy { _ in true }
-            let mappedWithIndex = group.mapWithIndex { (go: GroupedObservable<Bool, Int>, i: Int) -> Observable<String> in
-                return go.map { (e: Int) -> String in
-                    return "\(i) \(e)"
-                }
-            }
-            let result = mappedWithIndex.merge()
-            return result
-        }
-        
-        XCTAssertEqual(res.events, [
-            next(205, "0 1"),
-            next(210, "0 2"),
-            next(240, "0 3"),
-            next(280, "0 4"),
-            next(320, "0 5"),
-            next(350, "0 6"),
-            next(370, "0 7"),
-            next(420, "0 8"),
-            next(470, "0 9"),
-            completed(600)
-            ])
-        
-        XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 600)
-            ])
-    }
-
     func testGroupBy_TwoGroup() {
         let scheduler = TestScheduler(initialClock: 0)
         
@@ -1698,13 +1631,68 @@ extension ObservableSingleTest {
             next(480, "baz  "),
             next(510, " bAZ "),
             next(530, "    fOo    "),
-            completed(570)
+            completed(570),
+            next(580, "error"),
+            completed(600),
+            error(650, testError)
             ])
         
         let res = scheduler.start { () -> Observable<String> in
             let group: Observable<GroupedObservable<String, String>> = xs.groupBy { x in
                 keyInvoked++
-                return x.lowercaseString.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+                if x == "error" { throw testError }
+                return x.lowercaseString.trimWhitespace()
+            }
+            return group.map { (go: GroupedObservable<String, String>) -> String in
+                return go.key
+            }
+        }
+        
+        XCTAssertEqual(res.events, [
+            next(220, "foo"),
+            next(270, "bar"),
+            next(350, "baz"),
+            next(360, "qux"),
+            completed(570)
+            ])
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 570)
+            ])
+        
+        XCTAssertEqual(keyInvoked, 12)
+    }
+    
+    func testGroupBy_OuterComplete() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        var keyInvoked = 0
+        
+        let xs = scheduler.createHotObservable([
+            next(220, "  foo"),
+            next(240, " FoO "),
+            next(270, "baR  "),
+            next(310, "foO "),
+            next(350, " Baz   "),
+            next(360, "  qux "),
+            next(390, "   bar"),
+            next(420, " BAR  "),
+            next(470, "FOO "),
+            next(480, "baz  "),
+            next(510, " bAZ "),
+            next(530, "    fOo    "),
+            completed(570),
+            next(580, "error"),
+            completed(600),
+            error(650, testError)
+            ])
+        
+        let res = scheduler.start { () -> Observable<String> in
+            let group: Observable<GroupedObservable<String, String>> = xs.groupBy { x in
+                keyInvoked++
+                if x == "error" { throw testError }
+
+                return x.lowercaseString.trimWhitespace()
             }
             return group.map { (go: GroupedObservable<String, String>) -> String in
                 return go.key
@@ -1748,13 +1736,16 @@ extension ObservableSingleTest {
             next(510, " bAZ "),
             next(530, "    fOo    "),
             error(570, testError),
-            completed(600)
+            completed(600),
+            error(650, testError)
             ])
         
         let res = scheduler.start { () -> Observable<String> in
             let group: Observable<GroupedObservable<String, String>> = xs.groupBy { x in
                 keyInvoked++
-                return x.lowercaseString.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+                if x == "error" { throw testError }
+
+                return x.lowercaseString.trimWhitespace()
             }
             return group.map { (go: GroupedObservable<String, String>) -> String in
                 return go.key
@@ -1798,13 +1789,18 @@ extension ObservableSingleTest {
             next(480, "baz  "),
             next(510, " bAZ "),
             next(530, "    fOo    "),
-            completed(570)
+            completed(570),
+            next(580, "error"),
+            completed(600),
+            error(650, testError)
             ])
         
         let res = scheduler.start(355) { () -> Observable<String> in
             let group: Observable<GroupedObservable<String, String>> = xs.groupBy { x in
                 keyInvoked++
-                return x.lowercaseString.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+                if x == "error" { throw testError }
+
+                return x.lowercaseString.trimWhitespace()
             }
             return group.map { (go: GroupedObservable<String, String>) -> String in
                 return go.key
@@ -1845,17 +1841,21 @@ extension ObservableSingleTest {
             next(480, "baz  "),
             next(510, " bAZ "),
             next(530, "    fOo    "),
-            error(570, testError),
-            completed(600)
+            completed(570),
+            next(580, "error"),
+            completed(600),
+            error(650, testError)
             ])
         
         let res = scheduler.start { () -> Observable<String> in
             let group: Observable<GroupedObservable<String, String>> = xs.groupBy { x in
                 keyInvoked++
+                if x == "error" { throw testError }
+
                 if keyInvoked == 10 {
                     throw testError
                 }
-                return x.lowercaseString.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+                return x.lowercaseString.trimWhitespace()
             }
             return group.map { (go: GroupedObservable<String, String>) -> String in
                 return go.key
@@ -1896,7 +1896,10 @@ extension ObservableSingleTest {
             next(480, "baz  "),
             next(510, " bAZ "),
             next(530, "    fOo    "),
-            completed(570)
+            completed(570),
+            next(580, "error"),
+            completed(600),
+            error(650, testError)
             ])
 
         var outerSubscription: Disposable?
@@ -1906,7 +1909,8 @@ extension ObservableSingleTest {
 
         scheduler.scheduleAt(Defaults.subscribed) {
             let outer: Observable<GroupedObservable<String, String>> = xs.groupBy { x in
-                return x.lowercaseString.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+                if x == "error" { throw testError }
+                return x.lowercaseString.trimWhitespace()
             }
             outerSubscription = outer.subscribeNext({ (group: GroupedObservable<String, String>) -> Void in
                 let result: MockObserver<String> = scheduler.createObserver(String)
@@ -1973,7 +1977,10 @@ extension ObservableSingleTest {
             next(480, "baz  "),
             next(510, " bAZ "),
             next(530, "    fOo    "),
-            completed(570)
+            completed(570),
+            next(580, "error"),
+            completed(600),
+            error(650, testError)
             ])
         
         var outerSubscription: Disposable?
@@ -1983,7 +1990,8 @@ extension ObservableSingleTest {
         
         scheduler.scheduleAt(Defaults.subscribed) {
             let outer: Observable<GroupedObservable<String, String>> = xs.groupBy { x in
-                return x.lowercaseString.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+                if x == "error" { throw testError }
+                return x.lowercaseString.trimWhitespace()
             }
             outerSubscription = outer.subscribeNext({ (group: GroupedObservable<String, String>) -> Void in
                 let result: MockObserver<String> = scheduler.createObserver(String)
@@ -2051,7 +2059,10 @@ extension ObservableSingleTest {
             next(480, "baz  "),
             next(510, " bAZ "),
             next(530, "    fOo    "),
-            error(570, testError)
+            error(570, testError),
+            next(580, "error"),
+            completed(600),
+            error(650, testError)
             ])
         
         var outerSubscription: Disposable?
@@ -2061,7 +2072,8 @@ extension ObservableSingleTest {
         
         scheduler.scheduleAt(Defaults.subscribed) {
             let outer: Observable<GroupedObservable<String, String>> = xs.groupBy { x in
-                return x.lowercaseString.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+                if x == "error" { throw testError }
+                return x.lowercaseString.trimWhitespace()
             }
             outerSubscription = outer.subscribeNext({ (group: GroupedObservable<String, String>) -> Void in
                 let result: MockObserver<String> = scheduler.createObserver(String)
@@ -2127,7 +2139,10 @@ extension ObservableSingleTest {
             next(480, "baz  "),
             next(510, " bAZ "),
             next(530, "    fOo    "),
-            completed(570)
+            completed(570),
+            next(580, "error"),
+            completed(600),
+            error(650, testError)
             ])
         
         var outerSubscription: Disposable?
@@ -2137,7 +2152,8 @@ extension ObservableSingleTest {
         
         scheduler.scheduleAt(Defaults.subscribed) {
             let outer: Observable<GroupedObservable<String, String>> = xs.groupBy { x in
-                return x.lowercaseString.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+                if x == "error" { throw testError }
+                return x.lowercaseString.trimWhitespace()
             }
             outerSubscription = outer.subscribeNext { (group: GroupedObservable<String, String>) -> Void in
                 let result: MockObserver<String> = scheduler.createObserver(String)
@@ -2199,7 +2215,10 @@ extension ObservableSingleTest {
             next(480, "baz  "),
             next(510, " bAZ "),
             next(530, "    fOo    "),
-            completed(570)
+            completed(570),
+            next(580, "error"),
+            completed(600),
+            error(650, testError)
             ])
         
         var outer: Observable<GroupedObservable<String, String>>?
@@ -2211,10 +2230,11 @@ extension ObservableSingleTest {
         scheduler.scheduleAt(Defaults.created) {
             outer = xs.groupBy { x in
                 keyInvoked++
+                if x == "error" { throw testError }
                 if keyInvoked == 6 {
                     throw testError
                 }
-                return x.lowercaseString.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+                return x.lowercaseString.trimWhitespace()
             }
         }
         
@@ -2277,7 +2297,10 @@ extension ObservableSingleTest {
             next(480, "baz  "),
             next(510, " bAZ "),
             next(530, "    fOo    "),
-            completed(570)
+            completed(570),
+            next(580, "error"),
+            completed(600),
+            error(650, testError)
             ])
         
         var outer: Observable<GroupedObservable<String, String>>?
@@ -2289,7 +2312,8 @@ extension ObservableSingleTest {
         
         scheduler.scheduleAt(Defaults.created) {
             outer = xs.groupBy { x in
-                return x.lowercaseString.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+                if x == "error" { throw testError }
+                return x.lowercaseString.trimWhitespace()
             }
         }
         
@@ -2370,7 +2394,10 @@ extension ObservableSingleTest {
             next(480, "baz  "),
             next(510, " bAZ "),
             next(530, "    fOo    "),
-            completed(570)
+            completed(570),
+            next(580, "error"),
+            completed(600),
+            error(650, testError)
             ])
         
         var outerSubscription: Disposable?
@@ -2381,7 +2408,8 @@ extension ObservableSingleTest {
         
         scheduler.scheduleAt(Defaults.subscribed) {
             let outer: Observable<GroupedObservable<String, String>> = xs.groupBy { x in
-                return x.lowercaseString.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+                if x == "error" { throw testError }
+                return x.lowercaseString.trimWhitespace()
             }
             outerSubscription = outer
                 .subscribe(
@@ -2461,7 +2489,10 @@ extension ObservableSingleTest {
             next(480, "baz  "),
             next(510, " bAZ "),
             next(530, "    fOo    "),
-            completed(570)
+            completed(570),
+            next(580, "error"),
+            completed(600),
+            error(650, testError)
             ])
         
         var outerSubscription: Disposable?
@@ -2472,7 +2503,8 @@ extension ObservableSingleTest {
         
         scheduler.scheduleAt(Defaults.subscribed) {
             let outer: Observable<GroupedObservable<String, String>> = xs.groupBy { x in
-                return x.lowercaseString.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+                if x == "error" { throw testError }
+                return x.lowercaseString.trimWhitespace()
             }
             outerSubscription = outer
                 .subscribe(
@@ -2558,7 +2590,7 @@ extension ObservableSingleTest {
         
         scheduler.scheduleAt(Defaults.created) {
             outer = xs.groupBy { x in
-                return x.lowercaseString.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+                return x.lowercaseString.trimWhitespace()
             }
         }
         
@@ -2606,7 +2638,7 @@ extension ObservableSingleTest {
         
         scheduler.scheduleAt(Defaults.created) {
             outer = xs.groupBy { x in
-                return x.lowercaseString.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+                return x.lowercaseString.trimWhitespace()
             }
         }
         
@@ -2653,7 +2685,7 @@ extension ObservableSingleTest {
         
         scheduler.scheduleAt(Defaults.subscribed) {
             let outer: Observable<GroupedObservable<String, String>> = xs.groupBy { x in
-                return x.lowercaseString.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+                return x.lowercaseString.trimWhitespace()
             }
             outerSubscription = outer.subscribeNext({ (group: GroupedObservable<String, String>) -> Void in
                 inner = group
@@ -2679,28 +2711,6 @@ extension ObservableSingleTest {
         XCTAssertEqual(xs.subscriptions, [
             Subscription(200, 400)])
     }
-    
-    func testGroupBy_WithRealScheduler() {
-        let scheduler = ConcurrentDispatchQueueScheduler(globalConcurrentQueuePriority: .Default)
-        
-        let start = NSDate()
-        
-        let a = try! Observable<Int64>.interval(1, scheduler: scheduler)
-            .take(5)
-            .groupBy { return $0 % 3 }
-            .toBlocking()
-            .toArray()
-        
-        let end = NSDate()
-        
-        let b = a.map { (go: GroupedObservable<Int64, Int64>) -> Int64 in
-            return go.key
-        }
-        
-        XCTAssertEqualWithAccuracy(5, end.timeIntervalSinceDate(start), accuracy: 0.5)
-        XCTAssertEqual(b, [0, 1, 2])
-    }
-
     
     func testGroupBy_Never() {
         let scheduler = TestScheduler(initialClock: 0)

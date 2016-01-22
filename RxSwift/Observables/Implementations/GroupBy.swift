@@ -32,14 +32,11 @@ class GroupedObservableImpl<Key, Element> : GroupedObservable<Key, Element> {
 
 class GroupBySink<Key: Hashable, Element, O: ObserverType where O.E == GroupedObservable<Key,Element>>
     : Sink<O>
-    , LockOwnerType
-    , ObserverType
-    , SynchronizedOnType {
+    , ObserverType {
     typealias ResultType = O.E
     typealias Parent = GroupBy<Key, Element>
 
     private let _parent: Parent
-    let _lock = NSRecursiveLock()
     private let _groupDisposable = CompositeDisposable()
     private var _refCountDisposable: RefCountDisposable!
     private var _groupedSubjectTable: [Key: PublishSubject<Element>]
@@ -73,10 +70,6 @@ class GroupBySink<Key: Hashable, Element, O: ObserverType where O.E == GroupedOb
     }
     
     func on(event: Event<Element>) {
-        synchronizedOn(event)
-    }
-    
-    func _synchronized_on(event: Event<Element>) {
         switch event {
         case .Next(let value):
             do {
