@@ -220,3 +220,21 @@ extension NSObject {
         return result
     }
 }
+
+extension NSObject {
+    /**
+     Helper to make sure that `Observable` returned from `createCachedObservable` is only created once.
+     This is important because there is only one `target` and `action` properties on `NSControl` or `UIBarButtonItem`.
+     */
+    func rx_lazyInstanceObservable<T: AnyObject>(key: UnsafePointer<Void>, createCachedObservable: () -> T) -> T {
+        if let value = objc_getAssociatedObject(self, key) {
+            return value as! T
+        }
+        
+        let observable = createCachedObservable()
+        
+        objc_setAssociatedObject(self, key, observable, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+        
+        return observable
+    }
+}

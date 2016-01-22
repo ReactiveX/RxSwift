@@ -43,22 +43,6 @@ extension NSControl {
         return ControlEvent(events: source)
     }
 
-    /**
-    Helper to make sure that `Observable` returned from `createCachedObservable` is only created once.
-    This is important because on OSX there is only one `target` and `action` properties on `NSControl`.
-    */
-    func rx_lazyInstanceObservable<T: AnyObject>(key: UnsafePointer<Void>, createCachedObservable: () -> T) -> T {
-        if let value = objc_getAssociatedObject(self, key) {
-            return value as! T
-        }
-
-        let observable = createCachedObservable()
-
-        objc_setAssociatedObject(self, key, observable, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
-
-        return observable
-    }
-
     func rx_value<T: Equatable>(getter getter: () -> T, setter: T -> Void) -> ControlProperty<T> {
         MainScheduler.ensureExecutingOnScheduler()
 
