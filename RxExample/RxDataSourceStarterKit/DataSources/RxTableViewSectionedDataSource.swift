@@ -56,6 +56,23 @@ public class _RxTableViewSectionedDataSource : NSObject
     public func tableView(tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         return _tableView(tableView, titleForFooterInSection: section)
     }
+    
+    func _tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return false
+    }
+    
+    public func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return _tableView(tableView, canEditRowAtIndexPath: indexPath)
+    }
+    
+    func _tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return false
+    }
+    
+    public func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return _tableView(tableView, canMoveRowAtIndexPath: indexPath)
+    }
+    
 }
 
 public class RxTableViewSectionedDataSource<S: SectionModelType> : _RxTableViewSectionedDataSource {
@@ -90,6 +107,9 @@ public class RxTableViewSectionedDataSource<S: SectionModelType> : _RxTableViewS
     
     public var titleForHeaderInSection: ((section: Int) -> String)?
     public var titleForFooterInSection: ((section: Int) -> String)?
+    
+    public var canEditRowAtIndexPath: ((indexPath: NSIndexPath) -> Bool)?
+    public var canMoveRowAtIndexPath: ((indexPath: NSIndexPath) -> Bool)?
     
     public var rowAnimation: UITableViewRowAnimation = .Automatic
     
@@ -126,6 +146,16 @@ public class RxTableViewSectionedDataSource<S: SectionModelType> : _RxTableViewS
     
     override func _tableView(tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         return titleForFooterInSection?(section: section)
+    }
+    
+    override func _tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return canEditRowAtIndexPath?(indexPath: indexPath) ??
+            super._tableView(tableView, canMoveRowAtIndexPath: indexPath)
+    }
+    
+    override func _tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return canMoveRowAtIndexPath?(indexPath: indexPath) ??
+            super._tableView(tableView, canMoveRowAtIndexPath: indexPath)
     }
     
 }
