@@ -13,46 +13,61 @@ import CoreLocation
     import RxCocoa
 #endif
 
+private extension UILabel {
+    var rx_coordinates: AnyObserver<CLLocationCoordinate2D> {
+        return AnyObserver { [weak self] event in
+            guard let _self = self else { return }
+            switch event {
+            case let .Next(location):
+                _self.text = "Lat: \(location.latitude)\nLon: \(location.longitude)"
+            default:
+                break
+            }
+        }
+    }
+}
+
 class GeolocationViewController: ViewController {
     
     @IBOutlet weak private var noGeolocationView: UIView!
     @IBOutlet weak private var button: UIButton!
     @IBOutlet weak private var button2: UIButton!
-    @IBOutlet weak private var latLabel: UILabel!
-    @IBOutlet weak private var lonLabel: UILabel!
+    @IBOutlet weak var label: UILabel!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         let geolocationService = GeolocationService.instance
         
-        unowned let _self = self
-        
         geolocationService.autorized
-            .driveNext(_self.driveAutorization)
+            .driveNext { [weak self] authorized in
+                guard let _self = self else { return }
+                _self.driveAutorization(authorized)
+            }
             .addDisposableTo(disposeBag)
         
         geolocationService.location
-            .driveNext(_self.driveCoordinates)
+            .drive(label.rx_coordinates)
             .addDisposableTo(disposeBag)
         
         button.rx_tap
-            .bindNext(_self.openAppPreferences)
+            .bindNext { [weak self] in
+                guard let _self = self else { return }
+                _self.openAppPreferences()
+            }
             .addDisposableTo(disposeBag)
         
         button2.rx_tap
-            .bindNext(_self.openAppPreferences)
+            .bindNext { [weak self] in
+                guard let _self = self else { return }
+                _self.openAppPreferences()
+            }
             .addDisposableTo(disposeBag)
         
     }
     
     private func openAppPreferences() {
         UIApplication.sharedApplication().openURL(NSURL(string: UIApplicationOpenSettingsURLString)!)
-    }
-    
-    private func driveCoordinates(location: CLLocationCoordinate2D) {
-        latLabel.text = "Latitude: \(location.latitude)"
-        lonLabel.text = "Longitude: \(location.longitude)"
     }
     
     private func driveAutorization(autorized: Bool) {

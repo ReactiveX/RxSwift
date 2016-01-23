@@ -48,8 +48,11 @@ class GeolocationService {
         
         location = locationManager.rx_didUpdateLocations
             .asDriver(onErrorJustReturn: [])
-            .filter { !$0.isEmpty }
-            .map { $0.last!.coordinate }
+            .flatMap {
+                return $0.last.map(Driver.just) ?? Driver.empty()
+            }
+            .map { $0.coordinate }
+        
         
         locationManager.requestAlwaysAuthorization()
         locationManager.startUpdatingLocation()
