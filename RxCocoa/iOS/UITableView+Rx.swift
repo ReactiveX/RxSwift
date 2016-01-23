@@ -149,6 +149,18 @@ extension UITableView {
     }
 
     /**
+     Reactive wrapper for `delegate` message `tableView:accessoryButtonTappedForRowWithIndexPath:`.
+     */
+    public var rx_itemAccessoryButtonTapped: ControlEvent<NSIndexPath> {
+        let source: Observable<NSIndexPath> = rx_delegate.observe("tableView:accessoryButtonTappedForRowWithIndexPath:")
+            .map { a in
+                return a[1] as! NSIndexPath
+            }
+        
+        return ControlEvent(events: source)
+    }
+    
+    /**
     Reactive wrapper for `delegate` message `tableView:commitEditingStyle:forRowAtIndexPath:`.
     */
     public var rx_itemInserted: ControlEvent<NSIndexPath> {
