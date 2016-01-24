@@ -326,6 +326,8 @@ _ObservableMultipleTest.allTests = [
     //("testWithLatestFrom_Error2", { _ObservableMultipleTest.setUp(); _ObservableMultipleTest.testWithLatestFrom_Error2(); _ObservableMultipleTest.tearDown(); }),
     //("testWithLatestFrom_Error3", { _ObservableMultipleTest.setUp(); _ObservableMultipleTest.testWithLatestFrom_Error3(); _ObservableMultipleTest.tearDown(); }),
     ("testWithLatestFrom_MakeSureDefaultOverloadTakesSecondSequenceValues", { _ObservableMultipleTest.setUp(); _ObservableMultipleTest.testWithLatestFrom_MakeSureDefaultOverloadTakesSecondSequenceValues(); _ObservableMultipleTest.tearDown(); }),
+    ("testForwardIf_simple1", { _ObservableMultipleTest.setUp(); _ObservableMultipleTest.testForwardIf_simple1(); _ObservableMultipleTest.tearDown(); }),
+    ("testForwardIf_ConditionCompletedCausesDisposal", { _ObservableMultipleTest.setUp(); _ObservableMultipleTest.testForwardIf_ConditionCompletedCausesDisposal(); _ObservableMultipleTest.tearDown(); }),
 ]
 
 
