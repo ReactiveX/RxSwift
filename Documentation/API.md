@@ -406,6 +406,23 @@ extension UIActivityIndicatorView {
 }
 ```
 
+```swift
+extension WKWebView {
+
+    public var rx_canGoBack: Observable<Bool> {}
+
+    public var rx_canGoForward: Observable<Bool> {}
+
+    public var rx_loading: Observable<Bool> {}
+
+    public var rx_estimatedProgress<Double> {}
+
+    public var rx_title<String?> {}
+
+    public var rx_URL<NSURL?> {}
+}
+```
+
 **OSX**
 
 ```swift
