@@ -1905,7 +1905,7 @@ extension ObservableSingleTest {
         var outerSubscription: Disposable?
         var inners = Dictionary<String, GroupedObservable<String, String>>()
         var innerSubscriptions = Dictionary<String, Disposable>()
-        var results = Dictionary<String, MockObserver<String>>()
+        var results = Dictionary<String, TestableObserver<String>>()
 
         scheduler.scheduleAt(Defaults.subscribed) {
             let outer: Observable<GroupedObservable<String, String>> = xs.groupBy { x in
@@ -1913,7 +1913,7 @@ extension ObservableSingleTest {
                 return x.lowercaseString.trimWhitespace()
             }
             outerSubscription = outer.subscribeNext({ (group: GroupedObservable<String, String>) -> Void in
-                let result: MockObserver<String> = scheduler.createObserver(String)
+                let result: TestableObserver<String> = scheduler.createObserver(String)
                 inners[group.key] = group
                 results[group.key] = result
                 
@@ -1986,7 +1986,7 @@ extension ObservableSingleTest {
         var outerSubscription: Disposable?
         var inners = Dictionary<String, GroupedObservable<String, String>>()
         var innerSubscriptions = Dictionary<String, Disposable>()
-        var results = Dictionary<String, MockObserver<String>>()
+        var results = Dictionary<String, TestableObserver<String>>()
         
         scheduler.scheduleAt(Defaults.subscribed) {
             let outer: Observable<GroupedObservable<String, String>> = xs.groupBy { x in
@@ -1994,7 +1994,7 @@ extension ObservableSingleTest {
                 return x.lowercaseString.trimWhitespace()
             }
             outerSubscription = outer.subscribeNext({ (group: GroupedObservable<String, String>) -> Void in
-                let result: MockObserver<String> = scheduler.createObserver(String)
+                let result: TestableObserver<String> = scheduler.createObserver(String)
                 inners[group.key] = group
                 results[group.key] = result
                 innerSubscriptions[group.key] = group.subscribe(result)
@@ -2068,7 +2068,7 @@ extension ObservableSingleTest {
         var outerSubscription: Disposable?
         var inners = Dictionary<String, GroupedObservable<String, String>>()
         var innerSubscriptions = Dictionary<String, Disposable>()
-        var results = Dictionary<String, MockObserver<String>>()
+        var results = Dictionary<String, TestableObserver<String>>()
         
         scheduler.scheduleAt(Defaults.subscribed) {
             let outer: Observable<GroupedObservable<String, String>> = xs.groupBy { x in
@@ -2076,7 +2076,7 @@ extension ObservableSingleTest {
                 return x.lowercaseString.trimWhitespace()
             }
             outerSubscription = outer.subscribeNext({ (group: GroupedObservable<String, String>) -> Void in
-                let result: MockObserver<String> = scheduler.createObserver(String)
+                let result: TestableObserver<String> = scheduler.createObserver(String)
                 inners[group.key] = group
                 results[group.key] = result
                 
@@ -2148,7 +2148,7 @@ extension ObservableSingleTest {
         var outerSubscription: Disposable?
         var inners = Dictionary<String, GroupedObservable<String, String>>()
         var innerSubscriptions = Dictionary<String, Disposable>()
-        var results = Dictionary<String, MockObserver<String>>()
+        var results = Dictionary<String, TestableObserver<String>>()
         
         scheduler.scheduleAt(Defaults.subscribed) {
             let outer: Observable<GroupedObservable<String, String>> = xs.groupBy { x in
@@ -2156,7 +2156,7 @@ extension ObservableSingleTest {
                 return x.lowercaseString.trimWhitespace()
             }
             outerSubscription = outer.subscribeNext { (group: GroupedObservable<String, String>) -> Void in
-                let result: MockObserver<String> = scheduler.createObserver(String)
+                let result: TestableObserver<String> = scheduler.createObserver(String)
                 inners[group.key] = group
                 results[group.key] = result
                 innerSubscriptions[group.key] = group.subscribe(result)
@@ -2225,7 +2225,7 @@ extension ObservableSingleTest {
         var outerSubscription: Disposable?
         var inners = Dictionary<String, GroupedObservable<String, String>>()
         var innerSubscriptions = Dictionary<String, Disposable>()
-        var results = Dictionary<String, MockObserver<String>>()
+        var results = Dictionary<String, TestableObserver<String>>()
         
         scheduler.scheduleAt(Defaults.created) {
             outer = xs.groupBy { x in
@@ -2240,7 +2240,7 @@ extension ObservableSingleTest {
         
         scheduler.scheduleAt(Defaults.subscribed) {
             outerSubscription = outer!.subscribeNext { (group: GroupedObservable<String, String>) -> Void in
-                let result: MockObserver<String> = scheduler.createObserver(String)
+                let result: TestableObserver<String> = scheduler.createObserver(String)
                 inners[group.key] = group
                 results[group.key] = result
                 
@@ -2307,8 +2307,8 @@ extension ObservableSingleTest {
         var outerSubscription: Disposable?
         var inners = Dictionary<String, GroupedObservable<String, String>>()
         var innerSubscriptions = Dictionary<String, Disposable>()
-        var results = Dictionary<String, MockObserver<String>>()
-        let outerResults: MockObserver<String> = scheduler.createObserver(String)
+        var results = Dictionary<String, TestableObserver<String>>()
+        let outerResults: TestableObserver<String> = scheduler.createObserver(String)
         
         scheduler.scheduleAt(Defaults.created) {
             outer = xs.groupBy { x in
@@ -2323,7 +2323,7 @@ extension ObservableSingleTest {
                     onNext: { (group: GroupedObservable<String, String>) -> Void in
                         outerResults.onNext(group.key)
                         
-                        let result: MockObserver<String> = scheduler.createObserver(String)
+                        let result: TestableObserver<String> = scheduler.createObserver(String)
                         inners[group.key] = group
                         results[group.key] = result
                         innerSubscriptions[group.key] = group.subscribe(result)
@@ -2403,8 +2403,8 @@ extension ObservableSingleTest {
         var outerSubscription: Disposable?
         var inners = Dictionary<String, GroupedObservable<String, String>>()
         var innerSubscriptions = Dictionary<String, Disposable>()
-        var results = Dictionary<String, MockObserver<String>>()
-        let outerResults: MockObserver<String> = scheduler.createObserver(String)
+        var results = Dictionary<String, TestableObserver<String>>()
+        let outerResults: TestableObserver<String> = scheduler.createObserver(String)
         
         scheduler.scheduleAt(Defaults.subscribed) {
             let outer: Observable<GroupedObservable<String, String>> = xs.groupBy { x in
@@ -2416,7 +2416,7 @@ extension ObservableSingleTest {
                     onNext: { (group: GroupedObservable<String, String>) -> Void in
                         outerResults.onNext(group.key)
                         
-                        let result: MockObserver<String> = scheduler.createObserver(String)
+                        let result: TestableObserver<String> = scheduler.createObserver(String)
                         inners[group.key] = group
                         results[group.key] = result
                         innerSubscriptions[group.key] = group.subscribe(result)
@@ -2498,8 +2498,8 @@ extension ObservableSingleTest {
         var outerSubscription: Disposable?
         var inners = Dictionary<String, GroupedObservable<String, String>>()
         var innerSubscriptions = Dictionary<String, Disposable>()
-        var results = Dictionary<String, MockObserver<String>>()
-        let outerResults: MockObserver<String> = scheduler.createObserver(String)
+        var results = Dictionary<String, TestableObserver<String>>()
+        let outerResults: TestableObserver<String> = scheduler.createObserver(String)
         
         scheduler.scheduleAt(Defaults.subscribed) {
             let outer: Observable<GroupedObservable<String, String>> = xs.groupBy { x in
@@ -2511,7 +2511,7 @@ extension ObservableSingleTest {
                     onNext: { (group: GroupedObservable<String, String>) -> Void in
                         outerResults.onNext(group.key)
                         
-                        let result: MockObserver<String> = scheduler.createObserver(String)
+                        let result: TestableObserver<String> = scheduler.createObserver(String)
                         inners[group.key] = group
                         results[group.key] = result
                         innerSubscriptions[group.key] = group.subscribe(result)
@@ -2582,7 +2582,7 @@ extension ObservableSingleTest {
             completed(570)
             ])
         
-        let results: MockObserver<String> = scheduler.createObserver(String)
+        let results: TestableObserver<String> = scheduler.createObserver(String)
         var outer: Observable<GroupedObservable<String, String>>?
         var outerSubscription: Disposable?
         var inner: GroupedObservable<String, String>?
@@ -2630,7 +2630,7 @@ extension ObservableSingleTest {
             error(570, testError)
             ])
         
-        let results: MockObserver<String> = scheduler.createObserver(String)
+        let results: TestableObserver<String> = scheduler.createObserver(String)
         var outer: Observable<GroupedObservable<String, String>>?
         var outerSubscription: Disposable?
         var inner: GroupedObservable<String, String>?
@@ -2678,7 +2678,7 @@ extension ObservableSingleTest {
             error(570, testError)
             ])
         
-        let results: MockObserver<String> = scheduler.createObserver(String)
+        let results: TestableObserver<String> = scheduler.createObserver(String)
         var outerSubscription: Disposable?
         var inner: GroupedObservable<String, String>?
         var innerSubscription: Disposable?
