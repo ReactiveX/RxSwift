@@ -26,52 +26,51 @@ This project tries to be consistent with [ReactiveX.io](http://reactivex.io/). T
 # Observables aka Sequences
 
 ## Basics
-[Equivalence](MathBehindRx.md) of observer pattern(`Observable<Element>`) and sequences (`Generator`s) is one of the most important things to understand about Rx.
+The [Equivalence](MathBehindRx.md) of observer patterns (`Observable<Element>`) and sequences (`Generator`s) 
+is one of the most important things to understand about Rx.
 
-Observer pattern is needed because you want to model asynchronous behavior and
-that equivalence enables implementation of high level sequence operations as operators on `Observable`s.
+The observer pattern is needed because we want to model asynchronous behavior.
+That equivalence enablesthe  implementation of high level sequence operations as operators on `Observable`s.
 
 Sequences are a simple, familiar concept that is **easy to visualize**.
 
-People are creatures with huge visual cortexes. When you can visualize something easily, it's a lot easier to reason about.
+People are creatures with huge visual cortexes. When we can visualize a concept easily, it's a lot easier to reason about it.
 
-In that way you can lift a lot of the cognitive load from trying to simulate event state machines inside every Rx operator to high level operations over sequences.
+We can lift a lot of the cognitive load from trying to simulate event state machines inside every Rx operator onto high level operations over sequences.
 
-If you don't use Rx and you model async systems, that probably means that your code is full of those state machines and transient states that you need to simulate instead of abstracting them away.
+If we don't use Rx but model asynchronous systems, that probably means that our code is full of state machines and transient states that we need to simulate instead of abstracting away.
 
-Lists/sequences are probably one of the first concepts mathematicians/programmers learn.
+Lists and sequences are probably one of the first concepts mathematicians and programmers learn.
 
-Here is a sequence of numbers
+Here is a sequence of numbers:
 
-
-```
---1--2--3--4--5--6--| // it terminates normally
-```
-
-Here is another one with characters
 
 ```
---a--b--a--a--a---d---X // it terminates with error
+--1--2--3--4--5--6--| // terminates normally
 ```
 
-Some sequences are finite, and some are infinite, like sequence of button taps
+Another sequence, with characters:
+
+```
+--a--b--a--a--a---d---X // terminates with error
+```
+
+Some sequences are finite and others are infinite, like a sequence of button taps:
 
 ```
 ---tap-tap-------tap--->
 ```
 
-These diagrams are called marble diagrams.
+These are called marble diagrams. There are more marble diagrams at [rxmarbles.com](rxmarbles.com).
 
-[http://rxmarbles.com/](http://rxmarbles.com/)
-
-If we were to specify sequence grammar as regular expression it would look something like this
+If we were to specify sequence grammar as a regular expression it would look like:
 
 **Next* (Error | Completed)?**
 
 This describes the following:
 
-* **sequences can have 0 or more elements**
-* **once an `Error` or `Completed` event is received, the sequence can't produce any other element**
+* **Sequences can have 0 or more elements.**
+* **Once an `Error` or `Completed` event is received, the sequence cannot produce any other element.**
 
 Sequences in Rx are described by a push interface (aka callback).
 
@@ -91,23 +90,23 @@ protocol ObserverType {
 }
 ```
 
-**When sequence sends `Complete` or `Error` event all internal resources that compute sequence elements will be freed.**
+**When a sequence sends the `Complete` or `Error` event all internal resources that compute sequence elements will be freed.**
 
-**To cancel production of sequence elements and free resources immediately, call `dispose` on returned subscription.**
+**To cancel production of sequence elements and free resources immediately, call `dispose` on the returned subscription.**
 
-If a sequence terminates in finite time, not calling `dispose` or not using `addDisposableTo(disposeBag)` won't cause any permanent resource leaks, but those resources will be used until sequence completes in some way (finishes producing elements or error happens).
+If a sequence terminates in finite time, not calling `dispose` or not using `addDisposableTo(disposeBag)` won't cause any permanent resource leaks. However, those resources will be used until the sequence completes, either by finishing production of elements or returning an error.
 
-If a sequence doesn't terminate in some way, resources will be allocated permanently unless `dispose` is being called manually, automatically inside of a `disposeBag`, `takeUntil` or some other way.
+If a sequence does not terminate in some way, resources will be allocated permanently unless `dispose` is called manually, automatically inside of a `disposeBag`, `takeUntil` or in some other way.
 
-**Using dispose bags or `takeUntil` operator is a robust way of making sure resources are cleaned up and we recommend using them in production even though sequence will terminate in finite time.**
+**Using dispose bags or `takeUntil` operator is a robust way of making sure resources are cleaned up. We recommend using them in production even if the sequences will terminate in finite time.**
 
 In case you are curious why `ErrorType` isn't generic, you can find explanation [here](DesignRationale.md#why-error-type-isnt-generic).
 
 ## Disposing
 
-There is one additional way an observed sequence can terminate. When you are done with a sequence and want to release all of the resources that were allocated to compute upcoming elements, calling dispose on a subscription will clean this up for you.
+There is one additional way an observed sequence can terminate. When we are done with a sequence and we want to release all of the resources allocated to compute the upcoming elements, we can call `dispose` on a subscription.
 
-Here is an example with `interval` operator.
+Here is an example with the `interval` operator.
 
 ```swift
 let subscription = Observable<Int>.interval(0.3, scheduler: scheduler)
@@ -132,26 +131,26 @@ This will print:
 5
 ```
 
-One thing to note here is that you usually don't want to manually call `dispose` and this is only educational example. Calling dispose manually is usually bad code smell, and there are better ways to dispose subscriptions. You can either use `DisposeBag`, `takeUntil` operator or some other mechanism.
+Note the you usually do not want to manually call `dispose`; this is only educational example. Calling dispose manually is usually a bad code smell. There are better ways to dispose subscriptions. We can use `DisposeBag`, the `takeUntil` operator, or some other mechanism.
 
-So can this code print something after `dispose` call executed? The answer is, it depends.
+So can this code print something after the `dispose` call executed? The answer is: it depends.
 
-* If the `scheduler` is **serial scheduler** (`MainScheduler` is serial scheduler) and `dispose` is called on **on the same serial scheduler**, then the answer is **no**.
+* If the `scheduler` is a **serial scheduler** (ex. `MainScheduler`) and `dispose` is called on **on the same serial scheduler**, the answer is **no**.
 
-* otherwise **yes**.
+* Otherwise it is **yes**.
 
 You can find out more about schedulers [here](Schedulers.md).
 
 You simply have two processes happening in parallel.
 
 * one is producing elements
-* other is disposing subscription
+* the other is disposing the subscription
 
-When you think about it, the question `can something be printed after` doesn't even make sense in case those processes are on different schedulers.
+The question "Can something be printed after?" does not even make sense in the case that those processes are on different schedulers.
 
 A few more examples just to be sure (`observeOn` is explained [here](Schedulers.md)).
 
-In case you have something like:
+In case we have something like:
 
 ```swift
 let subscription = Observable<Int>.interval(0.3, scheduler: scheduler)
@@ -166,9 +165,9 @@ subscription.dispose() // called from main thread
 
 ```
 
-**After `dispose` call returns, nothing will be printed. That is a guarantee.**
+**After the `dispose` call returns, nothing will be printed. That is guaranteed.**
 
-Also in this case:
+Also, in this case:
 
 ```swift
 let subscription = Observable<Int>.interval(0.3, scheduler: scheduler)
@@ -183,21 +182,21 @@ subscription.dispose() // executing on same `serialScheduler`
 
 ```
 
-**After `dispose` call returns, nothing will be printed. That is a guarantee.**
+**After the `dispose` call returns, nothing will be printed. That is guaranteed.**
 
 ### Dispose Bags
 
 Dispose bags are used to return ARC like behavior to RX.
 
-When `DisposeBag` is deallocated, it will call `dispose` on each of the added disposables.
+When a `DisposeBag` is deallocated, it will call `dispose` on each of the added disposables.
 
-It doesn't have a `dispose` method and it doesn't allow calling explicit dispose on purpose. If immediate cleanup is needed just create a new bag.
+It does not have a `dispose` method and therefore does not allow calling explicit dispose on purpose. If immediate cleanup is required, we can just create a new bag.
 
 ```swift
   self.disposeBag = DisposeBag()
 ```
 
-That should clear references to old one and cause disposal of resources.
+This will clear old references and cause disposal of resources.
 
 If that explicit manual disposal is still wanted, use `CompositeDisposable`. **It has the wanted behavior but once that `dispose` method is called, it will immediately dispose any newly added disposable.**
 
