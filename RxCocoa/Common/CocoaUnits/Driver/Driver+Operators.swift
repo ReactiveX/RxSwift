@@ -124,15 +124,15 @@ extension DriverConvertibleType {
     Invokes an action for each event in the observable sequence, and propagates all observer messages through the result sequence.
     
     - parameter onNext: Action to invoke for each element in the observable sequence.
-    - parameter onError: Action to invoke upon errored termination of the observable sequence.
+    - parameter onError: Action to invoke upon errored termination of the observable sequence. This callback will never be invoked since driver can't error out.
     - parameter onCompleted: Action to invoke upon graceful termination of the observable sequence.
     - returns: The source sequence with the side-effecting behavior applied.
     */
     @warn_unused_result(message="http://git.io/rxs.uo")
-    public func doOn(onNext onNext: (E -> Void)? = nil, onCompleted: (() -> Void)? = nil)
+    public func doOn(onNext onNext: (E -> Void)? = nil, onError: (ErrorType -> Void)? = nil, onCompleted: (() -> Void)? = nil)
         -> Driver<E> {
         let source = self.asObservable()
-            .doOn(onNext: onNext, onCompleted: onCompleted)
+            .doOn(onNext: onNext, onError: onError, onCompleted: onCompleted)
             
         return Driver(source)
     }
