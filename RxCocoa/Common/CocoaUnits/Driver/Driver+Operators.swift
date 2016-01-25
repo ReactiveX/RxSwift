@@ -11,6 +11,7 @@ import Foundation
 import RxSwift
 #endif
 
+// MARK: map
 extension DriverConvertibleType {
     
     /**
@@ -26,7 +27,10 @@ extension DriverConvertibleType {
             .map(selector)
         return Driver<R>(source)
     }
-    
+}
+
+// MARK: filter
+extension DriverConvertibleType {
     /**
     Filters the elements of an observable sequence based on a predicate.
     
@@ -42,6 +46,7 @@ extension DriverConvertibleType {
     }
 }
 
+// MARK: switchLatest
 extension DriverConvertibleType where E : DriverConvertibleType {
     
     /**
@@ -63,6 +68,7 @@ extension DriverConvertibleType where E : DriverConvertibleType {
     }
 }
 
+// MARK: flatMapLatest
 extension DriverConvertibleType {
     /**
      Projects each element of an observable sequence into a new sequence of observable sequences and then
@@ -84,6 +90,7 @@ extension DriverConvertibleType {
     }
 }
 
+// MARK: flatMapFirst
 extension DriverConvertibleType {
 
     /**
@@ -103,6 +110,7 @@ extension DriverConvertibleType {
     }
 }
 
+// MARK: doOn
 extension DriverConvertibleType {
     
     /**
@@ -162,6 +170,7 @@ extension DriverConvertibleType {
     }
 }
 
+// MARK: debug
 extension DriverConvertibleType {
     
     /**
@@ -178,6 +187,7 @@ extension DriverConvertibleType {
     }
 }
 
+// MARK: distinctUntilChanged
 extension DriverConvertibleType where E: Equatable {
     
     /**
@@ -239,6 +249,7 @@ extension DriverConvertibleType {
 }
 
 
+// MARK: flatMap
 extension DriverConvertibleType {
     
     /**
@@ -256,7 +267,7 @@ extension DriverConvertibleType {
     }
 }
 
-// merge
+// MARK: merge
 extension DriverConvertibleType where E : DriverConvertibleType {
     
     /**
@@ -288,7 +299,7 @@ extension DriverConvertibleType where E : DriverConvertibleType {
     }
 }
 
-// throttle
+// MARK: throttle
 extension DriverConvertibleType {
     
     /**
@@ -326,7 +337,7 @@ extension DriverConvertibleType {
     }
 }
 
-// scan
+// MARK: scan
 extension DriverConvertibleType {
     /**
     Applies an accumulator function over an observable sequence and returns each intermediate result. The specified seed value is used as the initial accumulator value.
@@ -346,6 +357,7 @@ extension DriverConvertibleType {
     }
 }
 
+// MARK: concat
 extension SequenceType where Generator.Element : DriverConvertibleType {
 
     /**
@@ -376,6 +388,7 @@ extension CollectionType where Generator.Element : DriverConvertibleType {
     }
 }
 
+// MARK: zip
 extension CollectionType where Generator.Element : DriverConvertibleType {
 
     /**
@@ -391,6 +404,7 @@ extension CollectionType where Generator.Element : DriverConvertibleType {
     }
 }
 
+// MARK: combineLatest
 extension CollectionType where Generator.Element : DriverConvertibleType {
 
     /**
@@ -406,6 +420,7 @@ extension CollectionType where Generator.Element : DriverConvertibleType {
     }
 }
 
+// MARK: withLatestFrom
 extension DriverConvertibleType {
 
     /**
