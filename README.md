@@ -1,13 +1,10 @@
 <img src="assets/Rx_Logo_M.png" width="36" height="36"> RxSwift: ReactiveX for Swift
 ======================================
 
-[![Travis CI](https://travis-ci.org/ReactiveX/RxSwift.svg?branch=master)](https://travis-ci.org/ReactiveX/RxSwift)
+[![Travis CI](https://travis-ci.org/ReactiveX/RxSwift.svg?branch=master)](https://travis-ci.org/ReactiveX/RxSwift) ![platforms](https://img.shields.io/badge/platforms-iOS%20%7C%20OSX%20%7C%20tvOS%20%7C%20watchOS%20%7C%20Linux%28experimental%29-333333.svg) ![pod](https://img.shields.io/cocoapods/v/RxSwift.svg)
+ [![Slack channel](http://slack.rxswift.org/badge.svg)](http://slack.rxswift.org) Hang out with us on [rxswift.slack.com](http://slack.rxswift.org)
 
 Xcode 7 Swift 2.1 required
-
-**This README.md describes RxSwift 2.0.0**
-
-**You can find RxSwift 1.9 for Swift 1.2 [here](https://github.com/ReactiveX/RxSwift/tree/rxswift-1.0).**
 
 ### Change Log (from 1.9 version)
 
@@ -83,8 +80,6 @@ RxSwift
 ├-RxExample       - example apps: taste of Rx
 └-Rx.xcworkspace  - workspace that contains all of the projects hooked up
 ```
-
-Hang out with us on [rxswift.slack.com](http://slack.rxswift.org) <img src="http://slack.rxswift.org/badge.svg">
 
 1. [Why](#why)
   1. [State](#state)
@@ -325,7 +320,7 @@ extension UISearchBar {
     }
 
     public var rx_text: Observable<String> {
-        return defer { [weak self] in
+        return Observable.deferred { [weak self] in
             let text = self?.text ?? ""
 
             return self?.rx_delegate.observe("searchBar:textDidChange:") ?? empty()
@@ -482,7 +477,7 @@ $ pod install
 Add this to `Cartfile`
 
 ```
-github "ReactiveX/RxSwift" ~> 2.0 
+github "ReactiveX/RxSwift" ~> 2.0
 ```
 
 ```
