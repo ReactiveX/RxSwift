@@ -26,11 +26,11 @@ This project tries to be consistent with [ReactiveX.io](http://reactivex.io/). T
 # Observables aka Sequences
 
 ## Basics
-The [Equivalence](MathBehindRx.md) of observer patterns (`Observable<Element>`) and sequences (`Generator`s) 
+The [Equivalence](MathBehindRx.md) of observer patterns (`Observable<Element>`) and sequences (`Generator`s)
 is one of the most important things to understand about Rx.
 
 The observer pattern is needed because we want to model asynchronous behavior.
-That equivalence enablesthe  implementation of high level sequence operations as operators on `Observable`s.
+That equivalence enables the implementation of high level sequence operations as operators on `Observable`s.
 
 Sequences are a simple, familiar concept that is **easy to visualize**.
 
