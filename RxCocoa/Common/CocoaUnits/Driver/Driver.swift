@@ -135,12 +135,19 @@ extension Driver {
         return Driver(Observable.deferred { observableFactory().asObservable() })
     }
 
+    /**
+    This method creates a new Observable instance with a variable number of elements.
+
+    - seealso: [from operator on reactivex.io](http://reactivex.io/documentation/operators/from.html)
+
+    - parameter elements: Elements to generate.
+    - returns: The observable sequence whose elements are pulled from the given arguments.
+    */
     @warn_unused_result(message="http://git.io/rxs.uo")
     public static func of(elements: E ...) -> Driver<E> {
-        let source = elements.toObservable().subscribeOn(driverSubscribeOnScheduler)
+        let source = elements.toObservable(driverSubscribeOnScheduler)
         return Driver(raw: source)
     }
-
 }
 
 /**
