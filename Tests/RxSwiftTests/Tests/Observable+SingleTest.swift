@@ -271,9 +271,9 @@ extension ObservableSingleTest {
     }
 }
 
-// Do 
+// doOn
 extension ObservableSingleTest {
-    func testDo_shouldSeeAllValues() {
+    func testDoOn_shouldSeeAllValues() {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs = scheduler.createHotObservable([
@@ -317,7 +317,7 @@ extension ObservableSingleTest {
         XCTAssertEqual(xs.subscriptions, correctSubscriptions)
     }
 
-    func testDo_plainAction() {
+    func testDoOn_plainAction() {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs = scheduler.createHotObservable([
@@ -356,8 +356,8 @@ extension ObservableSingleTest {
         XCTAssertEqual(res.events, correctMessages)
         XCTAssertEqual(xs.subscriptions, correctSubscriptions)
     }
-    
-    func testDo_nextCompleted() {
+
+    func testDoOn_nextCompleted() {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs = scheduler.createHotObservable([
@@ -404,7 +404,7 @@ extension ObservableSingleTest {
         XCTAssertEqual(xs.subscriptions, correctSubscriptions)
     }
     
-    func testDo_completedNever() {
+    func testDoOn_completedNever() {
         let scheduler = TestScheduler(initialClock: 0)
         
         let recordedEvents: [Recorded<Event<Int>>] = [
@@ -439,7 +439,7 @@ extension ObservableSingleTest {
         XCTAssertEqual(xs.subscriptions, correctSubscriptions)
     }
     
-    func testDo_nextError() {
+    func testDoOn_nextError() {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs = scheduler.createHotObservable([
@@ -486,7 +486,7 @@ extension ObservableSingleTest {
         XCTAssertEqual(xs.subscriptions, correctSubscriptions)
     }
     
-    func testDo_nextErrorNot() {
+    func testDoOn_nextErrorNot() {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs = scheduler.createHotObservable([
@@ -533,7 +533,7 @@ extension ObservableSingleTest {
         XCTAssertEqual(xs.subscriptions, correctSubscriptions)
     }
     
-    func testDo_Throws() {
+    func testDoOn_Throws() {
         let scheduler = TestScheduler(initialClock: 0)
         
         let xs = scheduler.createHotObservable([
@@ -555,6 +555,213 @@ extension ObservableSingleTest {
             Subscription(200, 210)
         ]
         
+        XCTAssertEqual(res.events, correctMessages)
+        XCTAssertEqual(xs.subscriptions, correctSubscriptions)
+    }
+
+    func testDoOnNext_normal() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let xs = scheduler.createHotObservable([
+            next(150, 1),
+            next(210, 2),
+            next(220, 3),
+            next(230, 4),
+            next(240, 5),
+            completed(250)
+            ])
+
+        var numberOfTimesInvoked = 0
+
+        let res = scheduler.start { xs.doOnNext { error in
+                numberOfTimesInvoked = numberOfTimesInvoked + 1
+            }
+        }
+
+        let correctMessages = [
+            next(210, 2),
+            next(220, 3),
+            next(230, 4),
+            next(240, 5),
+            completed(250)
+        ]
+
+        let correctSubscriptions = [
+            Subscription(200, 250)
+        ]
+
+        XCTAssertEqual(res.events, correctMessages)
+        XCTAssertEqual(xs.subscriptions, correctSubscriptions)
+
+        XCTAssertEqual(numberOfTimesInvoked, 4)
+    }
+
+    func testDoOnNext_throws() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let xs = scheduler.createHotObservable([
+            next(150, 1),
+            next(210, 2),
+            next(220, 3),
+            next(230, 4),
+            next(240, 5),
+            completed(250)
+            ])
+
+        var numberOfTimesInvoked = 0
+
+        let res = scheduler.start { xs.doOnNext { error in
+                if numberOfTimesInvoked > 2 {
+                    throw testError
+                }
+                numberOfTimesInvoked = numberOfTimesInvoked + 1
+            }
+        }
+
+        let correctMessages = [
+            next(210, 2),
+            next(220, 3),
+            next(230, 4),
+            error(240, testError)
+        ]
+
+        let correctSubscriptions = [
+            Subscription(200, 240)
+        ]
+
+        XCTAssertEqual(res.events, correctMessages)
+        XCTAssertEqual(xs.subscriptions, correctSubscriptions)
+
+        XCTAssertEqual(numberOfTimesInvoked, 3)
+    }
+
+    func testDoOnError_normal() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let xs = scheduler.createHotObservable([
+            next(150, 1),
+            next(210, 2),
+            error(250, testError)
+            ])
+
+        var recordedError: ErrorType!
+        var numberOfTimesInvoked = 0
+
+        let res = scheduler.start { xs.doOnError { error in
+                recordedError = error
+                numberOfTimesInvoked = numberOfTimesInvoked + 1
+            }
+        }
+
+        let correctMessages = [
+            next(210, 2),
+            error(250, testError)
+        ]
+
+        let correctSubscriptions = [
+            Subscription(200, 250)
+        ]
+
+        XCTAssertEqual(res.events, correctMessages)
+        XCTAssertEqual(xs.subscriptions, correctSubscriptions)
+
+        XCTAssertEqual(recordedError as NSError, testError)
+        XCTAssertEqual(numberOfTimesInvoked, 1)
+    }
+
+    func testDoOnError_throws() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let xs = scheduler.createHotObservable([
+            next(150, 1),
+            next(210, 2),
+            error(250, testError)
+            ])
+
+        let res = scheduler.start { xs.doOnError { _ in
+                throw testError1
+            }
+        }
+
+        let correctMessages = [
+            next(210, 2),
+            error(250, testError1)
+        ]
+
+        let correctSubscriptions = [
+            Subscription(200, 250)
+        ]
+
+        XCTAssertEqual(res.events, correctMessages)
+        XCTAssertEqual(xs.subscriptions, correctSubscriptions)
+    }
+
+    func testDoOnCompleted_normal() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let xs = scheduler.createHotObservable([
+            next(150, 1),
+            next(210, 2),
+            next(220, 3),
+            next(230, 4),
+            next(240, 5),
+            completed(250)
+            ])
+
+        var didComplete = false
+
+        let res = scheduler.start { xs.doOnCompleted { error in
+                didComplete = true
+            }
+        }
+
+        let correctMessages = [
+            next(210, 2),
+            next(220, 3),
+            next(230, 4),
+            next(240, 5),
+            completed(250)
+        ]
+
+        let correctSubscriptions = [
+            Subscription(200, 250)
+        ]
+
+        XCTAssertEqual(res.events, correctMessages)
+        XCTAssertEqual(xs.subscriptions, correctSubscriptions)
+
+        XCTAssertEqual(didComplete, true)
+    }
+
+    func testDoOnCompleted_throws() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let xs = scheduler.createHotObservable([
+            next(150, 1),
+            next(210, 2),
+            next(220, 3),
+            next(230, 4),
+            next(240, 5),
+            completed(250)
+            ])
+
+        let res = scheduler.start { xs.doOnCompleted { error in
+                throw testError
+            }
+        }
+
+        let correctMessages = [
+            next(210, 2),
+            next(220, 3),
+            next(230, 4),
+            next(240, 5),
+            error(250, testError)
+        ]
+
+        let correctSubscriptions = [
+            Subscription(200, 250)
+        ]
+
         XCTAssertEqual(res.events, correctMessages)
         XCTAssertEqual(xs.subscriptions, correctSubscriptions)
     }

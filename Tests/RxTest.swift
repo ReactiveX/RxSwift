@@ -93,7 +93,7 @@ extension RxTest {
     func tearDownActions() {
         #if TRACE_RESOURCES
             // give 5 sec to clean up resources
-            for i in  0..<10 {
+            for _ in 0..<10 {
                 if self.startResourceCount < resourceCount {
                     // main schedulers need to finish work
                     NSRunLoop.currentRunLoop().runMode(NSDefaultRunLoopMode, beforeDate: NSDate(timeIntervalSinceNow: 0.05))

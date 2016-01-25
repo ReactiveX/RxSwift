@@ -13,6 +13,8 @@ import UIKit
 import RxSwift
 #endif
 
+var rx_tap_key: UInt8 = 0
+
 extension UIBarButtonItem {
     
 	/**
@@ -38,22 +40,23 @@ extension UIBarButtonItem {
     Reactive wrapper for target action pattern on `self`.
     */
     public var rx_tap: ControlEvent<Void> {
-        let source: Observable<Void> = Observable.create { [weak self] observer in
-
-            guard let control = self else {
-                observer.on(.Completed)
-                return NopDisposable.instance
+        let source = rx_lazyInstanceObservable(&rx_tap_key) { () -> Observable<Void> in
+            Observable.create { [weak self] observer in
+                guard let control = self else {
+                    observer.on(.Completed)
+                    return NopDisposable.instance
+                }
+                let target = BarButtonItemTarget(barButtonItem: control) {
+                    observer.on(.Next())
+                }
+                return target
             }
-
-            let target = BarButtonItemTarget(barButtonItem: control) {
-                observer.on(.Next())
-            }
-            return target
-        }.takeUntil(rx_deallocated)
+            .takeUntil(self.rx_deallocated)
+            .share()
+        }
         
         return ControlEvent(events: source)
     }
-    
 }
 
 

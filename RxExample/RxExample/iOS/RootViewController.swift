@@ -23,5 +23,6 @@ public class RootViewController : UITableViewController {
         DefaultWireframe.sharedInstance
         MainScheduler.instance
         ReachabilityService.sharedReachabilityService
+        GeolocationService.instance
     }
 }
