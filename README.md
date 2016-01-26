@@ -1,4 +1,4 @@
-<img src="assets/Rx_Logo_M.png" width="36" height="36"> RxSwift: ReactiveX for Swift
+<img src="assets/Rx_Logo_M.png" alt="Miss Electric Eel 2016" width="36" height="36"> RxSwift: ReactiveX for Swift
 ======================================
 
 [![Travis CI](https://travis-ci.org/ReactiveX/RxSwift.svg?branch=master)](https://travis-ci.org/ReactiveX/RxSwift) ![platforms](https://img.shields.io/badge/platforms-iOS%20%7C%20OSX%20%7C%20tvOS%20%7C%20watchOS%20%7C%20Linux%28experimental%29-333333.svg) ![pod](https://img.shields.io/cocoapods/v/RxSwift.svg)
@@ -81,6 +81,17 @@ RxSwift
 └-Rx.xcworkspace  - workspace that contains all of the projects hooked up
 ```
 
+## Docs
+
+1. [Getting started](Documentation/GettingStarted.md)
+1. [Math behind](Documentation/MathBehindRx.md)
+1. [Units](Documentation/Units.md)
+1. [Simple Examples](Documentation/Examples.md)
+1. [API - RxSwift operators / RxCocoa extensions](Documentation/API.md)
+1. [Hot and cold observables](Documentation/HotAndColdObservables.md)
+
+## Content
+
 1. [Why](#why)
   1. [State](#state)
   1. [Bindings](#bindings)
@@ -94,17 +105,8 @@ RxSwift
   1. [KVO](#kvo)
   1. [Benefits](#benefits)
   1. [It's not all or nothing](#its-not-all-or-nothing)
-1. [Getting started](Documentation/GettingStarted.md)
-1. [Units](Documentation/Units.md)
-1. [Creating observable sequences](Documentation/GettingStarted.md#creating-your-own-observable-aka-observable-sequence)
-1. [Examples](Documentation/Examples.md)
-1. [API - RxSwift operators / RxCocoa extensions](Documentation/API.md)
 1. [Build / Install / Run](#build--install--run)
-1. [Math behind](Documentation/MathBehindRx.md)
-1. [Hot and cold observables](Documentation/HotAndColdObservables.md)
-1. [Units](Documentation/Units.md)
-1. [Feature comparison with other frameworks](#feature-comparison-with-other-frameworks)
-1. [Roadmap](https://github.com/ReactiveX/RxSwift/wiki/roadmap)
+1. [Comparison with ReactiveCocoa](#comparison-with-reactivecocoa)
 1. [Playgrounds](#playgrounds)
 1. [RxExamples](#rxexamples)
 1. [References](#references)
@@ -495,54 +497,25 @@ $ git submodule add git@github.com:ReactiveX/RxSwift.git
 * Drag `Rx.xcodeproj` into Project Navigator
 * Go to `Project > Targets > Build Phases > Link Binary With Libraries`, click `+` and select `RxSwift-[Platform]` and `RxCocoa-[Platform]` targets
 
-### iOS 7
+## Comparison with ReactiveCocoa
 
-iOS 7 is little tricky, but it can be done. The main problem is that iOS 7 doesn't support dynamic frameworks.
+RxSwift is somewhat similar to ReactiveCocoa since ReactiveCocoa borrows a large number of concepts from Rx.
 
-These are the steps to include RxSwift/RxCocoa projects in an iOS7 project
+One of the main goals of this project was to create a significantly simpler interface that is more aligned with other Rx implementations, offers richer concurrency model, offers more optimization opportunities and is more aligned with built-in Swift error handling mechanisms.
 
-* RxSwift/RxCocoa projects have no external dependencies so just manually **including all of the `.swift`, `.m`, `.h` files** in build target should import all of the necessary source code.
+We've also decided to only rely on Swift/llvm compiler and not introduce any external dependencies.
 
-You can either do that by copying the files manually or using git submodules.
+Probably the main difference between these projects is the difference of approach in building abstractions.
 
-`git submodule add git@github.com:ReactiveX/RxSwift.git`
+The main goal of RxSwift project is to provide environment agnostic compositional computation glue abstracted in the form of observable sequences.
+We then aim to improve the experience of using RxSwift on specific platforms. To do this RxCocoa  uses those generic computations to build more practical abstractions and wrap Foundation/Cocoa/UKit frameworks. That means that other libraries give context and semantics to the generic computation engine RxSwift provides such as `Driver`, `ControlProperty`, `ControlEvent`s and more.
 
-After you've included files from `RxSwift` and `RxCocoa` directories, you'll need to remove files that are platform specific.
+One of the benefits to representing all these abstractions as a single concept; ​_observable sequences_​, is that all computation abstractions built on top of them are also composable in the same fundamental way. They all follow the same contract and implement the same interface.
+ It is also easy to create flexible subscription (resource) sharing strategies or use one of the built-in ones: `share`, `shareReplay`, `publish`, `multicast`, `shareReplayLatestWhileConnected`...
 
-If you are compiling for **`iOS`**, please **remove references** to OSX specific files located in **`RxCocoa/OSX`**.
+This library also offers fine-tunable concurrency model. In case concurrent schedulers are used, observable sequence operators will preserve sequence properties. The same observable sequence operators will also know how to detect and optimally use known serial schedulers. ReactiveCocoa has a more limited concurrency model and only allows serial schedulers.
 
-If you are compiling for **`OSX`**, please **remove references** to iOS specific files located in **`RxCocoa/iOS`**.
-
-* Add **`RX_NO_MODULE`** as a custom Swift preprocessor flag
-
-Go to your target's `Build Settings > Swift Compiler - Custom Flags` and add `-D RX_NO_MODULE`
-
-* Include **`RxCocoa.h`** in your bridging header
-
-If you already have a bridging header, adding `#import "RxCocoa.h"` should be sufficient.
-
-If you don't have a bridging header, you can go to your target's `Build Settings > Swift Compiler - Code Generation > Objective-C Bridging Header` and point it to `[path to RxCocoa.h parent directory]/RxCocoa.h`.
-
-## Feature comparison with other frameworks
-
-|                                                           | Rx[Swift] |      ReactiveCocoa     | Bolts | PromiseKit |
-|:---------------------------------------------------------:|:---------:|:----------------------:|:-----:|:----------:|
-| Language                                                  |   swift   |       objc/swift       |  objc | objc/swift |
-| Basic Concept                                             |  Sequence | Signal SignalProducer  |  Task |   Promise  |
-| Cancellation                                              |     •     |            •           |   •   |      •     |
-| Async operations                                          |     •     |            •           |   •   |      •     |
-| map/filter/...                                            |     •     |            •           |   •   |            |
-| cache invalidation                                        |     •     |            •           |       |            |
-| cross platform                                            |     •     |                        |   •   |            |
-| blocking operators for unit testing                       |     •     |                        |  N/A  |     N/A    |
-| Lockless single sequence operators (map, filter, ...)     |     •     |                        |  N/A  |     N/A    |
-| Unified hot and cold observables                          |     •     |                        |  N/A  |     N/A    |
-| RefCount                                                  |     •     |                        |  N/A  |     N/A    |
-| Concurrent schedulers                                     |     •     |                        |  N/A  |     N/A    |
-| Generated optimized narity operators (combineLatest, zip) |     •     |                        |  N/A  |     N/A    |
-| Reentrant operators                                       |     •     |                        |  N/A  |     N/A    |
-
-** Comparison with RAC with respect to v3.0-RC.1
+Multithreaded programming is really hard and detecting non trivial loops is even harder. That's why all operators are built in a fault tolerant way. Even in case element generation occurs during element processing (recursion), operators will try to handle that situation and prevent deadlocks. That means that in worst possible case programming error will cause stack overflow, but users won't have to manually kill the app, and you will get crash report in error reporting systems so you can find and fix the problem.
 
 ## Playgrounds
 
