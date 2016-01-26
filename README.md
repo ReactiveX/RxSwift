@@ -2,7 +2,7 @@
 ======================================
 
 [![Travis CI](https://travis-ci.org/ReactiveX/RxSwift.svg?branch=master)](https://travis-ci.org/ReactiveX/RxSwift) ![platforms](https://img.shields.io/badge/platforms-iOS%20%7C%20OSX%20%7C%20tvOS%20%7C%20watchOS%20%7C%20Linux%28experimental%29-333333.svg) ![pod](https://img.shields.io/cocoapods/v/RxSwift.svg)
- [![Slack channel](http://slack.rxswift.org/badge.svg)](http://slack.rxswift.org) Hang out with us on [rxswift.slack.com](http://slack.rxswift.org)
+ [![Slack channel](http://slack.rxswift.org/badge.svg)](http://slack.rxswift.org)
 
 Xcode 7 Swift 2.1 required
 
