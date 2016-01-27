@@ -96,7 +96,7 @@ extension ObservableType {
     @warn_unused_result(message="http://git.io/rxs.ud")
     public func bindNext(onNext: E -> Void) -> Disposable {
         return subscribe(onNext: onNext, onError: { error in
-            let error = "Binding error to variable: \(error)"
+            let error = "Binding error: \(error)"
             #if DEBUG
                 rxFatalError(error)
             #else
