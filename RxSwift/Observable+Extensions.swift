@@ -85,7 +85,7 @@ extension ObservableType {
     /**
     Subscribes an error handler to an observable sequence.
 
-    - parameter onRrror: Action to invoke upon errored termination of the observable sequence.
+    - parameter onError: Action to invoke upon errored termination of the observable sequence.
     - returns: Subscription object used to unsubscribe from the observable sequence.
     */
     @warn_unused_result(message="http://git.io/rxs.ud")
