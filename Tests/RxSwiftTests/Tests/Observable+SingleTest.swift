@@ -1307,7 +1307,7 @@ extension ObservableSingleTest {
                 errors.scan((0, nil)) { (a: (Int, NSError!), e) in
                     (a.0 + 1, e)
                 }
-                .flatMap { (a, e) -> Observable<Int64> in
+                .flatMap { (a, e) -> Observable<Int> in
                     if a >= 4 {
                         return Observable.error(e)
                     }
