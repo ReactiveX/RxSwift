@@ -382,7 +382,7 @@ extension ControlTests {
             }
 
         let testRow = NSIndexPath(forRow: 1, inSection: 0)
-        tableView.delegate!.tableView!(tableView, accessoryButtonTappedForRowWithIndexPath: NSIndexPath(forRow: 1, inSection: 0))
+        tableView.delegate!.tableView!(tableView, accessoryButtonTappedForRowWithIndexPath: testRow)
 
         XCTAssertEqual(selectedItem, testRow)
 
