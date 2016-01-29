@@ -125,7 +125,7 @@ extension Observable where Element: SignedIntegerType {
     */
     @warn_unused_result(message="http://git.io/rxs.uo")
     public static func timer(dueTime: RxTimeInterval, scheduler: SchedulerType)
-        -> Observable<Int64> {
+        -> Observable<E> {
         return Timer(
             dueTime: dueTime,
             period: nil,
