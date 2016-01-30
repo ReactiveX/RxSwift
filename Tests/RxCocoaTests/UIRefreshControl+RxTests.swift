@@ -6,6 +6,7 @@
 //  Copyright © 2016 Krunoslav Zaher. All rights reserved.
 //
 
+#if os(iOS)
 import Foundation
 
 import RxSwift
@@ -31,3 +32,5 @@ extension UIRefreshControlTests {
         XCTAssertTrue(subject.refreshing == false)
     }
 }
+
+#endif
