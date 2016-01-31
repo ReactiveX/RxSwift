@@ -150,6 +150,48 @@ extension Driver {
     }
 }
 
+extension Driver where Element: SignedIntegerType {
+    /**
+     Returns an observable sequence that produces a value after each period, using the specified scheduler to run timers and to send out observer messages.
+
+     - seealso: [interval operator on reactivex.io](http://reactivex.io/documentation/operators/interval.html)
+
+     - parameter period: Period for producing the values in the resulting sequence.
+     - returns: An observable sequence that produces a value after each period.
+     */
+    @warn_unused_result(message="http://git.io/rxs.uo")
+    public static func interval(period: RxTimeInterval) -> Driver<E> {
+        return Driver(raw: Observable<E>.interval(period, scheduler: driverObserveOnScheduler))
+    }
+
+    /**
+     Returns an observable sequence that periodically produces a value after the specified initial relative due time has elapsed, using the specified scheduler to run timers.
+
+     - seealso: [timer operator on reactivex.io](http://reactivex.io/documentation/operators/timer.html)
+
+     - parameter dueTime: Relative time at which to produce the first value.
+     - parameter period: Period to produce subsequent values.
+     - returns: An observable sequence that produces a value after due time has elapsed and then each period.
+     */
+    @warn_unused_result(message="http://git.io/rxs.uo")
+    public static func timer(dueTime: RxTimeInterval, period: RxTimeInterval) -> Driver<E> {
+        return Driver(raw: Observable<E>.timer(dueTime, period: period, scheduler: driverObserveOnScheduler))
+    }
+
+    /**
+     Returns an observable sequence that produces a single value at the specified absolute due time, using the specified scheduler to run the timer.
+
+     - seealso: [timer operator on reactivex.io](http://reactivex.io/documentation/operators/timer.html)
+
+     - parameter dueTime: Time interval after which to produce the value.
+     - returns: An observable sequence that produces a value at due time.
+     */
+    @warn_unused_result(message="http://git.io/rxs.uo")
+    public static func timer(dueTime: RxTimeInterval) -> Driver<E> {
+        return Driver(raw: Observable<E>.timer(dueTime, scheduler: driverObserveOnScheduler))
+    }
+}
+
 /**
  This method can be used in unit tests to ensure that driver is using mock schedulers instead of
  maind schedulers.
