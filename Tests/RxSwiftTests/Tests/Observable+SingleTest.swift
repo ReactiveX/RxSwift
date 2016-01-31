@@ -1307,12 +1307,12 @@ extension ObservableSingleTest {
                 errors.scan((0, nil)) { (a: (Int, NSError!), e) in
                     (a.0 + 1, e)
                 }
-                .flatMap { (a, e) -> Observable<Int> in
+                .flatMap { (a, e) -> Observable<Int64> in
                     if a >= 4 {
                         return Observable.error(e)
                     }
 
-                    return Observable<Int>.timer(RxTimeInterval(a * 50), scheduler: scheduler)
+                    return Observable<Int64>.timer(RxTimeInterval(a * 50), scheduler: scheduler)
                 }
             }
         }

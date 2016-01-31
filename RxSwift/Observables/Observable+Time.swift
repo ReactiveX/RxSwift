@@ -103,32 +103,11 @@ extension Observable where Element: SignedIntegerType {
     - returns: An observable sequence that produces a value after due time has elapsed and then each period.
     */
     @warn_unused_result(message="http://git.io/rxs.uo")
-    public static func timer(dueTime: RxTimeInterval, period: RxTimeInterval, scheduler: SchedulerType)
+    public static func timer(dueTime: RxTimeInterval, period: RxTimeInterval? = nil, scheduler: SchedulerType)
         -> Observable<E> {
         return Timer(
             dueTime: dueTime,
             period: period,
-            scheduler: scheduler
-        )
-    }
-}
-
-extension Observable where Element: SignedIntegerType {
-    /**
-    Returns an observable sequence that produces a single value at the specified absolute due time, using the specified scheduler to run the timer.
-
-    - seealso: [timer operator on reactivex.io](http://reactivex.io/documentation/operators/timer.html)
-
-    - parameter dueTime: Time interval after which to produce the value.
-    - parameter scheduler: Scheduler to run the timer on.
-    - returns: An observable sequence that produces a value at due time.
-    */
-    @warn_unused_result(message="http://git.io/rxs.uo")
-    public static func timer(dueTime: RxTimeInterval, scheduler: SchedulerType)
-        -> Observable<E> {
-        return Timer(
-            dueTime: dueTime,
-            period: nil,
             scheduler: scheduler
         )
     }
