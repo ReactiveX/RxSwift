@@ -49,11 +49,16 @@ extension CLLocationManager {
     /**
     Reactive wrapper for `delegate` message.
     */
-    public var rx_didFinishDeferredUpdatesWithError: Observable<NSError> {
+    public var rx_didFinishDeferredUpdates: Observable<Void> {
         return rx_delegate.observe("locationManager:didFinishDeferredUpdatesWithError:")
             .map { a in
-                return try castOrThrow(NSError.self, a[1])
-            }
+                
+                if let error = a[1] as? NSError {
+                    throw error
+                }
+                
+                return ()
+        }
     }
     #endif
 
