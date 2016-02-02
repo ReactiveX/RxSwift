@@ -302,7 +302,7 @@ This code will do all that, and when `imageSubscription` is disposed it will can
 
 Delegates can be used both as a hook for customizing behavior and as an observing mechanism.
 
-Each usage has it's drawbacks, but Rx can help remedy some of the problem with using delegates as a observing mechanism.
+Each usage has it's drawbacks, but Rx can help remedy some of the problem with using delegates as an observing mechanism.
 
 Using delegates and optional methods to report changes can be problematic because there can be usually only one delegate registered, so there is no way to register multiple observers.
 
