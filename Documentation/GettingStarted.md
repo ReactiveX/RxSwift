@@ -61,7 +61,7 @@ Some sequences are finite and others are infinite, like a sequence of button tap
 ---tap-tap-------tap--->
 ```
 
-These are called marble diagrams. There are more marble diagrams at [rxmarbles.com](rxmarbles.com).
+These are called marble diagrams. There are more marble diagrams at [rxmarbles.com](http://rxmarbles.com).
 
 If we were to specify sequence grammar as a regular expression it would look like:
 
