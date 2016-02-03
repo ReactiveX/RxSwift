@@ -287,6 +287,15 @@ func castOrFatalError<T>(value: AnyObject!) -> T {
     return result
 }
 
+func castOrFatalError<T>(value: Any!) -> T {
+    let maybeResult: T? = value as? T
+    guard let result = maybeResult else {
+        rxFatalError("Failure converting from \(value) to \(T.self)")
+    }
+    
+    return result
+}
+
 // MARK: Error messages
 
 let dataSourceNotSet = "DataSource not set"
