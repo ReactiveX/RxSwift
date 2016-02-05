@@ -64,24 +64,40 @@ extension CLLocationManagerTests {
 
     #if os(iOS) || os(OSX)
 
-    func testDidFinishDeferredUpdatesWithError() {
+    func testDidFinishDeferredUpdates() {
         var completed = false
-        var error: NSError?
+        var next = false
 
         autoreleasepool {
             let manager = CLLocationManager()
 
-            _ = manager.rx_didFinishDeferredUpdatesWithError.subscribe(onNext: { e in
-                error = e
+            _ = manager.rx_didFinishDeferredUpdates.subscribe(onNext: { _ in
+                    next = true
                 }, onCompleted: {
                     completed = true
             })
 
-            manager.delegate!.locationManager!(manager, didFinishDeferredUpdatesWithError: testError)
+            manager.delegate!.locationManager!(manager, didFinishDeferredUpdatesWithError: nil)
         }
 
-        XCTAssertEqual(error, testError)
+        XCTAssertTrue(next)
         XCTAssertTrue(completed)
+    }
+    
+    func testDidFinishDeferredUpdatesWithError() {
+        var error: NSError?
+    
+        autoreleasepool {
+            let manager = CLLocationManager()
+    
+            _ = manager.rx_didFinishDeferredUpdates.subscribeError { e in
+                    error = e as NSError
+                }
+    
+            manager.delegate!.locationManager!(manager, didFinishDeferredUpdatesWithError: testError)
+        }
+    
+        XCTAssertEqual(error, testError)
     }
 
     #endif
