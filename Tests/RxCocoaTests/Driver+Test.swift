@@ -37,8 +37,15 @@ extension DriverTest {
         var expectation2: XCTestExpectation!
 
         backgroundScheduler.schedule(()) { _ in
+            var subscribing1 = true
+            let currentThread = NSThread.currentThread()
             _ = driver.asObservable().subscribe { e in
-                XCTAssertTrue(isMainThread())
+                if !subscribing1 {
+                    XCTAssertTrue(isMainThread())
+                }
+                else {
+                    XCTAssertEqual(currentThread, NSThread.currentThread())
+                }
                 switch e {
                 case .Next(let element):
                     firstElements.append(element)
@@ -48,11 +55,15 @@ extension DriverTest {
                     expectation1.fulfill()
                 }
             }
+            subscribing1 = false
 
             var subscribing = true
             _ = driver.asDriver().asObservable().subscribe { e in
                 if !subscribing {
                     XCTAssertTrue(isMainThread())
+                }
+                else {
+                    XCTAssertEqual(currentThread, NSThread.currentThread())
                 }
                 switch e {
                 case .Next(let element):
@@ -1014,5 +1025,49 @@ extension DriverTest {
 
         XCTAssertEqual(results, [4, 5])
 
+    }
+}
+
+// MARK: skip
+extension DriverTest {
+    func testAsDriver_skip() {
+        let hotObservable1 = BackgroundThreadPrimitiveHotObservable<Int>()
+
+        let driver = hotObservable1.asDriver(onErrorJustReturn: -1).skip(1)
+
+        let results = subscribeTwiceOnBackgroundSchedulerAndOnlyOneSubscription(driver) {
+            XCTAssertTrue(hotObservable1.subscriptions == [SubscribedToHotObservable])
+
+            hotObservable1.on(.Next(1))
+            hotObservable1.on(.Next(2))
+
+            hotObservable1.on(.Error(testError))
+
+            XCTAssertTrue(hotObservable1.subscriptions == [UnsunscribedFromHotObservable])
+        }
+        
+        XCTAssertEqual(results, [2, -1])
+    }
+}
+
+// MARK: startWith
+extension DriverTest {
+    func testAsDriver_startWith() {
+        let hotObservable1 = BackgroundThreadPrimitiveHotObservable<Int>()
+
+        let driver = hotObservable1.asDriver(onErrorJustReturn: -1).startWith(0)
+
+        let results = subscribeTwiceOnBackgroundSchedulerAndOnlyOneSubscription(driver) {
+            XCTAssertTrue(hotObservable1.subscriptions == [SubscribedToHotObservable])
+
+            hotObservable1.on(.Next(1))
+            hotObservable1.on(.Next(2))
+
+            hotObservable1.on(.Error(testError))
+
+            XCTAssertTrue(hotObservable1.subscriptions == [UnsunscribedFromHotObservable])
+        }
+
+        XCTAssertEqual(results, [0, 1, 2, -1])
     }
 }

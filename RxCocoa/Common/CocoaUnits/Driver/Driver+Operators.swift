@@ -450,3 +450,44 @@ extension DriverConvertibleType {
         return Driver<SecondO.E>(source)
     }
 }
+
+// MARK: skip
+extension DriverConvertibleType {
+
+    /**
+     Bypasses a specified number of elements in an observable sequence and then returns the remaining elements.
+
+     - seealso: [skip operator on reactivex.io](http://reactivex.io/documentation/operators/skip.html)
+
+     - parameter count: The number of elements to skip before returning the remaining elements.
+     - returns: An observable sequence that contains the elements that occur after the specified index in the input sequence.
+     */
+    @warn_unused_result(message="http://git.io/rxs.uo")
+    public func skip(count: Int)
+        -> Driver<E> {
+        let source = self.asObservable()
+            .skip(count)
+        return Driver(source)
+    }
+}
+
+// MARK: startWith
+extension DriverConvertibleType {
+    
+    /**
+    Prepends a value to an observable sequence.
+
+    - seealso: [startWith operator on reactivex.io](http://reactivex.io/documentation/operators/startwith.html)
+    
+    - parameter element: Element to prepend to the specified sequence.
+    - returns: The source sequence prepended with the specified values.
+    */
+    @warn_unused_result(message="http://git.io/rxs.uo")
+    public func startWith(element: E)
+        -> Driver<E> {
+        let source = self.asObservable()
+                .startWith(element)
+
+        return Driver(source)
+    }
+}
