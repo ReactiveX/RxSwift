@@ -49,6 +49,26 @@ extension ObservableBlockingTest {
         
         XCTAssert(array == Array(0..<10))
     }
+
+    func testToArray_independent() {
+        for i in 0 ..< 10 {
+            let scheduler = ConcurrentDispatchQueueScheduler(globalConcurrentQueueQOS: .Default)
+
+            func operation1()->Observable<Int>{
+                return Observable.of(1, 2).subscribeOn(scheduler)
+            }
+
+            let a = try! operation1().toBlocking().toArray()
+            let b = try! operation1().toBlocking().toArray()
+            let c = try! operation1().toBlocking().toArray()
+            let d = try! operation1().toBlocking().toArray()
+
+            XCTAssertEqual(a, [1, 2])
+            XCTAssertEqual(b, [1, 2])
+            XCTAssertEqual(c, [1, 2])
+            XCTAssertEqual(d, [1, 2])
+        }
+    }
 }
 
 // first
@@ -86,6 +106,26 @@ extension ObservableBlockingTest {
         
         XCTAssert(array == 0)
     }
+
+    func testFirst_independent() {
+        for i in 0 ..< 10 {
+            let scheduler = ConcurrentDispatchQueueScheduler(globalConcurrentQueueQOS: .Default)
+
+            func operation1()->Observable<Int>{
+                return Observable.just(1).subscribeOn(scheduler)
+            }
+
+            let a = try! operation1().toBlocking().first()
+            let b = try! operation1().toBlocking().first()
+            let c = try! operation1().toBlocking().first()
+            let d = try! operation1().toBlocking().first()
+
+            XCTAssertEqual(a, 1)
+            XCTAssertEqual(b, 1)
+            XCTAssertEqual(c, 1)
+            XCTAssertEqual(d, 1)
+        }
+    }
 }
 
 // last
@@ -122,6 +162,26 @@ extension ObservableBlockingTest {
             .last()
         
         XCTAssert(array == 9)
+    }
+
+    func testLast_independent() {
+        for i in 0 ..< 10 {
+            let scheduler = ConcurrentDispatchQueueScheduler(globalConcurrentQueueQOS: .Default)
+
+            func operation1()->Observable<Int>{
+                return Observable.just(1).subscribeOn(scheduler)
+            }
+
+            let a = try! operation1().toBlocking().last()
+            let b = try! operation1().toBlocking().last()
+            let c = try! operation1().toBlocking().last()
+            let d = try! operation1().toBlocking().last()
+
+            XCTAssertEqual(a, 1)
+            XCTAssertEqual(b, 1)
+            XCTAssertEqual(c, 1)
+            XCTAssertEqual(d, 1)
+        }
     }
 }
 
@@ -279,5 +339,25 @@ extension ObservableBlockingTest {
             .single( { $0 == 3 } )
         
         XCTAssert(array == 3)
+    }
+
+    func testSingle_independent() {
+        for i in 0 ..< 10 {
+            let scheduler = ConcurrentDispatchQueueScheduler(globalConcurrentQueueQOS: .Default)
+
+            func operation1()->Observable<Int>{
+                return Observable.just(1).subscribeOn(scheduler)
+            }
+
+            let a = try! operation1().toBlocking().single()
+            let b = try! operation1().toBlocking().single()
+            let c = try! operation1().toBlocking().single()
+            let d = try! operation1().toBlocking().single()
+
+            XCTAssertEqual(a, 1)
+            XCTAssertEqual(b, 1)
+            XCTAssertEqual(c, 1)
+            XCTAssertEqual(d, 1)
+        }
     }
 }

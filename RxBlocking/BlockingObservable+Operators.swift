@@ -30,13 +30,18 @@ extension BlockingObservable {
 
         lock.dispatch {
             d.disposable = self.source.subscribe { e in
+                if d.disposed {
+                    return
+                }
                 switch e {
                 case .Next(let element):
                     elements.append(element)
                 case .Error(let e):
                     error = e
+                    d.dispose()
                     lock.stop()
                 case .Completed:
+                    d.dispose()
                     lock.stop()
                 }
             }
@@ -73,6 +78,10 @@ extension BlockingObservable {
 
         lock.dispatch {
             d.disposable = self.source.subscribe { e in
+                if d.disposed {
+                    return
+                }
+
                 switch e {
                 case .Next(let e):
                     if element == nil {
@@ -85,6 +94,7 @@ extension BlockingObservable {
                     break
                 }
 
+                d.dispose()
                 lock.stop()
             }
         }
@@ -120,6 +130,9 @@ extension BlockingObservable {
 
         lock.dispatch {
             d.disposable = self.source.subscribe { e in
+                if d.disposed {
+                    return
+                }
                 switch e {
                 case .Next(let e):
                     element = e
@@ -130,6 +143,7 @@ extension BlockingObservable {
                     break
                 }
 
+                d.dispose()
                 lock.stop()
             }
         }
@@ -205,6 +219,7 @@ extension BlockingObservable {
                     }
                 }
 
+                d.dispose()
                 lock.stop()
             }
         }

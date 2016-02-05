@@ -14,6 +14,9 @@ import Foundation
 class RunLoopLock {
     let currentRunLoop: CFRunLoopRef
 
+    var calledRun: Int32 = 0
+    var calledStop: Int32 = 0
+
     init() {
         currentRunLoop = CFRunLoopGetCurrent()
     }
@@ -34,6 +37,9 @@ class RunLoopLock {
     }
 
     func stop() {
+        if OSAtomicIncrement32(&calledStop) != 1 {
+            return
+        }
         CFRunLoopPerformBlock(currentRunLoop, kCFRunLoopDefaultMode) {
             CFRunLoopStop(self.currentRunLoop)
         }
@@ -41,6 +47,9 @@ class RunLoopLock {
     }
 
     func run() {
+        if OSAtomicIncrement32(&calledRun) != 1 {
+            fatalError("Run can be only called once")
+        }
         CFRunLoopRun()
     }
 }

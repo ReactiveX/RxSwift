@@ -55,16 +55,19 @@ _ObservableBlockingTest.allTests = [
     //("testToArray_fail", { _ObservableBlockingTest.setUp(); _ObservableBlockingTest.testToArray_fail(); _ObservableBlockingTest.tearDown(); }),
     ("testToArray_someData", { _ObservableBlockingTest.setUp(); _ObservableBlockingTest.testToArray_someData(); _ObservableBlockingTest.tearDown(); }),
     ("testToArray_withRealScheduler", { _ObservableBlockingTest.setUp(); _ObservableBlockingTest.testToArray_withRealScheduler(); _ObservableBlockingTest.tearDown(); }),
+    ("testToArray_independent", { _ObservableBlockingTest.setUp(); _ObservableBlockingTest.testToArray_independent(); _ObservableBlockingTest.tearDown(); }),
     ("testFirst_empty", { _ObservableBlockingTest.setUp(); _ObservableBlockingTest.testFirst_empty(); _ObservableBlockingTest.tearDown(); }),
     ("testFirst_return", { _ObservableBlockingTest.setUp(); _ObservableBlockingTest.testFirst_return(); _ObservableBlockingTest.tearDown(); }),
     //("testFirst_fail", { _ObservableBlockingTest.setUp(); _ObservableBlockingTest.testFirst_fail(); _ObservableBlockingTest.tearDown(); }),
     ("testFirst_someData", { _ObservableBlockingTest.setUp(); _ObservableBlockingTest.testFirst_someData(); _ObservableBlockingTest.tearDown(); }),
     ("testFirst_withRealScheduler", { _ObservableBlockingTest.setUp(); _ObservableBlockingTest.testFirst_withRealScheduler(); _ObservableBlockingTest.tearDown(); }),
+    ("testFirst_independent", { _ObservableBlockingTest.setUp(); _ObservableBlockingTest.testFirst_independent(); _ObservableBlockingTest.tearDown(); }),
     ("testLast_empty", { _ObservableBlockingTest.setUp(); _ObservableBlockingTest.testLast_empty(); _ObservableBlockingTest.tearDown(); }),
     ("testLast_return", { _ObservableBlockingTest.setUp(); _ObservableBlockingTest.testLast_return(); _ObservableBlockingTest.tearDown(); }),
     //("testLast_fail", { _ObservableBlockingTest.setUp(); _ObservableBlockingTest.testLast_fail(); _ObservableBlockingTest.tearDown(); }),
     ("testLast_someData", { _ObservableBlockingTest.setUp(); _ObservableBlockingTest.testLast_someData(); _ObservableBlockingTest.tearDown(); }),
     ("testLast_withRealScheduler", { _ObservableBlockingTest.setUp(); _ObservableBlockingTest.testLast_withRealScheduler(); _ObservableBlockingTest.tearDown(); }),
+    ("testLast_independent", { _ObservableBlockingTest.setUp(); _ObservableBlockingTest.testLast_independent(); _ObservableBlockingTest.tearDown(); }),
     ("testSingle_empty", { _ObservableBlockingTest.setUp(); _ObservableBlockingTest.testSingle_empty(); _ObservableBlockingTest.tearDown(); }),
     ("testSingle_return", { _ObservableBlockingTest.setUp(); _ObservableBlockingTest.testSingle_return(); _ObservableBlockingTest.tearDown(); }),
     ("testSingle_two", { _ObservableBlockingTest.setUp(); _ObservableBlockingTest.testSingle_two(); _ObservableBlockingTest.tearDown(); }),
@@ -79,6 +82,7 @@ _ObservableBlockingTest.allTests = [
     //("testSingle_predicate_throws", { _ObservableBlockingTest.setUp(); _ObservableBlockingTest.testSingle_predicate_throws(); _ObservableBlockingTest.tearDown(); }),
     //("testSingle_predicate_fail", { _ObservableBlockingTest.setUp(); _ObservableBlockingTest.testSingle_predicate_fail(); _ObservableBlockingTest.tearDown(); }),
     ("testSingle_predicate_withRealScheduler", { _ObservableBlockingTest.setUp(); _ObservableBlockingTest.testSingle_predicate_withRealScheduler(); _ObservableBlockingTest.tearDown(); }),
+    ("testSingle_independent", { _ObservableBlockingTest.setUp(); _ObservableBlockingTest.testSingle_independent(); _ObservableBlockingTest.tearDown(); }),
 ]
 
 
