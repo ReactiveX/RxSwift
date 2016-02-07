@@ -207,7 +207,21 @@ extension CLLocationManager {
 **iOS**
 
 ```swift
+extension UIView {
 
+    public var rx_hidden: ObserverOf<Bool> {}
+
+    public func rx_hiddenAnimated(transitionType: String?, duration: NSTimeInterval = 0.25) -> AnyObserver<Bool>
+
+    public var rx_alpha: ObserverOf<CGFloat> {}
+
+    public func rx_alphaAnimated(transitionType: String?, duration: NSTimeInterval = 0.25) -> AnyObserver<CGFloat>
+}
+
+```
+
+
+```swift
 extension UIControl {
 
     public func rx_controlEvent(controlEvents: UIControlEvents) -> ControlEvent<Void> {}
@@ -274,7 +288,7 @@ extension UIImageView {
 
     public var rx_image: ObserverOf<UIImage!> {}
 
-    public func rx_imageAnimated(transitionType: String?) -> AnyObserver<UIImage?>
+    public func rx_imageAnimated(transitionType: String?, duration: NSTimeInterval = 0.25) -> AnyObserver<UIImage?>
 
 }
 ```
@@ -409,6 +423,20 @@ extension UIActivityIndicatorView {
 **OSX**
 
 ```swift
+extension NSView {
+
+    public var rx_hidden: ObserverOf<Bool> {}
+
+    public func rx_hiddenAnimated(transitionType: String?, duration: NSTimeInterval = 0.25) -> AnyObserver<Bool>
+
+    public var rx_alpha: ObserverOf<CGFloat> {}
+
+    public func rx_alphaAnimated(transitionType: String?, duration: NSTimeInterval = 0.25) -> AnyObserver<CGFloat>
+}
+
+```
+
+```swift
 extension NSControl {
 
     public var rx_controlEvent: ControlEvent<()> {}
@@ -442,7 +470,7 @@ extension NSImageView {
 
     public var rx_image: ObserverOf<NSImage?> {}
 
-    public func rx_imageAnimated(transitionType: String?) -> AnyObserver<NSImage?>
+    public func rx_imageAnimated(transitionType: String?, duration: NSTimeInterval = 0.25) -> AnyObserver<NSImage?>
 }
 ```
 
