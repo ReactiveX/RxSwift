@@ -1071,3 +1071,85 @@ extension DriverTest {
         XCTAssertEqual(results, [0, 1, 2, -1])
     }
 }
+
+//MARK: interval
+extension DriverTest {
+    func testAsDriver_interval() {
+        let testScheduler = TestScheduler(initialClock: 0)
+
+        let firstObserver = testScheduler.createObserver(Int)
+        let secondObserver = testScheduler.createObserver(Int)
+
+        var disposable1: Disposable!
+        var disposable2: Disposable!
+
+        driveOnScheduler(testScheduler) {
+            let interval = Driver<Int>.interval(100)
+
+            testScheduler.scheduleAt(20) {
+                disposable1 = interval.asObservable().subscribe(firstObserver)
+            }
+
+            testScheduler.scheduleAt(170) {
+                disposable2 = interval.asObservable().subscribe(secondObserver)
+            }
+
+            testScheduler.scheduleAt(230) {
+                disposable1.dispose()
+                disposable2.dispose()
+            }
+
+            testScheduler.start()
+        }
+
+        XCTAssertEqual(firstObserver.events, [
+                next(120, 0),
+                next(220, 1)
+            ])
+        XCTAssertEqual(secondObserver.events, [
+                next(170, 0),
+                next(220, 1)
+            ])
+    }
+}
+
+//MARK: timer
+extension DriverTest {
+    func testAsDriver_timer() {
+        let testScheduler = TestScheduler(initialClock: 0)
+
+        let firstObserver = testScheduler.createObserver(Int)
+        let secondObserver = testScheduler.createObserver(Int)
+
+        var disposable1: Disposable!
+        var disposable2: Disposable!
+
+        driveOnScheduler(testScheduler) {
+            let interval = Driver<Int>.timer(100, period: 105)
+
+            testScheduler.scheduleAt(20) {
+                disposable1 = interval.asObservable().subscribe(firstObserver)
+            }
+
+            testScheduler.scheduleAt(170) {
+                disposable2 = interval.asObservable().subscribe(secondObserver)
+            }
+
+            testScheduler.scheduleAt(230) {
+                disposable1.dispose()
+                disposable2.dispose()
+            }
+
+            testScheduler.start()
+        }
+
+        XCTAssertEqual(firstObserver.events, [
+            next(120, 0),
+            next(225, 1)
+            ])
+        XCTAssertEqual(secondObserver.events, [
+            next(170, 0),
+            next(225, 1)
+            ])
+    }
+}

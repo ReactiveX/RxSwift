@@ -150,6 +150,41 @@ extension Driver {
     }
 }
 
+extension Driver where Element : SignedIntegerType {
+    /**
+     Returns an observable sequence that produces a value after each period, using the specified scheduler to run timers and to send out observer messages.
+
+     - seealso: [interval operator on reactivex.io](http://reactivex.io/documentation/operators/interval.html)
+
+     - parameter period: Period for producing the values in the resulting sequence.
+     - returns: An observable sequence that produces a value after each period.
+     */
+    @warn_unused_result(message="http://git.io/rxs.uo")
+    public static func interval(period: RxTimeInterval)
+        -> Driver<E> {
+        return Driver(Observable.interval(period, scheduler: driverObserveOnScheduler))
+    }
+}
+
+// MARK: timer
+
+extension Driver where Element: SignedIntegerType {
+    /**
+     Returns an observable sequence that periodically produces a value after the specified initial relative due time has elapsed, using the specified scheduler to run timers.
+
+     - seealso: [timer operator on reactivex.io](http://reactivex.io/documentation/operators/timer.html)
+
+     - parameter dueTime: Relative time at which to produce the first value.
+     - parameter period: Period to produce subsequent values.
+     - returns: An observable sequence that produces a value after due time has elapsed and then each period.
+     */
+    @warn_unused_result(message="http://git.io/rxs.uo")
+    public static func timer(dueTime: RxTimeInterval, period: RxTimeInterval)
+        -> Driver<E> {
+        return Driver(Observable.timer(dueTime, period: period, scheduler: driverObserveOnScheduler))
+    }
+}
+
 /**
  This method can be used in unit tests to ensure that driver is using mock schedulers instead of
  maind schedulers.
@@ -165,8 +200,21 @@ public func driveOnScheduler(scheduler: SchedulerType, action: () -> ()) {
 
     action()
 
+    // If you remove this line , compiler buggy optimizations will change behavior of this code
+    _forceCompilerToStopDoingInsaneOptimizationsThatBreakCode(driverObserveOnScheduler)
+    _forceCompilerToStopDoingInsaneOptimizationsThatBreakCode(driverSubscribeOnScheduler)
+    // Scary, I know
+
     driverObserveOnScheduler = originalObserveOnScheduler
     driverSubscribeOnScheduler = originalSubscribeOnScheduler
+}
+
+func _forceCompilerToStopDoingInsaneOptimizationsThatBreakCode(scheduler: SchedulerType) {
+    let a: Int32 = 1
+    let b = 314 + Int32(rand() & 1)
+    if a == b {
+        print(scheduler)
+    }
 }
 
 var driverObserveOnScheduler: SchedulerType = MainScheduler.instance
