@@ -25,8 +25,9 @@ extension NSImageView {
     Bindable sink for `image` property.
     
     - parameter transitionType: Optional transition type while setting the image (kCATransitionFade, kCATransitionMoveIn, ...)
+    - parameter duration: Duration for the optional transition
     */
-    public func rx_imageAnimated(transitionType: String?) -> AnyObserver<NSImage?> {
+    public func rx_imageAnimated(transitionType: String?, duration: NSTimeInterval = 0.25) -> AnyObserver<NSImage?> {
         return AnyObserver { [weak self] event in
             MainScheduler.ensureExecutingOnScheduler()
             
@@ -35,7 +36,7 @@ extension NSImageView {
                 if let transitionType = transitionType {
                     if value != nil {
                         let transition = CATransition()
-                        transition.duration = 0.25
+                        transition.duration = duration
                         transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
                         transition.type = transitionType
                         self?.layer?.addAnimation(transition, forKey: kCATransition)
