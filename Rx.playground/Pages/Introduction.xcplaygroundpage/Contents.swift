@@ -127,7 +127,6 @@ example("generate") {
         .subscribe { event in
             print(event)
         }
-
 }
 
 /*:
