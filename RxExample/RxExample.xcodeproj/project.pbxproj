@@ -427,6 +427,7 @@
 		D2245A191BD5654C00E7146F /* WithLatestFrom.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2245A0B1BD564A700E7146F /* WithLatestFrom.swift */; };
 		D2AF91981BD3D95900A008C1 /* Using.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2AF91881BD2C51900A008C1 /* Using.swift */; };
 		E3EE18D21C4D68F900834224 /* UIApplication+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3EE18D11C4D68F900834224 /* UIApplication+Rx.swift */; };
+		EBF032401C69FAEB00C81573 /* Delay.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF0323F1C69FAEB00C81573 /* Delay.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -935,6 +936,7 @@
 		D2245A0B1BD564A700E7146F /* WithLatestFrom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WithLatestFrom.swift; sourceTree = "<group>"; };
 		D2AF91881BD2C51900A008C1 /* Using.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Using.swift; sourceTree = "<group>"; };
 		E3EE18D11C4D68F900834224 /* UIApplication+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIApplication+Rx.swift"; sourceTree = "<group>"; };
+		EBF0323F1C69FAEB00C81573 /* Delay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Delay.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1406,6 +1408,7 @@
 				C89464531BC6C2B00055219D /* ConnectableObservable.swift */,
 				C89464541BC6C2B00055219D /* Debug.swift */,
 				C89464551BC6C2B00055219D /* Deferred.swift */,
+				EBF0323F1C69FAEB00C81573 /* Delay.swift */,
 				C89464561BC6C2B00055219D /* DelaySubscription.swift */,
 				C89464571BC6C2B00055219D /* DistinctUntilChanged.swift */,
 				C89464581BC6C2B00055219D /* Do.swift */,
@@ -2209,6 +2212,7 @@
 				C894657D1BC6C2BC0055219D /* RxTarget.swift in Sources */,
 				C80DDED21BCE9046006A1832 /* ControlEvent+Driver.swift in Sources */,
 				C89464EE1BC6C2B00055219D /* Observable+Creation.swift in Sources */,
+				EBF032401C69FAEB00C81573 /* Delay.swift in Sources */,
 				C894659A1BC6C2BC0055219D /* UISlider+Rx.swift in Sources */,
 				C89465891BC6C2BC0055219D /* RxSearchBarDelegateProxy.swift in Sources */,
 				C89464C21BC6C2B00055219D /* CombineLatest.swift in Sources */,

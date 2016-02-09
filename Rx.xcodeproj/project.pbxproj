@@ -1107,6 +1107,10 @@
 		D2FC15B31BCB95E5007361FF /* SkipWhile.swift in Sources */ = {isa = PBXBuildFile; fileRef = D22B6D251BC8504A00BCE0AB /* SkipWhile.swift */; };
 		D2FC15B41BCB95E7007361FF /* SkipWhile.swift in Sources */ = {isa = PBXBuildFile; fileRef = D22B6D251BC8504A00BCE0AB /* SkipWhile.swift */; };
 		D2FC15B51BCB95E8007361FF /* SkipWhile.swift in Sources */ = {isa = PBXBuildFile; fileRef = D22B6D251BC8504A00BCE0AB /* SkipWhile.swift */; };
+		EB8293841C698D1A00315EB6 /* Delay.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB8293831C698D1A00315EB6 /* Delay.swift */; };
+		EB8293851C69A70700315EB6 /* Delay.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB8293831C698D1A00315EB6 /* Delay.swift */; };
+		EB8293861C69A70700315EB6 /* Delay.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB8293831C698D1A00315EB6 /* Delay.swift */; };
+		EB8293871C69A70800315EB6 /* Delay.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB8293831C698D1A00315EB6 /* Delay.swift */; };
 		F31F35B01BB4FED800961002 /* UIStepper+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = F31F35AF1BB4FED800961002 /* UIStepper+Rx.swift */; };
 /* End PBXBuildFile section */
 
@@ -1653,6 +1657,7 @@
 		D285BAC31BC0231000B3F602 /* SkipUntil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SkipUntil.swift; sourceTree = "<group>"; };
 		D2EA280C1BB9B5A200880ED3 /* RxSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2EBEB811BB9B99D003A27DC /* RxBlocking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxBlocking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EB8293831C698D1A00315EB6 /* Delay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Delay.swift; sourceTree = "<group>"; };
 		F31F35AF1BB4FED800961002 /* UIStepper+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIStepper+Rx.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -1915,6 +1920,7 @@
 				C8093C741B8A72BE0088E94D /* ConnectableObservable.swift */,
 				C8093C751B8A72BE0088E94D /* Debug.swift */,
 				C8093C761B8A72BE0088E94D /* Deferred.swift */,
+				EB8293831C698D1A00315EB6 /* Delay.swift */,
 				C8093C771B8A72BE0088E94D /* DelaySubscription.swift */,
 				C8093C781B8A72BE0088E94D /* DistinctUntilChanged.swift */,
 				C8093C791B8A72BE0088E94D /* Do.swift */,
@@ -3685,6 +3691,7 @@
 				C8093D341B8A72BE0088E94D /* RefCount.swift in Sources */,
 				C8093D0E1B8A72BE0088E94D /* Concat.swift in Sources */,
 				C8093CCA1B8A72BE0088E94D /* Lock.swift in Sources */,
+				EB8293851C69A70700315EB6 /* Delay.swift in Sources */,
 				C8093D441B8A72BE0088E94D /* Take.swift in Sources */,
 				C84CC5591BDCF51200E06A64 /* SynchronizedSubscribeType.swift in Sources */,
 				C8093D321B8A72BE0088E94D /* Reduce.swift in Sources */,
@@ -3907,6 +3914,7 @@
 				C8093D331B8A72BE0088E94D /* RefCount.swift in Sources */,
 				C8093D0D1B8A72BE0088E94D /* Concat.swift in Sources */,
 				C8093CC91B8A72BE0088E94D /* Lock.swift in Sources */,
+				EB8293841C698D1A00315EB6 /* Delay.swift in Sources */,
 				C8093D431B8A72BE0088E94D /* Take.swift in Sources */,
 				C84CC5581BDCF51200E06A64 /* SynchronizedSubscribeType.swift in Sources */,
 				C8093D311B8A72BE0088E94D /* Reduce.swift in Sources */,
@@ -4053,6 +4061,7 @@
 				C8F0BFE11BBBFB8B001B112F /* RefCount.swift in Sources */,
 				C8F0BFE21BBBFB8B001B112F /* Concat.swift in Sources */,
 				C8F0BFE31BBBFB8B001B112F /* Lock.swift in Sources */,
+				EB8293871C69A70800315EB6 /* Delay.swift in Sources */,
 				C8F0BFE41BBBFB8B001B112F /* Take.swift in Sources */,
 				C84CC55B1BDCF51200E06A64 /* SynchronizedSubscribeType.swift in Sources */,
 				C8F0BFE51BBBFB8B001B112F /* Reduce.swift in Sources */,
@@ -4370,6 +4379,7 @@
 				D2EBEB2B1BB9B6CA003A27DC /* Observable+Aggregate.swift in Sources */,
 				D2EBEB291BB9B6C1003A27DC /* Zip+arity.swift in Sources */,
 				D2EBEB241BB9B6C1003A27DC /* TakeUntil.swift in Sources */,
+				EB8293861C69A70700315EB6 /* Delay.swift in Sources */,
 				C84CC55A1BDCF51200E06A64 /* SynchronizedSubscribeType.swift in Sources */,
 				D2EBEB3B1BB9B6D8003A27DC /* OperationQueueScheduler.swift in Sources */,
 				D2EBEAE51BB9B697003A27DC /* AnyObserver.swift in Sources */,
