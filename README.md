@@ -460,13 +460,15 @@ Open Rx.xcworkspace, choose `RxExample` and hit run. This method will build ever
 # Podfile
 use_frameworks!
 
-pod 'RxSwift',    '~> 2.0'
-pod 'RxCocoa',    '~> 2.0'
-pod 'RxBlocking', '~> 2.0'
-pod 'RxTests',    '~> 2.0'
+target 'YOUR_TARGET_NAME' do
+    pod 'RxSwift',    '~> 2.0'
+    pod 'RxCocoa',    '~> 2.0'
+    pod 'RxBlocking', '~> 2.0'
+    pod 'RxTests',    '~> 2.0'
+end
 ```
 
-type in `Podfile` directory
+replace `YOUR_TARGET_NAME`, then type in the `Podfile` directory:
 
 ```
 $ pod install
