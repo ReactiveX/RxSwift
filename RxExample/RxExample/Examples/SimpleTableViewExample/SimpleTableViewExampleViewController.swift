@@ -38,5 +38,13 @@ class SimpleTableViewExampleViewController : ViewController {
                 DefaultWireframe.presentAlert("Tapped `\(value)`")
             }
             .addDisposableTo(disposeBag)
+
+        tableView
+            .rx_itemAccessoryButtonTapped
+            .subscribeNext { indexPath in
+                DefaultWireframe.presentAlert("Tapped Detail @ \(indexPath.section),\(indexPath.row)")
+            }
+            .addDisposableTo(disposeBag)
+
     }
 }
