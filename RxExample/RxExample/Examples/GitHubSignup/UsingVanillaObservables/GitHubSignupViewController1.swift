@@ -74,7 +74,12 @@ class GitHubSignupViewController1 : ViewController {
             .addDisposableTo(disposeBag)
         //}
 
-        let tapBackground = UITapGestureRecognizer(target: self, action: Selector("dismissKeyboard:"))
+        let tapBackground = UITapGestureRecognizer()
+        tapBackground.rx_event
+            .subscribeNext { [weak self] _ in
+                self?.view.endEditing(true)
+            }
+            .addDisposableTo(disposeBag)
         view.addGestureRecognizer(tapBackground)
     }
    
@@ -93,10 +98,6 @@ class GitHubSignupViewController1 : ViewController {
         else {
             self.disposeBag = DisposeBag()
         }
-    }
-
-    func dismissKeyboard(gr: UITapGestureRecognizer) {
-        view.endEditing(true)
     }
 
 }
