@@ -17,37 +17,17 @@ extension NSView {
      Bindable sink for `hidden` property.
      */
     public var rx_hidden: AnyObserver<Bool> {
-        return AnyObserver { [weak self] event in
-            MainScheduler.ensureExecutingOnScheduler()
-
-            switch event {
-            case .Next(let value):
-                self?.hidden = value
-            case .Error(let error):
-                bindingErrorToInterface(error)
-                break
-            case .Completed:
-                break
-            }
-        }
+        return UIBindingObserver(UIElement: self) { view, value in
+            view.hidden = value
+        }.asObserver()
     }
 
     /**
      Bindable sink for `alphaValue` property.
      */
     public var rx_alpha: AnyObserver<CGFloat> {
-        return AnyObserver { [weak self] event in
-            MainScheduler.ensureExecutingOnScheduler()
-
-            switch event {
-            case .Next(let value):
-                self?.alphaValue = value
-            case .Error(let error):
-                bindingErrorToInterface(error)
-                break
-            case .Completed:
-                break
-            }
-        }
+        return UIBindingObserver(UIElement: self) { view, value in
+            view.alphaValue = value
+        }.asObserver()
     }
 }

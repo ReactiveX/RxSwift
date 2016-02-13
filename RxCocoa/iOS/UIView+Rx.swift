@@ -19,38 +19,18 @@ extension UIView {
      Bindable sink for `hidden` property.
      */
     public var rx_hidden: AnyObserver<Bool> {
-        return AnyObserver { [weak self] event in
-            MainScheduler.ensureExecutingOnScheduler()
-
-            switch event {
-            case .Next(let value):
-                self?.hidden = value
-            case .Error(let error):
-                bindingErrorToInterface(error)
-                break
-            case .Completed:
-                break
-            }
-        }
+        return UIBindingObserver(UIElement: self) { view, hidden in
+            view.hidden = hidden
+        }.asObserver()
     }
 
     /**
      Bindable sink for `alpha` property.
      */
     public var rx_alpha: AnyObserver<CGFloat> {
-        return AnyObserver { [weak self] event in
-            MainScheduler.ensureExecutingOnScheduler()
-
-            switch event {
-            case .Next(let value):
-                self?.alpha = value
-            case .Error(let error):
-                bindingErrorToInterface(error)
-                break
-            case .Completed:
-                break
-            }
-        }
+        return UIBindingObserver(UIElement: self) { view, alpha in
+            view.alpha = alpha
+        }.asObserver()
     }
 }
 

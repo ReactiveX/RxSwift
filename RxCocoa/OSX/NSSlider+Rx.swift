@@ -18,11 +18,15 @@ extension NSSlider {
     Reactive wrapper for `value` property.
     */
     public var rx_value: ControlProperty<Double> {
-        return rx_value(getter: { [weak self] in
-            return self?.doubleValue ?? 0
-        }, setter: { [weak self] value in
-            self?.doubleValue = value
-        })
+        return NSControl.rx_value(
+            self,
+            getter: { control in
+                return control.doubleValue
+            },
+            setter: { control, value in
+                control.doubleValue = value
+            }
+        )
     }
     
 }

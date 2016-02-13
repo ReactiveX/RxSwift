@@ -223,7 +223,7 @@ extension ObservableType {
         -> Disposable {
         let proxy = proxyForObject(P.self, object)
         let disposable = installDelegate(proxy, delegate: dataSource, retainDelegate: retainDataSource, onProxyForObject: object)
-        
+
         let subscription = self.asObservable()
             // source can't ever end, otherwise it will release the subscriber
             .concat(Observable.never())

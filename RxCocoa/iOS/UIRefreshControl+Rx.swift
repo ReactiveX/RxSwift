@@ -19,23 +19,13 @@ extension UIRefreshControl {
     Bindable sink for `beginRefreshing()`, `endRefreshing()` methods.
     */
     public var rx_refreshing: AnyObserver<Bool> {
-        return AnyObserver {event in
-            MainScheduler.ensureExecutingOnScheduler()
-
-            switch (event) {
-            case .Next(let value):
-                if value {
-                    self.beginRefreshing()
-                } else {
-                    self.endRefreshing()
-                }
-            case .Error(let error):
-                bindingErrorToInterface(error)
-                break
-            case .Completed:
-                break
+        return UIBindingObserver(UIElement: self) { refreshControl, refresh in
+            if refresh {
+                self.beginRefreshing()
+            } else {
+                self.endRefreshing()
             }
-        }
+        }.asObserver()
     }
 
 }
