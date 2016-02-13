@@ -21,9 +21,9 @@ extension UIRefreshControl {
     public var rx_refreshing: AnyObserver<Bool> {
         return UIBindingObserver(UIElement: self) { refreshControl, refresh in
             if refresh {
-                self.beginRefreshing()
+                refreshControl.beginRefreshing()
             } else {
-                self.endRefreshing()
+                refreshControl.endRefreshing()
             }
         }.asObserver()
     }
