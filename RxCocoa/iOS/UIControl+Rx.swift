@@ -57,7 +57,7 @@ extension UIControl {
      Swift compiler knows C is UIControl type and optimizations are turned on, it will crash.
 
      Can somebody offer poor Swift compiler writers some other better job maybe, this is becoming
-     rediculous.
+     ridiculous. So much time wasted ...
     */
     static func rx_value<C: AnyObject, T: Equatable>(control: C, getter: (C) -> T, setter: (C, T) -> Void) -> ControlProperty<T> {
         let source: Observable<T> = Observable.create { [weak weakControl = control] observer in

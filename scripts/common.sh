@@ -1,6 +1,5 @@
 #!/bin/bash
 set -e
-#set -o xtrace
 
 RESET="\033[0m"
 BLACK="\033[30m"
@@ -134,12 +133,14 @@ function action() {
 	fi
 
 	STATUS=""
+    set -x
 	xcodebuild -workspace "${WORKSPACE}" \
 				-scheme "${SCHEME}" \
 				-configuration "${CONFIGURATION}" \
 				-derivedDataPath "${BUILD_DIRECTORY}" \
 				-destination "$DESTINATION" \
 				$ACTION | xcpretty -c; STATUS=${PIPESTATUS[0]}
+    set +x
 
 	if [ $STATUS -ne 0 ]; then
 		echo $STATUS
