@@ -52,7 +52,14 @@ extension UIControl {
         return ControlEvent(events: source)
     }
 
-    static func rx_value<C: UIControl, T: Equatable>(control: C, getter: (C) -> T, setter: (C, T) -> Void) -> ControlProperty<T> {
+    /**
+     You might be wondering why the ugly `as!` casts etc, well, for some reason if 
+     Swift compiler knows C is UIControl type and optimizations are turned on, it will crash.
+
+     Can somebody offer poor Swift compiler writers some other better job maybe, this is becoming
+     rediculous.
+    */
+    static func rx_value<C: AnyObject, T: Equatable>(control: C, getter: (C) -> T, setter: (C, T) -> Void) -> ControlProperty<T> {
         let source: Observable<T> = Observable.create { [weak weakControl = control] observer in
                 guard let control = weakControl else {
                     observer.on(.Completed)
@@ -61,7 +68,7 @@ extension UIControl {
 
                 observer.on(.Next(getter(control)))
 
-                let controlTarget = ControlTarget(control: control, controlEvents: [.AllEditingEvents, .ValueChanged]) { _ in
+                let controlTarget = ControlTarget(control: control as! UIControl, controlEvents: [.AllEditingEvents, .ValueChanged]) { _ in
                     if let control = weakControl {
                         observer.on(.Next(getter(control)))
                     }
@@ -72,7 +79,7 @@ extension UIControl {
                 }
             }
             .distinctUntilChanged()
-            .takeUntil(control.rx_deallocated)
+            .takeUntil((control as! NSObject).rx_deallocated)
 
         let bindingObserver = UIBindingObserver(UIElement: control, binding: setter)
 
