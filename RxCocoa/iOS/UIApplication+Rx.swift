@@ -21,17 +21,9 @@ import Foundation
          Bindable sink for `networkActivityIndicatorVisible`.
          */
         public var rx_networkActivityIndicatorVisible: AnyObserver<Bool> {
-            return AnyObserver { event in
-                MainScheduler.ensureExecutingOnScheduler()
-                switch event {
-                case .Next(let value):
-                    self.networkActivityIndicatorVisible = value
-                case .Error(let error):
-                    bindingErrorToInterface(error)
-                case .Completed:
-                    break
-                }
-            }
+            return UIBindingObserver(UIElement: self) { application, active in
+                application.networkActivityIndicatorVisible = active
+            }.asObserver()
         }
     }
 #endif

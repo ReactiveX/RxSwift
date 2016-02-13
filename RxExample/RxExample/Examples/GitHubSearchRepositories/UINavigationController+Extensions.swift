@@ -20,7 +20,7 @@ struct Colors {
 
 extension UINavigationController {
     var rx_serviceState: AnyObserver<ServiceState?> {
-        return UIBindingObserver(owner: self) { navigationController, maybeServiceState in
+        return UIBindingObserver(UIElement: self) { navigationController, maybeServiceState in
             // if nil is being bound, then don't change color, it's not perfect, but :)
             if let serviceState = maybeServiceState {
                 let isOffline = serviceState ?? .Online == .Offline
