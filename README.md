@@ -21,7 +21,7 @@ KVO observing, async operations and streams are all unified under [abstraction o
 
 ## I came here because I want to ...
 
-##### ... understand
+###### ... understand
 
 * Why use Rx. [Why to Use Rx](Documentation/Why.md)
 * How RxSwift works. [Getting Started](Documentation/GettingStarted.md)
@@ -46,17 +46,17 @@ KVO observing, async operations and streams are all unified under [abstraction o
 * Request a new feature. [Open an Issue With Feature Request Template](Documentation/NewFeatureRequestTemplate.md)
 
 
-##### ... compare
+###### ... compare
 
 * Compare with other libraries. [Comparison](Documentation/ComparisonWithOtherLibraries.md)
 
 
-##### ... find compatible libraries
+###### ... find compatible libraries
 
 * Find RxSwift compatible libraries from [RxSwiftCommunity](https://github.com/RxSwiftCommunity)
 * [Pods using RxSwift](https://cocoapods.org/?q=uses%3Arxswift)
 
-##### ... see the broader vision
+###### ... see the broader vision
 
 * Does this exist for Android also? [RxJava](https://github.com/ReactiveX/RxJava)
 * Where is all of this going, what is the future, what about reactive architectures, how do you design entire apps this way? [Cycle.js](https://github.com/cyclejs/cycle-core) - this is javascript, but [RxJS](https://github.com/Reactive-Extensions/RxJS) is javascript version of Rx.
