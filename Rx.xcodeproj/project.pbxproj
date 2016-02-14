@@ -507,6 +507,7 @@
 		C8350A231C38756B0027C24C /* VirtualSchedulerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C835091C1C38706D0027C24C /* VirtualSchedulerTest.swift */; };
 		C8350A2A1C3875B50027C24C /* RxMutableBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093CB01B8A72BE0088E94D /* RxMutableBox.swift */; };
 		C8350A2B1C3875B60027C24C /* RxMutableBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093CB01B8A72BE0088E94D /* RxMutableBox.swift */; };
+		C839365F1C70E02200A9A09E /* UIApplication+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C839365E1C70E02200A9A09E /* UIApplication+Rx.swift */; };
 		C83D73B81C1DBAEE003DC470 /* AnonymousInvocable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83D73B31C1DBAEE003DC470 /* AnonymousInvocable.swift */; };
 		C83D73B91C1DBAEE003DC470 /* AnonymousInvocable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83D73B31C1DBAEE003DC470 /* AnonymousInvocable.swift */; };
 		C83D73BA1C1DBAEE003DC470 /* AnonymousInvocable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83D73B31C1DBAEE003DC470 /* AnonymousInvocable.swift */; };
@@ -1541,6 +1542,7 @@
 		C83509231C38706E0027C24C /* XCTest+AllTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "XCTest+AllTests.swift"; sourceTree = "<group>"; };
 		C83509841C38740E0027C24C /* AllTests-tvOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "AllTests-tvOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C83509941C38742C0027C24C /* AllTests-OSX.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "AllTests-OSX.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C839365E1C70E02200A9A09E /* UIApplication+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIApplication+Rx.swift"; sourceTree = "<group>"; };
 		C83D73B31C1DBAEE003DC470 /* AnonymousInvocable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnonymousInvocable.swift; sourceTree = "<group>"; };
 		C83D73B41C1DBAEE003DC470 /* InvocableScheduledItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InvocableScheduledItem.swift; sourceTree = "<group>"; };
 		C83D73B51C1DBAEE003DC470 /* InvocableType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InvocableType.swift; sourceTree = "<group>"; };
@@ -2312,6 +2314,7 @@
 				C88253F61B8A752B00B02D69 /* Protocols */,
 				C88253F91B8A752B00B02D69 /* Proxies */,
 				C88254051B8A752B00B02D69 /* UIBarButtonItem+Rx.swift */,
+				C839365E1C70E02200A9A09E /* UIApplication+Rx.swift */,
 				C88254061B8A752B00B02D69 /* UIButton+Rx.swift */,
 				C88254071B8A752B00B02D69 /* UICollectionView+Rx.swift */,
 				C88254081B8A752B00B02D69 /* UIControl+Rx.swift */,
@@ -3241,6 +3244,7 @@
 				C882542E1B8A752B00B02D69 /* UILabel+Rx.swift in Sources */,
 				C88254211B8A752B00B02D69 /* RxSearchBarDelegateProxy.swift in Sources */,
 				C80DDEA71BCE69BA006A1832 /* ObservableConvertibleType+Driver.swift in Sources */,
+				C839365F1C70E02200A9A09E /* UIApplication+Rx.swift in Sources */,
 				C80DDE9F1BCE69BA006A1832 /* Driver+Subscription.swift in Sources */,
 				C811C89D1C24D80100A2DDD4 /* DeallocObservable.swift in Sources */,
 				C8BCD3ED1C14B5FB005F1280 /* UIView+Rx.swift in Sources */,

@@ -8,7 +8,7 @@
 
 import Foundation
 
-#if os(iOS) || os(tvOS)
+#if os(iOS)
     import UIKit
     
 #if !RX_NO_MODULE
