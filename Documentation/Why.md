@@ -10,7 +10,7 @@ Observable.combineLatest(firstName.rx_text, lastName.rx_text) { $0 + " " + $1 }
             .bindTo(greetingLabel.rx_text)
 ```
 
-this also works with `UITableView`s and `UICollectionView`s.
+This also works with `UITableView`s and `UICollectionView`s.
 
 ```swift
 viewModel

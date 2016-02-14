@@ -2,7 +2,6 @@
 ======================================
 
 [![Travis CI](https://travis-ci.org/ReactiveX/RxSwift.svg?branch=master)](https://travis-ci.org/ReactiveX/RxSwift) ![platforms](https://img.shields.io/badge/platforms-iOS%20%7C%20OSX%20%7C%20tvOS%20%7C%20watchOS%20%7C%20Linux%28experimental%29-333333.svg) ![pod](https://img.shields.io/cocoapods/v/RxSwift.svg)
-[![Slack channel](http://slack.rxswift.org/badge.svg)](http://slack.rxswift.org) [slack.rxswift.org](http://slack.rxswift.org)
 
 Xcode 7 Swift 2.1 required
 
@@ -22,39 +21,47 @@ KVO observing, async operations and streams are all unified under [abstraction o
 
 ## I came here because I want to ...
 
-* Understand why people are using Rx. [Why to Use Rx](Documentation/Why.md)
-* Understand how RxSwift works. [Getting Started](Documentation/GettingStarted.md)
-* Understand what is that `Driver`, `ControlProperty`, `Variable` ... and why do they exist. [Units](Documentation/Units.md)
-* Understand the math behind Rx. [Math Behind Rx](Documentation/MathBehindRx.md)
-* Understand what are those hot/cold observable sequences. [Hot vs Cold Observable Sequences](Documentation/HotAndColdObservables.md)
+##### ... understand
+
+* Why use Rx. [Why to Use Rx](Documentation/Why.md)
+* How RxSwift works. [Getting Started](Documentation/GettingStarted.md)
+* What is that `Driver`, `ControlProperty`, `Variable` ... and why do they exist. [Units](Documentation/Units.md)
+* The math behind Rx. [Math Behind Rx](Documentation/MathBehindRx.md)
+* What are those hot/cold observable sequences. [Hot vs Cold Observable Sequences](Documentation/HotAndColdObservables.md)
+* Glance at the public API. [API Summary](Documentation/API.md)
+
+###### ... install
 
 * Integrate RxSwift/RxCocoa with my app. [Installation Guide](Documentation/Installation.md)
 
+###### ... hack around
 
-* Hack with example app. [Running Example App](Documentation/ExampleApp.md)
-* Hack with operators in playgrounds. [Playgrounds](Documentation/Playgrounds.md)
+* with example app. [Running Example App](Documentation/ExampleApp.md)
+* with operators in playgrounds. [Playgrounds](Documentation/Playgrounds.md)
 
+###### ... interact
 
 * All of this is great, but I want to meet other people using this library and exchange experience, brainstorm, ask about real world problems and solutions. [Join Slack Channel](http://slack.rxswift.org/) [![Slack channel](http://slack.rxswift.org/badge.svg)](http://slack.rxswift.org)
 * Report a problem using the library. [Open an Issue With Bug Template](Documentation/IssueTemplate.md)
 * Request a new feature. [Open an Issue With Feature Request Template](Documentation/NewFeatureRequestTemplate.md)
 
 
+##### ... compare
 
 * Compare with other libraries. [Comparison](Documentation/ComparisonWithOtherLibraries.md)
 
 
-* Glance at the public API. [API Summary](Documentation/API.md)
-
+##### ... find compatible libraries
 
 * Find RxSwift compatible libraries from [RxSwiftCommunity](https://github.com/RxSwiftCommunity)
 * [Pods using RxSwift](https://cocoapods.org/?q=uses%3Arxswift)
 
+##### ... see the broader vision
 
 * Does this exist for Android also? [RxJava](https://github.com/ReactiveX/RxJava)
 * Where is all of this going, what is the future, what about reactive architectures, how do you design entire apps this way? [Cycle.js](https://github.com/cyclejs/cycle-core) - this is javascript, but [RxJS](https://github.com/Reactive-Extensions/RxJS) is javascript version of Rx.
 
-## References
+##### References
 
 * [http://reactivex.io/](http://reactivex.io/)
 * [Reactive Extensions GitHub (GitHub)](https://github.com/Reactive-Extensions)
