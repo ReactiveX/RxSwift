@@ -23,12 +23,12 @@ KVO observing, async operations and streams are all unified under [abstraction o
 
 ###### ... understand
 
-* Why use Rx. [Why to Use Rx](Documentation/Why.md)
-* How RxSwift works. [Getting Started](Documentation/GettingStarted.md)
-* What is that `Driver`, `ControlProperty`, `Variable` ... and why do they exist. [Units](Documentation/Units.md)
-* The math behind Rx. [Math Behind Rx](Documentation/MathBehindRx.md)
-* What are those hot/cold observable sequences. [Hot vs Cold Observable Sequences](Documentation/HotAndColdObservables.md)
-* Glance at the public API. [API Summary](Documentation/API.md)
+* [why to use rx?](Documentation/Why.md)
+* how RxSwift works? [Getting Started Guide](Documentation/GettingStarted.md)
+* what is that `Driver`, `ControlProperty`, `Variable` ... and why do they exist? [Units](Documentation/Units.md)
+* [the math behind Rx](Documentation/MathBehindRx.md)
+* [what are those hot/cold observable sequences?](Documentation/HotAndColdObservables.md)
+* [how does the the public API look like](Documentation/API.md)
 
 ###### ... install
 
@@ -41,20 +41,20 @@ KVO observing, async operations and streams are all unified under [abstraction o
 
 ###### ... interact
 
-* All of this is great, but I want to meet other people using this library and exchange experience, brainstorm, ask about real world problems and solutions. [Join Slack Channel](http://slack.rxswift.org/) [![Slack channel](http://slack.rxswift.org/badge.svg)](http://slack.rxswift.org)
+* All of this is great, but it would be nice to talk with other people using RxSwift and exchange experiences. <br />[![Slack channel](http://slack.rxswift.org/badge.svg)](http://slack.rxswift.org) [Join Slack Channel](http://slack.rxswift.org/)
 * Report a problem using the library. [Open an Issue With Bug Template](Documentation/IssueTemplate.md)
 * Request a new feature. [Open an Issue With Feature Request Template](Documentation/NewFeatureRequestTemplate.md)
 
 
 ###### ... compare
 
-* Compare with other libraries. [Comparison](Documentation/ComparisonWithOtherLibraries.md)
+* [with other libraries](Documentation/ComparisonWithOtherLibraries.md).
 
 
-###### ... find compatible libraries
+###### ... find compatible
 
-* Find RxSwift compatible libraries from [RxSwiftCommunity](https://github.com/RxSwiftCommunity)
-* [Pods using RxSwift](https://cocoapods.org/?q=uses%3Arxswift)
+* libraries from [RxSwiftCommunity](https://github.com/RxSwiftCommunity).
+* [Pods using RxSwift](https://cocoapods.org/?q=uses%3Arxswift).
 
 ###### ... see the broader vision
 
