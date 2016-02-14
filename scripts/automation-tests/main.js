@@ -9,7 +9,7 @@
 var target = UIATarget.localTarget();
 
 // open all screens
-for (var i = 0; i < 12; ++i) {
+for (var i = 0; i < 14; ++i) {
   log(i);
   target.delay( 0.5 );
   target.frontMostApp().mainWindow().tableViews()[0].cells()[i].tap();

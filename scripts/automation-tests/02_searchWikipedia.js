@@ -6,7 +6,7 @@ test("----- searchWikipedia -----", function (check, pass) {
 
   var width = target.frontMostApp().mainWindow().rect().size.width
 
-  target.frontMostApp().mainWindow().tableViews()[0].cells()[11].tap();
+  target.frontMostApp().mainWindow().tableViews()[0].cells()[12].tap();
 
   target.delay(2);
 

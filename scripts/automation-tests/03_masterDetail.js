@@ -8,7 +8,7 @@ test("----- masterDetail -----", function (check, pass) {
 
   var target = UIATarget.localTarget()
 
-  target.frontMostApp().mainWindow().tableViews()[0].cells()[9].tap();
+  target.frontMostApp().mainWindow().tableViews()[0].cells()[10].tap();
   target.frontMostApp().navigationBar().rightButton().tap();
   target.frontMostApp().mainWindow().dragInsideWithOptions({startOffset:{x:0.93, y:yOffset(300)}, endOffset:{x:0.95, y:yOffset(200)}, duration:1.5});
   target.frontMostApp().mainWindow().dragInsideWithOptions({startOffset:{x:0.93, y:yOffset(300)}, endOffset:{x:0.95, y:yOffset(100)}, duration:1.5});
