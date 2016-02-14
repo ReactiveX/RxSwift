@@ -95,9 +95,7 @@ class GitHubSearchRepositoriesViewController: ViewController, UITableViewDelegat
         // activity indicator in status bar
         // {
         GitHubSearchRepositoriesAPI.sharedAPI.activityIndicator
-            .driveNext { active in
-                UIApplication.sharedApplication().networkActivityIndicatorVisible = active
-            }
+            .drive(UIApplication.sharedApplication().rx_networkActivityIndicatorVisible)
             .addDisposableTo(disposeBag)
         // }
     }
