@@ -3,6 +3,50 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [2.2.0](https://github.com/ReactiveX/RxSwift/releases/tag/2.2.0)
+
+#### Public Interface anomalies
+
+* Fixes problem with `timer` operator. Changes return type from `Observable<Int64>` to `Observable<T>`. This could potentially cause code breakage, but it was an API anomaly.
+* Curried functions were marked deprecated so they were replaced in `UITableView` and `UICollectionView` extensions with equivalent lambdas. This shouldn't break anyone's code, but it is a change in public interface.
+
+This is example of those changes:
+
+```swift
+- public func rx_itemsWithCellFactory<S : SequenceType, O : ObservableType where O.E == S>
+      (source: O)
+      (cellFactory: (UITableView, Int, S.Generator.Element) -> UITableViewCell) -> Disposable
++ public func rx_itemsWithCellFactory<S : SequenceType, O : ObservableType where O.E == S>
+      (source: O)
+      -> (cellFactory: (UITableView, Int, S.Generator.Element) -> UITableViewCell) -> Disposable
+```
+
+* Fixes anomaly in `CLLocationManager` extensions
+
+```swift
+-    public var rx_didFinishDeferredUpdatesWithError: RxSwift.Observable<NSError> { get }
++    public var rx_didFinishDeferredUpdatesWithError: RxSwift.Observable<NSError?> { get }
+```
+
+#### Features
+
+* Adds `UIBindingObserver`.
+* Adds `doOnNext` convenience operator (also added to `Driver`).
+* Adds `doOnError` convenience operator.
+* Adds `doOnCompleted` convenience operator (also added to `Driver`).
+* Adds `skip`, `startWith` to `Driver`.
+* Adds `rx_active` extension to `NSLayoutConstraint`.
+* Adds `rx_refreshing` extension to `UIRefreshControl`.
+* Adds `interval` and `timer` to `Driver`.
+* Adds `rx_itemAccessoryButtonTapped` to `UITableView` extensions.
+* Adds `rx_networkActivityIndicatorVisible` to `UIApplication`.
+* Adds `rx_selected` to `UIControl`.
+
+#### Anomalies
+
+* Fixes anomaly with registering multiple observers to `UIBarButtonItem`.
+* Fixes anomaly with blocking operators possibly over-stopping the `RunLoop`.
+
 ## [2.1.0](https://github.com/ReactiveX/RxSwift/releases/tag/2.1.0)
 
 #### Features
@@ -20,7 +64,7 @@ All notable changes to this project will be documented in this file.
 #### Anomalies
 
 * Removes usage of `OSSpinLock`s from all `Darwin` platforms because of problems with inversion of priority on iOS. [Original thread on swift mailing list is here](https://lists.swift.org/pipermail/swift-dev/Week-of-Mon-20151214/000321.html)
-* Reduces verbose output from `RxCocoa` project in debug mode. `TRACE_RESOURCES` is now also treated as a verbosity level setting. It is possible to get old output by using `TRACE_RESOURCES` with verbosity level `>= 2`. [#397](https://github.com/ReactiveX/RxSwift/issues/397) 
+* Reduces verbose output from `RxCocoa` project in debug mode. `TRACE_RESOURCES` is now also treated as a verbosity level setting. It is possible to get old output by using `TRACE_RESOURCES` with verbosity level `>= 2`. [#397](https://github.com/ReactiveX/RxSwift/issues/397)
 * Fixes anomaly with logging of HTTP body of requests in `RxCocoa` project.
 
 ## [2.0.0](https://github.com/ReactiveX/RxSwift/releases/tag/2.0.0)
