@@ -5,7 +5,7 @@ Examples
 1. [Simple UI bindings](#simple-ui-bindings)
 1. [Autocomplete](#autocomplete)
 1. [more examples](../RxExample)
-1. [Playgrounds](../README.md#playgrounds)
+1. [Playgrounds](Playgrounds.md)
 
 ## Calculated variable
 
