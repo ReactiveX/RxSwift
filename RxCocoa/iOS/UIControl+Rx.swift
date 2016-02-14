@@ -26,6 +26,15 @@ extension UIControl {
     }
 
     /**
+     Bindable sink for `selected` property.
+     */
+    public var rx_selected: AnyObserver<Bool> {
+        return UIBindingObserver(UIElement: self) { control, selected in
+            control.selected = selected
+        }.asObserver()
+    }
+
+    /**
     Reactive wrapper for target action pattern.
     
     - parameter controlEvents: Filter for observed event types.

@@ -27,6 +27,22 @@ extension ControlTests {
 
         XCTAssert(subject.enabled == false, "Expected enabled set to false")
     }
+
+    func testSubscribedSelectedToTrue() {
+        let subject = UIControl()
+        let disposable = Observable.just(true).subscribe(subject.rx_selected)
+        defer { disposable.dispose() }
+
+        XCTAssert(subject.selected == true, "Expected selected set to true")
+    }
+
+    func testSubscribeSelectedToFalse() {
+        let subject = UIControl()
+        let disposable = Observable.just(false).subscribe(subject.rx_selected)
+        defer { disposable.dispose() }
+
+        XCTAssert(subject.selected == false, "Expected selected set to false")
+    }
 }
 
 // UITextField
