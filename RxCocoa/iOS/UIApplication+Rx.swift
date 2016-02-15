@@ -10,11 +10,11 @@ import Foundation
 
 #if os(iOS)
     import UIKit
-    
+
 #if !RX_NO_MODULE
     import RxSwift
 #endif
-    
+
     extension UIApplication {
         
         /**
@@ -27,3 +27,4 @@ import Foundation
         }
     }
 #endif
+
