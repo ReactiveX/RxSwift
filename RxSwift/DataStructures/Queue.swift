@@ -162,7 +162,7 @@ public struct Queue<T>: SequenceType {
         var i = dequeueIndex
         var count = _count
 
-        return anyGenerator {
+        return AnyGenerator {
             if count == 0 {
                 return nil
             }
