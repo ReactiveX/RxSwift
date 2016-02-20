@@ -67,6 +67,7 @@ KVO observing, async operations and streams are all unified under [abstraction o
 * [Reactive Extensions GitHub (GitHub)](https://github.com/Reactive-Extensions)
 * [Erik Meijer (Wikipedia)](http://en.wikipedia.org/wiki/Erik_Meijer_%28computer_scientist%29)
 * [Expert to Expert: Brian Beckman and Erik Meijer - Inside the .NET Reactive Framework (Rx) (video)](https://youtu.be/looJcaeboBY)
+* [Reactive Programming Overview (Jafar Husain from Netflix)](https://www.youtube.com/watch?v=dwP1TNXE6fc)
 * [Subject/Observer is Dual to Iterator (paper)](http://csl.stanford.edu/~christos/pldi2010.fit/meijer.duality.pdf)
 * [Rx standard sequence operators visualized (visualization tool)](http://rxmarbles.com/)
 * [Haskell](https://www.haskell.org/)
