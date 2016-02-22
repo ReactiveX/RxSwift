@@ -32,6 +32,28 @@ extension UIView {
             view.alpha = alpha
         }.asObserver()
     }
+    
+    static func rx_animation(duration: NSTimeInterval, animations: () -> Void) -> Observable<Bool> {
+        return Observable.create { observer in
+            UIView.animateWithDuration(duration, animations: animations) {
+                observer.on(.Next($0))
+                observer.on(.Completed)
+            }
+            return AnonymousDisposable {}
+        }
+        .observeOn(MainScheduler.instance)
+    }
+}
+    
+extension ObservableType {
+    /**
+     Chaining view animations from Observable.
+     */
+    func animate(duration: NSTimeInterval, animations: () -> Void) -> Observable<E> {
+        return self.flatMap { (element: E) -> Observable<E> in
+            return UIView.rx_animation(duration, animations: animations).map { _ in return element }
+        }
+    }
 }
 
 #endif
