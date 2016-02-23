@@ -50,8 +50,15 @@ class GitHubSearchRepositoriesViewController: ViewController, UITableViewDelegat
                     : Observable.empty()
             }
 
-        let searchResult = searchBar.rx_text.asDriver()
+        let searchText = searchBar.rx_text.asDriver()
             .throttle(0.3)
+        let searchTapped = searchBar.rx_searchTapped.asDriver()
+            .flatMap { $0.text.flatMap { Driver.just($0) } ?? Driver.empty() }
+        let cancelTapped = searchBar.rx_cancelTapped.asDriver()
+            .map { _ in "" }
+      
+        let searchResult = Driver.of(searchText, searchTapped, cancelTapped)
+            .merge()
             .distinctUntilChanged()
             .flatMapLatest { query -> Driver<RepositoriesState> in
                 if query.isEmpty {

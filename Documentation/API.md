@@ -250,6 +250,10 @@ extension UISearchBar {
 
     public var rx_searchText: ControlProperty<String> {}
 
+    public var rx_searchTapped: ControlEvent<UISearchBar> {}
+
+    public var rx_cancelTapped: ControlEvent<UISearchBar> {}
+
 }
 ```
 

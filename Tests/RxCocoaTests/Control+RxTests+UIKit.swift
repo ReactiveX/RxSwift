@@ -616,10 +616,20 @@ extension ControlTests {
 
 // UISearchBar
 extension ControlTests {
-    func testSearchBar_DelegateEventCompletesOnDealloc() {
-        let createView: () -> UISearchBar = { UISearchBar(frame: CGRectMake(0, 0, 1, 1)) }
-        ensurePropertyDeallocated(createView, "a") { (view: UISearchBar) in view.rx_text }
-    }
+  func testSearchBar_DelegateEventTextCompletesOnDealloc() {
+      let createView: () -> UISearchBar = { UISearchBar(frame: CGRectMake(0, 0, 1, 1)) }
+      ensurePropertyDeallocated(createView, "a") { (view: UISearchBar) in view.rx_text }
+  }
+  
+  func testSearchBar_DelegateEventSearchCompletesOnDealloc() {
+    let createView: () -> UISearchBar = { UISearchBar(frame: CGRectMake(0, 0, 1, 1)) }
+    ensureEventDeallocated(createView) { (view: UISearchBar) in view.rx_searchTapped }
+  }
+  
+  func testSearchBar_DelegateEventCancelCompletesOnDealloc() {
+    let createView: () -> UISearchBar = { UISearchBar(frame: CGRectMake(0, 0, 1, 1)) }
+    ensureEventDeallocated(createView) { (view: UISearchBar) in view.rx_cancelTapped }
+  }
 }
 
 
