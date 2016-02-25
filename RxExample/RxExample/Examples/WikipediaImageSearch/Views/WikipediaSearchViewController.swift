@@ -46,7 +46,7 @@ class WikipediaSearchViewController: ViewController {
 
         let searchText = searchBar.rx_text.asDriver()
             .throttle(0.3)
-        let searchTapped = searchBar.rx_searchTapped.asDriver()
+        let searchTapped = searchBar.rx_searchButtonClicked.asDriver()
             .flatMap { $0.text.flatMap { Driver.just($0) } ?? Driver.empty() }
       
           Driver.of(searchText, searchTapped)

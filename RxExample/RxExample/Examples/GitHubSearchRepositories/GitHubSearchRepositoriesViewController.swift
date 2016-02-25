@@ -52,12 +52,10 @@ class GitHubSearchRepositoriesViewController: ViewController, UITableViewDelegat
 
         let searchText = searchBar.rx_text.asDriver()
             .throttle(0.3)
-        let searchTapped = searchBar.rx_searchTapped.asDriver()
-            .flatMap { $0.text.flatMap { Driver.just($0) } ?? Driver.empty() }
-        let cancelTapped = searchBar.rx_cancelTapped.asDriver()
+        let cancelTapped = searchBar.rx_cancelButtonClicked.asDriver()
             .map { _ in "" }
       
-        let searchResult = Driver.of(searchText, searchTapped, cancelTapped)
+        let searchResult = Driver.of(searchText, cancelTapped)
             .merge()
             .distinctUntilChanged()
             .flatMapLatest { query -> Driver<RepositoriesState> in
