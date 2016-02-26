@@ -30,14 +30,15 @@ class DelaySink<ElementType, O: ObserverType where O.E == ElementType>
     }
     
     func on(event: Event<E>) {
-        _lock.lock(); defer { _lock.unlock() }
         switch event {
         case .Error(_):
-            forwardOn(event)
-            dispose()
+            _lock.lock(); defer { _lock.unlock() } // lock {
+                forwardOn(event)
+                dispose()
+            // }
         default:
             let delayDisposable = SingleAssignmentDisposable()
-            if let _ = _group.addDisposable(disposable) {
+            if let _ = _group.addDisposable(delayDisposable) {
                 delayDisposable.disposable = _scheduler.scheduleRecursive((), dueTime: _dueTime) { _ in
                     self.forwardOn(event)
                     if event.isStopEvent {
