@@ -47,6 +47,27 @@ extension UISearchBar {
         
         return ControlProperty(values: source, valueSink: bindingObserver)
     }
+    
+    /**
+    Reactive wrapper for `selectedScopeButtonIndex` property.
+    */
+    public var rx_selectedScopeButtonIndex: ControlProperty<Int> {
+        let source: Observable<Int> = Observable.deferred { [weak self] () -> Observable<Int> in
+            let index = self?.selectedScopeButtonIndex ?? 0
+            
+            return (self?.rx_delegate.observe("searchBar:selectedScopeButtonIndexDidChange:") ?? Observable.empty())
+                .map { a in
+                    return try castOrThrow(Int.self, a[1])
+                }
+                .startWith(index)
+        }
+        
+        let bindingObserver = UIBindingObserver(UIElement: self) { (searchBar, index: Int) in
+            searchBar.selectedScopeButtonIndex = index
+        }
+        
+        return ControlProperty(values: source, valueSink: bindingObserver)
+    }
 }
 
 #endif
