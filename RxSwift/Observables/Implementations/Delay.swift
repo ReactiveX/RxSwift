@@ -38,13 +38,14 @@ class DelaySink<ElementType, O: ObserverType where O.E == ElementType>
             // }
         default:
             let delayDisposable = SingleAssignmentDisposable()
-            if let _ = _group.addDisposable(delayDisposable) {
-                delayDisposable.disposable = _scheduler.scheduleRecursive((), dueTime: _dueTime) { _ in
-                    self.forwardOn(event)
+            if let key = _group.addDisposable(delayDisposable) {
+                delayDisposable.disposable = _scheduler.scheduleRecursive((self, key), dueTime: _dueTime) { state, _ in
+                    let (sink, key) = state
+                    sink.forwardOn(event)
+                    sink._group.removeDisposable(key)
                     if event.isStopEvent {
-                        self.dispose()
+                        sink.dispose()
                     }
-                    delayDisposable.dispose()
                 }
             }
         }
