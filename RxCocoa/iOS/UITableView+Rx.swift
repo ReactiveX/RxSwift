@@ -27,11 +27,13 @@ extension UITableView {
     */
     public func rx_itemsWithCellFactory<S: SequenceType, O: ObservableType where O.E == S>
         (source: O)
-        (cellFactory: (UITableView, Int, S.Generator.Element) -> UITableViewCell)
+        -> (cellFactory: (UITableView, Int, S.Generator.Element) -> UITableViewCell)
         -> Disposable {
-        let dataSource = RxTableViewReactiveArrayDataSourceSequenceWrapper<S>(cellFactory: cellFactory)
-    
-        return self.rx_itemsWithDataSource(dataSource)(source: source)
+        return { cellFactory in
+            let dataSource = RxTableViewReactiveArrayDataSourceSequenceWrapper<S>(cellFactory: cellFactory)
+            
+            return self.rx_itemsWithDataSource(dataSource)(source: source)
+        }
     }
 
     /**
@@ -45,17 +47,20 @@ extension UITableView {
     */
     public func rx_itemsWithCellIdentifier<S: SequenceType, Cell: UITableViewCell, O : ObservableType where O.E == S>
         (cellIdentifier: String, cellType: Cell.Type = Cell.self)
-        (source: O)
-        (configureCell: (Int, S.Generator.Element, Cell) -> Void)
+        -> (source: O)
+        -> (configureCell: (Int, S.Generator.Element, Cell) -> Void)
         -> Disposable {
-        let dataSource = RxTableViewReactiveArrayDataSourceSequenceWrapper<S> { (tv, i, item) in
-            let indexPath = NSIndexPath(forItem: i, inSection: 0)
-            let cell = tv.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! Cell
-            configureCell(i, item, cell)
-            return cell
+        return { source in
+            return { configureCell in
+                let dataSource = RxTableViewReactiveArrayDataSourceSequenceWrapper<S> { (tv, i, item) in
+                    let indexPath = NSIndexPath(forItem: i, inSection: 0)
+                    let cell = tv.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! Cell
+                    configureCell(i, item, cell)
+                    return cell
+                }
+                return self.rx_itemsWithDataSource(dataSource)(source: source)
+            }
         }
-        
-        return self.rx_itemsWithDataSource(dataSource)(source: source)
     }
     
     /**
@@ -67,13 +72,15 @@ extension UITableView {
     */
     public func rx_itemsWithDataSource<DataSource: protocol<RxTableViewDataSourceType, UITableViewDataSource>, S: SequenceType, O: ObservableType where DataSource.Element == S, O.E == S>
         (dataSource: DataSource)
-        (source: O)
+        -> (source: O)
         -> Disposable  {
-        return source.subscribeProxyDataSourceForObject(self, dataSource: dataSource, retainDataSource: false) { [weak self] (_: RxTableViewDataSourceProxy, event) -> Void in
-            guard let tableView = self else {
-                return
+        return { source in
+            return source.subscribeProxyDataSourceForObject(self, dataSource: dataSource, retainDataSource: false) { [weak self] (_: RxTableViewDataSourceProxy, event) -> Void in
+                guard let tableView = self else {
+                    return
+                }
+                dataSource.tableView(tableView, observedEvent: event)
             }
-            dataSource.tableView(tableView, observedEvent: event)
         }
     }
 }
@@ -148,6 +155,18 @@ extension UITableView {
         return ControlEvent(events: source)
     }
 
+    /**
+     Reactive wrapper for `delegate` message `tableView:accessoryButtonTappedForRowWithIndexPath:`.
+     */
+    public var rx_itemAccessoryButtonTapped: ControlEvent<NSIndexPath> {
+        let source: Observable<NSIndexPath> = rx_delegate.observe("tableView:accessoryButtonTappedForRowWithIndexPath:")
+            .map { a in
+                return a[1] as! NSIndexPath
+            }
+        
+        return ControlEvent(events: source)
+    }
+    
     /**
     Reactive wrapper for `delegate` message `tableView:commitEditingStyle:forRowAtIndexPath:`.
     */
@@ -244,7 +263,7 @@ extension UITableView {
         
         let element = try dataSource.modelAtIndexPath(indexPath)
 
-        return element as! T
+        return castOrFatalError(element)
     }
 }
 

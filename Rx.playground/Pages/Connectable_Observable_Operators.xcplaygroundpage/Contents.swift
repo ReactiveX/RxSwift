@@ -2,6 +2,14 @@
 
 import RxSwift
 
+
+/*:
+ ## Below every example there is a commented method call that runs that example. To run the example just uncomment that part. 
+ 
+ E.g. `//sampleWithoutConnectableOperators()`
+*/
+
+
 /*:
 ## Connectable Observable Operators
 

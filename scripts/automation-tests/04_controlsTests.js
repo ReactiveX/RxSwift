@@ -1,5 +1,5 @@
 
-var apiTestIndex = 4
+var apiTestIndex = 5
 
 var firstScrollView = function () {
     return UIATarget.localTarget().frontMostApp().mainWindow().scrollViews()[0]

@@ -20,11 +20,14 @@ extension UISlider {
     Reactive wrapper for `value` property.
     */
     public var rx_value: ControlProperty<Float> {
-        return rx_value(getter: { [weak self] in
-            self?.value ?? 0.0
-        }, setter: { [weak self] value in
-            self?.value = value
-        })
+        return UIControl.rx_value(
+            self,
+            getter: { slider in
+                slider.value
+            }, setter: { slider, value in
+                slider.value = value
+            }
+        )
     }
     
 }

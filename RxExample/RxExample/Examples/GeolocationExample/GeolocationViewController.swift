@@ -15,36 +15,24 @@ import CoreLocation
 
 private extension UILabel {
     var rx_driveCoordinates: AnyObserver<CLLocationCoordinate2D> {
-        return AnyObserver { [weak self] event in
-            guard let _self = self else { return }
-            switch event {
-            case let .Next(location):
-                _self.text = "Lat: \(location.latitude)\nLon: \(location.longitude)"
-            default:
-                break
-            }
-        }
+        return UIBindingObserver(UIElement: self) { label, location in
+            label.text = "Lat: \(location.latitude)\nLon: \(location.longitude)"
+        }.asObserver()
     }
 }
 
 private extension UIView {
     var rx_driveAuthorization: AnyObserver<Bool> {
-        return AnyObserver { [weak self] event in
-            guard let _self = self else { return }
-            switch event {
-            case let .Next(autorized):
-                if autorized {
-                    _self.hidden = true
-                    _self.superview?.sendSubviewToBack(_self)
-                }
-                else {
-                    _self.hidden = false
-                    _self.superview?.bringSubviewToFront(_self)
-                }
-            default:
-                break
+        return UIBindingObserver(UIElement: self) { label, authorized in
+            if authorized {
+                label.hidden = true
+                label.superview?.sendSubviewToBack(label)
             }
-        }
+            else {
+                label.hidden = false
+                label.superview?.bringSubviewToFront(label)
+            }
+        }.asObserver()
     }
 }
 
@@ -59,15 +47,16 @@ class GeolocationViewController: ViewController {
         super.viewDidLoad()
         
         let geolocationService = GeolocationService.instance
-        
+
+
         geolocationService.autorized
             .drive(noGeolocationView.rx_driveAuthorization)
             .addDisposableTo(disposeBag)
-        
+        /*
         geolocationService.location
             .drive(label.rx_driveCoordinates)
             .addDisposableTo(disposeBag)
-        
+
         button.rx_tap
             .bindNext { [weak self] in
                 self?.openAppPreferences()
@@ -79,7 +68,7 @@ class GeolocationViewController: ViewController {
                 self?.openAppPreferences()
             }
             .addDisposableTo(disposeBag)
-        
+        */
     }
     
     private func openAppPreferences() {

@@ -16,7 +16,7 @@ import RxCocoa
 public class CollectionViewImageCell: UICollectionViewCell {
     @IBOutlet var imageOutlet: UIImageView!
     
-    var disposeBag: DisposeBag!
+    var disposeBag: DisposeBag?
 
     var downloadableImage: Observable<DownloadableImage>?{
         didSet{

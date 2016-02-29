@@ -86,6 +86,7 @@ function runAutomation() {
 }
 
 AUTOMATION_SIMULATORS=("Krunoslav Zaher’s iPhone" ${DEFAULT_IOS9_SIMULATOR})
+#AUTOMATION_SIMULATORS=(${DEFAULT_IOS9_SIMULATOR})
 
 IFS=""
 for simulator in ${AUTOMATION_SIMULATORS[@]}

@@ -104,6 +104,12 @@
          location = "group:HotAndColdObservables.md">
       </FileRef>
       <FileRef
+         location = "group:IssueTemplate.md">
+      </FileRef>
+      <FileRef
+         location = "group:Linux.md">
+      </FileRef>
+      <FileRef
          location = "group:MathBehindRx.md">
       </FileRef>
       <FileRef
@@ -120,9 +126,6 @@
       </FileRef>
       <FileRef
          location = "group:Warnings.md">
-      </FileRef>
-      <FileRef
-         location = "group:Linux.md">
       </FileRef>
    </Group>
    <FileRef

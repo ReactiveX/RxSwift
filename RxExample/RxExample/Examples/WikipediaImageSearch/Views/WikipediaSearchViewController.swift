@@ -94,9 +94,7 @@ class WikipediaSearchViewController: ViewController {
             DefaultImageService.sharedImageService.loadingImage
         ) { $0 || $1 }
             .distinctUntilChanged()
-            .driveNext { active in
-                UIApplication.sharedApplication().networkActivityIndicatorVisible = active
-            }
+            .drive(UIApplication.sharedApplication().rx_networkActivityIndicatorVisible)
             .addDisposableTo(disposeBag)
     }
 }

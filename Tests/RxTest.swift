@@ -30,7 +30,7 @@ class RxTest
     : XCTestCase {
 
     #if os(Linux)
-        var allTests : [(String, () -> Void)] = []
+        var allTests : [(String, () throws -> Void)] = []
     #endif
 
     private var startResourceCount: Int32 = 0

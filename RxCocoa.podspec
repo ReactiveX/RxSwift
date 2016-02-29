@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "RxCocoa"
-  s.version          = "2.1.0"
+  s.version          = "2.2.0"
   s.summary          = "RxSwift Cocoa extensions"
   s.description      = <<-DESC
 * UI extensions
@@ -25,5 +25,5 @@ Pod::Spec.new do |s|
   s.watchos.source_files  = 'RxCocoa/iOS/**/*.swift'
   s.tvos.source_files     = 'RxCocoa/iOS/**/*.swift'
 
-  s.dependency 'RxSwift', '~> 2.0'
+  s.dependency 'RxSwift', '~> 2.2'
 end

@@ -43,57 +43,48 @@ extension NSControl {
         return ControlEvent(events: source)
     }
 
-    func rx_value<T: Equatable>(getter getter: () -> T, setter: T -> Void) -> ControlProperty<T> {
+    /**
+     You might be wondering why the ugly `as!` casts etc, well, for some reason if
+     Swift compiler knows C is UIControl type and optimizations are turned on, it will crash.
+
+     Can somebody offer poor Swift compiler writers some other better job maybe, this is becoming
+     ridiculous. So much time wasted ...
+    */
+    static func rx_value<C: AnyObject, T: Equatable>(control: C, getter: (C) -> T, setter: (C, T) -> Void) -> ControlProperty<T> {
         MainScheduler.ensureExecutingOnScheduler()
 
-        let source = rx_lazyInstanceObservable(&rx_value_key) { () -> Observable<T> in
-            return Observable.create { [weak self] observer in
-                guard let control = self else {
+        let source = (control as! NSObject).rx_lazyInstanceObservable(&rx_value_key) { () -> Observable<T> in
+            return Observable.create { [weak weakControl = control] (observer: AnyObserver<T>) in
+                guard let control = weakControl else {
                     observer.on(.Completed)
                     return NopDisposable.instance
                 }
 
-                observer.on(.Next(getter()))
+                observer.on(.Next(getter(control)))
 
-                let observer = ControlTarget(control: control) { control in
-                    observer.on(.Next(getter()))
+                let observer = ControlTarget(control: control as! NSControl) { _ in
+                    if let control = weakControl {
+                        observer.on(.Next(getter(control)))
+                    }
                 }
                 
                 return observer
             }
-                .distinctUntilChanged()
-                .takeUntil(self.rx_deallocated)
+            .distinctUntilChanged()
+            .takeUntil((control as! NSObject).rx_deallocated)
         }
 
+        let bindingObserver = UIBindingObserver(UIElement: control, binding: setter)
 
-        return ControlProperty(values: source, valueSink: AnyObserver { event in
-            switch event {
-            case .Next(let value):
-                setter(value)
-            case .Error(let error):
-                bindingErrorToInterface(error)
-            case .Completed:
-                break
-            }
-        })
+        return ControlProperty(values: source, valueSink: bindingObserver)
     }
 
     /**
      Bindable sink for `enabled` property.
     */
     public var rx_enabled: AnyObserver<Bool> {
-        return AnyObserver { [weak self] event in
-            MainScheduler.ensureExecutingOnScheduler()
-
-            switch event {
-            case .Next(let value):
-                self?.enabled = value
-            case .Error(let error):
-                bindingErrorToInterface(error)
-                break
-            case .Completed:
-                break
-            }
-        }
+        return UIBindingObserver(UIElement: self) { (owner, value) in
+            owner.enabled = value
+        }.asObserver()
     }
 }

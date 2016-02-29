@@ -39,17 +39,12 @@ extension UIScrollView {
     */
     public var rx_contentOffset: ControlProperty<CGPoint> {
         let proxy = proxyForObject(RxScrollViewDelegateProxy.self, self)
-        
-        return ControlProperty(values: proxy.contentOffsetSubject, valueSink: AnyObserver { [weak self] event in
-            switch event {
-            case .Next(let value):
-                self?.contentOffset = value
-            case .Error(let error):
-                bindingErrorToInterface(error)
-            case .Completed:
-                break
-            }
-        })
+
+        let bindingObserver = UIBindingObserver(UIElement: self) { scrollView, contentOffset in
+            scrollView.contentOffset = contentOffset
+        }
+
+        return ControlProperty(values: proxy.contentOffsetSubject, valueSink: bindingObserver)
     }
     
     /**

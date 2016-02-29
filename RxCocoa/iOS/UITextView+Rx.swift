@@ -45,17 +45,12 @@ extension UITextView {
                 .startWith(text)
                 .distinctUntilChanged()
         }
+
+        let bindingObserver = UIBindingObserver(UIElement: self) { (textView, text: String) in
+            textView.text = text
+        }
         
-        return ControlProperty(values: source, valueSink: AnyObserver { [weak self] event in
-            switch event {
-            case .Next(let value):
-                self?.text = value
-            case .Error(let error):
-                bindingErrorToInterface(error)
-            case .Completed:
-                break
-            }
-        })
+        return ControlProperty(values: source, valueSink: bindingObserver)
     }
     
 }

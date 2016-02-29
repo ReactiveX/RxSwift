@@ -20,11 +20,14 @@ extension UISwitch {
     Reactive wrapper for `on` property.
     */
     public var rx_value: ControlProperty<Bool> {
-        return rx_value(getter: { [weak self] in
-            self?.on ?? false
-        }, setter: { [weak self] value in
-            self?.on = value
-        })
+        return UIControl.rx_value(
+            self,
+            getter: { uiSwitch in
+                uiSwitch.on
+            }, setter: { uiSwitch, value in
+                uiSwitch.on = value
+            }
+        )
     }
     
 }

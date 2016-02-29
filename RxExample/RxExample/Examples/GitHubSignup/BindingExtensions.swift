@@ -50,16 +50,9 @@ extension ValidationResult {
 
 extension UILabel {
     var ex_validationResult: AnyObserver<ValidationResult> {
-        return AnyObserver { [weak self] event in
-            switch event {
-            case let .Next(result):
-                self?.textColor = result.textColor
-                self?.text = result.description
-            case let .Error(error):
-                bindingErrorToInterface(error)
-            case .Completed:
-                break
-            }
-        }
+        return UIBindingObserver(UIElement: self) { label, result in
+            label.textColor = result.textColor
+            label.text = result.description
+        }.asObserver()
     }
 }

@@ -30,7 +30,7 @@ class SimpleValidationViewController : ViewController {
         super.viewDidLoad()
 
         usernameValidOutlet.text = "Username has to be at least \(minimalUsernameLength) characters"
-        passwordValidOutlet.text = "Username has to be at least \(minimalPasswordLength) characters"
+        passwordValidOutlet.text = "Password has to be at least \(minimalPasswordLength) characters"
 
         let usernameValid = usernameOutlet.rx_text
             .map { $0.characters.count >= minimalUsernameLength }

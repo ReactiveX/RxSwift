@@ -20,11 +20,14 @@ extension UIStepper {
     Reactive wrapper for `value` property.
     */
     public var rx_value: ControlProperty<Double> {
-        return rx_value(getter: { [weak self] in
-            self?.value ?? 0
-        }, setter: { [weak self] value in
-            self?.value = value
-        })
+        return UIControl.rx_value(
+            self,
+            getter: { stepper in
+                stepper.value
+            }, setter: { stepper, value in
+                stepper.value = value
+            }
+        )
     }
     
 }

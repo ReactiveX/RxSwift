@@ -196,7 +196,7 @@ public func proxyForObject<P: DelegateProxyType>(type: P.Type, _ object: AnyObje
 func installDelegate<P: DelegateProxyType>(proxy: P, delegate: AnyObject, retainDelegate: Bool, onProxyForObject object: AnyObject) -> Disposable {
     weak var weakDelegate: AnyObject? = delegate
     
-    assert(proxy.forwardToDelegate() === nil, "There is already a set delegate \(proxy.forwardToDelegate())")
+    assert(proxy.forwardToDelegate() === nil, "There is already a delegate set -> `\(proxy.forwardToDelegate())` for object -> `\(object)`.\nMaybe delegate was already set in `xib` or `storyboard` and now it's being overwritten in code.")
     
     proxy.setForwardToDelegate(delegate, retainDelegate: retainDelegate)
     
@@ -223,7 +223,7 @@ extension ObservableType {
         -> Disposable {
         let proxy = proxyForObject(P.self, object)
         let disposable = installDelegate(proxy, delegate: dataSource, retainDelegate: retainDataSource, onProxyForObject: object)
-        
+
         let subscription = self.asObservable()
             // source can't ever end, otherwise it will release the subscriber
             .concat(Observable.never())

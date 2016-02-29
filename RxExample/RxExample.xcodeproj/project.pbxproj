@@ -402,6 +402,8 @@
 		C8DF92EA1B0B38C0009BCF9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C8DF92E91B0B38C0009BCF9A /* Images.xcassets */; };
 		C8DF92EB1B0B38C0009BCF9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C8DF92E91B0B38C0009BCF9A /* Images.xcassets */; };
 		C8E9D2AF1BD3FD960079D0DB /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80397391BD3E17D009D8B26 /* ActivityIndicator.swift */; };
+		C8F3FFF11C6FD2FA00E60EEC /* UIApplication+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3EE18D11C4D68F900834224 /* UIApplication+Rx.swift */; };
+		C8F3FFF51C6FD62E00E60EEC /* UIBindingObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8F3FFF41C6FD62E00E60EEC /* UIBindingObserver.swift */; };
 		C8F6A12B1BEF9DA3007DF367 /* ConcurrentDispatchQueueScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C894648E1BC6C2B00055219D /* ConcurrentDispatchQueueScheduler.swift */; };
 		C8F6A12C1BEF9DA3007DF367 /* ConcurrentMainScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B145051BD2E45200267DCE /* ConcurrentMainScheduler.swift */; };
 		C8F6A12D1BEF9DA3007DF367 /* CurrentThreadScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C894648F1BC6C2B00055219D /* CurrentThreadScheduler.swift */; };
@@ -923,6 +925,7 @@
 		C8DF92E91B0B38C0009BCF9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		C8DF92F01B0B3E67009BCF9A /* Info-OSX.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Info-OSX.plist"; sourceTree = "<group>"; };
 		C8DF92F21B0B3E71009BCF9A /* Info-iOS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Info-iOS.plist"; sourceTree = "<group>"; };
+		C8F3FFF41C6FD62E00E60EEC /* UIBindingObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIBindingObserver.swift; sourceTree = "<group>"; };
 		C8F6A1361BEF9DD4007DF367 /* RetryWhen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RetryWhen.swift; sourceTree = "<group>"; };
 		C8F8C4891C277F460047640B /* CalculatorState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalculatorState.swift; sourceTree = "<group>"; };
 		C8F8C49C1C277F4F0047640B /* CalculatorAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalculatorAction.swift; sourceTree = "<group>"; };
@@ -1550,6 +1553,7 @@
 		C89465171BC6C2BC0055219D /* CocoaUnits */ = {
 			isa = PBXGroup;
 			children = (
+				C8F3FFF41C6FD62E00E60EEC /* UIBindingObserver.swift */,
 				C80DDEC11BCE9041006A1832 /* Driver */,
 				C89465191BC6C2BC0055219D /* ControlEvent.swift */,
 				C894651B1BC6C2BC0055219D /* ControlProperty.swift */,
@@ -2246,6 +2250,7 @@
 				C8F6A1311BEF9DA3007DF367 /* OperationQueueScheduler.swift in Sources */,
 				CBEE77541BD8C7B700AD584C /* ToArray.swift in Sources */,
 				C89465771BC6C2BC0055219D /* NSNotificationCenter+Rx.swift in Sources */,
+				C8F3FFF51C6FD62E00E60EEC /* UIBindingObserver.swift in Sources */,
 				C89465091BC6C2B00055219D /* ReplaySubject.swift in Sources */,
 				C8BCD3E01C1480E9005F1280 /* Operators.swift in Sources */,
 				C84CC58E1BDD486300E06A64 /* SynchronizedSubscribeType.swift in Sources */,
@@ -2286,6 +2291,7 @@
 				C89465901BC6C2BC0055219D /* UIButton+Rx.swift in Sources */,
 				C89464DD1BC6C2B00055219D /* Sink.swift in Sources */,
 				C89464BE1BC6C2B00055219D /* Catch.swift in Sources */,
+				C8F3FFF11C6FD2FA00E60EEC /* UIApplication+Rx.swift in Sources */,
 				C89CDB721BCC45EE002063D9 /* SkipUntil.swift in Sources */,
 				B1604CCB1BE5BC45002E1279 /* UIImageView+DownloadableImage.swift in Sources */,
 				C8297E471B6CF905000589EA /* ViewController.swift in Sources */,
@@ -2429,7 +2435,6 @@
 				C8984C491C36A579001E4272 /* SectionModel.swift in Sources */,
 				C83367251AD029AE00C668A7 /* ImageService.swift in Sources */,
 				C86E2F471AE5A0CA00C31024 /* WikipediaSearchResult.swift in Sources */,
-				E3EE18D21C4D68F900834224 /* UIApplication+Rx.swift in Sources */,
 				C8984CD11C36BC3E001E4272 /* NumberCell.swift in Sources */,
 				C8A2A2C81B4049E300F11F09 /* PseudoRandomGenerator.swift in Sources */,
 				C8D132151C42B54B00B59FFF /* UIImagePickerController+RxCreate.swift in Sources */,

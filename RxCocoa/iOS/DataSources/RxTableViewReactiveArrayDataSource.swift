@@ -51,14 +51,10 @@ class RxTableViewReactiveArrayDataSourceSequenceWrapper<S: SequenceType>
     }
 
     func tableView(tableView: UITableView, observedEvent: Event<S>) {
-        switch observedEvent {
-        case .Next(let value):
-            super.tableView(tableView, observedElements: Array(value))
-        case .Error(let error):
-            bindingErrorToInterface(error)
-        case .Completed:
-            break
-        }
+        UIBindingObserver(UIElement: self) { tableViewDataSource, sectionModels in
+            let sections = Array(sectionModels)
+            tableViewDataSource.tableView(tableView, observedElements: sections)
+        }.on(observedEvent)
     }
 }
 

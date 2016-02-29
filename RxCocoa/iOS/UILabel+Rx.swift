@@ -20,38 +20,18 @@ extension UILabel {
     Bindable sink for `text` property.
     */
     public var rx_text: AnyObserver<String> {
-        return AnyObserver { [weak self] event in
-            MainScheduler.ensureExecutingOnScheduler()
-            
-            switch event {
-            case .Next(let value):
-                self?.text = value
-            case .Error(let error):
-                bindingErrorToInterface(error)
-                break
-            case .Completed:
-                break
-            }
-        }
+        return UIBindingObserver(UIElement: self) { label, text in
+            label.text = text
+        }.asObserver()
     }
 
     /**
     Bindable sink for `attributedText` property.
     */
     public var rx_attributedText: AnyObserver<NSAttributedString?> {
-        return AnyObserver { [weak self] event in
-            MainScheduler.ensureExecutingOnScheduler()
-
-            switch event {
-            case .Next(let value):
-                self?.attributedText = value
-            case .Error(let error):
-                bindingErrorToInterface(error)
-                break
-            case .Completed:
-                break
-            }
-        }
+        return UIBindingObserver(UIElement: self) { label, text in
+            label.attributedText = text
+        }.asObserver()
     }
     
 }

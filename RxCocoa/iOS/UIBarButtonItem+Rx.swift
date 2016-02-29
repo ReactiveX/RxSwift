@@ -21,19 +21,9 @@ extension UIBarButtonItem {
 	Bindable sink for `enabled` property.
 	*/
 	public var rx_enabled: AnyObserver<Bool> {
-		return AnyObserver { [weak self] event in
-			MainScheduler.ensureExecutingOnScheduler()
-			
-			switch event {
-			case .Next(let value):
-				self?.enabled = value
-			case .Error(let error):
-				bindingErrorToInterface(error)
-				break
-			case .Completed:
-				break
-			}
-		}
+        return UIBindingObserver(UIElement: self) { UIElement, value in
+            UIElement.enabled = value
+		}.asObserver()
 	}
 	
     /**

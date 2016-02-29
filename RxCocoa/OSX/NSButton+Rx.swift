@@ -25,10 +25,13 @@ extension NSButton {
     Reactive wrapper for `state` property`.
     */
     public var rx_state: ControlProperty<Int> {
-        return rx_value(getter: { [weak self] in
-            return self?.state ?? 0
-        }, setter: { [weak self] state in
-            self?.state = state
-        })
+        return NSButton.rx_value(
+            self,
+            getter: { control in
+                return control.state
+            }, setter: { control, state in
+                control.state = state
+            }
+        )
     }
 }

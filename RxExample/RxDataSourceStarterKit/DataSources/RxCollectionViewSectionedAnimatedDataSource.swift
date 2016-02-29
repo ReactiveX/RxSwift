@@ -22,24 +22,17 @@ class RxCollectionViewSectionedAnimatedDataSource<S: SectionModelType> : RxColle
     var set = false
     
     func collectionView(collectionView: UICollectionView, observedEvent: Event<Element>) {
-        switch observedEvent {
-        case .Next(let element):
+        UIBindingObserver(UIElement: self) { ds, element in
             for c in element {
-                //print("Animating ==============================\n\(c)\n===============================\n")
-                
-                if !set {
-                    setSections(c.finalSections)
+                if !ds.set {
+                    ds.setSections(c.finalSections)
                     collectionView.reloadData()
-                    set = true
+                    ds.set = true
                     return
                 }
-                setSections(c.finalSections)
+                ds.setSections(c.finalSections)
                 collectionView.performBatchUpdates(c)
             }
-        case .Error(let error):
-            bindingErrorToInterface(error)
-        case .Completed:
-            break
-        }
+        }.on(observedEvent)
     }
 }

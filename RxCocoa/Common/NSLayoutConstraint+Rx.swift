@@ -24,19 +24,9 @@ extension NSLayoutConstraint {
      Bindable sink for `constant` property.
      */
     public var rx_constant: AnyObserver<CGFloat> {
-        return AnyObserver { [weak self] event in
-            MainScheduler.ensureExecutingOnScheduler()
-
-            switch event {
-            case .Next(let value):
-                self?.constant = value
-            case .Error(let error):
-                bindingErrorToInterface(error)
-                break
-            case .Completed:
-                break
-            }
-        }
+        return UIBindingObserver(UIElement: self) { constraint, constant in
+            constraint.constant = constant
+        }.asObserver()
     }
     
     /**
@@ -44,19 +34,9 @@ extension NSLayoutConstraint {
      */
     @available(iOS 8, OSX 10.10, *)
     public var rx_active: AnyObserver<Bool> {
-        return AnyObserver { [weak self] event in
-            MainScheduler.ensureExecutingOnScheduler()
-
-            switch event {
-            case .Next(let value):
-                self?.active = value
-            case .Error(let error):
-                bindingErrorToInterface(error)
-                break
-            case .Completed:
-                break
-            }
-        }
+        return UIBindingObserver(UIElement: self) { constraint, value in
+            constraint.active = value
+        }.asObserver()
     }
 }
 

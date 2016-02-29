@@ -14,7 +14,7 @@ test("----- githubSignUp -----", function (check, pass) {
     return false;
   }
 
-  target.frontMostApp().mainWindow().tableViews()[0].cells()[2].tap();
+  target.frontMostApp().mainWindow().tableViews()[0].cells()[3].tap();
 
   target.frontMostApp().mainWindow().textFields()[0].tap();
   target.frontMostApp().keyboard().typeString("rxrevolution")
