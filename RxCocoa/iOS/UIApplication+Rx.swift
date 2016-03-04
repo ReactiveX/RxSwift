@@ -10,6 +10,7 @@ import Foundation
 
 #if os(iOS)
     import UIKit
+#endif
     
 #if !RX_NO_MODULE
     import RxSwift
@@ -26,4 +27,3 @@ import Foundation
             }.asObserver()
         }
     }
-#endif
