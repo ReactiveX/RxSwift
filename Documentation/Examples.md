@@ -46,7 +46,9 @@ let b /*: Observable<Int>*/ = Variable(2)   // b = 2
 // if a + b >= 0 {
 //      c = "\(a + b) is positive"
 // }
-let c = Observable.combineLatest(a, b) { $0 + $1 }     // combines latest values of variables `a` and `b` using `+`
+
+        // combines latest values of variables `a` and `b` using `+`
+let c = Observable.combineLatest(a.asObservable(), b.asObservable()) { $0 + $1 }
 	.filter { $0 >= 0 }               // if `a + b >= 0` is true, `a + b` is passed to map operator
 	.map { "\($0) is positive" }      // maps `a + b` to "\(a + b) is positive"
 
