@@ -17,7 +17,7 @@
 extension UITabBarItem {
     
     /**
-     Bindable sink for `hidden` property.
+     Bindable sink for `badgeValue` property.
      */
     public var rx_badgeValue: AnyObserver<String?> {
         return UIBindingObserver(UIElement: self) { tabBarItem, badgeValue in
