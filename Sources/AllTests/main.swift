@@ -468,11 +468,13 @@ _ObservableStandardSequenceOperatorsTest.allTests = [
     ("testSingle_One", { _ObservableStandardSequenceOperatorsTest.setUp(); _ObservableStandardSequenceOperatorsTest.testSingle_One(); _ObservableStandardSequenceOperatorsTest.tearDown(); }),
     ("testSingle_Many", { _ObservableStandardSequenceOperatorsTest.setUp(); _ObservableStandardSequenceOperatorsTest.testSingle_Many(); _ObservableStandardSequenceOperatorsTest.tearDown(); }),
     //("testSingle_Error", { _ObservableStandardSequenceOperatorsTest.setUp(); _ObservableStandardSequenceOperatorsTest.testSingle_Error(); _ObservableStandardSequenceOperatorsTest.tearDown(); }),
+    ("testSingle_DecrementCountsFirst", { _ObservableStandardSequenceOperatorsTest.setUp(); _ObservableStandardSequenceOperatorsTest.testSingle_DecrementCountsFirst(); _ObservableStandardSequenceOperatorsTest.tearDown(); }),
     ("testSinglePredicate_Empty", { _ObservableStandardSequenceOperatorsTest.setUp(); _ObservableStandardSequenceOperatorsTest.testSinglePredicate_Empty(); _ObservableStandardSequenceOperatorsTest.tearDown(); }),
     ("testSinglePredicate_One", { _ObservableStandardSequenceOperatorsTest.setUp(); _ObservableStandardSequenceOperatorsTest.testSinglePredicate_One(); _ObservableStandardSequenceOperatorsTest.tearDown(); }),
     ("testSinglePredicate_Many", { _ObservableStandardSequenceOperatorsTest.setUp(); _ObservableStandardSequenceOperatorsTest.testSinglePredicate_Many(); _ObservableStandardSequenceOperatorsTest.tearDown(); }),
     //("testSinglePredicate_Error", { _ObservableStandardSequenceOperatorsTest.setUp(); _ObservableStandardSequenceOperatorsTest.testSinglePredicate_Error(); _ObservableStandardSequenceOperatorsTest.tearDown(); }),
     //("testSinglePredicate_Throws", { _ObservableStandardSequenceOperatorsTest.setUp(); _ObservableStandardSequenceOperatorsTest.testSinglePredicate_Throws(); _ObservableStandardSequenceOperatorsTest.tearDown(); }),
+    ("testSinglePredicate_DecrementCountsFirst", { _ObservableStandardSequenceOperatorsTest.setUp(); _ObservableStandardSequenceOperatorsTest.testSinglePredicate_DecrementCountsFirst(); _ObservableStandardSequenceOperatorsTest.tearDown(); }),
 ]
 
 
