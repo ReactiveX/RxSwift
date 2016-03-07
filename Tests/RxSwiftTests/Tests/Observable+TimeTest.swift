@@ -1850,4 +1850,20 @@ extension ObservableTimeTest {
             Subscription(200, 270)
             ])
     }
+    
+    func test_DelayWithRealScheduler() {
+        let scheduler = ConcurrentDispatchQueueScheduler(globalConcurrentQueueQOS: .Default)
+        
+        let start = NSDate()
+        
+        let a = try! [Observable.just(0), Observable.never()].toObservable().concat()
+            .delay(2.0, scheduler: scheduler)
+            .toBlocking()
+            .first()
+        
+        let end = NSDate()
+        
+        XCTAssertEqualWithAccuracy(2, end.timeIntervalSinceDate(start), accuracy: 0.5)
+        XCTAssertEqual(a, 0)
+    }
 }
