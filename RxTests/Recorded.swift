@@ -37,9 +37,7 @@ extension Recorded {
     A textual representation of `self`, suitable for debugging.
     */
     public var debugDescription: String {
-        get {
-            return "\(value) @ \(time)"
-        }
+        return "\(value) @ \(time)"
     }
 }
 

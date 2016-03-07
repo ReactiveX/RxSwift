@@ -25,9 +25,7 @@ public final class ConcurrentMainScheduler : SchedulerType {
     - returns: Current time.
     */
     public var now : NSDate {
-        get {
-            return _mainScheduler.now
-        }
+        return _mainScheduler.now
     }
 
     private init(mainScheduler: MainScheduler) {

@@ -20,10 +20,8 @@ public class CompositeDisposable : DisposeBase, Disposable, Cancelable {
     private var _disposables: Bag<Disposable>? = Bag()
 
     public var disposed: Bool {
-        get {
-            _lock.lock(); defer { _lock.unlock() }
-            return _disposables == nil
-        }
+        _lock.lock(); defer { _lock.unlock() }
+        return _disposables == nil
     }
     
     public override init() {
@@ -82,10 +80,8 @@ public class CompositeDisposable : DisposeBase, Disposable, Cancelable {
     - returns: Gets the number of disposables contained in the `CompositeDisposable`.
     */
     public var count: Int {
-        get {
-            _lock.lock(); defer { _lock.unlock() }
-            return _disposables?.count ?? 0
-        }
+        _lock.lock(); defer { _lock.unlock() }
+        return _disposables?.count ?? 0
     }
     
     /**

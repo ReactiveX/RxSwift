@@ -19,15 +19,11 @@ class MySubject<Element where Element : Hashable> : SubjectType, ObserverType {
     var _disposed: Bool = false
     
     var subscribeCount: Int {
-        get {
-            return _subscribeCount
-        }
+        return _subscribeCount
     }
     
     var diposed: Bool {
-        get {
-            return _disposed
-        }
+        return _disposed
     }
     
     func disposeOn(value: Element, disposable: Disposable) {

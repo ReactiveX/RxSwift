@@ -19,9 +19,7 @@ struct ScheduledItem<T>
     private let _disposable = SingleAssignmentDisposable()
 
     var disposed: Bool {
-        get {
-            return _disposable.disposed
-        }
+        return _disposable.disposed
     }
     
     init(action: Action, state: T) {

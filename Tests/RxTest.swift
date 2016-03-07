@@ -36,9 +36,7 @@ class RxTest
     private var startResourceCount: Int32 = 0
 
     var accumulateStatistics: Bool {
-        get {
-            return true
-        }
+        return true
     }
 
     #if TRACE_RESOURCES
