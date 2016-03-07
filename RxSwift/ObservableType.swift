@@ -25,7 +25,7 @@ public protocol ObservableType : ObservableConvertibleType {
     **Next\* (Error | Completed)?**
     
     * sequences can produce zero or more elements so zero or more `Next` events can be sent to `observer`
-    * once an `Error` or `Completed` event is sent, the sequence terminates and can't produce any other element
+    * once an `Error` or `Completed` event is sent, the sequence terminates and can't produce any other elements
     
     It is possible that events are sent from different threads, but no two events can be sent concurrently to
     `observer`.
