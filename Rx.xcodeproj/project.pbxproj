@@ -11,6 +11,11 @@
 		79E9DE8A1C3417FD009970AF /* DispatchQueueSchedulerQOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79E9DE881C3417FD009970AF /* DispatchQueueSchedulerQOS.swift */; };
 		79E9DE8B1C3417FD009970AF /* DispatchQueueSchedulerQOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79E9DE881C3417FD009970AF /* DispatchQueueSchedulerQOS.swift */; };
 		79E9DE8C1C3417FD009970AF /* DispatchQueueSchedulerQOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79E9DE881C3417FD009970AF /* DispatchQueueSchedulerQOS.swift */; };
+		7EDBAEB41C89B1A6006CBE67 /* UITabBarItem+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDBAEAB1C89B1A5006CBE67 /* UITabBarItem+RxTests.swift */; };
+		7EDBAEBC1C89B9B7006CBE67 /* UITabBarItem+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDBAEB71C89B9B7006CBE67 /* UITabBarItem+Rx.swift */; };
+		7EDBAEBE1C89B9B7006CBE67 /* UITabBarItem+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDBAEB71C89B9B7006CBE67 /* UITabBarItem+Rx.swift */; };
+		7EDBAEBF1C89B9B7006CBE67 /* UITabBarItem+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDBAEB71C89B9B7006CBE67 /* UITabBarItem+Rx.swift */; };
+		7EDBAEC31C89BCB9006CBE67 /* UITabBarItem+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDBAEAB1C89B1A5006CBE67 /* UITabBarItem+RxTests.swift */; };
 		7F600F3F1C5D0C6C00535B1D /* UIRefreshControl+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F600F3D1C5D0C0100535B1D /* UIRefreshControl+Rx.swift */; };
 		7F600F401C5D0C6D00535B1D /* UIRefreshControl+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F600F3D1C5D0C0100535B1D /* UIRefreshControl+Rx.swift */; };
 		7F600F411C5D0C6E00535B1D /* UIRefreshControl+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F600F3D1C5D0C0100535B1D /* UIRefreshControl+Rx.swift */; };
@@ -1322,6 +1327,8 @@
 
 /* Begin PBXFileReference section */
 		79E9DE881C3417FD009970AF /* DispatchQueueSchedulerQOS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DispatchQueueSchedulerQOS.swift; sourceTree = "<group>"; };
+		7EDBAEAB1C89B1A5006CBE67 /* UITabBarItem+RxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITabBarItem+RxTests.swift"; sourceTree = "<group>"; };
+		7EDBAEB71C89B9B7006CBE67 /* UITabBarItem+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITabBarItem+Rx.swift"; sourceTree = "<group>"; };
 		7F600F3D1C5D0C0100535B1D /* UIRefreshControl+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIRefreshControl+Rx.swift"; sourceTree = "<group>"; };
 		7F600F421C5D0D2D00535B1D /* UIRefreshControl+RxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIRefreshControl+RxTests.swift"; sourceTree = "<group>"; };
 		842A5A281C357F7D003568D5 /* NSTextStorage+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSTextStorage+Rx.swift"; sourceTree = "<group>"; };
@@ -2209,6 +2216,7 @@
 				C83508F01C38706D0027C24C /* SentMessageTest.swift */,
 				C83508F11C38706D0027C24C /* UIView+RxTests.swift */,
 				7F600F421C5D0D2D00535B1D /* UIRefreshControl+RxTests.swift */,
+				7EDBAEAB1C89B1A5006CBE67 /* UITabBarItem+RxTests.swift */,
 			);
 			path = RxCocoaTests;
 			sourceTree = "<group>";
@@ -2346,6 +2354,7 @@
 				9BA1CBD11C0F7C0A0044B50A /* UIActivityIndicatorView+Rx.swift */,
 				8479BC4A1C3ACED100FB8B54 /* UIImagePickerController+Rx.swift */,
 				C8BCD3EC1C14B5FB005F1280 /* UIView+Rx.swift */,
+				7EDBAEB71C89B9B7006CBE67 /* UITabBarItem+Rx.swift */,
 			);
 			path = iOS;
 			sourceTree = "<group>";
@@ -3254,6 +3263,7 @@
 				C882542E1B8A752B00B02D69 /* UILabel+Rx.swift in Sources */,
 				C88254211B8A752B00B02D69 /* RxSearchBarDelegateProxy.swift in Sources */,
 				C80DDEA71BCE69BA006A1832 /* ObservableConvertibleType+Driver.swift in Sources */,
+				7EDBAEBC1C89B9B7006CBE67 /* UITabBarItem+Rx.swift in Sources */,
 				C839365F1C70E02200A9A09E /* UIApplication+Rx.swift in Sources */,
 				C80DDE9F1BCE69BA006A1832 /* Driver+Subscription.swift in Sources */,
 				C811C89D1C24D80100A2DDD4 /* DeallocObservable.swift in Sources */,
@@ -3407,6 +3417,7 @@
 				C83509331C38706E0027C24C /* Driver+Extensions.swift in Sources */,
 				C835094F1C38706E0027C24C /* CurrentThreadSchedulerTest.swift in Sources */,
 				C835093E1C38706E0027C24C /* UIView+RxTests.swift in Sources */,
+				7EDBAEB41C89B1A6006CBE67 /* UITabBarItem+RxTests.swift in Sources */,
 				C83509411C38706E0027C24C /* BackgroundThreadPrimitiveHotObservable.swift in Sources */,
 				C83509581C38706E0027C24C /* Observable+MultipleTest+CombineLatest.swift in Sources */,
 				C83509651C38706E0027C24C /* VirtualSchedulerTest.swift in Sources */,
@@ -3492,6 +3503,7 @@
 				C8350A121C38756A0027C24C /* Observable+StandardSequenceOperatorsTest.swift in Sources */,
 				C83509C31C3875220027C24C /* KVOObservableTests.swift in Sources */,
 				C83509F91C38755D0027C24C /* MainSchedulerTests.swift in Sources */,
+				7EDBAEC31C89BCB9006CBE67 /* UITabBarItem+RxTests.swift in Sources */,
 				C83509AB1C3874D20027C24C /* XCTest+AllTests.swift in Sources */,
 				C83509C11C3875220027C24C /* Driver+Extensions.swift in Sources */,
 				C83509DD1C38754C0027C24C /* EquatableArray.swift in Sources */,
@@ -4187,6 +4199,7 @@
 				C8F0C03A1BBBFBB9001B112F /* ControlTarget.swift in Sources */,
 				C8F0C03B1BBBFBB9001B112F /* UISearchBar+Rx.swift in Sources */,
 				C8F0C03C1BBBFBB9001B112F /* ItemEvents.swift in Sources */,
+				7EDBAEBF1C89B9B7006CBE67 /* UITabBarItem+Rx.swift in Sources */,
 				C8DB968B1BF756F40084BD53 /* KVORepresentable+CoreGraphics.swift in Sources */,
 				C8FD21B11C67E14C00863EC3 /* UIBindingObserver.swift in Sources */,
 				C8F0C03D1BBBFBB9001B112F /* RxTableViewDataSourceType.swift in Sources */,
@@ -4280,6 +4293,7 @@
 				9D71C4D21BF08191006E8F59 /* UIButton+Rx.swift in Sources */,
 				D203C4FD1BB9C53700D02D00 /* RxSearchBarDelegateProxy.swift in Sources */,
 				D2138C8A1BB9BEBE00339B5C /* Logging.swift in Sources */,
+				7EDBAEBE1C89B9B7006CBE67 /* UITabBarItem+Rx.swift in Sources */,
 				C8DB968A1BF756F40084BD53 /* KVORepresentable+CoreGraphics.swift in Sources */,
 				C8FD21B01C67E14C00863EC3 /* UIBindingObserver.swift in Sources */,
 				D203C50F1BB9C53E00D02D00 /* UIStepper+Rx.swift in Sources */,

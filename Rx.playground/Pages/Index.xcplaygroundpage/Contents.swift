@@ -1,6 +1,6 @@
 
 /*:
-> # IMPORTANT: To use `RxSamples`, please:
+> # IMPORTANT: To use `Rx.playground`, please:
 
 1. Open `Rx.xcworkspace`
 2. Build `RxSwift-OSX` scheme

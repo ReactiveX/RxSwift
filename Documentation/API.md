@@ -455,3 +455,11 @@ extension NSTextField {
 
 }
 ```
+
+```swift
+extension UITabBarItem {
+
+    public var rx_badgeValue: AnyObserver<String?> {}
+
+}
+```
