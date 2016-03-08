@@ -35,9 +35,7 @@ final public class PublishSubject<Element>
     Indicates whether the subject has been disposed.
     */
     public var disposed: Bool {
-        get {
-            return _disposed
-        }
+        return _disposed
     }
     
     /**

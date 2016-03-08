@@ -35,9 +35,7 @@ public class SerialDispatchQueueScheduler: SchedulerType {
     - returns: Current time.
     */
     public var now : NSDate {
-        get {
-            return NSDate()
-        }
+        return NSDate()
     }
     
     // leeway for scheduling timers

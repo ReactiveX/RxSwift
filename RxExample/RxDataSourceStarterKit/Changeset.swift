@@ -18,9 +18,7 @@ struct ItemPath : CustomDebugStringConvertible {
     let itemIndex: Int
 
     var debugDescription : String {
-        get {
-            return "(\(sectionIndex), \(itemIndex))"
-        }
+        return "(\(sectionIndex), \(itemIndex))"
     }
 }
 
@@ -51,20 +49,18 @@ public struct Changeset<S: SectionModelType> : CustomDebugStringConvertible {
     }
 
     public var debugDescription : String {
-        get {
-            let serializedSections = "[\n" + finalSections.map { "\($0)" }.joinWithSeparator(",\n") + "\n]\n"
-            return " >> Final sections"
+        let serializedSections = "[\n" + finalSections.map { "\($0)" }.joinWithSeparator(",\n") + "\n]\n"
+        return " >> Final sections"
             + "   \n\(serializedSections)"
             + (insertedSections.count > 0 || deletedSections.count > 0 || movedSections.count > 0 || updatedSections.count > 0 ? "\nSections:" : "")
             + (insertedSections.count > 0 ? "\ninsertedSections:\n\t\(insertedSections)" : "")
             + (deletedSections.count > 0 ?  "\ndeletedSections:\n\t\(deletedSections)" : "")
             + (movedSections.count > 0 ? "\nmovedSections:\n\t\(movedSections)" : "")
             + (updatedSections.count > 0 ? "\nupdatesSections:\n\t\(updatedSections)" : "")
-                + (insertedItems.count > 0 || deletedItems.count > 0 || movedItems.count > 0 || updatedItems.count > 0 ? "\nItems:" : "")
+            + (insertedItems.count > 0 || deletedItems.count > 0 || movedItems.count > 0 || updatedItems.count > 0 ? "\nItems:" : "")
             + (insertedItems.count > 0 ? "\ninsertedItems:\n\t\(insertedItems)" : "")
             + (deletedItems.count > 0 ? "\ndeletedItems:\n\t\(deletedItems)" : "")
             + (movedItems.count > 0 ? "\nmovedItems:\n\t\(movedItems)" : "")
             + (updatedItems.count > 0 ? "\nupdatedItems:\n\t\(updatedItems)" : "")
-        }
     }
 }

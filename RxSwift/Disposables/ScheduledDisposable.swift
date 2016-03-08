@@ -28,9 +28,7 @@ public class ScheduledDisposable : Cancelable {
     - returns: Was resource disposed.
     */
     public var disposed: Bool {
-        get {
-            return _disposed == 1
-        }
+        return _disposed == 1
     }
 
     /**
