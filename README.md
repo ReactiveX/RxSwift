@@ -2,6 +2,7 @@
 ======================================
 
 [![Travis CI](https://travis-ci.org/ReactiveX/RxSwift.svg?branch=master)](https://travis-ci.org/ReactiveX/RxSwift) ![platforms](https://img.shields.io/badge/platforms-iOS%20%7C%20OSX%20%7C%20tvOS%20%7C%20watchOS%20%7C%20Linux%28experimental%29-333333.svg) ![pod](https://img.shields.io/cocoapods/v/RxSwift.svg)
+[![codebeat](https://codebeat.co/badges/95c47e63-d931-43ee-8d7e-f6d0eeaf21c4)](https://codebeat.co/projects/github-com-reactivex-rxswift)
 
 Xcode 7 Swift 2.1 required
 
