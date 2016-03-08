@@ -31,7 +31,7 @@ extension ObservableType {
     - parameter onError: Action to invoke upon errored termination of the observable sequence.
     - parameter onCompleted: Action to invoke upon graceful termination of the observable sequence.
     - parameter onDisposed: Action to invoke upon any type of termination of sequence (if the sequence has
-        gracefully completed, errored, or if the generation is cancelled by disposing subscription)
+        gracefully completed, errored, or if the generation is cancelled by disposing subscription).
     - returns: Subscription object used to unsubscribe from the observable sequence.
     */
     @warn_unused_result(message="http://git.io/rxs.ud")
@@ -119,7 +119,7 @@ extension ObservableType {
 
 public extension ObservableType {
     /**
-    All internal subscribe calls go through this method
+    All internal subscribe calls go through this method.
     */
     @warn_unused_result(message="http://git.io/rxs.ud")
     func subscribeSafe<O: ObserverType where O.E == E>(observer: O) -> Disposable {
