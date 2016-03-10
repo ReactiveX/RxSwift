@@ -30,6 +30,23 @@ extension UITextField {
         )
     }
     
+    /**
+    Reactive wrapper for `editing` property.
+    */
+    public var rx_editing: ControlProperty<Bool> {
+        return UIControl.rx_value(
+            self,
+            getter: { textField in
+                textField.editing
+            }, setter: { textField, value in
+                if value {
+                    textField.becomeFirstResponder()
+                } else {
+                    textField.resignFirstResponder()
+                }
+            }
+        )
+    }
 }
 
 #endif
