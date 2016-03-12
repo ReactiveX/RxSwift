@@ -43,6 +43,17 @@ class ControlTests : RxTest {
             control = nil
         }
 
+
+        // this code is here to flush any events that were scheduled to
+        // run on main loop
+        dispatch_async(dispatch_get_main_queue()) {
+            let runLoop = CFRunLoopGetCurrent()
+            CFRunLoopStop(runLoop)
+        }
+        let runLoop = CFRunLoopGetCurrent()
+        CFRunLoopWakeUp(runLoop)
+        CFRunLoopRun()
+
         XCTAssertTrue(deallocated)
         XCTAssertTrue(completed)
         XCTAssertEqual(initialValue, lastReturnedPropertyValue)
