@@ -44,9 +44,13 @@ class WikipediaSearchViewController: ViewController {
 
         let API = DefaultWikipediaAPI.sharedAPI
 
-        searchBar.rx_text
-            .asDriver()
+        let searchText = searchBar.rx_text.asDriver()
             .throttle(0.3)
+        let searchTapped = searchBar.rx_searchButtonClicked.asDriver()
+            .flatMap { $0.text.flatMap { Driver.just($0) } ?? Driver.empty() }
+      
+          Driver.of(searchText, searchTapped)
+            .merge()
             .distinctUntilChanged()
             .flatMapLatest { query in
                 API.getSearchResults(query)

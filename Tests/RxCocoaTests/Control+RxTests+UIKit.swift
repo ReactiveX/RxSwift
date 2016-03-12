@@ -633,10 +633,66 @@ extension ControlTests {
 
 // UISearchBar
 extension ControlTests {
-    func testSearchBar_DelegateEventCompletesOnDealloc() {
-        let createView: () -> UISearchBar = { UISearchBar(frame: CGRectMake(0, 0, 1, 1)) }
-        ensurePropertyDeallocated(createView, "a") { (view: UISearchBar) in view.rx_text }
-    }
+  func testSearchBar_DelegateEventTextCompletesOnDealloc() {
+      let createView: () -> UISearchBar = { UISearchBar(frame: CGRectMake(0, 0, 1, 1)) }
+      ensurePropertyDeallocated(createView, "a") { (view: UISearchBar) in view.rx_text }
+  }
+  
+  func testSearchBar_DelegateEventSearchCompletesOnDealloc() {
+    let createView: () -> UISearchBar = { UISearchBar(frame: CGRectMake(0, 0, 1, 1)) }
+    ensureEventDeallocated(createView) { (view: UISearchBar) in view.rx_searchButtonClicked }
+  }
+  
+  func testSearchBar_DelegateEventCancelCompletesOnDealloc() {
+    let createView: () -> UISearchBar = { UISearchBar(frame: CGRectMake(0, 0, 1, 1)) }
+    ensureEventDeallocated(createView) { (view: UISearchBar) in view.rx_cancelButtonClicked }
+  }
+  
+  func testSearchBar_Text_rx_text() {
+    let baseText = "someText"
+    let searchBar = UISearchBar(frame: CGRectMake(0, 0, 1, 1))
+    
+    var detectedText: String? = nil
+    
+    let disposable = searchBar.rx_text
+      .subscribeNext { detectedText = $0 }
+    
+    searchBar.delegate!.searchBar!(searchBar, textDidChange: baseText)
+    
+    XCTAssertEqual(baseText, detectedText)
+    
+    disposable.dispose()
+  }
+  
+  func testSearchBar_SearchBar_rx_searchButtonClicked() {
+    let searchBar = UISearchBar(frame: CGRectMake(0, 0, 1, 1))
+    
+    var detectedSearchBar: UISearchBar? = nil
+    
+    let disposable = searchBar.rx_searchButtonClicked
+      .subscribeNext { detectedSearchBar = $0 }
+    
+    searchBar.delegate!.searchBarSearchButtonClicked!(searchBar)
+    
+    XCTAssertEqual(searchBar, detectedSearchBar)
+    
+    disposable.dispose()
+  }
+  
+  func testSearchBar_SearchBar_rx_cancelButtonClicked() {
+    let searchBar = UISearchBar(frame: CGRectMake(0, 0, 1, 1))
+    
+    var detectedSearchBar: UISearchBar? = nil
+    
+    let disposable = searchBar.rx_cancelButtonClicked
+      .subscribeNext { detectedSearchBar = $0 }
+    
+    searchBar.delegate!.searchBarCancelButtonClicked!(searchBar)
+    
+    XCTAssertEqual(searchBar, detectedSearchBar)
+    
+    disposable.dispose()
+  }
 }
 
 
