@@ -36,6 +36,7 @@ extension UITextView {
             
             let textChanged = self?.textStorage
                 .rx_didProcessEditingRangeChangeInLength
+                .observeOn(MainScheduler.asyncInstance)
                 .map { _ in
                     return self?.textStorage.string ?? ""
                 }

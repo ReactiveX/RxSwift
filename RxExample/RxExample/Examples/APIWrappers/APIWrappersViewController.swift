@@ -70,7 +70,11 @@ class APIWrappersViewController: ViewController {
 
         // MARK: UISegmentedControl
 
-        segmentedControl.rx_value
+        // also test two way binding
+        let segmentedValue = Variable(0)
+        segmentedControl.rx_value <-> segmentedValue
+
+        segmentedValue.asObservable()
             .subscribeNext { [weak self] x in
                 self?.debug("UISegmentedControl value \(x)")
             }
@@ -79,7 +83,11 @@ class APIWrappersViewController: ViewController {
 
         // MARK: UISwitch
 
-        switcher.rx_value
+        // also test two way binding
+        let switchValue = Variable(false)
+        switcher.rx_value <-> switchValue
+
+        switchValue.asObservable()
             .subscribeNext { [weak self] x in
                 self?.debug("UISwitch value \(x)")
             }
@@ -103,7 +111,11 @@ class APIWrappersViewController: ViewController {
 
         // MARK: UISlider
 
-        slider.rx_value
+        // also test two way binding
+        let sliderValue = Variable<Float>(0.0)
+        slider.rx_value <-> sliderValue
+
+        sliderValue.asObservable()
             .subscribeNext { [weak self] x in
                 self?.debug("UISlider value \(x)")
             }
@@ -112,7 +124,12 @@ class APIWrappersViewController: ViewController {
 
         // MARK: UIDatePicker
 
-        datePicker.rx_date
+        // also test two way binding
+        let dateValue = Variable(NSDate())
+        datePicker.rx_date <-> dateValue
+
+
+        dateValue.asObservable()
             .subscribeNext { [weak self] x in
                 self?.debug("UIDatePicker date \(x)")
             }
@@ -121,7 +138,11 @@ class APIWrappersViewController: ViewController {
 
         // MARK: UITextField
 
-        textField.rx_text
+        // also test two way binding
+        let textValue = Variable("")
+        textField.rx_text <-> textValue
+
+        textValue.asObservable()
             .subscribeNext { [weak self] x in
                 self?.debug("UITextField text \(x)")
             }
@@ -139,7 +160,11 @@ class APIWrappersViewController: ViewController {
 
         // MARK: UITextView
 
-        textView.rx_text
+        // also test two way binding
+        let textViewValue = Variable("")
+        textView.rx_text <-> textViewValue
+
+        textViewValue.asObservable()
             .subscribeNext { [weak self] x in
                 self?.debug("UITextView event \(x)")
             }
