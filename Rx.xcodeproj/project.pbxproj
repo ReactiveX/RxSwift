@@ -642,6 +642,10 @@
 		C8B145011BD2D80100267DCE /* ImmediateScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B144FF1BD2D80100267DCE /* ImmediateScheduler.swift */; };
 		C8B145021BD2D80100267DCE /* ImmediateScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B144FF1BD2D80100267DCE /* ImmediateScheduler.swift */; };
 		C8B145031BD2D80100267DCE /* ImmediateScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B144FF1BD2D80100267DCE /* ImmediateScheduler.swift */; };
+		C8B290891C94D64600E923D0 /* RxTest+Controls.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B290841C94D55600E923D0 /* RxTest+Controls.swift */; };
+		C8B2908A1C94D64700E923D0 /* RxTest+Controls.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B290841C94D55600E923D0 /* RxTest+Controls.swift */; };
+		C8B2908B1C94D64700E923D0 /* RxTest+Controls.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B290841C94D55600E923D0 /* RxTest+Controls.swift */; };
+		C8B2908D1C94D6C500E923D0 /* UISearchBar+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B2908C1C94D6C500E923D0 /* UISearchBar+RxTests.swift */; };
 		C8BCD3C71C1468D4005F1280 /* ShareReplay1WhileConnected.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8BCD3C61C1468D4005F1280 /* ShareReplay1WhileConnected.swift */; };
 		C8BCD3C81C1468D4005F1280 /* ShareReplay1WhileConnected.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8BCD3C61C1468D4005F1280 /* ShareReplay1WhileConnected.swift */; };
 		C8BCD3C91C1468D4005F1280 /* ShareReplay1WhileConnected.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8BCD3C61C1468D4005F1280 /* ShareReplay1WhileConnected.swift */; };
@@ -1613,6 +1617,8 @@
 		C8A56AD71AD7424700B4673B /* RxSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8B144FA1BD2D44500267DCE /* ConcurrentMainScheduler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConcurrentMainScheduler.swift; sourceTree = "<group>"; };
 		C8B144FF1BD2D80100267DCE /* ImmediateScheduler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImmediateScheduler.swift; sourceTree = "<group>"; };
+		C8B290841C94D55600E923D0 /* RxTest+Controls.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RxTest+Controls.swift"; sourceTree = "<group>"; };
+		C8B2908C1C94D6C500E923D0 /* UISearchBar+RxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UISearchBar+RxTests.swift"; sourceTree = "<group>"; };
 		C8BCD3C61C1468D4005F1280 /* ShareReplay1WhileConnected.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareReplay1WhileConnected.swift; sourceTree = "<group>"; };
 		C8BCD3EC1C14B5FB005F1280 /* UIView+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Rx.swift"; sourceTree = "<group>"; };
 		C8BCD3F11C14B62B005F1280 /* NSView+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSView+Rx.swift"; sourceTree = "<group>"; };
@@ -2185,6 +2191,7 @@
 				C8D132511C42DA7F00B59FFF /* TestImplementations */,
 				C83508D91C38706D0027C24C /* CLLocationManager+RxTests.swift */,
 				8476A01F1C3D5D580040BA22 /* UIImagePickerController+RxTests.swift */,
+				C8B290841C94D55600E923D0 /* RxTest+Controls.swift */,
 				C83508DA1C38706D0027C24C /* Control+RxTests+Cocoa.swift */,
 				C83508DB1C38706D0027C24C /* Control+RxTests+UIKit.swift */,
 				C83508DC1C38706D0027C24C /* Control+RxTests.swift */,
@@ -2211,6 +2218,7 @@
 				C83508F11C38706D0027C24C /* UIView+RxTests.swift */,
 				7F600F421C5D0D2D00535B1D /* UIRefreshControl+RxTests.swift */,
 				7EDBAEAB1C89B1A5006CBE67 /* UITabBarItem+RxTests.swift */,
+				C8B2908C1C94D6C500E923D0 /* UISearchBar+RxTests.swift */,
 			);
 			path = RxCocoaTests;
 			sourceTree = "<group>";
@@ -3387,6 +3395,7 @@
 				C835094B1C38706E0027C24C /* AnonymousObservable+Test.swift in Sources */,
 				C835092E1C38706E0027C24C /* ControlEventTests.swift in Sources */,
 				C83509531C38706E0027C24C /* Observable+AggregateTest.swift in Sources */,
+				C8B290891C94D64600E923D0 /* RxTest+Controls.swift in Sources */,
 				C83509291C38706E0027C24C /* PerformanceTools.swift in Sources */,
 				C835096A1C38706E0027C24C /* TestErrors.swift in Sources */,
 				C83509561C38706E0027C24C /* Observable+ConcurrencyTest.swift in Sources */,
@@ -3400,6 +3409,7 @@
 				C835095F1C38706E0027C24C /* Observable+SubscriptionTest.swift in Sources */,
 				C83509451C38706E0027C24C /* Observable.Extensions.swift in Sources */,
 				C835093B1C38706E0027C24C /* RXObjCRuntime+Testing.m in Sources */,
+				C8B2908D1C94D6C500E923D0 /* UISearchBar+RxTests.swift in Sources */,
 				C83509641C38706E0027C24C /* VariableTest.swift in Sources */,
 				C83509461C38706E0027C24C /* PrimitiveHotObservable.swift in Sources */,
 				C835097E1C38726E0027C24C /* RxMutableBox.swift in Sources */,
@@ -3460,6 +3470,7 @@
 				C83509EE1C3875580027C24C /* Observable.Extensions.swift in Sources */,
 				C83509BD1C38750D0027C24C /* ControlPropertyTests.swift in Sources */,
 				C83509E11C3875500027C24C /* TestVirtualScheduler.swift in Sources */,
+				C8B2908A1C94D64700E923D0 /* RxTest+Controls.swift in Sources */,
 				C8350A181C38756A0027C24C /* VariableTest.swift in Sources */,
 				C83509EF1C3875580027C24C /* PrimitiveHotObservable.swift in Sources */,
 				C83509FB1C38755D0027C24C /* Observable+BindingTest.swift in Sources */,
@@ -3551,6 +3562,7 @@
 				C8350A081C38755E0027C24C /* Observable+AggregateTest.swift in Sources */,
 				C83509E81C3875580027C24C /* PrimitiveMockObserver.swift in Sources */,
 				C83509BE1C3875100027C24C /* DelegateProxyTest+Cocoa.swift in Sources */,
+				C8B2908B1C94D64700E923D0 /* RxTest+Controls.swift in Sources */,
 				C8350A1B1C38756B0027C24C /* Observable+SingleTest.swift in Sources */,
 				C8350A231C38756B0027C24C /* VirtualSchedulerTest.swift in Sources */,
 				C83509E51C3875580027C24C /* MySubject.swift in Sources */,
