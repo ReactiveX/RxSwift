@@ -104,7 +104,7 @@ func indexSections<S: AnimatableSectionModelType>(sections: [S]) throws -> [S.Id
     for (i, section) in sections.enumerate() {
         guard indexedSections[section.identity] == nil else {
             #if DEBUG
-            precondition(indexedSections[section.identity] == nil, "Section \(section) has already been indexed at \(indexedSections[section]!)")
+            precondition(indexedSections[section.identity] == nil, "Section \(section) has already been indexed at \(indexedSections[section.identity]!)")
             #endif
             throw DifferentiatorError.DuplicateItem(item: section)
         }
@@ -127,7 +127,7 @@ func indexSectionItems<S: AnimatableSectionModelType>(sections: [S]) throws -> [
         for (j, item) in sections[i].items.enumerate() {
             guard indexedItems[item.identity] == nil else {
                 #if DEBUG
-                precondition(indexedItems[item.identity] == nil, "Item \(item) has already been indexed at \(indexedItems[item]!)" )
+                precondition(indexedItems[item.identity] == nil, "Item \(item) has already been indexed at \(indexedItems[item.identity]!)" )
                 #endif
                 throw DifferentiatorError.DuplicateItem(item: item)
             }

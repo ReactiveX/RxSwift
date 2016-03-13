@@ -3,7 +3,7 @@
 //  RxDataSources
 //
 //  Created by Esteban Torres on 5/2/16.
-//  Copyright © 2016 kzaher. All rights reserved.
+//  Copyright © 2016 Krunoslav Zaher. All rights reserved.
 //
 
 import Foundation
