@@ -37,7 +37,7 @@ class UISearchBarTests : RxTest {
         XCTAssertEqual(latestText, "newValue")
     }
 
-    func textText_binding() {
+    func testText_binding() {
         let searchBar = UISearchBar(frame: CGRectMake(0, 0, 1, 1))
 
         XCTAssertNotEqual(searchBar.text, "value")
