@@ -287,6 +287,23 @@ extension ControlTests {
     }
 }
 
+// UIProgressView
+extension ControlTests {
+    func testProgressView_HasWeakReference() {
+        ensureControlObserverHasWeakReference(UIProgressView(), { (progressView: UIProgressView) -> AnyObserver<Float> in progressView.rx_progress }, { Variable<Float>(0.0).asObservable() })
+    }
+
+    func testProgressView_NextElementsSetsValue() {
+        let subject = UIProgressView()
+        let progressSequence = Variable<Float>(0.0)
+        let disposable = progressSequence.asObservable().bindTo(subject.rx_progress)
+        defer { disposable.dispose() }
+
+        progressSequence.value = 1.0
+        XCTAssert(subject.progress == progressSequence.value, "Expected progress to have been set")
+    }
+}
+
 // UITableView
 extension ControlTests {
     func testTableView_DelegateEventCompletesOnDealloc() {
@@ -613,15 +630,6 @@ extension ControlTests {
         ensurePropertyDeallocated(createView, true) { (view: UISwitch) in view.rx_value }
     }
 }
-
-// UISearchBar
-extension ControlTests {
-    func testSearchBar_DelegateEventCompletesOnDealloc() {
-        let createView: () -> UISearchBar = { UISearchBar(frame: CGRectMake(0, 0, 1, 1)) }
-        ensurePropertyDeallocated(createView, "a") { (view: UISearchBar) in view.rx_text }
-    }
-}
-
 
 // UIButton
 extension ControlTests {

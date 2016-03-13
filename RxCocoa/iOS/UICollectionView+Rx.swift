@@ -112,9 +112,7 @@ extension UICollectionView {
     For more information take a look at `DelegateProxyType` protocol documentation.
     */
     public var rx_dataSource: DelegateProxy {
-        get {
-            return proxyForObject(RxCollectionViewDataSourceProxy.self, self)
-        }
+        return proxyForObject(RxCollectionViewDataSourceProxy.self, self)
     }
     
     /**

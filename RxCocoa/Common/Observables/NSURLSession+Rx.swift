@@ -180,7 +180,7 @@ extension NSURLSession {
     public func rx_data(request: NSURLRequest) -> Observable<NSData> {
         return rx_response(request).map { (data, response) -> NSData in
             if 200 ..< 300 ~= response.statusCode {
-                return data ?? NSData()
+                return data
             }
             else {
                 throw RxCocoaURLError.HTTPRequestFailed(response: response, data: data)
@@ -209,7 +209,7 @@ extension NSURLSession {
     public func rx_JSON(request: NSURLRequest) -> Observable<AnyObject> {
         return rx_data(request).map { (data) -> AnyObject in
             do {
-                return try NSJSONSerialization.JSONObjectWithData(data ?? NSData(), options: [])
+                return try NSJSONSerialization.JSONObjectWithData(data, options: [])
             } catch let error {
                 throw RxCocoaURLError.DeserializationError(error: error)
             }

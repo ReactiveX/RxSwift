@@ -1,3 +1,12 @@
+/*:
+> # IMPORTANT: To use `Rx.playground`, please:
+
+1. Open `Rx.xcworkspace`
+2. Build `RxSwift-OSX` scheme
+3. And then open `Rx` playground in `Rx.xcworkspace` tree view.
+4. Choose `View > Show Debug Area`
+*/
+
 //: [<< Previous](@previous) - [Index](Index)
 
 import RxSwift

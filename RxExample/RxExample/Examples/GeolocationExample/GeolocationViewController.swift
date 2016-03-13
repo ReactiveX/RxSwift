@@ -23,14 +23,14 @@ private extension UILabel {
 
 private extension UIView {
     var rx_driveAuthorization: AnyObserver<Bool> {
-        return UIBindingObserver(UIElement: self) { label, authorized in
+        return UIBindingObserver(UIElement: self) { view, authorized in
             if authorized {
-                label.hidden = true
-                label.superview?.sendSubviewToBack(label)
+                view.hidden = true
+                view.superview?.sendSubviewToBack(view)
             }
             else {
-                label.hidden = false
-                label.superview?.bringSubviewToFront(label)
+                view.hidden = false
+                view.superview?.bringSubviewToFront(view)
             }
         }.asObserver()
     }
@@ -47,7 +47,6 @@ class GeolocationViewController: ViewController {
         super.viewDidLoad()
         
         let geolocationService = GeolocationService.instance
-
 
         geolocationService.autorized
             .drive(noGeolocationView.rx_driveAuthorization)

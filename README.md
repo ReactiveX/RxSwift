@@ -24,8 +24,11 @@ KVO observing, async operations and streams are all unified under [abstraction o
 ###### ... understand
 
 * [why use rx?](Documentation/Why.md)
-* how does RxSwift work? [Getting Started Guide](Documentation/GettingStarted.md)
-* what is `Driver`, `ControlProperty`, and `Variable` ... and why do they exist? [Units](Documentation/Units.md)
+* [the basics, getting started with RxSwift](Documentation/GettingStarted.md)
+* [units](Documentation/Units.md) - what is `Driver`, `ControlProperty`, and `Variable` ... and why do they exist?
+* [testing](Documentation/UnitTests.md)
+* [tips and common errors](Documentation/Tips.md)
+* [debugging](Documentation/GettingStarted.md#debugging)
 * [the math behind Rx](Documentation/MathBehindRx.md)
 * [what are hot and cold observable sequences?](Documentation/HotAndColdObservables.md)
 * [what does the the public API look like?](Documentation/API.md)

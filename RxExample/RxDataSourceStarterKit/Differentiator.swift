@@ -33,19 +33,17 @@ enum EditEvent : CustomDebugStringConvertible {
 
 extension EditEvent {
     var debugDescription: String {
-        get {
-            switch self {
-            case .Inserted:
-                return "Inserted"
-            case .Deleted:
-                return "Deleted"
-            case .Moved:
-                return "Moved"
-            case .MovedAutomatically:
-                return "MovedAutomatically"
-            case .Untouched:
-                return "Untouched"
-            }
+        switch self {
+        case .Inserted:
+            return "Inserted"
+        case .Deleted:
+            return "Deleted"
+        case .Moved:
+            return "Moved"
+        case .MovedAutomatically:
+            return "MovedAutomatically"
+        case .Untouched:
+            return "Untouched"
         }
     }
 }
@@ -57,9 +55,7 @@ struct SectionAdditionalInfo : CustomDebugStringConvertible {
 
 extension SectionAdditionalInfo {
     var debugDescription: String {
-        get {
-            return "\(event), \(indexAfterDelete)"
-        }
+        return "\(event), \(indexAfterDelete)"
     }
 }
 
@@ -70,9 +66,7 @@ struct ItemAdditionalInfo : CustomDebugStringConvertible {
 
 extension ItemAdditionalInfo {
     var debugDescription: String {
-        get {
-            return "\(event) \(indexAfterDelete)"
-        }
+        return "\(event) \(indexAfterDelete)"
     }
 }
 

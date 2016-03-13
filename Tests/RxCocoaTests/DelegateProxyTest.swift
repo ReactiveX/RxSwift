@@ -280,9 +280,7 @@ class ThreeDSectionedViewDelegateProxy : DelegateProxy
 
 extension ThreeDSectionedView {
     var rx_proxy: DelegateProxy {
-        get {
-            return proxyForObject(ThreeDSectionedViewDelegateProxy.self, self)
-        }
+        return proxyForObject(ThreeDSectionedViewDelegateProxy.self, self)
     }
 }
 

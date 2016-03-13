@@ -35,6 +35,12 @@ public final class MainScheduler : SerialDispatchQueueScheduler {
     public static let instance = MainScheduler()
 
     /**
+    Singleton instance of `MainScheduler` that always schedules work asynchronously
+    and doesn't perform optimizations for calls scheduled from main thread.
+    */
+    public static let asyncInstance = SerialDispatchQueueScheduler(serialQueue: dispatch_get_main_queue())
+
+    /**
     In case this method is called on a background thread it will throw an exception.
     */
     public class func ensureExecutingOnScheduler() {

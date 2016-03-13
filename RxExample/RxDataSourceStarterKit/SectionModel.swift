@@ -25,9 +25,7 @@ public struct SectionModel<Section, ItemType> : SectionModelType, CustomStringCo
     }
     
     public var description: String {
-        get {
-            return "\(self.model) > \(items)"
-        }
+        return "\(self.model) > \(items)"
     }
 }
 
@@ -48,15 +46,11 @@ public struct HashableSectionModel<Section: Hashable, ItemType: Hashable> : Hash
     }
     
     public var description: String {
-        get {
-            return "HashableSectionModel(model: \"\(self.model)\", items: \(items))"
-        }
+        return "HashableSectionModel(model: \"\(self.model)\", items: \(items))"
     }
     
     public var hashValue: Int {
-        get {
-            return self.model.hashValue
-        }
+        return self.model.hashValue
     }
 
 }

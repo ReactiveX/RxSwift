@@ -25,9 +25,7 @@ public class SingleAssignmentDisposable : DisposeBase, Disposable, Cancelable {
     - returns: A value that indicates whether the object is disposed.
     */
     public var disposed: Bool {
-        get {
-            return _disposed
-        }
+        return _disposed
     }
 
     /**
