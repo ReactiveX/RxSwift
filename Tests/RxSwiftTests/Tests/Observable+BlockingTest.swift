@@ -359,5 +359,8 @@ extension ObservableBlockingTest {
             XCTAssertEqual(c, 1)
             XCTAssertEqual(d, 1)
         }
+
+        // add timeout to give time to clean up
+        sleep(0.3)
     }
 }
