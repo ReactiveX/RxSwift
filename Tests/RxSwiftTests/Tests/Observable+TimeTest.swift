@@ -1779,3 +1779,91 @@ extension ObservableTimeTest {
             ])
     }
 }
+
+// MARK: Delay
+extension ObservableTimeTest {
+    
+    func testDelay_TimeSpan_Simple() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createColdObservable([
+            next(50, 42),
+            next(60, 43),
+            completed(70)
+            ])
+        
+        let res = scheduler.start {
+            xs.delay(30, scheduler: scheduler)
+        }
+        
+        XCTAssertEqual(res.events, [
+            next(280, 42),
+            next(290, 43),
+            completed(300)
+            ])
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 270)
+            ])
+    }
+    
+    func testDelay_TimeSpan_Error() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createColdObservable([
+            next(50, 42),
+            next(60, 43),
+            error(70, testError)
+            ])
+        
+        let res = scheduler.start {
+            xs.delay(30, scheduler: scheduler)
+        }
+        
+        XCTAssertEqual(res.events, [
+            error(270, testError)
+            ])
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 270)
+            ])
+    }
+    
+    func testDelay_TimeSpan_Dispose() {
+        let scheduler = TestScheduler(initialClock: 0)
+        
+        let xs = scheduler.createColdObservable([
+            next(50, 42),
+            next(60, 43),
+            error(70, testError)
+            ])
+        
+        let res = scheduler.start(291) {
+            xs.delay(30, scheduler: scheduler)
+        }
+        
+        XCTAssertEqual(res.events, [
+            error(270, testError)
+            ])
+        
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 270)
+            ])
+    }
+    
+    func test_DelayWithRealScheduler() {
+        let scheduler = ConcurrentDispatchQueueScheduler(globalConcurrentQueueQOS: .Default)
+        
+        let start = NSDate()
+        
+        let a = try! [Observable.just(0), Observable.never()].toObservable().concat()
+            .delay(2.0, scheduler: scheduler)
+            .toBlocking()
+            .first()
+        
+        let end = NSDate()
+        
+        XCTAssertEqualWithAccuracy(2, end.timeIntervalSinceDate(start), accuracy: 0.5)
+        XCTAssertEqual(a, 0)
+    }
+}
