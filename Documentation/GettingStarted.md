@@ -19,7 +19,7 @@ This project tries to be consistent with [ReactiveX.io](http://reactivex.io/). T
 1. [KVO](#kvo)
 1. [UI layer tips](#ui-layer-tips)
 1. [Making HTTP requests](#making-http-requests)
-1. [RxDataSourceStarterKit](#rxdatasourcestarterkit)
+1. [RxDataSources](#rxdatasources)
 1. [Driver](Units.md#driver-unit)
 1. [Examples](Examples.md)
 
