@@ -162,6 +162,10 @@ class TableViewWithEditingCommandsViewController: ViewController, UITableViewDel
             return dataSource.sectionAtIndex(sectionIndex).model
         }
 
+        dataSource.canEditRowAtIndexPath = { (ds, ip) in
+            return true
+        }
+
         return dataSource
     }
 
