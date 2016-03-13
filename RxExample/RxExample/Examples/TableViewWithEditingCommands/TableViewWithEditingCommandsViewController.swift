@@ -70,11 +70,16 @@ class TableViewWithEditingCommandsViewController: ViewController, UITableViewDel
             imageURL: "http://nerdreactor.com/wp-content/uploads/2015/02/Superman1.jpg"
         )
 
+        let watMan = User(firstName: "Wat",
+            lastName: "Man",
+            imageURL: "http://www.iri.upc.edu/files/project/98/main.GIF"
+        )
+
         let loadFavoriteUsers = RandomUserAPI.sharedAPI
                 .getExampleUserResultSet()
                 .map(TableViewEditingCommand.SetUsers)
 
-        let initialLoadCommand = Observable.just(TableViewEditingCommand.SetFavoriteUsers(favoriteUsers: [superMan]))
+        let initialLoadCommand = Observable.just(TableViewEditingCommand.SetFavoriteUsers(favoriteUsers: [superMan, watMan]))
                 .concat(loadFavoriteUsers)
                 .observeOn(MainScheduler.instance)
 
