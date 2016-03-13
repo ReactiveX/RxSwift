@@ -8,6 +8,9 @@
 
 import Foundation
 import UIKit
+#if !RX_NO_MODULE
+    import RxCocoa
+#endif
 
 // objc monkey business
 public class _TableViewSectionedDataSource
