@@ -15,7 +15,7 @@ This document will try to describe what units are, why they are a useful concept
 
 Swift has a powerful type system that can be used to improve correctness and stability of applications and make using Rx a more intuitive and straightforward experience.
 
-**Units are so far specific only to the (RxCocoa)[https://github.com/ReactiveX/RxSwift/tree/master/RxCocoa] project, but the same principles could be implemented easily in other Rx implementations if necessary. There is no private API magic needed.**
+**Units are so far specific only to the [RxCocoa](https://github.com/ReactiveX/RxSwift/tree/master/RxCocoa) project, but the same principles could be implemented easily in other Rx implementations if necessary. There is no private API magic needed.**
 
 **Units are totally optional, you can use raw observable sequences everywhere in your program and all RxCocoa APIs work with observable sequences.**
 
