@@ -84,7 +84,7 @@ class APIWrappersViewController: ViewController {
         // MARK: UISwitch
 
         // also test two way binding
-        let switchValue = Variable(false)
+        let switchValue = Variable(true)
         switcher.rx_value <-> switchValue
 
         switchValue.asObservable()
@@ -112,7 +112,7 @@ class APIWrappersViewController: ViewController {
         // MARK: UISlider
 
         // also test two way binding
-        let sliderValue = Variable<Float>(0.0)
+        let sliderValue = Variable<Float>(1.0)
         slider.rx_value <-> sliderValue
 
         sliderValue.asObservable()
@@ -125,7 +125,7 @@ class APIWrappersViewController: ViewController {
         // MARK: UIDatePicker
 
         // also test two way binding
-        let dateValue = Variable(NSDate())
+        let dateValue = Variable(NSDate(timeIntervalSince1970: 0))
         datePicker.rx_date <-> dateValue
 
 
@@ -166,7 +166,7 @@ class APIWrappersViewController: ViewController {
 
         textViewValue.asObservable()
             .subscribeNext { [weak self] x in
-                self?.debug("UITextView event \(x)")
+                self?.debug("UITextView text \(x)")
             }
             .addDisposableTo(disposeBag)
 
@@ -177,16 +177,15 @@ class APIWrappersViewController: ViewController {
         #endif
 
         manager.rx_didUpdateLocations
-            .subscribeNext { [weak self] x in
-                self?.debug("rx_didUpdateLocations \(x)")
+            .subscribeNext { x in
+                print("rx_didUpdateLocations \(x)")
             }
             .addDisposableTo(disposeBag)
 
         _ = manager.rx_didFailWithError
-            .subscribeNext { [weak self] x in
-                self?.debug("rx_didFailWithError \(x)")
+            .subscribeNext { x in
+                print("rx_didFailWithError \(x)")
             }
-        
         
         manager.rx_didChangeAuthorizationStatus
             .subscribeNext { status in
