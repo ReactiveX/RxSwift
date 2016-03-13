@@ -44,8 +44,13 @@ class UISearchBarTests : RxTest {
         _ = Observable.just("value").bindTo(searchBar.rx_text)
         XCTAssertEqual(searchBar.text, "value")
     }
+
+    func testSelectedScopeButtonIndex_completesOnDealloc() {
+        let createView: () -> UISearchBar = { UISearchBar(frame: CGRectMake(0, 0, 1, 1)) }
+        ensurePropertyDeallocated(createView, 1) { (view: UISearchBar) in view.rx_selectedScopeButtonIndex }
+    }
     
-    func testSelectedScopeButtonIndex_changeEventWOrks() {
+    func testSelectedScopeButtonIndex_changeEventWorks() {
         let searchBar = UISearchBar(frame: CGRectMake(0, 0, 1, 1))
         searchBar.scopeButtonTitles = [ "One", "Two", "Three" ]
         
