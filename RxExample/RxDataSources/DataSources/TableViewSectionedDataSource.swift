@@ -8,7 +8,6 @@
 
 import Foundation
 import UIKit
-import RxCocoa
 
 // objc monkey business
 public class _TableViewSectionedDataSource

@@ -8,7 +8,6 @@
 
 import Foundation
 import UIKit
-import RxCocoa
     
 public class _CollectionViewSectionedDataSource
     : NSObject

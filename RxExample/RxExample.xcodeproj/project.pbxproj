@@ -271,49 +271,27 @@
 		C8A468F21B8A8C2600BF917B /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8A468ED1B8A8BCC00BF917B /* RxCocoa.framework */; };
 		C8A468F31B8A8C2600BF917B /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8A468EB1B8A8BC900BF917B /* RxSwift.framework */; };
 		C8B290BF1C959D2900E923D0 /* AnimatableSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B290A71C959D2900E923D0 /* AnimatableSectionModel.swift */; };
-		C8B290C01C959D2900E923D0 /* AnimatableSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B290A71C959D2900E923D0 /* AnimatableSectionModel.swift */; };
 		C8B290C11C959D2900E923D0 /* AnimatableSectionModelType+ItemPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B290A81C959D2900E923D0 /* AnimatableSectionModelType+ItemPath.swift */; };
-		C8B290C21C959D2900E923D0 /* AnimatableSectionModelType+ItemPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B290A81C959D2900E923D0 /* AnimatableSectionModelType+ItemPath.swift */; };
 		C8B290C31C959D2900E923D0 /* AnimatableSectionModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B290A91C959D2900E923D0 /* AnimatableSectionModelType.swift */; };
-		C8B290C41C959D2900E923D0 /* AnimatableSectionModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B290A91C959D2900E923D0 /* AnimatableSectionModelType.swift */; };
 		C8B290C51C959D2900E923D0 /* AnimationConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B290AA1C959D2900E923D0 /* AnimationConfiguration.swift */; };
-		C8B290C61C959D2900E923D0 /* AnimationConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B290AA1C959D2900E923D0 /* AnimationConfiguration.swift */; };
 		C8B290C71C959D2900E923D0 /* Changeset.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B290AB1C959D2900E923D0 /* Changeset.swift */; };
-		C8B290C81C959D2900E923D0 /* Changeset.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B290AB1C959D2900E923D0 /* Changeset.swift */; };
 		C8B290C91C959D2900E923D0 /* CollectionViewSectionedDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B290AC1C959D2900E923D0 /* CollectionViewSectionedDataSource.swift */; };
-		C8B290CA1C959D2900E923D0 /* CollectionViewSectionedDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B290AC1C959D2900E923D0 /* CollectionViewSectionedDataSource.swift */; };
 		C8B290CB1C959D2900E923D0 /* DataSources.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B290AD1C959D2900E923D0 /* DataSources.swift */; };
-		C8B290CC1C959D2900E923D0 /* DataSources.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B290AD1C959D2900E923D0 /* DataSources.swift */; };
 		C8B290CD1C959D2900E923D0 /* Differentiator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B290AE1C959D2900E923D0 /* Differentiator.swift */; };
-		C8B290CE1C959D2900E923D0 /* Differentiator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B290AE1C959D2900E923D0 /* Differentiator.swift */; };
 		C8B290CF1C959D2900E923D0 /* IdentifiableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B290AF1C959D2900E923D0 /* IdentifiableType.swift */; };
-		C8B290D01C959D2900E923D0 /* IdentifiableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B290AF1C959D2900E923D0 /* IdentifiableType.swift */; };
 		C8B290D11C959D2900E923D0 /* IdentifiableValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B290B01C959D2900E923D0 /* IdentifiableValue.swift */; };
-		C8B290D21C959D2900E923D0 /* IdentifiableValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B290B01C959D2900E923D0 /* IdentifiableValue.swift */; };
 		C8B290D31C959D2900E923D0 /* ItemPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B290B11C959D2900E923D0 /* ItemPath.swift */; };
-		C8B290D41C959D2900E923D0 /* ItemPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B290B11C959D2900E923D0 /* ItemPath.swift */; };
 		C8B290D51C959D2900E923D0 /* Optional+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B290B21C959D2900E923D0 /* Optional+Extensions.swift */; };
-		C8B290D61C959D2900E923D0 /* Optional+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B290B21C959D2900E923D0 /* Optional+Extensions.swift */; };
 		C8B290D71C959D2900E923D0 /* SectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B290B31C959D2900E923D0 /* SectionModel.swift */; };
-		C8B290D81C959D2900E923D0 /* SectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B290B31C959D2900E923D0 /* SectionModel.swift */; };
 		C8B290D91C959D2900E923D0 /* SectionModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B290B41C959D2900E923D0 /* SectionModelType.swift */; };
-		C8B290DA1C959D2900E923D0 /* SectionModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B290B41C959D2900E923D0 /* SectionModelType.swift */; };
 		C8B290DB1C959D2900E923D0 /* TableViewSectionedDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B290B51C959D2900E923D0 /* TableViewSectionedDataSource.swift */; };
-		C8B290DC1C959D2900E923D0 /* TableViewSectionedDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B290B51C959D2900E923D0 /* TableViewSectionedDataSource.swift */; };
 		C8B290DD1C959D2900E923D0 /* UI+SectionedViewType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B290B61C959D2900E923D0 /* UI+SectionedViewType.swift */; };
-		C8B290DE1C959D2900E923D0 /* UI+SectionedViewType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B290B61C959D2900E923D0 /* UI+SectionedViewType.swift */; };
 		C8B290DF1C959D2900E923D0 /* ObservableConvertibleType+Differentiator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B290B81C959D2900E923D0 /* ObservableConvertibleType+Differentiator.swift */; };
-		C8B290E01C959D2900E923D0 /* ObservableConvertibleType+Differentiator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B290B81C959D2900E923D0 /* ObservableConvertibleType+Differentiator.swift */; };
 		C8B290E11C959D2900E923D0 /* RxCollectionViewSectionedAnimatedDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B290B91C959D2900E923D0 /* RxCollectionViewSectionedAnimatedDataSource.swift */; };
-		C8B290E21C959D2900E923D0 /* RxCollectionViewSectionedAnimatedDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B290B91C959D2900E923D0 /* RxCollectionViewSectionedAnimatedDataSource.swift */; };
 		C8B290E31C959D2900E923D0 /* RxCollectionViewSectionedReloadDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B290BA1C959D2900E923D0 /* RxCollectionViewSectionedReloadDataSource.swift */; };
-		C8B290E41C959D2900E923D0 /* RxCollectionViewSectionedReloadDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B290BA1C959D2900E923D0 /* RxCollectionViewSectionedReloadDataSource.swift */; };
 		C8B290E51C959D2900E923D0 /* RxTableViewSectionedAnimatedDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B290BB1C959D2900E923D0 /* RxTableViewSectionedAnimatedDataSource.swift */; };
-		C8B290E61C959D2900E923D0 /* RxTableViewSectionedAnimatedDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B290BB1C959D2900E923D0 /* RxTableViewSectionedAnimatedDataSource.swift */; };
 		C8B290E71C959D2900E923D0 /* RxTableViewSectionedReloadDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B290BC1C959D2900E923D0 /* RxTableViewSectionedReloadDataSource.swift */; };
-		C8B290E81C959D2900E923D0 /* RxTableViewSectionedReloadDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B290BC1C959D2900E923D0 /* RxTableViewSectionedReloadDataSource.swift */; };
 		C8B290E91C959D2900E923D0 /* UISectionedViewType+RxAnimatedDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B290BD1C959D2900E923D0 /* UISectionedViewType+RxAnimatedDataSource.swift */; };
-		C8B290EA1C959D2900E923D0 /* UISectionedViewType+RxAnimatedDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B290BD1C959D2900E923D0 /* UISectionedViewType+RxAnimatedDataSource.swift */; };
 		C8BCD3CE1C14756F005F1280 /* ShareReplay1WhileConnected.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8BCD3CD1C14756F005F1280 /* ShareReplay1WhileConnected.swift */; };
 		C8BCD3DF1C1480E9005F1280 /* Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8BCD3DE1C1480E9005F1280 /* Operators.swift */; };
 		C8BCD3E01C1480E9005F1280 /* Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8BCD3DE1C1480E9005F1280 /* Operators.swift */; };
@@ -406,6 +384,28 @@
 		C8CC3F1D1C95CB5300ABA17E /* UITextField+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8CC3EC61C95CB5300ABA17E /* UITextField+Rx.swift */; };
 		C8CC3F1E1C95CB5300ABA17E /* UITextView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8CC3EC71C95CB5300ABA17E /* UITextView+Rx.swift */; };
 		C8CC3F1F1C95CB5300ABA17E /* UIView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8CC3EC81C95CB5300ABA17E /* UIView+Rx.swift */; };
+		C8CC3F421C95D16C00ABA17E /* AnimatableSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B290A71C959D2900E923D0 /* AnimatableSectionModel.swift */; };
+		C8CC3F431C95D16C00ABA17E /* AnimatableSectionModelType+ItemPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B290A81C959D2900E923D0 /* AnimatableSectionModelType+ItemPath.swift */; };
+		C8CC3F441C95D16C00ABA17E /* AnimatableSectionModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B290A91C959D2900E923D0 /* AnimatableSectionModelType.swift */; };
+		C8CC3F451C95D16C00ABA17E /* AnimationConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B290AA1C959D2900E923D0 /* AnimationConfiguration.swift */; };
+		C8CC3F461C95D16C00ABA17E /* Changeset.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B290AB1C959D2900E923D0 /* Changeset.swift */; };
+		C8CC3F471C95D16C00ABA17E /* CollectionViewSectionedDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B290AC1C959D2900E923D0 /* CollectionViewSectionedDataSource.swift */; };
+		C8CC3F481C95D16C00ABA17E /* DataSources.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B290AD1C959D2900E923D0 /* DataSources.swift */; };
+		C8CC3F491C95D16C00ABA17E /* Differentiator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B290AE1C959D2900E923D0 /* Differentiator.swift */; };
+		C8CC3F4A1C95D16C00ABA17E /* IdentifiableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B290AF1C959D2900E923D0 /* IdentifiableType.swift */; };
+		C8CC3F4B1C95D16C00ABA17E /* IdentifiableValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B290B01C959D2900E923D0 /* IdentifiableValue.swift */; };
+		C8CC3F4C1C95D16C00ABA17E /* ItemPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B290B11C959D2900E923D0 /* ItemPath.swift */; };
+		C8CC3F4D1C95D16C00ABA17E /* Optional+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B290B21C959D2900E923D0 /* Optional+Extensions.swift */; };
+		C8CC3F4E1C95D16C00ABA17E /* SectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B290B31C959D2900E923D0 /* SectionModel.swift */; };
+		C8CC3F4F1C95D16C00ABA17E /* SectionModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B290B41C959D2900E923D0 /* SectionModelType.swift */; };
+		C8CC3F501C95D16C00ABA17E /* TableViewSectionedDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B290B51C959D2900E923D0 /* TableViewSectionedDataSource.swift */; };
+		C8CC3F511C95D16C00ABA17E /* UI+SectionedViewType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B290B61C959D2900E923D0 /* UI+SectionedViewType.swift */; };
+		C8CC3F521C95D17000ABA17E /* ObservableConvertibleType+Differentiator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B290B81C959D2900E923D0 /* ObservableConvertibleType+Differentiator.swift */; };
+		C8CC3F531C95D17000ABA17E /* RxCollectionViewSectionedAnimatedDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B290B91C959D2900E923D0 /* RxCollectionViewSectionedAnimatedDataSource.swift */; };
+		C8CC3F541C95D17000ABA17E /* RxCollectionViewSectionedReloadDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B290BA1C959D2900E923D0 /* RxCollectionViewSectionedReloadDataSource.swift */; };
+		C8CC3F551C95D17000ABA17E /* RxTableViewSectionedAnimatedDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B290BB1C959D2900E923D0 /* RxTableViewSectionedAnimatedDataSource.swift */; };
+		C8CC3F561C95D17000ABA17E /* RxTableViewSectionedReloadDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B290BC1C959D2900E923D0 /* RxTableViewSectionedReloadDataSource.swift */; };
+		C8CC3F571C95D17000ABA17E /* UISectionedViewType+RxAnimatedDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B290BD1C959D2900E923D0 /* UISectionedViewType+RxAnimatedDataSource.swift */; };
 		C8CCB8D41C2D5FBA000EDACC /* String+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8CCB8D31C2D5FBA000EDACC /* String+Rx.swift */; };
 		C8D132151C42B54B00B59FFF /* UIImagePickerController+RxCreate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D132141C42B54B00B59FFF /* UIImagePickerController+RxCreate.swift */; };
 		C8D132161C42B54B00B59FFF /* UIImagePickerController+RxCreate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D132141C42B54B00B59FFF /* UIImagePickerController+RxCreate.swift */; };
@@ -2143,8 +2143,8 @@
 			files = (
 				0744CDD51C4DB5F000720FD2 /* GeolocationService.swift in Sources */,
 				C83D73DE1C1DBC2A003DC470 /* AnonymousInvocable.swift in Sources */,
-				C8B290D21C959D2900E923D0 /* IdentifiableValue.swift in Sources */,
 				C84015751C34353D009D2E77 /* DispatchQueueSchedulerQOS.swift in Sources */,
+				C8CC3F4A1C95D16C00ABA17E /* IdentifiableType.swift in Sources */,
 				C84CC58B1BDD486300E06A64 /* LockOwnerType.swift in Sources */,
 				C864BADC1C3332F10083833C /* String+extensions.swift in Sources */,
 				C8CC3EFB1C95CB5300ABA17E /* ItemEvents.swift in Sources */,
@@ -2152,19 +2152,21 @@
 				C8CC3ED81C95CB5300ABA17E /* ControlEvent+Driver.swift in Sources */,
 				C89464D41BC6C2B00055219D /* ObserveOn.swift in Sources */,
 				8479BC711C3BCB9800FB8B54 /* ImagePickerController.swift in Sources */,
+				C8CC3F491C95D16C00ABA17E /* Differentiator.swift in Sources */,
 				C864BADA1C3332F10083833C /* RandomUserAPI.swift in Sources */,
 				C89464F61BC6C2B00055219D /* AnonymousObserver.swift in Sources */,
 				C8CC3F001C95CB5300ABA17E /* RxCollectionViewDelegateProxy.swift in Sources */,
 				C89464C81BC6C2B00055219D /* DistinctUntilChanged.swift in Sources */,
-				C8B290E21C959D2900E923D0 /* RxCollectionViewSectionedAnimatedDataSource.swift in Sources */,
 				C8CC3F021C95CB5300ABA17E /* RxScrollViewDelegateProxy.swift in Sources */,
 				C89464CF1BC6C2B00055219D /* Just.swift in Sources */,
 				C8CC3F1A1C95CB5300ABA17E /* UISwitch+Rx.swift in Sources */,
 				C8F6A1381BEF9DF6007DF367 /* RetryWhen.swift in Sources */,
 				C894650B1BC6C2B00055219D /* Variable.swift in Sources */,
+				C8CC3F431C95D16C00ABA17E /* AnimatableSectionModelType+ItemPath.swift in Sources */,
 				C83D73E21C1DBC2A003DC470 /* ScheduledItemType.swift in Sources */,
 				C8297E311B6CF905000589EA /* SearchResultViewModel.swift in Sources */,
 				C8F6A12D1BEF9DA3007DF367 /* CurrentThreadScheduler.swift in Sources */,
+				C8CC3F471C95D16C00ABA17E /* CollectionViewSectionedDataSource.swift in Sources */,
 				C8BCD3EB1C14B02A005F1280 /* SimpleValidationViewController.swift in Sources */,
 				C89464D91BC6C2B00055219D /* RefCount.swift in Sources */,
 				C8CC3F1C1C95CB5300ABA17E /* UITableView+Rx.swift in Sources */,
@@ -2181,6 +2183,7 @@
 				C89464B51BC6C2B00055219D /* ImmediateSchedulerType.swift in Sources */,
 				C8297E321B6CF905000589EA /* HtmlParsing.swift in Sources */,
 				C89464EA1BC6C2B00055219D /* Zip.swift in Sources */,
+				C8CC3F561C95D17000ABA17E /* RxTableViewSectionedReloadDataSource.swift in Sources */,
 				C8CC3F091C95CB5300ABA17E /* UIApplication+Rx.swift in Sources */,
 				C8CC3EEB1C95CB5300ABA17E /* DeallocObservable.swift in Sources */,
 				C8CC3EE71C95CB5300ABA17E /* Logging.swift in Sources */,
@@ -2192,7 +2195,6 @@
 				C84015881C343595009D2E77 /* Platform.Darwin.swift in Sources */,
 				C8F6A1321BEF9DA3007DF367 /* RecursiveScheduler.swift in Sources */,
 				07A5C3DC1B70B703001EFE5C /* CalculatorViewController.swift in Sources */,
-				C8B290CC1C959D2900E923D0 /* DataSources.swift in Sources */,
 				C8CC3F0B1C95CB5300ABA17E /* UIButton+Rx.swift in Sources */,
 				C822B1E01C14CEAA0088A01A /* BindingExtensions.swift in Sources */,
 				C8BCD3CE1C14756F005F1280 /* ShareReplay1WhileConnected.swift in Sources */,
@@ -2212,16 +2214,14 @@
 				C89464A71BC6C2B00055219D /* BinaryDisposable.swift in Sources */,
 				C8297E361B6CF905000589EA /* RootViewController.swift in Sources */,
 				C8CC3EE11C95CB5300ABA17E /* UIBindingObserver.swift in Sources */,
+				C8CC3F531C95D17000ABA17E /* RxCollectionViewSectionedAnimatedDataSource.swift in Sources */,
 				C89464BB1BC6C2B00055219D /* AnonymousObservable.swift in Sources */,
 				C8CC3EF61C95CB5300ABA17E /* RxTarget.swift in Sources */,
 				B1B7C3D01BE006870076934E /* TakeLast.swift in Sources */,
 				C849EF9E1C31A8750048AC4A /* String+URL.swift in Sources */,
-				C8B290CA1C959D2900E923D0 /* CollectionViewSectionedDataSource.swift in Sources */,
-				C8B290C01C959D2900E923D0 /* AnimatableSectionModel.swift in Sources */,
 				C8CC3EEA1C95CB5300ABA17E /* ControlTarget.swift in Sources */,
 				C8297E391B6CF905000589EA /* CollectionViewImageCell.swift in Sources */,
 				C894649E1BC6C2B00055219D /* Cancelable.swift in Sources */,
-				C8B290DC1C959D2900E923D0 /* TableViewSectionedDataSource.swift in Sources */,
 				C89464E01BC6C2B00055219D /* SubscribeOn.swift in Sources */,
 				C8CC3F121C95CB5300ABA17E /* UILabel+Rx.swift in Sources */,
 				C89464FA1BC6C2B00055219D /* ObserverType.swift in Sources */,
@@ -2229,10 +2229,11 @@
 				C89464F01BC6C2B00055219D /* Observable+Multiple.swift in Sources */,
 				C8CC3EF31C95CB5300ABA17E /* NSURLSession+Rx.swift in Sources */,
 				C891A2C91C07160C00DDD09D /* Timeout.swift in Sources */,
+				C8CC3F541C95D17000ABA17E /* RxCollectionViewSectionedReloadDataSource.swift in Sources */,
 				C89464DF1BC6C2B00055219D /* StartWith.swift in Sources */,
 				C8984CD21C36BC3E001E4272 /* NumberCell.swift in Sources */,
-				C8B290C61C959D2900E923D0 /* AnimationConfiguration.swift in Sources */,
 				C89464B71BC6C2B00055219D /* Observable+Extensions.swift in Sources */,
+				C8CC3F451C95D16C00ABA17E /* AnimationConfiguration.swift in Sources */,
 				C8F8C4A11C277F5A0047640B /* Operation.swift in Sources */,
 				C89464A01BC6C2B00055219D /* Lock.swift in Sources */,
 				CB883B601BE3AC72000AC2EE /* Window.swift in Sources */,
@@ -2240,10 +2241,8 @@
 				C89464A41BC6C2B00055219D /* Queue.swift in Sources */,
 				C89464B91BC6C2B00055219D /* ObservableConvertibleType.swift in Sources */,
 				C8CC3F151C95CB5300ABA17E /* UIScrollView+Rx.swift in Sources */,
-				C8B290CE1C959D2900E923D0 /* Differentiator.swift in Sources */,
 				C8CC3EEE1C95CB5300ABA17E /* MessageSentObserver.swift in Sources */,
 				C89464D61BC6C2B00055219D /* Producer.swift in Sources */,
-				C8B290D01C959D2900E923D0 /* IdentifiableType.swift in Sources */,
 				C822B1E81C14E7250088A01A /* SimpleTableViewExampleSectionedViewController.swift in Sources */,
 				C89464EC1BC6C2B00055219D /* Observable+Binding.swift in Sources */,
 				C83D73E01C1DBC2A003DC470 /* InvocableType.swift in Sources */,
@@ -2262,6 +2261,7 @@
 				C89464DB1BC6C2B00055219D /* Sample.swift in Sources */,
 				C80DA3411C30B23600C588B9 /* HistoricalSchedulerTimeConverter.swift in Sources */,
 				C849EF891C3195180048AC4A /* GithubSignupViewModel2.swift in Sources */,
+				C8CC3F4B1C95D16C00ABA17E /* IdentifiableValue.swift in Sources */,
 				C8CC3ED21C95CB5300ABA17E /* _RXDelegateProxy.m in Sources */,
 				C89464F31BC6C2B00055219D /* Observable+Time.swift in Sources */,
 				C8CC3EDE1C95CB5300ABA17E /* Driver.swift in Sources */,
@@ -2274,13 +2274,14 @@
 				C89464AA1BC6C2B00055219D /* DisposeBase.swift in Sources */,
 				D2245A191BD5654C00E7146F /* WithLatestFrom.swift in Sources */,
 				C809E97E1BE697100058D948 /* UIImage+Extensions.swift in Sources */,
-				C8B290C21C959D2900E923D0 /* AnimatableSectionModelType+ItemPath.swift in Sources */,
 				C89464E61BC6C2B00055219D /* Timer.swift in Sources */,
 				C83D73DF1C1DBC2A003DC470 /* InvocableScheduledItem.swift in Sources */,
 				C822B1E41C14E4810088A01A /* SimpleTableViewExampleViewController.swift in Sources */,
+				C8CC3F481C95D16C00ABA17E /* DataSources.swift in Sources */,
+				C8CC3F521C95D17000ABA17E /* ObservableConvertibleType+Differentiator.swift in Sources */,
 				C8297E401B6CF905000589EA /* ImageService.swift in Sources */,
-				C8B290EA1C959D2900E923D0 /* UISectionedViewType+RxAnimatedDataSource.swift in Sources */,
 				C8CC3EE41C95CB5300ABA17E /* KVORepresentable+CoreGraphics.swift in Sources */,
+				C8CC3F4D1C95D16C00ABA17E /* Optional+Extensions.swift in Sources */,
 				C89464AD1BC6C2B00055219D /* NopDisposable.swift in Sources */,
 				C84CC5901BDD486300E06A64 /* AsyncLock.swift in Sources */,
 				C8CC3EFD1C95CB5300ABA17E /* RxCollectionViewDataSourceType.swift in Sources */,
@@ -2289,7 +2290,6 @@
 				C89465091BC6C2B00055219D /* ReplaySubject.swift in Sources */,
 				C8CC3EFC1C95CB5300ABA17E /* NSTextStorage+Rx.swift in Sources */,
 				C8BCD3E01C1480E9005F1280 /* Operators.swift in Sources */,
-				C8B290DE1C959D2900E923D0 /* UI+SectionedViewType.swift in Sources */,
 				C8CC3EE61C95CB5300ABA17E /* KVORepresentable.swift in Sources */,
 				C84CC58E1BDD486300E06A64 /* SynchronizedSubscribeType.swift in Sources */,
 				0744CDEE1C4DB78600720FD2 /* GeolocationViewController.swift in Sources */,
@@ -2297,7 +2297,6 @@
 				C89464A81BC6C2B00055219D /* CompositeDisposable.swift in Sources */,
 				C89464D21BC6C2B00055219D /* Multicast.swift in Sources */,
 				C8297E421B6CF905000589EA /* WikipediaSearchResult.swift in Sources */,
-				C8B290E81C959D2900E923D0 /* RxTableViewSectionedReloadDataSource.swift in Sources */,
 				C8F8C49E1C277F4F0047640B /* CalculatorAction.swift in Sources */,
 				C89464A31BC6C2B00055219D /* InfiniteSequence.swift in Sources */,
 				CB30D9EE1BF106260084C1C0 /* SingleAsync.swift in Sources */,
@@ -2312,7 +2311,6 @@
 				C89464D51BC6C2B00055219D /* ObserveOnSerialDispatchQueue.swift in Sources */,
 				C843A08F1C1CE39900CBA4BD /* GitHubSearchRepositoriesAPI.swift in Sources */,
 				C8297E461B6CF905000589EA /* Example.swift in Sources */,
-				C8B290DA1C959D2900E923D0 /* SectionModelType.swift in Sources */,
 				C8CC3F011C95CB5300ABA17E /* RxImagePickerDelegateProxy.swift in Sources */,
 				C89465081BC6C2B00055219D /* PublishSubject.swift in Sources */,
 				C89464FC1BC6C2B00055219D /* RxMutableBox.swift in Sources */,
@@ -2320,6 +2318,7 @@
 				C809E97B1BE6841C0058D948 /* Wireframe.swift in Sources */,
 				C89464E21BC6C2B00055219D /* Take.swift in Sources */,
 				C80DA3551C30B48300C588B9 /* PriorityQueue.swift in Sources */,
+				C8CC3F511C95D16C00ABA17E /* UI+SectionedViewType.swift in Sources */,
 				B18F3BC11BD93E00000AAC79 /* Reachability.swift in Sources */,
 				C89464DD1BC6C2B00055219D /* Sink.swift in Sources */,
 				C89464BE1BC6C2B00055219D /* Catch.swift in Sources */,
@@ -2327,10 +2326,11 @@
 				B1604CCB1BE5BC45002E1279 /* UIImageView+DownloadableImage.swift in Sources */,
 				C8297E471B6CF905000589EA /* ViewController.swift in Sources */,
 				C89464E41BC6C2B00055219D /* TakeWhile.swift in Sources */,
-				C8B290C81C959D2900E923D0 /* Changeset.swift in Sources */,
 				C89464F71BC6C2B00055219D /* ObserverBase.swift in Sources */,
+				C8CC3F441C95D16C00ABA17E /* AnimatableSectionModelType.swift in Sources */,
 				C8CC3F111C95CB5300ABA17E /* UIImageView+Rx.swift in Sources */,
 				C89464E31BC6C2B00055219D /* TakeUntil.swift in Sources */,
+				C8CC3F421C95D16C00ABA17E /* AnimatableSectionModel.swift in Sources */,
 				C89464FB1BC6C2B00055219D /* Rx.swift in Sources */,
 				C84CC5911BDD48B800E06A64 /* SubscriptionDisposable.swift in Sources */,
 				C8F6A1341BEF9DA3007DF367 /* SchedulerServices+Emulation.swift in Sources */,
@@ -2338,8 +2338,11 @@
 				C8984CD61C36BC3E001E4272 /* PartialUpdatesViewController.swift in Sources */,
 				C80DA3401C30B23600C588B9 /* HistoricalScheduler.swift in Sources */,
 				C8CC3F141C95CB5300ABA17E /* UIRefreshControl+Rx.swift in Sources */,
+				C8CC3F551C95D17000ABA17E /* RxTableViewSectionedAnimatedDataSource.swift in Sources */,
 				C8297E491B6CF905000589EA /* WikipediaSearchCell.swift in Sources */,
 				C8CC3F181C95CB5300ABA17E /* UISlider+Rx.swift in Sources */,
+				C8CC3F461C95D16C00ABA17E /* Changeset.swift in Sources */,
+				C8CC3F571C95D17000ABA17E /* UISectionedViewType+RxAnimatedDataSource.swift in Sources */,
 				C89464D81BC6C2B00055219D /* Reduce.swift in Sources */,
 				C89464A91BC6C2B00055219D /* DisposeBag.swift in Sources */,
 				C8CC3EF21C95CB5300ABA17E /* NSObject+Rx.swift in Sources */,
@@ -2351,7 +2354,6 @@
 				C8CC3F101C95CB5300ABA17E /* UIImagePickerController+Rx.swift in Sources */,
 				C8CCB8D41C2D5FBA000EDACC /* String+Rx.swift in Sources */,
 				C8CC3F0E1C95CB5300ABA17E /* UIDatePicker+Rx.swift in Sources */,
-				C8B290E41C959D2900E923D0 /* RxCollectionViewSectionedReloadDataSource.swift in Sources */,
 				C84CC58F1BDD486300E06A64 /* SynchronizedUnsubscribeType.swift in Sources */,
 				C8CC3EFF1C95CB5300ABA17E /* RxCollectionViewDataSourceProxy.swift in Sources */,
 				C89CDB711BCC45E5002063D9 /* ShareReplay1.swift in Sources */,
@@ -2364,14 +2366,12 @@
 				C8CC3EE01C95CB5300ABA17E /* Variable+Driver.swift in Sources */,
 				C864BAE21C3332F10083833C /* User.swift in Sources */,
 				C8CC3EED1C95CB5300ABA17E /* KVOObserver.swift in Sources */,
-				C8B290D41C959D2900E923D0 /* ItemPath.swift in Sources */,
 				C8F6A1301BEF9DA3007DF367 /* MainScheduler.swift in Sources */,
 				C8CC3EF71C95CB5300ABA17E /* SectionedViewDataSourceType.swift in Sources */,
 				C8CC3ED61C95CB5300ABA17E /* ControlEvent.swift in Sources */,
 				C8CC3EDF1C95CB5300ABA17E /* ObservableConvertibleType+Driver.swift in Sources */,
 				C8CC3F061C95CB5300ABA17E /* RxTextStorageDelegateProxy.swift in Sources */,
 				C8CC3ED31C95CB5300ABA17E /* _RXKVOObserver.m in Sources */,
-				C8B290D61C959D2900E923D0 /* Optional+Extensions.swift in Sources */,
 				C8CC3EF51C95CB5300ABA17E /* RxCocoa.swift in Sources */,
 				C8CC3EDA1C95CB5300ABA17E /* Driver+Operators+arity.swift in Sources */,
 				C89464C51BC6C2B00055219D /* Debug.swift in Sources */,
@@ -2387,10 +2387,10 @@
 				C803973B1BD3E17D009D8B26 /* ActivityIndicator.swift in Sources */,
 				C89464C61BC6C2B00055219D /* Deferred.swift in Sources */,
 				C8CC3EF91C95CB5300ABA17E /* RxCollectionViewReactiveArrayDataSource.swift in Sources */,
-				C8B290E01C959D2900E923D0 /* ObservableConvertibleType+Differentiator.swift in Sources */,
 				C8CC3EF11C95CB5300ABA17E /* NSObject+Rx+RawRepresentable.swift in Sources */,
 				C8CC3F1B1C95CB5300ABA17E /* UITabBarItem+Rx.swift in Sources */,
 				C8984CD41C36BC3E001E4272 /* NumberSectionView.swift in Sources */,
+				C8CC3F4C1C95D16C00ABA17E /* ItemPath.swift in Sources */,
 				CB883B611BE3AC72000AC2EE /* AddRef.swift in Sources */,
 				D2AF91981BD3D95900A008C1 /* Using.swift in Sources */,
 				C8297E521B6CF905000589EA /* Dependencies.swift in Sources */,
@@ -2404,19 +2404,20 @@
 				C8297E531B6CF905000589EA /* WikipediaAPI.swift in Sources */,
 				C8CC3F071C95CB5300ABA17E /* RxTextViewDelegateProxy.swift in Sources */,
 				C89465071BC6C2B00055219D /* BehaviorSubject.swift in Sources */,
-				C8B290C41C959D2900E923D0 /* AnimatableSectionModelType.swift in Sources */,
 				C89464D01BC6C2B00055219D /* Map.swift in Sources */,
 				C8CC3ED71C95CB5300ABA17E /* ControlProperty.swift in Sources */,
 				C8297E541B6CF905000589EA /* AppDelegate.swift in Sources */,
+				C8CC3F4F1C95D16C00ABA17E /* SectionModelType.swift in Sources */,
 				C8CC3F1F1C95CB5300ABA17E /* UIView+Rx.swift in Sources */,
 				C8CC3F0D1C95CB5300ABA17E /* UIControl+Rx.swift in Sources */,
+				C8CC3F4E1C95D16C00ABA17E /* SectionModel.swift in Sources */,
 				C8F6A12C1BEF9DA3007DF367 /* ConcurrentMainScheduler.swift in Sources */,
 				C8F8C48B1C277F460047640B /* CalculatorState.swift in Sources */,
 				C8CC3F191C95CB5300ABA17E /* UIStepper+Rx.swift in Sources */,
 				C8CC3F0F1C95CB5300ABA17E /* UIGestureRecognizer+Rx.swift in Sources */,
 				C8CC3ED11C95CB5300ABA17E /* _RX.m in Sources */,
-				C8B290E61C959D2900E923D0 /* RxTableViewSectionedAnimatedDataSource.swift in Sources */,
 				C849EF831C3193B10048AC4A /* GithubSignupViewModel1.swift in Sources */,
+				C8CC3F501C95D16C00ABA17E /* TableViewSectionedDataSource.swift in Sources */,
 				C8CC3F0C1C95CB5300ABA17E /* UICollectionView+Rx.swift in Sources */,
 				C8297E561B6CF905000589EA /* WikipediaPage.swift in Sources */,
 				C8297E571B6CF905000589EA /* Randomizer.swift in Sources */,
@@ -2435,7 +2436,6 @@
 				C83D73E11C1DBC2A003DC470 /* ScheduledItem.swift in Sources */,
 				C849EF871C3195180048AC4A /* GitHubSignupViewController2.swift in Sources */,
 				C8CC3EDD1C95CB5300ABA17E /* Driver+Subscription.swift in Sources */,
-				C8B290D81C959D2900E923D0 /* SectionModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
