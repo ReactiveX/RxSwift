@@ -37,11 +37,38 @@ class UISearchBarTests : RxTest {
         XCTAssertEqual(latestText, "newValue")
     }
 
-    func textText_binding() {
+    func testText_binding() {
         let searchBar = UISearchBar(frame: CGRectMake(0, 0, 1, 1))
 
         XCTAssertNotEqual(searchBar.text, "value")
         _ = Observable.just("value").bindTo(searchBar.rx_text)
         XCTAssertEqual(searchBar.text, "value")
+    }
+    
+    func testSelectedScopeButtonIndex_changeEventWOrks() {
+        let searchBar = UISearchBar(frame: CGRectMake(0, 0, 1, 1))
+        searchBar.scopeButtonTitles = [ "One", "Two", "Three" ]
+        
+        var latestSelectedScopeIndex: Int = -1
+        
+        _ = searchBar.rx_selectedScopeButtonIndex.subscribeNext { index in
+            latestSelectedScopeIndex = index
+        }
+        
+        XCTAssertEqual(latestSelectedScopeIndex, 0)
+        
+        searchBar.selectedScopeButtonIndex = 1
+        searchBar.delegate!.searchBar!(searchBar, selectedScopeButtonIndexDidChange: 1)
+        
+        XCTAssertEqual(latestSelectedScopeIndex, 1)
+    }
+    
+    func testSelectedScopeButtonIndex_binding() {
+        let searchBar = UISearchBar(frame: CGRectMake(0, 0, 1, 1))
+        searchBar.scopeButtonTitles = [ "One", "Two", "Three" ]
+        
+        XCTAssertNotEqual(searchBar.selectedScopeButtonIndex, 1)
+        _ = Observable.just(1).bindTo(searchBar.rx_selectedScopeButtonIndex)
+        XCTAssertEqual(searchBar.selectedScopeButtonIndex, 1)
     }
 }
