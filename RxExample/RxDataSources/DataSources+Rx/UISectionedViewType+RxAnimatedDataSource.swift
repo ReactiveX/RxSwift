@@ -16,14 +16,11 @@ import RxCocoa
 extension UITableView {
     public func rx_itemsAnimatedWithDataSource<
             DataSource: protocol<RxTableViewDataSourceType, UITableViewDataSource>,
-            S: SequenceType,
             O: ObservableConvertibleType,
-            Section: protocol<SectionModelType, Hashable>
+            Section: AnimatableSectionModelType
         where
             DataSource.Element == [Changeset<Section>],
-            O.E == S,
-            S.Generator.Element == Section,
-            Section.Item: Hashable
+            O.E == [Section]
         >
         (dataSource: DataSource)
         (source: O)
@@ -36,14 +33,11 @@ extension UITableView {
 extension UICollectionView {
     public func rx_itemsAnimatedWithDataSource<
             DataSource: protocol<RxCollectionViewDataSourceType, UICollectionViewDataSource>,
-            S: SequenceType,
             O: ObservableConvertibleType,
-            Section: protocol<SectionModelType, Hashable>
+            Section: AnimatableSectionModelType
         where
             DataSource.Element == [Changeset<Section>],
-            O.E == S,
-            S.Generator.Element == Section,
-            Section.Item: Hashable
+            O.E == [Section]
         >
         (dataSource: DataSource)
         (source: O)

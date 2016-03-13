@@ -1,5 +1,5 @@
-RxSwift: DataSource Starter Kit
-===============================
+RxSwift: DataSources
+====================
 
 This directory contains example implementations of reactive data sources.
 

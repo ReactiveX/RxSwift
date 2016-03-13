@@ -13,11 +13,17 @@ import RxSwift
 import RxCocoa
 #endif
 
-class RxCollectionViewSectionedReloadDataSource<S: SectionModelType> : RxCollectionViewSectionedDataSource<S>
-                                                                     , RxCollectionViewDataSourceType {
-    typealias Element = [S]
+public class RxCollectionViewSectionedReloadDataSource<S: SectionModelType>
+    : CollectionViewSectionedDataSource<S>
+    , RxCollectionViewDataSourceType {
     
-    func collectionView(collectionView: UICollectionView, observedEvent: Event<Element>) {
+    public typealias Element = [S]
+
+    public override init() {
+        super.init()
+    }
+
+    public func collectionView(collectionView: UICollectionView, observedEvent: Event<Element>) {
         UIBindingObserver(UIElement: self) { dataSource, element in
             dataSource.setSections(element)
             collectionView.reloadData()

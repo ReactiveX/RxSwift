@@ -152,13 +152,13 @@ class TableViewWithEditingCommandsViewController: ViewController, UITableViewDel
     static func configureDataSource() -> RxTableViewSectionedReloadDataSource<SectionModel<String, User>> {
         let dataSource = RxTableViewSectionedReloadDataSource<SectionModel<String, User>>()
 
-        dataSource.cellFactory = { (tv, ip, user: User) in
+        dataSource.configureCell = { (_, tv, ip, user: User) in
             let cell = tv.dequeueReusableCellWithIdentifier("Cell")!
             cell.textLabel?.text = user.firstName + " " + user.lastName
             return cell
         }
 
-        dataSource.titleForHeaderInSection = { [unowned dataSource] sectionIndex in
+        dataSource.titleForHeaderInSection = { dataSource, sectionIndex in
             return dataSource.sectionAtIndex(sectionIndex).model
         }
 

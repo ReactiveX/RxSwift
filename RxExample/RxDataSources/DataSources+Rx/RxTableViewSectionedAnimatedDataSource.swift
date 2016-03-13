@@ -13,23 +13,26 @@ import RxSwift
 import RxCocoa
 #endif
 
-/**
- Code for reactive data sources is packed in [RxDataSources](https://github.com/RxSwiftCommunity/RxDataSources) project.
- */
-class RxTableViewSectionedAnimatedDataSource<S: SectionModelType> : RxTableViewSectionedDataSource<S>
-                                                                  , RxTableViewDataSourceType {
-    typealias Element = [Changeset<S>]
+public class RxTableViewSectionedAnimatedDataSource<S: SectionModelType>
+    : RxTableViewSectionedDataSource<S>
+    , RxTableViewDataSourceType {
     
-    func tableView(tableView: UITableView, observedEvent: Event<Element>) {
+    public typealias Element = [Changeset<S>]
+    public var animationConfiguration: AnimationConfiguration? = nil
+
+    public override init() {
+        super.init()
+    }
+
+    public func tableView(tableView: UITableView, observedEvent: Event<Element>) {
         UIBindingObserver(UIElement: self) { dataSource, element in
             for c in element {
-                //print("Animating ==============================\n\(c)\n===============================\n")
                 dataSource.setSections(c.finalSections)
                 if c.reloadData {
                     tableView.reloadData()
                 }
                 else {
-                    tableView.performBatchUpdates(c)
+                  tableView.performBatchUpdates(c, animationConfiguration: self.animationConfiguration)
                 }
             }
         }.on(observedEvent)
