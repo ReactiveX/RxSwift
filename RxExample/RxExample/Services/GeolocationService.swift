@@ -23,8 +23,8 @@ class GeolocationService {
     
     private init() {
         
-        locationManager.distanceFilter = kCLDistanceFilterNone;
-        locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation;
+        locationManager.distanceFilter = kCLDistanceFilterNone
+        locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
         
         autorized = Observable.deferred { [weak locationManager] in
                 let status = CLLocationManager.authorizationStatus()
