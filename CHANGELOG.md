@@ -3,6 +3,26 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [2.3.0](https://github.com/ReactiveX/RxSwift/releases/tag/2.2.0)
+
+#### Features
+
+* Adds `rx_badgeValue` to `UITabBarItem`.
+* Adds `rx_progress` to `UIProgresView`.
+* Adds `rx_selectedScopeButtonIndex` to `UISearchBar`.
+* Adds `asyncInstance` to `MainScheduler`.
+* Makes `name` parmeter optional for `rx_notification` extension.
+* Adds `UnitTests.md`.
+* Adds `Tips.md`.
+* Updates playground inline documentation with running instructions.
+* Synchronizes copy of `RxDataSources` source files inside example project to `0.6` release.
+
+#### Anomalies
+
+* Improves `DelegateProxy` memory management.
+* Fixes anomaly during two way binding of `UITextView` text value.
+* Improves `single` operator so it handles reentrancy better.
+
 ## [2.2.0](https://github.com/ReactiveX/RxSwift/releases/tag/2.2.0)
 
 #### Public Interface anomalies
