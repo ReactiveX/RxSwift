@@ -35,15 +35,29 @@ fi
 #	echo "${DEFAULT_IOS8_SIMULATOR} exists"
 #fi
 
-if [ "${RELEASE_TEST}" -eq 1 ]; then
-	. scripts/automation-tests.sh
-fi
-
 CONFIGURATIONS=(Release-Tests)
 
 if [ "${RELEASE_TEST}" -eq 1 ]; then
 	CONFIGURATIONS=(Release Release-Tests Debug)
 fi
+
+if [ "${RELEASE_TEST}" -eq 1 ]; then
+  scripts/validate-markdown.sh
+	scripts/validate-podspec.sh
+fi
+
+if [ "${RELEASE_TEST}" -eq 1 ]; then
+	. scripts/automation-tests.sh
+fi
+
+# make sure no module can be built
+for scheme in "RxExample-iOS-no-module"
+do
+	for configuration in ${CONFIGURATIONS[@]}
+	do
+		rx ${scheme} ${configuration} $DEFAULT_IOS9_SIMULATOR build
+	done
+done
 
 #make sure all tvOS tests pass
 if [ $TV_OS -eq 1 ]; then
@@ -83,15 +97,6 @@ do
 	rx "RxSwift-OSX" ${configuration} "" test
 done
 
-# make sure no module can be built
-for scheme in "RxExample-iOS-no-module"
-do
-	for configuration in ${CONFIGURATIONS[@]}
-	do
-		rx ${scheme} ${configuration} $DEFAULT_IOS9_SIMULATOR build
-	done
-done
-
 # make sure with modules can be built
 for scheme in "RxExample-iOS"
 do
@@ -121,8 +126,3 @@ done
 # compile and run playgrounds
 
 . scripts/validate-playgrounds.sh
-
-if [ "${RELEASE_TEST}" -eq 1 ]; then
-    scripts/validate-markdown.sh
-	scripts/validate-podspec.sh
-fi

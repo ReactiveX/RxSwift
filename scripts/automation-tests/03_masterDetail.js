@@ -19,7 +19,7 @@ test("----- masterDetail -----", function (check, pass) {
 
   firstCell.tapWithOptions({tapOffset:{x:0.05, y:0.77}});
 
-  firstCell.buttons()["Delete"].tap();
+  firstCell.tapWithOptions({tapOffset:{x:0.95, y:0.77}});
 
   target.delay( 3 );
 
