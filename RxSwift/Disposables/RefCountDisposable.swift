@@ -21,10 +21,8 @@ public class RefCountDisposable : DisposeBase, Cancelable {
      - returns: Was resource disposed.
      */
     public var disposed: Bool {
-        get {
-            _lock.lock(); defer { _lock.unlock() }
-            return _disposable == nil
-        }
+        _lock.lock(); defer { _lock.unlock() }
+        return _disposable == nil
     }
 
     /**

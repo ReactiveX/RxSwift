@@ -20,9 +20,7 @@ class ReachabilityService {
 
     private let _reachabilityChangedSubject = PublishSubject<ReachabilityStatus>()
     private var reachabilityChanged: Observable<ReachabilityStatus> {
-        get {
-            return _reachabilityChangedSubject.asObservable()
-        }
+        return _reachabilityChangedSubject.asObservable()
     }
 
     // singleton

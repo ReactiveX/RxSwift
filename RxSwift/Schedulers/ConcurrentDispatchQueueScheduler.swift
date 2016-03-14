@@ -20,9 +20,7 @@ public class ConcurrentDispatchQueueScheduler: SchedulerType {
     private let _queue : dispatch_queue_t
     
     public var now : NSDate {
-        get {
-            return NSDate()
-        }
+        return NSDate()
     }
     
     // leeway for scheduling timers

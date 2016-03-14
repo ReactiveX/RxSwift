@@ -19,7 +19,7 @@ public class WikipediaSearchCell: UITableViewCell {
     @IBOutlet var URLOutlet: UILabel!
     @IBOutlet var imagesOutlet: UICollectionView!
 
-    var disposeBag: DisposeBag!
+    var disposeBag: DisposeBag?
 
     let imageService = DefaultImageService.sharedImageService
 

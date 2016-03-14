@@ -23,9 +23,7 @@ public final class BinaryDisposable : DisposeBase, Cancelable {
     - returns: Was resource disposed.
     */
     public var disposed: Bool {
-        get {
-            return _disposed > 0
-        }
+        return _disposed > 0
     }
 
     /**

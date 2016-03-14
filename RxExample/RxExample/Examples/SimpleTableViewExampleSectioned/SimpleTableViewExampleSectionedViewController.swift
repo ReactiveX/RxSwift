@@ -43,7 +43,7 @@ class SimpleTableViewExampleSectionedViewController
                 ])
             ])
 
-        dataSource.cellFactory = { (tv, indexPath, element) in
+        dataSource.configureCell = { (_, tv, indexPath, element) in
             let cell = tv.dequeueReusableCellWithIdentifier("Cell")!
             cell.textLabel?.text = "\(element) @ row \(indexPath.row)"
             return cell

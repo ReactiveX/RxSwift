@@ -28,7 +28,7 @@ class PartialUpdatesViewController : ViewController {
 
     var timer: NSTimer? = nil
 
-    static let initialValue: [HashableSectionModel<String, Int>] = [
+    static let initialValue: [AnimatableSectionModel<String, Int>] = [
         NumberSection(model: "section 1", items: [1, 2, 3]),
         NumberSection(model: "section 2", items: [4, 5, 6]),
         NumberSection(model: "section 3", items: [7, 8, 9]),
@@ -42,7 +42,7 @@ class PartialUpdatesViewController : ViewController {
         ]
 
 
-    static let firstChange: [HashableSectionModel<String, Int>]? = nil
+    static let firstChange: [AnimatableSectionModel<String, Int>]? = nil
 
     var generator = Randomizer(rng: PseudoRandomGenerator(4, 3), sections: initialValue)
 
@@ -63,10 +63,10 @@ class PartialUpdatesViewController : ViewController {
             let nSections = 10
             let nItems = 100
 
-            var sections = [HashableSectionModel<String, Int>]()
+            var sections = [AnimatableSectionModel<String, Int>]()
 
             for i in 0 ..< nSections {
-                sections.append(HashableSectionModel(model: "Section \(i + 1)", items: Array(i * nItems ..< (i + 1) * nItems)))
+                sections.append(AnimatableSectionModel(model: "Section \(i + 1)", items: Array(i * nItems ..< (i + 1) * nItems)))
             }
 
             generator = Randomizer(rng: PseudoRandomGenerator(4, 3), sections: sections)
@@ -136,7 +136,7 @@ class PartialUpdatesViewController : ViewController {
     }
 
     func skinTableViewDataSource(dataSource: RxTableViewSectionedDataSource<NumberSection>) {
-        dataSource.cellFactory = { (tv, ip, i) in
+        dataSource.configureCell = { (_, tv, ip, i) in
             let cell = tv.dequeueReusableCellWithIdentifier("Cell")
                 ?? UITableViewCell(style:.Default, reuseIdentifier: "Cell")
 
@@ -145,13 +145,13 @@ class PartialUpdatesViewController : ViewController {
             return cell
         }
 
-        dataSource.titleForHeaderInSection = { [unowned dataSource] (section: Int) -> String in
+        dataSource.titleForHeaderInSection = { (ds, section: Int) -> String in
             return dataSource.sectionAtIndex(section).model
         }
     }
 
-    func skinCollectionViewDataSource(dataSource: RxCollectionViewSectionedDataSource<NumberSection>) {
-        dataSource.cellFactory = { (cv, ip, i) in
+    func skinCollectionViewDataSource(dataSource: CollectionViewSectionedDataSource<NumberSection>) {
+        dataSource.cellFactory = { (_, cv, ip, i) in
             let cell = cv.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: ip) as! NumberCell
 
             cell.value!.text = "\(i)"
@@ -159,7 +159,7 @@ class PartialUpdatesViewController : ViewController {
             return cell
         }
 
-        dataSource.supplementaryViewFactory = { [unowned dataSource] (cv, kind, ip) in
+        dataSource.supplementaryViewFactory = { (dataSource, cv, kind, ip) in
             let section = cv.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: "Section", forIndexPath: ip) as! NumberSectionView
 
             section.value!.text = "\(dataSource.sectionAtIndex(ip.section).model)"

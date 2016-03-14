@@ -1,6 +1,23 @@
+/*:
+> # IMPORTANT: To use `Rx.playground`, please:
+
+1. Open `Rx.xcworkspace`
+2. Build `RxSwift-OSX` scheme
+3. And then open `Rx` playground in `Rx.xcworkspace` tree view.
+4. Choose `View > Show Debug Area`
+*/
+
 //: [<< Previous](@previous) - [Index](Index)
 
 import RxSwift
+
+
+/*:
+ ## Below every example there is a commented method call that runs that example. To run the example just uncomment that part. 
+ 
+ E.g. `//sampleWithoutConnectableOperators()`
+*/
+
 
 /*:
 ## Connectable Observable Operators

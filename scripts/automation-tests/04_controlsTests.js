@@ -137,7 +137,7 @@ test("----- UITextView text -----", function (check, pass) {
 
     check(function () {
         var textValue = scrollView.staticTexts()["debugLabel"].value();
-        return textValue === "UITextField text t";
+        return textValue === "UITextView text t";
     });
 
     goBack();
@@ -158,5 +158,3 @@ test("----- UISlider value -----", function (check, pass) {
 
     goBack();
 });
-
-

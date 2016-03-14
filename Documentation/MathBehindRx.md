@@ -3,19 +3,18 @@ Math Behind Rx
 
 ## Duality between Observer and Iterator / Enumerator / Generator / Sequences
 
-There is a duality between observer and generator pattern. That's what enables transition from async callback world to synchronous world of sequence transformations.
+There is a duality between the observer and generator patterns. This is what enables us to transition from the async callback world to synchronous world of sequence transformations.
 
-In short, enumerator and observer pattern both describe sequences. It's pretty obvious why does enumerator defined sequence, but what about observer.
+In short, the enumerator and observer patterns both describe sequences. It's fairly obvious why the  enumerator defines a sequence, but the observer is slightly more complicated.
 
-There is also a pretty simple explanation that doesn't include a lot of math. Assume that you are observing mouse movements. Every received mouse movement is an element of a sequence of mouse movements over time.
+There is, however, a pretty simple example that doesn't require a lot of mathematical knowledge. Assume that you are observing the position of your mouse cursor on screen at given time periods. Over time, these mouse positions form a sequence. This is, in essence, an observer sequence.
 
-In short, there are two basic ways elements of a sequence can be accessed.
+There are two basic ways elements of a sequence can be accessed:
 
 * Push interface - Observer (observed elements over time make a sequence)
 * Pull interface - Iterator / Enumerator / Generator
 
-To learn more about this, these videos should help
+You can also see a more formal explanation in this video:
 
-You can also see a more formal explanation explained in a fun way in this video:
-
-[Expert to Expert: Brian Beckman and Erik Meijer - Inside the .NET Reactive Framework (Rx) (video)](https://www.youtube.com/watch?v=looJcaeboBY)
+* [Expert to Expert: Brian Beckman and Erik Meijer - Inside the .NET Reactive Framework (Rx) (video)](https://www.youtube.com/watch?v=looJcaeboBY)
+* [Reactive Programming Overview (Jafar Husain from Netflix)](https://www.youtube.com/watch?v=dwP1TNXE6fc)

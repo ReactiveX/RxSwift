@@ -68,7 +68,7 @@ class ImagePickerController: ViewController {
                 .take(1)
             }
             .map { info in
-                return info[UIImagePickerControllerOriginalImage] as? UIImage
+                return info[UIImagePickerControllerEditedImage] as? UIImage
             }
             .bindTo(imageView.rx_image)
             .addDisposableTo(disposeBag)

@@ -41,6 +41,8 @@ static NSMutableDictionary *forwardableSelectorsPerClass = nil;
     for (unsigned int i = 0; i < numberOfBaseProtocols; ++i) {
         [selectors unionSet:[self collectSelectorsForProtocol:pSubprotocols[i]]];
     }
+    
+    free(pSubprotocols);
 
     return selectors;
 }

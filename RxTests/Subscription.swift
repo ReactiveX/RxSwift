@@ -50,9 +50,7 @@ public struct Subscription
      The hash value.
     */
     public var hashValue : Int {
-        get {
-            return subscribe.hashValue ^ unsubscribe.hashValue
-        }
+        return subscribe.hashValue ^ unsubscribe.hashValue
     }
 }
 
@@ -61,10 +59,8 @@ extension Subscription {
     A textual representation of `self`, suitable for debugging.
     */
     public var debugDescription : String {
-        get {
-            let infiniteText = "Infinity"
-            return "(\(subscribe) : \(unsubscribe != Int.max ? String(unsubscribe) : infiniteText))"
-        }
+        let infiniteText = "Infinity"
+        return "(\(subscribe) : \(unsubscribe != Int.max ? String(unsubscribe) : infiniteText))"
     }
 }
 

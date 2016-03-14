@@ -70,11 +70,16 @@ class TableViewWithEditingCommandsViewController: ViewController, UITableViewDel
             imageURL: "http://nerdreactor.com/wp-content/uploads/2015/02/Superman1.jpg"
         )
 
+        let watMan = User(firstName: "Wat",
+            lastName: "Man",
+            imageURL: "http://www.iri.upc.edu/files/project/98/main.GIF"
+        )
+
         let loadFavoriteUsers = RandomUserAPI.sharedAPI
                 .getExampleUserResultSet()
                 .map(TableViewEditingCommand.SetUsers)
 
-        let initialLoadCommand = Observable.just(TableViewEditingCommand.SetFavoriteUsers(favoriteUsers: [superMan]))
+        let initialLoadCommand = Observable.just(TableViewEditingCommand.SetFavoriteUsers(favoriteUsers: [superMan, watMan]))
                 .concat(loadFavoriteUsers)
                 .observeOn(MainScheduler.instance)
 
@@ -152,14 +157,18 @@ class TableViewWithEditingCommandsViewController: ViewController, UITableViewDel
     static func configureDataSource() -> RxTableViewSectionedReloadDataSource<SectionModel<String, User>> {
         let dataSource = RxTableViewSectionedReloadDataSource<SectionModel<String, User>>()
 
-        dataSource.cellFactory = { (tv, ip, user: User) in
+        dataSource.configureCell = { (_, tv, ip, user: User) in
             let cell = tv.dequeueReusableCellWithIdentifier("Cell")!
             cell.textLabel?.text = user.firstName + " " + user.lastName
             return cell
         }
 
-        dataSource.titleForHeaderInSection = { [unowned dataSource] sectionIndex in
+        dataSource.titleForHeaderInSection = { dataSource, sectionIndex in
             return dataSource.sectionAtIndex(sectionIndex).model
+        }
+
+        dataSource.canEditRowAtIndexPath = { (ds, ip) in
+            return true
         }
 
         return dataSource

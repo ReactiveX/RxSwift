@@ -5067,6 +5067,14 @@ extension ObservableStandardSequenceOperatorsTest {
             Subscription(200, 210)
             ])
     }
+
+    func testSingle_DecrementCountsFirst() {
+        let k = BehaviorSubject(value: false)
+
+        _ = k.single { _ in true }.subscribeNext { n in
+            k.on(.Next(!n))
+        }
+    }
     
     func testSinglePredicate_Empty() {
         let scheduler = TestScheduler(initialClock: 0)
@@ -5198,6 +5206,15 @@ extension ObservableStandardSequenceOperatorsTest {
         XCTAssertEqual(xs.subscriptions, [
             Subscription(200, 230)
             ])
+    }
+
+    func testSinglePredicate_DecrementCountsFirst() {
+        let k = BehaviorSubject(value: false)
+
+        _ = k.single { _ in true }.subscribeNext { n in
+            k.on(.Next(!n))
+        }
+
     }
     
 }

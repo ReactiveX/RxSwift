@@ -481,7 +481,7 @@ Disposed
 Ended ----
 ```
 
-**Every subscriber upon subscription usually generates it's own separate sequence of elements. Operators are stateless by default. There is vastly more stateless operators then stateful ones.**
+**Every subscriber upon subscription usually generates it's own separate sequence of elements. Operators are stateless by default. There are vastly more stateless operators than stateful ones.**
 
 ## Sharing subscription and `shareReplay` operator
 
@@ -771,7 +771,7 @@ Usually after you have fixed the error, you can remove the type annotations to c
 
 ## Debugging
 
-Using debugger alone is useful, but you can also use `debug`. `debug` operator will print out all events to standard output and you can add also label those events.
+Using debugger alone is useful, but usually using `debug` operator will be more efficient. `debug` operator will print out all events to standard output and you can add also label those events.
 
 `debug` acts like a probe. Here is an example of using it:
 
@@ -809,17 +809,34 @@ This is simply 4
 Disposed
 ```
 
-You can also use `subscribe` instead of `subscribeNext`
+You can also easily create your version of the `debug` operator.
 
 ```swift
-NSURLSession.sharedSession().rx_JSON(request)
-   .map { json in
-       return parse()
-   }
-   .subscribe { n in      // this subscribes on all events including error and completed
-       print(n)
-   }
-```
+extension ObservableType {
+    public func myDebug(identifier: String) -> Observable<Self.E> {
+        return Observable.create { observer in
+            print("subscribed \(identifier)")
+            let subscription = self.subscribe { e in
+                print("event \(identifier)  \(e)")
+                switch e {
+                case .Next(let value):
+                    observer.on(.Next(value))
+
+                case .Error(let error):
+                    observer.on(.Error(error))
+
+                case .Completed:
+                    observer.on(.Completed)
+                }
+            }
+            return AnonymousDisposable {
+                   print("disposing \(identifier)")
+                   subscription.dispose()
+            }
+        }
+    }
+ }
+ ```
 
 ## Debugging memory leaks
 
@@ -964,7 +981,7 @@ self.rx_observe(CGRect.self, "view.frame", retainSelf: false)
 
 ### `rx_observeWeakly`
 
-`rx_observeWeakly` has somewhat slower then `rx_observe` because it has to handle object deallocation in case of weak references.
+`rx_observeWeakly` has somewhat slower than `rx_observe` because it has to handle object deallocation in case of weak references.
 
 It can be used in all cases where `rx_observe` can be used and additionally
 
