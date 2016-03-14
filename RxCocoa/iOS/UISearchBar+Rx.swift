@@ -68,6 +68,17 @@ extension UISearchBar {
         
         return ControlProperty(values: source, valueSink: bindingObserver)
     }
+    
+    /**
+    Reactive wrapper for delegate method `searchBarCancelButtonClicked`.
+    */
+    public var rx_cancelTap: ControlEvent<Void> {
+        let source: Observable<Void> = rx_delegate.observe("searchBarCancelButtonClicked:")
+            .map { _ in
+                return ()
+            }
+        return ControlEvent(events: source)
+    }
 }
 
 #endif
