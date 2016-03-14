@@ -76,4 +76,23 @@ class UISearchBarTests : RxTest {
         _ = Observable.just(1).bindTo(searchBar.rx_selectedScopeButtonIndex)
         XCTAssertEqual(searchBar.selectedScopeButtonIndex, 1)
     }
+    
+    func testCancelTap() {
+        let searchBar = UISearchBar(frame: CGRectMake(0, 0, 1, 1))
+        
+        var tapped = false
+        
+        let _ = searchBar.rx_cancelTap.subscribeNext { _ in
+            tapped = true
+        }
+        
+        XCTAssertFalse(tapped)
+        searchBar.delegate!.searchBarCancelButtonClicked!(searchBar)
+        XCTAssertTrue(tapped)
+    }
+    
+    func testCancelTap_DelegateEventCompletesOnDealloc() {
+        let createView: () -> UISearchBar = { UISearchBar(frame: CGRectMake(0, 0, 1, 1)) }
+        ensureEventDeallocated(createView) { (view: UISearchBar) in view.rx_cancelTap }
+    }
 }
