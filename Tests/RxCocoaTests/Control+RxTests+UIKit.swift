@@ -650,14 +650,13 @@ extension ControlTests {
   func testSearchBar_SearchBar_rx_searchButtonClicked() {
     let searchBar = UISearchBar(frame: CGRectMake(0, 0, 1, 1))
     
-    var detectedSearchBar: UISearchBar? = nil
-    
+    var didClickSearchButton = false
     let disposable = searchBar.rx_searchButtonClicked
-      .subscribeNext { detectedSearchBar = $0 }
+        .subscribeNext { didClickSearchButton = true }
     
     searchBar.delegate!.searchBarSearchButtonClicked!(searchBar)
     
-    XCTAssertEqual(searchBar, detectedSearchBar)
+    XCTAssertTrue(didClickSearchButton)
     
     disposable.dispose()
   }
@@ -665,14 +664,13 @@ extension ControlTests {
   func testSearchBar_SearchBar_rx_cancelButtonClicked() {
     let searchBar = UISearchBar(frame: CGRectMake(0, 0, 1, 1))
     
-    var detectedSearchBar: UISearchBar? = nil
-    
+    var didClickCancelButton = false
     let disposable = searchBar.rx_cancelButtonClicked
-      .subscribeNext { detectedSearchBar = $0 }
+      .subscribeNext { didClickCancelButton = true }
     
     searchBar.delegate!.searchBarCancelButtonClicked!(searchBar)
     
-    XCTAssertEqual(searchBar, detectedSearchBar)
+    XCTAssertTrue(didClickCancelButton)
     
     disposable.dispose()
   }
