@@ -22,6 +22,7 @@ extension UISlider {
     public var rx_value: ControlProperty<Float> {
         return UIControl.rx_value(
             self,
+            key: "value",
             getter: { slider in
                 slider.value
             }, setter: { slider, value in

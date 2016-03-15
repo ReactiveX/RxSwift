@@ -68,7 +68,7 @@ extension UIControl {
      Can somebody offer poor Swift compiler writers some other better job maybe, this is becoming
      ridiculous. So much time wasted ...
     */
-    static func rx_value<C: AnyObject, T: Equatable>(control: C, getter: (C) -> T, setter: (C, T) -> Void) -> ControlProperty<T> {
+    static func rx_value<C: AnyObject, T: Equatable>(control: C, key: String, getter: (C) -> T, setter: (C, T) -> Void) -> ControlProperty<T> {
         let source: Observable<T> = Observable.create { [weak weakControl = control] observer in
                 guard let control = weakControl else {
                     observer.on(.Completed)
@@ -82,10 +82,13 @@ extension UIControl {
                         observer.on(.Next(getter(control)))
                     }
                 }
+            
+                let kvoSubscription = (control as! NSObject).rx_observeWeakly(T.self, key)
+                    .filter { $0 != nil }
+                    .map { $0! }
+                    .subscribe(observer)
                 
-                return AnonymousDisposable {
-                    controlTarget.dispose()
-                }
+                return CompositeDisposable(controlTarget, kvoSubscription)
             }
             .distinctUntilChanged()
             .takeUntil((control as! NSObject).rx_deallocated)
