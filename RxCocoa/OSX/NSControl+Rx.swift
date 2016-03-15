@@ -50,7 +50,7 @@ extension NSControl {
      Can somebody offer poor Swift compiler writers some other better job maybe, this is becoming
      ridiculous. So much time wasted ...
     */
-    static func rx_value<C: AnyObject, T: Equatable>(control: C, getter: (C) -> T, setter: (C, T) -> Void) -> ControlProperty<T> {
+    static func rx_value<C: AnyObject, T: Equatable>(control: C, key: String, getter: (C) -> T, setter: (C, T) -> Void) -> ControlProperty<T> {
         MainScheduler.ensureExecutingOnScheduler()
 
         let source = (control as! NSObject).rx_lazyInstanceObservable(&rx_value_key) { () -> Observable<T> in
@@ -62,13 +62,18 @@ extension NSControl {
 
                 observer.on(.Next(getter(control)))
 
-                let observer = ControlTarget(control: control as! NSControl) { _ in
+                let controlTarget = ControlTarget(control: control as! NSControl) { _ in
                     if let control = weakControl {
                         observer.on(.Next(getter(control)))
                     }
                 }
                 
-                return observer
+                let kvoSubscription = (control as! NSObject).rx_observeWeakly(T.self, key)
+                    .filter { $0 != nil }
+                    .map { $0! }
+                    .subscribe(observer)
+                
+                return CompositeDisposable(controlTarget, kvoSubscription)
             }
             .distinctUntilChanged()
             .takeUntil((control as! NSObject).rx_deallocated)

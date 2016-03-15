@@ -22,6 +22,7 @@ extension UIDatePicker {
     public var rx_date: ControlProperty<NSDate> {
         return UIControl.rx_value(
             self,
+            key: "date",
             getter: { datePicker in
                 datePicker.date
             }, setter: { datePicker, value in

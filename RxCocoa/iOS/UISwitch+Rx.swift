@@ -22,6 +22,7 @@ extension UISwitch {
     public var rx_value: ControlProperty<Bool> {
         return UIControl.rx_value(
             self,
+            key: "on",
             getter: { uiSwitch in
                 uiSwitch.on
             }, setter: { uiSwitch, value in
