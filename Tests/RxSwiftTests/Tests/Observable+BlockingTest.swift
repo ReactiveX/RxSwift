@@ -166,7 +166,7 @@ extension ObservableBlockingTest {
 
     func testLast_independent() {
         for i in 0 ..< 10 {
-            let scheduler = ConcurrentDispatchQueueScheduler(globalConcurrentQueueQOS: .Default)
+            let scheduler = ConcurrentDispatchQueueScheduler(globalConcurrentQueueQOS: .Background)
 
             func operation1()->Observable<Int>{
                 return Observable.just(1).subscribeOn(scheduler)
@@ -359,8 +359,5 @@ extension ObservableBlockingTest {
             XCTAssertEqual(c, 1)
             XCTAssertEqual(d, 1)
         }
-
-        // add timeout to give time to clean up
-        sleep(0.3)
     }
 }

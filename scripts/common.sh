@@ -139,7 +139,7 @@ function action() {
 				-configuration "${CONFIGURATION}" \
 				-derivedDataPath "${BUILD_DIRECTORY}" \
 				-destination "$DESTINATION" \
-				$ACTION | xcpretty -c; STATUS=${PIPESTATUS[0]}
+				$ACTION | tee build/last-build-output.txt | xcpretty -c; STATUS=${PIPESTATUS[0]}
     set +x
 
 	if [ $STATUS -ne 0 ]; then
