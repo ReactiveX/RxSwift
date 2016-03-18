@@ -19,6 +19,7 @@ All notable changes to this project will be documented in this file.
 
 #### Anomalies
 
+* Fixes anomaly with synchronization in disposable setter of `SingleAssignmentDisposable`.
 * Improves `DelegateProxy` memory management.
 * Fixes anomaly during two way binding of `UITextView` text value.
 * Improves `single` operator so it handles reentrancy better.
