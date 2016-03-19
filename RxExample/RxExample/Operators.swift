@@ -48,7 +48,7 @@ func <-> <T>(property: ControlProperty<T>, variable: Variable<T>) -> Disposable 
     })
 */
 
-func <-> <T, E>(controlTuple: (property: ControlProperty<T>, map: (T -> E)), variableTuple: (variable: Variable<E>, map: (E -> T))) -> RxSwift.Disposable {
+func <-> <T, E>(controlTuple: (property: ControlProperty<T>, map: (T -> E)), variableTuple: (variable: Variable<E>, map: (E -> T))) -> Disposable {
     
     let (property, propertyMapClosure) = controlTuple
     let (variable, variableMapClosure) = variableTuple
