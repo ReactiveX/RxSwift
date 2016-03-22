@@ -8,7 +8,9 @@
 
 import Foundation
 import UIKit
+#if !RX_NO_MODULE
 import RxCocoa
+#endif
     
 public class _CollectionViewSectionedDataSource
     : NSObject
