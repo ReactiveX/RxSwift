@@ -17,7 +17,7 @@ public protocol SubjectType : ObservableType {
     
     Usually this type is type of subject itself, but it doesn't have to be.
     */
-    typealias SubjectObserverType : ObserverType
+    associatedtype SubjectObserverType : ObserverType
     
     /**
     Returns observer interface for subject.

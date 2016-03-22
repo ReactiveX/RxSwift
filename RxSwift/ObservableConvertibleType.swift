@@ -15,7 +15,7 @@ public protocol ObservableConvertibleType {
     /**
     Type of elements in sequence.
     */
-    typealias E
+    associatedtype E
     
     /**
     Converts `self` to `Observable` sequence.

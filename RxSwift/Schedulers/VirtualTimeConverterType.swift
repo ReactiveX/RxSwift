@@ -15,12 +15,12 @@ public protocol VirtualTimeConverterType {
     /**
      Virtual time unit used that represents ticks of virtual clock.
     */
-    typealias VirtualTimeUnit
+    associatedtype VirtualTimeUnit
 
     /**
      Virtual time unit used to represent differences of virtual times.
     */
-    typealias VirtualTimeIntervalUnit
+    associatedtype VirtualTimeIntervalUnit
 
     /**
      Converts virtual time to real time.

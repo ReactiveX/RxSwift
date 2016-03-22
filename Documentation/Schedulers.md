@@ -67,8 +67,8 @@ If you want to create new scheduler that supports time based operations, then yo
 
 ```swift
 public protocol Scheduler: ImmediateScheduler {
-    typealias TimeInterval
-    typealias Time
+    associatedtype TimeInterval
+    associatedtype Time
 
     var now : Time {
         get

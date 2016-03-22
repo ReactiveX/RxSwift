@@ -15,7 +15,7 @@ public protocol KVORepresentable {
     /**
     Associated KVO type.
     */
-    typealias KVOType
+    associatedtype KVOType
 
     /**
     Constructs `Self` using KVO value.
