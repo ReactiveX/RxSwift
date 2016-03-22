@@ -23,7 +23,7 @@ BOLDWHITE="\033[1m\033[37m"
 
 DEFAULT_IOS7_SIMULATOR=RxSwiftTest/iPhone-4s/iOS/7.1
 DEFAULT_IOS8_SIMULATOR=RxSwiftTest/iPhone-6/iOS/8.4
-DEFAULT_IOS9_SIMULATOR=RxSwiftTest/iPhone-6/iOS/9.2
+DEFAULT_IOS9_SIMULATOR=RxSwiftTest/iPhone-6/iOS/9.3
 DEFAULT_WATCHOS2_SIMULATOR=RxSwiftTest/Apple-Watch-38mm/watchOS/2.1
 DEFAULT_TVOS_SIMULATOR=RxSwiftTest/Apple-TV-1080p/tvOS/9.1
 
@@ -90,14 +90,6 @@ function ensure_simulator_available() {
 	xcrun simctl create "${SIMULATOR}" "com.apple.CoreSimulator.SimDeviceType.${DEVICE}" "${RUNTIME}"
 }
 
-if runtime_available "com.apple.CoreSimulator.SimRuntime.iOS-9-2"; then
-	DEFAULT_IOS9_SIMULATOR=RxSwiftTest/iPhone-6/iOS/9.2
-elif runtime_available "com.apple.CoreSimulator.SimRuntime.iOS-9-1"; then
-	DEFAULT_IOS9_SIMULATOR=RxSwiftTest/iPhone-6/iOS/9.1
-else
-	DEFAULT_IOS9_SIMULATOR=RxSwiftTest/iPhone-6/iOS/9.0
-fi
-
 BUILD_DIRECTORY=build
 
 function rx() {
@@ -139,7 +131,7 @@ function action() {
 				-configuration "${CONFIGURATION}" \
 				-derivedDataPath "${BUILD_DIRECTORY}" \
 				-destination "$DESTINATION" \
-				$ACTION | xcpretty -c; STATUS=${PIPESTATUS[0]}
+				$ACTION | tee build/last-build-output.txt | xcpretty -c; STATUS=${PIPESTATUS[0]}
     set +x
 
 	if [ $STATUS -ne 0 ]; then

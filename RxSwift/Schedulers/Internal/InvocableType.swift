@@ -13,7 +13,7 @@ protocol InvocableType {
 }
 
 protocol InvocableWithValueType {
-    typealias Value
+    associatedtype Value
 
     func invoke(value: Value)
 }

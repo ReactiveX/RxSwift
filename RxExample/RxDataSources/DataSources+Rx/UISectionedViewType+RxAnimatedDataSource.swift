@@ -23,10 +23,12 @@ extension UITableView {
             O.E == [Section]
         >
         (dataSource: DataSource)
-        (source: O)
+        -> (source: O)
         -> Disposable  {
-        let differences = source.differentiateForSectionedView()
-        return self.rx_itemsWithDataSource(dataSource)(source: differences)
+        return  { source in
+            let differences = source.differentiateForSectionedView()
+            return self.rx_itemsWithDataSource(dataSource)(source: differences)
+        }
     }
 }
 
@@ -40,9 +42,11 @@ extension UICollectionView {
             O.E == [Section]
         >
         (dataSource: DataSource)
-        (source: O)
+        -> (source: O)
         -> Disposable  {
-        let differences = source.differentiateForSectionedView()
-        return self.rx_itemsWithDataSource(dataSource)(source: differences)
+        return { source in
+            let differences = source.differentiateForSectionedView()
+            return self.rx_itemsWithDataSource(dataSource)(source: differences)
+        }
     }
 }

@@ -8,6 +8,9 @@
 
 import Foundation
 import UIKit
+#if !RX_NO_MODULE
+import RxCocoa
+#endif
     
 public class _CollectionViewSectionedDataSource
     : NSObject
@@ -141,13 +144,18 @@ public class CollectionViewSectionedDataSource<S: SectionModelType>
     }
     
     override func _collectionView(collectionView: UICollectionView, canMoveItemAtIndexPath indexPath: NSIndexPath) -> Bool {
-        return canMoveItemAtIndexPath?(self, indexPath: indexPath) ??
-            super._collectionView(collectionView, canMoveItemAtIndexPath: indexPath)
+        guard let canMoveItem = canMoveItemAtIndexPath?(self, indexPath: indexPath) else {
+            return super._collectionView(collectionView, canMoveItemAtIndexPath: indexPath)
+        }
+        
+        return canMoveItem
     }
     
     override func _collectionView(collectionView: UICollectionView, moveItemAtIndexPath sourceIndexPath: NSIndexPath, toIndexPath destinationIndexPath: NSIndexPath) {
-        return moveItem?(self, sourceIndexPath:sourceIndexPath, destinationIndexPath: destinationIndexPath) ??
+        guard let _ = moveItem?(self, sourceIndexPath:sourceIndexPath, destinationIndexPath: destinationIndexPath) else {
             super._collectionView(collectionView, moveItemAtIndexPath: sourceIndexPath, toIndexPath: destinationIndexPath)
+            return
+        }
     }
     
 }

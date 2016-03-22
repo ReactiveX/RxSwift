@@ -23,7 +23,7 @@ struct InfiniteSequence<E> : SequenceType {
     
     func generate() -> Generator {
         let repeatedValue = _repeatedValue
-        return anyGenerator {
+        return AnyGenerator {
             return repeatedValue
         }
     }

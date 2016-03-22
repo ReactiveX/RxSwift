@@ -135,7 +135,7 @@ extension UITableView {
     Reactive wrapper for `delegate` message `tableView:didSelectRowAtIndexPath:`.
     */
     public var rx_itemSelected: ControlEvent<NSIndexPath> {
-        let source = rx_delegate.observe("tableView:didSelectRowAtIndexPath:")
+        let source = rx_delegate.observe(#selector(UITableViewDelegate.tableView(_:didSelectRowAtIndexPath:)))
             .map { a in
                 return a[1] as! NSIndexPath
             }
@@ -147,7 +147,7 @@ extension UITableView {
      Reactive wrapper for `delegate` message `tableView:didDeselectRowAtIndexPath:`.
      */
     public var rx_itemDeselected: ControlEvent<NSIndexPath> {
-        let source = rx_delegate.observe("tableView:didDeselectRowAtIndexPath:")
+        let source = rx_delegate.observe(#selector(UITableViewDelegate.tableView(_:didDeselectRowAtIndexPath:)))
             .map { a in
                 return a[1] as! NSIndexPath
             }
@@ -159,7 +159,7 @@ extension UITableView {
      Reactive wrapper for `delegate` message `tableView:accessoryButtonTappedForRowWithIndexPath:`.
      */
     public var rx_itemAccessoryButtonTapped: ControlEvent<NSIndexPath> {
-        let source: Observable<NSIndexPath> = rx_delegate.observe("tableView:accessoryButtonTappedForRowWithIndexPath:")
+        let source: Observable<NSIndexPath> = rx_delegate.observe(#selector(UITableViewDelegate.tableView(_:accessoryButtonTappedForRowWithIndexPath:)))
             .map { a in
                 return a[1] as! NSIndexPath
             }
@@ -171,7 +171,7 @@ extension UITableView {
     Reactive wrapper for `delegate` message `tableView:commitEditingStyle:forRowAtIndexPath:`.
     */
     public var rx_itemInserted: ControlEvent<NSIndexPath> {
-        let source = rx_dataSource.observe("tableView:commitEditingStyle:forRowAtIndexPath:")
+        let source = rx_dataSource.observe(#selector(UITableViewDataSource.tableView(_:commitEditingStyle:forRowAtIndexPath:)))
             .filter { a in
                 return UITableViewCellEditingStyle(rawValue: (a[1] as! NSNumber).integerValue) == .Insert
             }
@@ -186,7 +186,7 @@ extension UITableView {
     Reactive wrapper for `delegate` message `tableView:commitEditingStyle:forRowAtIndexPath:`.
     */
     public var rx_itemDeleted: ControlEvent<NSIndexPath> {
-        let source = rx_dataSource.observe("tableView:commitEditingStyle:forRowAtIndexPath:")
+        let source = rx_dataSource.observe(#selector(UITableViewDataSource.tableView(_:commitEditingStyle:forRowAtIndexPath:)))
             .filter { a in
                 return UITableViewCellEditingStyle(rawValue: (a[1] as! NSNumber).integerValue) == .Delete
             }
@@ -201,7 +201,7 @@ extension UITableView {
     Reactive wrapper for `delegate` message `tableView:moveRowAtIndexPath:toIndexPath:`.
     */
     public var rx_itemMoved: ControlEvent<ItemMovedEvent> {
-        let source: Observable<ItemMovedEvent> = rx_dataSource.observe("tableView:moveRowAtIndexPath:toIndexPath:")
+        let source: Observable<ItemMovedEvent> = rx_dataSource.observe(#selector(UITableViewDataSource.tableView(_:moveRowAtIndexPath:toIndexPath:)))
             .map { a in
                 return ((a[1] as! NSIndexPath), (a[2] as! NSIndexPath))
             }

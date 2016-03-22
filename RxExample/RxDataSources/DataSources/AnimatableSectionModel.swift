@@ -12,7 +12,7 @@ public struct AnimatableSectionModel<Section: Hashable, ItemType: Hashable>
     : Hashable
     , AnimatableSectionModelType
     , CustomStringConvertible {
-    public typealias Item = IdentitifiableValue<ItemType>
+    public typealias Item = IdentifiableValue<ItemType>
     public typealias Identity = Section
 
     public var model: Section
@@ -25,7 +25,7 @@ public struct AnimatableSectionModel<Section: Hashable, ItemType: Hashable>
     
     public init(model: Section, items: [ItemType]) {
         self.model = model
-        self.items = items.map(IdentitifiableValue.init)
+        self.items = items.map(IdentifiableValue.init)
     }
     
     public init(original: AnimatableSectionModel, items: [Item]) {

@@ -51,6 +51,7 @@ public class SingleAssignmentDisposable : DisposeBase, Disposable, Cancelable {
     }
 
     private func _setDisposable(newValue: Disposable) -> Disposable? {
+        _lock.lock(); defer { _lock.unlock() }
         if _disposableSet {
             rxFatalError("oldState.disposable != nil")
         }
