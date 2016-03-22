@@ -74,7 +74,7 @@ class Randomizer {
             if rng.get_random() % 2 == 0 {
                 let itemIndex = rng.get_random() % (itemCount + 1)
                 if insertItems {
-                    sections[sectionIndex].items.insert(IdentitifiableValue(value: unusedValue), atIndex: itemIndex)
+                    sections[sectionIndex].items.insert(IdentifiableValue(value: unusedValue), atIndex: itemIndex)
                 }
                 else {
                     nextUnusedItems.append(unusedValue)
@@ -83,14 +83,14 @@ class Randomizer {
             // update
             else {
                 if itemCount == 0 {
-                    sections[sectionIndex].items.insert(IdentitifiableValue(value: unusedValue), atIndex: 0)
+                    sections[sectionIndex].items.insert(IdentifiableValue(value: unusedValue), atIndex: 0)
                     continue
                 }
                 
                 let itemIndex = rng.get_random() % itemCount
                 if reloadItems {
                     nextUnusedItems.append(sections[sectionIndex].items.removeAtIndex(itemIndex).value)
-                    sections[sectionIndex].items.insert(IdentitifiableValue(value: unusedValue), atIndex: itemIndex)
+                    sections[sectionIndex].items.insert(IdentifiableValue(value: unusedValue), atIndex: itemIndex)
                     
                 }
                 else {

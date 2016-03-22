@@ -19,7 +19,7 @@ import Foundation
 
 let MB = 1024 * 1024
 
-func exampleError(error: String, location: String = "\(__FILE__):\(__LINE__)") -> NSError {
+func exampleError(error: String, location: String = "\(#file):\(#line)") -> NSError {
     return NSError(domain: "ExampleError", code: -1, userInfo: [NSLocalizedDescriptionKey: "\(location): \(error)"])
 }
 
