@@ -37,7 +37,7 @@ public class ScheduledDisposable : Cancelable {
     - parameter scheduler: Scheduler where the disposable resource will be disposed on.
     - parameter disposable: Disposable resource to dispose on the given scheduler.
     */
-    init(scheduler: ImmediateSchedulerType, disposable: Disposable) {
+    public init(scheduler: ImmediateSchedulerType, disposable: Disposable) {
         self.scheduler = scheduler
         _disposable = disposable
     }
