@@ -45,7 +45,7 @@ extension CLLocationManager {
             }
     }
 
-    #if os(iOS) || os(watchOS) || os(OSX)
+    #if os(iOS) || os(OSX)
     /**
     Reactive wrapper for `delegate` message.
     */
