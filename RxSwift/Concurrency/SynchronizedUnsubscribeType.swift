@@ -9,7 +9,7 @@
 import Foundation
 
 protocol SynchronizedUnsubscribeType : class {
-    typealias DisposeKey
+    associatedtype DisposeKey
 
     func synchronizedUnsubscribe(disposeKey: DisposeKey)
 }

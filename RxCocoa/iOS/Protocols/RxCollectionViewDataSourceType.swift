@@ -22,7 +22,7 @@ public protocol RxCollectionViewDataSourceType /*: UICollectionViewDataSource*/ 
     /**
     Type of elements that can be bound to collection view.
     */
-    typealias Element
+    associatedtype Element
     
     /**
     New observable sequence event observed.
