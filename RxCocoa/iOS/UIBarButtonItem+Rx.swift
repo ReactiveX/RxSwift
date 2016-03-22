@@ -62,7 +62,7 @@ class BarButtonItemTarget: RxTarget {
         self.callback = callback
         super.init()
         barButtonItem.target = self
-        barButtonItem.action = Selector("action:")
+        barButtonItem.action = #selector(BarButtonItemTarget.action(_:))
     }
     
     override func dispose() {

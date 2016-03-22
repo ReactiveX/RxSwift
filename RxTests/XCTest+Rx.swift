@@ -58,7 +58,7 @@ Event is considered equal if:
 - parameter lhs: first set of events.
 - parameter lhs: second set of events.
 */
-public func XCTAssertEqual<T: Equatable>(lhs: [Event<T>], _ rhs: [Event<T>], file: StaticString = __FILE__, line: UInt = __LINE__) {
+public func XCTAssertEqual<T: Equatable>(lhs: [Event<T>], _ rhs: [Event<T>], file: StaticString = #file, line: UInt = #line) {
     let leftEquatable = lhs.map { AnyEquatable(target: $0, comparer: ==) }
     let rightEquatable = rhs.map { AnyEquatable(target: $0, comparer: ==) }
     #if os(Linux)
@@ -86,7 +86,7 @@ Event is considered equal if:
 - parameter lhs: first set of events.
 - parameter lhs: second set of events.
 */
-public func XCTAssertEqual<T: Equatable>(lhs: [Recorded<Event<T>>], _ rhs: [Recorded<Event<T>>], file: StaticString = __FILE__, line: UInt = __LINE__) {
+public func XCTAssertEqual<T: Equatable>(lhs: [Recorded<Event<T>>], _ rhs: [Recorded<Event<T>>], file: StaticString = #file, line: UInt = #line) {
     let leftEquatable = lhs.map { AnyEquatable(target: $0, comparer: ==) }
     let rightEquatable = rhs.map { AnyEquatable(target: $0, comparer: ==) }
     #if os(Linux)
