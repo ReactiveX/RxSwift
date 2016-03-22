@@ -9,7 +9,7 @@
 import Foundation
 
 public protocol IdentifiableType {
-    typealias Identity: Hashable
+    associatedtype Identity: Hashable
 
     var identity : Identity { get }
 }
