@@ -3,6 +3,12 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [2.3.1](https://github.com/ReactiveX/RxSwift/releases/tag/2.2.0)
+
+#### Features
+
+* Xcode 7.3 / Swift 2.2 support
+
 ## [2.3.0](https://github.com/ReactiveX/RxSwift/releases/tag/2.2.0)
 
 #### Features
