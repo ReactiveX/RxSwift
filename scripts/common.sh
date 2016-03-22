@@ -90,7 +90,9 @@ function ensure_simulator_available() {
 	xcrun simctl create "${SIMULATOR}" "com.apple.CoreSimulator.SimDeviceType.${DEVICE}" "${RUNTIME}"
 }
 
-if runtime_available "com.apple.CoreSimulator.SimRuntime.iOS-9-2"; then
+if runtime_available "com.apple.CoreSimulator.SimRuntime.iOS-9-3"; then
+	DEFAULT_IOS9_SIMULATOR=RxSwiftTest/iPhone-6/iOS/9.3
+elif runtime_available "com.apple.CoreSimulator.SimRuntime.iOS-9-2"; then
 	DEFAULT_IOS9_SIMULATOR=RxSwiftTest/iPhone-6/iOS/9.2
 elif runtime_available "com.apple.CoreSimulator.SimRuntime.iOS-9-1"; then
 	DEFAULT_IOS9_SIMULATOR=RxSwiftTest/iPhone-6/iOS/9.1
