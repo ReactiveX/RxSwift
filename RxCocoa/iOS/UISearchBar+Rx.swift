@@ -55,7 +55,7 @@ extension UISearchBar {
         let source: Observable<Int> = Observable.deferred { [weak self] () -> Observable<Int> in
             let index = self?.selectedScopeButtonIndex ?? 0
             
-            return (self?.rx_delegate.observe("searchBar:selectedScopeButtonIndexDidChange:") ?? Observable.empty())
+            return (self?.rx_delegate.observe(#selector(UISearchBarDelegate.searchBar(_:selectedScopeButtonIndexDidChange:))) ?? Observable.empty())
                 .map { a in
                     return try castOrThrow(Int.self, a[1])
                 }

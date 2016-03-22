@@ -208,8 +208,8 @@ extension NSObject {
 #endif
 }
 
-let deallocSelector = "dealloc" as Selector
-let rxDeallocatingSelector = RX_selector("dealloc")
+let deallocSelector = NSSelectorFromString("dealloc")
+let rxDeallocatingSelector = RX_selector(deallocSelector)
 let rxDeallocatingSelectorReference = RX_reference_from_selector(rxDeallocatingSelector)
 
 extension NSObject {
