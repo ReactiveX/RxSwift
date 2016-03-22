@@ -202,7 +202,7 @@ extension GitHubSearchRepositoriesAPI {
                 let range = m.rangeAtIndex(rangeIndex)
                 let startIndex = links.startIndex.advancedBy(range.location)
                 let endIndex = startIndex.advancedBy(range.length)
-                let stringRange = Range(start: startIndex, end: endIndex)
+                let stringRange = startIndex ..< endIndex
                 return links.substringWithRange(stringRange)
             }
 

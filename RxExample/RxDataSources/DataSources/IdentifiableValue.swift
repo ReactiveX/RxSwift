@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct IdentitifiableValue<Value: Hashable>
+public struct IdentifiableValue<Value: Hashable>
     : IdentifiableType
     , Equatable
     , CustomStringConvertible
@@ -30,6 +30,6 @@ public struct IdentitifiableValue<Value: Hashable>
     }
 }
 
-public func == <V: Hashable>(lhs: IdentitifiableValue<V>, rhs: IdentitifiableValue<V>) -> Bool {
+public func == <V: Hashable>(lhs: IdentifiableValue<V>, rhs: IdentifiableValue<V>) -> Bool {
     return lhs.value == rhs.value
 }
