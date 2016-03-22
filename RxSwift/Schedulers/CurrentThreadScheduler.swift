@@ -139,6 +139,11 @@ public class CurrentThreadScheduler : ImmediateSchedulerType {
 
         let scheduledItem = ScheduledItem(action: action, state: state)
         queue.value.enqueue(scheduledItem)
-        return scheduledItem
+        
+        // In Xcode 7.3, `return scheduledItem` causes segmentation fault 11 on release build.
+        // To workaround this compiler issue, returns AnonymousDisposable that disposes scheduledItem.
+        return AnonymousDisposable {
+            scheduledItem.dispose()
+        }
     }
 }
