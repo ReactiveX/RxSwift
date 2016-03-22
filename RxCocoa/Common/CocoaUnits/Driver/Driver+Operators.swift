@@ -180,7 +180,7 @@ extension DriverConvertibleType {
     - returns: An observable sequence whose events are printed to standard output.
     */
     @warn_unused_result(message="http://git.io/rxs.uo")
-    public func debug(identifier: String? = nil, file: String = __FILE__, line: UInt = __LINE__, function: String = __FUNCTION__) -> Driver<E> {
+    public func debug(identifier: String? = nil, file: String = #file, line: UInt = #line, function: String = #function) -> Driver<E> {
         let source = self.asObservable()
             .debug(identifier, file: file, line: line, function: function)
         return Driver(source)
