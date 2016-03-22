@@ -28,7 +28,7 @@ import RxSwift
 class ControlTarget: RxTarget {
     typealias Callback = (Control) -> Void
 
-    let selector: Selector = "eventHandler:"
+    let selector: Selector = #selector(ControlTarget.eventHandler(_:))
 
     weak var control: Control?
     #if os(iOS) || os(tvOS)

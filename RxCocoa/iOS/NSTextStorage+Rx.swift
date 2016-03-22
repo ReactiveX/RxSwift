@@ -30,7 +30,7 @@ extension NSTextStorage {
      */
     public var rx_didProcessEditingRangeChangeInLength: Observable<(editedMask:NSTextStorageEditActions, editedRange:NSRange, delta:Int)> {
         return rx_delegate
-            .observe("textStorage:didProcessEditing:range:changeInLength:")
+            .observe(#selector(NSTextStorageDelegate.textStorage(_:didProcessEditing:range:changeInLength:)))
             .map { a in
                 let editedMask = NSTextStorageEditActions(rawValue: try castOrThrow(UInt.self, a[1]) )
                 let editedRange = try castOrThrow(NSValue.self, a[2]).rangeValue

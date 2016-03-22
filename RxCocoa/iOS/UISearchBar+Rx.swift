@@ -34,7 +34,7 @@ extension UISearchBar {
         let source: Observable<String> = Observable.deferred { [weak self] () -> Observable<String> in
             let text = self?.text ?? ""
             
-            return (self?.rx_delegate.observe("searchBar:textDidChange:") ?? Observable.empty())
+            return (self?.rx_delegate.observe(#selector(UISearchBarDelegate.searchBar(_:textDidChange:))) ?? Observable.empty())
                     .map { a in
                         return a[1] as? String ?? ""
                     }
