@@ -229,9 +229,8 @@ static BOOL RX_responds_to_selector(id __nonnull __unsafe_unretained self, SEL s
     if (class == nil) { return NO; }
 
     Method m = class_getInstanceMethod(class, selector);
-    if (m != nil) { return YES; }
+    return m != nil;
 
-    return NO;
 }
 
 static NSMethodSignatureRef RX_method_signature(id __nonnull __unsafe_unretained self, SEL selector) {
@@ -642,7 +641,7 @@ static NSMutableDictionary<NSString *, RXInterceptWithOptimizedObserver> *optimi
         }
 
         NSString *methodEncoding = RX_method_encoding(instanceMethod);
-        RXInterceptWithOptimizedObserver optimizedIntercept = [optimizedObserversByMethodEncoding objectForKey:methodEncoding];
+        RXInterceptWithOptimizedObserver optimizedIntercept = optimizedObserversByMethodEncoding[methodEncoding];
 
         if (!RX_method_has_supported_return_type(instanceMethod)) {
             *error = [NSError errorWithDomain:RXObjCRuntimeErrorDomain
@@ -904,10 +903,10 @@ static NSMutableDictionary<NSString *, RXInterceptWithOptimizedObserver> *optimi
 
     if (swizzledIMPBySelectorsForClass == nil) {
         swizzledIMPBySelectorsForClass = [NSMutableDictionary dictionary];
-        [self.interceptorIMPbySelectorsByClass setObject:swizzledIMPBySelectorsForClass forKey:classValue];
+        self.interceptorIMPbySelectorsByClass[classValue] = swizzledIMPBySelectorsForClass;
     }
 
-    [swizzledIMPBySelectorsForClass setObject:IMP_VALUE(implementation) forKey:selectorValue];
+    swizzledIMPBySelectorsForClass[selectorValue] = IMP_VALUE(implementation);
 
     ALWAYS([self interceptorImplementationForSelector:selector forClass:class] != nil, @"Class should have been swizzled");
 }
@@ -918,7 +917,7 @@ static NSMutableDictionary<NSString *, RXInterceptWithOptimizedObserver> *optimi
 
     NSMutableDictionary *swizzledIMPBySelectorForClass = self.interceptorIMPbySelectorsByClass[classValue];
 
-    NSValue *impValue = [swizzledIMPBySelectorForClass objectForKey:selectorValue];
+    NSValue *impValue = swizzledIMPBySelectorForClass[selectorValue];
     return impValue.pointerValue;
 }
 
