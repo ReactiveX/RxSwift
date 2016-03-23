@@ -23,11 +23,11 @@ protocol ImageService {
 }
 
 class DefaultImageService: ImageService {
-	
-	static let sharedImageService = DefaultImageService() // Singleton
-	
-	let $: Dependencies = Dependencies.sharedDependencies
-	
+
+    static let sharedImageService = DefaultImageService() // Singleton
+
+    let $: Dependencies = Dependencies.sharedDependencies
+
     // 1st level cache
     private let _imageCache = NSCache()
 

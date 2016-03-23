@@ -62,15 +62,15 @@ public class ReplaySubject<Element>
             return ReplayMany(bufferSize: bufferSize)
         }
     }
-	
-	/**
-	Creates a new instance of `ReplaySubject` that buffers all the elements of a sequence.
-	To avoid filling up memory, developer needs to make sure that the use case will only ever store a 'reasonable'
-	number of elements.
-	*/
-	public static func createUnbounded() -> ReplaySubject<Element> {
-		return ReplayAll()
-	}
+
+    /**
+    Creates a new instance of `ReplaySubject` that buffers all the elements of a sequence.
+    To avoid filling up memory, developer needs to make sure that the use case will only ever store a 'reasonable'
+    number of elements.
+    */
+    public static func createUnbounded() -> ReplaySubject<Element> {
+        return ReplayAll()
+    }
 }
 
 class ReplayBufferBase<Element>
