@@ -17,15 +17,15 @@ var rx_tap_key: UInt8 = 0
 
 extension UIBarButtonItem {
     
-	/**
-	Bindable sink for `enabled` property.
-	*/
-	public var rx_enabled: AnyObserver<Bool> {
+    /**
+    Bindable sink for `enabled` property.
+    */
+    public var rx_enabled: AnyObserver<Bool> {
         return UIBindingObserver(UIElement: self) { UIElement, value in
             UIElement.enabled = value
-		}.asObserver()
-	}
-	
+        }.asObserver()
+    }
+
     /**
     Reactive wrapper for target action pattern on `self`.
     */
