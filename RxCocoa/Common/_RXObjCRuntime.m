@@ -44,7 +44,7 @@ static int32_t numberOfForwardedMethods = 0;
 #endif
 
 #define THREADING_HAZARD(class) \
-    NSLog(@"There was a problem swizzling on `%@`.\nYou have probably two libraries performing swizzling in runtime.\nWe didn't want to crash your program, but this is not good ...\nYou an solve this problem by either not using swizzling in this library, removing one of those other libraries, or making sure that swizzling parts are synchronized (only perform them on main thread).\nAnd yes, this message will self destruct when you clear the console, and since it's non deterministric, the problem could still exist and it will be hard for you to reproduce it.", NSStringFromClass(class)); ABORT_IN_DEBUG if (RXAbortOnThreadingHazard) { abort(); }
+    NSLog(@"There was a problem swizzling on `%@`.\nYou have probably two libraries performing swizzling in runtime.\nWe didn't want to crash your program, but this is not good ...\nYou an solve this problem by either not using swizzling in this library, removing one of those other libraries, or making sure that swizzling parts are synchronized (only perform them on main thread).\nAnd yes, this message will self destruct when you clear the console, and since it's non deterministic, the problem could still exist and it will be hard for you to reproduce it.", NSStringFromClass(class)); ABORT_IN_DEBUG if (RXAbortOnThreadingHazard) { abort(); }
 
 #define ALWAYS(condition, message) if (!(condition)) { [NSException raise:@"RX Invalid Operator" format:@"%@", message]; }
 #define ALWAYS_WITH_INFO(condition, message) NSAssert((condition), @"%@ [%@] > %@", NSStringFromClass(class), NSStringFromSelector(selector), (message))
@@ -267,7 +267,7 @@ static NSString * __nonnull RX_method_encoding(Method __nonnull method) {
 @property (nonatomic, strong) NSMutableSet<NSValue *> *classesThatSupportObservingByForwarding;
 @property (nonatomic, strong) NSMutableDictionary<NSValue *, NSMutableSet<NSValue*> *> *forwardedSelectorsByClass;
 
-@property (nonatomic, strong) NSMutableDictionary<NSValue *, Class> *dynamicSublassByRealClass;
+@property (nonatomic, strong) NSMutableDictionary<NSValue *, Class> *dynamicSubclassByRealClass;
 @property (nonatomic, strong) NSMutableDictionary<NSValue *, NSMutableDictionary<NSValue*, NSValue *>*> *interceptorIMPbySelectorsByClass;
 
 +(RXObjCRuntime*)instance;
@@ -277,7 +277,7 @@ static NSString * __nonnull RX_method_encoding(Method __nonnull method) {
 -(BOOL)ensureSwizzledSelector:(SEL __nonnull)selector
                       ofClass:(Class __nonnull)class
    newImplementationGenerator:(IMP(^)())newImplementationGenerator
-replacementImplementationGenerator:(IMP (^)(IMP originalImplemenation))replacementImplementationGenerator
+replacementImplementationGenerator:(IMP (^)(IMP originalImplementation))replacementImplementationGenerator
                         error:(NSError ** __nonnull)error;
 
 
@@ -456,7 +456,7 @@ method_prototype                                                                
 @interface RXObjCRuntime (InfrastructureMethods)
 @end
 
-// MARK: Infrastucture Methods
+// MARK: Infrastructure Methods
 
 @implementation RXObjCRuntime (InfrastructureMethods)
 
@@ -558,7 +558,7 @@ static NSMutableDictionary<NSString *, RXInterceptWithOptimizedObserver> *optimi
     self.classesThatSupportObservingByForwarding = [NSMutableSet set];
     self.forwardedSelectorsByClass = [NSMutableDictionary dictionary];
 
-    self.dynamicSublassByRealClass = [NSMutableDictionary dictionary];
+    self.dynamicSubclassByRealClass = [NSMutableDictionary dictionary];
     self.interceptorIMPbySelectorsByClass = [NSMutableDictionary dictionary];
 
     pthread_mutexattr_t lock_attr;
@@ -859,14 +859,14 @@ static NSMutableDictionary<NSString *, RXInterceptWithOptimizedObserver> *optimi
  single instance of `NSString`, not all instances of `NSString`s.
  */
 -(Class __nullable)ensureHasDynamicFakeSubclass:(Class __nonnull)class error:(NSError **)error {
-    Class dynamicFakeSubclass = [self.dynamicSublassByRealClass objectForKey:CLASS_VALUE(class)];
+    Class dynamicFakeSubclass = self.dynamicSubclassByRealClass[CLASS_VALUE(class)];
     if (dynamicFakeSubclass != nil) {
         return dynamicFakeSubclass;
     }
 
-    NSString *dynamicFakeSublassName = [RX_PREFIX stringByAppendingString:NSStringFromClass(class)];
-    const char *dynamicFakeSublassNameRaw = dynamicFakeSublassName.UTF8String;
-    dynamicFakeSubclass = objc_allocateClassPair(class, dynamicFakeSublassNameRaw, 0);
+    NSString *dynamicFakeSubclassName = [RX_PREFIX stringByAppendingString:NSStringFromClass(class)];
+    const char *dynamicFakeSubclassNameRaw = dynamicFakeSubclassName.UTF8String;
+    dynamicFakeSubclass = objc_allocateClassPair(class, dynamicFakeSubclassNameRaw, 0);
     ALWAYS(dynamicFakeSubclass != nil, @"Class not generated");
 
     if (![self swizzleClass:dynamicFakeSubclass toActAs:class error:error]) {
@@ -875,8 +875,8 @@ static NSMutableDictionary<NSString *, RXInterceptWithOptimizedObserver> *optimi
 
     objc_registerClassPair(dynamicFakeSubclass);
 
-    [self.dynamicSublassByRealClass setObject:dynamicFakeSubclass forKey:CLASS_VALUE(class)];
-    ALWAYS([self.dynamicSublassByRealClass objectForKey:CLASS_VALUE(class)] != nil, @"Class not registered");
+    [self.dynamicSubclassByRealClass setObject:dynamicFakeSubclass forKey:CLASS_VALUE(class)];
+    ALWAYS(self.dynamicSubclassByRealClass[CLASS_VALUE(class)] != nil, @"Class not registered");
 
     return dynamicFakeSubclass;
 }
@@ -925,7 +925,7 @@ static NSMutableDictionary<NSString *, RXInterceptWithOptimizedObserver> *optimi
 -(BOOL)ensureSwizzledSelector:(SEL __nonnull)selector
                       ofClass:(Class __nonnull)class
    newImplementationGenerator:(IMP(^)())newImplementationGenerator
-replacementImplementationGenerator:(IMP (^)(IMP originalImplemenation))replacementImplementationGenerator
+replacementImplementationGenerator:(IMP (^)(IMP originalImplementation))replacementImplementationGenerator
                         error:(NSError ** __nonnull)error {
     if ([self interceptorImplementationForSelector:selector forClass:class] != nil) {
         DLOG(@"Trying to register same intercept at least once, this sounds like a possible bug");
@@ -985,7 +985,7 @@ replacementImplementationGenerator:(IMP (^)(IMP originalImplemenation))replaceme
 NSInteger RX_number_of_dynamic_subclasses() {
     __block NSInteger count = 0;
     [[RXObjCRuntime instance] performLocked:^(RXObjCRuntime * __nonnull self) {
-        count = self.dynamicSublassByRealClass.count;
+        count = self.dynamicSubclassByRealClass.count;
     }];
 
     return count;

@@ -79,16 +79,16 @@ public class RxScrollViewDelegateProxy
      For more information take a look at `DelegateProxyType`.
      */
     public class func setCurrentDelegate(delegate: AnyObject?, toObject object: AnyObject) {
-        let collectionView: UIScrollView = castOrFatalError(object)
-        collectionView.delegate = castOptionalOrFatalError(delegate)
+        let scrollView: UIScrollView = castOrFatalError(object)
+        scrollView.delegate = castOptionalOrFatalError(delegate)
     }
 
     /**
      For more information take a look at `DelegateProxyType`.
      */
     public class func currentDelegateFor(object: AnyObject) -> AnyObject? {
-        let collectionView: UIScrollView = castOrFatalError(object)
-        return collectionView.delegate
+        let scrollView: UIScrollView = castOrFatalError(object)
+        return scrollView.delegate
     }
     
     deinit {
