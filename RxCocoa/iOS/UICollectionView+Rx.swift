@@ -221,7 +221,7 @@ extension UICollectionView {
      */
     public var rx_didUpdateFocusInContextWithAnimationCoordinator: ControlEvent<(context: UIFocusUpdateContext, animationCoordinator: UIFocusAnimationCoordinator)> {
         
-        let source = rx_delegate.observe("collectionView:didUpdateFocusInContext:withAnimationCoordinator:")
+        let source = rx_delegate.observe(#selector(UICollectionViewDelegate.collectionView(_:didUpdateFocusInContext:withAnimationCoordinator:)))
             .map { a -> (context: UIFocusUpdateContext, animationCoordinator: UIFocusAnimationCoordinator) in
                 let context = a[1] as! UIFocusUpdateContext
                 let animationCoordinator = a[2] as! UIFocusAnimationCoordinator

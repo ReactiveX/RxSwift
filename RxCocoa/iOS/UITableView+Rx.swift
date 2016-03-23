@@ -278,7 +278,7 @@ extension UITableView {
          */
         public var rx_didUpdateFocusInContextWithAnimationCoordinator: ControlEvent<(context: UIFocusUpdateContext, animationCoordinator: UIFocusAnimationCoordinator)> {
             
-            let source = rx_delegate.observe("tableView:didUpdateFocusInContext:withAnimationCoordinator:")
+            let source = rx_delegate.observe(#selector(UITableViewDelegate.tableView(_:didUpdateFocusInContext:withAnimationCoordinator:)))
                 .map { a -> (context: UIFocusUpdateContext, animationCoordinator: UIFocusAnimationCoordinator) in
                     let context = a[1] as! UIFocusUpdateContext
                     let animationCoordinator = a[2] as! UIFocusAnimationCoordinator

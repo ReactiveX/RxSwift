@@ -62,7 +62,7 @@ class DelegateProxyTest : RxTest {
         
         var observedFeedRequest = false
         
-        let d = view.rx_proxy.observe("threeDView:didLearnSomething:")
+        let d = view.rx_proxy.observe(#selector(ThreeDSectionedViewProtocol.threeDView(_:didLearnSomething:)))
             .subscribeNext { n in
                 observedFeedRequest = true
             }
@@ -85,7 +85,7 @@ class DelegateProxyTest : RxTest {
         
         var nMessages = 0
         
-        let d = view.rx_proxy.observe("threeDView:didLearnSomething:")
+        let d = view.rx_proxy.observe(#selector(ThreeDSectionedViewProtocol.threeDView(_:didLearnSomething:)))
             .subscribeNext { n in
                 nMessages += 1
             }
@@ -117,13 +117,13 @@ class DelegateProxyTest : RxTest {
         
         view.delegate = mock
        
-        XCTAssertTrue(!mock.respondsToSelector("threeDView(threeDView:didGetXXX:"))
+        XCTAssertTrue(!mock.respondsToSelector(NSSelectorFromString("threeDView(threeDView:didGetXXX:")))
         
         let sentArgument = NSIndexPath(index: 0)
         
         var receivedArgument: NSIndexPath? = nil
         
-        let d = view.rx_proxy.observe("threeDView:didGetXXX:")
+        let d = view.rx_proxy.observe(#selector(ThreeDSectionedViewProtocol.threeDView(_:didGetXXX:)))
             .subscribeNext { n in
                 let ip = n[1] as! NSIndexPath
                 receivedArgument = ip
@@ -148,13 +148,13 @@ class DelegateProxyTest : RxTest {
         var completed = false
         
         autoreleasepool {
-            XCTAssertTrue(!mock.respondsToSelector("threeDView(threeDView:didGetXXX:"))
+            XCTAssertTrue(!mock.respondsToSelector(NSSelectorFromString("threeDView:threeDView:didGetXXX:")))
             
             let sentArgument = NSIndexPath(index: 0)
             
             _ = view
                 .rx_proxy
-                .observe("threeDView:didGetXXX:")
+                .observe(#selector(ThreeDSectionedViewProtocol.threeDView(_:didGetXXX:)))
                 .subscribeCompleted {
                     completed = true
                 }
@@ -171,7 +171,7 @@ class DelegateProxyTest : RxTest {
 extension DelegateProxyTest {
     func test_DelegateProxyHierarchyWorks() {
         let tableView = UITableView()
-        _ = tableView.rx_delegate.observe("scrollViewWillBeginDragging:")
+        _ = tableView.rx_delegate.observe(#selector(UIScrollViewDelegate.scrollViewWillBeginDragging(_:)))
     }
 }
 #endif

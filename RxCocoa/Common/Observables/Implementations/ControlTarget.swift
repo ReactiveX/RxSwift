@@ -28,10 +28,10 @@ import RxSwift
 class ControlTarget: RxTarget {
     typealias Callback = (Control) -> Void
 
-    let selector: Selector = #selector(GestureTarget.eventHandler(_:))
+    let selector: Selector = #selector(ControlTarget.eventHandler(_:))
 
     weak var control: Control?
-    #if os(iOS) || os(tvOS)
+#if os(iOS) || os(tvOS)
     let controlEvents: UIControlEvents
 #endif
     var callback: Callback?

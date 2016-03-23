@@ -122,7 +122,7 @@ class UITableViewSubclass1
 
     var test: Observable<Int> {
         return rx_delegate
-            .observe("testEventHappened:")
+            .observe(#selector(TestDelegateProtocol.testEventHappened(_:)))
             .map { a in (a[0] as! NSNumber).integerValue }
     }
 }
@@ -151,7 +151,7 @@ class UITableViewSubclass2
 
     var test: Observable<Int> {
         return rx_dataSource
-            .observe("testEventHappened:")
+            .observe(#selector(TestDelegateProtocol.testEventHappened(_:)))
             .map { a in (a[0] as! NSNumber).integerValue }
     }
 }
@@ -180,7 +180,7 @@ class UICollectionViewSubclass1
 
     var test: Observable<Int> {
         return rx_delegate
-            .observe("testEventHappened:")
+            .observe(#selector(TestDelegateProtocol.testEventHappened(_:)))
             .map { a in (a[0] as! NSNumber).integerValue }
     }
 }
@@ -209,7 +209,7 @@ class UICollectionViewSubclass2
 
     var test: Observable<Int> {
         return rx_dataSource
-            .observe("testEventHappened:")
+            .observe(#selector(TestDelegateProtocol.testEventHappened(_:)))
             .map { a in (a[0] as! NSNumber).integerValue }
     }
 }
@@ -238,7 +238,7 @@ class UIScrollViewSubclass
 
     var test: Observable<Int> {
         return rx_delegate
-            .observe("testEventHappened:")
+            .observe(#selector(TestDelegateProtocol.testEventHappened(_:)))
             .map { a in (a[0] as! NSNumber).integerValue }
     }
 }
@@ -267,7 +267,7 @@ class UITextViewSubclass
 
     var test: Observable<Int> {
         return rx_delegate
-            .observe("testEventHappened:")
+            .observe(#selector(TestDelegateProtocol.testEventHappened(_:)))
             .map { a in (a[0] as! NSNumber).integerValue }
     }
 }

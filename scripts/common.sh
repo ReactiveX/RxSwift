@@ -24,7 +24,7 @@ BOLDWHITE="\033[1m\033[37m"
 DEFAULT_IOS7_SIMULATOR=RxSwiftTest/iPhone-4s/iOS/7.1
 DEFAULT_IOS8_SIMULATOR=RxSwiftTest/iPhone-6/iOS/8.4
 DEFAULT_IOS9_SIMULATOR=RxSwiftTest/iPhone-6/iOS/9.3
-DEFAULT_WATCHOS2_SIMULATOR=RxSwiftTest/Apple-Watch-38mm/watchOS/2.1
+DEFAULT_WATCHOS2_SIMULATOR=RxSwiftTest/Apple-Watch-38mm/watchOS/2.2
 DEFAULT_TVOS_SIMULATOR=RxSwiftTest/Apple-TV-1080p/tvOS/9.1
 
 function runtime_available() {

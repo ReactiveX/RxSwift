@@ -38,13 +38,9 @@ extension DriverTest {
 
         backgroundScheduler.schedule(()) { _ in
             var subscribing1 = true
-            let currentThread = NSThread.currentThread()
             _ = driver.asObservable().subscribe { e in
                 if !subscribing1 {
                     XCTAssertTrue(isMainThread())
-                }
-                else {
-                    XCTAssertEqual(currentThread, NSThread.currentThread())
                 }
                 switch e {
                 case .Next(let element):
@@ -61,9 +57,6 @@ extension DriverTest {
             _ = driver.asDriver().asObservable().subscribe { e in
                 if !subscribing {
                     XCTAssertTrue(isMainThread())
-                }
-                else {
-                    XCTAssertEqual(currentThread, NSThread.currentThread())
                 }
                 switch e {
                 case .Next(let element):

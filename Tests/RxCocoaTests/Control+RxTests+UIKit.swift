@@ -545,7 +545,7 @@ extension ControlTests {
 // UIGestureRecognizer
 extension ControlTests {
     func testGestureRecognizer_DelegateEventCompletesOnDealloc() {
-        let createView: () -> UIGestureRecognizer = { UIGestureRecognizer(target: nil, action: "s") }
+        let createView: () -> UIGestureRecognizer = { UIGestureRecognizer(target: nil, action: NSSelectorFromString("s")) }
         ensureEventDeallocated(createView) { (view: UIGestureRecognizer) in view.rx_event }
     }
 }
