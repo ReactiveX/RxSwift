@@ -27,6 +27,19 @@ extension DriverConvertibleType {
     }
 
     /**
+    Creates new subscription and sends elements to variable.
+
+    - parameter variable: Target variable for sequence elements.
+    - returns: Disposable object that can be used to unsubscribe the observer from the variable.
+    */
+    @warn_unused_result(message="http://git.io/rxs.ud")
+    public func drive(variable: Variable<E>) -> Disposable {
+        return drive(onNext: { e in
+            variable.value = e
+        })
+    }
+
+    /**
     Subscribes to observable sequence using custom binder function.
 
     - parameter with: Function used to bind elements from `self`.
