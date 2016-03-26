@@ -22,7 +22,7 @@ viewModel
   .addDisposableTo(disposeBag)
 ```
 
-** Official suggestion is to always use `.addDisposableTo(disposeBag)` even though that's not necessary for simple bindings.**
+**Official suggestion is to always use `.addDisposableTo(disposeBag)` even though that's not necessary for simple bindings.**
 
 ### Retries
 
