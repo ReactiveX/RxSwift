@@ -82,7 +82,7 @@ extension UISearchBar {
     Reactive wrapper for delegate method `searchBarCancelButtonClicked`.
     */
     public var rx_cancelTap: ControlEvent<Void> {
-        let source: Observable<Void> = rx_delegate.observe("searchBarCancelButtonClicked:")
+        let source: Observable<Void> = rx_delegate.observe(#selector(UISearchBarDelegate.searchBarCancelButtonClicked(_:)))
             .map { _ in
                 return ()
             }
@@ -93,7 +93,7 @@ extension UISearchBar {
      Reactive wrapper for delegate method `searchBarSearchButtonClicked`.
      */
     public var rx_searchTap: ControlEvent<Void> {
-        let source: Observable<Void> = rx_delegate.observe("searchBarSearchButtonClicked:")
+        let source: Observable<Void> = rx_delegate.observe(#selector(UISearchBarDelegate.searchBarSearchButtonClicked(_:)))
             .map { _ in
                 return ()
         }
