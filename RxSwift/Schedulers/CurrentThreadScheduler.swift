@@ -21,7 +21,7 @@ import Foundation
   typealias CurrentThreadSchedulerValue       = CurrentThreadSchedulerKey
   let CurrentThreadSchedulerValueInstance     = CurrentThreadSchedulerKeyInstance
 
-  class CurrentThreadSchedulerKey : NSObject, NSCopying {
+  @objc class CurrentThreadSchedulerKey : NSObject, NSCopying {
       override func isEqual(object: AnyObject?) -> Bool {
           return object === CurrentThreadSchedulerKeyInstance
       }
@@ -32,12 +32,12 @@ import Foundation
           return CurrentThreadSchedulerKeyInstance
       }
 
-      func copyWithZone(zone: NSZone) -> AnyObject {
+      @objc func copy(with zone: NSZone) -> AnyObject {
           return CurrentThreadSchedulerKeyInstance
       }
   }
 
-  class CurrentThreadSchedulerQueueKey : NSObject, NSCopying {
+  @objc class CurrentThreadSchedulerQueueKey : NSObject, NSCopying {
       override func isEqual(object: AnyObject?) -> Bool {
           return object === CurrentThreadSchedulerQueueKeyInstance
       }
@@ -48,7 +48,7 @@ import Foundation
           return CurrentThreadSchedulerQueueKeyInstance
       }
 
-      func copyWithZone(zone: NSZone) -> AnyObject {
+      @objc func copy(with zone: NSZone) -> AnyObject {
           return CurrentThreadSchedulerQueueKeyInstance
       }
   }

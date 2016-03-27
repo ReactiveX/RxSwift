@@ -9,7 +9,7 @@
 import Foundation
 
 
-class ConcatSink<S: SequenceType, O: ObserverType where S.Generator.Element : ObservableConvertibleType, S.Generator.Element.E == O.E>
+class ConcatSink<S: Sequence, O: ObserverType where S.Iterator.Element : ObservableConvertibleType, S.Iterator.Element.E == O.E>
     : TailRecursiveSink<S, O>
     , ObserverType {
     typealias Element = O.E
@@ -36,7 +36,7 @@ class ConcatSink<S: SequenceType, O: ObserverType where S.Generator.Element : Ob
     
     override func extract(observable: Observable<E>) -> SequenceGenerator? {
         if let source = observable as? Concat<S> {
-            return (source._sources.generate(), source._count)
+            return (source._sources.makeIterator(), source._count)
         }
         else {
             return nil
@@ -44,8 +44,8 @@ class ConcatSink<S: SequenceType, O: ObserverType where S.Generator.Element : Ob
     }
 }
 
-class Concat<S: SequenceType where S.Generator.Element : ObservableConvertibleType> : Producer<S.Generator.Element.E> {
-    typealias Element = S.Generator.Element.E
+class Concat<S: Sequence where S.Iterator.Element : ObservableConvertibleType> : Producer<S.Iterator.Element.E> {
+    typealias Element = S.Iterator.Element.E
     
     private let _sources: S
     private let _count: IntMax?
@@ -57,7 +57,7 @@ class Concat<S: SequenceType where S.Generator.Element : ObservableConvertibleTy
     
     override func run<O: ObserverType where O.E == Element>(observer: O) -> Disposable {
         let sink = ConcatSink<S, O>(observer: observer)
-        sink.disposable = sink.run((_sources.generate(), _count))
+        sink.disposable = sink.run((_sources.makeIterator(), _count))
         return sink
     }
 }

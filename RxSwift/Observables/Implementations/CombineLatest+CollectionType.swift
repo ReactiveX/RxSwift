@@ -1,5 +1,5 @@
 //
-//  CombineLatest+CollectionType.swift
+//  CombineLatest+Collection.swift
 //  Rx
 //
 //  Created by Krunoslav Zaher on 8/29/15.
@@ -8,10 +8,10 @@
 
 import Foundation
 
-class CombineLatestCollectionTypeSink<C: CollectionType, R, O: ObserverType where C.Generator.Element : ObservableConvertibleType, O.E == R>
+class CombineLatestCollectionTypeSink<C: Collection, R, O: ObserverType where C.Iterator.Element : ObservableConvertibleType, O.E == R>
     : Sink<O> {
     typealias Parent = CombineLatestCollectionType<C, R>
-    typealias SourceElement = C.Generator.Element.E
+    typealias SourceElement = C.Iterator.Element.E
     
     let _parent: Parent
     
@@ -26,8 +26,8 @@ class CombineLatestCollectionTypeSink<C: CollectionType, R, O: ObserverType wher
     
     init(parent: Parent, observer: O) {
         _parent = parent
-        _values = [SourceElement?](count: parent._count, repeatedValue: nil)
-        _isDone = [Bool](count: parent._count, repeatedValue: false)
+        _values = [SourceElement?](repeating: nil, count: parent._count)
+        _isDone = [Bool](repeating: false, count: parent._count)
         _subscriptions = Array<SingleAssignmentDisposable>()
         _subscriptions.reserveCapacity(parent._count)
         
@@ -104,8 +104,8 @@ class CombineLatestCollectionTypeSink<C: CollectionType, R, O: ObserverType wher
     }
 }
 
-class CombineLatestCollectionType<C: CollectionType, R where C.Generator.Element : ObservableConvertibleType> : Producer<R> {
-    typealias ResultSelector = [C.Generator.Element.E] throws -> R
+class CombineLatestCollectionType<C: Collection, R where C.Iterator.Element : ObservableConvertibleType> : Producer<R> {
+    typealias ResultSelector = [C.Iterator.Element.E] throws -> R
     
     let _sources: C
     let _resultSelector: ResultSelector

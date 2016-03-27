@@ -6,12 +6,12 @@ Design Rationale
 ```Swift
 enum Event<Element>  {
     case Next(Element)      // next element of a sequence
-    case Error(ErrorType)   // sequence failed with error
+    case Error(ErrorProtocol)   // sequence failed with error
     case Completed          // sequence terminated successfully
 }
 ```
 
-Let's discuss pros and cons of `ErrorType` being generic.
+Let's discuss pros and cons of `ErrorProtocol` being generic.
 
 If you have generic error type you create additional impedance mismatch between two observables.
 

@@ -40,8 +40,8 @@ class _RxCollectionViewReactiveArrayDataSource
     }
 }
 
-class RxCollectionViewReactiveArrayDataSourceSequenceWrapper<S: SequenceType>
-    : RxCollectionViewReactiveArrayDataSource<S.Generator.Element>
+class RxCollectionViewReactiveArrayDataSourceSequenceWrapper<S: Sequence>
+    : RxCollectionViewReactiveArrayDataSource<S.Iterator.Element>
     , RxCollectionViewDataSourceType {
     typealias Element = S
 

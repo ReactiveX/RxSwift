@@ -1,5 +1,5 @@
 //
-//  Zip+CollectionType.swift
+//  Zip+Collection.swift
 //  Rx
 //
 //  Created by Krunoslav Zaher on 8/30/15.
@@ -8,10 +8,10 @@
 
 import Foundation
 
-class ZipCollectionTypeSink<C: CollectionType, R, O: ObserverType where C.Generator.Element : ObservableConvertibleType, O.E == R>
+class ZipCollectionTypeSink<C: Collection, R, O: ObserverType where C.Iterator.Element : ObservableConvertibleType, O.E == R>
     : Sink<O> {
     typealias Parent = ZipCollectionType<C, R>
-    typealias SourceElement = C.Generator.Element.E
+    typealias SourceElement = C.Iterator.Element.E
     
     private let _parent: Parent
     
@@ -26,8 +26,8 @@ class ZipCollectionTypeSink<C: CollectionType, R, O: ObserverType where C.Genera
     
     init(parent: Parent, observer: O) {
         _parent = parent
-        _values = [Queue<SourceElement>](count: parent.count, repeatedValue: Queue(capacity: 4))
-        _isDone = [Bool](count: parent.count, repeatedValue: false)
+        _values = [Queue<SourceElement>](repeating: Queue(capacity: 4), count: parent.count)
+        _isDone = [Bool](repeating: false, count: parent.count)
         _subscriptions = Array<SingleAssignmentDisposable>()
         _subscriptions.reserveCapacity(parent.count)
         
@@ -116,8 +116,8 @@ class ZipCollectionTypeSink<C: CollectionType, R, O: ObserverType where C.Genera
     }
 }
 
-class ZipCollectionType<C: CollectionType, R where C.Generator.Element : ObservableConvertibleType> : Producer<R> {
-    typealias ResultSelector = [C.Generator.Element.E] throws -> R
+class ZipCollectionType<C: Collection, R where C.Iterator.Element : ObservableConvertibleType> : Producer<R> {
+    typealias ResultSelector = [C.Iterator.Element.E] throws -> R
     
     let sources: C
     let resultSelector: ResultSelector

@@ -47,7 +47,14 @@ class ActivityIndicator : DriverConvertibleType {
         _loading = _variable.asObservable()
             .map { $0 > 0 }
             .distinctUntilChanged()
+<<<<<<< 6b259b6618bc93a56405726866e1a103f72a49ad
             .asDriver(onErrorRecover: ActivityIndicator.ifItStillErrors)
+=======
+            .asDriver { (error: ErrorProtocol) -> Driver<Bool> in
+                _ = fatalError("Loader can't fail")
+                return Driver.empty()
+            }
+>>>>>>> Changes for Swift 3.0.
     }
 
     static func ifItStillErrors(error: ErrorType) -> Driver<Bool> {

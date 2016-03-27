@@ -87,7 +87,7 @@ public class VirtualTimeScheduler<Converter: VirtualTimeConverterType>
      - returns: The disposable object used to cancel the scheduled action (best effort).
      */
     public func scheduleRelative<StateType>(state: StateType, dueTime: RxTimeInterval, action: StateType -> Disposable) -> Disposable {
-        let time = self.now.dateByAddingTimeInterval(dueTime)
+        let time = self.now.addingTimeInterval(dueTime)
         let absoluteTime = _converter.convertToVirtualTime(time)
         let adjustedTime = self.adjustScheduledTime(absoluteTime)
         return scheduleAbsoluteVirtual(state, time: adjustedTime, action: action)

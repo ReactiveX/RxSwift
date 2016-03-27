@@ -19,12 +19,12 @@ public protocol DriverConvertibleType : ObservableConvertibleType {
     /**
     Converts self to `Driver`.
     */
-    @warn_unused_result(message="http://git.io/rxs.uo")
+    @warn_unused_result(message: "http://git.io/rxs.uo")
     func asDriver() -> Driver<E>
 }
 
 extension DriverConvertibleType {
-    @warn_unused_result(message="http://git.io/rxs.uo")
+    @warn_unused_result(message: "http://git.io/rxs.uo")
     public func asObservable() -> Observable<E> {
         return asDriver().asObservable()
     }
@@ -75,7 +75,7 @@ public struct Driver<Element> : DriverConvertibleType {
     /**
     - returns: Built observable sequence.
     */
-    @warn_unused_result(message="http://git.io/rxs.uo")
+    @warn_unused_result(message: "http://git.io/rxs.uo")
     public func asObservable() -> Observable<E> {
         return _source
     }
@@ -83,7 +83,7 @@ public struct Driver<Element> : DriverConvertibleType {
     /**
     - returns: `self`
     */
-    @warn_unused_result(message="http://git.io/rxs.uo")
+    @warn_unused_result(message: "http://git.io/rxs.uo")
     public func asDriver() -> Driver<E> {
         return self
     }
@@ -97,7 +97,7 @@ extension Driver {
 
     - returns: An observable sequence with no elements.
     */
-    @warn_unused_result(message="http://git.io/rxs.uo")
+    @warn_unused_result(message: "http://git.io/rxs.uo")
     public static func empty() -> Driver<E> {
         return Driver(raw: Observable.empty().subscribeOn(driverSubscribeOnScheduler))
     }
@@ -107,7 +107,7 @@ extension Driver {
 
     - returns: An observable sequence whose observers will never get called.
     */
-    @warn_unused_result(message="http://git.io/rxs.uo")
+    @warn_unused_result(message: "http://git.io/rxs.uo")
     public static func never() -> Driver<E> {
         return Driver(raw: Observable.never().subscribeOn(driverSubscribeOnScheduler))
     }
@@ -118,7 +118,7 @@ extension Driver {
     - parameter element: Single element in the resulting observable sequence.
     - returns: An observable sequence containing the single specified element.
     */
-    @warn_unused_result(message="http://git.io/rxs.uo")
+    @warn_unused_result(message: "http://git.io/rxs.uo")
     public static func just(element: E) -> Driver<E> {
         return Driver(raw: Observable.just(element).subscribeOn(driverSubscribeOnScheduler))
     }
@@ -129,7 +129,7 @@ extension Driver {
      - parameter observableFactory: Observable factory function to invoke for each observer that subscribes to the resulting sequence.
      - returns: An observable sequence whose observers trigger an invocation of the given observable factory function.
      */
-    @warn_unused_result(message="http://git.io/rxs.uo")
+    @warn_unused_result(message: "http://git.io/rxs.uo")
     public static func deferred(observableFactory: () -> Driver<E>)
         -> Driver<E> {
         return Driver(Observable.deferred { observableFactory().asObservable() })
@@ -143,14 +143,14 @@ extension Driver {
     - parameter elements: Elements to generate.
     - returns: The observable sequence whose elements are pulled from the given arguments.
     */
-    @warn_unused_result(message="http://git.io/rxs.uo")
+    @warn_unused_result(message: "http://git.io/rxs.uo")
     public static func of(elements: E ...) -> Driver<E> {
         let source = elements.toObservable(driverSubscribeOnScheduler)
         return Driver(raw: source)
     }
 }
 
-extension Driver where Element : SignedIntegerType {
+extension Driver where Element : SignedInteger {
     /**
      Returns an observable sequence that produces a value after each period, using the specified scheduler to run timers and to send out observer messages.
 
@@ -159,7 +159,7 @@ extension Driver where Element : SignedIntegerType {
      - parameter period: Period for producing the values in the resulting sequence.
      - returns: An observable sequence that produces a value after each period.
      */
-    @warn_unused_result(message="http://git.io/rxs.uo")
+    @warn_unused_result(message: "http://git.io/rxs.uo")
     public static func interval(period: RxTimeInterval)
         -> Driver<E> {
         return Driver(Observable.interval(period, scheduler: driverObserveOnScheduler))
@@ -168,7 +168,7 @@ extension Driver where Element : SignedIntegerType {
 
 // MARK: timer
 
-extension Driver where Element: SignedIntegerType {
+extension Driver where Element: SignedInteger {
     /**
      Returns an observable sequence that periodically produces a value after the specified initial relative due time has elapsed, using the specified scheduler to run timers.
 
@@ -178,7 +178,7 @@ extension Driver where Element: SignedIntegerType {
      - parameter period: Period to produce subsequent values.
      - returns: An observable sequence that produces a value after due time has elapsed and then each period.
      */
-    @warn_unused_result(message="http://git.io/rxs.uo")
+    @warn_unused_result(message: "http://git.io/rxs.uo")
     public static func timer(dueTime: RxTimeInterval, period: RxTimeInterval)
         -> Driver<E> {
         return Driver(Observable.timer(dueTime, period: period, scheduler: driverObserveOnScheduler))

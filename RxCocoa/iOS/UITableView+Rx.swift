@@ -25,9 +25,9 @@ extension UITableView {
     - parameter cellFactory: Transform between sequence elements and view cells.
     - returns: Disposable object that can be used to unbind.
     */
-    public func rx_itemsWithCellFactory<S: SequenceType, O: ObservableType where O.E == S>
+    public func rx_itemsWithCellFactory<S: Sequence, O: ObservableType where O.E == S>
         (source: O)
-        -> (cellFactory: (UITableView, Int, S.Generator.Element) -> UITableViewCell)
+        -> (cellFactory: (UITableView, Int, S.Iterator.Element) -> UITableViewCell)
         -> Disposable {
         return { cellFactory in
             let dataSource = RxTableViewReactiveArrayDataSourceSequenceWrapper<S>(cellFactory: cellFactory)
@@ -45,10 +45,10 @@ extension UITableView {
     - parameter cellType: Type of table view cell.
     - returns: Disposable object that can be used to unbind.
     */
-    public func rx_itemsWithCellIdentifier<S: SequenceType, Cell: UITableViewCell, O : ObservableType where O.E == S>
+    public func rx_itemsWithCellIdentifier<S: Sequence, Cell: UITableViewCell, O : ObservableType where O.E == S>
         (cellIdentifier: String, cellType: Cell.Type = Cell.self)
         -> (source: O)
-        -> (configureCell: (Int, S.Generator.Element, Cell) -> Void)
+        -> (configureCell: (Int, S.Iterator.Element, Cell) -> Void)
         -> Disposable {
         return { source in
             return { configureCell in
@@ -70,7 +70,7 @@ extension UITableView {
     - parameter source: Observable sequence of items.
     - returns: Disposable object that can be used to unbind.
     */
-    public func rx_itemsWithDataSource<DataSource: protocol<RxTableViewDataSourceType, UITableViewDataSource>, S: SequenceType, O: ObservableType where DataSource.Element == S, O.E == S>
+    public func rx_itemsWithDataSource<DataSource: protocol<RxTableViewDataSourceType, UITableViewDataSource>, S: Sequence, O: ObservableType where DataSource.Element == S, O.E == S>
         (dataSource: DataSource)
         -> (source: O)
         -> Disposable  {

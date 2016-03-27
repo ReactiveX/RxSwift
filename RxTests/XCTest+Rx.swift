@@ -41,7 +41,7 @@ require specifying `self.*`, they are made global.
 
      - parameter time: Recorded virtual time the `.Completed` event occurs.
     */
-    public func error<T>(time: TestTime, _ error: ErrorType, _ type: T.Type = T.self) -> Recorded<Event<T>> {
+    public func error<T>(time: TestTime, _ error: ErrorProtocol, _ type: T.Type = T.self) -> Recorded<Event<T>> {
         return Recorded(time: time, event: .Error(error))
     }
 //}

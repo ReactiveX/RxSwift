@@ -47,10 +47,10 @@ public extension ObserverType {
     }
     
     /**
-    Convenience method equivalent to `on(.Error(error: ErrorType))`
-    - parameter error: ErrorType to send to observer(s)
+    Convenience method equivalent to `on(.Error(error: ErrorProtocol))`
+    - parameter error: ErrorProtocol to send to observer(s)
     */
-    final func onError(error: ErrorType) {
+    final func onError(error: ErrorProtocol) {
         on(.Error(error))
     }
 }

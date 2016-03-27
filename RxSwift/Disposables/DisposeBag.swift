@@ -82,7 +82,7 @@ public class DisposeBag: DisposeBase {
 
         let disposables = _disposables
         
-        _disposables.removeAll(keepCapacity: false)
+        _disposables.removeAll(keepingCapacity: false)
         _disposed = true
         
         return disposables

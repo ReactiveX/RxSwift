@@ -86,8 +86,13 @@ example("sequenceOf") {
 }
 
 /*:
+<<<<<<< 48b782d76115d7551f420c325b85b893d5e5d724
 ### toObservable
 `toObservable` creates a sequence out of an array.
+=======
+### from
+`from` creates a sequence from `Sequence`
+>>>>>>> Changes for Swift 3.0.
 */
 
 example("toObservable") {
