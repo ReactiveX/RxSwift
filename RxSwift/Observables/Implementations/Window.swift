@@ -68,7 +68,7 @@ class WindowTimeCountSink<Element, O: ObserverType where O.E == Observable<Eleme
             do {
                 try incrementChecked(&_count)
             } catch (let e) {
-                _subject.on(.Error(e as ErrorType))
+                _subject.on(.Error(e as ErrorProtocol))
                 dispose()
             }
             

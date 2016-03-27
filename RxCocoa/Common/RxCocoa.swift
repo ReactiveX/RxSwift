@@ -18,7 +18,7 @@ import RxSwift
 RxCocoa errors.
 */
 public enum RxCocoaError
-    : ErrorType
+    : ErrorProtocol
     , CustomDebugStringConvertible {
     /**
     Unknown error has occurred.
@@ -69,7 +69,7 @@ public enum RxCocoaInterceptionMechanism {
 RxCocoa ObjC runtime modification errors.
  */
 public enum RxCocoaObjCRuntimeError
-    : ErrorType
+    : ErrorProtocol
     , CustomDebugStringConvertible {
     /**
     Unknown error has occurred.
@@ -219,7 +219,7 @@ public extension RxCocoaObjCRuntimeError {
 
 // MARK: Error binding policies
 
-func bindingErrorToInterface(error: ErrorType) {
+func bindingErrorToInterface(error: ErrorProtocol) {
     let error = "Binding error to UI: \(error)"
 #if DEBUG
     rxFatalError(error)

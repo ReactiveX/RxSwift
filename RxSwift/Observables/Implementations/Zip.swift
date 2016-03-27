@@ -11,7 +11,7 @@ import Foundation
 protocol ZipSinkProtocol : class
 {
     func next(index: Int)
-    func fail(error: ErrorType)
+    func fail(error: ErrorProtocol)
     func done(index: Int)
 }
 
@@ -26,7 +26,7 @@ class ZipSink<O: ObserverType> : Sink<O>, ZipSinkProtocol {
     private var _isDone: [Bool]
     
     init(arity: Int, observer: O) {
-        _isDone = [Bool](count: arity, repeatedValue: false)
+        _isDone = [Bool](repeating: false, count: arity)
         _arity = arity
         
         super.init(observer: observer)
@@ -78,7 +78,7 @@ class ZipSink<O: ObserverType> : Sink<O>, ZipSinkProtocol {
         }
     }
     
-    func fail(error: ErrorType) {
+    func fail(error: ErrorProtocol) {
         forwardOn(.Error(error))
         dispose()
     }

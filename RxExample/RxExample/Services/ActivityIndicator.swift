@@ -47,7 +47,7 @@ class ActivityIndicator : DriverConvertibleType {
         _loading = _variable.asObservable()
             .map { $0 > 0 }
             .distinctUntilChanged()
-            .asDriver { (error: ErrorType) -> Driver<Bool> in
+            .asDriver { (error: ErrorProtocol) -> Driver<Bool> in
                 _ = fatalError("Loader can't fail")
                 return Driver.empty()
             }

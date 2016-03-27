@@ -77,7 +77,7 @@ Sequences in Rx are described by a push interface (aka callback).
 ```swift
 enum Event<Element>  {
     case Next(Element)      // next element of a sequence
-    case Error(ErrorType)   // sequence failed with error
+    case Error(ErrorProtocol)   // sequence failed with error
     case Completed          // sequence terminated successfully
 }
 
@@ -100,7 +100,7 @@ If a sequence does not terminate in some way, resources will be allocated perman
 
 **Using dispose bags or `takeUntil` operator is a robust way of making sure resources are cleaned up. We recommend using them in production even if the sequences will terminate in finite time.**
 
-In case you are curious why `ErrorType` isn't generic, you can find explanation [here](DesignRationale.md#why-error-type-isnt-generic).
+In case you are curious why `ErrorProtocol` isn't generic, you can find explanation [here](DesignRationale.md#why-error-type-isnt-generic).
 
 ## Disposing
 

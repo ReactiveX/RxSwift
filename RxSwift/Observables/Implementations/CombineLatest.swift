@@ -10,7 +10,7 @@ import Foundation
 
 protocol CombineLatestProtocol : class {
     func next(index: Int)
-    func fail(error: ErrorType)
+    func fail(error: ErrorProtocol)
     func done(index: Int)
 }
 
@@ -29,8 +29,8 @@ class CombineLatestSink<O: ObserverType>
    
     init(arity: Int, observer: O) {
         _arity = arity
-        _hasValue = [Bool](count: arity, repeatedValue: false)
-        _isDone = [Bool](count: arity, repeatedValue: false)
+        _hasValue = [Bool](repeating: false, count: arity)
+        _isDone = [Bool](repeating: false, count: arity)
         
         super.init(observer: observer)
     }
@@ -72,7 +72,7 @@ class CombineLatestSink<O: ObserverType>
         }
     }
     
-    func fail(error: ErrorType) {
+    func fail(error: ErrorProtocol) {
         forwardOn(.Error(error))
         dispose()
     }

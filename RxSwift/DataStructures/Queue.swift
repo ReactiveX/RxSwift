@@ -16,11 +16,11 @@ averaged over N operations.
 
 Complexity of `peek` is O(1).
 */
-public struct Queue<T>: SequenceType {
+public struct Queue<T>: Sequence {
     /**
     Type of generator.
     */
-    public typealias Generator = AnyGenerator<T>
+    public typealias Generator = AnyIterator<T>
     
     private let _resizeFactor = 2
     
@@ -41,7 +41,7 @@ public struct Queue<T>: SequenceType {
         _pushNextIndex = 0
      
         if capacity > 0 {
-            _storage = ContiguousArray<T?>(count: capacity, repeatedValue: nil)
+            _storage = ContiguousArray<T?>(repeating: nil, count: capacity)
         }
         else {
             _storage = ContiguousArray<T?>()
@@ -77,7 +77,7 @@ public struct Queue<T>: SequenceType {
     }
     
     mutating private func resizeTo(size: Int) {
-        var newStorage = ContiguousArray<T?>(count: size, repeatedValue: nil)
+        var newStorage = ContiguousArray<T?>(repeating: nil, count: size)
         
         let count = _count
         
@@ -85,7 +85,7 @@ public struct Queue<T>: SequenceType {
         let spaceToEndOfQueue = _storage.count - dequeueIndex
         
         // first batch is from dequeue index to end of array
-        let countElementsInFirstBatch = min(count, spaceToEndOfQueue)
+        let countElementsInFirstBatch = Swift.min(count, spaceToEndOfQueue)
         // second batch is wrapped from start of array to end of queue
         let numberOfElementsInSecondBatch = count - countElementsInFirstBatch
         
@@ -104,7 +104,7 @@ public struct Queue<T>: SequenceType {
     */
     public mutating func enqueue(element: T) {
         if count == _storage.count {
-            resizeTo(max(_storage.count, 1) * _resizeFactor)
+            resizeTo(Swift.max(_storage.count, 1) * _resizeFactor)
         }
         
         _storage[_pushNextIndex] = element
@@ -152,11 +152,11 @@ public struct Queue<T>: SequenceType {
     /**
     - returns: Generator of contained elements.
     */
-    public func generate() -> Generator {
+    public func makeIterator() -> AnyIterator<T> {
         var i = dequeueIndex
         var count = _count
 
-        return AnyGenerator {
+        return AnyIterator {
             if count == 0 {
                 return nil
             }

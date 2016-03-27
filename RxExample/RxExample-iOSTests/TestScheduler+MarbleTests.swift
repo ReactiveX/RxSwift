@@ -41,7 +41,7 @@ extension TestScheduler {
     - `|` marks sequence completed
 
     */
-    func parseEventsAndTimes<T>(timeline: String, values: [String: T], errors: [String: ErrorType] = [:]) -> [[Recorded<Event<T>>]] {
+    func parseEventsAndTimes<T>(timeline: String, values: [String: T], errors: [String: ErrorProtocol] = [:]) -> [[Recorded<Event<T>>]] {
         //print("parsing: \(timeline)")
         typealias RecordedEvent = Recorded<Event<T>>
         let timelines = timeline.componentsSeparatedByString("|")
@@ -111,7 +111,7 @@ extension TestScheduler {
 
      - returns: Observable sequence specified by timeline and values.
     */
-    func createObservable<T>(timeline: String, values: [String: T], errors: [String: ErrorType] = [:]) -> Observable<T> {
+    func createObservable<T>(timeline: String, values: [String: T], errors: [String: ErrorProtocol] = [:]) -> Observable<T> {
         let events = self.parseEventsAndTimes(timeline, values: values, errors: errors)
         return createObservable(events)
     }
@@ -173,7 +173,7 @@ extension TestScheduler {
      - returns: Implementation of method that accepts arguments with parameter `Arg` and returns observable sequence
         with parameter `Ret`.
      */
-    func mock<Arg, Ret>(values: [String: Ret], errors: [String: ErrorType] = [:], timelineSelector: Arg -> String) -> Arg -> Observable<Ret> {
+    func mock<Arg, Ret>(values: [String: Ret], errors: [String: ErrorProtocol] = [:], timelineSelector: Arg -> String) -> Arg -> Observable<Ret> {
         return { (parameters: Arg) -> Observable<Ret> in
             let timeline = timelineSelector(parameters)
 

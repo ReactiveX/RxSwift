@@ -644,7 +644,7 @@ extension ObservableSingleTest {
             error(250, testError)
             ])
 
-        var recordedError: ErrorType!
+        var recordedError: ErrorProtocol!
         var numberOfTimesInvoked = 0
 
         let res = scheduler.start { xs.doOnError { error in
@@ -995,7 +995,7 @@ extension ObservableSingleTest {
     }
 }
 
-struct CustomErrorType : ErrorType {
+struct CustomErrorType : ErrorProtocol {
 
 }
 

@@ -8,7 +8,7 @@
 
 import Foundation
 
-class RangeProducer<E: SignedIntegerType> : Producer<E> {
+class RangeProducer<E: SignedInteger> : Producer<E> {
     private let _start: E
     private let _count: E
     private let _scheduler: ImmediateSchedulerType
@@ -34,7 +34,7 @@ class RangeProducer<E: SignedIntegerType> : Producer<E> {
     }
 }
 
-class RangeSink<O: ObserverType where O.E: SignedIntegerType> : Sink<O> {
+class RangeSink<O: ObserverType where O.E: SignedInteger> : Sink<O> {
     typealias Parent = RangeProducer<O.E>
     
     private let _parent: Parent

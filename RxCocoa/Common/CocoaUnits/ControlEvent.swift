@@ -71,7 +71,7 @@ public struct ControlEvent<PropertyType> : ControlEventType {
     /**
     - returns: `Observable` interface.
     */
-    @warn_unused_result(message="http://git.io/rxs.uo")
+    @warn_unused_result(message: "http://git.io/rxs.uo")
     public func asObservable() -> Observable<E> {
         return _events
     }
@@ -79,7 +79,7 @@ public struct ControlEvent<PropertyType> : ControlEventType {
     /**
     - returns: `ControlEvent` interface.
     */
-    @warn_unused_result(message="http://git.io/rxs.uo")
+    @warn_unused_result(message: "http://git.io/rxs.uo")
     public func asControlEvent() -> ControlEvent<E> {
         return self
     }

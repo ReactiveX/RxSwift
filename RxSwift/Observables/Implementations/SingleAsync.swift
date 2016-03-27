@@ -30,7 +30,7 @@ class SingleAsyncSink<ElementType, O: ObserverType where O.E == ElementType> : S
                 }
             }
             catch let error {
-                forwardOn(.Error(error as ErrorType))
+                forwardOn(.Error(error as ErrorProtocol))
                 dispose()
                 return
             }

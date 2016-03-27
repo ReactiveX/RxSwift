@@ -118,7 +118,7 @@ let aliveAtTheEnd = numberOfObjects / 10
 var objects: [AnyObject] = []
 
 func fragmentMemory() {
-    objects = [AnyObject](count: aliveAtTheEnd, repeatedValue: A())
+    objects = [AnyObject](repeatedValue: A(), count: aliveAtTheEnd)
     for _ in 0 ..< numberOfObjects {
         objects[Int(arc4random_uniform(UInt32(aliveAtTheEnd)))] = arc4random_uniform(2) == 0 ? A() : B()
     }

@@ -23,19 +23,19 @@
 
     extension NSThread {
         static func setThreadLocalStorageValue<T: AnyObject>(value: T?, forKey key: protocol<AnyObject, NSCopying>) {
-            let currentThread = NSThread.currentThread()
+            let currentThread = NSThread.current()
             let threadDictionary = currentThread.threadDictionary
 
             if let newValue = value {
                 threadDictionary.setObject(newValue, forKey: key)
             }
             else {
-                threadDictionary.removeObjectForKey(key)
+                threadDictionary.removeObject(forKey: key)
             }
 
         }
         static func getThreadLocalStorageValueForKey<T>(key: protocol<AnyObject, NSCopying>) -> T? {
-            let currentThread = NSThread.currentThread()
+            let currentThread = NSThread.current()
             let threadDictionary = currentThread.threadDictionary
             
             return threadDictionary[key] as? T

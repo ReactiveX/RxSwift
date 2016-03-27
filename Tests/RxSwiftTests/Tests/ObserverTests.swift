@@ -42,7 +42,7 @@ extension ObserverTests {
         }
 
         var elements = [Int]()
-        var errorNotification: ErrorType!
+        var errorNotification: ErrorProtocol!
 
         _ = a.subscribe(
             onNext: { n in elements.append(n) },

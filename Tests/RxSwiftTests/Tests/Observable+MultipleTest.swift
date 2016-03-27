@@ -3195,7 +3195,7 @@ extension ObservableMultipleTest {
     }
 }
 
-// MARK: combineLatest + CollectionType
+// MARK: combineLatest + Collection
 extension ObservableMultipleTest {
     func testCombineLatest_NeverN() {
         let scheduler = TestScheduler(initialClock: 0)
@@ -3785,7 +3785,7 @@ extension ObservableMultipleTest {
     }
 }
 
-// MARK: zip + CollectionType
+// MARK: zip + Collection
 extension ObservableMultipleTest {
     func testZip_NAry_symmetric() {
         let scheduler = TestScheduler(initialClock: 0)

@@ -9,7 +9,7 @@
 import Foundation
 
 public enum DifferentiatorError
-    : ErrorType
+    : ErrorProtocol
     , CustomDebugStringConvertible {
     case DuplicateItem(item: Any)
     case DuplicateSection(section: Any)

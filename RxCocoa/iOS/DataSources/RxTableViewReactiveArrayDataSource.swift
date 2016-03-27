@@ -41,8 +41,8 @@ class _RxTableViewReactiveArrayDataSource
 }
 
 
-class RxTableViewReactiveArrayDataSourceSequenceWrapper<S: SequenceType>
-    : RxTableViewReactiveArrayDataSource<S.Generator.Element>
+class RxTableViewReactiveArrayDataSourceSequenceWrapper<S: Sequence>
+    : RxTableViewReactiveArrayDataSource<S.Iterator.Element>
     , RxTableViewDataSourceType {
     typealias Element = S
 

@@ -44,7 +44,7 @@ public final class MainScheduler : SerialDispatchQueueScheduler {
     In case this method is called on a background thread it will throw an exception.
     */
     public class func ensureExecutingOnScheduler() {
-        if !NSThread.currentThread().isMainThread {
+        if !NSThread.current().isMainThread {
             rxFatalError("Executing on backgound thread. Please use `MainScheduler.instance.schedule` to schedule work on main thread.")
         }
     }
@@ -52,7 +52,7 @@ public final class MainScheduler : SerialDispatchQueueScheduler {
     override func scheduleInternal<StateType>(state: StateType, action: StateType -> Disposable) -> Disposable {
         let currentNumberEnqueued = AtomicIncrement(&numberEnqueued)
 
-        if NSThread.currentThread().isMainThread && currentNumberEnqueued == 1 {
+        if NSThread.current().isMainThread && currentNumberEnqueued == 1 {
             let disposable = action(state)
             AtomicDecrement(&numberEnqueued)
             return disposable

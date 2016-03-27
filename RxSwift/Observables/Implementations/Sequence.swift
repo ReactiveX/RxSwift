@@ -8,8 +8,8 @@
 
 import Foundation
 
-class SequenceSink<O: ObserverType> : Sink<O> {
-    typealias Parent = Sequence<O.E>
+class ObservableSequenceSink<O: ObserverType> : Sink<O> {
+    typealias Parent = ObservableSequence<O.E>
 
     private let _parent: Parent
 
@@ -31,7 +31,7 @@ class SequenceSink<O: ObserverType> : Sink<O> {
     }
 }
 
-class Sequence<E> : Producer<E> {
+class ObservableSequence<E> : Producer<E> {
     private let _elements: [E]
     private let _scheduler: ImmediateSchedulerType?
 
@@ -51,7 +51,7 @@ class Sequence<E> : Producer<E> {
             return NopDisposable.instance
         }
 
-        let sink = SequenceSink(parent: self, observer: observer)
+        let sink = ObservableSequenceSink(parent: self, observer: observer)
         sink.disposable = sink.run()
         return sink
     }

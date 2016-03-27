@@ -64,7 +64,7 @@ public struct HistoricalSchedulerTimeConverter : VirtualTimeConverterType {
      - returns: Time offsetted by time interval.
     */
     public func offsetVirtualTime(time time: VirtualTimeUnit, offset: VirtualTimeIntervalUnit) -> VirtualTimeUnit {
-        return time.dateByAddingTimeInterval(offset)
+        return time.addingTimeInterval(offset)
     }
 
     /**
@@ -72,11 +72,11 @@ public struct HistoricalSchedulerTimeConverter : VirtualTimeConverterType {
     */
     public func compareVirtualTime(lhs: VirtualTimeUnit, _ rhs: VirtualTimeUnit) -> VirtualTimeComparison {
         switch lhs.compare(rhs) {
-        case .OrderedAscending:
+        case .orderedAscending:
             return .LessThan
-        case .OrderedSame:
+        case .orderedSame:
             return .Equal
-        case .OrderedDescending:
+        case .orderedDescending:
             return .GreaterThan
         }
     }

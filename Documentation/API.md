@@ -314,9 +314,9 @@ extension UITableView {
 
     public func rx_setDataSource(dataSource: UITableViewDataSource) -> Disposable {}
 
-    public func rx_itemsWithCellFactory(source: O)(cellFactory: (UITableView, Int, S.Generator.Element) -> UITableViewCell) -> Disposable {}
+    public func rx_itemsWithCellFactory(source: O)(cellFactory: (UITableView, Int, S.Iterator.Element) -> UITableViewCell) -> Disposable {}
 
-    public func rx_itemsWithCellIdentifier(cellIdentifier: String, cellType: Cell.Type = Cell.self)(source: O)(configureCell: (Int, S.Generator.Element, Cell) -> Void) -> Disposable {}
+    public func rx_itemsWithCellIdentifier(cellIdentifier: String, cellType: Cell.Type = Cell.self)(source: O)(configureCell: (Int, S.Iterator.Element, Cell) -> Void) -> Disposable {}
 
     public func rx_itemsWithDataSource(dataSource: DataSource)(source: O) -> Disposable {}
 
@@ -346,9 +346,9 @@ extension UICollectionView {
 
     public func rx_setDataSource(dataSource: UICollectionViewDataSource) -> Disposable {}
 
-    public func rx_itemsWithCellFactory(source: O)(cellFactory: (UICollectionView, Int, S.Generator.Element) -> UICollectionViewCell) -> Disposable {}
+    public func rx_itemsWithCellFactory(source: O)(cellFactory: (UICollectionView, Int, S.Iterator.Element) -> UICollectionViewCell) -> Disposable {}
 
-    public func rx_itemsWithCellIdentifier(cellIdentifier: String, cellType: Cell.Type = Cell.self)(source: O)(configureCell: (Int, S.Generator.Element, Cell) -> Void) -> Disposable {}
+    public func rx_itemsWithCellIdentifier(cellIdentifier: String, cellType: Cell.Type = Cell.self)(source: O)(configureCell: (Int, S.Iterator.Element, Cell) -> Void) -> Disposable {}
 
     public func rx_itemsWithDataSource(dataSource: DataSource)(source: O) -> Disposable {}
 

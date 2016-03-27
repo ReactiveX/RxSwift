@@ -21,7 +21,7 @@ extension NSObject {
 
      For more information take a look at `rx_observe` method.
      */
-    @warn_unused_result(message="http://git.io/rxs.uo")
+    @warn_unused_result(message: "http://git.io/rxs.uo")
     public func rx_observe<E: RawRepresentable where E.RawValue: KVORepresentable>(type: E.Type, _ keyPath: String, options: NSKeyValueObservingOptions = [.New, .Initial], retainSelf: Bool = true) -> Observable<E?> {
         return rx_observe(E.RawValue.KVOType.self, keyPath, options: options, retainSelf: retainSelf)
             .map(E.init)
@@ -42,7 +42,7 @@ extension NSObject {
 
          For more information take a look at `rx_observeWeakly` method.
          */
-        @warn_unused_result(message="http://git.io/rxs.uo")
+        @warn_unused_result(message: "http://git.io/rxs.uo")
         public func rx_observeWeakly<E: RawRepresentable where E.RawValue: KVORepresentable>(type: E.Type, _ keyPath: String, options: NSKeyValueObservingOptions = [.New, .Initial]) -> Observable<E?> {
             return rx_observeWeakly(E.RawValue.KVOType.self, keyPath, options: options)
                 .map(E.init)

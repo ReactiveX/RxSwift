@@ -36,7 +36,7 @@ public struct BagKey : Hashable {
 
     public var hashValue: Int {
         if let uniqueIdentity = uniqueIdentity {
-            return hash(key) ^ (unsafeAddressOf(uniqueIdentity).hashValue)
+            return hash(key) ^ (unsafeAddress(of: uniqueIdentity).hashValue)
         }
         else {
             return hash(key)
@@ -164,8 +164,8 @@ public struct Bag<T> : CustomDebugStringConvertible {
         _key1 = nil
         _value1 = nil
 
-        _pairs.removeAll(keepCapacity: false)
-        _dictionary?.removeAll(keepCapacity: false)
+        _pairs.removeAll(keepingCapacity: false)
+        _dictionary?.removeAll(keepingCapacity: false)
     }
     
     /**
@@ -189,14 +189,14 @@ public struct Bag<T> : CustomDebugStringConvertible {
             return value
         }
 
-        if let existingObject = _dictionary?.removeValueForKey(key) {
+        if let existingObject = _dictionary?.removeValue(forKey: key) {
             return existingObject
         }
 
         for i in 0 ..< _pairs.count {
             if _pairs[i].key == key {
                 let value = _pairs[i].value
-                _pairs.removeAtIndex(i)
+                _pairs.remove(at: i)
                 return value
             }
         }

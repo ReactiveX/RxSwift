@@ -18,12 +18,12 @@ enum TailRecursiveSinkCommand {
 #endif
 
 /// This class is usually used with `Generator` version of the operators.
-class TailRecursiveSink<S: SequenceType, O: ObserverType where S.Generator.Element: ObservableConvertibleType, S.Generator.Element.E == O.E>
+class TailRecursiveSink<S: Sequence, O: ObserverType where S.Iterator.Element: ObservableConvertibleType, S.Iterator.Element.E == O.E>
     : Sink<O>
     , InvocableWithValueType {
     typealias Value = TailRecursiveSinkCommand
     typealias E = O.E
-    typealias SequenceGenerator = (generator: S.Generator, remaining: IntMax?)
+    typealias SequenceGenerator = (generator: S.Iterator, remaining: IntMax?)
 
     var _generators: [SequenceGenerator] = []
     var _disposed = false
@@ -138,7 +138,7 @@ class TailRecursiveSink<S: SequenceType, O: ObserverType where S.Generator.Eleme
 
     func disposeCommand() {
         _disposed = true
-        _generators.removeAll(keepCapacity: false)
+        _generators.removeAll(keepingCapacity: false)
     }
 
     override func dispose() {

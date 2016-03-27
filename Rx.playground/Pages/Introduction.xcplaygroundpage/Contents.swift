@@ -87,7 +87,7 @@ example("sequenceOf") {
 
 /*:
 ### from
-`from` creates a sequence from `SequenceType`
+`from` creates a sequence from `Sequence`
 */
 
 example("toObservable") {

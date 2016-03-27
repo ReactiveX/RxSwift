@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum RxDataSourceError : ErrorType {
+enum RxDataSourceError : ErrorProtocol {
     case UnwrappingOptional
     case PreconditionFailed(message: String)
 }
@@ -22,7 +22,7 @@ func rxPrecondition(condition: Bool, @autoclosure _ message: () -> String) throw
     throw RxDataSourceError.PreconditionFailed(message: message())
 }
 
-func rxDebugFatalError(error: ErrorType) {
+func rxDebugFatalError(error: ErrorProtocol) {
     rxDebugFatalError("\(error)")
 }
 

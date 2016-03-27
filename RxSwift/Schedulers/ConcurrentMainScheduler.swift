@@ -46,7 +46,7 @@ public final class ConcurrentMainScheduler : SchedulerType {
     - returns: The disposable object used to cancel the scheduled action (best effort).
     */
     public func schedule<StateType>(state: StateType, action: (StateType) -> Disposable) -> Disposable {
-        if NSThread.currentThread().isMainThread {
+        if NSThread.current().isMainThread {
             return action(state)
         }
 

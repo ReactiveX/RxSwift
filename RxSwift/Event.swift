@@ -24,7 +24,7 @@ public enum Event<Element> : CustomDebugStringConvertible {
     /**
     Sequence terminates with error
     */
-    case Error(ErrorType)
+    case Error(ErrorProtocol)
     
     /**
     Sequence completes sucessfully
@@ -72,7 +72,7 @@ extension Event {
     /**
     - returns: If `Error` event, returns error.
     */
-    public var error: ErrorType? {
+    public var error: ErrorProtocol? {
         if case .Error(let error) = self {
             return error
         }
