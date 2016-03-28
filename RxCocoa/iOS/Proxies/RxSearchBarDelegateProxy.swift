@@ -30,6 +30,7 @@ public class RxSearchBarDelegateProxy : DelegateProxy
 
     // MARK: Delegate proxy methods
     
+#if os(iOS)
     /**
      For more information take a look at `DelegateProxyType`.
      */
@@ -38,6 +39,8 @@ public class RxSearchBarDelegateProxy : DelegateProxy
         
         return castOrFatalError(searchBar.rx_createDelegateProxy())
     }
+#endif
+    
 }
 
 #endif

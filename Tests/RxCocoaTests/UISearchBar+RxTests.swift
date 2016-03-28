@@ -77,6 +77,7 @@ class UISearchBarTests : RxTest {
         XCTAssertEqual(searchBar.selectedScopeButtonIndex, 1)
     }
     
+#if os(iOS)
     func testCancelTap() {
         let searchBar = UISearchBar(frame: CGRectMake(0, 0, 1, 1))
         
@@ -95,6 +96,7 @@ class UISearchBarTests : RxTest {
         let createView: () -> UISearchBar = { UISearchBar(frame: CGRectMake(0, 0, 1, 1)) }
         ensureEventDeallocated(createView) { (view: UISearchBar) in view.rx_cancelTap }
     }
+#endif
     
     func testSearchTap() {
         let searchBar = UISearchBar(frame: CGRectMake(0, 0, 1, 1))

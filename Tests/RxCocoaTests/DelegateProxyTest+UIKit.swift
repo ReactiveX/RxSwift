@@ -44,11 +44,13 @@ import XCTest
     optional func testEventHappened(value: Int)
 }
 
+#if os(iOS)
 @objc protocol UISearchBarDelegateSubclass
     : UISearchBarDelegate
     , TestDelegateProtocol {
     optional func testEventHappened(value: Int)
 }
+#endif
 
 @objc protocol UITextViewDelegateSubclass
     : UITextViewDelegate
@@ -96,11 +98,13 @@ extension DelegateProxyTest {
 
 // MARK: UISearchBar
 
+#if os(iOS)
 extension DelegateProxyTest {
     func test_UISearchBarDelegateExtension() {
         performDelegateTest(UISearchBarSubclass(frame: CGRect.zero))
     }
 }
+#endif
 
 // MARK: UITextView
 
@@ -257,6 +261,7 @@ class UIScrollViewSubclass
     }
 }
 
+#if os(iOS)
 class ExtendSearchBarDelegateProxy
     : RxSearchBarDelegateProxy
     , UISearchBarDelegateSubclass {
@@ -271,6 +276,7 @@ class ExtendSearchBarDelegateProxy
 class UISearchBarSubclass
     : UISearchBar
     , TestDelegateControl {
+    
     override func rx_createDelegateProxy() -> RxSearchBarDelegateProxy {
         return ExtendSearchBarDelegateProxy(parentObject: self)
     }
@@ -285,6 +291,7 @@ class UISearchBarSubclass
             .map { a in (a[0] as! NSNumber).integerValue }
     }
 }
+#endif
 
 class ExtendTextViewDelegateProxy
     : RxTextViewDelegateProxy

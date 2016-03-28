@@ -18,6 +18,7 @@ import UIKit
 
 extension UISearchBar {
     
+#if os(iOS)
     /**
      Factory method that enables subclasses to implement their own `rx_delegate`.
      
@@ -26,6 +27,7 @@ extension UISearchBar {
     public func rx_createDelegateProxy() -> RxSearchBarDelegateProxy {
         return RxSearchBarDelegateProxy(parentObject: self)
     }
+#endif
     
     /**
     Reactive wrapper for `delegate`.
@@ -78,6 +80,7 @@ extension UISearchBar {
         return ControlProperty(values: source, valueSink: bindingObserver)
     }
     
+#if os(iOS)
     /**
     Reactive wrapper for delegate method `searchBarCancelButtonClicked`.
     */
@@ -88,6 +91,7 @@ extension UISearchBar {
             }
         return ControlEvent(events: source)
     }
+#endif
     
     /**
      Reactive wrapper for delegate method `searchBarSearchButtonClicked`.
