@@ -247,12 +247,12 @@ extension ObservableType {
 extension ObservableType {
     
     /**
-    Returns the elements from the source observable sequence until the other observable sequence produces an element.
+    Returns the elements from the source observable sequence that are emitted after the other observable sequence produces an element.
 
     - seealso: [skipUntil operator on reactivex.io](http://reactivex.io/documentation/operators/skipuntil.html)
     
-    - parameter other: Observable sequence that terminates propagation of elements of the source sequence.
-    - returns: An observable sequence containing the elements of the source sequence up to the point the other sequence interrupted further propagation.
+    - parameter other: Observable sequence that starts propagation of elements of the source sequence.
+    - returns: An observable sequence containing the elements of the source sequence that are emitted after the other sequence emits an item.
     */
     @warn_unused_result(message="http://git.io/rxs.uo")
     public func skipUntil<O: ObservableType>(other: O)
