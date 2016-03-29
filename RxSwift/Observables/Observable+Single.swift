@@ -149,6 +149,18 @@ extension ObservableType {
         -> Observable<E> {
         return self.doOn(onCompleted: onCompleted)
     }
+
+    @warn_unused_result(message="http://git.io/rxs.uo")
+    public func doOnSubscribe(onSubscribe: (() throws -> Void))
+        -> Observable<E> {
+            return DoOnSubscribe(source: self.asObservable(), onSubscribe: onSubscribe)
+    }
+
+    @warn_unused_result(message="http://git.io/rxs.uo")
+    public func doOnUnsubscribe(onUnsubscribe: (() throws -> Void))
+        -> Observable<E> {
+            return DoOnSubscribe(source: self.asObservable(), onUnsubscribe: onUnsubscribe)
+    }
 }
 
 // MARK: startWith

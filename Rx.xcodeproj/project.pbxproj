@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2CDD54F81CAA3B6800CB8631 /* DoOnSubscribe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDD54F71CAA3B6800CB8631 /* DoOnSubscribe.swift */; };
+		2CDD54F91CAA3B6800CB8631 /* DoOnSubscribe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDD54F71CAA3B6800CB8631 /* DoOnSubscribe.swift */; };
+		2CDD54FA1CAA3B6800CB8631 /* DoOnSubscribe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDD54F71CAA3B6800CB8631 /* DoOnSubscribe.swift */; };
+		2CDD54FB1CAA3B6800CB8631 /* DoOnSubscribe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDD54F71CAA3B6800CB8631 /* DoOnSubscribe.swift */; };
 		79E9DE891C3417FD009970AF /* DispatchQueueSchedulerQOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79E9DE881C3417FD009970AF /* DispatchQueueSchedulerQOS.swift */; };
 		79E9DE8A1C3417FD009970AF /* DispatchQueueSchedulerQOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79E9DE881C3417FD009970AF /* DispatchQueueSchedulerQOS.swift */; };
 		79E9DE8B1C3417FD009970AF /* DispatchQueueSchedulerQOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79E9DE881C3417FD009970AF /* DispatchQueueSchedulerQOS.swift */; };
@@ -1333,6 +1337,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2CDD54F71CAA3B6800CB8631 /* DoOnSubscribe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoOnSubscribe.swift; sourceTree = "<group>"; };
 		79E9DE881C3417FD009970AF /* DispatchQueueSchedulerQOS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DispatchQueueSchedulerQOS.swift; sourceTree = "<group>"; };
 		7EDBAEAB1C89B1A5006CBE67 /* UITabBarItem+RxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITabBarItem+RxTests.swift"; sourceTree = "<group>"; };
 		7EDBAEB71C89B9B7006CBE67 /* UITabBarItem+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITabBarItem+Rx.swift"; sourceTree = "<group>"; };
@@ -1951,6 +1956,7 @@
 				C8093C771B8A72BE0088E94D /* DelaySubscription.swift */,
 				C8093C781B8A72BE0088E94D /* DistinctUntilChanged.swift */,
 				C8093C791B8A72BE0088E94D /* Do.swift */,
+				2CDD54F71CAA3B6800CB8631 /* DoOnSubscribe.swift */,
 				C84CC53F1BDC3B3700E06A64 /* ElementAt.swift */,
 				C8C3DA051B9393AC004D233E /* Empty.swift */,
 				C8C3DA081B93941E004D233E /* Error.swift */,
@@ -3737,6 +3743,7 @@
 				B1D899901BF653410027B05C /* Timeout.swift in Sources */,
 				C8093D481B8A72BE0088E94D /* TakeWhile.swift in Sources */,
 				C8093D001B8A72BE0088E94D /* Amb.swift in Sources */,
+				2CDD54F91CAA3B6800CB8631 /* DoOnSubscribe.swift in Sources */,
 				C8093D1C1B8A72BE0088E94D /* Do.swift in Sources */,
 				C8093D9E1B8A72BE0088E94D /* SerialDispatchQueueScheduler.swift in Sources */,
 				C8093D341B8A72BE0088E94D /* RefCount.swift in Sources */,
@@ -3959,6 +3966,7 @@
 				B1D8998F1BF653410027B05C /* Timeout.swift in Sources */,
 				C8093D471B8A72BE0088E94D /* TakeWhile.swift in Sources */,
 				C8093CFF1B8A72BE0088E94D /* Amb.swift in Sources */,
+				2CDD54F81CAA3B6800CB8631 /* DoOnSubscribe.swift in Sources */,
 				C8093D1B1B8A72BE0088E94D /* Do.swift in Sources */,
 				C8093D9D1B8A72BE0088E94D /* SerialDispatchQueueScheduler.swift in Sources */,
 				C8093D331B8A72BE0088E94D /* RefCount.swift in Sources */,
@@ -4105,6 +4113,7 @@
 				B1D899921BF653410027B05C /* Timeout.swift in Sources */,
 				C8F0BFDD1BBBFB8B001B112F /* TakeWhile.swift in Sources */,
 				C8F0BFDE1BBBFB8B001B112F /* Amb.swift in Sources */,
+				2CDD54FB1CAA3B6800CB8631 /* DoOnSubscribe.swift in Sources */,
 				C8F0BFDF1BBBFB8B001B112F /* Do.swift in Sources */,
 				C8F0BFE01BBBFB8B001B112F /* SerialDispatchQueueScheduler.swift in Sources */,
 				C8F0BFE11BBBFB8B001B112F /* RefCount.swift in Sources */,
@@ -4431,6 +4440,7 @@
 				D2EBEAE31BB9B697003A27DC /* Observable+Extensions.swift in Sources */,
 				B1D899911BF653410027B05C /* Timeout.swift in Sources */,
 				D2EBEB121BB9B6C1003A27DC /* Merge.swift in Sources */,
+				2CDD54FA1CAA3B6800CB8631 /* DoOnSubscribe.swift in Sources */,
 				D2EBEAEF1BB9B6A4003A27DC /* Queue.swift in Sources */,
 				D2EBEB301BB9B6CA003A27DC /* Observable+Multiple.swift in Sources */,
 				D2EBEB2B1BB9B6CA003A27DC /* Observable+Aggregate.swift in Sources */,
