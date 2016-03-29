@@ -15,6 +15,7 @@
 		07A5C3DB1B70B703001EFE5C /* CalculatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07A5C3DA1B70B703001EFE5C /* CalculatorViewController.swift */; };
 		07A5C3DC1B70B703001EFE5C /* CalculatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07A5C3DA1B70B703001EFE5C /* CalculatorViewController.swift */; };
 		07E3C2331B03605B0010338D /* Dependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E3C2321B03605B0010338D /* Dependencies.swift */; };
+		2CBCE9471CAA6EFF00FB12BF /* DoOnSubscribe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CEFD4C21CAA6DCE008B4F59 /* DoOnSubscribe.swift */; };
 		8479BC711C3BCB9800FB8B54 /* ImagePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8479BC701C3BCB9800FB8B54 /* ImagePickerController.swift */; };
 		8479BC721C3BDAD400FB8B54 /* ImagePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8479BC701C3BCB9800FB8B54 /* ImagePickerController.swift */; };
 		B1604CB51BE49F8D002E1279 /* DownloadableImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1604CB41BE49F8D002E1279 /* DownloadableImage.swift */; };
@@ -636,6 +637,7 @@
 		075F130F1B4E9D5A000D7861 /* APIWrappersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIWrappersViewController.swift; sourceTree = "<group>"; };
 		07A5C3DA1B70B703001EFE5C /* CalculatorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalculatorViewController.swift; sourceTree = "<group>"; };
 		07E3C2321B03605B0010338D /* Dependencies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Dependencies.swift; path = Examples/Dependencies.swift; sourceTree = "<group>"; };
+		2CEFD4C21CAA6DCE008B4F59 /* DoOnSubscribe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoOnSubscribe.swift; sourceTree = "<group>"; };
 		8479BC701C3BCB9800FB8B54 /* ImagePickerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePickerController.swift; sourceTree = "<group>"; };
 		B1604CB41BE49F8D002E1279 /* DownloadableImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadableImage.swift; sourceTree = "<group>"; };
 		B1604CC81BE5BBFA002E1279 /* UIImageView+DownloadableImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+DownloadableImage.swift"; sourceTree = "<group>"; };
@@ -1422,6 +1424,7 @@
 				C89464561BC6C2B00055219D /* DelaySubscription.swift */,
 				C89464571BC6C2B00055219D /* DistinctUntilChanged.swift */,
 				C89464581BC6C2B00055219D /* Do.swift */,
+				2CEFD4C21CAA6DCE008B4F59 /* DoOnSubscribe.swift */,
 				C84CC52D1BDC344100E06A64 /* ElementAt.swift */,
 				C89464591BC6C2B00055219D /* Empty.swift */,
 				C894645A1BC6C2B00055219D /* Error.swift */,
@@ -2357,6 +2360,7 @@
 				C84CC58F1BDD486300E06A64 /* SynchronizedUnsubscribeType.swift in Sources */,
 				C8CC3EFF1C95CB5300ABA17E /* RxCollectionViewDataSourceProxy.swift in Sources */,
 				C89CDB711BCC45E5002063D9 /* ShareReplay1.swift in Sources */,
+				2CBCE9471CAA6EFF00FB12BF /* DoOnSubscribe.swift in Sources */,
 				C8CC3EE21C95CB5300ABA17E /* DelegateProxy.swift in Sources */,
 				C89464BD1BC6C2B00055219D /* Buffer.swift in Sources */,
 				C8CC3F171C95CB5300ABA17E /* UISegmentedControl+Rx.swift in Sources */,
