@@ -90,7 +90,7 @@ protocol ObserverType {
 }
 ```
 
-**When a sequence sends the `Complete` or `Error` event all internal resources that compute sequence elements will be freed.**
+**When a sequence sends the `Completed` or `Error` event all internal resources that compute sequence elements will be freed.**
 
 **To cancel production of sequence elements and free resources immediately, call `dispose` on the returned subscription.**
 
