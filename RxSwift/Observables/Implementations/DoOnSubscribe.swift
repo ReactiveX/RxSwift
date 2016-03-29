@@ -20,8 +20,10 @@ class DoOnSubscribe_<O: ObserverType>: Sink<O>, ObserverType {
 
         do {
             try _parent._onSubscribe?()
-        } catch let e {
-            forwardOn(Event.Error(e))
+        }
+        catch let error {
+            forwardOn(.Error(error))
+            dispose()
         }
     }
 
@@ -32,8 +34,9 @@ class DoOnSubscribe_<O: ObserverType>: Sink<O>, ObserverType {
     override func dispose() {
         do {
             try _parent._onUnsubscribe?()
-        } catch let e {
-            forwardOn(Event.Error(e))
+        }
+        catch let error {
+            forwardOn(.Error(error))
         }
         super.dispose()
     }
