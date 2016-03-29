@@ -150,12 +150,24 @@ extension ObservableType {
         return self.doOn(onCompleted: onCompleted)
     }
 
+    /**
+     Invokes an action when it is subscribed from its subscribers, and propagates all observer messages through the result sequece.
+     
+     - parameter onSubscribe: Action that gets called when an observer subscribes to this Observable
+     - returns: The source sequence with the side-effecting behavior applied.
+     */
     @warn_unused_result(message="http://git.io/rxs.uo")
     public func doOnSubscribe(onSubscribe: (() throws -> Void))
         -> Observable<E> {
             return DoOnSubscribe(source: self.asObservable(), onSubscribe: onSubscribe)
     }
 
+    /**
+     Invokes an action when it is unsubscribed from its subscribers, and propagates all observer messages through the result sequece.
+
+     - parameter onUnsubscribe: Action that gets called when this Observable is unsubscribed
+     - returns: The source sequence with the side-effecting behavior applied.
+     */
     @warn_unused_result(message="http://git.io/rxs.uo")
     public func doOnUnsubscribe(onUnsubscribe: (() throws -> Void))
         -> Observable<E> {
