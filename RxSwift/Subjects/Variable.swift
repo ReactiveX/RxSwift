@@ -28,9 +28,9 @@ public class Variable<Element> {
     /**
     Gets or sets current value of variable.
     
-    If case new value is set, all observers are notified of that change.
+    Whenever a new value is set, all the observers are notified of the change.
     
-    Even is case equal value is set, observers will still be notified.
+    Even if the newly set value is same as the old value, observers are still notified for change.
     */
     public var value: E {
         get {
