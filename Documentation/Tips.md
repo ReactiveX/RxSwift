@@ -23,7 +23,7 @@ extension ObservableType where E: MaybeCool {
 
   * Always use operators to compose subscriptions.
 
-  **Avoid nesting subscribe calls at all cost. This is a bad smell.**
+  **Avoid nesting subscribe calls at all cost. This is a code smell.**
 
   ```swift
   textField.rx_text.subscribeNext { text in
