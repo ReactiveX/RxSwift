@@ -24,8 +24,8 @@ Thread safe bag that disposes added disposables on `deinit`.
 
 This returns ARC (RAII) like resource management to `RxSwift`.
 
-In case contained disposables need to be disposed, just deference dispose bag
-or create new one in it's place.
+In case contained disposables need to be disposed, just put a different dispose bag
+or create a new one in its place.
 
     self.existingDisposeBag = DisposeBag()
 
