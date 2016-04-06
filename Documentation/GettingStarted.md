@@ -1099,12 +1099,12 @@ NSURLSession.sharedSession().rx_response(myNSURLRequest)
                 return just(transform(data))
             }
             else {
-                return failWith(yourNSError)
+                return Observable.error(yourNSError)
             }
         }
         else {
             rxFatalError("response = nil")
-            return failWith(yourNSError)
+            return Observable.error(yourNSError)
         }
     }
     .subscribe { event in
