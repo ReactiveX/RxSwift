@@ -210,6 +210,18 @@ extension UITableView {
     }
     
     /**
+     Reactive wrapper for `delegate` message `tableView:didEndDisplayingCell:forRowAtIndexPath:`.
+     */
+    public var rx_didEndDisplayingCell: ControlEvent<(cell: UITableViewCell, indexPath: NSIndexPath)> {
+        let source: Observable<(cell: UITableViewCell, indexPath: NSIndexPath)> = rx_delegate.observe(#selector(UITableViewDelegate.tableView(_:didEndDisplayingCell:forRowAtIndexPath:)))
+            .map { a in
+                (a[1] as! UITableViewCell, a[2] as! NSIndexPath)
+        }
+        
+        return ControlEvent(events: source)
+    }
+    
+    /**
     Reactive wrapper for `delegate` message `tableView:didSelectRowAtIndexPath:`.
     
     It can be only used when one of the `rx_itemsWith*` methods is used to bind observable sequence,
