@@ -46,7 +46,6 @@ public class UIBindingObserver<UIElementType, Value where UIElementType: AnyObje
             }
         case .Error(let error):
             bindingErrorToInterface(error)
-            break
         case .Completed:
             break
         }
