@@ -139,11 +139,11 @@ example("generate") {
 }
 
 /*:
-### failWith
+### error
 create an Observable that emits no items and terminates with an error
 */
 
-example("failWith") {
+example("error") {
     let error = NSError(domain: "Test", code: -1, userInfo: nil)
     
     let erroredSequence = Observable<Int>.error(error)
