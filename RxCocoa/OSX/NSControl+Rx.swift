@@ -46,9 +46,6 @@ extension NSControl {
     /**
      You might be wondering why the ugly `as!` casts etc, well, for some reason if
      Swift compiler knows C is UIControl type and optimizations are turned on, it will crash.
-
-     Can somebody offer poor Swift compiler writers some other better job maybe, this is becoming
-     ridiculous. So much time wasted ...
     */
     static func rx_value<C: AnyObject, T: Equatable>(control: C, getter: (C) -> T, setter: (C, T) -> Void) -> ControlProperty<T> {
         MainScheduler.ensureExecutingOnScheduler()
