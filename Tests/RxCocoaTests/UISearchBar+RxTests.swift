@@ -78,12 +78,12 @@ class UISearchBarTests : RxTest {
     }
     
 #if os(iOS)
-    func testCancelTap() {
+    func testCancelButtonClicked() {
         let searchBar = UISearchBar(frame: CGRectMake(0, 0, 1, 1))
         
         var tapped = false
         
-        let _ = searchBar.rx_cancelTap.subscribeNext { _ in
+        let _ = searchBar.rx_cancelButtonClicked.subscribeNext { _ in
             tapped = true
         }
         
@@ -92,18 +92,18 @@ class UISearchBarTests : RxTest {
         XCTAssertTrue(tapped)
     }
     
-    func testCancelTap_DelegateEventCompletesOnDealloc() {
+    func testCancelButtonClicked_DelegateEventCompletesOnDealloc() {
         let createView: () -> UISearchBar = { UISearchBar(frame: CGRectMake(0, 0, 1, 1)) }
-        ensureEventDeallocated(createView) { (view: UISearchBar) in view.rx_cancelTap }
+        ensureEventDeallocated(createView) { (view: UISearchBar) in view.rx_cancelButtonClicked }
     }
 #endif
     
-    func testSearchTap() {
+    func testSearchButtonClicked() {
         let searchBar = UISearchBar(frame: CGRectMake(0, 0, 1, 1))
         
         var tapped = false
         
-        let _ = searchBar.rx_searchTap.subscribeNext { _ in
+        let _ = searchBar.rx_searchButtonClicked.subscribeNext { _ in
             tapped = true
         }
         
@@ -112,8 +112,8 @@ class UISearchBarTests : RxTest {
         XCTAssertTrue(tapped)
     }
     
-    func testSearchTap_DelegateEventCompletesOnDealloc() {
+    func testSearchButtonClicked_DelegateEventCompletesOnDealloc() {
         let createView: () -> UISearchBar = { UISearchBar(frame: CGRectMake(0, 0, 1, 1)) }
-        ensureEventDeallocated(createView) { (view: UISearchBar) in view.rx_searchTap }
+        ensureEventDeallocated(createView) { (view: UISearchBar) in view.rx_searchButtonClicked }
     }
 }
