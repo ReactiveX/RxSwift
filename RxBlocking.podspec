@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "RxBlocking"
-  s.version          = "2.3.1"
+  s.version          = "2.4"
   s.summary          = "RxSwift Blocking operatos"
   s.description      = <<-DESC
 Set of blocking operators for RxSwift. These operators are mostly intended for unit/integration tests
@@ -24,5 +24,5 @@ Waiting for observable sequence to complete before exiting command line applicat
 
   s.source_files          = 'RxBlocking/**/*.swift'
 
-  s.dependency 'RxSwift', '~> 2.3.1'
+  s.dependency 'RxSwift', '~> 2.4'
 end
