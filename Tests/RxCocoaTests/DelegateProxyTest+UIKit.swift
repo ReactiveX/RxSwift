@@ -44,6 +44,14 @@ import XCTest
     optional func testEventHappened(value: Int)
 }
 
+#if os(iOS)
+@objc protocol UISearchBarDelegateSubclass
+    : UISearchBarDelegate
+    , TestDelegateProtocol {
+    optional func testEventHappened(value: Int)
+}
+#endif
+
 @objc protocol UITextViewDelegateSubclass
     : UITextViewDelegate
     , TestDelegateProtocol {
@@ -90,6 +98,16 @@ extension DelegateProxyTest {
         performDelegateTest(UIScrollViewSubclass(frame: CGRect.zero))
     }
 }
+
+// MARK: UISearchBar
+
+#if os(iOS)
+extension DelegateProxyTest {
+    func test_UISearchBarDelegateExtension() {
+        performDelegateTest(UISearchBarSubclass(frame: CGRect.zero))
+    }
+}
+#endif
 
 // MARK: UITextView
 
@@ -253,6 +271,38 @@ class UIScrollViewSubclass
             .map { a in (a[0] as! NSNumber).integerValue }
     }
 }
+
+#if os(iOS)
+class ExtendSearchBarDelegateProxy
+    : RxSearchBarDelegateProxy
+    , UISearchBarDelegateSubclass {
+    weak private(set) var control: UISearchBarSubclass?
+    
+    required init(parentObject: AnyObject) {
+        self.control = (parentObject as! UISearchBarSubclass)
+        super.init(parentObject: parentObject)
+    }
+}
+
+class UISearchBarSubclass
+    : UISearchBar
+    , TestDelegateControl {
+    
+    override func rx_createDelegateProxy() -> RxSearchBarDelegateProxy {
+        return ExtendSearchBarDelegateProxy(parentObject: self)
+    }
+    
+    func doThatTest(value: Int) {
+        (delegate as! TestDelegateProtocol).testEventHappened?(value)
+    }
+    
+    var test: Observable<Int> {
+        return rx_delegate
+            .observe(#selector(TestDelegateProtocol.testEventHappened(_:)))
+            .map { a in (a[0] as! NSNumber).integerValue }
+    }
+}
+#endif
 
 class ExtendTextViewDelegateProxy
     : RxTextViewDelegateProxy

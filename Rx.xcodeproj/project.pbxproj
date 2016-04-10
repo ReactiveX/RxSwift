@@ -1601,7 +1601,7 @@
 		C88254001B8A752B00B02D69 /* RxTableViewDataSourceProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxTableViewDataSourceProxy.swift; sourceTree = "<group>"; };
 		C88254011B8A752B00B02D69 /* RxTableViewDelegateProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxTableViewDelegateProxy.swift; sourceTree = "<group>"; };
 		C88254021B8A752B00B02D69 /* RxTextViewDelegateProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxTextViewDelegateProxy.swift; sourceTree = "<group>"; };
-		C88254051B8A752B00B02D69 /* UIBarButtonItem+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = "UIBarButtonItem+Rx.swift"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		C88254051B8A752B00B02D69 /* UIBarButtonItem+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = "UIBarButtonItem+Rx.swift"; sourceTree = "<group>"; };
 		C88254061B8A752B00B02D69 /* UIButton+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIButton+Rx.swift"; sourceTree = "<group>"; };
 		C88254071B8A752B00B02D69 /* UICollectionView+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Rx.swift"; sourceTree = "<group>"; };
 		C88254081B8A752B00B02D69 /* UIControl+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = "UIControl+Rx.swift"; sourceTree = "<group>"; };
