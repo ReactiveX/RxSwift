@@ -14,15 +14,25 @@ import UIKit
 import RxSwift
 #endif
 
-public class RxSearchBarDelegateProxy : DelegateProxy
-                               , UISearchBarDelegate
-                               , DelegateProxyType {
-    
+/**
+ For more information take a look at `DelegateProxyType`.
+ */
+public class RxSearchBarDelegateProxy
+    : DelegateProxy
+    , UISearchBarDelegate
+    , DelegateProxyType {
+
+    /**
+     For more information take a look at `DelegateProxyType`.
+     */
     public class func currentDelegateFor(object: AnyObject) -> AnyObject? {
         let searchBar: UISearchBar = castOrFatalError(object)
         return searchBar.delegate
     }
-    
+
+    /**
+     For more information take a look at `DelegateProxyType`.
+     */
     public class func setCurrentDelegate(delegate: AnyObject?, toObject object: AnyObject) {
         let searchBar: UISearchBar = castOrFatalError(object)
         searchBar.delegate = castOptionalOrFatalError(delegate)

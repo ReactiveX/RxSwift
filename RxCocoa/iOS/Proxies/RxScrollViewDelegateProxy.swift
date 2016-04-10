@@ -15,7 +15,7 @@ import RxSwift
 import UIKit
 
 /**
-     For more information take a look at `DelegateProxyType`.
+ For more information take a look at `DelegateProxyType`.
 */
 public class RxScrollViewDelegateProxy
     : DelegateProxy

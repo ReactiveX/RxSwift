@@ -14,6 +14,9 @@
 #endif
    import UIKit
 
+/**
+ For more information take a look at `DelegateProxyType`.
+ */
 public class RxSearchControllerDelegateProxy
     : DelegateProxy
     , DelegateProxyType
