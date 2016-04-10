@@ -15,6 +15,181 @@ class ObservableBindingTest : RxTest {
     
 }
 
+// multicast
+extension ObservableBindingTest {
+    func testMulticast_Cold_Completed() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let xs = scheduler.createHotObservable([
+            next(40, 0),
+            next(90, 1),
+            next(150, 2),
+            next(210, 3),
+            next(240, 4),
+            next(270, 5),
+            next(330, 6),
+            next(340, 7),
+            completed(390)
+            ])
+
+        let res = scheduler.start {
+            xs.multicast({ PublishSubject<Int>() }) { $0 }
+        }
+
+        XCTAssertEqual(res.events, [
+            next(210, 3),
+            next(240, 4),
+            next(270, 5),
+            next(330, 6),
+            next(340, 7),
+            completed(390)
+            ])
+
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 390)
+            ])
+    }
+
+    func testMulticast_Cold_Error() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let xs = scheduler.createHotObservable([
+            next(40, 0),
+            next(90, 1),
+            next(150, 2),
+            next(210, 3),
+            next(240, 4),
+            next(270, 5),
+            next(330, 6),
+            next(340, 7),
+            error(390, testError)
+            ])
+
+        let res = scheduler.start {
+            xs.multicast({ PublishSubject<Int>() }) { $0 }
+        }
+
+        XCTAssertEqual(res.events, [
+            next(210, 3),
+            next(240, 4),
+            next(270, 5),
+            next(330, 6),
+            next(340, 7),
+            error(390, testError)
+            ])
+
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 390)
+            ])
+    }
+
+    func testMulticast_Cold_Dispose() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let xs = scheduler.createHotObservable([
+            next(40, 0),
+            next(90, 1),
+            next(150, 2),
+            next(210, 3),
+            next(240, 4),
+            next(270, 5),
+            next(330, 6),
+            next(340, 7),
+            ])
+
+        let res = scheduler.start {
+            xs.multicast({ PublishSubject<Int>() }) { $0 }
+        }
+
+        XCTAssertEqual(res.events, [
+            next(210, 3),
+            next(240, 4),
+            next(270, 5),
+            next(330, 6),
+            next(340, 7),
+            ])
+
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 1000)
+            ])
+    }
+
+    func testMulticast_Cold_Zip() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let xs = scheduler.createHotObservable([
+            next(40, 0),
+            next(90, 1),
+            next(150, 2),
+            next(210, 3),
+            next(240, 4),
+            next(270, 5),
+            next(330, 6),
+            next(340, 7),
+            completed(390)
+            ])
+
+        let res = scheduler.start {
+            xs.multicast({ PublishSubject<Int>() }) { Observable.zip($0, $0) { a, b in a + b } }
+        }
+
+        XCTAssertEqual(res.events, [
+            next(210, 6),
+            next(240, 8),
+            next(270, 10),
+            next(330, 12),
+            next(340, 14),
+            completed(390)
+            ])
+
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 390)
+            ])
+    }
+
+    func testMulticast_SubjectSelectorThrows() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let xs = scheduler.createHotObservable([
+            next(210, 1),
+            next(240, 2),
+            completed(300)
+            ])
+
+        let res = scheduler.start {
+            xs.multicast({ () throws -> PublishSubject<Int> in throw testError }) { $0 }
+        }
+
+        XCTAssertEqual(res.events, [
+            error(200, testError)
+            ])
+
+        XCTAssertEqual(xs.subscriptions, [
+            ])
+    }
+
+    func testMulticast_SelectorThrows() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let xs = scheduler.createHotObservable([
+            next(210, 1),
+            next(240, 2),
+            completed(300)
+            ])
+
+        let res = scheduler.start {
+            xs.multicast({ PublishSubject<Int>() }) { _ -> Observable<Int> in throw testError }
+        }
+
+        XCTAssertEqual(res.events, [
+            error(200, testError)
+            ])
+
+        XCTAssertEqual(xs.subscriptions, [
+            ])
+    }
+}
+
 // refCount
 extension ObservableBindingTest {
     func testRefCount_DeadlockSimple() {

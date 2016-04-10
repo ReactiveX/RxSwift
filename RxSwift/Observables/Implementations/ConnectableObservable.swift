@@ -26,32 +26,36 @@ public class ConnectableObservable<Element>
 }
 
 class Connection<S: SubjectType> : Disposable {
-    
+
+    private var _lock: NSRecursiveLock
     // state
-    private weak var _parent: ConnectableObservableAdapter<S>?
+    private var _parent: ConnectableObservableAdapter<S>?
     private var _subscription : Disposable?
-    
-    init(parent: ConnectableObservableAdapter<S>, subscription: Disposable) {
+
+    init(parent: ConnectableObservableAdapter<S>, lock: NSRecursiveLock, subscription: Disposable) {
         _parent = parent
         _subscription = subscription
+        _lock = lock
     }
     
     func dispose() {
-        guard let parent = _parent else { return }
-        
-        parent._lock.performLocked {
+        _lock.lock(); defer { _lock.unlock() } // {
+            guard let parent = _parent else {
+                return
+            }
+
             guard let oldSubscription = _subscription else {
                 return
             }
             
             _subscription = nil
-            if _parent?._connection === self {
+            if parent._connection === self {
                 parent._connection = nil
             }
             _parent = nil
             
             oldSubscription.dispose()
-        }
+        // }
     }
 }
 
@@ -80,7 +84,7 @@ class ConnectableObservableAdapter<S: SubjectType>
             }
             
             let disposable = _source.subscribe(_subject.asObserver())
-            let connection = Connection(parent: self, subscription: disposable)
+            let connection = Connection(parent: self, lock: _lock, subscription: disposable)
             _connection = connection
             return connection
         }
