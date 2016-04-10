@@ -3,6 +3,28 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [2.4](https://github.com/ReactiveX/RxSwift/releases/tag/2.4)
+
+#### Features
+
+* adds `Driver.drive` with `Variable` parameter.
+* exposes `RxSearchBarDelegateProxy`
+* adds `rx_cancelButtonClicked` to `UISearchBar`.
+* adds `rx_searchButtonClicked` to `UISearchBar`.
+* adds `UISearchController` extensions:
+  * `rx_didDismiss`
+  * `rx_didPresent`
+  * `rx_present`
+  * `rx_willDismiss`
+  * `rx_willPresent`
+
+
+#### Anomalies
+
+* Fixes anomaly with `multicast` disposing subscription.
+* Small grammar fixes in code.
+* Fixes in documentation.
+
 ## [2.3.1](https://github.com/ReactiveX/RxSwift/releases/tag/2.3.1)
 
 #### Features
