@@ -9,6 +9,7 @@
 #if !RX_NO_MODULE
 import RxSwift
 #endif
+import Foundation
 
 public enum ReachabilityStatus {
     case Reachable(viaWiFi: Bool)
@@ -45,12 +46,19 @@ class DefaultReachabilityService
         let reachabilityRef = try Reachability.reachabilityForInternetConnection()
         let reachabilitySubject = BehaviorSubject<ReachabilityStatus>(value: .Unreachable)
 
+        // so main thread isn't blocked when reachability via WiFi is checked
+        let backgroundQueue = dispatch_queue_create("reachability.wificheck", DISPATCH_QUEUE_SERIAL)
+
         reachabilityRef.whenReachable = { reachability in
-            reachabilitySubject.on(.Next(.Reachable(viaWiFi: reachabilityRef.isReachableViaWiFi())))
+            dispatch_async(backgroundQueue) {
+                reachabilitySubject.on(.Next(.Reachable(viaWiFi: reachabilityRef.isReachableViaWiFi())))
+            }
         }
 
         reachabilityRef.whenUnreachable = { reachability in
-            reachabilitySubject.on(.Next(.Unreachable))
+            dispatch_async(backgroundQueue) {
+                reachabilitySubject.on(.Next(.Unreachable))
+            }
         }
 
         try reachabilityRef.startNotifier()
