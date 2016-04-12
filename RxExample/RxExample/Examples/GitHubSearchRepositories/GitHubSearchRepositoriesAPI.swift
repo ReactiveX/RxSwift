@@ -90,7 +90,11 @@ struct RepositoriesState {
 
 class GitHubSearchRepositoriesAPI {
 
-    static let sharedAPI = GitHubSearchRepositoriesAPI(wireframe: DefaultWireframe())
+    // *****************************************************************************************
+    // !!! This is defined for simplicity sake, using singletons isn't advised               !!!
+    // !!! This is just a simple way to move services to one location so you can see Rx code !!!
+    // *****************************************************************************************
+    static let sharedAPI = GitHubSearchRepositoriesAPI(wireframe: DefaultWireframe(), reachabilityService: try! DefaultReachabilityService())
 
     let activityIndicator = ActivityIndicator()
 
@@ -98,8 +102,11 @@ class GitHubSearchRepositoriesAPI {
     // Do we really want to make this example project factory/fascade/service competition? :)
     private let _wireframe: Wireframe
 
-    private init(wireframe: Wireframe) {
+    private let _reachabilityService: ReachabilityService
+
+    private init(wireframe: Wireframe, reachabilityService: ReachabilityService) {
         _wireframe = wireframe
+        _reachabilityService = reachabilityService
     }
 
 }
@@ -179,7 +186,7 @@ extension GitHubSearchRepositoriesAPI {
 
                 return .Repositories(repositories: repositories, nextURL: nextURL)
             }
-            .retryOnBecomesReachable(.ServiceOffline, reachabilityService: ReachabilityService.sharedReachabilityService)
+            .retryOnBecomesReachable(.ServiceOffline, reachabilityService: _reachabilityService)
     }
 }
 

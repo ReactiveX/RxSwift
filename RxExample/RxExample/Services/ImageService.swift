@@ -19,7 +19,7 @@ import RxCocoa
 #endif 
 
 protocol ImageService {
-    func imageFromURL(URL: NSURL) -> Observable<DownloadableImage>
+    func imageFromURL(URL: NSURL, reachabilityService: ReachabilityService) -> Observable<DownloadableImage>
 }
 
 class DefaultImageService: ImageService {
@@ -97,10 +97,10 @@ class DefaultImageService: ImageService {
      
     After image is sucessfully downloaded, sequence is completed.
     */
-    func imageFromURL(URL: NSURL) -> Observable<DownloadableImage> {
+    func imageFromURL(URL: NSURL, reachabilityService: ReachabilityService) -> Observable<DownloadableImage> {
         return _imageFromURL(URL)
                 .map { DownloadableImage.Content(image: $0) }
-                .retryOnBecomesReachable(DownloadableImage.OfflinePlaceholder, reachabilityService: ReachabilityService.sharedReachabilityService)
+                .retryOnBecomesReachable(DownloadableImage.OfflinePlaceholder, reachabilityService: reachabilityService)
                 .startWith(.Content(image: Image()))
     }
 }
