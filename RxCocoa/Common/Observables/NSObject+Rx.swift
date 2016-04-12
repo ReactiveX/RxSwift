@@ -14,9 +14,13 @@ import RxSwift
 #if !DISABLE_SWIZZLING
 var deallocatingSubjectTriggerContext: UInt8 = 0
 var deallocatingSubjectContext: UInt8 = 0
+var disposableBagContext: UInt8 = 0
+
 #endif
 var deallocatedSubjectTriggerContext: UInt8 = 0
 var deallocatedSubjectContext: UInt8 = 0
+var disposableBagContext: UInt8 = 0
+
 
 /**
 KVO is a tricky mechanism.
@@ -111,6 +115,23 @@ extension NSObject {
 
             objc_setAssociatedObject(self, &deallocatedSubjectContext, deallocObservable, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
             return deallocObservable._subject
+        }
+    }
+    /**
+     DisposeBag of object deallocated events.
+     
+     After object is deallocated one `()` element will be produced and sequence will immediately complete.
+     
+     - returns: DisposeBag of object deallocated events.
+     */
+    public var rx_disposableBag : DisposeBag {
+        return rx_synchronized {
+            if let disposableBag = objc_getAssociatedObject(self, &disposableBagContext) as? DisposeBag {
+                return disposableBag
+            }
+            let disposableBag = DisposeBag()
+            objc_setAssociatedObject(self, &disposableBagContext, disposableBag, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            return disposableBag
         }
     }
 
