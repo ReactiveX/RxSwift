@@ -14,8 +14,6 @@ import RxSwift
 #if !DISABLE_SWIZZLING
 var deallocatingSubjectTriggerContext: UInt8 = 0
 var deallocatingSubjectContext: UInt8 = 0
-var disposableBagContext: UInt8 = 0
-
 #endif
 var deallocatedSubjectTriggerContext: UInt8 = 0
 var deallocatedSubjectContext: UInt8 = 0
