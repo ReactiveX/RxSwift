@@ -73,15 +73,16 @@ class TailRecursiveSink<S: SequenceType, O: ObserverType where S.Generator.Eleme
         var next: Observable<E>? = nil
 
         repeat {
+            guard let (g, left) = _generators.last else {
+                break
+            }
+            
             if _disposed {
                 return
             }
 
-            guard let (g, left) = _generators.last else {
-                break
-            }
-
             _generators.removeLast()
+            
             var e = g
 
             guard let nextCandidate = e.next()?.asObservable() else {
