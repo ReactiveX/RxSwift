@@ -50,7 +50,6 @@ extension UITextView {
             
             return textChanged
                 .startWith(text)
-                .distinctUntilChanged()
         }
 
         let bindingObserver = UIBindingObserver(UIElement: self) { (textView, text: String) in

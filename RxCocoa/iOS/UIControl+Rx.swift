@@ -84,7 +84,6 @@ extension UIControl {
                     controlTarget.dispose()
                 }
             }
-            .distinctUntilChanged()
             .takeUntil((control as! NSObject).rx_deallocated)
 
         let bindingObserver = UIBindingObserver(UIElement: control, binding: setter)
