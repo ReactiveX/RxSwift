@@ -24,6 +24,8 @@ class UITableViewTests : RxTest {
         ensureEventDeallocated(createView) { (view: UITableView) in view.rx_itemInserted }
         ensureEventDeallocated(createView) { (view: UITableView) in view.rx_modelSelected(Int.self) }
         ensureEventDeallocated(createView) { (view: UITableView) in view.rx_modelDeselected(Int.self) }
+        ensureEventDeallocated(createView) { (view: UITableView) in view.rx_willDisplayCell }
+        ensureEventDeallocated(createView) { (view: UITableView) in view.rx_didEndDisplayingCell }
     }
 
     func testTableView_itemSelected() {
@@ -108,6 +110,48 @@ class UITableViewTests : RxTest {
         tableView.dataSource!.tableView!(tableView, commitEditingStyle: .Insert, forRowAtIndexPath:  testRow)
 
         XCTAssertEqual(resultIndexPath, testRow)
+        subscription.dispose()
+    }
+
+    func testTableView_willDisplayCell() {
+        let tableView = UITableView(frame: CGRectMake(0, 0, 1, 1))
+
+        var resultIndexPath: NSIndexPath? = nil
+        var resultCell: UITableViewCell? = nil
+
+        let subscription = tableView.rx_willDisplayCell
+            .subscribeNext { (cell, indexPath) in
+                resultIndexPath = indexPath
+                resultCell = cell
+            }
+
+        let testRow = NSIndexPath(forRow: 1, inSection: 0)
+        let testCell = UITableViewCell()
+        tableView.delegate!.tableView!(tableView, willDisplayCell: testCell, forRowAtIndexPath: testRow)
+
+        XCTAssertEqual(resultIndexPath, testRow)
+        XCTAssertEqual(resultCell, testCell)
+        subscription.dispose()
+    }
+
+    func testTableView_didEndDisplayingCell() {
+        let tableView = UITableView(frame: CGRectMake(0, 0, 1, 1))
+
+        var resultIndexPath: NSIndexPath? = nil
+        var resultCell: UITableViewCell? = nil
+
+        let subscription = tableView.rx_didEndDisplayingCell
+            .subscribeNext { (cell, indexPath) in
+                resultIndexPath = indexPath
+                resultCell = cell
+            }
+
+        let testRow = NSIndexPath(forRow: 1, inSection: 0)
+        let testCell = UITableViewCell()
+        tableView.delegate!.tableView!(tableView, didEndDisplayingCell: testCell, forRowAtIndexPath: testRow)
+
+        XCTAssertEqual(resultIndexPath, testRow)
+        XCTAssertEqual(resultCell, testCell)
         subscription.dispose()
     }
 
