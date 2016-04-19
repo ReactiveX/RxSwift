@@ -16,7 +16,7 @@ Observer that enforces interface binding rules:
  * can't bind errors (in debug builds binding of errors causes `fatalError` in release builds errors are being logged)
  * ensures binding is performed on main thread
  
-`InterfaceBindingObserver` doesn't retain target interface and in case owned interface element is released, element isn't bound.
+`UIBindingObserver` doesn't retain target interface and in case owned interface element is released, element isn't bound.
 */
 public class UIBindingObserver<UIElementType, Value where UIElementType: AnyObject> : ObserverType {
     public typealias E = Value
