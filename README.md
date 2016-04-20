@@ -65,6 +65,7 @@ KVO observing, async operations and streams are all unified under [abstraction o
 * Where is all of this going, what is the future, what about reactive architectures, how do you design entire apps this way? [Cycle.js](https://github.com/cyclejs/cycle-core) - this is javascript, but [RxJS](https://github.com/Reactive-Extensions/RxJS) is javascript version of Rx.
 
 ## Usage
+
 <table>
   <tr>
     <th width="20"></th>
@@ -73,7 +74,7 @@ KVO observing, async operations and streams are all unified under [abstraction o
   </tr>
   <tr>
     <td></td>
-    <td>Define search for GitHub repositories</td>
+    <td>Define search for GitHub repositories ...</td>
     <th rowspan="9"><img src="https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/GithubSearch.gif"></th>
   </tr>
   <tr>
@@ -94,7 +95,7 @@ let searchResults = searchBar.rx_text
   </tr>
   <tr>
     <td></td>
-    <td>Builds Xcode projects and workspaces</td>
+    <td>... then bind the results to your tableview</td>
   </tr>
   <tr>
     <td>:book:</td>
