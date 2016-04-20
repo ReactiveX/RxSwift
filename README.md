@@ -68,17 +68,14 @@ KVO observing, async operations and streams are all unified under [abstraction o
 
 <table>
   <tr>
-    <th width="20"></th>
     <th width="30%">Here's an example</th>
     <th width="30%">In Action</th>
   </tr>
   <tr>
-    <td></td>
     <td>Define search for GitHub repositories ...</td>
     <th rowspan="9"><img src="https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/GithubSearch.gif"></th>
   </tr>
   <tr>
-    <td>:book:</td>
     <td><div class="highlight highlight-source-swift"><pre>
 let searchResults = searchBar.rx_text
     .throttle(0.3, scheduler: MainScheduler.instance)
@@ -94,14 +91,12 @@ let searchResults = searchBar.rx_text
     .observeOn(MainScheduler.instance)</pre></div></td>
   </tr>
   <tr>
-    <td></td>
     <td>... then bind the results to your tableview</td>
   </tr>
   <tr>
-    <td>:book:</td>
     <td width="30%"><div class="highlight highlight-source-swift"><pre>
 searchResults
-    .bindTo(tableView.rx_itemsWithCellIdentifier("Cell")) { 
+    .bindTo(tableView.rx_itemsWithCellIdentifier("Cell")) {
         (index, repository: Repository, cell) in
         cell.textLabel?.text = repository.name
         cell.detailTextLabel?.text = repository.url
