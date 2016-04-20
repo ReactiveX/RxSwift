@@ -3,7 +3,6 @@
 
 [![Travis CI](https://travis-ci.org/ReactiveX/RxSwift.svg?branch=master)](https://travis-ci.org/ReactiveX/RxSwift) ![platforms](https://img.shields.io/badge/platforms-iOS%20%7C%20OSX%20%7C%20tvOS%20%7C%20watchOS%20%7C%20Linux%28experimental%29-333333.svg) ![pod](https://img.shields.io/cocoapods/v/RxSwift.svg) [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 
-
 Xcode 7.3 Swift 2.2 required
 
 ## About Rx
@@ -66,10 +65,20 @@ KVO observing, async operations and streams are all unified under [abstraction o
 * Where is all of this going, what is the future, what about reactive architectures, how do you design entire apps this way? [Cycle.js](https://github.com/cyclejs/cycle-core) - this is javascript, but [RxJS](https://github.com/Reactive-Extensions/RxJS) is javascript version of Rx.
 
 ## Usage
-
-Define search for GitHub repositories ...
-
-```swift
+<table>
+  <tr>
+    <th width="20"></th>
+    <th width="30%">Here's an example</th>
+    <th width="30%">In Action</th>
+  </tr>
+  <tr>
+    <td></td>
+    <td>Define search for GitHub repositories</td>
+    <th rowspan="9"><img src="https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/GithubSearch.gif"></th>
+  </tr>
+  <tr>
+    <td>:book:</td>
+    <td><div class="highlight highlight-source-swift"><pre>
 let searchResults = searchBar.rx_text
     .throttle(0.3, scheduler: MainScheduler.instance)
     .distinctUntilChanged()
@@ -81,19 +90,25 @@ let searchResults = searchBar.rx_text
         return searchGitHub(query)
             .catchErrorJustReturn([])
     }
-    .observeOn(MainScheduler.instance)
-```
-... bind results to table view
-```swift
+    .observeOn(MainScheduler.instance)</pre></div></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>Builds Xcode projects and workspaces</td>
+  </tr>
+  <tr>
+    <td>:book:</td>
+    <td width="30%"><div class="highlight highlight-source-swift"><pre>
 searchResults
-    .bindTo(tableView.rx_itemsWithCellIdentifier("Cell")) { (index, repository: Repository, cell) in
+    .bindTo(tableView.rx_itemsWithCellIdentifier("Cell")) { 
+        (index, repository: Repository, cell) in
         cell.textLabel?.text = repository.name
         cell.detailTextLabel?.text = repository.url
     }
-    .addDisposableTo(disposeBag)
-```
+    .addDisposableTo(disposeBag)</pre></div></td>
+  </tr>
+</table>
 
-![Example table view](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/GithubSearch.gif)
 
 ## Installation
 
