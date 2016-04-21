@@ -109,7 +109,7 @@ public struct Queue<T>: SequenceType {
         
         _storage[_pushNextIndex] = element
         _pushNextIndex += 1
-        _count = _count + 1
+        _count += 1
         
         if _pushNextIndex >= _storage.count {
             _pushNextIndex -= _storage.count
@@ -120,13 +120,13 @@ public struct Queue<T>: SequenceType {
         precondition(count > 0)
         
         let index = dequeueIndex
-        let value = _storage[index]!
-        
-        _storage[index] = nil
-        
-        _count = _count - 1
-        
-        return value
+
+        defer {
+            _storage[index] = nil
+            _count -= 1
+        }
+
+        return _storage[index]!
     }
 
     /**
@@ -139,14 +139,14 @@ public struct Queue<T>: SequenceType {
             return nil
         }
 
-        let value = dequeueElementOnly()
-        
-        let downsizeLimit = _storage.count / (_resizeFactor * _resizeFactor)
-        if _count < downsizeLimit && downsizeLimit >= _initialCapacity {
-            resizeTo(_storage.count / _resizeFactor)
+        defer {
+            let downsizeLimit = _storage.count / (_resizeFactor * _resizeFactor)
+            if _count < downsizeLimit && downsizeLimit >= _initialCapacity {
+                resizeTo(_storage.count / _resizeFactor)
+            }
         }
-        
-        return value
+
+        return dequeueElementOnly()
     }
     
     /**
@@ -161,14 +161,16 @@ public struct Queue<T>: SequenceType {
                 return nil
             }
 
-            count -= 1
+            defer {
+                count -= 1
+                i += 1
+            }
+
             if i >= self._storage.count {
                 i -= self._storage.count
             }
 
-            let element = self._storage[i]
-            i += 1
-            return element
+            return self._storage[i]
         }
     }
 }
