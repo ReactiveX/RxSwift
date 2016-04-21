@@ -25,9 +25,9 @@ public struct Queue<T>: SequenceType {
     private let _resizeFactor = 2
     
     private var _storage: ContiguousArray<T?>
-    private var _count: Int
-    private var _pushNextIndex: Int
-    private let _initialCapacity: Int
+    private var _count = 0
+    private var _pushNextIndex = 0
+    private var _initialCapacity: Int
     
     /**
     Creates new queue.
@@ -36,16 +36,8 @@ public struct Queue<T>: SequenceType {
     */
     public init(capacity: Int) {
         _initialCapacity = capacity
-        
-        _count = 0
-        _pushNextIndex = 0
-     
-        if capacity > 0 {
-            _storage = ContiguousArray<T?>(count: capacity, repeatedValue: nil)
-        }
-        else {
-            _storage = ContiguousArray<T?>()
-        }
+
+        _storage = ContiguousArray<T?>(count: capacity, repeatedValue: nil)
     }
     
     private var dequeueIndex: Int {
