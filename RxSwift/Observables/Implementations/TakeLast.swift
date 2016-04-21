@@ -26,18 +26,18 @@ class TakeLastSink<ElementType, O: ObserverType where O.E == ElementType> : Sink
     func on(event: Event<E>) {
         switch event {
         case .Next(let value):
-            _elements.enqueue(value)
+            _elements.enqueue(element: value)
             if _elements.count > self._parent._count {
                 _elements.dequeue()
             }
         case .Error:
-            forwardOn(event)
+            forwardOn(event: event)
             dispose()
         case .Completed:
             for e in _elements {
-                forwardOn(.Next(e))
+                forwardOn(event: .Next(e))
             }
-            forwardOn(.Completed)
+            forwardOn(event: .Completed)
             dispose()
         }
     }
@@ -57,7 +57,7 @@ class TakeLast<Element>: Producer<Element> {
     
     override func run<O : ObserverType where O.E == Element>(observer: O) -> Disposable {
         let sink = TakeLastSink(parent: self, observer: observer)
-        sink.disposable = _source.subscribe(sink)
+        sink.disposable = _source.subscribe(observer: sink)
         return sink
     }
 }

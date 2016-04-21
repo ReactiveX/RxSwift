@@ -34,7 +34,7 @@ class SchedulePeriodicRecursive<State> {
     }
 
     func start() -> Disposable {
-        return _scheduler.scheduleRecursive(SchedulePeriodicRecursiveCommand.Tick, dueTime: _startAfter, action: self.tick)
+        return _scheduler.scheduleRecursive(state: SchedulePeriodicRecursiveCommand.Tick, dueTime: _startAfter, action: self.tick)
     }
 
     func tick(command: SchedulePeriodicRecursiveCommand, scheduler: RecursiveScheduler) -> Void {
@@ -43,12 +43,12 @@ class SchedulePeriodicRecursive<State> {
         // tick interval is short.
         switch command {
         case .Tick:
-            scheduler.schedule(.Tick, dueTime: _period)
+            scheduler.schedule(state: .Tick, dueTime: _period)
 
             // The idea is that if on tick there wasn't any item enqueued, schedule to perform work immediatelly.
             // Else work will be scheduled after previous enqueued work completes.
             if AtomicIncrement(&_pendingTickCount) == 1 {
-                self.tick(.DispatchStart, scheduler: scheduler)
+                self.tick(command: .DispatchStart, scheduler: scheduler)
             }
 
         case .DispatchStart:
@@ -56,7 +56,7 @@ class SchedulePeriodicRecursive<State> {
             // Start work and schedule check is this last batch of work
             if AtomicDecrement(&_pendingTickCount) > 0 {
                 // This gives priority to scheduler emulation, it's not perfect, but helps
-                scheduler.schedule(SchedulePeriodicRecursiveCommand.DispatchStart)
+                scheduler.schedule(state: SchedulePeriodicRecursiveCommand.DispatchStart)
             }
         }
     }

@@ -46,7 +46,7 @@ public class SingleAssignmentDisposable : DisposeBase, Disposable, Cancelable {
             return _disposable ?? NopDisposable.instance
         }
         set {
-            _setDisposable(newValue)?.dispose()
+            _setDisposable(newValue: newValue)?.dispose()
         }
     }
 

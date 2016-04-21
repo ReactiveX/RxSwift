@@ -69,7 +69,7 @@ extension ObservableType {
     */
     @warn_unused_result(message: "http://git.io/rxs.uo")
     public func publish() -> ConnectableObservable<E> {
-        return self.multicast(PublishSubject())
+        return self.multicast(subject: PublishSubject())
     }
 }
 
@@ -90,7 +90,7 @@ extension ObservableType {
     @warn_unused_result(message: "http://git.io/rxs.uo")
     public func replay(bufferSize: Int)
         -> ConnectableObservable<E> {
-        return self.multicast(ReplaySubject.create(bufferSize: bufferSize))
+        return self.multicast(subject: ReplaySubject.create(bufferSize: bufferSize))
     }
 
     /**
@@ -105,7 +105,7 @@ extension ObservableType {
     @warn_unused_result(message: "http://git.io/rxs.uo")
     public func replayAll()
         -> ConnectableObservable<E> {
-        return self.multicast(ReplaySubject.createUnbounded())
+        return self.multicast(subject: ReplaySubject.createUnbounded())
     }
 }
 
@@ -166,7 +166,7 @@ extension ObservableType {
             return ShareReplay1(source: self.asObservable())
         }
         else {
-            return self.replay(bufferSize).refCount()
+            return self.replay(bufferSize: bufferSize).refCount()
         }
     }
 

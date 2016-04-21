@@ -23,7 +23,7 @@ class ObserveOn<E> : Producer<E> {
     
     override func run<O : ObserverType where O.E == E>(observer: O) -> Disposable {
         let sink = ObserveOnSink(scheduler: scheduler, observer: observer)
-        sink._subscription.disposable = source.subscribe(sink)
+        sink._subscription.disposable = source.subscribe(observer: sink)
         return sink
     }
     
@@ -63,7 +63,7 @@ class ObserveOnSink<O: ObserverType> : ObserverBase<O.E> {
 
     override func onCore(event: Event<E>) {
         let shouldStart = _lock.calculateLocked { () -> Bool in
-            self._queue.enqueue(event)
+            self._queue.enqueue(element: event)
             
             switch self._state {
             case .Stopped:
@@ -75,7 +75,7 @@ class ObserveOnSink<O: ObserverType> : ObserverBase<O.E> {
         }
         
         if shouldStart {
-            _scheduleDisposable.disposable = self._scheduler.scheduleRecursive((), action: self.run)
+            _scheduleDisposable.disposable = self._scheduler.scheduleRecursive(state: (), action: self.run)
         }
     }
     
@@ -91,7 +91,7 @@ class ObserveOnSink<O: ObserverType> : ObserverBase<O.E> {
         }
         
         if let nextEvent = nextEvent {
-            observer?.on(nextEvent)
+            observer?.on(event: nextEvent)
             if nextEvent.isStopEvent {
                 dispose()
             }

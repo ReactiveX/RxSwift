@@ -31,7 +31,7 @@ class SkipUntilSinkOther<ElementType, Other, O: ObserverType where O.E == Elemen
     }
 
     func on(event: Event<E>) {
-        synchronizedOn(event)
+        synchronizedOn(event: event)
     }
 
     func _synchronized_on(event: Event<E>) {
@@ -40,7 +40,7 @@ class SkipUntilSinkOther<ElementType, Other, O: ObserverType where O.E == Elemen
             _parent._forwardElements = true
             _subscription.dispose()
         case .Error(let e):
-            _parent.forwardOn(.Error(e))
+            _parent.forwardOn(event: .Error(e))
             _parent.dispose()
         case .Completed:
             _subscription.dispose()
@@ -76,30 +76,30 @@ class SkipUntilSink<ElementType, Other, O: ObserverType where O.E == ElementType
     }
     
     func on(event: Event<E>) {
-        synchronizedOn(event)
+        synchronizedOn(event: event)
     }
 
     func _synchronized_on(event: Event<E>) {
         switch event {
         case .Next:
             if _forwardElements {
-                forwardOn(event)
+                forwardOn(event: event)
             }
         case .Error:
-            forwardOn(event)
+            forwardOn(event: event)
             dispose()
         case .Completed:
             if _forwardElements {
-                forwardOn(event)
+                forwardOn(event: event)
             }
             _sourceSubscription.dispose()
         }
     }
     
     func run() -> Disposable {
-        let sourceSubscription = _parent._source.subscribe(self)
+        let sourceSubscription = _parent._source.subscribe(observer: self)
         let otherObserver = SkipUntilSinkOther(parent: self)
-        let otherSubscription = _parent._other.subscribe(otherObserver)
+        let otherSubscription = _parent._other.subscribe(observer: otherObserver)
         _sourceSubscription.disposable = sourceSubscription
         otherObserver._subscription.disposable = otherSubscription
         

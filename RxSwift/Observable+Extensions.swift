@@ -21,7 +21,7 @@ extension ObservableType {
         let observer = AnonymousObserver { e in
             on(event: e)
         }
-        return self.subscribeSafe(observer)
+        return self.subscribeSafe(observer: observer)
     }
 
     /**
@@ -60,7 +60,7 @@ extension ObservableType {
             }
         }
         return BinaryDisposable(
-            self.subscribeSafe(observer),
+            self.subscribeSafe(observer: observer),
             disposable
         )
     }
@@ -79,7 +79,7 @@ extension ObservableType {
                 onNext(value)
             }
         }
-        return self.subscribeSafe(observer)
+        return self.subscribeSafe(observer: observer)
     }
 
     /**
@@ -96,7 +96,7 @@ extension ObservableType {
                 onError(error)
             }
         }
-        return self.subscribeSafe(observer)
+        return self.subscribeSafe(observer: observer)
     }
 
     /**
@@ -113,7 +113,7 @@ extension ObservableType {
                 onCompleted()
             }
         }
-        return self.subscribeSafe(observer)
+        return self.subscribeSafe(observer: observer)
     }
 }
 
@@ -123,6 +123,6 @@ public extension ObservableType {
     */
     @warn_unused_result(message: "http://git.io/rxs.ud")
     func subscribeSafe<O: ObserverType where O.E == E>(observer: O) -> Disposable {
-        return self.asObservable().subscribe(observer)
+        return self.asObservable().subscribe(observer: observer)
     }
 }

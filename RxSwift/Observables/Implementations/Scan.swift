@@ -58,7 +58,7 @@ class Scan<Element, Accumulate>: Producer<Accumulate> {
     
     override func run<O : ObserverType where O.E == Accumulate>(observer: O) -> Disposable {
         let sink = ScanSink(parent: self, observer: observer)
-        sink.disposable = _source.subscribe(sink)
+        sink.disposable = _source.subscribe(observer: sink)
         return sink
     }
 }

@@ -17,7 +17,7 @@ class ObserverBase<ElementType> : Disposable, ObserverType {
         switch event {
         case .Next:
             if _isStopped == 0 {
-                onCore(event)
+                onCore(event: event)
             }
         case .Error, .Completed:
 
@@ -25,7 +25,7 @@ class ObserverBase<ElementType> : Disposable, ObserverType {
                 return
             }
 
-            onCore(event)
+            onCore(event: event)
         }
     }
 

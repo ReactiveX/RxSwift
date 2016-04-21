@@ -68,7 +68,7 @@ class ObserveOnSerialDispatchQueue<E> : Producer<E> {
     
     override func run<O : ObserverType where O.E == E>(observer: O) -> Disposable {
         let sink = ObserveOnSerialDispatchQueueSink(scheduler: scheduler, observer: observer)
-        sink.subscription.disposable = source.subscribe(sink)
+        sink.subscription.disposable = source.subscribe(observer: sink)
         return sink
     }
     

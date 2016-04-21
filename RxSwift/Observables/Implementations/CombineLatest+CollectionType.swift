@@ -51,7 +51,7 @@ class CombineLatestCollectionTypeSink<C: Collection, R, O: ObserverType where C.
                 if _numberOfValues < _parent._count {
                     let numberOfOthersThatAreDone = self._numberOfDone - (_isDone[atIndex] ? 1 : 0)
                     if numberOfOthersThatAreDone == self._parent._count - 1 {
-                        forwardOn(.Completed)
+                        forwardOn(event: .Completed)
                         dispose()
                     }
                     return
@@ -59,15 +59,15 @@ class CombineLatestCollectionTypeSink<C: Collection, R, O: ObserverType where C.
                 
                 do {
                     let result = try _parent._resultSelector(_values.map { $0! })
-                    forwardOn(.Next(result))
+                    forwardOn(event: .Next(result))
                 }
                 catch let error {
-                    forwardOn(.Error(error))
+                    forwardOn(event: .Error(error))
                     dispose()
                 }
                 
             case .Error(let error):
-                forwardOn(.Error(error))
+                forwardOn(event: .Error(error))
                 dispose()
             case .Completed:
                 if _isDone[atIndex] {
@@ -78,7 +78,7 @@ class CombineLatestCollectionTypeSink<C: Collection, R, O: ObserverType where C.
                 _numberOfDone += 1
                 
                 if _numberOfDone == self._parent._count {
-                    forwardOn(.Completed)
+                    forwardOn(event: .Completed)
                     dispose()
                 }
                 else {
@@ -93,8 +93,8 @@ class CombineLatestCollectionTypeSink<C: Collection, R, O: ObserverType where C.
         for i in _parent._sources.startIndex ..< _parent._sources.endIndex {
             let index = j
             let source = _parent._sources[i].asObservable()
-            _subscriptions[j].disposable = source.subscribe(AnyObserver { event in
-                self.on(event, atIndex: index)
+            _subscriptions[j].disposable = source.subscribe(observer: AnyObserver { event in
+                self.on(event: event, atIndex: index)
             })
             
             j += 1

@@ -32,14 +32,14 @@ class WithLatestFromSink<FirstType, SecondType, ResultType, O: ObserverType wher
         let sndSubscription = SingleAssignmentDisposable()
         let sndO = WithLatestFromSecond(parent: self, disposable: sndSubscription)
         
-        sndSubscription.disposable = _parent._second.subscribe(sndO)
-        let fstSubscription = _parent._first.subscribe(self)
+        sndSubscription.disposable = _parent._second.subscribe(observer: sndO)
+        let fstSubscription = _parent._first.subscribe(observer: self)
         
         return StableCompositeDisposable.create(fstSubscription, sndSubscription)
     }
 
     func on(event: Event<E>) {
-        synchronizedOn(event)
+        synchronizedOn(event: event)
     }
 
     func _synchronized_on(event: Event<E>) {
@@ -49,16 +49,16 @@ class WithLatestFromSink<FirstType, SecondType, ResultType, O: ObserverType wher
             do {
                 let res = try _parent._resultSelector(value, latest)
                 
-                forwardOn(.Next(res))
+                forwardOn(event: .Next(res))
             } catch let e {
-                forwardOn(.Error(e))
+                forwardOn(event: .Error(e))
                 dispose()
             }
         case .Completed:
-            forwardOn(.Completed)
+            forwardOn(event: .Completed)
             dispose()
         case let .Error(error):
-            forwardOn(.Error(error))
+            forwardOn(event: .Error(error))
             dispose()
         }
     }
@@ -85,7 +85,7 @@ class WithLatestFromSecond<FirstType, SecondType, ResultType, O: ObserverType wh
     }
     
     func on(event: Event<E>) {
-        synchronizedOn(event)
+        synchronizedOn(event: event)
     }
 
     func _synchronized_on(event: Event<E>) {
@@ -95,7 +95,7 @@ class WithLatestFromSecond<FirstType, SecondType, ResultType, O: ObserverType wh
         case .Completed:
             _disposable.dispose()
         case let .Error(error):
-            _parent.forwardOn(.Error(error))
+            _parent.forwardOn(event: .Error(error))
             _parent.dispose()
         }
     }

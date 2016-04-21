@@ -35,14 +35,14 @@ class DistinctUntilChangedSink<O: ObserverType, Key>: Sink<O>, ObserverType {
                 
                 _currentKey = key
                 
-                forwardOn(event)
+                forwardOn(event: event)
             }
             catch let error {
-                forwardOn(.Error(error))
+                forwardOn(event: .Error(error))
                 dispose()
             }
         case .Error, .Completed:
-            forwardOn(event)
+            forwardOn(event: event)
             dispose()
         }
     }
@@ -64,7 +64,7 @@ class DistinctUntilChanged<Element, Key>: Producer<Element> {
     
     override func run<O: ObserverType where O.E == Element>(observer: O) -> Disposable {
         let sink = DistinctUntilChangedSink(parent: self, observer: observer)
-        sink.disposable = _source.subscribe(sink)
+        sink.disposable = _source.subscribe(observer: sink)
         return sink
     }
 }

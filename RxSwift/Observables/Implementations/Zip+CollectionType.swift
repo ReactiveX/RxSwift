@@ -42,7 +42,7 @@ class ZipCollectionTypeSink<C: Collection, R, O: ObserverType where C.Iterator.E
         _lock.lock(); defer { _lock.unlock() } // {
             switch event {
             case .Next(let element):
-                _values[atIndex].enqueue(element)
+                _values[atIndex].enqueue(element: element)
                 
                 if _values[atIndex].count == 1 {
                     _numberOfValues += 1
@@ -51,7 +51,7 @@ class ZipCollectionTypeSink<C: Collection, R, O: ObserverType where C.Iterator.E
                 if _numberOfValues < _parent.count {
                     let numberOfOthersThatAreDone = _numberOfDone - (_isDone[atIndex] ? 1 : 0)
                     if numberOfOthersThatAreDone == _parent.count - 1 {
-                        self.forwardOn(.Completed)
+                        self.forwardOn(event: .Completed)
                         self.dispose()
                     }
                     return
@@ -72,15 +72,15 @@ class ZipCollectionTypeSink<C: Collection, R, O: ObserverType where C.Iterator.E
                     }
                     
                     let result = try _parent.resultSelector(arguments)
-                    self.forwardOn(.Next(result))
+                    self.forwardOn(event: .Next(result))
                 }
                 catch let error {
-                    self.forwardOn(.Error(error))
+                    self.forwardOn(event: .Error(error))
                     self.dispose()
                 }
                 
             case .Error(let error):
-                self.forwardOn(.Error(error))
+                self.forwardOn(event: .Error(error))
                 self.dispose()
             case .Completed:
                 if _isDone[atIndex] {
@@ -91,7 +91,7 @@ class ZipCollectionTypeSink<C: Collection, R, O: ObserverType where C.Iterator.E
                 _numberOfDone += 1
                 
                 if _numberOfDone == _parent.count {
-                    self.forwardOn(.Completed)
+                    self.forwardOn(event: .Completed)
                     self.dispose()
                 }
                 else {
@@ -106,8 +106,8 @@ class ZipCollectionTypeSink<C: Collection, R, O: ObserverType where C.Iterator.E
         for i in _parent.sources.startIndex ..< _parent.sources.endIndex {
             let index = j
             let source = _parent.sources[i].asObservable()
-            _subscriptions[j].disposable = source.subscribe(AnyObserver { event in
-                self.on(event, atIndex: index)
+            _subscriptions[j].disposable = source.subscribe(observer: AnyObserver { event in
+                self.on(event: event, atIndex: index)
                 })
             j += 1
         }

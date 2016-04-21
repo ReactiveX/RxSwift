@@ -22,7 +22,7 @@ import Foundation
   let CurrentThreadSchedulerValueInstance     = CurrentThreadSchedulerKeyInstance
 
   @objc class CurrentThreadSchedulerKey : NSObject, NSCopying {
-      override func isEqual(object: AnyObject?) -> Bool {
+      override func isEqual(_ object: AnyObject?) -> Bool {
           return object === CurrentThreadSchedulerKeyInstance
       }
 
@@ -38,7 +38,7 @@ import Foundation
   }
 
   @objc class CurrentThreadSchedulerQueueKey : NSObject, NSCopying {
-      override func isEqual(object: AnyObject?) -> Bool {
+      override func isEqual(_ object: AnyObject?) -> Bool {
           return object === CurrentThreadSchedulerQueueKeyInstance
       }
 
@@ -71,10 +71,10 @@ public class CurrentThreadScheduler : ImmediateSchedulerType {
 
     static var queue : ScheduleQueue? {
         get {
-            return NSThread.getThreadLocalStorageValueForKey(CurrentThreadSchedulerQueueKeyInstance)
+            return NSThread.getThreadLocalStorageValueForKey(key: CurrentThreadSchedulerQueueKeyInstance)
         }
         set {
-            NSThread.setThreadLocalStorageValue(newValue, forKey: CurrentThreadSchedulerQueueKeyInstance)
+            NSThread.setThreadLocalStorageValue(value: newValue, forKey: CurrentThreadSchedulerQueueKeyInstance)
         }
     }
 
@@ -83,11 +83,11 @@ public class CurrentThreadScheduler : ImmediateSchedulerType {
     */
     public static private(set) var isScheduleRequired: Bool {
         get {
-            let value: CurrentThreadSchedulerValue? = NSThread.getThreadLocalStorageValueForKey(CurrentThreadSchedulerKeyInstance)
+            let value: CurrentThreadSchedulerValue? = NSThread.getThreadLocalStorageValueForKey(key: CurrentThreadSchedulerKeyInstance)
             return value == nil
         }
         set(isScheduleRequired) {
-            NSThread.setThreadLocalStorageValue(isScheduleRequired ? nil : CurrentThreadSchedulerValueInstance, forKey: CurrentThreadSchedulerKeyInstance)
+            NSThread.setThreadLocalStorageValue(value: isScheduleRequired ? nil : CurrentThreadSchedulerValueInstance, forKey: CurrentThreadSchedulerKeyInstance)
         }
     }
 
@@ -138,7 +138,7 @@ public class CurrentThreadScheduler : ImmediateSchedulerType {
         }
 
         let scheduledItem = ScheduledItem(action: action, state: state)
-        queue.value.enqueue(scheduledItem)
+        queue.value.enqueue(element: scheduledItem)
         
         // In Xcode 7.3, `return scheduledItem` causes segmentation fault 11 on release build.
         // To workaround this compiler issue, returns AnonymousDisposable that disposes scheduledItem.

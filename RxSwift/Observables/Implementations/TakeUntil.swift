@@ -31,16 +31,16 @@ class TakeUntilSinkOther<ElementType, Other, O: ObserverType where O.E == Elemen
     }
     
     func on(event: Event<E>) {
-        synchronizedOn(event)
+        synchronizedOn(event: event)
     }
 
     func _synchronized_on(event: Event<E>) {
         switch event {
         case .Next:
-            _parent.forwardOn(.Completed)
+            _parent.forwardOn(event: .Completed)
             _parent.dispose()
         case .Error(let e):
-            _parent.forwardOn(.Error(e))
+            _parent.forwardOn(event: .Error(e))
             _parent.dispose()
         case .Completed:
             _parent._open = true
@@ -76,27 +76,27 @@ class TakeUntilSink<ElementType, Other, O: ObserverType where O.E == ElementType
     }
     
     func on(event: Event<E>) {
-        synchronizedOn(event)
+        synchronizedOn(event: event)
     }
 
     func _synchronized_on(event: Event<E>) {
         switch event {
         case .Next:
-            forwardOn(event)
+            forwardOn(event: event)
         case .Error:
-            forwardOn(event)
+            forwardOn(event: event)
             dispose()
         case .Completed:
-            forwardOn(event)
+            forwardOn(event: event)
             dispose()
         }
     }
     
     func run() -> Disposable {
         let otherObserver = TakeUntilSinkOther(parent: self)
-        let otherSubscription = _parent._other.subscribe(otherObserver)
+        let otherSubscription = _parent._other.subscribe(observer: otherObserver)
         otherObserver._subscription.disposable = otherSubscription
-        let sourceSubscription = _parent._source.subscribe(self)
+        let sourceSubscription = _parent._source.subscribe(observer: self)
         
         return StableCompositeDisposable.create(sourceSubscription, otherObserver._subscription)
     }

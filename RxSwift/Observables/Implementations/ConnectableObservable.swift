@@ -83,7 +83,7 @@ class ConnectableObservableAdapter<S: SubjectType>
                 return connection
             }
             
-            let disposable = _source.subscribe(_subject.asObserver())
+            let disposable = _source.subscribe(observer: _subject.asObserver())
             let connection = Connection(parent: self, lock: _lock, subscription: disposable)
             _connection = connection
             return connection
@@ -91,6 +91,6 @@ class ConnectableObservableAdapter<S: SubjectType>
     }
     
     override func subscribe<O : ObserverType where O.E == S.E>(observer: O) -> Disposable {
-        return _subject.subscribe(observer)
+        return _subject.subscribe(observer: observer)
     }
 }

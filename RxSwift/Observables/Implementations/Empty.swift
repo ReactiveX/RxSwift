@@ -10,7 +10,7 @@ import Foundation
 
 class Empty<Element> : Producer<Element> {
     override func subscribe<O : ObserverType where O.E == Element>(observer: O) -> Disposable {
-        observer.on(.Completed)
+        observer.on(event: .Completed)
         return NopDisposable.instance
     }
 }

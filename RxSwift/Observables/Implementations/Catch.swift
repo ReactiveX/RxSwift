@@ -21,7 +21,7 @@ class CatchSinkProxy<O: ObserverType> : ObserverType {
     }
     
     func on(event: Event<E>) {
-        _parent.forwardOn(event)
+        _parent.forwardOn(event: event)
         
         switch event {
         case .Next:
@@ -47,7 +47,7 @@ class CatchSink<O: ObserverType> : Sink<O>, ObserverType {
     func run() -> Disposable {
         let d1 = SingleAssignmentDisposable()
         _subscription.disposable = d1
-        d1.disposable = _parent._source.subscribe(self)
+        d1.disposable = _parent._source.subscribe(observer: self)
 
         return _subscription
     }
@@ -55,9 +55,9 @@ class CatchSink<O: ObserverType> : Sink<O>, ObserverType {
     func on(event: Event<E>) {
         switch event {
         case .Next:
-            forwardOn(event)
+            forwardOn(event: event)
         case .Completed:
-            forwardOn(event)
+            forwardOn(event: event)
             dispose()
         case .Error(let error):
             do {
@@ -68,7 +68,7 @@ class CatchSink<O: ObserverType> : Sink<O>, ObserverType {
                 _subscription.disposable = catchSequence.subscribe(observer)
             }
             catch let e {
-                forwardOn(.Error(e))
+                forwardOn(event: .Error(e))
                 dispose()
             }
         }
@@ -110,26 +110,26 @@ class CatchSequenceSink<S: Sequence, O: ObserverType where S.Iterator.Element : 
     func on(event: Event<Element>) {
         switch event {
         case .Next:
-            forwardOn(event)
+            forwardOn(event: event)
         case .Error(let error):
             _lastError = error
-            schedule(.MoveNext)
+            schedule(command: .MoveNext)
         case .Completed:
-            forwardOn(event)
+            forwardOn(event: event)
             dispose()
         }
     }
 
     override func subscribeToNext(source: Observable<E>) -> Disposable {
-        return source.subscribe(self)
+        return source.subscribe(observer: self)
     }
     
     override func done() {
         if let lastError = _lastError {
-            forwardOn(.Error(lastError))
+            forwardOn(event: .Error(lastError))
         }
         else {
-            forwardOn(.Completed)
+            forwardOn(event: .Completed)
         }
         
         self.dispose()
@@ -156,7 +156,7 @@ class CatchSequence<S: Sequence where S.Iterator.Element : ObservableConvertible
     
     override func run<O : ObserverType where O.E == Element>(observer: O) -> Disposable {
         let sink = CatchSequenceSink<S, O>(observer: observer)
-        sink.disposable = sink.run((self.sources.makeIterator(), nil))
+        sink.disposable = sink.run(sources: (self.sources.makeIterator(), nil))
         return sink
     }
 }

@@ -23,7 +23,7 @@ public var resourceCount: AtomicInt = 0
     rxFatalError("Abstract method")
 }
 
-@noreturn func rxFatalError(lastMessage: String) {
+@noreturn func rxFatalError(_ lastMessage: String) {
     // The temptation to comment this line is great, but please don't, it's for your own good. The choice is yours.
     fatalError(lastMessage)
 }

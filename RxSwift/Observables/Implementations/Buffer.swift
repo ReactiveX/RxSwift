@@ -53,7 +53,7 @@ class BufferTimeCountSink<Element, O: ObserverType where O.E == [Element]>
  
     func run() -> Disposable {
         createTimer(_windowID)
-        return StableCompositeDisposable.create(_timerD, _parent._source.subscribe(self))
+        return StableCompositeDisposable.create(_timerD, _parent._source.subscribe(observer: self))
     }
     
     func startNewWindowAndSendCurrentOne() {

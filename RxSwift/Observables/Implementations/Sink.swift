@@ -22,7 +22,7 @@ class Sink<O : ObserverType> : SingleAssignmentDisposable {
         if disposed {
             return
         }
-        _observer.on(event)
+        _observer.on(event: event)
     }
     
     final func forwarder() -> SinkForward<O> {
@@ -48,9 +48,9 @@ class SinkForward<O: ObserverType>: ObserverType {
     func on(event: Event<E>) {
         switch event {
         case .Next:
-            _forward._observer.on(event)
+            _forward._observer.on(event: event)
         case .Error, .Completed:
-            _forward._observer.on(event)
+            _forward._observer.on(event: event)
             _forward.dispose()
         }
     }

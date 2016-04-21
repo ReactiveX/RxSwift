@@ -27,7 +27,7 @@ class SamplerSink<O: ObserverType, ElementType, SampleType where O.E == ElementT
     }
     
     func on(event: Event<E>) {
-        synchronizedOn(event)
+        synchronizedOn(event: event)
     }
 
     func _synchronized_on(event: Event<E>) {
@@ -38,23 +38,23 @@ class SamplerSink<O: ObserverType, ElementType, SampleType where O.E == ElementT
                     _parent._element = nil
                 }
                 
-                _parent.forwardOn(.Next(element))
+                _parent.forwardOn(event: .Next(element))
             }
 
             if _parent._atEnd {
-                _parent.forwardOn(.Completed)
+                _parent.forwardOn(event: .Completed)
                 _parent.dispose()
             }
         case .Error(let e):
-            _parent.forwardOn(.Error(e))
+            _parent.forwardOn(event: .Error(e))
             _parent.dispose()
         case .Completed:
             if let element = _parent._element {
                 _parent._element = nil
-                _parent.forwardOn(.Next(element))
+                _parent.forwardOn(event: .Next(element))
             }
             if _parent._atEnd {
-                _parent.forwardOn(.Completed)
+                _parent.forwardOn(event: .Completed)
                 _parent.dispose()
             }
         }
@@ -85,14 +85,14 @@ class SampleSequenceSink<O: ObserverType, SampleType>
     }
     
     func run() -> Disposable {
-        _sourceSubscription.disposable = _parent._source.subscribe(self)
+        _sourceSubscription.disposable = _parent._source.subscribe(observer: self)
         let samplerSubscription = _parent._sampler.subscribe(SamplerSink(parent: self))
         
         return StableCompositeDisposable.create(_sourceSubscription, samplerSubscription)
     }
     
     func on(event: Event<Element>) {
-        synchronizedOn(event)
+        synchronizedOn(event: event)
     }
 
     func _synchronized_on(event: Event<Element>) {
@@ -100,7 +100,7 @@ class SampleSequenceSink<O: ObserverType, SampleType>
         case .Next(let element):
             _element = element
         case .Error:
-            forwardOn(event)
+            forwardOn(event: event)
             dispose()
         case .Completed:
             _atEnd = true

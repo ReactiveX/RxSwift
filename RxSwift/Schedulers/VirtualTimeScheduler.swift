@@ -31,7 +31,7 @@ public class VirtualTimeScheduler<Converter: VirtualTimeConverterType>
     - returns: Current time.
     */
     public var now: RxTime {
-        return _converter.convertFromVirtualTime(clock)
+        return _converter.convertFromVirtualTime(virtualTime: clock)
     }
 
     /**
@@ -51,7 +51,7 @@ public class VirtualTimeScheduler<Converter: VirtualTimeConverterType>
         _running = false
         _converter = converter
         _schedulerQueue = PriorityQueue(hasHigherPriority: {
-            switch converter.compareVirtualTime($0.time, $1.time) {
+            switch converter.compareVirtualTime(lhs: $0.time, $1.time) {
             case .LessThan:
                 return true
             case .Equal:
@@ -73,7 +73,7 @@ public class VirtualTimeScheduler<Converter: VirtualTimeConverterType>
     - returns: The disposable object used to cancel the scheduled action (best effort).
     */
     public func schedule<StateType>(state: StateType, action: StateType -> Disposable) -> Disposable {
-        return self.scheduleRelative(state, dueTime: 0.0) { a in
+        return self.scheduleRelative(state: state, dueTime: 0.0) { a in
             return action(a)
         }
     }
@@ -88,8 +88,8 @@ public class VirtualTimeScheduler<Converter: VirtualTimeConverterType>
      */
     public func scheduleRelative<StateType>(state: StateType, dueTime: RxTimeInterval, action: StateType -> Disposable) -> Disposable {
         let time = self.now.addingTimeInterval(dueTime)
-        let absoluteTime = _converter.convertToVirtualTime(time)
-        let adjustedTime = self.adjustScheduledTime(absoluteTime)
+        let absoluteTime = _converter.convertToVirtualTime(time: time)
+        let adjustedTime = self.adjustScheduledTime(time: absoluteTime)
         return scheduleAbsoluteVirtual(state, time: adjustedTime, action: action)
     }
 
@@ -103,7 +103,7 @@ public class VirtualTimeScheduler<Converter: VirtualTimeConverterType>
      */
     public func scheduleRelativeVirtual<StateType>(state: StateType, dueTime: VirtualTimeInterval, action: StateType -> Disposable) -> Disposable {
         let time = _converter.offsetVirtualTime(time: self.clock, offset: dueTime)
-        return scheduleAbsoluteVirtual(state, time: time, action: action)
+        return scheduleAbsoluteVirtual(state: state, time: time, action: action)
     }
 
     /**
@@ -126,9 +126,9 @@ public class VirtualTimeScheduler<Converter: VirtualTimeConverterType>
 
         _nextId += 1
 
-        _schedulerQueue.enqueue(item)
+        _schedulerQueue.enqueue(element: item)
         
-        compositeDisposable.addDisposable(item)
+        compositeDisposable.addDisposable(disposable: item)
         
         return compositeDisposable
     }
@@ -156,12 +156,12 @@ public class VirtualTimeScheduler<Converter: VirtualTimeConverterType>
                 break
             }
 
-            if _converter.compareVirtualTime(next.time, self.clock).greaterThan  {
+            if _converter.compareVirtualTime(lhs: next.time, self.clock).greaterThan  {
                 _clock = next.time
             }
 
             next.invoke()
-            _schedulerQueue.remove(next)
+            _schedulerQueue.remove(element: next)
         } while _running
 
         _running = false
@@ -170,7 +170,7 @@ public class VirtualTimeScheduler<Converter: VirtualTimeConverterType>
     func findNext() -> VirtualSchedulerItem<VirtualTime>? {
         while let front = _schedulerQueue.peek() {
             if front.disposed {
-                _schedulerQueue.remove(front)
+                _schedulerQueue.remove(element: front)
                 continue
             }
 
@@ -198,16 +198,16 @@ public class VirtualTimeScheduler<Converter: VirtualTimeConverterType>
                 break
             }
 
-            if _converter.compareVirtualTime(next.time, virtualTime).greaterThan {
+            if _converter.compareVirtualTime(lhs: next.time, virtualTime).greaterThan {
                 break
             }
 
-            if _converter.compareVirtualTime(next.time, self.clock).greaterThan  {
+            if _converter.compareVirtualTime(lhs: next.time, self.clock).greaterThan  {
                 _clock = next.time
             }
 
             next.invoke()
-            _schedulerQueue.remove(next)
+            _schedulerQueue.remove(element: next)
         } while _running
 
         _clock = virtualTime
@@ -221,7 +221,7 @@ public class VirtualTimeScheduler<Converter: VirtualTimeConverterType>
         MainScheduler.ensureExecutingOnScheduler()
 
         let sleepTo = _converter.offsetVirtualTime(time: clock, offset: virtualInterval)
-        if _converter.compareVirtualTime(sleepTo, clock).lessThen {
+        if _converter.compareVirtualTime(lhs: sleepTo, clock).lessThen {
             fatalError("Can't sleep to past.")
         }
 

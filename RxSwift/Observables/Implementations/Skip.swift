@@ -29,16 +29,16 @@ class SkipCountSink<ElementType, O: ObserverType where O.E == ElementType> : Sin
         case .Next(let value):
             
             if remaining <= 0 {
-                forwardOn(.Next(value))
+                forwardOn(event: .Next(value))
             }
             else {
                 remaining -= 1
             }
         case .Error:
-            forwardOn(event)
+            forwardOn(event: event)
             self.dispose()
         case .Completed:
-            forwardOn(event)
+            forwardOn(event: event)
             self.dispose()
         }
     }
@@ -56,7 +56,7 @@ class SkipCount<Element>: Producer<Element> {
     
     override func run<O : ObserverType where O.E == Element>(observer: O) -> Disposable {
         let sink = SkipCountSink(parent: self, observer: observer)
-        sink.disposable = source.subscribe(sink)
+        sink.disposable = source.subscribe(observer: sink)
 
         return sink
     }
@@ -82,13 +82,13 @@ class SkipTimeSink<ElementType, O: ObserverType where O.E == ElementType> : Sink
         switch event {
         case .Next(let value):
             if open {
-                forwardOn(.Next(value))
+                forwardOn(event: .Next(value))
             }
         case .Error:
-            forwardOn(event)
+            forwardOn(event: event)
             self.dispose()
         case .Completed:
-            forwardOn(event)
+            forwardOn(event: event)
             self.dispose()
         }
     }
@@ -98,12 +98,12 @@ class SkipTimeSink<ElementType, O: ObserverType where O.E == ElementType> : Sink
     }
     
     func run() -> Disposable {
-        let disposeTimer = parent.scheduler.scheduleRelative((), dueTime: self.parent.duration) {
+        let disposeTimer = parent.scheduler.scheduleRelative(state: (), dueTime: self.parent.duration) {
             self.tick()
             return NopDisposable.instance
         }
         
-        let disposeSubscription = parent.source.subscribe(self)
+        let disposeSubscription = parent.source.subscribe(observer: self)
         
         return BinaryDisposable(disposeTimer, disposeSubscription)
     }

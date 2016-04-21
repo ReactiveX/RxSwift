@@ -54,7 +54,7 @@ class Filter<Element> : Producer<Element> {
     
     override func run<O: ObserverType where O.E == Element>(observer: O) -> Disposable {
         let sink = FilterSink(predicate: _predicate, observer: observer)
-        sink.disposable = _source.subscribe(sink)
+        sink.disposable = _source.subscribe(observer: sink)
         return sink
     }
 }

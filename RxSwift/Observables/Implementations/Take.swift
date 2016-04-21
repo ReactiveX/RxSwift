@@ -63,7 +63,7 @@ class TakeCount<Element>: Producer<Element> {
     
     override func run<O : ObserverType where O.E == Element>(observer: O) -> Disposable {
         let sink = TakeCountSink(parent: self, observer: observer)
-        sink.disposable = _source.subscribe(sink)
+        sink.disposable = _source.subscribe(observer: sink)
         return sink
     }
 }
@@ -117,7 +117,7 @@ class TakeTimeSink<ElementType, O: ObserverType where O.E == ElementType>
             return NopDisposable.instance
         }
         
-        let disposeSubscription = _parent._source.subscribe(self)
+        let disposeSubscription = _parent._source.subscribe(observer: self)
         
         return BinaryDisposable(disposeTimer, disposeSubscription)
     }

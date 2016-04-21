@@ -44,7 +44,7 @@ class ToArray<SourceType> : Producer<[SourceType]> {
     
     override func run<O: ObserverType where O.E == [SourceType]>(observer: O) -> Disposable {
         let sink = ToArraySink(parent: self, observer: observer)
-        sink.disposable = _source.subscribe(sink)
+        sink.disposable = _source.subscribe(observer: sink)
         return sink
     }
 }

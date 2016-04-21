@@ -33,13 +33,13 @@ class ThrottleSink<O: ObserverType>
     }
     
     func run() -> Disposable {
-        let subscription = _parent._source.subscribe(self)
+        let subscription = _parent._source.subscribe(observer: self)
         
         return StableCompositeDisposable.create(subscription, cancellable)
     }
 
     func on(event: Event<Element>) {
-        synchronizedOn(event)
+        synchronizedOn(event: event)
     }
 
     func _synchronized_on(event: Event<Element>) {
@@ -55,17 +55,17 @@ class ThrottleSink<O: ObserverType>
 
             let d = SingleAssignmentDisposable()
             self.cancellable.disposable = d
-            d.disposable = scheduler.scheduleRelative(currentId, dueTime: dueTime, action: self.propagate)
+            d.disposable = scheduler.scheduleRelative(state: currentId, dueTime: dueTime, action: self.propagate)
         case .Error:
             _value = nil
-            forwardOn(event)
+            forwardOn(event: event)
             dispose()
         case .Completed:
             if let value = _value {
                 _value = nil
-                forwardOn(.Next(value))
+                forwardOn(event: .Next(value))
             }
-            forwardOn(.Completed)
+            forwardOn(event: .Completed)
             dispose()
         }
     }
@@ -76,7 +76,7 @@ class ThrottleSink<O: ObserverType>
 
             if let value = originalValue where _id == currentId {
                 _value = nil
-                forwardOn(.Next(value))
+                forwardOn(event: .Next(value))
             }
         // }
         return NopDisposable.instance

@@ -52,7 +52,7 @@ final public class PublishSubject<Element>
     */
     public func on(event: Event<Element>) {
         _lock.lock(); defer { _lock.unlock() }
-        _synchronized_on(event)
+        _synchronized_on(event: event)
     }
 
     func _synchronized_on(event: Event<E>) {
@@ -62,12 +62,12 @@ final public class PublishSubject<Element>
                 return
             }
             
-            _observers.on(event)
+            _observers.on(event: event)
         case .Completed, .Error:
             if _stoppedEvent == nil {
                 _stoppedEvent = event
                 _stopped = true
-                _observers.on(event)
+                _observers.on(event: event)
                 _observers.removeAll()
             }
         }
@@ -81,31 +81,31 @@ final public class PublishSubject<Element>
     */
     public override func subscribe<O : ObserverType where O.E == Element>(observer: O) -> Disposable {
         _lock.lock(); defer { _lock.unlock() }
-        return _synchronized_subscribe(observer)
+        return _synchronized_subscribe(observer: observer)
     }
 
     func _synchronized_subscribe<O : ObserverType where O.E == E>(observer: O) -> Disposable {
         if let stoppedEvent = _stoppedEvent {
-            observer.on(stoppedEvent)
+            observer.on(event: stoppedEvent)
             return NopDisposable.instance
         }
         
         if _disposed {
-            observer.on(.Error(RxError.Disposed(object: self)))
+            observer.on(event: .Error(RxError.Disposed(object: self)))
             return NopDisposable.instance
         }
         
-        let key = _observers.insert(observer.asObserver())
+        let key = _observers.insert(element: observer.asObserver())
         return SubscriptionDisposable(owner: self, key: key)
     }
 
     func synchronizedUnsubscribe(disposeKey: DisposeKey) {
         _lock.lock(); defer { _lock.unlock() }
-        _synchronized_unsubscribe(disposeKey)
+        _synchronized_unsubscribe(disposeKey: disposeKey)
     }
 
     func _synchronized_unsubscribe(disposeKey: DisposeKey) {
-        _ = _observers.removeKey(disposeKey)
+        _ = _observers.removeKey(key: disposeKey)
     }
     
     /**

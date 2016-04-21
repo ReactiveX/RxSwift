@@ -39,12 +39,12 @@ class TailRecursiveSink<S: Sequence, O: ObserverType where S.Iterator.Element: O
     func run(sources: SequenceGenerator) -> Disposable {
         _generators.append(sources)
 
-        schedule(.MoveNext)
+        schedule(command: .MoveNext)
 
         return _subscription
     }
 
-    func invoke(command: TailRecursiveSinkCommand) {
+    func invoke(value command: TailRecursiveSinkCommand) {
         switch command {
         case .Dispose:
             disposeCommand()
@@ -55,11 +55,11 @@ class TailRecursiveSink<S: Sequence, O: ObserverType where S.Iterator.Element: O
 
     // simple implementation for now
     func schedule(command: TailRecursiveSinkCommand) {
-        _gate.invoke(InvocableScheduledItem(invocable: self, state: command))
+        _gate.invoke(action: InvocableScheduledItem(invocable: self, state: command))
     }
 
     func done() {
-        forwardOn(.Completed)
+        forwardOn(event: .Completed)
         dispose()
     }
 
@@ -107,7 +107,7 @@ class TailRecursiveSink<S: Sequence, O: ObserverType where S.Iterator.Element: O
                 _generators.append((e, nil))
             }
 
-            let nextGenerator = extract(nextCandidate)
+            let nextGenerator = extract(observable: nextCandidate)
 
             if let nextGenerator = nextGenerator {
                 _generators.append(nextGenerator)
@@ -129,7 +129,7 @@ class TailRecursiveSink<S: Sequence, O: ObserverType where S.Iterator.Element: O
 
         let disposable = SingleAssignmentDisposable()
         _subscription.disposable = disposable
-        disposable.disposable = subscribeToNext(next!)
+        disposable.disposable = subscribeToNext(source: next!)
     }
 
     func subscribeToNext(source: Observable<E>) -> Disposable {
@@ -146,7 +146,7 @@ class TailRecursiveSink<S: Sequence, O: ObserverType where S.Iterator.Element: O
         
         _subscription.dispose()
         
-        schedule(.Dispose)
+        schedule(command: .Dispose)
     }
 }
 

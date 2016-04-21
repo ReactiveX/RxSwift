@@ -21,17 +21,17 @@ class DeferredSink<S: ObservableType, O: ObserverType where S.E == O.E> : Sink<O
     func run() -> Disposable {
         do {
             let result = try _observableFactory()
-            return result.subscribe(self)
+            return result.subscribe(observer: self)
         }
         catch let e {
-            forwardOn(.Error(e))
+            forwardOn(event: .Error(e))
             dispose()
             return NopDisposable.instance
         }
     }
     
     func on(event: Event<E>) {
-        forwardOn(event)
+        forwardOn(event: event)
         
         switch event {
         case .Next:

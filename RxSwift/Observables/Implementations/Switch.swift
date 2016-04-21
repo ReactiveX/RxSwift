@@ -30,7 +30,7 @@ class SwitchSink<SourceType, S: ObservableConvertibleType, O: ObserverType where
     }
     
     func run(source: Observable<SourceType>) -> Disposable {
-        let subscription = source.subscribe(self)
+        let subscription = source.subscribe(observer: self)
         _subscriptions.disposable = subscription
         return StableCompositeDisposable.create(_subscriptions, _innerSubscription)
     }

@@ -19,13 +19,13 @@ class ObservableSequenceSink<O: ObserverType> : Sink<O> {
     }
 
     func run() -> Disposable {
-        return _parent._scheduler!.scheduleRecursive((0, _parent._elements)) { (state, recurse) in
+        return _parent._scheduler!.scheduleRecursive(state: (0, _parent._elements)) { (state, recurse) in
             if state.0 < state.1.count {
-                self.forwardOn(.Next(state.1[state.0]))
+                self.forwardOn(event: .Next(state.1[state.0]))
                 recurse((state.0 + 1, state.1))
             }
             else {
-                self.forwardOn(.Completed)
+                self.forwardOn(event: .Completed)
             }
         }
     }
@@ -44,10 +44,10 @@ class ObservableSequence<E> : Producer<E> {
         // optimized version without scheduler
         guard _scheduler != nil else {
             for element in _elements {
-                observer.on(.Next(element))
+                observer.on(event: .Next(element))
             }
             
-            observer.on(.Completed)
+            observer.on(event: .Completed)
             return NopDisposable.instance
         }
 

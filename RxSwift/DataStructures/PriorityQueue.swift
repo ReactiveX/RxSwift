@@ -18,7 +18,7 @@ struct PriorityQueue<Element: AnyObject> {
 
     mutating func enqueue(element: Element) {
         _elements.append(element)
-        bubbleToHigherPriority(_elements.count - 1)
+        bubbleToHigherPriority(initialUnbalancedIndex: _elements.count - 1)
     }
 
     func peek() -> Element? {
@@ -34,7 +34,7 @@ struct PriorityQueue<Element: AnyObject> {
             return nil
         }
 
-        removeAt(0)
+        removeAt(index: 0)
 
         return front
     }
@@ -42,7 +42,7 @@ struct PriorityQueue<Element: AnyObject> {
     mutating func remove(element: Element) {
         for i in 0 ..< _elements.count {
             if _elements[i] === element {
-                removeAt(i)
+                removeAt(index: i)
                 return
             }
         }
@@ -57,8 +57,8 @@ struct PriorityQueue<Element: AnyObject> {
         _elements.popLast()
 
         if !removingLast {
-            bubbleToHigherPriority(index)
-            bubbleToLowerPriority(index)
+            bubbleToHigherPriority(initialUnbalancedIndex: index)
+            bubbleToLowerPriority(initialUnbalancedIndex: index)
         }
     }
 

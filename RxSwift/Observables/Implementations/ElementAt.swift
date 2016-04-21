@@ -27,27 +27,27 @@ class ElementAtSink<SourceType, O: ObserverType where O.E == SourceType> : Sink<
         case .Next(_):
 
             if (_i == 0) {
-                forwardOn(event)
-                forwardOn(.Completed)
+                forwardOn(event: event)
+                forwardOn(event: .Completed)
                 self.dispose()
             }
             
             do {
-                try decrementChecked(&_i)
+                try decrementChecked(i: &_i)
             } catch(let e) {
-                forwardOn(.Error(e))
+                forwardOn(event: .Error(e))
                 dispose()
                 return
             }
             
         case .Error(let e):
-            forwardOn(.Error(e))
+            forwardOn(event: .Error(e))
             self.dispose()
         case .Completed:
             if (_parent._throwOnEmpty) {
-                forwardOn(.Error(RxError.ArgumentOutOfRange))
+                forwardOn(event: .Error(RxError.ArgumentOutOfRange))
             } else {
-                forwardOn(.Completed)
+                forwardOn(event: .Completed)
             }
             
             self.dispose()
@@ -73,7 +73,7 @@ class ElementAt<SourceType> : Producer<SourceType> {
     
     override func run<O: ObserverType where O.E == SourceType>(observer: O) -> Disposable {
         let sink = ElementAtSink(parent: self, observer: observer)
-        sink.disposable = _source.subscribeSafe(sink)
+        sink.disposable = _source.subscribeSafe(observer: sink)
         return sink
     }
 }

@@ -68,7 +68,7 @@ class Reduce<SourceType, AccumulateType, ResultType> : Producer<ResultType> {
     
     override func run<O: ObserverType where O.E == ResultType>(observer: O) -> Disposable {
         let sink = ReduceSink(parent: self, observer: observer)
-        sink.disposable = _source.subscribe(sink)
+        sink.disposable = _source.subscribe(observer: sink)
         return sink
     }
 }

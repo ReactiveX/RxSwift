@@ -31,7 +31,7 @@ class ConcatSink<S: Sequence, O: ObserverType where S.Iterator.Element : Observa
     }
 
     override func subscribeToNext(source: Observable<E>) -> Disposable {
-        return source.subscribe(self)
+        return source.subscribe(observer: self)
     }
     
     override func extract(observable: Observable<E>) -> SequenceGenerator? {

@@ -26,17 +26,17 @@ class SkipWhileSink<ElementType, O: ObserverType where O.E == ElementType> : Sin
                 do {
                     _running = try !_parent._predicate(value)
                 } catch let e {
-                    forwardOn(.Error(e))
+                    forwardOn(event: .Error(e))
                     dispose()
                     return
                 }
             }
 
             if _running {
-                forwardOn(.Next(value))
+                forwardOn(event: .Next(value))
             }
         case .Error, .Completed:
-            forwardOn(event)
+            forwardOn(event: event)
             dispose()
         }
     }
@@ -62,19 +62,19 @@ class SkipWhileSinkWithIndex<ElementType, O: ObserverType where O.E == ElementTy
             if !_running {
                 do {
                     _running = try !_parent._predicateWithIndex(value, _index)
-                    try incrementChecked(&_index)
+                    try incrementChecked(i: &_index)
                 } catch let e {
-                    forwardOn(.Error(e))
+                    forwardOn(event: .Error(e))
                     dispose()
                     return
                 }
             }
 
             if _running {
-                forwardOn(.Next(value))
+                forwardOn(event: .Next(value))
             }
         case .Error, .Completed:
-            forwardOn(event)
+            forwardOn(event: event)
             dispose()
         }
     }
@@ -103,12 +103,12 @@ class SkipWhile<Element>: Producer<Element> {
     override func run<O : ObserverType where O.E == Element>(observer: O) -> Disposable {
         if let _ = _predicate {
             let sink = SkipWhileSink(parent: self, observer: observer)
-            sink.disposable = _source.subscribe(sink)
+            sink.disposable = _source.subscribe(observer: sink)
             return sink
         }
         else {
             let sink = SkipWhileSinkWithIndex(parent: self, observer: observer)
-            sink.disposable = _source.subscribe(sink)
+            sink.disposable = _source.subscribe(observer: sink)
             return sink
         }
     }

@@ -27,7 +27,7 @@ private class ImmediateScheduler : ImmediateSchedulerType {
     */
     func schedule<StateType>(state: StateType, action: (StateType) -> Disposable) -> Disposable {
         let disposable = SingleAssignmentDisposable()
-        _asyncLock.invoke(AnonymousInvocable {
+        _asyncLock.invoke(action: AnonymousInvocable {
             if disposable.disposed {
                 return
             }

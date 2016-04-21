@@ -203,7 +203,7 @@ extension ObservableType {
     @warn_unused_result(message: "http://git.io/rxs.uo")
     public func catchErrorJustReturn(element: E)
         -> Observable<E> {
-        return Catch(source: asObservable(), handler: { _ in Observable.just(element) })
+        return Catch(source: asObservable(), handler: { _ in Observable.just(element: element) })
     }
     
 }
@@ -294,7 +294,7 @@ extension Sequence where Iterator.Element : ObservableType {
     public func amb()
         -> Observable<Iterator.Element.E> {
         return self.reduce(Observable.never()) { a, o in
-            return a.amb(o.asObservable())
+            return a.amb(right: o.asObservable())
         }
     }
 }

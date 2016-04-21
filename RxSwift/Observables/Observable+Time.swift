@@ -253,7 +253,7 @@ extension ObservableType {
     @warn_unused_result(message: "http://git.io/rxs.uo")
     public func timeout(dueTime: RxTimeInterval, scheduler: SchedulerType)
         -> Observable<E> {
-            return Timeout(source: self.asObservable(), dueTime: dueTime, other: Observable.error(RxError.Timeout), scheduler: scheduler)
+            return Timeout(source: self.asObservable(), dueTime: dueTime, other: Observable.error(error: RxError.Timeout), scheduler: scheduler)
     }
 
     /**

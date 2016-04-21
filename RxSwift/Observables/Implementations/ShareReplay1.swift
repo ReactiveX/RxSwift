@@ -32,7 +32,7 @@ final class ShareReplay1<Element>
 
     override func subscribe<O : ObserverType where O.E == E>(observer: O) -> Disposable {
         _lock.lock(); defer { _lock.unlock() }
-        return _synchronized_subscribe(observer)
+        return _synchronized_subscribe(observer: observer)
     }
 
     func _synchronized_subscribe<O : ObserverType where O.E == E>(observer: O) -> Disposable {
@@ -41,19 +41,19 @@ final class ShareReplay1<Element>
         }
 
         if let stopEvent = self._stopEvent {
-            observer.on(stopEvent)
+            observer.on(event: stopEvent)
             return NopDisposable.instance
         }
 
         let initialCount = self._observers.count
 
-        let disposeKey = self._observers.insert(AnyObserver(observer))
+        let disposeKey = self._observers.insert(element: AnyObserver(observer))
 
         if initialCount == 0 {
             let connection = SingleAssignmentDisposable()
             _connection = connection
 
-            connection.disposable = self._source.subscribe(self)
+            connection.disposable = self._source.subscribe(observer: self)
         }
 
         return SubscriptionDisposable(owner: self, key: disposeKey)
@@ -61,12 +61,12 @@ final class ShareReplay1<Element>
 
     func synchronizedUnsubscribe(disposeKey: DisposeKey) {
         _lock.lock(); defer { _lock.unlock() }
-        _synchronized_unsubscribe(disposeKey)
+        _synchronized_unsubscribe(disposeKey: disposeKey)
     }
 
     func _synchronized_unsubscribe(disposeKey: DisposeKey) {
         // if already unsubscribed, just return
-        if self._observers.removeKey(disposeKey) == nil {
+        if self._observers.removeKey(key: disposeKey) == nil {
             return
         }
 
@@ -78,7 +78,7 @@ final class ShareReplay1<Element>
 
     func on(event: Event<E>) {
         _lock.lock(); defer { _lock.unlock() }
-        _synchronized_on(event)
+        _synchronized_on(event: event)
     }
 
     func _synchronized_on(event: Event<E>) {
@@ -96,6 +96,6 @@ final class ShareReplay1<Element>
             _connection = nil
         }
 
-        _observers.on(event)
+        _observers.on(event: event)
     }
 }
