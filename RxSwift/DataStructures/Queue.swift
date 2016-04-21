@@ -28,7 +28,7 @@ public struct Queue<T>: SequenceType {
     private var _count = 0
     private var _pushNextIndex = 0
     private var _initialCapacity: Int
-    
+
     /**
     Creates new queue.
     
