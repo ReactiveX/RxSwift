@@ -27,7 +27,7 @@ public struct Queue<T>: SequenceType {
     private var _storage: ContiguousArray<T?>
     private var _count: Int
     private var _pushNextIndex: Int
-    private var _initialCapacity: Int
+    private let _initialCapacity: Int
     
     /**
     Creates new queue.
