@@ -40,11 +40,13 @@ class WikipediaSearchViewController: ViewController {
         
         let searchBar = self.searchBar
         let searchBarContainer = self.searchBarContainer
-        
+
         searchBarContainer.addSubview(searchBar)
         searchBar.frame = searchBarContainer.bounds
         searchBar.autoresizingMask = .FlexibleWidth
-        
+
+        resultsViewController.edgesForExtendedLayout = UIRectEdge.None
+
         configureTableDataSource()
         configureKeyboardDismissesOnScroll()
         configureNavigateOnRowClick()
@@ -56,7 +58,11 @@ class WikipediaSearchViewController: ViewController {
         
         resultsTableView.rowHeight = 194
 
+        // This is for clarity only, don't use static dependencies
         let API = DefaultWikipediaAPI.sharedAPI
+
+        resultsTableView.delegate = nil
+        resultsTableView.dataSource = nil
 
         searchBar.rx_text
             .asDriver()
