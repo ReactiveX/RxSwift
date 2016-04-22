@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="E5v-jn-n2n">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="E5v-jn-n2n">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
@@ -41,7 +41,7 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9IA-eg-Rhf">
-                                <rect key="frame" x="16" y="214" width="288" height="30"/>
+                                <rect key="frame" x="16" y="215" width="288" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
@@ -52,13 +52,13 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Password" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w3Q-7d-PAK">
-                                <rect key="frame" x="16" y="185" width="288" height="21"/>
+                                <rect key="frame" x="16" y="186" width="288" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nZR-mS-TBY">
-                                <rect key="frame" x="16" y="280" width="288" height="44"/>
+                                <rect key="frame" x="16" y="282" width="288" height="44"/>
                                 <color key="backgroundColor" red="0.45835767445182407" green="1" blue="0.50599050155048486" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="Twt-zJ-ndu"/>
@@ -71,13 +71,13 @@
                                 </state>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IGP-gu-Gxt">
-                                <rect key="frame" x="16" y="252" width="288" height="20"/>
+                                <rect key="frame" x="16" y="253" width="288" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.98726278540000001" green="0.23694899680000001" blue="0.26975026730000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Qq-LW-zbl">
-                                <rect key="frame" x="16" y="157" width="288" height="20"/>
+                                <rect key="frame" x="16" y="157" width="288" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.9872627854347229" green="0.23694899678230286" blue="0.26975026726722717" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -503,7 +503,7 @@ To do this automatically, check out the corresponding `Driver` example.</string>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dob-Ct-qBk">
-                                            <rect key="frame" x="32" y="3" width="42" height="20"/>
+                                            <rect key="frame" x="32" y="2" width="42" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" red="0.98431372549999996" green="0.98431372549999996" blue="0.94901960780000005" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
@@ -980,13 +980,13 @@ To do this automatically, check out the corresponding `Driver` example.</string>
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <searchBar contentMode="redraw" placeholder="Pizza" translatesAutoresizingMaskIntoConstraints="NO" id="q4t-TG-WEX">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OOD-Jj-HQ2" userLabel="Search Bar Container">
                                 <rect key="frame" x="0.0" y="64" width="320" height="44"/>
+                                <color key="backgroundColor" red="0.76862745099999996" green="0.76862745099999996" blue="0.76862745099999996" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="sty-bZ-zjF"/>
+                                    <constraint firstAttribute="height" constant="44" id="o1h-Lx-ZMp"/>
                                 </constraints>
-                                <textInputTraits key="textInputTraits"/>
-                            </searchBar>
+                            </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="8" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FeZ-zt-ZeK">
                                 <rect key="frame" x="29" y="174" width="263" height="126"/>
                                 <string key="text">This app transforms Wikipedia into image search engine.
@@ -999,28 +999,21 @@ This is only showcase app, not intended for production purposes.</string>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailingMargin" secondItem="q4t-TG-WEX" secondAttribute="trailing" constant="-16" id="9Bk-YV-Ndt"/>
-                            <constraint firstItem="q4t-TG-WEX" firstAttribute="leading" secondItem="rhi-Gj-NG4" secondAttribute="leadingMargin" constant="-16" id="IIN-VP-EdF"/>
+                            <constraint firstAttribute="trailing" secondItem="OOD-Jj-HQ2" secondAttribute="trailing" id="4v9-Ng-HUC"/>
+                            <constraint firstItem="OOD-Jj-HQ2" firstAttribute="top" secondItem="5dr-42-uib" secondAttribute="bottom" id="C30-zF-Ab9"/>
                             <constraint firstItem="FeZ-zt-ZeK" firstAttribute="leading" secondItem="rhi-Gj-NG4" secondAttribute="leadingMargin" constant="13" id="MSu-fp-qv1"/>
                             <constraint firstAttribute="centerX" secondItem="FeZ-zt-ZeK" secondAttribute="centerX" constant="-0.5" id="UXX-0S-lap"/>
                             <constraint firstAttribute="trailingMargin" secondItem="FeZ-zt-ZeK" secondAttribute="trailing" constant="12" id="ahS-rn-Gm5"/>
-                            <constraint firstItem="q4t-TG-WEX" firstAttribute="top" secondItem="5dr-42-uib" secondAttribute="bottom" id="cYt-41-Gst"/>
                             <constraint firstAttribute="centerY" secondItem="FeZ-zt-ZeK" secondAttribute="centerY" multiplier="1.2" id="d4B-SW-gN2"/>
+                            <constraint firstItem="OOD-Jj-HQ2" firstAttribute="leading" secondItem="rhi-Gj-NG4" secondAttribute="leading" id="yn5-Zd-TAL"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Search Wikipedia" id="QNG-ow-NDA"/>
                     <connections>
-                        <outlet property="searchDisplayController" destination="4OD-HT-2f1" id="hGe-qe-2O9"/>
+                        <outlet property="searchBarContainer" destination="OOD-Jj-HQ2" id="xLM-oQ-9nk"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mQm-27-dBN" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <searchDisplayController id="4OD-HT-2f1">
-                    <connections>
-                        <outlet property="delegate" destination="Iwo-im-m6d" id="F12-il-zQa"/>
-                        <outlet property="searchBar" destination="q4t-TG-WEX" id="3J9-va-kKC"/>
-                        <outlet property="searchContentsController" destination="Iwo-im-m6d" id="PoN-L7-uT9"/>
-                    </connections>
-                </searchDisplayController>
             </objects>
             <point key="canvasLocation" x="521" y="1743"/>
         </scene>
@@ -1081,8 +1074,8 @@ This is only showcase app, not intended for production purposes.</string>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gjR-nX-oAX">
                                                 <rect key="frame" x="12" y="361" width="292" height="116"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Test Pan gesture in this view" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fQw-v9-hRf">
-                                                        <rect key="frame" x="38" y="49" width="218" height="21"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Test Pan gesture in this view" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fQw-v9-hRf">
+                                                        <rect key="frame" x="37" y="48" width="218" height="21"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
@@ -1257,7 +1250,7 @@ This is only showcase app, not intended for production purposes.</string>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="+" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X9s-MA-NXj">
-                                <rect key="frame" x="93" y="274" width="11" height="20"/>
+                                <rect key="frame" x="93" y="274" width="11" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
