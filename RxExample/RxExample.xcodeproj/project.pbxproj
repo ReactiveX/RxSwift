@@ -127,8 +127,6 @@
 		C864BAD81C3332F10083833C /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C864BAD11C3332F10083833C /* DetailViewController.swift */; };
 		C864BAD91C3332F10083833C /* RandomUserAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C864BAD21C3332F10083833C /* RandomUserAPI.swift */; };
 		C864BADA1C3332F10083833C /* RandomUserAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C864BAD21C3332F10083833C /* RandomUserAPI.swift */; };
-		C864BADB1C3332F10083833C /* String+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C864BAD31C3332F10083833C /* String+extensions.swift */; };
-		C864BADC1C3332F10083833C /* String+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C864BAD31C3332F10083833C /* String+extensions.swift */; };
 		C864BADD1C3332F10083833C /* TableViewWithEditingCommandsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C864BAD41C3332F10083833C /* TableViewWithEditingCommandsViewController.swift */; };
 		C864BADE1C3332F10083833C /* TableViewWithEditingCommandsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C864BAD41C3332F10083833C /* TableViewWithEditingCommandsViewController.swift */; };
 		C864BADF1C3332F10083833C /* UIImageView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C864BAD51C3332F10083833C /* UIImageView+Extensions.swift */; };
@@ -691,7 +689,6 @@
 		C84CC5831BDD484400E06A64 /* SubscriptionDisposable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionDisposable.swift; sourceTree = "<group>"; };
 		C864BAD11C3332F10083833C /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		C864BAD21C3332F10083833C /* RandomUserAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomUserAPI.swift; sourceTree = "<group>"; };
-		C864BAD31C3332F10083833C /* String+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+extensions.swift"; sourceTree = "<group>"; };
 		C864BAD41C3332F10083833C /* TableViewWithEditingCommandsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewWithEditingCommandsViewController.swift; sourceTree = "<group>"; };
 		C864BAD51C3332F10083833C /* UIImageView+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extensions.swift"; sourceTree = "<group>"; };
 		C864BAD61C3332F10083833C /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -1224,7 +1221,6 @@
 			children = (
 				C864BAD11C3332F10083833C /* DetailViewController.swift */,
 				C864BAD21C3332F10083833C /* RandomUserAPI.swift */,
-				C864BAD31C3332F10083833C /* String+extensions.swift */,
 				C864BAD41C3332F10083833C /* TableViewWithEditingCommandsViewController.swift */,
 				C864BAD51C3332F10083833C /* UIImageView+Extensions.swift */,
 				C864BAD61C3332F10083833C /* User.swift */,
@@ -2146,7 +2142,6 @@
 				C84015751C34353D009D2E77 /* DispatchQueueSchedulerQOS.swift in Sources */,
 				C8CC3F4A1C95D16C00ABA17E /* IdentifiableType.swift in Sources */,
 				C84CC58B1BDD486300E06A64 /* LockOwnerType.swift in Sources */,
-				C864BADC1C3332F10083833C /* String+extensions.swift in Sources */,
 				C8CC3EFB1C95CB5300ABA17E /* ItemEvents.swift in Sources */,
 				C8CC3F1D1C95CB5300ABA17E /* UITextField+Rx.swift in Sources */,
 				C8CC3ED81C95CB5300ABA17E /* ControlEvent+Driver.swift in Sources */,
@@ -2484,7 +2479,6 @@
 				C809E97A1BE6841C0058D948 /* Wireframe.swift in Sources */,
 				C8B290C71C959D2900E923D0 /* Changeset.swift in Sources */,
 				C843A0931C1CE58700CBA4BD /* UINavigationController+Extensions.swift in Sources */,
-				C864BADB1C3332F10083833C /* String+extensions.swift in Sources */,
 				C822B1E71C14E7250088A01A /* SimpleTableViewExampleSectionedViewController.swift in Sources */,
 				C83367251AD029AE00C668A7 /* ImageService.swift in Sources */,
 				C86E2F471AE5A0CA00C31024 /* WikipediaSearchResult.swift in Sources */,
