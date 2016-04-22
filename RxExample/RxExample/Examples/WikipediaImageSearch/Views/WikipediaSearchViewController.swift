@@ -80,9 +80,13 @@ class WikipediaSearchViewController: ViewController {
 
     func configureKeyboardDismissesOnScroll() {
         let searchBar = self.searchBar
-
+        let searchController = self.searchController
+        
         resultsTableView.rx_contentOffset
             .asDriver()
+            .filter { _ -> Bool in
+                return !searchController.isBeingPresented()
+            }
             .driveNext { _ in
                 if searchBar.isFirstResponder() {
                     _ = searchBar.resignFirstResponder()
