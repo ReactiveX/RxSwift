@@ -52,7 +52,7 @@ class BufferTimeCountSink<Element, O: ObserverType where O.E == [Element]>
     }
  
     func run() -> Disposable {
-        createTimer(_windowID)
+        createTimer(windowID: _windowID)
         return StableCompositeDisposable.create(_timerD, _parent._source.subscribe(observer: self))
     }
     
@@ -62,13 +62,13 @@ class BufferTimeCountSink<Element, O: ObserverType where O.E == [Element]>
         
         let buffer = _buffer
         _buffer = []
-        forwardOn(.Next(buffer))
+        forwardOn(event: .Next(buffer))
         
-        createTimer(windowID)
+        createTimer(windowID: windowID)
     }
     
     func on(event: Event<E>) {
-        synchronizedOn(event)
+        synchronizedOn(event: event)
     }
 
     func _synchronized_on(event: Event<E>) {
@@ -82,11 +82,11 @@ class BufferTimeCountSink<Element, O: ObserverType where O.E == [Element]>
             
         case .Error(let error):
             _buffer = []
-            forwardOn(.Error(error))
+            forwardOn(event: .Error(error))
             dispose()
         case .Completed:
-            forwardOn(.Next(_buffer))
-            forwardOn(.Completed)
+            forwardOn(event: .Next(_buffer))
+            forwardOn(event: .Completed)
             dispose()
         }
     }
@@ -104,7 +104,7 @@ class BufferTimeCountSink<Element, O: ObserverType where O.E == [Element]>
         
         _timerD.disposable = nextTimer
 
-        nextTimer.disposable = _parent._scheduler.scheduleRelative(windowID, dueTime: _parent._timeSpan) { previousWindowID in
+        nextTimer.disposable = _parent._scheduler.scheduleRelative(state: windowID, dueTime: _parent._timeSpan) { previousWindowID in
             self._lock.performLocked {
                 if previousWindowID != self._windowID {
                     return

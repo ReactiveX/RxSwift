@@ -24,7 +24,7 @@ extension DriverConvertibleType {
     public func map<R>(selector: E -> R) -> Driver<R> {
         let source = self
             .asObservable()
-            .map(selector)
+            .map(selector: selector)
         return Driver<R>(source)
     }
 }
@@ -41,7 +41,7 @@ extension DriverConvertibleType {
     public func filter(predicate: (E) -> Bool) -> Driver<E> {
         let source = self
             .asObservable()
-            .filter(predicate)
+            .filter(predicate: predicate)
         return Driver(source)
     }
 }
@@ -85,7 +85,7 @@ extension DriverConvertibleType {
         -> Driver<R> {
         let source: Observable<R> = self
             .asObservable()
-            .flatMapLatest(selector)
+            .flatMapLatest(selector: selector)
         return Driver<R>(source)
     }
 }
@@ -105,7 +105,7 @@ extension DriverConvertibleType {
         -> Driver<R> {
         let source: Observable<R> = self
             .asObservable()
-            .flatMapFirst(selector)
+            .flatMapFirst(selector: selector)
         return Driver<R>(source)
     }
 }
@@ -123,7 +123,7 @@ extension DriverConvertibleType {
     public func doOn(eventHandler: (Event<E>) -> Void)
         -> Driver<E> {
         let source = self.asObservable()
-                .doOn(eventHandler)
+            .doOn(eventHandler: eventHandler)
         
         return Driver(source)
     }
@@ -137,7 +137,7 @@ extension DriverConvertibleType {
     - returns: The source sequence with the side-effecting behavior applied.
     */
     @warn_unused_result(message: "http://git.io/rxs.uo")
-    public func doOn(onNext onNext: (E -> Void)? = nil, onError: (ErrorProtocol -> Void)? = nil, onCompleted: (() -> Void)? = nil)
+    public func doOn(onNext: (E -> Void)? = nil, onError: (ErrorProtocol -> Void)? = nil, onCompleted: (() -> Void)? = nil)
         -> Driver<E> {
         let source = self.asObservable()
             .doOn(onNext: onNext, onError: onError, onCompleted: onCompleted)
@@ -182,7 +182,7 @@ extension DriverConvertibleType {
     @warn_unused_result(message: "http://git.io/rxs.uo")
     public func debug(identifier: String? = nil, file: String = #file, line: UInt = #line, function: String = #function) -> Driver<E> {
         let source = self.asObservable()
-            .debug(identifier, file: file, line: line, function: function)
+            .debug(identifier: identifier, file: file, line: line, function: function)
         return Driver(source)
     }
 }
@@ -199,7 +199,7 @@ extension DriverConvertibleType where E: Equatable {
     public func distinctUntilChanged()
         -> Driver<E> {
         let source = self.asObservable()
-            .distinctUntilChanged({ $0 }, comparer: { ($0 == $1) })
+            .distinctUntilChanged(keySelector: { $0 }, comparer: { ($0 == $1) })
             
         return Driver(source)
     }
@@ -216,7 +216,7 @@ extension DriverConvertibleType {
     @warn_unused_result(message: "http://git.io/rxs.uo")
     public func distinctUntilChanged<K: Equatable>(keySelector: (E) -> K) -> Driver<E> {
         let source = self.asObservable()
-            .distinctUntilChanged(keySelector, comparer: { $0 == $1 })
+            .distinctUntilChanged(keySelector: keySelector, comparer: { $0 == $1 })
         return Driver(source)
     }
    
@@ -229,7 +229,7 @@ extension DriverConvertibleType {
     @warn_unused_result(message: "http://git.io/rxs.uo")
     public func distinctUntilChanged(comparer: (lhs: E, rhs: E) -> Bool) -> Driver<E> {
         let source = self.asObservable()
-            .distinctUntilChanged({ $0 }, comparer: comparer)
+            .distinctUntilChanged(keySelector: { $0 }, comparer: comparer)
         return Driver(source)
     }
     
@@ -243,7 +243,7 @@ extension DriverConvertibleType {
     @warn_unused_result(message: "http://git.io/rxs.uo")
     public func distinctUntilChanged<K>(keySelector: (E) -> K, comparer: (lhs: K, rhs: K) -> Bool) -> Driver<E> {
         let source = self.asObservable()
-            .distinctUntilChanged(keySelector, comparer: comparer)
+            .distinctUntilChanged(keySelector: keySelector, comparer: comparer)
         return Driver(source)
     }
 }
@@ -261,7 +261,7 @@ extension DriverConvertibleType {
     @warn_unused_result(message: "http://git.io/rxs.uo")
     public func flatMap<R>(selector: (E) -> Driver<R>) -> Driver<R> {
         let source = self.asObservable()
-            .flatMap(selector)
+            .flatMap(selector: selector)
         
         return Driver<R>(source)
     }
@@ -290,7 +290,7 @@ extension DriverConvertibleType where E : DriverConvertibleType {
     - returns: The observable sequence that merges the elements of the inner sequences.
     */
     @warn_unused_result(message: "http://git.io/rxs.uo")
-    public func merge(maxConcurrent maxConcurrent: Int)
+    public func merge(maxConcurrent: Int)
         -> Driver<E.E> {
         let source = self.asObservable()
             .map { $0.asDriver() }
@@ -314,7 +314,7 @@ extension DriverConvertibleType {
     public func throttle(dueTime: RxTimeInterval)
         -> Driver<E> {
         let source = self.asObservable()
-            .throttle(dueTime, scheduler: driverObserveOnScheduler)
+            .throttle(dueTime: dueTime, scheduler: driverObserveOnScheduler)
 
         return Driver(source)
     }
@@ -331,7 +331,7 @@ extension DriverConvertibleType {
     public func debounce(dueTime: RxTimeInterval)
         -> Driver<E> {
         let source = self.asObservable()
-            .debounce(dueTime, scheduler: driverObserveOnScheduler)
+            .debounce(dueTime: dueTime, scheduler: driverObserveOnScheduler)
 
         return Driver(source)
     }
@@ -352,13 +352,13 @@ extension DriverConvertibleType {
     public func scan<A>(seed: A, accumulator: (A, E) -> A)
         -> Driver<A> {
         let source = self.asObservable()
-            .scan(seed, accumulator: accumulator)
+            .scan(seed: seed, accumulator: accumulator)
         return Driver<A>(source)
     }
 }
 
 // MARK: concat
-extension Sequence where Generator.Element : DriverConvertibleType {
+extension Sequence where Iterator.Element : DriverConvertibleType {
 
     /**
     Concatenates all observable sequences in the given sequence, as long as the previous observable sequence terminated successfully.
@@ -367,13 +367,13 @@ extension Sequence where Generator.Element : DriverConvertibleType {
     */
     @warn_unused_result(message: "http://git.io/rxs.uo")
     public func concat()
-        -> Driver<Generator.Element.E> {
+        -> Driver<Iterator.Element.E> {
         let source = self.lazy.map { $0.asDriver().asObservable() }.concat()
-        return Driver<Generator.Element.E>(source)
+        return Driver<Iterator.Element.E>(source)
     }
 }
 
-extension Collection where Generator.Element : DriverConvertibleType {
+extension Collection where Iterator.Element : DriverConvertibleType {
 
     /**
      Concatenates all observable sequences in the given sequence, as long as the previous observable sequence terminated successfully.
@@ -389,7 +389,7 @@ extension Collection where Generator.Element : DriverConvertibleType {
 }
 
 // MARK: zip
-extension Collection where Generator.Element : DriverConvertibleType {
+extension Collection where Iterator.Element : DriverConvertibleType {
 
     /**
     Merges the specified observable sequences into one observable sequence by using the selector function whenever all of the observable sequences have produced an element at a corresponding index.
@@ -399,13 +399,13 @@ extension Collection where Generator.Element : DriverConvertibleType {
     */
     @warn_unused_result(message: "http://git.io/rxs.uo")
     public func zip<R>(resultSelector: [Generator.Element.E] throws -> R) -> Driver<R> {
-        let source = self.map { $0.asDriver().asObservable() }.zip(resultSelector)
+        let source = self.map { $0.asDriver().asObservable() }.zip(resultSelector: resultSelector)
         return Driver<R>(source)
     }
 }
 
 // MARK: combineLatest
-extension Collection where Generator.Element : DriverConvertibleType {
+extension Collection where Iterator.Element : DriverConvertibleType {
 
     /**
     Merges the specified observable sequences into one observable sequence by using the selector function whenever any of the observable sequences produces an element.
@@ -415,7 +415,7 @@ extension Collection where Generator.Element : DriverConvertibleType {
     */
     @warn_unused_result(message: "http://git.io/rxs.uo")
     public func combineLatest<R>(resultSelector: [Generator.Element.E] throws -> R) -> Driver<R> {
-        let source = self.map { $0.asDriver().asObservable() }.combineLatest(resultSelector)
+        let source = self.map { $0.asDriver().asObservable() }.combineLatest(resultSelector: resultSelector)
         return Driver<R>(source)
     }
 }
@@ -432,7 +432,7 @@ extension DriverConvertibleType {
     */
     public func withLatestFrom<SecondO: DriverConvertibleType, ResultType>(second: SecondO, resultSelector: (E, SecondO.E) -> ResultType) -> Driver<ResultType> {
         let source = self.asObservable()
-            .withLatestFrom(second.asDriver(), resultSelector: resultSelector)
+            .withLatestFrom(second: second.asDriver(), resultSelector: resultSelector)
 
         return Driver<ResultType>(source)
     }
@@ -445,7 +445,7 @@ extension DriverConvertibleType {
     */
     public func withLatestFrom<SecondO: DriverConvertibleType>(second: SecondO) -> Driver<SecondO.E> {
         let source = self.asObservable()
-            .withLatestFrom(second.asDriver())
+            .withLatestFrom(second: second.asDriver())
 
         return Driver<SecondO.E>(source)
     }
@@ -466,7 +466,7 @@ extension DriverConvertibleType {
     public func skip(count: Int)
         -> Driver<E> {
         let source = self.asObservable()
-            .skip(count)
+            .skip(count: count)
         return Driver(source)
     }
 }
@@ -486,7 +486,7 @@ extension DriverConvertibleType {
     public func startWith(element: E)
         -> Driver<E> {
         let source = self.asObservable()
-                .startWith(element)
+                .startWith(elements: element)
 
         return Driver(source)
     }

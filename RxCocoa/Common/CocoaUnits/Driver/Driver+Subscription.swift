@@ -23,7 +23,7 @@ extension DriverConvertibleType {
     @warn_unused_result(message: "http://git.io/rxs.ud")
     public func drive<O: ObserverType where O.E == E>(observer: O) -> Disposable {
         MainScheduler.ensureExecutingOnScheduler()
-        return self.asObservable().subscribe(observer)
+        return self.asObservable().subscribe(observer: observer)
     }
 
     /**
@@ -32,7 +32,7 @@ extension DriverConvertibleType {
     - parameter variable: Target variable for sequence elements.
     - returns: Disposable object that can be used to unsubscribe the observer from the variable.
     */
-    @warn_unused_result(message="http://git.io/rxs.ud")
+    @warn_unused_result(message: "http://git.io/rxs.ud")
     public func drive(variable: Variable<E>) -> Disposable {
         return drive(onNext: { e in
             variable.value = e
@@ -82,7 +82,7 @@ extension DriverConvertibleType {
     - returns: Subscription object used to unsubscribe from the observable sequence.
     */
     @warn_unused_result(message: "http://git.io/rxs.ud")
-    public func drive(onNext onNext: ((E) -> Void)? = nil, onCompleted: (() -> Void)? = nil, onDisposed: (() -> Void)? = nil) -> Disposable {
+    public func drive(onNext: ((E) -> Void)? = nil, onCompleted: (() -> Void)? = nil, onDisposed: (() -> Void)? = nil) -> Disposable {
         MainScheduler.ensureExecutingOnScheduler()
         return self.asObservable().subscribe(onNext: onNext, onCompleted: onCompleted, onDisposed: onDisposed)
     }
@@ -96,7 +96,7 @@ extension DriverConvertibleType {
     @warn_unused_result(message: "http://git.io/rxs.ud")
     public func driveNext(onNext: E -> Void) -> Disposable {
         MainScheduler.ensureExecutingOnScheduler()
-        return self.asObservable().subscribeNext(onNext)
+        return self.asObservable().subscribeNext(onNext: onNext)
     }
 }
 

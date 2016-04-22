@@ -20,7 +20,7 @@ class SubscribeOnSink<Ob: ObservableType, O: ObserverType where Ob.E == O.E> : S
     }
     
     func on(event: Event<Element>) {
-        forwardOn(event)
+        forwardOn(event: event)
         
         if event.isStopEvent {
             self.dispose()
@@ -33,7 +33,7 @@ class SubscribeOnSink<Ob: ObservableType, O: ObserverType where Ob.E == O.E> : S
         
         disposeEverything.disposable = cancelSchedule
         
-        cancelSchedule.disposable = parent.scheduler.schedule(()) { (_) -> Disposable in
+        cancelSchedule.disposable = parent.scheduler.schedule(state: ()) { (_) -> Disposable in
             let subscription = self.parent.source.subscribe(observer: self)
             disposeEverything.disposable = ScheduledDisposable(scheduler: self.parent.scheduler, disposable: subscription)
             return NopDisposable.instance

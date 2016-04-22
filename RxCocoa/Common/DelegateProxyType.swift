@@ -166,27 +166,27 @@ Returns existing proxy for object or installs new instance of delegate proxy.
         }
     }
 */
-public func proxyForObject<P: DelegateProxyType>(type: P.Type, _ object: AnyObject) -> P {
+public func proxyForObject<P: DelegateProxyType>(_ type: P.Type, _ object: AnyObject) -> P {
     MainScheduler.ensureExecutingOnScheduler()
     
-    let maybeProxy = P.assignedProxyFor(object) as? P
+    let maybeProxy = P.assignedProxyFor(object: object) as? P
     
     let proxy: P
     if maybeProxy == nil {
-        proxy = P.createProxyForObject(object) as! P
-        P.assignProxy(proxy, toObject: object)
-        assert(P.assignedProxyFor(object) === proxy)
+        proxy = P.createProxyForObject(object: object) as! P
+        P.assignProxy(proxy: proxy, toObject: object)
+        assert(P.assignedProxyFor(object: object) === proxy)
     }
     else {
         proxy = maybeProxy!
     }
     
-    let currentDelegate: AnyObject? = P.currentDelegateFor(object)
+    let currentDelegate: AnyObject? = P.currentDelegateFor(object: object)
     
     if currentDelegate !== proxy {
-        proxy.setForwardToDelegate(currentDelegate, retainDelegate: false)
-        P.setCurrentDelegate(proxy, toObject: object)
-        assert(P.currentDelegateFor(object) === proxy)
+        proxy.setForwardToDelegate(forwardToDelegate: currentDelegate, retainDelegate: false)
+        P.setCurrentDelegate(delegate: proxy, toObject: object)
+        assert(P.currentDelegateFor(object: object) === proxy)
         assert(proxy.forwardToDelegate() === currentDelegate)
     }
         
@@ -198,12 +198,12 @@ func installDelegate<P: DelegateProxyType>(proxy: P, delegate: AnyObject, retain
     
     assert(proxy.forwardToDelegate() === nil, "There is already a delegate set -> `\(proxy.forwardToDelegate())` for object -> `\(object)`.\nMaybe delegate was already set in `xib` or `storyboard` and now it's being overwritten in code.")
     
-    proxy.setForwardToDelegate(delegate, retainDelegate: retainDelegate)
+    proxy.setForwardToDelegate(forwardToDelegate: delegate, retainDelegate: retainDelegate)
     
     // refresh properties after delegate is set
     // some views like UITableView cache `respondsToSelector`
-    P.setCurrentDelegate(nil, toObject: object)
-    P.setCurrentDelegate(proxy, toObject: object)
+    P.setCurrentDelegate(delegate: nil, toObject: object)
+    P.setCurrentDelegate(delegate: proxy, toObject: object)
     
     assert(proxy.forwardToDelegate() === delegate, "Setting of delegate failed")
     
@@ -214,7 +214,7 @@ func installDelegate<P: DelegateProxyType>(proxy: P, delegate: AnyObject, retain
         
         assert(delegate == nil || proxy.forwardToDelegate() === delegate, "Delegate was changed from time it was first set. Current \(proxy.forwardToDelegate()), and it should have been \(proxy)")
         
-        proxy.setForwardToDelegate(nil, retainDelegate: retainDelegate)
+        proxy.setForwardToDelegate(forwardToDelegate: nil, retainDelegate: retainDelegate)
     }
 }
 
@@ -222,16 +222,16 @@ extension ObservableType {
     func subscribeProxyDataSourceForObject<P: DelegateProxyType>(object: AnyObject, dataSource: AnyObject, retainDataSource: Bool, binding: (P, Event<E>) -> Void)
         -> Disposable {
         let proxy = proxyForObject(P.self, object)
-        let disposable = installDelegate(proxy, delegate: dataSource, retainDelegate: retainDataSource, onProxyForObject: object)
+        let disposable = installDelegate(proxy: proxy, delegate: dataSource, retainDelegate: retainDataSource, onProxyForObject: object)
 
         let subscription = self.asObservable()
             // source can't ever end, otherwise it will release the subscriber
-            .concat(Observable.never())
+            .concat(second: Observable.never())
             .subscribe { [weak object] (event: Event<E>) in
                 MainScheduler.ensureExecutingOnScheduler()
 
                 if let object = object {
-                    assert(proxy === P.currentDelegateFor(object), "Proxy changed from the time it was first set.\nOriginal: \(proxy)\nExisting: \(P.currentDelegateFor(object))")
+                    assert(proxy === P.currentDelegateFor(object: object), "Proxy changed from the time it was first set.\nOriginal: \(proxy)\nExisting: \(P.currentDelegateFor(object: object))")
                 }
                 
                 binding(proxy, event)

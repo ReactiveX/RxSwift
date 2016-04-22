@@ -30,14 +30,14 @@ class GestureTarget: RxTarget {
         super.init()
         
         gestureRecognizer.addTarget(self, action: selector)
-        
+
         let method = self.methodForSelector(selector)
         if method == nil {
             fatalError("Can't find method")
         }
     }
     
-    func eventHandler(sender: UIGestureRecognizer!) {
+    func eventHandler(_ sender: UIGestureRecognizer!) {
         if let callback = self.callback, gestureRecognizer = self.gestureRecognizer {
             callback(gestureRecognizer)
         }
@@ -61,17 +61,17 @@ extension UIGestureRecognizer {
             MainScheduler.ensureExecutingOnScheduler()
 
             guard let control = self else {
-                observer.on(.Completed)
+                observer.on(event: .Completed)
                 return NopDisposable.instance
             }
             
             let observer = GestureTarget(control) {
                 control in
-                observer.on(.Next(control))
+                observer.on(event: .Next(control))
             }
             
             return observer
-        }.takeUntil(rx_deallocated)
+        }.takeUntil(other: rx_deallocated)
         
         return ControlEvent(events: source)
     }

@@ -33,7 +33,7 @@ extension ImmediateSchedulerType {
     public func scheduleRecursive<State>(state: State, action: (state: State, recurse: (State) -> ()) -> ()) -> Disposable {
         let recursiveScheduler = RecursiveImmediateScheduler(action: action, scheduler: self)
         
-        recursiveScheduler.schedule(state)
+        recursiveScheduler.schedule(state: state)
         
         return AnonymousDisposable {
             recursiveScheduler.dispose()

@@ -175,7 +175,7 @@ extension ObservableType {
     @warn_unused_result(message: "http://git.io/rxs.uo")
     public func map<R>(selector: E throws -> R)
         -> Observable<R> {
-        return self.asObservable().composeMap(selector)
+        return self.asObservable().composeMap(selector: selector)
     }
 
     /**

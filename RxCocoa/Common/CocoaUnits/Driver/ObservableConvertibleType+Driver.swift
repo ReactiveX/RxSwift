@@ -19,11 +19,11 @@ extension ObservableConvertibleType {
     - returns: Driving observable sequence.
     */
     @warn_unused_result(message: "http://git.io/rxs.uo")
-    public func asDriver(onErrorJustReturn onErrorJustReturn: E) -> Driver<E> {
+    public func asDriver(onErrorJustReturn: E) -> Driver<E> {
         let source = self
             .asObservable()
-            .observeOn(driverObserveOnScheduler)
-            .catchErrorJustReturn(onErrorJustReturn)
+            .observeOn(scheduler: driverObserveOnScheduler)
+            .catchErrorJustReturn(element: onErrorJustReturn)
         return Driver(source)
     }
     
@@ -34,10 +34,10 @@ extension ObservableConvertibleType {
     - returns: Driving observable sequence.
     */
     @warn_unused_result(message: "http://git.io/rxs.uo")
-    public func asDriver(onErrorDriveWith onErrorDriveWith: Driver<E>) -> Driver<E> {
+    public func asDriver(onErrorDriveWith: Driver<E>) -> Driver<E> {
         let source = self
             .asObservable()
-            .observeOn(driverObserveOnScheduler)
+            .observeOn(scheduler: driverObserveOnScheduler)
             .catchError { _ in
                 onErrorDriveWith.asObservable()
             }
@@ -51,10 +51,10 @@ extension ObservableConvertibleType {
     - returns: Driving observable sequence.
     */
     @warn_unused_result(message: "http://git.io/rxs.uo")
-    public func asDriver(onErrorRecover onErrorRecover: (error: ErrorProtocol) -> Driver<E>) -> Driver<E> {
+    public func asDriver(onErrorRecover: (error: ErrorProtocol) -> Driver<E>) -> Driver<E> {
         let source = self
             .asObservable()
-            .observeOn(driverObserveOnScheduler)
+            .observeOn(scheduler: driverObserveOnScheduler)
             .catchError { error in
                 onErrorRecover(error: error).asObservable()
             }

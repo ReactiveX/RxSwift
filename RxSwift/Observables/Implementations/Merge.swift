@@ -37,7 +37,7 @@ class MergeLimitedSinkIter<S: ObservableConvertibleType, O: ObserverType where S
     func _synchronized_on(event: Event<E>) {
         switch event {
         case .Next:
-            _parent.forwardOn(event)
+            _parent.forwardOn(event: event)
         case .Error:
             _parent.forwardOn(event: event)
             _parent.dispose()
@@ -101,7 +101,7 @@ class MergeLimitedSink<S: ObservableConvertibleType, O: ObserverType where S.E =
         if let key = key {
             let observer = MergeLimitedSinkIter(parent: self, disposeKey: key)
             
-            let disposable = innerSource.asObservable().subscribe(observer)
+            let disposable = innerSource.asObservable().subscribe(observer: observer)
             subscription.disposable = disposable
         }
     }
@@ -304,7 +304,7 @@ class MergeSink<SourceType, S: ObservableConvertibleType, O: ObserverType where 
             }
             do {
                 let value = try performMap(element: element)
-                subscribeInner(value.asObservable())
+                subscribeInner(source: value.asObservable())
             }
             catch let e {
                 forwardOn(event: .Error(e))
@@ -333,7 +333,7 @@ class MergeSink<SourceType, S: ObservableConvertibleType, O: ObserverType where 
         let iterDisposable = SingleAssignmentDisposable()
         if let disposeKey = _group.addDisposable(disposable: iterDisposable) {
             let iter = MergeSinkIter(parent: self, disposeKey: disposeKey)
-            let subscription = source.subscribe(iter)
+            let subscription = source.subscribe(observer: iter)
             iterDisposable.disposable = subscription
         }
     }

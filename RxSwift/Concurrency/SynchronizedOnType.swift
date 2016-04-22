@@ -15,6 +15,6 @@ protocol SynchronizedOnType : class, ObserverType, Lock {
 extension SynchronizedOnType {
     func synchronizedOn(event: Event<E>) {
         lock(); defer { unlock() }
-        _synchronized_on(event)
+        _synchronized_on(event: event)
     }
 }

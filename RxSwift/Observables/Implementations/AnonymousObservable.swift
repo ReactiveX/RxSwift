@@ -25,10 +25,10 @@ class AnonymousObservableSink<O: ObserverType> : Sink<O>, ObserverType {
             if _isStopped == 1 {
                 return
             }
-            forwardOn(event)
+            forwardOn(event: event)
         case .Error, .Completed:
             if AtomicCompareAndSwap(0, 1, &_isStopped) {
-                forwardOn(event)
+                forwardOn(event: event)
                 dispose()
             }
         }
@@ -50,7 +50,7 @@ class AnonymousObservable<Element> : Producer<Element> {
 
     override func run<O : ObserverType where O.E == Element>(observer: O) -> Disposable {
         let sink = AnonymousObservableSink(observer: observer)
-        sink.disposable = sink.run(self)
+        sink.disposable = sink.run(parent: self)
         return sink
     }
 }

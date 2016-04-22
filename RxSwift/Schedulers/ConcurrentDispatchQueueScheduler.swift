@@ -52,7 +52,7 @@ public class ConcurrentDispatchQueueScheduler: SchedulerType {
     }
     
     class func convertTimeIntervalToDispatchTime(timeInterval: NSTimeInterval) -> dispatch_time_t {
-        return dispatch_time(DISPATCH_TIME_NOW, convertTimeIntervalToDispatchInterval(timeInterval))
+        return dispatch_time(DISPATCH_TIME_NOW, convertTimeIntervalToDispatchInterval(timeInterval: timeInterval))
     }
     
     /**
@@ -63,7 +63,7 @@ public class ConcurrentDispatchQueueScheduler: SchedulerType {
     - returns: The disposable object used to cancel the scheduled action (best effort).
     */
     public final func schedule<StateType>(state: StateType, action: StateType -> Disposable) -> Disposable {
-        return self.scheduleInternal(state, action: action)
+        return self.scheduleInternal(state: state, action: action)
     }
     
     func scheduleInternal<StateType>(state: StateType, action: StateType -> Disposable) -> Disposable {
@@ -91,7 +91,7 @@ public class ConcurrentDispatchQueueScheduler: SchedulerType {
     public final func scheduleRelative<StateType>(state: StateType, dueTime: NSTimeInterval, action: (StateType) -> Disposable) -> Disposable {
         let timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, _queue)
         
-        let dispatchInterval = MainScheduler.convertTimeIntervalToDispatchTime(dueTime)
+        let dispatchInterval = MainScheduler.convertTimeIntervalToDispatchTime(timeInterval: dueTime)
         
         let compositeDisposable = CompositeDisposable()
         
@@ -100,11 +100,11 @@ public class ConcurrentDispatchQueueScheduler: SchedulerType {
             if compositeDisposable.disposed {
                 return
             }
-           compositeDisposable.addDisposable(action(state))
+           compositeDisposable.addDisposable(disposable: action(state))
         })
         dispatch_resume(timer)
         
-        compositeDisposable.addDisposable(AnonymousDisposable {
+        compositeDisposable.addDisposable(disposable: AnonymousDisposable {
             dispatch_source_cancel(timer)
             })
         
@@ -123,8 +123,8 @@ public class ConcurrentDispatchQueueScheduler: SchedulerType {
     public func schedulePeriodic<StateType>(state: StateType, startAfter: TimeInterval, period: TimeInterval, action: (StateType) -> StateType) -> Disposable {
         let timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, _queue)
         
-        let initial = MainScheduler.convertTimeIntervalToDispatchTime(startAfter)
-        let dispatchInterval = MainScheduler.convertTimeIntervalToDispatchInterval(period)
+        let initial = MainScheduler.convertTimeIntervalToDispatchTime(timeInterval: startAfter)
+        let dispatchInterval = MainScheduler.convertTimeIntervalToDispatchInterval(timeInterval: period)
         
         var timerState = state
         

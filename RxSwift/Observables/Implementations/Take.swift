@@ -31,18 +31,18 @@ class TakeCountSink<ElementType, O: ObserverType where O.E == ElementType> : Sin
             if _remaining > 0 {
                 _remaining -= 1
                 
-                forwardOn(.Next(value))
+                forwardOn(event: .Next(value))
             
                 if _remaining == 0 {
-                    forwardOn(.Completed)
+                    forwardOn(event: .Completed)
                     dispose()
                 }
             }
         case .Error:
-            forwardOn(event)
+            forwardOn(event: event)
             dispose()
         case .Completed:
-            forwardOn(event)
+            forwardOn(event: event)
             dispose()
         }
     }
@@ -88,18 +88,18 @@ class TakeTimeSink<ElementType, O: ObserverType where O.E == ElementType>
     }
     
     func on(event: Event<E>) {
-        synchronizedOn(event)
+        synchronizedOn(event: event)
     }
 
     func _synchronized_on(event: Event<E>) {
         switch event {
         case .Next(let value):
-            forwardOn(.Next(value))
+            forwardOn(event: .Next(value))
         case .Error:
-            forwardOn(event)
+            forwardOn(event: event)
             dispose()
         case .Completed:
-            forwardOn(event)
+            forwardOn(event: event)
             dispose()
         }
     }
@@ -107,12 +107,12 @@ class TakeTimeSink<ElementType, O: ObserverType where O.E == ElementType>
     func tick() {
         _lock.lock(); defer { _lock.unlock() }
 
-        forwardOn(.Completed)
+        forwardOn(event: .Completed)
         dispose()
     }
     
     func run() -> Disposable {
-        let disposeTimer = _parent._scheduler.scheduleRelative((), dueTime: _parent._duration) {
+        let disposeTimer = _parent._scheduler.scheduleRelative(state: (), dueTime: _parent._duration) {
             self.tick()
             return NopDisposable.instance
         }

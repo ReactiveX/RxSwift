@@ -31,7 +31,7 @@ class ObserveOnSerialDispatchQueueSink<O: ObserverType> : ObserverBase<O.E> {
         super.init()
 
         cachedScheduleLambda = { sink, event in
-            sink.observer.on(event)
+            sink.observer.on(event: event)
 
             if event.isStopEvent {
                 sink.dispose()
@@ -42,7 +42,7 @@ class ObserveOnSerialDispatchQueueSink<O: ObserverType> : ObserverBase<O.E> {
     }
 
     override func onCore(event: Event<E>) {
-        self.scheduler.schedule((self, event), action: cachedScheduleLambda)
+        self.scheduler.schedule(state: (self, event), action: cachedScheduleLambda)
     }
    
     override func dispose() {

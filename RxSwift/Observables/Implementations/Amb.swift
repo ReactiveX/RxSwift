@@ -69,7 +69,7 @@ class AmbSink<ElementType, O: ObserverType where O.E == ElementType> : Sink<O> {
         let disposeAll = StableCompositeDisposable.create(subscription1, subscription2)
         
         let forwardEvent = { (o: AmbObserverType, event: Event<ElementType>) -> Void in
-            self.forwardOn(event)
+            self.forwardOn(event: event)
         }
         
         let decide = { (o: AmbObserverType, event: Event<ElementType>, me: AmbState, otherSubscription: Disposable) in
@@ -82,7 +82,7 @@ class AmbSink<ElementType, O: ObserverType where O.E == ElementType> : Sink<O> {
                 }
                 
                 if self._choice == me {
-                    self.forwardOn(event)
+                    self.forwardOn(event: event)
                     if event.isStopEvent {
                         self.dispose()
                     }
@@ -98,8 +98,8 @@ class AmbSink<ElementType, O: ObserverType where O.E == ElementType> : Sink<O> {
             decide(o, e, .Right, subscription1)
         }
         
-        subscription1.disposable = _parent._left.subscribe(sink1)
-        subscription2.disposable = _parent._right.subscribe(sink2)
+        subscription1.disposable = _parent._left.subscribe(observer: sink1)
+        subscription2.disposable = _parent._right.subscribe(observer: sink2)
         
         return disposeAll
     }

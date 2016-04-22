@@ -60,7 +60,7 @@ public struct ControlProperty<PropertyType> : ControlPropertyType {
      to property.
     */
     public init<V: ObservableType, S: ObserverType where E == V.E, E == S.E>(values: V, valueSink: S) {
-        _values = values.subscribeOn(ConcurrentMainScheduler.instance)
+        _values = values.subscribeOn(scheduler: ConcurrentMainScheduler.instance)
         _valueSink = valueSink.asObserver()
     }
 
@@ -71,7 +71,7 @@ public struct ControlProperty<PropertyType> : ControlPropertyType {
     - returns: Disposable object that can be used to unsubscribe the observer from receiving control property values.
     */
     public func subscribe<O : ObserverType where O.E == E>(observer: O) -> Disposable {
-        return _values.subscribe(observer)
+        return _values.subscribe(observer: observer)
     }
 
     /**
@@ -102,9 +102,9 @@ public struct ControlProperty<PropertyType> : ControlPropertyType {
         case .Error(let error):
             bindingErrorToInterface(error)
         case .Next:
-            _valueSink.on(event)
+            _valueSink.on(event: event)
         case .Completed:
-            _valueSink.on(event)
+            _valueSink.on(event: event)
         }
     }
 }

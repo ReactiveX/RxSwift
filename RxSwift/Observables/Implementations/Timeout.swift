@@ -33,7 +33,7 @@ class TimeoutSink<ElementType, O: ObserverType where O.E == ElementType>: Sink<O
         
         _createTimeoutTimer()
         
-        original.disposable = _parent._source.subscribeSafe(self)
+        original.disposable = _parent._source.subscribeSafe(observer: self)
         
         return StableCompositeDisposable.create(_subscription, _timerD)
     }
@@ -51,7 +51,7 @@ class TimeoutSink<ElementType, O: ObserverType where O.E == ElementType>: Sink<O
             }
             
             if onNextWins {
-                forwardOn(event)
+                forwardOn(event: event)
                 self._createTimeoutTimer()
             }
         case .Error, .Completed:
@@ -65,7 +65,7 @@ class TimeoutSink<ElementType, O: ObserverType where O.E == ElementType>: Sink<O
             }
             
             if onEventWins {
-                forwardOn(event)
+                forwardOn(event: event)
                 self.dispose()
             }
         }
@@ -79,7 +79,7 @@ class TimeoutSink<ElementType, O: ObserverType where O.E == ElementType>: Sink<O
         let nextTimer = SingleAssignmentDisposable()
         _timerD.disposable = nextTimer
         
-        nextTimer.disposable = _parent._scheduler.scheduleRelative(_id, dueTime: _parent._dueTime) { state in
+        nextTimer.disposable = _parent._scheduler.scheduleRelative(state: _id, dueTime: _parent._dueTime) { state in
             
             var timerWins = false
             
@@ -89,7 +89,7 @@ class TimeoutSink<ElementType, O: ObserverType where O.E == ElementType>: Sink<O
             }
             
             if timerWins {
-                self._subscription.disposable = self._parent._other.subscribeSafe(self.forwarder())
+                self._subscription.disposable = self._parent._other.subscribeSafe(observer: self.forwarder())
             }
             
             return NopDisposable.instance

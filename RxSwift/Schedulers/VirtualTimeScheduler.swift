@@ -90,7 +90,7 @@ public class VirtualTimeScheduler<Converter: VirtualTimeConverterType>
         let time = self.now.addingTimeInterval(dueTime)
         let absoluteTime = _converter.convertToVirtualTime(time: time)
         let adjustedTime = self.adjustScheduledTime(time: absoluteTime)
-        return scheduleAbsoluteVirtual(state, time: adjustedTime, action: action)
+        return scheduleAbsoluteVirtual(state: state, time: adjustedTime, action: action)
     }
 
     /**

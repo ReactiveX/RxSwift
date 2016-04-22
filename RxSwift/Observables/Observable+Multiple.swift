@@ -203,7 +203,7 @@ extension ObservableType {
     @warn_unused_result(message: "http://git.io/rxs.uo")
     public func catchErrorJustReturn(element: E)
         -> Observable<E> {
-        return Catch(source: asObservable(), handler: { _ in Observable.just(element: element) })
+        return Catch(source: asObservable(), handler: { _ in Observable.just(element) })
     }
     
 }

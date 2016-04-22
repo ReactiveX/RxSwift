@@ -22,7 +22,7 @@ class DelaySubscriptionSink<ElementType, O: ObserverType where O.E == ElementTyp
     }
     
     func on(event: Event<E>) {
-        forwardOn(event)
+        forwardOn(event: event)
         if event.isStopEvent {
             dispose()
         }
@@ -43,7 +43,7 @@ class DelaySubscription<Element>: Producer<Element> {
     
     override func run<O : ObserverType where O.E == Element>(observer: O) -> Disposable {
         let sink = DelaySubscriptionSink(parent: self, observer: observer)
-        sink.disposable = _scheduler.scheduleRelative((), dueTime: _dueTime) { _ in
+        sink.disposable = _scheduler.scheduleRelative(state: (), dueTime: _dueTime) { _ in
             return self._source.subscribe(observer: sink)
         }
 

@@ -60,25 +60,17 @@ extension Observable {
     - seealso: [just operator on reactivex.io](http://reactivex.io/documentation/operators/just.html)
 
     - parameter element: Single element in the resulting observable sequence.
-    - returns: An observable sequence containing the single specified element.
-    */
-    @warn_unused_result(message: "http://git.io/rxs.uo")
-    public static func just(element: E) -> Observable<E> {
-        return Just(element: element)
-    }
-
-    /**
-    Returns an observable sequence that contains a single element.
-
-    - seealso: [just operator on reactivex.io](http://reactivex.io/documentation/operators/just.html)
-
-    - parameter element: Single element in the resulting observable sequence.
     - parameter: Scheduler to send the single element on.
     - returns: An observable sequence containing the single specified element.
     */
     @warn_unused_result(message: "http://git.io/rxs.uo")
-    public static func just(element: E, scheduler: ImmediateSchedulerType) -> Observable<E> {
-        return JustScheduled(element: element, scheduler: scheduler)
+    public static func just(_ element: E, scheduler: ImmediateSchedulerType? = nil) -> Observable<E> {
+        if let scheduler = scheduler {
+            return JustScheduled(element: element, scheduler: scheduler)
+        }
+        else {
+            return Just(element: element)
+        }
     }
 
     // MARK: fail
@@ -91,7 +83,7 @@ extension Observable {
     - returns: The observable sequence that terminates with specified error.
     */
     @warn_unused_result(message: "http://git.io/rxs.uo")
-    public static func error(error: ErrorProtocol) -> Observable<E> {
+    public static func error(_ error: ErrorProtocol) -> Observable<E> {
         return Error(error: error)
     }
 
@@ -140,7 +132,7 @@ extension Observable {
     - returns: The generated sequence.
     */
     @warn_unused_result(message: "http://git.io/rxs.uo")
-    public static func generate(initialState initialState: E, condition: E throws -> Bool, scheduler: ImmediateSchedulerType = CurrentThreadScheduler.instance, iterate: E throws -> E) -> Observable<E> {
+    public static func generate(initialState: E, condition: E throws -> Bool, scheduler: ImmediateSchedulerType = CurrentThreadScheduler.instance, iterate: E throws -> E) -> Observable<E> {
         return Generate(initialState: initialState, condition: condition, iterate: iterate, resultSelector: { $0 }, scheduler: scheduler)
     }
 
@@ -185,7 +177,7 @@ extension Observable where Element : SignedInteger {
     - returns: An observable sequence that contains a range of sequential integral numbers.
     */
     @warn_unused_result(message: "http://git.io/rxs.uo")
-    public static func range(start start: E, count: E, scheduler: ImmediateSchedulerType = CurrentThreadScheduler.instance) -> Observable<E> {
+    public static func range(start: E, count: E, scheduler: ImmediateSchedulerType = CurrentThreadScheduler.instance) -> Observable<E> {
         return RangeProducer<E>(start: start, count: count, scheduler: scheduler)
     }
 }

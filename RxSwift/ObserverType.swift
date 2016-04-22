@@ -36,14 +36,14 @@ public extension ObserverType {
     - parameter element: Next element to send to observer(s)
     */
     final func onNext(element: E) {
-        on(.Next(element))
+        on(event: .Next(element))
     }
     
     /**
     Convenience method equivalent to `on(.Completed)`
     */
     final func onCompleted() {
-        on(.Completed)
+        on(event: .Completed)
     }
     
     /**
@@ -51,6 +51,6 @@ public extension ObserverType {
     - parameter error: ErrorProtocol to send to observer(s)
     */
     final func onError(error: ErrorProtocol) {
-        on(.Error(error))
+        on(event: .Error(error))
     }
 }

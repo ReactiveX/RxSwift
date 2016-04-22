@@ -210,7 +210,7 @@ extension ObservableType {
     - returns: An observable sequence of buffers.
     */
     @warn_unused_result(message: "http://git.io/rxs.uo")
-    public func buffer(timeSpan timeSpan: RxTimeInterval, count: Int, scheduler: SchedulerType)
+    public func buffer(timeSpan: RxTimeInterval, count: Int, scheduler: SchedulerType)
         -> Observable<[E]> {
         return BufferTimeCount(source: self.asObservable(), timeSpan: timeSpan, count: count, scheduler: scheduler)
     }
@@ -231,7 +231,7 @@ extension ObservableType {
      - returns: An observable sequence of windows (instances of `Observable`).
      */
     @warn_unused_result(message: "http://git.io/rxs.uo")
-    public func window(timeSpan timeSpan: RxTimeInterval, count: Int, scheduler: SchedulerType)
+    public func window(timeSpan: RxTimeInterval, count: Int, scheduler: SchedulerType)
         -> Observable<Observable<E>> {
             return WindowTimeCount(source: self.asObservable(), timeSpan: timeSpan, count: count, scheduler: scheduler)
     }
@@ -253,7 +253,7 @@ extension ObservableType {
     @warn_unused_result(message: "http://git.io/rxs.uo")
     public func timeout(dueTime: RxTimeInterval, scheduler: SchedulerType)
         -> Observable<E> {
-            return Timeout(source: self.asObservable(), dueTime: dueTime, other: Observable.error(error: RxError.Timeout), scheduler: scheduler)
+            return Timeout(source: self.asObservable(), dueTime: dueTime, other: Observable.error(RxError.Timeout), scheduler: scheduler)
     }
 
     /**

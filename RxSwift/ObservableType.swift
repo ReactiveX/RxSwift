@@ -52,6 +52,10 @@ extension ObservableType {
     */
     @warn_unused_result(message: "http://git.io/rxs.uo")
     public func asObservable() -> Observable<E> {
-        return Observable.create(self.subscribe)
+        // temporary workaround
+        //return Observable.create(subscribe: self.subscribe)
+        return Observable.create { o in
+            return self.subscribe(observer: o)
+        }
     }
 }

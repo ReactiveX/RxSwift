@@ -26,17 +26,17 @@ class ScanSink<ElementType, Accumulate, O: ObserverType where O.E == Accumulate>
         case .Next(let element):
             do {
                 _accumulate = try _parent._accumulator(_accumulate, element)
-                forwardOn(.Next(_accumulate))
+                forwardOn(event: .Next(_accumulate))
             }
             catch let error {
-                forwardOn(.Error(error))
+                forwardOn(event: .Error(error))
                 dispose()
             }
         case .Error(let error):
-            forwardOn(.Error(error))
+            forwardOn(event: .Error(error))
             dispose()
         case .Completed:
-            forwardOn(.Completed)
+            forwardOn(event: .Completed)
             dispose()
         }
     }

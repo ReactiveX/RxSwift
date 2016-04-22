@@ -44,7 +44,7 @@ class ZipSink<O: ObserverType> : Sink<O>, ZipSinkProtocol {
         var hasValueAll = true
         
         for i in 0 ..< _arity {
-            if !hasElements(i) {
+            if !hasElements(index: i) {
                 hasValueAll = false
                 break
             }
@@ -53,10 +53,10 @@ class ZipSink<O: ObserverType> : Sink<O>, ZipSinkProtocol {
         if hasValueAll {
             do {
                 let result = try getResult()
-                self.forwardOn(.Next(result))
+                self.forwardOn(event: .Next(result))
             }
             catch let e {
-                self.forwardOn(.Error(e))
+                self.forwardOn(event: .Error(e))
                 dispose()
             }
         }
@@ -72,14 +72,14 @@ class ZipSink<O: ObserverType> : Sink<O>, ZipSinkProtocol {
             }
             
             if allOthersDone {
-                forwardOn(.Completed)
+                forwardOn(event: .Completed)
                 self.dispose()
             }
         }
     }
     
     func fail(error: ErrorProtocol) {
-        forwardOn(.Error(error))
+        forwardOn(event: .Error(error))
         dispose()
     }
     
@@ -96,7 +96,7 @@ class ZipSink<O: ObserverType> : Sink<O>, ZipSinkProtocol {
         }
         
         if allDone {
-            forwardOn(.Completed)
+            forwardOn(event: .Completed)
             dispose()
         }
     }
@@ -127,7 +127,7 @@ class ZipObserver<ElementType>
     }
     
     func on(event: Event<E>) {
-        synchronizedOn(event)
+        synchronizedOn(event: event)
     }
 
     func _synchronized_on(event: Event<E>) {
@@ -146,11 +146,11 @@ class ZipObserver<ElementType>
             switch event {
             case .Next(let value):
                 _setNextValue(value)
-                parent.next(_index)
+                parent.next(index: _index)
             case .Error(let error):
-                parent.fail(error)
+                parent.fail(error: error)
             case .Completed:
-                parent.done(_index)
+                parent.done(index: _index)
             }
         }
     }

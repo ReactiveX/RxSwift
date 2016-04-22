@@ -9,49 +9,52 @@
 import Foundation
 
 #if os(Linux)
-  let CurrentThreadSchedulerKeyInstance       = "RxSwift.CurrentThreadScheduler.SchedulerKey"
-  let CurrentThreadSchedulerQueueKeyInstance  = "RxSwift.CurrentThreadScheduler.Queue"
+    let CurrentThreadSchedulerKeyInstance       = "RxSwift.CurrentThreadScheduler.SchedulerKey"
+    let CurrentThreadSchedulerQueueKeyInstance  = "RxSwift.CurrentThreadScheduler.Queue"
 
-  typealias CurrentThreadSchedulerValue       = NSString
-  let CurrentThreadSchedulerValueInstance     = "RxSwift.CurrentThreadScheduler.SchedulerKey" as NSString
+    typealias CurrentThreadSchedulerValue       = NSString
+    let CurrentThreadSchedulerValueInstance     = "RxSwift.CurrentThreadScheduler.SchedulerKey" as NSString
 #else
-  let CurrentThreadSchedulerKeyInstance       = CurrentThreadSchedulerKey()
-  let CurrentThreadSchedulerQueueKeyInstance  = CurrentThreadSchedulerQueueKey()
+    // temporary workaround
 
-  typealias CurrentThreadSchedulerValue       = CurrentThreadSchedulerKey
-  let CurrentThreadSchedulerValueInstance     = CurrentThreadSchedulerKeyInstance
+    let CurrentThreadSchedulerKeyInstance       = "RxSwift.CurrentThreadScheduler.SchedulerKey"
+    let CurrentThreadSchedulerQueueKeyInstance  = "RxSwift.CurrentThreadScheduler.Queue"
 
-  @objc class CurrentThreadSchedulerKey : NSObject, NSCopying {
-      override func isEqual(_ object: AnyObject?) -> Bool {
+    typealias CurrentThreadSchedulerValue       = NSString
+    let CurrentThreadSchedulerValueInstance     = "RxSwift.CurrentThreadScheduler.SchedulerKey" as NSString
+
+    /*
+    let CurrentThreadSchedulerKeyInstance       = CurrentThreadSchedulerKey()
+    let CurrentThreadSchedulerQueueKeyInstance  = CurrentThreadSchedulerQueueKey()
+
+    typealias CurrentThreadSchedulerValue       = CurrentThreadSchedulerKey
+    let CurrentThreadSchedulerValueInstance     = CurrentThreadSchedulerKeyInstance
+
+    @objc class CurrentThreadSchedulerKey : NSObject, NSCopying {
+        override func isEqual(_ object: AnyObject?) -> Bool {
           return object === CurrentThreadSchedulerKeyInstance
-      }
+        }
 
-      override var hash: Int { return -904739208 }
+        override var hash: Int { return -904739208 }
 
-      override func copy() -> AnyObject {
-          return CurrentThreadSchedulerKeyInstance
-      }
+        //func copy(with zone: NSZone? = nil) -> AnyObject {
+        func copyWithZone(zone: NSZone) -> AnyObject {
+            return CurrentThreadSchedulerKeyInstance
+        }
+    }
 
-      @objc func copy(with zone: NSZone) -> AnyObject {
-          return CurrentThreadSchedulerKeyInstance
-      }
-  }
-
-  @objc class CurrentThreadSchedulerQueueKey : NSObject, NSCopying {
-      override func isEqual(_ object: AnyObject?) -> Bool {
+    @objc class CurrentThreadSchedulerQueueKey : NSObject, NSCopying {
+        override func isEqual(_ object: AnyObject?) -> Bool {
           return object === CurrentThreadSchedulerQueueKeyInstance
-      }
+        }
 
-      override var hash: Int { return -904739207 }
+        override var hash: Int { return -904739207 }
 
-      override func copy() -> AnyObject {
+        //func copy(with: NSZone?) -> AnyObject {
+        func copyWithZone(zone: NSZone) -> AnyObject {
           return CurrentThreadSchedulerQueueKeyInstance
-      }
-
-      @objc func copy(with zone: NSZone) -> AnyObject {
-          return CurrentThreadSchedulerQueueKeyInstance
-      }
-  }
+        }
+    }*/
 #endif
 
 /**

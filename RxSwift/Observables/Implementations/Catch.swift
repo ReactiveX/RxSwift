@@ -65,7 +65,7 @@ class CatchSink<O: ObserverType> : Sink<O>, ObserverType {
 
                 let observer = CatchSinkProxy(parent: self)
                 
-                _subscription.disposable = catchSequence.subscribe(observer)
+                _subscription.disposable = catchSequence.subscribe(observer: observer)
             }
             catch let e {
                 forwardOn(event: .Error(e))

@@ -42,14 +42,14 @@ extension UITextView {
                 // This observe on is here because text storage
                 // will emit event while process is not completely done,
                 // so rebinding a value will cause an exception to be thrown.
-                .observeOn(MainScheduler.asyncInstance)
+                .observeOn(scheduler: MainScheduler.asyncInstance)
                 .map { _ in
                     return self?.textStorage.string ?? ""
                 }
                 ?? Observable.empty()
             
             return textChanged
-                .startWith(text)
+                .startWith(elements: text)
         }
 
         let bindingObserver = UIBindingObserver(UIElement: self) { (textView, text: String) in

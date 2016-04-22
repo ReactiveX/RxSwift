@@ -22,7 +22,7 @@ class RefCountSink<CO: ConnectableObservableType, O: ObserverType where CO.E == 
     }
     
     func run() -> Disposable {
-        let subscription = _parent._source.subscribeSafe(self)
+        let subscription = _parent._source.subscribeSafe(observer: self)
         
         _parent._lock.lock(); defer { _parent._lock.unlock() } // {
             if _parent._count == 0 {
@@ -55,9 +55,9 @@ class RefCountSink<CO: ConnectableObservableType, O: ObserverType where CO.E == 
     func on(event: Event<Element>) {
         switch event {
         case .Next:
-            forwardOn(event)
+            forwardOn(event: event)
         case .Error, .Completed:
-            forwardOn(event)
+            forwardOn(event: event)
             dispose()
         }
     }

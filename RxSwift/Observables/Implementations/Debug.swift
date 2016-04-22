@@ -25,7 +25,7 @@ class Debug_<O: ObserverType> : Sink<O>, ObserverType {
         _parent = parent
         _timestampFormatter.dateFormat = dateFormat
 
-        logEvent(_parent._identifier, dateFormat: _timestampFormatter, content: "subscribed")
+        logEvent(identifier: _parent._identifier, dateFormat: _timestampFormatter, content: "subscribed")
 
         super.init(observer: observer)
     }
@@ -37,12 +37,12 @@ class Debug_<O: ObserverType> : Sink<O>, ObserverType {
             ? String(eventText.characters.prefix(maxEventTextLength / 2)) + "..." + String(eventText.characters.suffix(maxEventTextLength / 2))
             : eventText
 
-        logEvent(_parent._identifier, dateFormat: _timestampFormatter, content: "Event \(eventNormalized)")
-        forwardOn(event)
+        logEvent(identifier: _parent._identifier, dateFormat: _timestampFormatter, content: "Event \(eventNormalized)")
+        forwardOn(event: event)
     }
     
     override func dispose() {
-        logEvent(_parent._identifier, dateFormat: _timestampFormatter, content: "disposed")
+        logEvent(identifier: _parent._identifier, dateFormat: _timestampFormatter, content: "disposed")
         super.dispose()
     }
 }
@@ -58,7 +58,7 @@ class Debug<Element> : Producer<Element> {
         }
         else {
             let trimmedFile: String
-            if let lastIndex = file.lastIndexOf("/") {
+            if let lastIndex = file.lastIndexOf(character: "/") {
                 trimmedFile = file[lastIndex.successor() ..< file.endIndex]
             }
             else {

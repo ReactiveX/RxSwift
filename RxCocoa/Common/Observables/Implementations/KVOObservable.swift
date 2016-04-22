@@ -36,10 +36,10 @@ class KVOObservable<Element>
     func subscribe<O : ObserverType where O.E == Element?>(observer: O) -> Disposable {
         let observer = KVOObserver(parent: self) { (value) in
             if value as? NSNull != nil {
-                observer.on(.Next(nil))
+                observer.on(event: .Next(nil))
                 return
             }
-            observer.on(.Next(value as? Element))
+            observer.on(event: .Next(value as? Element))
         }
         
         return AnonymousDisposable {
@@ -52,17 +52,17 @@ class KVOObservable<Element>
 #if !DISABLE_SWIZZLING
 
 func observeWeaklyKeyPathFor(target: NSObject, keyPath: String, options: NSKeyValueObservingOptions) -> Observable<AnyObject?> {
-    let components = keyPath.componentsSeparatedByString(".").filter { $0 != "self" }
+    let components = keyPath.components(separatedBy: ".").filter { $0 != "self" }
     
-    let observable = observeWeaklyKeyPathFor(target, keyPathSections: components, options: options)
-        .finishWithNilWhenDealloc(target)
+    let observable = observeWeaklyKeyPathFor(target: target, keyPathSections: components, options: options)
+        .finishWithNilWhenDealloc(target: target)
  
-    if !options.intersect(.Initial).isEmpty {
+    if !options.intersect(.initial).isEmpty {
         return observable
     }
     else {
         return observable
-            .skip(1)
+            .skip(count: 1)
     }
 }
 
@@ -71,7 +71,7 @@ func observeWeaklyKeyPathFor(target: NSObject, keyPath: String, options: NSKeyVa
 // is as a delimiter.
 // This means there is `W` as element in an array of property attributes.
 func isWeakProperty(properyRuntimeInfo: String) -> Bool {
-    return properyRuntimeInfo.rangeOfString(",W,") != nil
+    return properyRuntimeInfo.range(of: ",W,") != nil
 }
 
 extension ObservableType where E == AnyObject? {
@@ -83,7 +83,7 @@ extension ObservableType where E == AnyObject? {
             .map { _ in
                 return Observable.just(nil)
             }
-            .startWith(self.asObservable())
+            .startWith(elements: self.asObservable())
             .switchLatest()
     }
 }
@@ -106,8 +106,8 @@ func observeWeaklyKeyPathFor(
     let propertyAttributes = property_getAttributes(property)
     
     // should dealloc hook be in place if week property, or just create strong reference because it doesn't matter
-    let isWeak = isWeakProperty(String.fromCString(propertyAttributes) ?? "")
-    let propertyObservable = KVOObservable(object: target, keyPath: propertyName, options: options.union(.Initial), retainTarget: false) as KVOObservable<AnyObject>
+    let isWeak = isWeakProperty(properyRuntimeInfo: String(propertyAttributes) ?? "")
+    let propertyObservable = KVOObservable(object: target, keyPath: propertyName, options: options.union(.initial), retainTarget: false) as KVOObservable<AnyObject>
     
     // KVO recursion for value changes
     return propertyObservable
@@ -131,11 +131,11 @@ func observeWeaklyKeyPathFor(
             
             let nextElementsObservable = keyPathSections.count == 1
                 ? Observable.just(nextTarget)
-                : observeWeaklyKeyPathFor(nextObject!, keyPathSections: remainingPaths, options: options)
+                : observeWeaklyKeyPathFor(target: nextObject!, keyPathSections: remainingPaths, options: options)
            
             if isWeak {
                 return nextElementsObservable
-                    .finishWithNilWhenDealloc(nextObject!)
+                    .finishWithNilWhenDealloc(target: nextObject!)
             }
             else {
                 return nextElementsObservable

@@ -74,7 +74,7 @@ public final class BehaviorSubject<Element>
     */
     public func on(event: Event<E>) {
         _lock.lock(); defer { _lock.unlock() }
-        _synchronized_on(event)
+        _synchronized_on(event: event)
     }
 
     func _synchronized_on(event: Event<E>) {
@@ -89,7 +89,7 @@ public final class BehaviorSubject<Element>
             _stoppedEvent = event
         }
         
-        _observers.on(event)
+        _observers.on(event: event)
     }
     
     /**
@@ -100,29 +100,29 @@ public final class BehaviorSubject<Element>
     */
     public override func subscribe<O : ObserverType where O.E == Element>(observer: O) -> Disposable {
         _lock.lock(); defer { _lock.unlock() }
-        return _synchronized_subscribe(observer)
+        return _synchronized_subscribe(observer: observer)
     }
 
     func _synchronized_subscribe<O : ObserverType where O.E == E>(observer: O) -> Disposable {
         if _disposed {
-            observer.on(.Error(RxError.Disposed(object: self)))
+            observer.on(event: .Error(RxError.Disposed(object: self)))
             return NopDisposable.instance
         }
         
         if let stoppedEvent = _stoppedEvent {
-            observer.on(stoppedEvent)
+            observer.on(event: stoppedEvent)
             return NopDisposable.instance
         }
         
-        let key = _observers.insert(observer.asObserver())
-        observer.on(.Next(_value))
+        let key = _observers.insert(element: observer.asObserver())
+        observer.on(event: .Next(_value))
     
         return SubscriptionDisposable(owner: self, key: key)
     }
 
     func synchronizedUnsubscribe(disposeKey: DisposeKey) {
         _lock.lock(); defer { _lock.unlock() }
-        _synchronized_unsubscribe(disposeKey)
+        _synchronized_unsubscribe(disposeKey: disposeKey)
     }
 
     func _synchronized_unsubscribe(disposeKey: DisposeKey) {
@@ -130,7 +130,7 @@ public final class BehaviorSubject<Element>
             return
         }
 
-        _ = _observers.removeKey(disposeKey)
+        _ = _observers.removeKey(key: disposeKey)
     }
 
     /**

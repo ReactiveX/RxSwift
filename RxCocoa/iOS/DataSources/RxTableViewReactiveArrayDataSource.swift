@@ -23,20 +23,20 @@ class _RxTableViewReactiveArrayDataSource
         return 1
     }
    
-    func _tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func _tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 0
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return _tableView(tableView, numberOfRowsInSection: section)
     }
 
-    func _tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func _tableView(tableView: UITableView, cellForRowAt indexPath: NSIndexPath) -> UITableViewCell {
         rxAbstractMethod()
     }
-    
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        return _tableView(tableView, cellForRowAtIndexPath: indexPath)
+
+    func tableView(tableView: UITableView, cellForRowAt indexPath: NSIndexPath) -> UITableViewCell {
+        return _tableView(tableView: tableView, cellForRowAt: indexPath)
     }
 }
 
@@ -50,11 +50,11 @@ class RxTableViewReactiveArrayDataSourceSequenceWrapper<S: Sequence>
         super.init(cellFactory: cellFactory)
     }
 
-    func tableView(tableView: UITableView, observedEvent: Event<S>) {
+    func tableView(_ tableView: UITableView, observedEvent: Event<S>) {
         UIBindingObserver(UIElement: self) { tableViewDataSource, sectionModels in
             let sections = Array(sectionModels)
             tableViewDataSource.tableView(tableView, observedElements: sections)
-        }.on(observedEvent)
+        }.on(event: observedEvent)
     }
 }
 
@@ -84,17 +84,17 @@ class RxTableViewReactiveArrayDataSource<Element>
         self.cellFactory = cellFactory
     }
     
-    override func _tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func _tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return itemModels?.count ?? 0
     }
     
-    override func _tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func _tableView(_ tableView: UITableView, cellForRowAt indexPath: NSIndexPath) -> UITableViewCell {
         return cellFactory(tableView, indexPath.item, itemModels![indexPath.row])
     }
     
     // reactive
     
-    func tableView(tableView: UITableView, observedElements: [Element]) {
+    func tableView(_ tableView: UITableView, observedElements: [Element]) {
         self.itemModels = observedElements
         
         tableView.reloadData()

@@ -15,6 +15,6 @@ protocol SynchronizedSubscribeType : class, ObservableType, Lock {
 extension SynchronizedSubscribeType {
     func synchronizedSubscribe<O: ObserverType where O.E == E>(observer: O) -> Disposable {
         lock(); defer { unlock() }
-        return _synchronized_subscribe(observer)
+        return _synchronized_subscribe(observer: observer)
     }
 }

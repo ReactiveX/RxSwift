@@ -30,27 +30,27 @@ class SingleAsyncSink<ElementType, O: ObserverType where O.E == ElementType> : S
                 }
             }
             catch let error {
-                forwardOn(.Error(error as ErrorProtocol))
+                forwardOn(event: .Error(error as ErrorProtocol))
                 dispose()
                 return
             }
 
             if _seenValue == false {
                 _seenValue = true
-                forwardOn(.Next(value))
+                forwardOn(event: .Next(value))
             } else {
-                forwardOn(.Error(RxError.MoreThanOneElement))
+                forwardOn(event: .Error(RxError.MoreThanOneElement))
                 dispose()
             }
             
         case .Error:
-            forwardOn(event)
+            forwardOn(event: event)
             dispose()
         case .Completed:
             if (!_seenValue) {
-                forwardOn(.Error(RxError.NoElements))
+                forwardOn(event: .Error(RxError.NoElements))
             } else {
-                forwardOn(.Completed)
+                forwardOn(event: .Completed)
             }
             dispose()
         }

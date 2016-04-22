@@ -22,7 +22,7 @@ extension ObservableType where E: Equatable {
     @warn_unused_result(message: "http://git.io/rxs.uo")
     public func distinctUntilChanged()
         -> Observable<E> {
-        return self.distinctUntilChanged({ $0 }, comparer: { ($0 == $1) })
+        return self.distinctUntilChanged(keySelector: { $0 }, comparer: { ($0 == $1) })
     }
 }
 
@@ -38,7 +38,7 @@ extension ObservableType {
     @warn_unused_result(message: "http://git.io/rxs.uo")
     public func distinctUntilChanged<K: Equatable>(keySelector: (E) throws -> K)
         -> Observable<E> {
-        return self.distinctUntilChanged(keySelector, comparer: { $0 == $1 })
+        return self.distinctUntilChanged(keySelector: keySelector, comparer: { $0 == $1 })
     }
 
     /**
@@ -52,7 +52,7 @@ extension ObservableType {
     @warn_unused_result(message: "http://git.io/rxs.uo")
     public func distinctUntilChanged(comparer: (lhs: E, rhs: E) throws -> Bool)
         -> Observable<E> {
-        return self.distinctUntilChanged({ $0 }, comparer: comparer)
+        return self.distinctUntilChanged(keySelector: { $0 }, comparer: comparer)
     }
     
     /**
@@ -100,7 +100,7 @@ extension ObservableType {
     - returns: The source sequence with the side-effecting behavior applied.
     */
     @warn_unused_result(message: "http://git.io/rxs.uo")
-    public func doOn(onNext onNext: (E throws -> Void)? = nil, onError: (ErrorProtocol throws -> Void)? = nil, onCompleted: (() throws -> Void)? = nil)
+    public func doOn(onNext: (E throws -> Void)? = nil, onError: (ErrorProtocol throws -> Void)? = nil, onCompleted: (() throws -> Void)? = nil)
         -> Observable<E> {
         return Do(source: self.asObservable()) { e in
             switch e {

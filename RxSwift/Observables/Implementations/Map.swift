@@ -26,17 +26,17 @@ class MapSink<SourceType, O : ObserverType> : Sink<O>, ObserverType {
         case .Next(let element):
             do {
                 let mappedElement = try _selector(element)
-                forwardOn(.Next(mappedElement))
+                forwardOn(event: .Next(mappedElement))
             }
             catch let e {
-                forwardOn(.Error(e))
+                forwardOn(event: .Error(e))
                 dispose()
             }
         case .Error(let error):
-            forwardOn(.Error(error))
+            forwardOn(event: .Error(error))
             dispose()
         case .Completed:
-            forwardOn(.Completed)
+            forwardOn(event: .Completed)
             dispose()
         }
     }
@@ -62,18 +62,18 @@ class MapWithIndexSink<SourceType, O : ObserverType> : Sink<O>, ObserverType {
         switch event {
         case .Next(let element):
             do {
-                let mappedElement = try _selector(element, try incrementChecked(&_index))
-                forwardOn(.Next(mappedElement))
+                let mappedElement = try _selector(element, try incrementChecked(i: &_index))
+                forwardOn(event: .Next(mappedElement))
             }
             catch let e {
-                forwardOn(.Error(e))
+                forwardOn(event: .Error(e))
                 dispose()
             }
         case .Error(let error):
-            forwardOn(.Error(error))
+            forwardOn(event: .Error(error))
             dispose()
         case .Completed:
-            forwardOn(.Completed)
+            forwardOn(event: .Completed)
             dispose()
         }
     }

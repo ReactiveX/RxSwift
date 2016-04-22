@@ -21,12 +21,12 @@ class ConcatSink<S: Sequence, O: ObserverType where S.Iterator.Element : Observa
     func on(event: Event<Element>){
         switch event {
         case .Next:
-            forwardOn(event)
+            forwardOn(event: event)
         case .Error:
-            forwardOn(event)
+            forwardOn(event: event)
             dispose()
         case .Completed:
-            schedule(.MoveNext)
+            schedule(command: .MoveNext)
         }
     }
 
@@ -57,7 +57,7 @@ class Concat<S: Sequence where S.Iterator.Element : ObservableConvertibleType> :
     
     override func run<O: ObserverType where O.E == Element>(observer: O) -> Disposable {
         let sink = ConcatSink<S, O>(observer: observer)
-        sink.disposable = sink.run((_sources.makeIterator(), _count))
+        sink.disposable = sink.run(sources: (_sources.makeIterator(), _count))
         return sink
     }
 }

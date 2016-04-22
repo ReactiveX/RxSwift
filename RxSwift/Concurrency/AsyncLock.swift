@@ -48,7 +48,7 @@ class AsyncLock<I: InvocableType>
             }
 
             if _isExecuting {
-                _queue.enqueue(action)
+                _queue.enqueue(element: action)
                 return nil
             }
 
@@ -71,7 +71,7 @@ class AsyncLock<I: InvocableType>
     }
 
     func invoke(action: I) {
-        let firstEnqueuedAction = enqueue(action)
+        let firstEnqueuedAction = enqueue(action: action)
         
         if let firstEnqueuedAction = firstEnqueuedAction {
             firstEnqueuedAction.invoke()

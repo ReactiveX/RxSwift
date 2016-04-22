@@ -45,13 +45,13 @@ class RangeSink<O: ObserverType where O.E: SignedInteger> : Sink<O> {
     }
     
     func run() -> Disposable {
-        return _parent._scheduler.scheduleRecursive(0 as O.E) { i, recurse in
+        return _parent._scheduler.scheduleRecursive(state: 0 as O.E) { i, recurse in
             if i < self._parent._count {
-                self.forwardOn(.Next(self._parent._start + i))
+                self.forwardOn(event: .Next(self._parent._start + i))
                 recurse(i + 1)
             }
             else {
-                self.forwardOn(.Completed)
+                self.forwardOn(event: .Completed)
                 self.dispose()
             }
         }

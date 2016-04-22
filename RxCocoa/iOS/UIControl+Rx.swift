@@ -20,7 +20,7 @@ extension UIControl {
     Bindable sink for `enabled` property.
     */
     public var rx_enabled: AnyObserver<Bool> {
-        return UIBindingObserver(UIElement: self) { control, value in
+        return UIBindingObserver<UIControl, Bool>(UIElement: self) { control, value in
             control.enabled = value
         }.asObserver()
     }
@@ -29,7 +29,7 @@ extension UIControl {
      Bindable sink for `selected` property.
      */
     public var rx_selected: AnyObserver<Bool> {
-        return UIBindingObserver(UIElement: self) { control, selected in
+        return UIBindingObserver<UIControl, Bool>(UIElement: self) { control, selected in
             control.selected = selected
         }.asObserver()
     }
@@ -44,19 +44,19 @@ extension UIControl {
             MainScheduler.ensureExecutingOnScheduler()
 
             guard let control = self else {
-                observer.on(.Completed)
+                observer.on(event: .Completed)
                 return NopDisposable.instance
             }
 
             let controlTarget = ControlTarget(control: control, controlEvents: controlEvents) {
                 control in
-                observer.on(.Next())
+                observer.on(event: .Next())
             }
             
             return AnonymousDisposable {
                 controlTarget.dispose()
             }
-        }.takeUntil(rx_deallocated)
+        }.takeUntil(other: rx_deallocated)
         
         return ControlEvent(events: source)
     }
@@ -68,15 +68,15 @@ extension UIControl {
     static func rx_value<C: AnyObject, T: Equatable>(control: C, getter: (C) -> T, setter: (C, T) -> Void) -> ControlProperty<T> {
         let source: Observable<T> = Observable.create { [weak weakControl = control] observer in
                 guard let control = weakControl else {
-                    observer.on(.Completed)
+                    observer.on(event: .Completed)
                     return NopDisposable.instance
                 }
 
-                observer.on(.Next(getter(control)))
+                observer.on(event: .Next(getter(control)))
 
-                let controlTarget = ControlTarget(control: control as! UIControl, controlEvents: [.AllEditingEvents, .ValueChanged]) { _ in
+                let controlTarget = ControlTarget(control: control as! UIControl, controlEvents: [.allEditingEvents, .valueChanged]) { _ in
                     if let control = weakControl {
-                        observer.on(.Next(getter(control)))
+                        observer.on(event: .Next(getter(control)))
                     }
                 }
                 
@@ -84,7 +84,7 @@ extension UIControl {
                     controlTarget.dispose()
                 }
             }
-            .takeUntil((control as! NSObject).rx_deallocated)
+            .takeUntil(other: (control as! NSObject).rx_deallocated)
 
         let bindingObserver = UIBindingObserver(UIElement: control, binding: setter)
 

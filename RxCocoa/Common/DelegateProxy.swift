@@ -72,7 +72,7 @@ public class DelegateProxy : _RXDelegateProxy {
     
     // proxy
     
-    public override func interceptedSelector(selector: Selector, withArguments arguments: [AnyObject]!) {
+    public override func interceptedSelector(_ selector: Selector, withArguments arguments: [AnyObject]!) {
         subjectsForSelector[selector]?.on(.Next(arguments))
     }
     
@@ -124,7 +124,7 @@ public class DelegateProxy : _RXDelegateProxy {
     - parameter forwardToDelegate: Reference of delegate that receives all messages through `self`.
     - parameter retainDelegate: Should `self` retain `forwardToDelegate`.
     */
-    public func setForwardToDelegate(delegate: AnyObject?, retainDelegate: Bool) {
+    public func setForwardToDelegate(forwardToDelegate delegate: AnyObject?, retainDelegate: Bool) {
         self._setForwardToDelegate(delegate, retainDelegate: retainDelegate)
     }
    

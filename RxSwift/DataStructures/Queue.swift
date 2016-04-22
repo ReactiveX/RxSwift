@@ -37,7 +37,7 @@ public struct Queue<T>: Sequence {
     public init(capacity: Int) {
         _initialCapacity = capacity
 
-        _storage = ContiguousArray<T?>(count: capacity, repeatedValue: nil)
+        _storage = ContiguousArray<T?>(repeating: nil, count: capacity)
     }
     
     private var dequeueIndex: Int {
@@ -96,7 +96,7 @@ public struct Queue<T>: Sequence {
     */
     public mutating func enqueue(element: T) {
         if count == _storage.count {
-            resizeTo(Swift.max(_storage.count, 1) * _resizeFactor)
+            resizeTo(size: Swift.max(_storage.count, 1) * _resizeFactor)
         }
         
         _storage[_pushNextIndex] = element
@@ -134,7 +134,7 @@ public struct Queue<T>: Sequence {
         defer {
             let downsizeLimit = _storage.count / (_resizeFactor * _resizeFactor)
             if _count < downsizeLimit && downsizeLimit >= _initialCapacity {
-                resizeTo(_storage.count / _resizeFactor)
+                resizeTo(size: _storage.count / _resizeFactor)
             }
         }
 

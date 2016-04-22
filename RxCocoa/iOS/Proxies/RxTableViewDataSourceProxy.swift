@@ -77,7 +77,7 @@ public class RxTableViewDataSourceProxy
     Required delegate method implementation.
     */
     public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        return (_requiredMethodsDataSource ?? tableViewDataSourceNotSet).tableView(tableView, cellForRowAtIndexPath: indexPath)
+        return (_requiredMethodsDataSource ?? tableViewDataSourceNotSet).tableView(tableView, cellForRowAt: indexPath)
     }
     
     // MARK: proxy
@@ -95,7 +95,7 @@ public class RxTableViewDataSourceProxy
      For more information take a look at `DelegateProxyType`.
      */
     public override class func delegateAssociatedObjectTag() -> UnsafePointer<Void> {
-        return _pointer(&dataSourceAssociatedTag)
+        return _pointer(p: &dataSourceAssociatedTag)
     }
 
     /**
@@ -120,7 +120,7 @@ public class RxTableViewDataSourceProxy
     public override func setForwardToDelegate(forwardToDelegate: AnyObject?, retainDelegate: Bool) {
         let requiredMethodsDataSource: UITableViewDataSource? = castOptionalOrFatalError(forwardToDelegate)
         _requiredMethodsDataSource = requiredMethodsDataSource ?? tableViewDataSourceNotSet
-        super.setForwardToDelegate(forwardToDelegate, retainDelegate: retainDelegate)
+        super.setForwardToDelegate(forwardToDelegate: forwardToDelegate, retainDelegate: retainDelegate)
     }
 }
 

@@ -36,10 +36,10 @@ public struct BagKey : Hashable {
 
     public var hashValue: Int {
         if let uniqueIdentity = uniqueIdentity {
-            return hash(key) ^ (unsafeAddress(of: uniqueIdentity).hashValue)
+            return hash(_x: key) ^ (unsafeAddress(of: uniqueIdentity).hashValue)
         }
         else {
-            return hash(key)
+            return hash(_x: key)
         }
     }
 }
@@ -264,7 +264,7 @@ extension Bag where T: ObserverType {
      */
     public func on(event: Event<T.E>) {
         if _onlyFastPath {
-            _value0?.on(event)
+            _value0?.on(event: event)
             return
         }
 
@@ -274,20 +274,20 @@ extension Bag where T: ObserverType {
         let dictionary = _dictionary
 
         if let value0 = value0 {
-            value0.on(event)
+            value0.on(event: event)
         }
 
         if let value1 = value1 {
-            value1.on(event)
+            value1.on(event: event)
         }
 
         for i in 0 ..< pairs.count {
-            pairs[i].value.on(event)
+            pairs[i].value.on(event: event)
         }
 
         if dictionary?.count ?? 0 > 0 {
             for element in dictionary!.values {
-                element.on(event)
+                element.on(event: event)
             }
         }
     }

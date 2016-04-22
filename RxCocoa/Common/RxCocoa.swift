@@ -219,7 +219,7 @@ public extension RxCocoaObjCRuntimeError {
 
 // MARK: Error binding policies
 
-func bindingErrorToInterface(error: ErrorProtocol) {
+func bindingErrorToInterface(_ error: ErrorProtocol) {
     let error = "Binding error to UI: \(error)"
 #if DEBUG
     rxFatalError(error)
@@ -230,7 +230,7 @@ func bindingErrorToInterface(error: ErrorProtocol) {
 
 // MARK: Abstract methods
 
-@noreturn func rxAbstractMethodWithMessage(message: String) {
+@noreturn func rxAbstractMethodWithMessage(_ message: String) {
     rxFatalError(message)
 }
 
@@ -241,7 +241,7 @@ func bindingErrorToInterface(error: ErrorProtocol) {
 // MARK: casts or fatal error
 
 // workaround for Swift compiler bug, cheers compiler team :)
-func castOptionalOrFatalError<T>(value: AnyObject?) -> T? {
+func castOptionalOrFatalError<T>(_ value: AnyObject?) -> T? {
     if value == nil {
         return nil
     }
@@ -249,7 +249,7 @@ func castOptionalOrFatalError<T>(value: AnyObject?) -> T? {
     return v
 }
 
-func castOrThrow<T>(resultType: T.Type, _ object: AnyObject) throws -> T {
+func castOrThrow<T>(_ resultType: T.Type, _ object: AnyObject) throws -> T {
     guard let returnValue = object as? T else {
         throw RxCocoaError.CastingError(object: object, targetType: resultType)
     }
@@ -257,7 +257,7 @@ func castOrThrow<T>(resultType: T.Type, _ object: AnyObject) throws -> T {
     return returnValue
 }
 
-func castOptionalOrThrow<T>(resultType: T.Type, _ object: AnyObject) throws -> T? {
+func castOptionalOrThrow<T>(_ resultType: T.Type, _ object: AnyObject) throws -> T? {
     if NSNull().isEqual(object) {
         return nil
     }
@@ -269,7 +269,7 @@ func castOptionalOrThrow<T>(resultType: T.Type, _ object: AnyObject) throws -> T
     return returnValue
 }
 
-func castOrFatalError<T>(value: AnyObject!, message: String) -> T {
+func castOrFatalError<T>(_ value: AnyObject!, message: String) -> T {
     let maybeResult: T? = value as? T
     guard let result = maybeResult else {
         rxFatalError(message)
@@ -278,7 +278,7 @@ func castOrFatalError<T>(value: AnyObject!, message: String) -> T {
     return result
 }
 
-func castOrFatalError<T>(value: Any!) -> T {
+func castOrFatalError<T>(_ value: Any!) -> T {
     let maybeResult: T? = value as? T
     guard let result = maybeResult else {
         rxFatalError("Failure converting from \(value) to \(T.self)")
@@ -297,29 +297,29 @@ let delegateNotSet = "Delegate not set"
 // MARK: Conversions `NSError` > `RxCocoaObjCRuntimeError`
 
 extension NSError {
-    func rxCocoaErrorForTarget(target: AnyObject) -> RxCocoaObjCRuntimeError {
+    func rxCocoaErrorForTarget(_ target: AnyObject) -> RxCocoaObjCRuntimeError {
         if domain == RXObjCRuntimeErrorDomain {
-            let errorCode = RXObjCRuntimeError(rawValue: self.code) ?? .Unknown
+            let errorCode = RXObjCRuntimeError(rawValue: self.code) ?? .unknown
 
             switch errorCode {
-            case .Unknown:
+            case .unknown:
                 return .Unknown(target: target)
-            case .ObjectMessagesAlreadyBeingIntercepted:
+            case .objectMessagesAlreadyBeingIntercepted:
                 let isKVO = (self.userInfo[RXObjCRuntimeErrorIsKVOKey] as? NSNumber)?.boolValue ?? false
                 return .ObjectMessagesAlreadyBeingIntercepted(target: target, interceptionMechanism: isKVO ? .KVO : .Unknown)
-            case .SelectorNotImplemented:
+            case .selectorNotImplemented:
                 return .SelectorNotImplemented(target: target)
-            case .CantInterceptCoreFoundationTollFreeBridgedObjects:
+            case .cantInterceptCoreFoundationTollFreeBridgedObjects:
                 return .CantInterceptCoreFoundationTollFreeBridgedObjects(target: target)
-            case .ThreadingCollisionWithOtherInterceptionMechanism:
+            case .threadingCollisionWithOtherInterceptionMechanism:
                 return .ThreadingCollisionWithOtherInterceptionMechanism(target: target)
-            case .SavingOriginalForwardingMethodFailed:
+            case .savingOriginalForwardingMethodFailed:
                 return .SavingOriginalForwardingMethodFailed(target: target)
-            case .ReplacingMethodWithForwardingImplementation:
+            case .replacingMethodWithForwardingImplementation:
                 return .ReplacingMethodWithForwardingImplementation(target: target)
-            case .ObservingPerformanceSensitiveMessages:
+            case .observingPerformanceSensitiveMessages:
                 return .ObservingPerformanceSensitiveMessages(target: target)
-            case .ObservingMessagesWithUnsupportedReturnType:
+            case .observingMessagesWithUnsupportedReturnType:
                 return .ObservingMessagesWithUnsupportedReturnType(target: target)
             }
         }

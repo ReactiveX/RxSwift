@@ -30,18 +30,18 @@ extension UIBarButtonItem {
     Reactive wrapper for target action pattern on `self`.
     */
     public var rx_tap: ControlEvent<Void> {
-        let source = rx_lazyInstanceObservable(&rx_tap_key) { () -> Observable<Void> in
+        let source = rx_lazyInstanceObservable(key: &rx_tap_key) { () -> Observable<Void> in
             Observable.create { [weak self] observer in
                 guard let control = self else {
-                    observer.on(.Completed)
+                    observer.on(event: .Completed)
                     return NopDisposable.instance
                 }
                 let target = BarButtonItemTarget(barButtonItem: control) {
-                    observer.on(.Next())
+                    observer.on(event: .Next())
                 }
                 return target
             }
-            .takeUntil(self.rx_deallocated)
+            .takeUntil(other: self.rx_deallocated)
             .share()
         }
         
@@ -77,7 +77,7 @@ class BarButtonItemTarget: RxTarget {
         callback = nil
     }
     
-    func action(sender: AnyObject) {
+    func action(_ sender: AnyObject) {
         callback()
     }
     

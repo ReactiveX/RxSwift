@@ -25,11 +25,11 @@ class ToArraySink<SourceType, O: ObserverType where O.E == [SourceType]> : Sink<
         case .Next(let value):
             self._list.append(value)
         case .Error(let e):
-            forwardOn(.Error(e))
+            forwardOn(event: .Error(e))
             self.dispose()
         case .Completed:
-            forwardOn(.Next(_list))
-            forwardOn(.Completed)
+            forwardOn(event: .Next(_list))
+            forwardOn(event: .Completed)
             self.dispose()
         }
     }

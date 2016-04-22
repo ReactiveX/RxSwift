@@ -20,9 +20,9 @@ class StartWith<Element>: Producer<Element> {
 
     override func run<O : ObserverType where O.E == Element>(observer: O) -> Disposable {
         for e in elements {
-            observer.on(.Next(e))
+            observer.on(event: .Next(e))
         }
 
-        return source.subscribe(observer)
+        return source.subscribe(observer: observer)
     }
 }

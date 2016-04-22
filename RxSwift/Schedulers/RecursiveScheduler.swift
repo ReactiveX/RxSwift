@@ -39,7 +39,7 @@ class AnyRecursiveScheduler<State> {
         var isDone = false
         
         var removeKey: CompositeDisposable.DisposeKey? = nil
-        let d = _scheduler.scheduleRelative(state, dueTime: dueTime) { (state) -> Disposable in
+        let d = _scheduler.scheduleRelative(state: state, dueTime: dueTime) { (state) -> Disposable in
             // best effort
             if self._group.disposed {
                 return NopDisposable.instance
@@ -47,7 +47,7 @@ class AnyRecursiveScheduler<State> {
             
             let action = self._lock.calculateLocked { () -> Action? in
                 if isAdded {
-                    self._group.removeDisposable(removeKey!)
+                    self._group.removeDisposable(disposeKey: removeKey!)
                 }
                 else {
                     isDone = true
@@ -65,7 +65,7 @@ class AnyRecursiveScheduler<State> {
             
         _lock.performLocked {
             if !isDone {
-                removeKey = _group.addDisposable(d)
+                removeKey = _group.addDisposable(disposable: d)
                 isAdded = true
             }
         }
@@ -82,7 +82,7 @@ class AnyRecursiveScheduler<State> {
         var isDone = false
         
         var removeKey: CompositeDisposable.DisposeKey? = nil
-        let d = _scheduler.schedule(state) { (state) -> Disposable in
+        let d = _scheduler.schedule(state: state) { (state) -> Disposable in
             // best effort
             if self._group.disposed {
                 return NopDisposable.instance
@@ -90,7 +90,7 @@ class AnyRecursiveScheduler<State> {
             
             let action = self._lock.calculateLocked { () -> Action? in
                 if isAdded {
-                    self._group.removeDisposable(removeKey!)
+                    self._group.removeDisposable(disposeKey: removeKey!)
                 }
                 else {
                     isDone = true
@@ -108,7 +108,7 @@ class AnyRecursiveScheduler<State> {
         
         _lock.performLocked {
             if !isDone {
-                removeKey = _group.addDisposable(d)
+                removeKey = _group.addDisposable(disposable: d)
                 isAdded = true
             }
         }
@@ -152,7 +152,7 @@ class RecursiveImmediateScheduler<State> {
         var isDone = false
         
         var removeKey: CompositeDisposable.DisposeKey? = nil
-        let d = _scheduler.schedule(state) { (state) -> Disposable in
+        let d = _scheduler.schedule(state: state) { (state) -> Disposable in
             // best effort
             if self._group.disposed {
                 return NopDisposable.instance
@@ -160,7 +160,7 @@ class RecursiveImmediateScheduler<State> {
             
             let action = self._lock.calculateLocked { () -> Action? in
                 if isAdded {
-                    self._group.removeDisposable(removeKey!)
+                    self._group.removeDisposable(disposeKey: removeKey!)
                 }
                 else {
                     isDone = true
@@ -178,7 +178,7 @@ class RecursiveImmediateScheduler<State> {
         
         _lock.performLocked {
             if !isDone {
-                removeKey = _group.addDisposable(d)
+                removeKey = _group.addDisposable(disposable: d)
                 isAdded = true
             }
         }

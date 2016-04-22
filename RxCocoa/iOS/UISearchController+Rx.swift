@@ -29,7 +29,7 @@ extension UISearchController {
      */
     public var rx_didDismiss: Observable<Void> {
         return rx_delegate
-            .observe(#selector(UISearchControllerDelegate.didDismissSearchController(_:)))
+            .observe(selector: #selector(UISearchControllerDelegate.didDismiss(_:)))
             .map {_ in}
     }
     /**
@@ -37,7 +37,7 @@ extension UISearchController {
      */
     public var rx_didPresent: Observable<Void> {
         return rx_delegate
-            .observe(#selector(UISearchControllerDelegate.didPresentSearchController(_:)))
+            .observe(selector: #selector(UISearchControllerDelegate.didPresent(_:)))
             .map {_ in}
     }
     /**
@@ -45,7 +45,7 @@ extension UISearchController {
      */
     public var rx_present: Observable<Void> {
         return rx_delegate
-            .observe(#selector(UISearchControllerDelegate.presentSearchController(_:)))
+            .observe(selector: #selector(UISearchControllerDelegate.present(_:)))
             .map {_ in}
     }
     /**
@@ -53,7 +53,7 @@ extension UISearchController {
      */
     public var rx_willDismiss: Observable<Void> {
         return rx_delegate
-            .observe(#selector(UISearchControllerDelegate.willDismissSearchController(_:)))
+            .observe(selector: #selector(UISearchControllerDelegate.willDismiss(_:)))
             .map {_ in}
     }
     /**
@@ -61,7 +61,7 @@ extension UISearchController {
      */
     public var rx_willPresent: Observable<Void> {
         return rx_delegate
-            .observe(#selector(UISearchControllerDelegate.willPresentSearchController(_:)))
+            .observe(selector: #selector(UISearchControllerDelegate.willPresent(_:)))
             .map {_ in}
     }
     

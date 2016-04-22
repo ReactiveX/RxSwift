@@ -19,12 +19,12 @@ let collectionViewDataSourceNotSet = CollectionViewDataSourceNotSet()
 class CollectionViewDataSourceNotSet
     : NSObject
     , UICollectionViewDataSource {
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         rxAbstractMethodWithMessage(dataSourceNotSet)
     }
     
     // The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: NSIndexPath) -> UICollectionViewCell {
         rxAbstractMethodWithMessage(dataSourceNotSet)
     }
     
@@ -60,15 +60,15 @@ public class RxCollectionViewDataSourceProxy
     /**
     Required delegate method implementation.
     */
-    public func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return (_requiredMethodsDataSource ?? collectionViewDataSourceNotSet).collectionView(collectionView, numberOfItemsInSection: section) ?? 0
     }
     
     /**
      Required delegate method implementation.
      */
-    public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        return (_requiredMethodsDataSource ?? collectionViewDataSourceNotSet).collectionView(collectionView, cellForItemAtIndexPath: indexPath)
+    public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: NSIndexPath) -> UICollectionViewCell {
+        return (_requiredMethodsDataSource ?? collectionViewDataSourceNotSet).collectionView(collectionView, cellForItemAt: indexPath)
     }
     
     // MARK: proxy
@@ -86,7 +86,7 @@ public class RxCollectionViewDataSourceProxy
     For more information take a look at `DelegateProxyType`.
     */
     public override class func delegateAssociatedObjectTag() -> UnsafePointer<Void> {
-        return _pointer(&dataSourceAssociatedTag)
+        return _pointer(p: &dataSourceAssociatedTag)
     }
 
     /**
@@ -111,7 +111,7 @@ public class RxCollectionViewDataSourceProxy
     public override func setForwardToDelegate(forwardToDelegate: AnyObject?, retainDelegate: Bool) {
         let requiredMethodsDataSource: UICollectionViewDataSource? = castOptionalOrFatalError(forwardToDelegate)
         _requiredMethodsDataSource = requiredMethodsDataSource ?? collectionViewDataSourceNotSet
-        super.setForwardToDelegate(forwardToDelegate, retainDelegate: retainDelegate)
+        super.setForwardToDelegate(forwardToDelegate: forwardToDelegate, retainDelegate: retainDelegate)
     }
 }
 

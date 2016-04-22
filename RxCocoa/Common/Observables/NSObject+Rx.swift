@@ -59,7 +59,7 @@ extension NSObject {
      - returns: Observable sequence of objects on `keyPath`.
      */
     @warn_unused_result(message: "http://git.io/rxs.uo")
-    public func rx_observe<E>(type: E.Type, _ keyPath: String, options: NSKeyValueObservingOptions = [.New, .Initial], retainSelf: Bool = true) -> Observable<E?> {
+    public func rx_observe<E>(_ type: E.Type, _ keyPath: String, options: NSKeyValueObservingOptions = [.new, .initial], retainSelf: Bool = true) -> Observable<E?> {
         return KVOObservable(object: self, keyPath: keyPath, options: options, retainTarget: retainSelf).asObservable()
     }
 }
@@ -82,8 +82,8 @@ extension NSObject {
      - returns: Observable sequence of objects on `keyPath`.
      */
     @warn_unused_result(message: "http://git.io/rxs.uo")
-    public func rx_observeWeakly<E>(type: E.Type, _ keyPath: String, options: NSKeyValueObservingOptions = [.New, .Initial]) -> Observable<E?> {
-        return observeWeaklyKeyPathFor(self, keyPath: keyPath, options: options)
+    public func rx_observeWeakly<E>(_ type: E.Type, _ keyPath: String, options: NSKeyValueObservingOptions = [.new, .initial]) -> Observable<E?> {
+        return observeWeaklyKeyPathFor(target: self, keyPath: keyPath, options: options)
             .map { n in
                 return n as? E
             }
@@ -154,9 +154,8 @@ extension NSObject {
             }
 
             var error: NSError?
-            let targetImplementation = RX_ensure_observing(self, selector, &error)
-            if targetImplementation == nil {
-                return Observable.error(error?.rxCocoaErrorForTarget(self) ?? RxCocoaError.Unknown)
+            guard let targetImplementation = RX_ensure_observing(self, selector, &error) else {
+                return Observable.error(error?.rxCocoaErrorForTarget(self) ?? RxCocoaError.unknown)
             }
 
             subject.targetImplementation = targetImplementation
@@ -201,7 +200,7 @@ extension NSObject {
                 return Observable.error(error?.rxCocoaErrorForTarget(self) ?? RxCocoaError.Unknown)
             }
 
-            subject.targetImplementation = targetImplementation
+            subject.targetImplementation = targetImplementation!
             return subject.asObservable()
         }
     }

@@ -99,7 +99,7 @@ extension Driver {
     */
     @warn_unused_result(message: "http://git.io/rxs.uo")
     public static func empty() -> Driver<E> {
-        return Driver(raw: Observable.empty().subscribeOn(driverSubscribeOnScheduler))
+        return Driver(raw: Observable.empty().subscribeOn(scheduler: driverSubscribeOnScheduler))
     }
 
     /**
@@ -109,7 +109,7 @@ extension Driver {
     */
     @warn_unused_result(message: "http://git.io/rxs.uo")
     public static func never() -> Driver<E> {
-        return Driver(raw: Observable.never().subscribeOn(driverSubscribeOnScheduler))
+        return Driver(raw: Observable.never().subscribeOn(scheduler: driverSubscribeOnScheduler))
     }
 
     /**
@@ -120,7 +120,7 @@ extension Driver {
     */
     @warn_unused_result(message: "http://git.io/rxs.uo")
     public static func just(element: E) -> Driver<E> {
-        return Driver(raw: Observable.just(element).subscribeOn(driverSubscribeOnScheduler))
+        return Driver(raw: Observable.just(element).subscribeOn(scheduler: driverSubscribeOnScheduler))
     }
 
     /**
@@ -145,7 +145,7 @@ extension Driver {
     */
     @warn_unused_result(message: "http://git.io/rxs.uo")
     public static func of(elements: E ...) -> Driver<E> {
-        let source = elements.toObservable(driverSubscribeOnScheduler)
+        let source = elements.toObservable(scheduler: driverSubscribeOnScheduler)
         return Driver(raw: source)
     }
 }
@@ -162,7 +162,7 @@ extension Driver where Element : SignedInteger {
     @warn_unused_result(message: "http://git.io/rxs.uo")
     public static func interval(period: RxTimeInterval)
         -> Driver<E> {
-        return Driver(Observable.interval(period, scheduler: driverObserveOnScheduler))
+        return Driver(Observable.interval(period: period, scheduler: driverObserveOnScheduler))
     }
 }
 
@@ -181,7 +181,7 @@ extension Driver where Element: SignedInteger {
     @warn_unused_result(message: "http://git.io/rxs.uo")
     public static func timer(dueTime: RxTimeInterval, period: RxTimeInterval)
         -> Driver<E> {
-        return Driver(Observable.timer(dueTime, period: period, scheduler: driverObserveOnScheduler))
+        return Driver(Observable.timer(dueTime: dueTime, period: period, scheduler: driverObserveOnScheduler))
     }
 }
 
@@ -201,8 +201,8 @@ public func driveOnScheduler(scheduler: SchedulerType, action: () -> ()) {
     action()
 
     // If you remove this line , compiler buggy optimizations will change behavior of this code
-    _forceCompilerToStopDoingInsaneOptimizationsThatBreakCode(driverObserveOnScheduler)
-    _forceCompilerToStopDoingInsaneOptimizationsThatBreakCode(driverSubscribeOnScheduler)
+    _forceCompilerToStopDoingInsaneOptimizationsThatBreakCode(scheduler: driverObserveOnScheduler)
+    _forceCompilerToStopDoingInsaneOptimizationsThatBreakCode(scheduler: driverSubscribeOnScheduler)
     // Scary, I know
 
     driverObserveOnScheduler = originalObserveOnScheduler

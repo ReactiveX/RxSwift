@@ -18,7 +18,7 @@ class DeallocObservable {
     }
 
     deinit {
-        _subject.on(.Next(()))
-        _subject.on(.Completed)
+        _subject.on(event: .Next(()))
+        _subject.on(event: .Completed)
     }
 }

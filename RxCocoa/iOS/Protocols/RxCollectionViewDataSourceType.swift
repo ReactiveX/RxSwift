@@ -30,7 +30,7 @@ public protocol RxCollectionViewDataSourceType /*: UICollectionViewDataSource*/ 
     - parameter collectionView: Bound collection view.
     - parameter observedEvent: Event
     */
-    func collectionView(collectionView: UICollectionView, observedEvent: Event<Element>) -> Void
+    func collectionView(_ collectionView: UICollectionView, observedEvent: Event<Element>) -> Void
 }
 
 #endif

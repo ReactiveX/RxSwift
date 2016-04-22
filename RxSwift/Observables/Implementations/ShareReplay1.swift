@@ -37,7 +37,7 @@ final class ShareReplay1<Element>
 
     func _synchronized_subscribe<O : ObserverType where O.E == E>(observer: O) -> Disposable {
         if let element = self._element {
-            observer.on(.Next(element))
+            observer.on(event: .Next(element))
         }
 
         if let stopEvent = self._stopEvent {
