@@ -47,11 +47,13 @@ class ActivityIndicator : DriverConvertibleType {
         _loading = _variable.asObservable()
             .map { $0 > 0 }
             .distinctUntilChanged()
-            .asDriver { (error: ErrorType) -> Driver<Bool> in
-                _ = fatalError("Loader can't fail")
-                return Driver.empty()
-            }
+            .asDriver(onErrorRecover: ActivityIndicator.ifItStillErrors)
     }
+
+    static func ifItStillErrors(error: ErrorType) -> Driver<Bool> {
+        _ = fatalError("Loader can't fail")
+    }
+
 
     func trackActivity<O: ObservableConvertibleType>(source: O) -> Observable<O.E> {
         return Observable.using({ () -> ActivityToken<O.E> in
