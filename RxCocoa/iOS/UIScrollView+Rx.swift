@@ -60,6 +60,24 @@ extension UIScrollView {
         let proxy = proxyForObject(RxScrollViewDelegateProxy.self, self)
         return installDelegate(proxy, delegate: delegate, retainDelegate: false, onProxyForObject: self)
     }
+    
+    /** 
+    Reactive observable that emit items whenever scroll view contentOffset.y is close to contentSize.height
+    */
+    public var rx_reachedBottom: Observable<Void> {
+        return rx_contentOffset
+            .flatMap { [weak self] contentOffset -> Observable<Void> in
+                guard let scrollView = self else {
+                    return Observable.empty()
+                }
+                
+                let visibleHeight = scrollView.frame.height - scrollView.contentInset.top - scrollView.contentInset.bottom
+                let y = contentOffset.y + scrollView.contentInset.top
+                let threshold = max(0.0, scrollView.contentSize.height - visibleHeight)
+                
+                return y > threshold ? Observable.just() : Observable.empty()
+        }
+    }
 }
 
 #endif
