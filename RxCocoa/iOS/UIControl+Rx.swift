@@ -53,9 +53,7 @@ extension UIControl {
                 observer.on(.Next())
             }
             
-            return AnonymousDisposable {
-                controlTarget.dispose()
-            }
+            return AnonymousDisposable(controlTarget.dispose)
         }.takeUntil(rx_deallocated)
         
         return ControlEvent(events: source)
@@ -80,9 +78,7 @@ extension UIControl {
                     }
                 }
                 
-                return AnonymousDisposable {
-                    controlTarget.dispose()
-                }
+                return AnonymousDisposable(controlTarget.dispose)
             }
             .takeUntil((control as! NSObject).rx_deallocated)
 
