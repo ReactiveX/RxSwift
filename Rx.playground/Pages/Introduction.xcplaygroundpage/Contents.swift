@@ -59,7 +59,7 @@ example("never") {
 
 /*:
 ### just
-`just` represents sequence that contains one element. It sends two messages to subscribers. The first message is the value of single element and the second message is `.Completed`.
+`just` represents a sequence that contains just one element. It sends two messages to subscribers. The first message is the value of a single element and the second message is `.Completed`.
 */
 
 example("just") {
@@ -101,7 +101,7 @@ example("toObservable") {
 
 /*:
 ### create
-`create` creates sequence using Swift closure. This examples creates custom version of `just` operator.
+`create` creates sequence using a Swift closure. This examples creates a custom version of the `just` operator.
 */
 
 example("create") {
@@ -122,7 +122,7 @@ example("create") {
 
 /*:
 ### generate
-`generate` creates sequence that generates its values and determines when to terminate based on its previous values.
+`generate` creates a sequence that generates values for as long as the provided condition evaluates to `true`.
 */
 
 example("generate") {
@@ -140,7 +140,7 @@ example("generate") {
 
 /*:
 ### error
-create an Observable that emits no items and terminates with an error
+create an Observable that emits no items and immediately terminates with an error
 */
 
 example("error") {
@@ -188,8 +188,8 @@ example("deferred") {
 }
 
 /*:
-There is a lot more useful methods in the RxCocoa library, so check them out: 
-* `rx_observe` exist on every NSObject and wraps KVO.
+There are many more useful methods in the RxCocoa library, so check them out:
+* `rx_observe` exists on every NSObject and wraps KVO.
 * `rx_tap` exists on buttons and wraps @IBActions
 * `rx_notification` wraps NotificationCenter events
 * ... and many others
