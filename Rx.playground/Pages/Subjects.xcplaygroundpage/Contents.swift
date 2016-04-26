@@ -53,6 +53,10 @@ example("PublishSubject") {
 ## ReplaySubject
 
 `ReplaySubject` emits to any observer all of the items that were emitted by the source Observable(s), regardless of when the observer subscribes.
+ When a new observer subscribes to a `ReplaySubject` it will receive only the past sent items that are currently
+ held in the buffer and then any new items that come later.
+ In the example below the buffer size is `1` so new observers will be able to see at most `1` item
+ from the past. i.e `Subscription: 2` will see the item `"b"` that was sent just before it subscribed but not `"a"` since the buffer size is less than `2`.
 
 ![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/replaysubject.png)
 */
@@ -96,7 +100,7 @@ example("BehaviorSubject") {
 
 ## Variable
 
-`Variable` wraps `BehaviorSubject`. Advantage of using variable over `BehaviorSubject` is that variable can never explicitly complete or error out, and `BehaviorSubject` can in case `Error` or `Completed` message is send to it. `Variable` will also automatically complete in case it's being deallocated.
+`Variable` wraps `BehaviorSubject`. The Advantage of using variable over `BehaviorSubject` is that `Variable` can never explicitly complete or error out, whereas `BehaviorSubject` can emit `Error` or `Completed` messages. `Variable` will also automatically complete if deallocated.
 
 */
 example("Variable") {
