@@ -19,7 +19,7 @@ extension UILabel {
     /**
     Bindable sink for `text` property.
     */
-    public var rx_text: AnyObserver<String> {
+    public var rx_text: AnyObserver<String?> {
         return UIBindingObserver(UIElement: self) { label, text in
             label.text = text
         }.asObserver()
