@@ -18,6 +18,7 @@ public struct Changeset<S: SectionModelType> {
 
     public let reloadData: Bool
 
+    public let originalSections: [S]
     public let finalSections: [S]
 
     public let insertedSections: [Int]
@@ -31,6 +32,7 @@ public struct Changeset<S: SectionModelType> {
     public let updatedItems: [ItemPath]
 
     init(reloadData: Bool = false,
+        originalSections: [S] = [],
         finalSections: [S] = [],
         insertedSections: [Int] = [],
         deletedSections: [Int] = [],
@@ -44,6 +46,7 @@ public struct Changeset<S: SectionModelType> {
     ) {
         self.reloadData = reloadData
 
+        self.originalSections = originalSections
         self.finalSections = finalSections
 
         self.insertedSections = insertedSections

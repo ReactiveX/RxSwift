@@ -51,9 +51,9 @@ extension UITableView : SectionedViewType {
         self.reloadSections(indexSet(sections), withRowAnimation: animationStyle)
     }
 
-  public func performBatchUpdates<S: SectionModelType>(changes: Changeset<S>, animationConfiguration: AnimationConfiguration?=nil) {
+  public func performBatchUpdates<S: SectionModelType>(changes: Changeset<S>, animationConfiguration: AnimationConfiguration) {
         self.beginUpdates()
-      _performBatchUpdates(self, changes: changes, animationConfiguration: animationConfiguration)
+        _performBatchUpdates(self, changes: changes, animationConfiguration: animationConfiguration)
         self.endUpdates()
     }
 }
@@ -91,9 +91,9 @@ extension UICollectionView : SectionedViewType {
         self.reloadSections(indexSet(sections))
     }
     
-  public func performBatchUpdates<S: SectionModelType>(changes: Changeset<S>, animationConfiguration:AnimationConfiguration?=nil) {
+  public func performBatchUpdates<S: SectionModelType>(changes: Changeset<S>, animationConfiguration: AnimationConfiguration) {
         self.performBatchUpdates({ () -> Void in
-            _performBatchUpdates(self, changes: changes)
+            _performBatchUpdates(self, changes: changes, animationConfiguration: animationConfiguration)
         }, completion: { (completed: Bool) -> Void in
         })
     }
@@ -110,13 +110,12 @@ public protocol SectionedViewType {
     func moveSection(from: Int, to: Int)
     func reloadSections(sections: [Int], animationStyle: UITableViewRowAnimation)
 
-    func performBatchUpdates<S>(changes: Changeset<S>, animationConfiguration: AnimationConfiguration?)
+    func performBatchUpdates<S>(changes: Changeset<S>, animationConfiguration: AnimationConfiguration)
 }
 
-func _performBatchUpdates<V: SectionedViewType, S: SectionModelType>(view: V, changes: Changeset<S>, animationConfiguration :AnimationConfiguration?=nil) {
+func _performBatchUpdates<V: SectionedViewType, S: SectionModelType>(view: V, changes: Changeset<S>, animationConfiguration:AnimationConfiguration) {
     typealias I = S.Item
   
-    let animationConfiguration = animationConfiguration ?? AnimationConfiguration()
     view.deleteSections(changes.deletedSections, animationStyle: animationConfiguration.deleteAnimation)
     // Updated sections doesn't mean reload entire section, somebody needs to update the section view manually
     // otherwise all cells will be reloaded for nothing.
