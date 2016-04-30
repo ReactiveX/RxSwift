@@ -23,6 +23,10 @@ final public class PublishSubject<Element>
     
     typealias DisposeKey = Bag<AnyObserver<Element>>.KeyType
     
+    public var hasObservers: Bool {
+        return _observers.count > 0
+    }
+    
     private var _lock = NSRecursiveLock()
     
     // state

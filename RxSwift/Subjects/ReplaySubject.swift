@@ -20,6 +20,15 @@ public class ReplaySubject<Element>
     , Disposable {
     public typealias SubjectObserverType = ReplaySubject<Element>
     
+    public var hasObservers: Bool {
+        return _observers.count > 0
+    }
+    
+    // state
+    private var _disposed = false
+    private var _stoppedEvent = nil as Event<Element>?
+    private var _observers = Bag<AnyObserver<Element>>()
+    
     typealias DisposeKey = Bag<AnyObserver<Element>>.KeyType
     
     func unsubscribe(key: DisposeKey) {
@@ -78,11 +87,6 @@ class ReplayBufferBase<Element>
     , SynchronizedUnsubscribeType {
     
     private var _lock = NSRecursiveLock()
-
-    // state
-    private var _disposed = false
-    private var _stoppedEvent = nil as Event<Element>?
-    private var _observers = Bag<AnyObserver<Element>>()
     
     func trim() {
         abstractMethod()
