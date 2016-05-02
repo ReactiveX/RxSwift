@@ -1129,6 +1129,9 @@
 		D2EBEB431BB9B6DE003A27DC /* SubjectType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093CC11B8A72BE0088E94D /* SubjectType.swift */; };
 		D2EBEB441BB9B6DE003A27DC /* Variable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093CC21B8A72BE0088E94D /* Variable.swift */; };
 		D2EBEB8A1BB9B9EE003A27DC /* ObservableConvertibleType+Blocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093F581B8A73A20088E94D /* ObservableConvertibleType+Blocking.swift */; };
+		D2F461021CD7AC1F00527B4D /* Reactive.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F461001CD7ABE400527B4D /* Reactive.swift */; };
+		D2F461031CD7AC2000527B4D /* Reactive.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F461001CD7ABE400527B4D /* Reactive.swift */; };
+		D2F461041CD7AC2100527B4D /* Reactive.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F461001CD7ABE400527B4D /* Reactive.swift */; };
 		D2FC15B31BCB95E5007361FF /* SkipWhile.swift in Sources */ = {isa = PBXBuildFile; fileRef = D22B6D251BC8504A00BCE0AB /* SkipWhile.swift */; };
 		D2FC15B41BCB95E7007361FF /* SkipWhile.swift in Sources */ = {isa = PBXBuildFile; fileRef = D22B6D251BC8504A00BCE0AB /* SkipWhile.swift */; };
 		D2FC15B51BCB95E8007361FF /* SkipWhile.swift in Sources */ = {isa = PBXBuildFile; fileRef = D22B6D251BC8504A00BCE0AB /* SkipWhile.swift */; };
@@ -1690,6 +1693,7 @@
 		D285BAC31BC0231000B3F602 /* SkipUntil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SkipUntil.swift; sourceTree = "<group>"; };
 		D2EA280C1BB9B5A200880ED3 /* RxSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2EBEB811BB9B99D003A27DC /* RxBlocking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxBlocking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D2F461001CD7ABE400527B4D /* Reactive.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reactive.swift; sourceTree = "<group>"; };
 		F31F35AF1BB4FED800961002 /* UIStepper+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIStepper+Rx.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -2087,6 +2091,7 @@
 				C8DB968C1BF7595D0084BD53 /* KVORepresentable+Swift.swift */,
 				C8BCD3F31C14B6D1005F1280 /* NSLayoutConstraint+Rx.swift */,
 				C8D132431C42D15E00B59FFF /* SectionedViewDataSourceType.swift */,
+				D2F461001CD7ABE400527B4D /* Reactive.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -3294,6 +3299,7 @@
 				C80D338F1B91EF9E0014629D /* Observable+Bind.swift in Sources */,
 				C88254311B8A752B00B02D69 /* UISegmentedControl+Rx.swift in Sources */,
 				C8093EED1B8A732E0088E94D /* KVOObservable.swift in Sources */,
+				D2F461021CD7AC1F00527B4D /* Reactive.swift in Sources */,
 				AAE623761C82475700FC7801 /* UIProgressView+Rx.swift in Sources */,
 				C8DB968D1BF7595D0084BD53 /* KVORepresentable+Swift.swift in Sources */,
 				C80DDEB11BCE8CA3006A1832 /* Driver+Operators+arity.swift in Sources */,
@@ -3360,6 +3366,7 @@
 				C8DB96841BF754C80084BD53 /* NSObject+Rx+KVORepresentable.swift in Sources */,
 				C8C4B4C31C17727000828BD5 /* MessageSentObserver.swift in Sources */,
 				C849EF8C1C3195950048AC4A /* Variable+Driver.swift in Sources */,
+				D2F461031CD7AC2000527B4D /* Reactive.swift in Sources */,
 				C8093F461B8A732E0088E94D /* NSButton+Rx.swift in Sources */,
 				C80DDEA01BCE69BA006A1832 /* Driver+Subscription.swift in Sources */,
 				C8093ED61B8A732E0088E94D /* _RXDelegateProxy.m in Sources */,
@@ -4288,6 +4295,7 @@
 				C80DDEA11BCE69BA006A1832 /* Driver+Subscription.swift in Sources */,
 				D2138C891BB9BEBE00339B5C /* DelegateProxyType.swift in Sources */,
 				C811C89F1C24D80100A2DDD4 /* DeallocObservable.swift in Sources */,
+				D2F461041CD7AC2100527B4D /* Reactive.swift in Sources */,
 				C8BCD3EF1C14B5FB005F1280 /* UIView+Rx.swift in Sources */,
 				D2138C921BB9BED600339B5C /* KVOObserver.swift in Sources */,
 				D2138C831BB9BEBE00339B5C /* _RXKVOObserver.m in Sources */,

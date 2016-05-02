@@ -440,6 +440,7 @@
 		CBEE77541BD8C7B700AD584C /* ToArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBEE77531BD8C7B700AD584C /* ToArray.swift */; };
 		D2245A191BD5654C00E7146F /* WithLatestFrom.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2245A0B1BD564A700E7146F /* WithLatestFrom.swift */; };
 		D2AF91981BD3D95900A008C1 /* Using.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2AF91881BD2C51900A008C1 /* Using.swift */; };
+		D2F4611B1CD7AC9000527B4D /* Reactive.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F461051CD7AC4D00527B4D /* Reactive.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -960,6 +961,7 @@
 		CBEE77531BD8C7B700AD584C /* ToArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToArray.swift; sourceTree = "<group>"; };
 		D2245A0B1BD564A700E7146F /* WithLatestFrom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WithLatestFrom.swift; sourceTree = "<group>"; };
 		D2AF91881BD2C51900A008C1 /* Using.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Using.swift; sourceTree = "<group>"; };
+		D2F461051CD7AC4D00527B4D /* Reactive.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reactive.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1626,6 +1628,7 @@
 		C8CC3E6B1C95CB5300ABA17E /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				D2F461051CD7AC4D00527B4D /* Reactive.swift */,
 				C8CC3E6C1C95CB5300ABA17E /* _RX.h */,
 				C8CC3E6D1C95CB5300ABA17E /* _RX.m */,
 				C8CC3E6E1C95CB5300ABA17E /* _RXDelegateProxy.h */,
@@ -2416,6 +2419,7 @@
 				C8CC3F0C1C95CB5300ABA17E /* UICollectionView+Rx.swift in Sources */,
 				C8297E561B6CF905000589EA /* WikipediaPage.swift in Sources */,
 				C8297E571B6CF905000589EA /* Randomizer.swift in Sources */,
+				D2F4611B1CD7AC9000527B4D /* Reactive.swift in Sources */,
 				C89464C31BC6C2B00055219D /* Concat.swift in Sources */,
 				C89464F41BC6C2B00055219D /* ObservableType.swift in Sources */,
 				C89464CE1BC6C2B00055219D /* Generate.swift in Sources */,

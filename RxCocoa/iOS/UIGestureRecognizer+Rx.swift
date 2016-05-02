@@ -51,15 +51,9 @@ class GestureTarget<Recognizer: UIGestureRecognizer>: RxTarget {
     }
 }
 
-public protocol Rx {
-    
-}
+extension UIGestureRecognizer: Reactive  { }
 
-extension UIGestureRecognizer: Rx  {
-    
-}
-
-extension Rx where Self: UIGestureRecognizer {
+extension Reactive where Self: UIGestureRecognizer {
     
     /**
     Reactive wrapper for gesture recognizer events.
