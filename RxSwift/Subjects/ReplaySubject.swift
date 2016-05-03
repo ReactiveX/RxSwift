@@ -20,6 +20,9 @@ public class ReplaySubject<Element>
     , Disposable {
     public typealias SubjectObserverType = ReplaySubject<Element>
     
+    /**
+     Indicates whether the subject has any observers
+     */
     public var hasObservers: Bool {
         return _observers.count > 0
     }
