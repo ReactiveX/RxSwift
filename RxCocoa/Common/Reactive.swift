@@ -11,16 +11,16 @@ We can use `Reactive` protocol as customization point for constrained protocol e
 
 General pattern would be:
 
-```swift
-// 1. Conform SomeType to Reactive protocol
-extension SomeType: Reactive {}
 
-// 2. Extend Reactive protocol with constrain on Self
-// Read as: Reactive Extension where Self is a SomeType
-extension Reactive where Self: SomeType {
-    // 3. Put any specific reactive extension for SomeType here
-}
-```
+    // 1. Conform SomeType to Reactive protocol
+    extension SomeType: Reactive {}
+
+    // 2. Extend Reactive protocol with constrain on Self
+    // Read as: Reactive Extension where Self is a SomeType
+    extension Reactive where Self: SomeType {
+        // 3. Put any specific reactive extension for SomeType here
+    }
+
 
 With this approach we can have more specialized methods and properties using 
 `Self` and not just specialized on common base type.
