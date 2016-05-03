@@ -26,6 +26,7 @@ public final class BehaviorSubject<Element>
      Indicates whether the subject has any observers
      */
     public var hasObservers: Bool {
+        _lock.lock(); defer { _lock.unlock() }
         return _observers.count > 0
     }
     

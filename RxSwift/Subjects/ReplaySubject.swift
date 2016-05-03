@@ -24,8 +24,11 @@ public class ReplaySubject<Element>
      Indicates whether the subject has any observers
      */
     public var hasObservers: Bool {
+        _lock.lock(); defer { _lock.unlock() }
         return _observers.count > 0
     }
+    
+    private var _lock = NSRecursiveLock()
     
     // state
     private var _disposed = false
@@ -88,8 +91,6 @@ public class ReplaySubject<Element>
 class ReplayBufferBase<Element>
     : ReplaySubject<Element>
     , SynchronizedUnsubscribeType {
-    
-    private var _lock = NSRecursiveLock()
     
     func trim() {
         abstractMethod()
