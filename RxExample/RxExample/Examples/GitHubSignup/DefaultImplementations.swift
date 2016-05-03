@@ -17,7 +17,7 @@ class GitHubDefaultValidationService: GitHubValidationService {
 
     static let sharedValidationService = GitHubDefaultValidationService(API: GitHubDefaultAPI.sharedAPI)
 
-    init (API: GitHubAPI) {
+    private init (API: GitHubAPI) {
         self.API = API
     }
     
@@ -85,7 +85,7 @@ class GitHubDefaultAPI : GitHubAPI {
         URLSession: NSURLSession.sharedSession()
     )
 
-    init(URLSession: NSURLSession) {
+    private init(URLSession: NSURLSession) {
         self.URLSession = URLSession
     }
     
