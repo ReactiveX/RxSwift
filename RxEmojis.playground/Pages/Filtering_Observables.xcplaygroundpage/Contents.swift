@@ -1,12 +1,3 @@
-/*:
-> # IMPORTANT: To use `Rx.playground`, please:
-
-1. Open `Rx.xcworkspace`
-2. Build `RxSwift-OSX` scheme
-3. And then open `Rx` playground in `Rx.xcworkspace` tree view.
-4. Choose `View > Show Debug Area`
-*/
-
 //: [<< Previous](@previous) - [Index](Index)
 
 import RxSwift
@@ -58,18 +49,18 @@ example("distinctUntilChanged") {
 
 
 /*:
- ### `elementAt`
- 
- Emit only item n of all elemets emitted by an Observable
- 
- ![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/elementat.png)
- 
- [More info in reactive.io website]( http://reactivex.io/documentation/operators/elementat.html )
- */
+### `elementAt`
+
+Emit only n items emitted by an Observable
+
+![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/elementat.png)
+
+[More info in reactive.io website]( http://reactivex.io/documentation/operators/elementat.html )
+*/
 
 example("elementAt") {
     let subscription = Observable.of("🔴","🔵","⚪️","㊗️")
-        .elementAt(2)
+        .elementAt(1)
         .subscribe {
             print($0)
         }
@@ -97,14 +88,14 @@ example("take") {
 
 
 /*:
- ### `single` (a.k.a first)
- 
- Emit only the first item (or the first item that meets some condition) emitted by an Observable
- 
- ![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/first.png)
- 
- [More info in reactive.io website]( http://reactivex.io/documentation/operators/first.html )
- */
+### `single` (a.k.a first)
+
+Emit only the first item (or the first item that meets some condition) emitted by an Observable
+
+![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/first.png)
+
+[More info in reactive.io website]( http://reactivex.io/documentation/operators/first.html )
+*/
 example("single") {
     let subscription = Observable.of("🔴","🔵","⚪️","㊗️")
         .single()
@@ -126,38 +117,38 @@ example("single with predicate") {
 
 
 /*:
- ### `takeLast`
- 
- Emit only the final n items emitted by an Observable
- 
- ![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/takelast.png)
- 
- [More info in reactive.io website]( http://reactivex.io/documentation/operators/takelast.html )
- */
+### `takeLast`
+
+Emit only the final n items emitted by an Observable
+
+![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/takelast.png)
+
+[More info in reactive.io website]( http://reactivex.io/documentation/operators/takelast.html )
+*/
 example("takeLast") {
     let subscription = Observable.of("🔴","🔵","⚪️","㊗️")
         .takeLast(2)
         .subscribe {
             print($0)
-        }
+    }
 }
 
 
 /*:
- ### `skip`
- 
- Suppress the first n items emitted by an Observable
- 
- ![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/skip.png)
- 
- [More info in reactive.io website]( http://reactivex.io/documentation/operators/skip.html )
- */
+### `skip`
+
+Suppress the first n items emitted by an Observable
+
+![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/skip.png)
+
+[More info in reactive.io website]( http://reactivex.io/documentation/operators/skip.html )
+*/
 example("skip") {
     let subscription = Observable.of("🔴","🔵","⚪️","㊗️")
         .skip(2)
         .subscribe {
             print($0)
-        }
+    }
 }
 
 
@@ -168,12 +159,10 @@ example("skipWhileWithIndex") {
         }
         .subscribe {
             print($0)
-        }
+    }
 }
 
 
 
 
-
-
-//: [Index](Index) - [Next >>](@next)
+//: [Index](Index) - [next >>](@next)

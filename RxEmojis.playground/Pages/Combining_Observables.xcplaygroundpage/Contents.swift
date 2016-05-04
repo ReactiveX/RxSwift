@@ -1,12 +1,3 @@
-/*:
-> # IMPORTANT: To use `Rx.playground`, please:
-
-1. Open `Rx.xcworkspace`
-2. Build `RxSwift-OSX` scheme
-3. And then open `Rx` playground in `Rx.xcworkspace` tree view.
-4. Choose `View > Show Debug Area`
-*/
-
 //: [<< Previous](@previous) - [Index](Index)
 
 import RxSwift
@@ -52,20 +43,20 @@ when an item is emitted by either of two Observables, combine the latest item em
 example("combineLatest 1") {
     let stringObs = PublishSubject<String>()
     let intObs = PublishSubject<Int>()
-    
+
     _ = Observable.combineLatest(stringObs, intObs) {
         "\($0) \($1)"
         }
         .subscribe {
             print($0)
         }
-    
+
     stringObs.on(.Next("🅰️"))
-    
+
     intObs.on(.Next(1))
-    
+
     stringObs.on(.Next("🅱️"))
-    
+
     intObs.on(.Next(2))
 }
 
@@ -75,9 +66,9 @@ example("combineLatest 1") {
 example("combineLatest 2") {
     let stringObs = Observable.of("🔴","🔵","⚪️","㊗️")
     let intObs = Observable.just(2)
-    
+
     _ = Observable.combineLatest(stringObs, intObs) {
-        "\($0) \($1)"
+            "\($0) \($1)"
         }
         .subscribe {
             print($0)
@@ -92,9 +83,9 @@ example("combineLatest 3") {
     let intObs = Observable.just(2)
     let stringObs1 = Observable.of("🔴","🔵","⚪️","㊗️")
     let stringObs2 = Observable.of("🅰️","🅱️","🆎")
-    
+
     _ = Observable.combineLatest(intObs, stringObs1, stringObs2) {
-        "\($0) \($1) \($2)"
+            "\($0) \($1) \($2)"
         }
         .subscribe {
             print($0)
@@ -110,11 +101,11 @@ example("combineLatest 4") {
     let stringObs = Observable.just("🔴")
     
     _ = Observable.combineLatest(intObs, stringObs) {
-        "\($0) " + $1
+            "\($0) " + $1
         }
         .subscribe {
             print($0)
-        }
+    }
 }
 
 
@@ -127,7 +118,7 @@ example("combineLatest 5") {
     let stringObs3 = Observable.of("🅰️","🅱️","🆎")
     
     _ = [stringObs1, stringObs2, stringObs3].combineLatest { stringArray -> String in
-        stringArray[0] + stringArray[1] + stringArray[2]
+            stringArray[0] + stringArray[1] + stringArray[2]
         }
         .subscribe { (event: Event<String>) -> Void in
             print(event)
@@ -148,22 +139,22 @@ combine the emissions of multiple Observables together via a specified function 
 example("zip 1") {
     let stringObs = PublishSubject<String>()
     let intObs = PublishSubject<Int>()
-    
+
     _ = Observable.zip(stringObs, intObs) {
         "\($0) \($1)"
         }
         .subscribe {
             print($0)
         }
-    
+
     stringObs.on(.Next("🔴"))
-    
+
     intObs.on(.Next(1))
-    
+
     stringObs.on(.Next("🔵"))
-    
+
     stringObs.on(.Next("⚪️"))
-    
+
     intObs.on(.Next(2))
 }
 
@@ -171,9 +162,9 @@ example("zip 1") {
 example("zip 2") {
     let intObs = Observable.just(1)
     let stringObs = Observable.of("🔴","🔵","⚪️","㊗️")
-    
+
     _ = Observable.zip(intObs, stringObs) {
-        "\($0) \($1)"
+            "\($0) \($1)"
         }
         .subscribe {
             print($0)
@@ -185,9 +176,9 @@ example("zip 3") {
     let intObs = Observable.of(1,2)
     let stringObs1 = Observable.of("🔴","🔵","⚪️","㊗️")
     let stringObs2 = Observable.of("🍎","🍐","🍊","🍋","🍉","🍓")
-    
+
     _ = Observable.zip(intObs, stringObs1, stringObs2) {
-        "\($0) \($1) \($2)"
+            "\($0) \($1) \($2)"
         }
         .subscribe {
             print($0)
@@ -200,7 +191,7 @@ example("zip 3") {
 /*:
 ### `merge`
 
-combine multiple Observables into one by merging their emissions
+combine multiple Observables of same type into one by merging their emissions
 
 ![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/merge.png)
 
@@ -209,13 +200,13 @@ combine multiple Observables into one by merging their emissions
 example("merge 1") {
     let subject1 = PublishSubject<String>()
     let subject2 = PublishSubject<String>()
-    
+
     _ = Observable.of(subject1, subject2)
         .merge()
         .subscribeNext { string in
             print(string)
         }
-    
+
     subject1.on(.Next("🍎"))
     subject1.on(.Next("🍐"))
     subject1.on(.Next("🍊"))
@@ -229,7 +220,7 @@ example("merge 1") {
 example("merge 2") {
     let subject1 = PublishSubject<String>()
     let subject2 = PublishSubject<String>()
-    
+
     _ = Observable.of(subject1, subject2)
         .merge(maxConcurrent: 2)
         .subscribe {
@@ -258,32 +249,32 @@ convert an Observable that emits Observables into a single Observable that emits
 */
 example("switchLatest") {
     let var1 = Variable("⚽️")
-    
+
     let var2 = Variable("🍎")
-    
+
     // var3 is an Observable<Observable<String>>
     let var3 = Variable(var1.asObservable())
-    
+
     let d = var3
         .asObservable()
         .switchLatest()
         .subscribe {
             print($0)
         }
-    
+
     var1.value = "🏀"
     var1.value = "🏈"
     var1.value = "⚾️"
     var1.value = "🎱"
-    
+
     var3.value = var2.asObservable()
-    
+
     var2.value = "🍐"
-    
+
     var1.value = "🏐"
     var1.value = "🏉"
     
     var2.value = "🍋"
 }
 
-//: [Index](Index) - [Next >>](@next)
+//: [Index](Index) - [next >>](@next)

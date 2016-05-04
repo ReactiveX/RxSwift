@@ -1,12 +1,3 @@
-/*:
-> # IMPORTANT: To use `Rx.playground`, please:
-
-1. Open `Rx.xcworkspace`
-2. Build `RxSwift-OSX` scheme
-3. And then open `Rx` playground in `Rx.xcworkspace` tree view.
-4. Choose `View > Show Debug Area`
-*/
-
 //: [<< Previous](@previous) - [Index](Index)
 
 import RxSwift
@@ -29,7 +20,7 @@ Recover from an `Error` notification by continuing the sequence without error
 example("catchError 1") {
     let sequenceThatFails = PublishSubject<String>()
     let recoverySequence = Observable.of("🍎","🍐","🍊","🍋")
-    
+
     _ = sequenceThatFails
         .catchError { error in
             return recoverySequence
@@ -37,7 +28,7 @@ example("catchError 1") {
         .subscribe {
             print($0)
         }
-    
+
     sequenceThatFails.on(.Next("🔴"))
     sequenceThatFails.on(.Next("🔵"))
     sequenceThatFails.on(.Next("⚪️"))
@@ -48,7 +39,7 @@ example("catchError 1") {
 
 example("catchError 2") {
     let sequenceThatFails = PublishSubject<String>()
-    
+
     _ = sequenceThatFails
         .catchErrorJustReturn("🍋")
         .subscribe {
@@ -88,10 +79,10 @@ example("retry") {
         observer.on(.Next("🏀"))
         observer.on(.Next("⚽️"))
         observer.on(.Completed)
-        
+
         return NopDisposable.instance
     }
-    
+
     _ = funnyLookingSequence
         .retry()
         .subscribe {

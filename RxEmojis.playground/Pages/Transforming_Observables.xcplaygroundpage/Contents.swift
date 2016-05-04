@@ -1,12 +1,3 @@
-/*:
-> # IMPORTANT: To use `Rx.playground`, please:
-
-1. Open `Rx.xcworkspace`
-2. Build `RxSwift-OSX` scheme
-3. And then open `Rx` playground in `Rx.xcworkspace` tree view.
-4. Choose `View > Show Debug Area`
-*/
-
 //: [<< Previous](@previous) - [Index](Index)
 
 import RxSwift
@@ -34,9 +25,7 @@ example("map") {
         .map { number in
             number * 2
         }
-        .subscribe {
-            print($0)
-        }
+        .subscribe { print($0) }
 }
 
 
@@ -51,9 +40,9 @@ Transform the items emitted by an Observable into Observables, then flatten the 
 */
 example("flatMap") {
     let sequenceInt = Observable.of(1, 2, 3)
-    
+
     let sequenceString = Observable.of("🔴","🔵","⚪️","㊗️")
-    
+
     _ = sequenceInt
         .flatMap { (x:Int) -> Observable<String> in
             print("from sequenceInt \(x)")

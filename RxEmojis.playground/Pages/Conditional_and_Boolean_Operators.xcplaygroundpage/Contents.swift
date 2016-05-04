@@ -1,12 +1,3 @@
-/*:
-> # IMPORTANT: To use `Rx.playground`, please:
-
-1. Open `Rx.xcworkspace`
-2. Build `RxSwift-OSX` scheme
-3. And then open `Rx` playground in `Rx.xcworkspace` tree view.
-4. Choose `View > Show Debug Area`
-*/
-
 //: [<< Previous](@previous) - [Index](Index)
 
 import Cocoa
@@ -79,14 +70,14 @@ example("takeWhile") {
 
 
 /*:
- ### `skipWhile`
- 
- Discard items emitted by an Observable until a specified condition becomes false
- 
- ![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/skipWhile.png)
- 
- [More info in reactive.io website]( http://reactivex.io/documentation/operators/skipwhile.html )
- */
+### `skipWhile`
+
+Discard items emitted by an Observable until a specified condition becomes false
+
+![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/skipWhile.png)
+
+[More info in reactive.io website]( http://reactivex.io/documentation/operators/skipwhile.html )
+*/
 example("skipWhile") {
     let subscription = Observable.of(1, 2, 3, 4, 5, 6)
         .skipWhile { integer -> Bool in
@@ -94,19 +85,19 @@ example("skipWhile") {
         }
         .subscribe {
             print($0)
-        }
+    }
 }
 
 
 /*:
- ### `skipUntil`
- 
- Discard items emitted by an Observable until a second Observable emits an item
- 
- ![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/skipuntil.png)
- 
- [More info in reactive.io website]( http://reactivex.io/documentation/operators/skipuntil.html )
- */
+### `skipUntil`
+
+Discard items emitted by an Observable until a second Observable emits an item
+
+![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/skipuntil.png)
+
+[More info in reactive.io website]( http://reactivex.io/documentation/operators/skipuntil.html )
+*/
 example("skipUntil") {
     let ob1: Observable<Int> = Observable.create { observer -> Disposable in
         observer.on(.Next(0))
@@ -142,11 +133,10 @@ example("skipUntil") {
         .skipUntil(ob2)
         .subscribe {
             print($0)
-        }
+    }
 }
 
 playgroundShouldContinueIndefinitely()
-
 
 
 //: [Index](Index) - [Next >>](@next)

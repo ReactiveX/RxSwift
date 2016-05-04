@@ -1,17 +1,11 @@
-/*:
-> # IMPORTANT: To use `Rx.playground`, please:
-
-1. Open `Rx.xcworkspace`
-2. Build `RxSwift-OSX` scheme
-3. And then open `Rx` playground in `Rx.xcworkspace` tree view.
-4. Choose `View > Show Debug Area`
-*/
-
 //: [<< Previous](@previous) - [Index](Index)
 
 import RxSwift
 
 /*:
+
+# Subjects
+
 
 A Subject is a sort of bridge or proxy that is available in some implementations of ReactiveX that acts both as an observer and as an Observable. Because it is an observer, it can subscribe to one or more Observables, and because it is an Observable, it can pass through the items it observes by reemitting them, and it can also emit new items.
 */
@@ -53,10 +47,6 @@ example("PublishSubject") {
 ## ReplaySubject
 
 `ReplaySubject` emits to any observer all of the items that were emitted by the source Observable(s), regardless of when the observer subscribes.
- When a new observer subscribes to a `ReplaySubject` it will receive only the past sent items that are currently
- held in the buffer and then any new items that come later.
- In the example below the buffer size is `1` so new observers will be able to see at most `1` item
- from the past. i.e `Subscription: 2` will see the item `"b"` that was sent just before it subscribed but not `"a"` since the buffer size is less than `2`.
 
 ![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/replaysubject.png)
 */
@@ -100,7 +90,7 @@ example("BehaviorSubject") {
 
 ## Variable
 
-`Variable` wraps `BehaviorSubject`. The Advantage of using variable over `BehaviorSubject` is that `Variable` can never explicitly complete or error out, whereas `BehaviorSubject` can emit `Error` or `Completed` messages. `Variable` will also automatically complete if deallocated.
+`Variable` wraps `BehaviorSubject`. Advantage of using variable over `BehaviorSubject` is that variable can never explicitly complete or error out, and `BehaviorSubject` can in case `Error` or `Completed` message is send to it. `Variable` will also automatically complete in case it's being deallocated.
 
 */
 example("Variable") {
