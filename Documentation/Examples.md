@@ -53,7 +53,7 @@ let c = Observable.combineLatest(a.asObservable(), b.asObservable()) { $0 + $1 }
 	.map { "\($0) is positive" }      // maps `a + b` to "\(a + b) is positive"
 
 // Since initial values are a = 1, b = 2
-// 1 + 2 = 3 which is >= 0, `c` is intially equal to "3 is positive"
+// 1 + 2 = 3 which is >= 0, `c` is initially equal to "3 is positive"
 
 // To pull values out of rx variable `c`, subscribe to values from  `c`.
 // `subscribeNext` means subscribe to next (fresh) values of variable `c`.
