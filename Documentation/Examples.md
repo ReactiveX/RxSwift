@@ -57,7 +57,7 @@ let c = Observable.combineLatest(a.asObservable(), b.asObservable()) { $0 + $1 }
 
 // To pull values out of rx variable `c`, subscribe to values from  `c`.
 // `subscribeNext` means subscribe to next (fresh) values of variable `c`.
-// That also includes the inital value "3 is positive".
+// That also includes the initial value "3 is positive".
 c.subscribeNext { print($0) }          // prints: "3 is positive"
 
 // Now let's increase the value of `a`
