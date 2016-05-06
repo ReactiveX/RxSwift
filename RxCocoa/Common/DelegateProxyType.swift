@@ -196,7 +196,7 @@ public func proxyForObject<P: DelegateProxyType>(type: P.Type, _ object: AnyObje
 func installDelegate<P: DelegateProxyType>(proxy: P, delegate: AnyObject, retainDelegate: Bool, onProxyForObject object: AnyObject) -> Disposable {
     weak var weakDelegate: AnyObject? = delegate
     
-    assert(proxy.forwardToDelegate() === nil, "There is already a delegate set -> `\(proxy.forwardToDelegate())` for object -> `\(object)`.\nMaybe delegate was already set in `xib` or `storyboard` and now it's being overwritten in code.")
+    assert(proxy.forwardToDelegate() === nil, "There is already a delegate set -> `\(proxy.forwardToDelegate()!)` for object -> `\(object)`.\nMaybe delegate was already set in `xib` or `storyboard` and now it's being overwritten in code.")
     
     proxy.setForwardToDelegate(delegate, retainDelegate: retainDelegate)
     
