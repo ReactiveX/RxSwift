@@ -53,11 +53,11 @@ let c = Observable.combineLatest(a.asObservable(), b.asObservable()) { $0 + $1 }
 	.map { "\($0) is positive" }      // maps `a + b` to "\(a + b) is positive"
 
 // Since initial values are a = 1, b = 2
-// 1 + 2 = 3 which is >= 0, `c` is intially equal to "3 is positive"
+// 1 + 2 = 3 which is >= 0, `c` is initially equal to "3 is positive"
 
 // To pull values out of rx variable `c`, subscribe to values from  `c`.
 // `subscribeNext` means subscribe to next (fresh) values of variable `c`.
-// That also includes the inital value "3 is positive".
+// That also includes the initial value "3 is positive".
 c.subscribeNext { print($0) }          // prints: "3 is positive"
 
 // Now let's increase the value of `a`
@@ -124,8 +124,8 @@ self.usernameOutlet.rx_text
         // synchronous validation, nothing special here
         if username.isEmpty {
             // Convenience for constructing synchronous result.
-            // In case there is mixed synchronous and asychronous code inside the same
-            // method, this will construct an async result that is resolved immediatelly.
+            // In case there is mixed synchronous and asynchronous code inside the same
+            // method, this will construct an async result that is resolved immediately.
             return Observable.just((valid: false, message: "Username can't be empty."))
         }
 
