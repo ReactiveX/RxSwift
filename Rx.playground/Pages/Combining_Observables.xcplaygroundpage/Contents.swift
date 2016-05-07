@@ -29,11 +29,10 @@ emit a specified sequence of items before beginning to emit the items from the s
 */
 example("startWith") {
 
-    let subscription = Observable.of(4, 5, 6, 7, 8, 9)
-        .startWith(3)
-        .startWith(2)
-        .startWith(1)
-        .startWith(0)
+    let subscription = Observable.of("🐶","🐱","🐭","🐹")
+        .startWith("🔴")
+        .startWith("🅱️")
+        .startWith("🆎")
         .subscribe {
             print($0)
         }
@@ -51,34 +50,34 @@ when an item is emitted by either of two Observables, combine the latest item em
 
 */
 example("combineLatest 1") {
-    let intOb1 = PublishSubject<String>()
-    let intOb2 = PublishSubject<Int>()
-
-    _ = Observable.combineLatest(intOb1, intOb2) {
+    let stringObs = PublishSubject<String>()
+    let intObs = PublishSubject<Int>()
+    
+    _ = Observable.combineLatest(stringObs, intObs) {
         "\($0) \($1)"
         }
         .subscribe {
             print($0)
         }
-
-    intOb1.on(.Next("A"))
-
-    intOb2.on(.Next(1))
-
-    intOb1.on(.Next("B"))
-
-    intOb2.on(.Next(2))
+    
+    stringObs.on(.Next("🅰️"))
+    
+    intObs.on(.Next(1))
+    
+    stringObs.on(.Next("🅱️"))
+    
+    intObs.on(.Next(2))
 }
 
 
 //: To produce output, at least one element has to be received from each sequence in arguements.
 
 example("combineLatest 2") {
-    let intOb1 = Observable.just(2)
-    let intOb2 = Observable.of(0, 1, 2, 3, 4)
-
-    _ = Observable.combineLatest(intOb1, intOb2) {
-            $0 * $1
+    let stringObs = Observable.of("🐶","🐱","🐭","🐹")
+    let intObs = Observable.just(2)
+    
+    _ = Observable.combineLatest(stringObs, intObs) {
+        "\($0) \($1)"
         }
         .subscribe {
             print($0)
@@ -90,12 +89,12 @@ example("combineLatest 2") {
 //: Combine latest has versions with more than 2 arguments.
 
 example("combineLatest 3") {
-    let intOb1 = Observable.just(2)
-    let intOb2 = Observable.of(0, 1, 2, 3)
-    let intOb3 = Observable.of(0, 1, 2, 3, 4)
-
-    _ = Observable.combineLatest(intOb1, intOb2, intOb3) {
-            ($0 + $1) * $2
+    let intObs = Observable.just(2)
+    let stringObs1 = Observable.of("🐶","🐱","🐭","🐹")
+    let stringObs2 = Observable.of("🅰️","🅱️","🆎")
+    
+    _ = Observable.combineLatest(intObs, stringObs1, stringObs2) {
+        "\($0) \($1) \($2)"
         }
         .subscribe {
             print($0)
@@ -107,15 +106,15 @@ example("combineLatest 3") {
 //: Combinelatest version that allows combining sequences with different types.
 
 example("combineLatest 4") {
-    let intOb = Observable.just(2)
-    let stringOb = Observable.just("a")
+    let intObs = Observable.just(2)
+    let stringObs = Observable.just("🔴")
     
-    _ = Observable.combineLatest(intOb, stringOb) {
-            "\($0) " + $1
+    _ = Observable.combineLatest(intObs, stringObs) {
+        "\($0) " + $1
         }
         .subscribe {
             print($0)
-    }
+        }
 }
 
 
@@ -123,14 +122,14 @@ example("combineLatest 4") {
 //: The array must be formed by `Observables` of the same type.
 
 example("combineLatest 5") {
-    let intOb1 = Observable.just(2)
-    let intOb2 = Observable.of(0, 1, 2, 3)
-    let intOb3 = Observable.of(0, 1, 2, 3, 4)
+    let stringObs1 = Observable.just("❤️")
+    let stringObs2 = Observable.of("🐶","🐱","🐭","🐹")
+    let stringObs3 = Observable.of("🅰️","🅱️","🆎")
     
-    _ = [intOb1, intOb2, intOb3].combineLatest { intArray -> Int in
-            Int((intArray[0] + intArray[1]) * intArray[2])
+    _ = [stringObs1, stringObs2, stringObs3].combineLatest { stringArray -> String in
+        stringArray[0] + stringArray[1] + stringArray[2]
         }
-        .subscribe { (event: Event<Int>) -> Void in
+        .subscribe { (event: Event<String>) -> Void in
             print(event)
         }
 }
@@ -147,35 +146,34 @@ combine the emissions of multiple Observables together via a specified function 
 [More info in reactive.io website](http://reactivex.io/documentation/operators/zip.html)
 */
 example("zip 1") {
-    let intOb1 = PublishSubject<String>()
-    let intOb2 = PublishSubject<Int>()
-
-    _ = Observable.zip(intOb1, intOb2) {
+    let stringObs = PublishSubject<String>()
+    let intObs = PublishSubject<Int>()
+    
+    _ = Observable.zip(stringObs, intObs) {
         "\($0) \($1)"
         }
         .subscribe {
             print($0)
         }
-
-    intOb1.on(.Next("A"))
-
-    intOb2.on(.Next(1))
-
-    intOb1.on(.Next("B"))
-
-    intOb1.on(.Next("C"))
-
-    intOb2.on(.Next(2))
+    
+    stringObs.on(.Next("🔴"))
+    
+    intObs.on(.Next(1))
+    
+    stringObs.on(.Next("🔵"))
+    
+    stringObs.on(.Next("⚪️"))
+    
+    intObs.on(.Next(2))
 }
 
 
 example("zip 2") {
-    let intOb1 = Observable.just(2)
-
-    let intOb2 = Observable.of(0, 1, 2, 3, 4)
-
-    _ = Observable.zip(intOb1, intOb2) {
-            $0 * $1
+    let intObs = Observable.just(1)
+    let stringObs = Observable.of("🐶","🐱","🐭","🐹")
+    
+    _ = Observable.zip(intObs, stringObs) {
+        "\($0) \($1)"
         }
         .subscribe {
             print($0)
@@ -184,12 +182,12 @@ example("zip 2") {
 
 
 example("zip 3") {
-    let intOb1 = Observable.of(0, 1)
-    let intOb2 = Observable.of(0, 1, 2, 3)
-    let intOb3 = Observable.of(0, 1, 2, 3, 4)
-
-    _ = Observable.zip(intOb1, intOb2, intOb3) {
-            ($0 + $1) * $2
+    let intObs = Observable.of(1,2)
+    let stringObs1 = Observable.of("🐶","🐱","🐭","🐹")
+    let stringObs2 = Observable.of("🍎","🍐","🍊","🍋","🍉","🍓")
+    
+    _ = Observable.zip(intObs, stringObs1, stringObs2) {
+        "\($0) \($1) \($2)"
         }
         .subscribe {
             print($0)
@@ -209,42 +207,42 @@ combine multiple Observables into one by merging their emissions
 [More info in reactive.io website]( http://reactivex.io/documentation/operators/merge.html )
 */
 example("merge 1") {
-    let subject1 = PublishSubject<Int>()
-    let subject2 = PublishSubject<Int>()
-
+    let subject1 = PublishSubject<String>()
+    let subject2 = PublishSubject<String>()
+    
     _ = Observable.of(subject1, subject2)
         .merge()
-        .subscribeNext { int in
-            print(int)
+        .subscribeNext { string in
+            print(string)
         }
-
-    subject1.on(.Next(20))
-    subject1.on(.Next(40))
-    subject1.on(.Next(60))
-    subject2.on(.Next(1))
-    subject1.on(.Next(80))
-    subject1.on(.Next(100))
-    subject2.on(.Next(1))
+    
+    subject1.on(.Next("🍎"))
+    subject1.on(.Next("🍐"))
+    subject1.on(.Next("🍊"))
+    subject2.on(.Next("🔴"))
+    subject1.on(.Next("🍋"))
+    subject1.on(.Next("🍉"))
+    subject2.on(.Next("🔵"))
 }
 
 
 example("merge 2") {
-    let subject1 = PublishSubject<Int>()
-    let subject2 = PublishSubject<Int>()
-
+    let subject1 = PublishSubject<String>()
+    let subject2 = PublishSubject<String>()
+    
     _ = Observable.of(subject1, subject2)
         .merge(maxConcurrent: 2)
         .subscribe {
             print($0)
         }
-
-    subject1.on(.Next(20))
-    subject1.on(.Next(40))
-    subject1.on(.Next(60))
-    subject2.on(.Next(1))
-    subject1.on(.Next(80))
-    subject1.on(.Next(100))
-    subject2.on(.Next(1))
+    
+    subject1.on(.Next("🍎"))
+    subject1.on(.Next("🍐"))
+    subject1.on(.Next("🍊"))
+    subject2.on(.Next("🔴"))
+    subject1.on(.Next("🍋"))
+    subject1.on(.Next("🍉"))
+    subject2.on(.Next("🔵"))
 }
 
 
@@ -259,32 +257,33 @@ convert an Observable that emits Observables into a single Observable that emits
 [More info in reactive.io website]( http://reactivex.io/documentation/operators/switch.html )
 */
 example("switchLatest") {
-    let var1 = Variable(0)
-
-    let var2 = Variable(200)
-
-    // var3 is like an Observable<Observable<Int>>
+    let var1 = Variable("⚽️")
+    
+    let var2 = Variable("🍎")
+    
+    // var3 is an Observable<Observable<String>>
     let var3 = Variable(var1.asObservable())
-
+    
     let d = var3
         .asObservable()
         .switchLatest()
         .subscribe {
             print($0)
         }
-
-    var1.value = 1
-    var1.value = 2
-    var1.value = 3
-    var1.value = 4
-
+    
+    var1.value = "🏀"
+    var1.value = "🏈"
+    var1.value = "⚾️"
+    var1.value = "🎱"
+    
     var3.value = var2.asObservable()
-
-    var2.value = 201
-
-    var1.value = 5
-    var1.value = 6
-    var1.value = 7
+    
+    var2.value = "🍐"
+    
+    var1.value = "🏐"
+    var1.value = "🏉"
+    
+    var2.value = "🍋"
 }
 
 //: [Index](Index) - [Next >>](@next)
