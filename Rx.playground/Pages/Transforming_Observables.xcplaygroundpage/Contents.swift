@@ -34,7 +34,9 @@ example("map") {
         .map { number in
             number * 2
         }
-        .subscribe { print($0) }
+        .subscribe {
+            print($0)
+        }
 }
 
 
@@ -49,9 +51,9 @@ Transform the items emitted by an Observable into Observables, then flatten the 
 */
 example("flatMap") {
     let sequenceInt = Observable.of(1, 2, 3)
-
-    let sequenceString = Observable.of("A", "B", "C", "D", "E", "F", "--")
-
+    
+    let sequenceString = Observable.of("🐶","🐱","🐭","🐹")
+    
     _ = sequenceInt
         .flatMap { (x:Int) -> Observable<String> in
             print("from sequenceInt \(x)")

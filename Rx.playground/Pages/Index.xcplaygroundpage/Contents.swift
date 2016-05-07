@@ -12,15 +12,16 @@
 ## Index:
 
 1. [Introduction](Introduction)
-1. [Subjects](Subjects)
-1. [Transforming Observables](Transforming_Observables)
-1. [Filtering Observables](Filtering_Observables)
-1. [Combining Observables](Combining_Observables)
-1. [Error Handling Operators](Error_Handling_Operators)
-1. [Observable Utility Operators](Observable_Utility_Operators)
-1. [Conditional and Boolean Operators](Conditional_and_Boolean_Operators)
-1. [Mathematical and Aggregate Operators](Mathematical_and_Aggregate_Operators)
-1. [Connectable Observable Operators](Connectable_Observable_Operators)
+1. [How to subscribe to Observable sequences](Subscribing_to_Observables)
+1. [Operators that create Observable sequences](Creating_Observables)
+1. [Subjects - act both as an Observer and as an Observable sequence](Subjects)
+1. [Operators that transform Observable sequences](Transforming_Observables)
+1. [Operators that filter Observable sequences](Filtering_Observables)
+1. [Operators that combine Observable sequences](Combining_Observables)
+1. [Operators that handle error notifications from Observable sequences](Error_Handling_Operators)
+1. [Operators that conditionally transform Observable sequences depending on Booleans or emissions from other Observable sequences](Conditional_and_Boolean_Operators)
+1. [Operators that perform operations on all the items emitted by Observable sequences](Mathematical_and_Aggregate_Operators)
+1. [Operators that control how Observable sequences are connected to observers](Connectable_Observable_Operators)
 
 */
 
