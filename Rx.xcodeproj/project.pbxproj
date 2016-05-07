@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		46307D461CDD703A00E47A1C /* UIAlertAction+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46307D451CDD703A00E47A1C /* UIAlertAction+Rx.swift */; };
+		46307D471CDD703A00E47A1C /* UIAlertAction+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46307D451CDD703A00E47A1C /* UIAlertAction+Rx.swift */; };
+		46307D481CDD703A00E47A1C /* UIAlertAction+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46307D451CDD703A00E47A1C /* UIAlertAction+Rx.swift */; };
 		79E9DE891C3417FD009970AF /* DispatchQueueSchedulerQOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79E9DE881C3417FD009970AF /* DispatchQueueSchedulerQOS.swift */; };
 		79E9DE8A1C3417FD009970AF /* DispatchQueueSchedulerQOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79E9DE881C3417FD009970AF /* DispatchQueueSchedulerQOS.swift */; };
 		79E9DE8B1C3417FD009970AF /* DispatchQueueSchedulerQOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79E9DE881C3417FD009970AF /* DispatchQueueSchedulerQOS.swift */; };
@@ -1291,6 +1294,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		46307D451CDD703A00E47A1C /* UIAlertAction+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIAlertAction+Rx.swift"; sourceTree = "<group>"; };
 		79E9DE881C3417FD009970AF /* DispatchQueueSchedulerQOS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DispatchQueueSchedulerQOS.swift; sourceTree = "<group>"; };
 		842A5A281C357F7D003568D5 /* NSTextStorage+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSTextStorage+Rx.swift"; sourceTree = "<group>"; };
 		84C225A21C33F00B008724EC /* RxTextStorageDelegateProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxTextStorageDelegateProxy.swift; sourceTree = "<group>"; };
@@ -2295,6 +2299,7 @@
 				842A5A281C357F7D003568D5 /* NSTextStorage+Rx.swift */,
 				9BA1CBD11C0F7C0A0044B50A /* UIActivityIndicatorView+Rx.swift */,
 				C8BCD3EC1C14B5FB005F1280 /* UIView+Rx.swift */,
+				46307D451CDD703A00E47A1C /* UIAlertAction+Rx.swift */,
 			);
 			path = iOS;
 			sourceTree = "<group>";
@@ -3173,6 +3178,7 @@
 				C80DDE971BCE69BA006A1832 /* ControlProperty+Driver.swift in Sources */,
 				C80DDE931BCE69BA006A1832 /* ControlEvent+Driver.swift in Sources */,
 				C8093ED11B8A732E0088E94D /* _RX.m in Sources */,
+				46307D461CDD703A00E47A1C /* UIAlertAction+Rx.swift in Sources */,
 				84C225A31C33F00B008724EC /* RxTextStorageDelegateProxy.swift in Sources */,
 				C8093EFB1B8A732E0088E94D /* RxCocoa.swift in Sources */,
 				C88254231B8A752B00B02D69 /* RxTableViewDelegateProxy.swift in Sources */,
@@ -4050,6 +4056,7 @@
 				C80DDE9A1BCE69BA006A1832 /* ControlProperty+Driver.swift in Sources */,
 				C80DDE961BCE69BA006A1832 /* ControlEvent+Driver.swift in Sources */,
 				C8F0C00E1BBBFBB9001B112F /* _RX.m in Sources */,
+				46307D481CDD703A00E47A1C /* UIAlertAction+Rx.swift in Sources */,
 				84C225A51C33F00B008724EC /* RxTextStorageDelegateProxy.swift in Sources */,
 				C8F0C00F1BBBFBB9001B112F /* RxCocoa.swift in Sources */,
 				C8F0C0101BBBFBB9001B112F /* RxTableViewDelegateProxy.swift in Sources */,
@@ -4137,6 +4144,7 @@
 				C80DDE951BCE69BA006A1832 /* ControlEvent+Driver.swift in Sources */,
 				D203C4F61BB9C52E00D02D00 /* RxCollectionViewDataSourceType.swift in Sources */,
 				84C225A41C33F00B008724EC /* RxTextStorageDelegateProxy.swift in Sources */,
+				46307D471CDD703A00E47A1C /* UIAlertAction+Rx.swift in Sources */,
 				D203C5131BB9C53E00D02D00 /* UITextView+Rx.swift in Sources */,
 				D203C4F41BB9C52400D02D00 /* RxTableViewReactiveArrayDataSource.swift in Sources */,
 				D2138C951BB9BEDA00339B5C /* NSObject+Rx.swift in Sources */,
@@ -5836,6 +5844,7 @@
 				C85BA0571C3878750075D68E /* Release-Tests */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		C88BB86E1B07E5ED0064D411 /* Build configuration list for PBXNativeTarget "RxSwift-OSX" */ = {
 			isa = XCConfigurationList;
