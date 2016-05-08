@@ -51,7 +51,7 @@ _/* : Observable<String>*/ = Observable<String>.create { observerOfString -> Dis
  However, the closure in the following is called:
  */
 
-_/* : Observable<String>*/ = Observable<String>.create { observerOfString -> Disposable in
+_/* : Disposable*/ = Observable<String>.create { observerOfString -> Disposable in
     print("Observable creation")
     observerOfString.on(.Next("😉"))
     observerOfString.on(.Completed)
@@ -61,7 +61,9 @@ _/* : Observable<String>*/ = Observable<String>.create { observerOfString -> Dis
 
 /*:
  
- The subscription will be present in the whole Rx.playground.
+ So the *subscription* will be present in the whole Rx.playground to prove cases.
+ 
+ > One note to add: It can be seen that the entity returned by `subscribe` is a `Disposable`. In the whole Rx.playground it is not asigned but in a real use case (normaly in most cases) it should be added to a DispodeBag. You can find more information about this in section *Disposing* of *GettingStarted.md* in *Documentation* directory.
  
  */
 
