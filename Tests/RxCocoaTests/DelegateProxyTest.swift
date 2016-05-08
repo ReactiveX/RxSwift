@@ -20,33 +20,14 @@ import UIKit
     optional func testEventHappened(value: Int)
 }
 
-@objc class MockTestDelegateProtocol:
-    NSObject,
-    TestDelegateProtocol,
-    UICollectionViewDataSource,
-    UIScrollViewDelegate,
-    UITableViewDataSource,
-    UITableViewDelegate {
+@objc class MockTestDelegateProtocol
+    : NSObject
+    , TestDelegateProtocol
+{
     var numbers = [Int]()
 
     func testEventHappened(value: Int) {
         numbers.append(value)
-    }
-
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        fatalError()
-    }
-    
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        fatalError()
-    }
-
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        fatalError()
-    }
-
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        fatalError()
     }
 }
 
@@ -361,3 +342,35 @@ class MockThreeDSectionedViewProtocol : NSObject, ThreeDSectionedViewProtocol {
         return Food()
     }
 }
+
+#if os(OSX)
+extension MockTestDelegateProtocol
+    : NSTextFieldDelegate {
+
+    }
+#endif
+
+#if os(iOS) || os(tvOS)
+extension MockTestDelegateProtocol
+    : UICollectionViewDataSource
+    , UIScrollViewDelegate
+    , UITableViewDataSource
+    , UITableViewDelegate {
+
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        fatalError()
+    }
+    
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        fatalError()
+    }
+
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        fatalError()
+    }
+
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        fatalError()
+    }
+}
+#endif
