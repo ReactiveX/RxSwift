@@ -22,48 +22,48 @@ All of these various systems makes our code needlessly complex. Wouldn't it be b
 
  ### Concepts
  
- The key to understanding RxSwift is by understanding the notion of Observables as **sequences** of elements.
- The next step is to learn how to **create** them, **manipulate** them, and finally **subscribe** to them. Subscribing is needed in order to start the computation and the reception of the elements.
- If an Observable emits an `Event.Next` (an element of the sequence), it can still send events. However, if the Observable emits an `Event.Error` (the Observable sequece terminates with an error) or `Event.Completed` (the Observable sequence has completed without error), the Observable won't ever emit more events.
+ **Every `Observable` sequence is just a sequence. The only difference from normal `SequenceType` is that it can also receive elements asynchronously. All other documentation is just a more detailed explanation of different aspects of the concept.**
+
+ * `Observable`(`ObservableType`) is equivalent to `SequenceType`
+ * `ObservableType.subscribe` method is equivalent to `SequenceType.generate` method.
+ * Observer (callback) needs to be passed to `ObservableType.subscribe` method to receive sequence elements instead of calling `next()` on the returned generator.
+ 
+ If an Observable emits an `Event.Next` (an element of the sequence), it can still send events. However, if the Observable emits an `Event.Error` (the Observable sequence terminates with an error) or `Event.Completed` (the Observable sequence has completed without error), the Observable sequence won't ever emit more events to this particular subscriber.
  
  Sequence grammar explains this more concisely.
  
  `Next* (Error | Completed)?`
  
+
  
- ## Subscription to Observables sequences
+ ## Subscribing to Observables sequences
  
- 
-  Creating an Observable is one thing, but if nothing subscribes to the observable then nothing will happen. In other words, an arbitrary number of `Next` events (sequence elements) will only be emitted after at least one subscription has been made. No more events will be produced after an `Error` or `Completed` has been emitted.
- 
- The following closure of the Observable will never be called:
+ The following closure of the Observable will never be called because there is no `subscribe` call:
  */
 
 _/* : Observable<String>*/ = Observable<String>.create { observerOfString -> Disposable in
-    print("This never will be printed")
-    observerOfString.on(.Next("😬"))
-    observerOfString.on(.Completed)
-    return NopDisposable.instance
-}
+        print("This never will be printed")
+        observerOfString.on(.Next("😬"))
+        observerOfString.on(.Completed)
+        return NopDisposable.instance
+    }
 
 /*:
  
- However, the closure in the following is called:
+ However, the subscription closure will be called once there is a subscriber:
  */
 
 _/* : Disposable*/ = Observable<String>.create { observerOfString -> Disposable in
-    print("Observable creation")
-    observerOfString.on(.Next("😉"))
-    observerOfString.on(.Completed)
-    return NopDisposable.instance
+        print("Observable creation")
+        observerOfString.on(.Next("😉"))
+        observerOfString.on(.Completed)
+        return NopDisposable.instance
     }
     .subscribe { print($0) }
 
 /*:
  
- So the *subscription* will be present in the whole Rx.playground to prove cases.
- 
- > One note to add: It can be seen that the entity returned by `subscribe` is a `Disposable`. In the whole Rx.playground it is not asigned but in a real use case (normaly in most cases) it should be added to a DispodeBag. You can find more information about this in section *Disposing* of *GettingStarted.md* in *Documentation* directory.
+ > One note to add: It can be seen that the entity returned by `subscribe`, a `Disposable`, is being ignored in this playground page for simplicity sake. In real world use cases it should be properly handled. Usually that means adding it to a `DisposeBag`. You can find more information about this in section *Disposing* of *GettingStarted.md* in *Documentation* directory.
  
  */
 

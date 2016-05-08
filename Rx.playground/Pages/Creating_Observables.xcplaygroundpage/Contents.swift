@@ -65,11 +65,11 @@ example("just") {
 }
 
 /*:
- ### sequenceOf
- `sequenceOf` creates a sequence of a fixed number of elements.
+ ### of
+ `of` creates a sequence of a fixed number of elements.
  */
 
-example("sequenceOf") {
+example("of") {
     let sequenceOfFourCircles/* : Observable<String> */ = Observable.of("🐶","🐱","🐭","🐹")
     
     let subscription = sequenceOfFourCircles
