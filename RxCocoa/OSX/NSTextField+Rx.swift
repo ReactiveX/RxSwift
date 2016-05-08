@@ -93,14 +93,14 @@ extension NSTextField {
     For more information take a look at `DelegateProxyType` protocol documentation.
     */
     public var rx_delegate: DelegateProxy {
-        return proxyForObject(RxTextFieldDelegateProxy.self, self)
+        return RxTextFieldDelegateProxy.proxyForObject(self)
     }
     
     /**
     Reactive wrapper for `text` property.
     */
     public var rx_text: ControlProperty<String> {
-        let delegate = proxyForObject(RxTextFieldDelegateProxy.self, self)
+        let delegate = RxTextFieldDelegateProxy.proxyForObject(self)
         
         let source = Observable.deferred { [weak self] in
             delegate.textSubject.startWith(self?.stringValue ?? "")

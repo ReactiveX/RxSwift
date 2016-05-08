@@ -111,7 +111,7 @@ extension UITableView {
     For more information take a look at `DelegateProxyType` protocol documentation.
     */
     public var rx_dataSource: DelegateProxy {
-        return proxyForObject(RxTableViewDataSourceProxy.self, self)
+        return RxTableViewDataSourceProxy.proxyForObject(self)
     }
    
     /**
@@ -124,9 +124,7 @@ extension UITableView {
     */
     public func rx_setDataSource(dataSource: UITableViewDataSource)
         -> Disposable {
-        let proxy = proxyForObject(RxTableViewDataSourceProxy.self, self)
-            
-        return installDelegate(proxy, delegate: dataSource, retainDelegate: false, onProxyForObject: self)
+        return RxTableViewDataSourceProxy.installForwardDelegate(dataSource, retainDelegate: false, onProxyForObject: self)
     }
     
     // events

@@ -20,10 +20,42 @@ import UIKit
     optional func testEventHappened(value: Int)
 }
 
+@objc class MockTestDelegateProtocol:
+    NSObject,
+    TestDelegateProtocol,
+    UICollectionViewDataSource,
+    UIScrollViewDelegate,
+    UITableViewDataSource,
+    UITableViewDelegate {
+    var numbers = [Int]()
+
+    func testEventHappened(value: Int) {
+        numbers.append(value)
+    }
+
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        fatalError()
+    }
+    
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        fatalError()
+    }
+
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        fatalError()
+    }
+
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        fatalError()
+    }
+}
+
 protocol TestDelegateControl: NSObjectProtocol {
     func doThatTest(value: Int)
 
     var test: Observable<Int> { get }
+
+    func setMineForwardDelegate(testDelegate: TestDelegateProtocol) -> Disposable
 }
 
 // MARK: Tests
@@ -208,6 +240,18 @@ extension DelegateProxyTest {
         }
         XCTAssertEqual(receivedValue, 382763)
 
+        autoreleasepool {
+            let mine = MockTestDelegateProtocol()
+            let disposable = control.setMineForwardDelegate(mine)
+
+            XCTAssertEqual(mine.numbers, [])
+            control.doThatTest(2)
+            XCTAssertEqual(mine.numbers, [2])
+            disposable.dispose()
+            control.doThatTest(3)
+            XCTAssertEqual(mine.numbers, [2])
+        }
+
         XCTAssertFalse(deallocated)
         XCTAssertFalse(completed)
         autoreleasepool {
@@ -280,7 +324,7 @@ class ThreeDSectionedViewDelegateProxy : DelegateProxy
 
 extension ThreeDSectionedView {
     var rx_proxy: DelegateProxy {
-        return proxyForObject(ThreeDSectionedViewDelegateProxy.self, self)
+        return ThreeDSectionedViewDelegateProxy.proxyForObject(self)
     }
 }
 
