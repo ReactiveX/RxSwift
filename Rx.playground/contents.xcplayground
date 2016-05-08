@@ -3,12 +3,13 @@
     <pages>
         <page name='Index'/>
         <page name='Introduction'/>
+        <page name='Subscribing_to_Observables'/>
+        <page name='Creating_Observables'/>
         <page name='Subjects'/>
         <page name='Transforming_Observables'/>
         <page name='Filtering_Observables'/>
         <page name='Combining_Observables'/>
         <page name='Error_Handling_Operators'/>
-        <page name='Observable_Utility_Operators'/>
         <page name='Conditional_and_Boolean_Operators'/>
         <page name='Mathematical_and_Aggregate_Operators'/>
         <page name='Connectable_Observable_Operators'/>

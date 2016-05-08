@@ -40,11 +40,11 @@ example("PublishSubject") {
 
     let subject = PublishSubject<String>()
     writeSequenceToConsole("1", sequence: subject).addDisposableTo(disposeBag)
-    subject.on(.Next("a"))
-    subject.on(.Next("b"))
+    subject.on(.Next("🐶"))
+    subject.on(.Next("🐱"))
     writeSequenceToConsole("2", sequence: subject).addDisposableTo(disposeBag)
-    subject.on(.Next("c"))
-    subject.on(.Next("d"))
+    subject.on(.Next("🅰️"))
+    subject.on(.Next("🅱️"))
 }
 
 
@@ -65,11 +65,11 @@ example("ReplaySubject") {
     let subject = ReplaySubject<String>.create(bufferSize: 1)
 
     writeSequenceToConsole("1", sequence: subject).addDisposableTo(disposeBag)
-    subject.on(.Next("a"))
-    subject.on(.Next("b"))
+    subject.on(.Next("🐶"))
+    subject.on(.Next("🐱"))
     writeSequenceToConsole("2", sequence: subject).addDisposableTo(disposeBag)
-    subject.on(.Next("c"))
-    subject.on(.Next("d"))
+    subject.on(.Next("🅰️"))
+    subject.on(.Next("🅱️"))
 }
 
 
@@ -86,13 +86,13 @@ When an observer subscribes to a `BehaviorSubject`, it begins by emitting the it
 example("BehaviorSubject") {
     let disposeBag = DisposeBag()
 
-    let subject = BehaviorSubject(value: "z")
+    let subject = BehaviorSubject(value: "🔴")
     writeSequenceToConsole("1", sequence: subject).addDisposableTo(disposeBag)
-    subject.on(.Next("a"))
-    subject.on(.Next("b"))
+    subject.on(.Next("🐶"))
+    subject.on(.Next("🐱"))
     writeSequenceToConsole("2", sequence: subject).addDisposableTo(disposeBag)
-    subject.on(.Next("c"))
-    subject.on(.Next("d"))
+    subject.on(.Next("🅰️"))
+    subject.on(.Next("🅱️"))
     subject.on(.Completed)
 }
 
@@ -105,13 +105,13 @@ example("BehaviorSubject") {
 */
 example("Variable") {
     let disposeBag = DisposeBag()
-    let variable = Variable("z")
+    let variable = Variable("🔴")
     writeSequenceToConsole("1", sequence: variable.asObservable()).addDisposableTo(disposeBag)
-    variable.value = "a"
-    variable.value = "b"
+    variable.value = "🐶"
+    variable.value = "🐱"
     writeSequenceToConsole("2", sequence: variable.asObservable()).addDisposableTo(disposeBag)
-    variable.value = "c"
-    variable.value = "d"
+    variable.value = "🅰️"
+    variable.value = "🅱️"
 }
 
 //: [Index](Index) - [Next >>](@next)
