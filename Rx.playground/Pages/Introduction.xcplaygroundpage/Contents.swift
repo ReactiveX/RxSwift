@@ -22,7 +22,7 @@ All of these various systems makes our code needlessly complex. Wouldn't it be b
 
  ### Concepts
  
- **Every `Observable` sequence is just a sequence. The only difference from normal `SequenceType` is that it can also receive elements asynchronously. All other documentation is just a more detailed explanation of different aspects of the concept.**
+ **Every `Observable` sequence is just a sequence. The key advantage for an `Observable` vs Swift's `SequenceType` is that it can also receive elements asynchronously. This is the kernel of the RxSwift, documentation from here is about ways that we expand on that idea.**
 
  * `Observable`(`ObservableType`) is equivalent to `SequenceType`
  * `ObservableType.subscribe` method is equivalent to `SequenceType.generate` method.
