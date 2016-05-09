@@ -3,7 +3,7 @@
 //  Rx
 //
 //  Created by kumapo on 2016/05/09.
-//  Copyright © 2016年 Krunoslav Zaher. All rights reserved.
+//  Copyright © 2016 Krunoslav Zaher. All rights reserved.
 //
 
 #if os(iOS) || os(tvOS)
