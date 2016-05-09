@@ -62,7 +62,7 @@ example("PublishSubject") {
 */
 example("ReplaySubject") {
     let disposeBag = DisposeBag()
-    let subject = ReplaySubject<String>.create(bufferSize: 1)
+    let subject = ReplaySubject<String>.createUnbounded()
 
     writeSequenceToConsole("1", sequence: subject).addDisposableTo(disposeBag)
     subject.on(.Next("🐶"))
