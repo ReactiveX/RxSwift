@@ -767,6 +767,145 @@ extension ObservableSingleTest {
     }
 }
 
+extension ObservableSingleTest {
+    func testDoOnSubscribe_normal() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let xs = scheduler.createHotObservable([
+            next(150, 1),
+            next(210, 2),
+            next(220, 3),
+            next(230, 4),
+            next(240, 5),
+            completed(250)
+            ])
+
+        var didSubscribe = false
+
+        let res = scheduler.start { xs.doOnSubscribe {
+            didSubscribe = true
+            }
+        }
+
+        let correctMessages = [
+            next(210, 2),
+            next(220, 3),
+            next(230, 4),
+            next(240, 5),
+            completed(250)
+        ]
+
+        let correctSubscriptions = [
+            Subscription(200, 250)
+        ]
+
+        XCTAssertEqual(res.events, correctMessages)
+        XCTAssertEqual(xs.subscriptions, correctSubscriptions)
+
+        XCTAssertEqual(didSubscribe, true)
+    }
+
+    func testDoOnSubscribe_throws() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let xs = scheduler.createHotObservable([
+            next(150, 1),
+            next(210, 2),
+            next(220, 3),
+            next(230, 4),
+            next(240, 5),
+            completed(250)
+            ])
+
+        let res = scheduler.start { xs.doOnSubscribe {
+            throw testError
+            }
+        }
+
+        let correctMessages: [Recorded<Event<Int>>] = [
+            error(200, testError)
+        ]
+
+        let correctSubscriptions = [
+            Subscription(200, 200)
+        ]
+
+        XCTAssertEqual(res.events, correctMessages)
+        XCTAssertEqual(xs.subscriptions, correctSubscriptions)
+    }
+
+    func testDoOnUnsubscribe_normal() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let xs = scheduler.createHotObservable([
+            next(150, 1),
+            next(210, 2),
+            next(220, 3),
+            next(230, 4),
+            next(240, 5),
+            completed(250)
+            ])
+
+        var didUnsubscribe = false
+
+        let res = scheduler.start { xs.doOnUnsubscribe {
+            didUnsubscribe = true
+            }
+        }
+
+        let correctMessages = [
+            next(210, 2),
+            next(220, 3),
+            next(230, 4),
+            next(240, 5),
+            completed(250)
+        ]
+
+        let correctSubscriptions = [
+            Subscription(200, 250)
+        ]
+
+        XCTAssertEqual(res.events, correctMessages)
+        XCTAssertEqual(xs.subscriptions, correctSubscriptions)
+        
+        XCTAssertEqual(didUnsubscribe, true)
+    }
+
+    func testDoOnUnsubscribe_throws() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let xs = scheduler.createHotObservable([
+            next(150, 1),
+            next(210, 2),
+            next(220, 3),
+            next(230, 4),
+            next(240, 5),
+            completed(250)
+            ])
+
+        let res = scheduler.start { xs.doOnUnsubscribe {
+            throw testError
+            }
+        }
+
+        let correctMessages: [Recorded<Event<Int>>] = [
+            next(210, 2),
+            next(220, 3),
+            next(230, 4),
+            next(240, 5),
+            completed(250),
+            error(1000, testError)
+        ]
+
+        let correctSubscriptions = [
+            Subscription(200, 250)
+        ]
+
+        XCTAssertEqual(res.events, correctMessages)
+        XCTAssertEqual(xs.subscriptions, correctSubscriptions)
+    }
+}
+
 // retry
 extension ObservableSingleTest {
     func testRetry_Basic() {
