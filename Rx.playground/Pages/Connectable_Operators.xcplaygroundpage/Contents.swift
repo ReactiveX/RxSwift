@@ -1,17 +1,13 @@
 /*:
-> # IMPORTANT: To use `Rx.playground`, please:
-
-1. Open `Rx.xcworkspace`
-2. Build `RxSwift-OSX` scheme
-3. And then open `Rx` playground in `Rx.xcworkspace` tree view.
-4. Choose `View > Show Debug Area`
-*/
-
-//: [<< Previous](@previous) - [Index](Index)
-
+ > # IMPORTANT: To use **Rx.playground**:
+ 1. Open **Rx.xcworkspace**.
+ 1. Build the **RxSwift-OSX** scheme (**Product** → **Build**).
+ 1. Open **Rx** playground in the **Project navigator**.
+ 1. Show the Debug Area (**View** → **Debug Area** → **Show Debug Area**).
+ ----
+ [Previous](@previous) - [Table of Contents](Table_of_Contents)
+ */
 import RxSwift
-
-
 /*:
  ## Below every example there is a commented method call that runs that example. To run the example just uncomment that part. 
  
@@ -20,7 +16,7 @@ import RxSwift
 
 
 /*:
-## Connectable Observable Operators
+## Connectable Operators
 
 A Connectable Observable resembles an ordinary Observable, except that it does not begin emitting items when it is subscribed to, but only when its connect() method is called. In this way you can wait for all intended Subscribers to subscribe to the Observable before the Observable begins emitting items.
 
@@ -218,4 +214,4 @@ func sampleWithPublish() {
 
 playgroundShouldContinueIndefinitely()
 
-//: [Index](Index)
+//: [Next](@next) - [Table of Contents](Table_of_Contents)

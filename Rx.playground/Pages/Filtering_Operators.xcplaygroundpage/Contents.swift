@@ -1,18 +1,15 @@
 /*:
-> # IMPORTANT: To use `Rx.playground`, please:
-
-1. Open `Rx.xcworkspace`
-2. Build `RxSwift-OSX` scheme
-3. And then open `Rx` playground in `Rx.xcworkspace` tree view.
-4. Choose `View > Show Debug Area`
-*/
-
-//: [<< Previous](@previous) - [Index](Index)
-
+ > # IMPORTANT: To use **Rx.playground**:
+ 1. Open **Rx.xcworkspace**.
+ 1. Build the **RxSwift-OSX** scheme (**Product** → **Build**).
+ 1. Open **Rx** playground in the **Project navigator**.
+ 1. Show the Debug Area (**View** → **Debug Area** → **Show Debug Area**).
+ ----
+ [Previous](@previous) - [Table of Contents](Table_of_Contents)
+ */
 import RxSwift
-
 /*:
-## Filtering Observables
+## Filtering Operators
 
 Operators that selectively emit items from a source Observable.
 */
@@ -171,9 +168,4 @@ example("skipWhileWithIndex") {
         }
 }
 
-
-
-
-
-
-//: [Index](Index) - [Next >>](@next)
+//: [Next](@next) - [Table of Contents](Table_of_Contents)
