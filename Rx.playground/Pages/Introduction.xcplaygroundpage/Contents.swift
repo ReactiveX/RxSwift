@@ -49,7 +49,7 @@ All of these various systems makes our code needlessly complex. Wouldn't it be b
 /*:
  ### Observables and observers (aka subscribers)
  
- `Observable`s will not execute their closure unless there is a subscriber. In the following example, the closure of the `Observable` will never be executed, because there are no subscribers:
+ `Observable`s will not execute their subscription closure unless there is a subscriber. In the following example, the closure of the `Observable` will never be executed, because there are no subscribers:
  */
 example("Observable with no subscribers") {
     _ = Observable<String>.create { observerOfString -> Disposable in
