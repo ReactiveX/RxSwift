@@ -41,7 +41,7 @@ example("flatMap and flatMapLatest") {
     let player = Variable(👦🏻)
     
     player.asObservable()
-        .flatMapLatest { $0.score.asObservable() } // Change flatMap to flatMapLatest and observe change in printed output
+        .flatMap { $0.score.asObservable() } // Change flatMap to flatMapLatest and observe change in printed output
         .subscribeNext { print($0) }
         .addDisposableTo(disposeBag)
     
