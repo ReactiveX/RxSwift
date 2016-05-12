@@ -14,7 +14,7 @@ import RxSwift
 #endif
 import UIKit
 
-extension UITextField {
+extension UITextField : RxTextInput {
     
     /**
     Reactive wrapper for `text` property.
@@ -25,7 +25,9 @@ extension UITextField {
             getter: { textField in
                 textField.text ?? ""
             }, setter: { textField, value in
-                textField.text = value
+                if textField.text != value {
+                    textField.text = value
+                }
             }
         )
     }

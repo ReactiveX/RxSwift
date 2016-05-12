@@ -16,7 +16,7 @@ import RxSwift
 
     
     
-extension UITextView {
+extension UITextView : RxTextInput {
     
     /**
     Factory method that enables subclasses to implement their own `rx_delegate`.
@@ -53,7 +53,9 @@ extension UITextView {
         }
 
         let bindingObserver = UIBindingObserver(UIElement: self) { (textView, text: String) in
-            textView.text = text
+            if textView.text != text {
+                textView.text = text
+            }
         }
         
         return ControlProperty(values: source, valueSink: bindingObserver)
