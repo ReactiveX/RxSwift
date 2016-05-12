@@ -140,7 +140,7 @@ class APIWrappersViewController: ViewController {
 
         // also test two way binding
         let textValue = Variable("")
-        textField.rx_text <-> textValue
+        textField <-> textValue
 
         textValue.asObservable()
             .subscribeNext { [weak self] x in
@@ -162,7 +162,7 @@ class APIWrappersViewController: ViewController {
 
         // also test two way binding
         let textViewValue = Variable("")
-        textView.rx_text <-> textViewValue
+        textView <-> textViewValue
 
         textViewValue.asObservable()
             .subscribeNext { [weak self] x in
