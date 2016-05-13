@@ -52,6 +52,15 @@ extension UITabBar {
         }.asObserver()
     }
 
+    /**
+     Bindable sink for `itemSpacing` property.
+     */
+    public var rx_itemSpacing: AnyObserver<CGFloat> {
+        return UIBindingObserver(UIElement: self) { tabBar, itemSpacing in
+            tabBar.itemSpacing = itemSpacing
+        }.asObserver()
+    }
+
 }
 
 #endif

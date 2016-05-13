@@ -54,4 +54,13 @@ extension UITabBar_RxTests {
         XCTAssertTrue(subject.itemPositioning == .Fill)
     }
 
+    func testItemSpacing() {
+        let subject = createSubject()
+        XCTAssertEqualWithAccuracy(subject.itemSpacing, 0, accuracy: 0.00001)
+
+        Observable.just(77).subscribe(subject.rx_itemSpacing).dispose()
+
+        XCTAssertEqualWithAccuracy(subject.itemSpacing, 77, accuracy: 0.00001)
+    }
+
 }
