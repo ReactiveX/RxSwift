@@ -9,7 +9,7 @@
  */
 import RxSwift
 /*:
-# Filtering Operators
+# Filtering and Conditional Operators
 Operators that selectively emit elements from a source `Observable` sequence.
 ## `filter`
 Emits only those elements from an `Observable` sequence that meet the specified condition. [More info](http://reactivex.io/documentation/operators/filter.html)
@@ -109,7 +109,7 @@ example("takeLast") {
 /*:
  ----
  ## `takeWhile`
- Emits only the specified number of elements from the beginning of an `Observable` sequence that meet the specified condition. [More info](http://reactivex.io/documentation/operators/takewhile.html)
+ Emits elements from the beginning of an `Observable` sequence as long as the specified condition evaluates to `true`. [More info](http://reactivex.io/documentation/operators/takewhile.html)
  ![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/takewhile.png)
  */
 example("takeWhile") {
@@ -119,6 +119,33 @@ example("takeWhile") {
         .takeWhile { $0 < 4 }
         .subscribeNext { print($0) }
         .addDisposableTo(disposeBag)
+}
+/*:
+ ----
+ ## `takeUntil`
+ Emits elements from a source `Observable` sequence until a reference `Observable` sequence emits an element. [More info](http://reactivex.io/documentation/operators/takeuntil.html)
+ ![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/takeuntil.png)
+ */
+example("takeUntil") {
+    let disposeBag = DisposeBag()
+    
+    let sourceSequence = PublishSubject<String>()
+    let referenceSequence = PublishSubject<String>()
+    
+    sourceSequence
+        .takeUntil(referenceSequence)
+        .subscribe { print($0) }
+        .addDisposableTo(disposeBag)
+    
+    sourceSequence.onNext("🐱")
+    sourceSequence.onNext("🐰")
+    sourceSequence.onNext("🐶")
+    
+    referenceSequence.onNext("🔴")
+    
+    sourceSequence.onNext("🐸")
+    sourceSequence.onNext("🐷")
+    sourceSequence.onNext("🐵")
 }
 /*:
  ----
@@ -162,6 +189,33 @@ example("skipWhileWithIndex") {
         }
         .subscribeNext { print($0) }
         .addDisposableTo(disposeBag)
+}
+/*:
+ ----
+ ## `skipUntil`
+ Suppresses emitting the elements from a source `Observable` sequence until a reference `Observable` sequence emits an element. [More info](http://reactivex.io/documentation/operators/skipuntil.html)
+ ![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/skipuntil.png)
+ */
+example("skipUntil") {
+    let disposeBag = DisposeBag()
+    
+    let sourceSequence = PublishSubject<String>()
+    let referenceSequence = PublishSubject<String>()
+    
+    sourceSequence
+        .skipUntil(referenceSequence)
+        .subscribe { print($0) }
+        .addDisposableTo(disposeBag)
+    
+    sourceSequence.onNext("🐱")
+    sourceSequence.onNext("🐰")
+    sourceSequence.onNext("🐶")
+    
+    referenceSequence.onNext("🔴")
+    
+    sourceSequence.onNext("🐸")
+    sourceSequence.onNext("🐷")
+    sourceSequence.onNext("🐵")
 }
 
 //: [Next](@next) - [Table of Contents](Table_of_Contents)
