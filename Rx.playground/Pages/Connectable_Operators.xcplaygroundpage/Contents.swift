@@ -36,7 +36,7 @@ func sampleWithoutConnectableOperators() {
  ![](http://reactivex.io/documentation/operators/images/interval.c.png)
  ----
  ## `publish`
- Converts the source `Observable` sequence to a connectable sequence. [More info](http://reactivex.io/documentation/operators/publish.html)
+ Converts the source `Observable` sequence into a connectable sequence. [More info](http://reactivex.io/documentation/operators/publish.html)
  ![](http://reactivex.io/documentation/operators/images/publishConnect.c.png)
  */
 func sampleWithPublish() {
@@ -68,7 +68,7 @@ func sampleWithPublish() {
 /*:
  ----
  ## `replay`
- Converts the source `Observable` sequence to a connectable sequence, and will replay `bufferSize` number of previous emissions to each new subscriber. [More info](http://reactivex.io/documentation/operators/replay.html)
+ Converts the source `Observable` sequence into a connectable sequence, and will replay `bufferSize` number of previous emissions to each new subscriber. [More info](http://reactivex.io/documentation/operators/replay.html)
  ![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/replay.png)
  */
 func sampleWithReplayBuffer() {
@@ -98,7 +98,7 @@ func sampleWithReplayBuffer() {
 /*:
  ----
  ## `multicast`
- Converts the source `Observable` sequence to a connectable sequence and broadcasts its emissions via the specified `subject`.
+ Converts the source `Observable` sequence into a connectable sequence, and broadcasts its emissions via the specified `subject`.
  */
 func sampleWithMulticast() {
     printExampleHeader(#function)
