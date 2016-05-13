@@ -204,7 +204,7 @@ example("skipUntil") {
     
     sourceSequence
         .skipUntil(referenceSequence)
-        .subscribe { print($0) }
+        .subscribeNext { print($0) }
         .addDisposableTo(disposeBag)
     
     sourceSequence.onNext("🐱")
