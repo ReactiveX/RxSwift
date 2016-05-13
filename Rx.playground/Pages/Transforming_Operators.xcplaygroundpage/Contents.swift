@@ -9,8 +9,8 @@
  */
 import RxSwift
 /*:
-## Transforming Operators
-Operators that transform Next event elements emitted by an `Observable`.
+# Transforming Operators
+Operators that transform Next event elements emitted by an `Observable` sequence.
 ## `map`
  Applies a transforming closure to elements emitted by an `Observable` sequence, and returns a new `Observable` sequence of the transformed elements. [More info](http://reactivex.io/documentation/operators/map.html)
 ![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/map.png)
