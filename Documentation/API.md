@@ -406,6 +406,13 @@ extension UIActivityIndicatorView {
 }
 ```
 
+```swift
+extension UINavigationItem {
+
+    public var rx_title: AnyObserver<String?> {}
+}
+```
+
 **OSX**
 
 ```swift
