@@ -105,4 +105,14 @@ extension UITabBar_RxTests {
         XCTAssertEqual(subject.shadowImage, image)
     }
 
+    func testSelectionIndicatorImage() {
+        let subject = createSubject()
+        XCTAssertEqual(subject.selectionIndicatorImage, nil)
+
+        let image = UIImage()
+        Observable.just(image).subscribe(subject.rx_selectionIndicatorImage).dispose()
+
+        XCTAssertEqual(subject.selectionIndicatorImage, image)
+    }
+
 }

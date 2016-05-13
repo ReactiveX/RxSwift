@@ -97,6 +97,15 @@ extension UITabBar {
         }.asObserver()
     }
 
+    /**
+     Bindable sink for `selectionIndicatorImage` property.
+     */
+    public var rx_selectionIndicatorImage: AnyObserver<UIImage?> {
+        return UIBindingObserver(UIElement: self) { tabBar, selectionIndicatorImage in
+            tabBar.selectionIndicatorImage = selectionIndicatorImage
+        }.asObserver()
+    }
+
 }
 
 #endif
