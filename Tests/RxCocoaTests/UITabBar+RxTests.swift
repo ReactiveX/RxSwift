@@ -20,38 +20,38 @@ class UITabBar_RxTests: RxTest {
 extension UITabBar_RxTests {
     func testBarStyle() {
         let subject = createSubject()
-        XCTAssertTrue(subject.barStyle == .Default)
+        XCTAssertEqual(subject.barStyle, UIBarStyle.Default)
 
         Observable.just(UIBarStyle.Black).subscribe(subject.rx_barStyle).dispose()
 
-        XCTAssertTrue(subject.barStyle == .Black)
+        XCTAssertEqual(subject.barStyle, UIBarStyle.Black)
     }
 
     func testTranslucent() {
         let subject = createSubject()
-        XCTAssertTrue(subject.translucent == true)
+        XCTAssertTrue(subject.translucent)
 
         Observable.just(false).subscribe(subject.rx_translucent).dispose()
 
-        XCTAssertTrue(subject.translucent == false)
+        XCTAssertFalse(subject.translucent)
     }
 
     func testBarTintColor() {
         let subject = createSubject()
-        XCTAssertTrue(subject.barTintColor == nil)
+        XCTAssertEqual(subject.barTintColor, nil)
 
         Observable.just(UIColor.purpleColor()).subscribe(subject.rx_barTintColor).dispose()
 
-        XCTAssertTrue(subject.barTintColor == UIColor.purpleColor())
+        XCTAssertEqual(subject.barTintColor, UIColor.purpleColor())
     }
 
     func testItemPositioning() {
         let subject = createSubject()
-        XCTAssertTrue(subject.itemPositioning == .Automatic)
+        XCTAssertEqual(subject.itemPositioning, UITabBarItemPositioning.Automatic)
 
         Observable.just(.Fill).subscribe(subject.rx_itemPositioning).dispose()
 
-        XCTAssertTrue(subject.itemPositioning == .Fill)
+        XCTAssertEqual(subject.itemPositioning, UITabBarItemPositioning.Fill)
     }
 
     func testItemSpacing() {
