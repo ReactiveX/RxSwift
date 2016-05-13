@@ -61,7 +61,7 @@ example("flatMap and flatMapLatest") {
 /*:
  ----
  ## `scan`
- Begins with an initial seed value, and then applies an accumulator closure to each element emitted by an `Observable` sequence, and returns each intermediate result. [More info](http://reactivex.io/documentation/operators/scan.html)
+ Begins with an initial seed value, and then applies an accumulator closure to each element emitted by an `Observable` sequence, and returns each intermediate result as a single-element `Observable` sequence. [More info](http://reactivex.io/documentation/operators/scan.html)
  ![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/scan.png)
  */
 example("scan") {
