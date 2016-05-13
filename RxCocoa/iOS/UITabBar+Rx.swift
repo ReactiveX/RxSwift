@@ -34,6 +34,15 @@ extension UITabBar {
         }.asObserver()
     }
 
+    /**
+     Bindable sink for `barTintColor` property.
+     */
+    public var rx_barTintColor: AnyObserver<UIColor?> {
+        return UIBindingObserver(UIElement: self) { tabBar, barTintColor in
+            tabBar.barTintColor = barTintColor
+        }.asObserver()
+    }
+
 }
 
 #endif

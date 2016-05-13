@@ -36,4 +36,13 @@ extension UITabBar_RxTests {
         XCTAssertTrue(subject.translucent == false)
     }
 
+    func testBarTintColor() {
+        let subject = UITabBar(frame: CGRectMake(0, 0, 1, 1))
+        XCTAssertTrue(subject.barTintColor == nil)
+
+        Observable.just(UIColor.purpleColor()).subscribe(subject.rx_barTintColor).dispose()
+
+        XCTAssertTrue(subject.barTintColor == UIColor.purpleColor())
+    }
+
 }
