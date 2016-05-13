@@ -14,12 +14,12 @@ import UIKit
 import XCTest
 
 class UITabBar_RxTests: RxTest {
+    let createSubject: () -> UITabBar = { UITabBar(frame: CGRectMake(0, 0, 1, 1)) }
 }
 
 extension UITabBar_RxTests {
-
     func testBarStyle() {
-        let subject = UITabBar(frame: CGRectMake(0, 0, 1, 1))
+        let subject = createSubject()
         XCTAssertTrue(subject.barStyle == .Default)
 
         Observable.just(UIBarStyle.Black).subscribe(subject.rx_barStyle).dispose()
@@ -28,7 +28,7 @@ extension UITabBar_RxTests {
     }
 
     func testTranslucent() {
-        let subject = UITabBar(frame: CGRectMake(0, 0, 1, 1))
+        let subject = createSubject()
         XCTAssertTrue(subject.translucent == true)
 
         Observable.just(false).subscribe(subject.rx_translucent).dispose()
@@ -37,7 +37,7 @@ extension UITabBar_RxTests {
     }
 
     func testBarTintColor() {
-        let subject = UITabBar(frame: CGRectMake(0, 0, 1, 1))
+        let subject = createSubject()
         XCTAssertTrue(subject.barTintColor == nil)
 
         Observable.just(UIColor.purpleColor()).subscribe(subject.rx_barTintColor).dispose()
@@ -46,7 +46,7 @@ extension UITabBar_RxTests {
     }
 
     func testItemPositioning() {
-        let subject = UITabBar(frame: CGRectMake(0, 0, 1, 1))
+        let subject = createSubject()
         XCTAssertTrue(subject.itemPositioning == .Automatic)
 
         Observable.just(.Fill).subscribe(subject.rx_itemPositioning).dispose()
