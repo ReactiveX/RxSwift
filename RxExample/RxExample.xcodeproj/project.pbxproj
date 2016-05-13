@@ -146,6 +146,7 @@
 		C88BB8C71B07E6C90064D411 /* Dependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E3C2321B03605B0010338D /* Dependencies.swift */; };
 		C88BB8CA1B07E6C90064D411 /* WikipediaAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86E2F3B1AE5A0CA00C31024 /* WikipediaAPI.swift */; };
 		C88BB8CC1B07E6C90064D411 /* WikipediaPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86E2F3C1AE5A0CA00C31024 /* WikipediaPage.swift */; };
+		C88F76861CE53B1300D5A014 /* RxTextInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88F76851CE53B1300D5A014 /* RxTextInput.swift */; };
 		C890A65D1AEC084100AFF7E6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C890A65C1AEC084100AFF7E6 /* ViewController.swift */; };
 		C891A2C91C07160C00DDD09D /* Timeout.swift in Sources */ = {isa = PBXBuildFile; fileRef = C891A2C81C07160C00DDD09D /* Timeout.swift */; };
 		C894649E1BC6C2B00055219D /* Cancelable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89464281BC6C2B00055219D /* Cancelable.swift */; };
@@ -698,6 +699,7 @@
 		C86E2F3C1AE5A0CA00C31024 /* WikipediaPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = WikipediaPage.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		C86E2F3D1AE5A0CA00C31024 /* WikipediaSearchResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = WikipediaSearchResult.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		C88BB8DC1B07E6C90064D411 /* RxExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RxExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C88F76851CE53B1300D5A014 /* RxTextInput.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxTextInput.swift; sourceTree = "<group>"; };
 		C890A65C1AEC084100AFF7E6 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		C891A2C81C07160C00DDD09D /* Timeout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Timeout.swift; sourceTree = "<group>"; };
 		C89464281BC6C2B00055219D /* Cancelable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cancelable.swift; sourceTree = "<group>"; };
@@ -1628,6 +1630,7 @@
 		C8CC3E6B1C95CB5300ABA17E /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				C88F76851CE53B1300D5A014 /* RxTextInput.swift */,
 				D2F461051CD7AC4D00527B4D /* Reactive.swift */,
 				C8CC3E6C1C95CB5300ABA17E /* _RX.h */,
 				C8CC3E6D1C95CB5300ABA17E /* _RX.m */,
@@ -2327,6 +2330,7 @@
 				C89464F71BC6C2B00055219D /* ObserverBase.swift in Sources */,
 				C8CC3F441C95D16C00ABA17E /* AnimatableSectionModelType.swift in Sources */,
 				C8CC3F111C95CB5300ABA17E /* UIImageView+Rx.swift in Sources */,
+				C88F76861CE53B1300D5A014 /* RxTextInput.swift in Sources */,
 				C89464E31BC6C2B00055219D /* TakeUntil.swift in Sources */,
 				C8CC3F421C95D16C00ABA17E /* AnimatableSectionModel.swift in Sources */,
 				C89464FB1BC6C2B00055219D /* Rx.swift in Sources */,
