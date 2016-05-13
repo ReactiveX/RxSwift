@@ -72,4 +72,17 @@ extension UITabBar_RxTests {
         XCTAssertEqualWithAccuracy(subject.itemWidth, 42, accuracy: 0.00001)
     }
 
+    func testTintColor() {
+        let subject = createSubject()
+        // The default color comes from the view hierarchy, so set the parent's tintColor
+        let parentView = UIView(frame: CGRectMake(0, 0, 1, 1))
+        parentView.tintColor = UIColor.redColor()
+        parentView.addSubview(subject)
+        XCTAssertEqual(subject.tintColor, UIColor.redColor())
+
+        Observable.just(UIColor.purpleColor()).subscribe(subject.rx_tintColor).dispose()
+
+        XCTAssertEqual(subject.tintColor, UIColor.purpleColor())
+    }
+
 }
