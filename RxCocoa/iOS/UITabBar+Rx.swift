@@ -25,6 +25,15 @@ extension UITabBar {
         }.asObserver()
     }
 
+    /**
+     Bindable sink for `translucent` property.
+     */
+    public var rx_translucent: AnyObserver<Bool> {
+        return UIBindingObserver(UIElement: self) { tabBar, translucent in
+            tabBar.translucent = translucent
+        }.asObserver()
+    }
+
 }
 
 #endif
