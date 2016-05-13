@@ -6,6 +6,8 @@
 //  Copyright © 2016 Krunoslav Zaher. All rights reserved.
 //
 
+#if os(iOS) || os(tvOS)
+
 import Foundation
 
 import RxSwift
@@ -17,7 +19,12 @@ class UITabBar_RxTests: RxTest {
     let createSubject: () -> UITabBar = { UITabBar(frame: CGRectMake(0, 0, 1, 1)) }
 }
 
+/**
+ iOS only
+ */
+#if os(iOS)
 extension UITabBar_RxTests {
+
     func testBarStyle() {
         let subject = createSubject()
         XCTAssertEqual(subject.barStyle, UIBarStyle.Default)
@@ -26,6 +33,23 @@ extension UITabBar_RxTests {
 
         XCTAssertEqual(subject.barStyle, UIBarStyle.Black)
     }
+
+    func testItemPositioning() {
+        let subject = createSubject()
+        XCTAssertEqual(subject.itemPositioning, UITabBarItemPositioning.Automatic)
+
+        Observable.just(.Fill).subscribe(subject.rx_itemPositioning).dispose()
+
+        XCTAssertEqual(subject.itemPositioning, UITabBarItemPositioning.Fill)
+    }
+
+}
+#endif
+
+/**
+ iOS and tvOS
+ */
+extension UITabBar_RxTests {
 
     func testTranslucent() {
         let subject = createSubject()
@@ -43,15 +67,6 @@ extension UITabBar_RxTests {
         Observable.just(UIColor.purpleColor()).subscribe(subject.rx_barTintColor).dispose()
 
         XCTAssertEqual(subject.barTintColor, UIColor.purpleColor())
-    }
-
-    func testItemPositioning() {
-        let subject = createSubject()
-        XCTAssertEqual(subject.itemPositioning, UITabBarItemPositioning.Automatic)
-
-        Observable.just(.Fill).subscribe(subject.rx_itemPositioning).dispose()
-
-        XCTAssertEqual(subject.itemPositioning, UITabBarItemPositioning.Fill)
     }
 
     func testItemSpacing() {
@@ -116,3 +131,5 @@ extension UITabBar_RxTests {
     }
 
 }
+
+#endif

@@ -14,6 +14,10 @@ import UIKit
 import RxSwift
 #endif
 
+/**
+ iOS only
+ */
+#if os(iOS)
 extension UITabBar {
 
     /**
@@ -25,6 +29,23 @@ extension UITabBar {
         }.asObserver()
     }
 
+    /**
+     Bindable sink for `itemPositioning` property.
+     */
+    public var rx_itemPositioning: AnyObserver<UITabBarItemPositioning> {
+        return UIBindingObserver(UIElement: self) { tabBar, itemPositioning in
+            tabBar.itemPositioning = itemPositioning
+        }.asObserver()
+    }
+
+}
+#endif
+
+/**
+ iOS and tvOS
+ */
+extension UITabBar {
+    
     /**
      Bindable sink for `translucent` property.
      */
@@ -40,15 +61,6 @@ extension UITabBar {
     public var rx_barTintColor: AnyObserver<UIColor?> {
         return UIBindingObserver(UIElement: self) { tabBar, barTintColor in
             tabBar.barTintColor = barTintColor
-        }.asObserver()
-    }
-
-    /**
-     Bindable sink for `itemPositioning` property.
-     */
-    public var rx_itemPositioning: AnyObserver<UITabBarItemPositioning> {
-        return UIBindingObserver(UIElement: self) { tabBar, itemPositioning in
-            tabBar.itemPositioning = itemPositioning
         }.asObserver()
     }
 
