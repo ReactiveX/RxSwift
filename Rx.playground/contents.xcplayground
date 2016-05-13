@@ -5,9 +5,9 @@
         <page name='Introduction'/>
         <page name='Creating_and_Subscribing_to_Observables'/>
         <page name='Working_with_Subjects'/>
+        <page name='Combining_Operators'/>
         <page name='Transforming_Operators'/>
         <page name='Filtering_Operators'/>
-        <page name='Combining_Operators'/>
         <page name='Conditional_Operators'/>
         <page name='Mathematical_and_Aggregate_Operators'/>
         <page name='Connectable_Operators'/>
