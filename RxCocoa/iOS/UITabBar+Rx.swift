@@ -88,6 +88,15 @@ extension UITabBar {
         }.asObserver()
     }
 
+    /**
+     Bindable sink for `shadowImage` property.
+     */
+    public var rx_shadowImage: AnyObserver<UIImage?> {
+        return UIBindingObserver(UIElement: self) { tabBar, shadowImage in
+            tabBar.shadowImage = shadowImage
+        }.asObserver()
+    }
+
 }
 
 #endif

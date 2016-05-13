@@ -95,4 +95,14 @@ extension UITabBar_RxTests {
         XCTAssertEqual(subject.backgroundImage, image)
     }
 
+    func testShadowImage() {
+        let subject = createSubject()
+        XCTAssertEqual(subject.shadowImage, nil)
+
+        let image = UIImage()
+        Observable.just(image).subscribe(subject.rx_shadowImage).dispose()
+
+        XCTAssertEqual(subject.shadowImage, image)
+    }
+
 }
