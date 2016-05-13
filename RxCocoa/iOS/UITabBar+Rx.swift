@@ -61,6 +61,15 @@ extension UITabBar {
         }.asObserver()
     }
 
+    /**
+     Bindable sink for `itemWidth` property.
+     */
+    public var rx_itemWidth: AnyObserver<CGFloat> {
+        return UIBindingObserver(UIElement: self) { tabBar, itemWidth in
+            tabBar.itemWidth = itemWidth
+        }.asObserver()
+    }
+    
 }
 
 #endif

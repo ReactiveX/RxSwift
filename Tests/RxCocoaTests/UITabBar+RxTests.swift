@@ -63,4 +63,13 @@ extension UITabBar_RxTests {
         XCTAssertEqualWithAccuracy(subject.itemSpacing, 77, accuracy: 0.00001)
     }
 
+    func testItemWidth() {
+        let subject = createSubject()
+        XCTAssertEqualWithAccuracy(subject.itemWidth, 0, accuracy: 0.00001)
+
+        Observable.just(42).subscribe(subject.rx_itemWidth).dispose()
+
+        XCTAssertEqualWithAccuracy(subject.itemWidth, 42, accuracy: 0.00001)
+    }
+
 }
