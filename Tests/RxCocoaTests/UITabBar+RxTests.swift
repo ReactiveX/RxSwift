@@ -85,4 +85,14 @@ extension UITabBar_RxTests {
         XCTAssertEqual(subject.tintColor, UIColor.purpleColor())
     }
 
+    func testBackgroundImage() {
+        let subject = createSubject()
+        XCTAssertEqual(subject.backgroundImage, nil)
+
+        let image = UIImage()
+        Observable.just(image).subscribe(subject.rx_backgroundImage).dispose()
+
+        XCTAssertEqual(subject.backgroundImage, image)
+    }
+
 }

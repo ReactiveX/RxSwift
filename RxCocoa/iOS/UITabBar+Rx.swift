@@ -79,6 +79,15 @@ extension UITabBar {
         }.asObserver()
     }
 
+    /**
+     Bindable sink for `backgroundImage` property.
+     */
+    public var rx_backgroundImage: AnyObserver<UIImage?> {
+        return UIBindingObserver(UIElement: self) { tabBar, backgroundImage in
+            tabBar.backgroundImage = backgroundImage
+        }.asObserver()
+    }
+
 }
 
 #endif
