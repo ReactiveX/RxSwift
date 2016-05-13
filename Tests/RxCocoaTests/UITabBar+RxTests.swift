@@ -45,4 +45,13 @@ extension UITabBar_RxTests {
         XCTAssertTrue(subject.barTintColor == UIColor.purpleColor())
     }
 
+    func testItemPositioning() {
+        let subject = UITabBar(frame: CGRectMake(0, 0, 1, 1))
+        XCTAssertTrue(subject.itemPositioning == .Automatic)
+
+        Observable.just(.Fill).subscribe(subject.rx_itemPositioning).dispose()
+
+        XCTAssertTrue(subject.itemPositioning == .Fill)
+    }
+
 }

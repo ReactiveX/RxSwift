@@ -43,6 +43,15 @@ extension UITabBar {
         }.asObserver()
     }
 
+    /**
+     Bindable sink for `itemPositioning` property.
+     */
+    public var rx_itemPositioning: AnyObserver<UITabBarItemPositioning> {
+        return UIBindingObserver(UIElement: self) { tabBar, itemPositioning in
+            tabBar.itemPositioning = itemPositioning
+        }.asObserver()
+    }
+
 }
 
 #endif
