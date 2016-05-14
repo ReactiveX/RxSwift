@@ -70,7 +70,7 @@ In case of UITableView / UIScrollView, there is
 
     extension UIScrollView {
         public func rx_createDelegateProxy() -> RxScrollViewDelegateProxy {
-            return RxScrollViewDelegateProxy(view: self)
+            return RxScrollViewDelegateProxy(parentObject: self)
         }
     ....
 
