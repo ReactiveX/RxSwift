@@ -8,6 +8,7 @@
  [Previous](@previous) - [Table of Contents](Table_of_Contents)
  */
 import RxSwift
+
 playgroundShouldContinueIndefinitely()
 /*:
 ## Connectable Operators
