@@ -65,6 +65,20 @@ extension UITabBar_RxTests {
         }
     }
 
+    func testItemsAnimated() {
+        let subject = createSubject()
+        XCTAssertNil(subject.items)
+
+        let items = [UITabBarItem()]
+        Observable.just(items).subscribe(subject.rx_items(true)).dispose()
+
+        let currentItems = subject.items
+        XCTAssertNotNil(currentItems)
+        if let currentItems = currentItems {
+            XCTAssertEqual(currentItems, items)
+        }
+    }
+
     func testTranslucent() {
         let subject = createSubject()
         XCTAssertTrue(subject.translucent)

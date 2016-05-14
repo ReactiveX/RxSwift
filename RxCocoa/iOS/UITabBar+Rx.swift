@@ -56,6 +56,17 @@ extension UITabBar {
     }
     
     /**
+     Bindable sink for `items` property.
+    
+     - parameter animated: A Boolean indicating whether changes should be animated.
+    */
+    public func rx_items(animated: Bool) -> AnyObserver<[UITabBarItem]?> {
+        return UIBindingObserver(UIElement: self) { tabBar, items in
+            tabBar.setItems(items, animated: animated)
+        }.asObserver()
+    }
+    
+    /**
      Bindable sink for `translucent` property.
      */
     public var rx_translucent: AnyObserver<Bool> {
