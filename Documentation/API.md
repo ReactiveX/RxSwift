@@ -473,3 +473,33 @@ extension UITabBarItem {
 
 }
 ```
+
+```swift
+extension UITabBar {
+
+    public var rx_barStyle: AnyObserver<UIBarStyle> {}
+
+    public var rx_itemPositioning: AnyObserver<UITabBarItemPositioning> {}
+
+    public var rx_items: AnyObserver<[UITabBarItem]?> {}
+
+    public func rx_items(animated: Bool) -> AnyObserver<[UITabBarItem]?> {}
+
+    public var rx_translucent: AnyObserver<Bool> {}
+
+    public var rx_barTintColor: AnyObserver<UIColor?> {}
+
+    public var rx_itemSpacing: AnyObserver<CGFloat> {}
+
+    public var rx_itemWidth: AnyObserver<CGFloat> {}
+
+    public var rx_tintColor: AnyObserver<UIColor> {}
+
+    public var rx_backgroundImage: AnyObserver<UIImage?> {}
+
+    public var rx_shadowImage: AnyObserver<UIImage?> {}
+
+    public var rx_selectionIndicatorImage: AnyObserver<UIImage?> {}
+
+}
+```
