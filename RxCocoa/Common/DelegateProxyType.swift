@@ -163,7 +163,7 @@ extension DelegateProxyType {
          extension UISearchBar {
 
              public var rx_delegate: DelegateProxy {
-                return proxyForObject(RxSearchBarDelegateProxy.self, self)
+                return RxSearchBarDelegateProxy.proxyForObject(self)
              }
 
              public var rx_text: ControlProperty<String> {
