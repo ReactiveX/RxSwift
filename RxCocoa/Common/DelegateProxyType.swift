@@ -243,7 +243,7 @@ extension ObservableType {
         let disposable = P.installForwardDelegate(dataSource, retainDelegate: retainDataSource, onProxyForObject: object)
 
         let subscription = self.asObservable()
-            // source can't ever end, otherwise it will release the subscriber
+            // source can never end, otherwise it would release the subscriber
             .concat(Observable.never())
             .subscribe { [weak object] (event: Event<E>) in
                 MainScheduler.ensureExecutingOnScheduler()
