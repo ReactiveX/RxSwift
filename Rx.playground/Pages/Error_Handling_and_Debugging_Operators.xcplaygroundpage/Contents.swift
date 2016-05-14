@@ -167,6 +167,8 @@ example("debug") {
  ## `RxSwift.resourceCount`
  Provides a count of all Rx resource allocations, which is useful for detecting leaks during development.
  */
+#if NOT_IN_PLAYGROUND
+#else
 example("RxSwift.resourceCount") {
     print(RxSwift.resourceCount)
     
@@ -194,6 +196,7 @@ example("RxSwift.resourceCount") {
 }
 
 print(RxSwift.resourceCount)
-//: > `RxSwift.resourceCount` is not enabled by default. [Click here](Enable_RxSwift.resourceCount) for instructions on how to enable it.
+#endif
+//: > `RxSwift.resourceCount` is not enabled by default, and should generally not be enabled in Release builds. [Click here](Enable_RxSwift.resourceCount) for instructions on how to enable it.
 
 //: [Table of Contents](Table_of_Contents)
