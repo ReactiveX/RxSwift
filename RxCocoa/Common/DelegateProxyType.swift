@@ -68,9 +68,9 @@ every view has a corresponding delegate virtual factory method.
 
 In case of UITableView / UIScrollView, there is
 
-    extensions UIScrollView {
+    extension UIScrollView {
         public func rx_createDelegateProxy() -> RxScrollViewDelegateProxy {
-            return RxScrollViewDelegateProxy(view: self)
+            return RxScrollViewDelegateProxy(parentObject: self)
         }
     ....
 
@@ -163,11 +163,11 @@ extension DelegateProxyType {
          extension UISearchBar {
 
              public var rx_delegate: DelegateProxy {
-                return proxyForObject(RxSearchBarDelegateProxy.self, self)
+                return RxSearchBarDelegateProxy.proxyForObject(self)
              }
 
              public var rx_text: ControlProperty<String> {
-                 let source: Observable<String> = self.rx_delegate.observe("searchBar:textDidChange:")
+                 let source: Observable<String> = self.rx_delegate.observe(#selector(UISearchBarDelegate.searchBar(_:textDidChange:)))
                  ...
              }
          }
@@ -243,7 +243,7 @@ extension ObservableType {
         let disposable = P.installForwardDelegate(dataSource, retainDelegate: retainDataSource, onProxyForObject: object)
 
         let subscription = self.asObservable()
-            // source can't ever end, otherwise it will release the subscriber
+            // source can never end, otherwise it would release the subscriber
             .concat(Observable.never())
             .subscribe { [weak object] (event: Event<E>) in
                 MainScheduler.ensureExecutingOnScheduler()
