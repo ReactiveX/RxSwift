@@ -189,11 +189,7 @@ example("deferred") {
  */
 example("error") {
     let disposeBag = DisposeBag()
-    
-    enum Error : ErrorType {
-        case Test
-    }
-    
+        
     Observable<Int>.error(Error.Test)
         .subscribe { print($0) }
         .addDisposableTo(disposeBag)

@@ -14,6 +14,10 @@ public func printExampleHeader(description: String) {
     print("\n--- \(description) example ---")
 }
 
+public enum Error: ErrorType {
+    case Test
+}
+
 /**
  Executes `closure` on main thread after `delay` seconds.
  - parameter delay: time in seconds to wait before executing `closure`
