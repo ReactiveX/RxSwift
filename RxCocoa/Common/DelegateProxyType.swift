@@ -68,7 +68,7 @@ every view has a corresponding delegate virtual factory method.
 
 In case of UITableView / UIScrollView, there is
 
-    extensions UIScrollView {
+    extension UIScrollView {
         public func rx_createDelegateProxy() -> RxScrollViewDelegateProxy {
             return RxScrollViewDelegateProxy(view: self)
         }
