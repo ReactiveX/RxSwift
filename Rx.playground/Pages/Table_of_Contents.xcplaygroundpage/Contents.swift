@@ -14,7 +14,8 @@
  1. [Filtering and Conditional Operators](Filtering_and_Conditional_Operators)
  1. [Mathematical and Aggregate Operators](Mathematical_and_Aggregate_Operators)
  1. [Connectable Operators](Connectable_Operators)
- 1. [Debugging and Error Handling Operators](Debugging_and_Error_Handling_Operators)
+ 1. [Error Handling Operators](Error_Handling_Operators)
+ 1. [Debugging Operators](Debugging_Operators)
  */
 
 //: [Next](@next)

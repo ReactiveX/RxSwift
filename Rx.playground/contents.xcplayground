@@ -10,7 +10,8 @@
         <page name='Filtering_and_Conditional_Operators'/>
         <page name='Mathematical_and_Aggregate_Operators'/>
         <page name='Connectable_Operators'/>
-        <page name='Error_Handling_and_Debugging_Operators'/>
+        <page name='Error_Handling_Operators'/>
+        <page name='Debugging_Operators'/>
         <page name='Enable_RxSwift.resourceCount'/>
     </pages>
 </playground>
