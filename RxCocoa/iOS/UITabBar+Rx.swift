@@ -47,6 +47,15 @@ extension UITabBar {
 extension UITabBar {
     
     /**
+     Bindable sink for `items` property.
+     */
+    public var rx_items: AnyObserver<[UITabBarItem]?> {
+        return UIBindingObserver(UIElement: self) { tabBar, items in
+            tabBar.items = items
+        }.asObserver()
+    }
+    
+    /**
      Bindable sink for `translucent` property.
      */
     public var rx_translucent: AnyObserver<Bool> {
