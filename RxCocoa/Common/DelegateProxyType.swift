@@ -167,7 +167,7 @@ extension DelegateProxyType {
              }
 
              public var rx_text: ControlProperty<String> {
-                 let source: Observable<String> = self.rx_delegate.observe("searchBar:textDidChange:")
+                 let source: Observable<String> = self.rx_delegate.observe(#selector(UISearchBarDelegate.searchBar(_:textDidChange:)))
                  ...
              }
          }
