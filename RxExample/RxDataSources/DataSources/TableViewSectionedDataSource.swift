@@ -219,7 +219,7 @@ public class RxTableViewSectionedDataSource<S: SectionModelType>
     }
     
     override func _rx_tableView(tableView: UITableView, sectionForSectionIndexTitle title: String, atIndex index: Int) -> Int {
-        guard let section  = sectionForSectionIndexTitle?(self, title: title, index: index) else {
+        guard let section = sectionForSectionIndexTitle?(self, title: title, index: index) else {
             return super._rx_tableView(tableView, sectionForSectionIndexTitle: title, atIndex: index)
         }
         
