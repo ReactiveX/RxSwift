@@ -8,210 +8,126 @@
  [Previous](@previous) - [Table of Contents](Table_of_Contents)
  */
 import RxSwift
-/*:
- ## Below every example there is a commented method call that runs that example. To run the example just uncomment that part. 
- 
- E.g. `//sampleWithoutConnectableOperators()`
-*/
-
-
-/*:
-## Connectable Operators
-
-A Connectable Observable resembles an ordinary Observable, except that it does not begin emitting items when it is subscribed to, but only when its connect() method is called. In this way you can wait for all intended Subscribers to subscribe to the Observable before the Observable begins emitting items.
-
-Specialty Observables that have more precisely-controlled subscription dynamics.
-*/
-
-func sampleWithoutConnectableOperators() {
-
-    let int1 = Observable<Int>.interval(1, scheduler: MainScheduler.instance)
-
-    _ = int1
-        .subscribe {
-            print("first subscription \($0)")
-        }
-
-    delay(5) {
-        _ = int1
-            .subscribe {
-                print("second subscription \($0)")
-            }
-    }
-
-}
-
-//sampleWithoutConnectableOperators()
-
-
-
-/*:
-### `multicast`
-
-![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/publishconnect.png)
-
-[More info in reactive.io website]( http://reactivex.io/documentation/operators/publish.html )
-*/
-func sampleWithMulticast() {
-
-    let subject1 = PublishSubject<Int64>()
-
-    _ = subject1
-        .subscribe {
-            print("Subject \($0)")
-        }
-
-    let int1 = Observable<Int64>.interval(1, scheduler: MainScheduler.instance)
-        .multicast(subject1)
-
-    _ = int1
-        .subscribe {
-            print("first subscription \($0)")
-        }
-
-    delay(2) {
-        int1.connect()
-    }
-
-    delay(4) {
-        _ = int1
-            .subscribe {
-                print("second subscription \($0)")
-            }
-    }
-
-    delay(6) {
-        _ = int1
-            .subscribe {
-                print("third subscription \($0)")
-            }
-    }
-
-}
-
-// sampleWithMulticast()
-
-
-/*:
-### `replay`
-Ensure that all observers see the same sequence of emitted items, even if they subscribe after the Observable has begun emitting items.
-
-publish = multicast + replay subject
-
-![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/replay.png)
-
-[More info in reactive.io website]( http://reactivex.io/documentation/operators/replay.html )
-*/
-func sampleWithReplayBuffer0() {
-
-    let int1 = Observable<Int>.interval(1, scheduler: MainScheduler.instance)
-        .replay(0)
-
-    _ = int1
-        .subscribe {
-            print("first subscription \($0)")
-        }
-
-    delay(2) {
-        int1.connect()
-    }
-
-    delay(4) {
-        _ = int1
-            .subscribe {
-                print("second subscription \($0)")
-            }
-    }
-
-    delay(6) {
-        _ = int1
-            .subscribe {
-                print("third subscription \($0)")
-            }
-    }
-
-}
-
-// sampleWithReplayBuffer0()
-
-
-func sampleWithReplayBuffer2() {
-
-    print("--- sampleWithReplayBuffer2 ---\n")
-
-    let int1 = Observable<Int>.interval(1, scheduler: MainScheduler.instance)
-        .replay(2)
-
-    _ = int1
-        .subscribe {
-            print("first subscription \($0)")
-        }
-
-    delay(2) {
-        int1.connect()
-    }
-
-    delay(4) {
-        _ = int1
-            .subscribe {
-                print("second subscription \($0)")
-            }
-    }
-
-    delay(6) {
-        _ = int1
-            .subscribe {
-                print("third subscription \($0)")
-            }
-    }
-
-}
-
-// sampleWithReplayBuffer2()
-
-
-/*:
-### `publish`
-Convert an ordinary Observable into a connectable Observable.
-
-publish = multicast + publish subject
-
-so publish is basically replay(0)
-
-[More info in reactive.io website]( http://reactivex.io/documentation/operators/publish.html )
-*/
-func sampleWithPublish() {
-
-    let int1 = Observable<Int>.interval(1, scheduler: MainScheduler.instance)
-        .publish()
-
-    _ = int1
-        .subscribe {
-            print("first subscription \($0)")
-        }
-
-    delay(2) {
-        int1.connect()
-    }
-
-    delay(4) {
-        _ = int1
-            .subscribe {
-                print("second subscription \($0)")
-            }
-    }
-
-    delay(6) {
-        _ = int1
-            .subscribe {
-                print("third subscription \($0)")
-            }
-    }
-
-}
-
-// sampleWithPublish()
 
 playgroundShouldContinueIndefinitely()
+/*:
+## Connectable Operators
+ Connectable `Observable` sequences resembles ordinary `Observable` sequences, except that they not begin emitting elements when subscribed to, but instead, only when their `connect()` method is called. In this way, you can wait for all intended subscribers to subscribe to a connectable `Observable` sequence before it begins emitting elements.
+ > Within each example on this page is a commented-out method. Uncomment that method to run the example, and then comment it out again to stop running the example.
+ #
+ Before learning about connectable operators, let's take a look at an example of a non-connectable operator:
+*/
+func sampleWithoutConnectableOperators() {
+    printExampleHeader(#function)
+    
+    let interval = Observable<Int>.interval(1, scheduler: MainScheduler.instance)
+    
+    _ = interval
+        .subscribeNext { print("Subscription: 1, Event: \($0)") }
+    
+    delay(5) {
+        _ = interval
+            .subscribeNext { print("Subscription: 2, Event: \($0)") }
+    }
+}
+
+//    sampleWithoutConnectableOperators() // ⚠️ Uncomment to run this example; comment to stop running
+/*:
+ > `interval` creates an `Observable` sequence that emits elements after each `period`, on the specified scheduler. [More info](http://reactivex.io/documentation/operators/interval.html)
+ ![](http://reactivex.io/documentation/operators/images/interval.c.png)
+ ----
+ ## `publish`
+ Converts the source `Observable` sequence into a connectable sequence. [More info](http://reactivex.io/documentation/operators/publish.html)
+ ![](http://reactivex.io/documentation/operators/images/publishConnect.c.png)
+ */
+func sampleWithPublish() {
+    printExampleHeader(#function)
+    
+    let intSequence = Observable<Int>.interval(1, scheduler: MainScheduler.instance)
+        .publish()
+    
+    _ = intSequence
+        .subscribeNext { print("Subscription 1:, Event: \($0)") }
+    
+    delay(2) { intSequence.connect() }
+    
+    delay(4) {
+        _ = intSequence
+            .subscribeNext { print("Subscription 2:, Event: \($0)") }
+    }
+    
+    delay(6) {
+        _ = intSequence
+            .subscribeNext { print("Subscription 3:, Event: \($0)") }
+    }
+}
+
+//sampleWithPublish() // ⚠️ Uncomment to run this example; comment to stop running
+
+//: > Schedulers are an abstraction of mechanisms for performing work, such as on specific threads or dispatch queues. [More info](https://github.com/ReactiveX/RxSwift/blob/master/Documentation/Schedulers.md)
+
+/*:
+ ----
+ ## `replay`
+ Converts the source `Observable` sequence into a connectable sequence, and will replay `bufferSize` number of previous emissions to each new subscriber. [More info](http://reactivex.io/documentation/operators/replay.html)
+ ![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/replay.png)
+ */
+func sampleWithReplayBuffer() {
+    printExampleHeader(#function)
+    
+    let intSequence = Observable<Int>.interval(1, scheduler: MainScheduler.instance)
+        .replay(5)
+    
+    _ = intSequence
+        .subscribeNext { print("Subscription 1:, Event: \($0)") }
+    
+    delay(2) { intSequence.connect() }
+    
+    delay(4) {
+        _ = intSequence
+            .subscribeNext { print("Subscription 2:, Event: \($0)") }
+    }
+    
+    delay(8) {
+        _ = intSequence
+            .subscribeNext { print("Subscription 3:, Event: \($0)") }
+    }
+}
+
+// sampleWithReplayBuffer() // ⚠️ Uncomment to run this example; comment to stop running
+
+/*:
+ ----
+ ## `multicast`
+ Converts the source `Observable` sequence into a connectable sequence, and broadcasts its emissions via the specified `subject`.
+ */
+func sampleWithMulticast() {
+    printExampleHeader(#function)
+    
+    let subject = PublishSubject<Int>()
+    
+    _ = subject
+        .subscribeNext { print("Subject: \($0)") }
+    
+    let intSequence = Observable<Int>.interval(1, scheduler: MainScheduler.instance)
+        .multicast(subject)
+    
+    _ = intSequence
+        .subscribeNext { print("\tSubscription 1:, Event: \($0)") }
+    
+    delay(2) { intSequence.connect() }
+    
+    delay(4) {
+        _ = intSequence
+            .subscribeNext { print("\tSubscription 2:, Event: \($0)") }
+    }
+    
+    delay(6) {
+        _ = intSequence
+            .subscribeNext { print("\tSubscription 3:, Event: \($0)") }
+    }
+}
+
+//sampleWithMulticast() // ⚠️ Uncomment to run this example; comment to stop running
 
 //: [Next](@next) - [Table of Contents](Table_of_Contents)

@@ -113,18 +113,16 @@ example("create") {
 /*:
  ----
  ## range
- Creates an `Observable` sequence that emits a range of sequential integers. [More info](http://reactivex.io/documentation/operators/range.html)
+ Creates an `Observable` sequence that emits a range of sequential integers and then terminates. [More info](http://reactivex.io/documentation/operators/range.html)
  */
 example("range") {
     let disposeBag = DisposeBag()
     
     Observable.range(start: 1, count: 10)
-        .toArray()
         .subscribe { print($0) }
         .addDisposableTo(disposeBag)
 }
 /*:
- > This example also introduces using the `toArray` operator to convert an entire sequence to an array, emit that array, and then terminate.
  ----
  ## repeatElement
  Creates an `Observable` sequence that emits the given element indefinitely. [More info](http://reactivex.io/documentation/operators/repeat.html)
@@ -191,11 +189,7 @@ example("deferred") {
  */
 example("error") {
     let disposeBag = DisposeBag()
-    
-    enum Error : ErrorType {
-        case Test
-    }
-    
+        
     Observable<Int>.error(Error.Test)
         .subscribe { print($0) }
         .addDisposableTo(disposeBag)

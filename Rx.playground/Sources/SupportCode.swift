@@ -6,8 +6,16 @@ import Foundation
  - parameter action: `Void` closure
  */
 public func example(description: String, @noescape action: Void -> Void) {
-    print("\n--- \(description) example ---")
+    printExampleHeader(description)
     action()
+}
+
+public func printExampleHeader(description: String) {
+    print("\n--- \(description) example ---")
+}
+
+public enum Error: ErrorType {
+    case Test
 }
 
 /**

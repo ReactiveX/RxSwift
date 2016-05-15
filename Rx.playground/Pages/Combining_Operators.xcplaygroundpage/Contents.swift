@@ -9,278 +9,152 @@
  */
 import RxSwift
 /*:
-## Combination Operators
-
-Operators that work with multiple source Observables to create a single Observable.
-*/
-
-/*:
-
-### `startWith`
-
-emit a specified sequence of items before beginning to emit the items from the source Observable
-
+# Combination Operators
+Operators that combine multiple source `Observable`s into a single `Observable`.
+## `startWith`
+Emits the specified sequence of elements before beginning to emit the elements from the source `Observable`. [More info](http://reactivex.io/documentation/operators/startwith.html)
 ![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/startwith.png)
-
-[More info in reactive.io website]( http://reactivex.io/documentation/operators/startwith.html )
 */
 example("startWith") {
-
-    let subscription = Observable.of("🐶","🐱","🐭","🐹")
-        .startWith("🔴")
-        .startWith("🅱️")
-        .startWith("🆎")
-        .subscribe {
-            print($0)
-        }
+    let disposeBag = DisposeBag()
+    
+    Observable.of("🐶", "🐱", "🐭", "🐹")
+        .startWith("1️⃣")
+        .startWith("2️⃣")
+        .startWith("3️⃣", "🅰️", "🅱️")
+        .subscribeNext { print($0) }
+        .addDisposableTo(disposeBag)
 }
-
-
 /*:
-### `combineLatest`
-
-when an item is emitted by either of two Observables, combine the latest item emitted by each Observable via a specified function and emit items based on the results of this function
-
-![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/combinelatest.png)
-
-[More info in reactive.io website]( http://reactivex.io/documentation/operators/combinelatest.html )
-
-*/
-example("combineLatest 1") {
-    let stringObs = PublishSubject<String>()
-    let intObs = PublishSubject<Int>()
+ > As this example demonstrates, `startWith` can be chained on a last-in-first-out basis, i.e., each successive `startWith`'s elements will be prepended before the prior `startWith`'s elements.
+ ----
+ ## `merge`
+ Combines elements from source `Observable` sequences into a single new `Observable` sequence, and will emit each element as it is emitted by each source `Observable` sequence. [More info](http://reactivex.io/documentation/operators/merge.html)
+ ![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/merge.png)
+ */
+example("merge") {
+    let disposeBag = DisposeBag()
     
-    _ = Observable.combineLatest(stringObs, intObs) {
-        "\($0) \($1)"
-        }
-        .subscribe {
-            print($0)
-        }
-    
-    stringObs.on(.Next("🅰️"))
-    
-    intObs.on(.Next(1))
-    
-    stringObs.on(.Next("🅱️"))
-    
-    intObs.on(.Next(2))
-}
-
-
-//: To produce output, at least one element has to be received from each sequence in arguements.
-
-example("combineLatest 2") {
-    let stringObs = Observable.of("🐶","🐱","🐭","🐹")
-    let intObs = Observable.just(2)
-    
-    _ = Observable.combineLatest(stringObs, intObs) {
-        "\($0) \($1)"
-        }
-        .subscribe {
-            print($0)
-        }
-}
-
-
-
-//: Combine latest has versions with more than 2 arguments.
-
-example("combineLatest 3") {
-    let intObs = Observable.just(2)
-    let stringObs1 = Observable.of("🐶","🐱","🐭","🐹")
-    let stringObs2 = Observable.of("🅰️","🅱️","🆎")
-    
-    _ = Observable.combineLatest(intObs, stringObs1, stringObs2) {
-        "\($0) \($1) \($2)"
-        }
-        .subscribe {
-            print($0)
-        }
-}
-
-
-
-//: Combinelatest version that allows combining sequences with different types.
-
-example("combineLatest 4") {
-    let intObs = Observable.just(2)
-    let stringObs = Observable.just("🔴")
-    
-    _ = Observable.combineLatest(intObs, stringObs) {
-        "\($0) " + $1
-        }
-        .subscribe {
-            print($0)
-        }
-}
-
-
-//: `combineLatest` extension method for Array of `ObservableType` conformable types
-//: The array must be formed by `Observables` of the same type.
-
-example("combineLatest 5") {
-    let stringObs1 = Observable.just("❤️")
-    let stringObs2 = Observable.of("🐶","🐱","🐭","🐹")
-    let stringObs3 = Observable.of("🅰️","🅱️","🆎")
-    
-    _ = [stringObs1, stringObs2, stringObs3].combineLatest { stringArray -> String in
-        stringArray[0] + stringArray[1] + stringArray[2]
-        }
-        .subscribe { (event: Event<String>) -> Void in
-            print(event)
-        }
-}
-
-
-
-/*:
-### `zip`
-
-combine the emissions of multiple Observables together via a specified function and emit single items for each combination based on the results of this function
-
-![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/zip.png)
-
-[More info in reactive.io website](http://reactivex.io/documentation/operators/zip.html)
-*/
-example("zip 1") {
-    let stringObs = PublishSubject<String>()
-    let intObs = PublishSubject<Int>()
-    
-    _ = Observable.zip(stringObs, intObs) {
-        "\($0) \($1)"
-        }
-        .subscribe {
-            print($0)
-        }
-    
-    stringObs.on(.Next("🔴"))
-    
-    intObs.on(.Next(1))
-    
-    stringObs.on(.Next("🔵"))
-    
-    stringObs.on(.Next("⚪️"))
-    
-    intObs.on(.Next(2))
-}
-
-
-example("zip 2") {
-    let intObs = Observable.just(1)
-    let stringObs = Observable.of("🐶","🐱","🐭","🐹")
-    
-    _ = Observable.zip(intObs, stringObs) {
-        "\($0) \($1)"
-        }
-        .subscribe {
-            print($0)
-        }
-}
-
-
-example("zip 3") {
-    let intObs = Observable.of(1,2)
-    let stringObs1 = Observable.of("🐶","🐱","🐭","🐹")
-    let stringObs2 = Observable.of("🍎","🍐","🍊","🍋","🍉","🍓")
-    
-    _ = Observable.zip(intObs, stringObs1, stringObs2) {
-        "\($0) \($1) \($2)"
-        }
-        .subscribe {
-            print($0)
-        }
-}
-
-
-
-
-/*:
-### `merge`
-
-combine multiple Observables into one by merging their emissions
-
-![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/merge.png)
-
-[More info in reactive.io website]( http://reactivex.io/documentation/operators/merge.html )
-*/
-example("merge 1") {
     let subject1 = PublishSubject<String>()
     let subject2 = PublishSubject<String>()
     
-    _ = Observable.of(subject1, subject2)
+    Observable.of(subject1, subject2)
         .merge()
-        .subscribeNext { string in
-            print(string)
-        }
+        .subscribeNext { print($0) }
+        .addDisposableTo(disposeBag)
     
-    subject1.on(.Next("🍎"))
-    subject1.on(.Next("🍐"))
-    subject1.on(.Next("🍊"))
-    subject2.on(.Next("🔴"))
-    subject1.on(.Next("🍋"))
-    subject1.on(.Next("🍉"))
-    subject2.on(.Next("🔵"))
+    subject1.onNext("🅰️")
+    
+    subject1.onNext("🅱️")
+    
+    subject2.onNext("①")
+    
+    subject2.onNext("②")
+    
+    subject1.onNext("🆎")
+    
+    subject2.onNext("③")
 }
-
-
-example("merge 2") {
-    let subject1 = PublishSubject<String>()
-    let subject2 = PublishSubject<String>()
-    
-    _ = Observable.of(subject1, subject2)
-        .merge(maxConcurrent: 2)
-        .subscribe {
-            print($0)
-        }
-    
-    subject1.on(.Next("🍎"))
-    subject1.on(.Next("🍐"))
-    subject1.on(.Next("🍊"))
-    subject2.on(.Next("🔴"))
-    subject1.on(.Next("🍋"))
-    subject1.on(.Next("🍉"))
-    subject2.on(.Next("🔵"))
-}
-
-
-
 /*:
-### `switchLatest`
-
-convert an Observable that emits Observables into a single Observable that emits the items emitted by the most-recently-emitted of those Observables
-
-![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/switch.png)
-
-[More info in reactive.io website]( http://reactivex.io/documentation/operators/switch.html )
-*/
-example("switchLatest") {
-    let var1 = Variable("⚽️")
+ ----
+ ## `zip`
+ Combines up to 8 source `Observable` sequences into a single new `Observable` sequence, and will emit from the combined `Observable` sequence the elements from each of the source `Observable` sequences at the corresponding index. [More info](http://reactivex.io/documentation/operators/zip.html)
+ ![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/zip.png)
+ */
+example("zip") {
+    let disposeBag = DisposeBag()
     
-    let var2 = Variable("🍎")
+    let stringSubject = PublishSubject<String>()
+    let intSubject = PublishSubject<Int>()
     
-    // var3 is an Observable<Observable<String>>
-    let var3 = Variable(var1.asObservable())
-    
-    let d = var3
-        .asObservable()
-        .switchLatest()
-        .subscribe {
-            print($0)
+    Observable.zip(stringSubject, intSubject) { stringElement, intElement in
+        "\(stringElement) \(intElement)"
         }
+        .subscribeNext { print($0) }
+        .addDisposableTo(disposeBag)
     
-    var1.value = "🏀"
-    var1.value = "🏈"
-    var1.value = "⚾️"
-    var1.value = "🎱"
+    stringSubject.onNext("🅰️")
+    stringSubject.onNext("🅱️")
     
-    var3.value = var2.asObservable()
+    intSubject.onNext(1)
     
-    var2.value = "🍐"
+    intSubject.onNext(2)
     
-    var1.value = "🏐"
-    var1.value = "🏉"
-    
-    var2.value = "🍋"
+    stringSubject.onNext("🆎")
+    intSubject.onNext(3)
 }
+/*:
+ ----
+ ## `combineLatest`
+ Combines up to 8 source `Observable` sequences into a single new `Observable` sequence, and will begin emitting from the combined `Observable` sequence the latest elements of each source `Observable` sequence once all source sequences have emitted at least one element, and also when any of the source `Observable` sequences emits a new element. [More info](http://reactivex.io/documentation/operators/combinelatest.html)
+ ![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/combinelatest.png)
+ */
+example("combineLatest") {
+    let disposeBag = DisposeBag()
+    
+    let stringSubject = PublishSubject<String>()
+    let intSubject = PublishSubject<Int>()
+    
+    Observable.combineLatest(stringSubject, intSubject) { stringElement, intElement in
+            "\(stringElement) \(intElement)"
+        }
+        .subscribeNext { print($0) }
+        .addDisposableTo(disposeBag)
+    
+    stringSubject.onNext("🅰️")
+    
+    stringSubject.onNext("🅱️")
+    intSubject.onNext(1)
+    
+    intSubject.onNext(2)
+    
+    stringSubject.onNext("🆎")
+}
+//: There is also a `combineLatest` extension on `Array`:
+example("Array.combineLatest") {
+    let disposeBag = DisposeBag()
+    
+    let stringObservable = Observable.just("❤️")
+    let fruitObservable = ["🍎", "🍐", "🍊"].toObservable()
+    let animalObservable = Observable.of("🐶", "🐱", "🐭", "🐹")
+    
+    [stringObservable, fruitObservable, animalObservable].combineLatest {
+            "\($0[0]) \($0[1]) \($0[2])"
+        }
+        .subscribeNext { print($0) }
+        .addDisposableTo(disposeBag)
+}
+/*:
+ > The `combineLatest` extension on `Array` requires that all source `Observable` sequences are of the same type.
+ ----
+ ## `switchLatest`
+ Transforms the elements emitted by an `Observable` sequence into `Observable` sequences, and emits elements from the most recent inner `Observable` sequence. [More info](http://reactivex.io/documentation/operators/switch.html)
+ ![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/switch.png)
+ */
+example("switchLatest") {
+    let disposeBag = DisposeBag()
+    
+    let subject1 = BehaviorSubject(value: "⚽️")
+    let subject2 = BehaviorSubject(value: "🍎")
+    
+    let variable = Variable(subject1)
+        
+    variable.asObservable()
+        .switchLatest()
+        .subscribeNext { print($0) }
+        .addDisposableTo(disposeBag)
+    
+    subject1.onNext("🏈")
+    subject1.onNext("🏀")
+    
+    variable.value = subject2
+    
+    subject1.onNext("⚾️")
+    
+    subject2.onNext("🍐")
+}
+/*:
+ > In this example, adding ⚾️ onto `subject1` after setting `variable.value` to `subject2` has no effect, because only the most recent inner `Observable` sequence (`subject2`) will emit elements.
+ */
 
 //: [Next](@next) - [Table of Contents](Table_of_Contents)

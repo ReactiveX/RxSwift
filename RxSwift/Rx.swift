@@ -9,16 +9,11 @@
 import Foundation
 
 #if TRACE_RESOURCES
-/**
-Counts internal Rx resources (Observables, Observers, Disposables ...).
-
-It provides a really simple way to detect leaks early during development.
-*/
+/// Counts internal Rx resource allocations (Observables, Observers, Disposables, etc.). This provides a simple way to detect leaks during development.
 public var resourceCount: AtomicInt = 0
 #endif
 
-// Swift doesn't have a concept of abstract metods.
-// This function is being used as a runtime check that abstract methods aren't being called.
+/// Swift does not implement abstract methods. This method is used as a runtime check to ensure that methods which intended to be abstract (i.e., they should be implemented in subclasses) are not called directly on the superclass.
 @noreturn func abstractMethod() -> Void {
     rxFatalError("Abstract method")
 }
