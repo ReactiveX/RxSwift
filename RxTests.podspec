@@ -55,5 +55,7 @@ func testMap() {
 
   s.framework    = 'XCTest'
 
-  s.dependency 'RxSwift', '~> 2.4'
+  s.dependency 'RxSwift', '~> 2.5'
+
+  s.pod_target_xcconfig = { 'ENABLE_BITCODE' => 'NO' }
 end
