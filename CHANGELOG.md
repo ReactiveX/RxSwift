@@ -3,7 +3,29 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-## [2.4](https://github.com/ReactiveX/RxSwift/releases/tag/2.4)
+## [2.5.0](https://github.com/ReactiveX/RxSwift/releases/tag/2.5.0)
+
+#### Features
+
+* Exposes `installForwardDelegate`.
+* Adds `proxyForObject` as protocol extension and deprecates global function version.
+* Improves `installForwardDelegate` assert messaging.
+* Improves gesture recognizer extensions to use typed gesture recognizers in `rx_event`.
+* Adds `RxTextInput` protocol to enable creating reactive extensions for `UITextInput/NSTextInput`.
+* Adds `rx_willDisplayCell` and `rx_didEndDisplayingCell` extensions to `UITableView`.
+* Improves playgrounds.
+
+
+#### Anomalies
+
+* Fixes in documentation.
+* Turns off Bitcode for `RxTests` CocoaPods integration.
+* Fixes `UITextField.rx_text` and `UITextView.rx_text` integrations to be more robust when used with two way binding.
+* Fixes two way binding example code so it now properly handles IME used in Asian cultures and adds explanations how to properly perform two way bindings. https://github.com/ReactiveX/RxSwift/issues/649
+* Removes `distinctUntilChanged` from control extensions. https://github.com/ReactiveX/RxSwift/issues/626
+
+
+## [2.4.0](https://github.com/ReactiveX/RxSwift/releases/tag/2.4)
 
 #### Features
 
