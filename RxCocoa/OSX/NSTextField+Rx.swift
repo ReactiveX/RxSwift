@@ -76,7 +76,7 @@ public class RxTextFieldDelegateProxy
     
 }
 
-extension NSTextField {
+extension NSTextField : RxTextInput {
 
     /**
     Factory method that enables subclasses to implement their own `rx_delegate`.
