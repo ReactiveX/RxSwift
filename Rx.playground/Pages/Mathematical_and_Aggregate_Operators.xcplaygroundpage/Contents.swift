@@ -56,14 +56,11 @@ example("concat") {
         .subscribe { print($0) }
         .addDisposableTo(disposeBag)
     
+    subject2.onNext("🐱")
     subject1.onNext("🍐")
     subject1.onNext("🍊")
     
     variable.value = subject2
-    
-    subject2.onNext("🐱")
-    
-    subject1.onCompleted()
     
     subject2.onNext("🐭")
 }
