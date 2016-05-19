@@ -37,23 +37,17 @@ protocol Lock {
       }
 
       func performLocked(@noescape action: () -> Void) {
-          pthread_spin_lock(&_lock)
+          lock(); defer { unlock() }
           action()
-          pthread_spin_unlock(&_lock)
       }
 
       func calculateLocked<T>(@noescape action: () -> T) -> T {
-          pthread_spin_lock(&_lock)
-          let result = action()
-          pthread_spin_unlock(&_lock)
-          return result
+          lock(); defer { unlock() }
+          return action()
       }
 
       func calculateLockedOrFail<T>(@noescape action: () throws -> T) throws -> T {
-          pthread_spin_lock(&_lock)
-          defer {
-              pthread_spin_unlock(&_lock)
-          }
+          lock(); defer { unlock() }
           let result = try action()
           return result
       }
@@ -70,23 +64,17 @@ protocol Lock {
 
 extension NSRecursiveLock : Lock {
     func performLocked(@noescape action: () -> Void) {
-        self.lock()
+        lock(); defer { unlock() }
         action()
-        self.unlock()
     }
 
     func calculateLocked<T>(@noescape action: () -> T) -> T {
-        self.lock()
-        let result = action()
-        self.unlock()
-        return result
+        lock(); defer { unlock() }
+        return action()
     }
 
     func calculateLockedOrFail<T>(@noescape action: () throws -> T) throws -> T {
-        self.lock()
-        defer {
-            self.unlock()
-        }
+        lock(); defer { unlock() }
         let result = try action()
         return result
     }

@@ -3,7 +3,7 @@ API
 
 ## RxSwift supported operators
 
-In some cases there are multiple aliases for the same operator, because on different platforms / implementations, the same operation is sometimes called differently. Sometimes this is because historical reasons, sometimes because of reserved language keywords.
+In some cases there are multiple aliases for the same operator, because on different platforms / implementations, the same operation is sometimes named differently. Sometimes this is because of historical reasons, while sometimes because of reserved language keywords.
 
 When lacking a strong community consensus, RxSwift will usually include multiple aliases.
 
@@ -26,6 +26,7 @@ Operators are stateless by default.
  * [`timer`](http://reactivex.io/documentation/operators/timer.html)
 
 #### Transforming Observables
+
   * [`buffer`](http://reactivex.io/documentation/operators/buffer.html)
   * [`flatMap`](http://reactivex.io/documentation/operators/flatmap.html)
   * [`flatMapFirst`](http://reactivex.io/documentation/operators/flatmap.html)
@@ -35,6 +36,7 @@ Operators are stateless by default.
   * [`window`](http://reactivex.io/documentation/operators/window.html)
 
 #### Filtering Observables
+
   * [`debounce` / `throttle`](http://reactivex.io/documentation/operators/debounce.html)
   * [`distinctUntilChanged`](http://reactivex.io/documentation/operators/distinct.html)
   * [`elementAt`](http://reactivex.io/documentation/operators/elementat.html)
@@ -71,6 +73,7 @@ Operators are stateless by default.
   * debug
 
 #### Conditional and Boolean Operators
+
   * [`amb`](http://reactivex.io/documentation/operators/amb.html)
   * [`skipWhile`](http://reactivex.io/documentation/operators/skipwhile.html)
   * [`skipUntil`](http://reactivex.io/documentation/operators/skipuntil.html)
@@ -403,6 +406,13 @@ extension UIActivityIndicatorView {
 
     public var rx_animating: AnyObserver<Bool> {}
 
+}
+```
+
+```swift
+extension UINavigationItem {
+
+    public var rx_title: AnyObserver<String?> {}
 }
 ```
 

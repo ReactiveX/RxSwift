@@ -8,34 +8,25 @@
 
 import Foundation
 
-
 /**
-Represents sequence event
+Represents a sequence event.
 
 Sequence grammar:
 Next\* (Error | Completed)
 */
-public enum Event<Element> : CustomDebugStringConvertible {
-    /**
-    Next element is produced
-    */
+public enum Event<Element> {
+    /// Next element is produced.
     case Next(Element)
-    
-    /**
-    Sequence terminates with error
-    */
+
+    /// Sequence terminated with an error.
     case Error(ErrorType)
-    
-    /**
-    Sequence completes sucessfully
-    */
+
+    /// Sequence completed successfully.
     case Completed
 }
 
-extension Event {
-    /**
-    - returns: Description of event
-    */
+extension Event : CustomDebugStringConvertible {
+    /// - returns: Description of event.
     public var debugDescription: String {
         switch self {
         case .Next(let value):
@@ -49,9 +40,7 @@ extension Event {
 }
 
 extension Event {
-    /**
-    - returns: Is `Completed` or `Error` event
-    */
+    /// - returns: Is `Completed` or `Error` event.
     public var isStopEvent: Bool {
         switch self {
         case .Next: return false
@@ -59,9 +48,7 @@ extension Event {
         }
     }
 
-    /**
-    - returns: If `Next` event, returns element value.
-    */
+    /// - returns: If `Next` event, returns element value.
     public var element: Element? {
         if case .Next(let value) = self {
             return value
@@ -69,9 +56,7 @@ extension Event {
         return nil
     }
 
-    /**
-    - returns: If `Error` event, returns error.
-    */
+    /// - returns: If `Error` event, returns error.
     public var error: ErrorType? {
         if case .Error(let error) = self {
             return error

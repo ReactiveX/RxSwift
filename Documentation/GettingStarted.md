@@ -26,11 +26,13 @@ This project tries to be consistent with [ReactiveX.io](http://reactivex.io/). T
 # Observables aka Sequences
 
 ## Basics
-The [Equivalence](MathBehindRx.md) of observer patterns (`Observable<Element>`) and sequences (`Generator`s)
-is one of the most important things to understand about Rx.
+The [equivalence](MathBehindRx.md) of observer pattern (`Observable<Element>` sequence) and normal sequences (`SequenceType`) is the most important thing to understand about Rx.
 
-The observer pattern is needed because we want to model asynchronous behavior.
-That equivalence enables the implementation of high level sequence operations as operators on `Observable`s.
+**Every `Observable` sequence is just a sequence. The key advantage for an `Observable` vs Swift's `SequenceType` is that it can also receive elements asynchronously. This is the kernel of the RxSwift, documentation from here is about ways that we expand on that idea.**
+
+* `Observable`(`ObservableType`) is equivalent to `SequenceType`
+* `ObservableType.subscribe` method is equivalent to `SequenceType.generate` method.
+* Observer (callback) needs to be passed to `ObservableType.subscribe` method to receive sequence elements instead of calling `next()` on the returned generator.
 
 Sequences are a simple, familiar concept that is **easy to visualize**.
 

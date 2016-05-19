@@ -12,7 +12,7 @@ import RxSwift
 import RxCocoa
 #endif
 
-struct ActivityToken<E> : ObservableConvertibleType, Disposable {
+private struct ActivityToken<E> : ObservableConvertibleType, Disposable {
     private let _source: Observable<E>
     private let _dispose: AnonymousDisposable
 
@@ -36,26 +36,26 @@ Enables monitoring of sequence computation.
 If there is at least one sequence computation in progress, `true` will be sent.
 When all activities complete `false` will be sent.
 */
-class ActivityIndicator : DriverConvertibleType {
-    typealias E = Bool
+public class ActivityIndicator : DriverConvertibleType {
+    public typealias E = Bool
 
     private let _lock = NSRecursiveLock()
     private let _variable = Variable(0)
     private let _loading: Driver<Bool>
 
-    init() {
+    public init() {
         _loading = _variable.asObservable()
             .map { $0 > 0 }
             .distinctUntilChanged()
             .asDriver(onErrorRecover: ActivityIndicator.ifItStillErrors)
     }
 
-    static func ifItStillErrors(error: ErrorType) -> Driver<Bool> {
+    private static func ifItStillErrors(error: ErrorType) -> Driver<Bool> {
         _ = fatalError("Loader can't fail")
     }
 
 
-    func trackActivity<O: ObservableConvertibleType>(source: O) -> Observable<O.E> {
+    private func trackActivityOfObservable<O: ObservableConvertibleType>(source: O) -> Observable<O.E> {
         return Observable.using({ () -> ActivityToken<O.E> in
             self.increment()
             return ActivityToken(source: source.asObservable(), disposeAction: self.decrement)
@@ -76,13 +76,13 @@ class ActivityIndicator : DriverConvertibleType {
         _lock.unlock()
     }
 
-    func asDriver() -> Driver<E> {
+    public func asDriver() -> Driver<E> {
         return _loading
     }
 }
 
-extension ObservableConvertibleType {
-    func trackActivity(activityIndicator: ActivityIndicator) -> Observable<E> {
-        return activityIndicator.trackActivity(self)
+public extension ObservableConvertibleType {
+    public func trackActivity(activityIndicator: ActivityIndicator) -> Observable<E> {
+        return activityIndicator.trackActivityOfObservable(self)
     }
 }

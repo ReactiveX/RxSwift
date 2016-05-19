@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <playground version='6.0' target-platform='osx' display-mode='rendered'>
     <pages>
-        <page name='Index'/>
+        <page name='Table_of_Contents'/>
         <page name='Introduction'/>
-        <page name='Subjects'/>
-        <page name='Transforming_Observables'/>
-        <page name='Filtering_Observables'/>
-        <page name='Combining_Observables'/>
-        <page name='Error_Handling_Operators'/>
-        <page name='Observable_Utility_Operators'/>
-        <page name='Conditional_and_Boolean_Operators'/>
+        <page name='Creating_and_Subscribing_to_Observables'/>
+        <page name='Working_with_Subjects'/>
+        <page name='Combining_Operators'/>
+        <page name='Transforming_Operators'/>
+        <page name='Filtering_and_Conditional_Operators'/>
         <page name='Mathematical_and_Aggregate_Operators'/>
-        <page name='Connectable_Observable_Operators'/>
+        <page name='Connectable_Operators'/>
+        <page name='Error_Handling_Operators'/>
+        <page name='Debugging_Operators'/>
+        <page name='Enable_RxSwift.resourceCount'/>
     </pages>
 </playground>
