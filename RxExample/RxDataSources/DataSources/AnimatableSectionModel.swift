@@ -8,24 +8,23 @@
 
 import Foundation
 
-public struct AnimatableSectionModel<Section: Hashable, ItemType: Hashable>
-    : Hashable
-    , AnimatableSectionModelType
+public struct AnimatableSectionModel<Section: IdentifiableType, ItemType: protocol<IdentifiableType, Equatable>>
+    : AnimatableSectionModelType
     , CustomStringConvertible {
-    public typealias Item = IdentifiableValue<ItemType>
-    public typealias Identity = Section
+    public typealias Item = ItemType
+    public typealias Identity = Section.Identity
 
     public var model: Section
     
     public var items: [Item]
 
-    public var identity: Section {
-        return model
+    public var identity: Section.Identity {
+        return model.identity
     }
     
     public init(model: Section, items: [ItemType]) {
         self.model = model
-        self.items = items.map(IdentifiableValue.init)
+        self.items = items
     }
     
     public init(original: AnimatableSectionModel, items: [Item]) {
@@ -38,10 +37,6 @@ public struct AnimatableSectionModel<Section: Hashable, ItemType: Hashable>
     }
     
     public var hashValue: Int {
-        return self.model.hashValue
+        return self.model.identity.hashValue
     }
-}
-
-public func == <S, I>(lhs: AnimatableSectionModel<S, I>, rhs: AnimatableSectionModel<S, I>) -> Bool {
-    return lhs.model == rhs.model
 }

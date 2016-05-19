@@ -56,4 +56,8 @@ class NSTextFieldSubclass
             .observe(#selector(NSTextFieldDelegateSubclass.testEventHappened(_:)))
             .map { a in (a[0] as! NSNumber).integerValue }
     }
+
+    func setMineForwardDelegate(testDelegate: TestDelegateProtocol) -> Disposable {
+        return RxTextFieldDelegateProxy.installForwardDelegate(testDelegate, retainDelegate: false, onProxyForObject: self)
+    }
 }

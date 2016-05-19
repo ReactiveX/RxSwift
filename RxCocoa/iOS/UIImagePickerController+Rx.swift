@@ -24,7 +24,7 @@ import Foundation
          For more information take a look at `DelegateProxyType` protocol documentation.
          */
         public var rx_delegate: DelegateProxy {
-            return proxyForObject(RxImagePickerDelegateProxy.self, self)
+            return RxImagePickerDelegateProxy.proxyForObject(self)
         }
 
         /**

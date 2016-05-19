@@ -1,86 +1,71 @@
 /*:
-> # IMPORTANT: To use `Rx.playground`, please:
-
-1. Open `Rx.xcworkspace`
-2. Build `RxSwift-OSX` scheme
-3. And then open `Rx` playground in `Rx.xcworkspace` tree view.
-4. Choose `View > Show Debug Area`
-*/
-
-//: [<< Previous](@previous) - [Index](Index)
-
+ > # IMPORTANT: To use **Rx.playground**:
+ 1. Open **Rx.xcworkspace**.
+ 1. Build the **RxSwift-OSX** scheme (**Product** → **Build**).
+ 1. Open **Rx** playground in the **Project navigator**.
+ 1. Show the Debug Area (**View** → **Debug Area** → **Show Debug Area**).
+ ----
+ [Previous](@previous) - [Table of Contents](Table_of_Contents)
+ */
 import RxSwift
-
 /*:
-## Mathematical and Aggregate Operators
-
-Operators that operate on the entire sequence of items emitted by an Observable
-
-*/
-
-/*:
-### `concat`
-
-Emit the emissions from two or more Observables without interleaving them.
-
-![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/concat.png)
-
-[More info in reactive.io website]( http://reactivex.io/documentation/operators/concat.html )
-*/
-example("concat") {
-    let var1 = BehaviorSubject(value: 0)
-    let var2 = BehaviorSubject(value: 200)
+ # Mathematical and Aggregate Operators
+ Operators that operate on the entire sequence of items emitted by an `Observable`.
+ ## `toArray`
+ Converts an `Observable` sequence into an array, emits that array as a new single-element `Observable` sequence, and then terminates. [More info](http://reactivex.io/documentation/operators/to.html)
+ ![](http://reactivex.io/documentation/operators/images/to.c.png)
+ */
+example("toArray") {
+    let disposeBag = DisposeBag()
     
-    // var3 is like an Observable<Observable<Int>>
-    let var3 = BehaviorSubject(value: var1)
-    
-    let d = var3
-        .concat()
-        .subscribe {
-            print($0)
-        }
-    
-    var1.on(.Next(1))
-    var1.on(.Next(2))
-    var1.on(.Next(3))
-    var1.on(.Next(4))
-    
-    var3.on(.Next(var2))
-    
-    var2.on(.Next(201))
-    
-    var1.on(.Next(5))
-    var1.on(.Next(6))
-    var1.on(.Next(7))
-    var1.on(.Completed)
-    
-    var2.on(.Next(202))
-    var2.on(.Next(203))
-    var2.on(.Next(204))
+    Observable.range(start: 1, count: 10)
+        .toArray()
+        .subscribe { print($0) }
+        .addDisposableTo(disposeBag)
 }
-
-
 /*:
-
-
-### `reduce`
-
-Apply a function to each item emitted by an Observable, sequentially, and emit the final value.
-This function will perform a function on each element in the sequence until it is completed, then send a message with the aggregate value. It works much like the Swift `reduce` function works on sequences.
-
-![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/reduce.png)
-
-[More info in reactive.io website]( http://reactivex.io/documentation/operators/reduce.html )
-
-*/
+ ----
+ ## `reduce`
+ Begins with an initial seed value, and then applies an accumulator closure to all elements emitted by an `Observable` sequence, and returns the aggregate result as a single-element `Observable` sequence. [More info](http://reactivex.io/documentation/operators/reduce.html)
+ ![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/reduce.png)
+ */
 example("reduce") {
-    _ = Observable.of(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
-        .reduce(0, accumulator: +)
-        .subscribe {
-            print($0)
-        }
+    let disposeBag = DisposeBag()
+    
+    Observable.of(10, 100, 1000)
+        .reduce(1, accumulator: +)
+        .subscribeNext { print($0) }
+        .addDisposableTo(disposeBag)
+}
+/*:
+ ----
+ ## `concat`
+ Joins elements from inner `Observable` sequences of an `Observable` sequence in a sequential manner, waiting for each sequence to terminate successfully before emitting elements from the next sequence. [More info](http://reactivex.io/documentation/operators/concat.html)
+ ![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/concat.png)
+ */
+example("concat") {
+    let disposeBag = DisposeBag()
+    
+    let subject1 = BehaviorSubject(value: "🍎")
+    let subject2 = BehaviorSubject(value: "🐶")
+    
+    let variable = Variable(subject1)
+    
+    variable.asObservable()
+        .concat()
+        .subscribe { print($0) }
+        .addDisposableTo(disposeBag)
+    
+    subject1.onNext("🍐")
+    subject1.onNext("🍊")
+    
+    variable.value = subject2
+    
+    subject2.onNext("🐱")
+    
+    subject1.onCompleted()
+    
+    subject2.onNext("🐭")
 }
 
-
-
-//: [Index](Index) - [Next >>](@next)
+//: [Next](@next) - [Table of Contents](Table_of_Contents)

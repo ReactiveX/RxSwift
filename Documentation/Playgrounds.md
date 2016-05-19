@@ -3,6 +3,6 @@
 To use playgrounds:
 
 * Open `Rx.xcworkspace`
-* Build `RxSwift-OSX` scheme
-* And then open `Rx` playground in `Rx.xcworkspace` tree view.
-* Choose `View > Show Debug Area`
+* Build the `RxSwift-OSX` scheme
+* Open `Rx` playground in the `Rx.xcworkspace` tree view.
+* Choose `View > Debug Area > Show Debug Area`

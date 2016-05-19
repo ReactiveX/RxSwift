@@ -16,13 +16,14 @@ import Foundation
 #endif
     import UIKit
     
+@available(iOS 8.0, *)
 extension UISearchController {
     /**
      Reactive wrapper for `delegate`.
      For more information take a look at `DelegateProxyType` protocol documentation.
      */
     public var rx_delegate: DelegateProxy {
-        return proxyForObject(RxSearchControllerDelegateProxy.self, self)
+        return RxSearchControllerDelegateProxy.proxyForObject(self)
     }
     /**
      Reactive wrapper for `delegate` message.
