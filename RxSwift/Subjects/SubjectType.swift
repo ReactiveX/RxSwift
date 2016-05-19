@@ -20,9 +20,15 @@ public protocol SubjectType : ObservableType {
     associatedtype SubjectObserverType : ObserverType
     
     /**
+     Check whether the subject has any observers
+     */
+    var hasObservers: Bool { get }
+    
+    /**
     Returns observer interface for subject.
     
     - returns: Observer interface for subject.
     */
     func asObserver() -> SubjectObserverType
+    
 }

@@ -54,4 +54,8 @@ class MySubject<Element where Element : Hashable> : SubjectType, ObserverType {
     func asObserver() -> MySubject<E> {
         return self
     }
+
+    var hasObservers: Bool {
+        return _observer != nil
+    }
 }
