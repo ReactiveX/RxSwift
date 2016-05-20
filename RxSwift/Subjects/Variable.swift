@@ -14,7 +14,7 @@ Variable is a wrapper for `BehaviorSubject`.
 Unlike `BehaviorSubject` it can't terminate with error, and when variable is deallocated
  it will complete it's observable sequence (`asObservable`).
 */
-public class Variable<Element> {
+public class Variable<Element>: VariableType, ObservableConvertibleType {
 
     public typealias E = Element
     
@@ -55,15 +55,16 @@ public class Variable<Element> {
         _value = value
         _subject = BehaviorSubject(value: value)
     }
-    
-    /**
-    - returns: Canonical interface for push style sequence
-    */
-    public func asObservable() -> Observable<E> {
-        return _subject
-    }
 
     deinit {
         _subject.on(.Completed)
     }
+    
+    /**
+     - returns: Canonical interface for push style sequence
+     */
+    public func asObservable() -> Observable<E> {
+        return _subject
+    }
 }
+
