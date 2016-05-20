@@ -30,18 +30,10 @@ public class CompositeDisposable : DisposeBase, Disposable, Cancelable {
     /**
      Initializes a new instance of composite disposable with the specified number of disposables.
     */
-    public init(_ disposable1: Disposable, _ disposable2: Disposable) {
-        _disposables!.insert(disposable1)
-        _disposables!.insert(disposable2)
-    }
-    
-    /**
-     Initializes a new instance of composite disposable with the specified number of disposables.
-    */
-    public init(_ disposable1: Disposable, _ disposable2: Disposable, _ disposable3: Disposable) {
-        _disposables!.insert(disposable1)
-        _disposables!.insert(disposable2)
-        _disposables!.insert(disposable3)
+    public init(_ disposables: Disposable...) {
+        for disposable in disposables {
+            _disposables!.insert(disposable)
+        }
     }
     
     /**
