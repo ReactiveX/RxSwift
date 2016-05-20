@@ -71,7 +71,10 @@ extension UICollectionView {
     - parameter source: Observable sequence of items.
     - returns: Disposable object that can be used to unbind.
     */
-    public func rx_itemsWithDataSource<DataSource: protocol<RxCollectionViewDataSourceType, UICollectionViewDataSource>, S: SequenceType, O: ObservableType where DataSource.Element == S, O.E == S>
+    public func rx_itemsWithDataSource<
+            DataSource: protocol<RxCollectionViewDataSourceType, UICollectionViewDataSource>,
+            O: ObservableType where DataSource.Element == O.E
+        >
         (dataSource: DataSource)
         -> (source: O)
         -> Disposable  {

@@ -70,7 +70,10 @@ extension UITableView {
     - parameter source: Observable sequence of items.
     - returns: Disposable object that can be used to unbind.
     */
-    public func rx_itemsWithDataSource<DataSource: protocol<RxTableViewDataSourceType, UITableViewDataSource>, S: SequenceType, O: ObservableType where DataSource.Element == S, O.E == S>
+    public func rx_itemsWithDataSource<
+            DataSource: protocol<RxTableViewDataSourceType, UITableViewDataSource>,
+            O: ObservableType where DataSource.Element == O.E
+        >
         (dataSource: DataSource)
         -> (source: O)
         -> Disposable  {
