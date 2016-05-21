@@ -59,7 +59,7 @@ class Using<SourceType, ResourceType: Disposable>: Producer<SourceType> {
     typealias E = SourceType
     
     typealias ResourceFactory = () throws -> ResourceType
-    typealias ObservableFactory = ResourceType throws -> Observable<SourceType>
+    typealias ObservableFactory = (ResourceType) throws -> Observable<SourceType>
     
     private let _resourceFactory: ResourceFactory
     private let _observableFactory: ObservableFactory

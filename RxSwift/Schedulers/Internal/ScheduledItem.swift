@@ -11,7 +11,7 @@ import Foundation
 struct ScheduledItem<T>
     : ScheduledItemType
     , InvocableType {
-    typealias Action = T -> Disposable
+    typealias Action = (T) -> Disposable
     
     private let _action: Action
     private let _state: T

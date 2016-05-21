@@ -79,7 +79,7 @@ class ObserveOnSink<O: ObserverType> : ObserverBase<O.E> {
         }
     }
     
-    func run(state: Void, recurse: Void -> Void) {
+    func run(state: Void, recurse: (Void) -> Void) {
         let (nextEvent, observer) = self._lock.calculateLocked { () -> (Event<E>?, O?) in
             if self._queue.count > 0 {
                 return (self._queue.dequeue(), self._observer)

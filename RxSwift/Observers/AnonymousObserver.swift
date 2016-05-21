@@ -11,7 +11,7 @@ import Foundation
 class AnonymousObserver<ElementType> : ObserverBase<ElementType> {
     typealias Element = ElementType
     
-    typealias EventHandler = Event<Element> -> Void
+    typealias EventHandler = (Event<Element>) -> Void
     
     private let _eventHandler : EventHandler
     

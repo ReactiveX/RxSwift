@@ -59,7 +59,7 @@ class Debug<Element> : Producer<Element> {
         else {
             let trimmedFile: String
             if let lastIndex = file.lastIndexOf(character: "/") {
-                trimmedFile = file[lastIndex.successor() ..< file.endIndex]
+                trimmedFile = file[file.index(after: lastIndex) ..< file.endIndex]
             }
             else {
                 trimmedFile = file

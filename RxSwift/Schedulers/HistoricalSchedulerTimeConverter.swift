@@ -63,7 +63,7 @@ public struct HistoricalSchedulerTimeConverter : VirtualTimeConverterType {
      - parameter timeInterval: Time interval offset.
      - returns: Time offsetted by time interval.
     */
-    public func offsetVirtualTime(time time: VirtualTimeUnit, offset: VirtualTimeIntervalUnit) -> VirtualTimeUnit {
+    public func offsetVirtualTime(time: VirtualTimeUnit, offset: VirtualTimeIntervalUnit) -> VirtualTimeUnit {
         return time.addingTimeInterval(offset)
     }
 

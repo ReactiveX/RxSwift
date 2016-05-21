@@ -49,7 +49,7 @@ public final class MainScheduler : SerialDispatchQueueScheduler {
         }
     }
 
-    override func scheduleInternal<StateType>(state: StateType, action: StateType -> Disposable) -> Disposable {
+    override func scheduleInternal<StateType>(state: StateType, action: (StateType) -> Disposable) -> Disposable {
         let currentNumberEnqueued = AtomicIncrement(&numberEnqueued)
 
         if NSThread.current().isMainThread && currentNumberEnqueued == 1 {

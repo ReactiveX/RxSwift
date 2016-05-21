@@ -72,7 +72,7 @@ public class VirtualTimeScheduler<Converter: VirtualTimeConverterType>
     - parameter action: Action to be executed.
     - returns: The disposable object used to cancel the scheduled action (best effort).
     */
-    public func schedule<StateType>(state: StateType, action: StateType -> Disposable) -> Disposable {
+    public func schedule<StateType>(state: StateType, action: (StateType) -> Disposable) -> Disposable {
         return self.scheduleRelative(state: state, dueTime: 0.0) { a in
             return action(a)
         }
@@ -86,7 +86,7 @@ public class VirtualTimeScheduler<Converter: VirtualTimeConverterType>
      - parameter action: Action to be executed.
      - returns: The disposable object used to cancel the scheduled action (best effort).
      */
-    public func scheduleRelative<StateType>(state: StateType, dueTime: RxTimeInterval, action: StateType -> Disposable) -> Disposable {
+    public func scheduleRelative<StateType>(state: StateType, dueTime: RxTimeInterval, action: (StateType) -> Disposable) -> Disposable {
         let time = self.now.addingTimeInterval(dueTime)
         let absoluteTime = _converter.convertToVirtualTime(time: time)
         let adjustedTime = self.adjustScheduledTime(time: absoluteTime)
@@ -101,7 +101,7 @@ public class VirtualTimeScheduler<Converter: VirtualTimeConverterType>
      - parameter action: Action to be executed.
      - returns: The disposable object used to cancel the scheduled action (best effort).
      */
-    public func scheduleRelativeVirtual<StateType>(state: StateType, dueTime: VirtualTimeInterval, action: StateType -> Disposable) -> Disposable {
+    public func scheduleRelativeVirtual<StateType>(state: StateType, dueTime: VirtualTimeInterval, action: (StateType) -> Disposable) -> Disposable {
         let time = _converter.offsetVirtualTime(time: self.clock, offset: dueTime)
         return scheduleAbsoluteVirtual(state: state, time: time, action: action)
     }
@@ -114,7 +114,7 @@ public class VirtualTimeScheduler<Converter: VirtualTimeConverterType>
      - parameter action: Action to be executed.
      - returns: The disposable object used to cancel the scheduled action (best effort).
      */
-    public func scheduleAbsoluteVirtual<StateType>(state: StateType, time: Converter.VirtualTimeUnit, action: StateType -> Disposable) -> Disposable {
+    public func scheduleAbsoluteVirtual<StateType>(state: StateType, time: Converter.VirtualTimeUnit, action: (StateType) -> Disposable) -> Disposable {
         MainScheduler.ensureExecutingOnScheduler()
 
         let compositeDisposable = CompositeDisposable()

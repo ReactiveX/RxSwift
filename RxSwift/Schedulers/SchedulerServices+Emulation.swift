@@ -14,7 +14,7 @@ enum SchedulePeriodicRecursiveCommand {
 }
 
 class SchedulePeriodicRecursive<State> {
-    typealias RecursiveAction = State -> State
+    typealias RecursiveAction = (State) -> State
     typealias RecursiveScheduler = AnyRecursiveScheduler<SchedulePeriodicRecursiveCommand>
 
     private let _scheduler: SchedulerType

@@ -14,7 +14,7 @@ extension String {
     */
     func lastIndexOf(character: Character) -> Index? {
         var last: Index?
-        for i in startIndex ..< endIndex {
+        for i in characters.indices.indices {
             if self[i] == character {
                 last = i
             }

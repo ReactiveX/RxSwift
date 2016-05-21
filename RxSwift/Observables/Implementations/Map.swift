@@ -118,7 +118,7 @@ class Map<SourceType, ResultType>: Producer<ResultType> {
 #endif
     }
 
-    override func composeMap<R>(selector: ResultType throws -> R) -> Observable<R> {
+    override func composeMap<R>(selector: (ResultType) throws -> R) -> Observable<R> {
         let originalSelector = _selector
         return Map<SourceType, R>(source: _source, selector: { (s: SourceType) throws -> R in
             let r: ResultType = try originalSelector(s)
