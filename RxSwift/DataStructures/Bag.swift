@@ -223,7 +223,7 @@ extension Bag {
     
     - parameter action: Enumeration closure.
     */
-    public func forEach(@noescape action: (T) -> Void) {
+    public func forEach(action: @noescape (T) -> Void) {
         if _onlyFastPath {
             if let value0 = _value0 {
                 action(value0)

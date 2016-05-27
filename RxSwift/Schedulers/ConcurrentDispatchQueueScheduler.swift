@@ -62,11 +62,11 @@ public class ConcurrentDispatchQueueScheduler: SchedulerType {
     - parameter action: Action to be executed.
     - returns: The disposable object used to cancel the scheduled action (best effort).
     */
-    public final func schedule<StateType>(state: StateType, action: StateType -> Disposable) -> Disposable {
+    public final func schedule<StateType>(state: StateType, action: (StateType) -> Disposable) -> Disposable {
         return self.scheduleInternal(state: state, action: action)
     }
     
-    func scheduleInternal<StateType>(state: StateType, action: StateType -> Disposable) -> Disposable {
+    func scheduleInternal<StateType>(state: StateType, action: (StateType) -> Disposable) -> Disposable {
         let cancel = SingleAssignmentDisposable()
         
         dispatch_async(_queue) {
@@ -89,7 +89,9 @@ public class ConcurrentDispatchQueueScheduler: SchedulerType {
     - returns: The disposable object used to cancel the scheduled action (best effort).
     */
     public final func scheduleRelative<StateType>(state: StateType, dueTime: NSTimeInterval, action: (StateType) -> Disposable) -> Disposable {
-        let timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, _queue)
+        
+        // Swift 3.0 IUO
+        let timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, _queue)!
         
         let dispatchInterval = MainScheduler.convertTimeIntervalToDispatchTime(timeInterval: dueTime)
         
@@ -121,7 +123,9 @@ public class ConcurrentDispatchQueueScheduler: SchedulerType {
     - returns: The disposable object used to cancel the scheduled action (best effort).
     */
     public func schedulePeriodic<StateType>(state: StateType, startAfter: TimeInterval, period: TimeInterval, action: (StateType) -> StateType) -> Disposable {
-        let timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, _queue)
+        
+        // Swift 3.0 IUO
+        let timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, _queue)!
         
         let initial = MainScheduler.convertTimeIntervalToDispatchTime(timeInterval: startAfter)
         let dispatchInterval = MainScheduler.convertTimeIntervalToDispatchInterval(timeInterval: period)

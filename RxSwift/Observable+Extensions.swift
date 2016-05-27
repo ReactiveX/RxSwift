@@ -35,7 +35,7 @@ extension ObservableType {
     - returns: Subscription object used to unsubscribe from the observable sequence.
     */
     @warn_unused_result(message: "http://git.io/rxs.ud")
-    public func subscribe(onNext onNext: (E -> Void)? = nil, onError: (ErrorProtocol -> Void)? = nil, onCompleted: (() -> Void)? = nil, onDisposed: (() -> Void)? = nil)
+    public func subscribe(onNext: ((E) -> Void)? = nil, onError: ((ErrorProtocol) -> Void)? = nil, onCompleted: (() -> Void)? = nil, onDisposed: (() -> Void)? = nil)
         -> Disposable {
 
         let disposable: Disposable

@@ -54,7 +54,7 @@ struct PriorityQueue<Element: AnyObject> {
             swap(&_elements[index], &_elements[_elements.count - 1])
         }
 
-        _elements.popLast()
+        _ = _elements.popLast()
 
         if !removingLast {
             bubbleToHigherPriority(initialUnbalancedIndex: index)

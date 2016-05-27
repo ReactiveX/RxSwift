@@ -61,7 +61,7 @@ public protocol VirtualTimeConverterType {
      - parameter offset: Virtual time interval.
      - returns: Time corresponding to time offsetted by virtual time interval.
     */
-    func offsetVirtualTime(time time: VirtualTimeUnit, offset: VirtualTimeIntervalUnit) -> VirtualTimeUnit
+    func offsetVirtualTime(time: VirtualTimeUnit, offset: VirtualTimeIntervalUnit) -> VirtualTimeUnit
 
     /**
      This is aditional abstraction because `NSDate` is unfortunately not comparable.

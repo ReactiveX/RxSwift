@@ -144,7 +144,7 @@ final class SwitchIdentitySink<S: ObservableConvertibleType, O: ObserverType whe
 }
 
 final class MapSwitchSink<SourceType, S: ObservableConvertibleType, O: ObserverType where O.E == S.E> : SwitchSink<SourceType, S, O> {
-    typealias Selector = SourceType throws -> S
+    typealias Selector = (SourceType) throws -> S
 
     private let _selector: Selector
 
@@ -175,7 +175,7 @@ final class Switch<S: ObservableConvertibleType> : Producer<S.E> {
 }
 
 final class FlatMapLatest<SourceType, S: ObservableConvertibleType> : Producer<S.E> {
-    typealias Selector = SourceType throws -> S
+    typealias Selector = (SourceType) throws -> S
 
     private let _source: Observable<SourceType>
     private let _selector: Selector

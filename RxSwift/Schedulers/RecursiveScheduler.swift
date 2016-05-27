@@ -126,7 +126,7 @@ class AnyRecursiveScheduler<State> {
 Type erased recursive scheduler.
 */
 class RecursiveImmediateScheduler<State> {
-    typealias Action =  (state: State, recurse: State -> Void) -> Void
+    typealias Action =  (state: State, recurse: (State) -> Void) -> Void
     
     private var _lock = SpinLock()
     private let _group = CompositeDisposable()

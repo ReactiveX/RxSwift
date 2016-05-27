@@ -90,9 +90,9 @@ class CombineLatestCollectionTypeSink<C: Collection, R, O: ObserverType where C.
     
     func run() -> Disposable {
         var j = 0
-        for i in _parent._sources.startIndex ..< _parent._sources.endIndex {
+        for i in _parent._sources {
             let index = j
-            let source = _parent._sources[i].asObservable()
+            let source = i.asObservable()
             _subscriptions[j].disposable = source.subscribe(observer: AnyObserver { event in
                 self.on(event: event, atIndex: index)
             })
@@ -105,7 +105,7 @@ class CombineLatestCollectionTypeSink<C: Collection, R, O: ObserverType where C.
 }
 
 class CombineLatestCollectionType<C: Collection, R where C.Iterator.Element : ObservableConvertibleType> : Producer<R> {
-    typealias ResultSelector = [C.Iterator.Element.E] throws -> R
+    typealias ResultSelector = ([C.Iterator.Element.E]) throws -> R
     
     let _sources: C
     let _resultSelector: ResultSelector

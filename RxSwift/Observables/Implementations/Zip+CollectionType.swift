@@ -103,9 +103,9 @@ class ZipCollectionTypeSink<C: Collection, R, O: ObserverType where C.Iterator.E
     
     func run() -> Disposable {
         var j = 0
-        for i in _parent.sources.startIndex ..< _parent.sources.endIndex {
+        for i in _parent.sources {
             let index = j
-            let source = _parent.sources[i].asObservable()
+            let source = i.asObservable()
             _subscriptions[j].disposable = source.subscribe(observer: AnyObserver { event in
                 self.on(event: event, atIndex: index)
                 })
@@ -117,7 +117,7 @@ class ZipCollectionTypeSink<C: Collection, R, O: ObserverType where C.Iterator.E
 }
 
 class ZipCollectionType<C: Collection, R where C.Iterator.Element : ObservableConvertibleType> : Producer<R> {
-    typealias ResultSelector = [C.Iterator.Element.E] throws -> R
+    typealias ResultSelector = ([C.Iterator.Element.E]) throws -> R
     
     let sources: C
     let resultSelector: ResultSelector

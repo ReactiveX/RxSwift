@@ -74,10 +74,10 @@ public class CurrentThreadScheduler : ImmediateSchedulerType {
 
     static var queue : ScheduleQueue? {
         get {
-            return NSThread.getThreadLocalStorageValueForKey(key: CurrentThreadSchedulerQueueKeyInstance)
+            return NSThread.getThreadLocalStorageValueForKey(key: CurrentThreadSchedulerQueueKeyInstance as NSString)
         }
         set {
-            NSThread.setThreadLocalStorageValue(value: newValue, forKey: CurrentThreadSchedulerQueueKeyInstance)
+            NSThread.setThreadLocalStorageValue(value: newValue, forKey: CurrentThreadSchedulerQueueKeyInstance as NSString)
         }
     }
 
@@ -86,11 +86,11 @@ public class CurrentThreadScheduler : ImmediateSchedulerType {
     */
     public static private(set) var isScheduleRequired: Bool {
         get {
-            let value: CurrentThreadSchedulerValue? = NSThread.getThreadLocalStorageValueForKey(key: CurrentThreadSchedulerKeyInstance)
+            let value: CurrentThreadSchedulerValue? = NSThread.getThreadLocalStorageValueForKey(key: CurrentThreadSchedulerKeyInstance as NSString)
             return value == nil
         }
         set(isScheduleRequired) {
-            NSThread.setThreadLocalStorageValue(value: isScheduleRequired ? nil : CurrentThreadSchedulerValueInstance, forKey: CurrentThreadSchedulerKeyInstance)
+            NSThread.setThreadLocalStorageValue(value: isScheduleRequired ? nil : CurrentThreadSchedulerValueInstance, forKey: CurrentThreadSchedulerKeyInstance as NSString)
         }
     }
 

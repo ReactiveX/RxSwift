@@ -132,7 +132,7 @@ extension Observable {
     - returns: The generated sequence.
     */
     @warn_unused_result(message: "http://git.io/rxs.uo")
-    public static func generate(initialState: E, condition: E throws -> Bool, scheduler: ImmediateSchedulerType = CurrentThreadScheduler.instance, iterate: E throws -> E) -> Observable<E> {
+    public static func generate(initialState: E, condition: (E) throws -> Bool, scheduler: ImmediateSchedulerType = CurrentThreadScheduler.instance, iterate: (E) throws -> E) -> Observable<E> {
         return Generate(initialState: initialState, condition: condition, iterate: iterate, resultSelector: { $0 }, scheduler: scheduler)
     }
 
@@ -160,7 +160,7 @@ extension Observable {
     - returns: An observable sequence whose lifetime controls the lifetime of the dependent resource object.
     */
     @warn_unused_result(message: "http://git.io/rxs.uo")
-    public static func using<R: Disposable>(resourceFactory: () throws -> R, observableFactory: R throws -> Observable<E>) -> Observable<E> {
+    public static func using<R: Disposable>(resourceFactory: () throws -> R, observableFactory: (R) throws -> Observable<E>) -> Observable<E> {
         return Using(resourceFactory: resourceFactory, observableFactory: observableFactory)
     }
 }

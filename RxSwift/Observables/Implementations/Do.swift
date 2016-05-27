@@ -35,7 +35,7 @@ class DoSink<O: ObserverType> : Sink<O>, ObserverType {
 }
 
 class Do<Element> : Producer<Element> {
-    typealias EventHandler = Event<Element> throws -> Void
+    typealias EventHandler = (Event<Element>) throws -> Void
     
     private let _source: Observable<Element>
     private let _eventHandler: EventHandler

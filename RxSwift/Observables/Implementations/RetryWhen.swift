@@ -135,9 +135,9 @@ class RetryWhenSequence<S: Sequence, TriggerObservable: ObservableType, Error wh
     typealias Element = S.Iterator.Element.E
     
     private let _sources: S
-    private let _notificationHandler: Observable<Error> -> TriggerObservable
+    private let _notificationHandler: (Observable<Error>) -> TriggerObservable
     
-    init(sources: S, notificationHandler: Observable<Error> -> TriggerObservable) {
+    init(sources: S, notificationHandler: (Observable<Error>) -> TriggerObservable) {
         _sources = sources
         _notificationHandler = notificationHandler
     }

@@ -54,7 +54,8 @@ public class SerialDispatchQueueScheduler: SchedulerType {
     - parameter serialQueueConfiguration: Additional configuration of internal serial dispatch queue.
     */
     public convenience init(internalSerialQueueName: String, serialQueueConfiguration: ((dispatch_queue_t) -> Void)? = nil) {
-        let queue = dispatch_queue_create(internalSerialQueueName, DISPATCH_QUEUE_SERIAL)
+        // Swift 3.0 IUO
+        let queue = dispatch_queue_create(internalSerialQueueName, DISPATCH_QUEUE_SERIAL)!
         serialQueueConfiguration?(queue)
         self.init(serialQueue: queue)
     }
@@ -66,7 +67,8 @@ public class SerialDispatchQueueScheduler: SchedulerType {
     - parameter internalSerialQueueName: Name of internal serial dispatch queue proxy.
     */
     public convenience init(queue: dispatch_queue_t, internalSerialQueueName: String) {
-        let serialQueue = dispatch_queue_create(internalSerialQueueName, DISPATCH_QUEUE_SERIAL)
+        // Swift 3.0 IUO
+        let serialQueue = dispatch_queue_create(internalSerialQueueName, DISPATCH_QUEUE_SERIAL)!
         dispatch_set_target_queue(serialQueue, queue)
         self.init(serialQueue: serialQueue)
     }
@@ -126,7 +128,8 @@ public class SerialDispatchQueueScheduler: SchedulerType {
     - returns: The disposable object used to cancel the scheduled action (best effort).
     */
     public final func scheduleRelative<StateType>(state: StateType, dueTime: NSTimeInterval, action: (StateType) -> Disposable) -> Disposable {
-        let timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, _serialQueue)
+        // Swift 3.0 IUO
+        let timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, _serialQueue)!
         
         let dispatchInterval = MainScheduler.convertTimeIntervalToDispatchTime(timeInterval: dueTime)
         
@@ -158,7 +161,9 @@ public class SerialDispatchQueueScheduler: SchedulerType {
     - returns: The disposable object used to cancel the scheduled action (best effort).
     */
     public func schedulePeriodic<StateType>(state: StateType, startAfter: TimeInterval, period: TimeInterval, action: (StateType) -> StateType) -> Disposable {
-        let timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, _serialQueue)
+        
+        // Swift 3.0 IUO
+        let timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, _serialQueue)!
         
         let initial = MainScheduler.convertTimeIntervalToDispatchTime(timeInterval: startAfter)
         let dispatchInterval = MainScheduler.convertTimeIntervalToDispatchInterval(timeInterval: period)
