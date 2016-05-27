@@ -144,6 +144,22 @@ extension ControlTests {
     }
 }
 
+// UIAlertAction
+extension ControlTests {
+    func testAlertAction_Enable() {
+        let subject = UIAlertAction()
+        Observable.just(false).subscribe(subject.rx_enabled).dispose()
+        
+        XCTAssertTrue(subject.enabled == false)
+    }
+
+    func testAlertAction_Disable() {
+        let subject = UIAlertAction()
+        Observable.just(true).subscribe(subject.rx_enabled).dispose()
+        
+        XCTAssertTrue(subject.enabled == true)
+    }
+}
 
 #if os(iOS)
 
