@@ -71,7 +71,7 @@ Rx units define operations by using corresponding observable sequence operations
 The `map` operation on `Driver` is defined using the `map` operation on its observable sequence.
 
 ```swift
-let d: Driver<Int> = Drive.just(11)
+let d: Driver<Int> = Driver.just(11)
 driver.map { $0 / 0.5 } = ...
 ```
 
