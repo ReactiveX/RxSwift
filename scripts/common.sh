@@ -126,6 +126,7 @@ function action() {
 
 	STATUS=""
     set -x
+		killall Simulator || true
 	xcodebuild -workspace "${WORKSPACE}" \
 				-scheme "${SCHEME}" \
 				-configuration "${CONFIGURATION}" \
