@@ -75,7 +75,7 @@ example("single with conditions") {
     
     Observable.of("🐱", "🐰", "🐶", "🐸", "🐷", "🐵")
         .single { $0 == "🔵" }
-        .subscribe { print($0) }
+        .subscribeNext { print($0) }
         .addDisposableTo(disposeBag)
 }
 /*:
