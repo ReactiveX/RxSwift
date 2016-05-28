@@ -18,12 +18,7 @@ public protocol SubjectType : ObservableType {
     Usually this type is type of subject itself, but it doesn't have to be.
     */
     associatedtype SubjectObserverType : ObserverType
-    
-    /**
-     Check whether the subject has any observers
-     */
-    var hasObservers: Bool { get }
-    
+
     /**
     Returns observer interface for subject.
     
