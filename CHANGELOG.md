@@ -3,6 +3,13 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## Master
+
+#### Features
+
+* Adds `rx_title` to `UIViewController`.
+
+
 ## [2.5.0](https://github.com/ReactiveX/RxSwift/releases/tag/2.5.0)
 
 #### Features
