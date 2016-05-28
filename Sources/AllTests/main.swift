@@ -94,6 +94,22 @@ _ObserverTests.allTests = [
 ]
 
 
+let _PublishSubjectTest = PublishSubjectTest()
+_PublishSubjectTest.allTests = [
+    ("test_hasObserversNoObservers", { _PublishSubjectTest.setUp(); _PublishSubjectTest.test_hasObserversNoObservers(); _PublishSubjectTest.tearDown(); }),
+    ("test_hasObserversOneObserver", { _PublishSubjectTest.setUp(); _PublishSubjectTest.test_hasObserversOneObserver(); _PublishSubjectTest.tearDown(); }),
+    ("test_hasObserversManyObserver", { _PublishSubjectTest.setUp(); _PublishSubjectTest.test_hasObserversManyObserver(); _PublishSubjectTest.tearDown(); }),
+]
+
+
+let _ReplaySubjectTest = ReplaySubjectTest()
+_ReplaySubjectTest.allTests = [
+    ("test_hasObserversNoObservers", { _ReplaySubjectTest.setUp(); _ReplaySubjectTest.test_hasObserversNoObservers(); _ReplaySubjectTest.tearDown(); }),
+    ("test_hasObserversOneObserver", { _ReplaySubjectTest.setUp(); _ReplaySubjectTest.test_hasObserversOneObserver(); _ReplaySubjectTest.tearDown(); }),
+    ("test_hasObserversManyObserver", { _ReplaySubjectTest.setUp(); _ReplaySubjectTest.test_hasObserversManyObserver(); _ReplaySubjectTest.tearDown(); }),
+]
+
+
 let _ObservableMultipleTest = ObservableMultipleTest()
 _ObservableMultipleTest.allTests = [
     ("testCombineLatest_Never2", { _ObservableMultipleTest.setUp(); _ObservableMultipleTest.testCombineLatest_Never2(); _ObservableMultipleTest.tearDown(); }),
@@ -615,6 +631,9 @@ _BehaviorSubjectTest.allTests = [
     ("test_Finite", { _BehaviorSubjectTest.setUp(); _BehaviorSubjectTest.test_Finite(); _BehaviorSubjectTest.tearDown(); }),
     //("test_Error", { _BehaviorSubjectTest.setUp(); _BehaviorSubjectTest.test_Error(); _BehaviorSubjectTest.tearDown(); }),
     ("test_Canceled", { _BehaviorSubjectTest.setUp(); _BehaviorSubjectTest.test_Canceled(); _BehaviorSubjectTest.tearDown(); }),
+    ("test_hasObserversNoObservers", { _BehaviorSubjectTest.setUp(); _BehaviorSubjectTest.test_hasObserversNoObservers(); _BehaviorSubjectTest.tearDown(); }),
+    ("test_hasObserversOneObserver", { _BehaviorSubjectTest.setUp(); _BehaviorSubjectTest.test_hasObserversOneObserver(); _BehaviorSubjectTest.tearDown(); }),
+    ("test_hasObserversManyObserver", { _BehaviorSubjectTest.setUp(); _BehaviorSubjectTest.test_hasObserversManyObserver(); _BehaviorSubjectTest.tearDown(); }),
 ]
 
 
@@ -741,6 +760,8 @@ CurrentThreadScheduler.instance.schedule(()) { _ in
         _VariableTest,
         _ObservableBlockingTest,
         _ObserverTests,
+        _PublishSubjectTest,
+        _ReplaySubjectTest,
         _ObservableMultipleTest,
         _CurrentThreadSchedulerTest,
         _DisposableTest,

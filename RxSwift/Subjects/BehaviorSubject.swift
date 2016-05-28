@@ -22,6 +22,14 @@ public final class BehaviorSubject<Element>
     public typealias SubjectObserverType = BehaviorSubject<Element>
     typealias DisposeKey = Bag<AnyObserver<Element>>.KeyType
     
+    /**
+     Indicates whether the subject has any observers
+     */
+    public var hasObservers: Bool {
+        _lock.lock(); defer { _lock.unlock() }
+        return _observers.count > 0
+    }
+    
     let _lock = NSRecursiveLock()
     
     // state
