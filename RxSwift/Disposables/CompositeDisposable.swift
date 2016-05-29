@@ -31,6 +31,7 @@ public class CompositeDisposable : DisposeBase, Disposable, Cancelable {
      Initializes a new instance of composite disposable with the specified number of disposables.
     */
     public init(_ disposable1: Disposable, _ disposable2: Disposable) {
+        // This overload is here to make sure we are using optimized version up to 4 arguments.
         _disposables!.insert(disposable1)
         _disposables!.insert(disposable2)
     }
@@ -39,9 +40,30 @@ public class CompositeDisposable : DisposeBase, Disposable, Cancelable {
      Initializes a new instance of composite disposable with the specified number of disposables.
     */
     public init(_ disposable1: Disposable, _ disposable2: Disposable, _ disposable3: Disposable) {
+        // This overload is here to make sure we are using optimized version up to 4 arguments.
         _disposables!.insert(disposable1)
         _disposables!.insert(disposable2)
         _disposables!.insert(disposable3)
+    }
+    
+    /**
+     Initializes a new instance of composite disposable with the specified number of disposables.
+    */
+    public init(_ disposable1: Disposable, _ disposable2: Disposable, _ disposable3: Disposable, _ disposable4: Disposable) {
+        // This overload is here to make sure we are using optimized version up to 4 arguments.
+        _disposables!.insert(disposable1)
+        _disposables!.insert(disposable2)
+        _disposables!.insert(disposable3)
+        _disposables!.insert(disposable4)
+    }
+    
+    /**
+     Initializes a new instance of composite disposable with the specified number of disposables.
+    */
+    public init(_ disposables: Disposable...) {
+        for disposable in disposables {
+            _disposables!.insert(disposable)
+        }
     }
     
     /**
