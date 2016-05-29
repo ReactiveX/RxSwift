@@ -98,6 +98,26 @@ class DisposableTest : RxTest {
         XCTAssertTrue(result == nil)
     }
     
+    func testCompositeDisposable_TestInitWithNumberOfDisposables() {
+        var numberDisposed = 0
+        
+        let disposable1 = AnonymousDisposable {
+            numberDisposed += 1
+        }
+        let disposable2 = AnonymousDisposable {
+            numberDisposed += 1
+        }
+
+        let compositeDisposable = CompositeDisposable(disposable1, disposable2)
+        
+        XCTAssertEqual(numberDisposed, 0)
+        XCTAssertEqual(compositeDisposable.count, 2)
+        
+        compositeDisposable.dispose()
+        XCTAssertEqual(numberDisposed, 2)
+        XCTAssertEqual(compositeDisposable.count, 0)
+    }
+    
     func testCompositeDisposable_TestRemoving() {
         var numberDisposed = 0
         let compositeDisposable = CompositeDisposable()
