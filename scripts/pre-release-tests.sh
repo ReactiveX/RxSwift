@@ -13,13 +13,41 @@ if [ "$1" == "r" ]; then
 	RELEASE_TEST=1
 fi
 
-./scripts/validate-headers.swift
-./scripts/package-spm.swift > /dev/null
+function ensureVersionEqual() {
+	if [[ "$1" != "$2" ]]; then
+		echo "Version $1 and $2 are not equal ($3)"
+		exit -1
+	fi 
+}
 
-if [ `git ls-files -o -d --exclude-standard | wc -l` -gt 0 ]; then
-	echo "Package for Swift package manager isn't updated, please run ./scripts/package-spm.swift and commit the changes"
-	exit -1
-fi
+function ensureNoGitChanges() {
+	if [ `git diff HEAD | wc -l` -gt 0 ]; then
+		echo $1
+		exit -1
+	fi
+}
+
+function checkPlistVersions() {
+	RXSWIFT_VERSION=`cat RxSwift.podspec | grep -E "s.version\s+=" | cut -d '"' -f 2`
+	
+	PROJECTS=(RxSwift RxCocoa RxBlocking RxTests)
+	for project in ${PROJECTS[@]}
+	do
+		echo "Checking version for ${project}"
+		PODSPEC_VERSION=`cat $project.podspec | grep -E "s.version\s+=" | cut -d '"' -f 2`
+		ensureVersionEqual "$RXSWIFT_VERSION" "$PODSPEC_VERSION" "${project} version not equal"
+		defaults write  "`pwd`/${project}/Info.plist" CFBundleShortVersionString $RXSWIFT_VERSION
+	done
+
+	ensureNoGitChanges "Plist versions aren't correct"
+}
+
+checkPlistVersions
+
+./scripts/validate-headers.swift
+
+./scripts/package-spm.swift > /dev/null
+ensureNoGitChanges "Package for Swift package manager isn't updated, please run ./scripts/package-spm.swift and commit the changes"
 
 # ios 7 sim
 #if [ `xcrun simctl list | grep "${DEFAULT_IOS7_SIMULATOR}" | wc -l` == 0 ]; then
