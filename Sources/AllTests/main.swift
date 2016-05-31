@@ -363,6 +363,7 @@ _DisposableTest.allTests = [
     ("testActionDisposable", { _DisposableTest.setUp(); _DisposableTest.testActionDisposable(); _DisposableTest.tearDown(); }),
     ("testHotObservable_Disposing", { _DisposableTest.setUp(); _DisposableTest.testHotObservable_Disposing(); _DisposableTest.tearDown(); }),
     ("testCompositeDisposable_TestNormal", { _DisposableTest.setUp(); _DisposableTest.testCompositeDisposable_TestNormal(); _DisposableTest.tearDown(); }),
+    ("testCompositeDisposable_TestInitWithNumberOfDisposables", { _DisposableTest.setUp(); _DisposableTest.testCompositeDisposable_TestInitWithNumberOfDisposables(); _DisposableTest.tearDown(); }),
     ("testCompositeDisposable_TestRemoving", { _DisposableTest.setUp(); _DisposableTest.testCompositeDisposable_TestRemoving(); _DisposableTest.tearDown(); }),
     ("testRefCountDisposable_RefCounting", { _DisposableTest.setUp(); _DisposableTest.testRefCountDisposable_RefCounting(); _DisposableTest.tearDown(); }),
     ("testRefCountDisposable_PrimaryDisposesFirst", { _DisposableTest.setUp(); _DisposableTest.testRefCountDisposable_PrimaryDisposesFirst(); _DisposableTest.tearDown(); }),
