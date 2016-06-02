@@ -152,10 +152,7 @@ public struct Bag<T> : CustomDebugStringConvertible {
     - returns: Number of elements in bag.
     */
     public var count: Int {
-        var dictionaryCount = 0
-        if let dc = _dictionary?.count {
-            dictionaryCount = dc
-        }
+        let dictionaryCount: Int = _dictionary?.count ?? 0
         return _pairs.count + (_value0 != nil ? 1 : 0) + (_value1 != nil ? 1 : 0) + dictionaryCount
     }
     
