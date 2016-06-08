@@ -25,13 +25,13 @@ class UITabBarTests: RxTest {
 #if os(iOS)
 extension UITabBarTests {
 
-    func testWillBeginCustomizingItems() {
+    func testWillBeginCustomizing() {
         let subject = createSubject()
 
         let items = [UITabBarItem()]
         var returnedItems: [UITabBarItem]!
 
-        _ = subject.rx_willBeginCustomizingItems
+        _ = subject.rx_willBeginCustomizing
             .subscribeNext { i in
                 returnedItems = i
             }
@@ -41,13 +41,13 @@ extension UITabBarTests {
         XCTAssertEqual(returnedItems, items)
     }
 
-    func testDidBeginCustomizingItems() {
+    func testDidBeginCustomizing() {
         let subject = createSubject()
 
         let items = [UITabBarItem()]
         var returnedItems: [UITabBarItem]!
 
-        _ = subject.rx_didBeginCustomizingItems
+        _ = subject.rx_didBeginCustomizing
             .subscribeNext { i in
                 returnedItems = i
             }
@@ -57,14 +57,14 @@ extension UITabBarTests {
         XCTAssertEqual(returnedItems, items)
     }
 
-    func testWillEndCustomizingItems() {
+    func testWillEndCustomizing() {
         let subject = createSubject()
 
         let items = [UITabBarItem()]
         var returnedItems: [UITabBarItem]!
         var changed: Bool!
 
-        _ = subject.rx_willEndCustomizingItems
+        _ = subject.rx_willEndCustomizing
             .subscribeNext { (i, c) in
                 returnedItems = i
                 changed = c
@@ -76,14 +76,14 @@ extension UITabBarTests {
         XCTAssertEqual(changed, true)
     }
 
-    func testDidEndCustomizingItems() {
+    func testDidEndCustomizing() {
         let subject = createSubject()
 
         let items = [UITabBarItem()]
         var returnedItems: [UITabBarItem]!
         var changed: Bool!
 
-        _ = subject.rx_didEndCustomizingItems
+        _ = subject.rx_didEndCustomizing
             .subscribeNext { (i, c) in
                 returnedItems = i
                 changed = c

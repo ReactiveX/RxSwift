@@ -23,7 +23,7 @@ extension UITabBar {
     /**
      Reactive wrapper for `delegate` message `tabBar:willBeginCustomizingItems:`.
     */
-    public var rx_willBeginCustomizingItems: ControlEvent<[UITabBarItem]> {
+    public var rx_willBeginCustomizing: ControlEvent<[UITabBarItem]> {
         let source = rx_delegate.observe(#selector(UITabBarDelegate.tabBar(_:willBeginCustomizingItems:)))
             .map { a in
                 return try castOrThrow([UITabBarItem].self, a[1])
@@ -35,7 +35,7 @@ extension UITabBar {
     /**
      Reactive wrapper for `delegate` message `tabBar:didBeginCustomizingItems:`.
     */
-    public var rx_didBeginCustomizingItems: ControlEvent<[UITabBarItem]> {
+    public var rx_didBeginCustomizing: ControlEvent<[UITabBarItem]> {
         let source = rx_delegate.observe(#selector(UITabBarDelegate.tabBar(_:didBeginCustomizingItems:)))
             .map { a in
                 return try castOrThrow([UITabBarItem].self, a[1])
@@ -47,7 +47,7 @@ extension UITabBar {
     /**
      Reactive wrapper for `delegate` message `tabBar:willEndCustomizingItems:changed:`.
     */
-    public var rx_willEndCustomizingItems: ControlEvent<([UITabBarItem], Bool)> {
+    public var rx_willEndCustomizing: ControlEvent<(items: [UITabBarItem], changed: Bool)> {
         let source = rx_delegate.observe(#selector(UITabBarDelegate.tabBar(_:willEndCustomizingItems:changed:)))
             .map { (a: [AnyObject]) -> (([UITabBarItem], Bool)) in
                 let items = try castOrThrow([UITabBarItem].self, a[1])
@@ -61,7 +61,7 @@ extension UITabBar {
     /**
      Reactive wrapper for `delegate` message `tabBar:didEndCustomizingItems:changed:`.
     */
-    public var rx_didEndCustomizingItems: ControlEvent<([UITabBarItem], Bool)> {
+    public var rx_didEndCustomizing: ControlEvent<(items: [UITabBarItem], changed: Bool)> {
         let source = rx_delegate.observe(#selector(UITabBarDelegate.tabBar(_:didEndCustomizingItems:changed:)))
             .map { (a: [AnyObject]) -> (([UITabBarItem], Bool)) in
                 let items = try castOrThrow([UITabBarItem].self, a[1])
