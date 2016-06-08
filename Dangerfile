@@ -1,5 +1,5 @@
 # Warn about develop branch
-current_branch = env.request_source.pr_json["head"]["ref"]
+current_branch = env.request_source.pr_json["base"]["ref"]
 warn("Please target PRs to `develop` branch") if current_branch != "develop"
 
 # Sometimes it's a README fix, or something like that - which isn't relevant for
