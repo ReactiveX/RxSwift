@@ -35,7 +35,7 @@ let excludedRootPaths = [
     ".git",
     "build",
     "Rx.playground",
-    "bundle"
+    "vendor"
 ]
 
 let excludePaths = [
