@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		033C2EF61D081C460050C015 /* UIScrollView+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033C2EF41D081B2A0050C015 /* UIScrollView+RxTests.swift */; };
 		1AF67DA21CED420A00C310FA /* PublishSubjectTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AF67DA11CED420A00C310FA /* PublishSubjectTest.swift */; };
 		1AF67DA31CED427D00C310FA /* PublishSubjectTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AF67DA11CED420A00C310FA /* PublishSubjectTest.swift */; };
 		1AF67DA41CED427D00C310FA /* PublishSubjectTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AF67DA11CED420A00C310FA /* PublishSubjectTest.swift */; };
@@ -1373,6 +1374,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		033C2EF41D081B2A0050C015 /* UIScrollView+RxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIScrollView+RxTests.swift"; sourceTree = "<group>"; };
 		1AF67DA11CED420A00C310FA /* PublishSubjectTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublishSubjectTest.swift; sourceTree = "<group>"; };
 		1AF67DA51CED430100C310FA /* ReplaySubjectTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReplaySubjectTest.swift; sourceTree = "<group>"; };
 		271A97401CFC996B00D64125 /* UIViewController+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Rx.swift"; sourceTree = "<group>"; };
@@ -2298,6 +2300,7 @@
 				C8F27DB11CE6711600D5FB4F /* UITextView+RxTests.swift */,
 				844BC8B71CE5023200F5C7CB /* UIPickerView+RxTests.swift */,
 				914FCD661CCDB82E0058B304 /* UIPageControl+RxTest.swift */,
+				033C2EF41D081B2A0050C015 /* UIScrollView+RxTests.swift */,
 			);
 			path = RxCocoaTests;
 			sourceTree = "<group>";
@@ -3489,6 +3492,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				033C2EF61D081C460050C015 /* UIScrollView+RxTests.swift in Sources */,
 				C835092A1C38706E0027C24C /* CLLocationManager+RxTests.swift in Sources */,
 				C83509661C38706E0027C24C /* RxTest.swift in Sources */,
 				C83509611C38706E0027C24C /* ObserverTests.swift in Sources */,
