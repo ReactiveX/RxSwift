@@ -74,8 +74,18 @@ example("single with conditions") {
     let disposeBag = DisposeBag()
     
     Observable.of("🐱", "🐰", "🐶", "🐸", "🐷", "🐵")
+        .single { $0 == "🐸" }
+        .subscribe { print($0) }
+        .addDisposableTo(disposeBag)
+    
+    Observable.of("🐱", "🐰", "🐶", "🐱", "🐰", "🐶")
+        .single { $0 == "🐰" }
+        .subscribe { print($0) }
+        .addDisposableTo(disposeBag)
+    
+    Observable.of("🐱", "🐰", "🐶", "🐸", "🐷", "🐵")
         .single { $0 == "🔵" }
-        .subscribeNext { print($0) }
+        .subscribe { print($0) }
         .addDisposableTo(disposeBag)
 }
 /*:
