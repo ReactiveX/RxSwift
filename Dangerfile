@@ -1,3 +1,7 @@
+# Warn about develop branch
+current_branch = env.request_source.pr_json["head"]["ref"]
+warn("Please target PRs to `develop` branch") if current_branch != "develop"
+
 # Sometimes it's a README fix, or something like that - which isn't relevant for
 # including in a project's CHANGELOG for example
 declared_trivial = pr_title.include? "#trivial"
@@ -27,6 +31,3 @@ end
 # Warn when there is a big PR
 warn("Big PR") if lines_of_code > 500
 
-# Don't let testing shortcuts get into master by accident
-fail("fdescribe left in tests") if `grep -r fdescribe specs/`.length > 1
-fail("fit left in tests") if `grep -r "fit specs/ `.length > 1
