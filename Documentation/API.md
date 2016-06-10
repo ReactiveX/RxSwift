@@ -479,13 +479,13 @@ extension UITabBar {
 
     public var rx_didSelectItem: ControlEvent<UITabBarItem> {}
 
-    public var rx_willBeginCustomizingItems: ControlEvent<[UITabBarItem]> {}
+    public var rx_willBeginCustomizing: ControlEvent<[UITabBarItem]> {}
 
-    public var rx_didBeginCustomizingItems: ControlEvent<[UITabBarItem]> {}
+    public var rx_didBeginCustomizing: ControlEvent<[UITabBarItem]> {}
 
-    public var rx_willEndCustomizingItems: ControlEvent<([UITabBarItem], Bool)> {}
+    public var rx_willEndCustomizing: ControlEvent<(items: [UITabBarItem], changed: Bool)> {}
 
-    public var rx_didEndCustomizingItems: ControlEvent<([UITabBarItem], Bool)> {}
+    public var rx_didEndCustomizing: ControlEvent<(items: [UITabBarItem], changed: Bool)> {}
 
 }
 ```
