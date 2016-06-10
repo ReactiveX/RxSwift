@@ -51,7 +51,7 @@ func <-> (textInput: RxTextInput, variable: Variable<String>) -> Disposable {
 
             let nonMarkedTextValue = nonMarkedText(textInput)
 
-            if nonMarkedTextValue != variable.value {
+            if nonMarkedTextValue != nil && nonMarkedTextValue != variable.value {
                 variable.value = nonMarkedTextValue ?? ""
             }
         }, onCompleted:  {
