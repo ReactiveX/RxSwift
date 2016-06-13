@@ -64,6 +64,22 @@ extension UITableView {
     }
     
     /**
+     Binds sequences of elements to table view rows. The method uses the same cell identifier as cell type.
+     
+     - parameter source: Observable sequence of items.
+     - parameter configureCell: Transform between sequence elements and view cells.
+     - parameter cellType: Type of table view cell.
+     - returns: Disposable object that can be used to unbind.
+     */
+    public func rx_itemsWithCellType<S: SequenceType, Cell: UITableViewCell, O: ObservableType where O.E == S>
+        (cellType: Cell.Type = Cell.self)
+        -> (source: O)
+        -> (configureCell: (Int, S.Generator.Element, Cell) -> Void)
+        -> Disposable {
+            return rx_itemsWithCellIdentifier(String(cellType), cellType: cellType)
+    }
+    
+    /**
     Binds sequences of elements to table view rows using a custom reactive data used to perform the transformation.
     
     - parameter dataSource: Data source used to transform elements to view cells.
