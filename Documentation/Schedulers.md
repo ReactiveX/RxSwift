@@ -45,7 +45,7 @@ Since schedulers can really be anything, and all operators that transform sequen
 
 In case the scheduler is concurrent, Rx's `observeOn` and `subscribeOn` operators will make sure everything works perfectly.
 
-If you use some scheduler that for which Rx can prove that it's serial, it will able to perform additional optimizations.
+If you use some scheduler that Rx can prove is serial, it will be able to perform additional optimizations.
 
 So far it only performs those optimizations for dispatch queue schedulers.
 
