@@ -211,7 +211,7 @@ public func driveOnScheduler(scheduler: SchedulerType, action: () -> ()) {
 
 func _forceCompilerToStopDoingInsaneOptimizationsThatBreakCode(scheduler: SchedulerType) {
     let a: Int32 = 1
-    let b = 314 + Int32(rand() & 1)
+    let b = 314 + Int32(arc4random() & 1)
     if a == b {
         print(scheduler)
     }
