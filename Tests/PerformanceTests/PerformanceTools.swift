@@ -159,7 +159,7 @@ func measureMemoryUsage(@noescape _ work: () -> ()) -> (bytesAllocated: UInt64, 
 
 var fragmentedMemory = false
 
-func compareTwoImplementations(benchmarkTime: Bool, benchmarkMemory: Bool, @noescape first: () -> (), @noescape second: () -> ()) {
+func compareTwoImplementations(_ benchmarkTime: Bool, benchmarkMemory: Bool, @noescape first: () -> (), @noescape second: () -> ()) {
     if !fragmentedMemory {
         print("Fragmenting memory ...")
         fragmentMemory()

@@ -352,7 +352,7 @@ extension DriverConvertibleType {
     public func scan<A>(_ seed: A, accumulator: (A, E) -> A)
         -> Driver<A> {
         let source = self.asObservable()
-            .scan(seed: seed, accumulator: accumulator)
+            .scan(seed, accumulator: accumulator)
         return Driver<A>(source)
     }
 }

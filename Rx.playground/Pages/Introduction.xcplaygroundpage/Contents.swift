@@ -7,7 +7,9 @@
  ----
  [Previous](@previous)
  */
+
 import RxSwift
+
 /*:
 # Introduction
 
@@ -54,8 +56,8 @@ All of these various systems makes our code needlessly complex. Wouldn't it be b
 example("Observable with no subscribers") {
     _ = Observable<String>.create { observerOfString -> Disposable in
         print("This will never be printed")
-        observerOfString.on(.Next("😬"))
-        observerOfString.on(.Completed)
+        observerOfString.on(.next("😬"))
+        observerOfString.on(.completed)
         return NopDisposable.instance
     }
 }
@@ -64,10 +66,10 @@ example("Observable with no subscribers") {
  In the following example, the closure will be executed when `subscribe(_:)` is called:
  */
 example("Observable with subscriber") {
-    _ = Observable<String>.create { observerOfString in
+  _ = Observable<String>.create { observerOfString in
             print("Observable created")
-            observerOfString.on(.Next("😉"))
-            observerOfString.on(.Completed)
+            observerOfString.on(.next("😉"))
+            observerOfString.on(.completed)
             return NopDisposable.instance
         }
         .subscribe { event in

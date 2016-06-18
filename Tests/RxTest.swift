@@ -77,7 +77,7 @@ extension RxTest {
     }
 
     func sleep(_ time: TimeInterval) {
-        RunLoop.current().run(mode: RunLoop Mode.defaultRunLoopMode, before: Date(timeIntervalSinceNow: time))
+        RunLoop.current().run(mode: RunLoopMode.defaultRunLoopMode, before: Date(timeIntervalSinceNow: time))
     }
 
     func setUpActions(){

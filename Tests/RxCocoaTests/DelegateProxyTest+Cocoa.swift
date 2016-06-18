@@ -47,7 +47,7 @@ class NSTextFieldSubclass
         return ExtendNSTextFieldDelegateProxy(parentObject: self)
     }
 
-    func doThatTest(value: Int) {
+    func doThatTest(_ value: Int) {
         (delegate as! NSTextFieldDelegateSubclass).testEventHappened?(value)
     }
 
@@ -57,7 +57,7 @@ class NSTextFieldSubclass
             .map { a in (a[0] as! NSNumber).integerValue }
     }
 
-    func setMineForwardDelegate(testDelegate: TestDelegateProtocol) -> Disposable {
+    func setMineForwardDelegate(_ testDelegate: TestDelegateProtocol) -> Disposable {
         return RxTextFieldDelegateProxy.installForwardDelegate(testDelegate, retainDelegate: false, onProxyForObject: self)
     }
 }

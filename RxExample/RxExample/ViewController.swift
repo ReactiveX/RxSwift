@@ -72,29 +72,28 @@ class ViewController: OSViewController {
         */
 
         let numberOfResourcesThatShouldRemain = startResourceCount
-        let mainQueue = dispatch_get_main_queue()
+        let mainQueue = DispatchQueue.main
         /*
         This first `dispatch_async` is here to compensate for CoreAnimation delay after
         changing view controller hierarchy. This time is usually ~100ms on simulator and less on device.
         
         If somebody knows more about why this delay happens, you can make a PR with explanation here.
         */
-        dispatch_async(mainQueue) {
+        let when = DispatchTime.now() + DispatchTimeInterval.milliseconds(2)
+        mainQueue.after(when: when) {
 
             /*
             Some small additional period to clean things up. In case there were async operations fired,
             they can't be cleaned up momentarily.
             */
-            let time = dispatch_time(DISPATCH_TIME_NOW, Int64(0.2 * Double(NSEC_PER_SEC)))
-            dispatch_after(time, mainQueue) {
                 // If this fails for you while testing, and you've been clicking fast, it's ok, just click slower,
                 // this is a debug build with resource tracing turned on.
                 //
                 // If this crashes when you've been clicking slowly, then it would be interesting to find out why.
                 // ¯\_(ツ)_/¯
                 assert(resourceCount <= numberOfResourcesThatShouldRemain, "Resources weren't cleaned properly")
-            }
-        }
+            
+    }
 #endif
     }
 }

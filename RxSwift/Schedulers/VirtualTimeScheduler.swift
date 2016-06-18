@@ -89,7 +89,7 @@ public class VirtualTimeScheduler<Converter: VirtualTimeConverterType>
     public func scheduleRelative<StateType>(_ state: StateType, dueTime: RxTimeInterval, action: (StateType) -> Disposable) -> Disposable {
         let time = self.now.addingTimeInterval(dueTime)
         let absoluteTime = _converter.convertToVirtualTime(time)
-        let adjustedTime = self.adjustScheduledTime(time: absoluteTime)
+        let adjustedTime = self.adjustScheduledTime(absoluteTime)
         return scheduleAbsoluteVirtual(state, time: adjustedTime, action: action)
     }
 
@@ -136,7 +136,7 @@ public class VirtualTimeScheduler<Converter: VirtualTimeConverterType>
     /**
     Adjusts time of scheduling before adding item to schedule queue.
     */
-    public func adjustScheduledTime(time: Converter.VirtualTimeUnit) -> Converter.VirtualTimeUnit {
+    public func adjustScheduledTime(_ time: Converter.VirtualTimeUnit) -> Converter.VirtualTimeUnit {
         return time
     }
 

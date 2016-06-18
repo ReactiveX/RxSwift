@@ -398,11 +398,11 @@ extension CLLocationManagerTests {
         var authorizationStatus: CLAuthorizationStatus?
 
         #if os(tvOS)
-        let targetAuthorizationStatus = CLAuthorizationStatus.AuthorizedAlways
+        let targetAuthorizationStatus = CLAuthorizationStatus.authorizedAlways
         #elseif os(iOS)
         let targetAuthorizationStatus = CLAuthorizationStatus.authorizedAlways
         #else
-        let targetAuthorizationStatus = CLAuthorizationStatus.Authorized
+        let targetAuthorizationStatus = CLAuthorizationStatus.authorized
         #endif
 
         autoreleasepool {

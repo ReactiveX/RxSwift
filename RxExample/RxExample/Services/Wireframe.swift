@@ -35,7 +35,7 @@ class DefaultWireframe: Wireframe {
         #if os(iOS)
             UIApplication.shared().openURL(URL)
         #elseif os(OSX)
-            NSWorkspace.sharedWorkspace().openURL(URL)
+            NSWorkspace.shared().open(URL)
         #endif
     }
 

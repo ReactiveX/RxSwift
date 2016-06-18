@@ -38,6 +38,8 @@ public final class MainScheduler : SerialDispatchQueueScheduler {
     Singleton instance of `MainScheduler` that always schedules work asynchronously
     and doesn't perform optimizations for calls scheduled from main thread.
     */
+    //TODO: investigate why this is necessary
+    @available(OSXApplicationExtension 10.10, *)
     public static let asyncInstance = SerialDispatchQueueScheduler(globalConcurrentQueueQOS: .default)
 
     /**

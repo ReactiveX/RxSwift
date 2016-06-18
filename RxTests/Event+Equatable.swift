@@ -18,7 +18,7 @@ and their string representations are equal.
 public func == <Element: Equatable>(lhs: Event<Element>, rhs: Event<Element>) -> Bool {
     switch (lhs, rhs) {
     case (.completed, .completed): return true
-    case (.Error(let e1), .Error(let e2)):
+    case (.error(let e1), .error(let e2)):
         // if the references are equal, then it's the same object
         if let  lhsObject = lhs as? AnyObject,
                 rhsObject = rhs as? AnyObject

@@ -77,7 +77,7 @@ public struct TestSchedulerVirtualTimeConverter : VirtualTimeConverterType {
      - parameter offset: Virtual time interval.
      - returns: Time corresponding to time offsetted by virtual time interval.
      */
-    public func offsetVirtualTime(time: VirtualTimeUnit, offset: VirtualTimeIntervalUnit) -> VirtualTimeUnit {
+    public func offsetVirtualTime(_ time: VirtualTimeUnit, offset: VirtualTimeIntervalUnit) -> VirtualTimeUnit {
         return time + offset
     }
 
@@ -89,10 +89,10 @@ public struct TestSchedulerVirtualTimeConverter : VirtualTimeConverterType {
             return .lessThan
         }
         else if lhs > rhs {
-            return .GreaterThan
+            return .greaterThan
         }
         else {
-            return .Equal
+            return .equal
         }
     }
 }

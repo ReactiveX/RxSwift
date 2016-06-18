@@ -41,7 +41,7 @@ struct TestVirtualSchedulerVirtualTimeConverter : VirtualTimeConverterType {
         return Int(timeInterval / 10.0)
     }
 
-    func offsetVirtualTime(time: VirtualTimeUnit, offset: VirtualTimeIntervalUnit) -> VirtualTimeUnit {
+    func offsetVirtualTime(_ time: VirtualTimeUnit, offset: VirtualTimeIntervalUnit) -> VirtualTimeUnit {
         return time + offset
     }
 

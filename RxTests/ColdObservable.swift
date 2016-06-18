@@ -31,7 +31,7 @@ class ColdObservable<Element>
         let i = self.subscriptions.count - 1
 
         for recordedEvent in recordedEvents {
-            testScheduler.scheduleRelativeVirtual((), dueTime: recordedEvent.time, action: { (_) in
+            _ = testScheduler.scheduleRelativeVirtual((), dueTime: recordedEvent.time, action: { (_) in
                 observer.on(recordedEvent.value)
                 return NopDisposable.instance
             })
