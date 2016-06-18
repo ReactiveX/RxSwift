@@ -12,6 +12,4 @@ public protocol AnimatableSectionModelType
     : SectionModelType
     , IdentifiableType {
     associatedtype Item : IdentifiableType, Equatable
-
-    init(original: Self, items: [Item])
 }

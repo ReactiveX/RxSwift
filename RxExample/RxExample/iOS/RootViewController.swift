@@ -23,7 +23,7 @@ public class RootViewController : UITableViewController {
         DefaultWireframe.sharedInstance
         MainScheduler.instance
         let geoService = GeolocationService.instance
-        geoService.autorized.driveNext { _ in
+        geoService.authorized.driveNext { _ in
 
         }.dispose()
         geoService.location.driveNext { _ in

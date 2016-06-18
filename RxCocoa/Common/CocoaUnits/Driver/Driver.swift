@@ -187,7 +187,7 @@ extension Driver where Element: SignedInteger {
 
 /**
  This method can be used in unit tests to ensure that driver is using mock schedulers instead of
- maind schedulers.
+ main schedulers.
 
  **This shouldn't be used in normal release builds.**
 */

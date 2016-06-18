@@ -39,7 +39,7 @@ KVO observing, async operations and streams are all unified under [abstraction o
 
 ###### ... hack around
 
-* with example app. [Running Example App](Documentation/ExampleApp.md)
+* with the example app. [Running Example App](Documentation/ExampleApp.md)
 * with operators in playgrounds. [Playgrounds](Documentation/Playgrounds.md)
 
 ###### ... interact
@@ -110,15 +110,15 @@ searchResults
 
 Rx doesn't contain any external dependencies.
 
-These are currently supported options:
+These are currently the supported options:
 
 ### Manual
 
-Open Rx.xcworkspace, choose `RxExample` and hit run. This method will build everything and run sample app
+Open Rx.xcworkspace, choose `RxExample` and hit run. This method will build everything and run the sample app
 
 ### [CocoaPods](https://guides.cocoapods.org/using/using-cocoapods.html)
 
-**:warning: IMPORTANT! For tvOS support CocoaPods `0.39` is required. :warning:**
+**:warning: IMPORTANT! For tvOS support, CocoaPods `0.39` is required. :warning:**
 
 ```
 # Podfile
@@ -129,14 +129,14 @@ target 'YOUR_TARGET_NAME' do
     pod 'RxCocoa',    '~> 2.0'
 end
 
-# RxTests and RxBlocking have most sense in the context of unit/integration tests
+# RxTests and RxBlocking make the most sense in the context of unit/integration tests
 target 'YOUR_TESTING_TARGET' do
     pod 'RxBlocking', '~> 2.0'
     pod 'RxTests',    '~> 2.0'
 end
 ```
 
-replace `YOUR_TARGET_NAME`, then type in the `Podfile` directory:
+Replace `YOUR_TARGET_NAME` and then, in the `Podfile` directory, type:
 
 ```
 $ pod install

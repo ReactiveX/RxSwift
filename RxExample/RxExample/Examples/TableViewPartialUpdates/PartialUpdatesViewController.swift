@@ -85,7 +85,7 @@ class PartialUpdatesViewController : ViewController {
         skinTableViewDataSource(reloadDataSource)
 
         self.sections.asObservable()
-            .bindTo(partialUpdatesTableViewOutlet.rx_itemsAnimatedWithDataSource(tvAnimatedDataSource))
+            .bindTo(partialUpdatesTableViewOutlet.rx_itemsWithDataSource(tvAnimatedDataSource))
             .addDisposableTo(disposeBag)
 
         self.sections.asObservable()

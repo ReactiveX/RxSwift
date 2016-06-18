@@ -16,10 +16,10 @@ let package = Package(
 )
 ```
 
-What does work:
+What works:
 * Distribution using Swift Package Manager
 * Single Threaded mode (CurrentThreadScheduler)
-* Half of unit tests are passing.
+* Half of the unit tests are passing.
 * Projects that can be compiled and "used":
     * RxSwift
     * RxBlocking

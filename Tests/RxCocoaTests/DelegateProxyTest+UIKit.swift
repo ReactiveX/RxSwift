@@ -60,6 +60,8 @@ import XCTest
 #if os(iOS)
 extension RxSearchControllerDelegateProxy: TestDelegateProtocol {
 }
+extension RxPickerViewDelegateProxy: TestDelegateProtocol {
+}
 #endif
 
 // MARK: Tests
@@ -124,6 +126,12 @@ extension DelegateProxyTest {
         performDelegateTest(UISearchControllerSubclass())
     }
 }
+    
+extension DelegateProxyTest {
+    func test_UIPickerViewExtension() {
+        performDelegateTest(UIPickerViewSubclass(frame: CGRect.zero))
+    }
+}
 #endif
 // MARK: Mocks
 
@@ -154,6 +162,10 @@ class UITableViewSubclass1
             .observe(#selector(TestDelegateProtocol.testEventHappened(_:)))
             .map { a in (a[0] as! NSNumber).integerValue }
     }
+
+    func setMineForwardDelegate(testDelegate: TestDelegateProtocol) -> Disposable {
+        return RxScrollViewDelegateProxy.installForwardDelegate(testDelegate, retainDelegate: false, onProxyForObject: self)
+    }
 }
 
 class ExtendTableViewDataSourceProxy
@@ -182,6 +194,10 @@ class UITableViewSubclass2
         return rx_dataSource
             .observe(#selector(TestDelegateProtocol.testEventHappened(_:)))
             .map { a in (a[0] as! NSNumber).integerValue }
+    }
+
+    func setMineForwardDelegate(testDelegate: TestDelegateProtocol) -> Disposable {
+        return RxTableViewDataSourceProxy.installForwardDelegate(testDelegate, retainDelegate: false, onProxyForObject: self)
     }
 }
 
@@ -212,6 +228,10 @@ class UICollectionViewSubclass1
             .observe(#selector(TestDelegateProtocol.testEventHappened(_:)))
             .map { a in (a[0] as! NSNumber).integerValue }
     }
+
+    func setMineForwardDelegate(testDelegate: TestDelegateProtocol) -> Disposable {
+        return RxScrollViewDelegateProxy.installForwardDelegate(testDelegate, retainDelegate: false, onProxyForObject: self)
+    }
 }
 
 class ExtendCollectionViewDataSourceProxy
@@ -241,6 +261,10 @@ class UICollectionViewSubclass2
             .observe(#selector(TestDelegateProtocol.testEventHappened(_:)))
             .map { a in (a[0] as! NSNumber).integerValue }
     }
+
+    func setMineForwardDelegate(testDelegate: TestDelegateProtocol) -> Disposable {
+        return RxCollectionViewDataSourceProxy.installForwardDelegate(testDelegate, retainDelegate: false, onProxyForObject: self)
+    }
 }
 
 class ExtendScrollViewDelegateProxy
@@ -269,6 +293,10 @@ class UIScrollViewSubclass
         return rx_delegate
             .observe(#selector(TestDelegateProtocol.testEventHappened(_:)))
             .map { a in (a[0] as! NSNumber).integerValue }
+    }
+
+    func setMineForwardDelegate(testDelegate: TestDelegateProtocol) -> Disposable {
+        return RxScrollViewDelegateProxy.installForwardDelegate(testDelegate, retainDelegate: false, onProxyForObject: self)
     }
 }
 
@@ -301,6 +329,10 @@ class UISearchBarSubclass
             .observe(#selector(TestDelegateProtocol.testEventHappened(_:)))
             .map { a in (a[0] as! NSNumber).integerValue }
     }
+
+    func setMineForwardDelegate(testDelegate: TestDelegateProtocol) -> Disposable {
+        return RxSearchBarDelegateProxy.installForwardDelegate(testDelegate, retainDelegate: false, onProxyForObject: self)
+    }
 }
 #endif
 
@@ -331,6 +363,10 @@ class UITextViewSubclass
             .observe(#selector(TestDelegateProtocol.testEventHappened(_:)))
             .map { a in (a[0] as! NSNumber).integerValue }
     }
+
+    func setMineForwardDelegate(testDelegate: TestDelegateProtocol) -> Disposable {
+        return RxScrollViewDelegateProxy.installForwardDelegate(testDelegate, retainDelegate: false, onProxyForObject: self)
+    }
 }
 #if os(iOS)
 class UISearchControllerSubclass
@@ -346,5 +382,31 @@ class UISearchControllerSubclass
             .observe(#selector(TestDelegateProtocol.testEventHappened(_:)))
             .map { a in (a[0] as! NSNumber).integerValue }
     }
+
+    func setMineForwardDelegate(testDelegate: TestDelegateProtocol) -> Disposable {
+        return RxSearchControllerDelegateProxy.installForwardDelegate(testDelegate, retainDelegate: false, onProxyForObject: self)
+    }
 }
+    
+class UIPickerViewSubclass
+    : UIPickerView
+    , TestDelegateControl {
+    
+    func doThatTest(value: Int) {
+        (delegate as! TestDelegateProtocol).testEventHappened?(value)
+    }
+    
+    var test: Observable<Int> {
+        return rx_delegate
+            .observe(#selector(TestDelegateProtocol.testEventHappened(_:)))
+            .map { a in (a[0] as! NSNumber).integerValue }
+    }
+    
+    func setMineForwardDelegate(testDelegate: TestDelegateProtocol) -> Disposable {
+        return RxPickerViewDelegateProxy.installForwardDelegate(testDelegate,
+                                                                retainDelegate: false,
+                                                                onProxyForObject: self)
+    }
+}
+    
 #endif
