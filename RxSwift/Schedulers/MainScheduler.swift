@@ -43,9 +43,10 @@ public final class MainScheduler : SerialDispatchQueueScheduler {
     /**
     In case this method is called on a background thread it will throw an exception.
     */
-    public class func ensureExecutingOnScheduler() {
-        if !NSThread.current().isMainThread {
-            rxFatalError("Executing on backgound thread. Please use `MainScheduler.instance.schedule` to schedule work on main thread.")
+
+    public class func ensureExecutingOnScheduler(errorMessage: String? = nil) {
+        if !NSThread.currentThread().isMainThread {
+            rxFatalError(errorMessage ?? "Executing on backgound thread. Please use `MainScheduler.instance.schedule` to schedule work on main thread.")
         }
     }
 

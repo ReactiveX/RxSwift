@@ -71,7 +71,10 @@ extension UICollectionView {
     - parameter source: Observable sequence of items.
     - returns: Disposable object that can be used to unbind.
     */
-    public func rx_itemsWithDataSource<DataSource: protocol<RxCollectionViewDataSourceType, UICollectionViewDataSource>, S: Sequence, O: ObservableType where DataSource.Element == S, O.E == S>
+    public func rx_itemsWithDataSource<
+            DataSource: protocol<RxCollectionViewDataSourceType, UICollectionViewDataSource>,
+            O: ObservableType where DataSource.Element == O.E
+        >
         (dataSource: DataSource)
         -> (source: O)
         -> Disposable  {
@@ -112,7 +115,7 @@ extension UICollectionView {
     For more information take a look at `DelegateProxyType` protocol documentation.
     */
     public var rx_dataSource: DelegateProxy {
-        return proxyForObject(RxCollectionViewDataSourceProxy.self, self)
+        return RxCollectionViewDataSourceProxy.proxyForObject(self)
     }
     
     /**
@@ -125,8 +128,7 @@ extension UICollectionView {
     */
     public func rx_setDataSource(dataSource: UICollectionViewDataSource)
         -> Disposable {
-        let proxy = proxyForObject(RxCollectionViewDataSourceProxy.self, self)
-        return installDelegate(proxy, delegate: dataSource, retainDelegate: false, onProxyForObject: self)
+        return RxCollectionViewDataSourceProxy.installForwardDelegate(dataSource, retainDelegate: false, onProxyForObject: self)
     }
    
     /**

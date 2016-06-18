@@ -70,7 +70,9 @@ extension UITableView {
     - parameter source: Observable sequence of items.
     - returns: Disposable object that can be used to unbind.
     */
-    public func rx_itemsWithDataSource<DataSource: protocol<RxTableViewDataSourceType, UITableViewDataSource>, S: Sequence, O: ObservableType where DataSource.Element == S, O.E == S>
+    public func rx_itemsWithDataSource<
+            DataSource: protocol<RxTableViewDataSourceType, UITableViewDataSource>,
+            O: ObservableType where DataSource.Element == O.E>
         (dataSource: DataSource)
         -> (source: O)
         -> Disposable  {
@@ -111,7 +113,7 @@ extension UITableView {
     For more information take a look at `DelegateProxyType` protocol documentation.
     */
     public var rx_dataSource: DelegateProxy {
-        return proxyForObject(RxTableViewDataSourceProxy.self, self)
+        return RxTableViewDataSourceProxy.proxyForObject(self)
     }
    
     /**
@@ -124,9 +126,8 @@ extension UITableView {
     */
     public func rx_setDataSource(dataSource: UITableViewDataSource)
         -> Disposable {
-        let proxy = proxyForObject(RxTableViewDataSourceProxy.self, self)
             
-        return installDelegate(proxy: proxy, delegate: dataSource, retainDelegate: false, onProxyForObject: self)
+        return RxTableViewDataSourceProxy.installForwardDelegate(dataSource, retainDelegate: false, onProxyForObject: self)
     }
     
     // events

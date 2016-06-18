@@ -1302,17 +1302,16 @@ extension ObservableSingleTest {
             error(10, testError)
             ])
 
+        let maxAttempts = 4
+
         let res = scheduler.start(800) {
-            xs.retryWhen { (errors: Observable<NSError>) in
-                errors.scan((0, nil)) { (a: (Int, NSError!), e) in
-                    (a.0 + 1, e)
-                }
-                .flatMap { (a, e) -> Observable<Int64> in
-                    if a >= 4 {
+            xs.retryWhen { (errors: Observable<ErrorType>) in
+                return errors.flatMapWithIndex { (e, a) -> Observable<Int64> in
+                    if a >= maxAttempts - 1 {
                         return Observable.error(e)
                     }
 
-                    return Observable<Int64>.timer(RxTimeInterval(a * 50), scheduler: scheduler)
+                    return Observable<Int64>.timer(RxTimeInterval((a + 1) * 50), scheduler: scheduler)
                 }
             }
         }

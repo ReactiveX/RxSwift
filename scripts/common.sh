@@ -124,16 +124,20 @@ function action() {
 			DESTINATION='platform=OS X,arch=x86_64'
 	fi
 
-	STATUS=""
     set -x
+		killall Simulator || true
 	xcodebuild -workspace "${WORKSPACE}" \
 				-scheme "${SCHEME}" \
 				-configuration "${CONFIGURATION}" \
 				-derivedDataPath "${BUILD_DIRECTORY}" \
 				-destination "$DESTINATION" \
-				$ACTION | tee build/last-build-output.txt | xcpretty -c; STATUS=${PIPESTATUS[0]}
+				$ACTION | tee build/last-build-output.txt | xcpretty -c
+    exitIfLastStatusWasUnsuccessful
     set +x
+}
 
+function exitIfLastStatusWasUnsuccessful() {
+  STATUS=${PIPESTATUS[0]}
 	if [ $STATUS -ne 0 ]; then
 		echo $STATUS
  		exit $STATUS

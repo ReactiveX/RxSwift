@@ -3,7 +3,7 @@ Unit Tests
 
 ## Testing custom operators
 
-Library uses `RxTests` for all of RxSwift operator tests so you can take a look at AllTests-* target inside the project `Rx.xcworkspace`.
+RxSwift uses `RxTests` for all operator tests, located in the AllTests-* target inside the project `Rx.xcworkspace`.
 
 This is an example of a typical `RxSwift` operator unit test:
 
@@ -12,16 +12,16 @@ func testMap_Range() {
         // Initializes test scheduler.
         // Test scheduler implements virtual time that is
         // detached from local machine clock.
-        // That enables running the simulation as fast as possible
+        // This enables running the simulation as fast as possible
         // and proving that all events have been handled.
         let scheduler = TestScheduler(initialClock: 0)
 
         // Creates a mock hot observable sequence.
-        // The sequence will emit events at following
-        // times no matter is there some observer subscribed.
+        // The sequence will emit events at desginated
+        // times, no matter if there are observers subscribed or not.
         // (that's what hot means).
         // This observable sequence will also record all subscriptions
-        // made during it's lifetime (`subscriptions` property).
+        // made during its lifetime (`subscriptions` property).
         let xs = scheduler.createHotObservable([
             next(150, 1),  // first argument is virtual time, second argument is element value
             next(210, 0),
@@ -32,10 +32,10 @@ func testMap_Range() {
             ])
 
         // `start` method will by default:
-        // * run the simulation and record all events
+        // * Run the simulation and record all events
         //   using observer referenced by `res`.
-        // * subscribe at virtual time 200
-        // * dispose subscription at virtual time 1000
+        // * Subscribe at virtual time 200
+        // * Dispose subscription at virtual time 1000
         let res = scheduler.start { xs.map { $0 * 2 } }
 
         let correctMessages = [
@@ -57,9 +57,9 @@ func testMap_Range() {
 
 ## Testing operator compositions (view models, components)
 
-Examples how to test operator compositions are contained inside `Rx.xcworkspace` > `RxExample-iOSTests` target.
+Examples of how to test operator compositions are contained inside `Rx.xcworkspace` > `RxExample-iOSTests` target.
 
-It easy to define `RxTests` extensions so you can write your tests in a readable way. Provided examples inside `RxExample-iOSTests` are just a tip how you can write those extensions, but there is a lot of possibilities how to write those tests.
+It's easy to define `RxTests` extensions so you can write your tests in a readable way. Provided examples inside `RxExample-iOSTests` are just suggestions on how you can write those extensions, but there are a lot of possibilities on how to write those tests.
 
 ```swift
     // expected events and test data

@@ -73,8 +73,6 @@ extension SchedulerType {
          
         scheduler.schedule(state: state, dueTime: dueTime)
             
-        return AnonymousDisposable {
-            scheduler.dispose()
-        }
+        return AnonymousDisposable(scheduler.dispose)
     }
 }
