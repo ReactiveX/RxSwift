@@ -95,7 +95,7 @@ extension RxTest {
                 if self.startResourceCount < resourceCount {
                     // main schedulers need to finish work
                     print("Waiting for resource cleanup ...")
-                    NSRunLoop.currentRunLoop().runMode(NSDefaultRunLoopMode, beforeDate: NSDate(timeIntervalSinceNow: 0.05))
+                    RunLoop.current().run(mode: RunLoopMode.defaultRunLoopMode, before: NSDate(timeIntervalSinceNow: 0.05) as Date)
                 }
                 else {
                     break

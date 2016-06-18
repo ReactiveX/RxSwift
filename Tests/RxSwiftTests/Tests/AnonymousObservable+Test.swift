@@ -81,7 +81,7 @@ extension AnonymousObservableTests {
         observer.on(.next(0))
         XCTAssertEqual(elements, [0])
         
-        observer.on(.Error(testError))
+        observer.on(.error(testError))
         
         observer.on(.next(1))
         XCTAssertEqual(elements, [0])
