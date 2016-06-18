@@ -58,7 +58,7 @@ class APIWrappersViewController: ViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        datePicker.date = NSDate(timeIntervalSince1970: 0)
+        datePicker.date = Date(timeIntervalSince1970: 0)
 
         // MARK: UIBarButtonItem
 
@@ -125,7 +125,7 @@ class APIWrappersViewController: ViewController {
         // MARK: UIDatePicker
 
         // also test two way binding
-        let dateValue = Variable(NSDate(timeIntervalSince1970: 0))
+        let dateValue = Variable(Date(timeIntervalSince1970: 0))
         datePicker.rx_date <-> dateValue
 
 
@@ -199,7 +199,7 @@ class APIWrappersViewController: ViewController {
 
     }
 
-    func debug(string: String) {
+    func debug(_ string: String) {
         print(string)
         debugLabel.text = string
     }

@@ -35,10 +35,10 @@ class GeolocationService {
                     .rx_didChangeAuthorizationStatus
                     .startWith(status)
             }
-            .asDriver(onErrorJustReturn: CLAuthorizationStatus.NotDetermined)
+            .asDriver(onErrorJustReturn: CLAuthorizationStatus.notDetermined)
             .map {
                 switch $0 {
-                case .AuthorizedAlways:
+                case .authorizedAlways:
                     return true
                 default:
                     return false

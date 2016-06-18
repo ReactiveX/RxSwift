@@ -78,7 +78,7 @@ class GithubSignupViewModel2 {
         validatedUsername = input.username
             .flatMapLatest { username in
                 return validationService.validateUsername(username)
-                    .asDriver(onErrorJustReturn: .Failed(message: "Error contacting server"))
+                    .asDriver(onErrorJustReturn: .failed(message: "Error contacting server"))
             }
 
         validatedPassword = input.password

@@ -39,7 +39,7 @@ When all activities complete `false` will be sent.
 public class ActivityIndicator : DriverConvertibleType {
     public typealias E = Bool
 
-    private let _lock = NSRecursiveLock()
+    private let _lock = RecursiveLock()
     private let _variable = Variable(0)
     private let _loading: Driver<Bool>
 
@@ -47,22 +47,15 @@ public class ActivityIndicator : DriverConvertibleType {
         _loading = _variable.asObservable()
             .map { $0 > 0 }
             .distinctUntilChanged()
-<<<<<<< 6b259b6618bc93a56405726866e1a103f72a49ad
-            .asDriver(onErrorRecover: ActivityIndicator.ifItStillErrors)
-=======
             .asDriver { (error: ErrorProtocol) -> Driver<Bool> in
                 _ = fatalError("Loader can't fail")
                 return Driver.empty()
             }
->>>>>>> Changes for Swift 3.0.
-    }
 
-    private static func ifItStillErrors(error: ErrorType) -> Driver<Bool> {
-        _ = fatalError("Loader can't fail")
     }
 
 
-    private func trackActivityOfObservable<O: ObservableConvertibleType>(source: O) -> Observable<O.E> {
+    private func trackActivityOfObservable<O: ObservableConvertibleType>(_ source: O) -> Observable<O.E> {
         return Observable.using({ () -> ActivityToken<O.E> in
             self.increment()
             return ActivityToken(source: source.asObservable(), disposeAction: self.decrement)
@@ -89,7 +82,7 @@ public class ActivityIndicator : DriverConvertibleType {
 }
 
 public extension ObservableConvertibleType {
-    public func trackActivity(activityIndicator: ActivityIndicator) -> Observable<E> {
+    public func trackActivity(_ activityIndicator: ActivityIndicator) -> Observable<E> {
         return activityIndicator.trackActivityOfObservable(self)
     }
 }

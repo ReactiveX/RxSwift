@@ -164,7 +164,7 @@ extension ObservableType {
     - returns: The source sequence prepended with the specified values.
     */
     @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func startWith(elements: E ...)
+    public func startWith(_ elements: E ...)
         -> Observable<E> {
         return StartWith(source: self.asObservable(), elements: elements)
     }
@@ -199,7 +199,7 @@ extension ObservableType {
     - returns: An observable sequence producing the elements of the given sequence repeatedly until it terminates successfully.
     */
     @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func retry(maxAttemptCount: Int)
+    public func retry(_ maxAttemptCount: Int)
         -> Observable<E> {
         return CatchSequence(sources: repeatElement(self.asObservable(), count: maxAttemptCount))
     }
@@ -251,7 +251,7 @@ extension ObservableType {
     - returns: An observable sequence containing the accumulated values.
     */
     @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func scan<A>(seed: A, accumulator: (A, E) throws -> A)
+    public func scan<A>(_ seed: A, accumulator: (A, E) throws -> A)
         -> Observable<A> {
         return Scan(source: self.asObservable(), seed: seed, accumulator: accumulator)
     }

@@ -81,7 +81,7 @@ extension ObservableType where E == AnyObject? {
             .map { _ in
                 return Observable.just(nil)
             }
-            .startWith(elements: self.asObservable())
+            .startWith(self.asObservable())
             .switchLatest()
     }
 }

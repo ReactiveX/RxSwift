@@ -46,7 +46,7 @@ class GitHubSignupViewController2 : ViewController {
         // bind results to  {
         viewModel.signupEnabled
             .driveNext { [weak self] valid  in
-                self?.signupOutlet.enabled = valid
+                self?.signupOutlet.isEnabled = valid
                 self?.signupOutlet.alpha = valid ? 1.0 : 0.5
             }
             .addDisposableTo(disposeBag)
@@ -91,9 +91,9 @@ class GitHubSignupViewController2 : ViewController {
     // This will work well with UINavigationController, but has an assumption that view controller will
     // never be added as a child view controller. If we didn't recreate the dispose bag here,
     // then our resources would never be properly released.
-    override func willMoveToParentViewController(parent: UIViewController?) {
+    override func willMove(toParentViewController parent: UIViewController?) {
         if let parent = parent {
-            assert(parent.isKindOfClass(UINavigationController), "Please read comments")
+            assert(parent as? UINavigationController != nil, "Please read comments")
         }
         else {
             self.disposeBag = DisposeBag()

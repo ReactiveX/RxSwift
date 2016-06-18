@@ -12,15 +12,15 @@ import RxSwift
 import RxCocoa
 #endif
 
-func apiError(error: String) -> NSError {
+func apiError(_ error: String) -> NSError {
     return NSError(domain: "WikipediaAPI", code: -1, userInfo: [NSLocalizedDescriptionKey: error])
 }
 
 public let WikipediaParseError = apiError("Error during parsing")
 
 protocol WikipediaAPI {
-    func getSearchResults(query: String) -> Observable<[WikipediaSearchResult]>
-    func articleContent(searchResult: WikipediaSearchResult) -> Observable<WikipediaPage>
+    func getSearchResults(_ query: String) -> Observable<[WikipediaSearchResult]>
+    func articleContent(_ searchResult: WikipediaSearchResult) -> Observable<WikipediaPage>
 }
 
 class DefaultWikipediaAPI: WikipediaAPI {
@@ -33,17 +33,17 @@ class DefaultWikipediaAPI: WikipediaAPI {
 
     private init() {}
 
-    private func rx_JSON(URL: NSURL) -> Observable<AnyObject> {
+    private func rx_JSON(_ url: URL) -> Observable<AnyObject> {
         return $.URLSession
-            .rx_JSON(URL)
+            .rx_JSON(url)
             .trackActivity(loadingWikipediaData)
     }
 
     // Example wikipedia response http://en.wikipedia.org/w/api.php?action=opensearch&search=Rx
-    func getSearchResults(query: String) -> Observable<[WikipediaSearchResult]> {
+    func getSearchResults(_ query: String) -> Observable<[WikipediaSearchResult]> {
         let escapedQuery = query.URLEscaped
         let urlContent = "http://en.wikipedia.org/w/api.php?action=opensearch&search=\(escapedQuery)"
-        let url = NSURL(string: urlContent)!
+        let url = URL(string: urlContent)!
             
         return rx_JSON(url)
             .observeOn($.backgroundWorkScheduler)
@@ -58,9 +58,9 @@ class DefaultWikipediaAPI: WikipediaAPI {
     }
     
     // http://en.wikipedia.org/w/api.php?action=parse&page=rx&format=json
-    func articleContent(searchResult: WikipediaSearchResult) -> Observable<WikipediaPage> {
+    func articleContent(_ searchResult: WikipediaSearchResult) -> Observable<WikipediaPage> {
         let escapedPage = searchResult.title.URLEscaped
-        guard let url = NSURL(string: "http://en.wikipedia.org/w/api.php?action=parse&page=\(escapedPage)&format=json") else {
+        guard let url = URL(string: "http://en.wikipedia.org/w/api.php?action=parse&page=\(escapedPage)&format=json") else {
             return Observable.error(apiError("Can't create url"))
         }
         

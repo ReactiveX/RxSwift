@@ -49,7 +49,7 @@ extension UITextView : RxTextInput {
                 ?? Observable.empty()
             
             return textChanged
-                .startWith(elements: text)
+                .startWith(text)
         }
 
         let bindingObserver = UIBindingObserver(UIElement: self) { (textView, text: String) in

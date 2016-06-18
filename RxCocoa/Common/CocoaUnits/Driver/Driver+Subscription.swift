@@ -84,7 +84,7 @@ extension DriverConvertibleType {
     @warn_unused_result(message: "http://git.io/rxs.ud")
     public func drive(_ onNext: ((E) -> Void)? = nil, onCompleted: (() -> Void)? = nil, onDisposed: (() -> Void)? = nil) -> Disposable {
         MainScheduler.ensureExecutingOnScheduler()
-        return self.asObservable().subscribe(onNext, onCompleted: onCompleted, onDisposed: onDisposed)
+        return self.asObservable().subscribe(onNext: onNext, onCompleted: onCompleted, onDisposed: onDisposed)
     }
     
     /**

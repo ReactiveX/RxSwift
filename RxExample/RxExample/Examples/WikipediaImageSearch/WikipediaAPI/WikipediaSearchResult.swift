@@ -14,16 +14,16 @@ import RxSwift
 struct WikipediaSearchResult: CustomDebugStringConvertible {
     let title: String
     let description: String
-    let URL: NSURL
+    let URL: Foundation.URL
 
-    init(title: String, description: String, URL: NSURL) {
+    init(title: String, description: String, URL: Foundation.URL) {
         self.title = title
         self.description = description
         self.URL = URL
     }
 
     // tedious parsing part
-    static func parseJSON(json: [AnyObject]) throws -> [WikipediaSearchResult] {
+    static func parseJSON(_ json: [AnyObject]) throws -> [WikipediaSearchResult] {
         let rootArrayTyped = json.map { $0 as? [AnyObject] }
             .filter { $0 != nil }
             .map { $0! }
@@ -42,7 +42,7 @@ struct WikipediaSearchResult: CustomDebugStringConvertible {
             guard let titleString = title as? String,
                   let descriptionString = description as? String,
                   let urlString = url as? String,
-                  let URL = NSURL(string: urlString) else {
+                  let URL = Foundation.URL(string: urlString) else {
                 throw WikipediaParseError
             }
 

@@ -486,7 +486,7 @@ extension DriverConvertibleType {
     public func startWith(_ element: E)
         -> Driver<E> {
         let source = self.asObservable()
-                .startWith(elements: element)
+                .startWith(element)
 
         return Driver(source)
     }

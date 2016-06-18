@@ -69,7 +69,7 @@ class GithubSignupViewModel1 {
             .flatMapLatest { username in
                 return validationService.validateUsername(username)
                     .observeOn(MainScheduler.instance)
-                    .catchErrorJustReturn(.Failed(message: "Error contacting server"))
+                    .catchErrorJustReturn(.failed(message: "Error contacting server"))
             }
             .shareReplay(1)
 

@@ -26,7 +26,7 @@ public class RxTableViewSectionedAnimatedDataSource<S: AnimatableSectionModelTyp
         super.init()
     }
 
-    public func tableView(tableView: UITableView, observedEvent: Event<Element>) {
+    public func tableView(_ tableView: UITableView, observedEvent: Event<Element>) {
         UIBindingObserver(UIElement: self) { dataSource, newSections in
             if !self.dataSet {
                 self.dataSet = true
@@ -34,7 +34,7 @@ public class RxTableViewSectionedAnimatedDataSource<S: AnimatableSectionModelTyp
                 tableView.reloadData()
             }
             else {
-                dispatch_async(dispatch_get_main_queue()) {
+                DispatchQueue.main.async {
                     let oldSections = dataSource.sectionModels
                     do {
                         let differences = try differencesForSectionedView(oldSections, finalSections: newSections)

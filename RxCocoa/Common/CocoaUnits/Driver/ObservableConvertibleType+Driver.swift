@@ -19,7 +19,7 @@ extension ObservableConvertibleType {
     - returns: Driving observable sequence.
     */
     @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func asDriver(_ onErrorJustReturn: E) -> Driver<E> {
+    public func asDriver(onErrorJustReturn: E) -> Driver<E> {
         let source = self
             .asObservable()
             .observeOn(driverObserveOnScheduler)
@@ -34,7 +34,7 @@ extension ObservableConvertibleType {
     - returns: Driving observable sequence.
     */
     @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func asDriver(_ onErrorDriveWith: Driver<E>) -> Driver<E> {
+    public func asDriver(onErrorDriveWith: Driver<E>) -> Driver<E> {
         let source = self
             .asObservable()
             .observeOn(driverObserveOnScheduler)
@@ -51,7 +51,7 @@ extension ObservableConvertibleType {
     - returns: Driving observable sequence.
     */
     @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func asDriver(_ onErrorRecover: (error: ErrorProtocol) -> Driver<E>) -> Driver<E> {
+    public func asDriver(onErrorRecover: (error: ErrorProtocol) -> Driver<E>) -> Driver<E> {
         let source = self
             .asObservable()
             .observeOn(driverObserveOnScheduler)

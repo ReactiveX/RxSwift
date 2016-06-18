@@ -13,31 +13,31 @@ import RxCocoa
 #endif
 
 enum ValidationResult {
-    case OK(message: String)
-    case Empty
-    case Validating
-    case Failed(message: String)
+    case ok(message: String)
+    case empty
+    case validating
+    case failed(message: String)
 }
 
 enum SignupState {
-    case SignedUp(signedUp: Bool)
+    case signedUp(signedUp: Bool)
 }
 
 protocol GitHubAPI {
-    func usernameAvailable(username: String) -> Observable<Bool>
-    func signup(username: String, password: String) -> Observable<Bool>
+    func usernameAvailable(_ username: String) -> Observable<Bool>
+    func signup(_ username: String, password: String) -> Observable<Bool>
 }
 
 protocol GitHubValidationService {
-    func validateUsername(username: String) -> Observable<ValidationResult>
-    func validatePassword(password: String) -> ValidationResult
-    func validateRepeatedPassword(password: String, repeatedPassword: String) -> ValidationResult
+    func validateUsername(_ username: String) -> Observable<ValidationResult>
+    func validatePassword(_ password: String) -> ValidationResult
+    func validateRepeatedPassword(_ password: String, repeatedPassword: String) -> ValidationResult
 }
 
 extension ValidationResult {
     var isValid: Bool {
         switch self {
-        case .OK:
+        case .ok:
             return true
         default:
             return false
