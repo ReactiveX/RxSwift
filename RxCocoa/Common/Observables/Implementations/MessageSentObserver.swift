@@ -18,7 +18,7 @@ import Foundation
         , RXMessageSentObserver {
         typealias E = ()
 
-        private let _subject = ReplaySubject<()>.create(bufferSize: 1)
+        private let _subject = ReplaySubject<()>.create(1)
 
         @objc var targetImplementation: IMP = RX_default_target_implementation()
 
@@ -29,8 +29,8 @@ import Foundation
         init() {
         }
 
-        @objc func messageSentWithParameters(_ parameters: [AnyObject]) -> Void {
-            _subject.on(event: .Next())
+        @objc func messageSent(withParameters parameters: [AnyObject]) -> Void {
+            _subject.on(.next())
         }
 
         func asObservable() -> Observable<()> {
@@ -38,7 +38,7 @@ import Foundation
         }
 
         deinit {
-            _subject.on(event: .Completed)
+            _subject.on(.completed)
         }
     }
 
@@ -58,8 +58,8 @@ import Foundation
         init() {
         }
 
-        @objc func messageSentWithParameters(_ parameters: [AnyObject]) -> Void {
-            _subject.on(event: .Next(parameters))
+        @objc func messageSent(withParameters parameters: [AnyObject]) -> Void {
+            _subject.on(.next(parameters))
         }
 
         func asObservable() -> Observable<[AnyObject]> {
@@ -67,7 +67,7 @@ import Foundation
         }
 
         deinit {
-            _subject.on(event: .Completed)
+            _subject.on(.completed)
         }
     }
 

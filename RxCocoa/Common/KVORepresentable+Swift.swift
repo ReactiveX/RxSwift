@@ -15,7 +15,7 @@ extension Int : KVORepresentable {
      Constructs `Self` using KVO value.
      */
     public init?(KVOValue: KVOType) {
-        self.init(KVOValue.intValue)
+        self.init(KVOValue.int32Value)
     }
 }
 
@@ -26,7 +26,7 @@ extension Int32 : KVORepresentable {
      Constructs `Self` using KVO value.
      */
     public init?(KVOValue: KVOType) {
-        self.init(KVOValue.intValue)
+        self.init(KVOValue.int32Value)
     }
 }
 

@@ -26,7 +26,7 @@ public class RxSearchControllerDelegateProxy
     /**
      For more information take a look at `DelegateProxyType`.
      */
-    public class func setCurrentDelegate(delegate: AnyObject?, toObject object: AnyObject) {
+    public class func setCurrentDelegate(_ delegate: AnyObject?, toObject object: AnyObject) {
         let searchController: UISearchController = castOrFatalError(object)
         searchController.delegate = castOptionalOrFatalError(delegate)
     }
@@ -34,7 +34,7 @@ public class RxSearchControllerDelegateProxy
     /**
      For more information take a look at `DelegateProxyType`.
      */
-    public class func currentDelegateFor(object: AnyObject) -> AnyObject? {
+    public class func currentDelegateFor(_ object: AnyObject) -> AnyObject? {
         let searchController: UISearchController = castOrFatalError(object)
         return searchController.delegate
     }

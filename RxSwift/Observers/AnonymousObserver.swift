@@ -17,18 +17,18 @@ class AnonymousObserver<ElementType> : ObserverBase<ElementType> {
     
     init(_ eventHandler: EventHandler) {
 #if TRACE_RESOURCES
-        AtomicIncrement(&resourceCount)
+        let _ = AtomicIncrement(&resourceCount)
 #endif
         _eventHandler = eventHandler
     }
 
-    override func onCore(event: Event<Element>) {
+    override func onCore(_ event: Event<Element>) {
         return _eventHandler(event)
     }
     
 #if TRACE_RESOURCES
     deinit {
-        AtomicDecrement(&resourceCount)
+        let _ = AtomicDecrement(&resourceCount)
     }
 #endif
 }

@@ -9,9 +9,9 @@
 import Foundation
 
 protocol CombineLatestProtocol : class {
-    func next(index: Int)
-    func fail(error: ErrorProtocol)
-    func done(index: Int)
+    func next(_ index: Int)
+    func fail(_ error: ErrorProtocol)
+    func done(_ index: Int)
 }
 
 class CombineLatestSink<O: ObserverType>
@@ -19,7 +19,7 @@ class CombineLatestSink<O: ObserverType>
     , CombineLatestProtocol {
     typealias Element = O.E
    
-    let _lock = NSRecursiveLock()
+    let _lock = RecursiveLock()
 
     private let _arity: Int
     private var _numberOfValues = 0
@@ -39,7 +39,7 @@ class CombineLatestSink<O: ObserverType>
         abstractMethod()
     }
     
-    func next(index: Int) {
+    func next(_ index: Int) {
         if !_hasValue[index] {
             _hasValue[index] = true
             _numberOfValues += 1
@@ -48,10 +48,10 @@ class CombineLatestSink<O: ObserverType>
         if _numberOfValues == _arity {
             do {
                 let result = try getResult()
-                forwardOn(event: .Next(result))
+                forwardOn(.next(result))
             }
             catch let e {
-                forwardOn(event: .Error(e))
+                forwardOn(.error(e))
                 dispose()
             }
         }
@@ -66,18 +66,18 @@ class CombineLatestSink<O: ObserverType>
             }
             
             if allOthersDone {
-                forwardOn(event: .Completed)
+                forwardOn(.completed)
                 dispose()
             }
         }
     }
     
-    func fail(error: ErrorProtocol) {
-        forwardOn(event: .Error(error))
+    func fail(_ error: ErrorProtocol) {
+        forwardOn(.error(error))
         dispose()
     }
     
-    func done(index: Int) {
+    func done(_ index: Int) {
         if _isDone[index] {
             return
         }
@@ -86,7 +86,7 @@ class CombineLatestSink<O: ObserverType>
         _numberOfDone += 1
 
         if _numberOfDone == _arity {
-            forwardOn(event: .Completed)
+            forwardOn(.completed)
             dispose()
         }
     }
@@ -101,12 +101,12 @@ class CombineLatestObserver<ElementType>
     
     private let _parent: CombineLatestProtocol
     
-    let _lock: NSRecursiveLock
+    let _lock: RecursiveLock
     private let _index: Int
     private let _this: Disposable
     private let _setLatestValue: ValueSetter
     
-    init(lock: NSRecursiveLock, parent: CombineLatestProtocol, index: Int, setLatestValue: ValueSetter, this: Disposable) {
+    init(lock: RecursiveLock, parent: CombineLatestProtocol, index: Int, setLatestValue: ValueSetter, this: Disposable) {
         _lock = lock
         _parent = parent
         _index = index
@@ -114,21 +114,21 @@ class CombineLatestObserver<ElementType>
         _setLatestValue = setLatestValue
     }
     
-    func on(event: Event<Element>) {
-        synchronizedOn(event: event)
+    func on(_ event: Event<Element>) {
+        synchronizedOn(event)
     }
 
-    func _synchronized_on(event: Event<Element>) {
+    func _synchronized_on(_ event: Event<Element>) {
         switch event {
-        case .Next(let value):
+        case .next(let value):
             _setLatestValue(value)
-            _parent.next(index: _index)
-        case .Error(let error):
+            _parent.next(_index)
+        case .error(let error):
             _this.dispose()
-            _parent.fail(error: error)
-        case .Completed:
+            _parent.fail(error)
+        case .completed:
             _this.dispose()
-            _parent.done(index: _index)
+            _parent.done(_index)
         }
     }
 }

@@ -26,7 +26,7 @@ extension NSLayoutConstraintTest {
     func testConstant_0() {
         let subject = View(frame: CGRect.zero)
         let subject2 = View(frame: CGRect.zero)
-        let constraint = NSLayoutConstraint(item: subject, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: subject2, attribute: NSLayoutAttribute.Top, multiplier: 0.5, constant: 0.5)
+        let constraint = NSLayoutConstraint(item: subject, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: subject2, attribute: NSLayoutAttribute.top, multiplier: 0.5, constant: 0.5)
         Observable.just(0).subscribe(constraint.rx_constant).dispose()
 
         XCTAssertTrue(constraint.constant == 0.0)
@@ -35,7 +35,7 @@ extension NSLayoutConstraintTest {
     func testConstant_1() {
         let subject = View(frame: CGRect.zero)
         let subject2 = View(frame: CGRect.zero)
-        let constraint = NSLayoutConstraint(item: subject, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: subject2, attribute: NSLayoutAttribute.Top, multiplier: 0.5, constant: 0.5)
+        let constraint = NSLayoutConstraint(item: subject, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: subject2, attribute: NSLayoutAttribute.top, multiplier: 0.5, constant: 0.5)
         Observable.just(1.0).subscribe(constraint.rx_constant).dispose()
 
         XCTAssertTrue(constraint.constant == 1.0)
@@ -50,10 +50,10 @@ extension NSLayoutConstraintTest {
         let subject2 = View(frame: CGRect.zero)
         parent.addSubview(subject)
         parent.addSubview(subject2)
-        let constraint = NSLayoutConstraint(item: subject, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: subject2, attribute: NSLayoutAttribute.Top, multiplier: 0.5, constant: 0.5)
+        let constraint = NSLayoutConstraint(item: subject, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: subject2, attribute: NSLayoutAttribute.top, multiplier: 0.5, constant: 0.5)
         Observable.just(true).subscribe(constraint.rx_active).dispose()
 
-        XCTAssertTrue(constraint.active == true)
+        XCTAssertTrue(constraint.isActive == true)
     }
     
     func testActive_False() {
@@ -62,9 +62,9 @@ extension NSLayoutConstraintTest {
         let subject2 = View(frame: CGRect.zero)
         parent.addSubview(subject)
         parent.addSubview(subject2)
-        let constraint = NSLayoutConstraint(item: subject, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: subject2, attribute: NSLayoutAttribute.Top, multiplier: 0.5, constant: 0.5)
+        let constraint = NSLayoutConstraint(item: subject, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: subject2, attribute: NSLayoutAttribute.top, multiplier: 0.5, constant: 0.5)
         Observable.just(false).subscribe(constraint.rx_active).dispose()
 
-        XCTAssertTrue(constraint.active == false)
+        XCTAssertTrue(constraint.isActive == false)
     }
 }

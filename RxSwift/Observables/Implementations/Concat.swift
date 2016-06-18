@@ -18,23 +18,23 @@ class ConcatSink<S: Sequence, O: ObserverType where S.Iterator.Element : Observa
         super.init(observer: observer)
     }
     
-    func on(event: Event<Element>){
+    func on(_ event: Event<Element>){
         switch event {
-        case .Next:
-            forwardOn(event: event)
-        case .Error:
-            forwardOn(event: event)
+        case .next:
+            forwardOn(event)
+        case .error:
+            forwardOn(event)
             dispose()
-        case .Completed:
-            schedule(command: .MoveNext)
+        case .completed:
+            schedule(.moveNext)
         }
     }
 
-    override func subscribeToNext(source: Observable<E>) -> Disposable {
-        return source.subscribe(observer: self)
+    override func subscribeToNext(_ source: Observable<E>) -> Disposable {
+        return source.subscribe(self)
     }
     
-    override func extract(observable: Observable<E>) -> SequenceGenerator? {
+    override func extract(_ observable: Observable<E>) -> SequenceGenerator? {
         if let source = observable as? Concat<S> {
             return (source._sources.makeIterator(), source._count)
         }
@@ -55,9 +55,9 @@ class Concat<S: Sequence where S.Iterator.Element : ObservableConvertibleType> :
         _count = count
     }
     
-    override func run<O: ObserverType where O.E == Element>(observer: O) -> Disposable {
+    override func run<O: ObserverType where O.E == Element>(_ observer: O) -> Disposable {
         let sink = ConcatSink<S, O>(observer: observer)
-        sink.disposable = sink.run(sources: (_sources.makeIterator(), _count))
+        sink.disposable = sink.run((_sources.makeIterator(), _count))
         return sink
     }
 }

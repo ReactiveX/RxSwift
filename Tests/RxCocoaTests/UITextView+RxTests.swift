@@ -14,7 +14,7 @@ import XCTest
 // UITextView
 class UITextViewTests : RxTest {
     func testText_DelegateEventCompletesOnDealloc() {
-        let createView: () -> UITextView = { UITextView(frame: CGRectMake(0, 0, 1, 1)) }
+        let createView: () -> UITextView = { UITextView(frame: CGRect(x: 0, y: 0, width: 1, height: 1)) }
         ensurePropertyDeallocated(createView, "text") { (view: UITextView) in view.rx_text }
     }
 
@@ -23,9 +23,9 @@ class UITextViewTests : RxTest {
 
         textView.text = "Text1"
         textView.set = false
-        textView.rx_text.on(.Next("Text1"))
+        textView.rx_text.on(.next("Text1"))
         XCTAssertTrue(!textView.set)
-        textView.rx_text.on(.Next("Text2"))
+        textView.rx_text.on(.next("Text2"))
         XCTAssertTrue(textView.set)
     }
 }

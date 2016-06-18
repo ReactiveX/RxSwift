@@ -22,9 +22,9 @@ class UITextFieldTests : RxTest {
 
         textField.text = "Text1"
         textField.set = false
-        textField.rx_text.on(.Next("Text1"))
+        textField.rx_text.on(.next("Text1"))
         XCTAssertTrue(!textField.set)
-        textField.rx_text.on(.Next("Text2"))
+        textField.rx_text.on(.next("Text2"))
         XCTAssertTrue(textField.set)
     }
 }

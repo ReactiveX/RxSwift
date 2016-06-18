@@ -10,8 +10,8 @@ import Foundation
 
 let dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"
 
-func logEvent(identifier: String, dateFormat: NSDateFormatter, content: String) {
-    print("\(dateFormat.string(from: NSDate())): \(identifier) -> \(content)")
+func logEvent(_ identifier: String, dateFormat: DateFormatter, content: String) {
+    print("\(dateFormat.string(from: Date())): \(identifier) -> \(content)")
 }
 
 class Debug_<O: ObserverType> : Sink<O>, ObserverType {
@@ -19,30 +19,30 @@ class Debug_<O: ObserverType> : Sink<O>, ObserverType {
     typealias Parent = Debug<Element>
     
     private let _parent: Parent
-    private let _timestampFormatter = NSDateFormatter()
+    private let _timestampFormatter = DateFormatter()
     
     init(parent: Parent, observer: O) {
         _parent = parent
         _timestampFormatter.dateFormat = dateFormat
 
-        logEvent(identifier: _parent._identifier, dateFormat: _timestampFormatter, content: "subscribed")
+        logEvent(_parent._identifier, dateFormat: _timestampFormatter, content: "subscribed")
 
         super.init(observer: observer)
     }
     
-    func on(event: Event<Element>) {
+    func on(_ event: Event<Element>) {
         let maxEventTextLength = 40
         let eventText = "\(event)"
         let eventNormalized = eventText.characters.count > maxEventTextLength
             ? String(eventText.characters.prefix(maxEventTextLength / 2)) + "..." + String(eventText.characters.suffix(maxEventTextLength / 2))
             : eventText
 
-        logEvent(identifier: _parent._identifier, dateFormat: _timestampFormatter, content: "Event \(eventNormalized)")
-        forwardOn(event: event)
+        logEvent(_parent._identifier, dateFormat: _timestampFormatter, content: "Event \(eventNormalized)")
+        forwardOn(event)
     }
     
     override func dispose() {
-        logEvent(identifier: _parent._identifier, dateFormat: _timestampFormatter, content: "disposed")
+        logEvent(_parent._identifier, dateFormat: _timestampFormatter, content: "disposed")
         super.dispose()
     }
 }
@@ -58,7 +58,7 @@ class Debug<Element> : Producer<Element> {
         }
         else {
             let trimmedFile: String
-            if let lastIndex = file.lastIndexOf(character: "/") {
+            if let lastIndex = file.lastIndexOf("/") {
                 trimmedFile = file[file.index(after: lastIndex) ..< file.endIndex]
             }
             else {
@@ -69,9 +69,9 @@ class Debug<Element> : Producer<Element> {
         _source = source
     }
     
-    override func run<O: ObserverType where O.E == Element>(observer: O) -> Disposable {
+    override func run<O: ObserverType where O.E == Element>(_ observer: O) -> Disposable {
         let sink = Debug_(parent: self, observer: observer)
-        sink.disposable = _source.subscribe(observer: sink)
+        sink.disposable = _source.subscribe(sink)
         return sink
     }
 }

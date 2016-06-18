@@ -40,7 +40,7 @@ extension ObservableBlockingTest {
     }
     
     func testToArray_withRealScheduler() {
-        let scheduler = ConcurrentDispatchQueueScheduler(globalConcurrentQueueQOS: .Default)
+        let scheduler = ConcurrentDispatchQueueScheduler(globalConcurrentQueueQOS: .default)
         
         let array = try! Observable<Int64>.interval(0.001, scheduler: scheduler)
             .take(10)
@@ -52,7 +52,7 @@ extension ObservableBlockingTest {
 
     func testToArray_independent() {
         for i in 0 ..< 10 {
-            let scheduler = ConcurrentDispatchQueueScheduler(globalConcurrentQueueQOS: .Default)
+            let scheduler = ConcurrentDispatchQueueScheduler(globalConcurrentQueueQOS: .default)
 
             func operation1()->Observable<Int>{
                 return Observable.of(1, 2).subscribeOn(scheduler)
@@ -97,7 +97,7 @@ extension ObservableBlockingTest {
     }
     
     func testFirst_withRealScheduler() {
-        let scheduler = ConcurrentDispatchQueueScheduler(globalConcurrentQueueQOS: .Default)
+        let scheduler = ConcurrentDispatchQueueScheduler(globalConcurrentQueueQOS: .default)
         
         let array = try! Observable<Int64>.interval(0.001, scheduler: scheduler)
             .take(10)
@@ -109,7 +109,7 @@ extension ObservableBlockingTest {
 
     func testFirst_independent() {
         for i in 0 ..< 10 {
-            let scheduler = ConcurrentDispatchQueueScheduler(globalConcurrentQueueQOS: .Default)
+            let scheduler = ConcurrentDispatchQueueScheduler(globalConcurrentQueueQOS: .default)
 
             func operation1()->Observable<Int>{
                 return Observable.just(1).subscribeOn(scheduler)
@@ -154,7 +154,7 @@ extension ObservableBlockingTest {
     }
     
     func testLast_withRealScheduler() {
-        let scheduler = ConcurrentDispatchQueueScheduler(globalConcurrentQueueQOS: .Default)
+        let scheduler = ConcurrentDispatchQueueScheduler(globalConcurrentQueueQOS: .default)
         
         let array = try! Observable<Int64>.interval(0.001, scheduler: scheduler)
             .take(10)
@@ -166,7 +166,7 @@ extension ObservableBlockingTest {
 
     func testLast_independent() {
         for i in 0 ..< 10 {
-            let scheduler = ConcurrentDispatchQueueScheduler(globalConcurrentQueueQOS: .Background)
+            let scheduler = ConcurrentDispatchQueueScheduler(globalConcurrentQueueQOS: .background)
 
             func operation1()->Observable<Int>{
                 return Observable.just(1).subscribeOn(scheduler)
@@ -195,7 +195,7 @@ extension ObservableBlockingTest {
             XCTFail()
         }
         catch let e {
-            XCTAssertTrue((e as! RxError)._code == RxError.NoElements._code)
+            XCTAssertTrue((e as! RxError)._code == RxError.noElements._code)
         }
     }
     
@@ -209,7 +209,7 @@ extension ObservableBlockingTest {
             XCTFail()
         }
         catch let e {
-            XCTAssertTrue((e as! RxError)._code == RxError.MoreThanOneElement._code)
+            XCTAssertTrue((e as! RxError)._code == RxError.moreThanOneElement._code)
         }
     }
 
@@ -219,7 +219,7 @@ extension ObservableBlockingTest {
             XCTFail()
         }
         catch let e {
-            XCTAssertTrue((e as! RxError)._code == RxError.MoreThanOneElement._code)
+            XCTAssertTrue((e as! RxError)._code == RxError.moreThanOneElement._code)
         }
     }
     
@@ -234,7 +234,7 @@ extension ObservableBlockingTest {
     }
     
     func testSingle_withRealScheduler() {
-        let scheduler = ConcurrentDispatchQueueScheduler(globalConcurrentQueueQOS: .Default)
+        let scheduler = ConcurrentDispatchQueueScheduler(globalConcurrentQueueQOS: .default)
         
         let array = try! Observable<Int64>.interval(0.001, scheduler: scheduler)
             .take(1)
@@ -251,7 +251,7 @@ extension ObservableBlockingTest {
             XCTFail()
         }
         catch let e {
-            XCTAssertTrue((e as! RxError)._code == RxError.NoElements._code)
+            XCTAssertTrue((e as! RxError)._code == RxError.noElements._code)
         }
     }
     
@@ -283,7 +283,7 @@ extension ObservableBlockingTest {
             XCTFail()
         }
         catch let e {
-            XCTAssertTrue((e as! RxError)._code == RxError.MoreThanOneElement._code)
+            XCTAssertTrue((e as! RxError)._code == RxError.moreThanOneElement._code)
         }
         XCTAssertEqual(predicateVals, [42, 43, 44])
     }
@@ -299,7 +299,7 @@ extension ObservableBlockingTest {
             XCTFail()
         }
         catch let e {
-            XCTAssertTrue((e as! RxError)._code == RxError.NoElements._code)
+            XCTAssertTrue((e as! RxError)._code == RxError.noElements._code)
         }
         XCTAssertEqual(predicateVals, [42, 43, 44, 45])
     }
@@ -331,7 +331,7 @@ extension ObservableBlockingTest {
     }
     
     func testSingle_predicate_withRealScheduler() {
-        let scheduler = ConcurrentDispatchQueueScheduler(globalConcurrentQueueQOS: .Default)
+        let scheduler = ConcurrentDispatchQueueScheduler(globalConcurrentQueueQOS: .default)
         
         let array = try! Observable<Int64>.interval(0.001, scheduler: scheduler)
             .take(4)
@@ -343,7 +343,7 @@ extension ObservableBlockingTest {
 
     func testSingle_independent() {
         for i in 0 ..< 10 {
-            let scheduler = ConcurrentDispatchQueueScheduler(globalConcurrentQueueQOS: .Default)
+            let scheduler = ConcurrentDispatchQueueScheduler(globalConcurrentQueueQOS: .default)
 
             func operation1()->Observable<Int>{
                 return Observable.just(1).subscribeOn(scheduler)

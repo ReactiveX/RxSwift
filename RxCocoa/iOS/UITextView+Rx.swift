@@ -42,7 +42,7 @@ extension UITextView : RxTextInput {
                 // This observe on is here because text storage
                 // will emit event while process is not completely done,
                 // so rebinding a value will cause an exception to be thrown.
-                .observeOn(scheduler: MainScheduler.asyncInstance)
+                .observeOn(MainScheduler.asyncInstance)
                 .map { _ in
                     return self?.textStorage.string ?? ""
                 }

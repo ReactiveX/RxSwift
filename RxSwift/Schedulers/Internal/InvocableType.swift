@@ -15,5 +15,5 @@ protocol InvocableType {
 protocol InvocableWithValueType {
     associatedtype Value
 
-    func invoke(value: Value)
+    func invoke(_ value: Value)
 }

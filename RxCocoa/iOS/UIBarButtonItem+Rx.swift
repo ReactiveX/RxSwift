@@ -22,7 +22,7 @@ extension UIBarButtonItem {
     */
     public var rx_enabled: AnyObserver<Bool> {
         return UIBindingObserver(UIElement: self) { UIElement, value in
-            UIElement.enabled = value
+            UIElement.isEnabled = value
         }.asObserver()
     }
 
@@ -30,18 +30,18 @@ extension UIBarButtonItem {
     Reactive wrapper for target action pattern on `self`.
     */
     public var rx_tap: ControlEvent<Void> {
-        let source = rx_lazyInstanceObservable(key: &rx_tap_key) { () -> Observable<Void> in
+        let source = rx_lazyInstanceObservable(&rx_tap_key) { () -> Observable<Void> in
             Observable.create { [weak self] observer in
                 guard let control = self else {
-                    observer.on(event: .Completed)
+                    observer.on(.completed)
                     return NopDisposable.instance
                 }
                 let target = BarButtonItemTarget(barButtonItem: control) {
-                    observer.on(event: .Next())
+                    observer.on(.next())
                 }
                 return target
             }
-            .takeUntil(other: self.rx_deallocated)
+            .takeUntil(self.rx_deallocated)
             .share()
         }
         

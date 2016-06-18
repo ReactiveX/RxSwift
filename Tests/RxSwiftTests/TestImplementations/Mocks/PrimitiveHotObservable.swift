@@ -22,20 +22,20 @@ class PrimitiveHotObservable<ElementType> : ObservableType {
     var subscriptions: [Subscription]
     var observers: Bag<AnyObserver<E>>
 
-    let lock = NSRecursiveLock()
+    let lock = RecursiveLock()
     
     init() {
         self.subscriptions = []
         self.observers = Bag()
     }
     
-    func on(event: Event<E>) {
+    func on(_ event: Event<E>) {
         lock.lock()
         defer { lock.unlock() }
         observers.on(event)
     }
     
-    func subscribe<O : ObserverType where O.E == E>(observer: O) -> Disposable {
+    func subscribe<O : ObserverType where O.E == E>(_ observer: O) -> Disposable {
         lock.lock()
         defer { lock.unlock() }
 

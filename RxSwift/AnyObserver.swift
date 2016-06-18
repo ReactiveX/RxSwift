@@ -49,7 +49,7 @@ public struct AnyObserver<Element> : ObserverType {
     
     - parameter event: Event instance.
     */
-    public func on(event: Event<Element>) {
+    public func on(_ event: Event<Element>) {
         return self.observer(event)
     }
 

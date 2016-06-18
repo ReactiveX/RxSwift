@@ -20,7 +20,7 @@ extension BagTest {
     typealias DoSomething = () -> Void
     typealias KeyType = Bag<DoSomething>.KeyType
     
-    func numberOfActionsAfter<T>(nInsertions: Int, deletionsFromStart: Int, createNew: () -> T, bagAction: (RxMutableBox<Bag<T>>) -> ()) {
+    func numberOfActionsAfter<T>(_ nInsertions: Int, deletionsFromStart: Int, createNew: () -> T, bagAction: (RxMutableBox<Bag<T>>) -> ()) {
         let bag = RxMutableBox(Bag<T>())
         
         var keys = [KeyType]()
@@ -52,7 +52,7 @@ extension BagTest {
                 numberOfActionsAfter(i,
                     deletionsFromStart: j,
                     createNew: { () -> AnyObserver<Int> in AnyObserver { _ in numberObservers += 1 } },
-                    bagAction: { (bag: RxMutableBox<Bag<AnyObserver<Int>>>) in bag.value.on(.Next(1)); XCTAssertTrue(bag.value.count == i - j) }
+                    bagAction: { (bag: RxMutableBox<Bag<AnyObserver<Int>>>) in bag.value.on(.next(1)); XCTAssertTrue(bag.value.count == i - j) }
                 )
                 numberOfActionsAfter(i,
                     deletionsFromStart: j,
@@ -67,7 +67,7 @@ extension BagTest {
         }
     }
 
-    func numberOfActionsAfter<T>(nInsertions: Int, deletionsFromEnd: Int, createNew: () -> T, bagAction: (RxMutableBox<Bag<T>>) -> ()) {
+    func numberOfActionsAfter<T>(_ nInsertions: Int, deletionsFromEnd: Int, createNew: () -> T, bagAction: (RxMutableBox<Bag<T>>) -> ()) {
         let bag = RxMutableBox(Bag<T>())
         
         var keys = [KeyType]()
@@ -99,7 +99,7 @@ extension BagTest {
                 numberOfActionsAfter(i,
                     deletionsFromStart: j,
                     createNew: { () -> AnyObserver<Int> in AnyObserver { _ in numberObservers += 1 } },
-                    bagAction: { (bag: RxMutableBox<Bag<AnyObserver<Int>>>) in bag.value.on(.Next(1)); XCTAssertTrue(bag.value.count == i - j) }
+                    bagAction: { (bag: RxMutableBox<Bag<AnyObserver<Int>>>) in bag.value.on(.next(1)); XCTAssertTrue(bag.value.count == i - j) }
                 )
                 numberOfActionsAfter(i,
                     deletionsFromStart: j,
@@ -150,7 +150,7 @@ extension BagTest {
                     c()
                 }
 
-                bag2.value.on(.Next(1))
+                bag2.value.on(.next(1))
 
                 disposeAllIn(bag3.value)
             }
@@ -172,7 +172,7 @@ extension BagTest {
         numberOfActionsAfter(100,
             deletionsFromStart: 0,
             createNew: { () -> AnyObserver<Int> in AnyObserver { _ in numberObservers += 1 } },
-            bagAction: { (bag: RxMutableBox<Bag<AnyObserver<Int>>>) in bag.value.removeAll(); bag.value.on(.Next(1)); }
+            bagAction: { (bag: RxMutableBox<Bag<AnyObserver<Int>>>) in bag.value.removeAll(); bag.value.on(.next(1)); }
         )
         numberOfActionsAfter(100,
             deletionsFromStart: 0,

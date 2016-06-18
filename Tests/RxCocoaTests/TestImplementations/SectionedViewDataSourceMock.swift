@@ -27,31 +27,31 @@ import UIKit
         super.init()
     }
 
-    func modelAtIndexPath(indexPath: NSIndexPath) throws -> Any {
-        return items![indexPath.item]
+    func modelAtIndexPath(_ indexPath: IndexPath) throws -> Any {
+        return items![(indexPath as NSIndexPath).item]
     }
 
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 0
     }
 
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         return UITableViewCell()
     }
 
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 0
     }
 
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         return UICollectionViewCell()
     }
 
-    func tableView(tableView: UITableView, observedEvent: Event<Element>) {
+    func tableView(_ tableView: UITableView, observedEvent: Event<Element>) {
         items = observedEvent.element!
     }
 
-    func collectionView(collectionView: UICollectionView, observedEvent: Event<Element>) {
+    func collectionView(_ collectionView: UICollectionView, observedEvent: Event<Element>) {
         items = observedEvent.element!
     }
 }

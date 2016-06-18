@@ -59,21 +59,21 @@ protocol Lock {
 #else
 
     // https://lists.swift.org/pipermail/swift-dev/Week-of-Mon-20151214/000321.html
-    typealias SpinLock = NSRecursiveLock
+    typealias SpinLock = RecursiveLock
 #endif
 
-extension NSRecursiveLock : Lock {
-    func performLocked(@noescape action: () -> Void) {
+extension RecursiveLock : Lock {
+    func performLocked( _ action: @noescape() -> Void) {
         lock(); defer { unlock() }
         action()
     }
 
-    func calculateLocked<T>(@noescape action: () -> T) -> T {
+    func calculateLocked<T>( _ action: @noescape() -> T) -> T {
         lock(); defer { unlock() }
         return action()
     }
 
-    func calculateLockedOrFail<T>(@noescape action: () throws -> T) throws -> T {
+    func calculateLockedOrFail<T>( _ action: @noescape() throws -> T) throws -> T {
         lock(); defer { unlock() }
         let result = try action()
         return result

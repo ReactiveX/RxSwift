@@ -19,7 +19,7 @@ class _RxTableViewReactiveArrayDataSource
     : NSObject
     , UITableViewDataSource {
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
    
@@ -31,12 +31,12 @@ class _RxTableViewReactiveArrayDataSource
         return _tableView(tableView, numberOfRowsInSection: section)
     }
 
-    func _tableView(tableView: UITableView, cellForRowAt indexPath: NSIndexPath) -> UITableViewCell {
+    private func _tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         rxAbstractMethod()
     }
 
-    func tableView(tableView: UITableView, cellForRowAt indexPath: NSIndexPath) -> UITableViewCell {
-        return _tableView(tableView: tableView, cellForRowAt: indexPath)
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        return _tableView(tableView, cellForRowAt: indexPath)
     }
 }
 
@@ -54,7 +54,7 @@ class RxTableViewReactiveArrayDataSourceSequenceWrapper<S: Sequence>
         UIBindingObserver(UIElement: self) { tableViewDataSource, sectionModels in
             let sections = Array(sectionModels)
             tableViewDataSource.tableView(tableView, observedElements: sections)
-        }.on(event: observedEvent)
+        }.on(observedEvent)
     }
 }
 
@@ -66,14 +66,14 @@ class RxTableViewReactiveArrayDataSource<Element>
     
     var itemModels: [Element]? = nil
     
-    func modelAtIndex(index: Int) -> Element? {
+    func modelAtIndex(_ index: Int) -> Element? {
         return itemModels?[index]
     }
 
-    func modelAtIndexPath(indexPath: NSIndexPath) throws -> Any {
-        precondition(indexPath.section == 0)
-        guard let item = itemModels?[indexPath.item] else {
-            throw RxCocoaError.ItemsNotYetBound(object: self)
+    func modelAtIndexPath(_ indexPath: IndexPath) throws -> Any {
+        precondition((indexPath as NSIndexPath).section == 0)
+        guard let item = itemModels?[(indexPath as NSIndexPath).item] else {
+            throw RxCocoaError.itemsNotYetBound(object: self)
         }
         return item
     }
@@ -88,8 +88,8 @@ class RxTableViewReactiveArrayDataSource<Element>
         return itemModels?.count ?? 0
     }
     
-    override func _tableView(_ tableView: UITableView, cellForRowAt indexPath: NSIndexPath) -> UITableViewCell {
-        return cellFactory(tableView, indexPath.item, itemModels![indexPath.row])
+    override func _tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        return cellFactory(tableView, (indexPath as NSIndexPath).item, itemModels![(indexPath as NSIndexPath).row])
     }
     
     // reactive

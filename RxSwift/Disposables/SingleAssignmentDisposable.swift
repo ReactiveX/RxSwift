@@ -46,11 +46,11 @@ public class SingleAssignmentDisposable : DisposeBase, Disposable, Cancelable {
             return _disposable ?? NopDisposable.instance
         }
         set {
-            _setDisposable(newValue: newValue)?.dispose()
+            _setDisposable(newValue)?.dispose()
         }
     }
 
-    private func _setDisposable(newValue: Disposable) -> Disposable? {
+    private func _setDisposable(_ newValue: Disposable) -> Disposable? {
         _lock.lock(); defer { _lock.unlock() }
         if _disposableSet {
             rxFatalError("oldState.disposable != nil")

@@ -18,12 +18,12 @@ extension ObservableConvertibleType {
     - parameter onErrorJustReturn: Element to return in case of error and after that complete the sequence.
     - returns: Driving observable sequence.
     */
-    @warn_unused_result(message: "http://git.io/rxs.uo")
-    public func asDriver(onErrorJustReturn: E) -> Driver<E> {
+    @warn_unused_result(message:"http://git.io/rxs.uo")
+    public func asDriver(_ onErrorJustReturn: E) -> Driver<E> {
         let source = self
             .asObservable()
-            .observeOn(scheduler: driverObserveOnScheduler)
-            .catchErrorJustReturn(element: onErrorJustReturn)
+            .observeOn(driverObserveOnScheduler)
+            .catchErrorJustReturn(onErrorJustReturn)
         return Driver(source)
     }
     
@@ -33,11 +33,11 @@ extension ObservableConvertibleType {
     - parameter onErrorDriveWith: Driver that continues to drive the sequence in case of error.
     - returns: Driving observable sequence.
     */
-    @warn_unused_result(message: "http://git.io/rxs.uo")
-    public func asDriver(onErrorDriveWith: Driver<E>) -> Driver<E> {
+    @warn_unused_result(message:"http://git.io/rxs.uo")
+    public func asDriver(_ onErrorDriveWith: Driver<E>) -> Driver<E> {
         let source = self
             .asObservable()
-            .observeOn(scheduler: driverObserveOnScheduler)
+            .observeOn(driverObserveOnScheduler)
             .catchError { _ in
                 onErrorDriveWith.asObservable()
             }
@@ -50,11 +50,11 @@ extension ObservableConvertibleType {
     - parameter onErrorRecover: Calculates driver that continues to drive the sequence in case of error.
     - returns: Driving observable sequence.
     */
-    @warn_unused_result(message: "http://git.io/rxs.uo")
-    public func asDriver(onErrorRecover: (error: ErrorProtocol) -> Driver<E>) -> Driver<E> {
+    @warn_unused_result(message:"http://git.io/rxs.uo")
+    public func asDriver(_ onErrorRecover: (error: ErrorProtocol) -> Driver<E>) -> Driver<E> {
         let source = self
             .asObservable()
-            .observeOn(scheduler: driverObserveOnScheduler)
+            .observeOn(driverObserveOnScheduler)
             .catchError { error in
                 onErrorRecover(error: error).asObservable()
             }

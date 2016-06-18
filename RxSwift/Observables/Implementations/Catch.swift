@@ -20,13 +20,13 @@ class CatchSinkProxy<O: ObserverType> : ObserverType {
         _parent = parent
     }
     
-    func on(event: Event<E>) {
-        _parent.forwardOn(event: event)
+    func on(_ event: Event<E>) {
+        _parent.forwardOn(event)
         
         switch event {
-        case .Next:
+        case .next:
             break
-        case .Error, .Completed:
+        case .error, .completed:
             _parent.dispose()
         }
     }
@@ -47,28 +47,28 @@ class CatchSink<O: ObserverType> : Sink<O>, ObserverType {
     func run() -> Disposable {
         let d1 = SingleAssignmentDisposable()
         _subscription.disposable = d1
-        d1.disposable = _parent._source.subscribe(observer: self)
+        d1.disposable = _parent._source.subscribe(self)
 
         return _subscription
     }
     
-    func on(event: Event<E>) {
+    func on(_ event: Event<E>) {
         switch event {
-        case .Next:
-            forwardOn(event: event)
-        case .Completed:
-            forwardOn(event: event)
+        case .next:
+            forwardOn(event)
+        case .completed:
+            forwardOn(event)
             dispose()
-        case .Error(let error):
+        case .error(let error):
             do {
                 let catchSequence = try _parent._handler(error)
 
                 let observer = CatchSinkProxy(parent: self)
                 
-                _subscription.disposable = catchSequence.subscribe(observer: observer)
+                _subscription.disposable = catchSequence.subscribe(observer)
             }
             catch let e {
-                forwardOn(event: .Error(e))
+                forwardOn(.error(e))
                 dispose()
             }
         }
@@ -86,7 +86,7 @@ class Catch<Element> : Producer<Element> {
         _handler = handler
     }
     
-    override func run<O: ObserverType where O.E == Element>(observer: O) -> Disposable {
+    override func run<O: ObserverType where O.E == Element>(_ observer: O) -> Disposable {
         let sink = CatchSink(parent: self, observer: observer)
         sink.disposable = sink.run()
         return sink
@@ -107,35 +107,35 @@ class CatchSequenceSink<S: Sequence, O: ObserverType where S.Iterator.Element : 
         super.init(observer: observer)
     }
     
-    func on(event: Event<Element>) {
+    func on(_ event: Event<Element>) {
         switch event {
-        case .Next:
-            forwardOn(event: event)
-        case .Error(let error):
+        case .next:
+            forwardOn(event)
+        case .error(let error):
             _lastError = error
-            schedule(command: .MoveNext)
-        case .Completed:
-            forwardOn(event: event)
+            schedule(.moveNext)
+        case .completed:
+            forwardOn(event)
             dispose()
         }
     }
 
-    override func subscribeToNext(source: Observable<E>) -> Disposable {
-        return source.subscribe(observer: self)
+    override func subscribeToNext(_ source: Observable<E>) -> Disposable {
+        return source.subscribe(self)
     }
     
     override func done() {
         if let lastError = _lastError {
-            forwardOn(event: .Error(lastError))
+            forwardOn(.error(lastError))
         }
         else {
-            forwardOn(event: .Completed)
+            forwardOn(.completed)
         }
         
         self.dispose()
     }
     
-    override func extract(observable: Observable<Element>) -> SequenceGenerator? {
+    override func extract(_ observable: Observable<Element>) -> SequenceGenerator? {
         if let onError = observable as? CatchSequence<S> {
             return (onError.sources.makeIterator(), nil)
         }
@@ -154,9 +154,9 @@ class CatchSequence<S: Sequence where S.Iterator.Element : ObservableConvertible
         self.sources = sources
     }
     
-    override func run<O : ObserverType where O.E == Element>(observer: O) -> Disposable {
+    override func run<O : ObserverType where O.E == Element>(_ observer: O) -> Disposable {
         let sink = CatchSequenceSink<S, O>(observer: observer)
-        sink.disposable = sink.run(sources: (self.sources.makeIterator(), nil))
+        sink.disposable = sink.run((self.sources.makeIterator(), nil))
         return sink
     }
 }

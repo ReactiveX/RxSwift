@@ -41,7 +41,7 @@ class ObservableSubscriptionTests : RxTest {
         XCTAssertTrue(onCompletedCalled == 0)
         XCTAssertTrue(onDisposedCalled == 0)
 
-        publishSubject.on(.Next(1))
+        publishSubject.on(.next(1))
 
         XCTAssertTrue(lastElement == 1)
         XCTAssertTrue(lastError == nil)
@@ -51,7 +51,7 @@ class ObservableSubscriptionTests : RxTest {
         XCTAssertTrue(onDisposedCalled == 0)
 
         subscription.dispose()
-        publishSubject.on(.Next(2))
+        publishSubject.on(.next(2))
 
         XCTAssertTrue(lastElement == 1)
         XCTAssertTrue(lastError == nil)
@@ -101,8 +101,8 @@ class ObservableSubscriptionTests : RxTest {
         XCTAssertTrue(onDisposedCalled == 1)
 
         subscription.dispose()
-        publishSubject.on(.Next(2))
-        publishSubject.on(.Completed)
+        publishSubject.on(.next(2))
+        publishSubject.on(.completed)
 
         XCTAssertTrue(lastElement == nil)
         XCTAssertTrue((lastError as? NSError) === testError)
@@ -142,7 +142,7 @@ class ObservableSubscriptionTests : RxTest {
         XCTAssertTrue(onCompletedCalled == 0)
         XCTAssertTrue(onDisposedCalled == 0)
 
-        publishSubject.on(.Completed)
+        publishSubject.on(.completed)
 
         XCTAssertTrue(lastElement == nil)
         XCTAssertTrue(lastError == nil)
@@ -152,7 +152,7 @@ class ObservableSubscriptionTests : RxTest {
         XCTAssertTrue(onDisposedCalled == 1)
 
         subscription.dispose()
-        publishSubject.on(.Next(2))
+        publishSubject.on(.next(2))
         publishSubject.on(.Error(testError))
 
         XCTAssertTrue(lastElement == nil)
@@ -193,11 +193,11 @@ class ObservableSubscriptionTests : RxTest {
         XCTAssertTrue(onCompletedCalled == 0)
         XCTAssertTrue(onDisposedCalled == 0)
 
-        publishSubject.on(.Next(1))
+        publishSubject.on(.next(1))
         subscription.dispose()
-        publishSubject.on(.Next(2))
+        publishSubject.on(.next(2))
         publishSubject.on(.Error(testError))
-        publishSubject.on(.Completed)
+        publishSubject.on(.completed)
 
         XCTAssertTrue(lastElement == 1)
         XCTAssertTrue(lastError == nil)

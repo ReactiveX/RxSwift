@@ -19,16 +19,16 @@ class DoSink<O: ObserverType> : Sink<O>, ObserverType {
         super.init(observer: observer)
     }
     
-    func on(event: Event<Element>) {
+    func on(_ event: Event<Element>) {
         do {
             try _parent._eventHandler(event)
-            forwardOn(event: event)
+            forwardOn(event)
             if event.isStopEvent {
                 dispose()
             }
         }
         catch let error {
-            forwardOn(event: .Error(error))
+            forwardOn(.error(error))
             dispose()
         }
     }
@@ -45,9 +45,9 @@ class Do<Element> : Producer<Element> {
         _eventHandler = eventHandler
     }
     
-    override func run<O: ObserverType where O.E == Element>(observer: O) -> Disposable {
+    override func run<O: ObserverType where O.E == Element>(_ observer: O) -> Disposable {
         let sink = DoSink(parent: self, observer: observer)
-        sink.disposable = _source.subscribe(observer: sink)
+        sink.disposable = _source.subscribe(sink)
         return sink
     }
 }

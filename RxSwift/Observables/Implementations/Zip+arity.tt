@@ -21,7 +21,7 @@ extension Observable {
     - parameter resultSelector: Function to invoke for each series of elements at corresponding indexes in the sources.
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
-    @warn_unused_result(message: "http://git.io/rxs.uo")
+    @warn_unused_result(message:"http://git.io/rxs.uo")
     public static func zip<<%= (Array(1...i).map { "O\($0): ObservableType" }).joinWithSeparator(", ") %>>
         (<%= (Array(1...i).map { "_ source\($0): O\($0)" }).joinWithSeparator(", ") %>, resultSelector: (<%= (Array(1...i).map { "O\($0).E" }).joinWithSeparator(", ") %>) throws -> E)
         -> Observable<E> {
@@ -65,11 +65,11 @@ class ZipSink<%= i %>_<<%= (Array(1...i).map { "E\($0)" }).joinWithSeparator(", 
 }).joinWithSeparator("\n") %>
 
 <%= (Array(1...i).map {
-"        let observer\($0) = ZipObserver(lock: _lock, parent: self, index: \($0 - 1), setNextValue: { self._values\($0).enqueue(element: $0) }, this: subscription\($0))"
+"        let observer\($0) = ZipObserver(lock: _lock, parent: self, index: \($0 - 1), setNextValue: { self._values\($0).enqueue($0) }, this: subscription\($0))"
 }).joinWithSeparator("\n") %>
 
 <%= (Array(1...i).map {
-"        subscription\($0).disposable = _parent.source\($0).subscribe(observer: observer\($0))" }).joinWithSeparator("\n")
+"        subscription\($0).disposable = _parent.source\($0).subscribe(observer\($0))" }).joinWithSeparator("\n")
 %>
 
         return CompositeDisposable(disposables: [

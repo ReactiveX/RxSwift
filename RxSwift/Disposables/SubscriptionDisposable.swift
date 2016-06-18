@@ -18,6 +18,6 @@ struct SubscriptionDisposable<T: SynchronizedUnsubscribeType> : Disposable {
     }
 
     func dispose() {
-        _owner?.synchronizedUnsubscribe(disposeKey: _key)
+        _owner?.synchronizedUnsubscribe(_key)
     }
 }

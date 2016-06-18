@@ -24,7 +24,7 @@ extension UIAlertAction {
      */
     public var rx_enabled: AnyObserver<Bool> {
         return UIBindingObserver(UIElement: self) { alertAction, value in
-            alertAction.enabled = value
+            alertAction.isEnabled = value
         }.asObserver()
     }
     

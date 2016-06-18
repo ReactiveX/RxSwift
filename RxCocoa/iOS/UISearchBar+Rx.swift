@@ -49,7 +49,7 @@ extension UISearchBar {
                     .map { a in
                         return a[1] as? String ?? ""
                     }
-                    .startWith(text)
+                    .startWith(elements: text)
         }
 
         let bindingObserver = UIBindingObserver(UIElement: self) { (searchBar, text: String) in
@@ -70,7 +70,7 @@ extension UISearchBar {
                 .map { a in
                     return try castOrThrow(Int.self, a[1])
                 }
-                .startWith(index)
+                .startWith(elements: index)
         }
         
         let bindingObserver = UIBindingObserver(UIElement: self) { (searchBar, index: Int) in

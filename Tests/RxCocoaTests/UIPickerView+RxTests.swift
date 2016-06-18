@@ -16,7 +16,7 @@ import XCTest
 class UIPickerViewTests: RxTest {
     
     func testTableView_DelegateEventCompletesOnDealloc() {
-        let createView: () -> UIPickerView = { UIPickerView(frame: CGRectMake(0, 0, 1, 1)) }
+        let createView: () -> UIPickerView = { UIPickerView(frame: CGRect(x: 0, y: 0, width: 1, height: 1)) }
         
         ensureEventDeallocated(createView) { (view: UIPickerView) in view.rx_itemSelected }
     }

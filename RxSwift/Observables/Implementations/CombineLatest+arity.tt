@@ -21,7 +21,7 @@ extension Observable {
     - parameter resultSelector: Function to invoke whenever any of the sources produces an element.
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
-    @warn_unused_result(message: "http://git.io/rxs.uo")
+    @warn_unused_result(message:"http://git.io/rxs.uo")
     public static func combineLatest<<%= (Array(1...i).map { "O\($0): ObservableType" }).joinWithSeparator(", ") %>>
         (<%= (Array(1...i).map { "_ source\($0): O\($0)" }).joinWithSeparator(", ") %>, resultSelector: (<%= (Array(1...i).map { "O\($0).E" }).joinWithSeparator(", ") %>) throws -> E)
             -> Observable<E> {
@@ -57,7 +57,7 @@ class CombineLatestSink<%= i %>_<<%= (Array(1...i).map { "E\($0)" }).joinWithSep
 }).joinWithSeparator("\n") %>
 
 <%= (Array(1...i).map {
-"         subscription\($0).disposable = _parent._source\($0).subscribe(observer: observer\($0))"
+"         subscription\($0).disposable = _parent._source\($0).subscribe(observer\($0))"
 }).joinWithSeparator("\n") %>
 
         return CompositeDisposable(disposables: [

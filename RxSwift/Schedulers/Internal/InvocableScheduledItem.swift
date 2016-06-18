@@ -19,6 +19,6 @@ struct InvocableScheduledItem<I: InvocableWithValueType> : InvocableType {
     }
 
     func invoke() {
-        _invocable.invoke(value: _state)
+        _invocable.invoke(_state)
     }
 }

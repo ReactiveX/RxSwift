@@ -22,14 +22,14 @@ extension UIRefreshControlTests {
         let subject = UIRefreshControl()
         Observable.just(true).subscribe(subject.rx_refreshing).dispose()
 
-        XCTAssertTrue(subject.refreshing == true)
+        XCTAssertTrue(subject.isRefreshing == true)
     }
 
     func testRefreshing_False() {
         let subject = UIRefreshControl()
         Observable.just(false).subscribe(subject.rx_refreshing).dispose()
 
-        XCTAssertTrue(subject.refreshing == false)
+        XCTAssertTrue(subject.isRefreshing == false)
     }
 }
 

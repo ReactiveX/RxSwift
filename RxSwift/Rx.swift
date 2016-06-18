@@ -23,18 +23,18 @@ public var resourceCount: AtomicInt = 0
     fatalError(lastMessage)
 }
 
-func incrementChecked(i: inout Int) throws -> Int {
+func incrementChecked(_ i: inout Int) throws -> Int {
     if i == Int.max {
-        throw RxError.Overflow
+        throw RxError.overflow
     }
     let result = i
     i += 1
     return result
 }
 
-func decrementChecked(i: inout Int) throws -> Int {
+func decrementChecked(_ i: inout Int) throws -> Int {
     if i == Int.min {
-        throw RxError.Overflow
+        throw RxError.overflow
     }
     let result = i
     i -= 1

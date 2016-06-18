@@ -20,7 +20,7 @@ class VirtualSchedulerTest : RxTest {
 extension VirtualSchedulerTest {
     func testVirtualScheduler_initialClock() {
         let scheduler = TestVirtualScheduler(initialClock: 10)
-        XCTAssertEqual(scheduler.now, NSDate(timeIntervalSince1970: 100.0))
+        XCTAssertEqual(scheduler.now, Date(timeIntervalSince1970: 100.0))
         XCTAssertEqual(scheduler.clock, 10)
     }
 
@@ -230,7 +230,7 @@ extension VirtualSchedulerTest {
 
         scheduler.start()
 
-        times = times.sort()
+        times = times.sorted()
         XCTAssertEqual(times, ticks)
     }
 }

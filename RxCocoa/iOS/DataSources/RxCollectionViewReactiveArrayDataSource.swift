@@ -19,6 +19,7 @@ class _RxCollectionViewReactiveArrayDataSource
     : NSObject
     , UICollectionViewDataSource {
     
+    @objc(numberOfSectionsInCollectionView:)
     func numberOfSections(in: UICollectionView) -> Int {
         return 1
     }
@@ -31,11 +32,11 @@ class _RxCollectionViewReactiveArrayDataSource
         return _collectionView(collectionView, numberOfItemsInSection: section)
     }
 
-    func _collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: NSIndexPath) -> UICollectionViewCell {
+    private func _collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         rxAbstractMethod()
     }
 
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: NSIndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         return _collectionView(collectionView, cellForItemAt: indexPath)
     }
 }
@@ -53,7 +54,7 @@ class RxCollectionViewReactiveArrayDataSourceSequenceWrapper<S: Sequence>
         UIBindingObserver(UIElement: self) { collectionViewDataSource, sectionModels in
             let sections = Array(sectionModels)
             collectionViewDataSource.collectionView(collectionView, observedElements: sections)
-        }.on(event: observedEvent)
+        }.on(observedEvent)
     }
 }
 
@@ -67,14 +68,14 @@ class RxCollectionViewReactiveArrayDataSource<Element>
     
     var itemModels: [Element]? = nil
     
-    func modelAtIndex(index: Int) -> Element? {
+    func modelAtIndex(_ index: Int) -> Element? {
         return itemModels?[index]
     }
 
-    func modelAtIndexPath(indexPath: NSIndexPath) throws -> Any {
-        precondition(indexPath.section == 0)
-        guard let item = itemModels?[indexPath.item] else {
-            throw RxCocoaError.ItemsNotYetBound(object: self)
+    func modelAtIndexPath(_ indexPath: IndexPath) throws -> Any {
+        precondition((indexPath as NSIndexPath).section == 0)
+        guard let item = itemModels?[(indexPath as NSIndexPath).item] else {
+            throw RxCocoaError.itemsNotYetBound(object: self)
         }
         return item
     }
@@ -91,8 +92,8 @@ class RxCollectionViewReactiveArrayDataSource<Element>
         return itemModels?.count ?? 0
     }
     
-    override func _collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: NSIndexPath) -> UICollectionViewCell {
-        return cellFactory(collectionView, indexPath.item, itemModels![indexPath.item])
+    override func _collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        return cellFactory(collectionView, (indexPath as NSIndexPath).item, itemModels![(indexPath as NSIndexPath).item])
     }
     
     // reactive

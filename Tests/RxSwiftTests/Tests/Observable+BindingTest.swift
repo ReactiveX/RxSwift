@@ -347,21 +347,21 @@ extension ObservableBindingTest {
         let res = xs.publish().refCount()
         _ = res.subscribe { event in
             switch event {
-            case .Next:
+            case .next:
                 XCTAssertTrue(false)
             case .Error(let error):
                 XCTAssertErrorEqual(error, testError)
-            case .Completed:
+            case .completed:
                 XCTAssertTrue(false)
             }
         }
         _ = res.subscribe { event in
             switch event {
-            case .Next:
+            case .next:
                 XCTAssertTrue(false)
             case .Error(let error):
                 XCTAssertErrorEqual(error, testError)
-            case .Completed:
+            case .completed:
                 XCTAssertTrue(false)
             }
         }
@@ -1077,7 +1077,7 @@ extension ObservableBindingTest {
 
 // shareReplay(1)
 extension ObservableBindingTest {
-    func _testIdenticalBehaviorOfShareReplayOptimizedAndComposed(action: (transform: (Observable<Int> -> Observable<Int>)) -> Void) {
+    func _testIdenticalBehaviorOfShareReplayOptimizedAndComposed(_ action: (transform: ((Observable<Int>) -> Observable<Int>)) -> Void) {
         action { $0.shareReplay(1) }
         action { $0.replay(1).refCount() }
     }

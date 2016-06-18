@@ -76,8 +76,8 @@ extension RxTest {
         static let disposed = 1000
     }
 
-    func sleep(time: NSTimeInterval) {
-        NSRunLoop.currentRunLoop().runMode(NSDefaultRunLoopMode, beforeDate: NSDate(timeIntervalSinceNow: time))
+    func sleep(_ time: TimeInterval) {
+        RunLoop.current().run(mode: RunLoop Mode.defaultRunLoopMode, before: Date(timeIntervalSinceNow: time))
     }
 
     func setUpActions(){
