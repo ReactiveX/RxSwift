@@ -11,12 +11,12 @@ import Foundation
 /**
 Type that represents time interval in the context of RxSwift.
 */
-public typealias RxTimeInterval = NSTimeInterval
+public typealias RxTimeInterval = TimeInterval
 
 /**
 Type that represents absolute time in the context of RxSwift.
 */
-public typealias RxTime = NSDate
+public typealias RxTime = Date
 
 /**
 Represents an object that schedules units of work.

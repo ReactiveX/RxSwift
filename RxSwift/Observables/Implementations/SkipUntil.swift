@@ -17,7 +17,7 @@ class SkipUntilSinkOther<ElementType, Other, O: ObserverType where O.E == Elemen
     
     private let _parent: Parent
 
-    var _lock: NSRecursiveLock {
+    var _lock: RecursiveLock {
         return _parent._lock
     }
     
@@ -64,7 +64,7 @@ class SkipUntilSink<ElementType, Other, O: ObserverType where O.E == ElementType
     typealias E = ElementType
     typealias Parent = SkipUntil<E, Other>
     
-    let _lock = NSRecursiveLock()
+    let _lock = RecursiveLock()
     private let _parent: Parent
     private var _forwardElements = false
     

@@ -10,8 +10,8 @@ import Foundation
 
 let dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"
 
-func logEvent(identifier: String, dateFormat: NSDateFormatter, content: String) {
-    print("\(dateFormat.string(from: NSDate())): \(identifier) -> \(content)")
+func logEvent(identifier: String, dateFormat: DateFormatter, content: String) {
+    print("\(dateFormat.string(from: Date())): \(identifier) -> \(content)")
 }
 
 class Debug_<O: ObserverType> : Sink<O>, ObserverType {
@@ -19,7 +19,7 @@ class Debug_<O: ObserverType> : Sink<O>, ObserverType {
     typealias Parent = Debug<Element>
     
     private let _parent: Parent
-    private let _timestampFormatter = NSDateFormatter()
+    private let _timestampFormatter = DateFormatter()
     
     init(parent: Parent, observer: O) {
         _parent = parent

@@ -15,7 +15,7 @@ class CombineLatestCollectionTypeSink<C: Collection, R, O: ObserverType where C.
     
     let _parent: Parent
     
-    let _lock = NSRecursiveLock()
+    let _lock = RecursiveLock()
 
     // state
     var _numberOfValues = 0

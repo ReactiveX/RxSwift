@@ -31,7 +31,7 @@ final public class PublishSubject<Element>
         return _observers.count > 0
     }
     
-    private var _lock = NSRecursiveLock()
+    private var _lock = RecursiveLock()
     
     // state
     private var _disposed = false

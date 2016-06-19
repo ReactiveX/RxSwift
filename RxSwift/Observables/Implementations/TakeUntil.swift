@@ -17,7 +17,7 @@ class TakeUntilSinkOther<ElementType, Other, O: ObserverType where O.E == Elemen
     
     private let _parent: Parent
 
-    var _lock: NSRecursiveLock {
+    var _lock: RecursiveLock {
         return _parent._lock
     }
     
@@ -65,7 +65,7 @@ class TakeUntilSink<ElementType, Other, O: ObserverType where O.E == ElementType
     
     private let _parent: Parent
  
-    let _lock = NSRecursiveLock()
+    let _lock = RecursiveLock()
     
     // state
     private var _open = false

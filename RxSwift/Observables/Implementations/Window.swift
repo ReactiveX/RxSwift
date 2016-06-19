@@ -18,7 +18,7 @@ class WindowTimeCountSink<Element, O: ObserverType where O.E == Observable<Eleme
     
     private let _parent: Parent
     
-    let _lock = NSRecursiveLock()
+    let _lock = RecursiveLock()
     
     private var _subject = PublishSubject<Element>()
     private var _count = 0

@@ -28,7 +28,7 @@ public class ReplaySubject<Element>
         return _observers.count > 0
     }
     
-    private var _lock = NSRecursiveLock()
+    private var _lock = RecursiveLock()
     
     // state
     private var _disposed = false
@@ -247,7 +247,7 @@ final class ReplayMany<Element> : ReplayManyBase<Element> {
     
     override func trim() {
         while _queue.count > _bufferSize {
-            _queue.dequeue()
+            _ = _queue.dequeue()
         }
     }
 }
