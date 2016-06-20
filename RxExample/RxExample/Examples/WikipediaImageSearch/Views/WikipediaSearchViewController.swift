@@ -107,7 +107,7 @@ class WikipediaSearchViewController: ViewController {
         resultsTableView.rx_modelSelected(SearchResultViewModel.self)
             .asDriver()
             .driveNext { searchResult in
-                wireframe.openURL(searchResult.searchResult.URL)
+                wireframe.open(url:searchResult.searchResult.URL)
             }
             .addDisposableTo(disposeBag)
     }

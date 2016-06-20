@@ -23,7 +23,7 @@ enum RetryResult {
 }
 
 protocol Wireframe {
-    func openURL(_ URL: URL)
+    func open(url: URL)
     func promptFor<Action: CustomStringConvertible>(_ message: String, cancelAction: Action, actions: [Action]) -> Observable<Action>
 }
 
@@ -31,9 +31,9 @@ protocol Wireframe {
 class DefaultWireframe: Wireframe {
     static let sharedInstance = DefaultWireframe()
 
-    func openURL(_ URL: Foundation.URL) {
+    func open(url: URL) {
         #if os(iOS)
-            UIApplication.shared().openURL(URL)
+            UIApplication.shared().openURL(url)
         #elseif os(OSX)
             NSWorkspace.shared().open(URL)
         #endif
