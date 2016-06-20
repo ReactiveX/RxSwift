@@ -40,11 +40,10 @@ public class RxTextFieldDelegateProxy
     }
 
     // MARK: Delegate methods
-
-    public override func controlTextDidChange(notification: NSNotification) {
-        let textField = notification.object as! NSTextField
+    public override func controlTextDidChange(_ obj: Notification) {
+        let textField = obj.object as! NSTextField
         let nextValue = textField.stringValue
-        self.textSubject.on(.Next(nextValue))
+        self.textSubject.on(event: .Next(nextValue))
     }
 
     // MARK: Delegate proxy methods
@@ -76,7 +75,7 @@ public class RxTextFieldDelegateProxy
     
 }
 
-extension NSTextField {
+extension NSTextField : RxTextInput {
 
     /**
     Factory method that enables subclasses to implement their own `rx_delegate`.
@@ -93,18 +92,18 @@ extension NSTextField {
     For more information take a look at `DelegateProxyType` protocol documentation.
     */
     public var rx_delegate: DelegateProxy {
-        return proxyForObject(RxTextFieldDelegateProxy.self, self)
+        return RxTextFieldDelegateProxy.proxyForObject(object: self)
     }
     
     /**
     Reactive wrapper for `text` property.
     */
     public var rx_text: ControlProperty<String> {
-        let delegate = proxyForObject(RxTextFieldDelegateProxy.self, self)
+        let delegate = RxTextFieldDelegateProxy.proxyForObject(object: self)
         
         let source = Observable.deferred { [weak self] in
-            delegate.textSubject.startWith(self?.stringValue ?? "")
-        }.takeUntil(rx_deallocated)
+            delegate.textSubject.startWith(elements: self?.stringValue ?? "")
+        }.takeUntil(other: rx_deallocated)
 
         let observer = UIBindingObserver(UIElement: self) { control, value in
             control.stringValue = value

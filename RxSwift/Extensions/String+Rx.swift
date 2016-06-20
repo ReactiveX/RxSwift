@@ -13,13 +13,15 @@ extension String {
      This is needed because on Linux Swift doesn't have `rangeOfString(..., options: .BackwardsSearch)`
     */
     func lastIndexOf(character: Character) -> Index? {
-        var last: Index?
-        for i in characters.indices.indices {
-            if self[i] == character {
-                last = i
+        
+        var idx = endIndex
+        while idx > startIndex {
+            idx = index(before: idx)
+            if self[idx] == character {
+                return idx
             }
         }
 
-        return last
+        return nil
     }
 }

@@ -35,7 +35,7 @@ extension UISearchBar {
     For more information take a look at `DelegateProxyType` protocol documentation.
     */
     public var rx_delegate: DelegateProxy {
-        return proxyForObject(RxSearchBarDelegateProxy.self, self)
+        return RxSearchBarDelegateProxy.proxyForObject(object: self)
     }
     
     /**
@@ -45,11 +45,11 @@ extension UISearchBar {
         let source: Observable<String> = Observable.deferred { [weak self] () -> Observable<String> in
             let text = self?.text ?? ""
             
-            return (self?.rx_delegate.observe(#selector(UISearchBarDelegate.searchBar(_:textDidChange:))) ?? Observable.empty())
+            return (self?.rx_delegate.observe(selector: #selector(UISearchBarDelegate.searchBar(_:textDidChange:))) ?? Observable.empty())
                     .map { a in
                         return a[1] as? String ?? ""
                     }
-                    .startWith(text)
+                    .startWith(elements: text)
         }
 
         let bindingObserver = UIBindingObserver(UIElement: self) { (searchBar, text: String) in
@@ -66,11 +66,11 @@ extension UISearchBar {
         let source: Observable<Int> = Observable.deferred { [weak self] () -> Observable<Int> in
             let index = self?.selectedScopeButtonIndex ?? 0
             
-            return (self?.rx_delegate.observe(#selector(UISearchBarDelegate.searchBar(_:selectedScopeButtonIndexDidChange:))) ?? Observable.empty())
+            return (self?.rx_delegate.observe(selector: #selector(UISearchBarDelegate.searchBar(_:selectedScopeButtonIndexDidChange:))) ?? Observable.empty())
                 .map { a in
                     return try castOrThrow(Int.self, a[1])
                 }
-                .startWith(index)
+                .startWith(elements: index)
         }
         
         let bindingObserver = UIBindingObserver(UIElement: self) { (searchBar, index: Int) in
@@ -85,7 +85,7 @@ extension UISearchBar {
     Reactive wrapper for delegate method `searchBarCancelButtonClicked`.
     */
     public var rx_cancelButtonClicked: ControlEvent<Void> {
-        let source: Observable<Void> = rx_delegate.observe(#selector(UISearchBarDelegate.searchBarCancelButtonClicked(_:)))
+        let source: Observable<Void> = rx_delegate.observe(selector: #selector(UISearchBarDelegate.searchBarCancelButtonClicked(_:)))
             .map { _ in
                 return ()
             }
@@ -97,7 +97,7 @@ extension UISearchBar {
      Reactive wrapper for delegate method `searchBarSearchButtonClicked`.
      */
     public var rx_searchButtonClicked: ControlEvent<Void> {
-        let source: Observable<Void> = rx_delegate.observe(#selector(UISearchBarDelegate.searchBarSearchButtonClicked(_:)))
+        let source: Observable<Void> = rx_delegate.observe(selector: #selector(UISearchBarDelegate.searchBarSearchButtonClicked(_:)))
             .map { _ in
                 return ()
         }

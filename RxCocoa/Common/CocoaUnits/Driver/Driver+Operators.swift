@@ -21,7 +21,7 @@ extension DriverConvertibleType {
     - returns: An observable sequence whose elements are the result of invoking the transform function on each element of source.
     */
     @warn_unused_result(message: "http://git.io/rxs.uo")
-    public func map<R>(selector: E -> R) -> Driver<R> {
+    public func map<R>(selector: (E) -> R) -> Driver<R> {
         let source = self
             .asObservable()
             .map(selector: selector)
@@ -137,7 +137,7 @@ extension DriverConvertibleType {
     - returns: The source sequence with the side-effecting behavior applied.
     */
     @warn_unused_result(message: "http://git.io/rxs.uo")
-    public func doOn(onNext: (E -> Void)? = nil, onError: (ErrorProtocol -> Void)? = nil, onCompleted: (() -> Void)? = nil)
+    public func doOn(onNext: ((E) -> Void)? = nil, onError: ((ErrorProtocol) -> Void)? = nil, onCompleted: (() -> Void)? = nil)
         -> Driver<E> {
         let source = self.asObservable()
             .doOn(onNext: onNext, onError: onError, onCompleted: onCompleted)
@@ -152,7 +152,7 @@ extension DriverConvertibleType {
      - returns: The source sequence with the side-effecting behavior applied.
      */
     @warn_unused_result(message: "http://git.io/rxs.uo")
-    public func doOnNext(onNext: (E -> Void))
+    public func doOnNext(onNext: ((E) -> Void))
         -> Driver<E> {
         return self.doOn(onNext: onNext)
     }
@@ -398,7 +398,7 @@ extension Collection where Iterator.Element : DriverConvertibleType {
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
     @warn_unused_result(message: "http://git.io/rxs.uo")
-    public func zip<R>(resultSelector: [Generator.Element.E] throws -> R) -> Driver<R> {
+    public func zip<R>(resultSelector: ([Generator.Element.E]) throws -> R) -> Driver<R> {
         let source = self.map { $0.asDriver().asObservable() }.zip(resultSelector: resultSelector)
         return Driver<R>(source)
     }
@@ -414,7 +414,7 @@ extension Collection where Iterator.Element : DriverConvertibleType {
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
     @warn_unused_result(message: "http://git.io/rxs.uo")
-    public func combineLatest<R>(resultSelector: [Generator.Element.E] throws -> R) -> Driver<R> {
+    public func combineLatest<R>(resultSelector: ([Generator.Element.E]) throws -> R) -> Driver<R> {
         let source = self.map { $0.asDriver().asObservable() }.combineLatest(resultSelector: resultSelector)
         return Driver<R>(source)
     }

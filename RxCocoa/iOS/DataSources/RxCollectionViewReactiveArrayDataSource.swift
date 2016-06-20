@@ -31,11 +31,11 @@ class _RxCollectionViewReactiveArrayDataSource
         return _collectionView(collectionView, numberOfItemsInSection: section)
     }
 
-    func _collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: NSIndexPath) -> UICollectionViewCell {
+    @nonobjc func _collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         rxAbstractMethod()
     }
 
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: NSIndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         return _collectionView(collectionView, cellForItemAt: indexPath)
     }
 }
@@ -91,8 +91,8 @@ class RxCollectionViewReactiveArrayDataSource<Element>
         return itemModels?.count ?? 0
     }
     
-    override func _collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: NSIndexPath) -> UICollectionViewCell {
-        return cellFactory(collectionView, indexPath.item, itemModels![indexPath.item])
+    override func _collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        return cellFactory(collectionView, indexPath.row, itemModels![indexPath.row])
     }
     
     // reactive

@@ -155,7 +155,7 @@ extension NSObject {
 
             var error: NSError?
             guard let targetImplementation = RX_ensure_observing(self, selector, &error) else {
-                return Observable.error(error?.rxCocoaErrorForTarget(self) ?? RxCocoaError.unknown)
+                return Observable.error(error?.rxCocoaErrorForTarget(self) ?? RxCocoaError.Unknown)
             }
 
             subject.targetImplementation = targetImplementation
@@ -212,7 +212,7 @@ let rxDeallocatingSelector = RX_selector(deallocSelector)
 let rxDeallocatingSelectorReference = RX_reference_from_selector(rxDeallocatingSelector)
 
 extension NSObject {
-    func rx_synchronized<T>(@noescape action: () -> T) -> T {
+    func rx_synchronized<T>(action: @noescape() -> T) -> T {
         objc_sync_enter(self)
         let result = action()
         objc_sync_exit(self)

@@ -31,17 +31,34 @@ public class CompositeDisposable : DisposeBase, Disposable, Cancelable {
      Initializes a new instance of composite disposable with the specified number of disposables.
     */
     public init(_ disposable1: Disposable, _ disposable2: Disposable) {
-        _disposables!.insert(element: disposable1)
-        _disposables!.insert(element: disposable2)
+        // This overload is here to make sure we are using optimized version up to 4 arguments.
+        _ = _disposables!.insert(element: disposable1)
+        _ = _disposables!.insert(element: disposable2)
     }
     
     /**
      Initializes a new instance of composite disposable with the specified number of disposables.
     */
     public init(_ disposable1: Disposable, _ disposable2: Disposable, _ disposable3: Disposable) {
-        _disposables!.insert(element: disposable1)
-        _disposables!.insert(element: disposable2)
-        _disposables!.insert(element: disposable3)
+        // This overload is here to make sure we are using optimized version up to 4 arguments.
+        _ = _disposables!.insert(element: disposable1)
+        _ = _disposables!.insert(element: disposable2)
+        _ = _disposables!.insert(element: disposable3)
+    }
+    
+    /**
+     Initializes a new instance of composite disposable with the specified number of disposables.
+     */
+    public init(_ disposable1: Disposable, _ disposable2: Disposable, _ disposable3: Disposable, _ disposable4: Disposable, _ disposables: Disposable...) {
+        // This overload is here to make sure we are using optimized version up to 4 arguments.
+        _ = _disposables!.insert(element: disposable1)
+        _ = _disposables!.insert(element: disposable2)
+        _ = _disposables!.insert(element: disposable3)
+        _ = _disposables!.insert(element: disposable4)
+        
+        for disposable in disposables {
+            _ = _disposables!.insert(element: disposable)
+        }
     }
     
     /**
@@ -49,7 +66,7 @@ public class CompositeDisposable : DisposeBase, Disposable, Cancelable {
     */
     public init(disposables: [Disposable]) {
         for disposable in disposables {
-            _disposables!.insert(element: disposable)
+            _ = _disposables!.insert(element: disposable)
         }
     }
 

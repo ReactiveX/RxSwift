@@ -9,7 +9,7 @@
 import Foundation
 
 protocol LockOwnerType : class, Lock {
-    var _lock: NSRecursiveLock { get }
+    var _lock: RecursiveLock { get }
 }
 
 extension LockOwnerType {

@@ -23,21 +23,21 @@ extension NSControl {
     public var rx_controlEvent: ControlEvent<Void> {
         MainScheduler.ensureExecutingOnScheduler()
 
-        let source = rx_lazyInstanceObservable(&rx_control_events_key) { () -> Observable<Void> in
+        let source = rx_lazyInstanceObservable(key: &rx_control_events_key) { () -> Observable<Void> in
             Observable.create { [weak self] observer in
                 MainScheduler.ensureExecutingOnScheduler()
 
                 guard let control = self else {
-                    observer.on(.Completed)
+                    observer.on(event: .Completed)
                     return NopDisposable.instance
                 }
 
                 let observer = ControlTarget(control: control) { control in
-                    observer.on(.Next())
+                    observer.on(event: .Next())
                 }
                 
                 return observer
-            }.takeUntil(self.rx_deallocated)
+            }.takeUntil(other: self.rx_deallocated)
         }
         
         return ControlEvent(events: source)
@@ -50,25 +50,25 @@ extension NSControl {
     static func rx_value<C: AnyObject, T: Equatable>(control: C, getter: (C) -> T, setter: (C, T) -> Void) -> ControlProperty<T> {
         MainScheduler.ensureExecutingOnScheduler()
 
-        let source = (control as! NSObject).rx_lazyInstanceObservable(&rx_value_key) { () -> Observable<T> in
+        let source = (control as! NSObject).rx_lazyInstanceObservable(key: &rx_value_key) { () -> Observable<T> in
             return Observable.create { [weak weakControl = control] (observer: AnyObserver<T>) in
                 guard let control = weakControl else {
-                    observer.on(.Completed)
+                    observer.on(event: .Completed)
                     return NopDisposable.instance
                 }
 
-                observer.on(.Next(getter(control)))
+                observer.on(event: .Next(getter(control)))
 
                 let observer = ControlTarget(control: control as! NSControl) { _ in
                     if let control = weakControl {
-                        observer.on(.Next(getter(control)))
+                        observer.on(event: .Next(getter(control)))
                     }
                 }
                 
                 return observer
             }
             .distinctUntilChanged()
-            .takeUntil((control as! NSObject).rx_deallocated)
+            .takeUntil(other:(control as! NSObject).rx_deallocated)
         }
 
         let bindingObserver = UIBindingObserver(UIElement: control, binding: setter)
@@ -81,7 +81,7 @@ extension NSControl {
     */
     public var rx_enabled: AnyObserver<Bool> {
         return UIBindingObserver(UIElement: self) { (owner, value) in
-            owner.enabled = value
+            owner.isEnabled = value
         }.asObserver()
     }
 }

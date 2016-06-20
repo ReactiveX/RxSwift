@@ -19,7 +19,7 @@ class _RxTableViewReactiveArrayDataSource
     : NSObject
     , UITableViewDataSource {
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
    
@@ -31,11 +31,11 @@ class _RxTableViewReactiveArrayDataSource
         return _tableView(tableView, numberOfRowsInSection: section)
     }
 
-    func _tableView(tableView: UITableView, cellForRowAt indexPath: NSIndexPath) -> UITableViewCell {
+    @nonobjc func _tableView(tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         rxAbstractMethod()
     }
 
-    func tableView(tableView: UITableView, cellForRowAt indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         return _tableView(tableView: tableView, cellForRowAt: indexPath)
     }
 }
@@ -88,8 +88,8 @@ class RxTableViewReactiveArrayDataSource<Element>
         return itemModels?.count ?? 0
     }
     
-    override func _tableView(_ tableView: UITableView, cellForRowAt indexPath: NSIndexPath) -> UITableViewCell {
-        return cellFactory(tableView, indexPath.item, itemModels![indexPath.row])
+    override func _tableView(tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        return cellFactory(tableView, indexPath.row, itemModels![indexPath.row])
     }
     
     // reactive

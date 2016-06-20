@@ -17,7 +17,7 @@ class AnonymousObserver<ElementType> : ObserverBase<ElementType> {
     
     init(_ eventHandler: EventHandler) {
 #if TRACE_RESOURCES
-        AtomicIncrement(&resourceCount)
+        _ = AtomicIncrement(&resourceCount)
 #endif
         _eventHandler = eventHandler
     }
@@ -28,7 +28,7 @@ class AnonymousObserver<ElementType> : ObserverBase<ElementType> {
     
 #if TRACE_RESOURCES
     deinit {
-        AtomicDecrement(&resourceCount)
+        _ = AtomicDecrement(&resourceCount)
     }
 #endif
 }

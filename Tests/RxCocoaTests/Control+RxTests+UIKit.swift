@@ -45,13 +45,6 @@ extension ControlTests {
     }
 }
 
-// UITextField
-extension ControlTests {
-    func testTextField_TextCompletesOnDealloc() {
-        ensurePropertyDeallocated({ UITextField() }, "a") { (view: UITextField) in view.rx_text }
-    }
-}
-
 // Attempting to load the view of a view controller while it is deallocating is not allowed and may result in undefined behavior (<UIAlertController: 0x7fc6820309c0>)
 // Don't know why can't use ActionSheet and AlertView inside unit tests
 
@@ -130,14 +123,6 @@ extension ControlTests {
     }
 }
 
-// UITextView
-extension ControlTests {
-    func testText_DelegateEventCompletesOnDealloc() {
-        let createView: () -> UITextView = { UITextView(frame: CGRectMake(0, 0, 1, 1)) }
-        ensurePropertyDeallocated(createView, "text") { (view: UITextView) in view.rx_text }
-    }
-}
-
 // UIActivityIndicatorView
 extension ControlTests {
     func testActivityIndicator_HasWeakReference() {
@@ -159,6 +144,22 @@ extension ControlTests {
     }
 }
 
+// UIAlertAction
+extension ControlTests {
+    func testAlertAction_Enable() {
+        let subject = UIAlertAction()
+        Observable.just(false).subscribe(subject.rx_enabled).dispose()
+        
+        XCTAssertTrue(subject.enabled == false)
+    }
+
+    func testAlertAction_Disable() {
+        let subject = UIAlertAction()
+        Observable.just(true).subscribe(subject.rx_enabled).dispose()
+        
+        XCTAssertTrue(subject.enabled == true)
+    }
+}
 
 #if os(iOS)
 

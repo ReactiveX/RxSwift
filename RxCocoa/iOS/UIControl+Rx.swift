@@ -21,7 +21,7 @@ extension UIControl {
     */
     public var rx_enabled: AnyObserver<Bool> {
         return UIBindingObserver<UIControl, Bool>(UIElement: self) { control, value in
-            control.enabled = value
+            control.isEnabled = value
         }.asObserver()
     }
 
@@ -30,7 +30,7 @@ extension UIControl {
      */
     public var rx_selected: AnyObserver<Bool> {
         return UIBindingObserver<UIControl, Bool>(UIElement: self) { control, selected in
-            control.selected = selected
+            control.isSelected = selected
         }.asObserver()
     }
 
@@ -53,9 +53,8 @@ extension UIControl {
                 observer.on(event: .Next())
             }
             
-            return AnonymousDisposable {
-                controlTarget.dispose()
-            }
+
+            return AnonymousDisposable(controlTarget.dispose)
         }.takeUntil(other: rx_deallocated)
         
         return ControlEvent(events: source)
@@ -80,9 +79,7 @@ extension UIControl {
                     }
                 }
                 
-                return AnonymousDisposable {
-                    controlTarget.dispose()
-                }
+                return AnonymousDisposable(controlTarget.dispose)
             }
             .takeUntil(other: (control as! NSObject).rx_deallocated)
 

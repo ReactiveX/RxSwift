@@ -26,7 +26,7 @@ class AmbObserver<ElementType, O: ObserverType where O.E == ElementType> : Obser
     
     init(parent: Parent, cancel: Disposable, sink: Sink) {
 #if TRACE_RESOURCES
-        AtomicIncrement(&resourceCount)
+        _ = AtomicIncrement(&resourceCount)
 #endif
         
         _parent = parent
@@ -43,7 +43,7 @@ class AmbObserver<ElementType, O: ObserverType where O.E == ElementType> : Obser
     
     deinit {
 #if TRACE_RESOURCES
-        AtomicDecrement(&resourceCount)
+        _ = AtomicDecrement(&resourceCount)
 #endif
     }
 }
@@ -54,7 +54,7 @@ class AmbSink<ElementType, O: ObserverType where O.E == ElementType> : Sink<O> {
 
     private let _parent: Parent
     
-    private let _lock = NSRecursiveLock()
+    private let _lock = RecursiveLock()
     // state
     private var _choice = AmbState.Neither
     

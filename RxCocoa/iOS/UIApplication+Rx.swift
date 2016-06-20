@@ -22,7 +22,7 @@ import Foundation
          */
         public var rx_networkActivityIndicatorVisible: AnyObserver<Bool> {
             return UIBindingObserver(UIElement: self) { application, active in
-                application.networkActivityIndicatorVisible = active
+                application.isNetworkActivityIndicatorVisible = active
             }.asObserver()
         }
     }

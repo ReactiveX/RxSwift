@@ -23,7 +23,15 @@ final public class PublishSubject<Element>
     
     typealias DisposeKey = Bag<AnyObserver<Element>>.KeyType
     
-    private var _lock = NSRecursiveLock()
+    /**
+     Indicates whether the subject has any observers
+     */
+    public var hasObservers: Bool {
+        _lock.lock(); defer { _lock.unlock() }
+        return _observers.count > 0
+    }
+    
+    private var _lock = RecursiveLock()
     
     // state
     private var _disposed = false

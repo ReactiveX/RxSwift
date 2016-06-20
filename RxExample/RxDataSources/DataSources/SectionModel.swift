@@ -20,7 +20,7 @@ public struct SectionModel<Section, ItemType>
     }
 
     public var items: [Item]
-    
+
     public init(model: Section, items: [Item]) {
         self.model = model
         self.items = items
@@ -31,3 +31,9 @@ public struct SectionModel<Section, ItemType>
     }
 }
 
+extension SectionModel {
+    public init(original: SectionModel<Section, Item>, items: [Item]) {
+        self.model = original.model
+        self.items = items
+    }
+}

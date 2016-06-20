@@ -42,9 +42,7 @@ class KVOObservable<Element>
             observer.on(event: .Next(value as? Element))
         }
         
-        return AnonymousDisposable {
-            observer.dispose()
-        }
+        return AnonymousDisposable(observer.dispose)
     }
     
 }
@@ -57,7 +55,7 @@ func observeWeaklyKeyPathFor(target: NSObject, keyPath: String, options: NSKeyVa
     let observable = observeWeaklyKeyPathFor(target: target, keyPathSections: components, options: options)
         .finishWithNilWhenDealloc(target: target)
  
-    if !options.intersect(.initial).isEmpty {
+    if !options.intersection(.initial).isEmpty {
         return observable
     }
     else {

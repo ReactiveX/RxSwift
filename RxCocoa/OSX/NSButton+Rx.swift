@@ -26,7 +26,7 @@ extension NSButton {
     */
     public var rx_state: ControlProperty<Int> {
         return NSButton.rx_value(
-            self,
+            control: self,
             getter: { control in
                 return control.state
             }, setter: { control, state in

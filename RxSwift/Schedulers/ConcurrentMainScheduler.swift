@@ -15,21 +15,20 @@ This scheduler is optimized for `subscribeOn` operator. If you want to observe o
 `MainScheduler` is more suitable for that purpose.
 */
 public final class ConcurrentMainScheduler : SchedulerType {
-    public typealias TimeInterval = NSTimeInterval
     public typealias Time = NSDate
 
     private let _mainScheduler: MainScheduler
-    private let _mainQueue: dispatch_queue_t
+    private let _mainQueue: DispatchQueue
 
     /**
     - returns: Current time.
     */
-    public var now : NSDate {
+    public var now : Date {
         return _mainScheduler.now
     }
 
     private init(mainScheduler: MainScheduler) {
-        _mainQueue = dispatch_get_main_queue()
+        _mainQueue = DispatchQueue.main
         _mainScheduler = mainScheduler
     }
 
@@ -46,17 +45,16 @@ public final class ConcurrentMainScheduler : SchedulerType {
     - returns: The disposable object used to cancel the scheduled action (best effort).
     */
     public func schedule<StateType>(state: StateType, action: (StateType) -> Disposable) -> Disposable {
-        if NSThread.current().isMainThread {
+        if Thread.current().isMainThread {
             return action(state)
         }
 
         let cancel = SingleAssignmentDisposable()
-
-        dispatch_async(_mainQueue) {
+        _mainQueue.async { 
             if cancel.disposed {
                 return
             }
-
+            
             cancel.disposable = action(state)
         }
 
@@ -71,7 +69,7 @@ public final class ConcurrentMainScheduler : SchedulerType {
     - parameter action: Action to be executed.
     - returns: The disposable object used to cancel the scheduled action (best effort).
     */
-    public final func scheduleRelative<StateType>(state: StateType, dueTime: NSTimeInterval, action: (StateType) -> Disposable) -> Disposable {
+    public final func scheduleRelative<StateType>(state: StateType, dueTime: TimeInterval, action: (StateType) -> Disposable) -> Disposable {
         return _mainScheduler.scheduleRelative(state: state, dueTime: dueTime, action: action)
     }
 

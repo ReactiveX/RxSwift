@@ -45,16 +45,52 @@ public class DelegateProxy : _RXDelegateProxy {
     
     /**
     Returns observable sequence of invocations of delegate methods.
-    
+
+    Only methods that have `void` return value can be observed using this method because
+     those methods are used as a notification mechanism. It doesn't matter if they are optional
+     or not. Observing is performed by installing a hidden associated `PublishSubject` that is 
+     used to dispatch messages to observers.
+
+    Delegate methods that have non `void` return value can't be observed directly using this method
+     because:
+     * those methods are not intended to be used as a notification mechanism, but as a behavior customization mechanism
+     * there is no sensible automatic way to determine a default return value
+
+    In case observing of delegate methods that have return type is required, it can be done by
+     manually installing a `PublishSubject` or `BehaviorSubject` and implementing delegate method.
+     
+     e.g.
+     
+         // delegate proxy part (RxScrollViewDelegateProxy)
+
+         let internalSubject = PublishSubject<CGPoint>
+     
+         public func requiredDelegateMethod(scrollView: UIScrollView, arg1: CGPoint) -> Bool {
+             internalSubject.on(.Next(arg1))
+             return self._forwardToDelegate?.requiredDelegateMethod?(scrollView, arg1: arg1) ?? defaultReturnValue
+         }
+     
+         ....
+
+         // reactive property implementation in a real class (`UIScrollView`)
+         public var rx_property: Observable<CGPoint> {
+             let proxy = RxScrollViewDelegateProxy.proxyForObject(self)
+             return proxy.internalSubject.asObservable()
+         }
+
+     **In case calling this method prints "Delegate proxy is already implementing `\(selector)`, 
+     a more performant way of registering might exist.", that means that manual observing method 
+     is required analog to the example above because delegate method has already been implemented.**
+
     - parameter selector: Selector used to filter observed invocations of delegate methods.
     - returns: Observable sequence of arguments passed to `selector` method.
     */
     public func observe(selector: Selector) -> Observable<[AnyObject]> {
-        if hasWiredImplementationForSelector(selector) {
+        if hasWiredImplementation(for: selector) {
             print("Delegate proxy is already implementing `\(selector)`, a more performant way of registering might exist.")
         }
 
-        if !self.respondsToSelector(selector) {
+        if !self.responds(to: selector) {
             rxFatalError("This class doesn't respond to selector \(selector)")
         }
         
@@ -73,7 +109,7 @@ public class DelegateProxy : _RXDelegateProxy {
     // proxy
     
     public override func interceptedSelector(_ selector: Selector, withArguments arguments: [AnyObject]!) {
-        subjectsForSelector[selector]?.on(.Next(arguments))
+        subjectsForSelector[selector]?.on(event: .Next(arguments))
     }
     
     /**
@@ -82,7 +118,7 @@ public class DelegateProxy : _RXDelegateProxy {
     - returns: Associated object tag.
     */
     public class func delegateAssociatedObjectTag() -> UnsafePointer<Void> {
-        return _pointer(&delegateAssociatedTag)
+        return _pointer(p: &delegateAssociatedTag)
     }
     
     /**
@@ -112,7 +148,7 @@ public class DelegateProxy : _RXDelegateProxy {
     - parameter proxy: Delegate proxy object to assign to `object`.
     */
     public class func assignProxy(proxy: AnyObject, toObject object: AnyObject) {
-        precondition(proxy.isKindOfClass(self.classForCoder()))
+        precondition(proxy.isKind(of: self.classForCoder()))
        
         objc_setAssociatedObject(object, self.delegateAssociatedObjectTag(), proxy, .OBJC_ASSOCIATION_RETAIN)
     }
@@ -125,7 +161,7 @@ public class DelegateProxy : _RXDelegateProxy {
     - parameter retainDelegate: Should `self` retain `forwardToDelegate`.
     */
     public func setForwardToDelegate(forwardToDelegate delegate: AnyObject?, retainDelegate: Bool) {
-        self._setForwardToDelegate(delegate, retainDelegate: retainDelegate)
+        self._setForward(toDelegate: delegate, retainDelegate: retainDelegate)
     }
    
     /**
@@ -140,7 +176,7 @@ public class DelegateProxy : _RXDelegateProxy {
     
     deinit {
         for v in subjectsForSelector.values {
-            v.on(.Completed)
+            v.on(event: .Completed)
         }
 #if TRACE_RESOURCES
         OSAtomicDecrement32(&resourceCount)

@@ -14,39 +14,41 @@ import RxCocoa
 #endif
 
 extension UITableView {
+    @available(*, deprecated=0.7, renamed="rx_itemsWithDataSource", message="You can just use normal `rx_itemsWithDataSource` extension.")
     public func rx_itemsAnimatedWithDataSource<
             DataSource: protocol<RxTableViewDataSourceType, UITableViewDataSource>,
-            O: ObservableConvertibleType,
-            Section: AnimatableSectionModelType
+            S: SequenceType,
+            O: ObservableType
         where
-            DataSource.Element == [Changeset<Section>],
-            O.E == [Section]
+            DataSource.Element == S,
+            O.E == S,
+            S.Generator.Element: AnimatableSectionModelType
         >
         (dataSource: DataSource)
         -> (source: O)
         -> Disposable  {
         return  { source in
-            let differences = source.differentiateForSectionedView()
-            return self.rx_itemsWithDataSource(dataSource)(source: differences)
+            return self.rx_itemsWithDataSource(dataSource)(source: source)
         }
     }
 }
 
 extension UICollectionView {
+    @available(*, deprecated=0.7, renamed="rx_itemsWithDataSource", message="You can just use normal `rx_itemsWithDataSource` extension.")
     public func rx_itemsAnimatedWithDataSource<
             DataSource: protocol<RxCollectionViewDataSourceType, UICollectionViewDataSource>,
-            O: ObservableConvertibleType,
-            Section: AnimatableSectionModelType
+            S: SequenceType,
+            O: ObservableType
         where
-            DataSource.Element == [Changeset<Section>],
-            O.E == [Section]
+            DataSource.Element == S,
+            O.E == S,
+            S.Generator.Element: AnimatableSectionModelType
         >
         (dataSource: DataSource)
         -> (source: O)
         -> Disposable  {
         return { source in
-            let differences = source.differentiateForSectionedView()
-            return self.rx_itemsWithDataSource(dataSource)(source: differences)
+            return self.rx_itemsWithDataSource(dataSource)(source: source)
         }
     }
 }

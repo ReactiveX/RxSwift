@@ -14,13 +14,12 @@ Abstracts the work that needs to be performed on a specific `dispatch_queue_t`. 
 This scheduler is suitable when some work needs to be performed in background.
 */
 public class ConcurrentDispatchQueueScheduler: SchedulerType {
-    public typealias TimeInterval = NSTimeInterval
-    public typealias Time = NSDate
+    public typealias Time = Date
     
-    private let _queue : dispatch_queue_t
+    private let _queue : DispatchQueue
     
-    public var now : NSDate {
-        return NSDate()
+    public var now : Date {
+        return Date()
     }
     
     // leeway for scheduling timers
@@ -31,7 +30,7 @@ public class ConcurrentDispatchQueueScheduler: SchedulerType {
     
     - parameter queue: Target dispatch queue.
     */
-    public init(queue: dispatch_queue_t) {
+    public init(queue: DispatchQueue) {
         _queue = queue
     }
     
@@ -41,18 +40,16 @@ public class ConcurrentDispatchQueueScheduler: SchedulerType {
      - parameter globalConcurrentQueueQOS: Target global dispatch queue, by quality of service class.
      */
     @available(iOS 8, OSX 10.10, *)
-    public convenience init(globalConcurrentQueueQOS: DispatchQueueSchedulerQOS) {
-        let priority = globalConcurrentQueueQOS.QOSClass
-        self.init(queue: dispatch_get_global_queue(priority, UInt(0)))
+    public convenience init(globalConcurrentQueueQOS: DispatchQueue.GlobalAttributes) {
+        self.init(queue: DispatchQueue.global(attributes: globalConcurrentQueueQOS))
     }
-
-    
-    class func convertTimeIntervalToDispatchInterval(timeInterval: NSTimeInterval) -> Int64 {
+//    TODO: Not sure if we  need it now
+    class func convertTimeIntervalToDispatchInterval(timeInterval: TimeInterval) -> Int64 {
         return Int64(timeInterval * Double(NSEC_PER_SEC))
     }
-    
-    class func convertTimeIntervalToDispatchTime(timeInterval: NSTimeInterval) -> dispatch_time_t {
-        return dispatch_time(DISPATCH_TIME_NOW, convertTimeIntervalToDispatchInterval(timeInterval: timeInterval))
+//    TODO: Not sure if we  need it now
+    class func convertTimeIntervalToDispatchTime(timeInterval: TimeInterval) -> DispatchTime {
+        return DispatchTime.now() + timeInterval
     }
     
     /**
@@ -69,7 +66,7 @@ public class ConcurrentDispatchQueueScheduler: SchedulerType {
     func scheduleInternal<StateType>(state: StateType, action: (StateType) -> Disposable) -> Disposable {
         let cancel = SingleAssignmentDisposable()
         
-        dispatch_async(_queue) {
+        _queue.async { 
             if cancel.disposed {
                 return
             }
@@ -88,27 +85,24 @@ public class ConcurrentDispatchQueueScheduler: SchedulerType {
     - parameter action: Action to be executed.
     - returns: The disposable object used to cancel the scheduled action (best effort).
     */
-    public final func scheduleRelative<StateType>(state: StateType, dueTime: NSTimeInterval, action: (StateType) -> Disposable) -> Disposable {
+    public final func scheduleRelative<StateType>(state: StateType, dueTime: TimeInterval, action: (StateType) -> Disposable) -> Disposable {
         
         // Swift 3.0 IUO
-        let timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, _queue)!
-        
-        let dispatchInterval = MainScheduler.convertTimeIntervalToDispatchTime(timeInterval: dueTime)
+        let timer = DispatchSource.timer(flags: DispatchSource.TimerFlags(rawValue: 0), queue: _queue)
         
         let compositeDisposable = CompositeDisposable()
-        
-        dispatch_source_set_timer(timer, dispatchInterval, DISPATCH_TIME_FOREVER, 0)
-        dispatch_source_set_event_handler(timer, {
+        timer.scheduleOneshot(deadline: DispatchTime.now() + dueTime)
+        timer.setEventHandler { 
             if compositeDisposable.disposed {
                 return
             }
-           compositeDisposable.addDisposable(disposable: action(state))
-        })
-        dispatch_resume(timer)
+            _ = compositeDisposable.addDisposable(disposable: action(state))
+        }
+        timer.resume()
         
-        compositeDisposable.addDisposable(disposable: AnonymousDisposable {
-            dispatch_source_cancel(timer)
-            })
+        _ = compositeDisposable.addDisposable(disposable: AnonymousDisposable {
+            timer.cancel()
+        })
         
         return compositeDisposable
     }
@@ -125,26 +119,23 @@ public class ConcurrentDispatchQueueScheduler: SchedulerType {
     public func schedulePeriodic<StateType>(state: StateType, startAfter: TimeInterval, period: TimeInterval, action: (StateType) -> StateType) -> Disposable {
         
         // Swift 3.0 IUO
-        let timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, _queue)!
-        
-        let initial = MainScheduler.convertTimeIntervalToDispatchTime(timeInterval: startAfter)
-        let dispatchInterval = MainScheduler.convertTimeIntervalToDispatchInterval(timeInterval: period)
+        let timer = DispatchSource.timer(flags: DispatchSource.TimerFlags(rawValue: 0), queue: _queue)
+        let initial = DispatchTime.now() + startAfter
         
         var timerState = state
+        let validDispatchInterval = period < 0 ? 0 : period
         
-        let validDispatchInterval = dispatchInterval < 0 ? 0 : UInt64(dispatchInterval)
-        
-        dispatch_source_set_timer(timer, initial, validDispatchInterval, 0)
+        timer.scheduleRepeating(deadline: initial, interval: validDispatchInterval)
         let cancel = AnonymousDisposable {
-            dispatch_source_cancel(timer)
+            timer.cancel()
         }
-        dispatch_source_set_event_handler(timer, {
+        timer.setEventHandler { 
             if cancel.disposed {
                 return
             }
             timerState = action(timerState)
-        })
-        dispatch_resume(timer)
+        }
+        timer.resume()
         
         return cancel
     }

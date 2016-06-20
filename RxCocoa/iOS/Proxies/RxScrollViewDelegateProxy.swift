@@ -57,7 +57,7 @@ public class RxScrollViewDelegateProxy
     /**
     For more information take a look at `DelegateProxyType`.
     */
-    public func scrollViewDidScroll(scrollView: UIScrollView) {
+    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if let contentOffset = _contentOffsetSubject {
             contentOffset.on(event: .Next(scrollView.contentOffset))
         }

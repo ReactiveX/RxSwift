@@ -48,10 +48,10 @@ class GeolocationViewController: ViewController {
         
         let geolocationService = GeolocationService.instance
 
-        geolocationService.autorized
+        geolocationService.authorized
             .drive(noGeolocationView.rx_driveAuthorization)
             .addDisposableTo(disposeBag)
-        /*
+        
         geolocationService.location
             .drive(label.rx_driveCoordinates)
             .addDisposableTo(disposeBag)
@@ -67,7 +67,6 @@ class GeolocationViewController: ViewController {
                 self?.openAppPreferences()
             }
             .addDisposableTo(disposeBag)
-        */
     }
     
     private func openAppPreferences() {

@@ -42,7 +42,7 @@ class ObserveOnSerialDispatchQueueSink<O: ObserverType> : ObserverBase<O.E> {
     }
 
     override func onCore(event: Event<E>) {
-        self.scheduler.schedule(state: (self, event), action: cachedScheduleLambda)
+        _ = self.scheduler.schedule(state: (self, event), action: cachedScheduleLambda)
     }
    
     override func dispose() {
@@ -61,8 +61,8 @@ class ObserveOnSerialDispatchQueue<E> : Producer<E> {
         self.source = source
         
 #if TRACE_RESOURCES
-        AtomicIncrement(&resourceCount)
-        AtomicIncrement(&numberOfSerialDispatchQueueObservables)
+        _ = AtomicIncrement(&resourceCount)
+        _ = AtomicIncrement(&numberOfSerialDispatchQueueObservables)
 #endif
     }
     
@@ -74,8 +74,8 @@ class ObserveOnSerialDispatchQueue<E> : Producer<E> {
     
 #if TRACE_RESOURCES
     deinit {
-        AtomicDecrement(&resourceCount)
-        AtomicDecrement(&numberOfSerialDispatchQueueObservables)
+        _ = AtomicDecrement(&resourceCount)
+        _ = AtomicDecrement(&numberOfSerialDispatchQueueObservables)
     }
 #endif
 }
