@@ -53,7 +53,7 @@ extension UITableView {
         return { source in
             return { configureCell in
                 let dataSource = RxTableViewReactiveArrayDataSourceSequenceWrapper<S> { (tv, i, item) in
-                    let indexPath = NSIndexPath(forItem: i, inSection: 0)
+                    let indexPath = IndexPath(item: i, section: 0)
                     let cell = tv.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! Cell
                     configureCell(i, item, cell)
                     return cell
@@ -113,7 +113,7 @@ extension UITableView {
     For more information take a look at `DelegateProxyType` protocol documentation.
     */
     public var rx_dataSource: DelegateProxy {
-        return RxTableViewDataSourceProxy.proxyForObject(self)
+        return RxTableViewDataSourceProxy.proxyForObject(object: self)
     }
    
     /**
@@ -127,7 +127,7 @@ extension UITableView {
     public func rx_setDataSource(dataSource: UITableViewDataSource)
         -> Disposable {
             
-        return RxTableViewDataSourceProxy.installForwardDelegate(dataSource, retainDelegate: false, onProxyForObject: self)
+        return RxTableViewDataSourceProxy.installForwardDelegate(forwardDelegate: dataSource, retainDelegate: false, onProxyForObject: self)
     }
     
     // events
@@ -303,7 +303,7 @@ extension UITableView {
          */
         public var rx_didUpdateFocusInContextWithAnimationCoordinator: ControlEvent<(context: UIFocusUpdateContext, animationCoordinator: UIFocusAnimationCoordinator)> {
             
-            let source = rx_delegate.observe(#selector(UITableViewDelegate.tableView(_:didUpdateFocusInContext:withAnimationCoordinator:)))
+            let source = rx_delegate.observe(selector: #selector(UITableViewDelegate.tableView(_:didUpdateFocusIn:with:)))
                 .map { a -> (context: UIFocusUpdateContext, animationCoordinator: UIFocusAnimationCoordinator) in
                     let context = a[1] as! UIFocusUpdateContext
                     let animationCoordinator = try castOrThrow(UIFocusAnimationCoordinator.self, a[2])

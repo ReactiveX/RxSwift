@@ -147,9 +147,9 @@ public protocol DelegateProxyType : AnyObject {
     func setForwardToDelegate(forwardToDelegate: AnyObject?, retainDelegate: Bool)
 }
 
-@available(*, deprecated=2.5, renamed="DelegateProxyType.proxyForObject", message="You can just use normal static protocol extension. E.g. `RxScrollViewDelegateProxy.proxyForObject`")
+@available(*, deprecated:2.5, renamed:"DelegateProxyType.proxyForObject", message:"You can just use normal static protocol extension. E.g. `RxScrollViewDelegateProxy.proxyForObject`")
 public func proxyForObject<P: DelegateProxyType>(type: P.Type, _ object: AnyObject) -> P {
-    return P.proxyForObject(object)
+    return P.proxyForObject(object: object)
 }
 
 extension DelegateProxyType {
@@ -175,24 +175,24 @@ extension DelegateProxyType {
     public static func proxyForObject(object: AnyObject) -> Self {
         MainScheduler.ensureExecutingOnScheduler()
 
-        let maybeProxy = Self.assignedProxyFor(object) as? Self
+        let maybeProxy = Self.assignedProxyFor(object: object) as? Self
 
         let proxy: Self
         if maybeProxy == nil {
-            proxy = Self.createProxyForObject(object) as! Self
-            Self.assignProxy(proxy, toObject: object)
-            assert(Self.assignedProxyFor(object) === proxy)
+            proxy = Self.createProxyForObject(object: object) as! Self
+            Self.assignProxy(proxy: proxy, toObject: object)
+            assert(Self.assignedProxyFor(object: object) === proxy)
         }
         else {
             proxy = maybeProxy!
         }
 
-        let currentDelegate: AnyObject? = Self.currentDelegateFor(object)
+        let currentDelegate: AnyObject? = Self.currentDelegateFor(object: object)
 
         if currentDelegate !== proxy {
-            proxy.setForwardToDelegate(currentDelegate, retainDelegate: false)
-            Self.setCurrentDelegate(proxy, toObject: object)
-            assert(Self.currentDelegateFor(object) === proxy)
+            proxy.setForwardToDelegate(forwardToDelegate: currentDelegate, retainDelegate: false)
+            Self.setCurrentDelegate(delegate: proxy, toObject: object)
+            assert(Self.currentDelegateFor(object: object) === proxy)
             assert(proxy.forwardToDelegate() === currentDelegate)
         }
         
@@ -211,7 +211,7 @@ extension DelegateProxyType {
     public static func installForwardDelegate(forwardDelegate: AnyObject, retainDelegate: Bool, onProxyForObject object: AnyObject) -> Disposable {
         weak var weakForwardDelegate: AnyObject? = forwardDelegate
 
-        let proxy = Self.proxyForObject(object)
+        let proxy = Self.proxyForObject(object: object)
         
         assert(proxy.forwardToDelegate() === nil, "This is a feature to warn you that there is already a delegate (or data source) set somewhere previously. The action you are trying to perform will clear that delegate (data source) and that means that some of your features that depend on that delegate (data source) being set will likely stop working.\n" +
             "If you are ok with this, try to set delegate (data source) to `nil` in front of this operation.\n" +
@@ -219,12 +219,12 @@ extension DelegateProxyType {
             " This this the original delegate (data source) value: \(proxy.forwardToDelegate()!)\n" +
             "Hint: Maybe delegate was already set in xib or storyboard and now it's being overwritten in code.\n")
 
-        proxy.setForwardToDelegate(forwardDelegate, retainDelegate: retainDelegate)
+        proxy.setForwardToDelegate(forwardToDelegate: forwardDelegate, retainDelegate: retainDelegate)
         
         // refresh properties after delegate is set
         // some views like UITableView cache `respondsToSelector`
-        Self.setCurrentDelegate(nil, toObject: object)
-        Self.setCurrentDelegate(proxy, toObject: object)
+        Self.setCurrentDelegate(delegate: nil, toObject: object)
+        Self.setCurrentDelegate(delegate: proxy, toObject: object)
         
         assert(proxy.forwardToDelegate() === forwardDelegate, "Setting of delegate failed")
         
@@ -235,7 +235,7 @@ extension DelegateProxyType {
             
             assert(delegate == nil || proxy.forwardToDelegate() === delegate, "Delegate was changed from time it was first set. Current \(proxy.forwardToDelegate()), and it should have been \(proxy)")
             
-            proxy.setForwardToDelegate(nil, retainDelegate: retainDelegate)
+            proxy.setForwardToDelegate(forwardToDelegate: nil, retainDelegate: retainDelegate)
         }
     }
 }
@@ -243,17 +243,17 @@ extension DelegateProxyType {
 extension ObservableType {
     func subscribeProxyDataSourceForObject<P: DelegateProxyType>(object: AnyObject, dataSource: AnyObject, retainDataSource: Bool, binding: (P, Event<E>) -> Void)
         -> Disposable {
-        let proxy = P.proxyForObject(object)
-        let disposable = P.installForwardDelegate(dataSource, retainDelegate: retainDataSource, onProxyForObject: object)
+        let proxy = P.proxyForObject(object: object)
+        let disposable = P.installForwardDelegate(forwardDelegate: dataSource, retainDelegate: retainDataSource, onProxyForObject: object)
 
         let subscription = self.asObservable()
             // source can never end, otherwise it would release the subscriber
-            .concat(Observable.never())
+            .concat(second: Observable.never())
             .subscribe { [weak object] (event: Event<E>) in
                 MainScheduler.ensureExecutingOnScheduler()
 
                 if let object = object {
-                    assert(proxy === P.currentDelegateFor(object), "Proxy changed from the time it was first set.\nOriginal: \(proxy)\nExisting: \(P.currentDelegateFor(object))")
+                    assert(proxy === P.currentDelegateFor(object: object), "Proxy changed from the time it was first set.\nOriginal: \(proxy)\nExisting: \(P.currentDelegateFor(object: object))")
                 }
                 
                 binding(proxy, event)

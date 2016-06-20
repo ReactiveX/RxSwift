@@ -22,7 +22,7 @@ extension NSTextStorage {
      For more information take a look at `DelegateProxyType` protocol documentation.
      */
     public var rx_delegate:DelegateProxy {
-        return RxTextStorageDelegateProxy.proxyForObject(self)
+        return RxTextStorageDelegateProxy.proxyForObject(object: self)
     }
 
     /**

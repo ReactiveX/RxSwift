@@ -28,7 +28,7 @@ import RxSwift
 class ControlTarget: RxTarget {
     typealias Callback = (Control) -> Void
 
-    let selector: Selector = #selector(ControlTarget.eventHandler(_:))
+    let selector: Selector = #selector(ControlTarget.eventHandler(sender:))
 
     weak var control: Control?
 #if os(iOS) || os(tvOS)
@@ -45,9 +45,9 @@ class ControlTarget: RxTarget {
 
         super.init()
 
-        control.addTarget(self, action: selector, forControlEvents: controlEvents)
+        control.addTarget(self, action: selector, for: controlEvents)
 
-        let method = self.methodForSelector(selector)
+        let method = self.method(for: selector)
         if method == nil {
             rxFatalError("Can't find method")
         }
@@ -64,7 +64,7 @@ class ControlTarget: RxTarget {
         control.target = self
         control.action = selector
 
-        let method = self.methodForSelector(selector)
+        let method = self.method(for: selector)
         if method == nil {
             rxFatalError("Can't find method")
         }
@@ -80,7 +80,7 @@ class ControlTarget: RxTarget {
     override func dispose() {
         super.dispose()
 #if os(iOS) || os(tvOS)
-        self.control?.removeTarget(self, action: self.selector, forControlEvents: self.controlEvents)
+        self.control?.removeTarget(self, action: selector, for: controlEvents)
 #elseif os(OSX)
         self.control?.target = nil
         self.control?.action = nil

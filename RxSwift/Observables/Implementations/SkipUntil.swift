@@ -26,7 +26,7 @@ class SkipUntilSinkOther<ElementType, Other, O: ObserverType where O.E == Elemen
     init(parent: Parent) {
         _parent = parent
         #if TRACE_RESOURCES
-            AtomicIncrement(&resourceCount)
+            _ = AtomicIncrement(&resourceCount)
         #endif
     }
 
@@ -49,7 +49,7 @@ class SkipUntilSinkOther<ElementType, Other, O: ObserverType where O.E == Elemen
     
     #if TRACE_RESOURCES
     deinit {
-        AtomicDecrement(&resourceCount)
+        _ = AtomicDecrement(&resourceCount)
     }
     #endif
 

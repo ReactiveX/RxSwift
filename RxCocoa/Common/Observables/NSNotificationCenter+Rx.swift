@@ -11,7 +11,7 @@ import Foundation
 import RxSwift
 #endif
 
-extension NSNotificationCenter {
+extension NotificationCenter {
     /**
     Transforms notifications posted to notification center to observable sequence of notifications.
     
@@ -22,8 +22,9 @@ extension NSNotificationCenter {
     @warn_unused_result(message: "http://git.io/rxs.uo")
     public func rx_notification(name: String?, object: AnyObject? = nil) -> Observable<NSNotification> {
         return Observable.create { [weak object] observer in
-            let nsObserver = self.addObserverForName(name, object: object, queue: nil) { notification in
-                observer.on(.Next(notification))
+            let nsObserver = self.addObserver(forName: name.map { NSNotification.Name(rawValue: $0) },
+                                              object: object, queue: nil) { notification in
+                observer.on(event: .Next(notification))
             }
             
             return AnonymousDisposable {

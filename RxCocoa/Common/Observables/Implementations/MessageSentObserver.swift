@@ -29,7 +29,7 @@ import Foundation
         init() {
         }
 
-        @objc func messageSentWithParameters(_ parameters: [AnyObject]) -> Void {
+        @objc func messageSent(withParameters parameters: [AnyObject]) -> Void {
             _subject.on(event: .Next())
         }
 
@@ -58,7 +58,7 @@ import Foundation
         init() {
         }
 
-        @objc func messageSentWithParameters(_ parameters: [AnyObject]) -> Void {
+        @objc func messageSent(withParameters parameters: [AnyObject]) -> Void {
             _subject.on(event: .Next(parameters))
         }
 

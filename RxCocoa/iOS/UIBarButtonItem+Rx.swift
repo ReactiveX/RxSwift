@@ -22,7 +22,7 @@ extension UIBarButtonItem {
     */
     public var rx_enabled: AnyObserver<Bool> {
         return UIBindingObserver(UIElement: self) { UIElement, value in
-            UIElement.enabled = value
+            UIElement.isEnabled = value
         }.asObserver()
     }
 

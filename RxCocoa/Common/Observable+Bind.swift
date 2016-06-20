@@ -62,7 +62,7 @@ extension ObservableType {
     - returns: Object representing subscription.
     */
     @warn_unused_result(message: "http://git.io/rxs.ud")
-    public func bindTo<R>(binder: Self -> R) -> R {
+    public func bindTo<R>(binder: (Self) -> R) -> R {
         return binder(self)
     }
 
@@ -79,7 +79,7 @@ extension ObservableType {
     - returns: Object representing subscription.
     */
     @warn_unused_result(message: "http://git.io/rxs.ud")
-    public func bindTo<R1, R2>(binder: Self -> R1 -> R2, curriedArgument: R1) -> R2 {
+    public func bindTo<R1, R2>(binder: (Self) -> (R1) -> R2, curriedArgument: R1) -> R2 {
          return binder(self)(curriedArgument)
     }
     
@@ -94,7 +94,7 @@ extension ObservableType {
     - returns: Subscription object used to unsubscribe from the observable sequence.
     */
     @warn_unused_result(message: "http://git.io/rxs.ud")
-    public func bindNext(onNext: E -> Void) -> Disposable {
+    public func bindNext(onNext: (E) -> Void) -> Disposable {
         return subscribe(onNext: onNext, onError: { error in
             let error = "Binding error: \(error)"
             #if DEBUG

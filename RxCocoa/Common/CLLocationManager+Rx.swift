@@ -20,7 +20,7 @@ extension CLLocationManager {
     For more information take a look at `DelegateProxyType` protocol documentation.
     */
     public var rx_delegate: DelegateProxy {
-        return RxCLLocationManagerDelegateProxy.proxyForObject(self)
+        return RxCLLocationManagerDelegateProxy.proxyForObject(object: self)
     }
 
     // MARK: Responding to Location Events
@@ -29,7 +29,7 @@ extension CLLocationManager {
     Reactive wrapper for `delegate` message.
     */
     public var rx_didUpdateLocations: Observable<[CLLocation]> {
-        return rx_delegate.observe(selector: #selector(CLLocationManagerDelegate.locationManager(_:didUpdate:)))
+        return rx_delegate.observe(selector: #selector(CLLocationManagerDelegate.locationManager(_:didUpdateLocations:)))
             .map { a in
                 return try castOrThrow([CLLocation].self, a[1])
             }
@@ -87,7 +87,7 @@ extension CLLocationManager {
     Reactive wrapper for `delegate` message.
     */
     public var rx_didUpdateHeading: Observable<CLHeading> {
-        return rx_delegate.observe(selector: #selector(CLLocationManagerDelegate.locationManager(_:didUpdate:)))
+        return rx_delegate.observe(selector: #selector(CLLocationManagerDelegate.locationManager(_:didUpdateHeading:)))
             .map { a in
                 return try castOrThrow(CLHeading.self, a[1])
             }
@@ -99,7 +99,7 @@ extension CLLocationManager {
     Reactive wrapper for `delegate` message.
     */
     public var rx_didEnterRegion: Observable<CLRegion> {
-        return rx_delegate.observe(selector: #selector(CLLocationManagerDelegate.locationManager(_:didEnter:)))
+        return rx_delegate.observe(selector: #selector(CLLocationManagerDelegate.locationManager(_:didEnterRegion:)))
             .map { a in
                 return try castOrThrow(CLRegion.self, a[1])
             }
@@ -206,7 +206,7 @@ extension CLLocationManager {
     Reactive wrapper for `delegate` message.
     */
     public var rx_didChangeAuthorizationStatus: Observable<CLAuthorizationStatus> {
-        return rx_delegate.observe(selector: #selector(CLLocationManagerDelegate.locationManager(_:didChange:)))
+        return rx_delegate.observe(selector: #selector(CLLocationManagerDelegate.locationManager(_:didChangeAuthorization:)))
             .map { a in
                 let number = try castOrThrow(NSNumber.self, a[1])
                 return CLAuthorizationStatus(rawValue: Int32(number.intValue)) ?? .notDetermined

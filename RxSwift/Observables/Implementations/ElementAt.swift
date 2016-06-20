@@ -33,7 +33,7 @@ class ElementAtSink<SourceType, O: ObserverType where O.E == SourceType> : Sink<
             }
             
             do {
-                try decrementChecked(i: &_i)
+                _ = try decrementChecked(i: &_i)
             } catch(let e) {
                 forwardOn(event: .Error(e))
                 dispose()

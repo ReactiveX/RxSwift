@@ -81,12 +81,12 @@ class MergeLimitedSink<S: ObservableConvertibleType, O: ObserverType where S.E =
     init(maxConcurrent: Int, observer: O) {
         _maxConcurrent = maxConcurrent
         
-        _group.addDisposable(disposable: _sourceSubscription)
+        _ = _group.addDisposable(disposable: _sourceSubscription)
         super.init(observer: observer)
     }
     
     func run(source: Observable<S>) -> Disposable {
-        _group.addDisposable(disposable: _sourceSubscription)
+        _ = _group.addDisposable(disposable: _sourceSubscription)
         
         let disposable = source.subscribe(observer: self)
         _sourceSubscription.disposable = disposable
@@ -339,7 +339,7 @@ class MergeSink<SourceType, S: ObservableConvertibleType, O: ObserverType where 
     }
     
     func run(source: Observable<SourceType>) -> Disposable {
-        _group.addDisposable(disposable: _sourceSubscription)
+        _ = _group.addDisposable(disposable: _sourceSubscription)
 
         let subscription = source.subscribe(observer: self)
         _sourceSubscription.disposable = subscription

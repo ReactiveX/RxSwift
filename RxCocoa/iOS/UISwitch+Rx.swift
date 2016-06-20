@@ -21,11 +21,11 @@ extension UISwitch {
     */
     public var rx_value: ControlProperty<Bool> {
         return UIControl.rx_value(
-            self,
+            control: self,
             getter: { uiSwitch in
-                uiSwitch.on
+                uiSwitch.isOn
             }, setter: { uiSwitch, value in
-                uiSwitch.on = value
+                uiSwitch.isOn = value
             }
         )
     }

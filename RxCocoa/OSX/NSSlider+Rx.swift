@@ -19,7 +19,7 @@ extension NSSlider {
     */
     public var rx_value: ControlProperty<Double> {
         return NSControl.rx_value(
-            self,
+            control: self,
             getter: { control in
                 return control.doubleValue
             },

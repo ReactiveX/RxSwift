@@ -21,7 +21,7 @@ extension UITextField : RxTextInput {
     */
     public var rx_text: ControlProperty<String> {
         return UIControl.rx_value(
-            self,
+            control: self,
             getter: { textField in
                 textField.text ?? ""
             }, setter: { textField, value in

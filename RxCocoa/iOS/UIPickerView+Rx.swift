@@ -20,12 +20,12 @@ extension UIPickerView {
      For more information take a look at `DelegateProxyType` protocol documentation.
      */
     public var rx_delegate: DelegateProxy {
-        return RxPickerViewDelegateProxy.proxyForObject(self)
+        return RxPickerViewDelegateProxy.proxyForObject(object: self)
     }
     
     public var rx_itemSelected: ControlEvent<(row: Int, component: Int)> {
-        let source = rx_delegate
-            .observe(#selector(UIPickerViewDelegate.pickerView(_:didSelectRow:inComponent:)))
+        let source: Observable<(row: Int, component: Int)> = rx_delegate
+            .observe(selector: #selector(UIPickerViewDelegate.pickerView(_:didSelectRow:inComponent:)))
             .map {
                 return (try castOrThrow(Int.self, $0[1]), try castOrThrow(Int.self, $0[2]))
             }

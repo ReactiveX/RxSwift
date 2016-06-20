@@ -19,7 +19,7 @@ extension UIDatePicker {
     /**
     Reactive wrapper for `date` property.
     */
-    public var rx_date: ControlProperty<NSDate> {
+    public var rx_date: ControlProperty<Date> {
         return UIControl.rx_value(
             control: self,
             getter: { datePicker in

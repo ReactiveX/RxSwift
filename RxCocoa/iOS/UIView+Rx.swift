@@ -20,7 +20,7 @@ extension UIView {
      */
     public var rx_hidden: AnyObserver<Bool> {
         return UIBindingObserver(UIElement: self) { view, hidden in
-            view.hidden = hidden
+            view.isHidden = hidden
         }.asObserver()
     }
 

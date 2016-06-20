@@ -18,7 +18,7 @@ extension NSView {
      */
     public var rx_hidden: AnyObserver<Bool> {
         return UIBindingObserver(UIElement: self) { view, value in
-            view.hidden = value
+            view.isHidden = value
         }.asObserver()
     }
 

@@ -49,7 +49,7 @@ public class OperationQueueScheduler: ImmediateSchedulerType {
 
         self.operationQueue.addOperation(operation)
 
-        compositeDisposable.addDisposable(disposable: AnonymousDisposable(operation.cancel))
+        _ = compositeDisposable.addDisposable(disposable: AnonymousDisposable(operation.cancel))
 
         return compositeDisposable
     }

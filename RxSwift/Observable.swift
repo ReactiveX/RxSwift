@@ -35,7 +35,7 @@ public class Observable<Element> : ObservableType {
     
     deinit {
 #if TRACE_RESOURCES
-        AtomicDecrement(&resourceCount)
+        _ = AtomicDecrement(&resourceCount)
 #endif
     }
 

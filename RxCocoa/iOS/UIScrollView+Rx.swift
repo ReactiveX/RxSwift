@@ -31,14 +31,14 @@ extension UIScrollView {
     For more information take a look at `DelegateProxyType` protocol documentation.
     */
     public var rx_delegate: DelegateProxy {
-        return RxScrollViewDelegateProxy.proxyForObject(self)
+        return RxScrollViewDelegateProxy.proxyForObject(object: self)
     }
     
     /**
     Reactive wrapper for `contentOffset`.
     */
     public var rx_contentOffset: ControlProperty<CGPoint> {
-        let proxy = RxScrollViewDelegateProxy.proxyForObject(self)
+        let proxy = RxScrollViewDelegateProxy.proxyForObject(object: self)
 
         let bindingObserver = UIBindingObserver(UIElement: self) { scrollView, contentOffset in
             scrollView.contentOffset = contentOffset
@@ -52,7 +52,7 @@ extension UIScrollView {
     */
     public var rx_scrollEnabled: AnyObserver<Bool> {
         return UIBindingObserver(UIElement: self) { scrollView, scrollEnabled in
-            scrollView.scrollEnabled = scrollEnabled
+            scrollView.isScrollEnabled = scrollEnabled
         }.asObserver()
     }
 
@@ -67,7 +67,7 @@ extension UIScrollView {
     public func rx_setDelegate(delegate: UIScrollViewDelegate)
         -> Disposable {
 
-        return RxScrollViewDelegateProxy.installForwardDelegate(delegate, retainDelegate: false, onProxyForObject: self)
+        return RxScrollViewDelegateProxy.installForwardDelegate(forwardDelegate: delegate, retainDelegate: false, onProxyForObject: self)
     }
 }
 

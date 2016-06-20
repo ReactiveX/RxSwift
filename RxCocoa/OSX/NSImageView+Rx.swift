@@ -18,7 +18,7 @@ extension NSImageView {
     Bindable sink for `image` property.
     */
     public var rx_image: AnyObserver<NSImage?> {
-        return self.rx_imageAnimated(nil)
+        return self.rx_imageAnimated(transitionType: nil)
     }
     
     /**
@@ -34,7 +34,7 @@ extension NSImageView {
                     transition.duration = 0.25
                     transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
                     transition.type = transitionType
-                    control.layer?.addAnimation(transition, forKey: kCATransition)
+                    control.layer?.add(transition, forKey: kCATransition)
                 }
             }
             else {

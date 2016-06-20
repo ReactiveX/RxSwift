@@ -62,7 +62,7 @@ class SkipWhileSinkWithIndex<ElementType, O: ObserverType where O.E == ElementTy
             if !_running {
                 do {
                     _running = try !_parent._predicateWithIndex(value, _index)
-                    try incrementChecked(i: &_index)
+                    _ = try incrementChecked(i: &_index)
                 } catch let e {
                     forwardOn(event: .Error(e))
                     dispose()

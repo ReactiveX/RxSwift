@@ -61,7 +61,7 @@ public class VirtualTimeScheduler<Converter: VirtualTimeConverterType>
             }
         })
         #if TRACE_RESOURCES
-            AtomicIncrement(&resourceCount)
+            _ = AtomicIncrement(&resourceCount)
         #endif
     }
 
@@ -128,7 +128,7 @@ public class VirtualTimeScheduler<Converter: VirtualTimeConverterType>
 
         _schedulerQueue.enqueue(element: item)
         
-        compositeDisposable.addDisposable(disposable: item)
+        _ = compositeDisposable.addDisposable(disposable: item)
         
         return compositeDisposable
     }
@@ -239,7 +239,7 @@ public class VirtualTimeScheduler<Converter: VirtualTimeConverterType>
 
     #if TRACE_RESOURCES
         deinit {
-            AtomicDecrement(&resourceCount)
+            _ = AtomicDecrement(&resourceCount)
         }
     #endif
 }
