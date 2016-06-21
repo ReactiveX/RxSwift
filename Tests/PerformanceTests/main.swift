@@ -19,7 +19,7 @@ func allocation() {
 }
 
 repeat {
-compareTwoImplementations(benchmarkTime: true, benchmarkMemory: false, first: {
+compareTwoImplementations(true, benchmarkMemory: false, first: {
     let publishSubject = PublishSubject<Int>()
 
     //let a = Observable.just(1)
@@ -55,7 +55,7 @@ compareTwoImplementations(benchmarkTime: true, benchmarkMemory: false, first: {
 
 
     for i in 0..<100 {
-        publishSubject.on(.Next(i))
+        publishSubject.on(.next(i))
     }
 
 }, second: {

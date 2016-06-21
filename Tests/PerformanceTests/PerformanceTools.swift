@@ -132,7 +132,7 @@ func approxValuePerIteration(_ total: UInt64) -> UInt64 {
     return UInt64(round(Double(total) / Double(NumberOfIterations)))
 }
 
-func measureTime(@noescape _ work: () -> ()) -> UInt64 {
+func measureTime( _ work: @noescape() -> ()) -> UInt64 {
     var timebaseInfo: mach_timebase_info = mach_timebase_info()
     let res = mach_timebase_info(&timebaseInfo)
 
@@ -147,7 +147,7 @@ func measureTime(@noescape _ work: () -> ()) -> UInt64 {
     return approxValuePerIteration(timeInNano) / 1000
 }
 
-func measureMemoryUsage(@noescape _ work: () -> ()) -> (bytesAllocated: UInt64, allocations: UInt64) {
+func measureMemoryUsage( _ work: @noescape() -> ()) -> (bytesAllocated: UInt64, allocations: UInt64) {
     let (bytes, allocations) = getMemoryInfo()
     for _ in 0 ..< NumberOfIterations {
         work()
@@ -159,7 +159,7 @@ func measureMemoryUsage(@noescape _ work: () -> ()) -> (bytesAllocated: UInt64, 
 
 var fragmentedMemory = false
 
-func compareTwoImplementations(_ benchmarkTime: Bool, benchmarkMemory: Bool, @noescape first: () -> (), @noescape second: () -> ()) {
+func compareTwoImplementations(_ benchmarkTime: Bool, benchmarkMemory: Bool, first: @noescape() -> (), second: @noescape() -> ()) {
     if !fragmentedMemory {
         print("Fragmenting memory ...")
         fragmentMemory()
