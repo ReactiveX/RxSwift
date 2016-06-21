@@ -145,8 +145,8 @@ public class Reachability: NSObject {
         var context = SCNetworkReachabilityContext(version: 0, info: nil, retain: nil, release: nil, copyDescription: nil)
         
           //TODO: Swift 3.0 beta 1 is missing the toOpaque method, rdar://26876680
-//        let u = Unmanaged.passUnretained(self).toOpaque()
-//        context.info = u as? UnsafeMutablePointer<Void>
+        let opaque = OpaquePointer(bitPattern:Unmanaged.passUnretained(self))
+        context.info = UnsafeMutablePointer<Void>(opaque)
         
         
         if !SCNetworkReachabilitySetCallback(reachabilityRef!, callback, &context) {
