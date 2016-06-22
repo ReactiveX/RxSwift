@@ -19,13 +19,13 @@ func allocation() {
 }
 
 repeat {
-compareTwoImplementations(true, benchmarkMemory: false, first: {
+compareTwoImplementations(benchmarkTime: true, benchmarkMemory: false, first: {
     let publishSubject = PublishSubject<Int>()
 
     //let a = Observable.just(1)
 
     //combineLatest(a,
-        publishSubject //.asDriver(onErrorJustReturn: -1)
+        _ = publishSubject //.asDriver(onErrorJustReturn: -1)
     /*create { (o: AnyObserver<Int>) in
             for i in 0..<100 {
                 o.on(.Next(i))

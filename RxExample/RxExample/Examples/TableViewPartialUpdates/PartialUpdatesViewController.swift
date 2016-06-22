@@ -26,7 +26,7 @@ class PartialUpdatesViewController : ViewController {
     @IBOutlet weak var partialUpdatesTableViewOutlet: UITableView!
     @IBOutlet weak var partialUpdatesCollectionViewOutlet: UICollectionView!
 
-    var timer: Timer? = nil
+    var timer: Foundation.Timer? = nil
 
     static let initialValue: [AnimatableSectionModel<String, Int>] = [
         NumberSection(model: "section 1", items: [1, 2, 3]),
