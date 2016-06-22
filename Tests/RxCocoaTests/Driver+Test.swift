@@ -36,7 +36,7 @@ extension DriverTest {
         var expectation1: XCTestExpectation!
         var expectation2: XCTestExpectation!
 
-        backgroundScheduler.schedule(()) { _ in
+        _ = backgroundScheduler.schedule(()) { _ in
             var subscribing1 = true
             _ = driver.asObservable().subscribe { e in
                 if !subscribing1 {
@@ -45,7 +45,7 @@ extension DriverTest {
                 switch e {
                 case .next(let element):
                     firstElements.append(element)
-                case .Error(let error):
+                case .error(let error):
                     XCTFail("Error passed \(error)")
                 case .completed:
                     expectation1.fulfill()
@@ -61,7 +61,7 @@ extension DriverTest {
                 switch e {
                 case .next(let element):
                     secondElements.append(element)
-                case .Error(let error):
+                case .error(let error):
                     XCTFail("Error passed \(error)")
                 case .completed:
                     expectation2.fulfill()
@@ -73,7 +73,7 @@ extension DriverTest {
             // Subscription should be made on main scheduler
             // so this will make sure execution is continued after
             // subscription because of serial nature of main scheduler.
-            MainScheduler.instance.schedule(()) { _ in
+            _ = MainScheduler.instance.schedule(()) { _ in
                 subscribeFinished.fulfill()
                 return NopDisposable.instance
             }
@@ -273,7 +273,7 @@ extension DriverTest {
 
             hotObservable.on(.next(1))
             hotObservable.on(.next(2))
-            hotObservable.on(.Error(testError))
+            hotObservable.on(.error(testError))
 
             XCTAssertTrue(hotObservable.subscriptions == [UnsunscribedFromHotObservable])
         }
@@ -290,7 +290,7 @@ extension DriverTest {
 
             hotObservable.on(.next(1))
             hotObservable.on(.next(2))
-            hotObservable.on(.Error(testError))
+            hotObservable.on(.error(testError))
 
             XCTAssertTrue(hotObservable.subscriptions == [UnsunscribedFromHotObservable])
         }
@@ -309,7 +309,7 @@ extension DriverTest {
 
             hotObservable.on(.next(1))
             hotObservable.on(.next(2))
-            hotObservable.on(.Error(testError))
+            hotObservable.on(.error(testError))
 
             XCTAssertTrue(hotObservable.subscriptions == [UnsunscribedFromHotObservable])
         }
@@ -329,7 +329,7 @@ extension DriverTest {
 
             hotObservable.on(.next(1))
             hotObservable.on(.next(2))
-            hotObservable.on(.Error(testError))
+            hotObservable.on(.error(testError))
 
             XCTAssertTrue(hotObservable.subscriptions == [UnsunscribedFromHotObservable])
         }
@@ -352,7 +352,7 @@ extension DriverTest {
 
             hotObservable.on(.next(1))
             hotObservable.on(.next(2))
-            hotObservable.on(.Error(testError))
+            hotObservable.on(.error(testError))
 
             XCTAssertTrue(hotObservable.subscriptions == [UnsunscribedFromHotObservable])
         }
@@ -375,7 +375,7 @@ extension DriverTest {
 
             hotObservable.on(.next(1))
             hotObservable.on(.next(2))
-            hotObservable.on(.Error(testError))
+            hotObservable.on(.error(testError))
 
             XCTAssertTrue(hotObservable.subscriptions == [UnsunscribedFromHotObservable])
         }
@@ -401,15 +401,15 @@ extension DriverTest {
 
             hotObservable1.on(.next(1))
             hotObservable1.on(.next(2))
-            hotObservable1.on(.Error(testError))
+            hotObservable1.on(.error(testError))
 
             hotObservable.on(.next(hotObservable2.asDriver(onErrorJustReturn: -3)))
 
             hotObservable2.on(.next(10))
             hotObservable2.on(.next(11))
-            hotObservable2.on(.Error(testError))
+            hotObservable2.on(.error(testError))
 
-            hotObservable.on(.Error(testError))
+            hotObservable.on(.error(testError))
 
             hotObservable1.on(.completed)
             hotObservable.on(.completed)
@@ -447,15 +447,15 @@ extension DriverTest {
 
             hotObservable1.on(.next(1))
             hotObservable1.on(.next(2))
-            hotObservable1.on(.Error(testError))
+            hotObservable1.on(.error(testError))
 
             hotObservable.on(.next(1))
 
             hotObservable2.on(.next(10))
             hotObservable2.on(.next(11))
-            hotObservable2.on(.Error(testError))
+            hotObservable2.on(.error(testError))
 
-            hotObservable.on(.Error(testError))
+            hotObservable.on(.error(testError))
 
             errorHotObservable.on(.completed)
             hotObservable.on(.completed)
@@ -494,13 +494,13 @@ extension DriverTest {
 
             hotObservable1.on(.next(1))
             hotObservable1.on(.next(2))
-            hotObservable1.on(.Error(testError))
+            hotObservable1.on(.error(testError))
 
             hotObservable2.on(.next(10))
             hotObservable2.on(.next(11))
-            hotObservable2.on(.Error(testError))
+            hotObservable2.on(.error(testError))
 
-            hotObservable.on(.Error(testError))
+            hotObservable.on(.error(testError))
 
             errorHotObservable.on(.completed)
             hotObservable.on(.completed)
@@ -532,7 +532,7 @@ extension DriverTest {
 
             hotObservable.on(.next(1))
             hotObservable.on(.next(2))
-            hotObservable.on(.Error(testError))
+            hotObservable.on(.error(testError))
 
             XCTAssertTrue(hotObservable.subscriptions == [UnsunscribedFromHotObservable])
         }
@@ -558,7 +558,7 @@ extension DriverTest {
 
             hotObservable.on(.next(1))
             hotObservable.on(.next(2))
-            hotObservable.on(.Error(testError))
+            hotObservable.on(.error(testError))
 
             XCTAssertTrue(hotObservable.subscriptions == [UnsunscribedFromHotObservable])
         }
@@ -582,7 +582,7 @@ extension DriverTest {
 
             hotObservable.on(.next(1))
             hotObservable.on(.next(2))
-            hotObservable.on(.Error(testError))
+            hotObservable.on(.error(testError))
 
             XCTAssertTrue(hotObservable.subscriptions == [UnsunscribedFromHotObservable])
         }
@@ -605,7 +605,7 @@ extension DriverTest {
             hotObservable.on(.next(1))
             hotObservable.on(.next(2))
             hotObservable.on(.next(2))
-            hotObservable.on(.Error(testError))
+            hotObservable.on(.error(testError))
 
             XCTAssertTrue(hotObservable.subscriptions == [UnsunscribedFromHotObservable])
         }
@@ -624,7 +624,7 @@ extension DriverTest {
             hotObservable.on(.next(1))
             hotObservable.on(.next(2))
             hotObservable.on(.next(2))
-            hotObservable.on(.Error(testError))
+            hotObservable.on(.error(testError))
 
             XCTAssertTrue(hotObservable.subscriptions == [UnsunscribedFromHotObservable])
         }
@@ -643,7 +643,7 @@ extension DriverTest {
             hotObservable.on(.next(1))
             hotObservable.on(.next(2))
             hotObservable.on(.next(2))
-            hotObservable.on(.Error(testError))
+            hotObservable.on(.error(testError))
 
             XCTAssertTrue(hotObservable.subscriptions == [UnsunscribedFromHotObservable])
         }
@@ -663,7 +663,7 @@ extension DriverTest {
             hotObservable.on(.next(1))
             hotObservable.on(.next(2))
             hotObservable.on(.next(2))
-            hotObservable.on(.Error(testError))
+            hotObservable.on(.error(testError))
 
             XCTAssertTrue(hotObservable.subscriptions == [UnsunscribedFromHotObservable])
         }
@@ -687,7 +687,7 @@ extension DriverTest {
 
             hotObservable.on(.next(1))
             hotObservable.on(.next(2))
-            hotObservable.on(.Error(testError))
+            hotObservable.on(.error(testError))
 
             XCTAssertTrue(hotObservable.subscriptions == [UnsunscribedFromHotObservable])
         }
@@ -711,7 +711,7 @@ extension DriverTest {
 
             hotObservable.on(.next(1))
             hotObservable.on(.next(2))
-            hotObservable.on(.Error(testError))
+            hotObservable.on(.error(testError))
 
             XCTAssertTrue(hotObservable.subscriptions == [UnsunscribedFromHotObservable])
         }
@@ -731,7 +731,7 @@ extension DriverTest {
 
             hotObservable.on(.next(1))
             hotObservable.on(.next(2))
-            hotObservable.on(.Error(testError))
+            hotObservable.on(.error(testError))
 
             XCTAssertTrue(hotObservable.subscriptions == [UnsunscribedFromHotObservable])
         }
@@ -749,7 +749,7 @@ extension DriverTest {
         let results = subscribeTwiceOnBackgroundSchedulerAndOnlyOneSubscription(driver) {
             XCTAssertTrue(hotObservable.subscriptions == [SubscribedToHotObservable])
 
-            hotObservable.on(.Error(testError))
+            hotObservable.on(.error(testError))
 
             XCTAssertTrue(hotObservable.subscriptions == [UnsunscribedFromHotObservable])
         }
@@ -766,7 +766,7 @@ extension DriverTest {
 
             hotObservable.on(.next(1))
             hotObservable.on(.next(2))
-            hotObservable.on(.Error(testError))
+            hotObservable.on(.error(testError))
 
             XCTAssertTrue(hotObservable.subscriptions == [UnsunscribedFromHotObservable])
         }
@@ -790,7 +790,7 @@ extension DriverTest {
 
             hotObservable.on(.next(1))
             hotObservable.on(.next(2))
-            hotObservable.on(.Error(testError))
+            hotObservable.on(.error(testError))
 
             XCTAssertTrue(hotObservable.subscriptions == [UnsunscribedFromHotObservable])
         }
@@ -813,14 +813,14 @@ extension DriverTest {
 
             hotObservable1.on(.next(1))
             hotObservable1.on(.next(2))
-            hotObservable1.on(.Error(testError))
+            hotObservable1.on(.error(testError))
 
             XCTAssertTrue(hotObservable1.subscriptions == [UnsunscribedFromHotObservable])
             XCTAssertTrue(hotObservable2.subscriptions == [SubscribedToHotObservable])
 
             hotObservable2.on(.next(4))
             hotObservable2.on(.next(5))
-            hotObservable2.on(.Error(testError))
+            hotObservable2.on(.error(testError))
 
             XCTAssertTrue(hotObservable2.subscriptions == [UnsunscribedFromHotObservable])
         }
@@ -839,14 +839,14 @@ extension DriverTest {
 
             hotObservable1.on(.next(1))
             hotObservable1.on(.next(2))
-            hotObservable1.on(.Error(testError))
+            hotObservable1.on(.error(testError))
 
             XCTAssertTrue(hotObservable1.subscriptions == [UnsunscribedFromHotObservable])
             XCTAssertTrue(hotObservable2.subscriptions == [SubscribedToHotObservable])
 
             hotObservable2.on(.next(4))
             hotObservable2.on(.next(5))
-            hotObservable2.on(.Error(testError))
+            hotObservable2.on(.error(testError))
 
             XCTAssertTrue(hotObservable2.subscriptions == [UnsunscribedFromHotObservable])
         }
@@ -873,8 +873,8 @@ extension DriverTest {
             hotObservable1.on(.next(2))
             hotObservable2.on(.next(5))
 
-            hotObservable1.on(.Error(testError))
-            hotObservable2.on(.Error(testError))
+            hotObservable1.on(.error(testError))
+            hotObservable2.on(.error(testError))
 
             XCTAssertTrue(hotObservable1.subscriptions == [UnsunscribedFromHotObservable])
             XCTAssertTrue(hotObservable2.subscriptions == [UnsunscribedFromHotObservable])
@@ -899,8 +899,8 @@ extension DriverTest {
             hotObservable1.on(.next(2))
             hotObservable2.on(.next(5))
 
-            hotObservable1.on(.Error(testError))
-            hotObservable2.on(.Error(testError))
+            hotObservable1.on(.error(testError))
+            hotObservable2.on(.error(testError))
 
             XCTAssertTrue(hotObservable1.subscriptions == [UnsunscribedFromHotObservable])
             XCTAssertTrue(hotObservable2.subscriptions == [UnsunscribedFromHotObservable])
@@ -928,8 +928,8 @@ extension DriverTest {
             hotObservable1.on(.next(2))
             hotObservable2.on(.next(5))
 
-            hotObservable1.on(.Error(testError))
-            hotObservable2.on(.Error(testError))
+            hotObservable1.on(.error(testError))
+            hotObservable2.on(.error(testError))
 
             XCTAssertTrue(hotObservable1.subscriptions == [UnsunscribedFromHotObservable])
             XCTAssertTrue(hotObservable2.subscriptions == [UnsunscribedFromHotObservable])
@@ -954,8 +954,8 @@ extension DriverTest {
             hotObservable1.on(.next(2))
             hotObservable2.on(.next(5))
 
-            hotObservable1.on(.Error(testError))
-            hotObservable2.on(.Error(testError))
+            hotObservable1.on(.error(testError))
+            hotObservable2.on(.error(testError))
 
             XCTAssertTrue(hotObservable1.subscriptions == [UnsunscribedFromHotObservable])
             XCTAssertTrue(hotObservable2.subscriptions == [UnsunscribedFromHotObservable])
@@ -983,8 +983,8 @@ extension DriverTest {
             hotObservable1.on(.next(2))
             hotObservable2.on(.next(5))
 
-            hotObservable1.on(.Error(testError))
-            hotObservable2.on(.Error(testError))
+            hotObservable1.on(.error(testError))
+            hotObservable2.on(.error(testError))
 
             XCTAssertTrue(hotObservable1.subscriptions == [UnsunscribedFromHotObservable])
             XCTAssertTrue(hotObservable2.subscriptions == [UnsunscribedFromHotObservable])
@@ -1009,8 +1009,8 @@ extension DriverTest {
             hotObservable1.on(.next(2))
             hotObservable2.on(.next(5))
 
-            hotObservable1.on(.Error(testError))
-            hotObservable2.on(.Error(testError))
+            hotObservable1.on(.error(testError))
+            hotObservable2.on(.error(testError))
 
             XCTAssertTrue(hotObservable1.subscriptions == [UnsunscribedFromHotObservable])
             XCTAssertTrue(hotObservable2.subscriptions == [UnsunscribedFromHotObservable])
@@ -1034,7 +1034,7 @@ extension DriverTest {
             hotObservable1.on(.next(1))
             hotObservable1.on(.next(2))
 
-            hotObservable1.on(.Error(testError))
+            hotObservable1.on(.error(testError))
 
             XCTAssertTrue(hotObservable1.subscriptions == [UnsunscribedFromHotObservable])
         }
@@ -1056,7 +1056,7 @@ extension DriverTest {
             hotObservable1.on(.next(1))
             hotObservable1.on(.next(2))
 
-            hotObservable1.on(.Error(testError))
+            hotObservable1.on(.error(testError))
 
             XCTAssertTrue(hotObservable1.subscriptions == [UnsunscribedFromHotObservable])
         }

@@ -125,19 +125,19 @@ extension BagTest {
             let bag3 = RxMutableBox(Bag<Disposable>())
 
             for _ in 0 ..< 50 {
-                bag1.value.insert({
+                _ = bag1.value.insert({
                     if increment1 == breakAt {
                         bag1.value.removeAll()
                     }
                     increment1 += 1
                 })
-                bag2.value.insert(AnyObserver { _ in
+                _ = bag2.value.insert(AnyObserver { _ in
                     if increment2 == breakAt {
                         bag2.value.removeAll()
                     }
                     increment2 += 1
                 })
-                bag3.value.insert(AnonymousDisposable { _ in
+                _ = bag3.value.insert(AnonymousDisposable { _ in
                     if increment3 == breakAt {
                         bag3.value.removeAll()
                     }
@@ -198,7 +198,7 @@ extension BagTest {
         }
 
         for i in 0..<limit {
-            bag.removeKey(keys[i])
+            _ = bag.removeKey(keys[i])
         }
     }
 
@@ -215,7 +215,7 @@ extension BagTest {
         }
 
         for i in 0..<limit {
-            bag.removeKey(keys[limit - 1 - i])
+            _ = bag.removeKey(keys[limit - 1 - i])
         }
     }
 }

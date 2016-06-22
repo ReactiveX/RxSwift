@@ -349,7 +349,7 @@ extension ObservableBindingTest {
             switch event {
             case .next:
                 XCTAssertTrue(false)
-            case .Error(let error):
+            case .error(let error):
                 XCTAssertErrorEqual(error, testError)
             case .completed:
                 XCTAssertTrue(false)
@@ -359,7 +359,7 @@ extension ObservableBindingTest {
             switch event {
             case .next:
                 XCTAssertTrue(false)
-            case .Error(let error):
+            case .error(let error):
                 XCTAssertErrorEqual(error, testError)
             case .completed:
                 XCTAssertTrue(false)

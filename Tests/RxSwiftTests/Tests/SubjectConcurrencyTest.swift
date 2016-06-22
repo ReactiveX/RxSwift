@@ -138,7 +138,7 @@ extension SubjectConcurrencyTest {
             }
             else if state == 1 {
                 // if isn't reentrant, this will cause deadlock
-                o.value.on(.Error(testError))
+                o.value.on(.error(testError))
                 ranAll = true
             }
         }

@@ -145,9 +145,8 @@ class DelegateProxyTest : RxTest {
             d.dispose()
         }
 
-        XCTAssertTrue(receivedArgument! === nil)
         view.delegate?.threeDView?(view, didGetXXX: sentArgument)
-        XCTAssertTrue(receivedArgument === sentArgument)
+        XCTAssertTrue(receivedArgument == sentArgument)
         
         XCTAssertEqual(mock.messages, [])
     }
@@ -192,7 +191,7 @@ extension DelegateProxyTest {
 // MARK: Testing extensions
 
 extension DelegateProxyTest {
-    func performDelegateTest<Control: TestDelegateControl>(@autoclosure _ createControl: () -> Control) {
+    func performDelegateTest<Control: TestDelegateControl>( _ createControl: @autoclosure() -> Control) {
         var control: TestDelegateControl!
 
         autoreleasepool {

@@ -21,7 +21,7 @@ extension Collection where Iterator.Element : ObservableType {
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
     @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func combineLatest<R>(_ resultSelector: ([Generator.Element.E]) throws -> R) -> Observable<R> {
+    public func combineLatest<R>(resultSelector: ([Generator.Element.E]) throws -> R) -> Observable<R> {
         return CombineLatestCollectionType(sources: self, resultSelector: resultSelector)
     }
 }
@@ -39,7 +39,7 @@ extension Collection where Iterator.Element : ObservableType {
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
     @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func zip<R>(_ resultSelector: ([Generator.Element.E]) throws -> R) -> Observable<R> {
+    public func zip<R>(resultSelector: ([Generator.Element.E]) throws -> R) -> Observable<R> {
         return ZipCollectionType(sources: self, resultSelector: resultSelector)
     }
 }
@@ -139,7 +139,7 @@ extension ObservableType where E : ObservableConvertibleType {
     */
     @warn_unused_result(message:"http://git.io/rxs.uo")
     public func concat() -> Observable<E.E> {
-        return merge(1)
+        return merge(maxConcurrent: 1)
     }
 }
 
@@ -168,7 +168,7 @@ extension ObservableType where E : ObservableConvertibleType {
     - returns: The observable sequence that merges the elements of the inner sequences.
     */
     @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func merge(_ maxConcurrent: Int)
+    public func merge(maxConcurrent: Int)
         -> Observable<E.E> {
         return MergeLimited(source: asObservable(), maxConcurrent: maxConcurrent)
     }

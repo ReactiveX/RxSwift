@@ -18,7 +18,7 @@ import Foundation
         , RXMessageSentObserver {
         typealias E = ()
 
-        private let _subject = ReplaySubject<()>.create(1)
+        private let _subject = ReplaySubject<()>.create(bufferSize: 1)
 
         @objc var targetImplementation: IMP = RX_default_target_implementation()
 

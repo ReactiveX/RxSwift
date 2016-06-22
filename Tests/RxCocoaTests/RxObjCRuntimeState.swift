@@ -19,7 +19,7 @@ struct RxObjCRuntimeChange {
     /**
      Takes into account default methods that were swizzled while creating dynamic subclasses.
     */
-    static func changes(_ dynamicSubclasses: Int = 0, swizzledForwardClasses: Int = 0, interceptedClasses: Int = 0, methodsSwizzled: Int = 0, methodsForwarded: Int = 0) -> RxObjCRuntimeChange {
+    static func changes(dynamicSubclasses: Int = 0, swizzledForwardClasses: Int = 0, interceptedClasses: Int = 0, methodsSwizzled: Int = 0, methodsForwarded: Int = 0) -> RxObjCRuntimeChange {
         return RxObjCRuntimeChange(
             dynamicSublasses: dynamicSubclasses,
             swizzledForwardClasses: swizzledForwardClasses,

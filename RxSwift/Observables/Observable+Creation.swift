@@ -132,7 +132,7 @@ extension Observable {
     - returns: The generated sequence.
     */
     @warn_unused_result(message:"http://git.io/rxs.uo")
-    public static func generate(_ initialState: E, condition: (E) throws -> Bool, scheduler: ImmediateSchedulerType = CurrentThreadScheduler.instance, iterate: (E) throws -> E) -> Observable<E> {
+    public static func generate(initialState: E, condition: (E) throws -> Bool, scheduler: ImmediateSchedulerType = CurrentThreadScheduler.instance, iterate: (E) throws -> E) -> Observable<E> {
         return Generate(initialState: initialState, condition: condition, iterate: iterate, resultSelector: { $0 }, scheduler: scheduler)
     }
 
@@ -177,7 +177,7 @@ extension Observable where Element : SignedInteger {
     - returns: An observable sequence that contains a range of sequential integral numbers.
     */
     @warn_unused_result(message:"http://git.io/rxs.uo")
-    public static func range(_ start: E, count: E, scheduler: ImmediateSchedulerType = CurrentThreadScheduler.instance) -> Observable<E> {
+    public static func range(start: E, count: E, scheduler: ImmediateSchedulerType = CurrentThreadScheduler.instance) -> Observable<E> {
         return RangeProducer<E>(start: start, count: count, scheduler: scheduler)
     }
 }

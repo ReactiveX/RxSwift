@@ -12,7 +12,7 @@ import RxSwift
 #endif
 
 class DeallocObservable {
-    let _subject = ReplaySubject<Void>.create(1)
+    let _subject = ReplaySubject<Void>.create(bufferSize:1)
 
     init() {
     }

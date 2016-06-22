@@ -26,9 +26,9 @@ extension HistoricalSchedulerTest {
 
         var times: [Date] = []
 
-        scheduler.scheduleRelative((), dueTime: 10.0) { _ in
+        _ = scheduler.scheduleRelative((), dueTime: 10.0) { _ in
             times.append(scheduler.now)
-            scheduler.scheduleRelative((), dueTime: 20.0) { _ in
+            _ = scheduler.scheduleRelative((), dueTime: 20.0) { _ in
                 times.append(scheduler.now)
                 return NopDisposable.instance
             }
@@ -52,7 +52,7 @@ extension HistoricalSchedulerTest {
 
         var times: [Date] = []
 
-        scheduler.scheduleRelative((), dueTime: 10.0) { _ in
+        _ = scheduler.scheduleRelative((), dueTime: 10.0) { _ in
             times.append(scheduler.now)
             let d = scheduler.scheduleRelative((), dueTime: 20.0) { _ in
                 times.append(scheduler.now)
@@ -80,9 +80,9 @@ extension HistoricalSchedulerTest {
 
         var times: [Date] = []
 
-        scheduler.scheduleRelative((), dueTime: 10.0) { _ in
+        _ = scheduler.scheduleRelative((), dueTime: 10.0) { _ in
             times.append(scheduler.now)
-            scheduler.scheduleRelative((), dueTime: 20.0) { _ in
+            _ = scheduler.scheduleRelative((), dueTime: 20.0) { _ in
                 times.append(scheduler.now)
                 return NopDisposable.instance
             }
@@ -106,9 +106,9 @@ extension HistoricalSchedulerTest {
 
         var times: [Date] = []
 
-        scheduler.scheduleRelative((), dueTime: 10.0) { [weak scheduler] _ in
+        _ = scheduler.scheduleRelative((), dueTime: 10.0) { [weak scheduler] _ in
             times.append(scheduler!.now)
-            scheduler!.scheduleRelative((), dueTime: 20.0) { _ in
+            _ = scheduler!.scheduleRelative((), dueTime: 20.0) { _ in
                 times.append(scheduler!.now)
                 return NopDisposable.instance
             }
@@ -131,7 +131,7 @@ extension HistoricalSchedulerTest {
 
         var times: [Date] = []
 
-        scheduler.scheduleRelative((), dueTime: 10.0) { [weak scheduler] _ in
+        _ = scheduler.scheduleRelative((), dueTime: 10.0) { [weak scheduler] _ in
             times.append(scheduler!.now)
             let d1 = scheduler!.scheduleRelative((), dueTime: 20.0) { _ in
                 times.append(scheduler!.now)
@@ -159,13 +159,13 @@ extension HistoricalSchedulerTest {
 
         var times: [Date] = []
 
-        scheduler.scheduleRelative((), dueTime: 10.0) { [weak scheduler] _ in
+        _ = scheduler.scheduleRelative((), dueTime: 10.0) { [weak scheduler] _ in
             times.append(scheduler!.now)
-            scheduler!.scheduleRelative((), dueTime: 20.0) { _ in
+            _ = scheduler!.scheduleRelative((), dueTime: 20.0) { _ in
                 times.append(scheduler!.now)
                 return NopDisposable.instance
             }
-            scheduler!.schedule(()) { _ in
+            _ = scheduler!.schedule(()) { _ in
                 times.append(scheduler!.now)
                 return NopDisposable.instance
             }
@@ -187,15 +187,15 @@ extension HistoricalSchedulerTest {
 
         var times: [Date] = []
 
-        scheduler.scheduleRelative((), dueTime: 10.0) { [weak scheduler] _ in
+        _ = scheduler.scheduleRelative((), dueTime: 10.0) { [weak scheduler] _ in
             times.append(scheduler!.now)
 
-            scheduler!.sleep(100)
-            scheduler!.scheduleRelative((), dueTime: 20.0) { _ in
+            _ = scheduler!.sleep(100)
+            _ = scheduler!.scheduleRelative((), dueTime: 20.0) { _ in
                 times.append(scheduler!.now)
                 return NopDisposable.instance
             }
-            scheduler!.schedule(()) { _ in
+            _ = scheduler!.schedule(()) { _ in
                 times.append(scheduler!.now)
                 return NopDisposable.instance
             }

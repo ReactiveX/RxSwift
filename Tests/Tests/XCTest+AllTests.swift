@@ -12,8 +12,8 @@ import RxTests
 import XCTest
 
 func XCTAssertErrorEqual(_ lhs: ErrorProtocol, _ rhs: ErrorProtocol) {
-    let event1: Event<Int> = .Error(lhs)
-    let event2: Event<Int> = .Error(rhs)
+    let event1: Event<Int> = .error(lhs)
+    let event2: Event<Int> = .error(rhs)
     
     XCTAssertTrue(event1 == event2)
 }

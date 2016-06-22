@@ -558,7 +558,7 @@ extension ObservableTimeTest {
 
         let cleanResources = expectation(withDescription: "Clean resources")
 
-        scheduler.schedule(()) { _ in
+        _ = scheduler.schedule(()) { _ in
             cleanResources.fulfill()
             return NopDisposable.instance
         }
@@ -1005,6 +1005,7 @@ extension ObservableTimeTest {
             next(470, 9),
             completed(600)
             ])
+        
         
         let res = scheduler.start {
             xs.buffer(timeSpan: 70, count: 3, scheduler: scheduler).map { EquatableArray($0) }

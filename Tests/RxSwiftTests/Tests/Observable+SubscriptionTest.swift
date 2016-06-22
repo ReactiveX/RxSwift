@@ -91,7 +91,7 @@ class ObservableSubscriptionTests : RxTest {
         XCTAssertTrue(onCompletedCalled == 0)
         XCTAssertTrue(onDisposedCalled == 0)
 
-        publishSubject.on(.Error(testError))
+        publishSubject.on(.error(testError))
 
         XCTAssertTrue(lastElement == nil)
         XCTAssertTrue((lastError as? NSError) === testError)
@@ -153,7 +153,7 @@ class ObservableSubscriptionTests : RxTest {
 
         subscription.dispose()
         publishSubject.on(.next(2))
-        publishSubject.on(.Error(testError))
+        publishSubject.on(.error(testError))
 
         XCTAssertTrue(lastElement == nil)
         XCTAssertTrue(lastError == nil)
@@ -196,7 +196,7 @@ class ObservableSubscriptionTests : RxTest {
         publishSubject.on(.next(1))
         subscription.dispose()
         publishSubject.on(.next(2))
-        publishSubject.on(.Error(testError))
+        publishSubject.on(.error(testError))
         publishSubject.on(.completed)
 
         XCTAssertTrue(lastElement == 1)

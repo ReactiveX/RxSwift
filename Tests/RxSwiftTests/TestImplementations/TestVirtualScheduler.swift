@@ -50,10 +50,10 @@ struct TestVirtualSchedulerVirtualTimeConverter : VirtualTimeConverterType {
             return .lessThan
         }
         else if lhs > rhs {
-            return .GreaterThan
+            return .greaterThan
         }
         else {
-            return .Equal
+            return .equal
         }
     }
 }

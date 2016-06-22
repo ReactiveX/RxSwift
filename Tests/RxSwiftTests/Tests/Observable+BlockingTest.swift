@@ -27,7 +27,7 @@ extension ObservableBlockingTest {
     
     func testToArray_fail() {
         do {
-            try Observable<Int>.error(testError).toBlocking().toArray()
+            _ = try Observable<Int>.error(testError).toBlocking().toArray()
             XCTFail("It should fail")
         }
         catch let e {
@@ -84,7 +84,7 @@ extension ObservableBlockingTest {
     
     func testFirst_fail() {
         do {
-            try Observable<Int>.error(testError).toBlocking().first()
+            _ = try Observable<Int>.error(testError).toBlocking().first()
             XCTFail()
         }
         catch let e {
@@ -141,7 +141,7 @@ extension ObservableBlockingTest {
     
     func testLast_fail() {
         do {
-            try Observable<Int>.error(testError).toBlocking().last()
+            _ = try Observable<Int>.error(testError).toBlocking().last()
             XCTFail()
         }
         catch let e {
@@ -191,7 +191,7 @@ extension ObservableBlockingTest {
 extension ObservableBlockingTest {
     func testSingle_empty() {
         do {
-            try Observable<Int>.empty().toBlocking().single()
+            _ = try Observable<Int>.empty().toBlocking().single()
             XCTFail()
         }
         catch let e {
@@ -205,7 +205,7 @@ extension ObservableBlockingTest {
 
     func testSingle_two() {
         do {
-            try Observable.of(42, 43).toBlocking().single()
+            _ = try Observable.of(42, 43).toBlocking().single()
             XCTFail()
         }
         catch let e {
@@ -215,7 +215,7 @@ extension ObservableBlockingTest {
 
     func testSingle_someData() {
         do {
-            try Observable.of(42, 43, 44, 45).toBlocking().single()
+            _ = try Observable.of(42, 43, 44, 45).toBlocking().single()
             XCTFail()
         }
         catch let e {
@@ -225,7 +225,7 @@ extension ObservableBlockingTest {
     
     func testSingle_fail() {
         do {
-            try Observable<Int>.error(testError).toBlocking().single()
+            _ = try Observable<Int>.error(testError).toBlocking().single()
             XCTFail()
         }
         catch let e {
@@ -247,7 +247,7 @@ extension ObservableBlockingTest {
     
     func testSingle_predicate_empty() {
         do {
-            try Observable<Int>.empty().toBlocking().single { _ in true }
+            _ = try Observable<Int>.empty().toBlocking().single { _ in true }
             XCTFail()
         }
         catch let e {
@@ -262,7 +262,7 @@ extension ObservableBlockingTest {
     func testSingle_predicate_someData_one_match() {
         var predicateVals = [Int]()
         do {
-            try Observable.of(42, 43, 44, 45).toBlocking().single( { e in
+            _ = try Observable.of(42, 43, 44, 45).toBlocking().single( { e in
                 predicateVals.append(e)
                 return e == 44
             } )
@@ -276,7 +276,7 @@ extension ObservableBlockingTest {
     func testSingle_predicate_someData_two_match() {
         var predicateVals = [Int]()
         do {
-            try Observable.of(42, 43, 44, 45).toBlocking().single( { e in
+            _ = try Observable.of(42, 43, 44, 45).toBlocking().single( { e in
                 predicateVals.append(e)
                 return e >= 43
             } )
@@ -292,7 +292,7 @@ extension ObservableBlockingTest {
     func testSingle_predicate_none() {
         var predicateVals = [Int]()
         do {
-            try Observable.of(42, 43, 44, 45).toBlocking().single( { e in
+            _ = try Observable.of(42, 43, 44, 45).toBlocking().single( { e in
                 predicateVals.append(e)
                 return e > 50
             } )
@@ -307,7 +307,7 @@ extension ObservableBlockingTest {
     func testSingle_predicate_throws() {
         var predicateVals = [Int]()
         do {
-            try Observable.of(42, 43, 44, 45, scheduler: CurrentThreadScheduler.instance).toBlocking().single( { e in
+            _ = try Observable.of(42, 43, 44, 45, scheduler: CurrentThreadScheduler.instance).toBlocking().single( { e in
                 predicateVals.append(e)
                 if e < 43 { return false }
                 throw testError
@@ -322,7 +322,7 @@ extension ObservableBlockingTest {
     
     func testSingle_predicate_fail() {
         do {
-            try Observable<Int>.error(testError).toBlocking().single( { _ in true } )
+            _ = try Observable<Int>.error(testError).toBlocking().single( { _ in true } )
             XCTFail()
         }
         catch let e {

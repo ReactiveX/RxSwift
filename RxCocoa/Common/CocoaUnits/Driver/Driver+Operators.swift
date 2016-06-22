@@ -199,7 +199,7 @@ extension DriverConvertibleType where E: Equatable {
     public func distinctUntilChanged()
         -> Driver<E> {
         let source = self.asObservable()
-            .distinctUntilChanged(keySelector: { $0 }, comparer: { ($0 == $1) })
+            .distinctUntilChanged({ $0 }, comparer: { ($0 == $1) })
             
         return Driver(source)
     }
@@ -216,7 +216,7 @@ extension DriverConvertibleType {
     @warn_unused_result(message:"http://git.io/rxs.uo")
     public func distinctUntilChanged<K: Equatable>(_ keySelector: (E) -> K) -> Driver<E> {
         let source = self.asObservable()
-            .distinctUntilChanged(keySelector: keySelector, comparer: { $0 == $1 })
+            .distinctUntilChanged(keySelector, comparer: { $0 == $1 })
         return Driver(source)
     }
    
@@ -229,7 +229,7 @@ extension DriverConvertibleType {
     @warn_unused_result(message:"http://git.io/rxs.uo")
     public func distinctUntilChanged(_ comparer: (lhs: E, rhs: E) -> Bool) -> Driver<E> {
         let source = self.asObservable()
-            .distinctUntilChanged(keySelector: { $0 }, comparer: comparer)
+            .distinctUntilChanged({ $0 }, comparer: comparer)
         return Driver(source)
     }
     
@@ -243,7 +243,7 @@ extension DriverConvertibleType {
     @warn_unused_result(message:"http://git.io/rxs.uo")
     public func distinctUntilChanged<K>(_ keySelector: (E) -> K, comparer: (lhs: K, rhs: K) -> Bool) -> Driver<E> {
         let source = self.asObservable()
-            .distinctUntilChanged(keySelector: keySelector, comparer: comparer)
+            .distinctUntilChanged(keySelector, comparer: comparer)
         return Driver(source)
     }
 }
@@ -290,11 +290,11 @@ extension DriverConvertibleType where E : DriverConvertibleType {
     - returns: The observable sequence that merges the elements of the inner sequences.
     */
     @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func merge(_ maxConcurrent: Int)
+    public func merge(maxConcurrent: Int)
         -> Driver<E.E> {
         let source = self.asObservable()
             .map { $0.asDriver() }
-            .merge( maxConcurrent)
+            .merge(maxConcurrent: maxConcurrent)
         return Driver<E.E>(source)
     }
 }
@@ -399,7 +399,7 @@ extension Collection where Iterator.Element : DriverConvertibleType {
     */
     @warn_unused_result(message:"http://git.io/rxs.uo")
     public func zip<R>(_ resultSelector: ([Generator.Element.E]) throws -> R) -> Driver<R> {
-        let source = self.map { $0.asDriver().asObservable() }.zip(resultSelector)
+        let source = self.map { $0.asDriver().asObservable() }.zip(resultSelector: resultSelector)
         return Driver<R>(source)
     }
 }
@@ -415,7 +415,7 @@ extension Collection where Iterator.Element : DriverConvertibleType {
     */
     @warn_unused_result(message:"http://git.io/rxs.uo")
     public func combineLatest<R>(_ resultSelector: ([Generator.Element.E]) throws -> R) -> Driver<R> {
-        let source = self.map { $0.asDriver().asObservable() }.combineLatest(resultSelector)
+        let source = self.map { $0.asDriver().asObservable() }.combineLatest(resultSelector: resultSelector)
         return Driver<R>(source)
     }
 }

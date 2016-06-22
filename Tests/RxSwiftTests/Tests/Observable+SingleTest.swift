@@ -459,7 +459,7 @@ extension ObservableSingleTest {
             case .next(let value):
                 i += 1
                 sum -= value
-            case .Error:
+            case .error:
                 sawError = true
             default: break
             }
@@ -506,7 +506,7 @@ extension ObservableSingleTest {
             case .next(let value):
                 i += 1
                 sum -= value
-            case .Error:
+            case .error:
                 sawError = true
             default: break
             }
@@ -977,7 +977,7 @@ extension ObservableSingleTest {
             observer.on(.next(1))
             observer.on(.next(2))
             if count < 2 {
-                observer.on(.Error(testError))
+                observer.on(.error(testError))
                 count += 1
             }
             observer.on(.next(3))
@@ -1369,7 +1369,7 @@ extension ObservableSingleTest {
             observer.on(.next(1))
             observer.on(.next(2))
             if count < 2 {
-                observer.on(.Error(testError))
+                observer.on(.error(testError))
                 count += 1
             }
             observer.on(.next(3))

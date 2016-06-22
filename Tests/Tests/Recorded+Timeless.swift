@@ -19,5 +19,5 @@ func completed<T>() -> Recorded<Event<T>> {
 }
 
 func error<T>(_ error: ErrorProtocol) -> Recorded<Event<T>> {
-    return Recorded(time: 0, event: .Error(error))
+    return Recorded(time: 0, event: .error(error))
 }

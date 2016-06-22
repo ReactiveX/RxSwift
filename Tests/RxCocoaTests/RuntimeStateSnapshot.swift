@@ -122,10 +122,10 @@ func ==(lhs: ObjectRuntimeChange, rhs: ObjectRuntimeChange) -> Bool {
     }
 }
 
-extension Sequence where Generator.Element == ObjectRuntimeChange {
+extension Sequence where Iterator.Element == ObjectRuntimeChange {
     var classChanged: Bool {
         return self.filter { x in
-            if case .ClassChanged = x {
+            if case .classChanged = x {
                 return true
             } else {
                 return false

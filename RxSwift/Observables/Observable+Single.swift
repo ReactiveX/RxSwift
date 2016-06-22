@@ -22,7 +22,7 @@ extension ObservableType where E: Equatable {
     @warn_unused_result(message:"http://git.io/rxs.uo")
     public func distinctUntilChanged()
         -> Observable<E> {
-        return self.distinctUntilChanged(keySelector: { $0 }, comparer: { ($0 == $1) })
+        return self.distinctUntilChanged({ $0 }, comparer: { ($0 == $1) })
     }
 }
 
@@ -36,9 +36,9 @@ extension ObservableType {
     - returns: An observable sequence only containing the distinct contiguous elements, based on a computed key value, from the source sequence.
     */
     @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func distinctUntilChanged<K: Equatable>(keySelector: (E) throws -> K)
+    public func distinctUntilChanged<K: Equatable>(_ keySelector: (E) throws -> K)
         -> Observable<E> {
-        return self.distinctUntilChanged(keySelector: keySelector, comparer: { $0 == $1 })
+        return self.distinctUntilChanged(keySelector, comparer: { $0 == $1 })
     }
 
     /**
@@ -50,9 +50,9 @@ extension ObservableType {
     - returns: An observable sequence only containing the distinct contiguous elements, based on `comparer`, from the source sequence.
     */
     @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func distinctUntilChanged(comparer: (lhs: E, rhs: E) throws -> Bool)
+    public func distinctUntilChanged(_ comparer: (lhs: E, rhs: E) throws -> Bool)
         -> Observable<E> {
-        return self.distinctUntilChanged(keySelector: { $0 }, comparer: comparer)
+        return self.distinctUntilChanged({ $0 }, comparer: comparer)
     }
     
     /**
@@ -65,7 +65,7 @@ extension ObservableType {
     - returns: An observable sequence only containing the distinct contiguous elements, based on a computed key value and the comparer, from the source sequence.
     */
     @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func distinctUntilChanged<K>(keySelector: (E) throws -> K, comparer: (lhs: K, rhs: K) throws -> Bool)
+    public func distinctUntilChanged<K>(_ keySelector: (E) throws -> K, comparer: (lhs: K, rhs: K) throws -> Bool)
         -> Observable<E> {
         return DistinctUntilChanged(source: self.asObservable(), selector: keySelector, comparer: comparer)
     }

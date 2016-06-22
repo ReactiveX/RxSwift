@@ -90,7 +90,7 @@ extension ObservableType {
     @warn_unused_result(message:"http://git.io/rxs.uo")
     public func replay(_ bufferSize: Int)
         -> ConnectableObservable<E> {
-        return self.multicast(ReplaySubject.create(bufferSize))
+        return self.multicast(ReplaySubject.create(bufferSize: bufferSize))
     }
 
     /**

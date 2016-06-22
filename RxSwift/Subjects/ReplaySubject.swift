@@ -69,7 +69,7 @@ public class ReplaySubject<Element>
     - parameter bufferSize: Maximal number of elements to replay to observer after subscription.
     - returns: New instance of replay subject.
     */
-    public static func create(_ bufferSize: Int) -> ReplaySubject<Element> {
+    public static func create(bufferSize: Int) -> ReplaySubject<Element> {
         if bufferSize == 1 {
             return ReplayOne()
         }

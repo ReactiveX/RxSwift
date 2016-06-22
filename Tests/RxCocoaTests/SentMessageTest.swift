@@ -192,7 +192,7 @@ extension SentMessageTest {
         ensureGlobalRuntimeChangesAreCached(
             createNormalInstance(SentMessageTest_interact_forwarding.self),
             observeIt: { target in
-                return [target.rx_sentMessage(#selector(SentMessageTestBase_shared.justCalled(_:)))]
+                return [target.rx_sentMessage(#selector(SentMessageTestBase_shared.justCalled(toSay:)))]
             },
             objectActingClassChange: [
             ],
@@ -202,7 +202,7 @@ extension SentMessageTest {
                     NSSelectorFromString("respondsToSelector:"),
                     NSSelectorFromString("methodSignatureForSelector:"),
                     NSSelectorFromString("forwardInvocation:"),
-                    #selector(SentMessageTestBase_shared.justCalled(_:)),
+                    #selector(SentMessageTestBase_shared.justCalled(toSay:)),
                     NSSelectorFromString("_RX_namespace_justCalledToSayObject:"),
                 ])
             ],
@@ -243,7 +243,7 @@ extension SentMessageTest {
         ensureGlobalRuntimeChangesAreCached(
             createNormalInstance(SentMessageTest_interact_forwarding.self),
             observeIt: { target in
-                return [target.rx_sentMessage(#selector(SentMessageTestBase_shared.justCalled(_:)))]
+                return [target.rx_sentMessage(#selector(SentMessageTestBase_shared.justCalled(toSay:)))]
             },
             objectActingClassChange: [
             ],
@@ -268,7 +268,7 @@ extension SentMessageTest {
         ensureGlobalRuntimeChangesAreCached(
             createNormalInstance(SentMessageTestBase_interact_forwarding.self),
             observeIt: { target in
-                return [target.rx_sentMessage(#selector(SentMessageTestBase_shared.justCalled(_:)))]
+                return [target.rx_sentMessage(#selector(SentMessageTestBase_shared.justCalled(toSay:)))]
             },
             objectActingClassChange: [
             ],
@@ -790,22 +790,22 @@ extension SentMessageTest {
 
         _testMessageRecordedAndAllCallsAreMade(#selector(SentMessageTestBase_shared.justCalled(toSay:)), sendMessage: { x in NSValue(nonretainedObject: x.justCalled(toSay: object)) }, expectedResult: NSValue(nonretainedObject: object))
         _testMessageRecordedAndAllCallsAreMade(#selector(SentMessageTestBase_shared.justCalled(toSay:)), sendMessage: { x in NSValue(nonretainedObject: x.justCalled(toSay: object.dynamicType)) }, expectedResult: NSValue(nonretainedObject: object.dynamicType))
-        _testMessageRecordedAndAllCallsAreMade(#selector(SentMessageTestBase_shared.justCalled(toSayClosure:)(_:)), sendMessage: { x in "\(x.justCalled(toSayClosure: closure))" }, expectedResult: "\(closure)")
-        _testMessageRecordedAndAllCallsAreMade(#selector(SentMessageTestBase_shared.justCalled(toSayChar:)(_:)), sendMessage: { x in x.justCalled(toSayChar: 3) }, expectedResult: 3)
-        _testMessageRecordedAndAllCallsAreMade(#selector(SentMessageTestBase_shared.justCalled(toSayShort:)(_:)), sendMessage: { x in x.justCalled(toSayShort: 4) }, expectedResult: 4)
+        _testMessageRecordedAndAllCallsAreMade(#selector(SentMessageTestBase_shared.justCalled(toSayClosure:)), sendMessage: { x in "\(x.justCalled(toSayClosure: closure))" }, expectedResult: "\(closure)")
+        _testMessageRecordedAndAllCallsAreMade(#selector(SentMessageTestBase_shared.justCalled(toSayChar:)), sendMessage: { x in x.justCalled(toSayChar: 3) }, expectedResult: 3)
+        _testMessageRecordedAndAllCallsAreMade(#selector(SentMessageTestBase_shared.justCalled(toSayShort:)), sendMessage: { x in x.justCalled(toSayShort: 4) }, expectedResult: 4)
         _testMessageRecordedAndAllCallsAreMade(#selector(SentMessageTestBase_shared.justCalled(toSay:)), sendMessage: { x in x.justCalled(toSay: 5) }, expectedResult: 5)
-        _testMessageRecordedAndAllCallsAreMade(#selector(SentMessageTestBase_shared.justCalled(toSayLong:)(_:)), sendMessage: { x in x.justCalled(toSayLong: 6) }, expectedResult: 6)
-        _testMessageRecordedAndAllCallsAreMade(#selector(SentMessageTestBase_shared.justCalled(toSayLongLong:)(_:)), sendMessage: { x in x.justCalled(toSayLongLong: 7) }, expectedResult: 7)
-        _testMessageRecordedAndAllCallsAreMade(#selector(SentMessageTestBase_shared.justCalled(toSayUnsignedChar:)(_:)), sendMessage: { x in x.justCalled(toSayUnsignedChar: 8) }, expectedResult: 8)
-        _testMessageRecordedAndAllCallsAreMade(#selector(SentMessageTestBase_shared.justCalled(toSayUnsignedShort:)(_:)), sendMessage: { x in x.justCalled(toSayUnsignedShort: 9) }, expectedResult: 9)
-        _testMessageRecordedAndAllCallsAreMade(#selector(SentMessageTestBase_shared.justCalled(toSayUnsignedInt:)(_:)), sendMessage: { x in x.justCalled(toSayUnsignedInt: 10) }, expectedResult: 10)
-        _testMessageRecordedAndAllCallsAreMade(#selector(SentMessageTestBase_shared.justCalled(toSayUnsignedLong:)(_:)), sendMessage: { x in x.justCalled(toSayUnsignedLong: 11) }, expectedResult: 11)
-        _testMessageRecordedAndAllCallsAreMade(#selector(SentMessageTestBase_shared.justCalled(toSayUnsignedLongLong:)(_:)), sendMessage: { x in x.justCalled(toSayUnsignedLongLong: 12) }, expectedResult: 12)
+        _testMessageRecordedAndAllCallsAreMade(#selector(SentMessageTestBase_shared.justCalled(toSayLong:)), sendMessage: { x in x.justCalled(toSayLong: 6) }, expectedResult: 6)
+        _testMessageRecordedAndAllCallsAreMade(#selector(SentMessageTestBase_shared.justCalled(toSayLongLong:)), sendMessage: { x in x.justCalled(toSayLongLong: 7) }, expectedResult: 7)
+        _testMessageRecordedAndAllCallsAreMade(#selector(SentMessageTestBase_shared.justCalled(toSayUnsignedChar:)), sendMessage: { x in x.justCalled(toSayUnsignedChar: 8) }, expectedResult: 8)
+        _testMessageRecordedAndAllCallsAreMade(#selector(SentMessageTestBase_shared.justCalled(toSayUnsignedShort:)), sendMessage: { x in x.justCalled(toSayUnsignedShort: 9) }, expectedResult: 9)
+        _testMessageRecordedAndAllCallsAreMade(#selector(SentMessageTestBase_shared.justCalled(toSayUnsignedInt:)), sendMessage: { x in x.justCalled(toSayUnsignedInt: 10) }, expectedResult: 10)
+        _testMessageRecordedAndAllCallsAreMade(#selector(SentMessageTestBase_shared.justCalled(toSayUnsignedLong:)), sendMessage: { x in x.justCalled(toSayUnsignedLong: 11) }, expectedResult: 11)
+        _testMessageRecordedAndAllCallsAreMade(#selector(SentMessageTestBase_shared.justCalled(toSayUnsignedLongLong:)), sendMessage: { x in x.justCalled(toSayUnsignedLongLong: 12) }, expectedResult: 12)
         _testMessageRecordedAndAllCallsAreMade(#selector(SentMessageTestBase_shared.justCalled(toSay:)), sendMessage: { x in x.justCalled(toSay: 13) }, expectedResult: 13)
         _testMessageRecordedAndAllCallsAreMade(#selector(SentMessageTestBase_shared.justCalled(toSay:)), sendMessage: { x in x.justCalled(toSay: 13) }, expectedResult: 13)
         _testMessageRecordedAndAllCallsAreMade(#selector(SentMessageTestBase_shared.justCalled(toSay:)), sendMessage: { x in x.justCalled(toSay: true) }, expectedResult: true)
-        _testMessageRecordedAndAllCallsAreMade(#selector(SentMessageTestBase_shared.justCalled(toSayConstChar:)(_:)), sendMessage: { x in x.justCalled(toSayConstChar: constChar) }, expectedResult: constChar)
-        _testMessageRecordedAndAllCallsAreMade(#selector(SentMessageTestBase_shared.justCalled(toSayLarge:)(_:)), sendMessage: { x in x.justCalled(toSayLarge: largeStruct) }, expectedResult: 28)
+        _testMessageRecordedAndAllCallsAreMade(#selector(SentMessageTestBase_shared.justCalled(toSayConstChar:)), sendMessage: { x in x.justCalled(toSayConstChar: constChar) }, expectedResult: constChar)
+        _testMessageRecordedAndAllCallsAreMade(#selector(SentMessageTestBase_shared.justCalled(toSayLarge:)), sendMessage: { x in x.justCalled(toSayLarge: largeStruct) }, expectedResult: 28)
 
         let middleRuntimeState = RxObjCRuntimeState()
 
@@ -813,15 +813,15 @@ extension SentMessageTest {
         middleRuntimeState.assertAfterThisMoment(startRuntimeState, changed:middleChanges)
 
         _testMessageRecordedAndAllCallsAreMade(#selector(SentMessageTestBase_shared.voidJustCalled(toSay:)), sendMessage: { x in x.voidJustCalled(toSay: object); return NSValue(nonretainedObject: object)  }, expectedResult: NSValue(nonretainedObject: object))
-        _testMessageRecordedAndAllCallsAreMade(#selector(SentMessageTestBase_shared.voidJustCalled(toSayClosure:)(_:)), sendMessage: { x in x.voidJustCalled(toSayClosure: closure); return "\(closure)" }, expectedResult: "\(closure)")
-        _testMessageRecordedAndAllCallsAreMade(#selector(SentMessageTestBase_shared.voidJustCalled(toSayChar:)(_:)), sendMessage: { x in x.voidJustCalled(toSayChar: 3); return 3 }, expectedResult: 3)
-        _testMessageRecordedAndAllCallsAreMade(#selector(SentMessageTestBase_shared.voidJustCalled(toSayShort:)(_:)), sendMessage: { x in x.voidJustCalled(toSayShort: 4); return 4 }, expectedResult: 4)
+        _testMessageRecordedAndAllCallsAreMade(#selector(SentMessageTestBase_shared.voidJustCalled(toSayClosure:)), sendMessage: { x in x.voidJustCalled(toSayClosure: closure); return "\(closure)" }, expectedResult: "\(closure)")
+        _testMessageRecordedAndAllCallsAreMade(#selector(SentMessageTestBase_shared.voidJustCalled(toSayChar:)), sendMessage: { x in x.voidJustCalled(toSayChar: 3); return 3 }, expectedResult: 3)
+        _testMessageRecordedAndAllCallsAreMade(#selector(SentMessageTestBase_shared.voidJustCalled(toSayShort:)), sendMessage: { x in x.voidJustCalled(toSayShort: 4); return 4 }, expectedResult: 4)
         _testMessageRecordedAndAllCallsAreMade(#selector(SentMessageTestBase_shared.voidJustCalled(toSay:)), sendMessage: { x in x.voidJustCalled(toSay: 5); return 5 }, expectedResult: 5)
-        _testMessageRecordedAndAllCallsAreMade(#selector(SentMessageTestBase_shared.voidJustCalled(toSayLong:)(_:)), sendMessage: { x in x.voidJustCalled(toSayLong: 6); return 6 }, expectedResult: 6)
-        _testMessageRecordedAndAllCallsAreMade(#selector(SentMessageTestBase_shared.voidJustCalled(toSayUnsignedChar:)(_:)), sendMessage: { x in x.voidJustCalled(toSayUnsignedChar: 8); return 8 }, expectedResult: 8)
-        _testMessageRecordedAndAllCallsAreMade(#selector(SentMessageTestBase_shared.voidJustCalled(toSayUnsignedShort:)(_:)), sendMessage: { x in x.voidJustCalled(toSayUnsignedShort: 9); return 9 }, expectedResult: 9)
-        _testMessageRecordedAndAllCallsAreMade(#selector(SentMessageTestBase_shared.voidJustCalled(toSayUnsignedInt:)(_:)), sendMessage: { x in x.voidJustCalled(toSayUnsignedInt: 10); return 10 }, expectedResult: 10)
-        _testMessageRecordedAndAllCallsAreMade(#selector(SentMessageTestBase_shared.voidJustCalled(toSayUnsignedLong:)(_:)), sendMessage: { x in x.voidJustCalled(toSayUnsignedLong: 11); return 11 }, expectedResult: 11)
+        _testMessageRecordedAndAllCallsAreMade(#selector(SentMessageTestBase_shared.voidJustCalled(toSayLong:)), sendMessage: { x in x.voidJustCalled(toSayLong: 6); return 6 }, expectedResult: 6)
+        _testMessageRecordedAndAllCallsAreMade(#selector(SentMessageTestBase_shared.voidJustCalled(toSayUnsignedChar:)), sendMessage: { x in x.voidJustCalled(toSayUnsignedChar: 8); return 8 }, expectedResult: 8)
+        _testMessageRecordedAndAllCallsAreMade(#selector(SentMessageTestBase_shared.voidJustCalled(toSayUnsignedShort:)), sendMessage: { x in x.voidJustCalled(toSayUnsignedShort: 9); return 9 }, expectedResult: 9)
+        _testMessageRecordedAndAllCallsAreMade(#selector(SentMessageTestBase_shared.voidJustCalled(toSayUnsignedInt:)), sendMessage: { x in x.voidJustCalled(toSayUnsignedInt: 10); return 10 }, expectedResult: 10)
+        _testMessageRecordedAndAllCallsAreMade(#selector(SentMessageTestBase_shared.voidJustCalled(toSayUnsignedLong:)), sendMessage: { x in x.voidJustCalled(toSayUnsignedLong: 11); return 11 }, expectedResult: 11)
         _testMessageRecordedAndAllCallsAreMade(#selector(SentMessageTestBase_shared.voidJustCalled(toSay:)), sendMessage: { x in x.voidJustCalled(toSay: 13); return 13 }, expectedResult: 13)
         _testMessageRecordedAndAllCallsAreMade(#selector(SentMessageTestBase_shared.voidJustCalled(toSay:)), sendMessage: { x in x.voidJustCalled(toSay: 13); return 13 }, expectedResult: 13)
 
