@@ -24,7 +24,8 @@ extension UITabBar {
      Reactive wrapper for `delegate` message `tabBar:willBeginCustomizingItems:`.
     */
     public var rx_willBeginCustomizing: ControlEvent<[UITabBarItem]> {
-        let source = rx_delegate.observe(#selector(UITabBarDelegate.tabBar(_:willBeginCustomizingItems:)))
+        
+        let source = rx_delegate.observe(#selector(UITabBarDelegate.tabBar(_:willBeginCustomizing:)))
             .map { a in
                 return try castOrThrow([UITabBarItem].self, a[1])
             }
@@ -36,7 +37,7 @@ extension UITabBar {
      Reactive wrapper for `delegate` message `tabBar:didBeginCustomizingItems:`.
     */
     public var rx_didBeginCustomizing: ControlEvent<[UITabBarItem]> {
-        let source = rx_delegate.observe(#selector(UITabBarDelegate.tabBar(_:didBeginCustomizingItems:)))
+        let source = rx_delegate.observe(#selector(UITabBarDelegate.tabBar(_:didBeginCustomizing:)))
             .map { a in
                 return try castOrThrow([UITabBarItem].self, a[1])
             }
@@ -47,8 +48,8 @@ extension UITabBar {
     /**
      Reactive wrapper for `delegate` message `tabBar:willEndCustomizingItems:changed:`.
     */
-    public var rx_willEndCustomizing: ControlEvent<(items: [UITabBarItem], changed: Bool)> {
-        let source = rx_delegate.observe(#selector(UITabBarDelegate.tabBar(_:willEndCustomizingItems:changed:)))
+    public var rx_willEndCustomizing: ControlEvent<([UITabBarItem], Bool)> {
+        let source = rx_delegate.observe(#selector(UITabBarDelegate.tabBar(_:willEndCustomizing:changed:)))
             .map { (a: [AnyObject]) -> (([UITabBarItem], Bool)) in
                 let items = try castOrThrow([UITabBarItem].self, a[1])
                 let changed = try castOrThrow(Bool.self, a[2])
@@ -61,8 +62,8 @@ extension UITabBar {
     /**
      Reactive wrapper for `delegate` message `tabBar:didEndCustomizingItems:changed:`.
     */
-    public var rx_didEndCustomizing: ControlEvent<(items: [UITabBarItem], changed: Bool)> {
-        let source = rx_delegate.observe(#selector(UITabBarDelegate.tabBar(_:didEndCustomizingItems:changed:)))
+    public var rx_didEndCustomizing: ControlEvent<([UITabBarItem], Bool)> {
+        let source = rx_delegate.observe(#selector(UITabBarDelegate.tabBar(_:didEndCustomizing:changed:)))
             .map { (a: [AnyObject]) -> (([UITabBarItem], Bool)) in
                 let items = try castOrThrow([UITabBarItem].self, a[1])
                 let changed = try castOrThrow(Bool.self, a[2])
@@ -102,7 +103,7 @@ extension UITabBar {
      Reactive wrapper for `delegate` message `tabBar:didSelectItem:`.
     */
     public var rx_didSelectItem: ControlEvent<UITabBarItem> {
-        let source = rx_delegate.observe(#selector(UITabBarDelegate.tabBar(_:didSelectItem:)))
+        let source = rx_delegate.observe(#selector(UITabBarDelegate.tabBar(_:didSelect:)))
             .map { a in
                 return try castOrThrow(UITabBarItem.self, a[1])
             }

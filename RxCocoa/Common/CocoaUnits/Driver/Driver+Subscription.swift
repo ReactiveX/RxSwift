@@ -53,7 +53,7 @@ extension DriverConvertibleType {
     - returns: Object representing subscription.
     */
     @warn_unused_result(message:"http://git.io/rxs.ud")
-    public func drive<R>(_ transformation: Observable<E> -> R) -> R {
+    public func drive<R>(_ transformation: (Observable<E>) -> R) -> R {
         MainScheduler.ensureExecutingOnScheduler(errorMessage: driverErrorMessage)
         return transformation(self.asObservable())
     }
@@ -73,7 +73,7 @@ extension DriverConvertibleType {
     - returns: Object representing subscription.
     */
     @warn_unused_result(message:"http://git.io/rxs.ud")
-    public func drive<R1, R2>(_ with: Observable<E> -> R1 -> R2, curriedArgument: R1) -> R2 {
+    public func drive<R1, R2>(_ with: (Observable<E>) -> (R1) -> R2, curriedArgument: R1) -> R2 {
         MainScheduler.ensureExecutingOnScheduler(errorMessage: driverErrorMessage)
         return with(self.asObservable())(curriedArgument)
     }
@@ -105,7 +105,7 @@ extension DriverConvertibleType {
     - returns: Subscription object used to unsubscribe from the observable sequence.
     */
     @warn_unused_result(message:"http://git.io/rxs.ud")
-    public func driveNext(_ onNext: E -> Void) -> Disposable {
+    public func driveNext(_ onNext: (E) -> Void) -> Disposable {
         MainScheduler.ensureExecutingOnScheduler(errorMessage: driverErrorMessage)
         return self.asObservable().subscribeNext(onNext)
     }

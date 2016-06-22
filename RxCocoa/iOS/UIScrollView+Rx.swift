@@ -52,7 +52,7 @@ extension UIScrollView {
     */
     public var rx_scrollEnabled: AnyObserver<Bool> {
         return UIBindingObserver(UIElement: self) { scrollView, scrollEnabled in
-            scrollView.scrollEnabled = scrollEnabled
+            scrollView.isScrollEnabled = scrollEnabled
         }.asObserver()
     }
 
