@@ -31,7 +31,7 @@ func sampleWithoutConnectableOperators() {
     }
 }
 
-//    sampleWithoutConnectableOperators() // ⚠️ Uncomment to run this example; comment to stop running
+//sampleWithoutConnectableOperators() // ⚠️ Uncomment to run this example; comment to stop running
 /*:
  > `interval` creates an `Observable` sequence that emits elements after each `period`, on the specified scheduler. [More info](http://reactivex.io/documentation/operators/interval.html)
  ![](http://reactivex.io/documentation/operators/images/interval.c.png)

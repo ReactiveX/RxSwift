@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		033C2EF61D081C460050C015 /* UIScrollView+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033C2EF41D081B2A0050C015 /* UIScrollView+RxTests.swift */; };
 		1AF67DA21CED420A00C310FA /* PublishSubjectTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AF67DA11CED420A00C310FA /* PublishSubjectTest.swift */; };
 		1AF67DA31CED427D00C310FA /* PublishSubjectTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AF67DA11CED420A00C310FA /* PublishSubjectTest.swift */; };
 		1AF67DA41CED427D00C310FA /* PublishSubjectTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AF67DA11CED420A00C310FA /* PublishSubjectTest.swift */; };
@@ -65,6 +66,12 @@
 		84E4D3931C9AFD3500ADFDC9 /* UISearchController+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E4D3901C9AFCD500ADFDC9 /* UISearchController+Rx.swift */; };
 		84E4D3941C9AFD3600ADFDC9 /* UISearchController+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E4D3901C9AFCD500ADFDC9 /* UISearchController+Rx.swift */; };
 		84E4D3961C9B011000ADFDC9 /* UISearchController+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E4D3951C9B011000ADFDC9 /* UISearchController+RxTests.swift */; };
+		88718CFE1CE5D80000D88D60 /* UITabBar+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88718CFD1CE5D80000D88D60 /* UITabBar+Rx.swift */; };
+		88718CFF1CE5D80000D88D60 /* UITabBar+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88718CFD1CE5D80000D88D60 /* UITabBar+Rx.swift */; };
+		88718D011CE5DE2600D88D60 /* UITabBar+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88718D001CE5DE2500D88D60 /* UITabBar+RxTests.swift */; };
+		88718D021CE5DE2600D88D60 /* UITabBar+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88718D001CE5DE2500D88D60 /* UITabBar+RxTests.swift */; };
+		88D98F2E1CE7549A00D50457 /* RxTabBarDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D98F2D1CE7549A00D50457 /* RxTabBarDelegateProxy.swift */; };
+		88D98F2F1CE7549A00D50457 /* RxTabBarDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D98F2D1CE7549A00D50457 /* RxTabBarDelegateProxy.swift */; };
 		914FCD671CCDB82E0058B304 /* UIPageControl+RxTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 914FCD661CCDB82E0058B304 /* UIPageControl+RxTest.swift */; };
 		914FCD681CCDB82E0058B304 /* UIPageControl+RxTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 914FCD661CCDB82E0058B304 /* UIPageControl+RxTest.swift */; };
 		91BE429C1CBF7EC000F6B062 /* UIPageControl+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91BE429B1CBF7EC000F6B062 /* UIPageControl+Rx.swift */; };
@@ -1373,6 +1380,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		033C2EF41D081B2A0050C015 /* UIScrollView+RxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIScrollView+RxTests.swift"; sourceTree = "<group>"; };
 		1AF67DA11CED420A00C310FA /* PublishSubjectTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublishSubjectTest.swift; sourceTree = "<group>"; };
 		1AF67DA51CED430100C310FA /* ReplaySubjectTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReplaySubjectTest.swift; sourceTree = "<group>"; };
 		271A97401CFC996B00D64125 /* UIViewController+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Rx.swift"; sourceTree = "<group>"; };
@@ -1396,6 +1404,9 @@
 		84C225A21C33F00B008724EC /* RxTextStorageDelegateProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxTextStorageDelegateProxy.swift; sourceTree = "<group>"; };
 		84E4D3901C9AFCD500ADFDC9 /* UISearchController+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UISearchController+Rx.swift"; sourceTree = "<group>"; };
 		84E4D3951C9B011000ADFDC9 /* UISearchController+RxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UISearchController+RxTests.swift"; sourceTree = "<group>"; };
+		88718CFD1CE5D80000D88D60 /* UITabBar+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITabBar+Rx.swift"; sourceTree = "<group>"; };
+		88718D001CE5DE2500D88D60 /* UITabBar+RxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITabBar+RxTests.swift"; sourceTree = "<group>"; };
+		88D98F2D1CE7549A00D50457 /* RxTabBarDelegateProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxTabBarDelegateProxy.swift; sourceTree = "<group>"; };
 		914FCD661CCDB82E0058B304 /* UIPageControl+RxTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIPageControl+RxTest.swift"; sourceTree = "<group>"; };
 		91BE429B1CBF7EC000F6B062 /* UIPageControl+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIPageControl+Rx.swift"; sourceTree = "<group>"; };
 		9BA1CBD11C0F7C0A0044B50A /* UIActivityIndicatorView+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIActivityIndicatorView+Rx.swift"; sourceTree = "<group>"; };
@@ -2289,6 +2300,7 @@
 				271A97421CFC99FE00D64125 /* UIViewControler+RxTests.swift */,
 				7F600F421C5D0D2D00535B1D /* UIRefreshControl+RxTests.swift */,
 				7EDBAEAB1C89B1A5006CBE67 /* UITabBarItem+RxTests.swift */,
+				88718D001CE5DE2500D88D60 /* UITabBar+RxTests.swift */,
 				C8B2908C1C94D6C500E923D0 /* UISearchBar+RxTests.swift */,
 				84E4D3951C9B011000ADFDC9 /* UISearchController+RxTests.swift */,
 				C8C217D41CB7100E0038A2E6 /* UITableView+RxTests.swift */,
@@ -2298,6 +2310,7 @@
 				C8F27DB11CE6711600D5FB4F /* UITextView+RxTests.swift */,
 				844BC8B71CE5023200F5C7CB /* UIPickerView+RxTests.swift */,
 				914FCD661CCDB82E0058B304 /* UIPageControl+RxTest.swift */,
+				033C2EF41D081B2A0050C015 /* UIScrollView+RxTests.swift */,
 			);
 			path = RxCocoaTests;
 			sourceTree = "<group>";
@@ -2439,6 +2452,7 @@
 				9BA1CBD11C0F7C0A0044B50A /* UIActivityIndicatorView+Rx.swift */,
 				8479BC4A1C3ACED100FB8B54 /* UIImagePickerController+Rx.swift */,
 				C8BCD3EC1C14B5FB005F1280 /* UIView+Rx.swift */,
+				88718CFD1CE5D80000D88D60 /* UITabBar+Rx.swift */,
 				7EDBAEB71C89B9B7006CBE67 /* UITabBarItem+Rx.swift */,
 				84E4D3901C9AFCD500ADFDC9 /* UISearchController+Rx.swift */,
 				54D2138C1CE081890028D5B4 /* UINavigationItem+Rx.swift */,
@@ -2481,6 +2495,7 @@
 				C88253FD1B8A752B00B02D69 /* RxCollectionViewDelegateProxy.swift */,
 				C88253FE1B8A752B00B02D69 /* RxScrollViewDelegateProxy.swift */,
 				C88253FF1B8A752B00B02D69 /* RxSearchBarDelegateProxy.swift */,
+				88D98F2D1CE7549A00D50457 /* RxTabBarDelegateProxy.swift */,
 				C88254001B8A752B00B02D69 /* RxTableViewDataSourceProxy.swift */,
 				C88254011B8A752B00B02D69 /* RxTableViewDelegateProxy.swift */,
 				C88254021B8A752B00B02D69 /* RxTextViewDelegateProxy.swift */,
@@ -3415,7 +3430,9 @@
 				C8BCD3F41C14B6D1005F1280 /* NSLayoutConstraint+Rx.swift in Sources */,
 				C882542C1B8A752B00B02D69 /* UIGestureRecognizer+Rx.swift in Sources */,
 				C8093EE11B8A732E0088E94D /* DelegateProxy.swift in Sources */,
+				88718CFE1CE5D80000D88D60 /* UITabBar+Rx.swift in Sources */,
 				C8093EF91B8A732E0088E94D /* RxCLLocationManagerDelegateProxy.swift in Sources */,
+				88D98F2E1CE7549A00D50457 /* RxTabBarDelegateProxy.swift in Sources */,
 				C88254331B8A752B00B02D69 /* UISwitch+Rx.swift in Sources */,
 				8479BC4C1C3ACF6B00FB8B54 /* UIImagePickerController+Rx.swift in Sources */,
 				C8DB96831BF754C80084BD53 /* NSObject+Rx+KVORepresentable.swift in Sources */,
@@ -3513,6 +3530,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				033C2EF61D081C460050C015 /* UIScrollView+RxTests.swift in Sources */,
 				C835092A1C38706E0027C24C /* CLLocationManager+RxTests.swift in Sources */,
 				C83509661C38706E0027C24C /* RxTest.swift in Sources */,
 				C83509611C38706E0027C24C /* ObserverTests.swift in Sources */,
@@ -3569,6 +3587,7 @@
 				271A97441CFC9F7B00D64125 /* UIViewControler+RxTests.swift in Sources */,
 				C83509631C38706E0027C24C /* SubjectConcurrencyTest.swift in Sources */,
 				84E4D3961C9B011000ADFDC9 /* UISearchController+RxTests.swift in Sources */,
+				88718D011CE5DE2600D88D60 /* UITabBar+RxTests.swift in Sources */,
 				C83509511C38706E0027C24C /* HistoricalSchedulerTest.swift in Sources */,
 				C835096B1C38706E0027C24C /* XCTest+AllTests.swift in Sources */,
 				C83509541C38706E0027C24C /* Observable+BindingTest.swift in Sources */,
@@ -3620,6 +3639,7 @@
 				C83509BA1C38750D0027C24C /* Control+RxTests+UIKit.swift in Sources */,
 				C83509E01C3875500027C24C /* Observable+Extensions.swift in Sources */,
 				C83509C41C3875220027C24C /* NSLayoutConstraint+RxTests.swift in Sources */,
+				88718D021CE5DE2600D88D60 /* UITabBar+RxTests.swift in Sources */,
 				C83509BC1C38750D0027C24C /* ControlEventTests.swift in Sources */,
 				C83509EC1C3875580027C24C /* MockDisposable.swift in Sources */,
 				1AF67DA31CED427D00C310FA /* PublishSubjectTest.swift in Sources */,
@@ -4384,10 +4404,12 @@
 				8479BC481C3ACDF700FB8B54 /* RxImagePickerDelegateProxy.swift in Sources */,
 				D203C5081BB9C53E00D02D00 /* UIGestureRecognizer+Rx.swift in Sources */,
 				D2138C931BB9BEDA00339B5C /* NSNotificationCenter+Rx.swift in Sources */,
+				88D98F2F1CE7549A00D50457 /* RxTabBarDelegateProxy.swift in Sources */,
 				C80DDE991BCE69BA006A1832 /* ControlProperty+Driver.swift in Sources */,
 				844BC8B51CE4FD7500F5C7CB /* UIPickerView+Rx.swift in Sources */,
 				C80DDE951BCE69BA006A1832 /* ControlEvent+Driver.swift in Sources */,
 				D203C4F61BB9C52E00D02D00 /* RxCollectionViewDataSourceType.swift in Sources */,
+				88718CFF1CE5D80000D88D60 /* UITabBar+Rx.swift in Sources */,
 				84C225A41C33F00B008724EC /* RxTextStorageDelegateProxy.swift in Sources */,
 				D203C5131BB9C53E00D02D00 /* UITextView+Rx.swift in Sources */,
 				D203C4F41BB9C52400D02D00 /* RxTableViewReactiveArrayDataSource.swift in Sources */,

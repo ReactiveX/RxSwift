@@ -20,12 +20,12 @@ operator please use `ConcurrentMainScheduler` because it is more optimized for t
 */
 public final class MainScheduler : SerialDispatchQueueScheduler {
 
-    private let _mainQueue: DispatchQueue
+    private let _mainQueue: dispatch_queue_t
 
     var numberEnqueued: AtomicInt = 0
 
     private init() {
-        _mainQueue = DispatchQueue.main
+        _mainQueue = dispatch_get_main_queue()
         super.init(serialQueue: _mainQueue)
     }
 
@@ -38,36 +38,34 @@ public final class MainScheduler : SerialDispatchQueueScheduler {
     Singleton instance of `MainScheduler` that always schedules work asynchronously
     and doesn't perform optimizations for calls scheduled from main thread.
     */
-    //TODO: investigate why this is necessary
-    @available(OSXApplicationExtension 10.10, *)
-    public static let asyncInstance = SerialDispatchQueueScheduler(globalConcurrentQueueQOS: .default)
+    public static let asyncInstance = SerialDispatchQueueScheduler(serialQueue: dispatch_get_main_queue())
 
     /**
     In case this method is called on a background thread it will throw an exception.
     */
-    public class func ensureExecutingOnScheduler() {
-        if !Thread.current().isMainThread {
-            rxFatalError("Executing on backgound thread. Please use `MainScheduler.instance.schedule` to schedule work on main thread.")
+    public class func ensureExecutingOnScheduler(errorMessage: String? = nil) {
+        if !NSThread.currentThread().isMainThread {
+            rxFatalError(errorMessage ?? "Executing on backgound thread. Please use `MainScheduler.instance.schedule` to schedule work on main thread.")
         }
     }
 
-    override func scheduleInternal<StateType>(_ state: StateType, action: (StateType) -> Disposable) -> Disposable {
+    override func scheduleInternal<StateType>(state: StateType, action: StateType -> Disposable) -> Disposable {
         let currentNumberEnqueued = AtomicIncrement(&numberEnqueued)
 
-        if Thread.current().isMainThread && currentNumberEnqueued == 1 {
+        if NSThread.currentThread().isMainThread && currentNumberEnqueued == 1 {
             let disposable = action(state)
-            let _ = AtomicDecrement(&numberEnqueued)
+            AtomicDecrement(&numberEnqueued)
             return disposable
         }
 
         let cancel = SingleAssignmentDisposable()
 
-        _mainQueue.async {
+        dispatch_async(_mainQueue) {
             if !cancel.disposed {
-                let _ = action(state)
+                action(state)
             }
 
-            let _ = AtomicDecrement(&self.numberEnqueued)
+            AtomicDecrement(&self.numberEnqueued)
         }
 
         return cancel

@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
 #### Features
 
 * Adds `rx_title` to `UIViewController`.
+* Adds `rx_scrollEnabled` to `UIScrollView`.
 
 
 ## [2.5.0](https://github.com/ReactiveX/RxSwift/releases/tag/2.5.0)

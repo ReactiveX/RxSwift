@@ -36,17 +36,17 @@ public class UIBindingObserver<UIElementType, Value where UIElementType: AnyObje
     /**
      Binds next element to owner view as described in `binding`.
     */
-    public func on(_ event: Event<Value>) {
-        MainScheduler.ensureExecutingOnScheduler()
+    public func on(event: Event<Value>) {
+        MainScheduler.ensureExecutingOnScheduler("Element can be bound to user interface only on MainThread.")
 
         switch event {
-        case .next(let element):
+        case .Next(let element):
             if let view = self.UIElement {
                 binding(view, element)
             }
-        case .error(let error):
+        case .Error(let error):
             bindingErrorToInterface(error)
-        case .completed:
+        case .Completed:
             break
         }
     }
