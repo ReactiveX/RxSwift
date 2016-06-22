@@ -804,7 +804,7 @@ extension SentMessageTest {
         _testMessageRecordedAndAllCallsAreMade(#selector(SentMessageTestBase_shared.justCalled(toSay:)), sendMessage: { x in x.justCalled(toSay: 13) }, expectedResult: 13)
         _testMessageRecordedAndAllCallsAreMade(#selector(SentMessageTestBase_shared.justCalled(toSay:)), sendMessage: { x in x.justCalled(toSay: 13) }, expectedResult: 13)
         _testMessageRecordedAndAllCallsAreMade(#selector(SentMessageTestBase_shared.justCalled(toSay:)), sendMessage: { x in x.justCalled(toSay: true) }, expectedResult: true)
-        _testMessageRecordedAndAllCallsAreMade(#selector(SentMessageTestBase_shared.justCalled(toSayConstChar:)), sendMessage: { x in x.justCalled(toSayConstChar: constChar) }, expectedResult: constChar)
+        _testMessageRecordedAndAllCallsAreMade(#selector(SentMessageTestBase_shared.justCalled(toSayConstChar:)), sendMessage: { x in x.justCalled(toSayConstChar: constChar!) }, expectedResult: constChar)
         _testMessageRecordedAndAllCallsAreMade(#selector(SentMessageTestBase_shared.justCalled(toSayLarge:)), sendMessage: { x in x.justCalled(toSayLarge: largeStruct) }, expectedResult: 28)
 
         let middleRuntimeState = RxObjCRuntimeState()

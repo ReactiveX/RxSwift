@@ -214,7 +214,7 @@ extension ObservableType {
     - returns: An observable sequence producing the elements of the given sequence repeatedly until it terminates successfully or is notified to error or complete.
     */
     @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func retryWhen<TriggerObservable: ObservableType, Error: ErrorProtocol>(notificationHandler: (Observable<Error>) -> TriggerObservable)
+    public func retryWhen<TriggerObservable: ObservableType, Error: ErrorProtocol>(_ notificationHandler: (Observable<Error>) -> TriggerObservable)
         -> Observable<E> {
             return RetryWhenSequence(sources: InfiniteSequence(repeatedValue: self.asObservable()), notificationHandler: notificationHandler)
     }
