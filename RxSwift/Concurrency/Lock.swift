@@ -37,23 +37,17 @@ protocol Lock {
       }
 
       func performLocked(@noescape action: () -> Void) {
-          pthread_spin_lock(&_lock)
+          lock(); defer { unlock() }
           action()
-          pthread_spin_unlock(&_lock)
       }
 
       func calculateLocked<T>(@noescape action: () -> T) -> T {
-          pthread_spin_lock(&_lock)
-          let result = action()
-          pthread_spin_unlock(&_lock)
-          return result
+          lock(); defer { unlock() }
+          return action()
       }
 
       func calculateLockedOrFail<T>(@noescape action: () throws -> T) throws -> T {
-          pthread_spin_lock(&_lock)
-          defer {
-              pthread_spin_unlock(&_lock)
-          }
+          lock(); defer { unlock() }
           let result = try action()
           return result
       }
@@ -65,28 +59,22 @@ protocol Lock {
 #else
 
     // https://lists.swift.org/pipermail/swift-dev/Week-of-Mon-20151214/000321.html
-    typealias SpinLock = NSRecursiveLock
+    typealias SpinLock = RecursiveLock
 #endif
 
-extension NSRecursiveLock : Lock {
-    func performLocked(action: @noescape () -> Void) {
-        self.lock()
+extension RecursiveLock : Lock {
+    func performLocked( _ action: @noescape() -> Void) {
+        lock(); defer { unlock() }
         action()
-        self.unlock()
     }
 
-    func calculateLocked<T>(action: @noescape () -> T) -> T {
-        self.lock()
-        let result = action()
-        self.unlock()
-        return result
+    func calculateLocked<T>( _ action: @noescape() -> T) -> T {
+        lock(); defer { unlock() }
+        return action()
     }
 
-    func calculateLockedOrFail<T>(action: @noescape () throws -> T) throws -> T {
-        self.lock()
-        defer {
-            self.unlock()
-        }
+    func calculateLockedOrFail<T>( _ action: @noescape() throws -> T) throws -> T {
+        lock(); defer { unlock() }
         let result = try action()
         return result
     }

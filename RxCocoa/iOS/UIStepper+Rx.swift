@@ -21,7 +21,7 @@ extension UIStepper {
     */
     public var rx_value: ControlProperty<Double> {
         return UIControl.rx_value(
-            control: self,
+            self,
             getter: { stepper in
                 stepper.value
             }, setter: { stepper, value in

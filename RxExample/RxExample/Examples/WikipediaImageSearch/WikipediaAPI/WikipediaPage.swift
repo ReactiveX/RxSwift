@@ -21,9 +21,9 @@ struct WikipediaPage {
     }
     
     // tedious parsing part
-    static func parseJSON(json: NSDictionary) throws -> WikipediaPage {
-        guard let title = json.valueForKey("parse")?.valueForKey("title") as? String,
-              let text = json.valueForKey("parse")?.valueForKey("text")?.valueForKey("*") as? String else {
+    static func parseJSON(_ json: NSDictionary) throws -> WikipediaPage {
+        guard let title = json.value(forKey: "parse")?.value(forKey: "title") as? String,
+              let text = json.value(forKey: "parse")?.value(forKey: "text")?.value(forKey: "*") as? String else {
             throw apiError("Error parsing page content")
         }
         

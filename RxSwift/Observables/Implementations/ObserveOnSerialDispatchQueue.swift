@@ -31,7 +31,7 @@ class ObserveOnSerialDispatchQueueSink<O: ObserverType> : ObserverBase<O.E> {
         super.init()
 
         cachedScheduleLambda = { sink, event in
-            sink.observer.on(event: event)
+            sink.observer.on(event)
 
             if event.isStopEvent {
                 sink.dispose()
@@ -41,8 +41,8 @@ class ObserveOnSerialDispatchQueueSink<O: ObserverType> : ObserverBase<O.E> {
         }
     }
 
-    override func onCore(event: Event<E>) {
-        self.scheduler.schedule(state: (self, event), action: cachedScheduleLambda)
+    override func onCore(_ event: Event<E>) {
+        let _ = self.scheduler.schedule((self, event), action: cachedScheduleLambda)
     }
    
     override func dispose() {
@@ -61,21 +61,21 @@ class ObserveOnSerialDispatchQueue<E> : Producer<E> {
         self.source = source
         
 #if TRACE_RESOURCES
-        AtomicIncrement(&resourceCount)
-        AtomicIncrement(&numberOfSerialDispatchQueueObservables)
+        let _ = AtomicIncrement(&resourceCount)
+        let _ = AtomicIncrement(&numberOfSerialDispatchQueueObservables)
 #endif
     }
     
-    override func run<O : ObserverType where O.E == E>(observer: O) -> Disposable {
+    override func run<O : ObserverType where O.E == E>(_ observer: O) -> Disposable {
         let sink = ObserveOnSerialDispatchQueueSink(scheduler: scheduler, observer: observer)
-        sink.subscription.disposable = source.subscribe(observer: sink)
+        sink.subscription.disposable = source.subscribe(sink)
         return sink
     }
     
 #if TRACE_RESOURCES
     deinit {
-        AtomicDecrement(&resourceCount)
-        AtomicDecrement(&numberOfSerialDispatchQueueObservables)
+        let _ = AtomicDecrement(&resourceCount)
+        let _ = AtomicDecrement(&numberOfSerialDispatchQueueObservables)
     }
 #endif
 }

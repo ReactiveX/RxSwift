@@ -22,7 +22,7 @@ class GenerateSink<S, O: ObserverType> : Sink<O> {
     }
     
     func run() -> Disposable {
-        return _parent._scheduler.scheduleRecursive(state: true) { (isFirst, recurse) -> Void in
+        return _parent._scheduler.scheduleRecursive(true) { (isFirst, recurse) -> Void in
             do {
                 if !isFirst {
                     self._state = try self._parent._iterate(self._state)
@@ -30,17 +30,17 @@ class GenerateSink<S, O: ObserverType> : Sink<O> {
                 
                 if try self._parent._condition(self._state) {
                     let result = try self._parent._resultSelector(self._state)
-                    self.forwardOn(event: .Next(result))
+                    self.forwardOn(.next(result))
                     
                     recurse(false)
                 }
                 else {
-                    self.forwardOn(event: .Completed)
+                    self.forwardOn(.completed)
                     self.dispose()
                 }
             }
             catch let error {
-                self.forwardOn(event: .Error(error))
+                self.forwardOn(.error(error))
                 self.dispose()
             }
         }
@@ -63,7 +63,7 @@ class Generate<S, E> : Producer<E> {
         super.init()
     }
     
-    override func run<O : ObserverType where O.E == E>(observer: O) -> Disposable {
+    override func run<O : ObserverType where O.E == E>(_ observer: O) -> Disposable {
         let sink = GenerateSink(parent: self, observer: observer)
         sink.disposable = sink.run()
         return sink

@@ -19,8 +19,8 @@ extension Observable {
     - parameter subscribe: Implementation of the resulting observable sequence's `subscribe` method.
     - returns: The observable sequence with the specified implementation for the `subscribe` method.
     */
-    @warn_unused_result(message: "http://git.io/rxs.uo")
-    public static func create(subscribe: (AnyObserver<E>) -> Disposable) -> Observable<E> {
+    @warn_unused_result(message:"http://git.io/rxs.uo")
+    public static func create(_ subscribe: (AnyObserver<E>) -> Disposable) -> Observable<E> {
         return AnonymousObservable(subscribe)
     }
 
@@ -33,7 +33,7 @@ extension Observable {
 
     - returns: An observable sequence with no elements.
     */
-    @warn_unused_result(message: "http://git.io/rxs.uo")
+    @warn_unused_result(message:"http://git.io/rxs.uo")
     public static func empty() -> Observable<E> {
         return Empty<E>()
     }
@@ -47,7 +47,7 @@ extension Observable {
 
     - returns: An observable sequence whose observers will never get called.
     */
-    @warn_unused_result(message: "http://git.io/rxs.uo")
+    @warn_unused_result(message:"http://git.io/rxs.uo")
     public static func never() -> Observable<E> {
         return Never()
     }
@@ -63,7 +63,7 @@ extension Observable {
     - parameter: Scheduler to send the single element on.
     - returns: An observable sequence containing the single specified element.
     */
-    @warn_unused_result(message: "http://git.io/rxs.uo")
+    @warn_unused_result(message:"http://git.io/rxs.uo")
     public static func just(_ element: E, scheduler: ImmediateSchedulerType? = nil) -> Observable<E> {
         if let scheduler = scheduler {
             return JustScheduled(element: element, scheduler: scheduler)
@@ -82,7 +82,7 @@ extension Observable {
 
     - returns: The observable sequence that terminates with specified error.
     */
-    @warn_unused_result(message: "http://git.io/rxs.uo")
+    @warn_unused_result(message:"http://git.io/rxs.uo")
     public static func error(_ error: ErrorProtocol) -> Observable<E> {
         return Error(error: error)
     }
@@ -98,8 +98,8 @@ extension Observable {
     - parameter scheduler: Scheduler to send elements on. If `nil`, elements are sent immediatelly on subscription.
     - returns: The observable sequence whose elements are pulled from the given arguments.
     */
-    @warn_unused_result(message: "http://git.io/rxs.uo")
-    public static func of(elements: E ..., scheduler: ImmediateSchedulerType? = nil) -> Observable<E> {
+    @warn_unused_result(message:"http://git.io/rxs.uo")
+    public static func of(_ elements: E ..., scheduler: ImmediateSchedulerType? = nil) -> Observable<E> {
         return ObservableSequence(elements: elements, scheduler: scheduler)
     }
 
@@ -113,8 +113,8 @@ extension Observable {
     - parameter observableFactory: Observable factory function to invoke for each observer that subscribes to the resulting sequence.
     - returns: An observable sequence whose observers trigger an invocation of the given observable factory function.
     */
-    @warn_unused_result(message: "http://git.io/rxs.uo")
-    public static func deferred(observableFactory: () throws -> Observable<E>)
+    @warn_unused_result(message:"http://git.io/rxs.uo")
+    public static func deferred(_ observableFactory: () throws -> Observable<E>)
         -> Observable<E> {
         return Deferred(observableFactory: observableFactory)
     }
@@ -131,7 +131,7 @@ extension Observable {
     - parameter scheduler: Scheduler on which to run the generator loop.
     - returns: The generated sequence.
     */
-    @warn_unused_result(message: "http://git.io/rxs.uo")
+    @warn_unused_result(message:"http://git.io/rxs.uo")
     public static func generate(initialState: E, condition: (E) throws -> Bool, scheduler: ImmediateSchedulerType = CurrentThreadScheduler.instance, iterate: (E) throws -> E) -> Observable<E> {
         return Generate(initialState: initialState, condition: condition, iterate: iterate, resultSelector: { $0 }, scheduler: scheduler)
     }
@@ -145,8 +145,8 @@ extension Observable {
     - parameter scheduler: Scheduler to run the producer loop on.
     - returns: An observable sequence that repeats the given element infinitely.
     */
-    @warn_unused_result(message: "http://git.io/rxs.uo")
-    public static func repeatElement(element: E, scheduler: ImmediateSchedulerType = CurrentThreadScheduler.instance) -> Observable<E> {
+    @warn_unused_result(message:"http://git.io/rxs.uo")
+    public static func repeatElement(_ element: E, scheduler: ImmediateSchedulerType = CurrentThreadScheduler.instance) -> Observable<E> {
         return RepeatElement(element: element, scheduler: scheduler)
     }
 
@@ -159,8 +159,8 @@ extension Observable {
     - parameter observableFactory: Factory function to obtain an observable sequence that depends on the obtained resource.
     - returns: An observable sequence whose lifetime controls the lifetime of the dependent resource object.
     */
-    @warn_unused_result(message: "http://git.io/rxs.uo")
-    public static func using<R: Disposable>(resourceFactory: () throws -> R, observableFactory: (R) throws -> Observable<E>) -> Observable<E> {
+    @warn_unused_result(message:"http://git.io/rxs.uo")
+    public static func using<R: Disposable>(_ resourceFactory: () throws -> R, observableFactory: (R) throws -> Observable<E>) -> Observable<E> {
         return Using(resourceFactory: resourceFactory, observableFactory: observableFactory)
     }
 }
@@ -176,7 +176,7 @@ extension Observable where Element : SignedInteger {
     - parameter scheduler: Scheduler to run the generator loop on.
     - returns: An observable sequence that contains a range of sequential integral numbers.
     */
-    @warn_unused_result(message: "http://git.io/rxs.uo")
+    @warn_unused_result(message:"http://git.io/rxs.uo")
     public static func range(start: E, count: E, scheduler: ImmediateSchedulerType = CurrentThreadScheduler.instance) -> Observable<E> {
         return RangeProducer<E>(start: start, count: count, scheduler: scheduler)
     }
@@ -190,8 +190,8 @@ extension Sequence {
 
     - returns: The observable sequence whose elements are pulled from the given enumerable sequence.
     */
-    @warn_unused_result(message: "http://git.io/rxs.uo")
-    public func toObservable(scheduler: ImmediateSchedulerType? = nil) -> Observable<Iterator.Element> {
+    @warn_unused_result(message:"http://git.io/rxs.uo")
+    public func toObservable(_ scheduler: ImmediateSchedulerType? = nil) -> Observable<Iterator.Element> {
         return ObservableSequence(elements: Array(self), scheduler: scheduler)
     }
 }
@@ -204,8 +204,8 @@ extension Array {
 
     - returns: The observable sequence whose elements are pulled from the given enumerable sequence.
     */
-    @warn_unused_result(message: "http://git.io/rxs.uo")
-    public func toObservable(scheduler: ImmediateSchedulerType? = nil) -> Observable<Iterator.Element> {
+    @warn_unused_result(message:"http://git.io/rxs.uo")
+    public func toObservable(_ scheduler: ImmediateSchedulerType? = nil) -> Observable<Iterator.Element> {
         return ObservableSequence(elements: self, scheduler: scheduler)
     }
 }

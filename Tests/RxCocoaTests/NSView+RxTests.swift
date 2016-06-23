@@ -20,14 +20,14 @@ extension NSViewTests {
         let subject = NSView(frame: CGRect.zero)
         Observable.just(true).subscribe(subject.rx_hidden).dispose()
 
-        XCTAssertTrue(subject.hidden == true)
+        XCTAssertTrue(subject.isHidden == true)
     }
 
     func testHidden_False() {
         let subject = NSView(frame: CGRect.zero)
         Observable.just(false).subscribe(subject.rx_hidden).dispose()
 
-        XCTAssertTrue(subject.hidden == false)
+        XCTAssertTrue(subject.isHidden == false)
     }
 }
 

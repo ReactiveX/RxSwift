@@ -33,36 +33,34 @@ class KVOObservable<Element>
         }
     }
     
-    func subscribe<O : ObserverType where O.E == Element?>(observer: O) -> Disposable {
+    func subscribe<O : ObserverType where O.E == Element?>(_ observer: O) -> Disposable {
         let observer = KVOObserver(parent: self) { (value) in
             if value as? NSNull != nil {
-                observer.on(event: .Next(nil))
+                observer.on(.next(nil))
                 return
             }
-            observer.on(event: .Next(value as? Element))
+            observer.on(.next(value as? Element))
         }
         
-        return AnonymousDisposable {
-            observer.dispose()
-        }
+        return AnonymousDisposable(observer.dispose)
     }
     
 }
 
 #if !DISABLE_SWIZZLING
 
-func observeWeaklyKeyPathFor(target: NSObject, keyPath: String, options: NSKeyValueObservingOptions) -> Observable<AnyObject?> {
+func observeWeaklyKeyPathFor(_ target: NSObject, keyPath: String, options: NSKeyValueObservingOptions) -> Observable<AnyObject?> {
     let components = keyPath.components(separatedBy: ".").filter { $0 != "self" }
     
-    let observable = observeWeaklyKeyPathFor(target: target, keyPathSections: components, options: options)
-        .finishWithNilWhenDealloc(target: target)
+    let observable = observeWeaklyKeyPathFor(target, keyPathSections: components, options: options)
+        .finishWithNilWhenDealloc(target)
  
-    if !options.intersect(.initial).isEmpty {
+    if !options.intersection(.initial).isEmpty {
         return observable
     }
     else {
         return observable
-            .skip(count: 1)
+            .skip(1)
     }
 }
 
@@ -70,12 +68,12 @@ func observeWeaklyKeyPathFor(target: NSObject, keyPath: String, options: NSKeyVa
 // Identifiers can't contain `,`, so the only place where `,` can appear
 // is as a delimiter.
 // This means there is `W` as element in an array of property attributes.
-func isWeakProperty(properyRuntimeInfo: String) -> Bool {
+func isWeakProperty(_ properyRuntimeInfo: String) -> Bool {
     return properyRuntimeInfo.range(of: ",W,") != nil
 }
 
 extension ObservableType where E == AnyObject? {
-    func finishWithNilWhenDealloc(target: NSObject)
+    func finishWithNilWhenDealloc(_ target: NSObject)
         -> Observable<AnyObject?> {
         let deallocating = target.rx_deallocating
             
@@ -83,13 +81,13 @@ extension ObservableType where E == AnyObject? {
             .map { _ in
                 return Observable.just(nil)
             }
-            .startWith(elements: self.asObservable())
+            .startWith(self.asObservable())
             .switchLatest()
     }
 }
 
 func observeWeaklyKeyPathFor(
-        target: NSObject,
+        _ target: NSObject,
         keyPathSections: [String],
         options: NSKeyValueObservingOptions
     ) -> Observable<AnyObject?> {
@@ -101,12 +99,12 @@ func observeWeaklyKeyPathFor(
     
     let property = class_getProperty(object_getClass(target), propertyName)
     if property == nil {
-        return Observable.error(RxCocoaError.InvalidPropertyName(object: target, propertyName: propertyName))
+        return Observable.error(RxCocoaError.invalidPropertyName(object: target, propertyName: propertyName))
     }
     let propertyAttributes = property_getAttributes(property)
     
     // should dealloc hook be in place if week property, or just create strong reference because it doesn't matter
-    let isWeak = isWeakProperty(properyRuntimeInfo: String(propertyAttributes) ?? "")
+    let isWeak = isWeakProperty(String(propertyAttributes) ?? "")
     let propertyObservable = KVOObservable(object: target, keyPath: propertyName, options: options.union(.initial), retainTarget: false) as KVOObservable<AnyObject>
     
     // KVO recursion for value changes
@@ -120,7 +118,7 @@ func observeWeaklyKeyPathFor(
             let strongTarget: AnyObject? = weakTarget
             
             if nextObject == nil {
-                return Observable.error(RxCocoaError.InvalidObjectOnKeyPath(object: nextTarget!, sourceObject: strongTarget ?? NSNull(), propertyName: propertyName))
+                return Observable.error(RxCocoaError.invalidObjectOnKeyPath(object: nextTarget!, sourceObject: strongTarget ?? NSNull(), propertyName: propertyName))
             }
 
             // if target is alive, then send change
@@ -131,11 +129,11 @@ func observeWeaklyKeyPathFor(
             
             let nextElementsObservable = keyPathSections.count == 1
                 ? Observable.just(nextTarget)
-                : observeWeaklyKeyPathFor(target: nextObject!, keyPathSections: remainingPaths, options: options)
+                : observeWeaklyKeyPathFor(nextObject!, keyPathSections: remainingPaths, options: options)
            
             if isWeak {
                 return nextElementsObservable
-                    .finishWithNilWhenDealloc(target: nextObject!)
+                    .finishWithNilWhenDealloc(nextObject!)
             }
             else {
                 return nextElementsObservable

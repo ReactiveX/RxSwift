@@ -74,10 +74,10 @@ public class CurrentThreadScheduler : ImmediateSchedulerType {
 
     static var queue : ScheduleQueue? {
         get {
-            return NSThread.getThreadLocalStorageValueForKey(key: CurrentThreadSchedulerQueueKeyInstance as NSString)
+            return Thread.getThreadLocalStorageValueForKey(CurrentThreadSchedulerQueueKeyInstance as NSString)
         }
         set {
-            NSThread.setThreadLocalStorageValue(value: newValue, forKey: CurrentThreadSchedulerQueueKeyInstance as NSString)
+            Thread.setThreadLocalStorageValue(newValue, forKey: CurrentThreadSchedulerQueueKeyInstance as NSString)
         }
     }
 
@@ -86,11 +86,11 @@ public class CurrentThreadScheduler : ImmediateSchedulerType {
     */
     public static private(set) var isScheduleRequired: Bool {
         get {
-            let value: CurrentThreadSchedulerValue? = NSThread.getThreadLocalStorageValueForKey(key: CurrentThreadSchedulerKeyInstance as NSString)
+            let value: CurrentThreadSchedulerValue? = Thread.getThreadLocalStorageValueForKey(CurrentThreadSchedulerKeyInstance as NSString)
             return value == nil
         }
         set(isScheduleRequired) {
-            NSThread.setThreadLocalStorageValue(value: isScheduleRequired ? nil : CurrentThreadSchedulerValueInstance, forKey: CurrentThreadSchedulerKeyInstance as NSString)
+            Thread.setThreadLocalStorageValue(isScheduleRequired ? nil : CurrentThreadSchedulerValueInstance, forKey: CurrentThreadSchedulerKeyInstance as NSString)
         }
     }
 
@@ -104,7 +104,7 @@ public class CurrentThreadScheduler : ImmediateSchedulerType {
     - parameter action: Action to be executed.
     - returns: The disposable object used to cancel the scheduled action (best effort).
     */
-    public func schedule<StateType>(state: StateType, action: (StateType) -> Disposable) -> Disposable {
+    public func schedule<StateType>(_ state: StateType, action: (StateType) -> Disposable) -> Disposable {
         if CurrentThreadScheduler.isScheduleRequired {
             CurrentThreadScheduler.isScheduleRequired = false
 
@@ -141,12 +141,10 @@ public class CurrentThreadScheduler : ImmediateSchedulerType {
         }
 
         let scheduledItem = ScheduledItem(action: action, state: state)
-        queue.value.enqueue(element: scheduledItem)
+        queue.value.enqueue(scheduledItem)
         
         // In Xcode 7.3, `return scheduledItem` causes segmentation fault 11 on release build.
         // To workaround this compiler issue, returns AnonymousDisposable that disposes scheduledItem.
-        return AnonymousDisposable {
-            scheduledItem.dispose()
-        }
+        return AnonymousDisposable(scheduledItem.dispose)
     }
 }

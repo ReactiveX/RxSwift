@@ -26,7 +26,7 @@ public class WikipediaSearchCell: UITableViewCell {
     public override func awakeFromNib() {
         super.awakeFromNib()
 
-        self.imagesOutlet.registerNib(UINib(nibName: "WikipediaImageCell", bundle: nil), forCellWithReuseIdentifier: "ImageCell")
+        self.imagesOutlet.register(UINib(nibName: "WikipediaImageCell", bundle: nil), forCellWithReuseIdentifier: "ImageCell")
     }
 
     var viewModel: SearchResultViewModel! {
@@ -42,8 +42,8 @@ public class WikipediaSearchCell: UITableViewCell {
 
             let reachabilityService = Dependencies.sharedDependencies.reachabilityService
             viewModel.imageURLs
-                .drive(self.imagesOutlet.rx_itemsWithCellIdentifier("ImageCell", cellType: CollectionViewImageCell.self)) { [weak self] (_, URL, cell) in
-                    cell.downloadableImage = self?.imageService.imageFromURL(URL, reachabilityService: reachabilityService) ?? Observable.empty()
+                .drive(self.imagesOutlet.rx_itemsWithCellIdentifier("ImageCell", cellType: CollectionViewImageCell.self)) { [weak self] (_, url, cell) in
+                    cell.downloadableImage = self?.imageService.imageFromURL(url, reachabilityService: reachabilityService) ?? Observable.empty()
                 }
                 .addDisposableTo(disposeBag)
 

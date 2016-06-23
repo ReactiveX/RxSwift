@@ -26,7 +26,7 @@ extension NSImageView {
     
     - parameter transitionType: Optional transition type while setting the image (kCATransitionFade, kCATransitionMoveIn, ...)
     */
-    public func rx_imageAnimated(transitionType: String?) -> AnyObserver<NSImage?> {
+    public func rx_imageAnimated(_ transitionType: String?) -> AnyObserver<NSImage?> {
         return UIBindingObserver(UIElement: self) { control, value in
             if let transitionType = transitionType {
                 if value != nil {
@@ -34,7 +34,7 @@ extension NSImageView {
                     transition.duration = 0.25
                     transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
                     transition.type = transitionType
-                    control.layer?.addAnimation(transition, forKey: kCATransition)
+                    control.layer?.add(transition, forKey: kCATransition)
                 }
             }
             else {

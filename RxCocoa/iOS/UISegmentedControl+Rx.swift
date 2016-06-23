@@ -21,7 +21,7 @@ extension UISegmentedControl {
     */
     public var rx_value: ControlProperty<Int> {
         return UIControl.rx_value(
-            control: self,
+            self,
             getter: { segmentedControl in
                 segmentedControl.selectedSegmentIndex
             }, setter: { segmentedControl, value in

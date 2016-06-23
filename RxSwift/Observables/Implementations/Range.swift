@@ -27,7 +27,7 @@ class RangeProducer<E: SignedInteger> : Producer<E> {
         _scheduler = scheduler
     }
     
-    override func run<O : ObserverType where O.E == E>(observer: O) -> Disposable {
+    override func run<O : ObserverType where O.E == E>(_ observer: O) -> Disposable {
         let sink = RangeSink(parent: self, observer: observer)
         sink.disposable = sink.run()
         return sink
@@ -45,13 +45,13 @@ class RangeSink<O: ObserverType where O.E: SignedInteger> : Sink<O> {
     }
     
     func run() -> Disposable {
-        return _parent._scheduler.scheduleRecursive(state: 0 as O.E) { i, recurse in
+        return _parent._scheduler.scheduleRecursive(0 as O.E) { i, recurse in
             if i < self._parent._count {
-                self.forwardOn(event: .Next(self._parent._start + i))
+                self.forwardOn(.next(self._parent._start + i))
                 recurse(i + 1)
             }
             else {
-                self.forwardOn(event: .Completed)
+                self.forwardOn(.completed)
                 self.dispose()
             }
         }

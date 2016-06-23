@@ -15,7 +15,7 @@ class ZipCollectionTypeSink<C: Collection, R, O: ObserverType where C.Iterator.E
     
     private let _parent: Parent
     
-    private let _lock = NSRecursiveLock()
+    private let _lock = RecursiveLock()
     
     // state
     private var _numberOfValues = 0
@@ -38,11 +38,11 @@ class ZipCollectionTypeSink<C: Collection, R, O: ObserverType where C.Iterator.E
         super.init(observer: observer)
     }
     
-    func on(event: Event<SourceElement>, atIndex: Int) {
+    func on(_ event: Event<SourceElement>, atIndex: Int) {
         _lock.lock(); defer { _lock.unlock() } // {
             switch event {
-            case .Next(let element):
-                _values[atIndex].enqueue(element: element)
+            case .next(let element):
+                _values[atIndex].enqueue(element)
                 
                 if _values[atIndex].count == 1 {
                     _numberOfValues += 1
@@ -51,7 +51,7 @@ class ZipCollectionTypeSink<C: Collection, R, O: ObserverType where C.Iterator.E
                 if _numberOfValues < _parent.count {
                     let numberOfOthersThatAreDone = _numberOfDone - (_isDone[atIndex] ? 1 : 0)
                     if numberOfOthersThatAreDone == _parent.count - 1 {
-                        self.forwardOn(event: .Completed)
+                        self.forwardOn(.completed)
                         self.dispose()
                     }
                     return
@@ -72,17 +72,17 @@ class ZipCollectionTypeSink<C: Collection, R, O: ObserverType where C.Iterator.E
                     }
                     
                     let result = try _parent.resultSelector(arguments)
-                    self.forwardOn(event: .Next(result))
+                    self.forwardOn(.next(result))
                 }
                 catch let error {
-                    self.forwardOn(event: .Error(error))
+                    self.forwardOn(.error(error))
                     self.dispose()
                 }
                 
-            case .Error(let error):
-                self.forwardOn(event: .Error(error))
+            case .error(let error):
+                self.forwardOn(.error(error))
                 self.dispose()
-            case .Completed:
+            case .completed:
                 if _isDone[atIndex] {
                     return
                 }
@@ -91,7 +91,7 @@ class ZipCollectionTypeSink<C: Collection, R, O: ObserverType where C.Iterator.E
                 _numberOfDone += 1
                 
                 if _numberOfDone == _parent.count {
-                    self.forwardOn(event: .Completed)
+                    self.forwardOn(.completed)
                     self.dispose()
                 }
                 else {
@@ -106,8 +106,8 @@ class ZipCollectionTypeSink<C: Collection, R, O: ObserverType where C.Iterator.E
         for i in _parent.sources {
             let index = j
             let source = i.asObservable()
-            _subscriptions[j].disposable = source.subscribe(observer: AnyObserver { event in
-                self.on(event: event, atIndex: index)
+            _subscriptions[j].disposable = source.subscribe(AnyObserver { event in
+                self.on(event, atIndex: index)
                 })
             j += 1
         }
@@ -129,7 +129,7 @@ class ZipCollectionType<C: Collection, R where C.Iterator.Element : ObservableCo
         self.count = Int(self.sources.count.toIntMax())
     }
     
-    override func run<O : ObserverType where O.E == R>(observer: O) -> Disposable {
+    override func run<O : ObserverType where O.E == R>(_ observer: O) -> Disposable {
         let sink = ZipCollectionTypeSink(parent: self, observer: observer)
         sink.disposable = sink.run()
         return sink

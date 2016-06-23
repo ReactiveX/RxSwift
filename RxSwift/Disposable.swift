@@ -8,12 +8,8 @@
 
 import Foundation
 
-/**
-Respresents disposable resource.
-*/
+/// Respresents a disposable resource.
 public protocol Disposable {
-    /**
-    Dispose resource.
-    */
+    /// Dispose resource.
     func dispose()
 }

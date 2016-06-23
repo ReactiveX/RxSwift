@@ -66,7 +66,7 @@ extension ObservableCreationTests {
                 res.on(e)
 
                 switch e {
-                case .Next:
+                case .next:
                     d.dispose()
                 default:
                     break

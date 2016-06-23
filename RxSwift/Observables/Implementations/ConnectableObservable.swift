@@ -27,12 +27,12 @@ public class ConnectableObservable<Element>
 
 class Connection<S: SubjectType> : Disposable {
 
-    private var _lock: NSRecursiveLock
+    private var _lock: RecursiveLock
     // state
     private var _parent: ConnectableObservableAdapter<S>?
     private var _subscription : Disposable?
 
-    init(parent: ConnectableObservableAdapter<S>, lock: NSRecursiveLock, subscription: Disposable) {
+    init(parent: ConnectableObservableAdapter<S>, lock: RecursiveLock, subscription: Disposable) {
         _parent = parent
         _subscription = subscription
         _lock = lock
@@ -66,7 +66,7 @@ class ConnectableObservableAdapter<S: SubjectType>
     private let _subject: S
     private let _source: Observable<S.SubjectObserverType.E>
     
-    private let _lock = NSRecursiveLock()
+    private let _lock = RecursiveLock()
     
     // state
     private var _connection: ConnectionType?
@@ -83,14 +83,14 @@ class ConnectableObservableAdapter<S: SubjectType>
                 return connection
             }
             
-            let disposable = _source.subscribe(observer: _subject.asObserver())
+            let disposable = _source.subscribe(_subject.asObserver())
             let connection = Connection(parent: self, lock: _lock, subscription: disposable)
             _connection = connection
             return connection
         }
     }
     
-    override func subscribe<O : ObserverType where O.E == S.E>(observer: O) -> Disposable {
-        return _subject.subscribe(observer: observer)
+    override func subscribe<O : ObserverType where O.E == S.E>(_ observer: O) -> Disposable {
+        return _subject.subscribe(observer)
     }
 }

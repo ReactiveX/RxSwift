@@ -23,8 +23,8 @@ extension ObservableType {
     - returns: Disposable object that can be used to unsubscribe the observer.
     */
     @warn_unused_result(message: "http://git.io/rxs.ud")
-    public func bindTo<O: ObserverType where O.E == E>(observer: O) -> Disposable {
-        return self.subscribe(observer: observer)
+    public func bindTo<O: ObserverType where O.E == E>(_ observer: O) -> Disposable {
+        return self.subscribe(observer)
     }
 
     /**
@@ -37,19 +37,19 @@ extension ObservableType {
     - returns: Disposable object that can be used to unsubscribe the observer.
     */
     @warn_unused_result(message: "http://git.io/rxs.ud")
-    public func bindTo(variable: Variable<E>) -> Disposable {
+    public func bindTo(_ variable: Variable<E>) -> Disposable {
         return subscribe { e in
             switch e {
-            case let .Next(element):
+            case let .next(element):
                 variable.value = element
-            case let .Error(error):
+            case let .error(error):
                 let error = "Binding error to variable: \(error)"
             #if DEBUG
                 rxFatalError(error)
             #else
                 print(error)
             #endif
-            case .Completed:
+            case .completed:
                 break
             }
         }
@@ -62,7 +62,7 @@ extension ObservableType {
     - returns: Object representing subscription.
     */
     @warn_unused_result(message: "http://git.io/rxs.ud")
-    public func bindTo<R>(binder: Self -> R) -> R {
+    public func bindTo<R>(_ binder: (Self) -> R) -> R {
         return binder(self)
     }
 
@@ -79,7 +79,7 @@ extension ObservableType {
     - returns: Object representing subscription.
     */
     @warn_unused_result(message: "http://git.io/rxs.ud")
-    public func bindTo<R1, R2>(binder: Self -> R1 -> R2, curriedArgument: R1) -> R2 {
+    public func bindTo<R1, R2>(_ binder: (Self) -> (R1) -> R2, curriedArgument: R1) -> R2 {
          return binder(self)(curriedArgument)
     }
     
@@ -94,7 +94,7 @@ extension ObservableType {
     - returns: Subscription object used to unsubscribe from the observable sequence.
     */
     @warn_unused_result(message: "http://git.io/rxs.ud")
-    public func bindNext(onNext: E -> Void) -> Disposable {
+    public func bindNext(_ onNext: (E) -> Void) -> Disposable {
         return subscribe(onNext: onNext, onError: { error in
             let error = "Binding error: \(error)"
             #if DEBUG

@@ -16,13 +16,13 @@ extension ValidationResult : Equatable {
 
 func == (lhs: ValidationResult, rhs: ValidationResult) -> Bool {
     switch (lhs, rhs) {
-    case (.OK, .OK):
+    case (.ok, .ok):
         return true
-    case (.Empty, .Empty):
+    case (.empty, .empty):
         return true
-    case (.Validating, .Validating):
+    case (.validating, .validating):
         return true
-    case (.Failed, .Failed):
+    case (.failed, .failed):
         return true
     default:
         return false

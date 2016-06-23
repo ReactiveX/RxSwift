@@ -26,13 +26,13 @@ extension UITableView {
     - returns: Disposable object that can be used to unbind.
     */
     public func rx_itemsWithCellFactory<S: Sequence, O: ObservableType where O.E == S>
-        (source: O)
+        (_ source: O)
         -> (cellFactory: (UITableView, Int, S.Iterator.Element) -> UITableViewCell)
         -> Disposable {
         return { cellFactory in
             let dataSource = RxTableViewReactiveArrayDataSourceSequenceWrapper<S>(cellFactory: cellFactory)
             
-            return self.rx_itemsWithDataSource(dataSource: dataSource)(source: source)
+            return self.rx_itemsWithDataSource(dataSource)(source: source)
         }
     }
 
@@ -46,19 +46,19 @@ extension UITableView {
     - returns: Disposable object that can be used to unbind.
     */
     public func rx_itemsWithCellIdentifier<S: Sequence, Cell: UITableViewCell, O : ObservableType where O.E == S>
-        (cellIdentifier: String, cellType: Cell.Type = Cell.self)
+        (_ cellIdentifier: String, cellType: Cell.Type = Cell.self)
         -> (source: O)
         -> (configureCell: (Int, S.Iterator.Element, Cell) -> Void)
         -> Disposable {
         return { source in
             return { configureCell in
                 let dataSource = RxTableViewReactiveArrayDataSourceSequenceWrapper<S> { (tv, i, item) in
-                    let indexPath = NSIndexPath(forItem: i, inSection: 0)
+                    let indexPath = IndexPath(item: i, section: 0)
                     let cell = tv.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! Cell
                     configureCell(i, item, cell)
                     return cell
                 }
-                return self.rx_itemsWithDataSource(dataSource: dataSource)(source: source)
+                return self.rx_itemsWithDataSource(dataSource)(source: source)
             }
         }
     }
@@ -70,12 +70,15 @@ extension UITableView {
     - parameter source: Observable sequence of items.
     - returns: Disposable object that can be used to unbind.
     */
-    public func rx_itemsWithDataSource<DataSource: protocol<RxTableViewDataSourceType, UITableViewDataSource>, S: Sequence, O: ObservableType where DataSource.Element == S, O.E == S>
-        (dataSource: DataSource)
+    public func rx_itemsWithDataSource<
+            DataSource: protocol<RxTableViewDataSourceType, UITableViewDataSource>,
+            O: ObservableType where DataSource.Element == O.E
+        >
+        (_ dataSource: DataSource)
         -> (source: O)
         -> Disposable  {
         return { source in
-            return source.subscribeProxyDataSourceForObject(object: self, dataSource: dataSource, retainDataSource: false) { [weak self] (_: RxTableViewDataSourceProxy, event) -> Void in
+            return source.subscribeProxyDataSourceForObject(self, dataSource: dataSource, retainDataSource: false) { [weak self] (_: RxTableViewDataSourceProxy, event) -> Void in
                 guard let tableView = self else {
                     return
                 }
@@ -111,7 +114,7 @@ extension UITableView {
     For more information take a look at `DelegateProxyType` protocol documentation.
     */
     public var rx_dataSource: DelegateProxy {
-        return proxyForObject(RxTableViewDataSourceProxy.self, self)
+        return RxTableViewDataSourceProxy.proxyForObject(self)
     }
    
     /**
@@ -122,11 +125,9 @@ extension UITableView {
     - parameter dataSource: Data source object.
     - returns: Disposable object that can be used to unbind the data source.
     */
-    public func rx_setDataSource(dataSource: UITableViewDataSource)
+    public func rx_setDataSource(_ dataSource: UITableViewDataSource)
         -> Disposable {
-        let proxy = proxyForObject(RxTableViewDataSourceProxy.self, self)
-            
-        return installDelegate(proxy: proxy, delegate: dataSource, retainDelegate: false, onProxyForObject: self)
+        return RxTableViewDataSourceProxy.installForwardDelegate(dataSource, retainDelegate: false, onProxyForObject: self)
     }
     
     // events
@@ -134,10 +135,10 @@ extension UITableView {
     /**
     Reactive wrapper for `delegate` message `tableView:didSelectRowAtIndexPath:`.
     */
-    public var rx_itemSelected: ControlEvent<NSIndexPath> {
-        let source = rx_delegate.observe(selector: #selector(UITableViewDelegate.tableView(_:didSelectRowAt:)))
+    public var rx_itemSelected: ControlEvent<IndexPath> {
+        let source = rx_delegate.observe(#selector(UITableViewDelegate.tableView(_:didSelectRowAt:)))
             .map { a in
-                return try castOrThrow(NSIndexPath.self, a[1])
+                return try castOrThrow(IndexPath.self, a[1])
             }
 
         return ControlEvent(events: source)
@@ -146,10 +147,10 @@ extension UITableView {
     /**
      Reactive wrapper for `delegate` message `tableView:didDeselectRowAtIndexPath:`.
      */
-    public var rx_itemDeselected: ControlEvent<NSIndexPath> {
-        let source = rx_delegate.observe(selector: #selector(UITableViewDelegate.tableView(_:didDeselectRowAt:)))
+    public var rx_itemDeselected: ControlEvent<IndexPath> {
+        let source = rx_delegate.observe(#selector(UITableViewDelegate.tableView(_:didDeselectRowAt:)))
             .map { a in
-                return try castOrThrow(NSIndexPath.self, a[1])
+                return try castOrThrow(IndexPath.self, a[1])
             }
 
         return ControlEvent(events: source)
@@ -158,10 +159,10 @@ extension UITableView {
     /**
      Reactive wrapper for `delegate` message `tableView:accessoryButtonTappedForRowWithIndexPath:`.
      */
-    public var rx_itemAccessoryButtonTapped: ControlEvent<NSIndexPath> {
-        let source: Observable<NSIndexPath> = rx_delegate.observe(selector: #selector(UITableViewDelegate.tableView(_:accessoryButtonTappedForRowWith:)))
+    public var rx_itemAccessoryButtonTapped: ControlEvent<IndexPath> {
+        let source: Observable<IndexPath> = rx_delegate.observe(#selector(UITableViewDelegate.tableView(_:accessoryButtonTappedForRowWith:)))
             .map { a in
-                return try castOrThrow(NSIndexPath.self, a[1])
+                return try castOrThrow(IndexPath.self, a[1])
             }
         
         return ControlEvent(events: source)
@@ -170,13 +171,13 @@ extension UITableView {
     /**
     Reactive wrapper for `delegate` message `tableView:commitEditingStyle:forRowAtIndexPath:`.
     */
-    public var rx_itemInserted: ControlEvent<NSIndexPath> {
-        let source = rx_dataSource.observe(selector: #selector(UITableViewDataSource.tableView(_:commit:forRowAt:)))
+    public var rx_itemInserted: ControlEvent<IndexPath> {
+        let source = rx_dataSource.observe(#selector(UITableViewDataSource.tableView(_:commit:forRowAt:)))
             .filter { a in
                 return UITableViewCellEditingStyle(rawValue: (try castOrThrow(NSNumber.self, a[1])).intValue) == .insert
             }
             .map { a in
-                return (try castOrThrow(NSIndexPath.self, a[2]))
+                return (try castOrThrow(IndexPath.self, a[2]))
         }
         
         return ControlEvent(events: source)
@@ -185,13 +186,13 @@ extension UITableView {
     /**
     Reactive wrapper for `delegate` message `tableView:commitEditingStyle:forRowAtIndexPath:`.
     */
-    public var rx_itemDeleted: ControlEvent<NSIndexPath> {
-        let source = rx_dataSource.observe(selector: #selector(UITableViewDataSource.tableView(_:commit:forRowAt:)))
+    public var rx_itemDeleted: ControlEvent<IndexPath> {
+        let source = rx_dataSource.observe(#selector(UITableViewDataSource.tableView(_:commit:forRowAt:)))
             .filter { a in
                 return UITableViewCellEditingStyle(rawValue: (try castOrThrow(NSNumber.self, a[1])).intValue) == .delete
             }
             .map { a in
-                return try castOrThrow(NSIndexPath.self, a[2])
+                return try castOrThrow(IndexPath.self, a[2])
             }
         
         return ControlEvent(events: source)
@@ -201,9 +202,9 @@ extension UITableView {
     Reactive wrapper for `delegate` message `tableView:moveRowAtIndexPath:toIndexPath:`.
     */
     public var rx_itemMoved: ControlEvent<ItemMovedEvent> {
-        let source: Observable<ItemMovedEvent> = rx_dataSource.observe(selector: #selector(UITableViewDataSource.tableView(_:moveRowAt:to:)))
+        let source: Observable<ItemMovedEvent> = rx_dataSource.observe(#selector(UITableViewDataSource.tableView(_:moveRowAt:to:)))
             .map { a in
-                return (try castOrThrow(NSIndexPath.self, a[1]), try castOrThrow(NSIndexPath.self, a[2]))
+                return (try castOrThrow(IndexPath.self, a[1]), try castOrThrow(IndexPath.self, a[2]))
             }
         
         return ControlEvent(events: source)
@@ -213,9 +214,9 @@ extension UITableView {
     Reactive wrapper for `delegate` message `tableView:willDisplayCell:forRowAtIndexPath:`.
     */
     public var rx_willDisplayCell: ControlEvent<WillDisplayCellEvent> {
-        let source: Observable<DidEndDisplayingCellEvent> = rx_delegate.observe(selector: #selector(UITableViewDelegate.tableView(_:willDisplay:forRowAt:)))
+        let source: Observable<DidEndDisplayingCellEvent> = rx_delegate.observe(#selector(UITableViewDelegate.tableView(_:willDisplay:forRowAt:)))
             .map { a in
-                return (try castOrThrow(UITableViewCell.self, a[1]), try castOrThrow(NSIndexPath.self, a[2]))
+                return (try castOrThrow(UITableViewCell.self, a[1]), try castOrThrow(IndexPath.self, a[2]))
             }
 
         return ControlEvent(events: source)
@@ -225,9 +226,9 @@ extension UITableView {
     Reactive wrapper for `delegate` message `tableView:didEndDisplayingCell:forRowAtIndexPath:`.
     */
     public var rx_didEndDisplayingCell: ControlEvent<DidEndDisplayingCellEvent> {
-        let source: Observable<DidEndDisplayingCellEvent> = rx_delegate.observe(selector: #selector(UITableViewDelegate.tableView(_:didEndDisplaying:forRowAt:)))
+        let source: Observable<DidEndDisplayingCellEvent> = rx_delegate.observe(#selector(UITableViewDelegate.tableView(_:didEndDisplaying:forRowAt:)))
             .map { a in
-                return (try castOrThrow(UITableViewCell.self, a[1]), try castOrThrow(NSIndexPath.self, a[2]))
+                return (try castOrThrow(UITableViewCell.self, a[1]), try castOrThrow(IndexPath.self, a[2]))
             }
 
         return ControlEvent(events: source)
@@ -244,13 +245,13 @@ extension UITableView {
             .map { ...
      ```
     */
-    public func rx_modelSelected<T>(modelType: T.Type) -> ControlEvent<T> {
+    public func rx_modelSelected<T>(_ modelType: T.Type) -> ControlEvent<T> {
         let source: Observable<T> = rx_itemSelected.flatMap { [weak self] indexPath -> Observable<T> in
             guard let view = self else {
                 return Observable.empty()
             }
 
-            return Observable.just(try view.rx_modelAtIndexPath(indexPath: indexPath))
+            return Observable.just(try view.rx_modelAtIndexPath(indexPath))
         }
         
         return ControlEvent(events: source)
@@ -267,13 +268,13 @@ extension UITableView {
             .map { ...
      ```
      */
-    public func rx_modelDeselected<T>(modelType: T.Type) -> ControlEvent<T> {
+    public func rx_modelDeselected<T>(_ modelType: T.Type) -> ControlEvent<T> {
          let source: Observable<T> = rx_itemDeselected.flatMap { [weak self] indexPath -> Observable<T> in
              guard let view = self else {
                  return Observable.empty()
              }
 
-           return Observable.just(try view.rx_modelAtIndexPath(indexPath: indexPath))
+           return Observable.just(try view.rx_modelAtIndexPath(indexPath))
         }
 
         return ControlEvent(events: source)
@@ -282,10 +283,10 @@ extension UITableView {
     /**
      Synchronous helper method for retrieving a model at indexPath through a reactive data source.
      */
-    public func rx_modelAtIndexPath<T>(indexPath: NSIndexPath) throws -> T {
+    public func rx_modelAtIndexPath<T>(_ indexPath: IndexPath) throws -> T {
         let dataSource: SectionedViewDataSourceType = castOrFatalError(self.rx_dataSource.forwardToDelegate(), message: "This method only works in case one of the `rx_items*` methods was used.")
         
-        let element = try dataSource.modelAtIndexPath(indexPath: indexPath)
+        let element = try dataSource.modelAtIndexPath(indexPath)
 
         return castOrFatalError(element)
     }
@@ -302,7 +303,7 @@ extension UITableView {
          */
         public var rx_didUpdateFocusInContextWithAnimationCoordinator: ControlEvent<(context: UIFocusUpdateContext, animationCoordinator: UIFocusAnimationCoordinator)> {
             
-            let source = rx_delegate.observe(#selector(UITableViewDelegate.tableView(_:didUpdateFocusInContext:withAnimationCoordinator:)))
+            let source = rx_delegate.observe(#selector(UITableViewDelegate.tableView(_:didUpdateFocusIn:with:)))
                 .map { a -> (context: UIFocusUpdateContext, animationCoordinator: UIFocusAnimationCoordinator) in
                     let context = a[1] as! UIFocusUpdateContext
                     let animationCoordinator = try castOrThrow(UIFocusAnimationCoordinator.self, a[2])

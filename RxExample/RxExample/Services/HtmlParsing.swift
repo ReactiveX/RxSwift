@@ -8,29 +8,29 @@
 
 import Foundation
 
-func parseImageURLsfromHTML(html: NSString) throws -> [NSURL]  {
-    let regularExpression = try NSRegularExpression(pattern: "<img[^>]*src=\"([^\"]+)\"[^>]*>", options: [])
+func parseImageURLsfromHTML(_ html: NSString) throws -> [URL]  {
+    let regularExpression = try RegularExpression(pattern: "<img[^>]*src=\"([^\"]+)\"[^>]*>", options: [])
     
-    let matches = regularExpression.matchesInString(html as String, options: [], range: NSMakeRange(0, html.length))
+    let matches = regularExpression.matches(in: html as String, options: [], range: NSMakeRange(0, html.length))
     
-    return matches.map { match -> NSURL? in
+    return matches.map { match -> URL? in
         if match.numberOfRanges != 2 {
             return nil
         }
         
-        let url = html.substringWithRange(match.rangeAtIndex(1))
+        let url = html.substring(with: match.range(at: 1))
         
         var absoluteURLString = url
         if url.hasPrefix("//") {
              absoluteURLString = "http:" + url
         }
         
-        return NSURL(string: absoluteURLString)
+        return URL(string: absoluteURLString)
     }.filter { $0 != nil }.map { $0! }
 }
 
-func parseImageURLsfromHTMLSuitableForDisplay(html: NSString) throws -> [NSURL] {
+func parseImageURLsfromHTMLSuitableForDisplay(_ html: NSString) throws -> [URL] {
     return try parseImageURLsfromHTML(html).filter {
-        return $0.absoluteString.rangeOfString(".svg.") == nil
+        return $0.absoluteString?.range(of: ".svg.") == nil
     }
 }

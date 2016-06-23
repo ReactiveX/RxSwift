@@ -31,17 +31,34 @@ public class CompositeDisposable : DisposeBase, Disposable, Cancelable {
      Initializes a new instance of composite disposable with the specified number of disposables.
     */
     public init(_ disposable1: Disposable, _ disposable2: Disposable) {
-        _disposables!.insert(element: disposable1)
-        _disposables!.insert(element: disposable2)
+        // This overload is here to make sure we are using optimized version up to 4 arguments.
+        let _ = _disposables!.insert(disposable1)
+        let _ = _disposables!.insert(disposable2)
     }
     
     /**
      Initializes a new instance of composite disposable with the specified number of disposables.
     */
     public init(_ disposable1: Disposable, _ disposable2: Disposable, _ disposable3: Disposable) {
-        _disposables!.insert(element: disposable1)
-        _disposables!.insert(element: disposable2)
-        _disposables!.insert(element: disposable3)
+        // This overload is here to make sure we are using optimized version up to 4 arguments.
+        let _ = _disposables!.insert(disposable1)
+        let _ = _disposables!.insert(disposable2)
+        let _ = _disposables!.insert(disposable3)
+    }
+    
+    /**
+     Initializes a new instance of composite disposable with the specified number of disposables.
+     */
+    public init(_ disposable1: Disposable, _ disposable2: Disposable, _ disposable3: Disposable, _ disposable4: Disposable, _ disposables: Disposable...) {
+        // This overload is here to make sure we are using optimized version up to 4 arguments.
+        let _ = _disposables!.insert(disposable1)
+        let _ = _disposables!.insert(disposable2)
+        let _ = _disposables!.insert(disposable3)
+        let _ = _disposables!.insert(disposable4)
+        
+        for disposable in disposables {
+            let _ = _disposables!.insert(disposable)
+        }
     }
     
     /**
@@ -49,7 +66,7 @@ public class CompositeDisposable : DisposeBase, Disposable, Cancelable {
     */
     public init(disposables: [Disposable]) {
         for disposable in disposables {
-            _disposables!.insert(element: disposable)
+            let _ = _disposables!.insert(disposable)
         }
     }
 
@@ -60,8 +77,8 @@ public class CompositeDisposable : DisposeBase, Disposable, Cancelable {
     - returns: Key that can be used to remove disposable from composite disposable. In case dispose bag was already
         disposed `nil` will be returned.
     */
-    public func addDisposable(disposable: Disposable) -> DisposeKey? {
-        let key = _addDisposable(disposable: disposable)
+    public func addDisposable(_ disposable: Disposable) -> DisposeKey? {
+        let key = _addDisposable(disposable)
 
         if key == nil {
             disposable.dispose()
@@ -70,10 +87,10 @@ public class CompositeDisposable : DisposeBase, Disposable, Cancelable {
         return key
     }
 
-    private func _addDisposable(disposable: Disposable) -> DisposeKey? {
+    private func _addDisposable(_ disposable: Disposable) -> DisposeKey? {
         _lock.lock(); defer { _lock.unlock() }
 
-        return _disposables?.insert(element: disposable)
+        return _disposables?.insert(disposable)
     }
     
     /**
@@ -89,13 +106,13 @@ public class CompositeDisposable : DisposeBase, Disposable, Cancelable {
     
     - parameter disposeKey: Key used to identify disposable to be removed.
     */
-    public func removeDisposable(disposeKey: DisposeKey) {
-        _removeDisposable(disposeKey: disposeKey)?.dispose()
+    public func removeDisposable(_ disposeKey: DisposeKey) {
+        _removeDisposable(disposeKey)?.dispose()
     }
 
-    private func _removeDisposable(disposeKey: DisposeKey) -> Disposable? {
+    private func _removeDisposable(_ disposeKey: DisposeKey) -> Disposable? {
         _lock.lock(); defer { _lock.unlock() }
-        return _disposables?.removeKey(key: disposeKey)
+        return _disposables?.removeKey(disposeKey)
     }
     
     /**
@@ -103,7 +120,7 @@ public class CompositeDisposable : DisposeBase, Disposable, Cancelable {
     */
     public func dispose() {
         if let disposables = _dispose() {
-            disposeAllIn(bag: disposables)
+            disposeAllIn(disposables)
         }
     }
 

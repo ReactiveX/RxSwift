@@ -17,10 +17,10 @@ extension Variable {
 
      - returns: Driving observable sequence.
      */
-    @warn_unused_result(message: "http://git.io/rxs.uo")
+    @warn_unused_result(message:"http://git.io/rxs.uo")
     public func asDriver() -> Driver<E> {
         let source = self.asObservable()
-            .observeOn(scheduler: driverObserveOnScheduler)
+            .observeOn(driverObserveOnScheduler)
         return Driver(source)
     }
 }

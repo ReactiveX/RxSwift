@@ -29,26 +29,26 @@ class UsingSink<SourceType, ResourceType: Disposable, O: ObserverType where O.E 
             let source = try _parent._observableFactory(resource)
             
             return StableCompositeDisposable.create(
-                source.subscribe(observer: self),
+                source.subscribe(self),
                 disposable
             )
         } catch let error {
             return StableCompositeDisposable.create(
-                Observable.error(error).subscribe(observer: self),
+                Observable.error(error).subscribe(self),
                 disposable
             )
         }
     }
     
-    func on(event: Event<E>) {
+    func on(_ event: Event<E>) {
         switch event {
-        case let .Next(value):
-            forwardOn(event: .Next(value))
-        case let .Error(error):
-            forwardOn(event: .Error(error))
+        case let .next(value):
+            forwardOn(.next(value))
+        case let .error(error):
+            forwardOn(.error(error))
             dispose()
-        case .Completed:
-            forwardOn(event: .Completed)
+        case .completed:
+            forwardOn(.completed)
             dispose()
         }
     }
@@ -70,7 +70,7 @@ class Using<SourceType, ResourceType: Disposable>: Producer<SourceType> {
         _observableFactory = observableFactory
     }
     
-    override func run<O : ObserverType where O.E == E>(observer: O) -> Disposable {
+    override func run<O : ObserverType where O.E == E>(_ observer: O) -> Disposable {
         let sink = UsingSink(parent: self, observer: observer)
         sink.disposable = sink.run()
         return sink

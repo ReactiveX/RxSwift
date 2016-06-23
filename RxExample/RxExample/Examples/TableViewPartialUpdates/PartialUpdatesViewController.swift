@@ -26,7 +26,7 @@ class PartialUpdatesViewController : ViewController {
     @IBOutlet weak var partialUpdatesTableViewOutlet: UITableView!
     @IBOutlet weak var partialUpdatesCollectionViewOutlet: UICollectionView!
 
-    var timer: NSTimer? = nil
+    var timer: Foundation.Timer? = nil
 
     static let initialValue: [AnimatableSectionModel<String, Int>] = [
         NumberSection(model: "section 1", items: [1, 2, 3]),
@@ -85,7 +85,7 @@ class PartialUpdatesViewController : ViewController {
         skinTableViewDataSource(reloadDataSource)
 
         self.sections.asObservable()
-            .bindTo(partialUpdatesTableViewOutlet.rx_itemsAnimatedWithDataSource(tvAnimatedDataSource))
+            .bindTo(partialUpdatesTableViewOutlet.rx_itemsWithDataSource(tvAnimatedDataSource))
             .addDisposableTo(disposeBag)
 
         self.sections.asObservable()
@@ -123,22 +123,22 @@ class PartialUpdatesViewController : ViewController {
 
         partialUpdatesCollectionViewOutlet.rx_itemSelected
             .subscribeNext { [weak self] i in
-                print("Let me guess, it's .... It's \(self?.generator.sections[i.section].items[i.item]), isn't it? Yeah, I've got it.")
+                print("Let me guess, it's .... It's \(self?.generator.sections[i.section].items[i.item!]), isn't it? Yeah, I've got it.")
             }
             .addDisposableTo(disposeBag)
 
         Observable.of(partialUpdatesTableViewOutlet.rx_itemSelected, reloadTableViewOutlet.rx_itemSelected)
             .merge()
             .subscribeNext { [weak self] i in
-                print("I have a feeling it's .... \(self?.generator.sections[i.section].items[i.item])?")
+                print("I have a feeling it's .... \(self?.generator.sections[i.section].items[i.item!])?")
             }
             .addDisposableTo(disposeBag)
     }
 
-    func skinTableViewDataSource(dataSource: RxTableViewSectionedDataSource<NumberSection>) {
+    func skinTableViewDataSource(_ dataSource: RxTableViewSectionedDataSource<NumberSection>) {
         dataSource.configureCell = { (_, tv, ip, i) in
-            let cell = tv.dequeueReusableCellWithIdentifier("Cell")
-                ?? UITableViewCell(style:.Default, reuseIdentifier: "Cell")
+            let cell = tv.dequeueReusableCell(withIdentifier: "Cell")
+                ?? UITableViewCell(style:.default, reuseIdentifier: "Cell")
 
             cell.textLabel!.text = "\(i)"
 
@@ -150,9 +150,9 @@ class PartialUpdatesViewController : ViewController {
         }
     }
 
-    func skinCollectionViewDataSource(dataSource: CollectionViewSectionedDataSource<NumberSection>) {
+    func skinCollectionViewDataSource(_ dataSource: CollectionViewSectionedDataSource<NumberSection>) {
         dataSource.cellFactory = { (_, cv, ip, i) in
-            let cell = cv.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: ip) as! NumberCell
+            let cell = cv.dequeueReusableCell(withReuseIdentifier: "Cell", for: ip as IndexPath) as! NumberCell
 
             cell.value!.text = "\(i)"
 
@@ -160,15 +160,15 @@ class PartialUpdatesViewController : ViewController {
         }
 
         dataSource.supplementaryViewFactory = { (dataSource, cv, kind, ip) in
-            let section = cv.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: "Section", forIndexPath: ip) as! NumberSectionView
+            let section = cv.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "Section", for: ip as IndexPath) as! NumberSectionView
 
-            section.value!.text = "\(dataSource.sectionAtIndex(ip.section).model)"
+            section.value!.text = "\(dataSource.sectionAtIndex((ip as NSIndexPath).section).model)"
 
             return section
         }
     }
 
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         self.timer?.invalidate()
     }
 

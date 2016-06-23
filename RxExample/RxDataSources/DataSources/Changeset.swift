@@ -18,6 +18,7 @@ public struct Changeset<S: SectionModelType> {
 
     public let reloadData: Bool
 
+    public let originalSections: [S]
     public let finalSections: [S]
 
     public let insertedSections: [Int]
@@ -31,6 +32,7 @@ public struct Changeset<S: SectionModelType> {
     public let updatedItems: [ItemPath]
 
     init(reloadData: Bool = false,
+        originalSections: [S] = [],
         finalSections: [S] = [],
         insertedSections: [Int] = [],
         deletedSections: [Int] = [],
@@ -44,6 +46,7 @@ public struct Changeset<S: SectionModelType> {
     ) {
         self.reloadData = reloadData
 
+        self.originalSections = originalSections
         self.finalSections = finalSections
 
         self.insertedSections = insertedSections
@@ -57,7 +60,7 @@ public struct Changeset<S: SectionModelType> {
         self.updatedItems = updatedItems
     }
 
-    public static func initialValue(sections: [S]) -> Changeset<S> {
+    public static func initialValue(_ sections: [S]) -> Changeset<S> {
         return Changeset<S>(
             insertedSections: Array(0 ..< sections.count) as [Int],
             finalSections: sections,
@@ -77,7 +80,7 @@ extension Changeset
     : CustomDebugStringConvertible {
 
     public var debugDescription : String {
-        let serializedSections = "[\n" + finalSections.map { "\($0)" }.joinWithSeparator(",\n") + "\n]\n"
+        let serializedSections = "[\n" + finalSections.map { "\($0)" }.joined(separator: ",\n") + "\n]\n"
         return " >> Final sections"
         + "   \n\(serializedSections)"
         + (insertedSections.count > 0 || deletedSections.count > 0 || movedSections.count > 0 || updatedSections.count > 0 ? "\nSections:" : "")

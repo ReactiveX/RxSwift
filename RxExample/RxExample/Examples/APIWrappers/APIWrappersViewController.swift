@@ -58,7 +58,7 @@ class APIWrappersViewController: ViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        datePicker.date = NSDate(timeIntervalSince1970: 0)
+        datePicker.date = Date(timeIntervalSince1970: 0)
 
         // MARK: UIBarButtonItem
 
@@ -72,7 +72,7 @@ class APIWrappersViewController: ViewController {
 
         // also test two way binding
         let segmentedValue = Variable(0)
-        segmentedControl.rx_value <-> segmentedValue
+        _ = segmentedControl.rx_value <-> segmentedValue
 
         segmentedValue.asObservable()
             .subscribeNext { [weak self] x in
@@ -85,7 +85,7 @@ class APIWrappersViewController: ViewController {
 
         // also test two way binding
         let switchValue = Variable(true)
-        switcher.rx_value <-> switchValue
+        _ = switcher.rx_value <-> switchValue
 
         switchValue.asObservable()
             .subscribeNext { [weak self] x in
@@ -113,7 +113,7 @@ class APIWrappersViewController: ViewController {
 
         // also test two way binding
         let sliderValue = Variable<Float>(1.0)
-        slider.rx_value <-> sliderValue
+        _ = slider.rx_value <-> sliderValue
 
         sliderValue.asObservable()
             .subscribeNext { [weak self] x in
@@ -125,8 +125,8 @@ class APIWrappersViewController: ViewController {
         // MARK: UIDatePicker
 
         // also test two way binding
-        let dateValue = Variable(NSDate(timeIntervalSince1970: 0))
-        datePicker.rx_date <-> dateValue
+        let dateValue = Variable(Date(timeIntervalSince1970: 0))
+        _ = datePicker.rx_date <-> dateValue
 
 
         dateValue.asObservable()
@@ -140,7 +140,7 @@ class APIWrappersViewController: ViewController {
 
         // also test two way binding
         let textValue = Variable("")
-        textField.rx_text <-> textValue
+        _ = textField <-> textValue
 
         textValue.asObservable()
             .subscribeNext { [weak self] x in
@@ -162,7 +162,7 @@ class APIWrappersViewController: ViewController {
 
         // also test two way binding
         let textViewValue = Variable("")
-        textView.rx_text <-> textViewValue
+        _ = textView <-> textViewValue
 
         textViewValue.asObservable()
             .subscribeNext { [weak self] x in
@@ -199,7 +199,7 @@ class APIWrappersViewController: ViewController {
 
     }
 
-    func debug(string: String) {
+    func debug(_ string: String) {
         print(string)
         debugLabel.text = string
     }

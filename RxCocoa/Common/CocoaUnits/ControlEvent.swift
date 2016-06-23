@@ -55,7 +55,7 @@ public struct ControlEvent<PropertyType> : ControlEventType {
      - returns: Control event created with a observable sequence of events.
      */
     public init<Ev: ObservableType where Ev.E == E>(events: Ev) {
-        _events = events.subscribeOn(scheduler: ConcurrentMainScheduler.instance)
+        _events = events.subscribeOn(ConcurrentMainScheduler.instance)
     }
 
     /**
@@ -64,14 +64,14 @@ public struct ControlEvent<PropertyType> : ControlEventType {
     - parameter observer: Observer to subscribe to events.
     - returns: Disposable object that can be used to unsubscribe the observer from receiving control events.
     */
-    public func subscribe<O : ObserverType where O.E == E>(observer: O) -> Disposable {
-        return _events.subscribe(observer: observer)
+    public func subscribe<O : ObserverType where O.E == E>(_ observer: O) -> Disposable {
+        return _events.subscribe(observer)
     }
 
     /**
     - returns: `Observable` interface.
     */
-    @warn_unused_result(message: "http://git.io/rxs.uo")
+    @warn_unused_result(message:"http://git.io/rxs.uo")
     public func asObservable() -> Observable<E> {
         return _events
     }
@@ -79,7 +79,7 @@ public struct ControlEvent<PropertyType> : ControlEventType {
     /**
     - returns: `ControlEvent` interface.
     */
-    @warn_unused_result(message: "http://git.io/rxs.uo")
+    @warn_unused_result(message:"http://git.io/rxs.uo")
     public func asControlEvent() -> ControlEvent<E> {
         return self
     }

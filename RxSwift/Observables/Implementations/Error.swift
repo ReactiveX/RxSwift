@@ -15,8 +15,8 @@ class Error<Element> : Producer<Element> {
         _error = error
     }
     
-    override func subscribe<O : ObserverType where O.E == Element>(observer: O) -> Disposable {
-        observer.on(event: .Error(_error))
+    override func subscribe<O : ObserverType where O.E == Element>(_ observer: O) -> Disposable {
+        observer.on(.error(_error))
         return NopDisposable.instance
     }
 }

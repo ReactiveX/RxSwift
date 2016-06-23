@@ -25,12 +25,12 @@ private extension UIView {
     var rx_driveAuthorization: AnyObserver<Bool> {
         return UIBindingObserver(UIElement: self) { view, authorized in
             if authorized {
-                view.hidden = true
-                view.superview?.sendSubviewToBack(view)
+                view.isHidden = true
+                view.superview?.sendSubview(toBack:view)
             }
             else {
-                view.hidden = false
-                view.superview?.bringSubviewToFront(view)
+                view.isHidden = false
+                view.superview?.bringSubview(toFront:view)
             }
         }.asObserver()
     }
@@ -48,10 +48,10 @@ class GeolocationViewController: ViewController {
         
         let geolocationService = GeolocationService.instance
 
-        geolocationService.autorized
+        geolocationService.authorized
             .drive(noGeolocationView.rx_driveAuthorization)
             .addDisposableTo(disposeBag)
-        /*
+        
         geolocationService.location
             .drive(label.rx_driveCoordinates)
             .addDisposableTo(disposeBag)
@@ -67,11 +67,10 @@ class GeolocationViewController: ViewController {
                 self?.openAppPreferences()
             }
             .addDisposableTo(disposeBag)
-        */
     }
     
     private func openAppPreferences() {
-        UIApplication.sharedApplication().openURL(NSURL(string: UIApplicationOpenSettingsURLString)!)
+        UIApplication.shared().openURL(URL(string: UIApplicationOpenSettingsURLString)!)
     }
 
 }

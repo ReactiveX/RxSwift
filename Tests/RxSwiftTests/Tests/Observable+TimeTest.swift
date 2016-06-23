@@ -257,18 +257,18 @@ extension ObservableTimeTest {
     }
 
     func test_ThrottleWithRealScheduler() {
-        let scheduler = ConcurrentDispatchQueueScheduler(globalConcurrentQueueQOS: .Default)
+        let scheduler = ConcurrentDispatchQueueScheduler(globalConcurrentQueueQOS: .default)
 
-        let start = NSDate()
+        let start = Date()
 
         let a = try! [Observable.just(0), Observable.never()].toObservable().concat()
             .throttle(2.0, scheduler: scheduler)
             .toBlocking()
             .first()
 
-        let end = NSDate()
+        let end = Date()
 
-        XCTAssertEqualWithAccuracy(2, end.timeIntervalSinceDate(start), accuracy: 0.5)
+        XCTAssertEqualWithAccuracy(2, end.timeIntervalSince(start), accuracy: 0.5)
         XCTAssertEqual(a, 0)
     }
 }
@@ -536,14 +536,14 @@ extension ObservableTimeTest {
     }
 
     func testInterval_TimeSpan_Zero_DefaultScheduler() {
-        let scheduler = SerialDispatchQueueScheduler(globalConcurrentQueueQOS: .Default)
+        let scheduler = SerialDispatchQueueScheduler(globalConcurrentQueueQOS: .default)
 
         let observer = PrimitiveMockObserver<Int64>()
 
-        let expectCompleted = expectationWithDescription("It will complete")
+        let expectCompleted = expectation(withDescription: "It will complete")
 
         let d = Observable<Int64>.interval(0, scheduler: scheduler).takeWhile { $0 < 10 } .subscribe(onNext: { t in
-            observer.on(.Next(t))
+            observer.on(.next(t))
         }, onCompleted: {
             expectCompleted.fulfill()
         })
@@ -552,18 +552,18 @@ extension ObservableTimeTest {
             d.dispose()
         }
 
-        waitForExpectationsWithTimeout(1.0) { e in
+        waitForExpectations(withTimeout: 1.0) { e in
             XCTAssert(e == nil, "Did not complete")
         }
 
-        let cleanResources = expectationWithDescription("Clean resources")
+        let cleanResources = expectation(withDescription: "Clean resources")
 
-        scheduler.schedule(()) { _ in
+        _ = scheduler.schedule(()) { _ in
             cleanResources.fulfill()
             return NopDisposable.instance
         }
 
-        waitForExpectationsWithTimeout(1.0) { e in
+        waitForExpectations(withTimeout: 1.0) { e in
             XCTAssert(e == nil, "Did not clean up")
         }
 
@@ -586,18 +586,18 @@ extension ObservableTimeTest {
     }
 
     func test_IntervalWithRealScheduler() {
-        let scheduler = ConcurrentDispatchQueueScheduler(globalConcurrentQueueQOS: .Default)
+        let scheduler = ConcurrentDispatchQueueScheduler(globalConcurrentQueueQOS: .default)
 
-        let start = NSDate()
+        let start = Date()
 
         let a = try! Observable<Int64>.interval(1, scheduler: scheduler)
             .take(2)
             .toBlocking()
             .toArray()
 
-        let end = NSDate()
+        let end = Date()
 
-        XCTAssertEqualWithAccuracy(2, end.timeIntervalSinceDate(start), accuracy: 0.5)
+        XCTAssertEqualWithAccuracy(2, end.timeIntervalSince(start), accuracy: 0.5)
         XCTAssertEqual(a, [0, 1])
     }
 }
@@ -1006,6 +1006,7 @@ extension ObservableTimeTest {
             completed(600)
             ])
         
+        
         let res = scheduler.start {
             xs.buffer(timeSpan: 70, count: 3, scheduler: scheduler).map { EquatableArray($0) }
         }
@@ -1093,7 +1094,7 @@ extension ObservableTimeTest {
     }
 
     func testBufferWithTimeOrCount_Default() {
-        let backgroundScheduler = SerialDispatchQueueScheduler(globalConcurrentQueueQOS: .Default)
+        let backgroundScheduler = SerialDispatchQueueScheduler(globalConcurrentQueueQOS: .default)
         
         let result = try! Observable.range(start: 1, count: 10, scheduler: backgroundScheduler)
             .buffer(timeSpan: 1000, count: 3, scheduler: backgroundScheduler)
@@ -1293,7 +1294,7 @@ extension ObservableTimeTest {
     }*/
     
     func windowWithTimeOrCount_Default() {
-        let backgroundScheduler = SerialDispatchQueueScheduler(globalConcurrentQueueQOS: .Default)
+        let backgroundScheduler = SerialDispatchQueueScheduler(globalConcurrentQueueQOS: .default)
         
         let result = try! Observable.range(start: 1, count: 10, scheduler: backgroundScheduler)
             .window(timeSpan: 1000, count: 3, scheduler: backgroundScheduler)
@@ -1450,7 +1451,7 @@ extension ObservableTimeTest {
         XCTAssertEqual(res.events, [
             next(210, 42),
             next(220, 43),
-            error(245, RxError.Timeout)
+            error(245, RxError.timeout)
             ])
 
         XCTAssertEqual(xs.subscriptions, [

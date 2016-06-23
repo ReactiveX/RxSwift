@@ -45,9 +45,9 @@ class ControlTarget: RxTarget {
 
         super.init()
 
-        control.addTarget(self, action: selector, forControlEvents: controlEvents)
+        control.addTarget(self, action: selector, for: controlEvents)
 
-        let method = self.methodForSelector(selector)
+        let method = self.method(for: selector)
         if method == nil {
             rxFatalError("Can't find method")
         }
@@ -64,14 +64,14 @@ class ControlTarget: RxTarget {
         control.target = self
         control.action = selector
 
-        let method = self.methodForSelector(selector)
+        let method = self.method(for: selector)
         if method == nil {
             rxFatalError("Can't find method")
         }
     }
 #endif
 
-    func eventHandler(sender: Control!) {
+    func eventHandler(_ sender: Control!) {
         if let callback = self.callback, control = self.control {
             callback(control)
         }
@@ -80,7 +80,7 @@ class ControlTarget: RxTarget {
     override func dispose() {
         super.dispose()
 #if os(iOS) || os(tvOS)
-        self.control?.removeTarget(self, action: self.selector, forControlEvents: self.controlEvents)
+        self.control?.removeTarget(self, action: self.selector, for: self.controlEvents)
 #elseif os(OSX)
         self.control?.target = nil
         self.control?.action = nil

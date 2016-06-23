@@ -19,8 +19,8 @@ class TimerSink<O: ObserverType where O.E : SignedInteger > : Sink<O> {
     }
     
     func run() -> Disposable {
-        return _parent._scheduler.schedulePeriodic(state: 0 as O.E, startAfter: _parent._dueTime, period: _parent._period!) { state in
-            self.forwardOn(event: .Next(state))
+        return _parent._scheduler.schedulePeriodic(0 as O.E, startAfter: _parent._dueTime, period: _parent._period!) { state in
+            self.forwardOn(.next(state))
             return state &+ 1
         }
     }
@@ -37,9 +37,9 @@ class TimerOneOffSink<O: ObserverType where O.E : SignedInteger> : Sink<O> {
     }
     
     func run() -> Disposable {
-        return _parent._scheduler.scheduleRelative(state: (), dueTime: _parent._dueTime) { (_) -> Disposable in
-            self.forwardOn(event: .Next(0))
-            self.forwardOn(event: .Completed)
+        return _parent._scheduler.scheduleRelative((), dueTime: _parent._dueTime) { (_) -> Disposable in
+            self.forwardOn(.next(0))
+            self.forwardOn(.completed)
             
             return NopDisposable.instance
         }
@@ -57,7 +57,7 @@ class Timer<E: SignedInteger>: Producer<E> {
         _period = period
     }
     
-    override func run<O : ObserverType where O.E == E>(observer: O) -> Disposable {
+    override func run<O : ObserverType where O.E == E>(_ observer: O) -> Disposable {
         if let _ = _period {
             let sink = TimerSink(parent: self, observer: observer)
             sink.disposable = sink.run()

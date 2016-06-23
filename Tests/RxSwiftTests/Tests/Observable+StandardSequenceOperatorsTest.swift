@@ -24,7 +24,7 @@ class ObservableStandardSequenceOperatorsTest : RxTest {
     }
 }
 
-func isPrime(i: Int) -> Bool {
+func isPrime(_ i: Int) -> Bool {
     if i <= 1 {
         return false
     }
@@ -3640,7 +3640,7 @@ extension ObservableStandardSequenceOperatorsTest {
         let k = BehaviorSubject(value: false)
         
         _ = k.take(1).subscribeNext { n in
-            k.on(.Next(!n))
+            k.on(.next(!n))
         }
     }
 }
@@ -3890,10 +3890,10 @@ extension ObservableStandardSequenceOperatorsTest {
         var elements = [Bool]()
         _ = k.takeLast(1).subscribeNext { n in
             elements.append(n)
-            k.on(.Next(!n))
+            k.on(.next(!n))
         }
 
-        k.on(.Completed)
+        k.on(.completed)
 
         XCTAssertEqual(elements, [false])
     }
@@ -4791,7 +4791,7 @@ extension ObservableStandardSequenceOperatorsTest {
         }
         
         XCTAssertEqual(res.events, [
-            error(320, RxError.ArgumentOutOfRange)
+            error(320, RxError.argumentOutOfRange)
             ])
         
         XCTAssertEqual(xs.subscriptions, [
@@ -4992,7 +4992,7 @@ extension ObservableStandardSequenceOperatorsTest {
         }
         
         XCTAssertEqual(res.events, [
-            error(250, RxError.NoElements)
+            error(250, RxError.noElements)
             ])
         
         XCTAssertEqual(xs.subscriptions, [
@@ -5039,7 +5039,7 @@ extension ObservableStandardSequenceOperatorsTest {
         
         XCTAssertEqual(res.events, [
             next(210, 2),
-            error(220, RxError.MoreThanOneElement)
+            error(220, RxError.moreThanOneElement)
             ])
         
         XCTAssertEqual(xs.subscriptions, [
@@ -5072,7 +5072,7 @@ extension ObservableStandardSequenceOperatorsTest {
         let k = BehaviorSubject(value: false)
 
         _ = k.single { _ in true }.subscribeNext { n in
-            k.on(.Next(!n))
+            k.on(.next(!n))
         }
     }
     
@@ -5091,7 +5091,7 @@ extension ObservableStandardSequenceOperatorsTest {
         }
         
         XCTAssertEqual(res.events, [
-            error(250, RxError.NoElements)
+            error(250, RxError.noElements)
             ])
         
         XCTAssertEqual(xs.subscriptions, [
@@ -5147,7 +5147,7 @@ extension ObservableStandardSequenceOperatorsTest {
         
         XCTAssertEqual(res.events, [
             next(220, 3),
-            error(240, RxError.MoreThanOneElement)
+            error(240, RxError.moreThanOneElement)
             ])
         
         XCTAssertEqual(xs.subscriptions, [
@@ -5212,7 +5212,7 @@ extension ObservableStandardSequenceOperatorsTest {
         let k = BehaviorSubject(value: false)
 
         _ = k.single { _ in true }.subscribeNext { n in
-            k.on(.Next(!n))
+            k.on(.next(!n))
         }
 
     }

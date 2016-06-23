@@ -18,8 +18,8 @@ class RandomUserAPI {
     private init() {}
     
     func getExampleUserResultSet() -> Observable<[User]> {
-        let url = NSURL(string: "http://api.randomuser.me/?results=20")!
-        return NSURLSession.sharedSession().rx_JSON(url)
+        let url = URL(string: "http://api.randomuser.me/?results=20")!
+        return URLSession.shared().rx_JSON(url)
             .map { json in
                 guard let json = json as? [String: AnyObject] else {
                     throw exampleError("Casting to dictionary failed")
@@ -29,7 +29,7 @@ class RandomUserAPI {
             }
     }
     
-    private func parseJSON(json: [String: AnyObject]) throws -> [User] {
+    private func parseJSON(_ json: [String: AnyObject]) throws -> [User] {
         guard let results = json["results"] as? [[String: AnyObject]] else {
             throw exampleError("Can't find results")
         }
@@ -47,8 +47,8 @@ class RandomUserAPI {
             }
             
             let returnUser = User(
-                firstName: firstName.capitalizedString,
-                lastName: lastName.capitalizedString,
+                firstName: firstName.capitalized,
+                lastName: lastName.capitalized,
                 imageURL: imageURL
             )
             return returnUser

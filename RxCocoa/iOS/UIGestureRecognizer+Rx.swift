@@ -15,15 +15,15 @@ import RxSwift
 
 
 // This should be only used from `MainScheduler`
-class GestureTarget: RxTarget {
-    typealias Callback = (UIGestureRecognizer) -> Void
+class GestureTarget<Recognizer: UIGestureRecognizer>: RxTarget {
+    typealias Callback = (Recognizer) -> Void
     
     let selector = #selector(ControlTarget.eventHandler(_:))
     
-    weak var gestureRecognizer: UIGestureRecognizer?
+    weak var gestureRecognizer: Recognizer?
     var callback: Callback?
     
-    init(_ gestureRecognizer: UIGestureRecognizer, callback: Callback) {
+    init(_ gestureRecognizer: Recognizer, callback: Callback) {
         self.gestureRecognizer = gestureRecognizer
         self.callback = callback
         
@@ -31,7 +31,7 @@ class GestureTarget: RxTarget {
         
         gestureRecognizer.addTarget(self, action: selector)
 
-        let method = self.methodForSelector(selector)
+        let method = self.method(for: selector)
         if method == nil {
             fatalError("Can't find method")
         }
@@ -51,27 +51,29 @@ class GestureTarget: RxTarget {
     }
 }
 
-extension UIGestureRecognizer {
+extension UIGestureRecognizer: Reactive  { }
+
+extension Reactive where Self: UIGestureRecognizer {
     
     /**
     Reactive wrapper for gesture recognizer events.
     */
-    public var rx_event: ControlEvent<UIGestureRecognizer> {
-        let source: Observable<UIGestureRecognizer> = Observable.create { [weak self] observer in
+    public var rx_event: ControlEvent<Self> {
+        let source: Observable<Self> = Observable.create { [weak self] observer in
             MainScheduler.ensureExecutingOnScheduler()
 
             guard let control = self else {
-                observer.on(event: .Completed)
+                observer.on(.completed)
                 return NopDisposable.instance
             }
             
             let observer = GestureTarget(control) {
                 control in
-                observer.on(event: .Next(control))
+                observer.on(.next(control))
             }
             
             return observer
-        }.takeUntil(other: rx_deallocated)
+        }.takeUntil(rx_deallocated)
         
         return ControlEvent(events: source)
     }

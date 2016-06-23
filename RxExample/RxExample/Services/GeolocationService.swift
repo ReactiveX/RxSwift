@@ -16,7 +16,7 @@ import CoreLocation
 class GeolocationService {
     
     static let instance = GeolocationService()
-    private (set) var autorized: Driver<Bool>
+    private (set) var authorized: Driver<Bool>
     private (set) var location: Driver<CLLocationCoordinate2D>
     
     private let locationManager = CLLocationManager()
@@ -26,7 +26,7 @@ class GeolocationService {
         locationManager.distanceFilter = kCLDistanceFilterNone
         locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
         
-        autorized = Observable.deferred { [weak locationManager] in
+        authorized = Observable.deferred { [weak locationManager] in
                 let status = CLLocationManager.authorizationStatus()
                 guard let locationManager = locationManager else {
                     return Observable.just(status)
@@ -35,10 +35,10 @@ class GeolocationService {
                     .rx_didChangeAuthorizationStatus
                     .startWith(status)
             }
-            .asDriver(onErrorJustReturn: CLAuthorizationStatus.NotDetermined)
+            .asDriver(onErrorJustReturn: CLAuthorizationStatus.notDetermined)
             .map {
                 switch $0 {
-                case .AuthorizedAlways:
+                case .authorizedAlways:
                     return true
                 default:
                     return false

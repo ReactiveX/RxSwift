@@ -13,18 +13,18 @@ class Producer<Element> : Observable<Element> {
         super.init()
     }
     
-    override func subscribe<O : ObserverType where O.E == Element>(observer: O) -> Disposable {
+    override func subscribe<O : ObserverType where O.E == Element>(_ observer: O) -> Disposable {
         if !CurrentThreadScheduler.isScheduleRequired {
-            return run(observer: observer)
+            return run(observer)
         }
         else {
-            return CurrentThreadScheduler.instance.schedule(state: ()) { _ in
-                return self.run(observer: observer)
+            return CurrentThreadScheduler.instance.schedule(()) { _ in
+                return self.run(observer)
             }
         }
     }
     
-    func run<O : ObserverType where O.E == Element>(observer: O) -> Disposable {
+    func run<O : ObserverType where O.E == Element>(_ observer: O) -> Disposable {
         abstractMethod()
     }
 }

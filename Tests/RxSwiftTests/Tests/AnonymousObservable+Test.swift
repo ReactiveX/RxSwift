@@ -30,12 +30,12 @@ extension AnonymousObservableTests {
         
         XCTAssertEqual(elements, [])
         
-        observer.on(.Next(0))
+        observer.on(.next(0))
         XCTAssertEqual(elements, [0])
         
         d.dispose()
 
-        observer.on(.Next(1))
+        observer.on(.next(1))
         XCTAssertEqual(elements, [0])
     }
     
@@ -54,12 +54,12 @@ extension AnonymousObservableTests {
 
         XCTAssertEqual(elements, [])
         
-        observer.on(.Next(0))
+        observer.on(.next(0))
         XCTAssertEqual(elements, [0])
         
-        observer.on(.Completed)
+        observer.on(.completed)
         
-        observer.on(.Next(1))
+        observer.on(.next(1))
         XCTAssertEqual(elements, [0])
     }
 
@@ -78,12 +78,12 @@ extension AnonymousObservableTests {
         
         XCTAssertEqual(elements, [])
         
-        observer.on(.Next(0))
+        observer.on(.next(0))
         XCTAssertEqual(elements, [0])
         
-        observer.on(.Error(testError))
+        observer.on(.error(testError))
         
-        observer.on(.Next(1))
+        observer.on(.next(1))
         XCTAssertEqual(elements, [0])
     }
 }

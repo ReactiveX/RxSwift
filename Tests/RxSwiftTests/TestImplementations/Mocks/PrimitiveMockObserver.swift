@@ -19,7 +19,7 @@ class PrimitiveMockObserver<ElementType> : ObserverType {
         self.events = []
     }
     
-    func on(event: Event<Element>) {
+    func on(_ event: Event<Element>) {
         events.append(Recorded(time: 0, event: event))
     }
 }

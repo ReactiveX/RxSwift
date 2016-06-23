@@ -16,9 +16,9 @@ struct PriorityQueue<Element: AnyObject> {
         _hasHigherPriority = hasHigherPriority
     }
 
-    mutating func enqueue(element: Element) {
+    mutating func enqueue(_ element: Element) {
         _elements.append(element)
-        bubbleToHigherPriority(initialUnbalancedIndex: _elements.count - 1)
+        bubbleToHigherPriority(_elements.count - 1)
     }
 
     func peek() -> Element? {
@@ -34,21 +34,21 @@ struct PriorityQueue<Element: AnyObject> {
             return nil
         }
 
-        removeAt(index: 0)
+        removeAt(0)
 
         return front
     }
 
-    mutating func remove(element: Element) {
+    mutating func remove(_ element: Element) {
         for i in 0 ..< _elements.count {
             if _elements[i] === element {
-                removeAt(index: i)
+                removeAt(i)
                 return
             }
         }
     }
 
-    private mutating func removeAt(index: Int) {
+    private mutating func removeAt(_ index: Int) {
         let removingLast = index == _elements.count - 1
         if !removingLast {
             swap(&_elements[index], &_elements[_elements.count - 1])
@@ -57,12 +57,12 @@ struct PriorityQueue<Element: AnyObject> {
         _ = _elements.popLast()
 
         if !removingLast {
-            bubbleToHigherPriority(initialUnbalancedIndex: index)
-            bubbleToLowerPriority(initialUnbalancedIndex: index)
+            bubbleToHigherPriority(index)
+            bubbleToLowerPriority(index)
         }
     }
 
-    private mutating func bubbleToHigherPriority(initialUnbalancedIndex: Int) {
+    private mutating func bubbleToHigherPriority(_ initialUnbalancedIndex: Int) {
         precondition(initialUnbalancedIndex >= 0)
         precondition(initialUnbalancedIndex < _elements.count)
 
@@ -82,7 +82,7 @@ struct PriorityQueue<Element: AnyObject> {
         }
     }
 
-    private mutating func bubbleToLowerPriority(initialUnbalancedIndex: Int) {
+    private mutating func bubbleToLowerPriority(_ initialUnbalancedIndex: Int) {
         precondition(initialUnbalancedIndex >= 0)
         precondition(initialUnbalancedIndex < _elements.count)
 

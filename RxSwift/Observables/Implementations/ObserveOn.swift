@@ -17,28 +17,28 @@ class ObserveOn<E> : Producer<E> {
         self.source = source
         
 #if TRACE_RESOURCES
-        AtomicIncrement(&resourceCount)
+        let _ = AtomicIncrement(&resourceCount)
 #endif
     }
     
-    override func run<O : ObserverType where O.E == E>(observer: O) -> Disposable {
+    override func run<O : ObserverType where O.E == E>(_ observer: O) -> Disposable {
         let sink = ObserveOnSink(scheduler: scheduler, observer: observer)
-        sink._subscription.disposable = source.subscribe(observer: sink)
+        sink._subscription.disposable = source.subscribe(sink)
         return sink
     }
     
 #if TRACE_RESOURCES
     deinit {
-        AtomicDecrement(&resourceCount)
+        let _ = AtomicDecrement(&resourceCount)
     }
 #endif
 }
 
 enum ObserveOnState : Int32 {
     // pump is not running
-    case Stopped = 0
+    case stopped = 0
     // pump is running
-    case Running = 1
+    case running = 1
 }
 
 class ObserveOnSink<O: ObserverType> : ObserverBase<O.E> {
@@ -49,7 +49,7 @@ class ObserveOnSink<O: ObserverType> : ObserverBase<O.E> {
     var _lock = SpinLock()
 
     // state
-    var _state = ObserveOnState.Stopped
+    var _state = ObserveOnState.stopped
     var _observer: O?
     var _queue = Queue<Event<E>>(capacity: 10)
 
@@ -61,37 +61,37 @@ class ObserveOnSink<O: ObserverType> : ObserverBase<O.E> {
         _observer = observer
     }
 
-    override func onCore(event: Event<E>) {
+    override func onCore(_ event: Event<E>) {
         let shouldStart = _lock.calculateLocked { () -> Bool in
-            self._queue.enqueue(element: event)
+            self._queue.enqueue(event)
             
             switch self._state {
-            case .Stopped:
-                self._state = .Running
+            case .stopped:
+                self._state = .running
                 return true
-            case .Running:
+            case .running:
                 return false
             }
         }
         
         if shouldStart {
-            _scheduleDisposable.disposable = self._scheduler.scheduleRecursive(state: (), action: self.run)
+            _scheduleDisposable.disposable = self._scheduler.scheduleRecursive((), action: self.run)
         }
     }
     
-    func run(state: Void, recurse: (Void) -> Void) {
+    func run(_ state: Void, recurse: (Void) -> Void) {
         let (nextEvent, observer) = self._lock.calculateLocked { () -> (Event<E>?, O?) in
             if self._queue.count > 0 {
                 return (self._queue.dequeue(), self._observer)
             }
             else {
-                self._state = .Stopped
+                self._state = .stopped
                 return (nil, self._observer)
             }
         }
         
         if let nextEvent = nextEvent {
-            observer?.on(event: nextEvent)
+            observer?.on(nextEvent)
             if nextEvent.isStopEvent {
                 dispose()
             }
@@ -113,7 +113,7 @@ class ObserveOnSink<O: ObserverType> : ObserverBase<O.E> {
                 return true
             }
             else {
-                self._state = .Stopped
+                self._state = .stopped
                 return false
             }
         // }

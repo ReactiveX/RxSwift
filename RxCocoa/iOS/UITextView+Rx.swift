@@ -16,7 +16,7 @@ import RxSwift
 
     
     
-extension UITextView {
+extension UITextView : RxTextInput {
     
     /**
     Factory method that enables subclasses to implement their own `rx_delegate`.
@@ -42,18 +42,23 @@ extension UITextView {
                 // This observe on is here because text storage
                 // will emit event while process is not completely done,
                 // so rebinding a value will cause an exception to be thrown.
-                .observeOn(scheduler: MainScheduler.asyncInstance)
+                .observeOn(MainScheduler.asyncInstance)
                 .map { _ in
                     return self?.textStorage.string ?? ""
                 }
                 ?? Observable.empty()
             
             return textChanged
-                .startWith(elements: text)
+                .startWith(text)
         }
 
         let bindingObserver = UIBindingObserver(UIElement: self) { (textView, text: String) in
-            textView.text = text
+            // This check is important because setting text value always clears control state
+            // including marked text selection which is imporant for proper input 
+            // when IME input method is used.
+            if textView.text != text {
+                textView.text = text
+            }
         }
         
         return ControlProperty(values: source, valueSink: bindingObserver)
