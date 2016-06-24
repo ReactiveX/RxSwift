@@ -555,6 +555,8 @@
 		C8350A231C38756B0027C24C /* VirtualSchedulerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C835091C1C38706D0027C24C /* VirtualSchedulerTest.swift */; };
 		C8350A2A1C3875B50027C24C /* RxMutableBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093CB01B8A72BE0088E94D /* RxMutableBox.swift */; };
 		C8350A2B1C3875B60027C24C /* RxMutableBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093CB01B8A72BE0088E94D /* RxMutableBox.swift */; };
+		C8379EF41D1DD326003EF8FC /* UIButton+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8379EF31D1DD326003EF8FC /* UIButton+RxTests.swift */; };
+		C8379EF51D1DD326003EF8FC /* UIButton+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8379EF31D1DD326003EF8FC /* UIButton+RxTests.swift */; };
 		C839365F1C70E02200A9A09E /* UIApplication+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C839365E1C70E02200A9A09E /* UIApplication+Rx.swift */; };
 		C83D73B81C1DBAEE003DC470 /* AnonymousInvocable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83D73B31C1DBAEE003DC470 /* AnonymousInvocable.swift */; };
 		C83D73B91C1DBAEE003DC470 /* AnonymousInvocable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83D73B31C1DBAEE003DC470 /* AnonymousInvocable.swift */; };
@@ -1629,6 +1631,7 @@
 		C83509231C38706E0027C24C /* XCTest+AllTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "XCTest+AllTests.swift"; sourceTree = "<group>"; };
 		C83509841C38740E0027C24C /* AllTests-tvOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "AllTests-tvOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C83509941C38742C0027C24C /* AllTests-OSX.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "AllTests-OSX.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C8379EF31D1DD326003EF8FC /* UIButton+RxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIButton+RxTests.swift"; sourceTree = "<group>"; };
 		C839365E1C70E02200A9A09E /* UIApplication+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIApplication+Rx.swift"; sourceTree = "<group>"; };
 		C83D73B31C1DBAEE003DC470 /* AnonymousInvocable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnonymousInvocable.swift; sourceTree = "<group>"; };
 		C83D73B41C1DBAEE003DC470 /* InvocableScheduledItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InvocableScheduledItem.swift; sourceTree = "<group>"; };
@@ -2311,6 +2314,7 @@
 				844BC8B71CE5023200F5C7CB /* UIPickerView+RxTests.swift */,
 				914FCD661CCDB82E0058B304 /* UIPageControl+RxTest.swift */,
 				033C2EF41D081B2A0050C015 /* UIScrollView+RxTests.swift */,
+				C8379EF31D1DD326003EF8FC /* UIButton+RxTests.swift */,
 			);
 			path = RxCocoaTests;
 			sourceTree = "<group>";
@@ -3549,6 +3553,7 @@
 				C835093E1C38706E0027C24C /* UIView+RxTests.swift in Sources */,
 				7EDBAEB41C89B1A6006CBE67 /* UITabBarItem+RxTests.swift in Sources */,
 				C83509411C38706E0027C24C /* BackgroundThreadPrimitiveHotObservable.swift in Sources */,
+				C8379EF41D1DD326003EF8FC /* UIButton+RxTests.swift in Sources */,
 				C83509581C38706E0027C24C /* Observable+MultipleTest+CombineLatest.swift in Sources */,
 				C83509651C38706E0027C24C /* VirtualSchedulerTest.swift in Sources */,
 				8476A0211C3D5DC60040BA22 /* UIImagePickerController+RxTests.swift in Sources */,
@@ -3657,6 +3662,7 @@
 				C83509EA1C3875580027C24C /* BackgroundThreadPrimitiveHotObservable.swift in Sources */,
 				C84CB1721C3876B800EB63CC /* UIView+RxTests.swift in Sources */,
 				C83509F81C38755D0027C24C /* HistoricalSchedulerTest.swift in Sources */,
+				C8379EF51D1DD326003EF8FC /* UIButton+RxTests.swift in Sources */,
 				C83509F21C38755D0027C24C /* AnonymousObservable+Test.swift in Sources */,
 				7FE849481C5D0D6B00845C0E /* UIRefreshControl+RxTests.swift in Sources */,
 				C83509D31C3875390027C24C /* RXObjCRuntime+Testing.m in Sources */,
