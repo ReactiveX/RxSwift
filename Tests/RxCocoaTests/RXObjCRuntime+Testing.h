@@ -45,81 +45,81 @@ typedef struct some_insanely_large_struct {
                                                                                                                                                \
 @property (nonatomic, copy) NSArray<NSArray * > * __nonnull baseMessages;                                                                      \
                                                                                                                                                \
--(void)voidJustCalledToSayVoid;                                                                                                                \
+-(void)voidJustCalledVoidToSay;                                                                                                                \
                                                                                                                                                \
--(id __nonnull)justCalledToSayObject:(id __nonnull)value;                                                                                      \
+-(id __nonnull)justCalledObjectToSay:(id __nonnull)value;                                                                                      \
                                                                                                                                                \
--(void)voidJustCalledToSayObject:(id __nonnull)value;                                                                                          \
+-(void)voidJustCalledObjectToSay:(id __nonnull)value;                                                                                          \
                                                                                                                                                \
--(void)voidJustCalledToSayObject:(id __nonnull)value object:(id __nonnull)value1;                                                              \
+-(void)voidJustCalledObjectToSay:(id __nonnull)value object:(id __nonnull)value1;                                                              \
                                                                                                                                                \
--(Class __nonnull)justCalledToSayClass:(Class __nonnull)value;                                                                                 \
+-(Class __nonnull)justCalledClassToSay:(Class __nonnull)value;                                                                                 \
                                                                                                                                                \
--(void)voidJustCalledToSayClass:(Class __nonnull)value;                                                                                        \
+-(void)voidJustCalledClassToSay:(Class __nonnull)value;                                                                                        \
                                                                                                                                                \
--(void (^ __nonnull)() )justCalledToSayClosure:(void (^ __nonnull)())value;                                                                    \
+-(void (^ __nonnull)() )justCalledClosureToSay:(void (^ __nonnull)())value;                                                                    \
                                                                                                                                                \
--(void)voidJustCalledToSayClosure:(void (^ __nonnull)())value;                                                                                 \
+-(void)voidJustCalledClosureToSay:(void (^ __nonnull)())value;                                                                                 \
                                                                                                                                                \
--(char)justCalledToSayChar:(char)value;                                                                                                        \
+-(char)justCalledCharToSay:(char)value;                                                                                                        \
                                                                                                                                                \
--(void)voidJustCalledToSayChar:(char)value;                                                                                                    \
+-(void)voidJustCalledCharToSay:(char)value;                                                                                                    \
                                                                                                                                                \
--(short)justCalledToSayShort:(short)value;                                                                                                     \
+-(short)justCalledShortToSay:(short)value;                                                                                                     \
                                                                                                                                                \
--(void)voidJustCalledToSayShort:(short)value;                                                                                                  \
+-(void)voidJustCalledShortToSay:(short)value;                                                                                                  \
                                                                                                                                                \
--(int)justCalledToSayInt:(int)value;                                                                                                           \
+-(int)justCalledIntToSay:(int)value;                                                                                                           \
                                                                                                                                                \
--(void)voidJustCalledToSayInt:(int)value;                                                                                                      \
+-(void)voidJustCalledIntToSay:(int)value;                                                                                                      \
                                                                                                                                                \
--(long)justCalledToSayLong:(long)value;                                                                                                        \
+-(long)justCalledLongToSay:(long)value;                                                                                                        \
                                                                                                                                                \
--(void)voidJustCalledToSayLong:(long)value;                                                                                                    \
+-(void)voidJustCalledLongToSay:(long)value;                                                                                                    \
                                                                                                                                                \
--(long long)justCalledToSayLongLong:(long long)value;                                                                                          \
+-(long long)justCalledLongLongToSay:(long long)value;                                                                                          \
                                                                                                                                                \
--(void)voidJustCalledToSayLongLong:(long long)value;                                                                                           \
+-(void)voidJustCalledLongLongToSay:(long long)value;                                                                                           \
                                                                                                                                                \
--(unsigned char)justCalledToSayUnsignedChar:(unsigned char)value;                                                                              \
+-(unsigned char)justCalledUnsignedCharToSay:(unsigned char)value;                                                                              \
                                                                                                                                                \
--(void)voidJustCalledToSayUnsignedChar:(unsigned char)value;                                                                                   \
+-(void)voidJustCalledUnsignedCharToSay:(unsigned char)value;                                                                                   \
                                                                                                                                                \
--(unsigned short)justCalledToSayUnsignedShort:(unsigned short)value;                                                                           \
+-(unsigned short)justCalledUnsignedShortToSay:(unsigned short)value;                                                                           \
                                                                                                                                                \
--(void)voidJustCalledToSayUnsignedShort:(unsigned short)value;                                                                                 \
+-(void)voidJustCalledUnsignedShortToSay:(unsigned short)value;                                                                                 \
                                                                                                                                                \
--(unsigned int)justCalledToSayUnsignedInt:(unsigned int)value;                                                                                 \
+-(unsigned int)justCalledUnsignedIntToSay:(unsigned int)value;                                                                                 \
                                                                                                                                                \
--(void)voidJustCalledToSayUnsignedInt:(unsigned int)value;                                                                                     \
+-(void)voidJustCalledUnsignedIntToSay:(unsigned int)value;                                                                                     \
                                                                                                                                                \
--(unsigned long)justCalledToSayUnsignedLong:(unsigned long)value;                                                                              \
+-(unsigned long)justCalledUnsignedLongToSay:(unsigned long)value;                                                                              \
                                                                                                                                                \
--(void)voidJustCalledToSayUnsignedLong:(unsigned long)value;                                                                                   \
+-(void)voidJustCalledUnsignedLongToSay:(unsigned long)value;                                                                                   \
                                                                                                                                                \
--(unsigned long long)justCalledToSayUnsignedLongLong:(unsigned long long)value;                                                                \
+-(unsigned long long)justCalledUnsignedLongLongToSay:(unsigned long long)value;                                                                \
                                                                                                                                                \
--(void)voidJustCalledToSayUnsignedLongLong:(unsigned long long)value;                                                                          \
+-(void)voidJustCalledUnsignedLongLongToSay:(unsigned long long)value;                                                                          \
                                                                                                                                                \
--(float)justCalledToSayFloat:(float)value;                                                                                                     \
+-(float)justCalledFloatToSay:(float)value;                                                                                                     \
                                                                                                                                                \
--(void)voidJustCalledToSayFloat:(float)value;                                                                                                  \
+-(void)voidJustCalledFloatToSay:(float)value;                                                                                                  \
                                                                                                                                                \
--(double)justCalledToSayDouble:(double)value;                                                                                                  \
+-(double)justCalledDoubleToSay:(double)value;                                                                                                  \
                                                                                                                                                \
--(void)voidJustCalledToSayDouble:(double)value;                                                                                                \
+-(void)voidJustCalledDoubleToSay:(double)value;                                                                                                \
                                                                                                                                                \
--(BOOL)justCalledToSayBool:(BOOL)value;                                                                                                        \
+-(BOOL)justCalledBoolToSay:(BOOL)value;                                                                                                        \
                                                                                                                                                \
--(void)voidJustCalledToSayBool:(BOOL)value;                                                                                                    \
+-(void)voidJustCalledBoolToSay:(BOOL)value;                                                                                                    \
                                                                                                                                                \
--(NSInteger)justCalledToSayLarge:(some_insanely_large_struct_t)value;                                                                          \
+-(NSInteger)justCalledLargeToSay:(some_insanely_large_struct_t)value;                                                                          \
                                                                                                                                                \
--(void)voidJustCalledToSayLarge:(some_insanely_large_struct_t)value;                                                                           \
+-(void)voidJustCalledLargeToSay:(some_insanely_large_struct_t)value;                                                                           \
                                                                                                                                                \
--(const char * __nonnull)justCalledToSayConstChar:(const char * __nonnull)value;                                                               \
+-(const char * __nonnull)justCalledConstCharToSay:(const char * __nonnull)value;                                                               \
                                                                                                                                                \
--(void)voidJustCalledToSayConstChar:(const char * __nonnull)value;                                                                             \
+-(void)voidJustCalledConstCharToSay:(const char * __nonnull)value;                                                                             \
                                                                                                                                                \
 -(NSInteger)message_allSupportedParameters:(id __nonnull)p1                                                                                    \
                                         p2:(Class __nonnull)p2                                                                                 \

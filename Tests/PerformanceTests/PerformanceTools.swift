@@ -8,12 +8,12 @@
 
 import Foundation
 
-var mallocFunctions: [(@convention(c) (UnsafeMutablePointer<_malloc_zone_t>, Int) -> UnsafeMutablePointer<Void>)] = []
+var mallocFunctions: [(@convention(c) (UnsafeMutablePointer<_malloc_zone_t>?, Int) -> UnsafeMutablePointer<Void>?)] = []
 
 var allocCalls: Int64 = 0
 var bytesAllocated: Int64 = 0
 
-func call0(_ p: UnsafeMutablePointer<_malloc_zone_t>, size: Int) -> UnsafeMutablePointer<Void> {
+func call0(_ p: UnsafeMutablePointer<_malloc_zone_t>?, size: Int) -> UnsafeMutablePointer<Void>? {
     OSAtomicIncrement64(&allocCalls)
     OSAtomicAdd64(Int64(size), &bytesAllocated)
 #if ALLOC_HOOK
@@ -22,7 +22,7 @@ func call0(_ p: UnsafeMutablePointer<_malloc_zone_t>, size: Int) -> UnsafeMutabl
     return mallocFunctions[0](p, size)
 }
 
-func call1(_ p: UnsafeMutablePointer<_malloc_zone_t>, size: Int) -> UnsafeMutablePointer<Void> {
+func call1(_ p: UnsafeMutablePointer<_malloc_zone_t>?, size: Int) -> UnsafeMutablePointer<Void>? {
     OSAtomicIncrement64(&allocCalls)
     OSAtomicAdd64(Int64(size), &bytesAllocated)
 #if ALLOC_HOOK
@@ -31,7 +31,7 @@ func call1(_ p: UnsafeMutablePointer<_malloc_zone_t>, size: Int) -> UnsafeMutabl
     return mallocFunctions[1](p, size)
 }
 
-func call2(_ p: UnsafeMutablePointer<_malloc_zone_t>, size: Int) -> UnsafeMutablePointer<Void> {
+func call2(_ p: UnsafeMutablePointer<_malloc_zone_t>?, size: Int) -> UnsafeMutablePointer<Void>? {
     OSAtomicIncrement64(&allocCalls)
     OSAtomicAdd64(Int64(size), &bytesAllocated)
 #if ALLOC_HOOK
@@ -40,7 +40,7 @@ func call2(_ p: UnsafeMutablePointer<_malloc_zone_t>, size: Int) -> UnsafeMutabl
     return mallocFunctions[2](p, size)
 }
 
-var proxies: [(@convention(c) (UnsafeMutablePointer<_malloc_zone_t>, Int) -> UnsafeMutablePointer<Void>)] = [call0, call1, call2]
+var proxies: [(@convention(c) (UnsafeMutablePointer<_malloc_zone_t>?, Int) -> UnsafeMutablePointer<Void>?)] = [call0, call1, call2]
 
 func getMemoryInfo() -> (bytes: Int64, allocations: Int64) {
     return (bytesAllocated, allocCalls)
@@ -55,7 +55,7 @@ func registerMallocHooks() {
 
     registeredMallocHooks = true
 
-    var _zones: UnsafeMutablePointer<vm_address_t> = UnsafeMutablePointer(nil)!
+    var _zones: UnsafeMutablePointer<vm_address_t>? = UnsafeMutablePointer(nil)
     var count: UInt32 = 0
 
     // malloc_zone_print(nil, 1)
@@ -67,7 +67,7 @@ func registerMallocHooks() {
     assert(Int(count) <= proxies.count)
 
     for i in 0 ..< Int(count) {
-        let zoneArray = zones.advanced(by: i)
+        let zoneArray = zones!.advanced(by: i)
         let name = malloc_get_zone_name(zoneArray.pointee)
         var zone = zoneArray.pointee.pointee
 
@@ -88,7 +88,7 @@ func registerMallocHooks() {
         zoneArray.pointee.pointee = zone
 
         if true {
-            let res = vm_protect(mach_task_self_, _zones.pointee, protectSize, 0, PROT_READ)
+            let res = vm_protect(mach_task_self_, _zones!.pointee, protectSize, 0, PROT_READ)
             assert(res == 0)
         }
     }

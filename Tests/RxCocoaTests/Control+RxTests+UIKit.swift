@@ -209,7 +209,7 @@ extension ControlTests {
 // UIButton
 extension ControlTests {
     func testButton_tapDeallocates() {
-        let createView: () -> UIButton = { UIButton(frame: CGRectMake(0, 0, 1, 1)) }
+        let createView: () -> UIButton = { UIButton(frame: CGRect(x: 0, y: 0, width: 1, height: 1)) }
         ensureEventDeallocated(createView) { (view: UIButton) in view.rx_primaryAction }
     }
 }
