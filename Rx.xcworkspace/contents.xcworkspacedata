@@ -11,6 +11,9 @@
       location = "group:README.md">
    </FileRef>
    <FileRef
+      location = "group:ISSUE_TEMPLATE.md">
+   </FileRef>
+   <FileRef
       location = "group:CHANGELOG.md">
    </FileRef>
    <Group
@@ -102,9 +105,6 @@
       </FileRef>
       <FileRef
          location = "group:HotAndColdObservables.md">
-      </FileRef>
-      <FileRef
-         location = "group:IssueTemplate.md">
       </FileRef>
       <FileRef
          location = "group:Linux.md">
