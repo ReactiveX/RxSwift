@@ -68,8 +68,9 @@ public class SerialDispatchQueueScheduler: SchedulerType {
     */
     public convenience init(queue: DispatchQueue, internalSerialQueueName: String) {
         // Swift 3.0 IUO
-        let serialQueue = DispatchQueue(label: internalSerialQueueName, attributes: DispatchQueueAttributes.serial)
-        serialQueue.setTarget(queue: queue)
+        let serialQueue = DispatchQueue(label: internalSerialQueueName,
+                                        attributes: DispatchQueueAttributes.serial,
+                                        target: queue)
         self.init(serialQueue: serialQueue)
     }
 
