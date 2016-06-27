@@ -10,7 +10,7 @@
 
 @interface _RXDelegateProxy : NSObject
 
-@property (nonatomic, assign, readonly) id _forwardToDelegate;
+@property (nonatomic, weak, readonly) id _forwardToDelegate;
 
 -(void)_setForwardToDelegate:(id)forwardToDelegate retainDelegate:(BOOL)retainDelegate;
 
