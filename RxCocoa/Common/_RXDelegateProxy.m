@@ -58,7 +58,7 @@ static NSMutableDictionary *forwardableSelectorsPerClass = nil;
 #define CLASS_HIERARCHY_MAX_DEPTH 100
 
         NSInteger  classHierarchyDepth = 0;
-        Class      targetClass         = self;
+        Class      targetClass         = NULL;
 
         for (classHierarchyDepth = 0, targetClass = self;
              classHierarchyDepth < CLASS_HIERARCHY_MAX_DEPTH && targetClass != nil;
