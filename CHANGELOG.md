@@ -9,6 +9,8 @@ All notable changes to this project will be documented in this file.
 
 * Adds `rx_title` to `UIViewController`.
 * Adds `rx_scrollEnabled` to `UIScrollView`.
+* Adds bindings to `NSTextView`
+* Adds bindings to `NSProgressIndicator`
 
 
 ## [2.5.0](https://github.com/ReactiveX/RxSwift/releases/tag/2.5.0)

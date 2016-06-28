@@ -989,6 +989,10 @@
 		CB30D9EA1BF0E3500084C1C0 /* SingleAsync.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB30D9E81BF0E3500084C1C0 /* SingleAsync.swift */; };
 		CB30D9EB1BF0E3500084C1C0 /* SingleAsync.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB30D9E81BF0E3500084C1C0 /* SingleAsync.swift */; };
 		CB30D9EC1BF0E3500084C1C0 /* SingleAsync.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB30D9E81BF0E3500084C1C0 /* SingleAsync.swift */; };
+		CB832B331D19654700C27230 /* NSProgressIndicator+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB832B311D1964E300C27230 /* NSProgressIndicator+Rx.swift */; };
+		CB832B371D19669100C27230 /* RxTextFieldDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB832B361D19669100C27230 /* RxTextFieldDelegateProxy.swift */; };
+		CB832B391D19673900C27230 /* NSTextView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB832B381D19673900C27230 /* NSTextView+Rx.swift */; };
+		CB832B3B1D1967A900C27230 /* RxTextViewDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB832B3A1D1967A900C27230 /* RxTextViewDelegateProxy.swift */; };
 		CB883B3B1BE24355000AC2EE /* Window.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB883B3A1BE24355000AC2EE /* Window.swift */; };
 		CB883B3C1BE24355000AC2EE /* Window.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB883B3A1BE24355000AC2EE /* Window.swift */; };
 		CB883B3D1BE24355000AC2EE /* Window.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB883B3A1BE24355000AC2EE /* Window.swift */; };
@@ -1745,6 +1749,10 @@
 		C8FD21AD1C67E14C00863EC3 /* UIBindingObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIBindingObserver.swift; sourceTree = "<group>"; };
 		CB255BD61BC46A9C00798A4C /* RetryWhen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RetryWhen.swift; sourceTree = "<group>"; };
 		CB30D9E81BF0E3500084C1C0 /* SingleAsync.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleAsync.swift; sourceTree = "<group>"; };
+		CB832B311D1964E300C27230 /* NSProgressIndicator+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSProgressIndicator+Rx.swift"; sourceTree = "<group>"; };
+		CB832B361D19669100C27230 /* RxTextFieldDelegateProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxTextFieldDelegateProxy.swift; sourceTree = "<group>"; };
+		CB832B381D19673900C27230 /* NSTextView+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSTextView+Rx.swift"; sourceTree = "<group>"; };
+		CB832B3A1D1967A900C27230 /* RxTextViewDelegateProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxTextViewDelegateProxy.swift; sourceTree = "<group>"; };
 		CB883B3A1BE24355000AC2EE /* Window.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Window.swift; sourceTree = "<group>"; };
 		CB883B3F1BE24C15000AC2EE /* RefCountDisposable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RefCountDisposable.swift; sourceTree = "<group>"; };
 		CB883B441BE256D4000AC2EE /* BooleanDisposable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BooleanDisposable.swift; sourceTree = "<group>"; };
@@ -2197,11 +2205,14 @@
 		C8093EC51B8A732E0088E94D /* OSX */ = {
 			isa = PBXGroup;
 			children = (
+				CB832B351D19667900C27230 /* Proxies */,
 				C8093EC61B8A732E0088E94D /* NSButton+Rx.swift */,
 				C8093EC71B8A732E0088E94D /* NSControl+Rx.swift */,
 				C8093EC81B8A732E0088E94D /* NSImageView+Rx.swift */,
+				CB832B311D1964E300C27230 /* NSProgressIndicator+Rx.swift */,
 				C8093EC91B8A732E0088E94D /* NSSlider+Rx.swift */,
 				C8093ECA1B8A732E0088E94D /* NSTextField+Rx.swift */,
+				CB832B381D19673900C27230 /* NSTextView+Rx.swift */,
 				C8BCD3F11C14B62B005F1280 /* NSView+Rx.swift */,
 			);
 			path = OSX;
@@ -2593,6 +2604,15 @@
 				C807F3611C2ACED300017910 /* TestSchedulerVirtualTimeConverter.swift */,
 			);
 			path = Schedulers;
+			sourceTree = "<group>";
+		};
+		CB832B351D19667900C27230 /* Proxies */ = {
+			isa = PBXGroup;
+			children = (
+				CB832B361D19669100C27230 /* RxTextFieldDelegateProxy.swift */,
+				CB832B3A1D1967A900C27230 /* RxTextViewDelegateProxy.swift */,
+			);
+			path = Proxies;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -3454,6 +3474,8 @@
 				C80D339B1B922FB00014629D /* ControlProperty.swift in Sources */,
 				C8BCD3F51C14B6D1005F1280 /* NSLayoutConstraint+Rx.swift in Sources */,
 				C8093EF01B8A732E0088E94D /* KVOObserver.swift in Sources */,
+				CB832B331D19654700C27230 /* NSProgressIndicator+Rx.swift in Sources */,
+				CB832B391D19673900C27230 /* NSTextView+Rx.swift in Sources */,
 				C8093EEE1B8A732E0088E94D /* KVOObservable.swift in Sources */,
 				C8F6A1461BF0B9B2007DF367 /* NSObject+Rx+RawRepresentable.swift in Sources */,
 				C8093EE01B8A732E0088E94D /* CLLocationManager+Rx.swift in Sources */,
@@ -3470,11 +3492,13 @@
 				C80DDE941BCE69BA006A1832 /* ControlEvent+Driver.swift in Sources */,
 				C80DDEB21BCE8CA3006A1832 /* Driver+Operators+arity.swift in Sources */,
 				C811C89E1C24D80100A2DDD4 /* DeallocObservable.swift in Sources */,
+				CB832B3B1D1967A900C27230 /* RxTextViewDelegateProxy.swift in Sources */,
 				C8BCD3F21C14B62B005F1280 /* NSView+Rx.swift in Sources */,
 				C8093EE21B8A732E0088E94D /* DelegateProxy.swift in Sources */,
 				C8093EFA1B8A732E0088E94D /* RxCLLocationManagerDelegateProxy.swift in Sources */,
 				C8093EE61B8A732E0088E94D /* Logging.swift in Sources */,
 				C8093EF21B8A732E0088E94D /* NSNotificationCenter+Rx.swift in Sources */,
+				CB832B371D19669100C27230 /* RxTextFieldDelegateProxy.swift in Sources */,
 				C8093EF81B8A732E0088E94D /* NSURLSession+Rx.swift in Sources */,
 				C80DDE9C1BCE69BA006A1832 /* Driver+Operators.swift in Sources */,
 				C8093F4C1B8A732E0088E94D /* NSSlider+Rx.swift in Sources */,
