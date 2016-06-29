@@ -64,6 +64,13 @@ extension RxPickerViewDelegateProxy: TestDelegateProtocol {
 }
 #endif
 
+@objc protocol UIGestureRecognizerDelegateSubclass
+    : UIGestureRecognizerDelegate
+    , TestDelegateProtocol {
+    optional func testEventHappened(value: Int)
+}
+
+
 // MARK: Tests
 
 // MARK: UITableView
@@ -133,6 +140,15 @@ extension DelegateProxyTest {
     }
 }
 #endif
+
+// MARK: UIGestureRecognizer
+
+extension DelegateProxyTest {
+    func test_UIGestureRecognizer() {
+        performDelegateTest(UIGestureRecognizerSubclass())
+    }
+}
+
 // MARK: Mocks
 
 class ExtendTableViewDelegateProxy
@@ -408,5 +424,42 @@ class UIPickerViewSubclass
                                                                 onProxyForObject: self)
     }
 }
-    
+
 #endif
+
+class ExtendGestureRecognizerDelegateProxy
+    : RxGestureRecognizerDelegateProxy
+    , UIGestureRecognizerDelegateSubclass {
+    weak private(set) var control: UIGestureRecognizerSubclass?
+
+    required init(parentObject: AnyObject) {
+        self.control = (parentObject as! UIGestureRecognizerSubclass)
+        super.init(parentObject: parentObject)
+    }
+}
+
+class UIGestureRecognizerSubclass
+    : UIGestureRecognizer
+    , TestDelegateControl {
+
+    override func rx_createDelegateProxy() -> RxGestureRecognizerDelegateProxy {
+        return ExtendGestureRecognizerDelegateProxy(parentObject: self)
+    }
+
+    func doThatTest(value: Int) {
+        (delegate as! TestDelegateProtocol).testEventHappened?(value)
+    }
+
+    var test: Observable<Int> {
+        return rx_delegate
+            .observe(#selector(TestDelegateProtocol.testEventHappened(_:)))
+            .map { a in (a[0] as! NSNumber).integerValue }
+    }
+
+    func setMineForwardDelegate(testDelegate: TestDelegateProtocol) -> Disposable {
+        return RxGestureRecognizerDelegateProxy.installForwardDelegate(testDelegate,
+                                                                retainDelegate: false,
+                                                                onProxyForObject: self)
+    }
+
+}

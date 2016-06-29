@@ -29,6 +29,7 @@
 		B18F3BC11BD93E00000AAC79 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18F3BBB1BD92EC8000AAC79 /* Reachability.swift */; };
 		B18F3BE21BDB2E8F000AAC79 /* ReachabilityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18F3BE11BDB2E8F000AAC79 /* ReachabilityService.swift */; };
 		B1B7C3D01BE006870076934E /* TakeLast.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B7C3CF1BE006870076934E /* TakeLast.swift */; };
+		B6AACACE1D22A58100B2A136 /* RxGestureRecognizerDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6AACAB81D22A56900B2A136 /* RxGestureRecognizerDelegateProxy.swift */; };
 		C803973A1BD3E17D009D8B26 /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80397391BD3E17D009D8B26 /* ActivityIndicator.swift */; };
 		C803973B1BD3E17D009D8B26 /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80397391BD3E17D009D8B26 /* ActivityIndicator.swift */; };
 		C809E97A1BE6841C0058D948 /* Wireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = C809E9791BE6841C0058D948 /* Wireframe.swift */; };
@@ -642,6 +643,7 @@
 		B18F3BBB1BD92EC8000AAC79 /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		B18F3BE11BDB2E8F000AAC79 /* ReachabilityService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReachabilityService.swift; sourceTree = "<group>"; };
 		B1B7C3CF1BE006870076934E /* TakeLast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TakeLast.swift; sourceTree = "<group>"; };
+		B6AACAB81D22A56900B2A136 /* RxGestureRecognizerDelegateProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxGestureRecognizerDelegateProxy.swift; sourceTree = "<group>"; };
 		C80397391BD3E17D009D8B26 /* ActivityIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
 		C809E9791BE6841C0058D948 /* Wireframe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Wireframe.swift; sourceTree = "<group>"; };
 		C809E97C1BE697100058D948 /* UIImage+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
@@ -1784,6 +1786,7 @@
 		C8CC3EA71C95CB5300ABA17E /* Proxies */ = {
 			isa = PBXGroup;
 			children = (
+				B6AACAB81D22A56900B2A136 /* RxGestureRecognizerDelegateProxy.swift */,
 				C8CC3EA81C95CB5300ABA17E /* RxCollectionViewDataSourceProxy.swift */,
 				C8CC3EA91C95CB5300ABA17E /* RxCollectionViewDelegateProxy.swift */,
 				C8CC3EAA1C95CB5300ABA17E /* RxImagePickerDelegateProxy.swift */,
@@ -2262,6 +2265,7 @@
 				C89464DB1BC6C2B00055219D /* Sample.swift in Sources */,
 				C80DA3411C30B23600C588B9 /* HistoricalSchedulerTimeConverter.swift in Sources */,
 				C849EF891C3195180048AC4A /* GithubSignupViewModel2.swift in Sources */,
+				B6AACACE1D22A58100B2A136 /* RxGestureRecognizerDelegateProxy.swift in Sources */,
 				C8CC3F4B1C95D16C00ABA17E /* IdentifiableValue.swift in Sources */,
 				C8CC3ED21C95CB5300ABA17E /* _RXDelegateProxy.m in Sources */,
 				C89464F31BC6C2B00055219D /* Observable+Time.swift in Sources */,
