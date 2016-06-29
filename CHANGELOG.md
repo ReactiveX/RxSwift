@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 
 * Adds `rx_title` to `UIViewController`.
 * Adds `rx_scrollEnabled` to `UIScrollView`.
+* Resolve static analysis issues relating to non-use of an assigned value, and potential null dereferences in RxCocoa's Objective-C classes.
 
 
 ## [2.5.0](https://github.com/ReactiveX/RxSwift/releases/tag/2.5.0)
