@@ -80,15 +80,6 @@ if [ "${RELEASE_TEST}" -eq 1 ]; then
 	. scripts/automation-tests.sh
 fi
 
-# make sure no module can be built
-for scheme in "RxExample-iOS-no-module"
-do
-	for configuration in ${CONFIGURATIONS[@]}
-	do
-		rx ${scheme} ${configuration} $DEFAULT_IOS9_SIMULATOR build
-	done
-done
-
 #make sure all tvOS tests pass
 if [ $TV_OS -eq 1 ]; then
 	for configuration in ${CONFIGURATIONS[@]}
