@@ -361,7 +361,65 @@ class UITableViewTests : RxTest {
 }
 
 extension UITableViewTests {
-    func testItemSelected() {
+    func testDataSourceIsBeingRetainedUntilDispose() {
 
+        var dataSourceDeallocated = false
+
+        var dataSourceSubscription: Disposable!
+        autoreleasepool {
+            let items: Observable<[Int]> = Observable.just([1, 2, 3])
+            let dataSource = SectionedViewDataSourceMock()
+            let tableView = UITableView(frame: CGRectMake(0, 0, 1, 1))
+            dataSourceSubscription = items.bindTo(tableView.rx_itemsWithDataSource(dataSource))
+
+            _ = dataSource.rx_deallocated.subscribeNext { _ in
+                dataSourceDeallocated = true
+            }
+        }
+
+        XCTAssert(dataSourceDeallocated == false)
+        dataSourceSubscription.dispose()
+        XCTAssert(dataSourceDeallocated == true)
+    }
+
+    func testDataSourceIsBeingRetainedUntilTableViewDealloc() {
+
+        var dataSourceDeallocated = false
+
+        autoreleasepool {
+            let tableView = UITableView(frame: CGRectMake(0, 0, 1, 1))
+            tableView.registerClass(NSClassFromString("UITableViewCell"), forCellReuseIdentifier: "a")
+
+            let items: Observable<[Int]> = Observable.just([1, 2, 3])
+            let dataSource = SectionedViewDataSourceMock()
+            _ = items.bindTo(tableView.rx_itemsWithDataSource(dataSource))
+
+            _ = dataSource.rx_deallocated.subscribeNext { _ in
+                dataSourceDeallocated = true
+            }
+
+            XCTAssert(dataSourceDeallocated == false)
+        }
+        XCTAssert(dataSourceDeallocated == true)
+    }
+
+    func testSetDataSourceUsesWeakReference() {
+
+        var dataSourceDeallocated = false
+
+        let tableView = UITableView(frame: CGRectMake(0, 0, 1, 1))
+        tableView.registerClass(NSClassFromString("UITableViewCell"), forCellReuseIdentifier: "a")
+
+        autoreleasepool {
+            let dataSource = SectionedViewDataSourceMock()
+            tableView.rx_setDataSource(dataSource)
+
+            _ = dataSource.rx_deallocated.subscribeNext { _ in
+                dataSourceDeallocated = true
+            }
+
+            XCTAssert(dataSourceDeallocated == false)
+        }
+        XCTAssert(dataSourceDeallocated == true)
     }
 }

@@ -65,6 +65,10 @@ extension UITableView {
     
     /**
     Binds sequences of elements to table view rows using a custom reactive data used to perform the transformation.
+    This method will retain the data source for as long as the subscription isn't disposed (result `Disposable` 
+    being disposed).
+    In case `source` observable sequence terminates sucessfully, the data source will present latest element
+    until the subscription isn't disposed.
     
     - parameter dataSource: Data source used to transform elements to view cells.
     - parameter source: Observable sequence of items.
@@ -78,7 +82,8 @@ extension UITableView {
         -> (source: O)
         -> Disposable  {
         return { source in
-            return source.subscribeProxyDataSourceForObject(self, dataSource: dataSource, retainDataSource: false) { [weak self] (_: RxTableViewDataSourceProxy, event) -> Void in
+            // There needs to be a strong retaining here because
+            return source.subscribeProxyDataSourceForObject(self, dataSource: dataSource, retainDataSource: true) { [weak self] (_: RxTableViewDataSourceProxy, event) -> Void in
                 guard let tableView = self else {
                     return
                 }
@@ -119,9 +124,10 @@ extension UITableView {
    
     /**
     Installs data source as forwarding delegate on `rx_dataSource`.
+    Data source won't be retained.
     
     It enables using normal delegate mechanism with reactive delegate mechanism.
-    
+     
     - parameter dataSource: Data source object.
     - returns: Disposable object that can be used to unbind the data source.
     */

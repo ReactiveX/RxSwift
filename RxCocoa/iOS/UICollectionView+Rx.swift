@@ -79,7 +79,8 @@ extension UICollectionView {
         -> (source: O)
         -> Disposable  {
         return { source in
-            return source.subscribeProxyDataSourceForObject(self, dataSource: dataSource, retainDataSource: false) { [weak self] (_: RxCollectionViewDataSourceProxy, event) -> Void in
+            
+            return source.subscribeProxyDataSourceForObject(self, dataSource: dataSource, retainDataSource: true) { [weak self] (_: RxCollectionViewDataSourceProxy, event) -> Void in
                 guard let collectionView = self else {
                     return
                 }
@@ -120,6 +121,7 @@ extension UICollectionView {
     
     /**
     Installs data source as forwarding delegate on `rx_dataSource`. 
+    Data source won't be retained.
     
     It enables using normal delegate mechanism with reactive delegate mechanism.
     
