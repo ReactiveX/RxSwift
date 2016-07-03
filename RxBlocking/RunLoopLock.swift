@@ -39,7 +39,7 @@ class RunLoopLock {
     }
 
     func dispatch(_ action: () -> ()) {
-        CFRunLoopPerformBlock(currentRunLoop, CFRunLoopMode.defaultMode as! CFTypeRef) {
+        CFRunLoopPerformBlock(currentRunLoop, CFRunLoopMode.defaultMode.rawValue) {
             if CurrentThreadScheduler.isScheduleRequired {
                 _ = CurrentThreadScheduler.instance.schedule(()) { _ in
                     action()
@@ -57,7 +57,7 @@ class RunLoopLock {
         if AtomicIncrement(&calledStop) != 1 {
             return
         }
-        CFRunLoopPerformBlock(currentRunLoop, CFRunLoopMode.defaultMode as! CFTypeRef) {
+        CFRunLoopPerformBlock(currentRunLoop, CFRunLoopMode.defaultMode.rawValue) {
             CFRunLoopStop(self.currentRunLoop)
         }
         CFRunLoopWakeUp(currentRunLoop)
