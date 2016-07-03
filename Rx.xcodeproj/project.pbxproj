@@ -367,7 +367,6 @@
 		C83100661BF7D51600AAE3CD /* Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83100631BF7D51600AAE3CD /* Sequence.swift */; };
 		C83100671BF7D51600AAE3CD /* Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83100631BF7D51600AAE3CD /* Sequence.swift */; };
 		C83508C81C386F6F0027C24C /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8A56AD71AD7424700B4673B /* RxSwift.framework */; };
-		C83509271C38706E0027C24C /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C83508D51C38706D0027C24C /* Info.plist */; };
 		C83509291C38706E0027C24C /* PerformanceTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83508D71C38706D0027C24C /* PerformanceTools.swift */; };
 		C835092A1C38706E0027C24C /* CLLocationManager+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83508D91C38706D0027C24C /* CLLocationManager+RxTests.swift */; };
 		C835092C1C38706E0027C24C /* Control+RxTests+UIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83508DB1C38706D0027C24C /* Control+RxTests+UIKit.swift */; };
@@ -3223,7 +3222,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C83509271C38706E0027C24C /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
