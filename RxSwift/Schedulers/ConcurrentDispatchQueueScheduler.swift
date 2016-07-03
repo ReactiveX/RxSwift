@@ -125,14 +125,14 @@ public class ConcurrentDispatchQueueScheduler: SchedulerType {
         
     
         let initial = MainScheduler.convertTimeIntervalToDispatchTime(startAfter)
-        let dispatchInterval = MainScheduler.convertTimeIntervalToDispatchInterval(period)
         
         var timerState = state
         
-        let validDispatchInterval = dispatchInterval < 0 ? 0 : dispatchInterval
+        let validDispatchInterval = period < 0.0 ? 0.0 : period
         
-        let timer = DispatchSource.timer(flags: DispatchSource.TimerFlags(rawValue: UInt(0)), queue: _queue)    
-        timer.scheduleRepeating(deadline: initial, interval: DispatchTimeInterval.seconds(Int(validDispatchInterval)), leeway: DispatchTimeInterval.microseconds(0))
+        let timer = DispatchSource.timer(flags: [], queue: _queue)
+        timer.scheduleRepeating(deadline: initial, interval: validDispatchInterval, leeway: DispatchTimeInterval.microseconds(0))
+        
         let cancel = AnonymousDisposable {
             timer.cancel()
         }
