@@ -24,6 +24,23 @@ extension UICollectionView {
     - parameter source: Observable sequence of items.
     - parameter cellFactory: Transform between sequence elements and view cells.
     - returns: Disposable object that can be used to unbind.
+     
+     Example
+    
+         let items = Observable.just([
+             1,
+             2,
+             3
+         ])
+
+         items
+         .bindTo(collectionView.rx_itemsWithCellFactory) { (collectionView, row, element) in
+             let indexPath = NSIndexPath(forItem: row, inSection: 0)
+             let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as! NumberCell
+             cell.value?.text = "\(element) @ \(row)"
+             return cell
+         }
+         .addDisposableTo(disposeBag)
     */
     public func rx_itemsWithCellFactory<S: SequenceType, O: ObservableType where O.E == S>
         (source: O)
@@ -44,6 +61,20 @@ extension UICollectionView {
     - parameter configureCell: Transform between sequence elements and view cells.
     - parameter cellType: Type of table view cell.
     - returns: Disposable object that can be used to unbind.
+     
+     Example
+
+         let items = Observable.just([
+             1,
+             2,
+             3
+         ])
+
+         items
+             .bindTo(collectionView.rx_itemsWithCellIdentifier("Cell", cellType: NumberCell.self)) { (row, element, cell) in
+                cell.value?.text = "\(element) @ \(row)"
+             }
+             .addDisposableTo(disposeBag)
     */
     public func rx_itemsWithCellIdentifier<S: SequenceType, Cell: UICollectionViewCell, O : ObservableType where O.E == S>
         (cellIdentifier: String, cellType: Cell.Type = Cell.self)
@@ -70,6 +101,38 @@ extension UICollectionView {
     - parameter dataSource: Data source used to transform elements to view cells.
     - parameter source: Observable sequence of items.
     - returns: Disposable object that can be used to unbind.
+     
+     Example
+     
+         let dataSource = RxCollectionViewSectionedReloadDataSource<SectionModel<String, Double>>()
+
+         let items = Observable.just([
+             SectionModel(model: "First section", items: [
+                 1.0,
+                 2.0,
+                 3.0
+             ]),
+             SectionModel(model: "Second section", items: [
+                 1.0,
+                 2.0,
+                 3.0
+             ]),
+             SectionModel(model: "Third section", items: [
+                 1.0,
+                 2.0,
+                 3.0
+             ])
+         ])
+
+         dataSource.configureCell = { (dataSource, cv, indexPath, element) in
+             let cell = cv.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as! NumberCell
+             cell.value?.text = "\(element) @ row \(indexPath.row)"
+             return cell
+         }
+
+         items
+            .bindTo(collectionView.rx_itemsWithDataSource(dataSource))
+            .addDisposableTo(disposeBag)
     */
     public func rx_itemsWithDataSource<
             DataSource: protocol<RxCollectionViewDataSourceType, UICollectionViewDataSource>,
@@ -79,7 +142,8 @@ extension UICollectionView {
         -> (source: O)
         -> Disposable  {
         return { source in
-            return source.subscribeProxyDataSourceForObject(self, dataSource: dataSource, retainDataSource: false) { [weak self] (_: RxCollectionViewDataSourceProxy, event) -> Void in
+            
+            return source.subscribeProxyDataSourceForObject(self, dataSource: dataSource, retainDataSource: true) { [weak self] (_: RxCollectionViewDataSourceProxy, event) -> Void in
                 guard let collectionView = self else {
                     return
                 }
@@ -120,6 +184,7 @@ extension UICollectionView {
     
     /**
     Installs data source as forwarding delegate on `rx_dataSource`. 
+    Data source won't be retained.
     
     It enables using normal delegate mechanism with reactive delegate mechanism.
     

@@ -11,6 +11,9 @@
       location = "group:README.md">
    </FileRef>
    <FileRef
+      location = "group:ISSUE_TEMPLATE.md">
+   </FileRef>
+   <FileRef
       location = "group:CHANGELOG.md">
    </FileRef>
    <Group
@@ -58,6 +61,9 @@
          </FileRef>
       </Group>
       <FileRef
+         location = "group:all-tests.sh">
+      </FileRef>
+      <FileRef
          location = "group:automation-tests.sh">
       </FileRef>
       <FileRef
@@ -65,9 +71,6 @@
       </FileRef>
       <FileRef
          location = "group:/Users/kzaher/Projects/RxSwift/scripts/package-spm.swift">
-      </FileRef>
-      <FileRef
-         location = "group:pre-release-tests.sh">
       </FileRef>
       <FileRef
          location = "group:test-linux.sh">
@@ -102,9 +105,6 @@
       </FileRef>
       <FileRef
          location = "group:HotAndColdObservables.md">
-      </FileRef>
-      <FileRef
-         location = "group:IssueTemplate.md">
       </FileRef>
       <FileRef
          location = "group:Linux.md">

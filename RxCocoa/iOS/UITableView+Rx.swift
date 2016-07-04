@@ -24,6 +24,23 @@ extension UITableView {
     - parameter source: Observable sequence of items.
     - parameter cellFactory: Transform between sequence elements and view cells.
     - returns: Disposable object that can be used to unbind.
+     
+     Example:
+    
+         let items = Observable.just([
+             "First Item",
+             "Second Item",
+             "Third Item"
+         ])
+
+         items
+         .bindTo(tableView.rx_itemsWithCellFactory) { (tableView, row, element) in
+             let cell = tableView.dequeueReusableCellWithIdentifier("Cell")!
+             cell.textLabel?.text = "\(element) @ row \(row)"
+             return cell
+         }
+         .addDisposableTo(disposeBag)
+
     */
     public func rx_itemsWithCellFactory<S: SequenceType, O: ObservableType where O.E == S>
         (source: O)
@@ -44,6 +61,20 @@ extension UITableView {
     - parameter configureCell: Transform between sequence elements and view cells.
     - parameter cellType: Type of table view cell.
     - returns: Disposable object that can be used to unbind.
+     
+     Example:
+
+         let items = Observable.just([
+             "First Item",
+             "Second Item",
+             "Third Item"
+         ])
+
+         items
+             .bindTo(tableView.rx_itemsWithCellIdentifier("Cell", cellType: UITableViewCell.self)) { (row, element, cell) in
+                cell.textLabel?.text = "\(element) @ row \(row)"
+             }
+             .addDisposableTo(disposeBag)
     */
     public func rx_itemsWithCellIdentifier<S: SequenceType, Cell: UITableViewCell, O : ObservableType where O.E == S>
         (cellIdentifier: String, cellType: Cell.Type = Cell.self)
@@ -65,10 +96,46 @@ extension UITableView {
     
     /**
     Binds sequences of elements to table view rows using a custom reactive data used to perform the transformation.
+    This method will retain the data source for as long as the subscription isn't disposed (result `Disposable` 
+    being disposed).
+    In case `source` observable sequence terminates sucessfully, the data source will present latest element
+    until the subscription isn't disposed.
     
     - parameter dataSource: Data source used to transform elements to view cells.
     - parameter source: Observable sequence of items.
     - returns: Disposable object that can be used to unbind.
+     
+     Example 
+
+        let dataSource = RxTableViewSectionedReloadDataSource<SectionModel<String, Double>>()
+
+        let items = Observable.just([
+            SectionModel(model: "First section", items: [
+                1.0,
+                2.0,
+                3.0
+                ]),
+            SectionModel(model: "Second section", items: [
+                1.0,
+                2.0,
+                3.0
+                ]),
+            SectionModel(model: "Third section", items: [
+                1.0,
+                2.0,
+                3.0
+                ])
+            ])
+
+        dataSource.configureCell = { (dataSource, tv, indexPath, element) in
+        let cell = tv.dequeueReusableCellWithIdentifier("Cell")!
+            cell.textLabel?.text = "\(element) @ row \(indexPath.row)"
+            return cell
+        }
+
+        items
+            .bindTo(tableView.rx_itemsWithDataSource(dataSource))
+            .addDisposableTo(disposeBag)
     */
     public func rx_itemsWithDataSource<
             DataSource: protocol<RxTableViewDataSourceType, UITableViewDataSource>,
@@ -78,7 +145,8 @@ extension UITableView {
         -> (source: O)
         -> Disposable  {
         return { source in
-            return source.subscribeProxyDataSourceForObject(self, dataSource: dataSource, retainDataSource: false) { [weak self] (_: RxTableViewDataSourceProxy, event) -> Void in
+            // There needs to be a strong retaining here because
+            return source.subscribeProxyDataSourceForObject(self, dataSource: dataSource, retainDataSource: true) { [weak self] (_: RxTableViewDataSourceProxy, event) -> Void in
                 guard let tableView = self else {
                     return
                 }
@@ -119,9 +187,10 @@ extension UITableView {
    
     /**
     Installs data source as forwarding delegate on `rx_dataSource`.
+    Data source won't be retained.
     
     It enables using normal delegate mechanism with reactive delegate mechanism.
-    
+     
     - parameter dataSource: Data source object.
     - returns: Disposable object that can be used to unbind the data source.
     */

@@ -317,11 +317,15 @@ extension CLLocationManagerTests {
 
     #if os(iOS)
     func testDidRangeBeaconsInRegion() {
+        
         var completed = false
         var value: ([CLBeacon], CLBeaconRegion)?
 
         let targetValue = (
-            [CLBeacon()],
+            // [CLBeacon()]
+            // TODO: This crashes on Xcode 8.0 beta version
+            // this is temporary workaround
+            [] as [CLBeacon],
             CLBeaconRegion(proximityUUID: NSUUID(UUIDString: "68753A44-4D6F-1226-9C60-0050E4C00067")!, identifier: "1231231")
         )
 
@@ -340,6 +344,7 @@ extension CLLocationManagerTests {
         XCTAssertEqual(value!.0, targetValue.0)
         XCTAssertEqual(value!.1, targetValue.1)
         XCTAssertTrue(completed)
+        
     }
 
     func testRangingBeaconsDidFailForRegionWithError() {
