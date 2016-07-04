@@ -45,7 +45,7 @@ KVO observing, async operations and streams are all unified under [abstraction o
 ###### ... interact
 
 * All of this is great, but it would be nice to talk with other people using RxSwift and exchange experiences. <br />[![Slack channel](http://slack.rxswift.org/badge.svg)](http://slack.rxswift.org) [Join Slack Channel](http://slack.rxswift.org/)
-* Report a problem using the library. [Open an Issue With Bug Template](Documentation/IssueTemplate.md)
+* Report a problem using the library. [Open an Issue With Bug Template](ISSUE_TEMPLATE.md)
 * Request a new feature. [Open an Issue With Feature Request Template](Documentation/NewFeatureRequestTemplate.md)
 
 
