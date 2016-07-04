@@ -138,6 +138,20 @@ end
 
 Replace `YOUR_TARGET_NAME` and then, in the `Podfile` directory, type:
 
+**:warning: If you want to use CocoaPods with Xcode 8.0 beta and Swift 2.3, you might need to add the following
+lines to your podfile: :warning:**
+
+```
+  post_install do |installer|
+	  installer.pods_project.targets.each do |target|
+	    target.build_configurations.each do |config|
+	      config.build_settings['SWIFT_VERSION'] = '2.3'
+	      config.build_settings['MACOSX_DEPLOYMENT_TARGET'] = '10.10'
+	    end
+	  end
+	end
+```
+
 ```
 $ pod install
 ```
