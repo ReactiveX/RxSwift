@@ -24,7 +24,7 @@ extension Double : IdentifiableType {
 
 }
 
-#if swift(>=2.3)
+#if swift(>=3.0)
 extension Float80 : IdentifiableType {
     typealias identity = Float80
 
