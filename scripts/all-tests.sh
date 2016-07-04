@@ -133,4 +133,6 @@ done
 
 # compile and run playgrounds
 
-. scripts/validate-playgrounds.sh
+if [ "${IS_SWIFT_3}" -ne 1 ]; then
+	. scripts/validate-playgrounds.sh
+fi
