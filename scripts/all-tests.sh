@@ -46,24 +46,11 @@ function checkPlistVersions() {
 
 checkPlistVersions
 
-./scripts/validate-headers.swift
-
-./scripts/package-spm.swift > /dev/null
+if [ "${IS_SWIFT_3}" -ne 1 ]; then
+    ./scripts/validate-headers.swift
+    ./scripts/package-spm.swift > /dev/null
+fi
 ensureNoGitChanges "Package for Swift package manager isn't updated, please run ./scripts/package-spm.swift and commit the changes"
-
-# ios 7 sim
-#if [ `xcrun simctl list | grep "${DEFAULT_IOS7_SIMULATOR}" | wc -l` == 0 ]; then
-#	xcrun simctl create $DEFAULT_IOS7_SIMULATOR 'iPhone 4s' 'com.apple.CoreSimulator.SimRuntime.iOS-7-1'
-#else
-#	echo "${DEFAULT_IOS7_SIMULATOR} exists"
-#fi
-
-#ios 8 sim
-#if [ `xcrun simctl list | grep "${DEFAULT_IOS8_SIMULATOR}" | wc -l` == 0 ]; then
-#	xcrun simctl create $DEFAULT_IOS8_SIMULATOR 'iPhone 6' 'com.apple.CoreSimulator.SimRuntime.iOS-8-4'
-#else
-#	echo "${DEFAULT_IOS8_SIMULATOR} exists"
-#fi
 
 CONFIGURATIONS=(Release-Tests)
 
@@ -95,21 +82,21 @@ for scheme in ${WATCH_OS_BUILD_TARGETS[@]}
 do
 	for configuration in ${CONFIGURATIONS[@]}
 	do
-		rx "${scheme}" "${configuration}" "${DEFAULT_WATCHOS2_SIMULATOR}" build
+		rx "${scheme}" "${configuration}" "${DEFAULT_WATCHOS_SIMULATOR}" build
 	done
 done
 
 #make sure all iOS tests pass
 for configuration in ${CONFIGURATIONS[@]}
 do
-	rx "RxSwift-iOS" ${configuration} $DEFAULT_IOS9_SIMULATOR test
+	rx "RxSwift-iOS" ${configuration} $DEFAULT_IOS_SIMULATOR test
 done
 
 #make sure all watchOS tests pass
 #tests for Watch OS are not available rdar://21760513
 # for configuration in ${CONFIGURATIONS[@]}
 # do
-# 	rx "RxTests-watchOS" ${configuration} $DEFAULT_WATCHOS2_SIMULATOR test
+# 	rx "RxTests-watchOS" ${configuration} $DEFAULT_WATCHOS_SIMULATOR test
 # done
 
 #make sure all OSX tests pass
@@ -123,7 +110,7 @@ for scheme in "RxExample-iOS"
 do
 	for configuration in ${CONFIGURATIONS[@]}
 	do
-		rx ${scheme} ${configuration} $DEFAULT_IOS9_SIMULATOR build
+		rx ${scheme} ${configuration} $DEFAULT_IOS_SIMULATOR build
 	done
 done
 
@@ -131,7 +118,7 @@ for scheme in "RxExample-iOS"
 do
     for configuration in "Debug"
     do
-        rx ${scheme} ${configuration} $DEFAULT_IOS9_SIMULATOR test
+        rx ${scheme} ${configuration} $DEFAULT_IOS_SIMULATOR test
     done
 done
 
