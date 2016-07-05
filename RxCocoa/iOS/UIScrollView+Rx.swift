@@ -58,6 +58,7 @@ extension UIScrollView {
 
     /**
     Installs delegate as forwarding delegate on `rx_delegate`.
+    Delegate won't be retained.
     
     It enables using normal delegate mechanism with reactive delegate mechanism.
     

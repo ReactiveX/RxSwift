@@ -875,7 +875,7 @@ The reason why 2 navigations are suggested is because first navigation forces lo
 
 Variable wraps a [`Subject`](http://reactivex.io/documentation/subject.html). More specifically it is a `BehaviorSubject`.  Unlike `BehaviorSubject`, it only exposes `value` interface, so variable can never terminate or fail.
 
-It will also broadcast it's current value immediately on subscription.
+It will also broadcast its current value immediately on subscription.
 
 After variable is deallocated, it will complete the observable sequence returned from `.asObservable()`.
 

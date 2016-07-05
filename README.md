@@ -45,7 +45,7 @@ KVO observing, async operations and streams are all unified under [abstraction o
 ###### ... interact
 
 * All of this is great, but it would be nice to talk with other people using RxSwift and exchange experiences. <br />[![Slack channel](http://slack.rxswift.org/badge.svg)](http://slack.rxswift.org) [Join Slack Channel](http://slack.rxswift.org/)
-* Report a problem using the library. [Open an Issue With Bug Template](Documentation/IssueTemplate.md)
+* Report a problem using the library. [Open an Issue With Bug Template](ISSUE_TEMPLATE.md)
 * Request a new feature. [Open an Issue With Feature Request Template](Documentation/NewFeatureRequestTemplate.md)
 
 
@@ -137,6 +137,20 @@ end
 ```
 
 Replace `YOUR_TARGET_NAME` and then, in the `Podfile` directory, type:
+
+**:warning: If you want to use CocoaPods with Xcode 8.0 beta and Swift 2.3, you might need to add the following
+lines to your podfile: :warning:**
+
+```
+  post_install do |installer|
+	  installer.pods_project.targets.each do |target|
+	    target.build_configurations.each do |config|
+	      config.build_settings['SWIFT_VERSION'] = '2.3'
+	      config.build_settings['MACOSX_DEPLOYMENT_TARGET'] = '10.10'
+	    end
+	  end
+	end
+```
 
 ```
 $ pod install
