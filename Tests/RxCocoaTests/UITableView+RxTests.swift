@@ -369,7 +369,7 @@ extension UITableViewTests {
         autoreleasepool {
             let items: Observable<[Int]> = Observable.just([1, 2, 3])
             let dataSource = SectionedViewDataSourceMock()
-            let tableView = UITableView(frame: CGRectMake(0, 0, 1, 1))
+            let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
             dataSourceSubscription = items.bindTo(tableView.rx_itemsWithDataSource(dataSource))
 
             _ = dataSource.rx_deallocated.subscribeNext { _ in
@@ -387,8 +387,8 @@ extension UITableViewTests {
         var dataSourceDeallocated = false
 
         autoreleasepool {
-            let tableView = UITableView(frame: CGRectMake(0, 0, 1, 1))
-            tableView.registerClass(NSClassFromString("UITableViewCell"), forCellReuseIdentifier: "a")
+            let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
+            tableView.register(UITableViewCell.self, forCellReuseIdentifier: "a")
 
             let items: Observable<[Int]> = Observable.just([1, 2, 3])
             let dataSource = SectionedViewDataSourceMock()
@@ -407,12 +407,12 @@ extension UITableViewTests {
 
         var dataSourceDeallocated = false
 
-        let tableView = UITableView(frame: CGRectMake(0, 0, 1, 1))
-        tableView.registerClass(NSClassFromString("UITableViewCell"), forCellReuseIdentifier: "a")
+        let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "a")
 
         autoreleasepool {
             let dataSource = SectionedViewDataSourceMock()
-            tableView.rx_setDataSource(dataSource)
+            _ = tableView.rx_setDataSource(dataSource)
 
             _ = dataSource.rx_deallocated.subscribeNext { _ in
                 dataSourceDeallocated = true
