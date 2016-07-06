@@ -77,7 +77,7 @@ class DisposableTest : RxTest {
             numberDisposed += 1
         })
         
-        compositeDisposable.addDisposable(AnonymousDisposable {
+        _ = compositeDisposable.addDisposable(AnonymousDisposable {
             numberDisposed += 1
         })
         

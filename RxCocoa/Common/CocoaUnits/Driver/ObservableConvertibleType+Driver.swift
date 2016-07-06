@@ -18,8 +18,8 @@ extension ObservableConvertibleType {
     - parameter onErrorJustReturn: Element to return in case of error and after that complete the sequence.
     - returns: Driving observable sequence.
     */
-    @warn_unused_result(message="http://git.io/rxs.uo")
-    public func asDriver(onErrorJustReturn onErrorJustReturn: E) -> Driver<E> {
+    @warn_unused_result(message:"http://git.io/rxs.uo")
+    public func asDriver(onErrorJustReturn: E) -> Driver<E> {
         let source = self
             .asObservable()
             .observeOn(driverObserveOnScheduler)
@@ -33,8 +33,8 @@ extension ObservableConvertibleType {
     - parameter onErrorDriveWith: Driver that continues to drive the sequence in case of error.
     - returns: Driving observable sequence.
     */
-    @warn_unused_result(message="http://git.io/rxs.uo")
-    public func asDriver(onErrorDriveWith onErrorDriveWith: Driver<E>) -> Driver<E> {
+    @warn_unused_result(message:"http://git.io/rxs.uo")
+    public func asDriver(onErrorDriveWith: Driver<E>) -> Driver<E> {
         let source = self
             .asObservable()
             .observeOn(driverObserveOnScheduler)
@@ -50,8 +50,8 @@ extension ObservableConvertibleType {
     - parameter onErrorRecover: Calculates driver that continues to drive the sequence in case of error.
     - returns: Driving observable sequence.
     */
-    @warn_unused_result(message="http://git.io/rxs.uo")
-    public func asDriver(onErrorRecover onErrorRecover: (error: ErrorType) -> Driver<E>) -> Driver<E> {
+    @warn_unused_result(message:"http://git.io/rxs.uo")
+    public func asDriver(onErrorRecover: (error: ErrorProtocol) -> Driver<E>) -> Driver<E> {
         let source = self
             .asObservable()
             .observeOn(driverObserveOnScheduler)

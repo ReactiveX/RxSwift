@@ -19,15 +19,15 @@ let tableViewDataSourceNotSet = TableViewDataSourceNotSet()
 class TableViewDataSourceNotSet
     : NSObject
     , UITableViewDataSource {
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         rxAbstractMethodWithMessage(dataSourceNotSet)
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         rxAbstractMethodWithMessage(dataSourceNotSet)
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         rxAbstractMethodWithMessage(dataSourceNotSet)
     }
 }
@@ -62,22 +62,22 @@ public class RxTableViewDataSourceProxy
     /**
     Required delegate method implementation.
     */
-    public func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return (_requiredMethodsDataSource ?? tableViewDataSourceNotSet).numberOfSectionsInTableView?(tableView) ?? 1
+    public func numberOfSections(in tableView: UITableView) -> Int {
+        return (_requiredMethodsDataSource ?? tableViewDataSourceNotSet).numberOfSections?(in: tableView) ?? 1
     }
 
     /**
     Required delegate method implementation.
     */
-    public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return (_requiredMethodsDataSource ?? tableViewDataSourceNotSet).tableView(tableView, numberOfRowsInSection: section)
     }
 
     /**
     Required delegate method implementation.
     */
-    public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        return (_requiredMethodsDataSource ?? tableViewDataSourceNotSet).tableView(tableView, cellForRowAtIndexPath: indexPath)
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        return (_requiredMethodsDataSource ?? tableViewDataSourceNotSet).tableView(tableView, cellForRowAt: indexPath)
     }
     
     // MARK: proxy
@@ -85,7 +85,7 @@ public class RxTableViewDataSourceProxy
     /**
     For more information take a look at `DelegateProxyType`.
     */
-    public override class func createProxyForObject(object: AnyObject) -> AnyObject {
+    public override class func createProxyForObject(_ object: AnyObject) -> AnyObject {
         let tableView = (object as! UITableView)
 
         return castOrFatalError(tableView.rx_createDataSourceProxy())
@@ -101,7 +101,7 @@ public class RxTableViewDataSourceProxy
     /**
      For more information take a look at `DelegateProxyType`.
      */
-    public class func setCurrentDelegate(delegate: AnyObject?, toObject object: AnyObject) {
+    public class func setCurrentDelegate(_ delegate: AnyObject?, toObject object: AnyObject) {
         let tableView: UITableView = castOrFatalError(object)
         tableView.dataSource = castOptionalOrFatalError(delegate)
     }
@@ -109,7 +109,7 @@ public class RxTableViewDataSourceProxy
     /**
      For more information take a look at `DelegateProxyType`.
      */
-    public class func currentDelegateFor(object: AnyObject) -> AnyObject? {
+    public class func currentDelegateFor(_ object: AnyObject) -> AnyObject? {
         let tableView: UITableView = castOrFatalError(object)
         return tableView.dataSource
     }
@@ -117,7 +117,7 @@ public class RxTableViewDataSourceProxy
     /**
      For more information take a look at `DelegateProxyType`.
      */
-    public override func setForwardToDelegate(forwardToDelegate: AnyObject?, retainDelegate: Bool) {
+    public override func setForwardToDelegate(_ forwardToDelegate: AnyObject?, retainDelegate: Bool) {
         let requiredMethodsDataSource: UITableViewDataSource? = castOptionalOrFatalError(forwardToDelegate)
         _requiredMethodsDataSource = requiredMethodsDataSource ?? tableViewDataSourceNotSet
         super.setForwardToDelegate(forwardToDelegate, retainDelegate: retainDelegate)

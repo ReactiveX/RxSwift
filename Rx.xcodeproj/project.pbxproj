@@ -3126,20 +3126,44 @@
 				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = "Krunoslav Zaher";
 				TargetAttributes = {
+					C80938F51B8A71760088E94D = {
+						LastSwiftMigration = 0800;
+					};
+					C809396F1B8A71840088E94D = {
+						LastSwiftMigration = 0800;
+					};
+					C8093B4B1B8A71F00088E94D = {
+						LastSwiftMigration = 0800;
+					};
+					C8093BC91B8A71FC0088E94D = {
+						LastSwiftMigration = 0800;
+					};
 					C83508C21C386F6F0027C24C = {
 						CreatedOnToolsVersion = 7.2;
+						LastSwiftMigration = 0800;
 					};
 					C83509831C38740E0027C24C = {
 						CreatedOnToolsVersion = 7.2;
 					};
 					C83509931C38742C0027C24C = {
 						CreatedOnToolsVersion = 7.2;
+						LastSwiftMigration = 0800;
 					};
 					C85BA04A1C3878740075D68E = {
 						CreatedOnToolsVersion = 7.2;
 					};
+					C88BB81A1B07E5ED0064D411 = {
+						LastSwiftMigration = 0800;
+					};
+					C88FA4FD1C25C44800CCFEA4 = {
+						LastSwiftMigration = 0800;
+					};
+					C88FA50E1C25C4B500CCFEA4 = {
+						LastSwiftMigration = 0800;
+					};
 					C8A56AD61AD7424700B4673B = {
 						CreatedOnToolsVersion = 6.3;
+						LastSwiftMigration = 0800;
 					};
 					D2138C741BB9BE9800339B5C = {
 						CreatedOnToolsVersion = 7.1;
@@ -4782,6 +4806,7 @@
 				PRODUCT_NAME = RxCocoa;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -4799,6 +4824,7 @@
 				PRODUCT_NAME = RxCocoa;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -4816,6 +4842,7 @@
 				PRODUCT_NAME = RxCocoa;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 			};
 			name = "Release-Tests";
 		};
@@ -4835,6 +4862,7 @@
 				PRODUCT_NAME = RxCocoa;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -4854,6 +4882,7 @@
 				PRODUCT_NAME = RxCocoa;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -4873,6 +4902,7 @@
 				PRODUCT_NAME = RxCocoa;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 			};
 			name = "Release-Tests";
 		};
@@ -4890,6 +4920,7 @@
 				PRODUCT_NAME = RxBlocking;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -4907,6 +4938,7 @@
 				PRODUCT_NAME = RxBlocking;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -4924,6 +4956,7 @@
 				PRODUCT_NAME = RxBlocking;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 			};
 			name = "Release-Tests";
 		};
@@ -4943,6 +4976,7 @@
 				PRODUCT_NAME = RxBlocking;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -4962,6 +4996,7 @@
 				PRODUCT_NAME = RxBlocking;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -4981,6 +5016,7 @@
 				PRODUCT_NAME = RxBlocking;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 			};
 			name = "Release-Tests";
 		};
@@ -4999,6 +5035,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = "Tests/RxCocoaTests/RxTests-iOS-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -5012,6 +5049,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = "Tests/RxCocoaTests/RxTests-iOS-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -5025,6 +5063,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = "Tests/RxCocoaTests/RxTests-iOS-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 			};
 			name = "Release-Tests";
 		};
@@ -5090,6 +5129,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SWIFT_OBJC_BRIDGING_HEADER = "Tests/RxCocoaTests/RxTests-OSX-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -5106,6 +5146,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SWIFT_OBJC_BRIDGING_HEADER = "Tests/RxCocoaTests/RxTests-OSX-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -5122,6 +5163,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SWIFT_OBJC_BRIDGING_HEADER = "Tests/RxCocoaTests/RxTests-OSX-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 			};
 			name = "Release-Tests";
 		};
@@ -5243,6 +5285,7 @@
 				PRODUCT_NAME = RxSwift;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 			};
 			name = "Release-Tests";
 		};
@@ -5262,6 +5305,7 @@
 				PRODUCT_NAME = RxSwift;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 			};
 			name = "Release-Tests";
 		};
@@ -5281,6 +5325,7 @@
 				PRODUCT_NAME = RxSwift;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -5300,6 +5345,7 @@
 				PRODUCT_NAME = RxSwift;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -5321,6 +5367,7 @@
 				PRODUCT_NAME = RxTests;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -5342,6 +5389,7 @@
 				PRODUCT_NAME = RxTests;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -5363,6 +5411,7 @@
 				PRODUCT_NAME = RxTests;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 			};
 			name = "Release-Tests";
 		};
@@ -5389,6 +5438,7 @@
 				PRODUCT_NAME = RxTests;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -5415,6 +5465,7 @@
 				PRODUCT_NAME = RxTests;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -5441,6 +5492,7 @@
 				PRODUCT_NAME = RxTests;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 			};
 			name = "Release-Tests";
 		};
@@ -5694,6 +5746,7 @@
 				PRODUCT_NAME = RxSwift;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -5711,6 +5764,7 @@
 				PRODUCT_NAME = RxSwift;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};

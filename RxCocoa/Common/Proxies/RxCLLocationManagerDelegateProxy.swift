@@ -15,12 +15,12 @@ class RxCLLocationManagerDelegateProxy : DelegateProxy
                                        , CLLocationManagerDelegate
                                        , DelegateProxyType {
     
-    class func currentDelegateFor(object: AnyObject) -> AnyObject? {
+    class func currentDelegateFor(_ object: AnyObject) -> AnyObject? {
         let locationManager: CLLocationManager = castOrFatalError(object)
         return locationManager.delegate
     }
     
-    class func setCurrentDelegate(delegate: AnyObject?, toObject object: AnyObject) {
+    class func setCurrentDelegate(_ delegate: AnyObject?, toObject object: AnyObject) {
         let locationManager: CLLocationManager = castOrFatalError(object)
         locationManager.delegate = castOptionalOrFatalError(delegate)
     }

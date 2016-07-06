@@ -20,13 +20,13 @@ class CatchSinkProxy<O: ObserverType> : ObserverType {
         _parent = parent
     }
     
-    func on(event: Event<E>) {
+    func on(_ event: Event<E>) {
         _parent.forwardOn(event)
         
         switch event {
-        case .Next:
+        case .next:
             break
-        case .Error, .Completed:
+        case .error, .completed:
             _parent.dispose()
         }
     }
@@ -52,14 +52,14 @@ class CatchSink<O: ObserverType> : Sink<O>, ObserverType {
         return _subscription
     }
     
-    func on(event: Event<E>) {
+    func on(_ event: Event<E>) {
         switch event {
-        case .Next:
+        case .next:
             forwardOn(event)
-        case .Completed:
+        case .completed:
             forwardOn(event)
             dispose()
-        case .Error(let error):
+        case .error(let error):
             do {
                 let catchSequence = try _parent._handler(error)
 
@@ -68,7 +68,7 @@ class CatchSink<O: ObserverType> : Sink<O>, ObserverType {
                 _subscription.disposable = catchSequence.subscribe(observer)
             }
             catch let e {
-                forwardOn(.Error(e))
+                forwardOn(.error(e))
                 dispose()
             }
         }
@@ -76,7 +76,7 @@ class CatchSink<O: ObserverType> : Sink<O>, ObserverType {
 }
 
 class Catch<Element> : Producer<Element> {
-    typealias Handler = (ErrorType) throws -> Observable<Element>
+    typealias Handler = (ErrorProtocol) throws -> Observable<Element>
     
     private let _source: Observable<Element>
     private let _handler: Handler
@@ -86,7 +86,7 @@ class Catch<Element> : Producer<Element> {
         _handler = handler
     }
     
-    override func run<O: ObserverType where O.E == Element>(observer: O) -> Disposable {
+    override func run<O: ObserverType where O.E == Element>(_ observer: O) -> Disposable {
         let sink = CatchSink(parent: self, observer: observer)
         sink.disposable = sink.run()
         return sink
@@ -95,49 +95,49 @@ class Catch<Element> : Producer<Element> {
 
 // catch enumerable
 
-class CatchSequenceSink<S: SequenceType, O: ObserverType where S.Generator.Element : ObservableConvertibleType, S.Generator.Element.E == O.E>
+class CatchSequenceSink<S: Sequence, O: ObserverType where S.Iterator.Element : ObservableConvertibleType, S.Iterator.Element.E == O.E>
     : TailRecursiveSink<S, O>
     , ObserverType {
     typealias Element = O.E
     typealias Parent = CatchSequence<S>
     
-    private var _lastError: ErrorType?
+    private var _lastError: ErrorProtocol?
     
     override init(observer: O) {
         super.init(observer: observer)
     }
     
-    func on(event: Event<Element>) {
+    func on(_ event: Event<Element>) {
         switch event {
-        case .Next:
+        case .next:
             forwardOn(event)
-        case .Error(let error):
+        case .error(let error):
             _lastError = error
-            schedule(.MoveNext)
-        case .Completed:
+            schedule(.moveNext)
+        case .completed:
             forwardOn(event)
             dispose()
         }
     }
 
-    override func subscribeToNext(source: Observable<E>) -> Disposable {
+    override func subscribeToNext(_ source: Observable<E>) -> Disposable {
         return source.subscribe(self)
     }
     
     override func done() {
         if let lastError = _lastError {
-            forwardOn(.Error(lastError))
+            forwardOn(.error(lastError))
         }
         else {
-            forwardOn(.Completed)
+            forwardOn(.completed)
         }
         
         self.dispose()
     }
     
-    override func extract(observable: Observable<Element>) -> SequenceGenerator? {
+    override func extract(_ observable: Observable<Element>) -> SequenceGenerator? {
         if let onError = observable as? CatchSequence<S> {
-            return (onError.sources.generate(), nil)
+            return (onError.sources.makeIterator(), nil)
         }
         else {
             return nil
@@ -145,8 +145,8 @@ class CatchSequenceSink<S: SequenceType, O: ObserverType where S.Generator.Eleme
     }
 }
 
-class CatchSequence<S: SequenceType where S.Generator.Element : ObservableConvertibleType> : Producer<S.Generator.Element.E> {
-    typealias Element = S.Generator.Element.E
+class CatchSequence<S: Sequence where S.Iterator.Element : ObservableConvertibleType> : Producer<S.Iterator.Element.E> {
+    typealias Element = S.Iterator.Element.E
     
     let sources: S
     
@@ -154,9 +154,9 @@ class CatchSequence<S: SequenceType where S.Generator.Element : ObservableConver
         self.sources = sources
     }
     
-    override func run<O : ObserverType where O.E == Element>(observer: O) -> Disposable {
+    override func run<O : ObserverType where O.E == Element>(_ observer: O) -> Disposable {
         let sink = CatchSequenceSink<S, O>(observer: observer)
-        sink.disposable = sink.run((self.sources.generate(), nil))
+        sink.disposable = sink.run((self.sources.makeIterator(), nil))
         return sink
     }
 }

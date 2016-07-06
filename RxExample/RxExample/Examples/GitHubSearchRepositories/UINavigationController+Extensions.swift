@@ -23,7 +23,8 @@ extension UINavigationController {
         return UIBindingObserver(UIElement: self) { navigationController, maybeServiceState in
             // if nil is being bound, then don't change color, it's not perfect, but :)
             if let serviceState = maybeServiceState {
-                let isOffline = serviceState ?? .Online == .Offline
+                let safeState = (serviceState ?? .online)
+                let isOffline = safeState == .offline
 
                 self.navigationBar.backgroundColor = isOffline
                     ? Colors.OfflineColor

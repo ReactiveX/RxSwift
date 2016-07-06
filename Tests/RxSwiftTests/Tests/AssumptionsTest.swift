@@ -114,7 +114,7 @@ class AssumptionsTest : RxTest {
 class Anything {
     var elements = [Int]()
     
-    func justCallIt(action: () -> Void) {
+    func justCallIt(_ action: () -> Void) {
         clearRealTest()
         action()
     }

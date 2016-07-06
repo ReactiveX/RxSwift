@@ -10,20 +10,20 @@ import Foundation
 import RxSwift
 
 class MockWireframe : Wireframe {
-    let _openURL: (NSURL) -> ()
+    let _openURL: (URL) -> ()
     let _promptFor: (String, Any, [Any]) -> Observable<Any>
 
-    init(openURL: (NSURL) -> () = notImplementedSync(),
+    init(openURL: (URL) -> () = notImplementedSync(),
         promptFor: (String, Any, [Any]) -> Observable<Any> = notImplemented()) {
         _openURL = openURL
         _promptFor = promptFor
     }
 
-    func openURL(URL: NSURL) {
-        _openURL(URL)
+    func open(url: URL) {
+        _openURL(url)
     }
 
-    func promptFor<Action: CustomStringConvertible>(message: String, cancelAction: Action, actions: [Action]) -> Observable<Action> {
+    func promptFor<Action: CustomStringConvertible>(_ message: String, cancelAction: Action, actions: [Action]) -> Observable<Action> {
         return _promptFor(message, cancelAction, actions.map { $0 as Any }).map { $0 as! Action }
     }
 }

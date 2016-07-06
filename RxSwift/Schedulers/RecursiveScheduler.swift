@@ -14,7 +14,7 @@ Type erased recursive scheduler.
 class AnyRecursiveScheduler<State> {
     typealias Action =  (state: State, scheduler: AnyRecursiveScheduler<State>) -> Void
 
-    private let _lock = NSRecursiveLock()
+    private let _lock = RecursiveLock()
     
     // state
     private let _group = CompositeDisposable()
@@ -33,7 +33,7 @@ class AnyRecursiveScheduler<State> {
     - parameter state: State passed to the action to be executed.
     - parameter dueTime: Relative time after which to execute the recursive action.
     */
-    func schedule(state: State, dueTime: RxTimeInterval) {
+    func schedule(_ state: State, dueTime: RxTimeInterval) {
 
         var isAdded = false
         var isDone = false
@@ -76,7 +76,7 @@ class AnyRecursiveScheduler<State> {
     
     - parameter state: State passed to the action to be executed.
     */
-    func schedule(state: State) {
+    func schedule(_ state: State) {
             
         var isAdded = false
         var isDone = false
@@ -126,7 +126,7 @@ class AnyRecursiveScheduler<State> {
 Type erased recursive scheduler.
 */
 class RecursiveImmediateScheduler<State> {
-    typealias Action =  (state: State, recurse: State -> Void) -> Void
+    typealias Action =  (state: State, recurse: (State) -> Void) -> Void
     
     private var _lock = SpinLock()
     private let _group = CompositeDisposable()
@@ -146,7 +146,7 @@ class RecursiveImmediateScheduler<State> {
     
     - parameter state: State passed to the action to be executed.
     */
-    func schedule(state: State) {
+    func schedule(_ state: State) {
         
         var isAdded = false
         var isDone = false

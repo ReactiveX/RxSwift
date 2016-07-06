@@ -8,7 +8,7 @@
 
 import Foundation
 
-class RangeProducer<E: SignedIntegerType> : Producer<E> {
+class RangeProducer<E: SignedInteger> : Producer<E> {
     private let _start: E
     private let _count: E
     private let _scheduler: ImmediateSchedulerType
@@ -27,14 +27,14 @@ class RangeProducer<E: SignedIntegerType> : Producer<E> {
         _scheduler = scheduler
     }
     
-    override func run<O : ObserverType where O.E == E>(observer: O) -> Disposable {
+    override func run<O : ObserverType where O.E == E>(_ observer: O) -> Disposable {
         let sink = RangeSink(parent: self, observer: observer)
         sink.disposable = sink.run()
         return sink
     }
 }
 
-class RangeSink<O: ObserverType where O.E: SignedIntegerType> : Sink<O> {
+class RangeSink<O: ObserverType where O.E: SignedInteger> : Sink<O> {
     typealias Parent = RangeProducer<O.E>
     
     private let _parent: Parent
@@ -47,11 +47,11 @@ class RangeSink<O: ObserverType where O.E: SignedIntegerType> : Sink<O> {
     func run() -> Disposable {
         return _parent._scheduler.scheduleRecursive(0 as O.E) { i, recurse in
             if i < self._parent._count {
-                self.forwardOn(.Next(self._parent._start + i))
+                self.forwardOn(.next(self._parent._start + i))
                 recurse(i + 1)
             }
             else {
-                self.forwardOn(.Completed)
+                self.forwardOn(.completed)
                 self.dispose()
             }
         }

@@ -20,9 +20,9 @@ class SingleAsyncSink<ElementType, O: ObserverType where O.E == ElementType> : S
         super.init(observer: observer)
     }
     
-    func on(event: Event<E>) {
+    func on(_ event: Event<E>) {
         switch event {
-        case .Next(let value):
+        case .next(let value):
             do {
                 let forward = try _parent._predicate?(value) ?? true
                 if !forward {
@@ -30,27 +30,27 @@ class SingleAsyncSink<ElementType, O: ObserverType where O.E == ElementType> : S
                 }
             }
             catch let error {
-                forwardOn(.Error(error as ErrorType))
+                forwardOn(.error(error as ErrorProtocol))
                 dispose()
                 return
             }
 
             if _seenValue == false {
                 _seenValue = true
-                forwardOn(.Next(value))
+                forwardOn(.next(value))
             } else {
-                forwardOn(.Error(RxError.MoreThanOneElement))
+                forwardOn(.error(RxError.moreThanOneElement))
                 dispose()
             }
             
-        case .Error:
+        case .error:
             forwardOn(event)
             dispose()
-        case .Completed:
+        case .completed:
             if (!_seenValue) {
-                forwardOn(.Error(RxError.NoElements))
+                forwardOn(.error(RxError.noElements))
             } else {
-                forwardOn(.Completed)
+                forwardOn(.completed)
             }
             dispose()
         }
@@ -68,7 +68,7 @@ class SingleAsync<Element>: Producer<Element> {
         _predicate = predicate
     }
     
-    override func run<O : ObserverType where O.E == Element>(observer: O) -> Disposable {
+    override func run<O : ObserverType where O.E == Element>(_ observer: O) -> Disposable {
         let sink = SingleAsyncSink(parent: self, observer: observer)
         sink.disposable = _source.subscribe(sink)
         return sink

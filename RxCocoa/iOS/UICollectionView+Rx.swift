@@ -42,9 +42,9 @@ extension UICollectionView {
          }
          .addDisposableTo(disposeBag)
     */
-    public func rx_itemsWithCellFactory<S: SequenceType, O: ObservableType where O.E == S>
-        (source: O)
-        -> (cellFactory: (UICollectionView, Int, S.Generator.Element) -> UICollectionViewCell)
+    public func rx_itemsWithCellFactory<S: Sequence, O: ObservableType where O.E == S>
+        (_ source: O)
+        -> (cellFactory: (UICollectionView, Int, S.Iterator.Element) -> UICollectionViewCell)
         -> Disposable {
         return { cellFactory in
             let dataSource = RxCollectionViewReactiveArrayDataSourceSequenceWrapper<S>(cellFactory: cellFactory)
@@ -76,16 +76,16 @@ extension UICollectionView {
              }
              .addDisposableTo(disposeBag)
     */
-    public func rx_itemsWithCellIdentifier<S: SequenceType, Cell: UICollectionViewCell, O : ObservableType where O.E == S>
-        (cellIdentifier: String, cellType: Cell.Type = Cell.self)
+    public func rx_itemsWithCellIdentifier<S: Sequence, Cell: UICollectionViewCell, O : ObservableType where O.E == S>
+        (_ cellIdentifier: String, cellType: Cell.Type = Cell.self)
         -> (source: O)
-        -> (configureCell: (Int, S.Generator.Element, Cell) -> Void)
+        -> (configureCell: (Int, S.Iterator.Element, Cell) -> Void)
         -> Disposable {
         return { source in
             return { configureCell in
                 let dataSource = RxCollectionViewReactiveArrayDataSourceSequenceWrapper<S> { (cv, i, item) in
-                    let indexPath = NSIndexPath(forItem: i, inSection: 0)
-                    let cell = cv.dequeueReusableCellWithReuseIdentifier(cellIdentifier, forIndexPath: indexPath) as! Cell
+                    let indexPath = IndexPath(item: i, section: 0)
+                    let cell = cv.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! Cell
                     configureCell(i, item, cell)
                     return cell
                 }
@@ -138,7 +138,7 @@ extension UICollectionView {
             DataSource: protocol<RxCollectionViewDataSourceType, UICollectionViewDataSource>,
             O: ObservableType where DataSource.Element == O.E
         >
-        (dataSource: DataSource)
+        (_ dataSource: DataSource)
         -> (source: O)
         -> Disposable  {
         return { source in
@@ -191,7 +191,7 @@ extension UICollectionView {
     - parameter dataSource: Data source object.
     - returns: Disposable object that can be used to unbind the data source.
     */
-    public func rx_setDataSource(dataSource: UICollectionViewDataSource)
+    public func rx_setDataSource(_ dataSource: UICollectionViewDataSource)
         -> Disposable {
         return RxCollectionViewDataSourceProxy.installForwardDelegate(dataSource, retainDelegate: false, onProxyForObject: self)
     }
@@ -199,10 +199,10 @@ extension UICollectionView {
     /**
     Reactive wrapper for `delegate` message `collectionView:didSelectItemAtIndexPath:`.
     */
-    public var rx_itemSelected: ControlEvent<NSIndexPath> {
-        let source = rx_delegate.observe(#selector(UICollectionViewDelegate.collectionView(_:didSelectItemAtIndexPath:)))
+    public var rx_itemSelected: ControlEvent<IndexPath> {
+        let source = rx_delegate.observe(#selector(UICollectionViewDelegate.collectionView(_:didSelectItemAt:)))
             .map { a in
-                return a[1] as! NSIndexPath
+                return a[1] as! IndexPath
             }
         
         return ControlEvent(events: source)
@@ -211,10 +211,10 @@ extension UICollectionView {
     /**
      Reactive wrapper for `delegate` message `collectionView:didSelectItemAtIndexPath:`.
      */
-    public var rx_itemDeselected: ControlEvent<NSIndexPath> {
-        let source = rx_delegate.observe(#selector(UICollectionViewDelegate.collectionView(_:didDeselectItemAtIndexPath:)))
+    public var rx_itemDeselected: ControlEvent<IndexPath> {
+        let source = rx_delegate.observe(#selector(UICollectionViewDelegate.collectionView(_:didDeselectItemAt:)))
             .map { a in
-                return a[1] as! NSIndexPath
+                return a[1] as! IndexPath
         }
 
         return ControlEvent(events: source)
@@ -231,7 +231,7 @@ extension UICollectionView {
             .map { ...
      ```
     */
-    public func rx_modelSelected<T>(modelType: T.Type) -> ControlEvent<T> {
+    public func rx_modelSelected<T>(_ modelType: T.Type) -> ControlEvent<T> {
         let source: Observable<T> = rx_itemSelected.flatMap { [weak self] indexPath -> Observable<T> in
             guard let view = self else {
                 return Observable.empty()
@@ -254,7 +254,7 @@ extension UICollectionView {
             .map { ...
      ```
      */
-    public func rx_modelDeselected<T>(modelType: T.Type) -> ControlEvent<T> {
+    public func rx_modelDeselected<T>(_ modelType: T.Type) -> ControlEvent<T> {
         let source: Observable<T> = rx_itemDeselected.flatMap { [weak self] indexPath -> Observable<T> in
             guard let view = self else {
                 return Observable.empty()
@@ -269,7 +269,7 @@ extension UICollectionView {
     /**
     Syncronous helper method for retrieving a model at indexPath through a reactive data source
     */
-    public func rx_modelAtIndexPath<T>(indexPath: NSIndexPath) throws -> T {
+    public func rx_modelAtIndexPath<T>(_ indexPath: IndexPath) throws -> T {
         let dataSource: SectionedViewDataSourceType = castOrFatalError(self.rx_dataSource.forwardToDelegate(), message: "This method only works in case one of the `rx_itemsWith*` methods was used.")
         
         let element = try dataSource.modelAtIndexPath(indexPath)
@@ -288,7 +288,7 @@ extension UICollectionView {
      */
     public var rx_didUpdateFocusInContextWithAnimationCoordinator: ControlEvent<(context: UIFocusUpdateContext, animationCoordinator: UIFocusAnimationCoordinator)> {
         
-        let source = rx_delegate.observe(#selector(UICollectionViewDelegate.collectionView(_:didUpdateFocusInContext:withAnimationCoordinator:)))
+        let source = rx_delegate.observe(#selector(UICollectionViewDelegate.collectionView(_:didUpdateFocusIn:with:)))
             .map { a -> (context: UIFocusUpdateContext, animationCoordinator: UIFocusAnimationCoordinator) in
                 let context = a[1] as! UIFocusUpdateContext
                 let animationCoordinator = a[2] as! UIFocusAnimationCoordinator

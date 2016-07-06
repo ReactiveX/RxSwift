@@ -47,11 +47,11 @@ class IntroductionExampleViewController : ViewController {
                 return "\(a) + \(b) = \(a + b)"
             }
             .subscribeNext { result in
-                if speech.speaking {
+                if speech.isSpeaking {
                     speech.stopSpeaking()
                 }
                 
-                speech.startSpeakingString(result)
+                speech.startSpeaking(result)
             }
             .addDisposableTo(disposeBag)
         

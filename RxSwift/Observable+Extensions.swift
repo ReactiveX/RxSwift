@@ -15,8 +15,8 @@ extension ObservableType {
     - parameter on: Action to invoke for each event in the observable sequence.
     - returns: Subscription object used to unsubscribe from the observable sequence.
     */
-    @warn_unused_result(message="http://git.io/rxs.ud")
-    public func subscribe(on: (event: Event<E>) -> Void)
+    @warn_unused_result(message: "http://git.io/rxs.ud")
+    public func subscribe(_ on: (event: Event<E>) -> Void)
         -> Disposable {
         let observer = AnonymousObserver { e in
             on(event: e)
@@ -34,8 +34,8 @@ extension ObservableType {
         gracefully completed, errored, or if the generation is cancelled by disposing subscription).
     - returns: Subscription object used to unsubscribe from the observable sequence.
     */
-    @warn_unused_result(message="http://git.io/rxs.ud")
-    public func subscribe(onNext onNext: (E -> Void)? = nil, onError: (ErrorType -> Void)? = nil, onCompleted: (() -> Void)? = nil, onDisposed: (() -> Void)? = nil)
+    @warn_unused_result(message: "http://git.io/rxs.ud")
+    public func subscribe(onNext: ((E) -> Void)? = nil, onError: ((ErrorProtocol) -> Void)? = nil, onCompleted: (() -> Void)? = nil, onDisposed: (() -> Void)? = nil)
         -> Disposable {
 
         let disposable: Disposable
@@ -49,12 +49,12 @@ extension ObservableType {
 
         let observer = AnonymousObserver<E> { e in
             switch e {
-            case .Next(let value):
+            case .next(let value):
                 onNext?(value)
-            case .Error(let e):
+            case .error(let e):
                 onError?(e)
                 disposable.dispose()
-            case .Completed:
+            case .completed:
                 onCompleted?()
                 disposable.dispose()
             }
@@ -71,11 +71,11 @@ extension ObservableType {
     - parameter onNext: Action to invoke for each element in the observable sequence.
     - returns: Subscription object used to unsubscribe from the observable sequence.
     */
-    @warn_unused_result(message="http://git.io/rxs.ud")
-    public func subscribeNext(onNext: (E) -> Void)
+    @warn_unused_result(message: "http://git.io/rxs.ud")
+    public func subscribeNext(_ onNext: (E) -> Void)
         -> Disposable {
         let observer = AnonymousObserver<E> { e in
-            if case .Next(let value) = e {
+            if case .next(let value) = e {
                 onNext(value)
             }
         }
@@ -88,11 +88,11 @@ extension ObservableType {
     - parameter onError: Action to invoke upon errored termination of the observable sequence.
     - returns: Subscription object used to unsubscribe from the observable sequence.
     */
-    @warn_unused_result(message="http://git.io/rxs.ud")
-    public func subscribeError(onError: (ErrorType) -> Void)
+    @warn_unused_result(message: "http://git.io/rxs.ud")
+    public func subscribeError(_ onError: (ErrorProtocol) -> Void)
         -> Disposable {
         let observer = AnonymousObserver<E> { e in
-            if case .Error(let error) = e {
+            if case .error(let error) = e {
                 onError(error)
             }
         }
@@ -105,11 +105,11 @@ extension ObservableType {
     - parameter onCompleted: Action to invoke upon graceful termination of the observable sequence.
     - returns: Subscription object used to unsubscribe from the observable sequence.
     */
-    @warn_unused_result(message="http://git.io/rxs.ud")
-    public func subscribeCompleted(onCompleted: () -> Void)
+    @warn_unused_result(message: "http://git.io/rxs.ud")
+    public func subscribeCompleted(_ onCompleted: () -> Void)
         -> Disposable {
         let observer = AnonymousObserver<E> { e in
-            if case .Completed = e {
+            if case .completed = e {
                 onCompleted()
             }
         }
@@ -121,8 +121,8 @@ public extension ObservableType {
     /**
     All internal subscribe calls go through this method.
     */
-    @warn_unused_result(message="http://git.io/rxs.ud")
-    func subscribeSafe<O: ObserverType where O.E == E>(observer: O) -> Disposable {
+    @warn_unused_result(message: "http://git.io/rxs.ud")
+    func subscribeSafe<O: ObserverType where O.E == E>(_ observer: O) -> Disposable {
         return self.asObservable().subscribe(observer)
     }
 }

@@ -19,50 +19,50 @@ class ObjectRuntimeState {
         actingAs = ClassRuntimeState(RXObjCTestRuntime.objCClass(target))
     }
 
-    private static func changesFrom(from: ClassRuntimeState, to: ClassRuntimeState) -> [ObjectRuntimeChange] {
+    private static func changesFrom(_ from: ClassRuntimeState, to: ClassRuntimeState) -> [ObjectRuntimeChange] {
         if from.targetClass == to.targetClass {
             var changes = [ObjectRuntimeChange]()
             for (selector, implementation) in to.implementations {
                 if let originalImplementation = from.implementations[selector] {
                     if originalImplementation != implementation {
                         if RXObjCTestRuntime.isForwardingIMP(implementation) {
-                            changes.append(.ImplementationChangedToForwarding(forSelector: selector))
+                            changes.append(.implementationChangedToForwarding(forSelector: selector))
                         }
                         else {
-                            changes.append(.ImplementationChanged(forSelector: selector))
+                            changes.append(.implementationChanged(forSelector: selector))
                         }
                     }
                 }
                 else {
                     if RXObjCTestRuntime.isForwardingIMP(implementation) {
-                        changes.append(.ForwardImplementationAdded(forSelector: selector))
+                        changes.append(.forwardImplementationAdded(forSelector: selector))
                     }
                     else {
-                        changes.append(.ImplementationAdded(forSelector: selector))
+                        changes.append(.implementationAdded(forSelector: selector))
                     }
                 }
             }
 
             for (oldSelector, _) in from.implementations {
                 if to.implementations[oldSelector] == nil {
-                    changes.append(.ImplementationDeleted(forSelector: oldSelector))
+                    changes.append(.implementationDeleted(forSelector: oldSelector))
                 }
             }
             return changes
         }
         else {
-            return [.ClassChanged(from: NSStringFromClass(from.targetClass), to: NSStringFromClass(to.targetClass), andImplementsTheseSelectors: Array(to.implementations.keys))]
+            return [.classChanged(from: NSStringFromClass(from.targetClass), to: NSStringFromClass(to.targetClass), andImplementsTheseSelectors: Array(to.implementations.keys))]
         }
     }
 
-    func changesFrom(initialState: ObjectRuntimeState) -> (real: [ObjectRuntimeChange], actingAs: [ObjectRuntimeChange]) {
+    func changesFrom(_ initialState: ObjectRuntimeState) -> (real: [ObjectRuntimeChange], actingAs: [ObjectRuntimeChange]) {
         return (
             real: ObjectRuntimeState.changesFrom(initialState.real, to: self.real),
             actingAs: ObjectRuntimeState.changesFrom(initialState.actingAs, to: self.actingAs)
         )
     }
 
-    func assertChangesFrom(initialState: ObjectRuntimeState, expectedActingClassChanges: [ObjectRuntimeChange], expectedRealClassChanges: [ObjectRuntimeChange]) {
+    func assertChangesFrom(_ initialState: ObjectRuntimeState, expectedActingClassChanges: [ObjectRuntimeChange], expectedRealClassChanges: [ObjectRuntimeChange]) {
         let changes = self.changesFrom(initialState)
         XCTAssertEqual(Set(changes.actingAs), Set(expectedActingClassChanges))
         if (Set(changes.actingAs) != Set(expectedActingClassChanges)) {
@@ -76,16 +76,16 @@ class ObjectRuntimeState {
 }
 
 enum ObjectRuntimeChange : Hashable {
-    static func ClassChangedToDynamic(from: String, andImplementsTheseSelectors: [Selector]) -> ObjectRuntimeChange {
-        return .ClassChanged(from: from, to: "_RX_namespace_" + from, andImplementsTheseSelectors: andImplementsTheseSelectors)
+    static func ClassChangedToDynamic(_ from: String, andImplementsTheseSelectors: [Selector]) -> ObjectRuntimeChange {
+        return .classChanged(from: from, to: "_RX_namespace_" + from, andImplementsTheseSelectors: andImplementsTheseSelectors)
     }
 
-    case ClassChanged(from: String, to: String, andImplementsTheseSelectors: [Selector])
-    case ImplementationChanged(forSelector: Selector)
-    case ImplementationChangedToForwarding(forSelector: Selector)
-    case ImplementationAdded(forSelector: Selector)
-    case ImplementationDeleted(forSelector: Selector)
-    case ForwardImplementationAdded(forSelector: Selector)
+    case classChanged(from: String, to: String, andImplementsTheseSelectors: [Selector])
+    case implementationChanged(forSelector: Selector)
+    case implementationChangedToForwarding(forSelector: Selector)
+    case implementationAdded(forSelector: Selector)
+    case implementationDeleted(forSelector: Selector)
+    case forwardImplementationAdded(forSelector: Selector)
 }
 
 extension ObjectRuntimeChange {
@@ -95,7 +95,7 @@ extension ObjectRuntimeChange {
     }
 
     var isClassChange: Bool {
-        if case .ClassChanged = self {
+        if case .classChanged = self {
             return true
         }
 
@@ -105,27 +105,27 @@ extension ObjectRuntimeChange {
 
 func ==(lhs: ObjectRuntimeChange, rhs: ObjectRuntimeChange) -> Bool {
     switch (lhs, rhs) {
-    case let (.ClassChanged(lFrom, lTo, lImplementations), .ClassChanged(rFrom, rTo, rImplementations)):
+    case let (.classChanged(lFrom, lTo, lImplementations), .classChanged(rFrom, rTo, rImplementations)):
         return (lFrom == rFrom && lTo == rTo) && Set(lImplementations) == Set(rImplementations)
-    case let (.ImplementationChanged(lSelector), .ImplementationChanged(rSelector)):
+    case let (.implementationChanged(lSelector), .implementationChanged(rSelector)):
         return lSelector == rSelector
-    case let (.ImplementationChangedToForwarding(lSelector), .ImplementationChangedToForwarding(rSelector)):
+    case let (.implementationChangedToForwarding(lSelector), .implementationChangedToForwarding(rSelector)):
         return lSelector == rSelector
-    case let (.ImplementationAdded(lSelector), .ImplementationAdded(rSelector)):
+    case let (.implementationAdded(lSelector), .implementationAdded(rSelector)):
         return lSelector == rSelector
-    case let (.ImplementationDeleted(lSelector), .ImplementationDeleted(rSelector)):
+    case let (.implementationDeleted(lSelector), .implementationDeleted(rSelector)):
         return lSelector == rSelector
-    case let (.ForwardImplementationAdded(lSelector), .ForwardImplementationAdded(rSelector)):
+    case let (.forwardImplementationAdded(lSelector), .forwardImplementationAdded(rSelector)):
         return lSelector == rSelector
     default:
         return false
     }
 }
 
-extension SequenceType where Generator.Element == ObjectRuntimeChange {
+extension Sequence where Iterator.Element == ObjectRuntimeChange {
     var classChanged: Bool {
         return self.filter { x in
-            if case .ClassChanged = x {
+            if case .classChanged = x {
                 return true
             } else {
                 return false
@@ -143,13 +143,13 @@ struct ClassRuntimeState {
         self.implementations = ClassRuntimeState.implementationsBySelector(targetClass)
     }
 
-    static func implementationsBySelector(klass: AnyClass) -> [Selector: IMP] {
+    static func implementationsBySelector(_ klass: AnyClass) -> [Selector: IMP] {
         var count: UInt32 = 0
         let methods = class_copyMethodList(klass, &count)
 
         var result = [Selector: IMP]()
         for i in 0 ..< count {
-            let method: Method = methods.advancedBy(Int(i)).memory
+            let method: Method = methods!.advanced(by: Int(i)).pointee!
             result[method_getName(method)] = method_getImplementation(method)
         }
 

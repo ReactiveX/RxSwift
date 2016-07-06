@@ -19,7 +19,7 @@ class SubscribeOnSink<Ob: ObservableType, O: ObserverType where Ob.E == O.E> : S
         super.init(observer: observer)
     }
     
-    func on(event: Event<Element>) {
+    func on(_ event: Event<Element>) {
         forwardOn(event)
         
         if event.isStopEvent {
@@ -52,7 +52,7 @@ class SubscribeOn<Ob: ObservableType> : Producer<Ob.E> {
         self.scheduler = scheduler
     }
     
-    override func run<O : ObserverType where O.E == Ob.E>(observer: O) -> Disposable {
+    override func run<O : ObserverType where O.E == Ob.E>(_ observer: O) -> Disposable {
         let sink = SubscribeOnSink(parent: self, observer: observer)
         sink.disposable = sink.run()
         return sink

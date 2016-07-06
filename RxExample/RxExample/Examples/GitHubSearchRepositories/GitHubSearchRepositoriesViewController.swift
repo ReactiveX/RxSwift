@@ -12,10 +12,16 @@ import RxSwift
 import RxCocoa
 #endif
 
+extension UIScrollView {
+    func  isNearBottomEdge(edgeOffset: CGFloat = 20.0) -> Bool {
+        return self.contentOffset.y + self.frame.size.height + edgeOffset > self.contentSize.height
+    }
+}
+
 class GitHubSearchRepositoriesViewController: ViewController, UITableViewDelegate {
     static let startLoadingOffset: CGFloat = 20.0
 
-    static func isNearTheBottomEdge(contentOffset: CGPoint, _ tableView: UITableView) -> Bool {
+    static func isNearTheBottomEdge(_ contentOffset: CGPoint, _ tableView: UITableView) -> Bool {
         return contentOffset.y + tableView.frame.size.height + startLoadingOffset > tableView.contentSize.height
     }
 
@@ -27,11 +33,10 @@ class GitHubSearchRepositoriesViewController: ViewController, UITableViewDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let tableView = self.tableView
-        let searchBar = self.searchBar
+        
 
         dataSource.configureCell = { (_, tv, ip, repository: Repository) in
-            let cell = tv.dequeueReusableCellWithIdentifier("Cell")!
+            let cell = tv.dequeueReusableCell(withIdentifier: "Cell")!
             cell.textLabel?.text = repository.name
             cell.detailTextLabel?.text = repository.url
             return cell
@@ -43,14 +48,14 @@ class GitHubSearchRepositoriesViewController: ViewController, UITableViewDelegat
         }
 
 
-        let loadNextPageTrigger = tableView.rx_contentOffset
-            .flatMap { offset in
-                GitHubSearchRepositoriesViewController.isNearTheBottomEdge(offset, tableView)
-                    ? Observable.just()
+        let loadNextPageTrigger = self.tableView.rx_contentOffset
+            .flatMap { _ in
+                self.tableView.isNearBottomEdge(edgeOffset: 20.0)
+                    ? Observable.just(())
                     : Observable.empty()
             }
 
-        let searchResult = searchBar.rx_text.asDriver()
+        let searchResult = self.searchBar.rx_text.asDriver()
             .throttle(0.3)
             .distinctUntilChanged()
             .flatMapLatest { query -> Driver<RepositoriesState> in
@@ -82,8 +87,8 @@ class GitHubSearchRepositoriesViewController: ViewController, UITableViewDelegat
         // dismiss keyboard on scroll
         tableView.rx_contentOffset
             .subscribe { _ in
-                if searchBar.isFirstResponder() {
-                    _ = searchBar.resignFirstResponder()
+                if self.searchBar.isFirstResponder() {
+                    _ = self.searchBar.resignFirstResponder()
                 }
             }
             .addDisposableTo(disposeBag)
@@ -95,14 +100,14 @@ class GitHubSearchRepositoriesViewController: ViewController, UITableViewDelegat
         // activity indicator in status bar
         // {
         GitHubSearchRepositoriesAPI.sharedAPI.activityIndicator
-            .drive(UIApplication.sharedApplication().rx_networkActivityIndicatorVisible)
+            .drive(UIApplication.shared().rx_networkActivityIndicatorVisible)
             .addDisposableTo(disposeBag)
         // }
     }
 
     // MARK: Table view delegate
     
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 30
     }
 

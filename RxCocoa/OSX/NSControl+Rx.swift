@@ -28,12 +28,12 @@ extension NSControl {
                 MainScheduler.ensureExecutingOnScheduler()
 
                 guard let control = self else {
-                    observer.on(.Completed)
+                    observer.on(.completed)
                     return NopDisposable.instance
                 }
 
                 let observer = ControlTarget(control: control) { control in
-                    observer.on(.Next())
+                    observer.on(.next())
                 }
                 
                 return observer
@@ -47,21 +47,21 @@ extension NSControl {
      You might be wondering why the ugly `as!` casts etc, well, for some reason if
      Swift compiler knows C is UIControl type and optimizations are turned on, it will crash.
     */
-    static func rx_value<C: AnyObject, T: Equatable>(control: C, getter: (C) -> T, setter: (C, T) -> Void) -> ControlProperty<T> {
+    static func rx_value<C: AnyObject, T: Equatable>(_ control: C, getter: (C) -> T, setter: (C, T) -> Void) -> ControlProperty<T> {
         MainScheduler.ensureExecutingOnScheduler()
 
         let source = (control as! NSObject).rx_lazyInstanceObservable(&rx_value_key) { () -> Observable<T> in
             return Observable.create { [weak weakControl = control] (observer: AnyObserver<T>) in
                 guard let control = weakControl else {
-                    observer.on(.Completed)
+                    observer.on(.completed)
                     return NopDisposable.instance
                 }
 
-                observer.on(.Next(getter(control)))
+                observer.on(.next(getter(control)))
 
                 let observer = ControlTarget(control: control as! NSControl) { _ in
                     if let control = weakControl {
-                        observer.on(.Next(getter(control)))
+                        observer.on(.next(getter(control)))
                     }
                 }
                 
@@ -81,7 +81,7 @@ extension NSControl {
     */
     public var rx_enabled: AnyObserver<Bool> {
         return UIBindingObserver(UIElement: self) { (owner, value) in
-            owner.enabled = value
+            owner.isEnabled = value
         }.asObserver()
     }
 }

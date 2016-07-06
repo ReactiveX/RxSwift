@@ -19,12 +19,12 @@ import UIKit
 infix operator <-> {
 }
 
-func nonMarkedText(textInput: UITextInput) -> String? {
+func nonMarkedText(_ textInput: UITextInput) -> String? {
     let start = textInput.beginningOfDocument
     let end = textInput.endOfDocument
 
-    guard let rangeAll = textInput.textRangeFromPosition(start, toPosition: end),
-        text = textInput.textInRange(rangeAll) else {
+    guard let rangeAll = textInput.textRange(from: start, to: end),
+        text = textInput.text(in: rangeAll) else {
             return nil
     }
 
@@ -32,12 +32,12 @@ func nonMarkedText(textInput: UITextInput) -> String? {
         return text
     }
 
-    guard let startRange = textInput.textRangeFromPosition(start, toPosition: markedTextRange.start),
-        endRange = textInput.textRangeFromPosition(markedTextRange.end, toPosition: end) else {
+    guard let startRange = textInput.textRange(from: start, to: markedTextRange.start),
+        endRange = textInput.textRange(from: markedTextRange.end, to: end) else {
         return text
     }
 
-    return (textInput.textInRange(startRange) ?? "") + (textInput.textInRange(endRange) ?? "")
+    return (textInput.text(in: startRange) ?? "") + (textInput.text(in: endRange) ?? "")
 }
 
 func <-> (textInput: RxTextInput, variable: Variable<String>) -> Disposable {

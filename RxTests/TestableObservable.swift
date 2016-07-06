@@ -38,7 +38,7 @@ public class TestableObservable<Element>
         self.subscriptions = []
     }
 
-    public func subscribe<O : ObserverType where O.E == Element>(observer: O) -> Disposable {
+    public func subscribe<O : ObserverType where O.E == Element>(_ observer: O) -> Disposable {
         fatalError("Abstract method")
     }
 }

@@ -21,8 +21,8 @@ require specifying `self.*`, they are made global.
      - parameter element: Next sequence element.
      - returns: Recorded event in time.
     */
-    public func next<T>(time: TestTime, _ element: T) -> Recorded<Event<T>> {
-        return Recorded(time: time, event: .Next(element))
+    public func next<T>(_ time: TestTime, _ element: T) -> Recorded<Event<T>> {
+        return Recorded(time: time, event: .next(element))
     }
 
     /**
@@ -32,8 +32,8 @@ require specifying `self.*`, they are made global.
      - parameter type: Sequence elements type.
      - returns: Recorded event in time.
     */
-    public func completed<T>(time: TestTime, _ type: T.Type = T.self) -> Recorded<Event<T>> {
-        return Recorded(time: time, event: .Completed)
+    public func completed<T>(_ time: TestTime, _ type: T.Type = T.self) -> Recorded<Event<T>> {
+        return Recorded(time: time, event: .completed)
     }
 
     /**
@@ -41,8 +41,8 @@ require specifying `self.*`, they are made global.
 
      - parameter time: Recorded virtual time the `.Completed` event occurs.
     */
-    public func error<T>(time: TestTime, _ error: ErrorType, _ type: T.Type = T.self) -> Recorded<Event<T>> {
-        return Recorded(time: time, event: .Error(error))
+    public func error<T>(_ time: TestTime, _ error: ErrorProtocol, _ type: T.Type = T.self) -> Recorded<Event<T>> {
+        return Recorded(time: time, event: .error(error))
     }
 //}
 
@@ -58,7 +58,7 @@ Event is considered equal if:
 - parameter lhs: first set of events.
 - parameter lhs: second set of events.
 */
-public func XCTAssertEqual<T: Equatable>(lhs: [Event<T>], _ rhs: [Event<T>], file: StaticString = #file, line: UInt = #line) {
+public func XCTAssertEqual<T: Equatable>(_ lhs: [Event<T>], _ rhs: [Event<T>], file: StaticString = #file, line: UInt = #line) {
     let leftEquatable = lhs.map { AnyEquatable(target: $0, comparer: ==) }
     let rightEquatable = rhs.map { AnyEquatable(target: $0, comparer: ==) }
     #if os(Linux)
@@ -86,7 +86,7 @@ Event is considered equal if:
 - parameter lhs: first set of events.
 - parameter lhs: second set of events.
 */
-public func XCTAssertEqual<T: Equatable>(lhs: [Recorded<Event<T>>], _ rhs: [Recorded<Event<T>>], file: StaticString = #file, line: UInt = #line) {
+public func XCTAssertEqual<T: Equatable>(_ lhs: [Recorded<Event<T>>], _ rhs: [Recorded<Event<T>>], file: StaticString = #file, line: UInt = #line) {
     let leftEquatable = lhs.map { AnyEquatable(target: $0, comparer: ==) }
     let rightEquatable = rhs.map { AnyEquatable(target: $0, comparer: ==) }
     #if os(Linux)
@@ -102,9 +102,9 @@ public func XCTAssertEqual<T: Equatable>(lhs: [Recorded<Event<T>>], _ rhs: [Reco
     printSequenceDifferences(lhs, rhs, ==)
 }
 
-func printSequenceDifferences<E>(lhs: [E], _ rhs: [E], _ equal: (E, E) -> Bool) {
+func printSequenceDifferences<E>(_ lhs: [E], _ rhs: [E], _ equal: (E, E) -> Bool) {
     print("Differences:")
-    for (index, elements) in zip(lhs, rhs).enumerate() {
+    for (index, elements) in zip(lhs, rhs).enumerated() {
         let l = elements.0
         let r = elements.1
         if !equal(l, r) {
@@ -114,10 +114,10 @@ func printSequenceDifferences<E>(lhs: [E], _ rhs: [E], _ equal: (E, E) -> Bool) 
     }
 
     let shortest = min(lhs.count, rhs.count)
-    for (index, element) in lhs[shortest ..< lhs.count].enumerate() {
+    for (index, element) in lhs[shortest ..< lhs.count].enumerated() {
         print("lhs[\(index + shortest)]:\n    \(element)")
     }
-    for (index, element) in rhs[shortest ..< rhs.count].enumerate() {
+    for (index, element) in rhs[shortest ..< rhs.count].enumerated() {
         print("rhs[\(index + shortest)]:\n    \(element)")
     }
 }

@@ -17,7 +17,7 @@ class SkipUntilSinkOther<ElementType, Other, O: ObserverType where O.E == Elemen
     
     private let _parent: Parent
 
-    var _lock: NSRecursiveLock {
+    var _lock: RecursiveLock {
         return _parent._lock
     }
     
@@ -26,30 +26,30 @@ class SkipUntilSinkOther<ElementType, Other, O: ObserverType where O.E == Elemen
     init(parent: Parent) {
         _parent = parent
         #if TRACE_RESOURCES
-            AtomicIncrement(&resourceCount)
+            let _ = AtomicIncrement(&resourceCount)
         #endif
     }
 
-    func on(event: Event<E>) {
+    func on(_ event: Event<E>) {
         synchronizedOn(event)
     }
 
-    func _synchronized_on(event: Event<E>) {
+    func _synchronized_on(_ event: Event<E>) {
         switch event {
-        case .Next:
+        case .next:
             _parent._forwardElements = true
             _subscription.dispose()
-        case .Error(let e):
-            _parent.forwardOn(.Error(e))
+        case .error(let e):
+            _parent.forwardOn(.error(e))
             _parent.dispose()
-        case .Completed:
+        case .completed:
             _subscription.dispose()
         }
     }
     
     #if TRACE_RESOURCES
     deinit {
-        AtomicDecrement(&resourceCount)
+        let _ = AtomicDecrement(&resourceCount)
     }
     #endif
 
@@ -64,7 +64,7 @@ class SkipUntilSink<ElementType, Other, O: ObserverType where O.E == ElementType
     typealias E = ElementType
     typealias Parent = SkipUntil<E, Other>
     
-    let _lock = NSRecursiveLock()
+    let _lock = RecursiveLock()
     private let _parent: Parent
     private var _forwardElements = false
     
@@ -75,20 +75,20 @@ class SkipUntilSink<ElementType, Other, O: ObserverType where O.E == ElementType
         super.init(observer: observer)
     }
     
-    func on(event: Event<E>) {
+    func on(_ event: Event<E>) {
         synchronizedOn(event)
     }
 
-    func _synchronized_on(event: Event<E>) {
+    func _synchronized_on(_ event: Event<E>) {
         switch event {
-        case .Next:
+        case .next:
             if _forwardElements {
                 forwardOn(event)
             }
-        case .Error:
+        case .error:
             forwardOn(event)
             dispose()
-        case .Completed:
+        case .completed:
             if _forwardElements {
                 forwardOn(event)
             }
@@ -117,7 +117,7 @@ class SkipUntil<Element, Other>: Producer<Element> {
         _other = other
     }
     
-    override func run<O : ObserverType where O.E == Element>(observer: O) -> Disposable {
+    override func run<O : ObserverType where O.E == Element>(_ observer: O) -> Disposable {
         let sink = SkipUntilSink(parent: self, observer: observer)
         sink.disposable = sink.run()
         return sink

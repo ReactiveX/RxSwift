@@ -17,7 +17,7 @@ import RxSwift
 #endif
 
 enum DownloadableImage{
-    case Content(image:Image)
-    case OfflinePlaceholder
+    case content(image:Image)
+    case offlinePlaceholder
 
 }

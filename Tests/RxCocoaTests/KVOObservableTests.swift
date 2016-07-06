@@ -29,10 +29,10 @@ class Parent : NSObject {
 
     dynamic var val: String = ""
 
-    init(callback: String? -> Void) {
+    init(callback: (String?) -> Void) {
         super.init()
         
-        self.rx_observe(String.self, "val", options: [.Initial, .New], retainSelf: false)
+        self.rx_observe(String.self, "val", options: [.initial, .new], retainSelf: false)
             .subscribeNext(callback)
             .addDisposableTo(disposeBag)
     }
@@ -45,9 +45,9 @@ class Parent : NSObject {
 class Child : NSObject {
     let disposeBag = DisposeBag()
     
-    init(parent: ParentWithChild, callback: String? -> Void) {
+    init(parent: ParentWithChild, callback: (String?) -> Void) {
         super.init()
-        parent.rx_observe(String.self, "val", options: [.Initial, .New], retainSelf: false)
+        parent.rx_observe(String.self, "val", options: [.initial, .new], retainSelf: false)
             .subscribeNext(callback)
             .addDisposableTo(disposeBag)
     }
@@ -62,7 +62,7 @@ class ParentWithChild : NSObject {
     
     var child: Child? = nil
     
-    init(callback: String? -> Void) {
+    init(callback: (String?) -> Void) {
         super.init()
         child = Child(parent: self, callback: callback)
     }
@@ -70,33 +70,33 @@ class ParentWithChild : NSObject {
 
 @objc enum IntEnum: Int {
     typealias RawValue = Int
-    case One
-    case Two
+    case one
+    case two
 }
 
 @objc enum UIntEnum: UInt {
-    case One
-    case Two
+    case one
+    case two
 }
 
 @objc enum Int32Enum: Int32 {
-    case One
-    case Two
+    case one
+    case two
 }
 
 @objc enum UInt32Enum: UInt32 {
-    case One
-    case Two
+    case one
+    case two
 }
 
 @objc enum Int64Enum: Int64 {
-    case One
-    case Two
+    case one
+    case two
 }
 
 @objc enum UInt64Enum: UInt64 {
-    case One
-    case Two
+    case one
+    case two
 }
 
 class HasStrongProperty : NSObject {
@@ -104,12 +104,12 @@ class HasStrongProperty : NSObject {
     dynamic var frame: CGRect
     dynamic var point: CGPoint
     dynamic var size: CGSize
-    dynamic var intEnum: IntEnum = .One
-    dynamic var uintEnum: UIntEnum = .One
-    dynamic var int32Enum: Int32Enum = .One
-    dynamic var uint32Enum: UInt32Enum = .One
-    dynamic var int64Enum: Int64Enum = .One
-    dynamic var uint64Enum: UInt64Enum = .One
+    dynamic var intEnum: IntEnum = .one
+    dynamic var uintEnum: UIntEnum = .one
+    dynamic var int32Enum: Int32Enum = .one
+    dynamic var uint32Enum: UInt32Enum = .one
+    dynamic var int64Enum: Int64Enum = .one
+    dynamic var uint64Enum: UInt64Enum = .one
 
     dynamic var integer: Int
     dynamic var uinteger: UInt
@@ -117,7 +117,7 @@ class HasStrongProperty : NSObject {
     override init() {
         self.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
         self.point = CGPoint(x: 3, y: 5)
-        self.size = CGSizeMake(1, 2)
+        self.size = CGSize(width: 1, height: 2)
         
         self.integer = 1
         self.uinteger = 1
@@ -140,7 +140,7 @@ extension KVOObservableTests {
     func test_New() {
         let testClass = TestClass()
         
-        let os = testClass.rx_observe(String.self, "pr", options: .New)
+        let os = testClass.rx_observe(String.self, "pr", options: .new)
         
         var latest: String?
         
@@ -174,7 +174,7 @@ extension KVOObservableTests {
     func test_New_And_Initial() {
         let testClass = TestClass()
         
-        let os = testClass.rx_observe(String.self, "pr", options: NSKeyValueObservingOptions(rawValue: NSKeyValueObservingOptions.Initial.rawValue | NSKeyValueObservingOptions.New.rawValue))
+        let os = testClass.rx_observe(String.self, "pr", options: NSKeyValueObservingOptions(rawValue: NSKeyValueObservingOptions.initial.rawValue | NSKeyValueObservingOptions.new.rawValue))
         
         var latest: String?
         
@@ -652,7 +652,7 @@ extension KVOObservableTests {
         XCTAssertTrue(latest == nil)
         
         _ = root
-            .rx_observeWeakly(String.self, "property", options: .New)
+            .rx_observeWeakly(String.self, "property", options: .new)
             .subscribeNext { n in
                 latest = n
             }
@@ -733,7 +733,7 @@ extension KVOObservableTests {
 
         XCTAssertTrue(latest == nil)
         
-        root.size = CGSizeMake(56, 1)
+        root.size = CGSize(width: 56, height: 1)
         
         XCTAssertTrue(latest == nil)
         
@@ -769,9 +769,9 @@ extension KVOObservableTests {
 
         XCTAssertTrue(latest == root.frame)
         
-        root.frame = CGRectMake(-2, 0, 0, 1)
+        root.frame = CGRect(x: -2, y: 0, width: 0, height: 1)
         
-        XCTAssertTrue(latest == CGRectMake(-2, 0, 0, 1))
+        XCTAssertTrue(latest == CGRect(x: -2, y: 0, width: 0, height: 1))
         
         var rootDeallocated = false
         
@@ -783,7 +783,7 @@ extension KVOObservableTests {
         
         root = nil
         
-        XCTAssertTrue(latest == CGRectMake(-2, 0, 0, 1))
+        XCTAssertTrue(latest == CGRect(x: -2, y: 0, width: 0, height: 1))
         XCTAssertTrue(!rootDeallocated)
     }
     
@@ -805,9 +805,9 @@ extension KVOObservableTests {
 
         XCTAssertTrue(latest == root.size)
         
-        root.size = CGSizeMake(56, 1)
+        root.size = CGSize(width: 56, height: 1)
         
-        XCTAssertTrue(latest == CGSizeMake(56, 1))
+        XCTAssertTrue(latest == CGSize(width: 56, height: 1))
         
         var rootDeallocated = false
         
@@ -819,7 +819,7 @@ extension KVOObservableTests {
         
         root = nil
         
-        XCTAssertTrue(latest == CGSizeMake(56, 1))
+        XCTAssertTrue(latest == CGSize(width: 56, height: 1))
         XCTAssertTrue(!rootDeallocated)
     }
     
@@ -873,9 +873,9 @@ extension KVOObservableTests {
             }
         XCTAssertTrue(latest == root.frame)
         
-        root.frame = CGRectMake(-2, 0, 0, 1)
+        root.frame = CGRect(x: -2, y: 0, width: 0, height: 1)
         
-        XCTAssertTrue(latest == CGRectMake(-2, 0, 0, 1))
+        XCTAssertTrue(latest == CGRect(x: -2, y: 0, width: 0, height: 1))
         
         var rootDeallocated = false
         
@@ -905,9 +905,9 @@ extension KVOObservableTests {
             }
         XCTAssertTrue(latest == root.size)
         
-        root.size = CGSizeMake(56, 1)
+        root.size = CGSize(width: 56, height: 1)
         
-        XCTAssertTrue(latest == CGSizeMake(56, 1))
+        XCTAssertTrue(latest == CGSize(width: 56, height: 1))
         
         var rootDeallocated = false
         
@@ -966,7 +966,7 @@ extension KVOObservableTests {
         _ = root
             .rx_observeWeakly(NSNumber.self, "integer")
             .subscribeNext { n in
-                latest = n?.integerValue
+                latest = n?.intValue
             }
         XCTAssertTrue(latest == root.integer)
         
@@ -991,7 +991,7 @@ extension KVOObservableTests {
     func testObserveWeak_PropertyDoesntExist() {
         var root: HasStrongProperty! = HasStrongProperty()
         
-        var lastError: ErrorType? = nil
+        var lastError: ErrorProtocol? = nil
         
         _ = root.rx_observeWeakly(NSNumber.self, "notExist")
             .subscribeError { error in
@@ -1017,7 +1017,7 @@ extension KVOObservableTests {
     func testObserveWeak_HierarchyPropertyDoesntExist() {
         var root: HasStrongProperty! = HasStrongProperty()
         
-        var lastError: ErrorType? = nil
+        var lastError: ErrorProtocol? = nil
         
         _ = root.rx_observeWeakly(NSNumber.self, "property.notExist")
             .subscribeError { error in
@@ -1198,11 +1198,11 @@ extension KVOObservableTests {
             .subscribeNext { n in
                 latest = n
             }
-        XCTAssertTrue(latest == .One)
+        XCTAssertTrue(latest == .one)
 
-        root.intEnum = .Two
+        root.intEnum = .two
 
-        XCTAssertTrue(latest == .Two)
+        XCTAssertTrue(latest == .two)
 
         var rootDeallocated = false
 
@@ -1214,7 +1214,7 @@ extension KVOObservableTests {
 
         root = nil
 
-        XCTAssertTrue(latest == .Two)
+        XCTAssertTrue(latest == .two)
         XCTAssertTrue(!rootDeallocated)
 
         disposable.dispose()
@@ -1231,11 +1231,11 @@ extension KVOObservableTests {
             .subscribeNext { n in
                 latest = n
         }
-        XCTAssertTrue(latest == .One)
+        XCTAssertTrue(latest == .one)
 
-        root.int32Enum = .Two
+        root.int32Enum = .two
 
-        XCTAssertTrue(latest == .Two)
+        XCTAssertTrue(latest == .two)
 
         var rootDeallocated = false
 
@@ -1247,7 +1247,7 @@ extension KVOObservableTests {
 
         root = nil
 
-        XCTAssertTrue(latest == .Two)
+        XCTAssertTrue(latest == .two)
         XCTAssertTrue(!rootDeallocated)
         
         disposable.dispose()
@@ -1264,11 +1264,11 @@ extension KVOObservableTests {
             .subscribeNext { n in
                 latest = n
         }
-        XCTAssertTrue(latest == .One)
+        XCTAssertTrue(latest == .one)
 
-        root.int64Enum = .Two
+        root.int64Enum = .two
 
-        XCTAssertTrue(latest == .Two)
+        XCTAssertTrue(latest == .two)
 
         var rootDeallocated = false
 
@@ -1280,7 +1280,7 @@ extension KVOObservableTests {
 
         root = nil
 
-        XCTAssertTrue(latest == .Two)
+        XCTAssertTrue(latest == .two)
         XCTAssertTrue(!rootDeallocated)
         
         disposable.dispose()
@@ -1298,11 +1298,11 @@ extension KVOObservableTests {
             .subscribeNext { n in
                 latest = n
             }
-        XCTAssertTrue(latest == .One)
+        XCTAssertTrue(latest == .one)
 
-        root.uintEnum = .Two
+        root.uintEnum = .two
 
-        XCTAssertTrue(latest == .Two)
+        XCTAssertTrue(latest == .two)
 
         var rootDeallocated = false
 
@@ -1314,7 +1314,7 @@ extension KVOObservableTests {
 
         root = nil
 
-        XCTAssertTrue(latest == .Two)
+        XCTAssertTrue(latest == .two)
         XCTAssertTrue(!rootDeallocated)
 
         disposable.dispose()
@@ -1331,11 +1331,11 @@ extension KVOObservableTests {
             .subscribeNext { n in
                 latest = n
         }
-        XCTAssertTrue(latest == .One)
+        XCTAssertTrue(latest == .one)
 
-        root.uint32Enum = .Two
+        root.uint32Enum = .two
 
-        XCTAssertTrue(latest == .Two)
+        XCTAssertTrue(latest == .two)
 
         var rootDeallocated = false
 
@@ -1347,7 +1347,7 @@ extension KVOObservableTests {
 
         root = nil
 
-        XCTAssertTrue(latest == .Two)
+        XCTAssertTrue(latest == .two)
         XCTAssertTrue(!rootDeallocated)
         
         disposable.dispose()
@@ -1364,11 +1364,11 @@ extension KVOObservableTests {
             .subscribeNext { n in
                 latest = n
         }
-        XCTAssertTrue(latest == .One)
+        XCTAssertTrue(latest == .one)
 
-        root.uint64Enum = .Two
+        root.uint64Enum = .two
 
-        XCTAssertTrue(latest == .Two)
+        XCTAssertTrue(latest == .two)
 
         var rootDeallocated = false
 
@@ -1380,7 +1380,7 @@ extension KVOObservableTests {
 
         root = nil
 
-        XCTAssertTrue(latest == .Two)
+        XCTAssertTrue(latest == .two)
         XCTAssertTrue(!rootDeallocated)
         
         disposable.dispose()
@@ -1401,11 +1401,11 @@ extension KVOObservableTests {
             .subscribeNext { n in
                 latest = n
             }
-        XCTAssertTrue(latest == .One)
+        XCTAssertTrue(latest == .one)
 
-        root.intEnum = .Two
+        root.intEnum = .two
 
-        XCTAssertTrue(latest == .Two)
+        XCTAssertTrue(latest == .two)
 
         var rootDeallocated = false
 
@@ -1433,11 +1433,11 @@ extension KVOObservableTests {
             .subscribeNext { n in
                 latest = n
         }
-        XCTAssertTrue(latest == .One)
+        XCTAssertTrue(latest == .one)
 
-        root.int32Enum = .Two
+        root.int32Enum = .two
 
-        XCTAssertTrue(latest == .Two)
+        XCTAssertTrue(latest == .two)
 
         var rootDeallocated = false
 
@@ -1465,11 +1465,11 @@ extension KVOObservableTests {
             .subscribeNext { n in
                 latest = n
         }
-        XCTAssertTrue(latest == .One)
+        XCTAssertTrue(latest == .one)
 
-        root.int64Enum = .Two
+        root.int64Enum = .two
 
-        XCTAssertTrue(latest == .Two)
+        XCTAssertTrue(latest == .two)
 
         var rootDeallocated = false
 
@@ -1497,11 +1497,11 @@ extension KVOObservableTests {
             .subscribeNext { n in
                 latest = n
             }
-        XCTAssertTrue(latest == .One)
+        XCTAssertTrue(latest == .one)
 
-        root.uintEnum = .Two
+        root.uintEnum = .two
 
-        XCTAssertTrue(latest == .Two)
+        XCTAssertTrue(latest == .two)
 
         var rootDeallocated = false
 
@@ -1529,11 +1529,11 @@ extension KVOObservableTests {
             .subscribeNext { n in
                 latest = n
         }
-        XCTAssertTrue(latest == .One)
+        XCTAssertTrue(latest == .one)
 
-        root.uint32Enum = .Two
+        root.uint32Enum = .two
 
-        XCTAssertTrue(latest == .Two)
+        XCTAssertTrue(latest == .two)
 
         var rootDeallocated = false
 
@@ -1561,11 +1561,11 @@ extension KVOObservableTests {
             .subscribeNext { n in
                 latest = n
         }
-        XCTAssertTrue(latest == .One)
+        XCTAssertTrue(latest == .one)
 
-        root.uint64Enum = .Two
+        root.uint64Enum = .two
 
-        XCTAssertTrue(latest == .Two)
+        XCTAssertTrue(latest == .two)
 
         var rootDeallocated = false
 

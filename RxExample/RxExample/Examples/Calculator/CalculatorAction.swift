@@ -9,11 +9,11 @@
 import Foundation
 
 enum Action {
-    case Clear
-    case ChangeSign
-    case Percent
-    case Operation(Operator)
-    case Equal
-    case AddNumber(Character)
-    case AddDot
+    case clear
+    case changeSign
+    case percent
+    case operation(Operator)
+    case equal
+    case addNumber(Character)
+    case addDot
 }

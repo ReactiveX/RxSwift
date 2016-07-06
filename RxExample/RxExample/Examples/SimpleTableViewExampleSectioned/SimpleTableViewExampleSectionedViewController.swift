@@ -44,8 +44,8 @@ class SimpleTableViewExampleSectionedViewController
             ])
 
         dataSource.configureCell = { (_, tv, indexPath, element) in
-            let cell = tv.dequeueReusableCellWithIdentifier("Cell")!
-            cell.textLabel?.text = "\(element) @ row \(indexPath.row)"
+            let cell = tv.dequeueReusableCell(withIdentifier: "Cell")!
+            cell.textLabel?.text = "\(element) @ row \((indexPath as NSIndexPath).row)"
             return cell
         }
 
@@ -68,7 +68,7 @@ class SimpleTableViewExampleSectionedViewController
             .addDisposableTo(disposeBag)
     }
 
-    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let label = UILabel(frame: CGRect.zero)
         label.text = dataSource.sectionAtIndex(section).model ?? ""
         return label

@@ -25,7 +25,7 @@ compareTwoImplementations(benchmarkTime: true, benchmarkMemory: false, first: {
     //let a = Observable.just(1)
 
     //combineLatest(a,
-        publishSubject //.asDriver(onErrorJustReturn: -1)
+        _ = publishSubject //.asDriver(onErrorJustReturn: -1)
     /*create { (o: AnyObserver<Int>) in
             for i in 0..<100 {
                 o.on(.Next(i))
@@ -55,7 +55,7 @@ compareTwoImplementations(benchmarkTime: true, benchmarkMemory: false, first: {
 
 
     for i in 0..<100 {
-        publishSubject.on(.Next(i))
+        publishSubject.on(.next(i))
     }
 
 }, second: {

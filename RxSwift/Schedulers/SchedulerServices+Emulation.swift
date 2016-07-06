@@ -9,12 +9,12 @@
 import Foundation
 
 enum SchedulePeriodicRecursiveCommand {
-    case Tick
-    case DispatchStart
+    case tick
+    case dispatchStart
 }
 
 class SchedulePeriodicRecursive<State> {
-    typealias RecursiveAction = State -> State
+    typealias RecursiveAction = (State) -> State
     typealias RecursiveScheduler = AnyRecursiveScheduler<SchedulePeriodicRecursiveCommand>
 
     private let _scheduler: SchedulerType
@@ -34,29 +34,29 @@ class SchedulePeriodicRecursive<State> {
     }
 
     func start() -> Disposable {
-        return _scheduler.scheduleRecursive(SchedulePeriodicRecursiveCommand.Tick, dueTime: _startAfter, action: self.tick)
+        return _scheduler.scheduleRecursive(SchedulePeriodicRecursiveCommand.tick, dueTime: _startAfter, action: self.tick)
     }
 
-    func tick(command: SchedulePeriodicRecursiveCommand, scheduler: RecursiveScheduler) -> Void {
+    func tick(_ command: SchedulePeriodicRecursiveCommand, scheduler: RecursiveScheduler) -> Void {
         // Tries to emulate periodic scheduling as best as possible.
         // The problem that could arise is if handling periodic ticks take too long, or
         // tick interval is short.
         switch command {
-        case .Tick:
-            scheduler.schedule(.Tick, dueTime: _period)
+        case .tick:
+            scheduler.schedule(.tick, dueTime: _period)
 
             // The idea is that if on tick there wasn't any item enqueued, schedule to perform work immediatelly.
             // Else work will be scheduled after previous enqueued work completes.
             if AtomicIncrement(&_pendingTickCount) == 1 {
-                self.tick(.DispatchStart, scheduler: scheduler)
+                self.tick(.dispatchStart, scheduler: scheduler)
             }
 
-        case .DispatchStart:
+        case .dispatchStart:
             _state = _action(_state)
             // Start work and schedule check is this last batch of work
             if AtomicDecrement(&_pendingTickCount) > 0 {
                 // This gives priority to scheduler emulation, it's not perfect, but helps
-                scheduler.schedule(SchedulePeriodicRecursiveCommand.DispatchStart)
+                scheduler.schedule(SchedulePeriodicRecursiveCommand.dispatchStart)
             }
         }
     }

@@ -289,7 +289,7 @@ extension ObservableSingleTest {
         var sum = 2 + 3 + 4 + 5
         let res = scheduler.start { xs.doOn { e in
                 switch e {
-                case .Next:
+                case .next:
                     i += 1
                     sum -= e.element ?? 0
 
@@ -332,7 +332,7 @@ extension ObservableSingleTest {
         var i = 0
         let res = scheduler.start { xs.doOn { e in
             switch e {
-            case .Next(_):
+            case .next(_):
                 i += 1
             default: break
             }
@@ -374,10 +374,10 @@ extension ObservableSingleTest {
         var completedEvaluation = false
         let res = scheduler.start { xs.doOn { e in
             switch e {
-            case .Next(let value):
+            case .next(let value):
                 i += 1
                 sum -= value
-            case .Completed:
+            case .completed:
                 completedEvaluation = true
             default: break
             }
@@ -416,9 +416,9 @@ extension ObservableSingleTest {
         var completedEvaluation = false
         let res = scheduler.start { xs.doOn { e in
             switch e {
-            case .Next(_):
+            case .next(_):
                 i += 1
-            case .Completed:
+            case .completed:
                 completedEvaluation = true
             default: break
             }
@@ -456,10 +456,10 @@ extension ObservableSingleTest {
         var sawError = false
         let res = scheduler.start { xs.doOn { e in
             switch e {
-            case .Next(let value):
+            case .next(let value):
                 i += 1
                 sum -= value
-            case .Error:
+            case .error:
                 sawError = true
             default: break
             }
@@ -503,10 +503,10 @@ extension ObservableSingleTest {
         var sawError = false
         let res = scheduler.start { xs.doOn { e in
             switch e {
-            case .Next(let value):
+            case .next(let value):
                 i += 1
                 sum -= value
-            case .Error:
+            case .error:
                 sawError = true
             default: break
             }
@@ -644,7 +644,7 @@ extension ObservableSingleTest {
             error(250, testError)
             ])
 
-        var recordedError: ErrorType!
+        var recordedError: ErrorProtocol!
         var numberOfTimesInvoked = 0
 
         let res = scheduler.start { xs.doOnError { error in
@@ -973,17 +973,17 @@ extension ObservableSingleTest {
     func testRetry_tailRecursiveOptimizationsTest() {
         var count = 1
         let sequenceSendingImmediateError: Observable<Int> = Observable.create { observer in
-            observer.on(.Next(0))
-            observer.on(.Next(1))
-            observer.on(.Next(2))
+            observer.on(.next(0))
+            observer.on(.next(1))
+            observer.on(.next(2))
             if count < 2 {
-                observer.on(.Error(testError))
+                observer.on(.error(testError))
                 count += 1
             }
-            observer.on(.Next(3))
-            observer.on(.Next(4))
-            observer.on(.Next(5))
-            observer.on(.Completed)
+            observer.on(.next(3))
+            observer.on(.next(4))
+            observer.on(.next(5))
+            observer.on(.completed)
 
             return NopDisposable.instance
         }
@@ -995,7 +995,7 @@ extension ObservableSingleTest {
     }
 }
 
-struct CustomErrorType : ErrorType {
+struct CustomErrorType : ErrorProtocol {
 
 }
 
@@ -1305,7 +1305,7 @@ extension ObservableSingleTest {
         let maxAttempts = 4
 
         let res = scheduler.start(800) {
-            xs.retryWhen { (errors: Observable<ErrorType>) in
+            xs.retryWhen { (errors: Observable<ErrorProtocol>) in
                 return errors.flatMapWithIndex { (e, a) -> Observable<Int64> in
                     if a >= maxAttempts - 1 {
                         return Observable.error(e)
@@ -1365,17 +1365,17 @@ extension ObservableSingleTest {
     func testRetryWhen_tailRecursiveOptimizationsTest() {
         var count = 1
         let sequenceSendingImmediateError: Observable<Int> = Observable.create { observer in
-            observer.on(.Next(0))
-            observer.on(.Next(1))
-            observer.on(.Next(2))
+            observer.on(.next(0))
+            observer.on(.next(1))
+            observer.on(.next(2))
             if count < 2 {
-                observer.on(.Error(testError))
+                observer.on(.error(testError))
                 count += 1
             }
-            observer.on(.Next(3))
-            observer.on(.Next(4))
-            observer.on(.Next(5))
-            observer.on(.Completed)
+            observer.on(.next(3))
+            observer.on(.next(4))
+            observer.on(.next(5))
+            observer.on(.completed)
 
             return NopDisposable.instance
         }

@@ -15,26 +15,26 @@ import XCTest
 
 class RxButtonTests: RxTest {
     func testTitleNormal() {
-        let button = UIButton(frame: CGRectMake(0, 0, 10, 10))
+        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
 
-        XCTAssertFalse(button.titleForState(.Normal) == "normal")
-        Observable.just("normal").subscribe(button.rx_title(.Normal))
-        XCTAssertTrue(button.titleForState(.Normal) == "normal")
+        XCTAssertFalse(button.title(for: []) == "normal")
+        _ = Observable.just("normal").subscribe(button.rx_title(controlState: []))
+        XCTAssertTrue(button.title(for: []) == "normal")
     }
 
     func testTitleSelected() {
-        let button = UIButton(frame: CGRectMake(0, 0, 10, 10))
+        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
 
-        XCTAssertFalse(button.titleForState(.Selected) == "normal")
-        Observable.just("normal").subscribe(button.rx_title(.Selected))
-        XCTAssertTrue(button.titleForState(.Selected) == "normal")
+        XCTAssertFalse(button.title(for: .selected) == "normal")
+        _ = Observable.just("normal").subscribe(button.rx_title(controlState: .selected))
+        XCTAssertTrue(button.title(for: .selected) == "normal")
     }
 
     func testTitleDefault() {
-        let button = UIButton(frame: CGRectMake(0, 0, 10, 10))
+        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
 
-        XCTAssertFalse(button.titleForState(.Normal) == "normal")
-        Observable.just("normal").subscribe(button.rx_title())
-        XCTAssertTrue(button.titleForState(.Normal) == "normal")
+        XCTAssertFalse(button.title(for: []) == "normal")
+        _ = Observable.just("normal").subscribe(button.rx_title())
+        XCTAssertTrue(button.title(for: []) == "normal")
     }
 }

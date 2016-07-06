@@ -22,9 +22,9 @@ extension Observable {
     - parameter resultSelector: Function to invoke whenever any of the sources produces an element.
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
-    @warn_unused_result(message="http://git.io/rxs.uo")
+    @warn_unused_result(message:"http://git.io/rxs.uo")
     public static func combineLatest<O1: ObservableType, O2: ObservableType>
-        (source1: O1, _ source2: O2, resultSelector: (O1.E, O2.E) throws -> E)
+        (_ source1: O1, _ source2: O2, resultSelector: (O1.E, O2.E) throws -> E)
             -> Observable<E> {
         return CombineLatest2(
             source1: source1.asObservable(), source2: source2.asObservable(),
@@ -83,7 +83,7 @@ class CombineLatest2<E1, E2, R> : Producer<R> {
         _resultSelector = resultSelector
     }
 
-    override func run<O: ObserverType where O.E == R>(observer: O) -> Disposable {
+    override func run<O: ObserverType where O.E == R>(_ observer: O) -> Disposable {
         let sink = CombineLatestSink2_(parent: self, observer: observer)
         sink.disposable = sink.run()
         return sink
@@ -103,9 +103,9 @@ extension Observable {
     - parameter resultSelector: Function to invoke whenever any of the sources produces an element.
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
-    @warn_unused_result(message="http://git.io/rxs.uo")
+    @warn_unused_result(message:"http://git.io/rxs.uo")
     public static func combineLatest<O1: ObservableType, O2: ObservableType, O3: ObservableType>
-        (source1: O1, _ source2: O2, _ source3: O3, resultSelector: (O1.E, O2.E, O3.E) throws -> E)
+        (_ source1: O1, _ source2: O2, _ source3: O3, resultSelector: (O1.E, O2.E, O3.E) throws -> E)
             -> Observable<E> {
         return CombineLatest3(
             source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(),
@@ -171,7 +171,7 @@ class CombineLatest3<E1, E2, E3, R> : Producer<R> {
         _resultSelector = resultSelector
     }
 
-    override func run<O: ObserverType where O.E == R>(observer: O) -> Disposable {
+    override func run<O: ObserverType where O.E == R>(_ observer: O) -> Disposable {
         let sink = CombineLatestSink3_(parent: self, observer: observer)
         sink.disposable = sink.run()
         return sink
@@ -191,9 +191,9 @@ extension Observable {
     - parameter resultSelector: Function to invoke whenever any of the sources produces an element.
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
-    @warn_unused_result(message="http://git.io/rxs.uo")
+    @warn_unused_result(message:"http://git.io/rxs.uo")
     public static func combineLatest<O1: ObservableType, O2: ObservableType, O3: ObservableType, O4: ObservableType>
-        (source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, resultSelector: (O1.E, O2.E, O3.E, O4.E) throws -> E)
+        (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, resultSelector: (O1.E, O2.E, O3.E, O4.E) throws -> E)
             -> Observable<E> {
         return CombineLatest4(
             source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(), source4: source4.asObservable(),
@@ -266,7 +266,7 @@ class CombineLatest4<E1, E2, E3, E4, R> : Producer<R> {
         _resultSelector = resultSelector
     }
 
-    override func run<O: ObserverType where O.E == R>(observer: O) -> Disposable {
+    override func run<O: ObserverType where O.E == R>(_ observer: O) -> Disposable {
         let sink = CombineLatestSink4_(parent: self, observer: observer)
         sink.disposable = sink.run()
         return sink
@@ -286,9 +286,9 @@ extension Observable {
     - parameter resultSelector: Function to invoke whenever any of the sources produces an element.
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
-    @warn_unused_result(message="http://git.io/rxs.uo")
+    @warn_unused_result(message:"http://git.io/rxs.uo")
     public static func combineLatest<O1: ObservableType, O2: ObservableType, O3: ObservableType, O4: ObservableType, O5: ObservableType>
-        (source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, resultSelector: (O1.E, O2.E, O3.E, O4.E, O5.E) throws -> E)
+        (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, resultSelector: (O1.E, O2.E, O3.E, O4.E, O5.E) throws -> E)
             -> Observable<E> {
         return CombineLatest5(
             source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(), source4: source4.asObservable(), source5: source5.asObservable(),
@@ -368,7 +368,7 @@ class CombineLatest5<E1, E2, E3, E4, E5, R> : Producer<R> {
         _resultSelector = resultSelector
     }
 
-    override func run<O: ObserverType where O.E == R>(observer: O) -> Disposable {
+    override func run<O: ObserverType where O.E == R>(_ observer: O) -> Disposable {
         let sink = CombineLatestSink5_(parent: self, observer: observer)
         sink.disposable = sink.run()
         return sink
@@ -388,9 +388,9 @@ extension Observable {
     - parameter resultSelector: Function to invoke whenever any of the sources produces an element.
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
-    @warn_unused_result(message="http://git.io/rxs.uo")
+    @warn_unused_result(message:"http://git.io/rxs.uo")
     public static func combineLatest<O1: ObservableType, O2: ObservableType, O3: ObservableType, O4: ObservableType, O5: ObservableType, O6: ObservableType>
-        (source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6, resultSelector: (O1.E, O2.E, O3.E, O4.E, O5.E, O6.E) throws -> E)
+        (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6, resultSelector: (O1.E, O2.E, O3.E, O4.E, O5.E, O6.E) throws -> E)
             -> Observable<E> {
         return CombineLatest6(
             source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(), source4: source4.asObservable(), source5: source5.asObservable(), source6: source6.asObservable(),
@@ -477,7 +477,7 @@ class CombineLatest6<E1, E2, E3, E4, E5, E6, R> : Producer<R> {
         _resultSelector = resultSelector
     }
 
-    override func run<O: ObserverType where O.E == R>(observer: O) -> Disposable {
+    override func run<O: ObserverType where O.E == R>(_ observer: O) -> Disposable {
         let sink = CombineLatestSink6_(parent: self, observer: observer)
         sink.disposable = sink.run()
         return sink
@@ -497,9 +497,9 @@ extension Observable {
     - parameter resultSelector: Function to invoke whenever any of the sources produces an element.
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
-    @warn_unused_result(message="http://git.io/rxs.uo")
+    @warn_unused_result(message:"http://git.io/rxs.uo")
     public static func combineLatest<O1: ObservableType, O2: ObservableType, O3: ObservableType, O4: ObservableType, O5: ObservableType, O6: ObservableType, O7: ObservableType>
-        (source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6, _ source7: O7, resultSelector: (O1.E, O2.E, O3.E, O4.E, O5.E, O6.E, O7.E) throws -> E)
+        (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6, _ source7: O7, resultSelector: (O1.E, O2.E, O3.E, O4.E, O5.E, O6.E, O7.E) throws -> E)
             -> Observable<E> {
         return CombineLatest7(
             source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(), source4: source4.asObservable(), source5: source5.asObservable(), source6: source6.asObservable(), source7: source7.asObservable(),
@@ -593,7 +593,7 @@ class CombineLatest7<E1, E2, E3, E4, E5, E6, E7, R> : Producer<R> {
         _resultSelector = resultSelector
     }
 
-    override func run<O: ObserverType where O.E == R>(observer: O) -> Disposable {
+    override func run<O: ObserverType where O.E == R>(_ observer: O) -> Disposable {
         let sink = CombineLatestSink7_(parent: self, observer: observer)
         sink.disposable = sink.run()
         return sink
@@ -613,9 +613,9 @@ extension Observable {
     - parameter resultSelector: Function to invoke whenever any of the sources produces an element.
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
-    @warn_unused_result(message="http://git.io/rxs.uo")
+    @warn_unused_result(message:"http://git.io/rxs.uo")
     public static func combineLatest<O1: ObservableType, O2: ObservableType, O3: ObservableType, O4: ObservableType, O5: ObservableType, O6: ObservableType, O7: ObservableType, O8: ObservableType>
-        (source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6, _ source7: O7, _ source8: O8, resultSelector: (O1.E, O2.E, O3.E, O4.E, O5.E, O6.E, O7.E, O8.E) throws -> E)
+        (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6, _ source7: O7, _ source8: O8, resultSelector: (O1.E, O2.E, O3.E, O4.E, O5.E, O6.E, O7.E, O8.E) throws -> E)
             -> Observable<E> {
         return CombineLatest8(
             source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(), source4: source4.asObservable(), source5: source5.asObservable(), source6: source6.asObservable(), source7: source7.asObservable(), source8: source8.asObservable(),
@@ -716,7 +716,7 @@ class CombineLatest8<E1, E2, E3, E4, E5, E6, E7, E8, R> : Producer<R> {
         _resultSelector = resultSelector
     }
 
-    override func run<O: ObserverType where O.E == R>(observer: O) -> Disposable {
+    override func run<O: ObserverType where O.E == R>(_ observer: O) -> Disposable {
         let sink = CombineLatestSink8_(parent: self, observer: observer)
         sink.disposable = sink.run()
         return sink

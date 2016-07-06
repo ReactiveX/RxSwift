@@ -13,9 +13,9 @@ import UIKit
     import RxCocoa
 #endif
 
-func dismissViewController(viewController: UIViewController, animated: Bool) {
+func dismissViewController(_ viewController: UIViewController, animated: Bool) {
     if viewController.isBeingDismissed() || viewController.isBeingPresented() {
-        dispatch_async(dispatch_get_main_queue()) {
+        DispatchQueue.main.async {
             dismissViewController(viewController, animated: animated)
         }
 
@@ -23,12 +23,12 @@ func dismissViewController(viewController: UIViewController, animated: Bool) {
     }
 
     if viewController.presentingViewController != nil {
-        viewController.dismissViewControllerAnimated(animated, completion: nil)
+        viewController.dismiss(animated: animated, completion: nil)
     }
 }
 
 extension UIImagePickerController {
-    static func rx_createWithParent(parent: UIViewController?, animated: Bool = true, configureImagePicker: (UIImagePickerController) throws -> () = { x in }) -> Observable<UIImagePickerController> {
+    static func rx_createWithParent(_ parent: UIViewController?, animated: Bool = true, configureImagePicker: (UIImagePickerController) throws -> () = { x in }) -> Observable<UIImagePickerController> {
         return Observable.create { [weak parent] observer in
             let imagePicker = UIImagePickerController()
             let dismissDisposable = imagePicker
@@ -44,17 +44,17 @@ extension UIImagePickerController {
                 try configureImagePicker(imagePicker)
             }
             catch let error {
-                observer.on(.Error(error))
+                observer.on(.error(error))
                 return NopDisposable.instance
             }
 
             guard let parent = parent else {
-                observer.on(.Completed)
+                observer.on(.completed)
                 return NopDisposable.instance
             }
 
-            parent.presentViewController(imagePicker, animated: animated, completion: nil)
-            observer.on(.Next(imagePicker))
+            parent.present(imagePicker, animated: animated, completion: nil)
+            observer.on(.next(imagePicker))
             
             return CompositeDisposable(dismissDisposable, AnonymousDisposable {
                     dismissViewController(imagePicker, animated: animated)

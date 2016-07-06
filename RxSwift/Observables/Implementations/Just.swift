@@ -21,9 +21,9 @@ class JustScheduledSink<O: ObserverType> : Sink<O> {
     func run() -> Disposable {
         let scheduler = _parent._scheduler
         return scheduler.schedule(_parent._element) { element in
-            self.forwardOn(.Next(element))
+            self.forwardOn(.next(element))
             return scheduler.schedule(()) { _ in
-                self.forwardOn(.Completed)
+                self.forwardOn(.completed)
                 return NopDisposable.instance
             }
         }
@@ -39,7 +39,7 @@ class JustScheduled<Element> : Producer<Element> {
         _element = element
     }
 
-    override func subscribe<O : ObserverType where O.E == E>(observer: O) -> Disposable {
+    override func subscribe<O : ObserverType where O.E == E>(_ observer: O) -> Disposable {
         let sink = JustScheduledSink(parent: self, observer: observer)
         sink.disposable = sink.run()
         return sink
@@ -53,9 +53,9 @@ class Just<Element> : Producer<Element> {
         _element = element
     }
     
-    override func subscribe<O : ObserverType where O.E == Element>(observer: O) -> Disposable {
-        observer.on(.Next(_element))
-        observer.on(.Completed)
+    override func subscribe<O : ObserverType where O.E == Element>(_ observer: O) -> Disposable {
+        observer.on(.next(_element))
+        observer.on(.completed)
         return NopDisposable.instance
     }
 }

@@ -20,7 +20,7 @@ extension UIButton {
     Reactive wrapper for `TouchUpInside` control event.
     */
     public var rx_tap: ControlEvent<Void> {
-        return rx_controlEvent(.TouchUpInside)
+        return rx_controlEvent(.touchUpInside)
     }
 }
 
@@ -40,7 +40,7 @@ extension UIButton {
      Reactive wrapper for `PrimaryActionTriggered` control event.
      */
     public var rx_primaryAction: ControlEvent<Void> {
-        return rx_controlEvent(.PrimaryActionTriggered)
+        return rx_controlEvent(.primaryActionTriggered)
     }
 
 }
@@ -59,9 +59,9 @@ extension UIButton {
     /**
      Reactive wrapper for `setTitle(_:controlState:)`
      */
-    public func rx_title(controlState: UIControlState = .Normal) -> AnyObserver<String?> {
+    public func rx_title(controlState: UIControlState = []) -> AnyObserver<String?> {
         return UIBindingObserver<UIButton, String?>(UIElement: self) { (button, title) -> () in
-            button.setTitle(title, forState: controlState)
+            button.setTitle(title, for: controlState)
         }.asObserver()
     }
 }

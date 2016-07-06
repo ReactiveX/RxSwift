@@ -118,12 +118,12 @@ All notable changes to this project will be documented in this file.
 This is example of those changes:
 
 ```swift
-- public func rx_itemsWithCellFactory<S : SequenceType, O : ObservableType where O.E == S>
+- public func rx_itemsWithCellFactory<S : Sequence, O : ObservableType where O.E == S>
       (source: O)
-      (cellFactory: (UITableView, Int, S.Generator.Element) -> UITableViewCell) -> Disposable
-+ public func rx_itemsWithCellFactory<S : SequenceType, O : ObservableType where O.E == S>
+      (cellFactory: (UITableView, Int, S.Iterator.Element) -> UITableViewCell) -> Disposable
++ public func rx_itemsWithCellFactory<S : Sequence, O : ObservableType where O.E == S>
       (source: O)
-      -> (cellFactory: (UITableView, Int, S.Generator.Element) -> UITableViewCell) -> Disposable
+      -> (cellFactory: (UITableView, Int, S.Iterator.Element) -> UITableViewCell) -> Disposable
 ```
 
 * Fixes anomaly in `CLLocationManager` extensions
@@ -395,7 +395,7 @@ let (
 * `NSURLSession` extensions now return `Observable<(NSData!, NSHTTPURLResponse)>` instead of `Observable<(NSData!, NSURLResponse!)>`.
 * Optimizes consecutive map operators. For example `map(validate1).map(validate2).map(parse)` is now internally optimized to one `map` operator.
 * Adds overloads for `just`, `sequenceOf`, `toObservable` that accept scheduler.
-* Deprecates `asObservable` extension of `SequenceType` in favor of `toObservable`.
+* Deprecates `asObservable` extension of `Sequence` in favor of `toObservable`.
 * Adds `toObservable` extension to `Array`.
 * Improves table view animated data source example.
 * Polishing of `RxDataSourceStarterKit`
@@ -507,7 +507,7 @@ let (
 * Renames `ScopedDispose` to `ScopedDisposable`
 * Deprecates `observeSingleOn` in favor of `observeOn`
 * Adds inline documentation
-* Renames `from` to `asObservable` extension method on `SequenceType`
+* Renames `from` to `asObservable` extension method on `Sequence`
 * Renames `catchErrorResumeNext` in favor of `catchErrorJustReturn`
 * Deprecates `catchErrorToResult`, the preferred way is to use Swift `do/try/catch` mechanism.
 * Deprecates `RxResult`, the preferred way is to use Swift `do/try/catch` mechanism.

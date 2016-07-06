@@ -19,30 +19,30 @@ class _RxTableViewReactiveArrayDataSource
     : NSObject
     , UITableViewDataSource {
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
    
-    func _tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func _tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 0
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return _tableView(tableView, numberOfRowsInSection: section)
     }
 
-    func _tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    private func _tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         rxAbstractMethod()
     }
-    
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        return _tableView(tableView, cellForRowAtIndexPath: indexPath)
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        return _tableView(tableView, cellForRowAt: indexPath)
     }
 }
 
 
-class RxTableViewReactiveArrayDataSourceSequenceWrapper<S: SequenceType>
-    : RxTableViewReactiveArrayDataSource<S.Generator.Element>
+class RxTableViewReactiveArrayDataSourceSequenceWrapper<S: Sequence>
+    : RxTableViewReactiveArrayDataSource<S.Iterator.Element>
     , RxTableViewDataSourceType {
     typealias Element = S
 
@@ -50,7 +50,7 @@ class RxTableViewReactiveArrayDataSourceSequenceWrapper<S: SequenceType>
         super.init(cellFactory: cellFactory)
     }
 
-    func tableView(tableView: UITableView, observedEvent: Event<S>) {
+    func tableView(_ tableView: UITableView, observedEvent: Event<S>) {
         UIBindingObserver(UIElement: self) { tableViewDataSource, sectionModels in
             let sections = Array(sectionModels)
             tableViewDataSource.tableView(tableView, observedElements: sections)
@@ -66,14 +66,14 @@ class RxTableViewReactiveArrayDataSource<Element>
     
     var itemModels: [Element]? = nil
     
-    func modelAtIndex(index: Int) -> Element? {
+    func modelAtIndex(_ index: Int) -> Element? {
         return itemModels?[index]
     }
 
-    func modelAtIndexPath(indexPath: NSIndexPath) throws -> Any {
-        precondition(indexPath.section == 0)
-        guard let item = itemModels?[indexPath.item] else {
-            throw RxCocoaError.ItemsNotYetBound(object: self)
+    func modelAtIndexPath(_ indexPath: IndexPath) throws -> Any {
+        precondition((indexPath as NSIndexPath).section == 0)
+        guard let item = itemModels?[(indexPath as NSIndexPath).item] else {
+            throw RxCocoaError.itemsNotYetBound(object: self)
         }
         return item
     }
@@ -84,17 +84,17 @@ class RxTableViewReactiveArrayDataSource<Element>
         self.cellFactory = cellFactory
     }
     
-    override func _tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func _tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return itemModels?.count ?? 0
     }
     
-    override func _tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        return cellFactory(tableView, indexPath.item, itemModels![indexPath.row])
+    override func _tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        return cellFactory(tableView, (indexPath as NSIndexPath).item, itemModels![(indexPath as NSIndexPath).row])
     }
     
     // reactive
     
-    func tableView(tableView: UITableView, observedElements: [Element]) {
+    func tableView(_ tableView: UITableView, observedElements: [Element]) {
         self.itemModels = observedElements
         
         tableView.reloadData()

@@ -100,8 +100,8 @@ example("create") {
     
     let myJust = { (element: String) -> Observable<String> in
         return Observable.create { observer in
-            observer.on(.Next(element))
-            observer.on(.Completed)
+            observer.on(.next(element))
+            observer.on(.completed)
             return NopDisposable.instance
         }
     }
@@ -190,7 +190,7 @@ example("deferred") {
 example("error") {
     let disposeBag = DisposeBag()
         
-    Observable<Int>.error(Error.Test)
+    Observable<Int>.error(Error.test)
         .subscribe { print($0) }
         .addDisposableTo(disposeBag)
 }

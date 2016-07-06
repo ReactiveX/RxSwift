@@ -918,7 +918,7 @@ extension ObservableMultipleTest {
 
 // this generates
 // [generator(0), [generator(1), [generator(2), ..].concat()].concat()].concat()
-func generateCollection<T>(startIndex: Int, _ generator: Int -> Observable<T>) -> Observable<T> {
+func generateCollection<T>(_ startIndex: Int, _ generator: (Int) -> Observable<T>) -> Observable<T> {
     let all = [0, 1].lazy.map { i in
         return i == 0 ? generator(startIndex) : generateCollection(startIndex + 1, generator)
     }
@@ -928,7 +928,7 @@ func generateCollection<T>(startIndex: Int, _ generator: Int -> Observable<T>) -
 // this generates
 // [generator(0), [generator(1), [generator(2), ..].concat()].concat()].concat()
 // This should
-func generateSequence<T>(startIndex: Int, _ generator: Int -> Observable<T>) -> Observable<T> {
+func generateSequence<T>(_ startIndex: Int, _ generator: (Int) -> Observable<T>) -> Observable<T> {
     let all = AnySequence([0, 1].lazy.map { i in
         return i == 0 ? generator(startIndex) : generateSequence(startIndex + 1, generator)
     })
@@ -3195,7 +3195,7 @@ extension ObservableMultipleTest {
     }
 }
 
-// MARK: combineLatest + CollectionType
+// MARK: combineLatest + Collection
 extension ObservableMultipleTest {
     func testCombineLatest_NeverN() {
         let scheduler = TestScheduler(initialClock: 0)
@@ -3785,7 +3785,7 @@ extension ObservableMultipleTest {
     }
 }
 
-// MARK: zip + CollectionType
+// MARK: zip + Collection
 extension ObservableMultipleTest {
     func testZip_NAry_symmetric() {
         let scheduler = TestScheduler(initialClock: 0)

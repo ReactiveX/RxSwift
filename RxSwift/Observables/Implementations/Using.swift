@@ -40,15 +40,15 @@ class UsingSink<SourceType, ResourceType: Disposable, O: ObserverType where O.E 
         }
     }
     
-    func on(event: Event<E>) {
+    func on(_ event: Event<E>) {
         switch event {
-        case let .Next(value):
-            forwardOn(.Next(value))
-        case let .Error(error):
-            forwardOn(.Error(error))
+        case let .next(value):
+            forwardOn(.next(value))
+        case let .error(error):
+            forwardOn(.error(error))
             dispose()
-        case .Completed:
-            forwardOn(.Completed)
+        case .completed:
+            forwardOn(.completed)
             dispose()
         }
     }
@@ -59,7 +59,7 @@ class Using<SourceType, ResourceType: Disposable>: Producer<SourceType> {
     typealias E = SourceType
     
     typealias ResourceFactory = () throws -> ResourceType
-    typealias ObservableFactory = ResourceType throws -> Observable<SourceType>
+    typealias ObservableFactory = (ResourceType) throws -> Observable<SourceType>
     
     private let _resourceFactory: ResourceFactory
     private let _observableFactory: ObservableFactory
@@ -70,7 +70,7 @@ class Using<SourceType, ResourceType: Disposable>: Producer<SourceType> {
         _observableFactory = observableFactory
     }
     
-    override func run<O : ObserverType where O.E == E>(observer: O) -> Disposable {
+    override func run<O : ObserverType where O.E == E>(_ observer: O) -> Disposable {
         let sink = UsingSink(parent: self, observer: observer)
         sink.disposable = sink.run()
         return sink

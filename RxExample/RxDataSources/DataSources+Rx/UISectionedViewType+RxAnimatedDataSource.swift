@@ -14,17 +14,17 @@ import RxCocoa
 #endif
 
 extension UITableView {
-    @available(*, deprecated=0.7, renamed="rx_itemsWithDataSource", message="You can just use normal `rx_itemsWithDataSource` extension.")
+    @available(*, deprecated:0.7, renamed:"rx_itemsWithDataSource", message:"You can just use normal `rx_itemsWithDataSource` extension.")
     public func rx_itemsAnimatedWithDataSource<
             DataSource: protocol<RxTableViewDataSourceType, UITableViewDataSource>,
-            S: SequenceType,
+            S: Sequence,
             O: ObservableType
         where
             DataSource.Element == S,
             O.E == S,
-            S.Generator.Element: AnimatableSectionModelType
+            S.Iterator.Element: AnimatableSectionModelType
         >
-        (dataSource: DataSource)
+        (_ dataSource: DataSource)
         -> (source: O)
         -> Disposable  {
         return  { source in
@@ -34,17 +34,17 @@ extension UITableView {
 }
 
 extension UICollectionView {
-    @available(*, deprecated=0.7, renamed="rx_itemsWithDataSource", message="You can just use normal `rx_itemsWithDataSource` extension.")
+    @available(*, deprecated:0.7, renamed:"rx_itemsWithDataSource", message:"You can just use normal `rx_itemsWithDataSource` extension.")
     public func rx_itemsAnimatedWithDataSource<
             DataSource: protocol<RxCollectionViewDataSourceType, UICollectionViewDataSource>,
-            S: SequenceType,
+            S: Sequence,
             O: ObservableType
         where
             DataSource.Element == S,
             O.E == S,
-            S.Generator.Element: AnimatableSectionModelType
+            S.Iterator.Element: AnimatableSectionModelType
         >
-        (dataSource: DataSource)
+        (_ dataSource: DataSource)
         -> (source: O)
         -> Disposable  {
         return { source in

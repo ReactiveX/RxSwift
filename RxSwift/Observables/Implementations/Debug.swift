@@ -10,8 +10,8 @@ import Foundation
 
 let dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"
 
-func logEvent(identifier: String, dateFormat: NSDateFormatter, content: String) {
-    print("\(dateFormat.stringFromDate(NSDate())): \(identifier) -> \(content)")
+func logEvent(_ identifier: String, dateFormat: DateFormatter, content: String) {
+    print("\(dateFormat.string(from: Date())): \(identifier) -> \(content)")
 }
 
 class Debug_<O: ObserverType> : Sink<O>, ObserverType {
@@ -19,7 +19,7 @@ class Debug_<O: ObserverType> : Sink<O>, ObserverType {
     typealias Parent = Debug<Element>
     
     private let _parent: Parent
-    private let _timestampFormatter = NSDateFormatter()
+    private let _timestampFormatter = DateFormatter()
     
     init(parent: Parent, observer: O) {
         _parent = parent
@@ -30,7 +30,7 @@ class Debug_<O: ObserverType> : Sink<O>, ObserverType {
         super.init(observer: observer)
     }
     
-    func on(event: Event<Element>) {
+    func on(_ event: Event<Element>) {
         let maxEventTextLength = 40
         let eventText = "\(event)"
         let eventNormalized = eventText.characters.count > maxEventTextLength
@@ -59,7 +59,7 @@ class Debug<Element> : Producer<Element> {
         else {
             let trimmedFile: String
             if let lastIndex = file.lastIndexOf("/") {
-                trimmedFile = file[lastIndex.successor() ..< file.endIndex]
+                trimmedFile = file[file.index(after: lastIndex) ..< file.endIndex]
             }
             else {
                 trimmedFile = file
@@ -69,7 +69,7 @@ class Debug<Element> : Producer<Element> {
         _source = source
     }
     
-    override func run<O: ObserverType where O.E == Element>(observer: O) -> Disposable {
+    override func run<O: ObserverType where O.E == Element>(_ observer: O) -> Disposable {
         let sink = Debug_(parent: self, observer: observer)
         sink.disposable = _source.subscribe(sink)
         return sink

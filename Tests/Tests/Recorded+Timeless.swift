@@ -10,14 +10,14 @@ import Foundation
 import RxTests
 import RxSwift
 
-func next<T>(value: T) -> Recorded<Event<T>> {
-    return Recorded(time: 0, event: .Next(value))
+func next<T>(_ value: T) -> Recorded<Event<T>> {
+    return Recorded(time: 0, event: .next(value))
 }
 
 func completed<T>() -> Recorded<Event<T>> {
-    return Recorded(time: 0, event: .Completed)
+    return Recorded(time: 0, event: .completed)
 }
 
-func error<T>(error: ErrorType) -> Recorded<Event<T>> {
-    return Recorded(time: 0, event: .Error(error))
+func error<T>(_ error: ErrorProtocol) -> Recorded<Event<T>> {
+    return Recorded(time: 0, event: .error(error))
 }

@@ -43,30 +43,30 @@ class CalculatorViewController: ViewController {
     
     override func viewDidLoad() {
         let commands:[Observable<Action>] = [
-            allClearButton.rx_tap.map { _ in .Clear },
+            allClearButton.rx_tap.map { _ in .clear },
             
-            changeSignButton.rx_tap.map { _ in .ChangeSign },
-            percentButton.rx_tap.map { _ in .Percent },
+            changeSignButton.rx_tap.map { _ in .changeSign },
+            percentButton.rx_tap.map { _ in .percent },
             
-            divideButton.rx_tap.map { _ in .Operation(.Division) },
-            multiplyButton.rx_tap.map { _ in .Operation(.Multiplication) },
-            minusButton.rx_tap.map { _ in .Operation(.Subtraction) },
-            plusButton.rx_tap.map { _ in .Operation(.Addition) },
+            divideButton.rx_tap.map { _ in .operation(.division) },
+            multiplyButton.rx_tap.map { _ in .operation(.multiplication) },
+            minusButton.rx_tap.map { _ in .operation(.subtraction) },
+            plusButton.rx_tap.map { _ in .operation(.addition) },
             
-            equalButton.rx_tap.map { _ in .Equal },
+            equalButton.rx_tap.map { _ in .equal },
             
-            dotButton.rx_tap.map { _ in .AddDot },
+            dotButton.rx_tap.map { _ in  .addDot },
             
-            zeroButton.rx_tap.map { _ in .AddNumber("0") },
-            oneButton.rx_tap.map { _ in .AddNumber("1") },
-            twoButton.rx_tap.map { _ in .AddNumber("2") },
-            threeButton.rx_tap.map { _ in .AddNumber("3") },
-            fourButton.rx_tap.map { _ in .AddNumber("4") },
-            fiveButton.rx_tap.map { _ in .AddNumber("5") },
-            sixButton.rx_tap.map { _ in .AddNumber("6") },
-            sevenButton.rx_tap.map { _ in .AddNumber("7") },
-            eightButton.rx_tap.map { _ in .AddNumber("8") },
-            nineButton.rx_tap.map { _ in .AddNumber("9") }
+            zeroButton.rx_tap.map { _ in .addNumber("0") },
+            oneButton.rx_tap.map { _ in .addNumber("1") },
+            twoButton.rx_tap.map { _ in .addNumber("2") },
+            threeButton.rx_tap.map { _ in .addNumber("3") },
+            fourButton.rx_tap.map { _ in .addNumber("4") },
+            fiveButton.rx_tap.map { _ in .addNumber("5") },
+            sixButton.rx_tap.map { _ in .addNumber("6") },
+            sevenButton.rx_tap.map { _ in .addNumber("7") },
+            eightButton.rx_tap.map { _ in .addNumber("8") },
+            nineButton.rx_tap.map { _ in .addNumber("9") }
         ]
         
         commands
@@ -77,17 +77,17 @@ class CalculatorViewController: ViewController {
             }
             .debug("debugging")
             .subscribeNext { [weak self] calState in
-                self?.resultLabel.text = self?.prettyFormat(calState.inScreen)
+                self?.resultLabel.text = calState.inScreen
                 switch calState.action {
-                case .Operation(let operation):
+                case .operation(let operation):
                     switch operation {
-                    case .Addition:
+                    case .addition:
                         self?.lastSignLabel.text = "+"
-                    case .Subtraction:
+                    case .subtraction:
                         self?.lastSignLabel.text = "-"
-                    case .Multiplication:
+                    case .multiplication:
                         self?.lastSignLabel.text = "x"
-                    case .Division:
+                    case .division:
                         self?.lastSignLabel.text = "/"
                     }
                 default:
@@ -97,10 +97,11 @@ class CalculatorViewController: ViewController {
             .addDisposableTo(disposeBag)
     }
     
+//swifts string api sucks
 
     func prettyFormat(str: String) -> String {
         if str.hasSuffix(".0") {
-            return str.substringToIndex(str.endIndex.predecessor().predecessor())
+//            return str[str.startIndex..<str.endIndex.pre]
         }
         return str
     }

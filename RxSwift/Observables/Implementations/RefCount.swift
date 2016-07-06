@@ -52,11 +52,11 @@ class RefCountSink<CO: ConnectableObservableType, O: ObserverType where CO.E == 
         }
     }
 
-    func on(event: Event<Element>) {
+    func on(_ event: Event<Element>) {
         switch event {
-        case .Next:
+        case .next:
             forwardOn(event)
-        case .Error, .Completed:
+        case .error, .completed:
             forwardOn(event)
             dispose()
         }
@@ -64,7 +64,7 @@ class RefCountSink<CO: ConnectableObservableType, O: ObserverType where CO.E == 
 }
 
 class RefCount<CO: ConnectableObservableType>: Producer<CO.E> {
-    private let _lock = NSRecursiveLock()
+    private let _lock = RecursiveLock()
     
     // state
     private var _count = 0
@@ -76,7 +76,7 @@ class RefCount<CO: ConnectableObservableType>: Producer<CO.E> {
         _source = source
     }
     
-    override func run<O: ObserverType where O.E == CO.E>(observer: O) -> Disposable {
+    override func run<O: ObserverType where O.E == CO.E>(_ observer: O) -> Disposable {
         let sink = RefCountSink(parent: self, observer: observer)
         sink.disposable = sink.run()
         return sink

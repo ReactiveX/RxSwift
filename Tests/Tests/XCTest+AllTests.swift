@@ -11,14 +11,14 @@ import RxSwift
 import RxTests
 import XCTest
 
-func XCTAssertErrorEqual(lhs: ErrorType, _ rhs: ErrorType) {
-    let event1: Event<Int> = .Error(lhs)
-    let event2: Event<Int> = .Error(rhs)
+func XCTAssertErrorEqual(_ lhs: ErrorProtocol, _ rhs: ErrorProtocol) {
+    let event1: Event<Int> = .error(lhs)
+    let event2: Event<Int> = .error(rhs)
     
     XCTAssertTrue(event1 == event2)
 }
 
-func NSValuesAreEqual(lhs: AnyObject, _ rhs: AnyObject) -> Bool {
+func NSValuesAreEqual(_ lhs: AnyObject, _ rhs: AnyObject) -> Bool {
     if let lhsValue = lhs as? NSValue, rhsValue = rhs as? NSValue {
         #if os(Linux)
             return lhsValue.isEqual(rhsValue)
@@ -31,7 +31,7 @@ func NSValuesAreEqual(lhs: AnyObject, _ rhs: AnyObject) -> Bool {
     return false
 }
 
-func XCTAssertEqualNSValues(lhs: AnyObject, rhs: AnyObject) {
+func XCTAssertEqualNSValues(_ lhs: AnyObject, rhs: AnyObject) {
     let areEqual = NSValuesAreEqual(lhs, rhs)
     XCTAssertTrue(areEqual)
     if !areEqual {
@@ -40,7 +40,7 @@ func XCTAssertEqualNSValues(lhs: AnyObject, rhs: AnyObject) {
     }
 }
 
-func XCTAssertEqualAnyObjectArrayOfArrays(lhs: [[AnyObject]], _ rhs: [[AnyObject]]) {
+func XCTAssertEqualAnyObjectArrayOfArrays(_ lhs: [[AnyObject]], _ rhs: [[AnyObject]]) {
     XCTAssertEqual(lhs, rhs) { lhs, rhs in
         if lhs.count != rhs.count {
             return false
@@ -53,7 +53,7 @@ func XCTAssertEqualAnyObjectArrayOfArrays(lhs: [[AnyObject]], _ rhs: [[AnyObject
     }
 }
 
-func XCTAssertEqual<T>(lhs: [T], _ rhs: [T], _ comparison: (T, T) -> Bool) {
+func XCTAssertEqual<T>(_ lhs: [T], _ rhs: [T], _ comparison: (T, T) -> Bool) {
     XCTAssertEqual(lhs.count, rhs.count)
     let areEqual = zip(lhs, rhs).reduce(true) { (a: Bool, z: (T, T)) in a && comparison(z.0, z.1) }
     XCTAssertTrue(areEqual)
@@ -64,10 +64,10 @@ func XCTAssertEqual<T>(lhs: [T], _ rhs: [T], _ comparison: (T, T) -> Bool) {
 }
 
 
-func doOnBackgroundThread(action: () -> ()) {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), action)
+func doOnBackgroundThread(_ action: () -> ()) {
+    DispatchQueue.global(attributes: DispatchQueue.GlobalAttributes.qosDefault).async(execute: action)
 }
 
-func doOnMainThread(action: () -> ()) {
-    dispatch_async(dispatch_get_main_queue(), action)
+func doOnMainThread(_ action: () -> ()) {
+    DispatchQueue.main.async(execute: action)
 }

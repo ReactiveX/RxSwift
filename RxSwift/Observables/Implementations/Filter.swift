@@ -21,20 +21,20 @@ class FilterSink<O : ObserverType>: Sink<O>, ObserverType {
         super.init(observer: observer)
     }
     
-    func on(event: Event<Element>) {
+    func on(_ event: Event<Element>) {
         switch event {
-            case .Next(let value):
+            case .next(let value):
                 do {
                     let satisfies = try _predicate(value)
                     if satisfies {
-                        forwardOn(.Next(value))
+                        forwardOn(.next(value))
                     }
                 }
                 catch let e {
-                    forwardOn(.Error(e))
+                    forwardOn(.error(e))
                     dispose()
                 }
-            case .Completed, .Error:
+            case .completed, .error:
                 forwardOn(event)
                 dispose()
         }
@@ -52,7 +52,7 @@ class Filter<Element> : Producer<Element> {
         _predicate = predicate
     }
     
-    override func run<O: ObserverType where O.E == Element>(observer: O) -> Disposable {
+    override func run<O: ObserverType where O.E == Element>(_ observer: O) -> Disposable {
         let sink = FilterSink(predicate: _predicate, observer: observer)
         sink.disposable = _source.subscribe(sink)
         return sink

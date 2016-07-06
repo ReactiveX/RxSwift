@@ -30,17 +30,17 @@ class GenerateSink<S, O: ObserverType> : Sink<O> {
                 
                 if try self._parent._condition(self._state) {
                     let result = try self._parent._resultSelector(self._state)
-                    self.forwardOn(.Next(result))
+                    self.forwardOn(.next(result))
                     
                     recurse(false)
                 }
                 else {
-                    self.forwardOn(.Completed)
+                    self.forwardOn(.completed)
                     self.dispose()
                 }
             }
             catch let error {
-                self.forwardOn(.Error(error))
+                self.forwardOn(.error(error))
                 self.dispose()
             }
         }
@@ -49,12 +49,12 @@ class GenerateSink<S, O: ObserverType> : Sink<O> {
 
 class Generate<S, E> : Producer<E> {
     private let _initialState: S
-    private let _condition: S throws -> Bool
-    private let _iterate: S throws -> S
-    private let _resultSelector: S throws -> E
+    private let _condition: (S) throws -> Bool
+    private let _iterate: (S) throws -> S
+    private let _resultSelector: (S) throws -> E
     private let _scheduler: ImmediateSchedulerType
     
-    init(initialState: S, condition: S throws -> Bool, iterate: S throws -> S, resultSelector: S throws -> E, scheduler: ImmediateSchedulerType) {
+    init(initialState: S, condition: (S) throws -> Bool, iterate: (S) throws -> S, resultSelector: (S) throws -> E, scheduler: ImmediateSchedulerType) {
         _initialState = initialState
         _condition = condition
         _iterate = iterate
@@ -63,7 +63,7 @@ class Generate<S, E> : Producer<E> {
         super.init()
     }
     
-    override func run<O : ObserverType where O.E == E>(observer: O) -> Disposable {
+    override func run<O : ObserverType where O.E == E>(_ observer: O) -> Disposable {
         let sink = GenerateSink(parent: self, observer: observer)
         sink.disposable = sink.run()
         return sink

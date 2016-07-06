@@ -22,7 +22,7 @@ class BufferTimeCount<Element> : Producer<[Element]> {
         _scheduler = scheduler
     }
     
-    override func run<O : ObserverType where O.E == [Element]>(observer: O) -> Disposable {
+    override func run<O : ObserverType where O.E == [Element]>(_ observer: O) -> Disposable {
         let sink = BufferTimeCountSink(parent: self, observer: observer)
         sink.disposable = sink.run()
         return sink
@@ -39,7 +39,7 @@ class BufferTimeCountSink<Element, O: ObserverType where O.E == [Element]>
     
     private let _parent: Parent
     
-    let _lock = NSRecursiveLock()
+    let _lock = RecursiveLock()
     
     // state
     private let _timerD = SerialDisposable()
@@ -62,36 +62,36 @@ class BufferTimeCountSink<Element, O: ObserverType where O.E == [Element]>
         
         let buffer = _buffer
         _buffer = []
-        forwardOn(.Next(buffer))
+        forwardOn(.next(buffer))
         
         createTimer(windowID)
     }
     
-    func on(event: Event<E>) {
+    func on(_ event: Event<E>) {
         synchronizedOn(event)
     }
 
-    func _synchronized_on(event: Event<E>) {
+    func _synchronized_on(_ event: Event<E>) {
         switch event {
-        case .Next(let element):
+        case .next(let element):
             _buffer.append(element)
             
             if _buffer.count == _parent._count {
                 startNewWindowAndSendCurrentOne()
             }
             
-        case .Error(let error):
+        case .error(let error):
             _buffer = []
-            forwardOn(.Error(error))
+            forwardOn(.error(error))
             dispose()
-        case .Completed:
-            forwardOn(.Next(_buffer))
-            forwardOn(.Completed)
+        case .completed:
+            forwardOn(.next(_buffer))
+            forwardOn(.completed)
             dispose()
         }
     }
     
-    func createTimer(windowID: Int) {
+    func createTimer(_ windowID: Int) {
         if _timerD.disposed {
             return
         }

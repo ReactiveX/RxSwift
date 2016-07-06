@@ -13,26 +13,26 @@ import RxCocoa
 
 class NSNotificationCenterTests : RxTest {
     func testNotificationCenterWithoutObject() {
-        let notificationCenter = NSNotificationCenter()
+        let notificationCenter = NotificationCenter()
         
         var numberOfNotifications = 0
 
-        notificationCenter.postNotificationName("testNotification", object: nil)
+        notificationCenter.post(name: Notification.Name(rawValue: "testNotification"), object: nil)
         
         XCTAssertTrue(numberOfNotifications == 0)
         
-        let subscription = notificationCenter.rx_notification("testNotification", object: nil)
+        let subscription = notificationCenter.rx_notification(Notification.Name(rawValue: "testNotification"), object: nil)
             .subscribeNext { n in
             numberOfNotifications += 1
         }
 
         XCTAssertTrue(numberOfNotifications == 0)
         
-        notificationCenter.postNotificationName("testNotification", object: nil)
+        notificationCenter.post(name: Notification.Name(rawValue: "testNotification"), object: nil)
         
         XCTAssertTrue(numberOfNotifications == 1)
         
-        notificationCenter.postNotificationName("testNotification", object: NSObject())
+        notificationCenter.post(name: Notification.Name(rawValue: "testNotification"), object: NSObject())
         
         XCTAssertTrue(numberOfNotifications == 2)
         
@@ -40,43 +40,43 @@ class NSNotificationCenterTests : RxTest {
 
         XCTAssertTrue(numberOfNotifications == 2)
         
-        notificationCenter.postNotificationName("testNotification", object: nil)
+        notificationCenter.post(name: Notification.Name(rawValue: "testNotification"), object: nil)
 
         XCTAssertTrue(numberOfNotifications == 2)
     }
     
     func testNotificationCenterWithObject() {
-        let notificationCenter = NSNotificationCenter()
+        let notificationCenter = NotificationCenter()
         
         var numberOfNotifications = 0
         
         let targetObject = NSObject()
         
-        notificationCenter.postNotificationName("testNotification", object: targetObject)
-        notificationCenter.postNotificationName("testNotification", object: nil)
+        notificationCenter.post(name: Notification.Name(rawValue: "testNotification"), object: targetObject)
+        notificationCenter.post(name: Notification.Name(rawValue: "testNotification"), object: nil)
         
         XCTAssertTrue(numberOfNotifications == 0)
         
-        let subscription = notificationCenter.rx_notification("testNotification", object: targetObject)
+        let subscription = notificationCenter.rx_notification(Notification.Name(rawValue: "testNotification"), object: targetObject)
             .subscribeNext { n in
                 numberOfNotifications += 1
         }
         
         XCTAssertTrue(numberOfNotifications == 0)
         
-        notificationCenter.postNotificationName("testNotification", object: targetObject)
+        notificationCenter.post(name: Notification.Name(rawValue: "testNotification"), object: targetObject)
         
         XCTAssertTrue(numberOfNotifications == 1)
         
-        notificationCenter.postNotificationName("testNotification", object: nil)
+        notificationCenter.post(name: Notification.Name(rawValue: "testNotification"), object: nil)
         
         XCTAssertTrue(numberOfNotifications == 1)
 
-        notificationCenter.postNotificationName("testNotification", object: NSObject())
+        notificationCenter.post(name: Notification.Name(rawValue: "testNotification"), object: NSObject())
         
         XCTAssertTrue(numberOfNotifications == 1)
         
-        notificationCenter.postNotificationName("testNotification", object: targetObject)
+        notificationCenter.post(name: Notification.Name(rawValue: "testNotification"), object: targetObject)
         
         XCTAssertTrue(numberOfNotifications == 2)
         
@@ -84,7 +84,7 @@ class NSNotificationCenterTests : RxTest {
         
         XCTAssertTrue(numberOfNotifications == 2)
         
-        notificationCenter.postNotificationName("testNotification", object: targetObject)
+        notificationCenter.post(name: Notification.Name(rawValue: "testNotification"), object: targetObject)
         
         XCTAssertTrue(numberOfNotifications == 2)
     }

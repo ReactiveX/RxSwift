@@ -36,9 +36,9 @@ extension CurrentThreadSchedulerTest {
         var messages = [Int]()
         _ = CurrentThreadScheduler.instance.schedule(()) { s in
             messages.append(1)
-            CurrentThreadScheduler.instance.schedule(()) { s in
+            _ = CurrentThreadScheduler.instance.schedule(()) { s in
                 messages.append(3)
-                CurrentThreadScheduler.instance.schedule(()) {
+                _ = CurrentThreadScheduler.instance.schedule(()) {
                     messages.append(5)
                     return NopDisposable.instance
                 }

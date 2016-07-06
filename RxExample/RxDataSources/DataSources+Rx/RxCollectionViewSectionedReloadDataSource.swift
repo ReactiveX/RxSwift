@@ -23,7 +23,7 @@ public class RxCollectionViewSectionedReloadDataSource<S: SectionModelType>
         super.init()
     }
 
-    public func collectionView(collectionView: UICollectionView, observedEvent: Event<Element>) {
+    public func collectionView(_ collectionView: UICollectionView, observedEvent: Event<Element>) {
         UIBindingObserver(UIElement: self) { dataSource, element in
             #if DEBUG
                 self._dataSourceBound = true

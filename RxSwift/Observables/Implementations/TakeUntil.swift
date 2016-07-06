@@ -17,7 +17,7 @@ class TakeUntilSinkOther<ElementType, Other, O: ObserverType where O.E == Elemen
     
     private let _parent: Parent
 
-    var _lock: NSRecursiveLock {
+    var _lock: RecursiveLock {
         return _parent._lock
     }
     
@@ -26,23 +26,23 @@ class TakeUntilSinkOther<ElementType, Other, O: ObserverType where O.E == Elemen
     init(parent: Parent) {
         _parent = parent
 #if TRACE_RESOURCES
-        AtomicIncrement(&resourceCount)
+        let _ = AtomicIncrement(&resourceCount)
 #endif
     }
     
-    func on(event: Event<E>) {
+    func on(_ event: Event<E>) {
         synchronizedOn(event)
     }
 
-    func _synchronized_on(event: Event<E>) {
+    func _synchronized_on(_ event: Event<E>) {
         switch event {
-        case .Next:
-            _parent.forwardOn(.Completed)
+        case .next:
+            _parent.forwardOn(.completed)
             _parent.dispose()
-        case .Error(let e):
-            _parent.forwardOn(.Error(e))
+        case .error(let e):
+            _parent.forwardOn(.error(e))
             _parent.dispose()
-        case .Completed:
+        case .completed:
             _parent._open = true
             _subscription.dispose()
         }
@@ -50,7 +50,7 @@ class TakeUntilSinkOther<ElementType, Other, O: ObserverType where O.E == Elemen
     
 #if TRACE_RESOURCES
     deinit {
-        AtomicDecrement(&resourceCount)
+        let _ = AtomicDecrement(&resourceCount)
     }
 #endif
 }
@@ -65,7 +65,7 @@ class TakeUntilSink<ElementType, Other, O: ObserverType where O.E == ElementType
     
     private let _parent: Parent
  
-    let _lock = NSRecursiveLock()
+    let _lock = RecursiveLock()
     
     // state
     private var _open = false
@@ -75,18 +75,18 @@ class TakeUntilSink<ElementType, Other, O: ObserverType where O.E == ElementType
         super.init(observer: observer)
     }
     
-    func on(event: Event<E>) {
+    func on(_ event: Event<E>) {
         synchronizedOn(event)
     }
 
-    func _synchronized_on(event: Event<E>) {
+    func _synchronized_on(_ event: Event<E>) {
         switch event {
-        case .Next:
+        case .next:
             forwardOn(event)
-        case .Error:
+        case .error:
             forwardOn(event)
             dispose()
-        case .Completed:
+        case .completed:
             forwardOn(event)
             dispose()
         }
@@ -112,7 +112,7 @@ class TakeUntil<Element, Other>: Producer<Element> {
         _other = other
     }
     
-    override func run<O : ObserverType where O.E == Element>(observer: O) -> Disposable {
+    override func run<O : ObserverType where O.E == Element>(_ observer: O) -> Disposable {
         let sink = TakeUntilSink(parent: self, observer: observer)
         sink.disposable = sink.run()
         return sink

@@ -41,17 +41,18 @@ extension TestScheduler {
     - `|` marks sequence completed
 
     */
-    func parseEventsAndTimes<T>(timeline: String, values: [String: T], errors: [String: ErrorType] = [:]) -> [[Recorded<Event<T>>]] {
+    func parseEventsAndTimes<T>(timeline: String, values: [String: T], errors: [String: ErrorProtocol] = [:]) -> [[Recorded<Event<T>>]] {
         //print("parsing: \(timeline)")
         typealias RecordedEvent = Recorded<Event<T>>
-        let timelines = timeline.componentsSeparatedByString("|")
+        
+        let timelines = timeline.components(separatedBy: "|")
 
         let allExceptLast = timelines[0 ..< timelines.count - 1]
 
         return (allExceptLast.map { $0 + "|" } + [timelines.last!])
             .filter { $0.characters.count > 0 }
             .map { timeline -> [Recorded<Event<T>>] in
-                let segments = timeline.componentsSeparatedByString("-")
+                let segments = timeline.components(separatedBy:"-")
                 let (time: _, events: events) = segments.reduce((time: 0, events: [RecordedEvent]())) { state, event in
                     let tickIncrement = event.characters.count + 1
 
@@ -60,12 +61,12 @@ extension TestScheduler {
                     }
 
                     if event == "#" {
-                        let errorEvent = RecordedEvent(time: state.time, event: Event<T>.Error(NSError(domain: "Any error domain", code: -1, userInfo: nil)))
+                        let errorEvent = RecordedEvent(time: state.time, event: Event<T>.error(NSError(domain: "Any error domain", code: -1, userInfo: nil)))
                         return (state.time + tickIncrement, state.events + [errorEvent])
                     }
 
                     if event == "|" {
-                        let completed = RecordedEvent(time: state.time, event: Event<T>.Completed)
+                        let completed = RecordedEvent(time: state.time, event: Event<T>.completed)
                         return (state.time + tickIncrement, state.events + [completed])
                     }
 
@@ -74,11 +75,11 @@ extension TestScheduler {
                             fatalError("Value with key \(event) not registered as value:\n\(values)\nor error:\n\(errors)")
                         }
 
-                        let nextEvent = RecordedEvent(time: state.time, event: Event<T>.Error(error))
+                        let nextEvent = RecordedEvent(time: state.time, event: Event<T>.error(error))
                         return (state.time + tickIncrement, state.events + [nextEvent])
                     }
 
-                    let nextEvent = RecordedEvent(time: state.time, event: Event<T>.Next(next))
+                    let nextEvent = RecordedEvent(time: state.time, event: Event<T>.next(next))
                     return (state.time + tickIncrement, state.events + [nextEvent])
                 }
 
@@ -96,7 +97,7 @@ extension TestScheduler {
      - returns: Driver specified by timeline and values.
     */
     func createDriver<T>(timeline: String, values: [String: T]) -> Driver<T> {
-        return createObservable(timeline, values: values, errors: [:]).asDriver(onErrorRecover: { (error) -> Driver<T> in
+        return createObservable(timeline: timeline, values: values, errors: [:]).asDriver(onErrorRecover: { (error) -> Driver<T> in
             fatalError("This can't error out")
             return Driver.never()
         })
@@ -111,8 +112,8 @@ extension TestScheduler {
 
      - returns: Observable sequence specified by timeline and values.
     */
-    func createObservable<T>(timeline: String, values: [String: T], errors: [String: ErrorType] = [:]) -> Observable<T> {
-        let events = self.parseEventsAndTimes(timeline, values: values, errors: errors)
+    func createObservable<T>(timeline: String, values: [String: T], errors: [String: ErrorProtocol] = [:]) -> Observable<T> {
+        let events = self.parseEventsAndTimes(timeline: timeline, values: values, errors: errors)
         return createObservable(events)
     }
 
@@ -123,7 +124,7 @@ extension TestScheduler {
 
      - returns: Observable sequence specified by timeline and values.
     */
-    func createObservable<T>(events: [Recorded<Event<T>>]) -> Observable<T> {
+    func createObservable<T>(_ events: [Recorded<Event<T>>]) -> Observable<T> {
         return createObservable([events])
     }
 
@@ -137,7 +138,7 @@ extension TestScheduler {
 
      - returns: Observable sequence specified by timeline and values.
     */
-    func createObservable<T>(events: [[Recorded<Event<T>>]]) -> Observable<T> {
+    func createObservable<T>(_ events: [[Recorded<Event<T>>]]) -> Observable<T> {
         var attemptCount = 0
         print("created for \(events)")
 
@@ -147,7 +148,7 @@ extension TestScheduler {
             }
 
             let scheduledEvents = events[attemptCount].map { event in
-                return self.scheduleRelative((), dueTime: resolution * NSTimeInterval(event.time)) { _ in
+                return self.scheduleRelative((), dueTime: resolution * TimeInterval(event.time)) { _ in
                     observer.on(event.value)
                     return  NopDisposable.instance
                 }
@@ -173,11 +174,11 @@ extension TestScheduler {
      - returns: Implementation of method that accepts arguments with parameter `Arg` and returns observable sequence
         with parameter `Ret`.
      */
-    func mock<Arg, Ret>(values: [String: Ret], errors: [String: ErrorType] = [:], timelineSelector: Arg -> String) -> Arg -> Observable<Ret> {
+    func mock<Arg, Ret>(values: [String: Ret], errors: [String: ErrorProtocol] = [:], timelineSelector: (Arg) -> String) -> (Arg) -> Observable<Ret> {
         return { (parameters: Arg) -> Observable<Ret> in
             let timeline = timelineSelector(parameters)
 
-            return self.createObservable(timeline, values: values, errors: errors)
+            return self.createObservable(timeline: timeline, values: values, errors: errors)
         }
     }
 

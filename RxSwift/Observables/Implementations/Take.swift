@@ -24,24 +24,24 @@ class TakeCountSink<ElementType, O: ObserverType where O.E == ElementType> : Sin
         super.init(observer: observer)
     }
     
-    func on(event: Event<E>) {
+    func on(_ event: Event<E>) {
         switch event {
-        case .Next(let value):
+        case .next(let value):
             
             if _remaining > 0 {
                 _remaining -= 1
                 
-                forwardOn(.Next(value))
+                forwardOn(.next(value))
             
                 if _remaining == 0 {
-                    forwardOn(.Completed)
+                    forwardOn(.completed)
                     dispose()
                 }
             }
-        case .Error:
+        case .error:
             forwardOn(event)
             dispose()
-        case .Completed:
+        case .completed:
             forwardOn(event)
             dispose()
         }
@@ -61,7 +61,7 @@ class TakeCount<Element>: Producer<Element> {
         _count = count
     }
     
-    override func run<O : ObserverType where O.E == Element>(observer: O) -> Disposable {
+    override func run<O : ObserverType where O.E == Element>(_ observer: O) -> Disposable {
         let sink = TakeCountSink(parent: self, observer: observer)
         sink.disposable = _source.subscribe(sink)
         return sink
@@ -80,25 +80,25 @@ class TakeTimeSink<ElementType, O: ObserverType where O.E == ElementType>
 
     private let _parent: Parent
     
-    let _lock = NSRecursiveLock()
+    let _lock = RecursiveLock()
     
     init(parent: Parent, observer: O) {
         _parent = parent
         super.init(observer: observer)
     }
     
-    func on(event: Event<E>) {
+    func on(_ event: Event<E>) {
         synchronizedOn(event)
     }
 
-    func _synchronized_on(event: Event<E>) {
+    func _synchronized_on(_ event: Event<E>) {
         switch event {
-        case .Next(let value):
-            forwardOn(.Next(value))
-        case .Error:
+        case .next(let value):
+            forwardOn(.next(value))
+        case .error:
             forwardOn(event)
             dispose()
-        case .Completed:
+        case .completed:
             forwardOn(event)
             dispose()
         }
@@ -107,7 +107,7 @@ class TakeTimeSink<ElementType, O: ObserverType where O.E == ElementType>
     func tick() {
         _lock.lock(); defer { _lock.unlock() }
 
-        forwardOn(.Completed)
+        forwardOn(.completed)
         dispose()
     }
     
@@ -136,7 +136,7 @@ class TakeTime<Element> : Producer<Element> {
         _duration = duration
     }
     
-    override func run<O : ObserverType where O.E == Element>(observer: O) -> Disposable {
+    override func run<O : ObserverType where O.E == Element>(_ observer: O) -> Disposable {
         let sink = TakeTimeSink(parent: self, observer: observer)
         sink.disposable = sink.run()
         return sink

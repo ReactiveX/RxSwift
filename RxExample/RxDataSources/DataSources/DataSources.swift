@@ -8,25 +8,25 @@
 
 import Foundation
 
-enum RxDataSourceError : ErrorType {
-    case UnwrappingOptional
-    case PreconditionFailed(message: String)
+enum RxDataSourceError : ErrorProtocol {
+    case unwrappingOptional
+    case preconditionFailed(message: String)
 }
 
-func rxPrecondition(condition: Bool, @autoclosure _ message: () -> String) throws -> () {
+func rxPrecondition(_ condition: Bool, _ message: @autoclosure() -> String) throws -> () {
     if condition {
         return
     }
     rxDebugFatalError("Precondition failed")
 
-    throw RxDataSourceError.PreconditionFailed(message: message())
+    throw RxDataSourceError.preconditionFailed(message: message())
 }
 
-func rxDebugFatalError(error: ErrorType) {
+func rxDebugFatalError(_ error: ErrorProtocol) {
     rxDebugFatalError("\(error)")
 }
 
-func rxDebugFatalError(message: String) {
+func rxDebugFatalError(_ message: String) {
     #if DEBUG
         fatalError(message)
     #else

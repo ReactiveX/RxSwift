@@ -19,7 +19,7 @@ class Identity {
     var _forceAllocation: Int32 = 0
 }
 
-func hash(_x: Int) -> Int {
+func hash(_ _x: Int) -> Int {
     var x = _x
     x = ((x >> 16) ^ x) &* 0x45d9f3b
     x = ((x >> 16) ^ x) &* 0x45d9f3b
@@ -36,7 +36,7 @@ public struct BagKey : Hashable {
 
     public var hashValue: Int {
         if let uniqueIdentity = uniqueIdentity {
-            return hash(key) ^ (unsafeAddressOf(uniqueIdentity).hashValue)
+            return hash(key) ^ (unsafeAddress(of: uniqueIdentity).hashValue)
         }
         else {
             return hash(key)
@@ -102,7 +102,7 @@ public struct Bag<T> : CustomDebugStringConvertible {
     - parameter element: Element to insert.
     - returns: Key that can be used to remove element from bag.
     */
-    public mutating func insert(element: T) -> BagKey {
+    public mutating func insert(_ element: T) -> BagKey {
         _nextKey = _nextKey &+ 1
 
 #if DEBUG
@@ -165,8 +165,8 @@ public struct Bag<T> : CustomDebugStringConvertible {
         _key1 = nil
         _value1 = nil
 
-        _pairs.removeAll(keepCapacity: false)
-        _dictionary?.removeAll(keepCapacity: false)
+        _pairs.removeAll(keepingCapacity: false)
+        _dictionary?.removeAll(keepingCapacity: false)
     }
     
     /**
@@ -175,7 +175,7 @@ public struct Bag<T> : CustomDebugStringConvertible {
     - parameter key: Key that identifies element to remove from bag.
     - returns: Element that bag contained, or nil in case element was already removed.
     */
-    public mutating func removeKey(key: BagKey) -> T? {
+    public mutating func removeKey(_ key: BagKey) -> T? {
         if _key0 == key {
             _key0 = nil
             let value = _value0!
@@ -190,14 +190,14 @@ public struct Bag<T> : CustomDebugStringConvertible {
             return value
         }
 
-        if let existingObject = _dictionary?.removeValueForKey(key) {
+        if let existingObject = _dictionary?.removeValue(forKey: key) {
             return existingObject
         }
 
         for i in 0 ..< _pairs.count {
             if _pairs[i].key == key {
                 let value = _pairs[i].value
-                _pairs.removeAtIndex(i)
+                _pairs.remove(at: i)
                 return value
             }
         }
@@ -224,7 +224,7 @@ extension Bag {
     
     - parameter action: Enumeration closure.
     */
-    public func forEach(@noescape action: (T) -> Void) {
+    public func forEach(_ action: @noescape (T) -> Void) {
         if _onlyFastPath {
             if let value0 = _value0 {
                 action(value0)
@@ -263,7 +263,7 @@ extension Bag where T: ObserverType {
 
      - parameter action: Enumeration closure.
      */
-    public func on(event: Event<T.E>) {
+    public func on(_ event: Event<T.E>) {
         if _onlyFastPath {
             _value0?.on(event)
             return
@@ -297,7 +297,7 @@ extension Bag where T: ObserverType {
 /**
 Dispatches `dispose` to all disposables contained inside bag.
 */
-public func disposeAllIn(bag: Bag<Disposable>) {
+public func disposeAllIn(_ bag: Bag<Disposable>) {
     if bag._onlyFastPath {
         bag._value0?.dispose()
         return

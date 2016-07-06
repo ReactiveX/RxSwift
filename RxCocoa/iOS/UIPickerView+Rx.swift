@@ -23,7 +23,7 @@ extension UIPickerView {
         return RxPickerViewDelegateProxy.proxyForObject(self)
     }
     
-    public var rx_itemSelected: ControlEvent<(row: Int, component: Int)> {
+    public var rx_itemSelected: ControlEvent<(Int, Int)> {
         let source = rx_delegate
             .observe(#selector(UIPickerViewDelegate.pickerView(_:didSelectRow:inComponent:)))
             .map {

@@ -18,7 +18,7 @@ class SamplerSink<O: ObserverType, ElementType, SampleType where O.E == ElementT
     
     private let _parent: Parent
 
-    var _lock: NSRecursiveLock {
+    var _lock: RecursiveLock {
         return _parent._lock
     }
     
@@ -26,35 +26,35 @@ class SamplerSink<O: ObserverType, ElementType, SampleType where O.E == ElementT
         _parent = parent
     }
     
-    func on(event: Event<E>) {
+    func on(_ event: Event<E>) {
         synchronizedOn(event)
     }
 
-    func _synchronized_on(event: Event<E>) {
+    func _synchronized_on(_ event: Event<E>) {
         switch event {
-        case .Next:
+        case .next:
             if let element = _parent._element {
                 if _parent._parent._onlyNew {
                     _parent._element = nil
                 }
                 
-                _parent.forwardOn(.Next(element))
+                _parent.forwardOn(.next(element))
             }
 
             if _parent._atEnd {
-                _parent.forwardOn(.Completed)
+                _parent.forwardOn(.completed)
                 _parent.dispose()
             }
-        case .Error(let e):
-            _parent.forwardOn(.Error(e))
+        case .error(let e):
+            _parent.forwardOn(.error(e))
             _parent.dispose()
-        case .Completed:
+        case .completed:
             if let element = _parent._element {
                 _parent._element = nil
-                _parent.forwardOn(.Next(element))
+                _parent.forwardOn(.next(element))
             }
             if _parent._atEnd {
-                _parent.forwardOn(.Completed)
+                _parent.forwardOn(.completed)
                 _parent.dispose()
             }
         }
@@ -71,7 +71,7 @@ class SampleSequenceSink<O: ObserverType, SampleType>
     
     private let _parent: Parent
 
-    let _lock = NSRecursiveLock()
+    let _lock = RecursiveLock()
     
     // state
     private var _element = nil as Element?
@@ -91,18 +91,18 @@ class SampleSequenceSink<O: ObserverType, SampleType>
         return StableCompositeDisposable.create(_sourceSubscription, samplerSubscription)
     }
     
-    func on(event: Event<Element>) {
+    func on(_ event: Event<Element>) {
         synchronizedOn(event)
     }
 
-    func _synchronized_on(event: Event<Element>) {
+    func _synchronized_on(_ event: Event<Element>) {
         switch event {
-        case .Next(let element):
+        case .next(let element):
             _element = element
-        case .Error:
+        case .error:
             forwardOn(event)
             dispose()
-        case .Completed:
+        case .completed:
             _atEnd = true
             _sourceSubscription.dispose()
         }
@@ -121,7 +121,7 @@ class Sample<Element, SampleType> : Producer<Element> {
         _onlyNew = onlyNew
     }
     
-    override func run<O: ObserverType where O.E == Element>(observer: O) -> Disposable {
+    override func run<O: ObserverType where O.E == Element>(_ observer: O) -> Disposable {
         let sink = SampleSequenceSink(parent: self, observer: observer)
         sink.disposable = sink.run()
         return sink
