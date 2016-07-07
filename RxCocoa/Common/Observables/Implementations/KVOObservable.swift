@@ -104,8 +104,7 @@ func observeWeaklyKeyPathFor(
     let propertyAttributes = property_getAttributes(property)
     
     // should dealloc hook be in place if week property, or just create strong reference because it doesn't matter
-    let propertyAttributesAsString = propertyAttributes == nil ? "" : String(cString: propertyAttributes!)
-    let isWeak = isWeakProperty(propertyAttributesAsString)
+    let isWeak = isWeakProperty(propertyAttributes.map(String.init) ?? "")
     let propertyObservable = KVOObservable(object: target, keyPath: propertyName, options: options.union(.initial), retainTarget: false) as KVOObservable<AnyObject>
     
     // KVO recursion for value changes
