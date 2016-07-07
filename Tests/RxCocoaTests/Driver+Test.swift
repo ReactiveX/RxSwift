@@ -105,9 +105,9 @@ extension DriverTest {
     func testDriverSharing_WhenErroring() {
         let scheduler = TestScheduler(initialClock: 0)
 
-        let observer1 = scheduler.createObserver(Int)
-        let observer2 = scheduler.createObserver(Int)
-        let observer3 = scheduler.createObserver(Int)
+        let observer1 = scheduler.createObserver(Int.self)
+        let observer2 = scheduler.createObserver(Int.self)
+        let observer3 = scheduler.createObserver(Int.self)
         var disposable1: Disposable!
         var disposable2: Disposable!
         var disposable3: Disposable!
@@ -177,9 +177,9 @@ extension DriverTest {
     func testDriverSharing_WhenCompleted() {
         let scheduler = TestScheduler(initialClock: 0)
 
-        let observer1 = scheduler.createObserver(Int)
-        let observer2 = scheduler.createObserver(Int)
-        let observer3 = scheduler.createObserver(Int)
+        let observer1 = scheduler.createObserver(Int.self)
+        let observer2 = scheduler.createObserver(Int.self)
+        let observer3 = scheduler.createObserver(Int.self)
         var disposable1: Disposable!
         var disposable2: Disposable!
         var disposable3: Disposable!
@@ -1070,8 +1070,8 @@ extension DriverTest {
     func testAsDriver_interval() {
         let testScheduler = TestScheduler(initialClock: 0)
 
-        let firstObserver = testScheduler.createObserver(Int)
-        let secondObserver = testScheduler.createObserver(Int)
+        let firstObserver = testScheduler.createObserver(Int.self)
+        let secondObserver = testScheduler.createObserver(Int.self)
 
         var disposable1: Disposable!
         var disposable2: Disposable!
@@ -1111,8 +1111,8 @@ extension DriverTest {
     func testAsDriver_timer() {
         let testScheduler = TestScheduler(initialClock: 0)
 
-        let firstObserver = testScheduler.createObserver(Int)
-        let secondObserver = testScheduler.createObserver(Int)
+        let firstObserver = testScheduler.createObserver(Int.self)
+        let secondObserver = testScheduler.createObserver(Int.self)
 
         var disposable1: Disposable!
         var disposable2: Disposable!

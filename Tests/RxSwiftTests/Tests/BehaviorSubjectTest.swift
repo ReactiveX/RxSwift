@@ -34,13 +34,13 @@ class BehaviorSubjectTest : RxTest {
         var subject: BehaviorSubject<Int>! = nil
         var subscription: Disposable! = nil
         
-        let results1 = scheduler.createObserver(Int)
+        let results1 = scheduler.createObserver(Int.self)
         var subscription1: Disposable! = nil
         
-        let results2 = scheduler.createObserver(Int)
+        let results2 = scheduler.createObserver(Int.self)
         var subscription2: Disposable! = nil
         
-        let results3 = scheduler.createObserver(Int)
+        let results3 = scheduler.createObserver(Int.self)
         var subscription3: Disposable! = nil
         
         scheduler.scheduleAt(100) { subject = BehaviorSubject<Int>(value: 100) }
@@ -98,13 +98,13 @@ class BehaviorSubjectTest : RxTest {
         var subject: BehaviorSubject<Int>! = nil
         var subscription: Disposable! = nil
         
-        let results1 = scheduler.createObserver(Int)
+        let results1 = scheduler.createObserver(Int.self)
         var subscription1: Disposable! = nil
         
-        let results2 = scheduler.createObserver(Int)
+        let results2 = scheduler.createObserver(Int.self)
         var subscription2: Disposable! = nil
         
-        let results3 = scheduler.createObserver(Int)
+        let results3 = scheduler.createObserver(Int.self)
         var subscription3: Disposable! = nil
         
         scheduler.scheduleAt(100) { subject = BehaviorSubject<Int>(value: 100) }
@@ -161,13 +161,13 @@ class BehaviorSubjectTest : RxTest {
         var subject: BehaviorSubject<Int>! = nil
         var subscription: Disposable! = nil
         
-        let results1 = scheduler.createObserver(Int)
+        let results1 = scheduler.createObserver(Int.self)
         var subscription1: Disposable! = nil
         
-        let results2 = scheduler.createObserver(Int)
+        let results2 = scheduler.createObserver(Int.self)
         var subscription2: Disposable! = nil
         
-        let results3 = scheduler.createObserver(Int)
+        let results3 = scheduler.createObserver(Int.self)
         var subscription3: Disposable! = nil
         
         scheduler.scheduleAt(100) { subject = BehaviorSubject<Int>(value: 100) }
@@ -217,13 +217,13 @@ class BehaviorSubjectTest : RxTest {
         var subject: BehaviorSubject<Int>! = nil
         var subscription: Disposable! = nil
         
-        let results1 = scheduler.createObserver(Int)
+        let results1 = scheduler.createObserver(Int.self)
         var subscription1: Disposable! = nil
         
-        let results2 = scheduler.createObserver(Int)
+        let results2 = scheduler.createObserver(Int.self)
         var subscription2: Disposable! = nil
         
-        let results3 = scheduler.createObserver(Int)
+        let results3 = scheduler.createObserver(Int.self)
         var subscription3: Disposable! = nil
         
         scheduler.scheduleAt(100) { subject = BehaviorSubject<Int>(value: 100) }
@@ -271,7 +271,7 @@ class BehaviorSubjectTest : RxTest {
 
         var subject: BehaviorSubject<Int>! = nil
 
-        let results1 = scheduler.createObserver(Int)
+        let results1 = scheduler.createObserver(Int.self)
         var subscription1: Disposable! = nil
 
         scheduler.scheduleAt(100) { subject = BehaviorSubject<Int>(value: 100) }
@@ -289,13 +289,13 @@ class BehaviorSubjectTest : RxTest {
 
         var subject: BehaviorSubject<Int>! = nil
 
-        let results1 = scheduler.createObserver(Int)
+        let results1 = scheduler.createObserver(Int.self)
         var subscription1: Disposable! = nil
 
-        let results2 = scheduler.createObserver(Int)
+        let results2 = scheduler.createObserver(Int.self)
         var subscription2: Disposable! = nil
 
-        let results3 = scheduler.createObserver(Int)
+        let results3 = scheduler.createObserver(Int.self)
         var subscription3: Disposable! = nil
 
         scheduler.scheduleAt(100) { subject = BehaviorSubject<Int>(value: 100) }

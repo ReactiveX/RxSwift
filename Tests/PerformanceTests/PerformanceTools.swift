@@ -77,7 +77,7 @@ func registerMallocHooks() {
         mallocFunctions.append(zone.malloc)
         zone.malloc = proxies[i]
 
-        let protectSize = vm_size_t(sizeof(malloc_zone_t)) * vm_size_t(count)
+        let protectSize = vm_size_t(sizeof(malloc_zone_t.self)) * vm_size_t(count)
 
         if true {
             let addressPointer = UnsafeMutablePointer<vm_address_t>(zoneArray)

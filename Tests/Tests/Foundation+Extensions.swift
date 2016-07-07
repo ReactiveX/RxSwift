@@ -9,5 +9,5 @@
 import Foundation
 
 func isMainThread() -> Bool {
-    return Thread.current().isMainThread
+    return Thread.current.isMainThread
 }

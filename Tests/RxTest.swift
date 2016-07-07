@@ -77,7 +77,7 @@ extension RxTest {
     }
 
     func sleep(_ time: TimeInterval) {
-        RunLoop.current().run(mode: RunLoopMode.defaultRunLoopMode, before: Date(timeIntervalSinceNow: time))
+        RunLoop.current.run(mode: RunLoopMode.defaultRunLoopMode, before: Date(timeIntervalSinceNow: time))
     }
 
     func setUpActions(){
@@ -95,7 +95,7 @@ extension RxTest {
                 if self.startResourceCount < resourceCount {
                     // main schedulers need to finish work
                     print("Waiting for resource cleanup ...")
-                    RunLoop.current().run(mode: RunLoopMode.defaultRunLoopMode, before: NSDate(timeIntervalSinceNow: 0.05) as Date)
+                    RunLoop.current.run(mode: RunLoopMode.defaultRunLoopMode, before: NSDate(timeIntervalSinceNow: 0.05) as Date)
                 }
                 else {
                     break

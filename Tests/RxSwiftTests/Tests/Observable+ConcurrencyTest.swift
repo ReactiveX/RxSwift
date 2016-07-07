@@ -69,7 +69,7 @@ extension ObservableConcurrencyTest {
     // tests
 
     func testObserveOnDispatchQueue_DoesPerformWorkOnQueue() {
-        let unitTestsThread = Thread.current()
+        let unitTestsThread = Thread.current
 
         var didExecute = false
 
@@ -78,7 +78,7 @@ extension ObservableConcurrencyTest {
                 .observeOn(scheduler)
             return observable .subscribeNext { n in
                 didExecute = true
-                XCTAssert(Thread.current() !== unitTestsThread)
+                XCTAssert(Thread.current !== unitTestsThread)
             }
         }
 

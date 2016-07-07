@@ -107,7 +107,7 @@ public class TestScheduler : VirtualTimeScheduler<TestSchedulerVirtualTimeConver
     public func start<Element>(_ created: TestTime, subscribed: TestTime, disposed: TestTime, create: () -> Observable<Element>) -> TestableObserver<Element> {
         var source : Observable<Element>? = nil
         var subscription : Disposable? = nil
-        let observer = createObserver(Element)
+        let observer = createObserver(Element.self)
         
         _ = self.scheduleAbsoluteVirtual((), time: created) {
             source = create()

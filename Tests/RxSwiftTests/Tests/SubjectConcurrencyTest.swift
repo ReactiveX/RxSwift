@@ -76,7 +76,7 @@ extension SubjectConcurrencyTest {
 
         // wait for second
         for _ in 0 ..< 10 {
-            RunLoop.current().run(until: Date().addingTimeInterval(0.1))
+            RunLoop.current.run(until: Date().addingTimeInterval(0.1))
             if allDone {
                 break
             }
