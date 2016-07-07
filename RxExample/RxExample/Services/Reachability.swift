@@ -39,7 +39,7 @@ public let ReachabilityChangedNotification = "ReachabilityChangedNotification"
 
 func callback(_ reachability:SCNetworkReachability, flags: SCNetworkReachabilityFlags, info: UnsafeMutablePointer<Void>?) {
     guard  let info = info else { return }
-    let reachability = Unmanaged<Reachability>.fromOpaque(OpaquePointer(info)).takeUnretainedValue()
+    let reachability = Unmanaged<Reachability>.fromOpaque(info).takeUnretainedValue()
 
     DispatchQueue.main.async {
         reachability.reachabilityChanged(flags)
@@ -73,7 +73,7 @@ public class Reachability: NSObject {
     public var whenReachable: NetworkReachable?
     public var whenUnreachable: NetworkUnreachable?
     public var reachableOnWWAN: Bool
-    public var notificationCenter = NotificationCenter.default()
+    public var notificationCenter = NotificationCenter.default
 
     public var currentReachabilityStatus: NetworkStatus {
         if isReachable() {
@@ -144,10 +144,7 @@ public class Reachability: NSObject {
         
         var context = SCNetworkReachabilityContext(version: 0, info: nil, retain: nil, release: nil, copyDescription: nil)
         
-          //TODO: Swift 3.0 beta 1 is missing the toOpaque method, rdar://26876680
-        let opaque = OpaquePointer(bitPattern:Unmanaged.passUnretained(self))
-        context.info = UnsafeMutablePointer<Void>(opaque)
-        
+        context.info = Unmanaged.passUnretained(self).toOpaque()
         
         if !SCNetworkReachabilitySetCallback(reachabilityRef!, callback, &context) {
             stopNotifier()
@@ -310,7 +307,7 @@ public class Reachability: NSObject {
 
     private func isOnWWAN(_ flags: SCNetworkReachabilityFlags) -> Bool {
         #if os(iOS)
-            return flags.contains(.iswwan)
+            return flags.contains(.isWWAN)
         #else
             return false
         #endif

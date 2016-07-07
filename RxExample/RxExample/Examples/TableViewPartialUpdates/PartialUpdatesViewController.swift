@@ -123,14 +123,14 @@ class PartialUpdatesViewController : ViewController {
 
         partialUpdatesCollectionViewOutlet.rx_itemSelected
             .subscribeNext { [weak self] i in
-                print("Let me guess, it's .... It's \(self?.generator.sections[i.section].items[i.item!]), isn't it? Yeah, I've got it.")
+                print("Let me guess, it's .... It's \(self?.generator.sections[i.section].items[i.item]), isn't it? Yeah, I've got it.")
             }
             .addDisposableTo(disposeBag)
 
         Observable.of(partialUpdatesTableViewOutlet.rx_itemSelected, reloadTableViewOutlet.rx_itemSelected)
             .merge()
             .subscribeNext { [weak self] i in
-                print("I have a feeling it's .... \(self?.generator.sections[i.section].items[i.item!])?")
+                print("I have a feeling it's .... \(self?.generator.sections[i.section].items[i.item])?")
             }
             .addDisposableTo(disposeBag)
     }
@@ -151,7 +151,7 @@ class PartialUpdatesViewController : ViewController {
     }
 
     func skinCollectionViewDataSource(_ dataSource: CollectionViewSectionedDataSource<NumberSection>) {
-        dataSource.cellFactory = { (_, cv, ip, i) in
+        dataSource.configureCell = { (_, cv, ip, i) in
             let cell = cv.dequeueReusableCell(withReuseIdentifier: "Cell", for: ip as IndexPath) as! NumberCell
 
             cell.value!.text = "\(i)"

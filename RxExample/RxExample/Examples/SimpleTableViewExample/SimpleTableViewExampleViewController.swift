@@ -33,7 +33,7 @@ class SimpleTableViewExampleViewController : ViewController {
 
 
         tableView
-            .rx_modelSelected(String)
+            .rx_modelSelected(String.self)
             .subscribeNext { value in
                 DefaultWireframe.presentAlert("Tapped `\(value)`")
             }

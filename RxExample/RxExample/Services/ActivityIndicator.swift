@@ -44,16 +44,10 @@ public class ActivityIndicator : DriverConvertibleType {
     private let _loading: Driver<Bool>
 
     public init() {
-        _loading = _variable.asObservable()
+        _loading = _variable.asDriver()
             .map { $0 > 0 }
             .distinctUntilChanged()
-            .asDriver { (error: ErrorProtocol) -> Driver<Bool> in
-                _ = fatalError("Loader can't fail")
-                return Driver.empty()
-            }
-
     }
-
 
     private func trackActivityOfObservable<O: ObservableConvertibleType>(_ source: O) -> Observable<O.E> {
         return Observable.using({ () -> ActivityToken<O.E> in

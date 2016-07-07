@@ -83,7 +83,7 @@ class GitHubDefaultAPI : GitHubAPI {
     let URLSession: Foundation.URLSession
 
     static let sharedAPI = GitHubDefaultAPI(
-        URLSession: Foundation.URLSession.shared()
+        URLSession: Foundation.URLSession.shared
     )
 
     init(URLSession: Foundation.URLSession) {
