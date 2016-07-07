@@ -36,4 +36,30 @@ extension UIScrollViewTests {
 
 }
 
+@objc class MockScrollViewDelegate
+    : NSObject
+    , UIScrollViewDelegate {
+
+}
+
+extension UIScrollViewTests {
+    func testSetDelegateUsesWeakReference() {
+
+        var delegateDeallocated = false
+
+        let scrollView = UIScrollView(frame: CGRect.zero)
+        autoreleasepool {
+            let delegate = MockScrollViewDelegate()
+            _ = scrollView.rx_setDelegate(delegate)
+
+            _ = delegate.rx_deallocated.subscribeNext { _ in
+                delegateDeallocated = true
+            }
+
+            XCTAssert(delegateDeallocated == false)
+        }
+        XCTAssert(delegateDeallocated == true)
+    }
+}
+
 #endif

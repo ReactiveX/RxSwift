@@ -596,9 +596,9 @@ static NSMutableDictionary<NSString *, RXInterceptWithOptimizedObserver> *optimi
 -(IMP __nullable)ensurePrepared:(id __nonnull)target forObserving:(SEL __nonnull)selector error:(NSError** __nonnull)error {
     Method instanceMethod = class_getInstanceMethod([target class], selector);
     if (instanceMethod == nil) {
-        *error = [NSError errorWithDomain:RXObjCRuntimeErrorDomain
-                                     code:RXObjCRuntimeErrorSelectorNotImplemented
-                                 userInfo:nil];
+        RX_SAFE_ERROR([NSError errorWithDomain:RXObjCRuntimeErrorDomain
+                                          code:RXObjCRuntimeErrorSelectorNotImplemented
+                                      userInfo:nil]);
         return nil;
     }
 
@@ -606,9 +606,9 @@ static NSMutableDictionary<NSString *, RXInterceptWithOptimizedObserver> *optimi
     ||  selector == @selector(forwardingTargetForSelector:)
     ||  selector == @selector(methodSignatureForSelector:)
     ||  selector == @selector(respondsToSelector:)) {
-        *error = [NSError errorWithDomain:RXObjCRuntimeErrorDomain
-                                     code:RXObjCRuntimeErrorObservingPerformanceSensitiveMessages
-                                 userInfo:nil];
+        RX_SAFE_ERROR([NSError errorWithDomain:RXObjCRuntimeErrorDomain
+                                          code:RXObjCRuntimeErrorObservingPerformanceSensitiveMessages
+                                      userInfo:nil]);
         return nil;
     }
 
@@ -644,9 +644,9 @@ static NSMutableDictionary<NSString *, RXInterceptWithOptimizedObserver> *optimi
         RXInterceptWithOptimizedObserver optimizedIntercept = optimizedObserversByMethodEncoding[methodEncoding];
 
         if (!RX_method_has_supported_return_type(instanceMethod)) {
-            *error = [NSError errorWithDomain:RXObjCRuntimeErrorDomain
-                                         code:RXObjCRuntimeErrorObservingMessagesWithUnsupportedReturnType
-                                     userInfo:nil];
+            RX_SAFE_ERROR([NSError errorWithDomain:RXObjCRuntimeErrorDomain
+                                              code:RXObjCRuntimeErrorObservingMessagesWithUnsupportedReturnType
+                                          userInfo:nil]);
 
             return nil;
         }
@@ -686,10 +686,9 @@ static NSMutableDictionary<NSString *, RXInterceptWithOptimizedObserver> *optimi
         }
     }
 
-
-    *error = [NSError errorWithDomain:RXObjCRuntimeErrorDomain
-                                 code:RXObjCRuntimeErrorUnknown
-                             userInfo:nil];
+    RX_SAFE_ERROR([NSError errorWithDomain:RXObjCRuntimeErrorDomain
+                                      code:RXObjCRuntimeErrorUnknown
+                                  userInfo:nil]);
 
     return nil;
 }
@@ -711,9 +710,9 @@ static NSMutableDictionary<NSString *, RXInterceptWithOptimizedObserver> *optimi
     BOOL isThisTollFreeFoundationClass = CFGetTypeID((CFTypeRef)target) != defaultTypeID;
 
     if (isThisTollFreeFoundationClass) {
-        *error = [NSError errorWithDomain:RXObjCRuntimeErrorDomain
-                                     code:RXObjCRuntimeErrorCantInterceptCoreFoundationTollFreeBridgedObjects
-                                 userInfo:nil];
+        RX_SAFE_ERROR([NSError errorWithDomain:RXObjCRuntimeErrorDomain
+                                          code:RXObjCRuntimeErrorCantInterceptCoreFoundationTollFreeBridgedObjects
+                                      userInfo:nil]);
         return nil;
     }
 
@@ -745,11 +744,11 @@ static NSMutableDictionary<NSString *, RXInterceptWithOptimizedObserver> *optimi
     if ([target class] != object_getClass(target)) {
         BOOL isKVO = [target respondsToSelector:NSSelectorFromString(@"_isKVOA")];
 
-        *error = [NSError errorWithDomain:RXObjCRuntimeErrorDomain
-                                     code:RXObjCRuntimeErrorObjectMessagesAlreadyBeingIntercepted
-                                 userInfo:@{
-                                            RXObjCRuntimeErrorIsKVOKey: @(isKVO)
-                                            }];
+        RX_SAFE_ERROR([NSError errorWithDomain:RXObjCRuntimeErrorDomain
+                                          code:RXObjCRuntimeErrorObjectMessagesAlreadyBeingIntercepted
+                                      userInfo:@{
+                                          RXObjCRuntimeErrorIsKVOKey : @(isKVO)
+                                      }]);
         return nil;
     }
 
@@ -761,9 +760,9 @@ static NSMutableDictionary<NSString *, RXInterceptWithOptimizedObserver> *optimi
 
     Class previousClass = object_setClass(target, dynamicFakeSubclass);
     if (previousClass != wannaBeClass) {
-        *error = [NSError errorWithDomain:RXObjCRuntimeErrorDomain
-                                     code:RXObjCRuntimeErrorThreadingCollisionWithOtherInterceptionMechanism
-                                 userInfo:nil];
+        RX_SAFE_ERROR([NSError errorWithDomain:RXObjCRuntimeErrorDomain
+                                          code:RXObjCRuntimeErrorThreadingCollisionWithOtherInterceptionMechanism
+                                      userInfo:nil]);
         THREADING_HAZARD(wannaBeClass);
         return nil;
     }
@@ -816,25 +815,25 @@ static NSMutableDictionary<NSString *, RXInterceptWithOptimizedObserver> *optimi
     IMP implementation = method_getImplementation(instanceMethod);
 
     if (implementation == nil) {
-        *error = [NSError errorWithDomain:RXObjCRuntimeErrorDomain
-                                     code:RXObjCRuntimeErrorSelectorNotImplemented
-                                 userInfo:nil];
+        RX_SAFE_ERROR([NSError errorWithDomain:RXObjCRuntimeErrorDomain
+                                          code:RXObjCRuntimeErrorSelectorNotImplemented
+                                      userInfo:nil]);
 
         return NO;
     }
 
     if (!class_addMethod(swizzlingImplementorClass, rxSelector, implementation, methodEncoding)) {
-        *error = [NSError errorWithDomain:RXObjCRuntimeErrorDomain
-                                     code:RXObjCRuntimeErrorSavingOriginalForwardingMethodFailed
-                                 userInfo:nil];
+        RX_SAFE_ERROR([NSError errorWithDomain:RXObjCRuntimeErrorDomain
+                                          code:RXObjCRuntimeErrorSavingOriginalForwardingMethodFailed
+                                      userInfo:nil]);
         return NO;
     }
 
     if (!class_addMethod(swizzlingImplementorClass, selector, _objc_msgForward, methodEncoding)) {
         if (implementation != method_setImplementation(instanceMethod, _objc_msgForward)) {
-            *error = [NSError errorWithDomain:RXObjCRuntimeErrorDomain
-                                         code:RXObjCRuntimeErrorReplacingMethodWithForwardingImplementation
-                                     userInfo:nil];
+            RX_SAFE_ERROR([NSError errorWithDomain:RXObjCRuntimeErrorDomain
+                                              code:RXObjCRuntimeErrorReplacingMethodWithForwardingImplementation
+                                          userInfo:nil]);
             THREADING_HAZARD(swizzlingImplementorClass);
             return NO;
         }

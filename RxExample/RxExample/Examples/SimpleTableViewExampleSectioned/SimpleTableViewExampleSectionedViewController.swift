@@ -36,7 +36,7 @@ class SimpleTableViewExampleSectionedViewController
                     2.0,
                     3.0
                 ]),
-            SectionModel(model: "Second section", items: [
+            SectionModel(model: "Third section", items: [
                     1.0,
                     2.0,
                     3.0

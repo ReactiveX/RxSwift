@@ -7,9 +7,15 @@
 
   description here
 
-*Code that reproduces the issue*:
+*Self contained code example that reproduces the issue*:
 
   code goes here
+  
+// If we can't get a self contained code example that reproduces the issue, there is a big chance we won't be able
+// to help you because there is not much we can do.
+// `Self contained code example` means:
+// * that we should be able to just run the provided code without changing it.
+// * that it will reproduce the issue upon running
 
 *Xcode version*:
 

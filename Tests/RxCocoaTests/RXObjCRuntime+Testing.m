@@ -296,7 +296,7 @@ baseClassContent                                                                
     return [super voidJustCalledVoidToSay];                                                                                                    \
 }                                                                                                                                              \
                                                                                                                                                \
--(id __nonnull)justCalledToObjectSay:(id __nonnull)value {                                                                                     \
+-(id __nonnull)justCalledObjectToSay:(id __nonnull)value {                                                                                     \
     self.messages = [self.messages arrayByAddingObject:@[value]];                                                                              \
     return [super justCalledObjectToSay:value];                                                                                                \
 }                                                                                                                                              \

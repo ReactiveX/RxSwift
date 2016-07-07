@@ -255,3 +255,71 @@ class UICollectionViewTests : RxTest {
         dataSourceSubscription.dispose()
     }
 }
+
+extension UICollectionViewTests {
+    func testDataSourceIsBeingRetainedUntilDispose() {
+        var dataSourceDeallocated = false
+
+        var dataSourceSubscription: Disposable!
+        autoreleasepool {
+            let items: Observable<[Int]> = Observable.just([1, 2, 3])
+
+            let layout = UICollectionViewFlowLayout()
+            let collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: 1, height: 1), collectionViewLayout: layout)
+            collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "a")
+            let dataSource = SectionedViewDataSourceMock()
+            dataSourceSubscription = items.bindTo(collectionView.rx_itemsWithDataSource(dataSource))
+
+            _ = dataSource.rx_deallocated.subscribeNext { _ in
+                dataSourceDeallocated = true
+            }
+        }
+
+        XCTAssert(dataSourceDeallocated == false)
+        dataSourceSubscription.dispose()
+        XCTAssert(dataSourceDeallocated == true)
+    }
+
+    func testDataSourceIsBeingRetainedUntilCollectionViewDealloc() {
+
+        var dataSourceDeallocated = false
+
+        autoreleasepool {
+            let items: Observable<[Int]> = Observable.just([1, 2, 3])
+
+            let layout = UICollectionViewFlowLayout()
+            let collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: 1, height: 1), collectionViewLayout: layout)
+            collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "a")
+            let dataSource = SectionedViewDataSourceMock()
+            _ = items.bindTo(collectionView.rx_itemsWithDataSource(dataSource))
+            
+            _ = dataSource.rx_deallocated.subscribeNext { _ in
+                dataSourceDeallocated = true
+            }
+
+            XCTAssert(dataSourceDeallocated == false)
+        }
+        XCTAssert(dataSourceDeallocated == true)
+    }
+
+    func testSetDataSourceUsesWeakReference() {
+
+        var dataSourceDeallocated = false
+
+        let layout = UICollectionViewFlowLayout()
+        let collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: 1, height: 1), collectionViewLayout: layout)
+        autoreleasepool {
+            collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "a")
+            let dataSource = SectionedViewDataSourceMock()
+            _ = collectionView.rx_setDataSource(dataSource)
+
+            _ = dataSource.rx_deallocated.subscribeNext { _ in
+                dataSourceDeallocated = true
+            }
+
+            XCTAssert(dataSourceDeallocated == false)
+        }
+        XCTAssert(dataSourceDeallocated == true)
+    }
+
+}
