@@ -118,7 +118,7 @@ extension URLSession {
     - parameter request: URL request.
     - returns: Observable sequence of URL responses.
     */
-    @warn_unused_result(message:"http://git.io/rxs.uo")
+    // @warn_unused_result(message:"http://git.io/rxs.uo")
     public func rx_response(_ request: URLRequest) -> Observable<(Data, HTTPURLResponse)> {
         return Observable.create { observer in
 
@@ -174,7 +174,7 @@ extension URLSession {
     - parameter request: URL request.
     - returns: Observable sequence of response data.
     */
-    @warn_unused_result(message:"http://git.io/rxs.uo")
+    // @warn_unused_result(message:"http://git.io/rxs.uo")
     public func rx_data(_ request: URLRequest) -> Observable<Data> {
         return rx_response(request).map { (data, response) -> Data in
             if 200 ..< 300 ~= response.statusCode {
@@ -203,7 +203,7 @@ extension URLSession {
     - parameter request: URL request.
     - returns: Observable sequence of response JSON.
     */
-    @warn_unused_result(message:"http://git.io/rxs.uo")
+    // @warn_unused_result(message:"http://git.io/rxs.uo")
     public func rx_JSON(_ request: URLRequest) -> Observable<AnyObject> {
         return rx_data(request).map { (data) -> AnyObject in
             do {
@@ -231,7 +231,7 @@ extension URLSession {
     - parameter URL: URL of `NSURLRequest` request.
     - returns: Observable sequence of response JSON.
     */
-    @warn_unused_result(message:"http://git.io/rxs.uo")
+    // @warn_unused_result(message:"http://git.io/rxs.uo")
     public func rx_JSON(_ URL: Foundation.URL) -> Observable<AnyObject> {
         return rx_JSON(URLRequest(url: URL))
     }

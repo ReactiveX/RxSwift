@@ -23,7 +23,7 @@ extension ObservableType {
     - parameter scheduler: Scheduler to notify observers on.
     - returns: The source sequence whose observations happen on the specified scheduler.
     */
-    @warn_unused_result(message:"http://git.io/rxs.uo")
+    // @warn_unused_result(message:"http://git.io/rxs.uo")
     public func observeOn(_ scheduler: ImmediateSchedulerType)
         -> Observable<E> {
         if let scheduler = scheduler as? SerialDispatchQueueScheduler {
@@ -54,7 +54,7 @@ extension ObservableType {
     - parameter scheduler: Scheduler to perform subscription and unsubscription actions on.
     - returns: The source sequence whose subscriptions and unsubscriptions happen on the specified scheduler.
     */
-    @warn_unused_result(message:"http://git.io/rxs.uo")
+    // @warn_unused_result(message:"http://git.io/rxs.uo")
     public func subscribeOn(_ scheduler: ImmediateSchedulerType)
         -> Observable<E> {
         return SubscribeOn(source: self, scheduler: scheduler)
