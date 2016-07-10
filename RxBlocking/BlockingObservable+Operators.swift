@@ -136,7 +136,6 @@ extension BlockingObservable {
                 switch e {
                 case .Next(let e):
                     element = e
-                    return
                 case .Error(let e):
                     error = e
                 default:
