@@ -232,6 +232,7 @@ extension UIButton {
 extension UITextField {
 
     public var rx_text: ControlProperty<String> {}
+    public var rx_editing: ControlProperty<Bool> {}
 
 }
 ```
