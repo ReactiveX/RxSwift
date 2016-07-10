@@ -929,7 +929,7 @@ extension SentMessageTest {
      results properly can cause serious memory leaks.
     */
     func ensureGlobalRuntimeChangesAreCached<T: protocol<SentMessageTestClassCreationProtocol, NSObjectProtocol>>(
-        _ createIt: () -> (T, [Disposable]),
+        _ createIt: () -> T,
         observeIt: (T) -> [Observable<MethodParameters>],
         objectActingClassChange: [ObjectRuntimeChange],
         objectRealClassChange: [ObjectRuntimeChange],
@@ -961,7 +961,7 @@ extension SentMessageTest {
     }
 
     func _ensureGlobalRuntimeChangesAreCached<T: protocol<SentMessageTestClassCreationProtocol, NSObjectProtocol>>(
-        _ createIt: () -> (T, [Disposable]),
+        _ createIt: () -> T,
         observeIt: (T) -> [Observable<MethodParameters>],
         expectedActingClassChanges: [ObjectRuntimeChange],
         expectedRealClassChanges: [ObjectRuntimeChange],
@@ -979,8 +979,7 @@ extension SentMessageTest {
         var observables: [Observable<MethodParameters>] = []
 
         autoreleasepool {
-            let (createdObjectTemp, disposables) = createIt()
-            createdObject = createdObjectTemp
+            createdObject = createIt()
             let afterCreateState = RxObjCRuntimeState()
             afterCreateState.assertAfterThisMoment(originalRuntimeState, changed:  RxObjCRuntimeChange.changes())
         }
@@ -1068,9 +1067,9 @@ extension SentMessageTest {
         }
     }
 
-    func createNormalInstance<T: protocol<SentMessageTestClassCreationProtocol, NSObjectProtocol>>(_ type: T.Type = T.self) -> () -> (T, [Disposable]) {
+    func createNormalInstance<T: protocol<SentMessageTestClassCreationProtocol, NSObjectProtocol>>(_ type: T.Type = T.self) -> () -> T {
         return {
-            return (T.createInstance(), [])
+            return T.createInstance()
         }
     }
 
