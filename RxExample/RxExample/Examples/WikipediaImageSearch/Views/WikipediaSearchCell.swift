@@ -33,7 +33,8 @@ public class WikipediaSearchCell: UITableViewCell {
         didSet {
             let disposeBag = DisposeBag()
 
-            (viewModel?.title ?? Driver.just(""))
+            viewModel.title
+                .map(Optional.init)
                 .drive(self.titleOutlet.rx_text)
                 .addDisposableTo(disposeBag)
 
