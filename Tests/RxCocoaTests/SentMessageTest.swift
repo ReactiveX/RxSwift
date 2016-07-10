@@ -203,7 +203,7 @@ extension SentMessageTest {
                     NSSelectorFromString("methodSignatureForSelector:"),
                     NSSelectorFromString("forwardInvocation:"),
                     #selector(SentMessageTestBase_shared.justCalledObject(toSay:)),
-                    NSSelectorFromString("_RX_namespace_justCalledToSayObject:"),
+                    NSSelectorFromString("_RX_namespace_justCalledObjectToSay:"),
                 ])
             ],
             runtimeChange: RxObjCRuntimeChange.changes(dynamicSubclasses:1, methodsForwarded: 1, swizzledForwardClasses: 1)
@@ -228,7 +228,7 @@ extension SentMessageTest {
                     NSSelectorFromString("methodSignatureForSelector:"),
                     NSSelectorFromString("forwardInvocation:"),
                     #selector(SentMessageTestBase_shared.justCalledObject(toSay:)),
-                    NSSelectorFromString("_RX_namespace_justCalledToSayObject:"),
+                    NSSelectorFromString("_RX_namespace_justCalledObjectToSay:"),
                     ])
             ],
             runtimeChange: RxObjCRuntimeChange.changes(dynamicSubclasses:1, methodsForwarded: 1, swizzledForwardClasses: 1)
@@ -254,7 +254,7 @@ extension SentMessageTest {
                     NSSelectorFromString("methodSignatureForSelector:"),
                     NSSelectorFromString("forwardInvocation:"),
                     #selector(SentMessageTestBase_shared.justCalledObject(toSay:)),
-                    NSSelectorFromString("_RX_namespace_justCalledToSayObject:"),
+                    NSSelectorFromString("_RX_namespace_justCalledObjectToSay:"),
                     ])
             ],
             runtimeChange: RxObjCRuntimeChange.changes()
@@ -279,7 +279,7 @@ extension SentMessageTest {
                     NSSelectorFromString("methodSignatureForSelector:"),
                     NSSelectorFromString("forwardInvocation:"),
                     #selector(SentMessageTestBase_shared.justCalledObject(toSay:)),
-                    NSSelectorFromString("_RX_namespace_justCalledToSayObject:"),
+                    NSSelectorFromString("_RX_namespace_justCalledObjectToSay:"),
                     ])
             ],
             runtimeChange: RxObjCRuntimeChange.changes()
@@ -971,7 +971,7 @@ extension SentMessageTest {
 
         let originalRuntimeState = RxObjCRuntimeState()
 
-        var createdObject: T = T()
+        var createdObject: T! = nil
         var disposables = [Disposable]()
 
         var nCompleted = 0
@@ -979,7 +979,8 @@ extension SentMessageTest {
         var observables: [Observable<MethodParameters>] = []
 
         autoreleasepool {
-            (createdObject, disposables) = createIt()
+            let (createdObjectTemp, disposables) = createIt()
+            createdObject = createdObjectTemp
             let afterCreateState = RxObjCRuntimeState()
             afterCreateState.assertAfterThisMoment(originalRuntimeState, changed:  RxObjCRuntimeChange.changes())
         }
@@ -1032,7 +1033,7 @@ extension SentMessageTest {
             disposables = []
 
             // tiny second test to make sure runtime stayed intact
-            createdObject = T()
+            createdObject = nil
         }
 
         // ensure all observables are completed on object dispose
@@ -1060,7 +1061,7 @@ extension SentMessageTest {
 
     func createKVODynamicSubclassed<T: protocol<SentMessageTestClassCreationProtocol, NSObjectProtocol>>(_ type: T.Type = T.self) -> () -> (T, [Disposable]) {
         return {
-            let t = T()
+            let t = T.createInstance()
             //let disposable = (t as! NSObject).rx_observe(NSArray.self, "messages").publish().connect()
             (t as! NSObject).addObserver(self, forKeyPath: "messages", options: [], context: nil)
             return (t, [AnonymousDisposable { (t as! NSObject).removeObserver(self, forKeyPath: "messages") }])
@@ -1069,7 +1070,7 @@ extension SentMessageTest {
 
     func createNormalInstance<T: protocol<SentMessageTestClassCreationProtocol, NSObjectProtocol>>(_ type: T.Type = T.self) -> () -> (T, [Disposable]) {
         return {
-            return (T(), [])
+            return (T.createInstance(), [])
         }
     }
 

@@ -62,6 +62,10 @@
     return self;                                                                                                                               \
 }                                                                                                                                              \
                                                                                                                                                \
++(instancetype)createInstance {                                                                                                                \
+    return [[self alloc] init];                                                                                                                \
+}                                                                                                                                              \
+                                                                                                                                               \
 -(void)voidJustCalledVoidToSay {                                                                                                               \
     self.baseMessages = [self.baseMessages arrayByAddingObject:@[]];                                                                           \
 }                                                                                                                                              \

@@ -17,8 +17,7 @@ NSInteger RX_number_of_swizzled_methods();
 #endif
 
 @protocol SentMessageTestClassCreationProtocol<NSObject>
--(instancetype __nonnull)init;
-
++(instancetype __nonnull)createInstance;
 @end
 
 @interface RXObjCTestRuntime : NSObject
