@@ -84,7 +84,7 @@ extension ObservableType {
     - returns: The source sequence with the side-effecting behavior applied.
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func doOn(eventHandler: (Event<E>) throws -> Void)
+    public func doOn(_ eventHandler: (Event<E>) throws -> Void)
         -> Observable<E> {
         return Do(source: self.asObservable(), eventHandler: eventHandler)
     }
@@ -121,7 +121,7 @@ extension ObservableType {
      - returns: The source sequence with the side-effecting behavior applied.
      */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func doOnNext(onNext: ((E) throws -> Void))
+    public func `do`(onNext: ((E) throws -> Void))
         -> Observable<E> {
         return self.doOn(onNext: onNext)
     }
@@ -133,7 +133,7 @@ extension ObservableType {
      - returns: The source sequence with the side-effecting behavior applied.
      */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func doOnError(onError: ((ErrorProtocol) throws -> Void))
+    public func `do`(onError: ((ErrorProtocol) throws -> Void))
         -> Observable<E> {
         return self.doOn(onError: onError)
     }
@@ -145,7 +145,7 @@ extension ObservableType {
      - returns: The source sequence with the side-effecting behavior applied.
      */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func doOnCompleted(onCompleted: (() throws -> Void))
+    public func `do`(onCompleted: (() throws -> Void))
         -> Observable<E> {
         return self.doOn(onCompleted: onCompleted)
     }
@@ -229,7 +229,7 @@ extension ObservableType {
     - returns: An observable sequence producing the elements of the given sequence repeatedly until it terminates successfully or is notified to error or complete.
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func retryWhen<TriggerObservable: ObservableType>(notificationHandler: (Observable<ErrorProtocol>) -> TriggerObservable)
+    public func retryWhen<TriggerObservable: ObservableType>(_ notificationHandler: (Observable<ErrorProtocol>) -> TriggerObservable)
         -> Observable<E> {
             return RetryWhenSequence(sources: InfiniteSequence(repeatedValue: self.asObservable()), notificationHandler: notificationHandler)
     }

@@ -21,7 +21,7 @@ extension Collection where Iterator.Element : ObservableType {
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func combineLatest<R>(resultSelector: ([Generator.Element.E]) throws -> R) -> Observable<R> {
+    public func combineLatest<R>(_ resultSelector: ([Generator.Element.E]) throws -> R) -> Observable<R> {
         return CombineLatestCollectionType(sources: self, resultSelector: resultSelector)
     }
 }
@@ -39,7 +39,7 @@ extension Collection where Iterator.Element : ObservableType {
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func zip<R>(resultSelector: ([Generator.Element.E]) throws -> R) -> Observable<R> {
+    public func zip<R>(_ resultSelector: ([Generator.Element.E]) throws -> R) -> Observable<R> {
         return ZipCollectionType(sources: self, resultSelector: resultSelector)
     }
 }

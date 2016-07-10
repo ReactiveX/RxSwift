@@ -548,10 +548,10 @@ extension DriverTest {
 
         var events = [Int]()
 
-        let driver = hotObservable.asDriver(onErrorJustReturn: -1).doOnNext { e in
+        let driver = hotObservable.asDriver(onErrorJustReturn: -1).do(onNext: { e in
             XCTAssertTrue(isMainThread())
             events.append(e)
-        }
+        })
 
         let results = subscribeTwiceOnBackgroundSchedulerAndOnlyOneSubscription(driver) {
             XCTAssertTrue(hotObservable.subscriptions == [SubscribedToHotObservable])
@@ -572,10 +572,10 @@ extension DriverTest {
         let hotObservable = BackgroundThreadPrimitiveHotObservable<Int>()
 
         var completed = false
-        let driver = hotObservable.asDriver(onErrorJustReturn: -1).doOnCompleted { e in
+        let driver = hotObservable.asDriver(onErrorJustReturn: -1).do(onCompleted: { e in
             XCTAssertTrue(isMainThread())
             completed = true
-        }
+        })
 
         let results = subscribeTwiceOnBackgroundSchedulerAndOnlyOneSubscription(driver) {
             XCTAssertTrue(hotObservable.subscriptions == [SubscribedToHotObservable])
