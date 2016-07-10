@@ -77,7 +77,28 @@ extension Reactive where Self: UIGestureRecognizer {
         
         return ControlEvent(events: source)
     }
-    
+
+}
+
+extension UIGestureRecognizer
+{
+    /**
+     Factory method that enables subclasses to implement their own `rx_delegate`.
+
+     - returns: Instance of delegate proxy that wraps `delegate`.
+     */
+    public func rx_createDelegateProxy() -> RxGestureRecognizerDelegateProxy {
+        return RxGestureRecognizerDelegateProxy(parentObject: self)
+    }
+
+    /**
+     Reactive wrapper for `delegate`.
+
+     For more information take a look at `DelegateProxyType` protocol documentation.
+     */
+    public var rx_delegate: DelegateProxy {
+        return RxGestureRecognizerDelegateProxy.proxyForObject(self)
+    }
 }
 
 #endif
