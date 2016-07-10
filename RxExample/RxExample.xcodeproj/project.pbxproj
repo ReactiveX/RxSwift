@@ -1270,53 +1270,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		C8297E661B6CF905000589EA /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				INFOPLIST_FILE = "RxExample/Info-iOS.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				OTHER_LDFLAGS = "-objc_loadall";
-				OTHER_SWIFT_FLAGS = "$(inherited) -D RX_NO_MODULE";
-				PRODUCT_BUNDLE_IDENTIFIER = "io.rx.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = "RxExample-iOS-no-module";
-				SDKROOT = iphoneos;
-				SWIFT_OBJC_BRIDGING_HEADER = ../RxCocoa/RxCocoa.h;
-			};
-			name = Debug;
-		};
-		C8297E671B6CF905000589EA /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				INFOPLIST_FILE = "RxExample/Info-iOS.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				OTHER_LDFLAGS = "-objc_loadall";
-				OTHER_SWIFT_FLAGS = "$(inherited) -D RX_NO_MODULE";
-				PRODUCT_BUNDLE_IDENTIFIER = "io.rx.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = "RxExample-iOS-no-module";
-				SDKROOT = iphoneos;
-				SWIFT_OBJC_BRIDGING_HEADER = ../RxCocoa/RxCocoa.h;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-			};
-			name = Release;
-		};
-		C8297E681B6CF905000589EA /* Release-Tests */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				INFOPLIST_FILE = "RxExample/Info-iOS.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				OTHER_LDFLAGS = "-objc_loadall";
-				OTHER_SWIFT_FLAGS = "$(inherited) -D RX_NO_MODULE";
-				PRODUCT_BUNDLE_IDENTIFIER = "io.rx.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = "RxExample-iOS-no-module";
-				SDKROOT = iphoneos;
-				SWIFT_OBJC_BRIDGING_HEADER = ../RxCocoa/RxCocoa.h;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-			};
-			name = "Release-Tests";
-		};
 		C83366FD1AD0293900C668A7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1418,7 +1371,7 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = "RxExample/Info-iOS.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-objc_loadall";
 				PRODUCT_BUNDLE_IDENTIFIER = "io.rx.$(PRODUCT_NAME:rfc1034identifier)";
@@ -1433,7 +1386,7 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = "RxExample/Info-iOS.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-objc_loadall";
 				PRODUCT_BUNDLE_IDENTIFIER = "io.rx.$(PRODUCT_NAME:rfc1034identifier)";
@@ -1569,7 +1522,7 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = "RxExample/Info-iOS.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-objc_loadall";
 				PRODUCT_BUNDLE_IDENTIFIER = "io.rx.$(PRODUCT_NAME:rfc1034identifier)";
