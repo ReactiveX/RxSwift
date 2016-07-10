@@ -45,7 +45,7 @@ class SimpleTableViewExampleSectionedViewController
 
         dataSource.configureCell = { (_, tv, indexPath, element) in
             let cell = tv.dequeueReusableCell(withIdentifier: "Cell")!
-            cell.textLabel?.text = "\(element) @ row \((indexPath as NSIndexPath).row)"
+            cell.textLabel?.text = "\(element) @ row \(indexPath.row)"
             return cell
         }
 

@@ -152,7 +152,7 @@ class PartialUpdatesViewController : ViewController {
 
     func skinCollectionViewDataSource(_ dataSource: CollectionViewSectionedDataSource<NumberSection>) {
         dataSource.configureCell = { (_, cv, ip, i) in
-            let cell = cv.dequeueReusableCell(withReuseIdentifier: "Cell", for: ip as IndexPath) as! NumberCell
+            let cell = cv.dequeueReusableCell(withReuseIdentifier: "Cell", for: ip) as! NumberCell
 
             cell.value!.text = "\(i)"
 
@@ -160,9 +160,9 @@ class PartialUpdatesViewController : ViewController {
         }
 
         dataSource.supplementaryViewFactory = { (dataSource, cv, kind, ip) in
-            let section = cv.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "Section", for: ip as IndexPath) as! NumberSectionView
+            let section = cv.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "Section", for: ip) as! NumberSectionView
 
-            section.value!.text = "\(dataSource.sectionAtIndex((ip as NSIndexPath).section).model)"
+            section.value!.text = "\(dataSource.sectionAtIndex(ip.section).model)"
 
             return section
         }

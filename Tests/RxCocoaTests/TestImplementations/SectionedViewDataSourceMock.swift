@@ -28,7 +28,7 @@ import UIKit
     }
 
     func modelAtIndexPath(_ indexPath: IndexPath) throws -> Any {
-        return items![(indexPath as NSIndexPath).item]
+        return items![indexPath.item]
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

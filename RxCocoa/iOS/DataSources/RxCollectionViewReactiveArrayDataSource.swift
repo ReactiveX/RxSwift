@@ -73,8 +73,8 @@ class RxCollectionViewReactiveArrayDataSource<Element>
     }
 
     func modelAtIndexPath(_ indexPath: IndexPath) throws -> Any {
-        precondition((indexPath as NSIndexPath).section == 0)
-        guard let item = itemModels?[(indexPath as NSIndexPath).item] else {
+        precondition(indexPath.section == 0)
+        guard let item = itemModels?[indexPath.item] else {
             throw RxCocoaError.itemsNotYetBound(object: self)
         }
         return item
@@ -93,7 +93,7 @@ class RxCollectionViewReactiveArrayDataSource<Element>
     }
     
     override func _collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        return cellFactory(collectionView, (indexPath as NSIndexPath).item, itemModels![(indexPath as NSIndexPath).item])
+        return cellFactory(collectionView, indexPath.item, itemModels![indexPath.item])
     }
     
     // reactive

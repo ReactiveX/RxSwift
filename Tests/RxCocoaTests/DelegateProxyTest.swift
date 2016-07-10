@@ -327,7 +327,7 @@ class MockThreeDSectionedViewProtocol : NSObject, ThreeDSectionedViewProtocol {
         return 3
     }
     
-    /*func threeDView(threeDView: ThreeDSectionedView, didGetXXX: NSIndexPath) {
+    /*func threeDView(threeDView: ThreeDSectionedView, didGetXXX: IndexPath) {
         messages.append("didGetXXX")
     }*/
     
@@ -335,7 +335,7 @@ class MockThreeDSectionedViewProtocol : NSObject, ThreeDSectionedViewProtocol {
         messages.append("didLearnSomething")
     }
     
-    //optional func threeDView(threeDView: ThreeDSectionedView, didFallAsleep: NSIndexPath)
+    //optional func threeDView(threeDView: ThreeDSectionedView, didFallAsleep: IndexPath)
     func threeDView(_ threeDView: ThreeDSectionedView, getMeSomeFood: IndexPath) -> Food {
         messages.append("getMeSomeFood")
         return Food()

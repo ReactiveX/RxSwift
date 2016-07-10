@@ -71,8 +71,8 @@ class RxTableViewReactiveArrayDataSource<Element>
     }
 
     func modelAtIndexPath(_ indexPath: IndexPath) throws -> Any {
-        precondition((indexPath as NSIndexPath).section == 0)
-        guard let item = itemModels?[(indexPath as NSIndexPath).item] else {
+        precondition(indexPath.section == 0)
+        guard let item = itemModels?[indexPath.item] else {
             throw RxCocoaError.itemsNotYetBound(object: self)
         }
         return item
@@ -89,7 +89,7 @@ class RxTableViewReactiveArrayDataSource<Element>
     }
     
     override func _tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return cellFactory(tableView, (indexPath as NSIndexPath).item, itemModels![(indexPath as NSIndexPath).row])
+        return cellFactory(tableView, indexPath.item, itemModels![indexPath.row])
     }
     
     // reactive

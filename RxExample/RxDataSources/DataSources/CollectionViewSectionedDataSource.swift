@@ -71,7 +71,7 @@ public class CollectionViewSectionedDataSource<S: SectionModelType>
     public typealias I = S.Item
     public typealias Section = S
     public typealias CellFactory = (CollectionViewSectionedDataSource<S>, UICollectionView, IndexPath, I) -> UICollectionViewCell
-    public typealias SupplementaryViewFactory = (CollectionViewSectionedDataSource<S>, UICollectionView, String, NSIndexPath) -> UICollectionReusableView
+    public typealias SupplementaryViewFactory = (CollectionViewSectionedDataSource<S>, UICollectionView, String, IndexPath) -> UICollectionReusableView
 
     #if DEBUG
     // If data source has already been bound, then mutating it
@@ -105,7 +105,7 @@ public class CollectionViewSectionedDataSource<S: SectionModelType>
     }
     
     public func itemAtIndexPath(_ indexPath: IndexPath) -> I {
-        return self._sectionModels[(indexPath as NSIndexPath).section].items[(indexPath as NSIndexPath).item]
+        return self._sectionModels[indexPath.section].items[indexPath.item]
     }
     
     public func modelAtIndexPath(_ indexPath: IndexPath) throws -> Any {
@@ -186,7 +186,7 @@ public class CollectionViewSectionedDataSource<S: SectionModelType>
     }
     
     override func _rx_collectionView(_ collectionView: UICollectionView, cellForItemAtIndexPath indexPath: IndexPath) -> UICollectionViewCell {
-        precondition((indexPath as NSIndexPath).item < _sectionModels[(indexPath as NSIndexPath).section].items.count)
+        precondition(indexPath.item < _sectionModels[indexPath.section].items.count)
         
         return configureCell(self, collectionView, indexPath, itemAtIndexPath(indexPath))
     }

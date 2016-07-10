@@ -323,13 +323,13 @@ extension UITableView {
 
     public func rx_itemsWithDataSource(dataSource: DataSource)(source: O) -> Disposable {}
 
-    public var rx_itemSelected: ControlEvent<NSIndexPath> {}
+    public var rx_itemSelected: ControlEvent<IndexPath> {}
 
-    public var rx_itemDeselected: ControlEvent<NSIndexPath> {}
+    public var rx_itemDeselected: ControlEvent<IndexPath> {}
 
-    public var rx_itemInserted: ControlEvent<NSIndexPath> {}
+    public var rx_itemInserted: ControlEvent<IndexPath> {}
 
-    public var rx_itemDeleted: ControlEvent<NSIndexPath> {}
+    public var rx_itemDeleted: ControlEvent<IndexPath> {}
 
     public var rx_itemMoved: ControlEvent<ItemMovedEvent> {}
 
@@ -355,9 +355,9 @@ extension UICollectionView {
 
     public func rx_itemsWithDataSource(dataSource: DataSource)(source: O) -> Disposable {}
 
-    public var rx_itemSelected: ControlEvent<NSIndexPath> {}
+    public var rx_itemSelected: ControlEvent<IndexPath> {}
 
-    public var rx_itemDeselected: ControlEvent<NSIndexPath> {}
+    public var rx_itemDeselected: ControlEvent<IndexPath> {}
 
     // This method only works in case one of the `rx_itemsWith*` methods was used, or data source implements `SectionedViewDataSourceType`
     public func rx_modelSelected<T>(modelType: T.Type) -> ControlEvent<T> {}

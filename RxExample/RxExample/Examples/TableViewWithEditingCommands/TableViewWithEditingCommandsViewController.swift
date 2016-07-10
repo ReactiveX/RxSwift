@@ -33,13 +33,13 @@ struct TableViewEditingCommandsViewModel {
             return TableViewEditingCommandsViewModel(favoriteUsers: favoriteUsers, users: users)
         case let .deleteUser(indexPath):
             var all = [self.favoriteUsers, self.users]
-            all[(indexPath as NSIndexPath).section].remove(at: (indexPath as NSIndexPath).row)
+            all[indexPath.section].remove(at: indexPath.row)
             return TableViewEditingCommandsViewModel(favoriteUsers: all[0], users: all[1])
         case let .moveUser(from, to):
             var all = [self.favoriteUsers, self.users]
-            let user = all[(from as NSIndexPath).section][(from as NSIndexPath).row]
-            all[(from as NSIndexPath).section].remove(at: (from as NSIndexPath).row)
-            all[(to as NSIndexPath).section].insert(user, at: (to as NSIndexPath).row)
+            let user = all[from.section][from.row]
+            all[from.section].remove(at: from.row)
+            all[to.section].insert(user, at: to.row)
 
             return TableViewEditingCommandsViewModel(favoriteUsers: all[0], users: all[1])
         }
