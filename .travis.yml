@@ -8,4 +8,6 @@ notifications:
 
 script: 
   - "bundle exec danger --verbose"
+  - xcodebuild -version
+  - xcodebuild -showsdks
   - ./scripts/all-tests.sh
