@@ -36,7 +36,6 @@ final public class PublishSubject<Element>
     // state
     private var _disposed = false
     private var _observers = Bag<AnyObserver<Element>>()
-    private var _stopped = false
     private var _stoppedEvent = nil as Event<Element>?
     
     /**
@@ -66,7 +65,7 @@ final public class PublishSubject<Element>
     func _synchronized_on(event: Event<E>) {
         switch event {
         case .Next(_):
-            if _disposed || _stopped {
+            if _disposed || _stoppedEvent != nil {
                 return
             }
             
@@ -74,7 +73,6 @@ final public class PublishSubject<Element>
         case .Completed, .Error:
             if _stoppedEvent == nil {
                 _stoppedEvent = event
-                _stopped = true
                 _observers.on(event)
                 _observers.removeAll()
             }
