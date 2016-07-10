@@ -16,11 +16,11 @@ averaged over N operations.
 
 Complexity of `peek` is O(1).
 */
-public struct Queue<T>: SequenceType {
+struct Queue<T>: SequenceType {
     /**
     Type of generator.
     */
-    public typealias Generator = AnyGenerator<T>
+    typealias Generator = AnyGenerator<T>
     
     private let _resizeFactor = 2
     
@@ -34,7 +34,7 @@ public struct Queue<T>: SequenceType {
     
     - parameter capacity: Capacity of newly created queue.
     */
-    public init(capacity: Int) {
+    init(capacity: Int) {
         _initialCapacity = capacity
 
         _storage = ContiguousArray<T?>(count: capacity, repeatedValue: nil)
@@ -48,21 +48,21 @@ public struct Queue<T>: SequenceType {
     /**
     - returns: Is queue empty.
     */
-    public var isEmpty: Bool {
+    var isEmpty: Bool {
         return count == 0
     }
     
     /**
     - returns: Number of elements inside queue.
     */
-    public var count: Int {
+    var count: Int {
         return _count
     }
     
     /**
     - returns: Element in front of a list of elements to `dequeue`.
     */
-    public func peek() -> T {
+    func peek() -> T {
         precondition(count > 0)
         
         return _storage[dequeueIndex]!
@@ -94,7 +94,7 @@ public struct Queue<T>: SequenceType {
     
     - parameter element: Element to enqueue.
     */
-    public mutating func enqueue(element: T) {
+    mutating func enqueue(element: T) {
         if count == _storage.count {
             resizeTo(max(_storage.count, 1) * _resizeFactor)
         }
@@ -126,7 +126,7 @@ public struct Queue<T>: SequenceType {
     
     - returns: Dequeued element.
     */
-    public mutating func dequeue() -> T? {
+    mutating func dequeue() -> T? {
         if self.count == 0 {
             return nil
         }
@@ -144,7 +144,7 @@ public struct Queue<T>: SequenceType {
     /**
     - returns: Generator of contained elements.
     */
-    public func generate() -> Generator {
+    func generate() -> Generator {
         var i = dequeueIndex
         var count = _count
 
