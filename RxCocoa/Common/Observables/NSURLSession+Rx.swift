@@ -33,6 +33,10 @@ public enum RxCocoaURLError
     Deserialization error.
     */
     case DeserializationError(error: ErrorType)
+    /**
+     File error.
+     */
+    case FileError(error: ErrorType)
 }
 
 public extension RxCocoaURLError {
@@ -234,5 +238,117 @@ extension NSURLSession {
     @warn_unused_result(message="http://git.io/rxs.uo")
     public func rx_JSON(URL: NSURL) -> Observable<AnyObject> {
         return rx_JSON(NSURLRequest(URL: URL))
+    }
+    
+    /**
+     Validate a path for file destination was provided or generate one if not in temp
+     folder
+     
+     - parameter path: optional file download destination
+     - returns: file url passed or path to temp file if none
+     */
+    private func getDownloadPath(path: NSURL?) -> NSURL {
+        
+        if let path = path {
+            return path
+        }
+        
+        let tempDirURL = NSURL(fileURLWithPath: NSTemporaryDirectory(), isDirectory: true)
+        
+        return tempDirURL.URLByAppendingPathComponent("\(NSUUID().UUIDString).download")
+    }
+    
+    /**
+     Observable sequence of responses for URL download.
+     
+     Performing of request starts after observer is subscribed and not after invoking this method.
+     
+     **URL requests will be performed per subscribed observer.**
+     
+     Any error during fetching of the response will cause observed sequence to terminate with error.
+     
+     - parameter request: URL request.
+     - returns: Observable sequence of URL responses and downloaded file locations
+     */
+    @warn_unused_result(message="http://git.io/rxs.uo")
+    public func rx_download(request: NSURLRequest, path: NSURL? = nil) -> Observable<(NSURL, NSHTTPURLResponse)> {
+        return create { observer in
+            
+            // smart compiler should be able to optimize this out
+            var d: NSDate?
+            
+            if Logging.URLRequests(request) {
+                d = NSDate()
+            }
+            
+            let task = self.downloadTaskWithRequest (request) { (file, response, error) in
+                
+                if Logging.URLRequests(request) {
+                    let interval = NSDate().timeIntervalSinceDate(d ?? NSDate())
+                    print(convertURLRequestToCurlCommand(request))
+                    print(convertResponseToString(response, error, interval))
+                }
+                
+                guard let response = response else {
+                    observer.on(.Error(error ?? RxCocoaURLError.Unknown))
+                    return
+                }
+                
+                guard let httpResponse = response as? NSHTTPURLResponse else {
+                    observer.on(.Error(RxCocoaURLError.NonHTTPResponse(response: response)))
+                    return
+                }
+                
+                if 200..<300 ~= httpResponse.statusCode {
+                    observer.on(.Error(RxCocoaURLError.HTTPRequestFailed(response: response, data: data)))
+                    return
+                }
+                
+                guard let file = file else {
+                    observer.on(.Error(error ?? RxCocoaURLError.Unknown))
+                    return
+                }
+                
+                let destPath = self.rx_downloadPath(path)
+                
+                // Move file to requested destination, this must be done otherwise
+                // will be deleted by iOS on return
+                do {
+                    try NSFileManager.defaultManager().moveItemAtURL(file, toURL: destPath)
+                } catch let error {
+                    observer.on(.Error(RxCocoaURLError.FileError(error: error)))
+                    return
+                }
+                
+                observer.on(.Next(destPath, httpResponse))
+                observer.on(.Completed)
+            }
+            
+            
+            let t = task
+            t.resume()
+            
+            return AnonymousDisposable {
+                task.cancel()
+            }
+        }
+    }
+    
+    /**
+     Observable sequence of responses for URL download.
+     
+     Performing of request starts after observer is subscribed and not after invoking this method.
+     
+     **URL requests will be performed per subscribed observer.**
+     
+     Any error during fetching of the response will cause observed sequence to terminate with error.
+     
+     - parameter request: URL of downloadable
+     - returns: Observable sequence of URL responses and downloaded file locations
+     */
+    
+    @warn_unused_result(message="http://git.io/rxs.uo")
+    public func rx_download(request: NSURL, path: NSURL? = nil) -> Observable<(NSURL, NSHTTPURLResponse)> {
+        return rx_download(request:NSURLRequest(NSURL:request), path:path)
     }
 }
