@@ -24,12 +24,12 @@ func exampleError(error: String, location: String = "\(#file):\(#line)") -> NSEr
 }
 
 extension String {
-    func toFloat() -> Float? {
+    var toFloat: Float? {
         let numberFormatter = NSNumberFormatter()
         return numberFormatter.numberFromString(self)?.floatValue
     }
     
-    func toDouble() -> Double? {
+    var toDouble: Double? {
         let numberFormatter = NSNumberFormatter()
         return numberFormatter.numberFromString(self)?.doubleValue
     }
