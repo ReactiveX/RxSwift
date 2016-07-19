@@ -255,7 +255,7 @@ extension GitHubSearchRepositoriesAPI {
         }
         return try items.map { item in
             guard let name = item["name"] as? String,
-                    url = item["url"] as? String else {
+                let url = item["url"] as? String else {
                 throw exampleError("Can't parse repository")
             }
             return Repository(name: name, url: url)
