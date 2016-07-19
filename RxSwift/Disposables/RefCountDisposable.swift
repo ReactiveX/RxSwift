@@ -60,7 +60,7 @@ public class RefCountDisposable : DisposeBase, Cancelable {
      */
     public func dispose() {
         let oldDisposable: Disposable? = _lock.calculateLocked {
-            if let oldDisposable = _disposable where !_primaryDisposed
+            if let oldDisposable = _disposable, !_primaryDisposed
             {
                 _primaryDisposed = true
 

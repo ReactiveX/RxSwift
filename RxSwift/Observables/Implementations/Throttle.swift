@@ -74,7 +74,7 @@ class ThrottleSink<O: ObserverType>
         _lock.lock(); defer { _lock.unlock() } // {
             let originalValue = _value
 
-            if let value = originalValue where _id == currentId {
+            if let value = originalValue, _id == currentId {
                 _value = nil
                 forwardOn(.next(value))
             }
