@@ -24,7 +24,7 @@ func nonMarkedText(_ textInput: UITextInput) -> String? {
     let end = textInput.endOfDocument
 
     guard let rangeAll = textInput.textRange(from: start, to: end),
-        text = textInput.text(in: rangeAll) else {
+        let text = textInput.text(in: rangeAll) else {
             return nil
     }
 
@@ -33,7 +33,7 @@ func nonMarkedText(_ textInput: UITextInput) -> String? {
     }
 
     guard let startRange = textInput.textRange(from: start, to: markedTextRange.start),
-        endRange = textInput.textRange(from: markedTextRange.end, to: end) else {
+        let endRange = textInput.textRange(from: markedTextRange.end, to: end) else {
         return text
     }
 
@@ -62,7 +62,7 @@ func <-> (textInput: RxTextInput, variable: Variable<String>) -> Disposable {
 
              and you hit "Done" button on keyboard.
              */
-            if let nonMarkedTextValue = nonMarkedTextValue where nonMarkedTextValue != variable.value {
+            if let nonMarkedTextValue = nonMarkedTextValue, nonMarkedTextValue != variable.value {
                 variable.value = nonMarkedTextValue
             }
         }, onCompleted:  {
