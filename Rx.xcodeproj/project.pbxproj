@@ -4807,7 +4807,6 @@
 				PRODUCT_NAME = RxCocoa;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -4825,7 +4824,6 @@
 				PRODUCT_NAME = RxCocoa;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -4843,7 +4841,6 @@
 				PRODUCT_NAME = RxCocoa;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
 			};
 			name = "Release-Tests";
 		};
@@ -4863,7 +4860,6 @@
 				PRODUCT_NAME = RxCocoa;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -4883,7 +4879,6 @@
 				PRODUCT_NAME = RxCocoa;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -4903,7 +4898,6 @@
 				PRODUCT_NAME = RxCocoa;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
 			};
 			name = "Release-Tests";
 		};
@@ -4921,7 +4915,6 @@
 				PRODUCT_NAME = RxBlocking;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -4939,7 +4932,6 @@
 				PRODUCT_NAME = RxBlocking;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -4957,7 +4949,6 @@
 				PRODUCT_NAME = RxBlocking;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
 			};
 			name = "Release-Tests";
 		};
@@ -4977,7 +4968,6 @@
 				PRODUCT_NAME = RxBlocking;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -4997,7 +4987,6 @@
 				PRODUCT_NAME = RxBlocking;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -5017,7 +5006,6 @@
 				PRODUCT_NAME = RxBlocking;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
 			};
 			name = "Release-Tests";
 		};
@@ -5036,7 +5024,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = "Tests/RxCocoaTests/RxTests-iOS-Bridging-Header.h";
-				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -5050,7 +5037,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = "Tests/RxCocoaTests/RxTests-iOS-Bridging-Header.h";
-				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -5064,7 +5050,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = "Tests/RxCocoaTests/RxTests-iOS-Bridging-Header.h";
-				SWIFT_VERSION = 3.0;
 			};
 			name = "Release-Tests";
 		};
@@ -5130,7 +5115,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SWIFT_OBJC_BRIDGING_HEADER = "Tests/RxCocoaTests/RxTests-OSX-Bridging-Header.h";
-				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -5147,7 +5131,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SWIFT_OBJC_BRIDGING_HEADER = "Tests/RxCocoaTests/RxTests-OSX-Bridging-Header.h";
-				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -5164,7 +5147,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SWIFT_OBJC_BRIDGING_HEADER = "Tests/RxCocoaTests/RxTests-OSX-Bridging-Header.h";
-				SWIFT_VERSION = 3.0;
 			};
 			name = "Release-Tests";
 		};
@@ -5186,7 +5168,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = io.rx.PerformanceTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
-				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -5203,7 +5184,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = io.rx.PerformanceTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
-				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -5220,7 +5200,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = io.rx.PerformanceTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
-				SWIFT_VERSION = 3.0;
 			};
 			name = "Release-Tests";
 		};
@@ -5265,6 +5244,7 @@
 				OTHER_SWIFT_FLAGS = "-D TRACE_RESOURCES";
 				SDKROOT = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TVOS_DEPLOYMENT_TARGET = 9.0;
 				VALIDATE_PRODUCT = YES;
@@ -5288,7 +5268,6 @@
 				PRODUCT_NAME = RxSwift;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
 			};
 			name = "Release-Tests";
 		};
@@ -5308,7 +5287,6 @@
 				PRODUCT_NAME = RxSwift;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
 			};
 			name = "Release-Tests";
 		};
@@ -5328,7 +5306,6 @@
 				PRODUCT_NAME = RxSwift;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -5348,7 +5325,6 @@
 				PRODUCT_NAME = RxSwift;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -5370,7 +5346,6 @@
 				PRODUCT_NAME = RxTests;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -5392,7 +5367,6 @@
 				PRODUCT_NAME = RxTests;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -5414,7 +5388,6 @@
 				PRODUCT_NAME = RxTests;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
 			};
 			name = "Release-Tests";
 		};
@@ -5441,7 +5414,6 @@
 				PRODUCT_NAME = RxTests;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -5468,7 +5440,6 @@
 				PRODUCT_NAME = RxTests;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -5495,7 +5466,6 @@
 				PRODUCT_NAME = RxTests;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
 			};
 			name = "Release-Tests";
 		};
@@ -5676,6 +5646,7 @@
 				OTHER_SWIFT_FLAGS = "-D TRACE_RESOURCES -D DEBUG";
 				SDKROOT = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TVOS_DEPLOYMENT_TARGET = 9.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -5724,6 +5695,7 @@
 				OTHER_SWIFT_FLAGS = "-D RELEASE";
 				SDKROOT = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TVOS_DEPLOYMENT_TARGET = 9.0;
 				VALIDATE_PRODUCT = YES;
@@ -5747,7 +5719,6 @@
 				PRODUCT_NAME = RxSwift;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -5765,7 +5736,6 @@
 				PRODUCT_NAME = RxSwift;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};

@@ -72,7 +72,7 @@ class ControlTarget: RxTarget {
 #endif
 
     func eventHandler(_ sender: Control!) {
-        if let callback = self.callback, control = self.control {
+        if let callback = self.callback, let control = self.control {
             callback(control)
         }
     }

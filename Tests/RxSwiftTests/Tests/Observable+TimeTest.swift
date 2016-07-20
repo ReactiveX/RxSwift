@@ -540,7 +540,7 @@ extension ObservableTimeTest {
 
         let observer = PrimitiveMockObserver<Int64>()
 
-        let expectCompleted = expectation(withDescription: "It will complete")
+        let expectCompleted = expectation(description: "It will complete")
 
         let d = Observable<Int64>.interval(0, scheduler: scheduler).takeWhile { $0 < 10 } .subscribe(onNext: { t in
             observer.on(.next(t))
@@ -552,18 +552,18 @@ extension ObservableTimeTest {
             d.dispose()
         }
 
-        waitForExpectations(withTimeout: 1.0) { e in
+        waitForExpectations(timeout: 1.0) { e in
             XCTAssert(e == nil, "Did not complete")
         }
 
-        let cleanResources = expectation(withDescription: "Clean resources")
+        let cleanResources = expectation(description: "Clean resources")
 
         _ = scheduler.schedule(()) { _ in
             cleanResources.fulfill()
             return NopDisposable.instance
         }
 
-        waitForExpectations(withTimeout: 1.0) { e in
+        waitForExpectations(timeout: 1.0) { e in
             XCTAssert(e == nil, "Did not clean up")
         }
 

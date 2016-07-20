@@ -17,7 +17,7 @@ class ControlEventTests : RxTest {
 
         var observedOnMainThread = false
 
-        let expectSubscribeOffMainThread = expectation(withDescription: "Did subscribe off main thread")
+        let expectSubscribeOffMainThread = expectation(description: "Did subscribe off main thread")
 
         let controlProperty = ControlEvent(events: Observable.deferred { () -> Observable<Int> in
             XCTAssertTrue(isMainThread())
@@ -39,7 +39,7 @@ class ControlEventTests : RxTest {
             }
         }
 
-        waitForExpectations(withTimeout: 1.0) { error in
+        waitForExpectations(timeout: 1.0) { error in
             XCTAssertNil(error)
         }
         

@@ -137,7 +137,7 @@ extension URLSession {
                     print(convertResponseToString(data, response, error, interval))
                 }
                 
-                guard let response = response, data = data else {
+                guard let response = response, let data = data else {
                     observer.on(.error(error ?? RxCocoaURLError.unknown))
                     return
                 }
