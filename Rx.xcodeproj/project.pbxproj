@@ -810,6 +810,9 @@
 		C8E7B36A1C30C6B800B34368 /* TestableObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E7B3681C30C6B800B34368 /* TestableObservable.swift */; };
 		C8E7B36B1C30C6B800B34368 /* TestableObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E7B3681C30C6B800B34368 /* TestableObservable.swift */; };
 		C8E7B36C1C30C6B800B34368 /* TestableObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E7B3681C30C6B800B34368 /* TestableObservable.swift */; };
+		C8E9E42B1D43B26C0049644E /* Observable+DebugTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E9E42A1D43B26C0049644E /* Observable+DebugTest.swift */; };
+		C8E9E42C1D43B26C0049644E /* Observable+DebugTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E9E42A1D43B26C0049644E /* Observable+DebugTest.swift */; };
+		C8E9E42D1D43B26C0049644E /* Observable+DebugTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E9E42A1D43B26C0049644E /* Observable+DebugTest.swift */; };
 		C8F0BF921BBBFB8B001B112F /* Observable+Creation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C981B8A72BE0088E94D /* Observable+Creation.swift */; };
 		C8F0BF931BBBFB8B001B112F /* ConnectableObservableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C4D1B8A72BE0088E94D /* ConnectableObservableType.swift */; };
 		C8F0BF941BBBFB8B001B112F /* Just.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C3DA021B9390C4004D233E /* Just.swift */; };
@@ -1740,6 +1743,7 @@
 		C8E3A7301C2606A900643FE6 /* Event+Equatable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Event+Equatable.swift"; sourceTree = "<group>"; };
 		C8E3A7351C26088C00643FE6 /* Any+Equatable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Any+Equatable.swift"; sourceTree = "<group>"; };
 		C8E7B3681C30C6B800B34368 /* TestableObservable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestableObservable.swift; sourceTree = "<group>"; };
+		C8E9E42A1D43B26C0049644E /* Observable+DebugTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Observable+DebugTest.swift"; sourceTree = "<group>"; };
 		C8F0C0021BBBFB8B001B112F /* RxSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8F0C04B1BBBFBB9001B112F /* RxCocoa.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxCocoa.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8F0C0581BBBFBCE001B112F /* RxBlocking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxBlocking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -2379,6 +2383,7 @@
 				C835090C1C38706D0027C24C /* Observable+BlockingTest.swift */,
 				C835090D1C38706D0027C24C /* Observable+ConcurrencyTest.swift */,
 				C835090E1C38706D0027C24C /* Observable+CreationTest.swift */,
+				C8E9E42A1D43B26C0049644E /* Observable+DebugTest.swift */,
 				C83509131C38706D0027C24C /* Observable+MultipleTest.swift */,
 				C835090F1C38706D0027C24C /* Observable+MultipleTest+CombineLatest.swift */,
 				C83509101C38706D0027C24C /* Observable+MultipleTest+CombineLatest.tt */,
@@ -3556,6 +3561,7 @@
 				C83509531C38706E0027C24C /* Observable+AggregateTest.swift in Sources */,
 				C8B290891C94D64600E923D0 /* RxTest+Controls.swift in Sources */,
 				C83509291C38706E0027C24C /* PerformanceTools.swift in Sources */,
+				C8E9E42B1D43B26C0049644E /* Observable+DebugTest.swift in Sources */,
 				C835096A1C38706E0027C24C /* TestErrors.swift in Sources */,
 				1AF67DA61CED430100C310FA /* ReplaySubjectTest.swift in Sources */,
 				C83509561C38706E0027C24C /* Observable+ConcurrencyTest.swift in Sources */,
@@ -3660,6 +3666,7 @@
 				C83509EC1C3875580027C24C /* MockDisposable.swift in Sources */,
 				1AF67DA31CED427D00C310FA /* PublishSubjectTest.swift in Sources */,
 				C8350A111C38756A0027C24C /* Observable+SingleTest.swift in Sources */,
+				C8E9E42C1D43B26C0049644E /* Observable+DebugTest.swift in Sources */,
 				C8350A2A1C3875B50027C24C /* RxMutableBox.swift in Sources */,
 				C8350A151C38756A0027C24C /* ObserverTests.swift in Sources */,
 				C83509B11C3874E20027C24C /* PerformanceTools.swift in Sources */,
@@ -3729,6 +3736,7 @@
 				C8350A071C38755E0027C24C /* MainSchedulerTests.swift in Sources */,
 				C83509B81C38750D0027C24C /* ControlEventTests.swift in Sources */,
 				C83509CB1C3875230027C24C /* KVOObservableTests.swift in Sources */,
+				C8E9E42D1D43B26C0049644E /* Observable+DebugTest.swift in Sources */,
 				C83509AD1C3874D70027C24C /* Foundation+Extensions.swift in Sources */,
 				C83509C81C3875230027C24C /* DelegateProxyTest.swift in Sources */,
 				C8350A0D1C38755E0027C24C /* Observable+MultipleTest+CombineLatest.swift in Sources */,
