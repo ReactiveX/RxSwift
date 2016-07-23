@@ -49,3 +49,4 @@ public class Observable<Element> : ObservableType {
         return Map(source: self, selector: selector)
     }
 }
+

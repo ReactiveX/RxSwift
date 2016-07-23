@@ -42,7 +42,6 @@ public protocol ObservableType : ObservableConvertibleType {
     */
     // @warn_unused_result(message: "http://git.io/rxs.ud")
     func subscribe<O: ObserverType where O.E == E>(_ observer: O) -> Disposable
-   
 }
 
 extension ObservableType {

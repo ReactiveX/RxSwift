@@ -27,7 +27,7 @@ extension ObservableMultipleTest {
 <% } %>
 
         let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = Observable.combineLatest(<%= (Array(0..<i).map { "e\($0)" }).joinWithSeparator(", ") %>) { (<%= (Array(0..<i).map { _ in "_" }).joinWithSeparator(", ") %>) -> Int in
+            let result: Observable<Int> = Observable.combineLatest(<%= (Array(0..<i).map { "e\($0)" }).joined(separator: ", ") %>) { (<%= (Array(0..<i).map { _ in "_" }).joined(separator: ", ") %>) -> Int in
                 return (42)
             }
 
@@ -53,7 +53,7 @@ extension ObservableMultipleTest {
 <% } %>
 
         let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = Observable.combineLatest(<%= (Array(0..<i).map { "e\($0)" }).joinWithSeparator(", ") %>) { (<%= (Array(0..<i).map { _ in "_" }).joinWithSeparator(", ") %>) -> Int in
+            let result: Observable<Int> = Observable.combineLatest(<%= (Array(0..<i).map { "e\($0)" }).joined(separator: ", ") %>) { (<%= (Array(0..<i).map { _ in "_" }).joined(separator: ", ") %>) -> Int in
                 return (42)
             }
 
@@ -79,7 +79,7 @@ extension ObservableMultipleTest {
 <% } %>
 
         let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = Observable.combineLatest(<%= (Array(0..<i).map { "e\($0)" }).joinWithSeparator(", ") %>) { (<%= (Array(0..<i).map { _ in "_" }).joinWithSeparator(", ") %>) throws -> Int in
+            let result: Observable<Int> = Observable.combineLatest(<%= (Array(0..<i).map { "e\($0)" }).joined(separator: ", ") %>) { (<%= (Array(0..<i).map { _ in "_" }).joined(separator: ", ") %>) throws -> Int in
                 throw testError
             }
 
@@ -111,7 +111,7 @@ extension ObservableMultipleTest {
         ])
 
         let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = Observable.combineLatest(<%= (Array(0..<i).map { "e\($0)" }).joinWithSeparator(", ") %>) { (<%= (Array(0..<i).map { _ in "_" }).joinWithSeparator(", ") %>) -> Int in
+            let result: Observable<Int> = Observable.combineLatest(<%= (Array(0..<i).map { "e\($0)" }).joined(separator: ", ") %>) { (<%= (Array(0..<i).map { _ in "_" }).joined(separator: ", ") %>) -> Int in
                 return (42)
             }
 
@@ -140,8 +140,8 @@ extension ObservableMultipleTest {
         ])
 <% } %>
         let res = scheduler.start { () -> Observable<Int> in
-            let result: Observable<Int> = Observable.combineLatest(<%= (Array(0..<i).map { "e\($0)" }).joinWithSeparator(", ") %>) {
-                return (<%= (Array(0..<i).map { "$\($0)" }).joinWithSeparator(" + ") %>)
+            let result: Observable<Int> = Observable.combineLatest(<%= (Array(0..<i).map { "e\($0)" }).joined(separator: ", ") %>) {
+                return (<%= (Array(0..<i).map { "$\($0)" }).joined(separator: " + ") %>)
             }
 
             return result

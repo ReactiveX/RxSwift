@@ -79,7 +79,7 @@ extension ObservableType {
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
     public func concat<O: ObservableConvertibleType where O.E == E>(_ second: O) -> Observable<E> {
-        return [asObservable(), second.asObservable()].concat()
+        return [self.asObservable(), second.asObservable()].concat()
     }
 }
 

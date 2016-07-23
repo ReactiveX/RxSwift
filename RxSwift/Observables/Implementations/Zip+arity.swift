@@ -66,8 +66,8 @@ class ZipSink2_<E1, E2, O: ObserverType> : ZipSink<O> {
         let observer1 = ZipObserver(lock: _lock, parent: self, index: 0, setNextValue: { self._values1.enqueue($0) }, this: subscription1)
         let observer2 = ZipObserver(lock: _lock, parent: self, index: 1, setNextValue: { self._values2.enqueue($0) }, this: subscription2)
 
-        subscription1.disposable = _parent.source1.subscribe( observer1)
-        subscription2.disposable = _parent.source2.subscribe( observer2)
+        subscription1.disposable = _parent.source1.subscribe(observer1)
+        subscription2.disposable = _parent.source2.subscribe(observer2)
 
         return CompositeDisposable(disposables: [
            subscription1,
@@ -163,9 +163,9 @@ class ZipSink3_<E1, E2, E3, O: ObserverType> : ZipSink<O> {
         let observer2 = ZipObserver(lock: _lock, parent: self, index: 1, setNextValue: { self._values2.enqueue($0) }, this: subscription2)
         let observer3 = ZipObserver(lock: _lock, parent: self, index: 2, setNextValue: { self._values3.enqueue($0) }, this: subscription3)
 
-        subscription1.disposable = _parent.source1.subscribe( observer1)
-        subscription2.disposable = _parent.source2.subscribe( observer2)
-        subscription3.disposable = _parent.source3.subscribe( observer3)
+        subscription1.disposable = _parent.source1.subscribe(observer1)
+        subscription2.disposable = _parent.source2.subscribe(observer2)
+        subscription3.disposable = _parent.source3.subscribe(observer3)
 
         return CompositeDisposable(disposables: [
            subscription1,
@@ -268,10 +268,10 @@ class ZipSink4_<E1, E2, E3, E4, O: ObserverType> : ZipSink<O> {
         let observer3 = ZipObserver(lock: _lock, parent: self, index: 2, setNextValue: { self._values3.enqueue($0) }, this: subscription3)
         let observer4 = ZipObserver(lock: _lock, parent: self, index: 3, setNextValue: { self._values4.enqueue($0) }, this: subscription4)
 
-        subscription1.disposable = _parent.source1.subscribe( observer1)
-        subscription2.disposable = _parent.source2.subscribe( observer2)
-        subscription3.disposable = _parent.source3.subscribe( observer3)
-        subscription4.disposable = _parent.source4.subscribe( observer4)
+        subscription1.disposable = _parent.source1.subscribe(observer1)
+        subscription2.disposable = _parent.source2.subscribe(observer2)
+        subscription3.disposable = _parent.source3.subscribe(observer3)
+        subscription4.disposable = _parent.source4.subscribe(observer4)
 
         return CompositeDisposable(disposables: [
            subscription1,
@@ -381,11 +381,11 @@ class ZipSink5_<E1, E2, E3, E4, E5, O: ObserverType> : ZipSink<O> {
         let observer4 = ZipObserver(lock: _lock, parent: self, index: 3, setNextValue: { self._values4.enqueue($0) }, this: subscription4)
         let observer5 = ZipObserver(lock: _lock, parent: self, index: 4, setNextValue: { self._values5.enqueue($0) }, this: subscription5)
 
-        subscription1.disposable = _parent.source1.subscribe( observer1)
-        subscription2.disposable = _parent.source2.subscribe( observer2)
-        subscription3.disposable = _parent.source3.subscribe( observer3)
-        subscription4.disposable = _parent.source4.subscribe( observer4)
-        subscription5.disposable = _parent.source5.subscribe( observer5)
+        subscription1.disposable = _parent.source1.subscribe(observer1)
+        subscription2.disposable = _parent.source2.subscribe(observer2)
+        subscription3.disposable = _parent.source3.subscribe(observer3)
+        subscription4.disposable = _parent.source4.subscribe(observer4)
+        subscription5.disposable = _parent.source5.subscribe(observer5)
 
         return CompositeDisposable(disposables: [
            subscription1,
@@ -502,12 +502,12 @@ class ZipSink6_<E1, E2, E3, E4, E5, E6, O: ObserverType> : ZipSink<O> {
         let observer5 = ZipObserver(lock: _lock, parent: self, index: 4, setNextValue: { self._values5.enqueue($0) }, this: subscription5)
         let observer6 = ZipObserver(lock: _lock, parent: self, index: 5, setNextValue: { self._values6.enqueue($0) }, this: subscription6)
 
-        subscription1.disposable = _parent.source1.subscribe( observer1)
-        subscription2.disposable = _parent.source2.subscribe( observer2)
-        subscription3.disposable = _parent.source3.subscribe( observer3)
-        subscription4.disposable = _parent.source4.subscribe( observer4)
-        subscription5.disposable = _parent.source5.subscribe( observer5)
-        subscription6.disposable = _parent.source6.subscribe( observer6)
+        subscription1.disposable = _parent.source1.subscribe(observer1)
+        subscription2.disposable = _parent.source2.subscribe(observer2)
+        subscription3.disposable = _parent.source3.subscribe(observer3)
+        subscription4.disposable = _parent.source4.subscribe(observer4)
+        subscription5.disposable = _parent.source5.subscribe(observer5)
+        subscription6.disposable = _parent.source6.subscribe(observer6)
 
         return CompositeDisposable(disposables: [
            subscription1,
@@ -631,13 +631,13 @@ class ZipSink7_<E1, E2, E3, E4, E5, E6, E7, O: ObserverType> : ZipSink<O> {
         let observer6 = ZipObserver(lock: _lock, parent: self, index: 5, setNextValue: { self._values6.enqueue($0) }, this: subscription6)
         let observer7 = ZipObserver(lock: _lock, parent: self, index: 6, setNextValue: { self._values7.enqueue($0) }, this: subscription7)
 
-        subscription1.disposable = _parent.source1.subscribe( observer1)
-        subscription2.disposable = _parent.source2.subscribe( observer2)
-        subscription3.disposable = _parent.source3.subscribe( observer3)
-        subscription4.disposable = _parent.source4.subscribe( observer4)
-        subscription5.disposable = _parent.source5.subscribe( observer5)
-        subscription6.disposable = _parent.source6.subscribe( observer6)
-        subscription7.disposable = _parent.source7.subscribe( observer7)
+        subscription1.disposable = _parent.source1.subscribe(observer1)
+        subscription2.disposable = _parent.source2.subscribe(observer2)
+        subscription3.disposable = _parent.source3.subscribe(observer3)
+        subscription4.disposable = _parent.source4.subscribe(observer4)
+        subscription5.disposable = _parent.source5.subscribe(observer5)
+        subscription6.disposable = _parent.source6.subscribe(observer6)
+        subscription7.disposable = _parent.source7.subscribe(observer7)
 
         return CompositeDisposable(disposables: [
            subscription1,
@@ -768,14 +768,14 @@ class ZipSink8_<E1, E2, E3, E4, E5, E6, E7, E8, O: ObserverType> : ZipSink<O> {
         let observer7 = ZipObserver(lock: _lock, parent: self, index: 6, setNextValue: { self._values7.enqueue($0) }, this: subscription7)
         let observer8 = ZipObserver(lock: _lock, parent: self, index: 7, setNextValue: { self._values8.enqueue($0) }, this: subscription8)
 
-        subscription1.disposable = _parent.source1.subscribe( observer1)
-        subscription2.disposable = _parent.source2.subscribe( observer2)
-        subscription3.disposable = _parent.source3.subscribe( observer3)
-        subscription4.disposable = _parent.source4.subscribe( observer4)
-        subscription5.disposable = _parent.source5.subscribe( observer5)
-        subscription6.disposable = _parent.source6.subscribe( observer6)
-        subscription7.disposable = _parent.source7.subscribe( observer7)
-        subscription8.disposable = _parent.source8.subscribe( observer8)
+        subscription1.disposable = _parent.source1.subscribe(observer1)
+        subscription2.disposable = _parent.source2.subscribe(observer2)
+        subscription3.disposable = _parent.source3.subscribe(observer3)
+        subscription4.disposable = _parent.source4.subscribe(observer4)
+        subscription5.disposable = _parent.source5.subscribe(observer5)
+        subscription6.disposable = _parent.source6.subscribe(observer6)
+        subscription7.disposable = _parent.source7.subscribe(observer7)
+        subscription8.disposable = _parent.source8.subscribe(observer8)
 
         return CompositeDisposable(disposables: [
            subscription1,
@@ -827,4 +827,5 @@ class Zip8<E1, E2, E3, E4, E5, E6, E7, E8, R> : Producer<R> {
         return sink
     }
 }
+
 

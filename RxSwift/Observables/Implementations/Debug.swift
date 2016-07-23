@@ -14,7 +14,7 @@ func logEvent(_ identifier: String, dateFormat: DateFormatter, content: String) 
     print("\(dateFormat.string(from: Date())): \(identifier) -> \(content)")
 }
 
-class Debug_<O: ObserverType> : Sink<O>, ObserverType {
+class DebugSink<O: ObserverType> : Sink<O>, ObserverType {
     typealias Element = O.E
     typealias Parent = Debug<Element>
     
@@ -38,6 +38,7 @@ class Debug_<O: ObserverType> : Sink<O>, ObserverType {
             : eventText
 
         logEvent(_parent._identifier, dateFormat: _timestampFormatter, content: "Event \(eventNormalized)")
+
         forwardOn(event)
     }
     
@@ -70,7 +71,7 @@ class Debug<Element> : Producer<Element> {
     }
     
     override func run<O: ObserverType where O.E == Element>(_ observer: O) -> Disposable {
-        let sink = Debug_(parent: self, observer: observer)
+        let sink = DebugSink(parent: self, observer: observer)
         sink.disposable = _source.subscribe(sink)
         return sink
     }

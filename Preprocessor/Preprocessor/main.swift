@@ -56,7 +56,7 @@ func processFile(path: String, outputPath: String) -> String {
         functionContentComponents.append("components.append(\(escape(value: suffix)));\n")
     }
     
-    functionContentComponents.append("try! components.join(withSeparator:\"\").write(toFile:\"\(outputPath)\", atomically: false, encoding: NSUTF8StringEncoding)")
+    functionContentComponents.append("try! components.joined(separator:\"\").write(toFile:\"\(outputPath)\", atomically: false, encoding: String.Encoding.utf8)")
     
     return functionContentComponents.joined(separator: "")
 }
