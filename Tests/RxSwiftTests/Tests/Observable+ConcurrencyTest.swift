@@ -60,7 +60,7 @@ extension ObservableConcurrencyTest {
         let compositeDisposable = CompositeDisposable()
 
         for test in tests {
-           _ = compositeDisposable.addDisposable(runDispatchQueueSchedulerTests(scheduler, tests: test))
+           _ = compositeDisposable.insert(runDispatchQueueSchedulerTests(scheduler, tests: test))
         }
 
         compositeDisposable.dispose()
