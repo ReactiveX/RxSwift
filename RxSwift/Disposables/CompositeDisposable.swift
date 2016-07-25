@@ -142,7 +142,7 @@ public class CompositeDisposable : DisposeBase, Disposable, Cancelable {
     */
     public func dispose() {
         if let disposables = _dispose() {
-            disposeAllIn(disposables)
+            disposeAll(in: disposables)
         }
     }
 
