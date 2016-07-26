@@ -283,7 +283,7 @@ extension UITableView {
     Reactive wrapper for `delegate` message `tableView:willDisplayCell:forRowAtIndexPath:`.
     */
     public var rx_willDisplayCell: ControlEvent<WillDisplayCellEvent> {
-        let source: Observable<DidEndDisplayingCellEvent> = rx_delegate.observe(#selector(UITableViewDelegate.tableView(_:willDisplayCell:forRowAtIndexPath:)))
+        let source: Observable<WillDisplayCellEvent> = rx_delegate.observe(#selector(UITableViewDelegate.tableView(_:willDisplayCell:forRowAtIndexPath:)))
             .map { a in
                 return (try castOrThrow(UITableViewCell.self, a[1]), try castOrThrow(NSIndexPath.self, a[2]))
             }
