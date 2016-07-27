@@ -118,9 +118,9 @@ public class CompositeDisposable : DisposeBase, Disposable, Cancelable {
      
      - parameter disposeKey: Key used to identify disposable to be removed.
      */
-    @available(*, deprecated, renamed: "removeDisposable(forKey:)")
+    @available(*, deprecated, renamed: "remove(for:)")
     public func removeDisposable(_ disposeKey: DisposeKey) {
-        removeDisposable(forKey: disposeKey)
+        remove(for: disposeKey)
     }
     
     /**
@@ -128,11 +128,11 @@ public class CompositeDisposable : DisposeBase, Disposable, Cancelable {
      
      - parameter disposeKey: Key used to identify disposable to be removed.
      */
-    public func removeDisposable(forKey disposeKey: DisposeKey) {
-        _removeDisposable(forKey: disposeKey)?.dispose()
+    public func remove(for disposeKey: DisposeKey) {
+        _remove(for: disposeKey)?.dispose()
     }
     
-    private func _removeDisposable(forKey disposeKey: DisposeKey) -> Disposable? {
+    private func _remove(for disposeKey: DisposeKey) -> Disposable? {
         _lock.lock(); defer { _lock.unlock() }
         return _disposables?.removeKey(disposeKey)
     }

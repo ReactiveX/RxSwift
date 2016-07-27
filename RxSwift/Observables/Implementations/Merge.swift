@@ -42,7 +42,7 @@ class MergeLimitedSinkIter<S: ObservableConvertibleType, O: ObserverType where S
             _parent.forwardOn(event)
             _parent.dispose()
         case .completed:
-            _parent._group.removeDisposable(forKey: _disposeKey)
+            _parent._group.remove(for: _disposeKey)
             if let next = _parent._queue.dequeue() {
                 _parent.subscribe(next, group: _parent._group)
             }
@@ -253,7 +253,7 @@ class MergeSinkIter<SourceType, S: ObservableConvertibleType, O: ObserverType wh
                 _parent.dispose()
             // }
         case .completed:
-            _parent._group.removeDisposable(forKey: _disposeKey)
+            _parent._group.remove(for: _disposeKey)
             // If this has returned true that means that `Completed` should be sent.
             // In case there is a race who will sent first completed,
             // lock will sort it out. When first Completed message is sent
