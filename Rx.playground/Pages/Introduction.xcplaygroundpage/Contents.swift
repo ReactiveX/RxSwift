@@ -44,7 +44,7 @@ All of these various systems makes our code needlessly complex. Wouldn't it be b
 
  `--tap--tap----------tap--> // "|" = Continues indefinitely, such as a sequence of button taps`
 
- > These diagrams are call marble diagrams. You can learn more about them at [RxMarbles.com](http://rxmarbles.com).
+ > These diagrams are called marble diagrams. You can learn more about them at [RxMarbles.com](http://rxmarbles.com).
 */
 /*:
  ### Observables and observers (aka subscribers)
