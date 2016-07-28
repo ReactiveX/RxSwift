@@ -60,12 +60,12 @@ extension DispatchQueueConfiguration {
             if compositeDisposable.disposed {
                 return
             }
-            _ = compositeDisposable.addDisposable(action(state))
+            _ = compositeDisposable.insert(action(state))
             cancelTimer.dispose()
         })
         timer.resume()
 
-        _ = compositeDisposable.addDisposable(cancelTimer)
+        _ = compositeDisposable.insert(cancelTimer)
 
         return compositeDisposable
     }

@@ -44,12 +44,12 @@ public class OperationQueueScheduler: ImmediateSchedulerType {
             }
             
             let disposable = action(state)
-            let _ = compositeDisposableWeak?.addDisposable(disposable)
+            let _ = compositeDisposableWeak?.insert(disposable)
         }
 
         self.operationQueue.addOperation(operation)
         
-        let _ = compositeDisposable.addDisposable(AnonymousDisposable(operation.cancel))
+        let _ = compositeDisposable.insert(AnonymousDisposable(operation.cancel))
 
         return compositeDisposable
     }
