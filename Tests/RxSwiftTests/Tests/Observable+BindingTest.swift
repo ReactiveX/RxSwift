@@ -293,7 +293,7 @@ extension ObservableBindingTest {
             completed(250)
         ])
         
-        XCTAssertTrue(subject.diposed)
+        XCTAssertTrue(subject.isDisposed)
     }
     
     func testRefCount_NotConnected() {

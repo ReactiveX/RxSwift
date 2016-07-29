@@ -22,7 +22,7 @@ class MySubject<Element where Element : Hashable> : SubjectType, ObserverType {
         return _subscribeCount
     }
     
-    var diposed: Bool {
+    var isDisposed: Bool {
         return _isDisposed
     }
     
