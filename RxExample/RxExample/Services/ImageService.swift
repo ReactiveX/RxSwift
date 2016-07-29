@@ -75,17 +75,17 @@ class DefaultImageService: ImageService {
                     else {
                         // fetch from network
                         decodedImage = self.$.URLSession.rx_data(URLRequest(url: url))
-                            .doOnNext { data in
+                            .do(onNext: { data in
                                 self._imageDataCache.setObject(data, forKey: url)
-                            }
+                            })
                             .flatMap(self.decodeImage)
                             .trackActivity(self.loadingImage)
                     }
                 }
                 
-                return decodedImage.doOnNext { image in
+                return decodedImage.do(onNext: { image in
                     self._imageCache.setObject(image, forKey: url)
-                }
+                })
             }
     }
 

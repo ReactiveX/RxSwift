@@ -123,7 +123,7 @@ extension DriverConvertibleType {
     public func doOn(_ eventHandler: (Event<E>) -> Void)
         -> Driver<E> {
         let source = self.asObservable()
-            .doOn(eventHandler: eventHandler)
+            .doOn(eventHandler)
         
         return Driver(source)
     }
@@ -137,7 +137,7 @@ extension DriverConvertibleType {
     - returns: The source sequence with the side-effecting behavior applied.
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func doOn(_ onNext: ((E) -> Void)? = nil, onError: ((ErrorProtocol) -> Void)? = nil, onCompleted: (() -> Void)? = nil)
+    public func doOn(onNext: ((E) -> Void)? = nil, onError: ((ErrorProtocol) -> Void)? = nil, onCompleted: (() -> Void)? = nil)
         -> Driver<E> {
         let source = self.asObservable()
             .doOn(onNext: onNext, onError: onError, onCompleted: onCompleted)
@@ -152,9 +152,9 @@ extension DriverConvertibleType {
      - returns: The source sequence with the side-effecting behavior applied.
      */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func doOnNext(_ onNext: ((E) -> Void))
+    public func `do`(onNext: ((E) -> Void))
         -> Driver<E> {
-        return self.doOn(onNext)
+        return self.doOn(onNext: onNext)
     }
 
     /**
@@ -164,7 +164,7 @@ extension DriverConvertibleType {
      - returns: The source sequence with the side-effecting behavior applied.
      */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func doOnCompleted(_ onCompleted: (() -> Void))
+    public func `do`(onCompleted: (() -> Void))
         -> Driver<E> {
         return self.doOn(onCompleted: onCompleted)
     }
@@ -399,7 +399,7 @@ extension Collection where Iterator.Element : DriverConvertibleType {
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
     public func zip<R>(_ resultSelector: ([Generator.Element.E]) throws -> R) -> Driver<R> {
-        let source = self.map { $0.asDriver().asObservable() }.zip(resultSelector: resultSelector)
+        let source = self.map { $0.asDriver().asObservable() }.zip(resultSelector)
         return Driver<R>(source)
     }
 }
@@ -415,7 +415,7 @@ extension Collection where Iterator.Element : DriverConvertibleType {
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
     public func combineLatest<R>(_ resultSelector: ([Generator.Element.E]) throws -> R) -> Driver<R> {
-        let source = self.map { $0.asDriver().asObservable() }.combineLatest(resultSelector: resultSelector)
+        let source = self.map { $0.asDriver().asObservable() }.combineLatest(resultSelector)
         return Driver<R>(source)
     }
 }
