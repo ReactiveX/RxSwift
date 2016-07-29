@@ -11,7 +11,7 @@ import Foundation
 /**
 Represents a disposable resource that can be checked for disposal status.
 */
-public class BooleanDisposable : Disposable, Cancelable {
+public final class BooleanDisposable : Disposable, Cancelable {
  
     internal static let BooleanDisposableTrue = BooleanDisposable(disposed: true)
     private var _disposed = false

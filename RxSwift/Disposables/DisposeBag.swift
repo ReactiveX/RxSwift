@@ -31,7 +31,7 @@ or create a new one in its place.
 
 In case explicit disposal is necessary, there is also `CompositeDisposable`.
 */
-public class DisposeBag: DisposeBase {
+public final class DisposeBag: DisposeBase {
     
     private var _lock = SpinLock()
     
