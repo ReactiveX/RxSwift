@@ -15,5 +15,5 @@ public protocol Cancelable : Disposable {
     /**
     - returns: Was resource disposed.
     */
-    var disposed: Bool { get }
+    var isDisposed: Bool { get }
 }

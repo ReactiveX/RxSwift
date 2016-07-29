@@ -19,7 +19,7 @@ class Sink<O : ObserverType> : SingleAssignmentDisposable {
     }
     
     final func forwardOn(_ event: Event<O.E>) {
-        if disposed {
+        if isDisposed {
             return
         }
         _observer.on(event)

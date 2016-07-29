@@ -92,7 +92,7 @@ class BufferTimeCountSink<Element, O: ObserverType where O.E == [Element]>
     }
     
     func createTimer(_ windowID: Int) {
-        if _timerD.disposed {
+        if _timerD.isDisposed {
             return
         }
         

@@ -25,7 +25,7 @@ extension DispatchQueueConfiguration {
         let cancel = SingleAssignmentDisposable()
 
         queue.async {
-            if cancel.disposed {
+            if cancel.isDisposed {
                 return
             }
 
@@ -57,7 +57,7 @@ extension DispatchQueueConfiguration {
         }
 
         timer.setEventHandler(handler: {
-            if compositeDisposable.disposed {
+            if compositeDisposable.isDisposed {
                 return
             }
             _ = compositeDisposable.insert(action(state))
@@ -91,7 +91,7 @@ extension DispatchQueueConfiguration {
         }
 
         timer.setEventHandler(handler: {
-            if cancelTimer.disposed {
+            if cancelTimer.isDisposed {
                 return
             }
             timerState = action(timerState)
