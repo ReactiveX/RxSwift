@@ -129,9 +129,6 @@
       </FileRef>
    </Group>
    <FileRef
-      location = "group:Rx.playground">
-   </FileRef>
-   <FileRef
       location = "group:Rx.xcodeproj">
    </FileRef>
    <FileRef
