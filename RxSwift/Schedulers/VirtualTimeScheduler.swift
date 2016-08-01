@@ -128,7 +128,7 @@ public class VirtualTimeScheduler<Converter: VirtualTimeConverterType>
 
         _schedulerQueue.enqueue(item)
         
-        _ = compositeDisposable.addDisposable(item)
+        _ = compositeDisposable.insert(item)
         
         return compositeDisposable
     }

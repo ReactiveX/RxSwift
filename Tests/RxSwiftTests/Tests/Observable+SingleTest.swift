@@ -573,9 +573,9 @@ extension ObservableSingleTest {
 
         var numberOfTimesInvoked = 0
 
-        let res = scheduler.start { xs.doOnNext { error in
+        let res = scheduler.start { xs.do(onNext: { error in
                 numberOfTimesInvoked = numberOfTimesInvoked + 1
-            }
+            })
         }
 
         let correctMessages = [
@@ -610,12 +610,12 @@ extension ObservableSingleTest {
 
         var numberOfTimesInvoked = 0
 
-        let res = scheduler.start { xs.doOnNext { error in
+        let res = scheduler.start { xs.do(onNext: { error in
                 if numberOfTimesInvoked > 2 {
                     throw testError
                 }
                 numberOfTimesInvoked = numberOfTimesInvoked + 1
-            }
+            })
         }
 
         let correctMessages = [
@@ -647,10 +647,10 @@ extension ObservableSingleTest {
         var recordedError: ErrorProtocol!
         var numberOfTimesInvoked = 0
 
-        let res = scheduler.start { xs.doOnError { error in
+        let res = scheduler.start { xs.do(onError: { error in
                 recordedError = error
                 numberOfTimesInvoked = numberOfTimesInvoked + 1
-            }
+            })
         }
 
         let correctMessages = [
@@ -678,9 +678,9 @@ extension ObservableSingleTest {
             error(250, testError)
             ])
 
-        let res = scheduler.start { xs.doOnError { _ in
+        let res = scheduler.start { xs.do(onError: { _ in
                 throw testError1
-            }
+            })
         }
 
         let correctMessages = [
@@ -710,9 +710,9 @@ extension ObservableSingleTest {
 
         var didComplete = false
 
-        let res = scheduler.start { xs.doOnCompleted { error in
+        let res = scheduler.start { xs.do(onCompleted: { error in
                 didComplete = true
-            }
+            })
         }
 
         let correctMessages = [
@@ -745,9 +745,9 @@ extension ObservableSingleTest {
             completed(250)
             ])
 
-        let res = scheduler.start { xs.doOnCompleted { error in
+        let res = scheduler.start { xs.do(onCompleted: { error in
                 throw testError
-            }
+            })
         }
 
         let correctMessages = [

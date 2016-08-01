@@ -77,17 +77,29 @@ public class CompositeDisposable : DisposeBase, Disposable, Cancelable {
     - returns: Key that can be used to remove disposable from composite disposable. In case dispose bag was already
         disposed `nil` will be returned.
     */
+    @available(*, deprecated, renamed: "insert(_:)")
     public func addDisposable(_ disposable: Disposable) -> DisposeKey? {
-        let key = _addDisposable(disposable)
-
+        return insert(disposable)
+    }
+    
+    /**
+     Adds a disposable to the CompositeDisposable or disposes the disposable if the CompositeDisposable is disposed.
+     
+     - parameter disposable: Disposable to add.
+     - returns: Key that can be used to remove disposable from composite disposable. In case dispose bag was already
+     disposed `nil` will be returned.
+     */
+    public func insert(_ disposable: Disposable) -> DisposeKey? {
+        let key = _insert(disposable)
+        
         if key == nil {
             disposable.dispose()
         }
         
         return key
     }
-
-    private func _addDisposable(_ disposable: Disposable) -> DisposeKey? {
+    
+    private func _insert(_ disposable: Disposable) -> DisposeKey? {
         _lock.lock(); defer { _lock.unlock() }
 
         return _disposables?.insert(disposable)
@@ -102,15 +114,25 @@ public class CompositeDisposable : DisposeBase, Disposable, Cancelable {
     }
     
     /**
-    Removes and disposes the disposable identified by `disposeKey` from the CompositeDisposable.
-    
-    - parameter disposeKey: Key used to identify disposable to be removed.
-    */
+     Removes and disposes the disposable identified by `disposeKey` from the CompositeDisposable.
+     
+     - parameter disposeKey: Key used to identify disposable to be removed.
+     */
+    @available(*, deprecated, renamed: "remove(for:)")
     public func removeDisposable(_ disposeKey: DisposeKey) {
-        _removeDisposable(disposeKey)?.dispose()
+        remove(for: disposeKey)
     }
-
-    private func _removeDisposable(_ disposeKey: DisposeKey) -> Disposable? {
+    
+    /**
+     Removes and disposes the disposable identified by `disposeKey` from the CompositeDisposable.
+     
+     - parameter disposeKey: Key used to identify disposable to be removed.
+     */
+    public func remove(for disposeKey: DisposeKey) {
+        _remove(for: disposeKey)?.dispose()
+    }
+    
+    private func _remove(for disposeKey: DisposeKey) -> Disposable? {
         _lock.lock(); defer { _lock.unlock() }
         return _disposables?.removeKey(disposeKey)
     }
@@ -120,7 +142,7 @@ public class CompositeDisposable : DisposeBase, Disposable, Cancelable {
     */
     public func dispose() {
         if let disposables = _dispose() {
-            disposeAllIn(disposables)
+            disposeAll(in: disposables)
         }
     }
 
