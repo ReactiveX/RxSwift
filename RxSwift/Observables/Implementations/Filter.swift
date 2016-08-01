@@ -12,8 +12,6 @@ class FilterSink<O : ObserverType>: Sink<O>, ObserverType {
     typealias Predicate = (Element) throws -> Bool
     typealias Element = O.E
     
-    typealias Parent = Filter<Element>
-    
     private let _predicate: Predicate
     
     init(predicate: Predicate, observer: O) {
