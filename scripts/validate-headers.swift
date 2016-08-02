@@ -23,7 +23,7 @@ Validates that all headers are in this standard form
 Only Project is not checked yet, but it will be soon.
 */
 
-let fileManager = FileManager.default()
+let fileManager = FileManager.default
 
 let allowedExtensions = [
     ".swift",
