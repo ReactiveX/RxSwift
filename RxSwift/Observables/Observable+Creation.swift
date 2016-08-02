@@ -83,7 +83,7 @@ extension Observable {
     - returns: The observable sequence that terminates with specified error.
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    public static func error(_ error: ErrorProtocol) -> Observable<E> {
+    public static func error(_ error: Swift.Error) -> Observable<E> {
         return Error(error: error)
     }
 

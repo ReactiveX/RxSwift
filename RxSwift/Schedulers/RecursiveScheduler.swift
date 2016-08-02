@@ -14,7 +14,7 @@ Type erased recursive scheduler.
 class AnyRecursiveScheduler<State> {
     typealias Action =  (state: State, scheduler: AnyRecursiveScheduler<State>) -> Void
 
-    private let _lock = RecursiveLock()
+    private let _lock = NSRecursiveLock()
     
     // state
     private let _group = CompositeDisposable()

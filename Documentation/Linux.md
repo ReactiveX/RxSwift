@@ -28,4 +28,4 @@ What works:
 What doesn't work:
 * Schedulers - because they are dependent on https://github.com/apple/swift-corelibs-libdispatch and it still hasn't been released
 * Multithreading - still no access to c11 locks
-* For some reason it looks like Swift compiler generates wrong code when using `ErrorProtocol` on `Linux`, so don't use errors, otherwise you can get weird crashes.
+* For some reason it looks like Swift compiler generates wrong code when using `Swift.Error` on `Linux`, so don't use errors, otherwise you can get weird crashes.

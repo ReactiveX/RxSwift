@@ -138,7 +138,7 @@ extension UITableView {
             .addDisposableTo(disposeBag)
     */
     public func rx_itemsWithDataSource<
-            DataSource: protocol<RxTableViewDataSourceType, UITableViewDataSource>,
+            DataSource: RxTableViewDataSourceType & UITableViewDataSource,
             O: ObservableType where DataSource.Element == O.E
         >
         (_ dataSource: DataSource)

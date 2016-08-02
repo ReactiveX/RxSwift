@@ -15,7 +15,7 @@ let RxCompositeFailures = "RxCompositeFailures"
 Generic Rx error codes.
 */
 public enum RxError
-    : ErrorProtocol
+    : Swift.Error
     , CustomDebugStringConvertible {
     /**
     Unknown error occured.

@@ -991,7 +991,7 @@ extension KVOObservableTests {
     func testObserveWeak_PropertyDoesntExist() {
         var root: HasStrongProperty! = HasStrongProperty()
         
-        var lastError: ErrorProtocol? = nil
+        var lastError: Swift.Error? = nil
         
         _ = root.rx_observeWeakly(NSNumber.self, "notExist")
             .subscribeError { error in
@@ -1017,7 +1017,7 @@ extension KVOObservableTests {
     func testObserveWeak_HierarchyPropertyDoesntExist() {
         var root: HasStrongProperty! = HasStrongProperty()
         
-        var lastError: ErrorProtocol? = nil
+        var lastError: Swift.Error? = nil
         
         _ = root.rx_observeWeakly(NSNumber.self, "property.notExist")
             .subscribeError { error in

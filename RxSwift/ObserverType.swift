@@ -47,10 +47,10 @@ public extension ObserverType {
     }
     
     /**
-    Convenience method equivalent to `on(.Error(error: ErrorProtocol))`
-    - parameter error: ErrorProtocol to send to observer(s)
+    Convenience method equivalent to `on(.Error(error: Swift.Error))`
+    - parameter error: Swift.Error to send to observer(s)
     */
-    final func onError(_ error: ErrorProtocol) {
+    final func onError(_ error: Swift.Error) {
         on(.error(error))
     }
 }

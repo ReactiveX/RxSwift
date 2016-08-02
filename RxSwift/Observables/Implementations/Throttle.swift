@@ -18,7 +18,7 @@ class ThrottleSink<O: ObserverType>
     
     private let _parent: ParentType
     
-    let _lock = RecursiveLock()
+    let _lock = NSRecursiveLock()
     
     // state
     private var _id = 0 as UInt64

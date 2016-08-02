@@ -15,7 +15,7 @@ class ZipCollectionTypeSink<C: Collection, R, O: ObserverType where C.Iterator.E
     
     private let _parent: Parent
     
-    private let _lock = RecursiveLock()
+    private let _lock = NSRecursiveLock()
     
     // state
     private var _numberOfValues = 0

@@ -14,7 +14,7 @@ public func printExampleHeader(description: String) {
     print("\n--- \(description) example ---")
 }
 
-public enum Error: ErrorProtocol {
+public enum Error: Swift.Error {
     case test
 }
 
@@ -27,7 +27,7 @@ public enum Error: ErrorProtocol {
 public func delay(delay: Double, closure: (Void) -> Void) {
 
     let delayTime = DispatchTime.now() + DispatchTimeInterval.seconds(Int(delay))
-    DispatchQueue.main.after(when: delayTime) {
+    DispatchQueue.main.asyncAfter(deadline: delayTime) {
         closure()
     }
 }

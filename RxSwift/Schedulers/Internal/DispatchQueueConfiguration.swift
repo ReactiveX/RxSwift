@@ -41,7 +41,7 @@ extension DispatchQueueConfiguration {
 
         let compositeDisposable = CompositeDisposable()
 
-        let timer = DispatchSource.timer(queue: queue)
+        let timer = DispatchSource.makeTimerSource(queue: queue)
         timer.scheduleOneshot(deadline: deadline)
 
         // TODO:
@@ -75,7 +75,7 @@ extension DispatchQueueConfiguration {
 
         var timerState = state
 
-        let timer = DispatchSource.timer(queue: queue)
+        let timer = DispatchSource.makeTimerSource(queue: queue)
         timer.scheduleRepeating(deadline: initial, interval: dispatchInterval(period), leeway: leeway)
 
         // TODO:

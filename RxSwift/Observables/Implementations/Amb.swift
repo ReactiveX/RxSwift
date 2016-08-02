@@ -54,7 +54,7 @@ class AmbSink<ElementType, O: ObserverType where O.E == ElementType> : Sink<O> {
 
     private let _parent: Parent
     
-    private let _lock = RecursiveLock()
+    private let _lock = NSRecursiveLock()
     // state
     private var _choice = AmbState.neither
     

@@ -22,7 +22,8 @@
     let AtomicDecrement = OSAtomicDecrement32
 
     extension Thread {
-        static func setThreadLocalStorageValue<T: AnyObject>(_ value: T?, forKey key: protocol<AnyObject, NSCopying>) {
+        static func setThreadLocalStorageValue<T: AnyObject>(_ value: T?, forKey key: AnyObject & NSCopying
+            ) {
             let currentThread = Thread.current
             let threadDictionary = currentThread.threadDictionary
 
@@ -34,7 +35,7 @@
             }
 
         }
-        static func getThreadLocalStorageValueForKey<T>(_ key: protocol<AnyObject, NSCopying>) -> T? {
+        static func getThreadLocalStorageValueForKey<T>(_ key: AnyObject & NSCopying) -> T? {
             let currentThread = Thread.current
             let threadDictionary = currentThread.threadDictionary
             

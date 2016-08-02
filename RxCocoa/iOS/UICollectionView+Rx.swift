@@ -135,7 +135,7 @@ extension UICollectionView {
             .addDisposableTo(disposeBag)
     */
     public func rx_itemsWithDataSource<
-            DataSource: protocol<RxCollectionViewDataSourceType, UICollectionViewDataSource>,
+            DataSource: RxCollectionViewDataSourceType & UICollectionViewDataSource,
             O: ObservableType where DataSource.Element == O.E
         >
         (_ dataSource: DataSource)

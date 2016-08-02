@@ -18,7 +18,7 @@ import RxSwift
 RxCocoa errors.
 */
 public enum RxCocoaError
-    : ErrorProtocol
+    : Swift.Error
     , CustomDebugStringConvertible {
     /**
     Unknown error has occurred.
@@ -69,7 +69,7 @@ public enum RxCocoaInterceptionMechanism {
 RxCocoa ObjC runtime modification errors.
  */
 public enum RxCocoaObjCRuntimeError
-    : ErrorProtocol
+    : Swift.Error
     , CustomDebugStringConvertible {
     /**
     Unknown error has occurred.
@@ -193,23 +193,23 @@ public extension RxCocoaObjCRuntimeError {
         switch self {
         case let .unknown(target):
             return "Unknown error occurred.\nTarget: `\(target)`"
-        case let objectMessagesAlreadyBeingIntercepted(target, interceptionMechanism):
+        case let .objectMessagesAlreadyBeingIntercepted(target, interceptionMechanism):
             let interceptionMechanismDescription = interceptionMechanism == .kvo ? "KVO" : "other interception mechanism"
             return "Collision between RxCocoa interception mechanism and \(interceptionMechanismDescription)."
             + " To resolve this conflict please use this interception mechanism first.\nTarget: \(target)"
-        case let selectorNotImplemented(target):
+        case let .selectorNotImplemented(target):
             return "Trying to observe messages for selector that isn't implemented.\nTarget: \(target)"
-        case let cantInterceptCoreFoundationTollFreeBridgedObjects(target):
+        case let .cantInterceptCoreFoundationTollFreeBridgedObjects(target):
             return "Interception of messages sent to Core Foundation isn't supported.\nTarget: \(target)"
-        case let threadingCollisionWithOtherInterceptionMechanism(target):
+        case let .threadingCollisionWithOtherInterceptionMechanism(target):
             return "Detected a conflict while modifying ObjC runtime.\nTarget: \(target)"
-        case let savingOriginalForwardingMethodFailed(target):
+        case let .savingOriginalForwardingMethodFailed(target):
             return "Saving original method implementation failed.\nTarget: \(target)"
-        case let replacingMethodWithForwardingImplementation(target):
+        case let .replacingMethodWithForwardingImplementation(target):
             return "Intercepting a sent message by replacing a method implementation with `_objc_msgForward` failed for some reason.\nTarget: \(target)"
-        case let observingPerformanceSensitiveMessages(target):
+        case let .observingPerformanceSensitiveMessages(target):
             return "Attempt to intercept one of the performance sensitive methods. \nTarget: \(target)"
-        case let observingMessagesWithUnsupportedReturnType(target):
+        case let .observingMessagesWithUnsupportedReturnType(target):
             return "Attempt to intercept a method with unsupported return type. \nTarget: \(target)"
         }
     }
@@ -219,7 +219,7 @@ public extension RxCocoaObjCRuntimeError {
 
 // MARK: Error binding policies
 
-func bindingErrorToInterface(_ error: ErrorProtocol) {
+func bindingErrorToInterface(_ error: Swift.Error) {
     let error = "Binding error to UI: \(error)"
 #if DEBUG
     rxFatalError(error)

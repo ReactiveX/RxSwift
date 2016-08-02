@@ -30,7 +30,7 @@ public final class BehaviorSubject<Element>
         return _observers.count > 0
     }
     
-    let _lock = RecursiveLock()
+    let _lock = NSRecursiveLock()
     
     // state
     private var _disposed = false

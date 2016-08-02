@@ -22,7 +22,7 @@ class PrimitiveHotObservable<ElementType> : ObservableType {
     var subscriptions: [Subscription]
     var observers: Bag<AnyObserver<E>>
 
-    let lock = RecursiveLock()
+    let lock = NSRecursiveLock()
     
     init() {
         self.subscriptions = []

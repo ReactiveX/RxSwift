@@ -9,9 +9,9 @@
 import Foundation
 
 class Error<Element> : Producer<Element> {
-    private let _error: ErrorProtocol
+    private let _error: Swift.Error
     
-    init(error: ErrorProtocol) {
+    init(error: Swift.Error) {
         _error = error
     }
     

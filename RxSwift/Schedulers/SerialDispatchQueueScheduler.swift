@@ -51,7 +51,7 @@ public class SerialDispatchQueueScheduler : SchedulerType {
     - parameter serialQueueConfiguration: Additional configuration of internal serial dispatch queue.
     */
     public convenience init(internalSerialQueueName: String, serialQueueConfiguration: ((DispatchQueue) -> Void)? = nil, leeway: DispatchTimeInterval = DispatchTimeInterval.nanoseconds(0)) {
-        let queue = DispatchQueue(label: internalSerialQueueName, attributes: DispatchQueueAttributes.serial)
+        let queue = DispatchQueue(label: internalSerialQueueName, attributes: [])
         serialQueueConfiguration?(queue)
         self.init(serialQueue: queue, leeway: leeway)
     }
@@ -65,7 +65,7 @@ public class SerialDispatchQueueScheduler : SchedulerType {
     public convenience init(queue: DispatchQueue, internalSerialQueueName: String, leeway: DispatchTimeInterval = DispatchTimeInterval.nanoseconds(0)) {
         // Swift 3.0 IUO
         let serialQueue = DispatchQueue(label: internalSerialQueueName,
-                                        attributes: DispatchQueueAttributes.serial,
+                                        attributes: [],
                                         target: queue)
         self.init(serialQueue: serialQueue, leeway: leeway)
     }
@@ -78,8 +78,8 @@ public class SerialDispatchQueueScheduler : SchedulerType {
      */
     @available(iOS 8, OSX 10.10, *)
     public convenience init(globalConcurrentQueueQOS: DispatchQueueSchedulerQOS, internalSerialQueueName: String = "rx.global_dispatch_queue.serial", leeway: DispatchTimeInterval = DispatchTimeInterval.nanoseconds(0)) {
-        let priority = globalConcurrentQueueQOS.QOSClass
-        self.init(queue: DispatchQueue.global(attributes: DispatchQueue.GlobalAttributes(rawValue: UInt64(priority.rawValue))), internalSerialQueueName: internalSerialQueueName, leeway: leeway)
+        let priority = globalConcurrentQueueQOS.qos
+        self.init(queue: DispatchQueue.global(qos: priority.qosClass), internalSerialQueueName: internalSerialQueueName, leeway: leeway)
     }
     
     /**

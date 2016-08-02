@@ -18,7 +18,7 @@ final class ShareReplay1WhileConnected<Element>
 
     private let _source: Observable<Element>
 
-    private var _lock = RecursiveLock()
+    private var _lock = NSRecursiveLock()
 
     private var _connection: SingleAssignmentDisposable?
     private var _element: Element?
