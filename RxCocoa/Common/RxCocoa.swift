@@ -296,16 +296,18 @@ let delegateNotSet = "Delegate not set"
 
 // MARK: Conversions `NSError` > `RxCocoaObjCRuntimeError`
 
-extension NSError {
+extension Error {
     func rxCocoaErrorForTarget(_ target: AnyObject) -> RxCocoaObjCRuntimeError {
-        if domain == RXObjCRuntimeErrorDomain {
-            let errorCode = RXObjCRuntimeError(rawValue: self.code) ?? .unknown
-
+        let error = self as NSError
+        
+        if error.domain == RXObjCRuntimeErrorDomain {
+            let errorCode = RXObjCRuntimeError(rawValue: error.code) ?? .unknown
+            
             switch errorCode {
             case .unknown:
                 return .unknown(target: target)
             case .objectMessagesAlreadyBeingIntercepted:
-                let isKVO = (self.userInfo[RXObjCRuntimeErrorIsKVOKey] as? NSNumber)?.boolValue ?? false
+                let isKVO = (error.userInfo[RXObjCRuntimeErrorIsKVOKey] as? NSNumber)?.boolValue ?? false
                 return .objectMessagesAlreadyBeingIntercepted(target: target, interceptionMechanism: isKVO ? .kvo : .unknown)
             case .selectorNotImplemented:
                 return .selectorNotImplemented(target: target)
@@ -323,7 +325,7 @@ extension NSError {
                 return .observingMessagesWithUnsupportedReturnType(target: target)
             }
         }
-
+        
         return RxCocoaObjCRuntimeError.unknown(target: target)
     }
 }

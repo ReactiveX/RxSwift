@@ -126,10 +126,6 @@ extension NSObject {
      - returns: Observable sequence of object deallocating events.
      */
     public func rx_sentMessage(_ selector: Selector) -> Observable<[AnyObject]> {
-        return Observable.create { _ in
-            return AnonymousDisposable {}
-        }
-        /*
         return rx_synchronized {
             // in case of dealloc selector replay subject behavior needs to be used
             if selector == deallocSelector {
@@ -164,7 +160,7 @@ extension NSObject {
 
             subject.targetImplementation = targetImplementation
             return subject.asObservable()
-        }*/
+        }
     }
 
     /**
@@ -178,10 +174,6 @@ extension NSObject {
     - returns: Observable sequence of object deallocating events.
     */
     public var rx_deallocating: Observable<()> {
-        return Observable.create { _ in
-            return AnonymousDisposable {}
-        }
-        /*
         return rx_synchronized {
 
             let subject: DeallocatingObservable
@@ -210,7 +202,7 @@ extension NSObject {
 
             subject.targetImplementation = targetImplementation!
             return subject.asObservable()
-        }*/
+        }
     }
 #endif
 }
