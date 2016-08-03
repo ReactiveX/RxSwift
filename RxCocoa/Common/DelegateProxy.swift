@@ -73,8 +73,8 @@ public class DelegateProxy : _RXDelegateProxy {
          ....
 
          // reactive property implementation in a real class (`UIScrollView`)
-         public var rx_property: Observable<CGPoint> {
-             let proxy = RxScrollViewDelegateProxy.proxyForObject(self)
+         public var property: Observable<CGPoint> {
+             let proxy = RxScrollViewDelegateProxy.proxyForObject(base)
              return proxy.internalSubject.asObservable()
          }
 

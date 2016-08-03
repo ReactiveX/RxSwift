@@ -12,21 +12,21 @@ import RxSwift
 #endif
 import Cocoa
 
-extension NSButton {
+extension Reactive where Base: NSButton {
     
     /**
     Reactive wrapper for control event.
     */
-    public var rx_tap: ControlEvent<Void> {
-        return rx_controlEvent
+    public var tap: ControlEvent<Void> {
+        return controlEvent
     }
 
     /**
     Reactive wrapper for `state` property`.
     */
-    public var rx_state: ControlProperty<Int> {
-        return NSButton.rx_value(
-            self,
+    public var state: ControlProperty<Int> {
+        return Reactive<NSButton>.value(
+            base,
             getter: { control in
                 return control.state
             }, setter: { control, state in

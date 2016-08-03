@@ -15,13 +15,13 @@ import Foundation
   import RxSwift
 #endif
 
-  extension UIViewController {
+  extension Reactive where Base: UIViewController {
 
     /**
      Bindable sink for `title`.
      */
-    public var rx_title: AnyObserver<String> {
-      return UIBindingObserver(UIElement: self) { viewController, title in
+    public var title: AnyObserver<String> {
+      return UIBindingObserver(UIElement: self.base) { viewController, title in
         viewController.title = title
       }.asObserver()
     }

@@ -12,13 +12,13 @@ import RxSwift
 #endif
 import Cocoa
 
-extension NSImageView {
+extension Reactive where Base: NSImageView {
    
     /**
     Bindable sink for `image` property.
     */
-    public var rx_image: AnyObserver<NSImage?> {
-        return self.rx_imageAnimated(nil)
+    public var image: AnyObserver<NSImage?> {
+        return imageAnimated(nil)
     }
     
     /**
@@ -26,8 +26,8 @@ extension NSImageView {
     
     - parameter transitionType: Optional transition type while setting the image (kCATransitionFade, kCATransitionMoveIn, ...)
     */
-    public func rx_imageAnimated(_ transitionType: String?) -> AnyObserver<NSImage?> {
-        return UIBindingObserver(UIElement: self) { control, value in
+    public func imageAnimated(_ transitionType: String?) -> AnyObserver<NSImage?> {
+        return UIBindingObserver(UIElement: self.base) { control, value in
             if let transitionType = transitionType {
                 if value != nil {
                     let transition = CATransition()

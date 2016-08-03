@@ -51,18 +51,16 @@ class GestureTarget<Recognizer: UIGestureRecognizer>: RxTarget {
     }
 }
 
-extension UIGestureRecognizer: Reactive  { }
-
-extension Reactive where Self: UIGestureRecognizer {
+extension Reactive where Base: UIGestureRecognizer {
     
     /**
     Reactive wrapper for gesture recognizer events.
     */
-    public var rx_event: ControlEvent<Self> {
-        let source: Observable<Self> = Observable.create { [weak self] observer in
+    public var event: ControlEvent<Base> {
+        let source: Observable<Base> = Observable.create { [weak control = self.base] observer in
             MainScheduler.ensureExecutingOnScheduler()
 
-            guard let control = self else {
+            guard let control = control else {
                 observer.on(.completed)
                 return NopDisposable.instance
             }
@@ -73,7 +71,7 @@ extension Reactive where Self: UIGestureRecognizer {
             }
             
             return observer
-        }.takeUntil(rx_deallocated)
+        }.takeUntil(deallocated)
         
         return ControlEvent(events: source)
     }

@@ -35,14 +35,14 @@ public class WikipediaSearchCell: UITableViewCell {
 
             viewModel.title
                 .map(Optional.init)
-                .drive(self.titleOutlet.rx_text)
+                .drive(self.titleOutlet.rx.text)
                 .addDisposableTo(disposeBag)
 
             self.URLOutlet.text = viewModel.searchResult.URL.absoluteString ?? ""
 
             let reachabilityService = Dependencies.sharedDependencies.reachabilityService
             viewModel.imageURLs
-                .drive(self.imagesOutlet.rx_itemsWithCellIdentifier("ImageCell", cellType: CollectionViewImageCell.self)) { [weak self] (_, url, cell) in
+                .drive(self.imagesOutlet.rx.itemsWithCellIdentifier("ImageCell", cellType: CollectionViewImageCell.self)) { [weak self] (_, url, cell) in
                     cell.downloadableImage = self?.imageService.imageFromURL(url, reachabilityService: reachabilityService) ?? Observable.empty()
                 }
                 .addDisposableTo(disposeBag)

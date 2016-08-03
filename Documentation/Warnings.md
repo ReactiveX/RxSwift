@@ -55,7 +55,7 @@ _ = xs
   .filter { ... }
   .map { ... }
   .switchLatest()
-  .takeUntil(someObject.rx_deallocated) // <-- note the `takeUntil` operator
+  .takeUntil(someObject.deallocated) // <-- note the `takeUntil` operator
   .subscribe(onNext: {
     ...
   }, onError: {

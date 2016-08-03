@@ -48,9 +48,9 @@ extension ValidationResult {
     }
 }
 
-extension UILabel {
-    var ex_validationResult: AnyObserver<ValidationResult> {
-        return UIBindingObserver(UIElement: self) { label, result in
+extension Reactive where Base: UILabel {
+    var validationResult: AnyObserver<ValidationResult> {
+        return UIBindingObserver(UIElement: base) { label, result in
             label.textColor = result.textColor
             label.text = result.description
         }.asObserver()

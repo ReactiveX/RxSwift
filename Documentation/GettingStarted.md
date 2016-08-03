@@ -208,7 +208,7 @@ Additional way to automatically dispose subscription on dealloc is to use `takeU
 
 ```swift
 sequence
-    .takeUntil(self.rx_deallocated)
+    .takeUntil(self.deallocated)
     .subscribe {
         print($0)
     }

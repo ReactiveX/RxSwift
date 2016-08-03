@@ -79,7 +79,7 @@ public class RxCollectionViewDataSourceProxy
     public override class func createProxyForObject(_ object: AnyObject) -> AnyObject {
         let collectionView = (object as! UICollectionView)
 
-        return castOrFatalError(collectionView.rx_createDataSourceProxy())
+        return castOrFatalError(collectionView.rx.createDataSourceProxy())
     }
 
     /**

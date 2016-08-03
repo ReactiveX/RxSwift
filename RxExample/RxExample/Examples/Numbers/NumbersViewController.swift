@@ -23,11 +23,11 @@ class NumbersViewController: ViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        Observable.combineLatest(number1.rx_text, number2.rx_text, number3.rx_text) { textValue1, textValue2, textValue3 -> Int in
+        Observable.combineLatest(number1.rx.text, number2.rx.text, number3.rx.text) { textValue1, textValue2, textValue3 -> Int in
                 return (Int(textValue1) ?? 0) + (Int(textValue2) ?? 0) + (Int(textValue3) ?? 0)
             }
             .map { $0.description }
-            .bindTo(result.rx_text)
+            .bindTo(result.rx.text)
             .addDisposableTo(disposeBag)
     }
 }

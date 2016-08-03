@@ -50,11 +50,11 @@ class SimpleTableViewExampleSectionedViewController
         }
 
         items
-            .bindTo(tableView.rx_itemsWithDataSource(dataSource))
+            .bindTo(tableView.rx.itemsWithDataSource(dataSource))
             .addDisposableTo(disposeBag)
 
         tableView
-            .rx_itemSelected
+            .rx.itemSelected
             .map { indexPath in
                 return (indexPath, dataSource.itemAtIndexPath(indexPath))
             }
@@ -64,7 +64,7 @@ class SimpleTableViewExampleSectionedViewController
             .addDisposableTo(disposeBag)
 
         tableView
-            .rx_setDelegate(self)
+            .rx.setDelegate(self)
             .addDisposableTo(disposeBag)
     }
 

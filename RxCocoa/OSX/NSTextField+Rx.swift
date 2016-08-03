@@ -55,7 +55,7 @@ public class RxTextFieldDelegateProxy
     public override class func createProxyForObject(_ object: AnyObject) -> AnyObject {
         let control = (object as! NSTextField)
 
-        return castOrFatalError(control.rx_createDelegateProxy())
+        return castOrFatalError(control.rx.createDelegateProxy())
     }
 
     /**
@@ -76,15 +76,15 @@ public class RxTextFieldDelegateProxy
     
 }
 
-extension NSTextField : RxTextInput {
+extension Reactive where Base: NSTextField {
 
     /**
-    Factory method that enables subclasses to implement their own `rx_delegate`.
+    Factory method that enables subclasses to implement their own `delegate`.
 
      - returns: Instance of delegate proxy that wraps `delegate`.
      */
-    public func rx_createDelegateProxy() -> RxTextFieldDelegateProxy {
-        return RxTextFieldDelegateProxy(parentObject: self)
+    public func createDelegateProxy() -> RxTextFieldDelegateProxy {
+        return RxTextFieldDelegateProxy(parentObject: base)
     }
 
     /**
@@ -92,21 +92,21 @@ extension NSTextField : RxTextInput {
     
     For more information take a look at `DelegateProxyType` protocol documentation.
     */
-    public var rx_delegate: DelegateProxy {
-        return RxTextFieldDelegateProxy.proxyForObject(self)
+    public var delegate: DelegateProxy {
+        return RxTextFieldDelegateProxy.proxyForObject(base)
     }
     
     /**
     Reactive wrapper for `text` property.
     */
-    public var rx_text: ControlProperty<String> {
-        let delegate = RxTextFieldDelegateProxy.proxyForObject(self)
+    public var text: ControlProperty<String> {
+        let delegate = RxTextFieldDelegateProxy.proxyForObject(base)
         
-        let source = Observable.deferred { [weak self] in
-            delegate.textSubject.startWith(self?.stringValue ?? "")
-        }.takeUntil(rx_deallocated)
+        let source = Observable.deferred { [weak textField = self.base] in
+            delegate.textSubject.startWith(textField?.stringValue ?? "")
+        }.takeUntil(deallocated)
 
-        let observer = UIBindingObserver(UIElement: self) { control, value in
+        let observer = UIBindingObserver(UIElement: base) { control, value in
             control.stringValue = value
         }
 

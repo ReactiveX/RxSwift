@@ -38,20 +38,20 @@ Both approaches can fail in certain scenarios:
 Second approach is chosen. It can fail in case there are multiple libraries dynamically trying
 to replace dealloc method. In case that isn't the case, it should be ok.
 */
-extension NSObject {
+extension Reactive where Base: NSObject {
 
 
     /**
      Observes values on `keyPath` starting from `self` with `options` and retains `self` if `retainSelf` is set.
 
-     `rx_observe` is just a simple and performant wrapper around KVO mechanism.
+     `observe` is just a simple and performant wrapper around KVO mechanism.
 
      * it can be used to observe paths starting from `self` or from ancestors in ownership graph (`retainSelf = false`)
      * it can be used to observe paths starting from descendants in ownership graph (`retainSelf = true`)
      * the paths have to consist only of `strong` properties, otherwise you are risking crashing the system by not unregistering KVO observer before dealloc.
 
      If support for weak properties is needed or observing arbitrary or unknown relationships in the
-     ownership tree, `rx_observeWeakly` is the preferred option.
+     ownership tree, `observeWeakly` is the preferred option.
 
      - parameter keyPath: Key path of property names to observe.
      - parameter options: KVO mechanism notification options.
@@ -59,18 +59,18 @@ extension NSObject {
      - returns: Observable sequence of objects on `keyPath`.
      */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func rx_observe<E>(_ type: E.Type, _ keyPath: String, options: NSKeyValueObservingOptions = [.new, .initial], retainSelf: Bool = true) -> Observable<E?> {
-        return KVOObservable(object: self, keyPath: keyPath, options: options, retainTarget: retainSelf).asObservable()
+    public func observe<E>(_ type: E.Type, _ keyPath: String, options: NSKeyValueObservingOptions = [.new, .initial], retainSelf: Bool = true) -> Observable<E?> {
+        return KVOObservable(object: base, keyPath: keyPath, options: options, retainTarget: retainSelf).asObservable()
     }
 }
 
 #if !DISABLE_SWIZZLING
 // KVO
-extension NSObject {
+extension Reactive where Base: NSObject {
     /**
      Observes values on `keyPath` starting from `self` with `options` and doesn't retain `self`.
 
-     It can be used in all cases where `rx_observe` can be used and additionally
+     It can be used in all cases where `observe` can be used and additionally
 
      * because it won't retain observed target, it can be used to observe arbitrary object graph whose ownership relation is unknown
      * it can be used to observe `weak` properties
@@ -82,8 +82,8 @@ extension NSObject {
      - returns: Observable sequence of objects on `keyPath`.
      */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func rx_observeWeakly<E>(_ type: E.Type, _ keyPath: String, options: NSKeyValueObservingOptions = [.new, .initial]) -> Observable<E?> {
-        return observeWeaklyKeyPathFor(self, keyPath: keyPath, options: options)
+    public func observeWeakly<E>(_ type: E.Type, _ keyPath: String, options: NSKeyValueObservingOptions = [.new, .initial]) -> Observable<E?> {
+        return observeWeaklyKeyPathFor(base, keyPath: keyPath, options: options)
             .map { n in
                 return n as? E
             }
@@ -92,7 +92,7 @@ extension NSObject {
 #endif
 
 // Dealloc
-extension NSObject {
+extension Reactive where Base: NSObject {
     
     /**
     Observable sequence of object deallocated events.
@@ -101,15 +101,15 @@ extension NSObject {
     
     - returns: Observable sequence of object deallocated events.
     */
-    public var rx_deallocated: Observable<Void> {
-        return rx_synchronized {
-            if let deallocObservable = objc_getAssociatedObject(self, &deallocatedSubjectContext) as? DeallocObservable {
+    public var deallocated: Observable<Void> {
+        return synchronized {
+            if let deallocObservable = objc_getAssociatedObject(base, &deallocatedSubjectContext) as? DeallocObservable {
                 return deallocObservable._subject
             }
 
             let deallocObservable = DeallocObservable()
 
-            objc_setAssociatedObject(self, &deallocatedSubjectContext, deallocObservable, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            objc_setAssociatedObject(base, &deallocatedSubjectContext, deallocObservable, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
             return deallocObservable._subject
         }
     }
@@ -125,24 +125,24 @@ extension NSObject {
 
      - returns: Observable sequence of object deallocating events.
      */
-    public func rx_sentMessage(_ selector: Selector) -> Observable<[AnyObject]> {
-        return rx_synchronized {
+    public func sentMessage(_ selector: Selector) -> Observable<[AnyObject]> {
+        return synchronized {
             // in case of dealloc selector replay subject behavior needs to be used
             if selector == deallocSelector {
-                return rx_deallocating.map { _ in [] }
+                return deallocating.map { _ in [] }
             }
 
             let rxSelector = RX_selector(selector)
             let selectorReference = RX_reference_from_selector(rxSelector)
 
             let subject: MessageSentObservable
-            if let existingSubject = objc_getAssociatedObject(self, selectorReference) as? MessageSentObservable {
+            if let existingSubject = objc_getAssociatedObject(base, selectorReference) as? MessageSentObservable {
                 subject = existingSubject
             }
             else {
                 subject = MessageSentObservable()
                 objc_setAssociatedObject(
-                    self,
+                    base,
                     selectorReference,
                     subject,
                     .OBJC_ASSOCIATION_RETAIN_NONATOMIC
@@ -154,8 +154,8 @@ extension NSObject {
             }
 
             var error: NSError?
-            guard let targetImplementation = RX_ensure_observing(self, selector, &error) else {
-                return Observable.error(error?.rxCocoaErrorForTarget(self) ?? RxCocoaError.unknown)
+            guard let targetImplementation = RX_ensure_observing(base, selector, &error) else {
+                return Observable.error(error?.rxCocoaErrorForTarget(base) ?? RxCocoaError.unknown)
             }
 
             subject.targetImplementation = targetImplementation
@@ -173,17 +173,17 @@ extension NSObject {
     
     - returns: Observable sequence of object deallocating events.
     */
-    public var rx_deallocating: Observable<()> {
-        return rx_synchronized {
+    public var deallocating: Observable<()> {
+        return synchronized {
 
             let subject: DeallocatingObservable
-            if let existingSubject = objc_getAssociatedObject(self, rxDeallocatingSelectorReference) as? DeallocatingObservable {
+            if let existingSubject = objc_getAssociatedObject(base, rxDeallocatingSelectorReference) as? DeallocatingObservable {
                 subject = existingSubject
             }
             else {
                 subject = DeallocatingObservable()
                 objc_setAssociatedObject(
-                    self,
+                    base,
                     rxDeallocatingSelectorReference,
                     subject,
                     .OBJC_ASSOCIATION_RETAIN_NONATOMIC
@@ -195,9 +195,9 @@ extension NSObject {
             }
 
             var error: NSError?
-            let targetImplementation = RX_ensure_observing(self, deallocSelector, &error)
+            let targetImplementation = RX_ensure_observing(base, deallocSelector, &error)
             if targetImplementation == nil {
-                return Observable.error(error?.rxCocoaErrorForTarget(self) ?? RxCocoaError.unknown)
+                return Observable.error(error?.rxCocoaErrorForTarget(base) ?? RxCocoaError.unknown)
             }
 
             subject.targetImplementation = targetImplementation!
@@ -211,28 +211,28 @@ let deallocSelector = NSSelectorFromString("dealloc")
 let rxDeallocatingSelector = RX_selector(deallocSelector)
 let rxDeallocatingSelectorReference = RX_reference_from_selector(rxDeallocatingSelector)
 
-extension NSObject {
-    func rx_synchronized<T>( _ action: @noescape() -> T) -> T {
-        objc_sync_enter(self)
+extension Reactive where Base: NSObject {
+    func synchronized<T>( _ action: @noescape() -> T) -> T {
+        objc_sync_enter(self.base)
         let result = action()
-        objc_sync_exit(self)
+        objc_sync_exit(self.base)
         return result
     }
 }
 
-extension NSObject {
+extension Reactive where Base: NSObject {
     /**
      Helper to make sure that `Observable` returned from `createCachedObservable` is only created once.
      This is important because there is only one `target` and `action` properties on `NSControl` or `UIBarButtonItem`.
      */
-    func rx_lazyInstanceObservable<T: AnyObject>(_ key: UnsafePointer<Void>, createCachedObservable: () -> T) -> T {
-        if let value = objc_getAssociatedObject(self, key) {
+    func lazyInstanceObservable<T: AnyObject>(_ key: UnsafePointer<Void>, createCachedObservable: () -> T) -> T {
+        if let value = objc_getAssociatedObject(base, key) {
             return value as! T
         }
         
         let observable = createCachedObservable()
         
-        objc_setAssociatedObject(self, key, observable, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+        objc_setAssociatedObject(base, key, observable, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         
         return observable
     }

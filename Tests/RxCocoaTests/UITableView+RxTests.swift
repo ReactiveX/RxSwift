@@ -372,7 +372,7 @@ extension UITableViewTests {
             let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
             dataSourceSubscription = items.bindTo(tableView.rx_itemsWithDataSource(dataSource))
 
-            _ = dataSource.rx_deallocated.subscribeNext { _ in
+            _ = dataSource.deallocated.subscribeNext { _ in
                 dataSourceDeallocated = true
             }
         }
@@ -394,7 +394,7 @@ extension UITableViewTests {
             let dataSource = SectionedViewDataSourceMock()
             _ = items.bindTo(tableView.rx_itemsWithDataSource(dataSource))
 
-            _ = dataSource.rx_deallocated.subscribeNext { _ in
+            _ = dataSource.deallocated.subscribeNext { _ in
                 dataSourceDeallocated = true
             }
 
@@ -414,7 +414,7 @@ extension UITableViewTests {
             let dataSource = SectionedViewDataSourceMock()
             _ = tableView.rx_setDataSource(dataSource)
 
-            _ = dataSource.rx_deallocated.subscribeNext { _ in
+            _ = dataSource.deallocated.subscribeNext { _ in
                 dataSourceDeallocated = true
             }
 

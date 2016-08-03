@@ -13,9 +13,9 @@ import RxSwift
 import RxCocoa
 #endif
 
-extension UITableView {
+extension Reactive where Base: UITableView {
     @available(*, deprecated:0.7, renamed:"rx_itemsWithDataSource", message:"You can just use normal `rx_itemsWithDataSource` extension.")
-    public func rx_itemsAnimatedWithDataSource<
+    public func itemsAnimatedWithDataSource<
             DataSource: protocol<RxTableViewDataSourceType, UITableViewDataSource>,
             S: Sequence,
             O: ObservableType
@@ -28,12 +28,12 @@ extension UITableView {
         -> (source: O)
         -> Disposable  {
         return  { source in
-            return self.rx_itemsWithDataSource(dataSource)(source: source)
+            return self.itemsWithDataSource(dataSource)(source: source)
         }
     }
 }
 
-extension UICollectionView {
+extension Reactive where Base: UICollectionView {
     @available(*, deprecated:0.7, renamed:"rx_itemsWithDataSource", message:"You can just use normal `rx_itemsWithDataSource` extension.")
     public func rx_itemsAnimatedWithDataSource<
             DataSource: protocol<RxCollectionViewDataSourceType, UICollectionViewDataSource>,
@@ -48,7 +48,7 @@ extension UICollectionView {
         -> (source: O)
         -> Disposable  {
         return { source in
-            return self.rx_itemsWithDataSource(dataSource)(source: source)
+            return self.itemsWithDataSource(dataSource)(source: source)
         }
     }
 }

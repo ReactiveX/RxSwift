@@ -11,7 +11,7 @@ import Foundation
 import RxSwift
 #endif
 
-extension NotificationCenter {
+extension Reactive where Base: NotificationCenter {
     /**
     Transforms notifications posted to notification center to observable sequence of notifications.
     
@@ -20,14 +20,14 @@ extension NotificationCenter {
     - returns: Observable sequence of posted notifications.
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func rx_notification(_ name: Notification.Name, object: AnyObject? = nil) -> Observable<Notification> {
+    public func notification(_ name: Notification.Name, object: AnyObject? = nil) -> Observable<Notification> {
         return Observable.create { [weak object] observer in
-            let nsObserver = self.addObserver(forName: name, object: object, queue: nil) { notification in
+            let nsObserver = self.base.addObserver(forName: name, object: object, queue: nil) { notification in
                 observer.on(.next(notification))
             }
             
             return AnonymousDisposable {
-                self.removeObserver(nsObserver)
+                self.base.removeObserver(nsObserver)
             }
         }
     }

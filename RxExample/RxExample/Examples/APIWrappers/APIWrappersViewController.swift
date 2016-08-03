@@ -62,7 +62,7 @@ class APIWrappersViewController: ViewController {
 
         // MARK: UIBarButtonItem
 
-        bbitem.rx_tap
+        bbitem.rx.tap
             .subscribeNext { [weak self] x in
                 self?.debug("UIBarButtonItem Tapped")
             }
@@ -72,7 +72,7 @@ class APIWrappersViewController: ViewController {
 
         // also test two way binding
         let segmentedValue = Variable(0)
-        _ = segmentedControl.rx_value <-> segmentedValue
+        _ = segmentedControl.rx.value <-> segmentedValue
 
         segmentedValue.asObservable()
             .subscribeNext { [weak self] x in
@@ -85,7 +85,7 @@ class APIWrappersViewController: ViewController {
 
         // also test two way binding
         let switchValue = Variable(true)
-        _ = switcher.rx_value <-> switchValue
+        _ = switcher.rx.value <-> switchValue
 
         switchValue.asObservable()
             .subscribeNext { [weak self] x in
@@ -95,14 +95,14 @@ class APIWrappersViewController: ViewController {
 
         // MARK: UIActivityIndicatorView
 
-        switcher.rx_value
-            .bindTo(activityIndicator.rx_animating)
+        switcher.rx.value
+            .bindTo(activityIndicator.rx.animating)
             .addDisposableTo(disposeBag)
 
 
         // MARK: UIButton
 
-        button.rx_tap
+        button.rx.tap
             .subscribeNext { [weak self] x in
                 self?.debug("UIButton Tapped")
             }
@@ -113,7 +113,7 @@ class APIWrappersViewController: ViewController {
 
         // also test two way binding
         let sliderValue = Variable<Float>(1.0)
-        _ = slider.rx_value <-> sliderValue
+        _ = slider.rx.value <-> sliderValue
 
         sliderValue.asObservable()
             .subscribeNext { [weak self] x in
@@ -126,7 +126,7 @@ class APIWrappersViewController: ViewController {
 
         // also test two way binding
         let dateValue = Variable(Date(timeIntervalSince1970: 0))
-        _ = datePicker.rx_date <-> dateValue
+        _ = datePicker.rx.date <-> dateValue
 
 
         dateValue.asObservable()
@@ -151,7 +151,7 @@ class APIWrappersViewController: ViewController {
 
         // MARK: UIGestureRecognizer
 
-        mypan.rx_event
+        mypan.rx.event
             .subscribeNext { [weak self] x in
                 self?.debug("UIGestureRecognizer event \(x.state)")
             }
@@ -162,7 +162,7 @@ class APIWrappersViewController: ViewController {
 
         // also test two way binding
         let textViewValue = Variable("")
-        _ = textView <-> textViewValue
+        _ = textView! <-> textViewValue
 
         textViewValue.asObservable()
             .subscribeNext { [weak self] x in
@@ -176,18 +176,18 @@ class APIWrappersViewController: ViewController {
         manager.requestWhenInUseAuthorization()
         #endif
 
-        manager.rx_didUpdateLocations
+        manager.rx.didUpdateLocations
             .subscribeNext { x in
-                print("rx_didUpdateLocations \(x)")
+                print("rx.didUpdateLocations \(x)")
             }
             .addDisposableTo(disposeBag)
 
-        _ = manager.rx_didFailWithError
+        _ = manager.rx.didFailWithError
             .subscribeNext { x in
-                print("rx_didFailWithError \(x)")
+                print("rx.didFailWithError \(x)")
             }
         
-        manager.rx_didChangeAuthorizationStatus
+        manager.rx.didChangeAuthorizationStatus
             .subscribeNext { status in
                 print("Authorization status \(status)")
             }

@@ -15,7 +15,7 @@ class NSObjectTests: RxTest {
     
 }
 
-// rx_deallocated
+// deallocated
 extension NSObjectTests {
     func testDeallocated_ObservableFires() {
         var a = NSObject()
@@ -23,7 +23,7 @@ extension NSObjectTests {
         var fired = false
         
         _ = a
-            .rx_deallocated
+            .deallocated
             .map { _ in
                 return 1
             }
@@ -44,7 +44,7 @@ extension NSObjectTests {
         var fired = false
         
         _ = a
-            .rx_deallocated
+            .deallocated
             .map { _ in
                 return 1
             }
@@ -65,7 +65,7 @@ extension NSObjectTests {
         var fired = false
 
         _ = a
-            .rx_deallocated
+            .deallocated
             .map { _ in
                 return 1
             }

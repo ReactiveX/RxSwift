@@ -104,7 +104,7 @@ Creating new operators is also pretty straightforward.
 
 extension NSObject {
 
-    public var rx_deallocated: Observable<Void> {}
+    public var deallocated: Observable<Void> {}
 
 #if !DISABLE_SWIZZLING
 

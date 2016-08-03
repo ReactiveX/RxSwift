@@ -14,13 +14,13 @@ import RxSwift
 #endif
 import UIKit
 
-extension UIProgressView {
+extension Reactive where Base: UIProgressView {
 
     /**
     Bindable sink for `progress` property
     */
-    public var rx_progress: AnyObserver<Float> {
-        return UIBindingObserver(UIElement: self) { progressView, progress in
+    public var progress: AnyObserver<Float> {
+        return UIBindingObserver(UIElement: self.base) { progressView, progress in
             progressView.progress = progress
         }.asObserver()
     }

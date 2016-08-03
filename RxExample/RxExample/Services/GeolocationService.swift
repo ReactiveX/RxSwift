@@ -32,7 +32,7 @@ class GeolocationService {
                     return Observable.just(status)
                 }
                 return locationManager
-                    .rx_didChangeAuthorizationStatus
+                    .rx.didChangeAuthorizationStatus
                     .startWith(status)
             }
             .asDriver(onErrorJustReturn: CLAuthorizationStatus.notDetermined)
@@ -45,7 +45,7 @@ class GeolocationService {
                 }
             }
         
-        location = locationManager.rx_didUpdateLocations
+        location = locationManager.rx.didUpdateLocations
             .asDriver(onErrorJustReturn: [])
             .flatMap {
                 return $0.last.map(Driver.just) ?? Driver.empty()

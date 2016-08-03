@@ -150,7 +150,7 @@ class UITableViewSubclass1
     : UITableView
     , TestDelegateControl {
     override func rx_createDelegateProxy() -> RxScrollViewDelegateProxy {
-        return ExtendTableViewDelegateProxy(parentObject: self)
+        return ExtendTableViewDelegateProxy(parentObject: base)
     }
 
     func doThatTest(_ value: Int) {
@@ -183,7 +183,7 @@ class UITableViewSubclass2
     : UITableView
     , TestDelegateControl {
     override func rx_createDataSourceProxy() -> RxTableViewDataSourceProxy {
-        return ExtendTableViewDataSourceProxy(parentObject: self)
+        return ExtendTableViewDataSourceProxy(parentObject: base)
     }
 
     func doThatTest(_ value: Int) {
@@ -216,7 +216,7 @@ class UICollectionViewSubclass1
     : UICollectionView
     , TestDelegateControl {
     override func rx_createDelegateProxy() -> RxScrollViewDelegateProxy {
-        return ExtendCollectionViewDelegateProxy(parentObject: self)
+        return ExtendCollectionViewDelegateProxy(parentObject: base)
     }
 
     func doThatTest(_ value: Int) {
@@ -249,7 +249,7 @@ class UICollectionViewSubclass2
     : UICollectionView
     , TestDelegateControl {
     override func rx_createDataSourceProxy() -> RxCollectionViewDataSourceProxy {
-        return ExtendCollectionViewDataSourceProxy(parentObject: self)
+        return ExtendCollectionViewDataSourceProxy(parentObject: base)
     }
 
     func doThatTest(_ value: Int) {
@@ -282,7 +282,7 @@ class UIScrollViewSubclass
     : UIScrollView
     , TestDelegateControl {
     override func rx_createDelegateProxy() -> RxScrollViewDelegateProxy {
-        return ExtendScrollViewDelegateProxy(parentObject: self)
+        return ExtendScrollViewDelegateProxy(parentObject: base)
     }
 
     func doThatTest(_ value: Int) {
@@ -317,7 +317,7 @@ class UISearchBarSubclass
     , TestDelegateControl {
     
     override func rx_createDelegateProxy() -> RxSearchBarDelegateProxy {
-        return ExtendSearchBarDelegateProxy(parentObject: self)
+        return ExtendSearchBarDelegateProxy(parentObject: base)
     }
     
     func doThatTest(_ value: Int) {
@@ -351,7 +351,7 @@ class UITextViewSubclass
     : UITextView
     , TestDelegateControl {
     override func rx_createDelegateProxy() -> RxScrollViewDelegateProxy {
-        return ExtendTextViewDelegateProxy(parentObject: self)
+        return ExtendTextViewDelegateProxy(parentObject: base)
     }
 
     func doThatTest(_ value: Int) {

@@ -27,12 +27,12 @@ func dismissViewController(_ viewController: UIViewController, animated: Bool) {
     }
 }
 
-extension UIImagePickerController {
-    static func rx_createWithParent(_ parent: UIViewController?, animated: Bool = true, configureImagePicker: (UIImagePickerController) throws -> () = { x in }) -> Observable<UIImagePickerController> {
+extension Reactive where Base: UIImagePickerController {
+    static func createWithParent(_ parent: UIViewController?, animated: Bool = true, configureImagePicker: (UIImagePickerController) throws -> () = { x in }) -> Observable<UIImagePickerController> {
         return Observable.create { [weak parent] observer in
             let imagePicker = UIImagePickerController()
             let dismissDisposable = imagePicker
-                .rx_didCancel
+                .rx.didCancel
                 .subscribeNext({ [weak imagePicker] in
                     guard let imagePicker = imagePicker else {
                         return

@@ -95,7 +95,7 @@ class GitHubDefaultAPI : GitHubAPI {
         
         let url = URL(string: "https://github.com/\(username.URLEscaped)")!
         let request = URLRequest(url: url)
-        return self.URLSession.rx_response(request)
+        return self.URLSession.rx.response(request)
             .map { (maybeData, response) in
                 return response.statusCode == 404
             }

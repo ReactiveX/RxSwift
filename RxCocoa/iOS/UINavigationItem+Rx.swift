@@ -14,12 +14,12 @@ import UIKit
 import RxSwift
 #endif
     
-extension UINavigationItem {
+extension Reactive where Base: UINavigationItem {
     /**
     Bindable sink for `title` property.
     */
-    public var rx_title: AnyObserver<String?> {
-        return UIBindingObserver(UIElement: self) { navigationItem, text in
+    public var title: AnyObserver<String?> {
+        return UIBindingObserver(UIElement: self.base) { navigationItem, text in
             navigationItem.title = text
             }.asObserver()
     }

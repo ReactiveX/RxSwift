@@ -11,34 +11,34 @@ import Foundation
     import RxSwift
 #endif
 
-extension NSObject {
+extension Reactive where Base: NSObject {
 
     /**
-     Specialization of generic `rx_observe` method.
+     Specialization of generic `observe` method.
 
      This is a special overload because to observe values of some type (for example `Int`), first values of KVO type
      need to be observed (`NSNumber`), and then converted to result type.
 
-     For more information take a look at `rx_observe` method.
+     For more information take a look at `observe` method.
      */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func rx_observe<E: KVORepresentable>(_ type: E.Type, _ keyPath: String, options: NSKeyValueObservingOptions = [.new, .initial], retainSelf: Bool = true) -> Observable<E?> {
-        return rx_observe(E.KVOType.self, keyPath, options: options, retainSelf: retainSelf)
+    public func observe<E: KVORepresentable>(_ type: E.Type, _ keyPath: String, options: NSKeyValueObservingOptions = [.new, .initial], retainSelf: Bool = true) -> Observable<E?> {
+        return observe(E.KVOType.self, keyPath, options: options, retainSelf: retainSelf)
             .map(E.init)
     }
 }
 
 #if !DISABLE_SWIZZLING
     // KVO
-    extension NSObject {
+    extension Reactive where Base: NSObject {
         /**
-        Specialization of generic `rx_observeWeakly` method.
+        Specialization of generic `observeWeakly` method.
 
-        For more information take a look at `rx_observeWeakly` method.
+        For more information take a look at `observeWeakly` method.
         */
         // @warn_unused_result(message:"http://git.io/rxs.uo")
-        public func rx_observeWeakly<E: KVORepresentable>(_ type: E.Type, _ keyPath: String, options: NSKeyValueObservingOptions = [.new, .initial]) -> Observable<E?> {
-            return rx_observeWeakly(E.KVOType.self, keyPath, options: options)
+        public func observeWeakly<E: KVORepresentable>(_ type: E.Type, _ keyPath: String, options: NSKeyValueObservingOptions = [.new, .initial]) -> Observable<E?> {
+            return observeWeakly(E.KVOType.self, keyPath, options: options)
                 .map(E.init)
         }
     }

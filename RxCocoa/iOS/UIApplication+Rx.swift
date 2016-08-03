@@ -15,13 +15,13 @@ import Foundation
     import RxSwift
 #endif
 
-    extension UIApplication {
+    extension Reactive where Base: UIApplication {
         
         /**
          Bindable sink for `networkActivityIndicatorVisible`.
          */
-        public var rx_networkActivityIndicatorVisible: AnyObserver<Bool> {
-            return UIBindingObserver(UIElement: self) { application, active in
+        public var networkActivityIndicatorVisible: AnyObserver<Bool> {
+            return UIBindingObserver(UIElement: self.base) { application, active in
                 application.isNetworkActivityIndicatorVisible = active
             }.asObserver()
         }

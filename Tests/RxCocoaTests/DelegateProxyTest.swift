@@ -209,7 +209,7 @@ extension DelegateProxyTest {
                 completed = true
             })
 
-            _ = (control as! NSObject).rx_deallocated.subscribeNext { _ in
+            _ = (control as! NSObject).deallocated.subscribeNext { _ in
                 deallocated = true
             }
         }
@@ -304,7 +304,7 @@ class ThreeDSectionedViewDelegateProxy : DelegateProxy
 
 extension ThreeDSectionedView {
     var rx_proxy: DelegateProxy {
-        return ThreeDSectionedViewDelegateProxy.proxyForObject(self)
+        return ThreeDSectionedViewDelegateProxy.proxyForObject(base)
     }
 }
 

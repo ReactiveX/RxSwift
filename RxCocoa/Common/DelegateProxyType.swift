@@ -68,17 +68,17 @@ every view has a corresponding delegate virtual factory method.
 
 In case of UITableView / UIScrollView, there is
 
-    extension UIScrollView {
-        public func rx_createDelegateProxy() -> RxScrollViewDelegateProxy {
-            return RxScrollViewDelegateProxy(parentObject: self)
+    extension Reactive where Base: UIScrollView {
+        public func createDelegateProxy() -> RxScrollViewDelegateProxy {
+            return RxScrollViewDelegateProxy(parentObject: base)
         }
     ....
 
 
 and override in UITableView
 
-    extension UITableView {
-        public override func rx_createDelegateProxy() -> RxScrollViewDelegateProxy {
+    extension Reactive where Base: UITableView {
+        public override func createDelegateProxy() -> RxScrollViewDelegateProxy {
         ....
 
 
@@ -160,14 +160,14 @@ extension DelegateProxyType {
      - returns: Installed instance of delegate proxy.
 
 
-         extension UISearchBar {
+         extension Reactive where Base: UISearchBar {
 
-             public var rx_delegate: DelegateProxy {
-                return RxSearchBarDelegateProxy.proxyForObject(self)
+             public var delegate: DelegateProxy {
+                return RxSearchBarDelegateProxy.proxyForObject(base)
              }
 
-             public var rx_text: ControlProperty<String> {
-                 let source: Observable<String> = self.rx_delegate.observe(#selector(UISearchBarDelegate.searchBar(_:textDidChange:)))
+             public var text: ControlProperty<String> {
+                 let source: Observable<String> = self.delegate.observe(#selector(UISearchBarDelegate.searchBar(_:textDidChange:)))
                  ...
              }
          }

@@ -247,7 +247,7 @@ extension KVOObservableTests {
             latest = n
         }
         
-        _ = parent.rx_deallocated
+        _ = parent.deallocated
             .subscribeCompleted {
                 disposed = true
             }
@@ -274,7 +274,7 @@ extension KVOObservableTests {
             latest = n
         }
         
-        _ = parent.rx_deallocated
+        _ = parent.deallocated
             .subscribeCompleted {
                 disposed = true
         }
@@ -310,7 +310,7 @@ extension KVOObservableTests {
                 latest = n
             }
         
-        _ = root.rx_deallocated
+        _ = root.deallocated
             .subscribeCompleted {
                 disposed = true
             }
@@ -340,7 +340,7 @@ extension KVOObservableTests {
                 latest = n
         }
         
-        _ = root.rx_deallocated
+        _ = root.deallocated
             .subscribeCompleted {
                 disposed = true
         }
@@ -374,7 +374,7 @@ extension KVOObservableTests {
                 latest = n
             }
         
-        _ = root.rx_deallocated
+        _ = root.deallocated
             .subscribeCompleted {
                 disposed = true
             }
@@ -423,7 +423,7 @@ extension KVOObservableTests {
                 latest = n
         }
         
-        _ = root.rx_deallocated
+        _ = root.deallocated
             .subscribeCompleted {
                 disposed = true
         }
@@ -451,7 +451,7 @@ extension KVOObservableTests {
                 latest = n
         }
         
-        _ = root.rx_deallocated
+        _ = root.deallocated
             .subscribeCompleted {
                 disposed = true
         }
@@ -500,7 +500,7 @@ extension KVOObservableTests {
                 latest = n
             }
         
-        _ = root.rx_deallocated
+        _ = root.deallocated
             .subscribeCompleted {
                 disposed = true
         }
@@ -631,7 +631,7 @@ extension KVOObservableTests {
         var rootDeallocated = false
         
         _ = root
-            .rx_deallocated
+            .deallocated
             .subscribeCompleted {
                 rootDeallocated = true
             }
@@ -666,7 +666,7 @@ extension KVOObservableTests {
         var rootDeallocated = false
         
         _ = root
-            .rx_deallocated
+            .deallocated
             .subscribeCompleted {
                 rootDeallocated = true
             }
@@ -699,7 +699,7 @@ extension KVOObservableTests {
         var rootDeallocated = false
         
         _ = root
-            .rx_deallocated
+            .deallocated
             .subscribeCompleted {
                 rootDeallocated = true
             }
@@ -740,7 +740,7 @@ extension KVOObservableTests {
         var rootDeallocated = false
         
         _ = root
-            .rx_deallocated
+            .deallocated
             .subscribeCompleted {
                 rootDeallocated = true
             }
@@ -776,7 +776,7 @@ extension KVOObservableTests {
         var rootDeallocated = false
         
         _ = root
-            .rx_deallocated
+            .deallocated
             .subscribeCompleted {
                 rootDeallocated = true
             }
@@ -812,7 +812,7 @@ extension KVOObservableTests {
         var rootDeallocated = false
         
         _ = root
-            .rx_deallocated
+            .deallocated
             .subscribeCompleted {
                 rootDeallocated = true
             }
@@ -847,7 +847,7 @@ extension KVOObservableTests {
         var rootDeallocated = false
         
         _ = root
-            .rx_deallocated
+            .deallocated
             .subscribeCompleted {
                 rootDeallocated = true
             }
@@ -880,7 +880,7 @@ extension KVOObservableTests {
         var rootDeallocated = false
         
         _ = root
-            .rx_deallocated
+            .deallocated
             .subscribeCompleted {
                 rootDeallocated = true
             }
@@ -912,7 +912,7 @@ extension KVOObservableTests {
         var rootDeallocated = false
         
         _ = root
-            .rx_deallocated
+            .deallocated
             .subscribeCompleted {
                 rootDeallocated = true
             }
@@ -945,7 +945,7 @@ extension KVOObservableTests {
         var rootDeallocated = false
         
         _ = root
-            .rx_deallocated
+            .deallocated
             .subscribeCompleted {
                 rootDeallocated = true
             }
@@ -977,7 +977,7 @@ extension KVOObservableTests {
         var rootDeallocated = false
         
         _ = root
-            .rx_deallocated
+            .deallocated
             .subscribeCompleted {
                 rootDeallocated = true
             }
@@ -1004,7 +1004,7 @@ extension KVOObservableTests {
         var rootDeallocated = false
         
         _ = root
-            .rx_deallocated
+            .deallocated
             .subscribeCompleted {
                 rootDeallocated = true
             }
@@ -1033,7 +1033,7 @@ extension KVOObservableTests {
         var rootDeallocated = false
         
         _ = root
-            .rx_deallocated
+            .deallocated
             .subscribeCompleted {
                 rootDeallocated = true
             }
@@ -1068,7 +1068,7 @@ extension KVOObservableTests {
         var rootDeallocated = false
 
         _ = root
-            .rx_deallocated
+            .deallocated
             .subscribeCompleted {
                 rootDeallocated = true
             }
@@ -1101,7 +1101,7 @@ extension KVOObservableTests {
         var rootDeallocated = false
 
         _ = root
-            .rx_deallocated
+            .deallocated
             .subscribeCompleted {
                 rootDeallocated = true
         }
@@ -1139,7 +1139,7 @@ extension KVOObservableTests {
             var rootDeallocated = false
 
             _ = root
-                .rx_deallocated
+                .deallocated
                 .subscribeCompleted {
                     rootDeallocated = true
             }
@@ -1172,7 +1172,7 @@ extension KVOObservableTests {
             var rootDeallocated = false
 
             _ = root
-                .rx_deallocated
+                .deallocated
                 .subscribeCompleted {
                     rootDeallocated = true
             }
@@ -1207,7 +1207,7 @@ extension KVOObservableTests {
         var rootDeallocated = false
 
         _ = root
-            .rx_deallocated
+            .deallocated
             .subscribeCompleted {
                 rootDeallocated = true
             }
@@ -1240,7 +1240,7 @@ extension KVOObservableTests {
         var rootDeallocated = false
 
         _ = root
-            .rx_deallocated
+            .deallocated
             .subscribeCompleted {
                 rootDeallocated = true
         }
@@ -1273,7 +1273,7 @@ extension KVOObservableTests {
         var rootDeallocated = false
 
         _ = root
-            .rx_deallocated
+            .deallocated
             .subscribeCompleted {
                 rootDeallocated = true
         }
@@ -1307,7 +1307,7 @@ extension KVOObservableTests {
         var rootDeallocated = false
 
         _ = root
-            .rx_deallocated
+            .deallocated
             .subscribeCompleted {
                 rootDeallocated = true
             }
@@ -1340,7 +1340,7 @@ extension KVOObservableTests {
         var rootDeallocated = false
 
         _ = root
-            .rx_deallocated
+            .deallocated
             .subscribeCompleted {
                 rootDeallocated = true
         }
@@ -1373,7 +1373,7 @@ extension KVOObservableTests {
         var rootDeallocated = false
 
         _ = root
-            .rx_deallocated
+            .deallocated
             .subscribeCompleted {
                 rootDeallocated = true
         }
@@ -1410,7 +1410,7 @@ extension KVOObservableTests {
         var rootDeallocated = false
 
         _ = root
-            .rx_deallocated
+            .deallocated
             .subscribeCompleted {
                 rootDeallocated = true
             }
@@ -1442,7 +1442,7 @@ extension KVOObservableTests {
         var rootDeallocated = false
 
         _ = root
-            .rx_deallocated
+            .deallocated
             .subscribeCompleted {
                 rootDeallocated = true
         }
@@ -1474,7 +1474,7 @@ extension KVOObservableTests {
         var rootDeallocated = false
 
         _ = root
-            .rx_deallocated
+            .deallocated
             .subscribeCompleted {
                 rootDeallocated = true
         }
@@ -1506,7 +1506,7 @@ extension KVOObservableTests {
         var rootDeallocated = false
 
         _ = root
-            .rx_deallocated
+            .deallocated
             .subscribeCompleted {
                 rootDeallocated = true
             }
@@ -1538,7 +1538,7 @@ extension KVOObservableTests {
         var rootDeallocated = false
 
         _ = root
-            .rx_deallocated
+            .deallocated
             .subscribeCompleted {
                 rootDeallocated = true
         }
@@ -1570,7 +1570,7 @@ extension KVOObservableTests {
         var rootDeallocated = false
 
         _ = root
-            .rx_deallocated
+            .deallocated
             .subscribeCompleted {
                 rootDeallocated = true
         }

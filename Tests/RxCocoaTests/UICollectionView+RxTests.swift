@@ -270,7 +270,7 @@ extension UICollectionViewTests {
             let dataSource = SectionedViewDataSourceMock()
             dataSourceSubscription = items.bindTo(collectionView.rx_itemsWithDataSource(dataSource))
 
-            _ = dataSource.rx_deallocated.subscribeNext { _ in
+            _ = dataSource.deallocated.subscribeNext { _ in
                 dataSourceDeallocated = true
             }
         }
@@ -293,7 +293,7 @@ extension UICollectionViewTests {
             let dataSource = SectionedViewDataSourceMock()
             _ = items.bindTo(collectionView.rx_itemsWithDataSource(dataSource))
             
-            _ = dataSource.rx_deallocated.subscribeNext { _ in
+            _ = dataSource.deallocated.subscribeNext { _ in
                 dataSourceDeallocated = true
             }
 
@@ -313,7 +313,7 @@ extension UICollectionViewTests {
             let dataSource = SectionedViewDataSourceMock()
             _ = collectionView.rx_setDataSource(dataSource)
 
-            _ = dataSource.rx_deallocated.subscribeNext { _ in
+            _ = dataSource.deallocated.subscribeNext { _ in
                 dataSourceDeallocated = true
             }
 

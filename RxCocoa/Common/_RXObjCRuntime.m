@@ -613,11 +613,11 @@ static NSMutableDictionary<NSString *, RXInterceptWithOptimizedObserver> *optimi
     }
 
     // For `dealloc` message, original implementation will be swizzled.
-    // This is a special case because observing `dealloc` message is performed when `rx_observeWeakly` is used.
+    // This is a special case because observing `dealloc` message is performed when `observeWeakly` is used.
     //
     // Some toll free bridged classes don't handle `object_setClass` well and cause crashes.
     //
-    // To make `rx_deallocating` as robust as possible, original implementation will be replaced.
+    // To make `deallocating` as robust as possible, original implementation will be replaced.
     if (selector == deallocSelector) {
         Class __nonnull deallocSwizzingTarget = [target class];
         IMP interceptorIMPForSelector = [self interceptorImplementationForSelector:selector forClass:deallocSwizzingTarget];
@@ -720,9 +720,9 @@ static NSMutableDictionary<NSString *, RXInterceptWithOptimizedObserver> *optimi
      If the object is reporting a different class then what it's real class, that means that there is probably
      already some interception mechanism in place or something weird is happening.
      
-     Most common case when this would happen is when using KVO (`rx_observe`) and `rx_sentMessage`.
+     Most common case when this would happen is when using KVO (`observe`) and `sentMessage`.
 
-     This error is easily resolved by just using `rx_sentMessage` observing before `rx_observe`.
+     This error is easily resolved by just using `sentMessage` observing before `observe`.
      
      The reason why other way around could create issues is because KVO will unregister it's interceptor 
      class and restore original class. Unfortunately that will happen no matter was there another interceptor
@@ -730,7 +730,7 @@ static NSMutableDictionary<NSString *, RXInterceptWithOptimizedObserver> *optimi
      
      Failure scenario:
      * KVO sets class to be `__KVO__OriginalClass` (subclass of `OriginalClass`)
-     * `rx_sentMessage` sets object class to be `_RX_namespace___KVO__OriginalClass` (subclass of `__KVO__OriginalClass`)
+     * `sentMessage` sets object class to be `_RX_namespace___KVO__OriginalClass` (subclass of `__KVO__OriginalClass`)
      * then unobserving with KVO will restore class to be `OriginalClass` -> failure point
 
      The reason why changing order of observing works is because any interception method should return

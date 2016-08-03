@@ -44,7 +44,7 @@ class NSTextFieldSubclass
     : NSTextField
     , TestDelegateControl {
     override func rx_createDelegateProxy() -> RxTextFieldDelegateProxy {
-        return ExtendNSTextFieldDelegateProxy(parentObject: self)
+        return ExtendNSTextFieldDelegateProxy(parentObject: base)
     }
 
     func doThatTest(_ value: Int) {

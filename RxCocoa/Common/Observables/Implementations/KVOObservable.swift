@@ -75,7 +75,7 @@ func isWeakProperty(_ properyRuntimeInfo: String) -> Bool {
 extension ObservableType where E == AnyObject? {
     func finishWithNilWhenDealloc(_ target: NSObject)
         -> Observable<AnyObject?> {
-        let deallocating = target.rx_deallocating
+        let deallocating = target.rx.deallocating
             
         return deallocating
             .map { _ in
