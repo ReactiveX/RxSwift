@@ -91,10 +91,10 @@ class WikipediaSearchViewController: ViewController {
         resultsTableView.rx_contentOffset
             .asDriver()
             .filter { _ -> Bool in
-                return !searchController.isBeingPresented()
+                return !searchController.isBeingPresented
             }
             .driveNext { _ in
-                if searchBar.isFirstResponder() {
+                if searchBar.isFirstResponder {
                     _ = searchBar.resignFirstResponder()
                 }
             }
@@ -118,7 +118,7 @@ class WikipediaSearchViewController: ViewController {
             DefaultImageService.sharedImageService.loadingImage
         ) { $0 || $1 }
             .distinctUntilChanged()
-            .drive(UIApplication.shared().rx_networkActivityIndicatorVisible)
+            .drive(UIApplication.shared.rx_networkActivityIndicatorVisible)
             .addDisposableTo(disposeBag)
     }
 }

@@ -87,7 +87,7 @@ class GitHubSearchRepositoriesViewController: ViewController, UITableViewDelegat
         // dismiss keyboard on scroll
         tableView.rx_contentOffset
             .subscribe { _ in
-                if self.searchBar.isFirstResponder() {
+                if self.searchBar.isFirstResponder {
                     _ = self.searchBar.resignFirstResponder()
                 }
             }
@@ -100,7 +100,7 @@ class GitHubSearchRepositoriesViewController: ViewController, UITableViewDelegat
         // activity indicator in status bar
         // {
         GitHubSearchRepositoriesAPI.sharedAPI.activityIndicator
-            .drive(UIApplication.shared().rx_networkActivityIndicatorVisible)
+            .drive(UIApplication.shared.rx_networkActivityIndicatorVisible)
             .addDisposableTo(disposeBag)
         // }
     }

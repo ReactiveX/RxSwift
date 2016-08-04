@@ -29,10 +29,10 @@ class DefaultImageService: ImageService {
     let $: Dependencies = Dependencies.sharedDependencies
 
     // 1st level cache
-    private let _imageCache = Cache<AnyObject, AnyObject>()
+    private let _imageCache = NSCache<AnyObject, AnyObject>()
 
     // 2nd level cache
-    private let _imageDataCache = Cache<AnyObject, AnyObject>()
+    private let _imageDataCache = NSCache<AnyObject, AnyObject>()
 
     let loadingImage = ActivityIndicator()
     

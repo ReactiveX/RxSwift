@@ -47,7 +47,7 @@ class DefaultReachabilityService
         let reachabilitySubject = BehaviorSubject<ReachabilityStatus>(value: .unreachable)
 
         // so main thread isn't blocked when reachability via WiFi is checked
-        let backgroundQueue = DispatchQueue(label: "reachability.wificheck", attributes: DispatchQueueAttributes.serial)
+        let backgroundQueue = DispatchQueue(label: "reachability.wificheck")
 
         reachabilityRef.whenReachable = { reachability in
             backgroundQueue.async {

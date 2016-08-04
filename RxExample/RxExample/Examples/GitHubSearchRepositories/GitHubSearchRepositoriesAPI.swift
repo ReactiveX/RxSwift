@@ -195,18 +195,18 @@ extension GitHubSearchRepositoriesAPI {
 extension GitHubSearchRepositoriesAPI {
 
     private static let parseLinksPattern = "\\s*,?\\s*<([^\\>]*)>\\s*;\\s*rel=\"([^\"]*)\""
-    private static let linksRegex = try! RegularExpression(pattern: parseLinksPattern, options: [.allowCommentsAndWhitespace])
+    private static let linksRegex = try! NSRegularExpression(pattern: parseLinksPattern, options: [.allowCommentsAndWhitespace])
 
     private static func parseLinks(_ links: String) throws -> [String: String] {
 
         let length = (links as NSString).length
-        let matches = GitHubSearchRepositoriesAPI.linksRegex.matches(in: links, options: RegularExpression.MatchingOptions(), range: NSRange(location: 0, length: length))
+        let matches = GitHubSearchRepositoriesAPI.linksRegex.matches(in: links, options: NSRegularExpression.MatchingOptions(), range: NSRange(location: 0, length: length))
 
         var result: [String: String] = [:]
 
         for m in matches {
             let matches = (1 ..< m.numberOfRanges).map { rangeIndex -> String in
-                let range = m.range(at: rangeIndex)
+                let range = m.rangeAt(rangeIndex)
                 let startIndex = links.characters.index(links.startIndex, offsetBy: range.location)
                 let endIndex = links.characters.index(links.startIndex, offsetBy: range.location + range.length)
                 let stringRange = startIndex ..< endIndex

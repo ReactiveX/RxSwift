@@ -224,7 +224,7 @@ public class Reachability: NSObject {
 
     private var notifierRunning = false
     private var reachabilityRef: SCNetworkReachability?
-    private let reachabilitySerialQueue = DispatchQueue(label: "uk.co.ashleymills.reachability", attributes: DispatchQueueAttributes.serial)
+    private let reachabilitySerialQueue = DispatchQueue(label: "uk.co.ashleymills.reachability")
 
     private func reachabilityChanged(_ flags: SCNetworkReachabilityFlags) {
         if isReachableWithFlags(flags) {

@@ -9,7 +9,7 @@
 import Foundation
 
 func parseImageURLsfromHTML(_ html: NSString) throws -> [URL]  {
-    let regularExpression = try RegularExpression(pattern: "<img[^>]*src=\"([^\"]+)\"[^>]*>", options: [])
+    let regularExpression = try NSRegularExpression(pattern: "<img[^>]*src=\"([^\"]+)\"[^>]*>", options: [])
     
     let matches = regularExpression.matches(in: html as String, options: [], range: NSMakeRange(0, html.length))
     
@@ -18,7 +18,7 @@ func parseImageURLsfromHTML(_ html: NSString) throws -> [URL]  {
             return nil
         }
         
-        let url = html.substring(with: match.range(at: 1))
+        let url = html.substring(with: match.rangeAt(1))
         
         var absoluteURLString = url
         if url.hasPrefix("//") {
@@ -31,6 +31,6 @@ func parseImageURLsfromHTML(_ html: NSString) throws -> [URL]  {
 
 func parseImageURLsfromHTMLSuitableForDisplay(_ html: NSString) throws -> [URL] {
     return try parseImageURLsfromHTML(html).filter {
-        return $0.absoluteString?.range(of: ".svg.") == nil
+        return $0.absoluteString.range(of: ".svg.") == nil
     }
 }

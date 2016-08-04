@@ -62,7 +62,7 @@ class TableViewWithEditingCommandsViewController: ViewController, UITableViewDel
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        self.navigationItem.rightBarButtonItem = self.editButtonItem
 
         let superMan =  User(
             firstName: "Super",
@@ -139,8 +139,8 @@ class TableViewWithEditingCommandsViewController: ViewController, UITableViewDel
         let label = UILabel(frame: CGRect.zero)
         // hacky I know :)
         label.text = "  \(title)"
-        label.textColor = UIColor.white()
-        label.backgroundColor = UIColor.darkGray()
+        label.textColor = UIColor.white
+        label.backgroundColor = UIColor.darkGray
         label.alpha = 0.9
 
         return label

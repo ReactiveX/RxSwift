@@ -14,7 +14,7 @@ import UIKit
 #endif
 
 func dismissViewController(_ viewController: UIViewController, animated: Bool) {
-    if viewController.isBeingDismissed() || viewController.isBeingPresented() {
+    if viewController.isBeingDismissed || viewController.isBeingPresented {
         DispatchQueue.main.async {
             dismissViewController(viewController, animated: animated)
         }
