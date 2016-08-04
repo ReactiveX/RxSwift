@@ -37,7 +37,7 @@ class ViewController: OSViewController {
     }
     
     deinit {
-#if TRACE_RESOURCES
+#if TRACE_RESOURCES && os(iOS)
         print("View controller disposed with \(resourceCount) resources")
 
         /*
@@ -79,8 +79,8 @@ class ViewController: OSViewController {
         
         If somebody knows more about why this delay happens, you can make a PR with explanation here.
         */
-        let when = DispatchTime.now() + DispatchTimeInterval.milliseconds(2)
-        mainQueue.after(when: when) {
+        let when = DispatchTime.now() + DispatchTimeInterval.milliseconds(20)
+        mainQueue.after (when: when) {
 
             /*
             Some small additional period to clean things up. In case there were async operations fired,
