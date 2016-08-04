@@ -59,17 +59,17 @@ extension ControlTests {
 // UILabel
 extension ControlTests {
     func testLabel_HasWeakReference() {
-        let variable = Variable<AttributedString?>(nil)
-        ensureControlObserverHasWeakReference(UILabel(), { (label: UILabel) -> AnyObserver<AttributedString?> in label.rx_attributedText }, { variable.asObservable() })
+        let variable = Variable<NSAttributedString?>(nil)
+        ensureControlObserverHasWeakReference(UILabel(), { (label: UILabel) -> AnyObserver<NSAttributedString?> in label.rx_attributedText }, { variable.asObservable() })
     }
 
     func testLabel_NextElementsSetsValue() {
         let subject = UILabel()
-        let attributedTextSequence = Variable<AttributedString?>(nil)
+        let attributedTextSequence = Variable<NSAttributedString?>(nil)
         let disposable = attributedTextSequence.asObservable().bindTo(subject.rx_attributedText)
         defer { disposable.dispose() }
 
-        attributedTextSequence.value = AttributedString(string: "Hello!")
+        attributedTextSequence.value = NSAttributedString(string: "Hello!")
         XCTAssert(subject.attributedText == attributedTextSequence.value, "Expected attributedText to have been set")
     }
 }
@@ -137,10 +137,10 @@ extension ControlTests {
         defer { disposable.dispose() }
 
         boolSequence.value = true
-        XCTAssertTrue(subject.isAnimating(), "Expected animation to be started")
+        XCTAssertTrue(subject.isAnimating, "Expected animation to be started")
 
         boolSequence.value = false
-        XCTAssertFalse(subject.isAnimating(), "Expected animation to be stopped")
+        XCTAssertFalse(subject.isAnimating, "Expected animation to be stopped")
     }
 }
 

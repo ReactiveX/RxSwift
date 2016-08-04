@@ -83,7 +83,7 @@ extension RxTest {
     func setUpActions(){
         #if TRACE_RESOURCES
             self.startResourceCount = resourceCount
-            registerMallocHooks()
+            //registerMallocHooks()
             (startNumberOfAllocatedBytes, startNumberOfAllocations) = getMemoryInfo()
         #endif
     }

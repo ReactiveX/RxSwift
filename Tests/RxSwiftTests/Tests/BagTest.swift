@@ -57,7 +57,7 @@ extension BagTest {
                 numberOfActionsAfter(i,
                     deletionsFromStart: j,
                     createNew: { () -> Disposable in AnonymousDisposable { numberDisposables += 1 } },
-                    bagAction: { (bag: RxMutableBox<Bag<Disposable>>) in disposeAllIn(bag.value); XCTAssertTrue(bag.value.count == i - j) }
+                    bagAction: { (bag: RxMutableBox<Bag<Disposable>>) in disposeAll(in: bag.value); XCTAssertTrue(bag.value.count == i - j) }
                 )
 
                 XCTAssertTrue(numberForEachActions == i - j)
@@ -104,7 +104,7 @@ extension BagTest {
                 numberOfActionsAfter(i,
                     deletionsFromStart: j,
                     createNew: { () -> Disposable in AnonymousDisposable { numberDisposables += 1 } },
-                    bagAction: { (bag: RxMutableBox<Bag<Disposable>>) in disposeAllIn(bag.value); XCTAssertTrue(bag.value.count == i - j) }
+                    bagAction: { (bag: RxMutableBox<Bag<Disposable>>) in disposeAll(in: bag.value); XCTAssertTrue(bag.value.count == i - j) }
                 )
 
                 XCTAssertTrue(numberForEachActions == i - j)
@@ -152,7 +152,7 @@ extension BagTest {
 
                 bag2.value.on(.next(1))
 
-                disposeAllIn(bag3.value)
+                disposeAll(in: bag3.value)
             }
             
             XCTAssertEqual(increment1, 50)
@@ -177,7 +177,7 @@ extension BagTest {
         numberOfActionsAfter(100,
             deletionsFromStart: 0,
             createNew: { () -> Disposable in AnonymousDisposable { numberDisposables += 1 } },
-            bagAction: { (bag: RxMutableBox<Bag<Disposable>>) in bag.value.removeAll(); disposeAllIn(bag.value); }
+            bagAction: { (bag: RxMutableBox<Bag<Disposable>>) in bag.value.removeAll(); disposeAll(in: bag.value); }
         )
 
         XCTAssertTrue(numberForEachActions == 0)

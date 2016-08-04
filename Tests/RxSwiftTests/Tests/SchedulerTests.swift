@@ -62,7 +62,7 @@ extension ConcurrentDispatchQueueSchedulerTests {
         }
         disposable.dispose()
 
-        DispatchQueue.main.after(when: .now() + .milliseconds(200)) {
+        DispatchQueue.main.asyncAfter (deadline: .now() + .milliseconds(200)) {
             expectScheduling.fulfill()
         }
 
@@ -112,7 +112,7 @@ extension ConcurrentDispatchQueueSchedulerTests {
 
         disposable.dispose()
 
-        DispatchQueue.main.after(when: .now() + .milliseconds(300)) {
+        DispatchQueue.main.asyncAfter (deadline: .now() + .milliseconds(300)) {
             expectScheduling.fulfill()
         }
 

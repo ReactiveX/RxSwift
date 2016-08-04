@@ -143,7 +143,7 @@ class DisposableTest : RxTest {
         XCTAssertEqual(compositeDisposable.count, 2)
         XCTAssertTrue(result1 != nil)
         
-        compositeDisposable.removeDisposable(result2!)
+        compositeDisposable.remove(for: result2!)
 
         XCTAssertEqual(numberDisposed, 1)
         XCTAssertEqual(compositeDisposable.count, 1)

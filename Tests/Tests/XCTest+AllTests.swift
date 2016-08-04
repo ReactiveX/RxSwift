@@ -65,7 +65,7 @@ func XCTAssertEqual<T>(_ lhs: [T], _ rhs: [T], _ comparison: (T, T) -> Bool) {
 
 
 func doOnBackgroundThread(_ action: () -> ()) {
-    DispatchQueue.global(attributes: DispatchQueue.GlobalAttributes.qosDefault).async(execute: action)
+    DispatchQueue.global(qos: .default).async(execute: action)
 }
 
 func doOnMainThread(_ action: () -> ()) {

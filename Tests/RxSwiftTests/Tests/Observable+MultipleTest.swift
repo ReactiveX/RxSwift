@@ -3213,7 +3213,7 @@ extension ObservableMultipleTest {
         ])
         
         let res = scheduler.start {
-            [e0, e1, e2].combineLatest { $0.reduce(0, combine:+) }
+            [e0, e1, e2].combineLatest { $0.reduce(0, +) }
         }
         
         XCTAssertEqual(res.events, [])
@@ -3236,7 +3236,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            [e0, e1].combineLatest { $0.reduce(0, combine:+) }
+            [e0, e1].combineLatest { $0.reduce(0, +) }
         }
         
         XCTAssertEqual(res.events, [])
@@ -3258,7 +3258,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            [e0, e1].combineLatest { $0.reduce(0, combine:+) }
+            [e0, e1].combineLatest { $0.reduce(0, +) }
         }
         
         XCTAssertEqual(res.events, [])
@@ -3282,7 +3282,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            ([e0, e1] as [TestableObservable<Int>]).combineLatest { $0.reduce(0, combine:+) }
+            ([e0, e1] as [TestableObservable<Int>]).combineLatest { $0.reduce(0, +) }
         }
         
         XCTAssertEqual(res.events, [
@@ -3309,7 +3309,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            [e0, e1].combineLatest { $0.reduce(0, combine:+) }
+            [e0, e1].combineLatest { $0.reduce(0, +) }
         }
         
         XCTAssertEqual(res.events, [
@@ -3335,7 +3335,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            [e0, e1].combineLatest { $0.reduce(0, combine:+) }
+            [e0, e1].combineLatest { $0.reduce(0, +) }
         }
         
         XCTAssertEqual(res.events, [
@@ -3361,7 +3361,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            [e0, e1].combineLatest { $0.reduce(0, combine:+) }
+            [e0, e1].combineLatest { $0.reduce(0, +) }
         }
         
         XCTAssertEqual(res.events, [
@@ -3386,7 +3386,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            [e0, e1].combineLatest { $0.reduce(0, combine:+) }
+            [e0, e1].combineLatest { $0.reduce(0, +) }
         }
         
         XCTAssertEqual(res.events, [
@@ -3410,7 +3410,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            [e0, e1].combineLatest { $0.reduce(0, combine:+) }
+            [e0, e1].combineLatest { $0.reduce(0, +) }
         }
         
         XCTAssertEqual(res.events, [
@@ -3436,7 +3436,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            [e0, e1].combineLatest { $0.reduce(0, combine:+) }
+            [e0, e1].combineLatest { $0.reduce(0, +) }
         }
         
         XCTAssertEqual(res.events, [
@@ -3462,7 +3462,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            [e0, e1].combineLatest { $0.reduce(0, combine:+) }
+            [e0, e1].combineLatest { $0.reduce(0, +) }
         }
         
         XCTAssertEqual(res.events, [
@@ -3493,7 +3493,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            [e0, e1].combineLatest { $0.reduce(0, combine:+) }
+            [e0, e1].combineLatest { $0.reduce(0, +) }
         }
         
         XCTAssertEqual(res.events, [
@@ -3527,7 +3527,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            [e0, e1].combineLatest { $0.reduce(0, combine:+) }
+            [e0, e1].combineLatest { $0.reduce(0, +) }
         }
         
         XCTAssertEqual(res.events, [
@@ -3558,7 +3558,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            [e0, e1].combineLatest { $0.reduce(0, combine:+) }
+            [e0, e1].combineLatest { $0.reduce(0, +) }
         }
         
         XCTAssertEqual(res.events, [
@@ -3587,7 +3587,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            [e0, e1].combineLatest { $0.reduce(0, combine:+) }
+            [e0, e1].combineLatest { $0.reduce(0, +) }
         }
         
         XCTAssertEqual(res.events, [
@@ -3682,7 +3682,7 @@ extension ObservableMultipleTest {
         ])
         
         let res = scheduler.start {
-            [e0, e1, e2].combineLatest { $0.reduce(0, combine:+) }
+            [e0, e1, e2].combineLatest { $0.reduce(0, +) }
         }
         
         XCTAssertEqual(res.events, [

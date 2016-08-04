@@ -13,7 +13,7 @@ import RxBlocking
 import RxTests
 
 class ObservableConcurrencyTestBase : RxTest {
-    var lock = Lock()
+    var lock = NSLock()
 
     func performLocked(_ action: () -> Void) {
         lock.lock()
@@ -332,7 +332,7 @@ class ObservableConcurrentSchedulerConcurrencyTest: ObservableConcurrencyTestBas
 
         let scheduler = createScheduler()
 
-        let condition = Condition()
+        let condition = NSCondition()
 
         var writtenStarted = 0
         var writtenEnded = 0
