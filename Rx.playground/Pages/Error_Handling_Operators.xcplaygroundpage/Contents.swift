@@ -29,7 +29,7 @@ example("catchErrorJustReturn") {
     sequenceThatFails.onNext("😨")
     sequenceThatFails.onNext("😡")
     sequenceThatFails.onNext("🔴")
-    sequenceThatFails.onError(Error.Test)
+    sequenceThatFails.onError(TestError.test)
 }
 /*:
  ----
@@ -55,7 +55,7 @@ example("catchError") {
     sequenceThatFails.onNext("😨")
     sequenceThatFails.onNext("😡")
     sequenceThatFails.onNext("🔴")
-    sequenceThatFails.onError(Error.Test)
+    sequenceThatFails.onError(TestError.test)
     
     recoverySequence.onNext("😊")
 }
@@ -75,7 +75,7 @@ example("retry") {
         observer.onNext("🍊")
         
         if count == 1 {
-            observer.onError(Error.Test)
+            observer.onError(TestError.test)
             print("Error encountered")
             count += 1
         }
@@ -109,7 +109,7 @@ example("retry maxAttemptCount") {
         observer.onNext("🍊")
         
         if count < 5 {
-            observer.onError(Error.Test)
+            observer.onError(TestError.test)
             print("Error encountered")
             count += 1
         }

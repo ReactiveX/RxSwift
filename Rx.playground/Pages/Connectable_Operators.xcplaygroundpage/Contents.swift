@@ -49,7 +49,7 @@ func sampleWithPublish() {
     _ = intSequence
         .subscribeNext { print("Subscription 1:, Event: \($0)") }
     
-    delay(2) { intSequence.connect() }
+    delay(2) { _ = intSequence.connect() }
     
     delay(4) {
         _ = intSequence
@@ -81,7 +81,7 @@ func sampleWithReplayBuffer() {
     _ = intSequence
         .subscribeNext { print("Subscription 1:, Event: \($0)") }
     
-    delay(2) { intSequence.connect() }
+    delay(2) { _ = intSequence.connect() }
     
     delay(4) {
         _ = intSequence
@@ -115,7 +115,7 @@ func sampleWithMulticast() {
     _ = intSequence
         .subscribeNext { print("\tSubscription 1:, Event: \($0)") }
     
-    delay(2) { intSequence.connect() }
+    delay(2) { _ = intSequence.connect() }
     
     delay(4) {
         _ = intSequence

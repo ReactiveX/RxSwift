@@ -190,7 +190,7 @@ example("deferred") {
 example("error") {
     let disposeBag = DisposeBag()
         
-    Observable<Int>.error(Error.test)
+    Observable<Int>.error(TestError.test)
         .subscribe { print($0) }
         .addDisposableTo(disposeBag)
 }

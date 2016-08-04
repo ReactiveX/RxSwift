@@ -5,16 +5,16 @@ import Foundation
  - parameter description: example description
  - parameter action: `Void` closure
  */
-public func example(description: String, action: @noescape(Void) -> Void) {
-    printExampleHeader(description: description)
+public func example(_ description: String, action: @noescape(Void) -> Void) {
+    printExampleHeader(description)
     action()
 }
 
-public func printExampleHeader(description: String) {
+public func printExampleHeader(_ description: String) {
     print("\n--- \(description) example ---")
 }
 
-public enum Error: Swift.Error {
+public enum TestError: Swift.Error {
     case test
 }
 
@@ -24,7 +24,7 @@ public enum Error: Swift.Error {
  - parameter delay: time in seconds to wait before executing `closure`
  - parameter closure: `Void` closure
  */
-public func delay(delay: Double, closure: (Void) -> Void) {
+public func delay(_ delay: Double, closure: (Void) -> Void) {
 
     let delayTime = DispatchTime.now() + DispatchTimeInterval.seconds(Int(delay))
     DispatchQueue.main.asyncAfter(deadline: delayTime) {

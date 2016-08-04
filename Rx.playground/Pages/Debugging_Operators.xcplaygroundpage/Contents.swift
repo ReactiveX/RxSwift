@@ -24,7 +24,7 @@ example("debug") {
         observer.onNext("🍊")
         
         if count < 5 {
-            observer.onError(Error.Test)
+            observer.onError(TestError.test)
             print("Error encountered")
             count += 1
         }
