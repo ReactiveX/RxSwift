@@ -714,7 +714,7 @@ If you are unsure how exactly some of the operators work, [playgrounds](../Rx.pl
 
 ## Error handling
 
-The are two error mechanisms.
+There are two error mechanisms.
 
 ### Asynchronous error handling mechanism in observables
 
