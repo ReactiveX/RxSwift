@@ -2500,17 +2500,7 @@ extension ObservableMultipleTest {
 
 // MARK: combine latest
 extension ObservableMultipleTest {
-    func testCombineLatest_DeadlockSimple() {
-        var nEvents = 0
-        
-        let observable = Observable.combineLatest(Observable.of(0, 1, 2), Observable.of(0, 1, 2)) { $0 + $1 }
-        _ = observable.subscribeNext { n in
-            nEvents += 1
-        }
-        
-        XCTAssertEqual(nEvents, 3)
-    }
-    
+
     func testCombineLatest_DeadlockErrorAfterN() {
         var nEvents = 0
         

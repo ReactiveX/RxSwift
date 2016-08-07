@@ -145,7 +145,7 @@ extension Driver {
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
     public static func of(_ elements: E ...) -> Driver<E> {
-        let source = elements.toObservable(driverSubscribeOnScheduler)
+        let source = Observable.from(elements, scheduler: driverSubscribeOnScheduler)
         return Driver(raw: source)
     }
 }

@@ -8,8 +8,8 @@
 
 import Foundation
 
-class ObservableSequenceSink<O: ObserverType> : Sink<O> {
-    typealias Parent = ObservableSequence<O.E>
+class ObservableSequenceSink<S: Sequence, O: ObserverType where S.Iterator.Element == O.E> : Sink<O> {
+    typealias Parent = ObservableSequence<S>
 
     private let _parent: Parent
 
@@ -19,10 +19,11 @@ class ObservableSequenceSink<O: ObserverType> : Sink<O> {
     }
 
     func run() -> Disposable {
-        return _parent._scheduler!.scheduleRecursive((0, _parent._elements)) { (state, recurse) in
-            if state.0 < state.1.count {
-                self.forwardOn(.next(state.1[state.0]))
-                recurse((state.0 + 1, state.1))
+        return _parent._scheduler.scheduleRecursive((_parent._elements.makeIterator(), _parent._elements)) { (iterator, recurse) in
+            var mutableIterator = iterator
+            if let next = mutableIterator.0.next() {
+                self.forwardOn(.next(next))
+                recurse(mutableIterator)
             }
             else {
                 self.forwardOn(.completed)
@@ -31,26 +32,16 @@ class ObservableSequenceSink<O: ObserverType> : Sink<O> {
     }
 }
 
-class ObservableSequence<E> : Producer<E> {
-    private let _elements: [E]
-    private let _scheduler: ImmediateSchedulerType?
+class ObservableSequence<S: Sequence> : Producer<S.Iterator.Element> {
+    private let _elements: S
+    private let _scheduler: ImmediateSchedulerType
 
-    init(elements: [E], scheduler: ImmediateSchedulerType?) {
+    init(elements: S, scheduler: ImmediateSchedulerType) {
         _elements = elements
         _scheduler = scheduler
     }
 
     override func subscribe<O : ObserverType where O.E == E>(_ observer: O) -> Disposable {
-        // optimized version without scheduler
-        guard _scheduler != nil else {
-            for element in _elements {
-                observer.on(.next(element))
-            }
-            
-            observer.on(.completed)
-            return NopDisposable.instance
-        }
-
         let sink = ObservableSequenceSink(parent: self, observer: observer)
         sink.disposable = sink.run()
         return sink
