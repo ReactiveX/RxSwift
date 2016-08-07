@@ -115,7 +115,7 @@ class PartialUpdatesViewController : ViewController {
             let cvReloadDataSource = RxCollectionViewSectionedReloadDataSource<NumberSection>()
             skinCollectionViewDataSource(cvReloadDataSource)
             self.sections.asObservable()
-                .bindTo(partialUpdatesCollectionViewOutlet.rx_itemsWithDataSource(cvReloadDataSource))
+                .bindTo(partialUpdatesCollectionViewOutlet.rx_items(dataSource: cvReloadDataSource))
                 .addDisposableTo(disposeBag)
         #endif
 

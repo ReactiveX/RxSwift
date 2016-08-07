@@ -20,7 +20,7 @@ extension UIImageView {
     Bindable sink for `image` property.
     */
     public var rx_image: AnyObserver<UIImage?> {
-        return self.rx_imageAnimated(nil)
+        return self.rx_image(transitionType: nil)
     }
     
     /**
@@ -28,6 +28,7 @@ extension UIImageView {
     
     - parameter transitionType: Optional transition type while setting the image (kCATransitionFade, kCATransitionMoveIn, ...)
     */
+    @available(*, deprecated, renamed: "rx_image(transitionType:)")
     public func rx_imageAnimated(_ transitionType: String?) -> AnyObserver<UIImage?> {
         return UIBindingObserver(UIElement: self) { imageView, image in
             if let transitionType = transitionType {
@@ -45,7 +46,29 @@ extension UIImageView {
             imageView.image = image
         }.asObserver()
     }
-    
+
+    /**
+     Bindable sink for `image` property.
+
+     - parameter transitionType: Optional transition type while setting the image (kCATransitionFade, kCATransitionMoveIn, ...)
+     */
+    public func rx_image(transitionType: String? = nil) -> AnyObserver<UIImage?> {
+        return UIBindingObserver(UIElement: self) { imageView, image in
+            if let transitionType = transitionType {
+                if image != nil {
+                    let transition = CATransition()
+                    transition.duration = 0.25
+                    transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+                    transition.type = transitionType
+                    imageView.layer.add(transition, forKey: kCATransition)
+                }
+            }
+            else {
+                imageView.layer.removeAllAnimations()
+            }
+            imageView.image = image
+        }.asObserver()
+    }
 }
 
 #endif
