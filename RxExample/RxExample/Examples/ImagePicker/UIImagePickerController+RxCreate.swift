@@ -33,7 +33,7 @@ extension UIImagePickerController {
             let imagePicker = UIImagePickerController()
             let dismissDisposable = imagePicker
                 .rx_didCancel
-                .subscribeNext({ [weak imagePicker] in
+                .subscribe(onNext: { [weak imagePicker] in
                     guard let imagePicker = imagePicker else {
                         return
                     }

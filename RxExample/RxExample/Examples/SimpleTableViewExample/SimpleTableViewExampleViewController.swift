@@ -34,16 +34,16 @@ class SimpleTableViewExampleViewController : ViewController {
 
         tableView
             .rx_modelSelected(String.self)
-            .subscribeNext { value in
+            .subscribe(onNext:  { value in
                 DefaultWireframe.presentAlert("Tapped `\(value)`")
-            }
+            })
             .addDisposableTo(disposeBag)
 
         tableView
             .rx_itemAccessoryButtonTapped
-            .subscribeNext { indexPath in
+            .subscribe(onNext: { indexPath in
                 DefaultWireframe.presentAlert("Tapped Detail @ \(indexPath.section),\(indexPath.row)")
-            }
+            })
             .addDisposableTo(disposeBag)
 
     }

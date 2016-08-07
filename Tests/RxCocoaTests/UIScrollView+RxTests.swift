@@ -52,9 +52,9 @@ extension UIScrollViewTests {
             let delegate = MockScrollViewDelegate()
             _ = scrollView.rx_setDelegate(delegate)
 
-            _ = delegate.rx_deallocated.subscribeNext { _ in
+            _ = delegate.rx_deallocated.subscribe(onNext: { _ in
                 delegateDeallocated = true
-            }
+            })
 
             XCTAssert(delegateDeallocated == false)
         }

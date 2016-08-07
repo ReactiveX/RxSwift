@@ -76,10 +76,10 @@ extension ObservableConcurrencyTest {
         runDispatchQueueSchedulerTests { scheduler in
             let observable = Observable.just(0)
                 .observeOn(scheduler)
-            return observable .subscribeNext { n in
+            return observable.subscribe(onNext: { n in
                 didExecute = true
                 XCTAssert(Thread.current !== unitTestsThread)
-            }
+            })
         }
 
 
@@ -128,9 +128,9 @@ extension ObservableConcurrencyTest {
 
         runDispatchQueueSchedulerTests { scheduler in
             let observable: Observable<Int> = Observable.error(testError).observeOn(scheduler)
-            return observable .subscribeError { n in
+            return observable.subscribe(onError: { n in
                 nEvents += 1
-            }
+            })
         }
 
         XCTAssertEqual(nEvents, 1)
@@ -142,9 +142,9 @@ extension ObservableConcurrencyTest {
         runDispatchQueueSchedulerTests { scheduler in
             let observable: Observable<Int> = Observable.empty().observeOn(scheduler)
 
-            return observable.subscribeCompleted {
+            return observable.subscribe(onCompleted: {
                 nEvents += 1
-            }
+            })
         }
 
         XCTAssertEqual(nEvents, 1)
@@ -155,9 +155,9 @@ extension ObservableConcurrencyTest {
             let xs: Observable<Int> = Observable.never()
             return xs
                 .observeOn(scheduler)
-                .subscribeNext { n in
+                .subscribe(onNext: { n in
                     XCTAssert(false)
-                }
+                })
         }
     }
 
@@ -382,9 +382,9 @@ class ObservableConcurrentSchedulerConcurrencyTest: ObservableConcurrencyTestBas
         let xs: Observable<Int> = Observable.never()
         let subscription = xs
             .observeOn(scheduler)
-            .subscribeNext { n in
+            .subscribe(onNext: { n in
                 XCTAssert(false)
-        }
+            })
 
         sleep(0.1)
 

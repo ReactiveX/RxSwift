@@ -93,11 +93,11 @@ class WikipediaSearchViewController: ViewController {
             .filter { _ -> Bool in
                 return !searchController.isBeingPresented
             }
-            .driveNext { _ in
+            .drive(onNext: { _ in
                 if searchBar.isFirstResponder {
                     _ = searchBar.resignFirstResponder()
                 }
-            }
+            })
             .addDisposableTo(disposeBag)
     }
 
@@ -106,9 +106,9 @@ class WikipediaSearchViewController: ViewController {
 
         resultsTableView.rx_modelSelected(SearchResultViewModel.self)
             .asDriver()
-            .driveNext { searchResult in
+            .drive(onNext: { searchResult in
                 wireframe.open(url:searchResult.searchResult.URL)
-            }
+            })
             .addDisposableTo(disposeBag)
     }
 

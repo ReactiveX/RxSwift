@@ -105,9 +105,10 @@ extension DriverConvertibleType {
     - returns: Subscription object used to unsubscribe from the observable sequence.
     */
     // @warn_unused_result(message:"http://git.io/rxs.ud")
+    @available(*, deprecated, renamed: "drive(onNext:)")
     public func driveNext(_ onNext: (E) -> Void) -> Disposable {
         MainScheduler.ensureExecutingOnScheduler(errorMessage: driverErrorMessage)
-        return self.asObservable().subscribeNext(onNext)
+        return self.asObservable().subscribe(onNext: onNext)
     }
 }
 

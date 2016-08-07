@@ -27,9 +27,9 @@ extension NSObjectTests {
             .map { _ in
                 return 1
             }
-            .subscribeNext { _ in
+            .subscribe(onNext: { _ in
                 fired = true
-            }
+            })
         
         XCTAssertFalse(fired)
         
@@ -48,9 +48,9 @@ extension NSObjectTests {
             .map { _ in
                 return 1
             }
-            .subscribeCompleted {
+            .subscribe(onCompleted: {
                 fired = true
-            }
+            })
         
         XCTAssertFalse(fired)
         
@@ -69,9 +69,9 @@ extension NSObjectTests {
             .map { _ in
                 return 1
             }
-            .subscribeNext { _ in
+            .subscribe(onNext: { _ in
                 fired = true
-            }
+            })
             .dispose()
 
         XCTAssertFalse(fired)
@@ -95,9 +95,9 @@ extension NSObjectTests {
             .map { _ in
                 return 1
             }
-            .subscribeNext { _ in
+            .subscribe(onNext: { _ in
                 fired = true
-            }
+            })
         
         XCTAssertFalse(fired)
         
@@ -116,9 +116,9 @@ extension NSObjectTests {
             .map { _ in
                 return 1
             }
-            .subscribeCompleted {
+            .subscribe(onCompleted: {
                 fired = true
-            }
+            })
         
         XCTAssertFalse(fired)
         
@@ -137,9 +137,9 @@ extension NSObjectTests {
             .map { _ in
                 return 1
             }
-            .subscribeNext { _ in
+            .subscribe(onNext: { _ in
                 fired = true
-            }
+            })
             .dispose()
         
         XCTAssertFalse(fired)

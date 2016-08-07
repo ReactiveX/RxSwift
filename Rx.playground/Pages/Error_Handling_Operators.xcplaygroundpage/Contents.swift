@@ -90,7 +90,7 @@ example("retry") {
     
     sequenceThatErrors
         .retry()
-        .subscribeNext { print($0) }
+        .subscribe(onNext: { print($0) })
         .addDisposableTo(disposeBag)
 }
 /*:
@@ -124,8 +124,8 @@ example("retry maxAttemptCount") {
     
     sequenceThatErrors
         .retry(3)
-        .subscribeNext { print($0) }
+        .subscribe(onNext: { print($0) })
         .addDisposableTo(disposeBag)
 }
 
-//: [Next](@next) - [Table of Contents](Table_of_Contents)
+//: [Next](@next) - [Table of Contents](Table_of_

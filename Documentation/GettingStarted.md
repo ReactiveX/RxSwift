@@ -276,9 +276,9 @@ let searchForMe = searchWikipedia("me")
 
 let cancel = searchForMe
   // sequence generation starts now, URL requests are fired
-  .subscribeNext { results in
+  .subscribe(onNext: { results in
       print(results)
-  }
+  })
 
 ```
 
@@ -298,9 +298,9 @@ func myJust<E>(element: E) -> Observable<E> {
 }
 
 myJust(0)
-    .subscribeNext { n in
+    .subscribe(onNext: { n in
       print(n)
-    }
+    })
 ```
 
 this will print:
@@ -339,17 +339,17 @@ print("Started ----")
 
 // first time
 stringCounter
-    .subscribeNext { n in
+    .subscribe(onNext: { n in
         print(n)
-    }
+    })
 
 print("----")
 
 // again
 stringCounter
-    .subscribeNext { n in
+    .subscribe(onNext: { n in
         print(n)
-    }
+    })
 
 print("Ended ----")
 ```
@@ -406,9 +406,9 @@ let counter = myInterval(0.1)
 print("Started ----")
 
 let subscription = counter
-    .subscribeNext { n in
+    .subscribe(onNext: { n in
        print(n)
-    }
+    })
 
 NSThread.sleepForTimeInterval(0.5)
 
@@ -438,13 +438,13 @@ let counter = myInterval(0.1)
 print("Started ----")
 
 let subscription1 = counter
-    .subscribeNext { n in
+    .subscribe(onNext: { n in
        print("First \(n)")
-    }
+    })
 let subscription2 = counter
-    .subscribeNext { n in
+    .subscribe(onNext: { n in
        print("Second \(n)")
-    }
+    })
 
 NSThread.sleepForTimeInterval(0.5)
 
@@ -503,13 +503,13 @@ let counter = myInterval(0.1)
 print("Started ----")
 
 let subscription1 = counter
-    .subscribeNext { n in
+    .subscribe(onNext: { n in
        print("First \(n)")
-    }
+    })
 let subscription2 = counter
-    .subscribeNext { n in
+    .subscribe(onNext: { n in
        print("Second \(n)")
-    }
+    })
 
 NSThread.sleepForTimeInterval(0.5)
 
@@ -637,9 +637,9 @@ let subscription = myInterval(0.1)
     .myMap { e in
         return "This is simply \(e)"
     }
-    .subscribeNext { n in
+    .subscribe(onNext: { n in
         print(n)
-    }
+    })
 ```
 
 and this will print
@@ -668,9 +668,9 @@ This isn't something that should be practiced often, and is a bad code smell, bu
   let magicBeings: Observable<MagicBeing> = summonFromMiddleEarth()
 
   magicBeings
-    .subscribeNext { being in     // exit the Rx monad  
+    .subscribe(onNext: { being in     // exit the Rx monad  
         self.doSomeStateMagic(being)
-    }
+    })
     .addDisposableTo(disposeBag)
 
   //
@@ -698,9 +698,9 @@ Every time you do this, somebody will probably write this code somewhere
 
 ```swift
   kittens
-    .subscribeNext { kitten in
+    .subscribe(onNext: { kitten in
       // so something with kitten
-    }
+    })
     .addDisposableTo(disposeBag)
 ```
 
@@ -783,9 +783,9 @@ let subscription = myInterval(0.1)
     .map { e in
         return "This is simply \(e)"
     }
-    .subscribeNext { n in
+    .subscribe(onNext: { n in
         print(n)
-    }
+    })
 
 NSThread.sleepForTimeInterval(0.5)
 
@@ -851,9 +851,9 @@ In case you want to have some resource leak detection logic, the simplest method
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool
     */
     _ = Observable<Int>.interval(1, scheduler: MainScheduler.instance)
-        .subscribeNext { _ in
-        print("Resource count \(RxSwift.resourceCount)")
-    }
+        .subscribe(onNext: { _ in
+            print("Resource count \(RxSwift.resourceCount)")
+        })
 ```
 
 Most efficient way to test for memory leaks is:
@@ -952,9 +952,9 @@ Example how to observe frame of `UIView`.
 ```swift
 view
   .rx_observe(CGRect.self, "frame")
-  .subscribeNext { frame in
+  .subscribe(onNext: { frame in
     ...
-  }
+  })
 ```
 
 or
@@ -962,9 +962,9 @@ or
 ```swift
 view
   .rx_observeWeakly(CGRect.self, "frame")
-  .subscribeNext { frame in
+  .subscribe(onNext: { frame in
     ...
-  }
+  })
 ```
 
 ### `rx_observe`
@@ -1077,9 +1077,9 @@ let responseJSON = NSURLSession.sharedSession().rx_JSON(request)
 
 let cancelRequest = responseJSON
     // this will fire the request
-    .subscribeNext { json in
+    .subscribe(onNext: { json in
         print(json)
-    }
+    })
 
 NSThread.sleepForTimeInterval(3)
 

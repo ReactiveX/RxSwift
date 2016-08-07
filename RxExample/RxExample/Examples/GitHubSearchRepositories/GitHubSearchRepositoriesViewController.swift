@@ -79,9 +79,9 @@ class GitHubSearchRepositoriesViewController: ViewController, UITableViewDelegat
 
         searchResult
             .filter { $0.limitExceeded }
-            .driveNext { n in
+            .drive(onNext: { n in
                 showAlert("Exceeded limit of 10 non authenticated requests per minute for GitHub API. Please wait a minute. :(\nhttps://developer.github.com/v3/#rate-limiting") 
-            }
+            })
             .addDisposableTo(disposeBag)
 
         // dismiss keyboard on scroll

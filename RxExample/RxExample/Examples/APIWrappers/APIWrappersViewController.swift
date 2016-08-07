@@ -63,9 +63,9 @@ class APIWrappersViewController: ViewController {
         // MARK: UIBarButtonItem
 
         bbitem.rx_tap
-            .subscribeNext { [weak self] x in
+            .subscribe(onNext: { [weak self] x in
                 self?.debug("UIBarButtonItem Tapped")
-            }
+            })
             .addDisposableTo(disposeBag)
 
         // MARK: UISegmentedControl
@@ -75,9 +75,9 @@ class APIWrappersViewController: ViewController {
         _ = segmentedControl.rx_value <-> segmentedValue
 
         segmentedValue.asObservable()
-            .subscribeNext { [weak self] x in
+            .subscribe(onNext: { [weak self] x in
                 self?.debug("UISegmentedControl value \(x)")
-            }
+            })
             .addDisposableTo(disposeBag)
 
 
@@ -88,9 +88,9 @@ class APIWrappersViewController: ViewController {
         _ = switcher.rx_value <-> switchValue
 
         switchValue.asObservable()
-            .subscribeNext { [weak self] x in
+            .subscribe(onNext: { [weak self] x in
                 self?.debug("UISwitch value \(x)")
-            }
+            })
             .addDisposableTo(disposeBag)
 
         // MARK: UIActivityIndicatorView
@@ -103,9 +103,9 @@ class APIWrappersViewController: ViewController {
         // MARK: UIButton
 
         button.rx_tap
-            .subscribeNext { [weak self] x in
+            .subscribe(onNext: { [weak self] x in
                 self?.debug("UIButton Tapped")
-            }
+            })
             .addDisposableTo(disposeBag)
 
 
@@ -116,9 +116,9 @@ class APIWrappersViewController: ViewController {
         _ = slider.rx_value <-> sliderValue
 
         sliderValue.asObservable()
-            .subscribeNext { [weak self] x in
+            .subscribe(onNext: { [weak self] x in
                 self?.debug("UISlider value \(x)")
-            }
+            })
             .addDisposableTo(disposeBag)
 
 
@@ -130,9 +130,9 @@ class APIWrappersViewController: ViewController {
 
 
         dateValue.asObservable()
-            .subscribeNext { [weak self] x in
+            .subscribe(onNext: { [weak self] x in
                 self?.debug("UIDatePicker date \(x)")
-            }
+            })
             .addDisposableTo(disposeBag)
 
 
@@ -143,18 +143,18 @@ class APIWrappersViewController: ViewController {
         _ = textField <-> textValue
 
         textValue.asObservable()
-            .subscribeNext { [weak self] x in
+            .subscribe(onNext: { [weak self] x in
                 self?.debug("UITextField text \(x)")
-            }
+            })
             .addDisposableTo(disposeBag)
 
 
         // MARK: UIGestureRecognizer
 
         mypan.rx_event
-            .subscribeNext { [weak self] x in
+            .subscribe(onNext: { [weak self] x in
                 self?.debug("UIGestureRecognizer event \(x.state)")
-            }
+            })
             .addDisposableTo(disposeBag)
 
 
@@ -165,9 +165,9 @@ class APIWrappersViewController: ViewController {
         _ = textView <-> textViewValue
 
         textViewValue.asObservable()
-            .subscribeNext { [weak self] x in
+            .subscribe(onNext: { [weak self] x in
                 self?.debug("UITextView text \(x)")
-            }
+            })
             .addDisposableTo(disposeBag)
 
         // MARK: CLLocationManager
@@ -177,20 +177,20 @@ class APIWrappersViewController: ViewController {
         #endif
 
         manager.rx_didUpdateLocations
-            .subscribeNext { x in
+            .subscribe(onNext: { x in
                 print("rx_didUpdateLocations \(x)")
-            }
+            })
             .addDisposableTo(disposeBag)
 
         _ = manager.rx_didFailWithError
-            .subscribeNext { x in
+            .subscribe(onNext: { x in
                 print("rx_didFailWithError \(x)")
-            }
+            })
         
         manager.rx_didChangeAuthorizationStatus
-            .subscribeNext { status in
+            .subscribe(onNext: { status in
                 print("Authorization status \(status)")
-            }
+            })
             .addDisposableTo(disposeBag)
         
         manager.startUpdatingLocation()

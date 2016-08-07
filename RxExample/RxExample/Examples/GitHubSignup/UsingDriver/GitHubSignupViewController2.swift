@@ -45,10 +45,10 @@ class GitHubSignupViewController2 : ViewController {
 
         // bind results to  {
         viewModel.signupEnabled
-            .driveNext { [weak self] valid  in
+            .drive(onNext: { [weak self] valid  in
                 self?.signupOutlet.isEnabled = valid
                 self?.signupOutlet.alpha = valid ? 1.0 : 0.5
-            }
+            })
             .addDisposableTo(disposeBag)
 
         viewModel.validatedUsername
@@ -68,17 +68,17 @@ class GitHubSignupViewController2 : ViewController {
             .addDisposableTo(disposeBag)
 
         viewModel.signedIn
-            .driveNext { signedIn in
+            .drive(onNext: { signedIn in
                 print("User signed in \(signedIn)")
-            }
+            })
             .addDisposableTo(disposeBag)
         //}
 
         let tapBackground = UITapGestureRecognizer()
         tapBackground.rx_event
-            .subscribeNext { [weak self] _ in
+            .subscribe(onNext: { [weak self] _ in
                 self?.view.endEditing(true)
-            }
+            })
             .addDisposableTo(disposeBag)
         view.addGestureRecognizer(tapBackground)
     }

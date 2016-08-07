@@ -30,9 +30,9 @@ class UICollectionViewTests : RxTest {
         var resultIndexPath: IndexPath? = nil
 
         let subscription = collectionView.rx_itemSelected
-            .subscribeNext { indexPath in
+            .subscribe(onNext: { indexPath in
                 resultIndexPath = indexPath
-            }
+            })
 
         let testRow = IndexPath(row: 1, section: 0)
         collectionView.delegate!.collectionView!(collectionView, didSelectItemAt: testRow)
@@ -48,9 +48,9 @@ class UICollectionViewTests : RxTest {
         var resultIndexPath: IndexPath? = nil
 
         let subscription = collectionView.rx_itemDeselected
-            .subscribeNext { indexPath in
+            .subscribe(onNext: { indexPath in
                 resultIndexPath = indexPath
-            }
+            })
 
         let testRow = IndexPath(row: 1, section: 0)
         collectionView.delegate!.collectionView!(collectionView, didDeselectItemAt: testRow)
@@ -128,9 +128,9 @@ class UICollectionViewTests : RxTest {
         var selectedItem: Int? = nil
 
         let s = collectionView.rx_modelSelected(Int.self)
-            .subscribeNext { (item: Int) in
+            .subscribe(onNext: { (item: Int) in
                 selectedItem = item
-            }
+            })
 
         collectionView.delegate!.collectionView!(collectionView, didSelectItemAt: IndexPath(row: 1, section: 0))
 
@@ -159,9 +159,9 @@ class UICollectionViewTests : RxTest {
         var selectedItem: Int? = nil
 
         let s = collectionView.rx_modelSelected(Int.self)
-            .subscribeNext { item in
+            .subscribe(onNext: { item in
                 selectedItem = item
-            }
+            })
 
         collectionView.delegate!.collectionView!(collectionView, didSelectItemAt: IndexPath(row: 1, section: 0))
 
@@ -190,9 +190,9 @@ class UICollectionViewTests : RxTest {
         var selectedItem: Int? = nil
 
         let s = collectionView.rx_modelDeselected(Int.self)
-            .subscribeNext { (item: Int) in
+            .subscribe(onNext: { (item: Int) in
                 selectedItem = item
-        }
+            })
 
         collectionView.delegate!.collectionView!(collectionView, didDeselectItemAt: IndexPath(row: 1, section: 0))
 
@@ -221,9 +221,9 @@ class UICollectionViewTests : RxTest {
         var selectedItem: Int? = nil
 
         let s = collectionView.rx_modelDeselected(Int.self)
-            .subscribeNext { item in
+            .subscribe(onNext: { item in
                 selectedItem = item
-            }
+            })
 
         collectionView.delegate!.collectionView!(collectionView, didDeselectItemAt: IndexPath(row: 1, section: 0))
         
@@ -270,9 +270,9 @@ extension UICollectionViewTests {
             let dataSource = SectionedViewDataSourceMock()
             dataSourceSubscription = items.bindTo(collectionView.rx_items(dataSource: dataSource))
 
-            _ = dataSource.rx_deallocated.subscribeNext { _ in
+            _ = dataSource.rx_deallocated.subscribe(onNext: { _ in
                 dataSourceDeallocated = true
-            }
+            })
         }
 
         XCTAssert(dataSourceDeallocated == false)
@@ -293,9 +293,9 @@ extension UICollectionViewTests {
             let dataSource = SectionedViewDataSourceMock()
             _ = items.bindTo(collectionView.rx_items(dataSource: dataSource))
             
-            _ = dataSource.rx_deallocated.subscribeNext { _ in
+            _ = dataSource.rx_deallocated.subscribe(onNext: { _ in
                 dataSourceDeallocated = true
-            }
+            })
 
             XCTAssert(dataSourceDeallocated == false)
         }
@@ -313,9 +313,9 @@ extension UICollectionViewTests {
             let dataSource = SectionedViewDataSourceMock()
             _ = collectionView.rx_setDataSource(dataSource)
 
-            _ = dataSource.rx_deallocated.subscribeNext { _ in
+            _ = dataSource.rx_deallocated.subscribe(onNext: { _ in
                 dataSourceDeallocated = true
-            }
+            })
 
             XCTAssert(dataSourceDeallocated == false)
         }

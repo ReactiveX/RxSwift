@@ -23,9 +23,9 @@ extension ObserverTests {
 
         var elements = [Int]()
 
-        _ = a.subscribeNext { n in
+        _ = a.subscribe(onNext: { n in
             elements.append(n)
-        }
+        })
 
         XCTAssertEqual(elements, [])
 
@@ -72,9 +72,9 @@ extension ObserverTests {
 
         var elements = [Int]()
 
-        _ = a.subscribeNext { n in
+        _ = a.subscribe(onNext: { n in
             elements.append(n)
-        }
+        })
 
         XCTAssertEqual(elements, [])
 

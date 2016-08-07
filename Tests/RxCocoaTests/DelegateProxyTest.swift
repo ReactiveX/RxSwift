@@ -76,9 +76,9 @@ class DelegateProxyTest : RxTest {
         var observedFeedRequest = false
         
         let d = view.rx_proxy.observe(#selector(ThreeDSectionedViewProtocol.threeDView(_:didLearnSomething:)))
-            .subscribeNext { n in
+            .subscribe(onNext: { n in
                 observedFeedRequest = true
-            }
+            })
         defer {
             d.dispose()
         }
@@ -99,9 +99,9 @@ class DelegateProxyTest : RxTest {
         var nMessages = 0
         
         let d = view.rx_proxy.observe(#selector(ThreeDSectionedViewProtocol.threeDView(_:didLearnSomething:)))
-            .subscribeNext { n in
+            .subscribe(onNext: { n in
                 nMessages += 1
-            }
+            })
         
         XCTAssertTrue(nMessages == 0)
         view.delegate?.threeDView?(view, didLearnSomething: "Psssst ...")
@@ -137,10 +137,10 @@ class DelegateProxyTest : RxTest {
         var receivedArgument: IndexPath? = nil
         
         let d = view.rx_proxy.observe(#selector(ThreeDSectionedViewProtocol.threeDView(_:didGetXXX:)))
-            .subscribeNext { n in
+            .subscribe(onNext: { n in
                 let ip = n[1] as! IndexPath
                 receivedArgument = ip
-            }
+            })
         defer {
             d.dispose()
         }
@@ -167,9 +167,9 @@ class DelegateProxyTest : RxTest {
             _ = view
                 .rx_proxy
                 .observe(#selector(ThreeDSectionedViewProtocol.threeDView(_:didGetXXX:)))
-                .subscribeCompleted {
+                .subscribe(onCompleted: {
                     completed = true
-                }
+                })
             
             view.delegate?.threeDView?(view, didGetXXX: sentArgument)
         }
@@ -209,9 +209,9 @@ extension DelegateProxyTest {
                 completed = true
             })
 
-            _ = (control as! NSObject).rx_deallocated.subscribeNext { _ in
+            _ = (control as! NSObject).rx_deallocated.subscribe(onNext: { _ in
                 deallocated = true
-            }
+            })
         }
 
         XCTAssertTrue(receivedValue == nil)

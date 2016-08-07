@@ -53,9 +53,9 @@ class ViewController: OSViewController {
                 func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool
             */
             _ = Observable<Int>.interval(1, scheduler: MainScheduler.instance)
-                .subscribeNext { _ in
+                .subscribe(onNext: { _ in
                     print("Resource count \(RxSwift.resourceCount)")
-                }
+                })
 
         Most efficient way to test for memory leaks is:
         * navigate to your screen and use it

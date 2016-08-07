@@ -34,9 +34,9 @@ class UITableViewTests : RxTest {
         var resultIndexPath: IndexPath? = nil
 
         let subscription = tableView.rx_itemSelected
-            .subscribeNext { indexPath in
+            .subscribe(onNext: { indexPath in
                 resultIndexPath = indexPath
-            }
+            })
 
         let testRow = IndexPath(row: 1, section: 0)
         tableView.delegate!.tableView!(tableView, didSelectRowAt: testRow)
@@ -51,9 +51,9 @@ class UITableViewTests : RxTest {
         var resultIndexPath: IndexPath? = nil
 
         let subscription = tableView.rx_itemDeselected
-            .subscribeNext { indexPath in
+            .subscribe(onNext: { indexPath in
                 resultIndexPath = indexPath
-            }
+            })
 
         let testRow = IndexPath(row: 1, section: 0)
         tableView.delegate!.tableView!(tableView, didDeselectRowAt: testRow)
@@ -68,9 +68,9 @@ class UITableViewTests : RxTest {
         var resultIndexPath: IndexPath? = nil
 
         let subscription = tableView.rx_itemAccessoryButtonTapped
-            .subscribeNext { indexPath in
+            .subscribe(onNext: { indexPath in
                 resultIndexPath = indexPath
-            }
+            })
 
         let testRow = IndexPath(row: 1, section: 0)
         tableView.delegate!.tableView!(tableView, accessoryButtonTappedForRowWith: testRow)
@@ -85,9 +85,9 @@ class UITableViewTests : RxTest {
         var resultIndexPath: IndexPath? = nil
 
         let subscription = tableView.rx_itemDeleted
-            .subscribeNext { indexPath in
+            .subscribe(onNext: { indexPath in
                 resultIndexPath = indexPath
-            }
+            })
 
         let testRow = IndexPath(row: 1, section: 0)
         tableView.dataSource!.tableView!(tableView, commit: .delete, forRowAt:  testRow)
@@ -102,9 +102,9 @@ class UITableViewTests : RxTest {
         var resultIndexPath: IndexPath? = nil
 
         let subscription = tableView.rx_itemInserted
-            .subscribeNext { indexPath in
+            .subscribe(onNext: { indexPath in
                 resultIndexPath = indexPath
-            }
+            })
 
         let testRow = IndexPath(row: 1, section: 0)
         tableView.dataSource!.tableView!(tableView, commit: .insert, forRowAt:  testRow)
@@ -120,10 +120,10 @@ class UITableViewTests : RxTest {
         var resultCell: UITableViewCell? = nil
 
         let subscription = tableView.rx_willDisplayCell
-            .subscribeNext { (cell, indexPath) in
+            .subscribe(onNext: { (cell, indexPath) in
                 resultIndexPath = indexPath
                 resultCell = cell
-            }
+            })
 
         let testRow = IndexPath(row: 1, section: 0)
         let testCell = UITableViewCell()
@@ -141,10 +141,10 @@ class UITableViewTests : RxTest {
         var resultCell: UITableViewCell? = nil
 
         let subscription = tableView.rx_didEndDisplayingCell
-            .subscribeNext { (cell, indexPath) in
+            .subscribe(onNext: { (cell, indexPath) in
                 resultIndexPath = indexPath
                 resultCell = cell
-            }
+            })
 
         let testRow = IndexPath(row: 1, section: 0)
         let testCell = UITableViewCell()
@@ -162,10 +162,10 @@ class UITableViewTests : RxTest {
         var resultIndexPath2: IndexPath? = nil
 
         let subscription = tableView.rx_itemMoved
-            .subscribeNext { (indexPath, indexPath2) in
+            .subscribe(onNext: { (indexPath, indexPath2) in
                 resultIndexPath = indexPath
                 resultIndexPath2 = indexPath2
-            }
+            })
 
         let testRow = IndexPath(row: 1, section: 0)
         let testRow2 = IndexPath(row: 1, section: 0)
@@ -237,9 +237,9 @@ class UITableViewTests : RxTest {
         var selectedItem: Int? = nil
         
         let s = tableView.rx_modelSelected(Int.self)
-            .subscribeNext { item in
+            .subscribe(onNext: { item in
                 selectedItem = item
-        }
+            })
         
         tableView.delegate!.tableView!(tableView, didSelectRowAt: IndexPath(row: 1, section: 0))
         
@@ -267,9 +267,9 @@ class UITableViewTests : RxTest {
         var selectedItem: Int? = nil
 
         let s = tableView.rx_modelSelected(Int.self)
-            .subscribeNext { item in
+            .subscribe(onNext: { item in
                 selectedItem = item
-        }
+            })
 
         tableView.delegate!.tableView!(tableView, didSelectRowAt: IndexPath(row: 1, section: 0))
 
@@ -296,9 +296,9 @@ class UITableViewTests : RxTest {
         var selectedItem: Int? = nil
 
         let s = tableView.rx_modelDeselected(Int.self)
-            .subscribeNext { item in
+            .subscribe(onNext: { item in
                 selectedItem = item
-            }
+            })
 
         tableView.delegate!.tableView!(tableView, didDeselectRowAt: IndexPath(row: 1, section: 0))
 
@@ -326,9 +326,9 @@ class UITableViewTests : RxTest {
         var selectedItem: Int? = nil
 
         let s = tableView.rx_modelDeselected(Int.self)
-            .subscribeNext { item in
+            .subscribe(onNext: { item in
                 selectedItem = item
-            }
+            })
 
         tableView.delegate!.tableView!(tableView, didDeselectRowAt: IndexPath(row: 1, section: 0))
         
@@ -372,9 +372,9 @@ extension UITableViewTests {
             let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
             dataSourceSubscription = items.bindTo(tableView.rx_items(dataSource: dataSource))
 
-            _ = dataSource.rx_deallocated.subscribeNext { _ in
+            _ = dataSource.rx_deallocated.subscribe(onNext: { _ in
                 dataSourceDeallocated = true
-            }
+            })
         }
 
         XCTAssert(dataSourceDeallocated == false)
@@ -394,9 +394,9 @@ extension UITableViewTests {
             let dataSource = SectionedViewDataSourceMock()
             _ = items.bindTo(tableView.rx_items(dataSource: dataSource))
 
-            _ = dataSource.rx_deallocated.subscribeNext { _ in
+            _ = dataSource.rx_deallocated.subscribe(onNext: { _ in
                 dataSourceDeallocated = true
-            }
+            })
 
             XCTAssert(dataSourceDeallocated == false)
         }
@@ -414,9 +414,9 @@ extension UITableViewTests {
             let dataSource = SectionedViewDataSourceMock()
             _ = tableView.rx_setDataSource(dataSource)
 
-            _ = dataSource.rx_deallocated.subscribeNext { _ in
+            _ = dataSource.rx_deallocated.subscribe(onNext: { _ in
                 dataSourceDeallocated = true
-            }
+            })
 
             XCTAssert(dataSourceDeallocated == false)
         }

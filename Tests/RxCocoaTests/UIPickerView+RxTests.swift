@@ -28,9 +28,9 @@ class UIPickerViewTests: RxTest {
         var result: (row: Int, component: Int)?
         
         autoreleasepool {
-            _ = pickerView.rx_itemSelected.subscribeNext { (element) in
+            _ = pickerView.rx_itemSelected.subscribe(onNext: { (element) in
                 result = element
-            }
+            })
             pickerView.delegate!.pickerView!(pickerView,
                 didSelectRow: row,
                 inComponent: component)

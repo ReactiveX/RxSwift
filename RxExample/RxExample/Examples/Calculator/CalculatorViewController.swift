@@ -75,7 +75,7 @@ class CalculatorViewController: ViewController {
                 return a.tranformState(x)
             }
             .debug("debugging")
-            .subscribeNext { [weak self] calState in
+            .subscribe(onNext: { [weak self] calState in
                 self?.resultLabel.text = calState.inScreen
                 switch calState.action {
                 case .operation(let operation):
@@ -92,7 +92,7 @@ class CalculatorViewController: ViewController {
                 default:
                     self?.lastSignLabel.text = ""
                 }
-            }
+            })
             .addDisposableTo(disposeBag)
     }
     

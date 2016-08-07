@@ -58,9 +58,9 @@ class SimpleTableViewExampleSectionedViewController
             .map { indexPath in
                 return (indexPath, dataSource.itemAtIndexPath(indexPath))
             }
-            .subscribeNext { indexPath, model in
+            .subscribe(onNext: { indexPath, model in
                 DefaultWireframe.presentAlert("Tapped `\(model)` @ \(indexPath)")
-            }
+            })
             .addDisposableTo(disposeBag)
 
         tableView

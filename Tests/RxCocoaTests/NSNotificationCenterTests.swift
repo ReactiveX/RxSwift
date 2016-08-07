@@ -22,9 +22,9 @@ class NSNotificationCenterTests : RxTest {
         XCTAssertTrue(numberOfNotifications == 0)
         
         let subscription = notificationCenter.rx_notification(Notification.Name(rawValue: "testNotification"), object: nil)
-            .subscribeNext { n in
-            numberOfNotifications += 1
-        }
+            .subscribe(onNext: { n in
+                numberOfNotifications += 1
+            })
 
         XCTAssertTrue(numberOfNotifications == 0)
         
@@ -58,9 +58,9 @@ class NSNotificationCenterTests : RxTest {
         XCTAssertTrue(numberOfNotifications == 0)
         
         let subscription = notificationCenter.rx_notification(Notification.Name(rawValue: "testNotification"), object: targetObject)
-            .subscribeNext { n in
+            .subscribe(onNext: { n in
                 numberOfNotifications += 1
-        }
+            })
         
         XCTAssertTrue(numberOfNotifications == 0)
         

@@ -46,35 +46,35 @@ class IntroductionExampleViewController : ViewController {
             .map { (a, b) in
                 return "\(a) + \(b) = \(a + b)"
             }
-            .subscribeNext { result in
+            .subscribe(onNext: { result in
                 if speech.isSpeaking {
                     speech.stopSpeaking()
                 }
                 
                 speech.startSpeaking(result)
-            }
+            })
             .addDisposableTo(disposeBag)
         
         
         slider.rx_value
-            .subscribeNext { value in
+            .subscribe(onNext: { value in
                 self.sliderValue.stringValue = "\(Int(value))"
-            }
+            })
             .addDisposableTo(disposeBag)
         
         sliderValue.rx_text
-            .subscribeNext { value in
+            .subscribe(onNext: { value in
                 let doubleValue = value.toDouble() ?? 0.0
                 self.slider.doubleValue = doubleValue
                 self.sliderValue.stringValue = "\(Int(doubleValue))"
-            }
+            })
             .addDisposableTo(disposeBag)
         
         disposeButton.rx_tap
-            .subscribeNext { [weak self] _ in
+            .subscribe(onNext: { [weak self] _ in
                 print("Unbind everything")
                 self?.disposeBag = DisposeBag()
-            }
+            })
             .addDisposableTo(disposeBag)
     }
 }

@@ -497,8 +497,8 @@ extension SentMessageTest {
 
         let disposeBag = DisposeBag()
         target.rx_observe(NSArray.self, "messages")
-            .subscribeNext { _ in
-            }
+            .subscribe(onNext: { _ in
+            })
             .addDisposableTo(disposeBag)
 
         do {
@@ -576,13 +576,13 @@ extension SentMessageTest {
         let messages = target.rx_sentMessage(#selector(SentMessageTestBase_shared.justCalledBool(toSay:)))
 
         let kvo = target.rx_observe(NSArray.self, "messages")
-            .subscribeNext { _ in
-            }
+            .subscribe(onNext: { _ in
+            })
 
         var recordedMessages = [MethodParameters]()
-        let methodObserving = messages.subscribeNext { n in
+        let methodObserving = messages.subscribe(onNext: { n in
             recordedMessages.append(n)
-        }
+        })
 
         target.justCalledBool(toSay: true)
 

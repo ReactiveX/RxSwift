@@ -115,9 +115,9 @@ class TableViewWithEditingCommandsViewController: ViewController, UITableViewDel
                 let all = [viewModel.favoriteUsers, viewModel.users]
                 return all[i.section][i.row]
             }
-            .subscribeNext { [weak self] user in
+            .subscribe(onNext: { [weak self] user in
                 self?.showDetailsForUser(user)
-            }
+            })
             .addDisposableTo(disposeBag)
 
         // customization using delegate

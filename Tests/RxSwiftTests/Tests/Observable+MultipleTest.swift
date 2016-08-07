@@ -939,9 +939,9 @@ func generateSequence<T>(_ startIndex: Int, _ generator: (Int) -> Observable<T>)
 extension ObservableMultipleTest {
     func testConcat_DefaultScheduler() {
         var sum = 0
-        _ = [Observable.just(1), Observable.just(2), Observable.just(3)].concat().subscribeNext { (e) -> Void in
+        _ = [Observable.just(1), Observable.just(2), Observable.just(3)].concat().subscribe(onNext: { (e) -> Void in
             sum += e
-        }
+        })
         
         XCTAssertEqual(sum, 6)
     }
@@ -1562,9 +1562,9 @@ extension ObservableMultipleTest {
             Observable.of(0, 1, 2)
         ).merge()
         
-        _ = observable.subscribeNext { n in
+        _ = observable.subscribe(onNext: { n in
             nEvents += 1
-        }
+        })
         
         XCTAssertEqual(nEvents, 9)
     }
@@ -1578,9 +1578,9 @@ extension ObservableMultipleTest {
             Observable.of(0, 1, 2)
         ).merge()
         
-        _ = observable.subscribeError { n in
+        _ = observable.subscribe(onError: { n in
             nEvents += 1
-        }
+        })
         
         XCTAssertEqual(nEvents, 1)
     }
@@ -1592,9 +1592,9 @@ extension ObservableMultipleTest {
             Observable.error(testError)
         ).merge()
 
-        _ = observable.subscribeError { n in
+        _ = observable.subscribe(onError: { n in
             nEvents += 1
-        }
+        })
         
         XCTAssertEqual(nEvents, 1)
     }
@@ -1603,9 +1603,9 @@ extension ObservableMultipleTest {
         var nEvents = 0
         
         let observable: Observable<Int> = Observable<Observable<Int>>.empty().merge()
-        _ = observable.subscribeCompleted {
+        _ = observable.subscribe(onCompleted: {
             nEvents += 1
-        }
+        })
         
         XCTAssertEqual(nEvents, 1)
     }
@@ -1614,9 +1614,9 @@ extension ObservableMultipleTest {
         var nEvents = 0
         
         let observable: Observable<Int> = Observable.just(Observable.empty()).merge()
-        _ = observable.subscribeCompleted { n in
+        _ = observable.subscribe(onCompleted: { n in
             nEvents += 1
-        }
+        })
         
         XCTAssertEqual(nEvents, 1)
     }
@@ -1630,9 +1630,9 @@ extension ObservableMultipleTest {
             Observable.of(0, 1, 2)
         ).merge(maxConcurrent: 1)
         
-        _ = observable.subscribeNext { n in
+        _ = observable.subscribe(onNext: { n in
             nEvents += 1
-        }
+        })
         
         XCTAssertEqual(nEvents, 9)
     }
@@ -1646,9 +1646,9 @@ extension ObservableMultipleTest {
             Observable.of(0, 1, 2)
         ).merge(maxConcurrent: 1)
         
-        _ = observable.subscribeError { n in
+        _ = observable.subscribe(onError: { n in
             nEvents += 1
-        }
+        })
         
         XCTAssertEqual(nEvents, 1)
     }
@@ -1660,9 +1660,9 @@ extension ObservableMultipleTest {
             Observable.error(testError)
         ).merge(maxConcurrent: 1)
 
-        _ = observable.subscribeError { n in
+        _ = observable.subscribe(onError: { n in
             nEvents += 1
-        }
+        })
         
         XCTAssertEqual(nEvents, 1)
     }
@@ -1672,9 +1672,9 @@ extension ObservableMultipleTest {
         
         let observable: Observable<Int> = Observable<Observable<Int>>.empty().merge(maxConcurrent: 1)
 
-        _ = observable.subscribeCompleted {
+        _ = observable.subscribe(onCompleted: {
             nEvents += 1
-        }
+        })
         
         XCTAssertEqual(nEvents, 1)
     }
@@ -1684,9 +1684,9 @@ extension ObservableMultipleTest {
         
         let observable: Observable<Int> = Observable.just(Observable.empty()).merge(maxConcurrent: 1)
 
-        _ = observable.subscribeCompleted { n in
+        _ = observable.subscribe(onCompleted: { n in
             nEvents += 1
-        }
+        })
         
         XCTAssertEqual(nEvents, 1)
     }
@@ -2509,9 +2509,9 @@ extension ObservableMultipleTest {
             Observable.of(0, 1, 2)
         ) { $0 + $1 }
 
-        _ = observable.subscribeError { n in
+        _ = observable.subscribe(onError: { n in
             nEvents += 1
-        }
+        })
         
         XCTAssertEqual(nEvents, 1)
     }
@@ -2524,9 +2524,9 @@ extension ObservableMultipleTest {
             Observable.of(0, 1, 2)
         ) { $0 + $1 }
 
-        _ = observable.subscribeError { n in
+        _ = observable.subscribe(onError: { n in
             nEvents += 1
-        }
+        })
         
         XCTAssertEqual(nEvents, 1)
     }
@@ -2540,9 +2540,9 @@ extension ObservableMultipleTest {
             Observable.of(0, 1, 2)
             ) { $0 + $1 }
 
-        _ = observable.subscribeCompleted {
+        _ = observable.subscribe(onCompleted: {
             nEvents += 1
-        }
+        })
         
         XCTAssertEqual(nEvents, 1)
     }

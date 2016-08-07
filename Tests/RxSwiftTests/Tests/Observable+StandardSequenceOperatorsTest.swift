@@ -1032,9 +1032,9 @@ extension ObservableStandardSequenceOperatorsTest {
             .map { a in
                 return a
             }
-            .subscribeNext { _ in
+            .subscribe(onNext: { _ in
                 
-            }
+            })
     }
     
     func testMap1_DisposeOnCompleted() {
@@ -1042,9 +1042,9 @@ extension ObservableStandardSequenceOperatorsTest {
             .mapWithIndex { (a, i) in
                 return a
             }
-            .subscribeNext { _ in
+            .subscribe(onNext: { _ in
                 
-            }
+            })
     }
 }
 
@@ -3639,9 +3639,9 @@ extension ObservableStandardSequenceOperatorsTest {
     func testTake_DecrementCountsFirst() {
         let k = BehaviorSubject(value: false)
         
-        _ = k.take(1).subscribeNext { n in
+        _ = k.take(1).subscribe(onNext: { n in
             k.on(.next(!n))
-        }
+        })
     }
 }
 
@@ -3888,10 +3888,10 @@ extension ObservableStandardSequenceOperatorsTest {
         let k = BehaviorSubject(value: false)
 
         var elements = [Bool]()
-        _ = k.takeLast(1).subscribeNext { n in
+        _ = k.takeLast(1).subscribe(onNext: { n in
             elements.append(n)
             k.on(.next(!n))
-        }
+        })
 
         k.on(.completed)
 
@@ -5071,9 +5071,9 @@ extension ObservableStandardSequenceOperatorsTest {
     func testSingle_DecrementCountsFirst() {
         let k = BehaviorSubject(value: false)
 
-        _ = k.single { _ in true }.subscribeNext { n in
+        _ = k.single { _ in true }.subscribe(onNext: { n in
             k.on(.next(!n))
-        }
+        })
     }
     
     func testSinglePredicate_Empty() {
@@ -5211,9 +5211,9 @@ extension ObservableStandardSequenceOperatorsTest {
     func testSinglePredicate_DecrementCountsFirst() {
         let k = BehaviorSubject(value: false)
 
-        _ = k.single { _ in true }.subscribeNext { n in
+        _ = k.single { _ in true }.subscribe(onNext: { n in
             k.on(.next(!n))
-        }
+        })
 
     }
     

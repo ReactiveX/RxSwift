@@ -24,9 +24,9 @@ extension AnonymousObservableTests {
         
         var elements = [Int]()
         
-        let d = a.subscribeNext { n in
+        let d = a.subscribe(onNext: { n in
             elements.append(n)
-        }
+        })
         
         XCTAssertEqual(elements, [])
         
@@ -48,9 +48,9 @@ extension AnonymousObservableTests {
         
         var elements = [Int]()
         
-        _ = a.subscribeNext { n in
+        _ = a.subscribe(onNext: { n in
             elements.append(n)
-        }
+        })
 
         XCTAssertEqual(elements, [])
         
@@ -72,10 +72,10 @@ extension AnonymousObservableTests {
         
         var elements = [Int]()
 
-        _ = a.subscribeNext { n in
+        _ = a.subscribe(onNext: { n in
             elements.append(n)
-        }
-        
+        })
+
         XCTAssertEqual(elements, [])
         
         observer.on(.next(0))
