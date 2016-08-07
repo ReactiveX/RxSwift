@@ -133,7 +133,7 @@ This will print:
 5
 ```
 
-Note the you usually do not want to manually call `dispose`; this is only educational example. Calling dispose manually is usually a bad code smell. There are better ways to dispose subscriptions. We can use `DisposeBag`, the `takeUntil` operator, or some other mechanism.
+Note that you usually do not want to manually call `dispose`; this is only educational example. Calling dispose manually is usually a bad code smell. There are better ways to dispose subscriptions. We can use `DisposeBag`, the `takeUntil` operator, or some other mechanism.
 
 So can this code print something after the `dispose` call executed? The answer is: it depends.
 
@@ -716,7 +716,7 @@ If you are unsure how exactly some of the operators work, [playgrounds](../Rx.pl
 
 ## Error handling
 
-The are two error mechanisms.
+There are two error mechanisms.
 
 ### Asynchronous error handling mechanism in observables
 
