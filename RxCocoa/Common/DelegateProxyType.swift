@@ -178,13 +178,13 @@ extension DelegateProxyType {
         let maybeProxy = Self.assignedProxyFor(object) as? Self
 
         let proxy: Self
-        if maybeProxy == nil {
+        if let existingProxy = maybeProxy {
+            proxy = existingProxy
+        }
+        else {
             proxy = Self.createProxyForObject(object) as! Self
             Self.assignProxy(proxy, toObject: object)
             assert(Self.assignedProxyFor(object) === proxy)
-        }
-        else {
-            proxy = maybeProxy!
         }
 
         let currentDelegate: AnyObject? = Self.currentDelegateFor(object)

@@ -19,6 +19,11 @@ let collectionViewDataSourceNotSet = CollectionViewDataSourceNotSet()
 class CollectionViewDataSourceNotSet
     : NSObject
     , UICollectionViewDataSource {
+
+    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+        return 0
+    }
+
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         rxAbstractMethodWithMessage(dataSourceNotSet)
     }
