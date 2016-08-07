@@ -42,6 +42,7 @@ extension UITableView {
          .addDisposableTo(disposeBag)
 
     */
+    @available(*, deprecated, renamed: "rx_items(source:cellFactory:)")
     public func rx_itemsWithCellFactory<S: Sequence, O: ObservableType where O.E == S>
         (_ source: O)
         -> (cellFactory: (UITableView, Int, S.Iterator.Element) -> UITableViewCell)
@@ -49,8 +50,43 @@ extension UITableView {
         return { cellFactory in
             let dataSource = RxTableViewReactiveArrayDataSourceSequenceWrapper<S>(cellFactory: cellFactory)
             
-            return self.rx_itemsWithDataSource(dataSource)(source: source)
+            return self.rx_items(dataSource: dataSource)(source: source)
         }
+    }
+
+    /**
+    Binds sequences of elements to table view rows.
+    
+    - parameter source: Observable sequence of items.
+    - parameter cellFactory: Transform between sequence elements and view cells.
+    - returns: Disposable object that can be used to unbind.
+     
+     Example:
+    
+         let items = Observable.just([
+             "First Item",
+             "Second Item",
+             "Third Item"
+         ])
+
+         items
+         .bindTo(tableView.rx_items) { (tableView, row, element) in
+             let cell = tableView.dequeueReusableCellWithIdentifier("Cell")!
+             cell.textLabel?.text = "\(element) @ row \(row)"
+             return cell
+         }
+         .addDisposableTo(disposeBag)
+
+     */
+    public func rx_items<S: Sequence, O: ObservableType where O.E == S>
+        (_ source: O)
+        -> (cellFactory: (UITableView, Int, S.Iterator.Element) -> UITableViewCell)
+        -> Disposable {
+            return { cellFactory in
+                let dataSource = RxTableViewReactiveArrayDataSourceSequenceWrapper<S>(cellFactory: cellFactory)
+
+                return self.rx_items(dataSource: dataSource)(source: source)
+            }
     }
 
     /**
@@ -76,6 +112,7 @@ extension UITableView {
              }
              .addDisposableTo(disposeBag)
     */
+    @available(*, deprecated, renamed: "rx_items(cellIdentifier:cellType:source:configureCell:)")
     public func rx_itemsWithCellIdentifier<S: Sequence, Cell: UITableViewCell, O : ObservableType where O.E == S>
         (_ cellIdentifier: String, cellType: Cell.Type = Cell.self)
         -> (source: O)
@@ -93,6 +130,48 @@ extension UITableView {
             }
         }
     }
+
+    /**
+    Binds sequences of elements to table view rows.
+    
+    - parameter cellIdentifier: Identifier used to dequeue cells.
+    - parameter source: Observable sequence of items.
+    - parameter configureCell: Transform between sequence elements and view cells.
+    - parameter cellType: Type of table view cell.
+    - returns: Disposable object that can be used to unbind.
+     
+     Example:
+
+         let items = Observable.just([
+             "First Item",
+             "Second Item",
+             "Third Item"
+         ])
+
+         items
+             .bindTo(tableView.rx_items(cellIdentifier: "Cell", cellType: UITableViewCell.self)) { (row, element, cell) in
+                cell.textLabel?.text = "\(element) @ row \(row)"
+             }
+             .addDisposableTo(disposeBag)
+    */
+    public func rx_items<S: Sequence, Cell: UITableViewCell, O : ObservableType where O.E == S>
+        (cellIdentifier: String, cellType: Cell.Type = Cell.self)
+        -> (source: O)
+        -> (configureCell: (Int, S.Iterator.Element, Cell) -> Void)
+        -> Disposable {
+        return { source in
+            return { configureCell in
+                let dataSource = RxTableViewReactiveArrayDataSourceSequenceWrapper<S> { (tv, i, item) in
+                    let indexPath = IndexPath(item: i, section: 0)
+                    let cell = tv.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! Cell
+                    configureCell(i, item, cell)
+                    return cell
+                }
+                return self.rx_items(dataSource: dataSource)(source: source)
+            }
+        }
+    }
+
     
     /**
     Binds sequences of elements to table view rows using a custom reactive data used to perform the transformation.
@@ -137,6 +216,7 @@ extension UITableView {
             .bindTo(tableView.rx_itemsWithDataSource(dataSource))
             .addDisposableTo(disposeBag)
     */
+    @available(*, deprecated, renamed: "rx_items(dataSource:source:)")
     public func rx_itemsWithDataSource<
             DataSource: RxTableViewDataSourceType & UITableViewDataSource,
             O: ObservableType where DataSource.Element == O.E
@@ -154,6 +234,69 @@ extension UITableView {
             }
         }
     }
+
+
+    /**
+    Binds sequences of elements to table view rows using a custom reactive data used to perform the transformation.
+    This method will retain the data source for as long as the subscription isn't disposed (result `Disposable` 
+    being disposed).
+    In case `source` observable sequence terminates sucessfully, the data source will present latest element
+    until the subscription isn't disposed.
+    
+    - parameter dataSource: Data source used to transform elements to view cells.
+    - parameter source: Observable sequence of items.
+    - returns: Disposable object that can be used to unbind.
+     
+     Example 
+
+        let dataSource = RxTableViewSectionedReloadDataSource<SectionModel<String, Double>>()
+
+        let items = Observable.just([
+            SectionModel(model: "First section", items: [
+                1.0,
+                2.0,
+                3.0
+                ]),
+            SectionModel(model: "Second section", items: [
+                1.0,
+                2.0,
+                3.0
+                ]),
+            SectionModel(model: "Third section", items: [
+                1.0,
+                2.0,
+                3.0
+                ])
+            ])
+
+        dataSource.configureCell = { (dataSource, tv, indexPath, element) in
+        let cell = tv.dequeueReusableCellWithIdentifier("Cell")!
+            cell.textLabel?.text = "\(element) @ row \(indexPath.row)"
+            return cell
+        }
+
+        items
+            .bindTo(tableView.rx_items(dataSource: dataSource))
+            .addDisposableTo(disposeBag)
+    */
+    public func rx_items<
+            DataSource: RxTableViewDataSourceType & UITableViewDataSource,
+            O: ObservableType where DataSource.Element == O.E
+        >
+        (dataSource: DataSource)
+        -> (source: O)
+        -> Disposable  {
+        return { source in
+            // There needs to be a strong retaining here because
+            return source.subscribeProxyDataSourceForObject(self, dataSource: dataSource, retainDataSource: true) { [weak self] (_: RxTableViewDataSourceProxy, event) -> Void in
+                guard let tableView = self else {
+                    return
+                }
+                dataSource.tableView(tableView, observedEvent: event)
+            }
+        }
+    }
+
 }
 
 extension UITableView {

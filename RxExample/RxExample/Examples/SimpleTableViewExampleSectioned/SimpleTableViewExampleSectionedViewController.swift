@@ -50,7 +50,7 @@ class SimpleTableViewExampleSectionedViewController
         }
 
         items
-            .bindTo(tableView.rx_itemsWithDataSource(dataSource))
+            .bindTo(tableView.rx_items(dataSource: dataSource))
             .addDisposableTo(disposeBag)
 
         tableView

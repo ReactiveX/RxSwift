@@ -78,7 +78,7 @@ class WikipediaSearchViewController: ViewController {
             .map { results in
                 results.map(SearchResultViewModel.init)
             }
-            .drive(resultsTableView.rx_itemsWithCellIdentifier("WikipediaSearchCell", cellType: WikipediaSearchCell.self)) { (_, viewModel, cell) in
+            .drive(resultsTableView.rx_items(cellIdentifier: "WikipediaSearchCell", cellType: WikipediaSearchCell.self)) { (_, viewModel, cell) in
                 cell.viewModel = viewModel
             }
             .addDisposableTo(disposeBag)

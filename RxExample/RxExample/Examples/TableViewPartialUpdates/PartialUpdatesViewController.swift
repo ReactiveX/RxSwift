@@ -85,11 +85,11 @@ class PartialUpdatesViewController : ViewController {
         skinTableViewDataSource(reloadDataSource)
 
         self.sections.asObservable()
-            .bindTo(partialUpdatesTableViewOutlet.rx_itemsWithDataSource(tvAnimatedDataSource))
+            .bindTo(partialUpdatesTableViewOutlet.rx_items(dataSource: tvAnimatedDataSource))
             .addDisposableTo(disposeBag)
 
         self.sections.asObservable()
-            .bindTo(reloadTableViewOutlet.rx_itemsWithDataSource(reloadDataSource))
+            .bindTo(reloadTableViewOutlet.rx_items(dataSource: reloadDataSource))
             .addDisposableTo(disposeBag)
 
         // Collection view logic works, but when clicking fast because of internal bugs

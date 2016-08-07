@@ -74,7 +74,7 @@ class GitHubSearchRepositoriesViewController: ViewController, UITableViewDelegat
 
         searchResult
             .map { [SectionModel(model: "Repositories", items: $0.repositories)] }
-            .drive(tableView.rx_itemsWithDataSource(dataSource))
+            .drive(tableView.rx_items(dataSource: dataSource))
             .addDisposableTo(disposeBag)
 
         searchResult

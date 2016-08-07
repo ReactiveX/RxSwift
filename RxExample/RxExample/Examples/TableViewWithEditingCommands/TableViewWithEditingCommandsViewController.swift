@@ -107,7 +107,7 @@ class TableViewWithEditingCommandsViewController: ViewController, UITableViewDel
                     SectionModel(model: "Normal Users", items: $0.users)
                 ]
             }
-            .bindTo(tableView.rx_itemsWithDataSource(dataSource))
+            .bindTo(tableView.rx_items(dataSource: dataSource))
             .addDisposableTo(disposeBag)
 
         tableView.rx_itemSelected
