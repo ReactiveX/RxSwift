@@ -9,7 +9,7 @@
 import Foundation
 
 public enum DifferentiatorError
-    : Swift.Error
+    : Error
     , CustomDebugStringConvertible {
     case duplicateItem(item: Any)
     case duplicateSection(section: Any)
