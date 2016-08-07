@@ -13,7 +13,7 @@ There are two main operators that work with schedulers, `observeOn` and `subscri
 
 If you want to perform work on a different scheduler just use `observeOn(scheduler)` operator.
 
-You would usually use `observeOn` a lot more often then `subscribeOn`.
+You would usually use `observeOn` a lot more often than `subscribeOn`.
 
 In case `observeOn` isn't explicitly specified, work will be performed on whichever thread/scheduler elements are generated.
 

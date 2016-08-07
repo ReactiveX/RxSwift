@@ -19,8 +19,9 @@ let tableViewDataSourceNotSet = TableViewDataSourceNotSet()
 class TableViewDataSourceNotSet
     : NSObject
     , UITableViewDataSource {
-    func numberOfSections(in tableView: UITableView) -> Int {
-        rxAbstractMethodWithMessage(dataSourceNotSet)
+
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 0
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -62,8 +63,8 @@ public class RxTableViewDataSourceProxy
     /**
     Required delegate method implementation.
     */
-    public func numberOfSections(in tableView: UITableView) -> Int {
-        return (_requiredMethodsDataSource ?? tableViewDataSourceNotSet).numberOfSections?(in: tableView) ?? 1
+    public func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return (_requiredMethodsDataSource ?? tableViewDataSourceNotSet).numberOfSections?(in: tableView) ?? 0
     }
 
     /**
