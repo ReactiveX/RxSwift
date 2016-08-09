@@ -17,3 +17,12 @@ public protocol Cancelable : Disposable {
     */
     var isDisposed: Bool { get }
 }
+
+public extension Cancelable {
+    
+    @available(*, deprecated, renamed: "isDisposed")
+    var disposed: Bool {
+        return isDisposed
+    }
+    
+}
