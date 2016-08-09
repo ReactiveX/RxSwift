@@ -14,12 +14,14 @@ public struct Disposables {
 
 public extension Disposables {
     
-    static let empty: Disposable = NopDisposable.instance
+    static func empty() -> Disposable {
+        return NopDisposable.instance
+    }
     
     static func create(with action: () -> ()) -> Disposable {
         return AnonymousDisposable(action)
     }
-        
+    
     static func create(_ disposable1: Disposable, _ disposable2: Disposable, _ disposable3: Disposable) -> Disposable {
         return CompositeDisposable(disposable1, disposable2, disposable3)
     }
@@ -31,7 +33,7 @@ public extension Disposables {
     static func create(_ disposables: [Disposable]) -> Disposable {
         switch disposables.count {
         case 0:
-            return Disposables.empty
+            return Disposables.empty()
         case 1:
             return disposables[0]
         case 2:
