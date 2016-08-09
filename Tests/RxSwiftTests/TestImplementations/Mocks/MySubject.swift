@@ -16,14 +16,14 @@ class MySubject<Element where Element : Hashable> : SubjectType, ObserverType {
     var _disposeOn: [Element : Disposable] = [:]
     var _observer: AnyObserver<Element>! = nil
     var _subscribeCount: Int = 0
-    var _disposed: Bool = false
+    var _isDisposed: Bool = false
     
     var subscribeCount: Int {
         return _subscribeCount
     }
     
-    var diposed: Bool {
-        return _disposed
+    var isDisposed: Bool {
+        return _isDisposed
     }
     
     func disposeOn(_ value: Element, disposable: Disposable) {
@@ -47,7 +47,7 @@ class MySubject<Element where Element : Hashable> : SubjectType, ObserverType {
         
         return AnonymousDisposable {
             self._observer = AnyObserver { _ -> Void in () }
-            self._disposed = true
+            self._isDisposed = true
         }
     }
 

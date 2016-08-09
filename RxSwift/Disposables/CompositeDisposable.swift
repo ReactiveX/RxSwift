@@ -19,7 +19,7 @@ public class CompositeDisposable : DisposeBase, Disposable, Cancelable {
     // state
     private var _disposables: Bag<Disposable>? = Bag()
 
-    public var disposed: Bool {
+    public var isDisposed: Bool {
         _lock.lock(); defer { _lock.unlock() }
         return _disposables == nil
     }

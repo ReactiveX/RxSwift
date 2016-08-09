@@ -20,7 +20,7 @@ public class RefCountDisposable : DisposeBase, Cancelable {
     /**
      - returns: Was resource disposed.
      */
-    public var disposed: Bool {
+    public var isDisposed: Bool {
         _lock.lock(); defer { _lock.unlock() }
         return _disposable == nil
     }
@@ -110,7 +110,7 @@ public class RefCountDisposable : DisposeBase, Cancelable {
 internal final class RefCountInnerDisposable: DisposeBase, Disposable
 {
     private let _parent: RefCountDisposable
-    private var _disposed: AtomicInt = 0
+    private var _isDisposed: AtomicInt = 0
 
     init(_ parent: RefCountDisposable)
     {
@@ -120,7 +120,7 @@ internal final class RefCountInnerDisposable: DisposeBase, Disposable
 
     internal func dispose()
     {
-        if AtomicCompareAndSwap(0, 1, &_disposed) {
+        if AtomicCompareAndSwap(0, 1, &_isDisposed) {
             _parent.release()
         }
     }

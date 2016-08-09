@@ -72,7 +72,7 @@ class TimeoutSink<ElementType, O: ObserverType where O.E == ElementType>: Sink<O
     }
     
     private func _createTimeoutTimer() {
-        if _timerD.disposed {
+        if _timerD.isDisposed {
             return
         }
         
