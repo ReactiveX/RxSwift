@@ -105,7 +105,7 @@ class SkipTimeSink<ElementType, O: ObserverType where O.E == ElementType> : Sink
         
         let disposeSubscription = parent.source.subscribe(self)
         
-        return BinaryDisposable(disposeTimer, disposeSubscription)
+        return Disposables.create(disposeTimer, disposeSubscription)
     }
 }
 

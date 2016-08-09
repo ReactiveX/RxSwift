@@ -119,7 +119,7 @@ class TakeTimeSink<ElementType, O: ObserverType where O.E == ElementType>
         
         let disposeSubscription = _parent._source.subscribe(self)
         
-        return BinaryDisposable(disposeTimer, disposeSubscription)
+        return Disposables.create(disposeTimer, disposeSubscription)
     }
 }
 

@@ -19,11 +19,7 @@ public extension Disposables {
     static func create(with action: () -> ()) -> Disposable {
         return AnonymousDisposable(action)
     }
-    
-    static func create(_ disposable1: Disposable, _ disposable2: Disposable) -> Disposable {
-        return BinaryDisposable(disposable1, disposable2)
-    }
-    
+        
     static func create(_ disposable1: Disposable, _ disposable2: Disposable, _ disposable3: Disposable) -> Disposable {
         return CompositeDisposable(disposable1, disposable2, disposable3)
     }
@@ -39,7 +35,7 @@ public extension Disposables {
         case 1:
             return disposables[0]
         case 2:
-            return BinaryDisposable(disposables[0], disposables[1])
+            return Disposables.create(disposables[0], disposables[1])
         default:
             return CompositeDisposable(disposables: disposables)
         }

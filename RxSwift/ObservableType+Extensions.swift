@@ -65,7 +65,7 @@ extension ObservableType {
                 disposable.dispose()
             }
         }
-        return BinaryDisposable(
+        return Disposables.create(
             self.subscribeSafe(observer),
             disposable
         )
@@ -106,7 +106,7 @@ extension ObservableType {
                 disposable.dispose()
             }
         }
-        return BinaryDisposable(
+        return Disposables.create(
             self.subscribeSafe(observer),
             disposable
         )

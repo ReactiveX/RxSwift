@@ -30,7 +30,7 @@ class MulticastSink<S: SubjectType, O: ObserverType>: Sink<O>, ObserverType {
             let subscription = observable.subscribe(self)
             let connection = connectable.connect()
                 
-            return BinaryDisposable(subscription, connection)
+            return Disposables.create(subscription, connection)
         }
         catch let e {
             forwardOn(.error(e))

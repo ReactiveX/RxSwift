@@ -11,7 +11,7 @@ import Foundation
 /**
 Represents two disposable resources that are disposed together.
 */
-public final class BinaryDisposable : DisposeBase, Cancelable {
+private final class BinaryDisposable : DisposeBase, Cancelable {
 
     private var _disposed: AtomicInt = 0
 
@@ -22,7 +22,7 @@ public final class BinaryDisposable : DisposeBase, Cancelable {
     /**
     - returns: Was resource disposed.
     */
-    public var disposed: Bool {
+    var disposed: Bool {
         return _disposed > 0
     }
 
@@ -43,7 +43,7 @@ public final class BinaryDisposable : DisposeBase, Cancelable {
 
     After invoking disposal action, disposal action will be dereferenced.
     */
-    public func dispose() {
+    func dispose() {
         if AtomicCompareAndSwap(0, 1, &_disposed) {
             _disposable1?.dispose()
             _disposable2?.dispose()
@@ -51,4 +51,12 @@ public final class BinaryDisposable : DisposeBase, Cancelable {
             _disposable2 = nil
         }
     }
+}
+
+public extension Disposables {
+    
+    static func create(_ disposable1: Disposable, _ disposable2: Disposable) -> Disposable {
+        return BinaryDisposable(disposable1, disposable2)
+    }
+    
 }
