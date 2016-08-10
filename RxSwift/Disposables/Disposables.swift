@@ -24,8 +24,12 @@ public extension Disposables {
         return CompositeDisposable(disposable1, disposable2, disposable3)
     }
     
-    static func create(_ disposable1: Disposable, _ disposable2: Disposable, _ disposable3: Disposable, _ disposable4: Disposable) -> Disposable {
-        return CompositeDisposable(disposable1, disposable2, disposable3, disposable4)
+    static func create(_ disposable1: Disposable, _ disposable2: Disposable, _ disposable3: Disposable, _ disposables: Disposable ...) -> Disposable {
+        var disposables = disposables
+        disposables.append(disposable1)
+        disposables.append(disposable2)
+        disposables.append(disposable3)
+        return CompositeDisposable(disposables: disposables)
     }
     
     static func create(_ disposables: [Disposable]) -> Disposable {

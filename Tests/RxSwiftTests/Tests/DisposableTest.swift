@@ -154,6 +154,33 @@ class DisposableTest : RxTest {
         XCTAssertEqual(compositeDisposable.count, 0)
     }
     
+    func testDisposables_TestCreateWithNumberOfDisposables() {
+        var numberDisposed = 0
+        
+        let disposable1 = AnonymousDisposable {
+            numberDisposed += 1
+        }
+        let disposable2 = AnonymousDisposable {
+            numberDisposed += 1
+        }
+        let disposable3 = AnonymousDisposable {
+            numberDisposed += 1
+        }
+        let disposable4 = AnonymousDisposable {
+            numberDisposed += 1
+        }
+        let disposable5 = AnonymousDisposable {
+            numberDisposed += 1
+        }
+        
+        let disposable = Disposables.create(disposable1, disposable2, disposable3, disposable4, disposable5)
+        
+        XCTAssertEqual(numberDisposed, 0)
+        
+        disposable.dispose()
+        XCTAssertEqual(numberDisposed, 5)
+    }
+    
     func testRefCountDisposable_RefCounting() {
         let d = BooleanDisposable()
         let r = RefCountDisposable(disposable: d)
