@@ -114,7 +114,7 @@ class TakeTimeSink<ElementType, O: ObserverType where O.E == ElementType>
     func run() -> Disposable {
         let disposeTimer = _parent._scheduler.scheduleRelative((), dueTime: _parent._duration) {
             self.tick()
-            return NopDisposable.instance
+            return Disposables.create()
         }
         
         let disposeSubscription = _parent._source.subscribe(self)

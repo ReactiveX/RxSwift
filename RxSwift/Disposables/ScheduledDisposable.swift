@@ -10,7 +10,7 @@ import Foundation
 
 private let disposeScheduledDisposable: (ScheduledDisposable) -> Disposable = { sd in
     sd.disposeInner()
-    return NopDisposable.instance
+    return Disposables.create()
 }
 
 /**

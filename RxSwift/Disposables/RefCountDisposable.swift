@@ -50,7 +50,7 @@ public final class RefCountDisposable : DisposeBase, Cancelable {
 
                 return RefCountInnerDisposable(self)
             } else {
-                return NopDisposable.instance
+                return Disposables.create()
             }
         }
     }

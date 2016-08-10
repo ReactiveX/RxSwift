@@ -42,7 +42,7 @@ final class ShareReplay1<Element>
 
         if let stopEvent = self._stopEvent {
             observer.on(stopEvent)
-            return NopDisposable.instance
+            return Disposables.create()
         }
 
         let initialCount = self._observers.count

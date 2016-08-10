@@ -293,7 +293,7 @@ func myJust<E>(element: E) -> Observable<E> {
     return Observable.create { observer in
         observer.on(.Next(element))
         observer.on(.Completed)
-        return NopDisposable.instance
+        return Disposables.create()
     }
 }
 
@@ -329,7 +329,7 @@ func myFrom<E>(sequence: [E]) -> Observable<E> {
         }
 
         observer.on(.Completed)
-        return NopDisposable.instance
+        return Disposables.create()
     }
 }
 

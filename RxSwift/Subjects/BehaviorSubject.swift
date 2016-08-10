@@ -114,12 +114,12 @@ public final class BehaviorSubject<Element>
     func _synchronized_subscribe<O : ObserverType where O.E == E>(_ observer: O) -> Disposable {
         if _disposed {
             observer.on(.error(RxError.disposed(object: self)))
-            return NopDisposable.instance
+            return Disposables.create()
         }
         
         if let stoppedEvent = _stoppedEvent {
             observer.on(stoppedEvent)
-            return NopDisposable.instance
+            return Disposables.create()
         }
         
         let key = _observers.insert(observer.asObserver())

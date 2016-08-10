@@ -985,7 +985,7 @@ extension ObservableSingleTest {
             observer.on(.next(5))
             observer.on(.completed)
 
-            return NopDisposable.instance
+            return Disposables.create()
         }
 
         _ = sequenceSendingImmediateError
@@ -1377,7 +1377,7 @@ extension ObservableSingleTest {
             observer.on(.next(5))
             observer.on(.completed)
 
-            return NopDisposable.instance
+            return Disposables.create()
         }
 
         _ = sequenceSendingImmediateError

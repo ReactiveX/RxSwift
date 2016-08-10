@@ -113,7 +113,7 @@ class BufferTimeCountSink<Element, O: ObserverType where O.E == [Element]>
                 self.startNewWindowAndSendCurrentOne()
             }
             
-            return NopDisposable.instance
+            return Disposables.create()
         }
     }
 }

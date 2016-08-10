@@ -45,7 +45,7 @@ extension UIControl {
 
             guard let control = self else {
                 observer.on(.completed)
-                return NopDisposable.instance
+                return Disposables.create()
             }
 
             let controlTarget = ControlTarget(control: control, controlEvents: controlEvents) {
@@ -67,7 +67,7 @@ extension UIControl {
         let source: Observable<T> = Observable.create { [weak weakControl = control] observer in
                 guard let control = weakControl else {
                     observer.on(.completed)
-                    return NopDisposable.instance
+                    return Disposables.create()
                 }
 
                 observer.on(.next(getter(control)))

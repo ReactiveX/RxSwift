@@ -45,7 +45,7 @@ extension ObservableType {
             disposable = AnonymousDisposable(disposed)
         }
         else {
-            disposable = NopDisposable.instance
+            disposable = Disposables.create()
         }
 
         let observer = AnonymousObserver<E> { e in
@@ -91,7 +91,7 @@ extension ObservableType {
             disposable = AnonymousDisposable(disposed)
         }
         else {
-            disposable = NopDisposable.instance
+            disposable = Disposables.create()
         }
 
         let observer = AnonymousObserver<E> { e in

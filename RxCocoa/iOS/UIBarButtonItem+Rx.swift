@@ -34,7 +34,7 @@ extension UIBarButtonItem {
             Observable.create { [weak self] observer in
                 guard let control = self else {
                     observer.on(.completed)
-                    return NopDisposable.instance
+                    return Disposables.create()
                 }
                 let target = BarButtonItemTarget(barButtonItem: control) {
                     observer.on(.next())

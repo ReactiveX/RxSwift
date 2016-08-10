@@ -92,7 +92,7 @@ class TimeoutSink<ElementType, O: ObserverType where O.E == ElementType>: Sink<O
                 self._subscription.disposable = self._parent._other.subscribeSafe(self.forwarder())
             }
             
-            return NopDisposable.instance
+            return Disposables.create()
         }
     }
 }

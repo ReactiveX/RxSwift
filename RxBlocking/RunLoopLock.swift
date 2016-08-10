@@ -43,7 +43,7 @@ class RunLoopLock {
             if CurrentThreadScheduler.isScheduleRequired {
                 _ = CurrentThreadScheduler.instance.schedule(()) { _ in
                     action()
-                    return NopDisposable.instance
+                    return Disposables.create()
                 }
             }
             else {

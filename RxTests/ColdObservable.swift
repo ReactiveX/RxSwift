@@ -33,7 +33,7 @@ class ColdObservable<Element>
         for recordedEvent in recordedEvents {
             _ = testScheduler.scheduleRelativeVirtual((), dueTime: recordedEvent.time, action: { (_) in
                 observer.on(recordedEvent.value)
-                return NopDisposable.instance
+                return Disposables.create()
             })
         }
         

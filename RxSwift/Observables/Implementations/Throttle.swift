@@ -79,7 +79,7 @@ class ThrottleSink<O: ObserverType>
                 forwardOn(.next(value))
             }
         // }
-        return NopDisposable.instance
+        return Disposables.create()
     }
 }
 

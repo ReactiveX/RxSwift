@@ -30,11 +30,11 @@ extension HistoricalSchedulerTest {
             times.append(scheduler.now)
             _ = scheduler.scheduleRelative((), dueTime: 20.0) { _ in
                 times.append(scheduler.now)
-                return NopDisposable.instance
+                return Disposables.create()
             }
             return scheduler.schedule(()) { _ in
                 times.append(scheduler.now)
-                return NopDisposable.instance
+                return Disposables.create()
             }
         }
 
@@ -56,16 +56,16 @@ extension HistoricalSchedulerTest {
             times.append(scheduler.now)
             let d = scheduler.scheduleRelative((), dueTime: 20.0) { _ in
                 times.append(scheduler.now)
-                return NopDisposable.instance
+                return Disposables.create()
             }
             let d2 = scheduler.schedule(()) { _ in
                 times.append(scheduler.now)
-                return NopDisposable.instance
+                return Disposables.create()
             }
 
             d2.dispose()
             d.dispose()
-            return NopDisposable.instance
+            return Disposables.create()
         }
 
         scheduler.start()
@@ -84,11 +84,11 @@ extension HistoricalSchedulerTest {
             times.append(scheduler.now)
             _ = scheduler.scheduleRelative((), dueTime: 20.0) { _ in
                 times.append(scheduler.now)
-                return NopDisposable.instance
+                return Disposables.create()
             }
             return scheduler.schedule(()) { _ in
                 times.append(scheduler.now)
-                return NopDisposable.instance
+                return Disposables.create()
             }
         }
 
@@ -110,11 +110,11 @@ extension HistoricalSchedulerTest {
             times.append(scheduler!.now)
             _ = scheduler!.scheduleRelative((), dueTime: 20.0) { _ in
                 times.append(scheduler!.now)
-                return NopDisposable.instance
+                return Disposables.create()
             }
             return scheduler!.schedule(()) { _ in
                 times.append(scheduler!.now)
-                return NopDisposable.instance
+                return Disposables.create()
             }
         }
 
@@ -135,16 +135,16 @@ extension HistoricalSchedulerTest {
             times.append(scheduler!.now)
             let d1 = scheduler!.scheduleRelative((), dueTime: 20.0) { _ in
                 times.append(scheduler!.now)
-                return NopDisposable.instance
+                return Disposables.create()
             }
             let d2 = scheduler!.schedule(()) { _ in
                 times.append(scheduler!.now)
-                return NopDisposable.instance
+                return Disposables.create()
             }
 
             d1.dispose()
             d2.dispose()
-            return NopDisposable.instance
+            return Disposables.create()
         }
 
         scheduler.advanceTo(Date(timeIntervalSince1970: 200.0))
@@ -163,16 +163,16 @@ extension HistoricalSchedulerTest {
             times.append(scheduler!.now)
             _ = scheduler!.scheduleRelative((), dueTime: 20.0) { _ in
                 times.append(scheduler!.now)
-                return NopDisposable.instance
+                return Disposables.create()
             }
             _ = scheduler!.schedule(()) { _ in
                 times.append(scheduler!.now)
-                return NopDisposable.instance
+                return Disposables.create()
             }
 
             scheduler!.stop()
 
-            return NopDisposable.instance
+            return Disposables.create()
         }
 
         scheduler.start()
@@ -193,15 +193,15 @@ extension HistoricalSchedulerTest {
             _ = scheduler!.sleep(100)
             _ = scheduler!.scheduleRelative((), dueTime: 20.0) { _ in
                 times.append(scheduler!.now)
-                return NopDisposable.instance
+                return Disposables.create()
             }
             _ = scheduler!.schedule(()) { _ in
                 times.append(scheduler!.now)
-                return NopDisposable.instance
+                return Disposables.create()
             }
 
 
-            return NopDisposable.instance
+            return Disposables.create()
         }
 
         scheduler.start()

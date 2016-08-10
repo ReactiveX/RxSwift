@@ -35,7 +35,7 @@ class MulticastSink<S: SubjectType, O: ObserverType>: Sink<O>, ObserverType {
         catch let e {
             forwardOn(.error(e))
             dispose()
-            return NopDisposable.instance
+            return Disposables.create()
         }
     }
     

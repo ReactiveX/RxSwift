@@ -21,7 +21,7 @@ class UsingSink<SourceType, ResourceType: Disposable, O: ObserverType where O.E 
     }
     
     func run() -> Disposable {
-        var disposable = NopDisposable.instance
+        var disposable = Disposables.create()
         
         do {
             let resource = try _parent._resourceFactory()
