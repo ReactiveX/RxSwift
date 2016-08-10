@@ -14,12 +14,10 @@ public struct Disposables {
 
 public extension Disposables {
     
-    static func create() -> Disposable {
-        return NopDisposable.instance
-    }
+    private static let noOp: Disposable = NopDisposable()
     
-    static func create(with action: () -> ()) -> Disposable {
-        return AnonymousDisposable(action)
+    static func create() -> Disposable {
+        return noOp
     }
     
     static func create(_ disposable1: Disposable, _ disposable2: Disposable, _ disposable3: Disposable) -> Disposable {
