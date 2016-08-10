@@ -62,7 +62,7 @@ public final class AnonymousDisposable : DisposeBase, Cancelable {
 
 public extension Disposables {
     
-    static func create(with action: () -> ()) -> Disposable {
+    static func create(with action: () -> ()) -> Cancelable {
         return AnonymousDisposable(disposeAction: action)
     }
     

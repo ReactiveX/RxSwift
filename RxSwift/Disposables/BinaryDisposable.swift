@@ -55,7 +55,7 @@ private final class BinaryDisposable : DisposeBase, Cancelable {
 
 public extension Disposables {
     
-    static func create(_ disposable1: Disposable, _ disposable2: Disposable) -> Disposable {
+    static func create(_ disposable1: Disposable, _ disposable2: Disposable) -> Cancelable {
         return BinaryDisposable(disposable1, disposable2)
     }
     

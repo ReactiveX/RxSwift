@@ -20,11 +20,11 @@ public extension Disposables {
         return noOp
     }
     
-    static func create(_ disposable1: Disposable, _ disposable2: Disposable, _ disposable3: Disposable) -> Disposable {
+    static func create(_ disposable1: Disposable, _ disposable2: Disposable, _ disposable3: Disposable) -> Cancelable {
         return CompositeDisposable(disposable1, disposable2, disposable3)
     }
     
-    static func create(_ disposable1: Disposable, _ disposable2: Disposable, _ disposable3: Disposable, _ disposables: Disposable ...) -> Disposable {
+    static func create(_ disposable1: Disposable, _ disposable2: Disposable, _ disposable3: Disposable, _ disposables: Disposable ...) -> Cancelable {
         var disposables = disposables
         disposables.append(disposable1)
         disposables.append(disposable2)
@@ -32,12 +32,8 @@ public extension Disposables {
         return CompositeDisposable(disposables: disposables)
     }
     
-    static func create(_ disposables: [Disposable]) -> Disposable {
+    static func create(_ disposables: [Disposable]) -> Cancelable {
         switch disposables.count {
-        case 0:
-            return Disposables.create()
-        case 1:
-            return disposables[0]
         case 2:
             return Disposables.create(disposables[0], disposables[1])
         default:
