@@ -293,7 +293,7 @@ func myJust<E>(element: E) -> Observable<E> {
     return Observable.create { observer in
         observer.on(.Next(element))
         observer.on(.Completed)
-        return NopDisposable.instance
+        return Disposables.create()
     }
 }
 
@@ -329,7 +329,7 @@ func myFrom<E>(sequence: [E]) -> Observable<E> {
         }
 
         observer.on(.Completed)
-        return NopDisposable.instance
+        return Disposables.create()
     }
 }
 
@@ -382,7 +382,7 @@ func myInterval(interval: NSTimeInterval) -> Observable<Int> {
         var next = 0
 
         dispatch_source_set_timer(timer, 0, UInt64(interval * Double(NSEC_PER_SEC)), 0)
-        let cancel = AnonymousDisposable {
+        let cancel = Disposables.create {
             print("Disposed")
             dispatch_source_cancel(timer)
         }
@@ -574,7 +574,7 @@ extension NSURLSession {
 
             task.resume()
 
-            return AnonymousDisposable {
+            return Disposables.create {
                 task.cancel()
             }
         }
@@ -831,7 +831,7 @@ extension ObservableType {
                     observer.on(.Completed)
                 }
             }
-            return AnonymousDisposable {
+            return Disposables.create {
                    print("disposing \(identifier)")
                    subscription.dispose()
             }

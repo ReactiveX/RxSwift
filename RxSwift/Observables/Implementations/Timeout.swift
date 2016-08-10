@@ -35,7 +35,7 @@ class TimeoutSink<ElementType, O: ObserverType where O.E == ElementType>: Sink<O
         
         original.disposable = _parent._source.subscribeSafe(self)
         
-        return StableCompositeDisposable.create(_subscription, _timerD)
+        return Disposables.create(_subscription, _timerD)
     }
 
     func on(_ event: Event<E>) {
@@ -92,7 +92,7 @@ class TimeoutSink<ElementType, O: ObserverType where O.E == ElementType>: Sink<O
                 self._subscription.disposable = self._parent._other.subscribeSafe(self.forwarder())
             }
             
-            return NopDisposable.instance
+            return Disposables.create()
         }
     }
 }

@@ -41,13 +41,13 @@ extension MainSchedulerTest {
                 messages.append(3)
                 _ = MainScheduler.instance.schedule(()) {
                     messages.append(5)
-                    return NopDisposable.instance
+                    return Disposables.create()
                 }
                 messages.append(4)
-                return NopDisposable.instance
+                return Disposables.create()
             }
             messages.append(2)
-            return NopDisposable.instance
+            return Disposables.create()
         }
 
         XCTAssertTrue(executedImmediatelly)
@@ -66,7 +66,7 @@ extension MainSchedulerTest {
                 messages.append(3)
                 let disposable = MainScheduler.instance.schedule(()) {
                     messages.append(5)
-                    return NopDisposable.instance
+                    return Disposables.create()
                 }
                 disposable.dispose()
                 messages.append(4)
@@ -90,7 +90,7 @@ extension MainSchedulerTest {
                 messages.append(3)
                 let disposable = MainScheduler.instance.schedule(()) {
                     messages.append(5)
-                    return NopDisposable.instance
+                    return Disposables.create()
                 }
                 messages.append(4)
                 return disposable

@@ -44,7 +44,7 @@ extension ObservableConcurrencyTest {
 
         _ = scheduler.schedule(()) { s in
             expectation.fulfill()
-            return NopDisposable.instance
+            return Disposables.create()
         }
 
         waitForExpectations(timeout: 1.0) { e in
@@ -95,7 +95,7 @@ extension ObservableConcurrencyTest {
                 .observeOn(scheduler)
             XCTAssertTrue(a == a) // shut up swift compiler :(, we only need to keep this in memory
             XCTAssert(numberOfSerialDispatchQueueObservables == 1)
-            return NopDisposable.instance
+            return Disposables.create()
         }
 
         XCTAssert(numberOfSerialDispatchQueueObservables == 0)
@@ -111,11 +111,11 @@ extension ObservableConcurrencyTest {
                 self.sleep(0.1) // should be enough to block the queue, so if it's concurrent, it will fail
                 XCTAssert(OSAtomicDecrement32(&numberOfConcurrentEvents) == 0)
                 OSAtomicIncrement32(&numberOfExecutions)
-                return NopDisposable.instance
+                return Disposables.create()
             }
             _ = scheduler.schedule((), action: action)
             _ = scheduler.schedule((), action: action)
-            return NopDisposable.instance
+            return Disposables.create()
         }
 
         XCTAssert(numberOfSerialDispatchQueueObservables == 0)
@@ -179,7 +179,7 @@ extension ObservableConcurrencyTest {
                     ])
                 xs.on(.next(1))
                 xs.on(.next(2))
-                return NopDisposable.instance
+                return Disposables.create()
             },
             { scheduler in
                 XCTAssertEqual(observer.events, [
@@ -189,7 +189,7 @@ extension ObservableConcurrencyTest {
                     ])
                 XCTAssert(xs.subscriptions == [SubscribedToHotObservable])
                 xs.on(.completed)
-                return NopDisposable.instance
+                return Disposables.create()
             },
             { scheduler in
                 XCTAssertEqual(observer.events, [
@@ -199,7 +199,7 @@ extension ObservableConcurrencyTest {
                     completed()
                     ])
                 XCTAssert(xs.subscriptions == [UnsunscribedFromHotObservable])
-                return NopDisposable.instance
+                return Disposables.create()
             },
             ])
     }
@@ -220,7 +220,7 @@ extension ObservableConcurrencyTest {
                     completed()
                 ])
                 XCTAssert(xs.subscriptions == [UnsunscribedFromHotObservable])
-                return NopDisposable.instance
+                return Disposables.create()
             }
         ])
     }
@@ -243,7 +243,7 @@ extension ObservableConcurrencyTest {
                     ])
                 xs.on(.next(1))
                 xs.on(.next(2))
-                return NopDisposable.instance
+                return Disposables.create()
             },
             { scheduler in
                 XCTAssertEqual(observer.events, [
@@ -253,7 +253,7 @@ extension ObservableConcurrencyTest {
                     ])
                 XCTAssert(xs.subscriptions == [SubscribedToHotObservable])
                 xs.on(.error(testError))
-                return NopDisposable.instance
+                return Disposables.create()
             },
             { scheduler in
                 XCTAssertEqual(observer.events, [
@@ -263,7 +263,7 @@ extension ObservableConcurrencyTest {
                     error(testError)
                     ])
                 XCTAssert(xs.subscriptions == [UnsunscribedFromHotObservable])
-                return NopDisposable.instance
+                return Disposables.create()
             },
         ])
     }
@@ -292,14 +292,14 @@ extension ObservableConcurrencyTest {
 
                 xs.on(.error(testError))
 
-                return NopDisposable.instance
+                return Disposables.create()
             },
             { scheduler in
                 XCTAssertEqual(observer.events, [
                     next(0),
                     ])
                 XCTAssert(xs.subscriptions == [UnsunscribedFromHotObservable])
-                return NopDisposable.instance
+                return Disposables.create()
             }
         ])
     }
@@ -364,7 +364,7 @@ class ObservableConcurrentSchedulerConcurrencyTest: ObservableConcurrencyTestBas
 
             stop.on(.completed)
 
-            return NopDisposable.instance
+            return Disposables.create()
         }
 
         _ = scheduler.schedule((), action: concurrent)
@@ -579,7 +579,7 @@ extension ObservableConcurrencyTest {
 
         let xs: Observable<Int> = Observable.create { observer in
             scheduled = scheduler.clock
-            return AnonymousDisposable {
+            return Disposables.create {
                 disposed = scheduler.clock
             }
         }

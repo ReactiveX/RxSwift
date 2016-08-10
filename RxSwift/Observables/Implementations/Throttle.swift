@@ -35,7 +35,7 @@ class ThrottleSink<O: ObserverType>
     func run() -> Disposable {
         let subscription = _parent._source.subscribe(self)
         
-        return StableCompositeDisposable.create(subscription, cancellable)
+        return Disposables.create(subscription, cancellable)
     }
 
     func on(_ event: Event<Element>) {
@@ -79,7 +79,7 @@ class ThrottleSink<O: ObserverType>
                 forwardOn(.next(value))
             }
         // }
-        return NopDisposable.instance
+        return Disposables.create()
     }
 }
 

@@ -45,18 +45,18 @@ extension UIImagePickerController {
             }
             catch let error {
                 observer.on(.error(error))
-                return NopDisposable.instance
+                return Disposables.create()
             }
 
             guard let parent = parent else {
                 observer.on(.completed)
-                return NopDisposable.instance
+                return Disposables.create()
             }
 
             parent.present(imagePicker, animated: animated, completion: nil)
             observer.on(.next(imagePicker))
             
-            return CompositeDisposable(dismissDisposable, AnonymousDisposable {
+            return Disposables.create(dismissDisposable, Disposables.create {
                     dismissViewController(imagePicker, animated: animated)
                 })
         }

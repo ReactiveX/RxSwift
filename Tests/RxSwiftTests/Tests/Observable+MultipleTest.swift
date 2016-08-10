@@ -4263,7 +4263,7 @@ extension ObservableMultipleTest {
         ])
         
         let r: Observable<Int> = Observable.create { o in
-            return AnonymousDisposable {
+            return Disposables.create {
                 isDisposed = true
             }
         }

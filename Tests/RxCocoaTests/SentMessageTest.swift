@@ -1063,7 +1063,7 @@ extension SentMessageTest {
             let t = T.createInstance()
             //let disposable = (t as! NSObject).rx_observe(NSArray.self, "messages").publish().connect()
             (t as! NSObject).addObserver(self, forKeyPath: "messages", options: [], context: nil)
-            return (t, [AnonymousDisposable { (t as! NSObject).removeObserver(self, forKeyPath: "messages") }])
+            return (t, [Disposables.create { (t as! NSObject).removeObserver(self, forKeyPath: "messages") }])
         }
     }
 

@@ -85,7 +85,7 @@ example("retry") {
         observer.onNext("🐭")
         observer.onCompleted()
         
-        return NopDisposable.instance
+        return Disposables.create()
     }
     
     sequenceThatErrors
@@ -119,7 +119,7 @@ example("retry maxAttemptCount") {
         observer.onNext("🐭")
         observer.onCompleted()
         
-        return NopDisposable.instance
+        return Disposables.create()
     }
     
     sequenceThatErrors

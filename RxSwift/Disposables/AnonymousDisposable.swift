@@ -31,11 +31,18 @@ public final class AnonymousDisposable : DisposeBase, Cancelable {
 
     - parameter disposeAction: Disposal action which will be run upon calling `dispose`.
     */
+    @available(*, deprecated, renamed: "Disposables.create")
     public init(_ disposeAction: DisposeAction) {
         _disposeAction = disposeAction
         super.init()
     }
-
+    
+    // Non-deprecated version of the constructor, used by `Disposables.create(with:)`
+    private init(disposeAction: DisposeAction) {
+        _disposeAction = disposeAction
+        super.init()
+    }
+    
     /**
     Calls the disposal action if and only if the current instance hasn't been disposed yet.
 
@@ -51,4 +58,17 @@ public final class AnonymousDisposable : DisposeBase, Cancelable {
             }
         }
     }
+}
+
+public extension Disposables {
+    
+    /**
+     Constructs a new disposable with the given action used for disposal.
+     
+     - parameter dispose: Disposal action which will be run upon calling `dispose`.
+     */
+    static func create(with dispose: () -> ()) -> Cancelable {
+        return AnonymousDisposable(disposeAction: dispose)
+    }
+    
 }

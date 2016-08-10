@@ -10,13 +10,13 @@ import Foundation
 
 private let disposeScheduledDisposable: (ScheduledDisposable) -> Disposable = { sd in
     sd.disposeInner()
-    return NopDisposable.instance
+    return Disposables.create()
 }
 
 /**
 Represents a disposable resource whose disposal invocation will be scheduled on the specified scheduler.
 */
-public class ScheduledDisposable : Cancelable {
+public final class ScheduledDisposable : Cancelable {
     public let scheduler: ImmediateSchedulerType
 
     private var _isDisposed: AtomicInt = 0

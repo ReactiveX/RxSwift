@@ -155,7 +155,7 @@ extension URLSession {
             let t = task
             t.resume()
 
-            return AnonymousDisposable(task.cancel)
+            return Disposables.create(with: task.cancel)
         }
     }
 

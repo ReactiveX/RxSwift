@@ -125,7 +125,7 @@ class WindowTimeCountSink<Element, O: ObserverType where O.E == Observable<Eleme
             
             self.createTimer(newId)
             
-            return NopDisposable.instance
+            return Disposables.create()
         }
     }
 }

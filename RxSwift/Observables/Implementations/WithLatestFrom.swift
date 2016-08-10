@@ -35,7 +35,7 @@ class WithLatestFromSink<FirstType, SecondType, ResultType, O: ObserverType wher
         sndSubscription.disposable = _parent._second.subscribe(sndO)
         let fstSubscription = _parent._first.subscribe(self)
         
-        return StableCompositeDisposable.create(fstSubscription, sndSubscription)
+        return Disposables.create(fstSubscription, sndSubscription)
     }
 
     func on(_ event: Event<E>) {

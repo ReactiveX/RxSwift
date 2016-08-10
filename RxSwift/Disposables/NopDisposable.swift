@@ -18,6 +18,7 @@ public struct NopDisposable : Disposable {
     /**
     Singleton instance of `NopDisposable`.
     */
+    @available(*, deprecated, renamed: "Disposables.empty()")
     public static let instance: Disposable = NopDisposable()
     
     init() {

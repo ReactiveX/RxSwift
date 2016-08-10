@@ -43,7 +43,7 @@ public class SingleAssignmentDisposable : DisposeBase, Disposable, Cancelable {
     public var disposable: Disposable {
         get {
             _lock.lock(); defer { _lock.unlock() }
-            return _disposable ?? NopDisposable.instance
+            return _disposable ?? Disposables.create()
         }
         set {
             _setDisposable(newValue)?.dispose()

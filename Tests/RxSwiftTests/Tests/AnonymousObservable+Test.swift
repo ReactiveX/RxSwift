@@ -19,7 +19,7 @@ extension AnonymousObservableTests {
         var observer: AnyObserver<Int>!
         let a = Observable.create { o in
             observer = o
-            return NopDisposable.instance
+            return Disposables.create()
         } as Observable<Int>
         
         var elements = [Int]()
@@ -43,7 +43,7 @@ extension AnonymousObservableTests {
         var observer: AnyObserver<Int>!
         let a = Observable.create { o in
             observer = o
-            return NopDisposable.instance
+            return Disposables.create()
         } as Observable<Int>
         
         var elements = [Int]()
@@ -67,7 +67,7 @@ extension AnonymousObservableTests {
         var observer: AnyObserver<Int>!
         let a = Observable.create { o in
             observer = o
-            return NopDisposable.instance
+            return Disposables.create()
         } as Observable<Int>
         
         var elements = [Int]()

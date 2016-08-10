@@ -29,7 +29,7 @@ extension NSControl {
 
                 guard let control = self else {
                     observer.on(.completed)
-                    return NopDisposable.instance
+                    return Disposables.create()
                 }
 
                 let observer = ControlTarget(control: control) { control in
@@ -54,7 +54,7 @@ extension NSControl {
             return Observable.create { [weak weakControl = control] (observer: AnyObserver<T>) in
                 guard let control = weakControl else {
                     observer.on(.completed)
-                    return NopDisposable.instance
+                    return Disposables.create()
                 }
 
                 observer.on(.next(getter(control)))

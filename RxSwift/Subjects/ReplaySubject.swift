@@ -139,7 +139,7 @@ class ReplayBufferBase<Element>
     func _synchronized_subscribe<O : ObserverType where O.E == E>(_ observer: O) -> Disposable {
         if _isDisposed {
             observer.on(.error(RxError.disposed(object: self)))
-            return NopDisposable.instance
+            return Disposables.create()
         }
      
         let AnyObserver = observer.asObserver()
@@ -147,7 +147,7 @@ class ReplayBufferBase<Element>
         replayBuffer(AnyObserver)
         if let stoppedEvent = _stoppedEvent {
             observer.on(stoppedEvent)
-            return NopDisposable.instance
+            return Disposables.create()
         }
         else {
             let key = _observers.insert(AnyObserver)

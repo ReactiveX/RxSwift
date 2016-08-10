@@ -49,7 +49,7 @@ public class OperationQueueScheduler: ImmediateSchedulerType {
 
         self.operationQueue.addOperation(operation)
         
-        let _ = compositeDisposable.insert(AnonymousDisposable(operation.cancel))
+        let _ = compositeDisposable.insert(Disposables.create(with: operation.cancel))
 
         return compositeDisposable
     }

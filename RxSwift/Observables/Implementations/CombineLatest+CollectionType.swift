@@ -100,7 +100,7 @@ class CombineLatestCollectionTypeSink<C: Collection, R, O: ObserverType where C.
             j += 1
         }
         
-        return CompositeDisposable(disposables: _subscriptions.map { $0 })
+        return Disposables.create(_subscriptions)
     }
 }
 

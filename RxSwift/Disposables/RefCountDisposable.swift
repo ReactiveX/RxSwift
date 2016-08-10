@@ -11,7 +11,7 @@ import Foundation
 /**
     Represents a disposable resource that only disposes its underlying disposable resource when all dependent disposable objects have been disposed.
  */
-public class RefCountDisposable : DisposeBase, Cancelable {
+public final class RefCountDisposable : DisposeBase, Cancelable {
     private var _lock = SpinLock()
     private var _disposable = nil as Disposable?
     private var _primaryDisposed = false
@@ -50,7 +50,7 @@ public class RefCountDisposable : DisposeBase, Cancelable {
 
                 return RefCountInnerDisposable(self)
             } else {
-                return NopDisposable.instance
+                return Disposables.create()
             }
         }
     }

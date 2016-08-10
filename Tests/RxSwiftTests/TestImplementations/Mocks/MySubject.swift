@@ -45,7 +45,7 @@ class MySubject<Element where Element : Hashable> : SubjectType, ObserverType {
         _subscribeCount += 1
         _observer = AnyObserver(observer)
         
-        return AnonymousDisposable {
+        return Disposables.create {
             self._observer = AnyObserver { _ -> Void in () }
             self._isDisposed = true
         }

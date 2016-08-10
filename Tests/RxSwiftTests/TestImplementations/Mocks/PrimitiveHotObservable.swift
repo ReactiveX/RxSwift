@@ -44,7 +44,7 @@ class PrimitiveHotObservable<ElementType> : ObservableType {
         
         let i = self.subscriptions.count - 1
         
-        return AnonymousDisposable {
+        return Disposables.create {
             self.lock.lock()
             defer { self.lock.unlock() }
             

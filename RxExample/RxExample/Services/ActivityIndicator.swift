@@ -18,7 +18,7 @@ private struct ActivityToken<E> : ObservableConvertibleType, Disposable {
 
     init(source: Observable<E>, disposeAction: () -> ()) {
         _source = source
-        _dispose = AnonymousDisposable(disposeAction)
+        _dispose = Disposables.create(with: disposeAction)
     }
 
     func dispose() {
