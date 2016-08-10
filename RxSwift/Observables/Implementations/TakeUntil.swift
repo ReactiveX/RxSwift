@@ -98,7 +98,7 @@ class TakeUntilSink<ElementType, Other, O: ObserverType where O.E == ElementType
         otherObserver._subscription.disposable = otherSubscription
         let sourceSubscription = _parent._source.subscribe(self)
         
-        return StableCompositeDisposable.create(sourceSubscription, otherObserver._subscription)
+        return Disposables.create(sourceSubscription, otherObserver._subscription)
     }
 }
 
