@@ -26,7 +26,7 @@ extension NotificationCenter {
                 observer.on(.next(notification))
             }
             
-            return AnonymousDisposable {
+            return Disposables.create {
                 self.removeObserver(nsObserver)
             }
         }

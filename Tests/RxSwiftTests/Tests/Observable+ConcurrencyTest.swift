@@ -579,7 +579,7 @@ extension ObservableConcurrencyTest {
 
         let xs: Observable<Int> = Observable.create { observer in
             scheduled = scheduler.clock
-            return AnonymousDisposable {
+            return Disposables.create {
                 disposed = scheduler.clock
             }
         }

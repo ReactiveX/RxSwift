@@ -46,7 +46,7 @@ class HotObservable<Element>
         
         let i = self.subscriptions.count - 1
         
-        return AnonymousDisposable {
+        return Disposables.create {
             let removed = self._observers.removeKey(key)
             assert(removed != nil)
             

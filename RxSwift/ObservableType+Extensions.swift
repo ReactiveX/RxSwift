@@ -42,7 +42,7 @@ extension ObservableType {
         let disposable: Disposable
 
         if let disposed = onDisposed {
-            disposable = AnonymousDisposable(disposed)
+            disposable = Disposables.create(with: disposed)
         }
         else {
             disposable = Disposables.create()
@@ -88,7 +88,7 @@ extension ObservableType {
         let disposable: Disposable
 
         if let disposed = onDisposed {
-            disposable = AnonymousDisposable(disposed)
+            disposable = Disposables.create(with: disposed)
         }
         else {
             disposable = Disposables.create()
