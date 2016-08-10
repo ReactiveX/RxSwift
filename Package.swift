@@ -3,11 +3,6 @@ import PackageDescription
 #if os(OSX)
 let package = Package(
     name: "RxSwift",
-    exclude: [
-        "Sources/RxCocoa",
-        "Sources/RxTests",
-        "Sources/AllTests"
-    ],
     targets: [
         Target(
             name: "RxSwift"
@@ -32,14 +27,16 @@ let package = Package(
                 .Target(name: "RxTests")
             ]
         )
+    ],
+    exclude: [
+        "Sources/RxCocoa",
+        "Sources/RxTests",
+        "Sources/AllTests"
     ]
 )
 #elseif os(Linux)
 let package = Package(
     name: "RxSwift",
-    exclude: [
-        "Sources/RxCocoa",
-    ],
     targets: [
         Target(
             name: "RxSwift"
@@ -64,6 +61,9 @@ let package = Package(
                 .Target(name: "RxTests")
             ]
         )
+    ],
+    exclude: [
+        "Sources/RxCocoa",
     ]
 )
 #endif
