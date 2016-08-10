@@ -387,7 +387,7 @@ func myInterval(interval: NSTimeInterval) -> Observable<Int> {
             dispatch_source_cancel(timer)
         }
         dispatch_source_set_event_handler(timer, {
-            if cancel.disposed {
+            if cancel.isDisposed {
                 return
             }
             observer.on(.Next(next))

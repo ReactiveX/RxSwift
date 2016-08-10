@@ -16,14 +16,14 @@ When dispose method is called, disposal action will be dereferenced.
 public final class AnonymousDisposable : DisposeBase, Cancelable {
     public typealias DisposeAction = () -> Void
 
-    private var _disposed: AtomicInt = 0
+    private var _isDisposed: AtomicInt = 0
     private var _disposeAction: DisposeAction?
 
     /**
     - returns: Was resource disposed.
     */
-    public var disposed: Bool {
-        return _disposed == 1
+    public var isDisposed: Bool {
+        return _isDisposed == 1
     }
 
     /**
@@ -49,8 +49,8 @@ public final class AnonymousDisposable : DisposeBase, Cancelable {
     After invoking disposal action, disposal action will be dereferenced.
     */
     public func dispose() {
-        if AtomicCompareAndSwap(0, 1, &_disposed) {
-            assert(_disposed == 1)
+        if AtomicCompareAndSwap(0, 1, &_isDisposed) {
+            assert(_isDisposed == 1)
 
             if let action = _disposeAction {
                 _disposeAction = nil

@@ -15,5 +15,14 @@ public protocol Cancelable : Disposable {
     /**
     - returns: Was resource disposed.
     */
-    var disposed: Bool { get }
+    var isDisposed: Bool { get }
+}
+
+public extension Cancelable {
+    
+    @available(*, deprecated, renamed: "isDisposed")
+    var disposed: Bool {
+        return isDisposed
+    }
+    
 }

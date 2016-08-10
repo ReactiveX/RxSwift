@@ -53,7 +53,7 @@ public final class ConcurrentMainScheduler : SchedulerType {
         let cancel = SingleAssignmentDisposable()
 
         _mainQueue.async {
-            if cancel.disposed {
+            if cancel.isDisposed {
                 return
             }
 

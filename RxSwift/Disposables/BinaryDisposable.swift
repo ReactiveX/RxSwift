@@ -13,7 +13,7 @@ Represents two disposable resources that are disposed together.
 */
 private final class BinaryDisposable : DisposeBase, Cancelable {
 
-    private var _disposed: AtomicInt = 0
+    private var _isDisposed: AtomicInt = 0
 
     // state
     private var _disposable1: Disposable?
@@ -22,8 +22,8 @@ private final class BinaryDisposable : DisposeBase, Cancelable {
     /**
     - returns: Was resource disposed.
     */
-    var disposed: Bool {
-        return _disposed > 0
+    var isDisposed: Bool {
+        return _isDisposed > 0
     }
 
     /**
@@ -44,7 +44,7 @@ private final class BinaryDisposable : DisposeBase, Cancelable {
     After invoking disposal action, disposal action will be dereferenced.
     */
     func dispose() {
-        if AtomicCompareAndSwap(0, 1, &_disposed) {
+        if AtomicCompareAndSwap(0, 1, &_isDisposed) {
             _disposable1?.dispose()
             _disposable2?.dispose()
             _disposable1 = nil

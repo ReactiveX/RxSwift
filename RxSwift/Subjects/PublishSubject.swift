@@ -34,16 +34,16 @@ final public class PublishSubject<Element>
     private var _lock = NSRecursiveLock()
     
     // state
-    private var _disposed = false
+    private var _isDisposed = false
     private var _observers = Bag<AnyObserver<Element>>()
     private var _stopped = false
     private var _stoppedEvent = nil as Event<Element>?
     
     /**
-    Indicates whether the subject has been disposed.
+    Indicates whether the subject has been isDisposed.
     */
-    public var disposed: Bool {
-        return _disposed
+    public var isDisposed: Bool {
+        return _isDisposed
     }
     
     /**
@@ -66,7 +66,7 @@ final public class PublishSubject<Element>
     func _synchronized_on(_ event: Event<E>) {
         switch event {
         case .next(_):
-            if _disposed || _stopped {
+            if _isDisposed || _stopped {
                 return
             }
             
@@ -98,7 +98,7 @@ final public class PublishSubject<Element>
             return Disposables.create()
         }
         
-        if _disposed {
+        if _isDisposed {
             observer.on(.error(RxError.disposed(object: self)))
             return Disposables.create()
         }
@@ -132,7 +132,7 @@ final public class PublishSubject<Element>
     }
 
     final func _synchronized_dispose() {
-        _disposed = true
+        _isDisposed = true
         _observers.removeAll()
         _stoppedEvent = nil
     }

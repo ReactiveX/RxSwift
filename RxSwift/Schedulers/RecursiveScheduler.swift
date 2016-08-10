@@ -41,7 +41,7 @@ class AnyRecursiveScheduler<State> {
         var removeKey: CompositeDisposable.DisposeKey? = nil
         let d = _scheduler.scheduleRelative(state, dueTime: dueTime) { (state) -> Disposable in
             // best effort
-            if self._group.disposed {
+            if self._group.isDisposed {
                 return Disposables.create()
             }
             
@@ -84,7 +84,7 @@ class AnyRecursiveScheduler<State> {
         var removeKey: CompositeDisposable.DisposeKey? = nil
         let d = _scheduler.schedule(state) { (state) -> Disposable in
             // best effort
-            if self._group.disposed {
+            if self._group.isDisposed {
                 return Disposables.create()
             }
             
@@ -154,7 +154,7 @@ class RecursiveImmediateScheduler<State> {
         var removeKey: CompositeDisposable.DisposeKey? = nil
         let d = _scheduler.schedule(state) { (state) -> Disposable in
             // best effort
-            if self._group.disposed {
+            if self._group.isDisposed {
                 return Disposables.create()
             }
             

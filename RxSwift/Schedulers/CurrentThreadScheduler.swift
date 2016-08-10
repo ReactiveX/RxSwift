@@ -120,7 +120,7 @@ public class CurrentThreadScheduler : ImmediateSchedulerType {
             }
 
             while let latest = queue.value.dequeue() {
-                if latest.disposed {
+                if latest.isDisposed {
                     continue
                 }
                 latest.invoke()

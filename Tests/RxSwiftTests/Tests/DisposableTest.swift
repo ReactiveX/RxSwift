@@ -185,21 +185,21 @@ class DisposableTest : RxTest {
         let d = BooleanDisposable()
         let r = RefCountDisposable(disposable: d)
         
-        XCTAssertEqual(r.disposed, false)
+        XCTAssertEqual(r.isDisposed, false)
         
         let d1 = r.retain()
         let d2 = r.retain()
         
-        XCTAssertEqual(d.disposed, false)
+        XCTAssertEqual(d.isDisposed, false)
         
         d1.dispose()
-        XCTAssertEqual(d.disposed, false)
+        XCTAssertEqual(d.isDisposed, false)
         
         d2.dispose()
-        XCTAssertEqual(d.disposed, false)
+        XCTAssertEqual(d.isDisposed, false)
         
         r.dispose()
-        XCTAssertEqual(d.disposed, true)
+        XCTAssertEqual(d.isDisposed, true)
         
         let d3 = r.retain()
         d3.dispose()
@@ -209,21 +209,21 @@ class DisposableTest : RxTest {
         let d = BooleanDisposable()
         let r = RefCountDisposable(disposable: d)
         
-        XCTAssertEqual(r.disposed, false)
+        XCTAssertEqual(r.isDisposed, false)
         
         let d1 = r.retain()
         let d2 = r.retain()
         
-        XCTAssertEqual(d.disposed, false)
+        XCTAssertEqual(d.isDisposed, false)
         
         d1.dispose()
-        XCTAssertEqual(d.disposed, false)
+        XCTAssertEqual(d.isDisposed, false)
         
         r.dispose()
-        XCTAssertEqual(d.disposed, false)
+        XCTAssertEqual(d.isDisposed, false)
         
         d2.dispose()
-        XCTAssertEqual(d.disposed, true)
+        XCTAssertEqual(d.isDisposed, true)
         
     }
 }
