@@ -14,7 +14,7 @@ public struct Disposables {
 
 public extension Disposables {
     
-    static func empty() -> Disposable {
+    static func create() -> Disposable {
         return NopDisposable.instance
     }
     
@@ -33,7 +33,7 @@ public extension Disposables {
     static func create(_ disposables: [Disposable]) -> Disposable {
         switch disposables.count {
         case 0:
-            return Disposables.empty()
+            return Disposables.create()
         case 1:
             return disposables[0]
         case 2:
