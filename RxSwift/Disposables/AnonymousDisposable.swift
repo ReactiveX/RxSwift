@@ -62,8 +62,13 @@ public final class AnonymousDisposable : DisposeBase, Cancelable {
 
 public extension Disposables {
     
-    static func create(with action: () -> ()) -> Cancelable {
-        return AnonymousDisposable(disposeAction: action)
+    /**
+     Constructs a new disposable with the given action used for disposal.
+     
+     - parameter dispose: Disposal action which will be run upon calling `dispose`.
+     */
+    static func create(with dispose: () -> ()) -> Cancelable {
+        return AnonymousDisposable(disposeAction: dispose)
     }
     
 }
