@@ -57,7 +57,7 @@ class CombineLatestSink2_<E1, E2, O: ObserverType> : CombineLatestSink<O> {
          subscription1.disposable = _parent._source1.subscribe(observer1)
          subscription2.disposable = _parent._source2.subscribe(observer2)
 
-        return CompositeDisposable(disposables: [
+        return Disposables.create([
                 subscription1,
                 subscription2
         ])
@@ -142,7 +142,7 @@ class CombineLatestSink3_<E1, E2, E3, O: ObserverType> : CombineLatestSink<O> {
          subscription2.disposable = _parent._source2.subscribe(observer2)
          subscription3.disposable = _parent._source3.subscribe(observer3)
 
-        return CompositeDisposable(disposables: [
+        return Disposables.create([
                 subscription1,
                 subscription2,
                 subscription3
@@ -234,7 +234,7 @@ class CombineLatestSink4_<E1, E2, E3, E4, O: ObserverType> : CombineLatestSink<O
          subscription3.disposable = _parent._source3.subscribe(observer3)
          subscription4.disposable = _parent._source4.subscribe(observer4)
 
-        return CompositeDisposable(disposables: [
+        return Disposables.create([
                 subscription1,
                 subscription2,
                 subscription3,
@@ -333,7 +333,7 @@ class CombineLatestSink5_<E1, E2, E3, E4, E5, O: ObserverType> : CombineLatestSi
          subscription4.disposable = _parent._source4.subscribe(observer4)
          subscription5.disposable = _parent._source5.subscribe(observer5)
 
-        return CompositeDisposable(disposables: [
+        return Disposables.create([
                 subscription1,
                 subscription2,
                 subscription3,
@@ -439,7 +439,7 @@ class CombineLatestSink6_<E1, E2, E3, E4, E5, E6, O: ObserverType> : CombineLate
          subscription5.disposable = _parent._source5.subscribe(observer5)
          subscription6.disposable = _parent._source6.subscribe(observer6)
 
-        return CompositeDisposable(disposables: [
+        return Disposables.create([
                 subscription1,
                 subscription2,
                 subscription3,
@@ -552,7 +552,7 @@ class CombineLatestSink7_<E1, E2, E3, E4, E5, E6, E7, O: ObserverType> : Combine
          subscription6.disposable = _parent._source6.subscribe(observer6)
          subscription7.disposable = _parent._source7.subscribe(observer7)
 
-        return CompositeDisposable(disposables: [
+        return Disposables.create([
                 subscription1,
                 subscription2,
                 subscription3,
@@ -672,7 +672,7 @@ class CombineLatestSink8_<E1, E2, E3, E4, E5, E6, E7, E8, O: ObserverType> : Com
          subscription7.disposable = _parent._source7.subscribe(observer7)
          subscription8.disposable = _parent._source8.subscribe(observer8)
 
-        return CompositeDisposable(disposables: [
+        return Disposables.create([
                 subscription1,
                 subscription2,
                 subscription3,

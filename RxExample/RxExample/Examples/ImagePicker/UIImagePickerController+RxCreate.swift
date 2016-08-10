@@ -56,7 +56,7 @@ extension UIImagePickerController {
             parent.present(imagePicker, animated: animated, completion: nil)
             observer.on(.next(imagePicker))
             
-            return CompositeDisposable(dismissDisposable, AnonymousDisposable {
+            return Disposables.create(dismissDisposable, AnonymousDisposable {
                     dismissViewController(imagePicker, animated: animated)
                 })
         }

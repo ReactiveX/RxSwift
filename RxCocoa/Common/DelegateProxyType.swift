@@ -273,6 +273,6 @@ extension ObservableType {
                 }
             }
             
-        return CompositeDisposable(subscription, disposable)
+        return Disposables.create(subscription, disposable)
     }
 }

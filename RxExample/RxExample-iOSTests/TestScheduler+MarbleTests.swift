@@ -156,7 +156,7 @@ extension TestScheduler {
 
             attemptCount += 1
 
-            return CompositeDisposable(disposables: scheduledEvents)
+            return Disposables.create(scheduledEvents)
         }
     }
 
