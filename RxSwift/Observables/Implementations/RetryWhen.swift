@@ -127,7 +127,7 @@ class RetryWhenSequenceSink<S: Sequence, O: ObserverType, TriggerObservable: Obs
     override func run(_ sources: SequenceGenerator) -> Disposable {
         let triggerSubscription = _handler.subscribe(_notifier.asObserver())
         let superSubscription = super.run(sources)
-        return StableCompositeDisposable.create(superSubscription, triggerSubscription)
+        return Disposables.create(superSubscription, triggerSubscription)
     }
 }
 

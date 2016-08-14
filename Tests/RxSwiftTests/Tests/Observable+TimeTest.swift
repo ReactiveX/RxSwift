@@ -560,7 +560,7 @@ extension ObservableTimeTest {
 
         _ = scheduler.schedule(()) { _ in
             cleanResources.fulfill()
-            return NopDisposable.instance
+            return Disposables.create()
         }
 
         waitForExpectations(timeout: 1.0) { e in

@@ -228,7 +228,7 @@ extension DelegateProxyType {
         
         assert(proxy.forwardToDelegate() === forwardDelegate, "Setting of delegate failed")
         
-        return AnonymousDisposable {
+        return Disposables.create {
             MainScheduler.ensureExecutingOnScheduler()
             
             let delegate: AnyObject? = weakForwardDelegate
@@ -273,6 +273,6 @@ extension ObservableType {
                 }
             }
             
-        return CompositeDisposable(subscription, disposable)
+        return Disposables.create(subscription, disposable)
     }
 }

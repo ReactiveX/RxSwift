@@ -37,7 +37,7 @@ class ObserveOnSerialDispatchQueueSink<O: ObserverType> : ObserverBase<O.E> {
                 sink.dispose()
             }
 
-            return NopDisposable.instance
+            return Disposables.create()
         }
     }
 

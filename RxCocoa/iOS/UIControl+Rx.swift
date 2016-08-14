@@ -45,7 +45,7 @@ extension UIControl {
 
             guard let control = self else {
                 observer.on(.completed)
-                return NopDisposable.instance
+                return Disposables.create()
             }
 
             let controlTarget = ControlTarget(control: control, controlEvents: controlEvents) {
@@ -53,7 +53,7 @@ extension UIControl {
                 observer.on(.next())
             }
             
-            return AnonymousDisposable(controlTarget.dispose)
+            return Disposables.create(with: controlTarget.dispose)
         }.takeUntil(rx_deallocated)
         
         return ControlEvent(events: source)
@@ -67,7 +67,7 @@ extension UIControl {
         let source: Observable<T> = Observable.create { [weak weakControl = control] observer in
                 guard let control = weakControl else {
                     observer.on(.completed)
-                    return NopDisposable.instance
+                    return Disposables.create()
                 }
 
                 observer.on(.next(getter(control)))
@@ -78,7 +78,7 @@ extension UIControl {
                     }
                 }
                 
-                return AnonymousDisposable(controlTarget.dispose)
+                return Disposables.create(with: controlTarget.dispose)
             }
             .takeUntil((control as! NSObject).rx_deallocated)
 

@@ -42,7 +42,7 @@ class KVOObservable<Element>
             observer.on(.next(value as? Element))
         }
         
-        return AnonymousDisposable(observer.dispose)
+        return Disposables.create(with: observer.dispose)
     }
     
 }

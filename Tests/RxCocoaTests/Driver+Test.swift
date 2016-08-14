@@ -75,10 +75,10 @@ extension DriverTest {
             // subscription because of serial nature of main scheduler.
             _ = MainScheduler.instance.schedule(()) { _ in
                 subscribeFinished.fulfill()
-                return NopDisposable.instance
+                return Disposables.create()
             }
 
-            return NopDisposable.instance
+            return Disposables.create()
         }
 
         waitForExpectations(timeout: 1.0) { error in

@@ -53,7 +53,7 @@ class BufferTimeCountSink<Element, O: ObserverType where O.E == [Element]>
  
     func run() -> Disposable {
         createTimer(_windowID)
-        return StableCompositeDisposable.create(_timerD, _parent._source.subscribe(self))
+        return Disposables.create(_timerD, _parent._source.subscribe(self))
     }
     
     func startNewWindowAndSendCurrentOne() {
@@ -92,7 +92,7 @@ class BufferTimeCountSink<Element, O: ObserverType where O.E == [Element]>
     }
     
     func createTimer(_ windowID: Int) {
-        if _timerD.disposed {
+        if _timerD.isDisposed {
             return
         }
         
@@ -113,7 +113,7 @@ class BufferTimeCountSink<Element, O: ObserverType where O.E == [Element]>
                 self.startNewWindowAndSendCurrentOne()
             }
             
-            return NopDisposable.instance
+            return Disposables.create()
         }
     }
 }

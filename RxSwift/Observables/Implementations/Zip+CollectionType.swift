@@ -112,7 +112,7 @@ class ZipCollectionTypeSink<C: Collection, R, O: ObserverType where C.Iterator.E
             j += 1
         }
         
-        return CompositeDisposable(disposables: _subscriptions.map { $0 })
+        return Disposables.create(_subscriptions)
     }
 }
 

@@ -88,7 +88,7 @@ class SampleSequenceSink<O: ObserverType, SampleType>
         _sourceSubscription.disposable = _parent._source.subscribe(self)
         let samplerSubscription = _parent._sampler.subscribe(SamplerSink(parent: self))
         
-        return StableCompositeDisposable.create(_sourceSubscription, samplerSubscription)
+        return Disposables.create(_sourceSubscription, samplerSubscription)
     }
     
     func on(_ event: Event<Element>) {

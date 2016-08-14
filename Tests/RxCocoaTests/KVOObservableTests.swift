@@ -241,7 +241,7 @@ extension KVOObservableTests {
     
     func test_ObserveAndDontRetainWorks() {
         var latest: String?
-        var disposed = false
+        var isDisposed = false
         
         var parent: Parent! = Parent { n in
             latest = n
@@ -249,26 +249,26 @@ extension KVOObservableTests {
         
         _ = parent.rx_deallocated
             .subscribe(onCompleted: {
-                disposed = true
+                isDisposed = true
             })
         
         XCTAssertTrue(latest == "")
-        XCTAssertTrue(disposed == false)
+        XCTAssertTrue(isDisposed == false)
         
         parent.val = "1"
         
         XCTAssertTrue(latest == "1")
-        XCTAssertTrue(disposed == false)
+        XCTAssertTrue(isDisposed == false)
         
         parent = nil
         
         XCTAssertTrue(latest == "1")
-        XCTAssertTrue(disposed == true)
+        XCTAssertTrue(isDisposed == true)
     }
     
     func test_ObserveAndDontRetainWorks2() {
         var latest: String?
-        var disposed = false
+        var isDisposed = false
         
         var parent: ParentWithChild! = ParentWithChild { n in
             latest = n
@@ -276,21 +276,21 @@ extension KVOObservableTests {
         
         _ = parent.rx_deallocated
             .subscribe(onCompleted: {
-                disposed = true
+                isDisposed = true
             })
         
         XCTAssertTrue(latest == "")
-        XCTAssertTrue(disposed == false)
+        XCTAssertTrue(isDisposed == false)
         
         parent.val = "1"
         
         XCTAssertTrue(latest == "1")
-        XCTAssertTrue(disposed == false)
+        XCTAssertTrue(isDisposed == false)
         
         parent = nil
         
         XCTAssertTrue(latest == "1")
-        XCTAssertTrue(disposed == true)
+        XCTAssertTrue(isDisposed == true)
     }
 }
 
@@ -301,7 +301,7 @@ extension KVOObservableTests {
     
     func testObserveWeak_SimpleStrongProperty() {
         var latest: String?
-        var disposed = false
+        var isDisposed = false
         
         var root: HasStrongProperty! = HasStrongProperty()
         
@@ -312,26 +312,26 @@ extension KVOObservableTests {
         
         _ = root.rx_deallocated
             .subscribe(onCompleted: {
-                disposed = true
+                isDisposed = true
             })
         
         XCTAssertTrue(latest == nil)
-        XCTAssertTrue(!disposed)
+        XCTAssertTrue(!isDisposed)
         
         root.property = "a"
 
         XCTAssertTrue(latest == "a")
-        XCTAssertTrue(!disposed)
+        XCTAssertTrue(!isDisposed)
         
         root = nil
 
         XCTAssertTrue(latest == nil)
-        XCTAssertTrue(disposed)
+        XCTAssertTrue(isDisposed)
     }
     
     func testObserveWeak_SimpleWeakProperty() {
         var latest: String?
-        var disposed = false
+        var isDisposed = false
         
         var root: HasWeakProperty! = HasWeakProperty()
         
@@ -342,28 +342,28 @@ extension KVOObservableTests {
         
         _ = root.rx_deallocated
             .subscribe(onCompleted: {
-                disposed = true
+                isDisposed = true
         })
         
         XCTAssertTrue(latest == nil)
-        XCTAssertTrue(!disposed)
+        XCTAssertTrue(!isDisposed)
     
         let a: NSString! = "a"
         
         root.property = a
         
         XCTAssertTrue(latest == "a")
-        XCTAssertTrue(!disposed)
+        XCTAssertTrue(!isDisposed)
         
         root = nil
         
         XCTAssertTrue(latest == nil)
-        XCTAssertTrue(disposed)
+        XCTAssertTrue(isDisposed)
     }
 
     func testObserveWeak_ObserveFirst_Weak_Strong_Basic() {
         var latest: String?
-        var disposed = false
+        var isDisposed = false
         
         var child: HasStrongProperty! = HasStrongProperty()
         
@@ -376,34 +376,34 @@ extension KVOObservableTests {
         
         _ = root.rx_deallocated
             .subscribe(onCompleted: {
-                disposed = true
+                isDisposed = true
             })
         
         XCTAssertTrue(latest == nil)
-        XCTAssertTrue(disposed == false)
+        XCTAssertTrue(isDisposed == false)
         
         root.property = child
         
         XCTAssertTrue(latest == nil)
-        XCTAssertTrue(disposed == false)
+        XCTAssertTrue(isDisposed == false)
         
         let one: NSString! = "1"
         
         child.property = one
         
         XCTAssertTrue(latest == "1")
-        XCTAssertTrue(disposed == false)
+        XCTAssertTrue(isDisposed == false)
         
         root = nil
         child = nil
      
         XCTAssertTrue(latest == nil)
-        XCTAssertTrue(disposed == true)
+        XCTAssertTrue(isDisposed == true)
     }
     
     func testObserveWeak_Weak_Strong_Observe_Basic() {
         var latest: String?
-        var disposed = false
+        var isDisposed = false
         
         var child: HasStrongProperty! = HasStrongProperty()
         
@@ -416,7 +416,7 @@ extension KVOObservableTests {
         child.property = one
         
         XCTAssertTrue(latest == nil)
-        XCTAssertTrue(disposed == false)
+        XCTAssertTrue(isDisposed == false)
         
         _ = root.rx_observeWeakly(String.self, "property.property")
             .subscribe(onNext: { n in
@@ -425,22 +425,22 @@ extension KVOObservableTests {
         
         _ = root.rx_deallocated
             .subscribe(onCompleted: {
-                disposed = true
+                isDisposed = true
         })
         
         XCTAssertTrue(latest == "1")
-        XCTAssertTrue(disposed == false)
+        XCTAssertTrue(isDisposed == false)
         
         root = nil
         child = nil
         
         XCTAssertTrue(latest == nil)
-        XCTAssertTrue(disposed == true)
+        XCTAssertTrue(isDisposed == true)
     }
     
     func testObserveWeak_ObserveFirst_Strong_Weak_Basic() {
         var latest: String?
-        var disposed = false
+        var isDisposed = false
         
         var child: HasWeakProperty! = HasWeakProperty()
         
@@ -453,34 +453,34 @@ extension KVOObservableTests {
         
         _ = root.rx_deallocated
             .subscribe(onCompleted: {
-                disposed = true
+                isDisposed = true
         })
         
         XCTAssertTrue(latest == nil)
-        XCTAssertTrue(disposed == false)
+        XCTAssertTrue(isDisposed == false)
         
         root.property = child
         
         XCTAssertTrue(latest == nil)
-        XCTAssertTrue(disposed == false)
+        XCTAssertTrue(isDisposed == false)
         
         let one: NSString! = "1"
         
         child.property = one
         
         XCTAssertTrue(latest == "1")
-        XCTAssertTrue(disposed == false)
+        XCTAssertTrue(isDisposed == false)
         
         root = nil
         child = nil
         
         XCTAssertTrue(latest == nil)
-        XCTAssertTrue(disposed == true)
+        XCTAssertTrue(isDisposed == true)
     }
     
     func testObserveWeak_Strong_Weak_Observe_Basic() {
         var latest: String?
-        var disposed = false
+        var isDisposed = false
         
         var child: HasWeakProperty! = HasWeakProperty()
         
@@ -493,7 +493,7 @@ extension KVOObservableTests {
         child.property = one
         
         XCTAssertTrue(latest == nil)
-        XCTAssertTrue(disposed == false)
+        XCTAssertTrue(isDisposed == false)
         
         _ = root.rx_observeWeakly(String.self, "property.property")
             .subscribe(onNext: { n in
@@ -502,17 +502,17 @@ extension KVOObservableTests {
         
         _ = root.rx_deallocated
             .subscribe(onCompleted: {
-                disposed = true
+                isDisposed = true
         })
         
         XCTAssertTrue(latest == "1")
-        XCTAssertTrue(disposed == false)
+        XCTAssertTrue(isDisposed == false)
         
         root = nil
         child = nil
         
         XCTAssertTrue(latest == nil)
-        XCTAssertTrue(disposed == true)
+        XCTAssertTrue(isDisposed == true)
     }
     
     // compiler won't release weak references otherwise :(

@@ -34,7 +34,7 @@ example("debug") {
         observer.onNext("🐭")
         observer.onCompleted()
         
-        return NopDisposable.instance
+        return Disposables.create()
     }
     
     sequenceThatErrors

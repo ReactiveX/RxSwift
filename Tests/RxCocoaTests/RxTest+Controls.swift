@@ -59,7 +59,7 @@ extension RxTest {
     }
 
     func ensureEventDeallocated<C, T where C: NSObject>(_ createControl: () -> C, _ eventSelector: (C) -> ControlEvent<T>) {
-        return ensureEventDeallocated({ () -> (C, Disposable) in (createControl(), NopDisposable.instance) }, eventSelector)
+        return ensureEventDeallocated({ () -> (C, Disposable) in (createControl(), Disposables.create()) }, eventSelector)
     }
 
     func ensureEventDeallocated<C, T where C: NSObject>(_ createControl: () -> (C, Disposable), _ eventSelector: (C) -> ControlEvent<T>) {

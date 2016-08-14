@@ -39,7 +39,7 @@ public class OperationQueueScheduler: ImmediateSchedulerType {
         weak var compositeDisposableWeak = compositeDisposable
         
         let operation = BlockOperation {
-            if compositeDisposableWeak?.disposed ?? false {
+            if compositeDisposableWeak?.isDisposed ?? false {
                 return
             }
             
@@ -49,7 +49,7 @@ public class OperationQueueScheduler: ImmediateSchedulerType {
 
         self.operationQueue.addOperation(operation)
         
-        let _ = compositeDisposable.insert(AnonymousDisposable(operation.cancel))
+        let _ = compositeDisposable.insert(Disposables.create(with: operation.cancel))
 
         return compositeDisposable
     }

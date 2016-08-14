@@ -30,7 +30,7 @@ compareTwoImplementations(benchmarkTime: true, benchmarkMemory: false, first: {
             for i in 0..<100 {
                 o.on(.Next(i))
             }
-            return NopDisposable.instance
+            return Disposables.create()
         }*/
         //.retryWhen { $0 }
         .shareReplay(1)

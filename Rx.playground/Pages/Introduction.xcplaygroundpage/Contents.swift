@@ -58,7 +58,7 @@ example("Observable with no subscribers") {
         print("This will never be printed")
         observerOfString.on(.next("😬"))
         observerOfString.on(.completed)
-        return NopDisposable.instance
+        return Disposables.create()
     }
 }
 /*:
@@ -70,7 +70,7 @@ example("Observable with subscriber") {
             print("Observable created")
             observerOfString.on(.next("😉"))
             observerOfString.on(.completed)
-            return NopDisposable.instance
+            return Disposables.create()
         }
         .subscribe { event in
             print(event)

@@ -11,7 +11,7 @@ import Foundation
 /**
     Represents a disposable resource that only disposes its underlying disposable resource when all dependent disposable objects have been disposed.
  */
-public class RefCountDisposable : DisposeBase, Cancelable {
+public final class RefCountDisposable : DisposeBase, Cancelable {
     private var _lock = SpinLock()
     private var _disposable = nil as Disposable?
     private var _primaryDisposed = false
@@ -20,7 +20,7 @@ public class RefCountDisposable : DisposeBase, Cancelable {
     /**
      - returns: Was resource disposed.
      */
-    public var disposed: Bool {
+    public var isDisposed: Bool {
         _lock.lock(); defer { _lock.unlock() }
         return _disposable == nil
     }
@@ -50,7 +50,7 @@ public class RefCountDisposable : DisposeBase, Cancelable {
 
                 return RefCountInnerDisposable(self)
             } else {
-                return NopDisposable.instance
+                return Disposables.create()
             }
         }
     }
@@ -110,7 +110,7 @@ public class RefCountDisposable : DisposeBase, Cancelable {
 internal final class RefCountInnerDisposable: DisposeBase, Disposable
 {
     private let _parent: RefCountDisposable
-    private var _disposed: AtomicInt = 0
+    private var _isDisposed: AtomicInt = 0
 
     init(_ parent: RefCountDisposable)
     {
@@ -120,7 +120,7 @@ internal final class RefCountInnerDisposable: DisposeBase, Disposable
 
     internal func dispose()
     {
-        if AtomicCompareAndSwap(0, 1, &_disposed) {
+        if AtomicCompareAndSwap(0, 1, &_isDisposed) {
             _parent.release()
         }
     }

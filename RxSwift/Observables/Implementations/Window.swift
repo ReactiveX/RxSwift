@@ -96,7 +96,7 @@ class WindowTimeCountSink<Element, O: ObserverType where O.E == Observable<Eleme
     }
     
     func createTimer(_ windowId: Int) {
-        if _timerD.disposed {
+        if _timerD.isDisposed {
             return
         }
         
@@ -125,7 +125,7 @@ class WindowTimeCountSink<Element, O: ObserverType where O.E == Observable<Eleme
             
             self.createTimer(newId)
             
-            return NopDisposable.instance
+            return Disposables.create()
         }
     }
 }

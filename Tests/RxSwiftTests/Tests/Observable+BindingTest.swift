@@ -293,7 +293,7 @@ extension ObservableBindingTest {
             completed(250)
         ])
         
-        XCTAssertTrue(subject.diposed)
+        XCTAssertTrue(subject.isDisposed)
     }
     
     func testRefCount_NotConnected() {
@@ -305,7 +305,7 @@ extension ObservableBindingTest {
         let xs: Observable<Int> = Observable.deferred {
             count += 1
             return Observable.create { obs in
-                return AnonymousDisposable {
+                return Disposables.create {
                     disconnected = true
                 }
             }

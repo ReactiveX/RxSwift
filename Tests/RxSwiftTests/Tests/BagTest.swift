@@ -56,7 +56,7 @@ extension BagTest {
                 )
                 numberOfActionsAfter(i,
                     deletionsFromStart: j,
-                    createNew: { () -> Disposable in AnonymousDisposable { numberDisposables += 1 } },
+                    createNew: { () -> Disposable in Disposables.create { numberDisposables += 1 } },
                     bagAction: { (bag: RxMutableBox<Bag<Disposable>>) in disposeAll(in: bag.value); XCTAssertTrue(bag.value.count == i - j) }
                 )
 
@@ -103,7 +103,7 @@ extension BagTest {
                 )
                 numberOfActionsAfter(i,
                     deletionsFromStart: j,
-                    createNew: { () -> Disposable in AnonymousDisposable { numberDisposables += 1 } },
+                    createNew: { () -> Disposable in Disposables.create { numberDisposables += 1 } },
                     bagAction: { (bag: RxMutableBox<Bag<Disposable>>) in disposeAll(in: bag.value); XCTAssertTrue(bag.value.count == i - j) }
                 )
 
@@ -137,7 +137,7 @@ extension BagTest {
                     }
                     increment2 += 1
                 })
-                _ = bag3.value.insert(AnonymousDisposable { _ in
+                _ = bag3.value.insert(Disposables.create { _ in
                     if increment3 == breakAt {
                         bag3.value.removeAll()
                     }
@@ -176,7 +176,7 @@ extension BagTest {
         )
         numberOfActionsAfter(100,
             deletionsFromStart: 0,
-            createNew: { () -> Disposable in AnonymousDisposable { numberDisposables += 1 } },
+            createNew: { () -> Disposable in Disposables.create { numberDisposables += 1 } },
             bagAction: { (bag: RxMutableBox<Bag<Disposable>>) in bag.value.removeAll(); disposeAll(in: bag.value); }
         )
 
@@ -194,7 +194,7 @@ extension BagTest {
 
         var keys: [Bag<Disposable>.KeyType] = []
         for _ in 0..<limit {
-            keys.append(bag.insert(AnonymousDisposable { increment += 1 }))
+            keys.append(bag.insert(Disposables.create { increment += 1 }))
         }
 
         for i in 0..<limit {
@@ -211,7 +211,7 @@ extension BagTest {
 
         var keys: [Bag<Disposable>.KeyType] = []
         for _ in 0..<limit {
-            keys.append(bag.insert(AnonymousDisposable { increment += 1 }))
+            keys.append(bag.insert(Disposables.create { increment += 1 }))
         }
 
         for i in 0..<limit {

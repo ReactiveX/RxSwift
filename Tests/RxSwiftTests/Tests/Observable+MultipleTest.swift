@@ -4251,7 +4251,7 @@ extension ObservableMultipleTest {
     func testSkipUntil_HasCompletedCausesDisposal() {
         let scheduler = TestScheduler(initialClock: 0)
         
-        var disposed = false
+        var isDisposed = false
         
         let l = scheduler.createHotObservable([
             next(150, 1),
@@ -4263,8 +4263,8 @@ extension ObservableMultipleTest {
         ])
         
         let r: Observable<Int> = Observable.create { o in
-            return AnonymousDisposable {
-                disposed = true
+            return Disposables.create {
+                isDisposed = true
             }
         }
         
@@ -4275,7 +4275,7 @@ extension ObservableMultipleTest {
         XCTAssertEqual(res.events, [
         ])
         
-        XCTAssert(disposed, "disposed")
+        XCTAssert(isDisposed, "isDisposed")
     }
 }
 

@@ -10,16 +10,16 @@ import Foundation
 
 private let disposeScheduledDisposable: (ScheduledDisposable) -> Disposable = { sd in
     sd.disposeInner()
-    return NopDisposable.instance
+    return Disposables.create()
 }
 
 /**
 Represents a disposable resource whose disposal invocation will be scheduled on the specified scheduler.
 */
-public class ScheduledDisposable : Cancelable {
+public final class ScheduledDisposable : Cancelable {
     public let scheduler: ImmediateSchedulerType
 
-    private var _disposed: AtomicInt = 0
+    private var _isDisposed: AtomicInt = 0
 
     // state
     private var _disposable: Disposable?
@@ -27,8 +27,8 @@ public class ScheduledDisposable : Cancelable {
     /**
     - returns: Was resource disposed.
     */
-    public var disposed: Bool {
-        return _disposed == 1
+    public var isDisposed: Bool {
+        return _isDisposed == 1
     }
 
     /**
@@ -50,7 +50,7 @@ public class ScheduledDisposable : Cancelable {
     }
 
     func disposeInner() {
-        if AtomicCompareAndSwap(0, 1, &_disposed) {
+        if AtomicCompareAndSwap(0, 1, &_isDisposed) {
             _disposable!.dispose()
             _disposable = nil
         }

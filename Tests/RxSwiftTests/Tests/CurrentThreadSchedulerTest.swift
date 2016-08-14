@@ -23,7 +23,7 @@ extension CurrentThreadSchedulerTest {
         _ = CurrentThreadScheduler.instance.schedule(()) { s in
             executed = true
             XCTAssertTrue(!CurrentThreadScheduler.isScheduleRequired)
-            return NopDisposable.instance
+            return Disposables.create()
         }
 
         XCTAssertTrue(executed)
@@ -40,13 +40,13 @@ extension CurrentThreadSchedulerTest {
                 messages.append(3)
                 _ = CurrentThreadScheduler.instance.schedule(()) {
                     messages.append(5)
-                    return NopDisposable.instance
+                    return Disposables.create()
                 }
                 messages.append(4)
-                return NopDisposable.instance
+                return Disposables.create()
             }
             messages.append(2)
-            return NopDisposable.instance
+            return Disposables.create()
         }
 
         XCTAssertEqual(messages, [1, 2, 3, 4, 5])
@@ -63,7 +63,7 @@ extension CurrentThreadSchedulerTest {
                 messages.append(3)
                 let disposable = CurrentThreadScheduler.instance.schedule(()) {
                     messages.append(5)
-                    return NopDisposable.instance
+                    return Disposables.create()
                 }
                 disposable.dispose()
                 messages.append(4)
@@ -87,7 +87,7 @@ extension CurrentThreadSchedulerTest {
                 messages.append(3)
                 let disposable = CurrentThreadScheduler.instance.schedule(()) {
                     messages.append(5)
-                    return NopDisposable.instance
+                    return Disposables.create()
                 }
                 messages.append(4)
                 return disposable

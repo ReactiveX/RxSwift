@@ -69,7 +69,7 @@ func <-> (textInput: RxTextInput, variable: Variable<String>) -> Disposable {
             bindToUIDisposable.dispose()
         })
 
-    return StableCompositeDisposable.create(bindToUIDisposable, bindToVariable)
+    return Disposables.create(bindToUIDisposable, bindToVariable)
 }
 
 func <-> <T>(property: ControlProperty<T>, variable: Variable<T>) -> Disposable {
@@ -92,7 +92,7 @@ func <-> <T>(property: ControlProperty<T>, variable: Variable<T>) -> Disposable 
             bindToUIDisposable.dispose()
         })
 
-    return StableCompositeDisposable.create(bindToUIDisposable, bindToVariable)
+    return Disposables.create(bindToUIDisposable, bindToVariable)
 }
 
 // }

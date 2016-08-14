@@ -102,7 +102,7 @@ example("create") {
         return Observable.create { observer in
             observer.on(.next(element))
             observer.on(.completed)
-            return NopDisposable.instance
+            return Disposables.create()
         }
     }
         
@@ -170,7 +170,7 @@ example("deferred") {
             observer.onNext("🐶")
             observer.onNext("🐱")
             observer.onNext("🐵")
-            return NopDisposable.instance
+            return Disposables.create()
         }
     }
     

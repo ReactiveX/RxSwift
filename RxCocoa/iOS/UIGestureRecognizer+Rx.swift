@@ -64,7 +64,7 @@ extension Reactive where Self: UIGestureRecognizer {
 
             guard let control = self else {
                 observer.on(.completed)
-                return NopDisposable.instance
+                return Disposables.create()
             }
             
             let observer = GestureTarget(control) {

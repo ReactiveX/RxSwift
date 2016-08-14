@@ -30,7 +30,7 @@ extension BlockingObservable {
 
         lock.dispatch {
             d.disposable = self.source.subscribe { e in
-                if d.disposed {
+                if d.isDisposed {
                     return
                 }
                 switch e {
@@ -78,7 +78,7 @@ extension BlockingObservable {
 
         lock.dispatch {
             d.disposable = self.source.subscribe { e in
-                if d.disposed {
+                if d.isDisposed {
                     return
                 }
 
@@ -130,7 +130,7 @@ extension BlockingObservable {
 
         lock.dispatch {
             d.disposable = self.source.subscribe { e in
-                if d.disposed {
+                if d.isDisposed {
                     return
                 }
                 switch e {
@@ -191,7 +191,7 @@ extension BlockingObservable {
         
         lock.dispatch {
             d.disposable = self.source.subscribe { e in
-                if d.disposed {
+                if d.isDisposed {
                     return
                 }
                 switch e {

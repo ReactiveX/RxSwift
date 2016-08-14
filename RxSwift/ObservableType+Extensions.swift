@@ -42,10 +42,10 @@ extension ObservableType {
         let disposable: Disposable
 
         if let disposed = onDisposed {
-            disposable = AnonymousDisposable(disposed)
+            disposable = Disposables.create(with: disposed)
         }
         else {
-            disposable = NopDisposable.instance
+            disposable = Disposables.create()
         }
 
         let observer = AnonymousObserver<E> { e in
@@ -65,7 +65,7 @@ extension ObservableType {
                 disposable.dispose()
             }
         }
-        return BinaryDisposable(
+        return Disposables.create(
             self.subscribeSafe(observer),
             disposable
         )
@@ -88,10 +88,10 @@ extension ObservableType {
         let disposable: Disposable
 
         if let disposed = onDisposed {
-            disposable = AnonymousDisposable(disposed)
+            disposable = Disposables.create(with: disposed)
         }
         else {
-            disposable = NopDisposable.instance
+            disposable = Disposables.create()
         }
 
         let observer = AnonymousObserver<E> { e in
@@ -106,7 +106,7 @@ extension ObservableType {
                 disposable.dispose()
             }
         }
-        return BinaryDisposable(
+        return Disposables.create(
             self.subscribeSafe(observer),
             disposable
         )
