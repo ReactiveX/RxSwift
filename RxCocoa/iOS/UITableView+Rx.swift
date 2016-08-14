@@ -145,7 +145,14 @@ extension UITableView {
         -> (source: O)
         -> Disposable  {
         return { source in
-            // There needs to be a strong retaining here because
+            // This is called for sideeffects only, and to make sure delegate proxy is in place when
+            // data source is being bound.
+            // This is needed because theoretically the data source subscription itself might
+            // call `self.rx_delegate`. If that happens, it might cause weird side effects since
+            // setting data source will set delegate, and UITableView might get into a weird state.
+            // Therefore it's better to set delegate proxy first, just to be sure.
+            _ = self.rx_delegate
+            // Strong reference is needed because data source is in use until result subscription is disposed
             return source.subscribeProxyDataSourceForObject(self, dataSource: dataSource, retainDataSource: true) { [weak self] (_: RxTableViewDataSourceProxy, event) -> Void in
                 guard let tableView = self else {
                     return
