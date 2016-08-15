@@ -62,7 +62,7 @@ class TableViewWithEditingCommandsViewController: ViewController, UITableViewDel
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        self.navigationItem.rightBarButtonItem = self.editButtonItem
 
         let superMan =  User(
             firstName: "Super",
@@ -107,7 +107,7 @@ class TableViewWithEditingCommandsViewController: ViewController, UITableViewDel
                     SectionModel(model: "Normal Users", items: $0.users)
                 ]
             }
-            .bindTo(tableView.rx.itemsWithDataSource(dataSource))
+            .bindTo(tableView.rx.items(dataSource: dataSource))
             .addDisposableTo(disposeBag)
 
         tableView.rx.itemSelected
@@ -115,9 +115,9 @@ class TableViewWithEditingCommandsViewController: ViewController, UITableViewDel
                 let all = [viewModel.favoriteUsers, viewModel.users]
                 return all[i.section][i.row]
             }
-            .subscribeNext { [weak self] user in
+            .subscribe(onNext: { [weak self] user in
                 self?.showDetailsForUser(user)
-            }
+            })
             .addDisposableTo(disposeBag)
 
         // customization using delegate
@@ -139,8 +139,8 @@ class TableViewWithEditingCommandsViewController: ViewController, UITableViewDel
         let label = UILabel(frame: CGRect.zero)
         // hacky I know :)
         label.text = "  \(title)"
-        label.textColor = UIColor.white()
-        label.backgroundColor = UIColor.darkGray()
+        label.textColor = UIColor.white
+        label.backgroundColor = UIColor.darkGray
         label.alpha = 0.9
 
         return label

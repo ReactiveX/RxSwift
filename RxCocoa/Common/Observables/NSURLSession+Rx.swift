@@ -15,7 +15,7 @@ import RxSwift
 RxCocoa URL errors.
 */
 public enum RxCocoaURLError
-    : ErrorProtocol
+    : Swift.Error
     , CustomDebugStringConvertible {
     /**
     Unknown error occurred.
@@ -32,7 +32,7 @@ public enum RxCocoaURLError
     /**
     Deserialization error.
     */
-    case deserializationError(error: ErrorProtocol)
+    case deserializationError(error: Swift.Error)
 }
 
 public extension RxCocoaURLError {
@@ -155,7 +155,7 @@ extension Reactive where Base: URLSession {
             let t = task
             t.resume()
 
-            return AnonymousDisposable(task.cancel)
+            return Disposables.create(with: task.cancel)
         }
     }
 

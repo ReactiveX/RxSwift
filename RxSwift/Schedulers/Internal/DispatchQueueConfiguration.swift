@@ -25,7 +25,7 @@ extension DispatchQueueConfiguration {
         let cancel = SingleAssignmentDisposable()
 
         queue.async {
-            if cancel.disposed {
+            if cancel.isDisposed {
                 return
             }
 
@@ -41,7 +41,7 @@ extension DispatchQueueConfiguration {
 
         let compositeDisposable = CompositeDisposable()
 
-        let timer = DispatchSource.timer(queue: queue)
+        let timer = DispatchSource.makeTimerSource(queue: queue)
         timer.scheduleOneshot(deadline: deadline)
 
         // TODO:
@@ -51,13 +51,13 @@ extension DispatchQueueConfiguration {
         // It looks like just setting timer to fire and not holding a reference to it
         // until deadline causes timer cancellation.
         var timerReference: DispatchSourceTimer? = timer
-        let cancelTimer = AnonymousDisposable {
+        let cancelTimer = Disposables.create {
             timerReference?.cancel()
             timerReference = nil
         }
 
         timer.setEventHandler(handler: {
-            if compositeDisposable.disposed {
+            if compositeDisposable.isDisposed {
                 return
             }
             _ = compositeDisposable.insert(action(state))
@@ -75,7 +75,7 @@ extension DispatchQueueConfiguration {
 
         var timerState = state
 
-        let timer = DispatchSource.timer(queue: queue)
+        let timer = DispatchSource.makeTimerSource(queue: queue)
         timer.scheduleRepeating(deadline: initial, interval: dispatchInterval(period), leeway: leeway)
 
         // TODO:
@@ -85,13 +85,13 @@ extension DispatchQueueConfiguration {
         // It looks like just setting timer to fire and not holding a reference to it
         // until deadline causes timer cancellation.
         var timerReference: DispatchSourceTimer? = timer
-        let cancelTimer = AnonymousDisposable {
+        let cancelTimer = Disposables.create {
             timerReference?.cancel()
             timerReference = nil
         }
 
         timer.setEventHandler(handler: {
-            if cancelTimer.disposed {
+            if cancelTimer.isDisposed {
                 return
             }
             timerState = action(timerState)

@@ -215,7 +215,7 @@
             return Expectation()
         }
 
-        public func waitForExpectationsWithTimeout(time: NSTimeInterval, action: ErrorProtocol? -> Void) {
+        public func waitForExpectationsWithTimeout(time: NSTimeInterval, action: Swift.Error? -> Void) {
         }
     }
 

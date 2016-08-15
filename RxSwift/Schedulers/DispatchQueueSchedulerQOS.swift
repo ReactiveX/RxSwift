@@ -42,13 +42,13 @@ public enum DispatchQueueSchedulerQOS {
 
 @available(iOS 8, OSX 10.10, *)
 extension DispatchQueueSchedulerQOS {
-    var QOSClass: DispatchQueueAttributes {
+    var qos: DispatchQoS {
         switch self {
-        case .userInteractive: return .qosUserInteractive
-        case .userInitiated:   return .qosUserInitiated
-        case .default:         return .qosDefault
-        case .utility:         return .qosUtility
-        case .background:      return .qosBackground
+        case .userInteractive: return .userInteractive
+        case .userInitiated:   return .userInitiated
+        case .default:         return .default
+        case .utility:         return .utility
+        case .background:      return .background
         }
     }
 }

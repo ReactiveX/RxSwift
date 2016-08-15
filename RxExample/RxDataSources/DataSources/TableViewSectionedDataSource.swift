@@ -72,7 +72,8 @@ public class _TableViewSectionedDataSource
     public func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
         return _rx_tableView(tableView, canMoveRowAtIndexPath: indexPath)
     }
-    
+
+    #if os(iOS)
     func _sectionIndexTitlesForTableView(_ tableView: UITableView) -> [String]? {
         return nil
     }
@@ -80,7 +81,7 @@ public class _TableViewSectionedDataSource
     public func sectionIndexTitles(for tableView: UITableView) -> [String]? {
         return _sectionIndexTitlesForTableView(tableView)
     }
-    
+
     func _rx_tableView(_ tableView: UITableView, sectionForSectionIndexTitle title: String, atIndex index: Int) -> Int {
         return 0
     }
@@ -88,6 +89,7 @@ public class _TableViewSectionedDataSource
     public func tableView(_ tableView: UITableView, sectionForSectionIndexTitle title: String, at index: Int) -> Int {
         return _rx_tableView(tableView, sectionForSectionIndexTitle: title, atIndex: index)
     }
+    #endif
 
     func _rx_tableView(_ tableView: UITableView, moveRowAtIndexPath sourceIndexPath: IndexPath, toIndexPath destinationIndexPath: IndexPath) {
     }
@@ -195,6 +197,7 @@ public class RxTableViewSectionedDataSource<S: SectionModelType>
 
     public var rowAnimation: UITableViewRowAnimation = .automatic
 
+    #if os(iOS)
     public var sectionIndexTitles: ((RxTableViewSectionedDataSource<S>) -> [String]?)? {
         didSet {
             #if DEBUG
@@ -209,6 +212,7 @@ public class RxTableViewSectionedDataSource<S: SectionModelType>
             #endif
         }
     }
+    #endif
     
     public override init() {
         super.init()
@@ -264,7 +268,8 @@ public class RxTableViewSectionedDataSource<S: SectionModelType>
     override func _rx_tableView(_ tableView: UITableView, moveRowAtIndexPath sourceIndexPath: IndexPath, toIndexPath destinationIndexPath: IndexPath) {
         self._sectionModels.moveFromSourceIndexPath(sourceIndexPath, destinationIndexPath: destinationIndexPath)
     }
-    
+
+    #if os(iOS)
     override func _sectionIndexTitlesForTableView(_ tableView: UITableView) -> [String]? {
         guard let titles = sectionIndexTitles?(self) else {
             return super._sectionIndexTitlesForTableView(tableView)
@@ -280,5 +285,5 @@ public class RxTableViewSectionedDataSource<S: SectionModelType>
         
         return section
     }
-    
+    #endif
 }

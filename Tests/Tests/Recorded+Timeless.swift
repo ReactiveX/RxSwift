@@ -18,6 +18,6 @@ func completed<T>() -> Recorded<Event<T>> {
     return Recorded(time: 0, event: .completed)
 }
 
-func error<T>(_ error: ErrorProtocol) -> Recorded<Event<T>> {
+func error<T>(_ error: Swift.Error) -> Recorded<Event<T>> {
     return Recorded(time: 0, event: .error(error))
 }

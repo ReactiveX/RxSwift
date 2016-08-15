@@ -34,7 +34,7 @@ extension Reactive where Base: UIBarButtonItem {
             Observable.create { [weak control = self.base] observer in
                 guard let control = control else {
                     observer.on(.completed)
-                    return NopDisposable.instance
+                    return Disposables.create()
                 }
                 let target = BarButtonItemTarget(barButtonItem: control) {
                     observer.on(.next())

@@ -114,9 +114,9 @@ let disposeBag = DisposeBag()
 xs
   .filter { ... }
   .map { ... }
-  .subscribeNext { nextElement in  // <-- note the `subscribe*` method
+  .subscribe(onNext: { nextElement in  // <-- note the `subscribe*` method
     // use the element
     print(nextElement)
-  }
+  })
   .addDisposableTo(disposeBag)
 ```

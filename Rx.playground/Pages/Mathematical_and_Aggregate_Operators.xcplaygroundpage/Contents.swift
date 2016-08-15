@@ -34,7 +34,7 @@ example("reduce") {
     
     Observable.of(10, 100, 1000)
         .reduce(1, accumulator: +)
-        .subscribeNext { print($0) }
+        .subscribe(onNext: { print($0) })
         .addDisposableTo(disposeBag)
 }
 /*:
@@ -69,4 +69,4 @@ example("concat") {
     subject2.onNext("🐭")
 }
 
-//: [Next](@next) - [Table of Contents](Table_of_Contents)
+//: [Next](@next) - [Table of Contents](Table_of_Conte

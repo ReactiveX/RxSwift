@@ -28,10 +28,10 @@ public class ReplaySubject<Element>
         return _observers.count > 0
     }
     
-    private var _lock = RecursiveLock()
+    private var _lock = NSRecursiveLock()
     
     // state
-    private var _disposed = false
+    private var _isDisposed = false
     private var _stoppedEvent = nil as Event<Element>?
     private var _observers = Bag<AnyObserver<Element>>()
     
@@ -110,7 +110,7 @@ class ReplayBufferBase<Element>
     }
 
     func _synchronized_on(_ event: Event<E>) {
-        if _disposed {
+        if _isDisposed {
             return
         }
         
@@ -137,9 +137,9 @@ class ReplayBufferBase<Element>
     }
 
     func _synchronized_subscribe<O : ObserverType where O.E == E>(_ observer: O) -> Disposable {
-        if _disposed {
+        if _isDisposed {
             observer.on(.error(RxError.disposed(object: self)))
-            return NopDisposable.instance
+            return Disposables.create()
         }
      
         let AnyObserver = observer.asObserver()
@@ -147,7 +147,7 @@ class ReplayBufferBase<Element>
         replayBuffer(AnyObserver)
         if let stoppedEvent = _stoppedEvent {
             observer.on(stoppedEvent)
-            return NopDisposable.instance
+            return Disposables.create()
         }
         else {
             let key = _observers.insert(AnyObserver)
@@ -161,7 +161,7 @@ class ReplayBufferBase<Element>
     }
 
     func _synchronized_unsubscribe(_ disposeKey: DisposeKey) {
-        if _disposed {
+        if _isDisposed {
             return
         }
         
@@ -180,7 +180,7 @@ class ReplayBufferBase<Element>
     }
 
     func _synchronized_dispose() {
-        _disposed = true
+        _isDisposed = true
         _stoppedEvent = nil
         _observers.removeAll()
     }

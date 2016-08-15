@@ -18,7 +18,7 @@ private struct ActivityToken<E> : ObservableConvertibleType, Disposable {
 
     init(source: Observable<E>, disposeAction: () -> ()) {
         _source = source
-        _dispose = AnonymousDisposable(disposeAction)
+        _dispose = Disposables.create(with: disposeAction)
     }
 
     func dispose() {
@@ -39,7 +39,7 @@ When all activities complete `false` will be sent.
 public class ActivityIndicator : DriverConvertibleType {
     public typealias E = Bool
 
-    private let _lock = RecursiveLock()
+    private let _lock = NSRecursiveLock()
     private let _variable = Variable(0)
     private let _loading: Driver<Bool>
 

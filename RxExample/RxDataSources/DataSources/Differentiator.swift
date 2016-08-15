@@ -9,7 +9,7 @@
 import Foundation
 
 public enum DifferentiatorError
-    : ErrorProtocol
+    : Error
     , CustomDebugStringConvertible {
     case duplicateItem(item: Any)
     case duplicateSection(section: Any)
@@ -23,7 +23,7 @@ extension DifferentiatorError {
             return "Duplicate item \(item)"
         case let .duplicateSection(section):
             return "Duplicate section \(section)"
-        case let invalidInitializerImplementation(section, expectedItems, expectedIdentifier):
+        case let .invalidInitializerImplementation(section, expectedItems, expectedIdentifier):
             return "Wrong initializer implementation for: \(section)\n" +
                 "Expected it should return items: \(expectedItems)\n" +
                 "Expected it should have id: \(expectedIdentifier)"

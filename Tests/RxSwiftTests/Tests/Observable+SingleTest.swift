@@ -644,7 +644,7 @@ extension ObservableSingleTest {
             error(250, testError)
             ])
 
-        var recordedError: ErrorProtocol!
+        var recordedError: Swift.Error!
         var numberOfTimesInvoked = 0
 
         let res = scheduler.start { xs.do(onError: { error in
@@ -665,7 +665,7 @@ extension ObservableSingleTest {
         XCTAssertEqual(res.events, correctMessages)
         XCTAssertEqual(xs.subscriptions, correctSubscriptions)
 
-        XCTAssertTrue((recordedError as! AnyObject) === testError)
+        XCTAssertTrue((recordedError as AnyObject) === testError)
         XCTAssertEqual(numberOfTimesInvoked, 1)
     }
 
@@ -985,7 +985,7 @@ extension ObservableSingleTest {
             observer.on(.next(5))
             observer.on(.completed)
 
-            return NopDisposable.instance
+            return Disposables.create()
         }
 
         _ = sequenceSendingImmediateError
@@ -995,7 +995,7 @@ extension ObservableSingleTest {
     }
 }
 
-struct CustomErrorType : ErrorProtocol {
+struct CustomErrorType : Swift.Error {
 
 }
 
@@ -1305,7 +1305,7 @@ extension ObservableSingleTest {
         let maxAttempts = 4
 
         let res = scheduler.start(800) {
-            xs.retryWhen { (errors: Observable<ErrorProtocol>) in
+            xs.retryWhen { (errors: Observable<Swift.Error>) in
                 return errors.flatMapWithIndex { (e, a) -> Observable<Int64> in
                     if a >= maxAttempts - 1 {
                         return Observable.error(e)
@@ -1377,7 +1377,7 @@ extension ObservableSingleTest {
             observer.on(.next(5))
             observer.on(.completed)
 
-            return NopDisposable.instance
+            return Disposables.create()
         }
 
         _ = sequenceSendingImmediateError

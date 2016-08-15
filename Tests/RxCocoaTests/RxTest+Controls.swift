@@ -35,9 +35,9 @@ extension RxTest {
             })
 
 
-            _ = control.deallocated.subscribeNext { _ in
+            _ = control.rx.deallocated.subscribe(onNext: { _ in
                 deallocated = true
-            }
+            })
 
             control = nil
         }
@@ -59,7 +59,7 @@ extension RxTest {
     }
 
     func ensureEventDeallocated<C, T where C: NSObject>(_ createControl: () -> C, _ eventSelector: (C) -> ControlEvent<T>) {
-        return ensureEventDeallocated({ () -> (C, Disposable) in (createControl(), NopDisposable.instance) }, eventSelector)
+        return ensureEventDeallocated({ () -> (C, Disposable) in (createControl(), Disposables.create()) }, eventSelector)
     }
 
     func ensureEventDeallocated<C, T where C: NSObject>(_ createControl: () -> (C, Disposable), _ eventSelector: (C) -> ControlEvent<T>) {
@@ -77,9 +77,9 @@ extension RxTest {
                 completed = true
             })
 
-            _ = control.deallocated.subscribeNext { _ in
+            _ = control.rx.deallocated.subscribe(onNext: { _ in
                 deallocated = true
-            }
+            })
 
             outerDisposable.disposable = disposable
         }
@@ -101,9 +101,9 @@ extension RxTest {
 
             observable.bindTo(propertyObserver).addDisposableTo(disposeBag)
 
-            _ = control.deallocated.subscribeNext { _ in
+            _ = control.rx.deallocated.subscribe(onNext: { _ in
                 deallocated = true
-            }
+            })
         }
 
         XCTAssertTrue(deallocated)

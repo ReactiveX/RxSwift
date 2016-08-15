@@ -18,7 +18,7 @@ class WindowTimeCountSink<Element, O: ObserverType where O.E == Observable<Eleme
     
     private let _parent: Parent
     
-    let _lock = RecursiveLock()
+    let _lock = NSRecursiveLock()
     
     private var _subject = PublishSubject<Element>()
     private var _count = 0
@@ -68,7 +68,7 @@ class WindowTimeCountSink<Element, O: ObserverType where O.E == Observable<Eleme
             do {
                 let _ = try incrementChecked(&_count)
             } catch (let e) {
-                _subject.on(.error(e as ErrorProtocol))
+                _subject.on(.error(e as Swift.Error))
                 dispose()
             }
             
@@ -96,7 +96,7 @@ class WindowTimeCountSink<Element, O: ObserverType where O.E == Observable<Eleme
     }
     
     func createTimer(_ windowId: Int) {
-        if _timerD.disposed {
+        if _timerD.isDisposed {
             return
         }
         
@@ -125,7 +125,7 @@ class WindowTimeCountSink<Element, O: ObserverType where O.E == Observable<Eleme
             
             self.createTimer(newId)
             
-            return NopDisposable.instance
+            return Disposables.create()
         }
     }
 }

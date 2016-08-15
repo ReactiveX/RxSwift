@@ -46,7 +46,7 @@ All of these various systems makes our code needlessly complex. Wouldn't it be b
 
  `--tap--tap----------tap--> // "|" = Continues indefinitely, such as a sequence of button taps`
 
- > These diagrams are call marble diagrams. You can learn more about them at [RxMarbles.com](http://rxmarbles.com).
+ > These diagrams are called marble diagrams. You can learn more about them at [RxMarbles.com](http://rxmarbles.com).
 */
 /*:
  ### Observables and observers (aka subscribers)
@@ -58,7 +58,7 @@ example("Observable with no subscribers") {
         print("This will never be printed")
         observerOfString.on(.next("😬"))
         observerOfString.on(.completed)
-        return NopDisposable.instance
+        return Disposables.create()
     }
 }
 /*:
@@ -70,7 +70,7 @@ example("Observable with subscriber") {
             print("Observable created")
             observerOfString.on(.next("😉"))
             observerOfString.on(.completed)
-            return NopDisposable.instance
+            return Disposables.create()
         }
         .subscribe { event in
             print(event)

@@ -28,7 +28,7 @@ POSSIBILITY OF SUCH DAMAGE.
 import SystemConfiguration
 import Foundation
 
-enum ReachabilityError: ErrorProtocol {
+enum ReachabilityError: Swift.Error {
     case failedToCreateWithAddress(sockaddr_in)
     case failedToCreateWithHostname(String)
     case unableToSetCallback
@@ -224,7 +224,7 @@ public class Reachability: NSObject {
 
     private var notifierRunning = false
     private var reachabilityRef: SCNetworkReachability?
-    private let reachabilitySerialQueue = DispatchQueue(label: "uk.co.ashleymills.reachability", attributes: DispatchQueueAttributes.serial)
+    private let reachabilitySerialQueue = DispatchQueue(label: "uk.co.ashleymills.reachability")
 
     private func reachabilityChanged(_ flags: SCNetworkReachabilityFlags) {
         if isReachableWithFlags(flags) {

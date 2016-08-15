@@ -18,7 +18,7 @@ class ThrottleSink<O: ObserverType>
     
     private let _parent: ParentType
     
-    let _lock = RecursiveLock()
+    let _lock = NSRecursiveLock()
     
     // state
     private var _id = 0 as UInt64
@@ -35,7 +35,7 @@ class ThrottleSink<O: ObserverType>
     func run() -> Disposable {
         let subscription = _parent._source.subscribe(self)
         
-        return StableCompositeDisposable.create(subscription, cancellable)
+        return Disposables.create(subscription, cancellable)
     }
 
     func on(_ event: Event<Element>) {
@@ -79,7 +79,7 @@ class ThrottleSink<O: ObserverType>
                 forwardOn(.next(value))
             }
         // }
-        return NopDisposable.instance
+        return Disposables.create()
     }
 }
 

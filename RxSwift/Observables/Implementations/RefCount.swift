@@ -34,7 +34,7 @@ class RefCountSink<CO: ConnectableObservableType, O: ObserverType where CO.E == 
             }
         // }
         
-        return AnonymousDisposable {
+        return Disposables.create {
             subscription.dispose()
             self._parent._lock.lock(); defer { self._parent._lock.unlock() } // {
                 if self._parent._count == 1 {
@@ -64,7 +64,7 @@ class RefCountSink<CO: ConnectableObservableType, O: ObserverType where CO.E == 
 }
 
 class RefCount<CO: ConnectableObservableType>: Producer<CO.E> {
-    private let _lock = RecursiveLock()
+    private let _lock = NSRecursiveLock()
     
     // state
     private var _count = 0

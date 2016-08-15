@@ -69,14 +69,13 @@ class CalculatorViewController: ViewController {
             nineButton.rx.tap.map { _ in .addNumber("9") }
         ]
         
-        commands
-            .toObservable()
+        Observable.from(commands)
             .merge()
             .scan(CalculatorState.CLEAR_STATE) { a, x in
                 return a.tranformState(x)
             }
             .debug("debugging")
-            .subscribeNext { [weak self] calState in
+            .subscribe(onNext: { [weak self] calState in
                 self?.resultLabel.text = calState.inScreen
                 switch calState.action {
                 case .operation(let operation):
@@ -93,7 +92,7 @@ class CalculatorViewController: ViewController {
                 default:
                     self?.lastSignLabel.text = ""
                 }
-            }
+            })
             .addDisposableTo(disposeBag)
     }
     

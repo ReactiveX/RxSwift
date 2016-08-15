@@ -14,9 +14,9 @@ import RxCocoa
 #endif
 
 extension Reactive where Base: UITableView {
-    @available(*, deprecated:0.7, renamed:"rx_itemsWithDataSource", message:"You can just use normal `rx_itemsWithDataSource` extension.")
+    @available(*, deprecated:0.7, renamed:"itemsWithDataSource", message:"You can just use normal `rx_itemsWithDataSource` extension.")
     public func itemsAnimatedWithDataSource<
-            DataSource: protocol<RxTableViewDataSourceType, UITableViewDataSource>,
+            DataSource: RxTableViewDataSourceType & UITableViewDataSource,
             S: Sequence,
             O: ObservableType
         where
@@ -34,9 +34,9 @@ extension Reactive where Base: UITableView {
 }
 
 extension Reactive where Base: UICollectionView {
-    @available(*, deprecated:0.7, renamed:"rx_itemsWithDataSource", message:"You can just use normal `rx_itemsWithDataSource` extension.")
-    public func rx_itemsAnimatedWithDataSource<
-            DataSource: protocol<RxCollectionViewDataSourceType, UICollectionViewDataSource>,
+    @available(*, deprecated:0.7, renamed:"itemsWithDataSource", message:"You can just use normal `rx_itemsWithDataSource` extension.")
+    public func itemsAnimatedWithDataSource<
+            DataSource: RxCollectionViewDataSourceType & UICollectionViewDataSource,
             S: Sequence,
             O: ObservableType
         where

@@ -120,6 +120,7 @@ extension DriverConvertibleType {
     - returns: The source sequence with the side-effecting behavior applied.
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
+    @available(*, deprecated, renamed: "do(onNext:onError:onCompleted:)")
     public func doOn(_ eventHandler: (Event<E>) -> Void)
         -> Driver<E> {
         let source = self.asObservable()
@@ -137,7 +138,8 @@ extension DriverConvertibleType {
     - returns: The source sequence with the side-effecting behavior applied.
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func doOn(onNext: ((E) -> Void)? = nil, onError: ((ErrorProtocol) -> Void)? = nil, onCompleted: (() -> Void)? = nil)
+    @available(*, deprecated, renamed: "do(onNext:onError:onCompleted:)")
+    public func doOn(onNext: ((E) -> Void)? = nil, onError: ((Swift.Error) -> Void)? = nil, onCompleted: (() -> Void)? = nil)
         -> Driver<E> {
         let source = self.asObservable()
             .doOn(onNext: onNext, onError: onError, onCompleted: onCompleted)
@@ -152,9 +154,10 @@ extension DriverConvertibleType {
      - returns: The source sequence with the side-effecting behavior applied.
      */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func `do`(onNext: ((E) -> Void))
+    @available(*, deprecated, renamed: "do(onNext:)")
+    public func doOnNext(_ onNext: ((E) -> Void))
         -> Driver<E> {
-        return self.doOn(onNext: onNext)
+            return self.do(onNext: onNext)
     }
 
     /**
@@ -164,9 +167,27 @@ extension DriverConvertibleType {
      - returns: The source sequence with the side-effecting behavior applied.
      */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func `do`(onCompleted: (() -> Void))
+    @available(*, deprecated, renamed: "do(onCompleted:)")
+    public func doOnCompleted(_ onCompleted: (() -> Void))
         -> Driver<E> {
-        return self.doOn(onCompleted: onCompleted)
+            return self.do(onCompleted: onCompleted)
+    }
+
+    /**
+     Invokes an action for each event in the observable sequence, and propagates all observer messages through the result sequence.
+
+     - parameter onNext: Action to invoke for each element in the observable sequence.
+     - parameter onError: Action to invoke upon errored termination of the observable sequence. This callback will never be invoked since driver can't error out.
+     - parameter onCompleted: Action to invoke upon graceful termination of the observable sequence.
+     - returns: The source sequence with the side-effecting behavior applied.
+     */
+    // @warn_unused_result(message:"http://git.io/rxs.uo")
+    public func `do`(onNext: ((E) -> Void)? = nil, onError: ((Swift.Error) -> Void)? = nil, onCompleted: (() -> Void)? = nil)
+        -> Driver<E> {
+        let source = self.asObservable()
+            .doOn(onNext: onNext, onError: onError, onCompleted: onCompleted)
+
+        return Driver(source)
     }
 }
 

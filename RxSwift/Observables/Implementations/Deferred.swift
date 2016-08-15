@@ -26,7 +26,7 @@ class DeferredSink<S: ObservableType, O: ObserverType where S.E == O.E> : Sink<O
         catch let e {
             forwardOn(.error(e))
             dispose()
-            return NopDisposable.instance
+            return Disposables.create()
         }
     }
     

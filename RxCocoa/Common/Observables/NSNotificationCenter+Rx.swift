@@ -26,7 +26,7 @@ extension Reactive where Base: NotificationCenter {
                 observer.on(.next(notification))
             }
             
-            return AnonymousDisposable {
+            return Disposables.create {
                 self.base.removeObserver(nsObserver)
             }
         }

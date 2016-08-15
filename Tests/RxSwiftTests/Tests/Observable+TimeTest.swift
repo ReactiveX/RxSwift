@@ -261,7 +261,7 @@ extension ObservableTimeTest {
 
         let start = Date()
 
-        let a = try! [Observable.just(0), Observable.never()].toObservable().concat()
+        let a = try! Observable.from([Observable.just(0), Observable.never()]).concat()
             .throttle(2.0, scheduler: scheduler)
             .toBlocking()
             .first()
@@ -560,7 +560,7 @@ extension ObservableTimeTest {
 
         _ = scheduler.schedule(()) { _ in
             cleanResources.fulfill()
-            return NopDisposable.instance
+            return Disposables.create()
         }
 
         waitForExpectations(timeout: 1.0) { e in

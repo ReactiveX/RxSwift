@@ -19,7 +19,7 @@ public enum Event<Element> {
     case next(Element)
 
     /// Sequence terminated with an error.
-    case error(ErrorProtocol)
+    case error(Swift.Error)
 
     /// Sequence completed successfully.
     case completed
@@ -57,7 +57,7 @@ extension Event {
     }
 
     /// - returns: If `Error` event, returns error.
-    public var error: ErrorProtocol? {
+    public var error: Swift.Error? {
         if case .error(let error) = self {
             return error
         }

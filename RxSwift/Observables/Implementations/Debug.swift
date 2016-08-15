@@ -14,9 +14,9 @@ func logEvent(_ identifier: String, dateFormat: DateFormatter, content: String) 
     print("\(dateFormat.string(from: Date())): \(identifier) -> \(content)")
 }
 
-class DebugSink<O: ObserverType> : Sink<O>, ObserverType {
+class DebugSink<Source: ObservableType, O: ObserverType where O.E == Source.E> : Sink<O>, ObserverType {
     typealias Element = O.E
-    typealias Parent = Debug<Element>
+    typealias Parent = Debug<Source>
     
     private let _parent: Parent
     private let _timestampFormatter = DateFormatter()
@@ -40,20 +40,23 @@ class DebugSink<O: ObserverType> : Sink<O>, ObserverType {
         logEvent(_parent._identifier, dateFormat: _timestampFormatter, content: "Event \(eventNormalized)")
 
         forwardOn(event)
+        if event.isStopEvent {
+            dispose()
+        }
     }
     
     override func dispose() {
-        logEvent(_parent._identifier, dateFormat: _timestampFormatter, content: "disposed")
+        logEvent(_parent._identifier, dateFormat: _timestampFormatter, content: "isDisposed")
         super.dispose()
     }
 }
 
-class Debug<Element> : Producer<Element> {
+class Debug<Source: ObservableType> : Producer<Source.E> {
     private let _identifier: String
     
-    private let _source: Observable<Element>
+    private let _source: Source
 
-    init(source: Observable<Element>, identifier: String?, file: String, line: UInt, function: String) {
+    init(source: Source, identifier: String?, file: String, line: UInt, function: String) {
         if let identifier = identifier {
             _identifier = identifier
         }
@@ -70,7 +73,7 @@ class Debug<Element> : Producer<Element> {
         _source = source
     }
     
-    override func run<O: ObserverType where O.E == Element>(_ observer: O) -> Disposable {
+    override func run<O: ObserverType where O.E == Source.E>(_ observer: O) -> Disposable {
         let sink = DebugSink(parent: self, observer: observer)
         sink.disposable = _source.subscribe(sink)
         return sink

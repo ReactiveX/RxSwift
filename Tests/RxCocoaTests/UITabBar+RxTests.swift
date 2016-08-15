@@ -32,9 +32,9 @@ extension UITabBarTests {
         var returnedItems: [UITabBarItem]!
 
         _ = subject.rx_willBeginCustomizing
-            .subscribeNext { i in
+            .subscribe(onNext: { i in
                 returnedItems = i
-            }
+            })
         subject.delegate!.tabBar!(subject, willBeginCustomizing: items)
 
         XCTAssertEqual(returnedItems, items)
@@ -47,9 +47,9 @@ extension UITabBarTests {
         var returnedItems: [UITabBarItem]!
 
         _ = subject.rx_didBeginCustomizing
-            .subscribeNext { i in
+            .subscribe(onNext: { i in
                 returnedItems = i
-            }
+            })
 
         subject.delegate!.tabBar!(subject, didBeginCustomizing: items)
 
@@ -64,10 +64,10 @@ extension UITabBarTests {
         var changed: Bool!
 
         _ = subject.rx_willEndCustomizing
-            .subscribeNext { (i, c) in
+            .subscribe(onNext: { (i, c) in
                 returnedItems = i
                 changed = c
-            }
+            })
         subject.delegate!.tabBar!(subject, willEndCustomizing: items, changed: true)
 
         XCTAssertEqual(returnedItems, items)
@@ -82,10 +82,10 @@ extension UITabBarTests {
         var changed: Bool!
 
         _ = subject.rx_didEndCustomizing
-            .subscribeNext { (i, c) in
+            .subscribe(onNext: { (i, c) in
                 returnedItems = i
                 changed = c
-            }
+            })
 
         subject.delegate!.tabBar!(subject, didEndCustomizing: items, changed: true)
 
@@ -108,9 +108,9 @@ extension UITabBarTests {
         var returnedItem: UITabBarItem!
 
         _ = subject.rx_didSelectItem
-            .subscribeNext { i in
+            .subscribe(onNext: { i in
                 returnedItem = i
-            }
+            })
         
         subject.delegate!.tabBar!(subject, didSelect: item)
         

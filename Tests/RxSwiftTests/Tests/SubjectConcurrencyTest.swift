@@ -42,14 +42,14 @@ extension SubjectConcurrencyTest {
         var allDone = false
 
         var state = 0
-        _ = observable.subscribeNext { [unowned o] n in
+        _ = observable.subscribe(onNext: { [unowned o] n in
             if n < 0 {
                 return
             }
 
             if state == 0 {
                 state = 1
-                DispatchQueue.global(attributes: DispatchQueue.GlobalAttributes.qosUserInitiated).async {
+                DispatchQueue.global(qos: DispatchQoS.QoSClass.userInitiated).async {
                     o.value.on(.next(1))
                 }
 
@@ -70,7 +70,7 @@ extension SubjectConcurrencyTest {
                 XCTAssertTrue(isMainThread())
                 allDone = true
             }
-        }
+        })
 
         _observer.on(.next(0))
 
@@ -94,7 +94,7 @@ extension SubjectConcurrencyTest {
 
         var ranAll = false
 
-        _ = observable.subscribeNext { [unowned o] n in
+        _ = observable.subscribe(onNext: { [unowned o] n in
             if n < 0 {
                 return
             }
@@ -110,7 +110,7 @@ extension SubjectConcurrencyTest {
                 o.value.on(.completed)
                 ranAll = true
             }
-        }
+        })
 
         o.value.on(.next(0))
         XCTAssertTrue(ranAll)
@@ -125,7 +125,7 @@ extension SubjectConcurrencyTest {
 
         var ranAll = false
 
-        _ = observable.subscribeNext { [unowned o] n in
+        _ = observable.subscribe(onNext: { [unowned o] n in
             if n < 0 {
                 return
             }
@@ -141,7 +141,7 @@ extension SubjectConcurrencyTest {
                 o.value.on(.error(testError))
                 ranAll = true
             }
-        }
+        })
 
         o.value.on(.next(0))
         XCTAssertTrue(ranAll)

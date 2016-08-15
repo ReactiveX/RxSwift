@@ -24,7 +24,7 @@ example("debug") {
         observer.onNext("🍊")
         
         if count < 5 {
-            observer.onError(Error.Test)
+            observer.onError(TestError.test)
             print("Error encountered")
             count += 1
         }
@@ -34,13 +34,13 @@ example("debug") {
         observer.onNext("🐭")
         observer.onCompleted()
         
-        return NopDisposable.instance
+        return Disposables.create()
     }
     
     sequenceThatErrors
         .retry(3)
         .debug()
-        .subscribeNext { print($0) }
+        .subscribe(onNext: { print($0) })
         .addDisposableTo(disposeBag)
 }
 /*:
@@ -59,11 +59,11 @@ example("RxSwift.resourceCount") {
     
     let variable = Variable("🍎")
     
-    let subscription1 = variable.asObservable().subscribeNext { print($0) }
+    let subscription1 = variable.asObservable().subscribe(onNext: { print($0) })
     
     print(RxSwift.resourceCount)
     
-    let subscription2 = variable.asObservable().subscribeNext { print($0) }
+    let subscription2 = variable.asObservable().subscribe(onNext: { print($0) })
     
     print(RxSwift.resourceCount)
     
@@ -80,4 +80,4 @@ print(RxSwift.resourceCount)
 #endif
 //: > `RxSwift.resourceCount` is not enabled by default, and should generally not be enabled in Release builds. [Click here](Enable_RxSwift.resourceCount) for instructions on how to enable it.
 
-//: [Table of Contents](Table_of_Contents)
+//: [Table of Contents](Tabl

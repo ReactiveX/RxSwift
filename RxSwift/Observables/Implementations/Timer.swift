@@ -41,7 +41,7 @@ class TimerOneOffSink<O: ObserverType where O.E : SignedInteger> : Sink<O> {
             self.forwardOn(.next(0))
             self.forwardOn(.completed)
             
-            return NopDisposable.instance
+            return Disposables.create()
         }
     }
 }

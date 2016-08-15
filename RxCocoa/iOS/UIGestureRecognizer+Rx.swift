@@ -62,7 +62,7 @@ extension Reactive where Base: UIGestureRecognizer {
 
             guard let control = control else {
                 observer.on(.completed)
-                return NopDisposable.instance
+                return Disposables.create()
             }
             
             let observer = GestureTarget(control) {

@@ -45,7 +45,7 @@ extension Reactive where Base: UIControl {
 
             guard let control = control else {
                 observer.on(.completed)
-                return NopDisposable.instance
+                return Disposables.create()
             }
 
             let controlTarget = ControlTarget(control: control, controlEvents: controlEvents) {
@@ -53,9 +53,9 @@ extension Reactive where Base: UIControl {
                 observer.on(.next())
             }
             
-            return AnonymousDisposable(controlTarget.dispose)
+            return Disposables.create(with: controlTarget.dispose)
         }.takeUntil(deallocated)
-        
+
         return ControlEvent(events: source)
     }
 
@@ -67,7 +67,7 @@ extension Reactive where Base: UIControl {
         let source: Observable<T> = Observable.create { [weak weakControl = control] observer in
                 guard let control = weakControl else {
                     observer.on(.completed)
-                    return NopDisposable.instance
+                    return Disposables.create()
                 }
 
                 observer.on(.next(getter(control)))
@@ -78,7 +78,7 @@ extension Reactive where Base: UIControl {
                     }
                 }
                 
-                return AnonymousDisposable(controlTarget.dispose)
+                return Disposables.create(with: controlTarget.dispose)
             }
             .takeUntil((control as! NSObject).rx.deallocated)
 

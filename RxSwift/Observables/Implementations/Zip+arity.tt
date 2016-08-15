@@ -72,7 +72,7 @@ class ZipSink<%= i %>_<<%= (Array(1...i).map { "E\($0)" }).joined(separator: ", 
 "        subscription\($0).disposable = _parent.source\($0).subscribe(observer\($0))" }).joined(separator: "\n")
 %>
 
-        return CompositeDisposable(disposables: [
+        return Disposables.create([
 <%= (Array(1...i).map { "           subscription\($0)" }).joined(separator: ",\n") %>
         ])
     }

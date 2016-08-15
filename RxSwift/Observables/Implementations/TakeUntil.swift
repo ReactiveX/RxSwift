@@ -17,7 +17,7 @@ class TakeUntilSinkOther<ElementType, Other, O: ObserverType where O.E == Elemen
     
     private let _parent: Parent
 
-    var _lock: RecursiveLock {
+    var _lock: NSRecursiveLock {
         return _parent._lock
     }
     
@@ -65,7 +65,7 @@ class TakeUntilSink<ElementType, Other, O: ObserverType where O.E == ElementType
     
     private let _parent: Parent
  
-    let _lock = RecursiveLock()
+    let _lock = NSRecursiveLock()
     
     // state
     private var _open = false
@@ -98,7 +98,7 @@ class TakeUntilSink<ElementType, Other, O: ObserverType where O.E == ElementType
         otherObserver._subscription.disposable = otherSubscription
         let sourceSubscription = _parent._source.subscribe(self)
         
-        return StableCompositeDisposable.create(sourceSubscription, otherObserver._subscription)
+        return Disposables.create(sourceSubscription, otherObserver._subscription)
     }
 }
 

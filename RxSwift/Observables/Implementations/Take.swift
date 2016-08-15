@@ -80,7 +80,7 @@ class TakeTimeSink<ElementType, O: ObserverType where O.E == ElementType>
 
     private let _parent: Parent
     
-    let _lock = RecursiveLock()
+    let _lock = NSRecursiveLock()
     
     init(parent: Parent, observer: O) {
         _parent = parent
@@ -114,12 +114,12 @@ class TakeTimeSink<ElementType, O: ObserverType where O.E == ElementType>
     func run() -> Disposable {
         let disposeTimer = _parent._scheduler.scheduleRelative((), dueTime: _parent._duration) {
             self.tick()
-            return NopDisposable.instance
+            return Disposables.create()
         }
         
         let disposeSubscription = _parent._source.subscribe(self)
         
-        return BinaryDisposable(disposeTimer, disposeSubscription)
+        return Disposables.create(disposeTimer, disposeSubscription)
     }
 }
 

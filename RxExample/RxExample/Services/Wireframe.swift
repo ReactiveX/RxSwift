@@ -33,7 +33,7 @@ class DefaultWireframe: Wireframe {
 
     func open(url: URL) {
         #if os(iOS)
-            UIApplication.shared().openURL(url)
+            UIApplication.shared.openURL(url)
         #elseif os(OSX)
             NSWorkspace.shared().open(url)
         #endif
@@ -42,7 +42,7 @@ class DefaultWireframe: Wireframe {
     #if os(iOS)
     private static func rootViewController() -> UIViewController {
         // cheating, I know
-        return UIApplication.shared().keyWindow!.rootViewController!
+        return UIApplication.shared.keyWindow!.rootViewController!
     }
     #endif
 
@@ -71,7 +71,7 @@ class DefaultWireframe: Wireframe {
 
             DefaultWireframe.rootViewController().present(alertView, animated: true, completion: nil)
 
-            return AnonymousDisposable {
+            return Disposables.create {
                 alertView.dismiss(animated:false, completion: nil)
             }
         }

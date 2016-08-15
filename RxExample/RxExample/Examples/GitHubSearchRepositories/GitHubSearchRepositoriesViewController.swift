@@ -74,20 +74,20 @@ class GitHubSearchRepositoriesViewController: ViewController, UITableViewDelegat
 
         searchResult
             .map { [SectionModel(model: "Repositories", items: $0.repositories)] }
-            .drive(tableView.rx.itemsWithDataSource(dataSource))
+            .drive(tableView.rx.items(dataSource: dataSource))
             .addDisposableTo(disposeBag)
 
         searchResult
             .filter { $0.limitExceeded }
-            .driveNext { n in
+            .drive(onNext: { n in
                 showAlert("Exceeded limit of 10 non authenticated requests per minute for GitHub API. Please wait a minute. :(\nhttps://developer.github.com/v3/#rate-limiting") 
-            }
+            })
             .addDisposableTo(disposeBag)
 
         // dismiss keyboard on scroll
         tableView.rx.contentOffset
             .subscribe { _ in
-                if self.searchBar.isFirstResponder() {
+                if self.searchBar.isFirstResponder {
                     _ = self.searchBar.resignFirstResponder()
                 }
             }
@@ -100,7 +100,7 @@ class GitHubSearchRepositoriesViewController: ViewController, UITableViewDelegat
         // activity indicator in status bar
         // {
         GitHubSearchRepositoriesAPI.sharedAPI.activityIndicator
-            .drive(UIApplication.shared().rx.networkActivityIndicatorVisible)
+            .drive(UIApplication.shared.rx.networkActivityIndicatorVisible)
             .addDisposableTo(disposeBag)
         // }
     }

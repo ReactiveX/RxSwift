@@ -84,11 +84,11 @@ class RetryWhenSequenceSink<S: Sequence, O: ObserverType, TriggerObservable: Obs
     typealias Element = O.E
     typealias Parent = RetryWhenSequence<S, TriggerObservable, Error>
     
-    let _lock = RecursiveLock()
+    let _lock = NSRecursiveLock()
     
     private let _parent: Parent
     
-    private var _lastError: ErrorProtocol?
+    private var _lastError: Swift.Error?
     private let _errorSubject = PublishSubject<Error>()
     private let _handler: Observable<TriggerObservable.E>
     private let _notifier = PublishSubject<TriggerObservable.E>()
@@ -127,7 +127,7 @@ class RetryWhenSequenceSink<S: Sequence, O: ObserverType, TriggerObservable: Obs
     override func run(_ sources: SequenceGenerator) -> Disposable {
         let triggerSubscription = _handler.subscribe(_notifier.asObserver())
         let superSubscription = super.run(sources)
-        return StableCompositeDisposable.create(superSubscription, triggerSubscription)
+        return Disposables.create(superSubscription, triggerSubscription)
     }
 }
 

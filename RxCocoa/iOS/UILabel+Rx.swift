@@ -28,7 +28,7 @@ extension Reactive where Base: UILabel {
     /**
     Bindable sink for `attributedText` property.
     */
-    public var attributedText: AnyObserver<AttributedString?> {
+    public var attributedText: AnyObserver<NSAttributedString?> {
         return UIBindingObserver(UIElement: self.base) { label, text in
             label.attributedText = text
         }.asObserver()

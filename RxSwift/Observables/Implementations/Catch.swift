@@ -76,7 +76,7 @@ class CatchSink<O: ObserverType> : Sink<O>, ObserverType {
 }
 
 class Catch<Element> : Producer<Element> {
-    typealias Handler = (ErrorProtocol) throws -> Observable<Element>
+    typealias Handler = (Swift.Error) throws -> Observable<Element>
     
     private let _source: Observable<Element>
     private let _handler: Handler
@@ -101,7 +101,7 @@ class CatchSequenceSink<S: Sequence, O: ObserverType where S.Iterator.Element : 
     typealias Element = O.E
     typealias Parent = CatchSequence<S>
     
-    private var _lastError: ErrorProtocol?
+    private var _lastError: Swift.Error?
     
     override init(observer: O) {
         super.init(observer: observer)

@@ -37,7 +37,7 @@ extension ConcurrentDispatchQueueSchedulerTests {
         _ = scheduler.scheduleRelative(1, dueTime: 0.5) { (_) -> Disposable in
             interval = Date().timeIntervalSince(start)
             expectScheduling.fulfill()
-            return NopDisposable.instance
+            return Disposables.create()
         }
 
         waitForExpectations(timeout: 1.0) { error in
@@ -58,11 +58,11 @@ extension ConcurrentDispatchQueueSchedulerTests {
         let disposable = scheduler.scheduleRelative(1, dueTime: 0.1) { (_) -> Disposable in
             interval = Date().timeIntervalSince(start)
             expectScheduling.fulfill()
-            return NopDisposable.instance
+            return Disposables.create()
         }
         disposable.dispose()
 
-        DispatchQueue.main.after(when: .now() + .milliseconds(200)) {
+        DispatchQueue.main.asyncAfter (deadline: .now() + .milliseconds(200)) {
             expectScheduling.fulfill()
         }
 
@@ -112,7 +112,7 @@ extension ConcurrentDispatchQueueSchedulerTests {
 
         disposable.dispose()
 
-        DispatchQueue.main.after(when: .now() + .milliseconds(300)) {
+        DispatchQueue.main.asyncAfter (deadline: .now() + .milliseconds(300)) {
             expectScheduling.fulfill()
         }
 

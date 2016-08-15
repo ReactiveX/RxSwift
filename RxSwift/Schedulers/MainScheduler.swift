@@ -61,7 +61,7 @@ public final class MainScheduler : SerialDispatchQueueScheduler {
         let cancel = SingleAssignmentDisposable()
 
         _mainQueue.async {
-            if !cancel.disposed {
+            if !cancel.isDisposed {
                 _ = action(state)
             }
 

@@ -13,7 +13,7 @@ There are two main operators that work with schedulers, `observeOn` and `subscri
 
 If you want to perform work on a different scheduler just use `observeOn(scheduler)` operator.
 
-You would usually use `observeOn` a lot more often then `subscribeOn`.
+You would usually use `observeOn` a lot more often than `subscribeOn`.
 
 In case `observeOn` isn't explicitly specified, work will be performed on whichever thread/scheduler elements are generated.
 
@@ -33,7 +33,7 @@ sequence1
 
 If you want to start sequence generation (`subscribe` method) and call dispose on a specific scheduler, use `subscribeOn(scheduler)`.
 
-In case `subscribeOn` isn't explicitly specified, the `subscribe` method will be called on the same thread/scheduler on which `subscribeNext` or `subscribe` is called.
+In case `subscribeOn` isn't explicitly specified, the `subscribe` method will be called on the same thread/scheduler on which `subscribe(onNext:)` or `subscribe` is called.
 
 In case `subscribeOn` isn't explicitly specified, the `dispose` method will be called on the same thread/scheduler that initiated disposing.
 

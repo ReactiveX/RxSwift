@@ -100,12 +100,12 @@ class SkipTimeSink<ElementType, O: ObserverType where O.E == ElementType> : Sink
     func run() -> Disposable {
         let disposeTimer = parent.scheduler.scheduleRelative((), dueTime: self.parent.duration) {
             self.tick()
-            return NopDisposable.instance
+            return Disposables.create()
         }
         
         let disposeSubscription = parent.source.subscribe(self)
         
-        return BinaryDisposable(disposeTimer, disposeSubscription)
+        return Disposables.create(disposeTimer, disposeSubscription)
     }
 }
 

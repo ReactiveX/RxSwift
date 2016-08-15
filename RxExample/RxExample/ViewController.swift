@@ -53,9 +53,9 @@ class ViewController: OSViewController {
                 func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool
             */
             _ = Observable<Int>.interval(1, scheduler: MainScheduler.instance)
-                .subscribeNext { _ in
+                .subscribe(onNext: { _ in
                     print("Resource count \(RxSwift.resourceCount)")
-                }
+                })
 
         Most efficient way to test for memory leaks is:
         * navigate to your screen and use it
@@ -79,8 +79,9 @@ class ViewController: OSViewController {
         
         If somebody knows more about why this delay happens, you can make a PR with explanation here.
         */
-        let when = DispatchTime.now() + DispatchTimeInterval.milliseconds(2)
-        mainQueue.after(when: when) {
+        let when = DispatchTime.now() + DispatchTimeInterval.milliseconds(20)
+
+        mainQueue.asyncAfter (deadline: when) {
 
             /*
             Some small additional period to clean things up. In case there were async operations fired,

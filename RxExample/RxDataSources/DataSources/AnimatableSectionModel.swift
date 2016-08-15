@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct AnimatableSectionModel<Section: IdentifiableType, ItemType: protocol<IdentifiableType, Equatable>>
+public struct AnimatableSectionModel<Section: IdentifiableType, ItemType: IdentifiableType & Equatable>
     : AnimatableSectionModelType
     , CustomStringConvertible {
     public typealias Item = ItemType

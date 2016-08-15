@@ -69,7 +69,7 @@ class ZipSink2_<E1, E2, O: ObserverType> : ZipSink<O> {
         subscription1.disposable = _parent.source1.subscribe(observer1)
         subscription2.disposable = _parent.source2.subscribe(observer2)
 
-        return CompositeDisposable(disposables: [
+        return Disposables.create([
            subscription1,
            subscription2
         ])
@@ -167,7 +167,7 @@ class ZipSink3_<E1, E2, E3, O: ObserverType> : ZipSink<O> {
         subscription2.disposable = _parent.source2.subscribe(observer2)
         subscription3.disposable = _parent.source3.subscribe(observer3)
 
-        return CompositeDisposable(disposables: [
+        return Disposables.create([
            subscription1,
            subscription2,
            subscription3
@@ -273,7 +273,7 @@ class ZipSink4_<E1, E2, E3, E4, O: ObserverType> : ZipSink<O> {
         subscription3.disposable = _parent.source3.subscribe(observer3)
         subscription4.disposable = _parent.source4.subscribe(observer4)
 
-        return CompositeDisposable(disposables: [
+        return Disposables.create([
            subscription1,
            subscription2,
            subscription3,
@@ -387,7 +387,7 @@ class ZipSink5_<E1, E2, E3, E4, E5, O: ObserverType> : ZipSink<O> {
         subscription4.disposable = _parent.source4.subscribe(observer4)
         subscription5.disposable = _parent.source5.subscribe(observer5)
 
-        return CompositeDisposable(disposables: [
+        return Disposables.create([
            subscription1,
            subscription2,
            subscription3,
@@ -509,7 +509,7 @@ class ZipSink6_<E1, E2, E3, E4, E5, E6, O: ObserverType> : ZipSink<O> {
         subscription5.disposable = _parent.source5.subscribe(observer5)
         subscription6.disposable = _parent.source6.subscribe(observer6)
 
-        return CompositeDisposable(disposables: [
+        return Disposables.create([
            subscription1,
            subscription2,
            subscription3,
@@ -639,7 +639,7 @@ class ZipSink7_<E1, E2, E3, E4, E5, E6, E7, O: ObserverType> : ZipSink<O> {
         subscription6.disposable = _parent.source6.subscribe(observer6)
         subscription7.disposable = _parent.source7.subscribe(observer7)
 
-        return CompositeDisposable(disposables: [
+        return Disposables.create([
            subscription1,
            subscription2,
            subscription3,
@@ -777,7 +777,7 @@ class ZipSink8_<E1, E2, E3, E4, E5, E6, E7, E8, O: ObserverType> : ZipSink<O> {
         subscription7.disposable = _parent.source7.subscribe(observer7)
         subscription8.disposable = _parent.source8.subscribe(observer8)
 
-        return CompositeDisposable(disposables: [
+        return Disposables.create([
            subscription1,
            subscription2,
            subscription3,

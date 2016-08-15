@@ -30,7 +30,7 @@ compareTwoImplementations(benchmarkTime: true, benchmarkMemory: false, first: {
             for i in 0..<100 {
                 o.on(.Next(i))
             }
-            return NopDisposable.instance
+            return Disposables.create()
         }*/
         //.retryWhen { $0 }
         .shareReplay(1)
@@ -49,9 +49,9 @@ compareTwoImplementations(benchmarkTime: true, benchmarkMemory: false, first: {
         /*.filter { _ in true }//){ x, _ in x }
         .map { $0 }
         .flatMap { Observable.just($0) }*/
-        .subscribeNext { _ in
+        .subscribe(onNext: { _ in
 
-        }
+        })
 
 
     for i in 0..<100 {

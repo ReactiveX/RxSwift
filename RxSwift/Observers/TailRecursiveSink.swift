@@ -26,7 +26,7 @@ class TailRecursiveSink<S: Sequence, O: ObserverType where S.Iterator.Element: O
     typealias SequenceGenerator = (generator: S.Iterator, remaining: IntMax?)
 
     var _generators: [SequenceGenerator] = []
-    var _disposed = false
+    var _isDisposed = false
     var _subscription = SerialDisposable()
 
     // this is thread safe object
@@ -77,7 +77,7 @@ class TailRecursiveSink<S: Sequence, O: ObserverType where S.Iterator.Element: O
                 break
             }
             
-            if _disposed {
+            if _isDisposed {
                 return
             }
 
@@ -137,7 +137,7 @@ class TailRecursiveSink<S: Sequence, O: ObserverType where S.Iterator.Element: O
     }
 
     func disposeCommand() {
-        _disposed = true
+        _isDisposed = true
         _generators.removeAll(keepingCapacity: false)
     }
 

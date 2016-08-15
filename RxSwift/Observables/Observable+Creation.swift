@@ -83,7 +83,7 @@ extension Observable {
     - returns: The observable sequence that terminates with specified error.
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    public static func error(_ error: ErrorProtocol) -> Observable<E> {
+    public static func error(_ error: Swift.Error) -> Observable<E> {
         return Error(error: error)
     }
 
@@ -99,7 +99,7 @@ extension Observable {
     - returns: The observable sequence whose elements are pulled from the given arguments.
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    public static func of(_ elements: E ..., scheduler: ImmediateSchedulerType? = nil) -> Observable<E> {
+    public static func of(_ elements: E ..., scheduler: ImmediateSchedulerType = CurrentThreadScheduler.instance) -> Observable<E> {
         return ObservableSequence(elements: elements, scheduler: scheduler)
     }
 
@@ -191,7 +191,8 @@ extension Sequence {
     - returns: The observable sequence whose elements are pulled from the given enumerable sequence.
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func toObservable(_ scheduler: ImmediateSchedulerType? = nil) -> Observable<Iterator.Element> {
+    @available(*, deprecated, renamed: "Observable.from()")
+    public func toObservable(_ scheduler: ImmediateSchedulerType = CurrentThreadScheduler.instance) -> Observable<Iterator.Element> {
         return ObservableSequence(elements: Array(self), scheduler: scheduler)
     }
 }
@@ -205,7 +206,32 @@ extension Array {
     - returns: The observable sequence whose elements are pulled from the given enumerable sequence.
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func toObservable(_ scheduler: ImmediateSchedulerType? = nil) -> Observable<Iterator.Element> {
+    @available(*, deprecated, renamed: "Observable.from()")
+    public func toObservable(_ scheduler: ImmediateSchedulerType = CurrentThreadScheduler.instance) -> Observable<Iterator.Element> {
         return ObservableSequence(elements: self, scheduler: scheduler)
+    }
+}
+
+extension Observable {
+    /**
+     Converts an array to an observable sequence.
+
+     - seealso: [from operator on reactivex.io](http://reactivex.io/documentation/operators/from.html)
+
+     - returns: The observable sequence whose elements are pulled from the given enumerable sequence.
+     */
+    public static func from(_ array: [E], scheduler: ImmediateSchedulerType = CurrentThreadScheduler.instance) -> Observable<E> {
+        return ObservableSequence(elements: array, scheduler: scheduler)
+    }
+
+    /**
+     Converts a sequence to an observable sequence.
+
+     - seealso: [from operator on reactivex.io](http://reactivex.io/documentation/operators/from.html)
+
+     - returns: The observable sequence whose elements are pulled from the given enumerable sequence.
+     */
+    public static func from<S: Sequence where S.Iterator.Element == E>(_ sequence: S, scheduler: ImmediateSchedulerType = CurrentThreadScheduler.instance) -> Observable<E> {
+        return ObservableSequence(elements: sequence, scheduler: scheduler)
     }
 }

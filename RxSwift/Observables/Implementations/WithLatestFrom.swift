@@ -19,7 +19,7 @@ class WithLatestFromSink<FirstType, SecondType, ResultType, O: ObserverType wher
     
     private let _parent: Parent
     
-    var _lock = RecursiveLock()
+    var _lock = NSRecursiveLock()
     private var _latest: SecondType?
 
     init(parent: Parent, observer: O) {
@@ -35,7 +35,7 @@ class WithLatestFromSink<FirstType, SecondType, ResultType, O: ObserverType wher
         sndSubscription.disposable = _parent._second.subscribe(sndO)
         let fstSubscription = _parent._first.subscribe(self)
         
-        return StableCompositeDisposable.create(fstSubscription, sndSubscription)
+        return Disposables.create(fstSubscription, sndSubscription)
     }
 
     func on(_ event: Event<E>) {
@@ -75,7 +75,7 @@ class WithLatestFromSecond<FirstType, SecondType, ResultType, O: ObserverType wh
     private let _parent: Parent
     private let _disposable: Disposable
 
-    var _lock: RecursiveLock {
+    var _lock: NSRecursiveLock {
         return _parent._lock
     }
 

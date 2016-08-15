@@ -30,10 +30,10 @@ public final class BehaviorSubject<Element>
         return _observers.count > 0
     }
     
-    let _lock = RecursiveLock()
+    let _lock = NSRecursiveLock()
     
     // state
-    private var _disposed = false
+    private var _isDisposed = false
     private var _value: Element
     private var _observers = Bag<AnyObserver<Element>>()
     private var _stoppedEvent: Event<Element>?
@@ -41,8 +41,8 @@ public final class BehaviorSubject<Element>
     /**
     Indicates whether the subject has been disposed.
     */
-    public var disposed: Bool {
-        return _disposed
+    public var isDisposed: Bool {
+        return _isDisposed
     }
  
     /**
@@ -61,7 +61,7 @@ public final class BehaviorSubject<Element>
     */
     public func value() throws -> Element {
         _lock.lock(); defer { _lock.unlock() } // {
-            if _disposed {
+            if _isDisposed {
                 throw RxError.disposed(object: self)
             }
             
@@ -86,7 +86,7 @@ public final class BehaviorSubject<Element>
     }
 
     func _synchronized_on(_ event: Event<E>) {
-        if _stoppedEvent != nil || _disposed {
+        if _stoppedEvent != nil || _isDisposed {
             return
         }
         
@@ -112,14 +112,14 @@ public final class BehaviorSubject<Element>
     }
 
     func _synchronized_subscribe<O : ObserverType where O.E == E>(_ observer: O) -> Disposable {
-        if _disposed {
+        if _isDisposed {
             observer.on(.error(RxError.disposed(object: self)))
-            return NopDisposable.instance
+            return Disposables.create()
         }
         
         if let stoppedEvent = _stoppedEvent {
             observer.on(stoppedEvent)
-            return NopDisposable.instance
+            return Disposables.create()
         }
         
         let key = _observers.insert(observer.asObserver())
@@ -134,7 +134,7 @@ public final class BehaviorSubject<Element>
     }
 
     func _synchronized_unsubscribe(_ disposeKey: DisposeKey) {
-        if _disposed {
+        if _isDisposed {
             return
         }
 
@@ -153,7 +153,7 @@ public final class BehaviorSubject<Element>
     */
     public func dispose() {
         _lock.performLocked {
-            _disposed = true
+            _isDisposed = true
             _observers.removeAll()
             _stoppedEvent = nil
         }

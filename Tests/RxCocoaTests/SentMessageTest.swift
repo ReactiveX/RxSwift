@@ -361,8 +361,8 @@ extension SentMessageTest {
 
     func _baseClass_subClass_dont_interact_for_optimized_version
     <
-        BaseClass: protocol<SentMessageTestClassCreationProtocol, NSObjectProtocol>,
-        TargetClass: protocol<SentMessageTestClassCreationProtocol, NSObjectProtocol>
+        BaseClass: SentMessageTestClassCreationProtocol & NSObjectProtocol,
+        TargetClass: SentMessageTestClassCreationProtocol & NSObjectProtocol
     >(_ baseClass: BaseClass.Type, _ targetClass: TargetClass.Type, _ method: Selector, _ invoke: (BaseClass) -> [[MethodParameters]]) {
         // now force forwarding mechanism for normal class
         ensureGlobalRuntimeChangesAreCached(
@@ -497,8 +497,8 @@ extension SentMessageTest {
 
         let disposeBag = DisposeBag()
         target.rx_observe(NSArray.self, "messages")
-            .subscribeNext { _ in
-            }
+            .subscribe(onNext: { _ in
+            })
             .addDisposableTo(disposeBag)
 
         do {
@@ -576,13 +576,13 @@ extension SentMessageTest {
         let messages = target.rx_sentMessage(#selector(SentMessageTestBase_shared.justCalledBool(toSay:)))
 
         let kvo = target.rx_observe(NSArray.self, "messages")
-            .subscribeNext { _ in
-            }
+            .subscribe(onNext: { _ in
+            })
 
         var recordedMessages = [MethodParameters]()
-        let methodObserving = messages.subscribeNext { n in
+        let methodObserving = messages.subscribe(onNext: { n in
             recordedMessages.append(n)
-        }
+        })
 
         target.justCalledBool(toSay: true)
 
@@ -928,7 +928,7 @@ extension SentMessageTest {
      Repeats action twice and makes sure there is no global leaks. Observing mechanism is lazy loaded so not caching
      results properly can cause serious memory leaks.
     */
-    func ensureGlobalRuntimeChangesAreCached<T: protocol<SentMessageTestClassCreationProtocol, NSObjectProtocol>>(
+    func ensureGlobalRuntimeChangesAreCached<T: SentMessageTestClassCreationProtocol & NSObjectProtocol>(
         _ createIt: () -> T,
         observeIt: (T) -> [Observable<MethodParameters>],
         objectActingClassChange: [ObjectRuntimeChange],
@@ -960,7 +960,7 @@ extension SentMessageTest {
 
     }
 
-    func _ensureGlobalRuntimeChangesAreCached<T: protocol<SentMessageTestClassCreationProtocol, NSObjectProtocol>>(
+    func _ensureGlobalRuntimeChangesAreCached<T: SentMessageTestClassCreationProtocol & NSObjectProtocol> (
         _ createIt: () -> T,
         observeIt: (T) -> [Observable<MethodParameters>],
         expectedActingClassChanges: [ObjectRuntimeChange],
@@ -1058,16 +1058,16 @@ extension SentMessageTest {
 
     }
 
-    func createKVODynamicSubclassed<T: protocol<SentMessageTestClassCreationProtocol, NSObjectProtocol>>(_ type: T.Type = T.self) -> () -> (T, [Disposable]) {
+    func createKVODynamicSubclassed<T: SentMessageTestClassCreationProtocol & NSObjectProtocol>(_ type: T.Type = T.self) -> () -> (T, [Disposable]) {
         return {
             let t = T.createInstance()
             //let disposable = (t as! NSObject).rx_observe(NSArray.self, "messages").publish().connect()
             (t as! NSObject).addObserver(self, forKeyPath: "messages", options: [], context: nil)
-            return (t, [AnonymousDisposable { (t as! NSObject).removeObserver(self, forKeyPath: "messages") }])
+            return (t, [Disposables.create { (t as! NSObject).removeObserver(self, forKeyPath: "messages") }])
         }
     }
 
-    func createNormalInstance<T: protocol<SentMessageTestClassCreationProtocol, NSObjectProtocol>>(_ type: T.Type = T.self) -> () -> T {
+    func createNormalInstance<T: SentMessageTestClassCreationProtocol & NSObjectProtocol>(_ type: T.Type = T.self) -> () -> T {
         return {
             return T.createInstance()
         }

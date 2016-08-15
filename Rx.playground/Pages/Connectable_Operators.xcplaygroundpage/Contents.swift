@@ -23,11 +23,11 @@ func sampleWithoutConnectableOperators() {
     let interval = Observable<Int>.interval(1, scheduler: MainScheduler.instance)
     
     _ = interval
-        .subscribeNext { print("Subscription: 1, Event: \($0)") }
+        .subscribe(onNext: { print("Subscription: 1, Event: \($0)") })
     
     delay(5) {
         _ = interval
-            .subscribeNext { print("Subscription: 2, Event: \($0)") }
+            .subscribe(onNext: { print("Subscription: 2, Event: \($0)") })
     }
 }
 
@@ -47,18 +47,18 @@ func sampleWithPublish() {
         .publish()
     
     _ = intSequence
-        .subscribeNext { print("Subscription 1:, Event: \($0)") }
+        .subscribe(onNext: { print("Subscription 1:, Event: \($0)") })
     
-    delay(2) { intSequence.connect() }
+    delay(2) { _ = intSequence.connect() }
     
     delay(4) {
         _ = intSequence
-            .subscribeNext { print("Subscription 2:, Event: \($0)") }
+            .subscribe(onNext: { print("Subscription 2:, Event: \($0)") })
     }
     
     delay(6) {
         _ = intSequence
-            .subscribeNext { print("Subscription 3:, Event: \($0)") }
+            .subscribe(onNext: { print("Subscription 3:, Event: \($0)") })
     }
 }
 
@@ -79,18 +79,18 @@ func sampleWithReplayBuffer() {
         .replay(5)
     
     _ = intSequence
-        .subscribeNext { print("Subscription 1:, Event: \($0)") }
+        ..subscribe(onNext: { print("Subscription 1:, Event: \($0)") })
     
-    delay(2) { intSequence.connect() }
+    delay(2) { _ = intSequence.connect() }
     
     delay(4) {
         _ = intSequence
-            .subscribeNext { print("Subscription 2:, Event: \($0)") }
+            .subscribe(onNext: { print("Subscription 2:, Event: \($0)") })
     }
     
     delay(8) {
         _ = intSequence
-            .subscribeNext { print("Subscription 3:, Event: \($0)") }
+            .subscribe(onNext: { print("Subscription 3:, Event: \($0)") })
     }
 }
 
@@ -107,24 +107,24 @@ func sampleWithMulticast() {
     let subject = PublishSubject<Int>()
     
     _ = subject
-        .subscribeNext { print("Subject: \($0)") }
+        .subscribe(onNext: { print("Subject: \($0)") })
     
     let intSequence = Observable<Int>.interval(1, scheduler: MainScheduler.instance)
         .multicast(subject)
     
     _ = intSequence
-        .subscribeNext { print("\tSubscription 1:, Event: \($0)") }
+        .subscribe(onNext: { print("\tSubscription 1:, Event: \($0)") })
     
-    delay(2) { intSequence.connect() }
+    delay(2) { _ = intSequence.connect() }
     
     delay(4) {
         _ = intSequence
-            .subscribeNext { print("\tSubscription 2:, Event: \($0)") }
+            .subscribe(onNext: { print("\tSubscription 2:, Event: \($0)") })
     }
     
     delay(6) {
         _ = intSequence
-            .subscribeNext { print("\tSubscription 3:, Event: \($0)") }
+            .subscribe(onNext: { print("\tSubscription 3:, Event: \($0)") })
     }
 }
 

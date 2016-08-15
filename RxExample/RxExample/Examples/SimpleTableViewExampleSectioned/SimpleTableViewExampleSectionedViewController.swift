@@ -50,21 +50,21 @@ class SimpleTableViewExampleSectionedViewController
         }
 
         items
-            .bindTo(tableView.rx.itemsWithDataSource(dataSource))
+            .bindTo(tableView.rx.items(dataSource: dataSource))
             .addDisposableTo(disposeBag)
 
-        tableView
-            .rx.itemSelected
+        tableView.rx
+            .itemSelected
             .map { indexPath in
                 return (indexPath, dataSource.itemAtIndexPath(indexPath))
             }
-            .subscribeNext { indexPath, model in
+            .subscribe(onNext: { indexPath, model in
                 DefaultWireframe.presentAlert("Tapped `\(model)` @ \(indexPath)")
-            }
+            })
             .addDisposableTo(disposeBag)
 
-        tableView
-            .rx.setDelegate(self)
+        tableView.rx
+            .setDelegate(self)
             .addDisposableTo(disposeBag)
     }
 

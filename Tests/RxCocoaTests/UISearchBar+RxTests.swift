@@ -25,9 +25,9 @@ class UISearchBarTests : RxTest {
         var latestText: String! = nil
 
         // search bar should dispose this itself
-        _ = searchBar.rx_text.subscribeNext { text in
+        _ = searchBar.rx_text.subscribe(onNext: { text in
             latestText = text
-        }
+        })
 
         XCTAssertEqual(latestText, "")
 
@@ -56,9 +56,9 @@ class UISearchBarTests : RxTest {
         
         var latestSelectedScopeIndex: Int = -1
         
-        _ = searchBar.rx_selectedScopeButtonIndex.subscribeNext { index in
+        _ = searchBar.rx_selectedScopeButtonIndex.subscribe(onNext: { index in
             latestSelectedScopeIndex = index
-        }
+        })
         
         XCTAssertEqual(latestSelectedScopeIndex, 0)
         
@@ -83,9 +83,9 @@ class UISearchBarTests : RxTest {
         
         var tapped = false
         
-        let _ = searchBar.rx_cancelButtonClicked.subscribeNext { _ in
+        let _ = searchBar.rx_cancelButtonClicked.subscribe(onNext: { _ in
             tapped = true
-        }
+        })
         
         XCTAssertFalse(tapped)
         searchBar.delegate!.searchBarCancelButtonClicked!(searchBar)
@@ -103,9 +103,9 @@ class UISearchBarTests : RxTest {
         
         var tapped = false
         
-        let _ = searchBar.rx_searchButtonClicked.subscribeNext { _ in
+        let _ = searchBar.rx_searchButtonClicked.subscribe(onNext: { _ in
             tapped = true
-        }
+        })
         
         XCTAssertFalse(tapped)
         searchBar.delegate!.searchBarSearchButtonClicked!(searchBar)

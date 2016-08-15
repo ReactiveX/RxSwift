@@ -187,7 +187,7 @@ extension ObservableType {
     - returns: An observable sequence containing the source sequence's elements, followed by the elements produced by the handler's resulting observable sequence in case an error occurred.
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func catchError(_ handler: (ErrorProtocol) throws -> Observable<E>)
+    public func catchError(_ handler: (Swift.Error) throws -> Observable<E>)
         -> Observable<E> {
         return Catch(source: asObservable(), handler: handler)
     }

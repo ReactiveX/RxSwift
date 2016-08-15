@@ -79,7 +79,7 @@ Sequences in Rx are described by a push interface (aka callback).
 ```swift
 enum Event<Element>  {
     case Next(Element)      // next element of a sequence
-    case Error(ErrorProtocol)   // sequence failed with error
+    case Error(Swift.Error)   // sequence failed with error
     case Completed          // sequence terminated successfully
 }
 
@@ -102,7 +102,7 @@ If a sequence does not terminate in some way, resources will be allocated perman
 
 **Using dispose bags or `takeUntil` operator is a robust way of making sure resources are cleaned up. We recommend using them in production even if the sequences will terminate in finite time.**
 
-In case you are curious why `ErrorProtocol` isn't generic, you can find explanation [here](DesignRationale.md#why-error-type-isnt-generic).
+In case you are curious why `Swift.Error` isn't generic, you can find explanation [here](DesignRationale.md#why-error-type-isnt-generic).
 
 ## Disposing
 
@@ -133,7 +133,7 @@ This will print:
 5
 ```
 
-Note the you usually do not want to manually call `dispose`; this is only educational example. Calling dispose manually is usually a bad code smell. There are better ways to dispose subscriptions. We can use `DisposeBag`, the `takeUntil` operator, or some other mechanism.
+Note that you usually do not want to manually call `dispose`; this is only educational example. Calling dispose manually is usually a bad code smell. There are better ways to dispose subscriptions. We can use `DisposeBag`, the `takeUntil` operator, or some other mechanism.
 
 So can this code print something after the `dispose` call executed? The answer is: it depends.
 
@@ -276,9 +276,9 @@ let searchForMe = searchWikipedia("me")
 
 let cancel = searchForMe
   // sequence generation starts now, URL requests are fired
-  .subscribeNext { results in
+  .subscribe(onNext: { results in
       print(results)
-  }
+  })
 
 ```
 
@@ -293,14 +293,14 @@ func myJust<E>(element: E) -> Observable<E> {
     return Observable.create { observer in
         observer.on(.Next(element))
         observer.on(.Completed)
-        return NopDisposable.instance
+        return Disposables.create()
     }
 }
 
 myJust(0)
-    .subscribeNext { n in
+    .subscribe(onNext: { n in
       print(n)
-    }
+    })
 ```
 
 this will print:
@@ -329,7 +329,7 @@ func myFrom<E>(sequence: [E]) -> Observable<E> {
         }
 
         observer.on(.Completed)
-        return NopDisposable.instance
+        return Disposables.create()
     }
 }
 
@@ -339,17 +339,17 @@ print("Started ----")
 
 // first time
 stringCounter
-    .subscribeNext { n in
+    .subscribe(onNext: { n in
         print(n)
-    }
+    })
 
 print("----")
 
 // again
 stringCounter
-    .subscribeNext { n in
+    .subscribe(onNext: { n in
         print(n)
-    }
+    })
 
 print("Ended ----")
 ```
@@ -382,12 +382,12 @@ func myInterval(interval: NSTimeInterval) -> Observable<Int> {
         var next = 0
 
         dispatch_source_set_timer(timer, 0, UInt64(interval * Double(NSEC_PER_SEC)), 0)
-        let cancel = AnonymousDisposable {
+        let cancel = Disposables.create {
             print("Disposed")
             dispatch_source_cancel(timer)
         }
         dispatch_source_set_event_handler(timer, {
-            if cancel.disposed {
+            if cancel.isDisposed {
                 return
             }
             observer.on(.Next(next))
@@ -406,9 +406,9 @@ let counter = myInterval(0.1)
 print("Started ----")
 
 let subscription = counter
-    .subscribeNext { n in
+    .subscribe(onNext: { n in
        print(n)
-    }
+    })
 
 NSThread.sleepForTimeInterval(0.5)
 
@@ -438,13 +438,13 @@ let counter = myInterval(0.1)
 print("Started ----")
 
 let subscription1 = counter
-    .subscribeNext { n in
+    .subscribe(onNext: { n in
        print("First \(n)")
-    }
+    })
 let subscription2 = counter
-    .subscribeNext { n in
+    .subscribe(onNext: { n in
        print("Second \(n)")
-    }
+    })
 
 NSThread.sleepForTimeInterval(0.5)
 
@@ -503,13 +503,13 @@ let counter = myInterval(0.1)
 print("Started ----")
 
 let subscription1 = counter
-    .subscribeNext { n in
+    .subscribe(onNext: { n in
        print("First \(n)")
-    }
+    })
 let subscription2 = counter
-    .subscribeNext { n in
+    .subscribe(onNext: { n in
        print("Second \(n)")
-    }
+    })
 
 NSThread.sleepForTimeInterval(0.5)
 
@@ -574,7 +574,7 @@ extension NSURLSession {
 
             task.resume()
 
-            return AnonymousDisposable {
+            return Disposables.create {
                 task.cancel()
             }
         }
@@ -637,9 +637,9 @@ let subscription = myInterval(0.1)
     .myMap { e in
         return "This is simply \(e)"
     }
-    .subscribeNext { n in
+    .subscribe(onNext: { n in
         print(n)
-    }
+    })
 ```
 
 and this will print
@@ -668,9 +668,9 @@ This isn't something that should be practiced often, and is a bad code smell, bu
   let magicBeings: Observable<MagicBeing> = summonFromMiddleEarth()
 
   magicBeings
-    .subscribeNext { being in     // exit the Rx monad  
+    .subscribe(onNext: { being in     // exit the Rx monad  
         self.doSomeStateMagic(being)
-    }
+    })
     .addDisposableTo(disposeBag)
 
   //
@@ -698,9 +698,9 @@ Every time you do this, somebody will probably write this code somewhere
 
 ```swift
   kittens
-    .subscribeNext { kitten in
+    .subscribe(onNext: { kitten in
       // so something with kitten
-    }
+    })
     .addDisposableTo(disposeBag)
 ```
 
@@ -716,7 +716,7 @@ If you are unsure how exactly some of the operators work, [playgrounds](../Rx.pl
 
 ## Error handling
 
-The are two error mechanisms.
+There are two error mechanisms.
 
 ### Asynchronous error handling mechanism in observables
 
@@ -783,9 +783,9 @@ let subscription = myInterval(0.1)
     .map { e in
         return "This is simply \(e)"
     }
-    .subscribeNext { n in
+    .subscribe(onNext: { n in
         print(n)
-    }
+    })
 
 NSThread.sleepForTimeInterval(0.5)
 
@@ -831,7 +831,7 @@ extension ObservableType {
                     observer.on(.Completed)
                 }
             }
-            return AnonymousDisposable {
+            return Disposables.create {
                    print("disposing \(identifier)")
                    subscription.dispose()
             }
@@ -851,9 +851,9 @@ In case you want to have some resource leak detection logic, the simplest method
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool
     */
     _ = Observable<Int>.interval(1, scheduler: MainScheduler.instance)
-        .subscribeNext { _ in
-        print("Resource count \(RxSwift.resourceCount)")
-    }
+        .subscribe(onNext: { _ in
+            print("Resource count \(RxSwift.resourceCount)")
+        })
 ```
 
 Most efficient way to test for memory leaks is:
@@ -952,9 +952,9 @@ Example how to observe frame of `UIView`.
 ```swift
 view
   .rx_observe(CGRect.self, "frame")
-  .subscribeNext { frame in
+  .subscribe(onNext: { frame in
     ...
-  }
+  })
 ```
 
 or
@@ -962,9 +962,9 @@ or
 ```swift
 view
   .rx_observeWeakly(CGRect.self, "frame")
-  .subscribeNext { frame in
+  .subscribe(onNext: { frame in
     ...
-  }
+  })
 ```
 
 ### `rx_observe`
@@ -1077,9 +1077,9 @@ let responseJSON = NSURLSession.sharedSession().rx_JSON(request)
 
 let cancelRequest = responseJSON
     // this will fire the request
-    .subscribeNext { json in
+    .subscribe(onNext: { json in
         print(json)
-    }
+    })
 
 NSThread.sleepForTimeInterval(3)
 

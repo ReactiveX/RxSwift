@@ -20,9 +20,9 @@ class VariableTest : RxTest {
         var latestValue: Int?
         
         let subscription = c
-            .subscribeNext { next in
+            .subscribe(onNext: { next in
                 latestValue = next
-            }
+            })
         
         XCTAssertEqual(latestValue!, 3)
         
@@ -82,10 +82,10 @@ class VariableTest : RxTest {
         var latestValueOfC : Int? = nil
         // let _ = doesn't retain.
         let d/*: Disposable*/  = c
-            .subscribeNext { c in
+            .subscribe(onNext: { c in
                 //print("Next value of c = \(c)")
                 latestValueOfC = c
-            }
+            })
 
         defer {
             d.dispose()

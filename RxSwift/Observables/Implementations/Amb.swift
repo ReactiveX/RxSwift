@@ -54,7 +54,7 @@ class AmbSink<ElementType, O: ObserverType where O.E == ElementType> : Sink<O> {
 
     private let _parent: Parent
     
-    private let _lock = RecursiveLock()
+    private let _lock = NSRecursiveLock()
     // state
     private var _choice = AmbState.neither
     
@@ -66,7 +66,7 @@ class AmbSink<ElementType, O: ObserverType where O.E == ElementType> : Sink<O> {
     func run() -> Disposable {
         let subscription1 = SingleAssignmentDisposable()
         let subscription2 = SingleAssignmentDisposable()
-        let disposeAll = StableCompositeDisposable.create(subscription1, subscription2)
+        let disposeAll = Disposables.create(subscription1, subscription2)
         
         let forwardEvent = { (o: AmbObserverType, event: Event<ElementType>) -> Void in
             self.forwardOn(event)

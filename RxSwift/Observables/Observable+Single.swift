@@ -84,6 +84,7 @@ extension ObservableType {
     - returns: The source sequence with the side-effecting behavior applied.
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
+    @available(*, deprecated, renamed: "do(onNext:onError:onCompleted:)")
     public func doOn(_ eventHandler: (Event<E>) throws -> Void)
         -> Observable<E> {
         return Do(source: self.asObservable(), eventHandler: eventHandler)
@@ -100,7 +101,8 @@ extension ObservableType {
     - returns: The source sequence with the side-effecting behavior applied.
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func doOn(onNext: ((E) throws -> Void)? = nil, onError: ((ErrorProtocol) throws -> Void)? = nil, onCompleted: (() throws -> Void)? = nil)
+    @available(*, deprecated, renamed: "do(onNext:onError:onCompleted:)")
+    public func doOn(onNext: ((E) throws -> Void)? = nil, onError: ((Swift.Error) throws -> Void)? = nil, onCompleted: (() throws -> Void)? = nil)
         -> Observable<E> {
         return Do(source: self.asObservable()) { e in
             switch e {
@@ -121,9 +123,10 @@ extension ObservableType {
      - returns: The source sequence with the side-effecting behavior applied.
      */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func `do`(onNext: ((E) throws -> Void))
+    @available(*, deprecated, renamed: "do(onNext:)")
+    public func doOnNext(onNext: ((E) throws -> Void))
         -> Observable<E> {
-        return self.doOn(onNext: onNext)
+        return self.do(onNext: onNext)
     }
 
     /**
@@ -133,9 +136,10 @@ extension ObservableType {
      - returns: The source sequence with the side-effecting behavior applied.
      */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func `do`(onError: ((ErrorProtocol) throws -> Void))
+    @available(*, deprecated, renamed: "do(onError:)")
+    public func doOnError(onError: ((Swift.Error) throws -> Void))
         -> Observable<E> {
-        return self.doOn(onError: onError)
+        return self.do(onError: onError)
     }
 
     /**
@@ -145,9 +149,35 @@ extension ObservableType {
      - returns: The source sequence with the side-effecting behavior applied.
      */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func `do`(onCompleted: (() throws -> Void))
+    @available(*, deprecated, renamed: "do(onCompleted:)")
+    public func doOnCompleted(onCompleted: (() throws -> Void))
         -> Observable<E> {
-        return self.doOn(onCompleted: onCompleted)
+        return self.do(onCompleted: onCompleted)
+    }
+
+    /**
+     Invokes an action for each event in the observable sequence, and propagates all observer messages through the result sequence.
+
+     - seealso: [do operator on reactivex.io](http://reactivex.io/documentation/operators/do.html)
+
+     - parameter onNext: Action to invoke for each element in the observable sequence.
+     - parameter onError: Action to invoke upon errored termination of the observable sequence.
+     - parameter onCompleted: Action to invoke upon graceful termination of the observable sequence.
+     - returns: The source sequence with the side-effecting behavior applied.
+     */
+    // @warn_unused_result(message:"http://git.io/rxs.uo")
+    public func `do`(onNext: ((E) throws -> Void)? = nil, onError: ((Swift.Error) throws -> Void)? = nil, onCompleted: (() throws -> Void)? = nil)
+        -> Observable<E> {
+            return Do(source: self.asObservable()) { e in
+                switch e {
+                case .next(let element):
+                    try onNext?(element)
+                case .error(let e):
+                    try onError?(e)
+                case .completed:
+                    try onCompleted?()
+                }
+            }
     }
 }
 
@@ -214,7 +244,7 @@ extension ObservableType {
     - returns: An observable sequence producing the elements of the given sequence repeatedly until it terminates successfully or is notified to error or complete.
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func retryWhen<TriggerObservable: ObservableType, Error: ErrorProtocol>(_ notificationHandler: (Observable<Error>) -> TriggerObservable)
+    public func retryWhen<TriggerObservable: ObservableType, Error: Swift.Error>(_ notificationHandler: (Observable<Error>) -> TriggerObservable)
         -> Observable<E> {
             return RetryWhenSequence(sources: InfiniteSequence(repeatedValue: self.asObservable()), notificationHandler: notificationHandler)
     }
@@ -229,7 +259,7 @@ extension ObservableType {
     - returns: An observable sequence producing the elements of the given sequence repeatedly until it terminates successfully or is notified to error or complete.
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func retryWhen<TriggerObservable: ObservableType>(_ notificationHandler: (Observable<ErrorProtocol>) -> TriggerObservable)
+    public func retryWhen<TriggerObservable: ObservableType>(_ notificationHandler: (Observable<Swift.Error>) -> TriggerObservable)
         -> Observable<E> {
             return RetryWhenSequence(sources: InfiniteSequence(repeatedValue: self.asObservable()), notificationHandler: notificationHandler)
     }

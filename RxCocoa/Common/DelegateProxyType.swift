@@ -178,13 +178,13 @@ extension DelegateProxyType {
         let maybeProxy = Self.assignedProxyFor(object) as? Self
 
         let proxy: Self
-        if maybeProxy == nil {
+        if let existingProxy = maybeProxy {
+            proxy = existingProxy
+        }
+        else {
             proxy = Self.createProxyForObject(object) as! Self
             Self.assignProxy(proxy, toObject: object)
             assert(Self.assignedProxyFor(object) === proxy)
-        }
-        else {
-            proxy = maybeProxy!
         }
 
         let currentDelegate: AnyObject? = Self.currentDelegateFor(object)
@@ -228,7 +228,7 @@ extension DelegateProxyType {
         
         assert(proxy.forwardToDelegate() === forwardDelegate, "Setting of delegate failed")
         
-        return AnonymousDisposable {
+        return Disposables.create {
             MainScheduler.ensureExecutingOnScheduler()
             
             let delegate: AnyObject? = weakForwardDelegate
@@ -241,7 +241,7 @@ extension DelegateProxyType {
 }
 
 extension ObservableType {
-    func subscribeProxyDataSourceForObject<P: DelegateProxyType>(_ object: AnyObject, dataSource: AnyObject, retainDataSource: Bool, binding: (P, Event<E>) -> Void)
+    func subscribeProxyDataSource<P: DelegateProxyType>(ofObject object: AnyObject, dataSource: AnyObject, retainDataSource: Bool, binding: (P, Event<E>) -> Void)
         -> Disposable {
         let proxy = P.proxyForObject(object)
         let disposable = P.installForwardDelegate(dataSource, retainDelegate: retainDataSource, onProxyForObject: object)
@@ -273,6 +273,6 @@ extension ObservableType {
                 }
             }
             
-        return CompositeDisposable(subscription, disposable)
+        return Disposables.create(subscription, disposable)
     }
 }

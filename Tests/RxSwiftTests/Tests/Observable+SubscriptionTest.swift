@@ -20,7 +20,7 @@ class ObservableSubscriptionTests : RxTest {
         var onDisposedCalled = 0
 
         var lastElement: Int? = nil
-        var lastError: ErrorProtocol? = nil
+        var lastError: Swift.Error? = nil
 
         let subscription = publishSubject.subscribe(onNext: { n in
                 lastElement = n
@@ -70,7 +70,7 @@ class ObservableSubscriptionTests : RxTest {
         var onDisposedCalled = 0
 
         var lastElement: Int? = nil
-        var lastError: ErrorProtocol? = nil
+        var lastError: Swift.Error? = nil
 
         let subscription = publishSubject.subscribe(onNext: { n in
                 lastElement = n
@@ -121,7 +121,7 @@ class ObservableSubscriptionTests : RxTest {
         var onDisposedCalled = 0
 
         var lastElement: Int? = nil
-        var lastError: ErrorProtocol? = nil
+        var lastError: Swift.Error? = nil
 
         let subscription = publishSubject.subscribe(onNext: { n in
             lastElement = n
@@ -172,7 +172,7 @@ class ObservableSubscriptionTests : RxTest {
         var onDisposedCalled = 0
 
         var lastElement: Int? = nil
-        var lastError: ErrorProtocol? = nil
+        var lastError: Swift.Error? = nil
 
         let subscription = publishSubject.subscribe(onNext: { n in
             lastElement = n

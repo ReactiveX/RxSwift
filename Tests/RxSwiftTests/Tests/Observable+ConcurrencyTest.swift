@@ -13,7 +13,7 @@ import RxBlocking
 import RxTests
 
 class ObservableConcurrencyTestBase : RxTest {
-    var lock = Lock()
+    var lock = NSLock()
 
     func performLocked(_ action: () -> Void) {
         lock.lock()
@@ -44,7 +44,7 @@ extension ObservableConcurrencyTest {
 
         _ = scheduler.schedule(()) { s in
             expectation.fulfill()
-            return NopDisposable.instance
+            return Disposables.create()
         }
 
         waitForExpectations(timeout: 1.0) { e in
@@ -76,10 +76,10 @@ extension ObservableConcurrencyTest {
         runDispatchQueueSchedulerTests { scheduler in
             let observable = Observable.just(0)
                 .observeOn(scheduler)
-            return observable .subscribeNext { n in
+            return observable.subscribe(onNext: { n in
                 didExecute = true
                 XCTAssert(Thread.current !== unitTestsThread)
-            }
+            })
         }
 
 
@@ -95,7 +95,7 @@ extension ObservableConcurrencyTest {
                 .observeOn(scheduler)
             XCTAssertTrue(a == a) // shut up swift compiler :(, we only need to keep this in memory
             XCTAssert(numberOfSerialDispatchQueueObservables == 1)
-            return NopDisposable.instance
+            return Disposables.create()
         }
 
         XCTAssert(numberOfSerialDispatchQueueObservables == 0)
@@ -111,11 +111,11 @@ extension ObservableConcurrencyTest {
                 self.sleep(0.1) // should be enough to block the queue, so if it's concurrent, it will fail
                 XCTAssert(OSAtomicDecrement32(&numberOfConcurrentEvents) == 0)
                 OSAtomicIncrement32(&numberOfExecutions)
-                return NopDisposable.instance
+                return Disposables.create()
             }
             _ = scheduler.schedule((), action: action)
             _ = scheduler.schedule((), action: action)
-            return NopDisposable.instance
+            return Disposables.create()
         }
 
         XCTAssert(numberOfSerialDispatchQueueObservables == 0)
@@ -128,9 +128,9 @@ extension ObservableConcurrencyTest {
 
         runDispatchQueueSchedulerTests { scheduler in
             let observable: Observable<Int> = Observable.error(testError).observeOn(scheduler)
-            return observable .subscribeError { n in
+            return observable.subscribe(onError: { n in
                 nEvents += 1
-            }
+            })
         }
 
         XCTAssertEqual(nEvents, 1)
@@ -142,9 +142,9 @@ extension ObservableConcurrencyTest {
         runDispatchQueueSchedulerTests { scheduler in
             let observable: Observable<Int> = Observable.empty().observeOn(scheduler)
 
-            return observable.subscribeCompleted {
+            return observable.subscribe(onCompleted: {
                 nEvents += 1
-            }
+            })
         }
 
         XCTAssertEqual(nEvents, 1)
@@ -155,9 +155,9 @@ extension ObservableConcurrencyTest {
             let xs: Observable<Int> = Observable.never()
             return xs
                 .observeOn(scheduler)
-                .subscribeNext { n in
+                .subscribe(onNext: { n in
                     XCTAssert(false)
-                }
+                })
         }
     }
 
@@ -179,7 +179,7 @@ extension ObservableConcurrencyTest {
                     ])
                 xs.on(.next(1))
                 xs.on(.next(2))
-                return NopDisposable.instance
+                return Disposables.create()
             },
             { scheduler in
                 XCTAssertEqual(observer.events, [
@@ -189,7 +189,7 @@ extension ObservableConcurrencyTest {
                     ])
                 XCTAssert(xs.subscriptions == [SubscribedToHotObservable])
                 xs.on(.completed)
-                return NopDisposable.instance
+                return Disposables.create()
             },
             { scheduler in
                 XCTAssertEqual(observer.events, [
@@ -199,7 +199,7 @@ extension ObservableConcurrencyTest {
                     completed()
                     ])
                 XCTAssert(xs.subscriptions == [UnsunscribedFromHotObservable])
-                return NopDisposable.instance
+                return Disposables.create()
             },
             ])
     }
@@ -220,7 +220,7 @@ extension ObservableConcurrencyTest {
                     completed()
                 ])
                 XCTAssert(xs.subscriptions == [UnsunscribedFromHotObservable])
-                return NopDisposable.instance
+                return Disposables.create()
             }
         ])
     }
@@ -243,7 +243,7 @@ extension ObservableConcurrencyTest {
                     ])
                 xs.on(.next(1))
                 xs.on(.next(2))
-                return NopDisposable.instance
+                return Disposables.create()
             },
             { scheduler in
                 XCTAssertEqual(observer.events, [
@@ -253,7 +253,7 @@ extension ObservableConcurrencyTest {
                     ])
                 XCTAssert(xs.subscriptions == [SubscribedToHotObservable])
                 xs.on(.error(testError))
-                return NopDisposable.instance
+                return Disposables.create()
             },
             { scheduler in
                 XCTAssertEqual(observer.events, [
@@ -263,7 +263,7 @@ extension ObservableConcurrencyTest {
                     error(testError)
                     ])
                 XCTAssert(xs.subscriptions == [UnsunscribedFromHotObservable])
-                return NopDisposable.instance
+                return Disposables.create()
             },
         ])
     }
@@ -292,14 +292,14 @@ extension ObservableConcurrencyTest {
 
                 xs.on(.error(testError))
 
-                return NopDisposable.instance
+                return Disposables.create()
             },
             { scheduler in
                 XCTAssertEqual(observer.events, [
                     next(0),
                     ])
                 XCTAssert(xs.subscriptions == [UnsunscribedFromHotObservable])
-                return NopDisposable.instance
+                return Disposables.create()
             }
         ])
     }
@@ -332,7 +332,7 @@ class ObservableConcurrentSchedulerConcurrencyTest: ObservableConcurrencyTestBas
 
         let scheduler = createScheduler()
 
-        let condition = Condition()
+        let condition = NSCondition()
 
         var writtenStarted = 0
         var writtenEnded = 0
@@ -364,7 +364,7 @@ class ObservableConcurrentSchedulerConcurrencyTest: ObservableConcurrencyTestBas
 
             stop.on(.completed)
 
-            return NopDisposable.instance
+            return Disposables.create()
         }
 
         _ = scheduler.schedule((), action: concurrent)
@@ -382,9 +382,9 @@ class ObservableConcurrentSchedulerConcurrencyTest: ObservableConcurrencyTestBas
         let xs: Observable<Int> = Observable.never()
         let subscription = xs
             .observeOn(scheduler)
-            .subscribeNext { n in
+            .subscribe(onNext: { n in
                 XCTAssert(false)
-        }
+            })
 
         sleep(0.1)
 
@@ -579,7 +579,7 @@ extension ObservableConcurrencyTest {
 
         let xs: Observable<Int> = Observable.create { observer in
             scheduled = scheduler.clock
-            return AnonymousDisposable {
+            return Disposables.create {
                 disposed = scheduler.clock
             }
         }

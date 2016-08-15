@@ -1,5 +1,5 @@
 //
-//  Observable+Extensions.swift
+//  ObservableType+Extensions.swift
 //  Rx
 //
 //  Created by Krunoslav Zaher on 2/21/15.
@@ -24,6 +24,7 @@ extension ObservableType {
         return self.subscribeSafe(observer)
     }
 
+    #if DEBUG
     /**
     Subscribes an element handler, an error handler, a completion handler and disposed handler to an observable sequence.
 
@@ -35,16 +36,62 @@ extension ObservableType {
     - returns: Subscription object used to unsubscribe from the observable sequence.
     */
     // @warn_unused_result(message: "http://git.io/rxs.ud")
-    public func subscribe(onNext: ((E) -> Void)? = nil, onError: ((ErrorProtocol) -> Void)? = nil, onCompleted: (() -> Void)? = nil, onDisposed: (() -> Void)? = nil)
+    public func subscribe(file: String = #file, line: UInt = #line, function: String = #function, onNext: ((E) -> Void)? = nil, onError: ((Swift.Error) -> Void)? = nil, onCompleted: (() -> Void)? = nil, onDisposed: (() -> Void)? = nil)
         -> Disposable {
 
         let disposable: Disposable
 
         if let disposed = onDisposed {
-            disposable = AnonymousDisposable(disposed)
+            disposable = Disposables.create(with: disposed)
         }
         else {
-            disposable = NopDisposable.instance
+            disposable = Disposables.create()
+        }
+
+        let observer = AnonymousObserver<E> { e in
+            switch e {
+            case .next(let value):
+                onNext?(value)
+            case .error(let e):
+                if let onError = onError {
+                    onError(e)
+                }
+                else {
+                    print("Received unhandled error: \(file):\(line):\(function) -> \(e)")
+                }
+                disposable.dispose()
+            case .completed:
+                onCompleted?()
+                disposable.dispose()
+            }
+        }
+        return Disposables.create(
+            self.subscribeSafe(observer),
+            disposable
+        )
+    }
+    #else
+    /**
+    Subscribes an element handler, an error handler, a completion handler and disposed handler to an observable sequence.
+
+    - parameter onNext: Action to invoke for each element in the observable sequence.
+    - parameter onError: Action to invoke upon errored termination of the observable sequence.
+    - parameter onCompleted: Action to invoke upon graceful termination of the observable sequence.
+    - parameter onDisposed: Action to invoke upon any type of termination of sequence (if the sequence has
+        gracefully completed, errored, or if the generation is cancelled by disposing subscription).
+    - returns: Subscription object used to unsubscribe from the observable sequence.
+    */
+    // @warn_unused_result(message: "http://git.io/rxs.ud")
+    public func subscribe(onNext: ((E) -> Void)? = nil, onError: ((Swift.Error) -> Void)? = nil, onCompleted: (() -> Void)? = nil, onDisposed: (() -> Void)? = nil)
+        -> Disposable {
+
+        let disposable: Disposable
+
+        if let disposed = onDisposed {
+            disposable = Disposables.create(with: disposed)
+        }
+        else {
+            disposable = Disposables.create()
         }
 
         let observer = AnonymousObserver<E> { e in
@@ -59,11 +106,12 @@ extension ObservableType {
                 disposable.dispose()
             }
         }
-        return BinaryDisposable(
+        return Disposables.create(
             self.subscribeSafe(observer),
             disposable
         )
     }
+    #endif
 
     /**
     Subscribes an element handler to an observable sequence.
@@ -72,6 +120,7 @@ extension ObservableType {
     - returns: Subscription object used to unsubscribe from the observable sequence.
     */
     // @warn_unused_result(message: "http://git.io/rxs.ud")
+    @available(*, deprecated, renamed: "subscribe(onNext:)")
     public func subscribeNext(_ onNext: (E) -> Void)
         -> Disposable {
         let observer = AnonymousObserver<E> { e in
@@ -89,7 +138,8 @@ extension ObservableType {
     - returns: Subscription object used to unsubscribe from the observable sequence.
     */
     // @warn_unused_result(message: "http://git.io/rxs.ud")
-    public func subscribeError(_ onError: (ErrorProtocol) -> Void)
+    @available(*, deprecated, renamed: "subscribe(onError:)")
+    public func subscribeError(_ onError: (Swift.Error) -> Void)
         -> Disposable {
         let observer = AnonymousObserver<E> { e in
             if case .error(let error) = e {
@@ -106,6 +156,7 @@ extension ObservableType {
     - returns: Subscription object used to unsubscribe from the observable sequence.
     */
     // @warn_unused_result(message: "http://git.io/rxs.ud")
+    @available(*, deprecated, renamed: "subscribe(onCompleted:)")
     public func subscribeCompleted(_ onCompleted: () -> Void)
         -> Disposable {
         let observer = AnonymousObserver<E> { e in

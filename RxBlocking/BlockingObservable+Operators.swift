@@ -22,7 +22,7 @@ extension BlockingObservable {
     public func toArray() throws -> [E] {
         var elements: [E] = Array<E>()
 
-        var error: ErrorProtocol?
+        var error: Swift.Error?
 
         let lock = RunLoopLock()
 
@@ -30,7 +30,7 @@ extension BlockingObservable {
 
         lock.dispatch {
             d.disposable = self.source.subscribe { e in
-                if d.disposed {
+                if d.isDisposed {
                     return
                 }
                 switch e {
@@ -70,7 +70,7 @@ extension BlockingObservable {
     public func first() throws -> E? {
         var element: E?
 
-        var error: ErrorProtocol?
+        var error: Swift.Error?
 
         let d = SingleAssignmentDisposable()
 
@@ -78,7 +78,7 @@ extension BlockingObservable {
 
         lock.dispatch {
             d.disposable = self.source.subscribe { e in
-                if d.disposed {
+                if d.isDisposed {
                     return
                 }
 
@@ -122,7 +122,7 @@ extension BlockingObservable {
     public func last() throws -> E? {
         var element: E?
 
-        var error: ErrorProtocol?
+        var error: Swift.Error?
 
         let d = SingleAssignmentDisposable()
 
@@ -130,7 +130,7 @@ extension BlockingObservable {
 
         lock.dispatch {
             d.disposable = self.source.subscribe { e in
-                if d.disposed {
+                if d.isDisposed {
                     return
                 }
                 switch e {
@@ -183,7 +183,7 @@ extension BlockingObservable {
     public func single(_ predicate: (E) throws -> Bool) throws -> E? {
         var element: E?
         
-        var error: ErrorProtocol?
+        var error: Swift.Error?
         
         let d = SingleAssignmentDisposable()
         
@@ -191,7 +191,7 @@ extension BlockingObservable {
         
         lock.dispatch {
             d.disposable = self.source.subscribe { e in
-                if d.disposed {
+                if d.isDisposed {
                     return
                 }
                 switch e {

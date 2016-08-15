@@ -92,27 +92,12 @@ extension ObservableCreationTests {
     }
 }
 
-// MARK: toObservable
+// MARK: from
 extension ObservableCreationTests {
-    func testToObservable_complete_immediate() {
+    func testFromArray_complete_immediate() {
         let scheduler = TestScheduler(initialClock: 0)
         let res = scheduler.start {
-            [3, 1, 2, 4].toObservable()
-        }
-
-        XCTAssertEqual(res.events, [
-            next(200, 3),
-            next(200, 1),
-            next(200, 2),
-            next(200, 4),
-            completed(200)
-            ])
-    }
-
-    func testToObservable_complete() {
-        let scheduler = TestScheduler(initialClock: 0)
-        let res = scheduler.start {
-            [3, 1, 2, 4].toObservable(scheduler)
+            Observable.from([3, 1, 2, 4], scheduler: scheduler)
         }
 
         XCTAssertEqual(res.events, [
@@ -124,10 +109,25 @@ extension ObservableCreationTests {
             ])
     }
 
-    func testToObservable_dispose() {
+    func testFromArray_complete() {
+        let scheduler = TestScheduler(initialClock: 0)
+        let res = scheduler.start {
+            Observable.from([3, 1, 2, 4], scheduler: scheduler)
+        }
+
+        XCTAssertEqual(res.events, [
+            next(201, 3),
+            next(202, 1),
+            next(203, 2),
+            next(204, 4),
+            completed(205)
+            ])
+    }
+
+    func testFromArray_dispose() {
         let scheduler = TestScheduler(initialClock: 0)
         let res = scheduler.start(203) {
-            [3, 1, 2, 4].toObservable(scheduler)
+            Observable.from([3, 1, 2, 4], scheduler: scheduler)
         }
 
         XCTAssertEqual(res.events, [
@@ -184,25 +184,25 @@ extension ObservableCreationTests {
 
 // MARK: toObservable 
 extension ObservableCreationTests {
-    func testToObservableAnySequence_basic_immediate() {
+    func testFromAnySequence_basic_immediate() {
         let scheduler = TestScheduler(initialClock: 0)
         let res = scheduler.start {
-            AnySequence([3, 1, 2, 4]).toObservable()
+            Observable.from(AnySequence([3, 1, 2, 4]), scheduler: scheduler)
         }
 
         XCTAssertEqual(res.events, [
-            next(200, 3),
-            next(200, 1),
-            next(200, 2),
-            next(200, 4),
-            completed(200)
+            next(201, 3),
+            next(202, 1),
+            next(203, 2),
+            next(204, 4),
+            completed(205)
             ])
     }
 
     func testToObservableAnySequence_basic_testScheduler() {
         let scheduler = TestScheduler(initialClock: 0)
         let res = scheduler.start {
-            AnySequence([3, 1, 2, 4]).toObservable(scheduler)
+            Observable.from(AnySequence([3, 1, 2, 4]), scheduler: scheduler)
         }
 
         XCTAssertEqual(res.events, [

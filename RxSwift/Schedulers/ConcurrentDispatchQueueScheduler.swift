@@ -39,10 +39,11 @@ public class ConcurrentDispatchQueueScheduler: SchedulerType {
      */
     @available(iOS 8, OSX 10.10, *)
     public convenience init(globalConcurrentQueueQOS: DispatchQueueSchedulerQOS, leeway: DispatchTimeInterval = DispatchTimeInterval.nanoseconds(0)) {
-        let priority = globalConcurrentQueueQOS.QOSClass
+        let priority = globalConcurrentQueueQOS.qos
         self.init(queue: DispatchQueue(
             label: "rxswift.queue.\(globalConcurrentQueueQOS)",
-            attributes: [priority, DispatchQueueAttributes.concurrent],
+            qos: priority,
+            attributes: [DispatchQueue.Attributes.concurrent],
             target: nil),
             leeway: leeway
         )
