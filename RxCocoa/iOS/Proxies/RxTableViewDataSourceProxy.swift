@@ -78,7 +78,7 @@ public class RxTableViewDataSourceProxy
     public override class func createProxyForObject(_ object: AnyObject) -> AnyObject {
         let tableView = (object as! UITableView)
 
-        return castOrFatalError(tableView.rx.createDataSourceProxy())
+        return castOrFatalError(tableView.createRxDataSourceProxy())
     }
 
     /**

@@ -27,7 +27,7 @@ extension NSLayoutConstraintTest {
         let subject = View(frame: CGRect.zero)
         let subject2 = View(frame: CGRect.zero)
         let constraint = NSLayoutConstraint(item: subject, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: subject2, attribute: NSLayoutAttribute.top, multiplier: 0.5, constant: 0.5)
-        Observable.just(0).subscribe(constraint.rx_constant).dispose()
+        Observable.just(0).subscribe(constraint.rx.constant).dispose()
 
         XCTAssertTrue(constraint.constant == 0.0)
     }
@@ -36,7 +36,7 @@ extension NSLayoutConstraintTest {
         let subject = View(frame: CGRect.zero)
         let subject2 = View(frame: CGRect.zero)
         let constraint = NSLayoutConstraint(item: subject, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: subject2, attribute: NSLayoutAttribute.top, multiplier: 0.5, constant: 0.5)
-        Observable.just(1.0).subscribe(constraint.rx_constant).dispose()
+        Observable.just(1.0).subscribe(constraint.rx.constant).dispose()
 
         XCTAssertTrue(constraint.constant == 1.0)
     }
@@ -51,7 +51,7 @@ extension NSLayoutConstraintTest {
         parent.addSubview(subject)
         parent.addSubview(subject2)
         let constraint = NSLayoutConstraint(item: subject, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: subject2, attribute: NSLayoutAttribute.top, multiplier: 0.5, constant: 0.5)
-        Observable.just(true).subscribe(constraint.rx_active).dispose()
+        Observable.just(true).subscribe(constraint.rx.active).dispose()
 
         XCTAssertTrue(constraint.isActive == true)
     }
@@ -63,7 +63,7 @@ extension NSLayoutConstraintTest {
         parent.addSubview(subject)
         parent.addSubview(subject2)
         let constraint = NSLayoutConstraint(item: subject, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: subject2, attribute: NSLayoutAttribute.top, multiplier: 0.5, constant: 0.5)
-        Observable.just(false).subscribe(constraint.rx_active).dispose()
+        Observable.just(false).subscribe(constraint.rx.active).dispose()
 
         XCTAssertTrue(constraint.isActive == false)
     }

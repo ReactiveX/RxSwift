@@ -43,8 +43,8 @@ class ExtendNSTextFieldDelegateProxy
 class NSTextFieldSubclass
     : NSTextField
     , TestDelegateControl {
-    override func rx_createDelegateProxy() -> RxTextFieldDelegateProxy {
-        return ExtendNSTextFieldDelegateProxy(parentObject: base)
+    override func createRxDelegateProxy() -> RxTextFieldDelegateProxy {
+        return ExtendNSTextFieldDelegateProxy(parentObject: self)
     }
 
     func doThatTest(_ value: Int) {
@@ -52,7 +52,7 @@ class NSTextFieldSubclass
     }
 
     var test: Observable<Int> {
-        return rx_delegate
+        return rx.delegate
             .observe(#selector(NSTextFieldDelegateSubclass.testEventHappened(_:)))
             .map { a in (a[0] as! NSNumber).intValue }
     }

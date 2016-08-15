@@ -14,17 +14,21 @@ import RxSwift
 #endif
 import UIKit
 
-extension Reactive where Base: UIScrollView {
+extension UIScrollView {
     
     /**
     Factory method that enables subclasses to implement their own `delegate`.
     
     - returns: Instance of delegate proxy that wraps `delegate`.
     */
-    public func createDelegateProxy() -> RxScrollViewDelegateProxy {
-        return RxScrollViewDelegateProxy(parentObject: self.base)
+    public func createRxDelegateProxy() -> RxScrollViewDelegateProxy {
+        return RxScrollViewDelegateProxy(parentObject: self)
     }
     
+}
+
+extension Reactive where Base: UIScrollView {
+
     /**
     Reactive wrapper for `delegate`.
     

@@ -16,17 +16,19 @@ import RxSwift
 
     
     
-extension Reactive where Base: UITextView {
+extension UITextView {
     
     /**
     Factory method that enables subclasses to implement their own `delegate`.
     
     - returns: Instance of delegate proxy that wraps `delegate`.
     */
-    public func createDelegateProxy() -> RxScrollViewDelegateProxy {
-        return RxTextViewDelegateProxy(parentObject: base)
+    public override func createRxDelegateProxy() -> RxScrollViewDelegateProxy {
+        return RxTextViewDelegateProxy(parentObject: self)
     }
-    
+}
+
+extension Reactive where Base: UITextView {
     /**
     Reactive wrapper for `text` property.
     */

@@ -15,7 +15,7 @@ import XCTest
 extension ControlTests {
     func testTextField_TextCompletesOnDealloc() {
         let createView: () -> NSTextField = { NSTextField(frame: CGRect(x: 0, y: 0, width: 1, height: 1)) }
-        ensurePropertyDeallocated(createView, "a") { (view: NSTextField) in view.rx_text }
+        ensurePropertyDeallocated(createView, "a") { (view: NSTextField) in view.rx.text }
     }
 }
 
@@ -23,13 +23,13 @@ extension ControlTests {
 extension ControlTests {
     func testControl_DelegateEventCompletesOnDealloc() {
         let createView: () -> NSControl = { NSControl(frame: CGRect(x: 0, y: 0, width: 1, height: 1)) }
-        ensureEventDeallocated(createView) { (view: NSControl) in view.rx_controlEvent }
+        ensureEventDeallocated(createView) { (view: NSControl) in view.rx.controlEvent }
     }
 
     func testControl_enabled_true() {
         let control = NSControl(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
 
-        _ = Observable.just(true).bindTo(control.rx_enabled)
+        _ = Observable.just(true).bindTo(control.rx.enabled)
 
         XCTAssertEqual(true, control.isEnabled)
     }
@@ -37,7 +37,7 @@ extension ControlTests {
     func testControl_enabled_false() {
         let control = NSControl(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
 
-        _ = Observable.just(false).bindTo(control.rx_enabled)
+        _ = Observable.just(false).bindTo(control.rx.enabled)
 
         XCTAssertEqual(false, control.isEnabled)
     }
@@ -47,7 +47,7 @@ extension ControlTests {
 extension ControlTests {
     func testCollectionView_DelegateEventCompletesOnDealloc() {
         let createView: () -> NSSlider = { NSSlider(frame: CGRect(x: 0, y: 0, width: 1, height: 1)) }
-        ensurePropertyDeallocated(createView, 0.3) { (view: NSSlider) in view.rx_value }
+        ensurePropertyDeallocated(createView, 0.3) { (view: NSSlider) in view.rx.value }
     }
 }
 
@@ -55,24 +55,24 @@ extension ControlTests {
 extension ControlTests {
     func testButton_DelegateEventCompletesOnDealloc() {
         let createView: () -> NSButton = { NSButton(frame: CGRect(x: 0, y: 0, width: 1, height: 1)) }
-        ensureEventDeallocated(createView) { (view: NSButton) in view.rx_tap }
+        ensureEventDeallocated(createView) { (view: NSButton) in view.rx.tap }
     }
 
     func testButton_StateCompletesOnDealloc() {
         let createView: () -> NSButton = { NSButton(frame: CGRect(x: 0, y: 0, width: 1, height: 1)) }
-        ensurePropertyDeallocated(createView, 0) { (view: NSButton) in view.rx_state }
+        ensurePropertyDeallocated(createView, 0) { (view: NSButton) in view.rx.state }
     }
 
     func testButton_state_observer_on() {
         let button = NSButton(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
-        _ = Observable.just(NSOnState).bindTo(button.rx_state)
+        _ = Observable.just(NSOnState).bindTo(button.rx.state)
 
         XCTAssertEqual(button.state, NSOnState)
     }
 
     func testButton_state_observer_off() {
         let button = NSButton(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
-        _ = Observable.just(NSOffState).bindTo(button.rx_state)
+        _ = Observable.just(NSOffState).bindTo(button.rx.state)
 
         XCTAssertEqual(button.state, NSOffState)
     }

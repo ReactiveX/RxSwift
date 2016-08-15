@@ -68,8 +68,8 @@ every view has a corresponding delegate virtual factory method.
 
 In case of UITableView / UIScrollView, there is
 
-    extension Reactive where Base: UIScrollView {
-        public func createDelegateProxy() -> RxScrollViewDelegateProxy {
+    extension UIScrollView {
+        public func createRxDelegateProxy() -> RxScrollViewDelegateProxy {
             return RxScrollViewDelegateProxy(parentObject: base)
         }
     ....
@@ -77,8 +77,8 @@ In case of UITableView / UIScrollView, there is
 
 and override in UITableView
 
-    extension Reactive where Base: UITableView {
-        public override func createDelegateProxy() -> RxScrollViewDelegateProxy {
+    extension UITableView {
+        public override func createRxDelegateProxy() -> RxScrollViewDelegateProxy {
         ....
 
 

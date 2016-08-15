@@ -16,7 +16,7 @@ import XCTest
 class UISearchBarTests : RxTest {
     func testText_completesOnDealloc() {
         let createView: () -> UISearchBar = { UISearchBar(frame: CGRect(x: 0, y: 0, width: 1, height: 1)) }
-        ensurePropertyDeallocated(createView, "a") { (view: UISearchBar) in view.rx_text }
+        ensurePropertyDeallocated(createView, "a") { (view: UISearchBar) in view.rx.text }
     }
 
     func testText_changeEventWorks() {
@@ -25,7 +25,7 @@ class UISearchBarTests : RxTest {
         var latestText: String! = nil
 
         // search bar should dispose this itself
-        _ = searchBar.rx_text.subscribe(onNext: { text in
+        _ = searchBar.rx.text.subscribe(onNext: { text in
             latestText = text
         })
 
@@ -41,13 +41,13 @@ class UISearchBarTests : RxTest {
         let searchBar = UISearchBar(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
 
         XCTAssertNotEqual(searchBar.text, "value")
-        _ = Observable.just("value").bindTo(searchBar.rx_text)
+        _ = Observable.just("value").bindTo(searchBar.rx.text)
         XCTAssertEqual(searchBar.text, "value")
     }
 
     func testSelectedScopeButtonIndex_completesOnDealloc() {
         let createView: () -> UISearchBar = { UISearchBar(frame: CGRect(x: 0, y: 0, width: 1, height: 1)) }
-        ensurePropertyDeallocated(createView, 1) { (view: UISearchBar) in view.rx_selectedScopeButtonIndex }
+        ensurePropertyDeallocated(createView, 1) { (view: UISearchBar) in view.rx.selectedScopeButtonIndex }
     }
     
     func testSelectedScopeButtonIndex_changeEventWorks() {
@@ -56,7 +56,7 @@ class UISearchBarTests : RxTest {
         
         var latestSelectedScopeIndex: Int = -1
         
-        _ = searchBar.rx_selectedScopeButtonIndex.subscribe(onNext: { index in
+        _ = searchBar.rx.selectedScopeButtonIndex.subscribe(onNext: { index in
             latestSelectedScopeIndex = index
         })
         
@@ -73,7 +73,7 @@ class UISearchBarTests : RxTest {
         searchBar.scopeButtonTitles = [ "One", "Two", "Three" ]
         
         XCTAssertNotEqual(searchBar.selectedScopeButtonIndex, 1)
-        _ = Observable.just(1).bindTo(searchBar.rx_selectedScopeButtonIndex)
+        _ = Observable.just(1).bindTo(searchBar.rx.selectedScopeButtonIndex)
         XCTAssertEqual(searchBar.selectedScopeButtonIndex, 1)
     }
     
@@ -83,7 +83,7 @@ class UISearchBarTests : RxTest {
         
         var tapped = false
         
-        let _ = searchBar.rx_cancelButtonClicked.subscribe(onNext: { _ in
+        let _ = searchBar.rx.cancelButtonClicked.subscribe(onNext: { _ in
             tapped = true
         })
         
@@ -94,7 +94,7 @@ class UISearchBarTests : RxTest {
     
     func testCancelButtonClicked_DelegateEventCompletesOnDealloc() {
         let createView: () -> UISearchBar = { UISearchBar(frame: CGRect(x: 0, y: 0, width: 1, height: 1)) }
-        ensureEventDeallocated(createView) { (view: UISearchBar) in view.rx_cancelButtonClicked }
+        ensureEventDeallocated(createView) { (view: UISearchBar) in view.rx.cancelButtonClicked }
     }
 #endif
     
@@ -103,7 +103,7 @@ class UISearchBarTests : RxTest {
         
         var tapped = false
         
-        let _ = searchBar.rx_searchButtonClicked.subscribe(onNext: { _ in
+        let _ = searchBar.rx.searchButtonClicked.subscribe(onNext: { _ in
             tapped = true
         })
         
@@ -114,6 +114,6 @@ class UISearchBarTests : RxTest {
     
     func testSearchButtonClicked_DelegateEventCompletesOnDealloc() {
         let createView: () -> UISearchBar = { UISearchBar(frame: CGRect(x: 0, y: 0, width: 1, height: 1)) }
-        ensureEventDeallocated(createView) { (view: UISearchBar) in view.rx_searchButtonClicked }
+        ensureEventDeallocated(createView) { (view: UISearchBar) in view.rx.searchButtonClicked }
     }
 }

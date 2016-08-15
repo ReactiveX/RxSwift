@@ -22,7 +22,7 @@ extension NSObjectTests {
         
         var fired = false
         
-        _ = a
+        _ = a.rx
             .deallocated
             .map { _ in
                 return 1
@@ -43,7 +43,7 @@ extension NSObjectTests {
         
         var fired = false
         
-        _ = a
+        _ = a.rx
             .deallocated
             .map { _ in
                 return 1
@@ -64,7 +64,7 @@ extension NSObjectTests {
         
         var fired = false
 
-        _ = a
+        _ = a.rx
             .deallocated
             .map { _ in
                 return 1
@@ -83,7 +83,7 @@ extension NSObjectTests {
 }
 
 #if !DISABLE_SWIZZLING
-// rx_deallocating
+// rx.deallocating
 extension NSObjectTests {
     func testDeallocating_ObservableFires() {
         var a = NSObject()
@@ -91,7 +91,7 @@ extension NSObjectTests {
         var fired = false
         
         _ = a
-            .rx_deallocating
+            .rx.deallocating
             .map { _ in
                 return 1
             }
@@ -112,7 +112,7 @@ extension NSObjectTests {
         var fired = false
         
         _ = a
-            .rx_deallocating
+            .rx.deallocating
             .map { _ in
                 return 1
             }
@@ -133,7 +133,7 @@ extension NSObjectTests {
         var fired = false
 
         _ = a
-            .rx_deallocating
+            .rx.deallocating
             .map { _ in
                 return 1
             }

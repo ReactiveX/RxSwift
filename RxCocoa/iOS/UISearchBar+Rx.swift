@@ -15,20 +15,22 @@ import RxSwift
 import UIKit
 
 
-
-extension Reactive where Base: UISearchBar {
-    
 #if os(iOS)
-    /**
-     Factory method that enables subclasses to implement their own `delegate`.
-     
-     - returns: Instance of delegate proxy that wraps `delegate`.
-     */
-    public func createDelegateProxy() -> RxSearchBarDelegateProxy {
-        return RxSearchBarDelegateProxy(parentObject: self.base)
+    extension UISearchBar {
+        /**
+         Factory method that enables subclasses to implement their own `delegate`.
+
+         - returns: Instance of delegate proxy that wraps `delegate`.
+         */
+        public func createRxDelegateProxy() -> RxSearchBarDelegateProxy {
+            return RxSearchBarDelegateProxy(parentObject: self)
+        }
+        
     }
 #endif
-    
+
+extension Reactive where Base: UISearchBar {
+
     /**
     Reactive wrapper for `delegate`.
     

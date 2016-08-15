@@ -31,7 +31,7 @@ extension UITabBarTests {
         let items = [UITabBarItem()]
         var returnedItems: [UITabBarItem]!
 
-        _ = subject.rx_willBeginCustomizing
+        _ = subject.rx.willBeginCustomizing
             .subscribe(onNext: { i in
                 returnedItems = i
             })
@@ -46,7 +46,7 @@ extension UITabBarTests {
         let items = [UITabBarItem()]
         var returnedItems: [UITabBarItem]!
 
-        _ = subject.rx_didBeginCustomizing
+        _ = subject.rx.didBeginCustomizing
             .subscribe(onNext: { i in
                 returnedItems = i
             })
@@ -63,7 +63,7 @@ extension UITabBarTests {
         var returnedItems: [UITabBarItem]!
         var changed: Bool!
 
-        _ = subject.rx_willEndCustomizing
+        _ = subject.rx.willEndCustomizing
             .subscribe(onNext: { (i, c) in
                 returnedItems = i
                 changed = c
@@ -81,7 +81,7 @@ extension UITabBarTests {
         var returnedItems: [UITabBarItem]!
         var changed: Bool!
 
-        _ = subject.rx_didEndCustomizing
+        _ = subject.rx.didEndCustomizing
             .subscribe(onNext: { (i, c) in
                 returnedItems = i
                 changed = c
@@ -107,7 +107,7 @@ extension UITabBarTests {
         let item = UITabBarItem()
         var returnedItem: UITabBarItem!
 
-        _ = subject.rx_didSelectItem
+        _ = subject.rx.didSelectItem
             .subscribe(onNext: { i in
                 returnedItem = i
             })

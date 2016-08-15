@@ -297,26 +297,30 @@ extension Reactive where Base: UICollectionView {
     }
 }
 
-extension Reactive where Base: UICollectionView {
+extension UICollectionView {
    
     /**
     Factory method that enables subclasses to implement their own `delegate`.
     
     - returns: Instance of delegate proxy that wraps `delegate`.
     */
-    public func createDelegateProxy() -> RxScrollViewDelegateProxy {
-        return RxCollectionViewDelegateProxy(parentObject: self.base)
+    public override func createRxDelegateProxy() -> RxScrollViewDelegateProxy {
+        return RxCollectionViewDelegateProxy(parentObject: self)
     }
 
     /**
-    Factory method that enables subclasses to implement their own `rx.dataSource`.
-    
-    - returns: Instance of delegate proxy that wraps `dataSource`.
-    */
-    public func createDataSourceProxy() -> RxCollectionViewDataSourceProxy {
-        return RxCollectionViewDataSourceProxy(parentObject: self.base)
+     Factory method that enables subclasses to implement their own `rx.dataSource`.
+
+     - returns: Instance of delegate proxy that wraps `dataSource`.
+     */
+    public func createRxDataSourceProxy() -> RxCollectionViewDataSourceProxy {
+        return RxCollectionViewDataSourceProxy(parentObject: self)
     }
-    
+
+}
+
+extension Reactive where Base: UICollectionView {
+
     /**
     Reactive wrapper for `dataSource`.
     

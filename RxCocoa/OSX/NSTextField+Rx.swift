@@ -55,7 +55,7 @@ public class RxTextFieldDelegateProxy
     public override class func createProxyForObject(_ object: AnyObject) -> AnyObject {
         let control = (object as! NSTextField)
 
-        return castOrFatalError(control.rx.createDelegateProxy())
+        return castOrFatalError(control.createRxDelegateProxy())
     }
 
     /**
@@ -76,16 +76,19 @@ public class RxTextFieldDelegateProxy
     
 }
 
-extension Reactive where Base: NSTextField {
+extension NSTextField {
 
     /**
     Factory method that enables subclasses to implement their own `delegate`.
 
      - returns: Instance of delegate proxy that wraps `delegate`.
      */
-    public func createDelegateProxy() -> RxTextFieldDelegateProxy {
-        return RxTextFieldDelegateProxy(parentObject: base)
+    public func createRxDelegateProxy() -> RxTextFieldDelegateProxy {
+        return RxTextFieldDelegateProxy(parentObject: self)
     }
+}
+
+extension Reactive where Base: NSTextField {
 
     /**
     Reactive wrapper for `delegate`.

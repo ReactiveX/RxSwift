@@ -149,8 +149,8 @@ class ExtendTableViewDelegateProxy
 class UITableViewSubclass1
     : UITableView
     , TestDelegateControl {
-    override func rx_createDelegateProxy() -> RxScrollViewDelegateProxy {
-        return ExtendTableViewDelegateProxy(parentObject: base)
+    override func createRxDelegateProxy() -> RxScrollViewDelegateProxy {
+        return ExtendTableViewDelegateProxy(parentObject: self)
     }
 
     func doThatTest(_ value: Int) {
@@ -158,7 +158,7 @@ class UITableViewSubclass1
     }
 
     var test: Observable<Int> {
-        return rx_delegate
+        return rx.delegate
             .observe(#selector(TestDelegateProtocol.testEventHappened(_:)))
             .map { a in (a[0] as! NSNumber).intValue }
     }
@@ -182,8 +182,8 @@ class ExtendTableViewDataSourceProxy
 class UITableViewSubclass2
     : UITableView
     , TestDelegateControl {
-    override func rx_createDataSourceProxy() -> RxTableViewDataSourceProxy {
-        return ExtendTableViewDataSourceProxy(parentObject: base)
+    override func createRxDataSourceProxy() -> RxTableViewDataSourceProxy {
+        return ExtendTableViewDataSourceProxy(parentObject: self)
     }
 
     func doThatTest(_ value: Int) {
@@ -191,7 +191,7 @@ class UITableViewSubclass2
     }
 
     var test: Observable<Int> {
-        return rx_dataSource
+        return rx.dataSource
             .observe(#selector(TestDelegateProtocol.testEventHappened(_:)))
             .map { a in (a[0] as! NSNumber).intValue }
     }
@@ -215,8 +215,8 @@ class ExtendCollectionViewDelegateProxy
 class UICollectionViewSubclass1
     : UICollectionView
     , TestDelegateControl {
-    override func rx_createDelegateProxy() -> RxScrollViewDelegateProxy {
-        return ExtendCollectionViewDelegateProxy(parentObject: base)
+    override func createRxDelegateProxy() -> RxScrollViewDelegateProxy {
+        return ExtendCollectionViewDelegateProxy(parentObject: self)
     }
 
     func doThatTest(_ value: Int) {
@@ -224,7 +224,7 @@ class UICollectionViewSubclass1
     }
 
     var test: Observable<Int> {
-        return rx_delegate
+        return rx.delegate
             .observe(#selector(TestDelegateProtocol.testEventHappened(_:)))
             .map { a in (a[0] as! NSNumber).intValue }
     }
@@ -248,8 +248,8 @@ class ExtendCollectionViewDataSourceProxy
 class UICollectionViewSubclass2
     : UICollectionView
     , TestDelegateControl {
-    override func rx_createDataSourceProxy() -> RxCollectionViewDataSourceProxy {
-        return ExtendCollectionViewDataSourceProxy(parentObject: base)
+    override func createRxDataSourceProxy() -> RxCollectionViewDataSourceProxy {
+        return ExtendCollectionViewDataSourceProxy(parentObject: self)
     }
 
     func doThatTest(_ value: Int) {
@@ -257,7 +257,7 @@ class UICollectionViewSubclass2
     }
 
     var test: Observable<Int> {
-        return rx_dataSource
+        return rx.dataSource
             .observe(#selector(TestDelegateProtocol.testEventHappened(_:)))
             .map { a in (a[0] as! NSNumber).intValue }
     }
@@ -281,8 +281,8 @@ class ExtendScrollViewDelegateProxy
 class UIScrollViewSubclass
     : UIScrollView
     , TestDelegateControl {
-    override func rx_createDelegateProxy() -> RxScrollViewDelegateProxy {
-        return ExtendScrollViewDelegateProxy(parentObject: base)
+    override func createRxDelegateProxy() -> RxScrollViewDelegateProxy {
+        return ExtendScrollViewDelegateProxy(parentObject: self)
     }
 
     func doThatTest(_ value: Int) {
@@ -290,7 +290,7 @@ class UIScrollViewSubclass
     }
 
     var test: Observable<Int> {
-        return rx_delegate
+        return rx.delegate
             .observe(#selector(TestDelegateProtocol.testEventHappened(_:)))
             .map { a in (a[0] as! NSNumber).intValue }
     }
@@ -316,8 +316,8 @@ class UISearchBarSubclass
     : UISearchBar
     , TestDelegateControl {
     
-    override func rx_createDelegateProxy() -> RxSearchBarDelegateProxy {
-        return ExtendSearchBarDelegateProxy(parentObject: base)
+    override func createRxDelegateProxy() -> RxSearchBarDelegateProxy {
+        return ExtendSearchBarDelegateProxy(parentObject: self)
     }
     
     func doThatTest(_ value: Int) {
@@ -325,7 +325,7 @@ class UISearchBarSubclass
     }
     
     var test: Observable<Int> {
-        return rx_delegate
+        return rx.delegate
             .observe(#selector(TestDelegateProtocol.testEventHappened(_:)))
             .map { a in (a[0] as! NSNumber).intValue }
     }
@@ -350,8 +350,8 @@ class ExtendTextViewDelegateProxy
 class UITextViewSubclass
     : UITextView
     , TestDelegateControl {
-    override func rx_createDelegateProxy() -> RxScrollViewDelegateProxy {
-        return ExtendTextViewDelegateProxy(parentObject: base)
+    override func createRxDelegateProxy() -> RxScrollViewDelegateProxy {
+        return ExtendTextViewDelegateProxy(parentObject: self)
     }
 
     func doThatTest(_ value: Int) {
@@ -359,7 +359,7 @@ class UITextViewSubclass
     }
 
     var test: Observable<Int> {
-        return rx_delegate
+        return rx.delegate
             .observe(#selector(TestDelegateProtocol.testEventHappened(_:)))
             .map { a in (a[0] as! NSNumber).intValue }
     }
@@ -378,7 +378,7 @@ class UISearchControllerSubclass
     }
     
     var test: Observable<Int> {
-        return rx_delegate
+        return rx.delegate
             .observe(#selector(TestDelegateProtocol.testEventHappened(_:)))
             .map { a in (a[0] as! NSNumber).intValue }
     }
@@ -397,7 +397,7 @@ class UIPickerViewSubclass
     }
     
     var test: Observable<Int> {
-        return rx_delegate
+        return rx.delegate
             .observe(#selector(TestDelegateProtocol.testEventHappened(_:)))
             .map { a in (a[0] as! NSNumber).intValue }
     }

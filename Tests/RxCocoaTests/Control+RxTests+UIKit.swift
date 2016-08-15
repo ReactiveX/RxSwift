@@ -14,7 +14,7 @@ import XCTest
 extension ControlTests {
     func testSubscribeEnabledToTrue() {
         let subject = UIControl()
-        let disposable = Observable.just(true).subscribe(subject.rx_enabled)
+        let disposable = Observable.just(true).subscribe(subject.rx.enabled)
         defer { disposable.dispose() }
 
         XCTAssert(subject.isEnabled == true, "Expected enabled set to true")
@@ -22,7 +22,7 @@ extension ControlTests {
 
     func testSubscribeEnabledToFalse() {
         let subject = UIControl()
-        let disposable = Observable.just(false).subscribe(subject.rx_enabled)
+        let disposable = Observable.just(false).subscribe(subject.rx.enabled)
         defer { disposable.dispose() }
 
         XCTAssert(subject.isEnabled == false, "Expected enabled set to false")
@@ -30,7 +30,7 @@ extension ControlTests {
 
     func testSubscribedSelectedToTrue() {
         let subject = UIControl()
-        let disposable = Observable.just(true).subscribe(subject.rx_selected)
+        let disposable = Observable.just(true).subscribe(subject.rx.selected)
         defer { disposable.dispose() }
 
         XCTAssert(subject.isSelected == true, "Expected selected set to true")
@@ -38,7 +38,7 @@ extension ControlTests {
 
     func testSubscribeSelectedToFalse() {
         let subject = UIControl()
-        let disposable = Observable.just(false).subscribe(subject.rx_selected)
+        let disposable = Observable.just(false).subscribe(subject.rx.selected)
         defer { disposable.dispose() }
 
         XCTAssert(subject.isSelected == false, "Expected selected set to false")
@@ -52,7 +52,7 @@ extension ControlTests {
 // UIBarButtonItem
 extension ControlTests {
     func testBarButtonItem_DelegateEventCompletesOnDealloc() {
-        ensureEventDeallocated({ UIBarButtonItem() }) { (view: UIBarButtonItem) in view.rx_tap }
+        ensureEventDeallocated({ UIBarButtonItem() }) { (view: UIBarButtonItem) in view.rx.tap }
     }
 }
 
@@ -60,13 +60,13 @@ extension ControlTests {
 extension ControlTests {
     func testLabel_HasWeakReference() {
         let variable = Variable<NSAttributedString?>(nil)
-        ensureControlObserverHasWeakReference(UILabel(), { (label: UILabel) -> AnyObserver<NSAttributedString?> in label.rx_attributedText }, { variable.asObservable() })
+        ensureControlObserverHasWeakReference(UILabel(), { (label: UILabel) -> AnyObserver<NSAttributedString?> in label.rx.attributedText }, { variable.asObservable() })
     }
 
     func testLabel_NextElementsSetsValue() {
         let subject = UILabel()
         let attributedTextSequence = Variable<NSAttributedString?>(nil)
-        let disposable = attributedTextSequence.asObservable().bindTo(subject.rx_attributedText)
+        let disposable = attributedTextSequence.asObservable().bindTo(subject.rx.attributedText)
         defer { disposable.dispose() }
 
         attributedTextSequence.value = NSAttributedString(string: "Hello!")
@@ -77,13 +77,13 @@ extension ControlTests {
 // UIProgressView
 extension ControlTests {
     func testProgressView_HasWeakReference() {
-        ensureControlObserverHasWeakReference(UIProgressView(), { (progressView: UIProgressView) -> AnyObserver<Float> in progressView.rx_progress }, { Variable<Float>(0.0).asObservable() })
+        ensureControlObserverHasWeakReference(UIProgressView(), { (progressView: UIProgressView) -> AnyObserver<Float> in progressView.rx.progress }, { Variable<Float>(0.0).asObservable() })
     }
 
     func testProgressView_NextElementsSetsValue() {
         let subject = UIProgressView()
         let progressSequence = Variable<Float>(0.0)
-        let disposable = progressSequence.asObservable().bindTo(subject.rx_progress)
+        let disposable = progressSequence.asObservable().bindTo(subject.rx.progress)
         defer { disposable.dispose() }
 
         progressSequence.value = 1.0
@@ -95,7 +95,7 @@ extension ControlTests {
 extension ControlTests {
     func testControl_DelegateEventCompletesOnDealloc() {
         let createView: () -> UIControl = { UIControl(frame: CGRect(x: 0, y: 0, width: 1, height: 1)) }
-        ensureEventDeallocated(createView) { (view: UIControl) in view.rx_controlEvent(.allEditingEvents) }
+        ensureEventDeallocated(createView) { (view: UIControl) in view.rx.controlEvent(.allEditingEvents) }
     }
 }
 
@@ -103,7 +103,7 @@ extension ControlTests {
 extension ControlTests {
     func testGestureRecognizer_DelegateEventCompletesOnDealloc() {
         let createView: () -> UIGestureRecognizer = { UIGestureRecognizer(target: nil, action: NSSelectorFromString("s")) }
-        ensureEventDeallocated(createView) { (view: UIGestureRecognizer) in view.rx_event }
+        ensureEventDeallocated(createView) { (view: UIGestureRecognizer) in view.rx.event }
     }
 }
 
@@ -111,7 +111,7 @@ extension ControlTests {
 extension ControlTests {
     func testScrollView_DelegateEventCompletesOnDealloc() {
         let createView: () -> UIScrollView = { UIScrollView(frame: CGRect(x: 0, y: 0, width: 1, height: 1)) }
-        ensurePropertyDeallocated(createView, CGPoint(x: 1, y: 1)) { (view: UIScrollView) in view.rx_contentOffset }
+        ensurePropertyDeallocated(createView, CGPoint(x: 1, y: 1)) { (view: UIScrollView) in view.rx.contentOffset }
     }
 }
 
@@ -119,21 +119,21 @@ extension ControlTests {
 extension ControlTests {
     func testSegmentedControl_DelegateEventCompletesOnDealloc() {
         let createView: () -> UISegmentedControl = { UISegmentedControl(items: ["a", "b", "c"]) }
-        ensurePropertyDeallocated(createView, 1) { (view: UISegmentedControl) in view.rx_value }
+        ensurePropertyDeallocated(createView, 1) { (view: UISegmentedControl) in view.rx.value }
     }
 }
 
 // UIActivityIndicatorView
 extension ControlTests {
     func testActivityIndicator_HasWeakReference() {
-        ensureControlObserverHasWeakReference(UIActivityIndicatorView(), { (view: UIActivityIndicatorView) -> AnyObserver<Bool> in view.rx_animating }, { Variable<Bool>(true).asObservable() })
+        ensureControlObserverHasWeakReference(UIActivityIndicatorView(), { (view: UIActivityIndicatorView) -> AnyObserver<Bool> in view.rx.animating }, { Variable<Bool>(true).asObservable() })
     }
 
     func testActivityIndicator_NextElementsSetsValue() {
         let subject = UIActivityIndicatorView()
         let boolSequence = Variable<Bool>(false)
 
-        let disposable = boolSequence.asObservable().bindTo(subject.rx_animating)
+        let disposable = boolSequence.asObservable().bindTo(subject.rx.animating)
         defer { disposable.dispose() }
 
         boolSequence.value = true
@@ -148,14 +148,14 @@ extension ControlTests {
 extension ControlTests {
     func testAlertAction_Enable() {
         let subject = UIAlertAction()
-        Observable.just(false).subscribe(subject.rx_enabled).dispose()
+        Observable.just(false).subscribe(subject.rx.enabled).dispose()
         
         XCTAssertTrue(subject.isEnabled == false)
     }
 
     func testAlertAction_Disable() {
         let subject = UIAlertAction()
-        Observable.just(true).subscribe(subject.rx_enabled).dispose()
+        Observable.just(true).subscribe(subject.rx.enabled).dispose()
         
         XCTAssertTrue(subject.isEnabled == true)
     }
@@ -167,7 +167,7 @@ extension ControlTests {
 extension ControlTests {
     func testDatePicker_DelegateEventCompletesOnDealloc() {
         let createView: () -> UIDatePicker = { UIDatePicker(frame: CGRect(x: 0, y: 0, width: 1, height: 1)) }
-        ensurePropertyDeallocated(createView, Date()) { (view: UIDatePicker) in view.rx_date }
+        ensurePropertyDeallocated(createView, Date()) { (view: UIDatePicker) in view.rx.date }
     }
 }
 
@@ -176,7 +176,7 @@ extension ControlTests {
 extension ControlTests {
     func testSlider_DelegateEventCompletesOnDealloc() {
         let createView: () -> UISlider = { UISlider(frame: CGRect(x: 0, y: 0, width: 1, height: 1)) }
-        ensurePropertyDeallocated(createView, 0.5) { (view: UISlider) in view.rx_value }
+        ensurePropertyDeallocated(createView, 0.5) { (view: UISlider) in view.rx.value }
     }
 }
 
@@ -184,7 +184,7 @@ extension ControlTests {
 extension ControlTests {
     func testStepper_DelegateEventCompletesOnDealloc() {
         let createView: () -> UIStepper = { UIStepper(frame: CGRect(x: 0, y: 0, width: 1, height: 1)) }
-        ensurePropertyDeallocated(createView, 1) { (view: UIStepper) in view.rx_value }
+        ensurePropertyDeallocated(createView, 1) { (view: UIStepper) in view.rx.value }
     }
 }
 
@@ -195,7 +195,7 @@ extension ControlTests {
     // TODO: UISwitch doesn't dealloc on Swift 2.3 compiler
     func testSwitch_DelegateEventCompletesOnDealloc() {
         let createView: () -> UISwitch = { UISwitch(frame: CGRect(x: 0, y: 0, width: 1, height: 1)) }
-        ensurePropertyDeallocated(createView, true) { (view: UISwitch) in view.rx_value }
+        ensurePropertyDeallocated(createView, true) { (view: UISwitch) in view.rx.value }
     }
     #endif
 }
@@ -204,7 +204,7 @@ extension ControlTests {
 extension ControlTests {
     func testButton_tapDeallocates() {
         let createView: () -> UIButton = { UIButton(frame: CGRect(x: 0, y: 0, width: 1, height: 1)) }
-        ensureEventDeallocated(createView) { (view: UIButton) in view.rx_tap }
+        ensureEventDeallocated(createView) { (view: UIButton) in view.rx.tap }
     }
 }
 
@@ -214,7 +214,7 @@ extension ControlTests {
 extension ControlTests {
     func testButton_tapDeallocates() {
         let createView: () -> UIButton = { UIButton(frame: CGRect(x: 0, y: 0, width: 1, height: 1)) }
-        ensureEventDeallocated(createView) { (view: UIButton) in view.rx_primaryAction }
+        ensureEventDeallocated(createView) { (view: UIButton) in view.rx.primaryAction }
     }
 }
 
