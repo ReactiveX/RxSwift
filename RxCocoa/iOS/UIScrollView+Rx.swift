@@ -52,7 +52,7 @@ extension UIScrollView {
     */
     public var rx_scrollEnabled: AnyObserver<Bool> {
         return UIBindingObserver(UIElement: self) { scrollView, scrollEnabled in
-            scrollView.scrollEnabled = scrollEnabled
+            scrollView.isScrollEnabled = scrollEnabled
         }.asObserver()
     }
 
@@ -65,7 +65,7 @@ extension UIScrollView {
     - parameter delegate: Delegate object.
     - returns: Disposable object that can be used to unbind the delegate.
     */
-    public func rx_setDelegate(delegate: UIScrollViewDelegate)
+    public func rx_setDelegate(_ delegate: UIScrollViewDelegate)
         -> Disposable {
         return RxScrollViewDelegateProxy.installForwardDelegate(delegate, retainDelegate: false, onProxyForObject: self)
     }

@@ -20,7 +20,7 @@ extension BagTest {
     typealias DoSomething = () -> Void
     typealias KeyType = Bag<DoSomething>.KeyType
     
-    func numberOfActionsAfter<T>(nInsertions: Int, deletionsFromStart: Int, createNew: () -> T, bagAction: (RxMutableBox<Bag<T>>) -> ()) {
+    func numberOfActionsAfter<T>(_ nInsertions: Int, deletionsFromStart: Int, createNew: () -> T, bagAction: (RxMutableBox<Bag<T>>) -> ()) {
         let bag = RxMutableBox(Bag<T>())
         
         var keys = [KeyType]()
@@ -52,12 +52,12 @@ extension BagTest {
                 numberOfActionsAfter(i,
                     deletionsFromStart: j,
                     createNew: { () -> AnyObserver<Int> in AnyObserver { _ in numberObservers += 1 } },
-                    bagAction: { (bag: RxMutableBox<Bag<AnyObserver<Int>>>) in bag.value.on(.Next(1)); XCTAssertTrue(bag.value.count == i - j) }
+                    bagAction: { (bag: RxMutableBox<Bag<AnyObserver<Int>>>) in bag.value.on(.next(1)); XCTAssertTrue(bag.value.count == i - j) }
                 )
                 numberOfActionsAfter(i,
                     deletionsFromStart: j,
-                    createNew: { () -> Disposable in AnonymousDisposable { numberDisposables += 1 } },
-                    bagAction: { (bag: RxMutableBox<Bag<Disposable>>) in disposeAllIn(bag.value); XCTAssertTrue(bag.value.count == i - j) }
+                    createNew: { () -> Disposable in Disposables.create { numberDisposables += 1 } },
+                    bagAction: { (bag: RxMutableBox<Bag<Disposable>>) in disposeAll(in: bag.value); XCTAssertTrue(bag.value.count == i - j) }
                 )
 
                 XCTAssertTrue(numberForEachActions == i - j)
@@ -67,7 +67,7 @@ extension BagTest {
         }
     }
 
-    func numberOfActionsAfter<T>(nInsertions: Int, deletionsFromEnd: Int, createNew: () -> T, bagAction: (RxMutableBox<Bag<T>>) -> ()) {
+    func numberOfActionsAfter<T>(_ nInsertions: Int, deletionsFromEnd: Int, createNew: () -> T, bagAction: (RxMutableBox<Bag<T>>) -> ()) {
         let bag = RxMutableBox(Bag<T>())
         
         var keys = [KeyType]()
@@ -99,12 +99,12 @@ extension BagTest {
                 numberOfActionsAfter(i,
                     deletionsFromStart: j,
                     createNew: { () -> AnyObserver<Int> in AnyObserver { _ in numberObservers += 1 } },
-                    bagAction: { (bag: RxMutableBox<Bag<AnyObserver<Int>>>) in bag.value.on(.Next(1)); XCTAssertTrue(bag.value.count == i - j) }
+                    bagAction: { (bag: RxMutableBox<Bag<AnyObserver<Int>>>) in bag.value.on(.next(1)); XCTAssertTrue(bag.value.count == i - j) }
                 )
                 numberOfActionsAfter(i,
                     deletionsFromStart: j,
-                    createNew: { () -> Disposable in AnonymousDisposable { numberDisposables += 1 } },
-                    bagAction: { (bag: RxMutableBox<Bag<Disposable>>) in disposeAllIn(bag.value); XCTAssertTrue(bag.value.count == i - j) }
+                    createNew: { () -> Disposable in Disposables.create { numberDisposables += 1 } },
+                    bagAction: { (bag: RxMutableBox<Bag<Disposable>>) in disposeAll(in: bag.value); XCTAssertTrue(bag.value.count == i - j) }
                 )
 
                 XCTAssertTrue(numberForEachActions == i - j)
@@ -125,19 +125,19 @@ extension BagTest {
             let bag3 = RxMutableBox(Bag<Disposable>())
 
             for _ in 0 ..< 50 {
-                bag1.value.insert({
+                _ = bag1.value.insert({
                     if increment1 == breakAt {
                         bag1.value.removeAll()
                     }
                     increment1 += 1
                 })
-                bag2.value.insert(AnyObserver { _ in
+                _ = bag2.value.insert(AnyObserver { _ in
                     if increment2 == breakAt {
                         bag2.value.removeAll()
                     }
                     increment2 += 1
                 })
-                bag3.value.insert(AnonymousDisposable { _ in
+                _ = bag3.value.insert(Disposables.create { _ in
                     if increment3 == breakAt {
                         bag3.value.removeAll()
                     }
@@ -150,9 +150,9 @@ extension BagTest {
                     c()
                 }
 
-                bag2.value.on(.Next(1))
+                bag2.value.on(.next(1))
 
-                disposeAllIn(bag3.value)
+                disposeAll(in: bag3.value)
             }
             
             XCTAssertEqual(increment1, 50)
@@ -172,12 +172,12 @@ extension BagTest {
         numberOfActionsAfter(100,
             deletionsFromStart: 0,
             createNew: { () -> AnyObserver<Int> in AnyObserver { _ in numberObservers += 1 } },
-            bagAction: { (bag: RxMutableBox<Bag<AnyObserver<Int>>>) in bag.value.removeAll(); bag.value.on(.Next(1)); }
+            bagAction: { (bag: RxMutableBox<Bag<AnyObserver<Int>>>) in bag.value.removeAll(); bag.value.on(.next(1)); }
         )
         numberOfActionsAfter(100,
             deletionsFromStart: 0,
-            createNew: { () -> Disposable in AnonymousDisposable { numberDisposables += 1 } },
-            bagAction: { (bag: RxMutableBox<Bag<Disposable>>) in bag.value.removeAll(); disposeAllIn(bag.value); }
+            createNew: { () -> Disposable in Disposables.create { numberDisposables += 1 } },
+            bagAction: { (bag: RxMutableBox<Bag<Disposable>>) in bag.value.removeAll(); disposeAll(in: bag.value); }
         )
 
         XCTAssertTrue(numberForEachActions == 0)
@@ -194,11 +194,11 @@ extension BagTest {
 
         var keys: [Bag<Disposable>.KeyType] = []
         for _ in 0..<limit {
-            keys.append(bag.insert(AnonymousDisposable { increment += 1 }))
+            keys.append(bag.insert(Disposables.create { increment += 1 }))
         }
 
         for i in 0..<limit {
-            bag.removeKey(keys[i])
+            _ = bag.removeKey(keys[i])
         }
     }
 
@@ -211,11 +211,11 @@ extension BagTest {
 
         var keys: [Bag<Disposable>.KeyType] = []
         for _ in 0..<limit {
-            keys.append(bag.insert(AnonymousDisposable { increment += 1 }))
+            keys.append(bag.insert(Disposables.create { increment += 1 }))
         }
 
         for i in 0..<limit {
-            bag.removeKey(keys[limit - 1 - i])
+            _ = bag.removeKey(keys[limit - 1 - i])
         }
     }
 }

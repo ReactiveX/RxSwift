@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension FloatingPointType {
+extension FloatingPoint {
     typealias identity = Self
 
     public var identity: Self {

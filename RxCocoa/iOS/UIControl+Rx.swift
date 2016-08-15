@@ -21,7 +21,7 @@ extension UIControl {
     */
     public var rx_enabled: AnyObserver<Bool> {
         return UIBindingObserver(UIElement: self) { control, value in
-            control.enabled = value
+            control.isEnabled = value
         }.asObserver()
     }
 
@@ -30,7 +30,7 @@ extension UIControl {
      */
     public var rx_selected: AnyObserver<Bool> {
         return UIBindingObserver(UIElement: self) { control, selected in
-            control.selected = selected
+            control.isSelected = selected
         }.asObserver()
     }
 
@@ -39,21 +39,21 @@ extension UIControl {
     
     - parameter controlEvents: Filter for observed event types.
     */
-    public func rx_controlEvent(controlEvents: UIControlEvents) -> ControlEvent<Void> {
+    public func rx_controlEvent(_ controlEvents: UIControlEvents) -> ControlEvent<Void> {
         let source: Observable<Void> = Observable.create { [weak self] observer in
             MainScheduler.ensureExecutingOnScheduler()
 
             guard let control = self else {
-                observer.on(.Completed)
-                return NopDisposable.instance
+                observer.on(.completed)
+                return Disposables.create()
             }
 
             let controlTarget = ControlTarget(control: control, controlEvents: controlEvents) {
                 control in
-                observer.on(.Next())
+                observer.on(.next())
             }
             
-            return AnonymousDisposable(controlTarget.dispose)
+            return Disposables.create(with: controlTarget.dispose)
         }.takeUntil(rx_deallocated)
         
         return ControlEvent(events: source)
@@ -63,22 +63,22 @@ extension UIControl {
      You might be wondering why the ugly `as!` casts etc, well, for some reason if 
      Swift compiler knows C is UIControl type and optimizations are turned on, it will crash.
     */
-    static func rx_value<C: AnyObject, T: Equatable>(control: C, getter: (C) -> T, setter: (C, T) -> Void) -> ControlProperty<T> {
+    static func rx_value<C: AnyObject, T: Equatable>(_ control: C, getter: (C) -> T, setter: (C, T) -> Void) -> ControlProperty<T> {
         let source: Observable<T> = Observable.create { [weak weakControl = control] observer in
                 guard let control = weakControl else {
-                    observer.on(.Completed)
-                    return NopDisposable.instance
+                    observer.on(.completed)
+                    return Disposables.create()
                 }
 
-                observer.on(.Next(getter(control)))
+                observer.on(.next(getter(control)))
 
-                let controlTarget = ControlTarget(control: control as! UIControl, controlEvents: [.AllEditingEvents, .ValueChanged]) { _ in
+                let controlTarget = ControlTarget(control: control as! UIControl, controlEvents: [.allEditingEvents, .valueChanged]) { _ in
                     if let control = weakControl {
-                        observer.on(.Next(getter(control)))
+                        observer.on(.next(getter(control)))
                     }
                 }
                 
-                return AnonymousDisposable(controlTarget.dispose)
+                return Disposables.create(with: controlTarget.dispose)
             }
             .takeUntil((control as! NSObject).rx_deallocated)
 

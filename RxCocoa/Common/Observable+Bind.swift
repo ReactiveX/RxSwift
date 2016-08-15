@@ -22,8 +22,8 @@ extension ObservableType {
     - parameter observer: Observer that receives events.
     - returns: Disposable object that can be used to unsubscribe the observer.
     */
-    @warn_unused_result(message="http://git.io/rxs.ud")
-    public func bindTo<O: ObserverType where O.E == E>(observer: O) -> Disposable {
+    // @warn_unused_result(message: "http://git.io/rxs.ud")
+    public func bindTo<O: ObserverType where O.E == E>(_ observer: O) -> Disposable {
         return self.subscribe(observer)
     }
 
@@ -36,20 +36,20 @@ extension ObservableType {
     - parameter variable: Target variable for sequence elements.
     - returns: Disposable object that can be used to unsubscribe the observer.
     */
-    @warn_unused_result(message="http://git.io/rxs.ud")
-    public func bindTo(variable: Variable<E>) -> Disposable {
+    // @warn_unused_result(message: "http://git.io/rxs.ud")
+    public func bindTo(_ variable: Variable<E>) -> Disposable {
         return subscribe { e in
             switch e {
-            case let .Next(element):
+            case let .next(element):
                 variable.value = element
-            case let .Error(error):
+            case let .error(error):
                 let error = "Binding error to variable: \(error)"
             #if DEBUG
                 rxFatalError(error)
             #else
                 print(error)
             #endif
-            case .Completed:
+            case .completed:
                 break
             }
         }
@@ -61,8 +61,8 @@ extension ObservableType {
     - parameter binder: Function used to bind elements from `self`.
     - returns: Object representing subscription.
     */
-    @warn_unused_result(message="http://git.io/rxs.ud")
-    public func bindTo<R>(binder: Self -> R) -> R {
+    // @warn_unused_result(message: "http://git.io/rxs.ud")
+    public func bindTo<R>(_ binder: (Self) -> R) -> R {
         return binder(self)
     }
 
@@ -78,8 +78,8 @@ extension ObservableType {
     - parameter curriedArgument: Final argument passed to `binder` to finish binding process.
     - returns: Object representing subscription.
     */
-    @warn_unused_result(message="http://git.io/rxs.ud")
-    public func bindTo<R1, R2>(binder: Self -> R1 -> R2, curriedArgument: R1) -> R2 {
+    // @warn_unused_result(message: "http://git.io/rxs.ud")
+    public func bindTo<R1, R2>(_ binder: (Self) -> (R1) -> R2, curriedArgument: R1) -> R2 {
          return binder(self)(curriedArgument)
     }
     
@@ -93,8 +93,8 @@ extension ObservableType {
     - parameter onNext: Action to invoke for each element in the observable sequence.
     - returns: Subscription object used to unsubscribe from the observable sequence.
     */
-    @warn_unused_result(message="http://git.io/rxs.ud")
-    public func bindNext(onNext: E -> Void) -> Disposable {
+    // @warn_unused_result(message: "http://git.io/rxs.ud")
+    public func bindNext(_ onNext: (E) -> Void) -> Disposable {
         return subscribe(onNext: onNext, onError: { error in
             let error = "Binding error: \(error)"
             #if DEBUG

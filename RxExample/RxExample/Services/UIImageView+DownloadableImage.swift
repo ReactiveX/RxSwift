@@ -20,18 +20,18 @@ extension UIImageView{
         return self.rxex_downloadableImageAnimated(nil)
     }
 
-    func rxex_downloadableImageAnimated(transitionType:String?) -> AnyObserver<DownloadableImage> {
+    func rxex_downloadableImageAnimated(_ transitionType:String?) -> AnyObserver<DownloadableImage> {
         return UIBindingObserver(UIElement: self) { imageView, image in
             for subview in imageView.subviews {
                 subview.removeFromSuperview()
             }
             switch image {
-            case .Content(let image):
+            case .content(let image):
                 imageView.rx_image.onNext(image)
-            case .OfflinePlaceholder:
+            case .offlinePlaceholder:
                 let label = UILabel(frame: imageView.bounds)
-                label.textAlignment = .Center
-                label.font = UIFont.systemFontOfSize(35)
+                label.textAlignment = .center
+                label.font = UIFont.systemFont(ofSize: 35)
                 label.text = "⚠️"
                 imageView.addSubview(label)
             }

@@ -29,13 +29,13 @@ class PrimitiveHotObservable<ElementType> : ObservableType {
         self.observers = Bag()
     }
     
-    func on(event: Event<E>) {
+    func on(_ event: Event<E>) {
         lock.lock()
         defer { lock.unlock() }
         observers.on(event)
     }
     
-    func subscribe<O : ObserverType where O.E == E>(observer: O) -> Disposable {
+    func subscribe<O : ObserverType where O.E == E>(_ observer: O) -> Disposable {
         lock.lock()
         defer { lock.unlock() }
 
@@ -44,7 +44,7 @@ class PrimitiveHotObservable<ElementType> : ObservableType {
         
         let i = self.subscriptions.count - 1
         
-        return AnonymousDisposable {
+        return Disposables.create {
             self.lock.lock()
             defer { self.lock.unlock() }
             

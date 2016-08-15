@@ -29,7 +29,7 @@ typealias AtomicInt = Int32
 #endif
 
 class RunLoopLock {
-    let currentRunLoop: CFRunLoopRef
+    let currentRunLoop: CFRunLoop
 
     var calledRun: AtomicInt = 0
     var calledStop: AtomicInt = 0
@@ -38,12 +38,12 @@ class RunLoopLock {
         currentRunLoop = CFRunLoopGetCurrent()
     }
 
-    func dispatch(action: () -> ()) {
-        CFRunLoopPerformBlock(currentRunLoop, kCFRunLoopDefaultMode) {
+    func dispatch(_ action: () -> ()) {
+        CFRunLoopPerformBlock(currentRunLoop, CFRunLoopMode.defaultMode.rawValue) {
             if CurrentThreadScheduler.isScheduleRequired {
-                CurrentThreadScheduler.instance.schedule(()) { _ in
+                _ = CurrentThreadScheduler.instance.schedule(()) { _ in
                     action()
-                    return NopDisposable.instance
+                    return Disposables.create()
                 }
             }
             else {
@@ -57,7 +57,7 @@ class RunLoopLock {
         if AtomicIncrement(&calledStop) != 1 {
             return
         }
-        CFRunLoopPerformBlock(currentRunLoop, kCFRunLoopDefaultMode) {
+        CFRunLoopPerformBlock(currentRunLoop, CFRunLoopMode.defaultMode.rawValue) {
             CFRunLoopStop(self.currentRunLoop)
         }
         CFRunLoopWakeUp(currentRunLoop)

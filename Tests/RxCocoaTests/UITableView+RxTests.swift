@@ -13,7 +13,7 @@ import XCTest
 
 class UITableViewTests : RxTest {
     func testTableView_DelegateEventCompletesOnDealloc() {
-        let createView: () -> UITableView = { UITableView(frame: CGRectMake(0, 0, 1, 1)) }
+        let createView: () -> UITableView = { UITableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1)) }
 
         ensureEventDeallocated(createView) { (view: UITableView) in view.rx_itemSelected }
         ensureEventDeallocated(createView) { (view: UITableView) in view.rx_itemDeselected }
@@ -29,105 +29,105 @@ class UITableViewTests : RxTest {
     }
 
     func testTableView_itemSelected() {
-        let tableView = UITableView(frame: CGRectMake(0, 0, 1, 1))
+        let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
 
-        var resultIndexPath: NSIndexPath? = nil
+        var resultIndexPath: IndexPath? = nil
 
         let subscription = tableView.rx_itemSelected
-            .subscribeNext { indexPath in
+            .subscribe(onNext: { indexPath in
                 resultIndexPath = indexPath
-            }
+            })
 
-        let testRow = NSIndexPath(forRow: 1, inSection: 0)
-        tableView.delegate!.tableView!(tableView, didSelectRowAtIndexPath: testRow)
+        let testRow = IndexPath(row: 1, section: 0)
+        tableView.delegate!.tableView!(tableView, didSelectRowAt: testRow)
 
         XCTAssertEqual(resultIndexPath, testRow)
         subscription.dispose()
     }
 
     func testTableView_itemDeselected() {
-        let tableView = UITableView(frame: CGRectMake(0, 0, 1, 1))
+        let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
 
-        var resultIndexPath: NSIndexPath? = nil
+        var resultIndexPath: IndexPath? = nil
 
         let subscription = tableView.rx_itemDeselected
-            .subscribeNext { indexPath in
+            .subscribe(onNext: { indexPath in
                 resultIndexPath = indexPath
-            }
+            })
 
-        let testRow = NSIndexPath(forRow: 1, inSection: 0)
-        tableView.delegate!.tableView!(tableView, didDeselectRowAtIndexPath: testRow)
+        let testRow = IndexPath(row: 1, section: 0)
+        tableView.delegate!.tableView!(tableView, didDeselectRowAt: testRow)
 
         XCTAssertEqual(resultIndexPath, testRow)
         subscription.dispose()
     }
 
     func testTableView_itemAccessoryButtonTapped() {
-        let tableView = UITableView(frame: CGRectMake(0, 0, 1, 1))
+        let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
 
-        var resultIndexPath: NSIndexPath? = nil
+        var resultIndexPath: IndexPath? = nil
 
         let subscription = tableView.rx_itemAccessoryButtonTapped
-            .subscribeNext { indexPath in
+            .subscribe(onNext: { indexPath in
                 resultIndexPath = indexPath
-            }
+            })
 
-        let testRow = NSIndexPath(forRow: 1, inSection: 0)
-        tableView.delegate!.tableView!(tableView, accessoryButtonTappedForRowWithIndexPath: testRow)
+        let testRow = IndexPath(row: 1, section: 0)
+        tableView.delegate!.tableView!(tableView, accessoryButtonTappedForRowWith: testRow)
 
         XCTAssertEqual(resultIndexPath, testRow)
         subscription.dispose()
     }
 
     func testTableView_itemDeleted() {
-        let tableView = UITableView(frame: CGRectMake(0, 0, 1, 1))
+        let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
 
-        var resultIndexPath: NSIndexPath? = nil
+        var resultIndexPath: IndexPath? = nil
 
         let subscription = tableView.rx_itemDeleted
-            .subscribeNext { indexPath in
+            .subscribe(onNext: { indexPath in
                 resultIndexPath = indexPath
-            }
+            })
 
-        let testRow = NSIndexPath(forRow: 1, inSection: 0)
-        tableView.dataSource!.tableView!(tableView, commitEditingStyle: .Delete, forRowAtIndexPath:  testRow)
+        let testRow = IndexPath(row: 1, section: 0)
+        tableView.dataSource!.tableView!(tableView, commit: .delete, forRowAt:  testRow)
 
         XCTAssertEqual(resultIndexPath, testRow)
         subscription.dispose()
     }
 
     func testTableView_itemInserted() {
-        let tableView = UITableView(frame: CGRectMake(0, 0, 1, 1))
+        let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
 
-        var resultIndexPath: NSIndexPath? = nil
+        var resultIndexPath: IndexPath? = nil
 
         let subscription = tableView.rx_itemInserted
-            .subscribeNext { indexPath in
+            .subscribe(onNext: { indexPath in
                 resultIndexPath = indexPath
-            }
+            })
 
-        let testRow = NSIndexPath(forRow: 1, inSection: 0)
-        tableView.dataSource!.tableView!(tableView, commitEditingStyle: .Insert, forRowAtIndexPath:  testRow)
+        let testRow = IndexPath(row: 1, section: 0)
+        tableView.dataSource!.tableView!(tableView, commit: .insert, forRowAt:  testRow)
 
         XCTAssertEqual(resultIndexPath, testRow)
         subscription.dispose()
     }
 
     func testTableView_willDisplayCell() {
-        let tableView = UITableView(frame: CGRectMake(0, 0, 1, 1))
+        let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
 
-        var resultIndexPath: NSIndexPath? = nil
+        var resultIndexPath: IndexPath? = nil
         var resultCell: UITableViewCell? = nil
 
         let subscription = tableView.rx_willDisplayCell
-            .subscribeNext { (cell, indexPath) in
+            .subscribe(onNext: { (cell, indexPath) in
                 resultIndexPath = indexPath
                 resultCell = cell
-            }
+            })
 
-        let testRow = NSIndexPath(forRow: 1, inSection: 0)
+        let testRow = IndexPath(row: 1, section: 0)
         let testCell = UITableViewCell()
-        tableView.delegate!.tableView!(tableView, willDisplayCell: testCell, forRowAtIndexPath: testRow)
+        tableView.delegate!.tableView!(tableView, willDisplay: testCell, forRowAt: testRow)
 
         XCTAssertEqual(resultIndexPath, testRow)
         XCTAssertEqual(resultCell, testCell)
@@ -135,20 +135,20 @@ class UITableViewTests : RxTest {
     }
 
     func testTableView_didEndDisplayingCell() {
-        let tableView = UITableView(frame: CGRectMake(0, 0, 1, 1))
+        let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
 
-        var resultIndexPath: NSIndexPath? = nil
+        var resultIndexPath: IndexPath? = nil
         var resultCell: UITableViewCell? = nil
 
         let subscription = tableView.rx_didEndDisplayingCell
-            .subscribeNext { (cell, indexPath) in
+            .subscribe(onNext: { (cell, indexPath) in
                 resultIndexPath = indexPath
                 resultCell = cell
-            }
+            })
 
-        let testRow = NSIndexPath(forRow: 1, inSection: 0)
+        let testRow = IndexPath(row: 1, section: 0)
         let testCell = UITableViewCell()
-        tableView.delegate!.tableView!(tableView, didEndDisplayingCell: testCell, forRowAtIndexPath: testRow)
+        tableView.delegate!.tableView!(tableView, didEndDisplaying: testCell, forRowAt: testRow)
 
         XCTAssertEqual(resultIndexPath, testRow)
         XCTAssertEqual(resultCell, testCell)
@@ -156,20 +156,20 @@ class UITableViewTests : RxTest {
     }
 
     func testTableView_itemMoved() {
-        let tableView = UITableView(frame: CGRectMake(0, 0, 1, 1))
+        let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
 
-        var resultIndexPath: NSIndexPath? = nil
-        var resultIndexPath2: NSIndexPath? = nil
+        var resultIndexPath: IndexPath? = nil
+        var resultIndexPath2: IndexPath? = nil
 
         let subscription = tableView.rx_itemMoved
-            .subscribeNext { (indexPath, indexPath2) in
+            .subscribe(onNext: { (indexPath, indexPath2) in
                 resultIndexPath = indexPath
                 resultIndexPath2 = indexPath2
-            }
+            })
 
-        let testRow = NSIndexPath(forRow: 1, inSection: 0)
-        let testRow2 = NSIndexPath(forRow: 1, inSection: 0)
-        tableView.dataSource!.tableView!(tableView, moveRowAtIndexPath: testRow, toIndexPath: testRow2)
+        let testRow = IndexPath(row: 1, section: 0)
+        let testRow2 = IndexPath(row: 1, section: 0)
+        tableView.dataSource!.tableView!(tableView, moveRowAt: testRow, to: testRow2)
 
         XCTAssertEqual(resultIndexPath, testRow)
         XCTAssertEqual(resultIndexPath2, testRow2)
@@ -180,9 +180,9 @@ class UITableViewTests : RxTest {
         let items: Observable<[Int]> = Observable.just([1, 2, 3])
 
         let createView: () -> (UITableView, Disposable) = {
-            let tableView = UITableView(frame: CGRectMake(0, 0, 1, 1))
-            let dataSourceSubscription = items.bindTo(tableView.rx_itemsWithCellFactory) { (tv, index: Int, item: Int) -> UITableViewCell in
-                return UITableViewCell(style: .Default, reuseIdentifier: "Identity")
+            let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
+            let dataSourceSubscription = items.bindTo(tableView.rx_items) { (tv, index: Int, item: Int) -> UITableViewCell in
+                return UITableViewCell(style: .default, reuseIdentifier: "Identity")
             }
 
             return (tableView, dataSourceSubscription)
@@ -194,9 +194,9 @@ class UITableViewTests : RxTest {
         let items: Observable<[Int]> = Observable.just([1, 2, 3])
 
         let createView: () -> (UITableView, Disposable) = {
-            let tableView = UITableView(frame: CGRectMake(0, 0, 1, 1))
-            tableView.registerClass(NSClassFromString("UITableViewCell"), forCellReuseIdentifier: "a")
-            let dataSourceSubscription = items.bindTo(tableView.rx_itemsWithCellIdentifier("a")) { (index: Int, item: Int, cell) in
+            let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
+            tableView.register(NSClassFromString("UITableViewCell"), forCellReuseIdentifier: "a")
+            let dataSourceSubscription = items.bindTo(tableView.rx_items(cellIdentifier: "a")) { (index: Int, item: Int, cell) in
 
             }
 
@@ -209,9 +209,9 @@ class UITableViewTests : RxTest {
         let items: Observable<[Int]> = Observable.just([1, 2, 3])
 
         let createView: () -> (UITableView, Disposable) = {
-            let tableView = UITableView(frame: CGRectMake(0, 0, 1, 1))
-            tableView.registerClass(NSClassFromString("UITableViewCell"), forCellReuseIdentifier: "a")
-            let dataSourceSubscription = items.bindTo(tableView.rx_itemsWithCellIdentifier("a", cellType: UITableViewCell.self)) { (index: Int, item: Int, cell) in
+            let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
+            tableView.register(NSClassFromString("UITableViewCell"), forCellReuseIdentifier: "a")
+            let dataSourceSubscription = items.bindTo(tableView.rx_items(cellIdentifier: "a", cellType: UITableViewCell.self)) { (index: Int, item: Int, cell) in
 
             }
 
@@ -224,9 +224,9 @@ class UITableViewTests : RxTest {
         let items: Observable<[Int]> = Observable.just([1, 2, 3])
         
         let createView: () -> (UITableView, Disposable) = {
-            let tableView = UITableView(frame: CGRectMake(0, 0, 1, 1))
-            let dataSourceSubscription = items.bindTo(tableView.rx_itemsWithCellFactory) { (tv, index: Int, item: Int) -> UITableViewCell in
-                return UITableViewCell(style: .Default, reuseIdentifier: "Identity")
+            let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
+            let dataSourceSubscription = items.bindTo(tableView.rx_items) { (tv, index: Int, item: Int) -> UITableViewCell in
+                return UITableViewCell(style: .default, reuseIdentifier: "Identity")
             }
             
             return (tableView, dataSourceSubscription)
@@ -237,11 +237,11 @@ class UITableViewTests : RxTest {
         var selectedItem: Int? = nil
         
         let s = tableView.rx_modelSelected(Int.self)
-            .subscribeNext { item in
+            .subscribe(onNext: { item in
                 selectedItem = item
-        }
+            })
         
-        tableView.delegate!.tableView!(tableView, didSelectRowAtIndexPath: NSIndexPath(forRow: 1, inSection: 0))
+        tableView.delegate!.tableView!(tableView, didSelectRowAt: IndexPath(row: 1, section: 0))
         
         XCTAssertEqual(selectedItem, 2)
         
@@ -253,9 +253,9 @@ class UITableViewTests : RxTest {
         let items: Observable<[Int]> = Observable.just([1, 2, 3])
 
         let createView: () -> (UITableView, Disposable) = {
-            let tableView = UITableView(frame: CGRectMake(0, 0, 1, 1))
-            tableView.registerClass(NSClassFromString("UITableViewCell"), forCellReuseIdentifier: "a")
-            let dataSourceSubscription = items.bindTo(tableView.rx_itemsWithCellIdentifier("a")) { (index: Int, item: Int, cell) in
+            let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
+            tableView.register(NSClassFromString("UITableViewCell"), forCellReuseIdentifier: "a")
+            let dataSourceSubscription = items.bindTo(tableView.rx_items(cellIdentifier: "a")) { (index: Int, item: Int, cell) in
 
             }
 
@@ -267,11 +267,11 @@ class UITableViewTests : RxTest {
         var selectedItem: Int? = nil
 
         let s = tableView.rx_modelSelected(Int.self)
-            .subscribeNext { item in
+            .subscribe(onNext: { item in
                 selectedItem = item
-        }
+            })
 
-        tableView.delegate!.tableView!(tableView, didSelectRowAtIndexPath: NSIndexPath(forRow: 1, inSection: 0))
+        tableView.delegate!.tableView!(tableView, didSelectRowAt: IndexPath(row: 1, section: 0))
 
         XCTAssertEqual(selectedItem, 2)
 
@@ -283,9 +283,9 @@ class UITableViewTests : RxTest {
         let items: Observable<[Int]> = Observable.just([1, 2, 3])
 
         let createView: () -> (UITableView, Disposable) = {
-            let tableView = UITableView(frame: CGRectMake(0, 0, 1, 1))
-            let dataSourceSubscription = items.bindTo(tableView.rx_itemsWithCellFactory) { (tv, index: Int, item: Int) -> UITableViewCell in
-                return UITableViewCell(style: .Default, reuseIdentifier: "Identity")
+            let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
+            let dataSourceSubscription = items.bindTo(tableView.rx_items) { (tv, index: Int, item: Int) -> UITableViewCell in
+                return UITableViewCell(style: .default, reuseIdentifier: "Identity")
             }
 
             return (tableView, dataSourceSubscription)
@@ -296,11 +296,11 @@ class UITableViewTests : RxTest {
         var selectedItem: Int? = nil
 
         let s = tableView.rx_modelDeselected(Int.self)
-            .subscribeNext { item in
+            .subscribe(onNext: { item in
                 selectedItem = item
-            }
+            })
 
-        tableView.delegate!.tableView!(tableView, didDeselectRowAtIndexPath: NSIndexPath(forRow: 1, inSection: 0))
+        tableView.delegate!.tableView!(tableView, didDeselectRowAt: IndexPath(row: 1, section: 0))
 
         XCTAssertEqual(selectedItem, 2)
 
@@ -312,9 +312,9 @@ class UITableViewTests : RxTest {
         let items: Observable<[Int]> = Observable.just([1, 2, 3])
 
         let createView: () -> (UITableView, Disposable) = {
-            let tableView = UITableView(frame: CGRectMake(0, 0, 1, 1))
-            tableView.registerClass(NSClassFromString("UITableViewCell"), forCellReuseIdentifier: "a")
-            let dataSourceSubscription = items.bindTo(tableView.rx_itemsWithCellIdentifier("a")) { (index: Int, item: Int, cell) in
+            let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
+            tableView.register(NSClassFromString("UITableViewCell"), forCellReuseIdentifier: "a")
+            let dataSourceSubscription = items.bindTo(tableView.rx_items(cellIdentifier: "a")) { (index: Int, item: Int, cell) in
 
             }
 
@@ -326,11 +326,11 @@ class UITableViewTests : RxTest {
         var selectedItem: Int? = nil
 
         let s = tableView.rx_modelDeselected(Int.self)
-            .subscribeNext { item in
+            .subscribe(onNext: { item in
                 selectedItem = item
-            }
+            })
 
-        tableView.delegate!.tableView!(tableView, didDeselectRowAtIndexPath: NSIndexPath(forRow: 1, inSection: 0))
+        tableView.delegate!.tableView!(tableView, didDeselectRowAt: IndexPath(row: 1, section: 0))
         
         XCTAssertEqual(selectedItem, 2)
         
@@ -342,17 +342,17 @@ class UITableViewTests : RxTest {
         let items: Observable<[Int]> = Observable.just([1, 2, 3])
 
         let createView: () -> (UITableView, Disposable) = {
-            let tableView = UITableView(frame: CGRectMake(0, 0, 1, 1))
-            tableView.registerClass(NSClassFromString("UITableViewCell"), forCellReuseIdentifier: "a")
+            let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
+            tableView.register(NSClassFromString("UITableViewCell"), forCellReuseIdentifier: "a")
             let dataSource = SectionedViewDataSourceMock()
-            let dataSourceSubscription = items.bindTo(tableView.rx_itemsWithDataSource(dataSource))
+            let dataSourceSubscription = items.bindTo(tableView.rx_items(dataSource: dataSource))
 
             return (tableView, dataSourceSubscription)
         }
 
         let (tableView, dataSourceSubscription) = createView()
 
-        let model: Int = try! tableView.rx_modelAtIndexPath(NSIndexPath(forItem: 1, inSection: 0))
+        let model: Int = try! tableView.rx_modelAtIndexPath(IndexPath(item: 1, section: 0))
 
         XCTAssertEqual(model, 2)
         
@@ -369,12 +369,12 @@ extension UITableViewTests {
         autoreleasepool {
             let items: Observable<[Int]> = Observable.just([1, 2, 3])
             let dataSource = SectionedViewDataSourceMock()
-            let tableView = UITableView(frame: CGRectMake(0, 0, 1, 1))
-            dataSourceSubscription = items.bindTo(tableView.rx_itemsWithDataSource(dataSource))
+            let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
+            dataSourceSubscription = items.bindTo(tableView.rx_items(dataSource: dataSource))
 
-            _ = dataSource.rx_deallocated.subscribeNext { _ in
+            _ = dataSource.rx_deallocated.subscribe(onNext: { _ in
                 dataSourceDeallocated = true
-            }
+            })
         }
 
         XCTAssert(dataSourceDeallocated == false)
@@ -387,16 +387,16 @@ extension UITableViewTests {
         var dataSourceDeallocated = false
 
         autoreleasepool {
-            let tableView = UITableView(frame: CGRectMake(0, 0, 1, 1))
-            tableView.registerClass(NSClassFromString("UITableViewCell"), forCellReuseIdentifier: "a")
+            let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
+            tableView.register(UITableViewCell.self, forCellReuseIdentifier: "a")
 
             let items: Observable<[Int]> = Observable.just([1, 2, 3])
             let dataSource = SectionedViewDataSourceMock()
-            _ = items.bindTo(tableView.rx_itemsWithDataSource(dataSource))
+            _ = items.bindTo(tableView.rx_items(dataSource: dataSource))
 
-            _ = dataSource.rx_deallocated.subscribeNext { _ in
+            _ = dataSource.rx_deallocated.subscribe(onNext: { _ in
                 dataSourceDeallocated = true
-            }
+            })
 
             XCTAssert(dataSourceDeallocated == false)
         }
@@ -407,16 +407,16 @@ extension UITableViewTests {
 
         var dataSourceDeallocated = false
 
-        let tableView = UITableView(frame: CGRectMake(0, 0, 1, 1))
-        tableView.registerClass(NSClassFromString("UITableViewCell"), forCellReuseIdentifier: "a")
+        let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "a")
 
         autoreleasepool {
             let dataSource = SectionedViewDataSourceMock()
-            tableView.rx_setDataSource(dataSource)
+            _ = tableView.rx_setDataSource(dataSource)
 
-            _ = dataSource.rx_deallocated.subscribeNext { _ in
+            _ = dataSource.rx_deallocated.subscribe(onNext: { _ in
                 dataSourceDeallocated = true
-            }
+            })
 
             XCTAssert(dataSourceDeallocated == false)
         }

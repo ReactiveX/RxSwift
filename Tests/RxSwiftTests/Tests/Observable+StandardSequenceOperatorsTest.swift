@@ -24,7 +24,7 @@ class ObservableStandardSequenceOperatorsTest : RxTest {
     }
 }
 
-func isPrime(i: Int) -> Bool {
+func isPrime(_ i: Int) -> Bool {
     if i <= 1 {
         return false
     }
@@ -1032,9 +1032,9 @@ extension ObservableStandardSequenceOperatorsTest {
             .map { a in
                 return a
             }
-            .subscribeNext { _ in
+            .subscribe(onNext: { _ in
                 
-            }
+            })
     }
     
     func testMap1_DisposeOnCompleted() {
@@ -1042,9 +1042,9 @@ extension ObservableStandardSequenceOperatorsTest {
             .mapWithIndex { (a, i) in
                 return a
             }
-            .subscribeNext { _ in
+            .subscribe(onNext: { _ in
                 
-            }
+            })
     }
 }
 
@@ -3639,9 +3639,9 @@ extension ObservableStandardSequenceOperatorsTest {
     func testTake_DecrementCountsFirst() {
         let k = BehaviorSubject(value: false)
         
-        _ = k.take(1).subscribeNext { n in
-            k.on(.Next(!n))
-        }
+        _ = k.take(1).subscribe(onNext: { n in
+            k.on(.next(!n))
+        })
     }
 }
 
@@ -3888,12 +3888,12 @@ extension ObservableStandardSequenceOperatorsTest {
         let k = BehaviorSubject(value: false)
 
         var elements = [Bool]()
-        _ = k.takeLast(1).subscribeNext { n in
+        _ = k.takeLast(1).subscribe(onNext: { n in
             elements.append(n)
-            k.on(.Next(!n))
-        }
+            k.on(.next(!n))
+        })
 
-        k.on(.Completed)
+        k.on(.completed)
 
         XCTAssertEqual(elements, [false])
     }
@@ -4791,7 +4791,7 @@ extension ObservableStandardSequenceOperatorsTest {
         }
         
         XCTAssertEqual(res.events, [
-            error(320, RxError.ArgumentOutOfRange)
+            error(320, RxError.argumentOutOfRange)
             ])
         
         XCTAssertEqual(xs.subscriptions, [
@@ -4992,7 +4992,7 @@ extension ObservableStandardSequenceOperatorsTest {
         }
         
         XCTAssertEqual(res.events, [
-            error(250, RxError.NoElements)
+            error(250, RxError.noElements)
             ])
         
         XCTAssertEqual(xs.subscriptions, [
@@ -5039,7 +5039,7 @@ extension ObservableStandardSequenceOperatorsTest {
         
         XCTAssertEqual(res.events, [
             next(210, 2),
-            error(220, RxError.MoreThanOneElement)
+            error(220, RxError.moreThanOneElement)
             ])
         
         XCTAssertEqual(xs.subscriptions, [
@@ -5071,9 +5071,9 @@ extension ObservableStandardSequenceOperatorsTest {
     func testSingle_DecrementCountsFirst() {
         let k = BehaviorSubject(value: false)
 
-        _ = k.single { _ in true }.subscribeNext { n in
-            k.on(.Next(!n))
-        }
+        _ = k.single { _ in true }.subscribe(onNext: { n in
+            k.on(.next(!n))
+        })
     }
     
     func testSinglePredicate_Empty() {
@@ -5091,7 +5091,7 @@ extension ObservableStandardSequenceOperatorsTest {
         }
         
         XCTAssertEqual(res.events, [
-            error(250, RxError.NoElements)
+            error(250, RxError.noElements)
             ])
         
         XCTAssertEqual(xs.subscriptions, [
@@ -5147,7 +5147,7 @@ extension ObservableStandardSequenceOperatorsTest {
         
         XCTAssertEqual(res.events, [
             next(220, 3),
-            error(240, RxError.MoreThanOneElement)
+            error(240, RxError.moreThanOneElement)
             ])
         
         XCTAssertEqual(xs.subscriptions, [
@@ -5211,9 +5211,9 @@ extension ObservableStandardSequenceOperatorsTest {
     func testSinglePredicate_DecrementCountsFirst() {
         let k = BehaviorSubject(value: false)
 
-        _ = k.single { _ in true }.subscribeNext { n in
-            k.on(.Next(!n))
-        }
+        _ = k.single { _ in true }.subscribe(onNext: { n in
+            k.on(.next(!n))
+        })
 
     }
     

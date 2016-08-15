@@ -18,7 +18,7 @@ extension ObservableType {
      Add observer with `id` and print each emitted event.
      - parameter id: an identifier for the subscription.
      */
-    func addObserver(id: String) -> Disposable {
+    func addObserver(_ id: String) -> Disposable {
         return subscribe { print("Subscription:", id, "Event:", $0) }
     }
     

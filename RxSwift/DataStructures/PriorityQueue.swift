@@ -16,7 +16,7 @@ struct PriorityQueue<Element: AnyObject> {
         _hasHigherPriority = hasHigherPriority
     }
 
-    mutating func enqueue(element: Element) {
+    mutating func enqueue(_ element: Element) {
         _elements.append(element)
         bubbleToHigherPriority(_elements.count - 1)
     }
@@ -39,7 +39,7 @@ struct PriorityQueue<Element: AnyObject> {
         return front
     }
 
-    mutating func remove(element: Element) {
+    mutating func remove(_ element: Element) {
         for i in 0 ..< _elements.count {
             if _elements[i] === element {
                 removeAt(i)
@@ -48,13 +48,13 @@ struct PriorityQueue<Element: AnyObject> {
         }
     }
 
-    private mutating func removeAt(index: Int) {
+    private mutating func removeAt(_ index: Int) {
         let removingLast = index == _elements.count - 1
         if !removingLast {
             swap(&_elements[index], &_elements[_elements.count - 1])
         }
 
-        _elements.popLast()
+        _ = _elements.popLast()
 
         if !removingLast {
             bubbleToHigherPriority(index)
@@ -62,7 +62,7 @@ struct PriorityQueue<Element: AnyObject> {
         }
     }
 
-    private mutating func bubbleToHigherPriority(initialUnbalancedIndex: Int) {
+    private mutating func bubbleToHigherPriority(_ initialUnbalancedIndex: Int) {
         precondition(initialUnbalancedIndex >= 0)
         precondition(initialUnbalancedIndex < _elements.count)
 
@@ -82,7 +82,7 @@ struct PriorityQueue<Element: AnyObject> {
         }
     }
 
-    private mutating func bubbleToLowerPriority(initialUnbalancedIndex: Int) {
+    private mutating func bubbleToLowerPriority(_ initialUnbalancedIndex: Int) {
         precondition(initialUnbalancedIndex >= 0)
         precondition(initialUnbalancedIndex < _elements.count)
 

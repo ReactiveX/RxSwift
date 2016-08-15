@@ -34,15 +34,15 @@
         }
     }
 
-    public func CFRunLoopWakeUp(runLoop: CFRunLoopRef) {
+    public func CFRunLoopWakeUp(_ runLoop: CFRunLoopRef) {
     }
 
-    public func CFRunLoopStop(runLoop: CFRunLoopRef) {
+    public func CFRunLoopStop(_ runLoop: CFRunLoopRef) {
         runLoopCounter -= 1
     }
 
-    public func CFRunLoopPerformBlock(runLoop: CFRunLoopRef, _ mode: String, _ action: () -> ()) {
-        queue.enqueue(action)
+    public func CFRunLoopPerformBlock(_ runLoop: CFRunLoopRef, _ mode: String, _ action: () -> ()) {
+        queue.enqueue(element: action)
     }
 
     public func CFRunLoopRun() {
@@ -72,17 +72,17 @@
     typealias AtomicInt = Int64
     #endif
 
-    func AtomicIncrement(increment: UnsafeMutablePointer<AtomicInt>) -> AtomicInt {
+    func AtomicIncrement(_ increment: UnsafeMutablePointer<AtomicInt>) -> AtomicInt {
         increment.memory = increment.memory + 1
         return increment.memory
     }
 
-    func AtomicDecrement(increment: UnsafeMutablePointer<AtomicInt>) -> AtomicInt {
+    func AtomicDecrement(_ increment: UnsafeMutablePointer<AtomicInt>) -> AtomicInt {
         increment.memory = increment.memory - 1
         return increment.memory
     }
 
-    func AtomicCompareAndSwap(l: AtomicInt, _ r: AtomicInt, _ target: UnsafeMutablePointer<AtomicInt>) -> Bool {
+    func AtomicCompareAndSwap(_ l: AtomicInt, _ r: AtomicInt, _ target: UnsafeMutablePointer<AtomicInt>) -> Bool {
         //return __sync_val_compare_and_swap(target, l, r)
         if target.memory == l {
             target.memory = r
@@ -119,10 +119,10 @@
 
     // MARK: objc mock
 
-    public func objc_sync_enter(lock: AnyObject) {
+    public func objc_sync_enter(_ lock: AnyObject) {
     }
 
-    public func objc_sync_exit(lock: AnyObject) {
+    public func objc_sync_exit(_ lock: AnyObject) {
 
     }
 
@@ -156,40 +156,40 @@
 
     public let DISPATCH_TIME_NOW = -1
 
-    public func dispatch_time(when: dispatch_time_t, _ delta: Int64) -> dispatch_time_t {
+    public func dispatch_time(_ when: dispatch_time_t, _ delta: Int64) -> dispatch_time_t {
         return when + Int(delta)
     }
 
-    public func dispatch_queue_create(label: UnsafePointer<Int8>, _ attr: dispatch_queue_attr_t!) -> dispatch_queue_t! {
+    public func dispatch_queue_create(_ label: UnsafePointer<Int8>, _ attr: dispatch_queue_attr_t!) -> dispatch_queue_t! {
         return 0
     }
 
-    public func dispatch_set_target_queue(object: dispatch_object_t!, _ queue: dispatch_queue_t!) {
+    public func dispatch_set_target_queue(_ object: dispatch_object_t!, _ queue: dispatch_queue_t!) {
     }
 
-    public func dispatch_async(queue2: dispatch_queue_t, _ block: dispatch_block_t) {
+    public func dispatch_async(_ queue2: dispatch_queue_t, _ block: dispatch_block_t) {
         queue.enqueue(block)
     }
 
-    public func dispatch_source_create(type: dispatch_source_type_t, _ handle: UInt, _ mask: UInt, _ queue: dispatch_queue_t!) -> dispatch_source_t! {
+    public func dispatch_source_create(_ type: dispatch_source_type_t, _ handle: UInt, _ mask: UInt, _ queue: dispatch_queue_t!) -> dispatch_source_t! {
         return 0
     }
 
-    public func dispatch_source_set_timer(source: dispatch_source_t, _ start: dispatch_time_t, _ interval: UInt64, _ leeway: UInt64) {
+    public func dispatch_source_set_timer(_ source: dispatch_source_t, _ start: dispatch_time_t, _ interval: UInt64, _ leeway: UInt64) {
 
     }
 
-    public func dispatch_source_set_event_handler(source: dispatch_source_t, _ handler: dispatch_block_t!) {
+    public func dispatch_source_set_event_handler(_ source: dispatch_source_t, _ handler: dispatch_block_t!) {
         queue.enqueue(handler)
     }
 
-    public func dispatch_resume(object: dispatch_object_t) {
+    public func dispatch_resume(_ object: dispatch_object_t) {
     }
 
-    public func dispatch_source_cancel(source: dispatch_source_t) {
+    public func dispatch_source_cancel(_ source: dispatch_source_t) {
     }
 
-    public func dispatch_get_global_queue(identifier: Int, _ flags: UInt) -> dispatch_queue_t! {
+    public func dispatch_get_global_queue(_ identifier: Int, _ flags: UInt) -> dispatch_queue_t! {
         return 0
     }
 
@@ -215,7 +215,7 @@
             return Expectation()
         }
 
-        public func waitForExpectationsWithTimeout(time: NSTimeInterval, action: ErrorType? -> Void) {
+        public func waitForExpectationsWithTimeout(time: NSTimeInterval, action: Swift.Error? -> Void) {
         }
     }
 

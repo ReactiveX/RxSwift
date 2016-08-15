@@ -9,7 +9,8 @@
 import Foundation
 
 public final class StableCompositeDisposable {
-    public static func create(disposable1: Disposable, _ disposable2: Disposable) -> Disposable {
-        return BinaryDisposable(disposable1, disposable2)
+    @available(*, deprecated, renamed: "Disposables.create")
+    public static func create(_ disposable1: Disposable, _ disposable2: Disposable) -> Disposable {
+        return Disposables.create(disposable1, disposable2)
     }
 }

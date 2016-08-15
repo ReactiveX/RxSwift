@@ -24,8 +24,8 @@ extension ObservableType {
     - parameter mapResult: A function to transform the final accumulator value into the result value.
     - returns: An observable sequence containing a single element with the final accumulator value.
     */
-    @warn_unused_result(message="http://git.io/rxs.uo")
-    public func reduce<A, R>(seed: A, accumulator: (A, E) throws -> A, mapResult: (A) throws -> R)
+    // @warn_unused_result(message:"http://git.io/rxs.uo")
+    public func reduce<A, R>(_ seed: A, accumulator: (A, E) throws -> A, mapResult: (A) throws -> R)
         -> Observable<R> {
         return Reduce(source: self.asObservable(), seed: seed, accumulator: accumulator, mapResult: mapResult)
     }
@@ -41,8 +41,8 @@ extension ObservableType {
     - parameter accumulator: A accumulator function to be invoked on each element.
     - returns: An observable sequence containing a single element with the final accumulator value.
     */
-    @warn_unused_result(message="http://git.io/rxs.uo")
-    public func reduce<A>(seed: A, accumulator: (A, E) throws -> A)
+    // @warn_unused_result(message:"http://git.io/rxs.uo")
+    public func reduce<A>(_ seed: A, accumulator: (A, E) throws -> A)
         -> Observable<A> {
         return Reduce(source: self.asObservable(), seed: seed, accumulator: accumulator, mapResult: { $0 })
     }
@@ -56,7 +56,7 @@ extension ObservableType {
     
     - returns: An observable sequence containing all the emitted elements as array.
     */
-    @warn_unused_result(message="http://git.io/rxs.uo")
+    // @warn_unused_result(message:"http://git.io/rxs.uo")
     public func toArray()
         -> Observable<[E]> {
             return ToArray(source: self.asObservable())

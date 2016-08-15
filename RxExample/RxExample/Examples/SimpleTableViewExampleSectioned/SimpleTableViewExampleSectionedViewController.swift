@@ -44,13 +44,13 @@ class SimpleTableViewExampleSectionedViewController
             ])
 
         dataSource.configureCell = { (_, tv, indexPath, element) in
-            let cell = tv.dequeueReusableCellWithIdentifier("Cell")!
+            let cell = tv.dequeueReusableCell(withIdentifier: "Cell")!
             cell.textLabel?.text = "\(element) @ row \(indexPath.row)"
             return cell
         }
 
         items
-            .bindTo(tableView.rx_itemsWithDataSource(dataSource))
+            .bindTo(tableView.rx_items(dataSource: dataSource))
             .addDisposableTo(disposeBag)
 
         tableView
@@ -58,9 +58,9 @@ class SimpleTableViewExampleSectionedViewController
             .map { indexPath in
                 return (indexPath, dataSource.itemAtIndexPath(indexPath))
             }
-            .subscribeNext { indexPath, model in
+            .subscribe(onNext: { indexPath, model in
                 DefaultWireframe.presentAlert("Tapped `\(model)` @ \(indexPath)")
-            }
+            })
             .addDisposableTo(disposeBag)
 
         tableView
@@ -68,7 +68,7 @@ class SimpleTableViewExampleSectionedViewController
             .addDisposableTo(disposeBag)
     }
 
-    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let label = UILabel(frame: CGRect.zero)
         label.text = dataSource.sectionAtIndex(section).model ?? ""
         return label

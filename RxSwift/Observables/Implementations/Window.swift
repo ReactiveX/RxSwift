@@ -31,7 +31,7 @@ class WindowTimeCountSink<Element, O: ObserverType where O.E == Observable<Eleme
     init(parent: Parent, observer: O) {
         _parent = parent
         
-        _groupDisposable.addDisposable(_timerD)
+        let _ = _groupDisposable.insert(_timerD)
         
         _refCountDisposable = RefCountDisposable(disposable: _groupDisposable)
         super.init(observer: observer)
@@ -39,36 +39,36 @@ class WindowTimeCountSink<Element, O: ObserverType where O.E == Observable<Eleme
     
     func run() -> Disposable {
         
-        forwardOn(.Next(AddRef(source: _subject, refCount: _refCountDisposable).asObservable()))
+        forwardOn(.next(AddRef(source: _subject, refCount: _refCountDisposable).asObservable()))
         createTimer(_windowId)
         
-        _groupDisposable.addDisposable(_parent._source.subscribeSafe(self))
+        let _ = _groupDisposable.insert(_parent._source.subscribeSafe(self))
         return _refCountDisposable
     }
     
     func startNewWindowAndCompleteCurrentOne() {
-        _subject.on(.Completed)
+        _subject.on(.completed)
         _subject = PublishSubject<Element>()
         
-        forwardOn(.Next(AddRef(source: _subject, refCount: _refCountDisposable).asObservable()))
+        forwardOn(.next(AddRef(source: _subject, refCount: _refCountDisposable).asObservable()))
     }
 
-    func on(event: Event<E>) {
+    func on(_ event: Event<E>) {
         synchronizedOn(event)
     }
 
-    func _synchronized_on(event: Event<E>) {
+    func _synchronized_on(_ event: Event<E>) {
         var newWindow = false
         var newId = 0
         
         switch event {
-        case .Next(let element):
-            _subject.on(.Next(element))
+        case .next(let element):
+            _subject.on(.next(element))
             
             do {
-                try incrementChecked(&_count)
+                let _ = try incrementChecked(&_count)
             } catch (let e) {
-                _subject.on(.Error(e as ErrorType))
+                _subject.on(.error(e as Swift.Error))
                 dispose()
             }
             
@@ -80,13 +80,13 @@ class WindowTimeCountSink<Element, O: ObserverType where O.E == Observable<Eleme
                 self.startNewWindowAndCompleteCurrentOne()
             }
             
-        case .Error(let error):
-            _subject.on(.Error(error))
-            forwardOn(.Error(error))
+        case .error(let error):
+            _subject.on(.error(error))
+            forwardOn(.error(error))
             dispose()
-        case .Completed:
-            _subject.on(.Completed)
-            forwardOn(.Completed)
+        case .completed:
+            _subject.on(.completed)
+            forwardOn(.completed)
             dispose()
         }
 
@@ -95,8 +95,8 @@ class WindowTimeCountSink<Element, O: ObserverType where O.E == Observable<Eleme
         }
     }
     
-    func createTimer(windowId: Int) {
-        if _timerD.disposed {
+    func createTimer(_ windowId: Int) {
+        if _timerD.isDisposed {
             return
         }
         
@@ -125,7 +125,7 @@ class WindowTimeCountSink<Element, O: ObserverType where O.E == Observable<Eleme
             
             self.createTimer(newId)
             
-            return NopDisposable.instance
+            return Disposables.create()
         }
     }
 }
@@ -144,7 +144,7 @@ class WindowTimeCount<Element> : Producer<Observable<Element>> {
         _scheduler = scheduler
     }
     
-    override func run<O : ObserverType where O.E == Observable<Element>>(observer: O) -> Disposable {
+    override func run<O : ObserverType where O.E == Observable<Element>>(_ observer: O) -> Disposable {
         let sink = WindowTimeCountSink(parent: self, observer: observer)
         sink.disposable = sink.run()
         return sink

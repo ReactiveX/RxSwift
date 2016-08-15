@@ -127,7 +127,7 @@ function action() {
 				echo "Running on ${DESTINATION}"
 			fi
 	else
-			DESTINATION='platform=OS X,arch=x86_64'
+			DESTINATION='platform=macOS,arch=x86_64'
 	fi
 
     set -x

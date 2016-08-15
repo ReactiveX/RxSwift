@@ -918,7 +918,7 @@ extension ObservableMultipleTest {
 
 // this generates
 // [generator(0), [generator(1), [generator(2), ..].concat()].concat()].concat()
-func generateCollection<T>(startIndex: Int, _ generator: Int -> Observable<T>) -> Observable<T> {
+func generateCollection<T>(_ startIndex: Int, _ generator: (Int) -> Observable<T>) -> Observable<T> {
     let all = [0, 1].lazy.map { i in
         return i == 0 ? generator(startIndex) : generateCollection(startIndex + 1, generator)
     }
@@ -928,7 +928,7 @@ func generateCollection<T>(startIndex: Int, _ generator: Int -> Observable<T>) -
 // this generates
 // [generator(0), [generator(1), [generator(2), ..].concat()].concat()].concat()
 // This should
-func generateSequence<T>(startIndex: Int, _ generator: Int -> Observable<T>) -> Observable<T> {
+func generateSequence<T>(_ startIndex: Int, _ generator: (Int) -> Observable<T>) -> Observable<T> {
     let all = AnySequence([0, 1].lazy.map { i in
         return i == 0 ? generator(startIndex) : generateSequence(startIndex + 1, generator)
     })
@@ -939,9 +939,9 @@ func generateSequence<T>(startIndex: Int, _ generator: Int -> Observable<T>) -> 
 extension ObservableMultipleTest {
     func testConcat_DefaultScheduler() {
         var sum = 0
-        _ = [Observable.just(1), Observable.just(2), Observable.just(3)].concat().subscribeNext { (e) -> Void in
+        _ = [Observable.just(1), Observable.just(2), Observable.just(3)].concat().subscribe(onNext: { (e) -> Void in
             sum += e
-        }
+        })
         
         XCTAssertEqual(sum, 6)
     }
@@ -1562,9 +1562,9 @@ extension ObservableMultipleTest {
             Observable.of(0, 1, 2)
         ).merge()
         
-        _ = observable.subscribeNext { n in
+        _ = observable.subscribe(onNext: { n in
             nEvents += 1
-        }
+        })
         
         XCTAssertEqual(nEvents, 9)
     }
@@ -1578,9 +1578,9 @@ extension ObservableMultipleTest {
             Observable.of(0, 1, 2)
         ).merge()
         
-        _ = observable.subscribeError { n in
+        _ = observable.subscribe(onError: { n in
             nEvents += 1
-        }
+        })
         
         XCTAssertEqual(nEvents, 1)
     }
@@ -1592,9 +1592,9 @@ extension ObservableMultipleTest {
             Observable.error(testError)
         ).merge()
 
-        _ = observable.subscribeError { n in
+        _ = observable.subscribe(onError: { n in
             nEvents += 1
-        }
+        })
         
         XCTAssertEqual(nEvents, 1)
     }
@@ -1603,9 +1603,9 @@ extension ObservableMultipleTest {
         var nEvents = 0
         
         let observable: Observable<Int> = Observable<Observable<Int>>.empty().merge()
-        _ = observable.subscribeCompleted {
+        _ = observable.subscribe(onCompleted: {
             nEvents += 1
-        }
+        })
         
         XCTAssertEqual(nEvents, 1)
     }
@@ -1614,9 +1614,9 @@ extension ObservableMultipleTest {
         var nEvents = 0
         
         let observable: Observable<Int> = Observable.just(Observable.empty()).merge()
-        _ = observable.subscribeCompleted { n in
+        _ = observable.subscribe(onCompleted: { n in
             nEvents += 1
-        }
+        })
         
         XCTAssertEqual(nEvents, 1)
     }
@@ -1630,9 +1630,9 @@ extension ObservableMultipleTest {
             Observable.of(0, 1, 2)
         ).merge(maxConcurrent: 1)
         
-        _ = observable.subscribeNext { n in
+        _ = observable.subscribe(onNext: { n in
             nEvents += 1
-        }
+        })
         
         XCTAssertEqual(nEvents, 9)
     }
@@ -1646,9 +1646,9 @@ extension ObservableMultipleTest {
             Observable.of(0, 1, 2)
         ).merge(maxConcurrent: 1)
         
-        _ = observable.subscribeError { n in
+        _ = observable.subscribe(onError: { n in
             nEvents += 1
-        }
+        })
         
         XCTAssertEqual(nEvents, 1)
     }
@@ -1660,9 +1660,9 @@ extension ObservableMultipleTest {
             Observable.error(testError)
         ).merge(maxConcurrent: 1)
 
-        _ = observable.subscribeError { n in
+        _ = observable.subscribe(onError: { n in
             nEvents += 1
-        }
+        })
         
         XCTAssertEqual(nEvents, 1)
     }
@@ -1672,9 +1672,9 @@ extension ObservableMultipleTest {
         
         let observable: Observable<Int> = Observable<Observable<Int>>.empty().merge(maxConcurrent: 1)
 
-        _ = observable.subscribeCompleted {
+        _ = observable.subscribe(onCompleted: {
             nEvents += 1
-        }
+        })
         
         XCTAssertEqual(nEvents, 1)
     }
@@ -1684,9 +1684,9 @@ extension ObservableMultipleTest {
         
         let observable: Observable<Int> = Observable.just(Observable.empty()).merge(maxConcurrent: 1)
 
-        _ = observable.subscribeCompleted { n in
+        _ = observable.subscribe(onCompleted: { n in
             nEvents += 1
-        }
+        })
         
         XCTAssertEqual(nEvents, 1)
     }
@@ -2500,17 +2500,7 @@ extension ObservableMultipleTest {
 
 // MARK: combine latest
 extension ObservableMultipleTest {
-    func testCombineLatest_DeadlockSimple() {
-        var nEvents = 0
-        
-        let observable = Observable.combineLatest(Observable.of(0, 1, 2), Observable.of(0, 1, 2)) { $0 + $1 }
-        _ = observable.subscribeNext { n in
-            nEvents += 1
-        }
-        
-        XCTAssertEqual(nEvents, 3)
-    }
-    
+
     func testCombineLatest_DeadlockErrorAfterN() {
         var nEvents = 0
         
@@ -2519,9 +2509,9 @@ extension ObservableMultipleTest {
             Observable.of(0, 1, 2)
         ) { $0 + $1 }
 
-        _ = observable.subscribeError { n in
+        _ = observable.subscribe(onError: { n in
             nEvents += 1
-        }
+        })
         
         XCTAssertEqual(nEvents, 1)
     }
@@ -2534,9 +2524,9 @@ extension ObservableMultipleTest {
             Observable.of(0, 1, 2)
         ) { $0 + $1 }
 
-        _ = observable.subscribeError { n in
+        _ = observable.subscribe(onError: { n in
             nEvents += 1
-        }
+        })
         
         XCTAssertEqual(nEvents, 1)
     }
@@ -2550,9 +2540,9 @@ extension ObservableMultipleTest {
             Observable.of(0, 1, 2)
             ) { $0 + $1 }
 
-        _ = observable.subscribeCompleted {
+        _ = observable.subscribe(onCompleted: {
             nEvents += 1
-        }
+        })
         
         XCTAssertEqual(nEvents, 1)
     }
@@ -3195,7 +3185,7 @@ extension ObservableMultipleTest {
     }
 }
 
-// MARK: combineLatest + CollectionType
+// MARK: combineLatest + Collection
 extension ObservableMultipleTest {
     func testCombineLatest_NeverN() {
         let scheduler = TestScheduler(initialClock: 0)
@@ -3213,7 +3203,7 @@ extension ObservableMultipleTest {
         ])
         
         let res = scheduler.start {
-            [e0, e1, e2].combineLatest { $0.reduce(0, combine:+) }
+            [e0, e1, e2].combineLatest { $0.reduce(0, +) }
         }
         
         XCTAssertEqual(res.events, [])
@@ -3236,7 +3226,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            [e0, e1].combineLatest { $0.reduce(0, combine:+) }
+            [e0, e1].combineLatest { $0.reduce(0, +) }
         }
         
         XCTAssertEqual(res.events, [])
@@ -3258,7 +3248,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            [e0, e1].combineLatest { $0.reduce(0, combine:+) }
+            [e0, e1].combineLatest { $0.reduce(0, +) }
         }
         
         XCTAssertEqual(res.events, [])
@@ -3282,7 +3272,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            ([e0, e1] as [TestableObservable<Int>]).combineLatest { $0.reduce(0, combine:+) }
+            ([e0, e1] as [TestableObservable<Int>]).combineLatest { $0.reduce(0, +) }
         }
         
         XCTAssertEqual(res.events, [
@@ -3309,7 +3299,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            [e0, e1].combineLatest { $0.reduce(0, combine:+) }
+            [e0, e1].combineLatest { $0.reduce(0, +) }
         }
         
         XCTAssertEqual(res.events, [
@@ -3335,7 +3325,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            [e0, e1].combineLatest { $0.reduce(0, combine:+) }
+            [e0, e1].combineLatest { $0.reduce(0, +) }
         }
         
         XCTAssertEqual(res.events, [
@@ -3361,7 +3351,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            [e0, e1].combineLatest { $0.reduce(0, combine:+) }
+            [e0, e1].combineLatest { $0.reduce(0, +) }
         }
         
         XCTAssertEqual(res.events, [
@@ -3386,7 +3376,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            [e0, e1].combineLatest { $0.reduce(0, combine:+) }
+            [e0, e1].combineLatest { $0.reduce(0, +) }
         }
         
         XCTAssertEqual(res.events, [
@@ -3410,7 +3400,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            [e0, e1].combineLatest { $0.reduce(0, combine:+) }
+            [e0, e1].combineLatest { $0.reduce(0, +) }
         }
         
         XCTAssertEqual(res.events, [
@@ -3436,7 +3426,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            [e0, e1].combineLatest { $0.reduce(0, combine:+) }
+            [e0, e1].combineLatest { $0.reduce(0, +) }
         }
         
         XCTAssertEqual(res.events, [
@@ -3462,7 +3452,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            [e0, e1].combineLatest { $0.reduce(0, combine:+) }
+            [e0, e1].combineLatest { $0.reduce(0, +) }
         }
         
         XCTAssertEqual(res.events, [
@@ -3493,7 +3483,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            [e0, e1].combineLatest { $0.reduce(0, combine:+) }
+            [e0, e1].combineLatest { $0.reduce(0, +) }
         }
         
         XCTAssertEqual(res.events, [
@@ -3527,7 +3517,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            [e0, e1].combineLatest { $0.reduce(0, combine:+) }
+            [e0, e1].combineLatest { $0.reduce(0, +) }
         }
         
         XCTAssertEqual(res.events, [
@@ -3558,7 +3548,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            [e0, e1].combineLatest { $0.reduce(0, combine:+) }
+            [e0, e1].combineLatest { $0.reduce(0, +) }
         }
         
         XCTAssertEqual(res.events, [
@@ -3587,7 +3577,7 @@ extension ObservableMultipleTest {
             ])
         
         let res = scheduler.start {
-            [e0, e1].combineLatest { $0.reduce(0, combine:+) }
+            [e0, e1].combineLatest { $0.reduce(0, +) }
         }
         
         XCTAssertEqual(res.events, [
@@ -3682,7 +3672,7 @@ extension ObservableMultipleTest {
         ])
         
         let res = scheduler.start {
-            [e0, e1, e2].combineLatest { $0.reduce(0, combine:+) }
+            [e0, e1, e2].combineLatest { $0.reduce(0, +) }
         }
         
         XCTAssertEqual(res.events, [
@@ -3785,7 +3775,7 @@ extension ObservableMultipleTest {
     }
 }
 
-// MARK: zip + CollectionType
+// MARK: zip + Collection
 extension ObservableMultipleTest {
     func testZip_NAry_symmetric() {
         let scheduler = TestScheduler(initialClock: 0)
@@ -4261,7 +4251,7 @@ extension ObservableMultipleTest {
     func testSkipUntil_HasCompletedCausesDisposal() {
         let scheduler = TestScheduler(initialClock: 0)
         
-        var disposed = false
+        var isDisposed = false
         
         let l = scheduler.createHotObservable([
             next(150, 1),
@@ -4273,8 +4263,8 @@ extension ObservableMultipleTest {
         ])
         
         let r: Observable<Int> = Observable.create { o in
-            return AnonymousDisposable {
-                disposed = true
+            return Disposables.create {
+                isDisposed = true
             }
         }
         
@@ -4285,7 +4275,7 @@ extension ObservableMultipleTest {
         XCTAssertEqual(res.events, [
         ])
         
-        XCTAssert(disposed, "disposed")
+        XCTAssert(isDisposed, "isDisposed")
     }
 }
 

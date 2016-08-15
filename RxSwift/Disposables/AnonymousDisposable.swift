@@ -16,14 +16,14 @@ When dispose method is called, disposal action will be dereferenced.
 public final class AnonymousDisposable : DisposeBase, Cancelable {
     public typealias DisposeAction = () -> Void
 
-    private var _disposed: AtomicInt = 0
+    private var _isDisposed: AtomicInt = 0
     private var _disposeAction: DisposeAction?
 
     /**
     - returns: Was resource disposed.
     */
-    public var disposed: Bool {
-        return _disposed == 1
+    public var isDisposed: Bool {
+        return _isDisposed == 1
     }
 
     /**
@@ -31,19 +31,26 @@ public final class AnonymousDisposable : DisposeBase, Cancelable {
 
     - parameter disposeAction: Disposal action which will be run upon calling `dispose`.
     */
+    @available(*, deprecated, renamed: "Disposables.create")
     public init(_ disposeAction: DisposeAction) {
         _disposeAction = disposeAction
         super.init()
     }
-
+    
+    // Non-deprecated version of the constructor, used by `Disposables.create(with:)`
+    private init(disposeAction: DisposeAction) {
+        _disposeAction = disposeAction
+        super.init()
+    }
+    
     /**
     Calls the disposal action if and only if the current instance hasn't been disposed yet.
 
     After invoking disposal action, disposal action will be dereferenced.
     */
     public func dispose() {
-        if AtomicCompareAndSwap(0, 1, &_disposed) {
-            assert(_disposed == 1)
+        if AtomicCompareAndSwap(0, 1, &_isDisposed) {
+            assert(_isDisposed == 1)
 
             if let action = _disposeAction {
                 _disposeAction = nil
@@ -51,4 +58,17 @@ public final class AnonymousDisposable : DisposeBase, Cancelable {
             }
         }
     }
+}
+
+public extension Disposables {
+    
+    /**
+     Constructs a new disposable with the given action used for disposal.
+     
+     - parameter dispose: Disposal action which will be run upon calling `dispose`.
+     */
+    static func create(with dispose: () -> ()) -> Cancelable {
+        return AnonymousDisposable(disposeAction: dispose)
+    }
+    
 }

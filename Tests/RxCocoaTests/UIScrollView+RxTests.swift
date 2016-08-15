@@ -22,16 +22,16 @@ extension UIScrollViewTests {
 
     func testScrollEnabled_False() {
         let scrollView = UIScrollView(frame: CGRect.zero)
-        scrollView.scrollEnabled = true
+        scrollView.isScrollEnabled = true
         Observable.just(false).bindTo(scrollView.rx_scrollEnabled).dispose()
-        XCTAssertTrue(scrollView.scrollEnabled == false)
+        XCTAssertTrue(scrollView.isScrollEnabled == false)
     }
 
     func testScrollEnabled_True() {
         let scrollView = UIScrollView(frame: CGRect.zero)
-        scrollView.scrollEnabled = false
+        scrollView.isScrollEnabled = false
         Observable.just(true).bindTo(scrollView.rx_scrollEnabled).dispose()
-        XCTAssertTrue(scrollView.scrollEnabled == true)
+        XCTAssertTrue(scrollView.isScrollEnabled == true)
     }
 
 }
@@ -52,9 +52,9 @@ extension UIScrollViewTests {
             let delegate = MockScrollViewDelegate()
             _ = scrollView.rx_setDelegate(delegate)
 
-            _ = delegate.rx_deallocated.subscribeNext { _ in
+            _ = delegate.rx_deallocated.subscribe(onNext: { _ in
                 delegateDeallocated = true
-            }
+            })
 
             XCTAssert(delegateDeallocated == false)
         }

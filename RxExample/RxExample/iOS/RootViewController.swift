@@ -17,17 +17,17 @@ public class RootViewController : UITableViewController {
     public override func viewDidLoad() {
         super.viewDidLoad()
         // force load
-        GitHubSearchRepositoriesAPI.sharedAPI.activityIndicator
-        DefaultWikipediaAPI.sharedAPI
-        DefaultImageService.sharedImageService
-        DefaultWireframe.sharedInstance
-        MainScheduler.instance
+        _ = GitHubSearchRepositoriesAPI.sharedAPI.activityIndicator
+        _ = DefaultWikipediaAPI.sharedAPI
+        _ = DefaultImageService.sharedImageService
+        _ = DefaultWireframe.sharedInstance
+        _ = MainScheduler.instance
         let geoService = GeolocationService.instance
-        geoService.authorized.driveNext { _ in
+        geoService.authorized.drive(onNext: { _ in
 
-        }.dispose()
-        geoService.location.driveNext { _ in
+        }).dispose()
+        geoService.location.drive(onNext: { _ in
 
-        }.dispose()
+        }).dispose()
     }
 }

@@ -13,7 +13,7 @@ import Foundation
 
 public enum ReachabilityStatus {
     case Reachable(viaWiFi: Bool)
-    case Unreachable
+    case unreachable
 }
 
 extension ReachabilityStatus {
@@ -21,7 +21,7 @@ extension ReachabilityStatus {
         switch self {
         case .Reachable:
             return true
-        case .Unreachable:
+        case .unreachable:
             return false
         }
     }
@@ -44,20 +44,20 @@ class DefaultReachabilityService
 
     init() throws {
         let reachabilityRef = try Reachability.reachabilityForInternetConnection()
-        let reachabilitySubject = BehaviorSubject<ReachabilityStatus>(value: .Unreachable)
+        let reachabilitySubject = BehaviorSubject<ReachabilityStatus>(value: .unreachable)
 
         // so main thread isn't blocked when reachability via WiFi is checked
-        let backgroundQueue = dispatch_queue_create("reachability.wificheck", DISPATCH_QUEUE_SERIAL)
+        let backgroundQueue = DispatchQueue(label: "reachability.wificheck")
 
         reachabilityRef.whenReachable = { reachability in
-            dispatch_async(backgroundQueue) {
-                reachabilitySubject.on(.Next(.Reachable(viaWiFi: reachabilityRef.isReachableViaWiFi())))
+            backgroundQueue.async {
+                reachabilitySubject.on(.next(.Reachable(viaWiFi: reachabilityRef.isReachableViaWiFi())))
             }
         }
 
         reachabilityRef.whenUnreachable = { reachability in
-            dispatch_async(backgroundQueue) {
-                reachabilitySubject.on(.Next(.Unreachable))
+            backgroundQueue.async {
+                reachabilitySubject.on(.next(.unreachable))
             }
         }
 
@@ -72,7 +72,7 @@ class DefaultReachabilityService
 }
 
 extension ObservableConvertibleType {
-    func retryOnBecomesReachable(valueOnFailure:E, reachabilityService: ReachabilityService) -> Observable<E> {
+    func retryOnBecomesReachable(_ valueOnFailure:E, reachabilityService: ReachabilityService) -> Observable<E> {
         return self.asObservable()
             .catchError { (e) -> Observable<E> in
                 reachabilityService.reachability

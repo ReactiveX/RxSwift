@@ -30,7 +30,7 @@ public protocol RxTableViewDataSourceType /*: UITableViewDataSource*/ {
     - parameter tableView: Bound table view.
     - parameter observedEvent: Event
     */
-    func tableView(tableView: UITableView, observedEvent: Event<Element>) -> Void
+    func tableView(_ tableView: UITableView, observedEvent: Event<Element>) -> Void
 }
 
 #endif

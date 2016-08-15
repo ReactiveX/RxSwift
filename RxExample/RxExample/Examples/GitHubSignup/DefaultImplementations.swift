@@ -25,75 +25,76 @@ class GitHubDefaultValidationService: GitHubValidationService {
     
     let minPasswordCount = 5
     
-    func validateUsername(username: String) -> Observable<ValidationResult> {
+    func validateUsername(_ username: String) -> Observable<ValidationResult> {
         if username.characters.count == 0 {
-            return Observable.just(.Empty)
+            return Observable.just(.empty)
         }
         
+
         // this obviously won't be
-        if username.rangeOfCharacterFromSet(NSCharacterSet.alphanumericCharacterSet().invertedSet) != nil {
-            return Observable.just(.Failed(message: "Username can only contain numbers or digits"))
+        if username.rangeOfCharacter(from: CharacterSet.alphanumerics.inverted) != nil {
+            return Observable.just(.failed(message: "Username can only contain numbers or digits"))
         }
         
-        let loadingValue = ValidationResult.Validating
+        let loadingValue = ValidationResult.validating
         
         return API
             .usernameAvailable(username)
             .map { available in
                 if available {
-                    return .OK(message: "Username available")
+                    return .ok(message: "Username available")
                 }
                 else {
-                    return .Failed(message: "Username already taken")
+                    return .failed(message: "Username already taken")
                 }
             }
             .startWith(loadingValue)
     }
     
-    func validatePassword(password: String) -> ValidationResult {
+    func validatePassword(_ password: String) -> ValidationResult {
         let numberOfCharacters = password.characters.count
         if numberOfCharacters == 0 {
-            return .Empty
+            return .empty
         }
         
         if numberOfCharacters < minPasswordCount {
-            return .Failed(message: "Password must be at least \(minPasswordCount) characters")
+            return .failed(message: "Password must be at least \(minPasswordCount) characters")
         }
         
-        return .OK(message: "Password acceptable")
+        return .ok(message: "Password acceptable")
     }
     
-    func validateRepeatedPassword(password: String, repeatedPassword: String) -> ValidationResult {
+    func validateRepeatedPassword(_ password: String, repeatedPassword: String) -> ValidationResult {
         if repeatedPassword.characters.count == 0 {
-            return .Empty
+            return .empty
         }
         
         if repeatedPassword == password {
-            return .OK(message: "Password repeated")
+            return .ok(message: "Password repeated")
         }
         else {
-            return .Failed(message: "Password different")
+            return .failed(message: "Password different")
         }
     }
 }
 
 
 class GitHubDefaultAPI : GitHubAPI {
-    let URLSession: NSURLSession
+    let URLSession: Foundation.URLSession
 
     static let sharedAPI = GitHubDefaultAPI(
-        URLSession: NSURLSession.sharedSession()
+        URLSession: Foundation.URLSession.shared
     )
 
-    init(URLSession: NSURLSession) {
+    init(URLSession: Foundation.URLSession) {
         self.URLSession = URLSession
     }
     
-    func usernameAvailable(username: String) -> Observable<Bool> {
+    func usernameAvailable(_ username: String) -> Observable<Bool> {
         // this is ofc just mock, but good enough
         
-        let URL = NSURL(string: "https://github.com/\(username.URLEscaped)")!
-        let request = NSURLRequest(URL: URL)
+        let url = URL(string: "https://github.com/\(username.URLEscaped)")!
+        let request = URLRequest(url: url)
         return self.URLSession.rx_response(request)
             .map { (maybeData, response) in
                 return response.statusCode == 404
@@ -101,7 +102,7 @@ class GitHubDefaultAPI : GitHubAPI {
             .catchErrorJustReturn(false)
     }
     
-    func signup(username: String, password: String) -> Observable<Bool> {
+    func signup(_ username: String, password: String) -> Observable<Bool> {
         // this is also just a mock
         let signupResult = arc4random() % 5 == 0 ? false : true
         return Observable.just(signupResult)

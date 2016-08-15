@@ -28,7 +28,7 @@ public struct HistoricalSchedulerTimeConverter : VirtualTimeConverterType {
      Returns identical value of argument passed because historical virtual time is equal to real time, just 
      decoupled from local machine clock.
     */
-    public func convertFromVirtualTime(virtualTime: VirtualTimeUnit) -> RxTime {
+    public func convertFromVirtualTime(_ virtualTime: VirtualTimeUnit) -> RxTime {
         return virtualTime
     }
 
@@ -36,7 +36,7 @@ public struct HistoricalSchedulerTimeConverter : VirtualTimeConverterType {
      Returns identical value of argument passed because historical virtual time is equal to real time, just 
      decoupled from local machine clock.
     */
-    public func convertToVirtualTime(time: RxTime) -> VirtualTimeUnit {
+    public func convertToVirtualTime(_ time: RxTime) -> VirtualTimeUnit {
         return time
     }
 
@@ -44,7 +44,7 @@ public struct HistoricalSchedulerTimeConverter : VirtualTimeConverterType {
      Returns identical value of argument passed because historical virtual time is equal to real time, just 
      decoupled from local machine clock.
     */
-    public func convertFromVirtualTimeInterval(virtualTimeInterval: VirtualTimeIntervalUnit) -> RxTimeInterval {
+    public func convertFromVirtualTimeInterval(_ virtualTimeInterval: VirtualTimeIntervalUnit) -> RxTimeInterval {
         return virtualTimeInterval
     }
 
@@ -52,7 +52,7 @@ public struct HistoricalSchedulerTimeConverter : VirtualTimeConverterType {
      Returns identical value of argument passed because historical virtual time is equal to real time, just 
      decoupled from local machine clock.
     */
-    public func convertToVirtualTimeInterval(timeInterval: RxTimeInterval) -> VirtualTimeIntervalUnit {
+    public func convertToVirtualTimeInterval(_ timeInterval: RxTimeInterval) -> VirtualTimeIntervalUnit {
         return timeInterval
     }
 
@@ -63,21 +63,21 @@ public struct HistoricalSchedulerTimeConverter : VirtualTimeConverterType {
      - parameter timeInterval: Time interval offset.
      - returns: Time offsetted by time interval.
     */
-    public func offsetVirtualTime(time time: VirtualTimeUnit, offset: VirtualTimeIntervalUnit) -> VirtualTimeUnit {
-        return time.dateByAddingTimeInterval(offset)
+    public func offsetVirtualTime(_ time: VirtualTimeUnit, offset: VirtualTimeIntervalUnit) -> VirtualTimeUnit {
+        return time.addingTimeInterval(offset)
     }
 
     /**
      Compares two `NSDate`s.
     */
-    public func compareVirtualTime(lhs: VirtualTimeUnit, _ rhs: VirtualTimeUnit) -> VirtualTimeComparison {
-        switch lhs.compare(rhs) {
-        case .OrderedAscending:
-            return .LessThan
-        case .OrderedSame:
-            return .Equal
-        case .OrderedDescending:
-            return .GreaterThan
+    public func compareVirtualTime(_ lhs: VirtualTimeUnit, _ rhs: VirtualTimeUnit) -> VirtualTimeComparison {
+        switch lhs.compare(rhs as Date) {
+        case .orderedAscending:
+            return .lessThan
+        case .orderedSame:
+            return .equal
+        case .orderedDescending:
+            return .greaterThan
         }
     }
 }

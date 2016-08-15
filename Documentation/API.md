@@ -317,19 +317,19 @@ extension UITableView {
 
     public func rx_setDataSource(dataSource: UITableViewDataSource) -> Disposable {}
 
-    public func rx_itemsWithCellFactory(source: O)(cellFactory: (UITableView, Int, S.Generator.Element) -> UITableViewCell) -> Disposable {}
+    public func rx_itemsWithCellFactory(source: O)(cellFactory: (UITableView, Int, S.Iterator.Element) -> UITableViewCell) -> Disposable {}
 
-    public func rx_itemsWithCellIdentifier(cellIdentifier: String, cellType: Cell.Type = Cell.self)(source: O)(configureCell: (Int, S.Generator.Element, Cell) -> Void) -> Disposable {}
+    public func rx_itemsWithCellIdentifier(cellIdentifier: String, cellType: Cell.Type = Cell.self)(source: O)(configureCell: (Int, S.Iterator.Element, Cell) -> Void) -> Disposable {}
 
     public func rx_itemsWithDataSource(dataSource: DataSource)(source: O) -> Disposable {}
 
-    public var rx_itemSelected: ControlEvent<NSIndexPath> {}
+    public var rx_itemSelected: ControlEvent<IndexPath> {}
 
-    public var rx_itemDeselected: ControlEvent<NSIndexPath> {}
+    public var rx_itemDeselected: ControlEvent<IndexPath> {}
 
-    public var rx_itemInserted: ControlEvent<NSIndexPath> {}
+    public var rx_itemInserted: ControlEvent<IndexPath> {}
 
-    public var rx_itemDeleted: ControlEvent<NSIndexPath> {}
+    public var rx_itemDeleted: ControlEvent<IndexPath> {}
 
     public var rx_itemMoved: ControlEvent<ItemMovedEvent> {}
 
@@ -349,15 +349,15 @@ extension UICollectionView {
 
     public func rx_setDataSource(dataSource: UICollectionViewDataSource) -> Disposable {}
 
-    public func rx_itemsWithCellFactory(source: O)(cellFactory: (UICollectionView, Int, S.Generator.Element) -> UICollectionViewCell) -> Disposable {}
+    public func rx_itemsWithCellFactory(source: O)(cellFactory: (UICollectionView, Int, S.Iterator.Element) -> UICollectionViewCell) -> Disposable {}
 
-    public func rx_itemsWithCellIdentifier(cellIdentifier: String, cellType: Cell.Type = Cell.self)(source: O)(configureCell: (Int, S.Generator.Element, Cell) -> Void) -> Disposable {}
+    public func rx_itemsWithCellIdentifier(cellIdentifier: String, cellType: Cell.Type = Cell.self)(source: O)(configureCell: (Int, S.Iterator.Element, Cell) -> Void) -> Disposable {}
 
     public func rx_itemsWithDataSource(dataSource: DataSource)(source: O) -> Disposable {}
 
-    public var rx_itemSelected: ControlEvent<NSIndexPath> {}
+    public var rx_itemSelected: ControlEvent<IndexPath> {}
 
-    public var rx_itemDeselected: ControlEvent<NSIndexPath> {}
+    public var rx_itemDeselected: ControlEvent<IndexPath> {}
 
     // This method only works in case one of the `rx_itemsWith*` methods was used, or data source implements `SectionedViewDataSourceType`
     public func rx_modelSelected<T>(modelType: T.Type) -> ControlEvent<T> {}

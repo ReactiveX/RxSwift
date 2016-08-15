@@ -18,23 +18,23 @@ public var resourceCount: AtomicInt = 0
     rxFatalError("Abstract method")
 }
 
-@noreturn func rxFatalError(lastMessage: String) {
+@noreturn func rxFatalError(_ lastMessage: String) {
     // The temptation to comment this line is great, but please don't, it's for your own good. The choice is yours.
     fatalError(lastMessage)
 }
 
-func incrementChecked(inout i: Int) throws -> Int {
+func incrementChecked(_ i: inout Int) throws -> Int {
     if i == Int.max {
-        throw RxError.Overflow
+        throw RxError.overflow
     }
     let result = i
     i += 1
     return result
 }
 
-func decrementChecked(inout i: Int) throws -> Int {
+func decrementChecked(_ i: inout Int) throws -> Int {
     if i == Int.min {
-        throw RxError.Overflow
+        throw RxError.overflow
     }
     let result = i
     i -= 1

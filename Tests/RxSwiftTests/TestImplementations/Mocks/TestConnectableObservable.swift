@@ -22,7 +22,7 @@ class TestConnectableObservable<S: SubjectType where S.E == S.SubjectObserverTyp
         return _o.connect()
     }
     
-    func subscribe<O : ObserverType where O.E == E>(observer: O) -> Disposable {
+    func subscribe<O : ObserverType where O.E == E>(_ observer: O) -> Disposable {
         return _o.subscribe(observer)
     }
 }

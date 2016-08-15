@@ -1,6 +1,6 @@
 # Warn about develop branch
 current_branch = env.request_source.pr_json["base"]["ref"]
-warn("Please target PRs to `develop` branch") if current_branch != "develop"
+warn("Please target PRs to `develop` branch") if current_branch != "develop" && current_branch != "swift-3.0"
 
 # Sometimes it's a README fix, or something like that - which isn't relevant for
 # including in a project's CHANGELOG for example

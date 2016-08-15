@@ -21,22 +21,22 @@ class ScanSink<ElementType, Accumulate, O: ObserverType where O.E == Accumulate>
         super.init(observer: observer)
     }
     
-    func on(event: Event<ElementType>) {
+    func on(_ event: Event<ElementType>) {
         switch event {
-        case .Next(let element):
+        case .next(let element):
             do {
                 _accumulate = try _parent._accumulator(_accumulate, element)
-                forwardOn(.Next(_accumulate))
+                forwardOn(.next(_accumulate))
             }
             catch let error {
-                forwardOn(.Error(error))
+                forwardOn(.error(error))
                 dispose()
             }
-        case .Error(let error):
-            forwardOn(.Error(error))
+        case .error(let error):
+            forwardOn(.error(error))
             dispose()
-        case .Completed:
-            forwardOn(.Completed)
+        case .completed:
+            forwardOn(.completed)
             dispose()
         }
     }
@@ -56,7 +56,7 @@ class Scan<Element, Accumulate>: Producer<Accumulate> {
         _accumulator = accumulator
     }
     
-    override func run<O : ObserverType where O.E == Accumulate>(observer: O) -> Disposable {
+    override func run<O : ObserverType where O.E == Accumulate>(_ observer: O) -> Disposable {
         let sink = ScanSink(parent: self, observer: observer)
         sink.disposable = _source.subscribe(sink)
         return sink

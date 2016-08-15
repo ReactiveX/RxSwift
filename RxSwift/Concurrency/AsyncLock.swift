@@ -41,7 +41,7 @@ class AsyncLock<I: InvocableType>
     }
     // }
 
-    private func enqueue(action: I) -> I? {
+    private func enqueue(_ action: I) -> I? {
         _lock.lock(); defer { _lock.unlock() } // {
             if _hasFaulted {
                 return nil
@@ -70,7 +70,7 @@ class AsyncLock<I: InvocableType>
         // }
     }
 
-    func invoke(action: I) {
+    func invoke(_ action: I) {
         let firstEnqueuedAction = enqueue(action)
         
         if let firstEnqueuedAction = firstEnqueuedAction {

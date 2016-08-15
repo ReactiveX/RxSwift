@@ -16,7 +16,7 @@ class SearchResultViewModel {
     let searchResult: WikipediaSearchResult
 
     var title: Driver<String>
-    var imageURLs: Driver<[NSURL]>
+    var imageURLs: Driver<[URL]>
 
     let API = DefaultWikipediaAPI.sharedAPI
     let $: Dependencies = Dependencies.sharedDependencies
@@ -35,10 +35,10 @@ class SearchResultViewModel {
 
     // private methods
 
-    func configureTitle(imageURLs: Observable<[NSURL]>) -> Observable<String> {
+    func configureTitle(_ imageURLs: Observable<[URL]>) -> Observable<String> {
         let searchResult = self.searchResult
 
-        let loadingValue: [NSURL]? = nil
+        let loadingValue: [URL]? = nil
 
         return imageURLs
             .map(Optional.init)
@@ -54,7 +54,7 @@ class SearchResultViewModel {
             .retryOnBecomesReachable("⚠️ Service offline ⚠️", reachabilityService: $.reachabilityService)
     }
 
-    func configureImageURLs() -> Observable<[NSURL]> {
+    func configureImageURLs() -> Observable<[URL]> {
         let searchResult = self.searchResult
         return API.articleContent(searchResult)
             .observeOn($.backgroundWorkScheduler)

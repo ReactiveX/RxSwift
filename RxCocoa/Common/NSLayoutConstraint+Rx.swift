@@ -35,7 +35,7 @@ extension NSLayoutConstraint {
     @available(iOS 8, OSX 10.10, *)
     public var rx_active: AnyObserver<Bool> {
         return UIBindingObserver(UIElement: self) { constraint, value in
-            constraint.active = value
+            constraint.isActive = value
         }.asObserver()
     }
 }

@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension IntegerType {
+extension Integer {
     typealias identity = Self
 
     public var identity: Self {

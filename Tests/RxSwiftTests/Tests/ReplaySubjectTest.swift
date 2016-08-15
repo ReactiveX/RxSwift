@@ -29,7 +29,7 @@ class ReplaySubjectTest: RxTest {
 
         var subject: ReplaySubject<Int>! = nil
 
-        let results1 = scheduler.createObserver(Int)
+        let results1 = scheduler.createObserver(Int.self)
         var subscription1: Disposable! = nil
 
         scheduler.scheduleAt(100) { subject = ReplaySubject.create(bufferSize: 1) }
@@ -47,13 +47,13 @@ class ReplaySubjectTest: RxTest {
 
         var subject: ReplaySubject<Int>! = nil
 
-        let results1 = scheduler.createObserver(Int)
+        let results1 = scheduler.createObserver(Int.self)
         var subscription1: Disposable! = nil
 
-        let results2 = scheduler.createObserver(Int)
+        let results2 = scheduler.createObserver(Int.self)
         var subscription2: Disposable! = nil
 
-        let results3 = scheduler.createObserver(Int)
+        let results3 = scheduler.createObserver(Int.self)
         var subscription3: Disposable! = nil
 
         scheduler.scheduleAt(100) { subject = ReplaySubject.create(bufferSize: 1) }

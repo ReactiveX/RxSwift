@@ -22,9 +22,9 @@ extension Observable {
     - parameter resultSelector: Function to invoke for each series of elements at corresponding indexes in the sources.
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
-    @warn_unused_result(message="http://git.io/rxs.uo")
+    // @warn_unused_result(message:"http://git.io/rxs.uo")
     public static func zip<O1: ObservableType, O2: ObservableType>
-        (source1: O1, _ source2: O2, resultSelector: (O1.E, O2.E) throws -> E)
+        (_ source1: O1, _ source2: O2, resultSelector: (O1.E, O2.E) throws -> E)
         -> Observable<E> {
         return Zip2(
             source1: source1.asObservable(), source2: source2.asObservable(),
@@ -47,7 +47,7 @@ class ZipSink2_<E1, E2, O: ObserverType> : ZipSink<O> {
         super.init(arity: 2, observer: observer)
     }
 
-    override func hasElements(index: Int) -> Bool {
+    override func hasElements(_ index: Int) -> Bool {
         switch (index) {
         case 0: return _values1.count > 0
         case 1: return _values2.count > 0
@@ -69,7 +69,7 @@ class ZipSink2_<E1, E2, O: ObserverType> : ZipSink<O> {
         subscription1.disposable = _parent.source1.subscribe(observer1)
         subscription2.disposable = _parent.source2.subscribe(observer2)
 
-        return CompositeDisposable(disposables: [
+        return Disposables.create([
            subscription1,
            subscription2
         ])
@@ -95,7 +95,7 @@ class Zip2<E1, E2, R> : Producer<R> {
         _resultSelector = resultSelector
     }
 
-    override func run<O: ObserverType where O.E == R>(observer: O) -> Disposable {
+    override func run<O: ObserverType where O.E == R>(_ observer: O) -> Disposable {
         let sink = ZipSink2_(parent: self, observer: observer)
         sink.disposable = sink.run()
         return sink
@@ -115,9 +115,9 @@ extension Observable {
     - parameter resultSelector: Function to invoke for each series of elements at corresponding indexes in the sources.
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
-    @warn_unused_result(message="http://git.io/rxs.uo")
+    // @warn_unused_result(message:"http://git.io/rxs.uo")
     public static func zip<O1: ObservableType, O2: ObservableType, O3: ObservableType>
-        (source1: O1, _ source2: O2, _ source3: O3, resultSelector: (O1.E, O2.E, O3.E) throws -> E)
+        (_ source1: O1, _ source2: O2, _ source3: O3, resultSelector: (O1.E, O2.E, O3.E) throws -> E)
         -> Observable<E> {
         return Zip3(
             source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(),
@@ -141,7 +141,7 @@ class ZipSink3_<E1, E2, E3, O: ObserverType> : ZipSink<O> {
         super.init(arity: 3, observer: observer)
     }
 
-    override func hasElements(index: Int) -> Bool {
+    override func hasElements(_ index: Int) -> Bool {
         switch (index) {
         case 0: return _values1.count > 0
         case 1: return _values2.count > 0
@@ -167,7 +167,7 @@ class ZipSink3_<E1, E2, E3, O: ObserverType> : ZipSink<O> {
         subscription2.disposable = _parent.source2.subscribe(observer2)
         subscription3.disposable = _parent.source3.subscribe(observer3)
 
-        return CompositeDisposable(disposables: [
+        return Disposables.create([
            subscription1,
            subscription2,
            subscription3
@@ -196,7 +196,7 @@ class Zip3<E1, E2, E3, R> : Producer<R> {
         _resultSelector = resultSelector
     }
 
-    override func run<O: ObserverType where O.E == R>(observer: O) -> Disposable {
+    override func run<O: ObserverType where O.E == R>(_ observer: O) -> Disposable {
         let sink = ZipSink3_(parent: self, observer: observer)
         sink.disposable = sink.run()
         return sink
@@ -216,9 +216,9 @@ extension Observable {
     - parameter resultSelector: Function to invoke for each series of elements at corresponding indexes in the sources.
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
-    @warn_unused_result(message="http://git.io/rxs.uo")
+    // @warn_unused_result(message:"http://git.io/rxs.uo")
     public static func zip<O1: ObservableType, O2: ObservableType, O3: ObservableType, O4: ObservableType>
-        (source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, resultSelector: (O1.E, O2.E, O3.E, O4.E) throws -> E)
+        (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, resultSelector: (O1.E, O2.E, O3.E, O4.E) throws -> E)
         -> Observable<E> {
         return Zip4(
             source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(), source4: source4.asObservable(),
@@ -243,7 +243,7 @@ class ZipSink4_<E1, E2, E3, E4, O: ObserverType> : ZipSink<O> {
         super.init(arity: 4, observer: observer)
     }
 
-    override func hasElements(index: Int) -> Bool {
+    override func hasElements(_ index: Int) -> Bool {
         switch (index) {
         case 0: return _values1.count > 0
         case 1: return _values2.count > 0
@@ -273,7 +273,7 @@ class ZipSink4_<E1, E2, E3, E4, O: ObserverType> : ZipSink<O> {
         subscription3.disposable = _parent.source3.subscribe(observer3)
         subscription4.disposable = _parent.source4.subscribe(observer4)
 
-        return CompositeDisposable(disposables: [
+        return Disposables.create([
            subscription1,
            subscription2,
            subscription3,
@@ -305,7 +305,7 @@ class Zip4<E1, E2, E3, E4, R> : Producer<R> {
         _resultSelector = resultSelector
     }
 
-    override func run<O: ObserverType where O.E == R>(observer: O) -> Disposable {
+    override func run<O: ObserverType where O.E == R>(_ observer: O) -> Disposable {
         let sink = ZipSink4_(parent: self, observer: observer)
         sink.disposable = sink.run()
         return sink
@@ -325,9 +325,9 @@ extension Observable {
     - parameter resultSelector: Function to invoke for each series of elements at corresponding indexes in the sources.
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
-    @warn_unused_result(message="http://git.io/rxs.uo")
+    // @warn_unused_result(message:"http://git.io/rxs.uo")
     public static func zip<O1: ObservableType, O2: ObservableType, O3: ObservableType, O4: ObservableType, O5: ObservableType>
-        (source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, resultSelector: (O1.E, O2.E, O3.E, O4.E, O5.E) throws -> E)
+        (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, resultSelector: (O1.E, O2.E, O3.E, O4.E, O5.E) throws -> E)
         -> Observable<E> {
         return Zip5(
             source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(), source4: source4.asObservable(), source5: source5.asObservable(),
@@ -353,7 +353,7 @@ class ZipSink5_<E1, E2, E3, E4, E5, O: ObserverType> : ZipSink<O> {
         super.init(arity: 5, observer: observer)
     }
 
-    override func hasElements(index: Int) -> Bool {
+    override func hasElements(_ index: Int) -> Bool {
         switch (index) {
         case 0: return _values1.count > 0
         case 1: return _values2.count > 0
@@ -387,7 +387,7 @@ class ZipSink5_<E1, E2, E3, E4, E5, O: ObserverType> : ZipSink<O> {
         subscription4.disposable = _parent.source4.subscribe(observer4)
         subscription5.disposable = _parent.source5.subscribe(observer5)
 
-        return CompositeDisposable(disposables: [
+        return Disposables.create([
            subscription1,
            subscription2,
            subscription3,
@@ -422,7 +422,7 @@ class Zip5<E1, E2, E3, E4, E5, R> : Producer<R> {
         _resultSelector = resultSelector
     }
 
-    override func run<O: ObserverType where O.E == R>(observer: O) -> Disposable {
+    override func run<O: ObserverType where O.E == R>(_ observer: O) -> Disposable {
         let sink = ZipSink5_(parent: self, observer: observer)
         sink.disposable = sink.run()
         return sink
@@ -442,9 +442,9 @@ extension Observable {
     - parameter resultSelector: Function to invoke for each series of elements at corresponding indexes in the sources.
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
-    @warn_unused_result(message="http://git.io/rxs.uo")
+    // @warn_unused_result(message:"http://git.io/rxs.uo")
     public static func zip<O1: ObservableType, O2: ObservableType, O3: ObservableType, O4: ObservableType, O5: ObservableType, O6: ObservableType>
-        (source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6, resultSelector: (O1.E, O2.E, O3.E, O4.E, O5.E, O6.E) throws -> E)
+        (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6, resultSelector: (O1.E, O2.E, O3.E, O4.E, O5.E, O6.E) throws -> E)
         -> Observable<E> {
         return Zip6(
             source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(), source4: source4.asObservable(), source5: source5.asObservable(), source6: source6.asObservable(),
@@ -471,7 +471,7 @@ class ZipSink6_<E1, E2, E3, E4, E5, E6, O: ObserverType> : ZipSink<O> {
         super.init(arity: 6, observer: observer)
     }
 
-    override func hasElements(index: Int) -> Bool {
+    override func hasElements(_ index: Int) -> Bool {
         switch (index) {
         case 0: return _values1.count > 0
         case 1: return _values2.count > 0
@@ -509,7 +509,7 @@ class ZipSink6_<E1, E2, E3, E4, E5, E6, O: ObserverType> : ZipSink<O> {
         subscription5.disposable = _parent.source5.subscribe(observer5)
         subscription6.disposable = _parent.source6.subscribe(observer6)
 
-        return CompositeDisposable(disposables: [
+        return Disposables.create([
            subscription1,
            subscription2,
            subscription3,
@@ -547,7 +547,7 @@ class Zip6<E1, E2, E3, E4, E5, E6, R> : Producer<R> {
         _resultSelector = resultSelector
     }
 
-    override func run<O: ObserverType where O.E == R>(observer: O) -> Disposable {
+    override func run<O: ObserverType where O.E == R>(_ observer: O) -> Disposable {
         let sink = ZipSink6_(parent: self, observer: observer)
         sink.disposable = sink.run()
         return sink
@@ -567,9 +567,9 @@ extension Observable {
     - parameter resultSelector: Function to invoke for each series of elements at corresponding indexes in the sources.
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
-    @warn_unused_result(message="http://git.io/rxs.uo")
+    // @warn_unused_result(message:"http://git.io/rxs.uo")
     public static func zip<O1: ObservableType, O2: ObservableType, O3: ObservableType, O4: ObservableType, O5: ObservableType, O6: ObservableType, O7: ObservableType>
-        (source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6, _ source7: O7, resultSelector: (O1.E, O2.E, O3.E, O4.E, O5.E, O6.E, O7.E) throws -> E)
+        (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6, _ source7: O7, resultSelector: (O1.E, O2.E, O3.E, O4.E, O5.E, O6.E, O7.E) throws -> E)
         -> Observable<E> {
         return Zip7(
             source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(), source4: source4.asObservable(), source5: source5.asObservable(), source6: source6.asObservable(), source7: source7.asObservable(),
@@ -597,7 +597,7 @@ class ZipSink7_<E1, E2, E3, E4, E5, E6, E7, O: ObserverType> : ZipSink<O> {
         super.init(arity: 7, observer: observer)
     }
 
-    override func hasElements(index: Int) -> Bool {
+    override func hasElements(_ index: Int) -> Bool {
         switch (index) {
         case 0: return _values1.count > 0
         case 1: return _values2.count > 0
@@ -639,7 +639,7 @@ class ZipSink7_<E1, E2, E3, E4, E5, E6, E7, O: ObserverType> : ZipSink<O> {
         subscription6.disposable = _parent.source6.subscribe(observer6)
         subscription7.disposable = _parent.source7.subscribe(observer7)
 
-        return CompositeDisposable(disposables: [
+        return Disposables.create([
            subscription1,
            subscription2,
            subscription3,
@@ -680,7 +680,7 @@ class Zip7<E1, E2, E3, E4, E5, E6, E7, R> : Producer<R> {
         _resultSelector = resultSelector
     }
 
-    override func run<O: ObserverType where O.E == R>(observer: O) -> Disposable {
+    override func run<O: ObserverType where O.E == R>(_ observer: O) -> Disposable {
         let sink = ZipSink7_(parent: self, observer: observer)
         sink.disposable = sink.run()
         return sink
@@ -700,9 +700,9 @@ extension Observable {
     - parameter resultSelector: Function to invoke for each series of elements at corresponding indexes in the sources.
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
-    @warn_unused_result(message="http://git.io/rxs.uo")
+    // @warn_unused_result(message:"http://git.io/rxs.uo")
     public static func zip<O1: ObservableType, O2: ObservableType, O3: ObservableType, O4: ObservableType, O5: ObservableType, O6: ObservableType, O7: ObservableType, O8: ObservableType>
-        (source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6, _ source7: O7, _ source8: O8, resultSelector: (O1.E, O2.E, O3.E, O4.E, O5.E, O6.E, O7.E, O8.E) throws -> E)
+        (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6, _ source7: O7, _ source8: O8, resultSelector: (O1.E, O2.E, O3.E, O4.E, O5.E, O6.E, O7.E, O8.E) throws -> E)
         -> Observable<E> {
         return Zip8(
             source1: source1.asObservable(), source2: source2.asObservable(), source3: source3.asObservable(), source4: source4.asObservable(), source5: source5.asObservable(), source6: source6.asObservable(), source7: source7.asObservable(), source8: source8.asObservable(),
@@ -731,7 +731,7 @@ class ZipSink8_<E1, E2, E3, E4, E5, E6, E7, E8, O: ObserverType> : ZipSink<O> {
         super.init(arity: 8, observer: observer)
     }
 
-    override func hasElements(index: Int) -> Bool {
+    override func hasElements(_ index: Int) -> Bool {
         switch (index) {
         case 0: return _values1.count > 0
         case 1: return _values2.count > 0
@@ -777,7 +777,7 @@ class ZipSink8_<E1, E2, E3, E4, E5, E6, E7, E8, O: ObserverType> : ZipSink<O> {
         subscription7.disposable = _parent.source7.subscribe(observer7)
         subscription8.disposable = _parent.source8.subscribe(observer8)
 
-        return CompositeDisposable(disposables: [
+        return Disposables.create([
            subscription1,
            subscription2,
            subscription3,
@@ -821,10 +821,11 @@ class Zip8<E1, E2, E3, E4, E5, E6, E7, E8, R> : Producer<R> {
         _resultSelector = resultSelector
     }
 
-    override func run<O: ObserverType where O.E == R>(observer: O) -> Disposable {
+    override func run<O: ObserverType where O.E == R>(_ observer: O) -> Disposable {
         let sink = ZipSink8_(parent: self, observer: observer)
         sink.disposable = sink.run()
         return sink
     }
 }
+
 

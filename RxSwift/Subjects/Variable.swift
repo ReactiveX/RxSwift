@@ -42,7 +42,7 @@ public class Variable<Element> {
             _value = newValue
             _lock.unlock()
 
-            _subject.on(.Next(newValue))
+            _subject.on(.next(newValue))
         }
     }
     
@@ -64,6 +64,6 @@ public class Variable<Element> {
     }
 
     deinit {
-        _subject.on(.Completed)
+        _subject.on(.completed)
     }
 }

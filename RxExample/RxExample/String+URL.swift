@@ -10,6 +10,6 @@ import Foundation
 
 extension String {
     var URLEscaped: String {
-       return self.stringByAddingPercentEncodingWithAllowedCharacters(.URLHostAllowedCharacterSet()) ?? ""
+       return self.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? ""
     }
 }

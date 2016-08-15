@@ -20,7 +20,7 @@ class VirtualSchedulerTest : RxTest {
 extension VirtualSchedulerTest {
     func testVirtualScheduler_initialClock() {
         let scheduler = TestVirtualScheduler(initialClock: 10)
-        XCTAssertEqual(scheduler.now, NSDate(timeIntervalSince1970: 100.0))
+        XCTAssertEqual(scheduler.now, Date(timeIntervalSince1970: 100.0))
         XCTAssertEqual(scheduler.clock, 10)
     }
 
@@ -29,15 +29,15 @@ extension VirtualSchedulerTest {
 
         var times: [Int] = []
 
-        scheduler.scheduleRelative((), dueTime: 10.0) { _ in
+        _ = scheduler.scheduleRelative((), dueTime: 10.0) { _ in
             times.append(scheduler.clock)
-            scheduler.scheduleRelative((), dueTime: 20.0) { _ in
+            _ = scheduler.scheduleRelative((), dueTime: 20.0) { _ in
                 times.append(scheduler.clock)
-                return NopDisposable.instance
+                return Disposables.create()
             }
             return scheduler.schedule(()) { _ in
                 times.append(scheduler.clock)
-                return NopDisposable.instance
+                return Disposables.create()
             }
         }
 
@@ -55,20 +55,20 @@ extension VirtualSchedulerTest {
 
         var times: [Int] = []
 
-        scheduler.scheduleRelative((), dueTime: 10.0) { _ in
+        _ = scheduler.scheduleRelative((), dueTime: 10.0) { _ in
             times.append(scheduler.clock)
             let d = scheduler.scheduleRelative((), dueTime: 20.0) { _ in
                 times.append(scheduler.clock)
-                return NopDisposable.instance
+                return Disposables.create()
             }
             let d2 = scheduler.schedule(()) { _ in
                 times.append(scheduler.clock)
-                return NopDisposable.instance
+                return Disposables.create()
             }
 
             d2.dispose()
             d.dispose()
-            return NopDisposable.instance
+            return Disposables.create()
         }
 
         scheduler.start()
@@ -83,15 +83,15 @@ extension VirtualSchedulerTest {
 
         var times: [Int] = []
 
-        scheduler.scheduleRelative((), dueTime: 10.0) { _ in
+        _ = scheduler.scheduleRelative((), dueTime: 10.0) { _ in
             times.append(scheduler.clock)
-            scheduler.scheduleRelative((), dueTime: 20.0) { _ in
+            _ = scheduler.scheduleRelative((), dueTime: 20.0) { _ in
                 times.append(scheduler.clock)
-                return NopDisposable.instance
+                return Disposables.create()
             }
             return scheduler.schedule(()) { _ in
                 times.append(scheduler.clock)
-                return NopDisposable.instance
+                return Disposables.create()
             }
         }
 
@@ -109,15 +109,15 @@ extension VirtualSchedulerTest {
 
         var times: [Int] = []
 
-        scheduler.scheduleRelative((), dueTime: 10.0) { [weak scheduler] _ in
+        _ = scheduler.scheduleRelative((), dueTime: 10.0) { [weak scheduler] _ in
             times.append(scheduler!.clock)
-            scheduler!.scheduleRelative((), dueTime: 20.0) { _ in
+            _ = scheduler!.scheduleRelative((), dueTime: 20.0) { _ in
                 times.append(scheduler!.clock)
-                return NopDisposable.instance
+                return Disposables.create()
             }
             return scheduler!.schedule(()) { _ in
                 times.append(scheduler!.clock)
-                return NopDisposable.instance
+                return Disposables.create()
             }
         }
 
@@ -134,20 +134,20 @@ extension VirtualSchedulerTest {
 
         var times: [Int] = []
 
-        scheduler.scheduleRelative((), dueTime: 10.0) { [weak scheduler] _ in
+        _ = scheduler.scheduleRelative((), dueTime: 10.0) { [weak scheduler] _ in
             times.append(scheduler!.clock)
             let d1 = scheduler!.scheduleRelative((), dueTime: 20.0) { _ in
                 times.append(scheduler!.clock)
-                return NopDisposable.instance
+                return Disposables.create()
             }
             let d2 = scheduler!.schedule(()) { _ in
                 times.append(scheduler!.clock)
-                return NopDisposable.instance
+                return Disposables.create()
             }
 
             d1.dispose()
             d2.dispose()
-            return NopDisposable.instance
+            return Disposables.create()
         }
 
         scheduler.advanceTo(20)
@@ -162,20 +162,20 @@ extension VirtualSchedulerTest {
 
         var times: [Int] = []
 
-        scheduler.scheduleRelative((), dueTime: 10.0) { [weak scheduler] _ in
+        _ = scheduler.scheduleRelative((), dueTime: 10.0) { [weak scheduler] _ in
             times.append(scheduler!.clock)
-            scheduler!.scheduleRelative((), dueTime: 20.0) { _ in
+            _ = scheduler!.scheduleRelative((), dueTime: 20.0) { _ in
                 times.append(scheduler!.clock)
-                return NopDisposable.instance
+                return Disposables.create()
             }
-            scheduler!.schedule(()) { _ in
+            _ = scheduler!.schedule(()) { _ in
                 times.append(scheduler!.clock)
-                return NopDisposable.instance
+                return Disposables.create()
             }
 
             scheduler!.stop()
 
-            return NopDisposable.instance
+            return Disposables.create()
         }
 
         scheduler.start()
@@ -190,19 +190,19 @@ extension VirtualSchedulerTest {
 
         var times: [Int] = []
 
-        scheduler.scheduleRelative((), dueTime: 10.0) { [weak scheduler] _ in
+        _ = scheduler.scheduleRelative((), dueTime: 10.0) { [weak scheduler] _ in
             times.append(scheduler!.clock)
             scheduler!.sleep(10)
-            scheduler!.scheduleRelative((), dueTime: 20.0) { _ in
+            _ = scheduler!.scheduleRelative((), dueTime: 20.0) { _ in
                 times.append(scheduler!.clock)
-                return NopDisposable.instance
+                return Disposables.create()
             }
-            scheduler!.schedule(()) { _ in
+            _ = scheduler!.schedule(()) { _ in
                 times.append(scheduler!.clock)
-                return NopDisposable.instance
+                return Disposables.create()
             }
 
-            return NopDisposable.instance
+            return Disposables.create()
         }
 
         scheduler.start()
@@ -222,15 +222,15 @@ extension VirtualSchedulerTest {
         for _ in 0 ..< 20000 {
             let random = Int(arc4random() % 10000)
             times.append(random)
-            scheduler.scheduleRelative((), dueTime: RxTimeInterval(10 * random)) { [weak scheduler] _ in
+            _ = scheduler.scheduleRelative((), dueTime: RxTimeInterval(10 * random)) { [weak scheduler] _ in
                 ticks.append(scheduler!.clock)
-                return NopDisposable.instance
+                return Disposables.create()
             }
         }
 
         scheduler.start()
 
-        times = times.sort()
+        times = times.sorted()
         XCTAssertEqual(times, ticks)
     }
 }

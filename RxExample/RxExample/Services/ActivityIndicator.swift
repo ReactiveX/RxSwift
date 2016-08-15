@@ -14,11 +14,11 @@ import RxCocoa
 
 private struct ActivityToken<E> : ObservableConvertibleType, Disposable {
     private let _source: Observable<E>
-    private let _dispose: AnonymousDisposable
+    private let _dispose: Cancelable
 
     init(source: Observable<E>, disposeAction: () -> ()) {
         _source = source
-        _dispose = AnonymousDisposable(disposeAction)
+        _dispose = Disposables.create(with: disposeAction)
     }
 
     func dispose() {
@@ -44,18 +44,12 @@ public class ActivityIndicator : DriverConvertibleType {
     private let _loading: Driver<Bool>
 
     public init() {
-        _loading = _variable.asObservable()
+        _loading = _variable.asDriver()
             .map { $0 > 0 }
             .distinctUntilChanged()
-            .asDriver(onErrorRecover: ActivityIndicator.ifItStillErrors)
     }
 
-    private static func ifItStillErrors(error: ErrorType) -> Driver<Bool> {
-        _ = fatalError("Loader can't fail")
-    }
-
-
-    private func trackActivityOfObservable<O: ObservableConvertibleType>(source: O) -> Observable<O.E> {
+    private func trackActivityOfObservable<O: ObservableConvertibleType>(_ source: O) -> Observable<O.E> {
         return Observable.using({ () -> ActivityToken<O.E> in
             self.increment()
             return ActivityToken(source: source.asObservable(), disposeAction: self.decrement)
@@ -82,7 +76,7 @@ public class ActivityIndicator : DriverConvertibleType {
 }
 
 public extension ObservableConvertibleType {
-    public func trackActivity(activityIndicator: ActivityIndicator) -> Observable<E> {
+    public func trackActivity(_ activityIndicator: ActivityIndicator) -> Observable<E> {
         return activityIndicator.trackActivityOfObservable(self)
     }
 }

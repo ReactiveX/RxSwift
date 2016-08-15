@@ -17,7 +17,7 @@ extension ObservableConvertibleType {
 
     - returns: `BlockingObservable` version of `self`
     */
-    @warn_unused_result(message="http://git.io/rxs.uo")
+    // @warn_unused_result(message:"http://git.io/rxs.uo")
     public func toBlocking() -> BlockingObservable<E> {
         return BlockingObservable(source: self.asObservable())
     }

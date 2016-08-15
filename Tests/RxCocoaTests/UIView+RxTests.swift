@@ -21,14 +21,14 @@ extension UIViewTests {
         let subject = UIView(frame: CGRect.zero)
         Observable.just(true).subscribe(subject.rx_hidden).dispose()
 
-        XCTAssertTrue(subject.hidden == true)
+        XCTAssertTrue(subject.isHidden == true)
     }
 
     func testEnabled_False() {
         let subject = UIView(frame: CGRect.zero)
         Observable.just(false).subscribe(subject.rx_hidden).dispose()
 
-        XCTAssertTrue(subject.hidden == false)
+        XCTAssertTrue(subject.isHidden == false)
     }
 }
 

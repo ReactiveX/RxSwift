@@ -90,7 +90,7 @@ class ConnectableObservableAdapter<S: SubjectType>
         }
     }
     
-    override func subscribe<O : ObserverType where O.E == S.E>(observer: O) -> Disposable {
+    override func subscribe<O : ObserverType where O.E == S.E>(_ observer: O) -> Disposable {
         return _subject.subscribe(observer)
     }
 }

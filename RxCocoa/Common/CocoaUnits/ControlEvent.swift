@@ -64,14 +64,14 @@ public struct ControlEvent<PropertyType> : ControlEventType {
     - parameter observer: Observer to subscribe to events.
     - returns: Disposable object that can be used to unsubscribe the observer from receiving control events.
     */
-    public func subscribe<O : ObserverType where O.E == E>(observer: O) -> Disposable {
+    public func subscribe<O : ObserverType where O.E == E>(_ observer: O) -> Disposable {
         return _events.subscribe(observer)
     }
 
     /**
     - returns: `Observable` interface.
     */
-    @warn_unused_result(message="http://git.io/rxs.uo")
+    // @warn_unused_result(message:"http://git.io/rxs.uo")
     public func asObservable() -> Observable<E> {
         return _events
     }
@@ -79,7 +79,7 @@ public struct ControlEvent<PropertyType> : ControlEventType {
     /**
     - returns: `ControlEvent` interface.
     */
-    @warn_unused_result(message="http://git.io/rxs.uo")
+    // @warn_unused_result(message:"http://git.io/rxs.uo")
     public func asControlEvent() -> ControlEvent<E> {
         return self
     }

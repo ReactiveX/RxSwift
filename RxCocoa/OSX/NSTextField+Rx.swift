@@ -41,10 +41,10 @@ public class RxTextFieldDelegateProxy
 
     // MARK: Delegate methods
 
-    public override func controlTextDidChange(notification: NSNotification) {
+    public override func controlTextDidChange(_ notification: Notification) {
         let textField = notification.object as! NSTextField
         let nextValue = textField.stringValue
-        self.textSubject.on(.Next(nextValue))
+        self.textSubject.on(.next(nextValue))
     }
 
     // MARK: Delegate proxy methods
@@ -52,7 +52,7 @@ public class RxTextFieldDelegateProxy
     /**
     For more information take a look at `DelegateProxyType`.
     */
-    public override class func createProxyForObject(object: AnyObject) -> AnyObject {
+    public override class func createProxyForObject(_ object: AnyObject) -> AnyObject {
         let control = (object as! NSTextField)
 
         return castOrFatalError(control.rx_createDelegateProxy())
@@ -61,7 +61,7 @@ public class RxTextFieldDelegateProxy
     /**
     For more information take a look at `DelegateProxyType`.
     */
-    public class func currentDelegateFor(object: AnyObject) -> AnyObject? {
+    public class func currentDelegateFor(_ object: AnyObject) -> AnyObject? {
         let textField: NSTextField = castOrFatalError(object)
         return textField.delegate
     }
@@ -69,7 +69,7 @@ public class RxTextFieldDelegateProxy
     /**
     For more information take a look at `DelegateProxyType`.
     */
-    public class func setCurrentDelegate(delegate: AnyObject?, toObject object: AnyObject) {
+    public class func setCurrentDelegate(_ delegate: AnyObject?, toObject object: AnyObject) {
         let textField: NSTextField = castOrFatalError(object)
         textField.delegate = castOptionalOrFatalError(delegate)
     }

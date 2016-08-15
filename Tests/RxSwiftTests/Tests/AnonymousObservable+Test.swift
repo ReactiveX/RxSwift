@@ -19,23 +19,23 @@ extension AnonymousObservableTests {
         var observer: AnyObserver<Int>!
         let a = Observable.create { o in
             observer = o
-            return NopDisposable.instance
+            return Disposables.create()
         } as Observable<Int>
         
         var elements = [Int]()
         
-        let d = a.subscribeNext { n in
+        let d = a.subscribe(onNext: { n in
             elements.append(n)
-        }
+        })
         
         XCTAssertEqual(elements, [])
         
-        observer.on(.Next(0))
+        observer.on(.next(0))
         XCTAssertEqual(elements, [0])
         
         d.dispose()
 
-        observer.on(.Next(1))
+        observer.on(.next(1))
         XCTAssertEqual(elements, [0])
     }
     
@@ -43,23 +43,23 @@ extension AnonymousObservableTests {
         var observer: AnyObserver<Int>!
         let a = Observable.create { o in
             observer = o
-            return NopDisposable.instance
+            return Disposables.create()
         } as Observable<Int>
         
         var elements = [Int]()
         
-        _ = a.subscribeNext { n in
+        _ = a.subscribe(onNext: { n in
             elements.append(n)
-        }
+        })
 
         XCTAssertEqual(elements, [])
         
-        observer.on(.Next(0))
+        observer.on(.next(0))
         XCTAssertEqual(elements, [0])
         
-        observer.on(.Completed)
+        observer.on(.completed)
         
-        observer.on(.Next(1))
+        observer.on(.next(1))
         XCTAssertEqual(elements, [0])
     }
 
@@ -67,23 +67,23 @@ extension AnonymousObservableTests {
         var observer: AnyObserver<Int>!
         let a = Observable.create { o in
             observer = o
-            return NopDisposable.instance
+            return Disposables.create()
         } as Observable<Int>
         
         var elements = [Int]()
 
-        _ = a.subscribeNext { n in
+        _ = a.subscribe(onNext: { n in
             elements.append(n)
-        }
-        
+        })
+
         XCTAssertEqual(elements, [])
         
-        observer.on(.Next(0))
+        observer.on(.next(0))
         XCTAssertEqual(elements, [0])
         
-        observer.on(.Error(testError))
+        observer.on(.error(testError))
         
-        observer.on(.Next(1))
+        observer.on(.next(1))
         XCTAssertEqual(elements, [0])
     }
 }

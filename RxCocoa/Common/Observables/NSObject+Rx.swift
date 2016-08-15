@@ -58,8 +58,8 @@ extension NSObject {
      - parameter retainSelf: Retains self during observation if set `true`.
      - returns: Observable sequence of objects on `keyPath`.
      */
-    @warn_unused_result(message="http://git.io/rxs.uo")
-    public func rx_observe<E>(type: E.Type, _ keyPath: String, options: NSKeyValueObservingOptions = [.New, .Initial], retainSelf: Bool = true) -> Observable<E?> {
+    // @warn_unused_result(message:"http://git.io/rxs.uo")
+    public func rx_observe<E>(_ type: E.Type, _ keyPath: String, options: NSKeyValueObservingOptions = [.new, .initial], retainSelf: Bool = true) -> Observable<E?> {
         return KVOObservable(object: self, keyPath: keyPath, options: options, retainTarget: retainSelf).asObservable()
     }
 }
@@ -81,8 +81,8 @@ extension NSObject {
      - parameter options: KVO mechanism notification options.
      - returns: Observable sequence of objects on `keyPath`.
      */
-    @warn_unused_result(message="http://git.io/rxs.uo")
-    public func rx_observeWeakly<E>(type: E.Type, _ keyPath: String, options: NSKeyValueObservingOptions = [.New, .Initial]) -> Observable<E?> {
+    // @warn_unused_result(message:"http://git.io/rxs.uo")
+    public func rx_observeWeakly<E>(_ type: E.Type, _ keyPath: String, options: NSKeyValueObservingOptions = [.new, .initial]) -> Observable<E?> {
         return observeWeaklyKeyPathFor(self, keyPath: keyPath, options: options)
             .map { n in
                 return n as? E
@@ -125,7 +125,7 @@ extension NSObject {
 
      - returns: Observable sequence of object deallocating events.
      */
-    public func rx_sentMessage(selector: Selector) -> Observable<[AnyObject]> {
+    public func rx_sentMessage(_ selector: Selector) -> Observable<[AnyObject]> {
         return rx_synchronized {
             // in case of dealloc selector replay subject behavior needs to be used
             if selector == deallocSelector {
@@ -154,9 +154,8 @@ extension NSObject {
             }
 
             var error: NSError?
-            let targetImplementation = RX_ensure_observing(self, selector, &error)
-            if targetImplementation == nil {
-                return Observable.error(error?.rxCocoaErrorForTarget(self) ?? RxCocoaError.Unknown)
+            guard let targetImplementation = RX_ensure_observing(self, selector, &error) else {
+                return Observable.error(error?.rxCocoaErrorForTarget(self) ?? RxCocoaError.unknown)
             }
 
             subject.targetImplementation = targetImplementation
@@ -198,10 +197,10 @@ extension NSObject {
             var error: NSError?
             let targetImplementation = RX_ensure_observing(self, deallocSelector, &error)
             if targetImplementation == nil {
-                return Observable.error(error?.rxCocoaErrorForTarget(self) ?? RxCocoaError.Unknown)
+                return Observable.error(error?.rxCocoaErrorForTarget(self) ?? RxCocoaError.unknown)
             }
 
-            subject.targetImplementation = targetImplementation
+            subject.targetImplementation = targetImplementation!
             return subject.asObservable()
         }
     }
@@ -213,7 +212,7 @@ let rxDeallocatingSelector = RX_selector(deallocSelector)
 let rxDeallocatingSelectorReference = RX_reference_from_selector(rxDeallocatingSelector)
 
 extension NSObject {
-    func rx_synchronized<T>(@noescape action: () -> T) -> T {
+    func rx_synchronized<T>( _ action: @noescape() -> T) -> T {
         objc_sync_enter(self)
         let result = action()
         objc_sync_exit(self)
@@ -226,14 +225,14 @@ extension NSObject {
      Helper to make sure that `Observable` returned from `createCachedObservable` is only created once.
      This is important because there is only one `target` and `action` properties on `NSControl` or `UIBarButtonItem`.
      */
-    func rx_lazyInstanceObservable<T: AnyObject>(key: UnsafePointer<Void>, createCachedObservable: () -> T) -> T {
+    func rx_lazyInstanceObservable<T: AnyObject>(_ key: UnsafePointer<Void>, createCachedObservable: () -> T) -> T {
         if let value = objc_getAssociatedObject(self, key) {
             return value as! T
         }
         
         let observable = createCachedObservable()
         
-        objc_setAssociatedObject(self, key, observable, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+        objc_setAssociatedObject(self, key, observable, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         
         return observable
     }

@@ -9,21 +9,21 @@
 import Foundation
 
 public enum DifferentiatorError
-    : ErrorType
+    : Error
     , CustomDebugStringConvertible {
-    case DuplicateItem(item: Any)
-    case DuplicateSection(section: Any)
-    case InvalidInitializerImplementation(section: Any, expectedItems: Any, expectedIdentifier: Any)
+    case duplicateItem(item: Any)
+    case duplicateSection(section: Any)
+    case invalidInitializerImplementation(section: Any, expectedItems: Any, expectedIdentifier: Any)
 }
 
 extension DifferentiatorError {
     public var debugDescription: String {
         switch self {
-        case let .DuplicateItem(item):
+        case let .duplicateItem(item):
             return "Duplicate item \(item)"
-        case let .DuplicateSection(section):
+        case let .duplicateSection(section):
             return "Duplicate section \(section)"
-        case let InvalidInitializerImplementation(section, expectedItems, expectedIdentifier):
+        case let .invalidInitializerImplementation(section, expectedItems, expectedIdentifier):
             return "Wrong initializer implementation for: \(section)\n" +
                 "Expected it should return items: \(expectedItems)\n" +
                 "Expected it should have id: \(expectedIdentifier)"
@@ -32,32 +32,32 @@ extension DifferentiatorError {
 }
 
 enum EditEvent : CustomDebugStringConvertible {
-    case Inserted           // can't be found in old sections
-    case InsertedAutomatically           // Item inside section being inserted
-    case Deleted            // Was in old, not in new, in it's place is something "not new" :(, otherwise it's Updated
-    case DeletedAutomatically            // Item inside section that is being deleted
-    case Moved              // same item, but was on different index, and needs explicit move
-    case MovedAutomatically // don't need to specify any changes for those rows
-    case Untouched
+    case inserted           // can't be found in old sections
+    case insertedAutomatically           // Item inside section being inserted
+    case deleted            // Was in old, not in new, in it's place is something "not new" :(, otherwise it's Updated
+    case deletedAutomatically            // Item inside section that is being deleted
+    case moved              // same item, but was on different index, and needs explicit move
+    case movedAutomatically // don't need to specify any changes for those rows
+    case untouched
 }
 
 extension EditEvent {
     var debugDescription: String {
         get {
             switch self {
-            case .Inserted:
+            case .inserted:
                 return "Inserted"
-            case .InsertedAutomatically:
+            case .insertedAutomatically:
                 return "InsertedAutomatically"
-            case .Deleted:
+            case .deleted:
                 return "Deleted"
-            case .DeletedAutomatically:
+            case .deletedAutomatically:
                 return "DeletedAutomatically"
-            case .Moved:
+            case .moved:
                 return "Moved"
-            case .MovedAutomatically:
+            case .movedAutomatically:
                 return "MovedAutomatically"
-            case .Untouched:
+            case .untouched:
                 return "Untouched"
             }
         }
@@ -80,7 +80,7 @@ extension SectionAssociatedData : CustomDebugStringConvertible {
 
 extension SectionAssociatedData {
     static var initial: SectionAssociatedData {
-        return SectionAssociatedData(event: .Untouched, indexAfterDelete: nil, moveIndex: nil)
+        return SectionAssociatedData(event: .untouched, indexAfterDelete: nil, moveIndex: nil)
     }
 }
 
@@ -100,20 +100,20 @@ extension ItemAssociatedData : CustomDebugStringConvertible {
 
 extension ItemAssociatedData {
     static var initial : ItemAssociatedData {
-        return ItemAssociatedData(event: .Untouched, indexAfterDelete: nil, moveIndex: nil)
+        return ItemAssociatedData(event: .untouched, indexAfterDelete: nil, moveIndex: nil)
     }
 }
 
-func indexSections<S: AnimatableSectionModelType>(sections: [S]) throws -> [S.Identity : Int] {
+func indexSections<S: AnimatableSectionModelType>(_ sections: [S]) throws -> [S.Identity : Int] {
     var indexedSections: [S.Identity : Int] = [:]
-    for (i, section) in sections.enumerate() {
+    for (i, section) in sections.enumerated() {
         guard indexedSections[section.identity] == nil else {
             #if DEBUG
                 if indexedSections[section.identity] != nil {
                     print("Section \(section) has already been indexed at \(indexedSections[section.identity]!)")
                 }
             #endif
-            throw DifferentiatorError.DuplicateItem(item: section)
+            throw DifferentiatorError.duplicateItem(item: section)
         }
         indexedSections[section.identity] = i
     }
@@ -121,7 +121,7 @@ func indexSections<S: AnimatableSectionModelType>(sections: [S]) throws -> [S.Id
     return indexedSections
 }
 
-func indexSectionItems<S: AnimatableSectionModelType>(sections: [S]) throws -> [S.Item.Identity : (Int, Int)] {
+func indexSectionItems<S: AnimatableSectionModelType>(_ sections: [S]) throws -> [S.Item.Identity : (Int, Int)] {
     var totalItems = 0
     for i in 0 ..< sections.count {
         totalItems += sections[i].items.count
@@ -131,14 +131,14 @@ func indexSectionItems<S: AnimatableSectionModelType>(sections: [S]) throws -> [
     var indexedItems: [S.Item.Identity : (Int, Int)] = Dictionary(minimumCapacity: totalItems * 3)
     
     for i in 0 ..< sections.count {
-        for (j, item) in sections[i].items.enumerate() {
+        for (j, item) in sections[i].items.enumerated() {
             guard indexedItems[item.identity] == nil else {
                 #if DEBUG
                     if indexedItems[item.identity] != nil {
                         print("Item \(item) has already been indexed at \(indexedItems[item.identity]!)" )
                     }
                 #endif
-                throw DifferentiatorError.DuplicateItem(item: item)
+                throw DifferentiatorError.duplicateItem(item: item)
             }
             indexedItems[item.identity] = (i, j)
         }
@@ -272,7 +272,7 @@ to = [
 // There maybe exists a better division, but time will tell.
 //
 public func differencesForSectionedView<S: AnimatableSectionModelType>(
-        initialSections: [S],
+        _ initialSections: [S],
         finalSections: [S]
     )
     throws -> [Changeset<S>] {
@@ -282,9 +282,9 @@ public func differencesForSectionedView<S: AnimatableSectionModelType>(
 
     var sectionCommands = try CommandGenerator<S>.generatorForInitialSections(initialSections, finalSections: finalSections)
 
-    result.appendContentsOf(try sectionCommands.generateDeleteSections())
-    result.appendContentsOf(try sectionCommands.generateInsertAndMoveSections())
-    result.appendContentsOf(try sectionCommands.generateNewAndMovedItems())
+    result.append(contentsOf: try sectionCommands.generateDeleteSections())
+    result.append(contentsOf: try sectionCommands.generateInsertAndMoveSections())
+    result.append(contentsOf: try sectionCommands.generateNewAndMovedItems())
 
     return result
 }
@@ -294,7 +294,7 @@ private extension AnimatableSectionModelType {
         self.init(original: safeOriginal, items: safeItems)
 
         if self.items != safeItems || self.identity != safeOriginal.identity {
-            throw DifferentiatorError.InvalidInitializerImplementation(section: self, expectedItems: safeItems, expectedIdentifier: safeOriginal.identity)
+            throw DifferentiatorError.invalidInitializerImplementation(section: self, expectedItems: safeItems, expectedIdentifier: safeOriginal.identity)
         }
     }
 }
@@ -310,7 +310,7 @@ struct CommandGenerator<S: AnimatableSectionModelType> {
     let finalItemData: [[ItemAssociatedData]]
 
     static func generatorForInitialSections(
-        initialSections: [S],
+        _ initialSections: [S],
         finalSections: [S]
     ) throws -> CommandGenerator<S> {
 
@@ -333,25 +333,25 @@ struct CommandGenerator<S: AnimatableSectionModelType> {
         )
     }
 
-    static func calculateItemMovementsForInitialSections(initialSections: [S], finalSections: [S],
+    static func calculateItemMovementsForInitialSections(_ initialSections: [S], finalSections: [S],
         initialSectionData: [SectionAssociatedData], finalSectionData: [SectionAssociatedData]) throws -> ([[ItemAssociatedData]], [[ItemAssociatedData]]) {
         var initialItemData = initialSections.map { s in
-            return [ItemAssociatedData](count: s.items.count, repeatedValue: ItemAssociatedData.initial)
+            return [ItemAssociatedData](repeating: ItemAssociatedData.initial, count: s.items.count)
         }
 
         var finalItemData = finalSections.map { s in
-            return [ItemAssociatedData](count: s.items.count, repeatedValue: ItemAssociatedData.initial)
+            return [ItemAssociatedData](repeating: ItemAssociatedData.initial, count: s.items.count)
         }
 
         let initialItemIndexes = try indexSectionItems(initialSections)
 
         for i in 0 ..< finalSections.count {
-            for (j, item) in finalSections[i].items.enumerate() {
+            for (j, item) in finalSections[i].items.enumerated() {
                 guard let initialItemIndex = initialItemIndexes[item.identity] else {
                     continue
                 }
                 if initialItemData[initialItemIndex.0][initialItemIndex.1].moveIndex != nil {
-                    throw DifferentiatorError.DuplicateItem(item: item)
+                    throw DifferentiatorError.duplicateItem(item: item)
                 }
 
                 initialItemData[initialItemIndex.0][initialItemIndex.1].moveIndex = ItemPath(sectionIndex: i, itemIndex: j)
@@ -365,7 +365,7 @@ struct CommandGenerator<S: AnimatableSectionModelType> {
             }
 
             while i2 < initialSections[initialSectionIndex].items.count {
-                if initialItemData[initialSectionIndex][i2].event == .Untouched {
+                if initialItemData[initialSectionIndex][i2].event == .untouched {
                     return i2
                 }
 
@@ -385,15 +385,15 @@ struct CommandGenerator<S: AnimatableSectionModelType> {
             for j in 0 ..< initialSections[i].items.count {
 
                 guard let finalIndexPath = initialItemData[i][j].moveIndex else {
-                    initialItemData[i][j].event = .Deleted
+                    initialItemData[i][j].event = .deleted
                     continue
                 }
 
                 // from this point below, section has to be move type because it's initial and not deleted
 
                 // because there is no move to inserted section
-                if finalSectionData[finalIndexPath.sectionIndex].event == .Inserted {
-                    initialItemData[i][j].event = .Deleted
+                if finalSectionData[finalIndexPath.sectionIndex].event == .inserted {
+                    initialItemData[i][j].event = .deleted
                     continue
                 }
 
@@ -413,25 +413,25 @@ struct CommandGenerator<S: AnimatableSectionModelType> {
                 untouchedIndex = findNextUntouchedOldIndex(originalSectionIndex, untouchedIndex)
 
                 guard let originalIndex = finalItemData[i][j].moveIndex else {
-                    finalItemData[i][j].event = .Inserted
+                    finalItemData[i][j].event = .inserted
                     continue
                 }
 
                 // In case trying to move from deleted section, abort, otherwise it will crash table view
-                if initialSectionData[originalIndex.sectionIndex].event == .Deleted {
-                    finalItemData[i][j].event = .Inserted
+                if initialSectionData[originalIndex.sectionIndex].event == .deleted {
+                    finalItemData[i][j].event = .inserted
                     continue
                 }
                 // original section can't be inserted
-                else if initialSectionData[originalIndex.sectionIndex].event == .Inserted {
+                else if initialSectionData[originalIndex.sectionIndex].event == .inserted {
                     try rxPrecondition(false, "New section in initial sections, that is wrong")
                 }
 
                 let initialSectionEvent = initialSectionData[originalIndex.sectionIndex].event
-                try rxPrecondition(initialSectionEvent == .Moved || initialSectionEvent == .MovedAutomatically, "Section not moved")
+                try rxPrecondition(initialSectionEvent == .moved || initialSectionEvent == .movedAutomatically, "Section not moved")
 
                 let eventType = originalIndex == ItemPath(sectionIndex: originalSectionIndex, itemIndex: untouchedIndex ?? -1)
-                    ? EditEvent.MovedAutomatically : EditEvent.Moved
+                    ? EditEvent.movedAutomatically : EditEvent.moved
 
                 initialItemData[originalIndex.sectionIndex][originalIndex.itemIndex].event = eventType
                 finalItemData[i][j].event = eventType
@@ -442,20 +442,20 @@ struct CommandGenerator<S: AnimatableSectionModelType> {
         return (initialItemData, finalItemData)
     }
 
-    static func calculateSectionMovementsForInitialSections(initialSections: [S], finalSections: [S]) throws -> ([SectionAssociatedData], [SectionAssociatedData]) {
+    static func calculateSectionMovementsForInitialSections(_ initialSections: [S], finalSections: [S]) throws -> ([SectionAssociatedData], [SectionAssociatedData]) {
 
         let initialSectionIndexes = try indexSections(initialSections)
 
-        var initialSectionData = [SectionAssociatedData](count: initialSections.count, repeatedValue: SectionAssociatedData.initial)
-        var finalSectionData = [SectionAssociatedData](count: finalSections.count, repeatedValue: SectionAssociatedData.initial)
+        var initialSectionData = [SectionAssociatedData](repeating: SectionAssociatedData.initial, count: initialSections.count)
+        var finalSectionData = [SectionAssociatedData](repeating: SectionAssociatedData.initial, count: finalSections.count)
 
-        for (i, section) in finalSections.enumerate() {
+        for (i, section) in finalSections.enumerated() {
             guard let initialSectionIndex = initialSectionIndexes[section.identity] else {
                 continue
             }
 
             if initialSectionData[initialSectionIndex].moveIndex != nil {
-                throw DifferentiatorError.DuplicateSection(section: section)
+                throw DifferentiatorError.duplicateSection(section: section)
             }
 
             initialSectionData[initialSectionIndex].moveIndex = i
@@ -467,7 +467,7 @@ struct CommandGenerator<S: AnimatableSectionModelType> {
         // deleted sections
         for i in 0 ..< initialSectionData.count {
             if initialSectionData[i].moveIndex == nil {
-                initialSectionData[i].event = .Deleted
+                initialSectionData[i].event = .deleted
                 continue
             }
 
@@ -484,7 +484,7 @@ struct CommandGenerator<S: AnimatableSectionModelType> {
             }
 
             while i < initialSections.count {
-                if initialSectionData[i].event == .Untouched {
+                if initialSectionData[i].event == .untouched {
                     return i
                 }
 
@@ -502,20 +502,20 @@ struct CommandGenerator<S: AnimatableSectionModelType> {
 
             // oh, it did exist
             if let oldSectionIndex = finalSectionData[i].moveIndex {
-                let moveType = oldSectionIndex != untouchedOldIndex ? EditEvent.Moved : EditEvent.MovedAutomatically
+                let moveType = oldSectionIndex != untouchedOldIndex ? EditEvent.moved : EditEvent.movedAutomatically
 
                 finalSectionData[i].event = moveType
                 initialSectionData[oldSectionIndex].event = moveType
             }
             else {
-                finalSectionData[i].event = .Inserted
+                finalSectionData[i].event = .inserted
             }
         }
 
         // inserted sections
-        for (i, section) in finalSectionData.enumerate() {
+        for (i, section) in finalSectionData.enumerated() {
             if section.moveIndex == nil {
-                finalSectionData[i].event == .Inserted
+                _ = finalSectionData[i].event == .inserted
             }
         }
         
@@ -531,13 +531,13 @@ struct CommandGenerator<S: AnimatableSectionModelType> {
 
         // mark deleted items {
         // 1rst stage again (I know, I know ...)
-        for (i, initialSection) in initialSections.enumerate() {
+        for (i, initialSection) in initialSections.enumerated() {
             let event = initialSectionData[i].event
 
             // Deleted section will take care of deleting child items.
             // In case of moving an item from deleted section, tableview will
             // crash anyway, so this is not limiting anything.
-            if event == .Deleted {
+            if event == .deleted {
                 deletedSections.append(i)
                 continue
             }
@@ -546,9 +546,9 @@ struct CommandGenerator<S: AnimatableSectionModelType> {
             for j in 0 ..< initialSection.items.count {
                 let event = initialItemData[i][j].event
                 switch event {
-                case .Deleted:
+                case .deleted:
                     deletedItems.append(ItemPath(sectionIndex: i, itemIndex: j))
-                case .Moved, .MovedAutomatically:
+                case .moved, .movedAutomatically:
                     let finalItemIndex = try initialItemData[i][j].moveIndex.unwrap()
                     let finalItem = finalSections[finalItemIndex]
                     if finalItem != initialSections[i].items[j] {
@@ -583,11 +583,11 @@ struct CommandGenerator<S: AnimatableSectionModelType> {
 
         for i in 0 ..< initialSections.count {
             switch initialSectionData[i].event {
-            case .Deleted:
+            case .deleted:
                 break
-            case .Moved:
+            case .moved:
                 movedSections.append((from: try initialSectionData[i].indexAfterDelete.unwrap(), to: try initialSectionData[i].moveIndex.unwrap()))
-            case .MovedAutomatically:
+            case .movedAutomatically:
                 break
             default:
                 try rxPrecondition(false, "Unhandled case in initial sections")
@@ -596,7 +596,7 @@ struct CommandGenerator<S: AnimatableSectionModelType> {
 
         for i in 0 ..< finalSections.count {
             switch finalSectionData[i].event {
-            case .Inserted:
+            case .inserted:
                 insertedSections.append(i)
             default:
                 break
@@ -608,22 +608,22 @@ struct CommandGenerator<S: AnimatableSectionModelType> {
         }
 
         // sections should be in place, but items should be original without deleted ones
-        let sectionsAfterChange: [S] = try self.finalSections.enumerate().map { i, s -> S in
+        let sectionsAfterChange: [S] = try self.finalSections.enumerated().map { i, s -> S in
             let event = self.finalSectionData[i].event
             
-            if event == .Inserted {
+            if event == .inserted {
                 // it's already set up
                 return s
             }
-            else if event == .Moved || event == .MovedAutomatically {
+            else if event == .moved || event == .movedAutomatically {
                 let originalSectionIndex = try finalSectionData[i].moveIndex.unwrap()
                 let originalSection = initialSections[originalSectionIndex]
                 
                 var items: [S.Item] = []
-                for (j, _) in originalSection.items.enumerate() {
+                for (j, _) in originalSection.items.enumerated() {
                     let initialData = self.initialItemData[originalSectionIndex][j]
 
-                    guard initialData.event != .Deleted else {
+                    guard initialData.event != .deleted else {
                         continue
                     }
 
@@ -663,21 +663,21 @@ struct CommandGenerator<S: AnimatableSectionModelType> {
             
             let sectionEvent = finalSectionData[i].event
             // new and deleted sections cause reload automatically
-            if sectionEvent != .Moved && sectionEvent != .MovedAutomatically {
+            if sectionEvent != .moved && sectionEvent != .movedAutomatically {
                 continue
             }
             
             for j in 0 ..< finalSection.items.count {
                 let currentItemEvent = finalItemData[i][j].event
                 
-                try rxPrecondition(currentItemEvent != .Untouched, "Current event is not untouched")
+                try rxPrecondition(currentItemEvent != .untouched, "Current event is not untouched")
 
                 let event = finalItemData[i][j].event
 
                 switch event {
-                case .Inserted:
+                case .inserted:
                     insertedItems.append(ItemPath(sectionIndex: i, itemIndex: j))
-                case .Moved:
+                case .moved:
                     let originalIndex = try finalItemData[i][j].moveIndex.unwrap()
                     let finalSectionIndex = try initialSectionData[originalIndex.sectionIndex].moveIndex.unwrap()
                     let moveFromItemWithIndex = try initialItemData[originalIndex.sectionIndex][originalIndex.itemIndex].indexAfterDelete.unwrap()

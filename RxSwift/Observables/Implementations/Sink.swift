@@ -13,13 +13,13 @@ class Sink<O : ObserverType> : SingleAssignmentDisposable {
 
     init(observer: O) {
 #if TRACE_RESOURCES
-        AtomicIncrement(&resourceCount)
+        let _ = AtomicIncrement(&resourceCount)
 #endif
         _observer = observer
     }
     
-    final func forwardOn(event: Event<O.E>) {
-        if disposed {
+    final func forwardOn(_ event: Event<O.E>) {
+        if isDisposed {
             return
         }
         _observer.on(event)
@@ -31,7 +31,7 @@ class Sink<O : ObserverType> : SingleAssignmentDisposable {
 
     deinit {
 #if TRACE_RESOURCES
-        AtomicDecrement(&resourceCount)
+       let _ =  AtomicDecrement(&resourceCount)
 #endif
     }
 }
@@ -45,11 +45,11 @@ class SinkForward<O: ObserverType>: ObserverType {
         _forward = forward
     }
     
-    func on(event: Event<E>) {
+    func on(_ event: Event<E>) {
         switch event {
-        case .Next:
+        case .next:
             _forward._observer.on(event)
-        case .Error, .Completed:
+        case .error, .completed:
             _forward._observer.on(event)
             _forward.dispose()
         }

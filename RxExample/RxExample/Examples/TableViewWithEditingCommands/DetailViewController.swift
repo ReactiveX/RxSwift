@@ -25,10 +25,10 @@ class DetailViewController: ViewController {
                 
         imageView.makeRoundedCorners(5)
         
-        let url = NSURL(string: user.imageURL)!
-        let request = NSURLRequest(URL: url)
+        let url = URL(string: user.imageURL)!
+        let request = URLRequest(url: url)
         
-        NSURLSession.sharedSession().rx_data(request)
+        URLSession.shared.rx_data(request)
             .map { data in
                 UIImage(data: data)
             }

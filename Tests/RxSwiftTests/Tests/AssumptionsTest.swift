@@ -65,14 +65,14 @@ class AssumptionsTest : RxTest {
     
     func testFunctionReturnValueOverload() {
         _ = returnSomething()
-            .subscribeNext { (n: AnyObject?) in
+            .subscribe(onNext: { (n: AnyObject?) in
                 XCTAssertEqual(n as? NSNull, NSNull())
-            }
+            })
 
         _ = returnSomething()
-            .subscribeNext { (n: Int?) in
+            .subscribe(onNext: { (n: Int?) in
                 XCTAssertEqual(n!, 3)
-             }
+             })
     }
     
     func testArrayMutation() {
@@ -114,7 +114,7 @@ class AssumptionsTest : RxTest {
 class Anything {
     var elements = [Int]()
     
-    func justCallIt(action: () -> Void) {
+    func justCallIt(_ action: () -> Void) {
         clearRealTest()
         action()
     }

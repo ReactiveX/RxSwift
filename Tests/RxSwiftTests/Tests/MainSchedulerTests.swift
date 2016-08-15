@@ -19,7 +19,7 @@ extension MainSchedulerTest {
     func runRunLoop() {
         for _ in 0 ..< 10 {
             let currentRunLoop = CFRunLoopGetCurrent()
-            dispatch_async(dispatch_get_main_queue()) {
+            DispatchQueue.main.async {
                 CFRunLoopStop(currentRunLoop)
             }
 
@@ -37,17 +37,17 @@ extension MainSchedulerTest {
         _ = MainScheduler.instance.schedule(()) { s in
             executedImmediatelly = true
             messages.append(1)
-            MainScheduler.instance.schedule(()) { s in
+            _ = MainScheduler.instance.schedule(()) { s in
                 messages.append(3)
-                MainScheduler.instance.schedule(()) {
+                _ = MainScheduler.instance.schedule(()) {
                     messages.append(5)
-                    return NopDisposable.instance
+                    return Disposables.create()
                 }
                 messages.append(4)
-                return NopDisposable.instance
+                return Disposables.create()
             }
             messages.append(2)
-            return NopDisposable.instance
+            return Disposables.create()
         }
 
         XCTAssertTrue(executedImmediatelly)
@@ -66,7 +66,7 @@ extension MainSchedulerTest {
                 messages.append(3)
                 let disposable = MainScheduler.instance.schedule(()) {
                     messages.append(5)
-                    return NopDisposable.instance
+                    return Disposables.create()
                 }
                 disposable.dispose()
                 messages.append(4)
@@ -90,7 +90,7 @@ extension MainSchedulerTest {
                 messages.append(3)
                 let disposable = MainScheduler.instance.schedule(()) {
                     messages.append(5)
-                    return NopDisposable.instance
+                    return Disposables.create()
                 }
                 messages.append(4)
                 return disposable

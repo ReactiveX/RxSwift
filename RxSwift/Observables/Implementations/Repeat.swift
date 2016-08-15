@@ -17,7 +17,7 @@ class RepeatElement<Element> : Producer<Element> {
         _scheduler = scheduler
     }
     
-    override func run<O : ObserverType where O.E == Element>(observer: O) -> Disposable {
+    override func run<O : ObserverType where O.E == Element>(_ observer: O) -> Disposable {
         let sink = RepeatElementSink(parent: self, observer: observer)
         sink.disposable = sink.run()
 
@@ -37,7 +37,7 @@ class RepeatElementSink<O: ObserverType> : Sink<O> {
     
     func run() -> Disposable {
         return _parent._scheduler.scheduleRecursive(_parent._element) { e, recurse in
-            self.forwardOn(.Next(e))
+            self.forwardOn(.next(e))
             recurse(e)
         }
     }

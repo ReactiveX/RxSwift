@@ -49,9 +49,9 @@ let c = Observable.combineLatest(a.asObservable(), b.asObservable()) { $0 + $1 }
 // 1 + 2 = 3 which is >= 0, so `c` is initially equal to "3 is positive"
 
 // To pull values out of the Rx `Observable` `c`, subscribe to values from `c`.
-// `subscribeNext` means subscribe to the next (fresh) values of `c`.
+// `subscribe(onNext:)` means subscribe to the next (fresh) values of `c`.
 // That also includes the initial value "3 is positive".
-c.subscribeNext { print($0) }          // prints: "3 is positive"
+c.subscribe(onNext: { print($0) })          // prints: "3 is positive"
 
 // Now, let's increase the value of `a`
 a.value = 4                                   // prints: 6 is positive
@@ -152,12 +152,12 @@ self.usernameOutlet.rx_text
 // That's what `switchLatest` does.
     .switchLatest()
 // Now we need to bind that to the user interface somehow.
-// Good old `subscribeNext` can do that.
+// Good old `subscribe(onNext:)` can do that.
 // That's the end of `Observable` chain.
-    .subscribeNext { valid in
+    .subscribe(onNext: { valid in
         errorLabel.textColor = validationColor(valid)
         errorLabel.text = valid.message
-    }
+    })
 // This will produce a `Disposable` object that can unbind everything and cancel
 // pending async operations.
 // Instead of doing it manually, which is tedious,

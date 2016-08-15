@@ -17,7 +17,7 @@ extension ControlEvent {
     
     `ControlEvent` already can't fail, so no special case needs to be handled.
     */
-    @warn_unused_result(message="http://git.io/rxs.uo")
+    // @warn_unused_result(message:"http://git.io/rxs.uo")
     public func asDriver() -> Driver<E> {
         return self.asDriver { (error) -> Driver<E> in
             #if DEBUG
