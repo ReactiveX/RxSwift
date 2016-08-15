@@ -14,7 +14,7 @@ import RxCocoa
 
 private struct ActivityToken<E> : ObservableConvertibleType, Disposable {
     private let _source: Observable<E>
-    private let _dispose: AnonymousDisposable
+    private let _dispose: Cancelable
 
     init(source: Observable<E>, disposeAction: () -> ()) {
         _source = source
