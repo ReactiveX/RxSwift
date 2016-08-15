@@ -167,7 +167,7 @@ extension UICollectionView {
     
     - returns: Instance of delegate proxy that wraps `delegate`.
     */
-    public override func rx_createDelegateProxy() -> RxScrollViewDelegateProxy {
+    public override func rx_createDelegateProxy() -> RxCollectionViewDelegateProxy {
         return RxCollectionViewDelegateProxy(parentObject: self)
     }
 
