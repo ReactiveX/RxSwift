@@ -1008,6 +1008,14 @@
 		CBEE77201BD649A000AD584C /* ToArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBEE771E1BD649A000AD584C /* ToArray.swift */; };
 		CBEE77211BD649A000AD584C /* ToArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBEE771E1BD649A000AD584C /* ToArray.swift */; };
 		CBEE77221BD649A000AD584C /* ToArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBEE771E1BD649A000AD584C /* ToArray.swift */; };
+		CCC906E81CEF5E1800EB5B61 /* VariableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC906E71CEF5E1800EB5B61 /* VariableType.swift */; };
+		CCC906E91CEF5E1800EB5B61 /* VariableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC906E71CEF5E1800EB5B61 /* VariableType.swift */; };
+		CCC906EA1CEF5E1800EB5B61 /* VariableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC906E71CEF5E1800EB5B61 /* VariableType.swift */; };
+		CCC906EB1CEF5E1800EB5B61 /* VariableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC906E71CEF5E1800EB5B61 /* VariableType.swift */; };
+		CCC906ED1CEF5F5A00EB5B61 /* AnyVariable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC906EC1CEF5F5A00EB5B61 /* AnyVariable.swift */; };
+		CCC906EE1CEF5F5A00EB5B61 /* AnyVariable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC906EC1CEF5F5A00EB5B61 /* AnyVariable.swift */; };
+		CCC906EF1CEF5F5A00EB5B61 /* AnyVariable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC906EC1CEF5F5A00EB5B61 /* AnyVariable.swift */; };
+		CCC906F01CEF5F5A00EB5B61 /* AnyVariable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC906EC1CEF5F5A00EB5B61 /* AnyVariable.swift */; };
 		D203C4F31BB9C4CA00D02D00 /* RxCollectionViewReactiveArrayDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88253F11B8A752B00B02D69 /* RxCollectionViewReactiveArrayDataSource.swift */; };
 		D203C4F41BB9C52400D02D00 /* RxTableViewReactiveArrayDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88253F21B8A752B00B02D69 /* RxTableViewReactiveArrayDataSource.swift */; };
 		D203C4F51BB9C52900D02D00 /* ItemEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88253F41B8A752B00B02D69 /* ItemEvents.swift */; };
@@ -1750,6 +1758,8 @@
 		CB883B441BE256D4000AC2EE /* BooleanDisposable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BooleanDisposable.swift; sourceTree = "<group>"; };
 		CB883B491BE369AA000AC2EE /* AddRef.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddRef.swift; sourceTree = "<group>"; };
 		CBEE771E1BD649A000AD584C /* ToArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToArray.swift; sourceTree = "<group>"; };
+		CCC906E71CEF5E1800EB5B61 /* VariableType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VariableType.swift; sourceTree = "<group>"; };
+		CCC906EC1CEF5F5A00EB5B61 /* AnyVariable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnyVariable.swift; sourceTree = "<group>"; };
 		D2138C751BB9BE9800339B5C /* RxCocoa.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxCocoa.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2245A1A1BD5657300E7146F /* WithLatestFrom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WithLatestFrom.swift; sourceTree = "<group>"; };
 		D22B6D251BC8504A00BCE0AB /* SkipWhile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SkipWhile.swift; sourceTree = "<group>"; };
@@ -2112,7 +2122,9 @@
 				C8093CBF1B8A72BE0088E94D /* PublishSubject.swift */,
 				C8093CC01B8A72BE0088E94D /* ReplaySubject.swift */,
 				C8093CC11B8A72BE0088E94D /* SubjectType.swift */,
+				CCC906E71CEF5E1800EB5B61 /* VariableType.swift */,
 				C8093CC21B8A72BE0088E94D /* Variable.swift */,
+				CCC906EC1CEF5F5A00EB5B61 /* AnyVariable.swift */,
 			);
 			path = Subjects;
 			sourceTree = "<group>";
@@ -3808,6 +3820,7 @@
 				C85106891C2D550E0075150C /* String+Rx.swift in Sources */,
 				C8093D121B8A72BE0088E94D /* ConnectableObservable.swift in Sources */,
 				C8BF34D01C2E426800416CAE /* Platform.Linux.swift in Sources */,
+				CCC906E91CEF5E1800EB5B61 /* VariableType.swift in Sources */,
 				C8093D621B8A72BE0088E94D /* Observable+StandardSequenceOperators.swift in Sources */,
 				C8093D1A1B8A72BE0088E94D /* DistinctUntilChanged.swift in Sources */,
 				C8093D561B8A72BE0088E94D /* Observable+Binding.swift in Sources */,
@@ -3857,6 +3870,7 @@
 				C8093D181B8A72BE0088E94D /* DelaySubscription.swift in Sources */,
 				C86409FD1BA593F500D3C4E8 /* Range.swift in Sources */,
 				C8093D221B8A72BE0088E94D /* Map.swift in Sources */,
+				CCC906EE1CEF5F5A00EB5B61 /* AnyVariable.swift in Sources */,
 				C8093CD01B8A72BE0088E94D /* InfiniteSequence.swift in Sources */,
 				D235B23F1BD003DD007E84DA /* Using.swift in Sources */,
 				C8093D661B8A72BE0088E94D /* ObservableType.swift in Sources */,
@@ -4030,6 +4044,7 @@
 				C8093D111B8A72BE0088E94D /* ConnectableObservable.swift in Sources */,
 				C8BF34CF1C2E426800416CAE /* Platform.Linux.swift in Sources */,
 				C8093D611B8A72BE0088E94D /* Observable+StandardSequenceOperators.swift in Sources */,
+				CCC906E81CEF5E1800EB5B61 /* VariableType.swift in Sources */,
 				C8093D191B8A72BE0088E94D /* DistinctUntilChanged.swift in Sources */,
 				C8093D551B8A72BE0088E94D /* Observable+Binding.swift in Sources */,
 				C8093D791B8A72BE0088E94D /* TailRecursiveSink.swift in Sources */,
@@ -4079,6 +4094,7 @@
 				C8093D171B8A72BE0088E94D /* DelaySubscription.swift in Sources */,
 				C86409FC1BA593F500D3C4E8 /* Range.swift in Sources */,
 				C8093D211B8A72BE0088E94D /* Map.swift in Sources */,
+				CCC906ED1CEF5F5A00EB5B61 /* AnyVariable.swift in Sources */,
 				C8093CCF1B8A72BE0088E94D /* InfiniteSequence.swift in Sources */,
 				D235B23E1BD003DD007E84DA /* Using.swift in Sources */,
 				C8093D651B8A72BE0088E94D /* ObservableType.swift in Sources */,
@@ -4176,6 +4192,7 @@
 				C851068B1C2D550E0075150C /* String+Rx.swift in Sources */,
 				C8F0BFB01BBBFB8B001B112F /* ConnectableObservable.swift in Sources */,
 				C8BF34D21C2E426800416CAE /* Platform.Linux.swift in Sources */,
+				CCC906EB1CEF5E1800EB5B61 /* VariableType.swift in Sources */,
 				C8F0BFB11BBBFB8B001B112F /* Observable+StandardSequenceOperators.swift in Sources */,
 				C8F0BFB21BBBFB8B001B112F /* DistinctUntilChanged.swift in Sources */,
 				C8F0BFB31BBBFB8B001B112F /* Observable+Binding.swift in Sources */,
@@ -4225,6 +4242,7 @@
 				C8F0BFD41BBBFB8B001B112F /* DelaySubscription.swift in Sources */,
 				C8F0BFD51BBBFB8B001B112F /* Range.swift in Sources */,
 				C8F0BFD61BBBFB8B001B112F /* Map.swift in Sources */,
+				CCC906F01CEF5F5A00EB5B61 /* AnyVariable.swift in Sources */,
 				C8F0BFD71BBBFB8B001B112F /* InfiniteSequence.swift in Sources */,
 				D235B2411BD003DD007E84DA /* Using.swift in Sources */,
 				C8F0BFD81BBBFB8B001B112F /* ObservableType.swift in Sources */,
@@ -4516,6 +4534,7 @@
 				D2EBEB2C1BB9B6CA003A27DC /* Observable+Binding.swift in Sources */,
 				C8BF34D11C2E426800416CAE /* Platform.Linux.swift in Sources */,
 				D2EBEB041BB9B6C1003A27DC /* Concat.swift in Sources */,
+				CCC906EA1CEF5E1800EB5B61 /* VariableType.swift in Sources */,
 				D2EBEB3A1BB9B6D8003A27DC /* MainScheduler.swift in Sources */,
 				D2EBEB101BB9B6C1003A27DC /* Just.swift in Sources */,
 				C8FA89211C30424000CD3A17 /* VirtualTimeConverterType.swift in Sources */,
@@ -4565,6 +4584,7 @@
 				D2EBEB441BB9B6DE003A27DC /* Variable.swift in Sources */,
 				D2EBEB051BB9B6C1003A27DC /* ConnectableObservable.swift in Sources */,
 				D2EBEADD1BB9B697003A27DC /* ConnectableObservableType.swift in Sources */,
+				CCC906EF1CEF5F5A00EB5B61 /* AnyVariable.swift in Sources */,
 				D2EBEB0C1BB9B6C1003A27DC /* Error.swift in Sources */,
 				D2EBEB361BB9B6D2003A27DC /* TailRecursiveSink.swift in Sources */,
 				D2EBEB311BB9B6CA003A27DC /* Observable+Single.swift in Sources */,
