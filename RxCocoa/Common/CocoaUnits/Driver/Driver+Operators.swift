@@ -179,13 +179,15 @@ extension DriverConvertibleType {
      - parameter onNext: Action to invoke for each element in the observable sequence.
      - parameter onError: Action to invoke upon errored termination of the observable sequence. This callback will never be invoked since driver can't error out.
      - parameter onCompleted: Action to invoke upon graceful termination of the observable sequence.
+     - parameter onSubscribe: Action to invoke before subscribing to source observable sequence.
+     - parameter onDispose: Action to invoke after subscription to source observable has been disposed for any reason. It can be either because sequence terminates for some reason or observer subscription being disposed.
      - returns: The source sequence with the side-effecting behavior applied.
      */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func `do`(onNext: ((E) -> Void)? = nil, onError: ((Swift.Error) -> Void)? = nil, onCompleted: (() -> Void)? = nil)
+    public func `do`(onNext: ((E) -> Void)? = nil, onError: ((Swift.Error) -> Void)? = nil, onCompleted: (() -> Void)? = nil, onSubscribe: (() -> ())? = nil, onDispose: (() -> ())? = nil)
         -> Driver<E> {
         let source = self.asObservable()
-            .doOn(onNext: onNext, onError: onError, onCompleted: onCompleted)
+            .do(onNext: onNext, onError: onError, onCompleted: onCompleted, onSubscribe: onSubscribe, onDispose: onDispose)
 
         return Driver(source)
     }

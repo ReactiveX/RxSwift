@@ -87,7 +87,7 @@ extension ObservableType {
     @available(*, deprecated, renamed: "do(onNext:onError:onCompleted:)")
     public func doOn(_ eventHandler: (Event<E>) throws -> Void)
         -> Observable<E> {
-        return Do(source: self.asObservable(), eventHandler: eventHandler)
+        return Do(source: self.asObservable(), eventHandler: eventHandler, onSubscribe: nil, onDispose: nil)
     }
 
     /**
@@ -98,13 +98,15 @@ extension ObservableType {
     - parameter onNext: Action to invoke for each element in the observable sequence.
     - parameter onError: Action to invoke upon errored termination of the observable sequence.
     - parameter onCompleted: Action to invoke upon graceful termination of the observable sequence.
+    - parameter onSubscribe: Action to invoke before subscribing to source observable sequence.
+    - parameter onDispose: Action to invoke after subscription to source observable has been disposed for any reason. It can be either because sequence terminates for some reason or observer subscription being disposed.
     - returns: The source sequence with the side-effecting behavior applied.
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
     @available(*, deprecated, renamed: "do(onNext:onError:onCompleted:)")
     public func doOn(onNext: ((E) throws -> Void)? = nil, onError: ((Swift.Error) throws -> Void)? = nil, onCompleted: (() throws -> Void)? = nil)
         -> Observable<E> {
-        return Do(source: self.asObservable()) { e in
+        return Do(source: self.asObservable(), eventHandler: { e in
             switch e {
             case .next(let element):
                 try onNext?(element)
@@ -113,7 +115,9 @@ extension ObservableType {
             case .completed:
                 try onCompleted?()
             }
-        }
+        },
+        onSubscribe: nil,
+        onDispose: nil)
     }
 
     /**
@@ -163,12 +167,14 @@ extension ObservableType {
      - parameter onNext: Action to invoke for each element in the observable sequence.
      - parameter onError: Action to invoke upon errored termination of the observable sequence.
      - parameter onCompleted: Action to invoke upon graceful termination of the observable sequence.
-     - returns: The source sequence with the side-effecting behavior applied.
+     - parameter onSubscribe: Action to invoke before subscribing to source observable sequence.
+     - parameter onDispose: Action to invoke after subscription to source observable has been disposed for any reason. It can be either because sequence terminates for some reason or observer subscription being disposed.
+    - returns: The source sequence with the side-effecting behavior applied.
      */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func `do`(onNext: ((E) throws -> Void)? = nil, onError: ((Swift.Error) throws -> Void)? = nil, onCompleted: (() throws -> Void)? = nil)
+    public func `do`(onNext: ((E) throws -> Void)? = nil, onError: ((Swift.Error) throws -> Void)? = nil, onCompleted: (() throws -> Void)? = nil, onSubscribe: (() -> ())? = nil, onDispose: (() -> ())? = nil)
         -> Observable<E> {
-            return Do(source: self.asObservable()) { e in
+            return Do(source: self.asObservable(), eventHandler: { e in
                 switch e {
                 case .next(let element):
                     try onNext?(element)
@@ -177,7 +183,7 @@ extension ObservableType {
                 case .completed:
                     try onCompleted?()
                 }
-            }
+            }, onSubscribe: onSubscribe, onDispose: onDispose)
     }
 }
 

@@ -39,15 +39,25 @@ class Do<Element> : Producer<Element> {
     
     private let _source: Observable<Element>
     private let _eventHandler: EventHandler
+    private let _onSubscribe: (() -> ())?
+    private let _onDispose: (() -> ())?
     
-    init(source: Observable<Element>, eventHandler: EventHandler) {
+    init(source: Observable<Element>, eventHandler: EventHandler, onSubscribe: (() -> ())?, onDispose: (() -> ())?) {
         _source = source
         _eventHandler = eventHandler
+        _onSubscribe = onSubscribe
+        _onDispose = onDispose
     }
     
     override func run<O: ObserverType where O.E == Element>(_ observer: O) -> Disposable {
+        _onSubscribe?()
         let sink = DoSink(parent: self, observer: observer)
-        sink.disposable = _source.subscribe(sink)
+        let subscription = _source.subscribe(sink)
+        let onDispose = _onDispose
+        sink.disposable = Disposables.create {
+            subscription.dispose()
+            onDispose?()
+        }
         return sink
     }
 }
