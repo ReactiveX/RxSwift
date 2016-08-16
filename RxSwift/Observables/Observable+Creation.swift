@@ -132,7 +132,7 @@ extension Observable {
     - returns: The generated sequence.
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    public static func generate(initialState: E, condition: (E) throws -> Bool, scheduler: ImmediateSchedulerType = CurrentThreadScheduler.instance, iterate: (E) throws -> E) -> Observable<E> {
+    public static func generate(initialState: E, condition: @escaping (E) throws -> Bool, scheduler: ImmediateSchedulerType = CurrentThreadScheduler.instance, iterate: @escaping (E) throws -> E) -> Observable<E> {
         return Generate(initialState: initialState, condition: condition, iterate: iterate, resultSelector: { $0 }, scheduler: scheduler)
     }
 

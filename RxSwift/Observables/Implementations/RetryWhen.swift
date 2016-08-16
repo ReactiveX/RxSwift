@@ -137,7 +137,7 @@ class RetryWhenSequence<S: Sequence, TriggerObservable: ObservableType, Error> :
     fileprivate let _sources: S
     fileprivate let _notificationHandler: (Observable<Error>) -> TriggerObservable
     
-    init(sources: S, notificationHandler: (Observable<Error>) -> TriggerObservable) {
+    init(sources: S, notificationHandler: @escaping (Observable<Error>) -> TriggerObservable) {
         _sources = sources
         _notificationHandler = notificationHandler
     }

@@ -25,7 +25,7 @@ extension ObservableType {
     - returns: An observable sequence containing a single element with the final accumulator value.
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func reduce<A, R>(_ seed: A, accumulator: (A, E) throws -> A, mapResult: (A) throws -> R)
+    public func reduce<A, R>(_ seed: A, accumulator: @escaping (A, E) throws -> A, mapResult: @escaping (A) throws -> R)
         -> Observable<R> {
         return Reduce(source: self.asObservable(), seed: seed, accumulator: accumulator, mapResult: mapResult)
     }
@@ -42,7 +42,7 @@ extension ObservableType {
     - returns: An observable sequence containing a single element with the final accumulator value.
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func reduce<A>(_ seed: A, accumulator: (A, E) throws -> A)
+    public func reduce<A>(_ seed: A, accumulator: @escaping (A, E) throws -> A)
         -> Observable<A> {
         return Reduce(source: self.asObservable(), seed: seed, accumulator: accumulator, mapResult: { $0 })
     }

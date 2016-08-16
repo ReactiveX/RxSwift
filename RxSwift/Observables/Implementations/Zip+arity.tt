@@ -23,7 +23,7 @@ extension Observable {
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
     public static func zip<<%= (Array(1...i).map { "O\($0): ObservableType" }).joined(separator: ", ") %>>
-        (<%= (Array(1...i).map { "_ source\($0): O\($0)" }).joined(separator: ", ") %>, resultSelector: (<%= (Array(1...i).map { "O\($0).E" }).joined(separator: ", ") %>) throws -> E)
+        (<%= (Array(1...i).map { "_ source\($0): O\($0)" }).joined(separator: ", ") %>, resultSelector: @escaping (<%= (Array(1...i).map { "O\($0).E" }).joined(separator: ", ") %>) throws -> E)
         -> Observable<E> {
         return Zip<%= i %>(
             <%= (Array(1...i).map { "source\($0): source\($0).asObservable()" }).joined(separator: ", ") %>,

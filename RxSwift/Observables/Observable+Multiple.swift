@@ -21,7 +21,7 @@ extension Collection where Iterator.Element : ObservableType {
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func combineLatest<R>(_ resultSelector: ([Generator.Element.E]) throws -> R) -> Observable<R> {
+    public func combineLatest<R>(_ resultSelector: @escaping ([Generator.Element.E]) throws -> R) -> Observable<R> {
         return CombineLatestCollectionType(sources: self, resultSelector: resultSelector)
     }
 }
@@ -39,7 +39,7 @@ extension Collection where Iterator.Element : ObservableType {
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func zip<R>(_ resultSelector: ([Generator.Element.E]) throws -> R) -> Observable<R> {
+    public func zip<R>(_ resultSelector: @escaping ([Generator.Element.E]) throws -> R) -> Observable<R> {
         return ZipCollectionType(sources: self, resultSelector: resultSelector)
     }
 }
@@ -187,7 +187,7 @@ extension ObservableType {
     - returns: An observable sequence containing the source sequence's elements, followed by the elements produced by the handler's resulting observable sequence in case an error occurred.
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func catchError(_ handler: (Swift.Error) throws -> Observable<E>)
+    public func catchError(_ handler: @escaping (Swift.Error) throws -> Observable<E>)
         -> Observable<E> {
         return Catch(source: asObservable(), handler: handler)
     }
@@ -312,7 +312,7 @@ extension ObservableType {
     - parameter resultSelector: Function to invoke for each element from the self combined with the latest element from the second source, if any.
     - returns: An observable sequence containing the result of combining each element of the self  with the latest element from the second source, if any, using the specified result selector function.
     */
-    public func withLatestFrom<SecondO: ObservableConvertibleType, ResultType>(_ second: SecondO, resultSelector: (E, SecondO.E) throws -> ResultType) -> Observable<ResultType> {
+    public func withLatestFrom<SecondO: ObservableConvertibleType, ResultType>(_ second: SecondO, resultSelector: @escaping (E, SecondO.E) throws -> ResultType) -> Observable<ResultType> {
         return WithLatestFrom(first: asObservable(), second: second.asObservable(), resultSelector: resultSelector)
     }
 

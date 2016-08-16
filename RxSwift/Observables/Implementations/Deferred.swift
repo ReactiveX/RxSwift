@@ -13,7 +13,7 @@ class DeferredSink<S: ObservableType, O: ObserverType> : Sink<O>, ObserverType w
 
     private let _observableFactory: () throws -> S
 
-    init(observableFactory: () throws -> S, observer: O) {
+    init(observableFactory: @escaping () throws -> S, observer: O) {
         _observableFactory = observableFactory
         super.init(observer: observer)
     }

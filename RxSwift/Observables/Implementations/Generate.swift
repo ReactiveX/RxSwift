@@ -54,7 +54,7 @@ class Generate<S, E> : Producer<E> {
     fileprivate let _resultSelector: (S) throws -> E
     fileprivate let _scheduler: ImmediateSchedulerType
     
-    init(initialState: S, condition: (S) throws -> Bool, iterate: (S) throws -> S, resultSelector: (S) throws -> E, scheduler: ImmediateSchedulerType) {
+    init(initialState: S, condition: @escaping (S) throws -> Bool, iterate: @escaping (S) throws -> S, resultSelector: @escaping (S) throws -> E, scheduler: ImmediateSchedulerType) {
         _initialState = initialState
         _condition = condition
         _iterate = iterate

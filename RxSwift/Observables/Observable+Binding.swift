@@ -44,7 +44,7 @@ extension ObservableType {
     - returns: An observable sequence that contains the elements of a sequence produced by multicasting the source sequence within a selector function.
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func multicast<S: SubjectType, R>(_ subjectSelector: () throws -> S, selector: (Observable<S.E>) throws -> Observable<R>)
+    public func multicast<S: SubjectType, R>(_ subjectSelector: @escaping () throws -> S, selector: @escaping (Observable<S.E>) throws -> Observable<R>)
         -> Observable<R> where S.SubjectObserverType.E == E {
         return Multicast(
             source: self.asObservable(),

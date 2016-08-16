@@ -12,7 +12,7 @@ struct PriorityQueue<Element: AnyObject> {
     private let _hasHigherPriority: (Element, Element) -> Bool
     fileprivate var _elements = [Element]()
 
-    init(hasHigherPriority: (Element, Element) -> Bool) {
+    init(hasHigherPriority: @escaping (Element, Element) -> Bool) {
         _hasHigherPriority = hasHigherPriority
     }
 

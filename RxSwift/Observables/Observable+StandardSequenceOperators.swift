@@ -21,7 +21,7 @@ extension ObservableType {
     - returns: An observable sequence that contains elements from the input sequence that satisfy the condition.
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func filter(_ predicate: (E) throws -> Bool)
+    public func filter(_ predicate: @escaping (E) throws -> Bool)
         -> Observable<E> {
         return Filter(source: asObservable(), predicate: predicate)
     }
@@ -40,7 +40,7 @@ extension ObservableType {
     - returns: An observable sequence that contains the elements from the input sequence that occur before the element at which the test no longer passes.
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func takeWhile(_ predicate: (E) throws -> Bool)
+    public func takeWhile(_ predicate: @escaping (E) throws -> Bool)
         -> Observable<E> {
         return TakeWhile(source: asObservable(), predicate: predicate)
     }
@@ -56,7 +56,7 @@ extension ObservableType {
     - returns: An observable sequence that contains the elements from the input sequence that occur before the element at which the test no longer passes.
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func takeWhileWithIndex(_ predicate: (E, Int) throws -> Bool)
+    public func takeWhileWithIndex(_ predicate: @escaping (E, Int) throws -> Bool)
         -> Observable<E> {
         return TakeWhile(source: asObservable(), predicate: predicate)
     }
@@ -140,7 +140,7 @@ extension ObservableType {
     - returns: An observable sequence that contains the elements from the input sequence starting at the first element in the linear series that does not pass the test specified by predicate.
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func skipWhile(_ predicate: (E) throws -> Bool) -> Observable<E> {
+    public func skipWhile(_ predicate: @escaping (E) throws -> Bool) -> Observable<E> {
         return SkipWhile(source: asObservable(), predicate: predicate)
     }
    
@@ -154,7 +154,7 @@ extension ObservableType {
     - returns: An observable sequence that contains the elements from the input sequence starting at the first element in the linear series that does not pass the test specified by predicate.
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func skipWhileWithIndex(_ predicate: (E, Int) throws -> Bool) -> Observable<E> {
+    public func skipWhileWithIndex(_ predicate: @escaping (E, Int) throws -> Bool) -> Observable<E> {
         return SkipWhile(source: asObservable(), predicate: predicate)
     }
 }
@@ -173,7 +173,7 @@ extension ObservableType {
      
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func map<R>(_ selector: (E) throws -> R)
+    public func map<R>(_ selector: @escaping (E) throws -> R)
         -> Observable<R> {
         return self.asObservable().composeMap(selector)
     }
@@ -187,7 +187,7 @@ extension ObservableType {
     - returns: An observable sequence whose elements are the result of invoking the transform function on each element of source.
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func mapWithIndex<R>(_ selector: (E, Int) throws -> R)
+    public func mapWithIndex<R>(_ selector: @escaping (E, Int) throws -> R)
         -> Observable<R> {
         return MapWithIndex(source: asObservable(), selector: selector)
     }
@@ -206,7 +206,7 @@ extension ObservableType {
     - returns: An observable sequence whose elements are the result of invoking the one-to-many transform function on each element of the input sequence.
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func flatMap<O: ObservableConvertibleType>(_ selector: (E) throws -> O)
+    public func flatMap<O: ObservableConvertibleType>(_ selector: @escaping (E) throws -> O)
         -> Observable<O.E> {
         return FlatMap(source: asObservable(), selector: selector)
     }
@@ -220,7 +220,7 @@ extension ObservableType {
     - returns: An observable sequence whose elements are the result of invoking the one-to-many transform function on each element of the input sequence.
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func flatMapWithIndex<O: ObservableConvertibleType>(_ selector: (E, Int) throws -> O)
+    public func flatMapWithIndex<O: ObservableConvertibleType>(_ selector: @escaping (E, Int) throws -> O)
         -> Observable<O.E> {
         return FlatMapWithIndex(source: asObservable(), selector: selector)
     }
@@ -240,7 +240,7 @@ extension ObservableType {
     - returns: An observable sequence whose elements are the result of invoking the one-to-many transform function on each element of the input sequence that was received while no other sequence was being calculated.
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func flatMapFirst<O: ObservableConvertibleType>(_ selector: (E) throws -> O)
+    public func flatMapFirst<O: ObservableConvertibleType>(_ selector: @escaping (E) throws -> O)
         -> Observable<O.E> {
         return FlatMapFirst(source: asObservable(), selector: selector)
     }
@@ -262,7 +262,7 @@ extension ObservableType {
         Observable of Observable sequences and that at any point in time produces the elements of the most recent inner observable sequence that has been received.
      */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func flatMapLatest<O: ObservableConvertibleType>(_ selector: (E) throws -> O)
+    public func flatMapLatest<O: ObservableConvertibleType>(_ selector: @escaping (E) throws -> O)
         -> Observable<O.E> {
             return FlatMapLatest(source: asObservable(), selector: selector)
     }
@@ -315,7 +315,7 @@ extension ObservableType {
     - returns: An observable sequence that emits a single item or throws an exception if more (or none) of them are emitted.
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func single(_ predicate: (E) throws -> Bool)
+    public func single(_ predicate: @escaping (E) throws -> Bool)
         -> Observable<E> {
         return SingleAsync(source: asObservable(), predicate: predicate)
     }
