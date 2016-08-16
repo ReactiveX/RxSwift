@@ -208,7 +208,7 @@ Additional way to automatically dispose subscription on dealloc is to use `takeU
 
 ```swift
 sequence
-    .takeUntil(self.deallocated)
+    .takeUntil(self.rx.deallocated)
     .subscribe {
         print($0)
     }
@@ -554,8 +554,8 @@ Behavior for URL observables is equivalent.
 This is how HTTP requests are wrapped in Rx. It's pretty much the same pattern like the `interval` operator.
 
 ```swift
-extension NSURLSession {
-    public func rx_response(request: NSURLRequest) -> Observable<(NSData, NSURLResponse)> {
+extension Reactive where Base: NSURLSession {
+    public func response(request: NSURLRequest) -> Observable<(NSData, NSURLResponse)> {
         return Observable.create { observer in
             let task = self.dataTaskWithRequest(request) { (data, response, error) in
                 guard let response = response, data = data else {
@@ -933,14 +933,14 @@ There are two built in ways this library supports KVO.
 
 ```swift
 // KVO
-extension NSObject {
-    public func rx_observe<E>(type: E.Type, _ keyPath: String, options: NSKeyValueObservingOptions, retainSelf: Bool = true) -> Observable<E?> {}
+extension Reactive where Base: NSObject {
+    public func observe<E>(type: E.Type, _ keyPath: String, options: NSKeyValueObservingOptions, retainSelf: Bool = true) -> Observable<E?> {}
 }
 
 #if !DISABLE_SWIZZLING
 // KVO
-extension NSObject {
-    public func rx_observeWeakly<E>(type: E.Type, _ keyPath: String, options: NSKeyValueObservingOptions) -> Observable<E?> {}
+extension Reactive where Base: NSObject {
+    public func observeWeakly<E>(type: E.Type, _ keyPath: String, options: NSKeyValueObservingOptions) -> Observable<E?> {}
 }
 #endif
 ```
@@ -951,7 +951,7 @@ Example how to observe frame of `UIView`.
 
 ```swift
 view
-  .rx_observe(CGRect.self, "frame")
+  .rx.observe(CGRect.self, "frame")
   .subscribe(onNext: { frame in
     ...
   })
@@ -961,15 +961,15 @@ or
 
 ```swift
 view
-  .rx_observeWeakly(CGRect.self, "frame")
+  .rx.observeWeakly(CGRect.self, "frame")
   .subscribe(onNext: { frame in
     ...
   })
 ```
 
-### `rx_observe`
+### `rx.observe`
 
-`rx_observe` is more performant because it's just a simple wrapper around KVO mechanism, but it has more limited usage scenarios
+`rx.observe` is more performant because it's just a simple wrapper around KVO mechanism, but it has more limited usage scenarios
 
 * it can be used to observe paths starting from `self` or from ancestors in ownership graph (`retainSelf = false`)
 * it can be used to observe paths starting from descendants in ownership graph (`retainSelf = true`)
@@ -978,14 +978,14 @@ view
 E.g.
 
 ```swift
-self.rx_observe(CGRect.self, "view.frame", retainSelf: false)
+self.rx.observe(CGRect.self, "view.frame", retainSelf: false)
 ```
 
-### `rx_observeWeakly`
+### `rx.observeWeakly`
 
-`rx_observeWeakly` has somewhat slower than `rx_observe` because it has to handle object deallocation in case of weak references.
+`rx.observeWeakly` has somewhat slower than `rx.observe` because it has to handle object deallocation in case of weak references.
 
-It can be used in all cases where `rx_observe` can be used and additionally
+It can be used in all cases where `rx.observe` can be used and additionally
 
 * because it won't retain observed target, it can be used to observe arbitrary object graph whose ownership relation is unknown
 * it can be used to observe `weak` properties
@@ -993,7 +993,7 @@ It can be used in all cases where `rx_observe` can be used and additionally
 E.g.
 
 ```swift
-someSuspiciousViewController.rx_observeWeakly(Bool.self, "behavingOk")
+someSuspiciousViewController.rx.observeWeakly(Bool.self, "behavingOk")
 ```
 
 ### Observing structs
@@ -1004,7 +1004,7 @@ KVO is an Objective-C mechanism so it relies heavily on `NSValue`.
 
 When observing some other structures it is necessary to extract those structures from `NSValue` manually.
 
-[Here](../RxCocoa/Common/KVORepresentable+CoreGraphics.swift) are examples how to extend KVO observing mechanism and `rx_observe*` methods for other structs by implementing `KVORepresentable` protocol.
+[Here](../RxCocoa/Common/KVORepresentable+CoreGraphics.swift) are examples how to extend KVO observing mechanism and `rx.observe*` methods for other structs by implementing `KVORepresentable` protocol.
 
 ## UI layer tips
 
@@ -1070,7 +1070,7 @@ let request = NSURLRequest(URL: NSURL(string: "http://en.wikipedia.org/w/api.php
 If you want to just execute that request outside of composition with other observables, this is what needs to be done.
 
 ```swift
-let responseJSON = NSURLSession.sharedSession().rx_JSON(request)
+let responseJSON = NSURLSession.sharedSession().rx.JSON(request)
 
 // no requests will be performed up to this point
 // `responseJSON` is just a description how to fetch the response
@@ -1093,7 +1093,7 @@ cancelRequest.dispose()
 In case you want a more low level access to response, you can use:
 
 ```swift
-NSURLSession.sharedSession().rx_response(myNSURLRequest)
+NSURLSession.sharedSession().rx.response(myNSURLRequest)
     .debug("my request") // this will print out information to console
     .flatMap { (data: NSData!, response: NSURLResponse!) -> Observable<String> in
         if let response = response as? NSHTTPURLResponse {

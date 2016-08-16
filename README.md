@@ -77,7 +77,7 @@ KVO observing, async operations and streams are all unified under [abstraction o
   </tr>
   <tr>
     <td><div class="highlight highlight-source-swift"><pre>
-let searchResults = searchBar.rx_text
+let searchResults = searchBar.rx.text
     .throttle(0.3, scheduler: MainScheduler.instance)
     .distinctUntilChanged()
     .flatMapLatest { query -> Observable<[Repository]> in
@@ -96,7 +96,7 @@ let searchResults = searchBar.rx_text
   <tr>
     <td width="30%"><div class="highlight highlight-source-swift"><pre>
 searchResults
-    .bindTo(tableView.rx_itemsWithCellIdentifier("Cell")) {
+    .bindTo(tableView.rx.itemsWithCellIdentifier("Cell")) {
         (index, repository: Repository, cell) in
         cell.textLabel?.text = repository.name
         cell.detailTextLabel?.text = repository.url
