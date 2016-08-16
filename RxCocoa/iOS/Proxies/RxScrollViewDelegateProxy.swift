@@ -17,7 +17,7 @@ import UIKit
 /**
  For more information take a look at `DelegateProxyType`.
 */
-open class RxScrollViewDelegateProxy
+public class RxScrollViewDelegateProxy
     : DelegateProxy
     , UIScrollViewDelegate
     , DelegateProxyType {
@@ -27,7 +27,7 @@ open class RxScrollViewDelegateProxy
     /**
      Typed parent object.
      */
-    open weak fileprivate(set) var scrollView: UIScrollView?
+    public weak fileprivate(set) var scrollView: UIScrollView?
 
     /**
      Optimized version used for observing content offset changes.
@@ -57,7 +57,7 @@ open class RxScrollViewDelegateProxy
     /**
     For more information take a look at `DelegateProxyType`.
     */
-    open func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if let contentOffset = _contentOffsetSubject {
             contentOffset.on(.next(scrollView.contentOffset))
         }
@@ -69,7 +69,7 @@ open class RxScrollViewDelegateProxy
     /**
     For more information take a look at `DelegateProxyType`.
     */
-    open override class func createProxyForObject(_ object: AnyObject) -> AnyObject {
+    public override class func createProxyForObject(_ object: AnyObject) -> AnyObject {
         let scrollView = (object as! UIScrollView)
         
         return castOrFatalError(scrollView.rx_createDelegateProxy())
@@ -78,7 +78,7 @@ open class RxScrollViewDelegateProxy
     /**
      For more information take a look at `DelegateProxyType`.
      */
-    open class func setCurrentDelegate(_ delegate: AnyObject?, toObject object: AnyObject) {
+    public class func setCurrentDelegate(_ delegate: AnyObject?, toObject object: AnyObject) {
         let scrollView: UIScrollView = castOrFatalError(object)
         scrollView.delegate = castOptionalOrFatalError(delegate)
     }
@@ -86,7 +86,7 @@ open class RxScrollViewDelegateProxy
     /**
      For more information take a look at `DelegateProxyType`.
      */
-    open class func currentDelegateFor(_ object: AnyObject) -> AnyObject? {
+    public class func currentDelegateFor(_ object: AnyObject) -> AnyObject? {
         let scrollView: UIScrollView = castOrFatalError(object)
         return scrollView.delegate
     }

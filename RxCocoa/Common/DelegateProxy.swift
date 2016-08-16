@@ -85,7 +85,7 @@ open class DelegateProxy : _RXDelegateProxy {
     - parameter selector: Selector used to filter observed invocations of delegate methods.
     - returns: Observable sequence of arguments passed to `selector` method.
     */
-    open func observe(_ selector: Selector) -> Observable<[AnyObject]> {
+    public func observe(_ selector: Selector) -> Observable<[AnyObject]> {
         if hasWiredImplementation(for: selector) {
             print("Delegate proxy is already implementing `\(selector)`, a more performant way of registering might exist.")
         }
@@ -117,7 +117,7 @@ open class DelegateProxy : _RXDelegateProxy {
     
     - returns: Associated object tag.
     */
-    open class func delegateAssociatedObjectTag() -> UnsafeRawPointer {
+    public class func delegateAssociatedObjectTag() -> UnsafeRawPointer {
         return _pointer(&delegateAssociatedTag)
     }
     
@@ -126,7 +126,7 @@ open class DelegateProxy : _RXDelegateProxy {
     
     - returns: Initialized instance of `self`.
     */
-    open class func createProxyForObject(_ object: AnyObject) -> AnyObject {
+    public class func createProxyForObject(_ object: AnyObject) -> AnyObject {
         return self.init(parentObject: object)
     }
     
@@ -136,7 +136,7 @@ open class DelegateProxy : _RXDelegateProxy {
     - parameter object: Object that can have assigned delegate proxy.
     - returns: Assigned delegate proxy or `nil` if no delegate proxy is assigned.
     */
-    open class func assignedProxyFor(_ object: AnyObject) -> AnyObject? {
+    public class func assignedProxyFor(_ object: AnyObject) -> AnyObject? {
         let maybeDelegate = objc_getAssociatedObject(object, self.delegateAssociatedObjectTag())
         return castOptionalOrFatalError(maybeDelegate.map { $0 as AnyObject })
     }
@@ -147,7 +147,7 @@ open class DelegateProxy : _RXDelegateProxy {
     - parameter object: Object that can have assigned delegate proxy.
     - parameter proxy: Delegate proxy object to assign to `object`.
     */
-    open class func assignProxy(_ proxy: AnyObject, toObject object: AnyObject) {
+    public class func assignProxy(_ proxy: AnyObject, toObject object: AnyObject) {
         precondition(proxy.isKind(of: self.classForCoder()))
        
         objc_setAssociatedObject(object, self.delegateAssociatedObjectTag(), proxy, .OBJC_ASSOCIATION_RETAIN)
@@ -160,7 +160,7 @@ open class DelegateProxy : _RXDelegateProxy {
     - parameter forwardToDelegate: Reference of delegate that receives all messages through `self`.
     - parameter retainDelegate: Should `self` retain `forwardToDelegate`.
     */
-    open func setForwardToDelegate(_ delegate: AnyObject?, retainDelegate: Bool) {
+    public func setForwardToDelegate(_ delegate: AnyObject?, retainDelegate: Bool) {
         self._setForward(toDelegate: delegate, retainDelegate: retainDelegate)
     }
    
@@ -170,7 +170,7 @@ open class DelegateProxy : _RXDelegateProxy {
     
     - returns: Value of reference if set or nil.
     */
-    open func forwardToDelegate() -> AnyObject? {
+    public func forwardToDelegate() -> AnyObject? {
         return self._forwardToDelegate
     }
     

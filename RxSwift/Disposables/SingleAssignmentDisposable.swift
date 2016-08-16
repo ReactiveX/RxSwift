@@ -13,7 +13,7 @@ Represents a disposable resource which only allows a single assignment of its un
 
 If an underlying disposable resource has already been set, future attempts to set the underlying disposable resource will throw an exception.
 */
-open class SingleAssignmentDisposable : DisposeBase, Disposable, Cancelable {
+public class SingleAssignmentDisposable : DisposeBase, Disposable, Cancelable {
     private var _lock = SpinLock()
     
     // state
@@ -24,7 +24,7 @@ open class SingleAssignmentDisposable : DisposeBase, Disposable, Cancelable {
     /**
     - returns: A value that indicates whether the object is disposed.
     */
-    open var isDisposed: Bool {
+    public var isDisposed: Bool {
         return _isDisposed
     }
 
@@ -40,7 +40,7 @@ open class SingleAssignmentDisposable : DisposeBase, Disposable, Cancelable {
     
     **Throws exception if the `SingleAssignmentDisposable` has already been assigned to.**
     */
-    open var disposable: Disposable {
+    public var disposable: Disposable {
         get {
             _lock.lock(); defer { _lock.unlock() }
             return _disposable ?? Disposables.create()
@@ -70,7 +70,7 @@ open class SingleAssignmentDisposable : DisposeBase, Disposable, Cancelable {
     /**
     Disposes the underlying disposable.
     */
-    open func dispose() {
+    public func dispose() {
         if _isDisposed {
             return
         }

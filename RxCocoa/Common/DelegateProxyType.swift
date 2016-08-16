@@ -191,6 +191,7 @@ extension DelegateProxyType {
 
         if currentDelegate !== proxy {
             proxy.setForwardToDelegate(currentDelegate, retainDelegate: false)
+            assert(proxy.forwardToDelegate() === currentDelegate)
             Self.setCurrentDelegate(proxy, toObject: object)
             assert(Self.currentDelegateFor(object) === proxy)
             assert(proxy.forwardToDelegate() === currentDelegate)
@@ -226,7 +227,7 @@ extension DelegateProxyType {
         Self.setCurrentDelegate(nil, toObject: object)
         Self.setCurrentDelegate(proxy, toObject: object)
         
-        assert(proxy.forwardToDelegate() === forwardDelegate, "Setting of delegate failed")
+        assert(proxy.forwardToDelegate() === forwardDelegate, "Setting of delegate failed:\ncurrent:\n\(proxy.forwardToDelegate())\nexpected:\n\(forwardDelegate)")
         
         return Disposables.create {
             MainScheduler.ensureExecutingOnScheduler()

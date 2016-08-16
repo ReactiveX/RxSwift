@@ -11,7 +11,7 @@ import Foundation
 /**
  Represents an observable wrapper that can be connected and disconnected from its underlying observable sequence.
 */
-open class ConnectableObservable<Element>
+public class ConnectableObservable<Element>
     : Observable<Element>
     , ConnectableObservableType {
 
@@ -20,7 +20,7 @@ open class ConnectableObservable<Element>
      
      - returns: Disposable used to disconnect the observable wrapper from its source, causing subscribed observer to stop receiving values from the underlying observable sequence.
     */
-    open func connect() -> Disposable {
+    public func connect() -> Disposable {
         abstractMethod()
     }
 }

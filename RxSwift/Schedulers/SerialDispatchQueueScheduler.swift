@@ -25,14 +25,14 @@ In case some customization need to be made on it before usage,
 internal serial queue can be customized using `serialQueueConfiguration`
 callback.
 */
-open class SerialDispatchQueueScheduler : SchedulerType {
+public class SerialDispatchQueueScheduler : SchedulerType {
     public typealias TimeInterval = Foundation.TimeInterval
     public typealias Time = Date
     
     /**
     - returns: Current time.
     */
-    open var now : Date {
+    public var now : Date {
         return Date()
     }
 
@@ -118,7 +118,7 @@ open class SerialDispatchQueueScheduler : SchedulerType {
     - parameter action: Action to be executed.
     - returns: The disposable object used to cancel the scheduled action (best effort).
     */
-    open func schedulePeriodic<StateType>(_ state: StateType, startAfter: TimeInterval, period: TimeInterval, action: @escaping (StateType) -> StateType) -> Disposable {
+    public func schedulePeriodic<StateType>(_ state: StateType, startAfter: TimeInterval, period: TimeInterval, action: @escaping (StateType) -> StateType) -> Disposable {
         return self.configuration.schedulePeriodic(state, startAfter: startAfter, period: period, action: action)
     }
 }

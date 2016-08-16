@@ -18,7 +18,7 @@ Observer that enforces interface binding rules:
  
 `UIBindingObserver` doesn't retain target interface and in case owned interface element is released, element isn't bound.
 */
-open class UIBindingObserver<UIElementType, Value> : ObserverType where UIElementType: AnyObject {
+public class UIBindingObserver<UIElementType, Value> : ObserverType where UIElementType: AnyObject {
     public typealias E = Value
 
     weak var UIElement: UIElementType?
@@ -36,7 +36,7 @@ open class UIBindingObserver<UIElementType, Value> : ObserverType where UIElemen
     /**
      Binds next element to owner view as described in `binding`.
     */
-    open func on(_ event: Event<Value>) {
+    public func on(_ event: Event<Value>) {
         MainScheduler.ensureExecutingOnScheduler(errorMessage: "Element can be bound to user interface only on MainThread.")
 
         switch event {
@@ -56,7 +56,7 @@ open class UIBindingObserver<UIElementType, Value> : ObserverType where UIElemen
 
      - returns: type erased observer.
      */
-    open func asObserver() -> AnyObserver<Value> {
+    public func asObserver() -> AnyObserver<Value> {
         return AnyObserver(eventHandler: on)
     }
 }

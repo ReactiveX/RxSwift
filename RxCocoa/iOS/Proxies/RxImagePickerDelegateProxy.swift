@@ -14,7 +14,7 @@
 #endif
    import UIKit
 
-open class RxImagePickerDelegateProxy
+public class RxImagePickerDelegateProxy
     : DelegateProxy
     , DelegateProxyType
     , UIImagePickerControllerDelegate
@@ -23,7 +23,7 @@ open class RxImagePickerDelegateProxy
     /**
      For more information take a look at `DelegateProxyType`.
      */
-    open class func setCurrentDelegate(_ delegate: AnyObject?, toObject object: AnyObject) {
+    public class func setCurrentDelegate(_ delegate: AnyObject?, toObject object: AnyObject) {
         let imagePickerController: UIImagePickerController = castOrFatalError(object)
         imagePickerController.delegate = castOptionalOrFatalError(delegate)
     }
@@ -31,7 +31,7 @@ open class RxImagePickerDelegateProxy
     /**
      For more information take a look at `DelegateProxyType`.
      */
-    open class func currentDelegateFor(_ object: AnyObject) -> AnyObject? {
+    public class func currentDelegateFor(_ object: AnyObject) -> AnyObject? {
         let imagePickerController: UIImagePickerController = castOrFatalError(object)
         return imagePickerController.delegate
     }

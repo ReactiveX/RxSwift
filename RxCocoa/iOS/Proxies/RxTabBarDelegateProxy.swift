@@ -17,7 +17,7 @@ import RxSwift
 /**
  For more information take a look at `DelegateProxyType`.
  */
-open class RxTabBarDelegateProxy
+public class RxTabBarDelegateProxy
     : DelegateProxy
     , UITabBarDelegate
     , DelegateProxyType {
@@ -25,7 +25,7 @@ open class RxTabBarDelegateProxy
     /**
      For more information take a look at `DelegateProxyType`.
      */
-    open class func currentDelegateFor(_ object: AnyObject) -> AnyObject? {
+    public class func currentDelegateFor(_ object: AnyObject) -> AnyObject? {
         let tabBar: UITabBar = castOrFatalError(object)
         return tabBar.delegate
     }
@@ -33,7 +33,7 @@ open class RxTabBarDelegateProxy
     /**
      For more information take a look at `DelegateProxyType`.
      */
-    open class func setCurrentDelegate(_ delegate: AnyObject?, toObject object: AnyObject) {
+    public class func setCurrentDelegate(_ delegate: AnyObject?, toObject object: AnyObject) {
         let tabBar: UITabBar = castOrFatalError(object)
         tabBar.delegate = castOptionalOrFatalError(delegate)
     }
@@ -41,7 +41,7 @@ open class RxTabBarDelegateProxy
     /**
      For more information take a look at `DelegateProxyType`.
      */
-    open override class func createProxyForObject(_ object: AnyObject) -> AnyObject {
+    public override class func createProxyForObject(_ object: AnyObject) -> AnyObject {
         let tabBar = (object as! UITabBar)
 
         return castOrFatalError(tabBar.rx_createDelegateProxy())

@@ -17,7 +17,7 @@ import RxSwift
 /**
  For more information take a look at `DelegateProxyType`.
  */
-open class RxSearchBarDelegateProxy
+public class RxSearchBarDelegateProxy
     : DelegateProxy
     , UISearchBarDelegate
     , DelegateProxyType {
@@ -25,7 +25,7 @@ open class RxSearchBarDelegateProxy
     /**
      For more information take a look at `DelegateProxyType`.
      */
-    open class func currentDelegateFor(_ object: AnyObject) -> AnyObject? {
+    public class func currentDelegateFor(_ object: AnyObject) -> AnyObject? {
         let searchBar: UISearchBar = castOrFatalError(object)
         return searchBar.delegate
     }
@@ -33,7 +33,7 @@ open class RxSearchBarDelegateProxy
     /**
      For more information take a look at `DelegateProxyType`.
      */
-    open class func setCurrentDelegate(_ delegate: AnyObject?, toObject object: AnyObject) {
+    public class func setCurrentDelegate(_ delegate: AnyObject?, toObject object: AnyObject) {
         let searchBar: UISearchBar = castOrFatalError(object)
         searchBar.delegate = castOptionalOrFatalError(delegate)
     }
@@ -44,7 +44,7 @@ open class RxSearchBarDelegateProxy
     /**
      For more information take a look at `DelegateProxyType`.
      */
-    open override class func createProxyForObject(_ object: AnyObject) -> AnyObject {
+    public override class func createProxyForObject(_ object: AnyObject) -> AnyObject {
         let searchBar = (object as! UISearchBar)
         
         return castOrFatalError(searchBar.rx_createDelegateProxy())

@@ -64,13 +64,13 @@ This is the default scheduler for operators that generate elements.
 
 This scheduler is also sometimes called `trampoline scheduler`.
 */
-open class CurrentThreadScheduler : ImmediateSchedulerType {
+public class CurrentThreadScheduler : ImmediateSchedulerType {
     typealias ScheduleQueue = RxMutableBox<Queue<ScheduledItemType>>
 
     /**
     The singleton instance of the current thread scheduler.
     */
-    open static let instance = CurrentThreadScheduler()
+    public static let instance = CurrentThreadScheduler()
 
     static var queue : ScheduleQueue? {
         get {
@@ -84,7 +84,7 @@ open class CurrentThreadScheduler : ImmediateSchedulerType {
     /**
     Gets a value that indicates whether the caller must call a `schedule` method.
     */
-    open static fileprivate(set) var isScheduleRequired: Bool {
+    public static fileprivate(set) var isScheduleRequired: Bool {
         get {
             let value: CurrentThreadSchedulerValue? = Thread.getThreadLocalStorageValueForKey(CurrentThreadSchedulerKeyInstance as NSString)
             return value == nil
@@ -104,7 +104,7 @@ open class CurrentThreadScheduler : ImmediateSchedulerType {
     - parameter action: Action to be executed.
     - returns: The disposable object used to cancel the scheduled action (best effort).
     */
-    open func schedule<StateType>(_ state: StateType, action: @escaping (StateType) -> Disposable) -> Disposable {
+    public func schedule<StateType>(_ state: StateType, action: @escaping (StateType) -> Disposable) -> Disposable {
         if CurrentThreadScheduler.isScheduleRequired {
             CurrentThreadScheduler.isScheduleRequired = false
 

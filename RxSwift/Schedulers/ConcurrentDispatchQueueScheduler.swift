@@ -13,11 +13,11 @@ Abstracts the work that needs to be performed on a specific `dispatch_queue_t`. 
 
 This scheduler is suitable when some work needs to be performed in background.
 */
-open class ConcurrentDispatchQueueScheduler: SchedulerType {
+public class ConcurrentDispatchQueueScheduler: SchedulerType {
     public typealias TimeInterval = Foundation.TimeInterval
     public typealias Time = Date
     
-    open var now : Date {
+    public var now : Date {
         return Date()
     }
 
@@ -81,7 +81,7 @@ open class ConcurrentDispatchQueueScheduler: SchedulerType {
     - parameter action: Action to be executed.
     - returns: The disposable object used to cancel the scheduled action (best effort).
     */
-    open func schedulePeriodic<StateType>(_ state: StateType, startAfter: TimeInterval, period: TimeInterval, action: @escaping (StateType) -> StateType) -> Disposable {
+    public func schedulePeriodic<StateType>(_ state: StateType, startAfter: TimeInterval, period: TimeInterval, action: @escaping (StateType) -> StateType) -> Disposable {
         return self.configuration.schedulePeriodic(state, startAfter: startAfter, period: period, action: action)
     }
 }

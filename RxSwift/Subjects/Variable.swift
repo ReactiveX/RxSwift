@@ -14,7 +14,7 @@ Variable is a wrapper for `BehaviorSubject`.
 Unlike `BehaviorSubject` it can't terminate with error, and when variable is deallocated
  it will complete it's observable sequence (`asObservable`).
 */
-open class Variable<Element> {
+public class Variable<Element> {
 
     public typealias E = Element
     
@@ -32,7 +32,7 @@ open class Variable<Element> {
     
     Even if the newly set value is same as the old value, observers are still notified for change.
     */
-    open var value: E {
+    public var value: E {
         get {
             _lock.lock(); defer { _lock.unlock() }
             return _value
@@ -59,7 +59,7 @@ open class Variable<Element> {
     /**
     - returns: Canonical interface for push style sequence
     */
-    open func asObservable() -> Observable<E> {
+    public func asObservable() -> Observable<E> {
         return _subject
     }
 

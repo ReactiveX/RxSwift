@@ -11,7 +11,7 @@ import Foundation
 /**
 Base class for all disposables.
 */
-open class DisposeBase {
+public class DisposeBase {
     init() {
 #if TRACE_RESOURCES
     let _ = AtomicIncrement(&resourceCount)

@@ -13,7 +13,7 @@ Represents an object that is both an observable sequence as well as an observer.
 
 Each notification is broadcasted to all subscribed and future observers, subject to buffer trimming policies.
 */
-open class ReplaySubject<Element>
+public class ReplaySubject<Element>
     : Observable<Element>
     , SubjectType
     , ObserverType
@@ -23,7 +23,7 @@ open class ReplaySubject<Element>
     /**
      Indicates whether the subject has any observers
      */
-    open var hasObservers: Bool {
+    public var hasObservers: Bool {
         _lock.lock(); defer { _lock.unlock() }
         return _observers.count > 0
     }
@@ -46,21 +46,21 @@ open class ReplaySubject<Element>
     
     - parameter event: Event to send to the observers.
     */
-    open func on(_ event: Event<E>) {
+    public func on(_ event: Event<E>) {
         abstractMethod()
     }
     
     /**
     Returns observer interface for subject.
     */
-    open func asObserver() -> SubjectObserverType {
+    public func asObserver() -> SubjectObserverType {
         return self
     }
     
     /**
     Unsubscribe all observers and release resources.
     */
-    open func dispose() {
+    public func dispose() {
     }
 
     /**
@@ -69,7 +69,7 @@ open class ReplaySubject<Element>
     - parameter bufferSize: Maximal number of elements to replay to observer after subscription.
     - returns: New instance of replay subject.
     */
-    open static func create(bufferSize: Int) -> ReplaySubject<Element> {
+    public static func create(bufferSize: Int) -> ReplaySubject<Element> {
         if bufferSize == 1 {
             return ReplayOne()
         }
@@ -83,7 +83,7 @@ open class ReplaySubject<Element>
     To avoid filling up memory, developer needs to make sure that the use case will only ever store a 'reasonable'
     number of elements.
     */
-    open static func createUnbounded() -> ReplaySubject<Element> {
+    public static func createUnbounded() -> ReplaySubject<Element> {
         return ReplayAll()
     }
 }
