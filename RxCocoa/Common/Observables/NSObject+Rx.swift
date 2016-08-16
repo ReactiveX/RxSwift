@@ -125,7 +125,7 @@ extension NSObject {
 
      - returns: Observable sequence of object deallocating events.
      */
-    public func rx_sentMessage(_ selector: Selector) -> Observable<[AnyObject]> {
+    public func rx_sentMessage(_ selector: Selector) -> Observable<[Any]> {
         return rx_synchronized {
             // in case of dealloc selector replay subject behavior needs to be used
             if selector == deallocSelector {
@@ -150,7 +150,7 @@ extension NSObject {
             }
 
             if subject.isActive {
-                return subject.asObservable()
+                return subject.asObservable().map { $0 }
             }
 
             var error: NSError?
@@ -159,7 +159,7 @@ extension NSObject {
             }
 
             subject.targetImplementation = targetImplementation
-            return subject.asObservable()
+            return subject.asObservable().map { $0 }
         }
     }
 

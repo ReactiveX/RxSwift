@@ -29,7 +29,7 @@ class Parent : NSObject {
 
     dynamic var val: String = ""
 
-    init(callback: (String?) -> Void) {
+    init(callback: @escaping (String?) -> Void) {
         super.init()
         
         self.rx_observe(String.self, "val", options: [.initial, .new], retainSelf: false)
@@ -45,7 +45,7 @@ class Parent : NSObject {
 class Child : NSObject {
     let disposeBag = DisposeBag()
     
-    init(parent: ParentWithChild, callback: (String?) -> Void) {
+    init(parent: ParentWithChild, callback: @escaping (String?) -> Void) {
         super.init()
         parent.rx_observe(String.self, "val", options: [.initial, .new], retainSelf: false)
             .subscribe(onNext: callback)
@@ -62,7 +62,7 @@ class ParentWithChild : NSObject {
     
     var child: Child? = nil
     
-    init(callback: (String?) -> Void) {
+    init(callback: @escaping (String?) -> Void) {
         super.init()
         child = Child(parent: self, callback: callback)
     }
@@ -318,7 +318,7 @@ extension KVOObservableTests {
         XCTAssertTrue(latest == nil)
         XCTAssertTrue(!isDisposed)
         
-        root.property = "a"
+        root.property = "a" as NSString
 
         XCTAssertTrue(latest == "a")
         XCTAssertTrue(!isDisposed)
@@ -616,7 +616,7 @@ extension KVOObservableTests {
         
         var latest: String? = nil
         
-        root.property = "a"
+        root.property = "a" as NSString
         
         XCTAssertTrue(latest == nil)
         
@@ -647,7 +647,7 @@ extension KVOObservableTests {
         
         var latest: String? = nil
         
-        root.property = "a"
+        root.property = "a" as NSString
         
         XCTAssertTrue(latest == nil)
         
@@ -659,7 +659,7 @@ extension KVOObservableTests {
         
         XCTAssertTrue(latest == nil)
         
-        root.property = "b"
+        root.property = "b" as NSString
 
         XCTAssertTrue(latest == "b")
         

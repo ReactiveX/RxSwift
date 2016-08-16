@@ -446,7 +446,7 @@ extension SentMessageTest {
 extension SentMessageTest {
     func testBasicForwardingCase() {
         let target = SentMessageTest_forwarding_basic()
-        var messages = [[AnyObject]]()
+        var messages = [[Any]]()
 
         let d = target.rx_sentMessage(#selector(SentMessageTestBase_shared.message_allSupportedParameters(_:p2:p3:p4:p5:p6:p7:p8:p9:p10:p11:p12:p13:p14:p15:p16:))).subscribe(onNext: { n in
                 messages.append(n)
@@ -456,16 +456,16 @@ extension SentMessageTest {
 
         let objectParam = NSObject()
         let str: UnsafePointer<Int8> = ("123" as NSString).utf8String!
-        let unsafeStr: UnsafeMutablePointer<Int8> = UnsafeMutablePointer.init(str)
+        let unsafeStr: UnsafeMutablePointer<Int8> = UnsafeMutablePointer(mutating: str)
 
         let largeStruct = some_insanely_large_struct(a: (0, 1, 2, 3, 4, 5, 6, 7), some_large_text: nil, next: nil)
 
-        target.message_allSupportedParameters(objectParam, p2: target.dynamicType, p3: { x in x}, p4: -2, p5: -3, p6: -4, p7: -5,
+        target.message_allSupportedParameters(objectParam, p2: type(of: target), p3: { x in x}, p4: -2, p5: -3, p6: -4, p7: -5,
             p8: 1, p9: 2, p10: 3, p11: 4, p12: 1.0, p13: 2.0, p14: str, p15: unsafeStr, p16: largeStruct)
 
         d.dispose()
 
-        XCTAssertEqualAnyObjectArrayOfArrays(target.messages, messages)
+        XCTAssertEqualAnyObjectArrayOfArrays(target.messages as [[AnyObject]], messages)
     }
 }
 
@@ -590,7 +590,7 @@ extension SentMessageTest {
 
         target.justCalledBool(toSay: false)
 
-        XCTAssertEqual(recordedMessages, [[NSNumber(value: true)], [NSNumber(value: false)]])
+        XCTAssertEqualAnyObjectArrayOfArrays(recordedMessages, [[NSNumber(value: true)], [NSNumber(value: false)]])
 
         methodObserving.dispose()
     }
@@ -622,7 +622,7 @@ extension SentMessageTest {
 
         }
 
-        XCTAssertEqual(recordedMessages, [[NSNumber(value: true)]])
+        XCTAssertEqualAnyObjectArrayOfArrays(recordedMessages, [[NSNumber(value: true)]])
         XCTAssertTrue(completed)
     }
 
@@ -792,7 +792,7 @@ extension SentMessageTest {
         _testMessageRecordedAndAllCallsAreMade(#selector(SentMessageTestBase_shared.justCalledObject(toSay:)),
                                                sendMessage: { x in NSValue(nonretainedObject: x.justCalledObject(toSay: object)) },
                                                expectedResult: NSValue(nonretainedObject: object))
-        _testMessageRecordedAndAllCallsAreMade(#selector(SentMessageTestBase_shared.justCalledClass(toSay:)), sendMessage: { x in NSValue(nonretainedObject: x.justCalledClass(toSay: object.dynamicType)) }, expectedResult: NSValue(nonretainedObject: object.dynamicType))
+        _testMessageRecordedAndAllCallsAreMade(#selector(SentMessageTestBase_shared.justCalledClass(toSay:)), sendMessage: { x in NSValue(nonretainedObject: x.justCalledClass(toSay: type(of: object))) }, expectedResult: NSValue(nonretainedObject: type(of: object)))
         _testMessageRecordedAndAllCallsAreMade(#selector(SentMessageTestBase_shared.justCalledClosure(toSay:)),
                                                sendMessage: { x in "\(x.justCalledClosure(toSay: closure))" },
                                                expectedResult: "\(closure)")
@@ -886,10 +886,10 @@ extension SentMessageTest {
 
     }
 
-    func _testMessageRecordedAndAllCallsAreMade<Result: Equatable>(_ selector: Selector, sendMessage: (SentMessageTest_all_supported_types) -> Result, expectedResult: Result) {
-        var observedMessages = [[AnyObject]]()
-        var receivedDerivedClassMessage = [[AnyObject]]()
-        var receivedBaseClassMessage = [[AnyObject]]()
+    func _testMessageRecordedAndAllCallsAreMade<Result: Equatable>(_ selector: Selector, sendMessage: @escaping (SentMessageTest_all_supported_types) -> Result, expectedResult: Result) {
+        var observedMessages = [[Any]]()
+        var receivedDerivedClassMessage = [[Any]]()
+        var receivedBaseClassMessage = [[Any]]()
         var completed = false
 
         var result: Result! = nil
@@ -1053,8 +1053,8 @@ extension SentMessageTest {
 // MARK: Convenience
 
 extension SentMessageTest {
-
-    override func observeValue(forKeyPath keyPath: String?, of object: AnyObject?, change: [NSKeyValueChangeKey : AnyObject]?, context: UnsafeMutablePointer<Void>?) {
+    
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
 
     }
 
@@ -1091,4 +1091,4 @@ public func ==(lhs: some_insanely_large_struct, rhs: some_insanely_large_struct)
     return lhs.some_large_text == rhs.some_large_text && lhs.next == rhs.next
 }
 
-typealias MethodParameters = [AnyObject]
+typealias MethodParameters = [Any]

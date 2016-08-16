@@ -55,43 +55,47 @@ func registerMallocHooks() {
 
     registeredMallocHooks = true
 
-    var _zones: UnsafeMutablePointer<vm_address_t>? = UnsafeMutablePointer(nil)
+    var _zones: UnsafeMutablePointer<vm_address_t>?
     var count: UInt32 = 0
 
     // malloc_zone_print(nil, 1)
     let res = malloc_get_all_zones(mach_task_self_, nil, &_zones, &count)
     assert(res == 0)
 
-    let zones = UnsafeMutablePointer<UnsafeMutablePointer<malloc_zone_t>>(_zones)
-
-    assert(Int(count) <= proxies.count)
-
-    for i in 0 ..< Int(count) {
-        let zoneArray = zones!.advanced(by: i)
-        let name = malloc_get_zone_name(zoneArray.pointee)
-        var zone = zoneArray.pointee.pointee
-
-        //print(String.fromCString(name))
-
-        assert(name != nil)
-        mallocFunctions.append(zone.malloc)
-        zone.malloc = proxies[i]
-
-        let protectSize = vm_size_t(MemoryLayout<malloc_zone_t>.size) * vm_size_t(count)
-
-        if true {
-            let addressPointer = UnsafeMutablePointer<vm_address_t>(zoneArray)
-            let res = vm_protect(mach_task_self_, addressPointer.pointee, protectSize, 0, PROT_READ | PROT_WRITE)
-            assert(res == 0)
+    _zones?.withMemoryRebound(to: UnsafeMutablePointer<malloc_zone_t>.self, capacity: Int(count), { zones in
+        
+        assert(Int(count) <= proxies.count)
+        
+        for i in 0 ..< Int(count) {
+            let zoneArray = zones.advanced(by: i)
+            let name = malloc_get_zone_name(zoneArray.pointee)
+            var zone = zoneArray.pointee.pointee
+            
+            //print(String.fromCString(name))
+            
+            assert(name != nil)
+            mallocFunctions.append(zone.malloc)
+            zone.malloc = proxies[i]
+            
+            let protectSize = vm_size_t(MemoryLayout<malloc_zone_t>.size) * vm_size_t(count)
+            
+            if true {
+                zoneArray.withMemoryRebound(to: vm_address_t.self, capacity: Int(protectSize), { addressPointer in
+                    let res = vm_protect(mach_task_self_, addressPointer.pointee, protectSize, 0, PROT_READ | PROT_WRITE)
+                    assert(res == 0)
+                })
+            }
+            
+            zoneArray.pointee.pointee = zone
+            
+            if true {
+                let res = vm_protect(mach_task_self_, _zones!.pointee, protectSize, 0, PROT_READ)
+                assert(res == 0)
+            }
         }
+        
+    })
 
-        zoneArray.pointee.pointee = zone
-
-        if true {
-            let res = vm_protect(mach_task_self_, _zones!.pointee, protectSize, 0, PROT_READ)
-            assert(res == 0)
-        }
-    }
 }
 
 // MARK: Benchmark tools
@@ -193,8 +197,8 @@ func compareTwoImplementations(benchmarkTime: Bool, benchmarkMemory: Bool, first
         first()
         second()
 
-        memory1 = measureMemoryUsage(first)
-        memory2 = measureMemoryUsage(second)
+        memory1 = measureMemoryUsage(work: first)
+        memory2 = measureMemoryUsage(work: second)
     }
     else {
         memory1 = (0, 0)

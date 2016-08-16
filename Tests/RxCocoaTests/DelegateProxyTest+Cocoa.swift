@@ -8,8 +8,8 @@
 
 import Foundation
 import Cocoa
-import RxCocoa
-import RxSwift
+@testable import RxCocoa
+@testable import RxSwift
 import XCTest
 
 // MARK: Protocols

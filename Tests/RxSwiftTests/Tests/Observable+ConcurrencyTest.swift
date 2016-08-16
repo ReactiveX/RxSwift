@@ -39,7 +39,7 @@ extension ObservableConcurrencyTest {
 
     func runDispatchQueueSchedulerTests(_ scheduler: SerialDispatchQueueScheduler, tests: (SerialDispatchQueueScheduler) -> Disposable) -> Disposable {
         // simplest possible solution, even though it has horrible efficiency in this case probably
-        let disposable = tests(scheduler: scheduler)
+        let disposable = tests(scheduler)
         let expectation = self.expectation(description: "Wait for all tests to complete")
 
         _ = scheduler.schedule(()) { s in

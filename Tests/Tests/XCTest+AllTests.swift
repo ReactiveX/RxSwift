@@ -18,13 +18,13 @@ func XCTAssertErrorEqual(_ lhs: Swift.Error, _ rhs: Swift.Error) {
     XCTAssertTrue(event1 == event2)
 }
 
-func NSValuesAreEqual(_ lhs: AnyObject, _ rhs: AnyObject) -> Bool {
+func NSValuesAreEqual(_ lhs: Any, _ rhs: Any) -> Bool {
     if let lhsValue = lhs as? NSValue, let rhsValue = rhs as? NSValue {
         #if os(Linux)
             return lhsValue.isEqual(rhsValue)
         #else
             return lhsValue.isEqual(rhsValue)
-                || lhs.pointerValue == rhs.pointerValue
+                || (lhs as AnyObject).pointerValue == (rhs as AnyObject).pointerValue
         #endif
     }
     
@@ -40,7 +40,7 @@ func XCTAssertEqualNSValues(_ lhs: AnyObject, rhs: AnyObject) {
     }
 }
 
-func XCTAssertEqualAnyObjectArrayOfArrays(_ lhs: [[AnyObject]], _ rhs: [[AnyObject]]) {
+func XCTAssertEqualAnyObjectArrayOfArrays(_ lhs: [[Any]], _ rhs: [[Any]]) {
     XCTAssertEqual(lhs, rhs) { lhs, rhs in
         if lhs.count != rhs.count {
             return false
