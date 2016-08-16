@@ -20,7 +20,7 @@ protocol KVOObservableProtocol {
 
 class KVOObserver : _RXKVOObserver
                   , Disposable {
-    typealias Callback = @escaping (AnyObject?) -> Void
+    typealias Callback = @escaping (Any?) -> Void
 
     var retainSelf: KVOObserver? = nil
 

@@ -69,8 +69,8 @@ func convertURLRequestToCurlCommand(_ request: URLRequest) -> String {
     }
 
     for (key, value) in request.allHTTPHeaderFields ?? [:] {
-        let escapedKey = escapeTerminalString((key as String) ?? "")
-        let escapedValue = escapeTerminalString((value as String) ?? "")
+        let escapedKey = escapeTerminalString(key as String)
+        let escapedValue = escapeTerminalString(value as String)
         returnValue += "\n    -H \"\(escapedKey): \(escapedValue)\" "
     }
 
@@ -134,7 +134,7 @@ extension URLSession {
                 if Logging.URLRequests(request) {
                     let interval = Date().timeIntervalSince(d ?? Date())
                     print(convertURLRequestToCurlCommand(request))
-                    print(convertResponseToString(data, response, error, interval))
+                    print(convertResponseToString(data, response, error as NSError!, interval))
                 }
                 
                 guard let response = response, let data = data else {
@@ -207,7 +207,7 @@ extension URLSession {
     public func rx_JSON(_ request: URLRequest) -> Observable<AnyObject> {
         return rx_data(request).map { (data) -> AnyObject in
             do {
-                return try JSONSerialization.jsonObject(with: data, options: [])
+                return try JSONSerialization.jsonObject(with: data, options: []) as AnyObject
             } catch let error {
                 throw RxCocoaURLError.deserializationError(error: error)
             }

@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface _RXDelegateProxy : NSObject
 
 @property (nonatomic, weak, readonly) id _forwardToDelegate;
@@ -19,3 +21,5 @@
 -(void)interceptedSelector:(SEL)selector withArguments:(NSArray*)arguments;
 
 @end
+
+NS_ASSUME_NONNULL_END

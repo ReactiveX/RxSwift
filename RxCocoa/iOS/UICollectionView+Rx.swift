@@ -45,11 +45,11 @@ extension UICollectionView {
     @available(*, deprecated, renamed: "rx_items(source:cellFactory:)")
     public func rx_itemsWithCellFactory<S: Sequence, O: ObservableType>
         (_ source: O)
-        -> (_ cellFactory: (UICollectionView, Int, S.Iterator.Element) -> UICollectionViewCell)
+        -> (_ cellFactory: @escaping (UICollectionView, Int, S.Iterator.Element) -> UICollectionViewCell)
         -> Disposable where O.E == S {
         return { cellFactory in
             let dataSource = RxCollectionViewReactiveArrayDataSourceSequenceWrapper<S>(cellFactory: cellFactory)
-            return self.rx_itemsWithDataSource(dataSource)(source: source)
+            return self.rx_itemsWithDataSource(dataSource)(source)
         }
         
     }
@@ -80,11 +80,11 @@ extension UICollectionView {
     */
     public func rx_items<S: Sequence, O: ObservableType>
         (source: O)
-        -> (_ cellFactory: (UICollectionView, Int, S.Iterator.Element) -> UICollectionViewCell)
+        -> (_ cellFactory: @escaping (UICollectionView, Int, S.Iterator.Element) -> UICollectionViewCell)
         -> Disposable where O.E == S {
         return { cellFactory in
             let dataSource = RxCollectionViewReactiveArrayDataSourceSequenceWrapper<S>(cellFactory: cellFactory)
-            return self.rx_items(dataSource: dataSource)(source: source)
+            return self.rx_items(dataSource: dataSource)(source)
         }
         
     }
@@ -116,7 +116,7 @@ extension UICollectionView {
     public func rx_itemsWithCellIdentifier<S: Sequence, Cell: UICollectionViewCell, O : ObservableType>
         (_ cellIdentifier: String, cellType: Cell.Type = Cell.self)
         -> (_ source: O)
-        -> (_ configureCell: (Int, S.Iterator.Element, Cell) -> Void)
+        -> (_ configureCell: @escaping (Int, S.Iterator.Element, Cell) -> Void)
         -> Disposable where O.E == S {
         return { source in
             return { configureCell in
@@ -127,7 +127,7 @@ extension UICollectionView {
                     return cell
                 }
                     
-                return self.rx_itemsWithDataSource(dataSource)(source: source)
+                return self.rx_itemsWithDataSource(dataSource)(source)
             }
         }
     }
@@ -158,7 +158,7 @@ extension UICollectionView {
     public func rx_items<S: Sequence, Cell: UICollectionViewCell, O : ObservableType>
         (cellIdentifier: String, cellType: Cell.Type = Cell.self)
         -> (_ source: O)
-        -> (_ configureCell: (Int, S.Iterator.Element, Cell) -> Void)
+        -> (_ configureCell: @escaping (Int, S.Iterator.Element, Cell) -> Void)
         -> Disposable where O.E == S {
         return { source in
             return { configureCell in
@@ -169,7 +169,7 @@ extension UICollectionView {
                     return cell
                 }
                     
-                return self.rx_items(dataSource: dataSource)(source: source)
+                return self.rx_items(dataSource: dataSource)(source)
             }
         }
     }

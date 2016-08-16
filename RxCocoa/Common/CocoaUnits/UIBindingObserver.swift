@@ -28,7 +28,7 @@ open class UIBindingObserver<UIElementType, Value> : ObserverType where UIElemen
     /**
      Initializes `ViewBindingObserver` using
     */
-    public init(UIElement: UIElementType, binding: (UIElementType, Value) -> Void) {
+    public init(UIElement: UIElementType, binding: @escaping (UIElementType, Value) -> Void) {
         self.UIElement = UIElement
         self.binding = binding
     }

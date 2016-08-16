@@ -108,8 +108,8 @@ open class DelegateProxy : _RXDelegateProxy {
     
     // proxy
     
-    open override func interceptedSelector(_ selector: Selector, withArguments arguments: [AnyObject]!) {
-        subjectsForSelector[selector]?.on(.next(arguments))
+    open override func interceptedSelector(_ selector: Selector, withArguments arguments: [Any]) {
+        subjectsForSelector[selector]?.on(.next(arguments as [AnyObject]))
     }
     
     /**
@@ -137,8 +137,8 @@ open class DelegateProxy : _RXDelegateProxy {
     - returns: Assigned delegate proxy or `nil` if no delegate proxy is assigned.
     */
     open class func assignedProxyFor(_ object: AnyObject) -> AnyObject? {
-        let maybeDelegate: AnyObject? = objc_getAssociatedObject(object, self.delegateAssociatedObjectTag())
-        return castOptionalOrFatalError(maybeDelegate)
+        let maybeDelegate = objc_getAssociatedObject(object, self.delegateAssociatedObjectTag())
+        return castOptionalOrFatalError(maybeDelegate.map { $0 as AnyObject })
     }
     
     /**

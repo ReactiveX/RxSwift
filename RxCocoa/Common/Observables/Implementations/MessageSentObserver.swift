@@ -29,7 +29,7 @@ import Foundation
         init() {
         }
 
-        @objc func messageSent(withParameters parameters: [AnyObject]) -> Void {
+        @objc func messageSent(withParameters parameters: [Any]) -> Void {
             _subject.on(.next())
         }
 
@@ -58,8 +58,8 @@ import Foundation
         init() {
         }
 
-        @objc func messageSent(withParameters parameters: [AnyObject]) -> Void {
-            _subject.on(.next(parameters))
+        @objc func messageSent(withParameters parameters: [Any]) -> Void {
+            _subject.on(.next(parameters as [AnyObject]))
         }
 
         func asObservable() -> Observable<[AnyObject]> {

@@ -24,7 +24,7 @@ extension Driver {
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
     public static func zip<<%= (Array(1...i).map { "O\($0): DriverConvertibleType" }).joined(separator: ", ") %>>
-        (<%= (Array(1...i).map { "_ source\($0): O\($0)" }).joined(separator: ", ") %>, resultSelector: (<%= (Array(1...i).map { "O\($0).E" }).joined(separator: ", ") %>) throws -> E)
+        (<%= (Array(1...i).map { "_ source\($0): O\($0)" }).joined(separator: ", ") %>, resultSelector: @escaping (<%= (Array(1...i).map { "O\($0).E" }).joined(separator: ", ") %>) throws -> E)
         -> Driver<E> {
         let source = Observable.zip(
             <%= (Array(1...i).map { "source\($0).asDriver().asObservable()" }).joined(separator: ", ") %>,
@@ -44,7 +44,7 @@ extension Driver {
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
     public static func combineLatest<<%= (Array(1...i).map { "O\($0): DriverConvertibleType" }).joined(separator: ", ") %>>
-        (<%= (Array(1...i).map { "_ source\($0): O\($0)" }).joined(separator: ", ") %>, resultSelector: (<%= (Array(1...i).map { "O\($0).E" }).joined(separator: ", ") %>) throws -> E)
+        (<%= (Array(1...i).map { "_ source\($0): O\($0)" }).joined(separator: ", ") %>, resultSelector: @escaping (<%= (Array(1...i).map { "O\($0).E" }).joined(separator: ", ") %>) throws -> E)
         -> Driver<E> {
         let source = Observable.combineLatest(
                 <%= (Array(1...i).map { "source\($0).asDriver().asObservable()" }).joined(separator: ", ") %>,
