@@ -48,11 +48,11 @@ class GenerateSink<S, O: ObserverType> : Sink<O> {
 }
 
 class Generate<S, E> : Producer<E> {
-    private let _initialState: S
-    private let _condition: (S) throws -> Bool
-    private let _iterate: (S) throws -> S
-    private let _resultSelector: (S) throws -> E
-    private let _scheduler: ImmediateSchedulerType
+    fileprivate let _initialState: S
+    fileprivate let _condition: (S) throws -> Bool
+    fileprivate let _iterate: (S) throws -> S
+    fileprivate let _resultSelector: (S) throws -> E
+    fileprivate let _scheduler: ImmediateSchedulerType
     
     init(initialState: S, condition: (S) throws -> Bool, iterate: (S) throws -> S, resultSelector: (S) throws -> E, scheduler: ImmediateSchedulerType) {
         _initialState = initialState

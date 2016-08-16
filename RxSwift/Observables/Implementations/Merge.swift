@@ -66,17 +66,17 @@ class MergeLimitedSink<S: ObservableConvertibleType, O: ObserverType>
     typealias E = S
     typealias QueueType = Queue<S>
 
-    private let _maxConcurrent: Int
+    fileprivate let _maxConcurrent: Int
 
     let _lock = NSRecursiveLock()
 
     // state
-    private var _stopped = false
-    private var _activeCount = 0
-    private var _queue = QueueType(capacity: 2)
+    fileprivate var _stopped = false
+    fileprivate var _activeCount = 0
+    fileprivate var _queue = QueueType(capacity: 2)
     
-    private let _sourceSubscription = SingleAssignmentDisposable()
-    private let _group = CompositeDisposable()
+    fileprivate let _sourceSubscription = SingleAssignmentDisposable()
+    fileprivate let _group = CompositeDisposable()
     
     init(maxConcurrent: Int, observer: O) {
         _maxConcurrent = maxConcurrent
@@ -276,17 +276,17 @@ class MergeSink<SourceType, S: ObservableConvertibleType, O: ObserverType>
     typealias ResultType = O.E
     typealias Element = SourceType
 
-    private let _lock = NSRecursiveLock()
+    fileprivate let _lock = NSRecursiveLock()
 
-    private var subscribeNext: Bool {
+    fileprivate var subscribeNext: Bool {
         return true
     }
 
     // state
-    private let _group = CompositeDisposable()
-    private let _sourceSubscription = SingleAssignmentDisposable()
+    fileprivate let _group = CompositeDisposable()
+    fileprivate let _sourceSubscription = SingleAssignmentDisposable()
 
-    private var _stopped = false
+    fileprivate var _stopped = false
 
     override init(observer: O) {
         super.init(observer: observer)

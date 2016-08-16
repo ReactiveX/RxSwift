@@ -100,10 +100,10 @@ class TimeoutSink<ElementType, O: ObserverType>: Sink<O>, LockOwnerType, Observe
 
 class Timeout<Element> : Producer<Element> {
     
-    private let _source: Observable<Element>
-    private let _dueTime: RxTimeInterval
-    private let _other: Observable<Element>
-    private let _scheduler: SchedulerType
+    fileprivate let _source: Observable<Element>
+    fileprivate let _dueTime: RxTimeInterval
+    fileprivate let _other: Observable<Element>
+    fileprivate let _scheduler: SchedulerType
     
     init(source: Observable<Element>, dueTime: RxTimeInterval, other: Observable<Element>, scheduler: SchedulerType) {
         _source = source

@@ -52,9 +52,9 @@ class DebugSink<Source: ObservableType, O: ObserverType> : Sink<O>, ObserverType
 }
 
 class Debug<Source: ObservableType> : Producer<Source.E> {
-    private let _identifier: String
+    fileprivate let _identifier: String
     
-    private let _source: Source
+    fileprivate let _source: Source
 
     init(source: Source, identifier: String?, file: String, line: UInt, function: String) {
         if let identifier = identifier {

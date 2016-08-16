@@ -53,9 +53,9 @@ class Multicast<S: SubjectType, R>: Producer<R> {
     typealias SubjectSelectorType = () throws -> S
     typealias SelectorType = (Observable<S.E>) throws -> Observable<R>
     
-    private let _source: Observable<S.SubjectObserverType.E>
-    private let _subjectSelector: SubjectSelectorType
-    private let _selector: SelectorType
+    fileprivate let _source: Observable<S.SubjectObserverType.E>
+    fileprivate let _subjectSelector: SubjectSelectorType
+    fileprivate let _selector: SelectorType
     
     init(source: Observable<S.SubjectObserverType.E>, subjectSelector: SubjectSelectorType, selector: SelectorType) {
         _source = source

@@ -47,8 +47,8 @@ class ConcatSink<S: Sequence, O: ObserverType>
 class Concat<S: Sequence> : Producer<S.Iterator.Element.E> where S.Iterator.Element : ObservableConvertibleType {
     typealias Element = S.Iterator.Element.E
     
-    private let _sources: S
-    private let _count: IntMax?
+    fileprivate let _sources: S
+    fileprivate let _count: IntMax?
 
     init(sources: S, count: IntMax?) {
         _sources = sources

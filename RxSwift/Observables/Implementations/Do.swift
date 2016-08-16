@@ -37,10 +37,10 @@ class DoSink<O: ObserverType> : Sink<O>, ObserverType {
 class Do<Element> : Producer<Element> {
     typealias EventHandler = (Event<Element>) throws -> Void
     
-    private let _source: Observable<Element>
-    private let _eventHandler: EventHandler
-    private let _onSubscribe: (() -> ())?
-    private let _onDispose: (() -> ())?
+    fileprivate let _source: Observable<Element>
+    fileprivate let _eventHandler: EventHandler
+    fileprivate let _onSubscribe: (() -> ())?
+    fileprivate let _onDispose: (() -> ())?
     
     init(source: Observable<Element>, eventHandler: EventHandler, onSubscribe: (() -> ())?, onDispose: (() -> ())?) {
         _source = source

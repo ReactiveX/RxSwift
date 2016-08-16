@@ -28,12 +28,12 @@ open class ReplaySubject<Element>
         return _observers.count > 0
     }
     
-    private var _lock = NSRecursiveLock()
+    fileprivate var _lock = NSRecursiveLock()
     
     // state
-    private var _isDisposed = false
-    private var _stoppedEvent = nil as Event<Element>?
-    private var _observers = Bag<AnyObserver<Element>>()
+    fileprivate var _isDisposed = false
+    fileprivate var _stoppedEvent = nil as Event<Element>?
+    fileprivate var _observers = Bag<AnyObserver<Element>>()
     
     typealias DisposeKey = Bag<AnyObserver<Element>>.KeyType
     
@@ -214,7 +214,7 @@ final class ReplayOne<Element> : ReplayBufferBase<Element> {
 }
 
 class ReplayManyBase<Element> : ReplayBufferBase<Element> {
-    private var _queue: Queue<Element>
+    fileprivate var _queue: Queue<Element>
     
     init(queueSize: Int) {
         _queue = Queue(capacity: queueSize + 1)

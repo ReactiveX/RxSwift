@@ -54,10 +54,10 @@ class Reduce<SourceType, AccumulateType, ResultType> : Producer<ResultType> {
     typealias AccumulatorType = (AccumulateType, SourceType) throws -> AccumulateType
     typealias ResultSelectorType = (AccumulateType) throws -> ResultType
     
-    private let _source: Observable<SourceType>
-    private let _seed: AccumulateType
-    private let _accumulator: AccumulatorType
-    private let _mapResult: ResultSelectorType
+    fileprivate let _source: Observable<SourceType>
+    fileprivate let _seed: AccumulateType
+    fileprivate let _accumulator: AccumulatorType
+    fileprivate let _mapResult: ResultSelectorType
     
     init(source: Observable<SourceType>, seed: AccumulateType, accumulator: AccumulatorType, mapResult: ResultSelectorType) {
         _source = source

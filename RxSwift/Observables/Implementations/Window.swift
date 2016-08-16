@@ -132,10 +132,10 @@ class WindowTimeCountSink<Element, O: ObserverType>
 
 class WindowTimeCount<Element> : Producer<Observable<Element>> {
     
-    private let _timeSpan: RxTimeInterval
-    private let _count: Int
-    private let _scheduler: SchedulerType
-    private let _source: Observable<Element>
+    fileprivate let _timeSpan: RxTimeInterval
+    fileprivate let _count: Int
+    fileprivate let _scheduler: SchedulerType
+    fileprivate let _source: Observable<Element>
     
     init(source: Observable<Element>, timeSpan: RxTimeInterval, count: Int, scheduler: SchedulerType) {
         _source = source

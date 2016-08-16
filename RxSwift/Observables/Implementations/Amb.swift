@@ -20,9 +20,9 @@ class AmbObserver<ElementType, O: ObserverType> : ObserverType where O.E == Elem
     typealias This = AmbObserver<ElementType, O>
     typealias Sink = (This, Event<Element>) -> Void
     
-    private let _parent: Parent
-    private var _sink: Sink
-    private var _cancel: Disposable
+    fileprivate let _parent: Parent
+    fileprivate var _sink: Sink
+    fileprivate var _cancel: Disposable
     
     init(parent: Parent, cancel: Disposable, sink: Sink) {
 #if TRACE_RESOURCES
@@ -106,8 +106,8 @@ class AmbSink<ElementType, O: ObserverType> : Sink<O> where O.E == ElementType {
 }
 
 class Amb<Element>: Producer<Element> {
-    private let _left: Observable<Element>
-    private let _right: Observable<Element>
+    fileprivate let _left: Observable<Element>
+    fileprivate let _right: Observable<Element>
     
     init(left: Observable<Element>, right: Observable<Element>) {
         _left = left
