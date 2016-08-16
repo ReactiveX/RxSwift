@@ -32,7 +32,7 @@ class _RxCollectionViewReactiveArrayDataSource
         return _collectionView(collectionView, numberOfItemsInSection: section)
     }
 
-    private func _collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    fileprivate func _collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         rxAbstractMethod()
     }
 

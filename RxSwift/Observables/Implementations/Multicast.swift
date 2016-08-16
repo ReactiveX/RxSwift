@@ -63,7 +63,7 @@ class Multicast<S: SubjectType, R>: Producer<R> {
         _selector = selector
     }
     
-    override func run<O: ObserverType where O.E == R>(_ observer: O) -> Disposable {
+    override func run<O: ObserverType>(_ observer: O) -> Disposable where O.E == R {
         let sink = MulticastSink(parent: self, observer: observer)
         sink.disposable = sink.run()
         return sink

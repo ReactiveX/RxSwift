@@ -1,22 +1,12 @@
 [
  {
-  "file": "/Users/kzaher/Projects/RxSwift/Rx.playground/Sources/SupportCode.swift",
-  "offset": 245,
-  "text": "_ ",
+  "file": "/Users/mo/Documents/OpenSource/RxSwift/Rx.playground/Sources/SupportCode.swift",
+  "offset": 276,
+  "remove": 9,
  },
  {
-  "file": "/Users/kzaher/Projects/RxSwift/Rx.playground/Sources/SupportCode.swift",
-  "offset": 335,
-  "remove": 13,
- },
- {
-  "file": "/Users/kzaher/Projects/RxSwift/Rx.playground/Sources/SupportCode.swift",
-  "offset": 397,
-  "text": "_ ",
- },
- {
-  "file": "/Users/kzaher/Projects/RxSwift/Rx.playground/Sources/SupportCode.swift",
-  "offset": 714,
-  "text": "_ ",
+  "file": "/Users/mo/Documents/OpenSource/RxSwift/Rx.playground/Sources/SupportCode.swift",
+  "offset": 733,
+  "text": "@escaping ",
  }
 ]

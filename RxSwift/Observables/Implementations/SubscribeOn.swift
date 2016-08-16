@@ -8,7 +8,7 @@
 
 import Foundation
 
-class SubscribeOnSink<Ob: ObservableType, O: ObserverType where Ob.E == O.E> : Sink<O>, ObserverType {
+class SubscribeOnSink<Ob: ObservableType, O: ObserverType> : Sink<O>, ObserverType where Ob.E == O.E {
     typealias Element = O.E
     typealias Parent = SubscribeOn<Ob>
     
@@ -52,7 +52,7 @@ class SubscribeOn<Ob: ObservableType> : Producer<Ob.E> {
         self.scheduler = scheduler
     }
     
-    override func run<O : ObserverType where O.E == Ob.E>(_ observer: O) -> Disposable {
+    override func run<O : ObserverType>(_ observer: O) -> Disposable where O.E == Ob.E {
         let sink = SubscribeOnSink(parent: self, observer: observer)
         sink.disposable = sink.run()
         return sink

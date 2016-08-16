@@ -20,7 +20,7 @@ extension Observable {
     - returns: The observable sequence with the specified implementation for the `subscribe` method.
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    public static func create(_ subscribe: (AnyObserver<E>) -> Disposable) -> Observable<E> {
+    public static func create(_ subscribe: @escaping (AnyObserver<E>) -> Disposable) -> Observable<E> {
         return AnonymousObservable(subscribe)
     }
 
@@ -114,7 +114,7 @@ extension Observable {
     - returns: An observable sequence whose observers trigger an invocation of the given observable factory function.
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    public static func deferred(_ observableFactory: () throws -> Observable<E>)
+    public static func deferred(_ observableFactory: @escaping () throws -> Observable<E>)
         -> Observable<E> {
         return Deferred(observableFactory: observableFactory)
     }
@@ -160,7 +160,7 @@ extension Observable {
     - returns: An observable sequence whose lifetime controls the lifetime of the dependent resource object.
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    public static func using<R: Disposable>(_ resourceFactory: () throws -> R, observableFactory: (R) throws -> Observable<E>) -> Observable<E> {
+    public static func using<R: Disposable>(_ resourceFactory: @escaping () throws -> R, observableFactory: @escaping (R) throws -> Observable<E>) -> Observable<E> {
         return Using(resourceFactory: resourceFactory, observableFactory: observableFactory)
     }
 }
@@ -231,7 +231,7 @@ extension Observable {
 
      - returns: The observable sequence whose elements are pulled from the given enumerable sequence.
      */
-    public static func from<S: Sequence where S.Iterator.Element == E>(_ sequence: S, scheduler: ImmediateSchedulerType = CurrentThreadScheduler.instance) -> Observable<E> {
+    public static func from<S: Sequence>(_ sequence: S, scheduler: ImmediateSchedulerType = CurrentThreadScheduler.instance) -> Observable<E> where S.Iterator.Element == E {
         return ObservableSequence(elements: sequence, scheduler: scheduler)
     }
 }

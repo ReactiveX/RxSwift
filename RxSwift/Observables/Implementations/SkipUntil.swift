@@ -8,14 +8,14 @@
 
 import Foundation
 
-class SkipUntilSinkOther<ElementType, Other, O: ObserverType where O.E == ElementType>
+class SkipUntilSinkOther<ElementType, Other, O: ObserverType>
     : ObserverType
     , LockOwnerType
-    , SynchronizedOnType {
+    , SynchronizedOnType where O.E == ElementType {
     typealias Parent = SkipUntilSink<ElementType, Other, O>
     typealias E = Other
     
-    private let _parent: Parent
+    fileprivate let _parent: Parent
 
     var _lock: NSRecursiveLock {
         return _parent._lock
@@ -56,19 +56,19 @@ class SkipUntilSinkOther<ElementType, Other, O: ObserverType where O.E == Elemen
 }
 
 
-class SkipUntilSink<ElementType, Other, O: ObserverType where O.E == ElementType>
+class SkipUntilSink<ElementType, Other, O: ObserverType>
     : Sink<O>
     , ObserverType
     , LockOwnerType
-    , SynchronizedOnType {
+    , SynchronizedOnType where O.E == ElementType {
     typealias E = ElementType
     typealias Parent = SkipUntil<E, Other>
     
     let _lock = NSRecursiveLock()
-    private let _parent: Parent
-    private var _forwardElements = false
+    fileprivate let _parent: Parent
+    fileprivate var _forwardElements = false
     
-    private let _sourceSubscription = SingleAssignmentDisposable()
+    fileprivate let _sourceSubscription = SingleAssignmentDisposable()
 
     init(parent: Parent, observer: O) {
         _parent = parent
@@ -109,15 +109,15 @@ class SkipUntilSink<ElementType, Other, O: ObserverType where O.E == ElementType
 
 class SkipUntil<Element, Other>: Producer<Element> {
     
-    private let _source: Observable<Element>
-    private let _other: Observable<Other>
+    fileprivate let _source: Observable<Element>
+    fileprivate let _other: Observable<Other>
     
     init(source: Observable<Element>, other: Observable<Other>) {
         _source = source
         _other = other
     }
     
-    override func run<O : ObserverType where O.E == Element>(_ observer: O) -> Disposable {
+    override func run<O : ObserverType>(_ observer: O) -> Disposable where O.E == Element {
         let sink = SkipUntilSink(parent: self, observer: observer)
         sink.disposable = sink.run()
         return sink

@@ -14,7 +14,7 @@ enum AmbState {
     case right
 }
 
-class AmbObserver<ElementType, O: ObserverType where O.E == ElementType> : ObserverType {
+class AmbObserver<ElementType, O: ObserverType> : ObserverType where O.E == ElementType {
     typealias Element = ElementType
     typealias Parent = AmbSink<ElementType, O>
     typealias This = AmbObserver<ElementType, O>
@@ -48,7 +48,7 @@ class AmbObserver<ElementType, O: ObserverType where O.E == ElementType> : Obser
     }
 }
 
-class AmbSink<ElementType, O: ObserverType where O.E == ElementType> : Sink<O> {
+class AmbSink<ElementType, O: ObserverType> : Sink<O> where O.E == ElementType {
     typealias Parent = Amb<ElementType>
     typealias AmbObserverType = AmbObserver<ElementType, O>
 
@@ -114,7 +114,7 @@ class Amb<Element>: Producer<Element> {
         _right = right
     }
     
-    override func run<O : ObserverType where O.E == Element>(_ observer: O) -> Disposable {
+    override func run<O : ObserverType>(_ observer: O) -> Disposable where O.E == Element {
         let sink = AmbSink(parent: self, observer: observer)
         sink.disposable = sink.run()
         return sink

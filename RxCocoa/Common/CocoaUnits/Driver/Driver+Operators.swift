@@ -250,7 +250,7 @@ extension DriverConvertibleType {
     - returns: An observable sequence only containing the distinct contiguous elements, based on `comparer`, from the source sequence.
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func distinctUntilChanged(_ comparer: (lhs: E, rhs: E) -> Bool) -> Driver<E> {
+    public func distinctUntilChanged(_ comparer: (E, E) -> Bool) -> Driver<E> {
         let source = self.asObservable()
             .distinctUntilChanged({ $0 }, comparer: comparer)
         return Driver(source)
@@ -264,7 +264,7 @@ extension DriverConvertibleType {
     - returns: An observable sequence only containing the distinct contiguous elements, based on a computed key value and the comparer, from the source sequence.
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func distinctUntilChanged<K>(_ keySelector: (E) -> K, comparer: (lhs: K, rhs: K) -> Bool) -> Driver<E> {
+    public func distinctUntilChanged<K>(_ keySelector: (E) -> K, comparer: (K, K) -> Bool) -> Driver<E> {
         let source = self.asObservable()
             .distinctUntilChanged(keySelector, comparer: comparer)
         return Driver(source)
@@ -406,7 +406,7 @@ extension Collection where Iterator.Element : DriverConvertibleType {
     // @warn_unused_result(message:"http://git.io/rxs.uo")
     public func concat()
         -> Driver<Generator.Element.E> {
-        let source = self.map { $0.asDriver().asObservable() }.concat()
+        let source = self.map { $0.asDriver().asObservable() } as (_) -> _.concat()
         return Driver<Generator.Element.E>(source)
     }
 }

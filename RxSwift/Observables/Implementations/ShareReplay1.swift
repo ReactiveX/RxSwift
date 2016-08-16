@@ -30,12 +30,12 @@ final class ShareReplay1<Element>
         self._source = source
     }
 
-    override func subscribe<O : ObserverType where O.E == E>(_ observer: O) -> Disposable {
+    override func subscribe<O : ObserverType>(_ observer: O) -> Disposable where O.E == E {
         _lock.lock(); defer { _lock.unlock() }
         return _synchronized_subscribe(observer)
     }
 
-    func _synchronized_subscribe<O : ObserverType where O.E == E>(_ observer: O) -> Disposable {
+    func _synchronized_subscribe<O : ObserverType>(_ observer: O) -> Disposable where O.E == E {
         if let element = self._element {
             observer.on(.next(element))
         }

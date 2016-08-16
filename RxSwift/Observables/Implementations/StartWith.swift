@@ -18,7 +18,7 @@ class StartWith<Element>: Producer<Element> {
         super.init()
     }
 
-    override func run<O : ObserverType where O.E == Element>(_ observer: O) -> Disposable {
+    override func run<O : ObserverType>(_ observer: O) -> Disposable where O.E == Element {
         for e in elements {
             observer.on(.next(e))
         }

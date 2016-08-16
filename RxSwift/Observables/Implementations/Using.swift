@@ -8,7 +8,7 @@
 
 import Foundation
 
-class UsingSink<SourceType, ResourceType: Disposable, O: ObserverType where O.E == SourceType> : Sink<O>, ObserverType {
+class UsingSink<SourceType, ResourceType: Disposable, O: ObserverType> : Sink<O>, ObserverType where O.E == SourceType {
 
     typealias Parent = Using<SourceType, ResourceType>
     typealias E = O.E
@@ -61,8 +61,8 @@ class Using<SourceType, ResourceType: Disposable>: Producer<SourceType> {
     typealias ResourceFactory = () throws -> ResourceType
     typealias ObservableFactory = (ResourceType) throws -> Observable<SourceType>
     
-    private let _resourceFactory: ResourceFactory
-    private let _observableFactory: ObservableFactory
+    fileprivate let _resourceFactory: ResourceFactory
+    fileprivate let _observableFactory: ObservableFactory
     
     
     init(resourceFactory: ResourceFactory, observableFactory: ObservableFactory) {
@@ -70,7 +70,7 @@ class Using<SourceType, ResourceType: Disposable>: Producer<SourceType> {
         _observableFactory = observableFactory
     }
     
-    override func run<O : ObserverType where O.E == E>(_ observer: O) -> Disposable {
+    override func run<O : ObserverType>(_ observer: O) -> Disposable where O.E == E {
         let sink = UsingSink(parent: self, observer: observer)
         sink.disposable = sink.run()
         return sink

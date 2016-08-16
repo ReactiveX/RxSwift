@@ -35,7 +35,7 @@ class CollectionViewDataSourceNotSet
 /**
      For more information take a look at `DelegateProxyType`.
  */
-public class RxCollectionViewDataSourceProxy
+open class RxCollectionViewDataSourceProxy
     : DelegateProxy
     , UICollectionViewDataSource
     , DelegateProxyType {
@@ -43,7 +43,7 @@ public class RxCollectionViewDataSourceProxy
     /**
      Typed parent object.
      */
-    public weak private(set) var collectionView: UICollectionView?
+    open weak private(set) var collectionView: UICollectionView?
     
     private weak var _requiredMethodsDataSource: UICollectionViewDataSource? = collectionViewDataSourceNotSet
 
@@ -62,14 +62,14 @@ public class RxCollectionViewDataSourceProxy
     /**
     Required delegate method implementation.
     */
-    public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    open func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return (_requiredMethodsDataSource ?? collectionViewDataSourceNotSet).collectionView(collectionView, numberOfItemsInSection: section) ?? 0
     }
     
     /**
      Required delegate method implementation.
      */
-    public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    open func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         return (_requiredMethodsDataSource ?? collectionViewDataSourceNotSet).collectionView(collectionView, cellForItemAt: indexPath)
     }
     
@@ -78,7 +78,7 @@ public class RxCollectionViewDataSourceProxy
     /**
     For more information take a look at `DelegateProxyType`.
     */
-    public override class func createProxyForObject(_ object: AnyObject) -> AnyObject {
+    open override class func createProxyForObject(_ object: AnyObject) -> AnyObject {
         let collectionView = (object as! UICollectionView)
 
         return castOrFatalError(collectionView.rx_createDataSourceProxy())
@@ -87,14 +87,14 @@ public class RxCollectionViewDataSourceProxy
     /**
     For more information take a look at `DelegateProxyType`.
     */
-    public override class func delegateAssociatedObjectTag() -> UnsafePointer<Void> {
+    open override class func delegateAssociatedObjectTag() -> UnsafeRawPointer {
         return _pointer(&dataSourceAssociatedTag)
     }
 
     /**
      For more information take a look at `DelegateProxyType`.
      */
-    public class func setCurrentDelegate(_ delegate: AnyObject?, toObject object: AnyObject) {
+    open class func setCurrentDelegate(_ delegate: AnyObject?, toObject object: AnyObject) {
         let collectionView: UICollectionView = castOrFatalError(object)
         collectionView.dataSource = castOptionalOrFatalError(delegate)
     }
@@ -102,7 +102,7 @@ public class RxCollectionViewDataSourceProxy
     /**
      For more information take a look at `DelegateProxyType`.
      */
-    public class func currentDelegateFor(_ object: AnyObject) -> AnyObject? {
+    open class func currentDelegateFor(_ object: AnyObject) -> AnyObject? {
         let collectionView: UICollectionView = castOrFatalError(object)
         return collectionView.dataSource
     }
@@ -110,7 +110,7 @@ public class RxCollectionViewDataSourceProxy
     /**
      For more information take a look at `DelegateProxyType`.
      */
-    public override func setForwardToDelegate(_ forwardToDelegate: AnyObject?, retainDelegate: Bool) {
+    open override func setForwardToDelegate(_ forwardToDelegate: AnyObject?, retainDelegate: Bool) {
         let requiredMethodsDataSource: UICollectionViewDataSource? = castOptionalOrFatalError(forwardToDelegate)
         _requiredMethodsDataSource = requiredMethodsDataSource ?? collectionViewDataSourceNotSet
         super.setForwardToDelegate(forwardToDelegate, retainDelegate: retainDelegate)

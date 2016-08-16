@@ -59,7 +59,7 @@ public struct ControlProperty<PropertyType> : ControlPropertyType {
      - returns: Control property created with a observable sequence of values and an observer that enables binding values
      to property.
     */
-    public init<V: ObservableType, S: ObserverType where E == V.E, E == S.E>(values: V, valueSink: S) {
+    public init<V: ObservableType, S: ObserverType>(values: V, valueSink: S) where E == V.E, E == S.E {
         _values = values.subscribeOn(ConcurrentMainScheduler.instance)
         _valueSink = valueSink.asObserver()
     }
@@ -70,7 +70,7 @@ public struct ControlProperty<PropertyType> : ControlPropertyType {
     - parameter observer: Observer to subscribe to property values.
     - returns: Disposable object that can be used to unsubscribe the observer from receiving control property values.
     */
-    public func subscribe<O : ObserverType where O.E == E>(_ observer: O) -> Disposable {
+    public func subscribe<O : ObserverType>(_ observer: O) -> Disposable where O.E == E {
         return _values.subscribe(observer)
     }
 

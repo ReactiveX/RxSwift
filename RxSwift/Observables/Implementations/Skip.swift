@@ -10,7 +10,7 @@ import Foundation
 
 // count version
 
-class SkipCountSink<ElementType, O: ObserverType where O.E == ElementType> : Sink<O>, ObserverType {
+class SkipCountSink<ElementType, O: ObserverType> : Sink<O>, ObserverType where O.E == ElementType {
     typealias Parent = SkipCount<ElementType>
     typealias Element = ElementType
     
@@ -54,7 +54,7 @@ class SkipCount<Element>: Producer<Element> {
         self.count = count
     }
     
-    override func run<O : ObserverType where O.E == Element>(_ observer: O) -> Disposable {
+    override func run<O : ObserverType>(_ observer: O) -> Disposable where O.E == Element {
         let sink = SkipCountSink(parent: self, observer: observer)
         sink.disposable = source.subscribe(sink)
 
@@ -64,7 +64,7 @@ class SkipCount<Element>: Producer<Element> {
 
 // time version
 
-class SkipTimeSink<ElementType, O: ObserverType where O.E == ElementType> : Sink<O>, ObserverType {
+class SkipTimeSink<ElementType, O: ObserverType> : Sink<O>, ObserverType where O.E == ElementType {
     typealias Parent = SkipTime<ElementType>
     typealias Element = ElementType
 
@@ -120,7 +120,7 @@ class SkipTime<Element>: Producer<Element> {
         self.duration = duration
     }
     
-    override func run<O : ObserverType where O.E == Element>(_ observer: O) -> Disposable {
+    override func run<O : ObserverType>(_ observer: O) -> Disposable where O.E == Element {
         let sink = SkipTimeSink(parent: self, observer: observer)
         sink.disposable = sink.run()
         return sink

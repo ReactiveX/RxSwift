@@ -31,7 +31,7 @@ class _RxTableViewReactiveArrayDataSource
         return _tableView(tableView, numberOfRowsInSection: section)
     }
 
-    private func _tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    fileprivate func _tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         rxAbstractMethod()
     }
 

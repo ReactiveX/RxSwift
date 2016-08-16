@@ -32,12 +32,12 @@ class ObservableConcurrencyTest : ObservableConcurrencyTestBase {
 // observeOn serial scheduler
 extension ObservableConcurrencyTest {
 
-    func runDispatchQueueSchedulerTests(_ tests: (scheduler: SerialDispatchQueueScheduler) -> Disposable) {
+    func runDispatchQueueSchedulerTests(_ tests: (SerialDispatchQueueScheduler) -> Disposable) {
         let scheduler = SerialDispatchQueueScheduler(internalSerialQueueName: "testQueue1")
         runDispatchQueueSchedulerTests(scheduler, tests: tests).dispose()
     }
 
-    func runDispatchQueueSchedulerTests(_ scheduler: SerialDispatchQueueScheduler, tests: (scheduler: SerialDispatchQueueScheduler) -> Disposable) -> Disposable {
+    func runDispatchQueueSchedulerTests(_ scheduler: SerialDispatchQueueScheduler, tests: (SerialDispatchQueueScheduler) -> Disposable) -> Disposable {
         // simplest possible solution, even though it has horrible efficiency in this case probably
         let disposable = tests(scheduler: scheduler)
         let expectation = self.expectation(description: "Wait for all tests to complete")
@@ -54,7 +54,7 @@ extension ObservableConcurrencyTest {
         return disposable
     }
 
-    func runDispatchQueueSchedulerMultiplexedTests(_ tests: [(scheduler: SerialDispatchQueueScheduler) -> Disposable]) {
+    func runDispatchQueueSchedulerMultiplexedTests(_ tests: [(SerialDispatchQueueScheduler) -> Disposable]) {
         let scheduler = SerialDispatchQueueScheduler(internalSerialQueueName: "testQueue1")
 
         let compositeDisposable = CompositeDisposable()

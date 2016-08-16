@@ -10,7 +10,7 @@ import Foundation
 
 struct PriorityQueue<Element: AnyObject> {
     private let _hasHigherPriority: (Element, Element) -> Bool
-    private var _elements = [Element]()
+    fileprivate var _elements = [Element]()
 
     init(hasHigherPriority: (Element, Element) -> Bool) {
         _hasHigherPriority = hasHigherPriority

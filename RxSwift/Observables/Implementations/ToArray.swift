@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ToArraySink<SourceType, O: ObserverType where O.E == [SourceType]> : Sink<O>, ObserverType {
+class ToArraySink<SourceType, O: ObserverType> : Sink<O>, ObserverType where O.E == [SourceType] {
     typealias Parent = ToArray<SourceType>
     
     let _parent: Parent
@@ -42,7 +42,7 @@ class ToArray<SourceType> : Producer<[SourceType]> {
         _source = source
     }
     
-    override func run<O: ObserverType where O.E == [SourceType]>(_ observer: O) -> Disposable {
+    override func run<O: ObserverType>(_ observer: O) -> Disposable where O.E == [SourceType] {
         let sink = ToArraySink(parent: self, observer: observer)
         sink.disposable = _source.subscribe(sink)
         return sink

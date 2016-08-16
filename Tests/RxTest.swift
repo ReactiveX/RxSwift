@@ -33,7 +33,7 @@ class RxTest
         var allTests : [(String, () throws -> Void)] = []
     #endif
 
-    private var startResourceCount: Int32 = 0
+    fileprivate var startResourceCount: Int32 = 0
 
     var accumulateStatistics: Bool {
         return true

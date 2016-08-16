@@ -19,7 +19,7 @@ Base class for `DelegateProxyType` protocol.
 
 This implementation is not thread safe and can be used only from one thread (Main thread).
 */
-public class DelegateProxy : _RXDelegateProxy {
+open class DelegateProxy : _RXDelegateProxy {
     
     private var subjectsForSelector = [Selector: PublishSubject<[AnyObject]>]()
 
@@ -85,7 +85,7 @@ public class DelegateProxy : _RXDelegateProxy {
     - parameter selector: Selector used to filter observed invocations of delegate methods.
     - returns: Observable sequence of arguments passed to `selector` method.
     */
-    public func observe(_ selector: Selector) -> Observable<[AnyObject]> {
+    open func observe(_ selector: Selector) -> Observable<[AnyObject]> {
         if hasWiredImplementation(for: selector) {
             print("Delegate proxy is already implementing `\(selector)`, a more performant way of registering might exist.")
         }
@@ -108,7 +108,7 @@ public class DelegateProxy : _RXDelegateProxy {
     
     // proxy
     
-    public override func interceptedSelector(_ selector: Selector, withArguments arguments: [AnyObject]!) {
+    open override func interceptedSelector(_ selector: Selector, withArguments arguments: [AnyObject]!) {
         subjectsForSelector[selector]?.on(.next(arguments))
     }
     
@@ -117,7 +117,7 @@ public class DelegateProxy : _RXDelegateProxy {
     
     - returns: Associated object tag.
     */
-    public class func delegateAssociatedObjectTag() -> UnsafePointer<Void> {
+    open class func delegateAssociatedObjectTag() -> UnsafeRawPointer {
         return _pointer(&delegateAssociatedTag)
     }
     
@@ -126,7 +126,7 @@ public class DelegateProxy : _RXDelegateProxy {
     
     - returns: Initialized instance of `self`.
     */
-    public class func createProxyForObject(_ object: AnyObject) -> AnyObject {
+    open class func createProxyForObject(_ object: AnyObject) -> AnyObject {
         return self.init(parentObject: object)
     }
     
@@ -136,7 +136,7 @@ public class DelegateProxy : _RXDelegateProxy {
     - parameter object: Object that can have assigned delegate proxy.
     - returns: Assigned delegate proxy or `nil` if no delegate proxy is assigned.
     */
-    public class func assignedProxyFor(_ object: AnyObject) -> AnyObject? {
+    open class func assignedProxyFor(_ object: AnyObject) -> AnyObject? {
         let maybeDelegate: AnyObject? = objc_getAssociatedObject(object, self.delegateAssociatedObjectTag())
         return castOptionalOrFatalError(maybeDelegate)
     }
@@ -147,7 +147,7 @@ public class DelegateProxy : _RXDelegateProxy {
     - parameter object: Object that can have assigned delegate proxy.
     - parameter proxy: Delegate proxy object to assign to `object`.
     */
-    public class func assignProxy(_ proxy: AnyObject, toObject object: AnyObject) {
+    open class func assignProxy(_ proxy: AnyObject, toObject object: AnyObject) {
         precondition(proxy.isKind(of: self.classForCoder()))
        
         objc_setAssociatedObject(object, self.delegateAssociatedObjectTag(), proxy, .OBJC_ASSOCIATION_RETAIN)
@@ -160,7 +160,7 @@ public class DelegateProxy : _RXDelegateProxy {
     - parameter forwardToDelegate: Reference of delegate that receives all messages through `self`.
     - parameter retainDelegate: Should `self` retain `forwardToDelegate`.
     */
-    public func setForwardToDelegate(_ delegate: AnyObject?, retainDelegate: Bool) {
+    open func setForwardToDelegate(_ delegate: AnyObject?, retainDelegate: Bool) {
         self._setForward(toDelegate: delegate, retainDelegate: retainDelegate)
     }
    
@@ -170,7 +170,7 @@ public class DelegateProxy : _RXDelegateProxy {
     
     - returns: Value of reference if set or nil.
     */
-    public func forwardToDelegate() -> AnyObject? {
+    open func forwardToDelegate() -> AnyObject? {
         return self._forwardToDelegate
     }
     
@@ -185,7 +185,7 @@ public class DelegateProxy : _RXDelegateProxy {
 
     // MARK: Pointer
 
-    class func _pointer(_ p: UnsafePointer<Void>) -> UnsafePointer<Void> {
+    class func _pointer(_ p: UnsafeRawPointer) -> UnsafeRawPointer {
         return p
     }
 }

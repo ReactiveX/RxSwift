@@ -9,7 +9,7 @@
 import Foundation
 import RxSwift
 
-class MySubject<Element where Element : Hashable> : SubjectType, ObserverType {
+class MySubject<Element> : SubjectType, ObserverType where Element : Hashable {
     typealias E = Element
     typealias SubjectObserverType = MySubject<E>
 
@@ -41,7 +41,7 @@ class MySubject<Element where Element : Hashable> : SubjectType, ObserverType {
         }
     }
     
-    func subscribe<O : ObserverType where O.E == E>(_ observer: O) -> Disposable {
+    func subscribe<O : ObserverType>(_ observer: O) -> Disposable where O.E == E {
         _subscribeCount += 1
         _observer = AnyObserver(observer)
         

@@ -63,7 +63,7 @@ class Generate<S, E> : Producer<E> {
         super.init()
     }
     
-    override func run<O : ObserverType where O.E == E>(_ observer: O) -> Disposable {
+    override func run<O : ObserverType>(_ observer: O) -> Disposable where O.E == E {
         let sink = GenerateSink(parent: self, observer: observer)
         sink.disposable = sink.run()
         return sink

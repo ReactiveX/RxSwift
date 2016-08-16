@@ -18,9 +18,9 @@ enum TailRecursiveSinkCommand {
 #endif
 
 /// This class is usually used with `Generator` version of the operators.
-class TailRecursiveSink<S: Sequence, O: ObserverType where S.Iterator.Element: ObservableConvertibleType, S.Iterator.Element.E == O.E>
+class TailRecursiveSink<S: Sequence, O: ObserverType>
     : Sink<O>
-    , InvocableWithValueType {
+    , InvocableWithValueType where S.Iterator.Element: ObservableConvertibleType, S.Iterator.Element.E == O.E {
     typealias Value = TailRecursiveSinkCommand
     typealias E = O.E
     typealias SequenceGenerator = (generator: S.Iterator, remaining: IntMax?)

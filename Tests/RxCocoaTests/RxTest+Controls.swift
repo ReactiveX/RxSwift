@@ -12,7 +12,7 @@ import RxSwift
 import XCTest
 
 extension RxTest {
-    func ensurePropertyDeallocated<C, T: Equatable where C: NSObject>(_ createControl: () -> C, _ initialValue: T, _ propertySelector: (C) -> ControlProperty<T>) {
+    func ensurePropertyDeallocated<C, T: Equatable>(_ createControl: () -> C, _ initialValue: T, _ propertySelector: (C) -> ControlProperty<T>) where C: NSObject {
         let variable = Variable(initialValue)
 
 
@@ -58,11 +58,11 @@ extension RxTest {
         XCTAssertEqual(initialValue, lastReturnedPropertyValue)
     }
 
-    func ensureEventDeallocated<C, T where C: NSObject>(_ createControl: () -> C, _ eventSelector: (C) -> ControlEvent<T>) {
+    func ensureEventDeallocated<C, T>(_ createControl: @escaping () -> C, _ eventSelector: (C) -> ControlEvent<T>) where C: NSObject {
         return ensureEventDeallocated({ () -> (C, Disposable) in (createControl(), Disposables.create()) }, eventSelector)
     }
 
-    func ensureEventDeallocated<C, T where C: NSObject>(_ createControl: () -> (C, Disposable), _ eventSelector: (C) -> ControlEvent<T>) {
+    func ensureEventDeallocated<C, T>(_ createControl: () -> (C, Disposable), _ eventSelector: (C) -> ControlEvent<T>) where C: NSObject {
         var completed = false
         var deallocated = false
         let outerDisposable = SingleAssignmentDisposable()
@@ -89,7 +89,7 @@ extension RxTest {
         XCTAssertTrue(completed)
     }
 
-    func ensureControlObserverHasWeakReference<C, T where C: NSObject>( _ createControl: @autoclosure() -> (C), _ observerSelector: (C) -> AnyObserver<T>, _ observableSelector: () -> (Observable<T>)) {
+    func ensureControlObserverHasWeakReference<C, T>( _ createControl: @autoclosure() -> (C), _ observerSelector: (C) -> AnyObserver<T>, _ observableSelector: () -> (Observable<T>)) where C: NSObject {
         var deallocated = false
 
         let disposeBag = DisposeBag()

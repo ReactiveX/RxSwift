@@ -10,7 +10,7 @@ import Foundation
 
 // count version
 
-class TakeCountSink<ElementType, O: ObserverType where O.E == ElementType> : Sink<O>, ObserverType {
+class TakeCountSink<ElementType, O: ObserverType> : Sink<O>, ObserverType where O.E == ElementType {
     typealias Parent = TakeCount<ElementType>
     typealias E = ElementType
     
@@ -50,8 +50,8 @@ class TakeCountSink<ElementType, O: ObserverType where O.E == ElementType> : Sin
 }
 
 class TakeCount<Element>: Producer<Element> {
-    private let _source: Observable<Element>
-    private let _count: Int
+    fileprivate let _source: Observable<Element>
+    fileprivate let _count: Int
     
     init(source: Observable<Element>, count: Int) {
         if count < 0 {
@@ -61,7 +61,7 @@ class TakeCount<Element>: Producer<Element> {
         _count = count
     }
     
-    override func run<O : ObserverType where O.E == Element>(_ observer: O) -> Disposable {
+    override func run<O : ObserverType>(_ observer: O) -> Disposable where O.E == Element {
         let sink = TakeCountSink(parent: self, observer: observer)
         sink.disposable = _source.subscribe(sink)
         return sink
@@ -70,15 +70,15 @@ class TakeCount<Element>: Producer<Element> {
 
 // time version
 
-class TakeTimeSink<ElementType, O: ObserverType where O.E == ElementType>
+class TakeTimeSink<ElementType, O: ObserverType>
     : Sink<O>
     , LockOwnerType
     , ObserverType
-    , SynchronizedOnType {
+    , SynchronizedOnType where O.E == ElementType {
     typealias Parent = TakeTime<ElementType>
     typealias E = ElementType
 
-    private let _parent: Parent
+    fileprivate let _parent: Parent
     
     let _lock = NSRecursiveLock()
     
@@ -126,9 +126,9 @@ class TakeTimeSink<ElementType, O: ObserverType where O.E == ElementType>
 class TakeTime<Element> : Producer<Element> {
     typealias TimeInterval = RxTimeInterval
     
-    private let _source: Observable<Element>
-    private let _duration: TimeInterval
-    private let _scheduler: SchedulerType
+    fileprivate let _source: Observable<Element>
+    fileprivate let _duration: TimeInterval
+    fileprivate let _scheduler: SchedulerType
     
     init(source: Observable<Element>, duration: TimeInterval, scheduler: SchedulerType) {
         _source = source
@@ -136,7 +136,7 @@ class TakeTime<Element> : Producer<Element> {
         _duration = duration
     }
     
-    override func run<O : ObserverType where O.E == Element>(_ observer: O) -> Disposable {
+    override func run<O : ObserverType>(_ observer: O) -> Disposable where O.E == Element {
         let sink = TakeTimeSink(parent: self, observer: observer)
         sink.disposable = sink.run()
         return sink

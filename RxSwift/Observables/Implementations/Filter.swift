@@ -50,7 +50,7 @@ class Filter<Element> : Producer<Element> {
         _predicate = predicate
     }
     
-    override func run<O: ObserverType where O.E == Element>(_ observer: O) -> Disposable {
+    override func run<O: ObserverType>(_ observer: O) -> Disposable where O.E == Element {
         let sink = FilterSink(predicate: _predicate, observer: observer)
         sink.disposable = _source.subscribe(sink)
         return sink

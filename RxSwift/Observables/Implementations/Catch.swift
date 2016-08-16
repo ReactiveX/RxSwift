@@ -78,15 +78,15 @@ class CatchSink<O: ObserverType> : Sink<O>, ObserverType {
 class Catch<Element> : Producer<Element> {
     typealias Handler = (Swift.Error) throws -> Observable<Element>
     
-    private let _source: Observable<Element>
-    private let _handler: Handler
+    fileprivate let _source: Observable<Element>
+    fileprivate let _handler: Handler
     
     init(source: Observable<Element>, handler: Handler) {
         _source = source
         _handler = handler
     }
     
-    override func run<O: ObserverType where O.E == Element>(_ observer: O) -> Disposable {
+    override func run<O: ObserverType>(_ observer: O) -> Disposable where O.E == Element {
         let sink = CatchSink(parent: self, observer: observer)
         sink.disposable = sink.run()
         return sink
@@ -95,9 +95,9 @@ class Catch<Element> : Producer<Element> {
 
 // catch enumerable
 
-class CatchSequenceSink<S: Sequence, O: ObserverType where S.Iterator.Element : ObservableConvertibleType, S.Iterator.Element.E == O.E>
+class CatchSequenceSink<S: Sequence, O: ObserverType>
     : TailRecursiveSink<S, O>
-    , ObserverType {
+    , ObserverType where S.Iterator.Element : ObservableConvertibleType, S.Iterator.Element.E == O.E {
     typealias Element = O.E
     typealias Parent = CatchSequence<S>
     
@@ -145,7 +145,7 @@ class CatchSequenceSink<S: Sequence, O: ObserverType where S.Iterator.Element : 
     }
 }
 
-class CatchSequence<S: Sequence where S.Iterator.Element : ObservableConvertibleType> : Producer<S.Iterator.Element.E> {
+class CatchSequence<S: Sequence> : Producer<S.Iterator.Element.E> where S.Iterator.Element : ObservableConvertibleType {
     typealias Element = S.Iterator.Element.E
     
     let sources: S
@@ -154,7 +154,7 @@ class CatchSequence<S: Sequence where S.Iterator.Element : ObservableConvertible
         self.sources = sources
     }
     
-    override func run<O : ObserverType where O.E == Element>(_ observer: O) -> Disposable {
+    override func run<O : ObserverType>(_ observer: O) -> Disposable where O.E == Element {
         let sink = CatchSequenceSink<S, O>(observer: observer)
         sink.disposable = sink.run((self.sources.makeIterator(), nil))
         return sink

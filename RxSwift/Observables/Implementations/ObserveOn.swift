@@ -21,7 +21,7 @@ class ObserveOn<E> : Producer<E> {
 #endif
     }
     
-    override func run<O : ObserverType where O.E == E>(_ observer: O) -> Disposable {
+    override func run<O : ObserverType>(_ observer: O) -> Disposable where O.E == E {
         let sink = ObserveOnSink(scheduler: scheduler, observer: observer)
         sink._subscription.disposable = source.subscribe(sink)
         return sink

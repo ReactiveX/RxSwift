@@ -12,20 +12,20 @@ import RxSwift
 /**
  Observable sequence that records subscription lifetimes and timestamped events sent to observers.
 */
-public class TestableObservable<Element>
+open class TestableObservable<Element>
     : ObservableType {
     public typealias E = Element
     /**
      Subscriptions recorded during observable lifetime.
     */
-    public internal(set) var subscriptions: [Subscription]
+    open internal(set) var subscriptions: [Subscription]
 
     /**
      List of events to replay for all subscribers.
      
      Event times represent absolute `TestScheduler` time.
     */
-    public internal(set) var recordedEvents: [Recorded<Event<Element>>]
+    open internal(set) var recordedEvents: [Recorded<Event<Element>>]
     
     /**
      Parent test scheduler.
@@ -38,7 +38,7 @@ public class TestableObservable<Element>
         self.subscriptions = []
     }
 
-    public func subscribe<O : ObserverType where O.E == Element>(_ observer: O) -> Disposable {
+    open func subscribe<O : ObserverType>(_ observer: O) -> Disposable where O.E == Element {
         fatalError("Abstract method")
     }
 }

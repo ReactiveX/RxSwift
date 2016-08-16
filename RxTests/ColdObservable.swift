@@ -25,7 +25,7 @@ class ColdObservable<Element>
     /**
     Subscribes `observer` to receive events for this sequence.
     */
-    override func subscribe<O : ObserverType where O.E == Element>(_ observer: O) -> Disposable {
+    override func subscribe<O : ObserverType>(_ observer: O) -> Disposable where O.E == Element {
         subscriptions.append(Subscription(testScheduler.clock))
         
         let i = self.subscriptions.count - 1

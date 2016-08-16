@@ -9,7 +9,7 @@
 import Foundation
 
 
-class TakeLastSink<ElementType, O: ObserverType where O.E == ElementType> : Sink<O>, ObserverType {
+class TakeLastSink<ElementType, O: ObserverType> : Sink<O>, ObserverType where O.E == ElementType {
     typealias Parent = TakeLast<ElementType>
     typealias E = ElementType
     
@@ -44,8 +44,8 @@ class TakeLastSink<ElementType, O: ObserverType where O.E == ElementType> : Sink
 }
 
 class TakeLast<Element>: Producer<Element> {
-    private let _source: Observable<Element>
-    private let _count: Int
+    fileprivate let _source: Observable<Element>
+    fileprivate let _count: Int
     
     init(source: Observable<Element>, count: Int) {
         if count < 0 {
@@ -55,7 +55,7 @@ class TakeLast<Element>: Producer<Element> {
         _count = count
     }
     
-    override func run<O : ObserverType where O.E == Element>(_ observer: O) -> Disposable {
+    override func run<O : ObserverType>(_ observer: O) -> Disposable where O.E == Element {
         let sink = TakeLastSink(parent: self, observer: observer)
         sink.disposable = _source.subscribe(sink)
         return sink

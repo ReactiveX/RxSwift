@@ -50,7 +50,7 @@ extension ObservableType {
     - returns: An observable sequence only containing the distinct contiguous elements, based on `comparer`, from the source sequence.
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func distinctUntilChanged(_ comparer: (lhs: E, rhs: E) throws -> Bool)
+    public func distinctUntilChanged(_ comparer: (E, E) throws -> Bool)
         -> Observable<E> {
         return self.distinctUntilChanged({ $0 }, comparer: comparer)
     }
@@ -65,7 +65,7 @@ extension ObservableType {
     - returns: An observable sequence only containing the distinct contiguous elements, based on a computed key value and the comparer, from the source sequence.
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func distinctUntilChanged<K>(_ keySelector: (E) throws -> K, comparer: (lhs: K, rhs: K) throws -> Bool)
+    public func distinctUntilChanged<K>(_ keySelector: (E) throws -> K, comparer: (K, K) throws -> Bool)
         -> Observable<E> {
         return DistinctUntilChanged(source: self.asObservable(), selector: keySelector, comparer: comparer)
     }

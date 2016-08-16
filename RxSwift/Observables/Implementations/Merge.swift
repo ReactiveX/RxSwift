@@ -10,10 +10,10 @@ import Foundation
 
 // MARK: Limited concurrency version
 
-class MergeLimitedSinkIter<S: ObservableConvertibleType, O: ObserverType where S.E == O.E>
+class MergeLimitedSinkIter<S: ObservableConvertibleType, O: ObserverType>
     : ObserverType
     , LockOwnerType
-    , SynchronizedOnType {
+    , SynchronizedOnType where S.E == O.E {
     typealias E = O.E
     typealias DisposeKey = Bag<Disposable>.KeyType
     typealias Parent = MergeLimitedSink<S, O>
@@ -58,11 +58,11 @@ class MergeLimitedSinkIter<S: ObservableConvertibleType, O: ObserverType where S
     }
 }
 
-class MergeLimitedSink<S: ObservableConvertibleType, O: ObserverType where S.E == O.E>
+class MergeLimitedSink<S: ObservableConvertibleType, O: ObserverType>
     : Sink<O>
     , ObserverType
     , LockOwnerType
-    , SynchronizedOnType {
+    , SynchronizedOnType where S.E == O.E {
     typealias E = S
     typealias QueueType = Queue<S>
 
@@ -152,7 +152,7 @@ class MergeLimited<S: ObservableConvertibleType> : Producer<S.E> {
         _maxConcurrent = maxConcurrent
     }
     
-    override func run<O: ObserverType where O.E == S.E>(_ observer: O) -> Disposable {
+    override func run<O: ObserverType>(_ observer: O) -> Disposable where O.E == S.E {
         let sink = MergeLimitedSink<S, O>(maxConcurrent: _maxConcurrent, observer: observer)
         sink.disposable = sink.run(_source)
         return sink
@@ -161,7 +161,7 @@ class MergeLimited<S: ObservableConvertibleType> : Producer<S.E> {
 
 // MARK: Merge
 
-final class MergeBasicSink<S: ObservableConvertibleType, O: ObserverType where O.E == S.E> : MergeSink<S, S, O> {
+final class MergeBasicSink<S: ObservableConvertibleType, O: ObserverType> : MergeSink<S, S, O> where O.E == S.E {
     override init(observer: O) {
         super.init(observer: observer)
     }
@@ -173,7 +173,7 @@ final class MergeBasicSink<S: ObservableConvertibleType, O: ObserverType where O
 
 // MARK: flatMap
 
-final class FlatMapSink<SourceType, S: ObservableConvertibleType, O: ObserverType where O.E == S.E> : MergeSink<SourceType, S, O> {
+final class FlatMapSink<SourceType, S: ObservableConvertibleType, O: ObserverType> : MergeSink<SourceType, S, O> where O.E == S.E {
     typealias Selector = (SourceType) throws -> S
 
     private let _selector: Selector
@@ -188,7 +188,7 @@ final class FlatMapSink<SourceType, S: ObservableConvertibleType, O: ObserverTyp
     }
 }
 
-final class FlatMapWithIndexSink<SourceType, S: ObservableConvertibleType, O: ObserverType where O.E == S.E> : MergeSink<SourceType, S, O> {
+final class FlatMapWithIndexSink<SourceType, S: ObservableConvertibleType, O: ObserverType> : MergeSink<SourceType, S, O> where O.E == S.E {
     typealias Selector = (SourceType, Int) throws -> S
 
     private var _index = 0
@@ -206,7 +206,7 @@ final class FlatMapWithIndexSink<SourceType, S: ObservableConvertibleType, O: Ob
 
 // MARK: FlatMapFirst
 
-final class FlatMapFirstSink<SourceType, S: ObservableConvertibleType, O: ObserverType where O.E == S.E> : MergeSink<SourceType, S, O> {
+final class FlatMapFirstSink<SourceType, S: ObservableConvertibleType, O: ObserverType> : MergeSink<SourceType, S, O> where O.E == S.E {
     typealias Selector = (SourceType) throws -> S
 
     private let _selector: Selector
@@ -228,7 +228,7 @@ final class FlatMapFirstSink<SourceType, S: ObservableConvertibleType, O: Observ
 // It's value is one because initial source subscription is always in CompositeDisposable
 private let MergeNoIterators = 1
 
-class MergeSinkIter<SourceType, S: ObservableConvertibleType, O: ObserverType where O.E == S.E> : ObserverType {
+class MergeSinkIter<SourceType, S: ObservableConvertibleType, O: ObserverType> : ObserverType where O.E == S.E {
     typealias Parent = MergeSink<SourceType, S, O>
     typealias DisposeKey = CompositeDisposable.DisposeKey
     typealias E = O.E
@@ -270,9 +270,9 @@ class MergeSinkIter<SourceType, S: ObservableConvertibleType, O: ObserverType wh
 }
 
 
-class MergeSink<SourceType, S: ObservableConvertibleType, O: ObserverType where O.E == S.E>
+class MergeSink<SourceType, S: ObservableConvertibleType, O: ObserverType>
     : Sink<O>
-    , ObserverType {
+    , ObserverType where O.E == S.E {
     typealias ResultType = O.E
     typealias Element = SourceType
 
@@ -362,7 +362,7 @@ final class FlatMap<SourceType, S: ObservableConvertibleType>: Producer<S.E> {
         _selector = selector
     }
     
-    override func run<O: ObserverType where O.E == S.E>(_ observer: O) -> Disposable {
+    override func run<O: ObserverType>(_ observer: O) -> Disposable where O.E == S.E {
         let sink = FlatMapSink(selector: _selector, observer: observer)
         sink.disposable = sink.run(_source)
         return sink
@@ -381,7 +381,7 @@ final class FlatMapWithIndex<SourceType, S: ObservableConvertibleType>: Producer
         _selector = selector
     }
     
-    override func run<O: ObserverType where O.E == S.E>(_ observer: O) -> Disposable {
+    override func run<O: ObserverType>(_ observer: O) -> Disposable where O.E == S.E {
         let sink = FlatMapWithIndexSink<SourceType, S, O>(selector: _selector, observer: observer)
         sink.disposable = sink.run(_source)
         return sink
@@ -401,7 +401,7 @@ final class FlatMapFirst<SourceType, S: ObservableConvertibleType>: Producer<S.E
         _selector = selector
     }
 
-    override func run<O: ObserverType where O.E == S.E>(_ observer: O) -> Disposable {
+    override func run<O: ObserverType>(_ observer: O) -> Disposable where O.E == S.E {
         let sink = FlatMapFirstSink<SourceType, S, O>(selector: _selector, observer: observer)
         sink.disposable = sink.run(_source)
         return sink
@@ -415,7 +415,7 @@ final class Merge<S: ObservableConvertibleType> : Producer<S.E> {
         _source = source
     }
     
-    override func run<O: ObserverType where O.E == S.E>(_ observer: O) -> Disposable {
+    override func run<O: ObserverType>(_ observer: O) -> Disposable where O.E == S.E {
         let sink = MergeBasicSink<S, O>(observer: observer)
         sink.disposable = sink.run(_source)
         return sink

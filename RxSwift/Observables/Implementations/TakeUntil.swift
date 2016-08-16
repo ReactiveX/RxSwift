@@ -8,20 +8,20 @@
 
 import Foundation
 
-class TakeUntilSinkOther<ElementType, Other, O: ObserverType where O.E == ElementType>
+class TakeUntilSinkOther<ElementType, Other, O: ObserverType>
     : ObserverType
     , LockOwnerType
-    , SynchronizedOnType {
+    , SynchronizedOnType where O.E == ElementType {
     typealias Parent = TakeUntilSink<ElementType, Other, O>
     typealias E = Other
     
-    private let _parent: Parent
+    fileprivate let _parent: Parent
 
     var _lock: NSRecursiveLock {
         return _parent._lock
     }
     
-    private let _subscription = SingleAssignmentDisposable()
+    fileprivate let _subscription = SingleAssignmentDisposable()
     
     init(parent: Parent) {
         _parent = parent
@@ -55,20 +55,20 @@ class TakeUntilSinkOther<ElementType, Other, O: ObserverType where O.E == Elemen
 #endif
 }
 
-class TakeUntilSink<ElementType, Other, O: ObserverType where O.E == ElementType>
+class TakeUntilSink<ElementType, Other, O: ObserverType>
     : Sink<O>
     , LockOwnerType
     , ObserverType
-    , SynchronizedOnType {
+    , SynchronizedOnType where O.E == ElementType {
     typealias E = ElementType
     typealias Parent = TakeUntil<E, Other>
     
-    private let _parent: Parent
+    fileprivate let _parent: Parent
  
     let _lock = NSRecursiveLock()
     
     // state
-    private var _open = false
+    fileprivate var _open = false
     
     init(parent: Parent, observer: O) {
         _parent = parent
@@ -104,15 +104,15 @@ class TakeUntilSink<ElementType, Other, O: ObserverType where O.E == ElementType
 
 class TakeUntil<Element, Other>: Producer<Element> {
     
-    private let _source: Observable<Element>
-    private let _other: Observable<Other>
+    fileprivate let _source: Observable<Element>
+    fileprivate let _other: Observable<Other>
     
     init(source: Observable<Element>, other: Observable<Other>) {
         _source = source
         _other = other
     }
     
-    override func run<O : ObserverType where O.E == Element>(_ observer: O) -> Disposable {
+    override func run<O : ObserverType>(_ observer: O) -> Disposable where O.E == Element {
         let sink = TakeUntilSink(parent: self, observer: observer)
         sink.disposable = sink.run()
         return sink

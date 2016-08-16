@@ -14,7 +14,7 @@
 #endif
     import UIKit
     
-public class RxTextStorageDelegateProxy
+open class RxTextStorageDelegateProxy
     : DelegateProxy
     , DelegateProxyType
     , NSTextStorageDelegate {
@@ -23,7 +23,7 @@ public class RxTextStorageDelegateProxy
     /**
      For more information take a look at `DelegateProxyType`.
      */
-    public class func setCurrentDelegate(_ delegate: AnyObject?, toObject object: AnyObject) {
+    open class func setCurrentDelegate(_ delegate: AnyObject?, toObject object: AnyObject) {
         let textStorage: NSTextStorage = castOrFatalError(object)
         textStorage.delegate = castOptionalOrFatalError(delegate)
     }
@@ -31,7 +31,7 @@ public class RxTextStorageDelegateProxy
     /**
      For more information take a look at `DelegateProxyType`.
      */
-    public class func currentDelegateFor(_ object: AnyObject) -> AnyObject? {
+    open class func currentDelegateFor(_ object: AnyObject) -> AnyObject? {
         let textStorage: NSTextStorage = castOrFatalError(object)
         return textStorage.delegate
     }

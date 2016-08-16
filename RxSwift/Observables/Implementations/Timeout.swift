@@ -8,7 +8,7 @@
 
 import Foundation
 
-class TimeoutSink<ElementType, O: ObserverType where O.E == ElementType>: Sink<O>, LockOwnerType, ObserverType {
+class TimeoutSink<ElementType, O: ObserverType>: Sink<O>, LockOwnerType, ObserverType where O.E == ElementType {
     typealias E = ElementType
     typealias Parent = Timeout<E>
     
@@ -112,7 +112,7 @@ class Timeout<Element> : Producer<Element> {
         _scheduler = scheduler
     }
     
-    override func run<O : ObserverType where O.E == Element>(_ observer: O) -> Disposable {
+    override func run<O : ObserverType>(_ observer: O) -> Disposable where O.E == Element {
         let sink = TimeoutSink(parent: self, observer: observer)
         sink.disposable = sink.run()
         return sink

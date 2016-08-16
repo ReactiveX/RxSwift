@@ -130,7 +130,7 @@ extension Driver {
      - returns: An observable sequence whose observers trigger an invocation of the given observable factory function.
      */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    public static func deferred(_ observableFactory: () -> Driver<E>)
+    public static func deferred(_ observableFactory: @escaping () -> Driver<E>)
         -> Driver<E> {
         return Driver(Observable.deferred { observableFactory().asObservable() })
     }

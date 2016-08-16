@@ -45,7 +45,7 @@ public final class ConcurrentMainScheduler : SchedulerType {
     - parameter action: Action to be executed.
     - returns: The disposable object used to cancel the scheduled action (best effort).
     */
-    public func schedule<StateType>(_ state: StateType, action: (StateType) -> Disposable) -> Disposable {
+    public func schedule<StateType>(_ state: StateType, action: @escaping (StateType) -> Disposable) -> Disposable {
         if Thread.current.isMainThread {
             return action(state)
         }

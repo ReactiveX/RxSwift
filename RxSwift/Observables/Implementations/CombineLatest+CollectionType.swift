@@ -8,8 +8,8 @@
 
 import Foundation
 
-class CombineLatestCollectionTypeSink<C: Collection, R, O: ObserverType where C.Iterator.Element : ObservableConvertibleType, O.E == R>
-    : Sink<O> {
+class CombineLatestCollectionTypeSink<C: Collection, R, O: ObserverType>
+    : Sink<O> where C.Iterator.Element : ObservableConvertibleType, O.E == R {
     typealias Parent = CombineLatestCollectionType<C, R>
     typealias SourceElement = C.Iterator.Element.E
     
@@ -104,7 +104,7 @@ class CombineLatestCollectionTypeSink<C: Collection, R, O: ObserverType where C.
     }
 }
 
-class CombineLatestCollectionType<C: Collection, R where C.Iterator.Element : ObservableConvertibleType> : Producer<R> {
+class CombineLatestCollectionType<C: Collection, R> : Producer<R> where C.Iterator.Element : ObservableConvertibleType {
     typealias ResultSelector = ([C.Iterator.Element.E]) throws -> R
     
     let _sources: C
@@ -117,7 +117,7 @@ class CombineLatestCollectionType<C: Collection, R where C.Iterator.Element : Ob
         _count = Int(self._sources.count.toIntMax())
     }
     
-    override func run<O : ObserverType where O.E == R>(_ observer: O) -> Disposable {
+    override func run<O : ObserverType>(_ observer: O) -> Disposable where O.E == R {
         let sink = CombineLatestCollectionTypeSink(parent: self, observer: observer)
         sink.disposable = sink.run()
         return sink

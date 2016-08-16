@@ -78,7 +78,7 @@ extension ObservableType {
     - returns: An observable sequence that contains the elements of `self`, followed by those of the second sequence.
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func concat<O: ObservableConvertibleType where O.E == E>(_ second: O) -> Observable<E> {
+    public func concat<O: ObservableConvertibleType>(_ second: O) -> Observable<E> where O.E == E {
         return [self.asObservable(), second.asObservable()].concat()
     }
 }
@@ -139,7 +139,7 @@ extension ObservableType where E : ObservableConvertibleType {
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
     public func concat() -> Observable<E.E> {
-        return merge(maxConcurrent: 1)
+        return merge(1)
     }
 }
 
@@ -168,7 +168,7 @@ extension ObservableType where E : ObservableConvertibleType {
     - returns: The observable sequence that merges the elements of the inner sequences.
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func merge(maxConcurrent: Int)
+    public func merge(_ maxConcurrent: Int)
         -> Observable<E.E> {
         return MergeLimited(source: asObservable(), maxConcurrent: maxConcurrent)
     }
@@ -274,9 +274,9 @@ extension ObservableType {
     - returns: An observable sequence that surfaces either of the given sequences, whichever reacted first.
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func amb<O2: ObservableType where O2.E == E>
+    public func amb<O2: ObservableType>
         (_ right: O2)
-        -> Observable<E> {
+        -> Observable<E> where O2.E == E {
         return Amb(left: asObservable(), right: right.asObservable())
     }
 }

@@ -14,7 +14,7 @@
 #endif
 import UIKit
 
-public class RxPickerViewDelegateProxy
+open class RxPickerViewDelegateProxy
     : DelegateProxy
     , DelegateProxyType
     , UIPickerViewDelegate {
@@ -22,7 +22,7 @@ public class RxPickerViewDelegateProxy
     /**
      For more information take a look at `DelegateProxyType`.
      */
-    public class func setCurrentDelegate(_ delegate: AnyObject?, toObject object: AnyObject) {
+    open class func setCurrentDelegate(_ delegate: AnyObject?, toObject object: AnyObject) {
         let pickerView: UIPickerView = castOrFatalError(object)
         pickerView.delegate = castOptionalOrFatalError(delegate)
     }
@@ -30,7 +30,7 @@ public class RxPickerViewDelegateProxy
     /**
      For more information take a look at `DelegateProxyType`.
      */
-    public class func currentDelegateFor(_ object: AnyObject) -> AnyObject? {
+    open class func currentDelegateFor(_ object: AnyObject) -> AnyObject? {
         let pickerView: UIPickerView = castOrFatalError(object)
         return pickerView.delegate
     }

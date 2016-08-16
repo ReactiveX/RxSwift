@@ -8,7 +8,7 @@
 
 import Foundation
 
-class TimerSink<O: ObserverType where O.E : SignedInteger > : Sink<O> {
+class TimerSink<O: ObserverType> : Sink<O> where O.E : SignedInteger  {
     typealias Parent = Timer<O.E>
     
     private let _parent: Parent
@@ -26,7 +26,7 @@ class TimerSink<O: ObserverType where O.E : SignedInteger > : Sink<O> {
     }
 }
 
-class TimerOneOffSink<O: ObserverType where O.E : SignedInteger> : Sink<O> {
+class TimerOneOffSink<O: ObserverType> : Sink<O> where O.E : SignedInteger {
     typealias Parent = Timer<O.E>
     
     private let _parent: Parent
@@ -47,9 +47,9 @@ class TimerOneOffSink<O: ObserverType where O.E : SignedInteger> : Sink<O> {
 }
 
 class Timer<E: SignedInteger>: Producer<E> {
-    private let _scheduler: SchedulerType
-    private let _dueTime: RxTimeInterval
-    private let _period: RxTimeInterval?
+    fileprivate let _scheduler: SchedulerType
+    fileprivate let _dueTime: RxTimeInterval
+    fileprivate let _period: RxTimeInterval?
     
     init(dueTime: RxTimeInterval, period: RxTimeInterval?, scheduler: SchedulerType) {
         _scheduler = scheduler
@@ -57,7 +57,7 @@ class Timer<E: SignedInteger>: Producer<E> {
         _period = period
     }
     
-    override func run<O : ObserverType where O.E == E>(_ observer: O) -> Disposable {
+    override func run<O : ObserverType>(_ observer: O) -> Disposable where O.E == E {
         if let _ = _period {
             let sink = TimerSink(parent: self, observer: observer)
             sink.disposable = sink.run()

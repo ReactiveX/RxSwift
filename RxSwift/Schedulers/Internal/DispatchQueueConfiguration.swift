@@ -21,7 +21,7 @@ private func dispatchInterval(_ interval: Foundation.TimeInterval) -> DispatchTi
 }
 
 extension DispatchQueueConfiguration {
-    func schedule<StateType>(_ state: StateType, action: (StateType) -> Disposable) -> Disposable {
+    func schedule<StateType>(_ state: StateType, action: @escaping (StateType) -> Disposable) -> Disposable {
         let cancel = SingleAssignmentDisposable()
 
         queue.async {
@@ -36,7 +36,7 @@ extension DispatchQueueConfiguration {
         return cancel
     }
 
-    func scheduleRelative<StateType>(_ state: StateType, dueTime: Foundation.TimeInterval, action: (StateType) -> Disposable) -> Disposable {
+    func scheduleRelative<StateType>(_ state: StateType, dueTime: Foundation.TimeInterval, action: @escaping (StateType) -> Disposable) -> Disposable {
         let deadline = DispatchTime.now() + dispatchInterval(dueTime)
 
         let compositeDisposable = CompositeDisposable()
@@ -70,7 +70,7 @@ extension DispatchQueueConfiguration {
         return compositeDisposable
     }
 
-    func schedulePeriodic<StateType>(_ state: StateType, startAfter: TimeInterval, period: TimeInterval, action: (StateType) -> StateType) -> Disposable {
+    func schedulePeriodic<StateType>(_ state: StateType, startAfter: TimeInterval, period: TimeInterval, action: @escaping (StateType) -> StateType) -> Disposable {
         let initial = DispatchTime.now() + dispatchInterval(startAfter)
 
         var timerState = state

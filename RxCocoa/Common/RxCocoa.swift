@@ -230,11 +230,11 @@ func bindingErrorToInterface(_ error: Swift.Error) {
 
 // MARK: Abstract methods
 
-@noreturn func rxAbstractMethodWithMessage(_ message: String) {
+func rxAbstractMethodWithMessage(_ message: String) -> Never  {
     rxFatalError(message)
 }
 
-@noreturn func rxAbstractMethod() {
+func rxAbstractMethod() -> Never  {
     rxFatalError("Abstract method")
 }
 
@@ -337,7 +337,7 @@ extension Error {
 
 #if !RX_NO_MODULE
 
-@noreturn func rxFatalError(_ lastMessage: String) {
+func rxFatalError(_ lastMessage: String) -> Never  {
     // The temptation to comment this line is great, but please don't, it's for your own good. The choice is yours.
     fatalError(lastMessage)
 }

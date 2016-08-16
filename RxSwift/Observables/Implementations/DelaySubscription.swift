@@ -8,9 +8,9 @@
 
 import Foundation
 
-class DelaySubscriptionSink<ElementType, O: ObserverType where O.E == ElementType>
+class DelaySubscriptionSink<ElementType, O: ObserverType>
     : Sink<O>
-    , ObserverType {
+    , ObserverType where O.E == ElementType {
     typealias Parent = DelaySubscription<ElementType>
     typealias E = O.E
     
@@ -41,7 +41,7 @@ class DelaySubscription<Element>: Producer<Element> {
         _scheduler = scheduler
     }
     
-    override func run<O : ObserverType where O.E == Element>(_ observer: O) -> Disposable {
+    override func run<O : ObserverType>(_ observer: O) -> Disposable where O.E == Element {
         let sink = DelaySubscriptionSink(parent: self, observer: observer)
         sink.disposable = _scheduler.scheduleRelative((), dueTime: _dueTime) { _ in
             return self._source.subscribe(sink)

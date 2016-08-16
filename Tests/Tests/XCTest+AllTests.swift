@@ -64,10 +64,10 @@ func XCTAssertEqual<T>(_ lhs: [T], _ rhs: [T], _ comparison: (T, T) -> Bool) {
 }
 
 
-func doOnBackgroundThread(_ action: () -> ()) {
+func doOnBackgroundThread(_ action: @escaping () -> ()) {
     DispatchQueue.global(qos: .default).async(execute: action)
 }
 
-func doOnMainThread(_ action: () -> ()) {
+func doOnMainThread(_ action: @escaping () -> ()) {
     DispatchQueue.main.async(execute: action)
 }

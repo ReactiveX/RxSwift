@@ -38,7 +38,7 @@ public final class AnonymousDisposable : DisposeBase, Cancelable {
     }
     
     // Non-deprecated version of the constructor, used by `Disposables.create(with:)`
-    private init(disposeAction: DisposeAction) {
+    fileprivate init(disposeAction: DisposeAction) {
         _disposeAction = disposeAction
         super.init()
     }
@@ -67,7 +67,7 @@ public extension Disposables {
      
      - parameter dispose: Disposal action which will be run upon calling `dispose`.
      */
-    static func create(with dispose: () -> ()) -> Cancelable {
+    static func create(with dispose: @escaping () -> ()) -> Cancelable {
         return AnonymousDisposable(disposeAction: dispose)
     }
     

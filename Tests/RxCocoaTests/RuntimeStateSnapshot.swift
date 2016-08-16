@@ -14,12 +14,12 @@ class ObjectRuntimeState {
     let actingAs: ClassRuntimeState
 
     init(target: AnyObject) {
-        assert(object_getClass(target) == target.dynamicType)
+        assert(object_getClass(target) == type(of: target))
         real = ClassRuntimeState(object_getClass(target))
         actingAs = ClassRuntimeState(RXObjCTestRuntime.objCClass(target))
     }
 
-    private static func changesFrom(_ from: ClassRuntimeState, to: ClassRuntimeState) -> [ObjectRuntimeChange] {
+    fileprivate static func changesFrom(_ from: ClassRuntimeState, to: ClassRuntimeState) -> [ObjectRuntimeChange] {
         if from.targetClass == to.targetClass {
             var changes = [ObjectRuntimeChange]()
             for (selector, implementation) in to.implementations {

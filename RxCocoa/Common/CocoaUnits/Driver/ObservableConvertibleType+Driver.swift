@@ -51,7 +51,7 @@ extension ObservableConvertibleType {
     - returns: Driving observable sequence.
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func asDriver(onErrorRecover: (error: Swift.Error) -> Driver<E>) -> Driver<E> {
+    public func asDriver(onErrorRecover: (_ error: Swift.Error) -> Driver<E>) -> Driver<E> {
         let source = self
             .asObservable()
             .observeOn(driverObserveOnScheduler)

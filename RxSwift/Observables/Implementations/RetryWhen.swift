@@ -8,13 +8,13 @@
 
 import Foundation
 
-class RetryTriggerSink<S: Sequence, O: ObserverType, TriggerObservable: ObservableType, Error where S.Iterator.Element : ObservableType, S.Iterator.Element.E == O.E>
-    : ObserverType {
+class RetryTriggerSink<S: Sequence, O: ObserverType, TriggerObservable: ObservableType, Error>
+    : ObserverType where S.Iterator.Element : ObservableType, S.Iterator.Element.E == O.E {
     typealias E = TriggerObservable.E
     
     typealias Parent = RetryWhenSequenceSinkIter<S, O, TriggerObservable, Error>
     
-    private let _parent: Parent
+    fileprivate let _parent: Parent
 
     init(parent: Parent) {
         _parent = parent
@@ -35,14 +35,14 @@ class RetryTriggerSink<S: Sequence, O: ObserverType, TriggerObservable: Observab
     }
 }
 
-class RetryWhenSequenceSinkIter<S: Sequence, O: ObserverType, TriggerObservable: ObservableType, Error where S.Iterator.Element : ObservableType, S.Iterator.Element.E == O.E>
+class RetryWhenSequenceSinkIter<S: Sequence, O: ObserverType, TriggerObservable: ObservableType, Error>
     : SingleAssignmentDisposable
-    , ObserverType {
+    , ObserverType where S.Iterator.Element : ObservableType, S.Iterator.Element.E == O.E {
     typealias E = O.E
     typealias Parent = RetryWhenSequenceSink<S, O, TriggerObservable, Error>
 
-    private let _parent: Parent
-    private let _errorHandlerSubscription = SingleAssignmentDisposable()
+    fileprivate let _parent: Parent
+    fileprivate let _errorHandlerSubscription = SingleAssignmentDisposable()
 
     init(parent: Parent) {
         _parent = parent
@@ -79,19 +79,19 @@ class RetryWhenSequenceSinkIter<S: Sequence, O: ObserverType, TriggerObservable:
     }
 }
 
-class RetryWhenSequenceSink<S: Sequence, O: ObserverType, TriggerObservable: ObservableType, Error where S.Iterator.Element : ObservableType, S.Iterator.Element.E == O.E>
-    : TailRecursiveSink<S, O> {
+class RetryWhenSequenceSink<S: Sequence, O: ObserverType, TriggerObservable: ObservableType, Error>
+    : TailRecursiveSink<S, O> where S.Iterator.Element : ObservableType, S.Iterator.Element.E == O.E {
     typealias Element = O.E
     typealias Parent = RetryWhenSequence<S, TriggerObservable, Error>
     
     let _lock = NSRecursiveLock()
     
-    private let _parent: Parent
+    fileprivate let _parent: Parent
     
-    private var _lastError: Swift.Error?
-    private let _errorSubject = PublishSubject<Error>()
-    private let _handler: Observable<TriggerObservable.E>
-    private let _notifier = PublishSubject<TriggerObservable.E>()
+    fileprivate var _lastError: Swift.Error?
+    fileprivate let _errorSubject = PublishSubject<Error>()
+    fileprivate let _handler: Observable<TriggerObservable.E>
+    fileprivate let _notifier = PublishSubject<TriggerObservable.E>()
 
     init(parent: Parent, observer: O) {
         _parent = parent
@@ -131,18 +131,18 @@ class RetryWhenSequenceSink<S: Sequence, O: ObserverType, TriggerObservable: Obs
     }
 }
 
-class RetryWhenSequence<S: Sequence, TriggerObservable: ObservableType, Error where S.Iterator.Element : ObservableType> : Producer<S.Iterator.Element.E> {
+class RetryWhenSequence<S: Sequence, TriggerObservable: ObservableType, Error> : Producer<S.Iterator.Element.E> where S.Iterator.Element : ObservableType {
     typealias Element = S.Iterator.Element.E
     
-    private let _sources: S
-    private let _notificationHandler: (Observable<Error>) -> TriggerObservable
+    fileprivate let _sources: S
+    fileprivate let _notificationHandler: (Observable<Error>) -> TriggerObservable
     
     init(sources: S, notificationHandler: (Observable<Error>) -> TriggerObservable) {
         _sources = sources
         _notificationHandler = notificationHandler
     }
     
-    override func run<O : ObserverType where O.E == Element>(_ observer: O) -> Disposable {
+    override func run<O : ObserverType>(_ observer: O) -> Disposable where O.E == Element {
         let sink = RetryWhenSequenceSink<S, O, TriggerObservable, Error>(parent: self, observer: observer)
         sink.disposable = sink.run((self._sources.makeIterator(), nil))
         return sink

@@ -8,7 +8,7 @@
 
 import Foundation
 
-class SingleAsyncSink<ElementType, O: ObserverType where O.E == ElementType> : Sink<O>, ObserverType {
+class SingleAsyncSink<ElementType, O: ObserverType> : Sink<O>, ObserverType where O.E == ElementType {
     typealias Parent = SingleAsync<ElementType>
     typealias E = ElementType
     
@@ -60,15 +60,15 @@ class SingleAsyncSink<ElementType, O: ObserverType where O.E == ElementType> : S
 class SingleAsync<Element>: Producer<Element> {
     typealias Predicate = (Element) throws -> Bool
     
-    private let _source: Observable<Element>
-    private let _predicate: Predicate?
+    fileprivate let _source: Observable<Element>
+    fileprivate let _predicate: Predicate?
     
     init(source: Observable<Element>, predicate: Predicate? = nil) {
         _source = source
         _predicate = predicate
     }
     
-    override func run<O : ObserverType where O.E == Element>(_ observer: O) -> Disposable {
+    override func run<O : ObserverType>(_ observer: O) -> Disposable where O.E == Element {
         let sink = SingleAsyncSink(parent: self, observer: observer)
         sink.disposable = _source.subscribe(sink)
         return sink

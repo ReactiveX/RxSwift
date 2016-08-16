@@ -79,7 +79,7 @@ public final class RefCountDisposable : DisposeBase, Cancelable {
         }
     }
 
-    private func release() {
+    fileprivate func release() {
         let oldDisposable: Disposable? = _lock.calculateLocked {
             if let oldDisposable = _disposable {
                 do {

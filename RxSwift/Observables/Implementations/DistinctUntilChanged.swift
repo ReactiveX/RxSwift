@@ -62,7 +62,7 @@ class DistinctUntilChanged<Element, Key>: Producer<Element> {
         _comparer = comparer
     }
     
-    override func run<O: ObserverType where O.E == Element>(_ observer: O) -> Disposable {
+    override func run<O: ObserverType>(_ observer: O) -> Disposable where O.E == Element {
         let sink = DistinctUntilChangedSink(parent: self, observer: observer)
         sink.disposable = _source.subscribe(sink)
         return sink

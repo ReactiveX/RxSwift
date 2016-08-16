@@ -17,7 +17,7 @@ import RxSwift
 /**
      For more information take a look at `DelegateProxyType`.
  */
-public class RxCollectionViewDelegateProxy
+open class RxCollectionViewDelegateProxy
     : RxScrollViewDelegateProxy
     , UICollectionViewDelegate
     , UICollectionViewDelegateFlowLayout {
@@ -25,7 +25,7 @@ public class RxCollectionViewDelegateProxy
     /**
      Typed parent object.
      */
-    public weak private(set) var collectionView: UICollectionView?
+    open weak private(set) var collectionView: UICollectionView?
 
     /**
      Initializes `RxCollectionViewDelegateProxy`

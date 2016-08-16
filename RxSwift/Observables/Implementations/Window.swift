@@ -8,11 +8,11 @@
 
 import Foundation
 
-class WindowTimeCountSink<Element, O: ObserverType where O.E == Observable<Element>>
+class WindowTimeCountSink<Element, O: ObserverType>
     : Sink<O>
     , ObserverType
     , LockOwnerType
-    , SynchronizedOnType {
+    , SynchronizedOnType where O.E == Observable<Element> {
     typealias Parent = WindowTimeCount<Element>
     typealias E = Element
     
@@ -144,7 +144,7 @@ class WindowTimeCount<Element> : Producer<Observable<Element>> {
         _scheduler = scheduler
     }
     
-    override func run<O : ObserverType where O.E == Observable<Element>>(_ observer: O) -> Disposable {
+    override func run<O : ObserverType>(_ observer: O) -> Disposable where O.E == Observable<Element> {
         let sink = WindowTimeCountSink(parent: self, observer: observer)
         sink.disposable = sink.run()
         return sink

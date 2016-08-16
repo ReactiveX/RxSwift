@@ -25,8 +25,8 @@ extension ObservableType {
     - returns: A connectable observable sequence that upon connection causes the source sequence to push results into the specified subject.
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func multicast<S: SubjectType where S.SubjectObserverType.E == E>(_ subject: S)
-        -> ConnectableObservable<S.E> {
+    public func multicast<S: SubjectType>(_ subject: S)
+        -> ConnectableObservable<S.E> where S.SubjectObserverType.E == E {
         return ConnectableObservableAdapter(source: self.asObservable(), subject: subject)
     }
 
@@ -44,8 +44,8 @@ extension ObservableType {
     - returns: An observable sequence that contains the elements of a sequence produced by multicasting the source sequence within a selector function.
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func multicast<S: SubjectType, R where S.SubjectObserverType.E == E>(_ subjectSelector: () throws -> S, selector: (Observable<S.E>) throws -> Observable<R>)
-        -> Observable<R> {
+    public func multicast<S: SubjectType, R>(_ subjectSelector: () throws -> S, selector: (Observable<S.E>) throws -> Observable<R>)
+        -> Observable<R> where S.SubjectObserverType.E == E {
         return Multicast(
             source: self.asObservable(),
             subjectSelector: subjectSelector,

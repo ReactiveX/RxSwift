@@ -180,7 +180,7 @@ extension BlockingObservable {
      - parameter predicate: A function to test each source element for a condition.
      - returns: Returns the only element of an sequence that satisfies the condition in the predicate, and reports an error if there is not exactly one element in the sequence.
      */
-    public func single(_ predicate: (E) throws -> Bool) throws -> E? {
+    public func single(_ predicate: @escaping (E) throws -> Bool) throws -> E? {
         var element: E?
         
         var error: Swift.Error?

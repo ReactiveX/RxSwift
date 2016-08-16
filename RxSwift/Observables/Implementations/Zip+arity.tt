@@ -97,7 +97,7 @@ class Zip<%= i %><<%= (Array(1...i).map { "E\($0)" }).joined(separator: ", ") %>
         _resultSelector = resultSelector
     }
 
-    override func run<O: ObserverType where O.E == R>(_ observer: O) -> Disposable {
+    override func run<O: ObserverType>(_ observer: O) -> Disposable where O.E == R {
         let sink = ZipSink<%= i %>_(parent: self, observer: observer)
         sink.disposable = sink.run()
         return sink

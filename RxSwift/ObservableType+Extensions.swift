@@ -16,10 +16,10 @@ extension ObservableType {
     - returns: Subscription object used to unsubscribe from the observable sequence.
     */
     // @warn_unused_result(message: "http://git.io/rxs.ud")
-    public func subscribe(_ on: (event: Event<E>) -> Void)
+    public func subscribe(_ on: @escaping (Event<E>) -> Void)
         -> Disposable {
         let observer = AnonymousObserver { e in
-            on(event: e)
+            on(e)
         }
         return self.subscribeSafe(observer)
     }
@@ -121,7 +121,7 @@ extension ObservableType {
     */
     // @warn_unused_result(message: "http://git.io/rxs.ud")
     @available(*, deprecated, renamed: "subscribe(onNext:)")
-    public func subscribeNext(_ onNext: (E) -> Void)
+    public func subscribeNext(_ onNext: @escaping (E) -> Void)
         -> Disposable {
         let observer = AnonymousObserver<E> { e in
             if case .next(let value) = e {
@@ -139,7 +139,7 @@ extension ObservableType {
     */
     // @warn_unused_result(message: "http://git.io/rxs.ud")
     @available(*, deprecated, renamed: "subscribe(onError:)")
-    public func subscribeError(_ onError: (Swift.Error) -> Void)
+    public func subscribeError(_ onError: @escaping (Swift.Error) -> Void)
         -> Disposable {
         let observer = AnonymousObserver<E> { e in
             if case .error(let error) = e {
@@ -157,7 +157,7 @@ extension ObservableType {
     */
     // @warn_unused_result(message: "http://git.io/rxs.ud")
     @available(*, deprecated, renamed: "subscribe(onCompleted:)")
-    public func subscribeCompleted(_ onCompleted: () -> Void)
+    public func subscribeCompleted(_ onCompleted: @escaping () -> Void)
         -> Disposable {
         let observer = AnonymousObserver<E> { e in
             if case .completed = e {
@@ -173,7 +173,7 @@ public extension ObservableType {
     All internal subscribe calls go through this method.
     */
     // @warn_unused_result(message: "http://git.io/rxs.ud")
-    func subscribeSafe<O: ObserverType where O.E == E>(_ observer: O) -> Disposable {
+    func subscribeSafe<O: ObserverType>(_ observer: O) -> Disposable where O.E == E {
         return self.asObservable().subscribe(observer)
     }
 }

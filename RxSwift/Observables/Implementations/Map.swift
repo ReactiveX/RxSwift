@@ -91,7 +91,7 @@ class MapWithIndex<SourceType, ResultType> : Producer<ResultType> {
         _selector = selector
     }
 
-    override func run<O: ObserverType where O.E == ResultType>(_ observer: O) -> Disposable {
+    override func run<O: ObserverType>(_ observer: O) -> Disposable where O.E == ResultType {
         let sink = MapWithIndexSink(selector: _selector, observer: observer)
         sink.disposable = _source.subscribe(sink)
         return sink
@@ -118,7 +118,7 @@ class Map<SourceType, ResultType>: Producer<ResultType> {
 #endif
     }
 
-    override func composeMap<R>(_ selector: (ResultType) throws -> R) -> Observable<R> {
+    override func composeMap<R>(_ selector: @escaping (ResultType) throws -> R) -> Observable<R> {
         let originalSelector = _selector
         return Map<SourceType, R>(source: _source, selector: { (s: SourceType) throws -> R in
             let r: ResultType = try originalSelector(s)
@@ -126,7 +126,7 @@ class Map<SourceType, ResultType>: Producer<ResultType> {
         })
     }
     
-    override func run<O: ObserverType where O.E == ResultType>(_ observer: O) -> Disposable {
+    override func run<O: ObserverType>(_ observer: O) -> Disposable where O.E == ResultType {
         let sink = MapSink(selector: _selector, observer: observer)
         sink.disposable = _source.subscribe(sink)
         return sink

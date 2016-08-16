@@ -35,7 +35,7 @@ class PrimitiveHotObservable<ElementType> : ObservableType {
         observers.on(event)
     }
     
-    func subscribe<O : ObserverType where O.E == E>(_ observer: O) -> Disposable {
+    func subscribe<O : ObserverType>(_ observer: O) -> Disposable where O.E == E {
         lock.lock()
         defer { lock.unlock() }
 

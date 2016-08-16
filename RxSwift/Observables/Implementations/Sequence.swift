@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ObservableSequenceSink<S: Sequence, O: ObserverType where S.Iterator.Element == O.E> : Sink<O> {
+class ObservableSequenceSink<S: Sequence, O: ObserverType> : Sink<O> where S.Iterator.Element == O.E {
     typealias Parent = ObservableSequence<S>
 
     private let _parent: Parent
@@ -33,15 +33,15 @@ class ObservableSequenceSink<S: Sequence, O: ObserverType where S.Iterator.Eleme
 }
 
 class ObservableSequence<S: Sequence> : Producer<S.Iterator.Element> {
-    private let _elements: S
-    private let _scheduler: ImmediateSchedulerType
+    fileprivate let _elements: S
+    fileprivate let _scheduler: ImmediateSchedulerType
 
     init(elements: S, scheduler: ImmediateSchedulerType) {
         _elements = elements
         _scheduler = scheduler
     }
 
-    override func subscribe<O : ObserverType where O.E == E>(_ observer: O) -> Disposable {
+    override func subscribe<O : ObserverType>(_ observer: O) -> Disposable where O.E == E {
         let sink = ObservableSequenceSink(parent: self, observer: observer)
         sink.disposable = sink.run()
         return sink

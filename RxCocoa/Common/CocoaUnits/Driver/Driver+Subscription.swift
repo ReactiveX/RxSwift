@@ -25,7 +25,7 @@ extension DriverConvertibleType {
     - returns: Disposable object that can be used to unsubscribe the observer from the subject.
     */
     // @warn_unused_result(message:"http://git.io/rxs.ud")
-    public func drive<O: ObserverType where O.E == E>(_ observer: O) -> Disposable {
+    public func drive<O: ObserverType>(_ observer: O) -> Disposable where O.E == E {
         MainScheduler.ensureExecutingOnScheduler(errorMessage: driverErrorMessage)
         return self.asObservable().subscribe(observer)
     }

@@ -9,15 +9,15 @@
 import Foundation
 
 class RepeatElement<Element> : Producer<Element> {
-    private let _element: Element
-    private let _scheduler: ImmediateSchedulerType
+    fileprivate let _element: Element
+    fileprivate let _scheduler: ImmediateSchedulerType
     
     init(element: Element, scheduler: ImmediateSchedulerType) {
         _element = element
         _scheduler = scheduler
     }
     
-    override func run<O : ObserverType where O.E == Element>(_ observer: O) -> Disposable {
+    override func run<O : ObserverType>(_ observer: O) -> Disposable where O.E == Element {
         let sink = RepeatElementSink(parent: self, observer: observer)
         sink.disposable = sink.run()
 

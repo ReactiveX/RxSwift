@@ -9,7 +9,7 @@
 import Foundation
 
 class Sink<O : ObserverType> : SingleAssignmentDisposable {
-    private let _observer: O
+    fileprivate let _observer: O
 
     init(observer: O) {
 #if TRACE_RESOURCES

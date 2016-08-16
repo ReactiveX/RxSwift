@@ -8,9 +8,9 @@
 
 import Foundation
 
-class RefCountSink<CO: ConnectableObservableType, O: ObserverType where CO.E == O.E>
+class RefCountSink<CO: ConnectableObservableType, O: ObserverType>
     : Sink<O>
-    , ObserverType {
+    , ObserverType where CO.E == O.E {
     typealias Element = O.E
     typealias Parent = RefCount<CO>
     
@@ -76,7 +76,7 @@ class RefCount<CO: ConnectableObservableType>: Producer<CO.E> {
         _source = source
     }
     
-    override func run<O: ObserverType where O.E == CO.E>(_ observer: O) -> Disposable {
+    override func run<O: ObserverType>(_ observer: O) -> Disposable where O.E == CO.E {
         let sink = RefCountSink(parent: self, observer: observer)
         sink.disposable = sink.run()
         return sink

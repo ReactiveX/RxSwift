@@ -138,7 +138,7 @@ extension DelegateProxyTest {
 class ExtendTableViewDelegateProxy
     : RxTableViewDelegateProxy
     , UITableViewDelegateSubclass {
-    weak private(set) var control: UITableViewSubclass1?
+    weak fileprivate(set) var control: UITableViewSubclass1?
 
     required init(parentObject: AnyObject) {
         self.control = (parentObject as! UITableViewSubclass1)
@@ -171,7 +171,7 @@ class UITableViewSubclass1
 class ExtendTableViewDataSourceProxy
     : RxTableViewDataSourceProxy
     , UITableViewDelegateSubclass {
-    weak private(set) var control: UITableViewSubclass2?
+    weak fileprivate(set) var control: UITableViewSubclass2?
 
     required init(parentObject: AnyObject) {
         self.control = (parentObject as! UITableViewSubclass2)
@@ -204,7 +204,7 @@ class UITableViewSubclass2
 class ExtendCollectionViewDelegateProxy
     : RxCollectionViewDelegateProxy
     , UITableViewDelegateSubclass {
-    weak private(set) var control: UICollectionViewSubclass1?
+    weak fileprivate(set) var control: UICollectionViewSubclass1?
 
     required init(parentObject: AnyObject) {
         self.control = (parentObject as! UICollectionViewSubclass1)
@@ -237,7 +237,7 @@ class UICollectionViewSubclass1
 class ExtendCollectionViewDataSourceProxy
     : RxCollectionViewDataSourceProxy
     , UICollectionViewDelegateSubclass {
-    weak private(set) var control: UICollectionViewSubclass2?
+    weak fileprivate(set) var control: UICollectionViewSubclass2?
 
     required init(parentObject: AnyObject) {
         self.control = (parentObject as! UICollectionViewSubclass2)
@@ -270,7 +270,7 @@ class UICollectionViewSubclass2
 class ExtendScrollViewDelegateProxy
     : RxScrollViewDelegateProxy
     , UIScrollViewDelegateSubclass {
-    weak private(set) var control: UIScrollViewSubclass?
+    weak fileprivate(set) var control: UIScrollViewSubclass?
 
     required init(parentObject: AnyObject) {
         self.control = (parentObject as! UIScrollViewSubclass)
@@ -304,7 +304,7 @@ class UIScrollViewSubclass
 class ExtendSearchBarDelegateProxy
     : RxSearchBarDelegateProxy
     , UISearchBarDelegateSubclass {
-    weak private(set) var control: UISearchBarSubclass?
+    weak fileprivate(set) var control: UISearchBarSubclass?
     
     required init(parentObject: AnyObject) {
         self.control = (parentObject as! UISearchBarSubclass)
@@ -339,7 +339,7 @@ class UISearchBarSubclass
 class ExtendTextViewDelegateProxy
     : RxTextViewDelegateProxy
     , UITextViewDelegateSubclass {
-    weak private(set) var control: UITextViewSubclass?
+    weak fileprivate(set) var control: UITextViewSubclass?
 
     required init(parentObject: AnyObject) {
         self.control = (parentObject as! UITextViewSubclass)

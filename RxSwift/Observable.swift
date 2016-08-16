@@ -13,7 +13,7 @@ A type-erased `ObservableType`.
 
 It represents a push style sequence.
 */
-public class Observable<Element> : ObservableType {
+open class Observable<Element> : ObservableType {
     /**
     Type of elements in sequence.
     */
@@ -25,11 +25,11 @@ public class Observable<Element> : ObservableType {
 #endif
     }
     
-    public func subscribe<O: ObserverType where O.E == E>(_ observer: O) -> Disposable {
+    open func subscribe<O: ObserverType>(_ observer: O) -> Disposable where O.E == E {
         abstractMethod()
     }
     
-    public func asObservable() -> Observable<E> {
+    open func asObservable() -> Observable<E> {
         return self
     }
     

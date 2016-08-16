@@ -63,17 +63,17 @@ protocol Lock {
 #endif
 
 extension NSRecursiveLock : Lock {
-    func performLocked( _ action: @noescape() -> Void) {
+    func performLocked(_ action: () -> Void) {
         lock(); defer { unlock() }
         action()
     }
 
-    func calculateLocked<T>( _ action: @noescape() -> T) -> T {
+    func calculateLocked<T>(_ action: () -> T) -> T {
         lock(); defer { unlock() }
         return action()
     }
 
-    func calculateLockedOrFail<T>( _ action: @noescape() throws -> T) throws -> T {
+    func calculateLockedOrFail<T>(_ action: () throws -> T) throws -> T {
         lock(); defer { unlock() }
         let result = try action()
         return result

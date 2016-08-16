@@ -66,7 +66,7 @@ class Reduce<SourceType, AccumulateType, ResultType> : Producer<ResultType> {
         _mapResult = mapResult
     }
     
-    override func run<O: ObserverType where O.E == ResultType>(_ observer: O) -> Disposable {
+    override func run<O: ObserverType>(_ observer: O) -> Disposable where O.E == ResultType {
         let sink = ReduceSink(parent: self, observer: observer)
         sink.disposable = _source.subscribe(sink)
         return sink

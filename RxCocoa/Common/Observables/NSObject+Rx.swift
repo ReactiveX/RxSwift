@@ -212,7 +212,7 @@ let rxDeallocatingSelector = RX_selector(deallocSelector)
 let rxDeallocatingSelectorReference = RX_reference_from_selector(rxDeallocatingSelector)
 
 extension NSObject {
-    func rx_synchronized<T>( _ action: @noescape() -> T) -> T {
+    func rx_synchronized<T>(_ action: () -> T) -> T {
         objc_sync_enter(self)
         let result = action()
         objc_sync_exit(self)
@@ -225,7 +225,7 @@ extension NSObject {
      Helper to make sure that `Observable` returned from `createCachedObservable` is only created once.
      This is important because there is only one `target` and `action` properties on `NSControl` or `UIBarButtonItem`.
      */
-    func rx_lazyInstanceObservable<T: AnyObject>(_ key: UnsafePointer<Void>, createCachedObservable: () -> T) -> T {
+    func rx_lazyInstanceObservable<T: AnyObject>(_ key: UnsafeRawPointer, createCachedObservable: () -> T) -> T {
         if let value = objc_getAssociatedObject(self, key) {
             return value as! T
         }

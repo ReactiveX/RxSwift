@@ -49,7 +49,7 @@ class Do<Element> : Producer<Element> {
         _onDispose = onDispose
     }
     
-    override func run<O: ObserverType where O.E == Element>(_ observer: O) -> Disposable {
+    override func run<O: ObserverType>(_ observer: O) -> Disposable where O.E == Element {
         _onSubscribe?()
         let sink = DoSink(parent: self, observer: observer)
         let subscription = _source.subscribe(sink)

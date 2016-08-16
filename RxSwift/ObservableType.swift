@@ -41,7 +41,7 @@ public protocol ObservableType : ObservableConvertibleType {
     - returns: Subscription for `observer` that can be used to cancel production of sequence elements and free resources.
     */
     // @warn_unused_result(message: "http://git.io/rxs.ud")
-    func subscribe<O: ObserverType where O.E == E>(_ observer: O) -> Disposable
+    func subscribe<O: ObserverType>(_ observer: O) -> Disposable where O.E == E
 }
 
 extension ObservableType {

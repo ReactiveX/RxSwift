@@ -95,7 +95,7 @@ class Zip2<E1, E2, R> : Producer<R> {
         _resultSelector = resultSelector
     }
 
-    override func run<O: ObserverType where O.E == R>(_ observer: O) -> Disposable {
+    override func run<O: ObserverType>(_ observer: O) -> Disposable where O.E == R {
         let sink = ZipSink2_(parent: self, observer: observer)
         sink.disposable = sink.run()
         return sink
@@ -196,7 +196,7 @@ class Zip3<E1, E2, E3, R> : Producer<R> {
         _resultSelector = resultSelector
     }
 
-    override func run<O: ObserverType where O.E == R>(_ observer: O) -> Disposable {
+    override func run<O: ObserverType>(_ observer: O) -> Disposable where O.E == R {
         let sink = ZipSink3_(parent: self, observer: observer)
         sink.disposable = sink.run()
         return sink
@@ -305,7 +305,7 @@ class Zip4<E1, E2, E3, E4, R> : Producer<R> {
         _resultSelector = resultSelector
     }
 
-    override func run<O: ObserverType where O.E == R>(_ observer: O) -> Disposable {
+    override func run<O: ObserverType>(_ observer: O) -> Disposable where O.E == R {
         let sink = ZipSink4_(parent: self, observer: observer)
         sink.disposable = sink.run()
         return sink
@@ -422,7 +422,7 @@ class Zip5<E1, E2, E3, E4, E5, R> : Producer<R> {
         _resultSelector = resultSelector
     }
 
-    override func run<O: ObserverType where O.E == R>(_ observer: O) -> Disposable {
+    override func run<O: ObserverType>(_ observer: O) -> Disposable where O.E == R {
         let sink = ZipSink5_(parent: self, observer: observer)
         sink.disposable = sink.run()
         return sink
@@ -547,7 +547,7 @@ class Zip6<E1, E2, E3, E4, E5, E6, R> : Producer<R> {
         _resultSelector = resultSelector
     }
 
-    override func run<O: ObserverType where O.E == R>(_ observer: O) -> Disposable {
+    override func run<O: ObserverType>(_ observer: O) -> Disposable where O.E == R {
         let sink = ZipSink6_(parent: self, observer: observer)
         sink.disposable = sink.run()
         return sink
@@ -680,7 +680,7 @@ class Zip7<E1, E2, E3, E4, E5, E6, E7, R> : Producer<R> {
         _resultSelector = resultSelector
     }
 
-    override func run<O: ObserverType where O.E == R>(_ observer: O) -> Disposable {
+    override func run<O: ObserverType>(_ observer: O) -> Disposable where O.E == R {
         let sink = ZipSink7_(parent: self, observer: observer)
         sink.disposable = sink.run()
         return sink
@@ -821,7 +821,7 @@ class Zip8<E1, E2, E3, E4, E5, E6, E7, E8, R> : Producer<R> {
         _resultSelector = resultSelector
     }
 
-    override func run<O: ObserverType where O.E == R>(_ observer: O) -> Disposable {
+    override func run<O: ObserverType>(_ observer: O) -> Disposable where O.E == R {
         let sink = ZipSink8_(parent: self, observer: observer)
         sink.disposable = sink.run()
         return sink

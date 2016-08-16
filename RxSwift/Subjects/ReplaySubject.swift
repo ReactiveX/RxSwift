@@ -13,7 +13,7 @@ Represents an object that is both an observable sequence as well as an observer.
 
 Each notification is broadcasted to all subscribed and future observers, subject to buffer trimming policies.
 */
-public class ReplaySubject<Element>
+open class ReplaySubject<Element>
     : Observable<Element>
     , SubjectType
     , ObserverType
@@ -23,7 +23,7 @@ public class ReplaySubject<Element>
     /**
      Indicates whether the subject has any observers
      */
-    public var hasObservers: Bool {
+    open var hasObservers: Bool {
         _lock.lock(); defer { _lock.unlock() }
         return _observers.count > 0
     }
@@ -46,21 +46,21 @@ public class ReplaySubject<Element>
     
     - parameter event: Event to send to the observers.
     */
-    public func on(_ event: Event<E>) {
+    open func on(_ event: Event<E>) {
         abstractMethod()
     }
     
     /**
     Returns observer interface for subject.
     */
-    public func asObserver() -> SubjectObserverType {
+    open func asObserver() -> SubjectObserverType {
         return self
     }
     
     /**
     Unsubscribe all observers and release resources.
     */
-    public func dispose() {
+    open func dispose() {
     }
 
     /**
@@ -69,7 +69,7 @@ public class ReplaySubject<Element>
     - parameter bufferSize: Maximal number of elements to replay to observer after subscription.
     - returns: New instance of replay subject.
     */
-    public static func create(bufferSize: Int) -> ReplaySubject<Element> {
+    open static func create(_ bufferSize: Int) -> ReplaySubject<Element> {
         if bufferSize == 1 {
             return ReplayOne()
         }
@@ -83,7 +83,7 @@ public class ReplaySubject<Element>
     To avoid filling up memory, developer needs to make sure that the use case will only ever store a 'reasonable'
     number of elements.
     */
-    public static func createUnbounded() -> ReplaySubject<Element> {
+    open static func createUnbounded() -> ReplaySubject<Element> {
         return ReplayAll()
     }
 }
@@ -131,12 +131,12 @@ class ReplayBufferBase<Element>
         }
     }
     
-    override func subscribe<O : ObserverType where O.E == Element>(_ observer: O) -> Disposable {
+    override func subscribe<O : ObserverType>(_ observer: O) -> Disposable where O.E == Element {
         _lock.lock(); defer { _lock.unlock() }
         return _synchronized_subscribe(observer)
     }
 
-    func _synchronized_subscribe<O : ObserverType where O.E == E>(_ observer: O) -> Disposable {
+    func _synchronized_subscribe<O : ObserverType>(_ observer: O) -> Disposable where O.E == E {
         if _isDisposed {
             observer.on(.error(RxError.disposed(object: self)))
             return Disposables.create()

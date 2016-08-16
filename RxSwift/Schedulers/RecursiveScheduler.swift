@@ -12,7 +12,7 @@ import Foundation
 Type erased recursive scheduler.
 */
 class AnyRecursiveScheduler<State> {
-    typealias Action =  (state: State, scheduler: AnyRecursiveScheduler<State>) -> Void
+    typealias Action =  (State, AnyRecursiveScheduler<State>) -> Void
 
     private let _lock = NSRecursiveLock()
     
@@ -57,7 +57,7 @@ class AnyRecursiveScheduler<State> {
             }
             
             if let action = action {
-                action(state: state, scheduler: self)
+                action(state, self)
             }
             
             return Disposables.create()
@@ -100,7 +100,7 @@ class AnyRecursiveScheduler<State> {
             }
            
             if let action = action {
-                action(state: state, scheduler: self)
+                action(state, self)
             }
             
             return Disposables.create()
@@ -126,7 +126,7 @@ class AnyRecursiveScheduler<State> {
 Type erased recursive scheduler.
 */
 class RecursiveImmediateScheduler<State> {
-    typealias Action =  (state: State, recurse: (State) -> Void) -> Void
+    typealias Action =  (_ state: State, _ recurse: (State) -> Void) -> Void
     
     private var _lock = SpinLock()
     private let _group = CompositeDisposable()
@@ -170,7 +170,7 @@ class RecursiveImmediateScheduler<State> {
             }
             
             if let action = action {
-                action(state: state, recurse: self.schedule)
+                action(state, self.schedule)
             }
             
             return Disposables.create()

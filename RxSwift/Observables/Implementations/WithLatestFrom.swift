@@ -8,19 +8,19 @@
 
 import Foundation
 
-class WithLatestFromSink<FirstType, SecondType, ResultType, O: ObserverType where O.E == ResultType>
+class WithLatestFromSink<FirstType, SecondType, ResultType, O: ObserverType>
     : Sink<O>
     , ObserverType
     , LockOwnerType
-    , SynchronizedOnType {
+    , SynchronizedOnType where O.E == ResultType {
 
     typealias Parent = WithLatestFrom<FirstType, SecondType, ResultType>
     typealias E = FirstType
     
-    private let _parent: Parent
+    fileprivate let _parent: Parent
     
     var _lock = NSRecursiveLock()
-    private var _latest: SecondType?
+    fileprivate var _latest: SecondType?
 
     init(parent: Parent, observer: O) {
         _parent = parent
@@ -64,10 +64,10 @@ class WithLatestFromSink<FirstType, SecondType, ResultType, O: ObserverType wher
     }
 }
 
-class WithLatestFromSecond<FirstType, SecondType, ResultType, O: ObserverType where O.E == ResultType>
+class WithLatestFromSecond<FirstType, SecondType, ResultType, O: ObserverType>
     : ObserverType
     , LockOwnerType
-    , SynchronizedOnType {
+    , SynchronizedOnType where O.E == ResultType {
     
     typealias Parent = WithLatestFromSink<FirstType, SecondType, ResultType, O>
     typealias E = SecondType
@@ -104,9 +104,9 @@ class WithLatestFromSecond<FirstType, SecondType, ResultType, O: ObserverType wh
 class WithLatestFrom<FirstType, SecondType, ResultType>: Producer<ResultType> {
     typealias ResultSelector = (FirstType, SecondType) throws -> ResultType
     
-    private let _first: Observable<FirstType>
-    private let _second: Observable<SecondType>
-    private let _resultSelector: ResultSelector
+    fileprivate let _first: Observable<FirstType>
+    fileprivate let _second: Observable<SecondType>
+    fileprivate let _resultSelector: ResultSelector
 
     init(first: Observable<FirstType>, second: Observable<SecondType>, resultSelector: ResultSelector) {
         _first = first
@@ -114,7 +114,7 @@ class WithLatestFrom<FirstType, SecondType, ResultType>: Producer<ResultType> {
         _resultSelector = resultSelector
     }
     
-    override func run<O : ObserverType where O.E == ResultType>(_ observer: O) -> Disposable {
+    override func run<O : ObserverType>(_ observer: O) -> Disposable where O.E == ResultType {
         let sink = WithLatestFromSink(parent: self, observer: observer)
         sink.disposable = sink.run()
         return sink

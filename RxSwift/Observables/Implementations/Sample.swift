@@ -8,15 +8,15 @@
 
 import Foundation
 
-class SamplerSink<O: ObserverType, ElementType, SampleType where O.E == ElementType>
+class SamplerSink<O: ObserverType, ElementType, SampleType>
     : ObserverType
     , LockOwnerType
-    , SynchronizedOnType {
+    , SynchronizedOnType where O.E == ElementType {
     typealias E = SampleType
     
     typealias Parent = SampleSequenceSink<O, SampleType>
     
-    private let _parent: Parent
+    fileprivate let _parent: Parent
 
     var _lock: NSRecursiveLock {
         return _parent._lock
@@ -69,15 +69,15 @@ class SampleSequenceSink<O: ObserverType, SampleType>
     typealias Element = O.E
     typealias Parent = Sample<Element, SampleType>
     
-    private let _parent: Parent
+    fileprivate let _parent: Parent
 
     let _lock = NSRecursiveLock()
     
     // state
-    private var _element = nil as Element?
-    private var _atEnd = false
+    fileprivate var _element = nil as Element?
+    fileprivate var _atEnd = false
     
-    private let _sourceSubscription = SingleAssignmentDisposable()
+    fileprivate let _sourceSubscription = SingleAssignmentDisposable()
     
     init(parent: Parent, observer: O) {
         _parent = parent
@@ -111,9 +111,9 @@ class SampleSequenceSink<O: ObserverType, SampleType>
 }
 
 class Sample<Element, SampleType> : Producer<Element> {
-    private let _source: Observable<Element>
-    private let _sampler: Observable<SampleType>
-    private let _onlyNew: Bool
+    fileprivate let _source: Observable<Element>
+    fileprivate let _sampler: Observable<SampleType>
+    fileprivate let _onlyNew: Bool
 
     init(source: Observable<Element>, sampler: Observable<SampleType>, onlyNew: Bool) {
         _source = source
@@ -121,7 +121,7 @@ class Sample<Element, SampleType> : Producer<Element> {
         _onlyNew = onlyNew
     }
     
-    override func run<O: ObserverType where O.E == Element>(_ observer: O) -> Disposable {
+    override func run<O: ObserverType>(_ observer: O) -> Disposable where O.E == Element {
         let sink = SampleSequenceSink(parent: self, observer: observer)
         sink.disposable = sink.run()
         return sink
