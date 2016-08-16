@@ -14,11 +14,11 @@ public var resourceCount: AtomicInt = 0
 #endif
 
 /// Swift does not implement abstract methods. This method is used as a runtime check to ensure that methods which intended to be abstract (i.e., they should be implemented in subclasses) are not called directly on the superclass.
-func abstractMethod() -> Never {
+func abstractMethod() -> Swift.Never {
     rxFatalError("Abstract method")
 }
 
-func rxFatalError(_ lastMessage: String) -> Never  {
+func rxFatalError(_ lastMessage: String) -> Swift.Never  {
     // The temptation to comment this line is great, but please don't, it's for your own good. The choice is yours.
     fatalError(lastMessage)
 }

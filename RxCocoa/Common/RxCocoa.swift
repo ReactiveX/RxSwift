@@ -230,11 +230,11 @@ func bindingErrorToInterface(_ error: Swift.Error) {
 
 // MARK: Abstract methods
 
-func rxAbstractMethodWithMessage(_ message: String) -> Never  {
+func rxAbstractMethodWithMessage(_ message: String) -> Swift.Never  {
     rxFatalError(message)
 }
 
-func rxAbstractMethod() -> Never  {
+func rxAbstractMethod() -> Swift.Never  {
     rxFatalError("Abstract method")
 }
 
