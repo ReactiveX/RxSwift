@@ -104,7 +104,7 @@ open class TestScheduler : VirtualTimeScheduler<TestSchedulerVirtualTimeConverte
     - parameter disposed: Virtual time at which to dispose the subscription.
     - returns: Observer with timestamped recordings of events that were received during the virtual time window when the subscription to the source sequence was active.
     */
-    open func start<Element>(_ created: TestTime, subscribed: TestTime, disposed: TestTime, create: () -> Observable<Element>) -> TestableObserver<Element> {
+    open func start<Element>(_ created: TestTime, subscribed: TestTime, disposed: TestTime, create: @escaping () -> Observable<Element>) -> TestableObserver<Element> {
         var source : Observable<Element>? = nil
         var subscription : Disposable? = nil
         let observer = createObserver(Element.self)
@@ -140,7 +140,7 @@ open class TestScheduler : VirtualTimeScheduler<TestSchedulerVirtualTimeConverte
      - parameter disposed: Virtual time at which to dispose the subscription.
      - returns: Observer with timestamped recordings of events that were received during the virtual time window when the subscription to the source sequence was active.
      */
-    open func start<Element>(_ disposed: TestTime, create: () -> Observable<Element>) -> TestableObserver<Element> {
+    open func start<Element>(_ disposed: TestTime, create: @escaping () -> Observable<Element>) -> TestableObserver<Element> {
         return start(Defaults.created, subscribed: Defaults.subscribed, disposed: disposed, create: create)
     }
 
@@ -155,7 +155,7 @@ open class TestScheduler : VirtualTimeScheduler<TestSchedulerVirtualTimeConverte
      - parameter create: Factory method to create an observable sequence.
      - returns: Observer with timestamped recordings of events that were received during the virtual time window when the subscription to the source sequence was active.
      */
-    open func start<Element>(_ create: () -> Observable<Element>) -> TestableObserver<Element> {
+    open func start<Element>(_ create: @escaping () -> Observable<Element>) -> TestableObserver<Element> {
         return start(Defaults.created, subscribed: Defaults.subscribed, disposed: Defaults.disposed, create: create)
     }
 }
