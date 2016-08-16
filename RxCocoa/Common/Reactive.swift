@@ -22,7 +22,7 @@
 
  */
 
-public struct Reactive<Base: AnyObject> {
+public struct Reactive<Base> {
     public let base: Base
 
     public init(_ base: Base) {
@@ -30,11 +30,18 @@ public struct Reactive<Base: AnyObject> {
     }
 }
 
-/**
- Extend NSObject with `rx` proxy.
-*/
-public extension NSObjectProtocol {
+public protocol ReactiveCompatible {
+    associatedtype CompatibleType
+    var rx: Reactive<CompatibleType> { get }
+}
+
+public extension ReactiveCompatible {
     public var rx: Reactive<Self> {
         return Reactive(self)
     }
 }
+
+/**
+ Extend NSObject with `rx` proxy.
+*/
+extension NSObject: ReactiveCompatible { }
