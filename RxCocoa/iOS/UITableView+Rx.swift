@@ -43,14 +43,15 @@ extension UITableView {
 
     */
     @available(*, deprecated, renamed: "rx_items(source:cellFactory:)")
-    public func rx_itemsWithCellFactory<S: Sequence, O: ObservableType where O.E == S>
+    public func rx_itemsWithCellFactory<S: Sequence, O: ObservableType>
         (_ source: O)
-        -> (cellFactory: (UITableView, Int, S.Iterator.Element) -> UITableViewCell)
-        -> Disposable {
+        -> (_ cellFactory: @escaping (UITableView, Int, S.Iterator.Element) -> UITableViewCell)
+        -> Disposable
+        where O.E == S {
         return { cellFactory in
             let dataSource = RxTableViewReactiveArrayDataSourceSequenceWrapper<S>(cellFactory: cellFactory)
             
-            return self.rx_items(dataSource: dataSource)(source: source)
+            return self.rx_items(dataSource: dataSource)(source)
         }
     }
 
@@ -78,14 +79,15 @@ extension UITableView {
          .addDisposableTo(disposeBag)
 
      */
-    public func rx_items<S: Sequence, O: ObservableType where O.E == S>
+    public func rx_items<S: Sequence, O: ObservableType>
         (_ source: O)
-        -> (cellFactory: (UITableView, Int, S.Iterator.Element) -> UITableViewCell)
-        -> Disposable {
+        -> (_ cellFactory: @escaping (UITableView, Int, S.Iterator.Element) -> UITableViewCell)
+        -> Disposable
+        where O.E == S {
             return { cellFactory in
                 let dataSource = RxTableViewReactiveArrayDataSourceSequenceWrapper<S>(cellFactory: cellFactory)
 
-                return self.rx_items(dataSource: dataSource)(source: source)
+                return self.rx_items(dataSource: dataSource, source: source)
             }
     }
 
@@ -113,11 +115,12 @@ extension UITableView {
              .addDisposableTo(disposeBag)
     */
     @available(*, deprecated, renamed: "rx_items(cellIdentifier:cellType:source:configureCell:)")
-    public func rx_itemsWithCellIdentifier<S: Sequence, Cell: UITableViewCell, O : ObservableType where O.E == S>
+    public func rx_itemsWithCellIdentifier<S: Sequence, Cell: UITableViewCell, O : ObservableType>
         (_ cellIdentifier: String, cellType: Cell.Type = Cell.self)
-        -> (source: O)
-        -> (configureCell: (Int, S.Iterator.Element, Cell) -> Void)
-        -> Disposable {
+        -> (_ source: O)
+        -> (_ configureCell: @escaping (Int, S.Iterator.Element, Cell) -> Void)
+        -> Disposable
+        where O.E == S {
         return { source in
             return { configureCell in
                 let dataSource = RxTableViewReactiveArrayDataSourceSequenceWrapper<S> { (tv, i, item) in
@@ -126,7 +129,7 @@ extension UITableView {
                     configureCell(i, item, cell)
                     return cell
                 }
-                return self.rx_itemsWithDataSource(dataSource)(source: source)
+                return self.rx_items(dataSource: dataSource)(source)
             }
         }
     }
@@ -154,11 +157,12 @@ extension UITableView {
              }
              .addDisposableTo(disposeBag)
     */
-    public func rx_items<S: Sequence, Cell: UITableViewCell, O : ObservableType where O.E == S>
+    public func rx_items<S: Sequence, Cell: UITableViewCell, O : ObservableType>
         (cellIdentifier: String, cellType: Cell.Type = Cell.self)
-        -> (source: O)
-        -> (configureCell: (Int, S.Iterator.Element, Cell) -> Void)
-        -> Disposable {
+        -> (_ source: O)
+        -> (_ configureCell: @escaping (Int, S.Iterator.Element, Cell) -> Void)
+        -> Disposable
+        where O.E == S {
         return { source in
             return { configureCell in
                 let dataSource = RxTableViewReactiveArrayDataSourceSequenceWrapper<S> { (tv, i, item) in
@@ -167,7 +171,7 @@ extension UITableView {
                     configureCell(i, item, cell)
                     return cell
                 }
-                return self.rx_items(dataSource: dataSource)(source: source)
+                return self.rx_items(dataSource: dataSource)(source)
             }
         }
     }
@@ -219,11 +223,12 @@ extension UITableView {
     @available(*, deprecated, renamed: "rx_items(dataSource:source:)")
     public func rx_itemsWithDataSource<
             DataSource: RxTableViewDataSourceType & UITableViewDataSource,
-            O: ObservableType where DataSource.Element == O.E
-        >
+            O: ObservableType>
         (_ dataSource: DataSource)
-        -> (source: O)
-        -> Disposable  {
+        -> (_ source: O)
+        -> Disposable
+        where DataSource.Element == O.E
+    {
         return { source in
             // There needs to be a strong retaining here because
             return source.subscribeProxyDataSource(ofObject: self, dataSource: dataSource, retainDataSource: true) { [weak self] (_: RxTableViewDataSourceProxy, event) -> Void in
@@ -281,11 +286,11 @@ extension UITableView {
     */
     public func rx_items<
             DataSource: RxTableViewDataSourceType & UITableViewDataSource,
-            O: ObservableType where DataSource.Element == O.E
-        >
+            O: ObservableType>
         (dataSource: DataSource)
-        -> (source: O)
-        -> Disposable  {
+        -> (_ source: O)
+        -> Disposable
+        where DataSource.Element == O.E {
         return { source in
             // This is called for sideeffects only, and to make sure delegate proxy is in place when
             // data source is being bound.

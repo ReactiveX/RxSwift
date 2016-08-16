@@ -139,7 +139,7 @@ extension ObservableType where E : ObservableConvertibleType {
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
     public func concat() -> Observable<E.E> {
-        return merge(1)
+        return merge(maxConcurrent: 1)
     }
 }
 
@@ -168,7 +168,7 @@ extension ObservableType where E : ObservableConvertibleType {
     - returns: The observable sequence that merges the elements of the inner sequences.
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func merge(_ maxConcurrent: Int)
+    public func merge(maxConcurrent: Int)
         -> Observable<E.E> {
         return MergeLimited(source: asObservable(), maxConcurrent: maxConcurrent)
     }
