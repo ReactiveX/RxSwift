@@ -14,8 +14,6 @@
  ################################################################################
  */
 
-typedef void (^KVOCallback)(id);
-
 // Exists because if written in Swift, reading unowned is disabled during dealloc process
 @interface _RXKVOObserver : NSObject
 
@@ -23,7 +21,7 @@ typedef void (^KVOCallback)(id);
                  retainTarget:(BOOL)retainTarget
                       keyPath:(NSString*)keyPath
                       options:(NSKeyValueObservingOptions)options
-                     callback:(KVOCallback)callback;
+                     callback:(void (^)(id))callback;
 
 -(void)dispose;
 

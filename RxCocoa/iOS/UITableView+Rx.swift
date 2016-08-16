@@ -87,7 +87,7 @@ extension UITableView {
             return { cellFactory in
                 let dataSource = RxTableViewReactiveArrayDataSourceSequenceWrapper<S>(cellFactory: cellFactory)
 
-                return self.rx_items(dataSource: dataSource, source: source)
+                return self.rx_items(dataSource: dataSource)(source)
             }
     }
 

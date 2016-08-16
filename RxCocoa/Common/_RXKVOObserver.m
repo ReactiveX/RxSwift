@@ -13,7 +13,7 @@
 @property (nonatomic, unsafe_unretained) id            target;
 @property (nonatomic, strong           ) id            retainedTarget;
 @property (nonatomic, copy             ) NSString     *keyPath;
-@property (nonatomic, copy             ) KVOCallback   callback;
+@property (nonatomic, copy             ) void (^callback)(id);
 
 @end
 
