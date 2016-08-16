@@ -36,7 +36,7 @@ public struct BagKey : Hashable {
 
     public var hashValue: Int {
         if let uniqueIdentity = uniqueIdentity {
-            return hash(key) ^ (unsafeAddress(of: uniqueIdentity).hashValue)
+            return hash(key) ^ (ObjectIdentifier(uniqueIdentity).hashValue)
         }
         else {
             return hash(key)
