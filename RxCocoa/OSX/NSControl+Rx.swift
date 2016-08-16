@@ -47,7 +47,7 @@ extension NSControl {
      You might be wondering why the ugly `as!` casts etc, well, for some reason if
      Swift compiler knows C is UIControl type and optimizations are turned on, it will crash.
     */
-    static func rx_value<C: AnyObject, T: Equatable>(_ control: C, getter: (C) -> T, setter: (C, T) -> Void) -> ControlProperty<T> {
+    static func rx_value<C: AnyObject, T: Equatable>(_ control: C, getter: @escaping (C) -> T, setter: @escaping (C, T) -> Void) -> ControlProperty<T> {
         MainScheduler.ensureExecutingOnScheduler()
 
         let source = (control as! NSObject).rx_lazyInstanceObservable(&rx_value_key) { () -> Observable<T> in

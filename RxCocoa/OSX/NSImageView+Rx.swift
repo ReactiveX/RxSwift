@@ -18,7 +18,7 @@ extension NSImageView {
     Bindable sink for `image` property.
     */
     public var rx_image: AnyObserver<NSImage?> {
-        return self.rx_imageAnimated(nil)
+        return self.rx_image(transitionType: nil)
     }
     
     /**

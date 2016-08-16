@@ -22,7 +22,7 @@ public class RxTextFieldDelegateProxy
     , NSTextFieldDelegate
     , DelegateProxyType {
 
-    private let textSubject = PublishSubject<String>()
+    fileprivate let textSubject = PublishSubject<String>()
 
     /**
      Typed parent object.
