@@ -38,7 +38,7 @@ public class WikipediaSearchCell: UITableViewCell {
                 .drive(self.titleOutlet.rx_text)
                 .addDisposableTo(disposeBag)
 
-            self.URLOutlet.text = viewModel.searchResult.URL.absoluteString ?? ""
+            self.URLOutlet.text = viewModel.searchResult.URL.absoluteString
 
             let reachabilityService = Dependencies.sharedDependencies.reachabilityService
             viewModel.imageURLs

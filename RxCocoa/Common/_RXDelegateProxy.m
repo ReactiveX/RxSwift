@@ -96,7 +96,7 @@ static NSMutableDictionary *forwardableSelectorsPerClass = nil;
     return __forwardToDelegate;
 }
 
--(void)_setForwardToDelegate:(id)forwardToDelegate retainDelegate:(BOOL)retainDelegate {
+-(void)_setForwardToDelegate:(id __nullable)forwardToDelegate retainDelegate:(BOOL)retainDelegate {
     __forwardToDelegate = forwardToDelegate;
     if (retainDelegate) {
         self.strongForwardDelegate = forwardToDelegate;

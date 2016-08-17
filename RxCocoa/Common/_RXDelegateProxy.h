@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, weak, readonly) id _forwardToDelegate;
 
--(void)_setForwardToDelegate:(id)forwardToDelegate retainDelegate:(BOOL)retainDelegate;
+-(void)_setForwardToDelegate:(id __nullable)forwardToDelegate retainDelegate:(BOOL)retainDelegate;
 
 -(BOOL)hasWiredImplementationForSelector:(SEL)selector;
 
