@@ -57,7 +57,7 @@ class DefaultImageService: ImageService {
     
     private func _imageFromURL(_ url: URL) -> Observable<Image> {
         return Observable.deferred {
-                let maybeImage = self._imageCache.object(forKey: url) as? Image
+                let maybeImage = self._imageCache.object(forKey: url as AnyObject) as? Image
 
                 let decodedImage: Observable<Image>
                 
@@ -66,7 +66,7 @@ class DefaultImageService: ImageService {
                     decodedImage = Observable.just(image)
                 }
                 else {
-                    let cachedData = self._imageDataCache.object(forKey: url) as? Data
+                    let cachedData = self._imageDataCache.object(forKey: url as AnyObject) as? Data
                     
                     // does image data cache contain anything
                     if let cachedData = cachedData {
@@ -76,7 +76,7 @@ class DefaultImageService: ImageService {
                         // fetch from network
                         decodedImage = self.$.URLSession.rx_data(URLRequest(url: url))
                             .do(onNext: { data in
-                                self._imageDataCache.setObject(data, forKey: url)
+                                self._imageDataCache.setObject(data as AnyObject, forKey: url as AnyObject)
                             })
                             .flatMap(self.decodeImage)
                             .trackActivity(self.loadingImage)
@@ -84,7 +84,7 @@ class DefaultImageService: ImageService {
                 }
                 
                 return decodedImage.do(onNext: { image in
-                    self._imageCache.setObject(image, forKey: url)
+                    self._imageCache.setObject(image, forKey: url as AnyObject)
                 })
             }
     }

@@ -142,14 +142,14 @@ public class CollectionViewSectionedDataSource<S: SectionModelType>
         }
     }
     
-    public var moveItem: ((CollectionViewSectionedDataSource<S>, sourceIndexPath:IndexPath, destinationIndexPath:IndexPath) -> Void)? {
+    public var moveItem: ((CollectionViewSectionedDataSource<S>, _ sourceIndexPath:IndexPath, _ destinationIndexPath:IndexPath) -> Void)? {
         didSet {
             #if DEBUG
                 ensureNotMutatedAfterBinding()
             #endif
         }
     }
-    public var canMoveItemAtIndexPath: ((CollectionViewSectionedDataSource<S>, indexPath:IndexPath) -> Bool)? {
+    public var canMoveItemAtIndexPath: ((CollectionViewSectionedDataSource<S>, IndexPath) -> Bool)? {
         didSet {
             #if DEBUG
             ensureNotMutatedAfterBinding()
@@ -196,7 +196,7 @@ public class CollectionViewSectionedDataSource<S: SectionModelType>
     }
     
     override func _rx_collectionView(_ collectionView: UICollectionView, canMoveItemAtIndexPath indexPath: IndexPath) -> Bool {
-        guard let canMoveItem = canMoveItemAtIndexPath?(self, indexPath: indexPath) else {
+        guard let canMoveItem = canMoveItemAtIndexPath?(self, indexPath) else {
             return super._rx_collectionView(collectionView, canMoveItemAtIndexPath: indexPath)
         }
         

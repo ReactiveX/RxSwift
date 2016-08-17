@@ -18,17 +18,17 @@ extension UITableView {
     public func rx_itemsAnimatedWithDataSource<
             DataSource: RxTableViewDataSourceType & UITableViewDataSource,
             S: Sequence,
-            O: ObservableType
-        where
-            DataSource.Element == S,
-            O.E == S,
-            S.Iterator.Element: AnimatableSectionModelType
-        >
+            O: ObservableType>
         (_ dataSource: DataSource)
-        -> (source: O)
-        -> Disposable  {
+        -> (_ source: O)
+        -> Disposable
+        where
+        DataSource.Element == S,
+        O.E == S,
+        S.Iterator.Element: AnimatableSectionModelType
+    {
         return  { source in
-            return self.rx_itemsWithDataSource(dataSource)(source: source)
+            return self.rx_itemsWithDataSource(dataSource)(source)
         }
     }
 }
@@ -38,17 +38,17 @@ extension UICollectionView {
     public func rx_itemsAnimatedWithDataSource<
             DataSource: RxCollectionViewDataSourceType & UICollectionViewDataSource,
             S: Sequence,
-            O: ObservableType
-        where
-            DataSource.Element == S,
-            O.E == S,
-            S.Iterator.Element: AnimatableSectionModelType
-        >
+            O: ObservableType>
         (_ dataSource: DataSource)
-        -> (source: O)
-        -> Disposable  {
+        -> (_ source: O)
+        -> Disposable
+        where
+        DataSource.Element == S,
+        O.E == S,
+        S.Iterator.Element: AnimatableSectionModelType
+    {
         return { source in
-            return self.rx_itemsWithDataSource(dataSource)(source: source)
+            return self.rx_itemsWithDataSource(dataSource)(source)
         }
     }
 }

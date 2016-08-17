@@ -60,7 +60,7 @@ class SearchResultViewModel {
             .observeOn($.backgroundWorkScheduler)
             .map { page in
                 do {
-                    return try parseImageURLsfromHTMLSuitableForDisplay(page.text)
+                    return try parseImageURLsfromHTMLSuitableForDisplay(page.text as NSString)
                 } catch {
                     return []
                 }

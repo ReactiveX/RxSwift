@@ -37,7 +37,7 @@ enum ReachabilityError: Swift.Error {
 
 public let ReachabilityChangedNotification = "ReachabilityChangedNotification"
 
-func callback(_ reachability:SCNetworkReachability, flags: SCNetworkReachabilityFlags, info: UnsafeMutablePointer<Void>?) {
+func callback(_ reachability:SCNetworkReachability, flags: SCNetworkReachabilityFlags, info: UnsafeMutableRawPointer?) {
     guard  let info = info else { return }
     let reachability = Unmanaged<Reachability>.fromOpaque(info).takeUnretainedValue()
 
@@ -110,11 +110,13 @@ public class Reachability: NSObject {
     public class func reachabilityForInternetConnection() throws -> Reachability {
         
         var zeroAddress = sockaddr_in()
-        zeroAddress.sin_len = UInt8(sizeofValue(zeroAddress))
+        zeroAddress.sin_len = UInt8(MemoryLayout<sockaddr_in>.size)
         zeroAddress.sin_family = sa_family_t(AF_INET)
         
-        guard let ref = withUnsafePointer(&zeroAddress, {
-            SCNetworkReachabilityCreateWithAddress(nil, UnsafePointer($0))
+        guard let ref = withUnsafePointer(to: &zeroAddress, {
+            $0.withMemoryRebound(to: sockaddr.self, capacity: 1) {
+                SCNetworkReachabilityCreateWithAddress(nil, $0)
+            }
         }) else { throw ReachabilityError.failedToCreateWithAddress(zeroAddress) }
         
         return Reachability(reachabilityRef: ref)
@@ -123,15 +125,17 @@ public class Reachability: NSObject {
     public class func reachabilityForLocalWiFi() throws -> Reachability {
 
         var localWifiAddress: sockaddr_in = sockaddr_in(sin_len: __uint8_t(0), sin_family: sa_family_t(0), sin_port: in_port_t(0), sin_addr: in_addr(s_addr: 0), sin_zero: (0, 0, 0, 0, 0, 0, 0, 0))
-        localWifiAddress.sin_len = UInt8(sizeofValue(localWifiAddress))
+        localWifiAddress.sin_len = UInt8(MemoryLayout<sockaddr_in>.size)
         localWifiAddress.sin_family = sa_family_t(AF_INET)
 
         // IN_LINKLOCALNETNUM is defined in <netinet/in.h> as 169.254.0.0
         let address: UInt32 = 0xA9FE0000
         localWifiAddress.sin_addr.s_addr = in_addr_t(address.bigEndian)
 
-        guard let ref = withUnsafePointer(&localWifiAddress, {
-            SCNetworkReachabilityCreateWithAddress(nil, UnsafePointer($0))
+        guard let ref = withUnsafePointer(to: &localWifiAddress, {
+            $0.withMemoryRebound(to: sockaddr.self, capacity: 1) {
+                SCNetworkReachabilityCreateWithAddress(nil, $0)
+            }
         }) else { throw ReachabilityError.failedToCreateWithAddress(localWifiAddress) }
         
         return Reachability(reachabilityRef: ref)
@@ -226,7 +230,7 @@ public class Reachability: NSObject {
     private var reachabilityRef: SCNetworkReachability?
     private let reachabilitySerialQueue = DispatchQueue(label: "uk.co.ashleymills.reachability")
 
-    private func reachabilityChanged(_ flags: SCNetworkReachabilityFlags) {
+    fileprivate func reachabilityChanged(_ flags: SCNetworkReachabilityFlags) {
         if isReachableWithFlags(flags) {
             if let block = whenReachable {
                 block(self)
@@ -267,8 +271,8 @@ public class Reachability: NSObject {
         if let reachabilityRef = reachabilityRef {
             
             var flags = SCNetworkReachabilityFlags(rawValue: 0)
-            let gotFlags = withUnsafeMutablePointer(&flags) {
-                SCNetworkReachabilityGetFlags(reachabilityRef, UnsafeMutablePointer($0))
+            let gotFlags = withUnsafeMutablePointer(to: &flags) {
+                SCNetworkReachabilityGetFlags(reachabilityRef, $0)
             }
             
             if gotFlags {
@@ -348,8 +352,8 @@ public class Reachability: NSObject {
         if let reachabilityRef = reachabilityRef {
             
             var flags = SCNetworkReachabilityFlags(rawValue: 0)
-            let gotFlags = withUnsafeMutablePointer(&flags) {
-                SCNetworkReachabilityGetFlags(reachabilityRef, UnsafeMutablePointer($0))
+            let gotFlags = withUnsafeMutablePointer(to: &flags) {
+                SCNetworkReachabilityGetFlags(reachabilityRef, $0)
             }
             
             if gotFlags {

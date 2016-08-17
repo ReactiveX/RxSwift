@@ -165,14 +165,14 @@ public class RxTableViewSectionedDataSource<S: SectionModelType>
         }
     }
     
-    public var titleForHeaderInSection: ((RxTableViewSectionedDataSource<S>, section: Int) -> String?)? {
+    public var titleForHeaderInSection: ((RxTableViewSectionedDataSource<S>, Int) -> String?)? {
         didSet {
             #if DEBUG
                 ensureNotMutatedAfterBinding()
             #endif
         }
     }
-    public var titleForFooterInSection: ((RxTableViewSectionedDataSource<S>, section: Int) -> String?)? {
+    public var titleForFooterInSection: ((RxTableViewSectionedDataSource<S>, Int) -> String?)? {
         didSet {
             #if DEBUG
                 ensureNotMutatedAfterBinding()
@@ -180,14 +180,14 @@ public class RxTableViewSectionedDataSource<S: SectionModelType>
         }
     }
     
-    public var canEditRowAtIndexPath: ((RxTableViewSectionedDataSource<S>, indexPath: IndexPath) -> Bool)? {
+    public var canEditRowAtIndexPath: ((RxTableViewSectionedDataSource<S>, IndexPath) -> Bool)? {
         didSet {
             #if DEBUG
                 ensureNotMutatedAfterBinding()
             #endif
         }
     }
-    public var canMoveRowAtIndexPath: ((RxTableViewSectionedDataSource<S>, indexPath: IndexPath) -> Bool)? {
+    public var canMoveRowAtIndexPath: ((RxTableViewSectionedDataSource<S>, IndexPath) -> Bool)? {
         didSet {
             #if DEBUG
                 ensureNotMutatedAfterBinding()
@@ -205,7 +205,7 @@ public class RxTableViewSectionedDataSource<S: SectionModelType>
             #endif
         }
     }
-    public var sectionForSectionIndexTitle:((RxTableViewSectionedDataSource<S>, title: String, index: Int) -> Int)? {
+    public var sectionForSectionIndexTitle:((RxTableViewSectionedDataSource<S>, _ title: String, _ index: Int) -> Int)? {
         didSet {
             #if DEBUG
             ensureNotMutatedAfterBinding()
@@ -242,15 +242,15 @@ public class RxTableViewSectionedDataSource<S: SectionModelType>
     }
     
     override func _rx_tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return titleForHeaderInSection?(self, section: section)
+        return titleForHeaderInSection?(self, section)
     }
     
     override func _rx_tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-        return titleForFooterInSection?(self, section: section)
+        return titleForFooterInSection?(self, section)
     }
     
     override func _rx_tableView(_ tableView: UITableView, canEditRowAtIndexPath indexPath: IndexPath) -> Bool {
-        guard let canEditRow = canEditRowAtIndexPath?(self, indexPath: indexPath) else {
+        guard let canEditRow = canEditRowAtIndexPath?(self, indexPath) else {
             return super._rx_tableView(tableView, canEditRowAtIndexPath: indexPath)
         }
         
@@ -258,7 +258,7 @@ public class RxTableViewSectionedDataSource<S: SectionModelType>
     }
    
     override func _rx_tableView(_ tableView: UITableView, canMoveRowAtIndexPath indexPath: IndexPath) -> Bool {
-        guard let canMoveRow = canMoveRowAtIndexPath?(self, indexPath: indexPath) else {
+        guard let canMoveRow = canMoveRowAtIndexPath?(self, indexPath) else {
             return super._rx_tableView(tableView, canMoveRowAtIndexPath: indexPath)
         }
         
@@ -279,7 +279,7 @@ public class RxTableViewSectionedDataSource<S: SectionModelType>
     }
     
     override func _rx_tableView(_ tableView: UITableView, sectionForSectionIndexTitle title: String, atIndex index: Int) -> Int {
-        guard let section = sectionForSectionIndexTitle?(self, title: title, index: index) else {
+        guard let section = sectionForSectionIndexTitle?(self, title, index) else {
             return super._rx_tableView(tableView, sectionForSectionIndexTitle: title, atIndex: index)
         }
         

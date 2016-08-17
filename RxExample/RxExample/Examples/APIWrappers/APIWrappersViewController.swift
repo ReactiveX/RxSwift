@@ -14,7 +14,7 @@ import RxCocoa
 #endif
 
 extension UILabel {
-    public override var accessibilityValue: String! {
+    open override var accessibilityValue: String! {
         get {
             return self.text
         }

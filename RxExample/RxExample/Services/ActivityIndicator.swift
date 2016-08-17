@@ -16,7 +16,7 @@ private struct ActivityToken<E> : ObservableConvertibleType, Disposable {
     private let _source: Observable<E>
     private let _dispose: Cancelable
 
-    init(source: Observable<E>, disposeAction: () -> ()) {
+    init(source: Observable<E>, disposeAction: @escaping () -> ()) {
         _source = source
         _dispose = Disposables.create(with: disposeAction)
     }
@@ -49,7 +49,7 @@ public class ActivityIndicator : DriverConvertibleType {
             .distinctUntilChanged()
     }
 
-    private func trackActivityOfObservable<O: ObservableConvertibleType>(_ source: O) -> Observable<O.E> {
+    fileprivate func trackActivityOfObservable<O: ObservableConvertibleType>(_ source: O) -> Observable<O.E> {
         return Observable.using({ () -> ActivityToken<O.E> in
             self.increment()
             return ActivityToken(source: source.asObservable(), disposeAction: self.decrement)
