@@ -20,14 +20,14 @@ class UIRefreshControlTests : RxTest {
 extension UIRefreshControlTests {
     func testRefreshing_True() {
         let subject = UIRefreshControl()
-        Observable.just(true).subscribe(subject.rx_refreshing).dispose()
+        Observable.just(true).subscribe(subject.rx.refreshing).dispose()
 
         XCTAssertTrue(subject.isRefreshing == true)
     }
 
     func testRefreshing_False() {
         let subject = UIRefreshControl()
-        Observable.just(false).subscribe(subject.rx_refreshing).dispose()
+        Observable.just(false).subscribe(subject.rx.refreshing).dispose()
 
         XCTAssertTrue(subject.isRefreshing == false)
     }

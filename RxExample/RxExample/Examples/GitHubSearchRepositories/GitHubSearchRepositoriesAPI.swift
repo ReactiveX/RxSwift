@@ -165,7 +165,7 @@ extension GitHubSearchRepositoriesAPI {
 
     private func loadSearchURL(_ searchURL: URL) -> Observable<SearchRepositoryResponse> {
         return URLSession.shared
-            .rx_response(URLRequest(url: searchURL))
+            .rx.response(URLRequest(url: searchURL))
             .retry(3)
             .trackActivity(self.activityIndicator)
             .observeOn(Dependencies.sharedDependencies.backgroundWorkScheduler)

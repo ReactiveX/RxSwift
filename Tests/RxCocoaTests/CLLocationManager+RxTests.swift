@@ -28,7 +28,7 @@ extension CLLocationManagerTests {
         autoreleasepool {
             let manager = CLLocationManager()
 
-            _ = manager.rx_didUpdateLocations.subscribe(onNext: { l in
+            _ = manager.rx.didUpdateLocations.subscribe(onNext: { l in
                     location = l[0]
                 }, onCompleted: {
                     completed = true
@@ -49,7 +49,7 @@ extension CLLocationManagerTests {
         autoreleasepool {
             let manager = CLLocationManager()
 
-            _ = manager.rx_didFailWithError.subscribe(onNext: { e in
+            _ = manager.rx.didFailWithError.subscribe(onNext: { e in
                 error = e
                 }, onCompleted: {
                     completed = true
@@ -71,7 +71,7 @@ extension CLLocationManagerTests {
         autoreleasepool {
             let manager = CLLocationManager()
 
-            _ = manager.rx_didFinishDeferredUpdatesWithError.subscribe(onNext: { e in
+            _ = manager.rx.didFinishDeferredUpdatesWithError.subscribe(onNext: { e in
                 error = e
                 }, onCompleted: {
                     completed = true
@@ -91,7 +91,7 @@ extension CLLocationManagerTests {
         autoreleasepool {
             let manager = CLLocationManager()
 
-            _ = manager.rx_didFinishDeferredUpdatesWithError.subscribe(onNext: { e in
+            _ = manager.rx.didFinishDeferredUpdatesWithError.subscribe(onNext: { e in
                 error = e
                 }, onCompleted: {
                     completed = true
@@ -115,7 +115,7 @@ extension CLLocationManagerTests {
         autoreleasepool {
             let manager = CLLocationManager()
 
-            _ = manager.rx_didPauseLocationUpdates.subscribe(onNext: { u in
+            _ = manager.rx.didPauseLocationUpdates.subscribe(onNext: { u in
                     updates = u
                 }, onCompleted: {
                     completed = true
@@ -135,7 +135,7 @@ extension CLLocationManagerTests {
         autoreleasepool {
             let manager = CLLocationManager()
 
-            _ = manager.rx_didResumeLocationUpdates.subscribe(onNext: { _ in
+            _ = manager.rx.didResumeLocationUpdates.subscribe(onNext: { _ in
                     updates = ()
                 }, onCompleted: {
                     completed = true
@@ -157,7 +157,7 @@ extension CLLocationManagerTests {
         autoreleasepool {
             let manager = CLLocationManager()
 
-            _ = manager.rx_didUpdateHeading.subscribe(onNext: { n in
+            _ = manager.rx.didUpdateHeading.subscribe(onNext: { n in
                     heading = n
                 }, onCompleted: {
                     completed = true
@@ -179,7 +179,7 @@ extension CLLocationManagerTests {
         autoreleasepool {
             let manager = CLLocationManager()
 
-            _ = manager.rx_didEnterRegion.subscribe(onNext: { n in
+            _ = manager.rx.didEnterRegion.subscribe(onNext: { n in
                     value = n
                 }, onCompleted: {
                     completed = true
@@ -201,7 +201,7 @@ extension CLLocationManagerTests {
         autoreleasepool {
             let manager = CLLocationManager()
 
-            _ = manager.rx_didExitRegion.subscribe(onNext: { n in
+            _ = manager.rx.didExitRegion.subscribe(onNext: { n in
                     value = n
                 }, onCompleted: {
                     completed = true
@@ -227,7 +227,7 @@ extension CLLocationManagerTests {
         autoreleasepool {
             let manager = CLLocationManager()
 
-            _ = manager.rx_didDetermineStateForRegion.subscribe(onNext: { n in
+            _ = manager.rx.didDetermineStateForRegion.subscribe(onNext: { n in
                     value = (n.state, n.region)
                 }, onCompleted: {
                     completed = true
@@ -251,7 +251,7 @@ extension CLLocationManagerTests {
         autoreleasepool {
             let manager = CLLocationManager()
 
-            _ = manager.rx_monitoringDidFailForRegionWithError.subscribe(onNext: { l in
+            _ = manager.rx.monitoringDidFailForRegionWithError.subscribe(onNext: { l in
                     region = l.region
                     error = l.error
                 }, onCompleted: {
@@ -276,7 +276,7 @@ extension CLLocationManagerTests {
         autoreleasepool {
             let manager = CLLocationManager()
 
-            _ = manager.rx_monitoringDidFailForRegionWithError.subscribe(onNext: { l in
+            _ = manager.rx.monitoringDidFailForRegionWithError.subscribe(onNext: { l in
                 region = l.region
                 error = l.error
                 }, onCompleted: {
@@ -300,7 +300,7 @@ extension CLLocationManagerTests {
         autoreleasepool {
             let manager = CLLocationManager()
 
-            _ = manager.rx_didStartMonitoringForRegion.subscribe(onNext: { n in
+            _ = manager.rx.didStartMonitoringForRegion.subscribe(onNext: { n in
                     value = n
                 }, onCompleted: {
                     completed = true
@@ -332,7 +332,7 @@ extension CLLocationManagerTests {
         autoreleasepool {
             let manager = CLLocationManager()
 
-            _ = manager.rx_didRangeBeaconsInRegion.subscribe(onNext: { n in
+            _ = manager.rx.didRangeBeaconsInRegion.subscribe(onNext: { n in
                     value = n
                 }, onCompleted: {
                     completed = true
@@ -359,7 +359,7 @@ extension CLLocationManagerTests {
         autoreleasepool {
             let manager = CLLocationManager()
 
-            _ = manager.rx_rangingBeaconsDidFailForRegionWithError.subscribe(onNext: { n in
+            _ = manager.rx.rangingBeaconsDidFailForRegionWithError.subscribe(onNext: { n in
                     value = n
                 }, onCompleted: {
                     completed = true
@@ -384,7 +384,7 @@ extension CLLocationManagerTests {
         autoreleasepool {
             let manager = CLLocationManager()
 
-            _ = manager.rx_didVisit.subscribe(onNext: { n in
+            _ = manager.rx.didVisit.subscribe(onNext: { n in
                     value = n
                 }, onCompleted: {
                     completed = true
@@ -413,7 +413,7 @@ extension CLLocationManagerTests {
         autoreleasepool {
             let manager = CLLocationManager()
 
-            _ = manager.rx_didChangeAuthorizationStatus.subscribe(onNext: { status in
+            _ = manager.rx.didChangeAuthorizationStatus.subscribe(onNext: { status in
                     authorizationStatus = status
                 }, onCompleted: {
                     completed = true

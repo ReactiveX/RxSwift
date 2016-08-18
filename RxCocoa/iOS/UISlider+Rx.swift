@@ -14,14 +14,14 @@ import RxSwift
 #endif
 import UIKit
 
-extension UISlider {
+extension Reactive where Base: UISlider {
     
     /**
     Reactive wrapper for `value` property.
     */
-    public var rx_value: ControlProperty<Float> {
-        return UIControl.rx_value(
-            self,
+    public var value: ControlProperty<Float> {
+        return Reactive<UIControl>.value(
+            self.base,
             getter: { slider in
                 slider.value
             }, setter: { slider, value in

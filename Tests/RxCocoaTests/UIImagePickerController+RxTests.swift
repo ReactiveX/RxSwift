@@ -31,7 +31,7 @@ extension UIImagePickerControllerTests {
         autoreleasepool {
             let imagePickerController = UIImagePickerController()
             
-            _ = imagePickerController.rx_didFinishPickingMediaWithInfo
+            _ = imagePickerController.rx.didFinishPickingMediaWithInfo
                 .subscribe(onNext: { (i) -> Void in
                     info = i
                 }, onCompleted: {
@@ -56,7 +56,7 @@ extension UIImagePickerControllerTests {
             
             let imagePickerController = UIImagePickerController()
             
-            _ = imagePickerController.rx_didCancel
+            _ = imagePickerController.rx.didCancel
                 .subscribe(onNext: { (i) -> Void in
                         canceled = true
                     }, onCompleted: {

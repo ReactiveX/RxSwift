@@ -164,7 +164,7 @@ E.g.
 This is a typical beginner example.
 
 ```swift
-let results = query.rx_text
+let results = query.rx.text
     .throttle(0.3, scheduler: MainScheduler.instance)
     .flatMapLatest { query in
         fetchAutoCompleteItems(query)
@@ -172,11 +172,11 @@ let results = query.rx_text
 
 results
     .map { "\($0.count)" }
-    .bindTo(resultCount.rx_text)
+    .bindTo(resultCount.rx.text)
     .addDisposableTo(disposeBag)
 
 results
-    .bindTo(resultsTableView.rx_itemsWithCellIdentifier("Cell")) { (_, result, cell) in
+    .bindTo(resultsTableView.rx.itemsWithCellIdentifier("Cell")) { (_, result, cell) in
         cell.textLabel?.text = "\(result)"
     }
     .addDisposableTo(disposeBag)
@@ -195,7 +195,7 @@ So, what are the problems with this code?:
 A more appropriate version of the code would look like this:
 
 ```swift
-let results = query.rx_text
+let results = query.rx.text
     .throttle(0.3, scheduler: MainScheduler.instance)
     .flatMapLatest { query in
         fetchAutoCompleteItems(query)
@@ -207,11 +207,11 @@ let results = query.rx_text
 
 results
     .map { "\($0.count)" }
-    .bindTo(resultCount.rx_text)
+    .bindTo(resultCount.rx.text)
     .addDisposableTo(disposeBag)
 
 results
-    .bindTo(resultTableView.rx_itemsWithCellIdentifier("Cell")) { (_, result, cell) in
+    .bindTo(resultTableView.rx.itemsWithCellIdentifier("Cell")) { (_, result, cell) in
         cell.textLabel?.text = "\(result)"
     }
     .addDisposableTo(disposeBag)
@@ -222,7 +222,7 @@ Making sure all of these requirements are properly handled in large systems can 
 The following code looks almost the same:
 
 ```swift
-let results = query.rx_text.asDriver()        // This converts a normal sequence into a `Driver` sequence.
+let results = query.rx.text.asDriver()        // This converts a normal sequence into a `Driver` sequence.
     .throttle(0.3, scheduler: MainScheduler.instance)
     .flatMapLatest { query in
         fetchAutoCompleteItems(query)
@@ -231,11 +231,11 @@ let results = query.rx_text.asDriver()        // This converts a normal sequence
 
 results
     .map { "\($0.count)" }
-    .drive(resultCount.rx_text)               // If there is a `drive` method available instead of `bindTo`,
+    .drive(resultCount.rx.text)               // If there is a `drive` method available instead of `bindTo`,
     .addDisposableTo(disposeBag)              // that means that the compiler has proven that all properties
                                               // are satisfied.
 results
-    .drive(resultTableView.rx_itemsWithCellIdentifier("Cell")) { (_, result, cell) in
+    .drive(resultTableView.rx.itemsWithCellIdentifier("Cell")) { (_, result, cell) in
         cell.textLabel?.text = "\(result)"
     }
     .addDisposableTo(disposeBag)
@@ -246,7 +246,7 @@ So what is happening here?
 This first `asDriver` method converts the `ControlProperty` unit to a `Driver` unit.
 
 ```swift
-query.rx_text.asDriver()
+query.rx.text.asDriver()
 ```
 
 Notice that there wasn't anything special that needed to be done. `Driver` has all of the properties of the `ControlProperty` unit, plus some more. The underlying observable sequence is just wrapped as a `Driver` unit, and that's it.

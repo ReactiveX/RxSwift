@@ -14,14 +14,14 @@ import RxSwift
 #endif
 
 
-extension UISegmentedControl {
+extension Reactive where Base: UISegmentedControl {
     
     /**
     Reactive wrapper for `selectedSegmentIndex` property.
     */
-    public var rx_value: ControlProperty<Int> {
-        return UIControl.rx_value(
-            self,
+    public var value: ControlProperty<Int> {
+        return Reactive<UIControl>.value(
+            self.base,
             getter: { segmentedControl in
                 segmentedControl.selectedSegmentIndex
             }, setter: { segmentedControl, value in

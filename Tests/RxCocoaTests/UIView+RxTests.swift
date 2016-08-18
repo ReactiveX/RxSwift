@@ -19,14 +19,14 @@ class UIViewTests : RxTest {
 extension UIViewTests {
     func testHidden_True() {
         let subject = UIView(frame: CGRect.zero)
-        Observable.just(true).subscribe(subject.rx_hidden).dispose()
+        Observable.just(true).subscribe(subject.rx.hidden).dispose()
 
         XCTAssertTrue(subject.isHidden == true)
     }
 
     func testEnabled_False() {
         let subject = UIView(frame: CGRect.zero)
-        Observable.just(false).subscribe(subject.rx_hidden).dispose()
+        Observable.just(false).subscribe(subject.rx.hidden).dispose()
 
         XCTAssertTrue(subject.isHidden == false)
     }
@@ -35,14 +35,14 @@ extension UIViewTests {
 extension UIViewTests {
     func testAlpha_0() {
         let subject = UIView(frame: CGRect.zero)
-        Observable.just(0).subscribe(subject.rx_alpha).dispose()
+        Observable.just(0).subscribe(subject.rx.alpha).dispose()
 
         XCTAssertTrue(subject.alpha == 0.0)
     }
 
     func testAlpha_1() {
         let subject = UIView(frame: CGRect.zero)
-        Observable.just(1).subscribe(subject.rx_alpha).dispose()
+        Observable.just(1).subscribe(subject.rx.alpha).dispose()
 
         XCTAssertTrue(subject.alpha == 1.0)
     }

@@ -22,7 +22,7 @@ extension UIPageControlTest {
     func testPageControl_CurrentPage() {
         let pageControl = UIPageControl(frame: CGRect.zero)
         pageControl.numberOfPages = 10
-        Observable.just(5).bindTo(pageControl.rx_currentPage).dispose()
+        Observable.just(5).bindTo(pageControl.rx.currentPage).dispose()
         XCTAssertTrue(pageControl.currentPage == 5)
     }
 }

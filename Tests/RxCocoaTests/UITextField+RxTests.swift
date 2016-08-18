@@ -14,7 +14,7 @@ import XCTest
 // UITextField
 class UITextFieldTests : RxTest {
     func testTextCompletesOnDealloc() {
-        ensurePropertyDeallocated({ UITextField() }, "a") { (view: UITextField) in view.rx_text }
+        ensurePropertyDeallocated({ UITextField() }, "a") { (view: UITextField) in view.rx.text }
     }
 
     func testSettingTextDoesntClearMarkedText() {
@@ -22,9 +22,9 @@ class UITextFieldTests : RxTest {
 
         textField.text = "Text1"
         textField.set = false
-        textField.rx_text.on(.next("Text1"))
+        textField.rx.text.on(.next("Text1"))
         XCTAssertTrue(!textField.set)
-        textField.rx_text.on(.next("Text2"))
+        textField.rx.text.on(.next("Text2"))
         XCTAssertTrue(textField.set)
     }
 }

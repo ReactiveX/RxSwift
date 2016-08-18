@@ -72,17 +72,17 @@ b.value = -8                                 // doesn't print anything
 
 ## Simple UI bindings
 
-* Instead of binding to variables, let's bind to `UITextField` values using the `rx_text` property
+* Instead of binding to variables, let's bind to `UITextField` values using the `rx.text` property
 * Next, `map` the `String` into an `Int` and determine if the number is prime using an async API
 * If the text is changed before the async call completes, a new async call will replace it via `concat`
 * Bind the results to a `UILabel`
 
 ```swift
-let subscription/*: Disposable */ = primeTextField.rx_text      // type is Observable<String>
+let subscription/*: Disposable */ = primeTextField.rx.text      // type is Observable<String>
             .map { WolframAlphaIsPrime(Int($0) ?? 0) }          // type is Observable<Observable<Prime>>
             .concat()                                           // type is Observable<Prime>
             .map { "number \($0.n) is prime? \($0.isPrime)" }   // type is Observable<String>
-            .bindTo(resultLabel.rx_text)                        // return Disposable that can be used to unbind everything
+            .bindTo(resultLabel.rx.text)                        // return Disposable that can be used to unbind everything
 
 // This will set `resultLabel.text` to "number 43 is prime? true" after
 // server call completes.
@@ -108,7 +108,7 @@ Let's give it a shot.
 ```swift
 // bind UI control values directly
 // use username from `usernameOutlet` as username values source
-self.usernameOutlet.rx_text
+self.usernameOutlet.rx.text
     .map { username in
 
         // synchronous validation, nothing special here

@@ -33,9 +33,9 @@ class DefaultWikipediaAPI: WikipediaAPI {
 
     private init() {}
 
-    private func rx_JSON(_ url: URL) -> Observable<AnyObject> {
+    private func JSON(_ url: URL) -> Observable<AnyObject> {
         return $.URLSession
-            .rx_JSON(url)
+            .rx.JSON(url)
             .trackActivity(loadingWikipediaData)
     }
 
@@ -45,7 +45,7 @@ class DefaultWikipediaAPI: WikipediaAPI {
         let urlContent = "http://en.wikipedia.org/w/api.php?action=opensearch&search=\(escapedQuery)"
         let url = URL(string: urlContent)!
             
-        return rx_JSON(url)
+        return JSON(url)
             .observeOn($.backgroundWorkScheduler)
             .map { json in
                 guard let json = json as? [AnyObject] else {
@@ -64,7 +64,7 @@ class DefaultWikipediaAPI: WikipediaAPI {
             return Observable.error(apiError("Can't create url"))
         }
         
-        return rx_JSON(url)
+        return JSON(url)
             .map { jsonResult in
                 guard let json = jsonResult as? NSDictionary else {
                     throw exampleError("Parsing error")

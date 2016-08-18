@@ -43,30 +43,30 @@ class CalculatorViewController: ViewController {
     
     override func viewDidLoad() {
         let commands:[Observable<Action>] = [
-            allClearButton.rx_tap.map { _ in .clear },
+            allClearButton.rx.tap.map { _ in .clear },
             
-            changeSignButton.rx_tap.map { _ in .changeSign },
-            percentButton.rx_tap.map { _ in .percent },
+            changeSignButton.rx.tap.map { _ in .changeSign },
+            percentButton.rx.tap.map { _ in .percent },
             
-            divideButton.rx_tap.map { _ in .operation(.division) },
-            multiplyButton.rx_tap.map { _ in .operation(.multiplication) },
-            minusButton.rx_tap.map { _ in .operation(.subtraction) },
-            plusButton.rx_tap.map { _ in .operation(.addition) },
+            divideButton.rx.tap.map { _ in .operation(.division) },
+            multiplyButton.rx.tap.map { _ in .operation(.multiplication) },
+            minusButton.rx.tap.map { _ in .operation(.subtraction) },
+            plusButton.rx.tap.map { _ in .operation(.addition) },
             
-            equalButton.rx_tap.map { _ in .equal },
+            equalButton.rx.tap.map { _ in .equal },
             
-            dotButton.rx_tap.map { _ in  .addDot },
+            dotButton.rx.tap.map { _ in  .addDot },
             
-            zeroButton.rx_tap.map { _ in .addNumber("0") },
-            oneButton.rx_tap.map { _ in .addNumber("1") },
-            twoButton.rx_tap.map { _ in .addNumber("2") },
-            threeButton.rx_tap.map { _ in .addNumber("3") },
-            fourButton.rx_tap.map { _ in .addNumber("4") },
-            fiveButton.rx_tap.map { _ in .addNumber("5") },
-            sixButton.rx_tap.map { _ in .addNumber("6") },
-            sevenButton.rx_tap.map { _ in .addNumber("7") },
-            eightButton.rx_tap.map { _ in .addNumber("8") },
-            nineButton.rx_tap.map { _ in .addNumber("9") }
+            zeroButton.rx.tap.map { _ in .addNumber("0") },
+            oneButton.rx.tap.map { _ in .addNumber("1") },
+            twoButton.rx.tap.map { _ in .addNumber("2") },
+            threeButton.rx.tap.map { _ in .addNumber("3") },
+            fourButton.rx.tap.map { _ in .addNumber("4") },
+            fiveButton.rx.tap.map { _ in .addNumber("5") },
+            sixButton.rx.tap.map { _ in .addNumber("6") },
+            sevenButton.rx.tap.map { _ in .addNumber("7") },
+            eightButton.rx.tap.map { _ in .addNumber("8") },
+            nineButton.rx.tap.map { _ in .addNumber("9") }
         ]
         
         Observable.from(commands)

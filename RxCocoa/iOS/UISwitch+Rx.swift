@@ -14,14 +14,14 @@ import RxSwift
 #endif
 
 
-extension UISwitch {
+extension Reactive where Base: UISwitch {
     
     /**
     Reactive wrapper for `on` property.
     */
-    public var rx_value: ControlProperty<Bool> {
-        return UIControl.rx_value(
-            self,
+    public var value: ControlProperty<Bool> {
+        return Reactive<UIControl>.value(
+            self.base,
             getter: { uiSwitch in
                 uiSwitch.isOn
             }, setter: { uiSwitch, value in

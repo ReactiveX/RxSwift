@@ -14,13 +14,13 @@ import RxSwift
 #endif
 import UIKit
 
-extension UIImageView {
+extension Reactive where Base: UIImageView {
     
     /**
     Bindable sink for `image` property.
     */
-    public var rx_image: AnyObserver<UIImage?> {
-        return self.rx_image(transitionType: nil)
+    public var image: AnyObserver<UIImage?> {
+        return image(transitionType: nil)
     }
     
     /**
@@ -28,9 +28,9 @@ extension UIImageView {
     
     - parameter transitionType: Optional transition type while setting the image (kCATransitionFade, kCATransitionMoveIn, ...)
     */
-    @available(*, deprecated, renamed: "rx_image(transitionType:)")
-    public func rx_imageAnimated(_ transitionType: String?) -> AnyObserver<UIImage?> {
-        return UIBindingObserver(UIElement: self) { imageView, image in
+    @available(*, deprecated, renamed: "image(transitionType:)")
+    public func imageAnimated(_ transitionType: String?) -> AnyObserver<UIImage?> {
+        return UIBindingObserver(UIElement: base) { imageView, image in
             if let transitionType = transitionType {
                 if image != nil {
                     let transition = CATransition()
@@ -52,8 +52,8 @@ extension UIImageView {
 
      - parameter transitionType: Optional transition type while setting the image (kCATransitionFade, kCATransitionMoveIn, ...)
      */
-    public func rx_image(transitionType: String? = nil) -> AnyObserver<UIImage?> {
-        return UIBindingObserver(UIElement: self) { imageView, image in
+    public func image(transitionType: String? = nil) -> AnyObserver<UIImage?> {
+        return UIBindingObserver(UIElement: base) { imageView, image in
             if let transitionType = transitionType {
                 if image != nil {
                     let transition = CATransition()

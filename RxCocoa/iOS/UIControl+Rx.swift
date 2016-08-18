@@ -14,13 +14,13 @@ import RxSwift
 #endif
 import UIKit
 
-extension UIControl {
+extension Reactive where Base: UIControl {
     
     /**
     Bindable sink for `enabled` property.
     */
-    public var rx_enabled: AnyObserver<Bool> {
-        return UIBindingObserver(UIElement: self) { control, value in
+    public var enabled: AnyObserver<Bool> {
+        return UIBindingObserver(UIElement: self.base) { control, value in
             control.isEnabled = value
         }.asObserver()
     }
@@ -28,8 +28,8 @@ extension UIControl {
     /**
      Bindable sink for `selected` property.
      */
-    public var rx_selected: AnyObserver<Bool> {
-        return UIBindingObserver(UIElement: self) { control, selected in
+    public var selected: AnyObserver<Bool> {
+        return UIBindingObserver(UIElement: self.base) { control, selected in
             control.isSelected = selected
         }.asObserver()
     }
@@ -39,11 +39,11 @@ extension UIControl {
     
     - parameter controlEvents: Filter for observed event types.
     */
-    public func rx_controlEvent(_ controlEvents: UIControlEvents) -> ControlEvent<Void> {
-        let source: Observable<Void> = Observable.create { [weak self] observer in
+    public func controlEvent(_ controlEvents: UIControlEvents) -> ControlEvent<Void> {
+        let source: Observable<Void> = Observable.create { [weak control = self.base] observer in
             MainScheduler.ensureExecutingOnScheduler()
 
-            guard let control = self else {
+            guard let control = control else {
                 observer.on(.completed)
                 return Disposables.create()
             }
@@ -54,8 +54,8 @@ extension UIControl {
             }
             
             return Disposables.create(with: controlTarget.dispose)
-        }.takeUntil(rx_deallocated)
-        
+        }.takeUntil(deallocated)
+
         return ControlEvent(events: source)
     }
 
@@ -63,7 +63,7 @@ extension UIControl {
      You might be wondering why the ugly `as!` casts etc, well, for some reason if 
      Swift compiler knows C is UIControl type and optimizations are turned on, it will crash.
     */
-    static func rx_value<C: AnyObject, T: Equatable>(_ control: C, getter: @escaping (C) -> T, setter: @escaping (C, T) -> Void) -> ControlProperty<T> {
+    static func value<C: AnyObject, T: Equatable>(_ control: C, getter: @escaping (C) -> T, setter: @escaping (C, T) -> Void) -> ControlProperty<T> {
         let source: Observable<T> = Observable.create { [weak weakControl = control] observer in
                 guard let control = weakControl else {
                     observer.on(.completed)
@@ -80,7 +80,7 @@ extension UIControl {
                 
                 return Disposables.create(with: controlTarget.dispose)
             }
-            .takeUntil((control as! NSObject).rx_deallocated)
+            .takeUntil((control as! NSObject).rx.deallocated)
 
         let bindingObserver = UIBindingObserver(UIElement: control, binding: setter)
 

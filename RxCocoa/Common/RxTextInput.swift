@@ -21,6 +21,19 @@ import Foundation
         */
         var rx_text: ControlProperty<String> { get }
     }
+
+    extension UITextField : RxTextInput {
+        public var rx_text: ControlProperty<String> {
+            return self.rx.text
+        }
+    }
+
+    extension UITextView : RxTextInput {
+        public var rx_text: ControlProperty<String> {
+            return self.rx.text
+        }
+    }
+
 #endif
 
 #if os(OSX)
@@ -36,4 +49,13 @@ import Foundation
         */
         var rx_text: ControlProperty<String> { get }
     }
+
+    extension NSTextField : RxTextInput {
+        public var rx_text: ControlProperty<String> {
+            return self.rx.text
+        }
+    }
+
 #endif
+
+

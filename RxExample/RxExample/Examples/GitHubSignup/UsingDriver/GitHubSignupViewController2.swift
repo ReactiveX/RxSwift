@@ -31,10 +31,10 @@ class GitHubSignupViewController2 : ViewController {
 
         let viewModel = GithubSignupViewModel2(
             input: (
-                username: usernameOutlet.rx_text.asDriver(),
-                password: passwordOutlet.rx_text.asDriver(),
-                repeatedPassword: repeatedPasswordOutlet.rx_text.asDriver(),
-                loginTaps: signupOutlet.rx_tap.asDriver()
+                username: usernameOutlet.rx.text.asDriver(),
+                password: passwordOutlet.rx.text.asDriver(),
+                repeatedPassword: repeatedPasswordOutlet.rx.text.asDriver(),
+                loginTaps: signupOutlet.rx.tap.asDriver()
             ),
             dependency: (
                 API: GitHubDefaultAPI.sharedAPI,
@@ -52,19 +52,19 @@ class GitHubSignupViewController2 : ViewController {
             .addDisposableTo(disposeBag)
 
         viewModel.validatedUsername
-            .drive(usernameValidationOutlet.ex_validationResult)
+            .drive(usernameValidationOutlet.rx.validationResult)
             .addDisposableTo(disposeBag)
 
         viewModel.validatedPassword
-            .drive(passwordValidationOutlet.ex_validationResult)
+            .drive(passwordValidationOutlet.rx.validationResult)
             .addDisposableTo(disposeBag)
 
         viewModel.validatedPasswordRepeated
-            .drive(repeatedPasswordValidationOutlet.ex_validationResult)
+            .drive(repeatedPasswordValidationOutlet.rx.validationResult)
             .addDisposableTo(disposeBag)
 
         viewModel.signingIn
-            .drive(signingUpOulet.rx_animating)
+            .drive(signingUpOulet.rx.animating)
             .addDisposableTo(disposeBag)
 
         viewModel.signedIn
@@ -75,7 +75,7 @@ class GitHubSignupViewController2 : ViewController {
         //}
 
         let tapBackground = UITapGestureRecognizer()
-        tapBackground.rx_event
+        tapBackground.rx.event
             .subscribe(onNext: { [weak self] _ in
                 self?.view.endEditing(true)
             })

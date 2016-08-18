@@ -13,13 +13,13 @@ import UIKit
 import RxSwift
 #endif
 
-extension UIRefreshControl {
+extension Reactive where Base: UIRefreshControl {
 
     /**
     Bindable sink for `beginRefreshing()`, `endRefreshing()` methods.
     */
-    public var rx_refreshing: AnyObserver<Bool> {
-        return UIBindingObserver(UIElement: self) { refreshControl, refresh in
+    public var refreshing: AnyObserver<Bool> {
+        return UIBindingObserver(UIElement: self.base) { refreshControl, refresh in
             if refresh {
                 refreshControl.beginRefreshing()
             } else {

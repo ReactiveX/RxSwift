@@ -35,7 +35,7 @@ extension RxTest {
             })
 
 
-            _ = control.rx_deallocated.subscribe(onNext: { _ in
+            _ = (control as NSObject).rx.deallocated.subscribe(onNext: { _ in
                 deallocated = true
             })
 
@@ -77,7 +77,7 @@ extension RxTest {
                 completed = true
             })
 
-            _ = control.rx_deallocated.subscribe(onNext: { _ in
+            _ = (control as NSObject).rx.deallocated.subscribe(onNext: { _ in
                 deallocated = true
             })
 
@@ -101,7 +101,7 @@ extension RxTest {
 
             observable.bindTo(propertyObserver).addDisposableTo(disposeBag)
 
-            _ = control.rx_deallocated.subscribe(onNext: { _ in
+            _ = (control as NSObject).rx.deallocated.subscribe(onNext: { _ in
                 deallocated = true
             })
         }

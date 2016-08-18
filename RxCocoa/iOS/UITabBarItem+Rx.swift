@@ -14,13 +14,13 @@
     import RxSwift
 #endif
     
-extension UITabBarItem {
+extension Reactive where Base: UITabBarItem {
     
     /**
      Bindable sink for `badgeValue` property.
      */
-    public var rx_badgeValue: AnyObserver<String?> {
-        return UIBindingObserver(UIElement: self) { tabBarItem, badgeValue in
+    public var badgeValue: AnyObserver<String?> {
+        return UIBindingObserver(UIElement: self.base) { tabBarItem, badgeValue in
             tabBarItem.badgeValue = badgeValue
         }.asObserver()
     }

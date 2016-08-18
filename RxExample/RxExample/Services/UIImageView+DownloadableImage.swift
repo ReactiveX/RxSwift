@@ -14,20 +14,20 @@ import RxCocoa
 #endif
 import UIKit
 
-extension UIImageView{
+extension Reactive where Base: UIImageView{
 
-    var rxex_downloadableImage: AnyObserver<DownloadableImage>{
-        return self.rxex_downloadableImageAnimated(nil)
+    var downloadableImage: AnyObserver<DownloadableImage>{
+        return downloadableImageAnimated(nil)
     }
 
-    func rxex_downloadableImageAnimated(_ transitionType:String?) -> AnyObserver<DownloadableImage> {
-        return UIBindingObserver(UIElement: self) { imageView, image in
+    func downloadableImageAnimated(_ transitionType:String?) -> AnyObserver<DownloadableImage> {
+        return UIBindingObserver(UIElement: base as UIImageView) { imageView, image in
             for subview in imageView.subviews {
                 subview.removeFromSuperview()
             }
             switch image {
             case .content(let image):
-                imageView.rx_image.onNext(image)
+                imageView.rx.image.onNext(image)
             case .offlinePlaceholder:
                 let label = UILabel(frame: imageView.bounds)
                 label.textAlignment = .center

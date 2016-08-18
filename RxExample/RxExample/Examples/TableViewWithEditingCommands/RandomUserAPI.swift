@@ -19,7 +19,7 @@ class RandomUserAPI {
     
     func getExampleUserResultSet() -> Observable<[User]> {
         let url = URL(string: "http://api.randomuser.me/?results=20")!
-        return URLSession.shared.rx_JSON(url)
+        return URLSession.shared.rx.JSON(url)
             .map { json in
                 guard let json = json as? [String: AnyObject] else {
                     throw exampleError("Casting to dictionary failed")

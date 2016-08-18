@@ -48,10 +48,10 @@ class DelegateProxyTest : RxTest {
         
         view.delegate = mock
         
-        let _ = view.rx_proxy
+        let _ = view.rx.proxy
         
         XCTAssertEqual(mock.messages, [])
-        XCTAssertTrue(view.rx_proxy.forwardToDelegate() === mock)
+        XCTAssertTrue(view.rx.proxy.forwardToDelegate() === mock)
     }
     
     func test_forwardsUnobservedMethods() {
@@ -60,7 +60,7 @@ class DelegateProxyTest : RxTest {
         
         view.delegate = mock
         
-        let _ = view.rx_proxy
+        let _ = view.rx.proxy
         
         view.delegate?.threeDView?(view, didLearnSomething: "Psssst ...")
         
@@ -75,7 +75,7 @@ class DelegateProxyTest : RxTest {
         
         var observedFeedRequest = false
         
-        let d = view.rx_proxy.observe(#selector(ThreeDSectionedViewProtocol.threeDView(_:didLearnSomething:)))
+        let d = view.rx.proxy.observe(#selector(ThreeDSectionedViewProtocol.threeDView(_:didLearnSomething:)))
             .subscribe(onNext: { n in
                 observedFeedRequest = true
             })
@@ -98,7 +98,7 @@ class DelegateProxyTest : RxTest {
         
         var nMessages = 0
         
-        let d = view.rx_proxy.observe(#selector(ThreeDSectionedViewProtocol.threeDView(_:didLearnSomething:)))
+        let d = view.rx.proxy.observe(#selector(ThreeDSectionedViewProtocol.threeDView(_:didLearnSomething:)))
             .subscribe(onNext: { n in
                 nMessages += 1
             })
@@ -136,7 +136,7 @@ class DelegateProxyTest : RxTest {
         
         var receivedArgument: IndexPath? = nil
         
-        let d = view.rx_proxy.observe(#selector(ThreeDSectionedViewProtocol.threeDView(_:didGetXXX:)))
+        let d = view.rx.proxy.observe(#selector(ThreeDSectionedViewProtocol.threeDView(_:didGetXXX:)))
             .subscribe(onNext: { n in
                 let ip = n[1] as! IndexPath
                 receivedArgument = ip
@@ -165,7 +165,7 @@ class DelegateProxyTest : RxTest {
             let sentArgument = IndexPath(index: 0)
             
             _ = view
-                .rx_proxy
+                .rx.proxy
                 .observe(#selector(ThreeDSectionedViewProtocol.threeDView(_:didGetXXX:)))
                 .subscribe(onCompleted: {
                     completed = true
@@ -183,7 +183,7 @@ class DelegateProxyTest : RxTest {
 extension DelegateProxyTest {
     func test_DelegateProxyHierarchyWorks() {
         let tableView = UITableView()
-        _ = tableView.rx_delegate.observe(#selector(UIScrollViewDelegate.scrollViewWillBeginDragging(_:)))
+        _ = tableView.rx.delegate.observe(#selector(UIScrollViewDelegate.scrollViewWillBeginDragging(_:)))
     }
 }
 #endif
@@ -209,7 +209,7 @@ extension DelegateProxyTest {
                 completed = true
             })
 
-            _ = (control as! NSObject).rx_deallocated.subscribe(onNext: { _ in
+            _ = (control as! NSObject).rx.deallocated.subscribe(onNext: { _ in
                 deallocated = true
             })
         }
@@ -302,9 +302,9 @@ class ThreeDSectionedViewDelegateProxy : DelegateProxy
     }
 }
 
-extension ThreeDSectionedView {
-    var rx_proxy: DelegateProxy {
-        return ThreeDSectionedViewDelegateProxy.proxyForObject(self)
+extension Reactive where Base: ThreeDSectionedView {
+    var proxy: DelegateProxy {
+        return ThreeDSectionedViewDelegateProxy.proxyForObject(base)
     }
 }
 

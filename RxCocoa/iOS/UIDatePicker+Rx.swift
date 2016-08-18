@@ -14,14 +14,14 @@ import RxSwift
 #endif
 import UIKit
 
-extension UIDatePicker {
+extension Reactive where Base: UIDatePicker {
     
     /**
     Reactive wrapper for `date` property.
     */
-    public var rx_date: ControlProperty<Date> {
-        return UIControl.rx_value(
-            self,
+    public var date: ControlProperty<Date> {
+        return Reactive<UIControl>.value(
+            self.base,
             getter: { datePicker in
                 datePicker.date
             }, setter: { datePicker, value in

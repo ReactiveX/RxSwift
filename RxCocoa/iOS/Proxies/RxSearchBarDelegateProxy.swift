@@ -47,7 +47,7 @@ public class RxSearchBarDelegateProxy
     public override class func createProxyForObject(_ object: AnyObject) -> AnyObject {
         let searchBar = (object as! UISearchBar)
         
-        return castOrFatalError(searchBar.rx_createDelegateProxy())
+        return castOrFatalError(searchBar.createRxDelegateProxy())
     }
 #endif
     

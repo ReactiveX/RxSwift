@@ -14,13 +14,13 @@ import RxSwift
 #endif
 import UIKit
 
-extension UIButton {
+extension Reactive where Base: UIButton {
     
     /**
     Reactive wrapper for `TouchUpInside` control event.
     */
-    public var rx_tap: ControlEvent<Void> {
-        return rx_controlEvent(.touchUpInside)
+    public var tap: ControlEvent<Void> {
+        return controlEvent(.touchUpInside)
     }
 }
 
@@ -34,13 +34,13 @@ import Foundation
 #endif
 import UIKit
 
-extension UIButton {
+extension Reactive where Base: UIButton {
 
     /**
      Reactive wrapper for `PrimaryActionTriggered` control event.
      */
-    public var rx_primaryAction: ControlEvent<Void> {
-        return rx_controlEvent(.primaryActionTriggered)
+    public var primaryAction: ControlEvent<Void> {
+        return controlEvent(.primaryActionTriggered)
     }
 
 }
@@ -55,12 +55,12 @@ extension UIButton {
 #endif
     import UIKit
 
-extension UIButton {
+extension Reactive where Base: UIButton {
     /**
      Reactive wrapper for `setTitle(_:controlState:)`
      */
-    public func rx_title(controlState: UIControlState = []) -> AnyObserver<String?> {
-        return UIBindingObserver<UIButton, String?>(UIElement: self) { (button, title) -> () in
+    public func title(controlState: UIControlState = []) -> AnyObserver<String?> {
+        return UIBindingObserver<UIButton, String?>(UIElement: self.base) { (button, title) -> () in
             button.setTitle(title, for: controlState)
         }.asObserver()
     }

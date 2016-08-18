@@ -13,17 +13,17 @@ import UIKit
 import RxSwift
 #endif
 
-extension UIActivityIndicatorView {
+extension Reactive where Base: UIActivityIndicatorView {
 
     /**
     Bindable sink for `startAnimating()`, `stopAnimating()` methods.
     */
-    public var rx_animating: AnyObserver<Bool> {
-        return UIBindingObserver(UIElement: self) { activityIndicator, active in
+    public var animating: AnyObserver<Bool> {
+        return UIBindingObserver(UIElement: self.base) { activityIndicator, active in
             if active {
-                self.startAnimating()
+                activityIndicator.startAnimating()
             } else {
-                self.stopAnimating()
+                activityIndicator.stopAnimating()
             }
         }.asObserver()
     }

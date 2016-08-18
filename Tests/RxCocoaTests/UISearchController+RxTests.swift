@@ -23,7 +23,7 @@ class UISearchController_RxTests: RxTest {
         autoreleasepool {
             let searchController = UISearchController()
             
-            _ = searchController.rx_didDismiss
+            _ = searchController.rx.didDismiss
                 .subscribe(onNext: {
                         didDismissed = true
                     }, onCompleted: {
@@ -43,7 +43,7 @@ class UISearchController_RxTests: RxTest {
         autoreleasepool {
             let searchController = UISearchController()
             
-            _ = searchController.rx_didPresent
+            _ = searchController.rx.didPresent
                 .subscribe(onNext: {
                     didPresent = true
                     }, onCompleted: {
@@ -63,7 +63,7 @@ class UISearchController_RxTests: RxTest {
         autoreleasepool {
             let searchController = UISearchController()
             
-            _ = searchController.rx_present
+            _ = searchController.rx.present
                 .subscribe(onNext: {
                     presented = true
                     }, onCompleted: {
@@ -83,7 +83,7 @@ class UISearchController_RxTests: RxTest {
         autoreleasepool {
             let searchController = UISearchController()
             
-            _ = searchController.rx_willDismiss
+            _ = searchController.rx.willDismiss
                 .subscribe(onNext: {
                     willDismiss = true
                     }, onCompleted: {
@@ -103,7 +103,7 @@ class UISearchController_RxTests: RxTest {
         autoreleasepool {
             let searchController = UISearchController()
             
-            _ = searchController.rx_willPresent
+            _ = searchController.rx.willPresent
                 .subscribe(onNext: {
                     willPresent = true
                     }, onCompleted: {

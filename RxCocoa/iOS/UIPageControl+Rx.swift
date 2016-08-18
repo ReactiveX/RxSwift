@@ -14,13 +14,13 @@ import RxSwift
 #endif
 import UIKit
     
-extension UIPageControl {
+extension Reactive where Base: UIPageControl {
     
     /**
     Bindable sink for `currentPage` property.
     */
-    public var rx_currentPage: AnyObserver<Int> {
-        return UIBindingObserver(UIElement: self) { controller, page in
+    public var currentPage: AnyObserver<Int> {
+        return UIBindingObserver(UIElement: self.base) { controller, page in
             controller.currentPage = page
         }.asObserver()
     }

@@ -28,12 +28,12 @@ class DetailViewController: ViewController {
         let url = URL(string: user.imageURL)!
         let request = URLRequest(url: url)
         
-        URLSession.shared.rx_data(request)
+        URLSession.shared.rx.data(request)
             .map { data in
                 UIImage(data: data)
             }
             .observeOn($.mainScheduler)
-            .subscribe(imageView.rx_image)
+            .subscribe(imageView.rx.image)
             .addDisposableTo(disposeBag)
         
         label.text = user.firstName + " " + user.lastName

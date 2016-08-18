@@ -18,7 +18,7 @@ class UIPickerViewTests: RxTest {
     func testTableView_DelegateEventCompletesOnDealloc() {
         let createView: () -> UIPickerView = { UIPickerView(frame: CGRect(x: 0, y: 0, width: 1, height: 1)) }
         
-        ensureEventDeallocated(createView) { (view: UIPickerView) in view.rx_itemSelected }
+        ensureEventDeallocated(createView) { (view: UIPickerView) in view.rx.itemSelected }
     }
 
     func testPickerView_itemSelected() {
@@ -28,7 +28,7 @@ class UIPickerViewTests: RxTest {
         var result: (row: Int, component: Int)?
         
         autoreleasepool {
-            _ = pickerView.rx_itemSelected.subscribe(onNext: { (element) in
+            _ = pickerView.rx.itemSelected.subscribe(onNext: { (element) in
                 result = element
             })
             pickerView.delegate!.pickerView!(pickerView,

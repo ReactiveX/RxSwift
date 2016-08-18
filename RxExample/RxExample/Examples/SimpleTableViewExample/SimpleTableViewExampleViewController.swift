@@ -26,21 +26,21 @@ class SimpleTableViewExampleViewController : ViewController {
         ])
 
         items
-            .bindTo(tableView.rx_items(cellIdentifier: "Cell", cellType: UITableViewCell.self)) { (row, element, cell) in
+            .bindTo(tableView.rx.items(cellIdentifier: "Cell", cellType: UITableViewCell.self)) { (row, element, cell) in
                 cell.textLabel?.text = "\(element) @ row \(row)"
             }
             .addDisposableTo(disposeBag)
 
 
-        tableView
-            .rx_modelSelected(String.self)
+        tableView.rx
+            .modelSelected(String.self)
             .subscribe(onNext:  { value in
                 DefaultWireframe.presentAlert("Tapped `\(value)`")
             })
             .addDisposableTo(disposeBag)
 
-        tableView
-            .rx_itemAccessoryButtonTapped
+        tableView.rx
+            .itemAccessoryButtonTapped
             .subscribe(onNext: { indexPath in
                 DefaultWireframe.presentAlert("Tapped Detail @ \(indexPath.section),\(indexPath.row)")
             })

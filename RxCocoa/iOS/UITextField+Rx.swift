@@ -14,14 +14,14 @@ import RxSwift
 #endif
 import UIKit
 
-extension UITextField : RxTextInput {
+extension Reactive where Base: UITextField {
     
     /**
     Reactive wrapper for `text` property.
     */
-    public var rx_text: ControlProperty<String> {
-        return UIControl.rx_value(
-            self,
+    public var text: ControlProperty<String> {
+        return Reactive<UIControl>.value(
+            base,
             getter: { textField in
                 textField.text ?? ""
             }, setter: { textField, value in

@@ -17,7 +17,7 @@ class UITViewControllerTests : RxTest {
   func testRxTitle() {
     let viewController = UIViewController()
 
-    _ = Observable.just("title").bindTo(viewController.rx_title)
+    _ = Observable.just("title").bindTo(viewController.rx.title)
 
     XCTAssertEqual("title", viewController.title)
   }

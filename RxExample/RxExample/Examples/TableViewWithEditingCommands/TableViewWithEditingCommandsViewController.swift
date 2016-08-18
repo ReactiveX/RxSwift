@@ -83,10 +83,10 @@ class TableViewWithEditingCommandsViewController: ViewController, UITableViewDel
                 .concat(loadFavoriteUsers)
                 .observeOn(MainScheduler.instance)
 
-        let deleteUserCommand = tableView.rx_itemDeleted.map(TableViewEditingCommand.deleteUser)
+        let deleteUserCommand = tableView.rx.itemDeleted.map(TableViewEditingCommand.deleteUser)
         let moveUserCommand = tableView
-            .rx_itemMoved
-            // This is needed because rx_itemMoved is being performed before delegate method is
+            .rx.itemMoved
+            // This is needed because rx.itemMoved is being performed before delegate method is
             // delegated to RxDataSource.
             // This observeOn makes sure data is rebound after automatic move is performed in data source.
             // This will be improved in RxSwift 3.0 when order will be inversed.
@@ -107,10 +107,10 @@ class TableViewWithEditingCommandsViewController: ViewController, UITableViewDel
                     SectionModel(model: "Normal Users", items: $0.users)
                 ]
             }
-            .bindTo(tableView.rx_items(dataSource: dataSource))
+            .bindTo(tableView.rx.items(dataSource: dataSource))
             .addDisposableTo(disposeBag)
 
-        tableView.rx_itemSelected
+        tableView.rx.itemSelected
             .withLatestFrom(viewModel) { i, viewModel in
                 let all = [viewModel.favoriteUsers, viewModel.users]
                 return all[i.section][i.row]
@@ -122,7 +122,7 @@ class TableViewWithEditingCommandsViewController: ViewController, UITableViewDel
 
         // customization using delegate
         // RxTableViewDelegateBridge will forward correct messages
-        tableView.rx_setDelegate(self)
+        tableView.rx.setDelegate(self)
             .addDisposableTo(disposeBag)
     }
 

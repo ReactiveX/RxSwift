@@ -85,11 +85,11 @@ class PartialUpdatesViewController : ViewController {
         skinTableViewDataSource(reloadDataSource)
 
         self.sections.asObservable()
-            .bindTo(partialUpdatesTableViewOutlet.rx_items(dataSource: tvAnimatedDataSource))
+            .bindTo(partialUpdatesTableViewOutlet.rx.items(dataSource: tvAnimatedDataSource))
             .addDisposableTo(disposeBag)
 
         self.sections.asObservable()
-            .bindTo(reloadTableViewOutlet.rx_items(dataSource: reloadDataSource))
+            .bindTo(reloadTableViewOutlet.rx.items(dataSource: reloadDataSource))
             .addDisposableTo(disposeBag)
 
         // Collection view logic works, but when clicking fast because of internal bugs
@@ -109,25 +109,25 @@ class PartialUpdatesViewController : ViewController {
             skinCollectionViewDataSource(cvAnimatedDataSource)
 
             updates
-                .bindTo(partialUpdatesCollectionViewOutlet.rx_itemsWithDataSource(cvAnimatedDataSource))
+                .bindTo(partialUpdatesCollectionViewOutlet.rx.itemsWithDataSource(cvAnimatedDataSource))
                 .addDisposableTo(disposeBag)
         #else
             let cvReloadDataSource = RxCollectionViewSectionedReloadDataSource<NumberSection>()
             skinCollectionViewDataSource(cvReloadDataSource)
             self.sections.asObservable()
-                .bindTo(partialUpdatesCollectionViewOutlet.rx_items(dataSource: cvReloadDataSource))
+                .bindTo(partialUpdatesCollectionViewOutlet.rx.items(dataSource: cvReloadDataSource))
                 .addDisposableTo(disposeBag)
         #endif
 
         // touches
 
-        partialUpdatesCollectionViewOutlet.rx_itemSelected
+        partialUpdatesCollectionViewOutlet.rx.itemSelected
             .subscribe(onNext: { [weak self] i in
                 print("Let me guess, it's .... It's \(self?.generator.sections[i.section].items[i.item]), isn't it? Yeah, I've got it.")
             })
             .addDisposableTo(disposeBag)
 
-        Observable.of(partialUpdatesTableViewOutlet.rx_itemSelected, reloadTableViewOutlet.rx_itemSelected)
+        Observable.of(partialUpdatesTableViewOutlet.rx.itemSelected, reloadTableViewOutlet.rx.itemSelected)
             .merge()
             .subscribe(onNext: { [weak self] i in
                 print("I have a feeling it's .... \(self?.generator.sections[i.section].items[i.item])?")

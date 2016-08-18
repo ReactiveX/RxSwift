@@ -11,40 +11,40 @@ import Foundation
     import RxSwift
 #endif
 
-extension NSObject {
+extension Reactive where Base: NSObject {
     /**
-     Specialization of generic `rx_observe` method.
+     Specialization of generic `observe` method.
 
      This specialization first observes `KVORepresentable` value and then converts it to `RawRepresentable` value.
      
      It is useful for observing bridged ObjC enum values.
 
-     For more information take a look at `rx_observe` method.
+     For more information take a look at `observe` method.
      */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func rx_observe<E: RawRepresentable>(_ type: E.Type, _ keyPath: String, options: NSKeyValueObservingOptions = [.new, .initial], retainSelf: Bool = true) -> Observable<E?> where E.RawValue: KVORepresentable {
-        return rx_observe(E.RawValue.KVOType.self, keyPath, options: options, retainSelf: retainSelf)
+    public func observe<E: RawRepresentable>(_ type: E.Type, _ keyPath: String, options: NSKeyValueObservingOptions = [.new, .initial], retainSelf: Bool = true) -> Observable<E?> where E.RawValue: KVORepresentable {
+        return observe(E.RawValue.KVOType.self, keyPath, options: options, retainSelf: retainSelf)
             .map(E.init)
     }
 }
 
 #if !DISABLE_SWIZZLING
 
-    // rx_observeWeakly + RawRepresentable
-    extension NSObject {
+    // observeWeakly + RawRepresentable
+    extension Reactive where Base: NSObject {
 
         /**
-         Specialization of generic `rx_observeWeakly` method.
+         Specialization of generic `observeWeakly` method.
 
          This specialization first observes `KVORepresentable` value and then converts it to `RawRepresentable` value.
      
          It is useful for observing bridged ObjC enum values.
 
-         For more information take a look at `rx_observeWeakly` method.
+         For more information take a look at `observeWeakly` method.
          */
         // @warn_unused_result(message:"http://git.io/rxs.uo")
-        public func rx_observeWeakly<E: RawRepresentable>(_ type: E.Type, _ keyPath: String, options: NSKeyValueObservingOptions = [.new, .initial]) -> Observable<E?> where E.RawValue: KVORepresentable {
-            return rx_observeWeakly(E.RawValue.KVOType.self, keyPath, options: options)
+        public func observeWeakly<E: RawRepresentable>(_ type: E.Type, _ keyPath: String, options: NSKeyValueObservingOptions = [.new, .initial]) -> Observable<E?> where E.RawValue: KVORepresentable {
+            return observeWeakly(E.RawValue.KVOType.self, keyPath, options: options)
                 .map(E.init)
         }
     }

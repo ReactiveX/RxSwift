@@ -64,7 +64,7 @@ class WikipediaSearchViewController: ViewController {
         resultsTableView.delegate = nil
         resultsTableView.dataSource = nil
 
-        searchBar.rx_text
+        searchBar.rx.text
             .asDriver()
             .throttle(0.3)
             .distinctUntilChanged()
@@ -78,7 +78,7 @@ class WikipediaSearchViewController: ViewController {
             .map { results in
                 results.map(SearchResultViewModel.init)
             }
-            .drive(resultsTableView.rx_items(cellIdentifier: "WikipediaSearchCell", cellType: WikipediaSearchCell.self)) { (_, viewModel, cell) in
+            .drive(resultsTableView.rx.items(cellIdentifier: "WikipediaSearchCell", cellType: WikipediaSearchCell.self)) { (_, viewModel, cell) in
                 cell.viewModel = viewModel
             }
             .addDisposableTo(disposeBag)
@@ -88,7 +88,7 @@ class WikipediaSearchViewController: ViewController {
         let searchBar = self.searchBar
         let searchController = self.searchController
         
-        resultsTableView.rx_contentOffset
+        resultsTableView.rx.contentOffset
             .asDriver()
             .filter { _ -> Bool in
                 return !searchController.isBeingPresented
@@ -104,7 +104,7 @@ class WikipediaSearchViewController: ViewController {
     func configureNavigateOnRowClick() {
         let wireframe = DefaultWireframe.sharedInstance
 
-        resultsTableView.rx_modelSelected(SearchResultViewModel.self)
+        resultsTableView.rx.modelSelected(SearchResultViewModel.self)
             .asDriver()
             .drive(onNext: { searchResult in
                 wireframe.open(url:searchResult.searchResult.URL)
@@ -118,7 +118,7 @@ class WikipediaSearchViewController: ViewController {
             DefaultImageService.sharedImageService.loadingImage
         ) { $0 || $1 }
             .distinctUntilChanged()
-            .drive(UIApplication.shared.rx_networkActivityIndicatorVisible)
+            .drive(UIApplication.shared.rx.networkActivityIndicatorVisible)
             .addDisposableTo(disposeBag)
     }
 }
