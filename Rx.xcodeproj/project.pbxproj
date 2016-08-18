@@ -668,10 +668,10 @@
 		C88E296C1BEB712E001CCB92 /* RunLoopLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88E296A1BEB712E001CCB92 /* RunLoopLock.swift */; };
 		C88E296D1BEB712E001CCB92 /* RunLoopLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88E296A1BEB712E001CCB92 /* RunLoopLock.swift */; };
 		C88E296E1BEB712E001CCB92 /* RunLoopLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88E296A1BEB712E001CCB92 /* RunLoopLock.swift */; };
-		C88F76811CE5341700D5A014 /* RxTextInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88F76801CE5341700D5A014 /* RxTextInput.swift */; };
-		C88F76821CE5341700D5A014 /* RxTextInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88F76801CE5341700D5A014 /* RxTextInput.swift */; };
-		C88F76831CE5341700D5A014 /* RxTextInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88F76801CE5341700D5A014 /* RxTextInput.swift */; };
-		C88F76841CE5341700D5A014 /* RxTextInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88F76801CE5341700D5A014 /* RxTextInput.swift */; };
+		C88F76811CE5341700D5A014 /* TextInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88F76801CE5341700D5A014 /* TextInput.swift */; };
+		C88F76821CE5341700D5A014 /* TextInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88F76801CE5341700D5A014 /* TextInput.swift */; };
+		C88F76831CE5341700D5A014 /* TextInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88F76801CE5341700D5A014 /* TextInput.swift */; };
+		C88F76841CE5341700D5A014 /* TextInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88F76801CE5341700D5A014 /* TextInput.swift */; };
 		C8941BDF1BD5695C00A0E874 /* BlockingObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8941BDE1BD5695C00A0E874 /* BlockingObservable.swift */; };
 		C8941BE01BD5695C00A0E874 /* BlockingObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8941BDE1BD5695C00A0E874 /* BlockingObservable.swift */; };
 		C8941BE11BD5695C00A0E874 /* BlockingObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8941BDE1BD5695C00A0E874 /* BlockingObservable.swift */; };
@@ -1693,7 +1693,7 @@
 		C88254141B8A752B00B02D69 /* UITextView+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = "UITextView+Rx.swift"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		C88BB8711B07E5ED0064D411 /* RxSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C88E296A1BEB712E001CCB92 /* RunLoopLock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RunLoopLock.swift; sourceTree = "<group>"; };
-		C88F76801CE5341700D5A014 /* RxTextInput.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxTextInput.swift; sourceTree = "<group>"; };
+		C88F76801CE5341700D5A014 /* TextInput.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextInput.swift; sourceTree = "<group>"; };
 		C88FA50C1C25C44800CCFEA4 /* RxTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C88FA51D1C25C4B500CCFEA4 /* RxTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C88FA52E1C25C4C000CCFEA4 /* RxTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -2168,7 +2168,7 @@
 				C8BCD3F31C14B6D1005F1280 /* NSLayoutConstraint+Rx.swift */,
 				C8D132431C42D15E00B59FFF /* SectionedViewDataSourceType.swift */,
 				D2F461001CD7ABE400527B4D /* Reactive.swift */,
-				C88F76801CE5341700D5A014 /* RxTextInput.swift */,
+				C88F76801CE5341700D5A014 /* TextInput.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -3414,7 +3414,7 @@
 				C882541F1B8A752B00B02D69 /* RxCollectionViewDelegateProxy.swift in Sources */,
 				46307D4E1CDE77D800E47A1C /* UIAlertAction+Rx.swift in Sources */,
 				C88254201B8A752B00B02D69 /* RxScrollViewDelegateProxy.swift in Sources */,
-				C88F76811CE5341700D5A014 /* RxTextInput.swift in Sources */,
+				C88F76811CE5341700D5A014 /* TextInput.swift in Sources */,
 				C882542E1B8A752B00B02D69 /* UILabel+Rx.swift in Sources */,
 				54D2138E1CE0824E0028D5B4 /* UINavigationItem+Rx.swift in Sources */,
 				91BE429C1CBF7EC000F6B062 /* UIPageControl+Rx.swift in Sources */,
@@ -3482,7 +3482,7 @@
 				C8093EE41B8A732E0088E94D /* DelegateProxyType.swift in Sources */,
 				C8093F481B8A732E0088E94D /* NSControl+Rx.swift in Sources */,
 				C8093F4E1B8A732E0088E94D /* NSTextField+Rx.swift in Sources */,
-				C88F76821CE5341700D5A014 /* RxTextInput.swift in Sources */,
+				C88F76821CE5341700D5A014 /* TextInput.swift in Sources */,
 				C8DB967F1BF7496C0084BD53 /* KVORepresentable.swift in Sources */,
 				C8093EFE1B8A732E0088E94D /* RxTarget.swift in Sources */,
 				C8093ED21B8A732E0088E94D /* _RX.m in Sources */,
@@ -4402,7 +4402,7 @@
 				C8F0C0381BBBFBB9001B112F /* UITextField+Rx.swift in Sources */,
 				C8F0C0391BBBFBB9001B112F /* NSURLSession+Rx.swift in Sources */,
 				C8F0C03A1BBBFBB9001B112F /* ControlTarget.swift in Sources */,
-				C88F76841CE5341700D5A014 /* RxTextInput.swift in Sources */,
+				C88F76841CE5341700D5A014 /* TextInput.swift in Sources */,
 				C8F0C03B1BBBFBB9001B112F /* UISearchBar+Rx.swift in Sources */,
 				C8F0C03C1BBBFBB9001B112F /* ItemEvents.swift in Sources */,
 				7EDBAEBF1C89B9B7006CBE67 /* UITabBarItem+Rx.swift in Sources */,
@@ -4467,7 +4467,7 @@
 				C80DDEA91BCE69BA006A1832 /* ObservableConvertibleType+Driver.swift in Sources */,
 				C80DDEA11BCE69BA006A1832 /* Driver+Subscription.swift in Sources */,
 				D2138C891BB9BEBE00339B5C /* DelegateProxyType.swift in Sources */,
-				C88F76831CE5341700D5A014 /* RxTextInput.swift in Sources */,
+				C88F76831CE5341700D5A014 /* TextInput.swift in Sources */,
 				C811C89F1C24D80100A2DDD4 /* DeallocObservable.swift in Sources */,
 				54D213921CE08D0C0028D5B4 /* UINavigationItem+Rx.swift in Sources */,
 				D2F461041CD7AC2100527B4D /* Reactive.swift in Sources */,

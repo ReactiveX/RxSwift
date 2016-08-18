@@ -1,5 +1,5 @@
 //
-//  RxTextInput.swift
+//  TextInput.swift
 //  Rx
 //
 //  Created by Krunoslav Zaher on 5/12/16.
@@ -110,11 +110,11 @@ import Foundation
         }
     }
 
-    extension Reactive where Base: NSTextView {
+    extension Reactive where Base: NSTextField {
         /**
          Reactive text input.
          */
-        public var textInput: TextInput<NSTextView> {
+        public var textInput: TextInput<NSTextField> {
             return TextInput(base: base, text: self.text)
         }
     }
