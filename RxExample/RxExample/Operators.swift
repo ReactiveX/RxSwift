@@ -39,16 +39,16 @@ func nonMarkedText(_ textInput: UITextInput) -> String? {
     return (textInput.text(in: startRange) ?? "") + (textInput.text(in: endRange) ?? "")
 }
 
-func <-> (textInput: RxTextInput, variable: Variable<String>) -> Disposable {
+func <-> <Base: UITextInput>(textInput: TextInput<Base>, variable: Variable<String>) -> Disposable {
     let bindToUIDisposable = variable.asObservable()
-        .bindTo(textInput.rx_text)
-    let bindToVariable = textInput.rx_text
-        .subscribe(onNext: { [weak textInput] n in
-            guard let textInput = textInput else {
+        .bindTo(textInput.text)
+    let bindToVariable = textInput.text
+        .subscribe(onNext: { [weak base = textInput.base] n in
+            guard let base = base else {
                 return
             }
 
-            let nonMarkedTextValue = nonMarkedText(textInput)
+            let nonMarkedTextValue = nonMarkedText(base)
 
             /**
              In some cases `textInput.textRangeFromPosition(start, toPosition: end)` will return nil even though the underlying
