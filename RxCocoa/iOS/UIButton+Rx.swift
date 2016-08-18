@@ -19,8 +19,8 @@ extension UIButton {
     /**
     Reactive wrapper for `TouchUpInside` control event.
     */
-    public var rx_tap: ControlEvent<Void> {
-        return rx_controlEvent(.TouchUpInside)
+    public var rx_tap: Observer<UIButton> {
+        return rx_controlEvent(.TouchUpInside).map { self }
     }
 }
 
