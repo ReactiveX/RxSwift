@@ -23,13 +23,24 @@
  */
 
 public struct Reactive<Base> {
+    /**
+    Base object to extend.
+    */
     public let base: Base
 
+    /**
+     Creates extensions with base object.
+     
+     - parameter base: Base object.
+    */
     public init(_ base: Base) {
         self.base = base
     }
 }
 
+/**
+ A type that has reactive extensions.
+ */
 public protocol ReactiveCompatible {
     associatedtype CompatibleType
     var rx: Reactive<CompatibleType> { get }
