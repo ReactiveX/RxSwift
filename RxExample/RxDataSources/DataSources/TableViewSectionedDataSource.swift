@@ -56,9 +56,9 @@ public class _TableViewSectionedDataSource
     public func tableView(tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         return _rx_tableView(tableView, titleForFooterInSection: section)
     }
-    
+
     func _rx_tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        return true
+        return false
     }
     
     public func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
@@ -95,6 +95,7 @@ public class _TableViewSectionedDataSource
     public func tableView(tableView: UITableView, moveRowAtIndexPath sourceIndexPath: NSIndexPath, toIndexPath destinationIndexPath: NSIndexPath) {
         _rx_tableView(tableView, moveRowAtIndexPath: sourceIndexPath, toIndexPath: destinationIndexPath)
     }
+
 }
 
 public class RxTableViewSectionedDataSource<S: SectionModelType>
@@ -104,7 +105,19 @@ public class RxTableViewSectionedDataSource<S: SectionModelType>
     public typealias I = S.Item
     public typealias Section = S
     public typealias CellFactory = (RxTableViewSectionedDataSource<S>, UITableView, NSIndexPath, I) -> UITableViewCell
+
+    #if DEBUG
+    // If data source has already been bound, then mutating it
+    // afterwards isn't something desired.
+    // This simulates immutability after binding
+    var _dataSourceBound: Bool = false
+
+    private func ensureNotMutatedAfterBinding() {
+        assert(!_dataSourceBound, "Data source is already bound. Please write this line before binding call (`bindTo`, `drive`). Data source must first be completely configured, and then bound after that, otherwise there could be runtime bugs, glitches, or partial malfunctions.")
+    }
     
+    #endif
+
     // This structure exists because model can be mutable
     // In that case current state value should be preserved.
     // The state that needs to be preserved is ordering of items in section
@@ -142,18 +155,59 @@ public class RxTableViewSectionedDataSource<S: SectionModelType>
         self._sectionModels = sections.map { SectionModelSnapshot(model: $0, items: $0.items) }
     }
 
-    public var configureCell: CellFactory! = nil
+    public var configureCell: CellFactory! = nil {
+        didSet {
+            #if DEBUG
+            ensureNotMutatedAfterBinding()
+            #endif
+        }
+    }
     
-    public var titleForHeaderInSection: ((RxTableViewSectionedDataSource<S>, section: Int) -> String?)?
-    public var titleForFooterInSection: ((RxTableViewSectionedDataSource<S>, section: Int) -> String?)?
+    public var titleForHeaderInSection: ((RxTableViewSectionedDataSource<S>, section: Int) -> String?)? {
+        didSet {
+            #if DEBUG
+            ensureNotMutatedAfterBinding()
+            #endif
+        }
+    }
+    public var titleForFooterInSection: ((RxTableViewSectionedDataSource<S>, section: Int) -> String?)? {
+        didSet {
+            #if DEBUG
+            ensureNotMutatedAfterBinding()
+            #endif
+        }
+    }
     
-    public var canEditRowAtIndexPath: ((RxTableViewSectionedDataSource<S>, indexPath: NSIndexPath) -> Bool)?
-    public var canMoveRowAtIndexPath: ((RxTableViewSectionedDataSource<S>, indexPath: NSIndexPath) -> Bool)?
-    
-    public var sectionIndexTitles: ((RxTableViewSectionedDataSource<S>) -> [String]?)?
-    public var sectionForSectionIndexTitle:((RxTableViewSectionedDataSource<S>, title: String, index: Int) -> Int)?
-    
-    public var rowAnimation: UITableViewRowAnimation = .Automatic
+    public var canEditRowAtIndexPath: ((RxTableViewSectionedDataSource<S>, indexPath: NSIndexPath) -> Bool)? {
+        didSet {
+            #if DEBUG
+            ensureNotMutatedAfterBinding()
+            #endif
+        }
+    }
+
+    public var canMoveRowAtIndexPath: ((RxTableViewSectionedDataSource<S>, indexPath: NSIndexPath) -> Bool)? {
+        didSet {
+            #if DEBUG
+            ensureNotMutatedAfterBinding()
+            #endif
+        }
+    }
+
+    public var sectionIndexTitles: ((RxTableViewSectionedDataSource<S>) -> [String]?)? {
+        didSet {
+            #if DEBUG
+            ensureNotMutatedAfterBinding()
+            #endif
+        }
+    }
+    public var sectionForSectionIndexTitle:((RxTableViewSectionedDataSource<S>, title: String, index: Int) -> Int)? {
+        didSet {
+            #if DEBUG
+            ensureNotMutatedAfterBinding()
+            #endif
+        }
+    }
     
     public override init() {
         super.init()

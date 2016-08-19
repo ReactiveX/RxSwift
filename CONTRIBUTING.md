@@ -13,6 +13,14 @@ So what does this mean in practice:
 * Please target your PR to **develop** branch
 * If you want to make a bigger contribution to the project, please [open an issue first](https://github.com/ReactiveX/RxSwift/issues/new) so we can plan that work, discuss the architecture and brainstorm around that idea first.
 
+## Submitting a Pull Request
+
+Before submitting a pull request please make sure **`./scripts/all-tests.sh`** is passing (exits with 0), otherwise we won't be able to pull your code.
+
+To be able to run `./scripts/all-tests.sh`, you'll need to install [xcpretty](https://github.com/supermarin/xcpretty).
+
+`sudo gem install xcpretty`
+
 ## Developer's Certificate of Origin 1.1
 
 By making a contribution to this project, I certify that:

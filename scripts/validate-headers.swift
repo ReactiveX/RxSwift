@@ -34,7 +34,8 @@ let allowedExtensions = [
 let excludedRootPaths = [
     ".git",
     "build",
-    "Rx.playground"
+    "Rx.playground",
+    "vendor"
 ]
 
 let excludePaths = [
@@ -175,10 +176,9 @@ func verifyAll(root: String) throws -> Bool {
             return true
         }
 
-        //print("Validating \(file)")
         let isValid = try validateHeader("\(root)/\(file)")
         if !isValid {
-            print("     while Validating \(file)")
+            print("     while Validating '\(root)/\(file)'")
         }
 
         return isValid

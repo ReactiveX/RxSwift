@@ -21,11 +21,17 @@ BOLDWHITE="\033[1m\033[37m"
 
 # make sure all tests are passing
 
-DEFAULT_IOS7_SIMULATOR=RxSwiftTest/iPhone-4s/iOS/7.1
-DEFAULT_IOS8_SIMULATOR=RxSwiftTest/iPhone-6/iOS/8.4
-DEFAULT_IOS9_SIMULATOR=RxSwiftTest/iPhone-6/iOS/9.3
-DEFAULT_WATCHOS2_SIMULATOR=RxSwiftTest/Apple-Watch-38mm/watchOS/2.2
-DEFAULT_TVOS_SIMULATOR=RxSwiftTest/Apple-TV-1080p/tvOS/9.1
+IS_SWIFT_3=`swift --version | grep "Apple Swift version 3.0" | wc -l`
+
+if [ "${IS_SWIFT_3}" -eq 1 ]; then
+    DEFAULT_IOS_SIMULATOR=RxSwiftTest/iPhone-6/iOS/10.0
+    DEFAULT_WATCHOS_SIMULATOR=RxSwiftTest/Apple-Watch-38mm/watchOS/3.0
+    DEFAULT_TVOS_SIMULATOR=RxSwiftTest/Apple-TV-1080p/tvOS/10.0
+else
+    DEFAULT_IOS_SIMULATOR=RxSwiftTest/iPhone-6/iOS/9.3
+    DEFAULT_WATCHOS_SIMULATOR=RxSwiftTest/Apple-Watch-38mm/watchOS/2.2
+    DEFAULT_TVOS_SIMULATOR=RxSwiftTest/Apple-TV-1080p/tvOS/9.1
+fi
 
 function runtime_available() {
 	if [ `xcrun simctl list runtimes | grep "${1}" | wc -l` -eq 1 ]; then
@@ -124,7 +130,6 @@ function action() {
 			DESTINATION='platform=OS X,arch=x86_64'
 	fi
 
-	STATUS=""
     set -x
 		killall Simulator || true
 	xcodebuild -workspace "${WORKSPACE}" \
@@ -132,9 +137,13 @@ function action() {
 				-configuration "${CONFIGURATION}" \
 				-derivedDataPath "${BUILD_DIRECTORY}" \
 				-destination "$DESTINATION" \
-				$ACTION | tee build/last-build-output.txt | xcpretty -c; STATUS=${PIPESTATUS[0]}
+				$ACTION | tee build/last-build-output.txt | xcpretty -c
+    exitIfLastStatusWasUnsuccessful
     set +x
+}
 
+function exitIfLastStatusWasUnsuccessful() {
+  STATUS=${PIPESTATUS[0]}
 	if [ $STATUS -ne 0 ]; then
 		echo $STATUS
  		exit $STATUS

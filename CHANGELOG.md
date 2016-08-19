@@ -5,9 +5,36 @@ All notable changes to this project will be documented in this file.
 
 ## Master
 
+## [2.6.0](https://github.com/ReactiveX/RxSwift/releases/tag/2.6.0)
+
 #### Features
 
-* Adds `rx_title` to `UIViewController`.
+* Adds Swift 2.3 compatibility.
+* Adds `UIViewController.rx_title` extension.
+* Adds `UIScrollView.rx_scrollEnabled` extension.
+* Resolve static analysis issues relating to non-use of an assigned value, and potential null dereferences in RxCocoa's Objective-C classes.
+* Changes `forwardDelegate` property type on `DelegateProxy` from `assign` to `weak`.
+* Simplifies UITable/CollectionView data source generic parameters.
+* Adds simple usage examples to UITable/CollectionView data source extensions.
+* Documents UITable/CollectionView data source extensions memory management and adds unit tests to cover that documentation.
+* Adds `.jazzy.yml`
+* Adds `UITabBar` extensions and delegate proxy wrapper
+    * rx_didSelectItem
+    * rx_willBeginCustomizing
+    * rx_didBeginCustomizing
+    * rx_willEndCustomizing
+    * rx_didEndCustomizing
+* Adds `UIPickerView` delegate proxy and extensions:
+    * rx_itemSelected
+* Adds `UIAlertAction.rx_enabled` extension.
+* Adds `UIButton.rx_title(controlState: UIControlState = .Normal)` extension.
+* Adds `UIPageControl.rx_currentPage` extension.
+* Adds `hasObservers` property to `*Subject`.
+
+#### Anomalies
+
+* Fixes problem with UITable/CollectionView releasing of data sources when result subscription disposable wasn't retained.
+* Fixes all Xcode analyzer warnings
 
 
 ## [2.5.0](https://github.com/ReactiveX/RxSwift/releases/tag/2.5.0)

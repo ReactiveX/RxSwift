@@ -133,7 +133,7 @@ This will print:
 5
 ```
 
-Note the you usually do not want to manually call `dispose`; this is only educational example. Calling dispose manually is usually a bad code smell. There are better ways to dispose subscriptions. We can use `DisposeBag`, the `takeUntil` operator, or some other mechanism.
+Note that you usually do not want to manually call `dispose`; this is only educational example. Calling dispose manually is usually a bad code smell. There are better ways to dispose subscriptions. We can use `DisposeBag`, the `takeUntil` operator, or some other mechanism.
 
 So can this code print something after the `dispose` call executed? The answer is: it depends.
 
@@ -716,7 +716,7 @@ If you are unsure how exactly some of the operators work, [playgrounds](../Rx.pl
 
 ## Error handling
 
-The are two error mechanisms.
+There are two error mechanisms.
 
 ### Asynchronous error handling mechanism in observables
 
@@ -875,7 +875,7 @@ The reason why 2 navigations are suggested is because first navigation forces lo
 
 Variable wraps a [`Subject`](http://reactivex.io/documentation/subject.html). More specifically it is a `BehaviorSubject`.  Unlike `BehaviorSubject`, it only exposes `value` interface, so variable can never terminate or fail.
 
-It will also broadcast it's current value immediately on subscription.
+It will also broadcast its current value immediately on subscription.
 
 After variable is deallocated, it will complete the observable sequence returned from `.asObservable()`.
 

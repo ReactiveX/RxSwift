@@ -31,6 +31,10 @@ func parseImageURLsfromHTML(html: NSString) throws -> [NSURL]  {
 
 func parseImageURLsfromHTMLSuitableForDisplay(html: NSString) throws -> [NSURL] {
     return try parseImageURLsfromHTML(html).filter {
-        return $0.absoluteString.rangeOfString(".svg.") == nil
+		#if swift(>=2.3)
+			return $0.absoluteString!.rangeOfString(".svg.") == nil
+		#else
+			return $0.absoluteString.rangeOfString(".svg.") == nil
+		#endif
     }
 }

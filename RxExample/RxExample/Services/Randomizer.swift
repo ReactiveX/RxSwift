@@ -10,22 +10,6 @@ import Foundation
 
 typealias NumberSection = AnimatableSectionModel<String, Int>
 
-extension String : IdentifiableType {
-    public typealias Identity = String
-
-    public var identity: String {
-        return self
-    }
-}
-
-extension Int : IdentifiableType {
-    public typealias Identity = Int
-
-    public var identity: Int {
-        return self
-    }
-}
-
 let insertItems = true
 let deleteItems = true
 let moveItems = true

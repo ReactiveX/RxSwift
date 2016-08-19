@@ -51,8 +51,19 @@ func <-> (textInput: RxTextInput, variable: Variable<String>) -> Disposable {
 
             let nonMarkedTextValue = nonMarkedText(textInput)
 
-            if nonMarkedTextValue != variable.value {
+            /**
+             In some cases `textInput.textRangeFromPosition(start, toPosition: end)` will return nil even though the underlying
+             value is not nil. This appears to be an Apple bug. If it's not, and we are doing something wrong, please let us know.
+             The can be reproed easily if replace bottom code with 
+             
+             if nonMarkedTextValue != variable.value {
                 variable.value = nonMarkedTextValue ?? ""
+             }
+
+             and you hit "Done" button on keyboard.
+             */
+            if let nonMarkedTextValue = nonMarkedTextValue where nonMarkedTextValue != variable.value {
+                variable.value = nonMarkedTextValue
             }
         }, onCompleted:  {
             bindToUIDisposable.dispose()

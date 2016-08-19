@@ -6,4 +6,6 @@ notifications:
   slack: rxswift:3ykt2Z61f8GkdvhCZTYPduOL
   email: false
 
-script: ./scripts/pre-release-tests.sh
+script: 
+  - "bundle exec danger --verbose"
+  - ./scripts/all-tests.sh

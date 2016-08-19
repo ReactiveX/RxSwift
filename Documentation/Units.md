@@ -43,7 +43,7 @@ Analogies:
 | Physical units                      | Rx units                                                            |
 |-------------------------------------|---------------------------------------------------------------------|
 | number (one value)                  | observable sequence (sequence of values)                            |
-| dimensional unit (m, s, m/s, N ...) | Swift struct (Driver, ControlProperty, ControlEvent, Variable, ...) |
+| dimensional unit (m, s, m/s, N ...) | Swift struct (Driver, ControlProperty, ControlEvent, ...) |
 
 A physical unit is a pair of a number and a corresponding dimensional unit.<br/>
 An Rx unit is a pair of an observable sequence and a corresponding struct that describes observable sequence properties.
@@ -106,7 +106,6 @@ E.g.
 ```
 Driver = (can't error out) * (observe on main scheduler) * (sharing side effects)
 ControlProperty = (sharing side effects) * (subscribe on main scheduler)
-Variable = (can't error out) * (sharing side effects)
 ```
 
 Conversion between different units in physics is done with the help of operators defined on numbers `*`, `/`.<br/>
@@ -135,11 +134,6 @@ Sharing side effects = share* (one of the `share` operators)
 * Can't error out
 * Subscribe on main scheduler
 * Observe on main scheduler
-* Sharing side effects
-
-### Variable
-
-* Can't error out
 * Sharing side effects
 
 ## Driver

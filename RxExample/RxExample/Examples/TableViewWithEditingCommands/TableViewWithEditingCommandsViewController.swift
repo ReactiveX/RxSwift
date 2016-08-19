@@ -84,7 +84,14 @@ class TableViewWithEditingCommandsViewController: ViewController, UITableViewDel
                 .observeOn(MainScheduler.instance)
 
         let deleteUserCommand = tableView.rx_itemDeleted.map(TableViewEditingCommand.DeleteUser)
-        let moveUserCommand = tableView.rx_itemMoved.map(TableViewEditingCommand.MoveUser)
+        let moveUserCommand = tableView
+            .rx_itemMoved
+            // This is needed because rx_itemMoved is being performed before delegate method is
+            // delegated to RxDataSource.
+            // This observeOn makes sure data is rebound after automatic move is performed in data source.
+            // This will be improved in RxSwift 3.0 when order will be inversed.
+            .observeOn(MainScheduler.asyncInstance)
+            .map(TableViewEditingCommand.MoveUser)
 
         let initialState = TableViewEditingCommandsViewModel(favoriteUsers: [], users: [])
 
@@ -168,6 +175,10 @@ class TableViewWithEditingCommandsViewController: ViewController, UITableViewDel
         }
 
         dataSource.canEditRowAtIndexPath = { (ds, ip) in
+            return true
+        }
+
+        dataSource.canMoveRowAtIndexPath = { _ in
             return true
         }
 

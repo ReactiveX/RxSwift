@@ -32,6 +32,12 @@
 #define CLASS_VALUE(x)    [NSValue valueWithNonretainedObject:(x)]
 #define IMP_VALUE(x)      [NSValue valueWithPointer:(x)]
 
+/**
+ Checks that the local `error` instance exists before assigning it's value by reference.
+ This macro exists to work around static analysis warnings — `NSError` is always assumed to be `nullable`, even though we explictly define the method parameter as `nonnull`. See http://www.openradar.me/21766176 for more details.
+ */
+#define RX_SAFE_ERROR(errorValue) if (error != nil) { *error = (errorValue); }
+
 // Inspired by http://p99.gforge.inria.fr
 
 // https://gcc.gnu.org/onlinedocs/gcc-2.95.3/cpp_1.html#SEC26

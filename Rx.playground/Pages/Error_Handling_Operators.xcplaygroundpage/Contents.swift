@@ -40,10 +40,10 @@ example("catchErrorJustReturn") {
 example("catchError") {
     let disposeBag = DisposeBag()
     
-    let sequenceThatErrors = PublishSubject<String>()
+    let sequenceThatFails = PublishSubject<String>()
     let recoverySequence = PublishSubject<String>()
     
-    sequenceThatErrors
+    sequenceThatFails
         .catchError {
             print("Error:", $0)
             return recoverySequence
@@ -51,18 +51,18 @@ example("catchError") {
         .subscribe { print($0) }
         .addDisposableTo(disposeBag)
     
-    sequenceThatErrors.onNext("😬")
-    sequenceThatErrors.onNext("😨")
-    sequenceThatErrors.onNext("😡")
-    sequenceThatErrors.onNext("🔴")
-    sequenceThatErrors.onError(Error.Test)
+    sequenceThatFails.onNext("😬")
+    sequenceThatFails.onNext("😨")
+    sequenceThatFails.onNext("😡")
+    sequenceThatFails.onNext("🔴")
+    sequenceThatFails.onError(Error.Test)
     
     recoverySequence.onNext("😊")
 }
 /*:
  ----
  ## `retry`
- Recovers repeatedly Error events by rescribing to the `Observable` sequence, indefinitely. [More info](http://reactivex.io/documentation/operators/retry.html)
+ Recovers repeatedly Error events by resubscribing to the `Observable` sequence, indefinitely. [More info](http://reactivex.io/documentation/operators/retry.html)
  ![](https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/MarbleDiagrams/png/retry.png)
  */
 example("retry") {

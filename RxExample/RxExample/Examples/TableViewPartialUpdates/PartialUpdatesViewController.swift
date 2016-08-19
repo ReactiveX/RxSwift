@@ -151,7 +151,7 @@ class PartialUpdatesViewController : ViewController {
     }
 
     func skinCollectionViewDataSource(dataSource: CollectionViewSectionedDataSource<NumberSection>) {
-        dataSource.cellFactory = { (_, cv, ip, i) in
+        dataSource.configureCell = { (_, cv, ip, i) in
             let cell = cv.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: ip) as! NumberCell
 
             cell.value!.text = "\(i)"

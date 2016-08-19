@@ -46,9 +46,19 @@ extension UIScrollView {
 
         return ControlProperty(values: proxy.contentOffsetSubject, valueSink: bindingObserver)
     }
-    
+
+    /**
+    Bindable sink for `scrollEnabled` property.
+    */
+    public var rx_scrollEnabled: AnyObserver<Bool> {
+        return UIBindingObserver(UIElement: self) { scrollView, scrollEnabled in
+            scrollView.scrollEnabled = scrollEnabled
+        }.asObserver()
+    }
+
     /**
     Installs delegate as forwarding delegate on `rx_delegate`.
+    Delegate won't be retained.
     
     It enables using normal delegate mechanism with reactive delegate mechanism.
     
