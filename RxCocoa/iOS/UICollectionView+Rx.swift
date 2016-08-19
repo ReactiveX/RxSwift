@@ -215,7 +215,7 @@ extension Reactive where Base: UICollectionView {
             .addDisposableTo(disposeBag)
     */
     @available(*, deprecated, renamed: "items(dataSource:source:)")
-    public func itemsWithDataSource<
+    public func rx_itemsWithDataSource<
             DataSource: RxCollectionViewDataSourceType & UICollectionViewDataSource,
             O: ObservableType>
         (_ dataSource: DataSource)
