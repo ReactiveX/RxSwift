@@ -174,7 +174,7 @@ extension TestScheduler {
      - returns: Implementation of method that accepts arguments with parameter `Arg` and returns observable sequence
         with parameter `Ret`.
      */
-    func mock<Arg, Ret>(values: [String: Ret], errors: [String: Swift.Error] = [:], timelineSelector: (Arg) -> String) -> (Arg) -> Observable<Ret> {
+    func mock<Arg, Ret>(values: [String: Ret], errors: [String: Swift.Error] = [:], timelineSelector: @escaping (Arg) -> String) -> (Arg) -> Observable<Ret> {
         return { (parameters: Arg) -> Observable<Ret> in
             let timeline = timelineSelector(parameters)
 
