@@ -102,6 +102,22 @@ public func XCTAssertEqual<T: Equatable>(lhs: [Recorded<Event<T>>], _ rhs: [Reco
     printSequenceDifferences(lhs, rhs, ==)
 }
 
+public func XCTAssertEqual<T: Equatable>(lhs: [Recorded<Event<[T]>>], _ rhs: [Recorded<Event<[T]>>], file: StaticString = #file, line: UInt = #line) {
+    let leftEquatable = lhs.map { AnyEquatable(target: $0, comparer: ==) }
+    let rightEquatable = rhs.map { AnyEquatable(target: $0, comparer: ==) }
+    #if os(Linux)
+        XCTAssertEqual(leftEquatable, rightEquatable)
+    #else
+        XCTAssertEqual(leftEquatable, rightEquatable, file: file, line: line)
+    #endif
+    
+    if leftEquatable == rightEquatable {
+        return
+    }
+    
+    printSequenceDifferences(lhs, rhs, ==)
+}
+
 func printSequenceDifferences<E>(lhs: [E], _ rhs: [E], _ equal: (E, E) -> Bool) {
     print("Differences:")
     for (index, elements) in zip(lhs, rhs).enumerate() {
