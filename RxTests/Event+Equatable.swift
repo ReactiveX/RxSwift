@@ -41,7 +41,7 @@ public func == <Element: Equatable>(lhs: Event<Element>, rhs: Event<Element>) ->
     }
 }
 
-func == <Element: Equatable>(lhs: Event<[Element]>, rhs: Event<[Element]>) -> Bool {
+public func == <Element: Equatable>(lhs: Event<[Element]>, rhs: Event<[Element]>) -> Bool {
     switch (lhs, rhs) {
     case (.Completed, .Completed): return true
     case (.Error(let e1), .Error(let e2)):

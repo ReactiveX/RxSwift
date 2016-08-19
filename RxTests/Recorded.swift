@@ -45,14 +45,14 @@ public func == <T: Equatable>(lhs: Recorded<T>, rhs: Recorded<T>) -> Bool {
     return lhs.time == rhs.time && lhs.value == rhs.value
 }
 
-func == <T: Equatable>(lhs: Recorded<[T]>, rhs: Recorded<[T]>) -> Bool {
+public func == <T: Equatable>(lhs: Recorded<[T]>, rhs: Recorded<[T]>) -> Bool {
     return lhs.time == rhs.time && lhs.value == rhs.value
 }
 
-func == <T: Equatable>(lhs: Recorded<Event<T>>, rhs: Recorded<Event<T>>) -> Bool {
+public func == <T: Equatable>(lhs: Recorded<Event<T>>, rhs: Recorded<Event<T>>) -> Bool {
     return lhs.time == rhs.time && lhs.value == rhs.value
 }
 
-func == <T: Equatable>(lhs: Recorded<Event<[T]>>, rhs: Recorded<Event<[T]>>) -> Bool {
+public func == <T: Equatable>(lhs: Recorded<Event<[T]>>, rhs: Recorded<Event<[T]>>) -> Bool {
     return lhs.time == rhs.time && lhs.value == rhs.value
 }
