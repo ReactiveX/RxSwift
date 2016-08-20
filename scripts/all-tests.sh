@@ -64,7 +64,15 @@ if [ "${RELEASE_TEST}" -eq 1 ]; then
 fi
 
 if [ "${RELEASE_TEST}" -eq 1 ]; then
-	. scripts/automation-tests.sh
+	for configuration in ${CONFIGURATIONS[@]}
+	do
+		rx "RxSwift-tvOS" ${configuration} "Krunoslav Zaher’s iPhone" test
+	done
+
+	for configuration in ${CONFIGURATIONS[@]}
+	do
+		rx "RxSwift-tvOS" ${configuration} $DEFAULT_TVOS_SIMULATOR test
+	done
 fi
 
 #make sure all tvOS tests pass
