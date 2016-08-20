@@ -63,7 +63,7 @@ extension Reactive where Base: UIControl {
      You might be wondering why the ugly `as!` casts etc, well, for some reason if 
      Swift compiler knows C is UIControl type and optimizations are turned on, it will crash.
     */
-    static func value<C: AnyObject, T: Equatable>(_ control: C, getter: @escaping (C) -> T, setter: @escaping (C, T) -> Void) -> ControlProperty<T> {
+    static func value<C: NSObject, T: Equatable>(_ control: C, getter: @escaping (C) -> T, setter: @escaping (C, T) -> Void) -> ControlProperty<T> {
         let source: Observable<T> = Observable.create { [weak weakControl = control] observer in
                 guard let control = weakControl else {
                     observer.on(.completed)
@@ -80,7 +80,7 @@ extension Reactive where Base: UIControl {
                 
                 return Disposables.create(with: controlTarget.dispose)
             }
-            .takeUntil((control as! NSObject).rx.deallocated)
+            .takeUntil((control as NSObject).rx.deallocated)
 
         let bindingObserver = UIBindingObserver(UIElement: control, binding: setter)
 

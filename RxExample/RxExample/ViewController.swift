@@ -79,7 +79,7 @@ class ViewController: OSViewController {
         
         If somebody knows more about why this delay happens, you can make a PR with explanation here.
         */
-        let when = DispatchTime.now() + DispatchTimeInterval.milliseconds(20)
+        let when = DispatchTime.now() + DispatchTimeInterval.milliseconds(UIApplication.isInUITest ? 1000 : 10)
 
         mainQueue.asyncAfter (deadline: when) {
 
@@ -92,7 +92,7 @@ class ViewController: OSViewController {
                 //
                 // If this crashes when you've been clicking slowly, then it would be interesting to find out why.
                 // ¯\_(ツ)_/¯
-                assert(resourceCount <= numberOfResourcesThatShouldRemain, "Resources weren't cleaned properly")
+                assert(resourceCount <= numberOfResourcesThatShouldRemain, "Resources weren't cleaned properly, \(resourceCount) remaned, \(numberOfResourcesThatShouldRemain) expected")
             
     }
 #endif

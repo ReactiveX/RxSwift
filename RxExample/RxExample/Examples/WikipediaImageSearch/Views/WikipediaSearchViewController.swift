@@ -13,21 +13,9 @@ import RxCocoa
 #endif
 
 class WikipediaSearchViewController: ViewController {
-    @IBOutlet var searchBarContainer: UIView!
-    
-    private let searchController = UISearchController(searchResultsController: UITableViewController())
-    
-    private var resultsViewController: UITableViewController {
-        return (self.searchController.searchResultsController as? UITableViewController)!
-    }
-    
-    private var resultsTableView: UITableView {
-        return self.resultsViewController.tableView!
-    }
-
-    private var searchBar: UISearchBar {
-        return self.searchController.searchBar
-    }
+    @IBOutlet var searchBar: UISearchBar!
+    @IBOutlet var resultsTableView: UITableView!
+    @IBOutlet var emptyView: UIView!
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -37,15 +25,8 @@ class WikipediaSearchViewController: ViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let searchBar = self.searchBar
-        let searchBarContainer = self.searchBarContainer
 
-        searchBarContainer?.addSubview(searchBar)
-        searchBar.frame = (searchBarContainer?.bounds)!
-        searchBar.autoresizingMask = .flexibleWidth
-
-        resultsViewController.edgesForExtendedLayout = UIRectEdge()
+        self.edgesForExtendedLayout = .all
 
         configureTableDataSource()
         configureKeyboardDismissesOnScroll()
@@ -57,14 +38,12 @@ class WikipediaSearchViewController: ViewController {
         resultsTableView.register(UINib(nibName: "WikipediaSearchCell", bundle: nil), forCellReuseIdentifier: "WikipediaSearchCell")
         
         resultsTableView.rowHeight = 194
+        resultsTableView.hideEmptyCells()
 
         // This is for clarity only, don't use static dependencies
         let API = DefaultWikipediaAPI.sharedAPI
 
-        resultsTableView.delegate = nil
-        resultsTableView.dataSource = nil
-
-        searchBar.rx.text
+        let results = searchBar.rx.text
             .asDriver()
             .throttle(0.3)
             .distinctUntilChanged()
@@ -78,24 +57,27 @@ class WikipediaSearchViewController: ViewController {
             .map { results in
                 results.map(SearchResultViewModel.init)
             }
+
+        results
             .drive(resultsTableView.rx.items(cellIdentifier: "WikipediaSearchCell", cellType: WikipediaSearchCell.self)) { (_, viewModel, cell) in
                 cell.viewModel = viewModel
             }
+            .addDisposableTo(disposeBag)
+
+        results
+            .map { $0.count != 0 }
+            .drive(self.emptyView.rx.hidden)
             .addDisposableTo(disposeBag)
     }
 
     func configureKeyboardDismissesOnScroll() {
         let searchBar = self.searchBar
-        let searchController = self.searchController
         
         resultsTableView.rx.contentOffset
             .asDriver()
-            .filter { _ -> Bool in
-                return !searchController.isBeingPresented
-            }
             .drive(onNext: { _ in
-                if searchBar.isFirstResponder {
-                    _ = searchBar.resignFirstResponder()
+                if searchBar?.isFirstResponder ?? false {
+                    _ = searchBar?.resignFirstResponder()
                 }
             })
             .addDisposableTo(disposeBag)

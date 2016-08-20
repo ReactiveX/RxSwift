@@ -11,10 +11,11 @@ import UIKit
 extension UIImageView {
     
     func makeRoundedCorners(_ radius: CGFloat) {
-        self.layer.cornerRadius = self.frame.size.width / 2
-        self.layer.borderColor = UIColor.darkGray.cgColor
-        self.layer.borderWidth = radius
+        self.layer.cornerRadius = radius
         self.layer.masksToBounds = true
     }
-    
+
+    func makeRoundedCorners() {
+        self.makeRoundedCorners(self.frame.size.width / 2)
+    }
 }

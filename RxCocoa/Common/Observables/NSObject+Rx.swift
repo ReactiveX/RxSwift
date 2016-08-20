@@ -92,7 +92,7 @@ extension Reactive where Base: NSObject {
 #endif
 
 // Dealloc
-extension Reactive where Base: NSObject {
+extension Reactive where Base: AnyObject {
     
     /**
     Observable sequence of object deallocated events.
@@ -211,7 +211,7 @@ let deallocSelector = NSSelectorFromString("dealloc")
 let rxDeallocatingSelector = RX_selector(deallocSelector)
 let rxDeallocatingSelectorReference = RX_reference_from_selector(rxDeallocatingSelector)
 
-extension Reactive where Base: NSObject {
+extension Reactive where Base: AnyObject {
     func synchronized<T>( _ action: () -> T) -> T {
         objc_sync_enter(self.base)
         let result = action()
@@ -220,7 +220,7 @@ extension Reactive where Base: NSObject {
     }
 }
 
-extension Reactive where Base: NSObject {
+extension Reactive where Base: AnyObject {
     /**
      Helper to make sure that `Observable` returned from `createCachedObservable` is only created once.
      This is important because there is only one `target` and `action` properties on `NSControl` or `UIBarButtonItem`.

@@ -23,7 +23,7 @@ class DetailViewController: ViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
                 
-        imageView.makeRoundedCorners(5)
+        imageView.makeRoundedCorners(40)
         
         let url = URL(string: user.imageURL)!
         let request = URLRequest(url: url)

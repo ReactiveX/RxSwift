@@ -54,14 +54,16 @@ class PartialUpdatesViewController : ViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.navigationItem.rightBarButtonItem?.accessibilityLabel = "Randomize"
+
         // For UICollectionView, if another animation starts before previous one is finished, it will sometimes crash :(
         // It's not deterministic (because Randomizer generates deterministic updates), and if you click fast
         // It sometimes will and sometimes wont crash, depending on tapping speed.
         // I guess you can maybe try some tricks with timeout, hard to tell :( That's on Apple side.
 
         if generateCustomSize {
-            let nSections = 10
-            let nItems = 100
+            let nSections = UIApplication.isInUITest ? 10 : 10
+            let nItems = UIApplication.isInUITest ? 20 : 100
 
             var sections = [AnimatableSectionModel<String, Int>]()
 

@@ -18,6 +18,10 @@ extension Reactive where Base: UISwitch {
     
     /**
     Reactive wrapper for `on` property.
+    
+    **⚠️Unlike other controls, Apple is reusing instances of UISwitch or a there is a leak,
+     so underlying observable sequence won't complete when nothing holds a strong reference
+     to UISwitch.⚠️**
     */
     public var value: ControlProperty<Bool> {
         return Reactive<UIControl>.value(
