@@ -63,15 +63,25 @@ if [ "${RELEASE_TEST}" -eq 1 ]; then
 fi
 
 if [ "${RELEASE_TEST}" -eq 1 ]; then
-	for configuration in ${CONFIGURATIONS[@]}
-	do
-		rx "RxExample-iOS" ${configuration} "Krunoslav Zaher’s iPhone" test
-	done
+#   for configuration in ${CONFIGURATIONS[@]}
+#	do
+#		rx "RxExample-iOSTests" ${configuration} "Krunoslav Zaher’s iPhone" test
+#	done
 
-	for configuration in ${CONFIGURATIONS[@]}
-	do
-		rx "RxExample-iOS" ${configuration} $DEFAULT_TVOS_SIMULATOR test
-	done
+    for configuration in ${CONFIGURATIONS[@]}
+    do
+        rx "RxExample-iOSUITests" ${configuration} "Krunoslav Zaher’s iPhone" test
+    done
+
+#	for configuration in ${CONFIGURATIONS[@]}
+#	do
+#		rx "RxExample-iOSTests" ${configuration} $DEFAULT_IOS_SIMULATOR test
+#	done
+
+    for configuration in ${CONFIGURATIONS[@]}
+    do
+        rx "RxExample-iOSUITests" ${configuration} $DEFAULT_IOS_SIMULATOR test
+    done
 fi
 
 if [ "${RELEASE_TEST}" -eq 1 ]; then
