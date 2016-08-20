@@ -38,36 +38,8 @@
    <Group
       location = "group:scripts"
       name = "scripts">
-      <Group
-         location = "group:automation-tests"
-         name = "automation-tests">
-         <FileRef
-            location = "group:01_githubSignUp.js">
-         </FileRef>
-         <FileRef
-            location = "group:02_searchWikipedia.js">
-         </FileRef>
-         <FileRef
-            location = "group:03_masterDetail.js">
-         </FileRef>
-         <FileRef
-            location = "group:04_controlsTests.js">
-         </FileRef>
-         <FileRef
-            location = "group:05_reactivePartialUpdates.js">
-         </FileRef>
-         <FileRef
-            location = "group:common.js">
-         </FileRef>
-         <FileRef
-            location = "group:main.js">
-         </FileRef>
-      </Group>
       <FileRef
          location = "group:all-tests.sh">
-      </FileRef>
-      <FileRef
-         location = "group:automation-tests.sh">
       </FileRef>
       <FileRef
          location = "group:common.sh">

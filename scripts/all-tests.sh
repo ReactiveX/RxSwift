@@ -59,20 +59,23 @@ if [ "${RELEASE_TEST}" -eq 1 ]; then
 fi
 
 if [ "${RELEASE_TEST}" -eq 1 ]; then
-  scripts/validate-markdown.sh
-	scripts/validate-podspec.sh
+  	scripts/validate-markdown.sh
 fi
 
 if [ "${RELEASE_TEST}" -eq 1 ]; then
 	for configuration in ${CONFIGURATIONS[@]}
 	do
-		rx "RxSwift-tvOS" ${configuration} "Krunoslav Zaher’s iPhone" test
+		rx "RxExample-iOS" ${configuration} "Krunoslav Zaher’s iPhone" test
 	done
 
 	for configuration in ${CONFIGURATIONS[@]}
 	do
-		rx "RxSwift-tvOS" ${configuration} $DEFAULT_TVOS_SIMULATOR test
+		rx "RxExample-iOS" ${configuration} $DEFAULT_TVOS_SIMULATOR test
 	done
+fi
+
+if [ "${RELEASE_TEST}" -eq 1 ]; then
+	scripts/validate-podspec.sh
 fi
 
 #make sure all tvOS tests pass
