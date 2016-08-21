@@ -5,6 +5,31 @@ All notable changes to this project will be documented in this file.
 
 ## Master
 
+## [3.0.0.alpha.1](https://github.com/ReactiveX/RxSwift/releases/tag/3.0.0.alpha.1) (Xcode 8 beta 6 compatible 8S201h)
+
+#### Features
+
+* Modernizes API to be more consistent with Swift 3.0 API Design Guidelines
+* Replaces `rx_*` prefix with `rx.*` extensions. (Inspired by `.lazy` collections API). We've tried annotate deprecated APIs with `@available(*, deprecated, renamed: "new method")` but trivial replacements aren't annotated.
+	* `rx_text` -> `rx.text`
+	* `rx_tap` -> `rx.tap`
+	* `rx_date` -> `rx.date`
+	* ...
+* Deprecates `subscribeNext`, `subscribeError`, `subscribeCompleted` in favor of `subscribe(onNext:onError:onCompleted:onDisposed)` (The downsides of old extensions were inconsistencies with Swift API guidelines. They also weren't expressing that calling them actually performes additional subscriptions and thus potentially additional work beside just registering observers).
+* Deprecates `doOnNext`, `doOnCompleted`, `doOnError` in favor of `do(onNext:onCompleted:onError:onSubscribe:onDisposed:)`
+* Adds `onSubscribe` and `onDisposed` to `do` operator.
+* Adds namespace for immutable disposables called `Disposables`
+	* Deprecates `AnonymousDisposable` in favor of `Disposables.create(with:)`
+	* Deprecates `NopDisposable` in favor of `Disposables.create()`
+	* Deprecates `BinaryDisposable` in favor of `Disposables.create(_:_:)`
+* Deprecates `toObservable` in favor of `Observable.from()`.
+* Replaces old javascript automation tests with Swift UI Tests.
+* ...
+
+#### Anomalies
+
+* There is a problem using `UISwitch` extensions because it seems that a bug exists in UIKit that causes all `UISwitch` instances to leak. https://github.com/ReactiveX/RxSwift/issues/842
+
 ## [2.6.0](https://github.com/ReactiveX/RxSwift/releases/tag/2.6.0)
 
 #### Features
