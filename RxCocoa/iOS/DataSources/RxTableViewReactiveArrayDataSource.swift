@@ -70,7 +70,7 @@ class RxTableViewReactiveArrayDataSource<Element>
         return itemModels?[index]
     }
 
-    func modelAtIndexPath(_ indexPath: IndexPath) throws -> Any {
+    func model(_ indexPath: IndexPath) throws -> Any {
         precondition(indexPath.section == 0)
         guard let item = itemModels?[indexPath.item] else {
             throw RxCocoaError.itemsNotYetBound(object: self)

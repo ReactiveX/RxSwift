@@ -164,7 +164,7 @@ class PartialUpdatesViewController : ViewController {
         dataSource.supplementaryViewFactory = { (dataSource, cv, kind, ip) in
             let section = cv.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "Section", for: ip) as! NumberSectionView
 
-            section.value!.text = "\(dataSource.sectionAtIndex(ip.section).model)"
+            section.value!.text = "\(dataSource[ip.section].model)"
 
             return section
         }

@@ -56,7 +56,7 @@ class SimpleTableViewExampleSectionedViewController
         tableView.rx
             .itemSelected
             .map { indexPath in
-                return (indexPath, dataSource.itemAtIndexPath(indexPath))
+                return (indexPath, dataSource[indexPath])
             }
             .subscribe(onNext: { indexPath, model in
                 DefaultWireframe.presentAlert("Tapped `\(model)` @ \(indexPath)")

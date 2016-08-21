@@ -17,43 +17,7 @@ import UIKit
 // Items
 
 extension Reactive where Base: UICollectionView {
-    
-    /**
-    Binds sequences of elements to collection view items.
-    
-    - parameter source: Observable sequence of items.
-    - parameter cellFactory: Transform between sequence elements and view cells.
-    - returns: Disposable object that can be used to unbind.
-     
-     Example
-    
-         let items = Observable.just([
-             1,
-             2,
-             3
-         ])
 
-         items
-         .bindTo(collectionView.rx.itemsWithCellFactory) { (collectionView, row, element) in
-             let indexPath = IndexPath(forItem: row, inSection: 0)
-             let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as! NumberCell
-             cell.value?.text = "\(element) @ \(row)"
-             return cell
-         }
-         .addDisposableTo(disposeBag)
-    */
-    @available(*, deprecated, renamed: "items(source:cellFactory:)")
-    public func rx_itemsWithCellFactory<S: Sequence, O: ObservableType>
-        (_ source: O)
-        -> (_ cellFactory: @escaping (UICollectionView, Int, S.Iterator.Element) -> UICollectionViewCell)
-        -> Disposable where O.E == S {
-        return { cellFactory in
-            let dataSource = RxCollectionViewReactiveArrayDataSourceSequenceWrapper<S>(cellFactory: cellFactory)
-            return self.items(dataSource: dataSource)(source)
-        }
-        
-    }
-    
     /**
     Binds sequences of elements to collection view items.
     
@@ -79,7 +43,7 @@ extension Reactive where Base: UICollectionView {
          .addDisposableTo(disposeBag)
     */
     public func items<S: Sequence, O: ObservableType>
-        (source: O)
+        (_ source: O)
         -> (_ cellFactory: @escaping (UICollectionView, Int, S.Iterator.Element) -> UICollectionViewCell)
         -> Disposable where O.E == S {
         return { cellFactory in
@@ -89,49 +53,6 @@ extension Reactive where Base: UICollectionView {
         
     }
     
-    /**
-    Binds sequences of elements to collection view items.
-    
-    - parameter cellIdentifier: Identifier used to dequeue cells.
-    - parameter source: Observable sequence of items.
-    - parameter configureCell: Transform between sequence elements and view cells.
-    - parameter cellType: Type of table view cell.
-    - returns: Disposable object that can be used to unbind.
-     
-     Example
-
-         let items = Observable.just([
-             1,
-             2,
-             3
-         ])
-
-         items
-             .bindTo(collectionView.rx.itemsWithCellIdentifier("Cell", cellType: NumberCell.self)) { (row, element, cell) in
-                cell.value?.text = "\(element) @ \(row)"
-             }
-             .addDisposableTo(disposeBag)
-    */
-    @available(*, deprecated, renamed: "items(cellIdentifier:cellType:source:configureCell:)")
-    public func rx_itemsWithCellIdentifier<S: Sequence, Cell: UICollectionViewCell, O : ObservableType>
-        (_ cellIdentifier: String, cellType: Cell.Type = Cell.self)
-        -> (_ source: O)
-        -> (_ configureCell: @escaping (Int, S.Iterator.Element, Cell) -> Void)
-        -> Disposable where O.E == S {
-        return { source in
-            return { configureCell in
-                let dataSource = RxCollectionViewReactiveArrayDataSourceSequenceWrapper<S> { (cv, i, item) in
-                    let indexPath = IndexPath(item: i, section: 0)
-                    let cell = cv.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! Cell
-                    configureCell(i, item, cell)
-                    return cell
-                }
-                    
-                return self.items(dataSource: dataSource)(source)
-            }
-        }
-    }
-
     /**
     Binds sequences of elements to collection view items.
     
@@ -211,63 +132,6 @@ extension Reactive where Base: UICollectionView {
          }
 
          items
-            .bindTo(collectionView.rx.itemsWithDataSource(dataSource))
-            .addDisposableTo(disposeBag)
-    */
-    @available(*, deprecated, renamed: "items(dataSource:source:)")
-    public func rx_itemsWithDataSource<
-            DataSource: RxCollectionViewDataSourceType & UICollectionViewDataSource,
-            O: ObservableType>
-        (_ dataSource: DataSource)
-        -> (_ source: O)
-        -> Disposable where DataSource.Element == O.E
-          {
-        return { source in
-            return source.subscribeProxyDataSource(ofObject: self.base, dataSource: dataSource, retainDataSource: true) { [weak collectionView = self.base] (_: RxCollectionViewDataSourceProxy, event) -> Void in
-                guard let collectionView = collectionView else {
-                    return
-                }
-                dataSource.collectionView(collectionView, observedEvent: event)
-            }
-        }
-    }
-
-    /**
-    Binds sequences of elements to collection view items using a custom reactive data used to perform the transformation.
-    
-    - parameter dataSource: Data source used to transform elements to view cells.
-    - parameter source: Observable sequence of items.
-    - returns: Disposable object that can be used to unbind.
-     
-     Example
-     
-         let dataSource = RxCollectionViewSectionedReloadDataSource<SectionModel<String, Double>>()
-
-         let items = Observable.just([
-             SectionModel(model: "First section", items: [
-                 1.0,
-                 2.0,
-                 3.0
-             ]),
-             SectionModel(model: "Second section", items: [
-                 1.0,
-                 2.0,
-                 3.0
-             ]),
-             SectionModel(model: "Third section", items: [
-                 1.0,
-                 2.0,
-                 3.0
-             ])
-         ])
-
-         dataSource.configureCell = { (dataSource, cv, indexPath, element) in
-             let cell = cv.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as! NumberCell
-             cell.value?.text = "\(element) @ row \(indexPath.row)"
-             return cell
-         }
-
-         items
             .bindTo(collectionView.rx.items(dataSource: dataSource))
             .addDisposableTo(disposeBag)
     */
@@ -283,7 +147,7 @@ extension Reactive where Base: UICollectionView {
             // data source is being bound.
             // This is needed because theoretically the data source subscription itself might
             // call `self.rx_delegate`. If that happens, it might cause weird side effects since
-            // setting data source will set delegate, and UITableView might get into a weird state.
+            // setting data source will set delegate, and UICollectionView might get into a weird state.
             // Therefore it's better to set delegate proxy first, just to be sure.
             _ = self.delegate
             // Strong reference is needed because data source is in use until result subscription is disposed
@@ -385,7 +249,7 @@ extension Reactive where Base: UICollectionView {
                 return Observable.empty()
             }
 
-            return Observable.just(try view.rx.modelAtIndexPath(indexPath))
+            return Observable.just(try view.rx.model(indexPath))
         }
         
         return ControlEvent(events: source)
@@ -408,7 +272,7 @@ extension Reactive where Base: UICollectionView {
                 return Observable.empty()
             }
 
-            return Observable.just(try view.rx.modelAtIndexPath(indexPath))
+            return Observable.just(try view.rx.model(indexPath))
         }
 
         return ControlEvent(events: source)
@@ -417,10 +281,10 @@ extension Reactive where Base: UICollectionView {
     /**
     Syncronous helper method for retrieving a model at indexPath through a reactive data source
     */
-    public func modelAtIndexPath<T>(_ indexPath: IndexPath) throws -> T {
+    public func model<T>(_ indexPath: IndexPath) throws -> T {
         let dataSource: SectionedViewDataSourceType = castOrFatalError(self.dataSource.forwardToDelegate(), message: "This method only works in case one of the `rx.itemsWith*` methods was used.")
         
-        let element = try dataSource.modelAtIndexPath(indexPath)
+        let element = try dataSource.model(indexPath)
 
         return element as! T
     }
@@ -447,3 +311,137 @@ extension Reactive where Base: UICollectionView {
     }
 }
 #endif
+
+extension UICollectionView {
+
+    /**
+    Binds sequences of elements to collection view items.
+    
+    - parameter cellIdentifier: Identifier used to dequeue cells.
+    - parameter source: Observable sequence of items.
+    - parameter configureCell: Transform between sequence elements and view cells.
+    - parameter cellType: Type of table view cell.
+    - returns: Disposable object that can be used to unbind.
+     
+     Example
+
+         let items = Observable.just([
+             1,
+             2,
+             3
+         ])
+
+         items
+             .bindTo(collectionView.rx.items(cellIdentifier: "Cell", cellType: NumberCell.self)) { (row, element, cell) in
+                cell.value?.text = "\(element) @ \(row)"
+             }
+             .addDisposableTo(disposeBag)
+    */
+    @available(*, deprecated, renamed: "items(cellIdentifier:cellType:_:_:)")
+    public func rx_itemsWithCellIdentifier<S: Sequence, Cell: UICollectionViewCell, O : ObservableType>
+        (_ cellIdentifier: String, cellType: Cell.Type = Cell.self)
+        -> (_ source: O)
+        -> (_ configureCell: @escaping (Int, S.Iterator.Element, Cell) -> Void)
+        -> Disposable where O.E == S {
+        return { source in
+            return { configureCell in
+                return self.rx.items(cellIdentifier: cellIdentifier, cellType: cellType)(source)(configureCell)
+            }
+        }
+    }
+
+    
+    /**
+    Binds sequences of elements to collection view items.
+    
+    - parameter source: Observable sequence of items.
+    - parameter cellFactory: Transform between sequence elements and view cells.
+    - returns: Disposable object that can be used to unbind.
+     
+     Example
+    
+         let items = Observable.just([
+             1,
+             2,
+             3
+         ])
+
+         items
+         .bindTo(collectionView.rx.items) { (collectionView, row, element) in
+             let indexPath = IndexPath(forItem: row, inSection: 0)
+             let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as! NumberCell
+             cell.value?.text = "\(element) @ \(row)"
+             return cell
+         }
+         .addDisposableTo(disposeBag)
+    */
+    @available(*, deprecated, renamed: "items(_:_:)")
+    public func rx_itemsWithCellFactory<S: Sequence, O: ObservableType>
+        (_ source: O)
+        -> (_ cellFactory: @escaping (UICollectionView, Int, S.Iterator.Element) -> UICollectionViewCell)
+        -> Disposable where O.E == S {
+        return { cellFactory in
+            return self.rx.items(source)(cellFactory)
+        }
+    }
+
+    /**
+    Binds sequences of elements to collection view items using a custom reactive data used to perform the transformation.
+    
+    - parameter dataSource: Data source used to transform elements to view cells.
+    - parameter source: Observable sequence of items.
+    - returns: Disposable object that can be used to unbind.
+     
+     Example
+     
+         let dataSource = RxCollectionViewSectionedReloadDataSource<SectionModel<String, Double>>()
+
+         let items = Observable.just([
+             SectionModel(model: "First section", items: [
+                 1.0,
+                 2.0,
+                 3.0
+             ]),
+             SectionModel(model: "Second section", items: [
+                 1.0,
+                 2.0,
+                 3.0
+             ]),
+             SectionModel(model: "Third section", items: [
+                 1.0,
+                 2.0,
+                 3.0
+             ])
+         ])
+
+         dataSource.configureCell = { (dataSource, cv, indexPath, element) in
+             let cell = cv.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as! NumberCell
+             cell.value?.text = "\(element) @ row \(indexPath.row)"
+             return cell
+         }
+
+         items
+            .bindTo(collectionView.rx.items(dataSource: dataSource))
+            .addDisposableTo(disposeBag)
+    */
+    @available(*, deprecated, renamed: "items(dataSource:_:)")
+    public func rx_itemsWithDataSource<
+            DataSource: RxCollectionViewDataSourceType & UICollectionViewDataSource,
+            O: ObservableType>
+        (_ dataSource: DataSource)
+        -> (_ source: O)
+        -> Disposable where DataSource.Element == O.E
+          {
+        return { source in
+            return self.rx.items(dataSource: dataSource)(source)
+        }
+    }
+
+    /**
+     Syncronous helper method for retrieving a model at indexPath through a reactive data source
+     */
+    @available(*, deprecated, renamed: "rx.model(_:)")
+    public func model<T>(_ indexPath: IndexPath) throws -> T {
+        return try self.rx.model(indexPath)
+    }
+}

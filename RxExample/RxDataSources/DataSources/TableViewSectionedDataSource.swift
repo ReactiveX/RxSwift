@@ -139,18 +139,19 @@ public class RxTableViewSectionedDataSource<S: SectionModelType>
         return Section(original: sectionModel.model, items: sectionModel.items)
     }
 
-    public func itemAtIndexPath(_ indexPath: IndexPath) -> I {
-        return self._sectionModels[indexPath.section].items[indexPath.item]
+    public subscript(indexPath: IndexPath) -> I {
+        get {
+            return self._sectionModels[indexPath.section].items[indexPath.item]
+        }
+        set(item) {
+            var section = self._sectionModels[indexPath.section]
+            section.items[indexPath.item] = item
+            self._sectionModels[indexPath.section] = section
+        }
     }
 
-    public func setItem(item: I, indexPath: IndexPath) {
-        var section = self._sectionModels[indexPath.section]
-        section.items[indexPath.item] = item
-        self._sectionModels[indexPath.section] = section
-    }
-
-    public func modelAtIndexPath(_ indexPath: IndexPath) throws -> Any {
-        return itemAtIndexPath(indexPath)
+    public func model(_ indexPath: IndexPath) throws -> Any {
+        return self[indexPath]
     }
 
     public func setSections(_ sections: [S]) {
@@ -238,7 +239,7 @@ public class RxTableViewSectionedDataSource<S: SectionModelType>
     override func _rx_tableView(_ tableView: UITableView, cellForRowAtIndexPath indexPath: IndexPath) -> UITableViewCell {
         precondition(indexPath.item < _sectionModels[indexPath.section].items.count)
         
-        return configureCell(self, tableView, indexPath, itemAtIndexPath(indexPath))
+        return configureCell(self, tableView, indexPath, self[indexPath])
     }
     
     override func _rx_tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
