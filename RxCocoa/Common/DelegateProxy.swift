@@ -66,7 +66,7 @@ open class DelegateProxy : _RXDelegateProxy {
          let internalSubject = PublishSubject<CGPoint>
      
          public func requiredDelegateMethod(scrollView: UIScrollView, arg1: CGPoint) -> Bool {
-             internalSubject.on(.Next(arg1))
+             internalSubject.on(.next(arg1))
              return self._forwardToDelegate?.requiredDelegateMethod?(scrollView, arg1: arg1) ?? defaultReturnValue
          }
      

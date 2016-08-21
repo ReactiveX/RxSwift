@@ -12,7 +12,7 @@ import Foundation
 Represents a sequence event.
 
 Sequence grammar:
-Next\* (Error | Completed)
+next\* (error | completed)
 */
 public enum Event<Element> {
     /// Next element is produced.
@@ -30,11 +30,11 @@ extension Event : CustomDebugStringConvertible {
     public var debugDescription: String {
         switch self {
         case .next(let value):
-            return "Next(\(value))"
+            return "next(\(value))"
         case .error(let error):
-            return "Error(\(error))"
+            return "error(\(error))"
         case .completed:
-            return "Completed"
+            return "completed"
         }
     }
 }

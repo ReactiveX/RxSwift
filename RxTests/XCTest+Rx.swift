@@ -15,9 +15,9 @@ require specifying `self.*`, they are made global.
 */
 //extension XCTestCase {
     /**
-    Factory method for an `.Next` event recorded at a given time with a given value.
+    Factory method for an `.next` event recorded at a given time with a given value.
 
-     - parameter time: Recorded virtual time the `.Next` event occurs.
+     - parameter time: Recorded virtual time the `.next` event occurs.
      - parameter element: Next sequence element.
      - returns: Recorded event in time.
     */
@@ -26,9 +26,9 @@ require specifying `self.*`, they are made global.
     }
 
     /**
-    Factory method for an `.Completed` event recorded at a given time.
+    Factory method for an `.completed` event recorded at a given time.
 
-     - parameter time: Recorded virtual time the `.Completed` event occurs.
+     - parameter time: Recorded virtual time the `.completed` event occurs.
      - parameter type: Sequence elements type.
      - returns: Recorded event in time.
     */
@@ -37,9 +37,9 @@ require specifying `self.*`, they are made global.
     }
 
     /**
-    Factory method for an `.Error` event recorded at a given time with a given error.
+    Factory method for an `.error` event recorded at a given time with a given error.
 
-     - parameter time: Recorded virtual time the `.Completed` event occurs.
+     - parameter time: Recorded virtual time the `.completed` event occurs.
     */
     public func error<T>(_ time: TestTime, _ error: Swift.Error, _ type: T.Type = T.self) -> Recorded<Event<T>> {
         return Recorded(time: time, event: .error(error))

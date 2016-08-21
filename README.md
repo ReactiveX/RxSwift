@@ -3,7 +3,9 @@
 
 [![Travis CI](https://travis-ci.org/ReactiveX/RxSwift.svg?branch=master)](https://travis-ci.org/ReactiveX/RxSwift) ![platforms](https://img.shields.io/badge/platforms-iOS%20%7C%20OSX%20%7C%20tvOS%20%7C%20watchOS%20%7C%20Linux%28experimental%29-333333.svg) ![pod](https://img.shields.io/cocoapods/v/RxSwift.svg) [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 
-Xcode 7.3 Swift 2.2 required
+**Xcode 8.0 beta 6 (8S201h) required**
+
+**Swift 3.0**
 
 ## About Rx
 
@@ -96,7 +98,7 @@ let searchResults = searchBar.rx.text
   <tr>
     <td width="30%"><div class="highlight highlight-source-swift"><pre>
 searchResults
-    .bindTo(tableView.rx.itemsWithCellIdentifier("Cell")) {
+    .bindTo(tableView.rx.items(cellIdentifier: "Cell")) {
         (index, repository: Repository, cell) in
         cell.textLabel?.text = repository.name
         cell.detailTextLabel?.text = repository.url
@@ -118,38 +120,36 @@ Open Rx.xcworkspace, choose `RxExample` and hit run. This method will build ever
 
 ### [CocoaPods](https://guides.cocoapods.org/using/using-cocoapods.html)
 
-**:warning: IMPORTANT! For tvOS support, CocoaPods `0.39` is required. :warning:**
-
 ```
 # Podfile
 use_frameworks!
 
 target 'YOUR_TARGET_NAME' do
-    pod 'RxSwift',    '~> 2.0'
-    pod 'RxCocoa',    '~> 2.0'
+    pod 'RxSwift',    '~> 3.0.0.alpha.1'
+    pod 'RxCocoa',    '~> 3.0.0.alpha.1'
 end
 
 # RxTests and RxBlocking make the most sense in the context of unit/integration tests
 target 'YOUR_TESTING_TARGET' do
-    pod 'RxBlocking', '~> 2.0'
-    pod 'RxTests',    '~> 2.0'
+    pod 'RxBlocking', '~> 3.0.0.alpha.1'
+    pod 'RxTests',    '~> 3.0.0.alpha.1'
 end
 ```
 
 Replace `YOUR_TARGET_NAME` and then, in the `Podfile` directory, type:
 
-**:warning: If you want to use CocoaPods with Xcode 8.0 beta and Swift 2.3, you might need to add the following
+**:warning: If you want to use CocoaPods with Xcode 8.0 beta and Swift 3.0, you might need to add the following
 lines to your podfile: :warning:**
 
 ```
-  post_install do |installer|
-	  installer.pods_project.targets.each do |target|
-	    target.build_configurations.each do |config|
-	      config.build_settings['SWIFT_VERSION'] = '2.3'
-	      config.build_settings['MACOSX_DEPLOYMENT_TARGET'] = '10.10'
-	    end
-	  end
-	end
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+    target.build_configurations.each do |config|
+      config.build_settings['SWIFT_VERSION'] = '3.0'
+      config.build_settings['MACOSX_DEPLOYMENT_TARGET'] = '10.10'
+    end
+  end
+end
 ```
 
 ```
@@ -158,12 +158,10 @@ $ pod install
 
 ### [Carthage](https://github.com/Carthage/Carthage)
 
-**Xcode 7.1 required**
-
 Add this to `Cartfile`
 
 ```
-github "ReactiveX/RxSwift" ~> 2.0
+github "ReactiveX/RxSwift" ~> 3.0.0.alpha.1
 ```
 
 ```

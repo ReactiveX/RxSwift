@@ -28,7 +28,7 @@ compareTwoImplementations(benchmarkTime: true, benchmarkMemory: false, first: {
         _ = publishSubject //.asDriver(onErrorJustReturn: -1)
     /*create { (o: AnyObserver<Int>) in
             for i in 0..<100 {
-                o.on(.Next(i))
+                o.on(.next(i))
             }
             return Disposables.create()
         }*/

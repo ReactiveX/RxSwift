@@ -67,32 +67,32 @@ These are called marble diagrams. There are more marble diagrams at [rxmarbles.c
 
 If we were to specify sequence grammar as a regular expression it would look like:
 
-**Next* (Error | Completed)?**
+**next* (error | completed)?**
 
 This describes the following:
 
 * **Sequences can have 0 or more elements.**
-* **Once an `Error` or `Completed` event is received, the sequence cannot produce any other element.**
+* **Once an `error` or `completed` event is received, the sequence cannot produce any other element.**
 
 Sequences in Rx are described by a push interface (aka callback).
 
 ```swift
 enum Event<Element>  {
-    case Next(Element)      // next element of a sequence
-    case Error(Swift.Error)   // sequence failed with error
-    case Completed          // sequence terminated successfully
+    case next(Element)      // next element of a sequence
+    case error(Swift.Error) // sequence failed with error
+    case completed          // sequence terminated successfully
 }
 
 class Observable<Element> {
-    func subscribe(observer: Observer<Element>) -> Disposable
+    func subscribe(_ observer: Observer<Element>) -> Disposable
 }
 
 protocol ObserverType {
-    func on(event: Event<Element>)
+    func on(_ event: Event<Element>)
 }
 ```
 
-**When a sequence sends the `Completed` or `Error` event all internal resources that compute sequence elements will be freed.**
+**When a sequence sends the `completed` or `error` event all internal resources that compute sequence elements will be freed.**
 
 **To cancel production of sequence elements and free resources immediately, call `dispose` on the returned subscription.**
 
@@ -116,7 +116,7 @@ let subscription = Observable<Int>.interval(0.3, scheduler: scheduler)
         print(event)
     }
 
-NSThread.sleepForTimeInterval(2)
+NSThread.sleep(forTimeInterval: 2.0)
 
 subscription.dispose()
 
@@ -218,9 +218,9 @@ sequence
 
 There is also a couple of additional guarantees that all sequence producers (`Observable`s) must honor.
 
-It doesn't matter on which thread they produce elements, but if they generate one element and send it to the observer `observer.on(.Next(nextElement))`, they can't send next element until `observer.on` method has finished execution.
+It doesn't matter on which thread they produce elements, but if they generate one element and send it to the observer `observer.on(.next(nextElement))`, they can't send next element until `observer.on` method has finished execution.
 
-Producers also cannot send terminating `.Completed` or `.Error` in case `.Next` event hasn't finished.
+Producers also cannot send terminating `.completed` or `.error` in case `.next` event hasn't finished.
 
 In short, consider this example:
 
@@ -291,8 +291,8 @@ Let's create a function which creates a sequence that returns one element upon s
 ```swift
 func myJust<E>(element: E) -> Observable<E> {
     return Observable.create { observer in
-        observer.on(.Next(element))
-        observer.on(.Completed)
+        observer.on(.next(element))
+        observer.on(.completed)
         return Disposables.create()
     }
 }
@@ -325,10 +325,10 @@ Lets now create an observable that returns elements from an array.
 func myFrom<E>(sequence: [E]) -> Observable<E> {
     return Observable.create { observer in
         for element in sequence {
-            observer.on(.Next(element))
+            observer.on(.next(element))
         }
 
-        observer.on(.Completed)
+        observer.on(.completed)
         return Disposables.create()
     }
 }
@@ -390,7 +390,7 @@ func myInterval(interval: NSTimeInterval) -> Observable<Int> {
             if cancel.isDisposed {
                 return
             }
-            observer.on(.Next(next))
+            observer.on(.next(next))
             next += 1
         })
         dispatch_resume(timer)
@@ -410,7 +410,8 @@ let subscription = counter
        print(n)
     })
 
-NSThread.sleepForTimeInterval(0.5)
+
+NSThread.sleep(forTimeInterval: 0.5)
 
 subscription.dispose()
 
@@ -446,11 +447,11 @@ let subscription2 = counter
        print("Second \(n)")
     })
 
-NSThread.sleepForTimeInterval(0.5)
+NSThread.sleep(forTimeInterval: 0.5)
 
 subscription1.dispose()
 
-NSThread.sleepForTimeInterval(0.5)
+NSThread.sleep(forTimeInterval: 0.5)
 
 subscription2.dispose()
 
@@ -559,17 +560,17 @@ extension Reactive where Base: NSURLSession {
         return Observable.create { observer in
             let task = self.dataTaskWithRequest(request) { (data, response, error) in
                 guard let response = response, data = data else {
-                    observer.on(.Error(error ?? RxCocoaURLError.Unknown))
+                    observer.on(.error(error ?? RxCocoaURLError.Unknown))
                     return
                 }
 
                 guard let httpResponse = response as? NSHTTPURLResponse else {
-                    observer.on(.Error(RxCocoaURLError.NonHTTPResponse(response: response)))
+                    observer.on(.error(RxCocoaURLError.nonHTTPResponse(response: response)))
                     return
                 }
 
-                observer.on(.Next(data, httpResponse))
-                observer.on(.Completed)
+                observer.on(.next(data, httpResponse))
+                observer.on(.completed)
             }
 
             task.resume()
@@ -614,13 +615,13 @@ extension ObservableType {
         return Observable.create { observer in
             let subscription = self.subscribe { e in
                     switch e {
-                    case .Next(let value):
+                    case .next(let value):
                         let result = transform(value)
-                        observer.on(.Next(result))
-                    case .Error(let error):
-                        observer.on(.Error(error))
-                    case .Completed:
-                        observer.on(.Completed)
+                        observer.on(.next(result))
+                    case .error(let error):
+                        observer.on(.error(error))
+                    case .completed:
+                        observer.on(.completed)
                     }
                 }
 
@@ -680,7 +681,7 @@ This isn't something that should be practiced often, and is a bad code smell, bu
     being,
     UIApplication.delegate.dataSomething.attendees
   )
-  kittens.on(.Next(kitten))   // send result back to rx
+  kittens.on(.next(kitten))   // send result back to rx
   //
   // Another mess
   //
@@ -797,15 +798,15 @@ will print
 ```
 [my probe] subscribed
 Subscribed
-[my probe] -> Event Next(Box(0))
+[my probe] -> Event next(Box(0))
 This is simply 0
-[my probe] -> Event Next(Box(1))
+[my probe] -> Event next(Box(1))
 This is simply 1
-[my probe] -> Event Next(Box(2))
+[my probe] -> Event next(Box(2))
 This is simply 2
-[my probe] -> Event Next(Box(3))
+[my probe] -> Event next(Box(3))
 This is simply 3
-[my probe] -> Event Next(Box(4))
+[my probe] -> Event next(Box(4))
 This is simply 4
 [my probe] dispose
 Disposed
@@ -821,14 +822,14 @@ extension ObservableType {
             let subscription = self.subscribe { e in
                 print("event \(identifier)  \(e)")
                 switch e {
-                case .Next(let value):
-                    observer.on(.Next(value))
+                case .next(let value):
+                    observer.on(.next(value))
 
-                case .Error(let error):
-                    observer.on(.Error(error))
+                case .error(let error):
+                    observer.on(.error(error))
 
-                case .Completed:
-                    observer.on(.Completed)
+                case .completed:
+                    observer.on(.completed)
                 }
             }
             return Disposables.create {
@@ -1081,7 +1082,7 @@ let cancelRequest = responseJSON
         print(json)
     })
 
-NSThread.sleepForTimeInterval(3)
+NSThread.sleep(forTimeInterval: 3.0)
 
 // if you want to cancel request after 3 seconds have passed just call
 cancelRequest.dispose()
@@ -1093,7 +1094,7 @@ cancelRequest.dispose()
 In case you want a more low level access to response, you can use:
 
 ```swift
-NSURLSession.sharedSession().rx.response(myNSURLRequest)
+NSURLSession.shared.rx.response(myNSURLRequest)
     .debug("my request") // this will print out information to console
     .flatMap { (data: NSData!, response: NSURLResponse!) -> Observable<String> in
         if let response = response as? NSHTTPURLResponse {
