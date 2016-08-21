@@ -68,6 +68,10 @@ if [ "${RELEASE_TEST}" -eq 1 ]; then
   	scripts/validate-markdown.sh
 fi
 
+# compile and run playgrounds
+
+. scripts/validate-playgrounds.sh
+
 if [ "${RELEASE_TEST}" -eq 1 ] && [ "${SKIP_AUTOMATION}" -eq 0 ]; then
 #   for configuration in ${CONFIGURATIONS[@]}
 #	do
@@ -97,6 +101,13 @@ else
         done
     done
 fi
+
+
+#make sure all OSX tests pass
+for configuration in ${CONFIGURATIONS[@]}
+do
+    rx "RxSwift-OSX" ${configuration} "" test
+done
 
 if [ "${RELEASE_TEST}" -eq 1 ]; then
 	scripts/validate-podspec.sh
@@ -134,12 +145,6 @@ done
 # 	rx "RxTests-watchOS" ${configuration} $DEFAULT_WATCHOS_SIMULATOR test
 # done
 
-#make sure all OSX tests pass
-for configuration in ${CONFIGURATIONS[@]}
-do
-	rx "RxSwift-OSX" ${configuration} "" test
-done
-
 # make sure osx builds
 for scheme in "RxExample-OSX"
 do
@@ -149,8 +154,3 @@ do
 	done
 done
 
-# compile and run playgrounds
-
-if [ "${IS_SWIFT_3}" -ne 1 ]; then
-	. scripts/validate-playgrounds.sh
-fi
