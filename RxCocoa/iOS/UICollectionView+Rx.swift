@@ -339,7 +339,7 @@ extension UICollectionView {
              }
              .addDisposableTo(disposeBag)
     */
-    @available(*, deprecated, renamed: "items(cellIdentifier:cellType:_:_:)")
+    @available(*, deprecated, renamed: "rx.items(cellIdentifier:cellType:_:_:)")
     public func rx_itemsWithCellIdentifier<S: Sequence, Cell: UICollectionViewCell, O : ObservableType>
         (_ cellIdentifier: String, cellType: Cell.Type = Cell.self)
         -> (_ source: O)
@@ -377,7 +377,7 @@ extension UICollectionView {
          }
          .addDisposableTo(disposeBag)
     */
-    @available(*, deprecated, renamed: "items(_:_:)")
+    @available(*, deprecated, renamed: "rx.items(_:_:)")
     public func rx_itemsWithCellFactory<S: Sequence, O: ObservableType>
         (_ source: O)
         -> (_ cellFactory: @escaping (UICollectionView, Int, S.Iterator.Element) -> UICollectionViewCell)
@@ -426,7 +426,7 @@ extension UICollectionView {
             .bindTo(collectionView.rx.items(dataSource: dataSource))
             .addDisposableTo(disposeBag)
     */
-    @available(*, deprecated, renamed: "items(dataSource:_:)")
+    @available(*, deprecated, renamed: "rx.items(dataSource:_:)")
     public func rx_itemsWithDataSource<
             DataSource: RxCollectionViewDataSourceType & UICollectionViewDataSource,
             O: ObservableType>

@@ -426,7 +426,7 @@ extension UITableView {
          .addDisposableTo(disposeBag)
 
     */
-    @available(*, deprecated, renamed: "items(_:_:)")
+    @available(*, deprecated, renamed: "rx.items(_:_:)")
     public func rx_itemsWithCellFactory<S: Sequence, O: ObservableType>
         (_ source: O)
         -> (_ cellFactory: @escaping (UITableView, Int, S.Iterator.Element) -> UITableViewCell)
@@ -460,7 +460,7 @@ extension UITableView {
              }
              .addDisposableTo(disposeBag)
     */
-    @available(*, deprecated, renamed: "items(cellIdentifier:cellType:_:_:)")
+    @available(*, deprecated, renamed: "rx.items(cellIdentifier:cellType:_:_:)")
     public func rx_itemsWithCellIdentifier<S: Sequence, Cell: UITableViewCell, O : ObservableType>
         (_ cellIdentifier: String, cellType: Cell.Type = Cell.self)
         -> (_ source: O)
@@ -517,7 +517,7 @@ extension UITableView {
             .bindTo(tableView.rx.items(dataSoruce: dataSource))
             .addDisposableTo(disposeBag)
     */
-    @available(*, deprecated, renamed: "items(dataSource:_:)")
+    @available(*, deprecated, renamed: "rx.items(dataSource:_:)")
     public func rx_itemsWithDataSource<
             DataSource: RxTableViewDataSourceType & UITableViewDataSource,
             O: ObservableType>
