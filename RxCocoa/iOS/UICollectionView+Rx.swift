@@ -312,6 +312,8 @@ extension Reactive where Base: UICollectionView {
 }
 #endif
 
+#if os(iOS) || os(tvOS)
+
 extension UICollectionView {
 
     /**
@@ -445,3 +447,4 @@ extension UICollectionView {
         return try self.rx.model(indexPath)
     }
 }
+#endif

@@ -397,6 +397,8 @@ extension Reactive where Base: UITableView {
     }
 #endif
 
+#if os(iOS) || os(tvOS)
+
 // deprecated APIs
 extension UITableView {
 
@@ -538,3 +540,4 @@ extension UITableView {
     }
 
 }
+#endif
