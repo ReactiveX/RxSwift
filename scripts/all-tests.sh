@@ -35,15 +35,17 @@ function ensureNoGitChanges() {
 
 function checkPlistVersions() {
 	RXSWIFT_VERSION=`cat RxSwift.podspec | grep -E "s.version\s+=" | cut -d '"' -f 2`
-	
+	echo "RxSwift version: ${RXSWIFT_VERSION}"
 	PROJECTS=(RxSwift RxCocoa RxBlocking RxTests)
 	for project in ${PROJECTS[@]}
 	do
 		echo "Checking version for ${project}"
 		PODSPEC_VERSION=`cat $project.podspec | grep -E "s.version\s+=" | cut -d '"' -f 2`
 		ensureVersionEqual "$RXSWIFT_VERSION" "$PODSPEC_VERSION" "${project} version not equal"
-		if [[ `defaults write  "\`pwd\`/${project}/Info.plist" CFBundleShortVersionString $RXSWIFT_VERSION` != $RXSWIFT_VERSION ]]; then
-			defaults write  "`pwd`/${project}/Info.plist" CFBundleShortVersionString $RXSWIFT_VERSION
+        PLIST_VERSION=`defaults read  "\`pwd\`/${project}/Info.plist" CFBundleShortVersionString`
+		if [[ "${PLIST_VERSION}" != "${RXSWIFT_VERSION}" ]]; then
+            echo "Invalid version for `pwd`/${project}/Info.plist: ${PLIST_VERSION}"
+            defaults write  "`pwd`/${project}/Info.plist" CFBundleShortVersionString $RXSWIFT_VERSION
 		fi
 	done
 
