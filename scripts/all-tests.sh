@@ -2,6 +2,7 @@
 
 TV_OS=0
 RELEASE_TEST=0
+SKIP_AUTOMATION=0
 
 if [ `xcodebuild -showsdks | grep tvOS | wc -l` -gt 0 ]; then
 	printf "${GREEN}tvOS found${RESET}\n"
@@ -11,6 +12,11 @@ fi
 if [ "$1" == "r" ]; then
 	printf "${GREEN}Pre release tests on, hang on tight ...${RESET}\n"
 	RELEASE_TEST=1
+fi
+
+if [ "$2" == "s" ]; then
+    printf "${RED}Skipping automation tests ...${RESET}\n"
+    SKIP_AUTOMATION=1
 fi
 
 function ensureVersionEqual() {
@@ -62,7 +68,7 @@ if [ "${RELEASE_TEST}" -eq 1 ]; then
   	scripts/validate-markdown.sh
 fi
 
-if [ "${RELEASE_TEST}" -eq 1 ]; then
+if [ "${RELEASE_TEST}" -eq 1 ] && [ "${SKIP_AUTOMATION}" -eq 0 ]; then
 #   for configuration in ${CONFIGURATIONS[@]}
 #	do
 #		rx "RxExample-iOSTests" ${configuration} "Krunoslav Zaher’s iPhone" test
@@ -81,6 +87,14 @@ if [ "${RELEASE_TEST}" -eq 1 ]; then
     for configuration in ${CONFIGURATIONS[@]}
     do
         rx "RxExample-iOSUITests" ${configuration} $DEFAULT_IOS_SIMULATOR test
+    done
+else
+    for scheme in "RxExample-iOS"
+    do
+        for configuration in "Debug"
+        do
+            rx ${scheme} ${configuration} $DEFAULT_IOS_SIMULATOR build
+        done
     done
 fi
 
@@ -125,28 +139,6 @@ for configuration in ${CONFIGURATIONS[@]}
 do
 	rx "RxSwift-OSX" ${configuration} "" test
 done
-
-
-# this is a silly ui tests error, tests succeed, but status code is -65, argh
-set +e
-for scheme in "RxExample-iOS"
-do
-	for configuration in ${CONFIGURATIONS[@]}
-	do
-        if [ `rx ${scheme} ${configuration} $DEFAULT_IOS_SIMULATOR build | grep "Executed 2 tests, with 0 failure (0 unexpected) | wc -l` -ne 2 ]; then
-            exit -1
-        fi
-	done
-done
-
-for scheme in "RxExample-iOS"
-do
-    for configuration in "Debug"
-    do
-        rx ${scheme} ${configuration} $DEFAULT_IOS_SIMULATOR test
-    done
-done
-set -e
 
 # make sure osx builds
 for scheme in "RxExample-OSX"
