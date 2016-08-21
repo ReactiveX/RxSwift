@@ -102,6 +102,15 @@ else
     done
 fi
 
+# make sure osx builds
+for scheme in "RxExample-OSX"
+do
+    for configuration in ${CONFIGURATIONS[@]}
+    do
+        rx ${scheme} ${configuration} "" build
+    done
+done
+
 
 #make sure all OSX tests pass
 for configuration in ${CONFIGURATIONS[@]}
@@ -144,13 +153,4 @@ done
 # do
 # 	rx "RxTests-watchOS" ${configuration} $DEFAULT_WATCHOS_SIMULATOR test
 # done
-
-# make sure osx builds
-for scheme in "RxExample-OSX"
-do
-	for configuration in ${CONFIGURATIONS[@]}
-	do
-		rx ${scheme} ${configuration} "" build
-	done
-done
 
