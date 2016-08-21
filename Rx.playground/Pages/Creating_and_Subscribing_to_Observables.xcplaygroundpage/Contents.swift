@@ -203,7 +203,7 @@ example("doOn") {
     let disposeBag = DisposeBag()
     
     Observable.of("🍎", "🍐", "🍊", "🍋")
-        .doOn { print("Intercepted:", $0) }
+        .do(onNext: { print("Intercepted:", $0) }, onError: { print("Intercepted error:", $0) }, onCompleted: { print("Completed")  })
         .subscribe(onNext: { print($0) })
         .addDisposableTo(disposeBag)
 }

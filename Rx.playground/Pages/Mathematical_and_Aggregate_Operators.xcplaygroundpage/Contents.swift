@@ -69,4 +69,4 @@ example("concat") {
     subject2.onNext("🐭")
 }
 
-//: [Next](@next) - [Table of Contents](Table_of_Conte
+//: [Next](@next) - [Table of Contents](Table_of_Contents)

@@ -75,4 +75,4 @@ example("scan") {
         .addDisposableTo(disposeBag)
 }
 
-//: [Next](@next) - [Table of Contents](Tabl
+//: [Next](@next) - [Table of Contents](Table_of_Contents)

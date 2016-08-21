@@ -22,7 +22,7 @@ example("startWith") {
         .startWith("1️⃣")
         .startWith("2️⃣")
         .startWith("3️⃣", "🅰️", "🅱️")
-        ..subscribe(onNext: { print($0) })
+        .subscribe(onNext: { print($0) })
         .addDisposableTo(disposeBag)
 }
 /*:
@@ -115,7 +115,7 @@ example("Array.combineLatest") {
     let disposeBag = DisposeBag()
     
     let stringObservable = Observable.just("❤️")
-    let fruitObservable = ["🍎", "🍐", "🍊"].toObservable()
+    let fruitObservable = Observable.from(["🍎", "🍐", "🍊"])
     let animalObservable = Observable.of("🐶", "🐱", "🐭", "🐹")
     
     [stringObservable, fruitObservable, animalObservable].combineLatest {

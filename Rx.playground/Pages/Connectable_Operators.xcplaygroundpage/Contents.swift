@@ -79,7 +79,7 @@ func sampleWithReplayBuffer() {
         .replay(5)
     
     _ = intSequence
-        ..subscribe(onNext: { print("Subscription 1:, Event: \($0)") })
+        .subscribe(onNext: { print("Subscription 1:, Event: \($0)") })
     
     delay(2) { _ = intSequence.connect() }
     
