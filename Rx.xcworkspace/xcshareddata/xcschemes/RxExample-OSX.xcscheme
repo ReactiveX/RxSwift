@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "C83366DC1AD0293800C668A7"
-               BuildableName = "RxExample-iOS.app"
-               BlueprintName = "RxExample-iOS"
-               ReferencedContainer = "container:RxExample.xcodeproj">
+               BlueprintIdentifier = "C88BB8B91B07E6C90064D411"
+               BuildableName = "RxExample.app"
+               BlueprintName = "RxExample-OSX"
+               ReferencedContainer = "container:RxExample/RxExample.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -28,34 +28,14 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "C849EF601C3190360048AC4A"
-               BuildableName = "RxExample-iOSTests.xctest"
-               BlueprintName = "RxExample-iOSTests"
-               ReferencedContainer = "container:RxExample.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "C88C2B261D67EC5200B01A98"
-               BuildableName = "RxExample-iOSUITests.xctest"
-               BlueprintName = "RxExample-iOSUITests"
-               ReferencedContainer = "container:RxExample.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "C83366DC1AD0293800C668A7"
-            BuildableName = "RxExample-iOS.app"
-            BlueprintName = "RxExample-iOS"
-            ReferencedContainer = "container:RxExample.xcodeproj">
+            BlueprintIdentifier = "C88BB8B91B07E6C90064D411"
+            BuildableName = "RxExample.app"
+            BlueprintName = "RxExample-OSX"
+            ReferencedContainer = "container:RxExample/RxExample.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -75,18 +55,13 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "C83366DC1AD0293800C668A7"
-            BuildableName = "RxExample-iOS.app"
-            BlueprintName = "RxExample-iOS"
-            ReferencedContainer = "container:RxExample.xcodeproj">
+            BlueprintIdentifier = "C88BB8B91B07E6C90064D411"
+            BuildableName = "RxExample.app"
+            BlueprintName = "RxExample-OSX"
+            ReferencedContainer = "container:RxExample/RxExample.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
-         <AdditionalOption
-            key = "NSZombieEnabled"
-            value = "YES"
-            isEnabled = "YES">
-         </AdditionalOption>
       </AdditionalOptions>
    </LaunchAction>
    <ProfileAction
@@ -99,10 +74,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "C83366DC1AD0293800C668A7"
-            BuildableName = "RxExample-iOS.app"
-            BlueprintName = "RxExample-iOS"
-            ReferencedContainer = "container:RxExample.xcodeproj">
+            BlueprintIdentifier = "C88BB8B91B07E6C90064D411"
+            BuildableName = "RxExample.app"
+            BlueprintName = "RxExample-OSX"
+            ReferencedContainer = "container:RxExample/RxExample.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

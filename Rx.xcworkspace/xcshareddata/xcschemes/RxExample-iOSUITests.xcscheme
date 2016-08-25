@@ -19,7 +19,7 @@
                BlueprintIdentifier = "C88C2B261D67EC5200B01A98"
                BuildableName = "RxExample-iOSUITests.xctest"
                BlueprintName = "RxExample-iOSUITests"
-               ReferencedContainer = "container:RxExample.xcodeproj">
+               ReferencedContainer = "container:RxExample/RxExample.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
