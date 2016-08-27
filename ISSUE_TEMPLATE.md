@@ -31,10 +31,9 @@
 
   _what actually happens goes here_
 
-:warning: Field below are optional for general issues in case those questions aren't related to your issue, but it will increase the changes of getting your issue resolved if you fill them. :warning:
+:warning: Fields below are optional for general issues or in case those questions aren't related to your issue, but filling them out will increase the chances of getting your issue resolved. :warning:
 
 **Installation method**:
-  (so we don't waste time investigating an incorrect integration)
   - [ ] CocoaPods
   - [ ] Carthage
   - [ ] Git submodules
