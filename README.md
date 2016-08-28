@@ -5,6 +5,10 @@
 
 ## About Rx
 
+**:warning: This readme describes RxSwift 3.0 version that requires Swift 3.0:warning:**
+
+**:warning: If you are looking for Swift 2.3 compatible version, please take a look at RxSwift ~> 2.0 versions and [swift-2.3](https://github.com/ReactiveX/RxSwift/tree/rxswift-2.0) branch :warning:**
+
 Rx is a [generic abstraction of computation](https://youtu.be/looJcaeboBY) expressed through `Observable<Element>` interface.
 
 This is a Swift version of [Rx](https://github.com/Reactive-Extensions/Rx.NET).
@@ -168,7 +172,7 @@ $ pod install
 Add this to `Cartfile`
 
 ```
-github "ReactiveX/RxSwift" ~> 3.0.0.alpha.1
+github "ReactiveX/RxSwift" "3.0.0.alpha.1"
 ```
 
 ```
