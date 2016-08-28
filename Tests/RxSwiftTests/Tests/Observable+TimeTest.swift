@@ -1864,7 +1864,49 @@ extension ObservableTimeTest {
             Subscription(200, 550)
             ])
     }
-    
+
+    func testDelay_TimeSpan_Error() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let xs = scheduler.createHotObservable([
+            next(150, 1),
+            error(250, testError)
+            ])
+
+        let res = scheduler.start {
+            xs.delay(150, scheduler: scheduler)
+        }
+
+        XCTAssertEqual(res.events, [
+            error(250, testError)
+            ])
+
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 250)
+            ])
+    }
+
+    func testDelay_TimeSpan_Completed() {
+        let scheduler = TestScheduler(initialClock: 0)
+
+        let xs = scheduler.createHotObservable([
+            next(150, 1),
+            completed(250)
+            ])
+
+        let res = scheduler.start {
+            xs.delay(150, scheduler: scheduler)
+        }
+
+        XCTAssertEqual(res.events, [
+            completed(250)
+            ])
+
+        XCTAssertEqual(xs.subscriptions, [
+            Subscription(200, 250)
+            ])
+    }
+
     func testDelay_TimeSpan_Error1() {
         let scheduler = TestScheduler(initialClock: 0)
     
@@ -1919,8 +1961,8 @@ extension ObservableTimeTest {
     }
     
     func testDelay_TimeSpan_Real_Simple() {
-        let expectation = self.expectationWithDescription("")
-        let scheduler = ConcurrentDispatchQueueScheduler(globalConcurrentQueueQOS: .Default)
+        let waitForError: ReplaySubject<()> = ReplaySubject.create(bufferSize: 1)
+        let scheduler = ConcurrentDispatchQueueScheduler(globalConcurrentQueueQOS: .default)
         
         let s = PublishSubject<Int>()
     
@@ -1933,17 +1975,17 @@ extension ObservableTimeTest {
                 array.append(i)
             },
             onCompleted: {
-                expectation.fulfill()
+                waitForError.onCompleted()
         })
         
-        dispatch_async(dispatch_get_global_queue(0, 0)) {
+        DispatchQueue.global(qos: .default).async {
             s.onNext(1)
             s.onNext(2)
             s.onNext(3)
             s.onCompleted()
         }
-        
-        waitForExpectationsWithTimeout(1.0, handler: nil)
+
+        try! _ = waitForError.toBlocking(timeout: 5.0).first()
         
         subscription.dispose()
         
@@ -1951,40 +1993,44 @@ extension ObservableTimeTest {
     }
     
     func testDelay_TimeSpan_Real_Error1() {
-        let expectation = self.expectationWithDescription("")
-        let scheduler = ConcurrentDispatchQueueScheduler(globalConcurrentQueueQOS: .Default)
+        let errorReceived: ReplaySubject<()> = ReplaySubject.create(bufferSize: 1)
+        let scheduler = ConcurrentDispatchQueueScheduler(globalConcurrentQueueQOS: .default)
         
         let s = PublishSubject<Int>()
-        
+
         let res = s.delay(0.01, scheduler: scheduler)
         
         var array = [Int]()
+
+        var error: Swift.Error? = nil
         
         let subscription = res.subscribe(
             onNext: { i in
                 array.append(i)
             },
-            onError: { _ in
-                expectation.fulfill()
+            onError: { e in
+                error = e
+                errorReceived.onCompleted()
         })
         
-        dispatch_async(dispatch_get_global_queue(0, 0)) {
+        DispatchQueue.global(qos: .default).async {
             s.onNext(1)
             s.onNext(2)
             s.onNext(3)
             s.onError(testError)
         }
-        
-        waitForExpectationsWithTimeout(1.0, handler: nil)
+
+        try! errorReceived.toBlocking(timeout: 5.0).first()
         
         subscription.dispose()
-        
-        XCTAssertEqual([], array)
+
+        XCTAssertEqual(error! as NSError, testError)
     }
     
     func testDelay_TimeSpan_Real_Error2() {
-        let expectation = self.expectationWithDescription("")
-        let scheduler = ConcurrentDispatchQueueScheduler(globalConcurrentQueueQOS: .Default)
+        let elementProcessed: ReplaySubject<()> = ReplaySubject.create(bufferSize: 1)
+        let errorReceived: ReplaySubject<()> = ReplaySubject.create(bufferSize: 1)
+        let scheduler = ConcurrentDispatchQueueScheduler(globalConcurrentQueueQOS: .default)
         
         let s = PublishSubject<Int>()
         
@@ -1996,29 +2042,33 @@ extension ObservableTimeTest {
         let subscription = res.subscribe(
             onNext: { i in
                 array.append(i)
+                elementProcessed.onCompleted()
             },
             onError: { ex in
                 err = ex as NSError
-                expectation.fulfill()
+                errorReceived.onCompleted()
         })
         
-        dispatch_async(dispatch_get_global_queue(0, 0)) {
+        DispatchQueue.global(qos: .default).async {
             s.onNext(1)
-            NSThread.sleepForTimeInterval(0.5)
+            try! _ = elementProcessed.toBlocking(timeout: 5.0).first()
             s.onError(testError)
         }
-        
-        waitForExpectationsWithTimeout(1.0, handler: nil)
+
+        try! _ = errorReceived.toBlocking(timeout: 5.0).first()
         
         subscription.dispose()
         
         XCTAssertEqual([1], array)
         XCTAssertEqual(testError, err)
     }
-    
+
+
     func testDelay_TimeSpan_Real_Error3() {
-        let expectation = self.expectationWithDescription("")
-        let scheduler = ConcurrentDispatchQueueScheduler(globalConcurrentQueueQOS: .Default)
+        let elementProcessed: ReplaySubject<()> = ReplaySubject.create(bufferSize: 1)
+        let errorReceived: ReplaySubject<()> = ReplaySubject.create(bufferSize: 1)
+        let acknowledged: ReplaySubject<()> = ReplaySubject.create(bufferSize: 1)
+        let scheduler = ConcurrentDispatchQueueScheduler(globalConcurrentQueueQOS: .default)
         
         let s = PublishSubject<Int>()
         
@@ -2030,20 +2080,22 @@ extension ObservableTimeTest {
         let subscription = res.subscribe(
             onNext: { i in
                 array.append(i)
-                NSThread.sleepForTimeInterval(0.5)
+                elementProcessed.onCompleted()
+                try! _ = acknowledged.toBlocking(timeout: 5.0).first()
             },
             onError: { ex in
                 err = ex as NSError
-                expectation.fulfill()
+                errorReceived.onCompleted()
         })
         
-        dispatch_async(dispatch_get_global_queue(0, 0)) {
+        DispatchQueue.global(qos: .default).async {
             s.onNext(1)
-            NSThread.sleepForTimeInterval(0.5)
+            try! _ = elementProcessed.toBlocking(timeout: 5.0).first()
             s.onError(testError)
+            acknowledged.onCompleted()
         }
-        
-        waitForExpectationsWithTimeout(1.0, handler: nil)
+
+        try! _ = errorReceived.toBlocking(timeout: 5.0).first()
         
         subscription.dispose()
         
@@ -2076,6 +2128,6 @@ extension ObservableTimeTest {
     
     func testDelay_TimeSpan_DefaultScheduler() {
         let scheduler = MainScheduler.instance
-        XCTAssertEqual(try! Observable.just(1).delay(0.001, scheduler: scheduler).toBlocking().toArray(), [1])
+        XCTAssertEqual(try! Observable.just(1).delay(0.001, scheduler: scheduler).toBlocking(timeout: 5.0).toArray(), [1])
     }
 }

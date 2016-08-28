@@ -286,8 +286,8 @@ extension ObservableType {
      - parameter scheduler: Scheduler to run the subscription delay timer on.
      - returns: the source Observable shifted in time by the specified delay.
      */
-    @warn_unused_result(message="http://git.io/rxs.uo")
-    public func delay(dueTime: RxTimeInterval, scheduler: SchedulerType)
+    // @warn_unused_result(message="http://git.io/rxs.uo")
+    public func delay(_ dueTime: RxTimeInterval, scheduler: SchedulerType)
         -> Observable<E> {
             return Delay(source: self.asObservable(), dueTime: dueTime, scheduler: scheduler)
     }
