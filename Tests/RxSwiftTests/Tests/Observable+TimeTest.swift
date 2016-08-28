@@ -1899,7 +1899,7 @@ extension ObservableTimeTest {
         }
 
         XCTAssertEqual(res.events, [
-            completed(250)
+            completed(400)
             ])
 
         XCTAssertEqual(xs.subscriptions, [
