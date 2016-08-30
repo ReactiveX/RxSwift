@@ -63,7 +63,47 @@ extension UITextView : RxTextInput {
         
         return ControlProperty(values: source, valueSink: bindingObserver)
     }
-    
+
+    /**
+     Reactive wrapper for `delegate` message.
+    */
+    public var rx_didBeginEditing: ControlEvent<()> {
+       return ControlEvent<()>(events: self.rx_delegate.observe(#selector(UITextViewDelegate.textViewDidBeginEditing(_:)))
+            .map { a in
+                return ()
+            })
+    }
+
+    /**
+     Reactive wrapper for `delegate` message.
+     */
+    public var rx_didEndEditing: ControlEvent<()> {
+        return ControlEvent<()>(events: self.rx_delegate.observe(#selector(UITextViewDelegate.textViewDidEndEditing(_:)))
+            .map { a in
+                return ()
+            })
+    }
+
+    /**
+     Reactive wrapper for `delegate` message.
+     */
+    public var rx_didChange: ControlEvent<()> {
+        return ControlEvent<()>(events: self.rx_delegate.observe(#selector(UITextViewDelegate.textViewDidChange(_:)))
+            .map { a in
+                return ()
+            })
+    }
+
+    /**
+     Reactive wrapper for `delegate` message.
+     */
+    public var rx_didChangeSelection: ControlEvent<()> {
+        return ControlEvent<()>(events: self.rx_delegate.observe(#selector(UITextViewDelegate.textViewDidChangeSelection(_:)))
+            .map { a in
+                return ()
+            })
+    }
+
 }
 
 #endif
