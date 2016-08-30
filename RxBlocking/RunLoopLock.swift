@@ -29,17 +29,19 @@ typealias AtomicInt = Int32
 #endif
 
 class RunLoopLock {
-    let currentRunLoop: CFRunLoop
+    let _currentRunLoop: CFRunLoop
 
-    var calledRun: AtomicInt = 0
-    var calledStop: AtomicInt = 0
+    var _calledRun: AtomicInt = 0
+    var _calledStop: AtomicInt = 0
+    var _timeout: RxTimeInterval?
 
-    init() {
-        currentRunLoop = CFRunLoopGetCurrent()
+    init(timeout: RxTimeInterval?) {
+        _timeout = timeout
+        _currentRunLoop = CFRunLoopGetCurrent()
     }
 
     func dispatch(_ action: @escaping () -> ()) {
-        CFRunLoopPerformBlock(currentRunLoop, CFRunLoopMode.defaultMode.rawValue) {
+        CFRunLoopPerformBlock(_currentRunLoop, CFRunLoopMode.defaultMode.rawValue) {
             if CurrentThreadScheduler.isScheduleRequired {
                 _ = CurrentThreadScheduler.instance.schedule(()) { _ in
                     action()
@@ -50,23 +52,37 @@ class RunLoopLock {
                 action()
             }
         }
-        CFRunLoopWakeUp(currentRunLoop)
+        CFRunLoopWakeUp(_currentRunLoop)
     }
 
     func stop() {
-        if AtomicIncrement(&calledStop) != 1 {
+        if AtomicIncrement(&_calledStop) != 1 {
             return
         }
-        CFRunLoopPerformBlock(currentRunLoop, CFRunLoopMode.defaultMode.rawValue) {
-            CFRunLoopStop(self.currentRunLoop)
+        CFRunLoopPerformBlock(_currentRunLoop, CFRunLoopMode.defaultMode.rawValue) {
+            CFRunLoopStop(self._currentRunLoop)
         }
-        CFRunLoopWakeUp(currentRunLoop)
+        CFRunLoopWakeUp(_currentRunLoop)
     }
 
-    func run() {
-        if AtomicIncrement(&calledRun) != 1 {
+    func run() throws {
+        if AtomicIncrement(&_calledRun) != 1 {
             fatalError("Run can be only called once")
         }
-        CFRunLoopRun()
+        if let timeout = _timeout {
+            switch CFRunLoopRunInMode(CFRunLoopMode.defaultMode, timeout, false) {
+            case .finished:
+                return
+            case .handledSource:
+                return
+            case .stopped:
+                return
+            case .timedOut:
+                throw RxError.timeout
+            }
+        }
+        else {
+            CFRunLoopRun()
+        }
     }
 }

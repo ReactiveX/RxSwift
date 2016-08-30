@@ -24,9 +24,13 @@ extension BlockingObservable {
 
         var error: Swift.Error?
 
-        let lock = RunLoopLock()
+        let lock = RunLoopLock(timeout: timeout)
 
         let d = SingleAssignmentDisposable()
+
+        defer {
+            d.dispose()
+        }
 
         lock.dispatch {
             d.disposable = self.source.subscribe { e in
@@ -47,9 +51,7 @@ extension BlockingObservable {
             }
         }
 
-        lock.run()
-
-        d.dispose()
+        try lock.run()
 
         if let error = error {
             throw error
@@ -74,7 +76,11 @@ extension BlockingObservable {
 
         let d = SingleAssignmentDisposable()
 
-        let lock = RunLoopLock()
+        defer {
+            d.dispose()
+        }
+        
+        let lock = RunLoopLock(timeout: timeout)
 
         lock.dispatch {
             d.disposable = self.source.subscribe { e in
@@ -99,9 +105,7 @@ extension BlockingObservable {
             }
         }
 
-        lock.run()
-
-        d.dispose()
+        try lock.run()
 
         if let error = error {
             throw error
@@ -126,7 +130,11 @@ extension BlockingObservable {
 
         let d = SingleAssignmentDisposable()
 
-        let lock = RunLoopLock()
+        defer {
+            d.dispose()
+        }
+        
+        let lock = RunLoopLock(timeout: timeout)
 
         lock.dispatch {
             d.disposable = self.source.subscribe { e in
@@ -148,9 +156,7 @@ extension BlockingObservable {
             }
         }
         
-        lock.run()
-        
-        d.dispose()
+        try lock.run()
         
         if let error = error {
             throw error
@@ -186,8 +192,12 @@ extension BlockingObservable {
         var error: Swift.Error?
         
         let d = SingleAssignmentDisposable()
+
+        defer {
+            d.dispose()
+        }
         
-        let lock = RunLoopLock()
+        let lock = RunLoopLock(timeout: timeout)
         
         lock.dispatch {
             d.disposable = self.source.subscribe { e in
@@ -224,9 +234,8 @@ extension BlockingObservable {
             }
         }
         
-        lock.run()
-        d.dispose()
-        
+        try lock.run()
+
         if let error = error {
             throw error
         }

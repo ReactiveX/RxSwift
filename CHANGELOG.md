@@ -24,6 +24,11 @@ All notable changes to this project will be documented in this file.
 	* Deprecates `BinaryDisposable` in favor of `Disposables.create(_:_:)`
 * Deprecates `toObservable` in favor of `Observable.from()`.
 * Replaces old javascript automation tests with Swift UI Tests.
+* adds `UISearchBar` extensions:
+  * `bookmarkButtonClicked`
+  * `resultsListButtonClicked`
+  * `textDidBeginEditing`
+  * `textDidEndEditing`
 * ...
 
 #### Anomalies

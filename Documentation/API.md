@@ -63,7 +63,7 @@ Operators are stateless by default.
 
 #### Observable Utility Operators
 
-  * [`delaySubscription`](http://reactivex.io/documentation/operators/delay.html)
+  * [`delaySubscription` / `delay`](http://reactivex.io/documentation/operators/delay.html)
   * [`do` / `doOnNext`](http://reactivex.io/documentation/operators/do.html)
   * [`observeOn` / `observeSingleOn`](http://reactivex.io/documentation/operators/observeon.html)
   * [`subscribe`](http://reactivex.io/documentation/operators/subscribe.html)

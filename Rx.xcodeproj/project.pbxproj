@@ -18,6 +18,8 @@
 		271A97441CFC9F7B00D64125 /* UIViewControler+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271A97421CFC99FE00D64125 /* UIViewControler+RxTests.swift */; };
 		46307D4E1CDE77D800E47A1C /* UIAlertAction+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46307D4D1CDE77D800E47A1C /* UIAlertAction+Rx.swift */; };
 		46307D4F1CDE77D800E47A1C /* UIAlertAction+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46307D4D1CDE77D800E47A1C /* UIAlertAction+Rx.swift */; };
+		46D3EE251D75F921006F337B /* UIWebView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D3EE231D75F8D2006F337B /* UIWebView+Rx.swift */; };
+		46D3EE281D75FB7B006F337B /* UIWebView+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D3EE261D75FB79006F337B /* UIWebView+RxTests.swift */; };
 		54700CA01CE37E1800EF3A8F /* UINavigationItem+RxTests.swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54700C9E1CE37D1000EF3A8F /* UINavigationItem+RxTests.swift.swift */; };
 		54700CA11CE37E1900EF3A8F /* UINavigationItem+RxTests.swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54700C9E1CE37D1000EF3A8F /* UINavigationItem+RxTests.swift.swift */; };
 		54D2138E1CE0824E0028D5B4 /* UINavigationItem+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D2138C1CE081890028D5B4 /* UINavigationItem+Rx.swift */; };
@@ -633,6 +635,10 @@
 		C86409FD1BA593F500D3C4E8 /* Range.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86409FB1BA593F500D3C4E8 /* Range.swift */; };
 		C8640A031BA5B12A00D3C4E8 /* Repeat.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8640A021BA5B12A00D3C4E8 /* Repeat.swift */; };
 		C8640A041BA5B12A00D3C4E8 /* Repeat.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8640A021BA5B12A00D3C4E8 /* Repeat.swift */; };
+		C86B0A561D735CCC005D8A16 /* Delay.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86B0A551D735CCC005D8A16 /* Delay.swift */; };
+		C86B0A571D735CCC005D8A16 /* Delay.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86B0A551D735CCC005D8A16 /* Delay.swift */; };
+		C86B0A581D735CCC005D8A16 /* Delay.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86B0A551D735CCC005D8A16 /* Delay.swift */; };
+		C86B0A591D735CCC005D8A16 /* Delay.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86B0A551D735CCC005D8A16 /* Delay.swift */; };
 		C86B1E221D42BF5200130546 /* SchedulerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86B1E211D42BF5200130546 /* SchedulerTests.swift */; };
 		C86B1E231D42BF5200130546 /* SchedulerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86B1E211D42BF5200130546 /* SchedulerTests.swift */; };
 		C86B1E241D42BF5200130546 /* SchedulerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86B1E211D42BF5200130546 /* SchedulerTests.swift */; };
@@ -1398,6 +1404,8 @@
 		271A97401CFC996B00D64125 /* UIViewController+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Rx.swift"; sourceTree = "<group>"; };
 		271A97421CFC99FE00D64125 /* UIViewControler+RxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewControler+RxTests.swift"; sourceTree = "<group>"; };
 		46307D4D1CDE77D800E47A1C /* UIAlertAction+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIAlertAction+Rx.swift"; sourceTree = "<group>"; };
+		46D3EE231D75F8D2006F337B /* UIWebView+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIWebView+Rx.swift"; sourceTree = "<group>"; };
+		46D3EE261D75FB79006F337B /* UIWebView+RxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIWebView+RxTests.swift"; sourceTree = "<group>"; };
 		54700C9E1CE37D1000EF3A8F /* UINavigationItem+RxTests.swift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationItem+RxTests.swift.swift"; sourceTree = "<group>"; };
 		54D2138C1CE081890028D5B4 /* UINavigationItem+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationItem+Rx.swift"; sourceTree = "<group>"; };
 		79E9DE881C3417FD009970AF /* DispatchQueueSchedulerQOS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DispatchQueueSchedulerQOS.swift; sourceTree = "<group>"; };
@@ -1662,6 +1670,7 @@
 		C85BA04B1C3878740075D68E /* PerformanceTests.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PerformanceTests.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C86409FB1BA593F500D3C4E8 /* Range.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Range.swift; sourceTree = "<group>"; };
 		C8640A021BA5B12A00D3C4E8 /* Repeat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Repeat.swift; sourceTree = "<group>"; };
+		C86B0A551D735CCC005D8A16 /* Delay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Delay.swift; sourceTree = "<group>"; };
 		C86B1E211D42BF5200130546 /* SchedulerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SchedulerTests.swift; sourceTree = "<group>"; };
 		C88253F11B8A752B00B02D69 /* RxCollectionViewReactiveArrayDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxCollectionViewReactiveArrayDataSource.swift; sourceTree = "<group>"; };
 		C88253F21B8A752B00B02D69 /* RxTableViewReactiveArrayDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxTableViewReactiveArrayDataSource.swift; sourceTree = "<group>"; };
@@ -2032,6 +2041,7 @@
 				C8093C741B8A72BE0088E94D /* ConnectableObservable.swift */,
 				C8093C751B8A72BE0088E94D /* Debug.swift */,
 				C8093C761B8A72BE0088E94D /* Deferred.swift */,
+				C86B0A551D735CCC005D8A16 /* Delay.swift */,
 				C8093C771B8A72BE0088E94D /* DelaySubscription.swift */,
 				C8093C781B8A72BE0088E94D /* DistinctUntilChanged.swift */,
 				C8093C791B8A72BE0088E94D /* Do.swift */,
@@ -2327,6 +2337,7 @@
 				914FCD661CCDB82E0058B304 /* UIPageControl+RxTest.swift */,
 				033C2EF41D081B2A0050C015 /* UIScrollView+RxTests.swift */,
 				C8379EF31D1DD326003EF8FC /* UIButton+RxTests.swift */,
+				46D3EE261D75FB79006F337B /* UIWebView+RxTests.swift */,
 			);
 			path = RxCocoaTests;
 			sourceTree = "<group>";
@@ -2477,6 +2488,7 @@
 				54D2138C1CE081890028D5B4 /* UINavigationItem+Rx.swift */,
 				844BC8B31CE4FD7500F5C7CB /* UIPickerView+Rx.swift */,
 				46307D4D1CDE77D800E47A1C /* UIAlertAction+Rx.swift */,
+				46D3EE231D75F8D2006F337B /* UIWebView+Rx.swift */,
 			);
 			path = iOS;
 			sourceTree = "<group>";
@@ -3418,6 +3430,7 @@
 				C882542E1B8A752B00B02D69 /* UILabel+Rx.swift in Sources */,
 				54D2138E1CE0824E0028D5B4 /* UINavigationItem+Rx.swift in Sources */,
 				91BE429C1CBF7EC000F6B062 /* UIPageControl+Rx.swift in Sources */,
+				46D3EE251D75F921006F337B /* UIWebView+Rx.swift in Sources */,
 				C88254211B8A752B00B02D69 /* RxSearchBarDelegateProxy.swift in Sources */,
 				C80DDEA71BCE69BA006A1832 /* ObservableConvertibleType+Driver.swift in Sources */,
 				7EDBAEBC1C89B9B7006CBE67 /* UITabBarItem+Rx.swift in Sources */,
@@ -3576,6 +3589,7 @@
 				C86B1E221D42BF5200130546 /* SchedulerTests.swift in Sources */,
 				C83509441C38706E0027C24C /* MySubject.swift in Sources */,
 				C835095F1C38706E0027C24C /* Observable+SubscriptionTest.swift in Sources */,
+				46D3EE281D75FB7B006F337B /* UIWebView+RxTests.swift in Sources */,
 				C8C217D71CB710200038A2E6 /* UICollectionView+RxTests.swift in Sources */,
 				C83509451C38706E0027C24C /* Observable.Extensions.swift in Sources */,
 				C835093B1C38706E0027C24C /* RXObjCRuntime+Testing.m in Sources */,
@@ -3926,6 +3940,7 @@
 				C8640A041BA5B12A00D3C4E8 /* Repeat.swift in Sources */,
 				79E9DE8A1C3417FD009970AF /* DispatchQueueSchedulerQOS.swift in Sources */,
 				C8093CF41B8A72BE0088E94D /* Errors.swift in Sources */,
+				C86B0A571D735CCC005D8A16 /* Delay.swift in Sources */,
 				C8093D141B8A72BE0088E94D /* Debug.swift in Sources */,
 				CB883B4B1BE369AA000AC2EE /* AddRef.swift in Sources */,
 				C8554E2B1C3051620052E67D /* PriorityQueue.swift in Sources */,
@@ -4149,6 +4164,7 @@
 				C8640A031BA5B12A00D3C4E8 /* Repeat.swift in Sources */,
 				79E9DE891C3417FD009970AF /* DispatchQueueSchedulerQOS.swift in Sources */,
 				C8093CF31B8A72BE0088E94D /* Errors.swift in Sources */,
+				C86B0A561D735CCC005D8A16 /* Delay.swift in Sources */,
 				C8093D131B8A72BE0088E94D /* Debug.swift in Sources */,
 				CB883B4A1BE369AA000AC2EE /* AddRef.swift in Sources */,
 				C8093CCD1B8A72BE0088E94D /* Bag.swift in Sources */,
@@ -4296,6 +4312,7 @@
 				C8F0BFE71BBBFB8B001B112F /* Repeat.swift in Sources */,
 				79E9DE8C1C3417FD009970AF /* DispatchQueueSchedulerQOS.swift in Sources */,
 				C8F0BFE81BBBFB8B001B112F /* Errors.swift in Sources */,
+				C86B0A591D735CCC005D8A16 /* Delay.swift in Sources */,
 				C8F0BFE91BBBFB8B001B112F /* Debug.swift in Sources */,
 				CB883B4D1BE369AA000AC2EE /* AddRef.swift in Sources */,
 				C8554E2D1C3051620052E67D /* PriorityQueue.swift in Sources */,
@@ -4638,6 +4655,7 @@
 				D2EBEB3D1BB9B6D8003A27DC /* SchedulerServices+Emulation.swift in Sources */,
 				D2EBEB1C1BB9B6C1003A27DC /* Sample.swift in Sources */,
 				D2EBEAFD1BB9B6BA003A27DC /* AnonymousObservable.swift in Sources */,
+				C86B0A581D735CCC005D8A16 /* Delay.swift in Sources */,
 				C8554E2C1C3051620052E67D /* PriorityQueue.swift in Sources */,
 				CB883B4C1BE369AA000AC2EE /* AddRef.swift in Sources */,
 				D2EBEAFA1BB9B6B2003A27DC /* SingleAssignmentDisposable.swift in Sources */,
