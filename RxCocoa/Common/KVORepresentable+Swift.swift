@@ -74,6 +74,17 @@ extension UInt64 : KVORepresentable {
     }
 }
 
+extension Bool : KVORepresentable {
+    public typealias KVOType = NSNumber
+
+    /**
+     Constructs `Self` using KVO value.
+    */
+    public init?(KVOValue: KVOType) {
+        self.init(KVOValue.boolValue)
+    }
+}
+
 
 extension RawRepresentable where RawValue: KVORepresentable {
     /**

@@ -132,6 +132,7 @@ import Foundation
         var rx_text: ControlProperty<String> { get }
     }
 
+    @available(*, deprecated)
     extension NSTextField : RxTextInput {
         /**
          Reactive wrapper for `text` property.

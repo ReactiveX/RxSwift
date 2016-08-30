@@ -20,5 +20,6 @@ If you think you need to use a `BlockingObservable` this is usually a sign that 
 design.
 */
 public struct BlockingObservable<E> {
+    let timeout: RxTimeInterval?
     let source: Observable<E>
 }
