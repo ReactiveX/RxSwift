@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 
 ## Master
 
+* adds `UIWebView` extensions:
+  * `didStartLoad`
+  * `didFinishLoad`
+  * `didFailLoad`
+
 ## [3.0.1](https://github.com/ReactiveX/RxSwift/releases/tag/3.0.1) (Xcode 8 / Swift 3.0 compatible)
 
 #### Anomalies
@@ -141,6 +146,7 @@ any observers or `forwardToDelegate` wasn't implementing `UITableViewDataSource.
   * `textDidEndEditing`
 * Moves `CLLocationManager` and `UIImagePickerViewController` extensions from RxCocoa to RxExample project. #874
 * Adds matrix CI builds.
+=======
 
 ## [3.0.0.alpha.1](https://github.com/ReactiveX/RxSwift/releases/tag/3.0.0.alpha.1) (Xcode 8 beta 6 compatible 8S201h)
 
