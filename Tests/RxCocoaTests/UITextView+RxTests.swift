@@ -28,6 +28,86 @@ class UITextViewTests : RxTest {
         textView.rx.text.on(.next("Text2"))
         XCTAssertTrue(textView.set)
     }
+
+    func testDidBeginEditing() {
+        var completed = false
+        var value: ()?
+
+        autoreleasepool {
+            let textView = UITextView(frame: CGRectMake(0, 0, 1, 1))
+
+            _ = textView.rx_didBeginEditing.subscribe(onNext: { n in
+                    value = n
+                }, onCompleted: {
+                    completed = true
+                })
+
+            textView.delegate!.textViewDidBeginEditing!(textView)
+        }
+
+        XCTAssertNotNil(value)
+        XCTAssertTrue(completed)
+    }
+
+    func testDidEndEditing() {
+        var completed = false
+        var value: ()?
+
+        autoreleasepool {
+            let textView = UITextView(frame: CGRectMake(0, 0, 1, 1))
+
+            _ = textView.rx_didEndEditing.subscribe(onNext: { n in
+                    value = n
+                }, onCompleted: {
+                    completed = true
+                })
+
+            textView.delegate!.textViewDidEndEditing!(textView)
+        }
+
+        XCTAssertNotNil(value)
+        XCTAssertTrue(completed)
+    }
+
+    func testDidChange() {
+        var completed = false
+        var value: ()?
+
+        autoreleasepool {
+            let textView = UITextView(frame: CGRectMake(0, 0, 1, 1))
+
+            _ = textView.rx_didChange.subscribe(onNext: { n in
+                    value = n
+                }, onCompleted: {
+                    completed = true
+                })
+
+            textView.delegate!.textViewDidChange!(textView)
+        }
+
+        XCTAssertNotNil(value)
+        XCTAssertTrue(completed)
+    }
+
+    func testDidChangeSelection() {
+        var completed = false
+        var value: ()?
+
+        autoreleasepool {
+            let textView = UITextView(frame: CGRectMake(0, 0, 1, 1))
+
+            _ = textView.rx_didChangeSelection.subscribe(onNext: { n in
+                    value = n
+                }, onCompleted: {
+                    completed = true
+                })
+
+            textView.delegate!.textViewDidChangeSelection!(textView)
+        }
+
+        XCTAssertNotNil(value)
+        XCTAssertTrue(completed)
+    }
 }
 
 class UITextViewSubclass2 : UITextView {
