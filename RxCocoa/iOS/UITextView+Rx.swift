@@ -69,8 +69,8 @@ extension Reactive where Base: UITextView {
     /**
      Reactive wrapper for `delegate` message.
     */
-    public var rx_didBeginEditing: ControlEvent<()> {
-       return ControlEvent<()>(events: self.rx_delegate.observe(#selector(UITextViewDelegate.textViewDidBeginEditing(_:)))
+    public var didBeginEditing: ControlEvent<()> {
+       return ControlEvent<()>(events: self.delegate.observe(#selector(UITextViewDelegate.textViewDidBeginEditing(_:)))
             .map { a in
                 return ()
             })
@@ -79,8 +79,8 @@ extension Reactive where Base: UITextView {
     /**
      Reactive wrapper for `delegate` message.
      */
-    public var rx_didEndEditing: ControlEvent<()> {
-        return ControlEvent<()>(events: self.rx_delegate.observe(#selector(UITextViewDelegate.textViewDidEndEditing(_:)))
+    public var didEndEditing: ControlEvent<()> {
+        return ControlEvent<()>(events: self.delegate.observe(#selector(UITextViewDelegate.textViewDidEndEditing(_:)))
             .map { a in
                 return ()
             })
@@ -89,8 +89,8 @@ extension Reactive where Base: UITextView {
     /**
      Reactive wrapper for `delegate` message.
      */
-    public var rx_didChange: ControlEvent<()> {
-        return ControlEvent<()>(events: self.rx_delegate.observe(#selector(UITextViewDelegate.textViewDidChange(_:)))
+    public var didChange: ControlEvent<()> {
+        return ControlEvent<()>(events: self.delegate.observe(#selector(UITextViewDelegate.textViewDidChange(_:)))
             .map { a in
                 return ()
             })
@@ -99,8 +99,8 @@ extension Reactive where Base: UITextView {
     /**
      Reactive wrapper for `delegate` message.
      */
-    public var rx_didChangeSelection: ControlEvent<()> {
-        return ControlEvent<()>(events: self.rx_delegate.observe(#selector(UITextViewDelegate.textViewDidChangeSelection(_:)))
+    public var didChangeSelection: ControlEvent<()> {
+        return ControlEvent<()>(events: self.delegate.observe(#selector(UITextViewDelegate.textViewDidChangeSelection(_:)))
             .map { a in
                 return ()
             })

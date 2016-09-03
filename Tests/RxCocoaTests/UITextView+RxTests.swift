@@ -34,9 +34,9 @@ class UITextViewTests : RxTest {
         var value: ()?
 
         autoreleasepool {
-            let textView = UITextView(frame: CGRectMake(0, 0, 1, 1))
+            let textView = UITextView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
 
-            _ = textView.rx_didBeginEditing.subscribe(onNext: { n in
+            _ = textView.rx.didBeginEditing.subscribe(onNext: { n in
                     value = n
                 }, onCompleted: {
                     completed = true
@@ -54,9 +54,9 @@ class UITextViewTests : RxTest {
         var value: ()?
 
         autoreleasepool {
-            let textView = UITextView(frame: CGRectMake(0, 0, 1, 1))
+            let textView = UITextView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
 
-            _ = textView.rx_didEndEditing.subscribe(onNext: { n in
+            _ = textView.rx.didEndEditing.subscribe(onNext: { n in
                     value = n
                 }, onCompleted: {
                     completed = true
@@ -74,9 +74,9 @@ class UITextViewTests : RxTest {
         var value: ()?
 
         autoreleasepool {
-            let textView = UITextView(frame: CGRectMake(0, 0, 1, 1))
+            let textView = UITextView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
 
-            _ = textView.rx_didChange.subscribe(onNext: { n in
+            _ = textView.rx.didChange.subscribe(onNext: { n in
                     value = n
                 }, onCompleted: {
                     completed = true
@@ -94,9 +94,9 @@ class UITextViewTests : RxTest {
         var value: ()?
 
         autoreleasepool {
-            let textView = UITextView(frame: CGRectMake(0, 0, 1, 1))
+            let textView = UITextView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
 
-            _ = textView.rx_didChangeSelection.subscribe(onNext: { n in
+            _ = textView.rx.didChangeSelection.subscribe(onNext: { n in
                     value = n
                 }, onCompleted: {
                     completed = true
