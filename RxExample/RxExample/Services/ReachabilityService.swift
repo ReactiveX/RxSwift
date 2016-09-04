@@ -12,14 +12,14 @@ import RxSwift
 import Foundation
 
 public enum ReachabilityStatus {
-    case Reachable(viaWiFi: Bool)
+    case reachable(viaWiFi: Bool)
     case unreachable
 }
 
 extension ReachabilityStatus {
     var reachable: Bool {
         switch self {
-        case .Reachable:
+        case .reachable:
             return true
         case .unreachable:
             return false
@@ -51,7 +51,7 @@ class DefaultReachabilityService
 
         reachabilityRef.whenReachable = { reachability in
             backgroundQueue.async {
-                reachabilitySubject.on(.next(.Reachable(viaWiFi: reachabilityRef.isReachableViaWiFi())))
+                reachabilitySubject.on(.next(.reachable(viaWiFi: reachabilityRef.isReachableViaWiFi())))
             }
         }
 
