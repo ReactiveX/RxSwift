@@ -42,7 +42,7 @@ class Do<Element> : Producer<Element> {
     fileprivate let _onSubscribe: (() -> ())?
     fileprivate let _onDispose: (() -> ())?
     
-    init(source: Observable<Element>, eventHandler: EventHandler, onSubscribe: (() -> ())?, onDispose: (() -> ())?) {
+    init(source: Observable<Element>, eventHandler: @escaping EventHandler, onSubscribe: (() -> ())?, onDispose: (() -> ())?) {
         _source = source
         _eventHandler = eventHandler
         _onSubscribe = onSubscribe

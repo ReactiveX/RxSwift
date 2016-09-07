@@ -57,7 +57,7 @@ class Multicast<S: SubjectType, R>: Producer<R> {
     fileprivate let _subjectSelector: SubjectSelectorType
     fileprivate let _selector: SelectorType
     
-    init(source: Observable<S.SubjectObserverType.E>, subjectSelector: SubjectSelectorType, selector: SelectorType) {
+    init(source: Observable<S.SubjectObserverType.E>, subjectSelector: @escaping SubjectSelectorType, selector: @escaping SelectorType) {
         _source = source
         _subjectSelector = subjectSelector
         _selector = selector

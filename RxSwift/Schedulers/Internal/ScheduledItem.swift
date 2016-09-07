@@ -22,7 +22,7 @@ struct ScheduledItem<T>
         return _disposable.isDisposed
     }
     
-    init(action: Action, state: T) {
+    init(action: @escaping Action, state: T) {
         _action = action
         _state = state
     }

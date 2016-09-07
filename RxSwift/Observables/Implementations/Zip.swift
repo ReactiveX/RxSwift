@@ -118,7 +118,7 @@ class ZipObserver<ElementType>
     private let _this: Disposable
     private let _setNextValue: ValueSetter
     
-    init(lock: NSRecursiveLock, parent: ZipSinkProtocol, index: Int, setNextValue: ValueSetter, this: Disposable) {
+    init(lock: NSRecursiveLock, parent: ZipSinkProtocol, index: Int, setNextValue: @escaping ValueSetter, this: Disposable) {
         _lock = lock
         _parent = parent
         _index = index

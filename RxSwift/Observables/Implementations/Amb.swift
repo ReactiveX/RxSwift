@@ -24,7 +24,7 @@ class AmbObserver<ElementType, O: ObserverType> : ObserverType where O.E == Elem
     fileprivate var _sink: Sink
     fileprivate var _cancel: Disposable
     
-    init(parent: Parent, cancel: Disposable, sink: Sink) {
+    init(parent: Parent, cancel: Disposable, sink: @escaping Sink) {
 #if TRACE_RESOURCES
         let _ = AtomicIncrement(&resourceCount)
 #endif

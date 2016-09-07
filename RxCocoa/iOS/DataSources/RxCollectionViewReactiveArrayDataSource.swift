@@ -46,7 +46,7 @@ class RxCollectionViewReactiveArrayDataSourceSequenceWrapper<S: Sequence>
     , RxCollectionViewDataSourceType {
     typealias Element = S
 
-    override init(cellFactory: CellFactory) {
+    override init(cellFactory: @escaping CellFactory) {
         super.init(cellFactory: cellFactory)
     }
     
@@ -82,7 +82,7 @@ class RxCollectionViewReactiveArrayDataSource<Element>
     
     var cellFactory: CellFactory
     
-    init(cellFactory: CellFactory) {
+    init(cellFactory: @escaping CellFactory) {
         self.cellFactory = cellFactory
     }
     

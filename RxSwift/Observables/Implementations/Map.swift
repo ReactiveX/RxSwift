@@ -16,7 +16,7 @@ class MapSink<SourceType, O : ObserverType> : Sink<O>, ObserverType {
 
     private let _selector: Selector
     
-    init(selector: Selector, observer: O) {
+    init(selector: @escaping Selector, observer: O) {
         _selector = selector
         super.init(observer: observer)
     }
@@ -53,7 +53,7 @@ class MapWithIndexSink<SourceType, O : ObserverType> : Sink<O>, ObserverType {
 
     private var _index = 0
 
-    init(selector: Selector, observer: O) {
+    init(selector: @escaping Selector, observer: O) {
         _selector = selector
         super.init(observer: observer)
     }
@@ -86,7 +86,7 @@ class MapWithIndex<SourceType, ResultType> : Producer<ResultType> {
 
     private let _selector: Selector
 
-    init(source: Observable<SourceType>, selector: Selector) {
+    init(source: Observable<SourceType>, selector: @escaping Selector) {
         _source = source
         _selector = selector
     }
@@ -109,7 +109,7 @@ class Map<SourceType, ResultType>: Producer<ResultType> {
 
     private let _selector: Selector
 
-    init(source: Observable<SourceType>, selector: Selector) {
+    init(source: Observable<SourceType>, selector: @escaping Selector) {
         _source = source
         _selector = selector
 

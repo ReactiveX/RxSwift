@@ -56,7 +56,7 @@ class DistinctUntilChanged<Element, Key>: Producer<Element> {
     fileprivate let _selector: KeySelector
     fileprivate let _comparer: EqualityComparer
     
-    init(source: Observable<Element>, selector: KeySelector, comparer: EqualityComparer) {
+    init(source: Observable<Element>, selector: @escaping KeySelector, comparer: @escaping EqualityComparer) {
         _source = source
         _selector = selector
         _comparer = comparer

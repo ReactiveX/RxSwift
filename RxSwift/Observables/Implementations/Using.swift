@@ -65,7 +65,7 @@ class Using<SourceType, ResourceType: Disposable>: Producer<SourceType> {
     fileprivate let _observableFactory: ObservableFactory
     
     
-    init(resourceFactory: ResourceFactory, observableFactory: ObservableFactory) {
+    init(resourceFactory: @escaping ResourceFactory, observableFactory: @escaping ObservableFactory) {
         _resourceFactory = resourceFactory
         _observableFactory = observableFactory
     }
