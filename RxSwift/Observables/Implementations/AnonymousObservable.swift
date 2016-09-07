@@ -44,7 +44,7 @@ class AnonymousObservable<Element> : Producer<Element> {
 
     let _subscribeHandler: SubscribeHandler
 
-    init(_ subscribeHandler: SubscribeHandler) {
+    init(_ subscribeHandler: @escaping SubscribeHandler) {
         _subscribeHandler = subscribeHandler
     }
 

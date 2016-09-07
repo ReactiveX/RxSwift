@@ -22,7 +22,7 @@ struct AnyEquatable<Target>
     let _target: Target
     let _comparer: Comparer
 
-    init(target: Target, comparer: Comparer) {
+    init(target: Target, comparer: @escaping Comparer) {
         _target = target
         _comparer = comparer
     }

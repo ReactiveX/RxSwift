@@ -269,7 +269,7 @@ class VirtualSchedulerItem<Time>
     
     var disposable = SingleAssignmentDisposable()
     
-    init(action: Action, time: Time, id: Int) {
+    init(action: @escaping Action, time: Time, id: Int) {
         self.action = action
         self.time = time
         self.id = id

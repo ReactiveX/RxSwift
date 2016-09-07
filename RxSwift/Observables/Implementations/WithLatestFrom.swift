@@ -108,7 +108,7 @@ class WithLatestFrom<FirstType, SecondType, ResultType>: Producer<ResultType> {
     fileprivate let _second: Observable<SecondType>
     fileprivate let _resultSelector: ResultSelector
 
-    init(first: Observable<FirstType>, second: Observable<SecondType>, resultSelector: ResultSelector) {
+    init(first: Observable<FirstType>, second: Observable<SecondType>, resultSelector: @escaping ResultSelector) {
         _first = first
         _second = second
         _resultSelector = resultSelector

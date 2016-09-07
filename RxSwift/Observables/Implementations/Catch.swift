@@ -81,7 +81,7 @@ class Catch<Element> : Producer<Element> {
     fileprivate let _source: Observable<Element>
     fileprivate let _handler: Handler
     
-    init(source: Observable<Element>, handler: Handler) {
+    init(source: Observable<Element>, handler: @escaping Handler) {
         _source = source
         _handler = handler
     }

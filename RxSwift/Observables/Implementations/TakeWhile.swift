@@ -106,13 +106,13 @@ class TakeWhile<Element>: Producer<Element> {
     fileprivate let _predicate: Predicate!
     fileprivate let _predicateWithIndex: PredicateWithIndex!
 
-    init(source: Observable<Element>, predicate: Predicate) {
+    init(source: Observable<Element>, predicate: @escaping Predicate) {
         _source = source
         _predicate = predicate
         _predicateWithIndex = nil
     }
     
-    init(source: Observable<Element>, predicate: PredicateWithIndex) {
+    init(source: Observable<Element>, predicate: @escaping PredicateWithIndex) {
         _source = source
         _predicate = nil
         _predicateWithIndex = predicate

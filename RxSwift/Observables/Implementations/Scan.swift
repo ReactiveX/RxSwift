@@ -50,7 +50,7 @@ class Scan<Element, Accumulate>: Producer<Accumulate> {
     fileprivate let _seed: Accumulate
     fileprivate let _accumulator: Accumulator
     
-    init(source: Observable<Element>, seed: Accumulate, accumulator: Accumulator) {
+    init(source: Observable<Element>, seed: Accumulate, accumulator: @escaping Accumulator) {
         _source = source
         _seed = seed
         _accumulator = accumulator

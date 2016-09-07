@@ -178,7 +178,7 @@ final class FlatMapSink<SourceType, S: ObservableConvertibleType, O: ObserverTyp
 
     private let _selector: Selector
 
-    init(selector: Selector, observer: O) {
+    init(selector: @escaping Selector, observer: O) {
         _selector = selector
         super.init(observer: observer)
     }
@@ -194,7 +194,7 @@ final class FlatMapWithIndexSink<SourceType, S: ObservableConvertibleType, O: Ob
     private var _index = 0
     private let _selector: Selector
 
-    init(selector: Selector, observer: O) {
+    init(selector: @escaping Selector, observer: O) {
         _selector = selector
         super.init(observer: observer)
     }
@@ -215,7 +215,7 @@ final class FlatMapFirstSink<SourceType, S: ObservableConvertibleType, O: Observ
         return _group.count == MergeNoIterators
     }
 
-    init(selector: Selector, observer: O) {
+    init(selector: @escaping Selector, observer: O) {
         _selector = selector
         super.init(observer: observer)
     }
@@ -357,7 +357,7 @@ final class FlatMap<SourceType, S: ObservableConvertibleType>: Producer<S.E> {
     
     private let _selector: Selector
 
-    init(source: Observable<SourceType>, selector: Selector) {
+    init(source: Observable<SourceType>, selector: @escaping Selector) {
         _source = source
         _selector = selector
     }
@@ -376,7 +376,7 @@ final class FlatMapWithIndex<SourceType, S: ObservableConvertibleType>: Producer
     
     private let _selector: Selector
 
-    init(source: Observable<SourceType>, selector: Selector) {
+    init(source: Observable<SourceType>, selector: @escaping Selector) {
         _source = source
         _selector = selector
     }
@@ -396,7 +396,7 @@ final class FlatMapFirst<SourceType, S: ObservableConvertibleType>: Producer<S.E
 
     private let _selector: Selector
 
-    init(source: Observable<SourceType>, selector: Selector) {
+    init(source: Observable<SourceType>, selector: @escaping Selector) {
         _source = source
         _selector = selector
     }
