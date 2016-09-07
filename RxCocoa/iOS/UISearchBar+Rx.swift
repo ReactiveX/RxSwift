@@ -93,8 +93,30 @@ extension Reactive where Base: UISearchBar {
             }
         return ControlEvent(events: source)
     }
+
+	/**
+	Reactive wrapper for delegate method `searchBarBookmarkButtonClicked`.
+	*/
+	public var bookmarkButtonClicked: ControlEvent<Void> {
+		let source: Observable<Void> = self.delegate.observe(#selector(UISearchBarDelegate.searchBarBookmarkButtonClicked(_:)))
+			.map { _ in
+				return ()
+			}
+		return ControlEvent(events: source)
+	}
+
+	/**
+	Reactive wrapper for delegate method `searchBarResultsListButtonClicked`.
+	*/
+	public var resultsListButtonClicked: ControlEvent<Void> {
+		let source: Observable<Void> = self.delegate.observe(#selector(UISearchBarDelegate.searchBarResultsListButtonClicked(_:)))
+			.map { _ in
+				return ()
+		}
+		return ControlEvent(events: source)
+	}
 #endif
-    
+	
     /**
      Reactive wrapper for delegate method `searchBarSearchButtonClicked`.
      */
@@ -105,6 +127,29 @@ extension Reactive where Base: UISearchBar {
         }
         return ControlEvent(events: source)
     }
+	
+	/**
+	Reactive wrapper for delegate method `searchBarTextDidBeginEditing`.
+	*/
+	public var textDidBeginEditing: ControlEvent<Void> {
+		let source: Observable<Void> = self.delegate.observe(#selector(UISearchBarDelegate.searchBarTextDidBeginEditing(_:)))
+			.map { _ in
+				return ()
+		}
+		return ControlEvent(events: source)
+	}
+	
+	/**
+	Reactive wrapper for delegate method `searchBarTextDidEndEditing`.
+	*/
+	public var textDidEndEditing: ControlEvent<Void> {
+		let source: Observable<Void> = self.delegate.observe(#selector(UISearchBarDelegate.searchBarTextDidEndEditing(_:)))
+			.map { _ in
+				return ()
+		}
+		return ControlEvent(events: source)
+	}
+	
 }
 
 #endif
