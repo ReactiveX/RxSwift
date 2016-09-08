@@ -14,7 +14,7 @@ class FilterSink<O : ObserverType>: Sink<O>, ObserverType {
     
     private let _predicate: Predicate
     
-    init(predicate: Predicate, observer: O) {
+    init(predicate: @escaping Predicate, observer: O) {
         _predicate = predicate
         super.init(observer: observer)
     }
@@ -45,7 +45,7 @@ class Filter<Element> : Producer<Element> {
     private let _source: Observable<Element>
     private let _predicate: Predicate
     
-    init(source: Observable<Element>, predicate: Predicate) {
+    init(source: Observable<Element>, predicate: @escaping Predicate) {
         _source = source
         _predicate = predicate
     }

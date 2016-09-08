@@ -23,7 +23,7 @@ class GestureTarget<Recognizer: UIGestureRecognizer>: RxTarget {
     weak var gestureRecognizer: Recognizer?
     var callback: Callback?
     
-    init(_ gestureRecognizer: Recognizer, callback: Callback) {
+    init(_ gestureRecognizer: Recognizer, callback: @escaping Callback) {
         self.gestureRecognizer = gestureRecognizer
         self.callback = callback
         

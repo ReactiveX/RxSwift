@@ -123,7 +123,7 @@ class ZipCollectionType<C: Collection, R> : Producer<R> where C.Iterator.Element
     let resultSelector: ResultSelector
     let count: Int
     
-    init(sources: C, resultSelector: ResultSelector) {
+    init(sources: C, resultSelector: @escaping ResultSelector) {
         self.sources = sources
         self.resultSelector = resultSelector
         self.count = Int(self.sources.count.toIntMax())

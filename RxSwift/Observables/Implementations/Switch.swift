@@ -148,7 +148,7 @@ final class MapSwitchSink<SourceType, S: ObservableConvertibleType, O: ObserverT
 
     fileprivate let _selector: Selector
 
-    init(selector: Selector, observer: O) {
+    init(selector: @escaping Selector, observer: O) {
         _selector = selector
         super.init(observer: observer)
     }
@@ -180,7 +180,7 @@ final class FlatMapLatest<SourceType, S: ObservableConvertibleType> : Producer<S
     fileprivate let _source: Observable<SourceType>
     fileprivate let _selector: Selector
 
-    init(source: Observable<SourceType>, selector: Selector) {
+    init(source: Observable<SourceType>, selector: @escaping Selector) {
         _source = source
         _selector = selector
     }

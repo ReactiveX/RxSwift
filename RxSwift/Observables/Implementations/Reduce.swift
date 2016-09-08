@@ -59,7 +59,7 @@ class Reduce<SourceType, AccumulateType, ResultType> : Producer<ResultType> {
     fileprivate let _accumulator: AccumulatorType
     fileprivate let _mapResult: ResultSelectorType
     
-    init(source: Observable<SourceType>, seed: AccumulateType, accumulator: AccumulatorType, mapResult: ResultSelectorType) {
+    init(source: Observable<SourceType>, seed: AccumulateType, accumulator: @escaping AccumulatorType, mapResult: @escaping ResultSelectorType) {
         _source = source
         _seed = seed
         _accumulator = accumulator

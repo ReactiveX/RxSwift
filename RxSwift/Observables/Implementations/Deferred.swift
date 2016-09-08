@@ -49,7 +49,7 @@ class Deferred<S: ObservableType> : Producer<S.E> {
     
     private let _observableFactory : Factory
     
-    init(observableFactory: Factory) {
+    init(observableFactory: @escaping Factory) {
         _observableFactory = observableFactory
     }
     

@@ -106,7 +106,7 @@ class CombineLatestObserver<ElementType>
     private let _this: Disposable
     private let _setLatestValue: ValueSetter
     
-    init(lock: NSRecursiveLock, parent: CombineLatestProtocol, index: Int, setLatestValue: ValueSetter, this: Disposable) {
+    init(lock: NSRecursiveLock, parent: CombineLatestProtocol, index: Int, setLatestValue: @escaping ValueSetter, this: Disposable) {
         _lock = lock
         _parent = parent
         _index = index

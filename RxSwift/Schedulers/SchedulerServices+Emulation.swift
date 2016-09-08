@@ -25,7 +25,7 @@ class SchedulePeriodicRecursive<State> {
     private var _state: State
     private var _pendingTickCount: AtomicInt = 0
 
-    init(scheduler: SchedulerType, startAfter: RxTimeInterval, period: RxTimeInterval, action: RecursiveAction, state: State) {
+    init(scheduler: SchedulerType, startAfter: RxTimeInterval, period: RxTimeInterval, action: @escaping RecursiveAction, state: State) {
         _scheduler = scheduler
         _startAfter = startAfter
         _period = period

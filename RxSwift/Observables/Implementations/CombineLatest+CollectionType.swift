@@ -111,7 +111,7 @@ class CombineLatestCollectionType<C: Collection, R> : Producer<R> where C.Iterat
     let _resultSelector: ResultSelector
     let _count: Int
 
-    init(sources: C, resultSelector: ResultSelector) {
+    init(sources: C, resultSelector: @escaping ResultSelector) {
         _sources = sources
         _resultSelector = resultSelector
         _count = Int(self._sources.count.toIntMax())
