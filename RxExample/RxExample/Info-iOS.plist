@@ -27,8 +27,12 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>We need camera</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>We need location</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>We need photo library</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
