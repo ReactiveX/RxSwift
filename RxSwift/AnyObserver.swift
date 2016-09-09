@@ -31,7 +31,7 @@ public struct AnyObserver<Element> : ObserverType {
     
     - parameter eventHandler: Event handler that observes sequences events.
     */
-    public init(eventHandler: EventHandler) {
+    public init(eventHandler: @escaping EventHandler) {
         self.observer = eventHandler
     }
     

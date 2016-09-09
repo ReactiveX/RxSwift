@@ -22,7 +22,7 @@ class AnyRecursiveScheduler<State> {
     private var _scheduler: SchedulerType
     private var _action: Action?
     
-    init(scheduler: SchedulerType, action: Action) {
+    init(scheduler: SchedulerType, action: @escaping Action) {
         _action = action
         _scheduler = scheduler
     }
@@ -134,7 +134,7 @@ class RecursiveImmediateScheduler<State> {
     private var _action: Action?
     private let _scheduler: ImmediateSchedulerType
     
-    init(action: Action, scheduler: ImmediateSchedulerType) {
+    init(action: @escaping Action, scheduler: ImmediateSchedulerType) {
         _action = action
         _scheduler = scheduler
     }

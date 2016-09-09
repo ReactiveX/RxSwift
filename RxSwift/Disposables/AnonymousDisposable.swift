@@ -32,13 +32,13 @@ public final class AnonymousDisposable : DisposeBase, Cancelable {
     - parameter disposeAction: Disposal action which will be run upon calling `dispose`.
     */
     @available(*, deprecated, renamed: "Disposables.create")
-    public init(_ disposeAction: DisposeAction) {
+    public init(_ disposeAction: @escaping DisposeAction) {
         _disposeAction = disposeAction
         super.init()
     }
     
     // Non-deprecated version of the constructor, used by `Disposables.create(with:)`
-    fileprivate init(disposeAction: DisposeAction) {
+    fileprivate init(disposeAction: @escaping DisposeAction) {
         _disposeAction = disposeAction
         super.init()
     }

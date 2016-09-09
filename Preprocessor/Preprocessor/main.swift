@@ -8,13 +8,13 @@
 
 import Foundation
 
-if Process.argc != 3 {
+if CommandLine.argc != 3 {
     print("./Preprocessor <source-files-root> <derived-data> ")
     exit(-1)
 }
 
-let sourceFilesRoot = Process.arguments[1]
-let derivedData = Process.arguments[2]
+let sourceFilesRoot = CommandLine.arguments[1]
+let derivedData = CommandLine.arguments[2]
 
 let fileManager = FileManager()
 
@@ -64,15 +64,15 @@ func processFile(path: String, outputPath: String) -> String {
 func runCommand(path: String) {
     _ = ProcessInfo().processIdentifier
     
-    let task = Task()
-    task.launchPath = "/bin/bash"
-    task.arguments = ["-c", "xcrun swift \"\(path)\""]
+    let process = Process()
+    process.launchPath = "/bin/bash"
+    process.arguments = ["-c", "xcrun swift \"\(path)\""]
     
-    task.launch()
+    process.launch()
     
-    task.waitUntilExit()
+    process.waitUntilExit()
     
-    if task.terminationReason != Task.TerminationReason.exit {
+    if process.terminationReason != .exit {
         exit(-1)
     }
 }

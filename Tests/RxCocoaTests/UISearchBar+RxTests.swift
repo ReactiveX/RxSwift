@@ -96,8 +96,47 @@ class UISearchBarTests : RxTest {
         let createView: () -> UISearchBar = { UISearchBar(frame: CGRect(x: 0, y: 0, width: 1, height: 1)) }
         ensureEventDeallocated(createView) { (view: UISearchBar) in view.rx.cancelButtonClicked }
     }
+	
+	func testBookmarkButtonClicked() {
+		let searchBar = UISearchBar(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
+		
+		var tapped = false
+		
+		let _ = searchBar.rx.bookmarkButtonClicked.subscribe(onNext: { _ in
+			tapped = true
+		})
+		
+		XCTAssertFalse(tapped)
+		searchBar.delegate!.searchBarBookmarkButtonClicked!(searchBar)
+		XCTAssertTrue(tapped)
+	}
+	
+	func testBookmarkButtonClicked_DelegateEventCompletesOnDealloc() {
+		let createView: () -> UISearchBar = { UISearchBar(frame: CGRect(x: 0, y: 0, width: 1, height: 1)) }
+		ensureEventDeallocated(createView) { (view: UISearchBar) in view.rx.bookmarkButtonClicked }
+	}
+	
+	func testResultsListButtonClicked() {
+		let searchBar = UISearchBar(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
+		
+		var tapped = false
+		
+		let _ = searchBar.rx.resultsListButtonClicked.subscribe(onNext: { _ in
+			tapped = true
+		})
+		
+		XCTAssertFalse(tapped)
+		searchBar.delegate!.searchBarResultsListButtonClicked!(searchBar)
+		XCTAssertTrue(tapped)
+	}
+	
+	func testResultsListButtonClicked_DelegateEventCompletesOnDealloc() {
+		let createView: () -> UISearchBar = { UISearchBar(frame: CGRect(x: 0, y: 0, width: 1, height: 1)) }
+		ensureEventDeallocated(createView) { (view: UISearchBar) in view.rx.resultsListButtonClicked }
+	}
+	
 #endif
-    
+	
     func testSearchButtonClicked() {
         let searchBar = UISearchBar(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
         
@@ -116,4 +155,41 @@ class UISearchBarTests : RxTest {
         let createView: () -> UISearchBar = { UISearchBar(frame: CGRect(x: 0, y: 0, width: 1, height: 1)) }
         ensureEventDeallocated(createView) { (view: UISearchBar) in view.rx.searchButtonClicked }
     }
+	
+	func testSearchBarTextDidBeginEditing(){
+		let searchBar = UISearchBar(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
+
+		var tapped = false
+		let _ = searchBar.rx.textDidBeginEditing.subscribe(onNext: { _ in
+			tapped = true
+		})
+		XCTAssertFalse(tapped)
+		searchBar.delegate!.searchBarTextDidBeginEditing!(searchBar)
+		XCTAssertTrue(tapped)
+	}
+
+	func testSearchBarTextDidBeginEditing_DelegateEventCompletesOnDealloc() {
+		let createView: () -> UISearchBar = { UISearchBar(frame: CGRect(x: 0, y: 0, width: 1, height: 1)) }
+		ensureEventDeallocated(createView) { (view: UISearchBar) in view.rx.textDidBeginEditing }
+	}
+	
+	func testSearchBarTextDidEndEditing(){
+		let searchBar = UISearchBar(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
+		
+		var tapped = false
+		let _ = searchBar.rx.textDidEndEditing.subscribe(onNext: { _ in
+			tapped = true
+		})
+		XCTAssertFalse(tapped)
+		searchBar.delegate!.searchBarTextDidBeginEditing!(searchBar)
+		XCTAssertFalse(tapped)
+		searchBar.delegate!.searchBarTextDidEndEditing!(searchBar)
+		XCTAssertTrue(tapped)
+	}
+
+	func testSearchBarTextDidEndEditing_DelegateEventCompletesOnDealloc() {
+		let createView: () -> UISearchBar = { UISearchBar(frame: CGRect(x: 0, y: 0, width: 1, height: 1)) }
+		ensureEventDeallocated(createView) { (view: UISearchBar) in view.rx.textDidEndEditing }
+	}
+	
 }

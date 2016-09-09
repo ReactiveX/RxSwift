@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 
 ## Master
 
+* adds `UISearchBar` extensions:
+  * `bookmarkButtonClicked`
+  * `resultsListButtonClicked`
+  * `textDidBeginEditing`
+  * `textDidEndEditing`
+
 ## [3.0.0.alpha.1](https://github.com/ReactiveX/RxSwift/releases/tag/3.0.0.alpha.1) (Xcode 8 beta 6 compatible 8S201h)
 
 #### Features
