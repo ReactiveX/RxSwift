@@ -3,6 +3,7 @@
 RELEASE_TEST=0
 SKIP_AUTOMATION=0
 
+VALIDATE_IOS_EXAMPLE=1
 VALIDATE_OSX=1
 VALIDATE_IOS=1
 VALIDATE_TVOS=1
@@ -11,22 +12,32 @@ VALIDATE_WATCHOS=1
 if [ "$1" == "r" ]; then
 	printf "${GREEN}Pre release tests on, hang on tight ...${RESET}\n"
 	RELEASE_TEST=1
+elif [ "$1" == "iOS-Example" ]; then
+    VALIDATE_IOS_EXAMPLE=1
+    VALIDATE_OSX=0
+    VALIDATE_IOS=0
+    VALIDATE_TVOS=0
+    VALIDATE_WATCHOS=0
 elif [ "$1" == "OSX" ]; then
+    VALIDATE_IOS_EXAMPLE=0
     VALIDATE_OSX=1
     VALIDATE_IOS=0
     VALIDATE_TVOS=0
     VALIDATE_WATCHOS=0
 elif [ "$1" == "iOS" ]; then
+    VALIDATE_IOS_EXAMPLE=0
     VALIDATE_OSX=0
     VALIDATE_IOS=1
     VALIDATE_TVOS=0
     VALIDATE_WATCHOS=0
 elif [ "$1" == "tvOS" ]; then
+    VALIDATE_IOS_EXAMPLE=0
     VALIDATE_OSX=0
     VALIDATE_IOS=0
     VALIDATE_TVOS=1
     VALIDATE_WATCHOS=0
 elif [ "$1" == "watchOS" ]; then
+    VALIDATE_IOS_EXAMPLE=0
     VALIDATE_OSX=0
     VALIDATE_IOS=0
     VALIDATE_TVOS=0
@@ -93,7 +104,7 @@ if [ "${RELEASE_TEST}" -eq 1 ]; then
 	scripts/validate-podspec.sh
 fi
 
-if [ "${VALIDATE_IOS}" -eq 1 ]; then
+if [ "${VALIDATE_IOS_EXAMPLE}" -eq 1 ]; then
     if [ "${RELEASE_TEST}" -eq 1 ] && [ "${SKIP_AUTOMATION}" -eq 0 ]; then
         for configuration in ${CONFIGURATIONS[@]}
         do
@@ -113,7 +124,11 @@ if [ "${VALIDATE_IOS}" -eq 1 ]; then
             done
         done
     fi
+else
+    printf "${RED}Skipping iOS-Example tests ...${RESET}\n"
+fi
 
+if [ "${VALIDATE_IOS}" -eq 1 ]; then
     #make sure all iOS tests pass
     for configuration in ${CONFIGURATIONS[@]}
     do

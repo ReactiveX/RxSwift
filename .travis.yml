@@ -4,21 +4,22 @@ osx_image: xcode8
 env:
   matrix:
     - DANGER=1
-    - OS="iOS"
-    - OS="OSX"
-    - OS="watchOS"
-    - OS="tvOS"
+    - TEST="iOS"
+    - TEST="OSX"
+    - TEST="watchOS"
+    - TEST="tvOS"
+    - TEST="iOS-Example"
 
 notifications:
   slack: rxswift:3ykt2Z61f8GkdvhCZTYPduOL
   email: false
 
 script: 
-  - if [ "${OS}" == "" ]; then
+  - if [ "${DANGER}" -eq 1 ]; then
        bundle exec danger --verbose;
     else
       xcodebuild -version;
       xcodebuild -showsdks;
-      ./scripts/all-tests.sh "${OS}";
+      ./scripts/all-tests.sh "${TEST}";
     fi
 
