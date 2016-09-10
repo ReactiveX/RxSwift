@@ -1,17 +1,36 @@
 . scripts/common.sh
 
-TV_OS=0
 RELEASE_TEST=0
 SKIP_AUTOMATION=0
 
-if [ `xcodebuild -showsdks | grep tvOS | wc -l` -gt 0 ]; then
-	printf "${GREEN}tvOS found${RESET}\n"
-	TV_OS=1
-fi
+VALIDATE_OSX=1
+VALIDATE_IOS=1
+VALIDATE_TVOS=1
+VALIDATE_WATCHOS=1
 
 if [ "$1" == "r" ]; then
 	printf "${GREEN}Pre release tests on, hang on tight ...${RESET}\n"
 	RELEASE_TEST=1
+elif [ "$1" == "OSX" ]; then
+    VALIDATE_OSX=1
+    VALIDATE_IOS=0
+    VALIDATE_TVOS=0
+    VALIDATE_WATCHOS=0
+elif [ "$1" == "iOS" ]; then
+    VALIDATE_OSX=0
+    VALIDATE_IOS=1
+    VALIDATE_TVOS=0
+    VALIDATE_WATCHOS=0
+elif [ "$1" == "tvOS" ]; then
+    VALIDATE_OSX=0
+    VALIDATE_IOS=0
+    VALIDATE_TVOS=1
+    VALIDATE_WATCHOS=0
+elif [ "$1" == "watchOS" ]; then
+    VALIDATE_OSX=0
+    VALIDATE_IOS=0
+    VALIDATE_TVOS=0
+    VALIDATE_WATCHOS=1
 fi
 
 if [ "$2" == "s" ]; then
@@ -43,7 +62,7 @@ function checkPlistVersions() {
 		PODSPEC_VERSION=`cat $project.podspec | grep -E "s.version\s+=" | cut -d '"' -f 2`
 		ensureVersionEqual "$RXSWIFT_VERSION" "$PODSPEC_VERSION" "${project} version not equal"
         PLIST_VERSION=`defaults read  "\`pwd\`/${project}/Info.plist" CFBundleShortVersionString`
-		if [[ "${PLIST_VERSION}" != "${RXSWIFT_VERSION}" ]]; then
+        if [[ "${PLIST_VERSION}" != "${RXSWIFT_VERSION}" ]]; then
             echo "Invalid version for `pwd`/${project}/Info.plist: ${PLIST_VERSION}"
             defaults write  "`pwd`/${project}/Info.plist" CFBundleShortVersionString $RXSWIFT_VERSION
 		fi
@@ -70,89 +89,90 @@ if [ "${RELEASE_TEST}" -eq 1 ]; then
   	scripts/validate-markdown.sh
 fi
 
-# compile and run playgrounds
-
-. scripts/validate-playgrounds.sh
-
-if [ "${RELEASE_TEST}" -eq 1 ] && [ "${SKIP_AUTOMATION}" -eq 0 ]; then
-#   for configuration in ${CONFIGURATIONS[@]}
-#	do
-#		rx "RxExample-iOSTests" ${configuration} "Krunoslav Zaher’s iPhone" test
-#	done
-
-    for configuration in ${CONFIGURATIONS[@]}
-    do
-        rx "RxExample-iOSUITests" ${configuration} "Krunoslav Zaher’s iPhone" test
-    done
-
-#	for configuration in ${CONFIGURATIONS[@]}
-#	do
-#		rx "RxExample-iOSTests" ${configuration} $DEFAULT_IOS_SIMULATOR test
-#	done
-
-    for configuration in ${CONFIGURATIONS[@]}
-    do
-        rx "RxExample-iOSUITests" ${configuration} $DEFAULT_IOS_SIMULATOR test
-    done
-else
-    for scheme in "RxExample-iOS"
-    do
-        for configuration in "Debug"
-        do
-            rx ${scheme} ${configuration} $DEFAULT_IOS_SIMULATOR build
-        done
-    done
-fi
-
-# make sure osx builds
-for scheme in "RxExample-OSX"
-do
-    for configuration in ${CONFIGURATIONS[@]}
-    do
-        rx ${scheme} ${configuration} "" build
-    done
-done
-
-
-#make sure all OSX tests pass
-for configuration in ${CONFIGURATIONS[@]}
-do
-    rx "RxSwift-OSX" ${configuration} "" test
-done
-
 if [ "${RELEASE_TEST}" -eq 1 ]; then
 	scripts/validate-podspec.sh
 fi
 
-#make sure all tvOS tests pass
-if [ $TV_OS -eq 1 ]; then
+if [ "${VALIDATE_IOS}" -eq 1 ]; then
+    if [ "${RELEASE_TEST}" -eq 1 ] && [ "${SKIP_AUTOMATION}" -eq 0 ]; then
+        for configuration in ${CONFIGURATIONS[@]}
+        do
+            rx "RxExample-iOSUITests" ${configuration} "Krunoslav Zaher’s iPhone" test
+        done
+
+        for configuration in ${CONFIGURATIONS[@]}
+        do
+            rx "RxExample-iOSUITests" ${configuration} $DEFAULT_IOS_SIMULATOR test
+        done
+    else
+        for scheme in "RxExample-iOS"
+        do
+            for configuration in "Debug"
+            do
+                rx ${scheme} ${configuration} $DEFAULT_IOS_SIMULATOR build
+            done
+        done
+    fi
+
+    #make sure all iOS tests pass
+    for configuration in ${CONFIGURATIONS[@]}
+    do
+    	rx "RxSwift-iOS" ${configuration} $DEFAULT_IOS_SIMULATOR test
+    done
+else
+    printf "${RED}Skipping iOS tests ...${RESET}\n"
+fi
+
+
+if [ "${VALIDATE_OSX}" -eq 1 ]; then
+    # compile and run playgrounds
+	. scripts/validate-playgrounds.sh
+
+	# make sure osx builds
+	for scheme in "RxExample-OSX"
+	do
+	    for configuration in ${CONFIGURATIONS[@]}
+	    do
+		rx ${scheme} ${configuration} "" build
+	    done
+	done
+
+    #make sure all OSX tests pass
+    for configuration in ${CONFIGURATIONS[@]}
+    do
+        rx "RxSwift-OSX" ${configuration} "" test
+    done
+else
+	printf "${RED}Skipping OSX tests ...${RESET}\n"
+fi
+
+if [ "${VALIDATE_TVOS}" -eq 1 ]; then
 	for configuration in ${CONFIGURATIONS[@]}
 	do
 		rx "RxSwift-tvOS" ${configuration} $DEFAULT_TVOS_SIMULATOR test
 	done
+else
+    printf "${RED}Skipping tvOS tests ...${RESET}\n"
 fi
 
-# make sure watchos builds
-# temporary solution
-WATCH_OS_BUILD_TARGETS=(RxSwift-watchOS RxCocoa-watchOS RxBlocking-watchOS)
-for scheme in ${WATCH_OS_BUILD_TARGETS[@]}
-do
-	for configuration in ${CONFIGURATIONS[@]}
-	do
-		rx "${scheme}" "${configuration}" "${DEFAULT_WATCHOS_SIMULATOR}" build
-	done
-done
-
-#make sure all iOS tests pass
-for configuration in ${CONFIGURATIONS[@]}
-do
-	rx "RxSwift-iOS" ${configuration} $DEFAULT_IOS_SIMULATOR test
-done
-
-#make sure all watchOS tests pass
-#tests for Watch OS are not available rdar://21760513
-# for configuration in ${CONFIGURATIONS[@]}
-# do
-# 	rx "RxTests-watchOS" ${configuration} $DEFAULT_WATCHOS_SIMULATOR test
-# done
+if [ "${VALIDATE_WATCHOS}" -eq 1 ]; then
+    # make sure watchos builds
+    # temporary solution
+    WATCH_OS_BUILD_TARGETS=(RxSwift-watchOS RxCocoa-watchOS RxBlocking-watchOS)
+    for scheme in ${WATCH_OS_BUILD_TARGETS[@]}
+    do
+    	for configuration in ${CONFIGURATIONS[@]}
+    	do
+    		rx "${scheme}" "${configuration}" "${DEFAULT_WATCHOS_SIMULATOR}" build
+    	done
+    done
+    #make sure all watchOS tests pass
+    #tests for Watch OS are not available rdar://21760513
+    # for configuration in ${CONFIGURATIONS[@]}
+    # do
+    # 	rx "RxTests-watchOS" ${configuration} $DEFAULT_WATCHOS_SIMULATOR test
+    # done
+else
+    printf "${RED}Skipping watchOS tests ...${RESET}\n"
+fi
 
