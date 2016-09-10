@@ -1077,7 +1077,7 @@ extension ObservableBindingTest {
 
 // shareReplay(1)
 extension ObservableBindingTest {
-    func _testIdenticalBehaviorOfShareReplayOptimizedAndComposed(_ action: (_ transform: ((Observable<Int>) -> Observable<Int>)) -> Void) {
+    func _testIdenticalBehaviorOfShareReplayOptimizedAndComposed(_ action: @escaping (_ transform: @escaping ((Observable<Int>) -> Observable<Int>)) -> Void) {
         action { $0.shareReplay(1) }
         action { $0.replay(1).refCount() }
     }

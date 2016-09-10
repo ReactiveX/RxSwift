@@ -10,6 +10,12 @@
 #import <objc/runtime.h>
 #import <objc/message.h>
 
+static int32_t (^defaultImpl)(int32_t) = ^int32_t(int32_t a) {
+    return 0;
+};
+
+#define A(...) [Arguments argumentsWithValues:@[__VA_ARGS__]]
+
 @implementation RXObjCTestRuntime
 
 +(id)castClosure:(void (^)(void))closure {
@@ -46,18 +52,25 @@
 
 @end
 
-@interface A : NSObject @property(nonatomic, strong) NSString *a; -(void)ante; @end @implementation A -(void)ante { printf(""); } @end
 
 #define IMPLEMENT_OBSERVING_CLASS_PAIR_FOR_TEST(testName) _IMPLEMENT_OBSERVING_CLASS_PAIR_FOR_TEST(testName,,)
 #define _IMPLEMENT_OBSERVING_CLASS_PAIR_FOR_TEST(testName, baseClassContent, subclassContent)                                                  \
 /*##########################################################################################################################################*/ \
+@interface SentMessageTestBase_ ## testName ()                                                                                                 \
+@property (nonatomic, strong) NSMutableArray<Arguments *> *privateBaseMessages;                                                                \
+@end                                                                                                                                           \
+                                                                                                                                               \
 @implementation SentMessageTestBase_ ## testName                                                                                               \
+                                                                                                                                               \
+-(NSArray *)baseMessages {                                                                                                                     \
+    return self.privateBaseMessages;                                                                                                           \
+}                                                                                                                                              \
                                                                                                                                                \
 -(instancetype)init {                                                                                                                          \
     self = [super init];                                                                                                                       \
     if (!self) return nil;                                                                                                                     \
                                                                                                                                                \
-    self.baseMessages = @[];                                                                                                                   \
+    self.privateBaseMessages = [[NSMutableArray alloc] init];                                                                                  \
                                                                                                                                                \
     return self;                                                                                                                               \
 }                                                                                                                                              \
@@ -67,180 +80,180 @@
 }                                                                                                                                              \
                                                                                                                                                \
 -(void)voidJustCalledVoidToSay {                                                                                                               \
-    self.baseMessages = [self.baseMessages arrayByAddingObject:@[]];                                                                           \
+    [self.privateBaseMessages addObject:A()];                                                                                                  \
 }                                                                                                                                              \
                                                                                                                                                \
 -(id __nonnull)justCalledObjectToSay:(id __nonnull)value {                                                                                     \
-    self.baseMessages = [self.baseMessages arrayByAddingObject:@[value]];                                                                      \
+    [self.privateBaseMessages addObject:A(value)];                                                                                             \
     return value;                                                                                                                              \
 }                                                                                                                                              \
                                                                                                                                                \
 -(void)voidJustCalledObjectToSay:(id __nonnull)value {                                                                                         \
-    self.baseMessages = [self.baseMessages arrayByAddingObject:@[value]];                                                                      \
+    [self.privateBaseMessages addObject:A(value)];                                                                                             \
 }                                                                                                                                              \
                                                                                                                                                \
 -(void)voidJustCalledObjectToSay:(id __nonnull)value object:(id __nonnull)value1 {                                                             \
-    self.baseMessages = [self.baseMessages arrayByAddingObject:@[value, value1]];                                                              \
+    [self.privateBaseMessages addObject:A(value, value1)];                                                                                     \
 }                                                                                                                                              \
                                                                                                                                                \
 -(Class __nonnull)justCalledClassToSay:(Class __nonnull)value {                                                                                \
-    self.baseMessages = [self.baseMessages arrayByAddingObject:@[value]];                                                                      \
+    [self.privateBaseMessages addObject:A(value)];                                                                                             \
     return value;                                                                                                                              \
 }                                                                                                                                              \
                                                                                                                                                \
 -(void)voidJustCalledClassToSay:(Class __nonnull)value {                                                                                       \
-    self.baseMessages = [self.baseMessages arrayByAddingObject:@[value]];                                                                      \
+    [self.privateBaseMessages addObject:A(value)];                                                                                             \
 }                                                                                                                                              \
                                                                                                                                                \
 -(void (^ __nonnull)() )justCalledClosureToSay:(void (^ __nonnull)())value {                                                                   \
-    self.baseMessages = [self.baseMessages arrayByAddingObject:@[value]];                                                                      \
+    [self.privateBaseMessages addObject:A(value)];                                                                                             \
     return value;                                                                                                                              \
 }                                                                                                                                              \
                                                                                                                                                \
 -(void)voidJustCalledClosureToSay:(void (^ __nonnull)())value {                                                                                \
-    self.baseMessages = [self.baseMessages arrayByAddingObject:@[value]];                                                                      \
+    [self.privateBaseMessages addObject:A(value)];                                                                                             \
 }                                                                                                                                              \
                                                                                                                                                \
 -(char)justCalledCharToSay:(char)value {                                                                                                       \
-    self.baseMessages = [self.baseMessages arrayByAddingObject:@[@(value)]];                                                                   \
+    [self.privateBaseMessages addObject:A(@(value))];                                                                                          \
     return value;                                                                                                                              \
 }                                                                                                                                              \
                                                                                                                                                \
 -(void)voidJustCalledCharToSay:(char)value {                                                                                                   \
-    self.baseMessages = [self.baseMessages arrayByAddingObject:@[@(value)]];                                                                   \
+    [self.privateBaseMessages addObject:A(@(value))];                                                                                          \
 }                                                                                                                                              \
                                                                                                                                                \
 -(short)justCalledShortToSay:(short)value {                                                                                                    \
-    self.baseMessages = [self.baseMessages arrayByAddingObject:@[@(value)]];                                                                   \
+    [self.privateBaseMessages addObject:A(@(value))];                                                                                          \
     return value;                                                                                                                              \
 }                                                                                                                                              \
                                                                                                                                                \
 -(void)voidJustCalledShortToSay:(short)value {                                                                                                 \
-    self.baseMessages = [self.baseMessages arrayByAddingObject:@[@(value)]];                                                                   \
+    [self.privateBaseMessages addObject:A(@(value))];                                                                                          \
 }                                                                                                                                              \
                                                                                                                                                \
 -(int)justCalledIntToSay:(int)value {                                                                                                          \
-    self.baseMessages = [self.baseMessages arrayByAddingObject:@[@(value)]];                                                                   \
+    [self.privateBaseMessages addObject:A(@(value))];                                                                                          \
     return value;                                                                                                                              \
 }                                                                                                                                              \
                                                                                                                                                \
 -(void)voidJustCalledIntToSay:(int)value {                                                                                                     \
-    self.baseMessages = [self.baseMessages arrayByAddingObject:@[@(value)]];                                                                   \
+    [self.privateBaseMessages addObject:A(@(value))];                                                                                          \
 }                                                                                                                                              \
                                                                                                                                                \
 -(long)justCalledLongToSay:(long)value {                                                                                                       \
-    self.baseMessages = [self.baseMessages arrayByAddingObject:@[@(value)]];                                                                   \
+    [self.privateBaseMessages addObject:A(@(value))];                                                                                          \
     return value;                                                                                                                              \
 }                                                                                                                                              \
                                                                                                                                                \
 -(void)voidJustCalledLongToSay:(long)value {                                                                                                   \
-    self.baseMessages = [self.baseMessages arrayByAddingObject:@[@(value)]];                                                                   \
+    [self.privateBaseMessages addObject:A(@(value))];                                                                                          \
 }                                                                                                                                              \
                                                                                                                                                \
 -(long long)justCalledLongLongToSay:(long long)value {                                                                                         \
-    self.baseMessages = [self.baseMessages arrayByAddingObject:@[@(value)]];                                                                   \
+    [self.privateBaseMessages addObject:A(@(value))];                                                                                          \
     return value;                                                                                                                              \
 }                                                                                                                                              \
                                                                                                                                                \
 -(void)voidJustCalledLongLongToSay:(long long)value {                                                                                          \
-    self.baseMessages = [self.baseMessages arrayByAddingObject:@[@(value)]];                                                                   \
+    [self.privateBaseMessages addObject:A(@(value))];                                                                                          \
 }                                                                                                                                              \
                                                                                                                                                \
 -(unsigned char)justCalledUnsignedCharToSay:(unsigned char)value {                                                                             \
-    self.baseMessages = [self.baseMessages arrayByAddingObject:@[@(value)]];                                                                   \
+    [self.privateBaseMessages addObject:A(@(value))];                                                                                          \
     return value;                                                                                                                              \
 }                                                                                                                                              \
                                                                                                                                                \
 -(void)voidJustCalledUnsignedCharToSay:(unsigned char)value {                                                                                  \
-    self.baseMessages = [self.baseMessages arrayByAddingObject:@[@(value)]];                                                                   \
+    [self.privateBaseMessages addObject:A(@(value))];                                                                                          \
 }                                                                                                                                              \
                                                                                                                                                \
 -(unsigned short)justCalledUnsignedShortToSay:(unsigned short)value {                                                                          \
-    self.baseMessages = [self.baseMessages arrayByAddingObject:@[@(value)]];                                                                   \
+    [self.privateBaseMessages addObject:A(@(value))];                                                                                          \
     return value;                                                                                                                              \
 }                                                                                                                                              \
                                                                                                                                                \
 -(void)voidJustCalledUnsignedShortToSay:(unsigned short)value {                                                                                \
-    self.baseMessages = [self.baseMessages arrayByAddingObject:@[@(value)]];                                                                   \
+    [self.privateBaseMessages addObject:A(@(value))];                                                                                          \
 }                                                                                                                                              \
                                                                                                                                                \
 -(unsigned int)justCalledUnsignedIntToSay:(unsigned int)value {                                                                                \
-    self.baseMessages = [self.baseMessages arrayByAddingObject:@[@(value)]];                                                                   \
+    [self.privateBaseMessages addObject:A(@(value))];                                                                                          \
     return value;                                                                                                                              \
 }                                                                                                                                              \
                                                                                                                                                \
 -(void)voidJustCalledUnsignedIntToSay:(unsigned int)value {                                                                                    \
-    self.baseMessages = [self.baseMessages arrayByAddingObject:@[@(value)]];                                                                   \
+    [self.privateBaseMessages addObject:A(@(value))];                                                                                          \
 }                                                                                                                                              \
                                                                                                                                                \
 -(unsigned long)justCalledUnsignedLongToSay:(unsigned long)value {                                                                             \
-    self.baseMessages = [self.baseMessages arrayByAddingObject:@[@(value)]];                                                                   \
+    [self.privateBaseMessages addObject:A(@(value))];                                                                                          \
     return value;                                                                                                                              \
 }                                                                                                                                              \
                                                                                                                                                \
 -(void)voidJustCalledUnsignedLongToSay:(unsigned long)value {                                                                                  \
-    self.baseMessages = [self.baseMessages arrayByAddingObject:@[@(value)]];                                                                   \
+    [self.privateBaseMessages addObject:A(@(value))];                                                                                          \
 }                                                                                                                                              \
                                                                                                                                                \
 -(unsigned long long)justCalledUnsignedLongLongToSay:(unsigned long long)value {                                                               \
-    self.baseMessages = [self.baseMessages arrayByAddingObject:@[@(value)]];                                                                   \
+    [self.privateBaseMessages addObject:A(@(value))];                                                                                          \
     return value;                                                                                                                              \
 }                                                                                                                                              \
                                                                                                                                                \
 -(void)voidJustCalledUnsignedLongLongToSay:(unsigned long long)value {                                                                         \
-    self.baseMessages = [self.baseMessages arrayByAddingObject:@[@(value)]];                                                                   \
+    [self.privateBaseMessages addObject:A(@(value))];                                                                                          \
 }                                                                                                                                              \
                                                                                                                                                \
 -(float)justCalledFloatToSay:(float)value {                                                                                                    \
-    self.baseMessages = [self.baseMessages arrayByAddingObject:@[@(value)]];                                                                   \
+    [self.privateBaseMessages addObject:A(@(value))];                                                                                          \
     return value;                                                                                                                              \
 }                                                                                                                                              \
                                                                                                                                                \
 -(void)voidJustCalledFloatToSay:(float)value {                                                                                                 \
-    self.baseMessages = [self.baseMessages arrayByAddingObject:@[@(value)]];                                                                   \
+    [self.privateBaseMessages addObject:A(@(value))];                                                                                          \
 }                                                                                                                                              \
                                                                                                                                                \
 -(double)justCalledDoubleToSay:(double)value {                                                                                                 \
-    self.baseMessages = [self.baseMessages arrayByAddingObject:@[@(value)]];                                                                   \
+    [self.privateBaseMessages addObject:A(@(value))];                                                                                          \
     return value;                                                                                                                              \
 }                                                                                                                                              \
                                                                                                                                                \
 -(void)voidJustCalledDoubleToSay:(double)value {                                                                                               \
-    self.baseMessages = [self.baseMessages arrayByAddingObject:@[@(value)]];                                                                   \
+    [self.privateBaseMessages addObject:A(@(value))];                                                                                          \
 }                                                                                                                                              \
                                                                                                                                                \
 -(BOOL)justCalledBoolToSay:(BOOL)value {                                                                                                       \
-    self.baseMessages = [self.baseMessages arrayByAddingObject:@[@(value)]];                                                                   \
+    [self.privateBaseMessages addObject:A(@(value))];                                                                                          \
     return value;                                                                                                                              \
 }                                                                                                                                              \
                                                                                                                                                \
 -(void)voidJustCalledBoolToSay:(BOOL)value {                                                                                                   \
-    self.baseMessages = [self.baseMessages arrayByAddingObject:@[@(value)]];                                                                   \
+    [self.privateBaseMessages addObject:A(@(value))];                                                                                          \
 }                                                                                                                                              \
                                                                                                                                                \
 -(const char * __nonnull)justCalledConstCharToSay:(const char * __nonnull)value {                                                              \
-    self.baseMessages = [self.baseMessages arrayByAddingObject:@[[NSValue valueWithPointer:value]]];                                           \
+    [self.privateBaseMessages addObject:A([NSValue valueWithPointer:value])];                                                                  \
     return value;                                                                                                                              \
 }                                                                                                                                              \
                                                                                                                                                \
 -(void)voidJustCalledConstCharToSay:(const char * __nonnull)value {                                                                            \
-    self.baseMessages = [self.baseMessages arrayByAddingObject:@[[NSValue valueWithPointer:value]]];                                           \
+    [self.privateBaseMessages addObject:A([NSValue valueWithPointer:value])];                                                                  \
 }                                                                                                                                              \
                                                                                                                                                \
 -(NSInteger)justCalledLargeToSay:(some_insanely_large_struct_t)value {                                                                         \
-    self.baseMessages = [self.baseMessages arrayByAddingObject:@[[NSValue valueWithBytes:&value                                                \
-                                                                        objCType:@encode(some_insanely_large_struct_t)]]];                     \
+    [self.privateBaseMessages addObject:A([NSValue valueWithBytes:&value                                                                       \
+                                                                        objCType:@encode(some_insanely_large_struct_t)])];                     \
     return value.a[0] + value.a[1] + value.a[2] + value.a[3] + value.a[4] + value.a[5] + value.a[6] + value.a[7];                              \
 }                                                                                                                                              \
                                                                                                                                                \
 -(void)voidJustCalledLargeToSay:(some_insanely_large_struct_t)value {                                                                          \
-    self.baseMessages = [self.baseMessages arrayByAddingObject:@[[NSValue valueWithBytes:&value                                                \
-                                                      objCType:@encode(some_insanely_large_struct_t)]]];                                       \
+    [self.privateBaseMessages addObject:A([NSValue valueWithBytes:&value                                                                       \
+                                                      objCType:@encode(some_insanely_large_struct_t)])];                                       \
 }                                                                                                                                              \
                                                                                                                                                \
--(NSInteger)message_allSupportedParameters:(id __nonnull)p1                                                                                    \
-                                        p2:(Class __nonnull)p2                                                                                 \
-                                        p3:(int32_t (^ __nonnull)(int32_t))p3                                                                  \
+-(NSInteger)message_allSupportedParameters:(id __nullable)p1                                                                                   \
+                                        p2:(Class __nullable)p2                                                                                \
+                                        p3:(int32_t (^ __nullable)(int32_t))p3                                                                 \
                                         p4:(int8_t)p4                                                                                          \
                                         p5:(int16_t)p5                                                                                         \
                                         p6:(int32_t)p6                                                                                         \
@@ -251,13 +264,13 @@
                                        p11:(uint64_t)p11                                                                                       \
                                        p12:(float)p12                                                                                          \
                                        p13:(double)p13                                                                                         \
-                                       p14:(const int8_t * __nonnull)p14                                                                       \
-                                       p15:(int8_t * __nonnull)p15                                                                             \
+                                       p14:(const int8_t * __nullable)p14                                                                      \
+                                       p15:(int8_t * __nullable)p15                                                                            \
                                        p16:(some_insanely_large_struct_t)p16 {                                                                 \
-    self.baseMessages = [self.baseMessages arrayByAddingObject:@[                                                                              \
-        p1,                                                                                                                                    \
-        p2,                                                                                                                                    \
-        p3,                                                                                                                                    \
+    [self.privateBaseMessages addObject:A(                                                                                                     \
+        p1 ?: [NSNull null],                                                                                                                   \
+        p2 ?: [NSNull null],                                                                                                                   \
+        p3 ?: defaultImpl,                                                                                                                     \
         @(p4),                                                                                                                                 \
         @(p5),                                                                                                                                 \
         @(p6),                                                                                                                                 \
@@ -271,7 +284,7 @@
         [NSValue valueWithPointer:p14],                                                                                                        \
         [NSValue valueWithPointer:p15],                                                                                                        \
         [NSValue valueWithBytes:&p16 objCType:@encode(some_insanely_large_struct_t)],                                                          \
-    ]];                                                                                                                                        \
+    )];                                                                                                                                        \
     return -5;                                                                                                                                 \
 }                                                                                                                                              \
                                                                                                                                                \
@@ -284,210 +297,218 @@
 baseClassContent                                                                                                                               \
 @end                                                                                                                                           \
                                                                                                                                                \
+@interface SentMessageTest_ ## testName ()                                                                                                     \
+@property (nonatomic, strong) NSMutableArray<Arguments *> *privateMessages;                                                                    \
+@end                                                                                                                                           \
+                                                                                                                                               \
 @implementation SentMessageTest_ ## testName                                                                                                   \
+                                                                                                                                               \
+-(NSArray *)messages {                                                                                                                         \
+    return self.privateMessages;                                                                                                               \
+}                                                                                                                                              \
                                                                                                                                                \
 -(instancetype)init {                                                                                                                          \
     self = [super init];                                                                                                                       \
     if (!self) return nil;                                                                                                                     \
                                                                                                                                                \
-    self.messages = @[];                                                                                                                       \
+    self.privateMessages = [[NSMutableArray alloc] init];                                                                                      \
                                                                                                                                                \
     return self;                                                                                                                               \
 }                                                                                                                                              \
                                                                                                                                                \
 -(void)voidJustCalledVoidToSay {                                                                                                               \
-    self.messages = [self.messages arrayByAddingObject:@[]];                                                                                   \
+    [self.privateMessages addObject:A()];                                                                                                      \
     return [super voidJustCalledVoidToSay];                                                                                                    \
 }                                                                                                                                              \
                                                                                                                                                \
 -(id __nonnull)justCalledObjectToSay:(id __nonnull)value {                                                                                     \
-    self.messages = [self.messages arrayByAddingObject:@[value]];                                                                              \
+    [self.privateMessages addObject:A(value)];                                                                                                 \
     return [super justCalledObjectToSay:value];                                                                                                \
 }                                                                                                                                              \
                                                                                                                                                \
 -(void)voidJustCalledObjectToSay:(id __nonnull)value {                                                                                         \
-    self.messages = [self.messages arrayByAddingObject:@[value]];                                                                              \
+    [self.privateMessages addObject:A(value)];                                                                                                 \
     return [super voidJustCalledObjectToSay:value];                                                                                            \
 }                                                                                                                                              \
                                                                                                                                                \
 -(void)voidJustCalledObjectToSay:(id __nonnull)value object:(id __nonnull)value1 {                                                             \
-    self.messages = [self.messages arrayByAddingObject:@[value]];                                                                              \
+    [self.privateMessages addObject:A(value)];                                                                                                 \
     return [super voidJustCalledObjectToSay:value object:value1];                                                                              \
 }                                                                                                                                              \
                                                                                                                                                \
 -(Class __nonnull)justCalledClassToSay:(Class __nonnull)value {                                                                                \
-    self.messages = [self.messages arrayByAddingObject:@[value]];                                                                              \
+    [self.privateMessages addObject:A(value)];                                                                                                 \
     return [super justCalledClassToSay:value];                                                                                                 \
 }                                                                                                                                              \
                                                                                                                                                \
 -(void)voidJustCalledClassToSay:(Class __nonnull)value {                                                                                       \
-    self.messages = [self.messages arrayByAddingObject:@[value]];                                                                              \
+    [self.privateMessages addObject:A(value)];                                                                                                 \
     return [super voidJustCalledClassToSay:value];                                                                                             \
 }                                                                                                                                              \
                                                                                                                                                \
 -(void (^ __nonnull)() )justCalledClosureToSay:(void (^ __nonnull)())value {                                                                   \
-    self.messages = [self.messages arrayByAddingObject:@[value]];                                                                              \
+    [self.privateMessages addObject:A(value)];                                                                                                 \
     return [super justCalledClosureToSay:value];                                                                                               \
 }                                                                                                                                              \
                                                                                                                                                \
 -(void)voidJustCalledClosureToSay:(void (^ __nonnull)())value {                                                                                \
-    self.messages = [self.messages arrayByAddingObject:@[value]];                                                                              \
+    [self.privateMessages addObject:A(value)];                                                                                                 \
     return [super voidJustCalledClosureToSay:value];                                                                                           \
 }                                                                                                                                              \
                                                                                                                                                \
 -(char)justCalledCharToSay:(char)value {                                                                                                       \
-    self.messages = [self.messages arrayByAddingObject:@[@(value)]];                                                                           \
+    [self.privateMessages addObject:A(@(value))];                                                                                              \
     return [super justCalledCharToSay:value];                                                                                                  \
 }                                                                                                                                              \
                                                                                                                                                \
 -(void)voidJustCalledCharToSay:(char)value {                                                                                                   \
-    self.messages = [self.messages arrayByAddingObject:@[@(value)]];                                                                           \
+    [self.privateMessages addObject:A(@(value))];                                                                                              \
     return [super voidJustCalledCharToSay:value];                                                                                              \
 }                                                                                                                                              \
                                                                                                                                                \
 -(short)justCalledShortToSay:(short)value {                                                                                                    \
-    self.messages = [self.messages arrayByAddingObject:@[@(value)]];                                                                           \
+    [self.privateMessages addObject:A(@(value))];                                                                                              \
     return [super justCalledShortToSay:value];                                                                                                 \
 }                                                                                                                                              \
                                                                                                                                                \
 -(void)voidJustCalledShortToSay:(short)value {                                                                                                 \
-    self.messages = [self.messages arrayByAddingObject:@[@(value)]];                                                                           \
+    [self.privateMessages addObject:A(@(value))];                                                                                              \
     return [super voidJustCalledShortToSay:value];                                                                                             \
 }                                                                                                                                              \
                                                                                                                                                \
 -(int)justCalledIntToSay:(int)value {                                                                                                          \
-    self.messages = [self.messages arrayByAddingObject:@[@(value)]];                                                                           \
+    [self.privateMessages addObject:A(@(value))];                                                                                              \
     return [super justCalledIntToSay:value];                                                                                                   \
 }                                                                                                                                              \
                                                                                                                                                \
 -(void)voidJustCalledIntToSay:(int)value {                                                                                                     \
-    self.messages = [self.messages arrayByAddingObject:@[@(value)]];                                                                           \
+    [self.privateMessages addObject:A(@(value))];                                                                                              \
     return [super voidJustCalledIntToSay:value];                                                                                               \
 }                                                                                                                                              \
                                                                                                                                                \
 -(long)justCalledLongToSay:(long)value {                                                                                                       \
-    self.messages = [self.messages arrayByAddingObject:@[@(value)]];                                                                           \
+    [self.privateMessages addObject:A(@(value))];                                                                                              \
     return [super justCalledLongToSay:value];                                                                                                  \
 }                                                                                                                                              \
                                                                                                                                                \
 -(void)voidJustCalledLongToSay:(long)value {                                                                                                   \
-    self.messages = [self.messages arrayByAddingObject:@[@(value)]];                                                                           \
+    [self.privateMessages addObject:A(@(value))];                                                                                              \
     return [super voidJustCalledLongToSay:value];                                                                                              \
 }                                                                                                                                              \
                                                                                                                                                \
 -(long long)justCalledLongLongToSay:(long long)value {                                                                                         \
-    self.messages = [self.messages arrayByAddingObject:@[@(value)]];                                                                           \
+    [self.privateMessages addObject:A(@(value))];                                                                                              \
     return [super justCalledLongLongToSay:value];                                                                                              \
 }                                                                                                                                              \
                                                                                                                                                \
 -(void)voidJustCalledLongLongToSay:(long long)value {                                                                                          \
-    self.messages = [self.messages arrayByAddingObject:@[@(value)]];                                                                           \
+    [self.privateMessages addObject:A(@(value))];                                                                                              \
     return [super voidJustCalledLongLongToSay:value];                                                                                          \
 }                                                                                                                                              \
                                                                                                                                                \
 -(unsigned char)justCalledUnsignedCharToSay:(unsigned char)value {                                                                             \
-    self.messages = [self.messages arrayByAddingObject:@[@(value)]];                                                                           \
+    [self.privateMessages addObject:A(@(value))];                                                                                              \
     return [super justCalledUnsignedCharToSay:value];                                                                                          \
 }                                                                                                                                              \
                                                                                                                                                \
 -(void)voidJustCalledUnsignedCharToSay:(unsigned char)value {                                                                                  \
-    self.messages = [self.messages arrayByAddingObject:@[@(value)]];                                                                           \
+    [self.privateMessages addObject:A(@(value))];                                                                                              \
     return [super voidJustCalledUnsignedCharToSay:value];                                                                                      \
 }                                                                                                                                              \
                                                                                                                                                \
 -(unsigned short)justCalledUnsignedShortToSay:(unsigned short)value {                                                                          \
-    self.messages = [self.messages arrayByAddingObject:@[@(value)]];                                                                           \
+    [self.privateMessages addObject:A(@(value))];                                                                                              \
     return [super justCalledUnsignedShortToSay:value];                                                                                         \
 }                                                                                                                                              \
                                                                                                                                                \
 -(void)voidJustCalledUnsignedShortToSay:(unsigned short)value {                                                                                \
-    self.messages = [self.messages arrayByAddingObject:@[@(value)]];                                                                           \
+    [self.privateMessages addObject:A(@(value))];                                                                                              \
     return [super voidJustCalledUnsignedShortToSay:value];                                                                                     \
 }                                                                                                                                              \
                                                                                                                                                \
 -(unsigned int)justCalledUnsignedIntToSay:(unsigned int)value {                                                                                \
-    self.messages = [self.messages arrayByAddingObject:@[@(value)]];                                                                           \
+    [self.privateMessages addObject:A(@(value))];                                                                                              \
     return [super justCalledUnsignedIntToSay:value];                                                                                           \
 }                                                                                                                                              \
                                                                                                                                                \
 -(void)voidJustCalledUnsignedIntToSay:(unsigned int)value {                                                                                    \
-    self.messages = [self.messages arrayByAddingObject:@[@(value)]];                                                                           \
+    [self.privateMessages addObject:A(@(value))];                                                                                              \
     return [super voidJustCalledUnsignedIntToSay:value];                                                                                       \
 }                                                                                                                                              \
                                                                                                                                                \
 -(unsigned long)justCalledUnsignedLongToSay:(unsigned long)value {                                                                             \
-    self.messages = [self.messages arrayByAddingObject:@[@(value)]];                                                                           \
+    [self.privateMessages addObject:A(@(value))];                                                                                              \
     return [super justCalledUnsignedLongToSay:value];                                                                                          \
 }                                                                                                                                              \
                                                                                                                                                \
 -(void)voidJustCalledUnsignedLongToSay:(unsigned long)value {                                                                                  \
-    self.messages = [self.messages arrayByAddingObject:@[@(value)]];                                                                           \
+    [self.privateMessages addObject:A(@(value))];                                                                                              \
     return [super voidJustCalledUnsignedLongToSay:value];                                                                                      \
 }                                                                                                                                              \
                                                                                                                                                \
 -(unsigned long long)justCalledUnsignedLongLongToSay:(unsigned long long)value {                                                               \
-    self.messages = [self.messages arrayByAddingObject:@[@(value)]];                                                                           \
+    [self.privateMessages addObject:A(@(value))];                                                                                              \
     return [super justCalledUnsignedLongLongToSay:value];                                                                                      \
 }                                                                                                                                              \
                                                                                                                                                \
 -(void)voidJustCalledUnsignedLongLongToSay:(unsigned long long)value {                                                                         \
-    self.messages = [self.messages arrayByAddingObject:@[@(value)]];                                                                           \
+    [self.privateMessages addObject:A(@(value))];                                                                                              \
     return [super voidJustCalledUnsignedLongLongToSay:value];                                                                                  \
 }                                                                                                                                              \
                                                                                                                                                \
 -(float)justCalledFloatToSay:(float)value {                                                                                                    \
-    self.messages = [self.messages arrayByAddingObject:@[@(value)]];                                                                           \
+    [self.privateMessages addObject:A(@(value))];                                                                                              \
     return [super justCalledFloatToSay:value];                                                                                                 \
 }                                                                                                                                              \
                                                                                                                                                \
 -(void)voidJustCalledFloatToSay:(float)value {                                                                                                 \
-    self.messages = [self.messages arrayByAddingObject:@[@(value)]];                                                                           \
+    [self.privateMessages addObject:A(@(value))];                                                                                              \
     return [super voidJustCalledFloatToSay:value];                                                                                             \
 }                                                                                                                                              \
                                                                                                                                                \
 -(double)justCalledDoubleToSay:(double)value {                                                                                                 \
-    self.messages = [self.messages arrayByAddingObject:@[@(value)]];                                                                           \
+    [self.privateMessages addObject:A(@(value))];                                                                                              \
     return [super justCalledDoubleToSay:value];                                                                                                \
 }                                                                                                                                              \
                                                                                                                                                \
 -(void)voidJustCalledDoubleToSay:(double)value {                                                                                               \
-    self.messages = [self.messages arrayByAddingObject:@[@(value)]];                                                                           \
+    [self.privateMessages addObject:A(@(value))];                                                                                              \
     return [super voidJustCalledDoubleToSay:value];                                                                                            \
 }                                                                                                                                              \
                                                                                                                                                \
 -(BOOL)justCalledBoolToSay:(BOOL)value {                                                                                                       \
-    self.messages = [self.messages arrayByAddingObject:@[@(value)]];                                                                           \
+    [self.privateMessages addObject:A(@(value))];                                                                                              \
     return [super justCalledBoolToSay:value];                                                                                                  \
 }                                                                                                                                              \
                                                                                                                                                \
 -(void)voidJustCalledBoolToSay:(BOOL)value {                                                                                                   \
-    self.messages = [self.messages arrayByAddingObject:@[@(value)]];                                                                           \
+    [self.privateMessages addObject:A(@(value))];                                                                                              \
     return [super voidJustCalledBoolToSay:value];                                                                                              \
 }                                                                                                                                              \
                                                                                                                                                \
 -(const char * __nonnull)justCalledConstCharToSay:(const char * __nonnull)value {                                                              \
-    self.messages = [self.messages arrayByAddingObject:@[[NSValue valueWithPointer:value]]];                                                   \
+    [self.privateMessages addObject:A([NSValue valueWithPointer:value])];                                                                      \
     return [super justCalledConstCharToSay:value];                                                                                             \
 }                                                                                                                                              \
                                                                                                                                                \
 -(void)voidJustCalledConstCharToSay:(const char * __nonnull)value {                                                                            \
-    self.messages = [self.messages arrayByAddingObject:@[[NSValue valueWithPointer:value]]];                                                   \
+    [self.privateMessages addObject:A([NSValue valueWithPointer:value])];                                                                      \
     return [super voidJustCalledConstCharToSay:value];                                                                                         \
 }                                                                                                                                              \
                                                                                                                                                \
 -(NSInteger)justCalledLargeToSay:(some_insanely_large_struct_t)value {                                                                         \
-    self.messages = [self.messages arrayByAddingObject:@[[NSValue valueWithBytes:&value objCType:@encode(some_insanely_large_struct_t)]]];     \
+    [self.privateMessages addObject:A([NSValue valueWithBytes:&value objCType:@encode(some_insanely_large_struct_t)])];                        \
     return [super justCalledLargeToSay:value];                                                                                                 \
 }                                                                                                                                              \
                                                                                                                                                \
 -(void)voidJustCalledLargeToSay:(some_insanely_large_struct_t)value {                                                                          \
-    self.messages = [self.messages arrayByAddingObject:@[[NSValue valueWithBytes:&value objCType:@encode(some_insanely_large_struct_t)]]];     \
+    [self.privateMessages addObject:A([NSValue valueWithBytes:&value objCType:@encode(some_insanely_large_struct_t)])];                        \
     return [super voidJustCalledLargeToSay:value];                                                                                             \
 }                                                                                                                                              \
                                                                                                                                                \
--(NSInteger)message_allSupportedParameters:(id __nonnull)p1                                                                                    \
-                                        p2:(Class __nonnull)p2                                                                                 \
-                                        p3:(int32_t (^ __nonnull)(int32_t))p3                                                                  \
+-(NSInteger)message_allSupportedParameters:(id __nullable)p1                                                                                   \
+                                        p2:(Class __nullable)p2                                                                                \
+                                        p3:(int32_t (^ __nullable)(int32_t))p3                                                                 \
                                         p4:(int8_t)p4                                                                                          \
                                         p5:(int16_t)p5                                                                                         \
                                         p6:(int32_t)p6                                                                                         \
@@ -498,13 +519,13 @@ baseClassContent                                                                
                                        p11:(uint64_t)p11                                                                                       \
                                        p12:(float)p12                                                                                          \
                                        p13:(double)p13                                                                                         \
-                                       p14:(const int8_t * __nonnull)p14                                                                       \
-                                       p15:(int8_t * __nonnull)p15                                                                             \
+                                       p14:(const int8_t * __nullable)p14                                                                      \
+                                       p15:(int8_t * __nullable)p15                                                                            \
                                        p16:(some_insanely_large_struct_t)p16 {                                                                 \
-    self.messages = [self.messages arrayByAddingObject:@[                                                                                      \
-        p1,                                                                                                                                    \
-        p2,                                                                                                                                    \
-        p3,                                                                                                                                    \
+    [self.privateMessages addObject:A(                                                                                                         \
+        p1 ?: [NSNull null],                                                                                                                   \
+        p2 ?: [NSNull null],                                                                                                                   \
+        p3 ?: defaultImpl,                                                                                                                     \
         @(p4),                                                                                                                                 \
         @(p5),                                                                                                                                 \
         @(p6),                                                                                                                                 \
@@ -518,7 +539,7 @@ baseClassContent                                                                
         [NSValue valueWithPointer:p14],                                                                                                        \
         [NSValue valueWithPointer:p15],                                                                                                        \
         [NSValue valueWithBytes:&p16 objCType:@encode(some_insanely_large_struct_t)],                                                          \
-    ]];                                                                                                                                        \
+    )];                                                                                                                                        \
     return [super message_allSupportedParameters:p1                                                                                            \
                                               p2:p2                                                                                            \
                                               p3:p3                                                                                            \
@@ -569,6 +590,34 @@ IMPLEMENT_OBSERVING_CLASS_PAIR_FOR_TEST(all_supported_types)
 
 -(Class __nonnull)class {
     return SentMessageTest_shared.class;
+}
+
+@end
+
+@implementation Arguments
+
++(instancetype)argumentsWithValues:(NSArray *)values {
+    Arguments *arguments = [[Arguments alloc] init];
+
+    arguments->_values = [values copy];
+
+    return arguments;
+}
+
+-(BOOL)isEqual:(Arguments *)object {
+    if (object == self) {
+        return YES;
+    }
+
+    if (object == nil) {
+        return NO;
+    }
+
+    if ([self class] != [object class]) {
+        return NO;
+    }
+
+    return [self.values isEqualToArray:object.values];
 }
 
 @end

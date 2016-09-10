@@ -455,8 +455,8 @@ extension SentMessageTest {
             })
 
         let objectParam = NSObject()
-        let str: UnsafePointer<Int8> = ("123" as NSString).utf8String!
-        let unsafeStr: UnsafeMutablePointer<Int8> = UnsafeMutablePointer(mutating: str)
+        let str: UnsafePointer<Int8> = UnsafePointer(bitPattern: 1343423)!
+        let unsafeStr: UnsafeMutablePointer<Int8> = UnsafeMutablePointer(bitPattern: 2123123)!
 
         let largeStruct = some_insanely_large_struct(a: (0, 1, 2, 3, 4, 5, 6, 7), some_large_text: nil, next: nil)
 
@@ -465,7 +465,8 @@ extension SentMessageTest {
 
         d.dispose()
 
-        XCTAssertEqualAnyObjectArrayOfArrays(target.messages as [[AnyObject]], messages)
+        let resultMessages = target.messages.map { $0.values }
+        XCTAssertEqualAnyObjectArrayOfArrays(resultMessages, messages)
     }
 }
 
@@ -907,8 +908,8 @@ extension SentMessageTest {
 
             result = sendMessage(target)
 
-            receivedDerivedClassMessage = target.messages
-            receivedBaseClassMessage = target.baseMessages
+            receivedDerivedClassMessage = target.messages.map { $0.values }
+            receivedBaseClassMessage = target.baseMessages.map { $0.values }
 
             return d
         }
