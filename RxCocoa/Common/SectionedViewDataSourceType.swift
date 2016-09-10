@@ -33,7 +33,7 @@ extension SectionedViewDataSourceType {
      - returns: Model at index path.
      */
     @available(*, deprecated, renamed: "model(_:)")
-    func model(_ indexPath: IndexPath) throws -> Any {
+    func modelAtIndexPath(_ indexPath: IndexPath) throws -> Any {
         return try self.model(indexPath)
     }
 }
