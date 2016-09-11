@@ -12,27 +12,26 @@ import Foundation
 extension ObservableType {
     
     /**
-    Ignores elements from an observable sequence which are followed by another element within a specified relative time duration, using the specified scheduler to run throttling timers.
- 
-    `throttle` and `debounce` are synonyms.
-
+    Returns an Observable that emits the first and the latest item emitted by the source Observable during sequential time windows of a specified duration.
+    
+    This operator makes sure that no two elements are emitted in less then dueTime.
+     
     - seealso: [debounce operator on reactivex.io](http://reactivex.io/documentation/operators/debounce.html)
     
     - parameter dueTime: Throttling duration for each element.
+    - parameter latest: Should latest element received in a dueTime wide time window since last element emission be emitted.
     - parameter scheduler: Scheduler to run the throttle timers and send events on.
     - returns: The throttled sequence.
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func throttle(_ dueTime: RxTimeInterval, scheduler: SchedulerType)
+    public func throttle(_ dueTime: RxTimeInterval, latest: Bool = true, scheduler: SchedulerType)
         -> Observable<E> {
-        return Throttle(source: self.asObservable(), dueTime: dueTime, scheduler: scheduler)
+        return Throttle(source: self.asObservable(), dueTime: dueTime, latest: latest, scheduler: scheduler)
     }
 
     /**
     Ignores elements from an observable sequence which are followed by another element within a specified relative time duration, using the specified scheduler to run throttling timers.
     
-    `throttle` and `debounce` are synonyms.
-
     - seealso: [debounce operator on reactivex.io](http://reactivex.io/documentation/operators/debounce.html)
     
     - parameter dueTime: Throttling duration for each element.
@@ -42,7 +41,7 @@ extension ObservableType {
     // @warn_unused_result(message:"http://git.io/rxs.uo")
     public func debounce(_ dueTime: RxTimeInterval, scheduler: SchedulerType)
         -> Observable<E> {
-        return Throttle(source: self.asObservable(), dueTime: dueTime, scheduler: scheduler)
+        return Debounce(source: self.asObservable(), dueTime: dueTime, scheduler: scheduler)
     }
 }
 

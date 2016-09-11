@@ -21,9 +21,10 @@ class ThrottleSink<O: ObserverType>
     let _lock = NSRecursiveLock()
     
     // state
-    private var _id = 0 as UInt64
-    private var _value: Element? = nil
-    
+    private var _lastUnsentElement: Element? = nil
+    private var _lastSentTime: Date? = nil
+    private var _completed: Bool = false
+
     let cancellable = SerialDisposable()
     
     init(parent: ParentType, observer: O) {
@@ -45,38 +46,73 @@ class ThrottleSink<O: ObserverType>
     func _synchronized_on(_ event: Event<Element>) {
         switch event {
         case .next(let element):
-            _id = _id &+ 1
-            let currentId = _id
-            _value = element
+            let now = _parent._scheduler.now
 
+            let timeIntervalSinceLast: RxTimeInterval
+
+            if let lastSendingTime = _lastSentTime {
+                timeIntervalSinceLast = now.timeIntervalSince(lastSendingTime)
+            }
+            else {
+                timeIntervalSinceLast = _parent._dueTime
+            }
+
+            let couldSendNow = timeIntervalSinceLast >= _parent._dueTime
+
+            if couldSendNow {
+                self.sendNow(element: element, now: now)
+                return
+            }
+
+            if !_parent._latest {
+                return
+            }
+
+            let isThereAlreadyInFlightRequest = _lastUnsentElement != nil
             
+            _lastUnsentElement = element
+
+            if isThereAlreadyInFlightRequest {
+                return
+            }
+
             let scheduler = _parent._scheduler
             let dueTime = _parent._dueTime
 
             let d = SingleAssignmentDisposable()
             self.cancellable.disposable = d
-            d.disposable = scheduler.scheduleRelative(currentId, dueTime: dueTime, action: self.propagate)
+
+            d.disposable = scheduler.scheduleRelative(0, dueTime: dueTime - timeIntervalSinceLast, action: self.propagate)
         case .error:
-            _value = nil
+            _lastUnsentElement = nil
             forwardOn(event)
             dispose()
         case .completed:
-            if let value = _value {
-                _value = nil
-                forwardOn(.next(value))
+            if let _ = _lastUnsentElement {
+                _completed = true
             }
-            forwardOn(.completed)
-            dispose()
+            else {
+                forwardOn(.completed)
+                dispose()
+            }
         }
     }
-    
-    func propagate(_ currentId: UInt64) -> Disposable {
-        _lock.lock(); defer { _lock.unlock() } // {
-            let originalValue = _value
 
-            if let value = originalValue, _id == currentId {
-                _value = nil
-                forwardOn(.next(value))
+    private func sendNow(element: Element, now: Date) {
+        _lastSentTime = now
+        _lastUnsentElement = nil
+        self.forwardOn(.next(element))
+    }
+    
+    func propagate(_: Int) -> Disposable {
+        _lock.lock(); defer { _lock.unlock() } // {
+            if let lastUnsentElement = _lastUnsentElement {
+                sendNow(element: lastUnsentElement, now: _parent._scheduler.now)
+            }
+
+            if _completed {
+                forwardOn(.completed)
+                dispose()
             }
         // }
         return Disposables.create()
@@ -87,11 +123,13 @@ class Throttle<Element> : Producer<Element> {
     
     fileprivate let _source: Observable<Element>
     fileprivate let _dueTime: RxTimeInterval
+    fileprivate let _latest: Bool
     fileprivate let _scheduler: SchedulerType
-    
-    init(source: Observable<Element>, dueTime: RxTimeInterval, scheduler: SchedulerType) {
+
+    init(source: Observable<Element>, dueTime: RxTimeInterval, latest: Bool, scheduler: SchedulerType) {
         _source = source
         _dueTime = dueTime
+        _latest = latest
         _scheduler = scheduler
     }
     
