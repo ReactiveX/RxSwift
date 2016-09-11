@@ -48,7 +48,7 @@ extension CLLocationManagerTests {
 
         autoreleasepool {
             let manager = CLLocationManager()
-
+            
             _ = manager.rx.didFailWithError.subscribe(onNext: { e in
                 error = e
                 }, onCompleted: {

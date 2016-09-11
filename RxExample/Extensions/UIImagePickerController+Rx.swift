@@ -13,6 +13,7 @@ import Foundation
 
 #if !RX_NO_MODULE
     import RxSwift
+    import RxCocoa
 #endif
     import UIKit
 
@@ -50,3 +51,11 @@ import Foundation
     }
     
 #endif
+
+fileprivate func castOrThrow<T>(_ resultType: T.Type, _ object: AnyObject) throws -> T {
+    guard let returnValue = object as? T else {
+        throw RxCocoaError.castingError(object: object, targetType: resultType)
+    }
+
+    return returnValue
+}

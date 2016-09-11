@@ -87,6 +87,15 @@
 		C86E2F451AE5A0CA00C31024 /* WikipediaAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86E2F3B1AE5A0CA00C31024 /* WikipediaAPI.swift */; };
 		C86E2F461AE5A0CA00C31024 /* WikipediaPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86E2F3C1AE5A0CA00C31024 /* WikipediaPage.swift */; };
 		C86E2F471AE5A0CA00C31024 /* WikipediaSearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86E2F3D1AE5A0CA00C31024 /* WikipediaSearchResult.swift */; };
+		C886A68B1D85AC9400653EE4 /* UIImagePickerController+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C886A68A1D85AC9400653EE4 /* UIImagePickerController+Rx.swift */; };
+		C886A68E1D85AD2000653EE4 /* CLLocationManager+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C886A68C1D85AD2000653EE4 /* CLLocationManager+Rx.swift */; };
+		C886A68F1D85AD2000653EE4 /* RxCLLocationManagerDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C886A68D1D85AD2000653EE4 /* RxCLLocationManagerDelegateProxy.swift */; };
+		C886A6911D85AD7E00653EE4 /* CLLocationManager+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C886A6901D85AD7E00653EE4 /* CLLocationManager+RxTests.swift */; };
+		C886A6931D85ADA100653EE4 /* UIImagePickerController+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C886A6921D85ADA100653EE4 /* UIImagePickerController+RxTests.swift */; };
+		C886A6951D85AEA300653EE4 /* RxTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C886A6941D85AEA300653EE4 /* RxTest.swift */; };
+		C886A6991D85B0E400653EE4 /* CLLocationManager+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C886A68C1D85AD2000653EE4 /* CLLocationManager+Rx.swift */; };
+		C886A69A1D85B0E400653EE4 /* RxCLLocationManagerDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C886A68D1D85AD2000653EE4 /* RxCLLocationManagerDelegateProxy.swift */; };
+		C886A69B1D85B0E500653EE4 /* UIImagePickerController+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C886A68A1D85AC9400653EE4 /* UIImagePickerController+Rx.swift */; };
 		C88BB8BB1B07E6C90064D411 /* SearchResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86E2F321AE5A0CA00C31024 /* SearchResultViewModel.swift */; };
 		C88BB8BC1B07E6C90064D411 /* HtmlParsing.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83367111AD029AE00C668A7 /* HtmlParsing.swift */; };
 		C88BB8BE1B07E6C90064D411 /* ImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83367121AD029AE00C668A7 /* ImageService.swift */; };
@@ -395,6 +404,12 @@
 		C86E2F3B1AE5A0CA00C31024 /* WikipediaAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WikipediaAPI.swift; sourceTree = "<group>"; };
 		C86E2F3C1AE5A0CA00C31024 /* WikipediaPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = WikipediaPage.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		C86E2F3D1AE5A0CA00C31024 /* WikipediaSearchResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = WikipediaSearchResult.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		C886A68A1D85AC9400653EE4 /* UIImagePickerController+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImagePickerController+Rx.swift"; sourceTree = "<group>"; };
+		C886A68C1D85AD2000653EE4 /* CLLocationManager+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CLLocationManager+Rx.swift"; sourceTree = "<group>"; };
+		C886A68D1D85AD2000653EE4 /* RxCLLocationManagerDelegateProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxCLLocationManagerDelegateProxy.swift; sourceTree = "<group>"; };
+		C886A6901D85AD7E00653EE4 /* CLLocationManager+RxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CLLocationManager+RxTests.swift"; sourceTree = "<group>"; };
+		C886A6921D85ADA100653EE4 /* UIImagePickerController+RxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImagePickerController+RxTests.swift"; sourceTree = "<group>"; };
+		C886A6941D85AEA300653EE4 /* RxTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxTest.swift; sourceTree = "<group>"; };
 		C88BB8DC1B07E6C90064D411 /* RxExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RxExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C88C2B271D67EC5200B01A98 /* RxExample-iOSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "RxExample-iOSUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C88C2B291D67EC5200B01A98 /* FlowTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTests.swift; sourceTree = "<group>"; };
@@ -569,6 +584,7 @@
 				C8A468EB1B8A8BC900BF917B /* RxSwift.framework */,
 				C8B290A51C959D2900E923D0 /* RxDataSources */,
 				C83366DF1AD0293800C668A7 /* RxExample */,
+				C886A6751D85AC7B00653EE4 /* Extensions */,
 				C849EF621C3190360048AC4A /* RxExample-iOSTests */,
 				C88C2B281D67EC5200B01A98 /* RxExample-iOSUITests */,
 				C83366DE1AD0293800C668A7 /* Products */,
@@ -685,9 +701,12 @@
 			isa = PBXGroup;
 			children = (
 				C89C2BD71C32231A00EBC99C /* Mocks */,
+				C886A6921D85ADA100653EE4 /* UIImagePickerController+RxTests.swift */,
+				C886A6901D85AD7E00653EE4 /* CLLocationManager+RxTests.swift */,
 				C849EF631C3190360048AC4A /* RxExample_iOSTests.swift */,
 				C89C2BD51C321DA200EBC99C /* TestScheduler+MarbleTests.swift */,
 				C849EF651C3190360048AC4A /* Info.plist */,
+				C886A6941D85AEA300653EE4 /* RxTest.swift */,
 			);
 			path = "RxExample-iOSTests";
 			sourceTree = "<group>";
@@ -795,6 +814,16 @@
 				C822B1DE1C14CEAA0088A01A /* BindingExtensions.swift */,
 			);
 			path = GitHubSignup;
+			sourceTree = "<group>";
+		};
+		C886A6751D85AC7B00653EE4 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				C886A68C1D85AD2000653EE4 /* CLLocationManager+Rx.swift */,
+				C886A68D1D85AD2000653EE4 /* RxCLLocationManagerDelegateProxy.swift */,
+				C886A68A1D85AC9400653EE4 /* UIImagePickerController+Rx.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		C88C2B281D67EC5200B01A98 /* RxExample-iOSUITests */ = {
@@ -1206,6 +1235,7 @@
 				0744CDD41C4DB5F000720FD2 /* GeolocationService.swift in Sources */,
 				C84780021D29DE8C0074454A /* UI+SectionedViewType.swift in Sources */,
 				B1604CC91BE5BBFA002E1279 /* UIImageView+DownloadableImage.swift in Sources */,
+				C886A68F1D85AD2000653EE4 /* RxCLLocationManagerDelegateProxy.swift in Sources */,
 				C84780041D29DE8C0074454A /* RxCollectionViewSectionedReloadDataSource.swift in Sources */,
 				C8477FF91D29DE8C0074454A /* IdentifiableType.swift in Sources */,
 				C86E2F3E1AE5A0CA00C31024 /* SearchResultViewModel.swift in Sources */,
@@ -1220,6 +1250,7 @@
 				C8477FFE1D29DE8C0074454A /* SectionModel.swift in Sources */,
 				C8477FFC1D29DE8C0074454A /* ItemPath.swift in Sources */,
 				C84780031D29DE8C0074454A /* RxCollectionViewSectionedAnimatedDataSource.swift in Sources */,
+				C886A68E1D85AD2000653EE4 /* CLLocationManager+Rx.swift in Sources */,
 				C8477FF61D29DE8C0074454A /* DataSources.swift in Sources */,
 				C8C46DA81B47F7110020D71E /* CollectionViewImageCell.swift in Sources */,
 				C8984CD31C36BC3E001E4272 /* NumberSectionView.swift in Sources */,
@@ -1233,6 +1264,7 @@
 				C864BAD71C3332F10083833C /* DetailViewController.swift in Sources */,
 				C822B1DF1C14CEAA0088A01A /* BindingExtensions.swift in Sources */,
 				C864BAD91C3332F10083833C /* RandomUserAPI.swift in Sources */,
+				C886A68B1D85AC9400653EE4 /* UIImagePickerController+Rx.swift in Sources */,
 				C8477FF01D29DE8C0074454A /* AnimatableSectionModelType+ItemPath.swift in Sources */,
 				C864BADF1C3332F10083833C /* UIImageView+Extensions.swift in Sources */,
 				C8477FFD1D29DE8C0074454A /* Optional+Extensions.swift in Sources */,
@@ -1293,15 +1325,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C886A6991D85B0E400653EE4 /* CLLocationManager+Rx.swift in Sources */,
 				C89C2BD61C321DA200EBC99C /* TestScheduler+MarbleTests.swift in Sources */,
+				C886A6951D85AEA300653EE4 /* RxTest.swift in Sources */,
 				C849EF901C319E9A0048AC4A /* GithubSignupViewModel1.swift in Sources */,
 				C849EF641C3190360048AC4A /* RxExample_iOSTests.swift in Sources */,
+				C886A69B1D85B0E500653EE4 /* UIImagePickerController+Rx.swift in Sources */,
+				C886A6911D85AD7E00653EE4 /* CLLocationManager+RxTests.swift in Sources */,
 				C849EF921C319E9A0048AC4A /* DefaultImplementations.swift in Sources */,
 				C849EF991C31A63C0048AC4A /* Wireframe.swift in Sources */,
 				C89C2BDC1C32231A00EBC99C /* MockGitHubAPI.swift in Sources */,
 				C89C2BDE1C32231A00EBC99C /* NotImplementedStubs.swift in Sources */,
 				C849EF9A1C31A7680048AC4A /* ActivityIndicator.swift in Sources */,
 				C849EF951C319E9D0048AC4A /* GithubSignupViewModel2.swift in Sources */,
+				C886A6931D85ADA100653EE4 /* UIImagePickerController+RxTests.swift in Sources */,
+				C886A69A1D85B0E400653EE4 /* RxCLLocationManagerDelegateProxy.swift in Sources */,
 				C89C2BDD1C32231A00EBC99C /* MockWireframe.swift in Sources */,
 				C89C2BDF1C32231A00EBC99C /* ValidationResult+Equatable.swift in Sources */,
 				C849EF911C319E9A0048AC4A /* Protocols.swift in Sources */,
