@@ -11,11 +11,12 @@ All notable changes to this project will be documented in this file.
 * Corrects `throttle` operator behavior to be more consistent with other platforms. Adds `latest` flag that controls should latest element
   be emitted after dueTime.
 * Adds `delay` operator.
-* adds `UISearchBar` extensions:
+* Adds `UISearchBar` extensions:
   * `bookmarkButtonClicked`
   * `resultsListButtonClicked`
   * `textDidBeginEditing`
   * `textDidEndEditing`
+* Moves `CLLocationManager` and `UIImagePickerViewController` extensions from RxCocoa to RxExample project. #874
 * Adds matrix CI builds.
 
 ## [3.0.0.alpha.1](https://github.com/ReactiveX/RxSwift/releases/tag/3.0.0.alpha.1) (Xcode 8 beta 6 compatible 8S201h)
