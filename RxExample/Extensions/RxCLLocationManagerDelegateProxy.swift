@@ -8,20 +8,20 @@
 
 import CoreLocation
 #if !RX_NO_MODULE
-import RxSwift
+    import RxSwift
+    import RxCocoa
 #endif
 
 class RxCLLocationManagerDelegateProxy : DelegateProxy
                                        , CLLocationManagerDelegate
                                        , DelegateProxyType {
-    
     class func currentDelegateFor(object: AnyObject) -> AnyObject? {
-        let locationManager: CLLocationManager = castOrFatalError(object)
+        let locationManager: CLLocationManager = object as! CLLocationManager
         return locationManager.delegate
     }
     
     class func setCurrentDelegate(delegate: AnyObject?, toObject object: AnyObject) {
-        let locationManager: CLLocationManager = castOrFatalError(object)
-        locationManager.delegate = castOptionalOrFatalError(delegate)
+        let locationManager: CLLocationManager = object as! CLLocationManager
+        locationManager.delegate = delegate as? CLLocationManagerDelegate
     }
 }

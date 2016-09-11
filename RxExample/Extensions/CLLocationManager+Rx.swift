@@ -8,9 +8,9 @@
 
 import CoreLocation
 #if !RX_NO_MODULE
-import RxSwift
+    import RxSwift
+    import RxCocoa
 #endif
-
 
 extension CLLocationManager {
 
@@ -215,4 +215,25 @@ extension CLLocationManager {
 
 
 
+}
+
+
+private func castOrThrow<T>(resultType: T.Type, _ object: AnyObject) throws -> T {
+    guard let returnValue = object as? T else {
+        throw RxCocoaError.CastingError(object: object, targetType: resultType)
+    }
+
+    return returnValue
+}
+
+private func castOptionalOrThrow<T>(resultType: T.Type, _ object: AnyObject) throws -> T? {
+    if NSNull().isEqual(object) {
+        return nil
+    }
+
+    guard let returnValue = object as? T else {
+        throw RxCocoaError.CastingError(object: object, targetType: resultType)
+    }
+
+    return returnValue
 }
