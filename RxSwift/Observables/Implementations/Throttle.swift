@@ -60,7 +60,7 @@ class ThrottleSink<O: ObserverType>
             let couldSendNow = timeIntervalSinceLast >= _parent._dueTime
 
             if couldSendNow {
-                self.sendNow(element: element, now: now)
+                self.sendNow(element: element)
                 return
             }
 
@@ -98,16 +98,17 @@ class ThrottleSink<O: ObserverType>
         }
     }
 
-    private func sendNow(element: Element, now: Date) {
-        _lastSentTime = now
+    private func sendNow(element: Element) {
         _lastUnsentElement = nil
         self.forwardOn(.next(element))
+        // in case element processing takes a while, this should give some more room
+        _lastSentTime = _parent._scheduler.now
     }
     
     func propagate(_: Int) -> Disposable {
         _lock.lock(); defer { _lock.unlock() } // {
             if let lastUnsentElement = _lastUnsentElement {
-                sendNow(element: lastUnsentElement, now: _parent._scheduler.now)
+                sendNow(element: lastUnsentElement)
             }
 
             if _completed {
