@@ -5,11 +5,18 @@ All notable changes to this project will be documented in this file.
 
 ## Master
 
+## [3.0.0-beta.1](https://github.com/ReactiveX/RxSwift/releases/tag/3.0.0-beta.1) (Xcode 8 GM compatible 8A218a)
+
+* Adapts to new Swift 3.0 syntax.
+* Corrects `throttle` operator behavior to be more consistent with other platforms. Adds `latest` flag that controls should latest element
+  be emitted after dueTime.
+* Adds `delay` operator.
 * adds `UISearchBar` extensions:
   * `bookmarkButtonClicked`
   * `resultsListButtonClicked`
   * `textDidBeginEditing`
   * `textDidEndEditing`
+* Adds matrix CI builds.
 
 ## [3.0.0.alpha.1](https://github.com/ReactiveX/RxSwift/releases/tag/3.0.0.alpha.1) (Xcode 8 beta 6 compatible 8S201h)
 
