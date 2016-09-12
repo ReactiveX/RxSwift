@@ -50,7 +50,7 @@ extension ObservableType {
 extension ObservableType {
    
     /**
-    Samples the source observable sequence using a samper observable sequence producing sampling ticks.
+    Samples the source observable sequence using a sampler observable sequence producing sampling ticks.
     
     Upon each sampling tick, the latest element (if any) in the source sequence during the last sampling interval is sent to the resulting sequence.
     
