@@ -172,7 +172,7 @@ $ pod install
 Add this to `Cartfile`
 
 ```
-github "ReactiveX/RxSwift" "3.0.0-beta.1"
+github "ReactiveX/RxSwift" "master"
 ```
 
 ```
