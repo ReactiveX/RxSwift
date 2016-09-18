@@ -27,13 +27,13 @@ class GitHubDefaultValidationService: GitHubValidationService {
     
     func validateUsername(_ username: String) -> Observable<ValidationResult> {
         if username.characters.count == 0 {
-            return Observable.just(.empty)
+            return .just(.empty)
         }
         
 
         // this obviously won't be
         if username.rangeOfCharacter(from: CharacterSet.alphanumerics.inverted) != nil {
-            return Observable.just(.failed(message: "Username can only contain numbers or digits"))
+            return .just(.failed(message: "Username can only contain numbers or digits"))
         }
         
         let loadingValue = ValidationResult.validating

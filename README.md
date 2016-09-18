@@ -85,7 +85,7 @@ let searchResults = searchBar.rx.text
     .distinctUntilChanged()
     .flatMapLatest { query -> Observable<[Repository]> in
         if query.isEmpty {
-            return Observable.just([])
+            return .just([])
         }
 
         return searchGitHub(query)
