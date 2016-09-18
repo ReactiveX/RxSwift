@@ -355,7 +355,6 @@
 		C83100671BF7D51600AAE3CD /* Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83100631BF7D51600AAE3CD /* Sequence.swift */; };
 		C83508C81C386F6F0027C24C /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8A56AD71AD7424700B4673B /* RxSwift.framework */; };
 		C83509291C38706E0027C24C /* PerformanceTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83508D71C38706D0027C24C /* PerformanceTools.swift */; };
-		C835092A1C38706E0027C24C /* CLLocationManager+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83508D91C38706D0027C24C /* CLLocationManager+RxTests.swift */; };
 		C835092C1C38706E0027C24C /* Control+RxTests+UIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83508DB1C38706D0027C24C /* Control+RxTests+UIKit.swift */; };
 		C835092D1C38706E0027C24C /* Control+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83508DC1C38706D0027C24C /* Control+RxTests.swift */; };
 		C835092E1C38706E0027C24C /* ControlEventTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83508DD1C38706D0027C24C /* ControlEventTests.swift */; };
@@ -430,8 +429,6 @@
 		C83509B01C3874DC0027C24C /* RxTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C835091D1C38706D0027C24C /* RxTest.swift */; };
 		C83509B11C3874E20027C24C /* PerformanceTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83508D71C38706D0027C24C /* PerformanceTools.swift */; };
 		C83509B21C3874E20027C24C /* PerformanceTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83508D71C38706D0027C24C /* PerformanceTools.swift */; };
-		C83509B31C3875010027C24C /* CLLocationManager+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83508D91C38706D0027C24C /* CLLocationManager+RxTests.swift */; };
-		C83509B41C3875020027C24C /* CLLocationManager+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83508D91C38706D0027C24C /* CLLocationManager+RxTests.swift */; };
 		C83509B51C3875050027C24C /* Control+RxTests+Cocoa.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83508DA1C38706D0027C24C /* Control+RxTests+Cocoa.swift */; };
 		C83509B71C38750D0027C24C /* Control+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83508DC1C38706D0027C24C /* Control+RxTests.swift */; };
 		C83509B81C38750D0027C24C /* ControlEventTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83508DD1C38706D0027C24C /* ControlEventTests.swift */; };
@@ -1536,7 +1533,6 @@
 		C83508D51C38706D0027C24C /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C83508D61C38706D0027C24C /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		C83508D71C38706D0027C24C /* PerformanceTools.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PerformanceTools.swift; sourceTree = "<group>"; };
-		C83508D91C38706D0027C24C /* CLLocationManager+RxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CLLocationManager+RxTests.swift"; sourceTree = "<group>"; };
 		C83508DA1C38706D0027C24C /* Control+RxTests+Cocoa.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Control+RxTests+Cocoa.swift"; sourceTree = "<group>"; };
 		C83508DB1C38706D0027C24C /* Control+RxTests+UIKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Control+RxTests+UIKit.swift"; sourceTree = "<group>"; };
 		C83508DC1C38706D0027C24C /* Control+RxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Control+RxTests.swift"; sourceTree = "<group>"; };
@@ -2249,7 +2245,6 @@
 			isa = PBXGroup;
 			children = (
 				C8D132511C42DA7F00B59FFF /* TestImplementations */,
-				C83508D91C38706D0027C24C /* CLLocationManager+RxTests.swift */,
 				C8B290841C94D55600E923D0 /* RxTest+Controls.swift */,
 				C83508DA1C38706D0027C24C /* Control+RxTests+Cocoa.swift */,
 				C83508DB1C38706D0027C24C /* Control+RxTests+UIKit.swift */,
@@ -3478,7 +3473,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				033C2EF61D081C460050C015 /* UIScrollView+RxTests.swift in Sources */,
-				C835092A1C38706E0027C24C /* CLLocationManager+RxTests.swift in Sources */,
 				C83509661C38706E0027C24C /* RxTest.swift in Sources */,
 				C83509611C38706E0027C24C /* ObserverTests.swift in Sources */,
 				C83509471C38706E0027C24C /* PrimitiveMockObserver.swift in Sources */,
@@ -3599,7 +3593,6 @@
 				C83509F11C3875580027C24C /* TestConnectableObservable.swift in Sources */,
 				C83509AA1C3874D20027C24C /* TestErrors.swift in Sources */,
 				C83509F51C38755D0027C24C /* BehaviorSubjectTest.swift in Sources */,
-				C83509B41C3875020027C24C /* CLLocationManager+RxTests.swift in Sources */,
 				C83509EB1C3875580027C24C /* MainThreadPrimitiveHotObservable.swift in Sources */,
 				C83509C21C3875220027C24C /* Driver+Test.swift in Sources */,
 				C83509FE1C38755D0027C24C /* Observable+CreationTest.swift in Sources */,
@@ -3681,7 +3674,6 @@
 				C8350A1E1C38756B0027C24C /* Observable+TimeTest.swift in Sources */,
 				C8350A061C38755E0027C24C /* HistoricalSchedulerTest.swift in Sources */,
 				C83509D11C38752E0027C24C /* RuntimeStateSnapshot.swift in Sources */,
-				C83509B31C3875010027C24C /* CLLocationManager+RxTests.swift in Sources */,
 				C8350A221C38756B0027C24C /* VariableTest.swift in Sources */,
 				C83509D21C3875380027C24C /* RXObjCRuntime+Testing.m in Sources */,
 				C83509CC1C3875230027C24C /* NSLayoutConstraint+RxTests.swift in Sources */,
