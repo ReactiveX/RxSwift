@@ -20,7 +20,7 @@ extension Reactive where Base: UISegmentedControl {
     Reactive wrapper for `selectedSegmentIndex` property.
     */
     public var value: ControlProperty<Int> {
-        return Reactive<UIControl>.value(
+        return UIControl.rx.value(
             self.base,
             getter: { segmentedControl in
                 segmentedControl.selectedSegmentIndex

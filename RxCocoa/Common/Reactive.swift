@@ -43,10 +43,14 @@ public struct Reactive<Base> {
  */
 public protocol ReactiveCompatible {
     associatedtype CompatibleType
+    static var rx: Reactive<CompatibleType>.Type { get }
     var rx: Reactive<CompatibleType> { get }
 }
 
 public extension ReactiveCompatible {
+    public static var rx: Reactive<Self>.Type {
+        return Reactive<Self>.self
+    }
     public var rx: Reactive<Self> {
         return Reactive(self)
     }

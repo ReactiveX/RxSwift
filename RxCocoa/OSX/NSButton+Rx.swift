@@ -25,7 +25,7 @@ extension Reactive where Base: NSButton {
     Reactive wrapper for `state` property`.
     */
     public var state: ControlProperty<Int> {
-        return Reactive<NSButton>.value(
+        return NSButton.rx.value(
             base,
             getter: { control in
                 return control.state

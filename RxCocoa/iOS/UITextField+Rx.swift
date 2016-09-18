@@ -20,7 +20,7 @@ extension Reactive where Base: UITextField {
     Reactive wrapper for `text` property.
     */
     public var text: ControlProperty<String> {
-        return Reactive<UIControl>.value(
+        return UIControl.rx.value(
             base,
             getter: { textField in
                 textField.text ?? ""
