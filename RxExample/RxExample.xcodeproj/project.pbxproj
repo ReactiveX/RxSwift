@@ -106,6 +106,8 @@
 		C88BB8CA1B07E6C90064D411 /* WikipediaAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86E2F3B1AE5A0CA00C31024 /* WikipediaAPI.swift */; };
 		C88BB8CC1B07E6C90064D411 /* WikipediaPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86E2F3C1AE5A0CA00C31024 /* WikipediaPage.swift */; };
 		C88C2B2A1D67EC5200B01A98 /* FlowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88C2B291D67EC5200B01A98 /* FlowTests.swift */; };
+		C88CB7261D8F253D0021D83F /* RxImagePickerDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88CB7251D8F253D0021D83F /* RxImagePickerDelegateProxy.swift */; };
+		C88CB73B1D8F25440021D83F /* RxImagePickerDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88CB7251D8F253D0021D83F /* RxImagePickerDelegateProxy.swift */; };
 		C890A65D1AEC084100AFF7E6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C890A65C1AEC084100AFF7E6 /* ViewController.swift */; };
 		C89634081B95BE50002AE38C /* RxBlocking.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C8A468EF1B8A8BD000BF917B /* RxBlocking.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C89634091B95BE50002AE38C /* RxCocoa.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C8A468ED1B8A8BCC00BF917B /* RxCocoa.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -414,6 +416,7 @@
 		C88C2B271D67EC5200B01A98 /* RxExample-iOSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "RxExample-iOSUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C88C2B291D67EC5200B01A98 /* FlowTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTests.swift; sourceTree = "<group>"; };
 		C88C2B2B1D67EC5200B01A98 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C88CB7251D8F253D0021D83F /* RxImagePickerDelegateProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxImagePickerDelegateProxy.swift; sourceTree = "<group>"; };
 		C890A65C1AEC084100AFF7E6 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		C8984CCE1C36BC3E001E4272 /* NumberCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NumberCell.swift; sourceTree = "<group>"; };
 		C8984CCF1C36BC3E001E4272 /* NumberSectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NumberSectionView.swift; sourceTree = "<group>"; };
@@ -819,6 +822,7 @@
 		C886A6751D85AC7B00653EE4 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				C88CB7251D8F253D0021D83F /* RxImagePickerDelegateProxy.swift */,
 				C886A68C1D85AD2000653EE4 /* CLLocationManager+Rx.swift */,
 				C886A68D1D85AD2000653EE4 /* RxCLLocationManagerDelegateProxy.swift */,
 				C886A68A1D85AC9400653EE4 /* UIImagePickerController+Rx.swift */,
@@ -1292,6 +1296,7 @@
 				C8D132151C42B54B00B59FFF /* UIImagePickerController+RxCreate.swift in Sources */,
 				C8477FF71D29DE8C0074454A /* Differentiator.swift in Sources */,
 				C8984CD51C36BC3E001E4272 /* PartialUpdatesViewController.swift in Sources */,
+				C88CB7261D8F253D0021D83F /* RxImagePickerDelegateProxy.swift in Sources */,
 				8479BC721C3BDAD400FB8B54 /* ImagePickerController.swift in Sources */,
 				C8477FFF1D29DE8C0074454A /* SectionModelType.swift in Sources */,
 				C8CDF0AB1D67F8FC00C18F99 /* UIApplication+Extensions.swift in Sources */,
@@ -1331,6 +1336,7 @@
 				C849EF901C319E9A0048AC4A /* GithubSignupViewModel1.swift in Sources */,
 				C849EF641C3190360048AC4A /* RxExample_iOSTests.swift in Sources */,
 				C886A69B1D85B0E500653EE4 /* UIImagePickerController+Rx.swift in Sources */,
+				C88CB73B1D8F25440021D83F /* RxImagePickerDelegateProxy.swift in Sources */,
 				C886A6911D85AD7E00653EE4 /* CLLocationManager+RxTests.swift in Sources */,
 				C849EF921C319E9A0048AC4A /* DefaultImplementations.swift in Sources */,
 				C849EF991C31A63C0048AC4A /* Wireframe.swift in Sources */,

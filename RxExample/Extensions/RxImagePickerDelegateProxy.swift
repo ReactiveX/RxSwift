@@ -10,7 +10,8 @@
    
    import Foundation
 #if !RX_NO_MODULE
-   import RxSwift
+    import RxSwift
+    import RxCocoa
 #endif
    import UIKit
 
@@ -37,5 +38,27 @@ public class RxImagePickerDelegateProxy
     }
 
 }
-   
+
+    private func castOrFatalError<T>(_ value: Any!) -> T {
+        let maybeResult: T? = value as? T
+        guard let result = maybeResult else {
+            rxFatalError("Failure converting from \(value) to \(T.self)")
+        }
+
+        return result
+    }
+
+    private func castOptionalOrFatalError<T>(_ value: AnyObject?) -> T? {
+        if value == nil {
+            return nil
+        }
+        let v: T = castOrFatalError(value)
+        return v
+    }
+
+    private func rxFatalError(_ lastMessage: String) -> Never {
+        // The temptation to comment this line is great, but please don't, it's for your own good. The choice is yours.
+        fatalError(lastMessage)
+    }
+    
 #endif
