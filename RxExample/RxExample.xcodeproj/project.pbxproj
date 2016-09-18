@@ -105,6 +105,8 @@
 		C88CB71C1D8F11DB0021D83F /* CLLocationManager+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88CB6FC1D8F10830021D83F /* CLLocationManager+Rx.swift */; };
 		C88CB71D1D8F11DB0021D83F /* RxCLLocationManagerDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88CB6FD1D8F10830021D83F /* RxCLLocationManagerDelegateProxy.swift */; };
 		C88CB71E1D8F11DB0021D83F /* UIImagePickerController+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88CB6FE1D8F10830021D83F /* UIImagePickerController+Rx.swift */; };
+		C88CB7201D8F125D0021D83F /* RxImagePickerDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88CB71F1D8F125D0021D83F /* RxImagePickerDelegateProxy.swift */; };
+		C88CB7211D8F12600021D83F /* RxImagePickerDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88CB71F1D8F125D0021D83F /* RxImagePickerDelegateProxy.swift */; };
 		C890A65D1AEC084100AFF7E6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C890A65C1AEC084100AFF7E6 /* ViewController.swift */; };
 		C89634081B95BE50002AE38C /* RxBlocking.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C8A468EF1B8A8BD000BF917B /* RxBlocking.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C89634091B95BE50002AE38C /* RxCocoa.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C8A468ED1B8A8BCC00BF917B /* RxCocoa.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -401,6 +403,7 @@
 		C88CB7161D8F109A0021D83F /* CLLocationManager+RxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CLLocationManager+RxTests.swift"; sourceTree = "<group>"; };
 		C88CB7171D8F109A0021D83F /* RxTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxTest.swift; sourceTree = "<group>"; };
 		C88CB7181D8F109A0021D83F /* UIImagePickerController+RxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImagePickerController+RxTests.swift"; sourceTree = "<group>"; };
+		C88CB71F1D8F125D0021D83F /* RxImagePickerDelegateProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxImagePickerDelegateProxy.swift; sourceTree = "<group>"; };
 		C890A65C1AEC084100AFF7E6 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		C8984CCE1C36BC3E001E4272 /* NumberCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NumberCell.swift; sourceTree = "<group>"; };
 		C8984CCF1C36BC3E001E4272 /* NumberSectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NumberSectionView.swift; sourceTree = "<group>"; };
@@ -795,6 +798,7 @@
 		C88CB6FB1D8F10830021D83F /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				C88CB71F1D8F125D0021D83F /* RxImagePickerDelegateProxy.swift */,
 				C88CB6FC1D8F10830021D83F /* CLLocationManager+Rx.swift */,
 				C88CB6FD1D8F10830021D83F /* RxCLLocationManagerDelegateProxy.swift */,
 				C88CB6FE1D8F10830021D83F /* UIImagePickerController+Rx.swift */,
@@ -1209,6 +1213,7 @@
 				C843A0931C1CE58700CBA4BD /* UINavigationController+Extensions.swift in Sources */,
 				C822B1E71C14E7250088A01A /* SimpleTableViewExampleSectionedViewController.swift in Sources */,
 				C83367251AD029AE00C668A7 /* ImageService.swift in Sources */,
+				C88CB7211D8F12600021D83F /* RxImagePickerDelegateProxy.swift in Sources */,
 				C84780001D29DE8C0074454A /* String+IdentifiableType.swift in Sources */,
 				C86E2F471AE5A0CA00C31024 /* WikipediaSearchResult.swift in Sources */,
 				C8984CD11C36BC3E001E4272 /* NumberCell.swift in Sources */,
@@ -1255,6 +1260,7 @@
 				C849EF641C3190360048AC4A /* RxExample_iOSTests.swift in Sources */,
 				C88CB7191D8F109A0021D83F /* CLLocationManager+RxTests.swift in Sources */,
 				C88CB71E1D8F11DB0021D83F /* UIImagePickerController+Rx.swift in Sources */,
+				C88CB7201D8F125D0021D83F /* RxImagePickerDelegateProxy.swift in Sources */,
 				C88CB71A1D8F109A0021D83F /* RxTest.swift in Sources */,
 				C849EF921C319E9A0048AC4A /* DefaultImplementations.swift in Sources */,
 				C849EF991C31A63C0048AC4A /* Wireframe.swift in Sources */,
