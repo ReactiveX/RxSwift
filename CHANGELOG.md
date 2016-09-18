@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 
 ## Master
 
+* Update Getting Started document, section on creating an observable that performs work to Swift 3.0.
+
 ## [3.0.0-beta.1](https://github.com/ReactiveX/RxSwift/releases/tag/3.0.0-beta.1) (Xcode 8 GM compatible 8A218a)
 
 * Adapts to new Swift 3.0 syntax.

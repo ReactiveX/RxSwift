@@ -373,27 +373,26 @@ Ok, now something more interesting. Let's create that `interval` operator that w
 *This is equivalent of actual implementation for dispatch queue schedulers*
 
 ```swift
-func myInterval(interval: NSTimeInterval) -> Observable<Int> {
+func myInterval(_ interval: TimeInterval) -> Observable<Int> {
     return Observable.create { observer in
         print("Subscribed")
-        let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
-        let timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, queue)
+        let timer = DispatchSource.makeTimerSource(queue: DispatchQueue.global())
+        timer.scheduleRepeating(deadline: DispatchTime.now() + interval, interval: interval)
 
-        var next = 0
-
-        dispatch_source_set_timer(timer, 0, UInt64(interval * Double(NSEC_PER_SEC)), 0)
         let cancel = Disposables.create {
             print("Disposed")
-            dispatch_source_cancel(timer)
+            timer.cancel()
         }
-        dispatch_source_set_event_handler(timer, {
+
+        var next = 0
+        timer.setEventHandler {
             if cancel.isDisposed {
                 return
             }
             observer.on(.next(next))
             next += 1
-        })
-        dispatch_resume(timer)
+        }
+        timer.resume()
 
         return cancel
     }
@@ -407,11 +406,11 @@ print("Started ----")
 
 let subscription = counter
     .subscribe(onNext: { n in
-       print(n)
+        print(n)
     })
 
 
-NSThread.sleep(forTimeInterval: 0.5)
+Thread.sleep(forTimeInterval: 0.5)
 
 subscription.dispose()
 
@@ -440,18 +439,18 @@ print("Started ----")
 
 let subscription1 = counter
     .subscribe(onNext: { n in
-       print("First \(n)")
+        print("First \(n)")
     })
 let subscription2 = counter
     .subscribe(onNext: { n in
-       print("Second \(n)")
+        print("Second \(n)")
     })
 
-NSThread.sleep(forTimeInterval: 0.5)
+Thread.sleep(forTimeInterval: 0.5)
 
 subscription1.dispose()
 
-NSThread.sleep(forTimeInterval: 0.5)
+Thread.sleep(forTimeInterval: 0.5)
 
 subscription2.dispose()
 
@@ -505,18 +504,18 @@ print("Started ----")
 
 let subscription1 = counter
     .subscribe(onNext: { n in
-       print("First \(n)")
+        print("First \(n)")
     })
 let subscription2 = counter
     .subscribe(onNext: { n in
-       print("Second \(n)")
+        print("Second \(n)")
     })
 
-NSThread.sleepForTimeInterval(0.5)
+Thread.sleep(forTimeInterval: 0.5)
 
 subscription1.dispose()
 
-NSThread.sleepForTimeInterval(0.5)
+Thread.sleep(forTimeInterval: 0.5)
 
 subscription2.dispose()
 
@@ -555,16 +554,16 @@ Behavior for URL observables is equivalent.
 This is how HTTP requests are wrapped in Rx. It's pretty much the same pattern like the `interval` operator.
 
 ```swift
-extension Reactive where Base: NSURLSession {
-    public func response(request: NSURLRequest) -> Observable<(NSData, NSURLResponse)> {
+extension Reactive where Base: URLSession {
+    public func response(_ request: NSURLRequest) -> Observable<(Data, HTTPURLResponse)> {
         return Observable.create { observer in
             let task = self.dataTaskWithRequest(request) { (data, response, error) in
-                guard let response = response, data = data else {
+                guard let response = response, let data = data else {
                     observer.on(.error(error ?? RxCocoaURLError.Unknown))
                     return
                 }
 
-                guard let httpResponse = response as? NSHTTPURLResponse else {
+                guard let httpResponse = response as? HTTPURLResponse else {
                     observer.on(.error(RxCocoaURLError.nonHTTPResponse(response: response)))
                     return
                 }
