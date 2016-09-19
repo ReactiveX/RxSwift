@@ -36,17 +36,17 @@ protocol Lock {
           pthread_spin_unlock(&_lock)
       }
 
-      func performLocked(@noescape action: () -> Void) {
+      func performLocked(action: () -> Void) {
           lock(); defer { unlock() }
           action()
       }
 
-      func calculateLocked<T>(@noescape action: () -> T) -> T {
+      func calculateLocked<T>(action: () -> T) -> T {
           lock(); defer { unlock() }
           return action()
       }
 
-      func calculateLockedOrFail<T>(@noescape action: () throws -> T) throws -> T {
+      func calculateLockedOrFail<T>(action: () throws -> T) throws -> T {
           lock(); defer { unlock() }
           let result = try action()
           return result

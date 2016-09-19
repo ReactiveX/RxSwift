@@ -7,6 +7,9 @@
 //
 
 import Foundation
+#if os(Linux)
+import Dispatch
+#endif
 
 struct DispatchQueueConfiguration {
     let queue: DispatchQueue

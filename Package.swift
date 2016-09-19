@@ -37,19 +37,13 @@ let package = Package(
             name: "RxSwift"
         ),
         Target(
-            name: "RxTests",
-            dependencies: [
-                .Target(name: "RxSwift")
-            ]
-        ),
-        Target(
             name: "RxBlocking",
             dependencies: [
                 .Target(name: "RxSwift")
             ]
         ),
         Target(
-            name: "AllTests",
+            name: "RxSwiftTests",
             dependencies: [
                 .Target(name: "RxSwift"),
                 .Target(name: "RxBlocking"),
@@ -59,6 +53,9 @@ let package = Package(
     ],
     exclude: [
         "Sources/RxCocoa",
+        "Sources/RxTests",
+        "Sources/AllTests",
+        "Tests/RxCocoaTests"
     ]
 )
 #endif

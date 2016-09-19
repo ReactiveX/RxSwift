@@ -28,7 +28,7 @@
 
     var runLoopCounter = 0
 
-    extension NSThread {
+    extension Thread {
         public var isMainThread: Bool {
             return true
         }
@@ -92,9 +92,9 @@
         return false
     }
 
-    extension NSThread {
+    extension Thread {
         static func setThreadLocalStorageValue<T: AnyObject>(value: T?, forKey key: String) {
-            let currentThread = NSThread.currentThread()
+            let currentThread = Thread.currentThread()
             var threadDictionary = currentThread.threadDictionary
 
             if let newValue = value {
@@ -108,7 +108,7 @@
         }
 
         static func getThreadLocalStorageValueForKey<T: AnyObject>(key: String) -> T? {
-            let currentThread = NSThread.currentThread()
+            let currentThread = Thread.currentThread()
             let threadDictionary = currentThread.threadDictionary
 
             return threadDictionary[key] as? T
