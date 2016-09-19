@@ -8,7 +8,9 @@
 
 import Foundation
 import RxSwift
+#if !SWIFT_PACKAGE
 import RxCocoa
+#endif
 import AppKit
 import CoreLocation
 

@@ -13,6 +13,14 @@ let package = Package(
                 .Target(name: "RxSwift")
             ]
         ),
+        Target(
+            name: "RxSwiftTests",
+            dependencies: [
+                .Target(name: "RxSwift"),
+                .Target(name: "RxBlocking"),
+                .Target(name: "RxTests"),
+            ]
+        )
     ],
     exclude: [
         "Sources/RxCocoa",

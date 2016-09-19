@@ -8,7 +8,7 @@
 
 import Foundation
 import XCTest
-import RxSwift
+@testable import RxSwift
 
 class BagTest : RxTest {
     override var accumulateStatistics: Bool {
