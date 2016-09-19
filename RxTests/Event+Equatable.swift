@@ -19,11 +19,6 @@ public func == <Element: Equatable>(lhs: Event<Element>, rhs: Event<Element>) ->
     switch (lhs, rhs) {
     case (.completed, .completed): return true
     case (.error(let e1), .error(let e2)):
-        // if the references are equal, then it's the same object
-        if (lhs as AnyObject) === (rhs as AnyObject) {
-            return true
-        }
-
         #if os(Linux)
           return  "\(e1)" == "\(e2)"
         #else
