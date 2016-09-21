@@ -26,6 +26,15 @@ let failure = unhandled_case()
 #endif
 
 
+
+#if os(Linux)
+// TODO: Implement PerformanceTests.swift for Linux
+func getMemoryInfo() -> (bytes: Int64, allocations: Int64) {
+    return (0, 0)
+}
+#endif
+
+
 class RxTest
     : XCTestCase {
 
@@ -33,7 +42,7 @@ class RxTest
         var allTests : [(String, () throws -> Void)] = []
     #endif
 
-    fileprivate var startResourceCount: Int32 = 0
+    fileprivate var startResourceCount: AtomicInt = 0
 
     var accumulateStatistics: Bool {
         return true
@@ -47,26 +56,16 @@ class RxTest
         var startNumberOfAllocatedBytes: Int64 = 0
     #endif
 
-    #if os(Linux)
-        func setUp() {
-            setUpActions()
-        }
+    override func setUp() {
+        super.setUp()
+        setUpActions()
+    }
 
-        func tearDown() {
-            tearDownActions()
-        }
-    #else
-        override func setUp() {
-            super.setUp()
-            setUpActions()
-        }
-
-        override func tearDown() {
-            // Put teardown code here. This method is called after the invocation of each test method in the class.
-            super.tearDown()
-            tearDownActions()
-        }
-    #endif
+    override func tearDown() {
+        // Put teardown code here. This method is called after the invocation of each test method in the class.
+        super.tearDown()
+        tearDownActions()
+    }
 }
 
 extension RxTest {
@@ -77,7 +76,7 @@ extension RxTest {
     }
 
     func sleep(_ time: TimeInterval) {
-        RunLoop.current.run(mode: RunLoopMode.defaultRunLoopMode, before: Date(timeIntervalSinceNow: time))
+        let _ = RunLoop.current.run(mode: RunLoopMode.defaultRunLoopMode, before: Date(timeIntervalSinceNow: time))
     }
 
     func setUpActions(){
@@ -95,7 +94,7 @@ extension RxTest {
                 if self.startResourceCount < resourceCount {
                     // main schedulers need to finish work
                     print("Waiting for resource cleanup ...")
-                    RunLoop.current.run(mode: RunLoopMode.defaultRunLoopMode, before: NSDate(timeIntervalSinceNow: 0.05) as Date)
+                    RunLoop.current.run(mode: RunLoopMode.defaultRunLoopMode, before: Date(timeIntervalSinceNow: 0.05)  )
                 }
                 else {
                     break

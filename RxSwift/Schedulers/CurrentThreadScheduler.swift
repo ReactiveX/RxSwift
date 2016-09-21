@@ -7,6 +7,9 @@
 //
 
 import Foundation
+#if os(Linux)
+import Dispatch
+#endif
 
 #if os(Linux)
     let CurrentThreadSchedulerKeyInstance       = "RxSwift.CurrentThreadScheduler.SchedulerKey"
@@ -74,10 +77,10 @@ public class CurrentThreadScheduler : ImmediateSchedulerType {
 
     static var queue : ScheduleQueue? {
         get {
-            return Thread.getThreadLocalStorageValueForKey(CurrentThreadSchedulerQueueKeyInstance as NSString)
+            return Thread.getThreadLocalStorageValueForKey(CurrentThreadSchedulerQueueKeyInstance)
         }
         set {
-            Thread.setThreadLocalStorageValue(newValue, forKey: CurrentThreadSchedulerQueueKeyInstance as NSString)
+            Thread.setThreadLocalStorageValue(newValue, forKey: CurrentThreadSchedulerQueueKeyInstance)
         }
     }
 
@@ -86,11 +89,11 @@ public class CurrentThreadScheduler : ImmediateSchedulerType {
     */
     public static fileprivate(set) var isScheduleRequired: Bool {
         get {
-            let value: CurrentThreadSchedulerValue? = Thread.getThreadLocalStorageValueForKey(CurrentThreadSchedulerKeyInstance as NSString)
+            let value: CurrentThreadSchedulerValue? = Thread.getThreadLocalStorageValueForKey(CurrentThreadSchedulerKeyInstance)
             return value == nil
         }
         set(isScheduleRequired) {
-            Thread.setThreadLocalStorageValue(isScheduleRequired ? nil : CurrentThreadSchedulerValueInstance, forKey: CurrentThreadSchedulerKeyInstance as NSString)
+            Thread.setThreadLocalStorageValue(isScheduleRequired ? nil : CurrentThreadSchedulerValueInstance, forKey: CurrentThreadSchedulerKeyInstance)
         }
     }
 

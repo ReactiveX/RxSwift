@@ -11,6 +11,9 @@ import RxSwift
 import RxBlocking
 import XCTest
 import RxTests
+#if os(Linux)
+import Dispatch
+#endif
 
 class ObservableTimeTest : RxTest {
     override func setUp() {
@@ -166,6 +169,7 @@ extension ObservableTimeTest {
     }
 
     func test_ThrottleTimeSpan_NotLatest_WithRealScheduler() {
+        #if !os(Linux)
         let scheduler = ConcurrentDispatchQueueScheduler(globalConcurrentQueueQOS: .default)
 
         let start = Date()
@@ -179,6 +183,7 @@ extension ObservableTimeTest {
 
         XCTAssertEqualWithAccuracy(0.0, end.timeIntervalSince(start), accuracy: 0.5)
         XCTAssertEqual(a, [0])
+        #endif
     }
 }
 
@@ -1204,6 +1209,7 @@ extension ObservableTimeTest {
     }
 
     func testBufferWithTimeOrCount_Default() {
+        #if !os(Linux)
         let backgroundScheduler = SerialDispatchQueueScheduler(globalConcurrentQueueQOS: .default)
         
         let result = try! Observable.range(start: 1, count: 10, scheduler: backgroundScheduler)
@@ -1213,6 +1219,7 @@ extension ObservableTimeTest {
             .first()
             
         XCTAssertEqual(result!, [4, 5, 6])
+        #endif
     }
     
 }
@@ -2134,7 +2141,7 @@ extension ObservableTimeTest {
         
         subscription.dispose()
 
-        XCTAssertEqual(error! as NSError, testError)
+        XCTAssertEqual(error! as! TestError, testError)
     }
     
     func testDelay_TimeSpan_Real_Error2() {
@@ -2147,7 +2154,7 @@ extension ObservableTimeTest {
         let res = s.delay(0.01, scheduler: scheduler)
         
         var array = [Int]()
-        var err: NSError!
+        var err: TestError!
         
         let subscription = res.subscribe(
             onNext: { i in
@@ -2155,7 +2162,7 @@ extension ObservableTimeTest {
                 elementProcessed.onCompleted()
             },
             onError: { ex in
-                err = ex as NSError
+                err = ex as! TestError
                 errorReceived.onCompleted()
         })
         
@@ -2185,7 +2192,7 @@ extension ObservableTimeTest {
         let res = s.delay(0.01, scheduler: scheduler)
         
         var array = [Int]()
-        var err: NSError!
+        var err: TestError!
         
         let subscription = res.subscribe(
             onNext: { i in
@@ -2194,7 +2201,7 @@ extension ObservableTimeTest {
                 try! _ = acknowledged.toBlocking(timeout: 5.0).first()
             },
             onError: { ex in
-                err = ex as NSError
+                err = ex as! TestError
                 errorReceived.onCompleted()
         })
         

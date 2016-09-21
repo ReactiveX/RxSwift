@@ -8,6 +8,12 @@
 
 import Foundation
 
+#if os(Linux)
+func isMainThread() -> Bool {
+    return RunLoop.current == RunLoop.main
+}
+#else
 func isMainThread() -> Bool {
     return Thread.current.isMainThread
 }
+#endif

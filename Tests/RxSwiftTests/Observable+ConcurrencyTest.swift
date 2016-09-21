@@ -102,15 +102,15 @@ extension ObservableConcurrencyTest {
     }
 
     func testObserveOnDispatchQueue_DispatchQueueSchedulerIsSerial() {
-        var numberOfConcurrentEvents: Int32 = 0
-        var numberOfExecutions: Int32 = 0
+        var numberOfConcurrentEvents: AtomicInt = 0
+        var numberOfExecutions: AtomicInt = 0
         runDispatchQueueSchedulerTests { scheduler in
             XCTAssert(numberOfSerialDispatchQueueObservables == 0)
             let action = { (s: Void) -> Disposable in
-                XCTAssert(OSAtomicIncrement32(&numberOfConcurrentEvents) == 1)
+                XCTAssert(AtomicIncrement(&numberOfConcurrentEvents) == 1)
                 self.sleep(0.1) // should be enough to block the queue, so if it's concurrent, it will fail
-                XCTAssert(OSAtomicDecrement32(&numberOfConcurrentEvents) == 0)
-                OSAtomicIncrement32(&numberOfExecutions)
+                XCTAssert(AtomicDecrement(&numberOfConcurrentEvents) == 0)
+                let _ = AtomicIncrement(&numberOfExecutions)
                 return Disposables.create()
             }
             _ = scheduler.schedule((), action: action)

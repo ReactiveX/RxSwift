@@ -94,7 +94,7 @@ class ObservableSubscriptionTests : RxTest {
         publishSubject.on(.error(testError))
 
         XCTAssertTrue(lastElement == nil)
-        XCTAssertTrue((lastError as? NSError) === testError)
+        XCTAssertTrue((lastError as! TestError) == testError)
         XCTAssertTrue(onNextCalled == 0)
         XCTAssertTrue(onErrorCalled == 1)
         XCTAssertTrue(onCompletedCalled == 0)
@@ -105,7 +105,7 @@ class ObservableSubscriptionTests : RxTest {
         publishSubject.on(.completed)
 
         XCTAssertTrue(lastElement == nil)
-        XCTAssertTrue((lastError as? NSError) === testError)
+        XCTAssertTrue((lastError as! TestError) == testError)
         XCTAssertTrue(onNextCalled == 0)
         XCTAssertTrue(onErrorCalled == 1)
         XCTAssertTrue(onCompletedCalled == 0)

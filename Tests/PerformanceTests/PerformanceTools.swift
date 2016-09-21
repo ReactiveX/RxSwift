@@ -7,6 +7,9 @@
 //
 
 import Foundation
+#if os(Linux)
+import Dispatch
+#endif
 
 var mallocFunctions: [(@convention(c) (UnsafeMutablePointer<_malloc_zone_t>?, Int) -> UnsafeMutableRawPointer?)] = []
 

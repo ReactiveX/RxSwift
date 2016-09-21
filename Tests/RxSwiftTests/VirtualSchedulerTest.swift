@@ -220,7 +220,11 @@ extension VirtualSchedulerTest {
         var times = [Int]()
         var ticks = [Int]()
         for _ in 0 ..< 20000 {
+            #if os(Linux)
+            let random = Int(Glibc.random() % 10000)
+            #else
             let random = Int(arc4random() % 10000)
+            #endif
             times.append(random)
             _ = scheduler.scheduleRelative((), dueTime: RxTimeInterval(10 * random)) { [weak scheduler] _ in
                 ticks.append(scheduler!.clock)

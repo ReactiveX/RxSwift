@@ -55,7 +55,9 @@ let package = Package(
         "Sources/RxCocoa",
         "Sources/RxTests",
         "Sources/AllTests",
-        "Tests/RxCocoaTests"
+        "Tests/RxCocoaTests",
+        "Tests/PerformanceTests",
+        "Tests/RxSwiftTests/SPMTestTools/PerformanceTools.swift",
     ]
 )
 #endif

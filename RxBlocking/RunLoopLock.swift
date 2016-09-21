@@ -14,20 +14,59 @@ import Foundation
 typealias AtomicInt = Int32
 
 #if os(Linux)
-  func AtomicIncrement(increment: UnsafeMutablePointer<AtomicInt>) -> AtomicInt {
-      increment.memory = increment.memory + 1
-      return increment.memory
+  func AtomicIncrement(_ increment: UnsafeMutablePointer<AtomicInt>) -> AtomicInt {
+      increment.pointee = increment.pointee + 1
+      return increment.pointee
   }
 
-  func AtomicDecrement(increment: UnsafeMutablePointer<AtomicInt>) -> AtomicInt {
-      increment.memory = increment.memory - 1
-      return increment.memory
+  func AtomicDecrement(_ increment: UnsafeMutablePointer<AtomicInt>) -> AtomicInt {
+      increment.pointee = increment.pointee - 1
+      return increment.pointee
   }
 #else
   let AtomicIncrement = OSAtomicIncrement32
   let AtomicDecrement = OSAtomicDecrement32
 #endif
 
+#if os(Linux)
+import Dispatch
+
+class RunLoopLock {
+    let _queue = DispatchQueue(label: "Worker")
+    let _sema = DispatchSemaphore(value: 0)
+    let _group = DispatchGroup()
+    var _timeout: TimeInterval?
+    
+    init(timeout: TimeInterval?) {
+        self._timeout = timeout
+    }
+    
+    func dispatch(_ action: @escaping () -> ()) {
+        _queue.async(group: _group, execute: action)
+    }
+    
+    func stop() {
+        _queue.suspend()
+        _sema.signal()
+    }
+    
+    func run() throws {
+        _group.notify(queue: _queue) { [weak self] in
+            self?._sema.signal()
+        }
+        if let timeout = _timeout {
+            let result = _sema.wait(timeout: DispatchTime.now() + timeout)
+            if result == .timedOut {
+                _queue.suspend()
+                throw RxError.timeout
+            }
+        } else {
+            _sema.wait()
+        }
+    }
+    
+}
+#else
 class RunLoopLock {
     let _currentRunLoop: CFRunLoop
 
@@ -86,3 +125,4 @@ class RunLoopLock {
         }
     }
 }
+#endif

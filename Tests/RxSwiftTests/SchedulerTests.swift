@@ -10,7 +10,8 @@ import Foundation
 import RxSwift
 import XCTest
 #if os(Linux)
-    import Glibc
+import Glibc
+import Dispatch
 #endif
 
 class ConcurrentDispatchQueueSchedulerTests: RxTest {

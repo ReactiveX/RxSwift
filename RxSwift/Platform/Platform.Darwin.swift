@@ -17,25 +17,25 @@
     typealias AtomicInt = Int32
     #endif
 
-    let AtomicCompareAndSwap = OSAtomicCompareAndSwap32
-    let AtomicIncrement = OSAtomicIncrement32
-    let AtomicDecrement = OSAtomicDecrement32
+    public let AtomicCompareAndSwap = OSAtomicCompareAndSwap32
+    public let AtomicIncrement = OSAtomicIncrement32
+    public let AtomicDecrement = OSAtomicDecrement32
 
-    extension Thread {
-        static func setThreadLocalStorageValue<T: AnyObject>(_ value: T?, forKey key: AnyObject & NSCopying
+    public extension Thread {
+        static func setThreadLocalStorageValue<T: AnyObject>(_ value: T?, forKey key: String
             ) {
             let currentThread = Thread.current
             let threadDictionary = currentThread.threadDictionary
 
             if let newValue = value {
-                threadDictionary.setObject(newValue, forKey: key)
+                threadDictionary[key] = newValue
             }
             else {
-                threadDictionary.removeObject(forKey: key)
+                threadDictionary[key] = nil
             }
 
         }
-        static func getThreadLocalStorageValueForKey<T>(_ key: AnyObject & NSCopying) -> T? {
+        static func getThreadLocalStorageValueForKey<T>(_ key: String) -> T? {
             let currentThread = Thread.current
             let threadDictionary = currentThread.threadDictionary
             

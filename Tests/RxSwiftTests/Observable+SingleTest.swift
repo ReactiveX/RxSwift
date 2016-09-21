@@ -665,7 +665,7 @@ extension ObservableSingleTest {
         XCTAssertEqual(res.events, correctMessages)
         XCTAssertEqual(xs.subscriptions, correctSubscriptions)
 
-        XCTAssertTrue((recordedError as AnyObject) === testError)
+        XCTAssertEqual(recordedError as! TestError, testError)
         XCTAssertEqual(numberOfTimesInvoked, 1)
     }
 

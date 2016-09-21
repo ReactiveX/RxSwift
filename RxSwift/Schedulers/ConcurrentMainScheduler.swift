@@ -7,6 +7,9 @@
 //
 
 import Foundation
+#if os(Linux)
+import Dispatch
+#endif
 
 /**
 Abstracts work that needs to be performed on `MainThread`. In case `schedule` methods are called from main thread, it will perform action immediately without scheduling.

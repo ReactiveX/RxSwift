@@ -99,7 +99,7 @@ class MapWithIndex<SourceType, ResultType> : Producer<ResultType> {
 }
 
 #if TRACE_RESOURCES
-public var numberOfMapOperators: Int32 = 0
+public var numberOfMapOperators: AtomicInt = 0
 #endif
 
 class Map<SourceType, ResultType>: Producer<ResultType> {

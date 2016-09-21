@@ -7,6 +7,9 @@
 //
 
 import Foundation
+#if os(Linux)
+import Dispatch
+#endif
 
 /**
 Identifies one of the global concurrent dispatch queues with specified quality of service class.

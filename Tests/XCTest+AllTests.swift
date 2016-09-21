@@ -10,6 +10,9 @@ import Foundation
 import RxSwift
 import RxTests
 import XCTest
+#if os(Linux)
+import Dispatch
+#endif
 
 func XCTAssertErrorEqual(_ lhs: Swift.Error, _ rhs: Swift.Error) {
     let event1: Event<Int> = .error(lhs)
