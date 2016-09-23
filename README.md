@@ -38,7 +38,7 @@ KVO observing, async operations and streams are all unified under [abstraction o
 
 ###### ... install
 
-* Integrate RxSwift/RxCocoa with my app. [Installation Guide](Documentation/Installation.md)
+* Integrate RxSwift/RxCocoa with my app. [Installation Guide](#installation)
 
 ###### ... hack around
 
