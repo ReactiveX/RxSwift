@@ -28,7 +28,7 @@ class ImagePickerController: ViewController {
 
         cameraButton.rx.tap
             .flatMapLatest { [weak self] _ in
-                return Reactive<UIImagePickerController>.createWithParent(self) { picker in
+                return UIImagePickerController.rx.createWithParent(self) { picker in
                     picker.sourceType = .camera
                     picker.allowsEditing = false
                 }
@@ -43,7 +43,7 @@ class ImagePickerController: ViewController {
 
         galleryButton.rx.tap
             .flatMapLatest { [weak self] _ in
-                return Reactive<UIImagePickerController>.createWithParent(self) { picker in
+                return UIImagePickerController.rx.createWithParent(self) { picker in
                     picker.sourceType = .photoLibrary
                     picker.allowsEditing = false
                 }
@@ -60,7 +60,7 @@ class ImagePickerController: ViewController {
 
         cropButton.rx.tap
             .flatMapLatest { [weak self] _ in
-                return Reactive<UIImagePickerController>.createWithParent(self) { picker in
+                return UIImagePickerController.rx.createWithParent(self) { picker in
                     picker.sourceType = .photoLibrary
                     picker.allowsEditing = true
                 }

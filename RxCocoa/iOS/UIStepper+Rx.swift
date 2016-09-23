@@ -20,7 +20,7 @@ extension Reactive where Base: UIStepper {
     Reactive wrapper for `value` property.
     */
     public var value: ControlProperty<Double> {
-        return Reactive<UIControl>.value(
+        return UIControl.rx.value(
             self.base,
             getter: { stepper in
                 stepper.value

@@ -20,7 +20,7 @@ extension Reactive where Base: UISlider {
     Reactive wrapper for `value` property.
     */
     public var value: ControlProperty<Float> {
-        return Reactive<UIControl>.value(
+        return UIControl.rx.value(
             self.base,
             getter: { slider in
                 slider.value
