@@ -62,7 +62,7 @@ public extension ReactiveCompatible {
     public static var rx: Reactive<Self>.Type {
         return Reactive<Self>.self
     }
-    
+
     /**
      Reactive extensions.
     */
@@ -71,6 +71,7 @@ public extension ReactiveCompatible {
     }
 }
 
+import Foundation
 /**
  Extend NSObject with `rx` proxy.
 */
