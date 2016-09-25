@@ -23,7 +23,10 @@ extension Reactive where Base: UIRefreshControl {
         
         let begin = sentMessage(#selector(UIRefreshControl.beginRefreshing)).map { _ in true }
         let end = sentMessage(#selector(UIRefreshControl.endRefreshing)).map { _ in false }
-        let change = controlEvent(.valueChanged).map { [weak base] in base?.isRefreshing ?? false }
+        let change = controlEvent(.valueChanged)
+                .flatMap { [weak base] _ -> Observable<Bool> in
+                    return base.map { Observable.of($0.isRefreshing) } ?? Observable.empty()
+                }
 
         let values = Observable
             .of(begin, end, change)
