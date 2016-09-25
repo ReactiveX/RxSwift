@@ -57,7 +57,7 @@ public final class ConcurrentMainScheduler : SchedulerType {
                 return
             }
 
-            cancel.disposable = action(state)
+            cancel.setDisposable(action(state))
         }
 
         return cancel

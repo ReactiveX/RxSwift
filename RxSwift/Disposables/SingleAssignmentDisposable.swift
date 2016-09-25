@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Darwin.C.stdatomic
 
 /**
 Represents a disposable resource which only allows a single assignment of its underlying disposable resource.
@@ -14,18 +15,26 @@ Represents a disposable resource which only allows a single assignment of its un
 If an underlying disposable resource has already been set, future attempts to set the underlying disposable resource will throw an exception.
 */
 public class SingleAssignmentDisposable : DisposeBase, Disposable, Cancelable {
-    private var _lock = SpinLock()
-    
+    fileprivate enum DisposeState: UInt32 {
+        case disposed = 1
+        case disposableSet = 2
+    }
+
+    // Jeej, swift API consistency rules
+    fileprivate enum DisposeStateInt32: Int32 {
+        case disposed = 1
+        case disposableSet = 2
+    }
+
     // state
-    private var _isDisposed = false
-    private var _disposableSet = false
+    private var _state: UInt32 = 0
     private var _disposable = nil as Disposable?
 
     /**
     - returns: A value that indicates whether the object is disposed.
     */
     public var isDisposed: Bool {
-        return _isDisposed
+        return (_state & DisposeState.disposed.rawValue) != 0
     }
 
     /**
@@ -40,50 +49,38 @@ public class SingleAssignmentDisposable : DisposeBase, Disposable, Cancelable {
     
     **Throws exception if the `SingleAssignmentDisposable` has already been assigned to.**
     */
-    public var disposable: Disposable {
-        get {
-            _lock.lock(); defer { _lock.unlock() }
-            return _disposable ?? Disposables.create()
-        }
-        set {
-            _setDisposable(newValue)?.dispose()
-        }
-    }
+    public func setDisposable(_ disposable: Disposable) {
+        _disposable = disposable
 
-    private func _setDisposable(_ newValue: Disposable) -> Disposable? {
-        _lock.lock(); defer { _lock.unlock() }
-        if _disposableSet {
+        let previousState = OSAtomicOr32OrigBarrier(DisposeState.disposableSet.rawValue, &_state)
+        
+        if (previousState & DisposeStateInt32.disposableSet.rawValue) != 0 {
             rxFatalError("oldState.disposable != nil")
         }
 
-        _disposableSet = true
-
-        if _isDisposed {
-            return newValue
+        if (previousState & DisposeStateInt32.disposed.rawValue) != 0 {
+            disposable.dispose()
+            _disposable = nil
         }
-
-        _disposable = newValue
-
-        return nil
     }
 
     /**
     Disposes the underlying disposable.
     */
     public func dispose() {
-        if _isDisposed {
+        let previousState = OSAtomicOr32OrigBarrier(DisposeState.disposed.rawValue, &_state)
+
+        if (previousState & DisposeStateInt32.disposed.rawValue) != 0 {
             return
         }
-        _dispose()?.dispose()
+
+        if (previousState & DisposeStateInt32.disposableSet.rawValue) != 0 {
+            guard let disposable = _disposable else {
+                rxFatalError("Disposable not set")
+            }
+            disposable.dispose()
+            _disposable = nil
+        }
     }
 
-    private func _dispose() -> Disposable? {
-        _lock.lock(); defer { _lock.unlock() }
-
-        _isDisposed = true
-        let disposable = _disposable
-        _disposable = nil
-
-        return disposable
-    }
 }

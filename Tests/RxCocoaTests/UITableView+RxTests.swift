@@ -365,11 +365,13 @@ extension UITableViewTests {
 
         var dataSourceDeallocated = false
 
+        var outerTableView: UITableView? = nil
         var dataSourceSubscription: Disposable!
         autoreleasepool {
             let items: Observable<[Int]> = Observable.just([1, 2, 3])
             let dataSource = SectionedViewDataSourceMock()
             let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
+            outerTableView = tableView
             dataSourceSubscription = items.bindTo(tableView.rx.items(dataSource: dataSource))
 
             _ = dataSource.rx.deallocated.subscribe(onNext: { _ in

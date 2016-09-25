@@ -276,7 +276,7 @@ class VirtualSchedulerItem<Time>
     }
 
     func invoke() {
-         self.disposable.disposable = action()
+         self.disposable.setDisposable(action())
     }
     
     func dispose() {

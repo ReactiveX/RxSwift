@@ -21,13 +21,13 @@ class DebugSink<Source: ObservableType, O: ObserverType> : Sink<O>, ObserverType
     private let _parent: Parent
     private let _timestampFormatter = DateFormatter()
     
-    init(parent: Parent, observer: O) {
+    init(parent: Parent, observer: O, cancel: Cancelable) {
         _parent = parent
         _timestampFormatter.dateFormat = dateFormat
 
         logEvent(_parent._identifier, dateFormat: _timestampFormatter, content: "subscribed")
 
-        super.init(observer: observer)
+        super.init(observer: observer, cancel: cancel)
     }
     
     func on(_ event: Event<Element>) {
@@ -73,9 +73,9 @@ class Debug<Source: ObservableType> : Producer<Source.E> {
         _source = source
     }
     
-    override func run<O: ObserverType>(_ observer: O) -> Disposable where O.E == Source.E {
-        let sink = DebugSink(parent: self, observer: observer)
-        sink.disposable = _source.subscribe(sink)
-        return sink
+    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == Source.E {
+        let sink = DebugSink(parent: self, observer: observer, cancel: cancel)
+        let subscription = _source.subscribe(sink)
+        return (sink: sink, subscription: subscription)
     }
 }

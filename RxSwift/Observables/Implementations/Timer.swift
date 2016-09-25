@@ -13,9 +13,9 @@ class TimerSink<O: ObserverType> : Sink<O> where O.E : SignedInteger  {
     
     private let _parent: Parent
     
-    init(parent: Parent, observer: O) {
+    init(parent: Parent, observer: O, cancel: Cancelable) {
         _parent = parent
-        super.init(observer: observer)
+        super.init(observer: observer, cancel: cancel)
     }
     
     func run() -> Disposable {
@@ -31,9 +31,9 @@ class TimerOneOffSink<O: ObserverType> : Sink<O> where O.E : SignedInteger {
     
     private let _parent: Parent
     
-    init(parent: Parent, observer: O) {
+    init(parent: Parent, observer: O, cancel: Cancelable) {
         _parent = parent
-        super.init(observer: observer)
+        super.init(observer: observer, cancel: cancel)
     }
     
     func run() -> Disposable {
@@ -57,16 +57,16 @@ class Timer<E: SignedInteger>: Producer<E> {
         _period = period
     }
     
-    override func run<O : ObserverType>(_ observer: O) -> Disposable where O.E == E {
+    override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == E {
         if let _ = _period {
-            let sink = TimerSink(parent: self, observer: observer)
-            sink.disposable = sink.run()
-            return sink
+            let sink = TimerSink(parent: self, observer: observer, cancel: cancel)
+            let subscription = sink.run()
+            return (sink: sink, subscription: subscription)
         }
         else {
-            let sink = TimerOneOffSink(parent: self, observer: observer)
-            sink.disposable = sink.run()
-            return sink
+            let sink = TimerOneOffSink(parent: self, observer: observer, cancel: cancel)
+            let subscription = sink.run()
+            return (sink: sink, subscription: subscription)
         }
     }
 }

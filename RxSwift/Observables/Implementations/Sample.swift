@@ -79,13 +79,13 @@ class SampleSequenceSink<O: ObserverType, SampleType>
     
     fileprivate let _sourceSubscription = SingleAssignmentDisposable()
     
-    init(parent: Parent, observer: O) {
+    init(parent: Parent, observer: O, cancel: Cancelable) {
         _parent = parent
-        super.init(observer: observer)
+        super.init(observer: observer, cancel: cancel)
     }
     
     func run() -> Disposable {
-        _sourceSubscription.disposable = _parent._source.subscribe(self)
+        _sourceSubscription.setDisposable(_parent._source.subscribe(self))
         let samplerSubscription = _parent._sampler.subscribe(SamplerSink(parent: self))
         
         return Disposables.create(_sourceSubscription, samplerSubscription)
@@ -121,9 +121,9 @@ class Sample<Element, SampleType> : Producer<Element> {
         _onlyNew = onlyNew
     }
     
-    override func run<O: ObserverType>(_ observer: O) -> Disposable where O.E == Element {
-        let sink = SampleSequenceSink(parent: self, observer: observer)
-        sink.disposable = sink.run()
-        return sink
+    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == Element {
+        let sink = SampleSequenceSink(parent: self, observer: observer, cancel: cancel)
+        let subscription = sink.run()
+        return (sink: sink, subscription: subscription)
     }
 }

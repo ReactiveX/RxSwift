@@ -42,9 +42,9 @@ class ZipSink<%= i %>_<<%= (Array(1...i).map { "E\($0)" }).joined(separator: ", 
 "    var _values\($0): Queue<E\($0)> = Queue(capacity: 2)"
 }).joined(separator: "\n") %>
 
-    init(parent: Parent, observer: O) {
+    init(parent: Parent, observer: O, cancel: Cancelable) {
         _parent = parent
-        super.init(arity: <%= i %>, observer: observer)
+        super.init(arity: <%= i %>, observer: observer, cancel: cancel)
     }
 
     override func hasElements(_ index: Int) -> Bool {
@@ -69,7 +69,7 @@ class ZipSink<%= i %>_<<%= (Array(1...i).map { "E\($0)" }).joined(separator: ", 
 }).joined(separator: "\n") %>
 
 <%= (Array(1...i).map {
-"        subscription\($0).disposable = _parent.source\($0).subscribe(observer\($0))" }).joined(separator: "\n")
+"        subscription\($0).setDisposable(_parent.source\($0).subscribe(observer\($0)))" }).joined(separator: "\n")
 %>
 
         return Disposables.create([
@@ -89,7 +89,7 @@ class Zip<%= i %><<%= (Array(1...i).map { "E\($0)" }).joined(separator: ", ") %>
 
     let _resultSelector: ResultSelector
 
-    init(<%= (Array(1...i).map { "source\($0): Observable<E\($0)>" }).joined(separator: ", ") %>, resultSelector: ResultSelector) {
+    init(<%= (Array(1...i).map { "source\($0): Observable<E\($0)>" }).joined(separator: ", ") %>, resultSelector: @escaping ResultSelector) {
 <%= (Array(1...i).map {
 "        self.source\($0) = source\($0)" }).joined(separator: "\n")
 %>
@@ -97,10 +97,10 @@ class Zip<%= i %><<%= (Array(1...i).map { "E\($0)" }).joined(separator: ", ") %>
         _resultSelector = resultSelector
     }
 
-    override func run<O: ObserverType>(_ observer: O) -> Disposable where O.E == R {
-        let sink = ZipSink<%= i %>_(parent: self, observer: observer)
-        sink.disposable = sink.run()
-        return sink
+    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == R {
+        let sink = ZipSink<%= i %>_(parent: self, observer: observer, cancel: cancel)
+        let subscription = sink.run()
+        return (sink: sink, subscription: subscription)
     }
 }
 

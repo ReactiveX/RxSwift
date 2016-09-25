@@ -70,9 +70,9 @@ class SkipUntilSink<ElementType, Other, O: ObserverType>
     
     fileprivate let _sourceSubscription = SingleAssignmentDisposable()
 
-    init(parent: Parent, observer: O) {
+    init(parent: Parent, observer: O, cancel: Cancelable) {
         _parent = parent
-        super.init(observer: observer)
+        super.init(observer: observer, cancel: cancel)
     }
     
     func on(_ event: Event<E>) {
@@ -100,8 +100,8 @@ class SkipUntilSink<ElementType, Other, O: ObserverType>
         let sourceSubscription = _parent._source.subscribe(self)
         let otherObserver = SkipUntilSinkOther(parent: self)
         let otherSubscription = _parent._other.subscribe(otherObserver)
-        _sourceSubscription.disposable = sourceSubscription
-        otherObserver._subscription.disposable = otherSubscription
+        _sourceSubscription.setDisposable(sourceSubscription)
+        otherObserver._subscription.setDisposable(otherSubscription)
         
         return Disposables.create(_sourceSubscription, otherObserver._subscription)
     }
@@ -117,9 +117,9 @@ class SkipUntil<Element, Other>: Producer<Element> {
         _other = other
     }
     
-    override func run<O : ObserverType>(_ observer: O) -> Disposable where O.E == Element {
-        let sink = SkipUntilSink(parent: self, observer: observer)
-        sink.disposable = sink.run()
-        return sink
+    override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == Element {
+        let sink = SkipUntilSink(parent: self, observer: observer, cancel: cancel)
+        let subscription = sink.run()
+        return (sink: sink, subscription: subscription)
     }
 }

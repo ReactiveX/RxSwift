@@ -33,7 +33,7 @@ extension BlockingObservable {
         }
 
         lock.dispatch {
-            d.disposable = self.source.subscribe { e in
+            let subscription = self.source.subscribe { e in
                 if d.isDisposed {
                     return
                 }
@@ -49,6 +49,8 @@ extension BlockingObservable {
                     lock.stop()
                 }
             }
+
+            d.setDisposable(subscription)
         }
 
         try lock.run()
@@ -83,7 +85,7 @@ extension BlockingObservable {
         let lock = RunLoopLock(timeout: timeout)
 
         lock.dispatch {
-            d.disposable = self.source.subscribe { e in
+            let subscription = self.source.subscribe { e in
                 if d.isDisposed {
                     return
                 }
@@ -103,6 +105,8 @@ extension BlockingObservable {
                 d.dispose()
                 lock.stop()
             }
+
+            d.setDisposable(subscription)
         }
 
         try lock.run()
@@ -137,7 +141,7 @@ extension BlockingObservable {
         let lock = RunLoopLock(timeout: timeout)
 
         lock.dispatch {
-            d.disposable = self.source.subscribe { e in
+            let subscription = self.source.subscribe { e in
                 if d.isDisposed {
                     return
                 }
@@ -154,6 +158,8 @@ extension BlockingObservable {
                 d.dispose()
                 lock.stop()
             }
+
+            d.setDisposable(subscription)
         }
         
         try lock.run()
@@ -200,7 +206,7 @@ extension BlockingObservable {
         let lock = RunLoopLock(timeout: timeout)
         
         lock.dispatch {
-            d.disposable = self.source.subscribe { e in
+            let subscription = self.source.subscribe { e in
                 if d.isDisposed {
                     return
                 }
@@ -232,6 +238,8 @@ extension BlockingObservable {
                 d.dispose()
                 lock.stop()
             }
+
+            d.setDisposable(subscription)
         }
         
         try lock.run()

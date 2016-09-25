@@ -53,7 +53,7 @@ final class ShareReplay1<Element>
             let connection = SingleAssignmentDisposable()
             _connection = connection
 
-            connection.disposable = self._source.subscribe(self)
+            connection.setDisposable(self._source.subscribe(self))
         }
 
         return SubscriptionDisposable(owner: self, key: disposeKey)

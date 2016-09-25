@@ -16,9 +16,9 @@ class MapSink<SourceType, O : ObserverType> : Sink<O>, ObserverType {
 
     private let _selector: Selector
     
-    init(selector: @escaping Selector, observer: O) {
+    init(selector: @escaping Selector, observer: O, cancel: Cancelable) {
         _selector = selector
-        super.init(observer: observer)
+        super.init(observer: observer, cancel: cancel)
     }
 
     func on(_ event: Event<SourceType>) {
@@ -53,9 +53,9 @@ class MapWithIndexSink<SourceType, O : ObserverType> : Sink<O>, ObserverType {
 
     private var _index = 0
 
-    init(selector: @escaping Selector, observer: O) {
+    init(selector: @escaping Selector, observer: O, cancel: Cancelable) {
         _selector = selector
-        super.init(observer: observer)
+        super.init(observer: observer, cancel: cancel)
     }
 
     func on(_ event: Event<SourceType>) {
@@ -91,10 +91,10 @@ class MapWithIndex<SourceType, ResultType> : Producer<ResultType> {
         _selector = selector
     }
 
-    override func run<O: ObserverType>(_ observer: O) -> Disposable where O.E == ResultType {
-        let sink = MapWithIndexSink(selector: _selector, observer: observer)
-        sink.disposable = _source.subscribe(sink)
-        return sink
+    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == ResultType {
+        let sink = MapWithIndexSink(selector: _selector, observer: observer, cancel: cancel)
+        let subscription = _source.subscribe(sink)
+        return (sink: sink, subscription: subscription)
     }
 }
 
@@ -126,10 +126,10 @@ class Map<SourceType, ResultType>: Producer<ResultType> {
         })
     }
     
-    override func run<O: ObserverType>(_ observer: O) -> Disposable where O.E == ResultType {
-        let sink = MapSink(selector: _selector, observer: observer)
-        sink.disposable = _source.subscribe(sink)
-        return sink
+    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == ResultType {
+        let sink = MapSink(selector: _selector, observer: observer, cancel: cancel)
+        let subscription = _source.subscribe(sink)
+        return (sink: sink, subscription: subscription)
     }
 
     #if TRACE_RESOURCES

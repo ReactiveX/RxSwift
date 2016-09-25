@@ -21,13 +21,14 @@ class ObserveOnSerialDispatchQueueSink<O: ObserverType> : ObserverBase<O.E> {
     let scheduler: SerialDispatchQueueScheduler
     let observer: O
     
-    let subscription = SingleAssignmentDisposable()
+    let cancel: Cancelable
 
     var cachedScheduleLambda: ((ObserveOnSerialDispatchQueueSink<O>, Event<E>) -> Disposable)!
 
-    init(scheduler: SerialDispatchQueueScheduler, observer: O) {
+    init(scheduler: SerialDispatchQueueScheduler, observer: O, cancel: Cancelable) {
         self.scheduler = scheduler
         self.observer = observer
+        self.cancel = cancel
         super.init()
 
         cachedScheduleLambda = { sink, event in
@@ -48,7 +49,7 @@ class ObserveOnSerialDispatchQueueSink<O: ObserverType> : ObserverBase<O.E> {
     override func dispose() {
         super.dispose()
 
-        subscription.dispose()
+        cancel.dispose()
     }
 }
     
@@ -66,10 +67,10 @@ class ObserveOnSerialDispatchQueue<E> : Producer<E> {
 #endif
     }
     
-    override func run<O : ObserverType>(_ observer: O) -> Disposable where O.E == E {
-        let sink = ObserveOnSerialDispatchQueueSink(scheduler: scheduler, observer: observer)
-        sink.subscription.disposable = source.subscribe(sink)
-        return sink
+    override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == E {
+        let sink = ObserveOnSerialDispatchQueueSink(scheduler: scheduler, observer: observer, cancel: cancel)
+        let subscription = source.subscribe(sink)
+        return (sink: sink, subscription: subscription)
     }
     
 #if TRACE_RESOURCES

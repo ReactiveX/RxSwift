@@ -31,7 +31,7 @@ private class ImmediateScheduler : ImmediateSchedulerType {
             if disposable.isDisposed {
                 return
             }
-            disposable.disposable = action(state)
+            disposable.setDisposable(action(state))
         })
 
         return disposable

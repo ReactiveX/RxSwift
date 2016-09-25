@@ -15,16 +15,85 @@ class Producer<Element> : Observable<Element> {
     
     override func subscribe<O : ObserverType>(_ observer: O) -> Disposable where O.E == Element {
         if !CurrentThreadScheduler.isScheduleRequired {
-            return run(observer)
+            // The returned disposable needs to release all references once it was disposed.
+            let disposer = SinkDisposer()
+            let sinkAndSubscription = run(observer, cancel: disposer)
+            disposer.setSinkAndSubscription(sink: sinkAndSubscription.sink, subscription: sinkAndSubscription.subscription)
+
+            return disposer
         }
         else {
             return CurrentThreadScheduler.instance.schedule(()) { _ in
-                return self.run(observer)
+                let disposer = SinkDisposer()
+                let sinkAndSubscription = self.run(observer, cancel: disposer)
+                disposer.setSinkAndSubscription(sink: sinkAndSubscription.sink, subscription: sinkAndSubscription.subscription)
+
+                return disposer
             }
         }
     }
     
-    func run<O : ObserverType>(_ observer: O) -> Disposable where O.E == Element {
+    func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == Element {
         abstractMethod()
+    }
+}
+
+fileprivate class SinkDisposer: Cancelable {
+    fileprivate enum DisposeState: UInt32 {
+        case disposed = 1
+        case sinkAndSubscriptionSet = 2
+    }
+
+    // Jeej, swift API consistency rules
+    fileprivate enum DisposeStateInt32: Int32 {
+        case disposed = 1
+        case sinkAndSubscriptionSet = 2
+    }
+    
+    private var _state: UInt32 = 0
+    private var _sink: Disposable? = nil
+    private var _subscription: Disposable? = nil
+
+    var isDisposed: Bool {
+        return (_state & DisposeState.disposed.rawValue) != 0
+    }
+
+    func setSinkAndSubscription(sink: Disposable, subscription: Disposable) {
+        _sink = sink
+        _subscription = subscription
+
+        let previousState = OSAtomicOr32OrigBarrier(DisposeState.sinkAndSubscriptionSet.rawValue, &_state)
+        if (previousState & DisposeStateInt32.sinkAndSubscriptionSet.rawValue) != 0 {
+            rxFatalError("Sink and subscription were already set")
+        }
+
+        if (previousState & DisposeStateInt32.disposed.rawValue) != 0 {
+            sink.dispose()
+            subscription.dispose()
+            _sink = nil
+            _subscription = nil
+        }
+    }
+    
+    func dispose() {
+        let previousState = OSAtomicOr32OrigBarrier(DisposeState.disposed.rawValue, &_state)
+        if (previousState & DisposeStateInt32.disposed.rawValue) != 0 {
+            return
+        }
+
+        if (previousState & DisposeStateInt32.sinkAndSubscriptionSet.rawValue) != 0 {
+            guard let sink = _sink else {
+                rxFatalError("Sink not set")
+            }
+            guard let subscription = _subscription else {
+                rxFatalError("Subscription not set")
+            }
+
+            sink.dispose()
+            subscription.dispose()
+
+            _sink = nil
+            _subscription = nil
+        }
     }
 }

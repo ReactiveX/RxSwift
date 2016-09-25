@@ -81,7 +81,7 @@ extension RxTest {
                 deallocated = true
             })
 
-            outerDisposable.disposable = disposable
+            outerDisposable.setDisposable(disposable)
         }
 
         outerDisposable.dispose()

@@ -62,7 +62,7 @@ extension ObservableCreationTests {
         let res = scheduler.createObserver(Int.self)
 
         scheduler.scheduleAt(100) {
-            d.disposable = Observable.just(42, scheduler: scheduler).subscribe { e in
+            let subscription = Observable.just(42, scheduler: scheduler).subscribe { e in
                 res.on(e)
 
                 switch e {
@@ -72,6 +72,8 @@ extension ObservableCreationTests {
                     break
                 }
             }
+
+            d.setDisposable(subscription)
         }
 
         scheduler.start()

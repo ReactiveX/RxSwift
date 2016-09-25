@@ -8,18 +8,22 @@
 
 import Foundation
 
-class Sink<O : ObserverType> : SingleAssignmentDisposable {
+class Sink<O : ObserverType> : Disposable {
     fileprivate let _observer: O
+    fileprivate let _cancel: Cancelable
+    fileprivate var _disposed: Bool
 
-    init(observer: O) {
+    init(observer: O, cancel: Cancelable) {
 #if TRACE_RESOURCES
         let _ = AtomicIncrement(&resourceCount)
 #endif
         _observer = observer
+        _cancel = cancel
+        _disposed = false
     }
     
     final func forwardOn(_ event: Event<O.E>) {
-        if isDisposed {
+        if _disposed {
             return
         }
         _observer.on(event)
@@ -27,6 +31,11 @@ class Sink<O : ObserverType> : SingleAssignmentDisposable {
     
     final func forwarder() -> SinkForward<O> {
         return SinkForward(forward: self)
+    }
+
+    func dispose() {
+        _disposed = true
+        _cancel.dispose()
     }
 
     deinit {
@@ -51,7 +60,7 @@ class SinkForward<O: ObserverType>: ObserverType {
             _forward._observer.on(event)
         case .error, .completed:
             _forward._observer.on(event)
-            _forward.dispose()
+            _forward._cancel.dispose()
         }
     }
 }

@@ -33,10 +33,10 @@ class DelaySink<ElementType, O: ObserverType>
     private var _queue = Queue<(eventTime: RxTime, event: Event<E>)>(capacity: 0)
     private var _disposed = false
     
-    init(observer: O, dueTime: RxTimeInterval, scheduler: SchedulerType) {
+    init(observer: O, dueTime: RxTimeInterval, scheduler: SchedulerType, cancel: Cancelable) {
         _dueTime = dueTime
         _scheduler = scheduler
-        super.init(observer: observer)
+        super.init(observer: observer, cancel: cancel)
     }
 
     // All of these complications in this method are caused by the fact that 
@@ -140,7 +140,7 @@ class DelaySink<ElementType, O: ObserverType>
     }
     
     func run(source: Source) -> Disposable {
-        _sourceSubscription.disposable = source.subscribeSafe(self)
+        _sourceSubscription.setDisposable(source.subscribeSafe(self))
         return Disposables.create(_sourceSubscription, _cancelable)
     }
 }
@@ -156,9 +156,9 @@ class Delay<Element>: Producer<Element> {
         _scheduler = scheduler
     }
 
-    override func run<O : ObserverType>(_ observer: O) -> Disposable where O.E == Element {
-        let sink = DelaySink(observer: observer, dueTime: _dueTime, scheduler: _scheduler)
-        sink.disposable = sink.run(source: _source)
-        return sink
+    override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == Element {
+        let sink = DelaySink(observer: observer, dueTime: _dueTime, scheduler: _scheduler, cancel: cancel)
+        let subscription = sink.run(source: _source)
+        return (sink: sink, subscription: subscription)
     }
 }

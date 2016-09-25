@@ -86,4 +86,44 @@ extension AnonymousObservableTests {
         observer.on(.next(1))
         XCTAssertEqual(elements, [0])
     }
+
+    func testAnonymousObservable_disposeReferenceDoesntRetainObservable() {
+
+        var targetDeallocated = false
+
+        var target: NSObject? = NSObject()
+        
+        let subscription = { () -> Disposable in
+            return autoreleasepool {
+                let localTarget = target!
+
+                let sequence = Observable.create { _ in
+                    return Disposables.create {
+                        if arc4random_uniform(4) == 0 {
+                            print(localTarget)
+                        }
+                    }
+                }.map { (n: Int) -> Int in
+                    if arc4random_uniform(4) == 0 {
+                        print(localTarget)
+                    }
+                    return n
+                }
+
+                let subscription = sequence.subscribe(onNext: { _ in })
+
+                _ = localTarget.rx.deallocated.subscribe(onNext: { _ in
+                    targetDeallocated = true
+                })
+
+                return subscription
+            }
+        }()
+
+        target = nil
+        
+        XCTAssertFalse(targetDeallocated)
+        subscription.dispose()
+        XCTAssertTrue(targetDeallocated)
+    }
 }

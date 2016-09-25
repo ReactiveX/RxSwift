@@ -24,7 +24,7 @@ class ZipCollectionTypeSink<C: Collection, R, O: ObserverType>
     private var _numberOfDone = 0
     private var _subscriptions: [SingleAssignmentDisposable]
     
-    init(parent: Parent, observer: O) {
+    init(parent: Parent, observer: O, cancel: Cancelable) {
         _parent = parent
         _values = [Queue<SourceElement>](repeating: Queue(capacity: 4), count: parent.count)
         _isDone = [Bool](repeating: false, count: parent.count)
@@ -35,7 +35,7 @@ class ZipCollectionTypeSink<C: Collection, R, O: ObserverType>
             _subscriptions.append(SingleAssignmentDisposable())
         }
         
-        super.init(observer: observer)
+        super.init(observer: observer, cancel: cancel)
     }
     
     func on(_ event: Event<SourceElement>, atIndex: Int) {
@@ -106,9 +106,11 @@ class ZipCollectionTypeSink<C: Collection, R, O: ObserverType>
         for i in _parent.sources {
             let index = j
             let source = i.asObservable()
-            _subscriptions[j].disposable = source.subscribe(AnyObserver { event in
+
+            let disposable = source.subscribe(AnyObserver { event in
                 self.on(event, atIndex: index)
                 })
+            _subscriptions[j].setDisposable(disposable)
             j += 1
         }
         
@@ -129,9 +131,9 @@ class ZipCollectionType<C: Collection, R> : Producer<R> where C.Iterator.Element
         self.count = Int(self.sources.count.toIntMax())
     }
     
-    override func run<O : ObserverType>(_ observer: O) -> Disposable where O.E == R {
-        let sink = ZipCollectionTypeSink(parent: self, observer: observer)
-        sink.disposable = sink.run()
-        return sink
+    override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == R {
+        let sink = ZipCollectionTypeSink(parent: self, observer: observer, cancel: cancel)
+        let subscription = sink.run()
+        return (sink: sink, subscription: subscription)
     }
 }

@@ -15,11 +15,11 @@ class ElementAtSink<SourceType, O: ObserverType> : Sink<O>, ObserverType where O
     let _parent: Parent
     var _i: Int
     
-    init(parent: Parent, observer: O) {
+    init(parent: Parent, observer: O, cancel: Cancelable) {
         _parent = parent
         _i = parent._index
         
-        super.init(observer: observer)
+        super.init(observer: observer, cancel: cancel)
     }
     
     func on(_ event: Event<SourceType>) {
@@ -71,9 +71,9 @@ class ElementAt<SourceType> : Producer<SourceType> {
         self._throwOnEmpty = throwOnEmpty
     }
     
-    override func run<O: ObserverType>(_ observer: O) -> Disposable where O.E == SourceType {
-        let sink = ElementAtSink(parent: self, observer: observer)
-        sink.disposable = _source.subscribeSafe(sink)
-        return sink
+    override func run<O: ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == SourceType {
+        let sink = ElementAtSink(parent: self, observer: observer, cancel: cancel)
+        let subscription = _source.subscribeSafe(sink)
+        return (sink: sink, subscription: subscription)
     }
 }

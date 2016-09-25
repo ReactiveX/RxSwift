@@ -23,7 +23,7 @@ extension ObserverTests {
 
         var elements = [Int]()
 
-        _ = a.subscribe(onNext: { n in
+        let subscription = a.subscribe(onNext: { n in
             elements.append(n)
         })
 
@@ -32,6 +32,8 @@ extension ObserverTests {
         observer.onNext(0)
 
         XCTAssertEqual(elements, [0])
+
+        subscription.dispose()
     }
 
     func testConvenienceOn_Error() {

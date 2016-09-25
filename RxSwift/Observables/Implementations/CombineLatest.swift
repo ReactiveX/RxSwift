@@ -27,12 +27,12 @@ class CombineLatestSink<O: ObserverType>
     private var _hasValue: [Bool]
     private var _isDone: [Bool]
    
-    init(arity: Int, observer: O) {
+    init(arity: Int, observer: O, cancel: Cancelable) {
         _arity = arity
         _hasValue = [Bool](repeating: false, count: arity)
         _isDone = [Bool](repeating: false, count: arity)
         
-        super.init(observer: observer)
+        super.init(observer: observer, cancel: cancel)
     }
     
     func getResult() throws -> Element {
