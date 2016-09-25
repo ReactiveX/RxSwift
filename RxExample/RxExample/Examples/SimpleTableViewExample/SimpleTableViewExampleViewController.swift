@@ -13,7 +13,7 @@ import RxSwift
 import RxCocoa
 #endif
 
-class SimpleTableViewExampleViewController : ViewController {
+class SimpleTableViewExampleViewController : ViewController, UITableViewDelegate {
     @IBOutlet weak var tableView: UITableView!
 
     override func viewDidLoad() {
@@ -46,5 +46,13 @@ class SimpleTableViewExampleViewController : ViewController {
             })
             .addDisposableTo(disposeBag)
 
+        // to prevent swipe to delete
+        tableView.rx.setDelegate(self)
+            .addDisposableTo(disposeBag)
+    }
+
+    // to prevent swipe to delete behavior
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
+        return .none
     }
 }
