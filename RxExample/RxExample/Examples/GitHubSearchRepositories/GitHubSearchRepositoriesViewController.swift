@@ -21,10 +21,6 @@ extension UIScrollView {
 class GitHubSearchRepositoriesViewController: ViewController, UITableViewDelegate {
     static let startLoadingOffset: CGFloat = 20.0
 
-    static func isNearTheBottomEdge(_ contentOffset: CGPoint, _ tableView: UITableView) -> Bool {
-        return contentOffset.y + tableView.frame.size.height + startLoadingOffset > tableView.contentSize.height
-    }
-
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
 
@@ -32,8 +28,6 @@ class GitHubSearchRepositoriesViewController: ViewController, UITableViewDelegat
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        
 
         dataSource.configureCell = { (_, tv, ip, repository: Repository) in
             let cell = tv.dequeueReusableCell(withIdentifier: "Cell")!
