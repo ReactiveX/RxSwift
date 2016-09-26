@@ -32,6 +32,15 @@ extension Reactive where Base: UIView {
             view.alpha = alpha
         }.asObserver()
     }
+    
+    /**
+     Bindable sink for `backgroundColor` property.
+     */
+    public var backgroundColor: AnyObserver<UIColor> {
+        return UIBindingObserver(UIElement: self.base) { view, color in
+            view.backgroundColor = color
+        }.asObserver()
+    }
 }
 
 #endif
