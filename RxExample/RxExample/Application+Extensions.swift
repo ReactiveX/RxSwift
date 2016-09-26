@@ -6,9 +6,15 @@
 //  Copyright © 2016 Krunoslav Zaher. All rights reserved.
 //
 
-import UIKit
+#if os(iOS)
+    import UIKit
+    private typealias OSApplication = UIApplication
+#elseif os(OSX)
+    import Cocoa
+    private typealias OSApplication = NSApplication
+#endif
 
-extension UIApplication {
+extension OSApplication {
     static var isInUITest: Bool {
         return ProcessInfo.processInfo.environment["isUITest"] != nil;
     }
