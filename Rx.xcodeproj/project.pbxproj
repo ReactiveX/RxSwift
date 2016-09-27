@@ -309,34 +309,6 @@
 		C80DA3391C30B20B00C588B9 /* VirtualTimeScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8FA89131C30405400CD3A17 /* VirtualTimeScheduler.swift */; };
 		C80DA33A1C30B20B00C588B9 /* VirtualTimeScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8FA89131C30405400CD3A17 /* VirtualTimeScheduler.swift */; };
 		C80DA33B1C30B20C00C588B9 /* VirtualTimeScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8FA89131C30405400CD3A17 /* VirtualTimeScheduler.swift */; };
-		C80DDE931BCE69BA006A1832 /* ControlEvent+Driver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80DDE8D1BCE69BA006A1832 /* ControlEvent+Driver.swift */; };
-		C80DDE941BCE69BA006A1832 /* ControlEvent+Driver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80DDE8D1BCE69BA006A1832 /* ControlEvent+Driver.swift */; };
-		C80DDE951BCE69BA006A1832 /* ControlEvent+Driver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80DDE8D1BCE69BA006A1832 /* ControlEvent+Driver.swift */; };
-		C80DDE961BCE69BA006A1832 /* ControlEvent+Driver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80DDE8D1BCE69BA006A1832 /* ControlEvent+Driver.swift */; };
-		C80DDE971BCE69BA006A1832 /* ControlProperty+Driver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80DDE8E1BCE69BA006A1832 /* ControlProperty+Driver.swift */; };
-		C80DDE981BCE69BA006A1832 /* ControlProperty+Driver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80DDE8E1BCE69BA006A1832 /* ControlProperty+Driver.swift */; };
-		C80DDE991BCE69BA006A1832 /* ControlProperty+Driver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80DDE8E1BCE69BA006A1832 /* ControlProperty+Driver.swift */; };
-		C80DDE9A1BCE69BA006A1832 /* ControlProperty+Driver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80DDE8E1BCE69BA006A1832 /* ControlProperty+Driver.swift */; };
-		C80DDE9B1BCE69BA006A1832 /* Driver+Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80DDE8F1BCE69BA006A1832 /* Driver+Operators.swift */; };
-		C80DDE9C1BCE69BA006A1832 /* Driver+Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80DDE8F1BCE69BA006A1832 /* Driver+Operators.swift */; };
-		C80DDE9D1BCE69BA006A1832 /* Driver+Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80DDE8F1BCE69BA006A1832 /* Driver+Operators.swift */; };
-		C80DDE9E1BCE69BA006A1832 /* Driver+Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80DDE8F1BCE69BA006A1832 /* Driver+Operators.swift */; };
-		C80DDE9F1BCE69BA006A1832 /* Driver+Subscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80DDE901BCE69BA006A1832 /* Driver+Subscription.swift */; };
-		C80DDEA01BCE69BA006A1832 /* Driver+Subscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80DDE901BCE69BA006A1832 /* Driver+Subscription.swift */; };
-		C80DDEA11BCE69BA006A1832 /* Driver+Subscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80DDE901BCE69BA006A1832 /* Driver+Subscription.swift */; };
-		C80DDEA21BCE69BA006A1832 /* Driver+Subscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80DDE901BCE69BA006A1832 /* Driver+Subscription.swift */; };
-		C80DDEA31BCE69BA006A1832 /* Driver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80DDE911BCE69BA006A1832 /* Driver.swift */; };
-		C80DDEA41BCE69BA006A1832 /* Driver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80DDE911BCE69BA006A1832 /* Driver.swift */; };
-		C80DDEA51BCE69BA006A1832 /* Driver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80DDE911BCE69BA006A1832 /* Driver.swift */; };
-		C80DDEA61BCE69BA006A1832 /* Driver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80DDE911BCE69BA006A1832 /* Driver.swift */; };
-		C80DDEA71BCE69BA006A1832 /* ObservableConvertibleType+Driver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80DDE921BCE69BA006A1832 /* ObservableConvertibleType+Driver.swift */; };
-		C80DDEA81BCE69BA006A1832 /* ObservableConvertibleType+Driver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80DDE921BCE69BA006A1832 /* ObservableConvertibleType+Driver.swift */; };
-		C80DDEA91BCE69BA006A1832 /* ObservableConvertibleType+Driver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80DDE921BCE69BA006A1832 /* ObservableConvertibleType+Driver.swift */; };
-		C80DDEAA1BCE69BA006A1832 /* ObservableConvertibleType+Driver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80DDE921BCE69BA006A1832 /* ObservableConvertibleType+Driver.swift */; };
-		C80DDEB11BCE8CA3006A1832 /* Driver+Operators+arity.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80DDEB01BCE8CA3006A1832 /* Driver+Operators+arity.swift */; };
-		C80DDEB21BCE8CA3006A1832 /* Driver+Operators+arity.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80DDEB01BCE8CA3006A1832 /* Driver+Operators+arity.swift */; };
-		C80DDEB31BCE8CA3006A1832 /* Driver+Operators+arity.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80DDEB01BCE8CA3006A1832 /* Driver+Operators+arity.swift */; };
-		C80DDEB41BCE8CA3006A1832 /* Driver+Operators+arity.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80DDEB01BCE8CA3006A1832 /* Driver+Operators+arity.swift */; };
 		C80EEC341D42D06E00131C39 /* DispatchQueueConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80EEC331D42D06E00131C39 /* DispatchQueueConfiguration.swift */; };
 		C80EEC351D42D06E00131C39 /* DispatchQueueConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80EEC331D42D06E00131C39 /* DispatchQueueConfiguration.swift */; };
 		C80EEC361D42D06E00131C39 /* DispatchQueueConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80EEC331D42D06E00131C39 /* DispatchQueueConfiguration.swift */; };
@@ -349,6 +321,54 @@
 		C811C8B01C24DBCC00A2DDD4 /* _RXObjCRuntime.h in Headers */ = {isa = PBXBuildFile; fileRef = C8C4B4A81C17722400828BD5 /* _RXObjCRuntime.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C811C8B11C24DBD200A2DDD4 /* _RXDelegateProxy.h in Headers */ = {isa = PBXBuildFile; fileRef = C8093E841B8A732E0088E94D /* _RXDelegateProxy.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C811C8B21C24DBD700A2DDD4 /* _RXKVOObserver.h in Headers */ = {isa = PBXBuildFile; fileRef = C8093E861B8A732E0088E94D /* _RXKVOObserver.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C81398591D9B21E3004F22E8 /* ObservableConvertibleType+SharedSequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81398531D9B21E3004F22E8 /* ObservableConvertibleType+SharedSequence.swift */; };
+		C813985A1D9B21E3004F22E8 /* ObservableConvertibleType+SharedSequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81398531D9B21E3004F22E8 /* ObservableConvertibleType+SharedSequence.swift */; };
+		C813985B1D9B21E3004F22E8 /* ObservableConvertibleType+SharedSequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81398531D9B21E3004F22E8 /* ObservableConvertibleType+SharedSequence.swift */; };
+		C813985C1D9B21E3004F22E8 /* ObservableConvertibleType+SharedSequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81398531D9B21E3004F22E8 /* ObservableConvertibleType+SharedSequence.swift */; };
+		C813985D1D9B21E3004F22E8 /* SharedSequence+Operators+arity.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81398541D9B21E3004F22E8 /* SharedSequence+Operators+arity.swift */; };
+		C813985E1D9B21E3004F22E8 /* SharedSequence+Operators+arity.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81398541D9B21E3004F22E8 /* SharedSequence+Operators+arity.swift */; };
+		C813985F1D9B21E3004F22E8 /* SharedSequence+Operators+arity.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81398541D9B21E3004F22E8 /* SharedSequence+Operators+arity.swift */; };
+		C81398601D9B21E3004F22E8 /* SharedSequence+Operators+arity.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81398541D9B21E3004F22E8 /* SharedSequence+Operators+arity.swift */; };
+		C81398611D9B21E3004F22E8 /* SharedSequence+Operators+arity.tt in Resources */ = {isa = PBXBuildFile; fileRef = C81398551D9B21E3004F22E8 /* SharedSequence+Operators+arity.tt */; };
+		C81398621D9B21E3004F22E8 /* SharedSequence+Operators+arity.tt in Resources */ = {isa = PBXBuildFile; fileRef = C81398551D9B21E3004F22E8 /* SharedSequence+Operators+arity.tt */; };
+		C81398631D9B21E3004F22E8 /* SharedSequence+Operators+arity.tt in Resources */ = {isa = PBXBuildFile; fileRef = C81398551D9B21E3004F22E8 /* SharedSequence+Operators+arity.tt */; };
+		C81398641D9B21E3004F22E8 /* SharedSequence+Operators+arity.tt in Resources */ = {isa = PBXBuildFile; fileRef = C81398551D9B21E3004F22E8 /* SharedSequence+Operators+arity.tt */; };
+		C81398651D9B21E3004F22E8 /* SharedSequence+Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81398561D9B21E3004F22E8 /* SharedSequence+Operators.swift */; };
+		C81398661D9B21E3004F22E8 /* SharedSequence+Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81398561D9B21E3004F22E8 /* SharedSequence+Operators.swift */; };
+		C81398671D9B21E3004F22E8 /* SharedSequence+Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81398561D9B21E3004F22E8 /* SharedSequence+Operators.swift */; };
+		C81398681D9B21E3004F22E8 /* SharedSequence+Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81398561D9B21E3004F22E8 /* SharedSequence+Operators.swift */; };
+		C81398691D9B21E3004F22E8 /* SharedSequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81398571D9B21E3004F22E8 /* SharedSequence.swift */; };
+		C813986A1D9B21E3004F22E8 /* SharedSequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81398571D9B21E3004F22E8 /* SharedSequence.swift */; };
+		C813986B1D9B21E3004F22E8 /* SharedSequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81398571D9B21E3004F22E8 /* SharedSequence.swift */; };
+		C813986C1D9B21E3004F22E8 /* SharedSequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81398571D9B21E3004F22E8 /* SharedSequence.swift */; };
+		C813986D1D9B21E3004F22E8 /* Variable+SharedSequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81398581D9B21E3004F22E8 /* Variable+SharedSequence.swift */; };
+		C813986E1D9B21E3004F22E8 /* Variable+SharedSequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81398581D9B21E3004F22E8 /* Variable+SharedSequence.swift */; };
+		C813986F1D9B21E3004F22E8 /* Variable+SharedSequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81398581D9B21E3004F22E8 /* Variable+SharedSequence.swift */; };
+		C81398701D9B21E3004F22E8 /* Variable+SharedSequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81398581D9B21E3004F22E8 /* Variable+SharedSequence.swift */; };
+		C81398781D9B21F2004F22E8 /* ControlEvent+Driver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81398721D9B21F2004F22E8 /* ControlEvent+Driver.swift */; };
+		C81398791D9B21F2004F22E8 /* ControlEvent+Driver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81398721D9B21F2004F22E8 /* ControlEvent+Driver.swift */; };
+		C813987A1D9B21F2004F22E8 /* ControlEvent+Driver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81398721D9B21F2004F22E8 /* ControlEvent+Driver.swift */; };
+		C813987B1D9B21F2004F22E8 /* ControlEvent+Driver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81398721D9B21F2004F22E8 /* ControlEvent+Driver.swift */; };
+		C813987C1D9B21F2004F22E8 /* ControlProperty+Driver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81398731D9B21F2004F22E8 /* ControlProperty+Driver.swift */; };
+		C813987D1D9B21F2004F22E8 /* ControlProperty+Driver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81398731D9B21F2004F22E8 /* ControlProperty+Driver.swift */; };
+		C813987E1D9B21F2004F22E8 /* ControlProperty+Driver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81398731D9B21F2004F22E8 /* ControlProperty+Driver.swift */; };
+		C813987F1D9B21F2004F22E8 /* ControlProperty+Driver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81398731D9B21F2004F22E8 /* ControlProperty+Driver.swift */; };
+		C81398801D9B21F2004F22E8 /* Driver+Subscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81398741D9B21F2004F22E8 /* Driver+Subscription.swift */; };
+		C81398811D9B21F2004F22E8 /* Driver+Subscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81398741D9B21F2004F22E8 /* Driver+Subscription.swift */; };
+		C81398821D9B21F2004F22E8 /* Driver+Subscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81398741D9B21F2004F22E8 /* Driver+Subscription.swift */; };
+		C81398831D9B21F2004F22E8 /* Driver+Subscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81398741D9B21F2004F22E8 /* Driver+Subscription.swift */; };
+		C81398841D9B21F2004F22E8 /* Driver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81398751D9B21F2004F22E8 /* Driver.swift */; };
+		C81398851D9B21F2004F22E8 /* Driver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81398751D9B21F2004F22E8 /* Driver.swift */; };
+		C81398861D9B21F2004F22E8 /* Driver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81398751D9B21F2004F22E8 /* Driver.swift */; };
+		C81398871D9B21F2004F22E8 /* Driver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81398751D9B21F2004F22E8 /* Driver.swift */; };
+		C81398881D9B21F2004F22E8 /* ObservableConvertibleType+Driver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81398761D9B21F2004F22E8 /* ObservableConvertibleType+Driver.swift */; };
+		C81398891D9B21F2004F22E8 /* ObservableConvertibleType+Driver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81398761D9B21F2004F22E8 /* ObservableConvertibleType+Driver.swift */; };
+		C813988A1D9B21F2004F22E8 /* ObservableConvertibleType+Driver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81398761D9B21F2004F22E8 /* ObservableConvertibleType+Driver.swift */; };
+		C813988B1D9B21F2004F22E8 /* ObservableConvertibleType+Driver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81398761D9B21F2004F22E8 /* ObservableConvertibleType+Driver.swift */; };
+		C813988C1D9B21F2004F22E8 /* Variable+Driver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81398771D9B21F2004F22E8 /* Variable+Driver.swift */; };
+		C813988D1D9B21F2004F22E8 /* Variable+Driver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81398771D9B21F2004F22E8 /* Variable+Driver.swift */; };
+		C813988E1D9B21F2004F22E8 /* Variable+Driver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81398771D9B21F2004F22E8 /* Variable+Driver.swift */; };
+		C813988F1D9B21F2004F22E8 /* Variable+Driver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81398771D9B21F2004F22E8 /* Variable+Driver.swift */; };
 		C821DBA21BA4DCAB008F3809 /* Buffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C821DBA11BA4DCAB008F3809 /* Buffer.swift */; };
 		C821DBA31BA4DCAB008F3809 /* Buffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C821DBA11BA4DCAB008F3809 /* Buffer.swift */; };
 		C83100641BF7D51600AAE3CD /* Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83100631BF7D51600AAE3CD /* Sequence.swift */; };
@@ -565,10 +585,6 @@
 		C83D73CB1C1DBAEE003DC470 /* ScheduledItemType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83D73B71C1DBAEE003DC470 /* ScheduledItemType.swift */; };
 		C849BE2B1BAB5D070019AD27 /* ObservableConvertibleType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C849BE2A1BAB5D070019AD27 /* ObservableConvertibleType.swift */; };
 		C849BE2C1BAB5D070019AD27 /* ObservableConvertibleType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C849BE2A1BAB5D070019AD27 /* ObservableConvertibleType.swift */; };
-		C849EF8B1C3195950048AC4A /* Variable+Driver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C849EF8A1C3195950048AC4A /* Variable+Driver.swift */; };
-		C849EF8C1C3195950048AC4A /* Variable+Driver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C849EF8A1C3195950048AC4A /* Variable+Driver.swift */; };
-		C849EF8D1C3195950048AC4A /* Variable+Driver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C849EF8A1C3195950048AC4A /* Variable+Driver.swift */; };
-		C849EF8E1C3195950048AC4A /* Variable+Driver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C849EF8A1C3195950048AC4A /* Variable+Driver.swift */; };
 		C84B38EE1BA433CD001B7D88 /* Generate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C84B38ED1BA433CD001B7D88 /* Generate.swift */; };
 		C84B38EF1BA433CD001B7D88 /* Generate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C84B38ED1BA433CD001B7D88 /* Generate.swift */; };
 		C84CB1721C3876B800EB63CC /* UIView+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83508F11C38706D0027C24C /* UIView+RxTests.swift */; };
@@ -1535,16 +1551,20 @@
 		C80D33931B922FB00014629D /* ControlEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ControlEvent.swift; sourceTree = "<group>"; };
 		C80D33941B922FB00014629D /* ControlProperty.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ControlProperty.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		C80D342D1B9245A40014629D /* CombineLatest+CollectionType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = "CombineLatest+CollectionType.swift"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		C80DDE8D1BCE69BA006A1832 /* ControlEvent+Driver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ControlEvent+Driver.swift"; sourceTree = "<group>"; };
-		C80DDE8E1BCE69BA006A1832 /* ControlProperty+Driver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ControlProperty+Driver.swift"; sourceTree = "<group>"; };
-		C80DDE8F1BCE69BA006A1832 /* Driver+Operators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Driver+Operators.swift"; sourceTree = "<group>"; };
-		C80DDE901BCE69BA006A1832 /* Driver+Subscription.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Driver+Subscription.swift"; sourceTree = "<group>"; };
-		C80DDE911BCE69BA006A1832 /* Driver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Driver.swift; sourceTree = "<group>"; };
-		C80DDE921BCE69BA006A1832 /* ObservableConvertibleType+Driver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ObservableConvertibleType+Driver.swift"; sourceTree = "<group>"; };
-		C80DDEAB1BCE83B2006A1832 /* Driver+Operators+arity.tt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Driver+Operators+arity.tt"; sourceTree = "<group>"; };
-		C80DDEB01BCE8CA3006A1832 /* Driver+Operators+arity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Driver+Operators+arity.swift"; sourceTree = "<group>"; };
 		C80EEC331D42D06E00131C39 /* DispatchQueueConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DispatchQueueConfiguration.swift; sourceTree = "<group>"; };
 		C811C89C1C24D80100A2DDD4 /* DeallocObservable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeallocObservable.swift; sourceTree = "<group>"; };
+		C81398531D9B21E3004F22E8 /* ObservableConvertibleType+SharedSequence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ObservableConvertibleType+SharedSequence.swift"; sourceTree = "<group>"; };
+		C81398541D9B21E3004F22E8 /* SharedSequence+Operators+arity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SharedSequence+Operators+arity.swift"; sourceTree = "<group>"; };
+		C81398551D9B21E3004F22E8 /* SharedSequence+Operators+arity.tt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "SharedSequence+Operators+arity.tt"; sourceTree = "<group>"; };
+		C81398561D9B21E3004F22E8 /* SharedSequence+Operators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SharedSequence+Operators.swift"; sourceTree = "<group>"; };
+		C81398571D9B21E3004F22E8 /* SharedSequence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharedSequence.swift; sourceTree = "<group>"; };
+		C81398581D9B21E3004F22E8 /* Variable+SharedSequence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Variable+SharedSequence.swift"; sourceTree = "<group>"; };
+		C81398721D9B21F2004F22E8 /* ControlEvent+Driver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ControlEvent+Driver.swift"; sourceTree = "<group>"; };
+		C81398731D9B21F2004F22E8 /* ControlProperty+Driver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ControlProperty+Driver.swift"; sourceTree = "<group>"; };
+		C81398741D9B21F2004F22E8 /* Driver+Subscription.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Driver+Subscription.swift"; sourceTree = "<group>"; };
+		C81398751D9B21F2004F22E8 /* Driver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Driver.swift; sourceTree = "<group>"; };
+		C81398761D9B21F2004F22E8 /* ObservableConvertibleType+Driver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ObservableConvertibleType+Driver.swift"; sourceTree = "<group>"; };
+		C81398771D9B21F2004F22E8 /* Variable+Driver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Variable+Driver.swift"; sourceTree = "<group>"; };
 		C821DBA11BA4DCAB008F3809 /* Buffer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Buffer.swift; sourceTree = "<group>"; };
 		C83100631BF7D51600AAE3CD /* Sequence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sequence.swift; sourceTree = "<group>"; };
 		C83508C31C386F6F0027C24C /* AllTests-iOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "AllTests-iOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1630,7 +1650,6 @@
 		C83D73B61C1DBAEE003DC470 /* ScheduledItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduledItem.swift; sourceTree = "<group>"; };
 		C83D73B71C1DBAEE003DC470 /* ScheduledItemType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduledItemType.swift; sourceTree = "<group>"; };
 		C849BE2A1BAB5D070019AD27 /* ObservableConvertibleType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObservableConvertibleType.swift; sourceTree = "<group>"; };
-		C849EF8A1C3195950048AC4A /* Variable+Driver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Variable+Driver.swift"; sourceTree = "<group>"; };
 		C84B38ED1BA433CD001B7D88 /* Generate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Generate.swift; sourceTree = "<group>"; };
 		C84CC53F1BDC3B3700E06A64 /* ElementAt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElementAt.swift; sourceTree = "<group>"; };
 		C84CC54D1BDCF48200E06A64 /* LockOwnerType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LockOwnerType.swift; sourceTree = "<group>"; };
@@ -2211,7 +2230,8 @@
 		C80D33911B922FB00014629D /* CocoaUnits */ = {
 			isa = PBXGroup;
 			children = (
-				C80DDE8C1BCE69BA006A1832 /* Driver */,
+				C81398711D9B21F2004F22E8 /* Driver */,
+				C81398521D9B21E3004F22E8 /* SharedSequence */,
 				C80D33931B922FB00014629D /* ControlEvent.swift */,
 				C80D33941B922FB00014629D /* ControlProperty.swift */,
 				C8FD21AD1C67E14C00863EC3 /* UIBindingObserver.swift */,
@@ -2219,18 +2239,28 @@
 			path = CocoaUnits;
 			sourceTree = "<group>";
 		};
-		C80DDE8C1BCE69BA006A1832 /* Driver */ = {
+		C81398521D9B21E3004F22E8 /* SharedSequence */ = {
 			isa = PBXGroup;
 			children = (
-				C80DDEB01BCE8CA3006A1832 /* Driver+Operators+arity.swift */,
-				C80DDE8D1BCE69BA006A1832 /* ControlEvent+Driver.swift */,
-				C80DDE8E1BCE69BA006A1832 /* ControlProperty+Driver.swift */,
-				C80DDE911BCE69BA006A1832 /* Driver.swift */,
-				C80DDE8F1BCE69BA006A1832 /* Driver+Operators.swift */,
-				C80DDEAB1BCE83B2006A1832 /* Driver+Operators+arity.tt */,
-				C80DDE901BCE69BA006A1832 /* Driver+Subscription.swift */,
-				C80DDE921BCE69BA006A1832 /* ObservableConvertibleType+Driver.swift */,
-				C849EF8A1C3195950048AC4A /* Variable+Driver.swift */,
+				C81398531D9B21E3004F22E8 /* ObservableConvertibleType+SharedSequence.swift */,
+				C81398541D9B21E3004F22E8 /* SharedSequence+Operators+arity.swift */,
+				C81398551D9B21E3004F22E8 /* SharedSequence+Operators+arity.tt */,
+				C81398561D9B21E3004F22E8 /* SharedSequence+Operators.swift */,
+				C81398571D9B21E3004F22E8 /* SharedSequence.swift */,
+				C81398581D9B21E3004F22E8 /* Variable+SharedSequence.swift */,
+			);
+			path = SharedSequence;
+			sourceTree = "<group>";
+		};
+		C81398711D9B21F2004F22E8 /* Driver */ = {
+			isa = PBXGroup;
+			children = (
+				C81398721D9B21F2004F22E8 /* ControlEvent+Driver.swift */,
+				C81398731D9B21F2004F22E8 /* ControlProperty+Driver.swift */,
+				C81398741D9B21F2004F22E8 /* Driver+Subscription.swift */,
+				C81398751D9B21F2004F22E8 /* Driver.swift */,
+				C81398761D9B21F2004F22E8 /* ObservableConvertibleType+Driver.swift */,
+				C81398771D9B21F2004F22E8 /* Variable+Driver.swift */,
 			);
 			path = Driver;
 			sourceTree = "<group>";
@@ -3208,6 +3238,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C81398611D9B21E3004F22E8 /* SharedSequence+Operators+arity.tt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3215,6 +3246,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C81398621D9B21E3004F22E8 /* SharedSequence+Operators+arity.tt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3313,6 +3345,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C81398641D9B21E3004F22E8 /* SharedSequence+Operators+arity.tt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3327,6 +3360,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C81398631D9B21E3004F22E8 /* SharedSequence+Operators+arity.tt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3355,15 +3389,15 @@
 				C8093ED91B8A732E0088E94D /* _RXKVOObserver.m in Sources */,
 				C882542F1B8A752B00B02D69 /* UIScrollView+Rx.swift in Sources */,
 				844BC8B41CE4FD7500F5C7CB /* UIPickerView+Rx.swift in Sources */,
-				C80DDE9B1BCE69BA006A1832 /* Driver+Operators.swift in Sources */,
 				C8093EE31B8A732E0088E94D /* DelegateProxyType.swift in Sources */,
 				C8093EFD1B8A732E0088E94D /* RxTarget.swift in Sources */,
 				C88254361B8A752B00B02D69 /* UITextView+Rx.swift in Sources */,
 				C88254171B8A752B00B02D69 /* RxTableViewReactiveArrayDataSource.swift in Sources */,
 				C882541E1B8A752B00B02D69 /* RxCollectionViewDataSourceProxy.swift in Sources */,
-				C80DDE971BCE69BA006A1832 /* ControlProperty+Driver.swift in Sources */,
-				C80DDE931BCE69BA006A1832 /* ControlEvent+Driver.swift in Sources */,
+				C81398651D9B21E3004F22E8 /* SharedSequence+Operators.swift in Sources */,
+				C81398841D9B21F2004F22E8 /* Driver.swift in Sources */,
 				C8093ED11B8A732E0088E94D /* _RX.m in Sources */,
+				C81398881D9B21F2004F22E8 /* ObservableConvertibleType+Driver.swift in Sources */,
 				84C225A31C33F00B008724EC /* RxTextStorageDelegateProxy.swift in Sources */,
 				C8093EFB1B8A732E0088E94D /* RxCocoa.swift in Sources */,
 				C88254231B8A752B00B02D69 /* RxTableViewDelegateProxy.swift in Sources */,
@@ -3372,14 +3406,15 @@
 				C882542D1B8A752B00B02D69 /* UIImageView+Rx.swift in Sources */,
 				C80D33981B922FB00014629D /* ControlEvent.swift in Sources */,
 				C882542A1B8A752B00B02D69 /* UIControl+Rx.swift in Sources */,
+				C813988C1D9B21F2004F22E8 /* Variable+Driver.swift in Sources */,
 				C8F6A1451BF0B9B1007DF367 /* NSObject+Rx+RawRepresentable.swift in Sources */,
 				C8DB967E1BF7496C0084BD53 /* KVORepresentable.swift in Sources */,
 				C8D132441C42D15E00B59FFF /* SectionedViewDataSourceType.swift in Sources */,
-				C849EF8B1C3195950048AC4A /* Variable+Driver.swift in Sources */,
 				84E4D3921C9AFD3400ADFDC9 /* UISearchController+Rx.swift in Sources */,
 				C88254341B8A752B00B02D69 /* UITableView+Rx.swift in Sources */,
 				C88254161B8A752B00B02D69 /* RxCollectionViewReactiveArrayDataSource.swift in Sources */,
 				846436E31C9AF65B0035B40D /* RxSearchControllerDelegateProxy.swift in Sources */,
+				C813985D1D9B21E3004F22E8 /* SharedSequence+Operators+arity.swift in Sources */,
 				C8C4B4A91C17722400828BD5 /* _RXObjCRuntime.m in Sources */,
 				C8093EEF1B8A732E0088E94D /* KVOObserver.swift in Sources */,
 				C882541F1B8A752B00B02D69 /* RxCollectionViewDelegateProxy.swift in Sources */,
@@ -3390,10 +3425,9 @@
 				54D2138E1CE0824E0028D5B4 /* UINavigationItem+Rx.swift in Sources */,
 				91BE429C1CBF7EC000F6B062 /* UIPageControl+Rx.swift in Sources */,
 				C88254211B8A752B00B02D69 /* RxSearchBarDelegateProxy.swift in Sources */,
-				C80DDEA71BCE69BA006A1832 /* ObservableConvertibleType+Driver.swift in Sources */,
+				C81398591D9B21E3004F22E8 /* ObservableConvertibleType+SharedSequence.swift in Sources */,
 				7EDBAEBC1C89B9B7006CBE67 /* UITabBarItem+Rx.swift in Sources */,
 				C839365F1C70E02200A9A09E /* UIApplication+Rx.swift in Sources */,
-				C80DDE9F1BCE69BA006A1832 /* Driver+Subscription.swift in Sources */,
 				844BC8AC1CE4FA6300F5C7CB /* RxPickerViewDelegateProxy.swift in Sources */,
 				C811C89D1C24D80100A2DDD4 /* DeallocObservable.swift in Sources */,
 				C8BCD3ED1C14B5FB005F1280 /* UIView+Rx.swift in Sources */,
@@ -3402,27 +3436,30 @@
 				C8093EED1B8A732E0088E94D /* KVOObservable.swift in Sources */,
 				AAE623761C82475700FC7801 /* UIProgressView+Rx.swift in Sources */,
 				271A97411CFC996B00D64125 /* UIViewController+Rx.swift in Sources */,
+				C813987C1D9B21F2004F22E8 /* ControlProperty+Driver.swift in Sources */,
 				C8DB968D1BF7595D0084BD53 /* KVORepresentable+Swift.swift in Sources */,
-				C80DDEB11BCE8CA3006A1832 /* Driver+Operators+arity.swift in Sources */,
 				C88254281B8A752B00B02D69 /* UIButton+Rx.swift in Sources */,
-				C80DDEA31BCE69BA006A1832 /* Driver.swift in Sources */,
 				C8093ED51B8A732E0088E94D /* _RXDelegateProxy.m in Sources */,
 				C8093EF51B8A732E0088E94D /* NSObject+Rx.swift in Sources */,
 				9BA1CBD31C0F7D550044B50A /* UIActivityIndicatorView+Rx.swift in Sources */,
 				842A5A2C1C357F92003568D5 /* NSTextStorage+Rx.swift in Sources */,
 				C88254241B8A752B00B02D69 /* RxTextViewDelegateProxy.swift in Sources */,
 				C88254271B8A752B00B02D69 /* UIBarButtonItem+Rx.swift in Sources */,
+				C81398781D9B21F2004F22E8 /* ControlEvent+Driver.swift in Sources */,
 				C8C4B4C21C17727000828BD5 /* MessageSentObserver.swift in Sources */,
 				C80D339A1B922FB00014629D /* ControlProperty.swift in Sources */,
 				C882542B1B8A752B00B02D69 /* UIDatePicker+Rx.swift in Sources */,
 				C88254221B8A752B00B02D69 /* RxTableViewDataSourceProxy.swift in Sources */,
 				C8BCD3F41C14B6D1005F1280 /* NSLayoutConstraint+Rx.swift in Sources */,
 				C882542C1B8A752B00B02D69 /* UIGestureRecognizer+Rx.swift in Sources */,
+				C81398801D9B21F2004F22E8 /* Driver+Subscription.swift in Sources */,
 				C8093EE11B8A732E0088E94D /* DelegateProxy.swift in Sources */,
 				88718CFE1CE5D80000D88D60 /* UITabBar+Rx.swift in Sources */,
+				C81398691D9B21E3004F22E8 /* SharedSequence.swift in Sources */,
 				88D98F2E1CE7549A00D50457 /* RxTabBarDelegateProxy.swift in Sources */,
 				C88254331B8A752B00B02D69 /* UISwitch+Rx.swift in Sources */,
 				C8DB96831BF754C80084BD53 /* NSObject+Rx+KVORepresentable.swift in Sources */,
+				C813986D1D9B21E3004F22E8 /* Variable+SharedSequence.swift in Sources */,
 				C8093EE51B8A732E0088E94D /* Logging.swift in Sources */,
 				C88254291B8A752B00B02D69 /* UICollectionView+Rx.swift in Sources */,
 				C882541A1B8A752B00B02D69 /* RxCollectionViewDataSourceType.swift in Sources */,
@@ -3442,49 +3479,52 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C80DDEA41BCE69BA006A1832 /* Driver.swift in Sources */,
 				C8093F4A1B8A732E0088E94D /* NSImageView+Rx.swift in Sources */,
 				C8DB96891BF756F40084BD53 /* KVORepresentable+CoreGraphics.swift in Sources */,
 				C8093EDA1B8A732E0088E94D /* _RXKVOObserver.m in Sources */,
 				C8093EE41B8A732E0088E94D /* DelegateProxyType.swift in Sources */,
 				C8093F481B8A732E0088E94D /* NSControl+Rx.swift in Sources */,
+				C813985E1D9B21E3004F22E8 /* SharedSequence+Operators+arity.swift in Sources */,
 				C8093F4E1B8A732E0088E94D /* NSTextField+Rx.swift in Sources */,
 				C88F76821CE5341700D5A014 /* TextInput.swift in Sources */,
 				C8DB967F1BF7496C0084BD53 /* KVORepresentable.swift in Sources */,
+				C81398891D9B21F2004F22E8 /* ObservableConvertibleType+Driver.swift in Sources */,
 				C8093EFE1B8A732E0088E94D /* RxTarget.swift in Sources */,
 				C8093ED21B8A732E0088E94D /* _RX.m in Sources */,
+				C81398851D9B21F2004F22E8 /* Driver.swift in Sources */,
+				C81398811D9B21F2004F22E8 /* Driver+Subscription.swift in Sources */,
 				C8FD21AF1C67E14C00863EC3 /* UIBindingObserver.swift in Sources */,
 				C8093EFC1B8A732E0088E94D /* RxCocoa.swift in Sources */,
 				C8DB968E1BF7595D0084BD53 /* KVORepresentable+Swift.swift in Sources */,
 				C80D33991B922FB00014629D /* ControlEvent.swift in Sources */,
-				C80DDEA81BCE69BA006A1832 /* ObservableConvertibleType+Driver.swift in Sources */,
+				C81398791D9B21F2004F22E8 /* ControlEvent+Driver.swift in Sources */,
 				C80D339B1B922FB00014629D /* ControlProperty.swift in Sources */,
 				C8BCD3F51C14B6D1005F1280 /* NSLayoutConstraint+Rx.swift in Sources */,
+				C81398661D9B21E3004F22E8 /* SharedSequence+Operators.swift in Sources */,
 				C8093EF01B8A732E0088E94D /* KVOObserver.swift in Sources */,
 				C8093EEE1B8A732E0088E94D /* KVOObservable.swift in Sources */,
 				C8F6A1461BF0B9B2007DF367 /* NSObject+Rx+RawRepresentable.swift in Sources */,
 				C8DB96841BF754C80084BD53 /* NSObject+Rx+KVORepresentable.swift in Sources */,
 				C8C4B4C31C17727000828BD5 /* MessageSentObserver.swift in Sources */,
-				C849EF8C1C3195950048AC4A /* Variable+Driver.swift in Sources */,
+				C813988D1D9B21F2004F22E8 /* Variable+Driver.swift in Sources */,
 				C8093F461B8A732E0088E94D /* NSButton+Rx.swift in Sources */,
-				C80DDEA01BCE69BA006A1832 /* Driver+Subscription.swift in Sources */,
 				C8093ED61B8A732E0088E94D /* _RXDelegateProxy.m in Sources */,
 				C8093EF61B8A732E0088E94D /* NSObject+Rx.swift in Sources */,
-				C80DDE981BCE69BA006A1832 /* ControlProperty+Driver.swift in Sources */,
 				C8C4B4AA1C17722400828BD5 /* _RXObjCRuntime.m in Sources */,
-				C80DDE941BCE69BA006A1832 /* ControlEvent+Driver.swift in Sources */,
-				C80DDEB21BCE8CA3006A1832 /* Driver+Operators+arity.swift in Sources */,
+				C813986A1D9B21E3004F22E8 /* SharedSequence.swift in Sources */,
 				C811C89E1C24D80100A2DDD4 /* DeallocObservable.swift in Sources */,
 				C8BCD3F21C14B62B005F1280 /* NSView+Rx.swift in Sources */,
 				C8093EE21B8A732E0088E94D /* DelegateProxy.swift in Sources */,
 				C8093EE61B8A732E0088E94D /* Logging.swift in Sources */,
 				C8093EF21B8A732E0088E94D /* NSNotificationCenter+Rx.swift in Sources */,
 				C8093EF81B8A732E0088E94D /* NSURLSession+Rx.swift in Sources */,
-				C80DDE9C1BCE69BA006A1832 /* Driver+Operators.swift in Sources */,
 				C8093F4C1B8A732E0088E94D /* NSSlider+Rx.swift in Sources */,
+				C813987D1D9B21F2004F22E8 /* ControlProperty+Driver.swift in Sources */,
 				C8D132451C42D15E00B59FFF /* SectionedViewDataSourceType.swift in Sources */,
+				C813985A1D9B21E3004F22E8 /* ObservableConvertibleType+SharedSequence.swift in Sources */,
 				C8093EE81B8A732E0088E94D /* ControlTarget.swift in Sources */,
 				C80D33901B91EF9E0014629D /* Observable+Bind.swift in Sources */,
+				C813986E1D9B21E3004F22E8 /* Variable+SharedSequence.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4296,15 +4336,14 @@
 				C8F0C0061BBBFBB9001B112F /* UISlider+Rx.swift in Sources */,
 				C8F0C0071BBBFBB9001B112F /* _RXKVOObserver.m in Sources */,
 				C8F0C0081BBBFBB9001B112F /* UIScrollView+Rx.swift in Sources */,
-				C80DDE9E1BCE69BA006A1832 /* Driver+Operators.swift in Sources */,
 				C8F0C0091BBBFBB9001B112F /* DelegateProxyType.swift in Sources */,
 				C8F0C00A1BBBFBB9001B112F /* RxTarget.swift in Sources */,
 				C8F0C00B1BBBFBB9001B112F /* UITextView+Rx.swift in Sources */,
 				C8F0C00C1BBBFBB9001B112F /* RxTableViewReactiveArrayDataSource.swift in Sources */,
 				C8F0C00D1BBBFBB9001B112F /* RxCollectionViewDataSourceProxy.swift in Sources */,
-				C80DDE9A1BCE69BA006A1832 /* ControlProperty+Driver.swift in Sources */,
-				C80DDE961BCE69BA006A1832 /* ControlEvent+Driver.swift in Sources */,
+				C81398701D9B21E3004F22E8 /* Variable+SharedSequence.swift in Sources */,
 				C8F0C00E1BBBFBB9001B112F /* _RX.m in Sources */,
+				C813986C1D9B21E3004F22E8 /* SharedSequence.swift in Sources */,
 				84C225A51C33F00B008724EC /* RxTextStorageDelegateProxy.swift in Sources */,
 				C8F0C00F1BBBFBB9001B112F /* RxCocoa.swift in Sources */,
 				C8F0C0101BBBFBB9001B112F /* RxTableViewDelegateProxy.swift in Sources */,
@@ -4316,7 +4355,6 @@
 				C8F6A1481BF0B9B2007DF367 /* NSObject+Rx+RawRepresentable.swift in Sources */,
 				C8DB96811BF7496C0084BD53 /* KVORepresentable.swift in Sources */,
 				C8D132471C42D15E00B59FFF /* SectionedViewDataSourceType.swift in Sources */,
-				C849EF8E1C3195950048AC4A /* Variable+Driver.swift in Sources */,
 				C8F0C0161BBBFBB9001B112F /* UITableView+Rx.swift in Sources */,
 				84E4D3941C9AFD3600ADFDC9 /* UISearchController+Rx.swift in Sources */,
 				C8F0C0171BBBFBB9001B112F /* RxCollectionViewReactiveArrayDataSource.swift in Sources */,
@@ -4326,23 +4364,26 @@
 				C8F0C0181BBBFBB9001B112F /* KVOObserver.swift in Sources */,
 				C8F0C01A1BBBFBB9001B112F /* RxCollectionViewDelegateProxy.swift in Sources */,
 				C8F0C01B1BBBFBB9001B112F /* RxScrollViewDelegateProxy.swift in Sources */,
+				C813985C1D9B21E3004F22E8 /* ObservableConvertibleType+SharedSequence.swift in Sources */,
 				C8F0C01C1BBBFBB9001B112F /* UILabel+Rx.swift in Sources */,
 				C8F0C01D1BBBFBB9001B112F /* RxSearchBarDelegateProxy.swift in Sources */,
-				C80DDEAA1BCE69BA006A1832 /* ObservableConvertibleType+Driver.swift in Sources */,
-				C80DDEA21BCE69BA006A1832 /* Driver+Subscription.swift in Sources */,
 				C811C8A01C24D80100A2DDD4 /* DeallocObservable.swift in Sources */,
 				C8BCD3F01C14B5FB005F1280 /* UIView+Rx.swift in Sources */,
 				C8F0C01F1BBBFBB9001B112F /* Observable+Bind.swift in Sources */,
 				C8F0C0201BBBFBB9001B112F /* UISegmentedControl+Rx.swift in Sources */,
 				C8F0C0211BBBFBB9001B112F /* KVOObservable.swift in Sources */,
+				C813988F1D9B21F2004F22E8 /* Variable+Driver.swift in Sources */,
 				C8DB96901BF7595D0084BD53 /* KVORepresentable+Swift.swift in Sources */,
-				C80DDEB41BCE8CA3006A1832 /* Driver+Operators+arity.swift in Sources */,
 				C8F0C0221BBBFBB9001B112F /* UIButton+Rx.swift in Sources */,
-				C80DDEA61BCE69BA006A1832 /* Driver.swift in Sources */,
 				C8F0C0261BBBFBB9001B112F /* _RXDelegateProxy.m in Sources */,
 				C8F0C0271BBBFBB9001B112F /* NSObject+Rx.swift in Sources */,
+				C813987F1D9B21F2004F22E8 /* ControlProperty+Driver.swift in Sources */,
+				C813988B1D9B21F2004F22E8 /* ObservableConvertibleType+Driver.swift in Sources */,
 				9BA1CBFE1C0F84C40044B50A /* UIActivityIndicatorView+Rx.swift in Sources */,
+				C81398681D9B21E3004F22E8 /* SharedSequence+Operators.swift in Sources */,
+				C81398831D9B21F2004F22E8 /* Driver+Subscription.swift in Sources */,
 				842A5A2E1C357F94003568D5 /* NSTextStorage+Rx.swift in Sources */,
+				C813987B1D9B21F2004F22E8 /* ControlEvent+Driver.swift in Sources */,
 				C8F0C0281BBBFBB9001B112F /* RxTextViewDelegateProxy.swift in Sources */,
 				C8F0C0291BBBFBB9001B112F /* UIBarButtonItem+Rx.swift in Sources */,
 				C8C4B4C51C17727000828BD5 /* MessageSentObserver.swift in Sources */,
@@ -4350,6 +4391,7 @@
 				C8F0C02C1BBBFBB9001B112F /* UIDatePicker+Rx.swift in Sources */,
 				C8F0C02D1BBBFBB9001B112F /* RxTableViewDataSourceProxy.swift in Sources */,
 				844BC8AE1CE4FA6600F5C7CB /* RxPickerViewDelegateProxy.swift in Sources */,
+				C81398871D9B21F2004F22E8 /* Driver.swift in Sources */,
 				C8BCD3F71C14B6D1005F1280 /* NSLayoutConstraint+Rx.swift in Sources */,
 				C8F0C0301BBBFBB9001B112F /* UIGestureRecognizer+Rx.swift in Sources */,
 				C8F0C0311BBBFBB9001B112F /* DelegateProxy.swift in Sources */,
@@ -4363,6 +4405,7 @@
 				C8F0C0371BBBFBB9001B112F /* NSNotificationCenter+Rx.swift in Sources */,
 				C8F0C0381BBBFBB9001B112F /* UITextField+Rx.swift in Sources */,
 				C8F0C0391BBBFBB9001B112F /* NSURLSession+Rx.swift in Sources */,
+				C81398601D9B21E3004F22E8 /* SharedSequence+Operators+arity.swift in Sources */,
 				C8F0C03A1BBBFBB9001B112F /* ControlTarget.swift in Sources */,
 				C88F76841CE5341700D5A014 /* TextInput.swift in Sources */,
 				C8F0C03B1BBBFBB9001B112F /* UISearchBar+Rx.swift in Sources */,
@@ -4391,29 +4434,31 @@
 			files = (
 				D203C4F71BB9C53100D02D00 /* RxTableViewDataSourceType.swift in Sources */,
 				D203C50E1BB9C53E00D02D00 /* UISlider+Rx.swift in Sources */,
-				C80DDE9D1BCE69BA006A1832 /* Driver+Operators.swift in Sources */,
 				D2138C8C1BB9BECA00339B5C /* ControlEvent.swift in Sources */,
 				D2138C981BB9BEEE00339B5C /* RxCocoa.swift in Sources */,
 				D2138C991BB9BEEE00339B5C /* RxTarget.swift in Sources */,
 				D203C5081BB9C53E00D02D00 /* UIGestureRecognizer+Rx.swift in Sources */,
 				D2138C931BB9BEDA00339B5C /* NSNotificationCenter+Rx.swift in Sources */,
 				88D98F2F1CE7549A00D50457 /* RxTabBarDelegateProxy.swift in Sources */,
-				C80DDE991BCE69BA006A1832 /* ControlProperty+Driver.swift in Sources */,
 				844BC8B51CE4FD7500F5C7CB /* UIPickerView+Rx.swift in Sources */,
-				C80DDE951BCE69BA006A1832 /* ControlEvent+Driver.swift in Sources */,
 				D203C4F61BB9C52E00D02D00 /* RxCollectionViewDataSourceType.swift in Sources */,
 				88718CFF1CE5D80000D88D60 /* UITabBar+Rx.swift in Sources */,
 				84C225A41C33F00B008724EC /* RxTextStorageDelegateProxy.swift in Sources */,
+				C813985F1D9B21E3004F22E8 /* SharedSequence+Operators+arity.swift in Sources */,
+				C813986B1D9B21E3004F22E8 /* SharedSequence.swift in Sources */,
 				D203C5131BB9C53E00D02D00 /* UITextView+Rx.swift in Sources */,
 				D203C4F41BB9C52400D02D00 /* RxTableViewReactiveArrayDataSource.swift in Sources */,
+				C813988E1D9B21F2004F22E8 /* Variable+Driver.swift in Sources */,
 				D2138C951BB9BEDA00339B5C /* NSObject+Rx.swift in Sources */,
 				7F600F401C5D0C6D00535B1D /* UIRefreshControl+Rx.swift in Sources */,
 				D2138C881BB9BEBE00339B5C /* DelegateProxy.swift in Sources */,
 				D203C5101BB9C53E00D02D00 /* UISwitch+Rx.swift in Sources */,
 				D203C5121BB9C53E00D02D00 /* UITextField+Rx.swift in Sources */,
+				C813987E1D9B21F2004F22E8 /* ControlProperty+Driver.swift in Sources */,
 				C8F6A1471BF0B9B2007DF367 /* NSObject+Rx+RawRepresentable.swift in Sources */,
 				C8DB96801BF7496C0084BD53 /* KVORepresentable.swift in Sources */,
-				C849EF8D1C3195950048AC4A /* Variable+Driver.swift in Sources */,
+				C813988A1D9B21F2004F22E8 /* ObservableConvertibleType+Driver.swift in Sources */,
+				C813985B1D9B21E3004F22E8 /* ObservableConvertibleType+SharedSequence.swift in Sources */,
 				C8D132461C42D15E00B59FFF /* SectionedViewDataSourceType.swift in Sources */,
 				D203C4F31BB9C4CA00D02D00 /* RxCollectionViewReactiveArrayDataSource.swift in Sources */,
 				D203C50B1BB9C53E00D02D00 /* UIScrollView+Rx.swift in Sources */,
@@ -4424,21 +4469,18 @@
 				D203C5031BB9C53E00D02D00 /* UIBarButtonItem+Rx.swift in Sources */,
 				D203C4FC1BB9C53700D02D00 /* RxScrollViewDelegateProxy.swift in Sources */,
 				D2138C8E1BB9BED600339B5C /* ControlTarget.swift in Sources */,
-				C80DDEA91BCE69BA006A1832 /* ObservableConvertibleType+Driver.swift in Sources */,
-				C80DDEA11BCE69BA006A1832 /* Driver+Subscription.swift in Sources */,
 				D2138C891BB9BEBE00339B5C /* DelegateProxyType.swift in Sources */,
 				C88F76831CE5341700D5A014 /* TextInput.swift in Sources */,
+				C813986F1D9B21E3004F22E8 /* Variable+SharedSequence.swift in Sources */,
 				C811C89F1C24D80100A2DDD4 /* DeallocObservable.swift in Sources */,
 				54D213921CE08D0C0028D5B4 /* UINavigationItem+Rx.swift in Sources */,
 				C8BCD3EF1C14B5FB005F1280 /* UIView+Rx.swift in Sources */,
 				D2138C921BB9BED600339B5C /* KVOObserver.swift in Sources */,
 				D2138C831BB9BEBE00339B5C /* _RXKVOObserver.m in Sources */,
 				46307D4F1CDE77D800E47A1C /* UIAlertAction+Rx.swift in Sources */,
-				C80DDEB31BCE8CA3006A1832 /* Driver+Operators+arity.swift in Sources */,
 				C8DB968F1BF7595D0084BD53 /* KVORepresentable+Swift.swift in Sources */,
 				D203C5061BB9C53E00D02D00 /* UIControl+Rx.swift in Sources */,
 				D203C5111BB9C53E00D02D00 /* UITableView+Rx.swift in Sources */,
-				C80DDEA51BCE69BA006A1832 /* Driver.swift in Sources */,
 				D2138C961BB9BEDA00339B5C /* NSURLSession+Rx.swift in Sources */,
 				D203C5051BB9C53E00D02D00 /* UICollectionView+Rx.swift in Sources */,
 				D2138C8D1BB9BECD00339B5C /* ControlProperty.swift in Sources */,
@@ -4455,6 +4497,7 @@
 				D2138C911BB9BED600339B5C /* KVOObservable.swift in Sources */,
 				D203C4FA1BB9C53700D02D00 /* RxCollectionViewDataSourceProxy.swift in Sources */,
 				D2138C7F1BB9BEBE00339B5C /* _RX.m in Sources */,
+				C813987A1D9B21F2004F22E8 /* ControlEvent+Driver.swift in Sources */,
 				91BE429D1CBF7EC000F6B062 /* UIPageControl+Rx.swift in Sources */,
 				D203C4FE1BB9C53700D02D00 /* RxTableViewDataSourceProxy.swift in Sources */,
 				D203C5001BB9C53700D02D00 /* RxTextViewDelegateProxy.swift in Sources */,
@@ -4465,10 +4508,13 @@
 				D2138C811BB9BEBE00339B5C /* _RXDelegateProxy.m in Sources */,
 				9D71C4D21BF08191006E8F59 /* UIButton+Rx.swift in Sources */,
 				D203C4FD1BB9C53700D02D00 /* RxSearchBarDelegateProxy.swift in Sources */,
+				C81398821D9B21F2004F22E8 /* Driver+Subscription.swift in Sources */,
 				D2138C8A1BB9BEBE00339B5C /* Logging.swift in Sources */,
 				7EDBAEBE1C89B9B7006CBE67 /* UITabBarItem+Rx.swift in Sources */,
 				C8DB968A1BF756F40084BD53 /* KVORepresentable+CoreGraphics.swift in Sources */,
+				C81398861D9B21F2004F22E8 /* Driver.swift in Sources */,
 				84E4D3931C9AFD3500ADFDC9 /* UISearchController+Rx.swift in Sources */,
+				C81398671D9B21E3004F22E8 /* SharedSequence+Operators.swift in Sources */,
 				C8FD21B01C67E14C00863EC3 /* UIBindingObserver.swift in Sources */,
 				D203C50F1BB9C53E00D02D00 /* UIStepper+Rx.swift in Sources */,
 			);

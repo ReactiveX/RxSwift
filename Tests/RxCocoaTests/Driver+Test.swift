@@ -251,14 +251,15 @@ extension DriverTest {
 // MARK: conversions
 extension DriverTest {
     func testVariableAsDriver() {
-        let hotObservable = Variable(1)
-        let driver = Driver.zip(hotObservable.asDriver(), Driver.of(0, 0)) { all in
+        var hotObservable: Variable<Int>? = Variable(1)
+        let driver = Driver.zip(hotObservable!.asDriver(), Driver.of(0, 0)) { all in
             return all.0
         }
 
         let results = subscribeTwiceOnBackgroundSchedulerAndOnlyOneSubscription(driver) {
-            hotObservable.value = 1
-            hotObservable.value = 2
+            hotObservable?.value = 1
+            hotObservable?.value = 2
+            hotObservable = nil
         }
 
         XCTAssertEqual(results, [1, 1])
