@@ -62,6 +62,7 @@ extension RxSearchControllerDelegateProxy: TestDelegateProtocol {
 }
 extension RxPickerViewDelegateProxy: TestDelegateProtocol {
 }
+extension RxWebViewDelegateProxy: TestDelegateProtocol {}
 #endif
 
 // MARK: Tests
@@ -133,6 +134,16 @@ extension DelegateProxyTest {
     }
 }
 #endif
+
+// MARK: UIWebView
+#if os(iOS)
+extension DelegateProxyTest {
+    func test_UIWebViewDelegateExtension() {
+        performDelegateTest(UIWebViewSubclass(frame: CGRect.zero))
+    }
+}
+#endif
+
 // MARK: Mocks
 
 class ExtendTableViewDelegateProxy
@@ -463,5 +474,30 @@ class UIPickerViewSubclass
                                                                 onProxyForObject: self)
     }
 }
+
+class UIWebViewSubclass: UIWebView, TestDelegateControl {
+
+    func doThatTest(_ value: Int) {
+        (delegate as! TestDelegateProtocol).testEventHappened?(value)
+    }
+
+    var testSentMessage: Observable<Int> {
+        return rx.delegate
+            .sentMessage(#selector(TestDelegateProtocol.testEventHappened(_:)))
+            .map { a in (a[0] as! NSNumber).intValue }
+    }
+    var testMethodInvoked: Observable<Int> {
+        return rx.delegate
+            .methodInvoked(#selector(TestDelegateProtocol.testEventHappened(_:)))
+            .map { a in (a[0] as! NSNumber).intValue }
+    }
+
+    func setMineForwardDelegate(_ testDelegate: TestDelegateProtocol) -> Disposable {
+        return RxWebViewDelegateProxy.installForwardDelegate(testDelegate,
+                                                             retainDelegate: false,
+                                                             onProxyForObject: self)
+    }
     
+}
+
 #endif

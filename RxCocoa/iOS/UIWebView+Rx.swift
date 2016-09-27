@@ -22,7 +22,7 @@ extension Reactive where Base: UIWebView {
      For more information take a look at `DelegateProxyType` protocol documentation.
      */
     public var delegate: DelegateProxy {
-        return RxSearchControllerDelegateProxy.proxyForObject(base)
+        return RxWebViewDelegateProxy.proxyForObject(base)
     }
     /**
      Reactive wrapper for `delegate` message.
