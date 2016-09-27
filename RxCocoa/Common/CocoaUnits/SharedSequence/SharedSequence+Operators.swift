@@ -1,5 +1,5 @@
 //
-//  Driver+Operators.swift
+//  SharedSequence+Operators.swift
 //  Rx
 //
 //  Created by Krunoslav Zaher on 9/19/15.
@@ -12,7 +12,7 @@ import RxSwift
 #endif
 
 // MARK: map
-extension DriverConvertibleType {
+extension SharedSequenceConvertibleType {
     
     /**
     Projects each element of an observable sequence into a new form.
@@ -21,16 +21,16 @@ extension DriverConvertibleType {
     - returns: An observable sequence whose elements are the result of invoking the transform function on each element of source.
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func map<R>(_ selector: @escaping (E) -> R) -> Driver<R> {
+    public func map<R>(_ selector: @escaping (E) -> R) -> SharedSequence<SharingStrategy, R> {
         let source = self
             .asObservable()
             .map(selector)
-        return Driver<R>(source)
+        return SharedSequence<SharingStrategy, R>(source)
     }
 }
 
 // MARK: filter
-extension DriverConvertibleType {
+extension SharedSequenceConvertibleType {
     /**
     Filters the elements of an observable sequence based on a predicate.
     
@@ -38,16 +38,16 @@ extension DriverConvertibleType {
     - returns: An observable sequence that contains elements from the input sequence that satisfy the condition.
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func filter(_ predicate: @escaping (E) -> Bool) -> Driver<E> {
+    public func filter(_ predicate: @escaping (E) -> Bool) -> SharedSequence<SharingStrategy, E> {
         let source = self
             .asObservable()
             .filter(predicate)
-        return Driver(source)
+        return SharedSequence(source)
     }
 }
 
 // MARK: switchLatest
-extension DriverConvertibleType where E : DriverConvertibleType {
+extension SharedSequenceConvertibleType where E : SharedSequenceConvertibleType, E.SharingStrategy == SharingStrategy {
     
     /**
     Transforms an observable sequence of observable sequences into an observable sequence
@@ -59,17 +59,17 @@ extension DriverConvertibleType where E : DriverConvertibleType {
     - returns: The observable sequence that at any point in time produces the elements of the most recent inner observable sequence that has been received.
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func switchLatest() -> Driver<E.E> {
+    public func switchLatest() -> SharedSequence<SharingStrategy, E.E> {
         let source: Observable<E.E> = self
             .asObservable()
-            .map { $0.asDriver() }
+            .map { $0.asSharedSequence() }
             .switchLatest()
-        return Driver<E.E>(source)
+        return SharedSequence<SharingStrategy, E.E>(source)
     }
 }
 
 // MARK: flatMapLatest
-extension DriverConvertibleType {
+extension SharedSequenceConvertibleType {
     /**
      Projects each element of an observable sequence into a new sequence of observable sequences and then
      transforms an observable sequence of observable sequences into an observable sequence producing values only from the most recent observable sequence.
@@ -81,17 +81,17 @@ extension DriverConvertibleType {
      Observable of Observable sequences and that at any point in time produces the elements of the most recent inner observable sequence that has been received.
      */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func flatMapLatest<R>(_ selector: @escaping (E) -> Driver<R>)
-        -> Driver<R> {
+    public func flatMapLatest<R>(_ selector: @escaping (E) -> SharedSequence<SharingStrategy, R>)
+        -> SharedSequence<SharingStrategy, R> {
         let source: Observable<R> = self
             .asObservable()
             .flatMapLatest(selector)
-        return Driver<R>(source)
+        return SharedSequence<SharingStrategy, R>(source)
     }
 }
 
 // MARK: flatMapFirst
-extension DriverConvertibleType {
+extension SharedSequenceConvertibleType {
 
     /**
      Projects each element of an observable sequence to an observable sequence and merges the resulting observable sequences into one observable sequence.
@@ -101,17 +101,17 @@ extension DriverConvertibleType {
      - returns: An observable sequence whose elements are the result of invoking the one-to-many transform function on each element of the input sequence that was received while no other sequence was being calculated.
      */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func flatMapFirst<R>(_ selector: @escaping (E) -> Driver<R>)
-        -> Driver<R> {
+    public func flatMapFirst<R>(_ selector: @escaping (E) -> SharedSequence<SharingStrategy, R>)
+        -> SharedSequence<SharingStrategy, R> {
         let source: Observable<R> = self
             .asObservable()
             .flatMapFirst(selector)
-        return Driver<R>(source)
+        return SharedSequence<SharingStrategy, R>(source)
     }
 }
 
 // MARK: doOn
-extension DriverConvertibleType {
+extension SharedSequenceConvertibleType {
     
     /**
     Invokes an action for each event in the observable sequence, and propagates all observer messages through the result sequence.
@@ -122,11 +122,11 @@ extension DriverConvertibleType {
     // @warn_unused_result(message:"http://git.io/rxs.uo")
     @available(*, deprecated, renamed: "do(onNext:onError:onCompleted:)")
     public func doOn(_ eventHandler: @escaping (Event<E>) -> Void)
-        -> Driver<E> {
+        -> SharedSequence<SharingStrategy, E> {
         let source = self.asObservable()
             .doOn(eventHandler)
         
-        return Driver(source)
+        return SharedSequence(source)
     }
     
     /**
@@ -140,11 +140,11 @@ extension DriverConvertibleType {
     // @warn_unused_result(message:"http://git.io/rxs.uo")
     @available(*, deprecated, renamed: "do(onNext:onError:onCompleted:)")
     public func doOn(onNext: ((E) -> Void)? = nil, onError: ((Swift.Error) -> Void)? = nil, onCompleted: (() -> Void)? = nil)
-        -> Driver<E> {
+        -> SharedSequence<SharingStrategy, E> {
         let source = self.asObservable()
             .doOn(onNext: onNext, onError: onError, onCompleted: onCompleted)
             
-        return Driver(source)
+        return SharedSequence(source)
     }
 
     /**
@@ -156,7 +156,7 @@ extension DriverConvertibleType {
     // @warn_unused_result(message:"http://git.io/rxs.uo")
     @available(*, deprecated, renamed: "do(onNext:)")
     public func doOnNext(_ onNext: @escaping (E) -> Void)
-        -> Driver<E> {
+        -> SharedSequence<SharingStrategy, E> {
             return self.do(onNext: onNext)
     }
 
@@ -169,7 +169,7 @@ extension DriverConvertibleType {
     // @warn_unused_result(message:"http://git.io/rxs.uo")
     @available(*, deprecated, renamed: "do(onCompleted:)")
     public func doOnCompleted(_ onCompleted: @escaping () -> Void)
-        -> Driver<E> {
+        -> SharedSequence<SharingStrategy, E> {
             return self.do(onCompleted: onCompleted)
     }
 
@@ -185,16 +185,16 @@ extension DriverConvertibleType {
      */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
     public func `do`(onNext: ((E) -> Void)? = nil, onError: ((Swift.Error) -> Void)? = nil, onCompleted: (() -> Void)? = nil, onSubscribe: (() -> ())? = nil, onDispose: (() -> ())? = nil)
-        -> Driver<E> {
+        -> SharedSequence<SharingStrategy, E> {
         let source = self.asObservable()
             .do(onNext: onNext, onError: onError, onCompleted: onCompleted, onSubscribe: onSubscribe, onDispose: onDispose)
 
-        return Driver(source)
+        return SharedSequence(source)
     }
 }
 
 // MARK: debug
-extension DriverConvertibleType {
+extension SharedSequenceConvertibleType {
     
     /**
     Prints received events for all observers on standard output.
@@ -203,15 +203,15 @@ extension DriverConvertibleType {
     - returns: An observable sequence whose events are printed to standard output.
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func debug(_ identifier: String? = nil, file: String = #file, line: UInt = #line, function: String = #function) -> Driver<E> {
+    public func debug(_ identifier: String? = nil, file: String = #file, line: UInt = #line, function: String = #function) -> SharedSequence<SharingStrategy, E> {
         let source = self.asObservable()
             .debug(identifier, file: file, line: line, function: function)
-        return Driver(source)
+        return SharedSequence(source)
     }
 }
 
 // MARK: distinctUntilChanged
-extension DriverConvertibleType where E: Equatable {
+extension SharedSequenceConvertibleType where E: Equatable {
     
     /**
     Returns an observable sequence that contains only distinct contiguous elements according to equality operator.
@@ -220,15 +220,15 @@ extension DriverConvertibleType where E: Equatable {
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
     public func distinctUntilChanged()
-        -> Driver<E> {
+        -> SharedSequence<SharingStrategy, E> {
         let source = self.asObservable()
             .distinctUntilChanged({ $0 }, comparer: { ($0 == $1) })
             
-        return Driver(source)
+        return SharedSequence(source)
     }
 }
 
-extension DriverConvertibleType {
+extension SharedSequenceConvertibleType {
     
     /**
     Returns an observable sequence that contains only distinct contiguous elements according to the `keySelector`.
@@ -237,10 +237,10 @@ extension DriverConvertibleType {
     - returns: An observable sequence only containing the distinct contiguous elements, based on a computed key value, from the source sequence.
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func distinctUntilChanged<K: Equatable>(_ keySelector: @escaping (E) -> K) -> Driver<E> {
+    public func distinctUntilChanged<K: Equatable>(_ keySelector: @escaping (E) -> K) -> SharedSequence<SharingStrategy, E> {
         let source = self.asObservable()
             .distinctUntilChanged(keySelector, comparer: { $0 == $1 })
-        return Driver(source)
+        return SharedSequence(source)
     }
    
     /**
@@ -250,10 +250,10 @@ extension DriverConvertibleType {
     - returns: An observable sequence only containing the distinct contiguous elements, based on `comparer`, from the source sequence.
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func distinctUntilChanged(_ comparer: @escaping (E, E) -> Bool) -> Driver<E> {
+    public func distinctUntilChanged(_ comparer: @escaping (E, E) -> Bool) -> SharedSequence<SharingStrategy, E> {
         let source = self.asObservable()
             .distinctUntilChanged({ $0 }, comparer: comparer)
-        return Driver(source)
+        return SharedSequence<SharingStrategy, E>(source)
     }
     
     /**
@@ -264,16 +264,16 @@ extension DriverConvertibleType {
     - returns: An observable sequence only containing the distinct contiguous elements, based on a computed key value and the comparer, from the source sequence.
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func distinctUntilChanged<K>(_ keySelector: @escaping (E) -> K, comparer: @escaping (K, K) -> Bool) -> Driver<E> {
+    public func distinctUntilChanged<K>(_ keySelector: @escaping (E) -> K, comparer: @escaping (K, K) -> Bool) -> SharedSequence<SharingStrategy, E> {
         let source = self.asObservable()
             .distinctUntilChanged(keySelector, comparer: comparer)
-        return Driver(source)
+        return SharedSequence<SharingStrategy, E>(source)
     }
 }
 
 
 // MARK: flatMap
-extension DriverConvertibleType {
+extension SharedSequenceConvertibleType {
     
     /**
     Projects each element of an observable sequence to an observable sequence and merges the resulting observable sequences into one observable sequence.
@@ -282,16 +282,16 @@ extension DriverConvertibleType {
     - returns: An observable sequence whose elements are the result of invoking the one-to-many transform function on each element of the input sequence.
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func flatMap<R>(_ selector: @escaping (E) -> Driver<R>) -> Driver<R> {
+    public func flatMap<R>(_ selector: @escaping (E) -> SharedSequence<SharingStrategy, R>) -> SharedSequence<SharingStrategy, R> {
         let source = self.asObservable()
             .flatMap(selector)
         
-        return Driver<R>(source)
+        return SharedSequence(source)
     }
 }
 
 // MARK: merge
-extension DriverConvertibleType where E : DriverConvertibleType {
+extension SharedSequenceConvertibleType where E : SharedSequenceConvertibleType, E.SharingStrategy == SharingStrategy {
     
     /**
     Merges elements from all observable sequences in the given enumerable sequence into a single observable sequence.
@@ -300,11 +300,11 @@ extension DriverConvertibleType where E : DriverConvertibleType {
     - returns: The observable sequence that merges the elements of the observable sequences.
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func merge() -> Driver<E.E> {
+    public func merge() -> SharedSequence<SharingStrategy, E.E> {
         let source = self.asObservable()
-            .map { $0.asDriver() }
+            .map { $0.asSharedSequence() }
             .merge()
-        return Driver<E.E>(source)
+        return SharedSequence<SharingStrategy, E.E>(source)
     }
     
     /**
@@ -314,54 +314,55 @@ extension DriverConvertibleType where E : DriverConvertibleType {
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
     public func merge(maxConcurrent: Int)
-        -> Driver<E.E> {
+        -> SharedSequence<SharingStrategy, E.E> {
         let source = self.asObservable()
-            .map { $0.asDriver() }
+            .map { $0.asSharedSequence() }
             .merge(maxConcurrent: maxConcurrent)
-        return Driver<E.E>(source)
+        return SharedSequence<SharingStrategy, E.E>(source)
     }
 }
 
 // MARK: throttle
-extension DriverConvertibleType {
+extension SharedSequenceConvertibleType {
     
     /**
-    Ignores elements from an observable sequence which are followed by another element within a specified relative time duration, using the specified scheduler to run throttling timers.
-    
-    `throttle` and `debounce` are synonyms.
-    
-    - parameter dueTime: Throttling duration for each element.
-    - returns: The throttled sequence.
+     Returns an Observable that emits the first and the latest item emitted by the source Observable during sequential time windows of a specified duration.
+
+     This operator makes sure that no two elements are emitted in less then dueTime.
+
+     - seealso: [debounce operator on reactivex.io](http://reactivex.io/documentation/operators/debounce.html)
+
+     - parameter dueTime: Throttling duration for each element.
+     - parameter latest: Should latest element received in a dueTime wide time window since last element emission be emitted.
+     - returns: The throttled sequence.
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
     public func throttle(_ dueTime: RxTimeInterval)
-        -> Driver<E> {
+        -> SharedSequence<SharingStrategy, E> {
         let source = self.asObservable()
-            .throttle(dueTime, scheduler: driverObserveOnScheduler)
+            .throttle(dueTime, scheduler: SharingStrategy.scheduler)
 
-        return Driver(source)
+        return SharedSequence(source)
     }
 
     /**
     Ignores elements from an observable sequence which are followed by another element within a specified relative time duration, using the specified scheduler to run throttling timers.
-    
-    `throttle` and `debounce` are synonyms.
     
     - parameter dueTime: Throttling duration for each element.
     - returns: The throttled sequence.
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
     public func debounce(_ dueTime: RxTimeInterval)
-        -> Driver<E> {
+        -> SharedSequence<SharingStrategy, E> {
         let source = self.asObservable()
-            .debounce(dueTime, scheduler: driverObserveOnScheduler)
+            .debounce(dueTime, scheduler: SharingStrategy.scheduler)
 
-        return Driver(source)
+        return SharedSequence(source)
     }
 }
 
 // MARK: scan
-extension DriverConvertibleType {
+extension SharedSequenceConvertibleType {
     /**
     Applies an accumulator function over an observable sequence and returns each intermediate result. The specified seed value is used as the initial accumulator value.
     
@@ -373,15 +374,15 @@ extension DriverConvertibleType {
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
     public func scan<A>(_ seed: A, accumulator: @escaping (A, E) -> A)
-        -> Driver<A> {
+        -> SharedSequence<SharingStrategy, A> {
         let source = self.asObservable()
             .scan(seed, accumulator: accumulator)
-        return Driver<A>(source)
+        return SharedSequence<SharingStrategy, A>(source)
     }
 }
 
 // MARK: concat
-extension Sequence where Iterator.Element : DriverConvertibleType {
+extension Sequence where Iterator.Element : SharedSequenceConvertibleType {
 
     /**
     Concatenates all observable sequences in the given sequence, as long as the previous observable sequence terminated successfully.
@@ -389,14 +390,15 @@ extension Sequence where Iterator.Element : DriverConvertibleType {
     - returns: An observable sequence that contains the elements of each given sequence, in sequential order.
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
+    @available(*, deprecated, renamed: "SharingSequence.from()")
     public func concat()
-        -> Driver<Iterator.Element.E> {
-        let source = self.lazy.map { $0.asDriver().asObservable() }.concat()
-        return Driver<Iterator.Element.E>(source)
+        -> SharedSequence<Iterator.Element.SharingStrategy, Iterator.Element.E> {
+        let source = self.lazy.map { $0.asSharedSequence().asObservable() }.concat()
+        return SharedSequence<Iterator.Element.SharingStrategy, Iterator.Element.E>(source)
     }
 }
 
-extension Collection where Iterator.Element : DriverConvertibleType {
+extension Collection where Iterator.Element : SharedSequenceConvertibleType {
 
     /**
      Concatenates all observable sequences in the given sequence, as long as the previous observable sequence terminated successfully.
@@ -405,14 +407,14 @@ extension Collection where Iterator.Element : DriverConvertibleType {
      */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
     public func concat()
-        -> Driver<Generator.Element.E> {
-        let source = self.map { $0.asDriver().asObservable() }.concat()
-        return Driver<Generator.Element.E>(source)
+        -> SharedSequence<Iterator.Element.SharingStrategy, Iterator.Element.E> {
+        let source = self.map { $0.asSharedSequence().asObservable() }.concat()
+        return SharedSequence<Iterator.Element.SharingStrategy, Iterator.Element.E>(source)
     }
 }
 
 // MARK: zip
-extension Collection where Iterator.Element : DriverConvertibleType {
+extension Collection where Iterator.Element : SharedSequenceConvertibleType {
 
     /**
     Merges the specified observable sequences into one observable sequence by using the selector function whenever all of the observable sequences have produced an element at a corresponding index.
@@ -421,14 +423,14 @@ extension Collection where Iterator.Element : DriverConvertibleType {
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func zip<R>(_ resultSelector: @escaping ([Generator.Element.E]) throws -> R) -> Driver<R> {
-        let source = self.map { $0.asDriver().asObservable() }.zip(resultSelector)
-        return Driver<R>(source)
+    public func zip<R>(_ resultSelector: @escaping ([Generator.Element.E]) throws -> R) -> SharedSequence<Generator.Element.SharingStrategy, R> {
+        let source = self.map { $0.asSharedSequence().asObservable() }.zip(resultSelector)
+        return SharedSequence<Generator.Element.SharingStrategy, R>(source)
     }
 }
 
 // MARK: combineLatest
-extension Collection where Iterator.Element : DriverConvertibleType {
+extension Collection where Iterator.Element : SharedSequenceConvertibleType {
 
     /**
     Merges the specified observable sequences into one observable sequence by using the selector function whenever any of the observable sequences produces an element.
@@ -437,14 +439,14 @@ extension Collection where Iterator.Element : DriverConvertibleType {
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func combineLatest<R>(_ resultSelector: @escaping ([Generator.Element.E]) throws -> R) -> Driver<R> {
-        let source = self.map { $0.asDriver().asObservable() }.combineLatest(resultSelector)
-        return Driver<R>(source)
+    public func combineLatest<R>(_ resultSelector: @escaping ([Generator.Element.E]) throws -> R) -> SharedSequence<Generator.Element.SharingStrategy, R> {
+        let source = self.map { $0.asSharedSequence().asObservable() }.combineLatest(resultSelector)
+        return SharedSequence<Generator.Element.SharingStrategy, R>(source)
     }
 }
 
 // MARK: withLatestFrom
-extension DriverConvertibleType {
+extension SharedSequenceConvertibleType {
 
     /**
     Merges two observable sequences into one observable sequence by combining each element from self with the latest element from the second source, if any.
@@ -453,11 +455,11 @@ extension DriverConvertibleType {
     - parameter resultSelector: Function to invoke for each element from the self combined with the latest element from the second source, if any.
     - returns: An observable sequence containing the result of combining each element of the self  with the latest element from the second source, if any, using the specified result selector function.
     */
-    public func withLatestFrom<SecondO: DriverConvertibleType, ResultType>(_ second: SecondO, resultSelector: @escaping (E, SecondO.E) -> ResultType) -> Driver<ResultType> {
+    public func withLatestFrom<SecondO: SharedSequenceConvertibleType, ResultType>(_ second: SecondO, resultSelector: @escaping (E, SecondO.E) -> ResultType) -> SharedSequence<SharingStrategy, ResultType> where SecondO.SharingStrategy == SecondO.SharingStrategy {
         let source = self.asObservable()
-            .withLatestFrom(second.asDriver(), resultSelector: resultSelector)
+            .withLatestFrom(second.asSharedSequence(), resultSelector: resultSelector)
 
-        return Driver<ResultType>(source)
+        return SharedSequence<SharingStrategy, ResultType>(source)
     }
 
     /**
@@ -466,16 +468,16 @@ extension DriverConvertibleType {
     - parameter second: Second observable source.
     - returns: An observable sequence containing the result of combining each element of the self  with the latest element from the second source, if any, using the specified result selector function.
     */
-    public func withLatestFrom<SecondO: DriverConvertibleType>(_ second: SecondO) -> Driver<SecondO.E> {
+    public func withLatestFrom<SecondO: SharedSequenceConvertibleType>(_ second: SecondO) -> SharedSequence<SharingStrategy, SecondO.E> {
         let source = self.asObservable()
-            .withLatestFrom(second.asDriver())
+            .withLatestFrom(second.asSharedSequence())
 
-        return Driver<SecondO.E>(source)
+        return SharedSequence<SharingStrategy, SecondO.E>(source)
     }
 }
 
 // MARK: skip
-extension DriverConvertibleType {
+extension SharedSequenceConvertibleType {
 
     /**
      Bypasses a specified number of elements in an observable sequence and then returns the remaining elements.
@@ -487,15 +489,15 @@ extension DriverConvertibleType {
      */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
     public func skip(_ count: Int)
-        -> Driver<E> {
+        -> SharedSequence<SharingStrategy, E> {
         let source = self.asObservable()
             .skip(count)
-        return Driver(source)
+        return SharedSequence(source)
     }
 }
 
 // MARK: startWith
-extension DriverConvertibleType {
+extension SharedSequenceConvertibleType {
     
     /**
     Prepends a value to an observable sequence.
@@ -507,10 +509,10 @@ extension DriverConvertibleType {
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
     public func startWith(_ element: E)
-        -> Driver<E> {
+        -> SharedSequence<SharingStrategy, E> {
         let source = self.asObservable()
                 .startWith(element)
 
-        return Driver(source)
+        return SharedSequence(source)
     }
 }

@@ -14,7 +14,8 @@ import RxSwift
 private let driverErrorMessage = "`drive*` family of methods can be only called from `MainThread`.\n" +
 "This is required to ensure that the last replayed `Driver` element is delivered on `MainThread`.\n"
 
-extension DriverConvertibleType {
+// This would ideally be Driver, but unfortunatelly Driver can't be extended in Swift 3.0
+extension SharedSequence {
     /**
     Creates new subscription and sends elements to observer.
     This method can be only called from `MainThread`.
