@@ -15,7 +15,7 @@ private let driverErrorMessage = "`drive*` family of methods can be only called 
 "This is required to ensure that the last replayed `Driver` element is delivered on `MainThread`.\n"
 
 // This would ideally be Driver, but unfortunatelly Driver can't be extended in Swift 3.0
-extension SharedSequence {
+extension SharedSequenceConvertibleType where SharingStrategy == DriverSharingStrategy {
     /**
     Creates new subscription and sends elements to observer.
     This method can be only called from `MainThread`.
@@ -28,7 +28,7 @@ extension SharedSequence {
     // @warn_unused_result(message:"http://git.io/rxs.ud")
     public func drive<O: ObserverType>(_ observer: O) -> Disposable where O.E == E {
         MainScheduler.ensureExecutingOnScheduler(errorMessage: driverErrorMessage)
-        return self.asObservable().subscribe(observer)
+        return self.asSharedSequence().asObservable().subscribe(observer)
     }
 
     /**
