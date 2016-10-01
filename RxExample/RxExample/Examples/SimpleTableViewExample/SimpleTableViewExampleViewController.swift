@@ -46,13 +46,6 @@ class SimpleTableViewExampleViewController : ViewController, UITableViewDelegate
             })
             .addDisposableTo(disposeBag)
 
-        // to prevent swipe to delete
-        tableView.rx.setDelegate(self)
-            .addDisposableTo(disposeBag)
     }
 
-    // to prevent swipe to delete behavior
-    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
-        return .none
-    }
 }

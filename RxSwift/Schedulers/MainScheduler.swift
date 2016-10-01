@@ -24,7 +24,10 @@ public final class MainScheduler : SerialDispatchQueueScheduler {
 
     var numberEnqueued: AtomicInt = 0
 
-    private init() {
+    /**
+     Initializes new instance of `MainScheduler`.
+    */
+    public init() {
         _mainQueue = DispatchQueue.main
         super.init(serialQueue: _mainQueue)
     }

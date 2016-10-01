@@ -36,6 +36,7 @@ public class RxTableViewDelegateProxy
         self.tableView = (parentObject as! UITableView)
         super.init(parentObject: parentObject)
     }
+
 }
 
 #endif
