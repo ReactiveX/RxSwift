@@ -57,7 +57,7 @@ func XCTAssertEqual<T>(_ lhs: [T], _ rhs: [T], _ comparison: (T, T) -> Bool) {
     XCTAssertEqual(lhs.count, rhs.count)
     let areEqual = zip(lhs, rhs).reduce(true) { (a: Bool, z: (T, T)) in a && comparison(z.0, z.1) }
     XCTAssertTrue(areEqual)
-    if (!areEqual) {
+    if (!areEqual || lhs.count != rhs.count) {
         print(lhs)
         print(rhs)
     }
