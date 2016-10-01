@@ -11,14 +11,14 @@
 
  General pattern would be:
 
- // 1. Extend Reactive protocol with constrain on Self
- // Read as: Reactive Extension where Self is a SomeType
- extension Reactive where Self: SomeType {
+ // 1. Extend Reactive protocol with constrain on Base
+ // Read as: Reactive Extension where Base is a SomeType
+ extension Reactive where Base: SomeType {
  // 2. Put any specific reactive extension for SomeType here
  }
 
  With this approach we can have more specialized methods and properties using
- `Self` and not just specialized on common base type.
+ `Base` and not just specialized on common base type.
 
  */
 
