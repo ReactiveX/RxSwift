@@ -18,6 +18,8 @@ NSInteger RX_number_of_swizzled_methods();
 
 @protocol SentMessageTestClassCreationProtocol<NSObject>
 +(instancetype __nonnull)createInstance;
+
+@property (nonatomic, copy) void (^ __nonnull invokedMethod)();
 @end
 
 @interface RXObjCTestRuntime : NSObject
@@ -51,6 +53,7 @@ typedef struct some_insanely_large_struct {
 @interface SentMessageTestBase_ ## testName : NSObject<SentMessageTestClassCreationProtocol> { }                                               \
                                                                                                                                                \
 @property (nonatomic, strong, readonly) NSArray<Arguments *> * __nonnull baseMessages;                                                         \
+@property (nonatomic, copy) void (^ __nonnull invokedMethod)();                                                                                \
                                                                                                                                                \
 -(void)voidJustCalledVoidToSay;                                                                                                                \
                                                                                                                                                \

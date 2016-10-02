@@ -81,174 +81,212 @@ static int32_t (^defaultImpl)(int32_t) = ^int32_t(int32_t a) {
                                                                                                                                                \
 -(void)voidJustCalledVoidToSay {                                                                                                               \
     [self.privateBaseMessages addObject:A()];                                                                                                  \
+    self.invokedMethod();                                                                                                                      \
 }                                                                                                                                              \
                                                                                                                                                \
 -(id __nonnull)justCalledObjectToSay:(id __nonnull)value {                                                                                     \
     [self.privateBaseMessages addObject:A(value)];                                                                                             \
+    self.invokedMethod();                                                                                                                      \
     return value;                                                                                                                              \
 }                                                                                                                                              \
                                                                                                                                                \
 -(void)voidJustCalledObjectToSay:(id __nonnull)value {                                                                                         \
     [self.privateBaseMessages addObject:A(value)];                                                                                             \
+    self.invokedMethod();                                                                                                                      \
 }                                                                                                                                              \
                                                                                                                                                \
 -(void)voidJustCalledObjectToSay:(id __nonnull)value object:(id __nonnull)value1 {                                                             \
     [self.privateBaseMessages addObject:A(value, value1)];                                                                                     \
+    self.invokedMethod();                                                                                                                      \
 }                                                                                                                                              \
                                                                                                                                                \
 -(Class __nonnull)justCalledClassToSay:(Class __nonnull)value {                                                                                \
     [self.privateBaseMessages addObject:A(value)];                                                                                             \
+    self.invokedMethod();                                                                                                                      \
     return value;                                                                                                                              \
 }                                                                                                                                              \
                                                                                                                                                \
 -(void)voidJustCalledClassToSay:(Class __nonnull)value {                                                                                       \
     [self.privateBaseMessages addObject:A(value)];                                                                                             \
+    self.invokedMethod();                                                                                                                      \
 }                                                                                                                                              \
                                                                                                                                                \
 -(void (^ __nonnull)() )justCalledClosureToSay:(void (^ __nonnull)())value {                                                                   \
     [self.privateBaseMessages addObject:A(value)];                                                                                             \
+    self.invokedMethod();                                                                                                                      \
     return value;                                                                                                                              \
 }                                                                                                                                              \
                                                                                                                                                \
 -(void)voidJustCalledClosureToSay:(void (^ __nonnull)())value {                                                                                \
     [self.privateBaseMessages addObject:A(value)];                                                                                             \
+    self.invokedMethod();                                                                                                                      \
 }                                                                                                                                              \
                                                                                                                                                \
 -(char)justCalledCharToSay:(char)value {                                                                                                       \
     [self.privateBaseMessages addObject:A(@(value))];                                                                                          \
+    self.invokedMethod();                                                                                                                      \
     return value;                                                                                                                              \
 }                                                                                                                                              \
                                                                                                                                                \
 -(void)voidJustCalledCharToSay:(char)value {                                                                                                   \
     [self.privateBaseMessages addObject:A(@(value))];                                                                                          \
+    self.invokedMethod();                                                                                                                      \
 }                                                                                                                                              \
                                                                                                                                                \
 -(short)justCalledShortToSay:(short)value {                                                                                                    \
     [self.privateBaseMessages addObject:A(@(value))];                                                                                          \
+    self.invokedMethod();                                                                                                                      \
     return value;                                                                                                                              \
 }                                                                                                                                              \
                                                                                                                                                \
 -(void)voidJustCalledShortToSay:(short)value {                                                                                                 \
     [self.privateBaseMessages addObject:A(@(value))];                                                                                          \
+    self.invokedMethod();                                                                                                                      \
 }                                                                                                                                              \
                                                                                                                                                \
 -(int)justCalledIntToSay:(int)value {                                                                                                          \
     [self.privateBaseMessages addObject:A(@(value))];                                                                                          \
+    self.invokedMethod();                                                                                                                      \
     return value;                                                                                                                              \
 }                                                                                                                                              \
                                                                                                                                                \
 -(void)voidJustCalledIntToSay:(int)value {                                                                                                     \
     [self.privateBaseMessages addObject:A(@(value))];                                                                                          \
+    self.invokedMethod();                                                                                                                      \
 }                                                                                                                                              \
                                                                                                                                                \
 -(long)justCalledLongToSay:(long)value {                                                                                                       \
     [self.privateBaseMessages addObject:A(@(value))];                                                                                          \
+    self.invokedMethod();                                                                                                                      \
     return value;                                                                                                                              \
 }                                                                                                                                              \
                                                                                                                                                \
 -(void)voidJustCalledLongToSay:(long)value {                                                                                                   \
     [self.privateBaseMessages addObject:A(@(value))];                                                                                          \
+    self.invokedMethod();                                                                                                                      \
 }                                                                                                                                              \
                                                                                                                                                \
 -(long long)justCalledLongLongToSay:(long long)value {                                                                                         \
     [self.privateBaseMessages addObject:A(@(value))];                                                                                          \
+    self.invokedMethod();                                                                                                                      \
     return value;                                                                                                                              \
 }                                                                                                                                              \
                                                                                                                                                \
 -(void)voidJustCalledLongLongToSay:(long long)value {                                                                                          \
     [self.privateBaseMessages addObject:A(@(value))];                                                                                          \
+    self.invokedMethod();                                                                                                                      \
 }                                                                                                                                              \
                                                                                                                                                \
 -(unsigned char)justCalledUnsignedCharToSay:(unsigned char)value {                                                                             \
     [self.privateBaseMessages addObject:A(@(value))];                                                                                          \
+    self.invokedMethod();                                                                                                                      \
     return value;                                                                                                                              \
 }                                                                                                                                              \
                                                                                                                                                \
 -(void)voidJustCalledUnsignedCharToSay:(unsigned char)value {                                                                                  \
     [self.privateBaseMessages addObject:A(@(value))];                                                                                          \
+    self.invokedMethod();                                                                                                                      \
 }                                                                                                                                              \
                                                                                                                                                \
 -(unsigned short)justCalledUnsignedShortToSay:(unsigned short)value {                                                                          \
     [self.privateBaseMessages addObject:A(@(value))];                                                                                          \
+    self.invokedMethod();                                                                                                                      \
     return value;                                                                                                                              \
 }                                                                                                                                              \
                                                                                                                                                \
 -(void)voidJustCalledUnsignedShortToSay:(unsigned short)value {                                                                                \
     [self.privateBaseMessages addObject:A(@(value))];                                                                                          \
+    self.invokedMethod();                                                                                                                      \
 }                                                                                                                                              \
                                                                                                                                                \
 -(unsigned int)justCalledUnsignedIntToSay:(unsigned int)value {                                                                                \
     [self.privateBaseMessages addObject:A(@(value))];                                                                                          \
+    self.invokedMethod();                                                                                                                      \
     return value;                                                                                                                              \
 }                                                                                                                                              \
                                                                                                                                                \
 -(void)voidJustCalledUnsignedIntToSay:(unsigned int)value {                                                                                    \
     [self.privateBaseMessages addObject:A(@(value))];                                                                                          \
+    self.invokedMethod();                                                                                                                      \
 }                                                                                                                                              \
                                                                                                                                                \
 -(unsigned long)justCalledUnsignedLongToSay:(unsigned long)value {                                                                             \
     [self.privateBaseMessages addObject:A(@(value))];                                                                                          \
+    self.invokedMethod();                                                                                                                      \
     return value;                                                                                                                              \
 }                                                                                                                                              \
                                                                                                                                                \
 -(void)voidJustCalledUnsignedLongToSay:(unsigned long)value {                                                                                  \
     [self.privateBaseMessages addObject:A(@(value))];                                                                                          \
+    self.invokedMethod();                                                                                                                      \
 }                                                                                                                                              \
                                                                                                                                                \
 -(unsigned long long)justCalledUnsignedLongLongToSay:(unsigned long long)value {                                                               \
     [self.privateBaseMessages addObject:A(@(value))];                                                                                          \
+    self.invokedMethod();                                                                                                                      \
     return value;                                                                                                                              \
 }                                                                                                                                              \
                                                                                                                                                \
 -(void)voidJustCalledUnsignedLongLongToSay:(unsigned long long)value {                                                                         \
     [self.privateBaseMessages addObject:A(@(value))];                                                                                          \
+    self.invokedMethod();                                                                                                                      \
 }                                                                                                                                              \
                                                                                                                                                \
 -(float)justCalledFloatToSay:(float)value {                                                                                                    \
     [self.privateBaseMessages addObject:A(@(value))];                                                                                          \
+    self.invokedMethod();                                                                                                                      \
     return value;                                                                                                                              \
 }                                                                                                                                              \
                                                                                                                                                \
 -(void)voidJustCalledFloatToSay:(float)value {                                                                                                 \
     [self.privateBaseMessages addObject:A(@(value))];                                                                                          \
+    self.invokedMethod();                                                                                                                      \
 }                                                                                                                                              \
                                                                                                                                                \
 -(double)justCalledDoubleToSay:(double)value {                                                                                                 \
     [self.privateBaseMessages addObject:A(@(value))];                                                                                          \
+    self.invokedMethod();                                                                                                                      \
     return value;                                                                                                                              \
 }                                                                                                                                              \
                                                                                                                                                \
 -(void)voidJustCalledDoubleToSay:(double)value {                                                                                               \
     [self.privateBaseMessages addObject:A(@(value))];                                                                                          \
+    self.invokedMethod();                                                                                                                      \
 }                                                                                                                                              \
                                                                                                                                                \
 -(BOOL)justCalledBoolToSay:(BOOL)value {                                                                                                       \
     [self.privateBaseMessages addObject:A(@(value))];                                                                                          \
+    self.invokedMethod();                                                                                                                      \
     return value;                                                                                                                              \
 }                                                                                                                                              \
                                                                                                                                                \
 -(void)voidJustCalledBoolToSay:(BOOL)value {                                                                                                   \
     [self.privateBaseMessages addObject:A(@(value))];                                                                                          \
+    self.invokedMethod();                                                                                                                      \
 }                                                                                                                                              \
                                                                                                                                                \
 -(const char * __nonnull)justCalledConstCharToSay:(const char * __nonnull)value {                                                              \
     [self.privateBaseMessages addObject:A([NSValue valueWithPointer:value])];                                                                  \
+    self.invokedMethod();                                                                                                                      \
     return value;                                                                                                                              \
 }                                                                                                                                              \
                                                                                                                                                \
 -(void)voidJustCalledConstCharToSay:(const char * __nonnull)value {                                                                            \
     [self.privateBaseMessages addObject:A([NSValue valueWithPointer:value])];                                                                  \
+    self.invokedMethod();                                                                                                                      \
 }                                                                                                                                              \
                                                                                                                                                \
 -(NSInteger)justCalledLargeToSay:(some_insanely_large_struct_t)value {                                                                         \
     [self.privateBaseMessages addObject:A([NSValue valueWithBytes:&value                                                                       \
                                                                         objCType:@encode(some_insanely_large_struct_t)])];                     \
+    self.invokedMethod();                                                                                                                      \
     return value.a[0] + value.a[1] + value.a[2] + value.a[3] + value.a[4] + value.a[5] + value.a[6] + value.a[7];                              \
 }                                                                                                                                              \
                                                                                                                                                \
 -(void)voidJustCalledLargeToSay:(some_insanely_large_struct_t)value {                                                                          \
     [self.privateBaseMessages addObject:A([NSValue valueWithBytes:&value                                                                       \
                                                       objCType:@encode(some_insanely_large_struct_t)])];                                       \
+    self.invokedMethod();                                                                                                                      \
 }                                                                                                                                              \
                                                                                                                                                \
 -(NSInteger)message_allSupportedParameters:(id __nullable)p1                                                                                   \
@@ -285,12 +323,14 @@ static int32_t (^defaultImpl)(int32_t) = ^int32_t(int32_t a) {
         [NSValue valueWithPointer:p15],                                                                                                        \
         [NSValue valueWithBytes:&p16 objCType:@encode(some_insanely_large_struct_t)],                                                          \
     )];                                                                                                                                        \
+    self.invokedMethod();                                                                                                                      \
     return -5;                                                                                                                                 \
 }                                                                                                                                              \
                                                                                                                                                \
                                                                                                                                                \
 -(some_insanely_large_struct_t)hugeResult {                                                                                                    \
     some_insanely_large_struct_t huge = {};                                                                                                    \
+    self.invokedMethod();                                                                                                                      \
     return huge;                                                                                                                               \
 }                                                                                                                                              \
                                                                                                                                                \

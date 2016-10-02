@@ -119,7 +119,7 @@ extension Reactive where Base: AnyObject {
     /**
      Observable sequence of message arguments that completes when object is deallocated.
      
-     Each element is produced before message is invoked on target object. `invokedMessage`
+     Each element is produced before message is invoked on target object. `methodInvoked`
      exists in case observing of invoked messages is needed.
 
      In case an error occurs sequence will fail with `RxCocoaObjCRuntimeError`.
@@ -157,7 +157,7 @@ extension Reactive where Base: AnyObject {
 
      - returns: Observable sequence of object deallocating events.
      */
-    public func invokedMessage(_ selector: Selector) -> Observable<[Any]> {
+    public func methodInvoked(_ selector: Selector) -> Observable<[Any]> {
         return synchronized {
             // in case of dealloc selector replay subject behavior needs to be used
             if selector == deallocSelector {
@@ -167,7 +167,7 @@ extension Reactive where Base: AnyObject {
 
             do {
                 let proxy: MessageSentProxy = try registerMessageInterceptor(selector)
-                return proxy.messageInvoked.asObservable()
+                return proxy.methodInvoked.asObservable()
             }
             catch let e {
                 return Observable.error(e)
@@ -248,7 +248,7 @@ extension Reactive where Base: AnyObject {
 
     fileprivate final class DeallocatingProxy
         : MessageInterceptorSubject
-        , RXMessageSentObserver {
+        , RXDeallocatingObserver {
         typealias E = ()
 
         let messageSent = ReplaySubject<()>.create(bufferSize: 1)
@@ -262,7 +262,7 @@ extension Reactive where Base: AnyObject {
         init() {
         }
 
-        @objc func messageSent(withParameters parameters: [Any]) -> Void {
+        @objc func deallocating() -> Void {
             messageSent.on(.next())
         }
 
@@ -277,7 +277,7 @@ extension Reactive where Base: AnyObject {
         typealias E = [AnyObject]
 
         let messageSent = PublishSubject<[Any]>()
-        let messageInvoked = PublishSubject<[Any]>()
+        let methodInvoked = PublishSubject<[Any]>()
 
         @objc var targetImplementation: IMP = RX_default_target_implementation()
 
@@ -288,17 +288,17 @@ extension Reactive where Base: AnyObject {
         init() {
         }
 
-        @objc func messageSent(withParameters parameters: [Any]) -> Void {
-            messageSent.on(.next(parameters))
+        @objc func messageSent(withArguments arguments: [Any]) -> Void {
+            messageSent.on(.next(arguments))
         }
 
-        @objc func invokedMessage(withParameters parameters: [Any]) -> Void {
-            messageInvoked.on(.next(parameters))
+        @objc func methodInvoked(withArguments arguments: [Any]) -> Void {
+            methodInvoked.on(.next(arguments))
         }
 
         deinit {
             messageSent.on(.completed)
-            messageInvoked.on(.completed)
+            methodInvoked.on(.completed)
         }
     }
 

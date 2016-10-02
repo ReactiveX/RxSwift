@@ -80,7 +80,23 @@ void * __nonnull RX_reference_from_selector(SEL __nonnull selector);
  */
 @property (nonatomic, assign, readonly) IMP __nonnull targetImplementation;
 
--(void)messageSentWithParameters:(NSArray* __nonnull)parameters;
+-(void)messageSentWithArguments:(NSArray* __nonnull)arguments;
+-(void)methodInvokedWithArguments:(NSArray* __nonnull)arguments;
+
+@end
+
+/**
+ Protocol that deallocating observer must implement.
+ */
+@protocol RXDeallocatingObserver
+
+/**
+ In case the same selector is being intercepted for a pair of base/sub classes,
+ this property will differentiate between interceptors that need to fire.
+ */
+@property (nonatomic, assign, readonly) IMP __nonnull targetImplementation;
+
+-(void)deallocating;
 
 @end
 
