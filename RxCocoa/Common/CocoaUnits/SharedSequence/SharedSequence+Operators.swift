@@ -382,6 +382,33 @@ extension SharedSequenceConvertibleType {
 }
 
 // MARK: concat
+
+extension SharedSequence {
+    /**
+     Concatenates all observable sequences in the given sequence, as long as the previous observable sequence terminated successfully.
+
+     - returns: An observable sequence that contains the elements of each given sequence, in sequential order.
+     */
+    // @warn_unused_result(message:"http://git.io/rxs.uo")
+    public static func concat<S: Sequence>(_ sequence: S) -> SharedSequence<SharingStrategy, Element>
+        where S.Iterator.Element == SharedSequence<SharingStrategy, Element> {
+            let source = Observable.concat(sequence.lazy.map { $0.asObservable() })
+            return SharedSequence<SharingStrategy, Element>(source)
+    }
+
+    /**
+     Concatenates all observable sequences in the given sequence, as long as the previous observable sequence terminated successfully.
+
+     - returns: An observable sequence that contains the elements of each given sequence, in sequential order.
+     */
+    // @warn_unused_result(message:"http://git.io/rxs.uo")
+    public static func concat<C: Collection>(_ collection: C) -> SharedSequence<SharingStrategy, Element>
+        where C.Iterator.Element == SharedSequence<SharingStrategy, Element> {
+        let source = Observable.concat(collection.map { $0.asObservable() })
+        return SharedSequence<SharingStrategy, Element>(source)
+    }
+}
+
 extension Sequence where Iterator.Element : SharedSequenceConvertibleType {
 
     /**
@@ -415,6 +442,21 @@ extension Collection where Iterator.Element : SharedSequenceConvertibleType {
 }
 
 // MARK: zip
+
+extension SharedSequence {
+    /**
+     Merges the specified observable sequences into one observable sequence by using the selector function whenever all of the observable sequences have produced an element at a corresponding index.
+
+     - parameter resultSelector: Function to invoke for each series of elements at corresponding indexes in the sources.
+     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
+     */
+    public static func zip<C: Collection, R>(_ collection: C, _ resultSelector: @escaping ([Element]) throws -> R) -> SharedSequence<SharingStrategy, R>
+        where C.Iterator.Element == SharedSequence<SharingStrategy, Element> {
+        let source = Observable.zip(collection.map { $0.asSharedSequence().asObservable() }, resultSelector)
+        return SharedSequence<SharingStrategy, R>(source)
+    }
+}
+
 extension Collection where Iterator.Element : SharedSequenceConvertibleType {
 
     /**
@@ -424,7 +466,7 @@ extension Collection where Iterator.Element : SharedSequenceConvertibleType {
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    @available(*, deprecated, renamed: "SharingSequence.zip()")
+    @available(*, deprecated, renamed: "SharedSequence.zip()")
     public func zip<R>(_ resultSelector: @escaping ([Generator.Element.E]) throws -> R) -> SharedSequence<Generator.Element.SharingStrategy, R> {
         let source = self.map { $0.asSharedSequence().asObservable() }.zip(resultSelector)
         return SharedSequence<Generator.Element.SharingStrategy, R>(source)
@@ -432,6 +474,22 @@ extension Collection where Iterator.Element : SharedSequenceConvertibleType {
 }
 
 // MARK: combineLatest
+
+extension SharedSequence {
+    /**
+     Merges the specified observable sequences into one observable sequence by using the selector function whenever any of the observable sequences produces an element.
+
+     - parameter resultSelector: Function to invoke whenever any of the sources produces an element.
+     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
+     */
+    // @warn_unused_result(message:"http://git.io/rxs.uo")
+    public static func combineLatest<C: Collection, R>(_ collection: C, _ resultSelector: @escaping ([Element]) throws -> R) -> SharedSequence<SharingStrategy, R>
+        where C.Iterator.Element == SharedSequence<SharingStrategy, Element> {
+        let source = Observable.combineLatest(collection.map { $0.asObservable() }, resultSelector)
+        return SharedSequence<SharingStrategy, R>(source)
+    }
+}
+
 extension Collection where Iterator.Element : SharedSequenceConvertibleType {
 
     /**
@@ -441,15 +499,11 @@ extension Collection where Iterator.Element : SharedSequenceConvertibleType {
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    @available(*, deprecated, renamed: "SharingSequence.zip()")
+    @available(*, deprecated, renamed: "SharingSequence.combineLatest()")
     public func combineLatest<R>(_ resultSelector: @escaping ([Generator.Element.E]) throws -> R) -> SharedSequence<Generator.Element.SharingStrategy, R> {
         let source = self.map { $0.asSharedSequence().asObservable() }.combineLatest(resultSelector)
         return SharedSequence<Generator.Element.SharingStrategy, R>(source)
     }
-}
-
-extension SharedSequence {
-
 }
 
 // MARK: withLatestFrom

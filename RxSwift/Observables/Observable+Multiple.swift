@@ -10,6 +10,22 @@ import Foundation
 
 // MARK: combineLatest
 
+extension Observable {
+    /**
+     Merges the specified observable sequences into one observable sequence by using the selector function whenever any of the observable sequences produces an element.
+
+     - seealso: [combinelatest operator on reactivex.io](http://reactivex.io/documentation/operators/combinelatest.html)
+
+     - parameter resultSelector: Function to invoke whenever any of the sources produces an element.
+     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
+     */
+    // @warn_unused_result(message:"http://git.io/rxs.uo")
+    public static func combineLatest<C: Collection>(_ collection: C, _ resultSelector: @escaping ([C.Iterator.Element.E]) throws -> Element) -> Observable<Element>
+        where C.Iterator.Element: ObservableType {
+        return CombineLatestCollectionType(sources: collection, resultSelector: resultSelector)
+    }
+}
+
 extension Collection where Iterator.Element : ObservableType {
     
     /**
@@ -21,12 +37,29 @@ extension Collection where Iterator.Element : ObservableType {
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
+    @available(*, deprecated, renamed: "Observable.combineLatest()")
     public func combineLatest<R>(_ resultSelector: @escaping ([Generator.Element.E]) throws -> R) -> Observable<R> {
         return CombineLatestCollectionType(sources: self, resultSelector: resultSelector)
     }
 }
 
 // MARK: zip
+
+extension Observable {
+    /**
+     Merges the specified observable sequences into one observable sequence by using the selector function whenever all of the observable sequences have produced an element at a corresponding index.
+
+     - seealso: [zip operator on reactivex.io](http://reactivex.io/documentation/operators/zip.html)
+
+     - parameter resultSelector: Function to invoke for each series of elements at corresponding indexes in the sources.
+     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
+     */
+    // @warn_unused_result(message:"http://git.io/rxs.uo")
+    public static func zip<C: Collection>(_ collection: C, _ resultSelector: @escaping ([C.Iterator.Element.E]) throws -> Element) -> Observable<Element>
+    where C.Iterator.Element: ObservableType {
+        return ZipCollectionType(sources: collection, resultSelector: resultSelector)
+    }
+}
 
 extension Collection where Iterator.Element : ObservableType {
     
@@ -39,6 +72,7 @@ extension Collection where Iterator.Element : ObservableType {
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
+    @available(*, deprecated, renamed: "Observable.zip()")
     public func zip<R>(_ resultSelector: @escaping ([Generator.Element.E]) throws -> R) -> Observable<R> {
         return ZipCollectionType(sources: self, resultSelector: resultSelector)
     }
@@ -79,7 +113,47 @@ extension ObservableType {
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
     public func concat<O: ObservableConvertibleType>(_ second: O) -> Observable<E> where O.E == E {
-        return [self.asObservable(), second.asObservable()].concat()
+        return Observable.concat([self.asObservable(), second.asObservable()])
+    }
+}
+
+extension Observable {
+    /**
+     Concatenates all observable sequences in the given sequence, as long as the previous observable sequence terminated successfully.
+
+     This operator has tail recursive optimizations that will prevent stack overflow.
+
+     Optimizations will be performed in cases equivalent to following:
+
+     [1, [2, [3, .....].concat()].concat].concat()
+
+     - seealso: [concat operator on reactivex.io](http://reactivex.io/documentation/operators/concat.html)
+
+     - returns: An observable sequence that contains the elements of each given sequence, in sequential order.
+     */
+    // @warn_unused_result(message:"http://git.io/rxs.uo")
+    public static func concat<S: Sequence >(_ sequence: S) -> Observable<Element>
+        where S.Iterator.Element == Observable<Element> {
+            return Concat(sources: sequence, count: nil)
+    }
+
+    /**
+     Concatenates all observable sequences in the given collection, as long as the previous observable sequence terminated successfully.
+
+     This operator has tail recursive optimizations that will prevent stack overflow.
+
+     Optimizations will be performed in cases equivalent to following:
+
+     [1, [2, [3, .....].concat()].concat].concat()
+
+     - seealso: [concat operator on reactivex.io](http://reactivex.io/documentation/operators/concat.html)
+
+     - returns: An observable sequence that contains the elements of each given sequence, in sequential order.
+     */
+    // @warn_unused_result(message:"http://git.io/rxs.uo")
+    public static func concat<S: Collection >(_ collection: S) -> Observable<Element>
+        where S.Iterator.Element == Observable<Element> {
+            return Concat(sources: collection, count: collection.count.toIntMax())
     }
 }
 
@@ -99,6 +173,7 @@ extension Sequence where Iterator.Element : ObservableType {
     - returns: An observable sequence that contains the elements of each given sequence, in sequential order.
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
+    @available(*, deprecated, renamed: "Observable.concat()")
     public func concat()
         -> Observable<Iterator.Element.E> {
         return Concat(sources: self, count: nil)
@@ -122,6 +197,7 @@ extension Collection where Iterator.Element : ObservableType {
     - returns: An observable sequence that contains the elements of each given sequence, in sequential order.
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
+    @available(*, deprecated, renamed: "Observable.concat()")
     public func concat()
         -> Observable<Generator.Element.E> {
         return Concat(sources: self, count: self.count.toIntMax())
@@ -208,6 +284,21 @@ extension ObservableType {
     
 }
 
+extension Observable {
+    /**
+     Continues an observable sequence that is terminated by an error with the next observable sequence.
+
+     - seealso: [catch operator on reactivex.io](http://reactivex.io/documentation/operators/catch.html)
+
+     - returns: An observable sequence containing elements from consecutive source sequences until a source sequence terminates successfully.
+     */
+    // @warn_unused_result(message:"http://git.io/rxs.uo")
+    public static func catchError<S: Sequence>(_ sequence: S) -> Observable<Element>
+        where S.Iterator.Element == Observable<Element> {
+        return CatchSequence(sources: sequence)
+    }
+}
+
 extension Sequence where Iterator.Element : ObservableType {
     /**
     Continues an observable sequence that is terminated by an error with the next observable sequence.
@@ -217,6 +308,7 @@ extension Sequence where Iterator.Element : ObservableType {
     - returns: An observable sequence containing elements from consecutive source sequences until a source sequence terminates successfully.
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
+    @available(*, deprecated, renamed: "Observable.catchError()")
     public func catchError()
         -> Observable<Iterator.Element.E> {
         return CatchSequence(sources: self)
@@ -281,6 +373,23 @@ extension ObservableType {
     }
 }
 
+extension Observable {
+    /**
+     Propagates the observable sequence that reacts first.
+
+     - seealso: [amb operator on reactivex.io](http://reactivex.io/documentation/operators/amb.html)
+
+     - returns: An observable sequence that surfaces any of the given sequences, whichever reacted first.
+     */
+    // @warn_unused_result(message:"http://git.io/rxs.uo")
+    public static func amb<S: Sequence>(_ sequence: S) -> Observable<Element>
+        where S.Iterator.Element == Observable<Element> {
+        return sequence.reduce(Observable<S.Iterator.Element.E>.never()) { a, o in
+            return a.amb(o.asObservable())
+        }
+    }
+}
+
 extension Sequence where Iterator.Element : ObservableType {
     
     /**
@@ -291,6 +400,7 @@ extension Sequence where Iterator.Element : ObservableType {
     - returns: An observable sequence that surfaces any of the given sequences, whichever reacted first.
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
+    @available(*, deprecated, renamed: "Observable.amb()")
     public func amb()
         -> Observable<Iterator.Element.E> {
         return self.reduce(Observable.never()) { a, o in

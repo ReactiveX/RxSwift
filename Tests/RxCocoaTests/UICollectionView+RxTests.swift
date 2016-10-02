@@ -262,6 +262,7 @@ extension UICollectionViewTests {
 
         var collectionViewOuter: UICollectionView? = nil
         var dataSourceSubscription: Disposable!
+        collectionViewOuter?.becomeFirstResponder()
         autoreleasepool {
             let items: Observable<[Int]> = Observable.just([1, 2, 3])
 

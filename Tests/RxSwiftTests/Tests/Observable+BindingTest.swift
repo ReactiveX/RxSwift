@@ -216,7 +216,7 @@ extension ObservableBindingTest {
         
         var nEvents = 0
         
-        let observable = TestConnectableObservable(o: [Observable.of(0, 1, 2), Observable.error(testError)].concat(), s: subject)
+        let observable = TestConnectableObservable(o: Observable.concat([Observable.of(0, 1, 2), Observable.error(testError)]), s: subject)
         let d = observable.subscribe(onError: { n in
             nEvents += 1
         })
@@ -1125,7 +1125,7 @@ extension ObservableBindingTest {
         _testIdenticalBehaviorOfShareReplayOptimizedAndComposed { transform in
             var nEvents = 0
 
-            let observable = transform([Observable.of(0, 1, 2), Observable.error(testError)].concat())
+            let observable = transform(Observable.concat([Observable.of(0, 1, 2), Observable.error(testError)]))
             _ = observable.subscribe(onError: { n in
                 nEvents += 1
             })
@@ -1429,7 +1429,7 @@ extension ObservableBindingTest {
     func testShareReplayLatestWhileConnected_DeadlockErrorAfterN() {
         var nEvents = 0
 
-        let observable = [Observable.of(0, 1, 2), Observable.error(testError)].concat().shareReplayLatestWhileConnected()
+        let observable = Observable.concat([Observable.of(0, 1, 2), Observable.error(testError)]).shareReplayLatestWhileConnected()
         _ = observable.subscribe(onError: { n in
             nEvents += 1
         })
