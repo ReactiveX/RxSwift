@@ -1092,4 +1092,4 @@ public func ==(lhs: some_insanely_large_struct, rhs: some_insanely_large_struct)
     return lhs.some_large_text == rhs.some_large_text && lhs.next == rhs.next
 }
 
-typealias MethodParameters = [AnyObject]
+typealias MethodParameters = [Any]
