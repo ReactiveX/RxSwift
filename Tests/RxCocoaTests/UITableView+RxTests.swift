@@ -485,4 +485,29 @@ extension UITableViewTests {
         XCTAssertFalse(tableView.dataSource!.responds(to: #selector(UITableViewDataSource.tableView(_:commit:forRowAt:))))
         XCTAssertEqual(setDataSources, [tableView.dataSource, nil, tableView.dataSource, nil, tableView.dataSource]) { $0 === $1 }
     }
+
+
+    func testDataSource_commitForRowAt_respondsWhenDataSourceImplementsCommitForRowAt() {
+        let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "a")
+
+        let dataSource = TableViewDataSourceThatImplementsCommitForRowAt()
+        _ = tableView.rx.setDataSource(dataSource)
+
+        XCTAssertTrue((tableView.dataSource! as! UITableViewDataSource).responds(to: #selector(UITableViewDataSource.tableView(_:commit:forRowAt:))))
+    }
+}
+
+@objc class TableViewDataSourceThatImplementsCommitForRowAt: NSObject, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        arc4random_stir()
+    }
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 0
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        return UITableViewCell()
+    }
 }

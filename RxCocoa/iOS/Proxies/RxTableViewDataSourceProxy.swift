@@ -158,8 +158,11 @@ public class RxTableViewDataSourceProxy
 
     override open func responds(to aSelector: Selector!) -> Bool {
         // https://github.com/ReactiveX/RxSwift/issues/907
-        if aSelector == #selector(UITableViewDataSource.tableView(_:commit:forRowAt:)) {
-            return _commitForRowAtHasObservers
+        let commitForRowAtSelector = #selector(UITableViewDataSource.tableView(_:commit:forRowAt:))
+        if aSelector == commitForRowAtSelector {
+            // without `as? UITableViewDataSource` `responds(to:)` fails, 🍻 compiler team
+            let forwardDelegateResponds = (self.forwardToDelegate() as? UITableViewDataSource)?.responds(to: commitForRowAtSelector) ?? false
+            return _commitForRowAtHasObservers || forwardDelegateResponds
         }
 
         return super.responds(to: aSelector)
