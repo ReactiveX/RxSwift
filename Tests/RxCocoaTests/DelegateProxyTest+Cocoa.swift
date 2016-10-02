@@ -51,9 +51,15 @@ class NSTextFieldSubclass
         (delegate as! NSTextFieldDelegateSubclass).testEventHappened?(value)
     }
 
-    var test: Observable<Int> {
+    var testSentMessage: Observable<Int> {
         return rx.delegate
-            .observe(#selector(NSTextFieldDelegateSubclass.testEventHappened(_:)))
+            .sentMessage(#selector(NSTextFieldDelegateSubclass.testEventHappened(_:)))
+            .map { a in (a[0] as! NSNumber).intValue }
+    }
+
+    var testMethodInvoked: Observable<Int> {
+        return rx.delegate
+            .methodInvoked(#selector(NSTextFieldDelegateSubclass.testEventHappened(_:)))
             .map { a in (a[0] as! NSNumber).intValue }
     }
 
