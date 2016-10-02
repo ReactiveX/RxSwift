@@ -31,7 +31,7 @@ open class DelegateProxy : _RXDelegateProxy {
     
     /**
     Initializes new instance.
-    
+
     - parameter parentObject: Optional parent object that owns `DelegateProxy` as associated object.
     */
     public required init(parentObject: AnyObject) {
@@ -45,7 +45,7 @@ open class DelegateProxy : _RXDelegateProxy {
     }
 
     /**
-    Returns observable sequence of invocations of delegate methods.
+    Returns observable sequence of invocations of delegate methods. Elements are sent *before method is invoked*.
 
     Only methods that have `void` return value can be observed using this method because
      those methods are used as a notification mechanism. It doesn't matter if they are optional
@@ -102,7 +102,7 @@ open class DelegateProxy : _RXDelegateProxy {
     }
 
     /**
-     Returns observable sequence of invoked delegate methods.
+     Returns observable sequence of invoked delegate methods. Elements are sent *after method is invoked*.
 
     Only methods that have `void` return value can be observed using this method because
      those methods are used as a notification mechanism. It doesn't matter if they are optional
@@ -176,7 +176,7 @@ open class DelegateProxy : _RXDelegateProxy {
         }
     }
 
-    @available(*, deprecated, renamed: "sentMessage")
+    @available(*, deprecated, renamed: "methodInvoked")
     open func observe(_ selector: Selector) -> Observable<[Any]> {
         return sentMessage(selector)
     }

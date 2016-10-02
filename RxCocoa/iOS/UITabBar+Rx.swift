@@ -25,7 +25,7 @@ extension Reactive where Base: UITabBar {
     */
     public var willBeginCustomizing: ControlEvent<[UITabBarItem]> {
         
-        let source = delegate.sentMessage(#selector(UITabBarDelegate.tabBar(_:willBeginCustomizing:)))
+        let source = delegate.methodInvoked(#selector(UITabBarDelegate.tabBar(_:willBeginCustomizing:)))
             .map { a in
                 return try castOrThrow([UITabBarItem].self, a[1])
             }
@@ -37,7 +37,7 @@ extension Reactive where Base: UITabBar {
      Reactive wrapper for `delegate` message `tabBar:didBeginCustomizingItems:`.
     */
     public var didBeginCustomizing: ControlEvent<[UITabBarItem]> {
-        let source = delegate.sentMessage(#selector(UITabBarDelegate.tabBar(_:didBeginCustomizing:)))
+        let source = delegate.methodInvoked(#selector(UITabBarDelegate.tabBar(_:didBeginCustomizing:)))
             .map { a in
                 return try castOrThrow([UITabBarItem].self, a[1])
             }
@@ -49,7 +49,7 @@ extension Reactive where Base: UITabBar {
      Reactive wrapper for `delegate` message `tabBar:willEndCustomizingItems:changed:`.
     */
     public var willEndCustomizing: ControlEvent<([UITabBarItem], Bool)> {
-        let source = delegate.sentMessage(#selector(UITabBarDelegate.tabBar(_:willEndCustomizing:changed:)))
+        let source = delegate.methodInvoked(#selector(UITabBarDelegate.tabBar(_:willEndCustomizing:changed:)))
             .map { (a: [Any]) -> (([UITabBarItem], Bool)) in
                 let items = try castOrThrow([UITabBarItem].self, a[1])
                 let changed = try castOrThrow(Bool.self, a[2])
@@ -63,7 +63,7 @@ extension Reactive where Base: UITabBar {
      Reactive wrapper for `delegate` message `tabBar:didEndCustomizingItems:changed:`.
     */
     public var didEndCustomizing: ControlEvent<([UITabBarItem], Bool)> {
-        let source = delegate.sentMessage(#selector(UITabBarDelegate.tabBar(_:didEndCustomizing:changed:)))
+        let source = delegate.methodInvoked(#selector(UITabBarDelegate.tabBar(_:didEndCustomizing:changed:)))
             .map { (a: [Any]) -> (([UITabBarItem], Bool)) in
                 let items = try castOrThrow([UITabBarItem].self, a[1])
                 let changed = try castOrThrow(Bool.self, a[2])
@@ -106,7 +106,7 @@ extension Reactive where Base: UITabBar {
      Reactive wrapper for `delegate` message `tabBar:didSelectItem:`.
     */
     public var didSelectItem: ControlEvent<UITabBarItem> {
-        let source = delegate.sentMessage(#selector(UITabBarDelegate.tabBar(_:didSelect:)))
+        let source = delegate.methodInvoked(#selector(UITabBarDelegate.tabBar(_:didSelect:)))
             .map { a in
                 return try castOrThrow(UITabBarItem.self, a[1])
             }

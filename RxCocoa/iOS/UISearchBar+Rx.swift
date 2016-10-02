@@ -47,7 +47,7 @@ extension Reactive where Base: UISearchBar {
         let source: Observable<String> = Observable.deferred { [weak searchBar = self.base as UISearchBar] () -> Observable<String> in
             let text = searchBar?.text ?? ""
             
-            return (searchBar?.rx.delegate.sentMessage(#selector(UISearchBarDelegate.searchBar(_:textDidChange:))) ?? Observable.empty())
+            return (searchBar?.rx.delegate.methodInvoked(#selector(UISearchBarDelegate.searchBar(_:textDidChange:))) ?? Observable.empty())
                     .map { a in
                         return a[1] as? String ?? ""
                     }
@@ -68,7 +68,7 @@ extension Reactive where Base: UISearchBar {
         let source: Observable<Int> = Observable.deferred { [weak source = self.base as UISearchBar] () -> Observable<Int> in
             let index = source?.selectedScopeButtonIndex ?? 0
             
-            return (source?.rx.delegate.sentMessage(#selector(UISearchBarDelegate.searchBar(_:selectedScopeButtonIndexDidChange:))) ?? Observable.empty())
+            return (source?.rx.delegate.methodInvoked(#selector(UISearchBarDelegate.searchBar(_:selectedScopeButtonIndexDidChange:))) ?? Observable.empty())
                 .map { a in
                     return try castOrThrow(Int.self, a[1])
                 }
@@ -87,7 +87,7 @@ extension Reactive where Base: UISearchBar {
     Reactive wrapper for delegate method `searchBarCancelButtonClicked`.
     */
     public var cancelButtonClicked: ControlEvent<Void> {
-        let source: Observable<Void> = self.delegate.sentMessage(#selector(UISearchBarDelegate.searchBarCancelButtonClicked(_:)))
+        let source: Observable<Void> = self.delegate.methodInvoked(#selector(UISearchBarDelegate.searchBarCancelButtonClicked(_:)))
             .map { _ in
                 return ()
             }
@@ -98,7 +98,7 @@ extension Reactive where Base: UISearchBar {
 	Reactive wrapper for delegate method `searchBarBookmarkButtonClicked`.
 	*/
 	public var bookmarkButtonClicked: ControlEvent<Void> {
-		let source: Observable<Void> = self.delegate.sentMessage(#selector(UISearchBarDelegate.searchBarBookmarkButtonClicked(_:)))
+		let source: Observable<Void> = self.delegate.methodInvoked(#selector(UISearchBarDelegate.searchBarBookmarkButtonClicked(_:)))
 			.map { _ in
 				return ()
 			}
@@ -109,7 +109,7 @@ extension Reactive where Base: UISearchBar {
 	Reactive wrapper for delegate method `searchBarResultsListButtonClicked`.
 	*/
 	public var resultsListButtonClicked: ControlEvent<Void> {
-		let source: Observable<Void> = self.delegate.sentMessage(#selector(UISearchBarDelegate.searchBarResultsListButtonClicked(_:)))
+		let source: Observable<Void> = self.delegate.methodInvoked(#selector(UISearchBarDelegate.searchBarResultsListButtonClicked(_:)))
 			.map { _ in
 				return ()
 		}
@@ -121,7 +121,7 @@ extension Reactive where Base: UISearchBar {
      Reactive wrapper for delegate method `searchBarSearchButtonClicked`.
      */
     public var searchButtonClicked: ControlEvent<Void> {
-        let source: Observable<Void> = self.delegate.sentMessage(#selector(UISearchBarDelegate.searchBarSearchButtonClicked(_:)))
+        let source: Observable<Void> = self.delegate.methodInvoked(#selector(UISearchBarDelegate.searchBarSearchButtonClicked(_:)))
             .map { _ in
                 return ()
         }
@@ -132,7 +132,7 @@ extension Reactive where Base: UISearchBar {
 	Reactive wrapper for delegate method `searchBarTextDidBeginEditing`.
 	*/
 	public var textDidBeginEditing: ControlEvent<Void> {
-		let source: Observable<Void> = self.delegate.sentMessage(#selector(UISearchBarDelegate.searchBarTextDidBeginEditing(_:)))
+		let source: Observable<Void> = self.delegate.methodInvoked(#selector(UISearchBarDelegate.searchBarTextDidBeginEditing(_:)))
 			.map { _ in
 				return ()
 		}
@@ -143,7 +143,7 @@ extension Reactive where Base: UISearchBar {
 	Reactive wrapper for delegate method `searchBarTextDidEndEditing`.
 	*/
 	public var textDidEndEditing: ControlEvent<Void> {
-		let source: Observable<Void> = self.delegate.sentMessage(#selector(UISearchBarDelegate.searchBarTextDidEndEditing(_:)))
+		let source: Observable<Void> = self.delegate.methodInvoked(#selector(UISearchBarDelegate.searchBarTextDidEndEditing(_:)))
 			.map { _ in
 				return ()
 		}

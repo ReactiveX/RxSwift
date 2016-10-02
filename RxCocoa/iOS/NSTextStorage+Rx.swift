@@ -30,7 +30,7 @@ extension Reactive where Base: NSTextStorage {
      */
     public var didProcessEditingRangeChangeInLength: Observable<(editedMask:NSTextStorageEditActions, editedRange:NSRange, delta:Int)> {
         return delegate
-            .sentMessage(#selector(NSTextStorageDelegate.textStorage(_:didProcessEditing:range:changeInLength:)))
+            .methodInvoked(#selector(NSTextStorageDelegate.textStorage(_:didProcessEditing:range:changeInLength:)))
             .map { a in
                 let editedMask = NSTextStorageEditActions(rawValue: try castOrThrow(UInt.self, a[1]) )
                 let editedRange = try castOrThrow(NSValue.self, a[2]).rangeValue
