@@ -27,19 +27,19 @@ public enum RxCocoaError
     /**
     Invalid operation was attempted.
     */
-    case invalidOperation(object: AnyObject)
+    case invalidOperation(object: Any)
     /**
     Items are not yet bound to user interface but have been requested.
     */
-    case itemsNotYetBound(object: AnyObject)
+    case itemsNotYetBound(object: Any)
     /**
     Invalid KVO Path.
     */
-    case invalidPropertyName(object: AnyObject, propertyName: String)
+    case invalidPropertyName(object: Any, propertyName: String)
     /**
     Invalid object on key path.
     */
-    case invalidObjectOnKeyPath(object: AnyObject, sourceObject: AnyObject, propertyName: String)
+    case invalidObjectOnKeyPath(object: Any, sourceObject: AnyObject, propertyName: String)
     /**
     Error during swizzling.
     */
@@ -47,7 +47,7 @@ public enum RxCocoaError
     /*
      Casting error.
      */
-    case castingError(object: AnyObject, targetType: Any.Type)
+    case castingError(object: Any, targetType: Any.Type)
 }
 
 #if !DISABLE_SWIZZLING
@@ -241,7 +241,7 @@ func rxAbstractMethod() -> Swift.Never  {
 // MARK: casts or fatal error
 
 // workaround for Swift compiler bug, cheers compiler team :)
-func castOptionalOrFatalError<T>(_ value: AnyObject?) -> T? {
+func castOptionalOrFatalError<T>(_ value: Any?) -> T? {
     if value == nil {
         return nil
     }
@@ -249,7 +249,7 @@ func castOptionalOrFatalError<T>(_ value: AnyObject?) -> T? {
     return v
 }
 
-func castOrThrow<T>(_ resultType: T.Type, _ object: AnyObject) throws -> T {
+func castOrThrow<T>(_ resultType: T.Type, _ object: Any) throws -> T {
     guard let returnValue = object as? T else {
         throw RxCocoaError.castingError(object: object, targetType: resultType)
     }

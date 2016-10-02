@@ -390,7 +390,7 @@ extension Sequence where Iterator.Element : SharedSequenceConvertibleType {
     - returns: An observable sequence that contains the elements of each given sequence, in sequential order.
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    @available(*, deprecated, renamed: "SharingSequence.from()")
+    @available(*, deprecated, renamed: "SharingSequence.concat()")
     public func concat()
         -> SharedSequence<Iterator.Element.SharingStrategy, Iterator.Element.E> {
         let source = self.lazy.map { $0.asSharedSequence().asObservable() }.concat()
@@ -406,6 +406,7 @@ extension Collection where Iterator.Element : SharedSequenceConvertibleType {
      - returns: An observable sequence that contains the elements of each given sequence, in sequential order.
      */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
+    @available(*, deprecated, renamed: "SharingSequence.concat()")
     public func concat()
         -> SharedSequence<Iterator.Element.SharingStrategy, Iterator.Element.E> {
         let source = self.map { $0.asSharedSequence().asObservable() }.concat()
@@ -423,6 +424,7 @@ extension Collection where Iterator.Element : SharedSequenceConvertibleType {
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
+    @available(*, deprecated, renamed: "SharingSequence.zip()")
     public func zip<R>(_ resultSelector: @escaping ([Generator.Element.E]) throws -> R) -> SharedSequence<Generator.Element.SharingStrategy, R> {
         let source = self.map { $0.asSharedSequence().asObservable() }.zip(resultSelector)
         return SharedSequence<Generator.Element.SharingStrategy, R>(source)
@@ -439,10 +441,15 @@ extension Collection where Iterator.Element : SharedSequenceConvertibleType {
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
+    @available(*, deprecated, renamed: "SharingSequence.zip()")
     public func combineLatest<R>(_ resultSelector: @escaping ([Generator.Element.E]) throws -> R) -> SharedSequence<Generator.Element.SharingStrategy, R> {
         let source = self.map { $0.asSharedSequence().asObservable() }.combineLatest(resultSelector)
         return SharedSequence<Generator.Element.SharingStrategy, R>(source)
     }
+}
+
+extension SharedSequence {
+
 }
 
 // MARK: withLatestFrom

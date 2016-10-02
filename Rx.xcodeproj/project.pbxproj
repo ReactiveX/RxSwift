@@ -424,21 +424,9 @@
 		C83509641C38706E0027C24C /* VariableTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C835091B1C38706D0027C24C /* VariableTest.swift */; };
 		C83509651C38706E0027C24C /* VirtualSchedulerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C835091C1C38706D0027C24C /* VirtualSchedulerTest.swift */; };
 		C83509661C38706E0027C24C /* RxTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C835091D1C38706D0027C24C /* RxTest.swift */; };
-		C83509671C38706E0027C24C /* Foundation+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C835091F1C38706E0027C24C /* Foundation+Extensions.swift */; };
-		C83509691C38706E0027C24C /* Recorded+Timeless.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83509211C38706E0027C24C /* Recorded+Timeless.swift */; };
-		C835096A1C38706E0027C24C /* TestErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83509221C38706E0027C24C /* TestErrors.swift */; };
-		C835096B1C38706E0027C24C /* XCTest+AllTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83509231C38706E0027C24C /* XCTest+AllTests.swift */; };
 		C835097E1C38726E0027C24C /* RxMutableBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093CB01B8A72BE0088E94D /* RxMutableBox.swift */; };
 		C83509891C38740E0027C24C /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2EA280C1BB9B5A200880ED3 /* RxSwift.framework */; };
 		C83509991C38742C0027C24C /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C88BB8711B07E5ED0064D411 /* RxSwift.framework */; };
-		C83509A61C3874D10027C24C /* Recorded+Timeless.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83509211C38706E0027C24C /* Recorded+Timeless.swift */; };
-		C83509A71C3874D10027C24C /* TestErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83509221C38706E0027C24C /* TestErrors.swift */; };
-		C83509A81C3874D10027C24C /* XCTest+AllTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83509231C38706E0027C24C /* XCTest+AllTests.swift */; };
-		C83509A91C3874D20027C24C /* Recorded+Timeless.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83509211C38706E0027C24C /* Recorded+Timeless.swift */; };
-		C83509AA1C3874D20027C24C /* TestErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83509221C38706E0027C24C /* TestErrors.swift */; };
-		C83509AB1C3874D20027C24C /* XCTest+AllTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83509231C38706E0027C24C /* XCTest+AllTests.swift */; };
-		C83509AD1C3874D70027C24C /* Foundation+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C835091F1C38706E0027C24C /* Foundation+Extensions.swift */; };
-		C83509AE1C3874D80027C24C /* Foundation+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C835091F1C38706E0027C24C /* Foundation+Extensions.swift */; };
 		C83509AF1C3874DC0027C24C /* RxTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C835091D1C38706D0027C24C /* RxTest.swift */; };
 		C83509B01C3874DC0027C24C /* RxTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C835091D1C38706D0027C24C /* RxTest.swift */; };
 		C83509B11C3874E20027C24C /* PerformanceTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83508D71C38706D0027C24C /* PerformanceTools.swift */; };
@@ -552,6 +540,21 @@
 		C8350A231C38756B0027C24C /* VirtualSchedulerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C835091C1C38706D0027C24C /* VirtualSchedulerTest.swift */; };
 		C8350A2A1C3875B50027C24C /* RxMutableBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093CB01B8A72BE0088E94D /* RxMutableBox.swift */; };
 		C8350A2B1C3875B60027C24C /* RxMutableBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093CB01B8A72BE0088E94D /* RxMutableBox.swift */; };
+		C8353CDC1DA19BA000BE3F5C /* MessageProcessingStage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8353CDB1DA19BA000BE3F5C /* MessageProcessingStage.swift */; };
+		C8353CDD1DA19BA000BE3F5C /* MessageProcessingStage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8353CDB1DA19BA000BE3F5C /* MessageProcessingStage.swift */; };
+		C8353CDE1DA19BA000BE3F5C /* MessageProcessingStage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8353CDB1DA19BA000BE3F5C /* MessageProcessingStage.swift */; };
+		C8353CE31DA19BC500BE3F5C /* Foundation+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8353CDF1DA19BC500BE3F5C /* Foundation+Extensions.swift */; };
+		C8353CE41DA19BC500BE3F5C /* Foundation+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8353CDF1DA19BC500BE3F5C /* Foundation+Extensions.swift */; };
+		C8353CE51DA19BC500BE3F5C /* Foundation+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8353CDF1DA19BC500BE3F5C /* Foundation+Extensions.swift */; };
+		C8353CE61DA19BC500BE3F5C /* Recorded+Timeless.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8353CE01DA19BC500BE3F5C /* Recorded+Timeless.swift */; };
+		C8353CE71DA19BC500BE3F5C /* Recorded+Timeless.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8353CE01DA19BC500BE3F5C /* Recorded+Timeless.swift */; };
+		C8353CE81DA19BC500BE3F5C /* Recorded+Timeless.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8353CE01DA19BC500BE3F5C /* Recorded+Timeless.swift */; };
+		C8353CE91DA19BC500BE3F5C /* TestErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8353CE11DA19BC500BE3F5C /* TestErrors.swift */; };
+		C8353CEA1DA19BC500BE3F5C /* TestErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8353CE11DA19BC500BE3F5C /* TestErrors.swift */; };
+		C8353CEB1DA19BC500BE3F5C /* TestErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8353CE11DA19BC500BE3F5C /* TestErrors.swift */; };
+		C8353CEC1DA19BC500BE3F5C /* XCTest+AllTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8353CE21DA19BC500BE3F5C /* XCTest+AllTests.swift */; };
+		C8353CED1DA19BC500BE3F5C /* XCTest+AllTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8353CE21DA19BC500BE3F5C /* XCTest+AllTests.swift */; };
+		C8353CEE1DA19BC500BE3F5C /* XCTest+AllTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8353CE21DA19BC500BE3F5C /* XCTest+AllTests.swift */; };
 		C8379EF41D1DD326003EF8FC /* UIButton+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8379EF31D1DD326003EF8FC /* UIButton+RxTests.swift */; };
 		C8379EF51D1DD326003EF8FC /* UIButton+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8379EF31D1DD326003EF8FC /* UIButton+RxTests.swift */; };
 		C839365F1C70E02200A9A09E /* UIApplication+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C839365E1C70E02200A9A09E /* UIApplication+Rx.swift */; };
@@ -1616,13 +1619,13 @@
 		C835091B1C38706D0027C24C /* VariableTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VariableTest.swift; sourceTree = "<group>"; };
 		C835091C1C38706D0027C24C /* VirtualSchedulerTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VirtualSchedulerTest.swift; sourceTree = "<group>"; };
 		C835091D1C38706D0027C24C /* RxTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxTest.swift; sourceTree = "<group>"; };
-		C835091F1C38706E0027C24C /* Foundation+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Foundation+Extensions.swift"; sourceTree = "<group>"; };
-		C83509201C38706E0027C24C /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C83509211C38706E0027C24C /* Recorded+Timeless.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Recorded+Timeless.swift"; sourceTree = "<group>"; };
-		C83509221C38706E0027C24C /* TestErrors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestErrors.swift; sourceTree = "<group>"; };
-		C83509231C38706E0027C24C /* XCTest+AllTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "XCTest+AllTests.swift"; sourceTree = "<group>"; };
 		C83509841C38740E0027C24C /* AllTests-tvOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "AllTests-tvOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C83509941C38742C0027C24C /* AllTests-OSX.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "AllTests-OSX.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C8353CDB1DA19BA000BE3F5C /* MessageProcessingStage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageProcessingStage.swift; sourceTree = "<group>"; };
+		C8353CDF1DA19BC500BE3F5C /* Foundation+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Foundation+Extensions.swift"; sourceTree = "<group>"; };
+		C8353CE01DA19BC500BE3F5C /* Recorded+Timeless.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Recorded+Timeless.swift"; sourceTree = "<group>"; };
+		C8353CE11DA19BC500BE3F5C /* TestErrors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestErrors.swift; sourceTree = "<group>"; };
+		C8353CE21DA19BC500BE3F5C /* XCTest+AllTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "XCTest+AllTests.swift"; sourceTree = "<group>"; };
 		C8379EF31D1DD326003EF8FC /* UIButton+RxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIButton+RxTests.swift"; sourceTree = "<group>"; };
 		C839365E1C70E02200A9A09E /* UIApplication+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIApplication+Rx.swift"; sourceTree = "<group>"; };
 		C83D73B31C1DBAEE003DC470 /* AnonymousInvocable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnonymousInvocable.swift; sourceTree = "<group>"; };
@@ -2248,7 +2251,11 @@
 				C83508D81C38706D0027C24C /* RxCocoaTests */,
 				C83508F21C38706D0027C24C /* RxSwiftTests */,
 				C835091D1C38706D0027C24C /* RxTest.swift */,
-				C835091E1C38706E0027C24C /* Tests */,
+				C8353CDF1DA19BC500BE3F5C /* Foundation+Extensions.swift */,
+				C8353CE01DA19BC500BE3F5C /* Recorded+Timeless.swift */,
+				C8353CE11DA19BC500BE3F5C /* TestErrors.swift */,
+				C8353CE21DA19BC500BE3F5C /* XCTest+AllTests.swift */,
+				C8353CDB1DA19BA000BE3F5C /* MessageProcessingStage.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -2381,18 +2388,6 @@
 				C835091B1C38706D0027C24C /* VariableTest.swift */,
 				C835091C1C38706D0027C24C /* VirtualSchedulerTest.swift */,
 				C86B1E211D42BF5200130546 /* SchedulerTests.swift */,
-			);
-			path = Tests;
-			sourceTree = "<group>";
-		};
-		C835091E1C38706E0027C24C /* Tests */ = {
-			isa = PBXGroup;
-			children = (
-				C835091F1C38706E0027C24C /* Foundation+Extensions.swift */,
-				C83509201C38706E0027C24C /* Info.plist */,
-				C83509211C38706E0027C24C /* Recorded+Timeless.swift */,
-				C83509221C38706E0027C24C /* TestErrors.swift */,
-				C83509231C38706E0027C24C /* XCTest+AllTests.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -3530,11 +3525,12 @@
 				C8C217D51CB7100E0038A2E6 /* UITableView+RxTests.swift in Sources */,
 				C835092E1C38706E0027C24C /* ControlEventTests.swift in Sources */,
 				844BC8BB1CE5024500F5C7CB /* UIPickerView+RxTests.swift in Sources */,
+				C8353CE31DA19BC500BE3F5C /* Foundation+Extensions.swift in Sources */,
 				C83509531C38706E0027C24C /* Observable+AggregateTest.swift in Sources */,
 				C8B290891C94D64600E923D0 /* RxTest+Controls.swift in Sources */,
+				C8353CDC1DA19BA000BE3F5C /* MessageProcessingStage.swift in Sources */,
 				C83509291C38706E0027C24C /* PerformanceTools.swift in Sources */,
 				C8E9E42B1D43B26C0049644E /* Observable+DebugTest.swift in Sources */,
-				C835096A1C38706E0027C24C /* TestErrors.swift in Sources */,
 				1AF67DA61CED430100C310FA /* ReplaySubjectTest.swift in Sources */,
 				C83509561C38706E0027C24C /* Observable+ConcurrencyTest.swift in Sources */,
 				C835095A1C38706E0027C24C /* Observable+MultipleTest+Zip.swift in Sources */,
@@ -3556,8 +3552,9 @@
 				C835097E1C38726E0027C24C /* RxMutableBox.swift in Sources */,
 				C8F27DC21CE68DAB00D5FB4F /* UITextField+RxTests.swift in Sources */,
 				C83509311C38706E0027C24C /* DelegateProxyTest+UIKit.swift in Sources */,
-				C83509671C38706E0027C24C /* Foundation+Extensions.swift in Sources */,
 				C83509481C38706E0027C24C /* TestConnectableObservable.swift in Sources */,
+				C8353CEC1DA19BC500BE3F5C /* XCTest+AllTests.swift in Sources */,
+				C8353CE61DA19BC500BE3F5C /* Recorded+Timeless.swift in Sources */,
 				C83509371C38706E0027C24C /* NSNotificationCenterTests.swift in Sources */,
 				C835095C1C38706E0027C24C /* Observable+MultipleTest.swift in Sources */,
 				C83509331C38706E0027C24C /* Driver+Extensions.swift in Sources */,
@@ -3567,11 +3564,11 @@
 				7EDBAEB41C89B1A6006CBE67 /* UITabBarItem+RxTests.swift in Sources */,
 				C83509411C38706E0027C24C /* BackgroundThreadPrimitiveHotObservable.swift in Sources */,
 				C8379EF41D1DD326003EF8FC /* UIButton+RxTests.swift in Sources */,
+				C8353CE91DA19BC500BE3F5C /* TestErrors.swift in Sources */,
 				C83509581C38706E0027C24C /* Observable+MultipleTest+CombineLatest.swift in Sources */,
 				C83509651C38706E0027C24C /* VirtualSchedulerTest.swift in Sources */,
 				C83509361C38706E0027C24C /* NSLayoutConstraint+RxTests.swift in Sources */,
 				C835095E1C38706E0027C24C /* Observable+StandardSequenceOperatorsTest.swift in Sources */,
-				C83509691C38706E0027C24C /* Recorded+Timeless.swift in Sources */,
 				C835094C1C38706E0027C24C /* AssumptionsTest.swift in Sources */,
 				C835092D1C38706E0027C24C /* Control+RxTests.swift in Sources */,
 				C83509601C38706E0027C24C /* Observable+TimeTest.swift in Sources */,
@@ -3582,7 +3579,6 @@
 				84E4D3961C9B011000ADFDC9 /* UISearchController+RxTests.swift in Sources */,
 				88718D011CE5DE2600D88D60 /* UITabBar+RxTests.swift in Sources */,
 				C83509511C38706E0027C24C /* HistoricalSchedulerTest.swift in Sources */,
-				C835096B1C38706E0027C24C /* XCTest+AllTests.swift in Sources */,
 				C83509541C38706E0027C24C /* Observable+BindingTest.swift in Sources */,
 				C83509521C38706E0027C24C /* MainSchedulerTests.swift in Sources */,
 				C835094D1C38706E0027C24C /* BagTest.swift in Sources */,
@@ -3636,19 +3632,20 @@
 				C83509BC1C38750D0027C24C /* ControlEventTests.swift in Sources */,
 				C83509EC1C3875580027C24C /* MockDisposable.swift in Sources */,
 				1AF67DA31CED427D00C310FA /* PublishSubjectTest.swift in Sources */,
+				C8353CDD1DA19BA000BE3F5C /* MessageProcessingStage.swift in Sources */,
 				C8350A111C38756A0027C24C /* Observable+SingleTest.swift in Sources */,
 				C8E9E42C1D43B26C0049644E /* Observable+DebugTest.swift in Sources */,
 				C8350A2A1C3875B50027C24C /* RxMutableBox.swift in Sources */,
 				C8350A151C38756A0027C24C /* ObserverTests.swift in Sources */,
 				C83509B11C3874E20027C24C /* PerformanceTools.swift in Sources */,
 				1AF67DA71CED430100C310FA /* ReplaySubjectTest.swift in Sources */,
-				C83509AE1C3874D80027C24C /* Foundation+Extensions.swift in Sources */,
 				C83509F11C3875580027C24C /* TestConnectableObservable.swift in Sources */,
-				C83509AA1C3874D20027C24C /* TestErrors.swift in Sources */,
 				C83509F51C38755D0027C24C /* BehaviorSubjectTest.swift in Sources */,
+				C8353CED1DA19BC500BE3F5C /* XCTest+AllTests.swift in Sources */,
 				C83509EB1C3875580027C24C /* MainThreadPrimitiveHotObservable.swift in Sources */,
 				C83509C21C3875220027C24C /* Driver+Test.swift in Sources */,
 				C83509FE1C38755D0027C24C /* Observable+CreationTest.swift in Sources */,
+				C8353CE71DA19BC500BE3F5C /* Recorded+Timeless.swift in Sources */,
 				C83509FC1C38755D0027C24C /* Observable+BlockingTest.swift in Sources */,
 				C8350A161C38756A0027C24C /* QueueTests.swift in Sources */,
 				C83509C51C3875220027C24C /* NSNotificationCenterTests.swift in Sources */,
@@ -3662,16 +3659,15 @@
 				C83509F91C38755D0027C24C /* MainSchedulerTests.swift in Sources */,
 				7EDBAEC31C89BCB9006CBE67 /* UITabBarItem+RxTests.swift in Sources */,
 				914FCD681CCDB82E0058B304 /* UIPageControl+RxTest.swift in Sources */,
-				C83509AB1C3874D20027C24C /* XCTest+AllTests.swift in Sources */,
 				C83509C11C3875220027C24C /* Driver+Extensions.swift in Sources */,
 				C83509DD1C38754C0027C24C /* EquatableArray.swift in Sources */,
 				C83509F71C38755D0027C24C /* DisposableTest.swift in Sources */,
 				C8350A101C38756A0027C24C /* Observable+MultipleTest.swift in Sources */,
 				C83509DC1C38754C0027C24C /* ElementIndexPair.swift in Sources */,
 				C8350A171C38756A0027C24C /* SubjectConcurrencyTest.swift in Sources */,
-				C83509A91C3874D20027C24C /* Recorded+Timeless.swift in Sources */,
 				C83509EA1C3875580027C24C /* BackgroundThreadPrimitiveHotObservable.swift in Sources */,
 				C84CB1721C3876B800EB63CC /* UIView+RxTests.swift in Sources */,
+				C8353CEA1DA19BC500BE3F5C /* TestErrors.swift in Sources */,
 				C83509F81C38755D0027C24C /* HistoricalSchedulerTest.swift in Sources */,
 				C8379EF51D1DD326003EF8FC /* UIButton+RxTests.swift in Sources */,
 				C83509F21C38755D0027C24C /* AnonymousObservable+Test.swift in Sources */,
@@ -3686,6 +3682,7 @@
 				C86B1E231D42BF5200130546 /* SchedulerTests.swift in Sources */,
 				C860EC961C42E26100A664B3 /* SectionedViewDataSourceMock.swift in Sources */,
 				C8350A0F1C3875630027C24C /* Observable+MultipleTest+Zip.swift in Sources */,
+				C8353CE41DA19BC500BE3F5C /* Foundation+Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3706,7 +3703,6 @@
 				C83509B81C38750D0027C24C /* ControlEventTests.swift in Sources */,
 				C83509CB1C3875230027C24C /* KVOObservableTests.swift in Sources */,
 				C8E9E42D1D43B26C0049644E /* Observable+DebugTest.swift in Sources */,
-				C83509AD1C3874D70027C24C /* Foundation+Extensions.swift in Sources */,
 				C83509C81C3875230027C24C /* DelegateProxyTest.swift in Sources */,
 				C8350A0D1C38755E0027C24C /* Observable+MultipleTest+CombineLatest.swift in Sources */,
 				C8350A0B1C38755E0027C24C /* Observable+ConcurrencyTest.swift in Sources */,
@@ -3714,13 +3710,13 @@
 				C8350A0E1C3875630027C24C /* Observable+MultipleTest+Zip.swift in Sources */,
 				C83509CF1C3875260027C24C /* NSView+RxTests.swift in Sources */,
 				C8350A1F1C38756B0027C24C /* ObserverTests.swift in Sources */,
-				C83509A71C3874D10027C24C /* TestErrors.swift in Sources */,
 				C83509D61C3875420027C24C /* SentMessageTest.swift in Sources */,
 				C8350A021C38755E0027C24C /* BagTest.swift in Sources */,
 				C86B1E241D42BF5200130546 /* SchedulerTests.swift in Sources */,
 				C8350A081C38755E0027C24C /* Observable+AggregateTest.swift in Sources */,
 				C83509E81C3875580027C24C /* PrimitiveMockObserver.swift in Sources */,
 				C83509BE1C3875100027C24C /* DelegateProxyTest+Cocoa.swift in Sources */,
+				C8353CEB1DA19BC500BE3F5C /* TestErrors.swift in Sources */,
 				C8B2908B1C94D64700E923D0 /* RxTest+Controls.swift in Sources */,
 				C8350A1B1C38756B0027C24C /* Observable+SingleTest.swift in Sources */,
 				C8350A231C38756B0027C24C /* VirtualSchedulerTest.swift in Sources */,
@@ -3732,8 +3728,10 @@
 				C83509D11C38752E0027C24C /* RuntimeStateSnapshot.swift in Sources */,
 				C8350A221C38756B0027C24C /* VariableTest.swift in Sources */,
 				C83509D21C3875380027C24C /* RXObjCRuntime+Testing.m in Sources */,
+				C8353CDE1DA19BA000BE3F5C /* MessageProcessingStage.swift in Sources */,
 				C83509CC1C3875230027C24C /* NSLayoutConstraint+RxTests.swift in Sources */,
 				C8350A0C1C38755E0027C24C /* Observable+CreationTest.swift in Sources */,
+				C8353CE51DA19BC500BE3F5C /* Foundation+Extensions.swift in Sources */,
 				C8350A1C1C38756B0027C24C /* Observable+StandardSequenceOperatorsTest.swift in Sources */,
 				C83509CA1C3875230027C24C /* Driver+Test.swift in Sources */,
 				C83509E41C3875580027C24C /* MockDisposable.swift in Sources */,
@@ -3744,17 +3742,17 @@
 				C83509DF1C38754F0027C24C /* TestVirtualScheduler.swift in Sources */,
 				C83509CD1C3875230027C24C /* NSNotificationCenterTests.swift in Sources */,
 				C83509DB1C38754C0027C24C /* EquatableArray.swift in Sources */,
-				C83509A81C3874D10027C24C /* XCTest+AllTests.swift in Sources */,
 				C8350A031C38755E0027C24C /* BehaviorSubjectTest.swift in Sources */,
 				C83509E31C3875580027C24C /* MainThreadPrimitiveHotObservable.swift in Sources */,
 				C8350A1D1C38756B0027C24C /* Observable+SubscriptionTest.swift in Sources */,
-				C83509A61C3874D10027C24C /* Recorded+Timeless.swift in Sources */,
 				C8350A041C38755E0027C24C /* CurrentThreadSchedulerTest.swift in Sources */,
+				C8353CE81DA19BC500BE3F5C /* Recorded+Timeless.swift in Sources */,
 				C8350A091C38755E0027C24C /* Observable+BindingTest.swift in Sources */,
 				C8350A051C38755E0027C24C /* DisposableTest.swift in Sources */,
 				C83509B01C3874DC0027C24C /* RxTest.swift in Sources */,
 				C8350A211C38756B0027C24C /* SubjectConcurrencyTest.swift in Sources */,
 				C8350A0A1C38755E0027C24C /* Observable+BlockingTest.swift in Sources */,
+				C8353CEE1DA19BC500BE3F5C /* XCTest+AllTests.swift in Sources */,
 				C83509B51C3875050027C24C /* Control+RxTests+Cocoa.swift in Sources */,
 				C83509E61C3875580027C24C /* Observable.Extensions.swift in Sources */,
 				C83509DE1C38754F0027C24C /* Observable+Extensions.swift in Sources */,
@@ -5011,7 +5009,7 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = Tests/Tests/Info.plist;
+				INFOPLIST_FILE = Tests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "io.rx.AllTests-iOS";
@@ -5024,7 +5022,7 @@
 		C83508CC1C386F6F0027C24C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				INFOPLIST_FILE = Tests/Tests/Info.plist;
+				INFOPLIST_FILE = Tests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "io.rx.AllTests-iOS";
@@ -5037,7 +5035,7 @@
 		C83508CD1C386F6F0027C24C /* Release-Tests */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				INFOPLIST_FILE = Tests/Tests/Info.plist;
+				INFOPLIST_FILE = Tests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "io.rx.AllTests-iOS";
@@ -5055,7 +5053,7 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = Tests/Tests/Info.plist;
+				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "io.rx.AllTests-tvOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -5068,7 +5066,7 @@
 		C835098E1C38740E0027C24C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				INFOPLIST_FILE = Tests/Tests/Info.plist;
+				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "io.rx.AllTests-tvOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -5081,7 +5079,7 @@
 		C835098F1C38740E0027C24C /* Release-Tests */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				INFOPLIST_FILE = Tests/Tests/Info.plist;
+				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "io.rx.AllTests-tvOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -5102,7 +5100,7 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = Tests/Tests/Info.plist;
+				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				PRODUCT_BUNDLE_IDENTIFIER = "io.rx.AllTests-OSX";
@@ -5118,7 +5116,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
 				ENABLE_BITCODE = NO;
-				INFOPLIST_FILE = Tests/Tests/Info.plist;
+				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				PRODUCT_BUNDLE_IDENTIFIER = "io.rx.AllTests-OSX";
@@ -5134,7 +5132,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
 				ENABLE_BITCODE = NO;
-				INFOPLIST_FILE = Tests/Tests/Info.plist;
+				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				PRODUCT_BUNDLE_IDENTIFIER = "io.rx.AllTests-OSX";

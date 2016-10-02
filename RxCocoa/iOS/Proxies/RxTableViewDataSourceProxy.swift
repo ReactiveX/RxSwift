@@ -44,7 +44,7 @@ public class RxTableViewDataSourceProxy
 
     // issue https://github.com/ReactiveX/RxSwift/issues/907
     private var _commitForRowAtHasObservers = false
-    private var _commitForRowAtSequence: Observable<[AnyObject]>? = nil
+    private var _commitForRowAtSequence: Observable<[Any]>? = nil
     
     fileprivate weak var _requiredMethodsDataSource: UITableViewDataSource? = tableViewDataSourceNotSet
 
@@ -117,7 +117,7 @@ public class RxTableViewDataSourceProxy
         super.setForwardToDelegate(forwardToDelegate, retainDelegate: retainDelegate)
     }
 
-    override open func observe(_ selector: Selector) -> Observable<[AnyObject]> {
+    override open func sentMessage(_ selector: Selector) -> Observable<[Any]> {
         MainScheduler.ensureExecutingOnScheduler()
 
         // This is special behavior for commit:forRowAt:
@@ -126,7 +126,7 @@ public class RxTableViewDataSourceProxy
         // https://github.com/ReactiveX/RxSwift/issues/907
         if selector == #selector(UITableViewDataSource.tableView(_:commit:forRowAt:)) {
             guard let commitForRowAtSequence = _commitForRowAtSequence else {
-                let commitForRowAtSequence = super.observe(selector)
+                let commitForRowAtSequence = super.sentMessage(selector)
                     .do(onSubscribe: { [weak self] in
                             self?._commitForRowAtHasObservers = true
                             self?.refreshTableViewDataSource()
@@ -145,7 +145,7 @@ public class RxTableViewDataSourceProxy
             return commitForRowAtSequence
         }
 
-        return super.observe(selector)
+        return super.sentMessage(selector)
     }
 
     // https://github.com/ReactiveX/RxSwift/issues/907

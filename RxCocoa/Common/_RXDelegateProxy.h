@@ -18,7 +18,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 -(BOOL)hasWiredImplementationForSelector:(SEL)selector;
 
--(void)interceptedSelector:(SEL)selector withArguments:(NSArray*)arguments;
+-(void)_sentMessage:(SEL)selector withArguments:(NSArray*)arguments;
+-(void)_methodInvoked:(SEL)selector withArguments:(NSArray*)arguments;
 
 @end
 

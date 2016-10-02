@@ -70,7 +70,7 @@ extension Reactive where Base: UITextView {
      Reactive wrapper for `delegate` message.
     */
     public var didBeginEditing: ControlEvent<()> {
-       return ControlEvent<()>(events: self.delegate.observe(#selector(UITextViewDelegate.textViewDidBeginEditing(_:)))
+       return ControlEvent<()>(events: self.delegate.sentMessage(#selector(UITextViewDelegate.textViewDidBeginEditing(_:)))
             .map { a in
                 return ()
             })
@@ -80,7 +80,7 @@ extension Reactive where Base: UITextView {
      Reactive wrapper for `delegate` message.
      */
     public var didEndEditing: ControlEvent<()> {
-        return ControlEvent<()>(events: self.delegate.observe(#selector(UITextViewDelegate.textViewDidEndEditing(_:)))
+        return ControlEvent<()>(events: self.delegate.sentMessage(#selector(UITextViewDelegate.textViewDidEndEditing(_:)))
             .map { a in
                 return ()
             })
@@ -90,7 +90,7 @@ extension Reactive where Base: UITextView {
      Reactive wrapper for `delegate` message.
      */
     public var didChange: ControlEvent<()> {
-        return ControlEvent<()>(events: self.delegate.observe(#selector(UITextViewDelegate.textViewDidChange(_:)))
+        return ControlEvent<()>(events: self.delegate.sentMessage(#selector(UITextViewDelegate.textViewDidChange(_:)))
             .map { a in
                 return ()
             })
@@ -100,7 +100,7 @@ extension Reactive where Base: UITextView {
      Reactive wrapper for `delegate` message.
      */
     public var didChangeSelection: ControlEvent<()> {
-        return ControlEvent<()>(events: self.delegate.observe(#selector(UITextViewDelegate.textViewDidChangeSelection(_:)))
+        return ControlEvent<()>(events: self.delegate.sentMessage(#selector(UITextViewDelegate.textViewDidChangeSelection(_:)))
             .map { a in
                 return ()
             })

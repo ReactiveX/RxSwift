@@ -21,7 +21,8 @@ This implementation is not thread safe and can be used only from one thread (Mai
 */
 open class DelegateProxy : _RXDelegateProxy {
     
-    private var subjectsForSelector = [Selector: PublishSubject<[AnyObject]>]()
+    private var sentMessageForSelector = [Selector: PublishSubject<[Any]>]()
+    private var methodInvokedForSelector = [Selector: PublishSubject<[Any]>]()
 
     /**
     Parent object associated with delegate proxy.
@@ -42,7 +43,7 @@ open class DelegateProxy : _RXDelegateProxy {
 #endif
         super.init()
     }
-    
+
     /**
     Returns observable sequence of invocations of delegate methods.
 
@@ -85,7 +86,79 @@ open class DelegateProxy : _RXDelegateProxy {
     - parameter selector: Selector used to filter observed invocations of delegate methods.
     - returns: Observable sequence of arguments passed to `selector` method.
     */
-    open func observe(_ selector: Selector) -> Observable<[AnyObject]> {
+    open func sentMessage(_ selector: Selector) -> Observable<[Any]> {
+        checkSelectorIsObservable(selector)
+
+        let subject = sentMessageForSelector[selector]
+        
+        if let subject = subject {
+            return subject
+        }
+        else {
+            let subject = PublishSubject<[Any]>()
+            sentMessageForSelector[selector] = subject
+            return subject
+        }
+    }
+
+    /**
+     Returns observable sequence of invoked delegate methods.
+
+    Only methods that have `void` return value can be observed using this method because
+     those methods are used as a notification mechanism. It doesn't matter if they are optional
+     or not. Observing is performed by installing a hidden associated `PublishSubject` that is 
+     used to dispatch messages to observers.
+
+    Delegate methods that have non `void` return value can't be observed directly using this method
+     because:
+     * those methods are not intended to be used as a notification mechanism, but as a behavior customization mechanism
+     * there is no sensible automatic way to determine a default return value
+
+    In case observing of delegate methods that have return type is required, it can be done by
+     manually installing a `PublishSubject` or `BehaviorSubject` and implementing delegate method.
+     
+     e.g.
+     
+         // delegate proxy part (RxScrollViewDelegateProxy)
+
+         let internalSubject = PublishSubject<CGPoint>
+     
+         public func requiredDelegateMethod(scrollView: UIScrollView, arg1: CGPoint) -> Bool {
+             internalSubject.on(.next(arg1))
+             return self._forwardToDelegate?.requiredDelegateMethod?(scrollView, arg1: arg1) ?? defaultReturnValue
+         }
+     
+         ....
+
+         // reactive property implementation in a real class (`UIScrollView`)
+         public var property: Observable<CGPoint> {
+             let proxy = RxScrollViewDelegateProxy.proxyForObject(base)
+             return proxy.internalSubject.asObservable()
+         }
+
+     **In case calling this method prints "Delegate proxy is already implementing `\(selector)`, 
+     a more performant way of registering might exist.", that means that manual observing method 
+     is required analog to the example above because delegate method has already been implemented.**
+
+    - parameter selector: Selector used to filter observed invocations of delegate methods.
+    - returns: Observable sequence of arguments passed to `selector` method.
+     */
+    open func methodInvoked(_ selector: Selector) -> Observable<[Any]> {
+        checkSelectorIsObservable(selector)
+
+        let subject = methodInvokedForSelector[selector]
+
+        if let subject = subject {
+            return subject
+        }
+        else {
+            let subject = PublishSubject<[Any]>()
+            methodInvokedForSelector[selector] = subject
+            return subject
+        }
+    }
+
+    private func checkSelectorIsObservable(_ selector: Selector) {
         MainScheduler.ensureExecutingOnScheduler()
 
         if hasWiredImplementation(for: selector) {
@@ -101,25 +174,23 @@ open class DelegateProxy : _RXDelegateProxy {
         if !super.responds(to: selector) {
             rxFatalError("This class doesn't respond to selector \(selector)")
         }
-        
-        let subject = subjectsForSelector[selector]
-        
-        if let subject = subject {
-            return subject
-        }
-        else {
-            let subject = PublishSubject<[AnyObject]>()
-            subjectsForSelector[selector] = subject
-            return subject
-        }
     }
-    
+
+    @available(*, deprecated, renamed: "sentMessage")
+    open func observe(_ selector: Selector) -> Observable<[Any]> {
+        return sentMessage(selector)
+    }
+
     // proxy
-    
-    open override func interceptedSelector(_ selector: Selector, withArguments arguments: [Any]) {
-        subjectsForSelector[selector]?.on(.next(arguments as [AnyObject]))
+
+    open override func _sentMessage(_ selector: Selector, withArguments arguments: [Any]) {
+        sentMessageForSelector[selector]?.on(.next(arguments))
     }
-    
+
+    open override func _methodInvoked(_ selector: Selector, withArguments arguments: [Any]) {
+        methodInvokedForSelector[selector]?.on(.next(arguments))
+    }
+
     /**
     Returns tag used to identify associated object.
     
@@ -183,7 +254,10 @@ open class DelegateProxy : _RXDelegateProxy {
     }
     
     deinit {
-        for v in subjectsForSelector.values {
+        for v in sentMessageForSelector.values {
+            v.on(.completed)
+        }
+        for v in methodInvokedForSelector.values {
             v.on(.completed)
         }
 #if TRACE_RESOURCES

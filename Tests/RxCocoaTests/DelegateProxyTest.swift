@@ -34,7 +34,8 @@ import UIKit
 protocol TestDelegateControl: NSObjectProtocol {
     func doThatTest(_ value: Int)
 
-    var test: Observable<Int> { get }
+    var testSentMessage: Observable<Int> { get }
+    var testMethodInvoked: Observable<Int> { get }
 
     func setMineForwardDelegate(_ testDelegate: TestDelegateProtocol) -> Disposable
 }
@@ -61,8 +62,16 @@ class DelegateProxyTest : RxTest {
         view.delegate = mock
         
         let _ = view.rx.proxy
-        
+
+        var invoked = false
+
+        mock.invoked = {
+            invoked = true
+        }
+
+        XCTAssertFalse(invoked)
         view.delegate?.threeDView?(view, didLearnSomething: "Psssst ...")
+        XCTAssertTrue(invoked)
         
         XCTAssertEqual(mock.messages, ["didLearnSomething"])
     }
@@ -73,21 +82,35 @@ class DelegateProxyTest : RxTest {
         
         view.delegate = mock
         
-        var observedFeedRequest = false
+        var observedFeedRequestSentMessage = false
+        var observedMessageInvoked = false
+        var events: [MessageProcessingStage] = []
         
-        let d = view.rx.proxy.observe(#selector(ThreeDSectionedViewProtocol.threeDView(_:didLearnSomething:)))
+        _ = view.rx.proxy.sentMessage(#selector(ThreeDSectionedViewProtocol.threeDView(_:didLearnSomething:)))
             .subscribe(onNext: { n in
-                observedFeedRequest = true
+                observedFeedRequestSentMessage = true
+                events.append(.sentMessage)
             })
-        defer {
-            d.dispose()
+
+        mock.invoked = {
+            events.append(.invoking)
         }
 
-        XCTAssertTrue(!observedFeedRequest)
+        _ = view.rx.proxy.methodInvoked(#selector(ThreeDSectionedViewProtocol.threeDView(_:didLearnSomething:)))
+            .subscribe(onNext: { n in
+                observedMessageInvoked = true
+                events.append(.methodInvoked)
+            })
+
+
+        XCTAssertTrue(!observedFeedRequestSentMessage)
+        XCTAssertTrue(!observedMessageInvoked)
         view.delegate?.threeDView?(view, didLearnSomething: "Psssst ...")
-        XCTAssertTrue(observedFeedRequest)
+        XCTAssertTrue(observedFeedRequestSentMessage)
+        XCTAssertTrue(observedMessageInvoked)
         
         XCTAssertEqual(mock.messages, ["didLearnSomething"])
+        XCTAssertEqual(events, [.sentMessage, .invoking, .methodInvoked])
     }
     
     func test_forwardsObserverDispose() {
@@ -97,20 +120,31 @@ class DelegateProxyTest : RxTest {
         view.delegate = mock
         
         var nMessages = 0
+        var invoked = false
         
-        let d = view.rx.proxy.observe(#selector(ThreeDSectionedViewProtocol.threeDView(_:didLearnSomething:)))
+        let d = view.rx.proxy.sentMessage(#selector(ThreeDSectionedViewProtocol.threeDView(_:didLearnSomething:)))
             .subscribe(onNext: { n in
                 nMessages += 1
             })
+
+        let d2 = view.rx.proxy.methodInvoked(#selector(ThreeDSectionedViewProtocol.threeDView(_:didLearnSomething:)))
+            .subscribe(onNext: { n in
+                nMessages += 1
+            })
+
+        mock.invoked = { invoked = true }
         
         XCTAssertTrue(nMessages == 0)
+        XCTAssertFalse(invoked)
         view.delegate?.threeDView?(view, didLearnSomething: "Psssst ...")
-        XCTAssertTrue(nMessages == 1)
+        XCTAssertTrue(invoked)
+        XCTAssertTrue(nMessages == 2)
 
         d.dispose()
+        d2.dispose()
 
         view.delegate?.threeDView?(view, didLearnSomething: "Psssst ...")
-        XCTAssertTrue(nMessages == 1)
+        XCTAssertTrue(nMessages == 2)
     }
     
     func test_forwardsUnobservableMethods() {
@@ -118,8 +152,13 @@ class DelegateProxyTest : RxTest {
         let mock = MockThreeDSectionedViewProtocol()
         
         view.delegate = mock
-        
+
+        var invoked = false
+        mock.invoked = { invoked = true }
+
+        XCTAssertFalse(invoked)
         view.delegate?.threeDView?(view, didLearnSomething: "Psssst ...")
+        XCTAssertTrue(invoked)
         
         XCTAssertEqual(mock.messages, ["didLearnSomething"])
     }
@@ -134,21 +173,36 @@ class DelegateProxyTest : RxTest {
         
         let sentArgument = IndexPath(index: 0)
         
-        var receivedArgument: IndexPath? = nil
+        var receivedArgumentSentMessage: IndexPath? = nil
+        var receivedArgumentMethodInvoked: IndexPath? = nil
+
+        var events: [MessageProcessingStage] = []
         
-        let d = view.rx.proxy.observe(#selector(ThreeDSectionedViewProtocol.threeDView(_:didGetXXX:)))
+        _ = view.rx.proxy.sentMessage(#selector(ThreeDSectionedViewProtocol.threeDView(_:didGetXXX:)))
             .subscribe(onNext: { n in
                 let ip = n[1] as! IndexPath
-                receivedArgument = ip
+                receivedArgumentSentMessage = ip
+                events.append(.sentMessage)
             })
-        defer {
-            d.dispose()
+
+        _ = view.rx.proxy.methodInvoked(#selector(ThreeDSectionedViewProtocol.threeDView(_:didGetXXX:)))
+            .subscribe(onNext: { n in
+                let ip = n[1] as! IndexPath
+                receivedArgumentMethodInvoked = ip
+                events.append(.methodInvoked)
+            })
+
+        mock.invoked = {
+            events.append(.invoking)
         }
 
+
         view.delegate?.threeDView?(view, didGetXXX: sentArgument)
-        XCTAssertTrue(receivedArgument == sentArgument)
+        XCTAssertTrue(receivedArgumentSentMessage == sentArgument)
+        XCTAssertTrue(receivedArgumentMethodInvoked == sentArgument)
         
         XCTAssertEqual(mock.messages, [])
+        XCTAssertEqual(events, [.sentMessage, .methodInvoked])
     }
     
     func test_delegateProxyCompletesOnDealloc() {
@@ -157,8 +211,9 @@ class DelegateProxyTest : RxTest {
         
         view.delegate = mock
         
-        var completed = false
-        
+        var completedSentMessage = false
+        var completedMethodInvoked = false
+
         autoreleasepool {
             XCTAssertTrue(!mock.responds(to: NSSelectorFromString("threeDView:threeDView:didGetXXX:")))
             
@@ -166,16 +221,26 @@ class DelegateProxyTest : RxTest {
             
             _ = view
                 .rx.proxy
-                .observe(#selector(ThreeDSectionedViewProtocol.threeDView(_:didGetXXX:)))
+                .sentMessage(#selector(ThreeDSectionedViewProtocol.threeDView(_:didGetXXX:)))
                 .subscribe(onCompleted: {
-                    completed = true
+                    completedSentMessage = true
                 })
+            _ = view
+                .rx.proxy
+                .methodInvoked(#selector(ThreeDSectionedViewProtocol.threeDView(_:didGetXXX:)))
+                .subscribe(onCompleted: {
+                    completedMethodInvoked = true
+                })
+
+            mock.invoked = {}
             
             view.delegate?.threeDView?(view, didGetXXX: sentArgument)
         }
-        XCTAssertTrue(!completed)
+        XCTAssertTrue(!completedSentMessage)
+        XCTAssertTrue(!completedMethodInvoked)
         view = nil
-        XCTAssertTrue(completed)
+        XCTAssertTrue(completedSentMessage)
+        XCTAssertTrue(completedMethodInvoked)
     }
 }
 
@@ -183,7 +248,8 @@ class DelegateProxyTest : RxTest {
 extension DelegateProxyTest {
     func test_DelegateProxyHierarchyWorks() {
         let tableView = UITableView()
-        _ = tableView.rx.delegate.observe(#selector(UIScrollViewDelegate.scrollViewWillBeginDragging(_:)))
+        _ = tableView.rx.delegate.sentMessage(#selector(UIScrollViewDelegate.scrollViewWillBeginDragging(_:)))
+        _ = tableView.rx.delegate.methodInvoked(#selector(UIScrollViewDelegate.scrollViewWillBeginDragging(_:)))
     }
 }
 #endif
@@ -198,15 +264,26 @@ extension DelegateProxyTest {
             control = createControl()
         }
 
-        var receivedValue: Int!
-        var completed = false
+        var receivedValueSentMessage: Int!
+        var receivedValueMethodInvoked: Int!
+        var completedSentMessage = false
+        var completedMethodInvoked = false
         var deallocated = false
+        var stages: [MessageProcessingStage] = []
 
         autoreleasepool {
-            _ = control.test.subscribe(onNext: { value in
-                receivedValue = value
+            _ = control.testSentMessage.subscribe(onNext: { value in
+                receivedValueSentMessage = value
+                stages.append(.sentMessage)
             }, onCompleted: {
-                completed = true
+                completedSentMessage = true
+            })
+
+            _ = control.testMethodInvoked.subscribe(onNext: { value in
+                receivedValueMethodInvoked = value
+                stages.append(.methodInvoked)
+            }, onCompleted: {
+                completedMethodInvoked = true
             })
 
             _ = (control as! NSObject).rx.deallocated.subscribe(onNext: { _ in
@@ -214,11 +291,15 @@ extension DelegateProxyTest {
             })
         }
 
-        XCTAssertTrue(receivedValue == nil)
+        XCTAssertTrue(receivedValueSentMessage == nil)
+        XCTAssertTrue(receivedValueMethodInvoked == nil)
+        XCTAssertEqual(stages, [])
         autoreleasepool {
             control.doThatTest(382763)
         }
-        XCTAssertEqual(receivedValue, 382763)
+        XCTAssertEqual(stages, [.sentMessage, .methodInvoked])
+        XCTAssertEqual(receivedValueSentMessage, 382763)
+        XCTAssertEqual(receivedValueMethodInvoked, 382763)
 
         autoreleasepool {
             let mine = MockTestDelegateProtocol()
@@ -233,12 +314,14 @@ extension DelegateProxyTest {
         }
 
         XCTAssertFalse(deallocated)
-        XCTAssertFalse(completed)
+        XCTAssertFalse(completedSentMessage)
+        XCTAssertFalse(completedMethodInvoked)
         autoreleasepool {
             control = nil
         }
         XCTAssertTrue(deallocated)
-        XCTAssertTrue(completed)
+        XCTAssertTrue(completedSentMessage)
+        XCTAssertTrue(completedMethodInvoked)
     }
 }
 
@@ -313,17 +396,21 @@ extension Reactive where Base: ThreeDSectionedView {
 class MockThreeDSectionedViewProtocol : NSObject, ThreeDSectionedViewProtocol {
     
     var messages: [String] = []
-    
+    var invoked: (() -> ())!
+
     func threeDView(_ threeDView: ThreeDSectionedView, listenToMeee: IndexPath) {
         messages.append("listenToMeee")
+        invoked()
     }
     
     func threeDView(_ threeDView: ThreeDSectionedView, feedMe: IndexPath) {
         messages.append("feedMe")
+        invoked()
     }
     
     func threeDView(_ threeDView: ThreeDSectionedView, howTallAmI: IndexPath) -> CGFloat {
         messages.append("howTallAmI")
+        invoked()
         return 3
     }
     
@@ -333,11 +420,13 @@ class MockThreeDSectionedViewProtocol : NSObject, ThreeDSectionedViewProtocol {
     
     func threeDView(_ threeDView: ThreeDSectionedView, didLearnSomething: String) {
         messages.append("didLearnSomething")
+        invoked()
     }
     
     //optional func threeDView(threeDView: ThreeDSectionedView, didFallAsleep: IndexPath)
     func threeDView(_ threeDView: ThreeDSectionedView, getMeSomeFood: IndexPath) -> Food {
         messages.append("getMeSomeFood")
+        invoked()
         return Food()
     }
 }

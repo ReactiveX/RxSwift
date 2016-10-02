@@ -30,7 +30,7 @@ extension Reactive where Base: UISearchController {
      */
     public var didDismiss: Observable<Void> {
         return delegate
-            .observe( #selector(UISearchControllerDelegate.didDismissSearchController(_:)))
+            .sentMessage( #selector(UISearchControllerDelegate.didDismissSearchController(_:)))
             .map {_ in}
     }
     /**
@@ -38,7 +38,7 @@ extension Reactive where Base: UISearchController {
      */
     public var didPresent: Observable<Void> {
         return delegate
-            .observe(#selector(UISearchControllerDelegate.didPresentSearchController(_:)))
+            .sentMessage(#selector(UISearchControllerDelegate.didPresentSearchController(_:)))
             .map {_ in}
     }
     /**
@@ -46,7 +46,7 @@ extension Reactive where Base: UISearchController {
      */
     public var present: Observable<Void> {
         return delegate
-            .observe( #selector(UISearchControllerDelegate.presentSearchController(_:)))
+            .sentMessage( #selector(UISearchControllerDelegate.presentSearchController(_:)))
             .map {_ in}
     }
     /**
@@ -54,7 +54,7 @@ extension Reactive where Base: UISearchController {
      */
     public var willDismiss: Observable<Void> {
         return delegate
-            .observe(#selector(UISearchControllerDelegate.willDismissSearchController(_:)))
+            .sentMessage(#selector(UISearchControllerDelegate.willDismissSearchController(_:)))
             .map {_ in}
     }
     /**
@@ -62,7 +62,7 @@ extension Reactive where Base: UISearchController {
      */
     public var willPresent: Observable<Void> {
         return delegate
-            .observe( #selector(UISearchControllerDelegate.willPresentSearchController(_:)))
+            .sentMessage( #selector(UISearchControllerDelegate.willPresentSearchController(_:)))
             .map {_ in}
     }
     

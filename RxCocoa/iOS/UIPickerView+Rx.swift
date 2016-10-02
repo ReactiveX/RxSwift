@@ -25,7 +25,7 @@ extension Reactive where Base: UIPickerView {
     
     public var itemSelected: ControlEvent<(Int, Int)> {
         let source = delegate
-            .observe(#selector(UIPickerViewDelegate.pickerView(_:didSelectRow:inComponent:)))
+            .sentMessage(#selector(UIPickerViewDelegate.pickerView(_:didSelectRow:inComponent:)))
             .map {
                 return (try castOrThrow(Int.self, $0[1]), try castOrThrow(Int.self, $0[2]))
             }

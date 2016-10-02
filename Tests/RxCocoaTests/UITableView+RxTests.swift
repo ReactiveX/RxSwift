@@ -366,6 +366,8 @@ extension UITableViewTests {
         var dataSourceDeallocated = false
 
         var outerTableView: UITableView? = nil
+        outerTableView?.beginUpdates()
+
         var dataSourceSubscription: Disposable!
         autoreleasepool {
             let items: Observable<[Int]> = Observable.just([1, 2, 3])
@@ -378,7 +380,6 @@ extension UITableViewTests {
                 dataSourceDeallocated = true
             })
         }
-
         XCTAssert(dataSourceDeallocated == false)
         autoreleasepool { dataSourceSubscription.dispose() }
         XCTAssert(dataSourceDeallocated == true)
@@ -445,7 +446,7 @@ extension UITableViewTests {
 
         XCTAssertFalse(tableView.dataSource!.responds(to: #selector(UITableViewDataSource.tableView(_:commit:forRowAt:))))
 
-        let commitedEvents = tableView.rx.dataSource.observe(#selector(UITableViewDataSource.tableView(_:commit:forRowAt:)))
+        let commitedEvents = tableView.rx.dataSource.sentMessage(#selector(UITableViewDataSource.tableView(_:commit:forRowAt:)))
 
         XCTAssertFalse(tableView.dataSource!.responds(to: #selector(UITableViewDataSource.tableView(_:commit:forRowAt:))))
         XCTAssertEqual(setDataSources, [tableView.dataSource!] as [UITableViewDataSource?]) { $0 === $1 }

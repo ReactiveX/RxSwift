@@ -157,9 +157,15 @@ class UITableViewSubclass1
         (delegate as! TestDelegateProtocol).testEventHappened?(value)
     }
 
-    var test: Observable<Int> {
+    var testSentMessage: Observable<Int> {
         return rx.delegate
-            .observe(#selector(TestDelegateProtocol.testEventHappened(_:)))
+            .sentMessage(#selector(TestDelegateProtocol.testEventHappened(_:)))
+            .map { a in (a[0] as! NSNumber).intValue }
+    }
+
+    var testMethodInvoked: Observable<Int> {
+        return rx.delegate
+            .methodInvoked(#selector(TestDelegateProtocol.testEventHappened(_:)))
             .map { a in (a[0] as! NSNumber).intValue }
     }
 
@@ -190,9 +196,15 @@ class UITableViewSubclass2
         (dataSource as! TestDelegateProtocol).testEventHappened?(value)
     }
 
-    var test: Observable<Int> {
+    var testSentMessage: Observable<Int> {
         return rx.dataSource
-            .observe(#selector(TestDelegateProtocol.testEventHappened(_:)))
+            .sentMessage(#selector(TestDelegateProtocol.testEventHappened(_:)))
+            .map { a in (a[0] as! NSNumber).intValue }
+    }
+
+    var testMethodInvoked: Observable<Int> {
+        return rx.dataSource
+            .sentMessage(#selector(TestDelegateProtocol.testEventHappened(_:)))
             .map { a in (a[0] as! NSNumber).intValue }
     }
 
@@ -223,9 +235,15 @@ class UICollectionViewSubclass1
         (delegate as! TestDelegateProtocol).testEventHappened?(value)
     }
 
-    var test: Observable<Int> {
+    var testSentMessage: Observable<Int> {
         return rx.delegate
-            .observe(#selector(TestDelegateProtocol.testEventHappened(_:)))
+            .sentMessage(#selector(TestDelegateProtocol.testEventHappened(_:)))
+            .map { a in (a[0] as! NSNumber).intValue }
+    }
+
+    var testMethodInvoked: Observable<Int> {
+        return rx.delegate
+            .methodInvoked(#selector(TestDelegateProtocol.testEventHappened(_:)))
             .map { a in (a[0] as! NSNumber).intValue }
     }
 
@@ -256,9 +274,15 @@ class UICollectionViewSubclass2
         (dataSource as! TestDelegateProtocol).testEventHappened?(value)
     }
 
-    var test: Observable<Int> {
+    var testSentMessage: Observable<Int> {
         return rx.dataSource
-            .observe(#selector(TestDelegateProtocol.testEventHappened(_:)))
+            .sentMessage(#selector(TestDelegateProtocol.testEventHappened(_:)))
+            .map { a in (a[0] as! NSNumber).intValue }
+    }
+
+    var testMethodInvoked: Observable<Int> {
+        return rx.dataSource
+            .methodInvoked(#selector(TestDelegateProtocol.testEventHappened(_:)))
             .map { a in (a[0] as! NSNumber).intValue }
     }
 
@@ -289,9 +313,15 @@ class UIScrollViewSubclass
         (delegate as! TestDelegateProtocol).testEventHappened?(value)
     }
 
-    var test: Observable<Int> {
+    var testSentMessage: Observable<Int> {
         return rx.delegate
-            .observe(#selector(TestDelegateProtocol.testEventHappened(_:)))
+            .sentMessage(#selector(TestDelegateProtocol.testEventHappened(_:)))
+            .map { a in (a[0] as! NSNumber).intValue }
+    }
+
+    var testMethodInvoked: Observable<Int> {
+        return rx.delegate
+            .methodInvoked(#selector(TestDelegateProtocol.testEventHappened(_:)))
             .map { a in (a[0] as! NSNumber).intValue }
     }
 
@@ -324,9 +354,15 @@ class UISearchBarSubclass
         (delegate as! TestDelegateProtocol).testEventHappened?(value)
     }
     
-    var test: Observable<Int> {
+    var testSentMessage: Observable<Int> {
         return rx.delegate
-            .observe(#selector(TestDelegateProtocol.testEventHappened(_:)))
+            .sentMessage(#selector(TestDelegateProtocol.testEventHappened(_:)))
+            .map { a in (a[0] as! NSNumber).intValue }
+    }
+
+    var testMethodInvoked: Observable<Int> {
+        return rx.delegate
+            .methodInvoked(#selector(TestDelegateProtocol.testEventHappened(_:)))
             .map { a in (a[0] as! NSNumber).intValue }
     }
 
@@ -358,9 +394,15 @@ class UITextViewSubclass
         (delegate as! TestDelegateProtocol).testEventHappened?(value)
     }
 
-    var test: Observable<Int> {
+    var testSentMessage: Observable<Int> {
         return rx.delegate
-            .observe(#selector(TestDelegateProtocol.testEventHappened(_:)))
+            .sentMessage(#selector(TestDelegateProtocol.testEventHappened(_:)))
+            .map { a in (a[0] as! NSNumber).intValue }
+    }
+
+    var testMethodInvoked: Observable<Int> {
+        return rx.delegate
+            .methodInvoked(#selector(TestDelegateProtocol.testEventHappened(_:)))
             .map { a in (a[0] as! NSNumber).intValue }
     }
 
@@ -377,11 +419,18 @@ class UISearchControllerSubclass
         (delegate as! TestDelegateProtocol).testEventHappened?(value)
     }
     
-    var test: Observable<Int> {
+    var testSentMessage: Observable<Int> {
         return rx.delegate
-            .observe(#selector(TestDelegateProtocol.testEventHappened(_:)))
+            .sentMessage(#selector(TestDelegateProtocol.testEventHappened(_:)))
             .map { a in (a[0] as! NSNumber).intValue }
     }
+
+    var testMethodInvoked: Observable<Int> {
+        return rx.delegate
+            .methodInvoked(#selector(TestDelegateProtocol.testEventHappened(_:)))
+            .map { a in (a[0] as! NSNumber).intValue }
+    }
+
 
     func setMineForwardDelegate(_ testDelegate: TestDelegateProtocol) -> Disposable {
         return RxSearchControllerDelegateProxy.installForwardDelegate(testDelegate, retainDelegate: false, onProxyForObject: self)
@@ -396,9 +445,15 @@ class UIPickerViewSubclass
         (delegate as! TestDelegateProtocol).testEventHappened?(value)
     }
     
-    var test: Observable<Int> {
+    var testSentMessage: Observable<Int> {
         return rx.delegate
-            .observe(#selector(TestDelegateProtocol.testEventHappened(_:)))
+            .sentMessage(#selector(TestDelegateProtocol.testEventHappened(_:)))
+            .map { a in (a[0] as! NSNumber).intValue }
+    }
+
+    var testMethodInvoked: Observable<Int> {
+        return rx.delegate
+            .methodInvoked(#selector(TestDelegateProtocol.testEventHappened(_:)))
             .map { a in (a[0] as! NSNumber).intValue }
     }
     

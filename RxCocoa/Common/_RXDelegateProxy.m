@@ -88,10 +88,6 @@ static NSMutableDictionary *forwardableSelectorsPerClass = nil;
     }
 }
 
--(void)interceptedSelector:(SEL)selector withArguments:(NSArray *)arguments {
-    
-}
-
 -(id)_forwardToDelegate {
     return __forwardToDelegate;
 }
@@ -125,14 +121,30 @@ static NSMutableDictionary *forwardableSelectorsPerClass = nil;
 }
 
 -(void)forwardInvocation:(NSInvocation *)anInvocation {
-    if (RX_is_method_signature_void(anInvocation.methodSignature)) {
-        NSArray *arguments = RX_extract_arguments(anInvocation);
-        [self interceptedSelector:anInvocation.selector withArguments:arguments];
+    BOOL isVoid = RX_is_method_signature_void(anInvocation.methodSignature);
+    NSArray *arguments = nil;
+    if (isVoid) {
+        arguments = RX_extract_arguments(anInvocation);
+        [self _sentMessage:anInvocation.selector withArguments:arguments];
     }
     
     if (self._forwardToDelegate && [self._forwardToDelegate respondsToSelector:anInvocation.selector]) {
         [anInvocation invokeWithTarget:self._forwardToDelegate];
     }
+
+    if (isVoid) {
+        [self _methodInvoked:anInvocation.selector withArguments:arguments];
+    }
+}
+
+// abstract method
+-(void)_sentMessage:(SEL)selector withArguments:(NSArray *)arguments {
+
+}
+
+// abstract method
+-(void)_methodInvoked:(SEL)selector withArguments:(NSArray *)arguments {
+
 }
 
 -(void)dealloc {
