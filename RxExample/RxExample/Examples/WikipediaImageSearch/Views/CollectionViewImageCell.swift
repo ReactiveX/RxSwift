@@ -34,6 +34,7 @@ public class CollectionViewImageCell: UICollectionViewCell {
     override public func prepareForReuse() {
         super.prepareForReuse()
         
+        downloadableImage = nil
         disposeBag = nil
     }
 

@@ -14,11 +14,9 @@ import RxSwift
 #if os(iOS)
     import UIKit
     typealias OSViewController = UIViewController
-    private typealias OSApplication = UIApplication
 #elseif os(OSX)
     import Cocoa
     typealias OSViewController = NSViewController
-    private typealias OSApplication = NSApplication
 #endif
 
 class ViewController: OSViewController {

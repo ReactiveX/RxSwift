@@ -8,10 +8,10 @@
 
 #if os(iOS)
     import UIKit
-    private typealias OSApplication = UIApplication
+    typealias OSApplication = UIApplication
 #elseif os(OSX)
     import Cocoa
-    private typealias OSApplication = NSApplication
+    typealias OSApplication = NSApplication
 #endif
 
 extension OSApplication {
