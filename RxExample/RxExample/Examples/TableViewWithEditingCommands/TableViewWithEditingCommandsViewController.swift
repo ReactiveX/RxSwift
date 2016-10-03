@@ -86,11 +86,6 @@ class TableViewWithEditingCommandsViewController: ViewController, UITableViewDel
         let deleteUserCommand = tableView.rx.itemDeleted.map(TableViewEditingCommand.deleteUser)
         let moveUserCommand = tableView
             .rx.itemMoved
-            // This is needed because rx.itemMoved is being performed before delegate method is
-            // delegated to RxDataSource.
-            // This observeOn makes sure data is rebound after automatic move is performed in data source.
-            // This will be improved in RxSwift 3.0 when order will be inversed.
-            .observeOn(MainScheduler.asyncInstance)
             .map(TableViewEditingCommand.moveUser)
 
         let initialState = TableViewEditingCommandsViewModel(favoriteUsers: [], users: [])
