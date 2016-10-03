@@ -151,14 +151,14 @@ extension GitHubSearchRepositoriesAPI {
                     return Observable.just(appenedRepositories)
                 }
 
-                return [
+                return Observable.concat([
                     // return loaded immediately
                     Observable.just(appenedRepositories),
                     // wait until next page can be loaded
                     Observable.never().takeUntil(loadNextPageTrigger),
                     // load next page
                     self.recursivelySearch(loadedRepositories, loadNextURL: nextURL, loadNextPageTrigger: loadNextPageTrigger)
-                ].concat()
+                ])
             }
         }
     }
