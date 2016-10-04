@@ -16,16 +16,34 @@ import RxSwift
 extension Reactive where Base: UIRefreshControl {
 
     /**
-    Bindable sink for `beginRefreshing()`, `endRefreshing()` methods.
+    Reactive wrapper for `refreshing` property.
     */
-    public var refreshing: AnyObserver<Bool> {
-        return UIBindingObserver(UIElement: self.base) { refreshControl, refresh in
-            if refresh {
-                refreshControl.beginRefreshing()
-            } else {
-                refreshControl.endRefreshing()
+    public var refreshing: ControlProperty<Bool> {
+        let base = self.base
+        
+        let begin = sentMessage(#selector(UIRefreshControl.beginRefreshing)).map { _ in true }
+        let end = sentMessage(#selector(UIRefreshControl.endRefreshing)).map { _ in false }
+        let change = controlEvent(.valueChanged)
+                .flatMap { [weak base] _ -> Observable<Bool> in
+                    return base.map { Observable.of($0.isRefreshing) } ?? Observable.empty()
+                }
+
+        let values = Observable
+            .of(begin, end, change)
+            .merge()
+            .startWith(base.isRefreshing)
+        
+        let valueSink = UIBindingObserver<UIRefreshControl, Bool>(UIElement: self.base)
+            { refreshControl, refresh in
+                if refresh {
+                    refreshControl.beginRefreshing()
+                } else {
+                    refreshControl.endRefreshing()
+                }
             }
-        }.asObserver()
+            .asObserver()
+
+        return ControlProperty(values: values, valueSink: valueSink)
     }
 
 }

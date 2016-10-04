@@ -48,6 +48,7 @@ any observers or `forwardToDelegate` wasn't implementing `UITableViewDataSource.
     * `Driver.amb`
 
 * Update Getting Started document, section on creating an observable that performs work to Swift 3.0.
+* Changes `refreshing` property of `UIRefreshControl` from `AnyObserver<Bool>` to `ControlProperty<Bool>`.
 
 * Removes stale installation instructions. 
 
