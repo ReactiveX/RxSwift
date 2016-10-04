@@ -111,13 +111,8 @@ searchResults
 
 ## Requirements
 
-* Xcode 8.0 GM (8A218a)
+* Xcode 8.0
 * Swift 3.0
-
-* iOS 8.0+
-* Mac OS X 10.10+ 
-* tvOS 9.0+ 
-* watchOS 2.0+
 
 ## Installation
 
@@ -136,14 +131,14 @@ Open Rx.xcworkspace, choose `RxExample` and hit run. This method will build ever
 use_frameworks!
 
 target 'YOUR_TARGET_NAME' do
-    pod 'RxSwift',    '~> 3.0.0-beta.1'
-    pod 'RxCocoa',    '~> 3.0.0-beta.1'
+    pod 'RxSwift',    '~> 3.0.0-beta.2'
+    pod 'RxCocoa',    '~> 3.0.0-beta.2'
 end
 
 # RxTests and RxBlocking make the most sense in the context of unit/integration tests
 target 'YOUR_TESTING_TARGET' do
-    pod 'RxBlocking', '~> 3.0.0-beta.1'
-    pod 'RxTests',    '~> 3.0.0-beta.1'
+    pod 'RxBlocking', '~> 3.0.0-beta.2'
+    pod 'RxTests',    '~> 3.0.0-beta.2'
 end
 ```
 
@@ -172,7 +167,7 @@ $ pod install
 Add this to `Cartfile`
 
 ```
-github "ReactiveX/RxSwift" "3.0.0-beta.1"
+github "ReactiveX/RxSwift" "3.0.0-beta.2"
 ```
 
 ```
