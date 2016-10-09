@@ -61,8 +61,8 @@ func convertURLRequestToCurlCommand(_ request: URLRequest) -> String {
     let method = request.httpMethod ?? "GET"
     var returnValue = "curl -X \(method) "
 
-    if  request.httpMethod == "POST" && request.httpBody != nil {
-        let maybeBody = NSString(data: request.httpBody!, encoding: String.Encoding.utf8.rawValue) as? String
+    if let httpBody = request.httpBody, request.httpMethod == "POST" {
+        let maybeBody = String(data: httpBody, encoding: String.Encoding.utf8)
         if let body = maybeBody {
             returnValue += "-d \"\(escapeTerminalString(body))\" "
         }
@@ -123,10 +123,13 @@ extension Reactive where Base: URLSession {
         return Observable.create { observer in
 
             // smart compiler should be able to optimize this out
-            var d: Date?
+            let d: Date?
 
             if Logging.URLRequests(request) {
                 d = Date()
+            }
+            else {
+               d = nil
             }
 
             let task = self.base.dataTask(with: request) { (data, response, error) in
@@ -204,10 +207,10 @@ extension Reactive where Base: URLSession {
     - returns: Observable sequence of response JSON.
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func JSON(_ request: URLRequest) -> Observable<AnyObject> {
-        return data(request).map { (data) -> AnyObject in
+    public func JSON(_ request: URLRequest) -> Observable<Any> {
+        return data(request).map { (data) -> Any in
             do {
-                return try JSONSerialization.jsonObject(with: data, options: []) as AnyObject
+                return try JSONSerialization.jsonObject(with: data, options: [])
             } catch let error {
                 throw RxCocoaURLError.deserializationError(error: error)
             }
@@ -232,7 +235,8 @@ extension Reactive where Base: URLSession {
     - returns: Observable sequence of response JSON.
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func JSON(_ URL: Foundation.URL) -> Observable<AnyObject> {
+    public func JSON(_ URL: Foundation.URL) -> Observable<Any> {
         return JSON(URLRequest(url: URL))
     }
 }
+

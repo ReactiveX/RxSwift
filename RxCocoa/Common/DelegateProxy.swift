@@ -6,10 +6,12 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
+#if DELEGATE_PROXY_ON
+
 import Foundation
 #if !RX_NO_MODULE
     import RxSwift
-    #if SWIFT_PACKAGE
+    #if SWIFT_PACKAGE && !os(Linux)
         import RxCocoaRuntime
     #endif
 #endif
@@ -274,3 +276,6 @@ open class DelegateProxy : _RXDelegateProxy {
         return p
     }
 }
+
+#endif
+

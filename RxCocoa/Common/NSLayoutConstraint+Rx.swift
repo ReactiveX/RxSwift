@@ -6,6 +6,8 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
+#if os(OSX)
+
 import Foundation
 
 #if os(OSX)
@@ -39,5 +41,7 @@ extension Reactive where Base: NSLayoutConstraint {
         }.asObserver()
     }
 }
+
+#endif
 
 #endif

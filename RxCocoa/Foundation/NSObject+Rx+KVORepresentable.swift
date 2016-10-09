@@ -6,6 +6,8 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
+#if KVO_ON
+
 import Foundation
 #if !RX_NO_MODULE
     import RxSwift
@@ -28,7 +30,7 @@ extension Reactive where Base: NSObject {
     }
 }
 
-#if !DISABLE_SWIZZLING
+#if SWIZZLING_ON
     // KVO
     extension Reactive where Base: NSObject {
         /**
@@ -42,4 +44,6 @@ extension Reactive where Base: NSObject {
                 .map(E.init)
         }
     }
+#endif
+
 #endif
