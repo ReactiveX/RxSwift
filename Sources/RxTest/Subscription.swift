@@ -1,1 +1,1 @@
-../../RxTests/Subscription.swift
+../../RxTest/Subscription.swift

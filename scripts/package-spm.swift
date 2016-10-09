@@ -71,13 +71,16 @@ func checkExtension(_ path: String) throws {
 func packageRelativePath(_ paths: [String], targetDirName: String, excluded: [String] = []) throws {
     let targetPath = "Sources/\(targetDirName)"
 
-    print(targetPath)
+    print("Checking " + targetPath)
 
     for file in try fileManager.contentsOfDirectory(atPath: targetPath)  {
-        try checkExtension(file)
+        if file != "include" && file != ".DS_Store" {
+            print("Checking extension \(file)")
+            try checkExtension(file)
 
-        print("Cleaning \(file)")
-        try fileManager.removeItem(atPath: "\(targetPath)/\(file)")
+            print("Cleaning \(file)")
+            try fileManager.removeItem(atPath: "\(targetPath)/\(file)")
+        }
     }
 
     for sourcePath in paths {
@@ -105,8 +108,15 @@ func packageRelativePath(_ paths: [String], targetDirName: String, excluded: [St
             let fileName = (file as NSString).lastPathComponent
             let atURL = NSURL(string: "file:///\(fileManager.currentDirectoryPath)/\(targetPath)/\(fileName)")!
 
-            print("Linking \(fileName) [\(atURL)] -> \(destinationURL)")
-            try fileManager.createSymbolicLink(at: atURL as URL, withDestinationURL: destinationURL as URL)
+            if fileName.hasSuffix(".h") {
+                let sourcePath = NSURL(string: "file:///" + fileManager.currentDirectoryPath + "/" + sourcePath + "/" + file)!
+                //throw NSError(domain: sourcePath.description, code: -1, userInfo: nil)
+                try fileManager.copyItem(at: sourcePath as URL, to: atURL as URL)
+            }
+            else {
+                print("Linking \(fileName) [\(atURL)] -> \(destinationURL)")
+                try fileManager.createSymbolicLink(at: atURL as URL, withDestinationURL: destinationURL as URL)
+            }
         }
     }
 }
@@ -182,14 +192,28 @@ func buildAllTestsTarget(_ testsPath: String) throws {
         mainContent.append("")
     }
 
-    mainContent.append("CurrentThreadScheduler.instance.schedule(()) { _ in")
+    mainContent.append("#if os(OSX) || os(iOS) || os(tvOS) || os(watchOS)")
+    mainContent.append("")
+    mainContent.append("func XCTMain(_ tests: [RxTest]) {")
+    mainContent.append("    for testCase in tests {")
+    mainContent.append("        print(\"Test \\(testCase)\")")
+    mainContent.append("        for test in testCase.allTests {")
+    mainContent.append("            print(\"   testing \\(test.0)\")")
+    mainContent.append("            try! test.1()")
+    mainContent.append("        }")
+    mainContent.append("    }")
+    mainContent.append("}")
+    mainContent.append("")
+    mainContent.append("#endif")
+    mainContent.append("")
+    mainContent.append("//CurrentThreadScheduler.instance.schedule(()) { _ in")
     mainContent.append("    XCTMain([")
     for testCase in reducedMethods.keys {
         mainContent.append("        _\(testCase),")
     }
     mainContent.append("    ])")
-    mainContent.append("    return NopDisposable.instance")
-    mainContent.append("}")
+    mainContent.append("    //return Disposables.create()")
+    mainContent.append("//}")
     mainContent.append("")
 
     let serializedMainContent = mainContent.joined(separator: "\n")
@@ -199,15 +223,36 @@ func buildAllTestsTarget(_ testsPath: String) throws {
 
 try packageRelativePath(["RxSwift"], targetDirName: "RxSwift")
 //try packageRelativePath(["RxCocoa/Common", "RxCocoa/OSX", "RxCocoa/RxCocoa.h"], targetDirName: "RxCocoa")
-try packageRelativePath(["RxCocoa/RxCocoa.h"], targetDirName: "RxCocoa")
+
+try packageRelativePath([
+    "RxCocoa/RxCocoa.swift",
+    "RxCocoa/CocoaUnits",
+    "RxCocoa/Common",
+    "RxCocoa/Foundation",
+    "RxCocoa/iOS",
+    "RxCocoa/OSX",
+    ], targetDirName: "RxCocoa")
+try packageRelativePath([
+    "RxCocoa/Runtime/include",
+    ], targetDirName: "RxCocoaRuntime/include")
+try packageRelativePath([
+    "RxCocoa/Runtime/_RX.m",
+    "RxCocoa/Runtime/_RXDelegateProxy.m",
+    "RxCocoa/Runtime/_RXKVOObserver.m",
+    "RxCocoa/Runtime/_RXObjCRuntime.m",
+    ], targetDirName: "RxCocoaRuntime")
+
 try packageRelativePath(["RxBlocking"], targetDirName: "RxBlocking")
-try packageRelativePath(["RxTests"], targetDirName: "RxTest")
+try packageRelativePath(["RxTest"], targetDirName: "RxTest")
 // It doesn't work under `Tests` subpath ¯\_(ツ)_/¯
 try packageRelativePath([
+        "Tests/RxSwiftTests",
         "RxSwift/RxMutableBox.swift",
         "Tests/RxTest.swift",
-        "Tests/Tests",
-        "Tests/RxSwiftTests"
+        "Tests/Foundation+Extensions.swift",
+        "Tests/Recorded+Timeless.swift",
+        "Tests/TestErrors.swift",
+        "Tests/XCTest+AllTests.swift",
     ],
     targetDirName: "AllTestz",
     excluded: [

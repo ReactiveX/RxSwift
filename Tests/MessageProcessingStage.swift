@@ -18,6 +18,8 @@ enum MessageProcessingStage: Int {
     case methodInvoked = 2
 }
 
+typealias MethodParameters = [Any]
+
 struct ObservedSequence {
     let stage: MessageProcessingStage
     let sequence: Observable<MethodParameters>

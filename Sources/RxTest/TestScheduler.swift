@@ -1,1 +1,1 @@
-../../RxTests/Schedulers/TestScheduler.swift
+../../RxTest/Schedulers/TestScheduler.swift

@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import RxTests
+import RxTest
 import RxSwift
 
 func next<T>(_ value: T) -> Recorded<Event<T>> {

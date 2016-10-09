@@ -1,6 +1,5 @@
 import PackageDescription
 
-#if os(OSX)
 let package = Package(
     name: "RxSwift",
     targets: [
@@ -14,50 +13,35 @@ let package = Package(
             ]
         ),
         Target(
-            name: "RxSwiftTests",
-            dependencies: [
-                .Target(name: "RxSwift"),
-                .Target(name: "RxBlocking"),
-                .Target(name: "RxTests"),
-            ]
-        )
-    ],
-    exclude: [
-        "Sources/RxCocoa",
-        "Sources/RxTests",
-        "Sources/AllTests",
-        "Tests/RxCocoaTests"
-    ]
-)
-#elseif os(Linux)
-let package = Package(
-    name: "RxSwift",
-    targets: [
-        Target(
-            name: "RxSwift"
-        ),
-        Target(
-            name: "RxBlocking",
+            name: "RxCocoaRuntime",
             dependencies: [
                 .Target(name: "RxSwift")
             ]
         ),
         Target(
-            name: "RxSwiftTests",
+            name: "RxCocoa",
+            dependencies: [
+                .Target(name: "RxSwift"),
+                .Target(name: "RxCocoaRuntime")
+            ]
+        ),
+        Target(
+            name: "RxTest",
+            dependencies: [
+                .Target(name: "RxSwift")
+            ]
+        ),
+        Target(
+            name: "AllTestz",
             dependencies: [
                 .Target(name: "RxSwift"),
                 .Target(name: "RxBlocking"),
-                .Target(name: "RxTests")
+                .Target(name: "RxTest"),
+                .Target(name: "RxCocoa")
             ]
         )
     ],
     exclude: [
-        "Sources/RxCocoa",
-        "Sources/RxTests",
-        "Sources/AllTests",
-        "Tests/RxCocoaTests",
-        "Tests/PerformanceTests",
-        "Tests/RxSwiftTests/SPMTestTools/PerformanceTools.swift",
+        "Tests"
     ]
 )
-#endif

@@ -8,7 +8,7 @@
 
 import Foundation
 import RxSwift
-import RxTests
+import RxTest
 
 public func == <T>(lhs: Observable<T>, rhs: Observable<T>) -> Bool {
     return lhs === rhs

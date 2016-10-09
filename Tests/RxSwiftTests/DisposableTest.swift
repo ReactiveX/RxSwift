@@ -9,7 +9,7 @@
 import Foundation
 import XCTest
 import RxSwift
-import RxTests
+import RxTest
 
 class DisposableTest : RxTest {
     override func setUp() {

@@ -1,1 +1,1 @@
-../../RxTests/ColdObservable.swift
+../../RxTest/ColdObservable.swift

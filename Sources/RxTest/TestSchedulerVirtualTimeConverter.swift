@@ -1,1 +1,1 @@
-../../RxTests/Schedulers/TestSchedulerVirtualTimeConverter.swift
+../../RxTest/Schedulers/TestSchedulerVirtualTimeConverter.swift

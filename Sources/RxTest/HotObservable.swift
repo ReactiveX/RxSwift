@@ -1,1 +1,1 @@
-../../RxTests/HotObservable.swift
+../../RxTest/HotObservable.swift

@@ -8,7 +8,7 @@
 
 import Foundation
 import RxSwift
-import RxTests
+import RxTest
 
 // MARK: Generic support code
 

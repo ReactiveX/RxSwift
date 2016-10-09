@@ -1,1 +1,1 @@
-../../RxTests/Any+Equatable.swift
+../../RxTest/Any+Equatable.swift

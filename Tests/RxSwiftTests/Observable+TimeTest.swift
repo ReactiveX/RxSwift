@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 import RxBlocking
 import XCTest
-import RxTests
+import RxTest
 #if os(Linux)
 import Dispatch
 #endif

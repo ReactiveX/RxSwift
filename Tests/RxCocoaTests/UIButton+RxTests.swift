@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import RxTests
+import RxTest
 import RxCocoa
 import UIKit
 import RxSwift

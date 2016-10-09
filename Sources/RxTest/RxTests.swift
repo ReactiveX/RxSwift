@@ -1,1 +1,1 @@
-../../RxTests/RxTests.swift
+../../RxTest/RxTests.swift

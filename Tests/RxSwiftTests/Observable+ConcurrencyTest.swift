@@ -10,7 +10,7 @@ import Foundation
 import XCTest
 import RxSwift
 import RxBlocking
-import RxTests
+import RxTest
 
 class ObservableConcurrencyTestBase : RxTest {
     var lock = NSLock()

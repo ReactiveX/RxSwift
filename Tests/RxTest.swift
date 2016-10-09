@@ -8,11 +8,12 @@
 
 import XCTest
 import RxSwift
-import RxTests
+import RxTest
 import Foundation
 
 #if TRACE_RESOURCES
 #elseif RELEASE
+#elseif os(OSX) || os(iOS) || os(tvOS) || os(watchOS)
 #elseif os(Linux)
 #else
 let failure = unhandled_case()
@@ -38,9 +39,7 @@ func getMemoryInfo() -> (bytes: Int64, allocations: Int64) {
 class RxTest
     : XCTestCase {
 
-    #if os(Linux)
-        var allTests : [(String, () throws -> Void)] = []
-    #endif
+    var allTests : [(String, () throws -> Void)] = []
 
     fileprivate var startResourceCount: AtomicInt = 0
 

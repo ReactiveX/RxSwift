@@ -796,7 +796,21 @@ _ReplaySubjectTest.allTests = [
     ("test_hasObserversManyObserver", { _ReplaySubjectTest.setUp(); _ReplaySubjectTest.test_hasObserversManyObserver(); _ReplaySubjectTest.tearDown(); }),
 ]
 
-CurrentThreadScheduler.instance.schedule(()) { _ in
+#if os(OSX) || os(iOS) || os(tvOS) || os(watchOS)
+
+func XCTMain(_ tests: [RxTest]) {
+    for testCase in tests {
+        print("Test \(testCase)")
+        for test in testCase.allTests {
+            print("   testing \(test.0)")
+            try! test.1()
+        }
+    }
+}
+
+#endif
+
+//CurrentThreadScheduler.instance.schedule(()) { _ in
     XCTMain([
         _ObservableSubscriptionTests,
         _DisposableTest,
@@ -823,5 +837,5 @@ CurrentThreadScheduler.instance.schedule(()) { _ in
         _BagTest,
         _ReplaySubjectTest,
     ])
-    return NopDisposable.instance
-}
+    //return Disposables.create()
+//}

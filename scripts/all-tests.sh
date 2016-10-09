@@ -66,7 +66,7 @@ function ensureNoGitChanges() {
 function checkPlistVersions() {
 	RXSWIFT_VERSION=`cat RxSwift.podspec | grep -E "s.version\s+=" | cut -d '"' -f 2`
 	echo "RxSwift version: ${RXSWIFT_VERSION}"
-	PROJECTS=(RxSwift RxCocoa RxBlocking RxTests)
+	PROJECTS=(RxSwift RxCocoa RxBlocking RxTest)
 	for project in ${PROJECTS[@]}
 	do
 		echo "Checking version for ${project}"

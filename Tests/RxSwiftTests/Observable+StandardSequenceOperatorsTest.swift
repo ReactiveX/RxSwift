@@ -9,7 +9,7 @@
 import Foundation
 import XCTest
 import RxSwift
-import RxTests
+import RxTest
 #if os(Linux)
 import Glibc
 #endif

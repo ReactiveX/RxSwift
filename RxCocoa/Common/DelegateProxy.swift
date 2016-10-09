@@ -8,7 +8,10 @@
 
 import Foundation
 #if !RX_NO_MODULE
-import RxSwift
+    import RxSwift
+    #if SWIFT_PACKAGE
+        import RxCocoaRuntime
+    #endif
 #endif
 
 var delegateAssociatedTag: UInt8 = 0

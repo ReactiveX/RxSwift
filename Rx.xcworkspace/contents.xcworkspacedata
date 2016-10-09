@@ -32,12 +32,24 @@
          location = "group:RxSwift.podspec">
       </FileRef>
       <FileRef
-         location = "group:RxTests.podspec">
+         location = "group:RxTest.podspec">
       </FileRef>
    </Group>
    <Group
       location = "group:scripts"
       name = "scripts">
+      <FileRef
+         location = "group:release-prep.sh">
+      </FileRef>
+      <FileRef
+         location = "group:spm-build-test.sh">
+      </FileRef>
+      <FileRef
+         location = "group:update-jazzy-config.rb">
+      </FileRef>
+      <FileRef
+         location = "group:update-jazzy-docs.sh">
+      </FileRef>
       <FileRef
          location = "group:all-tests.sh">
       </FileRef>

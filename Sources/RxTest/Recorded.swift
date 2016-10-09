@@ -1,1 +1,1 @@
-../../RxTests/Recorded.swift
+../../RxTest/Recorded.swift

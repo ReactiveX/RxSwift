@@ -1,1 +1,1 @@
-../../RxTests/TestableObserver.swift
+../../RxTest/TestableObserver.swift

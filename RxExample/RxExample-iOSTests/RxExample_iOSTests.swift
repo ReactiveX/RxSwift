@@ -9,7 +9,7 @@
 import XCTest
 
 import RxSwift
-import RxTests
+import RxTest
 import RxCocoa
 
 let resolution: TimeInterval = 0.2 // seconds

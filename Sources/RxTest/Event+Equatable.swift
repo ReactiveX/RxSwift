@@ -1,1 +1,1 @@
-../../RxTests/Event+Equatable.swift
+../../RxTest/Event+Equatable.swift
