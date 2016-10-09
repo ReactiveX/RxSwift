@@ -88,6 +88,7 @@ extension AnonymousObservableTests {
         XCTAssertEqual(elements, [0])
     }
 
+    #if !os(Linux)
     func testAnonymousObservable_disposeReferenceDoesntRetainObservable() {
 
         var targetDeallocated = false
@@ -127,4 +128,5 @@ extension AnonymousObservableTests {
         subscription.dispose()
         XCTAssertTrue(targetDeallocated)
     }
+    #endif
 }

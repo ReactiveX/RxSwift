@@ -6,7 +6,7 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-#if KVO_ON
+#if !os(Linux)
 
 import Foundation
 #if !RX_NO_MODULE
@@ -30,7 +30,7 @@ extension Reactive where Base: NSObject {
     }
 }
 
-#if SWIZZLING_ON
+#if !DISABLE_SWIZZLING && !os(Linux)
     // KVO
     extension Reactive where Base: NSObject {
         /**

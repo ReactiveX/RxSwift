@@ -40,7 +40,8 @@ let excludedTests = [
     "testObserveOnDispatchQueue_EnsureCorrectImplementationIsChosen",
     "testWindowWithTimeOrCount_BasicPeriod",
     "testObserveOnDispatchQueue_DispatchQueueSchedulerIsSerial",
-    "testResourceLeaksDetectionIsTurnedOn"
+    "testResourceLeaksDetectionIsTurnedOn",
+    "testAnonymousObservable_disposeReferenceDoesntRetainObservable"
 ]
 
 let excludedTestClasses = [
@@ -177,42 +178,66 @@ func buildAllTestsTarget(_ testsPath: String) throws {
     mainContent.append("import XCTest")
     mainContent.append("import RxSwift")
     mainContent.append("")
+    mainContent.append("protocol RxTestCase {")
+    mainContent.append("#if os(OSX)")
+    mainContent.append("    init()")
+    mainContent.append("    static var allTests: [(String, (Self) -> () -> ())] { get }")
+    mainContent.append("#endif")
+    mainContent.append("    func setUp()")
+    mainContent.append("    func tearDown()")
+    mainContent.append("}")
+    mainContent.append("")
 
     for (name, methods) in reducedMethods {
 
         mainContent.append("")
-        mainContent.append("let _\(name) = \(name)()")
-        mainContent.append("_\(name).allTests = [")
+        mainContent.append("final class \(name)_Sub : \(name), RxTestCase {")
+        mainContent.append("    #if os(OSX)")
+        mainContent.append("    required override init() {")
+        mainContent.append("        super.init()")
+        mainContent.append("    }")
+        mainContent.append("    #endif")
+        mainContent.append("")
+        mainContent.append("    static var allTests: [(String, (\(name)_Sub) -> () -> ())] { return [")
         for method in methods {
             // throwing error on Linux, you will crash
             let isTestCaseHandlingError = throwingWordsInTests.map { (method as String).lowercased().contains($0) }.reduce(false) { $0 || $1 }
-            mainContent.append("    \(isTestCaseHandlingError ? "//" : "")(\"\(method)\", { _\(name).setUp(); _\(name).\(method)(); _\(name).tearDown(); }),")
+            mainContent.append("    \(isTestCaseHandlingError ? "//" : "")(\"\(method)\", \(name).\(method)),")
         }
-        mainContent.append("]")
-        mainContent.append("")
+        mainContent.append("    ] }")
+        mainContent.append("}")
     }
 
     mainContent.append("#if os(OSX) || os(iOS) || os(tvOS) || os(watchOS)")
     mainContent.append("")
-    mainContent.append("func XCTMain(_ tests: [RxTest]) {")
-    mainContent.append("    for testCase in tests {")
-    mainContent.append("        print(\"Test \\(testCase)\")")
-    mainContent.append("        for test in testCase.allTests {")
-    mainContent.append("            print(\"   testing \\(test.0)\")")
-    mainContent.append("            try! test.1()")
+    mainContent.append("func testCase<T: RxTestCase>(_ tests: [(String, (T) -> () -> ())]) -> () -> () {")
+    mainContent.append("    return {")
+    mainContent.append("        for testCase in tests {")
+    mainContent.append("            print(\"Test \\(testCase)\")")
+    mainContent.append("            for test in T.allTests {")
+    mainContent.append("                let testInstance = T()")
+    mainContent.append("                testInstance.setUp()")
+    mainContent.append("                print(\"   testing \\(test.0)\")")
+    mainContent.append("                test.1(testInstance)()")
+    mainContent.append("                testInstance.tearDown()")
+    mainContent.append("            }")
     mainContent.append("        }")
+    mainContent.append("    }")
+    mainContent.append("}")
+    mainContent.append("")
+    mainContent.append("func XCTMain(_ tests: [() -> ()]) {")
+    mainContent.append("    for testCase in tests {")
+    mainContent.append("        testCase()")
     mainContent.append("    }")
     mainContent.append("}")
     mainContent.append("")
     mainContent.append("#endif")
     mainContent.append("")
-    mainContent.append("//CurrentThreadScheduler.instance.schedule(()) { _ in")
     mainContent.append("    XCTMain([")
     for testCase in reducedMethods.keys {
-        mainContent.append("        _\(testCase),")
+        mainContent.append("        testCase(\(testCase)_Sub.allTests),")
     }
     mainContent.append("    ])")
-    mainContent.append("    //return Disposables.create()")
     mainContent.append("//}")
     mainContent.append("")
 

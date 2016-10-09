@@ -6,6 +6,8 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
+import Foundation
+
 /**
 Represents a disposable resource which only allows a single assignment of its underlying disposable resource.
 

@@ -14,25 +14,6 @@ import RxSwift
     import UIKit
 #endif
 
-#if !DISABLE_SWIZZLING && !os(Linux)
-    let SWIZZLING_ON = true
-#else
-    let SWIZZLING_ON = false
-#endif
-
-#if !os(Linux)
-    let KVO_ON = true
-#else
-    let KVO_ON = false
-#endif
-
-#if !os(Linux)
-    let DELEGATE_PROXY_ON = true
-#else
-    let DELEGATE_PROXY_ON = false
-#endif
-
-
 /**
 RxCocoa errors.
 */

@@ -6,7 +6,7 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-#if os(OSX)
+#if !os(Linux)
 
 import Foundation
 

@@ -39,8 +39,6 @@ func getMemoryInfo() -> (bytes: Int64, allocations: Int64) {
 class RxTest
     : XCTestCase {
 
-    var allTests : [(String, () throws -> Void)] = []
-
     fileprivate var startResourceCount: AtomicInt = 0
 
     var accumulateStatistics: Bool {
@@ -129,6 +127,10 @@ extension RxTest {
     func AtomicDecrement(_ increment: UnsafeMutablePointer<AtomicInt>) -> AtomicInt {
         increment.pointee = increment.pointee - 1
         return increment.pointee
+    }
+
+    func autoreleasepool<T>(_ action: () -> T) -> T {
+        return action()
     }
 #else
     let error = fatalError("wot")
