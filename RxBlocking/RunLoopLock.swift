@@ -24,8 +24,8 @@ typealias AtomicInt = Int32
       return increment.pointee
   }
 #else
-  let AtomicIncrement = OSAtomicIncrement32
-  let AtomicDecrement = OSAtomicDecrement32
+  let AtomicIncrement = OSAtomicIncrement32Barrier
+  let AtomicDecrement = OSAtomicDecrement32Barrier
 #endif
 
 #if os(Linux)

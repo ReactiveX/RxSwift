@@ -21,7 +21,7 @@ class RxTarget : NSObject
         self.retainSelf = self
 
 #if TRACE_RESOURCES
-        OSAtomicIncrement32(&resourceCount)
+        OSAtomicIncrement32Barrier(&resourceCount)
 #endif
 
 #if DEBUG
@@ -38,7 +38,7 @@ class RxTarget : NSObject
 
 #if TRACE_RESOURCES
     deinit {
-        OSAtomicDecrement32(&resourceCount)
+        OSAtomicDecrement32Barrier(&resourceCount)
     }
 #endif
 }

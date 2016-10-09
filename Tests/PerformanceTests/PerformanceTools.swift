@@ -17,8 +17,8 @@ var allocCalls: Int64 = 0
 var bytesAllocated: Int64 = 0
 
 func call0(_ p: UnsafeMutablePointer<_malloc_zone_t>?, size: Int) -> UnsafeMutableRawPointer? {
-    OSAtomicIncrement64(&allocCalls)
-    OSAtomicAdd64(Int64(size), &bytesAllocated)
+    OSAtomicIncrement64Barrier(&allocCalls)
+    OSAtomicAdd64Barrier(Int64(size), &bytesAllocated)
 #if ALLOC_HOOK
     allocation()
 #endif
@@ -26,8 +26,8 @@ func call0(_ p: UnsafeMutablePointer<_malloc_zone_t>?, size: Int) -> UnsafeMutab
 }
 
 func call1(_ p: UnsafeMutablePointer<_malloc_zone_t>?, size: Int) -> UnsafeMutableRawPointer? {
-    OSAtomicIncrement64(&allocCalls)
-    OSAtomicAdd64(Int64(size), &bytesAllocated)
+    OSAtomicIncrement64Barrier(&allocCalls)
+    OSAtomicAdd64Barrier(Int64(size), &bytesAllocated)
 #if ALLOC_HOOK
     allocation()
 #endif
@@ -35,8 +35,8 @@ func call1(_ p: UnsafeMutablePointer<_malloc_zone_t>?, size: Int) -> UnsafeMutab
 }
 
 func call2(_ p: UnsafeMutablePointer<_malloc_zone_t>?, size: Int) -> UnsafeMutableRawPointer? {
-    OSAtomicIncrement64(&allocCalls)
-    OSAtomicAdd64(Int64(size), &bytesAllocated)
+    OSAtomicIncrement64Barrier(&allocCalls)
+    OSAtomicAdd64Barrier(Int64(size), &bytesAllocated)
 #if ALLOC_HOOK
     allocation()
 #endif

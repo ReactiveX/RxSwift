@@ -117,8 +117,8 @@ extension RxTest {
 
 #if os(OSX) || os(iOS) || os(tvOS) || os(watchOS)
     typealias AtomicInt = Int32
-    let AtomicIncrement = OSAtomicIncrement32
-    let AtomicDecrement = OSAtomicDecrement32
+    let AtomicIncrement = OSAtomicIncrement32Barrier
+    let AtomicDecrement = OSAtomicDecrement32Barrier
 #elseif os(Linux)
     typealias AtomicInt = Int64
     func AtomicIncrement(_ increment: UnsafeMutablePointer<AtomicInt>) -> AtomicInt {

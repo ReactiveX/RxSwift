@@ -819,7 +819,7 @@ static NSMutableDictionary<NSString *, RXInterceptWithOptimizedObserver> *optimi
     ALWAYS(![self forwardingSelector:selector forClass:swizzlingImplementorClass], @"Already observing selector for class");
 
 #if TRACE_RESOURCES
-    OSAtomicIncrement32(&numberOfForwardedMethods);
+    OSAtomicIncrement32Barrier(&numberOfForwardedMethods);
 #endif
     SEL rxSelector = RX_selector(selector);
 
@@ -950,7 +950,7 @@ replacementImplementationGenerator:(IMP (^)(IMP originalImplementation))replacem
     }
 
 #if TRACE_RESOURCES
-    OSAtomicIncrement32(&numberOInterceptedMethods);
+    OSAtomicIncrement32Barrier(&numberOInterceptedMethods);
 #endif
     
     DLOG(@"Rx is swizzling `%@` for `%@`", NSStringFromSelector(selector), class);
