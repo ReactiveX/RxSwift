@@ -10,19 +10,19 @@
 import Foundation
 
 /**
-This script packages normal Rx* structure into `Sources` directory.
+ This script packages normal Rx* structure into `Sources` directory.
 
-    * creates and updates links to normal project structure
-    * builds unit tests `main.swift`
+ * creates and updates links to normal project structure
+ * builds unit tests `main.swift`
 
-Unfortunately, Swift support for Linux, libdispatch and package manager are still quite unstable,
-so certain class of unit tests is excluded for now.
+ Unfortunately, Swift support for Linux, libdispatch and package manager are still quite unstable,
+ so certain class of unit tests is excluded for now.
 
-*/
+ */
 
 // It is kind of ironic that we need to additionally package for package manager :/
 
-let fileManager = NSFileManager.defaultManager()
+let fileManager = FileManager.default
 
 let allowedExtensions = [
     ".swift",
@@ -58,34 +58,34 @@ let throwingWordsInTests = [
     "retrywhen",
 ]
 
-func isExtensionAllowed(path: String) -> Bool {
+func isExtensionAllowed(_ path: String) -> Bool {
     return (allowedExtensions.map { path.hasSuffix($0) }).reduce(false) { $0 || $1 }
 }
 
-func checkExtension(path: String) throws {
+func checkExtension(_ path: String) throws {
     if !isExtensionAllowed(path) {
         throw NSError(domain: "Security", code: -1, userInfo: ["path" : path])
     }
 }
 
-func packageRelativePath(paths: [String], targetDirName: String, excluded: [String] = []) throws {
+func packageRelativePath(_ paths: [String], targetDirName: String, excluded: [String] = []) throws {
     let targetPath = "Sources/\(targetDirName)"
 
     print(targetPath)
 
-    for file in try fileManager.contentsOfDirectoryAtPath(targetPath)  {
+    for file in try fileManager.contentsOfDirectory(atPath: targetPath)  {
         try checkExtension(file)
 
         print("Cleaning \(file)")
-        try fileManager.removeItemAtPath("\(targetPath)/\(file)")
+        try fileManager.removeItem(atPath: "\(targetPath)/\(file)")
     }
 
     for sourcePath in paths {
         var isDirectory: ObjCBool = false
-        fileManager.fileExistsAtPath(sourcePath, isDirectory: &isDirectory)
+        fileManager.fileExists(atPath: sourcePath, isDirectory: &isDirectory)
 
-        let files = isDirectory ? try fileManager.subpathsOfDirectoryAtPath(sourcePath)
-                : [sourcePath]
+        let files: [String] = isDirectory.boolValue ? fileManager.subpaths(atPath: sourcePath)!
+            : [sourcePath]
 
         for file in files {
             if !isExtensionAllowed(file) {
@@ -98,7 +98,7 @@ func packageRelativePath(paths: [String], targetDirName: String, excluded: [Stri
                 continue
             }
 
-            let fileRelativePath = isDirectory ? "\(sourcePath)/\(file)" : file
+            let fileRelativePath = isDirectory.boolValue ? "\(sourcePath)/\(file)" : file
 
             let destinationURL = NSURL(string: "../../\(fileRelativePath)")!
 
@@ -106,12 +106,12 @@ func packageRelativePath(paths: [String], targetDirName: String, excluded: [Stri
             let atURL = NSURL(string: "file:///\(fileManager.currentDirectoryPath)/\(targetPath)/\(fileName)")!
 
             print("Linking \(fileName) [\(atURL)] -> \(destinationURL)")
-            try fileManager.createSymbolicLinkAtURL(atURL, withDestinationURL: destinationURL)
+            try fileManager.createSymbolicLink(at: atURL as URL, withDestinationURL: destinationURL as URL)
         }
     }
 }
 
-func buildAllTestsTarget(testsPath: String) throws {
+func buildAllTestsTarget(_ testsPath: String) throws {
     let splitClasses = "(?:class|extension)\\s+(\\w+)"
     let testMethods = "\\s+func\\s+(test\\w+)"
 
@@ -120,25 +120,25 @@ func buildAllTestsTarget(testsPath: String) throws {
 
     var reducedMethods: [String: [String]] = [:]
 
-    for file in try fileManager.contentsOfDirectoryAtPath(testsPath) {
+    for file in try fileManager.contentsOfDirectory(atPath: testsPath) {
         if !file.hasSuffix(".swift") || file == "main.swift" {
             continue
         }
 
         let fileRelativePath = "\(testsPath)/\(file)"
-        let testContent = try NSString(contentsOfFile: fileRelativePath, encoding: NSUTF8StringEncoding)
+        let testContent = try String(contentsOfFile: fileRelativePath, encoding: String.Encoding.utf8)
 
         print(fileRelativePath)
 
-        let classMatches = splitClassesRegularExpression.matchesInString(testContent as String, options: [], range: NSRange(location: 0, length: testContent.length))
+        let classMatches = splitClassesRegularExpression.matches(in: testContent as String, options: [], range: NSRange(location: 0, length: testContent.characters.count))
         let matchIndexes = classMatches
             .map { $0.range.location }
-        let classNames = classMatches.map { testContent.substringWithRange($0.rangeAtIndex(1)) as NSString }
+        let classNames = classMatches.map { (testContent as NSString).substring(with: $0.rangeAt(1)) as NSString }
 
-        let ranges = zip([0] + matchIndexes, matchIndexes + [testContent.length]).map { NSRange(location: $0, length: $1 - $0) }
+        let ranges = zip([0] + matchIndexes, matchIndexes + [testContent.characters.count]).map { NSRange(location: $0, length: $1 - $0) }
         let classRanges = ranges[1 ..< ranges.count]
 
-        let classes = zip(classNames, classRanges.map { testContent.substringWithRange($0) as NSString })
+        let classes = zip(classNames, classRanges.map { (testContent as NSString).substring(with: $0) as NSString })
 
         for (name, classCode) in classes {
             if excludedTestClasses.contains(name as String) {
@@ -146,10 +146,10 @@ func buildAllTestsTarget(testsPath: String) throws {
                 continue
             }
 
-            let methodMatches = testMethodsExpression.matchesInString(classCode as String, options: [], range: NSRange(location: 0, length: classCode.length))
-            let methodNameRanges = methodMatches.map { $0.rangeAtIndex(1) }
+            let methodMatches = testMethodsExpression.matches(in: classCode as String, options: [], range: NSRange(location: 0, length: classCode.length))
+            let methodNameRanges = methodMatches.map { $0.rangeAt(1) }
             let testMethodNames = methodNameRanges
-                .map { classCode.substringWithRange($0) }
+                .map { classCode.substring(with: $0) }
                 .filter { !excludedTests.contains($0) }
 
             if testMethodNames.count == 0 {
@@ -174,9 +174,9 @@ func buildAllTestsTarget(testsPath: String) throws {
         mainContent.append("let _\(name) = \(name)()")
         mainContent.append("_\(name).allTests = [")
         for method in methods {
-        // throwing error on Linux, you will crash
-        let isTestCaseHandlingError = throwingWordsInTests.map { (method as String).lowercaseString.containsString($0) }.reduce(false) { $0 || $1 }
-        mainContent.append("    \(isTestCaseHandlingError ? "//" : "")(\"\(method)\", { _\(name).setUp(); _\(name).\(method)(); _\(name).tearDown(); }),")
+            // throwing error on Linux, you will crash
+            let isTestCaseHandlingError = throwingWordsInTests.map { (method as String).lowercased().contains($0) }.reduce(false) { $0 || $1 }
+            mainContent.append("    \(isTestCaseHandlingError ? "//" : "")(\"\(method)\", { _\(name).setUp(); _\(name).\(method)(); _\(name).tearDown(); }),")
         }
         mainContent.append("]")
         mainContent.append("")
@@ -185,15 +185,15 @@ func buildAllTestsTarget(testsPath: String) throws {
     mainContent.append("CurrentThreadScheduler.instance.schedule(()) { _ in")
     mainContent.append("    XCTMain([")
     for testCase in reducedMethods.keys {
-    mainContent.append("        _\(testCase),")
+        mainContent.append("        _\(testCase),")
     }
     mainContent.append("    ])")
     mainContent.append("    return NopDisposable.instance")
     mainContent.append("}")
     mainContent.append("")
 
-    let serializedMainContent = mainContent.joinWithSeparator("\n")
-    try serializedMainContent.writeToFile("\(testsPath)/main.swift", atomically: true, encoding: NSUTF8StringEncoding)
+    let serializedMainContent = mainContent.joined(separator: "\n")
+    try serializedMainContent.write(toFile: "\(testsPath)/main.swift", atomically: true, encoding: String.Encoding.utf8)
 }
 
 
@@ -216,3 +216,4 @@ try packageRelativePath([
     ])
 
 try buildAllTestsTarget("Sources/AllTests")
+

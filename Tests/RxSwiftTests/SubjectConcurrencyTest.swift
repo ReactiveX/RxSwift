@@ -9,9 +9,7 @@
 import Foundation
 @testable import RxSwift
 import XCTest
-#if os(Linux)
 import Dispatch
-#endif
 
 
 

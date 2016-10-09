@@ -7,10 +7,7 @@
 //
 
 import Foundation
-#if os(Linux)
 import Dispatch
-#endif
-
 
 import RxSwift
 import XCTest

@@ -66,17 +66,17 @@
     typealias AtomicInt = Int64
     #endif
 
-    public func AtomicIncrement(_ increment: UnsafeMutablePointer<AtomicInt>) -> AtomicInt {
+    func AtomicIncrement(_ increment: UnsafeMutablePointer<AtomicInt>) -> AtomicInt {
         increment.pointee = increment.pointee + 1
         return increment.pointee
     }
 
-    public func AtomicDecrement(_ increment: UnsafeMutablePointer<AtomicInt>) -> AtomicInt {
+    func AtomicDecrement(_ increment: UnsafeMutablePointer<AtomicInt>) -> AtomicInt {
         increment.pointee = increment.pointee - 1
         return increment.pointee
     }
 
-    public func AtomicCompareAndSwap(_ l: AtomicInt, _ r: AtomicInt, _ target: UnsafeMutablePointer<AtomicInt>) -> Bool {
+    func AtomicCompareAndSwap(_ l: AtomicInt, _ r: AtomicInt, _ target: UnsafeMutablePointer<AtomicInt>) -> Bool {
         //return __sync_val_compare_and_swap(target, l, r)
         if target.pointee == l {
             target.pointee = r

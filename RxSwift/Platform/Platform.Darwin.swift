@@ -17,9 +17,9 @@
     typealias AtomicInt = Int32
     #endif
 
-    public let AtomicCompareAndSwap = OSAtomicCompareAndSwap32
-    public let AtomicIncrement = OSAtomicIncrement32
-    public let AtomicDecrement = OSAtomicDecrement32
+    let AtomicCompareAndSwap = OSAtomicCompareAndSwap32
+    let AtomicIncrement = OSAtomicIncrement32
+    let AtomicDecrement = OSAtomicDecrement32
 
     public extension Thread {
         static func setThreadLocalStorageValue<T: AnyObject>(_ value: T?, forKey key: String

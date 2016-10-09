@@ -1209,7 +1209,6 @@ extension ObservableTimeTest {
     }
 
     func testBufferWithTimeOrCount_Default() {
-        #if !os(Linux)
         let backgroundScheduler = SerialDispatchQueueScheduler(globalConcurrentQueueQOS: .default)
         
         let result = try! Observable.range(start: 1, count: 10, scheduler: backgroundScheduler)
@@ -1219,7 +1218,6 @@ extension ObservableTimeTest {
             .first()
             
         XCTAssertEqual(result!, [4, 5, 6])
-        #endif
     }
     
 }

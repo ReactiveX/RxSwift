@@ -7,9 +7,7 @@
 //
 
 import Foundation
-#if os(Linux)
 import Dispatch
-#endif
 
 #if os(Linux)
     let CurrentThreadSchedulerKeyInstance       = "RxSwift.CurrentThreadScheduler.SchedulerKey"
@@ -25,39 +23,6 @@ import Dispatch
 
     typealias CurrentThreadSchedulerValue       = NSString
     let CurrentThreadSchedulerValueInstance     = "RxSwift.CurrentThreadScheduler.SchedulerKey" as NSString
-
-    /*
-    let CurrentThreadSchedulerKeyInstance       = CurrentThreadSchedulerKey()
-    let CurrentThreadSchedulerQueueKeyInstance  = CurrentThreadSchedulerQueueKey()
-
-    typealias CurrentThreadSchedulerValue       = CurrentThreadSchedulerKey
-    let CurrentThreadSchedulerValueInstance     = CurrentThreadSchedulerKeyInstance
-
-    @objc class CurrentThreadSchedulerKey : NSObject, NSCopying {
-        override func isEqual(_ object: AnyObject?) -> Bool {
-          return object === CurrentThreadSchedulerKeyInstance
-        }
-
-        override var hash: Int { return -904739208 }
-
-        //func copy(with zone: NSZone? = nil) -> AnyObject {
-        func copyWithZone(zone: NSZone) -> AnyObject {
-            return CurrentThreadSchedulerKeyInstance
-        }
-    }
-
-    @objc class CurrentThreadSchedulerQueueKey : NSObject, NSCopying {
-        override func isEqual(_ object: AnyObject?) -> Bool {
-          return object === CurrentThreadSchedulerQueueKeyInstance
-        }
-
-        override var hash: Int { return -904739207 }
-
-        //func copy(with: NSZone?) -> AnyObject {
-        func copyWithZone(zone: NSZone) -> AnyObject {
-          return CurrentThreadSchedulerQueueKeyInstance
-        }
-    }*/
 #endif
 
 /**
