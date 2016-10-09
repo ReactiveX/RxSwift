@@ -6,6 +6,8 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
+#if os(OSX)
+
 import Foundation
 #if !RX_NO_MODULE
 import RxSwift
@@ -30,3 +32,5 @@ extension Reactive where Base: NSSlider {
     }
     
 }
+
+#endif

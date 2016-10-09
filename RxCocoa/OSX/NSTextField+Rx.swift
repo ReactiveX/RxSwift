@@ -6,6 +6,8 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
+#if os(OSX)
+
 import Foundation
 import Cocoa
 #if !RX_NO_MODULE
@@ -117,3 +119,5 @@ extension Reactive where Base: NSTextField {
     }
     
 }
+
+#endif

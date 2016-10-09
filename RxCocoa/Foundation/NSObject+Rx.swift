@@ -6,20 +6,24 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
+#if !os(Linux)
+
 import Foundation
 #if !RX_NO_MODULE
     import RxSwift
-    #if SWIFT_PACKAGE
+    #if SWIFT_PACKAGE && SWIZZLING_ON
         import RxCocoaRuntime
     #endif
 #endif
 
-#if !DISABLE_SWIZZLING
+#if SWIZZLING_ON
 var deallocatingSubjectTriggerContext: UInt8 = 0
 var deallocatingSubjectContext: UInt8 = 0
 #endif
 var deallocatedSubjectTriggerContext: UInt8 = 0
 var deallocatedSubjectContext: UInt8 = 0
+
+#if KVO_ON
 
 /**
 KVO is a tricky mechanism.
@@ -67,7 +71,9 @@ extension Reactive where Base: NSObject {
     }
 }
 
-#if !DISABLE_SWIZZLING
+#endif
+
+#if SWIZZLING_ON
 // KVO
 extension Reactive where Base: NSObject {
     /**
@@ -117,7 +123,7 @@ extension Reactive where Base: AnyObject {
         }
     }
 
-#if !DISABLE_SWIZZLING
+#if SWIZZLING_ON
 
     /**
      Observable sequence of message arguments that completes when object is deallocated.
@@ -237,7 +243,7 @@ extension Reactive where Base: AnyObject {
 
 // MARK: Message interceptors
 
-#if !DISABLE_SWIZZLING
+#if SWIZZLING_ON
 
     fileprivate protocol MessageInterceptorSubject: class {
         init()
@@ -322,6 +328,8 @@ fileprivate class DeallocObservable {
 
 // MARK: KVO
 
+#if KVO_ON
+
 fileprivate protocol KVOObservableProtocol {
     var target: AnyObject { get }
     var keyPath: String { get }
@@ -393,7 +401,9 @@ fileprivate class KVOObservable<Element>
 
 }
 
-#if !DISABLE_SWIZZLING
+#endif
+
+#if SWIZZLING_ON
 
     fileprivate func observeWeaklyKeyPathFor(_ target: NSObject, keyPath: String, options: NSKeyValueObservingOptions) -> Observable<AnyObject?> {
         let components = keyPath.components(separatedBy: ".").filter { $0 != "self" }
@@ -520,3 +530,5 @@ extension Reactive where Base: AnyObject {
         return observable
     }
 }
+
+#endif

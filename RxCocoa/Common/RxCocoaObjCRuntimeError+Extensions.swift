@@ -8,12 +8,12 @@
 
 import Foundation
 #if !RX_NO_MODULE
-    #if SWIFT_PACKAGE
+    #if SWIFT_PACKAGE && SWIZZLING_ON
         import RxCocoaRuntime
     #endif
 #endif
 
-#if !DISABLE_SWIZZLING
+#if SWIZZLING_ON
     /**
     RxCocoa ObjC runtime interception mechanism.
      */
