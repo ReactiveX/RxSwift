@@ -44,7 +44,7 @@ public struct SharedSequence<S: SharingStrategyProtocol, Element> : SharedSequen
      properties are preserved after extension.
     */
     public static func createUnsafe<O: ObservableType>(source: O) -> SharedSequence<S, O.E> {
-        return SharedSequence<O.E>(raw: source.asObservable())
+        return SharedSequence<S, O.E>(raw: source.asObservable())
     }
     #endif
 
