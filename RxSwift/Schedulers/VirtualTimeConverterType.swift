@@ -25,16 +25,16 @@ public protocol VirtualTimeConverterType {
     /**
      Converts virtual time to real time.
      
-     - parameter virtualTime: Virtual time to convert to `NSDate`.
-     - returns: `NSDate` corresponding to virtual time.
+     - parameter virtualTime: Virtual time to convert to `Date`.
+     - returns: `Date` corresponding to virtual time.
     */
     func convertFromVirtualTime(_ virtualTime: VirtualTimeUnit) -> RxTime
 
     /**
      Converts real time to virtual time.
      
-     - parameter time: `NSDate` to convert to virtual time.
-     - returns: Virtual time corresponding to `NSDate`.
+     - parameter time: `Date` to convert to virtual time.
+     - returns: Virtual time corresponding to `Date`.
     */
     func convertToVirtualTime(_ time: RxTime) -> VirtualTimeUnit
 
@@ -64,8 +64,8 @@ public protocol VirtualTimeConverterType {
     func offsetVirtualTime(_ time: VirtualTimeUnit, offset: VirtualTimeIntervalUnit) -> VirtualTimeUnit
 
     /**
-     This is aditional abstraction because `NSDate` is unfortunately not comparable.
-     Extending `NSDate` with `Comparable` would be too risky because of possible collisions with other libraries.
+     This is aditional abstraction because `Date` is unfortunately not comparable.
+     Extending `Date` with `Comparable` would be too risky because of possible collisions with other libraries.
     */
     func compareVirtualTime(_ lhs: VirtualTimeUnit, _ rhs: VirtualTimeUnit) -> VirtualTimeComparison
 }
@@ -73,8 +73,8 @@ public protocol VirtualTimeConverterType {
 /**
  Virtual time comparison result.
 
- This is aditional abstraction because `NSDate` is unfortunately not comparable.
- Extending `NSDate` with `Comparable` would be too risky because of possible collisions with other libraries.
+ This is aditional abstraction because `Date` is unfortunately not comparable.
+ Extending `Date` with `Comparable` would be too risky because of possible collisions with other libraries.
 */
 public enum VirtualTimeComparison {
     /**

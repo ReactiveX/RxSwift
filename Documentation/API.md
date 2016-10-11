@@ -267,7 +267,7 @@ extension Reactive where Base: UILabel {
 ```swift
 extension Reactive where Base: UIDatePicker {
 
-    public var date: ControlProperty<NSDate> {}
+    public var date: ControlProperty<Date> {}
 
 }
 ```

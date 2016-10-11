@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 
 /**
- Converter from virtual time and time interval measured in `Int`s to `NSDate` and `NSTimeInterval`.
+ Converter from virtual time and time interval measured in `Int`s to `Date` and `NSTimeInterval`.
 */
 public struct TestSchedulerVirtualTimeConverter : VirtualTimeConverterType {
     /**
@@ -33,8 +33,8 @@ public struct TestSchedulerVirtualTimeConverter : VirtualTimeConverterType {
     /**
      Converts virtual time to real time.
 
-     - parameter virtualTime: Virtual time to convert to `NSDate`.
-     - returns: `NSDate` corresponding to virtual time.
+     - parameter virtualTime: Virtual time to convert to `Date`.
+     - returns: `Date` corresponding to virtual time.
      */
     public func convertFromVirtualTime(_ virtualTime: VirtualTimeUnit) -> RxTime {
         return Date(timeIntervalSince1970: RxTimeInterval(virtualTime) * _resolution)
@@ -43,8 +43,8 @@ public struct TestSchedulerVirtualTimeConverter : VirtualTimeConverterType {
     /**
      Converts real time to virtual time.
 
-     - parameter time: `NSDate` to convert to virtual time.
-     - returns: Virtual time corresponding to `NSDate`.
+     - parameter time: `Date` to convert to virtual time.
+     - returns: Virtual time corresponding to `Date`.
      */
     public func convertToVirtualTime(_ time: RxTime) -> VirtualTimeUnit {
         return VirtualTimeIntervalUnit(time.timeIntervalSince1970 / _resolution + 0.5)

@@ -11,7 +11,7 @@ import Foundation
 /**
  Converts historial virtual time into real time. 
  
- Since historical virtual time is also measured in `NSDate`, this converter is identity function.
+ Since historical virtual time is also measured in `Date`, this converter is identity function.
  */
 public struct HistoricalSchedulerTimeConverter : VirtualTimeConverterType {
     /**
@@ -57,7 +57,7 @@ public struct HistoricalSchedulerTimeConverter : VirtualTimeConverterType {
     }
 
     /**
-     Offsets `NSDate` by time interval.
+     Offsets `Date` by time interval.
      
      - parameter time: Time.
      - parameter timeInterval: Time interval offset.
@@ -68,7 +68,7 @@ public struct HistoricalSchedulerTimeConverter : VirtualTimeConverterType {
     }
 
     /**
-     Compares two `NSDate`s.
+     Compares two `Date`s.
     */
     public func compareVirtualTime(_ lhs: VirtualTimeUnit, _ rhs: VirtualTimeUnit) -> VirtualTimeComparison {
         switch lhs.compare(rhs as Date) {
