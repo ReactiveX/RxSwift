@@ -20,10 +20,10 @@ import Foundation
         /**
          Bindable sink for `networkActivityIndicatorVisible`.
          */
-        public var networkActivityIndicatorVisible: AnyObserver<Bool> {
+        public var networkActivityIndicatorVisible: UIBindingObserver<Base, Bool> {
             return UIBindingObserver(UIElement: self.base) { application, active in
                 application.isNetworkActivityIndicatorVisible = active
-            }.asObserver()
+            }
         }
     }
 #endif

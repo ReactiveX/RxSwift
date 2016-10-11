@@ -18,19 +18,19 @@ extension Reactive where Base: UIView {
     /**
      Bindable sink for `hidden` property.
      */
-    public var hidden: AnyObserver<Bool> {
+    public var hidden: UIBindingObserver<Base, Bool> {
         return UIBindingObserver(UIElement: self.base) { view, hidden in
             view.isHidden = hidden
-        }.asObserver()
+        }
     }
 
     /**
      Bindable sink for `alpha` property.
      */
-    public var alpha: AnyObserver<CGFloat> {
+    public var alpha: UIBindingObserver<Base, CGFloat> {
         return UIBindingObserver(UIElement: self.base) { view, alpha in
             view.alpha = alpha
-        }.asObserver()
+        }
     }
 }
 

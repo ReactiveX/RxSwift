@@ -19,7 +19,7 @@ extension Reactive where Base: UIImageView {
     /**
     Bindable sink for `image` property.
     */
-    public var image: AnyObserver<UIImage?> {
+    public var image: UIBindingObserver<Base, UIImage?> {
         return image(transitionType: nil)
     }
     
@@ -29,7 +29,7 @@ extension Reactive where Base: UIImageView {
     - parameter transitionType: Optional transition type while setting the image (kCATransitionFade, kCATransitionMoveIn, ...)
     */
     @available(*, deprecated, renamed: "image(transitionType:)")
-    public func imageAnimated(_ transitionType: String?) -> AnyObserver<UIImage?> {
+    public func imageAnimated(_ transitionType: String?) -> UIBindingObserver<Base, UIImage?> {
         return UIBindingObserver(UIElement: base) { imageView, image in
             if let transitionType = transitionType {
                 if image != nil {
@@ -44,7 +44,7 @@ extension Reactive where Base: UIImageView {
                 imageView.layer.removeAllAnimations()
             }
             imageView.image = image
-        }.asObserver()
+        }
     }
 
     /**
@@ -52,7 +52,7 @@ extension Reactive where Base: UIImageView {
 
      - parameter transitionType: Optional transition type while setting the image (kCATransitionFade, kCATransitionMoveIn, ...)
      */
-    public func image(transitionType: String? = nil) -> AnyObserver<UIImage?> {
+    public func image(transitionType: String? = nil) -> UIBindingObserver<Base, UIImage?> {
         return UIBindingObserver(UIElement: base) { imageView, image in
             if let transitionType = transitionType {
                 if image != nil {
@@ -67,7 +67,7 @@ extension Reactive where Base: UIImageView {
                 imageView.layer.removeAllAnimations()
             }
             imageView.image = image
-        }.asObserver()
+        }
     }
 }
 

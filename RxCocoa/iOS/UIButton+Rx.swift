@@ -59,10 +59,10 @@ extension Reactive where Base: UIButton {
     /**
      Reactive wrapper for `setTitle(_:controlState:)`
      */
-    public func title(controlState: UIControlState = []) -> AnyObserver<String?> {
-        return UIBindingObserver<UIButton, String?>(UIElement: self.base) { (button, title) -> () in
+    public func title(controlState: UIControlState = []) -> UIBindingObserver<Base, String?> {
+        return UIBindingObserver<Base, String?>(UIElement: self.base) { (button, title) -> () in
             button.setTitle(title, for: controlState)
-        }.asObserver()
+        }
     }
 }
 #endif

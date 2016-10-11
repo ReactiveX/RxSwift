@@ -20,10 +20,10 @@ extension Reactive where Base: UIBarButtonItem {
     /**
     Bindable sink for `enabled` property.
     */
-    public var enabled: AnyObserver<Bool> {
+    public var enabled: UIBindingObserver<Base, Bool> {
         return UIBindingObserver(UIElement: self.base) { UIElement, value in
             UIElement.isEnabled = value
-        }.asObserver()
+        }
     }
 
     /**

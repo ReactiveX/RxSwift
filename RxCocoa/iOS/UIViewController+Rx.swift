@@ -20,10 +20,10 @@ import Foundation
     /**
      Bindable sink for `title`.
      */
-    public var title: AnyObserver<String> {
+    public var title: UIBindingObserver<Base, String> {
       return UIBindingObserver(UIElement: self.base) { viewController, title in
         viewController.title = title
-      }.asObserver()
+      }
     }
   }
 #endif

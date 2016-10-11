@@ -60,7 +60,7 @@ extension ControlTests {
 extension ControlTests {
     func testLabel_HasWeakReference() {
         let variable = Variable<NSAttributedString?>(nil)
-        ensureControlObserverHasWeakReference(UILabel(), { (label: UILabel) -> AnyObserver<NSAttributedString?> in label.rx.attributedText }, { variable.asObservable() })
+        ensureControlObserverHasWeakReference(UILabel(), { (label: UILabel) -> AnyObserver<NSAttributedString?> in label.rx.attributedText.asObserver() }, { variable.asObservable() })
     }
 
     func testLabel_NextElementsSetsValue() {
@@ -77,7 +77,7 @@ extension ControlTests {
 // UIProgressView
 extension ControlTests {
     func testProgressView_HasWeakReference() {
-        ensureControlObserverHasWeakReference(UIProgressView(), { (progressView: UIProgressView) -> AnyObserver<Float> in progressView.rx.progress }, { Variable<Float>(0.0).asObservable() })
+        ensureControlObserverHasWeakReference(UIProgressView(), { (progressView: UIProgressView) -> AnyObserver<Float> in progressView.rx.progress.asObserver() }, { Variable<Float>(0.0).asObservable() })
     }
 
     func testProgressView_NextElementsSetsValue() {
@@ -126,7 +126,7 @@ extension ControlTests {
 // UIActivityIndicatorView
 extension ControlTests {
     func testActivityIndicator_HasWeakReference() {
-        ensureControlObserverHasWeakReference(UIActivityIndicatorView(), { (view: UIActivityIndicatorView) -> AnyObserver<Bool> in view.rx.animating }, { Variable<Bool>(true).asObservable() })
+        ensureControlObserverHasWeakReference(UIActivityIndicatorView(), { (view: UIActivityIndicatorView) -> AnyObserver<Bool> in view.rx.animating.asObserver() }, { Variable<Bool>(true).asObservable() })
     }
 
     func testActivityIndicator_NextElementsSetsValue() {

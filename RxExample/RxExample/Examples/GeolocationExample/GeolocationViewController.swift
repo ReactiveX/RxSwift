@@ -14,15 +14,15 @@ import CoreLocation
 #endif
 
 private extension Reactive where Base: UILabel {
-    var driveCoordinates: AnyObserver<CLLocationCoordinate2D> {
+    var driveCoordinates: UIBindingObserver<Base, CLLocationCoordinate2D> {
         return UIBindingObserver(UIElement: base) { label, location in
             label.text = "Lat: \(location.latitude)\nLon: \(location.longitude)"
-        }.asObserver()
+        }
     }
 }
 
 private extension Reactive where Base: UIView {
-    var driveAuthorization: AnyObserver<Bool> {
+    var driveAuthorization: UIBindingObserver<Base, Bool> {
         return UIBindingObserver(UIElement: base) { view, authorized in
             if authorized {
                 view.isHidden = true
@@ -32,7 +32,7 @@ private extension Reactive where Base: UIView {
                 view.isHidden = false
                 view.superview?.bringSubview(toFront:view)
             }
-        }.asObserver()
+        }
     }
 }
 

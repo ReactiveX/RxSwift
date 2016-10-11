@@ -18,19 +18,19 @@
         /**
          Bindable sink for `hidden` property.
          */
-        public var hidden: AnyObserver<Bool> {
+        public var hidden:  UIBindingObserver<Base, Bool> {
             return UIBindingObserver(UIElement: self.base) { view, value in
                 view.isHidden = value
-            }.asObserver()
+            }
         }
 
         /**
          Bindable sink for `alphaValue` property.
          */
-        public var alpha: AnyObserver<CGFloat> {
+        public var alpha: UIBindingObserver<Base, CGFloat> {
             return UIBindingObserver(UIElement: self.base) { view, value in
                 view.alphaValue = value
-            }.asObserver()
+            }
         }
     }
 

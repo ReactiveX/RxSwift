@@ -20,7 +20,7 @@ extension Reactive where Base: UIImageView{
         return downloadableImageAnimated(nil)
     }
 
-    func downloadableImageAnimated(_ transitionType:String?) -> AnyObserver<DownloadableImage> {
+    func downloadableImageAnimated(_ transitionType:String?) -> UIBindingObserver<Base, DownloadableImage> {
         return UIBindingObserver(UIElement: base as UIImageView) { imageView, image in
             for subview in imageView.subviews {
                 subview.removeFromSuperview()
@@ -35,7 +35,7 @@ extension Reactive where Base: UIImageView{
                 label.text = "⚠️"
                 imageView.addSubview(label)
             }
-        }.asObserver()
+        }
     }
 }
 #endif

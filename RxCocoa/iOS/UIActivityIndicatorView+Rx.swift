@@ -18,14 +18,14 @@ extension Reactive where Base: UIActivityIndicatorView {
     /**
     Bindable sink for `startAnimating()`, `stopAnimating()` methods.
     */
-    public var animating: AnyObserver<Bool> {
+    public var animating: UIBindingObserver<Base, Bool> {
         return UIBindingObserver(UIElement: self.base) { activityIndicator, active in
             if active {
                 activityIndicator.startAnimating()
             } else {
                 activityIndicator.stopAnimating()
             }
-        }.asObserver()
+        }
     }
 
 }
