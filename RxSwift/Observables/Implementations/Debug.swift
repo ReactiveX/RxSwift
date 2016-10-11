@@ -33,7 +33,8 @@ class DebugSink<Source: ObservableType, O: ObserverType> : Sink<O>, ObserverType
     func on(_ event: Event<Element>) {
         let maxEventTextLength = 40
         let eventText = "\(event)"
-        let eventNormalized = eventText.characters.count > maxEventTextLength
+
+        let eventNormalized = (eventText.characters.count > maxEventTextLength) && _parent._trimOutput
             ? String(eventText.characters.prefix(maxEventTextLength / 2)) + "..." + String(eventText.characters.suffix(maxEventTextLength / 2))
             : eventText
 
@@ -55,10 +56,11 @@ class DebugSink<Source: ObservableType, O: ObserverType> : Sink<O>, ObserverType
 
 class Debug<Source: ObservableType> : Producer<Source.E> {
     fileprivate let _identifier: String
-    
+    fileprivate let _trimOutput: Bool
     fileprivate let _source: Source
 
-    init(source: Source, identifier: String?, file: String, line: UInt, function: String) {
+    init(source: Source, identifier: String?, trimOutput: Bool, file: String, line: UInt, function: String) {
+        _trimOutput = trimOutput
         if let identifier = identifier {
             _identifier = identifier
         }
