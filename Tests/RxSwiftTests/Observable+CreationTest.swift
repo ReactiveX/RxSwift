@@ -92,6 +92,10 @@ extension ObservableCreationTests {
             42
             ])
     }
+
+    func testJust_CompilesInMap() {
+        _ = (1 as Int?).map(Observable.just)
+    }
 }
 
 // MARK: from

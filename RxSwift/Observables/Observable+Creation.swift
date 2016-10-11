@@ -60,17 +60,25 @@ extension Observable {
     - seealso: [just operator on reactivex.io](http://reactivex.io/documentation/operators/just.html)
 
     - parameter element: Single element in the resulting observable sequence.
-    - parameter: Scheduler to send the single element on.
     - returns: An observable sequence containing the single specified element.
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    public static func just(_ element: E, scheduler: ImmediateSchedulerType? = nil) -> Observable<E> {
-        if let scheduler = scheduler {
-            return JustScheduled(element: element, scheduler: scheduler)
-        }
-        else {
-            return Just(element: element)
-        }
+    public static func just(_ element: E) -> Observable<E> {
+        return Just(element: element)
+    }
+
+    /**
+     Returns an observable sequence that contains a single element.
+
+     - seealso: [just operator on reactivex.io](http://reactivex.io/documentation/operators/just.html)
+
+     - parameter element: Single element in the resulting observable sequence.
+     - parameter: Scheduler to send the single element on.
+     - returns: An observable sequence containing the single specified element.
+     */
+    // @warn_unused_result(message:"http://git.io/rxs.uo")
+    public static func just(_ element: E, scheduler: ImmediateSchedulerType) -> Observable<E> {
+        return JustScheduled(element: element, scheduler: scheduler)
     }
 
     // MARK: fail
