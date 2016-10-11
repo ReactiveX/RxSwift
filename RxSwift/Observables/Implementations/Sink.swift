@@ -33,6 +33,10 @@ class Sink<O : ObserverType> : Disposable {
         return SinkForward(forward: self)
     }
 
+    var disposed: Bool {
+        return _disposed
+    }
+
     func dispose() {
         _disposed = true
         _cancel.dispose()

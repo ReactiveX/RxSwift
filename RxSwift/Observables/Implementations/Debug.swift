@@ -46,7 +46,9 @@ class DebugSink<Source: ObservableType, O: ObserverType> : Sink<O>, ObserverType
     }
     
     override func dispose() {
-        logEvent(_parent._identifier, dateFormat: _timestampFormatter, content: "isDisposed")
+        if !self.disposed {
+            logEvent(_parent._identifier, dateFormat: _timestampFormatter, content: "isDisposed")
+        }
         super.dispose()
     }
 }
