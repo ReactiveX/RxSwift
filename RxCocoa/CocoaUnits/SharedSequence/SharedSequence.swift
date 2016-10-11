@@ -124,7 +124,7 @@ extension SharedSequence {
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
     public static func never() -> SharedSequence<S, E> {
-        return SharedSequence(Observable.never().subscribeOn(S.scheduler))
+        return SharedSequence(Observable.never())
     }
 
     /**
@@ -135,7 +135,7 @@ extension SharedSequence {
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
     public static func just(_ element: E) -> SharedSequence<S, E> {
-        return SharedSequence(Observable.just(element).subscribeOn(S.scheduler))
+        return SharedSequence(Observable.just(element, scheduler: S.scheduler))
     }
 
     /**
