@@ -13,7 +13,7 @@ import Swift
 /**
 Record of a value including the virtual time it was produced on.
 */
-public struct Recorded<Element>
+public struct Recorded<Value>
     : CustomDebugStringConvertible {
 
     /**
@@ -24,11 +24,11 @@ public struct Recorded<Element>
     /**
     Gets the recorded value.
     */
-    public let value: Element
+    public let value: Value
     
-    public init(time: TestTime, event: Element) {
+    public init(time: TestTime, value: Value) {
         self.time = time
-        self.value = event
+        self.value = value
     }
 }
 

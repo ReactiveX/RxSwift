@@ -22,7 +22,7 @@ require specifying `self.*`, they are made global.
      - returns: Recorded event in time.
     */
     public func next<T>(_ time: TestTime, _ element: T) -> Recorded<Event<T>> {
-        return Recorded(time: time, event: .next(element))
+        return Recorded(time: time, value: .next(element))
     }
 
     /**
@@ -33,7 +33,7 @@ require specifying `self.*`, they are made global.
      - returns: Recorded event in time.
     */
     public func completed<T>(_ time: TestTime, _ type: T.Type = T.self) -> Recorded<Event<T>> {
-        return Recorded(time: time, event: .completed)
+        return Recorded(time: time, value: .completed)
     }
 
     /**
@@ -42,7 +42,7 @@ require specifying `self.*`, they are made global.
      - parameter time: Recorded virtual time the `.completed` event occurs.
     */
     public func error<T>(_ time: TestTime, _ error: Swift.Error, _ type: T.Type = T.self) -> Recorded<Event<T>> {
-        return Recorded(time: time, event: .error(error))
+        return Recorded(time: time, value: .error(error))
     }
 //}
 

@@ -33,6 +33,6 @@ public class TestableObserver<ElementType>
     - parameter event: Event that occured.
     */
     public func on(_ event: Event<Element>) {
-        events.append(Recorded(time: _scheduler.clock, event: event))
+        events.append(Recorded(time: _scheduler.clock, value: event))
     }
 }

@@ -11,13 +11,13 @@ import RxTest
 import RxSwift
 
 func next<T>(_ value: T) -> Recorded<Event<T>> {
-    return Recorded(time: 0, event: .next(value))
+    return Recorded(time: 0, value: .next(value))
 }
 
 func completed<T>() -> Recorded<Event<T>> {
-    return Recorded(time: 0, event: .completed)
+    return Recorded(time: 0, value: .completed)
 }
 
 func error<T>(_ error: Swift.Error) -> Recorded<Event<T>> {
-    return Recorded(time: 0, event: .error(error))
+    return Recorded(time: 0, value: .error(error))
 }

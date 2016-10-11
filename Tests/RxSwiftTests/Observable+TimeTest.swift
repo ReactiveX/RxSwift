@@ -2237,7 +2237,7 @@ extension ObservableTimeTest {
         }
     
         XCTAssertEqual(res.events,
-            msgs.map { Recorded(time: $0.time + Int(delay), event: $0.value) }
+            msgs.map { Recorded(time: $0.time + Int(delay), value: $0.value) }
                 .filter { $0.time > 200 })
     }
     

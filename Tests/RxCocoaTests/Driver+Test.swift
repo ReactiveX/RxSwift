@@ -1147,3 +1147,68 @@ extension DriverTest {
             ])
     }
 }
+
+// MARK: drive observer
+extension DriverTest {
+    func testDriveObserver() {
+        var events: [Recorded<Event<Int>>] = []
+
+        let observer: AnyObserver<Int> = AnyObserver { event in
+            events.append(Recorded(time: 0, value: event))
+        }
+
+        _ = Driver.just(1).drive(observer)
+    }
+
+    func testDriveOptionalObserver() {
+        var events: [Recorded<Event<Int?>>] = []
+
+        let observer: AnyObserver<Int?> = AnyObserver { event in
+            events.append(Recorded(time: 0, value: event))
+        }
+
+        _ = (Driver.just(1) as Driver<Int>).drive(observer)
+
+        XCTAssertEqual(events[0].value.element!, 1)
+    }
+
+    func testDriveNoAmbiguity() {
+        var events: [Recorded<Event<Int?>>] = []
+
+        let observer: AnyObserver<Int?> = AnyObserver { event in
+            events.append(Recorded(time: 0, value: event))
+        }
+
+        _ = Driver.just(1).drive(observer)
+
+        XCTAssertEqual(events[0].value.element!, 1)
+    }
+}
+
+// MARK: drive variable
+
+extension DriverTest {
+    func testdriveVariable() {
+        let variable = Variable<Int>(0)
+
+        _ = Driver.just(1).drive(variable)
+
+        XCTAssertEqual(variable.value, 1)
+    }
+
+    func testDriveOptionalVariable() {
+        let variable = Variable<Int?>(0)
+
+        _ = (Driver.just(1) as Driver<Int>).drive(variable)
+
+        XCTAssertEqual(variable.value, 1)
+    }
+
+    func testDriveVariableNoAmbiguity() {
+        let variable = Variable<Int?>(0)
+
+        _ = Driver.just(1).drive(variable)
+
+        XCTAssertEqual(variable.value, 1)
+    }
+}

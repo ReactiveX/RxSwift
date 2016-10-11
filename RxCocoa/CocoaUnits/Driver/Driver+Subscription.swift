@@ -32,6 +32,21 @@ extension SharedSequenceConvertibleType where SharingStrategy == DriverSharingSt
     }
 
     /**
+     Creates new subscription and sends elements to observer.
+     This method can be only called from `MainThread`.
+
+     In this form it's equivalent to `subscribe` method, but it communicates intent better.
+
+     - parameter observer: Observer that receives events.
+     - returns: Disposable object that can be used to unsubscribe the observer from the subject.
+     */
+    // @warn_unused_result(message:"http://git.io/rxs.ud")
+    public func drive<O: ObserverType>(_ observer: O) -> Disposable where O.E == E? {
+        MainScheduler.ensureExecutingOnScheduler(errorMessage: driverErrorMessage)
+        return self.asSharedSequence().asObservable().map { $0 as E? }.subscribe(observer)
+    }
+
+    /**
     Creates new subscription and sends elements to variable.
     This method can be only called from `MainThread`.
 
@@ -40,6 +55,21 @@ extension SharedSequenceConvertibleType where SharingStrategy == DriverSharingSt
     */
     // @warn_unused_result(message:"http://git.io/rxs.ud")
     public func drive(_ variable: Variable<E>) -> Disposable {
+        MainScheduler.ensureExecutingOnScheduler(errorMessage: driverErrorMessage)
+        return drive(onNext: { e in
+            variable.value = e
+        })
+    }
+
+    /**
+     Creates new subscription and sends elements to variable.
+     This method can be only called from `MainThread`.
+
+     - parameter variable: Target variable for sequence elements.
+     - returns: Disposable object that can be used to unsubscribe the observer from the variable.
+     */
+    // @warn_unused_result(message:"http://git.io/rxs.ud")
+    public func drive(_ variable: Variable<E?>) -> Disposable {
         MainScheduler.ensureExecutingOnScheduler(errorMessage: driverErrorMessage)
         return drive(onNext: { e in
             variable.value = e
