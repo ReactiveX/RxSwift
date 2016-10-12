@@ -70,15 +70,10 @@ struct PriorityQueue<Element: AnyObject> {
 
         while unbalancedIndex > 0 {
             let parentIndex = (unbalancedIndex - 1) / 2
-
-            if _hasHigherPriority(_elements[unbalancedIndex], _elements[parentIndex]) {
-                swap(&_elements[unbalancedIndex], &_elements[parentIndex])
-
-                unbalancedIndex = parentIndex
-            }
-            else {
-                break
-            }
+            guard _hasHigherPriority(_elements[unbalancedIndex], _elements[parentIndex]) else { break }
+            
+            swap(&_elements[unbalancedIndex], &_elements[parentIndex])
+            unbalancedIndex = parentIndex
         }
     }
 
@@ -87,7 +82,7 @@ struct PriorityQueue<Element: AnyObject> {
         precondition(initialUnbalancedIndex < _elements.count)
 
         var unbalancedIndex = initialUnbalancedIndex
-        repeat {
+        while true {
             let leftChildIndex = unbalancedIndex * 2 + 1
             let rightChildIndex = unbalancedIndex * 2 + 2
 
@@ -101,15 +96,11 @@ struct PriorityQueue<Element: AnyObject> {
                 highestPriorityIndex = rightChildIndex
             }
 
-            if highestPriorityIndex != unbalancedIndex {
-                swap(&_elements[highestPriorityIndex], &_elements[unbalancedIndex])
+            guard highestPriorityIndex != unbalancedIndex else { break }
 
-                unbalancedIndex = highestPriorityIndex
-            }
-            else {
-                break
-            }
-        } while true
+            swap(&_elements[highestPriorityIndex], &_elements[unbalancedIndex])
+            unbalancedIndex = highestPriorityIndex
+        }
     }
 }
 
