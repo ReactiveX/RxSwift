@@ -118,7 +118,7 @@ example("Array.combineLatest") {
     let fruitObservable = Observable.from(["🍎", "🍐", "🍊"])
     let animalObservable = Observable.of("🐶", "🐱", "🐭", "🐹")
     
-    [stringObservable, fruitObservable, animalObservable].combineLatest {
+    Observable.combineLatest([stringObservable, fruitObservable, animalObservable]) {
             "\($0[0]) \($0[1]) \($0[2])"
         }
         .subscribe(onNext: { print($0) })
