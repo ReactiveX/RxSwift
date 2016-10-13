@@ -32,7 +32,7 @@ private final class BinaryDisposable : DisposeBase, Cancelable {
     - parameter disposable1: First disposable
     - parameter disposable2: Second disposable
     */
-    init(_ disposable1: Disposable, _ disposable2: Disposable) {
+    public init(_ disposable1: Disposable, _ disposable2: Disposable) {
         _disposable1 = disposable1
         _disposable2 = disposable2
         super.init()
