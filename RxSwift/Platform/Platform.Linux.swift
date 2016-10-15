@@ -17,47 +17,6 @@
     import Glibc
     import SwiftShims
 
-    // MARK: CoreFoundation run loop mock
-
-    public typealias CFRunLoopRef = Int
-    public let kCFRunLoopDefaultMode = "CFRunLoopDefaultMode"
-
-    typealias Action = () -> ()
-
-    var queue = Queue<Action>(capacity: 100)
-
-    var runLoopCounter = 0
-
-    public func CFRunLoopWakeUp(_ runLoop: CFRunLoopRef) {
-    }
-
-    public func CFRunLoopStop(_ runLoop: CFRunLoopRef) {
-        runLoopCounter -= 1
-    }
-
-    public func CFRunLoopPerformBlock(_ runLoop: CFRunLoopRef, _ mode: String, _ action: @escaping () -> ()) {
-        queue.enqueue(action)
-    }
-
-    public func CFRunLoopRun() {
-        runLoopCounter += 1
-        let currentValueOfCounter = runLoopCounter
-        while let front = queue.dequeue() {
-            front()
-            if runLoopCounter < currentValueOfCounter - 1 {
-                fatalError("called stop twice")
-            }
-
-            if runLoopCounter == currentValueOfCounter - 1 {
-                break
-            }
-        }
-    }
-
-    public func CFRunLoopGetCurrent() -> CFRunLoopRef {
-        return 0
-    }
-
     // MARK: Atomic, just something that works for single thread case
 
     #if TRACE_RESOURCES
@@ -114,17 +73,5 @@
             return threadDictionary[key] as? T
         }
     }
-
-    //
-
-    // MARK: objc mock
-
-    public func objc_sync_enter(_ lock: AnyObject) {
-    }
-
-    public func objc_sync_exit(_ lock: AnyObject) {
-
-    }
-
 
 #endif

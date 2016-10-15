@@ -8,6 +8,7 @@
 
 import Foundation
 import Dispatch
+import CoreFoundation
 
 import RxSwift
 import XCTest
