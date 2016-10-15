@@ -31,32 +31,31 @@ let allowedExtensions = [
 ]
 // Those tests are dependent on conditional compilation logic and it's hard to handle them automatically
 // They usually test some internal state, so it should be ok to exclude them for now.
-let excludedTests = [
+let excludedTests: [String] = [
     "testConcat_TailRecursionCollection",
     "testConcat_TailRecursionSequence",
     "testMapCompose_OptimizationIsPerformed",
     "testMapCompose_OptimizationIsNotPerformed",
     "testObserveOn_EnsureCorrectImplementationIsChosen",
     "testObserveOnDispatchQueue_EnsureCorrectImplementationIsChosen",
-    "testWindowWithTimeOrCount_BasicPeriod",
-    "testObserveOnDispatchQueue_DispatchQueueSchedulerIsSerial",
     "testResourceLeaksDetectionIsTurnedOn",
-    "testAnonymousObservable_disposeReferenceDoesntRetainObservable"
+    "testAnonymousObservable_disposeReferenceDoesntRetainObservable",
+    "testObserveOnDispatchQueue_DispatchQueueSchedulerIsSerial"
 ]
 
-let excludedTestClasses = [
-    "ObservableConcurrentSchedulerConcurrencyTest",
+let excludedTestClasses: [String] = [
+    /*"ObservableConcurrentSchedulerConcurrencyTest",
     "SubjectConcurrencyTest",
     "VirtualSchedulerTest",
-    "HistoricalSchedulerTest"
+    "HistoricalSchedulerTest"*/
 ]
 
-let throwingWordsInTests = [
-    "error",
+let throwingWordsInTests: [String] = [
+    /*"error",
     "fail",
     "throw",
     "retrycount",
-    "retrywhen",
+    "retrywhen",*/
 ]
 
 func isExtensionAllowed(_ path: String) -> Bool {

@@ -1357,57 +1357,6 @@ extension ObservableTimeTest {
             ])
     }
     
-    /*
-    func testWindowWithTimeOrCount_BasicPeriod() {
-        let scheduler = TestScheduler(initialClock: 0)
-        
-        let xs = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 2),
-            next(240, 3),
-            next(270, 4),
-            next(320, 5),
-            next(360, 6),
-            next(390, 7),
-            next(410, 8),
-            next(460, 9),
-            next(470, 10),
-            completed(490)
-            ])
-        
-        let res = scheduler.start { () -> Observable<String> in
-            let window: Observable<Observable<Int>> = xs.window(timeSpan: 100, count: 3, scheduler: scheduler)
-            let mappedWithIndex = window.mapWithIndex { (o: Observable<Int>, i: Int) -> Observable<String> in
-                return o.map { (e: Int) -> String in
-                    return "\(i) \(e)"
-                    }.concat(just("\(i) end"))
-            }
-            let result = mappedWithIndex.merge()
-            return result
-        }
-        
-        XCTAssertEqual(res.events, [
-            next(210, "0 2"),
-            next(240, "0 3"),
-            next(270, "0 4"),
-            next(300, "0 end"),
-            next(320, "1 5"),
-            next(360, "1 6"),
-            next(390, "1 7"),
-            next(400, "1 end"),
-            next(410, "2 8"),
-            next(460, "2 9"),
-            next(470, "2 10"),
-            next(490, "2 end"),
-            completed(490)
-            ])
-        
-        XCTAssertEqual(xs.subscriptions, [
-            Subscription(200, 490)
-            ])
-        
-    }*/
-    
     func windowWithTimeOrCount_Default() {
         let backgroundScheduler = SerialDispatchQueueScheduler(globalConcurrentQueueQOS: .default)
         

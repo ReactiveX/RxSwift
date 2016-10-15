@@ -1074,9 +1074,17 @@ extension ObservableSingleTest {
     }
 }
 
-struct CustomErrorType : Swift.Error {
+struct CustomErrorType : Error {
 
 }
+
+class RetryWhenError: Error {
+    init() {
+
+    }
+}
+
+let retryError: RetryWhenError = RetryWhenError()
 
 // retryWhen
 extension ObservableSingleTest {
@@ -1122,7 +1130,7 @@ extension ObservableSingleTest {
             next(220, 3),
             next(230, 4),
             next(240, 5),
-            error(250, testError)
+            error(250, retryError)
             ])
 
         let never = scheduler.createHotObservable([
@@ -1130,7 +1138,7 @@ extension ObservableSingleTest {
             ])
 
         let res = scheduler.start() {
-            xs.retryWhen { (errors: Observable<NSError>) in
+            xs.retryWhen { (errors: Observable<RetryWhenError>) in
                 return never
             }
         }
@@ -1167,7 +1175,7 @@ extension ObservableSingleTest {
             ])
 
         let res = scheduler.start() {
-            xs.retryWhen { (errors: Observable<NSError>) in
+            xs.retryWhen { (errors: Observable<RetryWhenError>) in
                 return never
             }
         }
@@ -1204,7 +1212,7 @@ extension ObservableSingleTest {
             ])
 
         let res = scheduler.start() {
-            xs.retryWhen { (errors: Observable<NSError>) in
+            xs.retryWhen { (errors: Observable<RetryWhenError>) in
                 return empty
             }
         }
@@ -1231,12 +1239,12 @@ extension ObservableSingleTest {
         let xs = scheduler.createColdObservable([
             next(10, 1),
             next(20, 2),
-            error(30, testError),
+            error(30, retryError),
             completed(40)
             ])
 
         let res = scheduler.start(300) {
-            xs.retryWhen { (errors: Observable<NSError>) in
+            xs.retryWhen { (errors: Observable<RetryWhenError>) in
                 return errors.scan(0) { (_a, e) in
                     var a = _a
                     a += 1
@@ -1272,7 +1280,7 @@ extension ObservableSingleTest {
         let xs = scheduler.createColdObservable([
             next(10, 1),
             next(20, 2),
-            error(30, testError),
+            error(30, retryError),
             completed(40)
             ])
 
@@ -1282,7 +1290,7 @@ extension ObservableSingleTest {
             ])
 
         let res = scheduler.start() {
-            xs.retryWhen({ (errors: Observable<NSError>) in
+            xs.retryWhen({ (errors: Observable<RetryWhenError>) in
                 return empty.asObservable()
             })
         }
@@ -1307,12 +1315,12 @@ extension ObservableSingleTest {
         let xs = scheduler.createColdObservable([
             next(10, 1),
             next(20, 2),
-            error(30, testError),
+            error(30, retryError),
             completed(40)
             ])
 
         let res = scheduler.start(300) {
-            xs.retryWhen { (errors: Observable<NSError>) in
+            xs.retryWhen { (errors: Observable<RetryWhenError>) in
                 return errors.scan(0) { (a, e) in
                     return a + 1
                 }.takeWhile { (num: Int) -> Bool in
@@ -1344,7 +1352,7 @@ extension ObservableSingleTest {
         let xs = scheduler.createColdObservable([
             next(10, 1),
             next(20, 2),
-            error(30, testError),
+            error(30, retryError),
             completed(40)
             ])
 
@@ -1353,7 +1361,7 @@ extension ObservableSingleTest {
             ])
 
         let res = scheduler.start() {
-            xs.retryWhen { (errors: Observable<NSError>) in
+            xs.retryWhen { (errors: Observable<RetryWhenError>) in
                 return never
             }
         }
@@ -1378,7 +1386,7 @@ extension ObservableSingleTest {
         // just fails
         let xs = scheduler.createColdObservable([
             next(5, 1),
-            error(10, testError)
+            error(10, retryError)
             ])
 
         let maxAttempts = 4
@@ -1400,7 +1408,7 @@ extension ObservableSingleTest {
             next(265, 1),
             next(375, 1),
             next(535, 1),
-            error(540, testError)
+            error(540, retryError)
         ]
 
         XCTAssertEqual(res.events, correct)
@@ -1420,7 +1428,7 @@ extension ObservableSingleTest {
         // just fails
         let xs = scheduler.createColdObservable([
             next(5, 1),
-            error(10, testError)
+            error(10, retryError)
             ])
 
         let res = scheduler.start(800) {
@@ -1431,7 +1439,7 @@ extension ObservableSingleTest {
 
         let correct = [
             next(205, 1),
-            error(210, testError)
+            error(210, retryError)
         ]
 
         XCTAssertEqual(res.events, correct)
@@ -1448,7 +1456,7 @@ extension ObservableSingleTest {
             observer.on(.next(1))
             observer.on(.next(2))
             if count < 2 {
-                observer.on(.error(testError))
+                observer.on(.error(retryError))
                 count += 1
             }
             observer.on(.next(3))

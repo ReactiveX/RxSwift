@@ -17,7 +17,7 @@
     import Glibc
     import SwiftShims
 
-    final class AtomicInt: ExpressibleByIntegerLiteral {
+    final class AtomicInt {
         typealias IntegerLiteralType = Int
         fileprivate var value: Int32 = 0
         fileprivate var _lock = NSRecursiveLock()
@@ -35,31 +35,32 @@
     }
 
     extension AtomicInt: ExpressibleByIntegerLiteral {
-        init(integerLiteral value: Int) {
-            self.value = value
+        convenience init(integerLiteral value: Int) {
+            self.init()
+            self.value = Int32(value)
         }
     }
     
-    func >(lhs: AtomicInt, rhs: Int) -> Bool {
+    func >(lhs: AtomicInt, rhs: Int32) -> Bool {
         return lhs.value > rhs
     }
-    func ==(lhs: AtomicInt, rhs: Int) -> Bool {
+    func ==(lhs: AtomicInt, rhs: Int32) -> Bool {
         return lhs.value == rhs
     }
 
-    func AtomicIncrement(_ atomic: inout AtomicInt) -> Int {
+    func AtomicIncrement(_ atomic: inout AtomicInt) -> Int32 {
         atomic.lock(); defer { atomic.unlock() }
         atomic.value += 1
         return atomic.value
     }
 
-    func AtomicDecrement(_ atomic: inout AtomicInt) -> Int {
+    func AtomicDecrement(_ atomic: inout AtomicInt) -> Int32 {
         atomic.lock(); defer { atomic.unlock() }
         atomic.value -= 1
         return atomic.value
     }
 
-    func AtomicCompareAndSwap(_ l: Int, _ r: Int, _ atomic: inout AtomicInt) -> Bool {
+    func AtomicCompareAndSwap(_ l: Int32, _ r: Int32, _ atomic: inout AtomicInt) -> Bool {
         atomic.lock(); defer { atomic.unlock() }
         if atomic.value == l {
             atomic.value = r

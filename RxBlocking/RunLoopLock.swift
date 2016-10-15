@@ -14,9 +14,11 @@ import CoreFoundation
 #endif
 
 #if os(Linux)
-    let runLoopMode: CFTypeRef = RunLoopMode.defaultRunLoopMode.rawValue as! CFString
+    let runLoopMode: RunLoopMode = RunLoopMode.defaultRunLoopMode
+    let runLoopModeRaw: CFString = unsafeBitCast(runLoopMode.rawValue._bridgeToObjectiveC(), to: CFString.self)
 #else
     let runLoopMode: CFRunLoopMode = CFRunLoopMode.defaultMode
+    let runLoopModeRaw = runLoopMode.rawValue
 #endif
 
 class RunLoopLock {
@@ -32,7 +34,7 @@ class RunLoopLock {
     }
 
     func dispatch(_ action: @escaping () -> ()) {
-        CFRunLoopPerformBlock(_currentRunLoop, runLoopMode.rawValue) {
+        CFRunLoopPerformBlock(_currentRunLoop, runLoopModeRaw) {
             if CurrentThreadScheduler.isScheduleRequired {
                 _ = CurrentThreadScheduler.instance.schedule(()) { _ in
                     action()
@@ -50,7 +52,7 @@ class RunLoopLock {
         if AtomicIncrement(&_calledStop) != 1 {
             return
         }
-        CFRunLoopPerformBlock(_currentRunLoop, runLoopMode.rawValue) {
+        CFRunLoopPerformBlock(_currentRunLoop, runLoopModeRaw) {
             CFRunLoopStop(self._currentRunLoop)
         }
         CFRunLoopWakeUp(_currentRunLoop)
@@ -62,7 +64,7 @@ class RunLoopLock {
         }
         if let timeout = _timeout {
             #if os(Linux)
-                switch Int(CFRunLoopRunInMode(runLoopMode, timeout, false)) {
+                switch Int(CFRunLoopRunInMode(runLoopModeRaw, timeout, false)) {
                 case kCFRunLoopRunFinished:
                     return
                 case kCFRunLoopRunHandledSource:
