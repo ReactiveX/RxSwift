@@ -26,7 +26,7 @@ class TakeUntilSinkOther<ElementType, Other, O: ObserverType>
     init(parent: Parent) {
         _parent = parent
 #if TRACE_RESOURCES
-        let _ = AtomicIncrement(&resourceCount)
+        let _ = Resources.incrementTotal()
 #endif
     }
     
@@ -50,7 +50,7 @@ class TakeUntilSinkOther<ElementType, Other, O: ObserverType>
     
 #if TRACE_RESOURCES
     deinit {
-        let _ = AtomicDecrement(&resourceCount)
+        let _ = Resources.decrementTotal()
     }
 #endif
 }

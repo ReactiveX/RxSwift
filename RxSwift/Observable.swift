@@ -21,7 +21,7 @@ public class Observable<Element> : ObservableType {
     
     init() {
 #if TRACE_RESOURCES
-        let _ = AtomicIncrement(&resourceCount)
+        let _ = Resources.incrementTotal()
 #endif
     }
     
@@ -35,7 +35,7 @@ public class Observable<Element> : ObservableType {
     
     deinit {
 #if TRACE_RESOURCES
-        let _ = AtomicDecrement(&resourceCount)
+        let _ = Resources.decrementTotal()
 #endif
     }
 

@@ -38,11 +38,14 @@ let excludedRootPaths = [
     "build",
     "Rx.playground",
     "vendor",
-    "Sources"
+    "Sources",
+    "Platform"
 ]
 
 let excludePaths = [
     "AllTestz/main.swift",
+    "Platform/Platform.Linux.swift",
+    "Platform/Platform.Darwin.swift",
     "RxExample/Services/Reachability.swift",
     "RxDataSources"
 ]

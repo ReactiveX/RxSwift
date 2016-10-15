@@ -1260,7 +1260,7 @@ extension ObservableStandardSequenceOperatorsTest {
                 .map { $0 * 10 }
                 .map { x -> Int in
                     checked = true
-                    XCTAssertTrue(numberOfMapOperators == 1)
+                    XCTAssertTrue(Resources.numberOfMapOperators == 1)
                     return x + 1
                 }
         }
@@ -1293,7 +1293,7 @@ extension ObservableStandardSequenceOperatorsTest {
                 .filter { _ in true }
                 .map { x -> Int in
                     checked = true
-                    XCTAssertTrue(numberOfMapOperators == 2)
+                    XCTAssertTrue(Resources.numberOfMapOperators == 2)
                     return x + 1
             }
         }

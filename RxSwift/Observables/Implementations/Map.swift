@@ -99,7 +99,12 @@ class MapWithIndex<SourceType, ResultType> : Producer<ResultType> {
 }
 
 #if TRACE_RESOURCES
-public var numberOfMapOperators: AtomicInt = 0
+    var _numberOfMapOperators: AtomicInt = 0
+    extension Resources {
+        public static var numberOfMapOperators: Int32 {
+            return _numberOfMapOperators.valueSnapshot()
+        }
+    }
 #endif
 
 class Map<SourceType, ResultType>: Producer<ResultType> {
@@ -114,7 +119,7 @@ class Map<SourceType, ResultType>: Producer<ResultType> {
         _selector = selector
 
 #if TRACE_RESOURCES
-        let _ = AtomicIncrement(&numberOfMapOperators)
+        let _ = AtomicIncrement(&_numberOfMapOperators)
 #endif
     }
 
@@ -134,7 +139,7 @@ class Map<SourceType, ResultType>: Producer<ResultType> {
 
     #if TRACE_RESOURCES
     deinit {
-        let _ = AtomicDecrement(&numberOfMapOperators)
+        let _ = AtomicDecrement(&_numberOfMapOperators)
     }
     #endif
 }

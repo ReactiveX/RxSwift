@@ -14,7 +14,7 @@ import CoreFoundation
 #endif
 
 #if os(Linux)
-    let runLoopMode: CFString = RunLoopMode.defaultRunLoopMode.rawValue as! CFString
+    let runLoopMode: CFTypeRef = RunLoopMode.defaultRunLoopMode.rawValue as! CFString
 #else
     let runLoopMode: CFRunLoopMode = CFRunLoopMode.defaultMode
 #endif
@@ -32,7 +32,7 @@ class RunLoopLock {
     }
 
     func dispatch(_ action: @escaping () -> ()) {
-        CFRunLoopPerformBlock(_currentRunLoop, runLoopMode) {
+        CFRunLoopPerformBlock(_currentRunLoop, runLoopMode.rawValue) {
             if CurrentThreadScheduler.isScheduleRequired {
                 _ = CurrentThreadScheduler.instance.schedule(()) { _ in
                     action()
@@ -50,7 +50,7 @@ class RunLoopLock {
         if AtomicIncrement(&_calledStop) != 1 {
             return
         }
-        CFRunLoopPerformBlock(_currentRunLoop, runLoopMode) {
+        CFRunLoopPerformBlock(_currentRunLoop, runLoopMode.rawValue) {
             CFRunLoopStop(self._currentRunLoop)
         }
         CFRunLoopWakeUp(_currentRunLoop)
@@ -61,31 +61,31 @@ class RunLoopLock {
             fatalError("Run can be only called once")
         }
         if let timeout = _timeout {
-#if os(Linux)
-            switch Int(CFRunLoopRunInMode(runLoopMode, timeout, false)) {
-            case kCFRunLoopRunFinished:
-                return
-            case kCFRunLoopRunHandledSource:
-                return
-            case kCFRunLoopRunStopped:
-                return
-            case kCFRunLoopRunTimedOut:
-                throw RxError.timeout
-            default:
-                fatalError("This failed because CFRunLoopRunResult wasn't bridged to Swift.")
-            }
-#else
-            switch CFRunLoopRunInMode(runLoopMode, timeout, false) {
-            case .finished:
-                return
-            case .handledSource:
-                return
-            case .stopped:
-                return
-            case .timedOut:
-                throw RxError.timeout
-            }
-#endif
+            #if os(Linux)
+                switch Int(CFRunLoopRunInMode(runLoopMode, timeout, false)) {
+                case kCFRunLoopRunFinished:
+                    return
+                case kCFRunLoopRunHandledSource:
+                    return
+                case kCFRunLoopRunStopped:
+                    return
+                case kCFRunLoopRunTimedOut:
+                    throw RxError.timeout
+                default:
+                    fatalError("This failed because `CFRunLoopRunResult` wasn't bridged to Swift.")
+                }
+            #else
+                switch CFRunLoopRunInMode(runLoopMode, timeout, false) {
+                case .finished:
+                    return
+                case .handledSource:
+                    return
+                case .stopped:
+                    return
+                case .timedOut:
+                    throw RxError.timeout
+                }
+            #endif
         }
         else {
             CFRunLoopRun()

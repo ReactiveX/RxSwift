@@ -842,9 +842,9 @@ extension ObservableType {
 
 ## Debugging memory leaks
 
-In debug mode Rx tracks all allocated resources in a global variable `resourceCount`.
+In debug mode Rx tracks all allocated resources in a global variable `Resources.total`.
 
-In case you want to have some resource leak detection logic, the simplest method is just printing out `RxSwift.resourceCount` periodically to output.
+In case you want to have some resource leak detection logic, the simplest method is just printing out `RxSwift.Resources.total` periodically to output.
 
 ```swift
     /* add somewhere in
@@ -852,7 +852,7 @@ In case you want to have some resource leak detection logic, the simplest method
     */
     _ = Observable<Int>.interval(1, scheduler: MainScheduler.instance)
         .subscribe(onNext: { _ in
-            print("Resource count \(RxSwift.resourceCount)")
+            print("Resource count \(RxSwift.Resources.total)")
         })
 ```
 

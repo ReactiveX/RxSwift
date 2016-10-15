@@ -40,7 +40,7 @@ class RxTest
     : XCTestCase {
 
 #if TRACE_RESOURCES
-    fileprivate var startResourceCount: AtomicInt = 0
+    fileprivate var startResourceCount: Int32 = 0
 #endif
 
     var accumulateStatistics: Bool {
@@ -80,7 +80,7 @@ extension RxTest {
 
     func setUpActions(){
         #if TRACE_RESOURCES
-            self.startResourceCount = resourceCount
+            self.startResourceCount = Resources.total
             //registerMallocHooks()
             (startNumberOfAllocatedBytes, startNumberOfAllocations) = getMemoryInfo()
         #endif
@@ -90,7 +90,7 @@ extension RxTest {
         #if TRACE_RESOURCES
             // give 5 sec to clean up resources
             for _ in 0..<30 {
-                if self.startResourceCount < resourceCount {
+                if self.startResourceCount < Resources.total {
                     // main schedulers need to finish work
                     print("Waiting for resource cleanup ...")
                     RunLoop.current.run(mode: RunLoopMode.defaultRunLoopMode, before: Date(timeIntervalSinceNow: 0.05)  )
@@ -100,7 +100,7 @@ extension RxTest {
                 }
             }
 
-            XCTAssertEqual(self.startResourceCount, resourceCount)
+            XCTAssertEqual(self.startResourceCount, Resources.total)
             let (endNumberOfAllocatedBytes, endNumberOfAllocations) = getMemoryInfo()
 
             let (newBytes, newAllocations) = (endNumberOfAllocatedBytes - startNumberOfAllocatedBytes, endNumberOfAllocations - startNumberOfAllocations)

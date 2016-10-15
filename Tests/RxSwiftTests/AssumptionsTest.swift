@@ -91,16 +91,16 @@ class AssumptionsTest : RxTest {
     
     func testResourceLeaksDetectionIsTurnedOn() {
 #if TRACE_RESOURCES
-        let startResourceCount = resourceCount
+        let startResourceCount = Resources.total
     
         var observable: Observable<Int>! = Observable.just(1)
 
         XCTAssertTrue(observable != nil)
-        XCTAssertEqual(resourceCount, startResourceCount + 1)
+        XCTAssertEqual(Resources.total, startResourceCount + 1)
         
         observable = nil
 
-        XCTAssertEqual(resourceCount, startResourceCount)
+        XCTAssertEqual(Resources.total, startResourceCount)
 #elseif RELEASE
 
 #else

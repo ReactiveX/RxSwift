@@ -14,13 +14,13 @@ Base class for all disposables.
 public class DisposeBase {
     init() {
 #if TRACE_RESOURCES
-    let _ = AtomicIncrement(&resourceCount)
+    let _ = Resources.incrementTotal()
 #endif
     }
     
     deinit {
 #if TRACE_RESOURCES
-    let _ = AtomicDecrement(&resourceCount)
+    let _ = Resources.decrementTotal()
 #endif
     }
 }

@@ -61,7 +61,7 @@ open class VirtualTimeScheduler<Converter: VirtualTimeConverterType>
             }
         }, isEqual: { $0 === $1 })
         #if TRACE_RESOURCES
-            let _ = AtomicIncrement(&resourceCount)
+            let _ = Resources.incrementTotal()
         #endif
     }
 
@@ -239,7 +239,7 @@ open class VirtualTimeScheduler<Converter: VirtualTimeConverterType>
 
     #if TRACE_RESOURCES
         deinit {
-            _ = AtomicDecrement(&resourceCount)
+            _ = Resources.decrementTotal()
         }
     #endif
 }

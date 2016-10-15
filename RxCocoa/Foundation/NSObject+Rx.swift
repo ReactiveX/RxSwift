@@ -346,7 +346,7 @@ fileprivate class KVOObserver
 
     init(parent: KVOObservableProtocol, callback: @escaping Callback) {
         #if TRACE_RESOURCES
-            OSAtomicIncrement32Barrier(&resourceCount)
+            _ = Resources.incrementTotal()
         #endif
 
         super.init(target: parent.target, retainTarget: parent.retainTarget, keyPath: parent.keyPath, options: parent.options, callback: callback)
@@ -360,7 +360,7 @@ fileprivate class KVOObserver
 
     deinit {
         #if TRACE_RESOURCES
-            OSAtomicDecrement32Barrier(&resourceCount)
+            _ = Resources.decrementTotal()
         #endif
     }
 }

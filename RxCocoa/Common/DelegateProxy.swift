@@ -44,7 +44,7 @@ open class DelegateProxy : _RXDelegateProxy {
         
         MainScheduler.ensureExecutingOnScheduler()
 #if TRACE_RESOURCES
-        OSAtomicIncrement32Barrier(&resourceCount)
+        _ = Resources.incrementTotal()
 #endif
         super.init()
     }
@@ -266,7 +266,7 @@ open class DelegateProxy : _RXDelegateProxy {
             v.on(.completed)
         }
 #if TRACE_RESOURCES
-        OSAtomicDecrement32Barrier(&resourceCount)
+        _ = Resources.decrementTotal()
 #endif
     }
 

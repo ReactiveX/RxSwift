@@ -90,22 +90,22 @@ extension ObservableConcurrencyTest {
 #if TRACE_RESOURCES
     func testObserveOnDispatchQueue_EnsureCorrectImplementationIsChosen() {
         runDispatchQueueSchedulerTests { scheduler in
-            XCTAssert(numberOfSerialDispatchQueueObservables == 0)
+            XCTAssert(Resources.numberOfSerialDispatchQueueObservables == 0)
             let a = Observable.just(0)
                 .observeOn(scheduler)
             XCTAssertTrue(a == a) // shut up swift compiler :(, we only need to keep this in memory
-            XCTAssert(numberOfSerialDispatchQueueObservables == 1)
+            XCTAssert(Resources.numberOfSerialDispatchQueueObservables == 1)
             return Disposables.create()
         }
 
-        XCTAssert(numberOfSerialDispatchQueueObservables == 0)
+        XCTAssert(Resources.numberOfSerialDispatchQueueObservables == 0)
     }
 
     func testObserveOnDispatchQueue_DispatchQueueSchedulerIsSerial() {
         var numberOfConcurrentEvents: AtomicInt = 0
         var numberOfExecutions: AtomicInt = 0
         runDispatchQueueSchedulerTests { scheduler in
-            XCTAssert(numberOfSerialDispatchQueueObservables == 0)
+            XCTAssert(Resources.numberOfSerialDispatchQueueObservables == 0)
             let action = { (s: Void) -> Disposable in
                 XCTAssert(AtomicIncrement(&numberOfConcurrentEvents) == 1)
                 self.sleep(0.1) // should be enough to block the queue, so if it's concurrent, it will fail
@@ -118,7 +118,7 @@ extension ObservableConcurrencyTest {
             return Disposables.create()
         }
 
-        XCTAssert(numberOfSerialDispatchQueueObservables == 0)
+        XCTAssert(Resources.numberOfSerialDispatchQueueObservables == 0)
         XCTAssert(numberOfExecutions == 2)
     }
 #endif
@@ -318,10 +318,10 @@ class ObservableConcurrentSchedulerConcurrencyTest: ObservableConcurrencyTestBas
     func testObserveOn_EnsureCorrectImplementationIsChosen() {
         let scheduler = self.createScheduler()
 
-        XCTAssert(numberOfSerialDispatchQueueObservables == 0)
+        XCTAssert(Resources.numberOfSerialDispatchQueueObservables == 0)
         _ = Observable.just(0).observeOn(scheduler)
         self.sleep(0.1)
-        XCTAssert(numberOfSerialDispatchQueueObservables == 0)
+        XCTAssert(Resources.numberOfSerialDispatchQueueObservables == 0)
     }
 #endif
 

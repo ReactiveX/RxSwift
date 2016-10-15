@@ -9,12 +9,17 @@
 import Foundation
 
 #if TRACE_RESOURCES
-/**
-Counts number of `SerialDispatchQueueObservables`.
+    fileprivate var _numberOfSerialDispatchQueueObservables: AtomicInt = 0
+    extension Resources {
+        /**
+        Counts number of `SerialDispatchQueueObservables`.
 
-Purposed for unit tests.
-*/
-public var numberOfSerialDispatchQueueObservables: AtomicInt = 0
+        Purposed for unit tests.
+        */
+        public static var numberOfSerialDispatchQueueObservables: Int32 {
+            return _numberOfSerialDispatchQueueObservables.valueSnapshot()
+        }
+    }
 #endif
 
 class ObserveOnSerialDispatchQueueSink<O: ObserverType> : ObserverBase<O.E> {
@@ -62,8 +67,8 @@ class ObserveOnSerialDispatchQueue<E> : Producer<E> {
         self.source = source
         
 #if TRACE_RESOURCES
-        let _ = AtomicIncrement(&resourceCount)
-        let _ = AtomicIncrement(&numberOfSerialDispatchQueueObservables)
+        let _ = Resources.incrementTotal()
+        let _ = AtomicIncrement(&_numberOfSerialDispatchQueueObservables)
 #endif
     }
     
@@ -75,8 +80,8 @@ class ObserveOnSerialDispatchQueue<E> : Producer<E> {
     
 #if TRACE_RESOURCES
     deinit {
-        let _ = AtomicDecrement(&resourceCount)
-        let _ = AtomicDecrement(&numberOfSerialDispatchQueueObservables)
+        let _ = Resources.decrementTotal()
+        let _ = AtomicDecrement(&_numberOfSerialDispatchQueueObservables)
     }
 #endif
 }

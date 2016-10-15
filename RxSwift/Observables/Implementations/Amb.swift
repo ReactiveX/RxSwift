@@ -26,7 +26,7 @@ class AmbObserver<ElementType, O: ObserverType> : ObserverType where O.E == Elem
     
     init(parent: Parent, cancel: Disposable, sink: @escaping Sink) {
 #if TRACE_RESOURCES
-        let _ = AtomicIncrement(&resourceCount)
+        let _ = Resources.incrementTotal()
 #endif
         
         _parent = parent
@@ -43,7 +43,7 @@ class AmbObserver<ElementType, O: ObserverType> : ObserverType where O.E == Elem
     
     deinit {
 #if TRACE_RESOURCES
-        let _ = AtomicDecrement(&resourceCount)
+        let _ = Resources.decrementTotal()
 #endif
     }
 }
