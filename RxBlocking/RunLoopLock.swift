@@ -7,66 +7,18 @@
 //
 
 import Foundation
+import CoreFoundation
+
 #if !RX_NO_MODULE
     import RxSwift
 #endif
 
-typealias AtomicInt = Int32
-
 #if os(Linux)
-  func AtomicIncrement(_ increment: UnsafeMutablePointer<AtomicInt>) -> AtomicInt {
-      increment.pointee = increment.pointee + 1
-      return increment.pointee
-  }
-
-  func AtomicDecrement(_ increment: UnsafeMutablePointer<AtomicInt>) -> AtomicInt {
-      increment.pointee = increment.pointee - 1
-      return increment.pointee
-  }
+    let runLoopMode: CFString = RunLoopMode.defaultRunLoopMode.rawValue as! CFString
 #else
-  let AtomicIncrement = OSAtomicIncrement32Barrier
-  let AtomicDecrement = OSAtomicDecrement32Barrier
+    let runLoopMode: CFRunLoopMode = CFRunLoopMode.defaultMode
 #endif
 
-#if os(Linux)
-import Dispatch
-
-class RunLoopLock {
-    let _queue = DispatchQueue(label: "Worker")
-    let _sema = DispatchSemaphore(value: 0)
-    let _group = DispatchGroup()
-    var _timeout: TimeInterval?
-    
-    init(timeout: TimeInterval?) {
-        self._timeout = timeout
-    }
-    
-    func dispatch(_ action: @escaping () -> ()) {
-        _queue.async(group: _group, execute: action)
-    }
-    
-    func stop() {
-        _queue.suspend()
-        _sema.signal()
-    }
-    
-    func run() throws {
-        _group.notify(queue: _queue) { [weak self] in
-            self?._sema.signal()
-        }
-        if let timeout = _timeout {
-            let result = _sema.wait(timeout: DispatchTime.now() + timeout)
-            if result == .timedOut {
-                _queue.suspend()
-                throw RxError.timeout
-            }
-        } else {
-            _sema.wait()
-        }
-    }
-    
-}
-#else
 class RunLoopLock {
     let _currentRunLoop: CFRunLoop
 
@@ -80,7 +32,7 @@ class RunLoopLock {
     }
 
     func dispatch(_ action: @escaping () -> ()) {
-        CFRunLoopPerformBlock(_currentRunLoop, CFRunLoopMode.defaultMode.rawValue) {
+        CFRunLoopPerformBlock(_currentRunLoop, runLoopMode) {
             if CurrentThreadScheduler.isScheduleRequired {
                 _ = CurrentThreadScheduler.instance.schedule(()) { _ in
                     action()
@@ -98,7 +50,7 @@ class RunLoopLock {
         if AtomicIncrement(&_calledStop) != 1 {
             return
         }
-        CFRunLoopPerformBlock(_currentRunLoop, CFRunLoopMode.defaultMode.rawValue) {
+        CFRunLoopPerformBlock(_currentRunLoop, runLoopMode) {
             CFRunLoopStop(self._currentRunLoop)
         }
         CFRunLoopWakeUp(_currentRunLoop)
@@ -109,7 +61,21 @@ class RunLoopLock {
             fatalError("Run can be only called once")
         }
         if let timeout = _timeout {
-            switch CFRunLoopRunInMode(CFRunLoopMode.defaultMode, timeout, false) {
+#if os(Linux)
+            switch Int(CFRunLoopRunInMode(runLoopMode, timeout, false)) {
+            case kCFRunLoopRunFinished:
+                return
+            case kCFRunLoopRunHandledSource:
+                return
+            case kCFRunLoopRunStopped:
+                return
+            case kCFRunLoopRunTimedOut:
+                throw RxError.timeout
+            default:
+                fatalError("This failed because CFRunLoopRunResult wasn't bridged to Swift.")
+            }
+#else
+            switch CFRunLoopRunInMode(runLoopMode, timeout, false) {
             case .finished:
                 return
             case .handledSource:
@@ -119,10 +85,10 @@ class RunLoopLock {
             case .timedOut:
                 throw RxError.timeout
             }
+#endif
         }
         else {
             CFRunLoopRun()
         }
     }
 }
-#endif
