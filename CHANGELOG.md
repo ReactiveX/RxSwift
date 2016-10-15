@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 
 ## Master
 
+* Added backgroundColor observable extension to UIView.
+
 ## [3.0.0-beta.2](https://github.com/ReactiveX/RxSwift/releases/tag/3.0.0-beta.1) (Xcode 8 / Swift 3.0 compatible)
 
 * Subscription disposables now only create strong references to sinks until being disposed or sequence terminates. #573
