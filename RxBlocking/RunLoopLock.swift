@@ -1,6 +1,6 @@
 //
 //  RunLoopLock.swift
-//  Rx
+//  RxBlocking
 //
 //  Created by Krunoslav Zaher on 11/5/15.
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.

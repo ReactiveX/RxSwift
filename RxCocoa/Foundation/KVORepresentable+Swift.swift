@@ -1,6 +1,6 @@
 //
 //  KVORepresentable+Swift.swift
-//  Rx
+//  RxCocoa
 //
 //  Created by Krunoslav Zaher on 11/14/15.
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.

@@ -1,6 +1,6 @@
 //
 //  SectionedViewDataSourceMock.swift
-//  Rx
+//  Tests
 //
 //  Created by Krunoslav Zaher on 1/10/16.
 //  Copyright © 2016 Krunoslav Zaher. All rights reserved.

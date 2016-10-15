@@ -1,6 +1,6 @@
 //
 //  Debunce.swift
-//  Rx
+//  RxSwift
 //
 //  Created by Krunoslav Zaher on 9/11/16.
 //  Copyright © 2016 Krunoslav Zaher. All rights reserved.

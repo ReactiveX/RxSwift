@@ -1,6 +1,6 @@
 //
 //  UIViewController+Rx.swift
-//  Rx
+//  RxCocoa
 //
 //  Created by Kyle Fuller on 27/05/2016.
 //  Copyright © 2016 Krunoslav Zaher. All rights reserved.

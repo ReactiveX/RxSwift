@@ -1,6 +1,6 @@
 //
 //  Driver+Subscription.swift
-//  Rx
+//  RxCocoa
 //
 //  Created by Krunoslav Zaher on 9/19/15.
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.

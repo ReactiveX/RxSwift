@@ -1,6 +1,6 @@
 //
 //  UISearchBar+RxTests.swift
-//  Rx
+//  Tests
 //
 //  Created by Krunoslav Zaher on 3/12/16.
 //  Copyright © 2016 Krunoslav Zaher. All rights reserved.

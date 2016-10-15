@@ -1,6 +1,6 @@
 //
 //  SchedulerTests.swift
-//  Rx
+//  Tests
 //
 //  Created by Krunoslav Zaher on 7/22/16.
 //  Copyright © 2016 Krunoslav Zaher. All rights reserved.

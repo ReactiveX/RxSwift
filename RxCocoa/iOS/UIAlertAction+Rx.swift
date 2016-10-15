@@ -1,6 +1,6 @@
 //
 //  UIAlertAction+Rx.swift
-//  Rx
+//  RxCocoa
 //
 //  Created by Andrew Breckenridge on 5/7/16.
 //  Copyright © 2016 Krunoslav Zaher. All rights reserved.

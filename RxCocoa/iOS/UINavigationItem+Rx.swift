@@ -1,6 +1,6 @@
 //
 //  UINavigationItem+Rx.swift
-//  Rx
+//  RxCocoa
 //
 //  Created by kumapo on 2016/05/09.
 //  Copyright © 2016 Krunoslav Zaher. All rights reserved.

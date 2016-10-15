@@ -1,6 +1,6 @@
 //
 //  Observable+SingleTest.swift
-//  Rx
+//  Tests
 //
 //  Created by Krunoslav Zaher on 2/8/15.
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.

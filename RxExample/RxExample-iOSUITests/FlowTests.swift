@@ -1,6 +1,6 @@
 //
 //  FlowTests.swift
-//  RxExample-iOSUITests
+//  RxExample
 //
 //  Created by Krunoslav Zaher on 8/20/16.
 //  Copyright © 2016 Krunoslav Zaher. All rights reserved.

@@ -1,6 +1,6 @@
 //
 //  ElementAt.swift
-//  Rx
+//  RxSwift
 //
 //  Created by Junior B. on 21/10/15.
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.

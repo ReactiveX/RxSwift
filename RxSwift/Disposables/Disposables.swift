@@ -1,9 +1,9 @@
 //
 //  Disposables.swift
-//  Rx
+//  RxSwift
 //
 //  Created by Mohsen Ramezanpoor on 01/08/2016.
-//  Copyright © 2016 Mohsen Ramezanpoor. All rights reserved.
+//  Copyright © 2016 Krunoslav Zaher. All rights reserved.
 //
 
 import Foundation

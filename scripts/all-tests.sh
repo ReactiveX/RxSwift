@@ -84,10 +84,9 @@ function checkPlistVersions() {
 
 checkPlistVersions
 
-if [ "${IS_SWIFT_3}" -ne 1 ]; then
-    ./scripts/validate-headers.swift
-    ./scripts/package-spm.swift > /dev/null
-fi
+./scripts/validate-headers.swift
+./scripts/package-spm.swift > /dev/null
+
 ensureNoGitChanges "Package for Swift package manager isn't updated, please run ./scripts/package-spm.swift and commit the changes"
 
 CONFIGURATIONS=(Release-Tests)

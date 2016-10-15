@@ -1,6 +1,6 @@
 //
 //  UIProgressView+Rx.swift
-//  Rx
+//  RxCocoa
 //
 //  Created by Samuel Bae on 2/27/16.
 //  Copyright © 2016 Krunoslav Zaher. All rights reserved.

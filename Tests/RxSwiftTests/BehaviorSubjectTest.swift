@@ -1,6 +1,6 @@
 //
 //  BehaviorSubjectTest.swift
-//  RxTests
+//  Tests
 //
 //  Created by Krunoslav Zaher on 5/23/15.
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.

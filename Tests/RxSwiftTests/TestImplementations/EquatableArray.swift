@@ -1,6 +1,6 @@
 //
 //  EquatableArray.swift
-//  RxTests
+//  Tests
 //
 //  Created by Krunoslav Zaher on 10/15/15.
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.

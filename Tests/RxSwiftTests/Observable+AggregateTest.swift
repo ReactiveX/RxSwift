@@ -1,6 +1,6 @@
 //
 //  Observable+AggregateTest.swift
-//  Rx
+//  Tests
 //
 //  Created by Krunoslav Zaher on 4/2/15.
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.

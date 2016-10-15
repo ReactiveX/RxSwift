@@ -1,6 +1,6 @@
 //
 //  WithLatestFrom.swift
-//  RxExample
+//  RxSwift
 //
 //  Created by Yury Korolev on 10/19/15.
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.

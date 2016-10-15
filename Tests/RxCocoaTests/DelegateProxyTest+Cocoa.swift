@@ -1,6 +1,6 @@
 //
 //  DelegateProxyTest+Cocoa.swift
-//  RxTests
+//  Tests
 //
 //  Created by Krunoslav Zaher on 12/5/15.
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.

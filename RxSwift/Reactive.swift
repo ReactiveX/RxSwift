@@ -1,6 +1,6 @@
 //
 //  Reactive.swift
-//  Rx
+//  RxSwift
 //
 //  Created by Yury Korolev on 5/2/16.
 //  Copyright © 2016 Krunoslav Zaher. All rights reserved.

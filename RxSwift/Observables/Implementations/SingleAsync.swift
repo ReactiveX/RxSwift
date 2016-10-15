@@ -1,6 +1,6 @@
 //
 //  SingleAsync.swift
-//  Rx
+//  RxSwift
 //
 //  Created by Junior B. on 09/11/15.
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.

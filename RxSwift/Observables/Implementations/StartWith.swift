@@ -1,6 +1,6 @@
 //
 //  StartWith.swift
-//  RxCocoa
+//  RxSwift
 //
 //  Created by Krunoslav Zaher on 4/6/15.
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.

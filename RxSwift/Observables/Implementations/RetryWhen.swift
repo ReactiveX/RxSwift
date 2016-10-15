@@ -1,6 +1,6 @@
 //
 //  RetryWhen.swift
-//  Rx
+//  RxSwift
 //
 //  Created by Junior B. on 06/10/15.
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.

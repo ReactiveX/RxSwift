@@ -1,6 +1,6 @@
 //
 //  UIScrollView+RxTests.swift
-//  Rx
+//  Tests
 //
 //  Created by Suyeol Jeon on 6/8/16.
 //  Copyright © 2016 Krunoslav Zaher. All rights reserved.

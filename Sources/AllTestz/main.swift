@@ -421,6 +421,7 @@ final class ObservableCreationTests_Sub : ObservableCreationTests, RxTestCase {
     ("testJust_Disposed", ObservableCreationTests.testJust_Disposed),
     ("testJust_DisposeAfterNext", ObservableCreationTests.testJust_DisposeAfterNext),
     ("testJust_DefaultScheduler", ObservableCreationTests.testJust_DefaultScheduler),
+    ("testJust_CompilesInMap", ObservableCreationTests.testJust_CompilesInMap),
     ("testFromArray_complete_immediate", ObservableCreationTests.testFromArray_complete_immediate),
     ("testFromArray_complete", ObservableCreationTests.testFromArray_complete),
     ("testFromArray_dispose", ObservableCreationTests.testFromArray_dispose),

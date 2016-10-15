@@ -1,6 +1,6 @@
 //
 //  UIPageControl+Rx.swift
-//  Rx
+//  RxCocoa
 //
 //  Created by Francesco Puntillo on 14/04/2016.
 //  Copyright © 2016 Krunoslav Zaher. All rights reserved.

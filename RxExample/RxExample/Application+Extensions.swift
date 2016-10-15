@@ -1,5 +1,5 @@
 //
-//  UIApplication+Extensions.swift
+//  Application+Extensions.swift
 //  RxExample
 //
 //  Created by Krunoslav Zaher on 8/20/16.

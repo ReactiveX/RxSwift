@@ -1,6 +1,6 @@
 //
 //  RxExample_iOSTests.swift
-//  RxExample-iOSTests
+//  RxExample
 //
 //  Created by Krunoslav Zaher on 12/28/15.
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.

@@ -1,6 +1,6 @@
 //
 //  Observable+StandardSequenceOperators.swift
-//  Rx
+//  RxSwift
 //
 //  Created by Krunoslav Zaher on 2/17/15.
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.

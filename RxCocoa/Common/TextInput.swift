@@ -1,6 +1,6 @@
 //
 //  TextInput.swift
-//  Rx
+//  RxCocoa
 //
 //  Created by Krunoslav Zaher on 5/12/16.
 //  Copyright © 2016 Krunoslav Zaher. All rights reserved.

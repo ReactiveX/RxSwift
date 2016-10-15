@@ -1,6 +1,6 @@
 //
 //  SentMessageTest.swift
-//  RxTests
+//  Tests
 //
 //  Created by Krunoslav Zaher on 11/21/15.
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.

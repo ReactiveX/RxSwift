@@ -1,6 +1,6 @@
 //
 //  SkipWhile.swift
-//  Rx
+//  RxSwift
 //
 //  Created by Yury Korolev on 10/9/15.
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.

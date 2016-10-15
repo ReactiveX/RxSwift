@@ -1,6 +1,6 @@
 //
 //  RxTextStorageDelegateProxy.swift
-//  Rx
+//  RxCocoa
 //
 //  Created by Segii Shulga on 12/30/15.
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.

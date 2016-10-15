@@ -1,6 +1,6 @@
 //
 //  UIActivityIndicatorView+Rx.swift
-//  Rx
+//  RxCocoa
 //
 //  Created by Ivan Persidskiy on 02/12/15.
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.

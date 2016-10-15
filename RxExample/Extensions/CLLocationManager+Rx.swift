@@ -1,6 +1,6 @@
 //
 //  CLLocationManager+Rx.swift
-//  RxCocoa
+//  RxExample
 //
 //  Created by Carlos García on 8/7/15.
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.

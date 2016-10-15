@@ -1,6 +1,6 @@
 //
 //  CollectionViewImageCell.swift
-//  Example
+//  RxExample
 //
 //  Created by Krunoslav Zaher on 4/4/15.
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.

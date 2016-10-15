@@ -1,6 +1,6 @@
 //
 //  UIViewControler+RxTests.swift
-//  Rx
+//  Tests
 //
 //  Created by Kyle Fuller on 30/05/2016.
 //  Copyright © 2016 Krunoslav Zaher. All rights reserved.

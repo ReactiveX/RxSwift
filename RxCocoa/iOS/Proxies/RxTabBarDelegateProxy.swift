@@ -1,6 +1,6 @@
 //
 //  RxTabBarDelegateProxy.swift
-//  Rx
+//  RxCocoa
 //
 //  Created by Jesse Farless on 5/14/16.
 //  Copyright © 2016 Krunoslav Zaher. All rights reserved.

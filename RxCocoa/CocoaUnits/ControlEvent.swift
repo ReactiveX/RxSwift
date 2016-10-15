@@ -1,6 +1,6 @@
 //
 //  ControlEvent.swift
-//  Rx
+//  RxCocoa
 //
 //  Created by Krunoslav Zaher on 8/28/15.
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.

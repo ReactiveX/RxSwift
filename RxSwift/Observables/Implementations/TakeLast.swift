@@ -1,6 +1,6 @@
 //
 //  TakeLast.swift
-//  Rx
+//  RxSwift
 //
 //  Created by Tomi Koskinen on 25/10/15.
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.

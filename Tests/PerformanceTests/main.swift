@@ -1,6 +1,6 @@
 //
 //  main.swift
-//  Benchmark
+//  Tests
 //
 //  Created by Krunoslav Zaher on 9/26/15.
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.

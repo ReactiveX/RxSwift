@@ -1,6 +1,6 @@
 //
 //  Timeout.swift
-//  Rx
+//  RxSwift
 //
 //  Created by Tomi Koskinen on 13/11/15.
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.

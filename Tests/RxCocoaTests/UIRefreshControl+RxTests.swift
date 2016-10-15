@@ -1,6 +1,6 @@
 //
 //  UIRefreshControl+RxTests.swift
-//  RxTests
+//  Tests
 //
 //  Created by Yosuke Ishikawa on 1/31/16.
 //  Copyright © 2016 Krunoslav Zaher. All rights reserved.

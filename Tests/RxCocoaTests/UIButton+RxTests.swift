@@ -1,6 +1,6 @@
 //
 //  UIButton+RxTests.swift
-//  Rx
+//  Tests
 //
 //  Created by Krunoslav Zaher on 6/24/16.
 //  Copyright © 2016 Krunoslav Zaher. All rights reserved.

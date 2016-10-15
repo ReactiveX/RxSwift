@@ -1,6 +1,6 @@
 //
 //  UIPickerView+RxTests.swift
-//  Rx
+//  Tests
 //
 //  Created by Segii Shulga on 5/12/16.
 //  Copyright © 2016 Krunoslav Zaher. All rights reserved.

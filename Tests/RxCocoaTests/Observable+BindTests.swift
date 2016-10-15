@@ -1,6 +1,6 @@
 //
 //  Observable+BindTests.swift
-//  Rx
+//  Tests
 //
 //  Created by Krunoslav Zaher on 10/11/16.
 //  Copyright © 2016 Krunoslav Zaher. All rights reserved.

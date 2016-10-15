@@ -1,6 +1,6 @@
 //
 //  UIGestureRecognizer+Rx.swift
-//  Touches
+//  RxCocoa
 //
 //  Created by Carlos García on 10/6/15.
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.

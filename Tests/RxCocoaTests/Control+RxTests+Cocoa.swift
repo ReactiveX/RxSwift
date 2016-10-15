@@ -1,6 +1,6 @@
 //
 //  Control+RxTests+Cocoa.swift
-//  RxTests
+//  Tests
 //
 //  Created by Krunoslav Zaher on 10/19/15.
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.

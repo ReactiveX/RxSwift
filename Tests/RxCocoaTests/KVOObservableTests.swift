@@ -1,6 +1,6 @@
 //
 //  KVOObservableTests.swift
-//  RxTests
+//  Tests
 //
 //  Created by Krunoslav Zaher on 5/19/15.
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.

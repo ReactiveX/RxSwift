@@ -1,6 +1,6 @@
 //
 //  Dependencies.swift
-//  WikipediaImageSearch
+//  RxExample
 //
 //  Created by carlos on 13/5/15.
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.

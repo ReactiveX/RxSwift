@@ -1,5 +1,9 @@
 //
-//  Use this file to import your target's public headers that you would like to expose to Swift.
+//  RxTest-iOS-Bridging-Header.h
+//  Tests
+//
+//  Created by Krunoslav Zaher on 11/25/15.
+//  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
 #import "RXObjCRuntime+Testing.h"

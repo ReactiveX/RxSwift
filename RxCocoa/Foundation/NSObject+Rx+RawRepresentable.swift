@@ -1,6 +1,6 @@
 //
 //  NSObject+Rx+RawRepresentable.swift
-//  Rx
+//  RxCocoa
 //
 //  Created by Krunoslav Zaher on 11/9/15.
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.

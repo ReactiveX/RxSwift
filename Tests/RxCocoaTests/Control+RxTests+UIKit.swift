@@ -1,6 +1,6 @@
 //
 //  Control+RxTests+UIKit.swift
-//  RxTests
+//  Tests
 //
 //  Created by Ash Furrow on 4/7/15.
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.

@@ -1,6 +1,6 @@
 //
 //  ObserverTests.swift
-//  RxTests
+//  Tests
 //
 //  Created by Rob Cheung on 9/15/15.
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.

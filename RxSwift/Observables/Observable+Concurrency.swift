@@ -1,6 +1,6 @@
 //
 //  Observable+Concurrency.swift
-//  Rx
+//  RxSwift
 //
 //  Created by Krunoslav Zaher on 3/15/15.
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.

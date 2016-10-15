@@ -1,6 +1,6 @@
 //
 //  ToArray.swift
-//  Rx
+//  RxSwift
 //
 //  Created by Junior B. on 20/10/15.
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.

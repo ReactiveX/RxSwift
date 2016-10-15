@@ -1,6 +1,6 @@
 //
 //  MockDisposable.swift
-//  RxTests
+//  Tests
 //
 //  Created by Yury Korolev on 10/17/15.
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
