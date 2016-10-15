@@ -27,16 +27,14 @@ func incrementChecked(_ i: inout Int) throws -> Int {
     if i == Int.max {
         throw RxError.overflow
     }
-    let result = i
-    i += 1
-    return result
+    defer { i += 1 }
+    return i
 }
 
 func decrementChecked(_ i: inout Int) throws -> Int {
     if i == Int.min {
         throw RxError.overflow
     }
-    let result = i
-    i -= 1
-    return result
+    defer { i -= 1 }
+    return i
 }
