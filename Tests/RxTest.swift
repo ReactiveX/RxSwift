@@ -39,7 +39,9 @@ func getMemoryInfo() -> (bytes: Int64, allocations: Int64) {
 class RxTest
     : XCTestCase {
 
+#if TRACE_RESOURCES
     fileprivate var startResourceCount: AtomicInt = 0
+#endif
 
     var accumulateStatistics: Bool {
         return true
@@ -113,25 +115,3 @@ extension RxTest {
 
 }
 
-#if os(OSX) || os(iOS) || os(tvOS) || os(watchOS)
-    typealias AtomicInt = Int32
-    let AtomicIncrement = OSAtomicIncrement32Barrier
-    let AtomicDecrement = OSAtomicDecrement32Barrier
-#elseif os(Linux)
-    typealias AtomicInt = Int64
-    func AtomicIncrement(_ increment: UnsafeMutablePointer<AtomicInt>) -> AtomicInt {
-        increment.pointee = increment.pointee + 1
-        return increment.pointee
-    }
-
-    func AtomicDecrement(_ increment: UnsafeMutablePointer<AtomicInt>) -> AtomicInt {
-        increment.pointee = increment.pointee - 1
-        return increment.pointee
-    }
-
-    func autoreleasepool<T>(_ action: () -> T) -> T {
-        return action()
-    }
-#else
-    let error = fatalError("wot")
-#endif

@@ -17,28 +17,66 @@
     import Glibc
     import SwiftShims
 
-    // MARK: Atomic, just something that works for single thread case
-
-    #if TRACE_RESOURCES
-    public typealias AtomicInt = Int64
+    #if false
+    public final class AtomicInt: ExpressibleByIntegerLiteral {
+        public typealias IntegerLiteralType = Int
+        fileprivate var value = 0
+        fileprivate var _lock = NSRecursiveLock()
+        public init(integerLiteral value: Int) {
+            self.value = value
+        }
+        func lock() {
+          _lock.lock()
+        }
+        func unlock() {
+          _lock.unlock()
+        }
+    }
+    public func >(lhs: AtomicInt, rhs: Int) -> Bool {
+        return lhs.value > rhs
+    }
+    public func ==(lhs: AtomicInt, rhs: Int) -> Bool {
+        return lhs.value == rhs
+    }
     #else
-    typealias AtomicInt = Int64
+    final class AtomicInt: ExpressibleByIntegerLiteral {
+        typealias IntegerLiteralType = Int
+        fileprivate var value = 0
+        fileprivate var _lock = NSRecursiveLock()
+        init(integerLiteral value: Int) {
+            self.value = value
+        }
+        func lock() {
+          _lock.lock()
+        }
+        func unlock() {
+          _lock.unlock()
+        }
+    }
+    func >(lhs: AtomicInt, rhs: Int) -> Bool {
+        return lhs.value > rhs
+    }
+    func ==(lhs: AtomicInt, rhs: Int) -> Bool {
+        return lhs.value == rhs
+    }
     #endif
 
-    func AtomicIncrement(_ increment: UnsafeMutablePointer<AtomicInt>) -> AtomicInt {
-        increment.pointee = increment.pointee + 1
-        return increment.pointee
+    func AtomicIncrement(_ increment: inout AtomicInt) -> Int {
+        increment.lock(); defer { increment.unlock() } 
+        increment.value += 1
+        return increment.value
     }
 
-    func AtomicDecrement(_ increment: UnsafeMutablePointer<AtomicInt>) -> AtomicInt {
-        increment.pointee = increment.pointee - 1
-        return increment.pointee
+    func AtomicDecrement(_ increment: inout AtomicInt) -> Int {
+        increment.lock(); defer { increment.unlock() } 
+        increment.value -= 1
+        return increment.value
     }
 
-    func AtomicCompareAndSwap(_ l: AtomicInt, _ r: AtomicInt, _ target: UnsafeMutablePointer<AtomicInt>) -> Bool {
-        //return __sync_val_compare_and_swap(target, l, r)
-        if target.pointee == l {
-            target.pointee = r
+    func AtomicCompareAndSwap(_ l: Int, _ r: Int, _ target: inout AtomicInt) -> Bool {
+        target.lock(); defer { target.unlock() } 
+        if target.value == l {
+            target.value = r
             return true
         }
 
