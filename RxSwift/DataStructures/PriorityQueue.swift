@@ -8,12 +8,15 @@
 
 import Foundation
 
-struct PriorityQueue<Element: AnyObject> {
+struct PriorityQueue<Element> {
     private let _hasHigherPriority: (Element, Element) -> Bool
+    private let _isEqual: (Element, Element) -> Bool
+
     fileprivate var _elements = [Element]()
 
-    init(hasHigherPriority: @escaping (Element, Element) -> Bool) {
+    init(hasHigherPriority: @escaping (Element, Element) -> Bool, isEqual: @escaping (Element, Element) -> Bool) {
         _hasHigherPriority = hasHigherPriority
+        _isEqual = isEqual
     }
 
     mutating func enqueue(_ element: Element) {
@@ -41,7 +44,7 @@ struct PriorityQueue<Element: AnyObject> {
 
     mutating func remove(_ element: Element) {
         for i in 0 ..< _elements.count {
-            if _elements[i] === element {
+            if _isEqual(_elements[i], element) {
                 removeAt(i)
                 return
             }

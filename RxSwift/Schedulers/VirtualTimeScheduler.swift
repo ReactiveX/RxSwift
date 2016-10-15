@@ -59,7 +59,7 @@ open class VirtualTimeScheduler<Converter: VirtualTimeConverterType>
             case .greaterThan:
                 return false
             }
-        })
+        }, isEqual: { $0 === $1 })
         #if TRACE_RESOURCES
             let _ = AtomicIncrement(&resourceCount)
         #endif
