@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 
 ## [3.0.0-rc.1](https://github.com/ReactiveX/RxSwift/releases/tag/3.0.0-beta.1) (Xcode 8 / Swift 3.0 compatible)
 
+* Renames `RxTests` library to `RxTest` because of problems with Swift Package Manager.
 * Adds Swift Package Manager support
 * Adds Linux support 
 * Replaces `AnyObserver` with `UIBindingObserver` in public interface.

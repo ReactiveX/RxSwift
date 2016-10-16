@@ -138,7 +138,7 @@ end
 # RxTests and RxBlocking make the most sense in the context of unit/integration tests
 target 'YOUR_TESTING_TARGET' do
     pod 'RxBlocking', '3.0.0-rc.1'
-    pod 'RxTests',    '3.0.0-rc.1'
+    pod 'RxTest',     '3.0.0-rc.1'
 end
 ```
 
