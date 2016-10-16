@@ -38,7 +38,7 @@ done
 function validate() {
     local PODSPEC=$1
 
-    cd ~/.cocoapods/repos/master/; ~/Projects/CocoaPods/bin/pod lib lint ~/Projects/RxSwift/RxSwift.podspec --verbose --no-clean
+    ~/Projects/CocoaPods/bin/pod lib lint $PODSPEC --verbose --no-clean --allow-warnings # temporary allow warning because of deprecated API in rc
     #pod lib lint $PODSPEC --verbose --no-clean --allow-warnings # temporary allow warning because of deprecated API in rc
 }
 
