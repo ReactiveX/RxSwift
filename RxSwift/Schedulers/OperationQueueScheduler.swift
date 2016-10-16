@@ -33,25 +33,20 @@ public class OperationQueueScheduler: ImmediateSchedulerType {
     - returns: The disposable object used to cancel the scheduled action (best effort).
     */
     public func schedule<StateType>(_ state: StateType, action: @escaping (StateType) -> Disposable) -> Disposable {
-        
-        let compositeDisposable = CompositeDisposable()
-        
-        weak var compositeDisposableWeak = compositeDisposable
-        
+        let cancel = SingleAssignmentDisposable()
+
         let operation = BlockOperation {
-            if compositeDisposableWeak?.isDisposed ?? false {
+            if cancel.isDisposed {
                 return
             }
-            
-            let disposable = action(state)
-            let _ = compositeDisposableWeak?.insert(disposable)
+
+
+            cancel.setDisposable(action(state))
         }
 
         self.operationQueue.addOperation(operation)
         
-        let _ = compositeDisposable.insert(Disposables.create(with: operation.cancel))
-
-        return compositeDisposable
+        return cancel
     }
 
 }
