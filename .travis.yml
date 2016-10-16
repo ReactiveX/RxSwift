@@ -1,25 +1,58 @@
 language: objective-c
 
+os:
+    - linux
+    - osx
+language: generic
+sudo: required
+dist: trusty
 osx_image: xcode8
 env:
-  matrix:
-    - DANGER=1
-    - TEST="iOS"
-    - TEST="OSX"
-    - TEST="watchOS"
-    - TEST="tvOS"
-    - TEST="iOS-Example"
+  - DANGER=1
+  - TEST=iOS
+  - TEST=Unix
+  - TEST=watchOS
+  - TEST=tvOS
+  - TEST=iOS-Example
+  - TEST=SPM
+matrix:
+    exclude:
+      - os: linux
+        env: DANGER=1
+        
+      - os: linux
+        env: TEST=iOS
+
+      - os: linux
+        env: TEST=watchOS
+
+      - os: linux
+        env: TEST=tvOS
+
+      - os: linux
+        env: TEST=iOS-Example
 
 notifications:
   slack: rxswift:3ykt2Z61f8GkdvhCZTYPduOL
   email: false
 
-script: 
-  - if [ "${DANGER}" -eq 1 ]; then
-       bundle exec danger --verbose;
-    else
-      xcodebuild -version;
-      xcodebuild -showsdks;
-      ./scripts/all-tests.sh "${TEST}";
+install:
+  - if [ `uname` == "Linux" ] ; then 
+        curl -sL https://gist.github.com/kylef/5c0475ff02b7c7671d2a/raw/621ef9b29bbb852fdfd2e10ed147b321d792c1e4/swiftenv-install.sh | bash ;
     fi
 
+script: 
+  - if [[ `uname` == "Linux" ]] ; then
+        . ~/.swiftenv/init;
+        swiftenv install 3.0;
+    fi
+  - if [[ "${DANGER}" -eq 1 ]] ; then
+       bundle install --path vendor/bundle;
+       bundle exec danger --verbose;
+    else
+      if [[ `uname` == "Darwin" ]] ; then
+          xcodebuild -version;
+          xcodebuild -showsdks;
+      fi;
+      ./scripts/all-tests.sh "${TEST}";
+    fi
