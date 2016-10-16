@@ -522,6 +522,18 @@ final class ObservableConcurrencyTest_ : ObservableConcurrencyTest, RxTestCase {
     ] }
 }
 
+final class ReactiveTests_ : ReactiveTests, RxTestCase {
+    #if os(OSX)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (ReactiveTests_) -> () -> ())] { return [
+    ("testEnablesMutations", ReactiveTests.testEnablesMutations),
+    ] }
+}
+
 final class ReplaySubjectTest_ : ReplaySubjectTest, RxTestCase {
     #if os(OSX)
     required override init() {
@@ -1077,6 +1089,7 @@ func XCTMain(_ tests: [() -> ()]) {
         testCase(SubjectConcurrencyTest_.allTests),
         testCase(VariableTest_.allTests),
         testCase(ObservableConcurrencyTest_.allTests),
+        testCase(ReactiveTests_.allTests),
         testCase(ReplaySubjectTest_.allTests),
         testCase(ObservableSubscriptionTests_.allTests),
         testCase(DisposableTest_.allTests),

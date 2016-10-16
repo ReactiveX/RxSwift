@@ -47,12 +47,12 @@ public protocol ReactiveCompatible {
     /**
      Reactive extensions.
     */
-    static var rx: Reactive<CompatibleType>.Type { get }
+    static var rx: Reactive<CompatibleType>.Type { get set }
 
     /**
      Reactive extensions.
     */
-    var rx: Reactive<CompatibleType> { get }
+    var rx: Reactive<CompatibleType> { get set }
 }
 
 public extension ReactiveCompatible {
@@ -60,14 +60,24 @@ public extension ReactiveCompatible {
      Reactive extensions.
     */
     public static var rx: Reactive<Self>.Type {
-        return Reactive<Self>.self
+        get {
+            return Reactive<Self>.self
+        }
+        set {
+            // this enables using Reactive to "mutate" base type
+        }
     }
 
     /**
      Reactive extensions.
     */
     public var rx: Reactive<Self> {
-        return Reactive(self)
+        get {
+            return Reactive(self)
+        }
+        set {
+            // this enables using Reactive to "mutate" base object
+        }
     }
 }
 

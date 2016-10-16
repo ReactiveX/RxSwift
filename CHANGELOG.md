@@ -37,8 +37,8 @@ text.drive(label.rx.text)
 
 * Adds trim output parameter to `debug` operator. #930
 * Renames `NSDate` to `Date` everywhere.
-
 * Renames scheduler init param `globalConcurrentQueueQOS` to `qos` and removes custom enum wrapper.
+* Adds setter to `rx` property to enable mutation of base object.
 
 ## [3.0.0-beta.2](https://github.com/ReactiveX/RxSwift/releases/tag/3.0.0-beta.1) (Xcode 8 / Swift 3.0 compatible)
 
