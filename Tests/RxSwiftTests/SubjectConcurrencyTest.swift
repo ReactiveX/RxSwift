@@ -51,7 +51,7 @@ extension SubjectConcurrencyTest {
 
             if state == 0 {
                 state = 1
-                DispatchQueue.global(qos: DispatchQoS.QoSClass.userInitiated).async {
+                DispatchQueue.global(qos: DispatchQoS.QoSClass.default).async {
                     o.value.on(.next(1))
                 }
 
