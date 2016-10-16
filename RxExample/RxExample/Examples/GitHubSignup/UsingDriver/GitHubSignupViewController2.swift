@@ -31,9 +31,9 @@ class GitHubSignupViewController2 : ViewController {
 
         let viewModel = GithubSignupViewModel2(
             input: (
-                username: usernameOutlet.rx.text.asDriver(),
-                password: passwordOutlet.rx.text.asDriver(),
-                repeatedPassword: repeatedPasswordOutlet.rx.text.asDriver(),
+                username: usernameOutlet.rx.text.orEmpty.asDriver(),
+                password: passwordOutlet.rx.text.orEmpty.asDriver(),
+                repeatedPassword: repeatedPasswordOutlet.rx.text.orEmpty.asDriver(),
                 loginTaps: signupOutlet.rx.tap.asDriver()
             ),
             dependency: (

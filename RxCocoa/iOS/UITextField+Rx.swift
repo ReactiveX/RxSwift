@@ -19,11 +19,11 @@ extension Reactive where Base: UITextField {
     /**
     Reactive wrapper for `text` property.
     */
-    public var text: ControlProperty<String> {
+    public var text: ControlProperty<String?> {
         return UIControl.rx.value(
             base,
             getter: { textField in
-                textField.text ?? ""
+                textField.text
             }, setter: { textField, value in
                 // This check is important because setting text value always clears control state
                 // including marked text selection which is imporant for proper input 

@@ -27,7 +27,7 @@ import Foundation
         /**
          Reactive wrapper for `text` property.
         */
-        public let text: ControlProperty<String>
+        public let text: ControlProperty<String?>
 
         /**
          Initializes new text input.
@@ -35,7 +35,7 @@ import Foundation
          - parameter base: Base object.
          - parameter text: Textual control property.
         */
-        public init(base: Base, text: ControlProperty<String>) {
+        public init(base: Base, text: ControlProperty<String?>) {
             self.base = base
             self.text = text
         }
@@ -65,19 +65,19 @@ import Foundation
     @available(*, deprecated, renamed: "TextInput")
     public protocol RxTextInput : UITextInput {
         @available(*, deprecated, renamed: "rx.textInput.text")
-        var rx_text: ControlProperty<String> { get }
+        var rx_text: ControlProperty<String?> { get }
     }
 
     extension UITextField : RxTextInput {
         @available(*, deprecated, renamed: "rx.textInput.text")
-        public var rx_text: ControlProperty<String> {
+        public var rx_text: ControlProperty<String?> {
             return self.rx.text
         }
     }
 
     extension UITextView : RxTextInput {
         @available(*, deprecated, renamed: "rx.textInput.text")
-        public var rx_text: ControlProperty<String> {
+        public var rx_text: ControlProperty<String?> {
             return self.rx.text
         }
     }

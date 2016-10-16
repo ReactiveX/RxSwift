@@ -168,14 +168,14 @@ extension ObservableType {
     
     - seealso: [map operator on reactivex.io](http://reactivex.io/documentation/operators/map.html)
 
-    - parameter selector: A transform function to apply to each source element.
+    - parameter transform: A transform function to apply to each source element.
     - returns: An observable sequence whose elements are the result of invoking the transform function on each element of source.
      
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func map<R>(_ selector: @escaping (E) throws -> R)
+    public func map<R>(_ transform: @escaping (E) throws -> R)
         -> Observable<R> {
-        return self.asObservable().composeMap(selector)
+        return self.asObservable().composeMap(transform)
     }
 
     /**

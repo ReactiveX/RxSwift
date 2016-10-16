@@ -10,8 +10,12 @@ import Foundation
 import XCTest
 import RxCocoa
 import RxSwift
+import RxTest
 
 class ControlPropertyTests : RxTest {
+}
+
+extension ControlPropertyTests {
     func testObservingIsAlwaysHappeningOnMainThread() {
         let hotObservable = MainThreadPrimitiveHotObservable<Int>()
 
@@ -46,5 +50,23 @@ class ControlPropertyTests : RxTest {
         }
 
         XCTAssertTrue(observedOnMainThread)
+    }
+}
+
+extension ControlPropertyTests {
+    func testOrEmpty() {
+        let bindingObserver = PrimitiveMockObserver<String?>()
+        let controlProperty = ControlProperty<String?>(values: Observable.just(nil), valueSink: bindingObserver.asObserver())
+
+        let orEmpty = controlProperty.orEmpty
+
+        let finalObserver = PrimitiveMockObserver<String>()
+        _ = orEmpty.subscribe(finalObserver)
+        orEmpty.on(.next("a"))
+
+        let bindingEvents: [Event<String>] = bindingObserver.events.map { $0.value.map { $0 ?? "" } }
+        let observingEvents: [Event<String>] = finalObserver.events.map { $0.value.map { $0 } }
+        XCTAssertArraysEqual(bindingEvents, [Event<String>.next("a")], ==)
+        XCTAssertArraysEqual(observingEvents, [Event<String>.next(""), Event<String>.completed], ==)
     }
 }

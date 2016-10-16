@@ -449,7 +449,7 @@ extension UITableViewTests {
         let commitedEvents = tableView.rx.dataSource.sentMessage(#selector(UITableViewDataSource.tableView(_:commit:forRowAt:)))
 
         XCTAssertFalse(tableView.dataSource!.responds(to: #selector(UITableViewDataSource.tableView(_:commit:forRowAt:))))
-        XCTAssertEqual(setDataSources, [tableView.dataSource!] as [UITableViewDataSource?]) { $0 === $1 }
+        XCTAssertArraysEqual(setDataSources, [tableView.dataSource!] as [UITableViewDataSource?]) { $0 === $1 }
 
         var firstEvents: [Arguments] = []
         var secondEvents: [Arguments] = []
@@ -459,14 +459,14 @@ extension UITableViewTests {
         })
 
         XCTAssertTrue(tableView.dataSource!.responds(to: #selector(UITableViewDataSource.tableView(_:commit:forRowAt:))))
-        XCTAssertEqual(setDataSources, [tableView.dataSource, nil, tableView.dataSource] as [UITableViewDataSource?]) { $0 === $1 }
+        XCTAssertArraysEqual(setDataSources, [tableView.dataSource, nil, tableView.dataSource] as [UITableViewDataSource?]) { $0 === $1 }
 
         let subscription2 = commitedEvents.subscribe(onNext: { event in
             secondEvents.append(Arguments(values: event))
         })
 
         XCTAssertTrue(tableView.dataSource!.responds(to: #selector(UITableViewDataSource.tableView(_:commit:forRowAt:))))
-        XCTAssertEqual(setDataSources, [tableView.dataSource, nil, tableView.dataSource] as [UITableViewDataSource?]) { $0 === $1 }
+        XCTAssertArraysEqual(setDataSources, [tableView.dataSource, nil, tableView.dataSource] as [UITableViewDataSource?]) { $0 === $1 }
 
         let deleteEditingStyle: NSNumber = NSNumber(value: UITableViewCellEditingStyle.delete.rawValue)
         let indexPath: NSIndexPath = NSIndexPath(item: 0, section: 0)
@@ -479,12 +479,12 @@ extension UITableViewTests {
         subscription1.dispose()
 
         XCTAssertTrue(tableView.dataSource!.responds(to: #selector(UITableViewDataSource.tableView(_:commit:forRowAt:))))
-        XCTAssertEqual(setDataSources, [tableView.dataSource, nil, tableView.dataSource] as [UITableViewDataSource?]) { $0 === $1 }
+        XCTAssertArraysEqual(setDataSources, [tableView.dataSource, nil, tableView.dataSource] as [UITableViewDataSource?]) { $0 === $1 }
 
         subscription2.dispose()
 
         XCTAssertFalse(tableView.dataSource!.responds(to: #selector(UITableViewDataSource.tableView(_:commit:forRowAt:))))
-        XCTAssertEqual(setDataSources, [tableView.dataSource, nil, tableView.dataSource, nil, tableView.dataSource]) { $0 === $1 }
+        XCTAssertArraysEqual(setDataSources, [tableView.dataSource, nil, tableView.dataSource, nil, tableView.dataSource]) { $0 === $1 }
     }
 
     func testDataSource_commitForRowAt_methodInvoked() {
@@ -506,7 +506,7 @@ extension UITableViewTests {
         let commitedEvents = tableView.rx.dataSource.methodInvoked(#selector(UITableViewDataSource.tableView(_:commit:forRowAt:)))
 
         XCTAssertFalse(tableView.dataSource!.responds(to: #selector(UITableViewDataSource.tableView(_:commit:forRowAt:))))
-        XCTAssertEqual(setDataSources, [tableView.dataSource!] as [UITableViewDataSource?]) { $0 === $1 }
+        XCTAssertArraysEqual(setDataSources, [tableView.dataSource!] as [UITableViewDataSource?]) { $0 === $1 }
 
         var firstEvents: [Arguments] = []
         var secondEvents: [Arguments] = []
@@ -516,14 +516,14 @@ extension UITableViewTests {
         })
 
         XCTAssertTrue(tableView.dataSource!.responds(to: #selector(UITableViewDataSource.tableView(_:commit:forRowAt:))))
-        XCTAssertEqual(setDataSources, [tableView.dataSource, nil, tableView.dataSource] as [UITableViewDataSource?]) { $0 === $1 }
+        XCTAssertArraysEqual(setDataSources, [tableView.dataSource, nil, tableView.dataSource] as [UITableViewDataSource?]) { $0 === $1 }
 
         let subscription2 = commitedEvents.subscribe(onNext: { event in
             secondEvents.append(Arguments(values: event))
         })
 
         XCTAssertTrue(tableView.dataSource!.responds(to: #selector(UITableViewDataSource.tableView(_:commit:forRowAt:))))
-        XCTAssertEqual(setDataSources, [tableView.dataSource, nil, tableView.dataSource] as [UITableViewDataSource?]) { $0 === $1 }
+        XCTAssertArraysEqual(setDataSources, [tableView.dataSource, nil, tableView.dataSource] as [UITableViewDataSource?]) { $0 === $1 }
 
         let deleteEditingStyle: NSNumber = NSNumber(value: UITableViewCellEditingStyle.delete.rawValue)
         let indexPath: NSIndexPath = NSIndexPath(item: 0, section: 0)
@@ -536,12 +536,12 @@ extension UITableViewTests {
         subscription1.dispose()
 
         XCTAssertTrue(tableView.dataSource!.responds(to: #selector(UITableViewDataSource.tableView(_:commit:forRowAt:))))
-        XCTAssertEqual(setDataSources, [tableView.dataSource, nil, tableView.dataSource] as [UITableViewDataSource?]) { $0 === $1 }
+        XCTAssertArraysEqual(setDataSources, [tableView.dataSource, nil, tableView.dataSource] as [UITableViewDataSource?]) { $0 === $1 }
 
         subscription2.dispose()
 
         XCTAssertFalse(tableView.dataSource!.responds(to: #selector(UITableViewDataSource.tableView(_:commit:forRowAt:))))
-        XCTAssertEqual(setDataSources, [tableView.dataSource, nil, tableView.dataSource, nil, tableView.dataSource]) { $0 === $1 }
+        XCTAssertArraysEqual(setDataSources, [tableView.dataSource, nil, tableView.dataSource, nil, tableView.dataSource]) { $0 === $1 }
     }
 
 

@@ -108,3 +108,16 @@ public struct ControlProperty<PropertyType> : ControlPropertyType {
         }
     }
 }
+
+extension ControlPropertyType where E == String? {
+    /**
+     Transforms control property of type `String?` into control property of type `String`.
+    */
+    public var orEmpty: ControlProperty<String> {
+        let original: ControlProperty<String?> = self.asControlProperty()
+
+        let values: Observable<String> = original._values.map { $0 ?? "" }
+        let valueSink: AnyObserver<String> = original._valueSink.map { $0 }
+        return ControlProperty<String>(values: values, valueSink: valueSink)
+    }
+}

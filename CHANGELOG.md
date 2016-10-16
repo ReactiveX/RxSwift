@@ -11,6 +11,13 @@ All notable changes to this project will be documented in this file.
 * Adds Linux support 
 * Replaces `AnyObserver` with `UIBindingObserver` in public interface.
 * Renames `resourceCount` to `Resources.total`.
+* Makes `rx.text` type consistent with UIKit `String?` type.
+
+```swift
+textField.rx.text          // <- now has type `ControlProperty<String?>`
+textField.rx.text.orEmpty  // <- now has type `ControlProperty<String>`
+```
+
 * Adds optional overloads for `bindTo` and `drive`. Now the following works:
 
 ```swift
@@ -19,7 +26,13 @@ let text: Observable<String> = Observable.just("")
 // Previously `map { $0 }` was needed because of mismatch betweeen sequence `String` type and `String?` type
 // on binding `rx.text` observer.
 text.bindTo(label.rx.text)  
-   addDisposableTo(disposeBag)
+   .addDisposableTo(disposeBag)
+
+...
+
+let text = Driver.just("")
+text.drive(label.rx.text)
+   .addDisposableTo(disposeBag)
 ```
 
 * Adds trim output parameter to `debug` operator. #930

@@ -42,7 +42,7 @@ func XCTAssertEqualNSValues(_ lhs: AnyObject, rhs: AnyObject) {
 }
 
 func XCTAssertEqualAnyObjectArrayOfArrays(_ lhs: [[Any]], _ rhs: [[Any]]) {
-    XCTAssertEqual(lhs, rhs) { lhs, rhs in
+    XCTAssertArraysEqual(lhs, rhs) { (lhs: [Any], rhs: [Any]) in
         if lhs.count != rhs.count {
             return false
         }
@@ -54,7 +54,16 @@ func XCTAssertEqualAnyObjectArrayOfArrays(_ lhs: [[Any]], _ rhs: [[Any]]) {
     }
 }
 
-func XCTAssertEqual<T>(_ lhs: [T], _ rhs: [T], _ comparison: (T, T) -> Bool) {
+func XCTAssertEqual<T>(_ lhs: T, _ rhs: T, _ comparison: (T, T) -> Bool) {
+    let areEqual = comparison(lhs, rhs)
+    XCTAssertTrue(areEqual)
+    if (!areEqual) {
+        print(lhs)
+        print(rhs)
+    }
+}
+
+func XCTAssertArraysEqual<T>(_ lhs: [T], _ rhs: [T], _ comparison: (T, T) -> Bool) {
     XCTAssertEqual(lhs.count, rhs.count)
     let areEqual = zip(lhs, rhs).reduce(true) { (a: Bool, z: (T, T)) in a && comparison(z.0, z.1) }
     XCTAssertTrue(areEqual)

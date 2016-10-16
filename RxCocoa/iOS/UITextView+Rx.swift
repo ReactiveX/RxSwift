@@ -32,9 +32,9 @@ extension Reactive where Base: UITextView {
     /**
     Reactive wrapper for `text` property.
     */
-    public var text: ControlProperty<String> {
-        let source: Observable<String> = Observable.deferred { [weak textView = self.base] in
-            let text = textView?.text ?? ""
+    public var text: ControlProperty<String?> {
+        let source: Observable<String?> = Observable.deferred { [weak textView = self.base] in
+            let text = textView?.text
             
             let textChanged = textView?.textStorage
                 // This project uses text storage notifications because
@@ -46,7 +46,7 @@ extension Reactive where Base: UITextView {
                 // so rebinding a value will cause an exception to be thrown.
                 .observeOn(MainScheduler.asyncInstance)
                 .map { _ in
-                    return textView?.textStorage.string ?? ""
+                    return textView?.textStorage.string
                 }
                 ?? Observable.empty()
             
@@ -54,7 +54,7 @@ extension Reactive where Base: UITextView {
                 .startWith(text)
         }
 
-        let bindingObserver = UIBindingObserver(UIElement: self.base) { (textView, text: String) in
+        let bindingObserver = UIBindingObserver(UIElement: self.base) { (textView, text: String?) in
             // This check is important because setting text value always clears control state
             // including marked text selection which is imporant for proper input 
             // when IME input method is used.

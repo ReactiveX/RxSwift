@@ -12,6 +12,21 @@ protocol RxTestCase {
 }
 
 
+final class EventTests_ : EventTests, RxTestCase {
+    #if os(OSX)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (EventTests_) -> () -> ())] { return [
+    ("testMapTransformNext", EventTests.testMapTransformNext),
+    ("testMapTransformNextThrow", EventTests.testMapTransformNextThrow),
+    ("testMapTransformError", EventTests.testMapTransformError),
+    ("testMapTransformCompleted", EventTests.testMapTransformCompleted),
+    ] }
+}
+
 final class PublishSubjectTest_ : PublishSubjectTest, RxTestCase {
     #if os(OSX)
     required override init() {
@@ -599,6 +614,10 @@ final class ObserverTests_ : ObserverTests, RxTestCase {
     ("testConvenienceOn_Next", ObserverTests.testConvenienceOn_Next),
     ("testConvenienceOn_Error", ObserverTests.testConvenienceOn_Error),
     ("testConvenienceOn_Complete", ObserverTests.testConvenienceOn_Complete),
+    ("testMapElement", ObserverTests.testMapElement),
+    ("testMapElementCompleted", ObserverTests.testMapElementCompleted),
+    ("testMapElementError", ObserverTests.testMapElementError),
+    ("testMapElementThrow", ObserverTests.testMapElementThrow),
     ] }
 }
 
@@ -1046,6 +1065,7 @@ func XCTMain(_ tests: [() -> ()]) {
 #endif
 
     XCTMain([
+        testCase(EventTests_.allTests),
         testCase(PublishSubjectTest_.allTests),
         testCase(VirtualSchedulerTest_.allTests),
         testCase(ObservableBlockingTest_.allTests),

@@ -282,6 +282,9 @@
 		C81B6AAF1DB2C15C0047CF86 /* Platform.Linux.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81B6AA91DB2C15C0047CF86 /* Platform.Linux.swift */; };
 		C821DBA21BA4DCAB008F3809 /* Buffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C821DBA11BA4DCAB008F3809 /* Buffer.swift */; };
 		C821DBA31BA4DCAB008F3809 /* Buffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C821DBA11BA4DCAB008F3809 /* Buffer.swift */; };
+		C822BACA1DB4058000F98810 /* Event+Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = C822BAC51DB4048F00F98810 /* Event+Test.swift */; };
+		C822BACB1DB4058000F98810 /* Event+Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = C822BAC51DB4048F00F98810 /* Event+Test.swift */; };
+		C822BACC1DB4058100F98810 /* Event+Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = C822BAC51DB4048F00F98810 /* Event+Test.swift */; };
 		C83100641BF7D51600AAE3CD /* Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83100631BF7D51600AAE3CD /* Sequence.swift */; };
 		C83100651BF7D51600AAE3CD /* Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83100631BF7D51600AAE3CD /* Sequence.swift */; };
 		C83100661BF7D51600AAE3CD /* Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83100631BF7D51600AAE3CD /* Sequence.swift */; };
@@ -1545,6 +1548,7 @@
 		C81B6AA81DB2C15C0047CF86 /* Platform.Darwin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Platform.Darwin.swift; sourceTree = "<group>"; };
 		C81B6AA91DB2C15C0047CF86 /* Platform.Linux.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Platform.Linux.swift; sourceTree = "<group>"; };
 		C821DBA11BA4DCAB008F3809 /* Buffer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Buffer.swift; sourceTree = "<group>"; };
+		C822BAC51DB4048F00F98810 /* Event+Test.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Event+Test.swift"; sourceTree = "<group>"; };
 		C83100631BF7D51600AAE3CD /* Sequence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sequence.swift; sourceTree = "<group>"; };
 		C834F6C11DB394E100C29244 /* Observable+BlockingTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Observable+BlockingTest.swift"; sourceTree = "<group>"; };
 		C834F6C51DB3950600C29244 /* NSControl+RxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSControl+RxTests.swift"; sourceTree = "<group>"; };
@@ -2336,6 +2340,7 @@
 				C835091B1C38706D0027C24C /* VariableTest.swift */,
 				C835091C1C38706D0027C24C /* VirtualSchedulerTest.swift */,
 				C86B1E211D42BF5200130546 /* SchedulerTests.swift */,
+				C822BAC51DB4048F00F98810 /* Event+Test.swift */,
 			);
 			path = RxSwiftTests;
 			sourceTree = "<group>";
@@ -3618,6 +3623,7 @@
 				C83509621C38706E0027C24C /* QueueTests.swift in Sources */,
 				914FCD671CCDB82E0058B304 /* UIPageControl+RxTest.swift in Sources */,
 				C83509351C38706E0027C24C /* KVOObservableTests.swift in Sources */,
+				C822BACA1DB4058000F98810 /* Event+Test.swift in Sources */,
 				C83509421C38706E0027C24C /* MainThreadPrimitiveHotObservable.swift in Sources */,
 				C835093A1C38706E0027C24C /* RuntimeStateSnapshot.swift in Sources */,
 				C86B1E221D42BF5200130546 /* SchedulerTests.swift in Sources */,
@@ -3732,6 +3738,7 @@
 				C83509EB1C3875580027C24C /* MainThreadPrimitiveHotObservable.swift in Sources */,
 				C83509C21C3875220027C24C /* Driver+Test.swift in Sources */,
 				C83509FE1C38755D0027C24C /* Observable+CreationTest.swift in Sources */,
+				C822BACB1DB4058000F98810 /* Event+Test.swift in Sources */,
 				C8353CE71DA19BC500BE3F5C /* Recorded+Timeless.swift in Sources */,
 				C8350A161C38756A0027C24C /* QueueTests.swift in Sources */,
 				C89CFA0D1DAAB4670079D23B /* RxTest.swift in Sources */,
@@ -3794,6 +3801,7 @@
 				C8E9E42D1D43B26C0049644E /* Observable+DebugTest.swift in Sources */,
 				C83509C81C3875230027C24C /* DelegateProxyTest.swift in Sources */,
 				C8350A0D1C38755E0027C24C /* Observable+MultipleTest+CombineLatest.swift in Sources */,
+				C822BACC1DB4058100F98810 /* Event+Test.swift in Sources */,
 				C8350A0B1C38755E0027C24C /* Observable+ConcurrencyTest.swift in Sources */,
 				C83509E21C3875580027C24C /* BackgroundThreadPrimitiveHotObservable.swift in Sources */,
 				C8350A0E1C3875630027C24C /* Observable+MultipleTest+Zip.swift in Sources */,

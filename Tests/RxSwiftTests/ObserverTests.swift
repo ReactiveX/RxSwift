@@ -9,6 +9,7 @@
 import Foundation
 import XCTest
 import RxSwift
+import RxTest
 
 class ObserverTests: RxTest { }
 
@@ -87,5 +88,47 @@ extension ObserverTests {
 
         observer.onNext(1)
         XCTAssertEqual(elements, [0])
+    }
+}
+
+extension ObserverTests {
+    func testMapElement() {
+        let observer = PrimitiveMockObserver<Int>()
+
+        observer.map { (x: Int) -> Int in
+            return x / 2
+        }.on(.next(2))
+
+        XCTAssertEqual(observer.events, [next(1)])
+    }
+
+    func testMapElementCompleted() {
+        let observer = PrimitiveMockObserver<Int>()
+
+        observer.map { (x: Int) -> Int in
+            return x / 2
+        }.on(.completed)
+
+        XCTAssertEqual(observer.events, [completed()])
+    }
+
+    func testMapElementError() {
+        let observer = PrimitiveMockObserver<Int>()
+
+        observer.map { (x: Int) -> Int in
+            return x / 2
+        }.on(.error(testError))
+
+        XCTAssertEqual(observer.events, [error(testError)])
+    }
+
+    func testMapElementThrow() {
+        let observer = PrimitiveMockObserver<Int>()
+
+        observer.map { (x: Int) -> Int in
+            throw testError
+        }.on(.next(2))
+
+        XCTAssertEqual(observer.events, [error(testError)])
     }
 }

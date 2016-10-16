@@ -15,7 +15,7 @@ import XCTest
 class UITextViewTests : RxTest {
     func testText_DelegateEventCompletesOnDealloc() {
         let createView: () -> UITextView = { UITextView(frame: CGRect(x: 0, y: 0, width: 1, height: 1)) }
-        ensurePropertyDeallocated(createView, "text") { (view: UITextView) in view.rx.text }
+        ensurePropertyDeallocated(createView, "text", comparer: { $0 == $1 }) { (view: UITextView) in view.rx.text }
     }
 
     func testSettingTextDoesntClearMarkedText() {

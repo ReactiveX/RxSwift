@@ -46,7 +46,7 @@ public class Observable<Element> : ObservableType {
     Optimizations for map operator
     */
     internal func composeMap<R>(_ selector: @escaping (Element) throws -> R) -> Observable<R> {
-        return Map(source: self, selector: selector)
+        return Map(source: self, transform: selector)
     }
 }
 
