@@ -34,6 +34,6 @@ class ObserverBase<ElementType> : Disposable, ObserverType {
     }
 
     func dispose() {
-        _isStopped = 1
+        _ = AtomicCompareAndSwap(0, 1, &_isStopped)
     }
 }
