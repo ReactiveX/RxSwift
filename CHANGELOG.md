@@ -5,6 +5,28 @@ All notable changes to this project will be documented in this file.
 
 ## Master
 
+## [3.0.0-rc.1](https://github.com/ReactiveX/RxSwift/releases/tag/3.0.0-beta.1) (Xcode 8 / Swift 3.0 compatible)
+
+* Adds Swift Package Manager support
+* Adds Linux support 
+* Replaces `AnyObserver` with `UIBindingObserver` in public interface.
+* Renames `resourceCount` to `Resources.total`.
+* Adds optional overloads for `bindTo` and `drive`. Now the following works:
+
+```swift
+let text: Observable<String> = Observable.just("")
+
+// Previously `map { $0 }` was needed because of mismatch betweeen sequence `String` type and `String?` type
+// on binding `rx.text` observer.
+text.bindTo(label.rx.text)  
+   addDisposableTo(disposeBag)
+```
+
+* Adds trim output parameter to `debug` operator. #930
+* Renames `NSDate` to `Date` everywhere.
+
+* Renames scheduler init param `globalConcurrentQueueQOS` to `qos` and removes custom enum wrapper.
+
 ## [3.0.0-beta.2](https://github.com/ReactiveX/RxSwift/releases/tag/3.0.0-beta.1) (Xcode 8 / Swift 3.0 compatible)
 
 * Subscription disposables now only create strong references to sinks until being disposed or sequence terminates. #573
