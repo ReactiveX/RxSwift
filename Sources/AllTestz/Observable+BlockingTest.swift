@@ -1,1 +1,1 @@
-../../Tests/RxSwiftTests/Observable+BlockingTest.swift
+../../Tests/RxBlockingTests/Observable+BlockingTest.swift

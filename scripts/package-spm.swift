@@ -271,6 +271,7 @@ try packageRelativePath(["RxTest"], targetDirName: "RxTest")
 // It doesn't work under `Tests` subpath ¯\_(ツ)_/¯
 try packageRelativePath([
         "Tests/RxSwiftTests",
+        "Tests/RxBlockingTests",
         "RxSwift/RxMutableBox.swift",
         "Tests/RxTest.swift",
         "Tests/Foundation+Extensions.swift",
