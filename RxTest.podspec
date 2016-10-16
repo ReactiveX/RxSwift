@@ -51,7 +51,7 @@ func testMap() {
   s.osx.deployment_target = '10.10'
   s.tvos.deployment_target = '9.0'
 
-  s.source_files          = 'RxTests/**/*.swift'
+  s.source_files          = 'RxTest/**/*.swift'
 
   s.framework    = 'XCTest'
 

@@ -16,7 +16,7 @@ function cleanup {
 trap cleanup EXIT
 
 VERSION=`cat RxSwift.podspec | grep -E "s.version\s+=" | cut -d '"' -f 2`
-TARGETS=(RxTests RxCocoa RxBlocking RxSwift)
+TARGETS=(RxTest RxCocoa RxBlocking RxSwift)
 
 pushd ~/.cocoapods/repos/master/Specs
 for TARGET in ${TARGETS[@]}
