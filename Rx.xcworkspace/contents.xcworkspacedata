@@ -39,12 +39,6 @@
       location = "group:scripts"
       name = "scripts">
       <FileRef
-         location = "group:release-prep.sh">
-      </FileRef>
-      <FileRef
-         location = "group:spm-build-test.sh">
-      </FileRef>
-      <FileRef
          location = "group:update-jazzy-config.rb">
       </FileRef>
       <FileRef
