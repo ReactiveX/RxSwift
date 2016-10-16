@@ -148,6 +148,11 @@ if [ "${VALIDATE_IOS_EXAMPLE}" -eq 1 ]; then
             do
                 rx "RxExample-iOSUITests" ${configuration} $DEFAULT_IOS_SIMULATOR test
             done
+
+            for configuration in ${CONFIGURATIONS[@]}
+            do
+                rx "RxExample-iOSTests" ${configuration} $DEFAULT_IOS_SIMULATOR test
+            done
         else
             for scheme in "RxExample-iOS"
             do

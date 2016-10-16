@@ -61,12 +61,12 @@ extension TestScheduler {
                     }
 
                     if event == "#" {
-                        let errorEvent = RecordedEvent(time: state.time, event: Event<T>.error(NSError(domain: "Any error domain", code: -1, userInfo: nil)))
+                        let errorEvent = RecordedEvent(time: state.time, value: Event<T>.error(NSError(domain: "Any error domain", code: -1, userInfo: nil)))
                         return (state.time + tickIncrement, state.events + [errorEvent])
                     }
 
                     if event == "|" {
-                        let completed = RecordedEvent(time: state.time, event: Event<T>.completed)
+                        let completed = RecordedEvent(time: state.time, value: Event<T>.completed)
                         return (state.time + tickIncrement, state.events + [completed])
                     }
 
@@ -75,11 +75,11 @@ extension TestScheduler {
                             fatalError("Value with key \(event) not registered as value:\n\(values)\nor error:\n\(errors)")
                         }
 
-                        let nextEvent = RecordedEvent(time: state.time, event: Event<T>.error(error))
+                        let nextEvent = RecordedEvent(time: state.time, value: Event<T>.error(error))
                         return (state.time + tickIncrement, state.events + [nextEvent])
                     }
 
-                    let nextEvent = RecordedEvent(time: state.time, event: Event<T>.next(next))
+                    let nextEvent = RecordedEvent(time: state.time, value: Event<T>.next(next))
                     return (state.time + tickIncrement, state.events + [nextEvent])
                 }
 
