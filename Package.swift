@@ -1,9 +1,19 @@
 import PackageDescription
 
-#if !os(Linux)
-let package = Package(
-    name: "RxSwift",
-    targets: [
+let buildTests = false
+
+#if os(Linux)
+let rxCocoaDependencies: [Target.Dependency] = [
+        .Target(name: "RxSwift"),
+    ]
+#else
+let rxCocoaDependencies: [Target.Dependency] = [
+        .Target(name: "RxSwift"),
+        .Target(name: "RxCocoaRuntime"),
+    ]
+#endif
+
+let library = [
         Target(
             name: "RxSwift"
         ),
@@ -14,76 +24,58 @@ let package = Package(
             ]
         ),
         Target(
+            name: "RxCocoa",
+            dependencies: rxCocoaDependencies
+        ),
+        Target(
+            name: "RxTest",
+            dependencies: [
+                .Target(name: "RxSwift")
+            ]
+        )
+    ]
+ 
+#if os(Linux) 
+    let cocoaRuntime: [Target] = []   
+#else
+    let cocoaRuntime: [Target] = [
+         Target(
             name: "RxCocoaRuntime",
             dependencies: [
                 .Target(name: "RxSwift")
             ]
-        ),
-        Target(
-            name: "RxCocoa",
-            dependencies: [
-                .Target(name: "RxSwift"),
-                .Target(name: "RxCocoaRuntime")
-            ]
-        ),
-        Target(
-            name: "RxTest",
-            dependencies: [
-                .Target(name: "RxSwift")
-            ]
-        ),
-        Target(
-            name: "AllTestz",
-            dependencies: [
-                .Target(name: "RxSwift"),
-                .Target(name: "RxBlocking"),
-                .Target(name: "RxTest"),
-                .Target(name: "RxCocoa")
-            ]
         )
-    ],
-    exclude: [
-        "Tests"
+    ]
+#endif
+
+let tests: [Target] = buildTests ? [
+Target(
+    name: "AllTestz",
+    dependencies: [
+	.Target(name: "RxSwift"),
+	.Target(name: "RxBlocking"),
+	.Target(name: "RxTest"),
+	.Target(name: "RxCocoa")
     ]
 )
-#else 
+] : []
+
+let testExcludes: [String] = !buildTests ? [ "Sources/AllTestz" ] : []
+
+#if os(Linux)
+
+    let excludes: [String] = [
+        "Tests",
+        "Sources/RxCocoaRuntime",
+    ] + testExcludes
+#else
+    let excludes: [String] = [
+        "Tests",
+    ] + testExcludes
+#endif
+
 let package = Package(
     name: "RxSwift",
-    targets: [
-        Target(
-            name: "RxSwift"
-        ),
-        Target(
-            name: "RxBlocking",
-            dependencies: [
-                .Target(name: "RxSwift")
-            ]
-        ),
-        Target(
-            name: "RxCocoa",
-            dependencies: [
-                .Target(name: "RxSwift")
-            ]
-        ),
-        Target(
-            name: "RxTest",
-            dependencies: [
-                .Target(name: "RxSwift")
-            ]
-        ),
-        Target(
-            name: "AllTestz",
-            dependencies: [
-                .Target(name: "RxSwift"),
-                .Target(name: "RxBlocking"),
-                .Target(name: "RxTest"),
-                .Target(name: "RxCocoa")
-            ]
-        )
-    ],
-    exclude: [
-        "Tests",
-        "Sources/RxCocoaRuntime"
-    ]
+    targets: library + cocoaRuntime + tests,
+    exclude: excludes
 )
-#endif
