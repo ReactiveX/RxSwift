@@ -56,9 +56,11 @@ public class SingleAssignmentDisposable : DisposeBase, Disposable, Cancelable {
         _disposable = disposable
 
         #if os(Linux)
-        _lock.lock(); defer { _lock.unlock() }
+        _lock.lock()
         let previousState = Int32(_state)
         _state = _state | DisposeState.disposableSet.rawValue
+        // We know about `defer { _lock.unlock() }`, but this resolves Swift compiler bug. Using `defer` here causes anomaly.
+        _lock.unlock()
         #else
         let previousState = OSAtomicOr32OrigBarrier(DisposeState.disposableSet.rawValue, &_state)
         #endif
@@ -78,9 +80,11 @@ public class SingleAssignmentDisposable : DisposeBase, Disposable, Cancelable {
     */
     public func dispose() {
         #if os(Linux)
-        _lock.lock(); defer { _lock.unlock() }
+        _lock.lock()
         let previousState = Int32(_state)
         _state = _state | DisposeState.disposed.rawValue
+        // We know about `defer { _lock.unlock() }`, but this resolves Swift compiler bug. Using `defer` here causes anomaly.
+        _lock.unlock()
         #else
         let previousState = OSAtomicOr32OrigBarrier(DisposeState.disposed.rawValue, &_state)
         #endif

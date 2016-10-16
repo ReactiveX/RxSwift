@@ -67,9 +67,11 @@ fileprivate class SinkDisposer: Cancelable {
         _subscription = subscription
 
         #if os(Linux)
-        _lock.lock(); defer { _lock.unlock() }
+        _lock.lock()
         let previousState = Int32(_state)
         _state = _state | DisposeState.sinkAndSubscriptionSet.rawValue
+        // We know about `defer { _lock.unlock() }`, but this resolves Swift compiler bugs. Using `defer` here causes anomaly.
+        _lock.unlock()
         #else
         let previousState = OSAtomicOr32OrigBarrier(DisposeState.sinkAndSubscriptionSet.rawValue, &_state)
         #endif
@@ -87,9 +89,11 @@ fileprivate class SinkDisposer: Cancelable {
     
     func dispose() {
         #if os(Linux)
-        _lock.lock(); defer { _lock.unlock() }
+        _lock.lock()
         let previousState = Int32(_state)
         _state = _state | DisposeState.disposed.rawValue
+        // We know about `defer { _lock.unlock() }`, but this resolves Swift compiler bugs. Using `defer` here causes anomaly.
+        _lock.unlock()
         #else
         let previousState = OSAtomicOr32OrigBarrier(DisposeState.disposed.rawValue, &_state)
         #endif
