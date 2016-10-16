@@ -112,6 +112,10 @@ function checkPlistVersions() {
 if [[ "${UNIX_NAME}" == "${DARWIN}" ]]; then
     checkPlistVersions
 
+    ./scripts/update-jazzy-config.rb
+
+    ensureNoGitChanges "Please run ./scripts/update-jazzy-config.rb"
+
     ./scripts/validate-headers.swift
     ./scripts/package-spm.swift > /dev/null
 
