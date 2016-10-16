@@ -190,14 +190,14 @@ func buildAllTestsTarget(_ testsPath: String) throws {
     for (name, methods) in reducedMethods {
 
         mainContent.append("")
-        mainContent.append("final class \(name)_Sub : \(name), RxTestCase {")
+        mainContent.append("final class \(name)_ : \(name), RxTestCase {")
         mainContent.append("    #if os(OSX)")
         mainContent.append("    required override init() {")
         mainContent.append("        super.init()")
         mainContent.append("    }")
         mainContent.append("    #endif")
         mainContent.append("")
-        mainContent.append("    static var allTests: [(String, (\(name)_Sub) -> () -> ())] { return [")
+        mainContent.append("    static var allTests: [(String, (\(name)_) -> () -> ())] { return [")
         for method in methods {
             // throwing error on Linux, you will crash
             let isTestCaseHandlingError = throwingWordsInTests.map { (method as String).lowercased().contains($0) }.reduce(false) { $0 || $1 }
@@ -234,7 +234,7 @@ func buildAllTestsTarget(_ testsPath: String) throws {
     mainContent.append("")
     mainContent.append("    XCTMain([")
     for testCase in reducedMethods.keys {
-        mainContent.append("        testCase(\(testCase)_Sub.allTests),")
+        mainContent.append("        testCase(\(testCase)_.allTests),")
     }
     mainContent.append("    ])")
     mainContent.append("//}")
