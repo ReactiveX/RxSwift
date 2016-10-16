@@ -16,13 +16,13 @@ import Dispatch
 
 class ConcurrentDispatchQueueSchedulerTests: RxTest {
     func createScheduler() -> SchedulerType {
-        return ConcurrentDispatchQueueScheduler(globalConcurrentQueueQOS: .userInitiated)
+        return ConcurrentDispatchQueueScheduler(qos: .userInitiated)
     }
 }
 
 class SerialDispatchQueueSchedulerTests: RxTest {
     func createScheduler() -> SchedulerType {
-        return SerialDispatchQueueScheduler(globalConcurrentQueueQOS: .userInitiated)
+        return SerialDispatchQueueScheduler(qos: .userInitiated)
     }
 }
 

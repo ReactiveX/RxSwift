@@ -74,13 +74,12 @@ public class SerialDispatchQueueScheduler : SchedulerType {
     /**
      Constructs new `SerialDispatchQueueScheduler` that wraps on of the global concurrent dispatch queues.
      
-     - parameter globalConcurrentQueueQOS: Identifier for global dispatch queue with specified quality of service class.
+     - parameter qos: Identifier for global dispatch queue with specified quality of service class.
      - parameter internalSerialQueueName: Custom name for internal serial dispatch queue proxy.
      */
     @available(iOS 8, OSX 10.10, *)
-    public convenience init(globalConcurrentQueueQOS: DispatchQueueSchedulerQOS, internalSerialQueueName: String = "rx.global_dispatch_queue.serial", leeway: DispatchTimeInterval = DispatchTimeInterval.nanoseconds(0)) {
-        let priority = globalConcurrentQueueQOS.qos
-        self.init(queue: DispatchQueue.global(qos: priority.qosClass), internalSerialQueueName: internalSerialQueueName, leeway: leeway)
+    public convenience init(qos: DispatchQoS, internalSerialQueueName: String = "rx.global_dispatch_queue.serial", leeway: DispatchTimeInterval = DispatchTimeInterval.nanoseconds(0)) {
+        self.init(queue: DispatchQueue.global(qos: qos.qosClass), internalSerialQueueName: internalSerialQueueName, leeway: leeway)
     }
     
     /**

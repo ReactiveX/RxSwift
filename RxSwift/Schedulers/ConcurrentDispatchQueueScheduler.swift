@@ -36,14 +36,13 @@ public class ConcurrentDispatchQueueScheduler: SchedulerType {
     /**
      Convenience init for scheduler that wraps one of the global concurrent dispatch queues.
      
-     - parameter globalConcurrentQueueQOS: Target global dispatch queue, by quality of service class.
+     - parameter qos: Target global dispatch queue, by quality of service class.
      */
     @available(iOS 8, OSX 10.10, *)
-    public convenience init(globalConcurrentQueueQOS: DispatchQueueSchedulerQOS, leeway: DispatchTimeInterval = DispatchTimeInterval.nanoseconds(0)) {
-        let priority = globalConcurrentQueueQOS.qos
+    public convenience init(qos: DispatchQoS, leeway: DispatchTimeInterval = DispatchTimeInterval.nanoseconds(0)) {
         self.init(queue: DispatchQueue(
-            label: "rxswift.queue.\(globalConcurrentQueueQOS)",
-            qos: priority,
+            label: "rxswift.queue.\(qos)",
+            qos: qos,
             attributes: [DispatchQueue.Attributes.concurrent],
             target: nil),
             leeway: leeway

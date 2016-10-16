@@ -170,7 +170,7 @@ extension ObservableTimeTest {
 
     func test_ThrottleTimeSpan_NotLatest_WithRealScheduler() {
         #if !os(Linux)
-        let scheduler = ConcurrentDispatchQueueScheduler(globalConcurrentQueueQOS: .default)
+        let scheduler = ConcurrentDispatchQueueScheduler(qos: .default)
 
         let start = Date()
 
@@ -372,7 +372,7 @@ extension ObservableTimeTest {
     }
     
     func test_ThrottleTimeSpan_WithRealScheduler() {
-        let scheduler = ConcurrentDispatchQueueScheduler(globalConcurrentQueueQOS: .default)
+        let scheduler = ConcurrentDispatchQueueScheduler(qos: .default)
 
         let start = Date()
 
@@ -651,7 +651,7 @@ extension ObservableTimeTest {
     }
 
     func testInterval_TimeSpan_Zero_DefaultScheduler() {
-        let scheduler = SerialDispatchQueueScheduler(globalConcurrentQueueQOS: .default)
+        let scheduler = SerialDispatchQueueScheduler(qos: .default)
 
         let observer = PrimitiveMockObserver<Int64>()
 
@@ -701,7 +701,7 @@ extension ObservableTimeTest {
     }
 
     func test_IntervalWithRealScheduler() {
-        let scheduler = ConcurrentDispatchQueueScheduler(globalConcurrentQueueQOS: .default)
+        let scheduler = ConcurrentDispatchQueueScheduler(qos: .default)
 
         let start = Date()
 
@@ -1209,7 +1209,7 @@ extension ObservableTimeTest {
     }
 
     func testBufferWithTimeOrCount_Default() {
-        let backgroundScheduler = SerialDispatchQueueScheduler(globalConcurrentQueueQOS: .default)
+        let backgroundScheduler = SerialDispatchQueueScheduler(qos: .default)
         
         let result = try! Observable.range(start: 1, count: 10, scheduler: backgroundScheduler)
             .buffer(timeSpan: 1000, count: 3, scheduler: backgroundScheduler)
@@ -1358,7 +1358,7 @@ extension ObservableTimeTest {
     }
     
     func windowWithTimeOrCount_Default() {
-        let backgroundScheduler = SerialDispatchQueueScheduler(globalConcurrentQueueQOS: .default)
+        let backgroundScheduler = SerialDispatchQueueScheduler(qos: .default)
         
         let result = try! Observable.range(start: 1, count: 10, scheduler: backgroundScheduler)
             .window(timeSpan: 1000, count: 3, scheduler: backgroundScheduler)
@@ -2026,7 +2026,7 @@ extension ObservableTimeTest {
     
     func testDelay_TimeSpan_Real_Simple() {
         let waitForError: ReplaySubject<()> = ReplaySubject.create(bufferSize: 1)
-        let scheduler = ConcurrentDispatchQueueScheduler(globalConcurrentQueueQOS: .default)
+        let scheduler = ConcurrentDispatchQueueScheduler(qos: .default)
         
         let s = PublishSubject<Int>()
     
@@ -2058,7 +2058,7 @@ extension ObservableTimeTest {
     
     func testDelay_TimeSpan_Real_Error1() {
         let errorReceived: ReplaySubject<()> = ReplaySubject.create(bufferSize: 1)
-        let scheduler = ConcurrentDispatchQueueScheduler(globalConcurrentQueueQOS: .default)
+        let scheduler = ConcurrentDispatchQueueScheduler(qos: .default)
         
         let s = PublishSubject<Int>()
 
@@ -2094,7 +2094,7 @@ extension ObservableTimeTest {
     func testDelay_TimeSpan_Real_Error2() {
         let elementProcessed: ReplaySubject<()> = ReplaySubject.create(bufferSize: 1)
         let errorReceived: ReplaySubject<()> = ReplaySubject.create(bufferSize: 1)
-        let scheduler = ConcurrentDispatchQueueScheduler(globalConcurrentQueueQOS: .default)
+        let scheduler = ConcurrentDispatchQueueScheduler(qos: .default)
         
         let s = PublishSubject<Int>()
         
@@ -2132,7 +2132,7 @@ extension ObservableTimeTest {
         let elementProcessed: ReplaySubject<()> = ReplaySubject.create(bufferSize: 1)
         let errorReceived: ReplaySubject<()> = ReplaySubject.create(bufferSize: 1)
         let acknowledged: ReplaySubject<()> = ReplaySubject.create(bufferSize: 1)
-        let scheduler = ConcurrentDispatchQueueScheduler(globalConcurrentQueueQOS: .default)
+        let scheduler = ConcurrentDispatchQueueScheduler(qos: .default)
         
         let s = PublishSubject<Int>()
         
