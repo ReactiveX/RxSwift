@@ -174,6 +174,22 @@ github "ReactiveX/RxSwift" "3.0.0-rc.1"
 $ carthage update
 ```
 
+### [Swift Package Manager](https://github.com/apple/swift-package-manager)
+
+Create a `Package.swift` file.
+
+```
+import PackageDescription
+
+let package = Package(
+    name: "RxTestProject",
+    targets: [],
+    dependencies: [
+        .Package(url: "https://github.com/ReactiveX/RxSwift.git", Version(3, 0, 0, prereleaseIdentifiers: ["rc"]))
+    ]
+)
+```
+
 ### Manually using git submodules
 
 * Add RxSwift as a submodule
