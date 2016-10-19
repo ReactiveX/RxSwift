@@ -59,30 +59,6 @@ import Foundation
         }
     }
 
-    /**
-     Represents text input with reactive extensions.
-     */
-    @available(*, deprecated, renamed: "TextInput")
-    public protocol RxTextInput : UITextInput {
-        @available(*, deprecated, renamed: "rx.textInput.text")
-        var rx_text: ControlProperty<String?> { get }
-    }
-
-    extension UITextField : RxTextInput {
-        @available(*, deprecated, renamed: "rx.textInput.text")
-        public var rx_text: ControlProperty<String?> {
-            return self.rx.text
-        }
-    }
-
-    extension UITextView : RxTextInput {
-        @available(*, deprecated, renamed: "rx.textInput.text")
-        public var rx_text: ControlProperty<String?> {
-            return self.rx.text
-        }
-    }
-
-
 #endif
 
 #if os(OSX)
@@ -120,30 +96,6 @@ import Foundation
          */
         public var textInput: TextInput<NSTextField> {
             return TextInput(base: base, text: self.text)
-        }
-    }
-
-    /**
-    Represents text input with reactive extensions.
-    */
-    @available(*, deprecated, renamed: "TextInput")
-    public protocol RxTextInput : NSTextInput {
-        
-        /**
-         Reactive wrapper for `text` property.
-        */
-        @available(*, deprecated, renamed: "rx.textInput.text")
-        var rx_text: ControlProperty<String> { get }
-    }
-
-    @available(*, deprecated)
-    extension NSTextField : RxTextInput {
-        /**
-         Reactive wrapper for `text` property.
-         */
-        @available(*, deprecated, renamed: "rx.textInput.text")
-        public var rx_text: ControlProperty<String> {
-            return self.rx.text
         }
     }
 

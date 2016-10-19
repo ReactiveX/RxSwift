@@ -252,14 +252,6 @@ extension Bag where T: ObserverType {
 }
 
 /**
-Dispatches `dispose` to all disposables contained inside bag.
-*/
-@available(*, deprecated, renamed: "disposeAll(in:)")
-func disposeAllIn(_ bag: Bag<Disposable>) {
-    disposeAll(in: bag)
-}
-
-/**
  Dispatches `dispose` to all disposables contained inside bag.
  */
 func disposeAll(in bag: Bag<Disposable>) {

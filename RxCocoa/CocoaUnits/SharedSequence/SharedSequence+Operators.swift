@@ -110,84 +110,22 @@ extension SharedSequenceConvertibleType {
     }
 }
 
-// MARK: doOn
+// MARK: do
 extension SharedSequenceConvertibleType {
-    
-    /**
-    Invokes an action for each event in the observable sequence, and propagates all observer messages through the result sequence.
-    
-    - parameter eventHandler: Action to invoke for each event in the observable sequence.
-    - returns: The source sequence with the side-effecting behavior applied.
-    */
-    // @warn_unused_result(message:"http://git.io/rxs.uo")
-    @available(*, deprecated, renamed: "do(onNext:onError:onCompleted:)")
-    public func doOn(_ eventHandler: @escaping (Event<E>) -> Void)
-        -> SharedSequence<SharingStrategy, E> {
-        let source = self.asObservable()
-            .doOn(eventHandler)
-        
-        return SharedSequence(source)
-    }
-    
-    /**
-    Invokes an action for each event in the observable sequence, and propagates all observer messages through the result sequence.
-    
-    - parameter onNext: Action to invoke for each element in the observable sequence.
-    - parameter onError: Action to invoke upon errored termination of the observable sequence. This callback will never be invoked since driver can't error out.
-    - parameter onCompleted: Action to invoke upon graceful termination of the observable sequence.
-    - returns: The source sequence with the side-effecting behavior applied.
-    */
-    // @warn_unused_result(message:"http://git.io/rxs.uo")
-    @available(*, deprecated, renamed: "do(onNext:onError:onCompleted:)")
-    public func doOn(onNext: ((E) -> Void)? = nil, onError: ((Swift.Error) -> Void)? = nil, onCompleted: (() -> Void)? = nil)
-        -> SharedSequence<SharingStrategy, E> {
-        let source = self.asObservable()
-            .doOn(onNext: onNext, onError: onError, onCompleted: onCompleted)
-            
-        return SharedSequence(source)
-    }
-
-    /**
-     Invokes an action for each Next event in the observable sequence, and propagates all observer messages through the result sequence.
-
-     - parameter onNext: Action to invoke for each element in the observable sequence.
-     - returns: The source sequence with the side-effecting behavior applied.
-     */
-    // @warn_unused_result(message:"http://git.io/rxs.uo")
-    @available(*, deprecated, renamed: "do(onNext:)")
-    public func doOnNext(_ onNext: @escaping (E) -> Void)
-        -> SharedSequence<SharingStrategy, E> {
-            return self.do(onNext: onNext)
-    }
-
-    /**
-     Invokes an action for the Completed event in the observable sequence, and propagates all observer messages through the result sequence.
-
-     - parameter onCompleted: Action to invoke upon graceful termination of the observable sequence.
-     - returns: The source sequence with the side-effecting behavior applied.
-     */
-    // @warn_unused_result(message:"http://git.io/rxs.uo")
-    @available(*, deprecated, renamed: "do(onCompleted:)")
-    public func doOnCompleted(_ onCompleted: @escaping () -> Void)
-        -> SharedSequence<SharingStrategy, E> {
-            return self.do(onCompleted: onCompleted)
-    }
-
     /**
      Invokes an action for each event in the observable sequence, and propagates all observer messages through the result sequence.
 
      - parameter onNext: Action to invoke for each element in the observable sequence.
-     - parameter onError: Action to invoke upon errored termination of the observable sequence. This callback will never be invoked since driver can't error out.
      - parameter onCompleted: Action to invoke upon graceful termination of the observable sequence.
      - parameter onSubscribe: Action to invoke before subscribing to source observable sequence.
      - parameter onDispose: Action to invoke after subscription to source observable has been disposed for any reason. It can be either because sequence terminates for some reason or observer subscription being disposed.
      - returns: The source sequence with the side-effecting behavior applied.
      */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func `do`(onNext: ((E) -> Void)? = nil, onError: ((Swift.Error) -> Void)? = nil, onCompleted: (() -> Void)? = nil, onSubscribe: (() -> ())? = nil, onDispose: (() -> ())? = nil)
+    public func `do`(onNext: ((E) -> Void)? = nil, onCompleted: (() -> Void)? = nil, onSubscribe: (() -> ())? = nil, onDispose: (() -> ())? = nil)
         -> SharedSequence<SharingStrategy, E> {
         let source = self.asObservable()
-            .do(onNext: onNext, onError: onError, onCompleted: onCompleted, onSubscribe: onSubscribe, onDispose: onDispose)
+            .do(onNext: onNext, onCompleted: onCompleted, onSubscribe: onSubscribe, onDispose: onDispose)
 
         return SharedSequence(source)
     }
@@ -409,38 +347,6 @@ extension SharedSequence {
     }
 }
 
-extension Sequence where Iterator.Element : SharedSequenceConvertibleType {
-
-    /**
-    Concatenates all observable sequences in the given sequence, as long as the previous observable sequence terminated successfully.
-
-    - returns: An observable sequence that contains the elements of each given sequence, in sequential order.
-    */
-    // @warn_unused_result(message:"http://git.io/rxs.uo")
-    @available(*, deprecated, renamed: "SharingSequence.concat()")
-    public func concat()
-        -> SharedSequence<Iterator.Element.SharingStrategy, Iterator.Element.E> {
-        let source = self.lazy.map { $0.asSharedSequence().asObservable() }.concat()
-        return SharedSequence<Iterator.Element.SharingStrategy, Iterator.Element.E>(source)
-    }
-}
-
-extension Collection where Iterator.Element : SharedSequenceConvertibleType {
-
-    /**
-     Concatenates all observable sequences in the given sequence, as long as the previous observable sequence terminated successfully.
-
-     - returns: An observable sequence that contains the elements of each given sequence, in sequential order.
-     */
-    // @warn_unused_result(message:"http://git.io/rxs.uo")
-    @available(*, deprecated, renamed: "SharingSequence.concat()")
-    public func concat()
-        -> SharedSequence<Iterator.Element.SharingStrategy, Iterator.Element.E> {
-        let source = self.map { $0.asSharedSequence().asObservable() }.concat()
-        return SharedSequence<Iterator.Element.SharingStrategy, Iterator.Element.E>(source)
-    }
-}
-
 // MARK: zip
 
 extension SharedSequence {
@@ -454,22 +360,6 @@ extension SharedSequence {
         where C.Iterator.Element == SharedSequence<SharingStrategy, Element> {
         let source = Observable.zip(collection.map { $0.asSharedSequence().asObservable() }, resultSelector)
         return SharedSequence<SharingStrategy, R>(source)
-    }
-}
-
-extension Collection where Iterator.Element : SharedSequenceConvertibleType {
-
-    /**
-    Merges the specified observable sequences into one observable sequence by using the selector function whenever all of the observable sequences have produced an element at a corresponding index.
-
-    - parameter resultSelector: Function to invoke for each series of elements at corresponding indexes in the sources.
-    - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
-    */
-    // @warn_unused_result(message:"http://git.io/rxs.uo")
-    @available(*, deprecated, renamed: "SharedSequence.zip()")
-    public func zip<R>(_ resultSelector: @escaping ([Generator.Element.E]) throws -> R) -> SharedSequence<Generator.Element.SharingStrategy, R> {
-        let source = self.map { $0.asSharedSequence().asObservable() }.zip(resultSelector)
-        return SharedSequence<Generator.Element.SharingStrategy, R>(source)
     }
 }
 
@@ -487,22 +377,6 @@ extension SharedSequence {
         where C.Iterator.Element == SharedSequence<SharingStrategy, Element> {
         let source = Observable.combineLatest(collection.map { $0.asObservable() }, resultSelector)
         return SharedSequence<SharingStrategy, R>(source)
-    }
-}
-
-extension Collection where Iterator.Element : SharedSequenceConvertibleType {
-
-    /**
-    Merges the specified observable sequences into one observable sequence by using the selector function whenever any of the observable sequences produces an element.
-
-    - parameter resultSelector: Function to invoke whenever any of the sources produces an element.
-    - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
-    */
-    // @warn_unused_result(message:"http://git.io/rxs.uo")
-    @available(*, deprecated, renamed: "SharingSequence.combineLatest()")
-    public func combineLatest<R>(_ resultSelector: @escaping ([Generator.Element.E]) throws -> R) -> SharedSequence<Generator.Element.SharingStrategy, R> {
-        let source = self.map { $0.asSharedSequence().asObservable() }.combineLatest(resultSelector)
-        return SharedSequence<Generator.Element.SharingStrategy, R>(source)
     }
 }
 

@@ -112,8 +112,6 @@
 		C8093CEC1B8A72BE0088E94D /* SerialDisposable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C5F1B8A72BE0088E94D /* SerialDisposable.swift */; };
 		C8093CED1B8A72BE0088E94D /* SingleAssignmentDisposable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C601B8A72BE0088E94D /* SingleAssignmentDisposable.swift */; };
 		C8093CEE1B8A72BE0088E94D /* SingleAssignmentDisposable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C601B8A72BE0088E94D /* SingleAssignmentDisposable.swift */; };
-		C8093CEF1B8A72BE0088E94D /* StableCompositeDisposable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C611B8A72BE0088E94D /* StableCompositeDisposable.swift */; };
-		C8093CF01B8A72BE0088E94D /* StableCompositeDisposable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C611B8A72BE0088E94D /* StableCompositeDisposable.swift */; };
 		C8093CF31B8A72BE0088E94D /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C631B8A72BE0088E94D /* Errors.swift */; };
 		C8093CF41B8A72BE0088E94D /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C631B8A72BE0088E94D /* Errors.swift */; };
 		C8093CF51B8A72BE0088E94D /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C641B8A72BE0088E94D /* Event.swift */; };
@@ -782,10 +780,6 @@
 		C89CFA2B1DAABBE20079D23B /* HotObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89CFA131DAABBE20079D23B /* HotObservable.swift */; };
 		C89CFA2C1DAABBE20079D23B /* HotObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89CFA131DAABBE20079D23B /* HotObservable.swift */; };
 		C89CFA2D1DAABBE20079D23B /* HotObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89CFA131DAABBE20079D23B /* HotObservable.swift */; };
-		C89CFA2E1DAABBE20079D23B /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C89CFA141DAABBE20079D23B /* Info.plist */; };
-		C89CFA2F1DAABBE20079D23B /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C89CFA141DAABBE20079D23B /* Info.plist */; };
-		C89CFA301DAABBE20079D23B /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C89CFA141DAABBE20079D23B /* Info.plist */; };
-		C89CFA311DAABBE20079D23B /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C89CFA141DAABBE20079D23B /* Info.plist */; };
 		C89CFA321DAABBE20079D23B /* Recorded.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89CFA151DAABBE20079D23B /* Recorded.swift */; };
 		C89CFA331DAABBE20079D23B /* Recorded.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89CFA151DAABBE20079D23B /* Recorded.swift */; };
 		C89CFA341DAABBE20079D23B /* Recorded.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89CFA151DAABBE20079D23B /* Recorded.swift */; };
@@ -886,7 +880,6 @@
 		C8F0BF991BBBFB8B001B112F /* SchedulerServices+Emulation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093CBB1B8A72BE0088E94D /* SchedulerServices+Emulation.swift */; };
 		C8F0BF9A1BBBFB8B001B112F /* AnyObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093CA01B8A72BE0088E94D /* AnyObserver.swift */; };
 		C8F0BF9B1BBBFB8B001B112F /* Skip.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C891B8A72BE0088E94D /* Skip.swift */; };
-		C8F0BF9C1BBBFB8B001B112F /* StableCompositeDisposable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C611B8A72BE0088E94D /* StableCompositeDisposable.swift */; };
 		C8F0BF9D1BBBFB8B001B112F /* Zip+arity.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C921B8A72BE0088E94D /* Zip+arity.swift */; };
 		C8F0BF9E1BBBFB8B001B112F /* Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C911B8A72BE0088E94D /* Timer.swift */; };
 		C8F0BF9F1BBBFB8B001B112F /* Empty.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C3DA051B9393AC004D233E /* Empty.swift */; };
@@ -1134,7 +1127,6 @@
 		D2EBEAF71BB9B6B2003A27DC /* ScheduledDisposable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C5D1B8A72BE0088E94D /* ScheduledDisposable.swift */; };
 		D2EBEAF91BB9B6B2003A27DC /* SerialDisposable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C5F1B8A72BE0088E94D /* SerialDisposable.swift */; };
 		D2EBEAFA1BB9B6B2003A27DC /* SingleAssignmentDisposable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C601B8A72BE0088E94D /* SingleAssignmentDisposable.swift */; };
-		D2EBEAFB1BB9B6B2003A27DC /* StableCompositeDisposable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C611B8A72BE0088E94D /* StableCompositeDisposable.swift */; };
 		D2EBEAFC1BB9B6BA003A27DC /* Amb.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C6B1B8A72BE0088E94D /* Amb.swift */; };
 		D2EBEAFD1BB9B6BA003A27DC /* AnonymousObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C3DA111B93A3EA004D233E /* AnonymousObservable.swift */; };
 		D2EBEAFF1BB9B6BA003A27DC /* Buffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C821DBA11BA4DCAB008F3809 /* Buffer.swift */; };
@@ -1462,7 +1454,6 @@
 		C8093C5D1B8A72BE0088E94D /* ScheduledDisposable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduledDisposable.swift; sourceTree = "<group>"; };
 		C8093C5F1B8A72BE0088E94D /* SerialDisposable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SerialDisposable.swift; sourceTree = "<group>"; };
 		C8093C601B8A72BE0088E94D /* SingleAssignmentDisposable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleAssignmentDisposable.swift; sourceTree = "<group>"; };
-		C8093C611B8A72BE0088E94D /* StableCompositeDisposable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StableCompositeDisposable.swift; sourceTree = "<group>"; };
 		C8093C631B8A72BE0088E94D /* Errors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
 		C8093C641B8A72BE0088E94D /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		C8093C651B8A72BE0088E94D /* ImmediateSchedulerType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImmediateSchedulerType.swift; sourceTree = "<group>"; };
@@ -2019,7 +2010,6 @@
 				C8093C5D1B8A72BE0088E94D /* ScheduledDisposable.swift */,
 				C8093C5F1B8A72BE0088E94D /* SerialDisposable.swift */,
 				C8093C601B8A72BE0088E94D /* SingleAssignmentDisposable.swift */,
-				C8093C611B8A72BE0088E94D /* StableCompositeDisposable.swift */,
 				CDDEF1691D4FB40000CA8546 /* Disposables.swift */,
 			);
 			path = Disposables;
@@ -3356,7 +3346,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C89CFA2E1DAABBE20079D23B /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3364,7 +3353,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C89CFA2F1DAABBE20079D23B /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3372,7 +3360,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C89CFA301DAABBE20079D23B /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3380,7 +3367,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C89CFA311DAABBE20079D23B /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3896,7 +3882,6 @@
 				C8093D6A1B8A72BE0088E94D /* AnyObserver.swift in Sources */,
 				C8093D3C1B8A72BE0088E94D /* Skip.swift in Sources */,
 				C8B144FC1BD2D44500267DCE /* ConcurrentMainScheduler.swift in Sources */,
-				C8093CF01B8A72BE0088E94D /* StableCompositeDisposable.swift in Sources */,
 				C8FE72A11D84C3C100A1E297 /* Debunce.swift in Sources */,
 				D2245A1C1BD63C4600E7146F /* WithLatestFrom.swift in Sources */,
 				C8093D4E1B8A72BE0088E94D /* Zip+arity.swift in Sources */,
@@ -4120,7 +4105,6 @@
 				C8093D691B8A72BE0088E94D /* AnyObserver.swift in Sources */,
 				C8093D3B1B8A72BE0088E94D /* Skip.swift in Sources */,
 				C8B144FB1BD2D44500267DCE /* ConcurrentMainScheduler.swift in Sources */,
-				C8093CEF1B8A72BE0088E94D /* StableCompositeDisposable.swift in Sources */,
 				C8554E2A1C3051620052E67D /* PriorityQueue.swift in Sources */,
 				C8FE72A01D84C3C100A1E297 /* Debunce.swift in Sources */,
 				D2245A1B1BD5657300E7146F /* WithLatestFrom.swift in Sources */,
@@ -4270,7 +4254,6 @@
 				C8F0BF9A1BBBFB8B001B112F /* AnyObserver.swift in Sources */,
 				C8F0BF9B1BBBFB8B001B112F /* Skip.swift in Sources */,
 				C8B144FE1BD2D44500267DCE /* ConcurrentMainScheduler.swift in Sources */,
-				C8F0BF9C1BBBFB8B001B112F /* StableCompositeDisposable.swift in Sources */,
 				C8FE72A31D84C3C100A1E297 /* Debunce.swift in Sources */,
 				D2245A1E1BD63C4A00E7146F /* WithLatestFrom.swift in Sources */,
 				C8F0BF9D1BBBFB8B001B112F /* Zip+arity.swift in Sources */,
@@ -4667,7 +4650,6 @@
 				D2EBEB2F1BB9B6CA003A27DC /* Observable+Debug.swift in Sources */,
 				D2EBEAE61BB9B697003A27DC /* ObserverType.swift in Sources */,
 				C83D73CA1C1DBAEE003DC470 /* ScheduledItemType.swift in Sources */,
-				D2EBEAFB1BB9B6B2003A27DC /* StableCompositeDisposable.swift in Sources */,
 				D2EBEB011BB9B6BA003A27DC /* CombineLatest.swift in Sources */,
 				D2EBEB021BB9B6BA003A27DC /* CombineLatest+arity.swift in Sources */,
 				C84CC5641BDD037900E06A64 /* SynchronizedDisposeType.swift in Sources */,

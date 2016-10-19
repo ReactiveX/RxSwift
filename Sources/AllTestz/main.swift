@@ -403,7 +403,6 @@ final class ObservableSingleTest_ : ObservableSingleTest, RxTestCase {
     ("testDoOn_completedNever", ObservableSingleTest.testDoOn_completedNever),
     ("testDoOn_nextError", ObservableSingleTest.testDoOn_nextError),
     ("testDoOn_nextErrorNot", ObservableSingleTest.testDoOn_nextErrorNot),
-    ("testDoOn_Throws", ObservableSingleTest.testDoOn_Throws),
     ("testDoOnNext_normal", ObservableSingleTest.testDoOnNext_normal),
     ("testDoOnNext_throws", ObservableSingleTest.testDoOnNext_throws),
     ("testDoOnError_normal", ObservableSingleTest.testDoOnError_normal),

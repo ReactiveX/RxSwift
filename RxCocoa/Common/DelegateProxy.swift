@@ -181,11 +181,6 @@ open class DelegateProxy : _RXDelegateProxy {
         }
     }
 
-    @available(*, deprecated, renamed: "methodInvoked")
-    open func observe(_ selector: Selector) -> Observable<[Any]> {
-        return sentMessage(selector)
-    }
-
     // proxy
 
     open override func _sentMessage(_ selector: Selector, withArguments arguments: [Any]) {

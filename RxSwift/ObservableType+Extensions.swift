@@ -112,60 +112,6 @@ extension ObservableType {
         )
     }
     #endif
-
-    /**
-    Subscribes an element handler to an observable sequence.
-
-    - parameter onNext: Action to invoke for each element in the observable sequence.
-    - returns: Subscription object used to unsubscribe from the observable sequence.
-    */
-    // @warn_unused_result(message: "http://git.io/rxs.ud")
-    @available(*, deprecated, renamed: "subscribe(onNext:)")
-    public func subscribeNext(_ onNext: @escaping (E) -> Void)
-        -> Disposable {
-        let observer = AnonymousObserver<E> { e in
-            if case .next(let value) = e {
-                onNext(value)
-            }
-        }
-        return self.subscribeSafe(observer)
-    }
-
-    /**
-    Subscribes an error handler to an observable sequence.
-
-    - parameter onError: Action to invoke upon errored termination of the observable sequence.
-    - returns: Subscription object used to unsubscribe from the observable sequence.
-    */
-    // @warn_unused_result(message: "http://git.io/rxs.ud")
-    @available(*, deprecated, renamed: "subscribe(onError:)")
-    public func subscribeError(_ onError: @escaping (Swift.Error) -> Void)
-        -> Disposable {
-        let observer = AnonymousObserver<E> { e in
-            if case .error(let error) = e {
-                onError(error)
-            }
-        }
-        return self.subscribeSafe(observer)
-    }
-
-    /**
-    Subscribes a completion handler to an observable sequence.
-
-    - parameter onCompleted: Action to invoke upon graceful termination of the observable sequence.
-    - returns: Subscription object used to unsubscribe from the observable sequence.
-    */
-    // @warn_unused_result(message: "http://git.io/rxs.ud")
-    @available(*, deprecated, renamed: "subscribe(onCompleted:)")
-    public func subscribeCompleted(_ onCompleted: @escaping () -> Void)
-        -> Disposable {
-        let observer = AnonymousObserver<E> { e in
-            if case .completed = e {
-                onCompleted()
-            }
-        }
-        return self.subscribeSafe(observer)
-    }
 }
 
 public extension ObservableType {

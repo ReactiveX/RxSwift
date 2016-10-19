@@ -13,7 +13,8 @@ Represents an Action-based disposable.
 
 When dispose method is called, disposal action will be dereferenced.
 */
-public final class AnonymousDisposable : DisposeBase, Cancelable {
+
+fileprivate final class AnonymousDisposable : DisposeBase, Cancelable {
     public typealias DisposeAction = () -> Void
 
     private var _isDisposed: AtomicInt = 0
@@ -31,8 +32,7 @@ public final class AnonymousDisposable : DisposeBase, Cancelable {
 
     - parameter disposeAction: Disposal action which will be run upon calling `dispose`.
     */
-    @available(*, deprecated, renamed: "Disposables.create")
-    public init(_ disposeAction: @escaping DisposeAction) {
+    fileprivate init(_ disposeAction: @escaping DisposeAction) {
         _disposeAction = disposeAction
         super.init()
     }
@@ -48,7 +48,7 @@ public final class AnonymousDisposable : DisposeBase, Cancelable {
 
     After invoking disposal action, disposal action will be dereferenced.
     */
-    public func dispose() {
+    fileprivate func dispose() {
         if AtomicCompareAndSwap(0, 1, &_isDisposed) {
             assert(_isDisposed == 1)
 

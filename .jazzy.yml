@@ -47,7 +47,6 @@ custom_categories:
   - ScheduledDisposable
   - SerialDisposable
   - SingleAssignmentDisposable
-  - StableCompositeDisposable
   - SubscriptionDisposable
 - name: RxSwift/Extensions
   children:

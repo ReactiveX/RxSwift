@@ -47,16 +47,6 @@ public final class DisposeBag: DisposeBase {
     }
     
     /**
-    Adds `disposable` to be disposed when dispose bag is being deinited.
-    
-    - parameter disposable: Disposable to add.
-    */
-    @available(*, deprecated, renamed: "insert(_:)")
-    public func addDisposable(_ disposable: Disposable) {
-        insert(disposable)
-    }
-    
-    /**
      Adds `disposable` to be disposed when dispose bag is being deinited.
      
      - parameter disposable: Disposable to add.

@@ -149,11 +149,6 @@ public protocol DelegateProxyType : AnyObject {
     func setForwardToDelegate(_ forwardToDelegate: AnyObject?, retainDelegate: Bool)
 }
 
-@available(*, deprecated:2.5, renamed:"DelegateProxyType.proxyForObject", message:"You can just use normal static protocol extension. E.g. `RxScrollViewDelegateProxy.proxyForObject`")
-public func proxyForObject<P: DelegateProxyType>(_ type: P.Type, _ object: AnyObject) -> P {
-    return P.proxyForObject(object)
-}
-
 extension DelegateProxyType {
     /**
      Returns existing proxy for object or installs new instance of delegate proxy.

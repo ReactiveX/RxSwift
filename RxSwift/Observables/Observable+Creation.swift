@@ -190,36 +190,6 @@ extension Observable where Element : SignedInteger {
     }
 }
 
-extension Sequence {
-    /**
-    Converts a sequence to an observable sequence.
-
-    - seealso: [from operator on reactivex.io](http://reactivex.io/documentation/operators/from.html)
-
-    - returns: The observable sequence whose elements are pulled from the given enumerable sequence.
-    */
-    // @warn_unused_result(message:"http://git.io/rxs.uo")
-    @available(*, deprecated, renamed: "Observable.from()")
-    public func toObservable(_ scheduler: ImmediateSchedulerType = CurrentThreadScheduler.instance) -> Observable<Iterator.Element> {
-        return ObservableSequence(elements: Array(self), scheduler: scheduler)
-    }
-}
-
-extension Array {
-    /**
-    Converts a sequence to an observable sequence.
-
-    - seealso: [from operator on reactivex.io](http://reactivex.io/documentation/operators/from.html)
-
-    - returns: The observable sequence whose elements are pulled from the given enumerable sequence.
-    */
-    // @warn_unused_result(message:"http://git.io/rxs.uo")
-    @available(*, deprecated, renamed: "Observable.from()")
-    public func toObservable(_ scheduler: ImmediateSchedulerType = CurrentThreadScheduler.instance) -> Observable<Iterator.Element> {
-        return ObservableSequence(elements: self, scheduler: scheduler)
-    }
-}
-
 extension Observable {
     /**
      Converts an array to an observable sequence.

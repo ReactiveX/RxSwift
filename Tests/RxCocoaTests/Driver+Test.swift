@@ -522,11 +522,18 @@ extension DriverTest {
 
         var events = [Event<Int>]()
 
-        let driver = hotObservable.asDriver(onErrorJustReturn: -1).doOn { e in
+        let driver = hotObservable.asDriver(onErrorJustReturn: -1).do(onNext: { e in
             XCTAssertTrue(isMainThread())
 
-            events.append(e)
-        }
+            events.append(.next(e))
+        }, onCompleted: {
+            XCTAssertTrue(isMainThread())
+            events.append(.completed)
+        }, onSubscribe: {
+            XCTAssertTrue(!isMainThread())
+        }, onDispose: {
+            XCTAssertTrue(isMainThread())
+        })
 
         let results = subscribeTwiceOnBackgroundSchedulerAndOnlyOneSubscription(driver) {
             XCTAssertTrue(hotObservable.subscriptions == [SubscribedToHotObservable])

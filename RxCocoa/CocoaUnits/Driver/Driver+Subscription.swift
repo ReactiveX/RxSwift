@@ -127,20 +127,6 @@ extension SharedSequenceConvertibleType where SharingStrategy == DriverSharingSt
         MainScheduler.ensureExecutingOnScheduler(errorMessage: driverErrorMessage)
         return self.asObservable().subscribe(onNext: onNext, onCompleted: onCompleted, onDisposed: onDisposed)
     }
-    
-    /**
-    Subscribes an element handler to an observable sequence.
-    This method can be only called from `MainThread`.
-    
-    - parameter onNext: Action to invoke for each element in the observable sequence.
-    - returns: Subscription object used to unsubscribe from the observable sequence.
-    */
-    // @warn_unused_result(message:"http://git.io/rxs.ud")
-    @available(*, deprecated, renamed: "drive(onNext:)")
-    public func driveNext(_ onNext: @escaping (E) -> Void) -> Disposable {
-        MainScheduler.ensureExecutingOnScheduler(errorMessage: driverErrorMessage)
-        return self.asObservable().subscribe(onNext: onNext)
-    }
 }
 
 

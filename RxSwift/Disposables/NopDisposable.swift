@@ -13,13 +13,9 @@ Represents a disposable that does nothing on disposal.
 
 Nop = No Operation
 */
-public struct NopDisposable : Disposable {
+fileprivate struct NopDisposable : Disposable {
  
-    /**
-    Singleton instance of `NopDisposable`.
-    */
-    @available(*, deprecated, renamed: "Disposables.create()")
-    public static let instance: Disposable = NopDisposable()
+    fileprivate static let noOp: Disposable = NopDisposable()
     
     init() {
         
@@ -29,5 +25,14 @@ public struct NopDisposable : Disposable {
     Does nothing.
     */
     public func dispose() {
+    }
+}
+
+extension Disposables {
+    /**
+     Creates a disposable that does nothing on disposal.
+     */
+    static public func create() -> Disposable {
+        return NopDisposable.noOp
     }
 }

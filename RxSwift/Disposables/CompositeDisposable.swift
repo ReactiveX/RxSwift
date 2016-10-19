@@ -71,18 +71,6 @@ public final class CompositeDisposable : DisposeBase, Disposable, Cancelable {
     }
 
     /**
-    Adds a disposable to the CompositeDisposable or disposes the disposable if the CompositeDisposable is disposed.
-    
-    - parameter disposable: Disposable to add.
-    - returns: Key that can be used to remove disposable from composite disposable. In case dispose bag was already
-        disposed `nil` will be returned.
-    */
-    @available(*, deprecated, renamed: "insert(_:)")
-    public func addDisposable(_ disposable: Disposable) -> DisposeKey? {
-        return insert(disposable)
-    }
-    
-    /**
      Adds a disposable to the CompositeDisposable or disposes the disposable if the CompositeDisposable is disposed.
      
      - parameter disposable: Disposable to add.
@@ -118,16 +106,6 @@ public final class CompositeDisposable : DisposeBase, Disposable, Cancelable {
      
      - parameter disposeKey: Key used to identify disposable to be removed.
      */
-    @available(*, deprecated, renamed: "remove(for:)")
-    public func removeDisposable(_ disposeKey: DisposeKey) {
-        remove(for: disposeKey)
-    }
-    
-    /**
-     Removes and disposes the disposable identified by `disposeKey` from the CompositeDisposable.
-     
-     - parameter disposeKey: Key used to identify disposable to be removed.
-     */
     public func remove(for disposeKey: DisposeKey) {
         _remove(for: disposeKey)?.dispose()
     }
@@ -153,5 +131,38 @@ public final class CompositeDisposable : DisposeBase, Disposable, Cancelable {
         _disposables = nil
 
         return disposeBag
+    }
+}
+
+public extension Disposables {
+
+    /**
+     Creates a disposable with the given disposables.
+     */
+    public static func create(_ disposable1: Disposable, _ disposable2: Disposable, _ disposable3: Disposable) -> Cancelable {
+        return CompositeDisposable(disposable1, disposable2, disposable3)
+    }
+    
+    /**
+     Creates a disposable with the given disposables.
+     */
+    public static func create(_ disposable1: Disposable, _ disposable2: Disposable, _ disposable3: Disposable, _ disposables: Disposable ...) -> Cancelable {
+        var disposables = disposables
+        disposables.append(disposable1)
+        disposables.append(disposable2)
+        disposables.append(disposable3)
+        return CompositeDisposable(disposables: disposables)
+    }
+    
+    /**
+     Creates a disposable with the given disposables.
+     */
+    public static func create(_ disposables: [Disposable]) -> Cancelable {
+        switch disposables.count {
+        case 2:
+            return Disposables.create(disposables[0], disposables[1])
+        default:
+            return CompositeDisposable(disposables: disposables)
+        }
     }
 }

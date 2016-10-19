@@ -287,15 +287,10 @@ extension ObservableSingleTest {
 
         var i = 0
         var sum = 2 + 3 + 4 + 5
-        let res = scheduler.start { xs.doOn { e in
-                switch e {
-                case .next:
-                    i += 1
-                    sum -= e.element ?? 0
-
-                default: break
-                }
-            }
+        let res = scheduler.start { xs.do(onNext: { element in
+                i += 1
+                sum -= element ?? 0
+            })
         }
 
         XCTAssertEqual(i, 4)
@@ -330,13 +325,9 @@ extension ObservableSingleTest {
             ])
 
         var i = 0
-        let res = scheduler.start { xs.doOn { e in
-            switch e {
-            case .next(_):
+        let res = scheduler.start { xs.do(onNext: { _ in
                 i += 1
-            default: break
-            }
-            }
+            })
         }
 
         XCTAssertEqual(i, 4)
@@ -372,16 +363,12 @@ extension ObservableSingleTest {
         var i = 0
         var sum = 2 + 3 + 4 + 5
         var completedEvaluation = false
-        let res = scheduler.start { xs.doOn { e in
-            switch e {
-            case .next(let value):
+        let res = scheduler.start { xs.do(onNext: { value in
                 i += 1
                 sum -= value
-            case .completed:
+            }, onCompleted: {
                 completedEvaluation = true
-            default: break
-            }
-            }
+            })
         }
 
         XCTAssertEqual(i, 4)
@@ -414,15 +401,11 @@ extension ObservableSingleTest {
 
         var i = 0
         var completedEvaluation = false
-        let res = scheduler.start { xs.doOn { e in
-            switch e {
-            case .next(_):
+        let res = scheduler.start { xs.do(onNext: { e in
                 i += 1
-            case .completed:
+            }, onCompleted: {
                 completedEvaluation = true
-            default: break
-            }
-            }
+            })
         }
 
         XCTAssertEqual(i, 0)
@@ -454,16 +437,12 @@ extension ObservableSingleTest {
         var i = 0
         var sum = 2 + 3 + 4 + 5
         var sawError = false
-        let res = scheduler.start { xs.doOn { e in
-            switch e {
-            case .next(let value):
+        let res = scheduler.start { xs.do(onNext: { value in
                 i += 1
                 sum -= value
-            case .error:
+            }, onError: { _ in
                 sawError = true
-            default: break
-            }
-            }
+            })
         }
 
         XCTAssertEqual(i, 4)
@@ -501,16 +480,12 @@ extension ObservableSingleTest {
         var i = 0
         var sum = 2 + 3 + 4 + 5
         var sawError = false
-        let res = scheduler.start { xs.doOn { e in
-            switch e {
-            case .next(let value):
+        let res = scheduler.start { xs.do(onNext: { value in
                 i += 1
                 sum -= value
-            case .error:
+            }, onError: { e in
                 sawError = true
-            default: break
-            }
-            }
+            })
         }
 
         XCTAssertEqual(i, 4)
@@ -527,32 +502,6 @@ extension ObservableSingleTest {
 
         let correctSubscriptions = [
             Subscription(200, 250)
-        ]
-
-        XCTAssertEqual(res.events, correctMessages)
-        XCTAssertEqual(xs.subscriptions, correctSubscriptions)
-    }
-
-    func testDoOn_Throws() {
-        let scheduler = TestScheduler(initialClock: 0)
-
-        let xs = scheduler.createHotObservable([
-            next(150, 1),
-            next(210, 2),
-            completed(250)
-            ])
-
-        let res = scheduler.start { xs.doOn { _ in
-                throw testError
-            }
-        }
-
-        let correctMessages = [
-            error(210, testError, Int.self)
-        ]
-
-        let correctSubscriptions = [
-            Subscription(200, 210)
         ]
 
         XCTAssertEqual(res.events, correctMessages)
