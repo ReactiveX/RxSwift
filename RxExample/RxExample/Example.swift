@@ -11,7 +11,7 @@ import Foundation
 #if os(iOS)
     import UIKit
     typealias Image = UIImage
-#elseif os(OSX)
+#elseif os(macOS)
     import Cocoa
     import AppKit
     typealias Image = NSImage
@@ -38,7 +38,7 @@ extension String {
 func showAlert(_ message: String) {
     #if os(iOS)
         UIAlertView(title: "RxExample", message: message, delegate: nil, cancelButtonTitle: "OK").show()
-    #elseif os(OSX)
+    #elseif os(macOS)
         let alert = NSAlert()
         alert.messageText = message
         alert.runModal()

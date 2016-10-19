@@ -10,7 +10,7 @@
 
 import Foundation
 
-#if os(OSX)
+#if os(macOS)
 import Cocoa
 #else
 import UIKit
@@ -20,7 +20,7 @@ import UIKit
 import RxSwift
 #endif
 
-#if os(iOS) || os(OSX) || os(tvOS)
+#if os(iOS) || os(macOS) || os(tvOS)
 extension Reactive where Base: NSLayoutConstraint {
     /**
      Bindable sink for `constant` property.

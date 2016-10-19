@@ -3,7 +3,7 @@ import XCTest
 import RxSwift
 
 protocol RxTestCase {
-#if os(OSX)
+#if os(macOS)
     init()
     static var allTests: [(String, (Self) -> () -> ())] { get }
 #endif
@@ -13,7 +13,7 @@ protocol RxTestCase {
 
 
 final class EventTests_ : EventTests, RxTestCase {
-    #if os(OSX)
+    #if os(macOS)
     required override init() {
         super.init()
     }
@@ -28,7 +28,7 @@ final class EventTests_ : EventTests, RxTestCase {
 }
 
 final class PublishSubjectTest_ : PublishSubjectTest, RxTestCase {
-    #if os(OSX)
+    #if os(macOS)
     required override init() {
         super.init()
     }
@@ -42,7 +42,7 @@ final class PublishSubjectTest_ : PublishSubjectTest, RxTestCase {
 }
 
 final class VirtualSchedulerTest_ : VirtualSchedulerTest, RxTestCase {
-    #if os(OSX)
+    #if os(macOS)
     required override init() {
         super.init()
     }
@@ -62,7 +62,7 @@ final class VirtualSchedulerTest_ : VirtualSchedulerTest, RxTestCase {
 }
 
 final class ObservableBlockingTest_ : ObservableBlockingTest, RxTestCase {
-    #if os(OSX)
+    #if os(macOS)
     required override init() {
         super.init()
     }
@@ -111,7 +111,7 @@ final class ObservableBlockingTest_ : ObservableBlockingTest, RxTestCase {
 }
 
 final class ObservableTimeTest_ : ObservableTimeTest, RxTestCase {
-    #if os(OSX)
+    #if os(macOS)
     required override init() {
         super.init()
     }
@@ -197,7 +197,7 @@ final class ObservableTimeTest_ : ObservableTimeTest, RxTestCase {
 }
 
 final class ObservableBindingTest_ : ObservableBindingTest, RxTestCase {
-    #if os(OSX)
+    #if os(macOS)
     required override init() {
         super.init()
     }
@@ -249,7 +249,7 @@ final class ObservableBindingTest_ : ObservableBindingTest, RxTestCase {
 }
 
 final class ObservableStandardSequenceOperatorsTest_ : ObservableStandardSequenceOperatorsTest, RxTestCase {
-    #if os(OSX)
+    #if os(macOS)
     required override init() {
         super.init()
     }
@@ -380,7 +380,7 @@ final class ObservableStandardSequenceOperatorsTest_ : ObservableStandardSequenc
 }
 
 final class ObservableSingleTest_ : ObservableSingleTest, RxTestCase {
-    #if os(OSX)
+    #if os(macOS)
     required override init() {
         super.init()
     }
@@ -441,7 +441,7 @@ final class ObservableSingleTest_ : ObservableSingleTest, RxTestCase {
 }
 
 final class ObservableAggregateTest_ : ObservableAggregateTest, RxTestCase {
-    #if os(OSX)
+    #if os(macOS)
     required override init() {
         super.init()
     }
@@ -471,7 +471,7 @@ final class ObservableAggregateTest_ : ObservableAggregateTest, RxTestCase {
 }
 
 final class SubjectConcurrencyTest_ : SubjectConcurrencyTest, RxTestCase {
-    #if os(OSX)
+    #if os(macOS)
     required override init() {
         super.init()
     }
@@ -485,7 +485,7 @@ final class SubjectConcurrencyTest_ : SubjectConcurrencyTest, RxTestCase {
 }
 
 final class VariableTest_ : VariableTest, RxTestCase {
-    #if os(OSX)
+    #if os(macOS)
     required override init() {
         super.init()
     }
@@ -499,7 +499,7 @@ final class VariableTest_ : VariableTest, RxTestCase {
 }
 
 final class ObservableConcurrencyTest_ : ObservableConcurrencyTest, RxTestCase {
-    #if os(OSX)
+    #if os(macOS)
     required override init() {
         super.init()
     }
@@ -522,7 +522,7 @@ final class ObservableConcurrencyTest_ : ObservableConcurrencyTest, RxTestCase {
 }
 
 final class ReactiveTests_ : ReactiveTests, RxTestCase {
-    #if os(OSX)
+    #if os(macOS)
     required override init() {
         super.init()
     }
@@ -534,7 +534,7 @@ final class ReactiveTests_ : ReactiveTests, RxTestCase {
 }
 
 final class ReplaySubjectTest_ : ReplaySubjectTest, RxTestCase {
-    #if os(OSX)
+    #if os(macOS)
     required override init() {
         super.init()
     }
@@ -548,7 +548,7 @@ final class ReplaySubjectTest_ : ReplaySubjectTest, RxTestCase {
 }
 
 final class ObservableSubscriptionTests_ : ObservableSubscriptionTests, RxTestCase {
-    #if os(OSX)
+    #if os(macOS)
     required override init() {
         super.init()
     }
@@ -563,7 +563,7 @@ final class ObservableSubscriptionTests_ : ObservableSubscriptionTests, RxTestCa
 }
 
 final class DisposableTest_ : DisposableTest, RxTestCase {
-    #if os(OSX)
+    #if os(macOS)
     required override init() {
         super.init()
     }
@@ -582,7 +582,7 @@ final class DisposableTest_ : DisposableTest, RxTestCase {
 }
 
 final class HistoricalSchedulerTest_ : HistoricalSchedulerTest, RxTestCase {
-    #if os(OSX)
+    #if os(macOS)
     required override init() {
         super.init()
     }
@@ -601,7 +601,7 @@ final class HistoricalSchedulerTest_ : HistoricalSchedulerTest, RxTestCase {
 }
 
 final class MainSchedulerTest_ : MainSchedulerTest, RxTestCase {
-    #if os(OSX)
+    #if os(macOS)
     required override init() {
         super.init()
     }
@@ -615,7 +615,7 @@ final class MainSchedulerTest_ : MainSchedulerTest, RxTestCase {
 }
 
 final class ObserverTests_ : ObserverTests, RxTestCase {
-    #if os(OSX)
+    #if os(macOS)
     required override init() {
         super.init()
     }
@@ -633,7 +633,7 @@ final class ObserverTests_ : ObserverTests, RxTestCase {
 }
 
 final class ConcurrentDispatchQueueSchedulerTests_ : ConcurrentDispatchQueueSchedulerTests, RxTestCase {
-    #if os(OSX)
+    #if os(macOS)
     required override init() {
         super.init()
     }
@@ -648,7 +648,7 @@ final class ConcurrentDispatchQueueSchedulerTests_ : ConcurrentDispatchQueueSche
 }
 
 final class QueueTest_ : QueueTest, RxTestCase {
-    #if os(OSX)
+    #if os(macOS)
     required override init() {
         super.init()
     }
@@ -660,7 +660,7 @@ final class QueueTest_ : QueueTest, RxTestCase {
 }
 
 final class ObservableMultipleTest_ : ObservableMultipleTest, RxTestCase {
-    #if os(OSX)
+    #if os(macOS)
     required override init() {
         super.init()
     }
@@ -904,7 +904,7 @@ final class ObservableMultipleTest_ : ObservableMultipleTest, RxTestCase {
 }
 
 final class AssumptionsTest_ : AssumptionsTest, RxTestCase {
-    #if os(OSX)
+    #if os(macOS)
     required override init() {
         super.init()
     }
@@ -919,7 +919,7 @@ final class AssumptionsTest_ : AssumptionsTest, RxTestCase {
 }
 
 final class BehaviorSubjectTest_ : BehaviorSubjectTest, RxTestCase {
-    #if os(OSX)
+    #if os(macOS)
     required override init() {
         super.init()
     }
@@ -937,7 +937,7 @@ final class BehaviorSubjectTest_ : BehaviorSubjectTest, RxTestCase {
 }
 
 final class ObservableCreationTests_ : ObservableCreationTests, RxTestCase {
-    #if os(OSX)
+    #if os(macOS)
     required override init() {
         super.init()
     }
@@ -975,7 +975,7 @@ final class ObservableCreationTests_ : ObservableCreationTests, RxTestCase {
 }
 
 final class ObservableConcurrentSchedulerConcurrencyTest_ : ObservableConcurrentSchedulerConcurrencyTest, RxTestCase {
-    #if os(OSX)
+    #if os(macOS)
     required override init() {
         super.init()
     }
@@ -993,7 +993,7 @@ final class ObservableConcurrentSchedulerConcurrencyTest_ : ObservableConcurrent
 }
 
 final class ObservableDebugTest_ : ObservableDebugTest, RxTestCase {
-    #if os(OSX)
+    #if os(macOS)
     required override init() {
         super.init()
     }
@@ -1006,7 +1006,7 @@ final class ObservableDebugTest_ : ObservableDebugTest, RxTestCase {
 }
 
 final class AnonymousObservableTests_ : AnonymousObservableTests, RxTestCase {
-    #if os(OSX)
+    #if os(macOS)
     required override init() {
         super.init()
     }
@@ -1020,7 +1020,7 @@ final class AnonymousObservableTests_ : AnonymousObservableTests, RxTestCase {
 }
 
 final class CurrentThreadSchedulerTest_ : CurrentThreadSchedulerTest, RxTestCase {
-    #if os(OSX)
+    #if os(macOS)
     required override init() {
         super.init()
     }
@@ -1035,7 +1035,7 @@ final class CurrentThreadSchedulerTest_ : CurrentThreadSchedulerTest, RxTestCase
 }
 
 final class BagTest_ : BagTest, RxTestCase {
-    #if os(OSX)
+    #if os(macOS)
     required override init() {
         super.init()
     }
@@ -1050,7 +1050,7 @@ final class BagTest_ : BagTest, RxTestCase {
     ("testBag_complexityTestFromEnd", BagTest.testBag_complexityTestFromEnd),
     ] }
 }
-#if os(OSX) || os(iOS) || os(tvOS) || os(watchOS)
+#if os(macOS) || os(iOS) || os(tvOS) || os(watchOS)
 
 func testCase<T: RxTestCase>(_ tests: [(String, (T) -> () -> ())]) -> () -> () {
     return {

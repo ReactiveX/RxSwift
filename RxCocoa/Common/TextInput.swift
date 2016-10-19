@@ -61,7 +61,7 @@ import Foundation
 
 #endif
 
-#if os(OSX)
+#if os(macOS)
     import Cocoa
 
     /**

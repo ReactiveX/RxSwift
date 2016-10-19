@@ -12,7 +12,7 @@ import RxSwift
 #endif
 #if os(iOS)
     import UIKit
-#elseif os(OSX)
+#elseif os(macOS)
     import Cocoa
 #endif
 

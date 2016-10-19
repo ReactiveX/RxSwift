@@ -590,7 +590,7 @@ Marble diagrams for all operators can be found on [ReactiveX.io](http://reactive
 
 Almost all operators are demonstrated in [Playgrounds](../Rx.playground).
 
-To use playgrounds please open `Rx.xcworkspace`, build `RxSwift-OSX` scheme and then open playgrounds in `Rx.xcworkspace` tree view.
+To use playgrounds please open `Rx.xcworkspace`, build `RxSwift-macOS` scheme and then open playgrounds in `Rx.xcworkspace` tree view.
 
 In case you need an operator, and don't know how to find it there a [decision tree of operators](http://reactivex.io/documentation/operators.html#tree).
 
@@ -710,7 +710,7 @@ so please try not to do this.
 
 If you are unsure how exactly some of the operators work, [playgrounds](../Rx.playground) contain almost all of the operators already prepared with small examples that illustrate their behavior.
 
-**To use playgrounds please open Rx.xcworkspace, build RxSwift-OSX scheme and then open playgrounds in Rx.xcworkspace tree view.**
+**To use playgrounds please open Rx.xcworkspace, build RxSwift-macOS scheme and then open playgrounds in Rx.xcworkspace tree view.**
 
 **To view the results of the examples in the playgrounds, please open the `Assistant Editor`. You can open `Assistant Editor` by clicking on `View > Assistant Editor > Show Assistant Editor`**
 

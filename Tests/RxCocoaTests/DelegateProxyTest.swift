@@ -431,7 +431,7 @@ class MockThreeDSectionedViewProtocol : NSObject, ThreeDSectionedViewProtocol {
     }
 }
 
-#if os(OSX)
+#if os(macOS)
 extension MockTestDelegateProtocol
     : NSTextFieldDelegate {
 

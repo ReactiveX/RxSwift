@@ -13,16 +13,16 @@ import Foundation
 
 #if TRACE_RESOURCES
 #elseif RELEASE
-#elseif os(OSX) || os(iOS) || os(tvOS) || os(watchOS)
+#elseif os(macOS) || os(iOS) || os(tvOS) || os(watchOS)
 #elseif os(Linux)
 #else
 let failure = unhandled_case()
 #endif
 
-// because otherwise OSX unit tests won't run
+// because otherwise macOS unit tests won't run
 #if os(iOS)
     import UIKit
-#elseif os(OSX)
+#elseif os(macOS)
     import AppKit
 #endif
 

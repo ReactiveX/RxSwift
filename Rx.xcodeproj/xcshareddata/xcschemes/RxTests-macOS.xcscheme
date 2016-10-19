@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "C88BB81A1B07E5ED0064D411"
-               BuildableName = "RxSwift.framework"
-               BlueprintName = "RxSwift-OSX"
+               BlueprintIdentifier = "C88FA50E1C25C4B500CCFEA4"
+               BuildableName = "RxTest.framework"
+               BlueprintName = "RxTest-macOS"
                ReferencedContainer = "container:Rx.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -33,8 +33,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "C83509931C38742C0027C24C"
-               BuildableName = "AllTests-OSX.xctest"
-               BlueprintName = "AllTests-OSX"
+               BuildableName = "AllTests-macOS.xctest"
+               BlueprintName = "AllTests-macOS"
                ReferencedContainer = "container:Rx.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -42,9 +42,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "C88BB81A1B07E5ED0064D411"
-            BuildableName = "RxSwift.framework"
-            BlueprintName = "RxSwift-OSX"
+            BlueprintIdentifier = "C88FA50E1C25C4B500CCFEA4"
+            BuildableName = "RxTest.framework"
+            BlueprintName = "RxTest-macOS"
             ReferencedContainer = "container:Rx.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -64,9 +64,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "C88BB81A1B07E5ED0064D411"
-            BuildableName = "RxSwift.framework"
-            BlueprintName = "RxSwift-OSX"
+            BlueprintIdentifier = "C88FA50E1C25C4B500CCFEA4"
+            BuildableName = "RxTest.framework"
+            BlueprintName = "RxTest-macOS"
             ReferencedContainer = "container:Rx.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -82,9 +82,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "C88BB81A1B07E5ED0064D411"
-            BuildableName = "RxSwift.framework"
-            BlueprintName = "RxSwift-OSX"
+            BlueprintIdentifier = "C88FA50E1C25C4B500CCFEA4"
+            BuildableName = "RxTest.framework"
+            BlueprintName = "RxTest-macOS"
             ReferencedContainer = "container:Rx.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

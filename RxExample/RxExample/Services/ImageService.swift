@@ -14,7 +14,7 @@ import RxCocoa
 
 #if os(iOS)
     import UIKit
-#elseif os(OSX)
+#elseif os(macOS)
     import Cocoa
 #endif 
 

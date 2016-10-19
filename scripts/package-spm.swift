@@ -178,7 +178,7 @@ func buildAllTestsTarget(_ testsPath: String) throws {
     mainContent.append("import RxSwift")
     mainContent.append("")
     mainContent.append("protocol RxTestCase {")
-    mainContent.append("#if os(OSX)")
+    mainContent.append("#if os(macOS)")
     mainContent.append("    init()")
     mainContent.append("    static var allTests: [(String, (Self) -> () -> ())] { get }")
     mainContent.append("#endif")
@@ -191,7 +191,7 @@ func buildAllTestsTarget(_ testsPath: String) throws {
 
         mainContent.append("")
         mainContent.append("final class \(name)_ : \(name), RxTestCase {")
-        mainContent.append("    #if os(OSX)")
+        mainContent.append("    #if os(macOS)")
         mainContent.append("    required override init() {")
         mainContent.append("        super.init()")
         mainContent.append("    }")
@@ -207,7 +207,7 @@ func buildAllTestsTarget(_ testsPath: String) throws {
         mainContent.append("}")
     }
 
-    mainContent.append("#if os(OSX) || os(iOS) || os(tvOS) || os(watchOS)")
+    mainContent.append("#if os(macOS) || os(iOS) || os(tvOS) || os(watchOS)")
     mainContent.append("")
     mainContent.append("func testCase<T: RxTestCase>(_ tests: [(String, (T) -> () -> ())]) -> () -> () {")
     mainContent.append("    return {")
@@ -246,7 +246,7 @@ func buildAllTestsTarget(_ testsPath: String) throws {
 
 
 try packageRelativePath(["RxSwift"], targetDirName: "RxSwift")
-//try packageRelativePath(["RxCocoa/Common", "RxCocoa/OSX", "RxCocoa/RxCocoa.h"], targetDirName: "RxCocoa")
+//try packageRelativePath(["RxCocoa/Common", "RxCocoa/macOS", "RxCocoa/RxCocoa.h"], targetDirName: "RxCocoa")
 
 try packageRelativePath([
     "RxCocoa/RxCocoa.swift",
@@ -254,7 +254,7 @@ try packageRelativePath([
     "RxCocoa/Common",
     "RxCocoa/Foundation",
     "RxCocoa/iOS",
-    "RxCocoa/OSX",
+    "RxCocoa/macOS",
     ], targetDirName: "RxCocoa")
 try packageRelativePath([
     "RxCocoa/Runtime/include",

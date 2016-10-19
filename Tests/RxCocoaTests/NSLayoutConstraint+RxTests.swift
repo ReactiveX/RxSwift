@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 import RxCocoa
 import XCTest
-#if os(OSX)
+#if os(macOS)
 import Cocoa
 typealias View = NSView
 #else

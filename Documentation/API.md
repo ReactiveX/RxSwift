@@ -98,7 +98,7 @@ Creating new operators is also pretty straightforward.
 
 ## RxCocoa extensions
 
-**iOS / OSX**
+**iOS / macOS**
 
 ```swift
 

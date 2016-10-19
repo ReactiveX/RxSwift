@@ -1,1 +1,1 @@
-../../RxCocoa/OSX/NSSlider+Rx.swift
+../../RxCocoa/macOS/NSSlider+Rx.swift

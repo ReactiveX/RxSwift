@@ -9,7 +9,7 @@
 #if os(iOS)
     import UIKit
     typealias OSApplication = UIApplication
-#elseif os(OSX)
+#elseif os(macOS)
     import Cocoa
     typealias OSApplication = NSApplication
 #endif

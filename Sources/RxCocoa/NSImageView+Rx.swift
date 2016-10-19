@@ -1,1 +1,1 @@
-../../RxCocoa/OSX/NSImageView+Rx.swift
+../../RxCocoa/macOS/NSImageView+Rx.swift

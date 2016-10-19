@@ -14,7 +14,7 @@ import RxSwift
 #if os(iOS)
     import UIKit
     typealias OSViewController = UIViewController
-#elseif os(OSX)
+#elseif os(macOS)
     import Cocoa
     typealias OSViewController = NSViewController
 #endif

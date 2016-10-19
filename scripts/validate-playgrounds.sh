@@ -2,8 +2,8 @@
 
 CONFIGURATIONS=(Release)
 
-# make sure osx builds
-for scheme in "RxSwift-OSX"
+# make sure macOS builds
+for scheme in "RxSwift-macOS"
 do
   for configuration in ${CONFIGURATIONS[@]}
   do

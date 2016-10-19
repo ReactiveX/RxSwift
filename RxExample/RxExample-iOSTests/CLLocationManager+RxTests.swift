@@ -62,7 +62,7 @@ extension CLLocationManagerTests {
         XCTAssertTrue(completed)
     }
 
-    #if os(iOS) || os(OSX)
+    #if os(iOS) || os(macOS)
 
     func testDidFinishDeferredUpdatesWithError() {
         var completed = false
@@ -216,7 +216,7 @@ extension CLLocationManagerTests {
 
     #endif
 
-    #if os(iOS) || os(OSX)
+    #if os(iOS) || os(macOS)
 
     func testDidDetermineStateForRegion() {
         var completed = false

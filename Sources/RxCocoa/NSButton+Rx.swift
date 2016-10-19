@@ -1,1 +1,1 @@
-../../RxCocoa/OSX/NSButton+Rx.swift
+../../RxCocoa/macOS/NSButton+Rx.swift

@@ -265,7 +265,7 @@ custom_categories:
   - RxTableViewDelegateProxy
   - RxTextStorageDelegateProxy
   - RxTextViewDelegateProxy
-- name: RxCocoa/OSX
+- name: RxCocoa/macOS
   children:
   - NSButton+Rx
   - NSControl+Rx

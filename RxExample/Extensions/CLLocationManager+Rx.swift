@@ -45,7 +45,7 @@ extension Reactive where Base: CLLocationManager {
             }
     }
 
-    #if os(iOS) || os(OSX)
+    #if os(iOS) || os(macOS)
     /**
     Reactive wrapper for `delegate` message.
     */
@@ -117,7 +117,7 @@ extension Reactive where Base: CLLocationManager {
 
     #endif
 
-    #if os(iOS) || os(OSX)
+    #if os(iOS) || os(macOS)
     
     /**
     Reactive wrapper for `delegate` message.
