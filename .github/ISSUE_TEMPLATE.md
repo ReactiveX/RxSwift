@@ -1,6 +1,10 @@
 
 :warning: If you don't have something to report in the following format, it will probably be easier and faster to ask in the [slack channel](http://http://slack.rxswift.org/) first. :warning: 
 
+:warning: Please take you time to fill in the fields below. If we aren't provided with this basic information about your issue we probably won't be able to help you and there won't be much we can do except to close the issue :( :warning:
+
+*If you still want to report issue, please delete above statements before submitting an issue.*
+
 **Short description of the issue**:
 
   _description here_
@@ -12,7 +16,9 @@
   
 // If we can't get a self contained code example that reproduces the issue, there is a big chance we won't be able
 // to help you because there is not much we can do.
+//
 // `Self contained code example` means:
+//
 // * that we should be able to just run the provided code without changing it.
 // * that it will reproduce the issue upon running
 ```
