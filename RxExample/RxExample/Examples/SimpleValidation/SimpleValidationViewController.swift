@@ -44,19 +44,19 @@ class SimpleValidationViewController : ViewController {
             .shareReplay(1)
 
         usernameValid
-            .bindTo(passwordOutlet.rx.enabled)
+            .bindTo(passwordOutlet.rx.isEnabled)
             .addDisposableTo(disposeBag)
 
         usernameValid
-            .bindTo(usernameValidOutlet.rx.hidden)
+            .bindTo(usernameValidOutlet.rx.isHidden)
             .addDisposableTo(disposeBag)
 
         passwordValid
-            .bindTo(passwordValidOutlet.rx.hidden)
+            .bindTo(passwordValidOutlet.rx.isHidden)
             .addDisposableTo(disposeBag)
 
         everythingValid
-            .bindTo(doSomethingOutlet.rx.enabled)
+            .bindTo(doSomethingOutlet.rx.isEnabled)
             .addDisposableTo(disposeBag)
 
         doSomethingOutlet.rx.tap

@@ -64,7 +64,7 @@ class GitHubSignupViewController1 : ViewController {
             .addDisposableTo(disposeBag)
 
         viewModel.signingIn
-            .bindTo(signingUpOulet.rx.animating)
+            .bindTo(signingUpOulet.rx.isAnimating)
             .addDisposableTo(disposeBag)
 
         viewModel.signedIn

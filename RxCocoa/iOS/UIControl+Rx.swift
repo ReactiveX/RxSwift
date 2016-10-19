@@ -19,7 +19,7 @@ extension Reactive where Base: UIControl {
     /**
     Bindable sink for `enabled` property.
     */
-    public var enabled: UIBindingObserver<Base, Bool> {
+    public var isEnabled: UIBindingObserver<Base, Bool> {
         return UIBindingObserver(UIElement: self.base) { control, value in
             control.isEnabled = value
         }
@@ -28,7 +28,7 @@ extension Reactive where Base: UIControl {
     /**
      Bindable sink for `selected` property.
      */
-    public var selected: UIBindingObserver<Base, Bool> {
+    public var isSelected: UIBindingObserver<Base, Bool> {
         return UIBindingObserver(UIElement: self.base) { control, selected in
             control.isSelected = selected
         }

@@ -54,7 +54,7 @@ extension Reactive where Base: UIScrollView {
     /**
     Bindable sink for `scrollEnabled` property.
     */
-    public var scrollEnabled: UIBindingObserver<Base, Bool> {
+    public var isScrollEnabled: UIBindingObserver<Base, Bool> {
         return UIBindingObserver(UIElement: self.base) { scrollView, scrollEnabled in
             scrollView.isScrollEnabled = scrollEnabled
         }

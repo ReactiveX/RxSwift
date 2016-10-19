@@ -76,7 +76,7 @@ import Foundation
         /**
          Reactive wrapper for `text` property.
          */
-        public let text: ControlProperty<String>
+        public let text: ControlProperty<String?>
 
         /**
          Initializes new text input.
@@ -84,7 +84,7 @@ import Foundation
          - parameter base: Base object.
          - parameter text: Textual control property.
          */
-        public init(base: Base, text: ControlProperty<String>) {
+        public init(base: Base, text: ControlProperty<String?>) {
             self.base = base
             self.text = text
         }

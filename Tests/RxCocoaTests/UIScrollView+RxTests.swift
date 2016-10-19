@@ -23,14 +23,14 @@ extension UIScrollViewTests {
     func testScrollEnabled_False() {
         let scrollView = UIScrollView(frame: CGRect.zero)
         scrollView.isScrollEnabled = true
-        Observable.just(false).bindTo(scrollView.rx.scrollEnabled).dispose()
+        Observable.just(false).bindTo(scrollView.rx.isScrollEnabled).dispose()
         XCTAssertTrue(scrollView.isScrollEnabled == false)
     }
 
     func testScrollEnabled_True() {
         let scrollView = UIScrollView(frame: CGRect.zero)
         scrollView.isScrollEnabled = false
-        Observable.just(true).bindTo(scrollView.rx.scrollEnabled).dispose()
+        Observable.just(true).bindTo(scrollView.rx.isScrollEnabled).dispose()
         XCTAssertTrue(scrollView.isScrollEnabled == true)
     }
 

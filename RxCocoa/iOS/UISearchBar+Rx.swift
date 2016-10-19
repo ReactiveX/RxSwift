@@ -43,18 +43,18 @@ extension Reactive where Base: UISearchBar {
     /**
     Reactive wrapper for `text` property.
     */
-    public var text: ControlProperty<String> {
-        let source: Observable<String> = Observable.deferred { [weak searchBar = self.base as UISearchBar] () -> Observable<String> in
-            let text = searchBar?.text ?? ""
+    public var text: ControlProperty<String?> {
+        let source: Observable<String?> = Observable.deferred { [weak searchBar = self.base as UISearchBar] () -> Observable<String?> in
+            let text = searchBar?.text
             
             return (searchBar?.rx.delegate.methodInvoked(#selector(UISearchBarDelegate.searchBar(_:textDidChange:))) ?? Observable.empty())
                     .map { a in
-                        return a[1] as? String ?? ""
+                        return a[1] as? String
                     }
                     .startWith(text)
         }
 
-        let bindingObserver = UIBindingObserver(UIElement: self.base) { (searchBar, text: String) in
+        let bindingObserver = UIBindingObserver(UIElement: self.base) { (searchBar, text: String?) in
             searchBar.text = text
         }
         

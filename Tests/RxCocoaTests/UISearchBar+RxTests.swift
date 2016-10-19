@@ -16,7 +16,7 @@ import XCTest
 class UISearchBarTests : RxTest {
     func testText_completesOnDealloc() {
         let createView: () -> UISearchBar = { UISearchBar(frame: CGRect(x: 0, y: 0, width: 1, height: 1)) }
-        ensurePropertyDeallocated(createView, "a") { (view: UISearchBar) in view.rx.text }
+        ensurePropertyDeallocated(createView, "a") { (view: UISearchBar) in view.rx.text.orEmpty }
     }
 
     func testText_changeEventWorks() {

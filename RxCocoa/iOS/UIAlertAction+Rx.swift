@@ -22,7 +22,7 @@ extension Reactive where Base: UIAlertAction {
     /**
      Bindable sink for `enabled` property.
      */
-    public var enabled: UIBindingObserver<Base, Bool> {
+    public var isEnabled: UIBindingObserver<Base, Bool> {
         return UIBindingObserver(UIElement: self.base) { alertAction, value in
             alertAction.isEnabled = value
         }

@@ -15,7 +15,7 @@ import XCTest
 extension ControlTests {
     func testTextField_TextCompletesOnDealloc() {
         let createView: () -> NSTextField = { NSTextField(frame: CGRect(x: 0, y: 0, width: 1, height: 1)) }
-        ensurePropertyDeallocated(createView, "a") { (view: NSTextField) in view.rx.text }
+        ensurePropertyDeallocated(createView, "a") { (view: NSTextField) in view.rx.text.orEmpty }
     }
 }
 
@@ -29,7 +29,7 @@ extension ControlTests {
     func testControl_enabled_true() {
         let control = NSControl(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
 
-        _ = Observable.just(true).bindTo(control.rx.enabled)
+        _ = Observable.just(true).bindTo(control.rx.isEnabled)
 
         XCTAssertEqual(true, control.isEnabled)
     }
@@ -37,7 +37,7 @@ extension ControlTests {
     func testControl_enabled_false() {
         let control = NSControl(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
 
-        _ = Observable.just(false).bindTo(control.rx.enabled)
+        _ = Observable.just(false).bindTo(control.rx.isEnabled)
 
         XCTAssertEqual(false, control.isEnabled)
     }

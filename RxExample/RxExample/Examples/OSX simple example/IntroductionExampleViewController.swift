@@ -27,7 +27,7 @@ class IntroductionExampleViewController : ViewController {
         showAlert("After you close this, prepare for a loud sound ...")
 
         // c = a + b
-        let sum = Observable.combineLatest(a.rx.text, b.rx.text) { (a: String, b: String) -> (Int, Int) in
+        let sum = Observable.combineLatest(a.rx.text.orEmpty, b.rx.text.orEmpty) { (a: String, b: String) -> (Int, Int) in
             return (Int(a) ?? 0, Int(b) ?? 0)
         }
         
@@ -62,7 +62,7 @@ class IntroductionExampleViewController : ViewController {
             })
             .addDisposableTo(disposeBag)
         
-        sliderValue.rx.text
+        sliderValue.rx.text.orEmpty
             .subscribe(onNext: { value in
                 let doubleValue = value.toDouble() ?? 0.0
                 self.slider.doubleValue = doubleValue

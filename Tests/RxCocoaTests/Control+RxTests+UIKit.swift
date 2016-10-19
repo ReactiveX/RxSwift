@@ -14,7 +14,7 @@ import XCTest
 extension ControlTests {
     func testSubscribeEnabledToTrue() {
         let subject = UIControl()
-        let disposable = Observable.just(true).subscribe(subject.rx.enabled)
+        let disposable = Observable.just(true).subscribe(subject.rx.isEnabled)
         defer { disposable.dispose() }
 
         XCTAssert(subject.isEnabled == true, "Expected enabled set to true")
@@ -22,7 +22,7 @@ extension ControlTests {
 
     func testSubscribeEnabledToFalse() {
         let subject = UIControl()
-        let disposable = Observable.just(false).subscribe(subject.rx.enabled)
+        let disposable = Observable.just(false).subscribe(subject.rx.isEnabled)
         defer { disposable.dispose() }
 
         XCTAssert(subject.isEnabled == false, "Expected enabled set to false")
@@ -30,7 +30,7 @@ extension ControlTests {
 
     func testSubscribedSelectedToTrue() {
         let subject = UIControl()
-        let disposable = Observable.just(true).subscribe(subject.rx.selected)
+        let disposable = Observable.just(true).subscribe(subject.rx.isSelected)
         defer { disposable.dispose() }
 
         XCTAssert(subject.isSelected == true, "Expected selected set to true")
@@ -38,7 +38,7 @@ extension ControlTests {
 
     func testSubscribeSelectedToFalse() {
         let subject = UIControl()
-        let disposable = Observable.just(false).subscribe(subject.rx.selected)
+        let disposable = Observable.just(false).subscribe(subject.rx.isSelected)
         defer { disposable.dispose() }
 
         XCTAssert(subject.isSelected == false, "Expected selected set to false")
@@ -126,14 +126,14 @@ extension ControlTests {
 // UIActivityIndicatorView
 extension ControlTests {
     func testActivityIndicator_HasWeakReference() {
-        ensureControlObserverHasWeakReference(UIActivityIndicatorView(), { (view: UIActivityIndicatorView) -> AnyObserver<Bool> in view.rx.animating.asObserver() }, { Variable<Bool>(true).asObservable() })
+        ensureControlObserverHasWeakReference(UIActivityIndicatorView(), { (view: UIActivityIndicatorView) -> AnyObserver<Bool> in view.rx.isAnimating.asObserver() }, { Variable<Bool>(true).asObservable() })
     }
 
     func testActivityIndicator_NextElementsSetsValue() {
         let subject = UIActivityIndicatorView()
         let boolSequence = Variable<Bool>(false)
 
-        let disposable = boolSequence.asObservable().bindTo(subject.rx.animating)
+        let disposable = boolSequence.asObservable().bindTo(subject.rx.isAnimating)
         defer { disposable.dispose() }
 
         boolSequence.value = true
@@ -148,14 +148,14 @@ extension ControlTests {
 extension ControlTests {
     func testAlertAction_Enable() {
         let subject = UIAlertAction()
-        Observable.just(false).subscribe(subject.rx.enabled).dispose()
+        Observable.just(false).subscribe(subject.rx.isEnabled).dispose()
         
         XCTAssertTrue(subject.isEnabled == false)
     }
 
     func testAlertAction_Disable() {
         let subject = UIAlertAction()
-        Observable.just(true).subscribe(subject.rx.enabled).dispose()
+        Observable.just(true).subscribe(subject.rx.isEnabled).dispose()
         
         XCTAssertTrue(subject.isEnabled == true)
     }

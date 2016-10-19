@@ -18,14 +18,14 @@ class NSControlTests : RxTest {
 extension NSControlTests {
     func testEnabled_False() {
         let subject = NSButton(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
-        Observable.just(false).subscribe(subject.rx.enabled).dispose()
+        Observable.just(false).subscribe(subject.rx.isEnabled).dispose()
 
         XCTAssertTrue(subject.isEnabled == false)
     }
 
     func testEnabled_True() {
         let subject = NSButton(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
-        Observable.just(true).subscribe(subject.rx.enabled).dispose()
+        Observable.just(true).subscribe(subject.rx.isEnabled).dispose()
 
         XCTAssertTrue(subject.isEnabled == true)
     }

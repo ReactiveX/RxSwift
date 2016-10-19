@@ -18,7 +18,7 @@
         /**
          Bindable sink for `hidden` property.
          */
-        public var hidden:  UIBindingObserver<Base, Bool> {
+        public var isHidden:  UIBindingObserver<Base, Bool> {
             return UIBindingObserver(UIElement: self.base) { view, value in
                 view.isHidden = value
             }

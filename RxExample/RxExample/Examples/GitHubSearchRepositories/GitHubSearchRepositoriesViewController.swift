@@ -49,7 +49,7 @@ class GitHubSearchRepositoriesViewController: ViewController, UITableViewDelegat
                     : Observable.empty()
             }
 
-        let searchResult = self.searchBar.rx.text.asDriver()
+        let searchResult = self.searchBar.rx.text.orEmpty.asDriver()
             .throttle(0.3)
             .distinctUntilChanged()
             .flatMapLatest { query -> Driver<RepositoriesState> in
@@ -94,7 +94,7 @@ class GitHubSearchRepositoriesViewController: ViewController, UITableViewDelegat
         // activity indicator in status bar
         // {
         GitHubSearchRepositoriesAPI.sharedAPI.activityIndicator
-            .drive(UIApplication.shared.rx.networkActivityIndicatorVisible)
+            .drive(UIApplication.shared.rx.isNetworkActivityIndicatorVisible)
             .addDisposableTo(disposeBag)
         // }
     }
