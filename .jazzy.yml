@@ -27,12 +27,6 @@ custom_categories:
   - SynchronizedOnType
   - SynchronizedSubscribeType
   - SynchronizedUnsubscribeType
-- name: RxSwift/DataStructures
-  children:
-  - Bag
-  - InfiniteSequence
-  - PriorityQueue
-  - Queue
 - name: RxSwift/Disposables
   children:
   - AnonymousDisposable
@@ -50,6 +44,7 @@ custom_categories:
   - SubscriptionDisposable
 - name: RxSwift/Extensions
   children:
+  - Bag+Rx
   - String+Rx
 - name: RxSwift/Observables/Implementations
   children:
@@ -131,6 +126,12 @@ custom_categories:
   - AnonymousObserver
   - ObserverBase
   - TailRecursiveSink
+- name: RxSwift/Platform/DataStructures
+  children:
+  - Bag
+  - InfiniteSequence
+  - PriorityQueue
+  - Queue
 - name: RxSwift/Platform
   children:
   - Platform.Darwin

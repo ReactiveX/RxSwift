@@ -1,6 +1,6 @@
 //
 //  InfiniteSequence.swift
-//  RxSwift
+//  Platform
 //
 //  Created by Krunoslav Zaher on 6/13/15.
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.

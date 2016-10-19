@@ -1,1 +1,1 @@
-../../RxSwift/DataStructures/Queue.swift
+../../RxSwift/Platform/DataStructures/Queue.swift

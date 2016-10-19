@@ -1,6 +1,6 @@
 //
 //  Bag.swift
-//  RxSwift
+//  Platform
 //
 //  Created by Krunoslav Zaher on 2/28/15.
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
@@ -41,19 +41,19 @@ struct Bag<T> : CustomDebugStringConvertible {
     // data
 
     // first fill inline variables
-    fileprivate var _key0: BagKey? = nil
-    fileprivate var _value0: T? = nil
+    var _key0: BagKey? = nil
+    var _value0: T? = nil
 
-    fileprivate var _key1: BagKey? = nil
-    fileprivate var _value1: T? = nil
+    var _key1: BagKey? = nil
+    var _value1: T? = nil
 
     // then fill "array dictionary"
-    fileprivate var _pairs = ContiguousArray<Entry>()
+    var _pairs = ContiguousArray<Entry>()
 
     // last is sparse dictionary
-    fileprivate var _dictionary: [BagKey : T]? = nil
+    var _dictionary: [BagKey : T]? = nil
 
-    fileprivate var _onlyFastPath = true
+    var _onlyFastPath = true
 
     /**
     Creates new empty `Bag`.
@@ -172,15 +172,12 @@ extension Bag {
     }
 }
 
-
-// MARK: forEach
-
 extension Bag {
     /**
-    Enumerates elements inside the bag.
-    
-    - parameter action: Enumeration closure.
-    */
+     Enumerates elements inside the bag.
+
+     - parameter action: Enumeration closure.
+     */
     func forEach(_ action: (T) -> Void) {
         if _onlyFastPath {
             if let value0 = _value0 {
@@ -214,72 +211,3 @@ extension Bag {
     }
 }
 
-extension Bag where T: ObserverType {
-    /**
-     Dispatches `event` to app observers contained inside bag.
-
-     - parameter action: Enumeration closure.
-     */
-    func on(_ event: Event<T.E>) {
-        if _onlyFastPath {
-            _value0?.on(event)
-            return
-        }
-
-        let pairs = _pairs
-        let value0 = _value0
-        let value1 = _value1
-        let dictionary = _dictionary
-
-        if let value0 = value0 {
-            value0.on(event)
-        }
-
-        if let value1 = value1 {
-            value1.on(event)
-        }
-
-        for i in 0 ..< pairs.count {
-            pairs[i].value.on(event)
-        }
-
-        if dictionary?.count ?? 0 > 0 {
-            for element in dictionary!.values {
-                element.on(event)
-            }
-        }
-    }
-}
-
-/**
- Dispatches `dispose` to all disposables contained inside bag.
- */
-func disposeAll(in bag: Bag<Disposable>) {
-    if bag._onlyFastPath {
-        bag._value0?.dispose()
-        return
-    }
-
-    let pairs = bag._pairs
-    let value0 = bag._value0
-    let value1 = bag._value1
-    let dictionary = bag._dictionary
-
-    if let value0 = value0 {
-        value0.dispose()
-    }
-
-    if let value1 = value1 {
-        value1.dispose()
-    }
-
-    for i in 0 ..< pairs.count {
-        pairs[i].value.dispose()
-    }
-
-    if dictionary?.count ?? 0 > 0 {
-        for element in dictionary!.values {
-            element.dispose()
-        }
-    }
-}

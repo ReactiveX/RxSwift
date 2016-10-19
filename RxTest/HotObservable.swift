@@ -7,7 +7,7 @@
 //
 
 import Foundation
-@testable import RxSwift
+import RxSwift
 
 /**
  A representation of hot observable sequence.
@@ -32,7 +32,9 @@ class HotObservable<Element>
 
         for recordedEvent in recordedEvents {
             testScheduler.scheduleAt(recordedEvent.time) { t in
-                self._observers.on(recordedEvent.value)
+                self._observers.forEach {
+                    $0.on(recordedEvent.value)
+                }
             }
         }
     }
