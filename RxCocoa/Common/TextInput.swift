@@ -99,6 +99,10 @@ import Foundation
         }
     }
 
+    extension NSTextField : NSTextInput {
+        
+    }
+
 #endif
 
 

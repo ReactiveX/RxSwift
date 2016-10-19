@@ -385,7 +385,7 @@ extension Reactive where Base: UITableView {
          */
         public var didUpdateFocusInContextWithAnimationCoordinator: ControlEvent<(context: UIFocusUpdateContext, animationCoordinator: UIFocusAnimationCoordinator)> {
             
-            let source = delegate.observe(#selector(UITableViewDelegate.tableView(_:didUpdateFocusIn:with:)))
+            let source = delegate.methodInvoked(#selector(UITableViewDelegate.tableView(_:didUpdateFocusIn:with:)))
                 .map { a -> (context: UIFocusUpdateContext, animationCoordinator: UIFocusAnimationCoordinator) in
                     let context = a[1] as! UIFocusUpdateContext
                     let animationCoordinator = try castOrThrow(UIFocusAnimationCoordinator.self, a[2])

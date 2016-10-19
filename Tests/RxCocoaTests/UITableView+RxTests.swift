@@ -552,7 +552,7 @@ extension UITableViewTests {
         let dataSource = TableViewDataSourceThatImplementsCommitForRowAt()
         _ = tableView.rx.setDataSource(dataSource)
 
-        XCTAssertTrue((tableView.dataSource! as! UITableViewDataSource).responds(to: #selector(UITableViewDataSource.tableView(_:commit:forRowAt:))))
+        XCTAssertTrue((tableView.dataSource!).responds(to: #selector(UITableViewDataSource.tableView(_:commit:forRowAt:))))
     }
 }
 

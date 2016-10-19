@@ -300,7 +300,7 @@ extension Reactive where Base: UICollectionView {
      */
     public var didUpdateFocusInContextWithAnimationCoordinator: ControlEvent<(context: UIFocusUpdateContext, animationCoordinator: UIFocusAnimationCoordinator)> {
         
-        let source = delegate.observe(#selector(UICollectionViewDelegate.collectionView(_:didUpdateFocusIn:with:)))
+        let source = delegate.methodInvoked(#selector(UICollectionViewDelegate.collectionView(_:didUpdateFocusIn:with:)))
             .map { a -> (context: UIFocusUpdateContext, animationCoordinator: UIFocusAnimationCoordinator) in
                 let context = a[1] as! UIFocusUpdateContext
                 let animationCoordinator = a[2] as! UIFocusAnimationCoordinator
