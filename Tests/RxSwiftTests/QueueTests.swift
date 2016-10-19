@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import RxSwift
+@testable import RxSwift
 import XCTest
 
 class QueueTest : RxTest {

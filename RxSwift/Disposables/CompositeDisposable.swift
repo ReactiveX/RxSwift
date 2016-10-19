@@ -12,7 +12,7 @@ import Foundation
 Represents a group of disposable resources that are disposed together.
 */
 public final class CompositeDisposable : DisposeBase, Disposable, Cancelable {
-    public typealias DisposeKey = Bag<Disposable>.KeyType
+    public typealias DisposeKey = BagKey
     
     private var _lock = SpinLock()
     

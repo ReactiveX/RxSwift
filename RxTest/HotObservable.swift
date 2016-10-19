@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import RxSwift
+@testable import RxSwift
 
 /**
  A representation of hot observable sequence.

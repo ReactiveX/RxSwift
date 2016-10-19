@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import RxSwift
+@testable import RxSwift
 import RxTest
 
 let SubscribedToHotObservable = Subscription(0)

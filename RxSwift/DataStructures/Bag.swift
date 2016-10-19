@@ -60,11 +60,11 @@ Time and space complexity of insertion an deletion is O(n).
 
 It is suitable for storing small number of elements.
 */
-public struct Bag<T> : CustomDebugStringConvertible {
+struct Bag<T> : CustomDebugStringConvertible {
     /**
     Type of identifier for inserted elements.
     */
-    public typealias KeyType = BagKey
+    typealias KeyType = BagKey
     
     fileprivate typealias ScopeUniqueTokenType = Int
     
@@ -93,7 +93,7 @@ public struct Bag<T> : CustomDebugStringConvertible {
     /**
     Creates new empty `Bag`.
     */
-    public init() {
+    init() {
     }
     
     /**
@@ -102,7 +102,7 @@ public struct Bag<T> : CustomDebugStringConvertible {
     - parameter element: Element to insert.
     - returns: Key that can be used to remove element from bag.
     */
-    public mutating func insert(_ element: T) -> BagKey {
+    mutating func insert(_ element: T) -> BagKey {
         _nextKey = _nextKey &+ 1
 
 #if DEBUG
@@ -151,7 +151,7 @@ public struct Bag<T> : CustomDebugStringConvertible {
     /**
     - returns: Number of elements in bag.
     */
-    public var count: Int {
+    var count: Int {
         let dictionaryCount: Int = _dictionary?.count ?? 0
         return _pairs.count + (_value0 != nil ? 1 : 0) + (_value1 != nil ? 1 : 0) + dictionaryCount
     }
@@ -159,7 +159,7 @@ public struct Bag<T> : CustomDebugStringConvertible {
     /**
     Removes all elements from bag and clears capacity.
     */
-    public mutating func removeAll() {
+    mutating func removeAll() {
         _key0 = nil
         _value0 = nil
         _key1 = nil
@@ -175,7 +175,7 @@ public struct Bag<T> : CustomDebugStringConvertible {
     - parameter key: Key that identifies element to remove from bag.
     - returns: Element that bag contained, or nil in case element was already removed.
     */
-    public mutating func removeKey(_ key: BagKey) -> T? {
+    mutating func removeKey(_ key: BagKey) -> T? {
         if _key0 == key {
             _key0 = nil
             let value = _value0!
@@ -210,7 +210,7 @@ extension Bag {
     /**
     A textual representation of `self`, suitable for debugging.
     */
-    public var debugDescription : String {
+    var debugDescription : String {
         return "\(self.count) elements in Bag"
     }
 }
@@ -224,7 +224,7 @@ extension Bag {
     
     - parameter action: Enumeration closure.
     */
-    public func forEach(_ action: (T) -> Void) {
+    func forEach(_ action: (T) -> Void) {
         if _onlyFastPath {
             if let value0 = _value0 {
                 action(value0)
@@ -263,7 +263,7 @@ extension Bag where T: ObserverType {
 
      - parameter action: Enumeration closure.
      */
-    public func on(_ event: Event<T.E>) {
+    func on(_ event: Event<T.E>) {
         if _onlyFastPath {
             _value0?.on(event)
             return
@@ -298,14 +298,14 @@ extension Bag where T: ObserverType {
 Dispatches `dispose` to all disposables contained inside bag.
 */
 @available(*, deprecated, renamed: "disposeAll(in:)")
-public func disposeAllIn(_ bag: Bag<Disposable>) {
+func disposeAllIn(_ bag: Bag<Disposable>) {
     disposeAll(in: bag)
 }
 
 /**
  Dispatches `dispose` to all disposables contained inside bag.
  */
-public func disposeAll(in bag: Bag<Disposable>) {
+func disposeAll(in bag: Bag<Disposable>) {
     if bag._onlyFastPath {
         bag._value0?.dispose()
         return
