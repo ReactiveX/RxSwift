@@ -4,6 +4,6 @@ CONFIGURATIONS=(debug release)
 
 for configuration in ${CONFIGURATIONS[@]}
 do
-    swift build -c ${configuration} && .build/${configuration}/AllTests
+    swift build -c ${configuration} && .build/${configuration}/AllTestz
 done
 
