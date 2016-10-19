@@ -33,8 +33,6 @@ KVO observing, async operations and streams are all unified under [abstraction o
 * [debugging](Documentation/GettingStarted.md#debugging)
 * [the math behind Rx](Documentation/MathBehindRx.md)
 * [what are hot and cold observable sequences?](Documentation/HotAndColdObservables.md)
-* [what does the the public API look like?](Documentation/API.md)
-
 
 ###### ... install
 

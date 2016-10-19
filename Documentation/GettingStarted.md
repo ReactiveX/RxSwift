@@ -584,7 +584,7 @@ extension Reactive where Base: URLSession {
 
 ## Operators
 
-There are numerous operators implemented in RxSwift. The complete list can be found [here](API.md).
+There are numerous operators implemented in RxSwift.
 
 Marble diagrams for all operators can be found on [ReactiveX.io](http://reactivex.io/)
 
@@ -593,8 +593,6 @@ Almost all operators are demonstrated in [Playgrounds](../Rx.playground).
 To use playgrounds please open `Rx.xcworkspace`, build `RxSwift-macOS` scheme and then open playgrounds in `Rx.xcworkspace` tree view.
 
 In case you need an operator, and don't know how to find it there a [decision tree of operators](http://reactivex.io/documentation/operators.html#tree).
-
-[Supported RxSwift operators](API.md#rxswift-supported-operators) are also grouped by function they perform, so that can also help.
 
 ### Custom operators
 
