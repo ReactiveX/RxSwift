@@ -12,44 +12,12 @@ import Swift
 let arrayDictionaryMaxSize = 30
 
 /**
-Class that enables using memory allocations as a means to uniquely identify objects.
-*/
-class Identity {
-    // weird things have known to happen with Swift
-    var _forceAllocation: Int32 = 0
-}
-
-func hash(_ _x: Int) -> Int {
-    var x = _x
-    x = ((x >> 16) ^ x) &* 0x45d9f3b
-    x = ((x >> 16) ^ x) &* 0x45d9f3b
-    x = ((x >> 16) ^ x)
-    return x;
-}
-
-/**
 Unique identifier for object added to `Bag`.
+ 
+It's underlying type is UInt64. If we assume there in an idealized CPU that works at 4GHz,
+ it would take ~150 years of continuous running time for it to overflow.
 */
-public struct BagKey : Hashable {
-    let uniqueIdentity: Identity?
-    let key: Int
-
-    public var hashValue: Int {
-        if let uniqueIdentity = uniqueIdentity {
-            return hash(key) ^ (ObjectIdentifier(uniqueIdentity).hashValue)
-        }
-        else {
-            return hash(key)
-        }
-    }
-}
-
-/**
-Compares two `BagKey`s.
-*/
-public func == (lhs: BagKey, rhs: BagKey) -> Bool {
-    return lhs.key == rhs.key && lhs.uniqueIdentity === rhs.uniqueIdentity
-}
+public typealias BagKey = UInt64
 
 /**
 Data structure that represents a bag of elements typed `T`.
@@ -66,12 +34,9 @@ struct Bag<T> : CustomDebugStringConvertible {
     */
     typealias KeyType = BagKey
     
-    fileprivate typealias ScopeUniqueTokenType = Int
-    
     typealias Entry = (key: BagKey, value: T)
  
-    fileprivate var _uniqueIdentity: Identity?
-    fileprivate var _nextKey: ScopeUniqueTokenType = 0
+    fileprivate var _nextKey: BagKey = 0
 
     // data
 
@@ -103,17 +68,9 @@ struct Bag<T> : CustomDebugStringConvertible {
     - returns: Key that can be used to remove element from bag.
     */
     mutating func insert(_ element: T) -> BagKey {
+        let key = _nextKey
+
         _nextKey = _nextKey &+ 1
-
-#if DEBUG
-        _nextKey = _nextKey % 20
-#endif
-        
-        if _nextKey == 0 {
-            _uniqueIdentity = Identity()
-        }
-
-        let key = BagKey(uniqueIdentity: _uniqueIdentity, key: _nextKey)
 
         if _key0 == nil {
             _key0 = key
