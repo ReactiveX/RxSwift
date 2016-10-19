@@ -137,7 +137,7 @@ class PartialUpdatesViewController : ViewController {
             .addDisposableTo(disposeBag)
     }
 
-    func skinTableViewDataSource(_ dataSource: RxTableViewSectionedDataSource<NumberSection>) {
+    func skinTableViewDataSource(_ dataSource: TableViewSectionedDataSource<NumberSection>) {
         dataSource.configureCell = { (_, tv, ip, i) in
             let cell = tv.dequeueReusableCell(withIdentifier: "Cell")
                 ?? UITableViewCell(style:.default, reuseIdentifier: "Cell")
@@ -148,7 +148,7 @@ class PartialUpdatesViewController : ViewController {
         }
 
         dataSource.titleForHeaderInSection = { (ds, section: Int) -> String in
-            return dataSource.sectionAtIndex(section).model
+            return dataSource[section].model
         }
     }
 

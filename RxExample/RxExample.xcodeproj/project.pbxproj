@@ -62,7 +62,6 @@
 		C84780041D29DE8C0074454A /* RxCollectionViewSectionedReloadDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8477FEB1D29DE8C0074454A /* RxCollectionViewSectionedReloadDataSource.swift */; };
 		C84780051D29DE8C0074454A /* RxTableViewSectionedAnimatedDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8477FEC1D29DE8C0074454A /* RxTableViewSectionedAnimatedDataSource.swift */; };
 		C84780061D29DE8C0074454A /* RxTableViewSectionedReloadDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8477FED1D29DE8C0074454A /* RxTableViewSectionedReloadDataSource.swift */; };
-		C84780071D29DE8C0074454A /* UISectionedViewType+RxAnimatedDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8477FEE1D29DE8C0074454A /* UISectionedViewType+RxAnimatedDataSource.swift */; };
 		C849EF641C3190360048AC4A /* RxExample_iOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C849EF631C3190360048AC4A /* RxExample_iOSTests.swift */; };
 		C849EF801C3193B10048AC4A /* GitHubSignupViewController1.swift in Sources */ = {isa = PBXBuildFile; fileRef = C849EF7E1C3193B10048AC4A /* GitHubSignupViewController1.swift */; };
 		C849EF821C3193B10048AC4A /* GithubSignupViewModel1.swift in Sources */ = {isa = PBXBuildFile; fileRef = C849EF7F1C3193B10048AC4A /* GithubSignupViewModel1.swift */; };
@@ -390,7 +389,6 @@
 		C8477FEB1D29DE8C0074454A /* RxCollectionViewSectionedReloadDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxCollectionViewSectionedReloadDataSource.swift; sourceTree = "<group>"; };
 		C8477FEC1D29DE8C0074454A /* RxTableViewSectionedAnimatedDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxTableViewSectionedAnimatedDataSource.swift; sourceTree = "<group>"; };
 		C8477FED1D29DE8C0074454A /* RxTableViewSectionedReloadDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxTableViewSectionedReloadDataSource.swift; sourceTree = "<group>"; };
-		C8477FEE1D29DE8C0074454A /* UISectionedViewType+RxAnimatedDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UISectionedViewType+RxAnimatedDataSource.swift"; sourceTree = "<group>"; };
 		C849EF611C3190360048AC4A /* RxExample-iOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "RxExample-iOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C849EF631C3190360048AC4A /* RxExample_iOSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxExample_iOSTests.swift; sourceTree = "<group>"; };
 		C849EF651C3190360048AC4A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -697,7 +695,6 @@
 				C8477FEB1D29DE8C0074454A /* RxCollectionViewSectionedReloadDataSource.swift */,
 				C8477FEC1D29DE8C0074454A /* RxTableViewSectionedAnimatedDataSource.swift */,
 				C8477FED1D29DE8C0074454A /* RxTableViewSectionedReloadDataSource.swift */,
-				C8477FEE1D29DE8C0074454A /* UISectionedViewType+RxAnimatedDataSource.swift */,
 			);
 			path = "DataSources+Rx";
 			sourceTree = "<group>";
@@ -1323,7 +1320,6 @@
 				C809E97D1BE697100058D948 /* UIImage+Extensions.swift in Sources */,
 				C8A2A2CB1B404A1200F11F09 /* Randomizer.swift in Sources */,
 				C8BCD3EA1C14B02A005F1280 /* SimpleValidationViewController.swift in Sources */,
-				C84780071D29DE8C0074454A /* UISectionedViewType+RxAnimatedDataSource.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

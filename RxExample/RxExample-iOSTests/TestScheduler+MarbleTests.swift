@@ -98,8 +98,7 @@ extension TestScheduler {
     */
     func createDriver<T>(timeline: String, values: [String: T]) -> Driver<T> {
         return createObservable(timeline: timeline, values: values, errors: [:]).asDriver(onErrorRecover: { (error) -> Driver<T> in
-            fatalError("This can't error out")
-            return Driver.never()
+            genericFatal("This can't error out")
         })
     }
 

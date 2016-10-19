@@ -129,7 +129,7 @@ class TableViewWithEditingCommandsViewController: ViewController, UITableViewDel
     // MARK: Table view delegate ;)
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let title = dataSource.sectionAtIndex(section)
+        let title = dataSource[section]
 
         let label = UILabel(frame: CGRect.zero)
         // hacky I know :)
@@ -166,7 +166,7 @@ class TableViewWithEditingCommandsViewController: ViewController, UITableViewDel
         }
 
         dataSource.titleForHeaderInSection = { dataSource, sectionIndex in
-            return dataSource.sectionAtIndex(sectionIndex).model
+            return dataSource[sectionIndex].model
         }
 
         dataSource.canEditRowAtIndexPath = { (ds, ip) in

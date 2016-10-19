@@ -70,7 +70,7 @@ class SimpleTableViewExampleSectionedViewController
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let label = UILabel(frame: CGRect.zero)
-        label.text = dataSource.sectionAtIndex(section).model
+        label.text = dataSource[section].model
         return label
     }
 

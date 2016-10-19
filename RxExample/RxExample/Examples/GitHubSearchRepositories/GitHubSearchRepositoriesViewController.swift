@@ -37,7 +37,7 @@ class GitHubSearchRepositoriesViewController: ViewController, UITableViewDelegat
         }
 
         dataSource.titleForHeaderInSection = { dataSource, sectionIndex in
-            let section = dataSource.sectionAtIndex(sectionIndex)
+            let section = dataSource[sectionIndex]
             return section.items.count > 0 ? "Repositories (\(section.items.count))" : "No repositories found"
         }
 
