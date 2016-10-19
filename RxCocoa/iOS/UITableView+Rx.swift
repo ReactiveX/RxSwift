@@ -333,7 +333,7 @@ extension Reactive where Base: UITableView {
                 return Observable.empty()
             }
 
-            return Observable.just(try view.rx.model(indexPath))
+            return Observable.just(try view.rx.model(at: indexPath))
         }
         
         return ControlEvent(events: source)
@@ -356,7 +356,7 @@ extension Reactive where Base: UITableView {
                  return Observable.empty()
              }
 
-           return Observable.just(try view.rx.model(indexPath))
+            return Observable.just(try view.rx.model(at: indexPath))
         }
 
         return ControlEvent(events: source)
@@ -365,10 +365,10 @@ extension Reactive where Base: UITableView {
     /**
      Synchronous helper method for retrieving a model at indexPath through a reactive data source.
      */
-    public func model<T>(_ indexPath: IndexPath) throws -> T {
+    public func model<T>(at indexPath: IndexPath) throws -> T {
         let dataSource: SectionedViewDataSourceType = castOrFatalError(self.dataSource.forwardToDelegate(), message: "This method only works in case one of the `rx.items*` methods was used.")
         
-        let element = try dataSource.model(indexPath)
+        let element = try dataSource.model(at: indexPath)
 
         return castOrFatalError(element)
     }

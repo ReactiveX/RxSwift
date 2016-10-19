@@ -27,7 +27,7 @@ import UIKit
         super.init()
     }
 
-    func model(_ indexPath: IndexPath) throws -> Any {
+    func model(at indexPath: IndexPath) throws -> Any {
         return items![indexPath.item]
     }
 

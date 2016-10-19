@@ -150,7 +150,7 @@ public class RxTableViewSectionedDataSource<S: SectionModelType>
         }
     }
 
-    public func model(_ indexPath: IndexPath) throws -> Any {
+    public func model(at indexPath: IndexPath) throws -> Any {
         return self[indexPath]
     }
 
