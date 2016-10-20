@@ -35,7 +35,7 @@ extension Reactive where Base: UITableView {
 
          items
          .bindTo(tableView.rx.items) { (tableView, row, element) in
-             let cell = tableView.dequeueReusableCellWithIdentifier("Cell")!
+             let cell = tableView.dequeueReusableCell(withIdentifier: "Cell")!
              cell.textLabel?.text = "\(element) @ row \(row)"
              return cell
          }
@@ -130,7 +130,7 @@ extension Reactive where Base: UITableView {
             ])
 
         dataSource.configureCell = { (dataSource, tv, indexPath, element) in
-            let cell = tv.dequeueReusableCellWithIdentifier("Cell")!
+            let cell = tv.dequeueReusableCell(withIdentifier: "Cell")!
             cell.textLabel?.text = "\(element) @ row \(indexPath.row)"
             return cell
         }
@@ -150,7 +150,7 @@ extension Reactive where Base: UITableView {
             // This is called for sideeffects only, and to make sure delegate proxy is in place when
             // data source is being bound.
             // This is needed because theoretically the data source subscription itself might
-            // call `self.rx_delegate`. If that happens, it might cause weird side effects since
+            // call `self.rx.delegate`. If that happens, it might cause weird side effects since
             // setting data source will set delegate, and UITableView might get into a weird state.
             // Therefore it's better to set delegate proxy first, just to be sure.
             _ = self.delegate

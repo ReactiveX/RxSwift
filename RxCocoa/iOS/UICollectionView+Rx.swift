@@ -35,8 +35,8 @@ extension Reactive where Base: UICollectionView {
 
          items
          .bindTo(collectionView.rx.items) { (collectionView, row, element) in
-             let indexPath = IndexPath(forItem: row, inSection: 0)
-             let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as! NumberCell
+            let indexPath = IndexPath(row: row, section: 0)
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! NumberCell
              cell.value?.text = "\(element) @ \(row)"
              return cell
          }
@@ -126,7 +126,7 @@ extension Reactive where Base: UICollectionView {
          ])
 
          dataSource.configureCell = { (dataSource, cv, indexPath, element) in
-             let cell = cv.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as! NumberCell
+             let cell = cv.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! NumberCell
              cell.value?.text = "\(element) @ row \(indexPath.row)"
              return cell
          }
@@ -146,7 +146,7 @@ extension Reactive where Base: UICollectionView {
             // This is called for sideeffects only, and to make sure delegate proxy is in place when
             // data source is being bound.
             // This is needed because theoretically the data source subscription itself might
-            // call `self.rx_delegate`. If that happens, it might cause weird side effects since
+            // call `self.rx.delegate`. If that happens, it might cause weird side effects since
             // setting data source will set delegate, and UICollectionView might get into a weird state.
             // Therefore it's better to set delegate proxy first, just to be sure.
             _ = self.delegate
