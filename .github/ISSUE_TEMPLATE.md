@@ -9,6 +9,14 @@
 
   _description here_
 
+**Expected outcome**:
+
+  _what you expect to happen goes here_
+
+**What actually happens**:
+
+  _what actually happens goes here_
+
 **Self contained code example that reproduces the issue**:
 
 ```swift
@@ -23,19 +31,30 @@
 // * that it will reproduce the issue upon running
 ```
 
+**RxSwift/RxCocoa/RxBlocking/RxTest version/commit**
+
+  _version or commit here_
+
+**Platform/Environment**
+
+  - [ ] iOS
+  - [ ] macOS
+  - [ ] tvOS
+  - [ ] watchOS
+  - [ ] playgrounds
+
+**How easy is to reproduce? (chances of successful reproduce after running the self contained code)**
+
+  - [ ] easy, 100% repro
+  - [ ] sometimes, 10%-100%
+  - [ ] hard, 2% - 10%
+  - [ ] extremely hard, %0 - 2%
+
 **Xcode version**:
 
 ```
   Xcode version goes here
 ```
-
-**Expected outcome**:
-
-  _what you expect to happen goes here_
-
-**What actually happens**:
-
-  _what actually happens goes here_
 
 :warning: Fields below are optional for general issues or in case those questions aren't related to your issue, but filling them out will increase the chances of getting your issue resolved. :warning:
 
