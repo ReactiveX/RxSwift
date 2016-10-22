@@ -18,6 +18,7 @@
     let AtomicDecrement = OSAtomicDecrement32Barrier
 
     public extension Thread {
+
         static func setThreadLocalStorageValue<T: AnyObject>(_ value: T?, forKey key: String
             ) {
             let currentThread = Thread.current

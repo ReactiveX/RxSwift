@@ -134,6 +134,7 @@ custom_categories:
   - Queue
 - name: RxSwift/Platform
   children:
+  - DispatchQueue+Extensions
   - Platform.Darwin
   - Platform.Linux
 - name: RxSwift/Schedulers

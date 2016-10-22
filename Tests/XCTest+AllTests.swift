@@ -74,10 +74,10 @@ func XCTAssertArraysEqual<T>(_ lhs: [T], _ rhs: [T], _ comparison: (T, T) -> Boo
 }
 
 
-func doOnBackgroundThread(_ action: @escaping () -> ()) {
+func doOnBackgroundQueue(_ action: @escaping () -> ()) {
     DispatchQueue.global(qos: .default).async(execute: action)
 }
 
-func doOnMainThread(_ action: @escaping () -> ()) {
+func doOnMainQueue(_ action: @escaping () -> ()) {
     DispatchQueue.main.async(execute: action)
 }

@@ -12,30 +12,30 @@ import RxSwift
 import XCTest
 
 class ControlEventTests : RxTest {
-    func testObservingIsAlwaysHappeningOnMainThread() {
+    func testObservingIsAlwaysHappeningOnMainQueue() {
         let hotObservable = MainThreadPrimitiveHotObservable<Int>()
 
-        var observedOnMainThread = false
+        var observedOnMainQueue = false
 
-        let expectSubscribeOffMainThread = expectation(description: "Did subscribe off main thread")
+        let expectSubscribeOffMainQueue = expectation(description: "Did subscribe off main thread")
 
         let controlProperty = ControlEvent(events: Observable.deferred { () -> Observable<Int> in
-            XCTAssertTrue(isMainThread())
-            observedOnMainThread = true
+            XCTAssertTrue(DispatchQueue.isMain)
+            observedOnMainQueue = true
             return hotObservable.asObservable()
         })
 
-        doOnBackgroundThread {
+        doOnBackgroundQueue {
             let d = controlProperty.asObservable().subscribe { n in
 
             }
             let d2 = controlProperty.subscribe { n in
 
             }
-            doOnMainThread {
+            doOnMainQueue {
                 d.dispose()
                 d2.dispose()
-                expectSubscribeOffMainThread.fulfill()
+                expectSubscribeOffMainQueue.fulfill()
             }
         }
 
@@ -43,6 +43,6 @@ class ControlEventTests : RxTest {
             XCTAssertNil(error)
         }
         
-        XCTAssertTrue(observedOnMainThread)
+        XCTAssertTrue(observedOnMainQueue)
     }
 }

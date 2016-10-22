@@ -49,7 +49,7 @@ let excludePaths = [
     "Platform/DataStructures/InfiniteSequence.swift",
     "Platform/DataStructures/PriorityQueue.swift",
     "Platform/DataStructures/Queue.swift",
-    "Platform/Platform.Darwin.swift",
+    "Platform/DispatchQueue+Extensions.swift",
     "RxExample/Services/Reachability.swift",
     "RxDataSources"
 ]

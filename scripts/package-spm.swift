@@ -274,7 +274,6 @@ try packageRelativePath([
         "Tests/RxBlockingTests",
         "RxSwift/RxMutableBox.swift",
         "Tests/RxTest.swift",
-        "Tests/Foundation+Extensions.swift",
         "Tests/Recorded+Timeless.swift",
         "Tests/TestErrors.swift",
         "Tests/XCTest+AllTests.swift",

@@ -16,32 +16,32 @@ class ControlPropertyTests : RxTest {
 }
 
 extension ControlPropertyTests {
-    func testObservingIsAlwaysHappeningOnMainThread() {
+    func testObservingIsAlwaysHappeningOnMainQueue() {
         let hotObservable = MainThreadPrimitiveHotObservable<Int>()
 
-        var observedOnMainThread = false
+        var observedOnMainQueue = false
 
-        let expectSubscribeOffMainThread = expectation(description: "Did subscribe off main thread")
+        let expectSubscribeOffMainQueue = expectation(description: "Did subscribe off main thread")
 
         let controlProperty = ControlProperty(values: Observable.deferred { () -> Observable<Int> in
-            XCTAssertTrue(isMainThread())
-            observedOnMainThread = true
+            XCTAssertTrue(DispatchQueue.isMain)
+            observedOnMainQueue = true
             return hotObservable.asObservable()
         }, valueSink: AnyObserver { n in
             
         })
 
-        doOnBackgroundThread {
+        doOnBackgroundQueue {
             let d = controlProperty.asObservable().subscribe { n in
 
             }
             let d2 = controlProperty.subscribe { n in
 
             }
-            doOnMainThread {
+            doOnMainQueue {
                 d.dispose()
                 d2.dispose()
-                expectSubscribeOffMainThread.fulfill()
+                expectSubscribeOffMainQueue.fulfill()
             }
         }
 
@@ -49,7 +49,7 @@ extension ControlPropertyTests {
             XCTAssertNil(error)
         }
 
-        XCTAssertTrue(observedOnMainThread)
+        XCTAssertTrue(observedOnMainQueue)
     }
 }
 
