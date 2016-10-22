@@ -59,25 +59,29 @@ final public class PublishSubject<Element>
     - parameter event: Event to send to the observers.
     */
     public func on(_ event: Event<Element>) {
-        _lock.lock(); defer { _lock.unlock() }
-        _synchronized_on(event)
+        _synchronized_on(event).on(event)
     }
 
-    func _synchronized_on(_ event: Event<E>) {
+    func _synchronized_on(_ event: Event<E>) -> Bag<AnyObserver<Element>> {
+        _lock.lock(); defer { _lock.unlock() }
+
         switch event {
         case .next(_):
             if _isDisposed || _stopped {
-                return
+                return Bag()
             }
             
-            _observers.on(event)
+            return _observers
         case .completed, .error:
             if _stoppedEvent == nil {
                 _stoppedEvent = event
                 _stopped = true
-                _observers.on(event)
+                let observers = _observers
                 _observers.removeAll()
+                return observers
             }
+
+            return Bag()
         }
     }
     

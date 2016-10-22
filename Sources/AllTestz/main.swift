@@ -41,6 +41,18 @@ final class PublishSubjectTest_ : PublishSubjectTest, RxTestCase {
     ] }
 }
 
+final class AnomaliesTest_ : AnomaliesTest, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (AnomaliesTest_) -> () -> ())] { return [
+    ("test936", AnomaliesTest.test936),
+    ] }
+}
+
 final class VirtualSchedulerTest_ : VirtualSchedulerTest, RxTestCase {
     #if os(macOS)
     required override init() {
@@ -478,7 +490,6 @@ final class SubjectConcurrencyTest_ : SubjectConcurrencyTest, RxTestCase {
     #endif
 
     static var allTests: [(String, (SubjectConcurrencyTest_) -> () -> ())] { return [
-    ("testSubjectIsSynchronized", SubjectConcurrencyTest.testSubjectIsSynchronized),
     ("testSubjectIsReentrantForNextAndComplete", SubjectConcurrencyTest.testSubjectIsReentrantForNextAndComplete),
     ("testSubjectIsReentrantForNextAndError", SubjectConcurrencyTest.testSubjectIsReentrantForNextAndError),
     ] }
@@ -1078,6 +1089,7 @@ func XCTMain(_ tests: [() -> ()]) {
     XCTMain([
         testCase(EventTests_.allTests),
         testCase(PublishSubjectTest_.allTests),
+        testCase(AnomaliesTest_.allTests),
         testCase(VirtualSchedulerTest_.allTests),
         testCase(ObservableBlockingTest_.allTests),
         testCase(ObservableTimeTest_.allTests),

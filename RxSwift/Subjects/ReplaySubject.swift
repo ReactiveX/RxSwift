@@ -105,29 +105,30 @@ class ReplayBufferBase<Element>
     }
     
     override func on(_ event: Event<Element>) {
-        _lock.lock(); defer { _lock.unlock() }
-        _synchronized_on(event)
+        _synchronized_on(event).on(event)
     }
 
-    func _synchronized_on(_ event: Event<E>) {
+    func _synchronized_on(_ event: Event<E>) -> Bag<AnyObserver<Element>> {
+        _lock.lock(); defer { _lock.unlock() }
         if _isDisposed {
-            return
+            return Bag()
         }
         
         if _stoppedEvent != nil {
-            return
+            return Bag()
         }
         
         switch event {
         case .next(let value):
             addValueToBuffer(value)
             trim()
-            _observers.on(event)
+            return _observers
         case .error, .completed:
             _stoppedEvent = event
             trim()
-            _observers.on(event)
+            let observers = _observers
             _observers.removeAll()
+            return observers
         }
     }
     
