@@ -1,6 +1,11 @@
 import PackageDescription
 
 let buildTests = false
+#if os(Linux)
+let supportsTests = true
+#else
+let supportsTests = false
+#endif
 
 #if os(Linux)
 let rxCocoaDependencies: [Target.Dependency] = [
@@ -27,12 +32,6 @@ let library = [
             name: "RxCocoa",
             dependencies: rxCocoaDependencies
         ),
-        Target(
-            name: "RxTest",
-            dependencies: [
-                .Target(name: "RxSwift")
-            ]
-        )
     ]
  
 #if os(Linux) 
@@ -48,19 +47,25 @@ let library = [
     ]
 #endif
 
-let tests: [Target] = buildTests ? [
-Target(
-    name: "AllTestz",
-    dependencies: [
-	.Target(name: "RxSwift"),
-	.Target(name: "RxBlocking"),
-	.Target(name: "RxTest"),
-	.Target(name: "RxCocoa")
-    ]
-)
-] : []
+let tests: [Target] = (buildTests ? [
+        Target(
+            name: "AllTestz",
+            dependencies: [
+	        .Target(name: "RxSwift"),
+	        .Target(name: "RxBlocking"),
+	        .Target(name: "RxTest"),
+	        .Target(name: "RxCocoa")
+            ]
+        )
+    ] : []) + (supportsTests ?  [Target(
+            name: "RxTest",
+            dependencies: [
+                .Target(name: "RxSwift")
+            ]
+        )
+    ] : [])
 
-let testExcludes: [String] = !buildTests ? [ "Sources/AllTestz" ] : []
+let testExcludes: [String] = (!buildTests ? ["Sources/AllTestz"] : []) + (!supportsTests ? ["Sources/RxTest"] : [])
 
 #if os(Linux)
 
@@ -77,12 +82,5 @@ let testExcludes: [String] = !buildTests ? [ "Sources/AllTestz" ] : []
 let package = Package(
     name: "RxSwift",
     targets: library + cocoaRuntime + tests,
-    exclude: excludes,
-    dependencies: [
-#if !os(Linux) // XCTest is distributed with Swift releases on Linux
-    .Package(
-      url: "https://github.com/username/swift-corelibs-xctest.git",
-      majorVersion: 0
-    ),
-#endif
-  ])
+    exclude: excludes
+)
