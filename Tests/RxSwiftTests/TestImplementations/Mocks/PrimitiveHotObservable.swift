@@ -7,8 +7,9 @@
 //
 
 import Foundation
-@testable import RxSwift
+import RxSwift
 import RxTest
+import Dispatch
 
 let SubscribedToHotObservable = Subscription(0)
 let UnsunscribedFromHotObservable = Subscription(0, 0)
@@ -19,16 +20,14 @@ class PrimitiveHotObservable<ElementType> : ObservableType {
     typealias Events = Recorded<E>
     typealias Observer = AnyObserver<E>
     
-    var subscriptions: [Subscription]
-    var observers: Bag<AnyObserver<E>>
+    var subscriptions = [Subscription]()
+    let observers = PublishSubject<ElementType>()
 
     let lock = NSRecursiveLock()
     
     init() {
-        self.subscriptions = []
-        self.observers = Bag()
     }
-    
+
     func on(_ event: Event<E>) {
         lock.lock()
         defer { lock.unlock() }
@@ -39,17 +38,20 @@ class PrimitiveHotObservable<ElementType> : ObservableType {
         lock.lock()
         defer { lock.unlock() }
 
-        let key = observers.insert(AnyObserver(observer))
+        let removeObserver = observers.subscribe(observer)
         subscriptions.append(SubscribedToHotObservable)
-        
+
         let i = self.subscriptions.count - 1
+
+        var count = 0
         
         return Disposables.create {
             self.lock.lock()
             defer { self.lock.unlock() }
-            
-            let removed = self.observers.removeKey(key)
-            assert(removed != nil)
+
+            removeObserver.dispose()
+            count += 1
+            assert(count == 1)
             
             self.subscriptions[i] = UnsunscribedFromHotObservable
         }

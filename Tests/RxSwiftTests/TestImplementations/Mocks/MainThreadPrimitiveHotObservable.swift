@@ -9,6 +9,7 @@
 import Foundation
 import RxSwift
 import XCTest
+import Dispatch
 
 class MainThreadPrimitiveHotObservable<ElementType: Equatable> : PrimitiveHotObservable<ElementType> {
     override func subscribe<O : ObserverType>(_ observer: O) -> Disposable where O.E == E {

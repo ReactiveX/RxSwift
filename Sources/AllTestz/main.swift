@@ -1044,23 +1044,6 @@ final class CurrentThreadSchedulerTest_ : CurrentThreadSchedulerTest, RxTestCase
     ("testCurrentThreadScheduler_disposing2", CurrentThreadSchedulerTest.testCurrentThreadScheduler_disposing2),
     ] }
 }
-
-final class BagTest_ : BagTest, RxTestCase {
-    #if os(macOS)
-    required override init() {
-        super.init()
-    }
-    #endif
-
-    static var allTests: [(String, (BagTest_) -> () -> ())] { return [
-    ("testBag_deletionsFromStart", BagTest.testBag_deletionsFromStart),
-    ("testBag_deletionsFromEnd", BagTest.testBag_deletionsFromEnd),
-    ("testBag_immutableForeach", BagTest.testBag_immutableForeach),
-    ("testBag_removeAll", BagTest.testBag_removeAll),
-    ("testBag_complexityTestFromFront", BagTest.testBag_complexityTestFromFront),
-    ("testBag_complexityTestFromEnd", BagTest.testBag_complexityTestFromEnd),
-    ] }
-}
 #if os(macOS) || os(iOS) || os(tvOS) || os(watchOS)
 
 func testCase<T: RxTestCase>(_ tests: [(String, (T) -> () -> ())]) -> () -> () {
@@ -1117,6 +1100,5 @@ func XCTMain(_ tests: [() -> ()]) {
         testCase(ObservableDebugTest_.allTests),
         testCase(AnonymousObservableTests_.allTests),
         testCase(CurrentThreadSchedulerTest_.allTests),
-        testCase(BagTest_.allTests),
     ])
 //}

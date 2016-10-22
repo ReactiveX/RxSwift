@@ -11,6 +11,7 @@ import RxSwift
 import RxCocoa
 import RxTest
 import XCTest
+import Dispatch
 
 /**
  Makes sure github anomalies and edge cases don't surface up again.

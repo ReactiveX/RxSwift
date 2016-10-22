@@ -44,7 +44,7 @@ install:
 script: 
   - if [[ `uname` == "Linux" ]] ; then
         . ~/.swiftenv/init;
-        swiftenv install 3.0;
+        swiftenv install 3.0 || true;
     fi
   - if [[ "${DANGER}" -eq 1 ]] ; then
        bundle install --path vendor/bundle;

@@ -420,7 +420,8 @@ extension DriverTest {
 
         XCTAssertEqual(results, [
             1, 2, -2,
-            10, 11, -3
+            10, 11, -3,
+            -1
             ])
     }
 }

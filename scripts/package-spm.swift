@@ -48,6 +48,7 @@ let excludedTestClasses: [String] = [
     "SubjectConcurrencyTest",
     "VirtualSchedulerTest",
     "HistoricalSchedulerTest"*/
+    "BagTest"
 ]
 
 let throwingWordsInTests: [String] = [
@@ -277,11 +278,14 @@ try packageRelativePath([
         "Tests/Recorded+Timeless.swift",
         "Tests/TestErrors.swift",
         "Tests/XCTest+AllTests.swift",
+        "Platform",
     ],
     targetDirName: "AllTestz",
     excluded: [
         "Tests/VirtualSchedulerTest.swift",
-        "Tests/HistoricalSchedulerTest.swift"
+        "Tests/HistoricalSchedulerTest.swift",
+        // @testable import doesn't work well in Linux :/
+        "BagTest.swift"
     ])
 
 try buildAllTestsTarget("Sources/AllTestz")

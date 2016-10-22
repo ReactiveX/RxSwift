@@ -6,6 +6,8 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
+// testable import doesn't work well in Linux
+#if !os(Linux)
 import Foundation
 import XCTest
 @testable import RxSwift
@@ -219,3 +221,4 @@ extension BagTest {
         }
     }
 }
+#endif
