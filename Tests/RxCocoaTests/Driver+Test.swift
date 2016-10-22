@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Dispatch
 import RxSwift
 import RxCocoa
 import XCTest
@@ -768,7 +769,7 @@ extension DriverTest {
 
     func testAsDriver_throttle() {
         let hotObservable = BackgroundThreadPrimitiveHotObservable<Int>()
-        let driver = hotObservable.asDriver(onErrorJustReturn: -1).throttle(1.0)
+        let driver = hotObservable.asDriver(onErrorJustReturn: -1).throttle(0.5)
 
         let results = subscribeTwiceOnBackgroundSchedulerAndOnlyOneSubscription(driver) {
             XCTAssertTrue(hotObservable.subscriptions == [SubscribedToHotObservable])

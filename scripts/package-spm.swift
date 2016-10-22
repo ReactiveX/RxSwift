@@ -279,6 +279,9 @@ try packageRelativePath([
         "Tests/TestErrors.swift",
         "Tests/XCTest+AllTests.swift",
         "Platform",
+        "Tests/RxCocoaTests/Driver+Test.swift",
+        "Tests/RxCocoaTests/Driver+Extensions.swift",
+        "Tests/RxCocoaTests/NSNotificationCenterTests.swift",
     ],
     targetDirName: "AllTestz",
     excluded: [

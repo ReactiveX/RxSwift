@@ -190,12 +190,12 @@ fi
 
 if [ "${VALIDATE_UNIX}" -eq 1 ]; then
     if [[ "${UNIX_NAME}" == "${DARWIN}" ]]; then
-        # compile and run playgrounds
-    	. scripts/validate-playgrounds.sh
-
         if [[ "${RX_RUN_LINUX_TESTS}" -eq 1 ]]; then
             ./scripts/test-linux.sh
         fi
+
+        # compile and run playgrounds
+    	. scripts/validate-playgrounds.sh
 
     	# make sure macOS builds
     	for scheme in "RxExample-macOS"
@@ -266,6 +266,7 @@ else
 fi
 
 if [ "${TEST_SPM}" -eq 1 ]; then
+    rm -rf build || true
     swift build -c Release
     swift build -c Debug
 else

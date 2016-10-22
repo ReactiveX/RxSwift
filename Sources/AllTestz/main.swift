@@ -573,6 +573,19 @@ final class ObservableSubscriptionTests_ : ObservableSubscriptionTests, RxTestCa
     ] }
 }
 
+final class NSNotificationCenterTests_ : NSNotificationCenterTests, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (NSNotificationCenterTests_) -> () -> ())] { return [
+    ("testNotificationCenterWithoutObject", NSNotificationCenterTests.testNotificationCenterWithoutObject),
+    ("testNotificationCenterWithObject", NSNotificationCenterTests.testNotificationCenterWithObject),
+    ] }
+}
+
 final class DisposableTest_ : DisposableTest, RxTestCase {
     #if os(macOS)
     required override init() {
@@ -1030,6 +1043,60 @@ final class AnonymousObservableTests_ : AnonymousObservableTests, RxTestCase {
     ] }
 }
 
+final class DriverTest_ : DriverTest, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (DriverTest_) -> () -> ())] { return [
+    ("testDriverSharing_WhenErroring", DriverTest.testDriverSharing_WhenErroring),
+    ("testDriverSharing_WhenCompleted", DriverTest.testDriverSharing_WhenCompleted),
+    ("testVariableAsDriver", DriverTest.testVariableAsDriver),
+    ("testAsDriver_onErrorJustReturn", DriverTest.testAsDriver_onErrorJustReturn),
+    ("testAsDriver_onErrorDriveWith", DriverTest.testAsDriver_onErrorDriveWith),
+    ("testAsDriver_onErrorRecover", DriverTest.testAsDriver_onErrorRecover),
+    ("testAsDriver_deferred", DriverTest.testAsDriver_deferred),
+    ("testAsDriver_map", DriverTest.testAsDriver_map),
+    ("testAsDriver_filter", DriverTest.testAsDriver_filter),
+    ("testAsDriver_switchLatest", DriverTest.testAsDriver_switchLatest),
+    ("testAsDriver_flatMapLatest", DriverTest.testAsDriver_flatMapLatest),
+    ("testAsDriver_flatMapFirst", DriverTest.testAsDriver_flatMapFirst),
+    ("testAsDriver_doOn", DriverTest.testAsDriver_doOn),
+    ("testAsDriver_doOnNext", DriverTest.testAsDriver_doOnNext),
+    ("testAsDriver_doOnCompleted", DriverTest.testAsDriver_doOnCompleted),
+    ("testAsDriver_distinctUntilChanged1", DriverTest.testAsDriver_distinctUntilChanged1),
+    ("testAsDriver_distinctUntilChanged2", DriverTest.testAsDriver_distinctUntilChanged2),
+    ("testAsDriver_distinctUntilChanged3", DriverTest.testAsDriver_distinctUntilChanged3),
+    ("testAsDriver_distinctUntilChanged4", DriverTest.testAsDriver_distinctUntilChanged4),
+    ("testAsDriver_flatMap", DriverTest.testAsDriver_flatMap),
+    ("testAsDriver_merge", DriverTest.testAsDriver_merge),
+    ("testAsDriver_merge2", DriverTest.testAsDriver_merge2),
+    ("testAsDriver_debounce", DriverTest.testAsDriver_debounce),
+    ("testAsDriver_throttle", DriverTest.testAsDriver_throttle),
+    ("testAsDriver_scan", DriverTest.testAsDriver_scan),
+    ("testAsDriver_concat_sequenceType", DriverTest.testAsDriver_concat_sequenceType),
+    ("testAsDriver_concat", DriverTest.testAsDriver_concat),
+    ("testAsDriver_combineLatest_array", DriverTest.testAsDriver_combineLatest_array),
+    ("testAsDriver_combineLatest", DriverTest.testAsDriver_combineLatest),
+    ("testAsDriver_zip_array", DriverTest.testAsDriver_zip_array),
+    ("testAsDriver_zip", DriverTest.testAsDriver_zip),
+    ("testAsDriver_withLatestFrom", DriverTest.testAsDriver_withLatestFrom),
+    ("testAsDriver_withLatestFromDefaultOverload", DriverTest.testAsDriver_withLatestFromDefaultOverload),
+    ("testAsDriver_skip", DriverTest.testAsDriver_skip),
+    ("testAsDriver_startWith", DriverTest.testAsDriver_startWith),
+    ("testAsDriver_interval", DriverTest.testAsDriver_interval),
+    ("testAsDriver_timer", DriverTest.testAsDriver_timer),
+    ("testDriveObserver", DriverTest.testDriveObserver),
+    ("testDriveOptionalObserver", DriverTest.testDriveOptionalObserver),
+    ("testDriveNoAmbiguity", DriverTest.testDriveNoAmbiguity),
+    ("testdriveVariable", DriverTest.testdriveVariable),
+    ("testDriveOptionalVariable", DriverTest.testDriveOptionalVariable),
+    ("testDriveVariableNoAmbiguity", DriverTest.testDriveVariableNoAmbiguity),
+    ] }
+}
+
 final class CurrentThreadSchedulerTest_ : CurrentThreadSchedulerTest, RxTestCase {
     #if os(macOS)
     required override init() {
@@ -1086,6 +1153,7 @@ func XCTMain(_ tests: [() -> ()]) {
         testCase(ReactiveTests_.allTests),
         testCase(ReplaySubjectTest_.allTests),
         testCase(ObservableSubscriptionTests_.allTests),
+        testCase(NSNotificationCenterTests_.allTests),
         testCase(DisposableTest_.allTests),
         testCase(HistoricalSchedulerTest_.allTests),
         testCase(MainSchedulerTest_.allTests),
@@ -1099,6 +1167,7 @@ func XCTMain(_ tests: [() -> ()]) {
         testCase(ObservableConcurrentSchedulerConcurrencyTest_.allTests),
         testCase(ObservableDebugTest_.allTests),
         testCase(AnonymousObservableTests_.allTests),
+        testCase(DriverTest_.allTests),
         testCase(CurrentThreadSchedulerTest_.allTests),
     ])
 //}
