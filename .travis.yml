@@ -17,7 +17,7 @@ env:
   - TEST=SPM
 matrix:
     exclude:
-      - os: linux
+      - os: osx
         env: DANGER=1
         
       - os: linux
