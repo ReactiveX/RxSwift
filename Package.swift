@@ -77,5 +77,12 @@ let testExcludes: [String] = !buildTests ? [ "Sources/AllTestz" ] : []
 let package = Package(
     name: "RxSwift",
     targets: library + cocoaRuntime + tests,
-    exclude: excludes
-)
+    exclude: excludes,
+    dependencies: [
+#if !os(Linux) // XCTest is distributed with Swift releases on Linux
+    .Package(
+      url: "https://github.com/username/swift-corelibs-xctest.git",
+      majorVersion: 0
+    ),
+#endif
+  ])
