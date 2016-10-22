@@ -13,7 +13,7 @@
 #import <libkern/OSAtomic.h>
 
 #import "include/_RX.h"
-#import "include/_RXObjcRuntime.h"
+#import "include/_RXObjCRuntime.h"
 
 #if !DISABLE_SWIZZLING
 
