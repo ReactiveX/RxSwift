@@ -165,11 +165,11 @@ extension GitHubSearchRepositoriesAPI {
 
     private func loadSearchURL(_ searchURL: URL) -> Observable<SearchRepositoryResponse> {
         return URLSession.shared
-            .rx.response(URLRequest(url: searchURL))
+            .rx.response(request: URLRequest(url: searchURL))
             .retry(3)
             .trackActivity(self.activityIndicator)
             .observeOn(Dependencies.sharedDependencies.backgroundWorkScheduler)
-            .map { data, httpResponse -> SearchRepositoryResponse in
+            .map { httpResponse, data -> SearchRepositoryResponse in
                 if httpResponse.statusCode == 403 {
                     return .limitExceeded
                 }

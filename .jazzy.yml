@@ -208,7 +208,7 @@ custom_categories:
   - NSObject+Rx+KVORepresentable
   - NSObject+Rx+RawRepresentable
   - NSObject+Rx
-  - NSURLSession+Rx
+  - URLSession+Rx
 - name: RxCocoa/iOS/DataSources
   children:
   - RxCollectionViewReactiveArrayDataSource

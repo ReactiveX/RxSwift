@@ -725,10 +725,10 @@
 		C89AB21F1DAAC3350065FBE6 /* NSObject+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89AB1C41DAAC3350065FBE6 /* NSObject+Rx.swift */; };
 		C89AB2201DAAC3350065FBE6 /* NSObject+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89AB1C41DAAC3350065FBE6 /* NSObject+Rx.swift */; };
 		C89AB2211DAAC3350065FBE6 /* NSObject+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89AB1C41DAAC3350065FBE6 /* NSObject+Rx.swift */; };
-		C89AB2221DAAC3350065FBE6 /* NSURLSession+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89AB1C51DAAC3350065FBE6 /* NSURLSession+Rx.swift */; };
-		C89AB2231DAAC3350065FBE6 /* NSURLSession+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89AB1C51DAAC3350065FBE6 /* NSURLSession+Rx.swift */; };
-		C89AB2241DAAC3350065FBE6 /* NSURLSession+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89AB1C51DAAC3350065FBE6 /* NSURLSession+Rx.swift */; };
-		C89AB2251DAAC3350065FBE6 /* NSURLSession+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89AB1C51DAAC3350065FBE6 /* NSURLSession+Rx.swift */; };
+		C89AB2221DAAC3350065FBE6 /* URLSession+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89AB1C51DAAC3350065FBE6 /* URLSession+Rx.swift */; };
+		C89AB2231DAAC3350065FBE6 /* URLSession+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89AB1C51DAAC3350065FBE6 /* URLSession+Rx.swift */; };
+		C89AB2241DAAC3350065FBE6 /* URLSession+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89AB1C51DAAC3350065FBE6 /* URLSession+Rx.swift */; };
+		C89AB2251DAAC3350065FBE6 /* URLSession+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89AB1C51DAAC3350065FBE6 /* URLSession+Rx.swift */; };
 		C89AB2271DAAC33F0065FBE6 /* RxCocoa.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89AB2261DAAC33F0065FBE6 /* RxCocoa.swift */; };
 		C89AB2281DAAC33F0065FBE6 /* RxCocoa.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89AB2261DAAC33F0065FBE6 /* RxCocoa.swift */; };
 		C89AB2291DAAC33F0065FBE6 /* RxCocoa.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89AB2261DAAC33F0065FBE6 /* RxCocoa.swift */; };
@@ -1731,7 +1731,7 @@
 		C89AB1C21DAAC3350065FBE6 /* NSObject+Rx+KVORepresentable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSObject+Rx+KVORepresentable.swift"; sourceTree = "<group>"; };
 		C89AB1C31DAAC3350065FBE6 /* NSObject+Rx+RawRepresentable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSObject+Rx+RawRepresentable.swift"; sourceTree = "<group>"; };
 		C89AB1C41DAAC3350065FBE6 /* NSObject+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSObject+Rx.swift"; sourceTree = "<group>"; };
-		C89AB1C51DAAC3350065FBE6 /* NSURLSession+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSURLSession+Rx.swift"; sourceTree = "<group>"; };
+		C89AB1C51DAAC3350065FBE6 /* URLSession+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "URLSession+Rx.swift"; sourceTree = "<group>"; };
 		C89AB2261DAAC33F0065FBE6 /* RxCocoa.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxCocoa.swift; sourceTree = "<group>"; };
 		C89AB22D1DAAC3A60065FBE6 /* _RX.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _RX.m; sourceTree = "<group>"; };
 		C89AB22F1DAAC3A60065FBE6 /* _RXDelegateProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _RXDelegateProxy.m; sourceTree = "<group>"; };
@@ -2595,7 +2595,7 @@
 				C89AB1C21DAAC3350065FBE6 /* NSObject+Rx+KVORepresentable.swift */,
 				C89AB1C31DAAC3350065FBE6 /* NSObject+Rx+RawRepresentable.swift */,
 				C89AB1C41DAAC3350065FBE6 /* NSObject+Rx.swift */,
-				C89AB1C51DAAC3350065FBE6 /* NSURLSession+Rx.swift */,
+				C89AB1C51DAAC3350065FBE6 /* URLSession+Rx.swift */,
 			);
 			path = Foundation;
 			sourceTree = "<group>";
@@ -3509,7 +3509,7 @@
 				C88254341B8A752B00B02D69 /* UITableView+Rx.swift in Sources */,
 				C89AB1A61DAAC25A0065FBE6 /* RxCocoaObjCRuntimeError+Extensions.swift in Sources */,
 				C88254161B8A752B00B02D69 /* RxCollectionViewReactiveArrayDataSource.swift in Sources */,
-				C89AB2221DAAC3350065FBE6 /* NSURLSession+Rx.swift in Sources */,
+				C89AB2221DAAC3350065FBE6 /* URLSession+Rx.swift in Sources */,
 				846436E31C9AF65B0035B40D /* RxSearchControllerDelegateProxy.swift in Sources */,
 				C882541F1B8A752B00B02D69 /* RxCollectionViewDelegateProxy.swift in Sources */,
 				46307D4E1CDE77D800E47A1C /* UIAlertAction+Rx.swift in Sources */,
@@ -3613,7 +3613,7 @@
 				C8093EE21B8A732E0088E94D /* DelegateProxy.swift in Sources */,
 				C89AB1F31DAAC3350065FBE6 /* SharedSequence+Operators.swift in Sources */,
 				C86781A61DB823B500B2029A /* NSSlider+Rx.swift in Sources */,
-				C89AB2231DAAC3350065FBE6 /* NSURLSession+Rx.swift in Sources */,
+				C89AB2231DAAC3350065FBE6 /* URLSession+Rx.swift in Sources */,
 				C86781A11DB823B500B2029A /* NSImageView+Rx.swift in Sources */,
 				C89AB2281DAAC33F0065FBE6 /* RxCocoa.swift in Sources */,
 				C8D132451C42D15E00B59FFF /* SectionedViewDataSourceType.swift in Sources */,
@@ -4479,7 +4479,7 @@
 				C89AB2211DAAC3350065FBE6 /* NSObject+Rx.swift in Sources */,
 				C8F0C0171BBBFBB9001B112F /* RxCollectionViewReactiveArrayDataSource.swift in Sources */,
 				844BC8B61CE4FD7500F5C7CB /* UIPickerView+Rx.swift in Sources */,
-				C89AB2251DAAC3350065FBE6 /* NSURLSession+Rx.swift in Sources */,
+				C89AB2251DAAC3350065FBE6 /* URLSession+Rx.swift in Sources */,
 				C89AB22A1DAAC33F0065FBE6 /* RxCocoa.swift in Sources */,
 				C89AB2011DAAC3350065FBE6 /* UIBindingObserver.swift in Sources */,
 				54D213931CE08DDB0028D5B4 /* UINavigationItem+Rx.swift in Sources */,
@@ -4610,7 +4610,7 @@
 				842A5A2D1C357F93003568D5 /* NSTextStorage+Rx.swift in Sources */,
 				D203C5071BB9C53E00D02D00 /* UIDatePicker+Rx.swift in Sources */,
 				C89AB1E01DAAC3350065FBE6 /* ObservableConvertibleType+Driver.swift in Sources */,
-				C89AB2241DAAC3350065FBE6 /* NSURLSession+Rx.swift in Sources */,
+				C89AB2241DAAC3350065FBE6 /* URLSession+Rx.swift in Sources */,
 				D203C50D1BB9C53E00D02D00 /* UISegmentedControl+Rx.swift in Sources */,
 				C89AB1CC1DAAC3350065FBE6 /* ControlProperty.swift in Sources */,
 				D2138C861BB9BEBE00339B5C /* Observable+Bind.swift in Sources */,

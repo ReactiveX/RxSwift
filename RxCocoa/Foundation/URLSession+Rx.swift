@@ -1,5 +1,5 @@
 //
-//  NSURLSession+Rx.swift
+//  URLSession+Rx.swift
 //  RxCocoa
 //
 //  Created by Krunoslav Zaher on 3/23/15.
@@ -53,11 +53,11 @@ public extension RxCocoaURLError {
     }
 }
 
-func escapeTerminalString(_ value: String) -> String {
+fileprivate func escapeTerminalString(_ value: String) -> String {
     return value.replacingOccurrences(of: "\"", with: "\\\"", options:[], range: nil)
 }
 
-func convertURLRequestToCurlCommand(_ request: URLRequest) -> String {
+fileprivate func convertURLRequestToCurlCommand(_ request: URLRequest) -> String {
     let method = request.httpMethod ?? "GET"
     var returnValue = "curl -X \(method) "
 
@@ -83,7 +83,7 @@ func convertURLRequestToCurlCommand(_ request: URLRequest) -> String {
     return returnValue
 }
 
-func convertResponseToString(_ data: Data!, _ response: URLResponse!, _ error: NSError!, _ interval: TimeInterval) -> String {
+fileprivate func convertResponseToString(_ data: Data!, _ response: URLResponse!, _ error: NSError!, _ interval: TimeInterval) -> String {
     let ms = Int(interval * 1000)
 
     if let response = response as? HTTPURLResponse {
@@ -119,7 +119,7 @@ extension Reactive where Base: URLSession {
     - returns: Observable sequence of URL responses.
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func response(_ request: URLRequest) -> Observable<(Data, HTTPURLResponse)> {
+    public func response(request: URLRequest) -> Observable<(HTTPURLResponse, Data)> {
         return Observable.create { observer in
 
             // smart compiler should be able to optimize this out
@@ -150,7 +150,7 @@ extension Reactive where Base: URLSession {
                     return
                 }
 
-                observer.on(.next(data, httpResponse))
+                observer.on(.next(httpResponse, data))
                 observer.on(.completed)
             }
 
@@ -178,8 +178,8 @@ extension Reactive where Base: URLSession {
     - returns: Observable sequence of response data.
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func data(_ request: URLRequest) -> Observable<Data> {
-        return response(request).map { (data, response) -> Data in
+    public func data(request: URLRequest) -> Observable<Data> {
+        return response(request: request).map { (response, data) -> Data in
             if 200 ..< 300 ~= response.statusCode {
                 return data
             }
@@ -207,8 +207,8 @@ extension Reactive where Base: URLSession {
     - returns: Observable sequence of response JSON.
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func JSON(_ request: URLRequest) -> Observable<Any> {
-        return data(request).map { (data) -> Any in
+    public func json(request: URLRequest) -> Observable<Any> {
+        return data(request: request).map { (data) -> Any in
             do {
                 return try JSONSerialization.jsonObject(with: data, options: [])
             } catch let error {
@@ -219,7 +219,7 @@ extension Reactive where Base: URLSession {
 
     /**
     Observable sequence of response JSON for GET request with `URL`.
-    
+     
     Performing of request starts after observer is subscribed and not after invoking this method.
     
     **URL requests will be performed per subscribed observer.**
@@ -231,12 +231,12 @@ extension Reactive where Base: URLSession {
     
     If there is an error during JSON deserialization observable sequence will fail with that error.
     
-    - parameter URL: URL of `NSURLRequest` request.
+    - parameter url: URL of `NSURLRequest` request.
     - returns: Observable sequence of response JSON.
     */
     // @warn_unused_result(message:"http://git.io/rxs.uo")
-    public func JSON(_ URL: Foundation.URL) -> Observable<Any> {
-        return JSON(URLRequest(url: URL))
+    public func json(url: Foundation.URL) -> Observable<Any> {
+        return json(request: URLRequest(url: url))
     }
 }
 

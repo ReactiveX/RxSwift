@@ -35,7 +35,7 @@ class DefaultWikipediaAPI: WikipediaAPI {
 
     private func JSON(_ url: URL) -> Observable<Any> {
         return $.URLSession
-            .rx.JSON(url)
+            .rx.json(url: url)
             .trackActivity(loadingWikipediaData)
     }
 
