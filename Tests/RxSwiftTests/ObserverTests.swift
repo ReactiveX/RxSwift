@@ -95,7 +95,7 @@ extension ObserverTests {
     func testMapElement() {
         let observer = PrimitiveMockObserver<Int>()
 
-        observer.map { (x: Int) -> Int in
+        observer.mapObserver { (x: Int) -> Int in
             return x / 2
         }.on(.next(2))
 
@@ -105,7 +105,7 @@ extension ObserverTests {
     func testMapElementCompleted() {
         let observer = PrimitiveMockObserver<Int>()
 
-        observer.map { (x: Int) -> Int in
+        observer.mapObserver { (x: Int) -> Int in
             return x / 2
         }.on(.completed)
 
@@ -115,7 +115,7 @@ extension ObserverTests {
     func testMapElementError() {
         let observer = PrimitiveMockObserver<Int>()
 
-        observer.map { (x: Int) -> Int in
+        observer.mapObserver { (x: Int) -> Int in
             return x / 2
         }.on(.error(testError))
 
@@ -125,7 +125,7 @@ extension ObserverTests {
     func testMapElementThrow() {
         let observer = PrimitiveMockObserver<Int>()
 
-        observer.map { (x: Int) -> Int in
+        observer.mapObserver { (x: Int) -> Int in
             throw testError
         }.on(.next(2))
 
