@@ -10,7 +10,7 @@ import Foundation
 import Dispatch
 
 /**
-Abstracts work that needs to be performed on `MainThread`. In case `schedule` methods are called from main thread, it will perform action immediately without scheduling.
+Abstracts work that needs to be performed on `DispatchQueue.main`. In case `schedule` methods are called from `DispatchQueue.main`, it will perform action immediately without scheduling.
 
 This scheduler is usually used to perform UI work.
 
@@ -25,28 +25,20 @@ public final class MainScheduler : SerialDispatchQueueScheduler {
 
     var numberEnqueued: AtomicInt = 0
 
-    /**
-     Initializes new instance of `MainScheduler`.
-    */
+    /// Initializes new instance of `MainScheduler`.
     public init() {
         _mainQueue = DispatchQueue.main
         super.init(serialQueue: _mainQueue)
     }
 
-    /**
-    Singleton instance of `MainScheduler`
-    */
+    /// Singleton instance of `MainScheduler`
     public static let instance = MainScheduler()
 
-    /**
-    Singleton instance of `MainScheduler` that always schedules work asynchronously
-    and doesn't perform optimizations for calls scheduled from main thread.
-    */
+    /// Singleton instance of `MainScheduler` that always schedules work asynchronously
+    /// and doesn't perform optimizations for calls scheduled from main queue.
     public static let asyncInstance = SerialDispatchQueueScheduler(serialQueue: DispatchQueue.main)
 
-    /**
-    In case this method is called on a background thread it will throw an exception.
-    */
+    /// In case this method is called on a background thread it will throw an exception.
     public class func ensureExecutingOnScheduler(errorMessage: String? = nil) {
         if !DispatchQueue.isMain {
             rxFatalError(errorMessage ?? "Executing on backgound thread. Please use `MainScheduler.instance.schedule` to schedule work on main thread.")

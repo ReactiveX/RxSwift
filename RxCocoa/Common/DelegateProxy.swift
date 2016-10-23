@@ -19,26 +19,20 @@ import Foundation
 var delegateAssociatedTag: UInt8 = 0
 var dataSourceAssociatedTag: UInt8 = 0
 
-/**
-Base class for `DelegateProxyType` protocol.
-
-This implementation is not thread safe and can be used only from one thread (Main thread).
-*/
+/// Base class for `DelegateProxyType` protocol.
+///
+/// This implementation is not thread safe and can be used only from one thread (Main thread).
 open class DelegateProxy : _RXDelegateProxy {
-    
+
     private var sentMessageForSelector = [Selector: PublishSubject<[Any]>]()
     private var methodInvokedForSelector = [Selector: PublishSubject<[Any]>]()
 
-    /**
-    Parent object associated with delegate proxy.
-    */
+    /// Parent object associated with delegate proxy.
     weak private(set) var parentObject: AnyObject?
     
-    /**
-    Initializes new instance.
-
-    - parameter parentObject: Optional parent object that owns `DelegateProxy` as associated object.
-    */
+    /// Initializes new instance.
+    ///
+    /// - parameter parentObject: Optional parent object that owns `DelegateProxy` as associated object.
     public required init(parentObject: AnyObject) {
         self.parentObject = parentObject
         
@@ -191,64 +185,52 @@ open class DelegateProxy : _RXDelegateProxy {
         methodInvokedForSelector[selector]?.on(.next(arguments))
     }
 
-    /**
-    Returns tag used to identify associated object.
-    
-    - returns: Associated object tag.
-    */
+    /// Returns tag used to identify associated object.
+    ///
+    /// - returns: Associated object tag.
     open class func delegateAssociatedObjectTag() -> UnsafeRawPointer {
         return _pointer(&delegateAssociatedTag)
     }
     
-    /**
-    Initializes new instance of delegate proxy.
-    
-    - returns: Initialized instance of `self`.
-    */
+    /// Initializes new instance of delegate proxy.
+    ///
+    /// - returns: Initialized instance of `self`.
     open class func createProxyForObject(_ object: AnyObject) -> AnyObject {
         return self.init(parentObject: object)
     }
     
-    /**
-    Returns assigned proxy for object.
-    
-    - parameter object: Object that can have assigned delegate proxy.
-    - returns: Assigned delegate proxy or `nil` if no delegate proxy is assigned.
-    */
+    /// Returns assigned proxy for object.
+    ///
+    /// - parameter object: Object that can have assigned delegate proxy.
+    /// - returns: Assigned delegate proxy or `nil` if no delegate proxy is assigned.
     open class func assignedProxyFor(_ object: AnyObject) -> AnyObject? {
         let maybeDelegate = objc_getAssociatedObject(object, self.delegateAssociatedObjectTag())
         return castOptionalOrFatalError(maybeDelegate.map { $0 as AnyObject })
     }
     
-    /**
-    Assigns proxy to object.
-    
-    - parameter object: Object that can have assigned delegate proxy.
-    - parameter proxy: Delegate proxy object to assign to `object`.
-    */
+    /// Assigns proxy to object.
+    ///
+    /// - parameter object: Object that can have assigned delegate proxy.
+    /// - parameter proxy: Delegate proxy object to assign to `object`.
     open class func assignProxy(_ proxy: AnyObject, toObject object: AnyObject) {
         precondition(proxy.isKind(of: self.classForCoder()))
        
         objc_setAssociatedObject(object, self.delegateAssociatedObjectTag(), proxy, .OBJC_ASSOCIATION_RETAIN)
     }
     
-    /**
-    Sets reference of normal delegate that receives all forwarded messages
-    through `self`.
-    
-    - parameter forwardToDelegate: Reference of delegate that receives all messages through `self`.
-    - parameter retainDelegate: Should `self` retain `forwardToDelegate`.
-    */
+    /// Sets reference of normal delegate that receives all forwarded messages
+    /// through `self`.
+    ///
+    /// - parameter forwardToDelegate: Reference of delegate that receives all messages through `self`.
+    /// - parameter retainDelegate: Should `self` retain `forwardToDelegate`.
     open func setForwardToDelegate(_ delegate: AnyObject?, retainDelegate: Bool) {
         self._setForward(toDelegate: delegate, retainDelegate: retainDelegate)
     }
    
-    /**
-    Returns reference of normal delegate that receives all forwarded messages
-    through `self`.
-    
-    - returns: Value of reference if set or nil.
-    */
+    /// Returns reference of normal delegate that receives all forwarded messages
+    /// through `self`.
+    ///
+    /// - returns: Value of reference if set or nil.
     open func forwardToDelegate() -> AnyObject? {
         return self._forwardToDelegate
     }

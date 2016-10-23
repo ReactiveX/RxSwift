@@ -12,11 +12,9 @@ import Foundation
 // MARK: forEach
 
 extension Bag where T: ObserverType {
-    /**
-     Dispatches `event` to app observers contained inside bag.
-
-     - parameter action: Enumeration closure.
-     */
+    /// Dispatches `event` to app observers contained inside bag.
+    ///
+    /// - parameter action: Enumeration closure.
     func on(_ event: Event<T.E>) {
         if _onlyFastPath {
             _value0?.on(event)
@@ -48,9 +46,7 @@ extension Bag where T: ObserverType {
     }
 }
 
-/**
- Dispatches `dispose` to all disposables contained inside bag.
- */
+/// Dispatches `dispose` to all disposables contained inside bag.
 func disposeAll(in bag: Bag<Disposable>) {
     if bag._onlyFastPath {
         bag._value0?.dispose()

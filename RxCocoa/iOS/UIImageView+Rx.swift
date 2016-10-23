@@ -16,18 +16,14 @@ import UIKit
 
 extension Reactive where Base: UIImageView {
     
-    /**
-    Bindable sink for `image` property.
-    */
+    /// Bindable sink for `image` property.
     public var image: UIBindingObserver<Base, UIImage?> {
         return image(transitionType: nil)
     }
     
-    /**
-     Bindable sink for `image` property.
+    /// Bindable sink for `image` property.
 
-     - parameter transitionType: Optional transition type while setting the image (kCATransitionFade, kCATransitionMoveIn, ...)
-     */
+    /// - parameter transitionType: Optional transition type while setting the image (kCATransitionFade, kCATransitionMoveIn, ...)
     public func image(transitionType: String? = nil) -> UIBindingObserver<Base, UIImage?> {
         return UIBindingObserver(UIElement: base) { imageView, image in
             if let transitionType = transitionType {

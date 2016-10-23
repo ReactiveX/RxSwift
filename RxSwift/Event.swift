@@ -8,12 +8,10 @@
 
 import Foundation
 
-/**
-Represents a sequence event.
-
-Sequence grammar:
-next\* (error | completed)
-*/
+/// Represents a sequence event.
+///
+/// Sequence grammar: 
+/// **next\* (error | completed)**
 public enum Event<Element> {
     /// Next element is produced.
     case next(Element)
@@ -40,7 +38,7 @@ extension Event : CustomDebugStringConvertible {
 }
 
 extension Event {
-    /// - returns: Is `Completed` or `Error` event.
+    /// Is `Completed` or `Error` event.
     public var isStopEvent: Bool {
         switch self {
         case .next: return false
@@ -48,7 +46,7 @@ extension Event {
         }
     }
 
-    /// - returns: If `Next` event, returns element value.
+    /// If `Next` event, returns element value.
     public var element: Element? {
         if case .next(let value) = self {
             return value
@@ -56,7 +54,7 @@ extension Event {
         return nil
     }
 
-    /// - returns: If `Error` event, returns error.
+    /// If `Error` event, returns error.
     public var error: Swift.Error? {
         if case .error(let error) = self {
             return error

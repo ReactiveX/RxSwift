@@ -12,12 +12,9 @@ import Foundation
 #endif
 
 extension Variable {
-    /**
-     Converts `Variable` to `SharedSequence` unit.
-
-     - returns: Observable sequence.
-     */
-    // @warn_unused_result(message:"http://git.io/rxs.uo")
+    /// Converts `Variable` to `SharedSequence` unit.
+    ///
+    /// - returns: Observable sequence.
     public func asSharedSequence<SharingStrategy: SharingStrategyProtocol>(strategy: SharingStrategy.Type = SharingStrategy.self) -> SharedSequence<SharingStrategy, E> {
         let source = self.asObservable()
             .observeOn(SharingStrategy.scheduler)

@@ -8,9 +8,7 @@
 
 import Foundation
 
-/**
-Sequence that repeats `repeatedValue` infinite number of times.
-*/
+/// Sequence that repeats `repeatedValue` infinite number of times.
 struct InfiniteSequence<E> : Sequence {
     typealias Element = E
     typealias Iterator = AnyIterator<E>

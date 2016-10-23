@@ -29,9 +29,7 @@ Time and space complexity of insertion an deletion is O(n).
 It is suitable for storing small number of elements.
 */
 struct Bag<T> : CustomDebugStringConvertible {
-    /**
-    Type of identifier for inserted elements.
-    */
+    /// Type of identifier for inserted elements.
     typealias KeyType = BagKey
     
     typealias Entry = (key: BagKey, value: T)
@@ -55,9 +53,7 @@ struct Bag<T> : CustomDebugStringConvertible {
 
     var _onlyFastPath = true
 
-    /**
-    Creates new empty `Bag`.
-    */
+    /// Creates new empty `Bag`.
     init() {
     }
     
@@ -105,17 +101,13 @@ struct Bag<T> : CustomDebugStringConvertible {
         return key
     }
     
-    /**
-    - returns: Number of elements in bag.
-    */
+    /// - returns: Number of elements in bag.
     var count: Int {
         let dictionaryCount: Int = _dictionary?.count ?? 0
         return _pairs.count + (_value0 != nil ? 1 : 0) + (_value1 != nil ? 1 : 0) + dictionaryCount
     }
     
-    /**
-    Removes all elements from bag and clears capacity.
-    */
+    /// Removes all elements from bag and clears capacity.
     mutating func removeAll() {
         _key0 = nil
         _value0 = nil
@@ -164,20 +156,16 @@ struct Bag<T> : CustomDebugStringConvertible {
 }
 
 extension Bag {
-    /**
-    A textual representation of `self`, suitable for debugging.
-    */
+    /// A textual representation of `self`, suitable for debugging.
     var debugDescription : String {
         return "\(self.count) elements in Bag"
     }
 }
 
 extension Bag {
-    /**
-     Enumerates elements inside the bag.
-
-     - parameter action: Enumeration closure.
-     */
+    /// Enumerates elements inside the bag.
+    ///
+    /// - parameter action: Enumeration closure.
     func forEach(_ action: (T) -> Void) {
         if _onlyFastPath {
             if let value0 = _value0 {

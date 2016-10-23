@@ -16,11 +16,9 @@ import UIKit
 
 extension UIScrollView {
     
-    /**
-    Factory method that enables subclasses to implement their own `delegate`.
-    
-    - returns: Instance of delegate proxy that wraps `delegate`.
-    */
+    /// Factory method that enables subclasses to implement their own `delegate`.
+    ///
+    /// - returns: Instance of delegate proxy that wraps `delegate`.
     public func createRxDelegateProxy() -> RxScrollViewDelegateProxy {
         return RxScrollViewDelegateProxy(parentObject: self)
     }
@@ -29,18 +27,14 @@ extension UIScrollView {
 
 extension Reactive where Base: UIScrollView {
 
-    /**
-    Reactive wrapper for `delegate`.
-    
-    For more information take a look at `DelegateProxyType` protocol documentation.
-    */
+    /// Reactive wrapper for `delegate`.
+    ///
+    /// For more information take a look at `DelegateProxyType` protocol documentation.
     public var delegate: DelegateProxy {
         return RxScrollViewDelegateProxy.proxyForObject(base)
     }
     
-    /**
-    Reactive wrapper for `contentOffset`.
-    */
+    /// Reactive wrapper for `contentOffset`.
     public var contentOffset: ControlProperty<CGPoint> {
         let proxy = RxScrollViewDelegateProxy.proxyForObject(base)
 
@@ -51,24 +45,20 @@ extension Reactive where Base: UIScrollView {
         return ControlProperty(values: proxy.contentOffsetSubject, valueSink: bindingObserver)
     }
 
-    /**
-    Bindable sink for `scrollEnabled` property.
-    */
+    /// Bindable sink for `scrollEnabled` property.
     public var isScrollEnabled: UIBindingObserver<Base, Bool> {
         return UIBindingObserver(UIElement: self.base) { scrollView, scrollEnabled in
             scrollView.isScrollEnabled = scrollEnabled
         }
     }
 
-    /**
-    Installs delegate as forwarding delegate on `delegate`.
-    Delegate won't be retained.
-    
-    It enables using normal delegate mechanism with reactive delegate mechanism.
-    
-    - parameter delegate: Delegate object.
-    - returns: Disposable object that can be used to unbind the delegate.
-    */
+    /// Installs delegate as forwarding delegate on `delegate`.
+    /// Delegate won't be retained.
+    ///
+    /// It enables using normal delegate mechanism with reactive delegate mechanism.
+    ///
+    /// - parameter delegate: Delegate object.
+    /// - returns: Disposable object that can be used to unbind the delegate.
     public func setDelegate(_ delegate: UIScrollViewDelegate)
         -> Disposable {
         return RxScrollViewDelegateProxy.installForwardDelegate(delegate, retainDelegate: false, onProxyForObject: self.base)

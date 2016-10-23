@@ -9,9 +9,7 @@
 import Foundation
 
 extension String {
-    /**
-     This is needed because on Linux Swift doesn't have `rangeOfString(..., options: .BackwardsSearch)`
-    */
+    /// This is needed because on Linux Swift doesn't have `rangeOfString(..., options: .BackwardsSearch)`
     func lastIndexOf(_ character: Character) -> Index? {
         var index = endIndex
         while index > startIndex {

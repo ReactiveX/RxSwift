@@ -8,15 +8,11 @@
 
 import Foundation
 
-/**
-Simple logging settings for RxCocoa library.
-*/
+/// Simple logging settings for RxCocoa library.
 public struct Logging {
     public typealias LogURLRequest = (URLRequest) -> Bool
     
-    /**
-    Log URL requests to standard output in curl format.
-    */
+    /// Log URL requests to standard output in curl format.
     public static var URLRequests: LogURLRequest =  { _ in
     #if DEBUG
         return true

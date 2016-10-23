@@ -11,14 +11,10 @@ import Foundation
 import RxSwift
 #endif
 
-/**
-Protocol that enables extension of `ControlProperty`.
-*/
+/// Protocol that enables extension of `ControlProperty`.
 public protocol ControlPropertyType : ObservableType, ObserverType {
 
-    /**
-    - returns: `ControlProperty` interface
-    */
+    /// - returns: `ControlProperty` interface
     func asControlProperty() -> ControlProperty<E>
 }
 
@@ -50,53 +46,41 @@ public struct ControlProperty<PropertyType> : ControlPropertyType {
     let _values: Observable<PropertyType>
     let _valueSink: AnyObserver<PropertyType>
 
-    /**
-     Initializes control property with a observable sequence that represents property values and observer that enables
-     binding values to property.
-
-     - parameter values: Observable sequence that represents property values.
-     - parameter valueSink: Observer that enables binding values to control property.
-     - returns: Control property created with a observable sequence of values and an observer that enables binding values
-     to property.
-    */
+    /// Initializes control property with a observable sequence that represents property values and observer that enables
+    /// binding values to property.
+    ///
+    /// - parameter values: Observable sequence that represents property values.
+    /// - parameter valueSink: Observer that enables binding values to control property.
+    /// - returns: Control property created with a observable sequence of values and an observer that enables binding values
+    /// to property.
     public init<V: ObservableType, S: ObserverType>(values: V, valueSink: S) where E == V.E, E == S.E {
         _values = values.subscribeOn(ConcurrentMainScheduler.instance)
         _valueSink = valueSink.asObserver()
     }
 
-    /**
-    Subscribes an observer to control property values.
-
-    - parameter observer: Observer to subscribe to property values.
-    - returns: Disposable object that can be used to unsubscribe the observer from receiving control property values.
-    */
+    /// Subscribes an observer to control property values.
+    ///
+    /// - parameter observer: Observer to subscribe to property values.
+    /// - returns: Disposable object that can be used to unsubscribe the observer from receiving control property values.
     public func subscribe<O : ObserverType>(_ observer: O) -> Disposable where O.E == E {
         return _values.subscribe(observer)
     }
 
-    /**
-    - returns: `Observable` interface.
-    */
-    // @warn_unused_result(message:"http://git.io/rxs.uo")
+    /// - returns: `Observable` interface.
     public func asObservable() -> Observable<E> {
         return _values
     }
 
-    /**
-    - returns: `ControlProperty` interface.
-    */
-    // @warn_unused_result(message:"http://git.io/rxs.uo")
+    /// - returns: `ControlProperty` interface.
     public func asControlProperty() -> ControlProperty<E> {
         return self
     }
 
-    /**
-    Binds event to user interface.
-
-    - In case next element is received, it is being set to control value.
-    - In case error is received, DEBUG buids raise fatal error, RELEASE builds log event to standard output.
-    - In case sequence completes, nothing happens.
-    */
+    /// Binds event to user interface.
+    ///
+    /// - In case next element is received, it is being set to control value.
+    /// - In case error is received, DEBUG buids raise fatal error, RELEASE builds log event to standard output.
+    /// - In case sequence completes, nothing happens.
     public func on(_ event: Event<E>) {
         switch event {
         case .error(let error):
@@ -110,9 +94,7 @@ public struct ControlProperty<PropertyType> : ControlPropertyType {
 }
 
 extension ControlPropertyType where E == String? {
-    /**
-     Transforms control property of type `String?` into control property of type `String`.
-    */
+    /// Transforms control property of type `String?` into control property of type `String`.
     public var orEmpty: ControlProperty<String> {
         let original: ControlProperty<String?> = self.asControlProperty()
 

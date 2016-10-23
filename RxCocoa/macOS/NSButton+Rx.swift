@@ -16,16 +16,12 @@ import Cocoa
 
 extension Reactive where Base: NSButton {
     
-    /**
-    Reactive wrapper for control event.
-    */
+    /// Reactive wrapper for control event.
     public var tap: ControlEvent<Void> {
         return controlEvent
     }
 
-    /**
-    Reactive wrapper for `state` property`.
-    */
+    /// Reactive wrapper for `state` property`.
     public var state: ControlProperty<Int> {
         return NSButton.rx.value(
             base,

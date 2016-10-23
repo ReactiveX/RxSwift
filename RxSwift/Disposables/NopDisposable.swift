@@ -8,22 +8,18 @@
 
 import Foundation
 
-/**
-Represents a disposable that does nothing on disposal.
-
-Nop = No Operation
-*/
+/// Represents a disposable that does nothing on disposal.
+///
+/// Nop = No Operation
 fileprivate struct NopDisposable : Disposable {
  
     fileprivate static let noOp: Disposable = NopDisposable()
     
-    init() {
+    fileprivate init() {
         
     }
     
-    /**
-    Does nothing.
-    */
+    /// Does nothing.
     public func dispose() {
     }
 }

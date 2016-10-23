@@ -8,13 +8,11 @@
 
 import RxSwift
 
-/**
-A representation of cold observable sequence.
-
-Recorded events are replayed after subscription once per subscriber.
-
-Event times represent relative offset to subscription time.
-*/
+/// A representation of cold observable sequence.
+///
+/// Recorded events are replayed after subscription once per subscriber.
+///
+/// Event times represent relative offset to subscription time.
 class ColdObservable<Element>
     : TestableObservable<Element> {
 
@@ -22,9 +20,7 @@ class ColdObservable<Element>
         super.init(testScheduler: testScheduler, recordedEvents: recordedEvents)
     }
 
-    /**
-    Subscribes `observer` to receive events for this sequence.
-    */
+    /// Subscribes `observer` to receive events for this sequence.
     override func subscribe<O : ObserverType>(_ observer: O) -> Disposable where O.E == Element {
         subscriptions.append(Subscription(testScheduler.clock))
         

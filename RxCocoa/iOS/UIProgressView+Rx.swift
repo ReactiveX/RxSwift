@@ -16,9 +16,7 @@ import UIKit
 
 extension Reactive where Base: UIProgressView {
 
-    /**
-    Bindable sink for `progress` property
-    */
+    /// Bindable sink for `progress` property
     public var progress: UIBindingObserver<Base, Float> {
         return UIBindingObserver(UIElement: self.base) { progressView, progress in
             progressView.progress = progress

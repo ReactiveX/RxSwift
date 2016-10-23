@@ -8,8 +8,6 @@
 
 import Foundation
 
-/**
-Virtual time type.
-*/
+/// Virtual time type.
 public typealias TestTime = Int
 

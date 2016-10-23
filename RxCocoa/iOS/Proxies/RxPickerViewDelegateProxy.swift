@@ -19,17 +19,13 @@ public class RxPickerViewDelegateProxy
     , DelegateProxyType
     , UIPickerViewDelegate {
     
-    /**
-     For more information take a look at `DelegateProxyType`.
-     */
+    /// For more information take a look at `DelegateProxyType`.
     public class func setCurrentDelegate(_ delegate: AnyObject?, toObject object: AnyObject) {
         let pickerView: UIPickerView = castOrFatalError(object)
         pickerView.delegate = castOptionalOrFatalError(delegate)
     }
     
-    /**
-     For more information take a look at `DelegateProxyType`.
-     */
+    /// For more information take a look at `DelegateProxyType`.
     public class func currentDelegateFor(_ object: AnyObject) -> AnyObject? {
         let pickerView: UIPickerView = castOrFatalError(object)
         return pickerView.delegate

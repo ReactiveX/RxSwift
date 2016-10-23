@@ -23,42 +23,31 @@
  */
 
 public struct Reactive<Base> {
-    /**
-    Base object to extend.
-    */
+    /// Base object to extend.
     public let base: Base
 
-    /**
-     Creates extensions with base object.
-     
-     - parameter base: Base object.
-    */
+    /// Creates extensions with base object.
+    ///
+    /// - parameter base: Base object.
     public init(_ base: Base) {
         self.base = base
     }
 }
 
-/**
- A type that has reactive extensions.
- */
+/// A type that has reactive extensions.
 public protocol ReactiveCompatible {
+    /// Extended type
     associatedtype CompatibleType
 
-    /**
-     Reactive extensions.
-    */
+    /// Reactive extensions.
     static var rx: Reactive<CompatibleType>.Type { get set }
 
-    /**
-     Reactive extensions.
-    */
+    /// Reactive extensions.
     var rx: Reactive<CompatibleType> { get set }
 }
 
 public extension ReactiveCompatible {
-    /**
-     Reactive extensions.
-    */
+    /// Reactive extensions.
     public static var rx: Reactive<Self>.Type {
         get {
             return Reactive<Self>.self
@@ -68,9 +57,7 @@ public extension ReactiveCompatible {
         }
     }
 
-    /**
-     Reactive extensions.
-    */
+    /// Reactive extensions.
     public var rx: Reactive<Self> {
         get {
             return Reactive(self)
@@ -82,7 +69,6 @@ public extension ReactiveCompatible {
 }
 
 import Foundation
-/**
- Extend NSObject with `rx` proxy.
-*/
+
+/// Extend NSObject with `rx` proxy.
 extension NSObject: ReactiveCompatible { }

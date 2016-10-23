@@ -53,9 +53,7 @@ class GestureTarget<Recognizer: UIGestureRecognizer>: RxTarget {
 
 extension Reactive where Base: UIGestureRecognizer {
     
-    /**
-    Reactive wrapper for gesture recognizer events.
-    */
+    /// Reactive wrapper for gesture recognizer events.
     public var event: ControlEvent<Base> {
         let source: Observable<Base> = Observable.create { [weak control = self.base] observer in
             MainScheduler.ensureExecutingOnScheduler()

@@ -19,7 +19,6 @@ extension Reactive where Base: NotificationCenter {
     - parameter object: Optional object used to filter notifications.
     - returns: Observable sequence of posted notifications.
     */
-    // @warn_unused_result(message:"http://git.io/rxs.uo")
     public func notification(_ name: Notification.Name, object: AnyObject? = nil) -> Observable<Notification> {
         return Observable.create { [weak object] observer in
             let nsObserver = self.base.addObserver(forName: name, object: object, queue: nil) { notification in

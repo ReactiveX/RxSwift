@@ -20,17 +20,13 @@ public class RxTextStorageDelegateProxy
     , NSTextStorageDelegate {
     
     
-    /**
-     For more information take a look at `DelegateProxyType`.
-     */
+    /// For more information take a look at `DelegateProxyType`.
     public class func setCurrentDelegate(_ delegate: AnyObject?, toObject object: AnyObject) {
         let textStorage: NSTextStorage = castOrFatalError(object)
         textStorage.delegate = castOptionalOrFatalError(delegate)
     }
     
-    /**
-     For more information take a look at `DelegateProxyType`.
-     */
+    /// For more information take a look at `DelegateProxyType`.
     public class func currentDelegateFor(_ object: AnyObject) -> AnyObject? {
         let textStorage: NSTextStorage = castOrFatalError(object)
         return textStorage.delegate

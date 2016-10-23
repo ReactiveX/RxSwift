@@ -30,9 +30,7 @@ public class SerialDispatchQueueScheduler : SchedulerType {
     public typealias TimeInterval = Foundation.TimeInterval
     public typealias Time = Date
     
-    /**
-    - returns: Current time.
-    */
+    /// - returns: Current time.
     public var now : Date {
         return Date()
     }

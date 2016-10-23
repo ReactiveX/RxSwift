@@ -16,9 +16,7 @@ import UIKit
     
 extension Reactive where Base: UIPageControl {
     
-    /**
-    Bindable sink for `currentPage` property.
-    */
+    /// Bindable sink for `currentPage` property.
     public var currentPage: UIBindingObserver<Base, Int> {
         return UIBindingObserver(UIElement: self.base) { controller, page in
             controller.currentPage = page

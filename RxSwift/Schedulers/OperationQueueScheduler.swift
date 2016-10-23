@@ -8,19 +8,15 @@
 
 import Foundation
 
-/**
-Abstracts the work that needs to be performed on a specific `NSOperationQueue`.
-
-This scheduler is suitable for cases when there is some bigger chunk of work that needs to be performed in background and you want to fine tune concurrent processing using `maxConcurrentOperationCount`.
-*/
+/// Abstracts the work that needs to be performed on a specific `NSOperationQueue`.
+///
+/// This scheduler is suitable for cases when there is some bigger chunk of work that needs to be performed in background and you want to fine tune concurrent processing using `maxConcurrentOperationCount`.
 public class OperationQueueScheduler: ImmediateSchedulerType {
     public let operationQueue: OperationQueue
     
-    /**
-    Constructs new instance of `OperationQueueScheduler` that performs work on `operationQueue`.
-    
-    - parameter operationQueue: Operation queue targeted to perform work on.
-    */
+    /// Constructs new instance of `OperationQueueScheduler` that performs work on `operationQueue`.
+    ///
+    /// - parameter operationQueue: Operation queue targeted to perform work on.
     public init(operationQueue: OperationQueue) {
         self.operationQueue = operationQueue
     }

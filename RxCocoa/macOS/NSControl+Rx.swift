@@ -14,14 +14,12 @@ import Cocoa
 import RxSwift
 #endif
 
-var rx_value_key: UInt8 = 0
-var rx_control_events_key: UInt8 = 0
+fileprivate var rx_value_key: UInt8 = 0
+fileprivate var rx_control_events_key: UInt8 = 0
 
 extension Reactive where Base: NSControl {
 
-    /**
-    Reactive wrapper for control event.
-    */
+    /// Reactive wrapper for control event.
     public var controlEvent: ControlEvent<Void> {
         MainScheduler.ensureExecutingOnScheduler()
 
@@ -45,10 +43,8 @@ extension Reactive where Base: NSControl {
         return ControlEvent(events: source)
     }
 
-    /**
-     You might be wondering why the ugly `as!` casts etc, well, for some reason if
-     Swift compiler knows C is UIControl type and optimizations are turned on, it will crash.
-    */
+    /// You might be wondering why the ugly `as!` casts etc, well, for some reason if
+    /// Swift compiler knows C is UIControl type and optimizations are turned on, it will crash.
     static func value<C: AnyObject, T: Equatable>(_ control: C, getter: @escaping (C) -> T, setter: @escaping (C, T) -> Void) -> ControlProperty<T> {
         MainScheduler.ensureExecutingOnScheduler()
 
@@ -78,9 +74,7 @@ extension Reactive where Base: NSControl {
         return ControlProperty(values: source, valueSink: bindingObserver)
     }
 
-    /**
-     Bindable sink for `enabled` property.
-    */
+    /// Bindable sink for `enabled` property.
     public var isEnabled: UIBindingObserver<Base, Bool> {
         return UIBindingObserver(UIElement: self.base) { (owner, value) in
             owner.isEnabled = value

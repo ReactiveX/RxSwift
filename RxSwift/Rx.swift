@@ -10,26 +10,24 @@ import Foundation
 
 #if TRACE_RESOURCES
     fileprivate var resourceCount: AtomicInt = 0
+
+    /// Resource utilization information
     public struct Resources {
         /// Counts internal Rx resource allocations (Observables, Observers, Disposables, etc.). This provides a simple way to detect leaks during development.
         public static var total: Int32 {
             return resourceCount.valueSnapshot()
         }
 
-        /**
-         Increments `Resources.total` resource count.
-         
-         - returns: New resource count
-        */
+        /// Increments `Resources.total` resource count.
+        ///
+        /// - returns: New resource count
         public static func incrementTotal() -> Int32 {
             return AtomicIncrement(&resourceCount)
         }
 
-        /**
-         Decrements `Resources.total` resource count
-
-         - returns: New resource count
-        */
+        /// Decrements `Resources.total` resource count
+        ///
+        /// - returns: New resource count
         public static func decrementTotal() -> Int32 {
             return AtomicDecrement(&resourceCount)
         }

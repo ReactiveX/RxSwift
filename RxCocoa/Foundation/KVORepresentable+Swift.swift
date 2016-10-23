@@ -11,9 +11,7 @@ import Foundation
 extension Int : KVORepresentable {
     public typealias KVOType = NSNumber
 
-    /**
-     Constructs `Self` using KVO value.
-     */
+    /// Constructs `Self` using KVO value.
     public init?(KVOValue: KVOType) {
         self.init(KVOValue.int32Value)
     }
@@ -22,9 +20,7 @@ extension Int : KVORepresentable {
 extension Int32 : KVORepresentable {
     public typealias KVOType = NSNumber
 
-    /**
-     Constructs `Self` using KVO value.
-     */
+    /// Constructs `Self` using KVO value.
     public init?(KVOValue: KVOType) {
         self.init(KVOValue.int32Value)
     }
@@ -33,9 +29,7 @@ extension Int32 : KVORepresentable {
 extension Int64 : KVORepresentable {
     public typealias KVOType = NSNumber
 
-    /**
-     Constructs `Self` using KVO value.
-     */
+    /// Constructs `Self` using KVO value.
     public init?(KVOValue: KVOType) {
         self.init(KVOValue.int64Value)
     }
@@ -44,9 +38,7 @@ extension Int64 : KVORepresentable {
 extension UInt : KVORepresentable {
     public typealias KVOType = NSNumber
 
-    /**
-     Constructs `Self` using KVO value.
-     */
+    /// Constructs `Self` using KVO value.
     public init?(KVOValue: KVOType) {
         self.init(KVOValue.uintValue)
     }
@@ -55,9 +47,7 @@ extension UInt : KVORepresentable {
 extension UInt32 : KVORepresentable {
     public typealias KVOType = NSNumber
 
-    /**
-     Constructs `Self` using KVO value.
-     */
+    /// Constructs `Self` using KVO value.
     public init?(KVOValue: KVOType) {
         self.init(KVOValue.uint32Value)
     }
@@ -66,9 +56,7 @@ extension UInt32 : KVORepresentable {
 extension UInt64 : KVORepresentable {
     public typealias KVOType = NSNumber
 
-    /**
-     Constructs `Self` using KVO value.
-     */
+    /// Constructs `Self` using KVO value.
     public init?(KVOValue: KVOType) {
         self.init(KVOValue.uint64Value)
     }
@@ -77,9 +65,7 @@ extension UInt64 : KVORepresentable {
 extension Bool : KVORepresentable {
     public typealias KVOType = NSNumber
 
-    /**
-     Constructs `Self` using KVO value.
-    */
+    /// Constructs `Self` using KVO value.
     public init?(KVOValue: KVOType) {
         self.init(KVOValue.boolValue)
     }
@@ -87,9 +73,7 @@ extension Bool : KVORepresentable {
 
 
 extension RawRepresentable where RawValue: KVORepresentable {
-    /**
-     Constructs `Self` using optional KVO value.
-    */
+    /// Constructs `Self` using optional KVO value.
     init?(KVOValue: RawValue.KVOType?) {
         guard let KVOValue = KVOValue else {
             return nil

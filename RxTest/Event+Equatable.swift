@@ -9,12 +9,10 @@
 import Foundation
 import RxSwift
 
-/**
-Compares two events. They are equal if they are both the same member of `Event` enumeration.
-
-In case `Error` events are being compared, they are equal in case their `NSError` representations are equal (domain and code)
-and their string representations are equal.
-*/
+/// Compares two events. They are equal if they are both the same member of `Event` enumeration.
+///
+/// In case `Error` events are being compared, they are equal in case their `NSError` representations are equal (domain and code)
+/// and their string representations are equal.
 public func == <Element: Equatable>(lhs: Event<Element>, rhs: Event<Element>) -> Bool {
     switch (lhs, rhs) {
     case (.completed, .completed): return true

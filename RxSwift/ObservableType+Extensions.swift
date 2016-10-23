@@ -15,7 +15,6 @@ extension ObservableType {
     - parameter on: Action to invoke for each event in the observable sequence.
     - returns: Subscription object used to unsubscribe from the observable sequence.
     */
-    // @warn_unused_result(message: "http://git.io/rxs.ud")
     public func subscribe(_ on: @escaping (Event<E>) -> Void)
         -> Disposable {
         let observer = AnonymousObserver { e in
@@ -35,7 +34,6 @@ extension ObservableType {
         gracefully completed, errored, or if the generation is cancelled by disposing subscription).
     - returns: Subscription object used to unsubscribe from the observable sequence.
     */
-    // @warn_unused_result(message: "http://git.io/rxs.ud")
     public func subscribe(file: String = #file, line: UInt = #line, function: String = #function, onNext: ((E) -> Void)? = nil, onError: ((Swift.Error) -> Void)? = nil, onCompleted: (() -> Void)? = nil, onDisposed: (() -> Void)? = nil)
         -> Disposable {
 
@@ -81,7 +79,6 @@ extension ObservableType {
         gracefully completed, errored, or if the generation is cancelled by disposing subscription).
     - returns: Subscription object used to unsubscribe from the observable sequence.
     */
-    // @warn_unused_result(message: "http://git.io/rxs.ud")
     public func subscribe(onNext: ((E) -> Void)? = nil, onError: ((Swift.Error) -> Void)? = nil, onCompleted: (() -> Void)? = nil, onDisposed: (() -> Void)? = nil)
         -> Disposable {
 
@@ -115,10 +112,7 @@ extension ObservableType {
 }
 
 public extension ObservableType {
-    /**
-    All internal subscribe calls go through this method.
-    */
-    // @warn_unused_result(message: "http://git.io/rxs.ud")
+    /// All internal subscribe calls go through this method.
     func subscribeSafe<O: ObserverType>(_ observer: O) -> Disposable where O.E == E {
         return self.asObservable().subscribe(observer)
     }

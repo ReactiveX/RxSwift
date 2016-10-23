@@ -15,18 +15,14 @@ import RxSwift
 #endif
 
 extension Reactive where Base: UIView {
-    /**
-     Bindable sink for `hidden` property.
-     */
+    /// Bindable sink for `hidden` property.
     public var isHidden: UIBindingObserver<Base, Bool> {
         return UIBindingObserver(UIElement: self.base) { view, hidden in
             view.isHidden = hidden
         }
     }
 
-    /**
-     Bindable sink for `alpha` property.
-     */
+    /// Bindable sink for `alpha` property.
     public var alpha: UIBindingObserver<Base, CGFloat> {
         return UIBindingObserver(UIElement: self.base) { view, alpha in
             view.alpha = alpha

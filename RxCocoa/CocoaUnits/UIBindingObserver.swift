@@ -25,17 +25,13 @@ public class UIBindingObserver<UIElementType, Value> : ObserverType where UIElem
 
     let binding: (UIElementType, Value) -> Void
 
-    /**
-     Initializes `ViewBindingObserver` using
-    */
+    /// Initializes `ViewBindingObserver` using
     public init(UIElement: UIElementType, binding: @escaping (UIElementType, Value) -> Void) {
         self.UIElement = UIElement
         self.binding = binding
     }
 
-    /**
-     Binds next element to owner view as described in `binding`.
-    */
+    /// Binds next element to owner view as described in `binding`.
     public func on(_ event: Event<Value>) {
         MainScheduler.ensureExecutingOnScheduler(errorMessage: "Element can be bound to user interface only on MainThread.")
 
@@ -51,11 +47,9 @@ public class UIBindingObserver<UIElementType, Value> : ObserverType where UIElem
         }
     }
 
-    /**
-     Erases type of observer.
-
-     - returns: type erased observer.
-     */
+    /// Erases type of observer.
+    ///
+    /// - returns: type erased observer.
     public func asObserver() -> AnyObserver<Value> {
         return AnyObserver(eventHandler: on)
     }

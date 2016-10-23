@@ -8,18 +8,12 @@
 
 import Foundation
 
-/**
-Parametrization for virtual time used by `VirtualTimeScheduler`s.
-*/
+/// Parametrization for virtual time used by `VirtualTimeScheduler`s.
 public protocol VirtualTimeConverterType {
-    /**
-     Virtual time unit used that represents ticks of virtual clock.
-    */
+    /// Virtual time unit used that represents ticks of virtual clock.
     associatedtype VirtualTimeUnit
 
-    /**
-     Virtual time unit used to represent differences of virtual times.
-    */
+    /// Virtual time unit used to represent differences of virtual times.
     associatedtype VirtualTimeIntervalUnit
 
     /**
@@ -77,38 +71,26 @@ public protocol VirtualTimeConverterType {
  Extending `Date` with `Comparable` would be too risky because of possible collisions with other libraries.
 */
 public enum VirtualTimeComparison {
-    /**
-     lhs < rhs.
-    */
+    /// lhs < rhs.
     case lessThan
-    /**
-     lhs == rhs.
-    */
+    /// lhs == rhs.
     case equal
-    /**
-     lhs > rhs.
-    */
+    /// lhs > rhs.
     case greaterThan
 }
 
 extension VirtualTimeComparison {
-    /**
-     lhs < rhs.
-    */
+    /// lhs < rhs.
     var lessThen: Bool {
         return self == .lessThan
     }
 
-    /**
-    lhs > rhs
-    */
+    /// lhs > rhs
     var greaterThan: Bool {
         return self == .greaterThan
     }
 
-    /**
-     lhs == rhs
-    */
+    /// lhs == rhs
     var equal: Bool {
         return self == .equal
     }

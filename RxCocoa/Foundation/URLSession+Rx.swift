@@ -11,34 +11,22 @@ import Foundation
 import RxSwift
 #endif
 
-/**
-RxCocoa URL errors.
-*/
+/// RxCocoa URL errors.
 public enum RxCocoaURLError
-    : Swift.Error
-    , CustomDebugStringConvertible {
-    /**
-    Unknown error occurred.
-    */
+    : Swift.Error {
+    /// Unknown error occurred.
     case unknown
-    /**
-    Response is not NSHTTPURLResponse
-    */
+    /// Response is not NSHTTPURLResponse
     case nonHTTPResponse(response: URLResponse)
-    /**
-    Response is not successful. (not in `200 ..< 300` range)
-    */
+    /// Response is not successful. (not in `200 ..< 300` range)
     case httpRequestFailed(response: HTTPURLResponse, data: Data?)
-    /**
-    Deserialization error.
-    */
+    /// Deserialization error.
     case deserializationError(error: Swift.Error)
 }
 
-public extension RxCocoaURLError {
-    /**
-    A textual representation of `self`, suitable for debugging.
-    */
+extension RxCocoaURLError
+    : CustomDebugStringConvertible {
+    /// A textual representation of `self`, suitable for debugging.
     public var debugDescription: String {
         switch self {
         case .unknown:
@@ -118,7 +106,6 @@ extension Reactive where Base: URLSession {
     - parameter request: URL request.
     - returns: Observable sequence of URL responses.
     */
-    // @warn_unused_result(message:"http://git.io/rxs.uo")
     public func response(request: URLRequest) -> Observable<(HTTPURLResponse, Data)> {
         return Observable.create { observer in
 
@@ -177,7 +164,6 @@ extension Reactive where Base: URLSession {
     - parameter request: URL request.
     - returns: Observable sequence of response data.
     */
-    // @warn_unused_result(message:"http://git.io/rxs.uo")
     public func data(request: URLRequest) -> Observable<Data> {
         return response(request: request).map { (response, data) -> Data in
             if 200 ..< 300 ~= response.statusCode {
@@ -206,7 +192,6 @@ extension Reactive where Base: URLSession {
     - parameter request: URL request.
     - returns: Observable sequence of response JSON.
     */
-    // @warn_unused_result(message:"http://git.io/rxs.uo")
     public func json(request: URLRequest) -> Observable<Any> {
         return data(request: request).map { (data) -> Any in
             do {
@@ -234,7 +219,6 @@ extension Reactive where Base: URLSession {
     - parameter url: URL of `NSURLRequest` request.
     - returns: Observable sequence of response JSON.
     */
-    // @warn_unused_result(message:"http://git.io/rxs.uo")
     public func json(url: Foundation.URL) -> Observable<Any> {
         return json(request: URLRequest(url: url))
     }

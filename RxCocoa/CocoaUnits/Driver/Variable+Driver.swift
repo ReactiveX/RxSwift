@@ -12,12 +12,9 @@ import Foundation
 #endif
 
 extension Variable {
-    /**
-     Converts `Variable` to `Driver` unit.
-
-     - returns: Driving observable sequence.
-     */
-    // @warn_unused_result(message:"http://git.io/rxs.uo")
+    /// Converts `Variable` to `Driver` unit.
+    ///
+    /// - returns: Driving observable sequence.
     public func asDriver() -> Driver<E> {
         let source = self.asObservable()
             .observeOn(DriverSharingStrategy.scheduler)

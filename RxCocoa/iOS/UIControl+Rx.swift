@@ -16,29 +16,23 @@ import UIKit
 
 extension Reactive where Base: UIControl {
     
-    /**
-    Bindable sink for `enabled` property.
-    */
+    /// Bindable sink for `enabled` property.
     public var isEnabled: UIBindingObserver<Base, Bool> {
         return UIBindingObserver(UIElement: self.base) { control, value in
             control.isEnabled = value
         }
     }
 
-    /**
-     Bindable sink for `selected` property.
-     */
+    /// Bindable sink for `selected` property.
     public var isSelected: UIBindingObserver<Base, Bool> {
         return UIBindingObserver(UIElement: self.base) { control, selected in
             control.isSelected = selected
         }
     }
 
-    /**
-    Reactive wrapper for target action pattern.
-    
-    - parameter controlEvents: Filter for observed event types.
-    */
+    /// Reactive wrapper for target action pattern.
+    ///
+    /// - parameter controlEvents: Filter for observed event types.
     public func controlEvent(_ controlEvents: UIControlEvents) -> ControlEvent<Void> {
         let source: Observable<Void> = Observable.create { [weak control = self.base] observer in
             MainScheduler.ensureExecutingOnScheduler()
@@ -59,10 +53,8 @@ extension Reactive where Base: UIControl {
         return ControlEvent(events: source)
     }
 
-    /**
-     You might be wondering why the ugly `as!` casts etc, well, for some reason if 
-     Swift compiler knows C is UIControl type and optimizations are turned on, it will crash.
-    */
+    /// You might be wondering why the ugly `as!` casts etc, well, for some reason if
+    /// Swift compiler knows C is UIControl type and optimizations are turned on, it will crash.
     static func value<C: NSObject, T>(_ control: C, getter: @escaping (C) -> T, setter: @escaping (C, T) -> Void) -> ControlProperty<T> {
         let source: Observable<T> = Observable.create { [weak weakControl = control] observer in
                 guard let control = weakControl else {

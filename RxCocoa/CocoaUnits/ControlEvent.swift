@@ -11,14 +11,10 @@ import Foundation
 import RxSwift
 #endif
 
-/**
-Protocol that enables extension of `ControlEvent`.
-*/
+/// Protocol that enables extension of `ControlEvent`.
 public protocol ControlEventType : ObservableType {
 
-    /**
-    - returns: `ControlEvent` interface
-    */
+    /// - returns: `ControlEvent` interface
     func asControlEvent() -> ControlEvent<E>
 }
 
@@ -48,38 +44,28 @@ public struct ControlEvent<PropertyType> : ControlEventType {
 
     let _events: Observable<PropertyType>
 
-    /**
-     Initializes control event with a observable sequence that represents events.
-
-     - parameter events: Observable sequence that represents events.
-     - returns: Control event created with a observable sequence of events.
-     */
+    /// Initializes control event with a observable sequence that represents events.
+    ///
+    /// - parameter events: Observable sequence that represents events.
+    /// - returns: Control event created with a observable sequence of events.
     public init<Ev: ObservableType>(events: Ev) where Ev.E == E {
         _events = events.subscribeOn(ConcurrentMainScheduler.instance)
     }
 
-    /**
-    Subscribes an observer to control events.
-
-    - parameter observer: Observer to subscribe to events.
-    - returns: Disposable object that can be used to unsubscribe the observer from receiving control events.
-    */
+    /// Subscribes an observer to control events.
+    ///
+    /// - parameter observer: Observer to subscribe to events.
+    /// - returns: Disposable object that can be used to unsubscribe the observer from receiving control events.
     public func subscribe<O : ObserverType>(_ observer: O) -> Disposable where O.E == E {
         return _events.subscribe(observer)
     }
 
-    /**
-    - returns: `Observable` interface.
-    */
-    // @warn_unused_result(message:"http://git.io/rxs.uo")
+    /// - returns: `Observable` interface.
     public func asObservable() -> Observable<E> {
         return _events
     }
 
-    /**
-    - returns: `ControlEvent` interface.
-    */
-    // @warn_unused_result(message:"http://git.io/rxs.uo")
+    /// - returns: `ControlEvent` interface.
     public func asControlEvent() -> ControlEvent<E> {
         return self
     }

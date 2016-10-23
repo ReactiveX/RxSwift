@@ -8,15 +8,11 @@
 
 import Foundation
 
-/**
- A way to use built in XCTest methods with objects that are partially equatable.
- 
- If this can be done simpler, PRs are welcome :)
- */
+/// A way to use built in XCTest methods with objects that are partially equatable.
+///
+/// If this can be done simpler, PRs are welcome :)
 struct AnyEquatable<Target>
-    : Equatable
-    , CustomDebugStringConvertible
-    , CustomStringConvertible {
+    : Equatable {
     typealias Comparer = (Target, Target) -> Bool
 
     let _target: Target
@@ -32,7 +28,9 @@ func == <T>(lhs: AnyEquatable<T>, rhs: AnyEquatable<T>) -> Bool {
     return lhs._comparer(lhs._target, rhs._target)
 }
 
-extension AnyEquatable {
+extension AnyEquatable
+    : CustomDebugStringConvertible
+    , CustomStringConvertible  {
     var description: String {
         return "\(_target)"
     }

@@ -8,9 +8,7 @@
 
 import Foundation
 
-/**
-Represents a group of disposable resources that are disposed together.
-*/
+/// Represents a group of disposable resources that are disposed together.
 public final class CompositeDisposable : DisposeBase, Disposable, Cancelable {
     public typealias DisposeKey = BagKey
     
@@ -27,18 +25,14 @@ public final class CompositeDisposable : DisposeBase, Disposable, Cancelable {
     public override init() {
     }
     
-    /**
-     Initializes a new instance of composite disposable with the specified number of disposables.
-    */
+    /// Initializes a new instance of composite disposable with the specified number of disposables.
     public init(_ disposable1: Disposable, _ disposable2: Disposable) {
         // This overload is here to make sure we are using optimized version up to 4 arguments.
         let _ = _disposables!.insert(disposable1)
         let _ = _disposables!.insert(disposable2)
     }
     
-    /**
-     Initializes a new instance of composite disposable with the specified number of disposables.
-    */
+    /// Initializes a new instance of composite disposable with the specified number of disposables.
     public init(_ disposable1: Disposable, _ disposable2: Disposable, _ disposable3: Disposable) {
         // This overload is here to make sure we are using optimized version up to 4 arguments.
         let _ = _disposables!.insert(disposable1)
@@ -46,9 +40,7 @@ public final class CompositeDisposable : DisposeBase, Disposable, Cancelable {
         let _ = _disposables!.insert(disposable3)
     }
     
-    /**
-     Initializes a new instance of composite disposable with the specified number of disposables.
-     */
+    /// Initializes a new instance of composite disposable with the specified number of disposables.
     public init(_ disposable1: Disposable, _ disposable2: Disposable, _ disposable3: Disposable, _ disposable4: Disposable, _ disposables: Disposable...) {
         // This overload is here to make sure we are using optimized version up to 4 arguments.
         let _ = _disposables!.insert(disposable1)
@@ -61,9 +53,7 @@ public final class CompositeDisposable : DisposeBase, Disposable, Cancelable {
         }
     }
     
-    /**
-     Initializes a new instance of composite disposable with the specified number of disposables.
-    */
+    /// Initializes a new instance of composite disposable with the specified number of disposables.
     public init(disposables: [Disposable]) {
         for disposable in disposables {
             let _ = _disposables!.insert(disposable)
@@ -93,19 +83,15 @@ public final class CompositeDisposable : DisposeBase, Disposable, Cancelable {
         return _disposables?.insert(disposable)
     }
     
-    /**
-    - returns: Gets the number of disposables contained in the `CompositeDisposable`.
-    */
+    /// - returns: Gets the number of disposables contained in the `CompositeDisposable`.
     public var count: Int {
         _lock.lock(); defer { _lock.unlock() }
         return _disposables?.count ?? 0
     }
     
-    /**
-     Removes and disposes the disposable identified by `disposeKey` from the CompositeDisposable.
-     
-     - parameter disposeKey: Key used to identify disposable to be removed.
-     */
+    /// Removes and disposes the disposable identified by `disposeKey` from the CompositeDisposable.
+    ///
+    /// - parameter disposeKey: Key used to identify disposable to be removed.
     public func remove(for disposeKey: DisposeKey) {
         _remove(for: disposeKey)?.dispose()
     }
@@ -115,9 +101,7 @@ public final class CompositeDisposable : DisposeBase, Disposable, Cancelable {
         return _disposables?.removeKey(disposeKey)
     }
     
-    /**
-    Disposes all disposables in the group and removes them from the group.
-    */
+    /// Disposes all disposables in the group and removes them from the group.
     public func dispose() {
         if let disposables = _dispose() {
             disposeAll(in: disposables)
@@ -136,16 +120,12 @@ public final class CompositeDisposable : DisposeBase, Disposable, Cancelable {
 
 public extension Disposables {
 
-    /**
-     Creates a disposable with the given disposables.
-     */
+    /// Creates a disposable with the given disposables.
     public static func create(_ disposable1: Disposable, _ disposable2: Disposable, _ disposable3: Disposable) -> Cancelable {
         return CompositeDisposable(disposable1, disposable2, disposable3)
     }
     
-    /**
-     Creates a disposable with the given disposables.
-     */
+    /// Creates a disposable with the given disposables.
     public static func create(_ disposable1: Disposable, _ disposable2: Disposable, _ disposable3: Disposable, _ disposables: Disposable ...) -> Cancelable {
         var disposables = disposables
         disposables.append(disposable1)
@@ -154,9 +134,7 @@ public extension Disposables {
         return CompositeDisposable(disposables: disposables)
     }
     
-    /**
-     Creates a disposable with the given disposables.
-     */
+    /// Creates a disposable with the given disposables.
     public static func create(_ disposables: [Disposable]) -> Cancelable {
         switch disposables.count {
         case 2:

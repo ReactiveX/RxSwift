@@ -17,7 +17,7 @@
     let AtomicIncrement = OSAtomicIncrement32Barrier
     let AtomicDecrement = OSAtomicDecrement32Barrier
 
-    public extension Thread {
+    extension Thread {
 
         static func setThreadLocalStorageValue<T: AnyObject>(_ value: T?, forKey key: String
             ) {

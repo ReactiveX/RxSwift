@@ -27,9 +27,7 @@ let CGPointType = "{CGPoint=ff}"
 extension CGRect : KVORepresentable {
     public typealias KVOType = NSValue
 
-    /**
-     Constructs self from `NSValue`.
-    */
+    /// Constructs self from `NSValue`.
     public init?(KVOValue: KVOType) {
         if strcmp(KVOValue.objCType, CGRectType) != 0 {
             return nil
@@ -43,9 +41,7 @@ extension CGRect : KVORepresentable {
 extension CGPoint : KVORepresentable {
     public typealias KVOType = NSValue
 
-    /**
-     Constructs self from `NSValue`.
-    */
+    /// Constructs self from `NSValue`.
     public init?(KVOValue: KVOType) {
         if strcmp(KVOValue.objCType, CGPointType) != 0 {
             return nil
@@ -59,9 +55,7 @@ extension CGPoint : KVORepresentable {
 extension CGSize : KVORepresentable {
     public typealias KVOType = NSValue
 
-    /**
-     Constructs self from `NSValue`.
-    */
+    /// Constructs self from `NSValue`.
     public init?(KVOValue: KVOType) {
         if strcmp(KVOValue.objCType, CGSizeType) != 0 {
             return nil

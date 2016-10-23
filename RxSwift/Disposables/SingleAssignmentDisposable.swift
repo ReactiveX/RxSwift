@@ -33,25 +33,19 @@ public class SingleAssignmentDisposable : DisposeBase, Disposable, Cancelable {
     private var _state: UInt32 = 0
     private var _disposable = nil as Disposable?
 
-    /**
-    - returns: A value that indicates whether the object is disposed.
-    */
+    /// - returns: A value that indicates whether the object is disposed.
     public var isDisposed: Bool {
         return (_state & DisposeState.disposed.rawValue) != 0
     }
 
-    /**
-    Initializes a new instance of the `SingleAssignmentDisposable`.
-    */
+    /// Initializes a new instance of the `SingleAssignmentDisposable`.
     public override init() {
         super.init()
     }
 
-    /**
-    Gets or sets the underlying disposable. After disposal, the result of getting this property is undefined.
-    
-    **Throws exception if the `SingleAssignmentDisposable` has already been assigned to.**
-    */
+    /// Gets or sets the underlying disposable. After disposal, the result of getting this property is undefined.
+    ///
+    /// **Throws exception if the `SingleAssignmentDisposable` has already been assigned to.**
     public func setDisposable(_ disposable: Disposable) {
         _disposable = disposable
 
@@ -75,9 +69,7 @@ public class SingleAssignmentDisposable : DisposeBase, Disposable, Cancelable {
         }
     }
 
-    /**
-    Disposes the underlying disposable.
-    */
+    /// Disposes the underlying disposable.
     public func dispose() {
         #if os(Linux)
         _lock.lock()

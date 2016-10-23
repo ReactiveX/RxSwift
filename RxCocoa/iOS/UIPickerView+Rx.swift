@@ -15,10 +15,9 @@
     import UIKit
 
 extension Reactive where Base: UIPickerView {
-    /**
-     Reactive wrapper for `delegate`.
-     For more information take a look at `DelegateProxyType` protocol documentation.
-     */
+
+    /// Reactive wrapper for `delegate`.
+    /// For more information take a look at `DelegateProxyType` protocol documentation.
     public var delegate: DelegateProxy {
         return RxPickerViewDelegateProxy.proxyForObject(base)
     }

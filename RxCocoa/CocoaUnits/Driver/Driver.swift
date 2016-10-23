@@ -45,9 +45,7 @@ public struct DriverSharingStrategy: SharingStrategyProtocol {
 }
 
 extension SharedSequenceConvertibleType where SharingStrategy == DriverSharingStrategy {
-    /**
-     Adds `asDriver` to `SharingSequence` with `DriverSharingStrategy`.
-    */
+    /// Adds `asDriver` to `SharingSequence` with `DriverSharingStrategy`.
     public func asDriver() -> Driver<E> {
         return self.asSharedSequence()
     }

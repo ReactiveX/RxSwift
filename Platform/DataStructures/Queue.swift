@@ -17,11 +17,9 @@ averaged over N operations.
 Complexity of `peek` is O(1).
 */
 struct Queue<T>: Sequence {
-    /**
-    Type of generator.
-    */
+    /// Type of generator.
     typealias Generator = AnyIterator<T>
-    
+
     private let _resizeFactor = 2
     
     private var _storage: ContiguousArray<T?>
@@ -45,23 +43,17 @@ struct Queue<T>: Sequence {
         return index < 0 ? index + _storage.count : index
     }
     
-    /**
-    - returns: Is queue empty.
-    */
+    /// - returns: Is queue empty.
     var isEmpty: Bool {
         return count == 0
     }
     
-    /**
-    - returns: Number of elements inside queue.
-    */
+    /// - returns: Number of elements inside queue.
     var count: Int {
         return _count
     }
     
-    /**
-    - returns: Element in front of a list of elements to `dequeue`.
-    */
+    /// - returns: Element in front of a list of elements to `dequeue`.
     func peek() -> T {
         precondition(count > 0)
         
@@ -89,11 +81,9 @@ struct Queue<T>: Sequence {
         _storage = newStorage
     }
     
-    /**
-    Enqueues `element`.
-    
-    - parameter element: Element to enqueue.
-    */
+    /// Enqueues `element`.
+    ///
+    /// - parameter element: Element to enqueue.
     mutating func enqueue(_ element: T) {
         if count == _storage.count {
             resizeTo(Swift.max(_storage.count, 1) * _resizeFactor)
@@ -121,11 +111,9 @@ struct Queue<T>: Sequence {
         return _storage[index]!
     }
 
-    /**
-    Dequeues element or throws an exception in case queue is empty.
-    
-    - returns: Dequeued element.
-    */
+    /// Dequeues element or throws an exception in case queue is empty.
+    ///
+    /// - returns: Dequeued element.
     mutating func dequeue() -> T? {
         if self.count == 0 {
             return nil
@@ -141,9 +129,7 @@ struct Queue<T>: Sequence {
         return dequeueElementOnly()
     }
     
-    /**
-    - returns: Generator of contained elements.
-    */
+    /// - returns: Generator of contained elements.
     func makeIterator() -> AnyIterator<T> {
         var i = dequeueIndex
         var count = _count

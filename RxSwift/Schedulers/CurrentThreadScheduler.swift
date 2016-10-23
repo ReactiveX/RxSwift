@@ -15,19 +15,16 @@ let CurrentThreadSchedulerQueueKeyInstance  = "RxSwift.CurrentThreadScheduler.Qu
 typealias CurrentThreadSchedulerValue       = NSString
 let CurrentThreadSchedulerValueInstance     = "RxSwift.CurrentThreadScheduler.SchedulerKey" as NSString
 
-/**
-Represents an object that schedules units of work on the current thread.
 
-This is the default scheduler for operators that generate elements.
-
-This scheduler is also sometimes called `trampoline scheduler`.
-*/
+/// Represents an object that schedules units of work on the current thread.
+///
+/// This is the default scheduler for operators that generate elements.
+///
+/// This scheduler is also sometimes called `trampoline scheduler`.
 public class CurrentThreadScheduler : ImmediateSchedulerType {
     typealias ScheduleQueue = RxMutableBox<Queue<ScheduledItemType>>
 
-    /**
-    The singleton instance of the current thread scheduler.
-    */
+    /// The singleton instance of the current thread scheduler.
     public static let instance = CurrentThreadScheduler()
 
     static var queue : ScheduleQueue? {
@@ -39,9 +36,7 @@ public class CurrentThreadScheduler : ImmediateSchedulerType {
         }
     }
 
-    /**
-    Gets a value that indicates whether the caller must call a `schedule` method.
-    */
+    /// Gets a value that indicates whether the caller must call a `schedule` method.
     public static fileprivate(set) var isScheduleRequired: Bool {
         get {
             let value: CurrentThreadSchedulerValue? = Thread.getThreadLocalStorageValueForKey(CurrentThreadSchedulerKeyInstance)

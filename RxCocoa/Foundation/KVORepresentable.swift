@@ -8,25 +8,17 @@
 
 import Foundation
 
-/**
-Type that is KVO representable (KVO mechanism can be used to observe it).
-*/
+/// Type that is KVO representable (KVO mechanism can be used to observe it).
 public protocol KVORepresentable {
-    /**
-    Associated KVO type.
-    */
+    /// Associated KVO type.
     associatedtype KVOType
 
-    /**
-    Constructs `Self` using KVO value.
-    */
+    /// Constructs `Self` using KVO value.
     init?(KVOValue: KVOType)
 }
 
 extension KVORepresentable {
-    /**
-    Initializes `KVORepresentable` with optional value.
-    */
+    /// Initializes `KVORepresentable` with optional value.
     init?(KVOValue: KVOType?) {
         guard let KVOValue = KVOValue else {
             return nil

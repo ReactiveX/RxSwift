@@ -12,12 +12,9 @@ import RxSwift
 #endif
     
 extension ControlEvent {
-    /**
-    Converts `ControlEvent` to `Driver` unit.
-    
-    `ControlEvent` already can't fail, so no special case needs to be handled.
-    */
-    // @warn_unused_result(message:"http://git.io/rxs.uo")
+    /// Converts `ControlEvent` to `Driver` unit.
+    ///
+    /// `ControlEvent` already can't fail, so no special case needs to be handled.
     public func asDriver() -> Driver<E> {
         return self.asDriver { (error) -> Driver<E> in
             #if DEBUG

@@ -14,39 +14,23 @@ import RxSwift
     import UIKit
 #endif
 
-/**
-RxCocoa errors.
-*/
+/// RxCocoa errors.
 public enum RxCocoaError
     : Swift.Error
     , CustomDebugStringConvertible {
-    /**
-    Unknown error has occurred.
-    */
+    /// Unknown error has occurred.
     case unknown
-    /**
-    Invalid operation was attempted.
-    */
+    /// Invalid operation was attempted.
     case invalidOperation(object: Any)
-    /**
-    Items are not yet bound to user interface but have been requested.
-    */
+    /// Items are not yet bound to user interface but have been requested.
     case itemsNotYetBound(object: Any)
-    /**
-    Invalid KVO Path.
-    */
+    /// Invalid KVO Path.
     case invalidPropertyName(object: Any, propertyName: String)
-    /**
-    Invalid object on key path.
-    */
+    /// Invalid object on key path.
     case invalidObjectOnKeyPath(object: Any, sourceObject: AnyObject, propertyName: String)
-    /**
-    Error during swizzling.
-    */
+    /// Error during swizzling.
     case errorDuringSwizzling
-    /*
-     Casting error.
-     */
+    /// Casting error.
     case castingError(object: Any, targetType: Any.Type)
 }
 
@@ -54,9 +38,7 @@ public enum RxCocoaError
 // MARK: Debug descriptions
 
 public extension RxCocoaError {
-    /**
-     A textual representation of `self`, suitable for debugging.
-     */
+    /// A textual representation of `self`, suitable for debugging.
     public var debugDescription: String {
         switch self {
         case .unknown:

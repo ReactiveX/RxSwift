@@ -23,7 +23,6 @@ extension SharedSequence {
     - parameter resultSelector: Function to invoke for each series of elements at corresponding indexes in the sources.
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
-    // @warn_unused_result(message:"http://git.io/rxs.uo")
     public static func zip<O1: SharedSequenceConvertibleType, O2: SharedSequenceConvertibleType>
         (_ source1: O1, _ source2: O2, resultSelector: @escaping (O1.E, O2.E) throws -> E)
         -> SharedSequence<O1.SharingStrategy, E> where O1.SharingStrategy == O2.SharingStrategy {
@@ -43,7 +42,6 @@ extension SharedSequence {
     - parameter resultSelector: Function to invoke whenever any of the sources produces an element.
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
-    // @warn_unused_result(message:"http://git.io/rxs.uo")
     public static func combineLatest<O1: SharedSequenceConvertibleType, O2: SharedSequenceConvertibleType>
         (_ source1: O1, _ source2: O2, resultSelector: @escaping (O1.E, O2.E) throws -> E)
         -> SharedSequence<O1.SharingStrategy, E> where O1.SharingStrategy == O2.SharingStrategy {
@@ -67,7 +65,6 @@ extension SharedSequence {
     - parameter resultSelector: Function to invoke for each series of elements at corresponding indexes in the sources.
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
-    // @warn_unused_result(message:"http://git.io/rxs.uo")
     public static func zip<O1: SharedSequenceConvertibleType, O2: SharedSequenceConvertibleType, O3: SharedSequenceConvertibleType>
         (_ source1: O1, _ source2: O2, _ source3: O3, resultSelector: @escaping (O1.E, O2.E, O3.E) throws -> E)
         -> SharedSequence<O1.SharingStrategy, E> where O1.SharingStrategy == O2.SharingStrategy,
@@ -88,7 +85,6 @@ extension SharedSequence {
     - parameter resultSelector: Function to invoke whenever any of the sources produces an element.
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
-    // @warn_unused_result(message:"http://git.io/rxs.uo")
     public static func combineLatest<O1: SharedSequenceConvertibleType, O2: SharedSequenceConvertibleType, O3: SharedSequenceConvertibleType>
         (_ source1: O1, _ source2: O2, _ source3: O3, resultSelector: @escaping (O1.E, O2.E, O3.E) throws -> E)
         -> SharedSequence<O1.SharingStrategy, E> where O1.SharingStrategy == O2.SharingStrategy,
@@ -113,7 +109,6 @@ extension SharedSequence {
     - parameter resultSelector: Function to invoke for each series of elements at corresponding indexes in the sources.
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
-    // @warn_unused_result(message:"http://git.io/rxs.uo")
     public static func zip<O1: SharedSequenceConvertibleType, O2: SharedSequenceConvertibleType, O3: SharedSequenceConvertibleType, O4: SharedSequenceConvertibleType>
         (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, resultSelector: @escaping (O1.E, O2.E, O3.E, O4.E) throws -> E)
         -> SharedSequence<O1.SharingStrategy, E> where O1.SharingStrategy == O2.SharingStrategy,
@@ -135,7 +130,6 @@ extension SharedSequence {
     - parameter resultSelector: Function to invoke whenever any of the sources produces an element.
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
-    // @warn_unused_result(message:"http://git.io/rxs.uo")
     public static func combineLatest<O1: SharedSequenceConvertibleType, O2: SharedSequenceConvertibleType, O3: SharedSequenceConvertibleType, O4: SharedSequenceConvertibleType>
         (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, resultSelector: @escaping (O1.E, O2.E, O3.E, O4.E) throws -> E)
         -> SharedSequence<O1.SharingStrategy, E> where O1.SharingStrategy == O2.SharingStrategy,
@@ -161,7 +155,6 @@ extension SharedSequence {
     - parameter resultSelector: Function to invoke for each series of elements at corresponding indexes in the sources.
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
-    // @warn_unused_result(message:"http://git.io/rxs.uo")
     public static func zip<O1: SharedSequenceConvertibleType, O2: SharedSequenceConvertibleType, O3: SharedSequenceConvertibleType, O4: SharedSequenceConvertibleType, O5: SharedSequenceConvertibleType>
         (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, resultSelector: @escaping (O1.E, O2.E, O3.E, O4.E, O5.E) throws -> E)
         -> SharedSequence<O1.SharingStrategy, E> where O1.SharingStrategy == O2.SharingStrategy,
@@ -184,7 +177,6 @@ extension SharedSequence {
     - parameter resultSelector: Function to invoke whenever any of the sources produces an element.
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
-    // @warn_unused_result(message:"http://git.io/rxs.uo")
     public static func combineLatest<O1: SharedSequenceConvertibleType, O2: SharedSequenceConvertibleType, O3: SharedSequenceConvertibleType, O4: SharedSequenceConvertibleType, O5: SharedSequenceConvertibleType>
         (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, resultSelector: @escaping (O1.E, O2.E, O3.E, O4.E, O5.E) throws -> E)
         -> SharedSequence<O1.SharingStrategy, E> where O1.SharingStrategy == O2.SharingStrategy,
@@ -211,7 +203,6 @@ extension SharedSequence {
     - parameter resultSelector: Function to invoke for each series of elements at corresponding indexes in the sources.
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
-    // @warn_unused_result(message:"http://git.io/rxs.uo")
     public static func zip<O1: SharedSequenceConvertibleType, O2: SharedSequenceConvertibleType, O3: SharedSequenceConvertibleType, O4: SharedSequenceConvertibleType, O5: SharedSequenceConvertibleType, O6: SharedSequenceConvertibleType>
         (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6, resultSelector: @escaping (O1.E, O2.E, O3.E, O4.E, O5.E, O6.E) throws -> E)
         -> SharedSequence<O1.SharingStrategy, E> where O1.SharingStrategy == O2.SharingStrategy,
@@ -235,7 +226,6 @@ extension SharedSequence {
     - parameter resultSelector: Function to invoke whenever any of the sources produces an element.
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
-    // @warn_unused_result(message:"http://git.io/rxs.uo")
     public static func combineLatest<O1: SharedSequenceConvertibleType, O2: SharedSequenceConvertibleType, O3: SharedSequenceConvertibleType, O4: SharedSequenceConvertibleType, O5: SharedSequenceConvertibleType, O6: SharedSequenceConvertibleType>
         (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6, resultSelector: @escaping (O1.E, O2.E, O3.E, O4.E, O5.E, O6.E) throws -> E)
         -> SharedSequence<O1.SharingStrategy, E> where O1.SharingStrategy == O2.SharingStrategy,
@@ -263,7 +253,6 @@ extension SharedSequence {
     - parameter resultSelector: Function to invoke for each series of elements at corresponding indexes in the sources.
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
-    // @warn_unused_result(message:"http://git.io/rxs.uo")
     public static func zip<O1: SharedSequenceConvertibleType, O2: SharedSequenceConvertibleType, O3: SharedSequenceConvertibleType, O4: SharedSequenceConvertibleType, O5: SharedSequenceConvertibleType, O6: SharedSequenceConvertibleType, O7: SharedSequenceConvertibleType>
         (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6, _ source7: O7, resultSelector: @escaping (O1.E, O2.E, O3.E, O4.E, O5.E, O6.E, O7.E) throws -> E)
         -> SharedSequence<O1.SharingStrategy, E> where O1.SharingStrategy == O2.SharingStrategy,
@@ -288,7 +277,6 @@ extension SharedSequence {
     - parameter resultSelector: Function to invoke whenever any of the sources produces an element.
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
-    // @warn_unused_result(message:"http://git.io/rxs.uo")
     public static func combineLatest<O1: SharedSequenceConvertibleType, O2: SharedSequenceConvertibleType, O3: SharedSequenceConvertibleType, O4: SharedSequenceConvertibleType, O5: SharedSequenceConvertibleType, O6: SharedSequenceConvertibleType, O7: SharedSequenceConvertibleType>
         (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6, _ source7: O7, resultSelector: @escaping (O1.E, O2.E, O3.E, O4.E, O5.E, O6.E, O7.E) throws -> E)
         -> SharedSequence<O1.SharingStrategy, E> where O1.SharingStrategy == O2.SharingStrategy,
@@ -317,7 +305,6 @@ extension SharedSequence {
     - parameter resultSelector: Function to invoke for each series of elements at corresponding indexes in the sources.
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
-    // @warn_unused_result(message:"http://git.io/rxs.uo")
     public static func zip<O1: SharedSequenceConvertibleType, O2: SharedSequenceConvertibleType, O3: SharedSequenceConvertibleType, O4: SharedSequenceConvertibleType, O5: SharedSequenceConvertibleType, O6: SharedSequenceConvertibleType, O7: SharedSequenceConvertibleType, O8: SharedSequenceConvertibleType>
         (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6, _ source7: O7, _ source8: O8, resultSelector: @escaping (O1.E, O2.E, O3.E, O4.E, O5.E, O6.E, O7.E, O8.E) throws -> E)
         -> SharedSequence<O1.SharingStrategy, E> where O1.SharingStrategy == O2.SharingStrategy,
@@ -343,7 +330,6 @@ extension SharedSequence {
     - parameter resultSelector: Function to invoke whenever any of the sources produces an element.
     - returns: An observable sequence containing the result of combining elements of the sources using the specified result selector function.
     */
-    // @warn_unused_result(message:"http://git.io/rxs.uo")
     public static func combineLatest<O1: SharedSequenceConvertibleType, O2: SharedSequenceConvertibleType, O3: SharedSequenceConvertibleType, O4: SharedSequenceConvertibleType, O5: SharedSequenceConvertibleType, O6: SharedSequenceConvertibleType, O7: SharedSequenceConvertibleType, O8: SharedSequenceConvertibleType>
         (_ source1: O1, _ source2: O2, _ source3: O3, _ source4: O4, _ source5: O5, _ source6: O6, _ source7: O7, _ source8: O8, resultSelector: @escaping (O1.E, O2.E, O3.E, O4.E, O5.E, O6.E, O7.E, O8.E) throws -> E)
         -> SharedSequence<O1.SharingStrategy, E> where O1.SharingStrategy == O2.SharingStrategy,

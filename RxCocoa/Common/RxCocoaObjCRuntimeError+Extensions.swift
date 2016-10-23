@@ -14,29 +14,19 @@ import Foundation
 #endif
 
 #if !DISABLE_SWIZZLING && !os(Linux)
-    /**
-    RxCocoa ObjC runtime interception mechanism.
-     */
+    /// RxCocoa ObjC runtime interception mechanism.
     public enum RxCocoaInterceptionMechanism {
-        /**
-         Unknown message interception mechanism.
-        */
+        /// Unknown message interception mechanism.
         case unknown
-        /**
-         Key value observing interception mechanism.
-        */
+        /// Key value observing interception mechanism.
         case kvo
     }
 
-    /**
-    RxCocoa ObjC runtime modification errors.
-     */
+    /// RxCocoa ObjC runtime modification errors.
     public enum RxCocoaObjCRuntimeError
         : Swift.Error
         , CustomDebugStringConvertible {
-        /**
-        Unknown error has occurred.
-        */
+        /// Unknown error has occurred.
         case unknown(target: AnyObject)
 
         /**
@@ -66,62 +56,46 @@ import Foundation
         */
         case objectMessagesAlreadyBeingIntercepted(target: AnyObject, interceptionMechanism: RxCocoaInterceptionMechanism)
 
-        /**
-        Trying to observe messages for selector that isn't implemented.
-        */
+        /// Trying to observe messages for selector that isn't implemented.
         case selectorNotImplemented(target: AnyObject)
 
-        /**
-        Core Foundation classes are usually toll free bridged. Those classes crash the program in case
-        `object_setClass` is performed on them.
-
-        There is a possibility to just swizzle methods on original object, but since those won't be usual use
-        cases for this library, then an error will just be reported for now.
-        */
+        /// Core Foundation classes are usually toll free bridged. Those classes crash the program in case
+        /// `object_setClass` is performed on them.
+        ///
+        /// There is a possibility to just swizzle methods on original object, but since those won't be usual use
+        /// cases for this library, then an error will just be reported for now.
         case cantInterceptCoreFoundationTollFreeBridgedObjects(target: AnyObject)
 
-        /**
-        Two libraries have simultaneously tried to modify ObjC runtime and that was detected. This can only
-        happen in scenarios where multiple interception libraries are used.
-         
-        To synchronize other libraries intercepting messages for an object, use `synchronized` on target object and
-        it's meta-class.
-        */
+        /// Two libraries have simultaneously tried to modify ObjC runtime and that was detected. This can only
+        /// happen in scenarios where multiple interception libraries are used.
+        ///
+        /// To synchronize other libraries intercepting messages for an object, use `synchronized` on target object and
+        /// it's meta-class.
         case threadingCollisionWithOtherInterceptionMechanism(target: AnyObject)
 
-        /**
-        For some reason saving original method implementation under RX namespace failed.
-        */
+        /// For some reason saving original method implementation under RX namespace failed.
         case savingOriginalForwardingMethodFailed(target: AnyObject)
 
-        /**
-        Intercepting a sent message by replacing a method implementation with `_objc_msgForward` failed for some reason.
-        */
+        /// Intercepting a sent message by replacing a method implementation with `_objc_msgForward` failed for some reason.
         case replacingMethodWithForwardingImplementation(target: AnyObject)
 
-        /**
-        Attempt to intercept one of the performance sensitive methods:
-            * class
-            * respondsToSelector:
-            * methodSignatureForSelector:
-            * forwardingTargetForSelector:
-        */
+        /// Attempt to intercept one of the performance sensitive methods:
+        ///    * class
+        ///    * respondsToSelector:
+        ///    * methodSignatureForSelector:
+        ///    * forwardingTargetForSelector:
         case observingPerformanceSensitiveMessages(target: AnyObject)
 
-        /**
-        Message implementation has unsupported return type (for example large struct). The reason why this is a error
-        is because in some cases intercepting sent messages requires replacing implementation with `_objc_msgForward_stret` 
-        instead of `_objc_msgForward`.
-
-        The unsupported cases should be fairly uncommon.
-        */
+        /// Message implementation has unsupported return type (for example large struct). The reason why this is a error
+        /// is because in some cases intercepting sent messages requires replacing implementation with `_objc_msgForward_stret`
+        /// instead of `_objc_msgForward`.
+        ///
+        /// The unsupported cases should be fairly uncommon.
         case observingMessagesWithUnsupportedReturnType(target: AnyObject)
     }
 
     public extension RxCocoaObjCRuntimeError {
-        /**
-         A textual representation of `self`, suitable for debugging.
-         */
+        /// A textual representation of `self`, suitable for debugging.
         public var debugDescription: String {
             switch self {
             case let .unknown(target):

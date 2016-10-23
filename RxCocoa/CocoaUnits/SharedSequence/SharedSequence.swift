@@ -51,7 +51,6 @@ public struct SharedSequence<S: SharingStrategyProtocol, Element> : SharedSequen
     /**
     - returns: Built observable sequence.
     */
-    // @warn_unused_result(message:"http://git.io/rxs.uo")
     public func asObservable() -> Observable<E> {
         return _source
     }
@@ -59,7 +58,6 @@ public struct SharedSequence<S: SharingStrategyProtocol, Element> : SharedSequen
     /**
     - returns: `self`
     */
-    // @warn_unused_result(message:"http://git.io/rxs.uo")
     public func asSharedSequence() -> SharedSequence<SharingStrategy, E> {
         return self
     }
@@ -93,12 +91,10 @@ public protocol SharedSequenceConvertibleType : ObservableConvertibleType {
     /**
     Converts self to `SharedSequence`.
     */
-    // @warn_unused_result(message:"http://git.io/rxs.uo")
     func asSharedSequence() -> SharedSequence<SharingStrategy, E>
 }
 
 extension SharedSequenceConvertibleType {
-    // @warn_unused_result(message:"http://git.io/rxs.uo")
     public func asObservable() -> Observable<E> {
         return asSharedSequence().asObservable()
     }
@@ -112,7 +108,6 @@ extension SharedSequence {
 
     - returns: An observable sequence with no elements.
     */
-    // @warn_unused_result(message:"http://git.io/rxs.uo")
     public static func empty() -> SharedSequence<S, E> {
         return SharedSequence(Observable.empty().subscribeOn(S.scheduler))
     }
@@ -122,7 +117,6 @@ extension SharedSequence {
 
     - returns: An observable sequence whose observers will never get called.
     */
-    // @warn_unused_result(message:"http://git.io/rxs.uo")
     public static func never() -> SharedSequence<S, E> {
         return SharedSequence(Observable.never())
     }
@@ -133,7 +127,6 @@ extension SharedSequence {
     - parameter element: Single element in the resulting observable sequence.
     - returns: An observable sequence containing the single specified element.
     */
-    // @warn_unused_result(message:"http://git.io/rxs.uo")
     public static func just(_ element: E) -> SharedSequence<S, E> {
         return SharedSequence(Observable.just(element).subscribeOn(S.scheduler))
     }
@@ -144,7 +137,6 @@ extension SharedSequence {
      - parameter observableFactory: Observable factory function to invoke for each observer that subscribes to the resulting sequence.
      - returns: An observable sequence whose observers trigger an invocation of the given observable factory function.
      */
-    // @warn_unused_result(message:"http://git.io/rxs.uo")
     public static func deferred(_ observableFactory: @escaping () -> SharedSequence<S, E>)
         -> SharedSequence<S, E> {
         return SharedSequence(Observable.deferred { observableFactory().asObservable() })
@@ -158,7 +150,6 @@ extension SharedSequence {
     - parameter elements: Elements to generate.
     - returns: The observable sequence whose elements are pulled from the given arguments.
     */
-    // @warn_unused_result(message:"http://git.io/rxs.uo")
     public static func of(_ elements: E ...) -> SharedSequence<S, E> {
         let source = Observable.from(elements, scheduler: S.scheduler)
         return SharedSequence(raw: source)
@@ -174,7 +165,6 @@ extension SharedSequence where Element : SignedInteger {
      - parameter period: Period for producing the values in the resulting sequence.
      - returns: An observable sequence that produces a value after each period.
      */
-    // @warn_unused_result(message:"http://git.io/rxs.uo")
     public static func interval(_ period: RxTimeInterval)
         -> SharedSequence<S, E> {
         return SharedSequence(Observable.interval(period, scheduler: S.scheduler))
@@ -193,7 +183,6 @@ extension SharedSequence where Element: SignedInteger {
      - parameter period: Period to produce subsequent values.
      - returns: An observable sequence that produces a value after due time has elapsed and then each period.
      */
-    // @warn_unused_result(message:"http://git.io/rxs.uo")
     public static func timer(_ dueTime: RxTimeInterval, period: RxTimeInterval)
         -> SharedSequence<S, E> {
         return SharedSequence(Observable.timer(dueTime, period: period, scheduler: S.scheduler))
