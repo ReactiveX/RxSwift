@@ -111,7 +111,7 @@ extension ObservableType {
     #endif
 }
 
-public extension ObservableType {
+extension ObservableType {
     /// All internal subscribe calls go through this method.
     func subscribeSafe<O: ObserverType>(_ observer: O) -> Disposable where O.E == E {
         return self.asObservable().subscribe(observer)

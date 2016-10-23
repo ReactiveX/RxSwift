@@ -94,7 +94,7 @@ import Foundation
         case observingMessagesWithUnsupportedReturnType(target: AnyObject)
     }
 
-    public extension RxCocoaObjCRuntimeError {
+    extension RxCocoaObjCRuntimeError {
         /// A textual representation of `self`, suitable for debugging.
         public var debugDescription: String {
             switch self {

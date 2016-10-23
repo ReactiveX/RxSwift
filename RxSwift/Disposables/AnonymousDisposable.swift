@@ -51,12 +51,12 @@ fileprivate final class AnonymousDisposable : DisposeBase, Cancelable {
     }
 }
 
-public extension Disposables {
+extension Disposables {
     
     /// Constructs a new disposable with the given action used for disposal.
     ///
     /// - parameter dispose: Disposal action which will be run upon calling `dispose`.
-    static func create(with dispose: @escaping () -> ()) -> Cancelable {
+    public static func create(with dispose: @escaping () -> ()) -> Cancelable {
         return AnonymousDisposable(disposeAction: dispose)
     }
     

@@ -31,7 +31,7 @@ public enum RxError
     case timeout
 }
 
-public extension RxError {
+extension RxError {
     /// A textual representation of `self`, suitable for debugging.
     public var debugDescription: String {
         switch self {

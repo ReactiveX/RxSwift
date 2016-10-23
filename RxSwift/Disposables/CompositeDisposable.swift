@@ -118,7 +118,7 @@ public final class CompositeDisposable : DisposeBase, Disposable, Cancelable {
     }
 }
 
-public extension Disposables {
+extension Disposables {
 
     /// Creates a disposable with the given disposables.
     public static func create(_ disposable1: Disposable, _ disposable2: Disposable, _ disposable3: Disposable) -> Cancelable {

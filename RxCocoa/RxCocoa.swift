@@ -37,7 +37,7 @@ public enum RxCocoaError
 
 // MARK: Debug descriptions
 
-public extension RxCocoaError {
+extension RxCocoaError {
     /// A textual representation of `self`, suitable for debugging.
     public var debugDescription: String {
         switch self {

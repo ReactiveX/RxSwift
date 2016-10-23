@@ -46,7 +46,7 @@ public protocol ReactiveCompatible {
     var rx: Reactive<CompatibleType> { get set }
 }
 
-public extension ReactiveCompatible {
+extension ReactiveCompatible {
     /// Reactive extensions.
     public static var rx: Reactive<Self>.Type {
         get {
