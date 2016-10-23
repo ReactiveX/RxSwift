@@ -287,7 +287,7 @@ Well, all of the Rx operators are based on math and should be intuitive.
 
 The good news is that about 10-15 operators cover most typical use cases. And that list already includes some of the familiar ones like `map`, `filter`, `zip`, `observeOn`, ...
 
-There is a huge list of [all Rx operators](http://reactivex.io/documentation/operators.html) and list of all of the [currently supported RxSwift operators](API.md).
+There is a huge list of [all Rx operators](http://reactivex.io/documentation/operators.html).
 
 For each operator, there is a [marble diagram](http://reactivex.io/documentation/operators/retry.html) that helps to explain how it works.
 

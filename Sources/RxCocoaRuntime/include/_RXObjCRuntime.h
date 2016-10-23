@@ -37,14 +37,10 @@
  */
 extern BOOL RXAbortOnThreadingHazard;
 
-/**
- Error domain for RXObjCRuntime.
- */
+/// Error domain for RXObjCRuntime.
 extern NSString * __nonnull const RXObjCRuntimeErrorDomain;
 
-/**
- `userInfo` key with additional information is interceptor probably KVO.
- */
+/// `userInfo` key with additional information is interceptor probably KVO.
 extern NSString * __nonnull const RXObjCRuntimeErrorIsKVOKey;
 
 typedef NS_ENUM(NSInteger, RXObjCRuntimeError) {
@@ -59,25 +55,17 @@ typedef NS_ENUM(NSInteger, RXObjCRuntimeError) {
     RXObjCRuntimeErrorObservingMessagesWithUnsupportedReturnType        = 9,
 };
 
-/**
- Transforms normal selector into a selector with RX prefix.
- */
+/// Transforms normal selector into a selector with RX prefix.
 SEL _Nonnull RX_selector(SEL _Nonnull selector);
 
-/**
- Transforms selector into a unique pointer (because of Swift conversion rules)
- */
+/// Transforms selector into a unique pointer (because of Swift conversion rules)
 void * __nonnull RX_reference_from_selector(SEL __nonnull selector);
 
-/**
- Protocol that interception observers must implement.
- */
+/// Protocol that interception observers must implement.
 @protocol RXMessageSentObserver
 
-/**
- In case the same selector is being intercepted for a pair of base/sub classes,
- this property will differentiate between interceptors that need to fire.
- */
+/// In case the same selector is being intercepted for a pair of base/sub classes,
+/// this property will differentiate between interceptors that need to fire.
 @property (nonatomic, assign, readonly) IMP __nonnull targetImplementation;
 
 -(void)messageSentWithArguments:(NSArray* __nonnull)arguments;
@@ -85,44 +73,30 @@ void * __nonnull RX_reference_from_selector(SEL __nonnull selector);
 
 @end
 
-/**
- Protocol that deallocating observer must implement.
- */
+/// Protocol that deallocating observer must implement.
 @protocol RXDeallocatingObserver
 
-/**
- In case the same selector is being intercepted for a pair of base/sub classes,
- this property will differentiate between interceptors that need to fire.
- */
+/// In case the same selector is being intercepted for a pair of base/sub classes,
+/// this property will differentiate between interceptors that need to fire.
 @property (nonatomic, assign, readonly) IMP __nonnull targetImplementation;
 
 -(void)deallocating;
 
 @end
 
-/**
- Ensures interceptor is installed on target object.
- */
+/// Ensures interceptor is installed on target object.
 IMP __nullable RX_ensure_observing(id __nonnull target, SEL __nonnull selector, NSError *__nullable * __nonnull error);
 
-/**
- Extracts arguments for `invocation`.
- */
+/// Extracts arguments for `invocation`.
 NSArray * __nonnull RX_extract_arguments(NSInvocation * __nonnull invocation);
 
-/**
- Returns `YES` in case method has `void` return type.
- */
+/// Returns `YES` in case method has `void` return type.
 BOOL RX_is_method_with_description_void(struct objc_method_description method);
 
-/**
- Returns `YES` in case methodSignature has `void` return type.
- */
+/// Returns `YES` in case methodSignature has `void` return type.
 BOOL RX_is_method_signature_void(NSMethodSignature * __nonnull methodSignature);
 
-/**
- Default value for `RXInterceptionObserver.targetImplementation`.
- */
+/// Default value for `RXInterceptionObserver.targetImplementation`.
 IMP __nonnull RX_default_target_implementation();
 
 #endif
