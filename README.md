@@ -124,37 +124,25 @@ Open Rx.xcworkspace, choose `RxExample` and hit run. This method will build ever
 
 ### [CocoaPods](https://guides.cocoapods.org/using/using-cocoapods.html)
 
+**Tested with `pod --version`: `1.1.1`**
+
 ```
 # Podfile
 use_frameworks!
 
 target 'YOUR_TARGET_NAME' do
-    pod 'RxSwift',    '3.0.0-rc.1'
-    pod 'RxCocoa',    '3.0.0-rc.1'
+    pod 'RxSwift',    '~> 3.0'
+    pod 'RxCocoa',    '~> 3.0'
 end
 
 # RxTests and RxBlocking make the most sense in the context of unit/integration tests
 target 'YOUR_TESTING_TARGET' do
-    pod 'RxBlocking', '3.0.0-rc.1'
-    pod 'RxTest',     '3.0.0-rc.1'
+    pod 'RxBlocking', '~> 3.0'
+    pod 'RxTest',     '~> 3.0'
 end
 ```
 
 Replace `YOUR_TARGET_NAME` and then, in the `Podfile` directory, type:
-
-**:warning: If you want to use CocoaPods with Xcode 8.0 and Swift 3.0, you might need to add the following
-lines to your podfile: :warning:**
-
-```
-post_install do |installer|
-  installer.pods_project.targets.each do |target|
-    target.build_configurations.each do |config|
-      config.build_settings['SWIFT_VERSION'] = '3.0'
-      config.build_settings['MACOSX_DEPLOYMENT_TARGET'] = '10.10'
-    end
-  end
-end
-```
 
 ```
 $ pod install
@@ -162,10 +150,12 @@ $ pod install
 
 ### [Carthage](https://github.com/Carthage/Carthage)
 
+**Tested with `carthage version`: `0.18.1`**
+
 Add this to `Cartfile`
 
 ```
-github "ReactiveX/RxSwift" "3.0.0-rc.1"
+github "ReactiveX/RxSwift" ~> 3.0
 ```
 
 ```
@@ -173,6 +163,8 @@ $ carthage update
 ```
 
 ### [Swift Package Manager](https://github.com/apple/swift-package-manager)
+
+**Tested with `swift build --version`: `3.0.0 (swiftpm-19)`**
 
 Create a `Package.swift` file.
 
@@ -183,7 +175,7 @@ let package = Package(
     name: "RxTestProject",
     targets: [],
     dependencies: [
-        .Package(url: "https://github.com/ReactiveX/RxSwift.git", Version(3, 0, 0, prereleaseIdentifiers: ["rc"]))
+        .Package(url: "https://github.com/ReactiveX/RxSwift.git", majorVersion: 3)
     ]
 )
 ```

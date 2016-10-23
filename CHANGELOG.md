@@ -5,6 +5,39 @@ All notable changes to this project will be documented in this file.
 
 ## Master
 
+## [3.0.0](https://github.com/ReactiveX/RxSwift/releases/tag/3.0.0) (Xcode 8 / Swift 3.0 compatible)
+
+* Prefixes boolean properties with `is` and makes `String?` properties consistent.
+    * `rx.hidden` -> `rx.isHidden`
+    * `rx.enabled` -> `rx.isEnabled`
+    ...
+    also ...
+    * since `rx.text` has now type `String?` to be consistent with UIKit, in case `String` is needed
+    there is `rx.text.orEmpty` that has `String` type.   
+* Renames `title(controlState:)` on `UIButton` to `title(for:)`.
+* All data structures are now internal (`Bag`, `Queue`, `PriorityQueue` ...)
+* Improves performance of `Bag`.
+* Polishes RxCocoa `URLSession` extensions
+    * `JSON` -> `json`
+    * return type is `Any` instead of `AnyObject`
+    * replaces response tuple parameters, now it's `(HTTPResponse, Data)`
+    * removes name hiding for `request` parameter
+* Migrates `Driver` and `NSNotification` tests to `Linux`.
+* Removes RxTest from OSX + SPM integration until usable XCTest support on OSX.
+* Renames `ObserverType.map` to `OberverType.mapObserver` because of possible ambigutites with subjects.
+* Improves dispatch queue detection logic and replaces concept of threads in favor of dispatch queues (solves a lot
+  of problems on Linux environment).
+* Replaces `SectionedViewDataSourceType.model(_:)` with `SectionedViewDataSourceType.model(at:)`
+* Renames `OSX` to `macOS` across the project.
+
+#### Anomalies
+
+* Fixes wrong casing in `#import "include/_RXObjCRuntime.h"` (was creating issues for people with 
+  case sensitive file system). #949
+* Fixes issues with locking strategy for subjects. #936
+* Fixes code example in comments of RxTableViewExtensions that didn't compile. #947
+* Adds `.swift-version` to help package managers to detect Swift 3 version.
+
 ## [3.0.0-rc.1](https://github.com/ReactiveX/RxSwift/releases/tag/3.0.0-beta.1) (Xcode 8 / Swift 3.0 compatible)
 
 * Renames `RxTests` library to `RxTest` because of problems with Swift Package Manager.
