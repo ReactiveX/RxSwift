@@ -155,7 +155,7 @@ class RxExample_iOSTests
                     wireframe: wireframe
                 )
             )
-                              
+            
             // run experiment
             let recordedSignupEnabled = scheduler.record(source: viewModel.signupEnabled)
             let recordedValidatedUsername = scheduler.record(source: viewModel.validatedUsername)
