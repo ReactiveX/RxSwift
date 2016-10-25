@@ -131,7 +131,7 @@ class ZipObserver<ElementType>
     }
 
     func _synchronized_on(_ event: Event<E>) {
-        if let _ = _parent {
+        if _parent != nil {
             switch event {
             case .next(_):
                 break

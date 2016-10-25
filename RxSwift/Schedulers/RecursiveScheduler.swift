@@ -53,11 +53,9 @@ class AnyRecursiveScheduler<State> {
                 
                 return self._action
             }
-            
-            if let action = action {
-                action(state, self)
-            }
-            
+
+            action?(state, self)
+
             return Disposables.create()
         }
             
@@ -94,10 +92,8 @@ class AnyRecursiveScheduler<State> {
                 
                 return self._action
             }
-           
-            if let action = action {
-                action(state, self)
-            }
+
+            action?(state, self)
             
             return Disposables.create()
         }
@@ -160,10 +156,8 @@ class RecursiveImmediateScheduler<State> {
                 
                 return self._action
             }
-            
-            if let action = action {
-                action(state, self.schedule)
-            }
+
+            action?(state, self.schedule)
             
             return Disposables.create()
         }

@@ -58,7 +58,7 @@ class Timer<E: SignedInteger>: Producer<E> {
     }
     
     override func run<O : ObserverType>(_ observer: O, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where O.E == E {
-        if let _ = _period {
+        if _period != nil {
             let sink = TimerSink(parent: self, observer: observer, cancel: cancel)
             let subscription = sink.run()
             return (sink: sink, subscription: subscription)

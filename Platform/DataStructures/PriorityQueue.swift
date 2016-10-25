@@ -43,12 +43,12 @@ struct PriorityQueue<Element> {
     }
 
     mutating func remove(_ element: Element) {
-        for i in 0 ..< _elements.count {
-            if _isEqual(_elements[i], element) {
-                removeAt(i)
-                return
-            }
+
+        guard let index = _elements.index(where: { _isEqual($0, element) }) else {
+            return
         }
+
+        removeAt(index)
     }
 
     private mutating func removeAt(_ index: Int) {
