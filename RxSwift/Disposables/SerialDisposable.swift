@@ -50,10 +50,8 @@ public final class SerialDisposable : DisposeBase, Cancelable {
                     return toDispose
                 }
             }
-            
-            if let disposable = disposable {
-                disposable.dispose()
-            }
+
+            disposable?.dispose()
         }
     }
     
@@ -64,14 +62,12 @@ public final class SerialDisposable : DisposeBase, Cancelable {
 
     private func _dispose() -> Disposable? {
         _lock.lock(); defer { _lock.unlock() }
-        if _isDisposed {
+        guard !_isDisposed else {
             return nil
         }
-        else {
-            _isDisposed = true
-            let current = _current
-            _current = nil
-            return current
-        }
+        _isDisposed = true
+        let current = _current
+        _current = nil
+        return current
     }
 }

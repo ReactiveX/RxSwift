@@ -66,16 +66,10 @@ class DelaySink<ElementType, O: ObserverType>
                 let eventToForwardImmediatelly = ranAtLeastOnce ? nil : _queue.dequeue()?.event
                 let nextEventToScheduleOriginalTime: Date? = ranAtLeastOnce && !_queue.isEmpty ? _queue.peek().eventTime : nil
 
-                if let _ = errorEvent {
-                }
-                else  {
-                    if let _ = eventToForwardImmediatelly {
-                    }
-                    else if let _ = nextEventToScheduleOriginalTime {
-                        _running = false
-                    }
-                    else {
-                        _running = false
+                if errorEvent == nil  && eventToForwardImmediatelly == nil {
+                    _running = false
+
+                    if nextEventToScheduleOriginalTime == nil {
                         _active = false
                     }
                 }

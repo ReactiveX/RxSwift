@@ -127,14 +127,14 @@ struct Bag<T> : CustomDebugStringConvertible {
     mutating func removeKey(_ key: BagKey) -> T? {
         if _key0 == key {
             _key0 = nil
-            let value = _value0!
+            let value = _value0
             _value0 = nil
             return value
         }
 
         if _key1 == key {
             _key1 = nil
-            let value = _value1!
+            let value = _value1
             _value1 = nil
             return value
         }
@@ -143,15 +143,12 @@ struct Bag<T> : CustomDebugStringConvertible {
             return existingObject
         }
 
-        for i in 0 ..< _pairs.count {
-            if _pairs[i].key == key {
-                let value = _pairs[i].value
-                _pairs.remove(at: i)
-                return value
-            }
+
+        guard let index = _pairs.index(where: { $0.key == key }) else {
+            return nil
         }
 
-        return nil
+        return _pairs.remove(at: index).value
     }
 }
 
@@ -167,7 +164,7 @@ extension Bag {
     ///
     /// - parameter action: Enumeration closure.
     func forEach(_ action: (T) -> Void) {
-        if _onlyFastPath {
+        guard !_onlyFastPath else {
             if let value0 = _value0 {
                 action(value0)
             }
@@ -187,15 +184,9 @@ extension Bag {
             action(value1)
         }
 
-        for i in 0 ..< pairs.count {
-            action(pairs[i].value)
-        }
+        pairs.map({ $0.value }).forEach(action)
 
-        if dictionary?.count ?? 0 > 0 {
-            for element in dictionary!.values {
-                action(element)
-            }
-        }
+        dictionary?.values.forEach(action)
     }
 }
 

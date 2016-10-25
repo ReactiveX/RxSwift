@@ -72,7 +72,7 @@ class AsyncLock<I: InvocableType>
 
     func invoke(_ action: I) {
         let firstEnqueuedAction = enqueue(action)
-        
+
         if let firstEnqueuedAction = firstEnqueuedAction {
             firstEnqueuedAction.invoke()
         }
@@ -80,17 +80,11 @@ class AsyncLock<I: InvocableType>
             // action is enqueued, it's somebody else's concern now
             return
         }
-        
-        while true {
-            let nextAction = dequeue()
 
-            if let nextAction = nextAction {
-                nextAction.invoke()
-            }
-            else {
-                return
-            }
+        while let nextAction = dequeue() {
+            nextAction.invoke()
         }
+
     }
     
     func dispose() {
