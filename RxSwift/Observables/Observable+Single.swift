@@ -22,13 +22,17 @@ extension Optional: AnyOptional {
 // MARK: distinct until changed
 
 extension ObservableType where Element: AnyOptional, Element.T: Equatable {
+    
+    /**
+    Returns an observable sequence that contains only distinct contiguous elements according to equality operator.
+
+    - seealso: [distinct operator on reactivex.io](http://reactivex.io/documentation/operators/distinct.html)
+    
+    - returns: An observable sequence only containing the distinct contiguous elements, based on equality operator, from the source sequence.
+    */
     public func distinctUntilChanged() -> Observable<Element> {
         return self.distinctUntilChanged { (lhs, rhs) -> Bool in
-            switch (lhs.asOptional, rhs.asOptional) {
-            case (.some(let l), .some(let r)):      return l == r
-            case (.none, .none):                    return true
-            case (.some, .none), (.none, .some):    return false
-            }
+            return lhs.asOptional == rhs.asOptional
         }
     }
 }
