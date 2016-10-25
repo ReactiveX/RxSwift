@@ -21,7 +21,7 @@ extension Optional: AnyOptional {
 
 // MARK: distinct until changed
 
-extension ObservableType where Element: AnyOptional, Element.T: Equatable {
+extension ObservableType where E: AnyOptional, E.T: Equatable {
     
     /**
     Returns an observable sequence that contains only distinct contiguous elements according to equality operator.
@@ -30,7 +30,7 @@ extension ObservableType where Element: AnyOptional, Element.T: Equatable {
     
     - returns: An observable sequence only containing the distinct contiguous elements, based on equality operator, from the source sequence.
     */
-    public func distinctUntilChanged() -> Observable<Element> {
+    public func distinctUntilChanged() -> Observable<E> {
         return self.distinctUntilChanged { (lhs, rhs) -> Bool in
             return lhs.asOptional == rhs.asOptional
         }
