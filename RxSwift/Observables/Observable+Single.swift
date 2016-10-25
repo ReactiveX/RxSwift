@@ -8,7 +8,30 @@
 
 import Foundation
 
+/// Type erased OptionalType
+public protocol AnyOptional {
+    associatedtype T
+    var asOptional: T? { get }
+}
+extension Optional: AnyOptional {
+    public var asOptional: Wrapped? {
+        return self
+    }   
+}
+
 // MARK: distinct until changed
+
+extension ObservableType where Element: AnyOptional, Element.T: Equatable {
+    public func distinctUntilChanged() -> Observable<Element> {
+        return self.distinctUntilChanged { (lhs, rhs) -> Bool in
+            switch (lhs.asOptional, rhs.asOptional) {
+            case (.some(let l), .some(let r)):      return l == r
+            case (.none, .none):                    return true
+            case (.some, .none), (.none, .some):    return false
+            }
+        }
+    }
+}
 
 extension ObservableType where E: Equatable {
     
