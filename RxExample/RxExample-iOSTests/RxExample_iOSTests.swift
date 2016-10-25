@@ -141,6 +141,7 @@ class RxExample_iOSTests
         This method enables using mock schedulers for while testing drivers.
         */
         driveOnScheduler(scheduler) {
+            
             let viewModel = GithubSignupViewModel2(
                 input: (
                     username: scheduler.createHotObservable(usernameEvents).asDriver(onErrorJustReturn: ""),
@@ -154,9 +155,7 @@ class RxExample_iOSTests
                     wireframe: wireframe
                 )
             )
-          
-          
-          
+                              
             // run experiment
             let recordedSignupEnabled = scheduler.record(source: viewModel.signupEnabled)
             let recordedValidatedUsername = scheduler.record(source: viewModel.validatedUsername)
