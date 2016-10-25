@@ -142,6 +142,20 @@ extension SharedSequenceConvertibleType {
 }
 
 // MARK: distinctUntilChanged
+extension SharedSequence where Element: AnyOptional, Element.T: Equatable {
+    
+    /**
+    Returns an observable sequence that contains only distinct contiguous elements according to equality operator.
+    
+    - returns: An observable sequence only containing the distinct contiguous elements, based on equality operator, from the source sequence.
+    */
+    func distinctUntilChanged() -> SharedSequence<SharingStrategy, Element> {
+        return self.distinctUntilChanged { (lhs, rhs) -> Bool in
+            return lhs.asOptional == rhs.asOptional
+        }
+    }
+}
+
 extension SharedSequenceConvertibleType where E: Equatable {
     
     /**
