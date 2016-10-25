@@ -35,14 +35,14 @@ import Foundation
 
     extension Reactive where Base: UITextField {
         /// Reactive text input.
-        public var textInput: TextInput<UITextField> {
+        public var textInput: TextInput<Base> {
             return TextInput(base: base, text: self.text)
         }
     }
 
     extension Reactive where Base: UITextView {
         /// Reactive text input.
-        public var textInput: TextInput<UITextView> {
+        public var textInput: TextInput<Base> {
             return TextInput(base: base, text: self.text)
         }
     }
