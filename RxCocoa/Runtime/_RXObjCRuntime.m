@@ -295,7 +295,7 @@ replacementImplementationGenerator:(IMP (^)(IMP originalImplementation))replacem
  that every action is properly locked.
  */
 IMP __nullable RX_ensure_observing(id __nonnull target, SEL __nonnull selector, NSError ** __nonnull error) {
-    __block IMP __nonnull targetImplementation = nil;
+    __block IMP targetImplementation = nil;
     // Target is the second object that needs to be synchronized to TRY to make sure other swizzling framework
     // won't do something in parallel.
     // Even though this is too fine grained locking and more coarse grained locks should exist, this is just in case
