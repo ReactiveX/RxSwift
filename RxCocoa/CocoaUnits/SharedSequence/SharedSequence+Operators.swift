@@ -391,6 +391,25 @@ extension SharedSequenceConvertibleType {
     }
 }
 
+// MARK: take
+extension SharedSequenceConvertibleType {
+
+    /**
+     Returns a specified number of contiguous elements from the start of an observable sequence.
+
+     - seealso: [take operator on reactivex.io](http://reactivex.io/documentation/operators/take.html)
+
+     - parameter count: The number of elements to return.
+     - returns: An observable sequence that contains the specified number of elements from the start of the input sequence.
+     */
+    public func take(_ count: Int)
+        -> SharedSequence<SharingStrategy, E> {
+        let source = self.asObservable()
+            .take(count)
+        return SharedSequence(source)
+    }
+}
+
 // MARK: skip
 extension SharedSequenceConvertibleType {
 
