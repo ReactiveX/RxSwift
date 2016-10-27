@@ -180,6 +180,10 @@ let package = Package(
 )
 ```
 
+```
+$ swift build
+```
+
 ### Manually using git submodules
 
 * Add RxSwift as a submodule
