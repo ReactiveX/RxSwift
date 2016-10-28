@@ -54,5 +54,8 @@ script:
           xcodebuild -version;
           xcodebuild -showsdks;
       fi;
-      ./scripts/all-tests.sh "${TEST}";
+      TRAVIS=1 ./scripts/all-tests.sh "${TEST}";
     fi
+
+after_success:
+  - sleep 5 # workaround https://github.com/travis-ci/travis-ci/issues/4725

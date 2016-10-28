@@ -21,16 +21,30 @@ BOLDWHITE="\033[1m\033[37m"
 
 # make sure all tests are passing
 
-IS_SWIFT_3=`swift --version | grep "Apple Swift version 3.0" | wc -l`
-
-if [ "${IS_SWIFT_3}" -eq 1 ]; then
-    DEFAULT_IOS_SIMULATOR=RxSwiftTest/iPhone-6/iOS/10.0
-    DEFAULT_WATCHOS_SIMULATOR=RxSwiftTest/Apple-Watch-38mm/watchOS/3.0
-    DEFAULT_TVOS_SIMULATOR=RxSwiftTest/Apple-TV-1080p/tvOS/10.0
+if [[ "${TRAVIS}" -eq 1 ]]; then
+    DEFAULT_IOS_SIMULATOR="iPhone 7/iPhone-7/iOS"
+    DEFAULT_WATCHOS_SIMULATOR="Apple Watch - 38mm/Apple-Watch-38mm/watchOS"
+    DEFAULT_TVOS_SIMULATOR="Apple TV 1080p/Apple-TV-1080p/tvOS"
+    RUN_SIMULATOR_BY_NAME=1
 else
-    DEFAULT_IOS_SIMULATOR=RxSwiftTest/iPhone-6/iOS/9.3
-    DEFAULT_WATCHOS_SIMULATOR=RxSwiftTest/Apple-Watch-38mm/watchOS/2.2
-    DEFAULT_TVOS_SIMULATOR=RxSwiftTest/Apple-TV-1080p/tvOS/9.1
+    if [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.iOS-10-1 | wc -l` -eq 1 ]; then
+        DEFAULT_IOS_SIMULATOR=RxSwiftTest/iPhone-6/iOS/10.1
+    else
+        DEFAULT_IOS_SIMULATOR=RxSwiftTest/iPhone-6/iOS/10.0
+    fi
+
+    if [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.watchOS-3-1 | wc -l` -eq 1 ]; then
+        DEFAULT_WATCHOS_SIMULATOR=RxSwiftTest/Apple-Watch-38mm/watchOS/3.1
+    else
+        DEFAULT_WATCHOS_SIMULATOR=RxSwiftTest/Apple-Watch-38mm/watchOS/3.0
+    fi
+
+    if [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.tvOS-10-1 | wc -l` -eq 1 ]; then
+        DEFAULT_TVOS_SIMULATOR=RxSwiftTest/Apple-TV-1080p/tvOS/10.1
+    else
+        DEFAULT_TVOS_SIMULATOR=RxSwiftTest/Apple-TV-1080p/tvOS/10.0
+    fi
+    RUN_SIMULATOR_BY_NAME=0
 fi
 
 function runtime_available() {
@@ -94,6 +108,11 @@ function ensure_simulator_available() {
 
 	echo "Creating new simulator with runtime=${RUNTIME}"
 	xcrun simctl create "${SIMULATOR}" "com.apple.CoreSimulator.SimDeviceType.${DEVICE}" "${RUNTIME}"
+
+	SIMULATOR_ID=`simulator_ids "${SIMULATOR}"`
+    echo "Warming up ${SIMULATOR_ID} ..."
+	open -a "Simulator" --args -CurrentDeviceUDID "${SIMULATOR_ID}"
+    sleep 90
 }
 
 BUILD_DIRECTORY=build
@@ -120,10 +139,15 @@ function action() {
 				DESTINATION='name='${SIMULATOR}
 			#else it's just a simulator
 			else
-				ensure_simulator_available "${SIMULATOR}"
-				OS=`echo $SIMULATOR | cut -d '/' -f 3`
-				SIMULATOR_GUID=`simulator_ids "${SIMULATOR}"`
-				DESTINATION='platform='$OS' Simulator,OS='$OS',id='$SIMULATOR_GUID''
+                OS=`echo $SIMULATOR | cut -d '/' -f 3`
+                if [ "${RUN_SIMULATOR_BY_NAME}" -eq 1 ]; then
+    				SIMULATOR_NAME=`echo $SIMULATOR | cut -d '/' -f 1`
+    				DESTINATION='platform='$OS' Simulator,name='$SIMULATOR_NAME''
+                else
+				    ensure_simulator_available "${SIMULATOR}"
+    				SIMULATOR_GUID=`simulator_ids "${SIMULATOR}"`
+    				DESTINATION='platform='$OS' Simulator,OS='$OS',id='$SIMULATOR_GUID''
+                fi
 				echo "Running on ${DESTINATION}"
 			fi
 	else

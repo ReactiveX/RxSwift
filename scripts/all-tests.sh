@@ -146,19 +146,19 @@ if [ "${VALIDATE_IOS_EXAMPLE}" -eq 1 ]; then
 
             for configuration in ${CONFIGURATIONS[@]}
             do
-                rx "RxExample-iOSUITests" ${configuration} $DEFAULT_IOS_SIMULATOR test
+                rx "RxExample-iOSUITests" ${configuration} "${DEFAULT_IOS_SIMULATOR}" test
             done
 
             for configuration in ${CONFIGURATIONS[@]}
             do
-                rx "RxExample-iOSTests" ${configuration} $DEFAULT_IOS_SIMULATOR test
+                rx "RxExample-iOSTests" ${configuration} "${DEFAULT_IOS_SIMULATOR}" test
             done
         else
             for scheme in "RxExample-iOS"
             do
                 for configuration in "Debug"
                 do
-                    rx ${scheme} ${configuration} $DEFAULT_IOS_SIMULATOR build
+                    rx ${scheme} ${configuration} "${DEFAULT_IOS_SIMULATOR}" build
                 done
             done
         fi
@@ -176,7 +176,7 @@ if [ "${VALIDATE_IOS}" -eq 1 ]; then
         #make sure all iOS tests pass
         for configuration in ${CONFIGURATIONS[@]}
         do
-        	rx "RxSwift-iOS" ${configuration} $DEFAULT_IOS_SIMULATOR test
+        	rx "RxSwift-iOS" ${configuration} "${DEFAULT_IOS_SIMULATOR}" test
         done
     elif [[ "${UNIX_NAME}" == "${LINUX}" ]]; then
         unsupported_target
@@ -227,7 +227,7 @@ if [ "${VALIDATE_TVOS}" -eq 1 ]; then
     if [[ "${UNIX_NAME}" == "${DARWIN}" ]]; then
     	for configuration in ${CONFIGURATIONS[@]}
     	do
-    		rx "RxSwift-tvOS" ${configuration} $DEFAULT_TVOS_SIMULATOR test
+    		rx "RxSwift-tvOS" ${configuration} "${DEFAULT_TVOS_SIMULATOR}" test
     	done
     elif [[ "${UNIX_NAME}" == "${LINUX}" ]]; then
         printf "${RED}Skipping tvOS tests ...${RESET}\n"
