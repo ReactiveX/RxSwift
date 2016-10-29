@@ -15,7 +15,7 @@ extension Reactive where Base: NotificationCenter {
     /**
     Transforms notifications posted to notification center to observable sequence of notifications.
     
-    - parameter name: Filter notifications by name.
+    - parameter name: Optional name used to filter notifications.
     - parameter object: Optional object used to filter notifications.
     - returns: Observable sequence of posted notifications.
     */
