@@ -16,6 +16,12 @@ class IntroductionExampleViewController : ViewController {
     @IBOutlet var a: NSTextField!
     @IBOutlet var b: NSTextField!
     @IBOutlet var c: NSTextField!
+
+    @IBOutlet var leftTextView: NSTextView!
+    @IBOutlet var rightTextView: NSTextView!
+    let textViewTruth = Variable<String>("System Truth")
+    
+    @IBOutlet var speechEnabled: NSButton!
     @IBOutlet var slider: NSSlider!
     @IBOutlet var sliderValue: NSTextField!
     
@@ -23,8 +29,6 @@ class IntroductionExampleViewController : ViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        showAlert("After you close this, prepare for a loud sound ...")
 
         // c = a + b
         let sum = Observable.combineLatest(a.rx.text.orEmpty, b.rx.text.orEmpty) { (a: String, b: String) -> (Int, Int) in
@@ -42,9 +46,14 @@ class IntroductionExampleViewController : ViewController {
         // Also, tell it out loud
         let speech = NSSpeechSynthesizer()
         
-        sum
-            .map { (a, b) in
-                return "\(a) + \(b) = \(a + b)"
+        Observable.combineLatest(sum, speechEnabled.rx.state) { ($0, $1) }
+            .flatMapLatest { (operands, state) -> Observable<String> in
+                let (a, b) = operands
+                if state == 0 {
+                    return .empty()
+                }
+
+                return .just("\(a) + \(b) = \(a + b)")
             }
             .subscribe(onNext: { result in
                 if speech.isSpeaking {
