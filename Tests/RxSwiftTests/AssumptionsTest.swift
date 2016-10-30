@@ -42,6 +42,7 @@ class AssumptionsTest : RxTest {
         // first check is dealloc method working
         
         var a: Anything? = Anything()
+        _ = a
         XCTAssertFalse(deallocated)
         a = nil
         XCTAssertTrue(deallocated)
