@@ -122,7 +122,10 @@ if [[ "${UNIX_NAME}" == "${DARWIN}" ]]; then
     ensureNoGitChanges "Package for Swift package manager isn't updated, please run ./scripts/package-spm.swift and commit the changes"
 fi
 
-CONFIGURATIONS=(Release-Tests)
+# https://bugs.swift.org/browse/SR-3081
+# https://forums.developer.apple.com/thread/66580
+CONFIGURATIONS=(Debug)
+#CONFIGURATIONS=(Release-Tests)
 
 if [ "${RELEASE_TEST}" -eq 1 ]; then
 	CONFIGURATIONS=(Release Release-Tests Debug)
