@@ -21,25 +21,15 @@ extension Bag where T: ObserverType {
             return
         }
 
-        let pairs = _pairs
         let value0 = _value0
-        let value1 = _value1
         let dictionary = _dictionary
 
         if let value0 = value0 {
             value0.on(event)
         }
 
-        if let value1 = value1 {
-            value1.on(event)
-        }
-
-        for i in 0 ..< pairs.count {
-            pairs[i].value.on(event)
-        }
-
-        if dictionary?.count ?? 0 > 0 {
-            for element in dictionary!.values {
+        if let dictionary = dictionary {
+            for element in dictionary.values {
                 element.on(event)
             }
         }
@@ -53,25 +43,15 @@ func disposeAll(in bag: Bag<Disposable>) {
         return
     }
 
-    let pairs = bag._pairs
     let value0 = bag._value0
-    let value1 = bag._value1
     let dictionary = bag._dictionary
 
     if let value0 = value0 {
         value0.dispose()
     }
 
-    if let value1 = value1 {
-        value1.dispose()
-    }
-
-    for i in 0 ..< pairs.count {
-        pairs[i].value.dispose()
-    }
-
-    if dictionary?.count ?? 0 > 0 {
-        for element in dictionary!.values {
+    if let dictionary = dictionary {
+        for element in dictionary.values {
             element.dispose()
         }
     }
