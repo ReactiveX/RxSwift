@@ -133,20 +133,6 @@ class RxExample_iOSTests
         let wireframe = MockWireframe()
         let validationService = GitHubDefaultValidationService(API: mockAPI)
 
-        let viewModel = GithubSignupViewModel2(
-            input: (
-                username: scheduler.createHotObservable(usernameEvents).asDriver(onErrorJustReturn: ""),
-                password: scheduler.createHotObservable(passwordEvents).asDriver(onErrorJustReturn: ""),
-                repeatedPassword: scheduler.createHotObservable(repeatedPasswordEvents).asDriver(onErrorJustReturn: ""),
-                loginTaps: scheduler.createHotObservable(loginTapEvents).asDriver(onErrorJustReturn: ())
-            ),
-            dependency: (
-                API: mockAPI,
-                validationService: validationService,
-                wireframe: wireframe
-            )
-        )
-
         /**
         This is important because driver will try to ensure that elements are being pumped on main scheduler,
         and that sometimes means that it will get queued using `dispatch_async` to main dispatch queue and
@@ -155,6 +141,21 @@ class RxExample_iOSTests
         This method enables using mock schedulers for while testing drivers.
         */
         driveOnScheduler(scheduler) {
+            
+            let viewModel = GithubSignupViewModel2(
+                input: (
+                    username: scheduler.createHotObservable(usernameEvents).asDriver(onErrorJustReturn: ""),
+                    password: scheduler.createHotObservable(passwordEvents).asDriver(onErrorJustReturn: ""),
+                    repeatedPassword: scheduler.createHotObservable(repeatedPasswordEvents).asDriver(onErrorJustReturn: ""),
+                    loginTaps: scheduler.createHotObservable(loginTapEvents).asDriver(onErrorJustReturn: ())
+                ),
+                dependency: (
+                    API: mockAPI,
+                    validationService: validationService,
+                    wireframe: wireframe
+                )
+            )
+            
             // run experiment
             let recordedSignupEnabled = scheduler.record(source: viewModel.signupEnabled)
             let recordedValidatedUsername = scheduler.record(source: viewModel.validatedUsername)

@@ -390,7 +390,7 @@
 		C8477FEC1D29DE8C0074454A /* RxTableViewSectionedAnimatedDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxTableViewSectionedAnimatedDataSource.swift; sourceTree = "<group>"; };
 		C8477FED1D29DE8C0074454A /* RxTableViewSectionedReloadDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxTableViewSectionedReloadDataSource.swift; sourceTree = "<group>"; };
 		C849EF611C3190360048AC4A /* RxExample-iOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "RxExample-iOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		C849EF631C3190360048AC4A /* RxExample_iOSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxExample_iOSTests.swift; sourceTree = "<group>"; };
+		C849EF631C3190360048AC4A /* RxExample_iOSTests.swift */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = RxExample_iOSTests.swift; sourceTree = "<group>"; tabWidth = 4; };
 		C849EF651C3190360048AC4A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C849EF7E1C3193B10048AC4A /* GitHubSignupViewController1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GitHubSignupViewController1.swift; sourceTree = "<group>"; };
 		C849EF7F1C3193B10048AC4A /* GithubSignupViewModel1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GithubSignupViewModel1.swift; sourceTree = "<group>"; };
