@@ -5195,6 +5195,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = "Tests/RxCocoaTests/RxTest-iOS-Bridging-Header.h";
+				SWIFT_REFLECTION_METADATA_LEVEL = none;
 			};
 			name = Release;
 		};
@@ -5209,6 +5210,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = "Tests/RxCocoaTests/RxTest-iOS-Bridging-Header.h";
+				SWIFT_REFLECTION_METADATA_LEVEL = none;
 			};
 			name = "Release-Tests";
 		};
@@ -5241,6 +5243,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				SWIFT_OBJC_BRIDGING_HEADER = "Tests/RxCocoaTests/RxTest-tvOS-Bridging-Header.h";
+				SWIFT_REFLECTION_METADATA_LEVEL = none;
 				TVOS_DEPLOYMENT_TARGET = 9.1;
 			};
 			name = Release;
@@ -5255,6 +5258,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				SWIFT_OBJC_BRIDGING_HEADER = "Tests/RxCocoaTests/RxTest-tvOS-Bridging-Header.h";
+				SWIFT_REFLECTION_METADATA_LEVEL = none;
 				TVOS_DEPLOYMENT_TARGET = 9.1;
 			};
 			name = "Release-Tests";
@@ -5295,6 +5299,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SWIFT_OBJC_BRIDGING_HEADER = "Tests/RxCocoaTests/RxTest-macOS-Bridging-Header.h";
+				SWIFT_REFLECTION_METADATA_LEVEL = none;
 			};
 			name = Release;
 		};
@@ -5312,6 +5317,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SWIFT_OBJC_BRIDGING_HEADER = "Tests/RxCocoaTests/RxTest-macOS-Bridging-Header.h";
+				SWIFT_REFLECTION_METADATA_LEVEL = none;
 			};
 			name = "Release-Tests";
 		};
@@ -5412,7 +5418,6 @@
 				OTHER_SWIFT_FLAGS = "-D TRACE_RESOURCES";
 				SDKROOT = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_REFLECTION_METADATA_LEVEL = none;
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TVOS_DEPLOYMENT_TARGET = 9.0;
@@ -5869,7 +5874,6 @@
 				OTHER_SWIFT_FLAGS = "-D RELEASE";
 				SDKROOT = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_REFLECTION_METADATA_LEVEL = none;
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TVOS_DEPLOYMENT_TARGET = 9.0;
