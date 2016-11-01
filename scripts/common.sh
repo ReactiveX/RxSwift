@@ -21,31 +21,24 @@ BOLDWHITE="\033[1m\033[37m"
 
 # make sure all tests are passing
 
-if [[ "${TRAVIS}" -eq 1 ]]; then
-    DEFAULT_IOS_SIMULATOR="iPhone 7/iPhone-7/iOS"
-    DEFAULT_WATCHOS_SIMULATOR="Apple Watch - 38mm/Apple-Watch-38mm/watchOS"
-    DEFAULT_TVOS_SIMULATOR="Apple TV 1080p/Apple-TV-1080p/tvOS"
-    RUN_SIMULATOR_BY_NAME=1
+if [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.iOS-10-1 | wc -l` -eq 1 ]; then
+    DEFAULT_IOS_SIMULATOR=RxSwiftTest/iPhone-6/iOS/10.1
 else
-    if [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.iOS-10-1 | wc -l` -eq 1 ]; then
-        DEFAULT_IOS_SIMULATOR=RxSwiftTest/iPhone-6/iOS/10.1
-    else
-        DEFAULT_IOS_SIMULATOR=RxSwiftTest/iPhone-6/iOS/10.0
-    fi
-
-    if [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.watchOS-3-1 | wc -l` -eq 1 ]; then
-        DEFAULT_WATCHOS_SIMULATOR=RxSwiftTest/Apple-Watch-38mm/watchOS/3.1
-    else
-        DEFAULT_WATCHOS_SIMULATOR=RxSwiftTest/Apple-Watch-38mm/watchOS/3.0
-    fi
-
-    if [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.tvOS-10-1 | wc -l` -eq 1 ]; then
-        DEFAULT_TVOS_SIMULATOR=RxSwiftTest/Apple-TV-1080p/tvOS/10.1
-    else
-        DEFAULT_TVOS_SIMULATOR=RxSwiftTest/Apple-TV-1080p/tvOS/10.0
-    fi
-    RUN_SIMULATOR_BY_NAME=0
+    DEFAULT_IOS_SIMULATOR=RxSwiftTest/iPhone-6/iOS/10.0
 fi
+
+if [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.watchOS-3-1 | wc -l` -eq 1 ]; then
+    DEFAULT_WATCHOS_SIMULATOR=RxSwiftTest/Apple-Watch-38mm/watchOS/3.1
+else
+    DEFAULT_WATCHOS_SIMULATOR=RxSwiftTest/Apple-Watch-38mm/watchOS/3.0
+fi
+
+if [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.tvOS-10-1 | wc -l` -eq 1 ]; then
+    DEFAULT_TVOS_SIMULATOR=RxSwiftTest/Apple-TV-1080p/tvOS/10.1
+else
+    DEFAULT_TVOS_SIMULATOR=RxSwiftTest/Apple-TV-1080p/tvOS/10.0
+fi
+RUN_SIMULATOR_BY_NAME=0
 
 function runtime_available() {
 	if [ `xcrun simctl list runtimes | grep "${1}" | wc -l` -eq 1 ]; then
@@ -112,7 +105,7 @@ function ensure_simulator_available() {
 	SIMULATOR_ID=`simulator_ids "${SIMULATOR}"`
     echo "Warming up ${SIMULATOR_ID} ..."
 	open -a "Simulator" --args -CurrentDeviceUDID "${SIMULATOR_ID}"
-    sleep 90
+    sleep 120
 }
 
 BUILD_DIRECTORY=build

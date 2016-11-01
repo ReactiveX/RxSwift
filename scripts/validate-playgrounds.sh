@@ -1,11 +1,11 @@
 . scripts/common.sh
 
-CONFIGURATIONS=(Release)
+PLAYGROUND_CONFIGURATIONS=(Release)
 
 # make sure macOS builds
 for scheme in "RxSwift-macOS"
 do
-  for configuration in ${CONFIGURATIONS[@]}
+  for configuration in ${PLAYGROUND_CONFIGURATIONS[@]}
   do
     PAGES_PATH=${BUILD_DIRECTORY}/Build/Products/${configuration}/all-playground-pages.swift
     rx ${scheme} ${configuration} "" build
