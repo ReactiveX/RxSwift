@@ -31,6 +31,10 @@ protocol ReachabilityService {
     var reachability: Observable<ReachabilityStatus> { get }
 }
 
+enum ReachabilityServiceError: Error {
+    case failedToCreate
+}
+
 class DefaultReachabilityService
     : ReachabilityService {
 
@@ -43,7 +47,7 @@ class DefaultReachabilityService
     let _reachability: Reachability
 
     init() throws {
-        let reachabilityRef = try Reachability.reachabilityForInternetConnection()
+        guard let reachabilityRef = Reachability() else { throw ReachabilityServiceError.failedToCreate }
         let reachabilitySubject = BehaviorSubject<ReachabilityStatus>(value: .unreachable)
 
         // so main thread isn't blocked when reachability via WiFi is checked
@@ -51,7 +55,7 @@ class DefaultReachabilityService
 
         reachabilityRef.whenReachable = { reachability in
             backgroundQueue.async {
-                reachabilitySubject.on(.next(.reachable(viaWiFi: reachabilityRef.isReachableViaWiFi())))
+                reachabilitySubject.on(.next(.reachable(viaWiFi: reachabilityRef.isReachableViaWiFi)))
             }
         }
 
