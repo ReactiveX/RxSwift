@@ -8,7 +8,34 @@
 
 import Foundation
 
+/// Type erased OptionalType
+public protocol AnyOptional {
+    associatedtype T
+    var asOptional: T? { get }
+}
+extension Optional: AnyOptional {
+    public var asOptional: Wrapped? {
+        return self
+    }   
+}
+
 // MARK: distinct until changed
+
+extension ObservableType where E: AnyOptional, E.T: Equatable {
+    
+    /**
+    Returns an observable sequence that contains only distinct contiguous elements according to equality operator.
+
+    - seealso: [distinct operator on reactivex.io](http://reactivex.io/documentation/operators/distinct.html)
+    
+    - returns: An observable sequence only containing the distinct contiguous elements, based on equality operator, from the source sequence.
+    */
+    public func distinctUntilChanged() -> Observable<E> {
+        return self.distinctUntilChanged { (lhs, rhs) -> Bool in
+            return lhs.asOptional == rhs.asOptional
+        }
+    }
+}
 
 extension ObservableType where E: Equatable {
     

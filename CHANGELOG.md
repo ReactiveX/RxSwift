@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 
 ## Master
 
+* Adds a `.distinctUntilChanged()` operator for `Observable`s & `SharedSequence`s of `Element`s that are `Optional`s where the `Wrapped` type conforms to `Equatable`
+
 ## [3.0.0](https://github.com/ReactiveX/RxSwift/releases/tag/3.0.0) (Xcode 8 / Swift 3.0 compatible)
 
 * Prefixes boolean properties with `is` and makes `String?` properties consistent.
