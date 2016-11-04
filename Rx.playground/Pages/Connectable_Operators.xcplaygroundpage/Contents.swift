@@ -11,7 +11,7 @@ import RxSwift
 
 playgroundShouldContinueIndefinitely()
 /*:
-## Connectable Operators
+# Connectable Operators
  Connectable `Observable` sequences resembles ordinary `Observable` sequences, except that they not begin emitting elements when subscribed to, but instead, only when their `connect()` method is called. In this way, you can wait for all intended subscribers to subscribe to a connectable `Observable` sequence before it begins emitting elements.
  > Within each example on this page is a commented-out method. Uncomment that method to run the example, and then comment it out again to stop running the example.
  #

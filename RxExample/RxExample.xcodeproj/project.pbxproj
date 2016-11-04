@@ -1896,6 +1896,7 @@
 				C82E1DBA1DC69E8D004A6413 /* Release-Tests */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		C83366D81AD0293800C668A7 /* Build configuration list for PBXProject "RxExample" */ = {
 			isa = XCConfigurationList;
