@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RxSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -17,6 +18,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if UIApplication.isInUITest {
             UIView.setAnimationsEnabled(false)
         }
+
+        #if DEBUG
+        _ = Observable<Int>.interval(1, scheduler: MainScheduler.instance)
+            .subscribe(onNext: { _ in
+                print("Resource count \(RxSwift.Resources.total)")
+            })
+        #endif
     }
 }
 
