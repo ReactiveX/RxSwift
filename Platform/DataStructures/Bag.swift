@@ -11,14 +11,14 @@ import Swift
 
 let arrayDictionaryMaxSize = 30
 
-/**
-Unique identifier for object added to `Bag`.
- 
-It's underlying type is UInt64. If we assume there in an idealized CPU that works at 4GHz,
- it would take ~150 years of continuous running time for it to overflow.
-*/
-public struct BagKey {
-    let rawValue: UInt64
+struct BagKey {
+    /**
+    Unique identifier for object added to `Bag`.
+     
+    It's underlying type is UInt64. If we assume there in an idealized CPU that works at 4GHz,
+     it would take ~150 years of continuous running time for it to overflow.
+    */
+    fileprivate let rawValue: UInt64
 }
 
 /**
@@ -157,11 +157,11 @@ extension Bag {
 }
 
 extension BagKey: Hashable {
-    public var hashValue: Int {
+    var hashValue: Int {
         return rawValue.hashValue
     }
 }
 
-public func ==(lhs: BagKey, rhs: BagKey) -> Bool {
+func ==(lhs: BagKey, rhs: BagKey) -> Bool {
     return lhs.rawValue == rhs.rawValue
 }

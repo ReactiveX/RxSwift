@@ -15,7 +15,7 @@ class MergeLimitedSinkIter<S: ObservableConvertibleType, O: ObserverType>
     , LockOwnerType
     , SynchronizedOnType where S.E == O.E {
     typealias E = O.E
-    typealias DisposeKey = Bag<Disposable>.KeyType
+    typealias DisposeKey = CompositeDisposable.DisposeKey
     typealias Parent = MergeLimitedSink<S, O>
     
     private let _parent: Parent
