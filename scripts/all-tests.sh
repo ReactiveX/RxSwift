@@ -1,7 +1,6 @@
 . scripts/common.sh
 
 RELEASE_TEST=0
-SKIP_AUTOMATION=0
 
 VALIDATE_IOS_EXAMPLE=1
 VALIDATE_UNIX=1
@@ -71,6 +70,14 @@ elif [ "$1" == "SPM" ]; then
     TEST_SPM=1
 fi
 
+if [ "${RELEASE_TEST}" -eq 1 ]; then
+    VALIDATE_PODS=${VALIDATE_PODS:-1}
+    RUN_AUTOMATION_TESTS=${RUN_AUTOMATION_TESTS:-1}
+else
+    VALIDATE_PODS=${VALIDATE_PODS:-0}
+    RUN_AUTOMATION_TESTS=${RUN_AUTOMATION_TESTS:-0}
+fi
+
 if [ "$2" == "s" ]; then
     printf "${RED}Skipping automation tests ...${RESET}\n"
     SKIP_AUTOMATION=1
@@ -132,13 +139,13 @@ if [ "${RELEASE_TEST}" -eq 1 ]; then
   	scripts/validate-markdown.sh
 fi
 
-if [ "${RELEASE_TEST}" -eq 1 ]; then
+if [ "${VALIDATE_PODS}" -eq 1 ]; then
 	scripts/validate-podspec.sh
 fi
 
 if [ "${VALIDATE_IOS_EXAMPLE}" -eq 1 ]; then
     if [[ "${UNIX_NAME}" == "${DARWIN}" ]]; then
-        if [ "${RELEASE_TEST}" -eq 1 ] && [ "${SKIP_AUTOMATION}" -eq 0 ]; then
+        if [[ "${RUN_AUTOMATION_TESTS}" -eq 1 ]]; then
             for configuration in ${CONFIGURATIONS[@]}
             do
                 rx "RxExample-iOSUITests" ${configuration} "Krunoslav Zaher’s iPhone" test
