@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 
 ## Master
 
+## [3.0.1](https://github.com/ReactiveX/RxSwift/releases/tag/3.0.1) (Xcode 8 / Swift 3.0 compatible)
+
+#### Anomalies
+
+* Fixes RxCocoa problems on macOS (`TextInput` now uses `NSTextInputClient`)
+* Hides accidentally exposed `BagKey` structure.
+* Makes `notification` extension `name` parameter optional.
+
 ## [3.0.0](https://github.com/ReactiveX/RxSwift/releases/tag/3.0.0) (Xcode 8 / Swift 3.0 compatible)
 
 * Prefixes boolean properties with `is` and makes `String?` properties consistent.
