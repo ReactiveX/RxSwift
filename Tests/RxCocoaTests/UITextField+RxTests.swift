@@ -27,6 +27,20 @@ class UITextFieldTests : RxTest {
         textField.rx.text.on(.next("Text2"))
         XCTAssertTrue(textField.set)
     }
+
+    func testShouldReturnDelegateMessage() {
+        let textField = UITextField()
+
+        var didCall = false
+        let subscription = textField.rx.shouldReturn.subscribe(onNext: {
+            didCall = true
+        })
+
+        textField.delegate!.textFieldShouldReturn!(textField)
+
+        XCTAssertTrue(didCall)
+        subscription.dispose()
+    }
 }
 
 class UITextFieldSubclass : UITextField {
