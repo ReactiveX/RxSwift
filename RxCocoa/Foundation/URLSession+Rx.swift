@@ -192,10 +192,10 @@ extension Reactive where Base: URLSession {
     - parameter request: URL request.
     - returns: Observable sequence of response JSON.
     */
-    public func json(request: URLRequest) -> Observable<Any> {
+    public func json(request: URLRequest, options: JSONSerialization.ReadingOptions = []) -> Observable<Any> {
         return data(request: request).map { (data) -> Any in
             do {
-                return try JSONSerialization.jsonObject(with: data, options: [])
+                return try JSONSerialization.jsonObject(with: data, options: options)
             } catch let error {
                 throw RxCocoaURLError.deserializationError(error: error)
             }
