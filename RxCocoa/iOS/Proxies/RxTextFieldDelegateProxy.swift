@@ -1,6 +1,6 @@
 //
 //  RxTextFieldDelegateProxy.swift
-//  Rx
+//  RxCocoa
 //
 //  Created by Andrew Breckenridge on 11/6/16.
 //  Copyright © 2016 Krunoslav Zaher. All rights reserved.
