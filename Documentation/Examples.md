@@ -3,7 +3,7 @@ Examples
 
 1. [Calculated variable](#calculated-variable)
 1. [Simple UI bindings](#simple-ui-bindings)
-1. [Autocomplete](#autocomplete)
+1. [Automatic input validation](#automatic-input-validation)
 1. [more examples](../RxExample)
 1. [Playgrounds](Playgrounds.md)
 
@@ -96,7 +96,7 @@ subscription.dispose()
 
 All of the operators used in this example are the same operators used in the first example with variables. There's nothing special about it.
 
-## Autocomplete
+## Automatic input validation
 
 If you are new to Rx, the next example will probably be a little overwhelming at first. However, it's here to demonstrate how RxSwift code looks in the real-world.
 
@@ -106,6 +106,24 @@ All operations are cancelled the moment `disposeBag` is deallocated.
 Let's give it a shot.
 
 ```swift
+enum Availability {
+    case available(message: String)
+    case taken(message: String)
+    case invalid(message: String)
+    case pending(message: String)
+    
+    var message: String {
+        switch self {
+        case .available(message: let message),
+             .taken(message: let message),
+             .invalid(message: let message),
+             .pending(message: let message): 
+
+             return message
+        }
+    }
+}
+
 // bind UI control values directly
 // use username from `usernameOutlet` as username values source
 self.usernameOutlet.rx.text
@@ -116,30 +134,24 @@ self.usernameOutlet.rx.text
             // Convenience for constructing synchronous result.
             // In case there is mixed synchronous and asynchronous code inside the same
             // method, this will construct an async result that is resolved immediately.
-            return Observable.just((valid: false, message: "Username can't be empty."))
+            return Observable.just(Availability.invalid(message: "Username can't be empty."))
         }
 
         // ...
 
         // User interfaces should probably show some state while async operations
         // are executing.
-        // Let's assume that we want to show "Checking availability" while waiting for a result.
-        // Valid parameters can be:
-        //  * true  - is valid
-        //  * false - is not valid
-        //  * nil   - validation pending
-        typealias LoadingInfo = (valid: String?, message: String?)
-        let loadingValue : LoadingInfo = (valid: nil, message: "Checking availability ...")
+        let loadingValue = Availability.pending(message: "Checking availability ...")
 
         // This will fire a server call to check if the username already exists.
         // Its type is `Observable<ValidationResult>`
         return API.usernameAvailable(username)
           .map { available in
               if available {
-                  return (true, "Username available")
+                  return Availability.available(message: "Username available")
               }
               else {
-                  return (false, "Username already taken")
+                  return Availability.unavailable(message: "Username already taken")
               }
           }
           // use `loadingValue` until server responds
@@ -154,9 +166,9 @@ self.usernameOutlet.rx.text
 // Now we need to bind that to the user interface somehow.
 // Good old `subscribe(onNext:)` can do that.
 // That's the end of `Observable` chain.
-    .subscribe(onNext: { valid in
-        errorLabel.textColor = validationColor(valid)
-        errorLabel.text = valid.message
+    .subscribe(onNext: { validity in
+        errorLabel.textColor = validationColor(validity)
+        errorLabel.text = validity.message
     })
 // This will produce a `Disposable` object that can unbind everything and cancel
 // pending async operations.
