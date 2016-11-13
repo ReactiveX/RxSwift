@@ -19,11 +19,9 @@ class SimpleTableViewExampleViewController : ViewController, UITableViewDelegate
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let items = Observable.just([
-            "First Item",
-            "Second Item",
-            "Third Item"
-        ])
+        let items = Observable.just(
+            (0..<1000).map { "\($0)" }
+        )
 
         items
             .bindTo(tableView.rx.items(cellIdentifier: "Cell", cellType: UITableViewCell.self)) { (row, element, cell) in
