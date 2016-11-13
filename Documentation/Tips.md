@@ -26,12 +26,12 @@ extension ObservableType where E: MaybeCool {
   **Avoid nesting subscribe calls at all cost. This is a code smell.**
 
   ```swift
-  textField.rx_text.subscribeNext { text in
-      performURLRequest(text).subscribeNext { result in
+  textField.rx_text.subscribe(onNext: { text in
+      performURLRequest(text).subscribe(onNext: { result in
           ...
-      }
+      })
       .addDisposableTo(disposeBag)
-  }
+  })
   .addDisposableTo(disposeBag)
   ```
 
