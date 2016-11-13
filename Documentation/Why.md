@@ -87,9 +87,9 @@ This is how they can be used:
 
 ```swift
 view.rx_observe(CGRect.self, "frame")
-    .subscribeNext { frame in
+    .subscribe(onNext: { frame in
         print("Got new frame \(frame)")
-    }
+    })
 ```
 
 or
@@ -97,9 +97,9 @@ or
 ```swift
 someSuspiciousViewController
     .rx_observeWeakly(Bool.self, "behavingOk")
-    .subscribeNext { behavingOk in
+    .subscribe(onNext: { behavingOk in
         print("Cats can purr? \(behavingOk)")
-    }
+    })
 ```
 
 ### Notifications
@@ -144,9 +144,9 @@ searchTextField.rx_text
             .startWith([]) // clears results on new search term
             .catchErrorJustReturn([])
     }
-    .subscribeNext { results in
+    .subscribe(onNext: { results in
       // bind to ui
-    }
+    })
 ```
 
 There are no additional flags or fields required. Rx takes care of all that transient mess.
@@ -175,9 +175,9 @@ let imageSubscription = imageURLs
         return decodeAndBlurImage(imageData)
     }
     .observeOn(MainScheduler.instance)
-    .subscribeNext { blurredImage in
+    .subscribe(onNext: { blurredImage in
         imageView.image = blurredImage
-    }
+    })
     .addDisposableTo(reuseDisposeBag)
 ```
 
@@ -196,9 +196,9 @@ let friendsRequest: Observable<Friends> = API.getFriends("me")
 Observable.zip(userRequest, friendsRequest) { user, friends in
     return (user, friends)
 }
-.subscribeNext { user, friends in
+.subscribe(onNext: { user, friends in
     // bind them to the user interface
-}
+})
 ```
 
 So what if those APIs return results on a background thread, and binding has to happen on the main UI thread? There is `observeOn`.
@@ -211,9 +211,9 @@ Observable.zip(userRequest, friendsRequest) { user, friends in
     return (user, friends)
 }
 .observeOn(MainScheduler.instance)
-.subscribeNext { user, friends in
+.subscribe(onNext: { user, friends in
     // bind them to the user interface
-}
+})
 ```
 
 There are many more practical use cases where Rx really shines.
