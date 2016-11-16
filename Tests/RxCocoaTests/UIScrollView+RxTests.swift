@@ -15,14 +15,14 @@ import RxCocoa
 import UIKit
 import XCTest
 
-class UIScrollViewTests : RxTest {
-}
+class UIScrollViewTests : RxTest {}
 
 extension UIScrollViewTests {
 
     func testScrollEnabled_False() {
-        let scrollView = UIScrollView(frame: CGRect.zero)
+        let scrollView = UIScrollView()
         scrollView.isScrollEnabled = true
+
         Observable.just(false).bindTo(scrollView.rx.isScrollEnabled).dispose()
         XCTAssertTrue(scrollView.isScrollEnabled == false)
     }
@@ -30,24 +30,64 @@ extension UIScrollViewTests {
     func testScrollEnabled_True() {
         let scrollView = UIScrollView(frame: CGRect.zero)
         scrollView.isScrollEnabled = false
+
         Observable.just(true).bindTo(scrollView.rx.isScrollEnabled).dispose()
         XCTAssertTrue(scrollView.isScrollEnabled == true)
     }
 
+    func testScrollViewDidScroll() {
+        let scrollView = UIScrollView()
+        var didScroll = false
+
+        let subscription = scrollView.rx.didScroll.subscribe(onNext: {
+            didScroll = true
+        })
+
+        scrollView.delegate!.scrollViewDidScroll!(scrollView)
+
+        XCTAssertTrue(didScroll)
+        subscription.dispose()
+    }
+
+    func testScrollViewDidZoom() {
+        let scrollView = UIScrollView()
+        var didZoom = false
+
+        let subscription = scrollView.rx.didZoom.subscribe(onNext: {
+            didZoom = true
+        })
+
+        scrollView.delegate!.scrollViewDidZoom!(scrollView)
+
+        XCTAssertTrue(didZoom)
+        subscription.dispose()
+    }
+
+    func testScrollToTop() {
+        let scrollView = UIScrollView()
+        var didScrollToTop = false
+
+        let subscription = scrollView.rx.didScrollToTop.subscribe(onNext: {
+            didScrollToTop = true
+        })
+
+        scrollView.delegate!.scrollViewDidScrollToTop!(scrollView)
+
+        XCTAssertTrue(didScrollToTop)
+        subscription.dispose()
+    }
 }
 
 @objc class MockScrollViewDelegate
     : NSObject
-    , UIScrollViewDelegate {
-
-}
+    , UIScrollViewDelegate {}
 
 extension UIScrollViewTests {
     func testSetDelegateUsesWeakReference() {
+        let scrollView = UIScrollView()
 
         var delegateDeallocated = false
 
-        let scrollView = UIScrollView(frame: CGRect.zero)
         autoreleasepool {
             let delegate = MockScrollViewDelegate()
             _ = scrollView.rx.setDelegate(delegate)

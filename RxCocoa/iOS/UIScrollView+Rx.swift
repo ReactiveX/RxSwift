@@ -54,13 +54,13 @@ extension Reactive where Base: UIScrollView {
 
     /// Reactive wrapper for delegate method `scrollViewDidScroll`
     public var didScroll: ControlEvent<Void> {
-        let source = delegate.methodInvoked(#selector(UIScrollViewDelegate.scrollViewDidScroll(_:))).map { _ in }
+        let source = delegate.methodInvoked(#selector(UIScrollViewDelegate.scrollViewDidScroll)).map { _ in }
         return ControlEvent(events: source)
     }
 
-    /// Reactive wrapper for delegate method `scrollViewDidScroll`
+    /// Reactive wrapper for delegate method `scrollViewDidZoom`
     public var didZoom: ControlEvent<Void> {
-        let source = delegate.methodInvoked(#selector(UIScrollViewDelegate.scrollViewDidZoom(_:))).map { _ in }
+        let source = delegate.methodInvoked(#selector(UIScrollViewDelegate.scrollViewDidZoom)).map { _ in }
         return ControlEvent(events: source)
     }
 
