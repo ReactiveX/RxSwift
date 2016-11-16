@@ -23,52 +23,46 @@ extension UIWebViewTests {
         
     func testDidStartLoad() {
         let webView = UIWebView()
-        let expect = expectation(description: "webView did start loading")
+        var didStartLoad = false
 
         let subscription = webView.rx.didStartLoad.subscribe(onNext: {
-            expect.fulfill()
+            didStartLoad = true
         })
 
-        webView.loadHTMLString(testHTMLString, baseURL: nil)
+        webView.delegate!.webViewDidStartLoad!(webView)
 
-        waitForExpectations(timeout: 1, handler: { error in
-            XCTAssertNil(error)
-            subscription.dispose()
-        })
+        XCTAssertTrue(didStartLoad)
+        subscription.dispose()
     }
     
     func testDidFinishLoad() {
         let webView = UIWebView()
-        let expect = expectation(description: "webView did finish loading")
+        var didFinishLoad = false
 
         let subscription = webView.rx.didFinishLoad.subscribe(onNext: {
-            expect.fulfill()
+            didFinishLoad = true
         })
 
-        webView.loadHTMLString("<html></html>", baseURL: nil)
+        webView.delegate!.webViewDidFinishLoad!(webView)
 
-        waitForExpectations(timeout: 1, handler: { error in
-            XCTAssertNil(error)
-            subscription.dispose()
-        })
+        XCTAssertTrue(didFinishLoad)
+        subscription.dispose()
     }
 
     func testDidFailLoad() {
         let webView = UIWebView()
-        let expect = expectation(description: "webView did fail load")
+        var didFailLoad = false
 
         let subscription = webView.rx.didFailLoad.subscribe { _ in
-            expect.fulfill()
+            didFailLoad = true
         }
 
         webView.delegate!.webView!(webView, didFailLoadWithError: NSError(domain: "", code: 0, userInfo: .none))
 
-        waitForExpectations(timeout: 2, handler: { error in
-            XCTAssertNil(error)
-            subscription.dispose()
-        })
+        XCTAssertTrue(didFailLoad)
+        subscription.dispose()
     }
-    
+
 }
 
 #endif
