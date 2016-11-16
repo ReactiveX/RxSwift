@@ -18,6 +18,10 @@
 		271A97441CFC9F7B00D64125 /* UIViewControler+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271A97421CFC99FE00D64125 /* UIViewControler+RxTests.swift */; };
 		46307D4E1CDE77D800E47A1C /* UIAlertAction+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46307D4D1CDE77D800E47A1C /* UIAlertAction+Rx.swift */; };
 		46307D4F1CDE77D800E47A1C /* UIAlertAction+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46307D4D1CDE77D800E47A1C /* UIAlertAction+Rx.swift */; };
+		46C882C61DDBD8CA0032BCA7 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46C882C51DDBD8CA0032BCA7 /* Event.swift */; };
+		46C882C71DDBD8CA0032BCA7 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46C882C51DDBD8CA0032BCA7 /* Event.swift */; };
+		46C882C81DDBD8CA0032BCA7 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46C882C51DDBD8CA0032BCA7 /* Event.swift */; };
+		46C882C91DDBD8CA0032BCA7 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46C882C51DDBD8CA0032BCA7 /* Event.swift */; };
 		54700CA01CE37E1800EF3A8F /* UINavigationItem+RxTests.swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54700C9E1CE37D1000EF3A8F /* UINavigationItem+RxTests.swift.swift */; };
 		54700CA11CE37E1900EF3A8F /* UINavigationItem+RxTests.swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54700C9E1CE37D1000EF3A8F /* UINavigationItem+RxTests.swift.swift */; };
 		54D2138E1CE0824E0028D5B4 /* UINavigationItem+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D2138C1CE081890028D5B4 /* UINavigationItem+Rx.swift */; };
@@ -1424,6 +1428,7 @@
 		271A97401CFC996B00D64125 /* UIViewController+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Rx.swift"; sourceTree = "<group>"; };
 		271A97421CFC99FE00D64125 /* UIViewControler+RxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewControler+RxTests.swift"; sourceTree = "<group>"; };
 		46307D4D1CDE77D800E47A1C /* UIAlertAction+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIAlertAction+Rx.swift"; sourceTree = "<group>"; };
+		46C882C51DDBD8CA0032BCA7 /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		54700C9E1CE37D1000EF3A8F /* UINavigationItem+RxTests.swift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationItem+RxTests.swift.swift"; sourceTree = "<group>"; };
 		54D2138C1CE081890028D5B4 /* UINavigationItem+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationItem+Rx.swift"; sourceTree = "<group>"; };
 		7EDBAEAB1C89B1A5006CBE67 /* UITabBarItem+RxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITabBarItem+RxTests.swift"; sourceTree = "<group>"; };
@@ -1961,6 +1966,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		46C882C41DDBD8B50032BCA7 /* Event */ = {
+			isa = PBXGroup;
+			children = (
+				46C882C51DDBD8CA0032BCA7 /* Event.swift */,
+			);
+			name = Event;
+			sourceTree = "<group>";
+		};
 		C8093C471B8A72BE0088E94D /* RxSwift */ = {
 			isa = PBXGroup;
 			children = (
@@ -2551,6 +2564,7 @@
 			children = (
 				C89AB1AB1DAAC3350065FBE6 /* ControlEvent.swift */,
 				C89AB1AC1DAAC3350065FBE6 /* ControlProperty.swift */,
+				46C882C41DDBD8B50032BCA7 /* Event */,
 				C89AB1AD1DAAC3350065FBE6 /* Driver */,
 				C89AB1B41DAAC3350065FBE6 /* SharedSequence */,
 				C89AB1BB1DAAC3350065FBE6 /* UIBindingObserver.swift */,
@@ -3544,6 +3558,7 @@
 				C89AB1E61DAAC3350065FBE6 /* ObservableConvertibleType+SharedSequence.swift in Sources */,
 				C88254241B8A752B00B02D69 /* RxTextViewDelegateProxy.swift in Sources */,
 				C89AB2401DAAC3A60065FBE6 /* _RXDelegateProxy.m in Sources */,
+				46C882C61DDBD8CA0032BCA7 /* Event.swift in Sources */,
 				C89AB2061DAAC3350065FBE6 /* KVORepresentable+Swift.swift in Sources */,
 				C89AB1E21DAAC3350065FBE6 /* Variable+Driver.swift in Sources */,
 				C89AB1DE1DAAC3350065FBE6 /* ObservableConvertibleType+Driver.swift in Sources */,
@@ -3588,6 +3603,7 @@
 				C88F76821CE5341700D5A014 /* TextInput.swift in Sources */,
 				C89AB1DF1DAAC3350065FBE6 /* ObservableConvertibleType+Driver.swift in Sources */,
 				C89AB1D71DAAC3350065FBE6 /* Driver+Subscription.swift in Sources */,
+				46C882C71DDBD8CA0032BCA7 /* Event.swift in Sources */,
 				C89AB2511DAAC3A60065FBE6 /* _RXObjCRuntime.m in Sources */,
 				C89AB20B1DAAC3350065FBE6 /* KVORepresentable.swift in Sources */,
 				C89AB1A71DAAC25A0065FBE6 /* RxCocoaObjCRuntimeError+Extensions.swift in Sources */,
@@ -4473,6 +4489,7 @@
 				C89AB23B1DAAC3A60065FBE6 /* _RX.m in Sources */,
 				C8F0C0151BBBFBB9001B112F /* UIControl+Rx.swift in Sources */,
 				C8D132471C42D15E00B59FFF /* SectionedViewDataSourceType.swift in Sources */,
+				46C882C91DDBD8CA0032BCA7 /* Event.swift in Sources */,
 				C8F0C0161BBBFBB9001B112F /* UITableView+Rx.swift in Sources */,
 				C89AB1D11DAAC3350065FBE6 /* ControlEvent+Driver.swift in Sources */,
 				84E4D3941C9AFD3600ADFDC9 /* UISearchController+Rx.swift in Sources */,
@@ -4584,6 +4601,7 @@
 				C89AB1E81DAAC3350065FBE6 /* ObservableConvertibleType+SharedSequence.swift in Sources */,
 				C89AB1A81DAAC25A0065FBE6 /* RxCocoaObjCRuntimeError+Extensions.swift in Sources */,
 				D203C50C1BB9C53E00D02D00 /* UISearchBar+Rx.swift in Sources */,
+				46C882C81DDBD8CA0032BCA7 /* Event.swift in Sources */,
 				846436E51C9AF65E0035B40D /* RxSearchControllerDelegateProxy.swift in Sources */,
 				C89AB1751DAAC1680065FBE6 /* ControlTarget.swift in Sources */,
 				D203C4FB1BB9C53700D02D00 /* RxCollectionViewDelegateProxy.swift in Sources */,
