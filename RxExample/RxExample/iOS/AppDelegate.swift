@@ -14,7 +14,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-    func applicationDidFinishLaunching(_ application: UIApplication) {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
         if UIApplication.isInUITest {
             UIView.setAnimationsEnabled(false)
         }
@@ -25,6 +25,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 print("Resource count \(RxSwift.Resources.total)")
             })
         #endif
+
+        return true
     }
 }
 

@@ -116,7 +116,7 @@ let subscription = Observable<Int>.interval(0.3, scheduler: scheduler)
         print(event)
     }
 
-NSThread.sleep(forTimeInterval: 2.0)
+Thread.sleep(forTimeInterval: 2.0)
 
 subscription.dispose()
 
@@ -555,7 +555,7 @@ This is how HTTP requests are wrapped in Rx. It's pretty much the same pattern l
 
 ```swift
 extension Reactive where Base: URLSession {
-    public func response(_ request: NSURLRequest) -> Observable<(Data, HTTPURLResponse)> {
+    public func response(_ request: URLRequest) -> Observable<(Data, HTTPURLResponse)> {
         return Observable.create { observer in
             let task = self.dataTaskWithRequest(request) { (data, response, error) in
                 guard let response = response, let data = data else {
@@ -759,7 +759,7 @@ images = word
     .filter { (s: String) -> Bool in s.containsString("important") }
     .flatMap { (word: String) -> Observable<JSON> in
         return self.api.loadFlickrFeed("karate")
-            .catchError { (error: NSError) -> Observable<JSON> in
+            .catchError { (error: Error) -> Observable<JSON> in
                 return just(JSON(1))
             }
       }
@@ -785,7 +785,7 @@ let subscription = myInterval(0.1)
         print(n)
     })
 
-NSThread.sleepForTimeInterval(0.5)
+Thread.sleepForTimeInterval(0.5)
 
 subscription.dispose()
 ```
@@ -846,7 +846,7 @@ In case you want to have some resource leak detection logic, the simplest method
 
 ```swift
     /* add somewhere in
-    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil)
     */
     _ = Observable<Int>.interval(1, scheduler: MainScheduler.instance)
         .subscribe(onNext: { _ in
@@ -1062,13 +1062,13 @@ Request determines is it a GET request, or a POST request, what is the request b
 This is how you can create a simple GET request
 
 ```swift
-let req = NSURLRequest(url: NSURL(string: "http://en.wikipedia.org/w/api.php?action=parse&page=Pizza&format=json") as! URL)
+let req = URLRequest(url: NSURL(string: "http://en.wikipedia.org/w/api.php?action=parse&page=Pizza&format=json"))
 ```
 
 If you want to just execute that request outside of composition with other observables, this is what needs to be done.
 
 ```swift
-let responseJSON = URLSession.shared.rx.json(request: req as URLRequest)
+let responseJSON = URLSession.shared.rx.json(request: req)
 
 // no requests will be performed up to this point
 // `responseJSON` is just a description how to fetch the response
@@ -1087,15 +1087,15 @@ cancelRequest.dispose()
 
 ```
 
-**NSURLSession extensions don't return result on `MainScheduler` by default.**
+**URLSession extensions don't return result on `MainScheduler` by default.**
 
 In case you want a more low level access to response, you can use:
 
 ```swift
-NSURLSession.shared.rx.response(myNSURLRequest)
+URLSession.shared.rx.response(myNSURLRequest)
     .debug("my request") // this will print out information to console
-    .flatMap { (data: NSData!, response: NSURLResponse!) -> Observable<String> in
-        if let response = response as? NSHTTPURLResponse {
+    .flatMap { (data: NSData, response: URLResponse) -> Observable<String> in
+        if let response = response as? HTTPURLResponse {
             if 200 ..< 300 ~= response.statusCode {
                 return just(transform(data))
             }
@@ -1119,7 +1119,7 @@ In debug mode RxCocoa will log all HTTP request to console by default. In case y
 ```swift
 // read your own configuration
 public struct Logging {
-    public typealias LogURLRequest = (NSURLRequest) -> Bool
+    public typealias LogURLRequest = (URLRequest) -> Bool
 
     public static var URLRequests: LogURLRequest =  { _ in
     #if DEBUG
