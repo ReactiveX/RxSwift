@@ -1062,16 +1062,17 @@ Request determines is it a GET request, or a POST request, what is the request b
 This is how you can create a simple GET request
 
 ```swift
-let request = NSURLRequest(URL: NSURL(string: "http://en.wikipedia.org/w/api.php?action=parse&page=Pizza&format=json")!)
+let req = NSURLRequest(url: NSURL(string: "http://en.wikipedia.org/w/api.php?action=parse&page=Pizza&format=json") as! URL)
 ```
 
 If you want to just execute that request outside of composition with other observables, this is what needs to be done.
 
 ```swift
-let responseJSON = NSURLSession.sharedSession().rx.JSON(request)
+let responseJSON = URLSession.shared.rx.json(request: req as URLRequest)
 
 // no requests will be performed up to this point
 // `responseJSON` is just a description how to fetch the response
+
 
 let cancelRequest = responseJSON
     // this will fire the request
@@ -1079,7 +1080,7 @@ let cancelRequest = responseJSON
         print(json)
     })
 
-NSThread.sleep(forTimeInterval: 3.0)
+Thread.sleep(forTimeInterval: 3.0)
 
 // if you want to cancel request after 3 seconds have passed just call
 cancelRequest.dispose()
