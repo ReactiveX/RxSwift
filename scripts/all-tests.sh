@@ -59,12 +59,8 @@ if [ "${RELEASE_TEST}" -eq 1 ]; then
 fi
 
 if [ "${RELEASE_TEST}" -eq 1 ]; then
-  scripts/validate-markdown.sh
+    #scripts/validate-markdown.sh
 	scripts/validate-podspec.sh
-fi
-
-if [ "${RELEASE_TEST}" -eq 1 ]; then
-	. scripts/automation-tests.sh
 fi
 
 #make sure all tvOS tests pass

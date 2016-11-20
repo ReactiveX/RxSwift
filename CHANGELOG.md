@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 
 ## Master
 
+## [2.6.1](https://github.com/ReactiveX/RxSwift/releases/tag/2.6.0)
+
+#### Anomalies
+
+* Fixes issues with locking strategy for subjects. #936
+* Improves behavior of data sources on iOS 10. #999
+
 ## [2.6.0](https://github.com/ReactiveX/RxSwift/releases/tag/2.6.0)
 
 #### Features
