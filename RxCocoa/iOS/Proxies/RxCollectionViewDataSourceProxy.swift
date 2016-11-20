@@ -20,7 +20,7 @@ class CollectionViewDataSourceNotSet
     : NSObject
     , UICollectionViewDataSource {
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        rxAbstractMethodWithMessage(dataSourceNotSet)
+        return 0
     }
     
     // The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
