@@ -77,13 +77,13 @@ final class ShareReplay1<Element>
     }
 
     func on(event: Event<E>) {
-        _lock.lock(); defer { _lock.unlock() }
-        _synchronized_on(event)
+        _synchronized_on(event).on(event)
     }
 
-    func _synchronized_on(event: Event<E>) {
+    func _synchronized_on(event: Event<E>) -> Bag<AnyObserver<Element>> {
+        _lock.lock(); defer { _lock.unlock() }
         if _stopped {
-            return
+            return Bag()
         }
 
         switch event {
@@ -96,6 +96,6 @@ final class ShareReplay1<Element>
             _connection = nil
         }
 
-        _observers.on(event)
+        return _observers
     }
 }

@@ -660,6 +660,9 @@
 		C8941BE71BD56B0700A0E874 /* BlockingObservable+Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8941BE31BD56B0700A0E874 /* BlockingObservable+Operators.swift */; };
 		C89461751BC6C1210055219D /* ObservableConvertibleType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C849BE2A1BAB5D070019AD27 /* ObservableConvertibleType.swift */; };
 		C89461761BC6C1220055219D /* ObservableConvertibleType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C849BE2A1BAB5D070019AD27 /* ObservableConvertibleType.swift */; };
+		C89579381DE1FD8C00DC9C9C /* Anomalies.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89579351DE1FD8000DC9C9C /* Anomalies.swift */; };
+		C895793A1DE1FD8D00DC9C9C /* Anomalies.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89579351DE1FD8000DC9C9C /* Anomalies.swift */; };
+		C895793B1DE1FD8E00DC9C9C /* Anomalies.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89579351DE1FD8000DC9C9C /* Anomalies.swift */; };
 		C89CDB361BCB0DD7002063D9 /* ShareReplay1.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89CDB351BCB0DD7002063D9 /* ShareReplay1.swift */; };
 		C89CDB371BCB0DD7002063D9 /* ShareReplay1.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89CDB351BCB0DD7002063D9 /* ShareReplay1.swift */; };
 		C89CDB381BCB0DD7002063D9 /* ShareReplay1.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89CDB351BCB0DD7002063D9 /* ShareReplay1.swift */; };
@@ -1663,6 +1666,7 @@
 		C88FA53F1C25C4CC00CCFEA4 /* RxTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8941BDE1BD5695C00A0E874 /* BlockingObservable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockingObservable.swift; sourceTree = "<group>"; };
 		C8941BE31BD56B0700A0E874 /* BlockingObservable+Operators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "BlockingObservable+Operators.swift"; sourceTree = "<group>"; };
+		C89579351DE1FD8000DC9C9C /* Anomalies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Anomalies.swift; path = Tests/RxSwiftTests/Anomalies.swift; sourceTree = SOURCE_ROOT; };
 		C89CDB351BCB0DD7002063D9 /* ShareReplay1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ShareReplay1.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		C8A56AD71AD7424700B4673B /* RxSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8B144FA1BD2D44500267DCE /* ConcurrentMainScheduler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConcurrentMainScheduler.swift; sourceTree = "<group>"; };
@@ -2328,6 +2332,7 @@
 		C83509011C38706D0027C24C /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				C89579351DE1FD8000DC9C9C /* Anomalies.swift */,
 				C83509021C38706D0027C24C /* AnonymousObservable+Test.swift */,
 				C83509031C38706D0027C24C /* AssumptionsTest.swift */,
 				C83509041C38706D0027C24C /* BagTest.swift */,
@@ -3473,6 +3478,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				033C2EF61D081C460050C015 /* UIScrollView+RxTests.swift in Sources */,
+				C89579381DE1FD8C00DC9C9C /* Anomalies.swift in Sources */,
 				C83509661C38706E0027C24C /* RxTest.swift in Sources */,
 				C83509611C38706E0027C24C /* ObserverTests.swift in Sources */,
 				C83509471C38706E0027C24C /* PrimitiveMockObserver.swift in Sources */,
@@ -3562,6 +3568,7 @@
 				C83509F31C38755D0027C24C /* AssumptionsTest.swift in Sources */,
 				C83509ED1C3875580027C24C /* MySubject.swift in Sources */,
 				C83509C61C3875220027C24C /* NSObject+RxTests.swift in Sources */,
+				C895793B1DE1FD8E00DC9C9C /* Anomalies.swift in Sources */,
 				C83509BB1C38750D0027C24C /* Control+RxTests.swift in Sources */,
 				C83509EE1C3875580027C24C /* Observable.Extensions.swift in Sources */,
 				C83509BD1C38750D0027C24C /* ControlPropertyTests.swift in Sources */,
@@ -3679,6 +3686,7 @@
 				C83509CC1C3875230027C24C /* NSLayoutConstraint+RxTests.swift in Sources */,
 				C8350A0C1C38755E0027C24C /* Observable+CreationTest.swift in Sources */,
 				C8350A1C1C38756B0027C24C /* Observable+StandardSequenceOperatorsTest.swift in Sources */,
+				C895793A1DE1FD8D00DC9C9C /* Anomalies.swift in Sources */,
 				C83509CA1C3875230027C24C /* Driver+Test.swift in Sources */,
 				C83509E41C3875580027C24C /* MockDisposable.swift in Sources */,
 				C83509D51C38753E0027C24C /* RxObjCRuntimeState.swift in Sources */,

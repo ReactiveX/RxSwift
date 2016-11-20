@@ -24,7 +24,7 @@ class TableViewDataSourceNotSet
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        rxAbstractMethodWithMessage(dataSourceNotSet)
+        return 0
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {

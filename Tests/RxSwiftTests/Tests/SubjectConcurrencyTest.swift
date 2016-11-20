@@ -34,57 +34,6 @@ class SubjectConcurrencyTest : RxTest {
 }
 
 extension SubjectConcurrencyTest {
-    func testSubjectIsSynchronized() {
-        let (observable, _observer) = createSubject()
-
-        let o = RxMutableBox(_observer)
-
-        var allDone = false
-
-        var state = 0
-        _ = observable.subscribeNext { [unowned o] n in
-            if n < 0 {
-                return
-            }
-
-            if state == 0 {
-                state = 1
-                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)) {
-                    o.value.on(.Next(1))
-                }
-
-                // if other thread can't fulfill the condition in 0.5 sek, that means it is synchronized
-                NSThread.sleepForTimeInterval(0.5)
-
-                XCTAssertEqual(state, 1)
-
-                dispatch_async(dispatch_get_main_queue()) {
-                    o.value.on(.Next(2))
-                }
-            }
-            else if state == 1 {
-                XCTAssertTrue(!isMainThread())
-                state = 2
-            }
-            else if state == 2 {
-                XCTAssertTrue(isMainThread())
-                allDone = true
-            }
-        }
-
-        _observer.on(.Next(0))
-
-        // wait for second
-        for _ in 0 ..< 10 {
-            NSRunLoop.currentRunLoop().runUntilDate(NSDate().dateByAddingTimeInterval(0.1))
-            if allDone {
-                break
-            }
-        }
-
-        XCTAssertTrue(allDone)
-    }
-
     func testSubjectIsReentrantForNextAndComplete() {
         let (observable, _observer) = createSubject()
 
