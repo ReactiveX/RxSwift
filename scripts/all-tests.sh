@@ -46,10 +46,6 @@ function checkPlistVersions() {
 
 checkPlistVersions
 
-if [ "${IS_SWIFT_3}" -ne 1 ]; then
-    ./scripts/validate-headers.swift
-    ./scripts/package-spm.swift > /dev/null
-fi
 ensureNoGitChanges "Package for Swift package manager isn't updated, please run ./scripts/package-spm.swift and commit the changes"
 
 CONFIGURATIONS=(Release-Tests)
@@ -126,9 +122,3 @@ do
 		rx ${scheme} ${configuration} "" build
 	done
 done
-
-# compile and run playgrounds
-
-if [ "${IS_SWIFT_3}" -ne 1 ]; then
-	. scripts/validate-playgrounds.sh
-fi

@@ -21,16 +21,22 @@ BOLDWHITE="\033[1m\033[37m"
 
 # make sure all tests are passing
 
-IS_SWIFT_3=`swift --version | grep "Apple Swift version 3.0" | wc -l`
-
-if [ "${IS_SWIFT_3}" -eq 1 ]; then
+if [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.iOS-10-1 | wc -l` -eq 1 ]; then
     DEFAULT_IOS_SIMULATOR=RxSwiftTest/iPhone-6/iOS/10.1
-    DEFAULT_WATCHOS_SIMULATOR=RxSwiftTest/Apple-Watch-38mm/watchOS/3.1
-    DEFAULT_TVOS_SIMULATOR=RxSwiftTest/Apple-TV-1080p/tvOS/10.0
 else
-    DEFAULT_IOS_SIMULATOR=RxSwiftTest/iPhone-6/iOS/9.3
-    DEFAULT_WATCHOS_SIMULATOR=RxSwiftTest/Apple-Watch-38mm/watchOS/2.2
-    DEFAULT_TVOS_SIMULATOR=RxSwiftTest/Apple-TV-1080p/tvOS/9.1
+    DEFAULT_IOS_SIMULATOR=RxSwiftTest/iPhone-6/iOS/10.0
+fi
+
+if [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.watchOS-3-1 | wc -l` -eq 1 ]; then
+    DEFAULT_WATCHOS_SIMULATOR=RxSwiftTest/Apple-Watch-38mm/watchOS/3.1
+else
+    DEFAULT_WATCHOS_SIMULATOR=RxSwiftTest/Apple-Watch-38mm/watchOS/3.0
+fi
+
+if [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.tvOS-10-1 | wc -l` -eq 1 ]; then
+    DEFAULT_TVOS_SIMULATOR=RxSwiftTest/Apple-TV-1080p/tvOS/10.1
+else
+    DEFAULT_TVOS_SIMULATOR=RxSwiftTest/Apple-TV-1080p/tvOS/10.0
 fi
 
 function runtime_available() {

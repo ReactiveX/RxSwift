@@ -40,6 +40,7 @@ let excludedRootPaths = [
 
 let excludePaths = [
     "AllTests/main.swift",
+    "AllTestz/main.swift",
     "RxExample/Services/Reachability.swift",
     "RxCocoaTests/RxTests-"
 ]
