@@ -80,7 +80,7 @@ final class ShareReplay1<Element>
         _synchronized_on(event).on(event)
     }
 
-    func _synchronized_on(_ event: Event<E>) -> Bag<AnyObserver<Element>> {
+    func _synchronized_on(event: Event<E>) -> Bag<AnyObserver<Element>> {
         _lock.lock(); defer { _lock.unlock() }
         if _stopped {
             return Bag()

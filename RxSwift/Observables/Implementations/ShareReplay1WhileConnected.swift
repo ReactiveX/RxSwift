@@ -74,7 +74,7 @@ final class ShareReplay1WhileConnected<Element>
         _synchronized_on(event).on(event)
     }
 
-    func _synchronized_on(_ event: Event<E>) -> Bag<AnyObserver<Element>> {
+    func _synchronized_on(event: Event<E>) -> Bag<AnyObserver<Element>> {
         _lock.lock(); defer { _lock.unlock() }
         switch event {
         case .Next(let element):
