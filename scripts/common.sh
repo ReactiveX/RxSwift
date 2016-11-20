@@ -24,8 +24,8 @@ BOLDWHITE="\033[1m\033[37m"
 IS_SWIFT_3=`swift --version | grep "Apple Swift version 3.0" | wc -l`
 
 if [ "${IS_SWIFT_3}" -eq 1 ]; then
-    DEFAULT_IOS_SIMULATOR=RxSwiftTest/iPhone-6/iOS/10.0
-    DEFAULT_WATCHOS_SIMULATOR=RxSwiftTest/Apple-Watch-38mm/watchOS/3.0
+    DEFAULT_IOS_SIMULATOR=RxSwiftTest/iPhone-6/iOS/10.1
+    DEFAULT_WATCHOS_SIMULATOR=RxSwiftTest/Apple-Watch-38mm/watchOS/3.1
     DEFAULT_TVOS_SIMULATOR=RxSwiftTest/Apple-TV-1080p/tvOS/10.0
 else
     DEFAULT_IOS_SIMULATOR=RxSwiftTest/iPhone-6/iOS/9.3
