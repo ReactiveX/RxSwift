@@ -168,6 +168,20 @@ extension ObservableType {
         -> Observable<E> {
         return StartWith(source: self.asObservable(), elements: elements)
     }
+    
+    /**
+    Prepends a sequence of values to an observable sequence.
+
+    - seealso: [startWith operator on reactivex.io](http://reactivex.io/documentation/operators/startwith.html)
+    
+    - parameter elements: Elements to prepend to the specified sequence.
+    - returns: The source sequence prepended with the specified values.
+    */
+    @warn_unused_result(message="http://git.io/rxs.uo")
+    public func startWith(elements: [E])
+        -> Observable<E> {
+        return StartWith(source: self.asObservable(), elements: elements)
+    }
 }
 
 // MARK: retry
