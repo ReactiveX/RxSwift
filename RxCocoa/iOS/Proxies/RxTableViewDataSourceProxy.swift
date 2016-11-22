@@ -130,6 +130,7 @@ public class RxTableViewDataSourceProxy
         let requiredMethodsDataSource: UITableViewDataSource? = castOptionalOrFatalError(forwardToDelegate)
         _requiredMethodsDataSource = requiredMethodsDataSource ?? tableViewDataSourceNotSet
         super.setForwardToDelegate(forwardToDelegate, retainDelegate: retainDelegate)
+        refreshTableViewDataSource()
     }
 
     override open func methodInvoked(_ selector: Selector) -> Observable<[Any]> {
@@ -176,7 +177,9 @@ public class RxTableViewDataSourceProxy
     private func refreshTableViewDataSource() {
         if self.tableView?.dataSource === self {
             self.tableView?.dataSource = nil
-            self.tableView?.dataSource = self
+            if _requiredMethodsDataSource != nil && _requiredMethodsDataSource !== tableViewDataSourceNotSet {
+                self.tableView?.dataSource = self
+            }
         }
     }
 

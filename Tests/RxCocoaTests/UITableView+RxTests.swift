@@ -80,7 +80,18 @@ class UITableViewTests : RxTest {
     }
 
     func testTableView_itemDeleted() {
-        let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
+        let items: Observable<[Int]> = Observable.just([1, 2, 3])
+
+        let createView: () -> (UITableView, Disposable) = {
+            let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
+            let dataSourceSubscription = items.bindTo(tableView.rx.items) { (tv, index: Int, item: Int) -> UITableViewCell in
+                return UITableViewCell(style: .default, reuseIdentifier: "Identity")
+            }
+
+            return (tableView, dataSourceSubscription)
+        }
+        
+        let (tableView, dataSourceSubscription) = createView()
 
         var resultIndexPath: IndexPath? = nil
 
@@ -94,10 +105,22 @@ class UITableViewTests : RxTest {
 
         XCTAssertEqual(resultIndexPath, testRow)
         subscription.dispose()
+        dataSourceSubscription.dispose()
     }
 
     func testTableView_itemInserted() {
-        let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
+        let items: Observable<[Int]> = Observable.just([1, 2, 3])
+
+        let createView: () -> (UITableView, Disposable) = {
+            let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
+            let dataSourceSubscription = items.bindTo(tableView.rx.items) { (tv, index: Int, item: Int) -> UITableViewCell in
+                return UITableViewCell(style: .default, reuseIdentifier: "Identity")
+            }
+
+            return (tableView, dataSourceSubscription)
+        }
+
+        let (tableView, dataSourceSubscription) = createView()
 
         var resultIndexPath: IndexPath? = nil
 
@@ -111,6 +134,7 @@ class UITableViewTests : RxTest {
 
         XCTAssertEqual(resultIndexPath, testRow)
         subscription.dispose()
+        dataSourceSubscription.dispose()
     }
 
     func testTableView_willDisplayCell() {
@@ -156,7 +180,18 @@ class UITableViewTests : RxTest {
     }
 
     func testTableView_itemMoved() {
-        let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
+        let items: Observable<[Int]> = Observable.just([1, 2, 3])
+
+        let createView: () -> (UITableView, Disposable) = {
+            let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
+            let dataSourceSubscription = items.bindTo(tableView.rx.items) { (tv, index: Int, item: Int) -> UITableViewCell in
+                return UITableViewCell(style: .default, reuseIdentifier: "Identity")
+            }
+
+            return (tableView, dataSourceSubscription)
+        }
+
+        let (tableView, dataSourceSubscription) = createView()
 
         var resultIndexPath: IndexPath? = nil
         var resultIndexPath2: IndexPath? = nil
@@ -174,6 +209,7 @@ class UITableViewTests : RxTest {
         XCTAssertEqual(resultIndexPath, testRow)
         XCTAssertEqual(resultIndexPath2, testRow2)
         subscription.dispose()
+        dataSourceSubscription.dispose()
     }
 
     func testTableView_DelegateEventCompletesOnDealloc1() {
@@ -424,6 +460,28 @@ extension UITableViewTests {
             XCTAssert(dataSourceDeallocated == false)
         }
         XCTAssert(dataSourceDeallocated == true)
+    }
+
+    func testTableViewDataSourceIsNilOnDispose() {
+        let items: Observable<[Int]> = Observable.just([1, 2, 3])
+
+        let createView: () -> (UITableView, Disposable) = {
+            let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
+            tableView.register(NSClassFromString("UITableViewCell"), forCellReuseIdentifier: "a")
+            let dataSource = SectionedViewDataSourceMock()
+            let dataSourceSubscription = items.bindTo(tableView.rx.items(dataSource: dataSource))
+
+            return (tableView, dataSourceSubscription)
+        }
+
+
+        let (tableView, dataSourceSubscription) = createView()
+
+        XCTAssertTrue(tableView.dataSource === RxTableViewDataSourceProxy.proxyForObject(tableView))
+
+        dataSourceSubscription.dispose()
+
+        XCTAssertTrue(tableView.dataSource === nil)
     }
 }
 

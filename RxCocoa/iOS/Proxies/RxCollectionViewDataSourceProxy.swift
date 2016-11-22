@@ -94,6 +94,16 @@ public class RxCollectionViewDataSourceProxy
         let requiredMethodsDataSource: UICollectionViewDataSource? = castOptionalOrFatalError(forwardToDelegate)
         _requiredMethodsDataSource = requiredMethodsDataSource ?? collectionViewDataSourceNotSet
         super.setForwardToDelegate(forwardToDelegate, retainDelegate: retainDelegate)
+        self.refreshCollectionViewDataSource()
+    }
+
+    private func refreshCollectionViewDataSource() {
+        if self.collectionView?.dataSource === self {
+            self.collectionView?.dataSource = nil
+            if _requiredMethodsDataSource != nil && _requiredMethodsDataSource !== collectionViewDataSourceNotSet {
+                self.collectionView?.dataSource = self
+            }
+        }
     }
 }
 

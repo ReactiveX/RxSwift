@@ -325,4 +325,25 @@ extension UICollectionViewTests {
         XCTAssert(dataSourceDeallocated == true)
     }
 
+    func testCollectionViewDataSourceIsNilOnDispose() {
+        let items: Observable<[Int]> = Observable.just([1, 2, 3])
+
+        let layout = UICollectionViewFlowLayout()
+        let createView: () -> (UICollectionView, Disposable) = {
+            let collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: 1, height: 1), collectionViewLayout: layout)
+            collectionView.register(NSClassFromString("UICollectionViewCell"), forCellWithReuseIdentifier: "a")
+            let dataSource = SectionedViewDataSourceMock()
+            let dataSourceSubscription = items.bindTo(collectionView.rx.items(dataSource: dataSource))
+
+            return (collectionView, dataSourceSubscription)
+
+        }
+        let (collectionView, dataSourceSubscription) = createView()
+
+        XCTAssertTrue(collectionView.dataSource === RxCollectionViewDataSourceProxy.proxyForObject(collectionView))
+        
+        dataSourceSubscription.dispose()
+
+        XCTAssertTrue(collectionView.dataSource === nil)
+    }
 }

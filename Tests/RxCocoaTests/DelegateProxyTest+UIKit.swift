@@ -193,7 +193,9 @@ class UITableViewSubclass2
     }
 
     func doThatTest(_ value: Int) {
-        (dataSource as! TestDelegateProtocol).testEventHappened?(value)
+        if dataSource != nil {
+            (dataSource as! TestDelegateProtocol).testEventHappened?(value)
+        }
     }
 
     var testSentMessage: Observable<Int> {
@@ -271,7 +273,9 @@ class UICollectionViewSubclass2
     }
 
     func doThatTest(_ value: Int) {
-        (dataSource as! TestDelegateProtocol).testEventHappened?(value)
+        if dataSource != nil {
+            (dataSource as! TestDelegateProtocol).testEventHappened?(value)
+        }
     }
 
     var testSentMessage: Observable<Int> {
