@@ -148,7 +148,7 @@ class TableViewWithEditingCommandsViewController: ViewController, UITableViewDel
     // MARK: Navigation
 
     private func showDetailsForUser(_ user: User) {
-        let storyboard = UIStoryboard(name: "Main", bundle: Bundle(identifier: "RxExample-iOS"))
+        let storyboard = UIStoryboard(name: "TableViewWithEditingCommands", bundle: Bundle(identifier: "RxExample-iOS"))
         let viewController = storyboard.instantiateViewController(withIdentifier: "DetailViewController") as! DetailViewController
         viewController.user = user
         self.navigationController?.pushViewController(viewController, animated: true)
